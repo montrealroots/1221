@@ -8,9 +8,9 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { DecisionItem, Id, Person, SimulationTier } from '../domain/model';
+import type { DecisionItem, Id, Person, Project, SimulationTier } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, MS_DAY } from '../core/time';
+import { addDays, MS_DAY, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { seedIndependentProject } from '../systems/casting';
 import { ATTRIBUTES, TRAITS, conflictingTraits } from '../domain/attributes';
@@ -34,6 +34,15 @@ const AUDITION_RETENTION_DAYS = 540;
 
 /** How long answered or expired decisions stay in the save. */
 const DECISION_RETENTION_DAYS = 180;
+
+/**
+ * How long a finished project the player had nothing to do with keeps its cast
+ * individually simulated. After this it becomes a credit list.
+ */
+const PROJECT_ARCHIVE_YEARS = 8;
+
+/** How many people the world simulates at once, at any tier. */
+const POPULATION_BUDGET = 1200;
 
 export function registerWorld(sim: Simulation): void {
   sim.onSchedule('world.tick', () => {
@@ -250,6 +259,7 @@ function retier(sim: Simulation): void {
   }
 
   let activeCount = 0;
+  const contenders: Person[] = [];
   for (const person of Object.values(sim.universe.people)) {
     if (person.isPlayer) { person.tier = 'full'; continue; }
     if (known.has(person.id) && activeCount < TIER_BUDGET.active) {
@@ -257,11 +267,26 @@ function retier(sim: Simulation): void {
       activeCount++;
       continue;
     }
-    // Notable people stay in background; the long tail goes dormant.
-    person.tier = person.reputation.publicFame > 25 || person.careerTrack === 'executive' || person.industryRole
-      ? 'background'
-      : 'dormant';
+    person.tier = 'dormant';
+    // Notable people are candidates for background simulation, but the budget
+    // is a budget: an industry that has been running for a decade generates
+    // thousands of plausible names, and simulating all of them every tick is
+    // how a long save grinds to a halt.
+    if (person.reputation.publicFame > 25 || person.careerTrack === 'executive' || person.industryRole) {
+      contenders.push(person);
+    }
   }
+
+  if (contenders.length > TIER_BUDGET.background) {
+    // Rank by how likely the player is to run into them: who is famous, who
+    // people are hiring, and who has actually worked.
+    contenders.sort((a, b) => (
+      (b.reputation.publicFame + b.reputation.industryDemand + b.creditIds.length * 4)
+      - (a.reputation.publicFame + a.reputation.industryDemand + a.creditIds.length * 4)
+    ));
+    contenders.length = TIER_BUDGET.background;
+  }
+  for (const person of contenders) person.tier = 'background';
 }
 
 /** NPC careers move on their own, slowly, so the world is not static. */
@@ -370,10 +395,29 @@ function prune(sim: Simulation): void {
     for (const [id] of old) delete sim.universe.socialPosts[id];
   }
   // Dormant NPCs with no ties to anything are released.
+  //
+  // A project that finished a decade ago and never involved the player stops
+  // holding its cast in the simulation. The credit itself is permanent — it was
+  // written onto the project when they were cast — so the billing block still
+  // reads correctly; what is released is the individual simulation of a day
+  // player nobody has thought about since. Without this, every film ever made
+  // pins its whole cast forever and the population of a long save only grows.
+  const archiveCutoff = sim.now - PROJECT_ARCHIVE_YEARS * 365 * MS_DAY;
+  const archived: Project[] = [];
   const referenced = new Set<Id>([sim.universe.playerId]);
   for (const rel of Object.values(sim.universe.relationships)) { referenced.add(rel.aId); referenced.add(rel.bId); }
   for (const project of Object.values(sim.universe.projects)) {
+    if (isArchivable(sim, project, archiveCutoff)) {
+      archived.push(project);
+      continue;
+    }
     for (const id of [...project.castIds, ...project.writerIds, ...project.producerIds, project.directorId, project.createdById]) {
+      if (id) referenced.add(id);
+    }
+  }
+  // An archived project still pins whoever ran it, so the film has an author.
+  for (const project of archived) {
+    for (const id of [project.directorId, project.createdById, project.showrunnerId]) {
       if (id) referenced.add(id);
     }
   }
@@ -383,12 +427,49 @@ function prune(sim: Simulation): void {
   for (const nomination of Object.values(sim.universe.awardNominations)) if (nomination.personId) referenced.add(nomination.personId);
 
   const people = Object.values(sim.universe.people);
-  if (people.length > 1200) {
+  if (people.length > POPULATION_BUDGET) {
     const droppable = people
-      .filter((p) => p.tier === 'dormant' && !referenced.has(p.id) && p.creditIds.length === 0)
-      .slice(0, people.length - 1200);
-    for (const person of droppable) delete sim.universe.people[person.id];
+      .filter((p) => p.tier === 'dormant' && !referenced.has(p.id))
+      .slice(0, people.length - POPULATION_BUDGET);
+    if (droppable.length > 0) {
+      const dropped = new Set(droppable.map((p) => p.id));
+      for (const person of droppable) delete sim.universe.people[person.id];
+      // Unlink them from the archived work so nothing points at a person who
+      // is no longer there. `credits` keeps the names.
+      for (const project of archived) {
+        project.castIds = project.castIds.filter((id) => !dropped.has(id));
+        project.writerIds = project.writerIds.filter((id) => !dropped.has(id));
+        project.producerIds = project.producerIds.filter((id) => !dropped.has(id));
+        project.attachments = project.attachments.filter((a) => !dropped.has(a.personId));
+      }
+    }
   }
+}
+
+/**
+ * Whether a project has been finished and forgotten for long enough that the
+ * world no longer needs to simulate the people in it. Anything the player
+ * touched is never archived: their own history stays fully alive.
+ */
+function isArchivable(sim: Simulation, project: Project, cutoff: Instant): boolean {
+  if (project.phase !== 'library' && project.phase !== 'shelved') return false;
+  const playerId = sim.universe.playerId;
+  if (
+    project.createdById === playerId
+    || project.directorId === playerId
+    || project.showrunnerId === playerId
+    || project.castIds.includes(playerId)
+    || project.writerIds.includes(playerId)
+    || project.producerIds.includes(playerId)
+  ) return false;
+  if (project.ownerCompanyId) {
+    const company = sim.universe.companies[project.ownerCompanyId];
+    if (company?.ownerships.some((o) => o.holderId === playerId)) return false;
+  }
+  const concluded = project.releaseDate
+    ?? project.phaseHistory[project.phaseHistory.length - 1]?.enteredAt
+    ?? project.createdAt;
+  return concluded < cutoff;
 }
 
 // ---------------------------------------------------------------------------

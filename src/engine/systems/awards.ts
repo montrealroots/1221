@@ -230,6 +230,11 @@ export function setUpSeason(sim: Simulation, ceremonyYear: number): void {
     const nominationsAt = addDays(ceremonyAt, -38, sim.homeZone);
     const baseEdition = body.id === 'vanguard' ? 96 : body.id === 'beacon' ? 76 : body.id === 'continental' ? 82 : 40;
 
+    // A season that was already over when the save began is history, not work.
+    // Scheduling it would run seven ceremonies on the player's first morning
+    // and stamp last winter's winners with today's date.
+    const concluded = ceremonyAt < sim.now;
+
     const edition: AwardEdition = {
       id: sim.nextId('award'),
       saveId: sim.universe.meta.id,
@@ -240,13 +245,17 @@ export function setUpSeason(sim: Simulation, ceremonyYear: number): void {
       nominationsAnnouncedAt: nominationsAt,
       eligibilityStart,
       eligibilityEnd,
-      status: 'upcoming',
-      finalised: false,
+      status: concluded ? 'complete' : 'upcoming',
+      finalised: concluded,
+      ...(concluded ? { predatesSave: true } : {}),
     };
     sim.universe.awardEditions[edition.id] = edition;
+    if (concluded) continue;
 
     sim.schedule({
-      at: nominationsAt,
+      // Nominations that would land before the save opened are announced now
+      // instead. The ceremony is still ahead, so the season can still run.
+      at: Math.max(nominationsAt, sim.now),
       kind: 'award.nominations',
       label: `${ordinal(edition.editionNumber)} ${body.name} nominations`,
       category: 'awards',

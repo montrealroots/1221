@@ -1134,6 +1134,14 @@ export interface Project {
   producerIds: Id[];
   showrunnerId?: Id;
   castIds: Id[];
+  /**
+   * The credit list as it will always read, written the moment someone is
+   * attached or cast. The id links to a person while that person is still
+   * simulated; the name and role are the permanent record. A film made twenty
+   * years ago keeps its billing block even after the world has stopped
+   * individually simulating the day players in it.
+   */
+  credits: { personId: Id; name: string; role: string; characterName?: string }[];
 
   budget: Money;
   budgetLocked: boolean;
@@ -1478,6 +1486,12 @@ export interface AwardEdition {
   /** Once complete this never changes. */
   finalised: boolean;
   scheduledItemId?: Id;
+  /**
+   * Set on editions that were already over when the save began. They exist so
+   * the award bodies have a plausible run of editions behind them, but nothing
+   * about who won was simulated, and the game must never claim otherwise.
+   */
+  predatesSave?: boolean;
 }
 
 export interface AwardNomination {

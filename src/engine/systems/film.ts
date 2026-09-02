@@ -143,6 +143,7 @@ export function registerFilm(sim: Simulation): void {
         writerIds: [],
         producerIds: [],
         castIds: [],
+        credits: [],
         budget: 0,
         budgetLocked: false,
         spent: 0,
@@ -341,7 +342,10 @@ export function registerFilm(sim: Simulation): void {
       project.scriptDraftIds.push(draft.id);
       project.currentDraftId = draft.id;
       project.scriptQuality = draft.quality;
-      for (const id of writerIds) if (!project.writerIds.includes(id)) project.writerIds.push(id);
+      for (const id of writerIds) {
+        if (!project.writerIds.includes(id)) project.writerIds.push(id);
+        recordCredit(s, project, id, 'writer');
+      }
 
       if (project.phase === 'idea' || project.phase === 'rights') advancePhase(s, project, 'writing');
 
@@ -426,6 +430,7 @@ export function registerFilm(sim: Simulation): void {
       if (p.role === 'writer' && !project.writerIds.includes(p.personId)) project.writerIds.push(p.personId);
       if (p.role === 'producer' && !project.producerIds.includes(p.personId)) project.producerIds.push(p.personId);
       if (p.role === 'showrunner') project.showrunnerId = p.personId;
+      recordCredit(s, project, p.personId, p.role);
 
       recomputePackageValue(s, project.id);
       if (project.phase === 'writing') advancePhase(s, project, 'development');
@@ -1052,3 +1057,29 @@ export function projectProfitLoss(sim: Simulation, projectId: Id) {
 
 export const YEAR_MS = 365 * MS_DAY;
 void addYears;
+
+/**
+ * Writes a credit onto the project. Idempotent per person-and-role, so
+ * re-attaching somebody does not double the billing block.
+ */
+export function recordCredit(
+  sim: Simulation,
+  project: Project,
+  personId: Id,
+  role: string,
+  characterName?: string,
+): void {
+  const person = sim.universe.people[personId];
+  if (!person) return;
+  const existing = project.credits.find((c) => c.personId === personId && c.role === role);
+  if (existing) {
+    if (characterName) existing.characterName = characterName;
+    return;
+  }
+  project.credits.push({
+    personId,
+    name: person.stageName ?? person.displayName,
+    role,
+    ...(characterName ? { characterName } : {}),
+  });
+}

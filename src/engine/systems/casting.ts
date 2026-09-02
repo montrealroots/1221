@@ -12,17 +12,19 @@ import { CommandError } from '../core/simulation';
 import type { Audition, AuditionStage, Id, Person, Project, Role } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, ageOn, formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY } from '../core/time';
-import { applyRate, formatMoney, type Money } from '../core/money';
+import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { buildFactors, type AuditFactor } from '../core/audit';
 import { effectiveAttributes, systemModifier } from '../domain/attributes';
 import { readiness } from './life';
 import { AGENCIES } from '../content/industry';
 import { generatePersonName, generateCharacterName } from '../content/names';
 import { CITIES } from '../content/geography';
+import { recordCredit } from './film';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
   sim.onSchedule('cast.decide_role', (item) => decideRole(sim, item.payload.roleId as Id));
+  sim.onSchedule('world.project_progress', (item) => advanceBackgroundProject(sim, item.payload.projectId as Id));
   sim.onSchedule('cast.opportunity_scan', () => {
     generateOpportunities(sim);
     sim.schedule({ at: addDays(sim.now, 5, sim.homeZone), kind: 'cast.opportunity_scan', label: 'Casting breakdowns', category: 'career', priority: 72 });
@@ -220,6 +222,7 @@ export function registerCasting(sim: Simulation): void {
       role.status = 'cast';
       role.contractId = result.value?.contractId;
       if (!project.castIds.includes(person.id)) project.castIds.push(person.id);
+      recordCredit(s, project, person.id, 'cast', role.characterName);
       project.attachments.push({ personId: person.id, role: role.billing === 'lead' ? 'lead' : 'cast', attachedAt: s.now, confirmed: true });
       if (!person.creditIds.includes(project.id)) person.creditIds.push(project.id);
 
@@ -835,5 +838,171 @@ export function seedIndependentProject(sim: Simulation, seed: number): Project |
       sim.execute({ kind: 'cast.open_casting', payload: { roleId: created.value.roleId, candidateCount: rng.int(5, 18) } });
     }
   }
+
+  // It is a real production, so it goes and gets made.
+  sim.schedule({
+    at: addDays(sim.now, rng.int(45, 130), sim.homeZone),
+    kind: 'world.project_progress',
+    label: `${project.title} — production start`,
+    category: 'system',
+    payload: { projectId: project.id },
+    priority: 94,
+    refType: 'project', refId: project.id,
+  });
+
   return project;
+}
+
+// ---------------------------------------------------------------------------
+// The industry without the player
+// ---------------------------------------------------------------------------
+
+/**
+ * Background productions run on a coarse schedule rather than through the full
+ * production machinery: a hundred films a decade cannot each carry a shooting
+ * board and a post dependency graph. What they do carry is a real result. They
+ * shoot, they finish, they open on a date, they are reviewed, they earn, and
+ * they become eligible for the same awards the player competes for. Without
+ * this the library is empty, every ceremony has nothing to nominate, and the
+ * player is the only person in the industry who has ever made anything.
+ *
+ * No money moves here. These productions are world history, not the player's
+ * books, and inventing ledger entries for companies that do not exist would put
+ * numbers in the accounts that nothing could reconcile.
+ */
+function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
+  const project = sim.universe.projects[projectId];
+  if (!project) return;
+  // The moment the player takes it over it stops being background work.
+  if (project.createdById === sim.universe.playerId) return;
+
+  const rng = sim.rng('bg_project', project.id, project.phase);
+  const isSeries = project.format === 'series' || project.format === 'limited_series';
+  const enter = (phase: Project['phase'], inDays: number) => {
+    project.phase = phase;
+    project.phaseHistory.push({ phase, enteredAt: sim.now });
+    sim.schedule({
+      at: addDays(sim.now, inDays, sim.homeZone),
+      kind: 'world.project_progress',
+      label: `${project.title} — ${phase.replace(/_/g, ' ')}`,
+      category: 'system',
+      payload: { projectId: project.id },
+      priority: 94,
+      refType: 'project', refId: project.id,
+    });
+  };
+
+  switch (project.phase) {
+    case 'preproduction': {
+      // Anything still uncast when the start date arrives loses its window.
+      const roles = Object.values(sim.universe.roles).filter((r) => r.projectId === project.id);
+      const uncast = roles.filter((r) => r.status !== 'cast' && r.status !== 'closed');
+      if (uncast.length > 0 && rng.chance(0.35)) {
+        project.phase = 'shelved';
+        project.phaseHistory.push({ phase: 'shelved', enteredAt: sim.now });
+        project.shelvedReason = 'Could not close its cast before the start date.';
+        for (const role of uncast) role.status = 'closed';
+        return;
+      }
+      project.productionStartAt = sim.now;
+      enter('production', isSeries ? rng.int(70, 160) : rng.int(28, 70));
+      return;
+    }
+
+    case 'production': {
+      project.productionEndAt = sim.now;
+      project.completedShootDays = project.scheduledShootDays || rng.int(18, 65);
+      enter('post', isSeries ? rng.int(120, 240) : rng.int(140, 300));
+      return;
+    }
+
+    case 'post': {
+      project.pictureLockedAt = sim.now;
+      enter('distribution', rng.int(45, 150));
+      return;
+    }
+
+    case 'distribution': {
+      project.releaseDate = sim.now;
+      project.finalQuality = backgroundQuality(sim, project, rng);
+      project.criticScore = clamp(Math.round(project.finalQuality + rng.normal(0, 11)), 1, 100);
+      project.audienceScore = clamp(Math.round(project.finalQuality * 0.75 + 20 + rng.normal(0, 12)), 1, 100);
+      project.distributorName = rng.pick(['Meridian Pictures', 'Harbourline Releasing', 'Ninth Street Films', 'Cormorant Distribution', 'Pale Fire Releasing']);
+      enter('released', rng.int(60, 120));
+      return;
+    }
+
+    case 'released': {
+      recordBackgroundPerformance(sim, project, rng);
+      enter('library', 1);
+      return;
+    }
+
+    default:
+      // 'library' and 'shelved' are terminal; nothing more is scheduled.
+  }
+}
+
+/** Finished quality, from the script and whoever ended up in it. */
+function backgroundQuality(sim: Simulation, project: Project, rng: ReturnType<Simulation['rng']>): number {
+  let castStrength = 50;
+  const cast = project.castIds.map((id) => sim.universe.people[id]).filter((p): p is Person => Boolean(p));
+  if (cast.length > 0) {
+    castStrength = cast.reduce((sum, person) => {
+      const sheet = effectiveAttributes(person.attributes, person.traits);
+      return sum + (sheet['emotional_truth'] ?? 50) * 0.6 + (sheet['take_consistency'] ?? 50) * 0.4;
+    }, 0) / cast.length;
+  }
+  const scale = remap(project.budget, 1_000_000_00, 150_000_000_00, -4, 6);
+  return clamp(Math.round(project.scriptQuality * 0.5 + castStrength * 0.35 + scale + rng.normal(0, 7)), 1, 100);
+}
+
+/**
+ * What the film did. Coarse, but derived from the same things the player's
+ * films are: what it cost, how good it is, and how it was received.
+ */
+function recordBackgroundPerformance(sim: Simulation, project: Project, rng: ReturnType<Simulation['rng']>): void {
+  const quality = project.finalQuality ?? 50;
+  const reception = (quality * 0.5 + (project.criticScore ?? 50) * 0.25 + (project.audienceScore ?? 50) * 0.25) / 100;
+  const isSeries = project.format === 'series' || project.format === 'limited_series';
+
+  project.totalCost = project.budget;
+
+  if (isSeries) {
+    // Series do not open; they accumulate viewing.
+    project.streamingHoursViewed = Math.round(project.budget / 100 * remap(reception, 0.2, 0.95, 0.4, 9) * rng.float(0.6, 1.5));
+    project.totalRevenue = Math.round(project.budget * remap(reception, 0.2, 0.95, 0.5, 2.4) * rng.float(0.7, 1.3));
+  } else {
+    const multiple = remap(reception, 0.2, 0.95, 0.35, 3.6) * rng.float(0.55, 1.6);
+    project.boxOfficeDomestic = Math.round(project.budget * multiple * 0.55);
+    project.boxOfficeInternational = Math.round(project.budget * multiple * 0.62 * rng.float(0.5, 1.4));
+    project.totalRevenue = project.boxOfficeDomestic + project.boxOfficeInternational;
+  }
+
+  // The people in it have careers, and this is what moves them.
+  const success = clamp(project.totalRevenue / Math.max(1, project.budget), 0, 4);
+  for (const personId of [...project.castIds, project.directorId, ...project.writerIds]) {
+    if (!personId) continue;
+    const person = sim.universe.people[personId];
+    if (!person || person.isPlayer) continue;
+    if (!person.creditIds.includes(project.id)) person.creditIds.push(project.id);
+    person.reputation.publicFame = clamp(person.reputation.publicFame + remap(success, 0.3, 2.5, -1, 7), 0, 100);
+    person.reputation.professionalReputation = clamp(person.reputation.professionalReputation + remap(quality, 30, 90, -2, 6), 0, 100);
+    person.reputation.industryDemand = clamp(person.reputation.industryDemand + remap(success, 0.3, 2.5, -3, 9), 0, 100);
+  }
+
+  sim.remember({
+    category: 'project',
+    title: `${project.title} opened`,
+    detail: `${project.distributorName ?? 'An independent distributor'} released ${project.title}. ${
+      isSeries
+        ? `${formatMoneyCompact(project.totalRevenue)} in licensing against a ${formatMoneyCompact(project.budget)} budget.`
+        : `${formatMoneyCompact(project.boxOfficeDomestic + project.boxOfficeInternational)} worldwide against a ${formatMoneyCompact(project.budget)} budget.`
+    } Reviews averaged ${project.criticScore}.`,
+    refs: [{ type: 'project', id: project.id }],
+    significance: clamp(Math.round(remap(project.totalRevenue, 0, 400_000_000_00, 10, 55)), 10, 55),
+    public: true,
+  });
+
+  sim.emit('film.released', { projectId: project.id, background: true });
 }

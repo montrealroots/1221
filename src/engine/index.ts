@@ -422,6 +422,34 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record['counters'] ??= {};
   record['engineFailures'] ??= [];
 
+  // Schema 9 also denormalised the billing block onto the project so a credit
+  // outlives the simulation of the person who earned it. Rebuild it from the
+  // attachments an older save already has.
+  const projects = record['projects'] as Record<string, {
+    credits?: unknown[]; castIds?: string[]; writerIds?: string[]; producerIds?: string[];
+    directorId?: string; showrunnerId?: string;
+  }>;
+  const peopleById = record['people'] as Record<string, { displayName?: string; stageName?: string }>;
+  let credited = 0;
+  for (const project of Object.values(projects)) {
+    if (Array.isArray(project.credits)) continue;
+    const credits: { personId: string; name: string; role: string }[] = [];
+    const add = (personId: string | undefined, role: string) => {
+      if (!personId) return;
+      const person = peopleById[personId];
+      if (!person) return;
+      credits.push({ personId, name: person.stageName ?? person.displayName ?? 'Uncredited', role });
+    };
+    for (const id of project.castIds ?? []) add(id, 'cast');
+    for (const id of project.writerIds ?? []) add(id, 'writer');
+    for (const id of project.producerIds ?? []) add(id, 'producer');
+    add(project.directorId, 'director');
+    add(project.showrunnerId, 'showrunner');
+    project.credits = credits;
+    credited++;
+  }
+  if (credited > 0) steps.push(`Rebuilt the credit list on ${credited} project${credited === 1 ? '' : 's'}.`);
+
   // Schema 9 moved casting rooms onto the role. A save written before that has
   // the auditions but no index, so rebuild it from the auditions themselves
   // rather than losing anybody's casting history.
