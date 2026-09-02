@@ -1,0 +1,15 @@
+// SLATE — Base44 project configuration.
+//
+// Paths are relative to this file.
+{
+  "name": "slate",
+  "description": "SLATE — a life and film-industry simulator. One save is one universe.",
+
+  "entitiesDir": "./entities",
+  "functionsDir": "./functions",
+
+  // The Vite build writes to the repository root, one level above this file.
+  "site": {
+    "outputDirectory": "../dist"
+  }
+}

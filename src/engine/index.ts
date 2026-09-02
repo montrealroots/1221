@@ -1,0 +1,675 @@
+/**
+ * SLATE — Engine entry point.
+ *
+ * `createSave` builds a new universe and populates the world around the player.
+ * `loadSave` rehydrates an existing one. Both return a Simulation with every
+ * system registered, which is the only object the UI ever talks to.
+ */
+
+import { Simulation, type Command, type CommandResult } from './core/simulation';
+import type { Id, SaveUniverse } from './domain/model';
+import { SAVE_SCHEMA_VERSION } from './domain/model';
+import { addDays, addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
+import { formatMoneyCompact } from './core/money';
+import { clamp } from './core/rng';
+import { CITIES } from './content/geography';
+import { costOfLiving } from './content/tax';
+
+import { registerFinance, recomputeCreditScore, netWorth } from './systems/finance';
+import { registerLife, startOfLocalDay } from './systems/life';
+import { registerWork, refreshOpenings, createLivingBills, JOB_TEMPLATES, hire, annualisedOpeningPay } from './systems/work';
+import { registerRelationships, ensureHousehold } from './systems/relationships';
+import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
+import { registerVehicles, refreshInventory } from './systems/vehicles';
+import { registerCommerce } from './systems/commerce';
+import { registerTravel } from './systems/travel';
+import { registerServices, ensureProviders, ensureCourses } from './systems/services';
+import { registerMedia } from './systems/media';
+import { registerFilm, registerBuyerOffer } from './systems/film';
+import { registerCasting, seedIndependentProject } from './systems/casting';
+import { registerProduction } from './systems/production';
+import { registerRelease, registerFranchises } from './systems/release';
+import { registerAwards, setUpSeason } from './systems/awards';
+import { registerCompany } from './systems/company';
+import { registerWorld } from './world/world';
+import { createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig, careerLabel } from './world/bootstrap';
+
+export * from './world/bootstrap';
+export { Simulation };
+export type { Command, CommandResult };
+
+/**
+ * Registers every system onto a simulation. Order matters only for event
+ * reactor priority, which each system declares for itself.
+ */
+export function registerAllSystems(sim: Simulation): void {
+  registerFinance(sim);
+  registerLife(sim);
+  registerWork(sim);
+  registerRelationships(sim);
+  registerProperty(sim);
+  registerPropertyReactors(sim);
+  registerVehicles(sim);
+  registerCommerce(sim);
+  registerTravel(sim);
+  registerServices(sim);
+  registerMedia(sim);
+  registerFilm(sim);
+  registerBuyerOffer(sim);
+  registerCasting(sim);
+  registerProduction(sim);
+  registerRelease(sim);
+  registerFranchises(sim);
+  registerAwards(sim);
+  registerCompany(sim);
+  registerWorld(sim);
+}
+
+/** How many times a recurring bill lands in a year. */
+const BILLINGS_PER_YEAR: Record<string, number> = {
+  weekly: 52, biweekly: 26, monthly: 12, quarterly: 4, annual: 1, once: 0,
+};
+
+/** Recurring world processes every save needs running. */
+function armWorldClock(sim: Simulation): void {
+  const z = sim.homeZone;
+
+  sim.schedule({
+    at: addDays(startOfLocalDay(sim), 1, z),
+    kind: 'life.day_rollover',
+    label: 'New day', category: 'system', priority: 5,
+  });
+
+  const nextMonth = (() => {
+    const p = zonedParts(sim.now, z);
+    const month = p.month === 12 ? 1 : p.month + 1;
+    const year = p.month === 12 ? p.year + 1 : p.year;
+    return instantFromZoned({ year, month, day: 1, hour: 2 }, z);
+  })();
+
+  sim.schedule({
+    at: nextMonth, kind: 'finance.month_close',
+    label: 'Statement close', category: 'system', priority: 8,
+    recurrence: { unit: 'month', interval: 1 },
+  });
+  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New job listings', category: 'career', priority: 60 });
+  sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New property listings', category: 'property', priority: 65 });
+  sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer inventory', category: 'vehicles', priority: 68 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property market', category: 'system', priority: 92 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle values', category: 'system', priority: 93 });
+  sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience update', category: 'system', priority: 88 });
+  sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry check', category: 'system', priority: 95 });
+  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship drift', category: 'system', priority: 90 });
+  sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting breakdowns', category: 'career', priority: 72 });
+  sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World simulation', category: 'system', priority: 96 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise appetite', category: 'system', priority: 94 });
+
+  const nextYear = zonedParts(sim.now, z).year + 1;
+  sim.schedule({
+    at: instantFromZoned({ year: nextYear, month: 1, day: 2, hour: 3 }, z),
+    kind: 'award.season_setup',
+    label: 'Awards season', category: 'system', priority: 80,
+  });
+}
+
+/** Builds the player's starting situation and the world around it. */
+function populateWorld(sim: Simulation, config: NewSaveConfig): void {
+  const player = sim.player;
+  const cityId = config.startLocationId;
+  const wealth = WEALTH_PROFILES[config.wealth];
+  const col = costOfLiving(cityId);
+
+  // --- Household ----------------------------------------------------------
+  ensureHousehold(sim, player);
+
+  // --- Accounts -----------------------------------------------------------
+  const checking = sim.openAccount({
+    id: sim.nextId('account'),
+    kind: 'checking',
+    name: 'Everyday checking',
+    ownerId: player.id,
+    institution: 'Northbank',
+    openedAt: sim.now,
+    last4: '4417',
+    balance: wealth.checking,
+  });
+  player.primaryAccountId = checking.id;
+
+  if (wealth.savings > 0) {
+    sim.openAccount({
+      id: sim.nextId('account'),
+      kind: 'savings',
+      name: 'Savings',
+      ownerId: player.id,
+      institution: 'Northbank',
+      openedAt: sim.now,
+      last4: '8802',
+      balance: wealth.savings,
+    });
+  }
+
+  sim.universe.creditProfiles[player.id] = {
+    personId: player.id,
+    score: wealth.creditScore,
+    utilisation: 0,
+    onTimePayments: Math.max(0, Math.round((wealth.creditScore - 500) / 12)),
+    latePayments: wealth.creditScore < 640 ? 4 : 0,
+    accountsOpen: 1,
+    oldestAccountAt: sim.now - Math.max(0, (wealth.creditScore - 500)) * 12 * MS_DAY,
+    hardInquiries: [],
+    derogatory: [],
+  };
+
+  if (wealth.cardLimit > 0) {
+    const card = sim.openAccount({
+      id: sim.nextId('account'),
+      kind: 'credit_card',
+      name: 'Northbank Everyday Card',
+      ownerId: player.id,
+      institution: 'Northbank',
+      openedAt: sim.now - 400 * MS_DAY,
+      creditLimit: wealth.cardLimit,
+      apr: 0.2249,
+      last4: '9931',
+    });
+    if (wealth.cardBalance < 0) {
+      const expense = sim.nominalAccount('expense', 'Prior spending');
+      sim.post({
+        memo: 'Balance carried from before',
+        category: 'opening',
+        postings: [
+          { accountId: card.id, amount: wealth.cardBalance },
+          { accountId: expense.id, amount: -wealth.cardBalance },
+        ],
+      });
+    }
+    sim.schedule({
+      at: addMonths(sim.now, 1, sim.homeZone),
+      kind: 'finance.bill_due',
+      label: 'Credit card minimum due',
+      category: 'finance',
+      payload: { billId: '' },
+      priority: 20,
+    });
+  }
+  recomputeCreditScore(sim, player.id);
+
+  // --- The world that already exists -------------------------------------
+  ensureAgents(sim, cityId);
+  ensureProviders(sim, cityId);
+  ensureCourses(sim, cityId);
+  refreshOpenings(sim);
+  refreshListings(sim);
+  refreshInventory(sim);
+  setUpSeason(sim, zonedParts(sim.now, sim.homeZone).year);
+  setUpSeason(sim, zonedParts(sim.now, sim.homeZone).year + 1);
+
+  // --- Housing ------------------------------------------------------------
+  if (config.housing !== 'couch') {
+    const kind = config.housing === 'owned' ? 'house' : config.housing === 'rental' ? 'condo' : 'apartment';
+    const property = generateProperty(sim, cityId, kind, 'starting-home');
+    property.name = config.housing === 'roommates' ? 'Shared apartment' : property.name;
+
+    if (config.housing === 'owned') {
+      property.ownerId = player.id;
+      property.ownerKind = 'person';
+      property.tenure = 'owned';
+      property.purchasePrice = property.marketValue;
+      property.purchasedAt = sim.now;
+      property.isPrimaryResidence = true;
+      moveIn(sim, player.id, property.id);
+      // Owned from before the save begins, so the mortgage already exists.
+      const principal = Math.round(property.marketValue * 0.72);
+      sim.execute({
+        kind: 'finance.take_loan',
+        payload: {
+          borrowerId: player.id, principal, months: 348, product: 'mortgage',
+          refType: 'property', refId: property.id,
+          name: `Mortgage — ${property.addressLine}`,
+        },
+      });
+      property.mortgageAccountId = Object.values(sim.universe.accounts)
+        .find((a) => a.kind === 'mortgage' && a.ownerId === player.id)?.id;
+    } else {
+      property.tenure = 'rented';
+      property.ownerKind = 'none';
+      property.isPrimaryResidence = true;
+      const share = config.housing === 'roommates' ? 0.42 : 1;
+      property.monthlyRent = Math.round((property.monthlyRent ?? Math.round(CITIES.require(cityId).medianRentCents)) * share);
+      property.leaseEndsAt = addDays(sim.now, 300, sim.homeZone);
+      moveIn(sim, player.id, property.id);
+      sim.execute({
+        kind: 'finance.create_bill',
+        payload: {
+          payerId: player.id,
+          name: `Rent — ${property.addressLine}`,
+          category: 'housing',
+          amount: property.monthlyRent,
+          frequency: 'monthly',
+          firstDueAt: addDays(sim.now, 12, sim.homeZone),
+          autopayAccountId: checking.id,
+          refType: 'property', refId: property.id,
+        },
+      });
+    }
+  }
+
+  createLivingBills(sim, player.id, cityId, config.housing !== 'couch');
+
+  // --- Vehicle ------------------------------------------------------------
+  if (config.startWithVehicle) {
+    const listings = Object.values(sim.universe.vehicleListings)
+      .filter((l) => l.status === 'active')
+      .sort((a, b) => a.price - b.price);
+    const affordable = listings.find((l) => l.price <= Math.max(12_000_00, wealth.checking + wealth.savings));
+    const chosen = affordable ?? listings[0];
+    if (chosen) {
+      chosen.price = Math.min(chosen.price, Math.max(6_500_00, Math.round((wealth.checking + wealth.savings) * 0.55)));
+      const result = sim.execute<{ vehicleId: Id }>({
+        kind: 'veh.purchase',
+        payload: { listingId: chosen.id, acquisition: 'cash', accountId: checking.id },
+      });
+      if (!result.ok) {
+        // Could not afford anything: that is a legitimate starting position.
+        sim.notify({
+          category: 'vehicles', title: 'No car yet',
+          body: 'You could not afford one at the start. Public transport and rideshares for now.',
+          importance: 25, route: '/workspace/vehicles',
+        });
+      }
+    }
+  }
+
+  // --- Employment ---------------------------------------------------------
+  // The starting job has to be one the starting life can be lived on. Handing
+  // somebody a twelve-hour-a-week reading gig and a flat whose rent is twice
+  // what it pays is not a hard start, it is an unplayable one: they are broke
+  // inside a year no matter what the player does.
+  if (config.startWithJob) {
+    const openings = Object.values(sim.universe.jobOpenings);
+    const annualOutgoings = Object.values(sim.universe.bills)
+      .filter((b) => b.payerId === player.id && b.active)
+      .reduce((sum, bill) => sum + bill.amount * (BILLINGS_PER_YEAR[bill.frequency] ?? 12), 0);
+    const needed = Math.round(annualOutgoings * 1.25);
+
+    const canLiveOnIt = openings.filter((o) => annualisedOpeningPay(o) >= needed);
+    const pool = canLiveOnIt.length > 0 ? canLiveOnIt : openings;
+
+    // Within what is affordable, take the job that suits who they are.
+    const preferred = config.careerTrack === 'civilian' || config.careerTrack === 'none'
+      ? pool.find((o) => o.payBasis === 'salary') ?? pool[0]
+      : pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
+        ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
+        ?? pool[0];
+
+    // If nothing on the board pays for the life, take the best-paying thing
+    // going rather than something that guarantees insolvency.
+    const chosen = canLiveOnIt.length > 0
+      ? preferred
+      : [...openings].sort((a, b) => annualisedOpeningPay(b) - annualisedOpeningPay(a))[0];
+    if (chosen) hire(sim, player, chosen);
+  }
+
+  // --- Health cover -------------------------------------------------------
+  const job = player.jobId ? sim.universe.jobs[player.jobId] : undefined;
+  if (job?.benefits.health) {
+    const quote = sim.execute<{ quoteId: Id }>({ kind: 'ins.quote', payload: { line: 'health' } });
+    if (quote.ok && quote.value) {
+      const policy = sim.universe.insurancePolicies[quote.value.quoteId];
+      if (policy) policy.monthlyPremium = Math.round(policy.monthlyPremium * 0.28);
+      sim.execute({ kind: 'ins.purchase', payload: { quoteId: quote.value.quoteId, accountId: checking.id } });
+    }
+  }
+
+  // --- Social presence ----------------------------------------------------
+  const handle = `${config.firstName}${config.lastName}`.toLowerCase().replace(/[^a-z0-9]/g, '');
+  sim.execute({
+    kind: 'social.create_account',
+    payload: { platform: 'lumen', handle, displayName: player.displayName },
+  });
+  if (config.careerTrack === 'creator') {
+    sim.execute({ kind: 'social.create_account', payload: { platform: 'streamtube', handle, displayName: player.displayName } });
+    sim.execute({ kind: 'social.create_account', payload: { platform: 'pulse', handle, displayName: player.displayName } });
+  }
+
+  // --- The industry is already running -----------------------------------
+  for (let i = 0; i < 4; i++) seedIndependentProject(sim, i);
+
+  // --- Opening history ----------------------------------------------------
+  sim.remember({
+    category: 'life',
+    title: 'A new life begins',
+    detail: `${player.displayName} in ${CITIES.require(cityId).name}, ${formatDate(sim.now, sim.homeZone)}. ${WEALTH_PROFILES[config.wealth].note}`,
+    refs: [{ type: 'person', id: player.id }],
+    significance: 100, public: false,
+  });
+
+  armWorldClock(sim);
+  refreshMeta(sim);
+  void col;
+}
+
+/** Keeps the save-slot summary in step with the world. */
+export function refreshMeta(sim: Simulation): void {
+  const player = sim.universe.people[sim.universe.playerId];
+  if (!player) return;
+  const worth = netWorth(sim, player.id);
+  sim.universe.meta.characterName = player.displayName;
+  sim.universe.meta.careerLabel = careerLabel(player.careerTrack);
+  sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
+  sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
+  sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);
+  sim.universe.meta.lastPlayedAt = sim.now;
+}
+
+/** Creates a brand new save universe with every system wired up. */
+export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): Simulation {
+  const { universe } = createUniverse(slot, seed, config);
+  const sim = new Simulation(universe);
+  registerAllSystems(sim);
+  populateWorld(sim, config);
+  return sim;
+}
+
+/** Rehydrates an existing universe. */
+export function loadSave(universe: SaveUniverse): Simulation {
+  const sim = new Simulation(universe);
+  registerAllSystems(sim);
+  return sim;
+}
+
+// ---------------------------------------------------------------------------
+// Migrations
+// ---------------------------------------------------------------------------
+
+export interface MigrationResult {
+  migrated: boolean;
+  from: number;
+  to: number;
+  steps: string[];
+  problems: string[];
+}
+
+/**
+ * Brings an older save forward. Each step is additive and idempotent: a missing
+ * collection is created empty rather than the save being rejected, so old
+ * history is never destroyed by an architecture change.
+ */
+export function migrate(universe: SaveUniverse): MigrationResult {
+  const from = universe.meta.schemaVersion ?? 1;
+  const steps: string[] = [];
+  const problems: string[] = [];
+
+  if (from > SAVE_SCHEMA_VERSION) {
+    problems.push(
+      `This save was written by a newer version of SLATE (schema ${from}, this build understands ${SAVE_SCHEMA_VERSION}). Loading it could corrupt it.`,
+    );
+    return { migrated: false, from, to: SAVE_SCHEMA_VERSION, steps, problems };
+  }
+  if (from === SAVE_SCHEMA_VERSION) {
+    return { migrated: false, from, to: SAVE_SCHEMA_VERSION, steps, problems };
+  }
+
+  const record = universe as unknown as Record<string, unknown>;
+  const collections: [string, 'map' | 'list'][] = [
+    ['people', 'map'], ['relationships', 'map'], ['households', 'map'],
+    ['accounts', 'map'], ['transactions', 'list'], ['bills', 'map'],
+    ['creditProfiles', 'map'], ['taxYears', 'map'],
+    ['jobs', 'map'], ['jobOpenings', 'map'], ['jobApplications', 'map'],
+    ['properties', 'map'], ['structures', 'map'], ['rooms', 'map'], ['zones', 'map'],
+    ['furnishings', 'map'], ['propertyListings', 'map'], ['propertyOffers', 'map'],
+    ['realEstateAgents', 'map'], ['constructionProjects', 'map'],
+    ['constructionPhases', 'map'], ['changeOrders', 'map'],
+    ['vehicles', 'map'], ['vehicleListings', 'map'], ['vehicleModifications', 'map'],
+    ['serviceRecords', 'map'], ['assets', 'map'], ['outfits', 'map'], ['orders', 'map'],
+    ['pantry', 'map'], ['healthProviders', 'map'], ['appointments', 'map'],
+    ['insurancePolicies', 'map'], ['insuranceClaims', 'map'], ['courses', 'map'],
+    ['enrollments', 'map'], ['trips', 'map'], ['flightBookings', 'map'],
+    ['hotelBookings', 'map'], ['socialAccounts', 'map'], ['socialPosts', 'map'],
+    ['brandDeals', 'map'], ['projects', 'map'], ['rights', 'map'],
+    ['scriptDrafts', 'map'], ['roles', 'map'], ['auditions', 'map'], ['contracts', 'map'],
+    ['shootDays', 'map'], ['postTasks', 'map'], ['marketingCampaigns', 'map'],
+    ['releases', 'map'], ['reviews', 'map'], ['awardEditions', 'map'],
+    ['awardNominations', 'map'], ['festivalSubmissions', 'map'], ['franchises', 'map'],
+    ['companies', 'map'], ['divisions', 'map'], ['employees', 'map'],
+    ['equipment', 'map'], ['merchandise', 'map'],
+    ['scheduled', 'list'], ['audits', 'list'], ['history', 'list'], ['notifications', 'list'],
+    ['decisions', 'map'],
+  ];
+
+  for (const [key, shape] of collections) {
+    if (record[key] === undefined || record[key] === null) {
+      record[key] = shape === 'map' ? {} : [];
+      steps.push(`Added missing collection '${key}'.`);
+    }
+  }
+
+  record['idempotency'] ??= {};
+  record['counters'] ??= {};
+  record['engineFailures'] ??= [];
+
+  // Schema 9 also denormalised the billing block onto the project so a credit
+  // outlives the simulation of the person who earned it. Rebuild it from the
+  // attachments an older save already has.
+  const projects = record['projects'] as Record<string, {
+    credits?: unknown[]; castIds?: string[]; writerIds?: string[]; producerIds?: string[];
+    directorId?: string; showrunnerId?: string;
+  }>;
+  const peopleById = record['people'] as Record<string, { displayName?: string; stageName?: string }>;
+  let credited = 0;
+  for (const project of Object.values(projects)) {
+    if (Array.isArray(project.credits)) continue;
+    const credits: { personId: string; name: string; role: string }[] = [];
+    const add = (personId: string | undefined, role: string) => {
+      if (!personId) return;
+      const person = peopleById[personId];
+      if (!person) return;
+      credits.push({ personId, name: person.stageName ?? person.displayName ?? 'Uncredited', role });
+    };
+    for (const id of project.castIds ?? []) add(id, 'cast');
+    for (const id of project.writerIds ?? []) add(id, 'writer');
+    for (const id of project.producerIds ?? []) add(id, 'producer');
+    add(project.directorId, 'director');
+    add(project.showrunnerId, 'showrunner');
+    project.credits = credits;
+    credited++;
+  }
+  if (credited > 0) steps.push(`Rebuilt the credit list on ${credited} project${credited === 1 ? '' : 's'}.`);
+
+  // Schema 9 moved casting rooms onto the role. A save written before that has
+  // the auditions but no index, so rebuild it from the auditions themselves
+  // rather than losing anybody's casting history.
+  const roles = record['roles'] as Record<string, { id: string; auditionIds?: string[] }>;
+  const auditions = record['auditions'] as Record<string, { id: string; roleId: string }>;
+  let indexed = 0;
+  for (const role of Object.values(roles)) {
+    if (Array.isArray(role.auditionIds)) continue;
+    role.auditionIds = [];
+    indexed++;
+  }
+  if (indexed > 0) {
+    for (const audition of Object.values(auditions)) {
+      const role = roles[audition.roleId];
+      if (role?.auditionIds && !role.auditionIds.includes(audition.id)) role.auditionIds.push(audition.id);
+    }
+    steps.push(`Rebuilt the casting-room index on ${indexed} role${indexed === 1 ? '' : 's'}.`);
+  }
+  record['tutorial'] ??= { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false };
+  record['sandbox'] ??= { enabled: false, maxAttributesApplied: false, allTraitsGranted: false, unlimitedFunds: false, ignoreAuthority: false, log: [] };
+  if (typeof record['__idCounter'] !== 'number') {
+    record['__idCounter'] = 100000;
+    steps.push('Reset the id counter above any existing id.');
+  }
+
+  // Every record must belong to this save and nothing else.
+  const saveId = universe.meta.id;
+  let reassigned = 0;
+  for (const [key, shape] of collections) {
+    const value = record[key];
+    const entries = shape === 'map'
+      ? Object.values(value as Record<string, { saveId?: string }>)
+      : (value as { saveId?: string }[]);
+    for (const entity of entries) {
+      if (entity && typeof entity === 'object' && 'saveId' in entity && entity.saveId !== saveId) {
+        entity.saveId = saveId;
+        reassigned++;
+      }
+    }
+  }
+  if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
+
+  universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
+  steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
+  return { migrated: true, from, to: SAVE_SCHEMA_VERSION, steps, problems };
+}
+
+// ---------------------------------------------------------------------------
+// Validation
+// ---------------------------------------------------------------------------
+
+export interface ValidationReport {
+  ok: boolean;
+  errors: string[];
+  warnings: string[];
+  checked: number;
+}
+
+/**
+ * Structural validation of a universe. Run on load, before release, and by the
+ * test suite. Anything here failing means the world is internally inconsistent.
+ */
+export function validateUniverse(universe: SaveUniverse): ValidationReport {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  let checked = 0;
+
+  const sim = new Simulation(universe);
+
+  // Money must reconcile.
+  for (const problem of sim.ledger.audit()) errors.push(problem);
+  checked += universe.transactions.length;
+
+  // The player must exist and be coherent.
+  const player = universe.people[universe.playerId];
+  if (!player) errors.push('The save has no player.');
+  else {
+    if (!player.isPlayer) errors.push('The player record is not flagged as the player.');
+    if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
+    if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
+      errors.push('Player primary account points at an account that does not exist.');
+    }
+  }
+
+  // Save isolation.
+  const saveId = universe.meta.id;
+  const check = (label: string, items: { saveId?: string }[]) => {
+    for (const item of items) {
+      checked++;
+      if (item.saveId && item.saveId !== saveId) {
+        errors.push(`A ${label} record belongs to save '${item.saveId}', not '${saveId}'. Cross-save contamination.`);
+        break;
+      }
+    }
+  };
+  check('person', Object.values(universe.people));
+  check('property', Object.values(universe.properties));
+  check('vehicle', Object.values(universe.vehicles));
+  check('project', Object.values(universe.projects));
+  check('account', Object.values(universe.accounts));
+  check('scheduled', universe.scheduled);
+
+  // Ownership conservation: nothing owned by someone who does not exist.
+  for (const property of Object.values(universe.properties)) {
+    checked++;
+    if (!property.ownerId) continue;
+    if (!universe.people[property.ownerId] && !universe.companies[property.ownerId]) {
+      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who does not exist.`);
+    }
+  }
+  for (const vehicle of Object.values(universe.vehicles)) {
+    checked++;
+    if (!universe.people[vehicle.ownerId] && !universe.companies[vehicle.ownerId]) {
+      errors.push(`Vehicle ${vehicle.id} is owned by '${vehicle.ownerId}', who does not exist.`);
+    }
+  }
+
+  // Relationships must point at real people.
+  for (const rel of Object.values(universe.relationships)) {
+    checked++;
+    if (!universe.people[rel.aId] || !universe.people[rel.bId]) {
+      errors.push(`Relationship ${rel.id} references a person who does not exist.`);
+    }
+  }
+
+  // Projects must not claim cast who do not exist.
+  for (const project of Object.values(universe.projects)) {
+    checked++;
+    for (const castId of project.castIds) {
+      if (!universe.people[castId]) {
+        errors.push(`Project ${project.title} lists a cast member '${castId}' who does not exist.`);
+        break;
+      }
+    }
+    if (project.spent > project.budget + project.contingency && project.budgetLocked) {
+      warnings.push(`${project.title} has spent ${formatMoneyCompact(project.spent)} against a locked budget of ${formatMoneyCompact(project.budget)}.`);
+    }
+  }
+
+  // Post-production dependencies must never be violated.
+  for (const task of Object.values(universe.postTasks)) {
+    checked++;
+    if (task.status !== 'complete' && task.status !== 'in_progress') continue;
+    const siblings = Object.values(universe.postTasks).filter((t) => t.projectId === task.projectId);
+    for (const dep of task.dependsOn) {
+      const upstream = siblings.find((t) => t.kind === dep);
+      if (upstream && upstream.status !== 'complete' && task.status === 'complete') {
+        errors.push(`Post task '${task.name}' completed while '${upstream.name}' is still ${upstream.status}. Dependency violated.`);
+      }
+    }
+  }
+
+  // Award history must be stable.
+  for (const edition of Object.values(universe.awardEditions)) {
+    checked++;
+    if (!edition.finalised) continue;
+    const noms = Object.values(universe.awardNominations).filter((n) => n.editionId === edition.id);
+    if (noms.length > 0 && noms.every((n) => n.won === undefined)) {
+      errors.push(`Award edition ${edition.id} is finalised but no winner was recorded.`);
+    }
+  }
+
+  // The timeline must be sorted and every pending item in the future or due.
+  for (let i = 1; i < universe.scheduled.length; i++) {
+    const prev = universe.scheduled[i - 1];
+    const cur = universe.scheduled[i];
+    if (prev && cur && prev.at > cur.at) {
+      errors.push('The timeline is not sorted by time. Advancement would process events out of order.');
+      break;
+    }
+  }
+
+  // Wellbeing must stay inside its bounds.
+  for (const person of Object.values(universe.people)) {
+    checked++;
+    const w = person.wellbeing;
+    for (const [key, value] of Object.entries(w)) {
+      if (typeof value !== 'number' || Number.isNaN(value)) {
+        errors.push(`${person.displayName} has a non-numeric wellbeing value for ${key}.`);
+        break;
+      }
+      if (key !== 'sleepDebt' && (value < 0 || value > 100)) {
+        errors.push(`${person.displayName} has ${key} at ${value}, outside 0 to 100.`);
+        break;
+      }
+    }
+  }
+
+  return { ok: errors.length === 0, errors, warnings, checked };
+}
+
+/** Convenience for tests and the developer console. */
+export function quickSave(config?: Partial<NewSaveConfig>, seed = 'slate-test-seed', slot: 1 | 2 | 3 = 1): Simulation {
+  return createSave(slot, seed, { ...defaultConfig(), ...config });
+}
+
+export { clamp };
