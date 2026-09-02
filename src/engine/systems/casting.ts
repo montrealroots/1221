@@ -973,7 +973,10 @@ function recordBackgroundPerformance(sim: Simulation, project: Project, rng: Ret
     project.streamingHoursViewed = Math.round(project.budget / 100 * remap(reception, 0.2, 0.95, 0.4, 9) * rng.float(0.6, 1.5));
     project.totalRevenue = Math.round(project.budget * remap(reception, 0.2, 0.95, 0.5, 2.4) * rng.float(0.7, 1.3));
   } else {
-    const multiple = remap(reception, 0.2, 0.95, 0.35, 3.6) * rng.float(0.55, 1.6);
+    // A film that lands badly loses real money. Without a genuine lower tail
+    // the library fills up with titles that all roughly broke even, which is
+    // not what a slate looks like.
+    const multiple = remap(reception, 0.2, 0.95, 0.14, 3.8) * rng.float(0.45, 1.7);
     project.boxOfficeDomestic = Math.round(project.budget * multiple * 0.55);
     project.boxOfficeInternational = Math.round(project.budget * multiple * 0.62 * rng.float(0.5, 1.4));
     project.totalRevenue = project.boxOfficeDomestic + project.boxOfficeInternational;
