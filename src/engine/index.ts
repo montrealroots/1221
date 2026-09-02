@@ -28,7 +28,7 @@ import { registerMedia } from './systems/media';
 import { registerFilm, registerBuyerOffer } from './systems/film';
 import { registerCasting, seedIndependentProject } from './systems/casting';
 import { registerProduction } from './systems/production';
-import { registerRelease } from './systems/release';
+import { registerRelease, registerFranchises } from './systems/release';
 import { registerAwards, setUpSeason } from './systems/awards';
 import { registerCompany } from './systems/company';
 import { registerWorld } from './world/world';
@@ -59,6 +59,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCasting(sim);
   registerProduction(sim);
   registerRelease(sim);
+  registerFranchises(sim);
   registerAwards(sim);
   registerCompany(sim);
   registerWorld(sim);
@@ -101,6 +102,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship drift', category: 'system', priority: 90 });
   sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting breakdowns', category: 'career', priority: 72 });
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World simulation', category: 'system', priority: 96 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise appetite', category: 'system', priority: 94 });
 
   const nextYear = zonedParts(sim.now, z).year + 1;
   sim.schedule({

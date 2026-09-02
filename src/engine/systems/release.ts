@@ -13,7 +13,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Id, MarketingCampaign, Project, Release, Review } from '../domain/model';
+import type { Franchise, Id, MarketingCampaign, Project, Release, Review } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
@@ -482,10 +482,13 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
 
   if (day === 0) {
     // Opening day admissions.
+    // A series people want more of opens bigger than a standalone; one they
+    // are tired of opens smaller, however good this entry happens to be.
     const perTheatre = remap(awareness, 0, 100, 120, 2600)
       * remap(intent, 0, 100, 0.35, 1.9)
       * remap(appetite, 0, 100, 0.6, 1.35)
       * remap(starPower, 0, 100, 0.85, 1.35)
+      * franchiseLift(sim, project)
       * rng.float(0.82, 1.22);
     const admissions = Math.round(release.theaterCount * perTheatre / 10);
     const ticketPrice = 1_150;
@@ -726,6 +729,7 @@ function closeRelease(sim: Simulation, releaseId: Id): void {
   });
 
   applyCareerConsequences(sim, project, profit);
+  recordFranchiseEntry(sim, project, profit);
   sim.emit('project.results_final', {
     projectId: project.id, worldGross, netToProducer, profit,
     criticScore: project.criticScore, audienceScore: project.audienceScore,
@@ -787,4 +791,168 @@ export function releaseSummary(sim: Simulation, projectId: Id) {
 
 export function formatOpeningDate(sim: Simulation, release: Release): string {
   return formatDate(release.openingDate, sim.homeZone);
+}
+
+// ---------------------------------------------------------------------------
+// Franchises and the library
+// ---------------------------------------------------------------------------
+
+/**
+ * A film that worked becomes something a studio wants more of.
+ *
+ * A franchise is not a label on a project; it is a thing with its own state.
+ * Every entry raises the audience's appetite when it lands and spends it when
+ * it does not, and every entry raises fatigue whether it lands or not. That is
+ * why the third one opens bigger than the first and the sixth does not, and it
+ * is what the merchandise arm has always read from.
+ */
+export function registerFranchises(sim: Simulation): void {
+  sim.onCommand<{ projectId: Id; name?: string }, { franchiseId: Id; strength: number }>(
+    'film.start_franchise',
+    (p, { sim: s }) => {
+      const project = s.universe.projects[p.projectId];
+      if (!project) throw new CommandError('No such project.');
+      if (project.franchiseId) {
+        throw new CommandError(`${project.title} is already part of ${s.universe.franchises[project.franchiseId]?.name ?? 'a franchise'}.`);
+      }
+      if (project.phase !== 'library' && project.phase !== 'released') {
+        throw new CommandError(`${project.title} has not been released yet. There is nothing to build on.`);
+      }
+
+      // You cannot make more of something you do not hold the rights to.
+      const rights = project.rightsId ? s.universe.rights[project.rightsId] : undefined;
+      if (!rights || rights.status !== 'active') {
+        throw new CommandError(`${project.title} has no active chain of title.`);
+      }
+      if (!rights.scope.sequelRights) {
+        throw new CommandError(
+          `The rights you hold on ${project.title} do not include sequels. That has to be negotiated before anyone can build a franchise on it.`,
+        );
+      }
+
+      // And nobody builds a franchise on something nobody watched.
+      const reception = receptionOf(project);
+      if (reception < 45) {
+        throw new CommandError(
+          `${project.title} did not land well enough to build on. Reception reads ${Math.round(reception)} out of 100.`,
+        );
+      }
+
+      const franchise: Franchise = {
+        id: s.nextId('franchise'),
+        saveId: s.universe.meta.id,
+        name: p.name?.trim() || `${project.title} franchise`,
+        ownerCompanyId: project.ownerCompanyId,
+        projectIds: [project.id],
+        strength: clamp(Math.round(reception * 0.7), 0, 100),
+        fatigue: 0,
+        totalRevenue: project.totalRevenue,
+        merchandiseRevenue: 0,
+        startedAt: s.now,
+      };
+      s.universe.franchises[franchise.id] = franchise;
+      project.franchiseId = franchise.id;
+
+      s.remember({
+        category: 'project',
+        title: `${franchise.name} begins`,
+        detail: `${project.title} did well enough to build on. Audience appetite starts at ${franchise.strength} out of 100.`,
+        refs: [{ type: 'project', id: project.id }, { type: 'franchise', id: franchise.id }],
+        significance: 70, public: true,
+      });
+      s.emit('franchise.started', { franchiseId: franchise.id, projectId: project.id });
+      return { franchiseId: franchise.id, strength: franchise.strength };
+    },
+  );
+
+  sim.onCommand<{ franchiseId: Id; projectId: Id }, { entries: number; strength: number; fatigue: number }>(
+    'film.add_to_franchise',
+    (p, { sim: s }) => {
+      const franchise = s.universe.franchises[p.franchiseId];
+      if (!franchise) throw new CommandError('No such franchise.');
+      const project = s.universe.projects[p.projectId];
+      if (!project) throw new CommandError('No such project.');
+      if (project.franchiseId === franchise.id) throw new CommandError(`${project.title} is already an entry in it.`);
+      if (project.franchiseId) throw new CommandError(`${project.title} belongs to another franchise.`);
+      if (project.phase === 'library') {
+        throw new CommandError(`${project.title} has already run its course. Add a picture before it is released, not after.`);
+      }
+
+      project.franchiseId = franchise.id;
+      if (!franchise.projectIds.includes(project.id)) franchise.projectIds.push(project.id);
+      s.emit('franchise.entry_added', { franchiseId: franchise.id, projectId: project.id });
+      return { entries: franchise.projectIds.length, strength: franchise.strength, fatigue: franchise.fatigue };
+    },
+  );
+
+  // Appetite recovers with time away, which is the whole reason a series is
+  // ever rested rather than run into the ground.
+  sim.onSchedule('franchise.cool_off', () => {
+    for (const franchise of Object.values(sim.universe.franchises)) {
+      franchise.fatigue = clamp(franchise.fatigue - 1.6, 0, 100);
+    }
+    sim.schedule({
+      at: addDays(sim.now, 30, sim.homeZone),
+      kind: 'franchise.cool_off',
+      label: 'Franchise appetite',
+      category: 'system',
+      priority: 94,
+    });
+  });
+}
+
+/** How well a finished picture was received, on one 0-100 scale. */
+function receptionOf(project: Project): number {
+  return (project.finalQuality ?? 0) * 0.5
+    + (project.criticScore ?? 0) * 0.25
+    + (project.audienceScore ?? 0) * 0.25;
+}
+
+/**
+ * What being part of a franchise is worth to a new entry, as a multiplier on
+ * its opening. Appetite helps; fatigue takes it back.
+ */
+export function franchiseLift(sim: Simulation, project: Project): number {
+  const franchise = project.franchiseId ? sim.universe.franchises[project.franchiseId] : undefined;
+  if (!franchise) return 1;
+  const entries = franchise.projectIds.length;
+  if (entries <= 1) return 1;
+  return clamp(1 + franchise.strength / 130 - franchise.fatigue / 90, 0.55, 1.75);
+}
+
+/**
+ * Folds a finished entry back into the franchise. A hit buys appetite for the
+ * next one; a disappointment spends it. Every entry costs some novelty either
+ * way, so a series that never rests wears out however good it is.
+ */
+export function recordFranchiseEntry(sim: Simulation, project: Project, profit: Money): void {
+  const franchise = project.franchiseId ? sim.universe.franchises[project.franchiseId] : undefined;
+  if (!franchise) return;
+
+  const reception = receptionOf(project);
+  const roi = project.totalCost > 0 ? profit / project.totalCost : 0;
+  const landed = reception * 0.6 + clamp(roi, -1, 2) * 20;
+
+  const before = { strength: franchise.strength, fatigue: franchise.fatigue };
+  franchise.strength = clamp(franchise.strength + remap(landed, 10, 80, -14, 12), 0, 100);
+  franchise.fatigue = clamp(franchise.fatigue + remap(reception, 30, 85, 16, 6), 0, 100);
+  franchise.totalRevenue += project.totalRevenue;
+  if (!franchise.projectIds.includes(project.id)) franchise.projectIds.push(project.id);
+
+  sim.audit({
+    kind: 'franchise.entry_recorded', subjectType: 'franchise', subjectId: franchise.id,
+    question: 'What did this one do to the series?',
+    summary: `${project.title} moved appetite from ${Math.round(before.strength)} to ${Math.round(franchise.strength)} `
+      + `and fatigue from ${Math.round(before.fatigue)} to ${Math.round(franchise.fatigue)}.`,
+    factors: [
+      { label: 'How it was received', detail: `Reception reads ${Math.round(reception)} out of 100.`, weight: 0.6, contribution: reception, knowable: true },
+      { label: 'What it returned', detail: `${(roi * 100).toFixed(0)}% on cost.`, weight: 0.4, contribution: roi * 100, knowable: true },
+      { label: 'Novelty spent', detail: 'Every entry costs some appetite, however well it does. Time away is what brings it back.', weight: 0.3, contribution: 0, knowable: true },
+    ],
+    outcome: franchise.strength >= before.strength ? 'strengthened' : 'weakened',
+  });
+  sim.emit('franchise.entry_recorded', {
+    franchiseId: franchise.id, projectId: project.id,
+    strength: franchise.strength, fatigue: franchise.fatigue,
+  });
 }

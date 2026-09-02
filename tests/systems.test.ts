@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { franchiseLift, recordFranchiseEntry } from '@/engine/systems/release';
 import { quickSave } from '@/engine';
+import type { Id, Project } from '@/engine/domain/model';
 import { MS_DAY } from '@/engine/core/time';
 import { checkFitment, PARTS, VEHICLE_MODELS } from '@/engine/content/vehicles';
 import { fitmentSubject, createVehicle } from '@/engine/systems/vehicles';
@@ -9,7 +11,6 @@ import { computeAnnualTax, salesTaxRate, propertyTaxRate, resolveIncomeTaxLayers
 import { conflictingTraits, TRAITS, ATTRIBUTES, effectiveAttributes } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
 import { relationshipStrength, compatibilityBetween } from '@/engine/systems/relationships';
-import type { Id } from '@/engine/domain/model';
 
 describe('vehicle fitment', () => {
   const subject = (overrides: Partial<ReturnType<typeof fitmentSubject>> = {}) => ({
@@ -441,5 +442,161 @@ describe('relationships', () => {
         expect(compatibilityBetween(a, b)).toBe(compatibilityBetween(b, a));
       }
     }
+  });
+});
+
+describe('franchises', () => {
+  /** A released picture, good enough to build on, owned by the player. */
+  const madeAHit = (seed: string) => {
+    const sim = quickSave({ wealth: 'inherited' }, seed);
+    const savings = Object.values(sim.universe.accounts).find((a) => a.kind === 'savings');
+    const co = sim.execute<{ companyId: Id }>({
+      kind: 'co.found',
+      payload: { structure: 'llc', kind: 'production', initialCapital: 2_000_000_00, accountId: savings?.id },
+    });
+    const created = sim.execute<{ projectId: Id }>({
+      kind: 'film.create_project',
+      payload: { format: 'feature', genres: ['action'], logline: 'The first one.', companyId: co.value?.companyId },
+    });
+    const projectId = created.value?.projectId as Id;
+    sim.execute({ kind: 'film.write_draft', payload: { projectId } });
+    sim.execute({
+      kind: 'film.acquire_rights',
+      payload: {
+        projectId, title: 'Original', sourceKind: 'original', acquisitionKind: 'original',
+        cost: 0, holderId: co.value?.companyId, holderKind: 'company',
+      },
+    });
+    const project = sim.universe.projects[projectId] as Project;
+    // Stand the film up as delivered and well received, so the test is about
+    // what a franchise does rather than about getting one made.
+    project.phase = 'library';
+    project.finalQuality = 78;
+    project.criticScore = 74;
+    project.audienceScore = 80;
+    project.totalRevenue = 300_000_000_00;
+    project.totalCost = 90_000_000_00;
+    return { sim, projectId, companyId: co.value?.companyId as Id };
+  };
+
+  it('starts a franchise on a picture that earned one', () => {
+    const { sim, projectId } = madeAHit('franchise-start');
+    const result = sim.execute<{ franchiseId: Id; strength: number }>({
+      kind: 'film.start_franchise', payload: { projectId, name: 'The Undertow Saga' },
+    });
+    expect(result.ok, result.error).toBe(true);
+    expect(result.value?.strength).toBeGreaterThan(0);
+
+    const franchise = sim.universe.franchises[result.value?.franchiseId as Id];
+    expect(franchise, 'no franchise record was created').toBeDefined();
+    expect(franchise!.projectIds).toContain(projectId);
+    expect(sim.universe.projects[projectId]?.franchiseId).toBe(franchise!.id);
+  });
+
+  it('refuses to build on a film nobody liked', () => {
+    const { sim, projectId } = madeAHit('franchise-flop');
+    const project = sim.universe.projects[projectId] as Project;
+    project.finalQuality = 22;
+    project.criticScore = 18;
+    project.audienceScore = 30;
+
+    const result = sim.execute({ kind: 'film.start_franchise', payload: { projectId } });
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/did not land/);
+  });
+
+  it('refuses to build on rights that do not include sequels', () => {
+    const { sim, projectId } = madeAHit('franchise-rights');
+    const rightsId = (sim.universe.projects[projectId] as Project).rightsId as Id;
+    sim.universe.rights[rightsId]!.scope.sequelRights = false;
+
+    const result = sim.execute({ kind: 'film.start_franchise', payload: { projectId } });
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/sequels/);
+  });
+
+  it('will not start two franchises on the same picture', () => {
+    const { sim, projectId } = madeAHit('franchise-twice');
+    expect(sim.execute({ kind: 'film.start_franchise', payload: { projectId } }).ok).toBe(true);
+    const again = sim.execute({ kind: 'film.start_franchise', payload: { projectId } });
+    expect(again.ok).toBe(false);
+    expect(again.error).toMatch(/already part of/);
+  });
+
+  it('lifts a sequel while appetite holds and drags it once fatigue sets in', () => {
+    const { sim, projectId, companyId } = madeAHit('franchise-lift');
+    const started = sim.execute<{ franchiseId: Id }>({ kind: 'film.start_franchise', payload: { projectId } });
+    const franchiseId = started.value?.franchiseId as Id;
+
+    const sequel = sim.execute<{ projectId: Id }>({
+      kind: 'film.create_project',
+      payload: { format: 'feature', genres: ['action'], logline: 'The next one.', companyId },
+    });
+    const sequelId = sequel.value?.projectId as Id;
+    const added = sim.execute({ kind: 'film.add_to_franchise', payload: { franchiseId, projectId: sequelId } });
+    expect(added.ok, added.error).toBe(true);
+
+    const sequelProject = sim.universe.projects[sequelId] as Project;
+    const franchise = sim.universe.franchises[franchiseId]!;
+
+    // Appetite high and nobody tired of it yet: the sequel opens bigger.
+    franchise.strength = 80;
+    franchise.fatigue = 5;
+    expect(franchiseLift(sim, sequelProject)).toBeGreaterThan(1);
+
+    // Run into the ground: the same picture opens smaller.
+    franchise.strength = 30;
+    franchise.fatigue = 90;
+    expect(franchiseLift(sim, sequelProject)).toBeLessThan(1);
+
+    // A standalone is unaffected either way.
+    const standalone = sim.execute<{ projectId: Id }>({
+      kind: 'film.create_project',
+      payload: { format: 'feature', genres: ['drama'], logline: 'Nothing to do with it.', companyId },
+    });
+    expect(franchiseLift(sim, sim.universe.projects[standalone.value?.projectId as Id] as Project)).toBe(1);
+  });
+
+  it('spends appetite on a weak entry and buys it back on a strong one', () => {
+    const { sim, projectId, companyId } = madeAHit('franchise-entries');
+    const started = sim.execute<{ franchiseId: Id }>({ kind: 'film.start_franchise', payload: { projectId } });
+    const franchise = sim.universe.franchises[started.value?.franchiseId as Id]!;
+
+    const entry = (quality: number, revenue: number) => {
+      const made = sim.execute<{ projectId: Id }>({
+        kind: 'film.create_project',
+        payload: { format: 'feature', genres: ['action'], logline: 'Another.', companyId },
+      });
+      const p = sim.universe.projects[made.value?.projectId as Id] as Project;
+      p.franchiseId = franchise.id;
+      p.finalQuality = quality;
+      p.criticScore = quality;
+      p.audienceScore = quality;
+      p.totalRevenue = revenue;
+      p.totalCost = 100_000_000_00;
+      return p;
+    };
+
+    const strongBefore = franchise.strength;
+    recordFranchiseEntry(sim, entry(85, 400_000_000_00), 300_000_000_00);
+    expect(franchise.strength, 'a hit did not raise appetite').toBeGreaterThan(strongBefore);
+
+    const afterHit = franchise.strength;
+    recordFranchiseEntry(sim, entry(28, 40_000_000_00), -60_000_000_00);
+    expect(franchise.strength, 'a dud did not cost anything').toBeLessThan(afterHit);
+
+    // Every entry costs novelty, whichever way it went.
+    expect(franchise.fatigue, 'three entries left the series as fresh as it started').toBeGreaterThan(0);
+    expect(franchise.projectIds.length).toBe(3);
+  });
+
+  it('lets appetite recover while the series rests', () => {
+    const { sim, projectId } = madeAHit('franchise-rest');
+    const started = sim.execute<{ franchiseId: Id }>({ kind: 'film.start_franchise', payload: { projectId } });
+    const franchise = sim.universe.franchises[started.value?.franchiseId as Id]!;
+    franchise.fatigue = 70;
+
+    sim.advanceTo(sim.now + 365 * MS_DAY);
+    expect(franchise.fatigue, 'a year away did not cool anything off').toBeLessThan(70);
   });
 });

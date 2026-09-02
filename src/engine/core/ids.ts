@@ -20,7 +20,7 @@ export type IdNamespace =
   | 'acct' | 'post' | 'deal' | 'campaign'
   | 'proj' | 'script' | 'draft' | 'role' | 'audition' | 'contract' | 'rights'
   | 'shootday' | 'posttask' | 'release' | 'award' | 'nom'
-  | 'company' | 'division' | 'employee' | 'equip'
+  | 'company' | 'division' | 'employee' | 'equip' | 'franchise' | 'merch'
   | 'order' | 'item' | 'asset' | 'policy' | 'claim' | 'appt' | 'provider'
   | 'course' | 'history' | 'audit' | 'notice' | 'decision' | 'idem';
 
