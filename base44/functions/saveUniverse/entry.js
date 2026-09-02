@@ -5,8 +5,8 @@
  * server checks what it can check, and only then does anything land in
  * storage. What the server enforces:
  *
- *  - the caller is signed in, and the row is theirs (row-level security does
- *    the rest: nobody can name another player's slot);
+ *  - the caller is signed in, and row-level security scopes every row to them,
+ *    so naming another player's slot reaches nothing;
  *  - the slot is one of the three;
  *  - the payload parses, is within size, and is in a format this build reads;
  *  - every transaction balances and the whole ledger sums to zero;
@@ -19,28 +19,18 @@
  * the same answer, so a dropped connection never costs or duplicates anything.
  */
 
-import { createClient } from 'npm:@base44/sdk';
+import { createClientFromRequest } from 'npm:@base44/sdk';
 import {
   GuardError, failure, inspectPayload, ok, requireForwardProgress, requireSlot,
-} from './_shared/guard.js';
+} from '../../shared/guard.js';
 
-Deno.serve(async (req) => {
-  const respond = (body) => new Response(JSON.stringify(body), {
-    status: body.ok ? 200 : body.status ?? 400,
-    headers: { 'Content-Type': 'application/json' },
-  });
-
+export default async function (req) {
   try {
     if (req.method !== 'POST') throw new GuardError('This endpoint takes POST.', 405);
 
-    const base44 = createClient({
-      appId: Deno.env.get('BASE44_APP_ID'),
-      requiresAuth: true,
-    });
-    base44.auth.setToken(req.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ?? '');
-
+    const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
-    if (!user?.id) throw new GuardError('You are not signed in.', 401);
+    if (!user) return Response.json({ ok: false, status: 401, error: 'You are not signed in.' }, { status: 401 });
 
     const body = await req.json().catch(() => {
       throw new GuardError('The request body was not valid JSON.');
@@ -55,7 +45,7 @@ Deno.serve(async (req) => {
         save_id: incoming.saveId,
         idempotency_key: body.idempotencyKey,
       });
-      if (receipt) return respond(ok({ replayed: true, ...(receipt.result ?? {}) }));
+      if (receipt) return Response.json(ok({ replayed: true, ...(receipt.result ?? {}) }));
     }
 
     const [existing] = await base44.entities.SlateSave.filter({ slot });
@@ -112,8 +102,9 @@ Deno.serve(async (req) => {
       });
     }
 
-    return respond(ok(result));
+    return Response.json(ok(result));
   } catch (error) {
-    return respond(failure(error));
+    const body = failure(error);
+    return Response.json(body, { status: body.status });
   }
-});
+}

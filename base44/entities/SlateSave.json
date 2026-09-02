@@ -34,22 +34,45 @@
       "minimum": 0,
       "description": "Real seconds played. Only ever moves forward."
     },
-    "character_name": { "type": "string" },
-    "career_label": { "type": "string" },
-    "location_label": { "type": "string" },
-    "world_date_label": { "type": "string" },
-    "net_worth_label": { "type": "string" },
-    "app_version": { "type": "string" },
-    "payload_bytes": { "type": "integer", "minimum": 0 },
+    "character_name": {
+      "type": "string"
+    },
+    "career_label": {
+      "type": "string"
+    },
+    "location_label": {
+      "type": "string"
+    },
+    "world_date_label": {
+      "type": "string"
+    },
+    "net_worth_label": {
+      "type": "string"
+    },
+    "app_version": {
+      "type": "string"
+    },
+    "payload_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
     "integrity": {
       "type": "object",
       "description": "What the server checked when it accepted this write.",
       "properties": {
-        "postings_balance": { "type": "boolean", "description": "Every posting in the universe summed to zero." },
-        "save_id_consistent": { "type": "boolean", "description": "No record inside carried a different save id." },
-        "checked_at": { "type": "string", "format": "date-time" }
-      },
-      "additionalProperties": false
+        "postings_balance": {
+          "type": "boolean",
+          "description": "Every posting in the universe summed to zero."
+        },
+        "save_id_consistent": {
+          "type": "boolean",
+          "description": "No record inside carried a different save id."
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
     },
     "deleted_at": {
       "type": "string",
@@ -57,10 +80,22 @@
       "description": "Set when the player clears the slot. The backup is kept; nothing is destroyed outright."
     }
   },
-  "required": ["slot", "save_id", "payload", "schema_version"],
-  "additionalProperties": false,
+  "required": [
+    "slot",
+    "save_id",
+    "payload",
+    "schema_version"
+  ],
   "rls": {
-    "read": { "created_by": "{{user.email}}" },
-    "write": { "created_by": "{{user.email}}" }
+    "create": true,
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
   }
 }

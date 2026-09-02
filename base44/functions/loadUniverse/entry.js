@@ -6,24 +6,14 @@
  * the backup returns the payload kept before the last write.
  */
 
-import { createClient } from 'npm:@base44/sdk';
-import { GuardError, failure, ok, requireSlot } from './_shared/guard.js';
+import { createClientFromRequest } from 'npm:@base44/sdk';
+import { failure, ok, requireSlot } from '../../shared/guard.js';
 
-Deno.serve(async (req) => {
-  const respond = (body) => new Response(JSON.stringify(body), {
-    status: body.ok ? 200 : body.status ?? 400,
-    headers: { 'Content-Type': 'application/json' },
-  });
-
+export default async function (req) {
   try {
-    const base44 = createClient({
-      appId: Deno.env.get('BASE44_APP_ID'),
-      requiresAuth: true,
-    });
-    base44.auth.setToken(req.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ?? '');
-
+    const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
-    if (!user?.id) throw new GuardError('You are not signed in.', 401);
+    if (!user) return Response.json({ ok: false, status: 401, error: 'You are not signed in.' }, { status: 401 });
 
     const url = new URL(req.url);
     const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
@@ -33,7 +23,7 @@ Deno.serve(async (req) => {
     const rawSlot = body.slot ?? url.searchParams.get('slot');
     if (rawSlot === undefined || rawSlot === null || rawSlot === '') {
       const rows = await base44.entities.SlateSave.filter({});
-      return respond(ok({
+      return Response.json(ok({
         slots: [1, 2, 3].map((slot) => {
           const row = rows.find((r) => Number(r.slot) === slot && !r.deleted_at);
           if (!row) return { slot, occupied: false, hasBackup: false };
@@ -57,10 +47,10 @@ Deno.serve(async (req) => {
 
     const slot = requireSlot(rawSlot);
     const [row] = await base44.entities.SlateSave.filter({ slot });
-    if (!row) return respond(ok({ slot, payload: null }));
+    if (!row) return Response.json(ok({ slot, payload: null }));
 
     const payload = wantsBackup ? row.backup_payload : row.payload;
-    return respond(ok({
+    return Response.json(ok({
       slot,
       saveId: row.save_id,
       schemaVersion: row.schema_version,
@@ -68,6 +58,7 @@ Deno.serve(async (req) => {
       fromBackup: wantsBackup,
     }));
   } catch (error) {
-    return respond(failure(error));
+    const body = failure(error);
+    return Response.json(body, { status: body.status });
   }
-});
+}

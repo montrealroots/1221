@@ -23,14 +23,16 @@ interface Base44Entity<T> {
   delete(id: string): Promise<void>;
 }
 
-/** The backend functions, when the deployment has them. */
+/**
+ * Backend functions are called by name through `invoke`, not as properties.
+ * It resolves with the raw HTTP response — the function's JSON is on `.data` —
+ * and it throws on any non-2xx, with the body on `error.response.data`.
+ */
 interface Base44Functions {
-  saveUniverse?(payload: { slot: number; payload: string; idempotencyKey?: string }): Promise<FunctionReply>;
-  loadUniverse?(payload: { slot?: number; backup?: boolean }): Promise<FunctionReply>;
-  clearSlot?(payload: { slot: number }): Promise<FunctionReply>;
+  invoke(name: string, payload?: Record<string, unknown>): Promise<{ data?: FunctionReply }>;
 }
 
-interface FunctionReply {
+export interface FunctionReply {
   ok: boolean;
   error?: string;
   status?: number;
@@ -48,7 +50,7 @@ interface FunctionReply {
   }[];
 }
 
-interface Base44Client {
+export interface Base44Client {
   entities: {
     SlateSave: Base44Entity<SaveRecord>;
   };
@@ -73,6 +75,15 @@ interface SaveRecord {
   backup_payload?: string;
 }
 
+/**
+ * Whether a failure is worth trying again. A refusal the server made on
+ * purpose — a bad slot, a save from a newer build — will be refused again;
+ * a conflict or a server fault may not be.
+ */
+function isRetryable(status: number | undefined): boolean {
+  return status === undefined || status >= 500 || status === 409 || status === 429;
+}
+
 export class Base44SaveAdapter implements SaveAdapter {
   readonly name = 'Base44';
   readonly serverAuthoritative = true;
@@ -91,22 +102,44 @@ export class Base44SaveAdapter implements SaveAdapter {
    * Writing the entity straight from the browser skips all of that.
    */
   private get fn(): Base44Functions | null {
-    return this.client?.functions ?? null;
+    return typeof this.client?.functions?.invoke === 'function' ? this.client.functions : null;
   }
 
-  /** Turns a function's refusal into something a player can act on. */
-  private static demand(reply: FunctionReply, what: string): FunctionReply {
-    if (reply.ok) return reply;
-    throw new PersistenceError(
-      reply.error ?? `${what} was refused by the server.`,
-      reply.status === undefined || reply.status >= 500 || reply.status === 409,
-    );
+  /**
+   * Calls a backend function and returns what it actually said.
+   *
+   * Two things about `invoke` shape this: the JSON lives on `.data` rather
+   * than at the top level, and a non-2xx reply arrives as a thrown error with
+   * the body on `error.response.data`. A refusal the server explained is worth
+   * far more to the player than 'request failed', so it is dug out either way.
+   */
+  private async call(name: string, payload: Record<string, unknown>, what: string): Promise<FunctionReply> {
+    const fn = this.fn;
+    if (!fn) throw new PersistenceError(`${what} is unavailable: this deployment has no backend functions.`, true);
+
+    let reply: FunctionReply | undefined;
+    try {
+      reply = (await fn.invoke(name, payload))?.data;
+    } catch (error) {
+      const thrown = error as { response?: { data?: FunctionReply; status?: number }; message?: string };
+      const body = thrown.response?.data;
+      if (body?.error) {
+        throw new PersistenceError(body.error, isRetryable(body.status ?? thrown.response?.status));
+      }
+      throw new PersistenceError(
+        `${what} could not reach the server: ${thrown.message ?? 'the connection failed'}.`,
+        true,
+      );
+    }
+
+    if (!reply) throw new PersistenceError(`${what} came back empty from the server.`, true);
+    if (!reply.ok) throw new PersistenceError(reply.error ?? `${what} was refused by the server.`, isRetryable(reply.status));
+    return reply;
   }
 
   async listSlots(): Promise<SaveSlotInfo[]> {
-    const load = this.fn?.loadUniverse;
-    if (load) {
-      const reply = Base44SaveAdapter.demand(await load({}), 'Reading your saves');
+    if (this.fn) {
+      const reply = await this.call('loadUniverse', {}, 'Reading your saves');
       return ([1, 2, 3] as Slot[]).map((slot) => {
         const row = reply.slots?.find((s) => s.slot === slot);
         if (!row?.occupied) return { slot, occupied: false, hasBackup: Boolean(row?.hasBackup) };
@@ -164,9 +197,8 @@ export class Base44SaveAdapter implements SaveAdapter {
   }
 
   async load(slot: Slot): Promise<SaveUniverse | null> {
-    const read = this.fn?.loadUniverse;
-    if (read) {
-      const reply = Base44SaveAdapter.demand(await read({ slot }), 'Loading that save');
+    if (this.fn) {
+      const reply = await this.call('loadUniverse', { slot }, 'Loading that save');
       return reply.payload ? deserialise(reply.payload) : null;
     }
 
@@ -181,15 +213,15 @@ export class Base44SaveAdapter implements SaveAdapter {
     const slot = universe.meta.slot;
     const payload = serialise(universe);
 
-    const write = this.fn?.saveUniverse;
-    if (write) {
+    if (this.fn) {
       try {
         // The key is the save and the moment it reached, so a retry after a
         // dropped connection writes once rather than twice.
-        const reply = Base44SaveAdapter.demand(
-          await write({ slot, payload, idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}` }),
-          'Saving',
-        );
+        const reply = await this.call('saveUniverse', {
+          slot,
+          payload,
+          idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}`,
+        }, 'Saving');
         universe.meta.backupAvailable = Boolean(reply.backupAvailable);
         await this.fallback.save(universe).catch(() => undefined);
         return;
@@ -237,9 +269,8 @@ export class Base44SaveAdapter implements SaveAdapter {
   }
 
   async remove(slot: Slot): Promise<void> {
-    const clear = this.fn?.clearSlot;
-    if (clear) {
-      Base44SaveAdapter.demand(await clear({ slot }), 'Clearing that slot');
+    if (this.fn) {
+      await this.call('clearSlot', { slot }, 'Clearing that slot');
       await this.fallback.remove(slot).catch(() => undefined);
       return;
     }
@@ -280,7 +311,7 @@ export class Base44SaveAdapter implements SaveAdapter {
  */
 export async function resolveAdapter(): Promise<SaveAdapter> {
   const injected = (globalThis as unknown as { base44?: Base44Client }).base44;
-  if (injected?.functions?.saveUniverse || injected?.entities?.SlateSave) {
+  if (typeof injected?.functions?.invoke === 'function' || injected?.entities?.SlateSave) {
     return new Base44SaveAdapter(injected);
   }
   return new LocalSaveAdapter();

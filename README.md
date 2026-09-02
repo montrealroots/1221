@@ -63,23 +63,48 @@ after the world stops individually simulating the day players in it.
 
 ## Deploying to Base44
 
+The Base44 side of the app lives under `base44/`, in the layout the platform
+expects: `config.jsonc` naming the directories, entity schemas in `entities/`,
+one directory per function in `functions/`, and code shared between functions
+in `shared/`.
+
+```
+base44/
+├── config.jsonc
+├── entities/
+│   ├── SlateSave.json
+│   ├── SlateCommandReceipt.json
+│   └── SlateOfficialResult.json
+├── functions/
+│   ├── saveUniverse/entry.js
+│   ├── loadUniverse/entry.js
+│   ├── recordOfficialResult/entry.js
+│   └── clearSlot/entry.js
+└── shared/
+    └── guard.js
+```
+
 ### 1. Entities
 
-The schemas in `/entities` are the storage contract. Each carries a row-level
-security block scoping reads and writes to `created_by`, so one player can
-never reach another's rows even by naming them.
+Each schema carries a row-level security block. Reads are scoped to
+`created_by`, which Base44 fills with the signed-in user's email, so one player
+can never reach another's rows even by naming them.
 
-| Entity | What it holds |
-| --- | --- |
-| `SlateSave` | One row per slot: the serialised universe, its metadata, the previous payload as a backup, and what the server checked when it accepted the write. |
-| `SlateCommandReceipt` | Receipts for critical commands, keyed by save and idempotency key, so a retry is handed the original result instead of being applied twice. |
-| `SlateOfficialResult` | Finalised outcomes — award editions, release settlements, contract conclusions — written once and never updated. |
+| Entity | What it holds | RLS |
+| --- | --- | --- |
+| `SlateSave` | One row per slot: the serialised universe, its metadata, the previous payload as a backup, and what the server checked when it accepted the write. | create, read, update, delete — all owner-scoped |
+| `SlateCommandReceipt` | Receipts for critical commands, keyed by save and idempotency key, so a retry is handed the original result instead of being applied twice. | create and read only; update and delete denied |
+| `SlateOfficialResult` | Finalised outcomes — award editions, release settlements, contract conclusions — with the inputs, weights, rules version and seed that produced them. | create and read only; update and delete denied |
+
+The two append-only entities deny `update` and `delete` outright rather than
+scoping them to the owner. That is the difference between history that is not
+meant to change and history that cannot be changed: no client, signed in as
+anyone, can rewrite a finalised result.
 
 ### 2. Backend functions
 
-`/functions` holds the server-authoritative endpoints. The browser never writes
-a save directly; it sends the universe to `saveUniverse`, which checks, and only
-then stores.
+The browser never writes a save directly. It sends the universe to
+`saveUniverse`, which checks, and only then stores.
 
 | Function | Enforces |
 | --- | --- |
@@ -88,8 +113,8 @@ then stores.
 | `recordOfficialResult` | Writes a finalised result once. A second write returns what is already stored rather than changing it. |
 | `clearSlot` | Moves the payload aside as a backup and marks the slot cleared. Nothing is destroyed outright. |
 
-The checks themselves live in `functions/_shared/guard.js`, which is plain,
-pure JavaScript and is covered by `tests/server-guards.test.ts`.
+The checks themselves live in `base44/shared/guard.js`, which is plain, pure
+JavaScript and is covered by `tests/server-guards.test.ts`.
 
 What the guards deliberately are not is a re-simulation. They catch a corrupt
 or cross-contaminated write, a stale tab overwriting newer progress, and a
@@ -97,25 +122,48 @@ retry being applied twice. A player editing their own save can still make their
 own game strange; that is a different problem from a bad write landing in
 storage.
 
+Two things worth knowing about the platform's shape, because both are easy to
+get wrong and neither fails until the first real save:
+
+- **Functions are reached by name.** `base44.functions.invoke("saveUniverse",
+  payload)` — not as a property. The function's JSON arrives on `.data`, and a
+  non-2xx reply is *thrown*, with the body on `error.response.data`. The
+  adapter handles all three, and `tests/base44-adapter.test.ts` holds it to
+  that protocol against a stand-in client.
+- **Backend functions build their own client.** `createClientFromRequest(req)`
+  reads the auth headers Base44 injects; there is no app id or token to pass,
+  and no environment variable to set.
+
 ### 3. Configuration
 
-Set `BASE44_APP_ID` in the deployment environment. The functions read it when
-constructing their server-side client.
+`base44/config.jsonc` points at the entity and function directories and names
+the site output. The Vite build writes to `dist/` at the repository root, one
+level above the config file, so `site.outputDirectory` is `../dist`. If the
+platform resolves site paths from the project root rather than from the config
+file, that becomes `./dist` — it is the one path worth confirming on a first
+deploy.
 
 The client picks its storage at startup: backend functions if the deployment
 exposes them, direct entity access if not, and local storage if there is no
 Base44 client at all. Every Base44 write is also mirrored locally, so a
 connection dropping mid-session never costs progress.
 
-### 4. Before going live
+### 4. What could not be verified from here
 
-The function files use Base44's backend conventions — a `Deno.serve` handler
-and the `@base44/sdk` client. **Confirm the import specifier, the auth helper,
-and the RLS block syntax against Base44's current documentation before
-deploying**, and adjust if their surface has moved. Those details could not be
-verified from this repository, and the rest of the integration does not depend
-on them: the guards, the schemas and the client adapter are all independent of
-the exact SDK shape.
+The SDK surface above was checked against Base44's published documentation in
+September 2026: the function layout and `export default async function (req)`
+handler, `createClientFromRequest`, `functions.invoke` and its response shape,
+the `create`/`read`/`update`/`delete` RLS keys, and the built-in `created_by`
+field. Two things are **not** documented and are therefore not relied on:
+
+- **Unique indexes.** Base44's entity schema documentation does not describe
+  index or unique-constraint syntax, so the schemas declare none. Idempotency
+  and write-once are enforced by the functions reading before they write, which
+  is correct under normal use but is not an atomic guarantee against two
+  genuinely simultaneous requests for the same key. If Base44 does support
+  unique constraints, adding one on `(save_id, idempotency_key)` and
+  `(save_id, kind, subject_id)` would close that window.
+- **`additionalProperties`.** Not documented as supported, so it is not used.
 
 ---
 
@@ -138,14 +186,16 @@ npm test
 | `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, permission boundaries, what the player is allowed to know. |
 | `calibration` | Monte Carlo runs over the probabilistic models: uniformity, monotonicity, spread, reproducibility. |
 | `server-guards` | The server-side checks that stand between a browser and storage. |
+| `base44-adapter` | The client speaks the platform's documented protocol: invoke by name, JSON on `.data`, non-2xx thrown, local mirroring, graceful fallback. |
 
 ### What these tests do not cover
 
 Reported as unavailable rather than counted as passing:
 
 - **Deployed authentication and authorisation.** Requires a live Base44 app and
-  credentials. The guards the functions are built on are tested; the deployed
-  endpoints are not.
+  credentials. The guards the functions are built on are tested, and the client
+  is tested against a stand-in that mirrors the documented protocol, but no
+  request has been made to Base44 itself.
 - **Row-level security as enforced by Base44.** The schemas declare it; whether
   the platform applies it as declared can only be confirmed against a
   deployment.
@@ -167,8 +217,7 @@ src/engine/systems     life, work, property, vehicles, film, casting, awards, co
 src/engine/world       bootstrap, the world tick, tiering, the Decision Center
 src/engine/persistence local, Base44, and the adapter contract between them
 src/ui                 startup, saves, character creation, the shell, workspaces
-entities/              Base44 entity schemas with row-level security
-functions/             server-authoritative backend endpoints
+base44/                the platform side: config, entity schemas, functions, shared guards
 tests/                 the suites above
 ```
 

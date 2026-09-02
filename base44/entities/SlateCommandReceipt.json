@@ -1,0 +1,40 @@
+{
+  "name": "SlateCommandReceipt",
+  "type": "object",
+  "description": "A record that one critical command has already been applied. A retried request finds its receipt and is handed the original result instead of being applied a second time, so a dropped connection can never charge twice or hand over two of the same thing.",
+  "properties": {
+    "save_id": {
+      "type": "string",
+      "description": "The universe the command was applied to."
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Client-generated, unique per intended action. The same key is always the same action, never a second one."
+    },
+    "command_kind": {
+      "type": "string",
+      "description": "Which command this receipt is for, e.g. veh.purchase."
+    },
+    "result": {
+      "type": "object",
+      "description": "What the command returned the first time, replayed verbatim on a retry."
+    },
+    "applied_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "save_id",
+    "idempotency_key",
+    "command_kind"
+  ],
+  "rls": {
+    "create": true,
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": false,
+    "delete": false
+  }
+}

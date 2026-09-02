@@ -8,8 +8,8 @@
  * save, and progress has not gone backwards.
  *
  * The deployed functions themselves need a Base44 app and credentials to
- * exercise; those are reported as unavailable in the release report rather
- * than counted as passing. The guards they are built on are pure, so they are
+ * exercise; those are reported as unavailable in the README rather than
+ * counted as passing. The guards they are built on are pure, so they are
  * tested here properly.
  */
 
@@ -19,7 +19,7 @@ import { serialise } from '@/engine/persistence/adapter';
 import {
   GuardError, MAX_PAYLOAD_BYTES, SUPPORTED_SCHEMA_VERSION,
   inspectPayload, requireForwardProgress, requireSlot,
-} from '../functions/_shared/guard.js';
+} from '../base44/shared/guard.js';
 
 /** A real save, serialised the way the client would send it. */
 function realPayload(slot: 1 | 2 | 3 = 1) {

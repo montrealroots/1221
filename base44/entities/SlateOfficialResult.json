@@ -1,0 +1,64 @@
+{
+  "name": "SlateOfficialResult",
+  "type": "object",
+  "description": "A finalised outcome the world is not allowed to change its mind about: who won an award edition, what a release settled at, what a contract concluded. Written once and never updated, so history cannot be quietly rewritten from the browser.",
+  "properties": {
+    "save_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "award_edition",
+        "release_settlement",
+        "contract_conclusion",
+        "construction_handover",
+        "ownership_transfer"
+      ],
+      "description": "What sort of official result this is."
+    },
+    "subject_id": {
+      "type": "string",
+      "description": "The entity inside the save this result belongs to."
+    },
+    "decided_at_world": {
+      "type": "number",
+      "description": "The world clock at the moment it was decided."
+    },
+    "rules_version": {
+      "type": "string",
+      "description": "Which version of the rules produced it."
+    },
+    "seed": {
+      "type": "string",
+      "description": "The deterministic stream that produced the roll."
+    },
+    "inputs": {
+      "type": "object",
+      "description": "The inputs and weights the decision was made from."
+    },
+    "outcome": {
+      "type": "object",
+      "description": "The result itself."
+    },
+    "finalised": {
+      "type": "boolean",
+      "default": true,
+      "description": "Always true. A row that exists is final; the backend refuses to change one."
+    }
+  },
+  "required": [
+    "save_id",
+    "kind",
+    "subject_id",
+    "outcome"
+  ],
+  "rls": {
+    "create": true,
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": false,
+    "delete": false
+  }
+}
