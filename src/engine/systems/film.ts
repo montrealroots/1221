@@ -552,7 +552,15 @@ export function registerFilm(sim: Simulation): void {
         { label: 'Company appetite for risk', detail: 'What else is on the slate and how exposed it already is.', weight: 0.10, value: rng.float(0.3, 1), knowable: false },
       ]);
 
-      const probability = sandbox || p.force ? 1 : clamp(score * 1.15 - 0.05, 0.05, 0.97);
+      // Whose decision this actually is. When the player controls the company
+      // putting up the money, the appetite being modelled is their own, and
+      // they have already expressed it by asking. Authority and the company's
+      // ceiling still bind — those are checked above — but there is no one else
+      // in the room to say no. The dice belong to other people's money.
+      const ownControl = company?.ownerships.some((o) => o.holderId === player.id && o.percent >= 50) ?? false;
+      const decisionIsTheirs = ownControl || sandbox || p.force === true;
+
+      const probability = decisionIsTheirs ? 1 : clamp(score * 1.15 - 0.05, 0.05, 0.97);
       const roll = rng.next();
       const greenlit = roll < probability;
 
@@ -560,7 +568,9 @@ export function registerFilm(sim: Simulation): void {
         kind: 'film.greenlight_decided', subjectType: 'project', subjectId: project.id,
         question: 'Why was this greenlit, or not?',
         summary: greenlit
-          ? `${project.title} is greenlit at ${formatMoneyCompact(p.budget)}.`
+          ? ownControl && !sandbox && !p.force
+            ? `${project.title} is greenlit at ${formatMoneyCompact(p.budget)}. You control ${company?.name ?? 'the company'}, so this was your call to make, inside its ceiling.`
+            : `${project.title} is greenlit at ${formatMoneyCompact(p.budget)}.`
           : `${project.title} was not greenlit. ${(draft?.quality ?? 0) < 60 ? 'The script is the problem.' : 'The numbers did not work at that budget.'}`,
         factors, seed: `greenlight|${project.id}`, roll, probability, score,
         outcome: greenlit ? 'greenlit' : 'passed',
