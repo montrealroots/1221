@@ -23,12 +23,37 @@ interface Base44Entity<T> {
   delete(id: string): Promise<void>;
 }
 
+/** The backend functions, when the deployment has them. */
+interface Base44Functions {
+  saveUniverse?(payload: { slot: number; payload: string; idempotencyKey?: string }): Promise<FunctionReply>;
+  loadUniverse?(payload: { slot?: number; backup?: boolean }): Promise<FunctionReply>;
+  clearSlot?(payload: { slot: number }): Promise<FunctionReply>;
+}
+
+interface FunctionReply {
+  ok: boolean;
+  error?: string;
+  status?: number;
+  payload?: string | null;
+  saveId?: string;
+  schemaVersion?: number;
+  backupAvailable?: boolean;
+  cleared?: boolean;
+  recoverable?: boolean;
+  slots?: {
+    slot: number; occupied: boolean; hasBackup: boolean; saveId?: string;
+    schemaVersion?: number; characterName?: string; careerLabel?: string;
+    locationLabel?: string; worldDateLabel?: string; netWorthLabel?: string;
+    playtimeSeconds?: number; bytes?: number;
+  }[];
+}
+
 interface Base44Client {
   entities: {
     SlateSave: Base44Entity<SaveRecord>;
   };
   auth?: { me(): Promise<{ id: string; email?: string }> };
-  functions?: Record<string, (payload: unknown) => Promise<unknown>>;
+  functions?: Base44Functions;
 }
 
 interface SaveRecord {
@@ -59,7 +84,52 @@ export class Base44SaveAdapter implements SaveAdapter {
     return this.client?.entities?.SlateSave ?? null;
   }
 
+  /**
+   * The backend functions, when this deployment has them. They are preferred
+   * over writing entities directly, because they are where the server checks
+   * that a save balances, belongs to this player, and has not gone backwards.
+   * Writing the entity straight from the browser skips all of that.
+   */
+  private get fn(): Base44Functions | null {
+    return this.client?.functions ?? null;
+  }
+
+  /** Turns a function's refusal into something a player can act on. */
+  private static demand(reply: FunctionReply, what: string): FunctionReply {
+    if (reply.ok) return reply;
+    throw new PersistenceError(
+      reply.error ?? `${what} was refused by the server.`,
+      reply.status === undefined || reply.status >= 500 || reply.status === 409,
+    );
+  }
+
   async listSlots(): Promise<SaveSlotInfo[]> {
+    const load = this.fn?.loadUniverse;
+    if (load) {
+      const reply = Base44SaveAdapter.demand(await load({}), 'Reading your saves');
+      return ([1, 2, 3] as Slot[]).map((slot) => {
+        const row = reply.slots?.find((s) => s.slot === slot);
+        if (!row?.occupied) return { slot, occupied: false, hasBackup: Boolean(row?.hasBackup) };
+        return {
+          slot,
+          occupied: true,
+          hasBackup: row.hasBackup,
+          bytes: row.bytes,
+          meta: {
+            id: row.saveId ?? '',
+            slot,
+            schemaVersion: row.schemaVersion ?? 0,
+            characterName: row.characterName ?? '',
+            careerLabel: row.careerLabel ?? '',
+            locationLabel: row.locationLabel ?? '',
+            worldDateLabel: row.worldDateLabel ?? '',
+            netWorthLabel: row.netWorthLabel ?? '',
+            playtimeSeconds: row.playtimeSeconds ?? 0,
+          } as SaveSlotInfo['meta'],
+        };
+      });
+    }
+
     const entity = this.entity;
     if (!entity) return this.fallback.listSlots();
 
@@ -94,6 +164,12 @@ export class Base44SaveAdapter implements SaveAdapter {
   }
 
   async load(slot: Slot): Promise<SaveUniverse | null> {
+    const read = this.fn?.loadUniverse;
+    if (read) {
+      const reply = Base44SaveAdapter.demand(await read({ slot }), 'Loading that save');
+      return reply.payload ? deserialise(reply.payload) : null;
+    }
+
     const entity = this.entity;
     if (!entity) return this.fallback.load(slot);
     const [record] = await entity.filter({ slot });
@@ -102,11 +178,30 @@ export class Base44SaveAdapter implements SaveAdapter {
   }
 
   async save(universe: SaveUniverse): Promise<void> {
+    const slot = universe.meta.slot;
+    const payload = serialise(universe);
+
+    const write = this.fn?.saveUniverse;
+    if (write) {
+      try {
+        // The key is the save and the moment it reached, so a retry after a
+        // dropped connection writes once rather than twice.
+        const reply = Base44SaveAdapter.demand(
+          await write({ slot, payload, idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}` }),
+          'Saving',
+        );
+        universe.meta.backupAvailable = Boolean(reply.backupAvailable);
+        await this.fallback.save(universe).catch(() => undefined);
+        return;
+      } catch (error) {
+        await this.fallback.save(universe).catch(() => undefined);
+        throw error;
+      }
+    }
+
     const entity = this.entity;
     if (!entity) return this.fallback.save(universe);
 
-    const slot = universe.meta.slot;
-    const payload = serialise(universe);
     const data: Record<string, unknown> = {
       slot,
       payload,
@@ -142,6 +237,13 @@ export class Base44SaveAdapter implements SaveAdapter {
   }
 
   async remove(slot: Slot): Promise<void> {
+    const clear = this.fn?.clearSlot;
+    if (clear) {
+      Base44SaveAdapter.demand(await clear({ slot }), 'Clearing that slot');
+      await this.fallback.remove(slot).catch(() => undefined);
+      return;
+    }
+
     const entity = this.entity;
     if (!entity) return this.fallback.remove(slot);
     const [existing] = await entity.filter({ slot });
@@ -178,6 +280,8 @@ export class Base44SaveAdapter implements SaveAdapter {
  */
 export async function resolveAdapter(): Promise<SaveAdapter> {
   const injected = (globalThis as unknown as { base44?: Base44Client }).base44;
-  if (injected?.entities?.SlateSave) return new Base44SaveAdapter(injected);
+  if (injected?.functions?.saveUniverse || injected?.entities?.SlateSave) {
+    return new Base44SaveAdapter(injected);
+  }
   return new LocalSaveAdapter();
 }

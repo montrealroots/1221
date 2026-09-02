@@ -1,0 +1,66 @@
+{
+  "name": "SlateSave",
+  "type": "object",
+  "description": "One save slot for one player. A save is a whole universe, serialised. Three slots per player, and no player can ever see another player's rows.",
+  "properties": {
+    "slot": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "description": "Which of the player's three slots this is."
+    },
+    "save_id": {
+      "type": "string",
+      "description": "The universe's own id. Every record inside the payload carries it, and it is what proves one save has not been mixed with another."
+    },
+    "payload": {
+      "type": "string",
+      "description": "The serialised universe. Opaque to the server except for the invariants checked on write."
+    },
+    "backup_payload": {
+      "type": "string",
+      "description": "The previous payload, kept so a bad write or an accidental delete is recoverable."
+    },
+    "schema_version": {
+      "type": "integer",
+      "description": "Save format version. The client refuses to load a save written by a newer build than it understands."
+    },
+    "world_now": {
+      "type": "number",
+      "description": "The universe's clock, in epoch milliseconds. Only ever moves forward."
+    },
+    "playtime_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Real seconds played. Only ever moves forward."
+    },
+    "character_name": { "type": "string" },
+    "career_label": { "type": "string" },
+    "location_label": { "type": "string" },
+    "world_date_label": { "type": "string" },
+    "net_worth_label": { "type": "string" },
+    "app_version": { "type": "string" },
+    "payload_bytes": { "type": "integer", "minimum": 0 },
+    "integrity": {
+      "type": "object",
+      "description": "What the server checked when it accepted this write.",
+      "properties": {
+        "postings_balance": { "type": "boolean", "description": "Every posting in the universe summed to zero." },
+        "save_id_consistent": { "type": "boolean", "description": "No record inside carried a different save id." },
+        "checked_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Set when the player clears the slot. The backup is kept; nothing is destroyed outright."
+    }
+  },
+  "required": ["slot", "save_id", "payload", "schema_version"],
+  "additionalProperties": false,
+  "rls": {
+    "read": { "created_by": "{{user.email}}" },
+    "write": { "created_by": "{{user.email}}" }
+  }
+}
