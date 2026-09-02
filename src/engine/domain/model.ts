@@ -149,6 +149,11 @@ export interface Person {
   /** Authority to greenlight, in cents. Zero means no authority. */
   greenlightAuthority: Money;
 
+  /** When they last deliberately slept, so the world knows to fill the gap. */
+  lastSleptAt?: Instant;
+  /** When they last deliberately ate. */
+  lastAteAt?: Instant;
+
   aliveUntil?: Instant;
   createdAt: Instant;
 }

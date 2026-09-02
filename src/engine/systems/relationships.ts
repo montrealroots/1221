@@ -184,7 +184,9 @@ export function registerRelationships(sim: Simulation): void {
         trust: (def.effects.trust ?? 0) * scale,
         respect: (def.effects.respect ?? 0) * scale,
         commitment: (def.effects.commitment ?? 0) * scale,
-        conflict: wentWell ? -(def.effects.conflictRelief ?? 0) : (def.effects.conflictRisk ?? 2),
+        // Time spent well together takes a little of the friction out even
+        // when clearing the air was not the point of it.
+        conflict: wentWell ? -((def.effects.conflictRelief ?? 0) + 1.5) : (def.effects.conflictRisk ?? 2),
       });
       rel.lastInteractionAt = s.now;
 
@@ -874,17 +876,34 @@ function driftRelationships(sim: Simulation): void {
     if (weeksSince < 2) continue;
     if (isFamily(rel.type)) continue;
 
-    const rate = (isRomantic(rel.type) ? 1.5 : 1.0) * decayMultiplier;
+    // Somebody you live with does not become a stranger because you did not
+    // make a point of it. Sharing a home is itself contact.
+    const household = player.householdId ? sim.universe.households[player.householdId] : undefined;
+    const livesWithYou = household !== undefined
+      && !household.dissolvedAt
+      && household.memberIds.includes(otherParty(rel, player.id));
+
+    const rate = (isRomantic(rel.type) ? 1.5 : 1.0) * decayMultiplier * (livesWithYou ? 0.2 : 1);
     applyDelta(rel.dimensions, {
       affection: -0.6 * rate * Math.min(weeksSince, 8),
       commitment: isRomantic(rel.type) ? -0.5 * rate * Math.min(weeksSince, 8) : 0,
-      familiarity: -0.2 * Math.min(weeksSince, 6),
+      familiarity: -0.2 * (livesWithYou ? 0.2 : 1) * Math.min(weeksSince, 6),
+      // Friction fades. Without this, conflict only ever goes up, and a
+      // relationship anybody has argued in enough times is permanently ruined
+      // however well it goes afterwards.
+      conflict: -1.1 * Math.min(weeksSince, 8),
     });
 
     // A romantic relationship that has been neglected long enough ends itself.
-    if (isRomantic(rel.type) && relationshipStrength(rel, sim.now) < 18 && weeksSince > 8) {
+    // A marriage does not: it takes far longer to reach that point, and when
+    // it gets there the player is told, rather than finding out later that the
+    // game quietly divorced them.
+    const married = rel.type === 'spouse';
+    const floor = married ? 8 : 18;
+    const patience = married ? 30 : 8;
+    if (isRomantic(rel.type) && relationshipStrength(rel, sim.now) < floor && weeksSince > patience) {
       rel.endedAt = sim.now;
-      rel.endReason = 'Drifted apart';
+      rel.endReason = married ? 'The marriage ended' : 'Drifted apart';
       const other = sim.universe.people[otherParty(rel, player.id)];
       sim.notify({
         category: 'relationships',

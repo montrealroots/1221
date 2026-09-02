@@ -183,11 +183,13 @@ export class Simulation {
   }
 
   private context(): CommandContext & { emit: (e: WorldEvent) => void } {
-    const sim = this;
+    // Arrow functions capture `this` without aliasing it, so the getters below
+    // always read the live universe rather than a snapshot of it.
+    const universe = () => this.universe;
     return {
-      sim,
-      get u() { return sim.universe; },
-      get now() { return sim.universe.now; },
+      sim: this,
+      get u() { return universe(); },
+      get now() { return universe().now; },
       emit: () => {
         throw new Error('emit is injected per-cascade by the event bus');
       },
@@ -720,20 +722,119 @@ export function snapshotUniverse(u: SaveUniverse): UniverseSnapshot {
   return { clone, logLengths };
 }
 
+/**
+ * Puts the universe back exactly as the snapshot found it.
+ *
+ * The subtle part is object identity. Swapping in the snapshot's clones would
+ * restore every *value* correctly while quietly invalidating every reference
+ * anything still holds: a caller that read `const player = sim.player` before a
+ * command, and keeps using it after that command failed, would be writing to a
+ * detached copy that is no longer part of the world. Those writes vanish, and
+ * nothing reports an error. That is how a player ended up with a live job the
+ * game did not think they had.
+ *
+ * So the restore writes the old values back *into* the objects that are already
+ * there, keeping their identity. Records that the failed command created are
+ * removed; records it deleted are put back. A reference taken before a command
+ * is still the right object afterwards, whether the command succeeded or not.
+ */
 export function restoreUniverse(target: SaveUniverse, snapshot: UniverseSnapshot): void {
-  const logs: Record<string, unknown[]> = {};
+  const record = target as unknown as Record<string, unknown>;
+  const clone = snapshot.clone as unknown as Record<string, unknown>;
+
+  // The append-only logs roll back by truncation; they were never cloned.
   for (const key of APPEND_ONLY_LOGS) {
-    const list = target[key] as unknown[];
-    list.length = snapshot.logLengths[key] ?? 0;
-    logs[key] = list;
+    (target[key] as unknown[]).length = snapshot.logLengths[key] ?? 0;
   }
-  for (const key of Object.keys(target)) {
+
+  for (const key of Object.keys(record)) {
     if ((APPEND_ONLY_LOGS as readonly string[]).includes(key)) continue;
-    delete (target as unknown as Record<string, unknown>)[key];
+    if (!(key in clone)) {
+      delete record[key];
+    }
   }
-  Object.assign(target, snapshot.clone);
-  for (const key of APPEND_ONLY_LOGS) {
-    (target as unknown as Record<string, unknown>)[key] = logs[key] as unknown[];
+
+  for (const [key, before] of Object.entries(clone)) {
+    if ((APPEND_ONLY_LOGS as readonly string[]).includes(key)) continue;
+    const now = record[key];
+
+    if (Array.isArray(before)) {
+      restoreList(now, before, record, key);
+      continue;
+    }
+    if (isPlainRecord(before) && isPlainRecord(now)) {
+      restoreCollection(now, before);
+      continue;
+    }
+    record[key] = before;
+  }
+}
+
+/** Whether a value is a plain object we can restore field by field. */
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/** Restores an id-keyed collection without replacing the objects in it. */
+function restoreCollection(now: Record<string, unknown>, before: Record<string, unknown>): void {
+  for (const id of Object.keys(now)) {
+    if (!(id in before)) delete now[id];
+  }
+  for (const [id, wasValue] of Object.entries(before)) {
+    const isValue = now[id];
+    if (isPlainRecord(wasValue) && isPlainRecord(isValue)) {
+      restoreObject(isValue, wasValue);
+    } else {
+      now[id] = wasValue;
+    }
+  }
+}
+
+/** Copies a snapshot's fields back into the live object, in place. */
+function restoreObject(live: Record<string, unknown>, before: Record<string, unknown>): void {
+  for (const field of Object.keys(live)) {
+    if (!(field in before)) delete live[field];
+  }
+  for (const [field, wasValue] of Object.entries(before)) {
+    const isValue = live[field];
+    if (isPlainRecord(wasValue) && isPlainRecord(isValue)) {
+      restoreObject(isValue, wasValue);
+      continue;
+    }
+    if (Array.isArray(wasValue) && Array.isArray(isValue)) {
+      // Keep the array object itself; anything holding it stays correct.
+      isValue.length = 0;
+      for (const entry of wasValue) isValue.push(entry);
+      continue;
+    }
+    live[field] = wasValue;
+  }
+}
+
+/**
+ * Restores an array of records in place. `scheduled` is the one that matters:
+ * the timeline holds a cursor into it and handlers hold items out of it.
+ */
+function restoreList(now: unknown, before: unknown[], owner: Record<string, unknown>, key: string): void {
+  if (!Array.isArray(now)) {
+    owner[key] = before;
+    return;
+  }
+  const living = new Map<string, Record<string, unknown>>();
+  for (const entry of now) {
+    if (isPlainRecord(entry) && typeof entry['id'] === 'string') living.set(entry['id'], entry);
+  }
+  now.length = 0;
+  for (const wasEntry of before) {
+    if (isPlainRecord(wasEntry) && typeof wasEntry['id'] === 'string') {
+      const live = living.get(wasEntry['id']);
+      if (live) {
+        restoreObject(live, wasEntry);
+        now.push(live);
+        continue;
+      }
+    }
+    now.push(wasEntry);
   }
 }
 

@@ -52,8 +52,12 @@ describe('a new universe boots and runs', () => {
 
   it('produces things for the player to decide about', () => {
     const sim = quickSave();
-    sim.advanceTo(sim.now + 60 * MS_DAY);
-    expect(openDecisions(sim).length).toBeGreaterThan(0);
+    // A settled character with a job and a roof does not have a crisis every
+    // week, so this is measured over a stretch of life rather than a fortnight.
+    sim.advanceTo(sim.now + 300 * MS_DAY);
+    const raised = Object.keys(sim.universe.decisions).length;
+    expect(raised, 'the Decision Center never received anything').toBeGreaterThan(0);
+    expect(openDecisions(sim).length, `${raised} decisions were raised but none are open`).toBeGreaterThan(0);
   });
 
   it('keeps money as the sum of postings', () => {

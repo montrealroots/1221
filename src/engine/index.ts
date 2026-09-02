@@ -17,7 +17,7 @@ import { costOfLiving } from './content/tax';
 
 import { registerFinance, recomputeCreditScore, netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
-import { registerWork, refreshOpenings, createLivingBills, JOB_TEMPLATES, hire } from './systems/work';
+import { registerWork, refreshOpenings, createLivingBills, JOB_TEMPLATES, hire, annualisedOpeningPay } from './systems/work';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
 import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
@@ -63,6 +63,11 @@ export function registerAllSystems(sim: Simulation): void {
   registerCompany(sim);
   registerWorld(sim);
 }
+
+/** How many times a recurring bill lands in a year. */
+const BILLINGS_PER_YEAR: Record<string, number> = {
+  weekly: 52, biweekly: 26, monthly: 12, quarterly: 4, annual: 1, once: 0,
+};
 
 /** Recurring world processes every save needs running. */
 function armWorldClock(sim: Simulation): void {
@@ -274,14 +279,33 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   // --- Employment ---------------------------------------------------------
+  // The starting job has to be one the starting life can be lived on. Handing
+  // somebody a twelve-hour-a-week reading gig and a flat whose rent is twice
+  // what it pays is not a hard start, it is an unplayable one: they are broke
+  // inside a year no matter what the player does.
   if (config.startWithJob) {
     const openings = Object.values(sim.universe.jobOpenings);
+    const annualOutgoings = Object.values(sim.universe.bills)
+      .filter((b) => b.payerId === player.id && b.active)
+      .reduce((sum, bill) => sum + bill.amount * (BILLINGS_PER_YEAR[bill.frequency] ?? 12), 0);
+    const needed = Math.round(annualOutgoings * 1.25);
+
+    const canLiveOnIt = openings.filter((o) => annualisedOpeningPay(o) >= needed);
+    const pool = canLiveOnIt.length > 0 ? canLiveOnIt : openings;
+
+    // Within what is affordable, take the job that suits who they are.
     const preferred = config.careerTrack === 'civilian' || config.careerTrack === 'none'
-      ? openings.find((o) => o.payBasis === 'salary') ?? openings[0]
-      : openings.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
-        ?? openings.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
-        ?? openings[0];
-    if (preferred) hire(sim, player, preferred);
+      ? pool.find((o) => o.payBasis === 'salary') ?? pool[0]
+      : pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
+        ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
+        ?? pool[0];
+
+    // If nothing on the board pays for the life, take the best-paying thing
+    // going rather than something that guarantees insolvency.
+    const chosen = canLiveOnIt.length > 0
+      ? preferred
+      : [...openings].sort((a, b) => annualisedOpeningPay(b) - annualisedOpeningPay(a))[0];
+    if (chosen) hire(sim, player, chosen);
   }
 
   // --- Health cover -------------------------------------------------------

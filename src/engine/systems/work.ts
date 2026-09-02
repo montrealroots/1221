@@ -8,7 +8,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Id, Job, JobApplication, JobOpening, PayBasis, Person } from '../domain/model';
+import type { ApplicationStage, Id, Job, JobApplication, JobOpening, PayBasis, Person } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
@@ -65,6 +65,24 @@ export const JOB_TEMPLATES: readonly JobTemplate[] = [
 export function registerWork(sim: Simulation): void {
   sim.onSchedule('work.shift', (item) => workShift(sim, item.payload.jobId as Id, item.durationMinutes ?? 480));
 
+  // A job keeps producing work. Laying out one fixed batch of shifts at hire
+  // and never topping it up means employment quietly stops after three months:
+  // the person still has the job, and never works another day of it.
+  sim.onSchedule('work.extend_rota', (item) => {
+    const job = sim.universe.jobs[item.payload.jobId as Id];
+    if (!job || job.endedAt) return;
+    scheduleShifts(sim, job, SHIFT_HORIZON_DAYS);
+    sim.schedule({
+      at: addDays(sim.now, SHIFT_HORIZON_DAYS - 14, sim.homeZone),
+      kind: 'work.extend_rota',
+      label: `Rota — ${job.employerName}`,
+      category: 'work',
+      payload: { jobId: job.id },
+      priority: 92,
+      refType: 'job', refId: job.id,
+    });
+  });
+
   sim.onSchedule('work.interview', (item) => {
     const app = sim.universe.jobApplications[item.payload.applicationId as Id];
     if (!app || app.stage !== 'interview') return;
@@ -81,6 +99,23 @@ export function registerWork(sim: Simulation): void {
     const job = sim.universe.jobs[item.payload.jobId as Id];
     if (!job || job.endedAt) return;
     performanceReview(sim, job);
+  });
+
+  sim.onSchedule('work.offer_expires', (item) => {
+    const app = sim.universe.jobApplications[item.payload.applicationId as Id];
+    if (!app || app.stage !== 'offer') return;
+    app.stage = 'withdrawn';
+    app.decidedAt = sim.now;
+    sim.resolveDecision('application', app.id);
+    const opening = sim.universe.jobOpenings[app.openingId];
+    sim.notify({
+      category: 'career',
+      title: `Offer withdrawn: ${opening?.title ?? 'a role'}`,
+      body: `${opening?.employerName ?? 'The employer'} needed an answer and did not get one. They have gone to someone else.`,
+      importance: 55,
+      route: '/workspace/jobs',
+    });
+    sim.emit('work.offer_expired', { applicationId: app.id });
   });
 
   sim.onSchedule('work.refresh_openings', () => {
@@ -198,7 +233,7 @@ export function registerWork(sim: Simulation): void {
       });
 
       const person = s.universe.people[job.personId];
-      if (person) person.jobId = undefined;
+      if (person && person.jobId === job.id) person.jobId = undefined;
 
       s.remember({
         category: 'career',
@@ -302,6 +337,17 @@ export function describePay(job: Job): string {
   }
 }
 
+/** What an advertised role would be worth over a year, before tax. */
+export function annualisedOpeningPay(opening: JobOpening): Money {
+  switch (opening.payBasis) {
+    case 'hourly': return Math.round(opening.payRate * opening.hoursPerWeek * 52);
+    case 'daily': return Math.round(opening.payRate * 250);
+    case 'salary': return opening.payRate;
+    case 'per_project': return Math.round(opening.payRate * 40);
+    default: return opening.payRate;
+  }
+}
+
 export function annualisedPay(job: Job): Money {
   switch (job.payBasis) {
     case 'hourly': return Math.round(job.payRate * job.hoursPerWeek * 52);
@@ -313,6 +359,12 @@ export function annualisedPay(job: Job): Money {
 }
 
 /** Creates a batch of openings appropriate to a city. */
+/** Stages where the employer is still considering the person. */
+const LIVE_APPLICATION_STAGES: readonly ApplicationStage[] = ['submitted', 'screening', 'interview', 'offer'];
+
+/** How long a job offer stays open before it is withdrawn. */
+const OFFER_WINDOW_DAYS = 10;
+
 export function refreshOpenings(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
@@ -320,9 +372,15 @@ export function refreshOpenings(sim: Simulation): void {
   const city = CITIES.require(cityId);
   const col = costOfLiving(cityId);
 
-  // Retire stale listings.
+  // Retire stale listings — but never one somebody is still in process on. An
+  // offer that cannot be accepted because the advert came down is not a
+  // closing date, it is a job vanishing out from under the person who got it.
+  const inProcess = new Set<Id>();
+  for (const app of Object.values(sim.universe.jobApplications)) {
+    if (LIVE_APPLICATION_STAGES.includes(app.stage)) inProcess.add(app.openingId);
+  }
   for (const [id, opening] of Object.entries(sim.universe.jobOpenings)) {
-    if (opening.closesAt < sim.now) delete sim.universe.jobOpenings[id];
+    if (opening.closesAt < sim.now && !inProcess.has(id)) delete sim.universe.jobOpenings[id];
   }
 
   const rng = sim.rng('job_openings', cityId, Math.floor(sim.now / (7 * MS_DAY)));
@@ -387,12 +445,28 @@ export function scoreCandidate(sim: Simulation, person: Person, opening: JobOpen
 
   const rng = sim.rng('candidate', person.id, opening.id);
 
+  // How much the job actually asks for. A counter shift and a head of
+  // development are not scored the same way: nobody's first job can require a
+  // work history, and weighting one heavily means an ordinary person can never
+  // start. The demands of the listing decide how much history matters.
+  const bar = opening.requirements.length === 0
+    ? 0
+    : clamp(opening.requirements.reduce((s, r) => s + r.min, 0) / opening.requirements.length / 70, 0, 1);
+  const historyWeight = 0.04 + bar * 0.24;
+
+  // Meeting the stated bar makes you a real candidate, and being contested
+  // matters much less once you are one.
+  const meetsTheBar = opening.requirements.every((r) => (person.skills[r.skill] ?? 0) >= r.min);
+  const competitionWeight = meetsTheBar ? -0.10 : -0.22;
+
   const { factors, score } = buildFactors([
-    { label: 'Skills against the requirements', detail: opening.requirements.length === 0 ? 'No specific requirements listed.' : `They asked for ${opening.requirements.map((r) => `${r.skill.replace(/_/g, ' ')} ${r.min}+`).join(', ')}.`, weight: 0.32, value: requirementFit },
-    { label: 'Work history', detail: `${experienceYears.toFixed(1)} years of employment on record.`, weight: 0.20, value: clamp(experienceYears / 5, 0, 1) },
+    { label: 'Skills against the requirements', detail: opening.requirements.length === 0 ? 'No specific requirements listed.' : `They asked for ${opening.requirements.map((r) => `${r.skill.replace(/_/g, ' ')} ${r.min}+`).join(', ')}. ${meetsTheBar ? 'You meet it.' : 'You are short on at least one.'}`, weight: 0.34, value: requirementFit },
+    { label: 'Work history', detail: bar === 0
+      ? `${experienceYears.toFixed(1)} years on record, and this job does not ask for any.`
+      : `${experienceYears.toFixed(1)} years of employment on record.`, weight: historyWeight, value: clamp(experienceYears / 5, 0, 1) },
     { label: 'How you came across', detail: 'Presentation, warmth and whether you seemed like someone they want around.', weight: 0.18, value: clamp((person.personality.extraversion * 0.5 + person.personality.agreeableness * 0.5) / 100, 0, 1) },
     { label: 'Reliability', detail: 'References, punctuality and whether you look like you will show up.', weight: 0.16, value: clamp(((person.attributes['reliability'] ?? 40) + (person.attributes['punctuality'] ?? 40)) / 200, 0, 1) },
-    { label: 'Competition for the role', detail: `${opening.competition} out of 100 for how contested this listing is.`, weight: -0.22, value: opening.competition / 100 },
+    { label: 'Competition for the role', detail: `${opening.competition} out of 100 for how contested this listing is.${meetsTheBar ? ' You are qualified, which takes most of the sting out of it.' : ''}`, weight: competitionWeight, value: opening.competition / 100 },
     { label: 'Other candidates', detail: 'Who else applied, which you have no way of knowing.', weight: 0.14, value: rng.float(0, 1), knowable: false },
   ]);
 
@@ -407,7 +481,7 @@ function screenApplication(sim: Simulation, app: JobApplication): void {
   const { score, factors } = scoreCandidate(sim, person, opening);
   app.score = Math.round(score * 100);
   const rng = sim.rng('screening', app.id);
-  const probability = clamp(score * 1.15 - 0.16, 0.03, 0.92);
+  const probability = clamp(score * 1.25 - 0.06, 0.03, 0.92);
   const roll = rng.next();
 
   if (roll >= probability) {
@@ -499,7 +573,18 @@ function decideApplication(sim: Simulation, app: JobApplication): void {
   }
 
   app.stage = 'offer';
+  const decideBy = addDays(sim.now, OFFER_WINDOW_DAYS, sim.homeZone);
+  sim.schedule({
+    at: decideBy,
+    kind: 'work.offer_expires',
+    label: `Offer expires — ${opening.title}`,
+    category: 'career',
+    payload: { applicationId: app.id },
+    priority: 44,
+    refType: 'application', refId: app.id,
+  });
   sim.requireDecision({
+    dueAt: decideBy,
     urgency: 74, category: 'career',
     title: `Job offer: ${opening.title}`,
     detail: `${opening.employerName} at ${formatMoney(opening.payRate)}${opening.payBasis === 'hourly' ? '/hour' : opening.payBasis === 'salary' ? '/year' : ''}.`,
@@ -543,7 +628,16 @@ export function hire(sim: Simulation, person: Person, opening: JobOpening): Job 
   person.jobId = job.id;
   if (person.careerTrack === 'none') person.careerTrack = 'civilian';
 
-  scheduleShifts(sim, job, 90);
+  scheduleShifts(sim, job, SHIFT_HORIZON_DAYS);
+  sim.schedule({
+    at: addDays(sim.now, SHIFT_HORIZON_DAYS - 14, sim.homeZone),
+    kind: 'work.extend_rota',
+    label: `Rota — ${job.employerName}`,
+    category: 'work',
+    payload: { jobId: job.id },
+    priority: 92,
+    refType: 'job', refId: job.id,
+  });
 
   sim.schedule({
     at: job.nextPayAt,
@@ -580,8 +674,15 @@ export function hire(sim: Simulation, person: Person, opening: JobOpening): Job 
 }
 
 /** Lays down shifts for the next N days. Re-armed as the horizon is consumed. */
+/** How far ahead a rota is laid out, and how often it is extended. */
+const SHIFT_HORIZON_DAYS = 90;
+
 export function scheduleShifts(sim: Simulation, job: Job, days: number): void {
   const shiftHours = Math.max(3, Math.round(job.hoursPerWeek / Math.max(1, job.workDays.length)));
+  const existing = new Set<number>();
+  for (const item of sim.universe.scheduled) {
+    if (item.kind === 'work.shift' && item.refId === job.id && item.status === 'pending') existing.add(item.at);
+  }
   for (let d = 0; d <= days; d++) {
     const day = addDays(sim.now, d, sim.homeZone);
     const parts = zonedParts(day, sim.homeZone);
@@ -589,6 +690,8 @@ export function scheduleShifts(sim: Simulation, job: Job, days: number): void {
     const at = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: job.startHour }, sim.homeZone);
     if (at <= sim.now) continue;
     if (job.endedAt && at > job.endedAt) break;
+    // The rota is extended before it runs out, so the windows overlap.
+    if (existing.has(at)) continue;
     sim.schedule({
       at,
       kind: 'work.shift',
@@ -637,9 +740,13 @@ function workShift(sim: Simulation, jobId: Id, durationMinutes: number): void {
   const hours = durationMinutes / 60;
   const ready = readiness(person) / 100;
 
-  person.wellbeing.energy = clamp(person.wellbeing.energy - hours * 6.5 * (2 - ready), 0, 100);
-  person.wellbeing.stress = clamp(person.wellbeing.stress + hours * 1.6 * (2 - ready), 0, 100);
-  person.wellbeing.nourishment = clamp(person.wellbeing.nourishment - hours * 3.4, 0, 100);
+  // A hard day costs more when you are already worn out, but not without
+  // limit: an unbounded multiplier makes a tired week compound into a spiral
+  // nothing can pull you out of, which is neither realistic nor playable.
+  const strain = clamp(1.45 - ready * 0.55, 0.9, 1.45);
+  person.wellbeing.energy = clamp(person.wellbeing.energy - hours * 4.6 * strain, 0, 100);
+  person.wellbeing.stress = clamp(person.wellbeing.stress + hours * 1.25 * strain, 0, 100);
+  person.wellbeing.nourishment = clamp(person.wellbeing.nourishment - hours * 2.1, 0, 100);
 
   const shiftQuality = clamp(ready * 100 + (person.attributes['reliability'] ?? 50) * 0.2 - 10, 0, 100);
   job.performance = clamp(job.performance * 0.94 + shiftQuality * 0.06, 0, 100);
@@ -683,12 +790,18 @@ function performanceReview(sim: Simulation, job: Job): void {
 }
 
 export function terminate(sim: Simulation, job: Job, reason: string): void {
+  // Ending a job twice must not happen: a stale scheduled item firing against
+  // an old job would otherwise take the person's current job away from them.
+  if (job.endedAt !== undefined) return;
+
   job.endedAt = sim.now;
   job.endReason = reason;
   sim.timeline.cancelFor('job', job.id, sim.now);
   const person = sim.universe.people[job.personId];
   if (person) {
-    person.jobId = undefined;
+    // Only clear the pointer if it is this job it points at. Somebody who has
+    // already moved on keeps the job they moved on to.
+    if (person.jobId === job.id) person.jobId = undefined;
     person.wellbeing.stress = clamp(person.wellbeing.stress + 18, 0, 100);
     person.wellbeing.morale = clamp(person.wellbeing.morale - 20, 0, 100);
   }

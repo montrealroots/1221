@@ -38,6 +38,11 @@ export function SlateApp() {
     try {
       // A seed derived from the slot and the moment of creation, so two saves
       // made from identical settings still become different worlds.
+      //
+      // This is the one place real time is legitimately read: it happens before
+      // a universe exists, and it is entropy for a seed rather than a reading
+      // of the world clock. Everything after this point goes through the clock.
+      // eslint-disable-next-line no-restricted-syntax
       const seed = `${slot}-${config.firstName}${config.lastName}-${Date.now().toString(36)}`;
       const sim = createSave(slot, seed, config);
       refreshMeta(sim);

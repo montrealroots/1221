@@ -181,6 +181,7 @@ export function registerLife(sim: Simulation): void {
       s.advanceTo(wakeAt);
 
       applySleep(person, hours, quality);
+      person.lastSleptAt = s.now;
       const recovered = person.wellbeing.energy - before.energy;
 
       s.emit('life.woke', { personId: person.id, hours, quality, recovered });
@@ -336,6 +337,7 @@ export function registerLife(sim: Simulation): void {
       s.advanceTo(s.now + (item.category === 'dining' ? 55 : 15) * MS_MINUTE);
       person.wellbeing.nourishment = clamp(person.wellbeing.nourishment + nourishment, 0, 100);
       person.wellbeing.morale = clamp(person.wellbeing.morale + item.quality * 0.03, 0, 100);
+      person.lastAteAt = s.now;
       s.emit('life.ate', { personId: person.id, catalogId: item.id, nourishment, cost });
       return { nourishment, cost };
     },
@@ -421,6 +423,14 @@ function applyActivity(sim: Simulation, person: Person, def: ActivityDef, hours:
 }
 
 /** Runs once per local day: property wear, relationship drift, weekly upkeep. */
+/**
+ * What living on autopilot tops out at. A player who actually manages sleep,
+ * food and downtime should always be able to do better than these.
+ */
+const COASTING_ENERGY_CEILING = 74;
+const COASTING_STRESS_FLOOR = 14;
+const COASTING_NOURISHMENT_TARGET = 76;
+
 export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
@@ -446,7 +456,107 @@ export function dailyRollover(sim: Simulation): void {
     w.condition = clamp(w.condition + (target - w.condition) * 0.02, 0, 100);
   }
 
+  liveTheUnattendedDay(sim);
+
   sim.emit('world.day_rollover', { date: sim.now });
+}
+
+/**
+ * People sleep and eat whether or not anybody tells them to.
+ *
+ * The player directing a night's sleep or a meal is always better than this:
+ * they choose the hours, they choose the food, and they get the full benefit.
+ * But a character who is simply carried forward by the clock — which is what
+ * Skip to Event and a long jump both do — must not starve in a fortnight and
+ * stay ruined forever. A default night is a mediocre night, not a free one.
+ */
+function liveTheUnattendedDay(sim: Simulation): void {
+  for (const person of Object.values(sim.universe.people)) {
+    if (person.tier !== 'full' && person.tier !== 'active') continue;
+    const w = person.wellbeing;
+
+    // A night they did not plan. Shorter, poorer, and it does not clear debt
+    // the way a deliberate one does.
+    const sinceSlept = person.lastSleptAt === undefined ? Number.POSITIVE_INFINITY : sim.now - person.lastSleptAt;
+    if (sinceSlept >= 20 * MS_HOUR) {
+      const quality = sleepQuality(sim, person) * 0.82;
+      const hours = clamp(6.4 - w.stress * 0.012, 4.2, 7.4);
+      applySleep(person, hours, quality);
+      person.lastSleptAt = sim.now;
+
+      // Coasting keeps you going; it does not get you to your best. Choosing
+      // when and how long to sleep is worth something, so autopilot stops
+      // short of what a deliberate night reaches.
+      w.energy = Math.min(w.energy, COASTING_ENERGY_CEILING);
+      w.stress = Math.max(w.stress, COASTING_STRESS_FLOOR);
+    }
+
+    // Meals. Out of the pantry if there is any, otherwise the cheapest thing
+    // nearby, and only while they can actually pay for it. Somebody working
+    // eleven-hour days eats more than somebody who is not, so this tops up to
+    // a target rather than counting out a fixed three plates. Going hungry
+    // because the money ran out is a real outcome; going hungry because the
+    // simulation would only serve you three times is not.
+    for (let meal = 0; meal < 6 && w.nourishment < COASTING_NOURISHMENT_TARGET; meal++) {
+      if (!eatWhateverIsAround(sim, person)) break;
+    }
+
+    // Going without food is a real consequence, not a stuck number.
+    if (w.nourishment < 25) {
+      w.energy = clamp(w.energy - 6, 0, 100);
+      w.condition = clamp(w.condition - 0.6, 0, 100);
+      w.morale = clamp(w.morale - 1.2, 0, 100);
+    }
+  }
+}
+
+/**
+ * The default meal: pantry first, then the cheapest thing they can afford.
+ * Returns whether they actually managed to eat.
+ */
+function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
+  const w = person.wellbeing;
+
+  const stock = Object.values(sim.universe.pantry)
+    .filter((i) => i.quantity > 0 && i.expiresAt > sim.now && i.householdId === person.householdId)
+    .sort((a, b) => a.expiresAt - b.expiresAt)[0];
+  if (stock) {
+    stock.quantity = Math.max(0, stock.quantity - 1);
+    if (stock.quantity <= 0.0001) delete sim.universe.pantry[stock.id];
+    const item = CATALOG.get(stock.catalogId);
+    w.nourishment = clamp(w.nourishment + (item?.nourishment ?? 15), 0, 100);
+    person.lastAteAt = sim.now;
+    return true;
+  }
+
+  if (!person.isPlayer) {
+    // NPCs feed themselves off-screen; their money is not modelled.
+    w.nourishment = clamp(w.nourishment + 30, 0, 100);
+    person.lastAteAt = sim.now;
+    return true;
+  }
+
+  const accountId = person.primaryAccountId;
+  if (!accountId) return false;
+  const col = costOfLiving(person.currentLocationId);
+
+  // Somebody feeding themselves without a plan shops, they do not eat out
+  // three times a day. Pick whatever gives the most food for the money.
+  const best = CATALOG.all()
+    .filter((i) => (i.category === 'groceries' || i.category === 'dining') && (i.nourishment ?? 0) > 0)
+    .map((i) => {
+      const retailer = i.category === 'groceries' ? 'valuemart' : 'cornerstore';
+      const cost = Math.max(1, retailPrice(i.id, retailer, col));
+      return { item: i, cost, value: (i.nourishment ?? 0) / cost };
+    })
+    .sort((a, b) => b.value - a.value)[0];
+  if (!best) return false;
+
+  if (sim.ledger.availableFunds(accountId) < best.cost) return false;
+  sim.expense(accountId, best.cost, `${best.item.name} — eating without a plan`, 'food');
+  w.nourishment = clamp(w.nourishment + (best.item.nourishment ?? 15), 0, 100);
+  person.lastAteAt = sim.now;
+  return true;
 }
 
 /** How many hours until the player must be somewhere. */
