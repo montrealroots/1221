@@ -146,6 +146,7 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     },
     idempotency: {},
     counters: {},
+    engineFailures: [],
   };
 }
 

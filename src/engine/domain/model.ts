@@ -1255,6 +1255,12 @@ export interface Role {
   contractId?: Id;
   /** People currently in the running. */
   shortlistIds: Id[];
+  /**
+   * Every audition submitted for this role. Kept on the role so a casting
+   * decision never has to scan the whole universe of auditions — that scan is
+   * quadratic over a long career.
+   */
+  auditionIds: Id[];
 }
 
 export type AuditionStage = 'submitted' | 'self_tape' | 'first_read' | 'callback' | 'chemistry_read' | 'screen_test' | 'offer' | 'passed' | 'booked';
@@ -1716,7 +1722,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 8;
+export const SAVE_SCHEMA_VERSION = 9;
 
 export interface SaveMeta {
   id: Id;
@@ -1845,4 +1851,11 @@ export interface SaveUniverse {
 
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;
+
+  /**
+   * Commands the engine itself raised while the clock was moving that failed.
+   * Kept so a background failure is visible in a diagnostic report rather than
+   * disappearing silently. Capped: this is a symptom log, not history.
+   */
+  engineFailures: { at: Instant; kind: string; error: string }[];
 }

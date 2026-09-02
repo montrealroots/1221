@@ -56,6 +56,7 @@ export function registerCasting(sim: Simulation): void {
         payHigh: p.payHigh ?? Math.round(midpoint * 1.6),
         status: 'open',
         shortlistIds: [],
+        auditionIds: [],
       };
       s.universe.roles[role.id] = role;
       s.emit('cast.role_created', { roleId: role.id, projectId: project.id, billing: p.billing });
@@ -107,8 +108,9 @@ export function registerCasting(sim: Simulation): void {
       if (role.status !== 'casting') throw new CommandError('Casting on that role is closed.');
       const player = s.player;
 
-      const existing = Object.values(s.universe.auditions).find((a) => a.roleId === role.id && a.personId === player.id);
-      if (existing) throw new CommandError('You have already submitted for that.');
+      if (auditionsFor(s, role).some((a) => a.personId === player.id)) {
+        throw new CommandError('You have already submitted for that.');
+      }
 
       const age = ageOn(player.birthInstant, s.now, s.homeZone);
       if (age < role.ageRange[0] - 4 || age > role.ageRange[1] + 6) {
@@ -400,6 +402,20 @@ function ensureCandidate(sim: Simulation, role: Role, index: number): Person {
   return person;
 }
 
+/**
+ * The candidates for one role. Reads the role's own index, so cost is
+ * proportional to the people in that room rather than to every audition the
+ * save has ever recorded.
+ */
+export function auditionsFor(sim: Simulation, role: Role): Audition[] {
+  const out: Audition[] = [];
+  for (const id of role.auditionIds) {
+    const audition = sim.universe.auditions[id];
+    if (audition) out.push(audition);
+  }
+  return out;
+}
+
 function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: boolean): Audition {
   const project = sim.universe.projects[role.projectId];
   const audition: Audition = {
@@ -413,6 +429,7 @@ function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: b
     isPlayer,
   };
   sim.universe.auditions[audition.id] = audition;
+  role.auditionIds.push(audition.id);
 
   if (isPlayer) {
     // The player gets a real appointment, at a real place and time.
@@ -556,7 +573,7 @@ function decideRole(sim: Simulation, roleId: Id): void {
   const project = sim.universe.projects[role.projectId];
   if (!project) return;
 
-  const auditions = Object.values(sim.universe.auditions).filter((a) => a.roleId === role.id);
+  const auditions = auditionsFor(sim, role);
   // Score anyone who has not been scored yet, so NPCs are evaluated identically.
   for (const audition of auditions) {
     if (audition.totalScore === undefined && audition.stage !== 'passed') {
@@ -741,7 +758,7 @@ export function generateOpportunities(sim: Simulation): void {
   if (count <= 0) return;
 
   const openRoles = Object.values(sim.universe.roles).filter(
-    (r) => r.status === 'casting' && !Object.values(sim.universe.auditions).some((a) => a.roleId === r.id && a.personId === player.id),
+    (r) => r.status === 'casting' && !auditionsFor(sim, r).some((a) => a.personId === player.id),
   );
 
   let offered = 0;

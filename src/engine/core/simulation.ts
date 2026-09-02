@@ -384,6 +384,21 @@ export class Simulation {
    * Runs a command. If it throws, the universe is restored to exactly the state
    * it was in before, so a half-created house or a paid-but-not-delivered order
    * can never exist.
+   *
+   * There are three boundaries a command can run inside:
+   *
+   * - A player command, at the top level. It snapshots the universe and rolls
+   *   back completely on failure. This is the guarantee the player relies on.
+   * - A nested command, inside another command. It shares the outer snapshot,
+   *   so a failure propagates and takes the whole outer command down with it.
+   *   That is deliberate: a greenlight whose producer agreement cannot be
+   *   executed must not complete.
+   * - An engine command, raised by a scheduled handler while the clock is
+   *   moving. The scheduled item is already the unit of isolation there — the
+   *   advance loop marks a failing item missed and carries on — so these do not
+   *   snapshot. Cloning the whole universe several hundred times a simulated
+   *   year is what makes a long save unplayable, and it buys nothing the item
+   *   boundary does not already provide.
    */
   execute<R = unknown>(command: Command<Record<string, unknown>, R>): CommandResult<R> {
     const handler = this.commandHandlers.get(command.kind);
@@ -406,6 +421,25 @@ export class Simulation {
         this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
       }
       return { ok: true, value };
+    }
+
+    // Raised by a scheduled handler mid-advance: the item is the boundary.
+    if (this.advancing) {
+      this.depth++;
+      try {
+        const value = (handler as CommandHandler<Record<string, unknown>, R>)(command.payload, this.context());
+        if (command.idempotencyKey) {
+          this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
+        }
+        return { ok: true, value };
+      } catch (err) {
+        const message = err instanceof CommandError ? err.message : `${command.kind} failed: ${(err as Error).message}`;
+        this.universe.engineFailures.push({ at: this.now, kind: command.kind, error: message });
+        if (this.universe.engineFailures.length > 200) this.universe.engineFailures.shift();
+        return { ok: false, error: message };
+      } finally {
+        this.depth--;
+      }
     }
 
     const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);

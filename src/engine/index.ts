@@ -420,6 +420,26 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   record['idempotency'] ??= {};
   record['counters'] ??= {};
+  record['engineFailures'] ??= [];
+
+  // Schema 9 moved casting rooms onto the role. A save written before that has
+  // the auditions but no index, so rebuild it from the auditions themselves
+  // rather than losing anybody's casting history.
+  const roles = record['roles'] as Record<string, { id: string; auditionIds?: string[] }>;
+  const auditions = record['auditions'] as Record<string, { id: string; roleId: string }>;
+  let indexed = 0;
+  for (const role of Object.values(roles)) {
+    if (Array.isArray(role.auditionIds)) continue;
+    role.auditionIds = [];
+    indexed++;
+  }
+  if (indexed > 0) {
+    for (const audition of Object.values(auditions)) {
+      const role = roles[audition.roleId];
+      if (role?.auditionIds && !role.auditionIds.includes(audition.id)) role.auditionIds.push(audition.id);
+    }
+    steps.push(`Rebuilt the casting-room index on ${indexed} role${indexed === 1 ? '' : 's'}.`);
+  }
   record['tutorial'] ??= { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false };
   record['sandbox'] ??= { enabled: false, maxAttributesApplied: false, allTraitsGranted: false, unlimitedFunds: false, ignoreAuthority: false, log: [] };
   if (typeof record['__idCounter'] !== 'number') {

@@ -24,6 +24,17 @@ const TIER_BUDGET: Record<SimulationTier, number> = {
   dormant: Number.POSITIVE_INFINITY,
 };
 
+/**
+ * How long a settled casting room is kept before the NPC reads in it are
+ * released. Long enough that a player looking back over a season still sees who
+ * was up for what; short enough that a ten-year career does not carry tens of
+ * thousands of dead records.
+ */
+const AUDITION_RETENTION_DAYS = 540;
+
+/** How long answered or expired decisions stay in the save. */
+const DECISION_RETENTION_DAYS = 180;
+
 export function registerWorld(sim: Simulation): void {
   sim.onSchedule('world.tick', () => {
     runWorldTick(sim);
@@ -310,6 +321,37 @@ function keepIndustryAlive(sim: Simulation): void {
 /** Keeps the save from growing without bound over a long life. */
 function prune(sim: Simulation): void {
   sim.timeline.prune(sim.now, 400);
+
+  // Auditions are the fastest-growing record in the universe: every open role
+  // draws a room full of NPCs. The player's own auditions are career history
+  // and are kept; a stranger's read for a part that was cast two years ago is
+  // not, and the audit record already preserves what the player was told about
+  // it. Rooms are only cleared once the role itself is settled.
+  const auditionCutoff = sim.now - AUDITION_RETENTION_DAYS * MS_DAY;
+  for (const role of Object.values(sim.universe.roles)) {
+    if (role.status !== 'cast' && role.status !== 'closed') continue;
+    if (role.auditionIds.length === 0) continue;
+    const kept: Id[] = [];
+    for (const id of role.auditionIds) {
+      const audition = sim.universe.auditions[id];
+      if (!audition) continue;
+      const settled = audition.decidedAt !== undefined && audition.decidedAt < auditionCutoff;
+      if (audition.isPlayer || audition.personId === role.castPersonId || !settled) {
+        kept.push(id);
+        continue;
+      }
+      delete sim.universe.auditions[id];
+    }
+    role.auditionIds = kept;
+  }
+
+  // Decisions the player answered, ignored or let expire stop taking up room.
+  for (const [id, decision] of Object.entries(sim.universe.decisions)) {
+    const closedAt = decision.resolvedAt ?? decision.dismissedAt;
+    if (closedAt !== undefined && sim.now - closedAt > DECISION_RETENTION_DAYS * MS_DAY) {
+      delete sim.universe.decisions[id];
+    }
+  }
 
   // Expired listings nobody is looking at.
   for (const [id, listing] of Object.entries(sim.universe.vehicleListings)) {
