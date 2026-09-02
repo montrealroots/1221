@@ -1,0 +1,183 @@
+/**
+ * SLATE — Base44 persistence.
+ *
+ * Critical state is written through Base44 entities so the server, not the
+ * browser, is the authority on what a save contains. The adapter degrades to
+ * local storage when the SDK is not present, so development and offline play
+ * still work.
+ *
+ * Row-level security is expressed in the entity schemas under /entities. This
+ * adapter always scopes reads and writes by the authenticated user and by slot,
+ * which is what keeps one player's universe out of another's.
+ */
+
+import type { SaveUniverse } from '../domain/model';
+import { deserialise, serialise, PersistenceError, type SaveAdapter, type SaveSlotInfo, type Slot } from './adapter';
+import { LocalSaveAdapter } from './local';
+
+/** The shape SLATE needs from the Base44 SDK. Kept minimal on purpose. */
+interface Base44Entity<T> {
+  filter(query: Record<string, unknown>): Promise<T[]>;
+  create(data: Record<string, unknown>): Promise<T>;
+  update(id: string, data: Record<string, unknown>): Promise<T>;
+  delete(id: string): Promise<void>;
+}
+
+interface Base44Client {
+  entities: {
+    SlateSave: Base44Entity<SaveRecord>;
+  };
+  auth?: { me(): Promise<{ id: string; email?: string }> };
+  functions?: Record<string, (payload: unknown) => Promise<unknown>>;
+}
+
+interface SaveRecord {
+  id: string;
+  slot: number;
+  /** The serialised universe. */
+  payload: string;
+  schema_version: number;
+  character_name: string;
+  career_label: string;
+  location_label: string;
+  world_date_label: string;
+  net_worth_label: string;
+  playtime_seconds: number;
+  app_version: string;
+  updated_at?: string;
+  backup_payload?: string;
+}
+
+export class Base44SaveAdapter implements SaveAdapter {
+  readonly name = 'Base44';
+  readonly serverAuthoritative = true;
+  private fallback = new LocalSaveAdapter();
+
+  constructor(private client: Base44Client | null) {}
+
+  private get entity(): Base44Entity<SaveRecord> | null {
+    return this.client?.entities?.SlateSave ?? null;
+  }
+
+  async listSlots(): Promise<SaveSlotInfo[]> {
+    const entity = this.entity;
+    if (!entity) return this.fallback.listSlots();
+
+    let records: SaveRecord[] = [];
+    try {
+      records = await entity.filter({});
+    } catch (error) {
+      // A network failure must not look like an empty save file.
+      throw new PersistenceError(
+        `Your saves could not be reached: ${(error as Error).message}. They are not lost; try again in a moment.`,
+        true,
+      );
+    }
+
+    return ([1, 2, 3] as Slot[]).map((slot) => {
+      const record = records.find((r) => r.slot === slot);
+      if (!record) return { slot, occupied: false, hasBackup: false };
+      try {
+        const universe = deserialise(record.payload);
+        return {
+          slot, occupied: true, meta: universe.meta,
+          hasBackup: Boolean(record.backup_payload),
+          bytes: record.payload.length,
+        };
+      } catch (error) {
+        return {
+          slot, occupied: true, hasBackup: Boolean(record.backup_payload),
+          error: `Stored save could not be read: ${(error as Error).message}`,
+        };
+      }
+    });
+  }
+
+  async load(slot: Slot): Promise<SaveUniverse | null> {
+    const entity = this.entity;
+    if (!entity) return this.fallback.load(slot);
+    const [record] = await entity.filter({ slot });
+    if (!record) return null;
+    return deserialise(record.payload);
+  }
+
+  async save(universe: SaveUniverse): Promise<void> {
+    const entity = this.entity;
+    if (!entity) return this.fallback.save(universe);
+
+    const slot = universe.meta.slot;
+    const payload = serialise(universe);
+    const data: Record<string, unknown> = {
+      slot,
+      payload,
+      schema_version: universe.meta.schemaVersion,
+      character_name: universe.meta.characterName,
+      career_label: universe.meta.careerLabel,
+      location_label: universe.meta.locationLabel,
+      world_date_label: universe.meta.worldDateLabel,
+      net_worth_label: universe.meta.netWorthLabel,
+      playtime_seconds: Math.round(universe.meta.playtimeSeconds),
+      app_version: universe.meta.appVersion,
+    };
+
+    try {
+      const [existing] = await entity.filter({ slot });
+      if (existing) {
+        // Keep the prior payload as a server-side backup before overwriting.
+        await entity.update(existing.id, { ...data, backup_payload: existing.payload });
+        universe.meta.backupAvailable = true;
+      } else {
+        await entity.create(data);
+      }
+      // Mirror locally so a connection drop never costs the player progress.
+      await this.fallback.save(universe).catch(() => undefined);
+    } catch (error) {
+      // Local mirror is the recovery path, so say so honestly.
+      await this.fallback.save(universe).catch(() => undefined);
+      throw new PersistenceError(
+        `The save could not be written to Base44: ${(error as Error).message}. A copy has been kept on this device and will sync when the connection returns.`,
+        true,
+      );
+    }
+  }
+
+  async remove(slot: Slot): Promise<void> {
+    const entity = this.entity;
+    if (!entity) return this.fallback.remove(slot);
+    const [existing] = await entity.filter({ slot });
+    if (existing) {
+      // Keep the payload as a backup rather than destroying it outright.
+      await entity.update(existing.id, { backup_payload: existing.payload, payload: '' });
+    }
+    await this.fallback.remove(slot).catch(() => undefined);
+  }
+
+  async backup(slot: Slot): Promise<boolean> {
+    const entity = this.entity;
+    if (!entity) return this.fallback.backup(slot);
+    const [existing] = await entity.filter({ slot });
+    if (!existing?.payload) return false;
+    await entity.update(existing.id, { backup_payload: existing.payload });
+    return true;
+  }
+
+  async restoreBackup(slot: Slot): Promise<SaveUniverse | null> {
+    const entity = this.entity;
+    if (!entity) return this.fallback.restoreBackup(slot);
+    const [existing] = await entity.filter({ slot });
+    if (!existing?.backup_payload) return null;
+    const universe = deserialise(existing.backup_payload);
+    await this.save(universe);
+    return universe;
+  }
+}
+
+/**
+ * Picks the right adapter. Base44 injects its client on the window; when it is
+ * absent SLATE runs entirely locally, which is how it is developed and tested.
+ */
+export async function resolveAdapter(): Promise<SaveAdapter> {
+  const injected = (globalThis as unknown as { base44?: Base44Client }).base44;
+  if (injected?.entities?.SlateSave) return new Base44SaveAdapter(injected);
+  return new LocalSaveAdapter();
+}

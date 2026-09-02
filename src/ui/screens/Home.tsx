@@ -1,0 +1,268 @@
+/**
+ * SLATE — HOME.
+ *
+ * Immediate life. Where am I, what day is it, what happens next, what needs
+ * attention, how am I doing. A command surface, not a place to bury depth.
+ */
+
+import { useGame, useWorld } from '@/app/game-context';
+import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
+import { TutorialCard } from '@/ui/shell/Tutorial';
+import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
+import { nextCommitment, upcoming } from '@/engine/world/calendar';
+import { netWorth } from '@/engine/systems/finance';
+import { readiness, wellbeingSummary } from '@/engine/systems/life';
+import { activeProjects } from '@/engine/systems/film';
+import { CITIES } from '@/engine/content/geography';
+import {
+  formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
+} from '@/engine/core/time';
+import { formatMoney } from '@/engine/core/money';
+
+export function Home() {
+  const { sim, navigate, run } = useGame();
+  const snapshot = useWorld(lifeSnapshot);
+  const decisions = useWorld(openDecisions);
+  const next = useWorld(nextCommitment);
+  const soon = useWorld((s) => upcoming(s, 6));
+  const worth = useWorld((s) => netWorth(s, s.player.id));
+  const projects = useWorld((s) => activeProjects(s, s.player.id).slice(0, 3));
+  const unread = useWorld(unreadNotifications);
+
+  const player = snapshot.player;
+  const city = snapshot.city ?? CITIES.get(player.currentLocationId);
+  const ready = readiness(player);
+  const accounts = useWorld((s) => s.ledger.accountsOf(s.player.id));
+  const primary = accounts.find((a) => a.id === player.primaryAccountId) ?? accounts[0];
+
+  return (
+    <>
+      <div className="page-head">
+        <div className="eyebrow">{formatWeekdayDate(sim.now, sim.zone)}</div>
+        <h1>Good {partOfDay(sim.now, sim.zone)}, {player.firstName}.</h1>
+        <p className="muted">
+          {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
+          {zoneAbbreviation(sim.now, sim.zone)} · {seasonOf(sim.now, sim.zone, city?.latitude ?? 34)}
+        </p>
+      </div>
+
+      <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
+        <Panel
+          title="What needs you"
+          subtitle={decisions.length === 0 ? 'Nothing is waiting on a decision.' : `${decisions.length} open`}
+          flush
+          actions={unread.length > 0 ? (
+            <button className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
+              Mark {unread.length} read
+            </button>
+          ) : undefined}
+        >
+          {decisions.length === 0 ? (
+            <Empty
+              title="Nothing pressing"
+              body="No bills overdue, no offers expiring, no conflicts on the calendar. Go and do something you want to do."
+            />
+          ) : (
+            <div className="list">
+              {decisions.slice(0, 6).map((decision) => (
+                <div
+                  key={decision.id}
+                  className="decision"
+                  data-urgency={decision.urgency >= 85 ? 'critical' : decision.urgency >= 65 ? 'high' : 'normal'}
+                >
+                  <div className="decision-urgency" aria-hidden="true" />
+                  <div className="grow">
+                    <div className="row-between">
+                      <span className="small strong">{decision.title}</span>
+                      {decision.dueAt !== undefined && (
+                        <span className={`xs ${decision.dueAt < sim.now ? 'negative' : 'dim'}`}>
+                          {decision.dueAt < sim.now ? 'Overdue' : formatRelative(decision.dueAt, sim.now)}
+                        </span>
+                      )}
+                    </div>
+                    <p className="xs muted" style={{ margin: '2px 0 0' }}>{decision.detail}</p>
+                    <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+                      {decision.actions.map((action, index) => (
+                        <button
+                          key={action.label}
+                          className="btn btn-sm btn-primary"
+                          onClick={() => run('world.take_decision_action', { decisionId: decision.id, actionIndex: index })}
+                        >
+                          {action.label}
+                        </button>
+                      ))}
+                      <button className="btn btn-sm" onClick={() => navigate(decision.route)}>
+                        Open
+                      </button>
+                      <button
+                        className="btn btn-ghost btn-sm"
+                        onClick={() => run('world.dismiss_decision', { decisionId: decision.id })}
+                      >
+                        Dismiss
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {decisions.length > 6 && (
+                <div className="xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
+                  {decisions.length - 6} more waiting.
+                </div>
+              )}
+            </div>
+          )}
+        </Panel>
+
+        <div className="col gap-4">
+          <Panel title="What happens next" tight>
+            {next ? (
+              <>
+                <div className="stat" style={{ marginBottom: 'var(--s3)' }}>
+                  <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
+                  <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{next.title}</span>
+                  <span className="stat-note">
+                    {formatDate(next.at, sim.zone)} at {formatTime(next.at, sim.zone)}
+                    {next.locationId && next.locationId !== player.currentLocationId && (
+                      <span className="negative"> · you are not in {CITIES.get(next.locationId)?.name}</span>
+                    )}
+                  </span>
+                </div>
+                <button className="btn btn-sm" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+                  Open calendar
+                </button>
+              </>
+            ) : (
+              <p className="muted small">Nothing scheduled. The day is yours.</p>
+            )}
+
+            {soon.length > 1 && (
+              <>
+                <hr className="divider" />
+                <div className="col gap-2">
+                  {soon.slice(1, 5).map((entry) => (
+                    <div key={entry.id} className="row-between">
+                      <span className="small truncate">{entry.title}</span>
+                      <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </Panel>
+
+          <Panel title="How you are" tight>
+            <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>{wellbeingSummary(player)}</p>
+            <div className="col gap-3">
+              <Meter label="Energy" value={player.wellbeing.energy} />
+              <Meter label="Stress" value={player.wellbeing.stress} invert />
+              <Meter label="Readiness" value={ready} hint="How well you will perform at anything right now." />
+            </div>
+            <button className="btn btn-sm" style={{ marginTop: 'var(--s3)' }} onClick={() => navigate('/workspace/wellbeing', 'Wellbeing')}>
+              Wellbeing
+            </button>
+          </Panel>
+        </div>
+      </div>
+
+      <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
+        <Panel title="Money" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/bank', 'Bank')}>Bank</button>}>
+          <div className="col gap-3">
+            <Stat
+              label={primary?.name ?? 'No account'}
+              value={<MoneyText amount={primary?.balance ?? 0} />}
+            />
+            <Stat label="Net worth" value={<MoneyText amount={worth.total} compact />} note={`${formatMoney(worth.assets, { cents: false })} in assets`} />
+            {worth.liabilities > 0 && (
+              <Stat label="Owed" value={<span className="mono negative">{formatMoney(worth.liabilities, { cents: false })}</span>} />
+            )}
+          </div>
+        </Panel>
+
+        <Panel title="Work" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Work</button>}>
+          {snapshot.job ? (
+            <div className="col gap-3">
+              <Stat label={snapshot.job.employerName} value={<span style={{ fontSize: 'var(--size-md)' }}>{snapshot.job.title}</span>} />
+              <Meter label="Performance" value={snapshot.job.performance} />
+              <Meter label="Attendance" value={snapshot.job.attendance} />
+            </div>
+          ) : (
+            <div className="col gap-2">
+              <p className="small muted">You are not employed.</p>
+              <button className="btn btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Find work</button>
+            </div>
+          )}
+        </Panel>
+
+        <Panel title="Standing" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/character', 'Character')}>Character</button>}>
+          <div className="col gap-3">
+            <Meter label="Public fame" value={player.reputation.publicFame} />
+            <Meter label="Professional reputation" value={player.reputation.professionalReputation} />
+            <Meter label="Industry demand" value={player.reputation.industryDemand} />
+          </div>
+        </Panel>
+      </div>
+
+      <div className="grid grid-2">
+        <Panel
+          title="What you are working on"
+          flush
+          actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>All projects</button>}
+        >
+          {projects.length === 0 ? (
+            <Empty
+              title="Nothing in development"
+              body="No script, no shoot, no release. Every career in this game starts with somebody deciding to make something."
+              action={<button className="btn btn-primary btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>Start something</button>}
+            />
+          ) : (
+            <div className="list">
+              {projects.map((project) => (
+                <button key={project.id} className="list-item" onClick={() => navigate('/workspace/projects', project.title)}>
+                  <div className="grow">
+                    <div className="small strong">{project.title}</div>
+                    <div className="xs dim">
+                      {project.format.replace(/_/g, ' ')} · {project.phase.replace(/_/g, ' ')}
+                      {project.genres.length > 0 && ` · ${project.genres.join(', ')}`}
+                    </div>
+                  </div>
+                  <span className="chip">{project.phase.replace(/_/g, ' ')}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </Panel>
+
+        <Panel title="Home and household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
+          {snapshot.home ? (
+            <div className="col gap-3">
+              <Stat
+                label={snapshot.home.tenure === 'owned' ? 'You own' : 'You rent'}
+                value={<span style={{ fontSize: 'var(--size-md)' }}>{snapshot.home.addressLine}</span>}
+                note={`${snapshot.home.bedrooms} bed · ${snapshot.home.interiorSqft.toLocaleString('en-US')} sq ft`}
+              />
+              <Meter label="Condition" value={snapshot.home.condition} />
+              <Stat label="Household" value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`} />
+            </div>
+          ) : (
+            <div className="col gap-2">
+              <p className="small muted">You do not have a place of your own.</p>
+              <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find somewhere</button>
+            </div>
+          )}
+        </Panel>
+      </div>
+
+      <TutorialCard />
+    </>
+  );
+}
+
+function partOfDay(instant: number, zone: string): string {
+  const hour = Number(formatTime(instant, zone).split(':')[0]) % 12;
+  const isPm = formatTime(instant, zone).includes('PM');
+  const h24 = isPm ? (hour === 0 ? 12 : hour + 12) : (hour === 12 ? 0 : hour);
+  if (h24 < 5) return 'night';
+  if (h24 < 12) return 'morning';
+  if (h24 < 18) return 'afternoon';
+  return 'evening';
+}
