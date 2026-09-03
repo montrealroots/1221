@@ -99,6 +99,15 @@ export interface Person {
   /** Professional credit name, when different from the legal name. */
   stageName?: string;
   pronouns: string;
+  /**
+   * Their headshot, as a data URL.
+   *
+   * Stored on the person rather than beside the save, because it belongs to
+   * them: it follows them onto a credit, a casting shortlist and the slot
+   * card. Always re-encoded to a fixed frame before it gets here, so this is
+   * tens of kilobytes rather than whatever came off a phone.
+   */
+  portrait?: string;
 
   birthInstant: Instant;
   /** Reference city id where they are from. */
@@ -1758,6 +1767,9 @@ export interface SaveMeta {
   /** Deterministic seed for the whole universe. */
   seed: string;
   characterName: string;
+  /** The player's headshot, mirrored here so a slot can show it without
+   *  deserialising the whole universe behind it. */
+  portrait?: string;
   careerLabel: string;
   locationLabel: string;
   worldDateLabel: string;

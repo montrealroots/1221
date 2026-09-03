@@ -356,6 +356,7 @@ export function refreshMeta(sim: Simulation): void {
   if (!player) return;
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
+  sim.universe.meta.portrait = player.portrait;
   sim.universe.meta.careerLabel = careerLabel(player.careerTrack);
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);

@@ -155,9 +155,18 @@ export function SaveSlots({
                   </>
                 ) : (
                   <>
-                    <div>
-                      <div className="slot-name">{meta?.characterName}</div>
-                      <div className="muted small">{meta?.careerLabel}</div>
+                    <div className="row gap-3" style={{ alignItems: 'center' }}>
+                      {meta?.portrait && (
+                        <img
+                          className="headshot headshot-sm"
+                          src={meta.portrait}
+                          alt={`Headshot for ${meta.characterName}`}
+                        />
+                      )}
+                      <div style={{ minWidth: 0 }}>
+                        <div className="slot-name">{meta?.characterName}</div>
+                        <div className="muted small">{meta?.careerLabel}</div>
+                      </div>
                     </div>
 
                     <div className="slot-meta">

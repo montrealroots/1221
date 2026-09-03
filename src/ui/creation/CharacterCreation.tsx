@@ -14,6 +14,7 @@ import {
 } from '@/engine/world/bootstrap';
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, type TraitCategory } from '@/engine/domain/attributes';
 import { LocationPicker } from './LocationPicker';
+import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import type { CareerTrack, Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
@@ -183,6 +184,14 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
       </div>
 
+      <div className="identity-top">
+        <PortraitPicker
+          portrait={config.portrait}
+          name={[config.firstName, config.lastName].filter(Boolean).join(' ')}
+          onChange={(portrait) => set('portrait', portrait)}
+        />
+
+        <div className="identity-fields">
       <div className="field-row">
         <div className="field">
           <label htmlFor="first">First Name</label>
@@ -226,6 +235,8 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <option value="he/him">he/him</option>
             <option value="they/them">they/them</option>
           </select>
+        </div>
+      </div>
         </div>
       </div>
 
@@ -683,6 +694,14 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       <div className="grid grid-2">
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
+          {config.portrait && (
+            <img
+              className="headshot headshot-md"
+              src={config.portrait}
+              alt={`Headshot for ${config.firstName} ${config.lastName}`}
+              style={{ marginBottom: 'var(--s3)' }}
+            />
+          )}
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />

@@ -25,13 +25,18 @@ export function CharacterWorkspace() {
 
   return (
     <>
-      <div className="page-head">
-        <div className="eyebrow">Character</div>
-        <h1>{player.displayName}</h1>
-        <p className="muted">
-          {age} · {player.careerTrack} · {CITIES.get(player.currentLocationId)?.name}
-          {player.stageName && ` · credited as ${player.stageName}`}
-        </p>
+      <div className="page-head page-head-portrait">
+        {player.portrait && (
+          <img className="headshot headshot-lg" src={player.portrait} alt={`Headshot for ${player.displayName}`} />
+        )}
+        <div>
+          <div className="eyebrow">Character</div>
+          <h1>{player.displayName}</h1>
+          <p className="muted">
+            {age} · {player.careerTrack} · {CITIES.get(player.currentLocationId)?.name}
+            {player.stageName && ` · credited as ${player.stageName}`}
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>

@@ -43,6 +43,8 @@ export interface NewSaveConfig {
   birthDay: number;
   homeRegionId: string;
   citizenshipId: string;
+  /** Headshot as a data URL, already fitted to the portrait frame. */
+  portrait?: string;
 
   /** Personal */
   personality: Personality;
@@ -262,6 +264,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     playtimeSeconds: 0,
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
+    portrait: config.portrait,
     careerLabel: careerLabel(config.careerTrack),
     locationLabel: city.name,
     worldDateLabel: '',
@@ -295,6 +298,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lastName: config.lastName,
     displayName: config.displayName?.trim() || `${config.firstName} ${config.lastName}`,
     stageName: config.stageName?.trim() || undefined,
+    portrait: config.portrait,
     pronouns: config.pronouns,
     birthInstant,
     homeRegionId: config.homeRegionId,
