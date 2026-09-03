@@ -7,11 +7,12 @@
  * commitments but matter anyway — birthdays, holidays, seasons.
  */
 
+import { holidaysOn, type HolidayEntry } from '../content/holidays';
 import type { Simulation } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
 import type { Id } from '../domain/model';
 import {
-  addDays, dateKey, daysInMonth, instantFromZoned, nthWeekdayOfMonth, seasonOf,
+  addDays, dateKey, daysInMonth, instantFromZoned, seasonOf,
   startOfDay, zonedParts, type Instant, type Season, MS_DAY, MS_MINUTE,
 } from '../core/time';
 import { CITIES } from '../content/geography';
@@ -80,52 +81,13 @@ export interface CalendarDay {
   isToday: boolean;
   season: Season;
   entries: CalendarEntry[];
-  holidays: string[];
+  holidays: HolidayEntry[];
 }
 
 // ---------------------------------------------------------------------------
 // Holidays
 // ---------------------------------------------------------------------------
 
-export interface Holiday {
-  name: string;
-  /** Fixed date, or a rule resolved per year. */
-  resolve: (year: number, zone: string) => Instant;
-  countries: string[];
-}
-
-function fixed(month: number, day: number) {
-  return (year: number, zone: string) => instantFromZoned({ year, month, day }, zone);
-}
-
-export const HOLIDAYS: readonly Holiday[] = [
-  { name: "New Year's Day", resolve: fixed(1, 1), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'jp', 'kr', 'mx', 'ae'] },
-  { name: 'Martin Luther King Jr. Day', resolve: (y, z) => nthWeekdayOfMonth(y, 1, 1, 3, z), countries: ['us'] },
-  { name: "Presidents' Day", resolve: (y, z) => nthWeekdayOfMonth(y, 2, 1, 3, z), countries: ['us'] },
-  { name: "Valentine's Day", resolve: fixed(2, 14), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr'] },
-  { name: "St Patrick's Day", resolve: fixed(3, 17), countries: ['ie', 'us'] },
-  { name: 'Memorial Day', resolve: (y, z) => nthWeekdayOfMonth(y, 5, 1, -1, z), countries: ['us'] },
-  { name: 'Independence Day', resolve: fixed(7, 4), countries: ['us'] },
-  { name: 'Labour Day', resolve: (y, z) => nthWeekdayOfMonth(y, 9, 1, 1, z), countries: ['us', 'ca'] },
-  { name: 'Halloween', resolve: fixed(10, 31), countries: ['us', 'ca', 'uk', 'ie'] },
-  { name: 'Thanksgiving', resolve: (y, z) => nthWeekdayOfMonth(y, 11, 4, 4, z), countries: ['us'] },
-  { name: 'Christmas Eve', resolve: fixed(12, 24), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'mx'] },
-  { name: 'Christmas Day', resolve: fixed(12, 25), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'mx'] },
-  { name: 'Boxing Day', resolve: fixed(12, 26), countries: ['uk', 'ca', 'au', 'nz', 'ie'] },
-  { name: "New Year's Eve", resolve: fixed(12, 31), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'jp', 'kr', 'mx'] },
-];
-
-export function holidaysOn(instant: Instant, zone: string, countryId: string): string[] {
-  const parts = zonedParts(instant, zone);
-  const out: string[] = [];
-  for (const holiday of HOLIDAYS) {
-    if (!holiday.countries.includes(countryId)) continue;
-    const at = holiday.resolve(parts.year, zone);
-    const atParts = zonedParts(at, zone);
-    if (atParts.month === parts.month && atParts.day === parts.day) out.push(holiday.name);
-  }
-  return out;
-}
 
 // ---------------------------------------------------------------------------
 // Building the calendar
@@ -175,8 +137,10 @@ export function entriesBetween(sim: Simulation, from: Instant, to: Instant): Cal
 export function monthGrid(sim: Simulation, year: number, month: number): CalendarDay[] {
   const zone = sim.homeZone;
   const player = sim.universe.people[sim.universe.playerId];
-  const countryId = player ? CITIES.get(player.currentLocationId)?.countryId ?? 'us' : 'us';
-  const latitude = player ? CITIES.get(player.currentLocationId)?.latitude ?? 34 : 34;
+  const here = player ? CITIES.get(player.currentLocationId) : undefined;
+  const countryId = here?.countryId ?? 'us';
+  const regionId = here?.parentId;
+  const latitude = here?.latitude ?? 34;
 
   const firstOfMonth = instantFromZoned({ year, month, day: 1 }, zone);
   const leading = zonedParts(firstOfMonth, zone).weekday;
@@ -205,7 +169,7 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
       isToday: key === todayKey,
       season: seasonOf(date, zone, latitude),
       entries: entries.filter((e) => e.at >= dayStart && e.at < dayEnd),
-      holidays: holidaysOn(date, zone, countryId),
+      holidays: holidaysOn(date, zone, countryId, regionId),
     });
   }
   return days;

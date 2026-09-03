@@ -1,16 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty } from '@/ui/components/primitives';
 import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY } from '@/engine/world/calendar';
 import { formatDate, formatTime, zonedParts, addDays, MS_DAY } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
+import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export function CalendarWorkspace() {
-  const { sim, navigate } = useGame();
+  const { sim, navigate, refresh } = useGame();
   const today = zonedParts(sim.now, sim.homeZone);
+
+  // The holidays of the country you are standing in, fetched once per country.
+  const countryId = CITIES.get(sim.player.currentLocationId)?.countryId;
+  useEffect(() => {
+    if (!countryId || isHolidaysLoaded(countryId)) return;
+    let cancelled = false;
+    loadCountryHolidays(countryId).then(() => { if (!cancelled) refresh(); }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [countryId, refresh]);
   const [view, setView] = useState({ year: today.year, month: today.month });
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -76,9 +86,19 @@ export function CalendarWorkspace() {
             >
               <div className="row-between">
                 <span className="cal-daynum">{day.dayOfMonth}</span>
-                {day.holidays.length > 0 && <span className="xs dim" title={day.holidays.join(', ')}>✦</span>}
+                {day.holidays.length > 0 && <span className="xs dim" title={day.holidays.map(holidayLabel).join(', ')}>✦</span>}
               </div>
-              {day.entries.slice(0, 3).map((entry) => (
+              {day.holidays.slice(0, 1).map((holiday) => (
+                <span
+                  key={`${day.key}:${holiday.name}`}
+                  className="cal-event"
+                  style={{ borderLeftColor: LEGEND_BY_CATEGORY.holiday?.colour, opacity: holiday.type === 'public' ? 1 : 0.7 }}
+                  title={holidayLabel(holiday)}
+                >
+                  {holiday.name === holiday.englishName ? titleCaseLabel(holiday.name) : holiday.name}
+                </span>
+              ))}
+              {day.entries.slice(0, day.holidays.length > 0 ? 2 : 3).map((entry) => (
                 <span
                   key={entry.id}
                   className="cal-event"
@@ -89,8 +109,8 @@ export function CalendarWorkspace() {
                   {titleCaseLabel(entry.title)}
                 </span>
               ))}
-              {day.entries.length > 3 && (
-                <span className="xs dim">+{day.entries.length - 3} more</span>
+              {day.entries.length > (day.holidays.length > 0 ? 2 : 3) && (
+                <span className="xs dim">+{day.entries.length - (day.holidays.length > 0 ? 2 : 3)} more</span>
               )}
             </button>
           ))}
@@ -110,7 +130,7 @@ export function CalendarWorkspace() {
       {selectedDay && (
         <Panel
           title={formatDate(selectedDay.date, sim.homeZone)}
-          subtitle={selectedDay.holidays.length > 0 ? selectedDay.holidays.join(' · ') : `${selectedDay.season}`}
+          subtitle={selectedDay.holidays.length > 0 ? selectedDay.holidays.map(holidayLabel).join(' · ') : `${selectedDay.season}`}
           flush
           actions={<button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>}
         >
