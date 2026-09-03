@@ -105,9 +105,11 @@ export function CharacterCreation({
   const canAdvance = issues.length === 0;
 
   // Continue was at the foot of the last step, so without this the next step
-  // opens at its foot too, and the player reads it backwards.
-  const scroller = useRef<HTMLDivElement | null>(null);
-  useEffect(() => { scroller.current?.scrollTo({ top: 0 }); }, [step]);
+  // opens at its foot too, and the player reads it backwards. Which ancestor
+  // actually scrolls differs by layout — the body here, .main in the game —
+  // so the top of the form is asked into view rather than any one container.
+  const top = useRef<HTMLDivElement | null>(null);
+  useEffect(() => { top.current?.scrollIntoView({ block: 'start' }); }, [step]);
 
 
   const start = () => {
@@ -116,7 +118,7 @@ export function CharacterCreation({
   };
 
   return (
-    <div className="main" ref={scroller}>
+    <div className="main" ref={top}>
       <div className="creation">
         <div className="row-between" style={{ marginBottom: 'var(--s5)' }}>
           <div className="row gap-2">
