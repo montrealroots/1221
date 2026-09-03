@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
-import { awardsCalendar, awardHistory, festivalCalendar, ordinal, isEligible } from '@/engine/systems/awards';
+import { awardsCalendar, awardHistory, festivalCalendar, editionName, isEligible } from '@/engine/systems/awards';
 import { AWARD_BODIES, AWARD_BODY_BY_ID } from '@/engine/content/industry';
 import { activeProjects } from '@/engine/systems/film';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
@@ -43,7 +43,7 @@ export function AwardsWorkspace() {
               {calendar.slice(0, 12).map(({ edition, body, nominations, daysAway }) => (
                 <div key={edition.id} className="list-item list-static">
                   <div className="grow">
-                    <div className="small strong">{ordinal(edition.editionNumber)} {body?.name}</div>
+                    <div className="small strong">{editionName(edition.editionNumber, body?.name ?? '')}</div>
                     <div className="xs dim">
                       {formatDate(edition.ceremonyAt, sim.homeZone)}
                       {daysAway > 0 ? ` · in ${daysAway} days` : ' · past'} ·
@@ -142,7 +142,7 @@ export function AwardsWorkspace() {
                   <div className="grow">
                     <div className="small strong">{nomination.category}</div>
                     <div className="xs dim">
-                      {ordinal(edition?.editionNumber ?? 0)} {body?.name}
+                      {editionName(edition?.editionNumber ?? 0, body?.name ?? '')}
                       {project && ` · ${project.title}`}
                       {nomination.campaignSpend > 0 && ` · ${formatMoneyCompact(nomination.campaignSpend)} campaign`}
                     </div>

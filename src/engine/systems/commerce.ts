@@ -104,7 +104,7 @@ export function registerCommerce(sim: Simulation): void {
         s.schedule({
           at: order.deliverAt,
           kind: 'shop.deliver',
-          label: `Delivery from ${retailer.name}`,
+          label: `Delivery From ${retailer.name}`,
           category: 'personal',
           payload: { orderId: order.id },
           priority: 75,

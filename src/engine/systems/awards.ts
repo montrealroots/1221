@@ -52,7 +52,7 @@ export function registerAwards(sim: Simulation): void {
 
       const edition = currentEditionFor(s, p.bodyId);
       if (!edition) throw new CommandError(`There is no upcoming ${body.name} edition to campaign for.`);
-      if (edition.finalised) throw new CommandError(`The ${ordinal(edition.editionNumber)} ${body.name} is already decided. Finalised history does not change.`);
+      if (edition.finalised) throw new CommandError(`${editionName(edition.editionNumber, body.name)} is already decided. Finalised history does not change.`);
 
       const eligible = isEligible(s, project, edition);
       if (!eligible.ok) throw new CommandError(eligible.reason);
@@ -164,7 +164,7 @@ export function registerAwards(sim: Simulation): void {
       s.schedule({
         at: Math.max(decisionAt, addDays(s.now, 21, s.homeZone)),
         kind: 'fest.decision',
-        label: `${festival.name} decision — ${project.title}`,
+        label: `${festival.name} Decision — ${project.title}`,
         category: 'career',
         payload: { submissionId: submission.id },
         priority: 44,
@@ -261,7 +261,7 @@ export function setUpSeason(sim: Simulation, ceremonyYear: number): void {
       // instead. The ceremony is still ahead, so the season can still run.
       at: Math.max(nominationsAt, sim.now),
       kind: 'award.nominations',
-      label: `${ordinal(edition.editionNumber)} ${body.name} nominations`,
+      label: `${editionName(edition.editionNumber, body.name)} Nominations`,
       category: 'awards',
       payload: { editionId: edition.id },
       priority: 34,
@@ -270,7 +270,7 @@ export function setUpSeason(sim: Simulation, ceremonyYear: number): void {
     const item = sim.schedule({
       at: ceremonyAt,
       kind: 'award.ceremony',
-      label: `${ordinal(edition.editionNumber)} ${body.name}`,
+      label: `${editionName(edition.editionNumber, body.name)}`,
       category: 'awards',
       payload: { editionId: edition.id },
       priority: 22,
@@ -298,7 +298,7 @@ export function isEligible(sim: Simulation, project: Project, edition: AwardEdit
   if (project.releaseDate < edition.eligibilityStart || project.releaseDate > edition.eligibilityEnd) {
     return {
       ok: false,
-      reason: `The ${ordinal(edition.editionNumber)} ${body.name} covers releases between ${formatDate(edition.eligibilityStart, sim.homeZone)} and ${formatDate(edition.eligibilityEnd, sim.homeZone)}. ${project.title} opened ${formatDate(project.releaseDate, sim.homeZone)}.`,
+      reason: `${editionName(edition.editionNumber, body.name)} covers releases between ${formatDate(edition.eligibilityStart, sim.homeZone)} and ${formatDate(edition.eligibilityEnd, sim.homeZone)}. ${project.title} opened ${formatDate(project.releaseDate, sim.homeZone)}.`,
     };
   }
 
@@ -448,13 +448,13 @@ function announceNominations(sim: Simulation, editionId: Id): void {
         sim.notify({
           category: 'awards',
           title: `${body.shortName} nomination: ${category}`,
-          body: `${project?.title ?? 'Your work'} is nominated at the ${ordinal(edition.editionNumber)} ${body.name}.`,
+          body: `${project?.title ?? 'Your work'} is nominated at ${editionName(edition.editionNumber, body.name)}.`,
           importance: 88, route: '/workspace/awards',
         });
         sim.remember({
           category: 'award',
           title: `Nominated for ${category}`,
-          detail: `${ordinal(edition.editionNumber)} ${body.name}${project ? ` for ${project.title}` : ''}.`,
+          detail: `${editionName(edition.editionNumber, body.name)}${project ? ` for ${project.title}` : ''}.`,
           refs: [
             ...(nomination.projectId ? [{ type: 'project', id: nomination.projectId }] : []),
             ...(nomination.personId ? [{ type: 'person', id: nomination.personId }] : []),
@@ -471,7 +471,7 @@ function announceNominations(sim: Simulation, editionId: Id): void {
         sim.audit({
           kind: 'award.not_nominated', subjectType: 'project', subjectId: nomination.projectId ?? '',
           question: `Why was it not nominated for ${category}?`,
-          summary: `It finished outside the ${slots} slots at the ${ordinal(edition.editionNumber)} ${body.name}.`,
+          summary: `It finished outside the ${slots} slots at ${editionName(edition.editionNumber, body.name)}.`,
           factors: [
             { label: 'The Film Itself', detail: 'Quality and critical standing carry most of the weight.', weight: 0.6, contribution: 0, knowable: true },
             { label: 'Campaign Spend', detail: `${formatMoney(nomination.campaignSpend)} behind this category. Spend helps at the margin and cannot replace the work.`, weight: 0.15, contribution: 0, knowable: true },
@@ -534,13 +534,13 @@ function holdCeremony(sim: Simulation, editionId: Id): void {
       sim.notify({
         category: 'awards',
         title: `You won ${category}`,
-        body: `${ordinal(edition.editionNumber)} ${body.name}${project ? ` for ${project.title}` : ''}.`,
+        body: `${editionName(edition.editionNumber, body.name)}${project ? ` for ${project.title}` : ''}.`,
         importance: 98, route: '/workspace/awards',
       });
       sim.remember({
         category: 'award',
         title: `Won ${category}`,
-        detail: `${ordinal(edition.editionNumber)} ${body.name}${project ? ` for ${project.title}` : ''}.`,
+        detail: `${editionName(edition.editionNumber, body.name)}${project ? ` for ${project.title}` : ''}.`,
         refs: [
           ...(winner.nomination.projectId ? [{ type: 'project', id: winner.nomination.projectId }] : []),
           ...(winner.nomination.personId ? [{ type: 'person', id: winner.nomination.personId }] : []),
@@ -551,7 +551,7 @@ function holdCeremony(sim: Simulation, editionId: Id): void {
       sim.audit({
         kind: 'award.won', subjectType: 'nomination', subjectId: winner.nomination.id,
         question: 'Why did this win?',
-        summary: `${category} at the ${ordinal(edition.editionNumber)} ${body.name}.`,
+        summary: `${category} at ${editionName(edition.editionNumber, body.name)}.`,
         factors: [
           { label: 'The Work', detail: `Quality ${project?.finalQuality ?? '—'} and critics ${project?.criticScore ?? '—'} out of 100.`, weight: 0.55, contribution: 0, knowable: true },
           { label: 'Precursors', detail: 'Guild and critics wins earlier in the season build momentum voters follow.', weight: 0.2, contribution: 0, knowable: true },
@@ -564,7 +564,7 @@ function holdCeremony(sim: Simulation, editionId: Id): void {
       sim.notify({
         category: 'awards',
         title: `${category} went to ${project?.title ?? 'another film'}`,
-        body: `You were nominated at the ${ordinal(edition.editionNumber)} ${body.name} and did not win.`,
+        body: `You were nominated at ${editionName(edition.editionNumber, body.name)} and did not win.`,
         importance: 70, route: '/workspace/awards',
       });
     }
@@ -659,7 +659,7 @@ function decideFestivalSubmission(sim: Simulation, submissionId: Id): void {
   sim.schedule({
     at: screeningAt,
     kind: 'fest.screening',
-    label: `${festival.name} — ${project.title} premiere`,
+    label: `${festival.name} — ${project.title} Premiere`,
     category: 'career',
     payload: { submissionId: submission.id },
     priority: 26,
@@ -774,6 +774,11 @@ function holdScreening(sim: Simulation, submissionId: Id): void {
 export function ordinal(n: number): string {
   const suffix = n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
   return `${n}${suffix}`;
+}
+
+/** "The 97th Vanguard Awards", never "97th The Vanguard Awards". */
+export function editionName(n: number, name: string): string {
+  return name.startsWith('The ') ? `The ${ordinal(n)} ${name.slice(4)}` : `${ordinal(n)} ${name}`;
 }
 
 /** Award history for a person, newest first. Finalised results never change. */

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty } from '@/ui/components/primitives';
 import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY } from '@/engine/world/calendar';
@@ -44,7 +45,7 @@ export function CalendarWorkspace() {
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {conflicts.slice(0, 6).map((entry) => (
               <li key={entry.id}>
-                {entry.title} — {formatDate(entry.at, sim.homeZone)} at {formatTime(entry.at, sim.homeZone)}
+                {titleCaseLabel(entry.title)} — {formatDate(entry.at, sim.homeZone)} at {formatTime(entry.at, sim.homeZone)}
               </li>
             ))}
           </ul>
@@ -83,9 +84,9 @@ export function CalendarWorkspace() {
                   className="cal-event"
                   data-conflict={entry.conflicted}
                   style={{ borderLeftColor: LEGEND_BY_CATEGORY[entry.category]?.colour }}
-                  title={entry.title}
+                  title={titleCaseLabel(entry.title)}
                 >
-                  {entry.title}
+                  {titleCaseLabel(entry.title)}
                 </span>
               ))}
               {day.entries.length > 3 && (
@@ -125,7 +126,7 @@ export function CalendarWorkspace() {
                     aria-hidden="true"
                   />
                   <div className="grow">
-                    <div className="small strong">{entry.title}</div>
+                    <div className="small strong">{titleCaseLabel(entry.title)}</div>
                     <div className="xs dim">
                       {formatTime(entry.at, sim.homeZone)}
                       {entry.durationMinutes ? ` · ${entry.durationMinutes} min` : ''}
@@ -154,7 +155,7 @@ export function CalendarWorkspace() {
                   aria-hidden="true"
                 />
                 <div className="grow">
-                  <div className="small">{entry.title}</div>
+                  <div className="small">{titleCaseLabel(entry.title)}</div>
                   <div className="xs dim">
                     {formatDate(entry.at, sim.homeZone)} · {formatTime(entry.at, sim.homeZone)}
                   </div>

@@ -152,7 +152,7 @@ export function registerMedia(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 30, s.homeZone),
         kind: 'social.payout',
-        label: `${platform.name} payout`,
+        label: `${platform.name} Payout`,
         category: 'finance',
         payload: { accountId: account.id },
         priority: 66,
@@ -218,7 +218,7 @@ export function registerMedia(sim: Simulation): void {
       s.schedule({
         at: publishesAt,
         kind: 'social.publish',
-        label: `${platform.name} post — ${p.title}`,
+        label: `${platform.name} Post — ${p.title}`,
         category: 'social',
         payload: { postId: post.id },
         priority: 70,
@@ -253,7 +253,7 @@ export function registerMedia(sim: Simulation): void {
       s.schedule({
         at: deal.deadlineAt,
         kind: 'social.deal_deadline',
-        label: `${deal.brandName} deliverables due`,
+        label: `${deal.brandName} Deliverables Due`,
         category: 'career',
         payload: { dealId: deal.id },
         priority: 45,

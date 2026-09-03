@@ -172,7 +172,7 @@ export function registerTravel(sim: Simulation): void {
       s.schedule({
         at: option.departAt - 2 * MS_HOUR,
         kind: 'travel.depart',
-        label: `${option.airlineName} ${option.flightNumber} to ${CITIES.require(p.toCityId).name}`,
+        label: `${option.airlineName} ${option.flightNumber} To ${CITIES.require(p.toCityId).name}`,
         category: 'travel',
         payload: { bookingId: booking.id },
         priority: 15,
@@ -184,7 +184,7 @@ export function registerTravel(sim: Simulation): void {
       s.schedule({
         at: option.arriveAt,
         kind: 'travel.arrive',
-        label: `Arrive in ${CITIES.require(p.toCityId).name}`,
+        label: `Arrive In ${CITIES.require(p.toCityId).name}`,
         category: 'travel',
         payload: { bookingId: booking.id },
         priority: 15,
@@ -259,7 +259,7 @@ export function registerTravel(sim: Simulation): void {
       s.schedule({
         at: p.departAt - 25 * MS_MINUTE,
         kind: 'travel.depart',
-        label: `Private charter to ${CITIES.require(p.toCityId).name}`,
+        label: `Private Charter To ${CITIES.require(p.toCityId).name}`,
         category: 'travel',
         payload: { bookingId: booking.id },
         priority: 15,
@@ -269,7 +269,7 @@ export function registerTravel(sim: Simulation): void {
       });
       s.schedule({
         at: arriveAt, kind: 'travel.arrive',
-        label: `Arrive in ${CITIES.require(p.toCityId).name}`,
+        label: `Arrive In ${CITIES.require(p.toCityId).name}`,
         category: 'travel',
         payload: { bookingId: booking.id }, priority: 15,
         refType: 'flight', refId: booking.id,
@@ -324,13 +324,13 @@ export function registerTravel(sim: Simulation): void {
 
       s.schedule({
         at: booking.checkInAt, kind: 'travel.check_in',
-        label: `Check in — ${booking.hotelName}`,
+        label: `Check In — ${booking.hotelName}`,
         category: 'travel', payload: { bookingId: booking.id }, priority: 30,
         refType: 'stay', refId: booking.id, locationId: p.cityId,
       });
       s.schedule({
         at: booking.checkOutAt, kind: 'travel.check_out',
-        label: `Check out — ${booking.hotelName}`,
+        label: `Check Out — ${booking.hotelName}`,
         category: 'travel', payload: { bookingId: booking.id }, priority: 30,
         refType: 'stay', refId: booking.id, locationId: p.cityId,
       });

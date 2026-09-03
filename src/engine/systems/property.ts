@@ -232,7 +232,7 @@ export function registerProperty(sim: Simulation): void {
       s.schedule({
         at: offer.respondBy,
         kind: 'prop.offer_response',
-        label: `Seller response — ${property.addressLine}`,
+        label: `Seller Response — ${property.addressLine}`,
         category: 'property',
         payload: { offerId: offer.id },
         priority: 40,
@@ -422,7 +422,7 @@ export function registerProperty(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 7, s.homeZone),
         kind: 'build.phase_tick',
-        label: `${p.name} — construction progress`,
+        label: `${p.name} — Construction Progress`,
         category: 'property',
         payload: { projectId: project.id },
         priority: 60,
@@ -1230,7 +1230,7 @@ function advanceConstruction(sim: Simulation, projectId: Id): void {
   sim.schedule({
     at: addDays(sim.now, 7, sim.homeZone),
     kind: 'build.phase_tick',
-    label: `${project.name} — construction progress`,
+    label: `${project.name} — Construction Progress`,
     category: 'property',
     payload: { projectId: project.id },
     priority: 60,
@@ -1400,7 +1400,7 @@ export function registerPropertyReactors(sim: Simulation): void {
     if (!property) return;
     const col = costOfLiving(locationId);
     const scale = clamp(property.interiorSqft / 2000, 0.5, 6);
-    for (const [name, base] of [['Electricity', 145_00], ['Water and refuse', 88_00], ['Gas', 62_00]] as [string, number][]) {
+    for (const [name, base] of [['Electricity', 145_00], ['Water And Refuse', 88_00], ['Gas', 62_00]] as [string, number][]) {
       createBill(s, {
         payerId: buyerId,
         name: `${name} — ${property.addressLine}`,

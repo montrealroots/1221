@@ -1304,6 +1304,8 @@ export interface Role {
   payLow: Money;
   payHigh: Money;
   status: 'open' | 'casting' | 'offer_out' | 'cast' | 'closed';
+  /** When the decision on this role is made. Set when casting opens. */
+  decidesAt?: number;
   castPersonId?: Id;
   contractId?: Id;
   /** People currently in the running. */

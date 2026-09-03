@@ -175,7 +175,7 @@ export function registerProduction(sim: Simulation): void {
         const item = s.schedule({
           at: callTime,
           kind: 'prod.shoot_day',
-          label: `${project.title} — Day ${placed} of ${dayCount}`,
+          label: `${project.title} — Day ${placed} Of ${dayCount}`,
           category: 'production',
           payload: { shootDayId: day.id },
           priority: 18,
@@ -197,7 +197,7 @@ export function registerProduction(sim: Simulation): void {
       s.schedule({
         at: addDays(cursor, 2, s.homeZone),
         kind: 'prod.wrap',
-        label: `${project.title} — wrap`,
+        label: `${project.title} — Wrap`,
         category: 'production',
         payload: { projectId: project.id },
         priority: 20,
@@ -265,7 +265,7 @@ export function registerProduction(sim: Simulation): void {
         s.schedule({
           at: addDays(s.now, 7, s.homeZone),
           kind: 'prod.post_tick',
-          label: `${project.title} — post progress`,
+          label: `${project.title} — Post Progress`,
           category: 'production',
           payload: { projectId: project.id },
           priority: 58,
@@ -661,7 +661,7 @@ export function openPost(sim: Simulation, projectId: Id): void {
   sim.schedule({
     at: addDays(sim.now, 7, sim.homeZone),
     kind: 'prod.post_tick',
-    label: `${project.title} — post progress`,
+    label: `${project.title} — Post Progress`,
     category: 'production',
     payload: { projectId: project.id },
     priority: 58,
@@ -763,7 +763,7 @@ function advancePost(sim: Simulation, projectId: Id): void {
   sim.schedule({
     at: addDays(sim.now, 7, sim.homeZone),
     kind: 'prod.post_tick',
-    label: `${project.title} — post progress`,
+    label: `${project.title} — Post Progress`,
     category: 'production',
     payload: { projectId: project.id },
     priority: 58,

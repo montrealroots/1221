@@ -243,7 +243,7 @@ export function registerFilm(sim: Simulation): void {
         s.schedule({
           at: expiresAt,
           kind: 'film.option_expiry',
-          label: `Option expires — ${p.title}`,
+          label: `Option Expires — ${p.title}`,
           category: 'business',
           payload: { rightsId: rights.id },
           priority: 35,
@@ -278,7 +278,7 @@ export function registerFilm(sim: Simulation): void {
       rights.chainOfTitle.push({ at: s.now, note: `Option extended twelve months for ${formatMoney(cost)}.` });
       s.schedule({
         at: rights.expiresAt, kind: 'film.option_expiry',
-        label: `Option expires — ${rights.title}`, category: 'business',
+        label: `Option Expires — ${rights.title}`, category: 'business',
         payload: { rightsId: rights.id }, priority: 35,
         refType: 'rights', refId: rights.id,
       });
@@ -364,7 +364,7 @@ export function registerFilm(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 12, s.homeZone),
         kind: 'film.coverage',
-        label: `Coverage on ${project.title}`,
+        label: `Coverage On ${project.title}`,
         category: 'business',
         payload: { draftId: draft.id },
         priority: 62,
@@ -474,7 +474,7 @@ export function registerFilm(sim: Simulation): void {
         s.schedule({
           at: respondsAt,
           kind: 'film.pitch_response',
-          label: `${buyer.name} response — ${project.title}`,
+          label: `${buyer.name} Response — ${project.title}`,
           category: 'career',
           payload: { projectId: project.id, buyerId: buyer.id, ask },
           priority: 40,

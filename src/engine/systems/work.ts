@@ -160,7 +160,7 @@ export function registerWork(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, s.rng('hiring', app.id).int(2, 6), s.homeZone),
         kind: 'work.screening',
-        label: `${opening.employerName} — application review`,
+        label: `${opening.employerName} — Application Review`,
         category: 'career',
         payload: { applicationId: app.id },
         priority: 55,
@@ -224,7 +224,7 @@ export function registerWork(sim: Simulation): void {
       s.schedule({
         at: endsAt,
         kind: 'finance.payday',
-        label: `Final pay — ${job.employerName}`,
+        label: `Final Pay — ${job.employerName}`,
         category: 'finance',
         payload: { jobId: job.id },
         priority: 10,
@@ -505,7 +505,7 @@ function screenApplication(sim: Simulation, app: JobApplication): void {
   const item = sim.schedule({
     at: interviewAt,
     kind: 'work.interview',
-    label: `Interview — ${opening.title} at ${opening.employerName}`,
+    label: `Interview — ${opening.title} At ${opening.employerName}`,
     category: 'career',
     payload: { applicationId: app.id },
     priority: 40,
@@ -577,7 +577,7 @@ function decideApplication(sim: Simulation, app: JobApplication): void {
   sim.schedule({
     at: decideBy,
     kind: 'work.offer_expires',
-    label: `Offer expires — ${opening.title}`,
+    label: `Offer Expires — ${opening.title}`,
     category: 'career',
     payload: { applicationId: app.id },
     priority: 44,
@@ -651,7 +651,7 @@ export function hire(sim: Simulation, person: Person, opening: JobOpening): Job 
   sim.schedule({
     at: addDays(sim.now, 180, sim.homeZone),
     kind: 'work.review',
-    label: `Performance review — ${job.employerName}`,
+    label: `Performance Review — ${job.employerName}`,
     category: 'career',
     payload: { jobId: job.id },
     priority: 50,
@@ -781,7 +781,7 @@ function performanceReview(sim: Simulation, job: Job): void {
   sim.schedule({
     at: addDays(sim.now, 180, sim.homeZone),
     kind: 'work.review',
-    label: `Performance review — ${job.employerName}`,
+    label: `Performance Review — ${job.employerName}`,
     category: 'career',
     payload: { jobId: job.id },
     priority: 50,
@@ -809,7 +809,7 @@ export function terminate(sim: Simulation, job: Job, reason: string): void {
     sim.schedule({
       at: addDays(sim.now, 7, sim.homeZone),
       kind: 'finance.payday',
-      label: `Final pay — ${job.employerName}`,
+      label: `Final Pay — ${job.employerName}`,
       category: 'finance',
       payload: { jobId: job.id },
       priority: 10,
@@ -853,13 +853,13 @@ export function createLivingBills(sim: Simulation, personId: Id, cityId: string,
   const firstOfMonth = nextMonthStart(sim);
 
   const standing: { name: string; category: string; base: Money }[] = [
-    { name: 'Phone plan', category: 'utilities', base: 68_00 },
+    { name: 'Phone Plan', category: 'utilities', base: 68_00 },
     { name: 'Internet', category: 'utilities', base: 78_00 },
-    { name: 'Streaming subscriptions', category: 'subscriptions', base: 46_00 },
+    { name: 'Streaming Subscriptions', category: 'subscriptions', base: 46_00 },
   ];
   if (hasHome) {
     standing.push({ name: 'Electricity', category: 'utilities', base: 130_00 });
-    standing.push({ name: 'Water and refuse', category: 'utilities', base: 82_00 });
+    standing.push({ name: 'Water And Refuse', category: 'utilities', base: 82_00 });
   }
 
   for (const s of standing) {

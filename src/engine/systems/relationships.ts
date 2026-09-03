@@ -262,7 +262,7 @@ export function registerRelationships(sim: Simulation): void {
       const item = s.schedule({
         at: p.at,
         kind: 'rel.date',
-        label: `Date with ${other.displayName}`,
+        label: `Date With ${other.displayName}`,
         category: 'personal',
         payload: { relationshipId: rel.id, plan: plan as unknown as Record<string, unknown> },
         priority: 45,

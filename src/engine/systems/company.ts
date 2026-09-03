@@ -158,7 +158,7 @@ export function registerCompany(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 14, s.homeZone),
         kind: 'co.payroll',
-        label: `${name} — payroll`,
+        label: `${name} — Payroll`,
         category: 'business',
         payload: { companyId: company.id },
         priority: 14,
@@ -168,7 +168,7 @@ export function registerCompany(sim: Simulation): void {
       s.schedule({
         at: addMonths(s.now, 3, s.homeZone),
         kind: 'co.quarter_close',
-        label: `${name} — quarter close`,
+        label: `${name} — Quarter Close`,
         category: 'business',
         payload: { companyId: company.id },
         priority: 68,
@@ -439,7 +439,7 @@ export function registerCompany(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 30, s.homeZone),
         kind: 'co.merch_cycle',
-        label: `${p.name} — sales cycle`,
+        label: `${p.name} — Sales Cycle`,
         category: 'business',
         payload: { lineId: line.id },
         priority: 78,
@@ -725,7 +725,7 @@ function runMerchandiseCycle(sim: Simulation, lineId: Id): void {
     sim.schedule({
       at: addDays(sim.now, 30, sim.homeZone),
       kind: 'co.merch_cycle',
-      label: `${line.name} — sales cycle`,
+      label: `${line.name} — Sales Cycle`,
       category: 'business',
       payload: { lineId: line.id },
       priority: 78,

@@ -6,6 +6,7 @@
  * quote, premium, coverage, claim, decision, payout, renewal or lapse.
  */
 
+import { titleCaseLabel } from '../core/text';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type {
@@ -284,7 +285,7 @@ export function registerServices(sim: Simulation): void {
 
       createBill(s, {
         payerId: policy.holderId,
-        name: `${policy.carrier} ${policy.line} insurance`,
+        name: `${policy.carrier} ${titleCaseLabel(policy.line)} Insurance`,
         category: 'insurance',
         amount: policy.monthlyPremium,
         frequency: 'monthly',
@@ -303,7 +304,7 @@ export function registerServices(sim: Simulation): void {
 
       s.schedule({
         at: policy.endsAt, kind: 'ins.renewal',
-        label: `${policy.line} insurance renewal`,
+        label: `${titleCaseLabel(policy.line)} Insurance Renewal`,
         category: 'finance', payload: { policyId: policy.id }, priority: 64,
         refType: 'policy', refId: policy.id,
       });
@@ -603,7 +604,7 @@ function renewPolicy(sim: Simulation, policyId: Id): void {
 
   sim.schedule({
     at: policy.endsAt, kind: 'ins.renewal',
-    label: `${policy.line} insurance renewal`,
+    label: `${titleCaseLabel(policy.line)} Insurance Renewal`,
     category: 'finance', payload: { policyId: policy.id }, priority: 64,
     refType: 'policy', refId: policy.id,
   });
@@ -629,7 +630,7 @@ function scheduleNextSession(sim: Simulation, enrollment: Enrollment, course: Co
         sim.schedule({
           at,
           kind: 'edu.session',
-          label: `${course.name} — session ${enrollment.sessionsAttended + 1}`,
+          label: `${course.name} — Session ${enrollment.sessionsAttended + 1}`,
           category: 'education',
           payload: { enrollmentId: enrollment.id },
           priority: 52,

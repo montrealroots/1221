@@ -168,7 +168,7 @@ export function registerRelease(sim: Simulation): void {
       s.schedule({
         at: p.openingDate,
         kind: 'rel.open',
-        label: `${project.title} opens`,
+        label: `${project.title} Opens`,
         category: 'release',
         payload: { releaseId: release.id },
         priority: 12,
@@ -178,7 +178,7 @@ export function registerRelease(sim: Simulation): void {
       s.schedule({
         at: addDays(p.openingDate, -2, s.homeZone),
         kind: 'rel.reviews',
-        label: `${project.title} — reviews embargo lifts`,
+        label: `${project.title} — Reviews Embargo Lifts`,
         category: 'release',
         payload: { projectId: project.id },
         priority: 30,
@@ -413,7 +413,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, week * 7, sim.homeZone),
         kind: 'rel.streaming_window',
-        label: `${project.title} — streaming week ${week + 1}`,
+        label: `${project.title} — Streaming Week ${week + 1}`,
         category: 'release',
         payload: { releaseId: release.id, week },
         priority: 74,
@@ -427,7 +427,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, day, sim.homeZone),
         kind: 'rel.box_office_day',
-        label: `${project.title} — box office day ${day + 1}`,
+        label: `${project.title} — Box Office Day ${day + 1}`,
         category: 'release',
         payload: { releaseId: release.id, day },
         priority: 76,
@@ -439,7 +439,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
   sim.schedule({
     at: addDays(release.openingDate, 95, sim.homeZone),
     kind: 'rel.close',
-    label: `${project.title} — run closes`,
+    label: `${project.title} — Run Closes`,
     category: 'release',
     payload: { releaseId: release.id },
     priority: 40,

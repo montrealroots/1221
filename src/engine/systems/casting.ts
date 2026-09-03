@@ -23,6 +23,9 @@ import { recordCredit } from './film';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
+  // The player's note of a decision day. The decision itself is cast.decide_role.
+  sim.onSchedule('cast.decision_due', () => {});
+
   sim.onSchedule('cast.decide_role', (item) => decideRole(sim, item.payload.roleId as Id));
   sim.onSchedule('world.project_progress', (item) => advanceBackgroundProject(sim, item.payload.projectId as Id));
   sim.onSchedule('cast.opportunity_scan', () => {
@@ -85,11 +88,14 @@ export function registerCasting(sim: Simulation): void {
       }
 
       const decidesAt = addDays(s.now, p.closesInDays ?? 24, s.homeZone);
+      role.decidesAt = decidesAt;
+      // The world's own bookkeeping. Somebody else's casting is not on your
+      // calendar; submitting for the role is what puts the decision there.
       s.schedule({
         at: decidesAt,
         kind: 'cast.decide_role',
-        label: `Casting decision — ${role.characterName} in ${project.title}`,
-        category: 'career',
+        label: `Casting Decision — ${role.characterName} In ${project.title}`,
+        category: 'system',
         payload: { roleId: role.id },
         priority: 38,
         refType: 'role', refId: role.id,
@@ -120,6 +126,19 @@ export function registerCasting(sim: Simulation): void {
       }
 
       const audition = submitAudition(s, role, player, true);
+      // Now it is your business: the decision date goes on your calendar.
+      if (role.decidesAt && role.decidesAt > s.now) {
+        const project = s.universe.projects[role.projectId];
+        s.schedule({
+          at: role.decidesAt,
+          kind: 'cast.decision_due',
+          label: `Casting Decision — ${role.characterName} In ${project?.title ?? 'A Project'}`,
+          category: 'career',
+          payload: { roleId: role.id },
+          priority: 39,
+          refType: 'role', refId: role.id,
+        });
+      }
       return { auditionId: audition.id, stage: audition.stage };
     },
   );
@@ -843,7 +862,7 @@ export function seedIndependentProject(sim: Simulation, seed: number): Project |
   sim.schedule({
     at: addDays(sim.now, rng.int(45, 130), sim.homeZone),
     kind: 'world.project_progress',
-    label: `${project.title} — production start`,
+    label: `${project.title} — Production Start`,
     category: 'system',
     payload: { projectId: project.id },
     priority: 94,

@@ -86,7 +86,7 @@ export function Home() {
                   <div className="decision-urgency" aria-hidden="true" />
                   <div className="grow">
                     <div className="row-between">
-                      <span className="small strong">{decision.title}</span>
+                      <span className="small strong">{titleCaseLabel(decision.title)}</span>
                       {decision.dueAt !== undefined && (
                         <span className={`xs ${decision.dueAt < sim.now ? 'negative' : 'dim'}`}>
                           {decision.dueAt < sim.now ? 'Overdue' : formatRelative(decision.dueAt, sim.now)}
@@ -132,7 +132,7 @@ export function Home() {
               <>
                 <div className="stat" style={{ marginBottom: 'var(--s3)' }}>
                   <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
-                  <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{next.title}</span>
+                  <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{titleCaseLabel(next.title)}</span>
                   <span className="stat-note">
                     {formatDate(next.at, sim.zone)} at {formatTime(next.at, sim.zone)}
                     {next.locationId && next.locationId !== player.currentLocationId && (
@@ -154,7 +154,7 @@ export function Home() {
                 <div className="col gap-2">
                   {soon.slice(1, 5).map((entry) => (
                     <div key={entry.id} className="row-between">
-                      <span className="small truncate">{entry.title}</span>
+                      <span className="small truncate">{titleCaseLabel(entry.title)}</span>
                       <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
                     </div>
                   ))}

@@ -258,7 +258,7 @@ export function registerVehicles(sim: Simulation): void {
       const item = s.schedule({
         at,
         kind: 'veh.install_parts',
-        label: `Shop appointment — ${vehicle.make} ${vehicle.model}`,
+        label: `Shop Appointment — ${vehicle.make} ${vehicle.model}`,
         category: 'vehicles',
         payload: { vehicleId: vehicle.id, partIds: p.partIds },
         priority: 55,
@@ -441,7 +441,7 @@ export function createVehicle(
   sim.schedule({
     at: vehicle.registrationExpiresAt,
     kind: 'veh.registration_due',
-    label: `Registration renewal — ${vehicle.make} ${vehicle.model}`,
+    label: `Registration Renewal — ${vehicle.make} ${vehicle.model}`,
     category: 'vehicles',
     payload: { vehicleId: vehicle.id },
     priority: 62,
@@ -743,7 +743,7 @@ function renewRegistration(sim: Simulation, vehicleId: Id): void {
     vehicle.registrationExpiresAt = addYears(sim.now, 1, sim.homeZone);
     sim.schedule({
       at: vehicle.registrationExpiresAt, kind: 'veh.registration_due',
-      label: `Registration renewal — ${vehicle.make} ${vehicle.model}`,
+      label: `Registration Renewal — ${vehicle.make} ${vehicle.model}`,
       category: 'vehicles', payload: { vehicleId: vehicle.id }, priority: 62,
       refType: 'vehicle', refId: vehicle.id,
     });

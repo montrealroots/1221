@@ -5,6 +5,7 @@
  * world processes everything that comes due either way.
  */
 
+import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
@@ -72,7 +73,7 @@ export function TimeControls() {
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
-              <li key={entry.id}>{entry.title} — {formatDateTime(entry.at, sim.zone)}</li>
+              <li key={entry.id}>{titleCaseLabel(entry.title)} — {formatDateTime(entry.at, sim.zone)}</li>
             ))}
           </ul>
         </Modal>
@@ -176,7 +177,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
             disabled={!target}
             onClick={() => target && onSkip(target.item.at)}
           >
-            Skip {target ? `To ${target.entry.title}` : ''}
+            Skip {target ? `To ${titleCaseLabel(target.entry.title)}` : ''}
           </button>
         </>
       }
