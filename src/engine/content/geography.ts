@@ -20,10 +20,25 @@ export interface Country extends ReferenceRecord {
   type: 'country';
   iso2: string;
   currency: string;
+  /** The currency's name: "Dollar", "Yen", "Pound". */
+  currencyName: string;
   /** Path segment used by the jurisdiction resolver. */
   jurisdictionCode: string;
   drivesOn: 'left' | 'right';
+  capital: string;
+  continent: string;
+  /** National population, as GeoNames records it. */
+  population: number;
+  areaKm2: number;
+  /** International dialling code, without the plus. */
+  phone: string;
+  /** Languages as ISO 639 codes, most spoken first. */
+  languages: string;
 }
+
+export const CONTINENT_NAMES: Record<string, string> = {
+  AF: 'Africa', AS: 'Asia', EU: 'Europe', NA: 'North America', SA: 'South America', OC: 'Oceania', AN: 'Antarctica',
+};
 
 export interface Region extends ReferenceRecord {
   type: 'region';
@@ -56,6 +71,11 @@ export interface City extends ReferenceRecord {
   jurisdictionCode: string;
   /** Descriptive tags used by search and lifestyle systems. */
   tags: string[];
+  /**
+   * A section of a larger city (Hollywood, Brooklyn), a national capital, or
+   * the capital of a first-level region. An ordinary town has none.
+   */
+  kind?: 'section' | 'capital' | 'regional_capital';
 }
 
 export interface Neighbourhood extends ReferenceRecord {
@@ -123,8 +143,15 @@ export const COUNTRIES = new Registry<Country>('countries', WORLD_COUNTRIES.map(
   type: 'country' as const,
   iso2: c.iso2,
   currency: c.currency,
+  currencyName: c.currencyName,
   jurisdictionCode: c.iso2,
   drivesOn: DRIVES_LEFT.has(c.iso2) ? ('left' as const) : ('right' as const),
+  capital: c.capital,
+  continent: CONTINENT_NAMES[c.continent] ?? c.continent,
+  population: c.population,
+  areaKm2: c.areaKm2,
+  phone: c.phone,
+  languages: c.languages,
   ...PUB,
 })));
 
@@ -274,8 +301,10 @@ function deriveCity(raw: RawCity): City {
   const costOfLivingIndex = Math.round(base * (1 + scale * 0.13));
   const monthlyRent = Math.round(costOfLivingIndex * 16.5 * (1 + scale * 0.22));
   const homePrice = Math.round(monthlyRent * 320);
+  const kind = CITY_KIND[raw.kind];
 
   return {
+    ...(kind ? { kind } : {}),
     id: raw.id,
     name: raw.name,
     type: 'city',
@@ -301,6 +330,8 @@ function deriveCity(raw: RawCity): City {
       + 'The cost figures are derived from the country and the population, not looked up.',
   };
 }
+
+const CITY_KIND: Record<string, City['kind']> = { x: 'section', c: 'capital', a: 'regional_capital' };
 
 const WORLD_COUNTRY_BY_ID = new Map(WORLD_COUNTRIES.map((c) => [c.id, c]));
 const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
@@ -337,17 +368,25 @@ export async function loadCountryCities(countryId: string): Promise<number> {
   if (!response.ok) {
     throw new Error(`The city list for ${COUNTRIES.get(countryId)?.name ?? countryId} could not be loaded.`);
   }
-  const text = await response.text();
+  return addCountryCities(countryId, await response.text());
+}
 
+/**
+ * Adds every city in one country from its tab-delimited file, as built by
+ * `tools/build-world-data.mjs`. The fetch above uses this; so can anything
+ * that already has the file in hand.
+ */
+export function addCountryCities(countryId: string, text: string): number {
+  if (loadedCountries.has(countryId)) return 0;
   const parsed: City[] = [];
   for (const line of text.split('\n')) {
     if (!line) continue;
-    const [id, name, regionId, lat, lon, timeZone, population] = line.split('\t');
+    const [id, name, regionId, lat, lon, timeZone, population, kind] = line.split('\t');
     if (!id || !name || !timeZone) continue;
     if (CITIES.get(id)) continue;
     parsed.push(deriveCity({
       id, name, regionId: regionId ?? '', countryId,
-      lat: Number(lat), lon: Number(lon), timeZone, population: Number(population) || 0,
+      lat: Number(lat), lon: Number(lon), timeZone, population: Number(population) || 0, kind: kind ?? '',
     }));
   }
 

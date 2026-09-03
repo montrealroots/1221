@@ -13,7 +13,7 @@
  * Run with: node tools/build-world-data.mjs <geonames-dir>
  */
 
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 
 const source = process.argv[2];
@@ -84,7 +84,7 @@ function slug(name) {
 
 const countries = [];
 for (const r of rows('countryInfo.txt', true)) {
-  const [iso2, , , , name, capital, , population, continent, , currency] = r;
+  const [iso2, , , , name, capital, area, population, continent, , currency, currencyName, phone, , , languages] = r;
   if (!iso2 || !name) continue;
   countries.push({
     id: countryId(iso2),
@@ -93,6 +93,7 @@ for (const r of rows('countryInfo.txt', true)) {
     capital: capital || '',
     continent: continent || '',
     currency: currency || 'USD',
+    areaKm2: Number(area) || 0, currencyName: currencyName || '', phone: phone || '', languages: languages || '',
     population: Number(population) || 0,
   });
 }
@@ -130,6 +131,10 @@ for (const r of rows('cities1000.txt')) {
   const population = Number(r[14]) || 0;
   const timeZone = r[17];
   if (!name || !iso2 || !timeZone || Number.isNaN(lat) || Number.isNaN(lon)) continue;
+  // What kind of place: a section of a larger city (Hollywood, Brooklyn), a
+  // national capital, a first-level regional capital, or an ordinary town.
+  const code = r[7];
+  const kind = code === 'PPLX' ? 'x' : code === 'PPLC' ? 'c' : code === 'PPLA' ? 'a' : '';
 
   const region = regionByKey.get(`${iso2}.${admin1}`);
   const base = region ? `${region.id}-${slug(name)}` : `${countryId(iso2)}-${slug(name)}`;
@@ -139,7 +144,7 @@ for (const r of rows('cities1000.txt')) {
   seenId.add(id);
 
   const list = byCountry.get(iso2) ?? [];
-  list.push({ id, name, regionId: region?.id ?? '', countryId: countryId(iso2), lat, lon, timeZone, population });
+  list.push({ id, name, regionId: region?.id ?? '', countryId: countryId(iso2), lat, lon, timeZone, population, kind });
   byCountry.set(iso2, list);
   total++;
 }
@@ -147,14 +152,15 @@ for (const r of rows('cities1000.txt')) {
 // --- Per-country files -----------------------------------------------------
 
 const outDir = 'public/geo';
-rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
+// Only the city files are ours to replace; the map lives here too.
+for (const stale of readdirSync(outDir)) if (stale.endsWith('.tsv')) rmSync(join(outDir, stale));
 
 const manifest = [];
 for (const [iso2, list] of [...byCountry.entries()].sort()) {
   list.sort((a, b) => b.population - a.population || a.name.localeCompare(b.name));
   const body = list
-    .map((c) => [c.id, c.name, c.regionId, c.lat.toFixed(4), c.lon.toFixed(4), c.timeZone, c.population].join('\t'))
+    .map((c) => [c.id, c.name, c.regionId, c.lat.toFixed(4), c.lon.toFixed(4), c.timeZone, c.population, c.kind].join('\t'))
     .join('\n');
   writeFileSync(join(outDir, `${countryId(iso2)}.tsv`), body);
   manifest.push({ countryId: countryId(iso2), cities: list.length });
@@ -201,6 +207,14 @@ const ts = `/**
 export interface RawCountry {
   id: string; iso2: string; name: string; capital: string;
   continent: string; currency: string; population: number;
+  /** Land area in square kilometres. */
+  areaKm2: number;
+  /** The currency's name as GeoNames gives it: "Dollar", "Yen", "Pound". */
+  currencyName: string;
+  /** International dialling code, without the plus. */
+  phone: string;
+  /** Languages as ISO 639 codes, most spoken first: "en-US,es-US,haw,fr". */
+  languages: string;
 }
 
 export interface RawRegion {
@@ -210,19 +224,23 @@ export interface RawRegion {
 export interface RawCity {
   id: string; name: string; regionId: string; countryId: string;
   lat: number; lon: number; timeZone: string; population: number;
+  /** 'x' a section of a larger city, 'c' a national capital, 'a' a regional capital, '' a town. */
+  kind: string;
 }
 
-const COUNTRY_TABLE = ${lit(tsv(countries.map((c) => [c.id, c.iso2, c.name, c.capital, c.continent, c.currency, c.population])))};
+const COUNTRY_TABLE = ${lit(tsv(countries.map((c) => [c.id, c.iso2, c.name, c.capital, c.continent, c.currency, c.population, c.areaKm2, c.currencyName, c.phone, c.languages])))};
 
 const REGION_TABLE = ${lit(tsv(regions.map((r) => [r.id, r.code, r.name, r.countryId])))};
 
-const CITY_TABLE = ${lit(tsv(bundled.map((c) => [c.id, c.name, c.regionId, c.countryId, c.lat.toFixed(4), c.lon.toFixed(4), c.timeZone, c.population])))};
+const CITY_TABLE = ${lit(tsv(bundled.map((c) => [c.id, c.name, c.regionId, c.countryId, c.lat.toFixed(4), c.lon.toFixed(4), c.timeZone, c.population, c.kind])))};
 
 const rows = (table: string) => table.split('\\n').map((line) => line.split('\\t'));
 
 export const WORLD_COUNTRIES: readonly RawCountry[] = rows(COUNTRY_TABLE).map((r) => ({
   id: r[0] as string, iso2: r[1] as string, name: r[2] as string, capital: r[3] as string,
   continent: r[4] as string, currency: r[5] as string, population: Number(r[6]),
+  areaKm2: Number(r[7]) || 0, currencyName: (r[8] as string) ?? '', phone: (r[9] as string) ?? '',
+  languages: (r[10] as string) ?? '',
 }));
 
 export const WORLD_REGIONS: readonly RawRegion[] = rows(REGION_TABLE).map((r) => ({
@@ -231,7 +249,7 @@ export const WORLD_REGIONS: readonly RawRegion[] = rows(REGION_TABLE).map((r) =>
 
 export const WORLD_CITIES: readonly RawCity[] = rows(CITY_TABLE).map((r) => ({
   id: r[0] as string, name: r[1] as string, regionId: r[2] as string, countryId: r[3] as string,
-  lat: Number(r[4]), lon: Number(r[5]), timeZone: r[6] as string, population: Number(r[7]),
+  lat: Number(r[4]), lon: Number(r[5]), timeZone: r[6] as string, population: Number(r[7]), kind: r[8] ?? '',
 }));
 
 /** How many cities each country has on disk, for the picker to show a count. */

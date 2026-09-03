@@ -125,8 +125,9 @@ describe('the city files on disk', () => {
       for (const line of readFileSync(`${dir}/${file}`, 'utf8').split('\n')) {
         if (!line) continue;
         const parts = line.split('\t');
-        expect(parts.length, `malformed row in ${file}: ${line}`).toBe(7);
-        const [id, name, , lat, lon, tz, pop] = parts;
+        expect(parts.length, `malformed row in ${file}: ${line}`).toBe(8);
+        const [id, name, , lat, lon, tz, pop, kind] = parts;
+        expect(['', 'x', 'c', 'a'], `unknown place kind in ${file}: ${line}`).toContain(kind);
         expect(id).toMatch(/^[a-z0-9-]+$/);
         expect(name!.length).toBeGreaterThan(0);
         expect(Number.isFinite(Number(lat))).toBe(true);

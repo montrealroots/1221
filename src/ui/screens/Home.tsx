@@ -5,6 +5,10 @@
  * attention, how am I doing. A command surface, not a place to bury depth.
  */
 
+import { formatDaylight } from '@/engine/core/sun';
+import { RATES_NOTE } from '@/engine/content/currency';
+import { titleCaseLabel } from '@/engine/core/text';
+import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { forecastFor, weatherAt, weatherIcon } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
@@ -19,7 +23,7 @@ import { CITIES } from '@/engine/content/geography';
 import {
   formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney } from '@/engine/core/money';
+import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -36,6 +40,7 @@ export function Home() {
   const ready = readiness(player);
   const accounts = useWorld((s) => s.ledger.accountsOf(s.player.id));
   const primary = accounts.find((a) => a.id === player.primaryAccountId) ?? accounts[0];
+  const place = city ? placeProfile(sim, city.id) : undefined;
   const weather = city ? weatherAt(sim, city.id) : undefined;
   const week = city ? forecastFor(sim, city.id, 6) : [];
   const unit = weather?.fahrenheit ? '°F' : '°C';
@@ -170,6 +175,65 @@ export function Home() {
             </button>
           </Panel>
 
+          {place && (
+            <Panel
+              title="Where You Are"
+              tight
+              actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>Travel</button>}
+            >
+              <div className="strong">
+                {place.city.name}{place.regionName ? `, ${place.regionName}` : ''} · {place.countryName}
+              </div>
+              <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
+                {place.away && place.homeCity
+                  ? `${place.distanceFromHome} from home in ${place.homeCity.name}${place.hoursFromHome ? ` · ${place.hoursFromHome > 0 ? '+' : ''}${place.hoursFromHome}h from home time` : ''}.`
+                  : 'Home.'}
+                {placeLine(place) && ` ${placeLine(place)}.`}
+              </div>
+              <div className="grid grid-3">
+                <Stat
+                  label="Local Time"
+                  value={place.localTime}
+                  note={`${place.zoneAbbreviation}${place.away && place.hoursFromHome ? ` · ${place.hoursFromHome > 0 ? '+' : ''}${place.hoursFromHome}h from home` : ''}`}
+                />
+                <Stat
+                  label="Daylight"
+                  value={place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night'
+                    : `${formatTime(place.sun.sunrise ?? sim.now, place.zone)} – ${formatTime(place.sun.sunset ?? sim.now, place.zone)}`}
+                  note={`${formatDaylight(place.sun.daylightMinutes)} of light`}
+                />
+                <Stat
+                  label="Currency"
+                  value={`${place.currency.symbol} ${place.currency.code}`}
+                  note={`${place.currency.name}${place.currency.unitsPerUsd !== undefined && place.currency.code !== 'USD' ? ` · ${place.currency.unitsPerUsd} per $1` : ''}`}
+                />
+                <Stat
+                  label="Cost Of Living"
+                  value={place.costOfLivingIndex}
+                  note={`Rent about ${place.localRent ?? formatMoneyCompact(place.medianRentCents)}/mo`}
+                />
+                <Stat label="Income Tax" value={`${Math.round(place.effectiveIncomeTax * 100)}%`} note="Effective on $60,000" />
+                <Stat label="Sales Tax" value={`${(place.salesTax * 100).toFixed(1)}%`} note={`Property ${(place.propertyTax * 100).toFixed(2)}%`} />
+                <Stat label="Industry" value={`${place.industryPresence}/100`} note={`Jobs ${place.jobMarketDepth}/100`} />
+                <Stat
+                  label="Languages"
+                  value={place.languages[0] ?? '—'}
+                  note={place.languages.slice(1).join(', ') || 'Official language'}
+                />
+                <Stat
+                  label={place.countryName}
+                  value={place.capital || place.continent}
+                  note={`${place.continent} · ${place.countryPopulation >= 1_000_000 ? `${(place.countryPopulation / 1_000_000).toFixed(1)}M people` : `${place.countryPopulation.toLocaleString('en-US')} people`}${place.phone ? ` · +${place.phone}` : ''}`}
+                />
+              </div>
+              <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+                Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometres'}, temperatures in °{place.units.temperature}.
+                {place.filmIncentive ? ` ${Math.round(place.filmIncentive * 100)}% film incentive here.` : ''}
+                {place.currency.code !== 'USD' ? ` ${RATES_NOTE}` : ''}
+              </p>
+            </Panel>
+          )}
+
           {weather && city && (
             <Panel title="Weather" tight actions={<span className="chip">{weather.climateName}</span>}>
               <div className="weather-now">
@@ -302,8 +366,16 @@ function partOfDay(instant: number, zone: string): string {
   const hour = Number(formatTime(instant, zone).split(':')[0]) % 12;
   const isPm = formatTime(instant, zone).includes('PM');
   const h24 = isPm ? (hour === 0 ? 12 : hour + 12) : (hour === 12 ? 0 : hour);
-  if (h24 < 5) return 'night';
-  if (h24 < 12) return 'morning';
-  if (h24 < 18) return 'afternoon';
-  return 'evening';
+  if (h24 < 5) return 'Night';
+  if (h24 < 12) return 'Morning';
+  if (h24 < 18) return 'Afternoon';
+  return 'Evening';
+}
+
+
+/** What kind of place this is: its tags if SLATE has them, else its kind and its size. */
+function placeLine(place: PlaceProfile): string {
+  if (place.tags.length > 0) return place.tags.map(titleCaseLabel).join(' · ');
+  const parts = [placeKindLabel(place.city), place.cityPopulation > 0 ? `${formatPeople(place.cityPopulation)} people` : undefined];
+  return parts.filter((p): p is string => !!p).join(' · ');
 }

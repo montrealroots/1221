@@ -403,6 +403,7 @@ export function createVehicle(
     saveId: sim.universe.meta.id,
     ownerId: spec.ownerId,
     ownerKind: spec.ownerKind ?? 'person',
+    locationId: cityId,
     catalogId: model.id,
     make: model.make,
     model: model.name,

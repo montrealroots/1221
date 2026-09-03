@@ -684,6 +684,12 @@ export interface Vehicle {
   leaseMileageCap?: number;
   insurancePolicyId?: Id;
   registeredIn: string;
+  /**
+   * The city the car is in. A car driven somewhere is there until it is
+   * driven on; fly home and it stays behind. Absent on cars from before this
+   * existed, which are read as being with their owner.
+   */
+  locationId?: string;
   registrationExpiresAt: Instant;
   /** Manufacturer warranty; voided by certain modifications. */
   warranty: { bumperToBumperUntil?: Instant; powertrainUntil?: Instant; voided: boolean; voidReason?: string };
@@ -1779,7 +1785,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 12;
+export const SAVE_SCHEMA_VERSION = 13;
 
 export interface SaveMeta {
   id: Id;

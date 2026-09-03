@@ -31,6 +31,7 @@ import { registerCasting, seedIndependentProject } from './systems/casting';
 import { registerProduction } from './systems/production';
 import { registerRelease, registerFranchises } from './systems/release';
 import { registerProfessions } from './systems/professions';
+import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { registerAwards, setUpSeason } from './systems/awards';
 import { registerCompany } from './systems/company';
@@ -64,6 +65,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerRelease(sim);
   registerFranchises(sim);
   registerProfessions(sim);
+  registerDriving(sim);
   registerAwards(sim);
   registerCompany(sim);
   registerWorld(sim);
@@ -576,6 +578,17 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       steps.push(`${person.displayName} now starts as an actor/actress, as everyone does.`);
     }
   }
+
+  // Schema 13 gave every car a location. A car from before is wherever its
+  // owner is now, which is the only honest guess and the one that changes
+  // nothing about what the player can do today.
+  let parked = 0;
+  for (const vehicle of Object.values(universe.vehicles)) {
+    if (vehicle.locationId) continue;
+    const owner = universe.people[vehicle.ownerId];
+    if (owner) { vehicle.locationId = owner.currentLocationId; parked++; }
+  }
+  if (parked > 0) steps.push(`Placed ${parked} car${parked === 1 ? '' : 's'} where their owners are.`);
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
