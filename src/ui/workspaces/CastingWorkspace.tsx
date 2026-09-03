@@ -45,15 +45,15 @@ export function CastingWorkspace() {
 
       <Tabs active={tab} onChange={setTab} tabs={[
         { id: 'breakdowns', label: 'Breakdowns', badge: roles.length },
-        { id: 'auditions', label: 'Your auditions', badge: auditions.filter((a) => !a.decidedAt).length },
+        { id: 'auditions', label: 'Your Auditions', badge: auditions.filter((a) => !a.decidedAt).length },
         { id: 'representation', label: 'Representation' },
         { id: 'credits', label: 'Credits', badge: credits.length },
       ]} />
 
       {tab === 'breakdowns' && (
-        <Panel title="Casting now" flush>
+        <Panel title="Casting Now" flush>
           {roles.length === 0 ? (
-            <Empty title="Nothing open" body="New breakdowns appear as productions gear up. Representation brings you far more of them." />
+            <Empty title="Nothing Open" body="New breakdowns appear as productions gear up. Representation brings you far more of them." />
           ) : (
             <div className="list">
               {roles.map(({ role, project }) => {
@@ -96,9 +96,9 @@ export function CastingWorkspace() {
       )}
 
       {tab === 'auditions' && (
-        <Panel title="Your auditions" flush>
+        <Panel title="Your Auditions" flush>
           {auditions.length === 0 ? (
-            <Empty title="Nothing out" body="Submit for a breakdown and it appears here with a date and a place." />
+            <Empty title="Nothing Out" body="Submit for a breakdown and it appears here with a date and a place." />
           ) : (
             <div className="list">
               {auditions.map((audition) => {
@@ -157,7 +157,7 @@ export function CastingWorkspace() {
 
       {tab === 'representation' && (
         <>
-          <Panel title="Who represents you">
+          <Panel title="Who Represents You">
             {player.representation.agencyName ? (
               <div className="grid grid-2">
                 <Stat label="Agency" value={player.representation.agencyName} note={`${Math.round((player.representation.agentCommission ?? 0) * 100)}% commission`} />
@@ -171,7 +171,7 @@ export function CastingWorkspace() {
             )}
           </Panel>
 
-          <Panel title="Agencies and managers" flush>
+          <Panel title="Agencies And Managers" flush>
             <div className="list">
               {AGENCIES.all().map((agency) => {
                 const standing = player.reputation.professionalReputation * 0.4
@@ -206,7 +206,7 @@ export function CastingWorkspace() {
       {tab === 'credits' && (
         <Panel title="Credits" flush>
           {credits.length === 0 ? (
-            <Empty title="No credits yet" body="Everything starts with the first one." />
+            <Empty title="No Credits Yet" body="Everything starts with the first one." />
           ) : (
             <div className="list">
               {credits.map((project) => project && (
@@ -246,7 +246,7 @@ function PrepareDialog({ auditionId, onClose }: { auditionId: string; onClose: (
     <Modal
       title={`Audition for ${role?.characterName ?? 'the role'}`}
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Not yet</button><button className="btn btn-primary" onClick={submit}>Prepare and go in</button></>}
+      footer={<><button className="btn" onClick={onClose}>Not Yet</button><button className="btn btn-primary" onClick={submit}>Prepare And Go In</button></>}
     >
       <p className="muted small">
         Preparation costs hours and energy, and it is one of the largest single inputs into how the
@@ -254,7 +254,7 @@ function PrepareDialog({ auditionId, onClose }: { auditionId: string; onClose: (
       </p>
       <div className="field">
         <div className="row-between">
-          <label htmlFor="prep" style={{ marginBottom: 0 }}>Hours of preparation</label>
+          <label htmlFor="prep" style={{ marginBottom: 0 }}>Hours Of Preparation</label>
           <span className="mono">{hours}</span>
         </div>
         <input id="prep" type="range" min={0} max={16} value={hours} onChange={(e) => setHours(Number(e.target.value))} />

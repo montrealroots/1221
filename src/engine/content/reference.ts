@@ -69,6 +69,30 @@ export class Registry<T extends ReferenceRecord> {
     }
   }
 
+  /**
+   * Adds records after construction. The world has 170,000 cities and only a
+   * fraction of them belong in the bundle, so the rest arrive when somebody
+   * actually looks at the country they are in. Adding a record that is already
+   * present is a no-op rather than an error: loading a country twice is
+   * ordinary, not a bug.
+   */
+  add(records: readonly T[]): number {
+    let added = 0;
+    for (const raw of records) {
+      if (this.byId.has(raw.id)) continue;
+      const record = Object.freeze(raw);
+      this.byId.set(record.id, record);
+      pushInto(this.byType, record.type, record);
+      if (record.parentId) pushInto(this.byParent, record.parentId, record);
+      if (!this.aliasIndex.has(normalise(record.name))) this.aliasIndex.set(normalise(record.name), record);
+      for (const alias of record.aliases ?? []) {
+        if (!this.aliasIndex.has(normalise(alias))) this.aliasIndex.set(normalise(alias), record);
+      }
+      added++;
+    }
+    return added;
+  }
+
   get(id: string): T | undefined {
     return this.byId.get(id);
   }

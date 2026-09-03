@@ -33,7 +33,7 @@ export function ShoppingWorkspace() {
 
       <Tabs active={tab} onChange={setTab} tabs={[
         { id: 'shop', label: 'Shop' },
-        { id: 'owned', label: 'What you own', badge: owned.length },
+        { id: 'owned', label: 'What You Own', badge: owned.length },
         { id: 'wardrobe', label: 'Wardrobe' },
         { id: 'orders', label: 'Orders', badge: orders.filter((o) => o.status === 'shipped').length },
       ]} />
@@ -51,7 +51,7 @@ export function ShoppingWorkspace() {
 
           <Panel title={category} flush>
             {catalogue.length === 0 ? (
-              <Empty title="Nothing stocked" body="No retailer near you carries that category." />
+              <Empty title="Nothing Stocked" body="No retailer near you carries that category." />
             ) : (
               <div className="list">
                 {catalogue.map(({ item, retailers }) => (
@@ -99,9 +99,9 @@ export function ShoppingWorkspace() {
       )}
 
       {tab === 'owned' && (
-        <Panel title="Your things" flush>
+        <Panel title="Your Things" flush>
           {owned.length === 0 ? (
-            <Empty title="Nothing yet" body="Anything you buy that is not consumed shows up here." />
+            <Empty title="Nothing Yet" body="Anything you buy that is not consumed shows up here." />
           ) : (
             <div className="list">
               {owned.sort((a, b) => b.currentValue - a.currentValue).map((asset) => (
@@ -146,7 +146,7 @@ export function ShoppingWorkspace() {
             </Panel>
           ))}
           {Object.keys(wardrobe).length === 0 && (
-            <Empty title="Nothing to wear" body="Buy clothing and it appears here, ready to be assembled into outfits." />
+            <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be assembled into outfits." />
           )}
         </div>
       )}
@@ -154,7 +154,7 @@ export function ShoppingWorkspace() {
       {tab === 'orders' && (
         <Panel title="Orders" flush>
           {orders.length === 0 ? (
-            <Empty title="No orders" body="Everything you buy is recorded here with a receipt." />
+            <Empty title="No Orders" body="Everything you buy is recorded here with a receipt." />
           ) : (
             <div className="list">
               {orders.map((order) => (

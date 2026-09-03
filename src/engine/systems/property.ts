@@ -132,7 +132,7 @@ export const CONSTRUCTION_PHASES: readonly PhaseSpec[] = [
 export function registerProperty(sim: Simulation): void {
   sim.onSchedule('prop.refresh_listings', () => {
     refreshListings(sim);
-    sim.schedule({ at: addDays(sim.now, 10, sim.homeZone), kind: 'prop.refresh_listings', label: 'New property listings', category: 'property', priority: 65 });
+    sim.schedule({ at: addDays(sim.now, 10, sim.homeZone), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
   });
   sim.onSchedule('prop.offer_response', (item) => respondToOffer(sim, item.payload.offerId as Id));
   sim.onSchedule('prop.inspection', (item) => runInspection(sim, item.payload.offerId as Id));
@@ -145,7 +145,7 @@ export function registerProperty(sim: Simulation): void {
   sim.onSchedule('build.phase_tick', (item) => advanceConstruction(sim, item.payload.projectId as Id));
   sim.onSchedule('prop.market_tick', () => {
     driftMarket(sim);
-    sim.schedule({ at: addDays(sim.now, 30, sim.homeZone), kind: 'prop.market_tick', label: 'Property market', category: 'system', priority: 92 });
+    sim.schedule({ at: addDays(sim.now, 30, sim.homeZone), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
   });
 
   // --- Commands ------------------------------------------------------------
@@ -232,7 +232,7 @@ export function registerProperty(sim: Simulation): void {
       s.schedule({
         at: offer.respondBy,
         kind: 'prop.offer_response',
-        label: `Seller response — ${property.addressLine}`,
+        label: `Seller Response — ${property.addressLine}`,
         category: 'property',
         payload: { offerId: offer.id },
         priority: 40,
@@ -261,7 +261,7 @@ export function registerProperty(sim: Simulation): void {
         offer.history.push({ at: s.now, note: `You countered at ${formatMoney(p.counterAmount)}.` });
         s.schedule({
           at: offer.respondBy, kind: 'prop.offer_response',
-          label: 'Seller response', category: 'property',
+          label: 'Seller Response', category: 'property',
           payload: { offerId: offer.id }, priority: 40,
           refType: 'offer', refId: offer.id,
         });
@@ -422,7 +422,7 @@ export function registerProperty(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 7, s.homeZone),
         kind: 'build.phase_tick',
-        label: `${p.name} — construction progress`,
+        label: `${p.name} — Construction Progress`,
         category: 'property',
         payload: { projectId: project.id },
         priority: 60,
@@ -797,12 +797,12 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
   const contingencyPenalty = offer.contingencies.length * 0.025;
 
   const { factors, score } = buildFactors([
-    { label: 'Offer against asking', detail: `You offered ${formatMoney(offer.amount)} against ${formatMoney(listing.askingPrice)}, which is ${Math.round(ratio * 100)}%.`, weight: 0.52, value: clamp((ratio - 0.82) / 0.25, 0, 1.2) },
-    { label: 'How motivated the seller is', detail: `The listing has been up for ${listing.daysOnMarket} days.`, weight: 0.20, value: listing.sellerMotivation / 100 },
-    { label: 'Cash versus financing', detail: offer.financingKind === 'cash' ? 'A cash offer removes financing risk entirely.' : 'A financed offer can fall through at the lender.', weight: 0.12, value: cashBonus > 0 ? 1 : 0.4 },
+    { label: 'Offer Against Asking', detail: `You offered ${formatMoney(offer.amount)} against ${formatMoney(listing.askingPrice)}, which is ${Math.round(ratio * 100)}%.`, weight: 0.52, value: clamp((ratio - 0.82) / 0.25, 0, 1.2) },
+    { label: 'How Motivated The Seller Is', detail: `The listing has been up for ${listing.daysOnMarket} days.`, weight: 0.20, value: listing.sellerMotivation / 100 },
+    { label: 'Cash Versus Financing', detail: offer.financingKind === 'cash' ? 'A cash offer removes financing risk entirely.' : 'A financed offer can fall through at the lender.', weight: 0.12, value: cashBonus > 0 ? 1 : 0.4 },
     { label: 'Contingencies', detail: `${offer.contingencies.length} contingenc${offer.contingencies.length === 1 ? 'y' : 'ies'} attached.`, weight: -0.14, value: clamp(contingencyPenalty * 8, 0, 1) },
-    { label: 'Your agent', detail: agent ? `${agent.brokerage} negotiating on your behalf.` : 'You are representing yourself.', weight: 0.10, value: agent ? agent.negotiation / 100 : 0.35 },
-    { label: 'Competing offers', detail: 'What else the seller is looking at, which you do not see.', weight: -0.18, value: rng.float(0, 1), knowable: false },
+    { label: 'Your Agent', detail: agent ? `${agent.brokerage} negotiating on your behalf.` : 'You are representing yourself.', weight: 0.10, value: agent ? agent.negotiation / 100 : 0.35 },
+    { label: 'Competing Offers', detail: 'What else the seller is looking at, which you do not see.', weight: -0.18, value: rng.float(0, 1), knowable: false },
   ]);
 
   const roll = rng.next();
@@ -840,8 +840,8 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
       detail: `They came back at ${formatMoney(counter)}. You offered ${formatMoney(offer.amount)}.`,
       route: '/workspace/property',
       actions: [
-        { label: 'Accept the counter', commandKind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: true } },
-        { label: 'Walk away', commandKind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: false } },
+        { label: 'Accept The Counter', commandKind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: true } },
+        { label: 'Walk Away', commandKind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: false } },
       ],
       dueAt: addDays(sim.now, 2, sim.homeZone),
       refType: 'offer', refId: offer.id,
@@ -945,8 +945,8 @@ function runInspection(sim: Simulation, offerId: Id): void {
       detail: `${findings.length} item${findings.length === 1 ? '' : 's'}, roughly ${formatMoney(total)} of work. You can proceed, renegotiate, or walk away and get your deposit back.`,
       route: '/workspace/property',
       actions: [
-        { label: 'Proceed anyway', commandKind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: true } },
-        { label: 'Walk away', commandKind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: false } },
+        { label: 'Proceed Anyway', commandKind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: true } },
+        { label: 'Walk Away', commandKind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: false } },
       ],
       dueAt: addDays(sim.now, 4, sim.homeZone),
       refType: 'offer', refId: offer.id,
@@ -979,7 +979,7 @@ function closeTransaction(sim: Simulation, offerId: Id): void {
         const listing = sim.universe.propertyListings[offer.listingId];
         if (listing) listing.status = 'active';
         sim.notify({
-          category: 'property', title: 'Purchase fell through',
+          category: 'property', title: 'Purchase Fell Through',
           body: `The appraisal on ${property.addressLine} came in ${formatMoney(gap)} low and you could not cover the gap. Your deposit has been returned.`,
           importance: 85, route: '/workspace/property',
         });
@@ -1004,7 +1004,7 @@ function closeTransaction(sim: Simulation, offerId: Id): void {
     const listing = sim.universe.propertyListings[offer.listingId];
     if (listing) listing.status = 'active';
     sim.notify({
-      category: 'property', title: 'Closing failed',
+      category: 'property', title: 'Closing Failed',
       body: `You needed ${formatMoney(cashNeeded)} at closing on ${property.addressLine} and did not have it.`,
       importance: 88, route: '/workspace/property',
     });
@@ -1027,7 +1027,7 @@ function closeTransaction(sim: Simulation, offerId: Id): void {
     if (!result.ok) {
       offer.status = 'withdrawn';
       refundEarnest(sim, offer);
-      sim.notify({ category: 'property', title: 'Financing declined', body: result.error ?? 'The lender declined.', importance: 88, route: '/workspace/property' });
+      sim.notify({ category: 'property', title: 'Financing Declined', body: result.error ?? 'The lender declined.', importance: 88, route: '/workspace/property' });
       sim.emit('prop.closing_failed', { offerId: offer.id, reason: 'financing_declined' });
       return;
     }
@@ -1230,7 +1230,7 @@ function advanceConstruction(sim: Simulation, projectId: Id): void {
   sim.schedule({
     at: addDays(sim.now, 7, sim.homeZone),
     kind: 'build.phase_tick',
-    label: `${project.name} — construction progress`,
+    label: `${project.name} — Construction Progress`,
     category: 'property',
     payload: { projectId: project.id },
     priority: 60,
@@ -1400,7 +1400,7 @@ export function registerPropertyReactors(sim: Simulation): void {
     if (!property) return;
     const col = costOfLiving(locationId);
     const scale = clamp(property.interiorSqft / 2000, 0.5, 6);
-    for (const [name, base] of [['Electricity', 145_00], ['Water and refuse', 88_00], ['Gas', 62_00]] as [string, number][]) {
+    for (const [name, base] of [['Electricity', 145_00], ['Water And Refuse', 88_00], ['Gas', 62_00]] as [string, number][]) {
       createBill(s, {
         payerId: buyerId,
         name: `${name} — ${property.addressLine}`,

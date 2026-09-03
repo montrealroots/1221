@@ -9,6 +9,7 @@
  * Post is a dependency graph. You cannot colour a picture that is not locked.
  */
 
+import { shootDayWeather } from './weather';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Id, PostTask, PostTaskKind, Project, ShootDay } from '../domain/model';
@@ -174,7 +175,7 @@ export function registerProduction(sim: Simulation): void {
         const item = s.schedule({
           at: callTime,
           kind: 'prod.shoot_day',
-          label: `${project.title} — Day ${placed} of ${dayCount}`,
+          label: `${project.title} — Day ${placed} Of ${dayCount}`,
           category: 'production',
           payload: { shootDayId: day.id },
           priority: 18,
@@ -196,7 +197,7 @@ export function registerProduction(sim: Simulation): void {
       s.schedule({
         at: addDays(cursor, 2, s.homeZone),
         kind: 'prod.wrap',
-        label: `${project.title} — wrap`,
+        label: `${project.title} — Wrap`,
         category: 'production',
         payload: { projectId: project.id },
         priority: 20,
@@ -264,7 +265,7 @@ export function registerProduction(sim: Simulation): void {
         s.schedule({
           at: addDays(s.now, 7, s.homeZone),
           kind: 'prod.post_tick',
-          label: `${project.title} — post progress`,
+          label: `${project.title} — Post Progress`,
           category: 'production',
           payload: { projectId: project.id },
           priority: 58,
@@ -314,8 +315,8 @@ export function registerProduction(sim: Simulation): void {
         question: 'What did the test audience say?',
         summary: `${score} out of 100 with ${audience} recruited viewers.`,
         factors: [
-          { label: 'The cut as it stands', detail: `Assembled quality reads ${quality} out of 100.`, weight: 0.8, contribution: quality * 0.8, knowable: true },
-          { label: 'Audience composition', detail: 'Who the recruiters actually put in the room.', weight: 0.2, contribution: 0, knowable: false },
+          { label: 'The Cut As It Stands', detail: `Assembled quality reads ${quality} out of 100.`, weight: 0.8, contribution: quality * 0.8, knowable: true },
+          { label: 'Audience Composition', detail: 'Who the recruiters actually put in the room.', weight: 0.2, contribution: 0, knowable: false },
         ],
         score,
         outcome: score >= 70 ? 'strong' : score >= 55 ? 'mixed' : 'weak',
@@ -327,7 +328,7 @@ export function registerProduction(sim: Simulation): void {
           title: `${project.title} tested at ${score}`,
           detail: `${notes.join(' ')} Reshoots would cost time and money and might fix it.`,
           route: '/workspace/projects',
-          actions: [{ label: 'Order reshoots', commandKind: 'prod.order_reshoots', payload: { projectId: project.id, days: 4 } }],
+          actions: [{ label: 'Order Reshoots', commandKind: 'prod.order_reshoots', payload: { projectId: project.id, days: 4 } }],
           refType: 'project', refId: project.id,
         });
       }
@@ -481,7 +482,9 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
       }, 0) / castPresent.length
     : 0.9;
 
-  const weatherPenalty = !day.isStage && rng.chance(0.12) ? rng.float(0.45, 0.8) : 1;
+  // Not a coin flip: the weather that day, at that location.
+  const sky = shootDayWeather(sim, day.locationId, sim.now, day.isStage);
+  const weatherPenalty = sky.factor;
   const efficiency = clamp(directorFactor * castFactor * weatherPenalty * rng.float(0.82, 1.14), 0.25, 1.5);
 
   day.completedPages = Number(Math.min(day.plannedPages, day.plannedPages * efficiency).toFixed(1));
@@ -515,7 +518,7 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
   if (weatherPenalty < 1) {
     day.incidents.push({
       at: sim.now, kind: 'weather',
-      description: 'Weather stopped exterior work.',
+      description: sky.note ?? 'Weather stopped exterior work.',
       costDelta: 0, timeDeltaMinutes: Math.round((1 - weatherPenalty) * 300),
     });
   }
@@ -658,7 +661,7 @@ export function openPost(sim: Simulation, projectId: Id): void {
   sim.schedule({
     at: addDays(sim.now, 7, sim.homeZone),
     kind: 'prod.post_tick',
-    label: `${project.title} — post progress`,
+    label: `${project.title} — Post Progress`,
     category: 'production',
     payload: { projectId: project.id },
     priority: 58,
@@ -760,7 +763,7 @@ function advancePost(sim: Simulation, projectId: Id): void {
   sim.schedule({
     at: addDays(sim.now, 7, sim.homeZone),
     kind: 'prod.post_tick',
-    label: `${project.title} — post progress`,
+    label: `${project.title} — Post Progress`,
     category: 'production',
     payload: { projectId: project.id },
     priority: 58,

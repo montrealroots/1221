@@ -12,6 +12,7 @@ import { SAVE_SCHEMA_VERSION } from './domain/model';
 import { addDays, addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
+import { titleCaseLabel } from './core/text';
 import { CITIES } from './content/geography';
 import { costOfLiving } from './content/tax';
 
@@ -29,6 +30,9 @@ import { registerFilm, registerBuyerOffer } from './systems/film';
 import { registerCasting, seedIndependentProject } from './systems/casting';
 import { registerProduction } from './systems/production';
 import { registerRelease, registerFranchises } from './systems/release';
+import { registerProfessions } from './systems/professions';
+import { registerDriving } from './systems/driving';
+import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { registerAwards, setUpSeason } from './systems/awards';
 import { registerCompany } from './systems/company';
 import { registerWorld } from './world/world';
@@ -60,6 +64,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerProduction(sim);
   registerRelease(sim);
   registerFranchises(sim);
+  registerProfessions(sim);
+  registerDriving(sim);
   registerAwards(sim);
   registerCompany(sim);
   registerWorld(sim);
@@ -77,7 +83,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({
     at: addDays(startOfLocalDay(sim), 1, z),
     kind: 'life.day_rollover',
-    label: 'New day', category: 'system', priority: 5,
+    label: 'New Day', category: 'system', priority: 5,
   });
 
   const nextMonth = (() => {
@@ -89,26 +95,26 @@ function armWorldClock(sim: Simulation): void {
 
   sim.schedule({
     at: nextMonth, kind: 'finance.month_close',
-    label: 'Statement close', category: 'system', priority: 8,
+    label: 'Statement Close', category: 'system', priority: 8,
     recurrence: { unit: 'month', interval: 1 },
   });
-  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New job listings', category: 'career', priority: 60 });
-  sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New property listings', category: 'property', priority: 65 });
-  sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer inventory', category: 'vehicles', priority: 68 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property market', category: 'system', priority: 92 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle values', category: 'system', priority: 93 });
-  sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience update', category: 'system', priority: 88 });
-  sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry check', category: 'system', priority: 95 });
-  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship drift', category: 'system', priority: 90 });
-  sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting breakdowns', category: 'career', priority: 72 });
-  sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World simulation', category: 'system', priority: 96 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise appetite', category: 'system', priority: 94 });
+  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New Job Listings', category: 'career', priority: 60 });
+  sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
+  sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
+  sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
+  sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
+  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship Drift', category: 'system', priority: 90 });
+  sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
+  sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise Appetite', category: 'system', priority: 94 });
 
   const nextYear = zonedParts(sim.now, z).year + 1;
   sim.schedule({
     at: instantFromZoned({ year: nextYear, month: 1, day: 2, hour: 3 }, z),
     kind: 'award.season_setup',
-    label: 'Awards season', category: 'system', priority: 80,
+    label: 'Awards Season', category: 'system', priority: 80,
   });
 }
 
@@ -186,7 +192,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     sim.schedule({
       at: addMonths(sim.now, 1, sim.homeZone),
       kind: 'finance.bill_due',
-      label: 'Credit card minimum due',
+      label: 'Credit Card Minimum Due',
       category: 'finance',
       payload: { billId: '' },
       priority: 20,
@@ -272,7 +278,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
       if (!result.ok) {
         // Could not afford anything: that is a legitimate starting position.
         sim.notify({
-          category: 'vehicles', title: 'No car yet',
+          category: 'vehicles', title: 'No Car Yet',
           body: 'You could not afford one at the start. Public transport and rideshares for now.',
           importance: 25, route: '/workspace/vehicles',
         });
@@ -295,12 +301,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     const canLiveOnIt = openings.filter((o) => annualisedOpeningPay(o) >= needed);
     const pool = canLiveOnIt.length > 0 ? canLiveOnIt : openings;
 
-    // Within what is affordable, take the job that suits who they are.
-    const preferred = config.careerTrack === 'civilian' || config.careerTrack === 'none'
-      ? pool.find((o) => o.payBasis === 'salary') ?? pool[0]
-      : pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
-        ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
-        ?? pool[0];
+    // Within what is affordable, take the job that suits an actor: something
+    // near the industry, or the flexible work that fits around auditions.
+    const preferred = pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
+      ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
+      ?? pool[0];
 
     // If nothing on the board pays for the life, take the best-paying thing
     // going rather than something that guarantees insolvency.
@@ -327,10 +332,6 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     kind: 'social.create_account',
     payload: { platform: 'lumen', handle, displayName: player.displayName },
   });
-  if (config.careerTrack === 'creator') {
-    sim.execute({ kind: 'social.create_account', payload: { platform: 'streamtube', handle, displayName: player.displayName } });
-    sim.execute({ kind: 'social.create_account', payload: { platform: 'pulse', handle, displayName: player.displayName } });
-  }
 
   // --- The industry is already running -----------------------------------
   for (let i = 0; i < 4; i++) seedIndependentProject(sim, i);
@@ -338,7 +339,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // --- Opening history ----------------------------------------------------
   sim.remember({
     category: 'life',
-    title: 'A new life begins',
+    title: 'A New Life Begins',
     detail: `${player.displayName} in ${CITIES.require(cityId).name}, ${formatDate(sim.now, sim.homeZone)}. ${WEALTH_PROFILES[config.wealth].note}`,
     refs: [{ type: 'person', id: player.id }],
     significance: 100, public: false,
@@ -355,6 +356,7 @@ export function refreshMeta(sim: Simulation): void {
   if (!player) return;
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
+  sim.universe.meta.portrait = player.portrait;
   sim.universe.meta.careerLabel = careerLabel(player.careerTrack);
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
@@ -448,6 +450,39 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record['counters'] ??= {};
   record['engineFailures'] ??= [];
 
+  // Schema 10 put the clock on real time. A save from before it carries the
+  // old 'standard' speed, which ran a world minute for every real second.
+  const preferences = record['preferences'] as { timeSpeed?: string } | undefined;
+  if (preferences?.timeSpeed === 'standard') {
+    preferences.timeSpeed = 'live';
+    steps.push('Moved the clock to real time.');
+  }
+
+  // Schema 11 put every label in Title Case. Labels are written into the save
+  // when they are created — a scheduled item keeps the words it was given — so
+  // an older save would have gone on reading 'New day' forever while a fresh
+  // one read 'New Day'. Repair them in place rather than leaving two builds
+  // worth of capitalisation in one universe.
+  let relabelled = 0;
+  const relabel = <T extends Record<string, unknown>>(rows: T[] | undefined, field: keyof T & string) => {
+    for (const row of rows ?? []) {
+      const value = row[field];
+      if (typeof value !== 'string') continue;
+      const next = titleCaseLabel(value);
+      if (next !== value) {
+        (row as Record<string, unknown>)[field] = next;
+        relabelled++;
+      }
+    }
+  };
+  relabel(record['scheduled'] as Record<string, unknown>[], 'label');
+  relabel(record['notifications'] as Record<string, unknown>[], 'title');
+  relabel(record['history'] as Record<string, unknown>[], 'title');
+  relabel(Object.values((record['decisions'] ?? {}) as Record<string, Record<string, unknown>>), 'title');
+  if (relabelled > 0) {
+    steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
+  }
+
   // Schema 9 also denormalised the billing block onto the project so a credit
   // outlives the simulation of the person who earned it. Rebuild it from the
   // attachments an older save already has.
@@ -517,6 +552,43 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
   if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
+
+  // Schema 12 made everyone an actor to begin with and moved the other
+  // tracks into professions unlocked in the game. A save whose player was a
+  // writer keeps being a writer: the profession is unlocked at level two so
+  // their standing is not lost, their skills are exactly as they were, and
+  // their experience is read from the reputation they had already built.
+  for (const person of Object.values(universe.people)) {
+    if (!person.isPlayer) continue;
+    if (person.industryXp === undefined) {
+      person.industryXp = Math.round(person.reputation.professionalReputation * 8 + person.creditIds.length * 60);
+      steps.push(`Read ${person.industryXp} XP of industry experience from the career so far.`);
+    }
+    person.professions ??= {};
+    const track = person.careerTrack as string;
+    if (track !== 'actor' && (PROFESSION_BY_ID as Record<string, unknown>)[track]) {
+      const id = track as ProfessionId;
+      if (!person.professions[id]) {
+        person.professions[id] = { unlockedAt: universe.now, xp: LEVEL_XP[1] ?? 0, traitIds: [] };
+        steps.push(`Kept ${person.displayName} a ${PROFESSION_BY_ID[id].name}: unlocked as a profession at level 2.`);
+      }
+      person.careerTrack = 'actor';
+    } else if (track === 'civilian' || track === 'none') {
+      person.careerTrack = 'actor';
+      steps.push(`${person.displayName} now starts as an actor/actress, as everyone does.`);
+    }
+  }
+
+  // Schema 13 gave every car a location. A car from before is wherever its
+  // owner is now, which is the only honest guess and the one that changes
+  // nothing about what the player can do today.
+  let parked = 0;
+  for (const vehicle of Object.values(universe.vehicles)) {
+    if (vehicle.locationId) continue;
+    const owner = universe.people[vehicle.ownerId];
+    if (owner) { vehicle.locationId = owner.currentLocationId; parked++; }
+  }
+  if (parked > 0) steps.push(`Placed ${parked} car${parked === 1 ? '' : 's'} where their owners are.`);
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);

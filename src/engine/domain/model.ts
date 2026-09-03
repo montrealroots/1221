@@ -12,6 +12,8 @@ import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { AuditRecord, HistoryRecord } from '../core/audit';
+import type { PerformerTitle } from '../core/performer';
+import type { ProfessionId } from '../content/professions';
 import type { AttributeSheet } from './attributes';
 import type { SkillSheet } from './skills';
 
@@ -74,6 +76,15 @@ export type CareerTrack =
   | 'none' | 'actor' | 'writer' | 'director' | 'producer' | 'showrunner'
   | 'crew' | 'executive' | 'agent' | 'creator' | 'civilian';
 
+/** Standing in one unlocked profession. Level is derived from xp. */
+export interface ProfessionProgress {
+  unlockedAt: Instant;
+  /** Experience earned in this profession since unlocking it. */
+  xp: number;
+  /** Trait ids picked for this profession, one per open slot. */
+  traitIds: string[];
+}
+
 export interface Representation {
   agentId?: Id;
   managerId?: Id;
@@ -99,6 +110,21 @@ export interface Person {
   /** Professional credit name, when different from the legal name. */
   stageName?: string;
   pronouns: string;
+  /**
+   * Actor or actress, for the award categories that are named for one.
+   * Nothing in the game writes this yet; absent, pronouns decide. Optional
+   * so every save loads and is routed by the same rule.
+   */
+  performerTitle?: PerformerTitle;
+  /**
+   * Their headshot, as a data URL.
+   *
+   * Stored on the person rather than beside the save, because it belongs to
+   * them: it follows them onto a credit, a casting shortlist and the slot
+   * card. Always re-encoded to a fixed frame before it gets here, so this is
+   * tens of kilobytes rather than whatever came off a phone.
+   */
+  portrait?: string;
 
   birthInstant: Instant;
   /** Reference city id where they are from. */
@@ -124,6 +150,14 @@ export interface Person {
   reputation: Reputation;
 
   careerTrack: CareerTrack;
+  /**
+   * Industry experience: earned from auditions, shoot days, credits, shifts
+   * and the rest, spent to unlock professions. Absent on people from before
+   * professions existed and on NPCs, and read as zero.
+   */
+  industryXp?: number;
+  /** The professions they have unlocked, by id. Absent reads as none. */
+  professions?: Partial<Record<ProfessionId, ProfessionProgress>>;
   /** Employment record id for their ordinary job, if any. */
   jobId?: Id;
   representation: Representation;
@@ -650,6 +684,12 @@ export interface Vehicle {
   leaseMileageCap?: number;
   insurancePolicyId?: Id;
   registeredIn: string;
+  /**
+   * The city the car is in. A car driven somewhere is there until it is
+   * driven on; fly home and it stays behind. Absent on cars from before this
+   * existed, which are read as being with their owner.
+   */
+  locationId?: string;
   registrationExpiresAt: Instant;
   /** Manufacturer warranty; voided by certain modifications. */
   warranty: { bumperToBumperUntil?: Instant; powertrainUntil?: Instant; voided: boolean; voidReason?: string };
@@ -1264,6 +1304,8 @@ export interface Role {
   payLow: Money;
   payHigh: Money;
   status: 'open' | 'casting' | 'offer_out' | 'cast' | 'closed';
+  /** When the decision on this role is made. Set when casting opens. */
+  decidesAt?: number;
   castPersonId?: Id;
   contractId?: Id;
   /** People currently in the running. */
@@ -1719,8 +1761,12 @@ export interface Preferences {
   reducedMotion: boolean;
   audioEnabled: boolean;
   audioVolume: number;
-  /** 'standard' is realtime; other speeds may be unlocked later. */
-  timeSpeed: 'paused' | 'standard' | 'fast' | 'faster';
+  /**
+   * How fast the world runs against real time. 'live' is one to one: a minute
+   * of your evening is a minute of theirs. The faster settings are there for
+   * waiting something out, not because the game needs them.
+   */
+  timeSpeed: 'paused' | 'live' | 'fast' | 'faster';
   compactMode: boolean;
   showAdvancedNumbers: boolean;
   confirmLargePurchases: boolean;
@@ -1741,7 +1787,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 9;
+export const SAVE_SCHEMA_VERSION = 13;
 
 export interface SaveMeta {
   id: Id;
@@ -1754,6 +1800,9 @@ export interface SaveMeta {
   /** Deterministic seed for the whole universe. */
   seed: string;
   characterName: string;
+  /** The player's headshot, mirrored here so a slot can show it without
+   *  deserialising the whole universe behind it. */
+  portrait?: string;
   careerLabel: string;
   locationLabel: string;
   worldDateLabel: string;

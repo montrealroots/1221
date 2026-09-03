@@ -34,12 +34,12 @@ export function ProjectsWorkspace() {
 
       {projects.length === 0 ? (
         <Empty
-          title="Nothing yet"
+          title="Nothing Yet"
           body="Every career here starts with someone deciding to make something. An idea costs nothing; the rights, the script and the money come after."
         />
       ) : (
         <div className="grid" style={{ gridTemplateColumns: 'minmax(220px, 300px) 1fr', gap: 'var(--s5)' }}>
-          <Panel title="Your slate" flush>
+          <Panel title="Your Slate" flush>
             <div className="list" style={{ maxHeight: 600, overflowY: 'auto' }}>
               {projects.map((project) => (
                 <button
@@ -138,11 +138,11 @@ function ProjectDetail({ projectId }: { projectId: string }) {
       ]} />
 
       {tab === 'overview' && (
-        <Panel title="What happens next">
+        <Panel title="What Happens Next">
           <div className="col gap-3">
             {!project.currentDraftId && (
               <ActionRow
-                label="Write the first draft"
+                label="Write The First Draft"
                 detail="Forty-five days of work. Quality comes from your writing skills and the time you give it."
                 action={() => run('film.write_draft', { projectId: project.id })}
                 cta="Write"
@@ -157,7 +157,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   cta="Rewrite"
                 />
                 <ActionRow
-                  label="Take it out to buyers"
+                  label="Take It Out To Buyers"
                   detail="Only buyers who will take your call. Access comes from reputation, package and representation."
                   action={() => run('film.pitch', { projectId: project.id })}
                   cta="Pitch"
@@ -178,7 +178,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             )}
             {project.greenlitAt && project.financingIds.length === 0 && (
               <ActionRow
-                label="Arrange financing"
+                label="Arrange Financing"
                 detail="Production cannot start until the money is actually in a production account."
                 action={() => run('film.arrange_financing', {
                   projectId: project.id,
@@ -192,7 +192,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             )}
             {project.greenlitAt && roles.length === 0 && (
               <ActionRow
-                label="Break down the roles"
+                label="Break Down The Roles"
                 detail="Create the parts, then open casting on each of them."
                 action={() => {
                   run('cast.create_role', {
@@ -209,7 +209,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             )}
             {project.greenlitAt && shooting.planned === 0 && roles.every((r) => r.billing !== 'lead' || r.status === 'cast') && roles.length > 0 && (
               <ActionRow
-                label="Board a shooting schedule"
+                label="Board A Shooting Schedule"
                 detail="Days are placed on the calendar. Cast have to be in the right city on each of them."
                 action={() => run('prod.build_schedule', {
                   projectId: project.id,
@@ -221,7 +221,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             )}
             {project.finalQuality && !release?.campaign && (
               <ActionRow
-                label="Plan a campaign"
+                label="Plan A Campaign"
                 detail="Awareness and intent decide the opening. Thirty days of runway is the minimum."
                 action={() => run('rel.plan_campaign', {
                   projectId: project.id,
@@ -235,7 +235,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             )}
             {project.finalQuality && !project.releaseId && (
               <ActionRow
-                label="Set the release"
+                label="Set The Release"
                 detail="Wide, limited, platform, day and date, or streaming exclusive. Rights decide what is even possible."
                 action={() => run('rel.set_distribution', {
                   projectId: project.id,
@@ -252,7 +252,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
       {tab === 'script' && (
         <Panel title="Drafts" flush>
           {drafts.length === 0 ? (
-            <Empty title="Nothing written" body="A project without a script is an idea." />
+            <Empty title="Nothing Written" body="A project without a script is an idea." />
           ) : (
             <div className="list">
               {drafts.map((draft) => draft && (
@@ -285,7 +285,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
       {tab === 'cast' && (
         <Panel title="Roles" flush>
           {roles.length === 0 ? (
-            <Empty title="No roles yet" body="Break the script down into parts before you can cast it." />
+            <Empty title="No Roles Yet" body="Break the script down into parts before you can cast it." />
           ) : (
             <div className="list">
               {roles.map((role) => {
@@ -322,7 +322,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
           flush
         >
           {shooting.days.length === 0 ? (
-            <Empty title="No schedule" body="A schedule needs a greenlight, funded money in the account, and your leads cast." />
+            <Empty title="No Schedule" body="A schedule needs a greenlight, funded money in the account, and your leads cast." />
           ) : (
             <div className="table-scroll">
               <table>
@@ -357,7 +357,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
       {tab === 'post' && (
         <Panel title="Post-production" subtitle="A dependency graph. Nothing starts before what it needs is finished." flush>
           {post.length === 0 ? (
-            <Empty title="Post has not opened" body="Post opens once the film has been shot." />
+            <Empty title="Post Has Not Opened" body="Post opens once the film has been shot." />
           ) : (
             <div className="list">
               {post.map(({ task, blockedBy, progress }) => (
@@ -418,7 +418,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
           {release?.release && (
             <Panel title="Release" subtitle={`${release.release.strategy.replace(/_/g, ' ')} via ${release.release.distributorName}`}>
               <div className="grid grid-4" style={{ marginBottom: 'var(--s4)' }}>
-                <Stat label="Opening weekend" value={formatMoneyCompact(release.openingWeekend)} />
+                <Stat label="Opening Weekend" value={formatMoneyCompact(release.openingWeekend)} />
                 <Stat label="Worldwide" value={formatMoneyCompact(release.worldGross)} />
                 <Stat label="Theatres" value={release.release.theaterCount.toLocaleString('en-US')} />
                 <Stat
@@ -431,9 +431,9 @@ function ProjectDetail({ projectId }: { projectId: string }) {
               {release.release.streamingResults && (
                 <div className="grid grid-4" style={{ marginBottom: 'var(--s4)' }}>
                   <Stat label="Starts" value={`${(release.release.streamingResults.starts / 1_000_000).toFixed(1)}M`} />
-                  <Stat label="Hours viewed" value={`${(release.release.streamingResults.hoursViewed / 1_000_000).toFixed(1)}M`} />
+                  <Stat label="Hours Viewed" value={`${(release.release.streamingResults.hoursViewed / 1_000_000).toFixed(1)}M`} />
                   <Stat label="Completion" value={`${Math.round(release.release.streamingResults.completionRate * 100)}%`} />
-                  <Stat label="Peak rank" value={`#${release.release.streamingResults.peakRank}`} />
+                  <Stat label="Peak Rank" value={`#${release.release.streamingResults.peakRank}`} />
                 </div>
               )}
 
@@ -468,7 +468,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             </Panel>
           )}
 
-          {!release && <Empty title="Not released" body="Finish the film, then plan a campaign and set a release." />}
+          {!release && <Empty title="Not Released" body="Finish the film, then plan a campaign and set a release." />}
         </>
       )}
     </div>
@@ -501,7 +501,7 @@ function CreateProjectDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Modal
-      title="Start a project"
+      title="Start A Project"
       onClose={onClose}
       footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Create</button></>}
     >

@@ -5,6 +5,7 @@
  * join without the navigation collapsing.
  */
 
+import { weatherAt } from '@/engine/systems/weather';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
@@ -64,16 +65,16 @@ const DOMAINS: Domain[] = [
     entries: [
       { route: '/workspace/social', label: 'Platforms', detail: 'Long video, short video, photo and text, each behaving differently.' },
       { route: '/workspace/social', label: 'Audience', detail: 'Segments, affinity, churn and momentum.' },
-      { route: '/workspace/social', label: 'Brand deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },
+      { route: '/workspace/social', label: 'Brand Deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },
     ],
   },
   {
-    label: 'Film and television',
+    label: 'Film And Television',
     blurb: 'One canonical project, idea to library.',
     entries: [
       { route: '/workspace/casting', label: 'Casting', detail: 'Breakdowns, self-tapes, callbacks and offers you can lose.' },
       { route: '/workspace/projects', label: 'Projects', detail: 'Rights, writing, packaging, greenlight, shoot, post, release.' },
-      { route: '/workspace/awards', label: 'Awards and festivals', detail: 'Edition-specific, eligibility-gated, and permanent once decided.' },
+      { route: '/workspace/awards', label: 'Awards And Festivals', detail: 'Edition-specific, eligibility-gated, and permanent once decided.' },
     ],
   },
   {
@@ -86,7 +87,7 @@ const DOMAINS: Domain[] = [
     ],
   },
   {
-    label: 'Career and money',
+    label: 'Career And Money',
     blurb: 'The unglamorous machinery underneath all of it.',
     entries: [
       { route: '/workspace/jobs', label: 'Employment', detail: 'Apply, interview, work shifts, get promoted, or get let go.' },
@@ -98,6 +99,7 @@ const DOMAINS: Domain[] = [
 
 export function World() {
   const { navigate } = useGame();
+  const { sim } = useGame();
   const player = useWorld((s) => s.player);
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const city = CITIES.get(player.currentLocationId);
@@ -111,6 +113,17 @@ export function World() {
           You are in {city?.name} with {formatMoneyCompact(worth.total)} to your name. Every one of these
           connects to the others; nothing here is a separate game.
         </p>
+        {city && (() => {
+          const weather = weatherAt(sim, city.id);
+          if (!weather) return null;
+          const unit = weather.fahrenheit ? '°F' : '°C';
+          return (
+            <p className="small dim" style={{ marginTop: 'var(--s1)' }}>
+              <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} and {weather.condition.toLowerCase()} in {city.name} right now,
+              {' '}high {weather.high}{unit}, low {weather.low}{unit}. {weather.climateName} climate.
+            </p>
+          );
+        })()}
       </div>
 
       <div className="col gap-5">

@@ -252,7 +252,7 @@ export function registerFinance(sim: Simulation): void {
       const payer = s.universe.people[p.borrowerId];
       createBill(s, {
         payerId: p.borrowerId,
-        name: `${account.name} payment`,
+        name: `${account.name} Payment`,
         category: p.product === 'mortgage' ? 'housing' : p.product === 'auto' ? 'transport' : 'debt',
         amount: monthlyPayment,
         frequency: 'monthly',
@@ -338,7 +338,7 @@ export function createBill(
   sim.schedule({
     at: bill.nextDueAt,
     kind: 'finance.bill_due',
-    label: `${bill.name} due`,
+    label: `${bill.name} Due`,
     category: 'finance',
     payload: { billId: bill.id },
     priority: BILL_PRIORITY,
@@ -375,7 +375,7 @@ export function attemptBillPayment(sim: Simulation, bill: Bill): void {
       title: `${bill.name} is unpaid`,
       detail: `${formatMoney(bill.amount)} was due and there were not enough available funds. ${bill.missedCount >= 3 ? 'This has now gone to collections.' : `Missed ${bill.missedCount} time${bill.missedCount === 1 ? '' : 's'}.`}`,
       route: '/workspace/bank',
-      actions: [{ label: 'Pay now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
+      actions: [{ label: 'Pay Now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
       refType: 'bill',
       refId: bill.id,
     });
@@ -387,7 +387,7 @@ export function attemptBillPayment(sim: Simulation, bill: Bill): void {
     sim.schedule({
       at: next,
       kind: 'finance.bill_due',
-      label: `${bill.name} due`,
+      label: `${bill.name} Due`,
       category: 'finance',
       payload: { billId: bill.id },
       priority: BILL_PRIORITY,
@@ -526,7 +526,7 @@ export function recordTaxable(sim: Simulation, personId: Id, gross: Money, withh
     sim.schedule({
       at: instantFromZoned({ year: year + 1, month: 4, day: 15, hour: 9 }, sim.homeZone),
       kind: 'finance.tax_year',
-      label: `${year} tax return due`,
+      label: `${year} Tax Return Due`,
       category: 'finance',
       payload: { personId, year },
       priority: 30,

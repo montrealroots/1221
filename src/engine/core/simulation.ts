@@ -309,7 +309,7 @@ export class Simulation {
           due.status = 'missed';
           this.notify({
             category: 'system',
-            title: 'A scheduled event could not be processed',
+            title: 'A Scheduled Event Could Not Be Processed',
             body: `'${due.label}' failed: ${(err as Error).message}`,
             importance: 40,
           });

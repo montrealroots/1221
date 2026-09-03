@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
-import { awardsCalendar, awardHistory, festivalCalendar, ordinal, isEligible } from '@/engine/systems/awards';
+import { awardsCalendar, awardHistory, festivalCalendar, editionName, isEligible } from '@/engine/systems/awards';
 import { AWARD_BODIES, AWARD_BODY_BY_ID } from '@/engine/content/industry';
 import { activeProjects } from '@/engine/systems/film';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
@@ -31,9 +31,9 @@ export function AwardsWorkspace() {
       </div>
 
       <Tabs active={tab} onChange={setTab} tabs={[
-        { id: 'season', label: 'This season' },
+        { id: 'season', label: 'This Season' },
         { id: 'festivals', label: 'Festivals' },
-        { id: 'history', label: 'Your record', badge: history.length },
+        { id: 'history', label: 'Your Record', badge: history.length },
       ]} />
 
       {tab === 'season' && (
@@ -43,7 +43,7 @@ export function AwardsWorkspace() {
               {calendar.slice(0, 12).map(({ edition, body, nominations, daysAway }) => (
                 <div key={edition.id} className="list-item list-static">
                   <div className="grow">
-                    <div className="small strong">{ordinal(edition.editionNumber)} {body?.name}</div>
+                    <div className="small strong">{editionName(edition.editionNumber, body?.name ?? '')}</div>
                     <div className="xs dim">
                       {formatDate(edition.ceremonyAt, sim.homeZone)}
                       {daysAway > 0 ? ` · in ${daysAway} days` : ' · past'} ·
@@ -59,7 +59,7 @@ export function AwardsWorkspace() {
 
           <Panel title="Campaign" subtitle="Only films that are actually eligible can be entered." flush>
             {projects.length === 0 ? (
-              <Empty title="Nothing eligible" body="A film has to be finished and released before it can be campaigned." />
+              <Empty title="Nothing Eligible" body="A film has to be finished and released before it can be campaigned." />
             ) : (
               <div className="list">
                 {projects.map((project) => (
@@ -94,7 +94,7 @@ export function AwardsWorkspace() {
       )}
 
       {tab === 'festivals' && (
-        <Panel title="Festival calendar" flush>
+        <Panel title="Festival Calendar" flush>
           <div className="list">
             {festivals.map(({ festival, year, at, city, submissions }) => (
               <div key={festival.id} className="list-item list-static">
@@ -131,9 +131,9 @@ export function AwardsWorkspace() {
       )}
 
       {tab === 'history' && (
-        <Panel title="Your record" flush>
+        <Panel title="Your Record" flush>
           {history.length === 0 ? (
-            <Empty title="No nominations" body="Awards follow work. Make something worth voting for." />
+            <Empty title="No Nominations" body="Awards follow work. Make something worth voting for." />
           ) : (
             <div className="list">
               {history.map(({ nomination, edition, body, project }) => (
@@ -142,7 +142,7 @@ export function AwardsWorkspace() {
                   <div className="grow">
                     <div className="small strong">{nomination.category}</div>
                     <div className="xs dim">
-                      {ordinal(edition?.editionNumber ?? 0)} {body?.name}
+                      {editionName(edition?.editionNumber ?? 0, body?.name ?? '')}
                       {project && ` · ${project.title}`}
                       {nomination.campaignSpend > 0 && ` · ${formatMoneyCompact(nomination.campaignSpend)} campaign`}
                     </div>
@@ -180,10 +180,10 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
     <Modal
       title={`Campaign ${project?.title ?? ''}`}
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit} disabled={categories.length === 0}>Run the campaign</button></>}
+      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit} disabled={categories.length === 0}>Run The Campaign</button></>}
     >
       <div className="field">
-        <label htmlFor="body">Awards body</label>
+        <label htmlFor="body">Awards Body</label>
         <select id="body" value={bodyId} onChange={(e) => { setBodyId(e.target.value); setCategories([]); }}>
           {AWARD_BODIES.map((entry) => (
             <option key={entry.id} value={entry.id}>{entry.name} — prestige {entry.prestige}</option>
@@ -209,7 +209,7 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
       </div>
 
       <div className="field">
-        <label htmlFor="spend">Total spend</label>
+        <label htmlFor="spend">Total Spend</label>
         <input id="spend" type="number" min={10_000} step={10_000} value={spend} onChange={(e) => setSpend(Number(e.target.value))} />
         {categories.length > 0 && (
           <p className="xs dim" style={{ marginTop: 4 }}>
@@ -222,7 +222,7 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
         Spend has real but sharply diminishing influence. The film itself and its critical standing carry
         most of the weight, and precursor wins earlier in the season matter more than money.
       </div>
-      <Stat label="Project quality" value={project?.finalQuality ?? '—'} note={`critics ${project?.criticScore ?? '—'}`} />
+      <Stat label="Project Quality" value={project?.finalQuality ?? '—'} note={`critics ${project?.criticScore ?? '—'}`} />
     </Modal>
   );
 }

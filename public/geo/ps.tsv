@@ -1,0 +1,378 @@
+ps-we-eastjerusalem	East Jerusalem	ps-we	31.7834	35.2339	Asia/Hebron	428304	x
+ps-gz-gaza	Gaza	ps-gz	31.5016	34.4667	Asia/Gaza	410000	a
+ps-gz-khanyunis	Khān Yūnis	ps-gz	31.3402	34.3063	Asia/Gaza	173183	
+ps-gz-jabalya	Jabālyā	ps-gz	31.5272	34.4835	Asia/Gaza	168568	
+ps-we-hebron	Hebron	ps-we	31.5294	35.0938	Asia/Hebron	160470	
+ps-we-nablus	Nablus	ps-we	32.2211	35.2544	Asia/Hebron	130326	
+ps-gz-rafah	Rafaḩ	ps-gz	31.2972	34.2436	Asia/Gaza	126305	
+ps-gz-dayralbalah	Dayr al Balaḩ	ps-gz	31.4183	34.3493	Asia/Gaza	59504	
+ps-gz-baytlahya	Bayt Lāhyā	ps-gz	31.5464	34.4951	Asia/Gaza	56919	
+ps-we-battir	Battir	ps-we	31.7000	35.1167	Asia/Jerusalem	56746	
+ps-we-tulkarm	Ţūlkarm	ps-we	32.3116	35.0269	Asia/Hebron	44169	
+ps-we-ramallah	Ramallah	ps-we	31.8996	35.2042	Asia/Hebron	43880	
+ps-we-qalqilyah	Qalqīlyah	ps-we	32.1897	34.9706	Asia/Hebron	43212	
+ps-we-yatta	Yaţţā	ps-we	31.4459	35.0944	Asia/Hebron	41425	
+ps-we-maaleadummim	Ma‘ale Adummim	ps-we	31.7774	35.2987	Asia/Jerusalem	38193	
+ps-we-albirah	Al Bīrah	ps-we	31.9100	35.2165	Asia/Hebron	38192	
+ps-gz-baythanun	Bayt Ḩānūn	ps-gz	31.5353	34.5358	Asia/Gaza	37392	
+ps-gz-annusayrat	An Nuşayrāt	ps-gz	31.4486	34.3925	Asia/Gaza	36123	
+ps-we-oldcity	Old City	ps-we	31.7767	35.2342	Asia/Hebron	36000	x
+ps-we-shufat	Shu‘fāţ	ps-we	31.8165	35.2274	Asia/Hebron	35000	
+ps-gz-alburayj	Al Burayj	ps-gz	31.4394	34.4031	Asia/Gaza	34951	
+ps-we-janin	Janīn	ps-we	32.4594	35.3009	Asia/Hebron	34730	
+ps-gz-banisuhayla	Banī Suhaylā	ps-gz	31.3434	34.3234	Asia/Gaza	31272	
+ps-we-bethlehem	Bethlehem	ps-we	31.7049	35.2038	Asia/Hebron	29019	
+ps-we-azzahiriyah	Az̧ Z̧āhirīyah	ps-we	31.4097	34.9733	Asia/Hebron	27616	
+ps-we-baythanina	Bayt Ḩanīnā	ps-we	31.8300	35.2254	Asia/Hebron	27000	
+ps-we-atarut	‘Aţārūt	ps-we	31.8667	35.2167	Asia/Hebron	25595	
+ps-we-surifcity	Surif City	ps-we	31.6508	35.0644	Asia/Hebron	25242	
+ps-we-arramwadahiyatalbarid	Ar Rām wa Ḑāḩiyat al Barīd	ps-we	31.8495	35.2342	Asia/Hebron	24838	
+ps-we-halhul	Ḩalḩūl	ps-we	31.5803	35.1018	Asia/Hebron	21076	
+ps-we-dura	Dūrā	ps-we	31.5078	35.0293	Asia/Hebron	20835	
+ps-we-baninaim	Banī Na‘īm	ps-we	31.5159	35.1642	Asia/Hebron	19783	
+ps-we-jericho	Jericho	ps-we	31.8667	35.4500	Asia/Hebron	19783	a
+ps-gz-alqararah	Al Qarārah	ps-gz	31.3739	34.3409	Asia/Gaza	19500	
+ps-we-assamu	As Samū‘	ps-we	31.3967	35.0661	Asia/Hebron	19355	
+ps-we-qabatiyah	Qabāţīyah	ps-we	32.4104	35.2809	Asia/Hebron	19127	
+ps-we-idhna	Idhnā	ps-we	31.5587	34.9744	Asia/Hebron	18727	
+ps-gz-abasanalkabirah	‘Abasān al Kabīrah	ps-gz	31.3191	34.3400	Asia/Gaza	18163	
+ps-we-sair	Sa‘īr	ps-we	31.5785	35.1402	Asia/Hebron	17775	
+ps-we-alayzariyah	Al ‘Ayzarīyah	ps-we	31.7708	35.2692	Asia/Hebron	17455	
+ps-we-balatah	Balāţah	ps-we	32.2121	35.2856	Asia/Hebron	17146	
+ps-gz-azzuwaydah	Az Zuwāydah	ps-gz	31.4395	34.3805	Asia/Gaza	16688	
+ps-we-baytjala	Bayt Jālā	ps-we	31.7155	35.1879	Asia/Hebron	16183	
+ps-we-alyamun	Al Yāmūn	ps-we	32.4856	35.2301	Asia/Hebron	16164	
+ps-we-tubas	Ţūbās	ps-we	32.3209	35.3699	Asia/Hebron	15591	
+ps-gz-shokatassufi	Shokat as-Sufi	ps-gz	31.2586	34.2824	Asia/Gaza	15000	
+ps-we-surbahir	Şūr Bāhir	ps-we	31.7368	35.2334	Asia/Hebron	15000	
+ps-we-baytsahur	Bayt Sāḩūr	ps-we	31.7009	35.2263	Asia/Hebron	14921	
+ps-we-tarqumya	Tarqūmyā	ps-we	31.5755	35.0122	Asia/Hebron	14202	
+ps-we-yabad	Ya‘bad	ps-we	32.4457	35.1682	Asia/Hebron	13477	
+ps-we-wadialjoz	Wadi al-Joz	ps-we	31.7899	35.2366	Asia/Hebron	13000	
+ps-we-baytunya	Baytūnyā	ps-we	31.8966	35.1705	Asia/Hebron	12822	
+ps-we-baytummar	Bayt Ūmmar	ps-we	31.6233	35.1045	Asia/Hebron	12238	
+ps-we-anata	‘Anātā	ps-we	31.8092	35.2590	Asia/Hebron	11946	
+ps-we-givatzeev	Givat Zeev	ps-we	31.8615	35.1686	Asia/Hebron	11764	
+ps-we-abudis	Abū Dīs	ps-we	31.7621	35.2617	Asia/Hebron	11753	
+ps-we-salfit	Salfīt	ps-we	32.0837	35.1808	Asia/Hebron	11000	
+ps-we-alubaydiyah	Al ‘Ubaydīyah	ps-we	31.7170	35.2901	Asia/Hebron	10618	
+ps-we-baytfajjar	Bayt Fajjār	ps-we	31.6244	35.1546	Asia/Hebron	10579	
+ps-gz-shukatassufi	Shūkat aş Şūfī	ps-gz	31.2600	34.2826	Asia/Gaza	10566	
+ps-we-tammun	Ţammūn	ps-we	32.2835	35.3837	Asia/Hebron	10119	
+ps-we-baytfurik	Bayt Fūrīk	ps-we	32.1769	35.3354	Asia/Hebron	10108	
+ps-we-attil	‘Attīl	ps-we	32.3693	35.0719	Asia/Hebron	10100	
+ps-we-efrata	Efrata	ps-we	31.6531	35.1501	Asia/Jerusalem	10088	
+ps-we-arrabah	‘Arrābah	ps-we	32.4052	35.2019	Asia/Hebron	9703	
+ps-we-addawhah	Ad Dawḩah	ps-we	31.6995	35.1805	Asia/Hebron	9631	
+ps-we-silatalharithiyah	Sīlat al Ḩārithīyah	ps-we	32.5085	35.2275	Asia/Hebron	9557	
+ps-we-taffuh	Taffūḩ	ps-we	31.5386	35.0497	Asia/Hebron	9480	
+ps-we-dayralghusun	Dayr al Ghuşūn	ps-we	32.3524	35.0769	Asia/Hebron	9187	
+ps-we-baytula	Bayt Ūlā	ps-we	31.5962	35.0296	Asia/Hebron	9159	
+ps-gz-khuzaah	Khuzā‘ah	ps-gz	31.3068	34.3611	Asia/Gaza	9023	
+ps-we-alkhadir	Al Khaḑir	ps-we	31.6941	35.1668	Asia/Hebron	9003	
+ps-we-oranit	Oranit	ps-we	32.1317	34.9909	Asia/Hebron	8955	
+ps-we-baytaalfawqa	Baytā al Fawqā	ps-we	32.1426	35.2877	Asia/Hebron	8535	
+ps-we-qaffin	Qaffīn	ps-we	32.4327	35.0827	Asia/Hebron	8489	
+ps-we-jaba	Jaba‘	ps-we	32.3241	35.2213	Asia/Hebron	8391	
+ps-we-kokhavyaaqov	Kokhav Ya‘aqov	ps-we	31.8810	35.2438	Asia/Jerusalem	8194	
+ps-we-dhannabah	Dhannābah	ps-we	32.3134	35.0414	Asia/Hebron	8193	
+ps-we-ashshuyukh	Ash Shuyūkh	ps-we	31.5700	35.1561	Asia/Hebron	8151	
+ps-we-bidya	Bidyā	ps-we	32.1146	35.0803	Asia/Hebron	8065	
+ps-we-alfeimenasheh	Alfei Menasheh	ps-we	32.1726	35.0118	Asia/Jerusalem	8000	
+ps-we-baytawwa	Bayt ‘Awwā	ps-we	31.5091	34.9494	Asia/Hebron	7943	
+ps-we-baytliqya	Bayt Liqyā	ps-we	31.8696	35.0654	Asia/Hebron	7795	
+ps-we-azzun	‘Azzūn	ps-we	32.1750	35.0575	Asia/Hebron	7727	
+ps-we-qarneshomeron	Qarne Shomeron	ps-we	32.1667	35.0833	Asia/Jerusalem	7713	
+ps-we-aqraba	‘Aqrabā	ps-we	32.1249	35.3455	Asia/Hebron	7707	
+ps-we-asirahashshamaliyah	‘Aşīrah ash Shamālīyah	ps-we	32.2512	35.2672	Asia/Hebron	7475	
+ps-we-kafrrai	Kafr Rā‘ī	ps-we	32.3740	35.1545	Asia/Hebron	7276	
+ps-we-qatanah	Qaţanah	ps-we	31.8337	35.1189	Asia/Hebron	7274	
+ps-we-anabta	‘Anabtā	ps-we	32.3079	35.1169	Asia/Hebron	7106	
+ps-we-qabalan	Qabalān	ps-we	32.1018	35.2894	Asia/Hebron	7043	
+ps-we-silwad	Silwād	ps-we	31.9763	35.2613	Asia/Hebron	7006	
+ps-we-kharas	Khārās	ps-we	31.6148	35.0417	Asia/Hebron	6885	
+ps-we-maythalun	Maythalūn	ps-we	32.3480	35.2745	Asia/Hebron	6804	
+ps-we-dayrdibwan	Dayr Dibwān	ps-we	31.9111	35.2666	Asia/Hebron	6692	
+ps-we-illar	‘Illār	ps-we	32.3702	35.1071	Asia/Hebron	6681	
+ps-we-bala	Bal‘ā	ps-we	32.3339	35.1116	Asia/Hebron	6545	
+ps-gz-almughraqah	Al Mughrāqah	ps-gz	31.4659	34.4121	Asia/Gaza	6448	
+ps-we-birzayt	Bīr Zayt	ps-we	31.9696	35.1941	Asia/Hebron	6398	
+ps-we-nahhalin	Naḩḩālīn	ps-we	31.6856	35.1208	Asia/Hebron	6215	
+ps-gz-annasr	An Naşr	ps-gz	31.2814	34.3025	Asia/Gaza	6211	
+ps-we-zatarah	Za‘tarah	ps-we	31.6736	35.2566	Asia/Hebron	6210	
+ps-we-biddu	Biddū	ps-we	31.8348	35.1495	Asia/Hebron	6180	
+ps-we-jammain	Jammā‘īn	ps-we	32.1316	35.2040	Asia/Hebron	6158	
+ps-we-dayrsamit	Dayr Sāmit	ps-we	31.5206	34.9744	Asia/Hebron	6144	
+ps-we-azzaytuniyah	Az Zaytūnīyah	ps-we	31.9540	35.1624	Asia/Hebron	6107	
+ps-we-silatazzahr	Sīlat az̧ Z̧ahr	ps-we	32.3193	35.1842	Asia/Hebron	6079	
+ps-we-beitel	Beit El	ps-we	31.9415	35.2224	Asia/Hebron	6042	
+ps-gz-abasanaljadidah	‘Abasān al Jadīdah	ps-gz	31.3416	34.3459	Asia/Gaza	5984	
+ps-we-hablah	Ḩablah	ps-we	32.1652	34.9775	Asia/Hebron	5945	
+ps-we-hizma	Ḩizmā	ps-we	31.8334	35.2632	Asia/Hebron	5916	
+ps-we-baytlid	Bayt Līd	ps-we	32.2609	35.1317	Asia/Hebron	5740	
+ps-we-birqin	Birqīn	ps-we	32.4546	35.2608	Asia/Hebron	5730	
+ps-we-baytkahil	Bayt Kāḩil	ps-we	31.5701	35.0650	Asia/Hebron	5663	
+ps-we-huwwarah	Ḩuwwārah	ps-we	32.1522	35.2567	Asia/Hebron	5633	
+ps-we-huwara	Huwara	ps-we	32.1524	35.2566	Asia/Hebron	5570	
+ps-we-awarta	‘Awartā	ps-we	32.1611	35.2839	Asia/Hebron	5563	
+ps-we-husan	Ḩūsān	ps-we	31.7093	35.1347	Asia/Hebron	5535	
+ps-we-gevabinyamin	Geva Binyamin	ps-we	31.8503	35.2741	Asia/Jerusalem	5525	
+ps-we-dayrabudaif	Dayr Abū Ḑa‘īf	ps-we	32.4560	35.3616	Asia/Hebron	5506	
+ps-gz-alfukhkhari	Al Fukhkhārī	ps-gz	31.2928	34.3306	Asia/Gaza	5464	
+ps-we-banizayd	Banī Zayd	ps-we	32.0392	35.1032	Asia/Hebron	5441	
+ps-we-sinjil	Sinjil	ps-we	32.0333	35.2655	Asia/Hebron	5371	
+ps-we-jannatah	Jannātah	ps-we	31.6696	35.2196	Asia/Hebron	5348	
+ps-we-kharbathaalmisbah	Kharbathā al Mişbāḩ	ps-we	31.8855	35.0718	Asia/Hebron	5141	
+ps-we-betarye	Bet Arye	ps-we	32.0333	35.0500	Asia/Jerusalem	5139	
+ps-we-banizaydashsharqiyah	Banī Zayd ash Shārqīyah	ps-we	32.0493	35.1659	Asia/Hebron	5015	
+ps-we-ajjah	‘Ajjah	ps-we	32.3607	35.1959	Asia/Hebron	4995	
+ps-we-kafraddik	Kafr ad Dīk	ps-we	32.0671	35.0829	Asia/Hebron	4986	
+ps-we-kafrdan	Kafr Dān	ps-we	32.4785	35.2542	Asia/Hebron	4967	
+ps-we-salim	Sālim	ps-we	32.2096	35.3303	Asia/Hebron	4940	
+ps-we-azzawiyah	Az Zāwiyah	ps-we	32.0963	35.0398	Asia/Hebron	4917	
+ps-we-siris	Sīrīs	ps-we	32.3283	35.2913	Asia/Hebron	4898	
+ps-we-birnabala	Bīr Nabālā	ps-we	31.8508	35.2036	Asia/Hebron	4776	
+ps-we-qibyah	Qibyah	ps-we	31.9773	35.0098	Asia/Hebron	4761	
+ps-we-aljudayyidah	Al Judayyidah	ps-we	32.3354	35.3011	Asia/Hebron	4681	
+ps-we-till	Till	ps-we	32.2007	35.2129	Asia/Hebron	4605	
+ps-we-qedumim	Qedumim	ps-we	32.2121	35.1575	Asia/Jerusalem	4596	
+ps-gz-wadiassalqa	Wādī as Salqā	ps-gz	31.4005	34.3375	Asia/Gaza	4552	
+ps-we-kefaradummim	Kefar Adummim	ps-we	31.8261	35.3356	Asia/Jerusalem	4513	
+ps-we-nilin	Ni‘līn	ps-we	31.9475	35.0203	Asia/Hebron	4512	
+ps-we-aljib	Al Jīb	ps-we	31.8520	35.1845	Asia/Hebron	4505	
+ps-we-almazraahashsharqiyah	Al Mazra‘ah ash Sharqīyah	ps-we	32.0002	35.2815	Asia/Hebron	4435	
+ps-we-nuba	Nūbā	ps-we	31.6090	35.0346	Asia/Hebron	4328	
+ps-we-qusrah	Quşrah	ps-we	32.0854	35.3300	Asia/Hebron	4316	
+ps-we-bayturattahta	Bayt ‘Ūr at Taḩtā	ps-we	31.8961	35.0818	Asia/Hebron	4313	
+ps-we-aleizahav	Alei Zahav	ps-we	32.0721	35.0633	Asia/Jerusalem	4280	
+ps-we-kafrthulth	Kafr Thulth	ps-we	32.1533	35.0470	Asia/Hebron	4218	
+ps-we-shuqba	Shuqbā	ps-we	31.9870	35.0401	Asia/Hebron	4188	
+ps-we-baqahashsharqiyah	Bāqah ash Sharqīyah	ps-we	32.4103	35.0705	Asia/Hebron	4165	
+ps-we-dayrjarir	Dayr Jarīr	ps-we	31.9664	35.2926	Asia/Hebron	4156	
+ps-we-sanur	Şānūr	ps-we	32.3561	35.2454	Asia/Hebron	4141	
+ps-we-bartaahashsharqiyah	Barţa‘ah ash Sharqīyah	ps-we	32.4730	35.0936	Asia/Hebron	4126	
+ps-we-battir2	Battīr	ps-we	31.7194	35.1410	Asia/Hebron	4092	
+ps-we-alawja	Al ‘Awjā	ps-we	31.9507	35.4676	Asia/Hebron	4067	
+ps-we-khirbatabufalah	Khirbat Abū Falāḩ	ps-we	32.0168	35.3013	Asia/Hebron	3961	
+ps-we-baytanan	Bayt ‘Anān	ps-we	31.8507	35.1125	Asia/Hebron	3946	
+ps-we-kafrallabad	Kafr al Labad	ps-we	32.2997	35.1095	Asia/Hebron	3915	
+ps-we-saffa	Şaffā	ps-we	31.9056	35.0609	Asia/Hebron	3904	
+ps-we-elqana	Elqana	ps-we	32.1101	35.0323	Asia/Jerusalem	3812	
+ps-we-rujayb	Rūjayb	ps-we	32.1906	35.2933	Asia/Hebron	3805	
+ps-we-qarawatbanihasan	Qarāwat Banī Ḩasan	ps-we	32.1257	35.1006	Asia/Hebron	3761	
+ps-we-azzababidah	Az Zabābidah	ps-we	32.3867	35.3241	Asia/Hebron	3751	
+ps-we-dayristiya	Dayr Istiyā	ps-we	32.1310	35.1396	Asia/Hebron	3730	
+ps-we-baytsurik	Bayt Sūrīk	ps-we	31.8242	35.1494	Asia/Hebron	3705	
+ps-we-immanuel	‘Immanu‘el	ps-we	32.1608	35.1361	Asia/Jerusalem	3693	
+ps-we-turmusayya	Turmus‘ayyā	ps-we	32.0354	35.2856	Asia/Hebron	3686	
+ps-we-alkarmil	Al Karmil	ps-we	31.4230	35.1328	Asia/Hebron	3685	
+ps-we-aljiftlik	Al Jiftlik	ps-we	32.1407	35.4874	Asia/Hebron	3666	
+ps-we-anin	‘Anīn	ps-we	32.5026	35.1667	Asia/Hebron	3647	
+ps-we-burqah	Burqah	ps-we	32.3018	35.1926	Asia/Hebron	3631	
+ps-we-dayrballut	Dayr Ballūţ	ps-we	32.0655	35.0245	Asia/Hebron	3566	
+ps-we-artas	Arţās	ps-we	31.6894	35.1868	Asia/Hebron	3552	
+ps-we-kubar	Kūbar	ps-we	31.9872	35.1579	Asia/Hebron	3546	
+ps-we-bruqin	Brūqīn	ps-we	32.0722	35.0994	Asia/Hebron	3538	
+ps-we-baytdajan	Bayt Dajan	ps-we	32.1930	35.3713	Asia/Hebron	3487	
+ps-we-dayrabumashal	Dayr Abū Mash‘al	ps-we	31.9988	35.0684	Asia/Hebron	3475	
+ps-we-faqquah	Faqqū‘ah	ps-we	32.4900	35.4016	Asia/Hebron	3426	
+ps-we-khursa	Khursā	ps-we	31.4823	35.0174	Asia/Hebron	3388	
+ps-we-kafrqaddum	Kafr Qaddūm	ps-we	32.2216	35.1447	Asia/Hebron	3376	
+ps-we-azzaayyim	Az Za‘ayyim	ps-we	31.7885	35.2651	Asia/Hebron	3373	
+ps-we-arrihiyah	Ar Rīḩīyah	ps-we	31.4695	35.0778	Asia/Hebron	3369	
+ps-we-rummanah	Rummanah	ps-we	32.5245	35.2048	Asia/Hebron	3275	
+ps-we-alfandaqumiyah	Al Fandaqūmīyah	ps-we	32.3206	35.2033	Asia/Hebron	3266	
+ps-we-arramadin	Ar Ramāḑīn	ps-we	31.3795	34.9125	Asia/Hebron	3232	
+ps-we-jaba2	Jaba‘	ps-we	31.8573	35.2587	Asia/Hebron	3214	
+ps-we-jayyus	Jayyūs	ps-we	32.2013	35.0342	Asia/Hebron	3196	
+ps-we-baytiba	Bayt Ībā	ps-we	32.2372	35.2098	Asia/Hebron	3175	
+ps-we-alonshvut	Alon shvut	ps-we	31.6548	35.1259	Asia/Jerusalem	3151	
+ps-we-kifilharis	Kifil Ḩāris	ps-we	32.1183	35.1572	Asia/Hebron	3132	
+ps-we-rammun	Rammūn	ps-we	31.9334	35.2982	Asia/Hebron	3101	
+ps-we-ibwayn	‘Ibwayn	ps-we	32.0314	35.1999	Asia/Hebron	3077	
+ps-we-farun	Far‘ūn	ps-we	32.2861	35.0233	Asia/Hebron	3072	
+ps-we-zayta	Zaytā	ps-we	32.3856	35.0512	Asia/Hebron	3052	
+ps-we-ofra	Ofra	ps-we	31.9563	35.2601	Asia/Jerusalem	3039	
+ps-we-sayda	Şaydā	ps-we	32.3849	35.1186	Asia/Hebron	2988	
+ps-we-alittihad	Al Ittiḩād	ps-we	31.9755	35.1159	Asia/Hebron	2978	
+ps-we-haris	Ḩāris	ps-we	32.1142	35.1419	Asia/Hebron	2967	
+ps-we-aynyabrud	‘Ayn Yabrūd	ps-we	31.9492	35.2512	Asia/Hebron	2959	
+ps-we-raba	Rābā	ps-we	32.3868	35.3830	Asia/Hebron	2951	
+ps-we-baytin	Baytīn	ps-we	31.9267	35.2410	Asia/Hebron	2948	
+ps-we-talfit	Talfīt	ps-we	32.0866	35.2909	Asia/Hebron	2906	
+ps-we-kafrmalik	Kafr Mālik	ps-we	31.9884	35.3093	Asia/Hebron	2903	
+ps-we-yatma	Yatmā	ps-we	32.1089	35.2691	Asia/Hebron	2897	
+ps-we-urif	‘Ūrīf	ps-we	32.1595	35.2223	Asia/Hebron	2890	
+ps-we-sannirya	Sannīryā	ps-we	32.1288	35.0465	Asia/Hebron	2887	
+ps-gz-juhraddik	Juḩr ad Dīk	ps-gz	31.4557	34.4372	Asia/Gaza	2880	
+ps-we-duraalqar	Dūrā al Qar‘	ps-we	31.9586	35.2271	Asia/Hebron	2858	
+ps-we-sabastiyah	Sabasţīyah	ps-we	32.2756	35.1987	Asia/Hebron	2823	
+ps-we-sarrah	Şarrah	ps-we	32.2097	35.1915	Asia/Hebron	2810	
+ps-we-kharbathabaniharith	Kharbathā Banī Ḩārith	ps-we	31.9451	35.0719	Asia/Hebron	2808	
+ps-we-rantis	Rantīs	ps-we	32.0280	35.0188	Asia/Hebron	2795	
+ps-we-baytimrin	Bayt Imrīn	ps-we	32.2930	35.2161	Asia/Hebron	2794	
+ps-gz-ummannasr	Umm an Naşr	ps-gz	31.5608	34.5186	Asia/Gaza	2763	
+ps-we-baytsira	Bayt Sīrā	ps-we	31.8878	35.0462	Asia/Hebron	2744	
+ps-we-dayrsharaf	Dayr Sharaf	ps-we	32.2533	35.1889	Asia/Hebron	2681	
+ps-we-qarawatbanizayd	Qarāwat Banī Zayd	ps-we	32.0547	35.1291	Asia/Hebron	2673	
+ps-we-mevohoron	Mevo H̱oron	ps-we	31.8492	35.0359	Asia/Jerusalem	2669	
+ps-we-azmut	‘Azmūţ	ps-we	32.2230	35.3099	Asia/Hebron	2622	
+ps-we-talluzah	Ţallūzah	ps-we	32.2706	35.2950	Asia/Hebron	2604	
+ps-we-alkum	al-Kum	ps-we	31.5312	34.9606	Asia/Hebron	2568	
+ps-we-baytmaqdum	Bayt Maqdum	ps-we	31.5354	34.9719	Asia/Hebron	2568	
+ps-we-sartah	Şarţah	ps-we	32.1045	35.0920	Asia/Hebron	2528	
+ps-we-burin	Būrīn	ps-we	32.1845	35.2501	Asia/Hebron	2500	
+ps-we-ganeimodiin	Ganei Modi'in	ps-we	31.9289	35.0166	Asia/Hebron	2488	
+ps-we-kafrjammal	Kafr Jammāl	ps-we	32.2255	35.0434	Asia/Hebron	2481	
+ps-we-albadhan	Al Bādhān	ps-we	32.2586	35.3325	Asia/Hebron	2458	
+ps-we-hajjah	Ḩajjah	ps-we	32.2043	35.1308	Asia/Hebron	2444	
+ps-we-allubbanashsharqiyah	Al Lubban ash Sharqīyah	ps-we	32.0701	35.2403	Asia/Hebron	2439	
+ps-we-jalbun	Jalbūn	ps-we	32.4596	35.4152	Asia/Hebron	2421	
+ps-we-kafrqallil	Kafr Qallīl	ps-we	32.1935	35.2828	Asia/Hebron	2421	
+ps-we-qaryut	Qaryūt	ps-we	32.0700	35.2943	Asia/Hebron	2399	
+ps-we-alburj	Al Burj	ps-we	31.4361	34.9170	Asia/Hebron	2381	
+ps-we-kufayrit	Kufayrit	ps-we	32.4438	35.2018	Asia/Hebron	2376	
+ps-we-fahmah	Faḩmah	ps-we	32.3829	35.1791	Asia/Hebron	2369	
+ps-we-immatin	Immātīn	ps-we	32.1916	35.1584	Asia/Hebron	2368	
+ps-we-asirahalqibliyah	‘Aşīrah al Qiblīyah	ps-we	32.1784	35.2157	Asia/Hebron	2341	
+ps-we-almughayyir2	Al Mughayyir	ps-we	32.0192	35.3478	Asia/Hebron	2328	
+ps-we-tayasir	Tayāsīr	ps-we	32.3404	35.3960	Asia/Hebron	2323	
+ps-we-aynabus	‘Aynabūs	ps-we	32.1471	35.2451	Asia/Hebron	2315	
+ps-we-nevedaniel	Neve Daniel	ps-we	31.6768	35.1437	Asia/Jerusalem	2315	
+ps-we-nazlatisa	Nazlat ‘Īsá	ps-we	32.4156	35.0589	Asia/Hebron	2313	
+ps-we-ezefrayim	‘Ez Efrayim	ps-we	32.1198	35.0470	Asia/Jerusalem	2292	
+ps-gz-annazlah	An Nazlah	ps-gz	31.5333	34.4833	Asia/Gaza	2284	
+ps-we-jit	Jīt	ps-we	32.2143	35.1708	Asia/Hebron	2243	
+ps-we-atarah	‘Aţārah	ps-we	32.0006	35.2047	Asia/Hebron	2240	
+ps-we-burqah2	Burqah	ps-we	31.8968	35.2543	Asia/Hebron	2238	
+ps-we-assawiyah	As Sāwiyah	ps-we	32.0854	35.2578	Asia/Hebron	2236	
+ps-we-rabud	Rābūd	ps-we	31.4391	35.0162	Asia/Hebron	2228	
+ps-we-yasid	Yāşīd	ps-we	32.2969	35.2776	Asia/Hebron	2226	
+ps-we-nayot	Nayot	ps-we	31.7959	35.2452	Asia/Hebron	2223	
+ps-we-dayralhatab	Dayr al Ḩaţab	ps-we	32.2173	35.3213	Asia/Hebron	2194	
+ps-we-misliyah	Mislīyah	ps-we	32.3861	35.2878	Asia/Hebron	2187	
+ps-we-yaqqir	Yaqqir	ps-we	32.1497	35.1153	Asia/Jerusalem	2183	
+ps-we-almughayyir	Al Mughayyir	ps-we	32.4223	35.3848	Asia/Hebron	2175	
+ps-we-shufah	Shūfah	ps-we	32.2755	35.0814	Asia/Hebron	2174	
+ps-we-duma	Dūmā	ps-we	32.0563	35.3670	Asia/Hebron	2157	
+ps-we-khallataddar	Khallat ad Dār	ps-we	31.4974	35.1136	Asia/Hebron	2153	
+ps-we-marda	Mardā	ps-we	32.1138	35.1954	Asia/Hebron	2142	
+ps-we-alaraqa	Al ‘Araqa	ps-we	32.4706	35.2003	Asia/Hebron	2135	
+ps-we-baytamrah	Bayt ‘Amrah	ps-we	31.4502	35.0495	Asia/Hebron	2133	
+ps-we-attaybah	Aţ Ţaybah	ps-we	32.5149	35.1857	Asia/Hebron	2129	
+ps-we-rasatiyah	Rās ‘Aţīyah	ps-we	32.1585	34.9909	Asia/Hebron	2129	
+ps-we-majdalbanifadil	Majdal Banī Fāḑil	ps-we	32.0836	35.3638	Asia/Hebron	2122	
+ps-we-dayrassudan	Dayr as Sūdān	ps-we	32.0321	35.1484	Asia/Hebron	2104	
+ps-we-zaytajammain	Zaytā Jammā‘īn	ps-we	32.1370	35.1859	Asia/Hebron	2092	
+ps-we-bazzaryah	Bazzāryah	ps-we	32.3080	35.1659	Asia/Hebron	2091	
+ps-we-jinsafut	Jinşāfūţ	ps-we	32.1792	35.1304	Asia/Hebron	2089	
+ps-we-zububah	Zubūbah	ps-we	32.5435	35.2227	Asia/Hebron	2063	
+ps-we-rafat2	Rāfāt	ps-we	31.8710	35.1918	Asia/Hebron	2061	
+ps-we-alrashaydeh	Al Rashaydeh	ps-we	31.7529	35.3474	Asia/Hebron	2060	
+ps-we-aljudayrah	Al Judayrah	ps-we	31.8559	35.1971	Asia/Hebron	2059	
+ps-we-abud	‘Ābūd	ps-we	32.0164	35.0683	Asia/Hebron	2056	
+ps-we-dayribzi	Dayr Ibzī‘	ps-we	31.9173	35.1210	Asia/Hebron	2041	
+ps-we-ramin	Rāmīn	ps-we	32.2852	35.1495	Asia/Hebron	2040	
+ps-we-aljalamah	Al Jalamah	ps-we	32.5082	35.3132	Asia/Hebron	2035	
+ps-we-alqubaybah	Al Qubaybah	ps-we	31.8389	35.1368	Asia/Hebron	2008	
+ps-we-mashah	Masḩah	ps-we	32.1083	35.0510	Asia/Hebron	1982	
+ps-we-arranah	‘Arrānah	ps-we	32.4972	35.3227	Asia/Hebron	1972	
+ps-we-jalqamus	Jalqamūs	ps-we	32.4246	35.3642	Asia/Hebron	1968	
+ps-we-rafat	Rāfāt	ps-we	32.0781	35.0442	Asia/Hebron	1952	
+ps-we-ashshaykhsad	Ash Shaykh Sa‘d	ps-we	31.7372	35.2574	Asia/Hebron	1932	
+ps-we-iktabah	Iktābah	ps-we	32.3266	35.0526	Asia/Hebron	1919	
+ps-we-dayrqiddis	Dayr Qiddīs	ps-we	31.9486	35.0444	Asia/Hebron	1916	
+ps-we-peduel	Pedu’el	ps-we	32.0624	35.0532	Asia/Jerusalem	1910	
+ps-we-pesagot	Pesagot	ps-we	31.8990	35.2242	Asia/Jerusalem	1903	
+ps-we-almajd	Al Majd	ps-we	31.4809	34.9506	Asia/Hebron	1896	
+ps-we-assurrah	Aş Şūrrah	ps-we	31.4710	34.9990	Asia/Hebron	1896	
+ps-we-dayralasalalfawqa	Dayr al ‘Asal al Fawqā	ps-we	31.4683	34.9383	Asia/Hebron	1859	
+ps-we-zawata	Zawātā	ps-we	32.2461	35.2265	Asia/Hebron	1855	
+ps-we-anzah	‘Anzah	ps-we	32.3592	35.2201	Asia/Hebron	1851	
+ps-gz-almusaddar	Al Muşaddar	ps-gz	31.4105	34.3780	Asia/Gaza	1845	
+ps-we-barqan	Barqan	ps-we	32.1091	35.1120	Asia/Jerusalem	1833	
+ps-we-baytinun	Bayt ‘Īnūn	ps-we	31.5587	35.1244	Asia/Hebron	1782	
+ps-we-azunatme	Azun Atme	ps-we	32.1217	35.0204	Asia/Hebron	1746	
+ps-we-madama	Mādamā	ps-we	32.1859	35.2311	Asia/Hebron	1735	
+ps-we-baytiksa	Bayt Iksā	ps-we	31.8173	35.1793	Asia/Hebron	1734	
+ps-we-ashshuhada	Ash Shuhadā’	ps-we	32.4295	35.2711	Asia/Hebron	1727	
+ps-we-kafrayn	Kafr ‘Ayn	ps-we	32.0476	35.1204	Asia/Hebron	1720	
+ps-we-jifna	Jifnā	ps-we	31.9619	35.2134	Asia/Hebron	1693	
+ps-we-qusin	Qūşīn	ps-we	32.2383	35.1830	Asia/Hebron	1691	
+ps-we-bilin	Bil‘īn	ps-we	31.9283	35.0720	Asia/Hebron	1678	
+ps-we-jammalah	Jammālah	ps-we	31.9721	35.0929	Asia/Hebron	1664	
+ps-we-raskarkar	Rās Karkar	ps-we	31.9424	35.1077	Asia/Hebron	1641	
+ps-we-imrish	Imrīsh	ps-we	31.4689	35.0082	Asia/Hebron	1640	
+ps-we-baytduqqu	Bayt Duqqū	ps-we	31.8591	35.1312	Asia/Hebron	1637	
+ps-we-yizhar	Yiẕhar	ps-we	32.1674	35.2388	Asia/Jerusalem	1635	
+ps-we-baqatalhatab	Bāqat al Ḩaţab	ps-we	32.2043	35.1143	Asia/Hebron	1624	
+ps-we-bardalah	Bardalah	ps-we	32.3863	35.4808	Asia/Hebron	1612	
+ps-we-yasuf	Yāsūf	ps-we	32.1084	35.2378	Asia/Hebron	1604	
+ps-we-usarin	Ūşarīn	ps-we	32.1250	35.3100	Asia/Hebron	1595	
+ps-we-mirkah	Mirkah	ps-we	32.3958	35.2381	Asia/Hebron	1592	
+ps-we-hargillo	Har Gillo	ps-we	31.7212	35.1724	Asia/Jerusalem	1590	
+ps-we-annassariyah	An Naşşārīyah	ps-we	32.2365	35.3871	Asia/Hebron	1568	
+ps-we-qedar	Qedar	ps-we	31.7541	35.3106	Asia/Jerusalem	1565	
+ps-we-aynarik	‘Ayn ‘Arīk	ps-we	31.9061	35.1425	Asia/Hebron	1546	
+ps-we-batain	Bat A'in	ps-we	31.6576	35.1035	Asia/Jerusalem	1545	
+ps-we-annaqurah	An Nāqūrah	ps-we	32.2651	35.2013	Asia/Hebron	1528	
+ps-we-shuyukhalarrub	Shuyūkh al ‘Arrūb	ps-we	31.6173	35.1437	Asia/Hebron	1527	
+ps-we-annazlahashsharqiyah	An Nazlah ash Sharqīyah	ps-we	32.4107	35.1092	Asia/Hebron	1500	
+ps-we-hallamish	H̱allamish	ps-we	32.0040	35.1237	Asia/Jerusalem	1478	
+ps-we-juratashshamah	Jūrat ash Sham‘ah	ps-we	31.6505	35.1700	Asia/Hebron	1472	
+ps-we-maalemikhmas	Ma‘ale Mikhmas	ps-we	31.8797	35.3054	Asia/Jerusalem	1463	
+ps-we-mikhmas	Mikhmās	ps-we	31.8721	35.2760	Asia/Hebron	1461	
+ps-we-allubbanalgharbi	Al Lubban al Gharbī	ps-we	32.0350	35.0393	Asia/Hebron	1456	
+ps-we-kafrabbush	Kafr ‘Abbūsh	ps-we	32.2235	35.0850	Asia/Hebron	1444	
+ps-we-arabarrashaydah	‘Arab ar Rashāydah	ps-we	31.5711	35.2323	Asia/Hebron	1435	
+ps-we-attaybah2	Aţ Ţaybah	ps-we	31.9539	35.2998	Asia/Hebron	1433	
+ps-we-baytqad	Bayt Qād	ps-we	32.4697	35.3563	Asia/Hebron	1430	
+ps-we-azzubaydat	Az Zubaydāt	ps-we	32.1733	35.5301	Asia/Hebron	1403	
+ps-we-wadirahhal	Wādī Raḩḩāl	ps-we	31.6652	35.1673	Asia/Hebron	1401	
+ps-we-khallatannuman	Khallat an Nu‘mān	ps-we	31.7175	35.2423	Asia/Hebron	1397	
+ps-we-khallathamamah	Khallat Ḩamāmah	ps-we	31.7216	35.1924	Asia/Hebron	1397	
+ps-we-khallatalmayyah	Khallat al Mayyah	ps-we	31.4422	35.1429	Asia/Hebron	1391	
+ps-we-abuqashsh	Abū Qashsh	ps-we	31.9488	35.1843	Asia/Hebron	1385	
+ps-we-jurish	Jūrīsh	ps-we	32.1019	35.3219	Asia/Hebron	1385	
+ps-we-budrus	Budrus	ps-we	31.9669	34.9943	Asia/Hebron	1380	
+ps-we-almon	‘Almon	ps-we	31.8319	35.2969	Asia/Jerusalem	1378	
+ps-we-karmah	Karmah	ps-we	31.4519	35.0271	Asia/Hebron	1365	
+ps-we-farkhah	Farkhah	ps-we	32.0688	35.1529	Asia/Hebron	1351	
+ps-we-attirah	Aţ Ţīrah	ps-we	31.8702	35.1268	Asia/Hebron	1340	
+ps-we-hinnanit	H̱innanit	ps-we	32.4800	35.1736	Asia/Jerusalem	1323	
+ps-we-marahrabbah	Marāḩ Rabbāḩ	ps-we	31.6341	35.1869	Asia/Hebron	1303	
+ps-we-suseya	Suseya	ps-we	31.3912	35.1137	Asia/Jerusalem	1301	
+ps-we-biralbasha	Bīr al Bāshā	ps-we	32.4202	35.2301	Asia/Hebron	1291	
+ps-we-almidyah	Al Midyah	ps-we	31.9359	35.0050	Asia/Hebron	1284	
+ps-we-alhilah	Al Ḩīlah	ps-we	31.4745	35.1074	Asia/Hebron	1258	
+ps-we-maaleefrayim	Ma‘ale Efrayim	ps-we	32.0714	35.3987	Asia/Jerusalem	1241	
+ps-we-itamar	Itamar	ps-we	32.1747	35.3094	Asia/Hebron	1238	
+ps-we-annuwayimah	An Nuway‘imah	ps-we	31.8921	35.4355	Asia/Hebron	1229	
+ps-we-ajjul	‘Ajjūl	ps-we	32.0223	35.1797	Asia/Hebron	1220	
+ps-we-bayttamar	Bayt Ta‘mar	ps-we	31.6793	35.2399	Asia/Hebron	1214	
+ps-we-albuqah	Al Buq‘ah	ps-we	31.5420	35.1428	Asia/Hebron	1200	
+ps-we-salit	Sal‘it	ps-we	32.2430	35.0527	Asia/Jerusalem	1190	
+ps-we-qalandiya	Qalandiyā	ps-we	31.8629	35.2082	Asia/Hebron	1169	
+ps-we-annabiilyas	An Nabī Ilyās	ps-we	32.1848	35.0176	Asia/Hebron	1157	
+ps-we-wadifukin	Wādī Fūkīn	ps-we	31.7070	35.1037	Asia/Hebron	1153	
+ps-we-kefarezyon	Kefar ‘Eẕyon	ps-we	31.6500	35.1167	Asia/Jerusalem	1152	
+ps-we-aljaniyah	Al Jāniyah	ps-we	31.9385	35.1214	Asia/Hebron	1147	
+ps-we-aynalbayda	‘Ayn al Bayḑā	ps-we	32.3805	35.5084	Asia/Hebron	1145	
+ps-we-alattarah	Al ‘Aţţārah	ps-we	32.3257	35.1637	Asia/Hebron	1145	
+ps-we-qalqas	Qalqas	ps-we	31.4921	35.0954	Asia/Hebron	1132	
+ps-we-qirah	Qīrah	ps-we	32.1221	35.1717	Asia/Hebron	1131	
+ps-we-kafrqud	Kafr Qūd	ps-we	32.4566	35.2265	Asia/Hebron	1129	
+ps-we-udalah	Ūdalah	ps-we	32.1536	35.2765	Asia/Hebron	1123	
+ps-we-roshzurim	Rosh Ẕurim	ps-we	31.6680	35.1263	Asia/Jerusalem	1115	
+ps-we-baythasan	Bayt Ḩasan	ps-we	32.2376	35.4041	Asia/Hebron	1109	
+ps-we-kafrsur	Kafr Şūr	ps-we	32.2437	35.0639	Asia/Hebron	1107	
+ps-we-bruchin	Bruchin	ps-we	32.0819	35.0899	Asia/Jerusalem	1093	
+ps-we-khallatsalih	Khallat Şāliḩ	ps-we	31.4201	35.1152	Asia/Hebron	1077	
+ps-we-kafrzibad	Kafr Zībād	ps-we	32.2258	35.0718	Asia/Hebron	1068	
+ps-we-alfasayil	Al Faşāyil	ps-we	32.0251	35.4435	Asia/Hebron	1064	
+ps-we-baytwazan	Bayt Wazan	ps-we	32.2311	35.2158	Asia/Hebron	1046	
+ps-we-alhashimiyah	Al Hāshimīyah	ps-we	32.4639	35.2194	Asia/Hebron	1038	
+ps-we-otniel	Otniel	ps-we	31.4393	35.0286	Asia/Jerusalem	1037	
+ps-we-karmezur	Karme Ẕur	ps-we	31.6098	35.1017	Asia/Jerusalem	1021	
+ps-we-surda	Surdā	ps-we	31.9371	35.2032	Asia/Hebron	1017	
+ps-we-karneyshomron	Karney Shomron	ps-we	32.1714	35.0977	Asia/Hebron	0	

@@ -212,3 +212,20 @@ describe('the world clock', () => {
     });
   });
 });
+
+describe('durations round to the unit they show', () => {
+  it('never prints sixty minutes or twenty-four hours', () => {
+    expect(formatDuration(22 * MS_HOUR + 59.6 * MS_MINUTE)).toBe('23 hours');
+    expect(formatDuration(59.6 * MS_MINUTE)).toBe('1 hour');
+    expect(formatDuration(3 * MS_DAY + 23.7 * MS_HOUR)).toBe('4 days');
+    expect(formatDuration(23 * MS_HOUR + 60 * MS_MINUTE)).toBe('1 day');
+  });
+
+  it('keeps the exact split when it is exact', () => {
+    expect(formatDuration(2 * MS_HOUR + 5 * MS_MINUTE)).toBe('2h 5m');
+    expect(formatDuration(1 * MS_DAY + 22 * MS_HOUR)).toBe('1d 22h');
+    expect(formatDuration(45 * MS_MINUTE)).toBe('45 minutes');
+    expect(formatDuration(MS_MINUTE)).toBe('1 minute');
+    expect(formatDuration(30 * 1000)).toBe('less than a minute');
+  });
+});

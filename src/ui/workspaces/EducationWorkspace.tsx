@@ -64,7 +64,7 @@ export function EducationWorkspace() {
         </Panel>
       )}
 
-      <Panel title="Available where you are" flush>
+      <Panel title="Available Where You Are" flush>
         <div className="list">
           {courses.map((course) => {
             const enrolled = activeIds.has(course.id);
@@ -112,7 +112,7 @@ export function EducationWorkspace() {
       </Panel>
 
       {enrollments.filter((e) => e.status !== 'active').length > 0 && (
-        <Panel title="Completed and dropped" flush>
+        <Panel title="Completed And Dropped" flush>
           <div className="list">
             {enrollments.filter((e) => e.status !== 'active').map((enrollment) => {
               const course = sim.universe.courses[enrollment.courseId];

@@ -168,7 +168,7 @@ export function registerRelease(sim: Simulation): void {
       s.schedule({
         at: p.openingDate,
         kind: 'rel.open',
-        label: `${project.title} opens`,
+        label: `${project.title} Opens`,
         category: 'release',
         payload: { releaseId: release.id },
         priority: 12,
@@ -178,7 +178,7 @@ export function registerRelease(sim: Simulation): void {
       s.schedule({
         at: addDays(p.openingDate, -2, s.homeZone),
         kind: 'rel.reviews',
-        label: `${project.title} — reviews embargo lifts`,
+        label: `${project.title} — Reviews Embargo Lifts`,
         category: 'release',
         payload: { projectId: project.id },
         priority: 30,
@@ -367,10 +367,10 @@ function publishReviews(sim: Simulation, projectId: Id): void {
     question: 'Why did it review the way it did?',
     summary: `Critics ${project.criticScore} out of 100, audiences ${project.audienceScore}. ${expectationGap > 5 ? 'The marketing promised more than the film delivers.' : expectationGap < -5 ? 'It plays better than the campaign suggested.' : 'Reception is roughly in line with the film.'}`,
     factors: buildFactors([
-      { label: 'The finished film', detail: `Assembled quality is ${quality} out of 100.`, weight: 0.62, value: quality / 100 },
-      { label: 'Genre and critical taste', detail: prestigeLean > 0 ? 'Critics are generally warmer to this kind of material.' : 'Critics are generally cooler on this kind of material.', weight: 0.14, value: remap(prestigeLean, -8, 8, 0, 1) },
-      { label: 'Expectation gap', detail: campaign ? `The campaign drove intent to ${Math.round(campaign.intent)}. Audiences score against what they were promised.` : 'No campaign to set expectations.', weight: -0.14, value: remap(expectationGap, -12, 12, 0, 1) },
-      { label: 'Individual taste', detail: 'Which critics were assigned it, which nobody controls.', weight: 0.10, value: 0.5, knowable: false },
+      { label: 'The Finished Film', detail: `Assembled quality is ${quality} out of 100.`, weight: 0.62, value: quality / 100 },
+      { label: 'Genre And Critical Taste', detail: prestigeLean > 0 ? 'Critics are generally warmer to this kind of material.' : 'Critics are generally cooler on this kind of material.', weight: 0.14, value: remap(prestigeLean, -8, 8, 0, 1) },
+      { label: 'Expectation Gap', detail: campaign ? `The campaign drove intent to ${Math.round(campaign.intent)}. Audiences score against what they were promised.` : 'No campaign to set expectations.', weight: -0.14, value: remap(expectationGap, -12, 12, 0, 1) },
+      { label: 'Individual Taste', detail: 'Which critics were assigned it, which nobody controls.', weight: 0.10, value: 0.5, knowable: false },
     ]).factors,
     score: quality,
     outcome: `critics ${project.criticScore}, audience ${project.audienceScore}`,
@@ -413,7 +413,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, week * 7, sim.homeZone),
         kind: 'rel.streaming_window',
-        label: `${project.title} — streaming week ${week + 1}`,
+        label: `${project.title} — Streaming Week ${week + 1}`,
         category: 'release',
         payload: { releaseId: release.id, week },
         priority: 74,
@@ -427,7 +427,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, day, sim.homeZone),
         kind: 'rel.box_office_day',
-        label: `${project.title} — box office day ${day + 1}`,
+        label: `${project.title} — Box Office Day ${day + 1}`,
         category: 'release',
         payload: { releaseId: release.id, day },
         priority: 76,
@@ -439,7 +439,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
   sim.schedule({
     at: addDays(release.openingDate, 95, sim.homeZone),
     kind: 'rel.close',
-    label: `${project.title} — run closes`,
+    label: `${project.title} — Run Closes`,
     category: 'release',
     payload: { releaseId: release.id },
     priority: 40,
@@ -711,10 +711,10 @@ function closeRelease(sim: Simulation, releaseId: Id): void {
     question: 'Where did the money actually go?',
     summary: `${formatMoneyCompact(worldGross)} gross became ${formatMoneyCompact(netToProducer)} of producer revenue.`,
     factors: [
-      { label: 'Worldwide gross', detail: `${formatMoneyCompact(release.totalDomestic)} domestic and ${formatMoneyCompact(release.totalInternational)} international.`, weight: 1, contribution: worldGross, knowable: true },
-      { label: 'Exhibitor share', detail: `Theatres keep about ${Math.round(release.exhibitorShare * 100)}% of domestic and more internationally. That never reaches the studio.`, weight: 0.5, contribution: -(worldGross - rentals), knowable: true },
-      { label: 'Distribution fee', detail: `${release.distributorName} takes ${Math.round(release.distributorShare * 100)}% of rentals.`, weight: 0.2, contribution: -distributionFee, knowable: true },
-      { label: 'Prints and advertising', detail: `${formatMoneyCompact(pAndA)} of campaign spend is recouped before profit.`, weight: 0.3, contribution: -pAndA, knowable: true },
+      { label: 'Worldwide Gross', detail: `${formatMoneyCompact(release.totalDomestic)} domestic and ${formatMoneyCompact(release.totalInternational)} international.`, weight: 1, contribution: worldGross, knowable: true },
+      { label: 'Exhibitor Share', detail: `Theatres keep about ${Math.round(release.exhibitorShare * 100)}% of domestic and more internationally. That never reaches the studio.`, weight: 0.5, contribution: -(worldGross - rentals), knowable: true },
+      { label: 'Distribution Fee', detail: `${release.distributorName} takes ${Math.round(release.distributorShare * 100)}% of rentals.`, weight: 0.2, contribution: -distributionFee, knowable: true },
+      { label: 'Prints And Advertising', detail: `${formatMoneyCompact(pAndA)} of campaign spend is recouped before profit.`, weight: 0.3, contribution: -pAndA, knowable: true },
       ...(streamingRevenue > 0 ? [{ label: 'Streaming', detail: 'Licence fee plus an overage on hours viewed.', weight: 0.4, contribution: streamingRevenue, knowable: true }] : []),
     ],
     outcome: profit >= 0 ? 'profitable' : 'loss',
@@ -894,7 +894,7 @@ export function registerFranchises(sim: Simulation): void {
     sim.schedule({
       at: addDays(sim.now, 30, sim.homeZone),
       kind: 'franchise.cool_off',
-      label: 'Franchise appetite',
+      label: 'Franchise Appetite',
       category: 'system',
       priority: 94,
     });
@@ -945,9 +945,9 @@ export function recordFranchiseEntry(sim: Simulation, project: Project, profit: 
     summary: `${project.title} moved appetite from ${Math.round(before.strength)} to ${Math.round(franchise.strength)} `
       + `and fatigue from ${Math.round(before.fatigue)} to ${Math.round(franchise.fatigue)}.`,
     factors: [
-      { label: 'How it was received', detail: `Reception reads ${Math.round(reception)} out of 100.`, weight: 0.6, contribution: reception, knowable: true },
-      { label: 'What it returned', detail: `${(roi * 100).toFixed(0)}% on cost.`, weight: 0.4, contribution: roi * 100, knowable: true },
-      { label: 'Novelty spent', detail: 'Every entry costs some appetite, however well it does. Time away is what brings it back.', weight: 0.3, contribution: 0, knowable: true },
+      { label: 'How It Was Received', detail: `Reception reads ${Math.round(reception)} out of 100.`, weight: 0.6, contribution: reception, knowable: true },
+      { label: 'What It Returned', detail: `${(roi * 100).toFixed(0)}% on cost.`, weight: 0.4, contribution: roi * 100, knowable: true },
+      { label: 'Novelty Spent', detail: 'Every entry costs some appetite, however well it does. Time away is what brings it back.', weight: 0.3, contribution: 0, knowable: true },
     ],
     outcome: franchise.strength >= before.strength ? 'strengthened' : 'weakened',
   });

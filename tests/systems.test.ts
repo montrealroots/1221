@@ -8,7 +8,7 @@ import { fitmentSubject, createVehicle } from '@/engine/systems/vehicles';
 import { POST_TASKS, openPost, blockedReasons } from '@/engine/systems/production';
 import { CONSTRUCTION_PHASES } from '@/engine/systems/property';
 import { computeAnnualTax, salesTaxRate, propertyTaxRate, resolveIncomeTaxLayers } from '@/engine/content/tax';
-import { conflictingTraits, TRAITS, ATTRIBUTES, effectiveAttributes } from '@/engine/domain/attributes';
+import { conflictingTraits, TRAITS, ATTRIBUTES, effectiveAttributes, ACTING_TRAITS, ALL_TRAITS, PROFESSION_TRAITS } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
 import { relationshipStrength, compatibilityBetween } from '@/engine/systems/relationships';
 
@@ -341,15 +341,32 @@ describe('tax by jurisdiction', () => {
 });
 
 describe('attributes and traits', () => {
-  it('has exactly 88 attributes and 42 traits', () => {
+  it('has exactly 88 attributes and 42 acting traits', () => {
     expect(ATTRIBUTES).toHaveLength(88);
     expect(TRAITS).toHaveLength(42);
+    expect(ACTING_TRAITS).toHaveLength(42);
+    // The professions add their own on top; acting's forty-two are untouched.
+    expect(ALL_TRAITS.length).toBe(42 + PROFESSION_TRAITS.length);
+    expect(PROFESSION_TRAITS.length).toBeGreaterThan(0);
   });
 
   it('has no duplicate ids anywhere', () => {
     expect(new Set(ATTRIBUTES.map((a) => a.id)).size).toBe(88);
     expect(new Set(TRAITS.map((t) => t.id)).size).toBe(42);
+    expect(new Set(ALL_TRAITS.map((t) => t.id)).size).toBe(ALL_TRAITS.length);
     expect(new Set(SKILLS.map((s) => s.id)).size).toBe(SKILLS.length);
+  });
+
+  it('only modifies skills that exist, from profession traits', () => {
+    const ids = new Set(SKILLS.map((s) => s.id));
+    for (const trait of PROFESSION_TRAITS) {
+      for (const key of Object.keys(trait.skillMods ?? {})) {
+        expect(ids.has(key), `${trait.id} modifies unknown skill ${key}`).toBe(true);
+      }
+      for (const other of trait.conflictsWith ?? []) {
+        expect(ALL_TRAITS.some((t) => t.id === other), `${trait.id} conflicts with unknown ${other}`).toBe(true);
+      }
+    }
   });
 
   it('only modifies attributes that exist', () => {

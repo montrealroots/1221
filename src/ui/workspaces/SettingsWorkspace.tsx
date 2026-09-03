@@ -26,23 +26,27 @@ export function SettingsWorkspace() {
       </div>
 
       <div className="grid grid-2">
-        <Panel title="Time and play">
+        <Panel title="Time And Play">
           <div className="field">
-            <label htmlFor="speed">Time speed</label>
+            <label htmlFor="speed">Time Speed</label>
             <select id="speed" value={prefs.timeSpeed} onChange={(e) => setPref({ timeSpeed: e.target.value as typeof prefs.timeSpeed })}>
-              <option value="paused">Paused — the clock stops</option>
-              <option value="standard">Standard — one minute per second</option>
-              <option value="fast">Fast — five minutes per second</option>
-              <option value="faster">Faster — twenty minutes per second</option>
+              <option value="paused">Paused — The Clock Stops</option>
+              <option value="live">Live — One Minute Per Minute</option>
+              <option value="fast">Fast — One Hour Per Minute</option>
+              <option value="faster">Faster — Ten Hours Per Minute</option>
             </select>
+            <p className="hint">
+              Live runs at real time: a minute of your evening is a minute of theirs.
+              The faster settings are for waiting something out.
+            </p>
           </div>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.confirmLargePurchases}
               onChange={(e) => setPref({ confirmLargePurchases: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Confirm large purchases</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Confirm Large Purchases</span>
           </label>
           <div className="field">
-            <label htmlFor="threshold">Large purchase threshold</label>
+            <label htmlFor="threshold">Large Purchase Threshold</label>
             <input
               id="threshold" type="number" min={100}
               value={Math.round(prefs.largePurchaseThreshold / 100)}
@@ -55,17 +59,17 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.reducedMotion}
               onChange={(e) => setPref({ reducedMotion: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Reduce motion</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Reduce Motion</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.compactMode}
               onChange={(e) => setPref({ compactMode: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Compact layout</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Compact Layout</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.audioEnabled}
               onChange={(e) => setPref({ audioEnabled: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Audio cues</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Audio Cues</span>
           </label>
           <p className="xs dim">
             SLATE also honours your system reduced-motion setting automatically.
@@ -76,12 +80,12 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={tutorial.guidedMode}
               onChange={(e) => run('tutorial.set_mode', { guided: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Guided mode — explain each system the first time</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Guided Mode — Explain Each System The First Time</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={tutorial.advancedMode}
               onChange={(e) => run('tutorial.set_mode', { advanced: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Advanced mode — show the formulas behind outcomes</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Advanced Mode — Show The Formulas Behind Outcomes</span>
           </label>
           <div className="row gap-2">
             <button className="btn btn-sm" onClick={() => run('tutorial.reset')}>Replay tutorials</button>
@@ -95,7 +99,7 @@ export function SettingsWorkspace() {
           <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
             <Stat label="Slot" value={sim.universe.meta.slot} />
             <Stat label="Schema" value={sim.universe.meta.schemaVersion} />
-            <Stat label="World date" value={formatDate(sim.now, sim.homeZone)} />
+            <Stat label="World Date" value={formatDate(sim.now, sim.homeZone)} />
             <Stat label="Backup" value={sim.universe.meta.backupAvailable ? 'Available' : 'None yet'} />
           </div>
           <div className="row gap-2 wrap">
@@ -103,7 +107,7 @@ export function SettingsWorkspace() {
             <button className="btn btn-sm" onClick={() => setValidation(validateUniverse(sim.universe))}>
               Validate this universe
             </button>
-            <button className="btn btn-sm" onClick={exitToMenu}>Save and exit</button>
+            <button className="btn btn-sm" onClick={exitToMenu}>Save And Exit</button>
           </div>
 
           {validation && (
@@ -120,14 +124,14 @@ export function SettingsWorkspace() {
           )}
         </Panel>
 
-        <Panel title="Simulation load" subtitle="What this universe currently costs to run.">
+        <Panel title="Simulation Load" subtitle="What this universe currently costs to run.">
           <div className="grid grid-2">
             <Stat label="People" value={load.people.toLocaleString('en-US')} />
-            <Stat label="Pending events" value={load.pendingEvents.toLocaleString('en-US')} />
+            <Stat label="Pending Events" value={load.pendingEvents.toLocaleString('en-US')} />
             <Stat label="Transactions" value={load.transactions.toLocaleString('en-US')} />
-            <Stat label="History records" value={load.history.toLocaleString('en-US')} />
+            <Stat label="History Records" value={load.history.toLocaleString('en-US')} />
             <Stat label="Projects" value={load.projects.toLocaleString('en-US')} />
-            <Stat label="Estimated size" value={`${(load.estimatedBytes / 1024 / 1024).toFixed(1)} MB`} />
+            <Stat label="Estimated Size" value={`${(load.estimatedBytes / 1024 / 1024).toFixed(1)} MB`} />
           </div>
           <hr className="divider" />
           <div className="xs dim">
@@ -140,7 +144,7 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={sandbox.enabled}
               onChange={(e) => run('sandbox.toggle', { enabled: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Enable sandbox tools</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Enable Sandbox Tools</span>
           </label>
 
           <div className="row gap-2 wrap">

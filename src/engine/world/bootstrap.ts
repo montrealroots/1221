@@ -20,7 +20,7 @@ import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
 
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 
 // ---------------------------------------------------------------------------
 // Character creation input
@@ -43,6 +43,8 @@ export interface NewSaveConfig {
   birthDay: number;
   homeRegionId: string;
   citizenshipId: string;
+  /** Headshot as a data URL, already fitted to the portrait frame. */
+  portrait?: string;
 
   /** Personal */
   personality: Personality;
@@ -52,9 +54,11 @@ export interface NewSaveConfig {
   lifestyle: Person['lifestyle'];
   background: string;
 
-  /** Career */
-  careerTrack: CareerTrack;
-  /** 0 = complete unknown, 100 = already established. */
+  /**
+   * Career. Everyone starts as an actor or actress; the other professions
+   * are unlocked in the game with experience. This is how far along the
+   * acting career already is: 0 = complete unknown, 100 = already established.
+   */
   careerStage: number;
 
   /** Starting point */
@@ -67,6 +71,17 @@ export interface NewSaveConfig {
   startYear: number;
   startMonth: number;
   startDay: number;
+
+  /**
+   * Whether Sandbox is on from the first minute.
+   *
+   * It is a decision about what kind of save this is, so it belongs here
+   * rather than three menus deep. A sandbox save can hand itself money, max
+   * its attributes and greenlight anything; a straight save has to earn it.
+   * Either way every sandbox action is written into the log, so the save is
+   * always honest about what it is.
+   */
+  sandbox: boolean;
 }
 
 export function defaultPersonality(): Personality {
@@ -84,11 +99,12 @@ export function defaultConfig(): NewSaveConfig {
     personality: defaultPersonality(),
     traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
-    careerTrack: 'actor', careerStage: 5,
+    careerStage: 5,
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
     startWithJob: true, startWithVehicle: true,
     startYear: 2026, startMonth: 3, startDay: 2,
+    sandbox: false,
   };
 }
 
@@ -137,7 +153,7 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
-      timeSpeed: 'standard', compactMode: false, showAdvancedNumbers: false,
+      timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
       confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
     },
     sandbox: {
@@ -164,39 +180,7 @@ function seedCapability(config: NewSaveConfig): { attributes: AttributeSheet; sk
   };
 
   const trackBoost = 14 + stage * 34;
-  switch (config.careerTrack) {
-    case 'actor':
-      boost(attributes, ['emotional_truth', 'charisma', 'audition_technique', 'self_tape_craft', 'memorization', 'camera_awareness', 'active_listening'], trackBoost);
-      break;
-    case 'writer':
-      boost(skills, ['story_structure', 'dialogue', 'character_writing', 'page_speed', 'rewriting'], trackBoost);
-      break;
-    case 'director':
-      boost(skills, ['visual_language', 'actor_direction', 'coverage_planning', 'tone_control', 'set_authority'], trackBoost);
-      break;
-    case 'producer':
-      boost(skills, ['development_instinct', 'packaging', 'budgeting', 'scheduling', 'financing'], trackBoost);
-      break;
-    case 'showrunner':
-      boost(skills, ['room_leadership', 'episode_breaking', 'story_structure', 'post_supervision'], trackBoost);
-      break;
-    case 'crew':
-      boost(skills, ['camera_operation', 'grip_electric', 'script_supervision', 'editing'], trackBoost);
-      break;
-    case 'executive':
-      boost(skills, ['slate_strategy', 'market_reading', 'negotiation', 'deal_structuring', 'corporate_finance'], trackBoost);
-      break;
-    case 'agent':
-      boost(skills, ['negotiation', 'talent_relations', 'packaging', 'deal_structuring'], trackBoost);
-      break;
-    case 'creator':
-      boost(skills, ['content_strategy', 'editing_software', 'on_camera_hosting', 'audience_growth'], trackBoost);
-      boost(attributes, ['social_instinct', 'charisma'], trackBoost * 0.7);
-      break;
-    default:
-      boost(skills, ['operations', 'public_speaking', 'personal_finance'], trackBoost * 0.5);
-      break;
-  }
+  boost(attributes, ['emotional_truth', 'charisma', 'audition_technique', 'self_tape_craft', 'memorization', 'camera_awareness', 'active_listening'], trackBoost);
 
   // Personality feeds a handful of attributes that are genuinely dispositional.
   attributes['charisma'] = clamp((attributes['charisma'] ?? 10) + (config.personality.extraversion - 50) * 0.25, 0, 100);
@@ -250,7 +234,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     playtimeSeconds: 0,
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
-    careerLabel: careerLabel(config.careerTrack),
+    portrait: config.portrait,
+    careerLabel: careerLabel('actor'),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -259,6 +244,14 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   };
 
   const universe = emptyUniverse(meta, now, zone, playerId);
+
+  // Sandbox is a decision about what kind of save this is, made at creation
+  // rather than three menus deep. Turning it on is itself logged, so the save
+  // is always honest about having had it from the start.
+  if (config.sandbox) {
+    universe.sandbox.enabled = true;
+    universe.sandbox.log.push({ at: now, action: 'Sandbox enabled at character creation' });
+  }
   const { attributes, skills } = seedCapability(config);
 
   const birthInstant = instantFromZoned(
@@ -275,6 +268,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lastName: config.lastName,
     displayName: config.displayName?.trim() || `${config.firstName} ${config.lastName}`,
     stageName: config.stageName?.trim() || undefined,
+    portrait: config.portrait,
     pronouns: config.pronouns,
     birthInstant,
     homeRegionId: config.homeRegionId,
@@ -290,7 +284,11 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     skills,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
-    careerTrack: config.careerTrack,
+    careerTrack: 'actor',
+    // A career already under way has some experience behind it; a complete
+    // unknown has none. Either way the professions are earned from here.
+    industryXp: Math.round(clamp(config.careerStage, 0, 100) * 3),
+    professions: {},
     representation: {},
     quote: config.careerStage > 40 ? Math.round(config.careerStage * 4_000_00) : 0,
     creditIds: [],
@@ -306,11 +304,15 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   return { universe, playerId };
 }
 
+/**
+ * The track as a word. The industry keeps two words for one profession and
+ * the label carries both, so the same page reads for everyone who opens it.
+ */
 export function careerLabel(track: CareerTrack): string {
   const labels: Record<CareerTrack, string> = {
-    none: 'Undecided', actor: 'Actor', writer: 'Writer', director: 'Director',
+    none: 'Undecided', actor: 'Actor/Actress', writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',
-    executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working life',
+    executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working Life',
   };
   return labels[track];
 }

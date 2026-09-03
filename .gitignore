@@ -7,3 +7,10 @@ dist
 !.env.example
 coverage
 .vite
+
+# Screenshots produced by tools/screenshot.mjs, tools/ui-audit.mjs and
+# tools/walkthrough.mjs. Regenerable from the tools, so they are not carried
+# in the repository.
+walkthrough/
+screenshots/
+ui-audit/

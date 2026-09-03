@@ -6,43 +6,36 @@
  * connection never costs the setup.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   defaultConfig, wealthNote, careerLabel,
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, type TraitCategory } from '@/engine/domain/attributes';
-import { CITIES } from '@/engine/content/geography';
-import { COUNTRIES } from '@/engine/content/geography';
-import type { CareerTrack, Personality } from '@/engine/domain/model';
+import { LocationPicker } from './LocationPicker';
+import { PortraitPicker } from './PortraitPicker';
+import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
+import type { City } from '@/engine/content/geography';
+import type { Personality } from '@/engine/domain/model';
+import { PROFESSIONS, PROFESSION_BY_ID } from '@/engine/content/professions';
 import { formatMoney } from '@/engine/core/money';
-import { WEALTH_PROFILES } from '@/engine/world/bootstrap';
+import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
+import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
+import { titleCaseLabel } from '@/engine/core/text';
 
-const STEPS = ['Identity', 'Personal', 'Career', 'Starting point', 'Review'] as const;
+const STEPS = ['Identity', 'Personal', 'Career', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const MAX_TRAITS = 4;
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
-const CAREER_TRACKS: { id: CareerTrack; blurb: string }[] = [
-  { id: 'actor', blurb: 'Auditions, rooms, callbacks and the long climb from day player to lead.' },
-  { id: 'writer', blurb: 'Pages, drafts, notes and selling something you made out of nothing.' },
-  { id: 'director', blurb: 'Vision, a set of two hundred people, and whether the day gets made.' },
-  { id: 'producer', blurb: 'Material, money, talent and the will to hold it all together.' },
-  { id: 'showrunner', blurb: 'A room, a season, and a network with opinions.' },
-  { id: 'crew', blurb: 'Below the line, where films are actually made.' },
-  { id: 'executive', blurb: 'The slate, the market and the authority to say yes.' },
-  { id: 'agent', blurb: 'Other people’s careers, and ten percent of them.' },
-  { id: 'creator', blurb: 'Your own audience, your own schedule, your own risk.' },
-  { id: 'civilian', blurb: 'An ordinary job and an ordinary life. Everything else stays possible.' },
-];
 
 const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
-  { id: 'couch', label: "A friend's couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
-  { id: 'roommates', label: 'Room in a share', blurb: 'Cheap, crowded, and how most people start.' },
-  { id: 'rental', label: 'Your own rental', blurb: 'A lease, a deposit and somewhere that is yours.' },
-  { id: 'owned', label: 'You own a home', blurb: 'A house and the mortgage that came with it.' },
+  { id: 'couch', label: "A Friend's Couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
+  { id: 'roommates', label: 'Room In A Share', blurb: 'Cheap, crowded, and how most people start.' },
+  { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that is yours.' },
+  { id: 'owned', label: 'You Own A Home', blurb: 'A house and the mortgage that came with it.' },
 ];
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
@@ -52,9 +45,9 @@ const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; hi
   { key: 'conscientiousness', label: 'Conscientiousness', low: 'Loose', high: 'Meticulous' },
   { key: 'extraversion', label: 'Extraversion', low: 'Reserved', high: 'Outgoing' },
   { key: 'agreeableness', label: 'Agreeableness', low: 'Blunt', high: 'Accommodating' },
-  { key: 'emotionalStability', label: 'Emotional stability', low: 'Volatile', high: 'Steady' },
+  { key: 'emotionalStability', label: 'Emotional Stability', low: 'Volatile', high: 'Steady' },
   { key: 'ambition', label: 'Ambition', low: 'Content', high: 'Driven' },
-  { key: 'riskTolerance', label: 'Risk tolerance', low: 'Cautious', high: 'Reckless' },
+  { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
 ];
 
 const INTEREST_OPTIONS = [
@@ -77,6 +70,22 @@ export function CharacterCreation({
   // Persist on every change. Losing the page must not lose the setup.
   useEffect(() => { saveDraft(slot, config); }, [slot, config]);
 
+  // A restored draft can name towns too small to be bundled. Fetch the
+  // countries they belong to so the names, and the validation, come back.
+  const [, setResolved] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    const wanted = new Set(
+      [config.startLocationId, config.homeRegionId]
+        .map(countryOfPlace)
+        .filter((id): id is string => id !== undefined && !isCountryLoaded(id)),
+    );
+    if (wanted.size === 0) return;
+    void Promise.all([...wanted].map((id) => loadCountryCities(id).catch(() => 0)))
+      .then(() => { if (!cancelled) setResolved((n) => n + 1); });
+    return () => { cancelled = true; };
+  }, [config.startLocationId, config.homeRegionId]);
+
   const set = useCallback(<K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => {
     setConfig((c) => ({ ...c, [key]: value }));
   }, []);
@@ -84,7 +93,13 @@ export function CharacterCreation({
   const issues = useMemo(() => validate(config, step), [config, step]);
   const canAdvance = issues.length === 0;
 
-  const cities = useMemo(() => CITIES.all().sort((a, b) => b.industryPresence - a.industryPresence || a.name.localeCompare(b.name)), []);
+  // Continue was at the foot of the last step, so without this the next step
+  // opens at its foot too, and the player reads it backwards. Which ancestor
+  // actually scrolls differs by layout — the body here, .main in the game —
+  // so the top of the form is asked into view rather than any one container.
+  const top = useRef<HTMLDivElement | null>(null);
+  useEffect(() => { top.current?.scrollIntoView({ block: 'start' }); }, [step]);
+
 
   const start = () => {
     clearDraft(slot);
@@ -92,7 +107,7 @@ export function CharacterCreation({
   };
 
   return (
-    <div className="main">
+    <div className="main" ref={top}>
       <div className="creation">
         <div className="row-between" style={{ marginBottom: 'var(--s5)' }}>
           <div className="row gap-2">
@@ -130,7 +145,7 @@ export function CharacterCreation({
         {step === 0 && <IdentityStep config={config} set={set} />}
         {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === 2 && <CareerStep config={config} set={set} />}
-        {step === 3 && <StartingPointStep config={config} set={set} cities={cities} />}
+        {step === 3 && <StartingPointStep config={config} set={set} />}
         {step === 4 && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
@@ -174,6 +189,16 @@ export function CharacterCreation({
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
 function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+  const home = CITIES.get(config.startLocationId);
+  const birthplace = CITIES.get(config.homeRegionId);
+
+  // Most people are from where they are, so that is the default and the
+  // birthplace follows the home town until somebody says it should not. Once
+  // they have said so it stays said, even if they later pick the same town.
+  const [bornWhereTheyLive, setBornWhereTheyLive] = useState(
+    () => config.homeRegionId === config.startLocationId,
+  );
+
   return (
     <div className="card">
       <div className="panel-head">
@@ -183,24 +208,32 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
       </div>
 
+      <div className="identity-top">
+        <PortraitPicker
+          portrait={config.portrait}
+          name={[config.firstName, config.lastName].filter(Boolean).join(' ')}
+          onChange={(portrait) => set('portrait', portrait)}
+        />
+
+        <div className="identity-fields">
       <div className="field-row">
         <div className="field">
-          <label htmlFor="first">First name</label>
+          <label htmlFor="first">First Name</label>
           <input id="first" type="text" value={config.firstName} onChange={(e) => set('firstName', e.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="middle">Middle name (optional)</label>
+          <label htmlFor="middle">Middle Name (Optional)</label>
           <input id="middle" type="text" value={config.middleName ?? ''} onChange={(e) => set('middleName', e.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="last">Last name</label>
+          <label htmlFor="last">Last Name</label>
           <input id="last" type="text" value={config.lastName} onChange={(e) => set('lastName', e.target.value)} />
         </div>
       </div>
 
       <div className="field-row">
         <div className="field">
-          <label htmlFor="display">Preferred name</label>
+          <label htmlFor="display">Preferred Name</label>
           <input
             id="display" type="text"
             placeholder={`${config.firstName} ${config.lastName}`}
@@ -210,7 +243,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <p className="xs dim" style={{ marginTop: 4 }}>What people actually call you day to day.</p>
         </div>
         <div className="field">
-          <label htmlFor="stage">Credit name (optional)</label>
+          <label htmlFor="stage">Credit Name (Optional)</label>
           <input
             id="stage" type="text"
             placeholder="Leave blank to be credited under your own name"
@@ -228,12 +261,14 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           </select>
         </div>
       </div>
+        </div>
+      </div>
 
       <hr className="divider" />
 
       <div className="field-row">
         <div className="field">
-          <label htmlFor="birth-year">Year of birth</label>
+          <label htmlFor="birth-year">Year Of Birth</label>
           <input
             id="birth-year" type="number" min={1940} max={config.startYear - 16}
             value={config.birthYear}
@@ -257,17 +292,101 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div className="field">
           <label htmlFor="citizenship">Citizenship</label>
           <select id="citizenship" value={config.citizenshipId} onChange={(e) => set('citizenshipId', e.target.value)}>
-            {COUNTRIES.all().map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {[...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name))
+              .map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
           <p className="xs dim" style={{ marginTop: 4 }}>Affects where you can work without arrangement.</p>
         </div>
       </div>
+
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>Where You Live</h3>
+          <p className="muted small">
+            Where you are decides your taxes, your rent, your job market and how much industry work is
+            within reach. Picking a country here sets your citizenship to match — change it above if you
+            live somewhere you are not a citizen of.
+          </p>
+        </div>
+      </div>
+
+      <LocationPicker
+        idPrefix="live"
+        cityId={config.startLocationId}
+        onPick={(picked) => {
+          const previous = CITIES.get(config.startLocationId);
+          set('startLocationId', picked.id);
+          // Somebody who has not said otherwise was born where they live.
+          if (bornWhereTheyLive) set('homeRegionId', picked.id);
+          // Citizenship follows the country while the two agree. Once somebody
+          // has deliberately made them differ, moving no longer overwrites it.
+          if (!previous || config.citizenshipId === previous.countryId) {
+            set('citizenshipId', picked.countryId);
+          }
+        }}
+      />
+
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>Place Of Birth</h3>
+          <p className="muted small">
+            Where you are from, which is not always where you ended up. It is what you say when
+            somebody asks, it is the town your family is still in, and it is the accent you had
+            to lose or decided to keep.
+          </p>
+        </div>
+      </div>
+
+      <label className="check" htmlFor="born-here">
+        <input
+          id="born-here"
+          type="checkbox"
+          checked={bornWhereTheyLive}
+          onChange={(e) => {
+            setBornWhereTheyLive(e.target.checked);
+            if (e.target.checked) set('homeRegionId', config.startLocationId);
+          }}
+        />
+        <span>
+          I Was Born Where I Live Now
+          {home && <span className="dim"> — {placeLine(home)}</span>}
+        </span>
+      </label>
+
+      {!bornWhereTheyLive && (
+        <LocationPicker
+          idPrefix="born"
+          cityId={config.homeRegionId}
+          onPick={(picked) => set('homeRegionId', picked.id)}
+        />
+      )}
+
+      {!bornWhereTheyLive && birthplace && (
+        <div className="callout">
+          From <strong>{placeLine(birthplace)}</strong>
+          {home && birthplace.countryId !== home.countryId && (
+            <> · You moved country to get where you are, which is its own kind of start.</>
+          )}
+        </div>
+      )}
 
       <div className="callout">
         You will be <strong>{config.startYear - config.birthYear}</strong> when the save begins.
       </div>
     </div>
   );
+}
+
+/** A place written the way somebody would say it out loud. */
+function placeLine(city: City): string {
+  const region = REGIONS.get(city.parentId)?.name;
+  const country = COUNTRIES.get(city.countryId)?.name;
+  return [city.name, region, region === country ? undefined : country]
+    .filter(Boolean).join(', ');
 }
 
 function PersonalStep({
@@ -381,7 +500,7 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Interests and background</h2>
+            <h2>Interests And Background</h2>
             <p className="muted small">Interests affect who you get on with and what you enjoy doing with your time.</p>
           </div>
         </div>
@@ -396,12 +515,12 @@ function PersonalStep({
               aria-pressed={config.interests.includes(interest)}
               onClick={() => toggleInterest(interest)}
             >
-              {interest}
+              {titleCaseLabel(interest)}
             </button>
           ))}
         </div>
         <div className="field">
-          <label htmlFor="background">Where you come from</label>
+          <label htmlFor="background">Where You Come From</label>
           <textarea
             id="background" value={config.background}
             onChange={(e) => set('background', e.target.value)}
@@ -429,23 +548,15 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div>
           <h2>Career</h2>
           <p className="muted small">
-            This is where you start, not where you have to stay. Every path in SLATE remains open from every other one.
+            Everyone starts in front of the camera. The rest of the industry is unlocked in the game,
+            with experience you earn by working, and developed from there.
           </p>
         </div>
       </div>
 
-      <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
-        {CAREER_TRACKS.map((track) => (
-          <button
-            key={track.id}
-            className="trait"
-            aria-pressed={config.careerTrack === track.id}
-            onClick={() => set('careerTrack', track.id)}
-          >
-            <div className="trait-name">{careerLabel(track.id)}</div>
-            <div className="trait-desc">{track.blurb}</div>
-          </button>
-        ))}
+      <div className="trait is-fixed" aria-current="true" style={{ marginBottom: 'var(--s5)' }}>
+        <div className="trait-name">{careerLabel('actor')}</div>
+        <div className="trait-desc">Auditions, rooms, callbacks and the long climb from day player to lead.</div>
       </div>
 
       <div className="field">
@@ -470,17 +581,40 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         {config.careerStage >= 35 && config.careerStage < 60 && 'A working professional. People return your calls and you have a quote.'}
         {config.careerStage >= 60 && 'Established. Doors open, and the expectations that come with that are real.'}
       </div>
+
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>What You Can Grow Into</h3>
+          <p className="muted small">
+            Each profession is unlocked with industry experience and then has its own skills to raise
+            and its own traits to pick, level by level. You start with {Math.round(config.careerStage * 3)} XP.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-2">
+        {PROFESSIONS.map((profession) => (
+          <div key={profession.id} className="trait is-fixed">
+            <div className="row-between">
+              <div className="trait-name">{profession.name}</div>
+              <span className="chip">{profession.unlockXp.toLocaleString('en-US')} XP</span>
+            </div>
+            <div className="trait-desc">{profession.blurb}</div>
+            <div className="xs dim" style={{ marginTop: 6 }}>
+              {profession.earnedBy}
+              {profession.requires.length > 0
+                && ` Needs ${profession.requires.map((id) => PROFESSION_BY_ID[id].name).join(' and ')} first.`}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-function StartingPointStep({
-  config, set, cities,
-}: {
-  config: NewSaveConfig;
-  set: Setter;
-  cities: ReturnType<typeof CITIES.all>;
-}) {
+function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   const city = CITIES.get(config.startLocationId);
   const wealth = WEALTH_PROFILES[config.wealth];
 
@@ -489,25 +623,13 @@ function StartingPointStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where you start</h2>
+            <h2>Where You Start</h2>
             <p className="muted small">
-              Location decides your taxes, your rent, your job market and how much industry work is within reach.
+              {city
+                ? `${city.name}, chosen on Identity. This is what living there costs and offers.`
+                : 'Choose somewhere to live on the Identity step.'}
             </p>
           </div>
-        </div>
-
-        <div className="field">
-          <label htmlFor="city">City</label>
-          <select id="city" value={config.startLocationId} onChange={(e) => {
-            set('startLocationId', e.target.value);
-            set('homeRegionId', e.target.value);
-          }}>
-            {cities.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name} — industry {c.industryPresence}/100, cost of living {c.costOfLivingIndex}
-              </option>
-            ))}
-          </select>
         </div>
 
         {city && (
@@ -532,7 +654,7 @@ function StartingPointStep({
         )}
         {city && (
           <p className="muted small" style={{ marginTop: 'var(--s3)' }}>
-            {city.tags.join(' · ')}
+            {city.tags.map(titleCaseLabel).join(' · ')}
           </p>
         )}
       </div>
@@ -557,7 +679,7 @@ function StartingPointStep({
       <div className="card">
         <div className="panel-head"><h2>Money</h2></div>
         <div className="field">
-          <label htmlFor="wealth">What you are starting with</label>
+          <label htmlFor="wealth">What You Are Starting With</label>
           <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
             {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
           </select>
@@ -580,21 +702,42 @@ function StartingPointStep({
       </div>
 
       <div className="card">
-        <div className="panel-head"><h2>Starting situation</h2></div>
+        <div className="panel-head"><h2>Starting Situation</h2></div>
         <div className="col gap-3">
           <label className="row gap-2" style={{ marginBottom: 0 }}>
             <input
               type="checkbox" checked={config.startWithJob} style={{ width: 'auto' }}
               onChange={(e) => set('startWithJob', e.target.checked)}
             />
-            <span className="small" style={{ color: 'var(--text)' }}>Start with a job</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Start With A Job</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 0 }}>
             <input
               type="checkbox" checked={config.startWithVehicle} style={{ width: 'auto' }}
               onChange={(e) => set('startWithVehicle', e.target.checked)}
             />
-            <span className="small" style={{ color: 'var(--text)' }}>Start with a car</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Start With A Car</span>
+          </label>
+        </div>
+
+        <hr className="divider" />
+
+        <div className={`sandbox-choice${config.sandbox ? ' is-on' : ''}`}>
+          <label className="row gap-3" style={{ marginBottom: 0, alignItems: 'flex-start' }}>
+            <input
+              type="checkbox" checked={config.sandbox} style={{ width: 'auto', marginTop: '3px' }}
+              onChange={(e) => set('sandbox', e.target.checked)}
+            />
+            <span className="col gap-1">
+              <span className="sandbox-choice-title">Sandbox Mode</span>
+              <span className="small muted">
+                Turn the rules off from the first minute. Sandbox lets you add money, max every
+                attribute, grant every trait and greenlight anything, whatever your character has
+                actually earned. Every sandbox action is written into the save's log, so the game
+                stays honest about what it is. You can switch it on or off later in Settings —
+                but a save that had it from the start says so.
+              </span>
+            </span>
           </label>
         </div>
 
@@ -602,7 +745,7 @@ function StartingPointStep({
 
         <div className="field-row">
           <div className="field">
-            <label htmlFor="start-year">Start year</label>
+            <label htmlFor="start-year">Start Year</label>
             <input
               id="start-year" type="number" min={2000} max={2100}
               value={config.startYear} onChange={(e) => set('startYear', Number(e.target.value))}
@@ -629,6 +772,7 @@ function StartingPointStep({
 
 function ReviewStep({ config }: { config: NewSaveConfig }) {
   const city = CITIES.get(config.startLocationId);
+  const birthplace = CITIES.get(config.homeRegionId);
   const age = config.startYear - config.birthYear;
   const wealth = WEALTH_PROFILES[config.wealth];
 
@@ -636,12 +780,20 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
     <div className="col gap-5">
       <div className="card">
         <div className="center" style={{ padding: 'var(--s4) 0' }}>
+          {config.portrait && (
+            <img
+              className="headshot headshot-xl"
+              src={config.portrait}
+              alt={`Headshot for ${config.firstName} ${config.lastName}`}
+              style={{ margin: '0 auto var(--s4)' }}
+            />
+          )}
           <div className="eyebrow">Slot ready</div>
           <h1 style={{ fontSize: 'var(--size-2xl)', margin: 'var(--s2) 0' }}>
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {careerLabel(config.careerTrack)} · {city?.name}
+            {age} · {careerLabel('actor')} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>
@@ -652,9 +804,10 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       <div className="grid grid-2">
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
-          <Line label="Legal name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
+          <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
+          <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
         </div>
 
@@ -664,9 +817,10 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Housing" value={HOUSING.find((h) => h.id === config.housing)?.label ?? '—'} />
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
-          <Line label="Credit score" value={String(wealth.creditScore)} />
+          <Line label="Credit Score" value={String(wealth.creditScore)} />
           <Line label="Job" value={config.startWithJob ? 'Yes' : 'Not yet'} />
           <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
+          <Line label="Sandbox" value={config.sandbox ? 'On from the first minute' : 'Off'} />
         </div>
       </div>
 
@@ -723,6 +877,8 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (age < 16) issues.push('Your character has to be at least 16 when the save begins.');
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That is not a valid day of the month.');
+    if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
+    if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === 3) {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose a city to start in.');
@@ -731,20 +887,65 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
   return issues;
 }
 
+/**
+ * The build a draft was written by.
+ *
+ * A half-filled form is a convenience, not a save, and it must never outrank
+ * the game it is being filled in for. An unstamped draft written before an
+ * update was merged straight over the current defaults, so a brand new save
+ * silently came out with the old build's settings and none of the update in
+ * it. Drafts now carry the build they came from and are discarded when it
+ * moves on.
+ */
+const DRAFT_BUILD = `${APP_VERSION}/${SAVE_SCHEMA_VERSION}`;
+
+interface StoredDraft {
+  build: string;
+  config: NewSaveConfig;
+}
+
 function loadDraft(slot: Slot): NewSaveConfig | null {
   try {
     const raw = localStorage.getItem(DRAFT_KEY(slot));
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as NewSaveConfig;
-    return { ...defaultConfig(), ...parsed };
+    const stored = JSON.parse(raw) as Partial<StoredDraft>;
+
+    // Written by an older build, or by one that predates the stamp entirely.
+    if (stored?.build !== DRAFT_BUILD || !stored.config) {
+      localStorage.removeItem(DRAFT_KEY(slot));
+      return null;
+    }
+
+    const merged = { ...defaultConfig(), ...stored.config };
+
+    // A town small enough not to be bundled is not resolvable until its
+    // country has been fetched, which has not happened yet on a cold start.
+    // Losing the whole draft over that threw away a filled-in form because
+    // somebody was from a village, so the id is kept whenever the country it
+    // names is real, and CharacterCreation pulls that country in. An id whose
+    // country does not exist is a lost cause and falls back.
+    if (!countryOfPlace(merged.startLocationId)) {
+      merged.startLocationId = defaultConfig().startLocationId;
+    }
+    if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
+    if (!COUNTRIES.get(merged.citizenshipId)) merged.citizenshipId = defaultConfig().citizenshipId;
+
+    return merged;
   } catch {
     return null;
   }
 }
 
+/** The country a place id belongs to, or nothing if it names no real country. */
+function countryOfPlace(placeId: string): string | undefined {
+  const code = placeId.split('-')[0];
+  return code && COUNTRIES.get(code) ? code : undefined;
+}
+
 function saveDraft(slot: Slot, config: NewSaveConfig): void {
   try {
-    localStorage.setItem(DRAFT_KEY(slot), JSON.stringify(config));
+    const stored: StoredDraft = { build: DRAFT_BUILD, config };
+    localStorage.setItem(DRAFT_KEY(slot), JSON.stringify(stored));
   } catch {
     /* storage full or unavailable; the draft is a convenience */
   }

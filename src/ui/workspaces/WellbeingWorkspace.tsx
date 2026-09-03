@@ -36,7 +36,7 @@ export function WellbeingWorkspace() {
       </div>
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
-        <Panel title="Right now">
+        <Panel title="Right Now">
           <div className="col gap-4">
             <Meter label="Readiness" value={ready} hint="The single number auditions, shoot days and interviews read." />
             <Meter label="Energy" value={w.energy} />
@@ -44,7 +44,7 @@ export function WellbeingWorkspace() {
             <Meter label="Nourishment" value={w.nourishment} />
             <Meter label="Condition" value={w.condition} />
             <Meter label="Fitness" value={w.fitness} />
-            <Meter label="Travel fatigue" value={w.travelFatigue} invert />
+            <Meter label="Travel Fatigue" value={w.travelFatigue} invert />
             <div>
               <div className="row-between xs" style={{ marginBottom: 3 }}>
                 <span className="muted">Sleep debt</span>
@@ -60,9 +60,9 @@ export function WellbeingWorkspace() {
           </div>
         </Panel>
 
-        <Panel title="Cook something" subtitle="Uses what is actually in your kitchen." flush>
+        <Panel title="Cook Something" subtitle="Uses what is actually in your kitchen." flush>
           {pantry.length === 0 ? (
-            <Empty title="Empty kitchen" body="Buy groceries before you can cook. Shopping has a grocery section." />
+            <Empty title="Empty Kitchen" body="Buy groceries before you can cook. Shopping has a grocery section." />
           ) : (
             <div className="list">
               {RECIPES.all().map((recipe) => {
@@ -93,7 +93,7 @@ export function WellbeingWorkspace() {
         </Panel>
       </div>
 
-      <Panel title="How you spend the day" subtitle="Everything here takes real world time and changes real state." flush>
+      <Panel title="How You Spend The Day" subtitle="Everything here takes real world time and changes real state." flush>
         <div className="list">
           {ACTIVITIES.map((activity) => {
             const duration = minutes[activity.id] ?? activity.minutes;
@@ -142,7 +142,7 @@ export function WellbeingWorkspace() {
 
       <Panel title="Pantry" flush>
         {pantry.length === 0 ? (
-          <Empty title="Nothing in" body="No food in the house." />
+          <Empty title="Nothing In" body="No food in the house." />
         ) : (
           <div className="list">
             {pantry.map((item) => (

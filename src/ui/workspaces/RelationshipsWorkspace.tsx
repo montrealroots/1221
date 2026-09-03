@@ -30,9 +30,9 @@ export function RelationshipsWorkspace() {
       </div>
 
       <div className="grid" style={{ gridTemplateColumns: 'minmax(240px, 320px) 1fr', gap: 'var(--s5)' }}>
-        <Panel title="Everyone you know" flush>
+        <Panel title="Everyone You Know" flush>
           {circle.length === 0 ? (
-            <Empty title="Nobody yet" body="You meet people through work, projects, classes and the places you spend time." />
+            <Empty title="Nobody Yet" body="You meet people through work, projects, classes and the places you spend time." />
           ) : (
             <div className="list" style={{ maxHeight: 620, overflowY: 'auto' }}>
               {circle.map(({ rel, person }) => {
@@ -82,7 +82,7 @@ export function RelationshipsWorkspace() {
             >
               <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
                 <Stat label="Age" value={ageOn(selected.person.birthInstant, sim.now, sim.homeZone)} />
-                <Stat label="Last spoke" value={formatRelative(selected.rel.lastInteractionAt, sim.now)} />
+                <Stat label="Last Spoke" value={formatRelative(selected.rel.lastInteractionAt, sim.now)} />
               </div>
 
               <div className="grid grid-2">
@@ -96,7 +96,7 @@ export function RelationshipsWorkspace() {
               </div>
             </Panel>
 
-            <Panel title="What you can do" flush>
+            <Panel title="What You Can Do" flush>
               <div className="list">
                 {(Object.entries(INTERACTIONS) as [InteractionKind, typeof INTERACTIONS[InteractionKind]][]).map(([kind, def]) => {
                   const locked = selected.rel.dimensions.familiarity < def.minFamiliarity;
@@ -121,9 +121,9 @@ export function RelationshipsWorkspace() {
               </div>
             </Panel>
 
-            <Panel title="What they remember" flush>
+            <Panel title="What They Remember" flush>
               {selected.rel.memories.length === 0 ? (
-                <Empty title="Nothing yet" body="Memories build as things happen between you." />
+                <Empty title="Nothing Yet" body="Memories build as things happen between you." />
               ) : (
                 <div className="list">
                   {[...selected.rel.memories].reverse().slice(0, 15).map((memory) => (
@@ -214,7 +214,7 @@ function AskOutDialog({ relationshipId, name, onClose }: { relationshipId: strin
         their life all count.
       </p>
       <div className="field">
-        <label htmlFor="activity">What you would do</label>
+        <label htmlFor="activity">What You Would Do</label>
         <select id="activity" value={activity} onChange={(e) => setActivity(e.target.value)}>
           <option value="dinner">Dinner</option>
           <option value="drinks">Drinks</option>
@@ -224,7 +224,7 @@ function AskOutDialog({ relationshipId, name, onClose }: { relationshipId: strin
       </div>
       <div className="field-row">
         <div className="field">
-          <label htmlFor="days">Days from now</label>
+          <label htmlFor="days">Days From Now</label>
           <input id="days" type="number" min={1} max={30} value={days} onChange={(e) => setDays(Number(e.target.value))} />
         </div>
         <div className="field">

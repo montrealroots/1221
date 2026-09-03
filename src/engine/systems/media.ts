@@ -107,7 +107,7 @@ export function registerMedia(sim: Simulation): void {
   sim.onSchedule('social.publish', (item) => publishPost(sim, item.payload.postId as Id));
   sim.onSchedule('social.decay_tick', () => {
     decayPosts(sim);
-    sim.schedule({ at: addDays(sim.now, 1, sim.homeZone), kind: 'social.decay_tick', label: 'Audience update', category: 'system', priority: 88 });
+    sim.schedule({ at: addDays(sim.now, 1, sim.homeZone), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   });
   sim.onSchedule('social.deal_deadline', (item) => checkDealDeadline(sim, item.payload.dealId as Id));
   sim.onSchedule('social.payout', (item) => payCreatorEarnings(sim, item.payload.accountId as Id));
@@ -152,7 +152,7 @@ export function registerMedia(sim: Simulation): void {
       s.schedule({
         at: addDays(s.now, 30, s.homeZone),
         kind: 'social.payout',
-        label: `${platform.name} payout`,
+        label: `${platform.name} Payout`,
         category: 'finance',
         payload: { accountId: account.id },
         priority: 66,
@@ -218,7 +218,7 @@ export function registerMedia(sim: Simulation): void {
       s.schedule({
         at: publishesAt,
         kind: 'social.publish',
-        label: `${platform.name} post — ${p.title}`,
+        label: `${platform.name} Post — ${p.title}`,
         category: 'social',
         payload: { postId: post.id },
         priority: 70,
@@ -253,7 +253,7 @@ export function registerMedia(sim: Simulation): void {
       s.schedule({
         at: deal.deadlineAt,
         kind: 'social.deal_deadline',
-        label: `${deal.brandName} deliverables due`,
+        label: `${deal.brandName} Deliverables Due`,
         category: 'career',
         payload: { dealId: deal.id },
         priority: 45,
@@ -430,13 +430,13 @@ function publishPost(sim: Simulation, postId: Id): void {
 
   // --- Audit ---------------------------------------------------------------
   const { factors } = buildFactors([
-    { label: 'Content quality', detail: `${post.quality} out of 100, from your skill, the effort you put in and the gear you own.`, weight: 0.34, value: post.quality / 100 },
-    { label: 'Existing audience', detail: `${account.followers.toLocaleString('en-US')} followers, of whom the algorithm showed it to a fraction.`, weight: 0.22, value: clamp(followerReach / 200_000, 0, 1) },
-    { label: 'Posting consistency', detail: `${cadence.toFixed(1)} posts a week over the last month.`, weight: 0.14, value: clamp(cadence / 5, 0, 1) },
+    { label: 'Content Quality', detail: `${post.quality} out of 100, from your skill, the effort you put in and the gear you own.`, weight: 0.34, value: post.quality / 100 },
+    { label: 'Existing Audience', detail: `${account.followers.toLocaleString('en-US')} followers, of whom the algorithm showed it to a fraction.`, weight: 0.22, value: clamp(followerReach / 200_000, 0, 1) },
+    { label: 'Posting Consistency', detail: `${cadence.toFixed(1)} posts a week over the last month.`, weight: 0.14, value: clamp(cadence / 5, 0, 1) },
     { label: 'Momentum', detail: `Recent posts have been performing at ${Math.round(account.momentum)} out of 100.`, weight: 0.12, value: account.momentum / 100 },
     { label: 'Timing', detail: `Posted at ${zonedParts(post.postedAt, sim.homeZone).hour}:00 local.`, weight: 0.08, value: timingFactor / 1.25 },
-    { label: 'Your public profile', detail: `Fame at ${Math.round(owner.reputation.publicFame)} out of 100 carries reach on its own.`, weight: 0.10, value: owner.reputation.publicFame / 100 },
-    { label: 'The algorithm', detail: 'What else was competing for the same feed slot that day.', weight: 0.16, value: rng.float(0, 1), knowable: false },
+    { label: 'Your Public Profile', detail: `Fame at ${Math.round(owner.reputation.publicFame)} out of 100 carries reach on its own.`, weight: 0.10, value: owner.reputation.publicFame / 100 },
+    { label: 'The Algorithm', detail: 'What else was competing for the same feed slot that day.', weight: 0.16, value: rng.float(0, 1), knowable: false },
   ]);
 
   sim.audit({

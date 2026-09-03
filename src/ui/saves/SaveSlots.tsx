@@ -155,9 +155,18 @@ export function SaveSlots({
                   </>
                 ) : (
                   <>
-                    <div>
-                      <div className="slot-name">{meta?.characterName}</div>
-                      <div className="muted small">{meta?.careerLabel}</div>
+                    <div className="row gap-3" style={{ alignItems: 'center' }}>
+                      {meta?.portrait && (
+                        <img
+                          className="headshot headshot-sm"
+                          src={meta.portrait}
+                          alt={`Headshot for ${meta.characterName}`}
+                        />
+                      )}
+                      <div style={{ minWidth: 0 }}>
+                        <div className="slot-name">{meta?.characterName}</div>
+                        <div className="muted small">{meta?.careerLabel}</div>
+                      </div>
                     </div>
 
                     <div className="slot-meta">
@@ -215,7 +224,7 @@ export function SaveSlots({
 
       {confirmDelete !== null && (
         <div className="overlay" onClick={() => setConfirmDelete(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Confirm deletion">
+          <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Confirm Deletion">
             <div className="modal-head">
               <h2>Delete slot {confirmDelete}?</h2>
             </div>

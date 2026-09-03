@@ -7,11 +7,14 @@
  * commitments but matter anyway — birthdays, holidays, seasons.
  */
 
+import { holidaysOn, type HolidayEntry } from '../content/holidays';
+import { eventsOnDay, type EventDay } from '../content/events';
+import { INDUSTRY_EVENTS, lookupEvent } from '../content/events-data';
 import type { Simulation } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
 import type { Id } from '../domain/model';
 import {
-  addDays, dateKey, daysInMonth, instantFromZoned, nthWeekdayOfMonth, seasonOf,
+  addDays, dateKey, daysInMonth, instantFromZoned, seasonOf,
   startOfDay, zonedParts, type Instant, type Season, MS_DAY, MS_MINUTE,
 } from '../core/time';
 import { CITIES } from '../content/geography';
@@ -19,7 +22,8 @@ import { CITIES } from '../content/geography';
 export type CalendarCategory =
   | 'work' | 'career' | 'finance' | 'health' | 'personal' | 'family' | 'education'
   | 'property' | 'vehicles' | 'travel' | 'production' | 'release' | 'marketing'
-  | 'awards' | 'social' | 'business' | 'holiday' | 'birthday' | 'system';
+  | 'awards' | 'social' | 'business' | 'holiday' | 'birthday' | 'system'
+  | 'industry';
 
 export interface CalendarLegendEntry {
   category: CalendarCategory;
@@ -47,6 +51,7 @@ export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'travel', label: 'Travel', colour: '#5d8a9e', description: 'Flights, hotels and trips.' },
   { category: 'social', label: 'Social', colour: '#9c6f9e', description: 'Scheduled posts and campaign beats.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
+  { category: 'industry', label: 'Industry', colour: '#d9a441', description: 'Award shows, festivals, markets and fan events.' },
   { category: 'birthday', label: 'Birthday', colour: '#c98b8b', description: 'Birthdays of people you know.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];
@@ -80,52 +85,15 @@ export interface CalendarDay {
   isToday: boolean;
   season: Season;
   entries: CalendarEntry[];
-  holidays: string[];
+  holidays: HolidayEntry[];
+  /** What the industry is doing that day: ceremonies, festivals, nominations. */
+  industry: EventDay[];
 }
 
 // ---------------------------------------------------------------------------
 // Holidays
 // ---------------------------------------------------------------------------
 
-export interface Holiday {
-  name: string;
-  /** Fixed date, or a rule resolved per year. */
-  resolve: (year: number, zone: string) => Instant;
-  countries: string[];
-}
-
-function fixed(month: number, day: number) {
-  return (year: number, zone: string) => instantFromZoned({ year, month, day }, zone);
-}
-
-export const HOLIDAYS: readonly Holiday[] = [
-  { name: "New Year's Day", resolve: fixed(1, 1), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'jp', 'kr', 'mx', 'ae'] },
-  { name: 'Martin Luther King Jr. Day', resolve: (y, z) => nthWeekdayOfMonth(y, 1, 1, 3, z), countries: ['us'] },
-  { name: "Presidents' Day", resolve: (y, z) => nthWeekdayOfMonth(y, 2, 1, 3, z), countries: ['us'] },
-  { name: "Valentine's Day", resolve: fixed(2, 14), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr'] },
-  { name: "St Patrick's Day", resolve: fixed(3, 17), countries: ['ie', 'us'] },
-  { name: 'Memorial Day', resolve: (y, z) => nthWeekdayOfMonth(y, 5, 1, -1, z), countries: ['us'] },
-  { name: 'Independence Day', resolve: fixed(7, 4), countries: ['us'] },
-  { name: 'Labour Day', resolve: (y, z) => nthWeekdayOfMonth(y, 9, 1, 1, z), countries: ['us', 'ca'] },
-  { name: 'Halloween', resolve: fixed(10, 31), countries: ['us', 'ca', 'uk', 'ie'] },
-  { name: 'Thanksgiving', resolve: (y, z) => nthWeekdayOfMonth(y, 11, 4, 4, z), countries: ['us'] },
-  { name: 'Christmas Eve', resolve: fixed(12, 24), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'mx'] },
-  { name: 'Christmas Day', resolve: fixed(12, 25), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'mx'] },
-  { name: 'Boxing Day', resolve: fixed(12, 26), countries: ['uk', 'ca', 'au', 'nz', 'ie'] },
-  { name: "New Year's Eve", resolve: fixed(12, 31), countries: ['us', 'ca', 'uk', 'au', 'nz', 'ie', 'fr', 'de', 'es', 'it', 'jp', 'kr', 'mx'] },
-];
-
-export function holidaysOn(instant: Instant, zone: string, countryId: string): string[] {
-  const parts = zonedParts(instant, zone);
-  const out: string[] = [];
-  for (const holiday of HOLIDAYS) {
-    if (!holiday.countries.includes(countryId)) continue;
-    const at = holiday.resolve(parts.year, zone);
-    const atParts = zonedParts(at, zone);
-    if (atParts.month === parts.month && atParts.day === parts.day) out.push(holiday.name);
-  }
-  return out;
-}
 
 // ---------------------------------------------------------------------------
 // Building the calendar
@@ -175,8 +143,10 @@ export function entriesBetween(sim: Simulation, from: Instant, to: Instant): Cal
 export function monthGrid(sim: Simulation, year: number, month: number): CalendarDay[] {
   const zone = sim.homeZone;
   const player = sim.universe.people[sim.universe.playerId];
-  const countryId = player ? CITIES.get(player.currentLocationId)?.countryId ?? 'us' : 'us';
-  const latitude = player ? CITIES.get(player.currentLocationId)?.latitude ?? 34 : 34;
+  const here = player ? CITIES.get(player.currentLocationId) : undefined;
+  const countryId = here?.countryId ?? 'us';
+  const regionId = here?.parentId;
+  const latitude = here?.latitude ?? 34;
 
   const firstOfMonth = instantFromZoned({ year, month, day: 1 }, zone);
   const leading = zonedParts(firstOfMonth, zone).weekday;
@@ -205,7 +175,8 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
       isToday: key === todayKey,
       season: seasonOf(date, zone, latitude),
       entries: entries.filter((e) => e.at >= dayStart && e.at < dayEnd),
-      holidays: holidaysOn(date, zone, countryId),
+      holidays: holidaysOn(date, zone, countryId, regionId),
+      industry: eventsOnDay(INDUSTRY_EVENTS, key, lookupEvent),
     });
   }
   return days;
@@ -277,6 +248,19 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
       daysAway: Math.max(0, Math.round((item.at - sim.now) / MS_DAY)),
     };
   });
+}
+
+/**
+ * The commitments the player would miss by jumping straight to `at`.
+ *
+ * The Advance menu asks before it moves, because time only goes forwards and
+ * an audition skipped is an audition missed.
+ */
+export function missedBy(sim: Simulation, at: Instant): CalendarEntry[] {
+  return sim.timeline
+    .between(sim.now, at - 1, (i) => i.category !== 'system')
+    .map(toEntry)
+    .filter((e) => e.requiresPlayer);
 }
 
 /** Whether a proposed commitment collides with anything already booked. */

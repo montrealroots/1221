@@ -41,7 +41,7 @@ export function BankWorkspace() {
         <Stat label="Assets" value={<MoneyText amount={worth.assets} compact />} />
         <Stat label="Owed" value={<span className="mono negative">{formatMoneyCompact(worth.liabilities)}</span>} />
         <Stat
-          label="Credit score"
+          label="Credit Score"
           value={<span className="mono">{profile?.score ?? '—'}</span>}
           note={profile ? creditBand(profile.score) : undefined}
         />
@@ -127,7 +127,7 @@ export function BankWorkspace() {
       {tab === 'bills' && (
         <Panel title="Bills" subtitle="Autopay runs against your primary account. If it cannot cover one, you hear about it." flush>
           {bills.length === 0 ? (
-            <Empty title="No bills" body="Nothing recurring is set up against you yet." />
+            <Empty title="No Bills" body="Nothing recurring is set up against you yet." />
           ) : (
             <div className="list">
               {bills.map((bill) => {
@@ -187,23 +187,23 @@ export function BankWorkspace() {
 
       {tab === 'credit' && profile && (
         <div className="grid grid-2">
-          <Panel title="Credit score" subtitle={`${profile.score} — ${creditBand(profile.score)}`}>
+          <Panel title="Credit Score" subtitle={`${profile.score} — ${creditBand(profile.score)}`}>
             <div className="col gap-4">
               <Meter label="Score" value={profile.score - 300} max={550} hint={`${profile.score} on a 300 to 850 scale`} />
               <Meter label="Utilisation" value={profile.utilisation * 100} invert hint="How much of your available credit is in use. Under 30% is healthy." />
               <div className="grid grid-2">
-                <Stat label="On-time payments" value={profile.onTimePayments} />
-                <Stat label="Late payments" value={profile.latePayments} tone={profile.latePayments > 0 ? 'negative' : undefined} />
-                <Stat label="Accounts open" value={profile.accountsOpen} />
-                <Stat label="Recent inquiries" value={profile.hardInquiries.filter((i) => sim.now - i.at < 365 * MS_DAY).length} />
+                <Stat label="On-time Payments" value={profile.onTimePayments} />
+                <Stat label="Late Payments" value={profile.latePayments} tone={profile.latePayments > 0 ? 'negative' : undefined} />
+                <Stat label="Accounts Open" value={profile.accountsOpen} />
+                <Stat label="Recent Inquiries" value={profile.hardInquiries.filter((i) => sim.now - i.at < 365 * MS_DAY).length} />
               </div>
             </div>
           </Panel>
 
-          <Panel title="What you would be offered" subtitle="Rates move with your score, which moves with your behaviour.">
+          <Panel title="What You Would Be Offered" subtitle="Rates move with your score, which moves with your behaviour.">
             <div className="table-scroll">
               <table>
-                <thead><tr><th>Product</th><th className="num">APR</th><th className="num">Payment on 100k</th></tr></thead>
+                <thead><tr><th>Product</th><th className="num">APR</th><th className="num">Payment On 100K</th></tr></thead>
                 <tbody>
                   {(['mortgage', 'auto', 'personal', 'card'] as const).map((product) => {
                     const apr = offeredApr(profile.score, product);
@@ -250,12 +250,12 @@ function TaxPanel() {
 
   return (
     <div className="grid grid-2">
-      <Panel title="This year, as it stands" subtitle={`Based on where you live and what you have earned.`}>
+      <Panel title="This Year, As It Stands" subtitle={`Based on where you live and what you have earned.`}>
         <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
-          <Stat label="Estimated gross" value={<span className="mono">{formatMoneyCompact(income)}</span>} />
-          <Stat label="Effective rate" value={`${(computation.effectiveRate * 100).toFixed(1)}%`} />
-          <Stat label="Total tax" value={<span className="mono negative">{formatMoneyCompact(computation.total)}</span>} />
-          <Stat label="Take home" value={<span className="mono positive">{formatMoneyCompact(computation.net)}</span>} />
+          <Stat label="Estimated Gross" value={<span className="mono">{formatMoneyCompact(income)}</span>} />
+          <Stat label="Effective Rate" value={`${(computation.effectiveRate * 100).toFixed(1)}%`} />
+          <Stat label="Total Tax" value={<span className="mono negative">{formatMoneyCompact(computation.total)}</span>} />
+          <Stat label="Take Home" value={<span className="mono positive">{formatMoneyCompact(computation.net)}</span>} />
         </div>
         <div className="col gap-2">
           {computation.lines.map((line) => (
@@ -273,9 +273,9 @@ function TaxPanel() {
         </p>
       </Panel>
 
-      <Panel title="Filed years" flush>
+      <Panel title="Filed Years" flush>
         {years.length === 0 ? (
-          <Empty title="Nothing filed yet" body="Your first return is reconciled in April of the year after you start earning." />
+          <Empty title="Nothing Filed Yet" body="Your first return is reconciled in April of the year after you start earning." />
         ) : (
           <div className="list">
             {years.map((year) => (
@@ -366,7 +366,7 @@ function LoanDialog({ onClose }: { onClose: () => void }) {
     <Modal
       title="Borrow"
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Take the loan</button></>}
+      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Take The Loan</button></>}
     >
       <p className="muted small">
         Your score of {score} decides the rate. A loan creates a real monthly bill that will be paid whether you remember it or not.
@@ -384,14 +384,14 @@ function LoanDialog({ onClose }: { onClose: () => void }) {
           <input id="principal" type="number" min={1000} step={500} value={principal} onChange={(e) => setPrincipal(Number(e.target.value))} />
         </div>
         <div className="field">
-          <label htmlFor="months">Term (months)</label>
+          <label htmlFor="months">Term (Months)</label>
           <input id="months" type="number" min={12} max={84} step={12} value={months} onChange={(e) => setMonths(Number(e.target.value))} />
         </div>
       </div>
       <div className="grid grid-3">
         <Stat label="APR" value={`${(apr * 100).toFixed(2)}%`} />
         <Stat label="Monthly" value={<span className="mono">{formatMoney(payment)}</span>} />
-        <Stat label="Total repaid" value={<span className="mono">{formatMoney(payment * months)}</span>} />
+        <Stat label="Total Repaid" value={<span className="mono">{formatMoney(payment * months)}</span>} />
       </div>
     </Modal>
   );

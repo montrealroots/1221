@@ -1,0 +1,24 @@
+import { chromium } from 'playwright';
+import { mkdirSync } from 'node:fs';
+const OUT = process.argv[2];
+mkdirSync(OUT, { recursive: true });
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const page = await browser.newPage({ viewport: { width: 1440, height: 950 }, deviceScaleFactor: 2 });
+page.on('pageerror', (e) => console.log('PAGE ERROR:', String(e).slice(0, 200)));
+await page.goto('http://localhost:4173', { waitUntil: 'domcontentloaded' });
+await page.evaluate(() => localStorage.clear());
+await page.reload({ waitUntil: 'networkidle' });
+await page.waitForTimeout(4000);
+await page.getByRole('button', { name: /new (save|game)|start|empty slot|create/i }).first().click();
+await page.waitForTimeout(1200);
+await page.getByRole('button', { name: /^(next|continue)/i }).first().click();
+await page.waitForTimeout(1000);
+console.log('body.scrollTop after Continue:', await page.evaluate(() => document.body.scrollTop));
+await page.screenshot({ path: `${OUT}/personal-top.png` });
+// The page does not scroll; .main does. Grow the viewport to its full height.
+const h = await page.evaluate(() => document.querySelector('.main').scrollHeight);
+await page.setViewportSize({ width: 1440, height: Math.min(h + 40, 6000) });
+await page.waitForTimeout(500);
+await page.screenshot({ path: `${OUT}/personal-full.png` });
+console.log('captured full height', h);
+await browser.close();

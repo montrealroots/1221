@@ -30,7 +30,7 @@ export function SocialWorkspace() {
       </div>
 
       {missing.length > 0 && (
-        <Panel title="Platforms you are not on" flush>
+        <Panel title="Platforms You Are Not On" flush>
           <div className="list">
             {missing.map((platform) => (
               <div key={platform.id} className="list-item list-static">
@@ -72,15 +72,15 @@ export function SocialWorkspace() {
             <>
               <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>
                 <Stat label="Followers" value={selected.followers.toLocaleString('en-US')} note={`@${selected.handle}`} />
-                <Stat label="Last 30 days" value={`${summary.followersGainedLast30 >= 0 ? '+' : ''}${summary.followersGainedLast30.toLocaleString('en-US')}`}
+                <Stat label="Last 30 Days" value={`${summary.followersGainedLast30 >= 0 ? '+' : ''}${summary.followersGainedLast30.toLocaleString('en-US')}`}
                   tone={summary.followersGainedLast30 >= 0 ? 'positive' : 'negative'} />
                 <Stat label="Impressions" value={summary.impressionsLast30.toLocaleString('en-US')} note="last 30 days" />
-                <Stat label="Lifetime earnings" value={formatMoneyCompact(selected.lifetimeEarnings)}
+                <Stat label="Lifetime Earnings" value={formatMoneyCompact(selected.lifetimeEarnings)}
                   note={selected.monetisationEnabled ? `${formatMoney(selected.effectiveCpm)} CPM` : 'not monetised'} />
               </div>
 
               <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
-                <Panel title="Momentum and audience">
+                <Panel title="Momentum And Audience">
                   <Meter label="Momentum" value={selected.momentum} hint="How the algorithm currently reads your recent work." />
                   <div style={{ marginTop: 'var(--s4)' }}>
                     <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>Audience segments</div>
@@ -98,8 +98,8 @@ export function SocialWorkspace() {
                   )}
                 </Panel>
 
-                <Panel title="What a sponsored post is worth">
-                  <Stat label="Estimated rate" value={formatMoneyCompact(sponsorshipRate(selected))} note="per post at your current reach" />
+                <Panel title="What A Sponsored Post Is Worth">
+                  <Stat label="Estimated Rate" value={formatMoneyCompact(sponsorshipRate(selected))} note="per post at your current reach" />
                   <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
                     {PLATFORM_BY_ID[selected.platform].bestFor}
                   </p>
@@ -111,7 +111,7 @@ export function SocialWorkspace() {
 
               <Panel title="Posts" flush>
                 {summary.posts.length === 0 ? (
-                  <Empty title="Nothing posted" body="An account with no content is not an audience." />
+                  <Empty title="Nothing Posted" body="An account with no content is not an audience." />
                 ) : (
                   <div className="list">
                     {summary.posts.slice(0, 25).map((post) => (
@@ -145,9 +145,9 @@ export function SocialWorkspace() {
         </>
       )}
 
-      <Panel title="Brand deals" flush>
+      <Panel title="Brand Deals" flush>
         {deals.length === 0 ? (
-          <Empty title="No offers yet" body="Brands come to you once your audience is large enough and your momentum is good." />
+          <Empty title="No Offers Yet" body="Brands come to you once your audience is large enough and your momentum is good." />
         ) : (
           <div className="list">
             {deals.map((deal) => (
@@ -219,12 +219,12 @@ function PostDialog({ accountId, onClose }: { accountId: string; onClose: () => 
         </select>
       </div>
       <div className="field">
-        <label htmlFor="title">What is it</label>
+        <label htmlFor="title">What Is It</label>
         <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="A short description" />
       </div>
       <div className="field">
         <div className="row-between">
-          <label htmlFor="effort" style={{ marginBottom: 0 }}>Effort (minutes)</label>
+          <label htmlFor="effort" style={{ marginBottom: 0 }}>Effort (Minutes)</label>
           <span className="mono">{effort}</span>
         </div>
         <input id="effort" type="range" min={5} max={480} step={5} value={effort} onChange={(e) => setEffort(Number(e.target.value))} />
@@ -241,8 +241,8 @@ function PostDialog({ accountId, onClose }: { accountId: string; onClose: () => 
       </div>
 
       <div className="grid grid-2">
-        <Stat label="Projected quality" value={projected} note="from your skills, effort and gear" />
-        <Stat label="Time cost" value={`${Math.round(effort / 60 * 10) / 10}h`} note="taken out of your day" />
+        <Stat label="Projected Quality" value={projected} note="from your skills, effort and gear" />
+        <Stat label="Time Cost" value={`${Math.round(effort / 60 * 10) / 10}h`} note="taken out of your day" />
       </div>
 
       {activeDeal && (

@@ -1,0 +1,885 @@
+fi-01-helsinki	Helsinki	fi-01	60.1695	24.9354	Europe/Helsinki	658864	c
+fi-01-espoo	Espoo	fi-01	60.2052	24.6522	Europe/Helsinki	323910	
+fi-06-tampere	Tampere	fi-06	61.4991	23.7871	Europe/Helsinki	260646	a
+fi-01-vantaa	Vantaa	fi-01	60.2941	25.0410	Europe/Helsinki	252724	
+fi-17-oulu	Oulu	fi-17	65.0124	25.4682	Europe/Helsinki	216066	a
+fi-02-turku	Turku	fi-02	60.4515	22.2687	Europe/Helsinki	206655	a
+fi-01-easthelsinki	East Helsinki	fi-01	60.2104	25.0829	Europe/Helsinki	170557	x
+fi-13-jyvaskyla	Jyväskylä	fi-13	62.2415	25.7209	Europe/Helsinki	148744	a
+fi-11-kuopio	Kuopio	fi-11	62.8924	27.6770	Europe/Helsinki	125462	a
+fi-07-lahti	Lahti	fi-07	60.9827	25.6615	Europe/Helsinki	121622	a
+fi-04-pori	Pori	fi-04	61.4807	21.7852	Europe/Helsinki	83157	a
+fi-12-joensuu	Joensuu	fi-12	62.6012	29.7632	Europe/Helsinki	78398	a
+fi-08-kouvola	Kouvola	fi-08	60.8667	26.7000	Europe/Helsinki	78094	a
+fi-09-lappeenranta	Lappeenranta	fi-09	61.0587	28.1887	Europe/Helsinki	72909	a
+fi-15-vaasa	Vaasa	fi-15	63.0960	21.6158	Europe/Helsinki	69819	a
+fi-05-hameenlinna	Hämeenlinna	fi-05	60.9960	24.4643	Europe/Helsinki	68473	a
+fi-14-seinajoki	Seinäjoki	fi-14	62.7945	22.8282	Europe/Helsinki	66848	a
+fi-19-rovaniemi	Rovaniemi	fi-19	66.4990	25.6887	Europe/Helsinki	65670	a
+fi-01-porvoo	Porvoo	fi-01	60.3923	25.6651	Europe/Helsinki	51853	
+fi-10-mikkeli	Mikkeli	fi-10	61.6886	27.2723	Europe/Helsinki	51661	a
+fi-02-salo	Salo	fi-02	60.3833	23.1333	Europe/Helsinki	50794	
+fi-08-kotka	Kotka	fi-08	60.4664	26.9458	Europe/Helsinki	50157	
+fi-16-kokkola	Kokkola	fi-16	63.8385	23.1307	Europe/Helsinki	48361	a
+fi-01-jarvenpaa	Järvenpää	fi-01	60.4737	25.0899	Europe/Helsinki	46942	
+fi-01-lohja	Lohja	fi-01	60.2486	24.0653	Europe/Helsinki	45686	
+fi-01-nurmijarvi	Nurmijärvi	fi-01	60.4641	24.8073	Europe/Helsinki	45356	
+fi-01-hyvinge	Hyvinge	fi-01	60.6333	24.8667	Europe/Helsinki	43515	
+fi-01-tuusula	Tuusula	fi-01	60.4037	25.0264	Europe/Helsinki	42624	
+fi-01-kirkkonummi	Kirkkonummi	fi-01	60.1238	24.4385	Europe/Helsinki	41821	
+fi-01-vuosaari	Vuosaari	fi-01	60.2096	25.1420	Europe/Helsinki	38961	x
+fi-04-rauma	Rauma	fi-04	61.1272	21.5113	Europe/Helsinki	38909	
+fi-01-kerava	Kerava	fi-01	60.4034	25.1050	Europe/Helsinki	38535	
+fi-02-kaarina	Kaarina	fi-02	60.4072	22.3690	Europe/Helsinki	36631	
+fi-06-nokia	Nokia	fi-06	61.4667	23.5000	Europe/Helsinki	36486	
+fi-18-kajaani	Kajaani	fi-18	64.2273	27.7285	Europe/Helsinki	36458	a
+fi-01-mellunkyla	Mellunkylä	fi-01	60.2336	25.0995	Europe/Helsinki	36360	x
+fi-06-kangasala	Kangasala	fi-06	61.4638	24.0760	Europe/Helsinki	34315	
+fi-06-ylojarvi	Ylöjärvi	fi-06	61.5563	23.5961	Europe/Helsinki	33731	
+fi-10-savonlinna	Savonlinna	fi-10	61.8699	28.8800	Europe/Helsinki	31283	
+fi-01-vartiokyla	Vartiokylä	fi-01	60.2180	25.0957	Europe/Helsinki	30244	x
+fi-01-vihti	Vihti	fi-01	60.4170	24.3196	Europe/Helsinki	28864	
+fi-05-riihimaki	Riihimäki	fi-05	60.7377	24.7773	Europe/Helsinki	28610	
+fi-01-leppavaara	Leppävaara	fi-01	60.2128	24.8135	Europe/Helsinki	28409	x
+fi-01-haaga	Haaga	fi-01	60.2213	24.8976	Europe/Helsinki	27761	x
+fi-01-kallio	Kallio	fi-01	60.1843	24.9503	Europe/Helsinki	27051	x
+fi-01-raseborg	Raseborg	fi-01	59.9774	23.4397	Europe/Helsinki	26982	
+fi-01-kaarela	Kaarela	fi-01	60.2517	24.8811	Europe/Helsinki	26414	x
+fi-01-herttoniemi	Herttoniemi	fi-01	60.1947	25.0354	Europe/Helsinki	26047	x
+fi-02-raisio	Raisio	fi-02	60.4859	22.1689	Europe/Helsinki	25846	
+fi-06-hervanta	Hervanta	fi-06	61.4479	23.8530	Europe/Helsinki	25231	x
+fi-06-lempaala	Lempäälä	fi-06	61.3167	23.7500	Europe/Helsinki	25036	
+fi-09-imatra	Imatra	fi-09	61.1718	28.7524	Europe/Helsinki	24581	
+fi-06-sastamala	Sastamala	fi-06	61.3494	22.9093	Europe/Helsinki	24495	
+fi-01-oulunkyla	Oulunkylä	fi-01	60.2292	24.9640	Europe/Helsinki	23854	x
+fi-17-raahe	Raahe	fi-17	64.6833	24.4833	Europe/Helsinki	23566	
+fi-01-sibbo	Sibbo	fi-01	60.3775	25.2691	Europe/Helsinki	22903	
+fi-08-karhula	Karhula	fi-08	60.5216	26.9312	Europe/Helsinki	22867	
+fi-07-hollola2	Hollola	fi-07	61.0000	25.5000	Europe/Helsinki	22843	
+fi-01-matinkyla	Matinkylä	fi-01	60.1589	24.7424	Europe/Helsinki	22688	x
+fi-01-laajasalo	Laajasalo	fi-01	60.1752	25.0309	Europe/Helsinki	22419	x
+fi-11-siilinjarvi	Siilinjärvi	fi-11	63.0833	27.6667	Europe/Helsinki	21383	
+fi-06-pirkkala	Pirkkala	fi-06	61.4612	23.6323	Europe/Helsinki	21204	
+fi-01-klaukkala	Klaukkala	fi-01	60.3824	24.7510	Europe/Helsinki	21019	
+fi-01-mantsala	Mäntsälä	fi-01	60.6333	25.3167	Europe/Helsinki	20966	
+fi-19-tornio	Tornio	fi-19	65.8481	24.1466	Europe/Helsinki	20932	
+fi-06-valkeakoski	Valkeakoski	fi-06	61.2642	24.0312	Europe/Helsinki	20859	
+fi-02-lieto	Lieto	fi-02	60.5103	22.4618	Europe/Helsinki	20694	
+fi-07-hollola	Hollola	fi-07	61.0500	25.4333	Europe/Helsinki	20405	
+fi-11-iisalmi	Iisalmi	fi-11	63.5592	27.1907	Europe/Helsinki	20330	
+fi-02-naantali	Naantali	fi-02	60.4674	22.0243	Europe/Helsinki	20312	
+fi-01-lauttasaari	Lauttasaari	fi-01	60.1590	24.8680	Europe/Helsinki	20000	x
+fi-01-suutarila	Suutarila	fi-01	60.2800	25.0176	Europe/Helsinki	19690	x
+fi-15-jakobstad	Jakobstad	fi-15	63.6749	22.7026	Europe/Helsinki	19668	
+fi-11-varkaus	Varkaus	fi-11	62.3153	27.8730	Europe/Helsinki	19603	
+fi-14-kurikka	Kurikka	fi-14	62.6167	22.4167	Europe/Helsinki	19474	
+fi-19-kemi	Kemi	fi-19	65.7364	24.5637	Europe/Helsinki	19332	
+fi-08-hamina	Hamina	fi-08	60.5697	27.1979	Europe/Helsinki	19305	
+fi-13-jamsa	Jämsä	fi-13	61.8642	25.1900	Europe/Helsinki	19209	
+fi-13-laukaa	Laukaa	fi-13	62.4141	25.9519	Europe/Helsinki	18876	
+fi-01-myyrmaki	Myyrmäki	fi-01	60.2671	24.8471	Europe/Helsinki	18393	
+fi-01-pitajanmaki	Pitäjänmäki	fi-01	60.2229	24.8610	Europe/Helsinki	18016	x
+fi-07-heinola	Heinola	fi-07	61.2056	26.0381	Europe/Helsinki	17746	
+fi-01-espoonlahti	Espoonlahti	fi-01	60.1505	24.6531	Europe/Helsinki	17697	x
+fi-13-aanekoski	Äänekoski	fi-13	62.6000	25.7333	Europe/Helsinki	17614	
+fi-01-munkkiniemi	Munkkiniemi	fi-01	60.1986	24.8777	Europe/Helsinki	17334	x
+fi-17-haukipudas	Haukipudas	fi-17	65.1765	25.3523	Europe/Helsinki	17298	
+fi-10-pieksamaki	Pieksämäki	fi-10	62.3000	27.1333	Europe/Helsinki	17243	
+fi-15-korsholm	Korsholm	fi-15	63.1142	21.6822	Europe/Helsinki	17176	
+fi-01-olari	Olari	fi-01	60.1724	24.7271	Europe/Helsinki	16929	x
+fi-08-anjala	Anjala	fi-08	60.6833	26.8333	Europe/Helsinki	16779	x
+fi-06-vammala	Vammala	fi-06	61.3333	22.9000	Europe/Helsinki	16635	
+fi-01-suurmetsa	Suurmetsä	fi-01	60.2696	25.0540	Europe/Helsinki	16452	x
+fi-05-forssa	Forssa	fi-05	60.8146	23.6215	Europe/Helsinki	16368	
+fi-06-pohjoishervanta	Pohjois-Hervanta	fi-06	61.4535	23.8474	Europe/Helsinki	16053	x
+fi-05-janakkala	Janakkala	fi-05	60.9000	24.6000	Europe/Helsinki	15995	
+fi-07-orimattila	Orimattila	fi-07	60.8049	25.7296	Europe/Helsinki	15628	
+fi-02-vastaboland	Väståboland	fi-02	60.2997	22.3004	Europe/Helsinki	15498	
+fi-17-ylivieska	Ylivieska	fi-17	64.0833	24.5500	Europe/Helsinki	15375	
+fi-01-takatoolo	Taka-Töölö	fi-01	60.1843	24.9195	Europe/Helsinki	15343	x
+fi-02-loimaa	Loimaa	fi-02	60.8497	23.0561	Europe/Helsinki	15248	
+fi-01-viikki	Viikki	fi-01	60.2218	25.0239	Europe/Helsinki	15177	x
+fi-12-kontiolahti	Kontiolahti	fi-12	62.7602	29.8471	Europe/Helsinki	15092	
+fi-14-kauhava	Kauhava	fi-14	63.1030	23.0713	Europe/Helsinki	15066	
+fi-01-sornainen	Sörnäinen	fi-01	60.1864	24.9651	Europe/Helsinki	14999	x
+fi-07-nastola	Nastola	fi-07	60.9480	25.9288	Europe/Helsinki	14911	
+fi-17-kuusamo	Kuusamo	fi-17	65.9645	29.1888	Europe/Helsinki	14784	
+fi-02-uusikaupunki	Uusikaupunki	fi-02	60.8004	21.4084	Europe/Helsinki	14750	
+fi-01-etutoolo	Etu-Töölö	fi-01	60.1730	24.9251	Europe/Helsinki	14728	x
+fi-01-jatkasaari	Jätkäsaari	fi-01	60.1586	24.9169	Europe/Helsinki	14718	x
+fi-01-lansisatama	Länsisatama	fi-01	60.1553	24.9147	Europe/Helsinki	14542	x
+fi-01-ekenas	Ekenäs	fi-01	59.9736	23.4339	Europe/Helsinki	14377	
+fi-01-lovisa	Lovisa	fi-01	60.4566	26.2250	Europe/Helsinki	14362	
+fi-01-tapaninkyla	Tapaninkylä	fi-01	60.2638	24.9956	Europe/Helsinki	14313	x
+fi-17-kempele	Kempele	fi-17	64.9131	25.5034	Europe/Helsinki	14293	
+fi-01-kontula	Kontula	fi-01	60.2376	25.0839	Europe/Helsinki	14108	x
+fi-14-lapua	Lapua	fi-14	62.9693	23.0088	Europe/Helsinki	14016	
+fi-01-martinlaakso	Martinlaakso	fi-01	60.2741	24.8507	Europe/Helsinki	13992	
+fi-01-tapiola	Tapiola	fi-01	60.1764	24.8085	Europe/Helsinki	13617	x
+fi-01-yliskyla	Yliskylä	fi-01	60.1767	25.0536	Europe/Helsinki	13563	x
+fi-01-kannelmaki	Kannelmäki	fi-01	60.2418	24.8858	Europe/Helsinki	13272	
+fi-01-pasila	Pasila	fi-01	60.1990	24.9322	Europe/Helsinki	12921	x
+fi-01-myllypuro	Myllypuro	fi-01	60.2221	25.0674	Europe/Helsinki	12821	x
+fi-06-kaukajarvi	Kaukajärvi	fi-06	61.4675	23.8849	Europe/Helsinki	12779	x
+fi-04-kankaanpaa	Kankaanpää	fi-04	61.8000	22.4167	Europe/Helsinki	12571	
+fi-01-etelahaaga	Etelä-Haaga	fi-01	60.2135	24.8954	Europe/Helsinki	12555	x
+fi-14-kauhajoki	Kauhajoki	fi-14	62.4333	22.1833	Europe/Helsinki	12500	
+fi-14-ilmajoki	Ilmajoki	fi-14	62.7333	22.5667	Europe/Helsinki	12473	
+fi-01-hakunila	Hakunila	fi-01	60.2782	25.1034	Europe/Helsinki	12435	
+fi-04-ulvila	Ulvila	fi-04	61.4284	21.8710	Europe/Helsinki	12345	
+fi-17-kalajoki	Kalajoki	fi-17	64.2500	23.9500	Europe/Helsinki	12231	
+fi-01-kamppi	Kamppi	fi-01	60.1676	24.9304	Europe/Helsinki	12098	x
+fi-17-kiiminki	Kiiminki	fi-17	65.1314	25.7974	Europe/Helsinki	12069	
+fi-02-pargas	Pargas	fi-02	60.3067	22.3010	Europe/Helsinki	11962	
+fi-12-liperi	Liperi	fi-12	62.5333	29.3667	Europe/Helsinki	11927	
+fi-01-alppiharju	Alppiharju	fi-01	60.1891	24.9488	Europe/Helsinki	11481	x
+fi-06-hervantaluode	Hervanta luode	fi-06	61.4507	23.8353	Europe/Helsinki	11451	x
+fi-15-pedersore	Pedersöre	fi-15	63.6500	22.6833	Europe/Helsinki	11330	
+fi-01-laaksolahti	Laaksolahti	fi-01	60.2416	24.7585	Europe/Helsinki	11320	
+fi-02-paimio	Paimio	fi-02	60.4567	22.6869	Europe/Helsinki	11241	
+fi-01-kivisto	Kivistö	fi-01	60.3257	24.8384	Europe/Helsinki	11125	
+fi-01-saunalahti	Saunalahti	fi-01	60.1631	24.6201	Europe/Helsinki	11114	
+fi-04-eura	Eura	fi-04	61.1333	22.1333	Europe/Helsinki	11093	
+fi-01-noykkio	Nöykkiö	fi-01	60.1607	24.6681	Europe/Helsinki	11063	
+fi-01-ullanlinna	Ullanlinna	fi-01	60.1575	24.9489	Europe/Helsinki	10774	x
+fi-01-pakila	Pakila	fi-01	60.2433	24.9487	Europe/Helsinki	10730	x
+fi-14-alavus	Alavus	fi-14	62.5833	23.6167	Europe/Helsinki	10722	
+fi-13-muurame	Muurame	fi-13	62.1333	25.6667	Europe/Helsinki	10662	
+fi-09-joutseno	Joutseno	fi-09	61.1180	28.5076	Europe/Helsinki	10603	
+fi-01-kilo	Kilo	fi-01	60.2175	24.7815	Europe/Helsinki	10554	x
+fi-01-lintuvaara	Lintuvaara	fi-01	60.2344	24.8135	Europe/Helsinki	10554	
+fi-17-nivala	Nivala	fi-17	63.9167	24.9667	Europe/Helsinki	10397	
+fi-01-vallila	Vallila	fi-01	60.1945	24.9571	Europe/Helsinki	10375	x
+fi-01-patola	Patola	fi-01	60.2326	24.9537	Europe/Helsinki	10352	
+fi-06-hameenkyro	Hämeenkyrö	fi-06	61.6391	23.1953	Europe/Helsinki	10351	
+fi-14-alajarvi2	Älajärvi	fi-14	63.0003	23.8159	Europe/Helsinki	10308	
+fi-02-runosmaki	Runosmäki	fi-02	60.4892	22.2517	Europe/Helsinki	10296	x
+fi-01-kauniainen	Kauniainen	fi-01	60.2121	24.7276	Europe/Helsinki	10200	
+fi-17-liminka	Liminka	fi-17	64.8098	25.4154	Europe/Helsinki	10166	
+fi-18-sotkamo	Sotkamo	fi-18	64.1333	28.4167	Europe/Helsinki	10164	
+fi-01-pakkala	Pakkala	fi-01	60.2861	24.9573	Europe/Helsinki	10160	x
+fi-12-lieksa	Lieksa	fi-12	63.3167	30.0167	Europe/Helsinki	10002	
+fi-01-hanko	Hanko	fi-01	59.8333	22.9500	Europe/Helsinki	9962	
+fi-17-ii	Ii	fi-17	65.3174	25.3731	Europe/Helsinki	9800	
+fi-01-pohjoishaaga	Pohjois-Haaga	fi-01	60.2269	24.8960	Europe/Helsinki	9691	x
+fi-02-masku	Masku	fi-02	60.5708	22.0988	Europe/Helsinki	9628	
+fi-04-huittinen	Huittinen	fi-04	61.1833	22.7000	Europe/Helsinki	9618	
+fi-01-latokartano	Latokartano	fi-01	60.2262	25.0269	Europe/Helsinki	9606	x
+fi-01-linjat	Linjat	fi-01	60.1833	24.9465	Europe/Helsinki	9562	x
+fi-15-narpes	Närpes	fi-15	62.4728	21.3371	Europe/Helsinki	9559	
+fi-17-oulunsalo	Oulunsalo	fi-17	64.9346	25.4112	Europe/Helsinki	9556	
+fi-12-kitee	Kitee	fi-12	62.1000	30.1500	Europe/Helsinki	9483	
+fi-01-herttoniemenranta	Herttoniemenranta	fi-01	60.1906	25.0369	Europe/Helsinki	9414	x
+fi-02-halikko	Halikko	fi-02	60.4000	23.0833	Europe/Helsinki	9344	
+fi-01-mellunmaki	Mellunmäki	fi-01	60.2375	25.1155	Europe/Helsinki	9297	x
+fi-01-vanhamunkkiniemi	Vanha munkkiniemi	fi-01	60.1980	24.8760	Europe/Helsinki	9280	x
+fi-01-punavuori	Punavuori	fi-01	60.1614	24.9367	Europe/Helsinki	9258	x
+fi-06-etelahervanta	Etelä-Hervanta	fi-06	61.4442	23.8565	Europe/Helsinki	9178	x
+fi-13-keuruu	Keuruu	fi-13	62.2667	24.7000	Europe/Helsinki	9088	
+fi-04-eurajoki	Eurajoki	fi-04	61.2000	21.7333	Europe/Helsinki	9000	
+fi-19-saarenkyla	Saarenkylä	fi-19	66.5192	25.7674	Europe/Helsinki	9000	
+fi-11-leppavirta	Leppävirta	fi-11	62.4901	27.7826	Europe/Helsinki	8974	
+fi-01-niittykumpu	Niittykumpu	fi-01	60.1709	24.7642	Europe/Helsinki	8934	x
+fi-12-nurmes	Nurmes	fi-12	63.5421	29.1396	Europe/Helsinki	8924	
+fi-11-lapinlahti	Lapinlahti	fi-11	63.3667	27.4000	Europe/Helsinki	8856	
+fi-01-karis	Karis	fi-01	60.0718	23.6616	Europe/Helsinki	8853	
+fi-06-orivesi	Orivesi	fi-06	61.6777	24.3572	Europe/Helsinki	8846	
+fi-13-saarijarvi	Saarijärvi	fi-13	62.7049	25.2540	Europe/Helsinki	8831	
+fi-01-tikkurila	Tikkurila	fi-01	60.2935	25.0376	Europe/Helsinki	8815	
+fi-14-alajarvi	Alajärvi	fi-14	63.0000	23.8167	Europe/Helsinki	8793	
+fi-02-varissuo	Varissuo	fi-02	60.4481	22.3561	Europe/Helsinki	8760	x
+fi-08-elimaki	Elimäki	fi-08	60.7167	26.4667	Europe/Helsinki	8751	
+fi-01-toukola	Toukola	fi-01	60.2064	24.9712	Europe/Helsinki	8750	x
+fi-01-tapulikaupunki	Tapulikaupunki	fi-01	60.2752	25.0216	Europe/Helsinki	8741	
+fi-14-jalasjarvi	Jalasjärvi	fi-14	62.4902	22.7590	Europe/Helsinki	8662	
+fi-01-lansiherttoniemi	Länsi-Herttoniemi	fi-01	60.2074	25.0398	Europe/Helsinki	8626	x
+fi-01-tuomarinkyla	Tuomarinkylä	fi-01	60.2566	24.9672	Europe/Helsinki	8623	x
+fi-01-havukoski	Havukoski	fi-01	60.3216	25.0717	Europe/Helsinki	8581	
+fi-01-pukinmaki	Pukinmäki	fi-01	60.2448	24.9890	Europe/Helsinki	8573	x
+fi-01-vattuniemi	Vattuniemi	fi-01	60.1503	24.8825	Europe/Helsinki	8509	x
+fi-01-malminkartano	Malminkartano	fi-01	60.2474	24.8616	Europe/Helsinki	8495	
+fi-02-laitila	Laitila	fi-02	60.8757	21.6976	Europe/Helsinki	8492	
+fi-01-mankkaa	Mankkaa	fi-01	60.1942	24.7700	Europe/Helsinki	8468	x
+fi-01-hameenkyla	Hämeenkylä	fi-01	60.2712	24.8001	Europe/Helsinki	8437	
+fi-02-somero	Somero	fi-02	60.6167	23.5333	Europe/Helsinki	8423	
+fi-01-kivenlahti	Kivenlahti	fi-01	60.1537	24.6326	Europe/Helsinki	8397	
+fi-01-karkkila	Karkkila	fi-01	60.5342	24.2098	Europe/Helsinki	8391	
+fi-06-toijala	Toijala	fi-06	61.1678	23.8382	Europe/Helsinki	8300	x
+fi-06-akaa	Akaa	fi-06	61.1667	23.8667	Europe/Helsinki	8258	
+fi-01-siltamaki	Siltamäki	fi-01	60.2781	24.9834	Europe/Helsinki	8241	
+fi-17-muhos	Muhos	fi-17	64.8080	25.9931	Europe/Helsinki	8232	
+fi-01-simonkyla	Simonkylä	fi-01	60.3100	25.0301	Europe/Helsinki	8191	
+fi-02-ikaupunginosa	I kaupunginosa	fi-02	60.4522	22.2830	Europe/Helsinki	8101	x
+fi-01-kapyla	Käpylä	fi-01	60.2129	24.9482	Europe/Helsinki	8099	x
+fi-01-soukka	Soukka	fi-01	60.1416	24.6713	Europe/Helsinki	8069	
+fi-19-sodankyla	Sodankylä	fi-19	67.4167	26.6000	Europe/Helsinki	8067	
+fi-01-aurinkolahti	Aurinkolahti	fi-01	60.2033	25.1532	Europe/Helsinki	8033	x
+fi-15-laihia	Laihia	fi-15	62.9761	22.0114	Europe/Helsinki	8020	
+fi-02-poytya	Pöytyä	fi-02	60.7667	22.6667	Europe/Helsinki	8000	
+fi-01-viertola	Viertola	fi-01	60.2914	25.0101	Europe/Helsinki	7974	
+fi-01-tapaninvainio	Tapaninvainio	fi-01	60.2600	24.9824	Europe/Helsinki	7945	x
+fi-05-hausjarvi	Hausjärvi	fi-05	60.7833	24.9333	Europe/Helsinki	7923	
+fi-07-asikkala	Asikkala	fi-07	61.2167	25.5000	Europe/Helsinki	7870	
+fi-01-roihuvuori	Roihuvuori	fi-01	60.2017	25.0601	Europe/Helsinki	7869	x
+fi-01-nurmijarvenkirkonkyla	Nurmijärven kirkonkylä	fi-01	60.4596	24.8063	Europe/Helsinki	7841	
+fi-17-tuira	Tuira	fi-17	65.0261	25.4706	Europe/Helsinki	7805	x
+fi-01-henttaa	Henttaa	fi-01	60.1903	24.7270	Europe/Helsinki	7759	x
+fi-01-kotkavuori	Kotkavuori	fi-01	60.1631	24.8841	Europe/Helsinki	7695	x
+fi-17-toppila	Toppila	fi-17	65.0384	25.4433	Europe/Helsinki	7656	x
+fi-05-loppi	Loppi	fi-05	60.7167	24.4500	Europe/Helsinki	7622	
+fi-01-maunula	Maunula	fi-01	60.2287	24.9308	Europe/Helsinki	7618	x
+fi-19-keminmaa	Keminmaa	fi-19	65.8016	24.5448	Europe/Helsinki	7591	
+fi-01-vesala	Vesala	fi-01	60.2400	25.1031	Europe/Helsinki	7531	x
+fi-02-vikaupunginosa	VI kaupunginosa	fi-02	60.4549	22.2704	Europe/Helsinki	7475	x
+fi-15-nykarleby	Nykarleby	fi-15	63.5228	22.5307	Europe/Helsinki	7462	
+fi-06-vuores	Vuores	fi-06	61.4310	23.8118	Europe/Helsinki	7449	x
+fi-13-jamsankoski	Jämsänkoski	fi-13	61.9190	25.1701	Europe/Helsinki	7442	
+fi-18-kuhmo	Kuhmo	fi-18	64.1333	29.5167	Europe/Helsinki	7413	
+fi-01-pihlajamaki	Pihlajamäki	fi-01	60.2359	25.0113	Europe/Helsinki	7406	
+fi-01-korso	Korso	fi-01	60.3511	25.0781	Europe/Helsinki	7368	
+fi-11-kiuruvesi	Kiuruvesi	fi-11	63.6500	26.6167	Europe/Helsinki	7338	
+fi-06-hervantalounas	Hervanta lounas	fi-06	61.4402	23.8448	Europe/Helsinki	7288	x
+fi-01-arabianranta	Arabianranta	fi-01	60.2073	24.9796	Europe/Helsinki	7278	x
+fi-17-pudasjarvi	Pudasjärvi	fi-17	65.3833	26.9167	Europe/Helsinki	7226	
+fi-01-kruununhaka	Kruununhaka	fi-01	60.1717	24.9566	Europe/Helsinki	7222	x
+fi-12-pyhaselka	Pyhäselkä	fi-12	62.4333	29.9667	Europe/Helsinki	7210	
+fi-10-mantyharju	Mäntyharju	fi-10	61.4167	26.8833	Europe/Helsinki	7076	
+fi-19-inari	Inari	fi-19	68.9060	27.0288	Europe/Helsinki	7049	
+fi-01-pohjoistapiola	Pohjois-Tapiola	fi-01	60.1869	24.7970	Europe/Helsinki	7029	
+fi-02-nummi	Nummi	fi-02	60.4583	22.3135	Europe/Helsinki	7011	x
+fi-01-lansipakila	Länsi-Pakila	fi-01	60.2415	24.9270	Europe/Helsinki	7001	
+fi-18-suomussalmi	Suomussalmi	fi-18	64.8868	28.9078	Europe/Helsinki	7001	
+fi-01-ruskeasuo	Ruskeasuo	fi-01	60.2009	24.9052	Europe/Helsinki	6922	x
+fi-19-kemijarvi	Kemijärvi	fi-19	66.7131	27.4306	Europe/Helsinki	6918	
+fi-01-kaitaa	Kaitaa	fi-01	60.1456	24.6870	Europe/Helsinki	6911	
+fi-12-eno	Eno	fi-12	62.8051	30.1542	Europe/Helsinki	6891	
+fi-17-oulainen	Oulainen	fi-17	64.2667	24.8000	Europe/Helsinki	6887	
+fi-01-kallahti	Kallahti	fi-01	60.1929	25.1368	Europe/Helsinki	6854	
+fi-01-puistola	Puistola	fi-01	60.2711	25.0470	Europe/Helsinki	6718	x
+fi-06-ikaalinen	Ikaalinen	fi-06	61.7695	23.0658	Europe/Helsinki	6713	
+fi-01-pikkuhuopalahti	Pikku-Huopalahti	fi-01	60.2050	24.8955	Europe/Helsinki	6706	x
+fi-04-kokemaki	Kokemäki	fi-04	61.2565	22.3564	Europe/Helsinki	6662	
+fi-19-kittila	Kittilä	fi-19	67.6647	24.8936	Europe/Helsinki	6658	
+fi-01-ylamalmi	Ylä-Malmi	fi-01	60.2542	25.0086	Europe/Helsinki	6623	
+fi-11-suonenjoki	Suonenjoki	fi-11	62.6167	27.1333	Europe/Helsinki	6615	
+fi-04-harjavalta	Harjavalta	fi-04	61.3167	22.1333	Europe/Helsinki	6605	
+fi-17-kaakkuri	Kaakkuri	fi-17	64.9604	25.5305	Europe/Helsinki	6559	x
+fi-02-piikkio	Piikkiö	fi-02	60.4248	22.5160	Europe/Helsinki	6553	
+fi-01-hermanni	Hermanni	fi-01	60.1944	24.9701	Europe/Helsinki	6547	x
+fi-17-tyrnava	Tyrnävä	fi-17	64.7647	25.6523	Europe/Helsinki	6538	
+fi-01-jokela	Jokela	fi-01	60.5541	24.9630	Europe/Helsinki	6500	
+fi-17-haapajarvi	Haapajärvi	fi-17	63.7500	25.3333	Europe/Helsinki	6482	
+fi-11-nilsia	Nilsiä	fi-11	63.2075	28.0822	Europe/Helsinki	6474	
+fi-06-mantta	Mänttä	fi-06	62.0301	24.6279	Europe/Helsinki	6459	
+fi-06-linnainmaa	Linnainmaa	fi-06	61.4950	23.8862	Europe/Helsinki	6453	x
+fi-01-konala	Konala	fi-01	60.2371	24.8449	Europe/Helsinki	6438	x
+fi-02-portarthur	Port Arthur	fi-02	60.4474	22.2425	Europe/Helsinki	6423	x
+fi-07-iitti	Iitti	fi-07	60.8949	26.3387	Europe/Helsinki	6410	
+fi-12-outokumpu	Outokumpu	fi-12	62.7268	29.0159	Europe/Helsinki	6404	
+fi-02-rusko	Rusko	fi-02	60.5333	22.2167	Europe/Helsinki	6397	
+fi-01-jokiniemi	Jokiniemi	fi-01	60.5665	26.4583	Europe/Helsinki	6363	
+fi-17-haapavesi	Haapavesi	fi-17	64.1333	25.3667	Europe/Helsinki	6347	
+fi-15-kronoby	Kronoby	fi-15	63.7286	23.0339	Europe/Helsinki	6318	
+fi-02-mynamaki	Mynämäki	fi-02	60.6791	21.9927	Europe/Helsinki	6271	
+fi-15-vora	Vörå	fi-15	63.1361	22.2522	Europe/Helsinki	6264	
+fi-01-siuntio	Siuntio	fi-01	60.1386	24.2272	Europe/Helsinki	6251	
+fi-04-sakyla	Säkylä	fi-04	61.0333	22.3333	Europe/Helsinki	6237	
+fi-06-palkane	Pälkäne	fi-06	61.3342	24.2720	Europe/Helsinki	6203	
+fi-01-tapanila	Tapanila	fi-01	60.2646	25.0216	Europe/Helsinki	6193	x
+fi-18-vuokatti	Vuokatti	fi-18	64.1447	28.2820	Europe/Helsinki	6183	
+fi-06-virrat	Virrat	fi-06	62.2476	23.7800	Europe/Helsinki	6165	
+fi-01-metsola	Metsola	fi-01	60.3485	25.0900	Europe/Helsinki	6144	
+fi-15-kristinestad	Kristinestad	fi-15	62.2743	21.3760	Europe/Helsinki	6131	
+fi-01-kauklahti	Kauklahti	fi-01	60.1927	24.6004	Europe/Helsinki	6119	
+fi-19-pyhajarvi	Pyhäjärvi	fi-19	67.0701	27.2176	Europe/Helsinki	6094	
+fi-06-parkano	Parkano	fi-06	62.0167	23.0167	Europe/Helsinki	6092	
+fi-04-noormarkku	Noormarkku	fi-04	61.5927	21.8685	Europe/Helsinki	6076	
+fi-17-kello	Kello	fi-17	65.1285	25.3567	Europe/Helsinki	6030	
+fi-01-vartioharju	Vartioharju	fi-01	60.2240	25.1104	Europe/Helsinki	6015	x
+fi-01-kaivoksela	Kaivoksela	fi-01	60.2677	24.8687	Europe/Helsinki	5963	
+fi-06-tammela	Tammela	fi-06	61.5023	23.7796	Europe/Helsinki	5955	x
+fi-15-larsmo	Larsmo	fi-15	63.7539	22.7473	Europe/Helsinki	5934	
+fi-01-paloheina	Paloheinä	fi-01	60.2536	24.9283	Europe/Helsinki	5905	x
+fi-01-haukilahti	Haukilahti	fi-01	60.1589	24.7706	Europe/Helsinki	5873	
+fi-01-lansimaki	Länsimäki	fi-01	60.2463	25.1178	Europe/Helsinki	5865	
+fi-10-kerimaki	Kerimäki	fi-10	61.9107	29.2823	Europe/Helsinki	5841	
+fi-05-tammela	Tammela	fi-05	60.8103	23.7682	Europe/Helsinki	5810	
+fi-02-pernio	Perniö	fi-02	60.2000	23.1333	Europe/Helsinki	5809	
+fi-13-viitasaari	Viitasaari	fi-13	63.0667	25.8667	Europe/Helsinki	5787	
+fi-01-koivukyla	Koivukylä	fi-01	60.3224	25.0586	Europe/Helsinki	5702	
+fi-01-alamalmi	Ala-Malmi	fi-01	60.2482	25.0133	Europe/Helsinki	5678	
+fi-01-kalasatama	Kalasatama	fi-01	60.1852	24.9793	Europe/Helsinki	5671	x
+fi-01-karakallio	Karakallio	fi-01	60.2325	24.7608	Europe/Helsinki	5668	x
+fi-05-lammi	Lammi	fi-05	61.0833	25.0167	Europe/Helsinki	5634	
+fi-10-juva	Juva	fi-10	61.9000	27.8500	Europe/Helsinki	5628	
+fi-01-jakomaki	Jakomäki	fi-01	60.2594	25.0780	Europe/Helsinki	5625	
+fi-06-tampella	Tampella	fi-06	61.5037	23.7659	Europe/Helsinki	5590	x
+fi-01-asola	Asola	fi-01	60.3297	25.0511	Europe/Helsinki	5522	
+fi-15-malax	Malax	fi-15	62.9423	21.5731	Europe/Helsinki	5517	
+fi-11-juankoski	Juankoski	fi-11	63.0647	28.3292	Europe/Helsinki	5514	
+fi-01-ylasto	Ylästö	fi-01	60.2842	24.9139	Europe/Helsinki	5509	
+fi-06-viiala	Viiala	fi-06	61.2102	23.7674	Europe/Helsinki	5472	
+fi-06-lentavanniemi	Lentävänniemi	fi-06	61.5280	23.7057	Europe/Helsinki	5433	x
+fi-06-vilppula	Vilppula	fi-06	62.0212	24.5048	Europe/Helsinki	5422	
+fi-01-inga	Ingå	fi-01	60.0459	24.0046	Europe/Helsinki	5416	
+fi-01-lansipasila	Länsi-Pasila	fi-01	60.1986	24.9231	Europe/Helsinki	5413	x
+fi-13-suolahti	Suolahti	fi-13	62.5642	25.8536	Europe/Helsinki	5399	
+fi-01-espoonlahdenkeskus	Espoonlahden keskus	fi-01	60.1497	24.6551	Europe/Helsinki	5359	x
+fi-06-amuri	Amuri	fi-06	61.4996	23.7446	Europe/Helsinki	5353	x
+fi-01-hiekkaharju	Hiekkaharju	fi-01	60.3036	25.0441	Europe/Helsinki	5333	
+fi-01-merirastila	Meri-Rastila	fi-01	60.1997	25.1186	Europe/Helsinki	5327	
+fi-01-pojo	Pojo	fi-01	60.0963	23.5276	Europe/Helsinki	5257	
+fi-16-kannus	Kannus	fi-16	63.9000	23.9000	Europe/Helsinki	5255	
+fi-01-meilahti	Meilahti	fi-01	60.1898	24.8972	Europe/Helsinki	5223	x
+fi-01-viherlaakso	Viherlaakso	fi-01	60.2288	24.7408	Europe/Helsinki	5206	
+fi-14-ahtari	Ähtäri	fi-14	62.5540	24.0619	Europe/Helsinki	5180	
+fi-10-ristiina	Ristiina	fi-10	61.5058	27.2464	Europe/Helsinki	5171	
+fi-06-kaleva	Kaleva	fi-06	61.4983	23.8054	Europe/Helsinki	5117	x
+fi-17-vanhatulli	Vanhatulli	fi-17	65.0081	25.4693	Europe/Helsinki	5095	x
+fi-10-kangasniemi	Kangasniemi	fi-10	61.9936	26.6478	Europe/Helsinki	5057	
+fi-13-korpilahti	Korpilahti	fi-13	62.0167	25.5500	Europe/Helsinki	5050	
+fi-01-munkkivuori	Munkkivuori	fi-01	60.2058	24.8760	Europe/Helsinki	5048	x
+fi-01-kivikko	Kivikko	fi-01	60.2348	25.0602	Europe/Helsinki	5035	x
+fi-17-jaali	Jääli	fi-17	65.0930	25.6852	Europe/Helsinki	5022	
+fi-01-katajanokka	Katajanokka	fi-01	60.1659	24.9713	Europe/Helsinki	4994	x
+fi-01-pornainen	Pornainen	fi-01	60.4758	25.3749	Europe/Helsinki	4964	
+fi-08-pyhtaa	Pyhtää	fi-08	60.4935	26.5435	Europe/Helsinki	4964	
+fi-01-puotila	Puotila	fi-01	60.2116	25.1083	Europe/Helsinki	4930	x
+fi-06-aetsa	Äetsä	fi-06	61.2949	22.7046	Europe/Helsinki	4929	
+fi-01-latokaski	Latokaski	fi-01	60.1778	24.6581	Europe/Helsinki	4927	
+fi-01-ilola	Ilola	fi-01	60.3266	25.0130	Europe/Helsinki	4923	
+fi-14-alaharma	Alahärmä	fi-14	63.2483	22.8549	Europe/Helsinki	4915	
+fi-04-nakkila	Nakkila	fi-04	61.3667	22.0000	Europe/Helsinki	4905	
+fi-09-skinnarila	Skinnarila	fi-09	61.0637	28.1006	Europe/Helsinki	4873	x
+fi-01-karkola	Kärkölä	fi-01	60.6129	23.9420	Europe/Helsinki	4853	
+fi-05-jokioinen	Jokioinen	fi-05	60.8016	23.4800	Europe/Helsinki	4828	
+fi-01-reimarla	Reimarla	fi-01	60.2279	24.8526	Europe/Helsinki	4826	x
+fi-17-kaukovainio	Kaukovainio	fi-17	64.9921	25.5180	Europe/Helsinki	4809	x
+fi-05-tervakoski	Tervakoski	fi-05	60.8141	24.6259	Europe/Helsinki	4753	
+fi-01-rastila	Rastila	fi-01	60.2103	25.1182	Europe/Helsinki	4745	x
+fi-01-itakeskus	Itäkeskus	fi-01	60.2101	25.0814	Europe/Helsinki	4730	x
+fi-01-jarvenpera	Järvenperä	fi-01	60.2417	24.7136	Europe/Helsinki	4726	
+fi-09-ruokolahti	Ruokolahti	fi-09	61.2833	28.8333	Europe/Helsinki	4721	
+fi-15-hietalahti	Hietalahti	fi-15	63.0848	21.6172	Europe/Helsinki	4700	x
+fi-02-nousiainen	Nousiainen	fi-02	60.6042	22.0793	Europe/Helsinki	4685	
+fi-01-vanhamankkaa	Vanha-Mankkaa	fi-01	60.1911	24.7759	Europe/Helsinki	4680	x
+fi-06-atala	Atala	fi-06	61.5028	23.9068	Europe/Helsinki	4679	x
+fi-17-sievi	Sievi	fi-17	63.9000	24.5000	Europe/Helsinki	4654	
+fi-01-lassila	Lassila	fi-01	60.2319	24.8773	Europe/Helsinki	4644	x
+fi-17-pyhajarvi	Pyhäjärvi	fi-17	63.6812	25.9812	Europe/Helsinki	4639	
+fi-15-vahakyro	Vähäkyrö	fi-15	63.0564	22.1058	Europe/Helsinki	4638	
+fi-14-teuva	Teuva	fi-14	62.4819	21.7416	Europe/Helsinki	4628	
+fi-06-hervantakoillinen	Hervanta koillinen	fi-06	61.4562	23.8610	Europe/Helsinki	4602	x
+fi-09-taipalsaari	Taipalsaari	fi-09	61.1500	28.0500	Europe/Helsinki	4591	
+fi-01-otaniemi	Otaniemi	fi-01	60.1840	24.8279	Europe/Helsinki	4574	x
+fi-06-vesilahti	Vesilahti	fi-06	61.3167	23.6167	Europe/Helsinki	4550	
+fi-11-joroinen	Joroinen	fi-11	62.1782	27.8316	Europe/Helsinki	4543	
+fi-01-lippajarvi	Lippajärvi	fi-01	60.2305	24.7162	Europe/Helsinki	4525	
+fi-01-askola	Askola	fi-01	60.5333	25.6000	Europe/Helsinki	4515	
+fi-02-martti	Martti	fi-02	60.4416	22.2544	Europe/Helsinki	4506	x
+fi-06-urjala	Urjala	fi-06	61.0833	23.5333	Europe/Helsinki	4495	
+fi-02-paaskyvuori	Pääskyvuori	fi-02	60.4457	22.3349	Europe/Helsinki	4482	x
+fi-01-alppila	Alppila	fi-01	60.1899	24.9429	Europe/Helsinki	4478	x
+fi-02-luolavuori	Luolavuori	fi-02	60.4333	22.2810	Europe/Helsinki	4477	x
+fi-17-pateniemi	Pateniemi	fi-17	65.0794	25.4089	Europe/Helsinki	4472	x
+fi-13-hankasalmi	Hankasalmi	fi-13	62.3833	26.4333	Europe/Helsinki	4468	
+fi-17-kuivasjarvi	Kuivasjärvi	fi-17	65.0698	25.4969	Europe/Helsinki	4452	x
+fi-14-jurva	Jurva	fi-14	62.6833	21.9833	Europe/Helsinki	4450	
+fi-16-kalvia	Kälviä	fi-16	63.8607	23.4529	Europe/Helsinki	4449	
+fi-02-pahaniemi	Pahaniemi	fi-02	60.4539	22.2012	Europe/Helsinki	4397	x
+fi-17-ruukki	Ruukki	fi-17	64.6667	25.1000	Europe/Helsinki	4386	
+fi-02-viikaupunginosa	VII kaupunginosa	fi-02	60.4507	22.2592	Europe/Helsinki	4372	x
+fi-06-ikuri	Ikuri	fi-06	61.5113	23.5942	Europe/Helsinki	4332	x
+fi-12-ilomantsi	Ilomantsi	fi-12	62.6716	30.9328	Europe/Helsinki	4327	
+fi-09-luumaki	Luumäki	fi-09	60.9262	27.5814	Europe/Helsinki	4327	
+fi-09-rautjarvi	Rautjärvi	fi-09	61.4346	29.3715	Europe/Helsinki	4316	x
+fi-01-nikinmaki	Nikinmäki	fi-01	60.3407	25.1388	Europe/Helsinki	4308	
+fi-01-kumpula	Kumpula	fi-01	60.2094	24.9642	Europe/Helsinki	4305	x
+fi-01-kellokoski	Kellokoski	fi-01	60.5327	25.1092	Europe/Helsinki	4300	
+fi-14-isokyro	Isokyrö	fi-14	63.0117	22.3333	Europe/Helsinki	4296	
+fi-17-oulunsuu	Oulunsuu	fi-17	65.0086	25.5276	Europe/Helsinki	4292	x
+fi-17-linnanmaa	Linnanmaa	fi-17	65.0556	25.4664	Europe/Helsinki	4278	x
+fi-09-parikkala	Parikkala	fi-09	61.5500	29.5000	Europe/Helsinki	4274	
+fi-01-ruskeasanta	Ruskeasanta	fi-01	60.3126	25.0086	Europe/Helsinki	4251	
+fi-01-rajakyla	Rajakylä	fi-01	60.2495	25.0959	Europe/Helsinki	4128	
+fi-12-juuka	Juuka	fi-12	63.2333	29.2500	Europe/Helsinki	4118	
+fi-16-kaustinen	Kaustinen	fi-16	63.5488	23.6884	Europe/Helsinki	4098	
+fi-13-joutsa	Joutsa	fi-13	61.7333	26.1167	Europe/Helsinki	4060	
+fi-01-puotinharju	Puotinharju	fi-01	60.2128	25.0787	Europe/Helsinki	4045	x
+fi-06-ruovesi	Ruovesi	fi-06	61.9858	24.0571	Europe/Helsinki	4002	
+fi-19-ivalo	Ivalo	fi-19	68.6599	27.5389	Europe/Helsinki	3998	
+fi-01-vapaala	Vapaala	fi-01	60.2629	24.8252	Europe/Helsinki	3987	
+fi-10-punkaharju	Punkaharju	fi-10	61.7588	29.3884	Europe/Helsinki	3984	
+fi-01-kulosaari	Kulosaari	fi-01	60.1857	25.0052	Europe/Helsinki	3977	x
+fi-02-aura	Aura	fi-02	60.6471	22.5876	Europe/Helsinki	3965	
+fi-12-polvijarvi	Polvijärvi	fi-12	62.8500	29.3667	Europe/Helsinki	3957	
+fi-19-kolari	Kolari	fi-19	67.3305	23.7779	Europe/Helsinki	3952	
+fi-02-vasaramaki	Vasaramäki	fi-02	60.4410	22.3060	Europe/Helsinki	3949	x
+fi-08-koria	Koria	fi-08	60.8461	26.6075	Europe/Helsinki	3948	
+fi-11-pielavesi	Pielavesi	fi-11	63.2333	26.7500	Europe/Helsinki	3944	
+fi-01-laurinlahti	Laurinlahti	fi-01	60.1456	24.6431	Europe/Helsinki	3941	
+fi-01-perna	Pernå	fi-01	60.4487	26.0319	Europe/Helsinki	3938	
+fi-12-tohmajarvi	Tohmajärvi	fi-12	62.1833	30.3833	Europe/Helsinki	3925	
+fi-01-kurttila	Kurttila	fi-01	60.1781	24.6031	Europe/Helsinki	3917	
+fi-17-kaijonharju	Kaijonharju	fi-17	65.0599	25.4805	Europe/Helsinki	3916	x
+fi-01-pitajanmaenyritysalue	Pitäjänmäen yritysalue	fi-01	60.2216	24.8723	Europe/Helsinki	3916	x
+fi-06-rahola	Rahola	fi-06	61.4980	23.6386	Europe/Helsinki	3912	x
+fi-17-rajakyla	Rajakylä	fi-17	65.0655	25.4212	Europe/Helsinki	3890	x
+fi-02-harittu	Harittu	fi-02	60.4144	22.3060	Europe/Helsinki	3870	x
+fi-17-talvikangas	Talvikangas	fi-17	65.0420	25.5969	Europe/Helsinki	3860	x
+fi-01-paivakumpu	Päiväkumpu	fi-01	60.3273	25.1048	Europe/Helsinki	3856	
+fi-17-karjasilta	Karjasilta	fi-17	64.9991	25.4905	Europe/Helsinki	3838	x
+fi-01-veikkari	Veikkari	fi-01	60.6097	24.8124	Europe/Helsinki	3784	
+fi-06-pappila	Pappila	fi-06	61.4961	23.8691	Europe/Helsinki	3764	x
+fi-05-hauho	Hauho	fi-05	61.1726	24.5630	Europe/Helsinki	3755	
+fi-02-pertteli	Pertteli	fi-02	60.4333	23.2667	Europe/Helsinki	3740	
+fi-06-kalevanrinne	Kalevanrinne	fi-06	61.4933	23.8103	Europe/Helsinki	3734	x
+fi-06-hyhky	Hyhky	fi-06	61.5062	23.6913	Europe/Helsinki	3700	x
+fi-13-pihtipudas	Pihtipudas	fi-13	63.3833	25.5667	Europe/Helsinki	3697	
+fi-19-ylitornio	Ylitornio	fi-19	66.3089	23.6773	Europe/Helsinki	3697	
+fi-02-itaranta	Itäranta	fi-02	60.4365	22.2425	Europe/Helsinki	3677	x
+fi-01-itapasila	Itä-Pasila	fi-01	60.1988	24.9401	Europe/Helsinki	3656	
+fi-13-uurainen	Uurainen	fi-13	62.5000	25.4500	Europe/Helsinki	3652	
+fi-11-maaninka	Maaninka	fi-11	63.1552	27.2994	Europe/Helsinki	3638	
+fi-02-uittamo	Uittamo	fi-02	60.4196	22.2569	Europe/Helsinki	3635	x
+fi-17-taivalkoski	Taivalkoski	fi-17	65.5667	28.2500	Europe/Helsinki	3624	
+fi-01-koivuhaka	Koivuhaka	fi-01	60.2984	25.0038	Europe/Helsinki	3581	x
+fi-17-korvensuora	Korvensuora	fi-17	65.0390	25.5769	Europe/Helsinki	3571	x
+fi-17-herukka	Herukka	fi-17	65.0971	25.4048	Europe/Helsinki	3568	x
+fi-01-laajalahti	Laajalahti	fi-01	60.2008	24.8035	Europe/Helsinki	3567	
+fi-19-ranua	Ranua	fi-19	65.9167	26.5333	Europe/Helsinki	3563	
+fi-02-terasrautela	Teräsrautela	fi-02	60.4766	22.2372	Europe/Helsinki	3554	x
+fi-11-sonkajarvi	Sonkajärvi	fi-11	63.6667	27.5167	Europe/Helsinki	3551	
+fi-06-koivistonkyla	Koivistonkylä	fi-06	61.4708	23.7914	Europe/Helsinki	3548	x
+fi-13-petajavesi	Petäjävesi	fi-13	62.2500	25.2000	Europe/Helsinki	3548	
+fi-06-petsamo	Petsamo	fi-06	61.5072	23.7966	Europe/Helsinki	3543	
+fi-06-nalkala	Nalkala	fi-06	61.4951	23.7580	Europe/Helsinki	3542	x
+fi-13-karstula	Karstula	fi-13	62.8667	24.7833	Europe/Helsinki	3541	
+fi-02-halinen	Halinen	fi-02	60.4691	22.3126	Europe/Helsinki	3501	x
+fi-02-iiikaupunginosa	III kaupunginosa	fi-02	60.4440	22.2665	Europe/Helsinki	3492	x
+fi-17-maikkula	Maikkula	fi-17	64.9836	25.5686	Europe/Helsinki	3478	x
+fi-01-tammisto	Tammisto	fi-01	60.2743	24.9589	Europe/Helsinki	3473	
+fi-06-peltolammi	Peltolammi	fi-06	61.4535	23.7477	Europe/Helsinki	3429	x
+fi-17-koskela	Koskela	fi-17	65.0451	25.4453	Europe/Helsinki	3407	x
+fi-05-kalvola	Kalvola	fi-05	61.1008	24.1218	Europe/Helsinki	3406	
+fi-01-lidmalmen	Lidmalmen	fi-01	60.2680	24.9988	Europe/Helsinki	3406	x
+fi-02-lauste	Lauste	fi-02	60.4352	22.3451	Europe/Helsinki	3405	x
+fi-06-kyttala	Kyttälä	fi-06	61.4984	23.7694	Europe/Helsinki	3399	x
+fi-06-tammelaa	Tammela A	fi-06	61.5039	23.7796	Europe/Helsinki	3395	x
+fi-06-liisankallio	Liisankallio	fi-06	61.4991	23.7923	Europe/Helsinki	3393	x
+fi-07-sysma	Sysmä	fi-07	61.5000	25.6833	Europe/Helsinki	3393	
+fi-17-ylikiiminki	Ylikiiminki	fi-17	65.0833	26.2500	Europe/Helsinki	3386	
+fi-11-karttula	Karttula	fi-11	62.8963	26.9704	Europe/Helsinki	3383	
+fi-01-itapakila	Itä-Pakila	fi-01	60.2482	24.9581	Europe/Helsinki	3382	x
+fi-04-kiukainen	Kiukainen	fi-04	61.2167	22.0833	Europe/Helsinki	3358	
+fi-11-vierema	Vieremä	fi-11	63.7500	27.0167	Europe/Helsinki	3353	
+fi-01-koskela	Koskela	fi-01	60.2185	24.9668	Europe/Helsinki	3351	x
+fi-06-niemenranta	Niemenranta	fi-06	61.5217	23.6893	Europe/Helsinki	3345	x
+fi-14-kuortane	Kuortane	fi-14	62.8000	23.5000	Europe/Helsinki	3328	
+fi-01-westend	Westend	fi-01	60.1638	24.7984	Europe/Helsinki	3323	x
+fi-13-saynatsalo	Säynätsalo	fi-13	62.1403	25.7695	Europe/Helsinki	3322	
+fi-02-dragsfjard	Dragsfjärd	fi-02	60.0667	22.4833	Europe/Helsinki	3309	
+fi-06-kalkku	Kalkku	fi-06	61.4961	23.5796	Europe/Helsinki	3301	x
+fi-02-kimito	Kimito	fi-02	60.1605	22.7290	Europe/Helsinki	3287	
+fi-06-ristinarkku	Ristinarkku	fi-06	61.4899	23.8496	Europe/Helsinki	3275	x
+fi-17-vihanti	Vihanti	fi-17	64.4847	24.9916	Europe/Helsinki	3270	
+fi-04-luvia	Luvia	fi-04	61.3638	21.6256	Europe/Helsinki	3260	
+fi-10-rantasalmi	Rantasalmi	fi-10	62.0667	28.3000	Europe/Helsinki	3247	
+fi-19-salla	Salla	fi-19	66.8333	28.6667	Europe/Helsinki	3235	
+fi-01-niipperi	Niipperi	fi-01	60.2865	24.7397	Europe/Helsinki	3231	
+fi-04-lappi	Lappi	fi-04	61.1000	21.8333	Europe/Helsinki	3212	
+fi-19-pello	Pello	fi-19	66.7736	23.9626	Europe/Helsinki	3182	
+fi-09-savitaipale	Savitaipale	fi-09	61.2000	27.7000	Europe/Helsinki	3151	
+fi-14-toysa	Töysä	fi-14	62.6280	23.8183	Europe/Helsinki	3144	
+fi-17-himanka	Himanka	fi-17	64.0622	23.6545	Europe/Helsinki	3136	
+fi-02-vartiovuori	Vartiovuori	fi-02	60.4467	22.2776	Europe/Helsinki	3104	x
+fi-01-jollas	Jollas	fi-01	60.1628	25.0736	Europe/Helsinki	3098	x
+fi-17-hiukkavaara	Hiukkavaara	fi-17	65.0159	25.5840	Europe/Helsinki	3097	x
+fi-01-vaarala	Vaarala	fi-01	60.2623	25.0930	Europe/Helsinki	3089	
+fi-06-amuria	Amuri A	fi-06	61.5009	23.7444	Europe/Helsinki	3073	x
+fi-01-mikkola	Mikkola	fi-01	60.3407	25.0998	Europe/Helsinki	3071	
+fi-17-myllytulli	Myllytulli	fi-17	65.0158	25.4831	Europe/Helsinki	3067	x
+fi-17-valivainio	Välivainio	fi-17	65.0335	25.4781	Europe/Helsinki	3053	x
+fi-01-muurala	Muurala	fi-01	60.2127	24.6425	Europe/Helsinki	3052	
+fi-16-lohtaja	Lohtaja	fi-16	64.0247	23.5048	Europe/Helsinki	3043	
+fi-02-ylimaaria	Yli-maaria	fi-02	60.5502	22.3089	Europe/Helsinki	3023	x
+fi-11-varpaisjarvi	Varpaisjärvi	fi-11	63.3593	27.7551	Europe/Helsinki	3007	
+fi-01-heikinlaakso	Heikinlaakso	fi-01	60.2687	25.0738	Europe/Helsinki	2990	
+fi-02-vatti	Vätti	fi-02	60.4694	22.2536	Europe/Helsinki	2990	x
+fi-17-vaara	Vaara	fi-17	65.0106	25.4825	Europe/Helsinki	2980	x
+fi-18-paltamo	Paltamo	fi-18	64.4167	27.8333	Europe/Helsinki	2972	
+fi-17-pyhajoki	Pyhäjoki	fi-17	64.4667	24.2333	Europe/Helsinki	2970	
+fi-01-kuninkaala	Kuninkaala	fi-01	60.2848	25.0456	Europe/Helsinki	2969	
+fi-01-rekola	Rekola	fi-01	60.3309	25.0732	Europe/Helsinki	2969	
+fi-02-sauvo	Sauvo	fi-02	60.3431	22.6964	Europe/Helsinki	2968	
+fi-06-mouhijarvi	Mouhijärvi	fi-06	61.5000	23.0167	Europe/Helsinki	2961	
+fi-01-verajamaki	Veräjämäki	fi-01	60.2274	24.9748	Europe/Helsinki	2958	
+fi-02-kurala	Kurala	fi-02	60.4611	22.3277	Europe/Helsinki	2956	x
+fi-11-rautalampi	Rautalampi	fi-11	62.6333	26.8333	Europe/Helsinki	2953	
+fi-02-itaharju	Itäharju	fi-02	60.4521	22.3094	Europe/Helsinki	2940	x
+fi-01-lapinjarvi	Lapinjärvi	fi-01	60.6244	26.1972	Europe/Helsinki	2937	
+fi-16-veteli	Veteli	fi-16	63.4784	23.7828	Europe/Helsinki	2931	
+fi-06-kaakinmaa	Kaakinmaa	fi-06	61.4943	23.7479	Europe/Helsinki	2911	x
+fi-12-heinavesi	Heinävesi	fi-12	62.4333	28.6000	Europe/Helsinki	2909	
+fi-04-koylio	Köyliö	fi-04	61.1191	22.3098	Europe/Helsinki	2901	
+fi-06-hatanpaa	Hatanpää	fi-06	61.4829	23.7625	Europe/Helsinki	2894	x
+fi-01-kruunuvuorenranta	Kruunuvuorenranta	fi-01	60.1672	25.0189	Europe/Helsinki	2894	x
+fi-02-ilpoinen	Ilpoinen	fi-02	60.4227	22.2850	Europe/Helsinki	2889	
+fi-01-vantaanlaakso	Vantaanlaakso	fi-01	60.2900	24.8776	Europe/Helsinki	2888	
+fi-02-pitkamaki	Pitkämäki	fi-02	60.4591	22.2271	Europe/Helsinki	2886	x
+fi-09-lemi	Lemi	fi-09	61.0624	27.8057	Europe/Helsinki	2885	
+fi-04-merikarvia	Merikarvia	fi-04	61.8584	21.5004	Europe/Helsinki	2882	
+fi-19-posio	Posio	fi-19	66.1086	28.1719	Europe/Helsinki	2872	
+fi-01-kuninkaantammi	Kuninkaantammi	fi-01	60.2609	24.8894	Europe/Helsinki	2867	x
+fi-01-ruoholahti	Ruoholahti	fi-01	60.1628	24.9159	Europe/Helsinki	2863	x
+fi-06-lukonmaki	Lukonmäki	fi-06	61.4687	23.8458	Europe/Helsinki	2838	x
+fi-01-ruotsinpyhtaa	Ruotsinpyhtää	fi-01	60.5268	26.4620	Europe/Helsinki	2836	
+fi-14-yliharma	Ylihärmä	fi-14	63.1500	22.7833	Europe/Helsinki	2836	
+fi-19-tervola	Tervola	fi-19	66.0833	24.8000	Europe/Helsinki	2820	
+fi-02-pansio	Pansio	fi-02	60.4473	22.1640	Europe/Helsinki	2809	x
+fi-01-vanharuskeasuo	Vanha Ruskeasuo	fi-01	60.2025	24.9065	Europe/Helsinki	2798	x
+fi-08-virolahti	Virolahti	fi-08	60.5167	27.6831	Europe/Helsinki	2796	
+fi-16-toholampi	Toholampi	fi-16	63.7667	24.2500	Europe/Helsinki	2787	
+fi-09-tykki	Tykki	fi-09	61.0489	28.1869	Europe/Helsinki	2780	x
+fi-06-lamminpaa	Lamminpää	fi-06	61.5196	23.6262	Europe/Helsinki	2775	x
+fi-19-simo	Simo	fi-19	65.6667	25.0500	Europe/Helsinki	2753	
+fi-06-pispala	Pispala	fi-06	61.5043	23.7083	Europe/Helsinki	2752	x
+fi-01-kurkimaki	Kurkimäki	fi-01	60.2332	25.0675	Europe/Helsinki	2731	
+fi-06-kissanmaa	Kissanmaa	fi-06	61.4998	23.8161	Europe/Helsinki	2729	x
+fi-01-torpparinmaki	Torpparinmäki	fi-01	60.2611	24.9523	Europe/Helsinki	2728	x
+fi-12-kiihtelysvaara	Kiihtelysvaara	fi-12	62.4952	30.2508	Europe/Helsinki	2723	
+fi-01-itahakkila	Itä-Hakkila	fi-01	60.2924	25.1140	Europe/Helsinki	2721	
+fi-01-karhusuo	Karhusuo	fi-01	60.2277	24.6234	Europe/Helsinki	2717	
+fi-17-hollihaka	Hollihaka	fi-17	65.0078	25.4553	Europe/Helsinki	2716	x
+fi-17-leveri	Leveri	fi-17	65.0043	25.4647	Europe/Helsinki	2711	x
+fi-14-lappajarvi	Lappajärvi	fi-14	63.2000	23.6333	Europe/Helsinki	2710	
+fi-01-hakuninmaa	Hakuninmaa	fi-01	60.2536	24.8923	Europe/Helsinki	2708	
+fi-06-kuru	Kuru	fi-06	61.8756	23.7195	Europe/Helsinki	2701	
+fi-10-puumala	Puumala	fi-10	61.5273	28.1749	Europe/Helsinki	2693	
+fi-01-grundbacka	Grundbacka	fi-01	60.2893	24.7265	Europe/Helsinki	2685	
+fi-07-padasjoki	Padasjoki	fi-07	61.3500	25.2833	Europe/Helsinki	2670	
+fi-12-kesalahti	Kesälahti	fi-12	61.8975	29.8349	Europe/Helsinki	2665	
+fi-06-rantaperkio	Rantaperkiö	fi-06	61.4703	23.7556	Europe/Helsinki	2664	x
+fi-17-martinniemi	Martinniemi	fi-17	65.2124	25.3094	Europe/Helsinki	2654	
+fi-06-kylmakoski	Kylmäkoski	fi-06	61.1540	23.6886	Europe/Helsinki	2647	
+fi-01-kalajarvi	Kalajärvi	fi-01	60.3048	24.7372	Europe/Helsinki	2615	
+fi-14-vimpeli	Vimpeli	fi-14	63.1619	23.8192	Europe/Helsinki	2603	
+fi-01-maununneva	Maununneva	fi-01	60.2503	24.9060	Europe/Helsinki	2601	x
+fi-06-punkalaidun	Punkalaidun	fi-06	61.1167	23.1000	Europe/Helsinki	2595	
+fi-17-alppila	Alppila	fi-17	65.0364	25.4599	Europe/Helsinki	2587	x
+fi-11-kaavi	Kaavi	fi-11	62.9833	28.5000	Europe/Helsinki	2578	
+fi-16-perho	Perho	fi-16	63.2167	24.4167	Europe/Helsinki	2572	
+fi-18-vaala	Vaala	fi-18	64.5667	26.8333	Europe/Helsinki	2567	
+fi-06-tammelab	Tammela B	fi-06	61.5003	23.7797	Europe/Helsinki	2560	x
+fi-18-vuolijoki	Vuolijoki	fi-18	64.1854	26.9955	Europe/Helsinki	2557	
+fi-06-ristimaki	Ristimäki	fi-06	61.5038	23.6419	Europe/Helsinki	2545	x
+fi-06-hallila	Hallila	fi-06	61.4631	23.8294	Europe/Helsinki	2537	x
+fi-17-reisjarvi	Reisjärvi	fi-17	63.6167	24.9000	Europe/Helsinki	2534	
+fi-01-konepaja	Konepaja	fi-01	60.1938	24.9449	Europe/Helsinki	2500	x
+fi-02-karinaistenkirkonkyla	Karinaisten Kirkonkylä	fi-02	60.6709	22.7735	Europe/Helsinki	2497	
+fi-17-intio	Intiö	fi-17	65.0154	25.4987	Europe/Helsinki	2485	x
+fi-17-pokkinen	Pokkinen	fi-17	65.0131	25.4725	Europe/Helsinki	2484	x
+fi-17-puolivalinkangas	Puolivälinkangas	fi-17	65.0416	25.4849	Europe/Helsinki	2480	x
+fi-09-voisalmi	Voisalmi	fi-09	61.0818	28.1502	Europe/Helsinki	2472	x
+fi-07-hartola	Hartola	fi-07	61.5833	26.0167	Europe/Helsinki	2463	
+fi-09-uuslavola	Uus-Lavola	fi-09	61.0426	28.1020	Europe/Helsinki	2453	
+fi-17-utajarvi	Utajärvi	fi-17	64.7625	26.4194	Europe/Helsinki	2447	
+fi-01-leppakorpi	Leppäkorpi	fi-01	60.3627	25.0935	Europe/Helsinki	2440	
+fi-02-paattinen	Paattinen	fi-02	60.6014	22.3905	Europe/Helsinki	2430	
+fi-13-konnevesi	Konnevesi	fi-13	62.6167	26.3167	Europe/Helsinki	2429	
+fi-17-hoyhtya	Höyhtyä	fi-17	64.9956	25.4959	Europe/Helsinki	2426	x
+fi-01-keimola	Keimola	fi-01	60.3383	24.8164	Europe/Helsinki	2418	
+fi-06-lintulampi	Lintulampi	fi-06	61.5270	23.6706	Europe/Helsinki	2415	x
+fi-01-pihlajisto	Pihlajisto	fi-01	60.2310	25.0013	Europe/Helsinki	2411	
+fi-17-alavieska	Alavieska	fi-17	64.1667	24.3000	Europe/Helsinki	2407	
+fi-14-kortesjarvi	Kortesjärvi	fi-14	63.3000	23.1667	Europe/Helsinki	2400	
+fi-06-luopioinen	Luopioinen	fi-06	61.3629	24.6678	Europe/Helsinki	2381	
+fi-05-renko	Renko	fi-05	60.8956	24.2878	Europe/Helsinki	2376	
+fi-02-ruohonpaa	Ruohonpää	fi-02	60.4697	22.2215	Europe/Helsinki	2375	x
+fi-06-multisilta	Multisilta	fi-06	61.4383	23.7514	Europe/Helsinki	2367	x
+fi-02-samppalinna	Samppalinna	fi-02	60.4449	22.2702	Europe/Helsinki	2361	x
+fi-17-karsamaki	Kärsämäki	fi-17	63.9667	25.7667	Europe/Helsinki	2350	
+fi-01-matari	Matari	fi-01	60.3394	25.0887	Europe/Helsinki	2349	
+fi-18-puolanka	Puolanka	fi-18	64.8667	27.6667	Europe/Helsinki	2348	
+fi-17-myllyoja	Myllyoja	fi-17	65.0191	25.5529	Europe/Helsinki	2345	x
+fi-06-takahuhti	Takahuhti	fi-06	61.4972	23.8542	Europe/Helsinki	2344	x
+fi-06-holvasti	Holvasti	fi-06	61.4834	23.9275	Europe/Helsinki	2336	x
+fi-13-toivakka	Toivakka	fi-13	62.1000	26.0833	Europe/Helsinki	2333	
+fi-10-sulkava	Sulkava	fi-10	61.7869	28.3730	Europe/Helsinki	2328	
+fi-19-muonio	Muonio	fi-19	67.9555	23.6826	Europe/Helsinki	2321	
+fi-02-lansiranta	Länsiranta	fi-02	60.4392	22.2358	Europe/Helsinki	2319	x
+fi-01-vanttila	Vanttila	fi-01	60.1865	24.6205	Europe/Helsinki	2314	
+fi-11-tuusniemi	Tuusniemi	fi-11	62.8167	28.5000	Europe/Helsinki	2312	
+fi-01-varisto	Varisto	fi-01	60.2698	24.8175	Europe/Helsinki	2298	
+fi-06-kalevanharju	Kalevanharju	fi-06	61.4935	23.7848	Europe/Helsinki	2282	x
+fi-06-amurib	Amuri B	fi-06	61.4989	23.7459	Europe/Helsinki	2280	x
+fi-14-evijarvi	Evijärvi	fi-14	63.3667	23.4833	Europe/Helsinki	2262	
+fi-02-vehmaa	Vehmaa	fi-02	60.6833	21.6667	Europe/Helsinki	2262	
+fi-09-leiri	Leiri	fi-09	61.0558	28.1779	Europe/Helsinki	2260	x
+fi-10-haukivuori	Haukivuori	fi-10	62.0175	27.2191	Europe/Helsinki	2256	
+fi-17-yliii	Yli-Ii	fi-17	65.3718	25.8458	Europe/Helsinki	2235	
+fi-01-tammisalo	Tammisalo	fi-01	60.1923	25.0667	Europe/Helsinki	2223	x
+fi-06-tohloppi	Tohloppi	fi-06	61.5109	23.6281	Europe/Helsinki	2202	x
+fi-05-ypaja	Ypäjä	fi-05	60.8000	23.2833	Europe/Helsinki	2185	
+fi-02-kaerla	Kaerla	fi-02	60.4792	22.2653	Europe/Helsinki	2182	x
+fi-02-koskitl	Koski Tl	fi-02	60.6500	23.1500	Europe/Helsinki	2182	
+fi-06-jokipohja	Jokipohja	fi-06	61.4786	23.8083	Europe/Helsinki	2165	x
+fi-09-peltola	Peltola	fi-09	61.0547	28.1946	Europe/Helsinki	2165	x
+fi-09-hakali	Hakali	fi-09	61.0718	28.2758	Europe/Helsinki	2162	
+fi-04-karvia2	Karvia	fi-04	62.1333	22.5667	Europe/Helsinki	2162	
+fi-01-laakso	Laakso	fi-01	60.1922	24.9136	Europe/Helsinki	2157	x
+fi-01-malminlentokentta	Malmin lentokenttä	fi-01	60.2513	25.0440	Europe/Helsinki	2152	x
+fi-07-hameenkoski	Hämeenkoski	fi-07	61.0222	25.1542	Europe/Helsinki	2149	
+fi-02-ylane	Yläne	fi-02	60.8833	22.4167	Europe/Helsinki	2148	
+fi-15-oravais	Oravais	fi-15	63.3013	22.3782	Europe/Helsinki	2141	
+fi-06-sahalahti	Sahalahti	fi-06	61.4746	24.3265	Europe/Helsinki	2141	
+fi-12-valtimo	Valtimo	fi-12	63.6667	28.8000	Europe/Helsinki	2140	
+fi-02-marttila	Marttila	fi-02	60.5833	22.9000	Europe/Helsinki	2125	
+fi-06-viljakkala	Viljakkala	fi-06	61.7060	23.2669	Europe/Helsinki	2125	
+fi-04-lavia	Lavia	fi-04	61.5966	22.5873	Europe/Helsinki	2109	
+fi-09-pallo	Pallo	fi-09	61.0651	28.1681	Europe/Helsinki	2104	x
+fi-15-replot	Replot	fi-15	63.2288	21.4169	Europe/Helsinki	2100	
+fi-06-leinola	Leinola	fi-06	61.4862	23.9009	Europe/Helsinki	2095	x
+fi-06-vehmainen	Vehmainen	fi-06	61.4767	23.9183	Europe/Helsinki	2095	x
+fi-10-pertunmaa	Pertunmaa	fi-10	61.5000	26.4833	Europe/Helsinki	2089	
+fi-06-osmonmaki	Osmonmäki	fi-06	61.5056	23.7794	Europe/Helsinki	2086	x
+fi-05-humppila	Humppila	fi-05	60.9333	23.3667	Europe/Helsinki	2084	
+fi-12-tuupovaara	Tuupovaara	fi-12	62.4837	30.6273	Europe/Helsinki	2059	
+fi-01-espoonkeskus	Espoon Keskus	fi-01	60.2047	24.6523	Europe/Helsinki	2057	x
+fi-01-kuurinniitty	Kuurinniitty	fi-01	60.1978	24.7004	Europe/Helsinki	2057	
+fi-17-hiironen	Hiironen	fi-17	64.9842	25.5225	Europe/Helsinki	2056	x
+fi-06-haukiluoma	Haukiluoma	fi-06	61.5185	23.6041	Europe/Helsinki	2054	x
+fi-09-karhuvuori	Karhuvuori	fi-09	61.0444	28.2441	Europe/Helsinki	2049	x
+fi-17-rantsila	Rantsila	fi-17	64.5061	25.6645	Europe/Helsinki	2048	
+fi-10-hirvensalmi	Hirvensalmi	fi-10	61.6333	26.8000	Europe/Helsinki	2046	
+fi-09-lauritsala	Lauritsala	fi-09	61.0719	28.2592	Europe/Helsinki	2036	x
+fi-02-karsamaki	Kärsämäki	fi-02	60.4857	22.2890	Europe/Helsinki	2021	x
+fi-06-kuhmoinen	Kuhmoinen	fi-06	61.5667	25.1833	Europe/Helsinki	2020	
+fi-17-lumijoki	Lumijoki	fi-17	64.8374	25.1861	Europe/Helsinki	2016	
+fi-09-kourula	Kourula	fi-09	61.0463	28.1307	Europe/Helsinki	2010	x
+fi-06-tammerkoski	Tammerkoski	fi-06	61.4991	23.7566	Europe/Helsinki	2009	x
+fi-02-kastu	Kastu	fi-02	60.4715	22.2763	Europe/Helsinki	2002	x
+fi-18-hyrynsalmi	Hyrynsalmi	fi-18	64.6667	28.5333	Europe/Helsinki	1998	
+fi-15-sandsund	Sandsund	fi-15	63.6476	22.7298	Europe/Helsinki	1998	
+fi-09-tirila	Tirilä	fi-09	61.0577	28.2443	Europe/Helsinki	1994	
+fi-01-veromies	Veromies	fi-01	60.2984	24.9634	Europe/Helsinki	1990	
+fi-01-marjaniemi	Marjaniemi	fi-01	60.2018	25.0828	Europe/Helsinki	1989	x
+fi-02-rymattyla	Rymättylä	fi-02	60.3766	21.9418	Europe/Helsinki	1987	
+fi-15-korsnas	Korsnäs	fi-15	62.7833	21.2000	Europe/Helsinki	1985	
+fi-17-kuivaniemi	Kuivaniemi	fi-17	65.5785	25.1881	Europe/Helsinki	1979	
+fi-11-keitele	Keitele	fi-11	63.1833	26.3667	Europe/Helsinki	1964	
+fi-05-oitti	Oitti	fi-05	60.7833	25.0333	Europe/Helsinki	1963	
+fi-02-tarvasjoki	Tarvasjoki	fi-02	60.5833	22.7333	Europe/Helsinki	1961	
+fi-06-kammenniemi	Kämmenniemi	fi-06	61.6298	23.8372	Europe/Helsinki	1958	x
+fi-02-kisko	Kisko	fi-02	60.2333	23.4833	Europe/Helsinki	1958	
+fi-17-mantyla	Mäntylä	fi-17	64.9823	25.4966	Europe/Helsinki	1951	x
+fi-17-limingantulli	Limingantulli	fi-17	64.9960	25.4645	Europe/Helsinki	1939	x
+fi-02-rantamaki	Räntämäki	fi-02	60.4743	22.3004	Europe/Helsinki	1924	x
+fi-04-pomarkku	Pomarkku	fi-04	61.6935	22.0086	Europe/Helsinki	1921	
+fi-09-sammonlahti	Sammonlahti	fi-09	61.0493	28.1213	Europe/Helsinki	1921	x
+fi-02-vahto	Vahto	fi-02	60.6000	22.3000	Europe/Helsinki	1916	
+fi-02-pyharanta	Pyhäranta	fi-02	60.9500	21.4500	Europe/Helsinki	1910	
+fi-02-isoheikkila	Iso-Heikkilä	fi-02	60.4497	22.2203	Europe/Helsinki	1905	x
+fi-08-jaala	Jaala	fi-08	61.0525	26.4812	Europe/Helsinki	1893	
+fi-06-hervantakaakko	Hervanta kaakko	fi-06	61.4458	23.8672	Europe/Helsinki	1890	x
+fi-11-vehmersalmi	Vehmersalmi	fi-11	62.7610	28.0285	Europe/Helsinki	1889	
+fi-01-pajamaki	Pajamäki	fi-01	60.2178	24.8587	Europe/Helsinki	1884	x
+fi-02-moikoinen	Moikoinen	fi-02	60.4167	22.2348	Europe/Helsinki	1880	x
+fi-09-kivisalmi	Kivisalmi	fi-09	61.0906	28.1455	Europe/Helsinki	1866	x
+fi-12-raakkyla	Rääkkylä	fi-12	62.3167	29.6167	Europe/Helsinki	1858	
+fi-06-olkahinen	Olkahinen	fi-06	61.5253	23.9432	Europe/Helsinki	1853	x
+fi-01-askisto	Askisto	fi-01	60.2814	24.7836	Europe/Helsinki	1849	
+fi-06-hervantajarvi	Hervantajärvi	fi-06	61.4387	23.8732	Europe/Helsinki	1841	x
+fi-11-vesanto	Vesanto	fi-11	62.9333	26.4167	Europe/Helsinki	1828	
+fi-14-soini	Soini	fi-14	62.8667	24.2167	Europe/Helsinki	1793	
+fi-02-mietoinen	Mietoinen	fi-02	60.6333	21.9333	Europe/Helsinki	1785	
+fi-06-muotiala	Muotiala	fi-06	61.4773	23.8199	Europe/Helsinki	1780	x
+fi-02-kuusjoki	Kuusjoki	fi-02	60.5167	23.2000	Europe/Helsinki	1775	
+fi-14-isojoki	Isojoki	fi-14	62.1132	21.9588	Europe/Helsinki	1771	
+fi-02-kiikala	Kiikala	fi-02	60.4667	23.5667	Europe/Helsinki	1771	
+fi-17-raksila	Raksila	fi-17	65.0090	25.4933	Europe/Helsinki	1770	x
+fi-09-alakyla	Alakylä	fi-09	61.0556	28.2051	Europe/Helsinki	1769	x
+fi-06-pyynikinrinne	Pyynikinrinne	fi-06	61.4964	23.7415	Europe/Helsinki	1767	x
+fi-19-enontekio	Enontekiö	fi-19	68.3857	23.6321	Europe/Helsinki	1765	
+fi-02-koivula	Koivula	fi-02	60.4236	22.3120	Europe/Helsinki	1761	x
+fi-15-ytteresse	Ytteresse	fi-15	63.6221	22.9946	Europe/Helsinki	1758	
+fi-04-vampula	Vampula	fi-04	61.0167	22.7000	Europe/Helsinki	1743	
+fi-02-lemu	Lemu	fi-02	60.5667	21.9667	Europe/Helsinki	1738	
+fi-01-pukkila	Pukkila	fi-01	60.6440	25.5821	Europe/Helsinki	1737	
+fi-06-etelakyttala	Etelä-Kyttälä	fi-06	61.4965	23.7691	Europe/Helsinki	1729	x
+fi-02-taivassalo	Taivassalo	fi-02	60.5609	21.6164	Europe/Helsinki	1722	
+fi-01-hamevaara	Hämevaara	fi-01	60.2484	24.8076	Europe/Helsinki	1713	
+fi-01-herttoniemenyritysalue	Herttoniemen yritysalue	fi-01	60.1942	25.0430	Europe/Helsinki	1712	x
+fi-01-myrskyla	Myrskylä	fi-01	60.6696	25.8475	Europe/Helsinki	1706	
+fi-19-lautiosaari	Lautiosaari	fi-19	65.7991	24.5797	Europe/Helsinki	1700	x
+fi-06-kihnio	Kihniö	fi-06	62.2000	23.1833	Europe/Helsinki	1697	
+fi-08-miehikkala	Miehikkälä	fi-08	60.6667	27.7000	Europe/Helsinki	1697	
+fi-06-ylapispala	Ylä-Pispala	fi-06	61.5015	23.7176	Europe/Helsinki	1693	x
+fi-01-hevossalmi	Hevossalmi	fi-01	60.1657	25.0465	Europe/Helsinki	1690	x
+fi-17-kynsilehto	Kynsilehto	fi-17	65.0304	25.5392	Europe/Helsinki	1683	x
+fi-17-peltola	Peltola	fi-17	65.0132	25.5144	Europe/Helsinki	1679	x
+fi-17-pyhanta	Pyhäntä	fi-17	64.1000	26.3167	Europe/Helsinki	1674	
+fi-06-pohjoiskyttala	Pohjois-Kyttälä	fi-06	61.5001	23.7686	Europe/Helsinki	1670	x
+fi-01-sepankyla	Sepänkylä	fi-01	60.2044	24.7337	Europe/Helsinki	1665	x
+fi-17-pulkkila	Pulkkila	fi-17	64.2667	25.8667	Europe/Helsinki	1661	
+fi-04-jamijarvi	Jämijärvi	fi-04	61.8167	22.7000	Europe/Helsinki	1659	
+fi-06-juupajoki	Juupajoki	fi-06	61.7990	24.3694	Europe/Helsinki	1657	
+fi-01-karjalohja	Karjalohja	fi-01	60.2401	23.7179	Europe/Helsinki	1657	
+fi-01-kaupunginkallio	Kaupunginkallio	fi-01	60.1985	24.6472	Europe/Helsinki	1651	
+fi-01-vallinoja	Vallinoja	fi-01	60.3655	25.0737	Europe/Helsinki	1643	x
+fi-04-langelmaki	Längelmäki	fi-04	61.6500	22.1000	Europe/Helsinki	1636	
+fi-01-roykka	Röykkä	fi-01	60.4877	24.6494	Europe/Helsinki	1614	
+fi-02-malikkala	Mälikkälä	fi-02	60.4743	22.2187	Europe/Helsinki	1608	x
+fi-11-kangaslampi	Kangaslampi	fi-11	62.2956	28.2529	Europe/Helsinki	1596	
+fi-04-honkajoki	Honkajoki	fi-04	61.9833	22.2667	Europe/Helsinki	1595	
+fi-17-kestila	Kestilä	fi-17	64.3500	26.2792	Europe/Helsinki	1576	
+fi-02-pohjola	Pohjola	fi-02	60.4581	22.2528	Europe/Helsinki	1569	x
+fi-02-turunsatama	Turun satama	fi-02	60.4352	22.2229	Europe/Helsinki	1565	x
+fi-06-finlayson	Finlayson	fi-06	61.5017	23.7534	Europe/Helsinki	1561	x
+fi-17-kiviniemi	Kiviniemi	fi-17	64.9680	25.5002	Europe/Helsinki	1550	x
+fi-02-merimasku	Merimasku	fi-02	60.4833	21.8667	Europe/Helsinki	1538	
+fi-09-korvenkyla	Korvenkylä	fi-09	61.1811	28.7004	Europe/Helsinki	1536	
+fi-06-viiala2	Viiala	fi-06	61.4763	23.8564	Europe/Helsinki	1530	x
+fi-06-santalahti	Santalahti	fi-06	61.5072	23.7135	Europe/Helsinki	1529	x
+fi-09-kuusimaki	Kuusimäki	fi-09	61.0503	28.1403	Europe/Helsinki	1515	x
+fi-17-laanila	Laanila	fi-17	65.0238	25.5079	Europe/Helsinki	1503	x
+fi-10-jappila	Jäppilä	fi-10	62.3790	27.4337	Europe/Helsinki	1501	
+fi-15-ristinummi	Ristinummi	fi-15	63.0919	21.7230	Europe/Helsinki	1500	
+fi-15-teeriniemi	Teeriniemi	fi-15	63.0971	21.6959	Europe/Helsinki	1500	
+fi-04-kullaa	Kullaa	fi-04	61.4700	22.1614	Europe/Helsinki	1494	
+fi-13-kinnula	Kinnula	fi-13	63.3833	24.9500	Europe/Helsinki	1492	
+fi-02-mantymaki	Mäntymäki	fi-02	60.4396	22.2665	Europe/Helsinki	1489	x
+fi-02-kukola	Kukola	fi-02	60.4118	22.2280	Europe/Helsinki	1486	x
+fi-02-muurla	Muurla	fi-02	60.3500	23.2833	Europe/Helsinki	1486	
+fi-06-veisu	Veisu	fi-06	61.4699	23.8091	Europe/Helsinki	1484	x
+fi-06-lapinniemi	Lapinniemi	fi-06	61.5125	23.7767	Europe/Helsinki	1482	x
+fi-01-alppikyla	Alppikylä	fi-01	60.2601	25.0694	Europe/Helsinki	1478	
+fi-06-kaarila	Kaarila	fi-06	61.5028	23.6571	Europe/Helsinki	1478	x
+fi-05-tuulos	Tuulos	fi-05	61.1500	24.8000	Europe/Helsinki	1466	
+fi-01-liljendal	Liljendal	fi-01	60.5735	26.0526	Europe/Helsinki	1455	
+fi-06-tesomajarvi	Tesomajärvi	fi-06	61.5066	23.6179	Europe/Helsinki	1448	x
+fi-01-monninkyla	Monninkylä	fi-01	60.4953	25.5398	Europe/Helsinki	1443	
+fi-02-raunistula	Raunistula	fi-02	60.4639	22.2773	Europe/Helsinki	1442	x
+fi-06-epila	Epilä	fi-06	61.5081	23.6679	Europe/Helsinki	1436	x
+fi-01-ojakkala	Ojakkala	fi-01	60.3688	24.3843	Europe/Helsinki	1426	
+fi-17-pyykosjarvi	Pyykösjärvi	fi-17	65.0426	25.4958	Europe/Helsinki	1426	x
+fi-06-ruotula	Ruotula	fi-06	61.5024	23.8370	Europe/Helsinki	1421	x
+fi-01-tullisaari	Tullisaari	fi-01	60.1799	25.0355	Europe/Helsinki	1421	x
+fi-09-ylamaa	Ylämaa	fi-09	60.8000	28.0000	Europe/Helsinki	1415	
+fi-07-artjarvi	Artjärvi	fi-07	60.7454	26.0708	Europe/Helsinki	1412	
+fi-02-nagu	Nagu	fi-02	60.1938	21.9097	Europe/Helsinki	1410	
+fi-06-pohtola	Pohtola	fi-06	61.5373	23.6758	Europe/Helsinki	1407	x
+fi-11-rautavaara	Rautavaara	fi-11	63.4833	28.3000	Europe/Helsinki	1403	
+fi-01-vierumaki	Vierumäki	fi-01	60.3592	25.0374	Europe/Helsinki	1401	
+fi-11-tervo	Tervo	fi-11	62.9500	26.7500	Europe/Helsinki	1398	
+fi-17-heikkilankangas	Heikkilänkangas	fi-17	64.9686	25.6142	Europe/Helsinki	1395	x
+fi-06-tasanne	Tasanne	fi-06	61.5185	23.9268	Europe/Helsinki	1395	x
+fi-09-linnoitus	Linnoitus	fi-09	61.0665	28.1822	Europe/Helsinki	1392	x
+fi-13-multia	Multia	fi-13	62.4167	24.7833	Europe/Helsinki	1384	
+fi-01-lapinkyla	Lapinkylä	fi-01	60.2219	24.4549	Europe/Helsinki	1383	
+fi-01-grinddal	Grinddal	fi-01	60.2335	24.9809	Europe/Helsinki	1372	x
+fi-06-ryydynpohja	Ryydynpohja	fi-06	61.5270	23.6576	Europe/Helsinki	1370	x
+fi-06-jarvensivu	Järvensivu	fi-06	61.4891	23.8021	Europe/Helsinki	1368	x
+fi-01-jokiniemi2	Jokiniemi	fi-01	60.2983	25.0568	Europe/Helsinki	1357	
+fi-17-vartto	Värttö	fi-17	65.0182	25.5174	Europe/Helsinki	1354	x
+fi-01-niemenmaki	Niemenmäki	fi-01	60.2040	24.8848	Europe/Helsinki	1346	x
+fi-01-vanhakartano	Vanhakartano	fi-01	60.2594	24.7365	Europe/Helsinki	1345	
+fi-08-virojoki	Virojoki	fi-08	60.5794	27.7035	Europe/Helsinki	1328	
+fi-09-saarenkyla	Saarenkylä	fi-09	61.6494	29.7519	Europe/Helsinki	1326	
+fi-02-haarla	Haarla	fi-02	60.3912	22.2170	Europe/Helsinki	1316	x
+fi-02-suomusjarvi	Suomusjärvi	fi-02	60.3500	23.6500	Europe/Helsinki	1310	
+fi-01-kaartinkaupunki	Kaartinkaupunki	fi-01	60.1650	24.9469	Europe/Helsinki	1309	x
+fi-06-ratina	Ratina	fi-06	61.4932	23.7651	Europe/Helsinki	1309	x
+fi-01-hakkila	Hakkila	fi-01	60.2924	25.0735	Europe/Helsinki	1306	
+fi-01-viikinranta	Viikinranta	fi-01	60.2189	24.9873	Europe/Helsinki	1303	x
+fi-07-auttoinen	Auttoinen	fi-07	61.2990	25.0889	Europe/Helsinki	1300	
+fi-02-oripaa	Oripää	fi-02	60.8500	22.6833	Europe/Helsinki	1297	
+fi-17-siikajoki	Siikajoki	fi-17	64.8145	24.7592	Europe/Helsinki	1293	
+fi-01-viikintiedepuisto	Viikin Tiedepuisto	fi-01	60.2250	25.0141	Europe/Helsinki	1292	x
+fi-06-viinikka	Viinikka	fi-06	61.4879	23.7821	Europe/Helsinki	1290	x
+fi-10-enonkoski	Enonkoski	fi-10	62.0833	28.9333	Europe/Helsinki	1285	
+fi-02-katariina	Katariina	fi-02	60.4153	22.2792	Europe/Helsinki	1282	x
+fi-15-kaskinen	Kaskinen	fi-15	62.3844	21.2233	Europe/Helsinki	1278	
+fi-06-suodenniemi	Suodenniemi	fi-06	61.5581	22.7853	Europe/Helsinki	1274	
+fi-09-myllymaki	Myllymäki	fi-09	60.9616	28.0304	Europe/Helsinki	1269	
+fi-01-vanhanuuksionupuri	Vanha-Nuuksio-Nupuri	fi-01	60.2408	24.5985	Europe/Helsinki	1266	x
+fi-06-tulli	Tulli	fi-06	61.4970	23.7798	Europe/Helsinki	1261	x
+fi-06-uusikyla	Uusikylä	fi-06	61.4954	23.8289	Europe/Helsinki	1261	x
+fi-10-savonranta	Savonranta	fi-10	62.1833	29.2000	Europe/Helsinki	1255	
+fi-13-sumiainen	Sumiainen	fi-13	62.6574	26.0464	Europe/Helsinki	1251	
+fi-06-kiikoinen	Kiikoinen	fi-06	61.4539	22.5770	Europe/Helsinki	1248	
+fi-09-kimpinen	Kimpinen	fi-09	61.0632	28.2000	Europe/Helsinki	1248	
+fi-04-siikainen	Siikainen	fi-04	61.8770	21.8194	Europe/Helsinki	1248	
+fi-01-lehtisaari	Lehtisaari	fi-01	60.1797	24.8517	Europe/Helsinki	1243	x
+fi-01-gumbole	Gumböle	fi-01	60.2195	24.6168	Europe/Helsinki	1237	
+fi-02-kohmo	Kohmo	fi-02	60.4611	22.3412	Europe/Helsinki	1223	x
+fi-06-niemi	Niemi	fi-06	61.5272	23.6884	Europe/Helsinki	1210	x
+fi-09-laihia	Laihia	fi-09	61.0864	28.3228	Europe/Helsinki	1204	
+fi-09-nuijamaa	Nuijamaa	fi-09	60.9601	28.5510	Europe/Helsinki	1199	
+fi-19-nivavaara	Nivavaara	fi-19	66.5333	25.8333	Europe/Helsinki	1194	
+fi-01-munkkisaari	Munkkisaari	fi-01	60.1570	24.9279	Europe/Helsinki	1181	x
+fi-06-juhannuskyla	Juhannuskylä	fi-06	61.5024	23.7693	Europe/Helsinki	1178	x
+fi-13-kannonkoski	Kannonkoski	fi-13	62.9667	25.2500	Europe/Helsinki	1173	
+fi-01-sammatti	Sammatti	fi-01	60.3199	23.8209	Europe/Helsinki	1171	
+fi-17-taskila	Taskila	fi-17	65.0529	25.4309	Europe/Helsinki	1165	x
+fi-06-huikas	Huikas	fi-06	61.4979	23.8383	Europe/Helsinki	1162	x
+fi-18-ristijarvi	Ristijärvi	fi-18	64.5000	28.2167	Europe/Helsinki	1162	
+fi-02-vahaheikkila	Vähäheikkilä	fi-02	60.4339	22.2569	Europe/Helsinki	1153	
+fi-06-kuhmalahdenkirkonkyla	Kuhmalahden Kirkonkylä	fi-06	61.5046	24.5605	Europe/Helsinki	1143	
+fi-02-mellila	Mellilä	fi-02	60.7667	22.9500	Europe/Helsinki	1141	
+fi-09-kylpyla	Kylpylä	fi-09	61.0598	28.1908	Europe/Helsinki	1140	x
+fi-02-pihlajaniemi	Pihlajaniemi	fi-02	60.4277	22.2447	Europe/Helsinki	1139	x
+fi-13-kyyjarvi	Kyyjärvi	fi-13	63.0333	24.5667	Europe/Helsinki	1138	
+fi-13-leivonmaki	Leivonmäki	fi-13	61.9120	26.1280	Europe/Helsinki	1138	
+fi-14-karijoki	Karijoki	fi-14	62.3085	21.7086	Europe/Helsinki	1136	
+fi-02-urheilupuisto	Urheilupuisto	fi-02	60.4427	22.2633	Europe/Helsinki	1131	x
+fi-19-utsjoki	Utsjoki	fi-19	69.9086	27.0284	Europe/Helsinki	1127	
+fi-10-virtasalmi	Virtasalmi	fi-10	62.1270	27.4628	Europe/Helsinki	1123	
+fi-01-talinranta	Talinranta	fi-01	60.2074	24.8565	Europe/Helsinki	1115	x
+fi-06-korkinmaki	Korkinmäki	fi-06	61.4724	23.8272	Europe/Helsinki	1093	x
+fi-15-kallby	Kållby	fi-15	63.6254	22.8959	Europe/Helsinki	1083	
+fi-01-metsala	Metsälä	fi-01	60.2230	24.9403	Europe/Helsinki	1075	x
+fi-06-alapispala	Ala-Pispala	fi-06	61.5050	23.7031	Europe/Helsinki	1059	x
+fi-01-eira	Eira	fi-01	60.1565	24.9370	Europe/Helsinki	1050	x
+fi-09-harapainen	Harapainen	fi-09	61.0502	28.2110	Europe/Helsinki	1048	
+fi-16-ullava	Ullava	fi-16	63.6000	24.0833	Europe/Helsinki	1048	
+fi-06-villila	Villilä	fi-06	61.4942	23.6156	Europe/Helsinki	1040	x
+fi-01-koukkuniemi	Koukkuniemi	fi-01	60.1526	24.7647	Europe/Helsinki	1038	x
+fi-17-merijarvi	Merijärvi	fi-17	64.3000	24.4500	Europe/Helsinki	1032	
+fi-06-nekala	Nekala	fi-06	61.4842	23.7930	Europe/Helsinki	1016	x
+fi-01-box	Box	fi-01	60.3105	25.4000	Europe/Helsinki	1011	
+fi-13-kivijarvi	Kivijärvi	fi-13	63.1198	25.0784	Europe/Helsinki	1010	
+fi-02-askainen	Askainen	fi-02	60.5667	21.8667	Europe/Helsinki	1004	
+fi-16-halsua	Halsua	fi-16	63.4667	24.1667	Europe/Helsinki	993	
+fi-19-savukoski	Savukoski	fi-19	67.2925	28.1581	Europe/Helsinki	983	
+fi-13-pylkonmaki	Pylkönmäki	fi-13	62.6667	24.8000	Europe/Helsinki	981	
+fi-02-kustavi	Kustavi	fi-02	60.5453	21.3588	Europe/Helsinki	965	
+fi-17-hailuoto	Hailuoto	fi-17	65.0090	24.7139	Europe/Helsinki	928	
+fi-19-pelkosenniemi	Pelkosenniemi	fi-19	67.1108	27.5106	Europe/Helsinki	922	
+fi-02-vastanfjard	Västanfjärd	fi-02	60.0500	22.6833	Europe/Helsinki	783	
+fi-13-luhanka	Luhanka	fi-13	61.7968	25.7046	Europe/Helsinki	688	
+fi-16-lestijarvi	Lestijärvi	fi-16	63.5333	24.6500	Europe/Helsinki	653	
+fi-02-houtskar	Houtskär	fi-02	60.2228	21.3722	Europe/Helsinki	626	
+fi-17-piippola	Piippola	fi-17	64.1667	25.9667	Europe/Helsinki	550	
+fi-02-inio	Iniö	fi-02	60.4000	21.4000	Europe/Helsinki	279	
+fi-02-velkua	Velkua	fi-02	60.4667	21.6667	Europe/Helsinki	217	
+fi-02-alastaro	Alastaro	fi-02	60.9500	22.8500	Europe/Helsinki	0	
+fi-15-bennas	Bennäs	fi-15	63.6000	22.8000	Europe/Helsinki	0	
+fi-08-broby	Broby	fi-08	60.5000	26.7167	Europe/Helsinki	0	
+fi-07-jarvela	Järvelä	fi-07	60.8667	25.2833	Europe/Helsinki	0	
+fi-07-karkola	Kärkölä	fi-07	60.9167	25.2500	Europe/Helsinki	0	
+fi-04-karvia	Karvia	fi-04	62.2000	22.6500	Europe/Helsinki	0	
+fi-13-kinnula2	Kinnula	fi-13	63.3667	24.9667	Europe/Helsinki	0	
+fi-02-kyro	Kyrö	fi-02	60.7000	22.7500	Europe/Helsinki	0	
+fi-17-muhos2	Muhos	fi-17	64.7667	26.1000	Europe/Helsinki	0	
+fi-01-nickby	Nickby	fi-01	60.3833	25.2833	Europe/Helsinki	0	
+fi-05-parola	Parola	fi-05	61.0462	24.3546	Europe/Helsinki	0	
+fi-17-pyhasalmi	Pyhäsalmi	fi-17	63.6833	25.9833	Europe/Helsinki	0	
+fi-02-sarkisalo	Särkisalo	fi-02	60.1139	22.9500	Europe/Helsinki	0	
+fi-01-saukkola	Saukkola	fi-01	60.3833	23.9833	Europe/Helsinki	0	
+fi-17-siikajoki2	Siikajoki	fi-17	64.6643	25.0994	Europe/Helsinki	0	
+fi-09-simpele	Simpele	fi-09	61.4333	29.3667	Europe/Helsinki	0	
+fi-15-smedsby	Smedsby	fi-15	63.1167	21.7000	Europe/Helsinki	0	
+fi-09-taavetti	Taavetti	fi-09	60.9167	27.5667	Europe/Helsinki	0	
+fi-05-turenki	Turenki	fi-05	60.9167	24.6333	Europe/Helsinki	0	
+fi-02-vinkkila	Vinkkilä	fi-02	60.6833	21.7167	Europe/Helsinki	0	
