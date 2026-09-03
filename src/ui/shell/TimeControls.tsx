@@ -28,7 +28,7 @@ export function TimeControls() {
       <div className="row gap-1" role="group" aria-label="Time Controls">
         <button
           className="btn btn-ghost btn-sm"
-          onClick={() => setSpeed(speed === 'paused' ? 'standard' : 'paused')}
+          onClick={() => setSpeed(speed === 'paused' ? 'live' : 'paused')}
           aria-pressed={speed === 'paused'}
           title={speed === 'paused' ? 'Resume time' : 'Pause time'}
         >

@@ -79,7 +79,32 @@ export function useWorld<T>(read: (sim: Simulation) => T): T {
 
 const AUTOSAVE_INTERVAL_MS = 45_000;
 /** One real second is one world minute at standard speed. */
-const REALTIME_WORLD_MS_PER_SECOND = MS_MINUTE;
+/**
+ * How much world time passes for a given amount of real time.
+ *
+ * Live is one to one — a minute of your evening is a minute of theirs, which
+ * is the whole point of a life you live alongside rather than fast-forward
+ * through. The faster settings exist for waiting out a shoot or a pregnancy.
+ */
+const SPEED_MULTIPLIER: Record<string, number> = {
+  paused: 0,
+  live: 1,
+  fast: 60,
+  faster: 600,
+};
+
+/** How often the loop wakes. Often enough to feel continuous, cheap to ignore. */
+const TICK_MS = 1_000;
+
+/**
+ * The most world time one tick may apply.
+ *
+ * Coming back to a tab left open overnight should not freeze the browser while
+ * eight hours of simulation runs in a single frame. The backlog is kept and
+ * drained over the ticks that follow, so the world still lives through every
+ * hour of it, just not all at once.
+ */
+const MAX_ADVANCE_PER_TICK = 30 * MS_MINUTE;
 
 export function GameProvider({
   sim, adapter, onExit, children,
@@ -201,19 +226,35 @@ export function GameProvider({
   // The world moves while the player is in it. Standard speed is one world
   // minute per real second; pausing genuinely stops the clock.
   useEffect(() => {
-    if (timeSpeed === 'paused') return;
-    const multiplier = timeSpeed === 'fast' ? 5 : timeSpeed === 'faster' ? 20 : 1;
+    const multiplier = SPEED_MULTIPLIER[timeSpeed] ?? 1;
+    if (multiplier === 0) return;
+
+    // Measured against a monotonic clock rather than assumed from the interval.
+    // A throttled or backgrounded tab does not fire on schedule, and a world
+    // clock that quietly loses an hour is worse than one that runs behind.
+    let lastAt = performance.now();
+    let backlog = 0;
+
     const handle = window.setInterval(() => {
+      const now = performance.now();
+      const elapsed = Math.max(0, now - lastAt);
+      lastAt = now;
+
+      backlog += elapsed * multiplier;
+      const step = Math.min(backlog, MAX_ADVANCE_PER_TICK);
+      if (step < 1) return;
+      backlog -= step;
+
       try {
-        sim.advanceBy(REALTIME_WORLD_MS_PER_SECOND * multiplier);
-        sim.universe.meta.playtimeSeconds += 1;
+        sim.advanceBy(Math.round(step));
+        sim.universe.meta.playtimeSeconds += elapsed / 1_000;
         dirty.current = true;
         setVersion((v) => v + 1);
       } catch {
         // A handler threw; stop ticking rather than looping on the error.
         window.clearInterval(handle);
       }
-    }, 1000);
+    }, TICK_MS);
     return () => window.clearInterval(handle);
   }, [sim, timeSpeed]);
 

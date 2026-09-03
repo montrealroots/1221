@@ -137,7 +137,7 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
-      timeSpeed: 'standard', compactMode: false, showAdvancedNumbers: false,
+      timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
       confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
     },
     sandbox: {

@@ -30,11 +30,15 @@ export function SettingsWorkspace() {
           <div className="field">
             <label htmlFor="speed">Time speed</label>
             <select id="speed" value={prefs.timeSpeed} onChange={(e) => setPref({ timeSpeed: e.target.value as typeof prefs.timeSpeed })}>
-              <option value="paused">Paused — the clock stops</option>
-              <option value="standard">Standard — one minute per second</option>
-              <option value="fast">Fast — five minutes per second</option>
-              <option value="faster">Faster — twenty minutes per second</option>
+              <option value="paused">Paused — The Clock Stops</option>
+              <option value="live">Live — One Minute Per Minute</option>
+              <option value="fast">Fast — One Hour Per Minute</option>
+              <option value="faster">Faster — Ten Hours Per Minute</option>
             </select>
+            <p className="hint">
+              Live runs at real time: a minute of your evening is a minute of theirs.
+              The faster settings are for waiting something out.
+            </p>
           </div>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.confirmLargePurchases}

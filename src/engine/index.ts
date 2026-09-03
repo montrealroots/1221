@@ -448,6 +448,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record['counters'] ??= {};
   record['engineFailures'] ??= [];
 
+  // Schema 10 put the clock on real time. A save from before it carries the
+  // old 'standard' speed, which ran a world minute for every real second.
+  const preferences = record['preferences'] as { timeSpeed?: string } | undefined;
+  if (preferences?.timeSpeed === 'standard') {
+    preferences.timeSpeed = 'live';
+    steps.push('Moved the clock to real time.');
+  }
+
   // Schema 9 also denormalised the billing block onto the project so a credit
   // outlives the simulation of the person who earned it. Rebuild it from the
   // attachments an older save already has.

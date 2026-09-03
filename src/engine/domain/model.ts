@@ -1719,8 +1719,12 @@ export interface Preferences {
   reducedMotion: boolean;
   audioEnabled: boolean;
   audioVolume: number;
-  /** 'standard' is realtime; other speeds may be unlocked later. */
-  timeSpeed: 'paused' | 'standard' | 'fast' | 'faster';
+  /**
+   * How fast the world runs against real time. 'live' is one to one: a minute
+   * of your evening is a minute of theirs. The faster settings are there for
+   * waiting something out, not because the game needs them.
+   */
+  timeSpeed: 'paused' | 'live' | 'fast' | 'faster';
   compactMode: boolean;
   showAdvancedNumbers: boolean;
   confirmLargePurchases: boolean;
@@ -1741,7 +1745,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 9;
+export const SAVE_SCHEMA_VERSION = 10;
 
 export interface SaveMeta {
   id: Id;
