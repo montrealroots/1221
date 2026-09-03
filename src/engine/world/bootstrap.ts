@@ -338,7 +338,7 @@ export function careerLabel(track: CareerTrack): string {
   const labels: Record<CareerTrack, string> = {
     none: 'Undecided', actor: 'Actor/Actress', writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',
-    executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working life',
+    executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working Life',
   };
   return labels[track];
 }
