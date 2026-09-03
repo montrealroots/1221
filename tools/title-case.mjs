@@ -30,12 +30,14 @@ const WRITE = process.argv.includes('--write');
  */
 function capitaliseWord(word) {
   if (!/[a-z]/.test(word)) return word;
-  const firstLetter = word.search(/[A-Za-z]/);
-  if (firstLetter < 0) return word;
-  if (/[A-Z]/.test(word.slice(firstLetter + 1))) return word;
-  return word.slice(0, firstLetter)
-    + word[firstLetter].toUpperCase()
-    + word.slice(firstLetter + 1);
+  // Leading brackets and quotes are skipped; a leading digit is not. '97th' is
+  // an ordinal, and '97Th' is nothing at all.
+  const first = word.search(/[A-Za-z0-9]/);
+  if (first < 0) return word;
+  const lead = word[first];
+  if (lead >= '0' && lead <= '9') return word;
+  if (/[A-Z]/.test(word.slice(first + 1))) return word;
+  return word.slice(0, first) + lead.toUpperCase() + word.slice(first + 1);
 }
 
 /** Title-cases a run of plain text, leaving interpolations and markup alone. */

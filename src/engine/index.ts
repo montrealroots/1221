@@ -12,6 +12,7 @@ import { SAVE_SCHEMA_VERSION } from './domain/model';
 import { addDays, addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
+import { titleCaseLabel } from './core/text';
 import { CITIES } from './content/geography';
 import { costOfLiving } from './content/tax';
 
@@ -454,6 +455,31 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   if (preferences?.timeSpeed === 'standard') {
     preferences.timeSpeed = 'live';
     steps.push('Moved the clock to real time.');
+  }
+
+  // Schema 11 put every label in Title Case. Labels are written into the save
+  // when they are created — a scheduled item keeps the words it was given — so
+  // an older save would have gone on reading 'New day' forever while a fresh
+  // one read 'New Day'. Repair them in place rather than leaving two builds
+  // worth of capitalisation in one universe.
+  let relabelled = 0;
+  const relabel = <T extends Record<string, unknown>>(rows: T[] | undefined, field: keyof T & string) => {
+    for (const row of rows ?? []) {
+      const value = row[field];
+      if (typeof value !== 'string') continue;
+      const next = titleCaseLabel(value);
+      if (next !== value) {
+        (row as Record<string, unknown>)[field] = next;
+        relabelled++;
+      }
+    }
+  };
+  relabel(record['scheduled'] as Record<string, unknown>[], 'label');
+  relabel(record['notifications'] as Record<string, unknown>[], 'title');
+  relabel(record['history'] as Record<string, unknown>[], 'title');
+  relabel(Object.values((record['decisions'] ?? {}) as Record<string, Record<string, unknown>>), 'title');
+  if (relabelled > 0) {
+    steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
   }
 
   // Schema 9 also denormalised the billing block onto the project so a credit

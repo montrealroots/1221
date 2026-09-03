@@ -14,11 +14,11 @@ import {
 } from '@/engine/world/bootstrap';
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, type TraitCategory } from '@/engine/domain/attributes';
 import { LocationPicker } from './LocationPicker';
-import { CITIES } from '@/engine/content/geography';
-import { COUNTRIES } from '@/engine/content/geography';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import type { CareerTrack, Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
-import { WEALTH_PROFILES } from '@/engine/world/bootstrap';
+import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
+import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 
 const STEPS = ['Identity', 'Personal', 'Career', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -257,11 +257,39 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div className="field">
           <label htmlFor="citizenship">Citizenship</label>
           <select id="citizenship" value={config.citizenshipId} onChange={(e) => set('citizenshipId', e.target.value)}>
-            {COUNTRIES.all().map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {[...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name))
+              .map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
           <p className="xs dim" style={{ marginTop: 4 }}>Affects where you can work without arrangement.</p>
         </div>
       </div>
+
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>Where You Live</h3>
+          <p className="muted small">
+            Where you are decides your taxes, your rent, your job market and how much industry work is
+            within reach. Picking a country here sets your citizenship to match — change it above if you
+            live somewhere you are not a citizen of.
+          </p>
+        </div>
+      </div>
+
+      <LocationPicker
+        cityId={config.startLocationId}
+        onPick={(picked) => {
+          const previous = CITIES.get(config.startLocationId);
+          set('startLocationId', picked.id);
+          set('homeRegionId', picked.id);
+          // Citizenship follows the country while the two agree. Once somebody
+          // has deliberately made them differ, moving no longer overwrites it.
+          if (!previous || config.citizenshipId === previous.countryId) {
+            set('citizenshipId', picked.countryId);
+          }
+        }}
+      />
 
       <div className="callout">
         You will be <strong>{config.startYear - config.birthYear}</strong> when the save begins.
@@ -485,18 +513,12 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
           <div>
             <h2>Where You Start</h2>
             <p className="muted small">
-              Location decides your taxes, your rent, your job market and how much industry work is within reach.
+              {city
+                ? `${city.name}, chosen on Identity. This is what living there costs and offers.`
+                : 'Choose somewhere to live on the Identity step.'}
             </p>
           </div>
         </div>
-
-        <LocationPicker
-          cityId={config.startLocationId}
-          onPick={(picked) => {
-            set('startLocationId', picked.id);
-            set('homeRegionId', picked.id);
-          }}
-        />
 
         {city && (
           <div className="grid grid-4">
@@ -741,12 +763,43 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
   return issues;
 }
 
+/**
+ * The build a draft was written by.
+ *
+ * A half-filled form is a convenience, not a save, and it must never outrank
+ * the game it is being filled in for. An unstamped draft written before an
+ * update was merged straight over the current defaults, so a brand new save
+ * silently came out with the old build's settings and none of the update in
+ * it. Drafts now carry the build they came from and are discarded when it
+ * moves on.
+ */
+const DRAFT_BUILD = `${APP_VERSION}/${SAVE_SCHEMA_VERSION}`;
+
+interface StoredDraft {
+  build: string;
+  config: NewSaveConfig;
+}
+
 function loadDraft(slot: Slot): NewSaveConfig | null {
   try {
     const raw = localStorage.getItem(DRAFT_KEY(slot));
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as NewSaveConfig;
-    return { ...defaultConfig(), ...parsed };
+    const stored = JSON.parse(raw) as Partial<StoredDraft>;
+
+    // Written by an older build, or by one that predates the stamp entirely.
+    if (stored?.build !== DRAFT_BUILD || !stored.config) {
+      localStorage.removeItem(DRAFT_KEY(slot));
+      return null;
+    }
+
+    const merged = { ...defaultConfig(), ...stored.config };
+
+    // A place that no longer exists, or never did. Fall back rather than
+    // hand the engine an id it cannot resolve.
+    if (!CITIES.get(merged.startLocationId)) return null;
+    if (!COUNTRIES.get(merged.citizenshipId)) merged.citizenshipId = defaultConfig().citizenshipId;
+
+    return merged;
   } catch {
     return null;
   }
@@ -754,7 +807,8 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
 
 function saveDraft(slot: Slot, config: NewSaveConfig): void {
   try {
-    localStorage.setItem(DRAFT_KEY(slot), JSON.stringify(config));
+    const stored: StoredDraft = { build: DRAFT_BUILD, config };
+    localStorage.setItem(DRAFT_KEY(slot), JSON.stringify(stored));
   } catch {
     /* storage full or unavailable; the draft is a convenience */
   }

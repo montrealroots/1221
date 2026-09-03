@@ -20,7 +20,7 @@ import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
 
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 
 // ---------------------------------------------------------------------------
 // Character creation input

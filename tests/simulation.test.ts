@@ -356,3 +356,51 @@ describe('the decision centre', () => {
     }
   });
 });
+
+describe('an older save catches up with the build', () => {
+  it('puts labels written by an older build into Title Case', () => {
+    const sim = quickSave({}, 'relabel');
+    sim.advanceTo(sim.now + 30 * MS_DAY);
+
+    // Wind the save back to how an older build left it: schema behind, and
+    // labels in the sentence case that build wrote.
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 9;
+    const item = universe.scheduled.find((s) => s.label.includes(' '));
+    expect(item, 'no multi-word label to test with').toBeDefined();
+    item!.label = 'New day';
+    universe.notifications.push({
+      id: 'notice_test', saveId: universe.meta.id, at: universe.now,
+      category: 'system', title: 'a scheduled event could not be processed',
+      body: 'Something went wrong.', importance: 40, read: false,
+    } as (typeof universe.notifications)[number]);
+
+    const result = migrate(universe);
+    expect(result.migrated).toBe(true);
+    expect(universe.scheduled.find((s) => s.id === item!.id)?.label).toBe('New Day');
+    expect(universe.notifications.at(-1)?.title).toBe('A Scheduled Event Could Not Be Processed');
+    expect(result.steps.join(' ')).toMatch(/Title Case/);
+  });
+
+  it('leaves a sentence in a title field alone', () => {
+    const sim = quickSave({}, 'relabel-prose');
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 9;
+    universe.history.push({
+      id: 'history_test', saveId: universe.meta.id, at: universe.now,
+      category: 'life', title: 'You were too exhausted to work.',
+      detail: 'A missed shift.', refs: [], significance: 10, public: false,
+    } as (typeof universe.history)[number]);
+
+    migrate(universe);
+    expect(universe.history.at(-1)?.title).toBe('You were too exhausted to work.');
+  });
+
+  it('does not relabel a save that is already current', () => {
+    const sim = quickSave({}, 'relabel-current');
+    const before = sim.universe.scheduled.map((s) => s.label);
+    const result = migrate(sim.universe);
+    expect(result.migrated).toBe(false);
+    expect(sim.universe.scheduled.map((s) => s.label)).toEqual(before);
+  });
+});
