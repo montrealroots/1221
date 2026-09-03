@@ -1,30 +1,42 @@
 /**
- * Choosing where in the world to start.
+ * Choosing a place in the world.
  *
  * SLATE knows every country, every first-level subdivision of every country,
  * and every populated place of a thousand people or more — a hundred and
  * seventy thousand of them. A flat dropdown is useless at that size, so this
- * narrows: country, then state or province, then the town itself by name.
+ * narrows: the map or the country list, then the state or province, then the
+ * town itself by name.
  *
  * Only the country you are looking at is ever fetched. Picking Italy pulls
  * Italy's ten thousand towns and nothing else, once.
+ *
+ * Two of these can sit on one form — where you live and where you are from —
+ * so every control here is named from `idPrefix` rather than hard-coded, and
+ * each keeps its own country, region and search.
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import {
   CITIES, COUNTRIES, REGIONS, cityCount, isCountryLoaded, loadCountryCities,
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
+import { WorldMap } from './WorldMap';
 
 /** How many matches to render at once. Enough to choose from, cheap to draw. */
 const VISIBLE_MATCHES = 60;
 
 export function LocationPicker({
-  cityId, onPick,
+  cityId, onPick, idPrefix, map = true,
 }: {
   cityId: string;
   onPick: (city: City) => void;
+  /** Distinguishes this picker's controls from any other on the page. */
+  idPrefix?: string;
+  /** Whether to offer the map. */
+  map?: boolean;
 }) {
+  const fallbackPrefix = useId();
+  const prefix = idPrefix ?? fallbackPrefix;
   const selected = CITIES.get(cityId);
   const [countryId, setCountryId] = useState(selected?.countryId ?? 'us');
   const [regionId, setRegionId] = useState<string>('');
@@ -32,6 +44,21 @@ export function LocationPicker({
   const [loading, setLoading] = useState(false);
   const [problem, setProblem] = useState<string | undefined>();
   const [loadedTick, setLoadedTick] = useState(0);
+  const [mapOpen, setMapOpen] = useState(map);
+
+  // Somebody else changed the selection — the birthplace following the home
+  // town, a draft loading — so follow it rather than sitting on a stale country.
+  useEffect(() => {
+    const city = CITIES.get(cityId);
+    if (city && city.countryId !== countryId) {
+      setCountryId(city.countryId);
+      setRegionId('');
+      setQuery('');
+    }
+    // Only when the selection itself moves; changing the country by hand is
+    // meant to leave the chosen city alone until a new one is picked.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityId]);
 
   const countries = useMemo(
     () => COUNTRIES.all().slice().sort((a, b) => a.name.localeCompare(b.name)),
@@ -77,11 +104,44 @@ export function LocationPicker({
 
   return (
     <div className="col gap-3">
+      {map && (
+        <div className="row-between wrap gap-2">
+          <p className="xs dim" style={{ margin: 0 }}>
+            {mapOpen
+              ? 'Tap a country on the map, or use the list.'
+              : 'The map is hidden. The list below does the same thing.'}
+          </p>
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm"
+            aria-expanded={mapOpen}
+            onClick={() => setMapOpen((open) => !open)}
+          >
+            {mapOpen ? 'Hide Map' : 'Show Map'}
+          </button>
+        </div>
+      )}
+
+      {map && mapOpen && (
+        <WorldMap
+          countryId={countryId}
+          marker={selected && selected.countryId === countryId
+            ? { latitude: selected.latitude, longitude: selected.longitude, name: selected.name }
+            : undefined}
+          onPick={(picked) => {
+            if (picked === countryId) return;
+            setCountryId(picked);
+            setRegionId('');
+            setQuery('');
+          }}
+        />
+      )}
+
       <div className="grid grid-2">
         <div className="field">
-          <label htmlFor="country">Country</label>
+          <label htmlFor={`${prefix}-country`}>Country</label>
           <select
-            id="country"
+            id={`${prefix}-country`}
             value={countryId}
             onChange={(e) => { setCountryId(e.target.value); setRegionId(''); setQuery(''); }}
           >
@@ -97,9 +157,9 @@ export function LocationPicker({
         </div>
 
         <div className="field">
-          <label htmlFor="region">State Or Region</label>
+          <label htmlFor={`${prefix}-region`}>State Or Region</label>
           <select
-            id="region"
+            id={`${prefix}-region`}
             value={regionId}
             onChange={(e) => { setRegionId(e.target.value); setQuery(''); }}
             disabled={regions.length === 0}
@@ -120,9 +180,9 @@ export function LocationPicker({
       </div>
 
       <div className="field">
-        <label htmlFor="city-search">Town Or City</label>
+        <label htmlFor={`${prefix}-search`}>Town Or City</label>
         <input
-          id="city-search"
+          id={`${prefix}-search`}
           type="search"
           value={query}
           placeholder={loading ? 'Loading the country…' : 'Start typing a town name'}

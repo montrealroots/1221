@@ -15,7 +15,8 @@ import {
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, type TraitCategory } from '@/engine/domain/attributes';
 import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
-import { CITIES, COUNTRIES } from '@/engine/content/geography';
+import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
+import type { City } from '@/engine/content/geography';
 import type { CareerTrack, Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
 import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
@@ -78,6 +79,22 @@ export function CharacterCreation({
 
   // Persist on every change. Losing the page must not lose the setup.
   useEffect(() => { saveDraft(slot, config); }, [slot, config]);
+
+  // A restored draft can name towns too small to be bundled. Fetch the
+  // countries they belong to so the names, and the validation, come back.
+  const [, setResolved] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    const wanted = new Set(
+      [config.startLocationId, config.homeRegionId]
+        .map(countryOfPlace)
+        .filter((id): id is string => id !== undefined && !isCountryLoaded(id)),
+    );
+    if (wanted.size === 0) return;
+    void Promise.all([...wanted].map((id) => loadCountryCities(id).catch(() => 0)))
+      .then(() => { if (!cancelled) setResolved((n) => n + 1); });
+    return () => { cancelled = true; };
+  }, [config.startLocationId, config.homeRegionId]);
 
   const set = useCallback(<K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => {
     setConfig((c) => ({ ...c, [key]: value }));
@@ -175,6 +192,16 @@ export function CharacterCreation({
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
 function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+  const home = CITIES.get(config.startLocationId);
+  const birthplace = CITIES.get(config.homeRegionId);
+
+  // Most people are from where they are, so that is the default and the
+  // birthplace follows the home town until somebody says it should not. Once
+  // they have said so it stays said, even if they later pick the same town.
+  const [bornWhereTheyLive, setBornWhereTheyLive] = useState(
+    () => config.homeRegionId === config.startLocationId,
+  );
+
   return (
     <div className="card">
       <div className="panel-head">
@@ -289,11 +316,13 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       </div>
 
       <LocationPicker
+        idPrefix="live"
         cityId={config.startLocationId}
         onPick={(picked) => {
           const previous = CITIES.get(config.startLocationId);
           set('startLocationId', picked.id);
-          set('homeRegionId', picked.id);
+          // Somebody who has not said otherwise was born where they live.
+          if (bornWhereTheyLive) set('homeRegionId', picked.id);
           // Citizenship follows the country while the two agree. Once somebody
           // has deliberately made them differ, moving no longer overwrites it.
           if (!previous || config.citizenshipId === previous.countryId) {
@@ -302,11 +331,65 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         }}
       />
 
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>Place Of Birth</h3>
+          <p className="muted small">
+            Where you are from, which is not always where you ended up. It is what you say when
+            somebody asks, it is the town your family is still in, and it is the accent you had
+            to lose or decided to keep.
+          </p>
+        </div>
+      </div>
+
+      <label className="check" htmlFor="born-here">
+        <input
+          id="born-here"
+          type="checkbox"
+          checked={bornWhereTheyLive}
+          onChange={(e) => {
+            setBornWhereTheyLive(e.target.checked);
+            if (e.target.checked) set('homeRegionId', config.startLocationId);
+          }}
+        />
+        <span>
+          I Was Born Where I Live Now
+          {home && <span className="dim"> — {placeLine(home)}</span>}
+        </span>
+      </label>
+
+      {!bornWhereTheyLive && (
+        <LocationPicker
+          idPrefix="born"
+          cityId={config.homeRegionId}
+          onPick={(picked) => set('homeRegionId', picked.id)}
+        />
+      )}
+
+      {!bornWhereTheyLive && birthplace && (
+        <div className="callout">
+          From <strong>{placeLine(birthplace)}</strong>
+          {home && birthplace.countryId !== home.countryId && (
+            <> · You moved country to get where you are, which is its own kind of start.</>
+          )}
+        </div>
+      )}
+
       <div className="callout">
         You will be <strong>{config.startYear - config.birthYear}</strong> when the save begins.
       </div>
     </div>
   );
+}
+
+/** A place written the way somebody would say it out loud. */
+function placeLine(city: City): string {
+  const region = REGIONS.get(city.parentId)?.name;
+  const country = COUNTRIES.get(city.countryId)?.name;
+  return [city.name, region, region === country ? undefined : country]
+    .filter(Boolean).join(', ');
 }
 
 function PersonalStep({
@@ -671,6 +754,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
 
 function ReviewStep({ config }: { config: NewSaveConfig }) {
   const city = CITIES.get(config.startLocationId);
+  const birthplace = CITIES.get(config.homeRegionId);
   const age = config.startYear - config.birthYear;
   const wealth = WEALTH_PROFILES[config.wealth];
 
@@ -705,6 +789,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
+          <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
         </div>
 
@@ -774,6 +859,8 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (age < 16) issues.push('Your character has to be at least 16 when the save begins.');
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That is not a valid day of the month.');
+    if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
+    if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === 3) {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose a city to start in.');
@@ -813,15 +900,28 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
 
     const merged = { ...defaultConfig(), ...stored.config };
 
-    // A place that no longer exists, or never did. Fall back rather than
-    // hand the engine an id it cannot resolve.
-    if (!CITIES.get(merged.startLocationId)) return null;
+    // A town small enough not to be bundled is not resolvable until its
+    // country has been fetched, which has not happened yet on a cold start.
+    // Losing the whole draft over that threw away a filled-in form because
+    // somebody was from a village, so the id is kept whenever the country it
+    // names is real, and CharacterCreation pulls that country in. An id whose
+    // country does not exist is a lost cause and falls back.
+    if (!countryOfPlace(merged.startLocationId)) {
+      merged.startLocationId = defaultConfig().startLocationId;
+    }
+    if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
     if (!COUNTRIES.get(merged.citizenshipId)) merged.citizenshipId = defaultConfig().citizenshipId;
 
     return merged;
   } catch {
     return null;
   }
+}
+
+/** The country a place id belongs to, or nothing if it names no real country. */
+function countryOfPlace(placeId: string): string | undefined {
+  const code = placeId.split('-')[0];
+  return code && COUNTRIES.get(code) ? code : undefined;
 }
 
 function saveDraft(slot: Slot, config: NewSaveConfig): void {

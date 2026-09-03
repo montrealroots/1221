@@ -68,6 +68,13 @@
 
   --nav-h: 56px;
   --rail-w: 232px;
+
+  /* The map. Land has to read as land against water at a glance, which the
+     surface tokens are deliberately too close together to do. */
+  --map-sea: #10141b;
+  --map-land: #333a45;
+  --map-land-hover: #4a5361;
+  --map-land-quiet: #22272f;
 }
 
 :root[data-theme="light"] {
@@ -93,6 +100,10 @@
   --info: #3d6d95;
   --shadow: 0 1px 2px rgba(30,28,24,.08), 0 8px 24px rgba(30,28,24,.06);
   --shadow-lg: 0 2px 6px rgba(30,28,24,.1), 0 24px 60px rgba(30,28,24,.14);
+  --map-sea: #d7e1e8;
+  --map-land: #c6c1b7;
+  --map-land-hover: #aca69a;
+  --map-land-quiet: #e2ded7;
 }
 
 * { box-sizing: border-box; }
@@ -486,11 +497,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   font-variant-numeric: tabular-nums;
 }
 .topbar-clock strong { font-size: var(--size-base); font-weight: 650; }
-.topbar-clock-sep { color: var(--border-strong); }
+.topbar-clock-sep { color: var(--line-strong); }
 .topbar-clock-date { font-size: var(--size-sm); color: var(--text-dim); }
 .topbar-clock-zone {
   font-size: var(--size-xs); color: var(--text-dim);
-  border: 1px solid var(--border); border-radius: var(--r1);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 0 var(--s1); letter-spacing: .04em;
 }
 /* On a narrow screen the time is what matters; the rest steps aside rather
@@ -762,29 +773,81 @@ kbd {
   display: flex; flex-direction: column;
   max-height: 340px; overflow-y: auto;
   margin-bottom: var(--s4);
-  border: 1px solid var(--border); border-radius: var(--r2);
+  border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--surface-2);
 }
 .picker-option {
   display: flex; flex-direction: column; gap: 2px;
   padding: var(--s2) var(--s3); text-align: left;
-  background: none; border: 0; border-bottom: 1px solid var(--border);
+  background: none; border: 0; border-bottom: 1px solid var(--line);
   color: var(--text); cursor: pointer; min-width: 0;
 }
 .picker-option:last-child { border-bottom: 0; }
 .picker-option:hover, .picker-option:focus-visible { background: var(--surface-hover); }
-.picker-option[data-selected] { background: var(--accent-soft); }
+.picker-option[data-selected] { background: var(--accent-dim); }
 .picker-option-name { font-weight: 600; font-size: var(--size-sm); }
 .picker-option-meta { font-size: var(--size-xs); color: var(--text-dim); }
 
+/* The map. A second way into the same country list, not a second answer.
+   Every colour is a token so the outlines follow the theme rather than
+   sitting on it as a foreign object. */
+.worldmap-shell {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface-2); overflow: hidden;
+}
+.worldmap-empty {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 140px; padding: var(--s4);
+}
+.worldmap-empty .hint { margin: 0; text-align: center; }
+.worldmap-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: var(--s1) var(--s3); padding: var(--s2) var(--s3);
+  border-bottom: 1px solid var(--line); min-width: 0;
+}
+.worldmap-readout {
+  font-size: var(--size-sm); font-weight: 600; color: var(--text);
+  flex: 1 1 8rem; min-width: 0;
+}
+.worldmap {
+  display: block; width: 100%; aspect-ratio: 2 / 1;
+  max-height: 360px; margin-inline: auto;
+  background: var(--map-sea);
+  /* A tap is a tap. No double-tap-to-zoom swallowing the first one. */
+  touch-action: manipulation;
+}
+.worldmap-sea { fill: var(--map-sea); }
+.worldmap-country {
+  fill: var(--map-land); stroke: var(--map-sea);
+  cursor: pointer; transition: fill 90ms linear;
+}
+.worldmap-country:hover { fill: var(--map-land-hover); }
+.worldmap-country[data-empty] {
+  fill: var(--map-land-quiet); stroke: var(--map-sea); cursor: default;
+}
+.worldmap-country[data-empty]:hover { fill: var(--map-land-quiet); }
+.worldmap-country[data-selected] { fill: var(--accent); stroke: var(--accent-strong); }
+.worldmap-country[data-selected]:hover { fill: var(--accent-strong); }
+.worldmap-marker { fill: var(--accent-strong); stroke: var(--bg); stroke-width: 0.6; }
+.worldmap-marker-halo { fill: var(--accent-dim); }
+.worldmap-note { margin: 0; padding: var(--s2) var(--s3); border-top: 1px solid var(--line); }
+
+/* A checkbox and its sentence, on one line, aligned on the first line of it. */
+.check {
+  display: flex; align-items: flex-start; gap: var(--s2);
+  margin-bottom: 0; font-weight: 400; font-size: var(--size-sm);
+  color: var(--text); line-height: 1.5; cursor: pointer;
+}
+.check input[type="checkbox"] { margin-top: 2px; }
+
 /* Sandbox, offered at creation rather than buried in a menu. */
 .sandbox-choice {
-  border: 1px dashed var(--border-strong); border-radius: var(--r2);
+  border: 1px dashed var(--line-strong); border-radius: var(--radius);
   padding: var(--s3); background: var(--surface-2);
 }
 .sandbox-choice.is-on {
   border-style: solid; border-color: var(--accent);
-  background: var(--accent-soft);
+  background: var(--accent-dim);
 }
 .sandbox-choice-title { font-weight: 650; font-size: var(--size-sm); }
 /* A label element makes everything inside it bold. The explanation under the
@@ -807,13 +870,18 @@ kbd {
 /* Four by five, because that is the shape a headshot has always been. */
 .portrait-frame {
   position: relative; width: 208px; aspect-ratio: 4 / 5;
-  border: 1px solid var(--border); border-radius: var(--r2);
+  border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--surface-2); overflow: hidden;
   display: flex; align-items: center; justify-content: center;
   touch-action: none;
 }
 .portrait-frame[data-empty] { border-style: dashed; }
-.portrait-frame[data-dragging="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.portrait-frame[data-dragging="true"] { border-color: var(--accent); background: var(--accent-dim); }
+/* [hidden] is display:none in the UA sheet, and any author display rule beats
+   it. The canvas exists before a photo does, so without this the empty frame
+   is a blank canvas with the invitation to choose a photo squeezed into a
+   one-character sliver beside it. */
+.portrait-frame canvas[hidden] { display: none; }
 .portrait-frame canvas,
 .portrait-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .portrait-frame canvas:not([hidden]) { cursor: grab; }
@@ -822,6 +890,9 @@ kbd {
 .portrait-empty {
   display: flex; flex-direction: column; align-items: center; gap: var(--s2);
   padding: var(--s3); text-align: center;
+  /* A flex item is min-width:auto, so without this the invitation to drop a
+     photo is wider than the frame and gets clipped rather than wrapping. */
+  max-width: 100%; min-width: 0;
 }
 .portrait-initials {
   font-size: 2rem; font-weight: 650; letter-spacing: .06em;
@@ -840,8 +911,8 @@ kbd {
 
 /* The headshot wherever it appears afterwards. */
 .headshot {
-  border-radius: var(--r2); object-fit: cover; display: block;
-  border: 1px solid var(--border); background: var(--surface-2); flex: none;
+  border-radius: var(--radius); object-fit: cover; display: block;
+  border: 1px solid var(--line); background: var(--surface-2); flex: none;
 }
 .headshot-sm { width: 44px; height: 55px; }
 .headshot-md { width: 96px; height: 120px; }

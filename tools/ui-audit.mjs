@@ -36,6 +36,14 @@ const OVERFLOW_PROBE = `(() => {
     // the fault. Same for a line clamp.
     if (style.textOverflow === 'ellipsis' && style.overflow === 'hidden') continue;
     if (style.webkitLineClamp && style.webkitLineClamp !== 'none') continue;
+    // Inside an SVG a bounding rect is the shape's geometry, not a layout box:
+    // a country path that runs past the viewBox is clipped by the SVG viewport
+    // and nothing escapes onto the page. Measuring those reports the whole of
+    // Asia as bleeding off the right edge of a map showing the Atlantic.
+    if (el.ownerSVGElement) continue;
+    // An element clipped to a pixel on purpose — a screen-reader-only input —
+    // has content wider than its box by definition.
+    if (style.clip && style.clip !== 'auto') continue;
 
     const rect = el.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) continue;
