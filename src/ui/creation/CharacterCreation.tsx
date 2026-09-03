@@ -6,7 +6,7 @@
  * connection never costs the setup.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   defaultConfig, wealthNote, careerLabel,
@@ -21,6 +21,7 @@ import type { CareerTrack, Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
 import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
+import { titleCaseLabel } from '@/engine/core/text';
 
 const STEPS = ['Identity', 'Personal', 'Career', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -103,6 +104,11 @@ export function CharacterCreation({
   const issues = useMemo(() => validate(config, step), [config, step]);
   const canAdvance = issues.length === 0;
 
+  // Continue was at the foot of the last step, so without this the next step
+  // opens at its foot too, and the player reads it backwards.
+  const scroller = useRef<HTMLDivElement | null>(null);
+  useEffect(() => { scroller.current?.scrollTo({ top: 0 }); }, [step]);
+
 
   const start = () => {
     clearDraft(slot);
@@ -110,7 +116,7 @@ export function CharacterCreation({
   };
 
   return (
-    <div className="main">
+    <div className="main" ref={scroller}>
       <div className="creation">
         <div className="row-between" style={{ marginBottom: 'var(--s5)' }}>
           <div className="row gap-2">
@@ -518,7 +524,7 @@ function PersonalStep({
               aria-pressed={config.interests.includes(interest)}
               onClick={() => toggleInterest(interest)}
             >
-              {interest}
+              {titleCaseLabel(interest)}
             </button>
           ))}
         </div>

@@ -328,6 +328,9 @@ a:hover { text-decoration: underline; }
   display: inline-flex; align-items: center; gap: var(--s1);
   padding: 2px var(--s2); border-radius: 100px;
   font-size: var(--size-xs); font-weight: 600;
+  /* A chip is a label, never prose. "0 / 4" split over two lines is not a
+     smaller chip, it is a broken one. */
+  white-space: nowrap; flex: none;
   background: var(--surface-3); color: var(--text-muted);
   border: 1px solid var(--line);
 }
