@@ -3,22 +3,30 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Tabs } from '@/ui/components/primitives';
 import {
-  ATTRIBUTE_GROUPS, attributesInGroup, effectiveAttributes, groupAverage,
-  overallRating, TRAIT_BY_ID, type AttributeGroup,
+  ATTRIBUTE_GROUPS, attributesInGroup, conflictingTraits, effectiveAttributes, effectiveSkills,
+  groupAverage, overallRating, TRAIT_BY_ID, traitsForProfession, type AttributeGroup,
 } from '@/engine/domain/attributes';
 import { SKILLS, domainAverage, type SkillDomain } from '@/engine/domain/skills';
+import {
+  LEVEL_XP, PROFESSIONS, PROFESSION_BY_ID, levelFor, traitSlotsAt, xpToNextLevel,
+} from '@/engine/content/professions';
 import { ageOn } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 
-type Tab = 'attributes' | 'skills' | 'traits' | 'standing';
+type Tab = 'attributes' | 'professions' | 'skills' | 'traits' | 'standing';
+
+const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((k) => [k.id, k.name]));
 
 const SKILL_DOMAINS: SkillDomain[] = ['writing', 'directing', 'producing', 'executive', 'crew', 'business', 'creator', 'general'];
 
 export function CharacterWorkspace() {
-  const { sim } = useGame();
+  const { sim, run } = useGame();
   const player = useWorld((s) => s.player);
   const [tab, setTab] = useState<Tab>('attributes');
+  const xp = player.industryXp ?? 0;
+  const held = Object.values(player.professions ?? {}).flatMap((p) => p?.traitIds ?? []);
+  const skills = effectiveSkills(player.skills, held);
   const [group, setGroup] = useState<AttributeGroup>('Craft');
 
   const effective = effectiveAttributes(player.attributes, player.traits);
@@ -42,7 +50,7 @@ export function CharacterWorkspace() {
 
       <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>
         <Stat label="Overall Performer Rating" value={Math.round(overallRating(effective))} note="Average across all 88" />
-        <Stat label="Traits Held" value={player.traits.length} />
+        <Stat label="Industry XP" value={<span className="mono">{xp.toLocaleString('en-US')}</span>} note="Earned by working. Spent to unlock professions." />
         <Stat label="Credits" value={player.creditIds.length} />
         <Stat label="Quote" value={<span className="mono">{player.quote > 0 ? formatMoney(player.quote, { cents: false }) : '—'}</span>} note="What you can ask per project" />
       </div>
@@ -52,6 +60,7 @@ export function CharacterWorkspace() {
         onChange={setTab}
         tabs={[
           { id: 'attributes', label: 'Attributes' },
+          { id: 'professions', label: 'Professions', badge: Object.keys(player.professions ?? {}).length || undefined },
           { id: 'skills', label: 'Skills' },
           { id: 'traits', label: 'Traits', badge: player.traits.length },
           { id: 'standing', label: 'Standing' },
@@ -104,6 +113,128 @@ export function CharacterWorkspace() {
             })}
           </Panel>
         </>
+      )}
+
+      {tab === 'professions' && (
+        <div className="col gap-4">
+          <p className="muted small" style={{ margin: 0 }}>
+            You are an actor/actress. Everything else in the industry is unlocked with the experience you
+            earn working, and each profession then levels on its own work: every one of its skills rises
+            with each level, and a trait slot opens at levels 1, 3, 6 and 9.
+          </p>
+          <div className="grid grid-2">
+            {PROFESSIONS.map((def) => {
+              const progress = player.professions?.[def.id];
+              const level = progress ? levelFor(progress.xp) : 0;
+              const missing = def.requires.filter((id) => !player.professions?.[id]);
+              const affordable = xp >= def.unlockXp;
+              const slots = progress ? traitSlotsAt(level) : 0;
+              const picked = progress?.traitIds ?? [];
+              const open = Math.max(0, slots - picked.length);
+              const choices = progress
+                ? traitsForProfession(def.id).filter((t) => !picked.includes(t.id) && conflictingTraits(picked, t.id).length === 0)
+                : [];
+              const floor = LEVEL_XP[level - 1] ?? 0;
+              const ceiling = LEVEL_XP[level] ?? (progress?.xp ?? 0);
+              const toNext = progress ? xpToNextLevel(progress.xp) : 0;
+
+              return (
+                <Panel
+                  key={def.id}
+                  title={def.name}
+                  subtitle={def.blurb}
+                  actions={progress
+                    ? <span className="chip chip-accent">Level {level}</span>
+                    : (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-primary"
+                        disabled={!affordable || missing.length > 0}
+                        onClick={() => run('profession.unlock', { professionId: def.id }, { idempotencyKey: `profession.unlock:${def.id}` })}
+                      >
+                        Unlock · {def.unlockXp.toLocaleString('en-US')} XP
+                      </button>
+                    )}
+                >
+                  {!progress && (
+                    <p className="small muted" style={{ margin: 0 }}>
+                      {def.earnedBy}
+                      {missing.length > 0 && ` Needs ${missing.map((id) => PROFESSION_BY_ID[id].name).join(' and ')} first.`}
+                      {missing.length === 0 && !affordable && ` ${(def.unlockXp - xp).toLocaleString('en-US')} more XP to unlock.`}
+                    </p>
+                  )}
+
+                  {progress && (
+                    <div className="col gap-4">
+                      <Meter
+                        label={toNext > 0 ? `${toNext.toLocaleString('en-US')} XP To Level ${level + 1}` : 'Top Level'}
+                        value={progress.xp - floor}
+                        max={Math.max(1, ceiling - floor)}
+                        hint={def.earnedBy}
+                      />
+
+                      <div>
+                        <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>Skills</div>
+                        <div className="col gap-2">
+                          {def.skillIds.map((id) => (
+                            <div key={id}>
+                              <div className="row-between xs">
+                                <span className="muted">{SKILL_NAME[id] ?? id}</span>
+                                <span className="mono">{Math.round(skills[id] ?? 0)}</span>
+                              </div>
+                              <div className="meter"><span style={{ width: `${Math.round(skills[id] ?? 0)}%` }} /></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="row-between" style={{ marginBottom: 'var(--s2)' }}>
+                          <span className="eyebrow">Traits</span>
+                          <span className="chip">{picked.length} / {slots}</span>
+                        </div>
+                        {picked.length === 0 && open === 0 && (
+                          <p className="small muted" style={{ margin: 0 }}>The first slot opens at level 1.</p>
+                        )}
+                        <div className="col gap-2">
+                          {picked.map((id) => {
+                            const trait = TRAIT_BY_ID[id];
+                            if (!trait) return null;
+                            return (
+                              <div key={id}>
+                                <div className="strong small">{trait.name}</div>
+                                <div className="xs muted">{trait.description}</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        {open > 0 && (
+                          <div className="field" style={{ marginTop: 'var(--s3)' }}>
+                            <label htmlFor={`pick-${def.id}`}>Pick A Trait ({open} Open)</label>
+                            <select
+                              id={`pick-${def.id}`}
+                              value=""
+                              onChange={(e) => {
+                                const traitId = e.target.value;
+                                if (!traitId) return;
+                                run('profession.pick_trait', { professionId: def.id, traitId }, { idempotencyKey: `profession.pick_trait:${def.id}:${traitId}` });
+                              }}
+                            >
+                              <option value="">Choose…</option>
+                              {choices.map((t) => (
+                                <option key={t.id} value={t.id}>{t.name} — {t.description}</option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </Panel>
+              );
+            })}
+          </div>
+        </div>
       )}
 
       {tab === 'skills' && (

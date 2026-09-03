@@ -17,7 +17,8 @@ import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
-import type { CareerTrack, Personality } from '@/engine/domain/model';
+import type { Personality } from '@/engine/domain/model';
+import { PROFESSIONS, PROFESSION_BY_ID } from '@/engine/content/professions';
 import { formatMoney } from '@/engine/core/money';
 import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
@@ -29,18 +30,6 @@ type StepIndex = 0 | 1 | 2 | 3 | 4;
 const MAX_TRAITS = 4;
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
-const CAREER_TRACKS: { id: CareerTrack; blurb: string }[] = [
-  { id: 'actor', blurb: 'Auditions, rooms, callbacks and the long climb from day player to lead.' },
-  { id: 'writer', blurb: 'Pages, drafts, notes and selling something you made out of nothing.' },
-  { id: 'director', blurb: 'Vision, a set of two hundred people, and whether the day gets made.' },
-  { id: 'producer', blurb: 'Material, money, talent and the will to hold it all together.' },
-  { id: 'showrunner', blurb: 'A room, a season, and a network with opinions.' },
-  { id: 'crew', blurb: 'Below the line, where films are actually made.' },
-  { id: 'executive', blurb: 'The slate, the market and the authority to say yes.' },
-  { id: 'agent', blurb: 'Other people’s careers, and ten percent of them.' },
-  { id: 'creator', blurb: 'Your own audience, your own schedule, your own risk.' },
-  { id: 'civilian', blurb: 'An ordinary job and an ordinary life. Everything else stays possible.' },
-];
 
 const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
   { id: 'couch', label: "A friend's couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
@@ -559,23 +548,15 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div>
           <h2>Career</h2>
           <p className="muted small">
-            This is where you start, not where you have to stay. Every path in SLATE remains open from every other one.
+            Everyone starts in front of the camera. The rest of the industry is unlocked in the game,
+            with experience you earn by working, and developed from there.
           </p>
         </div>
       </div>
 
-      <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
-        {CAREER_TRACKS.map((track) => (
-          <button
-            key={track.id}
-            className="trait"
-            aria-pressed={config.careerTrack === track.id}
-            onClick={() => set('careerTrack', track.id)}
-          >
-            <div className="trait-name">{careerLabel(track.id)}</div>
-            <div className="trait-desc">{track.blurb}</div>
-          </button>
-        ))}
+      <div className="trait is-fixed" aria-current="true" style={{ marginBottom: 'var(--s5)' }}>
+        <div className="trait-name">{careerLabel('actor')}</div>
+        <div className="trait-desc">Auditions, rooms, callbacks and the long climb from day player to lead.</div>
       </div>
 
       <div className="field">
@@ -599,6 +580,35 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         {config.careerStage >= 10 && config.careerStage < 35 && 'You have done a little. A few credits, some contacts, no leverage yet.'}
         {config.careerStage >= 35 && config.careerStage < 60 && 'A working professional. People return your calls and you have a quote.'}
         {config.careerStage >= 60 && 'Established. Doors open, and the expectations that come with that are real.'}
+      </div>
+
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>What You Can Grow Into</h3>
+          <p className="muted small">
+            Each profession is unlocked with industry experience and then has its own skills to raise
+            and its own traits to pick, level by level. You start with {Math.round(config.careerStage * 3)} XP.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-2">
+        {PROFESSIONS.map((profession) => (
+          <div key={profession.id} className="trait is-fixed">
+            <div className="row-between">
+              <div className="trait-name">{profession.name}</div>
+              <span className="chip">{profession.unlockXp.toLocaleString('en-US')} XP</span>
+            </div>
+            <div className="trait-desc">{profession.blurb}</div>
+            <div className="xs dim" style={{ marginTop: 6 }}>
+              {profession.earnedBy}
+              {profession.requires.length > 0
+                && ` Needs ${profession.requires.map((id) => PROFESSION_BY_ID[id].name).join(' and ')} first.`}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -775,7 +785,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {careerLabel(config.careerTrack)} · {city?.name}
+            {age} · {careerLabel('actor')} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>

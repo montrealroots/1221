@@ -54,9 +54,11 @@ export interface NewSaveConfig {
   lifestyle: Person['lifestyle'];
   background: string;
 
-  /** Career */
-  careerTrack: CareerTrack;
-  /** 0 = complete unknown, 100 = already established. */
+  /**
+   * Career. Everyone starts as an actor or actress; the other professions
+   * are unlocked in the game with experience. This is how far along the
+   * acting career already is: 0 = complete unknown, 100 = already established.
+   */
   careerStage: number;
 
   /** Starting point */
@@ -97,7 +99,7 @@ export function defaultConfig(): NewSaveConfig {
     personality: defaultPersonality(),
     traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
-    careerTrack: 'actor', careerStage: 5,
+    careerStage: 5,
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
     startWithJob: true, startWithVehicle: true,
@@ -178,39 +180,7 @@ function seedCapability(config: NewSaveConfig): { attributes: AttributeSheet; sk
   };
 
   const trackBoost = 14 + stage * 34;
-  switch (config.careerTrack) {
-    case 'actor':
-      boost(attributes, ['emotional_truth', 'charisma', 'audition_technique', 'self_tape_craft', 'memorization', 'camera_awareness', 'active_listening'], trackBoost);
-      break;
-    case 'writer':
-      boost(skills, ['story_structure', 'dialogue', 'character_writing', 'page_speed', 'rewriting'], trackBoost);
-      break;
-    case 'director':
-      boost(skills, ['visual_language', 'actor_direction', 'coverage_planning', 'tone_control', 'set_authority'], trackBoost);
-      break;
-    case 'producer':
-      boost(skills, ['development_instinct', 'packaging', 'budgeting', 'scheduling', 'financing'], trackBoost);
-      break;
-    case 'showrunner':
-      boost(skills, ['room_leadership', 'episode_breaking', 'story_structure', 'post_supervision'], trackBoost);
-      break;
-    case 'crew':
-      boost(skills, ['camera_operation', 'grip_electric', 'script_supervision', 'editing'], trackBoost);
-      break;
-    case 'executive':
-      boost(skills, ['slate_strategy', 'market_reading', 'negotiation', 'deal_structuring', 'corporate_finance'], trackBoost);
-      break;
-    case 'agent':
-      boost(skills, ['negotiation', 'talent_relations', 'packaging', 'deal_structuring'], trackBoost);
-      break;
-    case 'creator':
-      boost(skills, ['content_strategy', 'editing_software', 'on_camera_hosting', 'audience_growth'], trackBoost);
-      boost(attributes, ['social_instinct', 'charisma'], trackBoost * 0.7);
-      break;
-    default:
-      boost(skills, ['operations', 'public_speaking', 'personal_finance'], trackBoost * 0.5);
-      break;
-  }
+  boost(attributes, ['emotional_truth', 'charisma', 'audition_technique', 'self_tape_craft', 'memorization', 'camera_awareness', 'active_listening'], trackBoost);
 
   // Personality feeds a handful of attributes that are genuinely dispositional.
   attributes['charisma'] = clamp((attributes['charisma'] ?? 10) + (config.personality.extraversion - 50) * 0.25, 0, 100);
@@ -265,7 +235,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    careerLabel: careerLabel(config.careerTrack),
+    careerLabel: careerLabel('actor'),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -314,7 +284,11 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     skills,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
-    careerTrack: config.careerTrack,
+    careerTrack: 'actor',
+    // A career already under way has some experience behind it; a complete
+    // unknown has none. Either way the professions are earned from here.
+    industryXp: Math.round(clamp(config.careerStage, 0, 100) * 3),
+    professions: {},
     representation: {},
     quote: config.careerStage > 40 ? Math.round(config.careerStage * 4_000_00) : 0,
     creditIds: [],

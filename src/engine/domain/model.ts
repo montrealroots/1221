@@ -13,6 +13,7 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { AuditRecord, HistoryRecord } from '../core/audit';
 import type { PerformerTitle } from '../core/performer';
+import type { ProfessionId } from '../content/professions';
 import type { AttributeSheet } from './attributes';
 import type { SkillSheet } from './skills';
 
@@ -74,6 +75,15 @@ export interface Reputation {
 export type CareerTrack =
   | 'none' | 'actor' | 'writer' | 'director' | 'producer' | 'showrunner'
   | 'crew' | 'executive' | 'agent' | 'creator' | 'civilian';
+
+/** Standing in one unlocked profession. Level is derived from xp. */
+export interface ProfessionProgress {
+  unlockedAt: Instant;
+  /** Experience earned in this profession since unlocking it. */
+  xp: number;
+  /** Trait ids picked for this profession, one per open slot. */
+  traitIds: string[];
+}
 
 export interface Representation {
   agentId?: Id;
@@ -140,6 +150,14 @@ export interface Person {
   reputation: Reputation;
 
   careerTrack: CareerTrack;
+  /**
+   * Industry experience: earned from auditions, shoot days, credits, shifts
+   * and the rest, spent to unlock professions. Absent on people from before
+   * professions existed and on NPCs, and read as zero.
+   */
+  industryXp?: number;
+  /** The professions they have unlocked, by id. Absent reads as none. */
+  professions?: Partial<Record<ProfessionId, ProfessionProgress>>;
   /** Employment record id for their ordinary job, if any. */
   jobId?: Id;
   representation: Representation;
@@ -1761,7 +1779,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 11;
+export const SAVE_SCHEMA_VERSION = 12;
 
 export interface SaveMeta {
   id: Id;

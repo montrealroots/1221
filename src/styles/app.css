@@ -253,6 +253,11 @@ a:hover { text-decoration: underline; }
 .btn {
   display: inline-flex; align-items: center; gap: var(--s2);
   padding: var(--s2) var(--s4);
+  /* A button's label is a label. The containment layer lets text break
+     inside a word so nothing escapes its box, which for a button in a tight
+     flex slot meant "Unlo / ck". A button keeps its words whole and its
+     width, and the slot wraps around it instead. */
+  white-space: nowrap; overflow-wrap: normal; flex: none;
   font: inherit; font-size: var(--size-sm); font-weight: 550;
   color: var(--text); background: var(--surface-3);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
@@ -289,8 +294,12 @@ a:hover { text-decoration: underline; }
 
 .panel-head {
   display: flex; align-items: baseline; justify-content: space-between;
-  gap: var(--s3); margin-bottom: var(--s4);
+  gap: var(--s2) var(--s3); margin-bottom: var(--s4);
+  /* The title shrinks; the action keeps its size; when both cannot fit on
+     one line the action drops below rather than either being squeezed. */
+  flex-wrap: wrap;
 }
+.panel-head > :first-child { min-width: 0; flex: 1 1 12rem; }
 .panel-head h2, .panel-head h3 { margin: 0; }
 
 .eyebrow {
@@ -513,9 +522,17 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .topbar-clock strong { flex: none; }
 .topbar-clock-date { overflow: hidden; text-overflow: ellipsis; }
 /* Below a laptop the bar has no room to spare, so the clock is just the time.
-   It is the part anyone actually reads at a glance. */
+   It is the part anyone actually reads at a glance. Buttons keep their words
+   whole everywhere, so the room is found in the gaps and the padding, not by
+   crushing a label into "Unlo / ck". */
 @media (max-width: 1024px) {
   .topbar-clock-sep, .topbar-clock-date, .topbar-clock-zone { display: none; }
+  .topbar { gap: var(--s2); }
+  .topbar .btn { padding-inline: var(--s2); }
+}
+/* On a phone the bar may take a second line rather than lose a control. */
+@media (max-width: 620px) {
+  .topbar { flex-wrap: wrap; height: auto; min-height: var(--nav-h); padding-block: var(--s1); row-gap: 0; }
 }
 
 .shell-body { display: flex; flex: 1; min-height: 0; }

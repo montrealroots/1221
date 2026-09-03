@@ -30,6 +30,8 @@ import { registerFilm, registerBuyerOffer } from './systems/film';
 import { registerCasting, seedIndependentProject } from './systems/casting';
 import { registerProduction } from './systems/production';
 import { registerRelease, registerFranchises } from './systems/release';
+import { registerProfessions } from './systems/professions';
+import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { registerAwards, setUpSeason } from './systems/awards';
 import { registerCompany } from './systems/company';
 import { registerWorld } from './world/world';
@@ -61,6 +63,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerProduction(sim);
   registerRelease(sim);
   registerFranchises(sim);
+  registerProfessions(sim);
   registerAwards(sim);
   registerCompany(sim);
   registerWorld(sim);
@@ -296,12 +299,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     const canLiveOnIt = openings.filter((o) => annualisedOpeningPay(o) >= needed);
     const pool = canLiveOnIt.length > 0 ? canLiveOnIt : openings;
 
-    // Within what is affordable, take the job that suits who they are.
-    const preferred = config.careerTrack === 'civilian' || config.careerTrack === 'none'
-      ? pool.find((o) => o.payBasis === 'salary') ?? pool[0]
-      : pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
-        ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
-        ?? pool[0];
+    // Within what is affordable, take the job that suits an actor: something
+    // near the industry, or the flexible work that fits around auditions.
+    const preferred = pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
+      ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
+      ?? pool[0];
 
     // If nothing on the board pays for the life, take the best-paying thing
     // going rather than something that guarantees insolvency.
@@ -328,10 +330,6 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     kind: 'social.create_account',
     payload: { platform: 'lumen', handle, displayName: player.displayName },
   });
-  if (config.careerTrack === 'creator') {
-    sim.execute({ kind: 'social.create_account', payload: { platform: 'streamtube', handle, displayName: player.displayName } });
-    sim.execute({ kind: 'social.create_account', payload: { platform: 'pulse', handle, displayName: player.displayName } });
-  }
 
   // --- The industry is already running -----------------------------------
   for (let i = 0; i < 4; i++) seedIndependentProject(sim, i);
@@ -552,6 +550,32 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
   if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
+
+  // Schema 12 made everyone an actor to begin with and moved the other
+  // tracks into professions unlocked in the game. A save whose player was a
+  // writer keeps being a writer: the profession is unlocked at level two so
+  // their standing is not lost, their skills are exactly as they were, and
+  // their experience is read from the reputation they had already built.
+  for (const person of Object.values(universe.people)) {
+    if (!person.isPlayer) continue;
+    if (person.industryXp === undefined) {
+      person.industryXp = Math.round(person.reputation.professionalReputation * 8 + person.creditIds.length * 60);
+      steps.push(`Read ${person.industryXp} XP of industry experience from the career so far.`);
+    }
+    person.professions ??= {};
+    const track = person.careerTrack as string;
+    if (track !== 'actor' && (PROFESSION_BY_ID as Record<string, unknown>)[track]) {
+      const id = track as ProfessionId;
+      if (!person.professions[id]) {
+        person.professions[id] = { unlockedAt: universe.now, xp: LEVEL_XP[1] ?? 0, traitIds: [] };
+        steps.push(`Kept ${person.displayName} a ${PROFESSION_BY_ID[id].name}: unlocked as a profession at level 2.`);
+      }
+      person.careerTrack = 'actor';
+    } else if (track === 'civilian' || track === 'none') {
+      person.careerTrack = 'actor';
+      steps.push(`${person.displayName} now starts as an actor/actress, as everyone does.`);
+    }
+  }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
