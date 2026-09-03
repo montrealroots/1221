@@ -32,7 +32,7 @@ const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
 
 const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
-  { id: 'couch', label: "A friend's couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
+  { id: 'couch', label: "A Friend's Couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
   { id: 'roommates', label: 'Room In A Share', blurb: 'Cheap, crowded, and how most people start.' },
   { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that is yours.' },
   { id: 'owned', label: 'You Own A Home', blurb: 'A house and the mortgage that came with it.' },
@@ -654,7 +654,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
         )}
         {city && (
           <p className="muted small" style={{ marginTop: 'var(--s3)' }}>
-            {city.tags.join(' · ')}
+            {city.tags.map(titleCaseLabel).join(' · ')}
           </p>
         )}
       </div>
