@@ -15,6 +15,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { serialise } from '@/engine/persistence/adapter';
 import {
   GuardError, MAX_PAYLOAD_BYTES, SUPPORTED_SCHEMA_VERSION,
@@ -27,6 +28,17 @@ function realPayload(slot: 1 | 2 | 3 = 1) {
   sim.advanceTo(sim.now + 90 * 86_400_000);
   return { sim, payload: serialise(sim.universe) };
 }
+
+describe('the guard and the client agree on the save format', () => {
+  it('understands exactly the version the client writes', () => {
+    // The guard cannot import this — it runs on Deno — so the coupling is held
+    // here. Drift means the backend refuses every save the game produces.
+    expect(
+      SUPPORTED_SCHEMA_VERSION,
+      'base44/shared/guard.js is behind src/engine/domain/model.ts. Bump it.',
+    ).toBe(SAVE_SCHEMA_VERSION);
+  });
+});
 
 describe('slots', () => {
   it('accepts the three real slots', () => {

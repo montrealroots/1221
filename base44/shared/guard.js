@@ -13,8 +13,16 @@
  * cross-contaminated write landing in storage and a retry being applied twice.
  */
 
-/** Save format version this deployment understands. Bump with the client. */
-export const SUPPORTED_SCHEMA_VERSION = 9;
+/**
+ * Save format version this deployment understands.
+ *
+ * Must equal SAVE_SCHEMA_VERSION in src/engine/domain/model.ts. It cannot
+ * import it — this runs on Deno, not in the bundle — so the two are held
+ * together by a test instead. If they drift, the backend rejects every save
+ * the client writes, which is exactly what the guard is for and exactly what
+ * you do not want to find out in production.
+ */
+export const SUPPORTED_SCHEMA_VERSION = 10;
 
 /** A save larger than this is refused rather than silently truncated. */
 export const MAX_PAYLOAD_BYTES = 24 * 1024 * 1024;
