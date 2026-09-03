@@ -954,6 +954,8 @@ kbd {
 .headshot-sm { width: 44px; height: 55px; }
 .headshot-md { width: 96px; height: 120px; }
 .headshot-lg { width: 160px; height: 200px; }
+/* The review card's portrait: the one place the photo is the point. */
+.headshot-xl { width: 200px; height: 250px; box-shadow: var(--shadow); }
 .page-head-portrait { display: flex; gap: var(--s4); align-items: flex-start; }
 @media (max-width: 640px) {
   .page-head-portrait { flex-direction: column; }

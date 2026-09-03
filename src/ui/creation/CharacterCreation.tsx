@@ -780,6 +780,14 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
     <div className="col gap-5">
       <div className="card">
         <div className="center" style={{ padding: 'var(--s4) 0' }}>
+          {config.portrait && (
+            <img
+              className="headshot headshot-xl"
+              src={config.portrait}
+              alt={`Headshot for ${config.firstName} ${config.lastName}`}
+              style={{ margin: '0 auto var(--s4)' }}
+            />
+          )}
           <div className="eyebrow">Slot ready</div>
           <h1 style={{ fontSize: 'var(--size-2xl)', margin: 'var(--s2) 0' }}>
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
@@ -796,14 +804,6 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       <div className="grid grid-2">
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
-          {config.portrait && (
-            <img
-              className="headshot headshot-md"
-              src={config.portrait}
-              alt={`Headshot for ${config.firstName} ${config.lastName}`}
-              style={{ marginBottom: 'var(--s3)' }}
-            />
-          )}
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
