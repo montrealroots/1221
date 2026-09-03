@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty } from '@/ui/components/primitives';
-import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY } from '@/engine/world/calendar';
+import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay } from '@/engine/world/calendar';
+import { occurrenceTitle, upcomingEvents, type EventDay } from '@/engine/content/events';
+import { INDUSTRY_EVENTS, lookupEvent } from '@/engine/content/events-data';
 import { formatDate, formatTime, zonedParts, addDays, MS_DAY } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
@@ -28,6 +30,24 @@ export function CalendarWorkspace() {
   const next30 = useWorld((s) => entriesBetween(s, s.now, s.now + 30 * MS_DAY));
   const conflicts = next30.filter((e) => e.conflicted);
   const selectedDay = days.find((d) => d.key === selected);
+  const todayKey = `${today.year}-${String(today.month).padStart(2, '0')}-${String(today.day).padStart(2, '0')}`;
+  const industryAhead = upcomingEvents(INDUSTRY_EVENTS, todayKey, 12, lookupEvent);
+  // How many of the player's own entries fit in a cell after the day's holiday and industry chips.
+  const roomFor = (day: CalendarDay) => 3 - (day.holidays.length > 0 ? 1 : 0) - (day.industry.length > 0 ? 1 : 0);
+  // "March 1–2, 2026", from the local date keys the industry calendar keeps.
+  const keyParts = (key: string) => ({ year: Number(key.slice(0, 4)), month: Number(key.slice(5, 7)), day: Number(key.slice(8, 10)) });
+  const formatKey = (key: string) => { const k = keyParts(key); return `${MONTHS[k.month - 1]} ${k.day}, ${k.year}`; };
+  const formatSpan = (start: string, end: string) => {
+    if (start === end) return formatKey(start);
+    const a = keyParts(start); const b = keyParts(end);
+    if (a.year === b.year && a.month === b.month) return `${MONTHS[a.month - 1]} ${a.day}–${b.day}, ${a.year}`;
+    if (a.year === b.year) return `${MONTHS[a.month - 1]} ${a.day} – ${MONTHS[b.month - 1]} ${b.day}, ${a.year}`;
+    return `${formatKey(start)} – ${formatKey(end)}`;
+  };
+  const industryChip = (d: EventDay) => {
+    const name = d.occurrence.event.shortName ?? d.occurrence.event.name;
+    return d.phase === 'nominations' ? `${name} Nominations` : d.phase === 'milestone' ? `${name}: ${d.detail}` : name;
+  };
 
   const shift = (delta: number) => {
     setView((v) => {
@@ -98,7 +118,17 @@ export function CalendarWorkspace() {
                   {holiday.name === holiday.englishName ? titleCaseLabel(holiday.name) : holiday.name}
                 </span>
               ))}
-              {day.entries.slice(0, day.holidays.length > 0 ? 2 : 3).map((entry) => (
+              {day.industry.slice(0, 1).map((d) => (
+                <span
+                  key={`${day.key}:${d.occurrence.event.id}:${d.phase}`}
+                  className="cal-event"
+                  style={{ borderLeftColor: LEGEND_BY_CATEGORY.industry?.colour }}
+                  title={`${occurrenceTitle(d.occurrence)} · ${d.detail}${d.occurrence.verified ? '' : ' · projected from the usual pattern'}`}
+                >
+                  {industryChip(d)}
+                </span>
+              ))}
+              {day.entries.slice(0, roomFor(day)).map((entry) => (
                 <span
                   key={entry.id}
                   className="cal-event"
@@ -109,8 +139,8 @@ export function CalendarWorkspace() {
                   {titleCaseLabel(entry.title)}
                 </span>
               ))}
-              {day.entries.length > (day.holidays.length > 0 ? 2 : 3) && (
-                <span className="xs dim">+{day.entries.length - (day.holidays.length > 0 ? 2 : 3)} more</span>
+              {day.entries.length > roomFor(day) && (
+                <span className="xs dim">+{day.entries.length - roomFor(day)} more</span>
               )}
             </button>
           ))}
@@ -134,8 +164,24 @@ export function CalendarWorkspace() {
           flush
           actions={<button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>}
         >
+          {selectedDay.industry.length > 0 && (
+            <div className="list">
+              {selectedDay.industry.map((d) => (
+                <div key={`${d.occurrence.event.id}:${d.phase}:${d.detail}`} className="list-item list-static">
+                  <span className="cal-swatch" style={{ background: LEGEND_BY_CATEGORY.industry?.colour, width: 4, height: 32, borderRadius: 2 }} aria-hidden="true" />
+                  <div className="grow">
+                    <div className="small strong">{occurrenceTitle(d.occurrence)} · {d.detail}</div>
+                    <div className="xs dim">
+                      {d.occurrence.event.city}{d.occurrence.event.venue ? ` · ${d.occurrence.event.venue}` : ''}
+                      {' · '}{d.occurrence.verified ? 'Verified Date' : 'Projected From The Usual Pattern'}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
           {selectedDay.entries.length === 0 ? (
-            <Empty title="Nothing Scheduled" body="That day is entirely yours." />
+            <Empty title="Nothing Scheduled" body={selectedDay.industry.length > 0 ? 'Nothing of yours, at least.' : 'That day is entirely yours.'} />
           ) : (
             <div className="list">
               {selectedDay.entries.map((entry) => (
@@ -161,6 +207,23 @@ export function CalendarWorkspace() {
           )}
         </Panel>
       )}
+
+      <Panel title="Coming Up In The Industry" subtitle="Award shows, festivals, markets and fan events, on the days they really happen. A date nobody has announced yet is projected from where it usually lands." flush>
+        <div className="list">
+          {industryAhead.map((occ) => (
+            <div key={`${occ.event.id}:${occ.year}`} className="list-item list-static">
+              <span className="cal-swatch" style={{ background: LEGEND_BY_CATEGORY.industry?.colour }} aria-hidden="true" />
+              <div className="grow" style={{ minWidth: 0 }}>
+                <div className="small strong truncate">{occurrenceTitle(occ)}</div>
+                <div className="xs dim truncate">
+                  {formatSpan(occ.start, occ.end)}{occ.nominations ? ` · Nominations ${formatKey(occ.nominations)}` : ''} · {occ.event.city}
+                </div>
+              </div>
+              <span className="chip">{occ.verified ? 'Verified' : 'Projected'}</span>
+            </div>
+          ))}
+        </div>
+      </Panel>
 
       <Panel title="Next Thirty Days" flush>
         {next30.length === 0 ? (

@@ -1,0 +1,243 @@
+/**
+ * SLATE — the guild and craft awards, where the people who make the work vote.
+ */
+
+import type { IndustryEventSpec } from './events';
+import { SUN, MON, TUE, WED, THU, FRI, SAT, nearest, WIKI, SEARCH, EDITORIAL } from './events-rules';
+
+const LA = { city: 'Los Angeles', cityId: 'us-ca-losangeles', countryId: 'us', zone: 'America/Los_Angeles' } as const;
+
+export const GUILD_AWARDS: IndustryEventSpec[] = [
+  {
+    id: 'pga-awards', name: 'The Producers Guild of America Awards', shortName: 'The PGA Awards', kind: 'awards', scope: 'both',
+    organiser: 'Producers Guild of America', ...LA, venue: 'Fairmont Century Plaza', editionOffset: 1989,
+    start: nearest(2, 22, SAT), days: 1, nominations: nearest(1, 9, FRI),
+    known: {
+      2025: { start: '2025-02-08', nominations: '2025-01-10', source: WIKI('36th Producers Guild of America Awards') },
+      2026: { start: '2026-02-28', nominations: '2026-01-09', source: WIKI('37th Producers Guild of America Awards') },
+    },
+    categories: [
+      'Darryl F. Zanuck Award for Outstanding Producer of Theatrical Motion Pictures', 'Outstanding Producer of Documentary Theatrical Motion Pictures',
+      'Outstanding Producer of Animated Theatrical Motion Pictures', 'Norman Felton Award for Outstanding Producer of Episodic Television, Drama',
+      'Danny Thomas Award for Outstanding Producer of Episodic Television, Comedy', 'David L. Wolper Award for Outstanding Producer of Limited or Anthology Series Television',
+      'Outstanding Producer of Streamed or Televised Motion Pictures', 'Outstanding Producer of Non-Fiction Television', 'Outstanding Producer of Game & Competition Television',
+      'Outstanding Producer of Live Entertainment, Variety, Sketch, Standup & Talk Television', 'Outstanding Sports Program', 'Outstanding Children\'s Program',
+      'Outstanding Short-Form Program', 'PGA Innovation Award', 'David O. Selznick Achievement Award in Theatrical Motion Pictures', 'Milestone Award',
+      'Norman Lear Achievement Award in Television', 'Stanley Kramer Award', 'Visionary Award',
+    ],
+    note: 'The Zanuck Award is the season\'s best predictor of Best Picture, because the same preferential ballot is used.',
+    sources: [WIKI('37th Producers Guild of America Awards')],
+  },
+  {
+    id: 'dga-awards', name: 'The Directors Guild of America Awards', shortName: 'The DGA Awards', kind: 'awards', scope: 'both',
+    organiser: 'Directors Guild of America', ...LA, venue: 'The Beverly Hilton', editionOffset: 1948,
+    start: nearest(2, 8, SAT), days: 1, nominations: nearest(1, 8, WED),
+    known: {
+      2025: { start: '2025-02-08', nominations: '2025-01-08', source: WIKI('77th Directors Guild of America Awards') },
+      2026: { start: '2026-02-07', nominations: '2026-01-07', source: WIKI('78th Directors Guild of America Awards') },
+    },
+    categories: [
+      'Outstanding Directorial Achievement in Feature Film', 'Outstanding Directorial Achievement of a First-Time Feature Film Director',
+      'Outstanding Directorial Achievement in Documentary', 'Outstanding Directorial Achievement in Dramatic Series',
+      'Outstanding Directorial Achievement in Comedy Series', 'Outstanding Directorial Achievement in Movies for Television and Limited Series',
+      'Outstanding Directorial Achievement in Variety/Talk/News/Sports – Regularly Scheduled Programming', 'Outstanding Directorial Achievement in Variety/Talk/News/Sports – Specials',
+      'Outstanding Directorial Achievement in Reality Programs', 'Outstanding Directorial Achievement in Children\'s Programs', 'Outstanding Directorial Achievement in Commercials',
+      'Lifetime Achievement Award', 'Frank Capra Achievement Award', 'Franklin J. Schaffner Achievement Award', 'Robert B. Aldrich Service Award', 'Honorary Life Member Award',
+    ],
+    sources: [WIKI('78th Directors Guild of America Awards')],
+  },
+  {
+    id: 'wga-awards', name: 'The Writers Guild of America Awards', shortName: 'The WGA Awards', kind: 'awards', scope: 'both',
+    organiser: 'Writers Guild of America West and East', ...LA, venue: 'Simultaneous ceremonies in Los Angeles and New York', editionOffset: 1948,
+    start: nearest(3, 4, SUN), days: 1, nominations: nearest(1, 27, TUE),
+    known: {
+      2026: { start: '2026-03-08', nominations: '2026-01-27', source: SEARCH('2025-26 awards season calendar') },
+    },
+    categories: [
+      'Original Screenplay', 'Adapted Screenplay', 'Documentary Screenplay', 'Drama Series', 'Comedy Series', 'New Series', 'Limited Series',
+      'Original Short Form New Media', 'Adapted Short Form New Media', 'Episodic Drama', 'Episodic Comedy', 'Comedy/Variety Talk Series',
+      'Comedy/Variety Sketch Series', 'Comedy/Variety Specials', 'Quiz and Audience Participation', 'Daytime Drama', 'Children\'s Episodic and Specials',
+      'Children\'s Long Form or Series', 'Documentary Script – Current Events', 'Documentary Script – Other Than Current Events', 'News Script – Regularly Scheduled, Bulletin or Breaking Report',
+      'News Script – Analysis, Feature or Commentary', 'Animation', 'Videogame Writing', 'Radio/Audio Documentary', 'Radio/Audio News Script', 'Promotional Writing',
+      'Digital News', 'Laurel Award for Screenwriting Achievement', 'Paddy Chayefsky Laurel Award for Television Writing Achievement', 'Herb Sargent Award for Comedy Excellence',
+    ],
+    sources: [SEARCH('2025-26 awards season calendar'), WIKI('Writers Guild of America Awards'), EDITORIAL],
+  },
+  {
+    id: 'ace-eddies', name: 'The ACE Eddie Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'American Cinema Editors', ...LA, venue: 'Royce Hall, UCLA', editionOffset: 1950,
+    start: nearest(2, 27, FRI), days: 1, nominations: nearest(1, 15, THU),
+    known: { 2026: { start: '2026-02-27', source: SEARCH('2026 guild awards dates') } },
+    categories: [
+      'Best Edited Feature Film (Drama)', 'Best Edited Feature Film (Comedy)', 'Best Edited Animated Feature Film', 'Best Edited Documentary (Feature)',
+      'Best Edited Documentary (Non-Theatrical)', 'Best Edited Drama Series', 'Best Edited Comedy Series', 'Best Edited Limited Series',
+      'Best Edited Non-Scripted Series', 'Best Edited Variety Talk/Sketch Show or Special', 'Best Edited Multi-Camera Comedy Series',
+      'Best Edited Animated Series', 'Best Edited Student Film', 'Golden Eddie Filmmaker of the Year', 'Career Achievement Award', 'Heritage Award',
+    ],
+    sources: [SEARCH('2026 guild awards dates'), EDITORIAL],
+  },
+  {
+    id: 'adg-awards', name: 'The Art Directors Guild Excellence in Production Design Awards', shortName: 'The ADG Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Art Directors Guild', ...LA, venue: 'InterContinental Los Angeles Downtown', editionOffset: 1996,
+    start: nearest(2, 21, SAT), days: 1, nominations: nearest(1, 9, FRI),
+    known: { 2026: { start: '2026-02-28', source: SEARCH('2026 guild awards dates') } },
+    categories: [
+      'Period Feature Film', 'Fantasy Feature Film', 'Contemporary Feature Film', 'Animated Feature Film', 'One-Hour Period Series',
+      'One-Hour Fantasy Series', 'One-Hour Contemporary Series', 'Half-Hour Series', 'Television Movie or Limited Series', 'Variety, Reality or Competition Series',
+      'Variety Special', 'Short Format: Web Series, Music Video or Commercial', 'Animated Series', 'Lifetime Achievement Award', 'Cinematic Imagery Award', 'Hall of Fame',
+    ],
+    sources: [SEARCH('2026 guild awards dates'), EDITORIAL],
+  },
+  {
+    id: 'asc-awards', name: 'The American Society of Cinematographers Awards', shortName: 'The ASC Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'American Society of Cinematographers', ...LA, venue: 'The Beverly Hilton', editionOffset: 1986,
+    start: nearest(3, 1, SUN), days: 1, nominations: nearest(1, 14, WED),
+    known: { 2026: { start: '2026-03-08', source: SEARCH('2025-26 awards season calendar') } },
+    categories: [
+      'Theatrical Feature Film', 'Spotlight Award', 'Documentary', 'Episode of a One-Hour Television Series (Commercial)', 'Episode of a One-Hour Television Series (Non-Commercial)',
+      'Episode of a Half-Hour Television Series', 'Limited Series or Motion Picture Made for Television', 'Music Video', 'Lifetime Achievement Award', 'Career Achievement in Television Award',
+      'Board of Governors Award', 'President\'s Award', 'Bud Stone Award of Distinction', 'Curtis Clark Award', 'Student Heritage Awards',
+    ],
+    sources: [SEARCH('2025-26 awards season calendar'), EDITORIAL],
+  },
+  {
+    id: 'ves-awards', name: 'The Visual Effects Society Awards', shortName: 'The VES Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Visual Effects Society', ...LA, venue: 'The Beverly Hilton', editionOffset: 2002,
+    start: nearest(2, 18, WED), days: 1, nominations: nearest(1, 13, TUE),
+    known: { 2026: { start: '2026-02-25', source: SEARCH('2026 guild awards dates') } },
+    categories: [
+      'Outstanding Visual Effects in a Photoreal Feature', 'Outstanding Supporting Visual Effects in a Photoreal Feature', 'Outstanding Visual Effects in an Animated Feature',
+      'Outstanding Visual Effects in a Photoreal Episode', 'Outstanding Supporting Visual Effects in a Photoreal Episode', 'Outstanding Visual Effects in a Real-Time Project',
+      'Outstanding Visual Effects in a Commercial', 'Outstanding Visual Effects in a Special Venue Project', 'Outstanding Animated Character in a Photoreal Feature',
+      'Outstanding Animated Character in an Animated Feature', 'Outstanding Animated Character in an Episode, Commercial, Game Cinematic or Real-Time Project',
+      'Outstanding Created Environment in a Photoreal Feature', 'Outstanding Created Environment in an Animated Feature', 'Outstanding Created Environment in an Episode, Commercial, Game Cinematic or Real-Time Project',
+      'Outstanding Virtual Cinematography in a CG Project', 'Outstanding Model in a Photoreal or Animated Project', 'Outstanding Effects Simulations in a Photoreal Feature',
+      'Outstanding Effects Simulations in an Animated Feature', 'Outstanding Effects Simulations in an Episode, Commercial, Game Cinematic or Real-Time Project',
+      'Outstanding Compositing and Lighting in a Feature', 'Outstanding Compositing and Lighting in an Episode', 'Outstanding Compositing and Lighting in a Commercial',
+      'Outstanding Special (Practical) Effects in a Photoreal Project', 'Emerging Technology Award', 'Outstanding Visual Effects in a Student Project',
+      'VES Lifetime Achievement Award', 'VES Visionary Award', 'Georges Méliès Award',
+    ],
+    sources: [SEARCH('2026 guild awards dates'), EDITORIAL],
+  },
+  {
+    id: 'cas-awards', name: 'The Cinema Audio Society Awards', shortName: 'The CAS Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Cinema Audio Society', ...LA, venue: 'The Beverly Hilton', editionOffset: 1964,
+    start: nearest(3, 1, SAT), days: 1, nominations: nearest(1, 13, TUE),
+    known: { 2026: { start: '2026-03-07', source: SEARCH('2026 guild awards dates') } },
+    categories: [
+      'Motion Picture – Live Action', 'Motion Picture – Animated', 'Motion Picture – Documentary', 'Non-Theatrical Motion Pictures or Limited Series',
+      'Television Series – One Hour', 'Television Series – Half Hour', 'Television Non-Fiction, Variety or Music Series or Specials',
+      'Outstanding Product – Production', 'Outstanding Product – Post-Production', 'Career Achievement Award', 'Filmmaker Award', 'Student Recognition Award',
+    ],
+    sources: [SEARCH('2026 guild awards dates'), EDITORIAL],
+  },
+  {
+    id: 'golden-reels', name: 'The MPSE Golden Reel Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Motion Picture Sound Editors', ...LA, venue: 'The Wilshire Ebell Theatre', editionOffset: 1953,
+    start: nearest(3, 1, SUN), days: 1, nominations: nearest(1, 13, TUE),
+    known: { 2026: { start: '2026-03-08', source: SEARCH('2025-26 awards season calendar') } },
+    categories: [
+      'Feature Dialogue/ADR', 'Feature Effects/Foley', 'Feature Music', 'Feature Musical', 'Feature Animation', 'Feature Documentary', 'Foreign Language Feature',
+      'Broadcast Long Form Dialogue/ADR', 'Broadcast Long Form Effects/Foley', 'Broadcast Long Form Music', 'Broadcast Short Form Dialogue/ADR', 'Broadcast Short Form Effects/Foley',
+      'Broadcast Short Form Music', 'Broadcast Animation', 'Broadcast Documentary', 'Non-Theatrical Animation', 'Non-Theatrical Documentary', 'Computer Cinematic',
+      'Computer Interactive', 'Student Film (Verna Fields Award)', 'Filmmaker Award', 'Career Achievement Award',
+    ],
+    sources: [SEARCH('2025-26 awards season calendar'), EDITORIAL],
+  },
+  {
+    id: 'artios', name: 'The Artios Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Casting Society', ...LA, venue: 'Simultaneous ceremonies in Los Angeles, New York and London', editionOffset: 1985,
+    start: nearest(2, 26, THU), days: 1, nominations: nearest(1, 13, TUE),
+    known: { 2026: { start: '2026-02-26', source: SEARCH('2026 guild awards dates') } },
+    categories: [
+      'Feature – Big Budget Drama', 'Feature – Big Budget Comedy', 'Feature – Studio or Independent Drama', 'Feature – Studio or Independent Comedy',
+      'Feature – Micro Budget', 'Feature – Animation', 'Television Series – Drama', 'Television Series – Comedy', 'Limited Series', 'Television Movie',
+      'Television Pilot – Drama', 'Television Pilot – Comedy', 'Non-Fiction', 'Animation Television', 'Short Film', 'Commercials', 'Theatre (multiple)',
+      'Hoyt Bowers Award', 'Career Achievement Award', 'New York Apple Award', 'Lynn Stalmaster Award', 'Rosalie Joseph Humanitarian Award',
+    ],
+    sources: [SEARCH('2026 guild awards dates'), EDITORIAL],
+  },
+  {
+    id: 'cdg-awards', name: 'The Costume Designers Guild Awards', shortName: 'The CDG Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Costume Designers Guild', ...LA, editionOffset: 1998,
+    start: nearest(2, 12, THU), days: 1, nominations: nearest(1, 14, WED),
+    known: { 2026: { start: '2026-02-12', source: WIKI('Costume Designers Guild Awards'), note: 'Hosted by Courtney Hope.' } },
+    categories: [
+      'Excellence in Contemporary Film', 'Excellence in Period Film', 'Excellence in Sci-Fi/Fantasy Film', 'Excellence in Contemporary Television',
+      'Excellence in Period Television', 'Excellence in Sci-Fi/Fantasy Television', 'Excellence in Variety, Reality-Competition and Live Television',
+      'Excellence in Short Form Design', 'Career Achievement Award', 'Hall of Fame Award', 'Spotlight Award', 'Distinguished Collaborator Award',
+    ],
+    sources: [WIKI('Costume Designers Guild Awards')],
+  },
+  {
+    id: 'muahs-awards', name: 'The Make-Up Artists and Hair Stylists Guild Awards', shortName: 'The MUAHS Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Make-Up Artists and Hair Stylists Guild', ...LA, venue: 'The Beverly Hilton', editionOffset: 2013,
+    start: nearest(2, 15, SAT), days: 1, nominations: nearest(1, 7, WED),
+    known: {},
+    categories: [
+      'Feature-Length Motion Picture: Best Contemporary Make-Up', 'Best Period and/or Character Make-Up', 'Best Special Make-Up Effects', 'Best Contemporary Hair Styling',
+      'Best Period and/or Character Hair Styling', 'Television Series, Limited or Miniseries or TV Movie (the same five)', 'Daytime Television', 'Children and Teen Television Programming',
+      'Theatrical Productions', 'Commercials and Music Videos', 'Lifetime Achievement Awards', 'Distinguished Artisan Award', 'Vanguard Award',
+    ],
+    note: 'Mid-February. Dates projected from the pattern.',
+    sources: [EDITORIAL],
+  },
+  {
+    id: 'scl-awards', name: 'The Society of Composers and Lyricists Awards', shortName: 'The SCL Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Society of Composers and Lyricists', ...LA, venue: 'Skirball Cultural Center', editionOffset: 2019,
+    start: nearest(2, 18, WED), days: 1, nominations: nearest(12, 16, TUE),
+    known: {},
+    categories: [
+      'Outstanding Original Score for a Studio Film', 'Outstanding Original Score for an Independent Film', 'Outstanding Original Score for a Television Production',
+      'Outstanding Original Song for Visual Media', 'Outstanding Original Score for Interactive Media', 'Outstanding Original Song for Interactive Media',
+      'David Raksin Award for Emerging Talent', 'Spirit of Collaboration Award', 'Ambassador Award', 'Career Achievement Award',
+    ],
+    note: 'Dates projected from the pattern.',
+    sources: [EDITORIAL],
+  },
+  {
+    id: 'lmgi-awards', name: 'The Location Managers Guild International Awards', shortName: 'The LMGI Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Location Managers Guild International', ...LA, editionOffset: 2013,
+    start: nearest(8, 23, SAT), days: 1, nominations: nearest(7, 15, WED),
+    known: {},
+    categories: [
+      'Outstanding Locations in a Contemporary Feature Film', 'Outstanding Locations in a Period Feature Film', 'Outstanding Locations in a Contemporary Television Series',
+      'Outstanding Locations in a Period Television Series', 'Outstanding Locations in a Limited Anthology Television Series', 'Outstanding Locations in a Commercial',
+      'Outstanding Film Commission', 'Trailblazer Award', 'Eva Monley Award', 'Lifetime Achievement Award', 'Humanitarian Award',
+    ],
+    note: 'Late summer. Dates projected from the pattern.',
+    sources: [EDITORIAL],
+  },
+  {
+    id: 'annie-awards', name: 'The Annie Awards', kind: 'awards', scope: 'animation',
+    organiser: 'ASIFA-Hollywood', ...LA, venue: 'Royce Hall, UCLA', editionOffset: 1973,
+    start: nearest(2, 14, SAT), days: 1, nominations: nearest(1, 5, MON),
+    known: {
+      2025: { start: '2025-02-08', nominations: '2025-01-06', source: WIKI('52nd Annie Awards') },
+      2026: { start: '2026-02-21', nominations: '2026-01-05', source: WIKI('53rd Annie Awards') },
+    },
+    categories: [
+      'Best Animated Feature', 'Best Animated Feature – Independent', 'Best TV/Media – Preschool', 'Best TV/Media – Children', 'Best TV/Media – Mature',
+      'Best TV/Media – Limited Series', 'Best Special Production', 'Best Short Subject', 'Best Animated Television Commercial', 'Best Student Film',
+      'Animated Effects in a Feature', 'Animated Effects in a TV/Media Production', 'Character Animation in a Feature', 'Character Animation in a TV/Media Production',
+      'Character Animation in a Live Action Production', 'Character Animation in a Video Game', 'Character Design in a Feature', 'Character Design in a TV/Media Production',
+      'Directing in a Feature', 'Directing in a TV/Media Production', 'Editorial in a Feature', 'Editorial in a TV/Media Production', 'Music in a Feature',
+      'Music in a TV/Media Production', 'Production Design in a Feature', 'Production Design in a TV/Media Production', 'Storyboarding in a Feature',
+      'Storyboarding in a TV/Media Production', 'Voice Acting in a Feature', 'Voice Acting in a TV/Media Production', 'Writing in a Feature', 'Writing in a TV/Media Production',
+      'June Foray Award', 'Special Achievement Award', 'Ub Iwerks Award', 'Winsor McCay Award',
+    ],
+    sources: [WIKI('53rd Annie Awards')],
+  },
+  {
+    id: 'sdsa-awards', name: 'The Set Decorators Society of America Awards', shortName: 'The SDSA Awards', kind: 'awards', scope: 'crafts',
+    organiser: 'Set Decorators Society of America', ...LA, editionOffset: 2019,
+    start: nearest(2, 22, SUN), days: 1, nominations: nearest(1, 16, FRI),
+    known: {},
+    categories: [
+      'Best Achievement in Decor/Design of a Feature Film: Period', 'Fantasy or Science Fiction', 'Comedy or Musical', 'Contemporary', 'Animated',
+      'Television: One-Hour Period or Fantasy', 'One-Hour Contemporary', 'Half-Hour Single-Camera', 'Half-Hour Multi-Camera', 'Limited Series or Movie', 'Variety, Reality or Competition',
+    ],
+    note: 'Dates projected from the pattern.',
+    sources: [EDITORIAL],
+  },
+];
