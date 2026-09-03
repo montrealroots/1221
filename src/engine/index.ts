@@ -6,7 +6,6 @@
  * system registered, which is the only object the UI ever talks to.
  */
 
-import { performerTitleOf } from './core/performer';
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Id, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
@@ -358,7 +357,7 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
-  sim.universe.meta.careerLabel = careerLabel(player.careerTrack, performerTitleOf(player));
+  sim.universe.meta.careerLabel = careerLabel(player.careerTrack);
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);

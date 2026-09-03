@@ -101,9 +101,9 @@ export interface Person {
   stageName?: string;
   pronouns: string;
   /**
-   * Actor or actress, when they have said which. Absent, pronouns decide.
-   * Optional so that saves written before the word was asked about still
-   * load, and are described by the same rule everyone else is.
+   * Actor or actress, for the award categories that are named for one.
+   * Nothing in the game writes this yet; absent, pronouns decide. Optional
+   * so every save loads and is routed by the same rule.
    */
   performerTitle?: PerformerTitle;
   /**
