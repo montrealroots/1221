@@ -302,18 +302,21 @@ export function zoneAbbreviation(instant: Instant, zone: TimeZone): string {
 export function formatDuration(ms: number): string {
   const abs = Math.abs(ms);
   if (abs < MS_MINUTE) return 'less than a minute';
-  if (abs < MS_HOUR) {
-    const m = Math.round(abs / MS_MINUTE);
-    return `${m} minute${m === 1 ? '' : 's'}`;
-  }
-  if (abs < MS_DAY) {
-    const h = Math.floor(abs / MS_HOUR);
-    const m = Math.round((abs % MS_HOUR) / MS_MINUTE);
+
+  // Round to the smallest unit shown *first*, then split. Flooring the hours
+  // and rounding the minutes separately printed "22h 60m" for 22h 59.6m.
+  const totalMinutes = Math.round(abs / MS_MINUTE);
+  if (totalMinutes < 60) return `${totalMinutes} minute${totalMinutes === 1 ? '' : 's'}`;
+  if (totalMinutes < 24 * 60) {
+    const h = Math.floor(totalMinutes / 60);
+    const m = totalMinutes % 60;
     return m > 0 ? `${h}h ${m}m` : `${h} hour${h === 1 ? '' : 's'}`;
   }
-  const d = Math.floor(abs / MS_DAY);
+
+  const totalHours = Math.round(abs / MS_HOUR);
+  const d = Math.floor(totalHours / 24);
   if (d < 14) {
-    const h = Math.round((abs % MS_DAY) / MS_HOUR);
+    const h = totalHours % 24;
     return h > 0 ? `${d}d ${h}h` : `${d} day${d === 1 ? '' : 's'}`;
   }
   if (d < 60) return `${Math.round(d / 7)} weeks`;
