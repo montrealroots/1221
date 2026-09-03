@@ -22,6 +22,7 @@ import { formatMoney } from '@/engine/core/money';
 import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
+import { performerLabel, performerTitleOf, performerWord, type PerformerTitle } from '@/engine/core/performer';
 
 const STEPS = ['Identity', 'Personal', 'Career', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -271,6 +272,21 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <option value="they/them">they/them</option>
           </select>
         </div>
+        <div className="field">
+          <label htmlFor="performer-title">Performer Title</label>
+          <select
+            id="performer-title"
+            value={performerTitleOf(config)}
+            onChange={(e) => set('performerTitle', e.target.value as PerformerTitle)}
+          >
+            <option value="actor">Actor</option>
+            <option value="actress">Actress</option>
+          </select>
+          <p className="xs dim" style={{ marginTop: 4 }}>
+            {config.performerTitle ? 'Your choice. ' : 'Follows your pronouns until you choose. '}
+            Used on casting lists, in credits and in award categories.
+          </p>
+        </div>
       </div>
         </div>
       </div>
@@ -407,6 +423,7 @@ function PersonalStep({
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
+  const title = performerTitleOf(config);
   const grouped = useMemo(() => {
     const map = new Map<TraitCategory, typeof TRAITS[number][]>();
     for (const trait of TRAITS) {
@@ -495,10 +512,10 @@ function PersonalStep({
                     disabled={blocked}
                     onClick={() => toggleTrait(trait.id)}
                     title={conflicts.length > 0
-                      ? `Cannot be held with ${conflicts.map((c) => TRAIT_BY_ID[c]?.name).join(', ')}.`
+                      ? `Cannot be held with ${conflicts.map((c) => performerLabel(TRAIT_BY_ID[c]?.name ?? '', title)).join(', ')}.`
                       : undefined}
                   >
-                    <div className="trait-name">{trait.name}</div>
+                    <div className="trait-name">{performerLabel(trait.name, title)}</div>
                     <div className="trait-desc">{trait.description}</div>
                   </button>
                 );
@@ -572,7 +589,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             aria-pressed={config.careerTrack === track.id}
             onClick={() => set('careerTrack', track.id)}
           >
-            <div className="trait-name">{careerLabel(track.id)}</div>
+            <div className="trait-name">{careerLabel(track.id, performerTitleOf(config))}</div>
             <div className="trait-desc">{track.blurb}</div>
           </button>
         ))}
@@ -775,7 +792,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {careerLabel(config.careerTrack)} · {city?.name}
+            {age} · {careerLabel(config.careerTrack, performerTitleOf(config))} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>
@@ -796,6 +813,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           )}
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
+          <Line label="Performer Title" value={performerWord(performerTitleOf(config))} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
@@ -825,7 +843,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
               if (!trait) return null;
               return (
                 <div key={id}>
-                  <div className="strong small">{trait.name}</div>
+                  <div className="strong small">{performerLabel(trait.name, performerTitleOf(config))}</div>
                   <div className="xs muted">{trait.description}</div>
                 </div>
               );

@@ -12,6 +12,7 @@ import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { AuditRecord, HistoryRecord } from '../core/audit';
+import type { PerformerTitle } from '../core/performer';
 import type { AttributeSheet } from './attributes';
 import type { SkillSheet } from './skills';
 
@@ -99,6 +100,12 @@ export interface Person {
   /** Professional credit name, when different from the legal name. */
   stageName?: string;
   pronouns: string;
+  /**
+   * Actor or actress, when they have said which. Absent, pronouns decide.
+   * Optional so that saves written before the word was asked about still
+   * load, and are described by the same rule everyone else is.
+   */
+  performerTitle?: PerformerTitle;
   /**
    * Their headshot, as a data URL.
    *

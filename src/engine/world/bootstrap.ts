@@ -7,6 +7,7 @@
  * already running before they arrived.
  */
 
+import { performerTitleOf, performerWord, type PerformerTitle } from '../core/performer';
 import type {
   CareerTrack, Person, Personality, SaveMeta, SaveUniverse,
 } from '../domain/model';
@@ -37,6 +38,8 @@ export interface NewSaveConfig {
   displayName?: string;
   stageName?: string;
   pronouns: string;
+  /** Actor or actress. Left unset, it follows the pronouns. */
+  performerTitle?: PerformerTitle;
   /** Local date of birth in the starting city's zone. */
   birthYear: number;
   birthMonth: number;
@@ -265,7 +268,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    careerLabel: careerLabel(config.careerTrack),
+    careerLabel: careerLabel(config.careerTrack, performerTitleOf(config)),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -300,6 +303,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     stageName: config.stageName?.trim() || undefined,
     portrait: config.portrait,
     pronouns: config.pronouns,
+    performerTitle: config.performerTitle,
     birthInstant,
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
@@ -330,9 +334,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   return { universe, playerId };
 }
 
-export function careerLabel(track: CareerTrack): string {
+/** The track as a word, in the performer's own word where that is what it is. */
+export function careerLabel(track: CareerTrack, title: PerformerTitle = 'actor'): string {
   const labels: Record<CareerTrack, string> = {
-    none: 'Undecided', actor: 'Actor', writer: 'Writer', director: 'Director',
+    none: 'Undecided', actor: performerWord(title), writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',
     executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working life',
   };

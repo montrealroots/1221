@@ -10,6 +10,7 @@
  * the player could actually know. Ballots are private.
  */
 
+import { categoryAdmits, performerTitleOf } from '../core/performer';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { AwardEdition, AwardNomination, FestivalSubmission, Id, Project } from '../domain/model';
@@ -59,6 +60,9 @@ export function registerAwards(sim: Simulation): void {
       for (const category of p.categories) {
         if (!body.categories.includes(category)) {
           throw new CommandError(`${body.name} does not have a category called "${category}".`);
+        }
+        if (isPerformanceCategory(category) && !pickNomineeFor(s, project, category)) {
+          throw new CommandError(`${project.title} has nobody in its cast that ${category} could go to.`);
         }
       }
 
@@ -312,15 +316,33 @@ export function isEligible(sim: Simulation, project: Project, edition: AwardEdit
   return { ok: true };
 }
 
+/** A category that goes to a performer rather than to the film or its makers. */
+function isPerformanceCategory(category: string): boolean {
+  const lower = category.toLowerCase();
+  return ['actor', 'actress', 'lead', 'supporting', 'performance'].some((word) => lower.includes(word))
+    && !lower.includes('director') && !lower.includes('screenplay') && !lower.includes('writing');
+}
+
+/**
+ * Who a category goes to.
+ *
+ * A performance category is named for a title, and the cast is read in that
+ * light: the lead first, then the rest, and the first of them the category
+ * admits is the nominee. A film whose lead is an actress is not a Best Actor
+ * nominee however good it was; if nobody in the cast fits, nobody is named.
+ */
 function pickNomineeFor(sim: Simulation, project: Project, category: string): Id | undefined {
   const lower = category.toLowerCase();
   if (lower.includes('director')) return project.directorId;
   if (lower.includes('screenplay') || lower.includes('writing')) return project.writerIds[0];
-  if (lower.includes('actor') || lower.includes('actress') || lower.includes('lead') || lower.includes('supporting') || lower.includes('performance')) {
-    const lead = project.attachments.find((a) => a.role === 'lead');
-    return lead?.personId ?? project.castIds[0];
+  if (isPerformanceCategory(category)) {
+    const leads = project.attachments.filter((a) => a.role === 'lead').map((a) => a.personId);
+    for (const id of [...leads, ...project.castIds]) {
+      const person = sim.universe.people[id];
+      if (person && categoryAdmits(category, performerTitleOf(person))) return id;
+    }
+    return undefined;
   }
-  void sim;
   return undefined;
 }
 
@@ -387,6 +409,8 @@ function announceNominations(sim: Simulation, editionId: Id): void {
       if (merit < 58) continue;
       const rng = sim.rng('auto_nom', edition.id, category, project.id);
       if (!rng.chance(remap(merit, 58, 95, 0.12, 0.8))) continue;
+      const personId = pickNomineeFor(sim, project, category);
+      if (isPerformanceCategory(category) && !personId) continue;
       const auto: AwardNomination = {
         id: sim.nextId('nom'),
         saveId: sim.universe.meta.id,
@@ -394,7 +418,7 @@ function announceNominations(sim: Simulation, editionId: Id): void {
         bodyId: body.id,
         category,
         projectId: project.id,
-        personId: pickNomineeFor(sim, project, category),
+        personId,
         announcedAt: 0,
         campaignSpend: 0,
       };

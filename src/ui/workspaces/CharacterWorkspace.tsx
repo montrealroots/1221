@@ -1,3 +1,5 @@
+import { careerLabel } from '@/engine/world/bootstrap';
+import { performerLabel, performerTitleOf } from '@/engine/core/performer';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Tabs } from '@/ui/components/primitives';
@@ -33,7 +35,7 @@ export function CharacterWorkspace() {
           <div className="eyebrow">Character</div>
           <h1>{player.displayName}</h1>
           <p className="muted">
-            {age} · {player.careerTrack} · {CITIES.get(player.currentLocationId)?.name}
+            {age} · {careerLabel(player.careerTrack, performerTitleOf(player))} · {CITIES.get(player.currentLocationId)?.name}
             {player.stageName && ` · credited as ${player.stageName}`}
           </p>
         </div>
@@ -133,7 +135,7 @@ export function CharacterWorkspace() {
                 return (
                   <div key={id}>
                     <div className="row gap-2">
-                      <span className="strong">{trait.name}</span>
+                      <span className="strong">{performerLabel(trait.name, performerTitleOf(player))}</span>
                       <span className="chip">{trait.category}</span>
                     </div>
                     <p className="small muted" style={{ margin: '4px 0' }}>{trait.description}</p>
