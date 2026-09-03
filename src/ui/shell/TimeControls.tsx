@@ -5,17 +5,22 @@
  * world processes everything that comes due either way.
  */
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
 import { suggestedSleep, hoursUntilNextCommitment } from '@/engine/systems/life';
-import { skipTargets } from '@/engine/world/calendar';
-import { formatDate, formatDuration, formatTime, MS_HOUR } from '@/engine/core/time';
+import { missedBy, skipTargets } from '@/engine/world/calendar';
+import type { CalendarEntry } from '@/engine/world/calendar';
+import {
+  addDays, formatDate, formatDateTime, formatDuration, formatTime, instantFromZoned, zonedParts, MS_HOUR,
+  type Instant,
+} from '@/engine/core/time';
 
 export function TimeControls() {
   const { sim, advanceTo, refresh } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
+  const [confirm, setConfirm] = useState<{ at: Instant; label: string; missed: CalendarEntry[] } | null>(null);
   const speed = sim.universe.preferences.timeSpeed;
 
   const setSpeed = (next: typeof speed) => {
@@ -35,11 +40,43 @@ export function TimeControls() {
           {speed === 'paused' ? '▶' : '❚❚'}
         </button>
         <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
-        <button className="btn btn-sm hide-sm" onClick={() => setSkipOpen(true)}>Skip to…</button>
+        <AdvanceMenu
+          onAdvance={(at, label) => {
+            const missed = missedBy(sim, at);
+            if (missed.length > 0) setConfirm({ at, label, missed });
+            else advanceTo(at);
+          }}
+          onChooseEvent={() => setSkipOpen(true)}
+        />
       </div>
 
       {sleepOpen && <SleepDialog onClose={() => setSleepOpen(false)} />}
       {skipOpen && <SkipDialog onClose={() => setSkipOpen(false)} onSkip={(at) => { advanceTo(at); setSkipOpen(false); }} />}
+      {confirm && (
+        <Modal
+          title="You Would Miss Something"
+          onClose={() => setConfirm(null)}
+          footer={
+            <>
+              <button className="btn" onClick={() => setConfirm(null)}>Cancel</button>
+              <button className="btn btn-primary" onClick={() => { advanceTo(confirm.at); setConfirm(null); }}>
+                Advance Anyway
+              </button>
+            </>
+          }
+        >
+          <p className="small muted">
+            Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
+            {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} you are expected at.
+            Time only moves forwards; anything missed stays missed.
+          </p>
+          <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
+            {confirm.missed.slice(0, 8).map((entry) => (
+              <li key={entry.id}>{entry.title} — {formatDateTime(entry.at, sim.zone)}</li>
+            ))}
+          </ul>
+        </Modal>
+      )}
     </>
   );
 }
@@ -139,7 +176,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
             disabled={!target}
             onClick={() => target && onSkip(target.item.at)}
           >
-            Skip {target ? `to ${target.entry.title}` : ''}
+            Skip {target ? `To ${target.entry.title}` : ''}
           </button>
         </>
       }
@@ -203,5 +240,100 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
         </>
       )}
     </Modal>
+  );
+}
+
+/**
+ * Advance: the world moved forward on purpose.
+ *
+ * Live time is a minute a minute. This is for when you do not want to wait —
+ * the hour until a call, the night until a morning, the week until a
+ * decision. Every jump goes through the one world clock, everything on the
+ * way is processed in order, and a jump that would skip past a commitment
+ * asks first.
+ */
+function AdvanceMenu({
+  onAdvance, onChooseEvent,
+}: {
+  onAdvance: (at: Instant, label: string) => void;
+  onChooseEvent: () => void;
+}) {
+  const { sim } = useGame();
+  const nextEvent = useWorld((s) => skipTargets(s, 1)[0]);
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const away = (event: MouseEvent) => {
+      if (anchor.current && !anchor.current.contains(event.target as Node)) setOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', away);
+    document.addEventListener('keydown', escape);
+    return () => {
+      document.removeEventListener('mousedown', away);
+      document.removeEventListener('keydown', escape);
+    };
+  }, [open]);
+
+  const zone = sim.zone;
+  const now = sim.now;
+  const today = zonedParts(now, zone);
+  const todayAt = (hour: number) => instantFromZoned(
+    { year: today.year, month: today.month, day: today.day, hour, minute: 0, second: 0 }, zone,
+  );
+  const nextAt = (hour: number) => (todayAt(hour) > now ? todayAt(hour) : addDays(todayAt(hour), 1, zone));
+  const weekday = new Date(Date.UTC(today.year, today.month - 1, today.day)).getUTCDay();
+  const untilMonday = ((1 - weekday) + 7) % 7 || 7;
+
+  const items: { label: string; detail: string; at?: Instant; choose?: boolean }[] = [
+    { label: 'One Hour', detail: formatTime(now + MS_HOUR, zone), at: now + MS_HOUR },
+    { label: 'This Evening', detail: `6:00 PM · ${formatDate(nextAt(18), zone)}`, at: nextAt(18) },
+    { label: 'Tonight', detail: `10:00 PM · ${formatDate(nextAt(22), zone)}`, at: nextAt(22) },
+    { label: 'Tomorrow Morning', detail: `7:00 AM · ${formatDate(addDays(todayAt(7), 1, zone), zone)}`, at: addDays(todayAt(7), 1, zone) },
+    {
+      label: 'Next Event',
+      detail: nextEvent ? `${nextEvent.entry.title} · ${formatDateTime(nextEvent.item.at, zone)}` : 'Nothing is scheduled',
+      at: nextEvent?.item.at,
+    },
+    { label: 'Next Monday', detail: `9:00 AM · ${formatDate(addDays(todayAt(9), untilMonday, zone), zone)}`, at: addDays(todayAt(9), untilMonday, zone) },
+    { label: 'One Week', detail: formatDateTime(addDays(now, 7, zone), zone), at: addDays(now, 7, zone) },
+    { label: 'Choose An Event…', detail: 'Pick from everything on the calendar', choose: true },
+  ];
+
+  return (
+    <div className="menu-anchor" ref={anchor}>
+      <button
+        type="button"
+        className="btn btn-sm"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        Advance ▾
+      </button>
+      {open && (
+        <div className="menu" role="menu" aria-label="Advance Time">
+          {items.map((item) => (
+            <button
+              key={item.label}
+              type="button"
+              role="menuitem"
+              className="menu-item"
+              disabled={!item.choose && item.at === undefined}
+              onClick={() => {
+                setOpen(false);
+                if (item.choose) onChooseEvent();
+                else if (item.at !== undefined) onAdvance(item.at, item.label);
+              }}
+            >
+              <span className="menu-item-label">{item.label}</span>
+              <span className="menu-item-detail">{item.detail}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

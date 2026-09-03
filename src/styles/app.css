@@ -961,3 +961,43 @@ kbd {
   .page-head-portrait { flex-direction: column; }
   .headshot-lg { width: 120px; height: 150px; }
 }
+
+/* --------------------------------------------------------------------------
+   Advance menu
+   -------------------------------------------------------------------------- */
+
+.menu-anchor { position: relative; display: inline-flex; }
+.menu {
+  position: absolute; top: calc(100% + 4px); left: 0; z-index: 40;
+  min-width: 18rem; max-width: min(24rem, calc(100vw - 2 * var(--s4)));
+  padding: var(--s1); border-radius: var(--radius);
+  background: var(--surface-2); border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column;
+}
+.menu-item {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  width: 100%; padding: var(--s2) var(--s3); border: 0; border-radius: var(--radius-sm);
+  background: none; color: var(--text); text-align: left; cursor: pointer;
+  font: inherit; min-width: 0;
+}
+.menu-item:hover, .menu-item:focus-visible { background: var(--surface-hover); outline: none; }
+.menu-item:disabled { opacity: .45; cursor: default; }
+.menu-item-label { font-size: var(--size-sm); font-weight: 600; }
+.menu-item-detail { font-size: var(--size-xs); color: var(--text-dim); overflow-wrap: anywhere; }
+/* On a phone the menu hangs from the right edge of the bar so it stays on screen. */
+@media (max-width: 620px) { .menu { left: auto; right: 0; } }
+
+/* --------------------------------------------------------------------------
+   Weather
+   -------------------------------------------------------------------------- */
+
+.weather-now { display: flex; align-items: center; gap: var(--s3); min-width: 0; }
+.weather-icon { font-size: 2.4rem; line-height: 1; flex: none; }
+.weather-temp { font-size: var(--size-xl); font-weight: 650; line-height: 1.1; }
+.weather-week {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s2);
+  margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line);
+}
+.weather-day { text-align: center; min-width: 0; }
+.weather-day > div:nth-child(2) { font-size: 1.3rem; line-height: 1.4; }

@@ -135,7 +135,7 @@ export function GameShell() {
         <SaveIndicator />
 
         <button className="btn btn-ghost btn-sm hide-sm" onClick={game.exitToMenu}>
-          Save &amp; exit
+          Save &amp; Exit
         </button>
       </header>
 

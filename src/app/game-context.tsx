@@ -7,6 +7,7 @@
  * after any mutation and re-reads what it needs.
  */
 
+import { createClockStepper } from '@/engine/core/realclock';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState,
   type ReactNode,
@@ -14,7 +15,6 @@ import {
 import type { Simulation, CommandResult } from '@/engine';
 import { refreshMeta } from '@/engine';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
-import { MS_MINUTE } from '@/engine/core/time';
 
 export interface Toast {
   id: number;
@@ -96,15 +96,6 @@ const SPEED_MULTIPLIER: Record<string, number> = {
 /** How often the loop wakes. Often enough to feel continuous, cheap to ignore. */
 const TICK_MS = 1_000;
 
-/**
- * The most world time one tick may apply.
- *
- * Coming back to a tab left open overnight should not freeze the browser while
- * eight hours of simulation runs in a single frame. The backlog is kept and
- * drained over the ticks that follow, so the world still lives through every
- * hour of it, just not all at once.
- */
-const MAX_ADVANCE_PER_TICK = 30 * MS_MINUTE;
 
 export function GameProvider({
   sim, adapter, onExit, children,
@@ -232,21 +223,21 @@ export function GameProvider({
     // Measured against a monotonic clock rather than assumed from the interval.
     // A throttled or backgrounded tab does not fire on schedule, and a world
     // clock that quietly loses an hour is worse than one that runs behind.
+    // The arithmetic — carrying fractions, paying a night away back in
+    // bounded steps — is the stepper's, and is tested to the millisecond.
     let lastAt = performance.now();
-    let backlog = 0;
+    const stepper = createClockStepper(multiplier);
 
     const handle = window.setInterval(() => {
       const now = performance.now();
       const elapsed = Math.max(0, now - lastAt);
       lastAt = now;
 
-      backlog += elapsed * multiplier;
-      const step = Math.min(backlog, MAX_ADVANCE_PER_TICK);
+      const step = stepper.feed(elapsed);
       if (step < 1) return;
-      backlog -= step;
 
       try {
-        sim.advanceBy(Math.round(step));
+        sim.advanceBy(step);
         sim.universe.meta.playtimeSeconds += elapsed / 1_000;
         dirty.current = true;
         setVersion((v) => v + 1);

@@ -5,6 +5,8 @@
  * attention, how am I doing. A command surface, not a place to bury depth.
  */
 
+import { forecastFor, weatherAt, weatherIcon } from '@/engine/systems/weather';
+import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
@@ -34,6 +36,9 @@ export function Home() {
   const ready = readiness(player);
   const accounts = useWorld((s) => s.ledger.accountsOf(s.player.id));
   const primary = accounts.find((a) => a.id === player.primaryAccountId) ?? accounts[0];
+  const weather = city ? weatherAt(sim, city.id) : undefined;
+  const week = city ? forecastFor(sim, city.id, 6) : [];
+  const unit = weather?.fahrenheit ? '°F' : '°C';
 
   return (
     <>
@@ -43,6 +48,9 @@ export function Home() {
         <p className="muted">
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
           {zoneAbbreviation(sim.now, sim.zone)} · {seasonOf(sim.now, sim.zone, city?.latitude ?? 34)}
+          {weather && (
+            <> · <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} {weather.condition}</>
+          )}
         </p>
       </div>
 
@@ -53,7 +61,7 @@ export function Home() {
           flush
           actions={unread.length > 0 ? (
             <button className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
-              Mark {unread.length} read
+              Mark {unread.length} Read
             </button>
           ) : undefined}
         >
@@ -128,7 +136,7 @@ export function Home() {
                   </span>
                 </div>
                 <button className="btn btn-sm" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                  Open calendar
+                  Open Calendar
                 </button>
               </>
             ) : (
@@ -161,6 +169,39 @@ export function Home() {
               Wellbeing
             </button>
           </Panel>
+
+          {weather && city && (
+            <Panel title="Weather" tight actions={<span className="chip">{weather.climateName}</span>}>
+              <div className="weather-now">
+                <span className="weather-icon" aria-hidden="true">{weather.icon}</span>
+                <div className="grow">
+                  <div className="weather-temp mono">{weather.temperature}{unit}</div>
+                  <div className="small muted">
+                    {weather.condition} · High {weather.high}{unit} · Low {weather.low}{unit}
+                  </div>
+                  <div className="xs dim">
+                    Humidity {weather.humidity}% · Wind {weather.fahrenheit ? `${Math.round(weather.windKph * 0.621)} mph` : `${weather.windKph} km/h`}
+                  </div>
+                </div>
+              </div>
+              <div className="weather-week" aria-label="The Days Ahead">
+                {week.slice(1).map((day) => {
+                  const [y, m, d] = day.dateKey.split('-').map(Number);
+                  const weekday = WEEKDAY_NAMES[new Date(Date.UTC(y ?? 2026, (m ?? 1) - 1, d ?? 1)).getUTCDay()] ?? '';
+                  return (
+                    <div key={day.dateKey} className="weather-day" title={`${day.condition}, ${day.low}${unit} to ${day.high}${unit}`}>
+                      <div className="xs dim">{weekday.slice(0, 3)}</div>
+                      <div aria-hidden="true">{weatherIcon(day.condition)}</div>
+                      <div className="xs mono">{day.high}° / {day.low}°</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+                SLATE's climate model for {city.name}: the season, the latitude and the kind of place it is. Not a forecast service.
+              </p>
+            </Panel>
+          )}
         </div>
       </div>
 
@@ -206,13 +247,13 @@ export function Home() {
         <Panel
           title="What You Are Working On"
           flush
-          actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>All projects</button>}
+          actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>All Projects</button>}
         >
           {projects.length === 0 ? (
             <Empty
               title="Nothing In Development"
               body="No script, no shoot, no release. Every career in this game starts with somebody deciding to make something."
-              action={<button className="btn btn-primary btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>Start something</button>}
+              action={<button className="btn btn-primary btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>Start Something</button>}
             />
           ) : (
             <div className="list">

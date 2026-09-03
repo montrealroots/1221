@@ -192,7 +192,7 @@ export function LocationPicker({
         {problem && <p className="hint" role="alert">{problem}</p>}
       </div>
 
-      <div className="picker-results" role="listbox" aria-label="Matching places">
+      <div className="picker-results" role="listbox" aria-label="Matching Places">
         {matches.length === 0 && !loading && (
           <p className="hint" style={{ padding: 'var(--s3)' }}>
             Nothing matches “{query}” there. Try a different spelling, or widen the region.

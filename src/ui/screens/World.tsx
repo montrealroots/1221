@@ -5,6 +5,7 @@
  * join without the navigation collapsing.
  */
 
+import { weatherAt } from '@/engine/systems/weather';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
@@ -98,6 +99,7 @@ const DOMAINS: Domain[] = [
 
 export function World() {
   const { navigate } = useGame();
+  const { sim } = useGame();
   const player = useWorld((s) => s.player);
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const city = CITIES.get(player.currentLocationId);
@@ -111,6 +113,17 @@ export function World() {
           You are in {city?.name} with {formatMoneyCompact(worth.total)} to your name. Every one of these
           connects to the others; nothing here is a separate game.
         </p>
+        {city && (() => {
+          const weather = weatherAt(sim, city.id);
+          if (!weather) return null;
+          const unit = weather.fahrenheit ? '°F' : '°C';
+          return (
+            <p className="small dim" style={{ marginTop: 'var(--s1)' }}>
+              <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} and {weather.condition.toLowerCase()} in {city.name} right now,
+              {' '}high {weather.high}{unit}, low {weather.low}{unit}. {weather.climateName} climate.
+            </p>
+          );
+        })()}
       </div>
 
       <div className="col gap-5">

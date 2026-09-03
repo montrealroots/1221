@@ -279,6 +279,19 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
   });
 }
 
+/**
+ * The commitments the player would miss by jumping straight to `at`.
+ *
+ * The Advance menu asks before it moves, because time only goes forwards and
+ * an audition skipped is an audition missed.
+ */
+export function missedBy(sim: Simulation, at: Instant): CalendarEntry[] {
+  return sim.timeline
+    .between(sim.now, at - 1, (i) => i.category !== 'system')
+    .map(toEntry)
+    .filter((e) => e.requiresPlayer);
+}
+
 /** Whether a proposed commitment collides with anything already booked. */
 export function checkConflicts(sim: Simulation, at: Instant, durationMinutes: number): CalendarEntry[] {
   return sim.timeline.conflicts(at, durationMinutes).map(toEntry);

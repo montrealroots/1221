@@ -106,10 +106,10 @@ export function TutorialCard() {
       <p className="small muted">{tutorial.body}</p>
       <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
         <button className="btn btn-primary btn-sm" onClick={() => run('tutorial.complete', { tutorialId: tutorial.id })}>
-          {tutorial.cta ?? 'Got it'}
+          {tutorial.cta ?? 'Got It'}
         </button>
         <button className="btn btn-ghost btn-sm" onClick={() => run('tutorial.set_mode', { guided: false })}>
-          Turn guided mode off
+          Turn Guided Mode Off
         </button>
       </div>
     </div>

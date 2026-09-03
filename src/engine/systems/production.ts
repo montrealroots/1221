@@ -9,6 +9,7 @@
  * Post is a dependency graph. You cannot colour a picture that is not locked.
  */
 
+import { shootDayWeather } from './weather';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Id, PostTask, PostTaskKind, Project, ShootDay } from '../domain/model';
@@ -481,7 +482,9 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
       }, 0) / castPresent.length
     : 0.9;
 
-  const weatherPenalty = !day.isStage && rng.chance(0.12) ? rng.float(0.45, 0.8) : 1;
+  // Not a coin flip: the weather that day, at that location.
+  const sky = shootDayWeather(sim, day.locationId, sim.now, day.isStage);
+  const weatherPenalty = sky.factor;
   const efficiency = clamp(directorFactor * castFactor * weatherPenalty * rng.float(0.82, 1.14), 0.25, 1.5);
 
   day.completedPages = Number(Math.min(day.plannedPages, day.plannedPages * efficiency).toFixed(1));
@@ -515,7 +518,7 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
   if (weatherPenalty < 1) {
     day.incidents.push({
       at: sim.now, kind: 'weather',
-      description: 'Weather stopped exterior work.',
+      description: sky.note ?? 'Weather stopped exterior work.',
       costDelta: 0, timeDeltaMinutes: Math.round((1 - weatherPenalty) * 300),
     });
   }
