@@ -105,7 +105,7 @@ export function GoAnywhere() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
-          aria-label="Search everything"
+          aria-label="Search Everything"
           aria-controls="go-anywhere-results"
         />
 

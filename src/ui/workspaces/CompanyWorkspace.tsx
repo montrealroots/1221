@@ -25,7 +25,7 @@ export function CompanyWorkspace() {
           </p>
         </div>
         <Empty
-          title="Nothing founded"
+          title="Nothing Founded"
           body="A production company separates your money from the business's, and is the only way to greenlight anything yourself."
           action={<button className="btn btn-primary" onClick={() => setFounding(true)}>Found a company</button>}
         />
@@ -78,7 +78,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
     <>
       <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>
         <Stat label="Cash" value={<MoneyText amount={dashboard.cash} compact />} note={`${formatMoneyCompact(dashboard.committed)} committed`} />
-        <Stat label="Greenlight ceiling" value={formatMoneyCompact(company.greenlightCeiling)} note="Largest single project" />
+        <Stat label="Greenlight Ceiling" value={formatMoneyCompact(company.greenlightCeiling)} note="Largest single project" />
         <Stat label="Valuation" value={formatMoneyCompact(company.valuation)} />
         <Stat
           label="Runway"
@@ -97,7 +97,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
 
       {tab === 'overview' && (
         <div className="grid grid-2">
-          <Panel title="Why the ceiling is what it is">
+          <Panel title="Why The Ceiling Is What It Is">
             <ul className="small" style={{ margin: 0, paddingLeft: 'var(--s4)' }}>
               {ceiling.map((line) => <li key={line} style={{ marginBottom: 4 }}>{line}</li>)}
             </ul>
@@ -117,7 +117,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
 
           <Panel title="Slate" flush>
             {dashboard.projects.length === 0 ? (
-              <Empty title="No projects" body="A company with nothing in development is an expensive hobby." />
+              <Empty title="No Projects" body="A company with nothing in development is an expensive hobby." />
             ) : (
               <div className="list">
                 {dashboard.projects.map((project) => project && (
@@ -135,8 +135,8 @@ function CompanyDetail({ companyId }: { companyId: string }) {
             )}
             <hr className="divider" />
             <div className="grid grid-2" style={{ padding: '0 var(--s4) var(--s4)' }}>
-              <Stat label="In production" value={dashboard.inProduction} />
-              <Stat label="Library value" value={formatMoneyCompact(dashboard.libraryValue)} />
+              <Stat label="In Production" value={dashboard.inProduction} />
+              <Stat label="Library Value" value={formatMoneyCompact(dashboard.libraryValue)} />
             </div>
           </Panel>
         </div>
@@ -150,7 +150,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
           flush
         >
           {dashboard.employees.length === 0 ? (
-            <Empty title="No employees" body="Executives bring skills and authority the company can delegate." />
+            <Empty title="No Employees" body="Executives bring skills and authority the company can delegate." />
           ) : (
             <div className="list">
               {dashboard.employees.map((employee) => {
@@ -181,9 +181,9 @@ function CompanyDetail({ companyId }: { companyId: string }) {
 
       {tab === 'equipment' && (
         <>
-          <Panel title="Owned and rented" flush>
+          <Panel title="Owned And Rented" flush>
             {dashboard.equipment.length === 0 ? (
-              <Empty title="Nothing owned" body="Owning gear raises what your productions can achieve and adds to the balance sheet." />
+              <Empty title="Nothing Owned" body="Owning gear raises what your productions can achieve and adds to the balance sheet." />
             ) : (
               <div className="list">
                 {dashboard.equipment.map((item) => item && (
@@ -228,7 +228,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
       {tab === 'merchandise' && (
         <Panel title="Merchandise" subtitle="Needs the merchandising rights to exist. Overstock gets written down." flush>
           {dashboard.merchandise.length === 0 ? (
-            <Empty title="Nothing launched" body="Merchandise only works when something people love exists to attach it to." />
+            <Empty title="Nothing Launched" body="Merchandise only works when something people love exists to attach it to." />
           ) : (
             <div className="list">
               {dashboard.merchandise.map((line) => (
@@ -306,13 +306,13 @@ function FoundDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Modal
-      title="Found a company"
+      title="Found A Company"
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Found it</button></>}
+      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Found It</button></>}
     >
       <div className="field">
         <label htmlFor="name">Name</label>
-        <input id="name" type="text" value={name} placeholder="Leave blank and one will be suggested" onChange={(e) => setName(e.target.value)} />
+        <input id="name" type="text" value={name} placeholder="Leave Blank And One Will Be Suggested" onChange={(e) => setName(e.target.value)} />
       </div>
       <div className="field">
         <label htmlFor="structure">Structure</label>

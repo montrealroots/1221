@@ -34,7 +34,7 @@ export function VehiclesWorkspace() {
         onChange={setTab}
         tabs={[
           { id: 'garage', label: 'Garage', badge: owned.length },
-          { id: 'market', label: 'For sale', badge: listings.length },
+          { id: 'market', label: 'For Sale', badge: listings.length },
           { id: 'modify', label: 'Modify' },
           { id: 'service', label: 'Service' },
         ]}
@@ -42,7 +42,7 @@ export function VehiclesWorkspace() {
 
       {tab === 'garage' && (
         owned.length === 0 ? (
-          <Empty title="Nothing in the garage" body="Browse what is for sale. You can pay cash, finance or lease." />
+          <Empty title="Nothing In The Garage" body="Browse what is for sale. You can pay cash, finance or lease." />
         ) : (
           <div className="grid grid-2">
             {owned.map((vehicle) => (
@@ -60,7 +60,7 @@ export function VehiclesWorkspace() {
                 </div>
                 <div className="col gap-3">
                   <Meter label="Condition" value={vehicle.condition} />
-                  <Meter label="Mechanical health" value={vehicle.mechanicalHealth} hint="Falls without service. Repairs get expensive when it is low." />
+                  <Meter label="Mechanical Health" value={vehicle.mechanicalHealth} hint="Falls without service. Repairs get expensive when it is low." />
                 </div>
 
                 <hr className="divider" />
@@ -101,11 +101,11 @@ export function VehiclesWorkspace() {
       {tab === 'market' && <MarketTab listings={listings} />}
 
       {tab === 'modify' && (
-        selected ? <ModifyTab vehicleId={selected.id} /> : <Empty title="No vehicle" body="Buy something first." />
+        selected ? <ModifyTab vehicleId={selected.id} /> : <Empty title="No Vehicle" body="Buy something first." />
       )}
 
       {tab === 'service' && (
-        selected ? <ServiceTab vehicleId={selected.id} /> : <Empty title="No vehicle" body="Buy something first." />
+        selected ? <ServiceTab vehicleId={selected.id} /> : <Empty title="No Vehicle" body="Buy something first." />
       )}
     </>
   );
@@ -117,7 +117,7 @@ function MarketTab({ listings }: { listings: VehicleListing[] }) {
 
   return (
     <>
-      <Panel title="For sale" subtitle={`${listings.length} vehicles near you`} flush>
+      <Panel title="For Sale" subtitle={`${listings.length} vehicles near you`} flush>
         <div className="list">
           {listings.map((listing) => {
             const [modelId, trimId] = String(listing.catalogId).split(':');
@@ -148,7 +148,7 @@ function MarketTab({ listings }: { listings: VehicleListing[] }) {
       </Panel>
 
       {buying && (
-        <Modal title="Buy this vehicle" onClose={() => setBuying(null)}>
+        <Modal title="Buy This Vehicle" onClose={() => setBuying(null)}>
           <p className="muted small">
             Cash avoids interest. Financing needs your income to support the payment. A lease is cheaper
             monthly and you own nothing at the end.
@@ -179,7 +179,7 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
   const [category, setCategory] = useState<PartCategory | 'all'>('all');
   const options = useWorld((s) => availableParts(s, vehicleId, category === 'all' ? undefined : category));
 
-  if (!vehicle) return <Empty title="No vehicle" body="Nothing selected." />;
+  if (!vehicle) return <Empty title="No Vehicle" body="Nothing selected." />;
 
   const categories = [...new Set(PARTS.all().map((p) => p.category))].sort();
 
@@ -202,7 +202,7 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
 
       <Panel title="Parts" flush>
         {options.length === 0 ? (
-          <Empty title="Nothing fits" body="No parts in that category are made for this car." />
+          <Empty title="Nothing Fits" body="No parts in that category are made for this car." />
         ) : (
           <div className="list">
             {options.map(({ part, verdict }) => (
@@ -249,13 +249,13 @@ function ServiceTab({ vehicleId }: { vehicleId: string }) {
     .filter((r) => r.vehicleId === vehicleId)
     .sort((a, b) => b.performedAt - a.performedAt));
 
-  if (!vehicle) return <Empty title="No vehicle" body="Nothing selected." />;
+  if (!vehicle) return <Empty title="No Vehicle" body="Nothing selected." />;
 
   const kinds = ['scheduled', 'repair', 'inspection', 'tires', 'detail', 'bodywork'] as const;
 
   return (
     <>
-      <Panel title="Book service" subtitle={`Next scheduled service due at ${vehicle.nextServiceDueMileage.toLocaleString('en-US')} miles. Currently ${vehicle.mileage.toLocaleString('en-US')}.`} flush>
+      <Panel title="Book Service" subtitle={`Next scheduled service due at ${vehicle.nextServiceDueMileage.toLocaleString('en-US')} miles. Currently ${vehicle.mileage.toLocaleString('en-US')}.`} flush>
         <div className="list">
           {kinds.map((kind) => (
             <div key={kind} className="list-item list-static">
@@ -277,9 +277,9 @@ function ServiceTab({ vehicleId }: { vehicleId: string }) {
         </div>
       </Panel>
 
-      <Panel title="Service history" flush>
+      <Panel title="Service History" flush>
         {records.length === 0 ? (
-          <Empty title="No history" body="A documented service history is worth real money at resale." />
+          <Empty title="No History" body="A documented service history is worth real money at resale." />
         ) : (
           <div className="list">
             {records.map((record) => (

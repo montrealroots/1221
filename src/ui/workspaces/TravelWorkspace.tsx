@@ -63,9 +63,9 @@ export function TravelWorkspace() {
         {there && (
           <div className="grid grid-4">
             <Stat label="Distance" value={`${Math.round(cityDistanceKm(player.currentLocationId, destination)).toLocaleString('en-US')} km`} />
-            <Stat label="Flight time" value={formatDuration(estimateFlightMinutes(player.currentLocationId, destination) * MS_MINUTE)} />
-            <Stat label="Local time there" value={formatTime(sim.now, there.timeZone)} />
-            <Stat label="Cost of living" value={there.costOfLivingIndex} />
+            <Stat label="Flight Time" value={formatDuration(estimateFlightMinutes(player.currentLocationId, destination) * MS_MINUTE)} />
+            <Stat label="Local Time There" value={formatTime(sim.now, there.timeZone)} />
+            <Stat label="Cost Of Living" value={there.costOfLivingIndex} />
           </div>
         )}
       </Panel>
@@ -80,7 +80,7 @@ export function TravelWorkspace() {
       {tab === 'flights' && (
         <Panel title="Flights" subtitle="Fares rise sharply as departure approaches." flush>
           {flights.length === 0 ? (
-            <Empty title="No route" body="Pick a different destination." />
+            <Empty title="No Route" body="Pick a different destination." />
           ) : (
             <div className="list">
               {flights.map((flight) => (
@@ -110,7 +110,7 @@ export function TravelWorkspace() {
       )}
 
       {tab === 'private' && (
-        <Panel title="Private charter" subtitle="Range and runway length are real constraints, not price tiers." flush>
+        <Panel title="Private Charter" subtitle="Range and runway length are real constraints, not price tiers." flush>
           <div className="list">
             {aircraft.map((option) => (
               <div key={option.id} className="list-item list-static">
@@ -170,7 +170,7 @@ export function TravelWorkspace() {
       {tab === 'bookings' && (
         <>
           <Panel title="Flights" flush>
-            {bookings.length === 0 ? <Empty title="Nothing booked" body="Book a flight and it appears on your calendar." /> : (
+            {bookings.length === 0 ? <Empty title="Nothing Booked" body="Book a flight and it appears on your calendar." /> : (
               <div className="list">
                 {bookings.map((booking) => (
                   <div key={booking.id} className="list-item list-static">
@@ -191,7 +191,7 @@ export function TravelWorkspace() {
             )}
           </Panel>
           <Panel title="Stays" flush>
-            {stays.length === 0 ? <Empty title="No hotels booked" body="" /> : (
+            {stays.length === 0 ? <Empty title="No Hotels Booked" body="" /> : (
               <div className="list">
                 {stays.map((stay) => (
                   <div key={stay.id} className="list-item list-static">

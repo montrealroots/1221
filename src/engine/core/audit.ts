@@ -144,7 +144,7 @@ export function redactForPlayer(record: AuditRecord): AuditRecord {
       ? [
           ...knowable,
           {
-            label: 'Information you do not have',
+            label: 'Information You Do Not Have',
             detail: `${hidden} factor${hidden === 1 ? '' : 's'} in this decision ${hidden === 1 ? 'was' : 'were'} private to other people. You never saw ${hidden === 1 ? 'it' : 'them'}.`,
             weight: 0,
             contribution: 0,

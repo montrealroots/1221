@@ -59,7 +59,7 @@ export function HistoryWorkspace() {
 
           <Panel flush>
             {history.length === 0 ? (
-              <Empty title="Nothing yet" body="Your history begins the moment something worth remembering happens." />
+              <Empty title="Nothing Yet" body="Your history begins the moment something worth remembering happens." />
             ) : (
               <div className="list">
                 {history.map((record) => (
@@ -91,7 +91,7 @@ export function HistoryWorkspace() {
           flush
         >
           {audits.length === 0 ? (
-            <Empty title="Nothing to explain yet" body="Once decisions start going for and against you, the reasons appear here." />
+            <Empty title="Nothing To Explain Yet" body="Once decisions start going for and against you, the reasons appear here." />
           ) : (
             <div className="list">
               {audits.map((audit) => (

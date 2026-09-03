@@ -48,7 +48,7 @@ export function Home() {
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
         <Panel
-          title="What needs you"
+          title="What Needs You"
           subtitle={decisions.length === 0 ? 'Nothing is waiting on a decision.' : `${decisions.length} open`}
           flush
           actions={unread.length > 0 ? (
@@ -59,7 +59,7 @@ export function Home() {
         >
           {decisions.length === 0 ? (
             <Empty
-              title="Nothing pressing"
+              title="Nothing Pressing"
               body="No bills overdue, no offers expiring, no conflicts on the calendar. Go and do something you want to do."
             />
           ) : (
@@ -114,7 +114,7 @@ export function Home() {
         </Panel>
 
         <div className="col gap-4">
-          <Panel title="What happens next" tight>
+          <Panel title="What Happens Next" tight>
             {next ? (
               <>
                 <div className="stat" style={{ marginBottom: 'var(--s3)' }}>
@@ -150,7 +150,7 @@ export function Home() {
             )}
           </Panel>
 
-          <Panel title="How you are" tight>
+          <Panel title="How You Are" tight>
             <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>{wellbeingSummary(player)}</p>
             <div className="col gap-3">
               <Meter label="Energy" value={player.wellbeing.energy} />
@@ -171,7 +171,7 @@ export function Home() {
               label={primary?.name ?? 'No account'}
               value={<MoneyText amount={primary?.balance ?? 0} />}
             />
-            <Stat label="Net worth" value={<MoneyText amount={worth.total} compact />} note={`${formatMoney(worth.assets, { cents: false })} in assets`} />
+            <Stat label="Net Worth" value={<MoneyText amount={worth.total} compact />} note={`${formatMoney(worth.assets, { cents: false })} in assets`} />
             {worth.liabilities > 0 && (
               <Stat label="Owed" value={<span className="mono negative">{formatMoney(worth.liabilities, { cents: false })}</span>} />
             )}
@@ -195,22 +195,22 @@ export function Home() {
 
         <Panel title="Standing" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/character', 'Character')}>Character</button>}>
           <div className="col gap-3">
-            <Meter label="Public fame" value={player.reputation.publicFame} />
-            <Meter label="Professional reputation" value={player.reputation.professionalReputation} />
-            <Meter label="Industry demand" value={player.reputation.industryDemand} />
+            <Meter label="Public Fame" value={player.reputation.publicFame} />
+            <Meter label="Professional Reputation" value={player.reputation.professionalReputation} />
+            <Meter label="Industry Demand" value={player.reputation.industryDemand} />
           </div>
         </Panel>
       </div>
 
       <div className="grid grid-2">
         <Panel
-          title="What you are working on"
+          title="What You Are Working On"
           flush
           actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>All projects</button>}
         >
           {projects.length === 0 ? (
             <Empty
-              title="Nothing in development"
+              title="Nothing In Development"
               body="No script, no shoot, no release. Every career in this game starts with somebody deciding to make something."
               action={<button className="btn btn-primary btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>Start something</button>}
             />
@@ -232,7 +232,7 @@ export function Home() {
           )}
         </Panel>
 
-        <Panel title="Home and household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
+        <Panel title="Home And Household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
           {snapshot.home ? (
             <div className="col gap-3">
               <Stat

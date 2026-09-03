@@ -152,7 +152,7 @@ export function registerLife(sim: Simulation): void {
     sim.schedule({
       at: addDays(startOfLocalDay(sim), 1, sim.homeZone),
       kind: 'life.day_rollover',
-      label: 'New day',
+      label: 'New Day',
       category: 'system',
       priority: 5,
     });

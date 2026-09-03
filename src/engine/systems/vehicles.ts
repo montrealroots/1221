@@ -30,14 +30,14 @@ const SERVICE_INTERVAL_MILES = 7_500;
 export function registerVehicles(sim: Simulation): void {
   sim.onSchedule('veh.refresh_inventory', () => {
     refreshInventory(sim);
-    sim.schedule({ at: addDays(sim.now, 14, sim.homeZone), kind: 'veh.refresh_inventory', label: 'Dealer inventory', category: 'vehicles', priority: 68 });
+    sim.schedule({ at: addDays(sim.now, 14, sim.homeZone), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
   });
   sim.onSchedule('veh.service_appointment', (item) => performService(sim, item.payload.vehicleId as Id, item.payload.kind as ServiceRecord['kind'], item.payload.description as string));
   sim.onSchedule('veh.install_parts', (item) => installParts(sim, item.payload.vehicleId as Id, item.payload.partIds as string[]));
   sim.onSchedule('veh.registration_due', (item) => renewRegistration(sim, item.payload.vehicleId as Id));
   sim.onSchedule('veh.depreciate', () => {
     depreciateAll(sim);
-    sim.schedule({ at: addDays(sim.now, 30, sim.homeZone), kind: 'veh.depreciate', label: 'Vehicle values', category: 'system', priority: 93 });
+    sim.schedule({ at: addDays(sim.now, 30, sim.homeZone), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   });
 
   // --- Purchase ------------------------------------------------------------
@@ -500,7 +500,7 @@ function installParts(sim: Simulation, vehicleId: Id, partIds: string[]): void {
       vehicle.warranty.voidReason = `${part.name} fitted on ${new Date(sim.now).toISOString().slice(0, 10)}.`;
       sim.notify({
         category: 'vehicles',
-        title: 'Warranty voided',
+        title: 'Warranty Voided',
         body: `Fitting ${part.name} voids the manufacturer warranty on the ${vehicle.make} ${vehicle.model}.`,
         importance: 58, route: '/workspace/vehicles',
       });
@@ -629,13 +629,13 @@ export function addMileage(sim: Simulation, vehicle: Vehicle, miles: number): vo
       title: `${vehicle.make} ${vehicle.model} is due for service`,
       detail: `${vehicle.mileage.toLocaleString('en-US')} miles. Skipping it costs more later.`,
       route: '/workspace/vehicles',
-      actions: [{ label: 'Book service', commandKind: 'veh.book_service', payload: { vehicleId: vehicle.id, kind: 'scheduled' } }],
+      actions: [{ label: 'Book Service', commandKind: 'veh.book_service', payload: { vehicleId: vehicle.id, kind: 'scheduled' } }],
       refType: 'vehicle', refId: vehicle.id,
     });
   }
   if (vehicle.leaseMileageCap && vehicle.mileage - 0 > vehicle.leaseMileageCap) {
     sim.notify({
-      category: 'vehicles', title: 'Over the lease mileage cap',
+      category: 'vehicles', title: 'Over The Lease Mileage Cap',
       body: `You are past the allowance on the ${vehicle.make} ${vehicle.model}. Overage is charged per mile at return.`,
       importance: 55, route: '/workspace/vehicles',
     });
@@ -749,7 +749,7 @@ function renewRegistration(sim: Simulation, vehicleId: Id): void {
   } else {
     sim.requireDecision({
       urgency: 66, category: 'vehicles',
-      title: 'Registration is overdue',
+      title: 'Registration Is Overdue',
       detail: `${formatMoney(fee)} is owed on the ${vehicle.make} ${vehicle.model}.`,
       route: '/workspace/vehicles',
       refType: 'vehicle', refId: vehicle.id,

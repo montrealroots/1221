@@ -36,25 +36,25 @@ interface StartupContext {
 
 const STAGES: Stage[] = [
   {
-    id: 'boot', label: 'Starting the projector', weight: 10,
+    id: 'boot', label: 'Starting The Projector', weight: 10,
     run: async () => { await pause(160); },
   },
   {
-    id: 'storage', label: 'Connecting to storage', weight: 20,
+    id: 'storage', label: 'Connecting To Storage', weight: 20,
     run: async (context) => {
       context.adapter = await resolveAdapter();
       await pause(140);
     },
   },
   {
-    id: 'saves', label: 'Reading save slots', weight: 25,
+    id: 'saves', label: 'Reading Save Slots', weight: 25,
     run: async (context) => {
       if (!context.adapter) throw new Error('Storage was not resolved.');
       context.slots = await context.adapter.listSlots();
     },
   },
   {
-    id: 'validate', label: 'Validating universes', weight: 25,
+    id: 'validate', label: 'Validating Universes', weight: 25,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         if (slot.error) {
@@ -65,7 +65,7 @@ const STAGES: Stage[] = [
     },
   },
   {
-    id: 'migrations', label: 'Checking schema versions', weight: 15,
+    id: 'migrations', label: 'Checking Schema Versions', weight: 15,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         const version = slot.meta?.schemaVersion;
@@ -161,7 +161,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
           aria-valuenow={progress}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-label="Startup progress"
+          aria-label="Startup Progress"
         >
           <span style={{ width: `${progress}%` }} />
         </div>

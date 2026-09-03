@@ -25,13 +25,13 @@ import { systemModifier } from '../domain/attributes';
 // ---------------------------------------------------------------------------
 
 const SPECIALTIES: { key: HealthProvider['specialty']; label: string; baseCost: number; minutes: number; leadDays: [number, number]; conditionGain: number; description: string }[] = [
-  { key: 'primary', label: 'Primary care', baseCost: 180_00, minutes: 40, leadDays: [3, 21], conditionGain: 6, description: 'Annual checks, referrals and the person who knows your history.' },
+  { key: 'primary', label: 'Primary Care', baseCost: 180_00, minutes: 40, leadDays: [3, 21], conditionGain: 6, description: 'Annual checks, referrals and the person who knows your history.' },
   { key: 'dentist', label: 'Dentistry', baseCost: 220_00, minutes: 50, leadDays: [7, 40], conditionGain: 4, description: 'Cleanings, fillings and the appointment everybody postpones.' },
   { key: 'optometrist', label: 'Optometry', baseCost: 160_00, minutes: 35, leadDays: [4, 25], conditionGain: 3, description: 'Eye exams and prescriptions.' },
   { key: 'chiropractor', label: 'Chiropractic', baseCost: 130_00, minutes: 30, leadDays: [1, 8], conditionGain: 5, description: 'Adjustment and manual therapy for the wear a physical shoot causes.' },
-  { key: 'physical_therapy', label: 'Physical therapy', baseCost: 210_00, minutes: 55, leadDays: [3, 14], conditionGain: 9, description: 'Structured rehabilitation after injury.' },
+  { key: 'physical_therapy', label: 'Physical Therapy', baseCost: 210_00, minutes: 55, leadDays: [3, 14], conditionGain: 9, description: 'Structured rehabilitation after injury.' },
   { key: 'specialist', label: 'Specialist', baseCost: 420_00, minutes: 45, leadDays: [14, 70], conditionGain: 12, description: 'Referral-only, expensive and worth it when you need it.' },
-  { key: 'urgent_care', label: 'Urgent care', baseCost: 340_00, minutes: 90, leadDays: [0, 0], conditionGain: 14, description: 'Walk-in, same day, no appointment.' },
+  { key: 'urgent_care', label: 'Urgent Care', baseCost: 340_00, minutes: 90, leadDays: [0, 0], conditionGain: 14, description: 'Walk-in, same day, no appointment.' },
   { key: 'emergency', label: 'Emergency', baseCost: 2_800_00, minutes: 240, leadDays: [0, 0], conditionGain: 22, description: 'When it cannot wait, at a price that reflects that.' },
   { key: 'counseling', label: 'Counselling', baseCost: 240_00, minutes: 55, leadDays: [5, 30], conditionGain: 3, description: 'Talking to someone about the pressure. Moves stress more than anything else does.' },
 ];
@@ -94,7 +94,7 @@ export const INSURANCE_PRODUCTS: readonly InsuranceProduct[] = [
   { line: 'valuables', label: 'Valuables', basePremium: 0, valueRate: 0.0016, deductible: 500_00, coverageLimit: 0, coinsurance: 1, description: 'Scheduled cover for watches, jewellery and art. Worth having the moment a single item passes fifteen thousand.' },
   { line: 'travel', label: 'Travel', basePremium: 68_00, deductible: 250_00, coverageLimit: 50_000_00, coinsurance: 1, description: 'Cancellations, medical abroad and lost bags.' },
   { line: 'life', label: 'Life', basePremium: 74_00, deductible: 0, coverageLimit: 1_000_000_00, coinsurance: 1, description: 'For the people who depend on you.' },
-  { line: 'umbrella', label: 'Umbrella liability', basePremium: 42_00, deductible: 0, coverageLimit: 5_000_000_00, coinsurance: 1, description: 'Sits above your other policies. Cheap, and the thing that protects an estate.' },
+  { line: 'umbrella', label: 'Umbrella Liability', basePremium: 42_00, deductible: 0, coverageLimit: 5_000_000_00, coinsurance: 1, description: 'Sits above your other policies. Cheap, and the thing that protects an estate.' },
   { line: 'business', label: 'Business', basePremium: 340_00, deductible: 5_000_00, coverageLimit: 2_000_000_00, coinsurance: 1, description: 'General liability for a company that employs people.' },
   { line: 'production', label: 'Production', basePremium: 0, valueRate: 0.019, deductible: 25_000_00, coverageLimit: 0, coinsurance: 1, description: 'Required before a completion bond. Priced on the budget.' },
   { line: 'equipment', label: 'Equipment', basePremium: 0, valueRate: 0.0085, deductible: 2_500_00, coverageLimit: 0, coinsurance: 1, description: 'Cameras, lenses and lighting against damage and theft.' },
@@ -350,7 +350,7 @@ export function registerServices(sim: Simulation): void {
         claim.status = 'denied';
         claim.deniedReason = denialReason;
         s.emit('ins.claim_denied', { claimId: claim.id, reason: denialReason });
-        s.notify({ category: 'insurance', title: 'Claim denied', body: denialReason, importance: 78, route: '/workspace/insurance' });
+        s.notify({ category: 'insurance', title: 'Claim Denied', body: denialReason, importance: 78, route: '/workspace/insurance' });
         return { claimId: claim.id, status: claim.status };
       }
 
@@ -530,7 +530,7 @@ function attendAppointment(sim: Simulation, appointmentId: Id): void {
   if (person.currentLocationId !== appointment.locationId) {
     appointment.status = 'missed';
     sim.notify({
-      category: 'health', title: 'Missed appointment',
+      category: 'health', title: 'Missed Appointment',
       body: `You were not in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}. Practices charge for a no-show.`,
       importance: 55, route: '/workspace/health',
     });
@@ -549,7 +549,7 @@ function attendAppointment(sim: Simulation, appointmentId: Id): void {
     } else {
       sim.requireDecision({
         urgency: 70, category: 'health',
-        title: 'Unpaid medical bill',
+        title: 'Unpaid Medical Bill',
         detail: `${formatMoney(appointment.outOfPocket)} is owed to ${provider.name}.`,
         route: '/workspace/health',
         refType: 'appointment', refId: appointment.id,
@@ -576,7 +576,7 @@ function attendAppointment(sim: Simulation, appointmentId: Id): void {
   if (provider.specialty === 'primary') {
     appointment.followUpAt = addYears(sim.now, 1, sim.homeZone);
     sim.notify({
-      category: 'health', title: 'Checkup complete',
+      category: 'health', title: 'Checkup Complete',
       body: `${provider.name} suggests coming back in a year. ${formatMoney(appointment.outOfPocket)} out of pocket.`,
       importance: 30, route: '/workspace/health',
     });

@@ -401,11 +401,11 @@ export function registerFilm(sim: Simulation): void {
         const rng = s.rng('attach', project.id, person.id);
         const draft = project.currentDraftId ? s.universe.scriptDrafts[project.currentDraftId] : undefined;
         const { factors, score } = buildFactors([
-          { label: 'The script', detail: `Currently reads at ${Math.round(draft?.quality ?? project.scriptQuality)} out of 100.`, weight: 0.40, value: (draft?.quality ?? project.scriptQuality) / 100 },
-          { label: 'Who else is attached', detail: project.attachments.length > 0 ? `${project.attachments.length} other attachment${project.attachments.length === 1 ? '' : 's'}.` : 'Nobody else yet.', weight: 0.20, value: clamp(project.packageValue / 100, 0, 1) },
-          { label: 'Your standing', detail: `Your professional reputation reads ${Math.round(s.player.reputation.professionalReputation)} out of 100.`, weight: 0.22, value: s.player.reputation.professionalReputation / 100 },
-          { label: 'Their demand', detail: `${person.displayName} is at ${Math.round(person.reputation.industryDemand)} out of 100 for how busy they are.`, weight: -0.18, value: person.reputation.industryDemand / 100 },
-          { label: 'What else they were offered', detail: 'Their other options, which you do not see.', weight: 0.15, value: rng.float(0, 1), knowable: false },
+          { label: 'The Script', detail: `Currently reads at ${Math.round(draft?.quality ?? project.scriptQuality)} out of 100.`, weight: 0.40, value: (draft?.quality ?? project.scriptQuality) / 100 },
+          { label: 'Who Else Is Attached', detail: project.attachments.length > 0 ? `${project.attachments.length} other attachment${project.attachments.length === 1 ? '' : 's'}.` : 'Nobody else yet.', weight: 0.20, value: clamp(project.packageValue / 100, 0, 1) },
+          { label: 'Your Standing', detail: `Your professional reputation reads ${Math.round(s.player.reputation.professionalReputation)} out of 100.`, weight: 0.22, value: s.player.reputation.professionalReputation / 100 },
+          { label: 'Their Demand', detail: `${person.displayName} is at ${Math.round(person.reputation.industryDemand)} out of 100 for how busy they are.`, weight: -0.18, value: person.reputation.industryDemand / 100 },
+          { label: 'What Else They Were Offered', detail: 'Their other options, which you do not see.', weight: 0.15, value: rng.float(0, 1), knowable: false },
         ]);
         const probability = clamp(score * 1.1 - 0.1, 0.02, 0.94);
         const roll = rng.next();
@@ -546,10 +546,10 @@ export function registerFilm(sim: Simulation): void {
       const { factors, score } = buildFactors([
         { label: 'Script', detail: `${draft?.label ?? 'Current draft'} reads at ${Math.round(draft?.quality ?? 0)} out of 100.`, weight: 0.30, value: (draft?.quality ?? 0) / 100 },
         { label: 'Package', detail: `Talent attached brings the package to ${Math.round(project.packageValue)} out of 100.`, weight: 0.22, value: project.packageValue / 100 },
-        { label: 'Market appetite', detail: `${project.genres.join(' and ')} currently reads at ${Math.round(appetite)} out of 100 for audience appetite.`, weight: 0.18, value: appetite / 100 },
-        { label: 'Budget against the material', detail: `${formatMoneyCompact(p.budget)} against a comparable of ${formatMoneyCompact(suggestedBudget(project.format, project.genres, draft?.quality ?? 50))}.`, weight: -0.16, value: clamp(p.budget / Math.max(1, suggestedBudget(project.format, project.genres, draft?.quality ?? 50)) - 1, 0, 1.5) },
-        { label: 'Your track record', detail: `Professional reputation at ${Math.round(player.reputation.professionalReputation)} out of 100.`, weight: 0.18, value: player.reputation.professionalReputation / 100 },
-        { label: 'Company appetite for risk', detail: 'What else is on the slate and how exposed it already is.', weight: 0.10, value: rng.float(0.3, 1), knowable: false },
+        { label: 'Market Appetite', detail: `${project.genres.join(' and ')} currently reads at ${Math.round(appetite)} out of 100 for audience appetite.`, weight: 0.18, value: appetite / 100 },
+        { label: 'Budget Against The Material', detail: `${formatMoneyCompact(p.budget)} against a comparable of ${formatMoneyCompact(suggestedBudget(project.format, project.genres, draft?.quality ?? 50))}.`, weight: -0.16, value: clamp(p.budget / Math.max(1, suggestedBudget(project.format, project.genres, draft?.quality ?? 50)) - 1, 0, 1.5) },
+        { label: 'Your Track Record', detail: `Professional reputation at ${Math.round(player.reputation.professionalReputation)} out of 100.`, weight: 0.18, value: player.reputation.professionalReputation / 100 },
+        { label: 'Company Appetite For Risk', detail: 'What else is on the slate and how exposed it already is.', weight: 0.10, value: rng.float(0.3, 1), knowable: false },
       ]);
 
       // Whose decision this actually is. When the player controls the company
@@ -694,9 +694,9 @@ export function registerFilm(sim: Simulation): void {
     'film.execute_contract',
     (p, { sim: s }) => {
       const milestones = p.milestones ?? [
-        { label: 'On execution', fraction: 0.2, dueInDays: 0 },
-        { label: 'On commencement', fraction: 0.4, dueInDays: 30 },
-        { label: 'On completion', fraction: 0.4, dueInDays: 120 },
+        { label: 'On Execution', fraction: 0.2, dueInDays: 0 },
+        { label: 'On Commencement', fraction: 0.4, dueInDays: 30 },
+        { label: 'On Completion', fraction: 0.4, dueInDays: 120 },
       ];
       const totalFraction = milestones.reduce((s_, m) => s_ + m.fraction, 0);
       if (Math.abs(totalFraction - 1) > 0.001) {
@@ -805,13 +805,13 @@ function resolvePitch(sim: Simulation, projectId: Id, buyerId: string): void {
   const appetite = project.genres.reduce((s, g) => s + (GENRE_APPETITE[g] ?? 45), 0) / project.genres.length;
 
   const { factors, score } = buildFactors([
-    { label: 'The material', detail: `The draft reads at ${Math.round(draft?.quality ?? 0)} out of 100.`, weight: 0.32, value: (draft?.quality ?? 0) / 100 },
-    { label: 'Fit with their slate', detail: buyer.wants.some((w) => project.genres.includes(w)) ? `${buyer.name} actively wants ${project.genres.filter((g) => buyer.wants.includes(g)).join(' and ')}.` : `${buyer.name} is not looking for ${project.genres.join(' or ')} right now.`, weight: 0.24, value: genreWant * formatFit },
-    { label: 'Budget band', detail: `They commission between ${formatMoneyCompact(buyer.budgetFloor)} and ${formatMoneyCompact(buyer.budgetCeiling)}. This asks ${formatMoneyCompact(ask)}.`, weight: 0.16, value: budgetFit },
+    { label: 'The Material', detail: `The draft reads at ${Math.round(draft?.quality ?? 0)} out of 100.`, weight: 0.32, value: (draft?.quality ?? 0) / 100 },
+    { label: 'Fit With Their Slate', detail: buyer.wants.some((w) => project.genres.includes(w)) ? `${buyer.name} actively wants ${project.genres.filter((g) => buyer.wants.includes(g)).join(' and ')}.` : `${buyer.name} is not looking for ${project.genres.join(' or ')} right now.`, weight: 0.24, value: genreWant * formatFit },
+    { label: 'Budget Band', detail: `They commission between ${formatMoneyCompact(buyer.budgetFloor)} and ${formatMoneyCompact(buyer.budgetCeiling)}. This asks ${formatMoneyCompact(ask)}.`, weight: 0.16, value: budgetFit },
     { label: 'Package', detail: `${project.attachments.length} attachment${project.attachments.length === 1 ? '' : 's'}, package value ${Math.round(project.packageValue)}.`, weight: 0.18, value: project.packageValue / 100 },
-    { label: 'Their prestige bias', detail: `${buyer.name} weighs prestige at ${buyer.prestigeBias} out of 100 against commercial return.`, weight: 0.10, value: remap(buyer.prestigeBias, 0, 100, appetite / 100, (draft?.quality ?? 50) / 100) },
-    { label: 'Genres they will not touch', detail: genreAvoid ? `${buyer.name} does not make ${project.genres.filter((g) => buyer.avoids.includes(g)).join(' or ')}.` : 'Nothing here is a hard no for them.', weight: -0.30, value: genreAvoid },
-    { label: 'What is already on their slate', detail: 'Their internal portfolio and exposure, which is not public.', weight: 0.14, value: rng.float(0, 1), knowable: false },
+    { label: 'Their Prestige Bias', detail: `${buyer.name} weighs prestige at ${buyer.prestigeBias} out of 100 against commercial return.`, weight: 0.10, value: remap(buyer.prestigeBias, 0, 100, appetite / 100, (draft?.quality ?? 50) / 100) },
+    { label: 'Genres They Will Not Touch', detail: genreAvoid ? `${buyer.name} does not make ${project.genres.filter((g) => buyer.avoids.includes(g)).join(' or ')}.` : 'Nothing here is a hard no for them.', weight: -0.30, value: genreAvoid },
+    { label: 'What Is Already On Their Slate', detail: 'Their internal portfolio and exposure, which is not public.', weight: 0.14, value: rng.float(0, 1), knowable: false },
   ]);
 
   const riskAdjust = remap(buyer.riskAppetite, 0, 100, -0.12, 0.10);
@@ -849,7 +849,7 @@ function resolvePitch(sim: Simulation, projectId: Id, buyerId: string): void {
     detail: `They will commission at ${formatMoneyCompact(offerBudget)} with a producer fee of ${formatMoney(producerFee)}. Accepting hands them the project; you keep your credit and your backend.`,
     route: '/workspace/projects',
     actions: [
-      { label: 'Take the deal', commandKind: 'film.accept_buyer_offer', payload: { projectId: project.id, buyerId, budget: offerBudget, fee: producerFee } },
+      { label: 'Take The Deal', commandKind: 'film.accept_buyer_offer', payload: { projectId: project.id, buyerId, budget: offerBudget, fee: producerFee } },
     ],
     dueAt: addDays(sim.now, 10, sim.homeZone),
     refType: 'project', refId: project.id,

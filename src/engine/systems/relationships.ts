@@ -133,7 +133,7 @@ export function registerRelationships(sim: Simulation): void {
   sim.onSchedule('rel.wedding', (item) => holdWedding(sim, item.payload.relationshipId as Id, item.payload.budget as Money, item.payload.guests as number));
   sim.onSchedule('rel.drift', () => {
     driftRelationships(sim);
-    sim.schedule({ at: addDays(sim.now, 7, sim.homeZone), kind: 'rel.drift', label: 'Relationship drift', category: 'system', priority: 90 });
+    sim.schedule({ at: addDays(sim.now, 7, sim.homeZone), kind: 'rel.drift', label: 'Relationship Drift', category: 'system', priority: 90 });
   });
 
   // --- Commands ------------------------------------------------------------
@@ -226,11 +226,11 @@ export function registerRelationships(sim: Simulation): void {
 
       const rng = s.rng('ask_out', rel.id, p.at);
       const { factors, score } = buildFactors([
-        { label: 'How well they know you', detail: `Familiarity is ${Math.round(rel.dimensions.familiarity)} out of 100.`, weight: 0.26, value: rel.dimensions.familiarity / 100 },
-        { label: 'How they feel about you', detail: `Affection is ${Math.round(rel.dimensions.affection)} out of 100.`, weight: 0.30, value: rel.dimensions.affection / 100 },
+        { label: 'How Well They Know You', detail: `Familiarity is ${Math.round(rel.dimensions.familiarity)} out of 100.`, weight: 0.26, value: rel.dimensions.familiarity / 100 },
+        { label: 'How They Feel About You', detail: `Affection is ${Math.round(rel.dimensions.affection)} out of 100.`, weight: 0.30, value: rel.dimensions.affection / 100 },
         { label: 'Compatibility', detail: 'Underlying fit between the two of you.', weight: 0.18, value: rel.dimensions.compatibility / 100 },
-        { label: 'Your public profile', detail: 'Fame opens some doors and closes others.', weight: 0.08, value: player.reputation.publicFame / 100 },
-        { label: 'Whether they are seeing someone', detail: 'Their situation, which you may not know.', weight: -0.30, value: exclusiveElsewhere ? 1 : 0, knowable: false },
+        { label: 'Your Public Profile', detail: 'Fame opens some doors and closes others.', weight: 0.08, value: player.reputation.publicFame / 100 },
+        { label: 'Whether They Are Seeing Someone', detail: 'Their situation, which you may not know.', weight: -0.30, value: exclusiveElsewhere ? 1 : 0, knowable: false },
         { label: 'Timing', detail: 'What else is going on in their life.', weight: 0.12, value: rng.float(0, 1), knowable: false },
       ]);
 
@@ -320,12 +320,12 @@ export function registerRelationships(sim: Simulation): void {
       const monthsTogether = (s.now - rel.since) / (30.44 * MS_DAY);
       const rng = s.rng('propose', rel.id);
       const { factors, score } = buildFactors([
-        { label: 'How strong the relationship is', detail: `Overall strength is ${Math.round(relationshipStrength(rel, s.now))} out of 100.`, weight: 0.38, value: relationshipStrength(rel, s.now) / 100 },
-        { label: 'How long you have been together', detail: `${monthsTogether.toFixed(1)} months.`, weight: 0.24, value: clamp(monthsTogether / 24, 0, 1) },
+        { label: 'How Strong The Relationship Is', detail: `Overall strength is ${Math.round(relationshipStrength(rel, s.now))} out of 100.`, weight: 0.38, value: relationshipStrength(rel, s.now) / 100 },
+        { label: 'How Long You Have Been Together', detail: `${monthsTogether.toFixed(1)} months.`, weight: 0.24, value: clamp(monthsTogether / 24, 0, 1) },
         { label: 'Commitment', detail: `Their commitment reads ${Math.round(rel.dimensions.commitment)} out of 100.`, weight: 0.22, value: rel.dimensions.commitment / 100 },
-        { label: 'The ring', detail: ring ? `${ring.name}.` : 'You proposed without a ring.', weight: 0.08, value: ringQuality },
-        { label: 'Unresolved conflict', detail: `Friction reads ${Math.round(rel.dimensions.conflict)} out of 100.`, weight: -0.20, value: rel.dimensions.conflict / 100 },
-        { label: 'Whether they were ready', detail: 'What they want for their own life.', weight: 0.14, value: rng.float(0, 1), knowable: false },
+        { label: 'The Ring', detail: ring ? `${ring.name}.` : 'You proposed without a ring.', weight: 0.08, value: ringQuality },
+        { label: 'Unresolved Conflict', detail: `Friction reads ${Math.round(rel.dimensions.conflict)} out of 100.`, weight: -0.20, value: rel.dimensions.conflict / 100 },
+        { label: 'Whether They Were Ready', detail: 'What they want for their own life.', weight: 0.14, value: rng.float(0, 1), knowable: false },
       ]);
 
       const probability = clamp(score * 1.15 - 0.14, 0.03, 0.97);
@@ -404,7 +404,7 @@ export function registerRelationships(sim: Simulation): void {
       });
 
       s.notify({
-        category: 'relationships', title: 'Wedding booked',
+        category: 'relationships', title: 'Wedding Booked',
         body: `${formatDate(p.date, s.homeZone)}, ${p.guests} guests, budget ${formatMoney(budget)}.`,
         importance: 70, route: '/workspace/calendar',
       });
@@ -630,10 +630,10 @@ function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan): void 
   const effortFactor = spent > 0 ? clamp(remap(spent, 0, 400_00, 0.5, 1.1), 0.5, 1.1) : 0.35;
 
   const { factors, score } = buildFactors([
-    { label: 'How the two of you get on', detail: `Compatibility is ${Math.round(rel.dimensions.compatibility)} out of 100.`, weight: 0.30, value: rel.dimensions.compatibility / 100 },
-    { label: 'How present you were', detail: `You arrived tired at ${Math.round(player.wellbeing.energy)}% energy.`, weight: 0.26, value: readinessFactor },
-    { label: 'Effort and planning', detail: spent > 0 ? `You spent ${formatMoney(spent)} on the evening.` : 'You did not spend anything on it.', weight: 0.20, value: effortFactor },
-    { label: 'Existing warmth', detail: `Affection is ${Math.round(rel.dimensions.affection)} out of 100.`, weight: 0.24, value: rel.dimensions.affection / 100 },
+    { label: 'How The Two Of You Get On', detail: `Compatibility is ${Math.round(rel.dimensions.compatibility)} out of 100.`, weight: 0.30, value: rel.dimensions.compatibility / 100 },
+    { label: 'How Present You Were', detail: `You arrived tired at ${Math.round(player.wellbeing.energy)}% energy.`, weight: 0.26, value: readinessFactor },
+    { label: 'Effort And Planning', detail: spent > 0 ? `You spent ${formatMoney(spent)} on the evening.` : 'You did not spend anything on it.', weight: 0.20, value: effortFactor },
+    { label: 'Existing Warmth', detail: `Affection is ${Math.round(rel.dimensions.affection)} out of 100.`, weight: 0.24, value: rel.dimensions.affection / 100 },
   ]);
 
   const roll = rng.next();
@@ -711,7 +711,7 @@ function holdWedding(sim: Simulation, relationshipId: Id, budget: Money, guests:
   sim.schedule({
     at: nextAnniversary(zonedParts(sim.now, sim.homeZone).month, zonedParts(sim.now, sim.homeZone).day, addDays(sim.now, 1, sim.homeZone), sim.homeZone),
     kind: 'rel.anniversary',
-    label: 'Wedding anniversary',
+    label: 'Wedding Anniversary',
     category: 'family',
     payload: { relationshipId: rel.id },
     priority: 70,

@@ -35,8 +35,8 @@ export function CharacterWorkspace() {
       </div>
 
       <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>
-        <Stat label="Overall performer rating" value={Math.round(overallRating(effective))} note="Average across all 88" />
-        <Stat label="Traits held" value={player.traits.length} />
+        <Stat label="Overall Performer Rating" value={Math.round(overallRating(effective))} note="Average across all 88" />
+        <Stat label="Traits Held" value={player.traits.length} />
         <Stat label="Credits" value={player.creditIds.length} />
         <Stat label="Quote" value={<span className="mono">{player.quote > 0 ? formatMoney(player.quote, { cents: false }) : '—'}</span>} note="What you can ask per project" />
       </div>
@@ -156,12 +156,12 @@ export function CharacterWorkspace() {
         <div className="grid grid-2">
           <Panel title="Reputation" subtitle="Seven separate things. You can be famous and disliked professionally.">
             <div className="col gap-4">
-              <Meter label="Public fame" value={player.reputation.publicFame} hint="How many people know who you are." />
-              <Meter label="Audience appeal" value={player.reputation.audienceAppeal} hint="Whether the people who know you like you." />
-              <Meter label="Professional reputation" value={player.reputation.professionalReputation} hint="What the industry thinks of the work." />
+              <Meter label="Public Fame" value={player.reputation.publicFame} hint="How many people know who you are." />
+              <Meter label="Audience Appeal" value={player.reputation.audienceAppeal} hint="Whether the people who know you like you." />
+              <Meter label="Professional Reputation" value={player.reputation.professionalReputation} hint="What the industry thinks of the work." />
               <Meter label="Reliability" value={player.reputation.reliability} hint="Whether producers believe you will finish the job." />
               <Meter label="Prestige" value={player.reputation.prestige} hint="Awards and critical standing." />
-              <Meter label="Industry demand" value={player.reputation.industryDemand} hint="How many people want to hire you right now." />
+              <Meter label="Industry Demand" value={player.reputation.industryDemand} hint="How many people want to hire you right now." />
               <Meter label="Controversy" value={player.reputation.controversy} invert hint="Active negative attention. Decays slowly." />
             </div>
           </Panel>

@@ -26,7 +26,7 @@ export function SettingsWorkspace() {
       </div>
 
       <div className="grid grid-2">
-        <Panel title="Time and play">
+        <Panel title="Time And Play">
           <div className="field">
             <label htmlFor="speed">Time speed</label>
             <select id="speed" value={prefs.timeSpeed} onChange={(e) => setPref({ timeSpeed: e.target.value as typeof prefs.timeSpeed })}>
@@ -95,7 +95,7 @@ export function SettingsWorkspace() {
           <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
             <Stat label="Slot" value={sim.universe.meta.slot} />
             <Stat label="Schema" value={sim.universe.meta.schemaVersion} />
-            <Stat label="World date" value={formatDate(sim.now, sim.homeZone)} />
+            <Stat label="World Date" value={formatDate(sim.now, sim.homeZone)} />
             <Stat label="Backup" value={sim.universe.meta.backupAvailable ? 'Available' : 'None yet'} />
           </div>
           <div className="row gap-2 wrap">
@@ -103,7 +103,7 @@ export function SettingsWorkspace() {
             <button className="btn btn-sm" onClick={() => setValidation(validateUniverse(sim.universe))}>
               Validate this universe
             </button>
-            <button className="btn btn-sm" onClick={exitToMenu}>Save and exit</button>
+            <button className="btn btn-sm" onClick={exitToMenu}>Save And Exit</button>
           </div>
 
           {validation && (
@@ -120,14 +120,14 @@ export function SettingsWorkspace() {
           )}
         </Panel>
 
-        <Panel title="Simulation load" subtitle="What this universe currently costs to run.">
+        <Panel title="Simulation Load" subtitle="What this universe currently costs to run.">
           <div className="grid grid-2">
             <Stat label="People" value={load.people.toLocaleString('en-US')} />
-            <Stat label="Pending events" value={load.pendingEvents.toLocaleString('en-US')} />
+            <Stat label="Pending Events" value={load.pendingEvents.toLocaleString('en-US')} />
             <Stat label="Transactions" value={load.transactions.toLocaleString('en-US')} />
-            <Stat label="History records" value={load.history.toLocaleString('en-US')} />
+            <Stat label="History Records" value={load.history.toLocaleString('en-US')} />
             <Stat label="Projects" value={load.projects.toLocaleString('en-US')} />
-            <Stat label="Estimated size" value={`${(load.estimatedBytes / 1024 / 1024).toFixed(1)} MB`} />
+            <Stat label="Estimated Size" value={`${(load.estimatedBytes / 1024 / 1024).toFixed(1)} MB`} />
           </div>
           <hr className="divider" />
           <div className="xs dim">

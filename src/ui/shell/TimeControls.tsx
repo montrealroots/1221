@@ -25,7 +25,7 @@ export function TimeControls() {
 
   return (
     <>
-      <div className="row gap-1" role="group" aria-label="Time controls">
+      <div className="row gap-1" role="group" aria-label="Time Controls">
         <button
           className="btn btn-ghost btn-sm"
           onClick={() => setSpeed(speed === 'paused' ? 'standard' : 'paused')}
@@ -64,7 +64,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       onClose={onClose}
       footer={
         <>
-          <button className="btn" onClick={onClose}>Not yet</button>
+          <button className="btn" onClick={onClose}>Not Yet</button>
           <button className="btn btn-primary" onClick={sleep}>
             Sleep {hours} hours
           </button>
@@ -128,7 +128,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
 
   return (
     <Modal
-      title="Skip to event"
+      title="Skip To Event"
       onClose={onClose}
       wide
       footer={

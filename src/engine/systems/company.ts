@@ -35,13 +35,13 @@ export interface RoleTemplate {
 export const COMPANY_ROLES: readonly RoleTemplate[] = [
   { title: 'Assistant', department: 'operations', baseSalary: 52_000_00, authorityShare: 0, skills: ['operations'], description: 'Keeps the calendar, the coverage and the coffee moving.' },
   { title: 'Creative Executive', department: 'development', baseSalary: 96_000_00, authorityShare: 0, skills: ['development_instinct', 'story_structure'], description: 'Reads everything, finds the one worth making.' },
-  { title: 'Director of Development', department: 'development', baseSalary: 168_000_00, authorityShare: 0.05, skills: ['development_instinct', 'packaging', 'talent_relations'], description: 'Runs the slate from idea to greenlight-ready.' },
-  { title: 'Head of Production', department: 'production', baseSalary: 245_000_00, authorityShare: 0.15, skills: ['budgeting', 'scheduling', 'crisis_management'], description: 'Owns whether the films actually get made on budget.' },
-  { title: 'Head of Business Affairs', department: 'legal', baseSalary: 265_000_00, authorityShare: 0.10, skills: ['negotiation', 'deal_structuring', 'rights_management'], description: 'Every contract, every chain of title, every option.' },
-  { title: 'Head of Marketing', department: 'marketing', baseSalary: 235_000_00, authorityShare: 0.08, skills: ['marketing_strategy', 'market_reading'], description: 'Turns a finished film into a thing people plan to see.' },
-  { title: 'Head of Distribution', department: 'distribution', baseSalary: 255_000_00, authorityShare: 0.12, skills: ['distribution_strategy', 'negotiation'], description: 'Windows, territories and the release date fight.' },
+  { title: 'Director Of Development', department: 'development', baseSalary: 168_000_00, authorityShare: 0.05, skills: ['development_instinct', 'packaging', 'talent_relations'], description: 'Runs the slate from idea to greenlight-ready.' },
+  { title: 'Head Of Production', department: 'production', baseSalary: 245_000_00, authorityShare: 0.15, skills: ['budgeting', 'scheduling', 'crisis_management'], description: 'Owns whether the films actually get made on budget.' },
+  { title: 'Head Of Business Affairs', department: 'legal', baseSalary: 265_000_00, authorityShare: 0.10, skills: ['negotiation', 'deal_structuring', 'rights_management'], description: 'Every contract, every chain of title, every option.' },
+  { title: 'Head Of Marketing', department: 'marketing', baseSalary: 235_000_00, authorityShare: 0.08, skills: ['marketing_strategy', 'market_reading'], description: 'Turns a finished film into a thing people plan to see.' },
+  { title: 'Head Of Distribution', department: 'distribution', baseSalary: 255_000_00, authorityShare: 0.12, skills: ['distribution_strategy', 'negotiation'], description: 'Windows, territories and the release date fight.' },
   { title: 'Chief Financial Officer', department: 'finance', baseSalary: 320_000_00, authorityShare: 0.20, skills: ['corporate_finance', 'accounting'], description: 'The person who says no, correctly, most of the time.' },
-  { title: 'President of Production', department: 'production', baseSalary: 480_000_00, authorityShare: 0.45, skills: ['slate_strategy', 'market_reading', 'talent_relations'], description: 'Runs the slate and can commit the company to a picture.' },
+  { title: 'President Of Production', department: 'production', baseSalary: 480_000_00, authorityShare: 0.45, skills: ['slate_strategy', 'market_reading', 'talent_relations'], description: 'Runs the slate and can commit the company to a picture.' },
   { title: 'Chief Executive', department: 'executive', baseSalary: 750_000_00, authorityShare: 1.0, skills: ['slate_strategy', 'corporate_finance', 'leadership'], description: 'Full authority, and the person who wears every failure.' },
 ];
 

@@ -375,7 +375,7 @@ export function attemptBillPayment(sim: Simulation, bill: Bill): void {
       title: `${bill.name} is unpaid`,
       detail: `${formatMoney(bill.amount)} was due and there were not enough available funds. ${bill.missedCount >= 3 ? 'This has now gone to collections.' : `Missed ${bill.missedCount} time${bill.missedCount === 1 ? '' : 's'}.`}`,
       route: '/workspace/bank',
-      actions: [{ label: 'Pay now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
+      actions: [{ label: 'Pay Now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
       refType: 'bill',
       refId: bill.id,
     });

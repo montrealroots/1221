@@ -47,7 +47,7 @@ export function GameShell() {
       ],
     },
     {
-      label: 'Money and things',
+      label: 'Money And Things',
       items: [
         { route: '/workspace/bank', label: 'Bank', icon: '▦' },
         { route: '/workspace/property', label: 'Property', icon: '⌂' },
@@ -68,7 +68,7 @@ export function GameShell() {
       ],
     },
     {
-      label: 'Care and growth',
+      label: 'Care And Growth',
       items: [
         { route: '/workspace/health', label: 'Health', icon: '✚' },
         { route: '/workspace/education', label: 'Education', icon: '✎' },
@@ -88,7 +88,7 @@ export function GameShell() {
           className="btn btn-ghost btn-sm rail-toggle"
           onClick={() => setRailOpen((open) => !open)}
           aria-expanded={railOpen}
-          aria-label="Toggle navigation"
+          aria-label="Toggle Navigation"
         >
           ☰
         </button>
@@ -96,7 +96,7 @@ export function GameShell() {
         <button
           className="topbar-brand btn btn-ghost"
           onClick={() => navigate('/home', 'Home')}
-          aria-label="SLATE, go to Home"
+          aria-label="SLATE, Go To Home"
         >
           <span role="img" aria-hidden="true">🎬</span>
           <span className="hide-sm">SLATE</span>
@@ -126,7 +126,7 @@ export function GameShell() {
         <button
           className="btn btn-ghost btn-sm"
           onClick={() => setHelpOpen(!helpOpen)}
-          aria-label="Help for this screen"
+          aria-label="Help For This Screen"
           aria-pressed={helpOpen}
         >
           ?
@@ -140,7 +140,7 @@ export function GameShell() {
       </header>
 
       <div className="shell-body">
-        <nav className="rail" data-open={railOpen} aria-label="Main navigation">
+        <nav className="rail" data-open={railOpen} aria-label="Main Navigation">
           {groups.map((group) => (
             <div key={group.label} className="rail-group">
               <div className="rail-group-label">{group.label}</div>

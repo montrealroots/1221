@@ -32,7 +32,7 @@ export function WorkWorkspace() {
 
       {job && (
         <Panel
-          title="Where you work"
+          title="Where You Work"
           actions={
             <>
               <button className="btn btn-sm" onClick={() => run('work.request_promotion', { jobId: job.id })}>
@@ -48,7 +48,7 @@ export function WorkWorkspace() {
             <Stat label="Rate" value={<span className="mono">{describePay(job)}</span>} />
             <Stat label="Hours" value={`${job.hoursPerWeek}/week`} />
             <Stat label="Started" value={formatDate(job.startedAt, sim.homeZone)} />
-            <Stat label="Next pay" value={formatRelative(job.nextPayAt, sim.now)} note={`${formatMoney(job.accruedPay)} accrued`} />
+            <Stat label="Next Pay" value={formatRelative(job.nextPayAt, sim.now)} note={`${formatMoney(job.accruedPay)} accrued`} />
           </div>
           <div className="grid grid-2">
             <Meter label="Performance" value={job.performance} hint="How your manager rates you. Feeds promotions and raises." />
@@ -100,9 +100,9 @@ export function WorkWorkspace() {
         </Panel>
       )}
 
-      <Panel title="Open positions" subtitle={`${openings.length} listings where you are`} flush>
+      <Panel title="Open Positions" subtitle={`${openings.length} listings where you are`} flush>
         {openings.length === 0 ? (
-          <Empty title="Nothing listed" body="New listings appear weekly. Check back, or move somewhere with a deeper job market." />
+          <Empty title="Nothing Listed" body="New listings appear weekly. Check back, or move somewhere with a deeper job market." />
         ) : (
           <div className="list">
             {openings.map((opening) => (
@@ -134,7 +134,7 @@ export function WorkWorkspace() {
       </Panel>
 
       {history.length > 0 && (
-        <Panel title="Work history" flush>
+        <Panel title="Work History" flush>
           <div className="list">
             {history.map((entry) => (
               <div key={entry.id} className="list-item list-static">

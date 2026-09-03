@@ -65,7 +65,7 @@ export function HealthWorkspace() {
         </Panel>
       </div>
 
-      <Panel title="Providers where you are" flush>
+      <Panel title="Providers Where You Are" flush>
         <div className="list">
           {providers.map((provider) => (
             <div key={provider.id} className="list-item list-static">
@@ -84,9 +84,9 @@ export function HealthWorkspace() {
         </div>
       </Panel>
 
-      <Panel title="Appointment history" flush>
+      <Panel title="Appointment History" flush>
         {past.length === 0 ? (
-          <Empty title="Nothing yet" body="Preventative care is cheaper than the alternative." />
+          <Empty title="Nothing Yet" body="Preventative care is cheaper than the alternative." />
         ) : (
           <div className="list">
             {past.map((appointment) => (

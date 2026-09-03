@@ -31,9 +31,9 @@ export function AwardsWorkspace() {
       </div>
 
       <Tabs active={tab} onChange={setTab} tabs={[
-        { id: 'season', label: 'This season' },
+        { id: 'season', label: 'This Season' },
         { id: 'festivals', label: 'Festivals' },
-        { id: 'history', label: 'Your record', badge: history.length },
+        { id: 'history', label: 'Your Record', badge: history.length },
       ]} />
 
       {tab === 'season' && (
@@ -59,7 +59,7 @@ export function AwardsWorkspace() {
 
           <Panel title="Campaign" subtitle="Only films that are actually eligible can be entered." flush>
             {projects.length === 0 ? (
-              <Empty title="Nothing eligible" body="A film has to be finished and released before it can be campaigned." />
+              <Empty title="Nothing Eligible" body="A film has to be finished and released before it can be campaigned." />
             ) : (
               <div className="list">
                 {projects.map((project) => (
@@ -94,7 +94,7 @@ export function AwardsWorkspace() {
       )}
 
       {tab === 'festivals' && (
-        <Panel title="Festival calendar" flush>
+        <Panel title="Festival Calendar" flush>
           <div className="list">
             {festivals.map(({ festival, year, at, city, submissions }) => (
               <div key={festival.id} className="list-item list-static">
@@ -131,9 +131,9 @@ export function AwardsWorkspace() {
       )}
 
       {tab === 'history' && (
-        <Panel title="Your record" flush>
+        <Panel title="Your Record" flush>
           {history.length === 0 ? (
-            <Empty title="No nominations" body="Awards follow work. Make something worth voting for." />
+            <Empty title="No Nominations" body="Awards follow work. Make something worth voting for." />
           ) : (
             <div className="list">
               {history.map(({ nomination, edition, body, project }) => (
@@ -180,7 +180,7 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
     <Modal
       title={`Campaign ${project?.title ?? ''}`}
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit} disabled={categories.length === 0}>Run the campaign</button></>}
+      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit} disabled={categories.length === 0}>Run The Campaign</button></>}
     >
       <div className="field">
         <label htmlFor="body">Awards body</label>
@@ -222,7 +222,7 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
         Spend has real but sharply diminishing influence. The film itself and its critical standing carry
         most of the weight, and precursor wins earlier in the season matter more than money.
       </div>
-      <Stat label="Project quality" value={project?.finalQuality ?? '—'} note={`critics ${project?.criticScore ?? '—'}`} />
+      <Stat label="Project Quality" value={project?.finalQuality ?? '—'} note={`critics ${project?.criticScore ?? '—'}`} />
     </Modal>
   );
 }

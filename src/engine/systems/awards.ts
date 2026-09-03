@@ -31,7 +31,7 @@ export function registerAwards(sim: Simulation): void {
     sim.schedule({
       at: addYears(sim.now, 1, sim.homeZone),
       kind: 'award.season_setup',
-      label: 'Awards season',
+      label: 'Awards Season',
       category: 'system',
       priority: 80,
     });
@@ -449,9 +449,9 @@ function announceNominations(sim: Simulation, editionId: Id): void {
           question: `Why was it not nominated for ${category}?`,
           summary: `It finished outside the ${slots} slots at the ${ordinal(edition.editionNumber)} ${body.name}.`,
           factors: [
-            { label: 'The film itself', detail: 'Quality and critical standing carry most of the weight.', weight: 0.6, contribution: 0, knowable: true },
-            { label: 'Campaign spend', detail: `${formatMoney(nomination.campaignSpend)} behind this category. Spend helps at the margin and cannot replace the work.`, weight: 0.15, contribution: 0, knowable: true },
-            { label: 'The other contenders', detail: 'What else was in the year, and what voters privately preferred.', weight: 0.25, contribution: 0, knowable: false },
+            { label: 'The Film Itself', detail: 'Quality and critical standing carry most of the weight.', weight: 0.6, contribution: 0, knowable: true },
+            { label: 'Campaign Spend', detail: `${formatMoney(nomination.campaignSpend)} behind this category. Spend helps at the margin and cannot replace the work.`, weight: 0.15, contribution: 0, knowable: true },
+            { label: 'The Other Contenders', detail: 'What else was in the year, and what voters privately preferred.', weight: 0.25, contribution: 0, knowable: false },
           ],
           outcome: 'not nominated',
         });
@@ -529,10 +529,10 @@ function holdCeremony(sim: Simulation, editionId: Id): void {
         question: 'Why did this win?',
         summary: `${category} at the ${ordinal(edition.editionNumber)} ${body.name}.`,
         factors: [
-          { label: 'The work', detail: `Quality ${project?.finalQuality ?? '—'} and critics ${project?.criticScore ?? '—'} out of 100.`, weight: 0.55, contribution: 0, knowable: true },
+          { label: 'The Work', detail: `Quality ${project?.finalQuality ?? '—'} and critics ${project?.criticScore ?? '—'} out of 100.`, weight: 0.55, contribution: 0, knowable: true },
           { label: 'Precursors', detail: 'Guild and critics wins earlier in the season build momentum voters follow.', weight: 0.2, contribution: 0, knowable: true },
           { label: 'Campaign', detail: `${formatMoney(winner.nomination.campaignSpend)} of campaign spend behind it.`, weight: 0.1, contribution: 0, knowable: true },
-          { label: 'The ballots', detail: 'Individual votes are secret. Nobody sees the count.', weight: 0.15, contribution: 0, knowable: false },
+          { label: 'The Ballots', detail: 'Individual votes are secret. Nobody sees the count.', weight: 0.15, contribution: 0, knowable: false },
         ],
         outcome: 'won',
       });
@@ -604,10 +604,10 @@ function decideFestivalSubmission(sim: Simulation, submissionId: Id): void {
     question: `Why did ${festival.name} take it, or not?`,
     summary: selected ? `Selected for ${festival.name}.` : `Not selected for ${festival.name}.`,
     factors: [
-      { label: 'The film', detail: `Quality ${quality} out of 100.`, weight: 0.55, contribution: quality * 0.55, knowable: true },
-      { label: 'Programming taste', detail: artLean > 0 ? 'This kind of film is squarely what they programme.' : 'This is not really their sort of film.', weight: 0.2, contribution: artLean, knowable: true },
-      { label: 'Cast draw', detail: 'Festivals need films that sell tickets and press too.', weight: 0.1, contribution: starDraw * 0.1, knowable: true },
-      { label: 'The rest of the slate', detail: 'How many slots were left and what else was submitted.', weight: 0.15, contribution: 0, knowable: false },
+      { label: 'The Film', detail: `Quality ${quality} out of 100.`, weight: 0.55, contribution: quality * 0.55, knowable: true },
+      { label: 'Programming Taste', detail: artLean > 0 ? 'This kind of film is squarely what they programme.' : 'This is not really their sort of film.', weight: 0.2, contribution: artLean, knowable: true },
+      { label: 'Cast Draw', detail: 'Festivals need films that sell tickets and press too.', weight: 0.1, contribution: starDraw * 0.1, knowable: true },
+      { label: 'The Rest Of The Slate', detail: 'How many slots were left and what else was submitted.', weight: 0.15, contribution: 0, knowable: false },
     ],
     seed: `festival|${submission.id}`, roll, probability, score: merit,
     outcome: selected ? 'selected' : 'rejected',

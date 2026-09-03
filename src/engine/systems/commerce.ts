@@ -24,7 +24,7 @@ export function registerCommerce(sim: Simulation): void {
   sim.onSchedule('shop.deliver', (item) => deliverOrder(sim, item.payload.orderId as Id));
   sim.onSchedule('shop.pantry_expiry', () => {
     expirePantry(sim);
-    sim.schedule({ at: addDays(sim.now, 3, sim.homeZone), kind: 'shop.pantry_expiry', label: 'Pantry check', category: 'system', priority: 95 });
+    sim.schedule({ at: addDays(sim.now, 3, sim.homeZone), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
   });
 
   sim.onCommand<{ retailerId: string; lines: CartLine[]; channel?: Order['channel']; accountId?: Id; giftFor?: Id }, { orderId: Id; total: Money; deliverAt?: number }>(

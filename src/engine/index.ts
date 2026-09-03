@@ -77,7 +77,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({
     at: addDays(startOfLocalDay(sim), 1, z),
     kind: 'life.day_rollover',
-    label: 'New day', category: 'system', priority: 5,
+    label: 'New Day', category: 'system', priority: 5,
   });
 
   const nextMonth = (() => {
@@ -89,26 +89,26 @@ function armWorldClock(sim: Simulation): void {
 
   sim.schedule({
     at: nextMonth, kind: 'finance.month_close',
-    label: 'Statement close', category: 'system', priority: 8,
+    label: 'Statement Close', category: 'system', priority: 8,
     recurrence: { unit: 'month', interval: 1 },
   });
-  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New job listings', category: 'career', priority: 60 });
-  sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New property listings', category: 'property', priority: 65 });
-  sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer inventory', category: 'vehicles', priority: 68 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property market', category: 'system', priority: 92 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle values', category: 'system', priority: 93 });
-  sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience update', category: 'system', priority: 88 });
-  sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry check', category: 'system', priority: 95 });
-  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship drift', category: 'system', priority: 90 });
-  sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting breakdowns', category: 'career', priority: 72 });
-  sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World simulation', category: 'system', priority: 96 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise appetite', category: 'system', priority: 94 });
+  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New Job Listings', category: 'career', priority: 60 });
+  sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
+  sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
+  sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
+  sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
+  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship Drift', category: 'system', priority: 90 });
+  sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
+  sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise Appetite', category: 'system', priority: 94 });
 
   const nextYear = zonedParts(sim.now, z).year + 1;
   sim.schedule({
     at: instantFromZoned({ year: nextYear, month: 1, day: 2, hour: 3 }, z),
     kind: 'award.season_setup',
-    label: 'Awards season', category: 'system', priority: 80,
+    label: 'Awards Season', category: 'system', priority: 80,
   });
 }
 
@@ -186,7 +186,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     sim.schedule({
       at: addMonths(sim.now, 1, sim.homeZone),
       kind: 'finance.bill_due',
-      label: 'Credit card minimum due',
+      label: 'Credit Card Minimum Due',
       category: 'finance',
       payload: { billId: '' },
       priority: 20,
@@ -272,7 +272,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
       if (!result.ok) {
         // Could not afford anything: that is a legitimate starting position.
         sim.notify({
-          category: 'vehicles', title: 'No car yet',
+          category: 'vehicles', title: 'No Car Yet',
           body: 'You could not afford one at the start. Public transport and rideshares for now.',
           importance: 25, route: '/workspace/vehicles',
         });
@@ -338,7 +338,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // --- Opening history ----------------------------------------------------
   sim.remember({
     category: 'life',
-    title: 'A new life begins',
+    title: 'A New Life Begins',
     detail: `${player.displayName} in ${CITIES.require(cityId).name}, ${formatDate(sim.now, sim.homeZone)}. ${WEALTH_PROFILES[config.wealth].note}`,
     refs: [{ type: 'person', id: player.id }],
     significance: 100, public: false,

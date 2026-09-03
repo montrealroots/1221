@@ -50,7 +50,7 @@ export function registerWorld(sim: Simulation): void {
     sim.schedule({
       at: addDays(sim.now, 2, sim.homeZone),
       kind: 'world.tick',
-      label: 'World simulation',
+      label: 'World Simulation',
       category: 'system',
       priority: 96,
     });
@@ -112,7 +112,7 @@ export function registerWorld(sim: Simulation): void {
       s.universe.sandbox.maxAttributesApplied = true;
       s.universe.sandbox.log.push({ at: s.now, action: 'Maxed all attributes and skills' });
       s.remember({
-        category: 'life', title: 'Sandbox: attributes maxed',
+        category: 'life', title: 'Sandbox: Attributes Maxed',
         detail: 'All 88 attributes and every skill set to 100 through sandbox tools.',
         refs: [{ type: 'person', id: player.id }], significance: 1, public: false,
       });

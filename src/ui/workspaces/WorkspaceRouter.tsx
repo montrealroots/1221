@@ -48,7 +48,7 @@ export function WorkspaceRouter({ route }: { route: string }) {
   if (!Workspace) {
     return (
       <div className="empty">
-        <h3>Nothing here yet</h3>
+        <h3>Nothing Here Yet</h3>
         <p className="small">That workspace does not exist. Use Go Anywhere to find what you were after.</p>
       </div>
     );

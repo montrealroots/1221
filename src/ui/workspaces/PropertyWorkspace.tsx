@@ -44,7 +44,7 @@ export function PropertyWorkspace() {
         onChange={setTab}
         tabs={[
           { id: 'owned', label: 'Yours', badge: owned.length },
-          { id: 'market', label: 'For sale', badge: listings.length },
+          { id: 'market', label: 'For Sale', badge: listings.length },
           { id: 'offers', label: 'Offers', badge: offers.filter((o) => ['submitted', 'countered', 'accepted'].includes(o.status)).length },
           { id: 'build', label: 'Build', badge: builds.length },
           { id: 'interiors', label: 'Interiors' },
@@ -53,7 +53,7 @@ export function PropertyWorkspace() {
 
       {tab === 'owned' && (
         owned.length === 0 ? (
-          <Empty title="Nowhere of your own" body="Rent something from the market, or buy land and build." />
+          <Empty title="Nowhere Of Your Own" body="Rent something from the market, or buy land and build." />
         ) : (
           <div className="grid grid-2">
             {owned.map((property) => (
@@ -82,7 +82,7 @@ export function PropertyWorkspace() {
                 </div>
                 <div className="col gap-3">
                   <Meter label="Condition" value={property.condition} hint="Decays slowly without maintenance." />
-                  <Meter label="Living quality" value={propertyQuality(sim, property.id)} hint="Feeds how well you sleep and how you feel." />
+                  <Meter label="Living Quality" value={propertyQuality(sim, property.id)} hint="Feeds how well you sleep and how you feel." />
                 </div>
                 {property.features.length > 0 && (
                   <div className="row wrap gap-1" style={{ marginTop: 'var(--s3)' }}>
@@ -96,9 +96,9 @@ export function PropertyWorkspace() {
       )}
 
       {tab === 'market' && (
-        <Panel title="On the market" subtitle={`${listings.length} listings where you are`} flush>
+        <Panel title="On The Market" subtitle={`${listings.length} listings where you are`} flush>
           {listings.length === 0 ? (
-            <Empty title="Nothing listed" body="New listings appear every ten days." />
+            <Empty title="Nothing Listed" body="New listings appear every ten days." />
           ) : (
             <div className="list">
               {listings.map(({ listing, property }) => property && (
@@ -133,9 +133,9 @@ export function PropertyWorkspace() {
       )}
 
       {tab === 'offers' && (
-        <Panel title="Your offers" flush>
+        <Panel title="Your Offers" flush>
           {offers.length === 0 ? (
-            <Empty title="No offers out" body="Find something on the market and make one." />
+            <Empty title="No Offers Out" body="Find something on the market and make one." />
           ) : (
             <div className="list">
               {offers.map((offer) => {
@@ -225,11 +225,11 @@ function OfferDialog({ listingId, onClose }: { listingId: string; onClose: () =>
     <Modal
       title={`Offer on ${property.addressLine}`}
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Submit offer</button></>}
+      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Submit Offer</button></>}
     >
       <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
         <Stat label="Asking" value={<span className="mono">{formatMoney(listing.askingPrice, { cents: false })}</span>} />
-        <Stat label="Days on market" value={listing.daysOnMarket} note="Longer means more flexible" />
+        <Stat label="Days On Market" value={listing.daysOnMarket} note="Longer means more flexible" />
       </div>
 
       <div className="field">
@@ -283,7 +283,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
       >
         {builds.length === 0 ? (
           <Empty
-            title="Nothing under construction"
+            title="Nothing Under Construction"
             body={land.length === 0
               ? 'You need to own a parcel of land first. Vacant lots appear in the market listings.'
               : 'You own land. Start a build on it.'}
@@ -317,7 +317,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
                   <Meter label="Progress" value={(complete / Math.max(1, phases.length)) * 100} />
 
                   <details style={{ marginTop: 'var(--s3)' }}>
-                    <summary className="small" style={{ cursor: 'pointer' }}>Phase detail</summary>
+                    <summary className="small" style={{ cursor: 'pointer' }}>Phase Detail</summary>
                     <div className="table-scroll" style={{ marginTop: 'var(--s2)' }}>
                       <table>
                         <thead><tr><th>Phase</th><th>Status</th><th className="num">Days</th><th className="num">Spent</th></tr></thead>
@@ -347,7 +347,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
 
       {open && (
         <Modal
-          title="Start a build"
+          title="Start A Build"
           onClose={() => setOpen(false)}
           footer={<button className="btn" onClick={() => setOpen(false)}>Close</button>}
         >
@@ -403,7 +403,7 @@ function InteriorsTab() {
     <>
       <Panel title="Rooms" subtitle="Property, structure, floor, room, zone. Every furnishing you buy becomes a real owned asset." flush>
         {rooms.length === 0 ? (
-          <Empty title="No rooms" body="Rooms exist once you own or rent somewhere with an interior." />
+          <Empty title="No Rooms" body="Rooms exist once you own or rent somewhere with an interior." />
         ) : (
           <div className="list">
             {rooms.map(({ room, property }) => (

@@ -314,8 +314,8 @@ export function registerProduction(sim: Simulation): void {
         question: 'What did the test audience say?',
         summary: `${score} out of 100 with ${audience} recruited viewers.`,
         factors: [
-          { label: 'The cut as it stands', detail: `Assembled quality reads ${quality} out of 100.`, weight: 0.8, contribution: quality * 0.8, knowable: true },
-          { label: 'Audience composition', detail: 'Who the recruiters actually put in the room.', weight: 0.2, contribution: 0, knowable: false },
+          { label: 'The Cut As It Stands', detail: `Assembled quality reads ${quality} out of 100.`, weight: 0.8, contribution: quality * 0.8, knowable: true },
+          { label: 'Audience Composition', detail: 'Who the recruiters actually put in the room.', weight: 0.2, contribution: 0, knowable: false },
         ],
         score,
         outcome: score >= 70 ? 'strong' : score >= 55 ? 'mixed' : 'weak',
@@ -327,7 +327,7 @@ export function registerProduction(sim: Simulation): void {
           title: `${project.title} tested at ${score}`,
           detail: `${notes.join(' ')} Reshoots would cost time and money and might fix it.`,
           route: '/workspace/projects',
-          actions: [{ label: 'Order reshoots', commandKind: 'prod.order_reshoots', payload: { projectId: project.id, days: 4 } }],
+          actions: [{ label: 'Order Reshoots', commandKind: 'prod.order_reshoots', payload: { projectId: project.id, days: 4 } }],
           refType: 'project', refId: project.id,
         });
       }

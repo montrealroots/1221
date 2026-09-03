@@ -26,7 +26,7 @@ export function HelpPanel() {
       <div className="modal-head">
         <div className="row-between">
           <h2>Help</h2>
-          <button className="btn btn-ghost btn-sm" onClick={() => setHelpOpen(false)} aria-label="Close help">✕</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setHelpOpen(false)} aria-label="Close Help">✕</button>
         </div>
         <input
           type="search"
@@ -34,7 +34,7 @@ export function HelpPanel() {
           value={query}
           onChange={(e) => { setQuery(e.target.value); setPinned(null); }}
           style={{ marginTop: 'var(--s3)' }}
-          aria-label="Search help"
+          aria-label="Search Help"
         />
       </div>
 
@@ -105,7 +105,7 @@ export function HelpPanel() {
 
             {advanced && article.advanced && article.advanced.length > 0 && (
               <div className="help-section">
-                <h4>Under the hood</h4>
+                <h4>Under The Hood</h4>
                 <ul className="small mono" style={{ margin: 0, paddingLeft: 'var(--s4)' }}>
                   {article.advanced.map((item) => <li key={item} style={{ marginBottom: 'var(--s2)' }}>{item}</li>)}
                 </ul>

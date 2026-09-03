@@ -215,7 +215,7 @@ export function SaveSlots({
 
       {confirmDelete !== null && (
         <div className="overlay" onClick={() => setConfirmDelete(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Confirm deletion">
+          <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Confirm Deletion">
             <div className="modal-head">
               <h2>Delete slot {confirmDelete}?</h2>
             </div>

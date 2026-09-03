@@ -27,7 +27,7 @@ export function registerCasting(sim: Simulation): void {
   sim.onSchedule('world.project_progress', (item) => advanceBackgroundProject(sim, item.payload.projectId as Id));
   sim.onSchedule('cast.opportunity_scan', () => {
     generateOpportunities(sim);
-    sim.schedule({ at: addDays(sim.now, 5, sim.homeZone), kind: 'cast.opportunity_scan', label: 'Casting breakdowns', category: 'career', priority: 72 });
+    sim.schedule({ at: addDays(sim.now, 5, sim.homeZone), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
   });
 
   // --- Creating roles ------------------------------------------------------
@@ -204,15 +204,15 @@ export function registerCasting(sim: Simulation): void {
           title: `${project.title} — ${role.characterName}`,
           compensation: fee,
           milestones: [
-            { label: 'On execution', fraction: 0.15, dueInDays: 0 },
-            { label: 'On commencement of principal photography', fraction: 0.55, dueInDays: 45 },
-            { label: 'On completion of services', fraction: 0.30, dueInDays: 45 + role.shootDays * 2 },
+            { label: 'On Execution', fraction: 0.15, dueInDays: 0 },
+            { label: 'On Commencement Of Principal Photography', fraction: 0.55, dueInDays: 45 },
+            { label: 'On Completion Of Services', fraction: 0.30, dueInDays: 45 + role.shootDays * 2 },
           ],
           backendPoints: role.billing === 'lead' ? 0.02 : undefined,
           backendKind: role.billing === 'lead' ? 'net' : undefined,
           obligations: [
-            { label: 'Publicity days', kind: 'publicity', dueInDays: 400 },
-            { label: 'Exclusivity during principal photography', kind: 'exclusivity' },
+            { label: 'Publicity Days', kind: 'publicity', dueInDays: 400 },
+            { label: 'Exclusivity During Principal Photography', kind: 'exclusivity' },
           ],
           exclusivityMonths: Math.max(2, Math.round(role.shootDays / 12)),
         },
@@ -258,11 +258,11 @@ export function registerCasting(sim: Simulation): void {
 
       const rng = s.rng('representation', player.id, agency.id);
       const { factors, score } = buildFactors([
-        { label: 'Your standing', detail: `Reputation, demand and profile average to ${Math.round(standing)} out of 100.`, weight: 0.44, value: standing / 100 },
+        { label: 'Your Standing', detail: `Reputation, demand and profile average to ${Math.round(standing)} out of 100.`, weight: 0.44, value: standing / 100 },
         { label: 'Credits', detail: `${player.creditIds.length} credit${player.creditIds.length === 1 ? '' : 's'} on record.`, weight: 0.24, value: clamp(player.creditIds.length / 8, 0, 1) },
-        { label: 'Their threshold', detail: `${agency.name} generally signs at ${agency.signingThreshold} out of 100.`, weight: -0.26, value: agency.signingThreshold / 100 },
+        { label: 'Their Threshold', detail: `${agency.name} generally signs at ${agency.signingThreshold} out of 100.`, weight: -0.26, value: agency.signingThreshold / 100 },
         { label: 'Networking', detail: `Your networking reads ${Math.round(player.attributes['networking'] ?? 0)} out of 100.`, weight: 0.14, value: (player.attributes['networking'] ?? 0) / 100 },
-        { label: 'Their client list', detail: 'Whether they already represent someone in your lane.', weight: 0.12, value: rng.float(0, 1), knowable: false },
+        { label: 'Their Client List', detail: 'Whether they already represent someone in your lane.', weight: 0.12, value: rng.float(0, 1), knowable: false },
       ]);
 
       const probability = clamp(score * 1.2 - 0.05, 0.01, 0.95);
@@ -526,12 +526,12 @@ function scoreAudition(sim: Simulation, audition: Audition, prepHours: number): 
   );
 
   const { factors } = buildFactors([
-    { label: 'Fit for the role', detail: `The part needs ${role.requirements.slice(0, 3).map((r) => r.attributeId.replace(/_/g, ' ')).join(', ')}. You read at ${Math.round(fit)} out of 100 against that.`, weight: 0.32, value: fit / 100 },
-    { label: 'Audition technique', detail: `${audition.stage === 'self_tape' ? 'Self-tape craft' : 'Audition technique'} at ${Math.round(technique)} out of 100.`, weight: 0.20, value: technique / 100 },
+    { label: 'Fit For The Role', detail: `The part needs ${role.requirements.slice(0, 3).map((r) => r.attributeId.replace(/_/g, ' ')).join(', ')}. You read at ${Math.round(fit)} out of 100 against that.`, weight: 0.32, value: fit / 100 },
+    { label: 'Audition Technique', detail: `${audition.stage === 'self_tape' ? 'Self-tape craft' : 'Audition technique'} at ${Math.round(technique)} out of 100.`, weight: 0.20, value: technique / 100 },
     { label: 'Preparation', detail: prepHours > 0 ? `You put ${prepHours} hours into it.` : 'You went in cold.', weight: 0.18, value: preparedness / 100 },
-    { label: 'How you were on the day', detail: `Energy and stress put you at ${Math.round(ready)}% readiness.`, weight: 0.14, value: ready / 100 },
-    { label: 'Age against the breakdown', detail: `They wrote it for ${role.ageRange[0]} to ${role.ageRange[1]}.`, weight: 0.08, value: ageMatch },
-    { label: 'What you have done before', detail: `Industry demand at ${Math.round(demand)} out of 100.`, weight: 0.12, value: demand / 100 },
+    { label: 'How You Were On The Day', detail: `Energy and stress put you at ${Math.round(ready)}% readiness.`, weight: 0.14, value: ready / 100 },
+    { label: 'Age Against The Breakdown', detail: `They wrote it for ${role.ageRange[0]} to ${role.ageRange[1]}.`, weight: 0.08, value: ageMatch },
+    { label: 'What You Have Done Before', detail: `Industry demand at ${Math.round(demand)} out of 100.`, weight: 0.12, value: demand / 100 },
   ]);
 
   return { performance, fit, total, factors };
@@ -620,7 +620,7 @@ function decideRole(sim: Simulation, roleId: Id): void {
         factors: [
           ...result.factors,
           {
-            label: 'The other people in the running',
+            label: 'The Other People In The Running',
             detail: `${ranked.length - 1} other actors read for this. What they did in their rooms is not something you get to see.`,
             weight: 0.25, contribution: 0, knowable: true,
           },

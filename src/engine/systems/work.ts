@@ -123,7 +123,7 @@ export function registerWork(sim: Simulation): void {
     sim.schedule({
       at: addDays(sim.now, 7, sim.homeZone),
       kind: 'work.refresh_openings',
-      label: 'New job listings',
+      label: 'New Job Listings',
       category: 'career',
       priority: 60,
     });
@@ -258,10 +258,10 @@ export function registerWork(sim: Simulation): void {
       const monthsHeld = (s.now - job.startedAt) / (30.44 * MS_DAY);
       const rng = s.rng('promotion', job.id, Math.floor(monthsHeld));
       const { factors, score } = buildFactors([
-        { label: 'Performance rating', detail: `Your manager rates you ${Math.round(job.performance)} out of 100.`, weight: 0.42, value: job.performance / 100 },
+        { label: 'Performance Rating', detail: `Your manager rates you ${Math.round(job.performance)} out of 100.`, weight: 0.42, value: job.performance / 100 },
         { label: 'Attendance', detail: `Attendance is at ${Math.round(job.attendance)}%.`, weight: 0.22, value: job.attendance / 100 },
-        { label: 'Time in role', detail: `${monthsHeld.toFixed(1)} months in the role.`, weight: 0.24, value: clamp(monthsHeld / 14, 0, 1) },
-        { label: 'Openings above you', detail: 'Whether there is anywhere to be promoted into right now.', weight: 0.12, value: rng.float(0.2, 1), knowable: false },
+        { label: 'Time In Role', detail: `${monthsHeld.toFixed(1)} months in the role.`, weight: 0.24, value: clamp(monthsHeld / 14, 0, 1) },
+        { label: 'Openings Above You', detail: 'Whether there is anywhere to be promoted into right now.', weight: 0.12, value: rng.float(0.2, 1), knowable: false },
       ]);
 
       const roll = rng.next();
@@ -460,14 +460,14 @@ export function scoreCandidate(sim: Simulation, person: Person, opening: JobOpen
   const competitionWeight = meetsTheBar ? -0.10 : -0.22;
 
   const { factors, score } = buildFactors([
-    { label: 'Skills against the requirements', detail: opening.requirements.length === 0 ? 'No specific requirements listed.' : `They asked for ${opening.requirements.map((r) => `${r.skill.replace(/_/g, ' ')} ${r.min}+`).join(', ')}. ${meetsTheBar ? 'You meet it.' : 'You are short on at least one.'}`, weight: 0.34, value: requirementFit },
-    { label: 'Work history', detail: bar === 0
+    { label: 'Skills Against The Requirements', detail: opening.requirements.length === 0 ? 'No specific requirements listed.' : `They asked for ${opening.requirements.map((r) => `${r.skill.replace(/_/g, ' ')} ${r.min}+`).join(', ')}. ${meetsTheBar ? 'You meet it.' : 'You are short on at least one.'}`, weight: 0.34, value: requirementFit },
+    { label: 'Work History', detail: bar === 0
       ? `${experienceYears.toFixed(1)} years on record, and this job does not ask for any.`
       : `${experienceYears.toFixed(1)} years of employment on record.`, weight: historyWeight, value: clamp(experienceYears / 5, 0, 1) },
-    { label: 'How you came across', detail: 'Presentation, warmth and whether you seemed like someone they want around.', weight: 0.18, value: clamp((person.personality.extraversion * 0.5 + person.personality.agreeableness * 0.5) / 100, 0, 1) },
+    { label: 'How You Came Across', detail: 'Presentation, warmth and whether you seemed like someone they want around.', weight: 0.18, value: clamp((person.personality.extraversion * 0.5 + person.personality.agreeableness * 0.5) / 100, 0, 1) },
     { label: 'Reliability', detail: 'References, punctuality and whether you look like you will show up.', weight: 0.16, value: clamp(((person.attributes['reliability'] ?? 40) + (person.attributes['punctuality'] ?? 40)) / 200, 0, 1) },
-    { label: 'Competition for the role', detail: `${opening.competition} out of 100 for how contested this listing is.${meetsTheBar ? ' You are qualified, which takes most of the sting out of it.' : ''}`, weight: competitionWeight, value: opening.competition / 100 },
-    { label: 'Other candidates', detail: 'Who else applied, which you have no way of knowing.', weight: 0.14, value: rng.float(0, 1), knowable: false },
+    { label: 'Competition For The Role', detail: `${opening.competition} out of 100 for how contested this listing is.${meetsTheBar ? ' You are qualified, which takes most of the sting out of it.' : ''}`, weight: competitionWeight, value: opening.competition / 100 },
+    { label: 'Other Candidates', detail: 'Who else applied, which you have no way of knowing.', weight: 0.14, value: rng.float(0, 1), knowable: false },
   ]);
 
   return { score: clamp(score, 0, 1.2), factors };
@@ -541,7 +541,7 @@ function decideApplication(sim: Simulation, app: JobApplication): void {
   const allFactors = [
     ...factors,
     {
-      label: 'How you were on the day',
+      label: 'How You Were On The Day',
       detail: `You arrived at ${Math.round(ready * 100)}% readiness. Tired and stressed reads in a room.`,
       weight: 0.3, contribution: ready * 0.3, knowable: true,
     },
@@ -825,7 +825,7 @@ export function terminate(sim: Simulation, job: Job, reason: string): void {
   });
   sim.requireDecision({
     urgency: 84, category: 'career',
-    title: 'You have lost your job',
+    title: 'You Have Lost Your Job',
     detail: `${job.employerName} has ended your employment. Reason: ${reason}. Your bills have not stopped.`,
     route: '/workspace/jobs',
     refType: 'job', refId: job.id,

@@ -55,9 +55,9 @@ export function CalendarWorkspace() {
         title={`${MONTHS[view.month - 1]} ${view.year}`}
         actions={
           <>
-            <button className="btn btn-sm" onClick={() => shift(-1)} aria-label="Previous month">‹</button>
+            <button className="btn btn-sm" onClick={() => shift(-1)} aria-label="Previous Month">‹</button>
             <button className="btn btn-sm" onClick={() => setView({ year: today.year, month: today.month })}>Today</button>
-            <button className="btn btn-sm" onClick={() => shift(1)} aria-label="Next month">›</button>
+            <button className="btn btn-sm" onClick={() => shift(1)} aria-label="Next Month">›</button>
           </>
         }
       >
@@ -114,7 +114,7 @@ export function CalendarWorkspace() {
           actions={<button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>}
         >
           {selectedDay.entries.length === 0 ? (
-            <Empty title="Nothing scheduled" body="That day is entirely yours." />
+            <Empty title="Nothing Scheduled" body="That day is entirely yours." />
           ) : (
             <div className="list">
               {selectedDay.entries.map((entry) => (
@@ -141,9 +141,9 @@ export function CalendarWorkspace() {
         </Panel>
       )}
 
-      <Panel title="Next thirty days" flush>
+      <Panel title="Next Thirty Days" flush>
         {next30.length === 0 ? (
-          <Empty title="Clear ahead" body="Nothing is on the calendar for the next month." />
+          <Empty title="Clear Ahead" body="Nothing is on the calendar for the next month." />
         ) : (
           <div className="list">
             {next30.slice(0, 20).map((entry) => (

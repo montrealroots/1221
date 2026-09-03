@@ -64,16 +64,16 @@ const DOMAINS: Domain[] = [
     entries: [
       { route: '/workspace/social', label: 'Platforms', detail: 'Long video, short video, photo and text, each behaving differently.' },
       { route: '/workspace/social', label: 'Audience', detail: 'Segments, affinity, churn and momentum.' },
-      { route: '/workspace/social', label: 'Brand deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },
+      { route: '/workspace/social', label: 'Brand Deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },
     ],
   },
   {
-    label: 'Film and television',
+    label: 'Film And Television',
     blurb: 'One canonical project, idea to library.',
     entries: [
       { route: '/workspace/casting', label: 'Casting', detail: 'Breakdowns, self-tapes, callbacks and offers you can lose.' },
       { route: '/workspace/projects', label: 'Projects', detail: 'Rights, writing, packaging, greenlight, shoot, post, release.' },
-      { route: '/workspace/awards', label: 'Awards and festivals', detail: 'Edition-specific, eligibility-gated, and permanent once decided.' },
+      { route: '/workspace/awards', label: 'Awards And Festivals', detail: 'Edition-specific, eligibility-gated, and permanent once decided.' },
     ],
   },
   {
@@ -86,7 +86,7 @@ const DOMAINS: Domain[] = [
     ],
   },
   {
-    label: 'Career and money',
+    label: 'Career And Money',
     blurb: 'The unglamorous machinery underneath all of it.',
     entries: [
       { route: '/workspace/jobs', label: 'Employment', detail: 'Apply, interview, work shifts, get promoted, or get let go.' },

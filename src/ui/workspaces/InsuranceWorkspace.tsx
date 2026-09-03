@@ -65,7 +65,7 @@ export function InsuranceWorkspace() {
         </div>
       )}
 
-      <Panel title="Available cover" flush>
+      <Panel title="Available Cover" flush>
         <div className="list">
           {INSURANCE_PRODUCTS.map((product) => {
             const held = policies.find((p) => p.line === product.line && p.status === 'active');
@@ -89,9 +89,9 @@ export function InsuranceWorkspace() {
         </div>
       </Panel>
 
-      <Panel title="Your policies" flush>
+      <Panel title="Your Policies" flush>
         {policies.length === 0 ? (
-          <Empty title="No cover" body="Nothing you own is insured. That is a decision, and it has consequences." />
+          <Empty title="No Cover" body="Nothing you own is insured. That is a decision, and it has consequences." />
         ) : (
           <div className="list">
             {policies.map((policy) => (
@@ -197,7 +197,7 @@ function QuoteDialog({ line, onClose }: { line: InsuranceLine; onClose: () => vo
     <Modal
       title={`Quote for ${line} cover`}
       onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={purchase}>Buy this policy</button></>}
+      footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={purchase}>Buy This Policy</button></>}
     >
       {candidates.length > 0 && (
         <div className="field">
@@ -222,7 +222,7 @@ function QuoteDialog({ line, onClose }: { line: InsuranceLine; onClose: () => vo
       <div className="grid grid-2">
         <Stat label="Premium" value={<span className="mono">{formatMoney(quote.premium)}/mo</span>} />
         <Stat label="Deductible" value={<span className="mono">{formatMoney(quote.deductible)}</span>} />
-        <Stat label="Covered after deductible" value={`${Math.round(quote.coinsurance * 100)}%`} />
+        <Stat label="Covered After Deductible" value={`${Math.round(quote.coinsurance * 100)}%`} />
         <Stat label="Limit" value={<span className="mono">{formatMoneyCompact(quote.coverageLimit)}</span>} />
       </div>
 

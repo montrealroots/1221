@@ -40,9 +40,9 @@ const CAREER_TRACKS: { id: CareerTrack; blurb: string }[] = [
 
 const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
   { id: 'couch', label: "A friend's couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
-  { id: 'roommates', label: 'Room in a share', blurb: 'Cheap, crowded, and how most people start.' },
-  { id: 'rental', label: 'Your own rental', blurb: 'A lease, a deposit and somewhere that is yours.' },
-  { id: 'owned', label: 'You own a home', blurb: 'A house and the mortgage that came with it.' },
+  { id: 'roommates', label: 'Room In A Share', blurb: 'Cheap, crowded, and how most people start.' },
+  { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that is yours.' },
+  { id: 'owned', label: 'You Own A Home', blurb: 'A house and the mortgage that came with it.' },
 ];
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
@@ -52,9 +52,9 @@ const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; hi
   { key: 'conscientiousness', label: 'Conscientiousness', low: 'Loose', high: 'Meticulous' },
   { key: 'extraversion', label: 'Extraversion', low: 'Reserved', high: 'Outgoing' },
   { key: 'agreeableness', label: 'Agreeableness', low: 'Blunt', high: 'Accommodating' },
-  { key: 'emotionalStability', label: 'Emotional stability', low: 'Volatile', high: 'Steady' },
+  { key: 'emotionalStability', label: 'Emotional Stability', low: 'Volatile', high: 'Steady' },
   { key: 'ambition', label: 'Ambition', low: 'Content', high: 'Driven' },
-  { key: 'riskTolerance', label: 'Risk tolerance', low: 'Cautious', high: 'Reckless' },
+  { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
 ];
 
 const INTEREST_OPTIONS = [
@@ -213,7 +213,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <label htmlFor="stage">Credit name (optional)</label>
           <input
             id="stage" type="text"
-            placeholder="Leave blank to be credited under your own name"
+            placeholder="Leave Blank To Be Credited Under Your Own Name"
             value={config.stageName ?? ''}
             onChange={(e) => set('stageName', e.target.value)}
           />
@@ -381,7 +381,7 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Interests and background</h2>
+            <h2>Interests And Background</h2>
             <p className="muted small">Interests affect who you get on with and what you enjoy doing with your time.</p>
           </div>
         </div>
@@ -489,7 +489,7 @@ function StartingPointStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where you start</h2>
+            <h2>Where You Start</h2>
             <p className="muted small">
               Location decides your taxes, your rent, your job market and how much industry work is within reach.
             </p>
@@ -580,7 +580,7 @@ function StartingPointStep({
       </div>
 
       <div className="card">
-        <div className="panel-head"><h2>Starting situation</h2></div>
+        <div className="panel-head"><h2>Starting Situation</h2></div>
         <div className="col gap-3">
           <label className="row gap-2" style={{ marginBottom: 0 }}>
             <input
@@ -652,7 +652,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       <div className="grid grid-2">
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
-          <Line label="Legal name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
+          <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
@@ -664,7 +664,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Housing" value={HOUSING.find((h) => h.id === config.housing)?.label ?? '—'} />
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
-          <Line label="Credit score" value={String(wealth.creditScore)} />
+          <Line label="Credit Score" value={String(wealth.creditScore)} />
           <Line label="Job" value={config.startWithJob ? 'Yes' : 'Not yet'} />
           <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
         </div>
