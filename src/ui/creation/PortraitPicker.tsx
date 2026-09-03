@@ -21,6 +21,25 @@ import {
 /** Quality to re-encode at. High enough for a face, small enough for a save. */
 const JPEG_QUALITY = 0.86;
 
+/**
+ * The picture-with-an-arrow every upload control has.
+ *
+ * Drawn rather than fetched, so it costs nothing, scales to any screen and
+ * takes the frame's colour — including the accent it turns while a photo is
+ * being dragged over it.
+ */
+function UploadGlyph() {
+  return (
+    <svg className="portrait-glyph" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <rect x="5" y="8" width="38" height="32" rx="5" />
+      <circle cx="15" cy="18.5" r="3" />
+      <path d="M7 36.5 16 27.5l4.5 4" />
+      <path d="M31 37V21.5" />
+      <path d="M25.5 27 31 21.5 36.5 27" />
+    </svg>
+  );
+}
+
 export function PortraitPicker({
   portrait, name, onChange,
 }: {
@@ -123,7 +142,6 @@ export function PortraitPicker({
     if (inputRef.current) inputRef.current.value = '';
   };
 
-  const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('');
   const storedBytes = portrait ? dataUrlBytes(portrait) : 0;
 
   return (
@@ -151,12 +169,17 @@ export function PortraitPicker({
         />
         {!source && portrait && <img src={portrait} alt={`Headshot for ${name || 'your character'}`} />}
         {!source && !portrait && (
-          <div className="portrait-empty">
-            <span className="portrait-initials" aria-hidden="true">{initials || '🎬'}</span>
-            <span className="small muted">
-              {busy ? 'Opening the photo…' : 'Drop a photo here, or choose one below.'}
+          <button
+            type="button"
+            className="portrait-empty"
+            onClick={() => inputRef.current?.click()}
+          >
+            <UploadGlyph />
+            <span className="portrait-empty-title">Upload Custom Photo</span>
+            <span className="portrait-empty-note">
+              {busy ? 'Opening the photo…' : 'Tap here, or drop one in.'}
             </span>
-          </div>
+          </button>
         )}
       </div>
 
@@ -169,8 +192,10 @@ export function PortraitPicker({
           className="visually-hidden"
           onChange={(e) => { const f = e.target.files?.[0]; if (f) accept(f); }}
         />
+        {/* The frame itself is the upload control now, so this is the plain
+            file-picker route rather than a second copy of the same words. */}
         <label htmlFor="portrait-file" className="btn btn-sm">
-          {portrait || source ? 'Replace Photo' : 'Choose Photo'}
+          {portrait || source ? 'Replace Photo' : 'Choose File'}
         </label>
         {(portrait || source) && (
           <button type="button" className="btn btn-ghost btn-sm" onClick={clear}>Remove</button>
