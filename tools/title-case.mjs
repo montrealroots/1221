@@ -83,14 +83,15 @@ for (const file of files) {
   // JSX string attributes that render as visible text. `aria-label` is
   // deliberately absent: it is spoken, not shown, and a screen reader reading
   // "Help For This Screen" is worse than one reading it as a sentence.
+  // `placeholder` is absent too — a placeholder is a hint, and hints are prose.
   after = after.replace(
-    /\b(title|label|placeholder)=(")([^"\n]*)\2/g,
+    /\b(title|label)=(")([^"\n]*)\2/g,
     (whole, key, quote, value) => rewrite(whole, `${key}=${quote}`, value, quote),
   );
 
   // Headings and buttons written as literal JSX text.
   after = after.replace(
-    /(<(h1|h2|h3|h4|button|summary)(?:\s[^>]*)?>)([A-Za-z][^<>{}\n]*?)(<\/\2>)/g,
+    /(<(h1|h2|h3|h4|h5|h6|label|button|summary|th|legend|dt)(?:\s[^>]*)?>)([A-Za-z][^<>{}\n]*?)(<\/\2>)/g,
     (whole, open, _tag, text, close) => {
       if (isProse(text)) return whole;
       const next = titleCase(text);

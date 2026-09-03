@@ -183,7 +183,7 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
       footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit} disabled={categories.length === 0}>Run The Campaign</button></>}
     >
       <div className="field">
-        <label htmlFor="body">Awards body</label>
+        <label htmlFor="body">Awards Body</label>
         <select id="body" value={bodyId} onChange={(e) => { setBodyId(e.target.value); setCategories([]); }}>
           {AWARD_BODIES.map((entry) => (
             <option key={entry.id} value={entry.id}>{entry.name} — prestige {entry.prestige}</option>
@@ -209,7 +209,7 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
       </div>
 
       <div className="field">
-        <label htmlFor="spend">Total spend</label>
+        <label htmlFor="spend">Total Spend</label>
         <input id="spend" type="number" min={10_000} step={10_000} value={spend} onChange={(e) => setSpend(Number(e.target.value))} />
         {categories.length > 0 && (
           <p className="xs dim" style={{ marginTop: 4 }}>

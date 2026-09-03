@@ -28,7 +28,7 @@ export function SettingsWorkspace() {
       <div className="grid grid-2">
         <Panel title="Time And Play">
           <div className="field">
-            <label htmlFor="speed">Time speed</label>
+            <label htmlFor="speed">Time Speed</label>
             <select id="speed" value={prefs.timeSpeed} onChange={(e) => setPref({ timeSpeed: e.target.value as typeof prefs.timeSpeed })}>
               <option value="paused">Paused — The Clock Stops</option>
               <option value="live">Live — One Minute Per Minute</option>
@@ -43,10 +43,10 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.confirmLargePurchases}
               onChange={(e) => setPref({ confirmLargePurchases: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Confirm large purchases</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Confirm Large Purchases</span>
           </label>
           <div className="field">
-            <label htmlFor="threshold">Large purchase threshold</label>
+            <label htmlFor="threshold">Large Purchase Threshold</label>
             <input
               id="threshold" type="number" min={100}
               value={Math.round(prefs.largePurchaseThreshold / 100)}
@@ -59,17 +59,17 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.reducedMotion}
               onChange={(e) => setPref({ reducedMotion: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Reduce motion</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Reduce Motion</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.compactMode}
               onChange={(e) => setPref({ compactMode: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Compact layout</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Compact Layout</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={prefs.audioEnabled}
               onChange={(e) => setPref({ audioEnabled: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Audio cues</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Audio Cues</span>
           </label>
           <p className="xs dim">
             SLATE also honours your system reduced-motion setting automatically.
@@ -80,12 +80,12 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={tutorial.guidedMode}
               onChange={(e) => run('tutorial.set_mode', { guided: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Guided mode — explain each system the first time</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Guided Mode — Explain Each System The First Time</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={tutorial.advancedMode}
               onChange={(e) => run('tutorial.set_mode', { advanced: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Advanced mode — show the formulas behind outcomes</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Advanced Mode — Show The Formulas Behind Outcomes</span>
           </label>
           <div className="row gap-2">
             <button className="btn btn-sm" onClick={() => run('tutorial.reset')}>Replay tutorials</button>
@@ -144,7 +144,7 @@ export function SettingsWorkspace() {
           <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
             <input type="checkbox" style={{ width: 'auto' }} checked={sandbox.enabled}
               onChange={(e) => run('sandbox.toggle', { enabled: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Enable sandbox tools</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Enable Sandbox Tools</span>
           </label>
 
           <div className="row gap-2 wrap">

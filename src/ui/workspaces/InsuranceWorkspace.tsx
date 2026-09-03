@@ -201,7 +201,7 @@ function QuoteDialog({ line, onClose }: { line: InsuranceLine; onClose: () => vo
     >
       {candidates.length > 0 && (
         <div className="field">
-          <label>What to cover</label>
+          <label>What To Cover</label>
           {candidates.map((candidate) => (
             <label key={candidate.id} className="row gap-2" style={{ marginBottom: 4 }}>
               <input

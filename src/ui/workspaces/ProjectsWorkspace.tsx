@@ -507,7 +507,7 @@ function CreateProjectDialog({ onClose }: { onClose: () => void }) {
     >
       <div className="field">
         <label htmlFor="title">Title</label>
-        <input id="title" type="text" value={title} placeholder="Leave Blank And One Will Be Suggested" onChange={(e) => setTitle(e.target.value)} />
+        <input id="title" type="text" value={title} placeholder="Leave blank and one will be suggested" onChange={(e) => setTitle(e.target.value)} />
       </div>
       <div className="field">
         <label htmlFor="format">Format</label>

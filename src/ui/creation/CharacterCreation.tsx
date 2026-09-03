@@ -13,13 +13,14 @@ import {
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, type TraitCategory } from '@/engine/domain/attributes';
+import { LocationPicker } from './LocationPicker';
 import { CITIES } from '@/engine/content/geography';
 import { COUNTRIES } from '@/engine/content/geography';
 import type { CareerTrack, Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
 import { WEALTH_PROFILES } from '@/engine/world/bootstrap';
 
-const STEPS = ['Identity', 'Personal', 'Career', 'Starting point', 'Review'] as const;
+const STEPS = ['Identity', 'Personal', 'Career', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const MAX_TRAITS = 4;
@@ -84,7 +85,6 @@ export function CharacterCreation({
   const issues = useMemo(() => validate(config, step), [config, step]);
   const canAdvance = issues.length === 0;
 
-  const cities = useMemo(() => CITIES.all().sort((a, b) => b.industryPresence - a.industryPresence || a.name.localeCompare(b.name)), []);
 
   const start = () => {
     clearDraft(slot);
@@ -130,7 +130,7 @@ export function CharacterCreation({
         {step === 0 && <IdentityStep config={config} set={set} />}
         {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === 2 && <CareerStep config={config} set={set} />}
-        {step === 3 && <StartingPointStep config={config} set={set} cities={cities} />}
+        {step === 3 && <StartingPointStep config={config} set={set} />}
         {step === 4 && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
@@ -185,22 +185,22 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
 
       <div className="field-row">
         <div className="field">
-          <label htmlFor="first">First name</label>
+          <label htmlFor="first">First Name</label>
           <input id="first" type="text" value={config.firstName} onChange={(e) => set('firstName', e.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="middle">Middle name (optional)</label>
+          <label htmlFor="middle">Middle Name (Optional)</label>
           <input id="middle" type="text" value={config.middleName ?? ''} onChange={(e) => set('middleName', e.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="last">Last name</label>
+          <label htmlFor="last">Last Name</label>
           <input id="last" type="text" value={config.lastName} onChange={(e) => set('lastName', e.target.value)} />
         </div>
       </div>
 
       <div className="field-row">
         <div className="field">
-          <label htmlFor="display">Preferred name</label>
+          <label htmlFor="display">Preferred Name</label>
           <input
             id="display" type="text"
             placeholder={`${config.firstName} ${config.lastName}`}
@@ -210,10 +210,10 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <p className="xs dim" style={{ marginTop: 4 }}>What people actually call you day to day.</p>
         </div>
         <div className="field">
-          <label htmlFor="stage">Credit name (optional)</label>
+          <label htmlFor="stage">Credit Name (Optional)</label>
           <input
             id="stage" type="text"
-            placeholder="Leave Blank To Be Credited Under Your Own Name"
+            placeholder="Leave blank to be credited under your own name"
             value={config.stageName ?? ''}
             onChange={(e) => set('stageName', e.target.value)}
           />
@@ -233,7 +233,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
 
       <div className="field-row">
         <div className="field">
-          <label htmlFor="birth-year">Year of birth</label>
+          <label htmlFor="birth-year">Year Of Birth</label>
           <input
             id="birth-year" type="number" min={1940} max={config.startYear - 16}
             value={config.birthYear}
@@ -401,7 +401,7 @@ function PersonalStep({
           ))}
         </div>
         <div className="field">
-          <label htmlFor="background">Where you come from</label>
+          <label htmlFor="background">Where You Come From</label>
           <textarea
             id="background" value={config.background}
             onChange={(e) => set('background', e.target.value)}
@@ -474,13 +474,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   );
 }
 
-function StartingPointStep({
-  config, set, cities,
-}: {
-  config: NewSaveConfig;
-  set: Setter;
-  cities: ReturnType<typeof CITIES.all>;
-}) {
+function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   const city = CITIES.get(config.startLocationId);
   const wealth = WEALTH_PROFILES[config.wealth];
 
@@ -496,19 +490,13 @@ function StartingPointStep({
           </div>
         </div>
 
-        <div className="field">
-          <label htmlFor="city">City</label>
-          <select id="city" value={config.startLocationId} onChange={(e) => {
-            set('startLocationId', e.target.value);
-            set('homeRegionId', e.target.value);
-          }}>
-            {cities.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name} — industry {c.industryPresence}/100, cost of living {c.costOfLivingIndex}
-              </option>
-            ))}
-          </select>
-        </div>
+        <LocationPicker
+          cityId={config.startLocationId}
+          onPick={(picked) => {
+            set('startLocationId', picked.id);
+            set('homeRegionId', picked.id);
+          }}
+        />
 
         {city && (
           <div className="grid grid-4">
@@ -557,7 +545,7 @@ function StartingPointStep({
       <div className="card">
         <div className="panel-head"><h2>Money</h2></div>
         <div className="field">
-          <label htmlFor="wealth">What you are starting with</label>
+          <label htmlFor="wealth">What You Are Starting With</label>
           <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
             {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
           </select>
@@ -587,14 +575,35 @@ function StartingPointStep({
               type="checkbox" checked={config.startWithJob} style={{ width: 'auto' }}
               onChange={(e) => set('startWithJob', e.target.checked)}
             />
-            <span className="small" style={{ color: 'var(--text)' }}>Start with a job</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Start With A Job</span>
           </label>
           <label className="row gap-2" style={{ marginBottom: 0 }}>
             <input
               type="checkbox" checked={config.startWithVehicle} style={{ width: 'auto' }}
               onChange={(e) => set('startWithVehicle', e.target.checked)}
             />
-            <span className="small" style={{ color: 'var(--text)' }}>Start with a car</span>
+            <span className="small" style={{ color: 'var(--text)' }}>Start With A Car</span>
+          </label>
+        </div>
+
+        <hr className="divider" />
+
+        <div className={`sandbox-choice${config.sandbox ? ' is-on' : ''}`}>
+          <label className="row gap-3" style={{ marginBottom: 0, alignItems: 'flex-start' }}>
+            <input
+              type="checkbox" checked={config.sandbox} style={{ width: 'auto', marginTop: '3px' }}
+              onChange={(e) => set('sandbox', e.target.checked)}
+            />
+            <span className="col gap-1">
+              <span className="sandbox-choice-title">Sandbox Mode</span>
+              <span className="small muted">
+                Turn the rules off from the first minute. Sandbox lets you add money, max every
+                attribute, grant every trait and greenlight anything, whatever your character has
+                actually earned. Every sandbox action is written into the save's log, so the game
+                stays honest about what it is. You can switch it on or off later in Settings —
+                but a save that had it from the start says so.
+              </span>
+            </span>
           </label>
         </div>
 
@@ -602,7 +611,7 @@ function StartingPointStep({
 
         <div className="field-row">
           <div className="field">
-            <label htmlFor="start-year">Start year</label>
+            <label htmlFor="start-year">Start Year</label>
             <input
               id="start-year" type="number" min={2000} max={2100}
               value={config.startYear} onChange={(e) => set('startYear', Number(e.target.value))}
@@ -667,6 +676,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Credit Score" value={String(wealth.creditScore)} />
           <Line label="Job" value={config.startWithJob ? 'Yes' : 'Not yet'} />
           <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
+          <Line label="Sandbox" value={config.sandbox ? 'On from the first minute' : 'Off'} />
         </div>
       </div>
 

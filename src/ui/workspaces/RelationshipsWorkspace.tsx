@@ -214,7 +214,7 @@ function AskOutDialog({ relationshipId, name, onClose }: { relationshipId: strin
         their life all count.
       </p>
       <div className="field">
-        <label htmlFor="activity">What you would do</label>
+        <label htmlFor="activity">What You Would Do</label>
         <select id="activity" value={activity} onChange={(e) => setActivity(e.target.value)}>
           <option value="dinner">Dinner</option>
           <option value="drinks">Drinks</option>
@@ -224,7 +224,7 @@ function AskOutDialog({ relationshipId, name, onClose }: { relationshipId: strin
       </div>
       <div className="field-row">
         <div className="field">
-          <label htmlFor="days">Days from now</label>
+          <label htmlFor="days">Days From Now</label>
           <input id="days" type="number" min={1} max={30} value={days} onChange={(e) => setDays(Number(e.target.value))} />
         </div>
         <div className="field">

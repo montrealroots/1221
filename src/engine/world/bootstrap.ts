@@ -67,6 +67,17 @@ export interface NewSaveConfig {
   startYear: number;
   startMonth: number;
   startDay: number;
+
+  /**
+   * Whether Sandbox is on from the first minute.
+   *
+   * It is a decision about what kind of save this is, so it belongs here
+   * rather than three menus deep. A sandbox save can hand itself money, max
+   * its attributes and greenlight anything; a straight save has to earn it.
+   * Either way every sandbox action is written into the log, so the save is
+   * always honest about what it is.
+   */
+  sandbox: boolean;
 }
 
 export function defaultPersonality(): Personality {
@@ -89,6 +100,7 @@ export function defaultConfig(): NewSaveConfig {
     housing: 'roommates', wealth: 'scraping',
     startWithJob: true, startWithVehicle: true,
     startYear: 2026, startMonth: 3, startDay: 2,
+    sandbox: false,
   };
 }
 
@@ -259,6 +271,14 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   };
 
   const universe = emptyUniverse(meta, now, zone, playerId);
+
+  // Sandbox is a decision about what kind of save this is, made at creation
+  // rather than three menus deep. Turning it on is itself logged, so the save
+  // is always honest about having had it from the start.
+  if (config.sandbox) {
+    universe.sandbox.enabled = true;
+    universe.sandbox.log.push({ at: now, action: 'Sandbox enabled at character creation' });
+  }
   const { attributes, skills } = seedCapability(config);
 
   const birthInstant = instantFromZoned(

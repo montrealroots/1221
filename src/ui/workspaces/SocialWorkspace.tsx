@@ -219,12 +219,12 @@ function PostDialog({ accountId, onClose }: { accountId: string; onClose: () => 
         </select>
       </div>
       <div className="field">
-        <label htmlFor="title">What is it</label>
-        <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="A Short Description" />
+        <label htmlFor="title">What Is It</label>
+        <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="A short description" />
       </div>
       <div className="field">
         <div className="row-between">
-          <label htmlFor="effort" style={{ marginBottom: 0 }}>Effort (minutes)</label>
+          <label htmlFor="effort" style={{ marginBottom: 0 }}>Effort (Minutes)</label>
           <span className="mono">{effort}</span>
         </div>
         <input id="effort" type="range" min={5} max={480} step={5} value={effort} onChange={(e) => setEffort(Number(e.target.value))} />

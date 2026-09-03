@@ -203,7 +203,7 @@ export function BankWorkspace() {
           <Panel title="What You Would Be Offered" subtitle="Rates move with your score, which moves with your behaviour.">
             <div className="table-scroll">
               <table>
-                <thead><tr><th>Product</th><th className="num">APR</th><th className="num">Payment on 100k</th></tr></thead>
+                <thead><tr><th>Product</th><th className="num">APR</th><th className="num">Payment On 100K</th></tr></thead>
                 <tbody>
                   {(['mortgage', 'auto', 'personal', 'card'] as const).map((product) => {
                     const apr = offeredApr(profile.score, product);
@@ -384,7 +384,7 @@ function LoanDialog({ onClose }: { onClose: () => void }) {
           <input id="principal" type="number" min={1000} step={500} value={principal} onChange={(e) => setPrincipal(Number(e.target.value))} />
         </div>
         <div className="field">
-          <label htmlFor="months">Term (months)</label>
+          <label htmlFor="months">Term (Months)</label>
           <input id="months" type="number" min={12} max={84} step={12} value={months} onChange={(e) => setMonths(Number(e.target.value))} />
         </div>
       </div>

@@ -104,9 +104,9 @@ export function GameShell() {
 
         <div className="topbar-clock" aria-live="polite">
           <strong>{formatTime(sim.now, sim.zone)}</strong>
-          <span>
-            {formatDate(sim.now, sim.zone)} · {zoneAbbreviation(sim.now, sim.zone)}
-          </span>
+          <span className="topbar-clock-sep" aria-hidden="true">·</span>
+          <span className="topbar-clock-date">{formatDate(sim.now, sim.zone)}</span>
+          <span className="topbar-clock-zone">{zoneAbbreviation(sim.now, sim.zone)}</span>
         </div>
 
         <TimeControls />

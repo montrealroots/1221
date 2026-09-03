@@ -39,7 +39,7 @@ export function TravelWorkspace() {
       <Panel title="Route">
         <div className="field-row">
           <div className="field">
-            <label htmlFor="destination">Going to</label>
+            <label htmlFor="destination">Going To</label>
             <select id="destination" value={destination} onChange={(e) => setDestination(e.target.value)}>
               {CITIES.all().filter((c) => c.id !== player.currentLocationId).map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
@@ -47,7 +47,7 @@ export function TravelWorkspace() {
             </select>
           </div>
           <div className="field">
-            <label htmlFor="days">Days from now</label>
+            <label htmlFor="days">Days From Now</label>
             <input id="days" type="number" min={0} max={365} value={daysOut} onChange={(e) => setDaysOut(Number(e.target.value))} />
           </div>
           <div className="field">

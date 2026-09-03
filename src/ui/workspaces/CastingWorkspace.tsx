@@ -254,7 +254,7 @@ function PrepareDialog({ auditionId, onClose }: { auditionId: string; onClose: (
       </p>
       <div className="field">
         <div className="row-between">
-          <label htmlFor="prep" style={{ marginBottom: 0 }}>Hours of preparation</label>
+          <label htmlFor="prep" style={{ marginBottom: 0 }}>Hours Of Preparation</label>
           <span className="mono">{hours}</span>
         </div>
         <input id="prep" type="range" min={0} max={16} value={hours} onChange={(e) => setHours(Number(e.target.value))} />

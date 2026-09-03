@@ -97,6 +97,84 @@
 
 * { box-sizing: border-box; }
 
+/* ==========================================================================
+   Containment
+   Nothing is allowed to bleed out of the box it lives in.
+
+   Two defaults cause almost all of it. A flex or grid child is min-width:auto,
+   which refuses to shrink below its own content, so one long word or one long
+   number pushes the whole row wide. And text does not break inside a word by
+   default, so a place name like Llanfairpwllgwyngyll, an email address or a
+   long id runs straight through the panel edge.
+
+   These rules fix both at the root rather than one component at a time.
+   ========================================================================== */
+
+/* Long words break rather than escape. Applies to every text-bearing element. */
+body, p, span, strong, em, small, li, dd, dt, td, th, label, button, a,
+h1, h2, h3, h4, h5, h6, figcaption, blockquote, .hint, .small {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Flex and grid children can shrink. Without this they never do. */
+.row > *, .col > *, .grid > *, .stack > *,
+.panel > *, .topbar > *, .card > * {
+  min-width: 0;
+}
+
+/* Except the controls that have a real size of their own. A checkbox told it
+   may shrink will shrink to nothing in a flex row, which is a tick box three
+   pixels wide and no way to tell whether it is ticked. */
+input[type="checkbox"], input[type="radio"] {
+  flex: none;
+  min-width: 1rem;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Nothing pushes the page itself sideways. */
+html, body { overflow-x: hidden; }
+
+/* Wide content scrolls inside its own container rather than widening the page. */
+.table-wrap, .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; table-layout: auto; }
+
+/* Anything genuinely unbreakable gets its own scroller instead of overflowing. */
+pre, code, .mono-block {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* One-line labels that should cut off cleanly rather than wrap. */
+.truncate {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+
+/* Two- and three-line clamps, for cards where a title may run long. */
+.clamp-2, .clamp-3 {
+  display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+}
+.clamp-2 { -webkit-line-clamp: 2; }
+.clamp-3 { -webkit-line-clamp: 3; }
+
+/* An emoji glyph is often drawn wider than the box the browser measures for
+   it, which reads as a few pixels of overflow. Let it size itself. */
+[role="img"], .emoji {
+  flex: none;
+  line-height: 1;
+  overflow: visible;
+  overflow-wrap: normal;
+}
+
+/* Numbers line up and never wrap mid-figure. */
+.tabular, .money, .stat-value { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+
 html, body, #root { height: 100%; }
 
 body {
@@ -231,9 +309,9 @@ a:hover { text-decoration: underline; }
 .gap-1 { gap: var(--s1); } .gap-2 { gap: var(--s2); } .gap-4 { gap: var(--s4); } .gap-5 { gap: var(--s5); }
 
 .grid { display: grid; gap: var(--s4); }
-.grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-.grid-4 { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);
@@ -272,7 +350,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); }
 textarea { resize: vertical; min-height: 72px; }
 label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
-input[type="range"] { width: 100%; accent-color: var(--accent); }
+/* Chromium gives a range input a default side margin, which pushes it a few
+   pixels past the field it sits in. */
+input[type="range"] {
+  width: 100%; min-width: 0; margin: 0;
+  accent-color: var(--accent); box-sizing: border-box;
+}
 
 .field { margin-bottom: var(--s4); }
 .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--s4); }
@@ -395,12 +478,31 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   display: flex; align-items: center; gap: var(--s2);
   font-weight: 600; letter-spacing: .18em; font-size: var(--size-sm);
 }
+/* The clock reads across, not down. Stacking the date under the time made a
+   tall, narrow column that crowded everything beside it in the bar. */
 .topbar-clock {
-  display: flex; flex-direction: column; line-height: 1.15;
+  display: flex; flex-direction: row; align-items: baseline;
+  gap: var(--s2); white-space: nowrap; min-width: 0;
   font-variant-numeric: tabular-nums;
 }
 .topbar-clock strong { font-size: var(--size-base); font-weight: 650; }
-.topbar-clock span { font-size: var(--size-xs); color: var(--text-dim); }
+.topbar-clock-sep { color: var(--border-strong); }
+.topbar-clock-date { font-size: var(--size-sm); color: var(--text-dim); }
+.topbar-clock-zone {
+  font-size: var(--size-xs); color: var(--text-dim);
+  border: 1px solid var(--border); border-radius: var(--r1);
+  padding: 0 var(--s1); letter-spacing: .04em;
+}
+/* On a narrow screen the time is what matters; the rest steps aside rather
+   than pushing into the controls next to it. The clock never grows the bar. */
+.topbar-clock { flex: none; }
+.topbar-clock strong { flex: none; }
+.topbar-clock-date { overflow: hidden; text-overflow: ellipsis; }
+/* Below a laptop the bar has no room to spare, so the clock is just the time.
+   It is the part anyone actually reads at a glance. */
+@media (max-width: 1024px) {
+  .topbar-clock-sep, .topbar-clock-date, .topbar-clock-zone { display: none; }
+}
 
 .shell-body { display: flex; flex: 1; min-height: 0; }
 
@@ -506,9 +608,10 @@ kbd {
 
 /* ---------- Calendar ---------- */
 
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .cal-weekday { background: var(--surface-2); padding: var(--s2); text-align: center; font-size: var(--size-xs); font-weight: 650; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
-.cal-day { background: var(--surface); min-height: 96px; padding: var(--s2); display: flex; flex-direction: column; gap: 2px; }
+.cal-day { background: var(--surface); min-height: 96px; min-width: 0; padding: var(--s2); display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+.cal-day > * { min-width: 0; max-width: 100%; }
 .cal-day[data-out="true"] { background: var(--surface-2); opacity: .5; }
 .cal-day[data-today="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
 .cal-daynum { font-size: var(--size-xs); font-weight: 650; color: var(--text-muted); }
@@ -650,3 +753,39 @@ kbd {
   .rail, .topbar, .toasts, .help-panel { display: none !important; }
   body { background: #fff; color: #000; }
 }
+
+/* --------------------------------------------------------------------------
+   Choosing where in the world to start
+   -------------------------------------------------------------------------- */
+
+.picker-results {
+  display: flex; flex-direction: column;
+  max-height: 340px; overflow-y: auto;
+  border: 1px solid var(--border); border-radius: var(--r2);
+  background: var(--surface-2);
+}
+.picker-option {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: var(--s2) var(--s3); text-align: left;
+  background: none; border: 0; border-bottom: 1px solid var(--border);
+  color: var(--text); cursor: pointer; min-width: 0;
+}
+.picker-option:last-child { border-bottom: 0; }
+.picker-option:hover, .picker-option:focus-visible { background: var(--surface-hover); }
+.picker-option[data-selected] { background: var(--accent-soft); }
+.picker-option-name { font-weight: 600; font-size: var(--size-sm); }
+.picker-option-meta { font-size: var(--size-xs); color: var(--text-dim); }
+
+/* Sandbox, offered at creation rather than buried in a menu. */
+.sandbox-choice {
+  border: 1px dashed var(--border-strong); border-radius: var(--r2);
+  padding: var(--s3); background: var(--surface-2);
+}
+.sandbox-choice.is-on {
+  border-style: solid; border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.sandbox-choice-title { font-weight: 650; font-size: var(--size-sm); }
+/* A label element makes everything inside it bold. The explanation under the
+   heading is body copy and should read like it. */
+.sandbox-choice .small { font-weight: 400; line-height: 1.5; }

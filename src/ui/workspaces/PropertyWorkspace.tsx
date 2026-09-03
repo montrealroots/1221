@@ -233,7 +233,7 @@ function OfferDialog({ listingId, onClose }: { listingId: string; onClose: () =>
       </div>
 
       <div className="field">
-        <label htmlFor="amount">Your offer</label>
+        <label htmlFor="amount">Your Offer</label>
         <input id="amount" type="number" step={1000} value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
         <p className={`xs ${ratio < 0.9 ? 'negative' : ratio > 1 ? 'positive' : 'dim'}`} style={{ marginTop: 4 }}>
           {Math.round(ratio * 100)}% of asking.
@@ -242,7 +242,7 @@ function OfferDialog({ listingId, onClose }: { listingId: string; onClose: () =>
       </div>
 
       <div className="field">
-        <label htmlFor="financing">How you are paying</label>
+        <label htmlFor="financing">How You Are Paying</label>
         <select id="financing" value={financing} onChange={(e) => setFinancing(e.target.value as 'cash' | 'conventional')}>
           <option value="conventional">Financed — 20% down, subject to a lender</option>
           <option value="cash">Cash — no financing risk, and sellers know it</option>

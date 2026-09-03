@@ -312,7 +312,7 @@ function FoundDialog({ onClose }: { onClose: () => void }) {
     >
       <div className="field">
         <label htmlFor="name">Name</label>
-        <input id="name" type="text" value={name} placeholder="Leave Blank And One Will Be Suggested" onChange={(e) => setName(e.target.value)} />
+        <input id="name" type="text" value={name} placeholder="Leave blank and one will be suggested" onChange={(e) => setName(e.target.value)} />
       </div>
       <div className="field">
         <label htmlFor="structure">Structure</label>
@@ -324,7 +324,7 @@ function FoundDialog({ onClose }: { onClose: () => void }) {
         </select>
       </div>
       <div className="field">
-        <label htmlFor="capital">Starting capital</label>
+        <label htmlFor="capital">Starting Capital</label>
         <input id="capital" type="number" min={1000} step={1000} value={capital} onChange={(e) => setCapital(Number(e.target.value))} />
         <p className="xs dim" style={{ marginTop: 4 }}>
           This moves out of your personal account and becomes the company's. Everything it can commit to
