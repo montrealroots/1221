@@ -1,0 +1,904 @@
+vn-79-hochiminhcity	Ho Chi Minh City	vn-79	10.8230	106.6296	Asia/Ho_Chi_Minh	14002598
+vn-01-hanoi	Hanoi	vn-01	21.0245	105.8412	Asia/Bangkok	8053663
+vn-31-haiphong	Haiphong	vn-31	20.8648	106.6834	Asia/Bangkok	2625200
+vn-92-cantho	Cần Thơ	vn-92	10.0371	105.7883	Asia/Ho_Chi_Minh	1507187
+vn-46-hue	Huế	vn-46	16.4619	107.5955	Asia/Bangkok	1380000
+vn-48-danang	Da Nang	vn-48	16.0678	108.2208	Asia/Ho_Chi_Minh	1276000
+vn-75-bienhoa	Biên Hòa	vn-75	10.9447	106.8243	Asia/Ho_Chi_Minh	1272235
+vn-38-thanhhoa	Thanh Hóa	vn-38	19.8000	105.7667	Asia/Bangkok	850000
+vn-40-vinh	Vinh	vn-40	18.6734	105.6923	Asia/Bangkok	790000
+vn-79-thuanan	Thuận An	vn-79	10.9239	106.7143	Asia/Ho_Chi_Minh	588616
+vn-56-nhatrang	Nha Trang	vn-56	12.2451	109.1943	Asia/Ho_Chi_Minh	579000
+vn-79-cholon	Chợ Lớn	vn-79	10.7500	106.6500	Asia/Ho_Chi_Minh	561000
+vn-79-binhthanh	Bình Thạnh	vn-79	10.8110	106.7060	Asia/Ho_Chi_Minh	552164
+vn-79-thuuc	Thủ Đức	vn-79	10.8486	106.7721	Asia/Ho_Chi_Minh	524670
+vn-52-quinhon	Qui Nhon	vn-52	13.7765	109.2237	Asia/Ho_Chi_Minh	519208
+vn-79-vungtau	Vũng Tàu	vn-79	10.3460	107.0843	Asia/Ho_Chi_Minh	464860
+vn-79-dian	Dĩ An	vn-79	10.9068	106.7694	Asia/Ho_Chi_Minh	463023
+vn-91-rachgia	Rạch Giá	vn-91	10.0124	105.0809	Asia/Ho_Chi_Minh	459860
+vn-24-bacgiang	Bắc Giang	vn-24	21.2731	106.1946	Asia/Bangkok	450000
+vn-37-naminh	Nam Định	vn-37	20.4339	106.1773	Asia/Bangkok	448225
+vn-66-buonmathuot	Buôn Ma Thuột	vn-66	12.6675	108.0378	Asia/Ho_Chi_Minh	434256
+vn-19-thainguyen	Thái Nguyên	vn-19	21.5942	105.8482	Asia/Bangkok	420000
+vn-25-viettri	Việt Trì	vn-25	21.3227	105.4020	Asia/Bangkok	415280
+vn-79-quanmuoi	Quận Mười	vn-79	10.7682	106.6663	Asia/Ho_Chi_Minh	399000
+vn-79-thudaumot	Thủ Dầu Một	vn-79	10.9804	106.6519	Asia/Ho_Chi_Minh	373105
+vn-01-onga	Đống Đa	vn-01	21.0130	105.8250	Asia/Bangkok	371606
+vn-79-bencat	Bến Cát	vn-79	11.1500	106.6000	Asia/Ho_Chi_Minh	364578
+vn-01-longbien	Long Bien	vn-01	21.0333	105.9000	Asia/Bangkok	347829
+vn-01-bactuliem	Bắc Từ Liêm	vn-01	21.0653	105.7466	Asia/Ho_Chi_Minh	340605
+vn-79-quanmuoimot	Quận Mười Một	vn-79	10.7638	106.6436	Asia/Ho_Chi_Minh	332536
+vn-01-gialam	Gia Lâm	vn-01	21.0200	105.9390	Asia/Bangkok	309353
+vn-52-annhon	An Nhơn	vn-52	13.8858	109.1082	Asia/Ho_Chi_Minh	308396
+vn-01-haibatrung	Hai Bà Trưng	vn-01	21.0134	105.8477	Asia/Bangkok	303586
+vn-38-nghison	Nghi Sơn	vn-38	19.3275	105.8214	Asia/Bangkok	302210
+vn-91-phuquoc	Phu Quoc	vn-91	10.2241	103.9716	Asia/Ho_Chi_Minh	294419
+vn-01-thanhxuan	Thanh Xuân	vn-01	20.9947	105.7998	Asia/Bangkok	293292
+vn-01-caugiay	Cầu Giấy	vn-01	21.0323	105.8007	Asia/Bangkok	292536
+vn-24-bacninh	Bắc Ninh	vn-24	21.1861	106.0763	Asia/Bangkok	287658
+vn-79-phumy	Phú Mỹ	vn-79	10.6333	107.0667	Asia/Ho_Chi_Minh	287055
+vn-91-longxuyen	Long Xuyên	vn-91	10.3864	105.4352	Asia/Ho_Chi_Minh	286140
+vn-01-bavi	Ba Vì	vn-01	21.0833	105.3833	Asia/Bangkok	282600
+vn-51-quangngai	Quảng Ngãi	vn-51	15.1205	108.7923	Asia/Ho_Chi_Minh	278496
+vn-79-quansau	Quận Sáu	vn-79	10.7468	106.6490	Asia/Ho_Chi_Minh	271050
+vn-82-mytho	Mỹ Tho	vn-82	10.3600	106.3600	Asia/Ho_Chi_Minh	270700
+vn-22-halong	Hạ Long	vn-22	20.9505	107.0734	Asia/Bangkok	270054
+vn-42-hatinh	Hà Tĩnh	vn-42	18.3428	105.9057	Asia/Bangkok	266321
+vn-68-alat	Ðà Lạt	vn-68	11.9465	108.4419	Asia/Ho_Chi_Minh	258014
+vn-75-xuanloc	Xuân Lộc	vn-75	10.9333	107.2333	Asia/Ho_Chi_Minh	253140
+vn-22-thitranongtrieu	Thị Trấn Đông Triều	vn-22	21.0824	106.5138	Asia/Bangkok	248896
+vn-31-haiduong	Hải Dương	vn-31	20.9410	106.3330	Asia/Bangkok	241373
+vn-79-thanhphobaria	Thành Phố Bà Rịa	vn-79	10.4963	107.1685	Asia/Ho_Chi_Minh	235192
+vn-19-phoyen	Phổ Yên	vn-19	21.4198	105.8899	Asia/Bangkok	231363
+vn-01-sontay	Sơn Tây	vn-01	21.1405	105.5069	Asia/Bangkok	230577
+vn-56-ninhhoa	Ninh Hòa	vn-56	12.4919	109.1249	Asia/Ho_Chi_Minh	230566
+vn-68-phanthiet	Phan Thiết	vn-68	10.9289	108.1021	Asia/Ho_Chi_Minh	228536
+vn-48-ienban	Điện Bàn	vn-48	15.8885	108.2545	Asia/Ho_Chi_Minh	226564
+vn-96-camau	Cà Mau	vn-96	9.1768	105.1524	Asia/Ho_Chi_Minh	226372
+vn-01-badinh	Ba Dinh	vn-01	21.0365	105.8268	Asia/Bangkok	221893
+vn-92-soctrang	Sóc Trăng	vn-92	9.5999	105.9719	Asia/Ho_Chi_Minh	221430
+vn-31-chilinh	Chí Linh	vn-31	21.0667	106.3167	Asia/Ho_Chi_Minh	220421
+vn-79-quanba	Quận Ba	vn-79	10.7749	106.6863	Asia/Ho_Chi_Minh	220375
+vn-80-tanan	Tân An	vn-80	10.5359	106.4137	Asia/Ho_Chi_Minh	215250
+vn-82-sadec	Sa Dec	vn-82	10.2909	105.7563	Asia/Ho_Chi_Minh	214610
+vn-82-caolanh	Cao Lãnh	vn-82	10.4602	105.6329	Asia/Ho_Chi_Minh	211912
+vn-56-phanrangthapcham	Phan Rang-Tháp Chàm	vn-56	11.5643	108.9886	Asia/Ho_Chi_Minh	207998
+vn-24-vietyen	Việt Yên	vn-24	21.2667	106.1333	Asia/Ho_Chi_Minh	205900
+vn-51-kontum	Kon Tum	vn-51	14.3545	108.0076	Asia/Ho_Chi_Minh	205762
+vn-48-thanhkhe	Thanh Khê	vn-48	16.0706	108.1910	Asia/Ho_Chi_Minh	201240
+vn-20-langson	Lạng Sơn	vn-20	21.8526	106.7610	Asia/Bangkok	200108
+vn-24-thuanthanh	Thuận Thanh	vn-24	21.0460	106.0790	Asia/Bangkok	199577
+vn-79-quanbon	Quận Bốn	vn-79	10.7668	106.7057	Asia/Ho_Chi_Minh	199329
+vn-22-campha	Cẩm Phả	vn-22	21.0100	107.2734	Asia/Bangkok	190232
+vn-79-quannam	Quận Năm	vn-79	10.7557	106.6675	Asia/Ho_Chi_Minh	187510
+vn-92-vinhchau	Vĩnh Châu	vn-92	9.3244	105.9801	Asia/Ho_Chi_Minh	183918
+vn-25-phucyen	Phúc Yên	vn-25	21.2370	105.7048	Asia/Bangkok	180000
+vn-91-phuquoc2	Phú Quốc	vn-91	10.2872	104.0105	Asia/Ho_Chi_Minh	179480
+vn-19-thitranaitu	Thị Trấn Đại Từ	vn-19	21.6338	105.6377	Asia/Ho_Chi_Minh	179192
+vn-91-tanchau	Tân Châu	vn-91	10.7983	105.2389	Asia/Ho_Chi_Minh	175211
+vn-75-longkhanh	Long Khánh	vn-75	10.9266	107.2478	Asia/Ho_Chi_Minh	171276
+vn-68-baoloc	Bảo Lộc	vn-68	11.5480	107.8077	Asia/Ho_Chi_Minh	170920
+vn-01-tayho	Tây Hồ	vn-01	21.0690	105.8105	Asia/Bangkok	168300
+vn-75-ongxoai	Đồng Xoài	vn-75	11.5350	106.8832	Asia/Ho_Chi_Minh	168000
+vn-48-tamky	Tam Kỳ	vn-48	15.5736	108.4740	Asia/Ho_Chi_Minh	165240
+vn-44-ongha	Ðông Hà	vn-44	16.8163	107.1003	Asia/Bangkok	164228
+vn-80-trangbang	Trảng Bàng	vn-80	11.0299	106.3575	Asia/Ho_Chi_Minh	161831
+vn-68-uctrong	Đưc Trọng	vn-68	11.7356	108.3733	Asia/Ho_Chi_Minh	161232
+vn-68-lagi	La Gi	vn-68	10.6599	107.7721	Asia/Ho_Chi_Minh	160652
+vn-86-travinh	Trà Vinh	vn-86	9.9472	106.3423	Asia/Ho_Chi_Minh	160310
+vn-92-thotnot	Thốt Nốt	vn-92	10.2721	105.5338	Asia/Ho_Chi_Minh	158225
+vn-96-baclieu	Bạc Liêu	vn-96	9.2941	105.7278	Asia/Ho_Chi_Minh	156110
+vn-66-tuyhoa	Tuy Hòa	vn-66	13.0955	109.3209	Asia/Ho_Chi_Minh	155921
+vn-51-ucpho	Đức Phổ	vn-51	14.8135	108.9593	Asia/Ho_Chi_Minh	155743
+vn-14-thitranthuanchau	Thị Trấn Thuận Châu	vn-14	21.4385	103.6900	Asia/Ho_Chi_Minh	153000
+vn-80-cangiuoc	Cần Giuộc	vn-80	10.6086	106.6714	Asia/Ho_Chi_Minh	152200
+vn-42-kyanh	Kỳ Anh	vn-42	18.0624	106.2983	Asia/Bangkok	150226
+vn-80-hoathanh	Hòa Thành	vn-80	11.2870	106.1294	Asia/Ho_Chi_Minh	147666
+vn-56-camranh	Cam Ranh	vn-56	11.9214	109.1591	Asia/Ho_Chi_Minh	146771
+vn-96-giarai	Giá Rai	vn-96	9.2344	105.4583	Asia/Ho_Chi_Minh	145340
+vn-68-huyenlamha	Huyện Lâm Hà	vn-68	11.8155	108.2144	Asia/Ho_Chi_Minh	144707
+vn-91-tinhbien	Tịnh Biên	vn-91	10.5959	104.9367	Asia/Ho_Chi_Minh	143098
+vn-82-cailay	Cai Lậy	vn-82	10.4000	106.1167	Asia/Ho_Chi_Minh	143050
+vn-86-vinhlong	Vĩnh Long	vn-86	10.2537	105.9722	Asia/Ho_Chi_Minh	137870
+vn-37-phuly	Phủ Lý	vn-37	20.5453	105.9122	Asia/Bangkok	136654
+vn-01-tuongmai	Tương Mai	vn-01	20.9888	105.8552	Asia/Bangkok	136292
+vn-01-hoankiem	Hoàn Kiếm	vn-01	21.0286	105.8506	Asia/Bangkok	135618
+vn-22-camphamines	Cẩm Phả Mines	vn-22	21.0167	107.3000	Asia/Ho_Chi_Minh	135477
+vn-80-tayninh	Tây Ninh	vn-80	11.3100	106.0983	Asia/Ho_Chi_Minh	135254
+vn-44-onghoi	Đồng Hới	vn-44	17.4688	106.6223	Asia/Bangkok	133672
+vn-quanucthinh	Quận Đức Thịnh		10.3099	105.7386	Asia/Ho_Chi_Minh	132000
+vn-48-haichau	Hải Châu	vn-48	15.9167	108.1333	Asia/Ho_Chi_Minh	131427
+vn-15-laocai	Lào Cai	vn-15	22.4856	103.9707	Asia/Bangkok	130671
+vn-38-samson	Sầm Sơn	vn-38	19.7333	105.9000	Asia/Ho_Chi_Minh	129801
+vn-92-omon	Ô Môn	vn-92	10.1097	105.6232	Asia/Ho_Chi_Minh	129683
+vn-19-thanhphosongcong	Thành phố Sông Công	vn-19	21.4772	105.8414	Asia/Ho_Chi_Minh	128357
+vn-66-buonho	Buôn Hồ	vn-66	12.9523	108.2962	Asia/Ho_Chi_Minh	127920
+vn-24-chu	Chũ	vn-24	21.3738	106.5665	Asia/Bangkok	127881
+vn-86-bentre	Bến Tre	vn-86	10.2415	106.3758	Asia/Ho_Chi_Minh	124449
+vn-75-chonthanh	Chơn Thành	vn-75	11.4282	106.6354	Asia/Ho_Chi_Minh	121083
+vn-01-boe	Bồ Đề	vn-01	21.0562	105.8667	Asia/Bangkok	120028
+vn-48-hoacuong	Hòa Cường	vn-48	16.0431	108.1821	Asia/Ho_Chi_Minh	119363
+vn-25-vinhyen	Vĩnh Yên	vn-25	21.3089	105.6049	Asia/Bangkok	119128
+vn-08-bacquang	Bắc Quang	vn-08	22.4833	104.8667	Asia/Ho_Chi_Minh	118690
+vn-33-hungyen	Hưng Yên	vn-33	20.6464	106.0511	Asia/Bangkok	118646
+vn-31-kienan	Kiến An	vn-31	20.8053	106.6256	Asia/Bangkok	118047
+vn-92-coo	Cờ Đỏ	vn-92	10.0938	105.4292	Asia/Ho_Chi_Minh	116576
+vn-33-myhao	Mỹ Hào	vn-33	20.9167	106.0833	Asia/Bangkok	115608
+vn-46-phongien	Phong Điền	vn-46	16.5832	107.3644	Asia/Bangkok	114820
+vn-52-pleiku	Pleiku	vn-52	13.9833	108.0000	Asia/Ho_Chi_Minh	114225
+vn-92-binhthuy	Bình Thủy	vn-92	10.0743	105.7397	Asia/Ho_Chi_Minh	113565
+vn-40-hoangmai	Hoàng Mai	vn-40	19.2676	105.7159	Asia/Bangkok	113360
+vn-79-govap	Gò Vấp	vn-79	10.8167	106.6833	Asia/Ho_Chi_Minh	110850
+vn-92-thoilai	Thới Lai	vn-92	10.0652	105.5586	Asia/Ho_Chi_Minh	109684
+vn-22-mongcai	Móng Cái	vn-22	21.5247	107.9662	Asia/Bangkok	108553
+vn-40-yenvinh	Yên Vinh	vn-40	18.6667	105.6667	Asia/Bangkok	107082
+vn-44-baon	Ba Đồn	vn-44	17.7535	106.4236	Asia/Bangkok	106413
+vn-14-sonla	Sơn La	vn-14	21.3256	103.9188	Asia/Bangkok	106052
+vn-25-hoabinh	Hòa Bình	vn-25	20.8172	105.3376	Asia/Bangkok	105260
+vn-08-tuyenquang	Tuyên Quang	vn-08	21.8236	105.2142	Asia/Bangkok	104645
+vn-92-ngabay	Ngã Bảy	vn-92	9.8137	105.8210	Asia/Ho_Chi_Minh	101192
+vn-82-hongngu	Hồng Ngự	vn-82	10.8000	105.3500	Asia/Ho_Chi_Minh	101155
+vn-15-yenbai	Yên Bái	vn-15	21.7229	104.9113	Asia/Bangkok	100631
+vn-91-hatien	Hà Tiên	vn-91	10.3831	104.4875	Asia/Ho_Chi_Minh	100560
+vn-92-phongien	Phong Điền	vn-92	9.9975	105.6673	Asia/Ho_Chi_Minh	98424
+vn-92-vinhthanh	Vĩnh Thạnh	vn-92	10.2226	105.3984	Asia/Ho_Chi_Minh	98399
+vn-82-gocong	Gò Công	vn-82	10.3667	106.6667	Asia/Ho_Chi_Minh	97709
+vn-01-nghiao	Nghĩa Đô	vn-01	21.0500	105.8000	Asia/Bangkok	96418
+vn-46-huongthuy	Hương Thủy	vn-46	16.4218	107.6400	Asia/Ho_Chi_Minh	95299
+vn-86-binhminh	Bình Minh	vn-86	10.0682	105.8222	Asia/Ho_Chi_Minh	94862
+vn-66-songcau	Sông Cầu	vn-66	13.4556	109.2235	Asia/Ho_Chi_Minh	94066
+vn-01-khuonginh	Khương Đình	vn-01	20.9837	105.8154	Asia/Bangkok	93780
+vn-25-phutho	Phú Thọ	vn-25	21.3996	105.2222	Asia/Bangkok	91650
+vn-01-bachmai	Bạch Mai	vn-01	20.9833	105.8333	Asia/Bangkok	91308
+vn-79-tanbinh	Tân Bình	vn-79	10.8025	106.6600	Asia/Ho_Chi_Minh	89373
+vn-01-thuongcat	Thượng Cát	vn-01	21.0934	105.7319	Asia/Bangkok	87406
+vn-48-sontra	Sơn Trà	vn-48	16.0607	108.2326	Asia/Ho_Chi_Minh	86890
+vn-01-vinhtuy	Vĩnh Tuy	vn-01	21.0000	105.8833	Asia/Bangkok	86618
+vn-92-cairang	Cái Răng	vn-92	10.0009	105.7510	Asia/Ho_Chi_Minh	86278
+vn-01-inhcong	Định Công	vn-01	20.9839	105.8269	Asia/Bangkok	85502
+vn-01-socson	Sóc Sơn	vn-01	21.2578	105.8489	Asia/Bangkok	85431
+vn-68-gianghia	Gia Nghĩa	vn-68	12.0042	107.6907	Asia/Ho_Chi_Minh	85082
+vn-11-dienbienphu	Dien Bien Phu	vn-11	21.3860	103.0230	Asia/Bangkok	84672
+vn-01-ongngac	Đông Ngạc	vn-01	21.0806	105.7740	Asia/Bangkok	83544
+vn-48-anhai	An Hải	vn-48	16.0667	108.2333	Asia/Ho_Chi_Minh	82635
+vn-52-ankhe	An Khê	vn-52	13.9500	108.6500	Asia/Ho_Chi_Minh	81600
+vn-82-laivung	Lai Vung	vn-82	10.2566	105.5933	Asia/Ho_Chi_Minh	80649
+vn-24-cungkiem	Cung Kiệm	vn-24	21.1870	106.1608	Asia/Ho_Chi_Minh	80000
+vn-48-camle	Cẩm Lệ	vn-48	16.0177	108.2038	Asia/Ho_Chi_Minh	78837
+vn-01-yenhoa	Yên Hòa	vn-01	21.0219	105.7915	Asia/Bangkok	77029
+vn-01-giangvo	Giảng Võ	vn-01	21.0307	105.8125	Asia/Bangkok	76658
+vn-01-thanhliet	Thanh Liệt	vn-01	20.9667	105.8167	Asia/Bangkok	76238
+vn-79-cuchi	Củ Chi	vn-79	10.9733	106.4933	Asia/Ho_Chi_Minh	75000
+vn-04-caobang	Cao Bằng	vn-04	22.6657	106.2579	Asia/Bangkok	73549
+vn-46-huongtra	Hương Trà	vn-46	16.5254	107.4755	Asia/Bangkok	72677
+vn-22-thitranmaokhe	Thị Trấn Mạo Khê	vn-22	21.0586	106.5926	Asia/Ho_Chi_Minh	72012
+vn-01-kienhung	Kiến Hưng	vn-01	20.9583	105.7897	Asia/Bangkok	70833
+vn-01-coo	Cổ Đô	vn-01	21.2796	105.3640	Asia/Bangkok	70706
+vn-91-chauoc	Châu Đốc	vn-91	10.7000	105.1167	Asia/Ho_Chi_Minh	70239
+vn-01-linham	Linh Đàm	vn-01	20.9644	105.8305	Asia/Bangkok	70000
+vn-86-duyenhai	Duyên Hải	vn-86	9.6350	106.4924	Asia/Ho_Chi_Minh	69961
+vn-48-nuithanh	Núi Thành	vn-48	15.4319	108.6595	Asia/Ho_Chi_Minh	69406
+vn-15-nghialo	Nghĩa Lộ	vn-15	21.6000	104.5167	Asia/Ho_Chi_Minh	68206
+vn-01-phucloi	Phúc Lợi	vn-01	21.0451	105.9294	Asia/Bangkok	66790
+vn-40-thaihoa	Thái Hòa	vn-40	18.9203	104.9744	Asia/Ho_Chi_Minh	66127
+vn-24-tuson	Từ Sơn	vn-24	21.1000	105.9667	Asia/Bangkok	65697
+vn-22-thanhphouongbi	Thành Phố Uông Bí	vn-22	21.0343	106.7705	Asia/Ho_Chi_Minh	63829
+vn-92-longmy	Long Mỹ	vn-92	9.6814	105.5723	Asia/Ho_Chi_Minh	61781
+vn-01-vinhomesoceanpark	Vinhomes Ocean Park	vn-01	20.9948	105.9465	Asia/Bangkok	60000
+vn-01-daimo	Dại Mỗ	vn-01	20.9833	105.7667	Asia/Bangkok	59980
+vn-92-nganam	Ngã Năm	vn-92	9.5651	105.5990	Asia/Ho_Chi_Minh	58588
+vn-75-trangbom	Trảng Bom	vn-75	10.9536	107.0059	Asia/Ho_Chi_Minh	57560
+vn-91-chauphong	Châu Phong	vn-91	10.7167	105.1333	Asia/Ho_Chi_Minh	56322
+vn-01-duongnoi	Dương Nội	vn-01	20.9774	105.7538	Asia/Bangkok	56091
+vn-96-tranvanthoi	Trần Văn Thời	vn-96	9.0771	104.9791	Asia/Ho_Chi_Minh	55897
+vn-01-hoangliet	Hoàng Liệt	vn-01	20.9640	105.8405	Asia/Bangkok	55820
+vn-08-hagiang	Hà Giang	vn-08	22.8233	104.9836	Asia/Bangkok	55559
+vn-79-cangio	Cần Giờ	vn-79	10.4111	106.9547	Asia/Ho_Chi_Minh	55137
+vn-91-xomcainuoc	Xóm Cái Nước	vn-91	9.8000	105.1000	Asia/Ho_Chi_Minh	54397
+vn-96-phongthanh	Phong Thạnh	vn-96	9.3236	105.3464	Asia/Ho_Chi_Minh	53912
+vn-38-bimson	Bỉm Sơn	vn-38	20.0781	105.8603	Asia/Ho_Chi_Minh	53754
+vn-33-thaibinh	Thái Bình	vn-33	20.4500	106.3400	Asia/Bangkok	53071
+vn-79-tanuyen	Tân Uyên	vn-79	11.0842	106.7883	Asia/Ho_Chi_Minh	52873
+vn-01-cuanam	Cửa Nam	vn-01	21.0211	105.8523	Asia/Bangkok	52750
+vn-79-thitranphuocbuu	Thị Trấn Phước Bửu	vn-79	10.5347	107.4020	Asia/Ho_Chi_Minh	51895
+vn-31-oson	Đố Sơn	vn-31	20.7136	106.7894	Asia/Ho_Chi_Minh	51417
+vn-01-haong	Hà Đông	vn-01	20.9714	105.7788	Asia/Bangkok	50877
+vn-80-canuoc	Cần Đước	vn-80	10.5097	106.6031	Asia/Ho_Chi_Minh	50473
+vn-68-muine	Mui Ne	vn-68	10.9331	108.2833	Asia/Ho_Chi_Minh	50166
+vn-01-vinhomessmartcity	Vinhomes Smart City	vn-01	21.0045	105.7404	Asia/Ho_Chi_Minh	50000
+vn-01-vinhomestimescity	Vinhomes Times City	vn-01	20.9945	105.8677	Asia/Bangkok	50000
+vn-01-yennghia	Yên Nghĩa	vn-01	20.9541	105.7347	Asia/Bangkok	49643
+vn-79-thitranngaigiao	Thị Trấn Ngải Giao	vn-79	10.6471	107.2458	Asia/Ho_Chi_Minh	49065
+vn-80-phukhuong	Phú Khương	vn-80	11.2833	106.1333	Asia/Ho_Chi_Minh	47966
+vn-38-ngason	Nga Sơn	vn-38	20.0072	105.9704	Asia/Bangkok	47176
+vn-22-thitranamha	Thị Trấn Đầm Hà	vn-22	21.3531	107.5972	Asia/Bangkok	47060
+vn-01-taymo	Tây Mỗ	vn-01	21.0025	105.7457	Asia/Bangkok	46469
+vn-19-backan	Bắc Kạn	vn-19	22.1470	105.8348	Asia/Bangkok	45036
+vn-38-thitransaovang	Thị Trấn Sao Vàng	vn-38	19.8886	105.4619	Asia/Bangkok	44643
+vn-44-hoanlao	Hoàn Lão	vn-44	17.5844	106.5343	Asia/Bangkok	43554
+vn-12-laichau	Lai Châu	vn-12	22.3964	103.4582	Asia/Bangkok	42973
+vn-92-apmot	Ấp Một	vn-92	9.8422	105.5360	Asia/Ho_Chi_Minh	42766
+vn-01-maidich	Mai Dịch	vn-01	21.0333	105.7833	Asia/Bangkok	40527
+vn-01-anphuong	Đan Phượng	vn-01	21.0892	105.6625	Asia/Bangkok	39917
+vn-91-oceo	Óc Eo	vn-91	10.2421	105.1550	Asia/Ho_Chi_Minh	39481
+vn-01-taytuu	Tây Tựu	vn-01	21.0730	105.7300	Asia/Bangkok	39436
+vn-33-luongbang	Lương Bằng	vn-33	20.7400	106.0600	Asia/Bangkok	39420
+vn-01-phuthuong	Phú Thương	vn-01	21.0873	105.8067	Asia/Bangkok	39322
+vn-96-hungmy	Hưng Mỹ	vn-96	8.9000	104.9833	Asia/Ho_Chi_Minh	38687
+vn-96-thoibinh	Thới Bình	vn-96	9.3558	105.0993	Asia/Ho_Chi_Minh	38116
+vn-42-honglinh	Hồng Lĩnh	vn-42	18.5286	105.7064	Asia/Bangkok	36940
+vn-37-ninhbinh	Ninh Bình	vn-37	20.2581	105.9797	Asia/Bangkok	36864
+vn-96-caioivam	Cái Đôi Vàm	vn-96	8.8571	104.8120	Asia/Ho_Chi_Minh	36444
+vn-01-ochodua	Ô Chợ Dừa	vn-01	21.0215	105.8246	Asia/Ho_Chi_Minh	36318
+vn-44-quanhau	Quán Hàu	vn-44	17.4044	106.6407	Asia/Bangkok	36210
+vn-80-duongminhchau	Dương Minh Châu	vn-80	11.3841	106.2308	Asia/Ho_Chi_Minh	35878
+vn-79-xalonghai	Xã Long Hải	vn-79	10.3871	107.2388	Asia/Ho_Chi_Minh	35167
+vn-52-ayunpa	A Yun Pa	vn-52	13.4002	108.4350	Asia/Ho_Chi_Minh	35058
+vn-91-aplongthanh	Ấp Long Thạnh	vn-91	10.7607	105.2743	Asia/Ho_Chi_Minh	34198
+vn-48-ongphu	Đông Phú	vn-48	15.6736	108.2201	Asia/Ho_Chi_Minh	34122
+vn-91-hamninh	Hàm Ninh	vn-91	10.1806	104.0477	Asia/Ho_Chi_Minh	33503
+vn-38-thitranlamson	Thị Trấn Lam Sơn	vn-38	19.9047	105.4056	Asia/Ho_Chi_Minh	33117
+vn-15-thitranpholu	Thị Trấn Phố Lu	vn-15	22.3192	104.1872	Asia/Ho_Chi_Minh	32800
+vn-48-hoian	Hoi An	vn-48	15.8794	108.3350	Asia/Ho_Chi_Minh	32757
+vn-79-xommyxuan	Xóm Mỹ Xuân	vn-79	10.6167	107.0667	Asia/Ho_Chi_Minh	32345
+vn-96-ganhhao	Gành Hào	vn-96	9.0283	105.4212	Asia/Ho_Chi_Minh	31552
+vn-01-langthuong	Láng Thượng	vn-01	21.0237	105.8036	Asia/Ho_Chi_Minh	31279
+vn-91-coto	Cô Tô	vn-91	10.3500	105.0167	Asia/Ho_Chi_Minh	31278
+vn-96-namcan	Năm Căn	vn-96	8.7590	104.9929	Asia/Ho_Chi_Minh	30135
+vn-44-camlo	Cam Lộ	vn-44	16.8080	106.9941	Asia/Bangkok	30111
+vn-01-trauquy	Trâu Quỳ	vn-01	21.0195	105.9369	Asia/Bangkok	30051
+vn-31-catba	Cát Bà	vn-31	20.7278	107.0482	Asia/Ho_Chi_Minh	30000
+vn-56-tubong	Tu Bông	vn-56	12.7667	109.3000	Asia/Ho_Chi_Minh	29751
+vn-96-antrach	An Trạch	vn-96	9.0686	105.3958	Asia/Ho_Chi_Minh	28412
+vn-91-kienan	Kiến An	vn-91	10.5667	105.3667	Asia/Ho_Chi_Minh	28333
+vn-01-dichvong	Dịch Vọng	vn-01	21.0333	105.8000	Asia/Bangkok	27979
+vn-75-longthanh	Long Thành	vn-75	10.7891	106.9503	Asia/Ho_Chi_Minh	27084
+vn-01-caudien	Cầu Diễn	vn-01	21.0393	105.7666	Asia/Bangkok	27017
+vn-66-quangphu	Quảng Phú	vn-66	12.8196	108.0774	Asia/Ho_Chi_Minh	26733
+vn-91-nuisap	Núi Sập	vn-91	10.2648	105.2668	Asia/Ho_Chi_Minh	25633
+vn-91-khanhhoa	Khánh Hòa	vn-91	10.6833	105.1667	Asia/Ho_Chi_Minh	25320
+vn-68-phuquy	Phú Quý	vn-68	10.5166	108.9329	Asia/Ho_Chi_Minh	25267
+vn-66-phuocan	Phước An	vn-66	12.7130	108.3015	Asia/Ho_Chi_Minh	25120
+vn-01-xuanmai	Xuân Mai	vn-01	20.9000	105.5833	Asia/Ho_Chi_Minh	25100
+vn-33-ecopark	Ecopark	vn-33	20.9621	105.9318	Asia/Ho_Chi_Minh	25000
+vn-01-quangminh	Quang Minh	vn-01	21.1888	105.7727	Asia/Ho_Chi_Minh	25000
+vn-40-kimlien	Kim Liên	vn-40	18.8833	105.3167	Asia/Ho_Chi_Minh	24489
+vn-92-vithanh	Vị Thanh	vn-92	9.7845	105.4701	Asia/Ho_Chi_Minh	24477
+vn-20-thitrannaduong	Thị Trấn Na Dương	vn-20	21.7025	106.9555	Asia/Ho_Chi_Minh	24369
+vn-38-thitranvandu	Thị Trấn Vân Du	vn-38	20.1519	105.7310	Asia/Bangkok	24146
+vn-51-mykhe	Mỹ Khê	vn-51	15.1500	108.9000	Asia/Ho_Chi_Minh	23978
+vn-51-mylai	Mỹ Lại	vn-51	15.1876	108.8890	Asia/Ho_Chi_Minh	23978
+vn-01-yenphu	Yên Phụ	vn-01	21.0333	105.8333	Asia/Bangkok	23942
+vn-66-buontrap	Buôn Trấp	vn-66	12.4848	108.0298	Asia/Ho_Chi_Minh	23683
+vn-44-thixaquangtri	thị xã Quảng Trị	vn-44	16.7508	107.1828	Asia/Ho_Chi_Minh	23356
+vn-96-tamgiang	Tam Giang	vn-96	8.8000	105.1833	Asia/Ho_Chi_Minh	23277
+vn-91-kienhai	Kiên Hải	vn-91	9.9727	104.8475	Asia/Ho_Chi_Minh	23179
+vn-82-tramchim	Tràm Chim	vn-82	10.6700	105.5647	Asia/Ho_Chi_Minh	22725
+vn-14-chiengcoi	Chiềng Cơi	vn-14	21.3000	103.9000	Asia/Bangkok	22624
+vn-96-aphophong	Ấp Hô Phòng	vn-96	9.2258	105.4186	Asia/Ho_Chi_Minh	22317
+vn-51-lyson	Lý Sơn	vn-51	15.3720	109.1189	Asia/Ho_Chi_Minh	22174
+vn-22-thitrantienyen	Thị Trấn Tiên Yên	vn-22	21.3313	107.4053	Asia/Ho_Chi_Minh	22164
+vn-79-apphuoctinh	Ấp Phước Tĩnh	vn-79	10.4000	107.1833	Asia/Ho_Chi_Minh	22106
+vn-40-dienthanh	Diễn Thành	vn-40	18.9765	105.6003	Asia/Bangkok	21605
+vn-01-linhnam	Lĩnh Nam	vn-01	20.9797	105.8904	Asia/Bangkok	20706
+vn-66-eadrang	Ea Drăng	vn-66	13.2045	108.2103	Asia/Ho_Chi_Minh	20600
+vn-01-lieugiai	Liễu Giai	vn-01	21.0333	105.8167	Asia/Bangkok	20546
+vn-11-muonglay	Mường Lay	vn-11	22.0000	103.1333	Asia/Ho_Chi_Minh	20450
+vn-04-thitrannuochai	Thị Trấn Nước Hai	vn-04	22.7374	106.1522	Asia/Ho_Chi_Minh	20309
+vn-79-thitranato	Thị Trấn Đất Đỏ	vn-79	10.4909	107.2701	Asia/Ho_Chi_Minh	20187
+vn-20-thitranthatkhe	Thị Trấn Thất Khê	vn-20	22.2553	106.4736	Asia/Ho_Chi_Minh	20153
+vn-01-vinhomesroyalcity	Vinhomes Royal City	vn-01	21.0028	105.8151	Asia/Ho_Chi_Minh	20000
+vn-42-nghen	Nghèn	vn-42	18.4512	105.7797	Asia/Bangkok	18965
+vn-01-hoangcau	Hoang Cau	vn-01	21.0167	105.8333	Asia/Bangkok	18500
+vn-79-longdien	Long Diền	vn-79	10.4833	107.2167	Asia/Ho_Chi_Minh	18093
+vn-04-thitrantrungkhanh	Thị Trấn Trùng Khánh	vn-04	22.8351	106.5250	Asia/Ho_Chi_Minh	17849
+vn-22-thitranbache	Thị Trấn Ba Chẽ	vn-22	21.2716	107.2836	Asia/Bangkok	17504
+vn-79-nhabe	Nhà Bè	vn-79	10.6967	106.7403	Asia/Ho_Chi_Minh	17264
+vn-40-benthuy	Bến Thủy	vn-40	18.6500	105.7000	Asia/Bangkok	17000
+vn-01-trungphung	Trung Phụng	vn-01	21.0000	105.8333	Asia/Bangkok	16998
+vn-40-bannahy	Bản Na Hỷ	vn-40	19.5636	104.5346	Asia/Ho_Chi_Minh	16710
+vn-01-coloa	Cổ Lóa	vn-01	21.1167	105.8667	Asia/Ho_Chi_Minh	16514
+vn-48-ailoc	Đại Lộc	vn-48	15.8821	108.1209	Asia/Ho_Chi_Minh	16215
+vn-14-itong	Ít Ong	vn-14	21.5175	104.0270	Asia/Bangkok	16153
+vn-08-thitranvietquang	Thị Trấn Việt Quang	vn-08	22.4151	104.8068	Asia/Bangkok	16072
+vn-68-inhvan	Đinh Văn	vn-68	11.7862	108.2428	Asia/Ho_Chi_Minh	16036
+vn-01-phuo	Phú Đô	vn-01	21.0167	105.7667	Asia/Bangkok	15983
+vn-56-khanhhai	Khánh Hải	vn-56	11.5910	109.0405	Asia/Ho_Chi_Minh	15585
+vn-75-phuochoa	Phước Hòa	vn-75	12.1000	107.1167	Asia/Ho_Chi_Minh	15418
+vn-25-bo	Bo	vn-25	20.6726	105.5362	Asia/Bangkok	15408
+vn-79-apbinhchau	Ấp Bình Châu	vn-79	10.5500	107.5500	Asia/Ho_Chi_Minh	15344
+vn-68-eatling	Ea T’ling	vn-68	12.5890	107.8958	Asia/Ho_Chi_Minh	15342
+vn-48-bana	Bà Nà	vn-48	15.9833	107.9833	Asia/Ho_Chi_Minh	15276
+vn-92-phuloc	Phú Lộc	vn-92	9.4284	105.7411	Asia/Ho_Chi_Minh	15099
+vn-75-binhlong	Bình Long	vn-75	11.6471	106.6059	Asia/Ho_Chi_Minh	15000
+vn-91-duongong	Dương Đông	vn-91	10.2172	103.9593	Asia/Ho_Chi_Minh	15000
+vn-01-quynhloi	Quỳnh Lôi	vn-01	20.9833	105.8667	Asia/Bangkok	14970
+vn-48-hiepuc	Hiệp Đức	vn-48	15.5822	108.1142	Asia/Ho_Chi_Minh	14931
+vn-01-yenvien	Yên Viên	vn-01	21.0833	105.9167	Asia/Bangkok	14482
+vn-96-ongyen	Ông Yến	vn-96	9.4830	105.3459	Asia/Ho_Chi_Minh	14141
+vn-20-thitrannasam	Thị Trấn Na Sầm	vn-20	22.0564	106.6151	Asia/Ho_Chi_Minh	14117
+vn-25-thotang	Thổ Tăng	vn-25	21.2553	105.4894	Asia/Bangkok	14049
+vn-44-khesanh	Khe Sanh	vn-44	16.6283	106.7388	Asia/Bangkok	13927
+vn-11-muongcha	Mường Chà	vn-11	21.7617	103.0978	Asia/Ho_Chi_Minh	13884
+vn-01-thuyphuong	Thụy Phương	vn-01	21.0833	105.7833	Asia/Bangkok	13676
+vn-42-thachha	Thạch Hà	vn-42	18.3679	105.8612	Asia/Bangkok	13647
+vn-01-ngochoi	Ngọc Hồi	vn-01	20.9219	105.8520	Asia/Bangkok	13453
+vn-22-thitranbinhlieu	Thị Trấn Bình Liêu	vn-22	21.5236	107.3981	Asia/Bangkok	13330
+vn-96-rachgoc	Rạch Gốc	vn-96	8.6119	105.0051	Asia/Ho_Chi_Minh	13144
+vn-91-bachuc	Ba Chúc	vn-91	10.4943	104.9072	Asia/Ho_Chi_Minh	13122
+vn-79-conao	Côn Đảo	vn-79	8.7029	106.6489	Asia/Ho_Chi_Minh	13112
+vn-19-thitranbahang	Thị Trấn Ba Hàng	vn-19	21.4155	105.8732	Asia/Bangkok	13023
+vn-44-hoxa	Hồ Xá	vn-44	17.0684	107.0052	Asia/Bangkok	13000
+vn-01-tayang	Tây Đằng	vn-01	21.1981	105.4222	Asia/Bangkok	12877
+vn-44-laobao	Lao Bảo	vn-44	16.6141	106.6007	Asia/Ho_Chi_Minh	12862
+vn-42-camxuyen	Cẩm Xuyên	vn-42	18.2503	106.0013	Asia/Bangkok	12857
+vn-66-eana	Ea Na	vn-66	12.5429	107.9898	Asia/Ho_Chi_Minh	12780
+vn-91-chomoi	Chợ Mới	vn-91	10.5512	105.4044	Asia/Ho_Chi_Minh	12530
+vn-66-eakar	Ea Kar	vn-66	12.8082	108.4490	Asia/Ho_Chi_Minh	12446
+vn-91-nhabang	Nhà Bàng	vn-91	10.6177	105.0034	Asia/Ho_Chi_Minh	12343
+vn-15-thitranyenbinh	Thị Trấn Yên Bình	vn-15	21.7259	104.9635	Asia/Ho_Chi_Minh	12282
+vn-66-eahiao	Ea Hiao	vn-66	13.2073	108.3164	Asia/Ho_Chi_Minh	12259
+vn-91-apphuhoa	Ấp Phú Hòa	vn-91	10.9000	105.1333	Asia/Ho_Chi_Minh	12098
+vn-52-phutuc	Phú Túc	vn-52	13.1968	108.6904	Asia/Ho_Chi_Minh	12000
+vn-01-trieukhuc	Triều Khúc	vn-01	20.9806	105.8023	Asia/Bangkok	12000
+vn-79-suoinghe	Suối Nghệ	vn-79	10.5919	107.2162	Asia/Ho_Chi_Minh	11894
+vn-40-cualo	Cửa Lô	vn-40	18.8167	105.7167	Asia/Ho_Chi_Minh	11884
+vn-01-traikhoai	Trại Khoai	vn-01	21.1317	105.3448	Asia/Ho_Chi_Minh	11833
+vn-24-kep	Kép	vn-24	21.4000	106.2667	Asia/Ho_Chi_Minh	11832
+vn-42-uctho	Đức Thọ	vn-42	18.5396	105.5830	Asia/Bangkok	11728
+vn-11-muongnhe	Mường Nhé	vn-11	22.1924	102.4579	Asia/Bangkok	11671
+vn-68-eapo	Ea Pô	vn-68	12.7000	107.8833	Asia/Ho_Chi_Minh	11575
+vn-25-xuantrung	Xuân Trùng	vn-25	21.0575	105.2838	Asia/Ho_Chi_Minh	11506
+vn-25-hangtram	Hàng Trạm	vn-25	20.3947	105.6224	Asia/Bangkok	11503
+vn-01-phungnghia	Phụng Nghia	vn-01	20.9500	105.7167	Asia/Bangkok	11500
+vn-66-eahleo	Ea H'Leo	vn-66	13.1992	108.1939	Asia/Ho_Chi_Minh	10942
+vn-08-thitrannahang	Thị Trấn Na Hang	vn-08	22.3492	105.3824	Asia/Bangkok	10921
+vn-46-langco	Lăng Cô	vn-46	16.2387	108.0804	Asia/Ho_Chi_Minh	10810
+vn-48-ainghia	Đại Nghĩa	vn-48	15.8790	108.0890	Asia/Ho_Chi_Minh	10808
+vn-42-huongkhe	Hương Khê	vn-42	18.1767	105.7002	Asia/Bangkok	10768
+vn-48-aiquang	Đại Quang	vn-48	15.8667	108.0500	Asia/Ho_Chi_Minh	10666
+vn-48-aiong	Đại Đồng	vn-48	15.8744	108.0213	Asia/Ho_Chi_Minh	10659
+vn-15-sapa	Sa Pa	vn-15	22.3402	103.8441	Asia/Bangkok	10554
+vn-75-locninh	Lộc Ninh	vn-75	11.8448	106.5907	Asia/Ho_Chi_Minh	10504
+vn-86-thanhphu	Thạnh Phú	vn-86	9.9483	106.5163	Asia/Ho_Chi_Minh	10311
+vn-42-khanhvinhyen	Khánh Vĩnh Yên	vn-42	18.4631	105.7131	Asia/Ho_Chi_Minh	10244
+vn-01-nguyendu	Nguyễn Du	vn-01	21.0167	105.8500	Asia/Bangkok	10078
+vn-91-apbinhchanh	Ấp Bình Chánh	vn-91	10.5533	105.2581	Asia/Ho_Chi_Minh	10000
+vn-48-traquevegetablevillage	Tra Que Vegetable Village	vn-48	15.9022	108.3388	Asia/Ho_Chi_Minh	10000
+vn-24-lim	Lim	vn-24	21.1439	106.0202	Asia/Bangkok	9923
+vn-79-xuyenmoc	Xuyên Mộc	vn-79	10.5667	107.4167	Asia/Ho_Chi_Minh	9804
+vn-79-xabinhgia	Xã Bình Giả	vn-79	10.6500	107.2667	Asia/Ho_Chi_Minh	9780
+vn-15-thitranmuongkhuong	Thị Trấn Mường Khương	vn-15	22.7614	104.1216	Asia/Bangkok	9680
+vn-25-vuban	Vụ Bản	vn-25	20.4642	105.4435	Asia/Bangkok	9497
+vn-20-locbinh	Lộc Bình	vn-20	21.7587	106.9233	Asia/Bangkok	9427
+vn-96-ongdo	Ông Do	vn-96	8.8243	105.0087	Asia/Ho_Chi_Minh	9253
+vn-79-apxuanson	Ấp Xuân Sơn	vn-79	10.6500	107.3500	Asia/Ho_Chi_Minh	9117
+vn-04-thitranongkhe	Thị Trấn Đông Khê	vn-04	22.4294	106.4319	Asia/Bangkok	9099
+vn-37-thitranbinhminh	Thị Trấn Bình Minh	vn-37	19.9910	106.0627	Asia/Bangkok	9040
+vn-82-sarai	Sa Rài	vn-82	10.8702	105.4658	Asia/Ho_Chi_Minh	9003
+vn-01-lienquan	Liên Quan	vn-01	21.0572	105.5792	Asia/Bangkok	8997
+vn-82-aptanmy	Ấp Tân Mỹ	vn-82	10.6167	105.5167	Asia/Ho_Chi_Minh	8923
+vn-20-thitranongang	Thị Trấn Đồng Đăng	vn-20	21.9511	106.6977	Asia/Ho_Chi_Minh	8922
+vn-42-kimsongtruong	Kim Song Trường	vn-42	18.4634	105.6873	Asia/Ho_Chi_Minh	8905
+vn-86-aptanngai	Ấp Tân Ngãi	vn-86	10.2333	106.2833	Asia/Ho_Chi_Minh	8887
+vn-15-thitranphorang	Thị Trấn Phố Ràng	vn-15	22.2343	104.4764	Asia/Ho_Chi_Minh	8886
+vn-42-vuongloc	Vượng Lộc	vn-42	18.4806	105.7337	Asia/Bangkok	8866
+vn-08-thitrantanyen	Thị Trấn Tân Yên	vn-08	22.0655	105.0345	Asia/Bangkok	8800
+vn-42-truongson	Trường Sơn	vn-42	18.3833	105.7333	Asia/Ho_Chi_Minh	8757
+vn-96-uminh	U Minh	vn-96	9.4129	104.9735	Asia/Ho_Chi_Minh	8696
+vn-20-thitrancaoloc	Thị Trấn Cao Lộc	vn-20	21.8665	106.7683	Asia/Bangkok	8653
+vn-11-tuangiao	Tuần Giáo	vn-11	21.5833	103.4167	Asia/Ho_Chi_Minh	8512
+vn-42-phochau	Phố Châu	vn-42	18.5133	105.4241	Asia/Bangkok	8481
+vn-24-nhanam	Nhã Nam	vn-24	21.4500	106.1000	Asia/Ho_Chi_Minh	8461
+vn-48-aicuong	Đại Cường	vn-48	15.8500	108.0833	Asia/Ho_Chi_Minh	8436
+vn-42-tungloc	Tùng Lộc	vn-42	18.4576	105.8148	Asia/Bangkok	8388
+vn-01-uonglam	Đường Lâm	vn-01	21.1533	105.4712	Asia/Bangkok	8329
+vn-19-vantung	Vân Tùng	vn-19	22.4308	105.9969	Asia/Bangkok	8260
+vn-48-anha	An Hà	vn-48	15.5833	108.4833	Asia/Ho_Chi_Minh	8245
+vn-08-thitranyenminh	Thị Trấn Yên Minh	vn-08	23.1179	105.1416	Asia/Bangkok	8085
+vn-82-tanninh	Tân Ninh	vn-82	10.3335	106.4449	Asia/Ho_Chi_Minh	8000
+vn-42-thuanthien	Thuần Thiện	vn-42	18.4742	105.7869	Asia/Bangkok	7949
+vn-08-thitranongvan	Thị Trấn Đồng Văn	vn-08	23.2784	105.3629	Asia/Bangkok	7912
+vn-40-phucson	Phúc Sơn	vn-40	18.9667	105.0500	Asia/Ho_Chi_Minh	7746
+vn-42-ichhau	Ich Hau	vn-42	18.4500	105.8500	Asia/Bangkok	7538
+vn-25-tutrung	Tú Trưng	vn-25	21.1989	105.5328	Asia/Bangkok	7530
+vn-66-buontur	Buôn Tur	vn-66	12.5000	108.0167	Asia/Ho_Chi_Minh	7500
+vn-66-easup	Ea Súp	vn-66	13.0662	107.8855	Asia/Ho_Chi_Minh	7484
+vn-42-xuanloc	Xuân Lộc	vn-42	18.4190	105.7584	Asia/Bangkok	7354
+vn-01-phongchau	Phong Châu	vn-01	21.2393	105.4325	Asia/Ho_Chi_Minh	7346
+vn-20-chilang	Chi Lăng	vn-20	21.5736	106.5026	Asia/Bangkok	7213
+vn-25-thitranthanhha	Thị Trấn Thanh Hà	vn-25	20.5945	105.6793	Asia/Bangkok	7190
+vn-42-myloc	Mỹ Lộc	vn-42	18.3653	105.7533	Asia/Bangkok	7061
+vn-44-giolinh	Gio Linh	vn-44	16.9248	107.0844	Asia/Bangkok	7002
+vn-15-batxat	Bát Xát	vn-15	22.5431	103.8899	Asia/Bangkok	6933
+vn-51-mangen	Măng Đen	vn-51	14.6006	108.2909	Asia/Ho_Chi_Minh	6913
+vn-08-thitranmeovac	Thị Trấn Mèo Vạc	vn-08	23.1641	105.4099	Asia/Ho_Chi_Minh	6850
+vn-79-conson	Côn Sơn	vn-79	8.6864	106.6082	Asia/Ho_Chi_Minh	6800
+vn-22-coto	Cô Tô	vn-22	20.9727	107.7658	Asia/Bangkok	6778
+vn-42-buixa	Bùi Xá	vn-42	18.3898	105.8250	Asia/Ho_Chi_Minh	6634
+vn-24-baclung	Bắc Lũng	vn-24	21.2667	106.3833	Asia/Ho_Chi_Minh	6618
+vn-15-thitrankhanhyen	Thị Trấn Khánh Yên	vn-15	22.0893	104.2515	Asia/Ho_Chi_Minh	6609
+vn-04-thitrannguyenbinh	Thị Trấn Nguyên Bình	vn-04	22.6500	105.9599	Asia/Bangkok	6586
+vn-22-thitrancairong	Thị Trấn Cái Rồng	vn-22	21.0712	107.4207	Asia/Bangkok	6583
+vn-42-thienloc	Thiên Lộc	vn-42	18.5042	105.7688	Asia/Bangkok	6571
+vn-48-tramy	Trà My	vn-48	15.3397	108.2207	Asia/Ho_Chi_Minh	6559
+vn-11-nalay	Na Lay	vn-11	22.0351	103.1535	Asia/Ho_Chi_Minh	6556
+vn-25-bichchu	Bích Chu	vn-25	21.2072	105.4755	Asia/Bangkok	6500
+vn-37-goi	Gôi	vn-37	20.3333	106.0783	Asia/Bangkok	6339
+vn-11-natau	Nà Tấu	vn-11	21.5064	103.1178	Asia/Ho_Chi_Minh	6333
+vn-37-thanhnguyen	Thanh Nguyên	vn-37	20.4150	105.9259	Asia/Bangkok	6300
+vn-42-sonloc	Sơn Lộc	vn-42	18.3719	105.7795	Asia/Bangkok	6263
+vn-24-caothuong	Cao Thượng	vn-24	21.3871	106.1293	Asia/Bangkok	6115
+vn-11-sipaphin	Si Pa Phìn	vn-11	21.8015	102.9626	Asia/Ho_Chi_Minh	6090
+vn-42-quangloc	Quang Lộc	vn-42	18.4036	105.7694	Asia/Bangkok	6084
+vn-42-ongloc	Đồng Lộc	vn-42	18.3761	105.7175	Asia/Ho_Chi_Minh	6076
+vn-25-vinhtuong	Vĩnh Tường	vn-25	21.2165	105.5125	Asia/Bangkok	6000
+vn-48-aitan	Đại Tân	vn-48	15.8333	108.0500	Asia/Ho_Chi_Minh	5881
+vn-04-thitrantinhtuc	Thị Trấn Tĩnh Túc	vn-04	22.6535	105.8849	Asia/Bangkok	5850
+vn-42-giahanh	Gia Hanh	vn-42	18.4245	105.6872	Asia/Bangkok	5825
+vn-44-xuanson	Xuân Sơn	vn-44	17.6167	106.3167	Asia/Bangkok	5802
+vn-79-xaanngai	Xã An Ngãi	vn-79	10.4833	107.2333	Asia/Ho_Chi_Minh	5740
+vn-15-simacai	Si Ma Cai	vn-15	22.6951	104.2786	Asia/Bangkok	5652
+vn-12-thitransinho	Thị Trấn Sìn Hồ	vn-12	22.3665	103.2344	Asia/Bangkok	5621
+vn-08-thitranvinhtuy	Thị Trấn Vĩnh Tuy	vn-08	22.2744	104.8909	Asia/Bangkok	5560
+vn-42-phuctrach	Phúc Trạch	vn-42	18.1333	105.7667	Asia/Ho_Chi_Minh	5550
+vn-12-thanuyen	Than Uyên	vn-12	21.9591	103.8800	Asia/Bangkok	5482
+vn-66-lienson	Liên Sơn	vn-66	12.4109	108.1768	Asia/Ho_Chi_Minh	5425
+vn-42-phuloc	Phú Lộc	vn-42	18.4408	105.6707	Asia/Bangkok	5425
+vn-11-laynua	Lay Nưa	vn-11	22.0176	103.1162	Asia/Ho_Chi_Minh	5376
+vn-80-xombencui	Xóm Bến Củi	vn-80	11.2667	106.3500	Asia/Ho_Chi_Minh	5150
+vn-15-nongtruongtranphu	Nông Trường Trần Phú	vn-15	21.4824	104.7288	Asia/Bangkok	5132
+vn-40-quanhanh	Quán Hành	vn-40	18.7793	105.6460	Asia/Bangkok	5114
+vn-40-nghiaan	Nghĩa Đàn	vn-40	19.3000	105.4333	Asia/Ho_Chi_Minh	5037
+vn-46-aluoi	A Lưới	vn-46	16.2723	107.2339	Asia/Bangkok	5019
+vn-42-thuongloc	Thượng Lộc	vn-42	18.3910	105.7000	Asia/Bangkok	4997
+vn-08-lungcu	Lũng Cú	vn-08	23.3611	105.3155	Asia/Ho_Chi_Minh	4885
+vn-31-huyentung	Huyền Tụng	vn-31	20.9500	106.5500	Asia/Bangkok	4876
+vn-42-thuongnga	Thường Nga	vn-42	18.4500	105.6667	Asia/Bangkok	4814
+vn-04-pacmiau	Pác Miầu	vn-04	22.8297	105.4933	Asia/Bangkok	4793
+vn-04-thitranbaolac	Thị Trấn Bảo Lạc	vn-04	22.9492	105.6805	Asia/Bangkok	4771
+vn-42-thiencam	Thiên Cầm	vn-42	18.2784	106.0787	Asia/Bangkok	4755
+vn-44-krongklang	Krông Klang	vn-44	16.6891	106.8874	Asia/Bangkok	4732
+vn-42-thanhloc	Thanh Lộc	vn-42	18.4784	105.7121	Asia/Bangkok	4663
+vn-48-ba	Ba	vn-48	15.9628	107.9065	Asia/Ho_Chi_Minh	4656
+vn-46-lamot	Lâm Đớt	vn-46	16.0756	107.3555	Asia/Ho_Chi_Minh	4611
+vn-04-thitranxuanhoa	Thị Trấn Xuân Hoà	vn-04	22.9024	106.0774	Asia/Bangkok	4541
+vn-46-quangnham	Quảng Nhâm	vn-46	16.2310	107.1837	Asia/Ho_Chi_Minh	4527
+vn-56-vanthanh	Vạn Thạnh	vn-56	12.6707	109.4038	Asia/Ho_Chi_Minh	4476
+vn-42-trungloc	Trung Lộc	vn-42	18.4240	105.7320	Asia/Bangkok	4318
+vn-38-nameo	Na Mèo	vn-38	20.2916	104.6466	Asia/Vientiane	4174
+vn-11-namvi	Nằm Vi	vn-11	22.2167	102.5167	Asia/Ho_Chi_Minh	4163
+vn-48-prao	Prao	vn-48	15.9244	107.6481	Asia/Ho_Chi_Minh	4075
+vn-19-nongha	Nong Hạ	vn-19	21.9500	105.8000	Asia/Ho_Chi_Minh	4062
+vn-01-phuninh	Phù Ninh	vn-01	21.0833	105.9500	Asia/Ho_Chi_Minh	4000
+vn-44-thonlavangchinh	Thôn La Vang Chinh	vn-44	16.7167	107.2333	Asia/Ho_Chi_Minh	4000
+vn-42-khanhloc	Khánh Lộc	vn-42	18.4431	105.7406	Asia/Bangkok	3929
+vn-42-yenloc	Yên Lộc	vn-42	18.4648	105.7088	Asia/Ho_Chi_Minh	3862
+vn-19-thitraninhca	Thị Trấn Đình Cả	vn-19	21.7522	106.0752	Asia/Bangkok	3810
+vn-14-phonglang	Phổng Lăng	vn-14	21.4646	103.6704	Asia/Ho_Chi_Minh	3792
+vn-40-xuanlac	Xuân Lạc	vn-40	19.0000	105.2833	Asia/Ho_Chi_Minh	3764
+vn-19-bocbo	Bộc Bố	vn-19	22.6121	105.6671	Asia/Bangkok	3748
+vn-42-tienloc	Tiến Lộc	vn-42	18.4294	105.7955	Asia/Bangkok	3732
+vn-42-songloc	Song Lộc	vn-42	18.4804	105.6787	Asia/Bangkok	3704
+vn-25-phuonglinh	Phương Linh	vn-25	21.4671	105.0987	Asia/Ho_Chi_Minh	3679
+vn-19-chora	Chợ Rã	vn-19	22.4500	105.7000	Asia/Ho_Chi_Minh	3672
+vn-42-hoahop	Hòa Hợp	vn-42	18.3114	105.9099	Asia/Ho_Chi_Minh	3560
+vn-42-kimloc	Kim Lộc	vn-42	18.4907	105.6831	Asia/Bangkok	3519
+vn-11-puhong	Pú Hồng	vn-11	21.0696	103.2371	Asia/Ho_Chi_Minh	3443
+vn-51-anba	An Bá	vn-51	14.9833	108.8500	Asia/Ho_Chi_Minh	3333
+vn-46-trungson	Trung Sơn	vn-46	16.3250	107.1605	Asia/Ho_Chi_Minh	3295
+vn-86-aplongtho	Ấp Long Thọ	vn-86	10.1333	106.0333	Asia/Ho_Chi_Minh	3126
+vn-42-vinhloc	Vĩnh Lộc	vn-42	18.4495	105.7211	Asia/Bangkok	3008
+vn-15-thitrantramtau	Thị Trấn Trạm Tấu	vn-15	21.4666	104.3797	Asia/Ho_Chi_Minh	2926
+vn-44-giaoliem	Giáo Liêm	vn-44	16.8500	107.1500	Asia/Ho_Chi_Minh	2871
+vn-40-xommuoilam	Xóm Mười Lăm	vn-40	19.2232	105.6572	Asia/Bangkok	2855
+vn-08-thitranphobang	Thị Trấn Phố Bảng	vn-08	23.2543	105.1845	Asia/Ho_Chi_Minh	2811
+vn-19-caoky	Cao Ký	vn-19	21.9833	105.8500	Asia/Ho_Chi_Minh	2754
+vn-19-hahieu	Hạ Hiệu	vn-19	22.4333	105.8500	Asia/Ho_Chi_Minh	2739
+vn-25-longcoc	Long Cốc	vn-25	21.1184	105.0605	Asia/Bangkok	2658
+vn-42-nghixuan	Nghi Xuân	vn-42	18.6580	105.7520	Asia/Bangkok	2590
+vn-48-atieng	A Tiêng	vn-48	15.9058	107.4908	Asia/Ho_Chi_Minh	2587
+vn-42-truongloc	Trường Lộc	vn-42	18.4659	105.6933	Asia/Bangkok	2493
+vn-42-vuquang	Vũ Quang	vn-42	18.3838	105.5059	Asia/Bangkok	2449
+vn-46-sonthuy	Sơn Thủy	vn-46	16.2528	107.2727	Asia/Ho_Chi_Minh	2437
+vn-46-ango	A Ngo	vn-46	16.2577	107.2438	Asia/Ho_Chi_Minh	2404
+vn-19-chomoi	Chợ Mới	vn-19	21.8837	105.7728	Asia/Bangkok	2383
+vn-15-laochai	Lao Chải	vn-15	22.3138	103.8684	Asia/Ho_Chi_Minh	2324
+vn-48-bhale	Bha Lê	vn-48	15.9732	107.5105	Asia/Ho_Chi_Minh	2289
+vn-08-saphin	Sà Phìn	vn-08	23.2667	105.2500	Asia/Ho_Chi_Minh	2264
+vn-48-ating	A Ting	vn-48	15.9863	107.8274	Asia/Ho_Chi_Minh	2243
+vn-48-songkon	Sông Kôn	vn-48	15.9939	107.7673	Asia/Ho_Chi_Minh	2207
+vn-48-macooi	Mà Cooi	vn-48	15.8365	107.6943	Asia/Ho_Chi_Minh	2145
+vn-46-hongvan	Hồng Vân	vn-46	16.3646	107.1217	Asia/Ho_Chi_Minh	2136
+vn-48-jongay	Jơ Ngây	vn-48	15.9286	107.7735	Asia/Ho_Chi_Minh	2130
+vn-tanhiep	Tân Hiệp		15.9500	108.5000	Asia/Ho_Chi_Minh	2091
+vn-04-sanguy	Sằng Uỷ	vn-04	22.7000	106.5500	Asia/Bangkok	2000
+vn-46-aroanghai	A Roàng Hai	vn-46	16.1125	107.3970	Asia/Bangkok	1976
+vn-91-anthoi	An Thới	vn-91	10.0191	104.0150	Asia/Ho_Chi_Minh	1957
+vn-48-lang	Lăng	vn-48	15.8258	107.4563	Asia/Ho_Chi_Minh	1945
+vn-25-luongbang	Lương Bằng	vn-25	21.6484	105.0285	Asia/Ho_Chi_Minh	1937
+vn-thochau	Thổ Châu		9.3031	103.4755	Asia/Ho_Chi_Minh	1829
+vn-48-axan	A Xan	vn-48	15.8077	107.3160	Asia/Ho_Chi_Minh	1815
+vn-48-avuong	A Vương	vn-48	15.9655	107.5491	Asia/Ho_Chi_Minh	1806
+vn-46-hongthuong	Hồng Thượng	vn-46	16.1857	107.2609	Asia/Ho_Chi_Minh	1669
+vn-48-kadang	Ka Dăng	vn-48	15.8807	107.8085	Asia/Ho_Chi_Minh	1569
+vn-48-dang	Dang	vn-48	15.8267	107.5786	Asia/Ho_Chi_Minh	1525
+vn-46-hongbac	Hồng Bắc	vn-46	16.2773	107.1834	Asia/Ho_Chi_Minh	1513
+vn-68-aphoathanh	Ấp Hòa Thanh	vn-68	11.0333	108.1667	Asia/Ho_Chi_Minh	1474
+vn-46-hongkim	Hồng Kim	vn-46	16.3352	107.2372	Asia/Ho_Chi_Minh	1451
+vn-48-hoangsa	Hoàng Sa	vn-48	16.6666	112.7254	Asia/Ho_Chi_Minh	1443
+vn-48-chom	Ch’ Ơm	vn-48	15.7966	107.2695	Asia/Ho_Chi_Minh	1395
+vn-48-gari	Ga Ri	vn-48	15.7466	107.2655	Asia/Ho_Chi_Minh	1355
+vn-48-tu	Tư	vn-48	16.0169	107.9104	Asia/Ho_Chi_Minh	1349
+vn-40-yenthuong	Yên Thượng	vn-40	18.8833	105.2833	Asia/Ho_Chi_Minh	1264
+vn-46-hongha	Hồng Hạ	vn-46	16.3006	107.3129	Asia/Ho_Chi_Minh	1153
+vn-48-arooi	A Rooi	vn-48	15.8755	107.6282	Asia/Ho_Chi_Minh	1119
+vn-46-ongson	Đông Sơn	vn-46	16.1126	107.3200	Asia/Ho_Chi_Minh	1081
+vn-48-trhy	Tr'Hy	vn-48	15.7959	107.3655	Asia/Ho_Chi_Minh	1074
+vn-46-hongthai	Hồng Thái	vn-46	16.1844	107.2071	Asia/Ho_Chi_Minh	1070
+vn-48-zahung	Za Hung	vn-48	15.8923	107.6766	Asia/Ho_Chi_Minh	1048
+vn-25-tamao	Tam Đảo	vn-25	21.3932	105.6144	Asia/Bangkok	734
+vn-44-aitu	Ái Tử	vn-44	16.7689	107.1650	Asia/Bangkok	0
+vn-91-anbien	An Biên	vn-91	9.8153	105.0637	Asia/Ho_Chi_Minh	0
+vn-24-anchau	An Châu	vn-24	21.3346	106.8493	Asia/Bangkok	0
+vn-91-anchau	An Châu	vn-91	10.4456	105.3862	Asia/Ho_Chi_Minh	0
+vn-31-anduong	An Dương	vn-31	20.8638	106.6133	Asia/Bangkok	0
+vn-82-anhoa	An Hòa	vn-82	10.2969	105.7443	Asia/Ho_Chi_Minh	0
+vn-52-anlao	An Lão	vn-52	14.6124	108.8899	Asia/Ho_Chi_Minh	0
+vn-31-anlao	An Lão	vn-31	20.8229	106.5558	Asia/Bangkok	0
+vn-91-anphu	An Phú	vn-91	10.8159	105.0904	Asia/Ho_Chi_Minh	0
+vn-33-anthi	Ân Thi	vn-33	20.8183	106.0912	Asia/Bangkok	0
+vn-40-anhson	Anh Son	vn-40	18.9696	105.0550	Asia/Bangkok	0
+vn-51-bato	Ba Tơ	vn-51	14.7636	108.7322	Asia/Ho_Chi_Minh	0
+vn-86-batri	Ba Tri	vn-86	10.0443	106.5902	Asia/Ho_Chi_Minh	0
+vn-56-bacai	Bác Ái	vn-56	11.8410	108.9032	Asia/Ho_Chi_Minh	0
+vn-15-bacha	Bắc Hà	vn-15	22.5391	104.2930	Asia/Bangkok	0
+vn-20-bacson	Bắc Sơn	vn-20	21.9000	106.3208	Asia/Bangkok	0
+vn-14-bacyen	Bắc Yên	vn-14	21.2463	104.4328	Asia/Bangkok	0
+vn-33-banyennhan	Bẩn Yên Nhân	vn-33	20.9365	106.0571	Asia/Bangkok	0
+vn-19-banglung	Bằng Lũng	vn-19	22.1578	105.5956	Asia/Bangkok	0
+vn-80-bencau	Bến Cầu	vn-80	11.1105	106.1792	Asia/Ho_Chi_Minh	0
+vn-38-bensung	Bến Sung	vn-38	19.6314	105.5781	Asia/Bangkok	0
+vn-24-bichong	Bích Động	vn-24	21.2742	106.1007	Asia/Bangkok	0
+vn-86-binhai	Bình Đại	vn-86	10.1896	106.6915	Asia/Ho_Chi_Minh	0
+vn-20-binhgia	Bình Gia	vn-20	21.9609	106.3645	Asia/Bangkok	0
+vn-37-binhmy	Bình Mỹ	vn-37	20.4912	106.0096	Asia/Bangkok	0
+vn-51-binhson	Bình Sơn	vn-51	15.2978	108.7612	Asia/Ho_Chi_Minh	0
+vn-52-bongson	Bồng Sơn	vn-52	14.4291	109.0156	Asia/Ho_Chi_Minh	0
+vn-75-buop	Bù Đốp	vn-75	11.9549	106.8002	Asia/Ho_Chi_Minh	0
+vn-38-butson	Bút Sơn	vn-38	19.8580	105.8548	Asia/Bangkok	0
+vn-91-caidau	Cái Dầu	vn-91	10.5698	105.2295	Asia/Ho_Chi_Minh	0
+vn-86-cainhum	Cái Nhum	vn-86	10.1741	106.1105	Asia/Ho_Chi_Minh	0
+vn-96-cainuoc	Cái Nước	vn-96	8.9423	105.0141	Asia/Ho_Chi_Minh	0
+vn-82-caitauha	Cái Tàu Hạ	vn-82	10.2597	105.8704	Asia/Ho_Chi_Minh	0
+vn-56-camlam	Cam Lâm	vn-56	12.0540	109.1600	Asia/Ho_Chi_Minh	0
+vn-38-camthuy	Cẩm Thủy	vn-38	20.2087	105.4695	Asia/Bangkok	0
+vn-38-canhnang	Cành Nàng	vn-38	20.3480	105.2288	Asia/Bangkok	0
+vn-25-caophong	Cao Phong	vn-25	20.7045	105.3206	Asia/Bangkok	0
+vn-40-caugiat	Cầu Giát	vn-40	19.1460	105.6309	Asia/Bangkok	0
+vn-24-caugo	Cầu Gồ	vn-24	21.4768	106.1265	Asia/Bangkok	0
+vn-86-cauke	Cầu Kè	vn-86	9.8724	106.0550	Asia/Ho_Chi_Minh	0
+vn-86-chauthanh	Châu Thành	vn-86	9.8699	106.3494	Asia/Ho_Chi_Minh	0
+vn-80-chauthanh	Châu Thành	vn-80	11.3117	106.0295	Asia/Ho_Chi_Minh	0
+vn-86-chauthanh2	Châu Thành	vn-86	10.3012	106.3570	Asia/Ho_Chi_Minh	0
+vn-92-chauthanh	Châu Thành	vn-92	9.7007	105.9020	Asia/Ho_Chi_Minh	0
+vn-25-chine	Chi Nê	vn-25	20.4906	105.7780	Asia/Bangkok	0
+vn-66-chithanh	Chí Thạnh	vn-66	13.3085	109.2152	Asia/Ho_Chi_Minh	0
+vn-24-cho	Chờ	vn-24	21.1949	105.9547	Asia/Bangkok	0
+vn-19-chochu	Chợ Chu	vn-19	21.9072	105.6422	Asia/Bangkok	0
+vn-82-chogao	Chợ Gạo	vn-82	10.3498	106.4634	Asia/Ho_Chi_Minh	0
+vn-86-cholach	Chợ Lách	vn-86	10.2603	106.1189	Asia/Ho_Chi_Minh	0
+vn-68-cholau	Chợ Lầu	vn-68	11.2216	108.5071	Asia/Ho_Chi_Minh	0
+vn-52-chuprong	Chư Prông	vn-52	13.7568	107.8862	Asia/Ho_Chi_Minh	0
+vn-52-chuse	Chư Sê	vn-52	13.6915	108.0802	Asia/Ho_Chi_Minh	0
+vn-52-chuty	Chư Ty	vn-52	13.8051	107.6961	Asia/Ho_Chi_Minh	0
+vn-19-chuahang	Chùa Hang	vn-19	21.6238	105.8417	Asia/Bangkok	0
+vn-01-chucson	Chúc Sơn	vn-01	20.9237	105.7015	Asia/Bangkok	0
+vn-37-cole	Cổ Lễ	vn-37	20.3234	106.2658	Asia/Bangkok	0
+vn-15-cophuc	Cổ Phúc	vn-15	21.7558	104.8277	Asia/Bangkok	0
+vn-40-concuong	Con Cuông	vn-40	19.0500	104.8812	Asia/Bangkok	0
+vn-92-culaodung	Cù Lao Dung	vn-92	9.5930	106.2060	Asia/Ho_Chi_Minh	0
+vn-66-cungson	Củng Sơn	vn-66	13.0500	108.9789	Asia/Ho_Chi_Minh	0
+vn-25-abac	Đà Bắc	vn-25	20.8771	105.2542	Asia/Bangkok	0
+vn-68-ateh	Đạ Tẻh	vn-68	11.5115	107.4909	Asia/Ho_Chi_Minh	0
+vn-01-ainghia	Đại Nghĩa	vn-01	20.6867	105.7447	Asia/Bangkok	0
+vn-52-akoa	Đăk Đoa	vn-52	13.9950	108.1121	Asia/Ho_Chi_Minh	0
+vn-51-akglei	Đắk Glei	vn-51	15.0864	107.7358	Asia/Ho_Chi_Minh	0
+vn-51-akha	Đắk Hà	vn-51	14.5135	107.9210	Asia/Ho_Chi_Minh	0
+vn-68-akmam	Đắk Mâm	vn-68	12.4579	107.8625	Asia/Ho_Chi_Minh	0
+vn-68-akmil	Đắk Mil	vn-68	12.4496	107.6224	Asia/Ho_Chi_Minh	0
+vn-51-akrve	Đắk Rve	vn-51	14.5072	108.2473	Asia/Ho_Chi_Minh	0
+vn-68-aksong	Đắk Song	vn-68	12.2552	107.6092	Asia/Ho_Chi_Minh	0
+vn-51-akto	Đắk Tô	vn-51	14.6609	107.8389	Asia/Ho_Chi_Minh	0
+vn-96-amdoi	Đầm Dơi	vn-96	8.9921	105.1960	Asia/Ho_Chi_Minh	0
+vn-79-dautieng	Dầu Tiếng	vn-79	11.2741	106.3588	Asia/Ho_Chi_Minh	0
+vn-68-dilinh	Di Linh	vn-68	11.5815	108.0764	Asia/Ho_Chi_Minh	0
+vn-33-diemien	Diêm Điền	vn-33	20.5583	106.5688	Asia/Bangkok	0
+vn-11-ienbienong	Điện Biên Đông	vn-11	21.2967	103.2201	Asia/Bangkok	0
+vn-56-dienkhanh	Diên Khánh	vn-56	12.2549	109.0933	Asia/Ho_Chi_Minh	0
+vn-20-inhlap	Đình Lập	vn-20	21.5463	107.0981	Asia/Bangkok	0
+vn-25-oanhung	Đoan Hùng	vn-25	21.6225	105.1846	Asia/Bangkok	0
+vn-24-oingo	Đồi Ngô	vn-24	21.3063	106.3867	Asia/Bangkok	0
+vn-01-onganh	Đông Anh	vn-01	21.1396	105.8493	Asia/Bangkok	0
+vn-33-onghung	Đông Hưng	vn-33	20.5565	106.3553	Asia/Bangkok	0
+vn-44-ongle	Đồng Lê	vn-44	17.8839	106.0254	Asia/Bangkok	0
+vn-20-ongmo	Đồng Mỏ	vn-20	21.6570	106.5783	Asia/Bangkok	0
+vn-68-ongnai	Đồng Nai	vn-68	11.5798	107.3652	Asia/Ho_Chi_Minh	0
+vn-80-ongthanh	Đông Thành	vn-80	10.8922	106.3061	Asia/Ho_Chi_Minh	0
+vn-66-ongxuan	Đồng Xuân	vn-66	13.3773	109.1081	Asia/Ho_Chi_Minh	0
+vn-19-u	Đu	vn-19	21.7385	105.7039	Asia/Bangkok	0
+vn-75-ucphong	Đức Phong	vn-75	11.8135	107.2443	Asia/Ho_Chi_Minh	0
+vn-48-duyxuyen	Duy Xuyên	vn-48	15.8290	108.2596	Asia/Ho_Chi_Minh	0
+vn-24-giabinh	Gia Bình	vn-24	21.0594	106.1747	Asia/Bangkok	0
+vn-31-gialoc	Gia Lộc	vn-31	20.8678	106.3000	Asia/Bangkok	0
+vn-75-giaray	Gia Ray	vn-75	10.9261	107.4017	Asia/Ho_Chi_Minh	0
+vn-91-giongrieng	Giồng Riềng	vn-91	9.9097	105.3143	Asia/Ho_Chi_Minh	0
+vn-86-giongtrom	Giồng Trôm	vn-86	10.1502	106.5061	Asia/Ho_Chi_Minh	0
+vn-80-godau	Gò Dầu	vn-80	11.0885	106.2635	Asia/Ho_Chi_Minh	0
+vn-91-goquao	Gò Quao	vn-91	9.7332	105.2739	Asia/Ho_Chi_Minh	0
+vn-25-hahoa	Hạ Hòa	vn-25	21.5630	105.0051	Asia/Bangkok	0
+vn-48-halam	Hà Lam	vn-48	15.7387	108.3506	Asia/Ho_Chi_Minh	0
+vn-38-hatrung	Hà Trung	vn-38	20.0129	105.8532	Asia/Bangkok	0
+vn-44-hailang	Hải Lăng	vn-44	16.6935	107.2512	Asia/Bangkok	0
+vn-66-hairieng	Hai Riêng	vn-66	12.9791	108.8973	Asia/Ho_Chi_Minh	0
+vn-01-hanoi2	Hanoi	vn-01	20.3277	106.0121	Asia/Ho_Chi_Minh	0
+vn-14-hatlot	Hát Lót	vn-14	21.1973	104.1060	Asia/Bangkok	0
+vn-38-hauloc	Hậu Lộc	vn-38	19.9144	105.8862	Asia/Bangkok	0
+vn-80-haunghia	Hậu Nghĩa	vn-80	10.8943	106.3970	Asia/Ho_Chi_Minh	0
+vn-24-ho	Hồ	vn-24	21.0631	106.0857	Asia/Bangkok	0
+vn-40-hoabinh	Hòa Bình	vn-40	19.2639	104.4723	Asia/Bangkok	0
+vn-37-hoamac	Hòa Mạc	vn-37	20.6417	105.9890	Asia/Bangkok	0
+vn-48-hoavang	Hòa Vang	vn-48	15.9876	108.1389	Asia/Ho_Chi_Minh	0
+vn-52-hoaian	Hoài Ân	vn-52	14.3635	108.9648	Asia/Ho_Chi_Minh	0
+vn-48-hoangsa2	Hoàng Sa	vn-48	16.8352	112.3387	Asia/Shanghai	0
+vn-79-hocmon	Hóc Môn	vn-79	10.8891	106.5953	Asia/Ho_Chi_Minh	0
+vn-91-honat	Hòn Đất	vn-91	10.1846	104.9296	Asia/Ho_Chi_Minh	0
+vn-25-hophoa	Hợp Hòa	vn-25	21.3753	105.5426	Asia/Bangkok	0
+vn-33-hungha	Hưng Hà	vn-33	20.5904	106.2245	Asia/Bangkok	0
+vn-25-hunghoa	Hưng Hóa	vn-25	21.2549	105.2953	Asia/Bangkok	0
+vn-40-hungnguyen	Hưng Nguyên	vn-40	18.6716	105.6288	Asia/Bangkok	0
+vn-25-huongcanh	Hương Canh	vn-25	21.2788	105.6470	Asia/Bangkok	0
+vn-19-huongson	Hương Sơn	vn-19	21.4601	105.9781	Asia/Bangkok	0
+vn-20-huulung	Hữu Lũng	vn-20	21.5056	106.3446	Asia/Bangkok	0
+vn-68-huyenbaolam	Huyện Bảo Lâm	vn-68	11.6996	107.7625	Asia/Ho_Chi_Minh	0
+vn-92-huynhhuunghia	Huỳnh Hữu Nghĩa	vn-92	9.6354	105.8117	Asia/Ho_Chi_Minh	0
+vn-52-iakha	Ia Kha	vn-52	13.9624	107.8448	Asia/Ho_Chi_Minh	0
+vn-52-iapa	Ia Pa	vn-52	13.5336	108.4553	Asia/Ho_Chi_Minh	0
+vn-52-kbang	K Bang	vn-52	14.1445	108.5991	Asia/Ho_Chi_Minh	0
+vn-92-kesach	Kế Sách	vn-92	9.7674	105.9857	Asia/Ho_Chi_Minh	0
+vn-31-kesat	Kẻ Sặt	vn-31	20.9101	106.1477	Asia/Bangkok	0
+vn-48-khamuc	Khâm Đức	vn-48	15.4451	107.7934	Asia/Ho_Chi_Minh	0
+vn-56-khanhvinh	Khánh Vĩnh	vn-56	12.2835	108.9047	Asia/Ho_Chi_Minh	0
+vn-46-khetre	Khe Tre	vn-46	16.1691	107.7179	Asia/Bangkok	0
+vn-33-khoaichau	Khoái Châu	vn-33	20.8391	105.9775	Asia/Bangkok	0
+vn-44-kiengiang	Kiến Giang	vn-44	17.2233	106.7901	Asia/Bangkok	0
+vn-91-kienluong	Kiên Lương	vn-91	10.2862	104.6462	Asia/Ho_Chi_Minh	0
+vn-01-kimbai	Kim Bài	vn-01	20.8527	105.7696	Asia/Bangkok	0
+vn-40-kimson	Kim Sơn	vn-40	19.6041	104.9190	Asia/Bangkok	0
+vn-38-kimtan	Kim Tân	vn-38	20.1305	105.6745	Asia/Bangkok	0
+vn-31-kinhmon	Kinh Môn	vn-31	20.9896	106.5551	Asia/Bangkok	0
+vn-52-kondong	Kon Dơng	vn-52	14.0389	108.2501	Asia/Ho_Chi_Minh	0
+vn-52-kongchro	Kông Chro	vn-52	13.7753	108.5256	Asia/Ho_Chi_Minh	0
+vn-66-krongkmar	Krông Kmar	vn-66	12.5045	108.3329	Asia/Ho_Chi_Minh	0
+vn-66-krongnang	Krông Năng	vn-66	12.9517	108.3443	Asia/Ho_Chi_Minh	0
+vn-25-kyson	Kỳ Sơn	vn-25	20.8867	105.3524	Asia/Bangkok	0
+vn-68-lacduong	Lạc Dương	vn-68	12.0040	108.4190	Asia/Ho_Chi_Minh	0
+vn-31-laicach	Lai Cách	vn-31	20.9325	106.2476	Asia/Bangkok	0
+vn-79-laithieu	Lái Thiêu	vn-79	10.9051	106.6995	Asia/Ho_Chi_Minh	0
+vn-25-lamthao	Lâm Thao	vn-25	21.3201	105.2916	Asia/Bangkok	0
+vn-38-langchanh	Lang Chánh	vn-38	20.1561	105.2422	Asia/Bangkok	0
+vn-25-lapthach	Lập Thạch	vn-25	21.4154	105.4608	Asia/Bangkok	0
+vn-82-lapvo	Lấp Vò	vn-82	10.3616	105.5192	Asia/Ho_Chi_Minh	0
+vn-48-lienchieu	Liên Chiểu	vn-48	16.0727	108.1582	Asia/Ho_Chi_Minh	0
+vn-68-lienhuong	Liên Hương	vn-68	11.2276	108.7237	Asia/Ho_Chi_Minh	0
+vn-37-lieue	Liễu Đề	vn-37	20.2209	106.1875	Asia/Bangkok	0
+vn-68-locthang	Lộc Thắng	vn-68	11.6284	107.8351	Asia/Ho_Chi_Minh	0
+vn-86-longho	Long Hồ	vn-86	10.1928	106.0123	Asia/Ho_Chi_Minh	0
+vn-92-longphu	Long Phú	vn-92	9.6103	106.1188	Asia/Ho_Chi_Minh	0
+vn-08-lungho	Lũng Hồ	vn-08	22.9848	105.2398	Asia/Bangkok	0
+vn-25-luongson	Lương Sơn	vn-25	20.8715	105.5257	Asia/Bangkok	0
+vn-66-mrak	M’Đrăk	vn-66	12.7462	108.7428	Asia/Ho_Chi_Minh	0
+vn-68-maagui	Ma Đa Gui	vn-68	11.3870	107.5351	Asia/Ho_Chi_Minh	0
+vn-68-malam	Ma Lâm	vn-68	11.0730	108.1300	Asia/Ho_Chi_Minh	0
+vn-37-me	Me	vn-37	20.3470	105.8362	Asia/Bangkok	0
+vn-01-melinh	Mê Linh	vn-01	21.1580	105.7390	Asia/Bangkok	0
+vn-51-minhlong	Minh Long	vn-51	14.9322	108.7033	Asia/Ho_Chi_Minh	0
+vn-91-minhluong	Minh Lương	vn-91	9.9025	105.1595	Asia/Ho_Chi_Minh	0
+vn-86-mocay	Mỏ Cày	vn-86	10.1331	106.3352	Asia/Ho_Chi_Minh	0
+vn-51-mouc	Mộ Đức	vn-51	14.9551	108.8859	Asia/Ho_Chi_Minh	0
+vn-14-mocchau	Mộc Châu	vn-14	20.8520	104.6218	Asia/Bangkok	0
+vn-92-motngan	Một Ngàn	vn-92	9.9240	105.6296	Asia/Ho_Chi_Minh	0
+vn-15-mucangchai	Mù Cang Chải	vn-15	21.8513	104.0895	Asia/Bangkok	0
+vn-11-muongang	Mường Ảng	vn-11	21.5199	103.2229	Asia/Bangkok	0
+vn-14-muongchien	Mường Chiên	vn-14	21.8424	103.5661	Asia/Bangkok	0
+vn-25-muongkhen	Mường Khến	vn-25	20.6144	105.2795	Asia/Bangkok	0
+vn-38-muonglat	Mường Lát	vn-38	20.5292	104.6014	Asia/Bangkok	0
+vn-40-muongxen	Mường Xén	vn-40	19.3980	104.1524	Asia/Bangkok	0
+vn-37-myloc	Mỹ Lộc	vn-37	20.4411	106.1024	Asia/Bangkok	0
+vn-82-myphuoc	Mỹ Phước	vn-82	10.4771	106.1926	Asia/Ho_Chi_Minh	0
+vn-82-mytho2	Mỹ Thọ	vn-82	10.4427	105.6951	Asia/Ho_Chi_Minh	0
+vn-92-myxuyen	Mỹ Xuyên	vn-92	9.5601	105.9898	Asia/Ho_Chi_Minh	0
+vn-40-naman	Nam Đàn	vn-40	18.7280	105.4980	Asia/Bangkok	0
+vn-37-namgiang	Nam Giang	vn-37	20.3332	106.1775	Asia/Bangkok	0
+vn-31-namsach	Nam Sách	vn-31	20.9920	106.3361	Asia/Bangkok	0
+vn-92-nangmau	Nàng Mau	vn-92	9.7513	105.5345	Asia/Ho_Chi_Minh	0
+vn-24-neo	Neo	vn-24	21.2005	106.2474	Asia/Bangkok	0
+vn-92-ngasau	Ngã Sáu	vn-92	9.9230	105.8054	Asia/Ho_Chi_Minh	0
+vn-51-nghiahanh	Nghĩa Hành	vn-51	15.0457	108.7772	Asia/Ho_Chi_Minh	0
+vn-37-ngoong	Ngô Đồng	vn-37	20.2830	106.4435	Asia/Bangkok	0
+vn-96-ngochien	Ngọc Hiển	vn-96	8.6572	105.0602	Asia/Ho_Chi_Minh	0
+vn-38-ngoclac	Ngọc Lặc	vn-38	20.0919	105.3676	Asia/Bangkok	0
+vn-48-nguhanhson	Ngũ Hành Sơn	vn-48	16.0162	108.2533	Asia/Ho_Chi_Minh	0
+vn-37-nhoquan	Nho Quan	vn-37	20.3228	105.7519	Asia/Bangkok	0
+vn-75-nhontrach	Nhơn Trạch	vn-75	10.7229	106.8834	Asia/Ho_Chi_Minh	0
+vn-33-nhuquynh	Như Quỳnh	vn-33	20.9817	105.9849	Asia/Bangkok	0
+vn-31-ninhgiang	Ninh Giang	vn-31	20.7308	106.3979	Asia/Bangkok	0
+vn-38-nongcong	Nông Cống	vn-38	19.6240	105.6494	Asia/Bangkok	0
+vn-31-nuieo	Núi Đèo	vn-31	20.9157	106.6744	Asia/Bangkok	0
+vn-31-nuioi	Núi Đối	vn-31	20.7508	106.6689	Asia/Bangkok	0
+vn-37-phatdiem	Phát Diệm	vn-37	20.0905	106.0832	Asia/Bangkok	0
+vn-25-phongchau	Phong Châu	vn-25	21.4068	105.3123	Asia/Bangkok	0
+vn-12-phongtho	Phong Thổ	vn-12	22.5443	103.2978	Asia/Bangkok	0
+vn-52-phucat	Phù Cát	vn-52	14.0032	109.0580	Asia/Ho_Chi_Minh	0
+vn-52-phuhoa	Phú Hòa	vn-52	14.1000	107.9690	Asia/Ho_Chi_Minh	0
+vn-91-phumy	Phú Mỹ	vn-91	10.5924	105.3557	Asia/Ho_Chi_Minh	0
+vn-52-phumy	Phù Mỹ	vn-52	14.1718	109.0489	Asia/Ho_Chi_Minh	0
+vn-48-phuninh	Phú Ninh	vn-48	15.5547	108.4114	Asia/Ho_Chi_Minh	0
+vn-52-phuphong	Phú Phong	vn-52	13.9096	108.9190	Asia/Ho_Chi_Minh	0
+vn-31-phuthai	Phú Thái	vn-31	20.9628	106.5095	Asia/Bangkok	0
+vn-19-phuthong	Phủ Thông	vn-19	22.2731	105.8794	Asia/Bangkok	0
+vn-46-phuvang	Phú Vang	vn-46	16.4391	107.7144	Asia/Bangkok	0
+vn-01-phuxuyen	Phú Xuyên	vn-01	20.7455	105.9136	Asia/Bangkok	0
+vn-14-phuyen	Phù Yên	vn-14	21.2633	104.6444	Asia/Bangkok	0
+vn-01-phuctho	Phúc Thọ	vn-01	21.1034	105.5455	Asia/Bangkok	0
+vn-01-phung	Phùng	vn-01	21.0890	105.6590	Asia/Bangkok	0
+vn-92-phunghiep	Phụng Hiệp	vn-92	9.7797	105.7338	Asia/Ho_Chi_Minh	0
+vn-56-phuocdan	Phước Dân	vn-56	11.5270	108.9300	Asia/Ho_Chi_Minh	0
+vn-51-pleikan	Plei Kần	vn-51	14.7050	107.6862	Asia/Ho_Chi_Minh	0
+vn-79-quanbay	Quận Bảy	vn-79	10.7118	106.7364	Asia/Ho_Chi_Minh	0
+vn-79-quanbinhthanh	Quận Bình Thạnh	vn-79	10.8033	106.6967	Asia/Ho_Chi_Minh	0
+vn-79-quanchin	Quận Chín	vn-79	10.8397	106.7709	Asia/Ho_Chi_Minh	0
+vn-79-quanhai	Quận Hai	vn-79	10.7916	106.7495	Asia/Ho_Chi_Minh	0
+vn-38-quanhoa	Quan Hóa	vn-38	20.3848	105.1002	Asia/Bangkok	0
+vn-38-quanlao	Quán Lào	vn-38	19.9715	105.6511	Asia/Bangkok	0
+vn-82-quanlapvo	Quận Lấp Vò	vn-82	10.3555	105.5812	Asia/Ho_Chi_Minh	0
+vn-79-quanmot	Quận Một	vn-79	10.7807	106.6994	Asia/Ho_Chi_Minh	0
+vn-79-quanphunhuan	Quận Phú Nhuận	vn-79	10.7948	106.6763	Asia/Ho_Chi_Minh	0
+vn-38-quanson	Quan Sơn	vn-38	20.2591	104.9452	Asia/Bangkok	0
+vn-79-quantanphu	Quận Tân Phú	vn-79	10.7838	106.6370	Asia/Ho_Chi_Minh	0
+vn-22-quangha	Quảng Hà	vn-22	21.4506	107.7559	Asia/Bangkok	0
+vn-38-quangxuong	Quảng Xương	vn-38	19.7295	105.7827	Asia/Bangkok	0
+vn-22-quangyen	Quảng Yên	vn-22	20.9421	106.8027	Asia/Bangkok	0
+vn-37-que	Quế	vn-37	20.5806	105.8727	Asia/Bangkok	0
+vn-01-quocoai	Quốc Oai	vn-01	20.9902	105.6409	Asia/Bangkok	0
+vn-40-quychau	Quỳ Châu	vn-40	19.5521	105.0939	Asia/Bangkok	0
+vn-44-quyat	Quy Đạt	vn-44	17.8046	105.9704	Asia/Bangkok	0
+vn-40-quyhop	Quỳ Hợp	vn-40	19.3255	105.1825	Asia/Bangkok	0
+vn-33-quynhcoi	Quỳnh Côi	vn-33	20.6619	106.3274	Asia/Bangkok	0
+vn-38-rungthong	Rừng Thông	vn-38	19.8191	105.7328	Asia/Bangkok	0
+vn-51-sathay	Sa Thầy	vn-51	14.4138	107.7934	Asia/Ho_Chi_Minh	0
+vn-46-sia	Sịa	vn-46	16.5745	107.5107	Asia/Bangkok	0
+vn-08-sonduong	Sơn Dương	vn-08	21.6968	105.3990	Asia/Bangkok	0
+vn-51-sonha	Sơn Hà	vn-51	15.0419	108.4697	Asia/Ho_Chi_Minh	0
+vn-15-sonthinh	Sơn Thịnh	vn-15	21.5625	104.5948	Asia/Bangkok	0
+vn-51-sontinh	Sơn Tịnh	vn-51	15.1586	108.7958	Asia/Ho_Chi_Minh	0
+vn-14-songma	Sông Mã	vn-14	21.0509	103.7499	Asia/Bangkok	0
+vn-25-songthao	Sông Thao	vn-25	21.4213	105.1337	Asia/Bangkok	0
+vn-86-tambinh	Tam Bình	vn-86	10.0481	106.0002	Asia/Ho_Chi_Minh	0
+vn-37-tamiep	Tam Điệp	vn-37	20.1563	105.9174	Asia/Bangkok	0
+vn-12-tamuong	Tam Đường	vn-12	22.3181	103.6262	Asia/Bangkok	0
+vn-80-tamvu	Tầm Vu	vn-80	10.4411	106.4679	Asia/Ho_Chi_Minh	0
+vn-80-tanbien	Tân Biên	vn-80	11.5444	106.0116	Asia/Ho_Chi_Minh	0
+vn-80-tanchau	Tân Châu	vn-80	11.5520	106.1724	Asia/Ho_Chi_Minh	0
+vn-82-tanhiep	Tân Hiệp	vn-82	10.4490	106.3439	Asia/Ho_Chi_Minh	0
+vn-91-tanhiep	Tân Hiệp	vn-91	10.1171	105.2858	Asia/Ho_Chi_Minh	0
+vn-82-tanhoa	Tân Hòa	vn-82	10.3191	106.7113	Asia/Ho_Chi_Minh	0
+vn-80-tanhung	Tân Hưng	vn-80	10.8348	105.6613	Asia/Ho_Chi_Minh	0
+vn-40-tanky	Tân Kỳ	vn-40	19.0476	105.2681	Asia/Bangkok	0
+vn-75-tanphu	Tân Phú	vn-75	11.2722	107.4365	Asia/Ho_Chi_Minh	0
+vn-75-tanphu2	Tân Phú	vn-75	11.4512	106.8681	Asia/Ho_Chi_Minh	0
+vn-56-tanson	Tân Sơn	vn-56	11.7752	108.7848	Asia/Ho_Chi_Minh	0
+vn-80-tanthanh	Tân Thạnh	vn-80	10.6067	106.0471	Asia/Ho_Chi_Minh	0
+vn-80-tantru	Tân Trụ	vn-80	10.5127	106.5076	Asia/Ho_Chi_Minh	0
+vn-79-tantuc	Tân Túc	vn-79	10.6954	106.5913	Asia/Ho_Chi_Minh	0
+vn-04-tanviet	Tân Việt	vn-04	22.8641	105.4591	Asia/Bangkok	0
+vn-68-tanhlinh	Tánh Linh	vn-68	11.0842	107.6809	Asia/Ho_Chi_Minh	0
+vn-51-taytra	Tây Trà	vn-51	15.1695	108.3600	Asia/Ho_Chi_Minh	0
+vn-24-thang	Thắng	vn-24	21.3550	105.9834	Asia/Bangkok	0
+vn-25-thanhba	Thanh Ba	vn-25	21.4988	105.1410	Asia/Bangkok	0
+vn-82-thanhbinh	Thanh Bình	vn-82	10.5619	105.4841	Asia/Ho_Chi_Minh	0
+vn-40-thanhchuong	Thanh Chương	vn-40	18.7788	105.3336	Asia/Bangkok	0
+vn-31-thanhha	Thanh Hà	vn-31	20.8982	106.4261	Asia/Bangkok	0
+vn-80-thanhhoa	Thạnh Hóa	vn-80	10.6574	106.1808	Asia/Ho_Chi_Minh	0
+vn-37-thanhluu	Thanh Lưu	vn-37	20.4740	105.9527	Asia/Bangkok	0
+vn-31-thanhmien	Thanh Miện	vn-31	20.7871	106.2462	Asia/Bangkok	0
+vn-48-thanhmy	Thạnh Mỹ	vn-48	15.7489	107.8368	Asia/Ho_Chi_Minh	0
+vn-68-thanhmy	Thạnh Mỹ	vn-68	11.7616	108.4947	Asia/Ho_Chi_Minh	0
+vn-33-thanhne	Thanh Nê	vn-33	20.3881	106.4383	Asia/Bangkok	0
+vn-25-thanhson	Thanh Sơn	vn-25	21.1987	105.1789	Asia/Bangkok	0
+vn-25-thanhthuy	Thanh Thủy	vn-25	21.1755	105.2839	Asia/Bangkok	0
+vn-11-thitranienbien	Thị Trấn Điện Biên	vn-11	21.2596	103.0344	Asia/Bangkok	0
+vn-96-thitranganhhao	Thị Trấn Gành Hào	vn-96	9.0318	105.4211	Asia/Ho_Chi_Minh	0
+vn-96-thitrangiarai	Thị Trấn Giá Rai	vn-96	9.2379	105.4552	Asia/Ho_Chi_Minh	0
+vn-96-thitranhoabinh	Thị Trấn Hòa Bình	vn-96	9.2847	105.6292	Asia/Ho_Chi_Minh	0
+vn-04-thitranhungquoc	Thị Trấn Hùng Quốc	vn-04	22.8290	106.3234	Asia/Bangkok	0
+vn-79-thitranlongien	Thị Trấn Long Điền	vn-79	10.4856	107.2123	Asia/Ho_Chi_Minh	0
+vn-12-thitranmuongte	Thị Trấn Mường Tè	vn-12	22.3807	102.8201	Asia/Bangkok	0
+vn-96-thitranngandua	Thị Trấn Ngan Dừa	vn-96	9.5670	105.4502	Asia/Ho_Chi_Minh	0
+vn-79-thitranphumy	Thị Trấn Phú Mỹ	vn-79	10.6036	107.0540	Asia/Ho_Chi_Minh	0
+vn-96-thitranphuoclong	Thị Trấn Phước Long	vn-96	9.4375	105.4622	Asia/Ho_Chi_Minh	0
+vn-04-thitranquanguyen	Thị Trấn Quảng Uyên	vn-04	22.6950	106.4424	Asia/Bangkok	0
+vn-04-thitrantalung	Thị Trấn Tà Lùng	vn-04	22.4979	106.5669	Asia/Ho_Chi_Minh	0
+vn-08-thitrantamson	Thị Trấn Tam Sơn	vn-08	23.0674	104.9893	Asia/Bangkok	0
+vn-04-thitranthanhnhat	Thị Trấn Thanh Nhật	vn-04	22.6875	106.6700	Asia/Bangkok	0
+vn-04-thitranthongnong	Thị Trấn Thông Nông	vn-04	22.7841	105.9832	Asia/Bangkok	0
+vn-11-thitrantuachua	Thị Trấn Tủa Chùa	vn-11	21.8577	103.3426	Asia/Bangkok	0
+vn-11-thitrantuangiao	Thị Trấn Tuần Giáo	vn-11	21.5899	103.4218	Asia/Bangkok	0
+vn-08-thitranvixuyen	Thị Trấn Vị Xuyên	vn-08	22.6676	104.9819	Asia/Bangkok	0
+vn-08-thitranvietlam	Thị Trấn Việt Lâm	vn-08	22.6249	104.9599	Asia/Bangkok	0
+vn-08-thitranvinhloc	Thị Trấn Vĩnh Lộc	vn-08	22.1436	105.2719	Asia/Bangkok	0
+vn-08-thitranvinhquang	Thị Trấn Vinh Quang	vn-08	22.7408	104.6796	Asia/Bangkok	0
+vn-15-thitranyenthe	Thị Trấn Yên Thế	vn-15	22.1107	104.7675	Asia/Bangkok	0
+vn-37-thienton	Thiên Tồn	vn-37	20.2991	105.9520	Asia/Bangkok	0
+vn-38-thoxuan	Thọ Xuân	vn-38	19.9313	105.5218	Asia/Bangkok	0
+vn-75-thongnhat	Thống Nhất	vn-75	10.9505	107.1457	Asia/Ho_Chi_Minh	0
+vn-91-thumuoimot	Thứ Mười Một	vn-91	9.6114	104.9465	Asia/Ho_Chi_Minh	0
+vn-80-thuthua	Thủ Thừa	vn-80	10.6023	106.4021	Asia/Ho_Chi_Minh	0
+vn-24-thua	Thứa	vn-24	21.0194	106.2004	Asia/Bangkok	0
+vn-68-thuannam	Thuận Nam	vn-68	10.8500	107.8786	Asia/Ho_Chi_Minh	0
+vn-01-thuongtin	Thường Tín	vn-01	20.8687	105.8612	Asia/Bangkok	0
+vn-38-thuongxuan	Thường Xuân	vn-38	19.9029	105.3472	Asia/Bangkok	0
+vn-33-tienhai	Tiền Hải	vn-33	20.4056	106.5036	Asia/Bangkok	0
+vn-31-tienlang	Tiên Lãng	vn-31	20.7246	106.5539	Asia/Bangkok	0
+vn-48-tienphuoc	Tiên Phước	vn-48	15.4882	108.3074	Asia/Ho_Chi_Minh	0
+vn-86-tieucan	Tiểu Cần	vn-86	9.8117	106.1907	Asia/Ho_Chi_Minh	0
+vn-38-tinhgia	Tĩnh Gia	vn-38	19.4464	105.7786	Asia/Bangkok	0
+vn-56-tohap	Tô Hạp	vn-56	12.0058	108.9487	Asia/Ho_Chi_Minh	0
+vn-51-trabong	Trà Bồng	vn-51	15.2557	108.5172	Asia/Ho_Chi_Minh	0
+vn-86-tracu	Trà Cú	vn-86	9.6977	106.2583	Asia/Ho_Chi_Minh	0
+vn-86-traon	Trà Ôn	vn-86	9.9626	105.9217	Asia/Ho_Chi_Minh	0
+vn-33-trancao	Trần Cao	vn-33	20.7295	106.1797	Asia/Bangkok	0
+vn-91-triton	Tri Tôn	vn-91	10.4202	105.0007	Asia/Ho_Chi_Minh	0
+vn-38-trieuson	Triệu Sơn	vn-38	19.8191	105.6039	Asia/Bangkok	0
+vn-01-troi	Trôi	vn-01	21.0695	105.7065	Asia/Bangkok	0
+vn-22-troi	Trới	vn-22	21.0314	106.9910	Asia/Bangkok	0
+vn-31-tuky	Tứ Kỳ	vn-31	20.8191	106.4066	Asia/Bangkok	0
+vn-51-tunghia	Tư Nghĩa	vn-51	15.0845	108.8260	Asia/Ho_Chi_Minh	0
+vn-52-tuyphuoc	Tuy Phước	vn-52	13.8274	109.1665	Asia/Ho_Chi_Minh	0
+vn-52-vancanh	Vân Canh	vn-52	13.6195	108.9981	Asia/Ho_Chi_Minh	0
+vn-01-vanien	Văn Điển	vn-01	20.9463	105.8450	Asia/Bangkok	0
+vn-01-vaninh	Vân Đình	vn-01	20.7351	105.7724	Asia/Bangkok	0
+vn-56-vangia	Vạn Giã	vn-56	12.6920	109.2207	Asia/Ho_Chi_Minh	0
+vn-33-vangiang	Văn Giang	vn-33	20.9430	105.9312	Asia/Bangkok	0
+vn-38-vanha	Vạn Hà	vn-38	19.8866	105.6788	Asia/Bangkok	0
+vn-20-vanquan	Văn Quan	vn-20	21.8652	106.5392	Asia/Bangkok	0
+vn-75-vinhan	Vĩnh An	vn-75	11.0890	107.0352	Asia/Ho_Chi_Minh	0
+vn-82-vinhbinh	Vĩnh Bình	vn-82	10.3450	106.5806	Asia/Ho_Chi_Minh	0
+vn-80-vinhhung	Vĩnh Hưng	vn-80	10.8907	105.7849	Asia/Ho_Chi_Minh	0
+vn-38-vinhloc	Vĩnh Lộc	vn-38	20.0544	105.6157	Asia/Bangkok	0
+vn-52-vinhthanh	Vĩnh Thạnh	vn-52	14.1088	108.7838	Asia/Ho_Chi_Minh	0
+vn-91-vinhthuan	Vĩnh Thuận	vn-91	9.5080	105.2575	Asia/Ho_Chi_Minh	0
+vn-37-vinhtru	Vĩnh Trụ	vn-37	20.5602	106.0281	Asia/Bangkok	0
+vn-68-voxu	Võ Xu	vn-68	11.1869	107.5602	Asia/Ho_Chi_Minh	0
+vn-33-vuthu	Vũ Thư	vn-33	20.4367	106.2912	Asia/Bangkok	0
+vn-86-vungliem	Vũng Liêm	vn-86	10.0958	106.1855	Asia/Ho_Chi_Minh	0
+vn-33-vuong	Vương	vn-33	20.7011	106.1175	Asia/Bangkok	0
+vn-68-xaaknang	Xã Đạ K'Nàng	vn-68	11.8936	108.1348	Asia/Ho_Chi_Minh	0
+vn-68-xahoaiuc	Xã Hoài Đức	vn-68	11.7447	108.1469	Asia/Ho_Chi_Minh	0
+vn-68-xaphuctho	Xã Phúc Thọ	vn-68	11.8070	108.1287	Asia/Ho_Chi_Minh	0
+vn-68-xatanha	Xã Tân Hà	vn-68	11.7348	108.2023	Asia/Ho_Chi_Minh	0
+vn-68-xatanthanh	Xã Tân Thanh	vn-68	11.7522	108.0697	Asia/Ho_Chi_Minh	0
+vn-68-xatanvan	Xã Tân Văn	vn-68	11.7754	108.2246	Asia/Ho_Chi_Minh	0
+vn-37-xuantruong	Xuân Trường	vn-37	20.2923	106.3328	Asia/Bangkok	0
+vn-08-yenbinh	Yên Bình	vn-08	22.4099	104.5795	Asia/Bangkok	0
+vn-38-yencat	Yên Cát	vn-38	19.6633	105.4285	Asia/Bangkok	0
+vn-14-yenchau	Yên Châu	vn-14	21.0458	104.3010	Asia/Bangkok	0
+vn-37-yeninh	Yên Định	vn-37	20.2015	106.2958	Asia/Bangkok	0
+vn-25-yenlac	Yên Lạc	vn-25	21.2365	105.5730	Asia/Bangkok	0
+vn-19-yenlac	Yến Lạc	vn-19	22.2369	106.1815	Asia/Bangkok	0
+vn-25-yenlap	Yên Lập	vn-25	21.3470	105.0574	Asia/Bangkok	0
+vn-33-yenmy	Yên Mỹ	vn-33	20.8856	106.0356	Asia/Bangkok	0
+vn-37-yenninh	Yên Ninh	vn-37	20.1840	106.0612	Asia/Bangkok	0
+vn-08-yenphu	Yên Phú	vn-08	22.7322	105.3714	Asia/Bangkok	0
+vn-40-yenthanh	Yên Thành	vn-40	18.9986	105.4712	Asia/Bangkok	0
+vn-37-yenthinh	Yên Thịnh	vn-37	20.1624	106.0070	Asia/Bangkok	0

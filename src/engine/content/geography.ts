@@ -11,6 +11,10 @@
  */
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
+import {
+  WORLD_COUNTRIES, WORLD_REGIONS, WORLD_CITIES, CITY_COUNTS, TOTAL_CITIES,
+  type RawCity,
+} from './world-data';
 
 export interface Country extends ReferenceRecord {
   type: 'country';
@@ -83,73 +87,62 @@ export interface Airport extends ReferenceRecord {
 const V = REFERENCE_VERSION;
 const PUB = { source: 'public_reference', confidence: 'high', version: V } as const;
 
-export const COUNTRIES = new Registry<Country>('countries', [
-  { id: 'us', name: 'United States', aliases: ['USA', 'America'], type: 'country', iso2: 'US', currency: 'USD', jurisdictionCode: 'US', drivesOn: 'right', ...PUB },
-  { id: 'ca', name: 'Canada', type: 'country', iso2: 'CA', currency: 'CAD', jurisdictionCode: 'CA', drivesOn: 'right', ...PUB },
-  { id: 'uk', name: 'United Kingdom', aliases: ['Britain', 'UK'], type: 'country', iso2: 'GB', currency: 'GBP', jurisdictionCode: 'GB', drivesOn: 'left', ...PUB },
-  { id: 'ie', name: 'Ireland', type: 'country', iso2: 'IE', currency: 'EUR', jurisdictionCode: 'IE', drivesOn: 'left', ...PUB },
-  { id: 'fr', name: 'France', type: 'country', iso2: 'FR', currency: 'EUR', jurisdictionCode: 'FR', drivesOn: 'right', ...PUB },
-  { id: 'de', name: 'Germany', type: 'country', iso2: 'DE', currency: 'EUR', jurisdictionCode: 'DE', drivesOn: 'right', ...PUB },
-  { id: 'es', name: 'Spain', type: 'country', iso2: 'ES', currency: 'EUR', jurisdictionCode: 'ES', drivesOn: 'right', ...PUB },
-  { id: 'it', name: 'Italy', type: 'country', iso2: 'IT', currency: 'EUR', jurisdictionCode: 'IT', drivesOn: 'right', ...PUB },
-  { id: 'au', name: 'Australia', type: 'country', iso2: 'AU', currency: 'AUD', jurisdictionCode: 'AU', drivesOn: 'left', ...PUB },
-  { id: 'nz', name: 'New Zealand', type: 'country', iso2: 'NZ', currency: 'NZD', jurisdictionCode: 'NZ', drivesOn: 'left', ...PUB },
-  { id: 'jp', name: 'Japan', type: 'country', iso2: 'JP', currency: 'JPY', jurisdictionCode: 'JP', drivesOn: 'left', ...PUB },
-  { id: 'kr', name: 'South Korea', type: 'country', iso2: 'KR', currency: 'KRW', jurisdictionCode: 'KR', drivesOn: 'right', ...PUB },
-  { id: 'mx', name: 'Mexico', type: 'country', iso2: 'MX', currency: 'MXN', jurisdictionCode: 'MX', drivesOn: 'right', ...PUB },
-  { id: 'ae', name: 'United Arab Emirates', type: 'country', iso2: 'AE', currency: 'AED', jurisdictionCode: 'AE', drivesOn: 'right', ...PUB },
+/**
+ * Countries where traffic keeps left. Public reference data; the list is short
+ * enough to state outright rather than guess from a region.
+ */
+const DRIVES_LEFT = new Set([
+  'AG', 'AU', 'BS', 'BD', 'BB', 'BM', 'BT', 'BW', 'BN', 'KY', 'CX', 'CC', 'CK', 'CY', 'DM',
+  'FK', 'FJ', 'GD', 'GG', 'GY', 'HK', 'IN', 'ID', 'IE', 'IM', 'JM', 'JE', 'JP', 'KE', 'KI',
+  'LS', 'MO', 'MW', 'MY', 'MV', 'MT', 'MU', 'MS', 'MZ', 'NA', 'NR', 'NP', 'NZ', 'NU', 'NF',
+  'PK', 'PG', 'PN', 'WS', 'SC', 'SG', 'SB', 'ZA', 'LK', 'SH', 'KN', 'LC', 'VC', 'SR', 'SZ',
+  'TZ', 'TH', 'TL', 'TK', 'TO', 'TT', 'TC', 'TV', 'UG', 'GB', 'VG', 'VI', 'ZM', 'ZW',
 ]);
 
-function region(id: string, name: string, code: string, parentId: string): Region {
-  return { id, name, type: 'region', code, parentId, jurisdictionCode: `${COUNTRIES.require(parentId).jurisdictionCode}-${code}`, ...PUB };
-}
+/** Names people actually type, where they differ from the official one. */
+const COUNTRY_ALIASES: Record<string, string[] | undefined> = {
+  us: ['USA', 'America', 'United States of America'],
+  uk: ['Britain', 'Great Britain', 'England', 'UK'],
+  ae: ['UAE', 'Dubai'],
+  kr: ['South Korea'],
+  kp: ['North Korea'],
+  nl: ['Holland'],
+  cz: ['Czech Republic'],
+  cd: ['DR Congo'],
+};
 
-export const REGIONS = new Registry<Region>('regions', [
-  region('us-ca', 'California', 'CA', 'us'),
-  region('us-ny', 'New York', 'NY', 'us'),
-  region('us-ga', 'Georgia', 'GA', 'us'),
-  region('us-tx', 'Texas', 'TX', 'us'),
-  region('us-fl', 'Florida', 'FL', 'us'),
-  region('us-il', 'Illinois', 'IL', 'us'),
-  region('us-nv', 'Nevada', 'NV', 'us'),
-  region('us-wa', 'Washington', 'WA', 'us'),
-  region('us-or', 'Oregon', 'OR', 'us'),
-  region('us-co', 'Colorado', 'CO', 'us'),
-  region('us-nm', 'New Mexico', 'NM', 'us'),
-  region('us-la', 'Louisiana', 'LA', 'us'),
-  region('us-nc', 'North Carolina', 'NC', 'us'),
-  region('us-tn', 'Tennessee', 'TN', 'us'),
-  region('us-ma', 'Massachusetts', 'MA', 'us'),
-  region('us-pa', 'Pennsylvania', 'PA', 'us'),
-  region('us-az', 'Arizona', 'AZ', 'us'),
-  region('us-ut', 'Utah', 'UT', 'us'),
-  region('us-mi', 'Michigan', 'MI', 'us'),
-  region('us-oh', 'Ohio', 'OH', 'us'),
-  region('us-nj', 'New Jersey', 'NJ', 'us'),
-  region('us-hi', 'Hawaii', 'HI', 'us'),
-  region('ca-bc', 'British Columbia', 'BC', 'ca'),
-  region('ca-on', 'Ontario', 'ON', 'ca'),
-  region('ca-qc', 'Quebec', 'QC', 'ca'),
-  region('uk-eng', 'England', 'ENG', 'uk'),
-  region('uk-sct', 'Scotland', 'SCT', 'uk'),
-  region('uk-wls', 'Wales', 'WLS', 'uk'),
-  region('ie-lei', 'Leinster', 'LEI', 'ie'),
-  region('fr-idf', 'Ile-de-France', 'IDF', 'fr'),
-  region('fr-paca', 'Provence-Alpes-Cote d’Azur', 'PAC', 'fr'),
-  region('de-be', 'Berlin', 'BE', 'de'),
-  region('es-md', 'Madrid', 'MD', 'es'),
-  region('es-cat', 'Catalonia', 'CAT', 'es'),
-  region('it-laz', 'Lazio', 'LAZ', 'it'),
-  region('au-nsw', 'New South Wales', 'NSW', 'au'),
-  region('au-vic', 'Victoria', 'VIC', 'au'),
-  region('au-qld', 'Queensland', 'QLD', 'au'),
-  region('nz-akl', 'Auckland', 'AKL', 'nz'),
-  region('nz-wgn', 'Wellington', 'WGN', 'nz'),
-  region('jp-13', 'Tokyo', 'TKY', 'jp'),
-  region('kr-11', 'Seoul', 'SEO', 'kr'),
-  region('mx-cmx', 'Mexico City', 'CMX', 'mx'),
-  region('ae-du', 'Dubai', 'DU', 'ae'),
-]);
+/**
+ * Every country and territory in the world, from the GeoNames public dataset.
+ * The geographic and administrative facts are reference data; nothing here is
+ * a SLATE invention.
+ */
+export const COUNTRIES = new Registry<Country>('countries', WORLD_COUNTRIES.map((c) => ({
+  id: c.id,
+  name: c.name,
+  aliases: COUNTRY_ALIASES[c.id],
+  type: 'country' as const,
+  iso2: c.iso2,
+  currency: c.currency,
+  jurisdictionCode: c.iso2,
+  drivesOn: DRIVES_LEFT.has(c.iso2) ? ('left' as const) : ('right' as const),
+  ...PUB,
+})));
+
+
+
+/**
+ * Every first-level subdivision on Earth — states, provinces, prefectures,
+ * regions, emirates, counties — as published by GeoNames.
+ */
+export const REGIONS = new Registry<Region>('regions', WORLD_REGIONS.map((r) => ({
+  id: r.id,
+  name: r.name,
+  type: 'region' as const,
+  code: r.code,
+  parentId: r.countryId,
+  jurisdictionCode: `${(COUNTRIES.get(r.countryId)?.jurisdictionCode ?? r.countryId.toUpperCase())}-${r.code}`,
+  ...PUB,
+})));
 
 interface CitySpec {
   id: string; name: string; region: string; tz: string; lat: number; lon: number;
@@ -185,7 +178,10 @@ function city(spec: CitySpec): City {
   };
 }
 
-export const CITIES = new Registry<City>('cities', [
+/** The places SLATE simulates in detail, with economics that were actually
+ * calibrated rather than derived. Everything else in the world is layered
+ * underneath these. */
+const CALIBRATED_CITIES: readonly City[] = [
   city({ id: 'us-ca-losangeles', name: 'Los Angeles', aliases: ['LA'], region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.05, lon: -118.24, col: 152, rent: 2450, home: 985000, pop: 3900000, industry: 100, jobs: 88, airport: 'lax', tags: ['film', 'television', 'beach', 'entertainment capital'] }),
   city({ id: 'us-ca-burbank', name: 'Burbank', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.18, lon: -118.31, col: 148, rent: 2350, home: 1050000, pop: 107000, industry: 96, jobs: 72, airport: 'bur', tags: ['studios', 'television', 'production'] }),
   city({ id: 'us-ca-santamonica', name: 'Santa Monica', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.02, lon: -118.49, col: 178, rent: 3300, home: 1750000, pop: 93000, industry: 82, jobs: 70, tags: ['beach', 'agencies', 'affluent'] }),
@@ -208,29 +204,171 @@ export const CITIES = new Registry<City>('cities', [
   city({ id: 'us-ma-boston', name: 'Boston', region: 'us-ma', tz: 'America/New_York', lat: 42.36, lon: -71.06, col: 149, rent: 2900, home: 760000, pop: 650000, industry: 40, jobs: 86, airport: 'bos', tags: ['universities', 'historic'] }),
   city({ id: 'us-az-phoenix', name: 'Phoenix', region: 'us-az', tz: 'America/Phoenix', lat: 33.45, lon: -112.07, col: 103, rent: 1550, home: 440000, pop: 1650000, industry: 26, jobs: 80, airport: 'phx', tags: ['no daylight saving', 'desert', 'affordable'] }),
   city({ id: 'us-hi-honolulu', name: 'Honolulu', region: 'us-hi', tz: 'Pacific/Honolulu', lat: 21.31, lon: -157.86, col: 179, rent: 2400, home: 830000, pop: 350000, industry: 34, jobs: 58, airport: 'hnl', tags: ['island', 'no daylight saving', 'tourism'] }),
-  city({ id: 'ca-bc-vancouver', name: 'Vancouver', region: 'ca-bc', tz: 'America/Vancouver', lat: 49.28, lon: -123.12, col: 137, rent: 2400, home: 1150000, pop: 675000, industry: 82, jobs: 76, airport: 'yvr', tags: ['production hub', 'incentives', 'mountains'] }),
-  city({ id: 'ca-on-toronto', name: 'Toronto', region: 'ca-on', tz: 'America/Toronto', lat: 43.65, lon: -79.38, col: 128, rent: 2200, home: 900000, pop: 2900000, industry: 74, jobs: 88, airport: 'yyz', tags: ['production hub', 'incentives', 'finance'] }),
-  city({ id: 'ca-qc-montreal', name: 'Montreal', region: 'ca-qc', tz: 'America/Toronto', lat: 45.50, lon: -73.57, col: 105, rent: 1500, home: 550000, pop: 1760000, industry: 62, jobs: 76, airport: 'yul', tags: ['vfx', 'incentives', 'bilingual'] }),
+  city({ id: 'ca-bc-vancouver', name: 'Vancouver', region: 'ca-02', tz: 'America/Vancouver', lat: 49.28, lon: -123.12, col: 137, rent: 2400, home: 1150000, pop: 675000, industry: 82, jobs: 76, airport: 'yvr', tags: ['production hub', 'incentives', 'mountains'] }),
+  city({ id: 'ca-on-toronto', name: 'Toronto', region: 'ca-08', tz: 'America/Toronto', lat: 43.65, lon: -79.38, col: 128, rent: 2200, home: 900000, pop: 2900000, industry: 74, jobs: 88, airport: 'yyz', tags: ['production hub', 'incentives', 'finance'] }),
+  city({ id: 'ca-qc-montreal', name: 'Montreal', region: 'ca-10', tz: 'America/Toronto', lat: 45.50, lon: -73.57, col: 105, rent: 1500, home: 550000, pop: 1760000, industry: 62, jobs: 76, airport: 'yul', tags: ['vfx', 'incentives', 'bilingual'] }),
   city({ id: 'uk-eng-london', name: 'London', region: 'uk-eng', tz: 'Europe/London', lat: 51.51, lon: -0.13, col: 158, rent: 2700, home: 780000, pop: 8900000, industry: 86, jobs: 94, airport: 'lhr', tags: ['theatre', 'production hub', 'international'] }),
   city({ id: 'uk-eng-manchester', name: 'Manchester', region: 'uk-eng', tz: 'Europe/London', lat: 53.48, lon: -2.24, col: 108, rent: 1350, home: 330000, pop: 553000, industry: 52, jobs: 76, airport: 'man', tags: ['television', 'affordable', 'music'] }),
   city({ id: 'uk-sct-glasgow', name: 'Glasgow', region: 'uk-sct', tz: 'Europe/London', lat: 55.86, lon: -4.25, col: 98, rent: 1100, home: 250000, pop: 635000, industry: 44, jobs: 68, tags: ['incentives', 'locations'] }),
-  city({ id: 'ie-lei-dublin', name: 'Dublin', region: 'ie-lei', tz: 'Europe/Dublin', lat: 53.35, lon: -6.26, col: 132, rent: 2100, home: 520000, pop: 590000, industry: 54, jobs: 78, airport: 'dub', tags: ['incentives', 'production'] }),
-  city({ id: 'fr-idf-paris', name: 'Paris', region: 'fr-idf', tz: 'Europe/Paris', lat: 48.86, lon: 2.35, col: 142, rent: 2200, home: 780000, pop: 2100000, industry: 66, jobs: 86, airport: 'cdg', tags: ['festival', 'fashion', 'arthouse'] }),
-  city({ id: 'fr-paca-cannes', name: 'Cannes', region: 'fr-paca', tz: 'Europe/Paris', lat: 43.55, lon: 7.02, col: 138, rent: 1900, home: 720000, pop: 74000, industry: 70, jobs: 42, tags: ['festival', 'market', 'riviera'] }),
-  city({ id: 'de-be-berlin', name: 'Berlin', region: 'de-be', tz: 'Europe/Berlin', lat: 52.52, lon: 13.40, col: 112, rent: 1450, home: 520000, pop: 3700000, industry: 62, jobs: 82, airport: 'ber', tags: ['festival', 'affordable', 'creative'] }),
-  city({ id: 'es-md-madrid', name: 'Madrid', region: 'es-md', tz: 'Europe/Madrid', lat: 40.42, lon: -3.70, col: 102, rent: 1300, home: 420000, pop: 3300000, industry: 56, jobs: 78, airport: 'mad', tags: ['production hub', 'sunny'] }),
-  city({ id: 'es-cat-barcelona', name: 'Barcelona', region: 'es-cat', tz: 'Europe/Madrid', lat: 41.39, lon: 2.17, col: 108, rent: 1400, home: 480000, pop: 1620000, industry: 52, jobs: 76, airport: 'bcn', tags: ['locations', 'beach', 'design'] }),
-  city({ id: 'it-laz-rome', name: 'Rome', region: 'it-laz', tz: 'Europe/Rome', lat: 41.90, lon: 12.50, col: 104, rent: 1250, home: 430000, pop: 2800000, industry: 58, jobs: 70, airport: 'fco', tags: ['historic studios', 'locations'] }),
-  city({ id: 'au-nsw-sydney', name: 'Sydney', region: 'au-nsw', tz: 'Australia/Sydney', lat: -33.87, lon: 151.21, col: 141, rent: 2400, home: 1050000, pop: 5300000, industry: 66, jobs: 86, airport: 'syd', tags: ['southern hemisphere', 'harbour', 'production hub'] }),
-  city({ id: 'au-vic-melbourne', name: 'Melbourne', region: 'au-vic', tz: 'Australia/Melbourne', lat: -37.81, lon: 144.96, col: 128, rent: 1900, home: 780000, pop: 5000000, industry: 58, jobs: 84, airport: 'mel', tags: ['southern hemisphere', 'arts', 'coffee'] }),
-  city({ id: 'au-qld-goldcoast', name: 'Gold Coast', region: 'au-qld', tz: 'Australia/Brisbane', lat: -28.02, lon: 153.40, col: 118, rent: 1700, home: 720000, pop: 640000, industry: 62, jobs: 58, tags: ['studios', 'incentives', 'beach', 'no daylight saving'] }),
-  city({ id: 'nz-wgn-wellington', name: 'Wellington', region: 'nz-wgn', tz: 'Pacific/Auckland', lat: -41.29, lon: 174.78, col: 116, rent: 1650, home: 640000, pop: 215000, industry: 72, jobs: 58, airport: 'wlg', tags: ['vfx', 'southern hemisphere', 'incentives'] }),
-  city({ id: 'nz-akl-auckland', name: 'Auckland', region: 'nz-akl', tz: 'Pacific/Auckland', lat: -36.85, lon: 174.76, col: 122, rent: 1750, home: 720000, pop: 1650000, industry: 56, jobs: 72, airport: 'akl', tags: ['southern hemisphere', 'locations'] }),
-  city({ id: 'jp-13-tokyo', name: 'Tokyo', region: 'jp-13', tz: 'Asia/Tokyo', lat: 35.68, lon: 139.69, col: 126, rent: 1500, home: 620000, pop: 13900000, industry: 62, jobs: 92, airport: 'hnd', tags: ['international', 'animation', 'dense'] }),
+  city({ id: 'ie-lei-dublin', name: 'Dublin', region: 'ie-l', tz: 'Europe/Dublin', lat: 53.35, lon: -6.26, col: 132, rent: 2100, home: 520000, pop: 590000, industry: 54, jobs: 78, airport: 'dub', tags: ['incentives', 'production'] }),
+  city({ id: 'fr-idf-paris', name: 'Paris', region: 'fr-11', tz: 'Europe/Paris', lat: 48.86, lon: 2.35, col: 142, rent: 2200, home: 780000, pop: 2100000, industry: 66, jobs: 86, airport: 'cdg', tags: ['festival', 'fashion', 'arthouse'] }),
+  city({ id: 'fr-paca-cannes', name: 'Cannes', region: 'fr-93', tz: 'Europe/Paris', lat: 43.55, lon: 7.02, col: 138, rent: 1900, home: 720000, pop: 74000, industry: 70, jobs: 42, tags: ['festival', 'market', 'riviera'] }),
+  city({ id: 'de-be-berlin', name: 'Berlin', region: 'de-16', tz: 'Europe/Berlin', lat: 52.52, lon: 13.40, col: 112, rent: 1450, home: 520000, pop: 3700000, industry: 62, jobs: 82, airport: 'ber', tags: ['festival', 'affordable', 'creative'] }),
+  city({ id: 'es-md-madrid', name: 'Madrid', region: 'es-29', tz: 'Europe/Madrid', lat: 40.42, lon: -3.70, col: 102, rent: 1300, home: 420000, pop: 3300000, industry: 56, jobs: 78, airport: 'mad', tags: ['production hub', 'sunny'] }),
+  city({ id: 'es-cat-barcelona', name: 'Barcelona', region: 'es-56', tz: 'Europe/Madrid', lat: 41.39, lon: 2.17, col: 108, rent: 1400, home: 480000, pop: 1620000, industry: 52, jobs: 76, airport: 'bcn', tags: ['locations', 'beach', 'design'] }),
+  city({ id: 'it-laz-rome', name: 'Rome', region: 'it-07', tz: 'Europe/Rome', lat: 41.90, lon: 12.50, col: 104, rent: 1250, home: 430000, pop: 2800000, industry: 58, jobs: 70, airport: 'fco', tags: ['historic studios', 'locations'] }),
+  city({ id: 'au-nsw-sydney', name: 'Sydney', region: 'au-02', tz: 'Australia/Sydney', lat: -33.87, lon: 151.21, col: 141, rent: 2400, home: 1050000, pop: 5300000, industry: 66, jobs: 86, airport: 'syd', tags: ['southern hemisphere', 'harbour', 'production hub'] }),
+  city({ id: 'au-vic-melbourne', name: 'Melbourne', region: 'au-07', tz: 'Australia/Melbourne', lat: -37.81, lon: 144.96, col: 128, rent: 1900, home: 780000, pop: 5000000, industry: 58, jobs: 84, airport: 'mel', tags: ['southern hemisphere', 'arts', 'coffee'] }),
+  city({ id: 'au-qld-goldcoast', name: 'Gold Coast', region: 'au-04', tz: 'Australia/Brisbane', lat: -28.02, lon: 153.40, col: 118, rent: 1700, home: 720000, pop: 640000, industry: 62, jobs: 58, tags: ['studios', 'incentives', 'beach', 'no daylight saving'] }),
+  city({ id: 'nz-wgn-wellington', name: 'Wellington', region: 'nz-g2', tz: 'Pacific/Auckland', lat: -41.29, lon: 174.78, col: 116, rent: 1650, home: 640000, pop: 215000, industry: 72, jobs: 58, airport: 'wlg', tags: ['vfx', 'southern hemisphere', 'incentives'] }),
+  city({ id: 'nz-akl-auckland', name: 'Auckland', region: 'nz-e7', tz: 'Pacific/Auckland', lat: -36.85, lon: 174.76, col: 122, rent: 1750, home: 720000, pop: 1650000, industry: 56, jobs: 72, airport: 'akl', tags: ['southern hemisphere', 'locations'] }),
+  city({ id: 'jp-13-tokyo', name: 'Tokyo', region: 'jp-40', tz: 'Asia/Tokyo', lat: 35.68, lon: 139.69, col: 126, rent: 1500, home: 620000, pop: 13900000, industry: 62, jobs: 92, airport: 'hnd', tags: ['international', 'animation', 'dense'] }),
   city({ id: 'kr-11-seoul', name: 'Seoul', region: 'kr-11', tz: 'Asia/Seoul', lat: 37.57, lon: 126.98, col: 118, rent: 1350, home: 700000, pop: 9700000, industry: 68, jobs: 90, airport: 'icn', tags: ['international', 'television', 'music'] }),
-  city({ id: 'mx-cmx-mexicocity', name: 'Mexico City', region: 'mx-cmx', tz: 'America/Mexico_City', lat: 19.43, lon: -99.13, col: 68, rent: 900, home: 250000, pop: 9200000, industry: 54, jobs: 80, airport: 'mex', tags: ['affordable', 'production hub'] }),
-  city({ id: 'ae-du-dubai', name: 'Dubai', region: 'ae-du', tz: 'Asia/Dubai', lat: 25.20, lon: 55.27, col: 134, rent: 2200, home: 640000, pop: 3600000, industry: 42, jobs: 82, airport: 'dxb', tags: ['no income tax', 'luxury', 'international'] }),
+  city({ id: 'mx-cmx-mexicocity', name: 'Mexico City', region: 'mx-09', tz: 'America/Mexico_City', lat: 19.43, lon: -99.13, col: 68, rent: 900, home: 250000, pop: 9200000, industry: 54, jobs: 80, airport: 'mex', tags: ['affordable', 'production hub'] }),
+  city({ id: 'ae-du-dubai', name: 'Dubai', region: 'ae-03', tz: 'Asia/Dubai', lat: 25.20, lon: 55.27, col: 134, rent: 2200, home: 640000, pop: 3600000, industry: 42, jobs: 82, airport: 'dxb', tags: ['no income tax', 'luxury', 'international'] }),
+];
+
+// ---------------------------------------------------------------------------
+// The rest of the world
+// ---------------------------------------------------------------------------
+
+/**
+ * Roughly what things cost in a country relative to the United States at 100.
+ *
+ * These are SLATE calibrations, not published figures, and they are coarse on
+ * purpose: they place a country in a band rather than claim to know its prices.
+ * A city SLATE actually simulates overrides its country's band entirely.
+ */
+const COUNTRY_PRICE_LEVEL: Record<string, number> = {
+  ch: 155, is: 145, no: 140, bm: 140, ky: 138, sg: 130, dk: 128, ie: 126, lu: 126,
+  au: 122, nz: 118, uk: 118, us: 100, ca: 104, nl: 112, se: 112, fi: 112, at: 110,
+  be: 110, fr: 110, de: 106, il: 118, jp: 100, kr: 92, ae: 104, qa: 104, hk: 128,
+  it: 96, es: 90, pt: 86, gr: 84, cy: 92, mt: 92, si: 86, cz: 80, ee: 88, lt: 78,
+  lv: 80, sk: 78, pl: 72, hu: 70, hr: 78, ro: 66, bg: 62, rs: 60, ua: 48, ru: 56,
+  tr: 54, cn: 62, tw: 78, my: 56, th: 54, vn: 44, ph: 46, id: 44, in: 38, pk: 34,
+  bd: 36, lk: 40, np: 36, mx: 56, br: 54, ar: 50, cl: 62, co: 46, pe: 48, uy: 62,
+  za: 52, ng: 40, ke: 46, eg: 34, ma: 50, gh: 44, tz: 42, et: 38, dz: 40, tn: 40,
+};
+
+/** Continent fallbacks, for the countries the table above does not name. */
+const CONTINENT_PRICE_LEVEL: Record<string, number> = {
+  EU: 92, NA: 78, OC: 96, AS: 56, SA: 52, AF: 44, AN: 90,
+};
+
+/**
+ * Economics for a city nobody has calibrated by hand.
+ *
+ * Derived from two things SLATE does know: what country it is in and how many
+ * people live there. That is enough to tell a capital from a market town, and
+ * it is marked as an estimate because that is exactly what it is. Nothing here
+ * claims to be a real rent in a real place.
+ */
+function deriveCity(raw: RawCity): City {
+  const country = COUNTRIES.get(raw.countryId);
+  const base = COUNTRY_PRICE_LEVEL[raw.countryId]
+    ?? CONTINENT_PRICE_LEVEL[WORLD_COUNTRY_BY_ID.get(raw.countryId)?.continent ?? 'EU']
+    ?? 70;
+
+  // Big cities cost more than small ones, everywhere, and the curve flattens.
+  const scale = Math.log10(Math.max(1_000, raw.population)) - 3;
+  const costOfLivingIndex = Math.round(base * (1 + scale * 0.13));
+  const monthlyRent = Math.round(costOfLivingIndex * 16.5 * (1 + scale * 0.22));
+  const homePrice = Math.round(monthlyRent * 320);
+
+  return {
+    id: raw.id,
+    name: raw.name,
+    type: 'city',
+    parentId: raw.regionId || raw.countryId,
+    countryId: raw.countryId,
+    timeZone: raw.timeZone,
+    latitude: raw.lat,
+    longitude: raw.lon,
+    costOfLivingIndex,
+    medianRentCents: monthlyRent * 100,
+    medianHomePriceCents: homePrice * 100,
+    population: raw.population,
+    // The industry is where SLATE says it is. Everywhere else, you would be
+    // working remotely or moving.
+    industryPresence: 0,
+    jobMarketDepth: Math.round(Math.min(92, 18 + scale * 17)),
+    jurisdictionCode: `${REGIONS.get(raw.regionId)?.jurisdictionCode ?? country?.jurisdictionCode ?? raw.countryId.toUpperCase()}-${raw.id.split('-').pop()}`,
+    tags: [],
+    source: 'calibrated_estimate',
+    confidence: 'low',
+    version: V,
+    note: 'Location, time zone and administrative parentage are public reference data. '
+      + 'The cost figures are derived from the country and the population, not looked up.',
+  };
+}
+
+const WORLD_COUNTRY_BY_ID = new Map(WORLD_COUNTRIES.map((c) => [c.id, c]));
+const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
+
+/**
+ * Every city SLATE can name. The calibrated ones first, then the largest
+ * places on Earth; the remaining ${'${'}TOTAL_CITIES.toLocaleString('en-US')} are fetched
+ * a country at a time by `loadCountryCities`.
+ */
+export const CITIES = new Registry<City>('cities', [
+  ...CALIBRATED_CITIES,
+  ...WORLD_CITIES.filter((c) => !CALIBRATED_IDS.has(c.id)).map(deriveCity),
 ]);
+
+/** Countries whose full city list has already been pulled in. */
+const loadedCountries = new Set<string>();
+
+/**
+ * Pulls in every city in one country.
+ *
+ * A picker set to Italy should offer all ten thousand Italian towns, not the
+ * three that happened to be big enough to bundle. They are fetched once and
+ * kept, and asking twice is free.
+ */
+export async function loadCountryCities(countryId: string): Promise<number> {
+  if (loadedCountries.has(countryId)) return 0;
+  const total = CITY_COUNTS[countryId];
+  if (!total) {
+    loadedCountries.add(countryId);
+    return 0;
+  }
+
+  const response = await fetch(`${import.meta.env.BASE_URL}geo/${countryId}.tsv`);
+  if (!response.ok) {
+    throw new Error(`The city list for ${COUNTRIES.get(countryId)?.name ?? countryId} could not be loaded.`);
+  }
+  const text = await response.text();
+
+  const parsed: City[] = [];
+  for (const line of text.split('\n')) {
+    if (!line) continue;
+    const [id, name, regionId, lat, lon, timeZone, population] = line.split('\t');
+    if (!id || !name || !timeZone) continue;
+    if (CITIES.get(id)) continue;
+    parsed.push(deriveCity({
+      id, name, regionId: regionId ?? '', countryId,
+      lat: Number(lat), lon: Number(lon), timeZone, population: Number(population) || 0,
+    }));
+  }
+
+  loadedCountries.add(countryId);
+  return CITIES.add(parsed);
+}
+
+/** Whether a country's full list is already in memory. */
+export function isCountryLoaded(countryId: string): boolean {
+  return loadedCountries.has(countryId);
+}
+
+/** How many cities SLATE knows in a country, loaded or not. */
+export function cityCount(countryId: string): number {
+  return CITY_COUNTS[countryId] ?? 0;
+}
+
+/** Every city in the world SLATE knows about, loaded or not. */
+export const CITIES_IN_THE_WORLD = TOTAL_CITIES;
+
+
 
 function airport(id: string, name: string, iata: string, cityId: string, connectivity: number, runwayFeet: number, privateTerminal = true): Airport {
   const c = CITIES.require(cityId);

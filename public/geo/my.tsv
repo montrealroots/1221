@@ -1,0 +1,731 @@
+my-14-kualalumpur	Kuala Lumpur	my-14	3.1412	101.6865	Asia/Kuala_Lumpur	1453975
+my-01-johorbahru	Johor Bahru	my-01	1.4655	103.7578	Asia/Kuala_Lumpur	858118
+my-12-kampungbarusubang	Kampung Baru Subang	my-12	3.1500	101.5333	Asia/Kuala_Lumpur	833571
+my-12-petalingjaya	Petaling Jaya	my-12	3.1073	101.6067	Asia/Kuala_Lumpur	807879
+my-07-ipoh	Ipoh	my-07	4.5841	101.0829	Asia/Kuala_Lumpur	759952
+my-12-shahalam	Shah Alam	my-12	3.0851	101.5328	Asia/Kuala_Lumpur	740750
+my-12-subangjaya	Subang Jaya	my-12	3.0438	101.5806	Asia/Kuala_Lumpur	708296
+my-12-bukitrahmanputra	Bukit Rahman Putra	my-12	3.2173	101.5608	Asia/Kuala_Lumpur	607000
+my-01-pelentong	Pelentong	my-01	1.5243	103.8240	Asia/Kuala_Lumpur	583640
+my-04-malacca	Malacca	my-04	2.1960	102.2405	Asia/Kuala_Lumpur	579000
+my-01-iskandarputeri	Iskandar Puteri	my-01	1.3932	103.6232	Asia/Kuala_Lumpur	575977
+my-03-kotabharu	Kota Bharu	my-03	6.1236	102.2433	Asia/Kuala_Lumpur	568900
+my-06-kuantan	Kuantan	my-06	3.8077	103.3260	Asia/Kuala_Lumpur	548014
+my-02-kotakualamuda	Kota Kuala Muda	my-02	5.5882	100.3709	Asia/Kuala_Lumpur	544984
+my-02-sungaipetani	Sungai Petani	my-02	5.6470	100.4877	Asia/Kuala_Lumpur	544851
+my-12-selayangbaruutara	Selayang Baru Utara	my-12	3.2549	101.6668	Asia/Kuala_Lumpur	542409
+my-01-pasirgudang	Pasir Gudang	my-01	1.4620	103.9053	Asia/Kuala_Lumpur	534659
+my-01-mukimpulai	Mukim Pulai	my-01	1.5333	103.6667	Asia/Kuala_Lumpur	505661
+my-16-kotakinabalu	Kota Kinabalu	my-16	5.9749	116.0724	Asia/Kuching	500421
+my-01-kampunglarkinlama	Kampung Larkin Lama	my-01	1.5024	103.7440	Asia/Kuala_Lumpur	500000
+my-12-kotadamansara	Kota Damansara	my-12	3.1545	101.5802	Asia/Kuala_Lumpur	500000
+my-16-sandakan	Sandakan	my-16	5.8402	118.1179	Asia/Kuching	439050
+my-13-kualaterengganu	Kuala Terengganu	my-13	5.3302	103.1408	Asia/Kuala_Lumpur	426500
+my-14-tamanpetaling	Taman Petaling	my-14	3.1992	101.6498	Asia/Kuala_Lumpur	423062
+my-02-alorsetar	Alor Setar	my-02	6.1210	100.3601	Asia/Kuala_Lumpur	417800
+my-01-kampungkangkarteberau	Kampung Kangkar Teberau	my-01	1.5320	103.7549	Asia/Kuala_Lumpur	412373
+my-11-kuching	Kuching	my-11	1.5500	110.3333	Asia/Kuching	402738
+my-12-puchong	Puchong	my-12	3.0000	101.6167	Asia/Kuala_Lumpur	375181
+my-05-seremban	Seremban	my-05	2.7297	101.9381	Asia/Kuala_Lumpur	372917
+my-16-tawau	Tawau	my-16	4.2448	117.8911	Asia/Kuching	372615
+my-12-setapak	Setapak	my-12	3.2070	101.7270	Asia/Kuala_Lumpur	353268
+my-01-kluang	Kluang	my-01	2.0305	103.3169	Asia/Kuala_Lumpur	323762
+my-01-muar	Muar	my-01	2.0442	102.5689	Asia/Kuala_Lumpur	314776
+my-11-miri	Miri	my-11	4.3993	113.9916	Asia/Kuching	300543
+my-12-kapar	Kapar	my-12	3.1333	101.3833	Asia/Kuala_Lumpur	269627
+my-12-batucaves	Batu Caves	my-12	3.2380	101.6820	Asia/Kuala_Lumpur	254083
+my-12-klang	Klang	my-12	3.0367	101.4433	Asia/Kuala_Lumpur	240016
+my-12-kajang	Kajang	my-12	2.9942	101.7887	Asia/Kuala_Lumpur	236240
+my-07-telukintan	Teluk Intan	my-07	4.0222	101.0208	Asia/Kuala_Lumpur	232800
+my-12-kampongbaharucherasbatusebel	Kampong Baharu Cheras Batu Sebelas	my-12	3.0500	101.7667	Asia/Kuala_Lumpur	232100
+my-03-pasirmas	Pasir Mas	my-03	6.0493	102.1399	Asia/Kuala_Lumpur	230424
+my-09-payaterubong	Paya Terubong	my-09	5.3728	100.2797	Asia/Kuala_Lumpur	226712
+my-12-sungaibuloh	Sungai Buloh	my-12	3.2100	101.5610	Asia/Kuala_Lumpur	222858
+my-01-bandarserialam	Bandar Seri Alam	my-01	1.5043	103.8752	Asia/Kuala_Lumpur	220000
+my-07-taiping	Taiping	my-07	4.8500	100.7333	Asia/Kuala_Lumpur	217647
+my-14-wangsamaju	Wangsa Maju	my-14	3.2006	101.7397	Asia/Kuala_Lumpur	215600
+my-09-bukitmertajam	Bukit Mertajam	my-09	5.3630	100.4667	Asia/Kuala_Lumpur	212329
+my-12-sepang	Sepang	my-12	2.6931	101.7498	Asia/Kuala_Lumpur	212050
+my-12-bandarsunway	Bandar Sunway	my-12	3.0693	101.6074	Asia/Kuala_Lumpur	200000
+my-14-bandarutama	Bandar Utama	my-14	3.1482	101.6141	Asia/Kuala_Lumpur	200000
+my-14-bukitjalil	Bukit Jalil	my-14	3.0491	101.6804	Asia/Kuala_Lumpur	200000
+my-12-rawang	Rawang	my-12	3.3213	101.5767	Asia/Kuala_Lumpur	199095
+my-11-sibu	Sibu	my-11	2.3000	111.8167	Asia/Kuching	198239
+my-12-kualakububaharu	Kuala Kubu Baharu	my-12	3.5638	101.6581	Asia/Kuala_Lumpur	194387
+my-02-kulim	Kulim	my-02	5.3650	100.5618	Asia/Kuala_Lumpur	170889
+my-01-skudai	Skudai	my-01	1.5374	103.6578	Asia/Kuala_Lumpur	159733
+my-09-georgetown	George Town	my-09	5.4112	100.3354	Asia/Kuala_Lumpur	158336
+my-01-batupahat	Batu Pahat	my-01	1.8548	102.9325	Asia/Kuala_Lumpur	156236
+my-07-sitiawan	Sitiawan	my-07	4.2168	100.6996	Asia/Kuala_Lumpur	156234
+my-11-bintulu	Bintulu	my-11	3.1667	113.0333	Asia/Kuching	151617
+my-12-bandartasikputeri	Bandar Tasik Puteri	my-12	3.2853	101.4741	Asia/Kuala_Lumpur	150000
+my-07-bercham	Bercham	my-07	4.6411	101.1393	Asia/Kuala_Lumpur	150000
+my-12-setiaalam	Setia Alam	my-12	3.1016	101.4557	Asia/Kuala_Lumpur	150000
+my-12-bandarbukitraja	Bandar Bukit Raja	my-12	3.0874	101.4334	Asia/Kuala_Lumpur	146534
+my-01-kampungpasirgudangbaru	Kampung Pasir Gudang Baru	my-01	1.4726	103.8780	Asia/Kuala_Lumpur	145639
+my-09-kampungsungaiglugur	Kampung Sungai Glugur	my-09	5.3697	100.3135	Asia/Kuala_Lumpur	145600
+my-01-masai	Masai	my-01	1.4907	103.8788	Asia/Kuala_Lumpur	141730
+my-09-kampungsungaiara	Kampung Sungai Ara	my-09	5.3270	100.2735	Asia/Kuala_Lumpur	140849
+my-03-pasirputeh	Pasir Puteh	my-03	5.8333	102.4000	Asia/Kuala_Lumpur	137400
+my-12-cheras	Cheras	my-12	3.1080	101.7260	Asia/Kuala_Lumpur	135823
+my-09-tasekglugor	Tasek Glugor	my-09	5.4803	100.4985	Asia/Kuala_Lumpur	135786
+my-09-bayanlepas	Bayan Lepas	my-09	5.2999	100.2605	Asia/Kuala_Lumpur	130455
+my-12-serikembangan	Seri Kembangan	my-12	3.0333	101.7167	Asia/Kuala_Lumpur	130252
+my-14-ampang	Ampang	my-14	3.1500	101.7667	Asia/Kuala_Lumpur	126285
+my-14-titiwangsa	Titiwangsa	my-14	3.1782	101.7031	Asia/Kuala_Lumpur	122096
+my-14-bukitbintang	Bukit Bintang	my-14	3.1466	101.7102	Asia/Kuala_Lumpur	120529
+my-05-portdickson	Port Dickson	my-05	2.5246	101.7965	Asia/Kuala_Lumpur	119300
+my-06-maran	Maran	my-06	3.5860	102.7730	Asia/Kuala_Lumpur	111056
+my-09-butterworth	Butterworth	my-09	5.3991	100.3638	Asia/Kuala_Lumpur	107591
+my-16-lahaddatu	Lahad Datu	my-16	5.0230	118.3290	Asia/Kuching	105622
+my-03-kualakrai	Kuala Krai	my-03	5.5313	102.1993	Asia/Kuala_Lumpur	105007
+my-01-perling	Perling	my-01	1.4806	103.6838	Asia/Kuala_Lumpur	101263
+my-12-ijok	Ijok	my-12	3.3167	101.4000	Asia/Kuala_Lumpur	100899
+my-12-bandarmahkotacheras	Bandar Mahkota Cheras	my-12	3.0542	101.7984	Asia/Kuala_Lumpur	100000
+my-14-sentul	Sentul	my-14	3.1833	101.6833	Asia/Kuala_Lumpur	100000
+my-07-serimanjung	Seri Manjung	my-07	4.1987	100.6700	Asia/Kuala_Lumpur	100000
+my-12-tamanmelawati	Taman Melawati	my-12	3.2108	101.7482	Asia/Kuala_Lumpur	99304
+my-01-pagoh	Pagoh	my-01	2.1495	102.7704	Asia/Kuala_Lumpur	95202
+my-15-labuan	Labuan	my-15	5.2803	115.2475	Asia/Kuala_Lumpur	95120
+my-02-pendang	Pendang	my-02	5.9952	100.4788	Asia/Kuala_Lumpur	94033
+my-12-bandarkinrara	Bandar Kinrara	my-12	3.0493	101.6415	Asia/Kuala_Lumpur	93822
+my-13-kualanerus	Kuala Nerus	my-13	5.3729	103.0205	Asia/Kuala_Lumpur	93485
+my-12-semenyih	Semenyih	my-12	2.9516	101.8430	Asia/Kuala_Lumpur	92491
+my-11-marudi	Marudi	my-11	4.1833	114.3167	Asia/Kuching	90100
+my-09-valdor	Val Dor	my-09	5.2520	100.4905	Asia/Kuala_Lumpur	88600
+my-07-kampungmanjoi	Kampung Manjoi	my-07	4.6192	101.0685	Asia/Kuala_Lumpur	86266
+my-14-kepong	Kepong	my-14	3.2140	101.6402	Asia/Kuala_Lumpur	85960
+my-12-damansaradamai	Damansara Damai	my-12	3.1989	101.5918	Asia/Kuala_Lumpur	85000
+my-12-kampungsungaikajang	Kampung Sungai Kajang	my-12	3.4161	101.1730	Asia/Kuala_Lumpur	84031
+my-13-cukai	Cukai	my-13	4.2500	103.4167	Asia/Kuala_Lumpur	82425
+my-01-paritsulung	Parit Sulung	my-01	1.9760	102.8835	Asia/Kuala_Lumpur	82399
+my-12-cyberjaya	Cyberjaya	my-12	2.9228	101.6572	Asia/Kuala_Lumpur	79200
+my-16-putatan	Putatan	my-16	5.9258	116.0609	Asia/Kuching	78340
+my-16-donggongon	Donggongon	my-16	5.9070	116.1015	Asia/Kuching	78086
+my-16-keningau	Keningau	my-16	5.3378	116.1602	Asia/Kuching	77650
+my-01-ulutiram	Ulu Tiram	my-01	1.6000	103.8167	Asia/Kuala_Lumpur	75350
+my-01-tamansenai	Taman Senai	my-01	1.6006	103.6419	Asia/Kuala_Lumpur	73176
+my-12-bandarsaujanautama	Bandar Saujana Utama	my-12	3.2066	101.4773	Asia/Kuala_Lumpur	72000
+my-12-serendah	Serendah	my-12	3.3646	101.6041	Asia/Kuala_Lumpur	71202
+my-01-segamat	Segamat	my-01	2.5148	102.8158	Asia/Kuala_Lumpur	69816
+my-12-kampungbarubalakong	Kampung Baru Balakong	my-12	3.0294	101.7471	Asia/Kuala_Lumpur	69302
+my-02-yanbesar	Yan Besar	my-02	5.7989	100.3726	Asia/Kuala_Lumpur	67653
+my-07-tanjongmalim	Tanjong Malim	my-07	3.6810	101.5198	Asia/Kuala_Lumpur	66103
+my-01-johorjaya	Johor Jaya	my-01	1.5392	103.8092	Asia/Kuala_Lumpur	66000
+my-09-perai	Perai	my-09	5.3833	100.3833	Asia/Kuala_Lumpur	65301
+my-05-tamansenawangindah	Taman Senawang Indah	my-05	2.6910	101.9890	Asia/Kuala_Lumpur	64497
+my-01-gelangpatah	Gelang Patah	my-01	1.4484	103.5873	Asia/Kuala_Lumpur	64375
+my-08-kangar	Kangar	my-08	6.4414	100.1986	Asia/Kuala_Lumpur	63869
+my-01-kulai	Kulai	my-01	1.6561	103.6032	Asia/Kuala_Lumpur	63762
+my-09-jelutong	Jelutong	my-09	5.3900	100.3188	Asia/Kuala_Lumpur	63507
+my-02-jitra	Jitra	my-02	6.2681	100.4217	Asia/Kuala_Lumpur	63489
+my-16-semporna	Semporna	my-16	4.4818	118.6112	Asia/Kuching	62641
+my-01-kempas	Kempas	my-01	1.5489	103.6965	Asia/Kuala_Lumpur	62011
+my-05-seremban2	Seremban 2	my-05	2.6898	101.9077	Asia/Kuala_Lumpur	62000
+my-07-parit	Parit	my-07	4.4833	100.9167	Asia/Kuala_Lumpur	60988
+my-02-kampongsidam	Kampong Sidam	my-02	5.5333	100.5667	Asia/Kuala_Lumpur	60983
+my-01-setiatropika	Setia Tropika	my-01	1.5463	103.7183	Asia/Kuala_Lumpur	60279
+my-12-aradamansara	Ara Damansara	my-12	3.1190	101.5866	Asia/Kuala_Lumpur	60000
+my-01-bukitindah	Bukit Indah	my-01	1.4800	103.6596	Asia/Kuala_Lumpur	60000
+my-12-putraheights	Putra Heights	my-12	2.9936	101.5726	Asia/Kuala_Lumpur	60000
+my-06-temerluh	Temerluh	my-06	3.4506	102.4176	Asia/Kuala_Lumpur	59916
+my-01-simpangrenggam	Simpang Renggam	my-01	1.8250	103.3107	Asia/Kuala_Lumpur	59033
+my-07-kampongdungun	Kampong Dungun	my-07	3.2167	101.3167	Asia/Kuala_Lumpur	58674
+my-11-serian	Serian	my-11	1.1667	110.5667	Asia/Kuching	58059
+my-07-simpangempat	Simpang Empat	my-07	4.9500	100.6333	Asia/Kuala_Lumpur	58004
+my-12-kualaselangor	Kuala Selangor	my-12	3.3500	101.2500	Asia/Kuala_Lumpur	55887
+my-04-kampungbukitbaharu	Kampung Bukit Baharu	my-04	2.2152	102.2851	Asia/Kuala_Lumpur	55656
+my-12-hululangat	Hulu Langat	my-12	3.1137	101.8142	Asia/Kuala_Lumpur	55251
+my-16-bandarlabuan	Bandar Labuan	my-16	5.2832	115.2537	Asia/Kuching	54752
+my-09-bukittengah	Bukit Tengah	my-09	5.3460	100.4392	Asia/Kuala_Lumpur	54416
+my-12-pandamaran	Pandamaran	my-12	3.0108	101.4208	Asia/Kuala_Lumpur	53916
+my-01-kotatinggi	Kota Tinggi	my-01	1.7381	103.8999	Asia/Kuala_Lumpur	52743
+my-11-bau	Bau	my-11	1.4167	110.1500	Asia/Kuching	52643
+my-02-padangserai	Padang Serai	my-02	5.5131	100.5536	Asia/Kuala_Lumpur	50757
+my-14-kuchailama	Kuchai Lama	my-14	3.0847	101.6909	Asia/Kuala_Lumpur	50000
+my-17-putrajaya	Putrajaya	my-17	2.9353	101.6911	Asia/Kuala_Lumpur	50000
+my-14-sripetaling	Sri Petaling	my-14	3.0688	101.6897	Asia/Kuala_Lumpur	50000
+my-14-tamanmelati	Taman Melati	my-14	3.2212	101.7232	Asia/Kuala_Lumpur	50000
+my-06-bentongtown	Bentong Town	my-06	3.5223	101.9087	Asia/Kuala_Lumpur	49213
+my-12-telukpanglimagarang	Teluk Panglima Garang	my-12	2.9080	101.4688	Asia/Kuala_Lumpur	49155
+my-07-sungaisiput	Sungai Siput	my-07	4.3945	101.1947	Asia/Kuala_Lumpur	49000
+my-11-niah	Niah	my-11	3.8620	113.7152	Asia/Kuching	48875
+my-12-bandarsridamansara	Bandar Sri Damansara	my-12	3.1903	101.6106	Asia/Kuala_Lumpur	48556
+my-12-banting	Banting	my-12	2.8136	101.5019	Asia/Kuala_Lumpur	48240
+my-02-bedong	Bedong	my-02	5.7274	100.5088	Asia/Kuala_Lumpur	47585
+my-11-sriaman	Sri Aman	my-11	1.2472	111.4528	Asia/Kuching	47313
+my-07-batugajah	Batu Gajah	my-07	4.4692	101.0411	Asia/Kuala_Lumpur	46183
+my-12-bangi	Bangi	my-12	2.9000	101.7833	Asia/Kuala_Lumpur	45042
+my-12-elmina	Elmina	my-12	3.1852	101.5246	Asia/Kuala_Lumpur	45000
+my-01-tamanpermasjaya	Taman Permas Jaya	my-01	1.5110	103.8198	Asia/Kuala_Lumpur	45000
+my-06-kampungperak	Kampung Perak	my-06	3.8682	102.5862	Asia/Kuala_Lumpur	44964
+my-02-bandarbaharu	Bandar Baharu	my-02	5.1343	100.4955	Asia/Kuala_Lumpur	44412
+my-11-sarikei	Sarikei	my-11	2.1167	111.5167	Asia/Kuching	44039
+my-04-duriantunggal	Durian Tunggal	my-04	2.3125	102.2805	Asia/Kuala_Lumpur	42185
+my-06-mentakab	Mentakab	my-06	3.4854	102.3484	Asia/Kuala_Lumpur	42171
+my-05-rompin	Rompin	my-05	2.7083	102.5047	Asia/Kuala_Lumpur	41931
+my-12-tamangreenwood	Taman Greenwood	my-12	3.2321	101.7048	Asia/Kuala_Lumpur	41699
+my-01-pontianbesar	Pontian Besar	my-01	1.5059	103.3816	Asia/Kuala_Lumpur	40613
+my-06-bentung	Bentung	my-06	3.5316	101.9038	Asia/Kuala_Lumpur	40373
+my-09-nibongtebal	Nibong Tebal	my-09	5.1659	100.4779	Asia/Kuala_Lumpur	40072
+my-06-raub	Raub	my-06	3.7899	101.8570	Asia/Kuala_Lumpur	40024
+my-12-bandartunhusseinonn	Bandar Tun Hussein Onn	my-12	3.0547	101.7594	Asia/Kuala_Lumpur	40000
+my-14-bangsar	Bangsar	my-14	3.1294	101.6700	Asia/Kuala_Lumpur	40000
+my-01-bukitgambir	Bukit Gambir	my-01	2.2110	102.6546	Asia/Kuala_Lumpur	40000
+my-14-tamansrisinar	Taman Sri Sinar	my-14	3.1868	101.6509	Asia/Kuala_Lumpur	40000
+my-03-kampongpangkalkalong	Kampong Pangkal Kalong	my-03	5.9167	102.2167	Asia/Kuala_Lumpur	39904
+my-07-lumut	Lumut	my-07	4.2323	100.6298	Asia/Kuala_Lumpur	39595
+my-07-kualakangsar	Kuala Kangsar	my-07	4.7667	100.9333	Asia/Kuala_Lumpur	39331
+my-16-sipitang	Sipitang	my-16	5.0790	115.5496	Asia/Kuching	39300
+my-12-bandarcountryhomes	Bandar Country Homes	my-12	3.3275	101.5311	Asia/Kuala_Lumpur	39000
+my-12-kampungsetia	Kampung Setia	my-12	3.2418	101.5330	Asia/Kuala_Lumpur	38870
+my-04-klebangbesar	Klebang Besar	my-04	2.2186	102.1995	Asia/Kuala_Lumpur	38643
+my-05-kampungbaharunilai	Kampung Baharu Nilai	my-05	2.8033	101.7972	Asia/Kuala_Lumpur	38612
+my-07-padangrengas	Padang Rengas	my-07	4.7667	100.8500	Asia/Kuala_Lumpur	38294
+my-02-kampungalormengkudu	Kampung Alor Mengkudu	my-02	6.0884	100.3917	Asia/Kuala_Lumpur	38193
+my-11-limbang	Limbang	my-11	4.7548	115.0101	Asia/Kuching	38093
+my-04-kampungayerkeroh	Kampung Ayer Keroh	my-04	2.2654	102.2801	Asia/Kuala_Lumpur	37716
+my-14-tamantundrismail	Taman Tun Dr Ismail	my-14	3.1451	101.6262	Asia/Kuala_Lumpur	37500
+my-09-jawi	Jawi	my-09	5.2153	100.4921	Asia/Kuala_Lumpur	36601
+my-11-betong	Betong	my-11	1.4000	111.5167	Asia/Kuching	36303
+my-07-kamunting	Kamunting	my-07	4.8833	100.7333	Asia/Kuala_Lumpur	36243
+my-16-petagas	Petagas	my-16	5.9116	116.0499	Asia/Kuching	35844
+my-01-tangkak	Tangkak	my-01	2.2673	102.5453	Asia/Kuala_Lumpur	35109
+my-14-alamdamai	Alam Damai	my-14	3.0603	101.7408	Asia/Kuala_Lumpur	35000
+my-14-bukitkerinchi	Bukit Kerinchi	my-14	3.1063	101.6676	Asia/Kuala_Lumpur	35000
+my-12-denaialam	Denai Alam	my-12	3.1603	101.5150	Asia/Kuala_Lumpur	35000
+my-11-sibujaya	Sibu Jaya	my-11	2.2403	111.9714	Asia/Kuching	35000
+my-02-sungailalang	Sungai Lalang	my-02	5.6998	100.5145	Asia/Kuala_Lumpur	34947
+my-07-selama	Selama	my-07	5.2236	100.6926	Asia/Kuala_Lumpur	34800
+my-13-dungun	Dungun	my-13	4.7750	103.4162	Asia/Kuala_Lumpur	34767
+my-06-jerantut	Jerantut	my-06	3.9360	102.3626	Asia/Kuala_Lumpur	33606
+my-11-mukah	Mukah	my-11	2.8944	112.0914	Asia/Kuching	33478
+my-01-gerisek	Gerisek	my-01	2.2097	102.7095	Asia/Kuala_Lumpur	33217
+my-11-kapit	Kapit	my-11	1.9955	112.9325	Asia/Kuching	33014
+my-07-sungkai	Sungkai	my-07	4.0000	101.3167	Asia/Kuala_Lumpur	32700
+my-02-sik	Sik	my-02	5.8333	100.7500	Asia/Kuala_Lumpur	32565
+my-16-kudat	Kudat	my-16	6.8873	116.8236	Asia/Kuching	32393
+my-01-kawasanpenempatanulubenutlim	Kawasan Penempatan Ulu Benut Lima	my-01	1.7439	103.3207	Asia/Kuala_Lumpur	32226
+my-01-kawasanpenempatanulubenuttig	Kawasan Penempatan Ulu Benut Tiga	my-01	1.7497	103.2770	Asia/Kuala_Lumpur	32226
+my-01-kawasanpenempatanulusungaibe	Kawasan Penempatan Ulu Sungai Benut	my-01	1.7541	103.2798	Asia/Kuala_Lumpur	32226
+my-01-tamanpelangi	Taman Pelangi	my-01	2.4280	102.6801	Asia/Kuala_Lumpur	32000
+my-04-kampungkerubong	Kampung Kerubong	my-04	2.2958	102.2537	Asia/Kuala_Lumpur	31936
+my-11-tatau	Tatau	my-11	2.8833	112.8500	Asia/Kuching	31920
+my-06-pekan	Pekan	my-06	3.4836	103.3996	Asia/Kuala_Lumpur	31826
+my-16-bandarnabawan	Bandar Nabawan	my-16	5.0393	116.4274	Asia/Kuching	31807
+my-05-bahau	Bahau	my-05	2.8079	102.4049	Asia/Kuala_Lumpur	31273
+my-07-kualakurau	Kuala Kurau	my-07	5.0182	100.4282	Asia/Kuala_Lumpur	31065
+my-05-tamanserembanjaya	Taman Seremban Jaya	my-05	2.6831	101.9700	Asia/Kuala_Lumpur	31016
+my-07-gerik	Gerik	my-07	5.4167	101.1333	Asia/Kuala_Lumpur	30868
+my-07-lahat	Lahat	my-07	4.5388	101.0365	Asia/Kuala_Lumpur	30694
+my-14-montkiara	Mont Kiara	my-14	3.1687	101.6508	Asia/Kuala_Lumpur	30643
+my-07-chemor	Chemor	my-07	4.7211	101.1189	Asia/Kuala_Lumpur	30461
+my-01-bakri	Bakri	my-01	2.0441	102.6527	Asia/Kuala_Lumpur	30280
+my-02-kuah	Kuah	my-02	6.3265	99.8432	Asia/Kuala_Lumpur	30212
+my-07-bidur	Bidur	my-07	4.1167	101.2833	Asia/Kuala_Lumpur	30016
+my-01-tamanscientex	Taman Scientex	my-01	1.5122	103.9166	Asia/Kuala_Lumpur	30000
+my-01-tamanuniversiti	Taman Universiti	my-01	1.5331	103.6155	Asia/Kuala_Lumpur	30000
+my-02-tokai	Tokai	my-02	6.0287	100.4069	Asia/Kuala_Lumpur	30000
+my-05-gemas	Gemas	my-05	2.5832	102.6117	Asia/Kuala_Lumpur	29777
+my-11-sebauh	Sebauh	my-11	3.1167	113.2667	Asia/Kuching	29606
+my-05-rembau	Rembau	my-05	2.5897	102.0913	Asia/Kuala_Lumpur	29595
+my-16-tambunan	Tambunan	my-16	5.7167	116.4000	Asia/Kuching	29294
+my-04-kampongmasjidtanah	Kampong Masjid Tanah	my-04	2.3500	102.1167	Asia/Kuala_Lumpur	29185
+my-03-tanahmerah	Tanah Merah	my-03	5.8000	102.1500	Asia/Kuala_Lumpur	29116
+my-11-beluru	Beluru	my-11	3.9833	114.1000	Asia/Kuching	28695
+my-07-hutanmelintang	Hutan Melintang	my-07	3.8766	100.9328	Asia/Kuala_Lumpur	28357
+my-05-tampin	Tampin	my-05	2.4701	102.2302	Asia/Kuala_Lumpur	28238
+my-12-ulukelang	Ulu Kelang	my-12	3.1800	101.7730	Asia/Kuala_Lumpur	28222
+my-09-sungaidua	Sungai Dua	my-09	5.4427	100.4297	Asia/Kuala_Lumpur	28100
+my-07-tapahroad	Tapah Road	my-07	4.1667	101.2000	Asia/Kuala_Lumpur	27863
+my-07-paritbuntar	Parit Buntar	my-07	5.1267	100.4932	Asia/Kuala_Lumpur	27313
+my-11-siburan	Siburan	my-11	1.3667	110.4000	Asia/Kuching	27286
+my-09-kubangsemang	Kubang Semang	my-09	5.4037	100.4574	Asia/Kuala_Lumpur	27194
+my-09-permatangkuching	Permatang Kuching	my-09	5.4634	100.3814	Asia/Kuala_Lumpur	27191
+my-01-yongpeng	Yong Peng	my-01	2.0136	103.0659	Asia/Kuala_Lumpur	27138
+my-12-sungaibesar	Sungai Besar	my-12	3.6746	100.9867	Asia/Kuala_Lumpur	26939
+my-11-lundu	Lundu	my-11	1.6744	109.8517	Asia/Kuching	26372
+my-05-bandarsrisendayan	Bandar Sri Sendayan	my-05	2.6738	101.8721	Asia/Kuala_Lumpur	26127
+my-04-sungaiudang	Sungai Udang	my-04	2.2690	102.1427	Asia/Kuala_Lumpur	26044
+my-11-lawas	Lawas	my-11	4.8604	115.4090	Asia/Kuching	26002
+my-14-tamanoug	Taman OUG	my-14	3.0729	101.6763	Asia/Kuala_Lumpur	25989
+my-07-cangkatjong	Cangkat Jong	my-07	3.9851	101.1237	Asia/Kuala_Lumpur	25618
+my-14-ss2	SS2	my-14	3.1204	101.6225	Asia/Kuala_Lumpur	25500
+my-11-tebedu	Tebedu	my-11	1.0266	110.3633	Asia/Kuching	25232
+my-04-batuberendam	Batu Berendam	my-04	2.2487	102.2460	Asia/Kuala_Lumpur	25028
+my-12-bandarpuncakalam	Bandar Puncak Alam	my-12	3.2389	101.4279	Asia/Kuala_Lumpur	25000
+my-14-tamandesa	Taman Desa	my-14	3.1059	101.6868	Asia/Kuala_Lumpur	25000
+my-12-jenjarum	Jenjarum	my-12	2.8724	101.4948	Asia/Kuala_Lumpur	24857
+my-01-kampungjelutongtengah	Kampung Jelutong Tengah	my-01	1.4714	103.5675	Asia/Kuala_Lumpur	24765
+my-11-kanowit	Kanowit	my-11	2.1000	112.1500	Asia/Kuching	24700
+my-13-kertih	Kertih	my-13	4.5141	103.4483	Asia/Kuala_Lumpur	24401
+my-16-kualapenyu	Kuala Penyu	my-16	5.5714	115.5984	Asia/Kuching	24200
+my-09-balikpulau	Balik Pulau	my-09	5.3492	100.2394	Asia/Kuala_Lumpur	23559
+my-12-ladangserikundang	Ladang Seri Kundang	my-12	3.2856	101.5190	Asia/Kuala_Lumpur	23307
+my-01-pekannenas	Pekan Nenas	my-01	1.5100	103.5141	Asia/Kuala_Lumpur	23292
+my-03-peringat	Peringat	my-03	6.0333	102.2833	Asia/Kuala_Lumpur	23288
+my-06-bandartunrazak	Bandar Tun Razak	my-06	2.9029	102.8877	Asia/Kuala_Lumpur	23247
+my-04-kampungtanjungminyak	Kampung Tanjung Minyak	my-04	2.2666	102.2004	Asia/Kuala_Lumpur	23074
+my-11-simunjan	Simunjan	my-11	1.3833	110.7500	Asia/Kuching	23011
+my-09-bukittambun	Bukit Tambun	my-09	5.2718	100.4601	Asia/Kuala_Lumpur	22900
+my-12-batuarang	Batu Arang	my-12	3.3167	101.4667	Asia/Kuala_Lumpur	22579
+my-01-kampungsedenak	Kampung Sedenak	my-01	1.7114	103.5276	Asia/Kuala_Lumpur	22535
+my-11-belaga	Belaga	my-11	2.7000	113.7833	Asia/Kuching	22502
+my-12-tanjungsepat	Tanjung Sepat	my-12	2.6579	101.5629	Asia/Kuala_Lumpur	22340
+my-07-batukurau	Batu Kurau	my-07	4.9667	100.8000	Asia/Kuala_Lumpur	22307
+my-01-mersing	Mersing	my-01	2.4312	103.8405	Asia/Kuala_Lumpur	22007
+my-01-batuanam	Batu Anam	my-01	2.5825	102.7110	Asia/Kuala_Lumpur	21923
+my-01-labis	Labis	my-01	2.3850	103.0210	Asia/Kuala_Lumpur	21906
+my-01-kampungbatuempat	Kampung Batu Empat	my-01	1.7760	103.8736	Asia/Kuala_Lumpur	21898
+my-12-bandarbarusalaktinggi	Bandar Baru Salak Tinggi	my-12	2.8123	101.7356	Asia/Kuala_Lumpur	21534
+my-09-kampungtelukkumbar	Kampung Teluk Kumbar	my-09	5.2890	100.2470	Asia/Kuala_Lumpur	21481
+my-13-marang	Marang	my-13	5.2056	103.2059	Asia/Kuala_Lumpur	21410
+my-12-kuang	Kuang	my-12	3.2594	101.5541	Asia/Kuala_Lumpur	21185
+my-11-dalat	Dalat	my-11	2.6667	112.0833	Asia/Kuching	21147
+my-13-paka	Paka	my-13	4.6374	103.4368	Asia/Kuala_Lumpur	21044
+my-07-baganserai	Bagan Serai	my-07	5.0108	100.5410	Asia/Kuala_Lumpur	20476
+my-12-huluyamlama	Hulu Yam Lama	my-12	3.4537	101.6413	Asia/Kuala_Lumpur	20334
+my-11-maradong	Maradong	my-11	2.0833	111.6167	Asia/Kuching	20299
+my-04-alorgajah	Alor Gajah	my-04	2.3804	102.2089	Asia/Kuala_Lumpur	20163
+my-12-bukitberuntung	Bukit Beruntung	my-12	3.4156	101.5571	Asia/Kuala_Lumpur	20023
+my-12-batangberjuntai	Batang Berjuntai	my-12	3.3833	101.4167	Asia/Kuala_Lumpur	20001
+my-09-batuferinggi	Batu Feringgi	my-09	5.4709	100.2453	Asia/Kuala_Lumpur	20000
+my-14-desapetaling	Desa Petaling	my-14	3.0838	101.7090	Asia/Kuala_Lumpur	20000
+my-08-kampunghutanarau	Kampung Hutan Arau	my-08	6.4294	100.2817	Asia/Kuala_Lumpur	20000
+my-01-kampungselang	Kampung Selang	my-01	2.3500	102.8760	Asia/Kuala_Lumpur	20000
+my-12-pelabuhanklang	Pelabuhan Klang	my-12	2.9996	101.3929	Asia/Kuala_Lumpur	20000
+my-12-tropicanaindah	Tropicana Indah	my-12	3.1416	101.5909	Asia/Kuala_Lumpur	20000
+my-11-selangau	Selangau	my-11	2.5248	112.3254	Asia/Kuching	19844
+my-01-bandarputrakulai	Bandar Putra Kulai	my-01	1.6496	103.6266	Asia/Kuala_Lumpur	19793
+my-03-guamusang	Gua Musang	my-03	4.8844	101.9686	Asia/Kuala_Lumpur	19731
+my-12-seminyih	Seminyih	my-12	2.9476	101.8470	Asia/Kuala_Lumpur	19724
+my-02-pokoksena	Pokok Sena	my-02	6.1706	100.5189	Asia/Kuala_Lumpur	19677
+my-09-sungaijawi	Sungai Jawi	my-09	5.1978	100.4924	Asia/Kuala_Lumpur	19586
+my-05-kualapilah	Kuala Pilah	my-05	2.7389	102.2487	Asia/Kuala_Lumpur	19510
+my-11-daro	Daro	my-11	2.5169	111.4300	Asia/Kuching	19477
+my-01-kampungminyakbeku	Kampung Minyak Beku	my-01	1.7954	102.8971	Asia/Kuala_Lumpur	19374
+my-09-kampungtelukairtawar	Kampung Teluk Air Tawar	my-09	5.4833	100.3833	Asia/Kuala_Lumpur	19371
+my-16-ranau	Ranau	my-16	5.9538	116.6641	Asia/Kuching	19294
+my-16-papar	Papar	my-16	5.7333	115.9333	Asia/Kuching	19278
+my-03-kampongkadok	Kampong Kadok	my-03	6.0000	102.2500	Asia/Kuala_Lumpur	19233
+my-02-kualakedah	Kuala Kedah	my-02	6.1000	100.3000	Asia/Kuala_Lumpur	19231
+my-02-kualaketil	Kuala Ketil	my-02	5.6000	100.6500	Asia/Kuala_Lumpur	19209
+my-04-kampungcheng	Kampung Cheng	my-04	2.2635	102.2179	Asia/Kuala_Lumpur	19158
+my-04-kawasanperindustriancheng	Kawasan Perindustrian Cheng	my-04	2.2618	102.2317	Asia/Kuala_Lumpur	19158
+my-02-pulai	Pulai	my-02	5.6549	100.8954	Asia/Kuala_Lumpur	19093
+my-07-kampar	Kampar	my-07	4.3000	101.1500	Asia/Kuala_Lumpur	19056
+my-11-saratok	Saratok	my-11	1.7333	111.3333	Asia/Kuching	19009
+my-02-kampungbaruulumelaka	Kampung Baru Ulu Melaka	my-02	6.3520	99.7879	Asia/Kuala_Lumpur	18898
+my-02-changloon	Changloon	my-02	6.4342	100.4313	Asia/Kuala_Lumpur	18872
+my-02-kampungkupang	Kampung Kupang	my-02	5.6364	100.8452	Asia/Kuala_Lumpur	18844
+my-01-horizonhills	Horizon Hills	my-01	1.4577	103.6455	Asia/Kuala_Lumpur	18800
+my-09-relau	Relau	my-09	5.3310	100.2830	Asia/Kuala_Lumpur	18755
+my-09-glugor	Glugor	my-09	5.3722	100.3071	Asia/Kuala_Lumpur	18662
+my-04-merlimau	Merlimau	my-04	2.1449	102.4251	Asia/Kuala_Lumpur	18632
+my-14-seputeh	Seputeh	my-14	3.1167	101.6833	Asia/Kuala_Lumpur	18605
+my-06-feldachini	FELDA Chini	my-06	3.3746	102.9434	Asia/Kuala_Lumpur	18493
+my-02-lunas	Lunas	my-02	5.4306	100.5301	Asia/Kuala_Lumpur	18236
+my-02-teloikanan	Teloi Kanan	my-02	5.7168	100.6582	Asia/Kuala_Lumpur	17972
+my-03-kampungjeli	Kampung Jeli	my-03	5.7000	101.8333	Asia/Kuala_Lumpur	17734
+my-01-kampungsimpangrenggam	Kampung Simpang Renggam	my-01	1.8278	103.3000	Asia/Kuala_Lumpur	17528
+my-01-paritraja	Parit Raja	my-01	1.8681	103.1124	Asia/Kuala_Lumpur	17441
+my-04-bukitrambai	Bukit Rambai	my-04	2.2594	102.1838	Asia/Kuala_Lumpur	17391
+my-09-bukitgemuroh	Bukit Gemuroh	my-09	5.2977	100.2115	Asia/Kuala_Lumpur	17379
+my-09-kepalabatas	Kepala Batas	my-09	5.5171	100.4265	Asia/Kuala_Lumpur	17131
+my-04-kampungbertamulu	Kampung Bertam Ulu	my-04	2.2898	102.1928	Asia/Kuala_Lumpur	17119
+my-03-wakafbaharu	Wakaf Baharu	my-03	6.1167	102.2000	Asia/Kuala_Lumpur	17033
+my-09-ayeritam	Ayer Itam	my-09	5.4016	100.2781	Asia/Kuala_Lumpur	16974
+my-05-kampungtelukkemang	Kampung Teluk Kemang	my-05	2.4615	101.8595	Asia/Kuala_Lumpur	16672
+my-02-anakbukit	Anak Bukit	my-02	6.1840	100.3775	Asia/Kuala_Lumpur	16525
+my-14-desaparkcity	Desa Parkcity	my-14	3.1861	101.6287	Asia/Kuala_Lumpur	16500
+my-05-lukut	Lukut	my-05	2.5703	101.8330	Asia/Kuala_Lumpur	16450
+my-12-kampungtanjungkarang	Kampung Tanjung Karang	my-12	3.4242	101.1849	Asia/Kuala_Lumpur	16393
+my-07-pantairemis	Pantai Remis	my-07	4.4557	100.6288	Asia/Kuala_Lumpur	16317
+my-02-padangbesar	Padang Besar	my-02	6.3833	100.3000	Asia/Kuala_Lumpur	16235
+my-04-kampungmachapbaru	Kampung Machap Baru	my-04	2.3829	102.3311	Asia/Kuala_Lumpur	16000
+my-02-gurun	Gurun	my-02	5.8172	100.4738	Asia/Kuala_Lumpur	15964
+my-16-beaufort	Beaufort	my-16	5.3473	115.7455	Asia/Kuching	15855
+my-16-kinarut	Kinarut	my-16	5.8231	116.0466	Asia/Kuching	15716
+my-04-kampungayermolek	Kampung Ayer Molek	my-04	2.2139	102.3278	Asia/Kuala_Lumpur	15497
+my-01-pengerang	Pengerang	my-01	1.3651	104.1118	Asia/Kuala_Lumpur	15494
+my-11-pakan	Pakan	my-11	1.8833	111.6833	Asia/Kuching	15462
+my-06-kualalipis	Kuala Lipis	my-06	4.1842	102.0468	Asia/Kuala_Lumpur	15448
+my-11-julau	Julau	my-11	2.0167	111.9167	Asia/Kuching	15333
+my-01-bandartenggara	Bandar Tenggara	my-01	1.8700	103.6158	Asia/Kuala_Lumpur	15278
+my-11-engkilili	Engkilili	my-11	1.1386	111.6667	Asia/Kuching	15031
+my-06-muadzamshah	Muadzam Shah	my-06	3.0627	103.0892	Asia/Kuala_Lumpur	15000
+my-02-pantaicenang	Pantai Cenang	my-02	6.2937	99.7279	Asia/Kuala_Lumpur	15000
+my-14-pudu	Pudu	my-14	3.1333	101.7167	Asia/Kuala_Lumpur	15000
+my-07-seriiskandar	Seri Iskandar	my-07	4.3599	100.9849	Asia/Kuala_Lumpur	14827
+my-07-keruh	Keruh	my-07	5.7167	101.0000	Asia/Kuala_Lumpur	14661
+my-03-cherangruku	Cherang Ruku	my-03	5.8706	102.4948	Asia/Kuala_Lumpur	14656
+my-01-padangendau	Padang Endau	my-01	2.6557	103.6150	Asia/Kuala_Lumpur	14517
+my-08-kampungchuping	Kampung Chuping	my-08	6.5013	100.2558	Asia/Kuala_Lumpur	14428
+my-04-bemban	Bemban	my-04	2.2684	102.3746	Asia/Kuala_Lumpur	14329
+my-11-pusa	Pusa	my-11	1.5833	111.2500	Asia/Kuching	14273
+my-09-tanjungbungah	Tanjung Bungah	my-09	5.4649	100.2816	Asia/Kuala_Lumpur	14271
+my-03-pengkalanchepa	Pengkalan Chepa	my-03	6.1747	102.2880	Asia/Kuala_Lumpur	14000
+my-08-kualaperlis	Kuala Perlis	my-08	6.4000	100.1333	Asia/Kuala_Lumpur	13917
+my-12-sungaipeleknewvillage	Sungai Pelek New Village	my-12	2.6500	101.7000	Asia/Kuala_Lumpur	13829
+my-16-kampungkunak	Kampung Kunak	my-16	4.6858	118.2491	Asia/Kuching	13823
+my-02-guarchempedak	Guar Chempedak	my-02	5.8585	100.4593	Asia/Kuala_Lumpur	13781
+my-07-bagandatuk	Bagan Datuk	my-07	3.9899	100.7819	Asia/Kuala_Lumpur	13700
+my-07-bagantiang	Bagan Tiang	my-07	5.1167	100.4167	Asia/Kuala_Lumpur	13538
+my-13-jertih	Jertih	my-13	5.7336	102.4897	Asia/Kuala_Lumpur	13526
+my-08-kampungtititinggi	Kampung Titi Tinggi	my-08	6.6373	100.2627	Asia/Kuala_Lumpur	13403
+my-01-layanglayang	Layang Layang	my-01	1.8154	103.4784	Asia/Kuala_Lumpur	13374
+my-06-sungaikoyan	Sungai Koyan	my-06	4.2186	101.8015	Asia/Kuala_Lumpur	13356
+my-11-matu	Matu	my-11	2.6833	111.5333	Asia/Kuching	13327
+my-07-mambangdiawan	Mambang Di Awan	my-07	4.2667	101.1500	Asia/Kuala_Lumpur	13300
+my-01-kelapasawit	Kelapa Sawit	my-01	1.6698	103.5327	Asia/Kuala_Lumpur	13239
+my-12-sekinchan	Sekinchan	my-12	3.5074	101.1041	Asia/Kuala_Lumpur	13226
+my-11-sebuyau	Sebuyau	my-11	1.5167	110.9333	Asia/Kuching	13200
+my-01-bulohkasap	Buloh Kasap	my-01	2.5536	102.7640	Asia/Kuala_Lumpur	13088
+my-05-lenggeng	Lenggeng	my-05	2.8558	101.9424	Asia/Kuala_Lumpur	13081
+my-14-kampongdatukkeramat	Kampong Datuk Keramat	my-14	3.1667	101.7333	Asia/Kuala_Lumpur	13061
+my-14-jinjang	Jinjang	my-14	3.2088	101.6562	Asia/Kuala_Lumpur	13000
+my-01-tongkangpechah	Tongkang Pechah	my-01	1.9203	102.9561	Asia/Kuala_Lumpur	13000
+my-02-sintok	Sintok	my-02	6.4423	100.5235	Asia/Kuala_Lumpur	12942
+my-02-bandarlagunamerbok	Bandar Laguna Merbok	my-02	5.6892	100.4962	Asia/Kuala_Lumpur	12940
+my-02-kampongmerbok	Kampong Merbok	my-02	5.7167	100.4167	Asia/Kuala_Lumpur	12940
+my-16-kotabelud	Kota Belud	my-16	6.3510	116.4305	Asia/Kuching	12825
+my-11-kotasamarahan	Kota Samarahan	my-11	1.4603	110.4882	Asia/Kuching	12724
+my-07-lenggong	Lenggong	my-07	5.1063	100.9679	Asia/Kuala_Lumpur	12722
+my-01-paloh	Paloh	my-01	2.1904	103.1963	Asia/Kuala_Lumpur	12677
+my-09-tanjungtokong	Tanjung Tokong	my-09	5.4606	100.3074	Asia/Kuala_Lumpur	12550
+my-06-kualapahang	Kuala Pahang	my-06	3.5321	103.4619	Asia/Kuala_Lumpur	12540
+my-02-kepalabatas	Kepala Batas	my-02	6.2041	100.4075	Asia/Kuala_Lumpur	12397
+my-06-kampungbukittinggibentong	Kampung Bukit Tinggi, Bentong	my-06	3.3494	101.8263	Asia/Kuala_Lumpur	12346
+my-03-tumpat	Tumpat	my-03	6.1978	102.1710	Asia/Kuala_Lumpur	12280
+my-04-kualasungaibaru	Kuala Sungai Baru	my-04	2.3594	102.0353	Asia/Kuala_Lumpur	12269
+my-09-juru	Juru	my-09	5.3120	100.4423	Asia/Kuala_Lumpur	12265
+my-02-kampongbakai	Kampong Bakai	my-02	5.5333	100.7333	Asia/Kuala_Lumpur	12235
+my-05-gemencheh	Gemencheh	my-05	2.5331	102.3989	Asia/Kuala_Lumpur	12175
+my-07-protoncity	Proton City	my-07	3.7429	101.5352	Asia/Kuala_Lumpur	12009
+my-12-bandar16sierra	Bandar 16 Sierra	my-12	2.9714	101.6546	Asia/Kuala_Lumpur	12000
+my-14-brickfields	Brickfields	my-14	3.1297	101.6842	Asia/Kuala_Lumpur	12000
+my-01-rengit	Rengit	my-01	1.6807	103.1478	Asia/Kuala_Lumpur	12000
+my-04-pulausebang	Pulau Sebang	my-04	2.4550	102.2329	Asia/Kuala_Lumpur	11879
+my-01-chaah	Chaah	my-01	2.2490	103.0480	Asia/Kuala_Lumpur	11844
+my-16-kobang	Kobang	my-16	4.4419	118.6929	Asia/Kuching	11682
+my-05-bandarbaruenstek	Bandar Baru Enstek	my-05	2.7511	101.7654	Asia/Kuala_Lumpur	11591
+my-09-batukawan	Batu Kawan	my-09	5.2582	100.4288	Asia/Kuala_Lumpur	11409
+my-16-kampungkundassang	Kampung Kundassang	my-16	5.9824	116.5712	Asia/Kuching	11251
+my-02-kampungjerlun	Kampung Jerlun	my-02	6.2139	100.2658	Asia/Kuala_Lumpur	11094
+my-11-spaoh	Spaoh	my-11	1.5000	111.5000	Asia/Kuching	11063
+my-05-bandarspringhill	Bandar Springhill	my-05	2.6013	101.8641	Asia/Kuala_Lumpur	11000
+my-04-ayermolek	Ayer Molek	my-04	2.2028	102.3172	Asia/Kuala_Lumpur	10792
+my-07-sungaisumun	Sungai Sumun	my-07	3.8915	100.8532	Asia/Kuala_Lumpur	10781
+my-04-kampungtanjungkeling	Kampung Tanjung Keling	my-04	2.2267	102.1716	Asia/Kuala_Lumpur	10552
+my-06-kualarompin	Kuala Rompin	my-06	2.8167	103.4833	Asia/Kuala_Lumpur	10417
+my-09-bandarbaruayeritam	Bandar Baru Ayer Itam	my-09	5.3891	100.2818	Asia/Kuala_Lumpur	10290
+my-16-kinabatangan	Kinabatangan	my-16	5.5860	117.8508	Asia/Kuching	10256
+my-13-kemasik	Kemasik	my-13	4.4256	103.4538	Asia/Kuala_Lumpur	10247
+my-03-kampungkualabalah	Kampung Kuala Balah	my-03	5.4167	101.9167	Asia/Kuala_Lumpur	10198
+my-09-penaga	Penaga	my-09	5.5272	100.3841	Asia/Kuala_Lumpur	10138
+my-14-tamanikanemas	Taman Ikan Emas	my-14	3.1162	101.7202	Asia/Kuala_Lumpur	10046
+my-04-telukmas	Teluk Mas	my-04	2.1654	102.3220	Asia/Kuala_Lumpur	10028
+my-02-ayerhangat	Ayer Hangat	my-02	6.4206	99.8220	Asia/Kuala_Lumpur	10000
+my-01-bandarpenawar	Bandar Penawar	my-01	1.5513	104.2260	Asia/Kuala_Lumpur	10000
+my-14-mutiaradamansara	Mutiara Damansara	my-14	3.1572	101.6082	Asia/Kuala_Lumpur	10000
+my-02-padangmatsirat	Padang Mat Sirat	my-02	6.3542	99.7340	Asia/Kuala_Lumpur	10000
+my-07-pangkor	Pangkor	my-07	4.2134	100.5747	Asia/Kuala_Lumpur	10000
+my-01-paritjawa	Parit Jawa	my-01	1.9577	102.6401	Asia/Kuala_Lumpur	10000
+my-16-tamanrajawali	Taman Rajawali	my-16	5.8948	118.0458	Asia/Kuching	10000
+my-09-telagabatu	Telaga Batu	my-09	5.4667	100.2333	Asia/Kuala_Lumpur	10000
+my-13-ketengahjaya	Ketengah Jaya	my-13	4.5722	103.3188	Asia/Kuala_Lumpur	9993
+my-11-song	Song	my-11	2.0167	112.5500	Asia/Kuching	9961
+my-11-pantu	Pantu	my-11	1.1397	111.1177	Asia/Kuching	9852
+my-07-ulukinta	Ulu Kinta	my-07	4.6667	101.2167	Asia/Kuala_Lumpur	9799
+my-11-lubokantu	Lubok Antu	my-11	1.0419	111.8340	Asia/Kuching	9542
+my-02-kampongtajar	Kampong Tajar	my-02	6.1000	100.4167	Asia/Kuala_Lumpur	9441
+my-02-kampungsiong	Kampung Siong	my-02	5.7886	100.9086	Asia/Kuala_Lumpur	9413
+my-06-karak	Karak	my-06	3.4000	102.0333	Asia/Kuala_Lumpur	9362
+my-07-beruas	Beruas	my-07	4.5000	100.7833	Asia/Kuala_Lumpur	9268
+my-02-gunong	Gunong	my-02	6.1901	100.3414	Asia/Kuala_Lumpur	9200
+my-09-simpangempat	Simpang Empat	my-09	5.2818	100.4777	Asia/Kuala_Lumpur	9149
+my-02-simpangempat	Simpang Empat	my-02	6.0267	100.3960	Asia/Kuala_Lumpur	9149
+my-07-bagandatoh	Bagan Datoh	my-07	3.9833	100.7833	Asia/Kuala_Lumpur	9046
+my-12-bandarparklands	Bandar Parklands	my-12	2.9746	101.4572	Asia/Kuala_Lumpur	9000
+my-04-kampungumbai	Kampung Umbai	my-04	2.1586	102.3475	Asia/Kuala_Lumpur	8989
+my-12-lamanpermai	Laman Permai	my-12	3.1737	101.5420	Asia/Kuala_Lumpur	8800
+my-11-balingian	Balingian	my-11	2.9306	112.5413	Asia/Kuching	8797
+my-02-kampungsok	Kampung Sok	my-02	5.7736	100.7305	Asia/Kuala_Lumpur	8781
+my-16-bandau	Bandau	my-16	6.5205	116.7534	Asia/Kuching	8716
+my-12-sabakbernam	Sabak Bernam	my-12	3.7698	100.9879	Asia/Kuala_Lumpur	8696
+my-12-bandarbotanic	Bandar Botanic	my-12	2.9879	101.4397	Asia/Kuala_Lumpur	8670
+my-01-pekanserkat	Pekan Serkat	my-01	1.3033	103.4894	Asia/Kuala_Lumpur	8668
+my-02-kampungtawarbesar	Kampung Tawar Besar	my-02	5.5566	100.8120	Asia/Kuala_Lumpur	8642
+my-01-kampungbagan	Kampung Bagan	my-01	1.8481	102.8588	Asia/Kuala_Lumpur	8506
+my-05-seremban3	Seremban 3	my-05	2.6736	101.9311	Asia/Kuala_Lumpur	8403
+my-07-tanjungpiandang	Tanjung Piandang	my-07	5.0724	100.3811	Asia/Kuala_Lumpur	8352
+my-06-kampungteh	Kampung Teh	my-06	3.9607	102.3470	Asia/Kuala_Lumpur	8350
+my-02-tikambatu	Tikam Batu	my-02	5.5872	100.4402	Asia/Kuala_Lumpur	8323
+my-05-pasirpanjang	Pasir Panjang	my-05	2.4322	101.9352	Asia/Kuala_Lumpur	8249
+my-06-ringlet	Ringlet	my-06	4.4155	101.3836	Asia/Kuala_Lumpur	8242
+my-07-kampungsimpangpulai	Kampung Simpang Pulai	my-07	5.7106	100.9965	Asia/Kuala_Lumpur	8102
+my-04-pantaibelimbing	Pantai Belimbing	my-04	2.3436	102.2567	Asia/Kuala_Lumpur	8056
+my-11-binatang	Binatang	my-11	2.1667	111.6333	Asia/Kuching	7912
+my-11-debak	Debak	my-11	1.5667	111.4167	Asia/Kuching	7907
+my-02-kualanerang	Kuala Nerang	my-02	6.2584	100.6126	Asia/Kuala_Lumpur	7802
+my-09-kampungpondokupih	Kampung Pondok Upih	my-09	5.3373	100.2325	Asia/Kuala_Lumpur	7679
+my-12-dengkil	Dengkil	my-12	2.8600	101.6806	Asia/Kuala_Lumpur	7672
+my-12-meru	Meru	my-12	3.1362	101.4394	Asia/Kuala_Lumpur	7404
+my-02-alormerah	Alor Merah	my-02	6.1667	100.3833	Asia/Kuala_Lumpur	7273
+my-12-glenmarieestate	Glenmarie Estate	my-12	3.0833	101.5833	Asia/Kuala_Lumpur	7265
+my-02-kampungpering	Kampung Pering	my-02	6.3760	100.3364	Asia/Kuala_Lumpur	7227
+my-11-sematan	Sematan	my-11	1.8000	109.7667	Asia/Kuching	7107
+my-06-tanahrata	Tanah Rata	my-06	4.4636	101.3763	Asia/Kuala_Lumpur	7000
+my-11-nangamedamit	Nanga Medamit	my-11	4.4667	114.9167	Asia/Kuching	6968
+my-07-kampungcangkatjering	Kampung Cangkat Jering	my-07	4.7833	100.7167	Asia/Kuala_Lumpur	6936
+my-11-sundar	Sundar	my-11	4.8895	115.2075	Asia/Kuching	6806
+my-07-serdang	Serdang	my-07	5.2037	100.6248	Asia/Kuala_Lumpur	6793
+my-07-pusing	Pusing	my-07	4.4941	101.0079	Asia/Kuala_Lumpur	6780
+my-01-ayerhitam	Ayer Hitam	my-01	1.9150	103.1808	Asia/Kuala_Lumpur	6745
+my-02-kampungbatulima	Kampung Batu Lima	my-02	5.7934	100.6894	Asia/Kuala_Lumpur	6739
+my-01-feldagugusanadela	Felda Gugusan Adela	my-01	1.4788	104.1774	Asia/Kuala_Lumpur	6736
+my-11-roban	Roban	my-11	1.9167	111.3333	Asia/Kuching	6722
+my-12-templerbestari	Templer Bestari	my-12	3.2911	101.6380	Asia/Kuala_Lumpur	6300
+my-07-slimriver	Slim River	my-07	3.8333	101.4000	Asia/Kuala_Lumpur	6297
+my-06-teras	Teras	my-06	3.7420	101.8112	Asia/Kuala_Lumpur	6266
+my-01-kemajuantanahlokhengbarat	Kemajuan Tanah Lok Heng Barat	my-01	1.7225	104.0913	Asia/Kuala_Lumpur	6262
+my-04-rembia	Rembia	my-04	2.3280	102.2101	Asia/Kuala_Lumpur	6217
+my-12-gedangsa	Gedangsa	my-12	3.7333	101.4000	Asia/Kuala_Lumpur	6150
+my-02-kampungpulai	Kampung Pulai	my-02	5.6584	100.8917	Asia/Kuala_Lumpur	6129
+my-01-niyor	Niyor	my-01	2.0945	103.2807	Asia/Kuala_Lumpur	6092
+my-12-feldasoeharto	FELDA Soeharto	my-12	3.6796	101.3926	Asia/Kuala_Lumpur	6060
+my-06-kemajuantanahbukitgoh	Kemajuan Tanah Bukit Goh	my-06	3.9128	103.2572	Asia/Kuala_Lumpur	6053
+my-02-kangkong	Kangkong	my-02	6.0005	100.3446	Asia/Kuala_Lumpur	6034
+my-11-oya	Oya	my-11	2.8667	111.8833	Asia/Kuching	6027
+my-12-kampungolaklempit	Kampung Olak Lempit	my-12	2.8356	101.5947	Asia/Kuala_Lumpur	6020
+my-06-kemayan	Kemayan	my-06	3.1364	102.3620	Asia/Kuala_Lumpur	5977
+my-02-langgar	Langgar	my-02	6.1476	100.4324	Asia/Kuala_Lumpur	5872
+my-11-longlama	Long Lama	my-11	3.7667	114.4000	Asia/Kuching	5870
+my-13-bandaralmuktafibillahshah	Bandar Al-Muktafi Billah Shah	my-13	4.6111	103.2092	Asia/Kuala_Lumpur	5853
+my-12-ecosanctuary	Eco Sanctuary	my-12	2.9370	101.5353	Asia/Kuala_Lumpur	5827
+my-03-kampungwakafstan	Kampung Wakaf Stan	my-03	6.0799	102.2897	Asia/Kuala_Lumpur	5823
+my-03-kamponggunong	Kampong Gunong	my-03	5.7167	101.7500	Asia/Kuala_Lumpur	5800
+my-03-melor	Melor	my-03	5.9656	102.2942	Asia/Kuala_Lumpur	5777
+my-02-sungaikob	Sungai Kob	my-02	5.4300	100.6448	Asia/Kuala_Lumpur	5777
+my-04-machap	Machap	my-04	2.3862	102.2907	Asia/Kuala_Lumpur	5770
+my-02-kampungayerputeh	Kampung Ayer Puteh	my-02	5.1822	100.6019	Asia/Kuala_Lumpur	5724
+my-12-kampongsijangkang	Kampong Sijangkang	my-12	2.9405	101.4637	Asia/Kuala_Lumpur	5723
+my-01-feldamaokil	FELDA Maokil	my-01	2.2956	102.9679	Asia/Kuala_Lumpur	5630
+my-16-bongawan	Bongawan	my-16	5.5333	115.8500	Asia/Kuching	5594
+my-02-kampungnagalilit	Kampung Naga Lilit	my-02	5.4765	100.5509	Asia/Kuala_Lumpur	5547
+my-05-titi	Titi	my-05	2.9983	102.0765	Asia/Kuala_Lumpur	5533
+my-01-chaahbahru	Chaah Bahru	my-01	2.0993	103.0222	Asia/Kuala_Lumpur	5509
+my-03-kampongtanjongchat	Kampong Tanjong Chat	my-03	6.1500	102.2500	Asia/Kuala_Lumpur	5462
+my-12-batutiga	Batu Tiga	my-12	3.0780	101.5470	Asia/Kuala_Lumpur	5419
+my-02-tebengau	Tebengau	my-02	6.0460	100.3314	Asia/Kuala_Lumpur	5415
+my-02-bagansamak	Bagan Samak	my-02	5.0895	100.5619	Asia/Kuala_Lumpur	5391
+my-02-pengkalankundor	Pengkalan Kundor	my-02	6.0779	100.3604	Asia/Kuala_Lumpur	5328
+my-11-maludam	Maludam	my-11	1.6500	111.0333	Asia/Kuching	5284
+my-02-kampungpadanglalang	Kampung Padang Lalang	my-02	6.1637	100.3099	Asia/Kuala_Lumpur	5216
+my-08-kampungoran	Kampung Oran	my-08	6.4653	100.2456	Asia/Kuala_Lumpur	5210
+my-14-bukitdamansara	Bukit Damansara	my-14	3.1505	101.6548	Asia/Kuala_Lumpur	5161
+my-16-tenom	Tenom	my-16	5.1192	115.9372	Asia/Kuching	5148
+my-07-simpang	Simpang	my-07	4.8167	100.7000	Asia/Kuala_Lumpur	5132
+my-06-kemajuantanahrentam	Kemajuan Tanah Rentam	my-06	3.2679	102.6228	Asia/Kuala_Lumpur	5110
+my-02-bukitpinang	Bukit Pinang	my-02	5.9333	100.4500	Asia/Kuala_Lumpur	5012
+my-07-aulong	Au Long	my-07	4.8500	100.7167	Asia/Kuala_Lumpur	5000
+my-02-kampungkilim	Kampung Kilim	my-02	6.4055	99.8502	Asia/Kuala_Lumpur	5000
+my-14-kampungsungaipenchala	Kampung Sungai Penchala	my-14	3.1624	101.6270	Asia/Kuala_Lumpur	5000
+my-06-sungailembing	Sungai Lembing	my-06	3.9178	103.0361	Asia/Kuala_Lumpur	5000
+my-02-bukitkayuhitam	Bukit Kayu Hitam	my-02	6.5167	100.4189	Asia/Kuala_Lumpur	4983
+my-05-mantin	Mantin	my-05	2.8243	101.8949	Asia/Kuala_Lumpur	4974
+my-02-kodiang	Kodiang	my-02	6.3964	100.3076	Asia/Kuala_Lumpur	4946
+my-02-kampungasun	Kampung Asun	my-02	6.3333	100.3333	Asia/Kuala_Lumpur	4899
+my-06-lurahbilut	Lurah Bilut	my-06	3.6648	101.8888	Asia/Kuala_Lumpur	4721
+my-02-kampungbongor	Kampung Bongor	my-02	5.7040	100.9143	Asia/Kuala_Lumpur	4646
+my-03-kampungairlanas	Kampung Air Lanas	my-03	5.7761	101.8850	Asia/Kuala_Lumpur	4645
+my-06-kemajuantanahtembangau	Kemajuan Tanah Tembangau	my-06	3.0321	102.5228	Asia/Kuala_Lumpur	4617
+my-09-kampungkualamuda	Kampung Kuala Muda	my-09	5.5744	100.3398	Asia/Kuala_Lumpur	4590
+my-06-kemajuantanahtementi	Kemajuan Tanah Tementi	my-06	3.2707	102.6076	Asia/Kuala_Lumpur	4524
+my-02-padanghang	Padang Hang	my-02	6.2063	100.3018	Asia/Kuala_Lumpur	4506
+my-02-kotasarangsamut	Kota Sarang Samut	my-02	5.9455	100.3645	Asia/Kuala_Lumpur	4479
+my-02-tamankotasarangsemut	Taman Kota Sarang Semut	my-02	5.9791	100.3999	Asia/Kuala_Lumpur	4479
+my-02-derga	Derga	my-02	6.1209	100.3893	Asia/Kuala_Lumpur	4449
+my-09-kampungpantaiaceh	Kampung Pantai Aceh	my-09	5.4157	100.1958	Asia/Kuala_Lumpur	4302
+my-03-kampongtokbali	Kampong Tok Bali	my-03	5.8917	102.4836	Asia/Kuala_Lumpur	4200
+my-02-kampungkok	Kampung Kok	my-02	6.3676	99.6825	Asia/Kuala_Lumpur	4160
+my-02-kampongsungaibatu	Kampong Sungai Batu	my-02	5.3176	100.7004	Asia/Kuala_Lumpur	4140
+my-01-tamanmountaustin	Taman Mount Austin	my-01	1.5609	103.7820	Asia/Kuala_Lumpur	4137
+my-05-kampungsirusa	Kampung Sirusa	my-05	2.4957	101.8415	Asia/Kuala_Lumpur	4112
+my-11-longbedian	Long Bedian	my-11	3.8000	114.7333	Asia/Kuching	4107
+my-11-budu	Budu	my-11	1.7667	111.5000	Asia/Kuching	4096
+my-11-lingga	Lingga	my-11	1.3500	111.1667	Asia/Kuching	4073
+my-01-forestcity	Forest City	my-01	1.3388	103.5888	Asia/Kuala_Lumpur	4000
+my-16-kampongmenumbok	Kampong Menumbok	my-16	5.3032	115.3700	Asia/Kuching	4000
+my-09-kampungbatuferinggi	Kampung Batu Feringgi	my-09	5.4695	100.2445	Asia/Kuala_Lumpur	4000
+my-01-kangkarbaru	Kangkar Baru	my-01	1.9891	103.0826	Asia/Kuala_Lumpur	4000
+my-12-kotawarisan	Kota Warisan	my-12	2.8239	101.6937	Asia/Kuala_Lumpur	4000
+my-09-sungaibakap	Sungai Bakap	my-09	5.2223	100.4954	Asia/Kuala_Lumpur	4000
+my-02-salakechik	Sala Kechik	my-02	5.9843	100.3492	Asia/Kuala_Lumpur	3991
+my-02-kampungsungaiterap	Kampung Sungai Terap	my-02	5.2935	100.6283	Asia/Kuala_Lumpur	3975
+my-13-ajil	Ajil	my-13	5.0829	103.0857	Asia/Kuala_Lumpur	3925
+my-12-tamansepangputra	Taman Sepang Putra	my-12	2.6230	101.7027	Asia/Kuala_Lumpur	3900
+my-11-trusan	Trusan	my-11	4.7849	115.2746	Asia/Kuching	3796
+my-05-kampungbaharuparoi	Kampung Baharu Paroi	my-05	2.7241	102.0007	Asia/Kuala_Lumpur	3782
+my-01-bekok	Bekok	my-01	2.2972	103.1302	Asia/Kuala_Lumpur	3761
+my-16-inanam	Inanam	my-16	5.9922	116.1321	Asia/Kuching	3604
+my-12-batangkali	Batang Kali	my-12	3.4684	101.6389	Asia/Kuala_Lumpur	3601
+my-09-batuhitam	Batu Hitam	my-09	5.3896	100.2326	Asia/Kuala_Lumpur	3574
+my-09-batuitam	Batu Itam	my-09	5.3951	100.2166	Asia/Kuala_Lumpur	3574
+my-02-kampunglubokmerbau	Kampung Lubok Merbau	my-02	6.0196	100.7293	Asia/Kuala_Lumpur	3463
+my-09-kampungsungaiudangbesar	Kampung Sungai Udang Besar	my-09	5.1613	100.4268	Asia/Kuala_Lumpur	3426
+my-07-kampongchenderongbalai	Kampong Chenderong Balai	my-07	4.1333	101.0833	Asia/Kuala_Lumpur	3400
+my-12-assamjawa	Assam Jawa	my-12	3.3013	101.2875	Asia/Kuala_Lumpur	3380
+my-02-telagamas	Telaga Mas	my-02	6.1667	100.4667	Asia/Kuala_Lumpur	3367
+my-02-lepai	Lepai	my-02	6.0833	100.3667	Asia/Kuala_Lumpur	3362
+my-11-datakakus	Data Kakus	my-11	2.6547	113.6225	Asia/Kuching	3350
+my-12-kerling	Kerling	my-12	3.5908	101.6024	Asia/Kuala_Lumpur	3309
+my-05-kualaklawang	Kuala Klawang	my-05	2.9395	102.0704	Asia/Kuala_Lumpur	3300
+my-07-kampungchuichak	Kampung Chui Chak	my-07	4.0453	101.1715	Asia/Kuala_Lumpur	3272
+my-04-ujongpasir	Ujong Pasir	my-04	2.1891	102.2726	Asia/Kuala_Lumpur	3236
+my-01-kemajuantanahchemplak	Kemajuan Tanah Chemplak	my-01	2.3800	102.9440	Asia/Kuala_Lumpur	3208
+my-16-beluran	Beluran	my-16	5.8956	117.5557	Asia/Kuching	3132
+my-12-morib	Morib	my-12	2.7518	101.4443	Asia/Kuala_Lumpur	3122
+my-03-dabong	Dabong	my-03	5.3768	102.0097	Asia/Kuala_Lumpur	3097
+my-01-feldataibandak	FELDA Taib Andak	my-01	1.7336	103.6452	Asia/Kuala_Lumpur	3058
+my-07-ayertawar	Ayer Tawar	my-07	4.3055	100.7618	Asia/Kuala_Lumpur	3050
+my-11-nangamerit	Nanga Merit	my-11	2.2833	113.1333	Asia/Kuching	3016
+my-07-chenderong	Chenderong	my-07	4.4091	101.0495	Asia/Kuala_Lumpur	3000
+my-12-kampunglabohandagang	Kampung Labohan Dagang	my-12	2.8021	101.6196	Asia/Kuala_Lumpur	3000
+my-02-kualateriang	Kuala Teriang	my-02	6.3638	99.7153	Asia/Kuala_Lumpur	3000
+my-11-igan	Igan	my-11	2.8228	111.7079	Asia/Kuching	2989
+my-16-wallacebay	Wallace Bay	my-16	4.2555	117.6678	Asia/Kuching	2987
+my-06-kemajuantanahsebertak	Kemajuan Tanah Sebertak	my-06	3.2562	102.5975	Asia/Kuala_Lumpur	2965
+my-01-semerah	Semerah	my-01	1.8845	102.7832	Asia/Kuala_Lumpur	2945
+my-02-selamakedah	Selama Kedah	my-02	5.2324	100.6828	Asia/Kuala_Lumpur	2941
+my-13-bandarpermaisuri	Bandar Permaisuri	my-13	5.5224	102.7485	Asia/Kuala_Lumpur	2900
+my-07-alurpongsu	Alur Pongsu	my-07	5.0333	100.5833	Asia/Kuala_Lumpur	2858
+my-02-mahang	Mahang	my-02	5.3251	100.7487	Asia/Kuala_Lumpur	2835
+my-11-belawai	Belawai	my-11	2.2333	111.2167	Asia/Kuching	2823
+my-09-kampongsungairusa	Kampong Sungai Rusa	my-09	5.3833	100.2167	Asia/Kuala_Lumpur	2817
+my-12-kampungulutris	Kampung Ulu Tris	my-12	2.6677	101.6684	Asia/Kuala_Lumpur	2800
+my-03-kampongchap	Kampong Chap	my-03	6.0500	102.3500	Asia/Kuala_Lumpur	2780
+my-01-kemajuantanahulutebrau	Kemajuan Tanah Ulu Tebrau	my-01	1.6358	103.7560	Asia/Kuala_Lumpur	2741
+my-04-kampungkualalinggi	Kampung Kuala Linggi	my-04	2.3853	101.9731	Asia/Kuala_Lumpur	2738
+my-04-kampungtebong	Kampung Tebong	my-04	2.4382	102.3269	Asia/Kuala_Lumpur	2725
+my-11-mulu	Mulu	my-11	1.6833	111.3833	Asia/Kuching	2706
+my-04-kampungramuanchinakechil	Kampung Ramuan China Kechil	my-04	2.4301	102.0750	Asia/Kuala_Lumpur	2696
+my-13-neramsatu	Neram Satu	my-13	4.0129	103.2766	Asia/Kuala_Lumpur	2675
+my-02-kampungpengkalangelong	Kampung Pengkalan Gelong	my-02	6.1935	100.3830	Asia/Kuala_Lumpur	2639
+my-04-lubokchina	Lubok China	my-04	2.4536	102.0695	Asia/Kuala_Lumpur	2627
+my-01-kampungkangkarpulai	Kampung Kangkar Pulai	my-01	1.5591	103.5863	Asia/Kuala_Lumpur	2616
+my-11-kualabaram	Kuala Baram	my-11	4.5855	113.9897	Asia/Kuching	2600
+my-07-menglembu	Menglembu	my-07	4.5594	101.0484	Asia/Kuala_Lumpur	2600
+my-06-bukitibam	Bukit Ibam	my-06	3.1637	102.9777	Asia/Kuala_Lumpur	2568
+my-09-telukbahang	Teluk Bahang	my-09	5.4583	100.2154	Asia/Kuala_Lumpur	2531
+my-01-feldasemenchu	FELDA Semenchu	my-01	1.5693	104.0999	Asia/Kuala_Lumpur	2470
+my-02-kualapegang	Kuala Pegang	my-02	5.6362	100.8091	Asia/Kuala_Lumpur	2466
+my-05-rantau	Rantau	my-05	2.5902	101.9629	Asia/Kuala_Lumpur	2450
+my-09-kampungpermatangpasir	Kampung Permatang Pasir	my-09	5.3724	100.2109	Asia/Kuala_Lumpur	2439
+my-09-permatangpasir	Permatang Pasir	my-09	5.4163	100.4386	Asia/Kuala_Lumpur	2439
+my-06-padangtengku	Padang Tengku	my-06	4.2324	101.9899	Asia/Kuala_Lumpur	2432
+my-02-kampungrelau	Kampung Relau	my-02	5.2313	100.5559	Asia/Kuala_Lumpur	2425
+my-11-kampungkualamatu	Kampung Kuala Matu	my-11	2.7167	111.4667	Asia/Kuching	2423
+my-13-kampungkualabesut	Kampung Kuala Besut	my-13	5.8330	102.5506	Asia/Kuala_Lumpur	2400
+my-13-kualabesut	Kuala Besut	my-13	5.8330	102.5551	Asia/Kuala_Lumpur	2400
+my-07-redangpanjang	Redang Panjang	my-07	5.1167	100.7833	Asia/Kuala_Lumpur	2400
+my-03-kampungbukitjering	Kampung Bukit Jering	my-03	5.4775	101.9078	Asia/Kuala_Lumpur	2396
+my-03-rantaupanjang	Rantau Panjang	my-03	6.0219	101.9767	Asia/Kuala_Lumpur	2364
+my-06-ceruh	Ceruh	my-06	3.9042	101.8132	Asia/Kuala_Lumpur	2350
+my-14-tamannagaemas	Taman Naga Emas	my-14	3.0777	101.6976	Asia/Kuala_Lumpur	2350
+my-07-kampungenggor	Kampung Enggor	my-07	4.8258	100.9704	Asia/Kuala_Lumpur	2342
+my-01-kemajuantanahbukitapingtimur	Kemajuan Tanah Bukit Aping Timur	my-01	1.8348	104.0212	Asia/Kuala_Lumpur	2309
+my-03-kampungbukitbunga	Kampung Bukit Bunga	my-03	5.8337	101.9003	Asia/Kuala_Lumpur	2300
+my-07-gelungpepuyu	Gelung Pepuyu	my-07	4.3679	100.8201	Asia/Kuala_Lumpur	2285
+my-07-kampunglamborkanan	Kampung Lambor Kanan	my-07	4.2664	100.9044	Asia/Kuala_Lumpur	2276
+my-07-sungaidurian	Sungai Durian	my-07	4.3167	101.0500	Asia/Kuala_Lumpur	2253
+my-02-kampungpadangcina	Kampung Padang Cina	my-02	5.4381	100.5790	Asia/Kuala_Lumpur	2252
+my-02-alorjanggus	Alor Janggus	my-02	6.1739	100.3116	Asia/Kuala_Lumpur	2243
+my-06-kemajuantanahsungaipancingut	Kemajuan Tanah Sungai Pancing Utara	my-06	3.8382	103.1598	Asia/Kuala_Lumpur	2234
+my-02-lubokbuntar	Lubok Buntar	my-02	5.1422	100.5897	Asia/Kuala_Lumpur	2228
+my-05-tamandusunsetia	Taman Dusun Setia	my-05	2.7141	101.9644	Asia/Kuala_Lumpur	2215
+my-09-sungaichenaam	Sungai Chenaam	my-09	5.1461	100.4092	Asia/Kuala_Lumpur	2142
+my-01-ayerbaloi	Ayer Baloi	my-01	1.5915	103.3327	Asia/Kuala_Lumpur	2062
+my-06-kemajuantanahsungaipancingti	Kemajuan Tanah Sungai Pancing Timur	my-06	3.8177	103.1993	Asia/Kuala_Lumpur	2030
+my-06-kemajuantanahbukitkepayang	Kemajuan Tanah Bukit Kepayang	my-06	3.3229	102.5794	Asia/Kuala_Lumpur	2019
+my-04-nyalas	Nyalas	my-04	2.4338	102.4714	Asia/Kuala_Lumpur	2009
+my-12-baganpulauketam	Bagan Pulau Ketam	my-12	3.0167	101.2667	Asia/Kuala_Lumpur	2000
+my-06-kampungtekek	Kampung Tekek	my-06	2.8147	104.1592	Asia/Kuala_Lumpur	2000
+my-01-kemajuantanahbukitbesar	Kemajuan Tanah Bukit Besar	my-01	1.7698	103.7064	Asia/Kuala_Lumpur	2000
+my-03-kualageris	Kuala Geris	my-03	5.3833	102.0667	Asia/Kuala_Lumpur	2000
+my-02-padangsira	Padang Sira	my-02	6.3621	100.3395	Asia/Kuala_Lumpur	1991
+my-01-senggarang	Senggarang	my-01	1.7511	103.0494	Asia/Kuala_Lumpur	1991
+my-02-kampunglalang	Kampung Lalang	my-02	5.7918	100.8972	Asia/Kuala_Lumpur	1976
+my-09-kampungsungairusa	Kampung Sungai Rusa	my-09	5.3819	100.2173	Asia/Kuala_Lumpur	1919
+my-02-limbong	Limbong	my-02	6.1333	100.4167	Asia/Kuala_Lumpur	1919
+my-01-kemajuantanahbukiteaster	Kemajuan Tanah Bukit Easter	my-01	1.7486	104.0777	Asia/Kuala_Lumpur	1905
+my-11-lidungjelo	Lidung Jelo	my-11	2.6485	114.7865	Asia/Kuching	1900
+my-05-simpangpertang	Simpang Pertang	my-05	2.9434	102.2589	Asia/Kuala_Lumpur	1890
+my-09-bukitjambul	Bukit Jambul	my-09	5.3337	100.2900	Asia/Kuala_Lumpur	1875
+my-06-feldabukitdamar	FELDA Bukit Damar	my-06	3.5397	102.1189	Asia/Kuala_Lumpur	1875
+my-01-mukimtioman	Mukim Tioman	my-01	2.7825	104.1700	Asia/Kuala_Lumpur	1874
+my-02-kualasanglang	Kuala Sanglang	my-02	6.2612	100.1964	Asia/Kuala_Lumpur	1862
+my-02-kampongwangtepus	Kampong Wang Tepus	my-02	6.2500	100.4833	Asia/Kuala_Lumpur	1857
+my-11-longampanaingorabanang	Long Ampan Aing or Abanang	my-11	2.6567	114.7368	Asia/Kuching	1850
+my-07-kampunggula	Kampung Gula	my-07	4.9333	100.4667	Asia/Kuala_Lumpur	1805
+my-06-kampungsrijaya	Kampung Sri Jaya	my-06	3.8299	101.9277	Asia/Kuala_Lumpur	1801
+my-06-kemajuantanahsungaipancingse	Kemajuan Tanah Sungai Pancing Selatan	my-06	3.7866	103.1683	Asia/Kuala_Lumpur	1800
+my-01-pontiankechil	Pontian Kechil	my-01	1.4866	103.3896	Asia/Kuala_Lumpur	1787
+my-07-behrangstesen	Behrang Stesen	my-07	3.7444	101.4513	Asia/Kuala_Lumpur	1754
+my-04-kampungbukitberuang	Kampung Bukit Beruang	my-04	2.2414	102.2792	Asia/Kuala_Lumpur	1746
+my-01-bandarsungaimati	Bandar Sungai Mati	my-01	2.1467	102.5655	Asia/Kuala_Lumpur	1737
+my-02-titigajah	Titi Gajah	my-02	6.2019	100.3933	Asia/Kuala_Lumpur	1727
+my-04-kampungbatangmelakaulu	Kampung Batang Melaka Ulu	my-04	2.4591	102.4139	Asia/Kuala_Lumpur	1692
+my-06-kampunggedungsiam	Kampung Gedung Siam	my-06	3.6942	102.9635	Asia/Kuala_Lumpur	1658
+my-01-kemajuantanahsimpangwaha	Kemajuan Tanah Simpang Waha	my-01	1.7615	104.0740	Asia/Kuala_Lumpur	1600
+my-02-kampungkualaselama	Kampung Kuala Selama	my-02	5.2382	100.6830	Asia/Kuala_Lumpur	1597
+my-14-kampungbaru	Kampung Baru	my-14	3.1654	101.7039	Asia/Kuala_Lumpur	1587
+my-06-feldakemansul	FELDA Kemansul	my-06	3.2856	102.2262	Asia/Kuala_Lumpur	1582
+my-01-kemajuantanahchemplakbarat	Kemajuan Tanah Chemplak Barat	my-01	2.3880	102.9340	Asia/Kuala_Lumpur	1562
+my-16-kampongindarasabak	Kampong Indarasabak	my-16	4.2995	118.1672	Asia/Kuching	1558
+my-02-sungaibaharu	Sungai Baharu	my-02	6.1640	100.3339	Asia/Kuala_Lumpur	1549
+my-06-kampungdong	Kampung Dong	my-06	3.8959	101.8947	Asia/Kuala_Lumpur	1530
+my-04-kampungonlok	Kampung On Lok	my-04	2.4723	102.3829	Asia/Kuala_Lumpur	1500
+my-11-metrocitynewtownship	Metro City New Township	my-11	1.5680	110.3059	Asia/Kuching	1500
+my-08-felcralubeksireh	FELCRA Lubek Sireh	my-08	6.6501	100.2241	Asia/Kuala_Lumpur	1490
+my-07-malimnawar	Malim Nawar	my-07	4.3506	101.1188	Asia/Kuala_Lumpur	1477
+my-07-terung	Terung	my-07	4.7167	100.7333	Asia/Kuala_Lumpur	1476
+my-12-rasa	Rasa	my-12	3.4955	101.6294	Asia/Kuala_Lumpur	1470
+my-01-kemajuantanahpasirraja	Kemajuan Tanah Pasir Raja	my-01	1.7578	103.6742	Asia/Kuala_Lumpur	1467
+my-01-kemajuantanahbukitapingbarat	Kemajuan Tanah Bukit Aping Barat	my-01	1.8294	103.9901	Asia/Kuala_Lumpur	1441
+my-02-kampungparitpanjang	Kampung Parit Panjang	my-02	5.7057	100.7462	Asia/Kuala_Lumpur	1434
+my-02-kampongsungaikechilulu	Kampong Sungai Kechil Ulu	my-02	5.1096	100.5438	Asia/Kuala_Lumpur	1425
+my-07-cenderiang	Cenderiang	my-07	4.2667	101.2333	Asia/Kuala_Lumpur	1400
+my-13-kampungtelagapapan	Kampung Telaga Papan	my-13	5.7632	102.6389	Asia/Kuala_Lumpur	1400
+my-01-kukup	Kukup	my-01	1.3233	103.4426	Asia/Kuala_Lumpur	1400
+my-06-kampungladangsawitlepar	Kampung Ladang Sawit Lepar	my-06	3.5827	103.0962	Asia/Kuala_Lumpur	1392
+my-02-lengkuas	Lengkuas	my-02	6.0278	100.3819	Asia/Kuala_Lumpur	1389
+my-07-gopeng	Gopeng	my-07	4.4715	101.1663	Asia/Kuala_Lumpur	1330
+my-05-linggi	Linggi	my-05	2.4857	102.0096	Asia/Kuala_Lumpur	1322
+my-05-kampungsimpangdurian	Kampung Simpang Durian	my-05	3.1014	102.2222	Asia/Kuala_Lumpur	1319
+my-09-kampungsungaiacheh	Kampung Sungai Acheh	my-09	5.1517	100.4248	Asia/Kuala_Lumpur	1313
+my-07-tanjungrambutan	Tanjung Rambutan	my-07	4.6706	101.1546	Asia/Kuala_Lumpur	1311
+my-06-bluevalley	Blue Valley	my-06	4.5829	101.4142	Asia/Kuala_Lumpur	1301
+my-03-hendrop	Hendrop	my-03	4.7190	101.5521	Asia/Kuala_Lumpur	1295
+my-02-kampungkobah	Kampung Kobah	my-02	5.9667	100.4333	Asia/Kuala_Lumpur	1278
+my-07-kampungkualasepetang	Kampung Kuala Sepetang	my-07	4.5429	100.6597	Asia/Kuala_Lumpur	1264
+my-01-mawai	Mawai	my-01	1.8685	103.9568	Asia/Kuala_Lumpur	1229
+my-01-penyabong	Penyabong	my-01	1.6311	104.1469	Asia/Kuala_Lumpur	1218
+my-16-eburu	Eburu	my-16	4.6000	115.7167	Asia/Kuching	1192
+my-07-kampungcangkatkeruing	Kampung Cangkat Keruing	my-07	4.3775	100.6891	Asia/Kuala_Lumpur	1174
+my-01-kemajuantanahinasutaradansel	Kemajuan Tanah Inas Utara dan Selatan	my-01	1.7734	103.6098	Asia/Kuala_Lumpur	1174
+my-06-berincang	Berincang	my-06	4.4911	101.3869	Asia/Kuala_Lumpur	1153
+my-06-brinchang	Brinchang	my-06	4.4911	101.3884	Asia/Kuala_Lumpur	1153
+my-01-kampungparitbelahantampok	Kampung Parit Belahan Tampok	my-01	1.6610	103.1936	Asia/Kuala_Lumpur	1147
+my-03-kampungwakafsku	Kampung Wakaf Sku	my-03	6.1162	102.2423	Asia/Kuala_Lumpur	1125
+my-03-kampongcheranghangus	Kampong Cherang Hangus	my-03	6.0333	102.3500	Asia/Kuala_Lumpur	1123
+my-11-bekenu	Bekenu	my-11	4.0539	113.8441	Asia/Kuching	1113
+my-02-kampunghajikudong	Kampung Haji Kudong	my-02	5.5831	100.3624	Asia/Kuala_Lumpur	1070
+my-01-kemajuantanahbukitramon	Kemajuan Tanah Bukit Ramon	my-01	1.7532	103.7261	Asia/Kuala_Lumpur	1060
+my-01-kangkarsedilikecil	Kangkar Sedili Kecil	my-01	1.7500	104.1500	Asia/Kuala_Lumpur	1058
+my-13-kampungbatusembilanluar	Kampung Batu Sembilan Luar	my-13	4.3493	103.3940	Asia/Kuala_Lumpur	1028
+my-11-empaong	Empaong	my-11	1.4167	111.5333	Asia/Kuching	1015
+my-06-gambang	Gambang	my-06	3.7068	103.1002	Asia/Kuala_Lumpur	1013
+my-03-kampunglemal	Kampung Lemal	my-03	6.0302	102.1413	Asia/Kuala_Lumpur	0
+my-03-ketereh	Ketereh	my-03	5.9570	102.2482	Asia/Kuala_Lumpur	0
+my-03-pulaichondong	Pulai Chondong	my-03	5.8713	102.2318	Asia/Kuala_Lumpur	0
