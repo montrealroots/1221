@@ -179,11 +179,14 @@ export function registerWorld(sim: Simulation): void {
         const { companyId } = run<{ companyId: Id }>('co.found', { structure: 'c_corp', kind: 'production', name: 'Demo Pictures', initialCapital: 300_000_000_00 });
         company = s.universe.companies[companyId]!;
       }
+      // No title asked for means a fresh one from the title engine, so the
+      // demo never collides with a picture the world already has.
       const { projectId } = run<{ projectId: Id }>('film.create_project', {
-        title: p.title ?? 'The Long Way Round', format: 'feature', genres: ['thriller', 'drama'],
+        ...(p.title ? { title: p.title } : {}), format: 'feature', genres: ['thriller', 'drama'],
         logline: 'A river pilot has one night to bring a stranded ferry home.', companyId: company.id,
       });
-      run('film.acquire_rights', { projectId, title: p.title ?? 'The Long Way Round', sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: company.id, holderKind: 'company' });
+      const created = s.universe.projects[projectId]!;
+      run('film.acquire_rights', { projectId, title: created.title, sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: company.id, holderKind: 'company' });
       run('film.write_draft', { projectId, daysSpent: 40 });
       run('film.attach_talent', { projectId, personId: player.id, role: 'director', confirmed: true });
       run('film.attach_talent', { projectId, personId: player.id, role: 'producer', confirmed: true });

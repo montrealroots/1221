@@ -330,7 +330,7 @@ for (const size of WIDTHS) {
       if (await projectsAgain.count()) {
         await projectsAgain.click().catch(() => {});
         await page.waitForTimeout(1200);
-        const demo = page.locator('.list-item').filter({ hasText: /Long Way Round/ }).first();
+        const demo = page.locator('.list-item').filter({ hasText: /\bPost\b/ }).first();
         if (await demo.count()) { await demo.click().catch(() => {}); await page.waitForTimeout(1000); }
         const scriptTab = page.getByRole('tab', { name: /^Script/ }).first();
         if (await scriptTab.count()) {

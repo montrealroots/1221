@@ -61,6 +61,11 @@ for (const file of files) {
         // A name that carries its own capital — tvN, iQIYI, iPhone — is spelled
         // that way on purpose.
         if (/[A-Z]/.test(cleaned)) return false;
+        // So is a model designation with a number in it: the Angénieux Optimo
+        // Ultra 12x, the Aputure LS 600d, where the letter means something to
+        // the maker. The digits are checked on the word itself, because the
+        // leading ones are stripped before the first letter is looked at.
+        if (/\d/.test(word)) return false;
         if (i > 0 && JOINING_WORDS.has(cleaned.toLowerCase())) return false;
         return true;
       });

@@ -589,7 +589,10 @@ function LicenceDialog({ project, cue, onClose }: { project: Project; cue: Music
         <div className="field"><label>Term</label><select value={term} onChange={(e) => setTerm(e.target.value as typeof term)}><option value="perpetuity">In Perpetuity</option><option value="ten_years">Ten Years</option><option value="festival_only">Festival Only</option></select></div>
         <div className="field"><label>Territory</label><select value={territory} onChange={(e) => setTerritory(e.target.value as typeof territory)}><option value="worldwide">Worldwide</option><option value="domestic">Domestic</option></select></div>
       </div>
-      <label className="row gap-2 xs" style={{ alignItems: 'center' }}><input type="checkbox" checked={mfn} onChange={(e) => setMfn(e.target.checked)} /> Most Favoured Nations: both sides get the same number</label>
+      <label className="row gap-2 xs" style={{ alignItems: 'center' }}>
+        <input type="checkbox" checked={mfn} onChange={(e) => setMfn(e.target.checked)} />
+        <span>Most Favoured Nations <span className="dim">— both sides get the same number</span></span>
+      </label>
       {answer && <div className="callout callout-negative" style={{ marginTop: 'var(--s2)' }}><p className="xs" style={{ margin: 0 }}>{answer}</p></div>}
     </Modal>
   );
