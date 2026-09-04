@@ -12,12 +12,14 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { titleCaseLabel } from '../core/text';
 import { CommandError } from '../core/simulation';
 import type { Franchise, Id, MarketingCampaign, Project, Release } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { BUYERS, EXHIBITORS, GENRE_APPETITE } from '../content/industry';
+import { isPlayersProject } from './studio-state';
 import { runEmbargoWave } from './critics';
 import { payOnePartner, NETWORKS } from '../content/networks';
 import { advancePhase } from './film';
@@ -86,7 +88,7 @@ export function registerRelease(sim: Simulation): void {
         s.schedule({
           at: Math.max(beat.at, s.now),
           kind: 'rel.marketing_beat',
-          label: `${project.title} — ${beat.kind.replace(/_/g, ' ')}`,
+          label: `${titleCaseLabel(project.title)} — ${beat.kind.replace(/_/g, ' ')}`,
           category: 'marketing',
           payload: { campaignId: campaign.id, index },
           priority: 48,
@@ -132,7 +134,7 @@ export function registerRelease(sim: Simulation): void {
       const partner = project.studioId && (p.strategy !== 'streaming_exclusive' && p.strategy !== 'network') ? payOnePartner(project.studioId) : undefined;
       const network = project.networkId ? NETWORKS.get(project.networkId) : undefined;
 
-      const maxTheaters = p.theaterCount ?? bookingFootprint(project, p.strategy, buyer?.distributionReach ?? 0.4);
+      const maxTheaters = Math.min(4_400, p.theaterCount ?? bookingFootprint(project, p.strategy, buyer?.distributionReach ?? 0.4));
 
       const openingTheaters = p.strategy === 'platform' ? 6 : maxTheaters;
 
@@ -151,6 +153,7 @@ export function registerRelease(sim: Simulation): void {
         windows: buildWindows(s, p.strategy, p.openingDate),
         streamingPartnerId: partner?.network.id ?? (network ? network.id : undefined),
         streamingPartnerName: partner?.network.name ?? network?.name,
+        market: project.productionCountryId ?? 'us',
         dailyBoxOffice: [],
         totalDomestic: 0,
         totalInternational: 0,
@@ -167,7 +170,7 @@ export function registerRelease(sim: Simulation): void {
       s.schedule({
         at: p.openingDate,
         kind: 'rel.open',
-        label: `${project.title} Opens`,
+        label: `${titleCaseLabel(project.title)} Opens`,
         category: 'release',
         payload: { releaseId: release.id },
         priority: 12,
@@ -212,8 +215,14 @@ export function bookingFootprint(
     const take = clamp(specialty * distributorReach, 0, 1);
     screens += chain.screens * take * (strategy === 'limited_theatrical' ? 0.18 : 1);
   }
-  return Math.max(strategy === 'limited_theatrical' ? 120 : 400, Math.round(screens));
+  // Circuits count screens; the trades count theatres, at about four and a
+  // half screens each. The widest release in the country is about 4,400.
+  const theatres = Math.round(screens / SCREENS_PER_THEATRE);
+  return Math.max(strategy === 'limited_theatrical' ? 25 : 600, theatres);
 }
+
+/** Screens per theatre across the circuits, the ratio the trades' theatre counts imply. */
+export const SCREENS_PER_THEATRE = 4.4;
 
 function buildWindows(sim: Simulation, strategy: Release['strategy'], openingDate: number): Release['windows'] {
   const z = sim.homeZone;
@@ -333,7 +342,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, week * 7, sim.homeZone),
         kind: 'rel.streaming_window',
-        label: `${project.title} — Streaming Week ${week + 1}`,
+        label: `${titleCaseLabel(project.title)} — Streaming Week ${week + 1}`,
         category: 'release',
         payload: { releaseId: release.id, week },
         priority: 74,
@@ -347,7 +356,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, day, sim.homeZone),
         kind: 'rel.box_office_day',
-        label: `${project.title} — Box Office Day ${day + 1}`,
+        label: `${titleCaseLabel(project.title)} — Box Office Day ${day + 1}`,
         category: 'release',
         payload: { releaseId: release.id, day },
         priority: 76,
@@ -359,21 +368,23 @@ function openRelease(sim: Simulation, releaseId: Id): void {
   sim.schedule({
     at: addDays(release.openingDate, 95, sim.homeZone),
     kind: 'rel.close',
-    label: `${project.title} — Run Closes`,
+    label: `${titleCaseLabel(project.title)} — Run Closes`,
     category: 'release',
     payload: { releaseId: release.id },
     priority: 40,
     refType: 'project', refId: project.id,
   });
 
-  sim.notify({
-    category: 'release',
-    title: `${project.title} is out`,
-    body: release.theaterCount > 0
-      ? `Opening in ${release.theaterCount.toLocaleString('en-US')} theatres.`
-      : `Streaming on ${release.distributorName}.`,
-    importance: 88, route: '/workspace/projects',
-  });
+  if (isPlayersProject(sim, project)) {
+    sim.notify({
+      category: 'release',
+      title: `${project.title} is out`,
+      body: release.theaterCount > 0
+        ? `Opening in ${release.theaterCount.toLocaleString('en-US')} theatres.`
+        : `Streaming on ${release.distributorName}.`,
+      importance: 88, route: '/workspace/projects',
+    });
+  }
   sim.emit('project.released', {
     projectId: project.id, releaseId: release.id,
     strategy: release.strategy, theaterCount: release.theaterCount,
@@ -403,17 +414,41 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
   if (day === 0) {
     // Opening day admissions.
     // A series people want more of opens bigger than a standalone; one they
-    // are tired of opens smaller, however good this entry happens to be.
+    // are tired of opens smaller, however good this entry happens to be. And
+    // nothing opens alone: what else is in theatres takes its share.
+    const competition = competitionFactor(sim, release);
+    const lift = franchiseLift(sim, project);
+    const luck = rng.float(0.82, 1.22);
     const perTheatre = remap(awareness, 0, 100, 120, 2600)
       * remap(intent, 0, 100, 0.35, 1.9)
       * remap(appetite, 0, 100, 0.6, 1.35)
       * remap(starPower, 0, 100, 0.85, 1.35)
-      * franchiseLift(sim, project)
-      * rng.float(0.82, 1.22);
-    const admissions = Math.round(release.theaterCount * perTheatre / 10);
+      * lift
+      * competition.factor
+      * luck;
+    // perTheatre is calibrated per screen; a theatre has several.
+    const admissions = Math.round(release.theaterCount * SCREENS_PER_THEATRE * perTheatre / 10);
     const ticketPrice = 1_150;
     const gross = admissions * ticketPrice;
     recordBoxOfficeDay(sim, release, project, day, gross, rng);
+    if (isPlayersProject(sim, project)) {
+      sim.audit({
+        kind: 'rel.opening_decided', subjectType: 'project', subjectId: project.id,
+        question: `Why did ${project.title} open the way it did?`,
+        summary: `${formatMoneyCompact(gross)} on opening day across ${release.theaterCount.toLocaleString('en-US')} theatres.`,
+        factors: [
+          { label: 'Awareness', detail: `${Math.round(awareness)} out of 100 know it exists. That is the campaign.`, weight: 0.3, contribution: remap(awareness, 0, 100, 120, 2600) / 2600, knowable: true },
+          { label: 'Intent', detail: `${Math.round(intent)} out of 100 of them mean to see it.`, weight: 0.2, contribution: remap(intent, 0, 100, 0.35, 1.9), knowable: true },
+          { label: 'Genre Appetite', detail: `${project.genres.map((g) => g).join(', ')} reads ${Math.round(appetite)} out of 100 with audiences.`, weight: 0.1, contribution: remap(appetite, 0, 100, 0.6, 1.35), knowable: true },
+          { label: 'Star Power', detail: `The cast's fame averages ${Math.round(starPower)} out of 100.`, weight: 0.1, contribution: remap(starPower, 0, 100, 0.85, 1.35), knowable: true },
+          { label: 'Franchise', detail: lift === 1 ? 'A standalone.' : `Appetite for the series multiplies the opening by ${lift.toFixed(2)}.`, weight: 0.1, contribution: lift, knowable: true },
+          { label: 'Competition', detail: competition.detail, weight: 0.15, contribution: competition.factor, knowable: true },
+          { label: 'The Weekend Itself', detail: 'Weather, a game, a mood. Not knowable in advance.', weight: 0.05, contribution: luck, knowable: false },
+        ],
+        seed: `box_office|${release.id}|0`, roll: luck, probability: competition.factor, score: perTheatre,
+        outcome: 'opened',
+      });
+    }
     return;
   }
 
@@ -437,6 +472,36 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
   const base = previous.domestic / Math.max(0.4, weekdayFactorOf(day - 1));
   const gross = Math.max(0, Math.round(base * decay * weekdayFactor * rng.float(0.9, 1.1)));
   recordBoxOfficeDay(sim, release, project, day, gross, rng);
+}
+
+/**
+ * What else is in theatres the weekend a picture opens. Every wide release
+ * opening within three days takes a slice, a big holdover in its second
+ * weekend takes a smaller one, and the slices are capped: nobody loses more
+ * than three tenths of an opening to the calendar.
+ */
+export function competitionFactor(sim: Simulation, release: Release): { factor: number; detail: string } {
+  let haircut = 0;
+  const rivals: string[] = [];
+  for (const other of Object.values(sim.universe.releases)) {
+    if (other.id === release.id || other.theaterCount < 1500) continue;
+    if (other.status !== 'in_release' && other.status !== 'planned') continue;
+    const gap = Math.abs(other.openingDate - release.openingDate) / MS_DAY;
+    const project = sim.universe.projects[other.projectId];
+    if (!project) continue;
+    const campaign = Object.values(sim.universe.marketingCampaigns).find((c) => c.projectId === project.id);
+    const awareness = campaign?.awareness ?? 25;
+    if (gap <= 3) {
+      haircut += remap(awareness, 40, 95, 0.03, 0.12);
+      rivals.push(project.title);
+    } else if (gap >= 5 && gap <= 9 && other.openingDate < release.openingDate && awareness >= 70) {
+      haircut += 0.03;
+      rivals.push(`${project.title} (holdover)`);
+    }
+  }
+  const factor = 1 - clamp(haircut, 0, 0.3);
+  const detail = rivals.length === 0 ? 'A clear weekend. Nothing else of size opened against it.' : `Against ${rivals.slice(0, 3).join(', ')}${rivals.length > 3 ? ` and ${rivals.length - 3} more` : ''}: ${Math.round((1 - factor) * 100)}% off the opening.`;
+  return { factor, detail };
 }
 
 function weekdayFactorOf(day: number): number {
@@ -465,6 +530,10 @@ function recordBoxOfficeDay(
 
   if (day === 2) {
     const openingWeekend = release.dailyBoxOffice.slice(0, 3).reduce((s, d) => s + d.domestic, 0);
+    if (!isPlayersProject(sim, project)) {
+      sim.emit('rel.opening_weekend', { projectId: project.id, releaseId: release.id, gross: openingWeekend, theaters: release.theaterCount });
+      return;
+    }
     sim.notify({
       category: 'release',
       title: `${project.title} opened to ${formatMoneyCompact(openingWeekend)}`,
@@ -533,7 +602,7 @@ function runStreamingWindow(sim: Simulation, releaseId: Id, week: number): void 
 
   project.streamingHoursViewed = results.hoursViewed;
 
-  if (week === 0) {
+  if (week === 0 && isPlayersProject(sim, project)) {
     sim.notify({
       category: 'release',
       title: `${project.title} — first week on ${release.distributorName}`,
@@ -642,7 +711,7 @@ function closeRelease(sim: Simulation, releaseId: Id): void {
     outcome: profit >= 0 ? 'profitable' : 'loss',
   });
 
-  sim.remember({
+  if (isPlayersProject(sim, project)) sim.remember({
     category: 'project',
     title: profit >= 0 ? `${project.title} turned a profit` : `${project.title} did not recoup`,
     detail: `${summary} Producer revenue ${formatMoneyCompact(netToProducer)} against ${formatMoneyCompact(project.totalCost)} of cost.`,

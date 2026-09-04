@@ -312,6 +312,9 @@ a:hover { text-decoration: underline; }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .tabular { font-variant-numeric: tabular-nums; }
 .positive { color: var(--positive); }
+/* A name that is also a way in: a button dressed as a link inside running text. */
+button.link { background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+button.link:hover { color: var(--accent-strong); }
 .negative { color: var(--negative); }
 .warning { color: var(--warning); }
 .small { font-size: var(--size-sm); }

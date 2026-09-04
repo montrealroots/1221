@@ -18,6 +18,7 @@ import { effectiveAttributes, systemModifier } from '../domain/attributes';
 import { readiness } from './life';
 import { AGENCIES } from '../content/industry';
 import { STUDIOS, type Studio, type StudioFormat } from '../content/studios';
+import { effectiveStudio } from './studio-state';
 import { NETWORKS, type Network } from '../content/networks';
 import { quickReception } from './critics';
 import { generatePersonName, generateCharacterName } from '../content/names';
@@ -820,11 +821,13 @@ const FILM_COUNTRIES = ['us', 'uk', 'fr', 'kr', 'jp', 'in', 'es', 'it', 'de', 'm
  * makes this kind of thing at this size, preferably where the film is from.
  * The weights are SLATE's; the studios and what they make are the record.
  */
-export function studioForBackgroundProject(rng: ReturnType<Simulation['rng']>, project: Project): Studio | undefined {
-  const candidates = STUDIOS.all().filter((s) => s.formats.includes(project.format as StudioFormat) && !project.genres.some((g) => s.avoids.includes(g)));
+export function studioForBackgroundProject(rng: ReturnType<Simulation['rng']>, project: Project, sim?: Simulation): Studio | undefined {
+  const candidates = STUDIOS.all().filter((s) => s.formats.includes(project.format as StudioFormat) && !project.genres.some((g) => s.avoids.includes(g)) && !(sim && effectiveStudio(sim, s).closing));
   if (candidates.length === 0) return undefined;
   const weights = candidates.map((s) => {
-    let weight = Math.max(1, s.slateSize);
+    // A studio's mood in the save sets how much it takes on: a slate cut is a
+    // slate cut, an expansion is an expansion.
+    let weight = Math.max(1, sim ? Math.max(0.2, effectiveStudio(sim, s).slateSize) : s.slateSize);
     if (s.countryId === project.productionCountryId) weight *= 12;
     else if (s.countryId !== 'us') weight *= 0.1;
     else if (project.productionCountryId && project.productionCountryId !== 'us') weight *= 0.3;
@@ -903,7 +906,7 @@ export function seedIndependentProject(sim: Simulation, seed: number): Project |
   // Its own stream, so choosing a studio never shifts the draws the rest of
   // the world makes: a save's trajectory is the same as before studios existed.
   const television = project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie';
-  const studio = studioForBackgroundProject(sim.rng('world_studio', seed, Math.floor(sim.now / MS_DAY)), project);
+  const studio = studioForBackgroundProject(sim.rng('world_studio', seed, Math.floor(sim.now / MS_DAY)), project, sim);
   if (studio) {
     project.studioId = studio.id;
     project.distributorName = studio.name;
@@ -1031,7 +1034,7 @@ function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
       project.finalQuality = backgroundQuality(sim, project, rng);
       quickReception(sim, project, sim.rng('world_reception', project.id));
       if (!project.distributorName) {
-        const distributor = studioForBackgroundProject(sim.rng('world_studio', project.id), project);
+        const distributor = studioForBackgroundProject(sim.rng('world_studio', project.id), project, sim);
         project.studioId = distributor?.id;
         project.distributorName = distributor?.name ?? 'Self-distributed';
       }

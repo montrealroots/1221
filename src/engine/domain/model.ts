@@ -1247,6 +1247,8 @@ export interface Project {
   seasons?: { number: number; episodeCount: number; orderedAt: Instant; status: string }[];
   parentSeriesId?: Id;
   franchiseId?: Id;
+  /** Set when the project is a real title from a studio's dated slate, released by the world on its day. */
+  catalogueQid?: string;
 
   greenlitAt?: Instant;
   greenlitById?: Id;
@@ -1467,6 +1469,8 @@ export interface MarketingCampaign {
   intent: number;
   /** -100..100 how they feel about it. */
   sentiment: number;
+  /** Set once the producer has asked the distributor for more prints and advertising. */
+  studioPush?: { at: Instant; granted: boolean; amount: Money };
   socialPostIds: Id[];
   startedAt: Instant;
 }
@@ -1480,6 +1484,8 @@ export interface Release {
   /** The real service that carries it after cinemas, by its pay-one deal, when one applies. */
   streamingPartnerId?: string;
   streamingPartnerName?: string;
+  /** The home market whose weekend chart counts it, as a country id. Absent means the United States. */
+  market?: string;
   /** Fraction of gross the distributor keeps. */
   distributorShare: number;
   /** Fraction exhibitors keep of theatrical gross. */
@@ -1674,6 +1680,137 @@ export interface Franchise {
 }
 
 // ---------------------------------------------------------------------------
+// The studios and networks as they live inside a save
+// ---------------------------------------------------------------------------
+
+export type IndustryNewsKind = 'release' | 'weekend' | 'greenlight' | 'deal' | 'leadership' | 'corporate' | 'standing' | 'slate' | 'year';
+
+export interface IndustryNewsItem {
+  at: Instant;
+  kind: IndustryNewsKind;
+  title: string;
+  detail: string;
+  projectId?: Id;
+}
+
+/** A seat at a studio or network as it stands in this save, once anything about it has changed. */
+export interface LiveLeader {
+  name: string;
+  title: string;
+  /** When they took the seat in this save; absent for a seat held since before the save began. */
+  since?: Instant;
+  /** True when SLATE generated the person to fill a seat that emptied. Never a real person. */
+  generated?: boolean;
+}
+
+export type StudioStrategy = 'steady' | 'franchise_first' | 'prestige' | 'volume' | 'cost_cutting' | 'expansion';
+
+/** What a real studio has done, and how it regards the player, since the save began. Everything here is simulation. */
+export interface StudioState {
+  id: string;
+  saveId: Id;
+  /** 0-100 how the studio regards the player: who returns calls, who gets terms. */
+  standing: number;
+  standingLog: { at: Instant; delta: number; note: string }[];
+  /** 0-100 corporate mood, from results. Drives strategy, slate size and appetite for risk. */
+  confidence: number;
+  strategy: StudioStrategy;
+  /** Multiplier on how many projects the studio puts through in a year. */
+  slateMultiplier: number;
+  /** Drift on the studio's calibrated risk appetite and prestige bias, from results and new leadership. */
+  riskDrift: number;
+  prestigeDrift: number;
+  /** Domestic gross of its releases by calendar year in the save, in cents. */
+  yearGross: Record<string, Money>;
+  yearResults: Record<string, { releases: number; hits: number; flops: number }>;
+  /** The roster as it stands now, once a seat has changed hands in the save. */
+  leadership?: LiveLeader[];
+  leadershipChanges: { at: Instant; left: string; title: string; successor: string; generated: boolean; reason: string }[];
+  parentOverride?: string;
+  ownershipOverride?: string;
+  statusOverride?: string;
+  /** True once the studio has stopped taking on new work in this save. */
+  closing?: boolean;
+  corporate: { eventId: string; outcomeId: string; at: Instant; note: string }[];
+  news: IndustryNewsItem[];
+}
+
+export interface NetworkState {
+  id: string;
+  saveId: Id;
+  standing: number;
+  standingLog: { at: Instant; delta: number; note: string }[];
+  confidence: number;
+  leadership?: LiveLeader[];
+  leadershipChanges: { at: Instant; left: string; title: string; successor: string; generated: boolean; reason: string }[];
+  parentOverride?: string;
+  statusOverride?: string;
+  closing?: boolean;
+  corporate: { eventId: string; outcomeId: string; at: Instant; note: string }[];
+  news: IndustryNewsItem[];
+}
+
+/** A first-look or overall deal between the player (or their company) and a real studio or network. */
+export interface TalentDeal {
+  id: Id;
+  saveId: Id;
+  kind: 'first_look' | 'overall';
+  counterpartyKind: 'studio' | 'network';
+  counterpartyId: string;
+  counterpartyName: string;
+  holderId: Id;
+  holderKind: 'person' | 'company';
+  /** Overhead paid to the holder each year of the term, in cents. */
+  annualFee: Money;
+  /** Days the counterparty has to answer before anyone else may see a project. */
+  exclusiveDays: number;
+  startsAt: Instant;
+  endsAt: Instant;
+  status: 'active' | 'ended' | 'expired';
+  endedReason?: string;
+  projectsShown: number;
+  paidTotal: Money;
+}
+
+export interface BoxOfficeEntry {
+  projectId: Id;
+  /** The market the gross belongs to, as a country id. Every market has its own chart. */
+  market: string;
+  title: string;
+  studioId?: string;
+  distributorName: string;
+  /** Friday to Sunday domestic, in cents. */
+  weekend: Money;
+  /** Running domestic total, in cents. */
+  total: Money;
+  theaters: number;
+  /** Weekend of release: 1 is opening. */
+  week: number;
+  /** True when the title is a real one from the record, released by the world on its day. */
+  onRecord: boolean;
+  /** True when it is the player's own picture. */
+  yours: boolean;
+}
+
+export interface BoxOfficeWeekend {
+  /** The Friday, as a date key. */
+  key: string;
+  fridayAt: Instant;
+  entries: BoxOfficeEntry[];
+}
+
+export interface TradeItem {
+  id: Id;
+  at: Instant;
+  kind: IndustryNewsKind;
+  headline: string;
+  detail: string;
+  studioId?: string;
+  networkId?: string;
+  projectId?: Id;
+}
+
+// ---------------------------------------------------------------------------
 // Companies
 // ---------------------------------------------------------------------------
 
@@ -1857,7 +1994,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 15;
+export const SAVE_SCHEMA_VERSION = 16;
 
 export interface SaveMeta {
   id: Id;
@@ -1967,6 +2104,19 @@ export interface SaveUniverse {
   awardNominations: Record<Id, AwardNomination>;
   festivalSubmissions: Record<Id, FestivalSubmission>;
   franchises: Record<Id, Franchise>;
+
+  /** The real studios and networks as they live in this save, keyed by registry id. */
+  studios: Record<string, StudioState>;
+  networks: Record<string, NetworkState>;
+  talentDeals: Record<Id, TalentDeal>;
+  boxOffice: {
+    weekends: BoxOfficeWeekend[];
+    /** Gross by calendar year, market (country id) and studio id ('other' for the rest), in cents. Never trimmed. */
+    yearToDate: Record<string, Record<string, Record<string, Money>>>;
+    /** Weekend lumps waiting to be counted, from the world's own lump-sum releases. */
+    pending: { key: string; entry: BoxOfficeEntry }[];
+  };
+  trade: TradeItem[];
 
   companies: Record<Id, Company>;
   divisions: Record<Id, Division>;

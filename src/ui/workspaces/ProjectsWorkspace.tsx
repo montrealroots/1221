@@ -1,4 +1,5 @@
 import { formatLabel, titleCaseLabel } from '@/engine/core/text';
+import { STUDIOS } from '@/engine/content/studios';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -75,6 +76,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
   const post = useWorld((s) => postBoard(s, projectId));
   const shooting = useWorld((s) => shootingBoard(s, projectId));
   const release = useWorld((s) => releaseSummary(s, projectId));
+  const campaign = useWorld((s) => Object.values(s.universe.marketingCampaigns).find((c) => c.projectId === projectId));
   const pl = useWorld((s) => projectProfitLoss(s, projectId));
   const companies = useWorld(playerCompanies);
   const roles = useWorld((s) => Object.values(s.universe.roles).filter((r) => r.projectId === projectId));
@@ -234,6 +236,14 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   openingDate: addDays(sim.now, 120, sim.homeZone),
                 })}
                 cta="Plan"
+              />
+            )}
+            {campaign && project.studioId && !campaign.studioPush && (!release || release.release.status === 'planned') && (
+              <ActionRow
+                label={`Ask ${STUDIOS.get(project.studioId)?.shortName ?? 'The Studio'} For More Prints And Advertising`}
+                detail="Once. They decide on your standing with them and what they have seen of the picture; a no costs you a little of both."
+                action={() => run('studio.request_pa', { projectId: project.id })}
+                cta="Ask"
               />
             )}
             {project.finalQuality && !project.releaseId && (

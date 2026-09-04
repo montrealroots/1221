@@ -17,6 +17,7 @@ export type IdNamespace =
   | 'prop' | 'listing' | 'offer' | 'build' | 'room' | 'furn'
   | 'veh' | 'vehmod' | 'service' | 'part'
   | 'trip' | 'flight' | 'stay'
+  | 'trade' | 'deal'
   | 'acct' | 'post' | 'deal' | 'campaign'
   | 'proj' | 'script' | 'draft' | 'role' | 'audition' | 'contract' | 'rights'
   | 'shootday' | 'posttask' | 'release' | 'award' | 'nom'

@@ -36,6 +36,7 @@ import { registerProduction } from './systems/production';
 import { registerRelease, registerFranchises } from './systems/release';
 import { registerCritics } from './systems/critics';
 import { registerIpLicensing } from './systems/ip';
+import { registerStudios, ensureStudioSchedules } from './systems/studios';
 import { registerProfessions } from './systems/professions';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
@@ -72,6 +73,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCritics(sim);
   registerFranchises(sim);
   registerIpLicensing(sim);
+  registerStudios(sim);
   registerProfessions(sim);
   registerDriving(sim);
   registerAwards(sim);
@@ -117,6 +119,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise Appetite', category: 'system', priority: 94 });
+  ensureStudioSchedules(sim);
 
   const nextYear = zonedParts(sim.now, z).year + 1;
   sim.schedule({
@@ -388,6 +391,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   ensureSeasons(sim);
+  // A save from before the studios lived inside it needs their clocks running.
+  ensureStudioSchedules(sim);
   return sim;
 }
 
@@ -673,6 +678,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     } else {
       steps.push('The studios are now the real ones.');
     }
+  }
+
+  if (from < 16) {
+    // The studios and networks now live inside the save: their standing with
+    // the player, their results, their dated slate playing out, the weekend
+    // chart and the trades. Nothing already in the save is touched; the new
+    // collections start empty and the world fills them from here.
+    record['studios'] ??= {};
+    record['networks'] ??= {};
+    record['talentDeals'] ??= {};
+    record['boxOffice'] ??= { weekends: [], yearToDate: {}, pending: [] };
+    record['trade'] ??= [];
+    steps.push('The studios and networks now act inside the save: their dated slates release on the day, the weekend box office is counted, and their standing with you is kept.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

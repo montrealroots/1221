@@ -17,12 +17,14 @@ import {
 } from '@/engine/content/filmography';
 import { COUNTRIES } from '@/engine/content/geography';
 import { formatMoneyCompact } from '@/engine/core/money';
-import { formatDate, zonedParts } from '@/engine/core/time';
+import { addDays, dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { formatLabel, titleCaseLabel } from '@/engine/core/text';
-import type { Project, ProjectFormat } from '@/engine/domain/model';
+import type { BoxOfficeWeekend, IndustryNewsItem, LiveLeader, Project, ProjectFormat, TradeItem } from '@/engine/domain/model';
+import { activeDeal, effectiveStudio, liveLeadership, marketRank, marketShare, marketsCounted, type CompanyKind } from '@/engine/systems/studio-state';
+import { STRATEGY_LABEL, releaseCalendar, upcomingFor } from '@/engine/systems/studios';
 import { LICENCE_KINDS, LICENCE_KIND_LABEL, licenceOdds, licenceStatus, type LicenceKind } from '@/engine/systems/ip';
 
-type Tab = 'studios' | 'networks' | 'people';
+type Tab = 'studios' | 'networks' | 'boxoffice' | 'trades' | 'people';
 type Kind = 'all' | 'film' | 'tv';
 type Sort = 'year' | 'gross' | 'tomatometer' | 'imdb' | 'title';
 
@@ -63,9 +65,13 @@ export function IndustryWorkspace() {
       <Tabs active={tab} onChange={(id) => { setTab(id); setSelectedId(null); }} tabs={[
         { id: 'studios', label: 'Studios', badge: studios.length },
         { id: 'networks', label: 'Networks', badge: networks.length },
+        { id: 'boxoffice', label: 'Box Office' },
+        { id: 'trades', label: 'Trades' },
         { id: 'people', label: 'People' },
       ]} />
 
+      {tab === 'boxoffice' && <BoxOfficeTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
+      {tab === 'trades' && <TradesTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} onNetwork={(id) => { setTab('networks'); setSelectedId(id); }} />}
       {tab === 'studios' && !selectedStudio && <StudioList onSelect={setSelectedId} />}
       {tab === 'studios' && selectedStudio && <StudioDetail studio={selectedStudio} onBack={() => setSelectedId(null)} />}
       {tab === 'networks' && !selectedNetwork && <NetworkList onSelect={setSelectedId} />}
@@ -140,6 +146,9 @@ function StudioDetail({ studio, onBack }: { studio: Studio; onBack: () => void }
   const franchises = useMemo(() => franchisesIn(catalogue), [catalogue]);
   const inUniverse = useWorld((s) => Object.values(s.universe.projects).filter((p) => p.studioId === studio.id || (p.distributorName === studio.name && !p.studioId)));
   const licences = useWorld((s) => new Map(franchises.map((f) => [f.qid, licenceStatus(s, studio.id, f.qid)])));
+  const live = useWorld((s) => s.universe.studios[studio.id] ?? { statusOverride: undefined, parentOverride: undefined, ownershipOverride: undefined, news: [] as IndustryNewsItem[] });
+  const upcoming = useWorld((s) => upcomingFor(s, studio.id));
+  const inDevelopment = useWorld((s) => Object.values(s.universe.projects).filter((p) => p.studioId === studio.id && !p.catalogueQid && p.phase !== 'released' && p.phase !== 'library' && p.phase !== 'shelved'));
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -170,31 +179,20 @@ function StudioDetail({ studio, onBack }: { studio: Studio; onBack: () => void }
           <h1 style={{ margin: 0 }}>{studio.name}</h1>
         </div>
         <p className="muted">
-          {studio.parent ? `${studio.parent.name}. ` : ''}{studio.ownership}. {studio.city}{country ? `, ${country.name}` : ''}{studio.founded ? `, since ${studio.founded}` : ''}.
+          {live.parentOverride ?? studio.parent?.name ? `${live.parentOverride ?? studio.parent?.name}. ` : ''}{live.ownershipOverride ?? studio.ownership}. {studio.city}{country ? `, ${country.name}` : ''}{studio.founded ? `, since ${studio.founded}` : ''}.
         </p>
         <p className="small">{studio.description}</p>
-        {studio.status && <div className="callout callout-warning small">{studio.status}</div>}
-        {studio.parent?.note && !studio.status && <div className="callout callout-info small">{studio.parent.note}</div>}
+        {live.statusOverride !== undefined
+          ? (live.statusOverride && <div className="callout callout-warning small">{live.statusOverride} <span className="dim">In your universe.</span></div>)
+          : studio.status && <div className="callout callout-warning small">{studio.status}</div>}
+        {studio.parent?.note && !studio.status && live.statusOverride === undefined && <div className="callout callout-info small">{studio.parent.note}</div>}
         {studio.catalogueNote && <div className="callout small">{studio.catalogueNote}</div>}
       </div>
 
+      <StandingPanel kind="studio" id={studio.id} name={studio.shortName} />
+
       <div className="grid grid-2">
-        <Panel title="Leadership" subtitle="Who runs it. Verified seats carry the source that confirmed them this year." flush>
-          <div className="list">
-            {studio.leadership.map((leader) => (
-              <div key={`${leader.name}|${leader.title}`} className="list-item list-static">
-                <div className="grow" style={{ minWidth: 0 }}>
-                  <div className="small strong truncate">{leader.name}</div>
-                  <div className="xs dim">{leader.title}</div>
-                  {leader.note && <div className="xs dim">{leader.note}</div>}
-                </div>
-                {leader.source
-                  ? <a className="chip chip-positive" href={leader.source} target="_blank" rel="noreferrer" title={leader.source}>Verified</a>
-                  : <span className="chip" title="From the record, not confirmed this year">On Record</span>}
-              </div>
-            ))}
-          </div>
-        </Panel>
+        <LeadershipPanel kind="studio" id={studio.id} registry={studio.leadership} />
 
         <Panel title="What They Make" subtitle={stats && stats.titles > 0 ? `Measured from ${stats.titles.toLocaleString('en-US')} titles on record.` : 'The record is thin; these are SLATE\'s estimates.'}>
           <div className="grid grid-2">
@@ -223,6 +221,37 @@ function StudioDetail({ studio, onBack }: { studio: Studio; onBack: () => void }
       </Panel>
 
       <StudioDeals studio={studio} />
+
+      <Panel title="Coming Up" subtitle={`What ${studio.shortName} has dated on the record, and what it is making in your universe. Dates are the record; what happens on them is not.`} flush>
+        {upcoming.length === 0 && inDevelopment.length === 0
+          ? <Empty title="Nothing Dated" body={`${studio.shortName} has nothing dated ahead on the record and nothing in the works in your universe.`} />
+          : (
+            <div className="list">
+              {upcoming.slice(0, 14).map((t) => (
+                <div key={t.qid} className="list-item list-static">
+                  <div className="mono small" style={{ minWidth: 92 }}>{t.date}</div>
+                  <div className="grow" style={{ minWidth: 0 }}>
+                    <div className="small strong truncate">{t.title}</div>
+                    <div className="xs dim truncate">{formatLabel(t.kind)}{t.genres.length > 0 ? ` · ${t.genres.map(titleCaseLabel).join(', ')}` : ''}{t.franchise ? ` · ${titleCaseLabel(t.franchise.name)}` : ''}{t.budget ? ` · ${formatMoneyCompact(t.budget * 100)} Budget On Record` : ''}</div>
+                  </div>
+                  <span className="chip">Dated · On Record</span>
+                </div>
+              ))}
+              {inDevelopment.slice(0, 10).map((p) => (
+                <div key={p.id} className="list-item list-static">
+                  <div className="mono small dim" style={{ minWidth: 92 }}>{p.releaseDate ? formatDate(p.releaseDate, sim.homeZone) : 'Undated'}</div>
+                  <div className="grow" style={{ minWidth: 0 }}>
+                    <div className="small strong truncate">{p.title}</div>
+                    <div className="xs dim truncate">{formatLabel(p.format)} · {p.genres.map(titleCaseLabel).join(', ')}{p.budget > 0 ? ` · ${formatMoneyCompact(p.budget)}` : ''}</div>
+                  </div>
+                  <span className="chip chip-info">{titleCaseLabel(p.phase.replace(/_/g, ' '))} · Your Universe</span>
+                </div>
+              ))}
+            </div>
+          )}
+      </Panel>
+
+      <NewsPanel title={`This Year At ${studio.shortName}`} news={live.news} />
 
       <Panel title="Franchises And IP" subtitle={loaded ? `${franchises.length} franchises with two or more titles on record, biggest first. Every one is ${studio.shortName}'s to license; ask, and they answer the way a studio does.` : 'Loading the catalogue.'} flush>
         {franchises.length === 0
@@ -541,6 +570,7 @@ function NetworkDetail({ network, onBack }: { network: Network; onBack: () => vo
   const worldDay = (() => { const p = zonedParts(sim.now, sim.homeZone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; })();
   const series = useMemo(() => (loaded ? seriesOn(network.broadcasterNames) : []).filter((s) => !s.start || s.start <= worldDay), [loaded, network, worldDay]);
   const inUniverse = useWorld((s) => Object.values(s.universe.projects).filter((p) => p.networkId === network.id));
+  const liveNet = useWorld((s) => s.universe.networks[network.id] ?? { statusOverride: undefined, parentOverride: undefined, news: [] as IndustryNewsItem[] });
   const country = COUNTRIES.get(network.countryId);
   const [shown, setShown] = useState(60);
 
@@ -555,29 +585,18 @@ function NetworkDetail({ network, onBack }: { network: Network; onBack: () => vo
           <Logo id={network.id} name={network.shortName} large />
           <h1 style={{ margin: 0 }}>{network.name}</h1>
         </div>
-        <p className="muted">{network.parent ? `${network.parent.name}. ` : ''}{network.ownership}. {network.city}{country ? `, ${country.name}` : ''}{network.founded ? `, since ${network.founded}` : ''}.</p>
+        <p className="muted">{liveNet.parentOverride ?? network.parent?.name ? `${liveNet.parentOverride ?? network.parent?.name}. ` : ''}{network.ownership}. {network.city}{country ? `, ${country.name}` : ''}{network.founded ? `, since ${network.founded}` : ''}.</p>
         <p className="small">{network.description}</p>
-        {network.status && <div className="callout callout-warning small">{network.status}</div>}
-        {network.parent?.note && !network.status && <div className="callout callout-info small">{network.parent.note}</div>}
+        {liveNet.statusOverride !== undefined
+          ? (liveNet.statusOverride && <div className="callout callout-warning small">{liveNet.statusOverride} <span className="dim">In your universe.</span></div>)
+          : network.status && <div className="callout callout-warning small">{network.status}</div>}
+        {network.parent?.note && !network.status && liveNet.statusOverride === undefined && <div className="callout callout-info small">{network.parent.note}</div>}
       </div>
 
+      <StandingPanel kind="network" id={network.id} name={network.shortName} />
+
       <div className="grid grid-2">
-        <Panel title="Leadership" subtitle="Who runs it. Verified seats carry the source that confirmed them this year." flush>
-          <div className="list">
-            {network.leadership.map((leader) => (
-              <div key={`${leader.name}|${leader.title}`} className="list-item list-static">
-                <div className="grow" style={{ minWidth: 0 }}>
-                  <div className="small strong truncate">{leader.name}</div>
-                  <div className="xs dim">{leader.title}</div>
-                  {leader.note && <div className="xs dim">{leader.note}</div>}
-                </div>
-                {leader.source
-                  ? <a className="chip chip-positive" href={leader.source} target="_blank" rel="noreferrer" title={leader.source}>Verified</a>
-                  : <span className="chip" title="From the record, not confirmed this year">On Record</span>}
-              </div>
-            ))}
-          </div>
-        </Panel>
+        <LeadershipPanel kind="network" id={network.id} registry={network.leadership} />
         <Panel title="What It Commissions" subtitle="SLATE's calibration from the public record.">
           <div className="grid grid-2">
             <Stat label="Reach" value={network.reach ? network.reach.value.toLocaleString('en-US') : 'Not Published'} note={network.reach ? `${titleCaseLabel(network.reach.unit)} · ${network.reach.note}` : undefined} />
@@ -617,6 +636,8 @@ function NetworkDetail({ network, onBack }: { network: Network; onBack: () => vo
             </div>
           )}
       </Panel>
+
+      <NewsPanel title={`This Year At ${network.shortName}`} news={liveNet.news} />
 
       <Panel title="In Your Universe" subtitle="What it has commissioned since your save began. Simulation, not record." flush>
         {inUniverse.length === 0
@@ -740,5 +761,257 @@ function LicenceDialog({ studio, franchise, onClose }: { studio: Studio; franchi
       </div>
       {error && <div className="callout callout-warning small">{error}</div>}
     </Modal>
+  );
+}
+
+const STANDING_WORD = (standing: number) => standing >= 80 ? 'Inner Circle' : standing >= 60 ? 'Trusted' : standing >= 45 ? 'Known' : standing >= 25 ? 'A Name' : standing >= 10 ? 'Cold' : 'Burned';
+
+/** Where the player stands with one company, what mood it is in, and any deal between them. */
+function StandingPanel({ kind, id, name }: { kind: CompanyKind; id: string; name: string }) {
+  const { sim, run } = useGame();
+  const state = useWorld((s) => (kind === 'studio' ? s.universe.studios[id] : s.universe.networks[id]));
+  const deal = useWorld((s) => activeDeal(s, { counterpartyId: id }));
+  const year = zonedParts(sim.now, sim.homeZone).year;
+  const rank = useWorld((s) => (kind === 'studio' ? marketRank(s, id, year) : undefined));
+  const studio = kind === 'studio' ? STUDIOS.get(id) : undefined;
+  const mood = useWorld((s) => (studio ? effectiveStudio(s, studio) : undefined));
+  const standing = state?.standing ?? 30;
+  const log = state?.standingLog.slice(-6).reverse() ?? [];
+  return (
+    <Panel title="Where You Stand" subtitle={`How ${name} regards you, how it is doing, and any deal between you. Simulation, not record.`}>
+      <div className="grid grid-2">
+        <Stat label="Standing" value={`${Math.round(standing)} · ${STANDING_WORD(standing)}`} note="Moves with what you bring them and what it does. Settles over the months." />
+        {mood && <Stat label="Their Mood" value={STRATEGY_LABEL[mood.strategy]} note={`Confidence ${mood.confidence} out of 100${mood.closing ? ' · Closing' : ''}`} />}
+        {kind === 'studio' && <Stat label={`Market Share, ${year}`} value={rank ? `#${rank.rank} · ${Math.round(rank.share * 100)}%` : 'Nothing Counted Yet'} note={rank ? `${formatMoneyCompact(rank.gross)} This Year In ${COUNTRIES.get(rank.market)?.name ?? 'Its Home Market'}` : `At home, from the weekends counted in your universe`} />}
+        <Stat label="Your Deal" value={deal ? (deal.kind === 'first_look' ? 'First-Look' : 'Overall') : 'None'} note={deal ? `${formatMoneyCompact(deal.annualFee)} A Year Until ${formatDate(deal.endsAt, sim.homeZone)} · ${deal.projectsShown} Shown` : 'Standing above the high sixties and a track record bring one.'} />
+      </div>
+      {deal && (
+        <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
+          <button className="btn btn-sm" onClick={() => run('studio.end_deal', { dealId: deal.id })}>Walk Away From The Deal</button>
+          <span className="xs dim">Walking away costs standing. The overhead already paid is yours.</span>
+        </div>
+      )}
+      {log.length > 0 && (
+        <div className="list" style={{ marginTop: 'var(--s3)' }}>
+          {log.map((entry, i) => (
+            <div key={`${entry.at}|${i}`} className="list-item list-static">
+              <div className={`mono small ${entry.delta > 0 ? 'positive' : 'negative'}`} style={{ minWidth: 44 }}>{entry.delta > 0 ? '+' : ''}{entry.delta}</div>
+              <div className="grow small truncate">{entry.note}</div>
+              <div className="xs dim">{formatDate(entry.at, sim.homeZone)}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+/** The seats as they stand now. A seat that changed hands in the save says so, and a successor SLATE named is marked as such. */
+function LeadershipPanel({ kind, id, registry }: { kind: CompanyKind; id: string; registry: readonly { name: string; title: string; source?: string; note?: string }[] }) {
+  const { sim } = useGame();
+  const roster = useWorld((s) => liveLeadership(s, kind, id));
+  const changes = useWorld((s) => (kind === 'studio' ? s.universe.studios[id] : s.universe.networks[id])?.leadershipChanges ?? []);
+  const byName = new Map(registry.map((l) => [l.name, l]));
+  return (
+    <Panel title="Leadership" subtitle="Who runs it. Verified seats carry the source that confirmed them this year; a seat filled in your universe says so." flush>
+      <div className="list">
+        {roster.map((leader: LiveLeader) => {
+          const record = byName.get(leader.name);
+          return (
+            <div key={`${leader.name}|${leader.title}`} className="list-item list-static">
+              <div className="grow" style={{ minWidth: 0 }}>
+                <div className="small strong truncate">{leader.name}</div>
+                <div className="xs dim">{leader.title}</div>
+                {record?.note && <div className="xs dim">{record.note}</div>}
+                {leader.since && <div className="xs dim">Since {formatDate(leader.since, sim.homeZone)} in your universe.</div>}
+              </div>
+              {leader.generated
+                ? <span className="chip chip-warning" title="SLATE named this person to fill a seat that emptied in your universe. Not a real person.">Simulated Successor</span>
+                : record?.source
+                  ? <a className="chip chip-positive" href={record.source} target="_blank" rel="noreferrer" title={record.source}>Verified</a>
+                  : <span className="chip" title="From the record, not confirmed this year">On Record</span>}
+            </div>
+          );
+        })}
+        {changes.slice().reverse().slice(0, 5).map((change, i) => (
+          <div key={`${change.at}|${i}`} className="list-item list-static">
+            <div className="grow xs dim">{change.left} left as {change.title} {change.reason} on {formatDate(change.at, sim.homeZone)}. {change.successor} took the seat{change.generated ? ', a name SLATE gave the seat' : ''}.</div>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  );
+}
+
+const NEWS_KIND_LABEL: Readonly<Record<IndustryNewsItem['kind'], string>> = {
+  release: 'Release', weekend: 'Weekend', greenlight: 'Greenlight', deal: 'Deal', leadership: 'Leadership', corporate: 'Corporate', standing: 'Standing', slate: 'Slate', year: 'Year',
+};
+
+function NewsPanel({ title, news }: { title: string; news: readonly IndustryNewsItem[] }) {
+  const { sim } = useGame();
+  const items = news.slice().reverse().slice(0, 14);
+  return (
+    <Panel title={title} subtitle="What it has done since your save began, newest first. Simulation, not record." flush>
+      {items.length === 0
+        ? <Empty title="Nothing Yet" body="Nothing has happened here since your save began." />
+        : (
+          <div className="list">
+            {items.map((item, i) => (
+              <div key={`${item.at}|${i}`} className="list-item list-static">
+                <div className="xs dim mono" style={{ minWidth: 92 }}>{formatDate(item.at, sim.homeZone)}</div>
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div className="small strong truncate">{item.title}</div>
+                  <div className="xs dim">{item.detail}</div>
+                </div>
+                <span className="chip">{NEWS_KIND_LABEL[item.kind]}</span>
+              </div>
+            ))}
+          </div>
+        )}
+    </Panel>
+  );
+}
+
+/** The weekend chart, the year's market share, and what is dated ahead. */
+function BoxOfficeTab({ onStudio }: { onStudio: (id: string) => void }) {
+  const { sim } = useGame();
+  const weekends = useWorld((s) => s.universe.boxOffice.weekends);
+  const [key, setKey] = useState<string | null>(null);
+  const [market, setMarket] = useState('us');
+  const latest = weekends[weekends.length - 1];
+  const weekend: BoxOfficeWeekend | undefined = key ? weekends.find((w) => w.key === key) : latest;
+  const entries = (weekend?.entries ?? []).filter((e) => e.market === market);
+  const year = zonedParts(sim.now, sim.homeZone).year;
+  const markets = useWorld((s) => marketsCounted(s, year));
+  const share = useWorld((s) => marketShare(s, year, market));
+  const calendar = useWorld((s) => releaseCalendar(s, 90));
+  const total = share.reduce((a, r) => a + r.gross, 0);
+  const marketName = COUNTRIES.get(market)?.name ?? market.toUpperCase();
+  const today = dateKey(sim.now, sim.homeZone);
+  const weekAhead = dateKey(addDays(sim.now, 7, sim.homeZone), sim.homeZone);
+  return (
+    <>
+      <Panel
+        title="The Weekend"
+        subtitle={weekend ? `Friday ${weekend.key} to Sunday in ${marketName}. Every market has its own chart, counted Sunday night. Simulation, not record.` : 'The first weekend is counted on Sunday night.'}
+        flush
+        actions={(
+          <div className="row gap-2">
+            {markets.length > 1 && (
+              <select className="btn btn-sm" value={market} onChange={(e) => setMarket(e.target.value)} aria-label="Market">
+                {markets.map((m) => <option key={m} value={m}>{COUNTRIES.get(m)?.name ?? m.toUpperCase()}</option>)}
+              </select>
+            )}
+            {weekends.length > 1 && (
+              <select className="btn btn-sm" value={weekend?.key ?? ''} onChange={(e) => setKey(e.target.value)} aria-label="Weekend">
+                {weekends.slice().reverse().slice(0, 26).map((w) => <option key={w.key} value={w.key}>{w.key}</option>)}
+              </select>
+            )}
+          </div>
+        )}
+      >
+        {entries.length === 0
+          ? <Empty title="Nothing Counted Yet" body={weekend ? `Nothing opened in ${marketName} that weekend.` : 'The chart fills in as pictures open. The first Sunday night in your save counts the first weekend.'} />
+          : (
+            <div style={{ overflowX: 'auto' }}>
+              <table className="table">
+                <thead><tr><th>#</th><th>Title</th><th>Distributor</th><th style={{ whiteSpace: 'nowrap' }}>Weekend</th><th style={{ whiteSpace: 'nowrap' }}>Total</th><th>Week</th><th>Theatres</th><th></th></tr></thead>
+                <tbody>
+                  {entries.slice(0, 15).map((e, i) => (
+                    <tr key={e.projectId}>
+                      <td className="mono">{i + 1}</td>
+                      <td className="strong" style={{ minWidth: 180 }}>{e.title}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>{e.studioId && STUDIOS.get(e.studioId) ? <button className="link" onClick={() => onStudio(e.studioId!)}>{e.distributorName}</button> : e.distributorName}</td>
+                      <td className="mono" style={{ whiteSpace: 'nowrap' }}>{formatMoneyCompact(e.weekend)}</td>
+                      <td className="mono" style={{ whiteSpace: 'nowrap' }}>{formatMoneyCompact(e.total)}</td>
+                      <td className="mono">{e.week}</td>
+                      <td className="mono">{e.theaters.toLocaleString('en-US')}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>{e.yours ? <span className="chip chip-positive">Yours</span> : e.onRecord ? <span className="chip">On Record</span> : <span className="chip chip-info">World</span>}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+      </Panel>
+
+      <div className="grid grid-2">
+        <Panel title={`Market Share, ${year}`} subtitle={total > 0 ? `${formatMoneyCompact(total)} counted so far this year in ${marketName} in your universe.` : `Counted from the weekends in ${marketName} in your universe.`} flush>
+          {share.length === 0
+            ? <Empty title="Nothing Counted Yet" body="Share is counted from the weekends." />
+            : (
+              <div className="list">
+                {share.slice(0, 12).map((r) => (
+                  <div key={r.studioId} className="list-item list-static" style={{ display: 'block' }}>
+                    <div className="row-between">
+                      <div className="small strong truncate">{r.studioId !== 'other' && STUDIOS.get(r.studioId) ? <button className="link" onClick={() => onStudio(r.studioId)}>{r.name}</button> : r.name}</div>
+                      <div className="mono small" style={{ whiteSpace: 'nowrap' }}>{formatMoneyCompact(r.gross)} · {Math.round(r.share * 100)}%</div>
+                    </div>
+                    <div style={{ height: 6, background: 'var(--line)', borderRadius: 3, marginTop: 6 }}><div style={{ width: `${Math.max(2, Math.round(r.share * 100))}%`, height: 6, background: 'var(--accent)', borderRadius: 3 }} /></div>
+                  </div>
+                ))}
+              </div>
+            )}
+        </Panel>
+        <Panel title="Dated Ahead" subtitle="The next ninety days on the record, across every studio. The dates are real; what happens on them is your universe's." flush>
+          {calendar.length === 0
+            ? <Empty title="Nothing Dated" body="No studio has anything on the record in the next ninety days." />
+            : (
+              <div className="list">
+                {calendar.slice(0, 24).map((t) => (
+                  <div key={`${t.studioId}|${t.qid}`} className="list-item list-static">
+                    <div className="mono small" style={{ minWidth: 92 }}>{t.date}</div>
+                    <div className="grow" style={{ minWidth: 0 }}>
+                      <div className="small strong truncate">{t.title}</div>
+                      <div className="xs dim truncate"><button className="link" onClick={() => onStudio(t.studioId)}>{STUDIOS.get(t.studioId)?.shortName ?? t.studioId}</button>{t.genres.length > 0 ? ` · ${t.genres.slice(0, 2).map(titleCaseLabel).join(', ')}` : ''}{t.franchise ? ` · ${titleCaseLabel(t.franchise.name)}` : ''}</div>
+                    </div>
+                    {t.date >= today && t.date <= weekAhead && <span className="chip chip-warning">This Week</span>}
+                  </div>
+                ))}
+              </div>
+            )}
+        </Panel>
+      </div>
+    </>
+  );
+}
+
+/** Every headline the industry made in the save, newest first. */
+function TradesTab({ onStudio, onNetwork }: { onStudio: (id: string) => void; onNetwork: (id: string) => void }) {
+  const { sim } = useGame();
+  const trade = useWorld((s) => s.universe.trade);
+  const [kind, setKind] = useState<'all' | TradeItem['kind']>('all');
+  const items = trade.slice().reverse().filter((t) => kind === 'all' || t.kind === kind).slice(0, 80);
+  return (
+    <Panel
+      title="The Trades"
+      subtitle="What the industry did in your universe, as the trades would report it. Simulation, not record."
+      flush
+      actions={(
+        <select className="btn btn-sm" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label="Kind">
+          <option value="all">Everything</option>
+          {(Object.keys(NEWS_KIND_LABEL) as TradeItem['kind'][]).map((k) => <option key={k} value={k}>{NEWS_KIND_LABEL[k]}</option>)}
+        </select>
+      )}
+    >
+      {items.length === 0
+        ? <Empty title="No Headlines Yet" body="The trades fill in as the studios act: the first opening, the first weekend, the first deal." />
+        : (
+          <div className="list">
+            {items.map((item) => (
+              <div key={item.id} className="list-item list-static">
+                {item.studioId && STUDIOS.get(item.studioId) && <button className="btn btn-ghost btn-sm" onClick={() => onStudio(item.studioId!)} style={{ padding: 0 }}><Logo id={item.studioId} name={STUDIOS.get(item.studioId)?.shortName ?? ''} /></button>}
+                {item.networkId && NETWORKS.get(item.networkId) && <button className="btn btn-ghost btn-sm" onClick={() => onNetwork(item.networkId!)} style={{ padding: 0 }}><Logo id={item.networkId} name={NETWORKS.get(item.networkId)?.shortName ?? ''} /></button>}
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div className="small strong">{item.headline}</div>
+                  <div className="xs dim">{item.detail}</div>
+                </div>
+                <div className="xs dim mono" style={{ whiteSpace: 'nowrap' }}>{formatDate(item.at, sim.homeZone)}</div>
+                <span className="chip">{NEWS_KIND_LABEL[item.kind]}</span>
+              </div>
+            ))}
+          </div>
+        )}
+    </Panel>
   );
 }

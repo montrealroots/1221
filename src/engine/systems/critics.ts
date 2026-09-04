@@ -17,6 +17,7 @@
  */
 
 import { buildFactors } from '../core/audit';
+import { titleCaseLabel } from '../core/text';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Id, Project, Reception, Release, Review } from '../domain/model';
@@ -344,7 +345,7 @@ export function defaultEmbargo(sim: Simulation, project: Project, release: Relea
 
 function scheduleWave(sim: Simulation, project: Project, wave: Wave, at: number, tick = 0): void {
   sim.schedule({
-    at, kind: 'crit.wave', label: `${project.title} — ${WAVE_LABEL[wave]}`, category: 'release',
+    at, kind: 'crit.wave', label: `${titleCaseLabel(project.title)} — ${WAVE_LABEL[wave]}`, category: 'release',
     payload: { projectId: project.id, wave, tick }, priority: 30, refType: 'project', refId: project.id,
   });
 }

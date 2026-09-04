@@ -23,6 +23,7 @@ import { STUDIOS, type Studio } from '../content/studios';
 import { franchisesIn, normaliseTitle, studioCatalog, titleTaken, type FranchiseSummary } from '../content/filmography';
 import { formatPlural, titleCaseLabel } from '../core/text';
 import { advancePhase } from './film';
+import { standingWith } from './studio-state';
 
 export type LicenceKind = 'sequel' | 'remake' | 'spin_off' | 'series';
 export const LICENCE_KINDS: readonly LicenceKind[] = ['sequel', 'remake', 'spin_off', 'series'];
@@ -87,23 +88,27 @@ export function licenceOdds(sim: Simulation, studio: Studio, franchise: Franchis
   const makesFormat = (studio.formats as readonly string[]).includes(format);
   const formatFit = makesFormat ? 1 : 0.4;
   const genreFit = genres.length === 0 || genres.some((g) => studio.wants.includes(g)) ? 1 : 0.6;
-  const standing = standingOf(sim, holderId, holderKind);
+  const standing = standingWith(sim, 'studio', studio.id);
+  const standingOfAsker = standingOf(sim, holderId, holderKind);
   const name = titleCaseLabel(franchise.name);
 
   const { factors, score } = buildFactors([
-    { label: 'Who Is Asking', detail: `The industry reads your standing at ${Math.round(standing.reputation)} out of 100.`, weight: 0.20, value: standing.reputation / 100 },
-    { label: 'Track Record', detail: standing.released === 0 ? 'Nothing released yet under your name.' : `${standing.released} released, ${standing.hits} that landed.`, weight: 0.10, value: clamp(standing.hits / 3, 0, 1) },
+    { label: 'Who Is Asking', detail: `The industry reads your standing at ${Math.round(standingOfAsker.reputation)} out of 100.`, weight: 0.20, value: standingOfAsker.reputation / 100 },
+    { label: 'Track Record', detail: standingOfAsker.released === 0 ? 'Nothing released yet under your name.' : `${standingOfAsker.released} released, ${standingOfAsker.hits} that landed.`, weight: 0.10, value: clamp(standingOfAsker.hits / 3, 0, 1) },
     { label: 'Is It Resting', detail: dormantYears === 0 ? `The latest ${name} title is this year. It is live, and live franchises stay in house.` : `The latest ${name} title was ${last}, ${dormantYears} year${dormantYears === 1 ? '' : 's'} ago.${dormantYears >= 10 ? ' A library title is the kind that gets licensed.' : ''}`, weight: 0.22, value: availability },
     { label: 'How Big It Is', detail: gross > 0 ? `${formatMoneyCompact(gross * 100)} across ${franchise.titles.length} titles on record.${gross >= 2_000_000_000 ? ' A crown jewel is not for hire.' : ''}` : `No box office on record across ${franchise.titles.length} titles. A library title.`, weight: 0.16, value: scale },
     { label: 'What You Want To Make', detail: `A ${LICENCE_KIND_LABEL[kind].toLowerCase()}. A studio remakes a resting title long before it lets anyone else make the next chapter.`, weight: 0.10, value: kindValue[kind] },
     { label: 'Fit With The Studio', detail: `${studio.shortName} ${makesFormat ? 'makes' : 'does not make'} ${formatPlural(format)}${genres.length > 0 ? `, and ${genres.some((g) => studio.wants.includes(g)) ? 'wants' : 'is not chasing'} ${genres.slice(0, 2).map(titleCaseLabel).join(' and ')}` : ''}.`, weight: 0.08, value: formatFit * genreFit },
+    { label: 'Your Standing With Them', detail: `${studio.shortName} reads you at ${Math.round(standing)} out of 100.`, weight: 0.10, value: standing / 100 },
     { label: 'Their Own Plans For It', detail: 'What the studio already has in development on it, which is not public.', weight: 0.14, value: hidden, knowable: false },
   ]);
   // Resting and size are gates as much as weights: nobody licenses a live
   // franchise or a crown jewel, however well the rest of the ask reads.
   const gate = Math.min(1, availability * 2) * Math.min(1, scale * 2);
   const probability = clamp((score * 1.15 + remap(studio.riskAppetite, 0, 100, -0.08, 0.06) - 0.22) * gate, 0.01, 0.85);
-  return { factors, score, probability, dormantYears, fee: licenceFee(franchise, kind, dormantYears) };
+  // A studio that knows you shaves the fee, up to a quarter.
+  const fee = Math.round(licenceFee(franchise, kind, dormantYears) * (1 - clamp((standing - 30) / 280, 0, 0.25)) / 10_000_00) * 10_000_00;
+  return { factors, score, probability, dormantYears, fee };
 }
 
 /** Where a producer stands with a studio over one franchise, for the interface. */

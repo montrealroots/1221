@@ -296,6 +296,13 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     const score = scoreMatch(query, network);
     push('Industry', network.id, network.name, network.description, '/workspace/industry', score);
   }
+  for (const page of [
+    { id: 'box-office', type: 'page', name: 'Box Office', aliases: ['weekend', 'market share', 'chart', 'release calendar', 'slate'], description: 'The weekend chart, the year\'s market share and what is dated ahead.' },
+    { id: 'trades', type: 'page', name: 'The Trades', aliases: ['headlines', 'news', 'trade', 'variety', 'deadline'], description: 'Every headline the industry made in your universe.' },
+  ]) {
+    const score = scoreMatch(query, page);
+    push('Industry', page.id, page.name, page.description, '/workspace/industry', score);
+  }
   for (const agency of AGENCIES.all()) {
     const score = scoreMatch(query, agency);
     push('Industry', agency.id, agency.name, agency.description, '/workspace/casting', score);
