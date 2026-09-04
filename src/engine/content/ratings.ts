@@ -71,6 +71,11 @@ export interface RatingDef {
   restrictive?: boolean;
   /** No longer issued. Kept because older titles carry it. */
   historical?: boolean;
+  /**
+   * Not a decision a board made. "Not Rated" means nobody submitted it, so it
+   * is never what a board would suggest — it is what a distributor chooses.
+   */
+  unsubmitted?: boolean;
 }
 
 /**
@@ -83,7 +88,7 @@ export const RATINGS: readonly RatingDef[] = [
   { id: 'pg-13', system: 'mpa', code: 'PG-13', name: 'Parents Strongly Cautioned', severity: 40, minimumAge: 13, accompanied: true, description: 'Some material may be inappropriate for children under thirteen.', permits: 'Sustained action violence, one use of the harshest language as an expletive, brief non-sexual nudity, and drug material with consequence.', limit: 'No realistic sexualised nudity, no repeated hard language, and violence without dwelling on the gore.', reach: 1 },
   { id: 'r', system: 'mpa', code: 'R', name: 'Restricted', severity: 65, minimumAge: 17, accompanied: true, description: 'Under seventeen requires an accompanying parent or adult guardian.', permits: 'Strong language throughout, graphic violence, drug use, and sexual content.', limit: 'Sexual content that is explicit rather than depicted, which is the line to NC-17.', reach: 0.76 },
   { id: 'nc-17', system: 'mpa', code: 'NC-17', name: 'Adults Only', severity: 85, minimumAge: 18, description: 'No one seventeen and under admitted, with no exception for an accompanying adult.', permits: 'Anything the board considers adult, most often explicit sexual content or extreme violence.', limit: 'Not a legal ban, but many chains will not book it and many outlets will not carry the advertising.', reach: 0.18, restrictive: true },
-  { id: 'nr', system: 'mpa', code: 'NR', name: 'Not Rated', severity: 50, description: 'Never submitted to the board. Common for documentaries, foreign titles and festival releases.', permits: 'Anything, because nothing was certified.', limit: 'Chains treat an unrated wide release as an R at best, and many will not book one.', reach: 0.55, restrictive: true },
+  { id: 'nr', system: 'mpa', code: 'NR', name: 'Not Rated', severity: 50, unsubmitted: true, description: 'Never submitted to the board. Common for documentaries, foreign titles and festival releases.', permits: 'Anything, because nothing was certified.', limit: 'Chains treat an unrated wide release as an R at best, and many will not book one.', reach: 0.55, restrictive: true },
   { id: 'm', system: 'mpa', code: 'M', name: 'Mature Audiences', severity: 35, description: 'The original 1968 middle rung, for mature audiences with parental discretion advised.', permits: 'What PG later covered.', limit: 'Replaced by GP in 1970 because audiences read it as restricted.', reach: 0.9, historical: true },
   { id: 'gp', system: 'mpa', code: 'GP', name: 'All Ages Admitted, Parental Guidance Suggested', severity: 25, description: 'The 1970 replacement for M, itself replaced by PG in 1972.', permits: 'What PG covers now.', limit: 'Withdrawn as confusing.', reach: 0.95, historical: true },
   { id: 'x', system: 'mpa', code: 'X', name: 'X', severity: 88, minimumAge: 17, description: 'The original adults-only rung, unregistered as a trademark and so adopted by the pornographic trade.', permits: 'Adult content of any kind.', limit: 'Replaced by NC-17 in 1990 precisely because the label had been taken.', reach: 0.12, restrictive: true, historical: true },
@@ -214,7 +219,9 @@ export function audienceReach(ratingId: string | undefined): number {
 
 /** The certificate the content itself earns, given how hard the material runs. */
 export function suggestRating(system: RatingSystemId, severity: number): RatingDef {
-  const rungs = ladder(system);
+  // Only rungs a board actually issues. "Not Rated" is not a decision, it is
+  // the absence of one, so nothing is ever suggested into it.
+  const rungs = ladder(system).filter((r) => !r.unsubmitted);
   const target = Math.max(0, Math.min(100, severity));
   let best = rungs[0]!;
   for (const rung of rungs) {

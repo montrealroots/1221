@@ -8,14 +8,14 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
+import { Panel, Stat, Empty, Tabs, Modal, Logo, Meter } from '@/ui/components/primitives';
 import { STUDIOS, STUDIO_TIER_LABEL, STUDIO_TIER_ORDER, type Studio } from '@/engine/content/studios';
 import { DEAL_KIND_LABEL, NETWORKS, NETWORK_KIND_LABEL, NETWORK_KIND_ORDER, dealsForStudio, type Network } from '@/engine/content/networks';
 import {
   CREDIT_ROLE_LABEL, CREDIT_ROLE_ORDER, TITLE_KIND_LABEL, creditsFor, decadeOf, franchisesIn, isCreditsLoaded, isImdbLoaded, isStudioCatalogLoaded, type FranchiseSummary,
   loadStudioCatalog, loadStudioCredits, studioCatalog, type CatalogTitle, isBroadcastSeriesLoaded, loadBroadcastSeries, seriesOn,
 } from '@/engine/content/filmography';
-import { COUNTRIES } from '@/engine/content/geography';
+import { COUNTRIES, countryOfCity } from '@/engine/content/geography';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { addDays, dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { formatLabel, titleCaseLabel } from '@/engine/core/text';
@@ -28,8 +28,9 @@ import {
 } from '@/engine/systems/networks-live';
 import { ALL_TIME, type RecordEntry } from '@/engine/content/records';
 import { LICENCE_KINDS, LICENCE_KIND_LABEL, licenceOdds, licenceStatus, type LicenceKind } from '@/engine/systems/ip';
+import { activeWaves, marketReport, marketsInPlay } from '@/engine/systems/zeitgeist';
 
-type Tab = 'studios' | 'networks' | 'boxoffice' | 'records' | 'trades' | 'people';
+type Tab = 'studios' | 'networks' | 'markets' | 'boxoffice' | 'records' | 'trades' | 'people';
 type Kind = 'all' | 'film' | 'tv';
 type Sort = 'year' | 'gross' | 'tomatometer' | 'imdb' | 'title';
 
@@ -70,12 +71,14 @@ export function IndustryWorkspace() {
       <Tabs active={tab} onChange={(id) => { setTab(id); setSelectedId(null); }} tabs={[
         { id: 'studios', label: 'Studios', badge: studios.length },
         { id: 'networks', label: 'Networks', badge: networks.length },
+        { id: 'markets', label: 'Markets' },
         { id: 'boxoffice', label: 'Box Office' },
         { id: 'records', label: 'Records' },
         { id: 'trades', label: 'Trades' },
         { id: 'people', label: 'People' },
       ]} />
 
+      {tab === 'markets' && <MarketsTab />}
       {tab === 'boxoffice' && <BoxOfficeTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
       {tab === 'records' && <RecordsTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
       {tab === 'trades' && <TradesTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} onNetwork={(id) => { setTab('networks'); setSelectedId(id); }} />}
@@ -84,6 +87,132 @@ export function IndustryWorkspace() {
       {tab === 'networks' && !selectedNetwork && <NetworkList onSelect={setSelectedId} />}
       {tab === 'networks' && selectedNetwork && <NetworkDetail network={selectedNetwork} onBack={() => setSelectedId(null)} />}
       {tab === 'people' && <Empty title="The People Come After The Networks" body="Presidents, executives, showrunners, directors, producers, actors, cinematographers and composers each get their own step." />}
+    </>
+  );
+}
+
+/**
+ * What the world is making, market by market.
+ *
+ * Every country has its own appetite, taken from what it has really made, and
+ * its own weather on top of that: a hit warms a genre, everybody piles in, the
+ * pile-on saturates it and the heat falls back. When heat runs far enough
+ * ahead of a country's nature for long enough, the trades give it a name.
+ *
+ * The shares are the record. The heat, the waves and what gets commissioned
+ * are this save's own, and nothing here is a real-world forecast.
+ */
+function MarketsTab() {
+  const sim = useGame().sim;
+  const world = useWorld((s) => s.universe.zeitgeist);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const home = countryOfCity(sim.player.currentLocationId);
+  void world;
+
+  const markets = marketsInPlay().map((entry) => ({ entry, report: marketReport(sim, entry.countryId) }));
+  const waves = activeWaves(sim);
+
+  return (
+    <>
+      <Panel
+        title="What The World Is Making"
+        subtitle={`${markets.length} markets, each with its own appetite. Nothing is made twice inside the window a market remembers.`}
+        flush
+      >
+        <div className="list">
+          {markets.map(({ entry, report }) => {
+            const open = openId === entry.countryId;
+            const share = Object.entries(entry.profile.genres).sort((a, b) => b[1] - a[1]).slice(0, 4);
+            return (
+              <div key={entry.countryId} className="list-item" style={{ display: 'block' }} onClick={() => setOpenId(open ? null : entry.countryId)}>
+                <div className="row-between">
+                  <div className="grow" style={{ minWidth: 0 }}>
+                    <div className="small strong">
+                      {entry.name}
+                      {entry.countryId === home && <span className="chip chip-accent" style={{ marginLeft: 6 }}>Where You Are</span>}
+                    </div>
+                    <div className="xs dim">
+                      About {Math.round(entry.profile.perYear)} titles a year on the record · {report.commissioned} made in this save
+                      {report.waves.length > 0 && ` · ${report.waves.length} wave${report.waves.length === 1 ? '' : 's'} running`}
+                    </div>
+                    <div className="row wrap gap-1" style={{ marginTop: 4 }}>
+                      {share.map(([g, value]) => (
+                        <span key={g} className="chip" title={`${Math.round(value * 100)}% of what this country has made carries this genre.`}>
+                          {genreName(g)} {Math.round(value * 100)}%
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ minWidth: 190 }}>
+                    <div className="xs dim" style={{ marginBottom: 2 }}>Warmest Right Now</div>
+                    {report.rising.slice(0, 3).map((row) => (
+                      <div key={row.genreId} className="xs row-between" style={{ gap: 8 }}>
+                        <span>{row.name}</span>
+                        <span className="mono">{row.heat}{row.against !== 0 && <span className={row.against > 0 ? 'positive' : 'dim'}> {row.against > 0 ? '+' : ''}{row.against}</span>}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {open && (
+                  <div style={{ marginTop: 'var(--s3)', borderTop: '1px solid var(--line)', paddingTop: 'var(--s3)' }}>
+                    <div className="xs dim" style={{ marginBottom: 4 }}>
+                      Heat against this country's own nature. A number above the line is a genre running hotter than it usually does here.
+                    </div>
+                    <div className="grid grid-2 gap-4">
+                      <div>
+                        {report.rising.map((row) => (
+                          <div key={row.genreId} style={{ marginBottom: 6 }}>
+                            <Meter label={row.name} value={row.heat} hint={row.against > 0 ? `${row.against} above its own average` : row.against < 0 ? `${Math.abs(row.against)} below its own average` : 'Exactly its own average'} />
+                          </div>
+                        ))}
+                      </div>
+                      <div>
+                        <div className="xs dim" style={{ marginBottom: 4 }}>Waves</div>
+                        {report.waves.length === 0 && report.pastWaves.length === 0 && (
+                          <div className="xs dim">Nothing has run hot enough here for long enough to be given a name.</div>
+                        )}
+                        {report.waves.map((wave) => (
+                          <div key={wave.id} className="xs" style={{ padding: '3px 0' }}>
+                            <span className="chip chip-positive">Running</span> <span className="strong">{wave.name}</span>
+                            <span className="dim"> · {wave.titles} title{wave.titles === 1 ? '' : 's'} under it</span>
+                          </div>
+                        ))}
+                        {report.pastWaves.map((wave) => (
+                          <div key={wave.id} className="xs" style={{ padding: '3px 0' }}>
+                            <span className="chip">Over</span> <span>{wave.name}</span>
+                            <span className="dim"> · {wave.titles} title{wave.titles === 1 ? '' : 's'}, peaked at {wave.peak}</span>
+                          </div>
+                        ))}
+                        <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+                          {report.variety} different genre combinations in the last {report.windowSize} it made here.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </Panel>
+
+      {waves.length > 0 && (
+        <Panel title="Waves Running Anywhere" subtitle="A genre far enough ahead of a country's own average, for long enough, that the trades named it." flush>
+          <div className="list">
+            {waves.map((wave) => (
+              <div key={wave.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{wave.name}</div>
+                  <div className="xs dim">
+                    {COUNTRIES.get(wave.countryId)?.name ?? wave.countryId} · {genreName(wave.genreId)} · peaked at {wave.peak}
+                  </div>
+                </div>
+                <span className="chip chip-accent">{wave.titles} Title{wave.titles === 1 ? '' : 's'}</span>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
     </>
   );
 }
@@ -481,33 +610,6 @@ function TitleDialog({ title, studioId, onClose }: { title: CatalogTitle; studio
   );
 }
 
-
-/**
- * A real logo, from the record, in one fixed frame; a monogram when the record
- * has none. Nothing is drawn by hand to stand in for a real mark.
- */
-function Logo({ id, name, large }: { id: string; name: string; large?: boolean }) {
-  const [missing, setMissing] = useState(false);
-  const width = large ? 160 : 72;
-  const height = large ? 80 : 36;
-  if (missing) {
-    return (
-      <div className="chip" style={{ width, height, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontWeight: 600 }} aria-label={`${name}, no logo on record`}>
-        {name.split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? '').join('')}
-      </div>
-    );
-  }
-  return (
-    <img
-      src={`${import.meta.env.BASE_URL}industry/logos/${id}.png`}
-      alt={`${name} logo`}
-      width={width}
-      height={height}
-      style={{ width, height, objectFit: 'contain', flexShrink: 0, background: 'rgba(255,255,255,0.92)', borderRadius: 6, padding: 4, boxSizing: 'border-box' }}
-      onError={() => setMissing(true)}
-    />
-  );
-}
 
 function StudioDeals({ studio }: { studio: Studio }) {
   const deals = dealsForStudio(studio.id);

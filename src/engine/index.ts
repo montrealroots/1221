@@ -31,13 +31,14 @@ import { registerTravel } from './systems/travel';
 import { registerServices, ensureProviders, ensureCourses } from './systems/services';
 import { registerMedia } from './systems/media';
 import { registerFilm, registerBuyerOffer } from './systems/film';
-import { registerCasting, seedIndependentProject } from './systems/casting';
+import { registerCasting } from './systems/casting';
 import { registerProduction } from './systems/production';
 import { registerRelease, registerFranchises } from './systems/release';
 import { registerCritics } from './systems/critics';
 import { registerIpLicensing } from './systems/ip';
 import { registerStudios, ensureStudioSchedules } from './systems/studios';
 import { registerNetworks, ensureNetworkSchedules } from './systems/networks-live';
+import { registerZeitgeist, ensureZeitgeist, commissionProject } from './systems/zeitgeist';
 import { registerProfessions } from './systems/professions';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
@@ -76,6 +77,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerIpLicensing(sim);
   registerStudios(sim);
   registerNetworks(sim);
+  registerZeitgeist(sim);
   registerProfessions(sim);
   registerDriving(sim);
   registerAwards(sim);
@@ -123,6 +125,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise Appetite', category: 'system', priority: 94 });
   ensureStudioSchedules(sim);
   ensureNetworkSchedules(sim);
+  ensureZeitgeist(sim);
 
   const nextYear = zonedParts(sim.now, z).year + 1;
   sim.schedule({
@@ -348,7 +351,14 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   });
 
   // --- The industry is already running -----------------------------------
-  for (let i = 0; i < 4; i++) seedIndependentProject(sim, i);
+  // A save opens with the world already mid-production on a few things, in
+  // the player's own market and abroad.
+  // The two at home are already casting, so there is something to be seen for
+  // on day one; the rest are simply being made somewhere else.
+  const startHome = countryOfCity(sim.universe.people[sim.universe.playerId]?.currentLocationId) ?? 'us';
+  for (const [i, market] of [startHome, startHome, 'us', 'uk', 'kr', 'fr'].entries()) {
+    commissionProject(sim, market, `seed-${i}`, i < 2);
+  }
 
   // --- Opening history ----------------------------------------------------
   sim.remember({
@@ -397,6 +407,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // A save from before the studios lived inside it needs their clocks running.
   ensureStudioSchedules(sim);
   ensureNetworkSchedules(sim);
+  ensureZeitgeist(sim);
   return sim;
 }
 
@@ -705,6 +716,53 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     record['streamingCharts'] ??= [];
     record['saveRecords'] ??= {};
     steps.push('Television now runs on a schedule: every linear network has a week, every airing has a rating, the services publish a weekly chart, and the records your universe sets are kept.');
+  }
+
+  if (from < 18) {
+    // The world stopped making films to fill a casting page and started
+    // commissioning them the way an industry does: by country, by what that
+    // country makes, and by what is warm there this year. The filler that was
+    // only ever there to have something open is cleared out — but nothing the
+    // player ever touched goes with it.
+    record['zeitgeist'] ??= { markets: {}, lastTick: 0, history: [] };
+    const touched = new Set<string>();
+    const player = universe.people[universe.playerId];
+    for (const id of player?.creditIds ?? []) touched.add(id);
+    for (const contract of Object.values(universe.contracts)) if (contract.projectId) touched.add(contract.projectId);
+    for (const audition of Object.values(universe.auditions)) {
+      const role = universe.roles[audition.roleId];
+      if (role?.projectId) touched.add(role.projectId);
+    }
+    for (const nomination of Object.values(universe.awardNominations)) if (nomination.projectId) touched.add(nomination.projectId);
+    for (const submission of Object.values(universe.festivalSubmissions)) if (submission.projectId) touched.add(submission.projectId);
+
+    const filler = Object.values(universe.projects).filter((p) => p.createdById !== universe.playerId
+      && !p.catalogueQid
+      && !p.ownerCompanyId
+      && !touched.has(p.id)
+      && (p.logline === 'An independent production, casting now.' || p.phase === 'preproduction' || p.phase === 'idea'));
+    let clearedRoles = 0;
+    for (const project of filler) {
+      for (const role of Object.values(universe.roles)) {
+        if (role.projectId !== project.id) continue;
+        delete universe.roles[role.id];
+        clearedRoles++;
+      }
+      delete universe.projects[project.id];
+    }
+    // Any decision or scheduled item pointing at something that is gone goes too.
+    for (const decision of Object.values(universe.decisions)) {
+      if (decision.refType === 'role' && decision.refId && !universe.roles[decision.refId]) decision.dismissedAt = universe.now;
+      if (decision.refType === 'project' && decision.refId && !universe.projects[decision.refId]) decision.dismissedAt = universe.now;
+    }
+    universe.scheduled = universe.scheduled.filter((item) => {
+      if (item.refType === 'project' && item.refId && !universe.projects[item.refId]) return false;
+      if (item.refType === 'role' && item.refId && !universe.roles[item.refId]) return false;
+      return true;
+    });
+    steps.push(filler.length > 0
+      ? `The world commissions its own films now, by country and by what is in fashion there. ${filler.length} unstarted filler production${filler.length === 1 ? '' : 's'} and ${clearedRoles} open role${clearedRoles === 1 ? '' : 's'} that existed only to fill the casting page were cleared; everything you were ever attached to was kept.`
+      : 'The world commissions its own films now, by country and by what is in fashion there.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

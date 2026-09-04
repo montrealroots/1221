@@ -21,9 +21,10 @@ import { STUDIOS, type Studio, type StudioFormat } from '../content/studios';
 import { effectiveStudio } from './studio-state';
 import { NETWORKS, type Network } from '../content/networks';
 import { quickReception } from './critics';
-import { generatePersonName, generateCharacterName } from '../content/names';
-import { CITIES, countryOfCity, primaryLanguageOf } from '../content/geography';
+import { generateCharacterName, generatePersonName } from '../content/names';
+import { CITIES } from '../content/geography';
 import { recordCredit } from './film';
+import { titleCaseLabel } from '../core/text';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
@@ -610,8 +611,11 @@ function decideRole(sim: Simulation, roleId: Id): void {
     }
   }
 
+  // Nobody plays two parts in the same picture, so anyone already in it is
+  // out of the running for this one however well they read.
+  const alreadyIn = new Set(project.castIds);
   const ranked = auditions
-    .filter((a) => a.stage !== 'passed' && a.totalScore !== undefined)
+    .filter((a) => a.stage !== 'passed' && a.totalScore !== undefined && !alreadyIn.has(a.personId))
     .sort((a, b) => (b.totalScore ?? 0) - (a.totalScore ?? 0));
 
   ranked.forEach((a, i) => { a.rank = i + 1; });
@@ -681,10 +685,19 @@ function decideRole(sim: Simulation, roleId: Id): void {
       score: winner.totalScore,
       outcome: 'offered',
     });
+    const helm = project.directorId ? sim.universe.people[project.directorId] : undefined;
+    const alongside = project.castIds
+      .filter((id) => id !== winner.personId)
+      .map((id) => sim.universe.people[id]?.stageName ?? sim.universe.people[id]?.displayName)
+      .filter(Boolean)
+      .slice(0, 3);
     sim.requireDecision({
       urgency: 90, category: 'career',
       title: `Offer: ${role.characterName} in ${project.title}`,
-      detail: `${role.billing.replace(/_/g, ' ')} role, ${role.shootDays} shoot days, ${formatMoney(fee)}.${role.billing === 'lead' ? ' Two points of net.' : ''}`,
+      detail: `${titleCaseLabel(role.billing.replace(/_/g, ' '))}, ${role.shootDays} shoot days, ${formatMoney(fee)}.${role.billing === 'lead' ? ' Two points of net.' : ''} ${project.logline}`
+        + `${helm ? ` Directed by ${helm.stageName ?? helm.displayName}.` : ''}`
+        + `${project.distributorName ? ` For ${project.distributorName}.` : ''}`
+        + `${alongside.length > 0 ? ` Alongside ${alongside.join(', ')}.` : ''}`,
       route: '/workspace/casting',
       actions: [
         { label: 'Accept', commandKind: 'cast.accept_offer', payload: { roleId: role.id, personId: winner.personId, accept: true } },
@@ -795,10 +808,23 @@ export function generateOpportunities(sim: Simulation): void {
     const age = ageOn(player.birthInstant, sim.now, sim.homeZone);
     if (age < role.ageRange[0] - 4 || age > role.ageRange[1] + 6) continue;
 
+    // What a real breakdown carries: what it is, who is making it, who is
+    // already in it, and what the part pays. Nothing about the other people
+    // reading, because that is not something anybody would tell you.
+    const director = project.directorId ? sim.universe.people[project.directorId] : undefined;
+    const attached = Object.values(sim.universe.roles)
+      .filter((r) => r.projectId === project.id && r.status === 'cast' && r.castPersonId)
+      .map((r) => sim.universe.people[r.castPersonId!]?.stageName ?? sim.universe.people[r.castPersonId!]?.displayName)
+      .filter(Boolean)
+      .slice(0, 3);
+    const madeBy = project.distributorName ? ` For ${project.distributorName}.` : '';
+    const helm = director ? ` Directed by ${director.stageName ?? director.displayName}.` : '';
+    const names = attached.length > 0 ? ` Attached: ${attached.join(', ')}.` : '';
+
     sim.requireDecision({
       urgency: 52, category: 'career',
       title: `Breakdown: ${role.characterName}`,
-      detail: `${project.title}, ${role.billing.replace(/_/g, ' ')}. ${role.description} Paying ${formatMoney(role.payLow)} to ${formatMoney(role.payHigh)}.`,
+      detail: `${project.title} — ${project.logline}${helm}${madeBy}${names} ${titleCaseLabel(role.billing.replace(/_/g, ' '))}: ${role.description} Paying ${formatMoney(role.payLow)} to ${formatMoney(role.payHigh)}.`,
       route: '/workspace/casting',
       actions: [{ label: 'Submit', commandKind: 'cast.submit', payload: { roleId: role.id } }],
       refType: 'role', refId: role.id,
@@ -806,15 +832,137 @@ export function generateOpportunities(sim: Simulation): void {
     offered++;
   }
 
-  // If there is nothing open in the world, the world makes something.
-  if (offered === 0 && rng.chance(0.5)) {
-    seedIndependentProject(sim, rng.int(0, 9999));
-  }
+  // Casting does not make films. The world commissions its own (systems/
+  // zeitgeist), and what is open here is whatever those productions and the
+  // player's own have put out to be cast.
+  void offered;
 }
 
-/** The world keeps making things whether the player is involved or not. */
-/** Where the rest of the world's films come from, when they are not from where you are. */
-const FILM_COUNTRIES = ['us', 'uk', 'fr', 'kr', 'jp', 'in', 'es', 'it', 'de', 'mx', 'cn', 'br', 'ca', 'au', 'hk', 'ie', 'be', 'dk', 'se', 'ar'];
+
+/**
+ * How a part reads on a breakdown, by how big it is. Short, because a real
+ * breakdown is short: the size of the part, what it is for, and nothing else.
+ */
+const ROLE_BRIEFS: Readonly<Record<Role['billing'], readonly string[]>> = {
+  lead: [
+    'Carries it. On screen in nearly every scene.',
+    'The part the whole thing is built around.',
+    'First on the call sheet, and there every day of it.',
+  ],
+  supporting: [
+    'Opposite the lead for most of the second half.',
+    'The other side of the argument, and not a straw one.',
+    'Seven or eight scenes, all of which have to land.',
+  ],
+  featured: [
+    'Three scenes, one of which is the one people quote.',
+    'One sequence, and it is the one the trailer uses.',
+    'A handful of scenes across the middle of it.',
+  ],
+  day_player: ['A day on set and two lines that have to be exactly right.'],
+  voice: ['Voice only. Booth work, no camera.'],
+  cameo: ['One scene, as yourself or near enough.'],
+};
+
+/**
+ * A production the world commissioned puts its speaking parts out to be cast.
+ *
+ * Casting does not invent films any more — the world's slate does that (see
+ * systems/zeitgeist), and this is what one of those productions does when it
+ * needs people. Only work the player could actually be seen for goes out
+ * publicly: a breakdown in a city they have never been to is not something
+ * their character would ever hear about.
+ */
+export function openWorldCasting(sim: Simulation, project: Project, rng: ReturnType<Simulation['rng']>): number {
+  // A documentary casts nobody; an animated title casts voices, and does that
+  // out of the player's sight until the voice career exists.
+  if (project.format === 'documentary') return 0;
+
+  const isSeries = project.format === 'series' || project.format === 'limited_series';
+  const count = isSeries ? rng.int(3, 6) : project.format === 'short' ? rng.int(2, 3) : rng.int(3, 5);
+
+  let opened = 0;
+  // A breakdown that describes two parts in the same words is a breakdown
+  // nobody proofread, so each brief is used once per production.
+  const usedBriefs = new Set<string>();
+  for (let i = 0; i < count; i++) {
+    // A series has a pair of regulars at the top of it; a film has the one.
+    const billing: Role['billing'] = i === 0 || (isSeries && i === 1) ? 'lead' : i < 3 ? 'supporting' : 'featured';
+    // Half of what gets written is for somebody under thirty-two, because
+    // half of what gets made is. A slate that only casts forty-year-olds
+    // leaves a young actor with nothing to read for.
+    const roll = rng.next();
+    const low = roll < 0.5 ? rng.int(18, 32) : roll < 0.82 ? rng.int(28, 45) : rng.int(45, 62);
+    const briefs = ROLE_BRIEFS[billing];
+    const created = sim.execute<{ roleId: Id }>({
+      kind: 'cast.create_role',
+      payload: {
+        projectId: project.id,
+        characterName: generateCharacterName(rng),
+        billing,
+        description: pickBrief(briefs, usedBriefs, rng),
+        ageRange: [low, low + rng.int(6, 20)],
+      },
+    });
+    if (!created.ok || !created.value) continue;
+    const role = sim.universe.roles[created.value.roleId];
+    if (!role) continue;
+
+    // Nothing goes out to be cast with the whole picture empty. A production
+    // attaches its names first and casts around them, which is why a breakdown
+    // can tell you who you would be working with.
+    if (rng.chance(billing === 'lead' ? 0.55 : 0.18) && attachToRole(sim, role, project, rng)) {
+      continue;
+    }
+
+    const put = sim.execute({
+      kind: 'cast.open_casting',
+      payload: {
+        roleId: role.id,
+        // A room, not a stadium. Leads see fewer people and see them longer.
+        candidateCount: rng.int(4, billing === 'lead' ? 9 : 13),
+        closesInDays: rng.int(16, 40),
+      },
+    });
+    if (put.ok) opened++;
+  }
+  return opened;
+}
+
+/** A brief this production has not used yet, or any of them once they are all spent. */
+function pickBrief(briefs: readonly string[], used: Set<string>, rng: ReturnType<Simulation['rng']>): string {
+  const fresh = briefs.filter((brief) => !used.has(brief));
+  const pool = fresh.length > 0 ? fresh : briefs;
+  const brief = pool[rng.int(0, pool.length - 1)] ?? 'Casting now.';
+  used.add(brief);
+  return brief;
+}
+
+/**
+ * Somebody is already in it.
+ *
+ * This is an attachment rather than a casting decision: no room, no reading,
+ * no offer. It is how a production has a name on it before the breakdown goes
+ * out, and no money moves because none of it is the player's.
+ */
+function attachToRole(sim: Simulation, role: Role, project: Project, rng: ReturnType<Simulation['rng']>): boolean {
+  // Nobody plays two parts in the same picture, so a name already on it is
+  // passed over. If nobody free turns up, the part goes out to be cast like
+  // any other rather than quietly disappearing.
+  let person = ensureCandidate(sim, role, rng.int(0, 40));
+  for (let attempt = 0; attempt < 6 && project.castIds.includes(person.id); attempt++) {
+    person = ensureCandidate(sim, role, rng.int(41, 400));
+  }
+  if (project.castIds.includes(person.id)) return false;
+
+  role.status = 'cast';
+  role.castPersonId = person.id;
+  role.decidesAt = undefined;
+  project.castIds.push(person.id);
+  if (!person.creditIds.includes(project.id)) person.creditIds.push(project.id);
+  recordCredit(sim, project, person.id, role.billing, role.characterName);
+  return true;
+}
 
 /**
  * Which real studio is behind a project the world made on its own: one that
@@ -865,112 +1013,7 @@ export function networkForBackgroundProject(rng: ReturnType<Simulation['rng']>, 
   return candidates[candidates.length - 1];
 }
 
-export function seedIndependentProject(sim: Simulation, seed: number): Project | undefined {
-  const rng = sim.rng('world_project', seed, Math.floor(sim.now / MS_DAY));
-  const player = sim.universe.people[sim.universe.playerId];
-  if (!player) return undefined;
 
-  const formats: Project['format'][] = ['feature', 'feature', 'series', 'limited_series', 'short'];
-  const format = rng.pick(formats);
-  const genrePool = ['drama', 'thriller', 'comedy', 'horror', 'crime', 'science fiction', 'romance', 'action', 'mystery', 'biography'];
-  const genres = [rng.pick(genrePool)];
-
-  const result = sim.execute<{ projectId: Id }>({
-    kind: 'film.create_project',
-    payload: {
-      format, genres,
-      logline: 'An independent production, casting now.',
-      targetAudience: 'General audience',
-    },
-  });
-  if (!result.ok || !result.value) return undefined;
-
-  const project = sim.universe.projects[result.value.projectId];
-  if (!project) return undefined;
-
-  project.createdById = sim.nextId('person');
-  project.productionLocationIds = [player.currentLocationId];
-  // Most of the industry around you is local; some of it is not, which is
-  // how the international categories have anything to judge.
-  const homeCountry = countryOfCity(player.currentLocationId) ?? 'us';
-  const abroad = rng.chance(0.3);
-  const country = abroad ? rng.pick(FILM_COUNTRIES.filter((c) => c !== homeCountry)) : homeCountry;
-  project.productionCountryId = country;
-  project.language = primaryLanguageOf(country);
-  if (abroad) {
-    const capital = CITIES.all().find((c) => c.countryId === country && c.kind === 'capital');
-    if (capital) project.productionLocationIds = [capital.id];
-  }
-  project.scriptQuality = rng.int(38, 88);
-  project.budget = Math.round(rng.float(0.4, 6) * 5_000_000_00);
-  // Its own stream, so choosing a studio never shifts the draws the rest of
-  // the world makes: a save's trajectory is the same as before studios existed.
-  const television = project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie';
-  const studio = studioForBackgroundProject(sim.rng('world_studio', seed, Math.floor(sim.now / MS_DAY)), project, sim);
-  if (studio) {
-    project.studioId = studio.id;
-    project.distributorName = studio.name;
-  }
-  if (television) {
-    const network = networkForBackgroundProject(sim.rng('world_network', seed, Math.floor(sim.now / MS_DAY)), project);
-    if (network) {
-      project.networkId = network.id;
-      project.distributorName = network.name;
-    }
-  }
-  project.greenlitAt = sim.now;
-  project.phase = 'preproduction';
-  project.phaseHistory.push({ phase: 'preproduction', enteredAt: sim.now });
-
-  const roleCount = rng.int(2, 5);
-  for (let i = 0; i < roleCount; i++) {
-    const billing: Role['billing'] = i === 0 ? 'lead' : i < 3 ? 'supporting' : 'featured';
-    const created = sim.execute<{ roleId: Id }>({
-      kind: 'cast.create_role',
-      payload: {
-        projectId: project.id,
-        characterName: generateCharacterName(rng),
-        billing,
-        description: 'Casting now.',
-        ageRange: [Math.max(18, rng.int(20, 40)), rng.int(42, 68)],
-      },
-    });
-    if (created.ok && created.value) {
-      sim.execute({ kind: 'cast.open_casting', payload: { roleId: created.value.roleId, candidateCount: rng.int(5, 18) } });
-    }
-  }
-
-  // It is a real production, so it goes and gets made.
-  sim.schedule({
-    at: addDays(sim.now, rng.int(45, 130), sim.homeZone),
-    kind: 'world.project_progress',
-    label: `${project.title} — Production Start`,
-    category: 'system',
-    payload: { projectId: project.id },
-    priority: 94,
-    refType: 'project', refId: project.id,
-  });
-
-  return project;
-}
-
-// ---------------------------------------------------------------------------
-// The industry without the player
-// ---------------------------------------------------------------------------
-
-/**
- * Background productions run on a coarse schedule rather than through the full
- * production machinery: a hundred films a decade cannot each carry a shooting
- * board and a post dependency graph. What they do carry is a real result. They
- * shoot, they finish, they open on a date, they are reviewed, they earn, and
- * they become eligible for the same awards the player competes for. Without
- * this the library is empty, every ceremony has nothing to nominate, and the
- * player is the only person in the industry who has ever made anything.
- *
- * No money moves here. These productions are world history, not the player's
- * books, and inventing ledger entries for companies that do not exist would put
- * numbers in the accounts that nothing could reconcile.
- */
 function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
   const project = sim.universe.projects[projectId];
   if (!project) return;
@@ -995,7 +1038,8 @@ function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
 
   switch (project.phase) {
     case 'preproduction': {
-      // Anything still uncast when the start date arrives loses its window.
+      // A production that has put roles out and cannot fill them loses its
+      // window. A world commission with no roles open has nothing to lose.
       const roles = Object.values(sim.universe.roles).filter((r) => r.projectId === project.id);
       const uncast = roles.filter((r) => r.status !== 'cast' && r.status !== 'closed');
       if (uncast.length > 0 && rng.chance(0.35)) {

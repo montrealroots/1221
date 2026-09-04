@@ -15,7 +15,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Id, Project } from '@/engine/domain/model';
 import { AGGREGATOR_RULES, OUTLETS, cinemaScoreGrade, isFresh, letterGrade, metacriticBand, reviewTargets, scaleText } from '@/engine/content/critics';
 import { defaultEmbargo, eligibleOutlets, quickReception, readsOf, receptionSummary } from '@/engine/systems/critics';
-import { seedIndependentProject } from '@/engine/systems/casting';
+import { commissionProject } from '@/engine/systems/zeitgeist';
 import { addDays, MS_DAY } from '@/engine/core/time';
 
 function boot(): Simulation {
@@ -189,7 +189,7 @@ describe('the world\'s own films', () => {
     const sim = boot();
     let counted = 0;
     for (let i = 0; i < 12; i++) {
-      const project = seedIndependentProject(sim, 100 + i);
+      const project = commissionProject(sim, 'us', 100 + i);
       if (!project || project.format === 'short') continue;
       project.finalQuality = 60 + i;
       project.releaseStrategy = i % 2 === 0 ? 'wide_theatrical' : 'streaming_exclusive';

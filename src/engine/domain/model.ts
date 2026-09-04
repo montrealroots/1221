@@ -1255,6 +1255,8 @@ export interface Project {
   franchiseId?: Id;
   /** Set when the project is a real title from a studio's dated slate, released by the world on its day. */
   catalogueQid?: string;
+  /** Set when the world commissioned it rather than a person. Trimmable once its run is over. */
+  worldCommissioned?: boolean;
 
   greenlitAt?: Instant;
   greenlitById?: Id;
@@ -1900,6 +1902,41 @@ export interface SaveRecord {
   note: string;
 }
 
+/** A named movement running in one market: a genre the money has moved to. */
+export interface Wave {
+  id: string;
+  countryId: string;
+  genreId: string;
+  name: string;
+  startedAt: Instant;
+  endedAt?: Instant;
+  /** The highest heat it reached. */
+  peak: number;
+  /** Titles commissioned under it. */
+  titles: number;
+}
+
+/** What one national industry is making, and how warm each genre is there. */
+export interface MarketMood {
+  countryId: string;
+  /** Genre heat, 0-100. Rises with hits, falls with saturation, settles toward the country's own nature. */
+  heat: Record<string, number>;
+  /** The genre combinations most recently commissioned here, newest last. */
+  recent: string[];
+  /** Individual genres most recently commissioned here, newest last. */
+  recentGenres: string[];
+  /** Titles commissioned here since the save began. */
+  commissioned: number;
+  waves: Wave[];
+}
+
+export interface Zeitgeist {
+  markets: Record<string, MarketMood>;
+  lastTick: Instant;
+  /** Every wave that has run, finished or not. */
+  history: Wave[];
+}
+
 export interface TradeItem {
   id: Id;
   at: Instant;
@@ -2095,7 +2132,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 17;
+export const SAVE_SCHEMA_VERSION = 18;
 
 export interface SaveMeta {
   id: Id;
@@ -2215,6 +2252,8 @@ export interface SaveUniverse {
   streamingCharts: StreamingChart[];
   /** The best of everything that has happened in this save, by category. */
   saveRecords: Partial<Record<RecordCategory, SaveRecord[]>>;
+  /** What each national industry is in the mood for, and what it has just made. */
+  zeitgeist: Zeitgeist;
   talentDeals: Record<Id, TalentDeal>;
   boxOffice: {
     weekends: BoxOfficeWeekend[];

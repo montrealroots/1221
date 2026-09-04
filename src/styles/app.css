@@ -300,6 +300,9 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 .panel-head > :first-child { min-width: 0; flex: 1 1 12rem; }
+/* Four actions do not fit across a phone. They wrap onto a second line rather
+   than pushing the card open and bleeding out of its right edge. */
+.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; }
 .panel-head h2, .panel-head h3 { margin: 0; }
 
 .eyebrow {

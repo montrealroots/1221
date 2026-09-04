@@ -13,7 +13,8 @@ import { NETWORKS, NETWORK_KIND_ORDER, dealsForStudio, networkForBroadcaster, pa
 import { STUDIOS } from '@/engine/content/studios';
 import { BUYERS, LEGACY_BUYER_NAMES } from '@/engine/content/industry';
 import { COUNTRIES } from '@/engine/content/geography';
-import { networkForBackgroundProject, seedIndependentProject } from '@/engine/systems/casting';
+import { networkForBackgroundProject } from '@/engine/systems/casting';
+import { commissionProject } from '@/engine/systems/zeitgeist';
 import { addDays } from '@/engine/core/time';
 
 describe('the networks', () => {
@@ -87,7 +88,7 @@ describe('the world', () => {
     const sim = quickSave({ wealth: 'inherited' }, 'networks-seed');
     let series = 0;
     for (let i = 0; i < 40; i++) {
-      const project = seedIndependentProject(sim, 300 + i);
+      const project = commissionProject(sim, 'us', 300 + i);
       if (!project || (project.format !== 'series' && project.format !== 'limited_series')) continue;
       series++;
       expect(project.networkId, project.title).toBeDefined();

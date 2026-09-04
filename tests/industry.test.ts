@@ -24,7 +24,8 @@ import {
 } from '@/engine/content/filmography';
 import { generateProjectTitle } from '@/engine/content/names';
 import { makeRng } from '@/engine/core/rng';
-import { studioForBackgroundProject, seedIndependentProject } from '@/engine/systems/casting';
+import { studioForBackgroundProject } from '@/engine/systems/casting';
+import { commissionProject } from '@/engine/systems/zeitgeist';
 
 const INDUSTRY = new URL('../public/industry/', import.meta.url);
 const file = (name: string) => new URL(name, INDUSTRY);
@@ -191,7 +192,7 @@ describe('the world', () => {
     const sim = boot();
     const seen = new Set<string>();
     for (let i = 0; i < 24; i++) {
-      const project = seedIndependentProject(sim, i);
+      const project = commissionProject(sim, 'us', i);
       if (!project) continue;
       if (project.format === 'short') continue;
       expect(project.studioId, project.title).toBeDefined();

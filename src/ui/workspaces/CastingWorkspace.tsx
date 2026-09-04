@@ -1,4 +1,5 @@
 import { formatLabel, titleCaseLabel } from '@/engine/core/text';
+import { genreName } from '@/engine/content/genres';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
@@ -7,6 +8,7 @@ import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatTime, ageOn } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { redactForPlayer } from '@/engine/core/audit';
+import { DossierButton } from '@/ui/components/ProjectDossier';
 
 type Tab = 'breakdowns' | 'auditions' | 'representation' | 'credits';
 
@@ -65,7 +67,7 @@ export function CastingWorkspace() {
                       <div className="small strong">{role.characterName} — {project?.title}</div>
                       <div className="xs dim">
                         {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
-                        {project && ` · ${project.genres.map(titleCaseLabel).join(', ')}`}
+                        {project && ` · ${project.genres.map(genreName).join(', ')}`}
                       </div>
                       <div className="xs muted" style={{ marginTop: 2 }}>{role.description}</div>
                       <div className="row wrap gap-1" style={{ marginTop: 4 }}>
@@ -80,13 +82,14 @@ export function CastingWorkspace() {
                       <div className="mono small">{formatMoney(role.payLow, { cents: false })}</div>
                       <div className="xs dim">to {formatMoney(role.payHigh, { cents: false })}</div>
                     </div>
+                    {project && <DossierButton project={project} roleId={role.id} />}
                     <button
                       className="btn btn-sm"
                       disabled={submittedRoleIds.has(role.id) || !inRange}
                       title={!inRange ? `They are looking for ${role.ageRange[0]} to ${role.ageRange[1]}. You are ${age}.` : undefined}
                       onClick={() => run('cast.submit', { roleId: role.id })}
                     >
-                      {submittedRoleIds.has(role.id) ? 'Submitted' : inRange ? 'Submit' : 'Wrong age'}
+                      {submittedRoleIds.has(role.id) ? 'Submitted' : inRange ? 'Submit' : 'Wrong Age'}
                     </button>
                   </div>
                 );
@@ -120,6 +123,7 @@ export function CastingWorkspace() {
                       <span className={`chip ${audition.stage === 'booked' || audition.stage === 'offer' ? 'chip-positive' : audition.stage === 'passed' ? 'chip-negative' : ''}`}>
                         {titleCaseLabel(audition.stage.replace(/_/g, ' '))}
                       </span>
+                      {project && <DossierButton project={project} roleId={audition.roleId} />}
                       {!audition.decidedAt && audition.performanceScore === undefined && (
                         <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
                           Prepare and perform

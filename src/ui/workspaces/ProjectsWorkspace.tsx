@@ -2,6 +2,7 @@ import { formatLabel, titleCaseLabel } from '@/engine/core/text';
 import { STUDIOS } from '@/engine/content/studios';
 import { CRAFT_LABEL, craftFocus, genre, genreName, genresByCategory, runtimeBandOf, suggestedPairings } from '@/engine/content/genres';
 import { rating, ratingsFor } from '@/engine/content/ratings';
+import { SLOT_EXPLAIN, SLOT_LABEL, buildLogline } from '@/engine/content/logline';
 import { countryOfCity } from '@/engine/content/geography';
 import { useMemo, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -554,6 +555,99 @@ function ActionRow({ label, detail, action, cta }: { label: string; detail: stri
   );
 }
 
+/** The notes that ship as the example, so the builder can be tried without inventing anything. */
+const LOGLINE_EXAMPLE = [
+  'a retired hitman',
+  'his old crew comes back',
+  'wants out',
+  'the cartel will not let him go',
+  'his daughter pays for it',
+].map((line) => `- ${line}`).join('\n');
+
+/**
+ * Bullet points in, a logline out. It reads each fragment, works out which part
+ * of a logline it is, and builds the sentence — then shows its working, so what
+ * it could not find is named rather than filled in with something plausible.
+ */
+function LoglineBuilder({ genres, onUse }: { genres: readonly string[]; onUse: (line: string) => void }) {
+  const [notes, setNotes] = useState('');
+  const built = useMemo(() => (notes.trim() ? buildLogline(notes, genres) : null), [notes, genres]);
+
+  return (
+    <div className="callout callout-accent" style={{ marginTop: 'var(--s3)' }}>
+      <div className="row-between" style={{ marginBottom: 'var(--s2)' }}>
+        <div className="small strong">The Logline Builder</div>
+        <button className="link xs" onClick={() => setNotes(LOGLINE_EXAMPLE)}>Fill It With An Example</button>
+      </div>
+      <div className="xs dim" style={{ marginBottom: 'var(--s2)' }}>
+        One thought per line. Who it is, what happens to them, what they now want, who is in the way,
+        and what it costs if they fail — in any order, in your own words. This is a parser and a grammar
+        rather than a language model: it runs offline, it never invents a fact you did not type, and the
+        same notes always give you the same line.
+      </div>
+      <textarea
+        aria-label="Bullet Points For The Logline"
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+        placeholder={LOGLINE_EXAMPLE}
+        style={{ minHeight: 108 }}
+      />
+      {built && built.logline.length > 0 && (
+        <>
+          <div
+            className="small strong"
+            style={{ marginTop: 'var(--s3)', padding: 'var(--s3)', background: 'var(--surface-2)', borderRadius: 8, lineHeight: 1.5, overflowWrap: 'anywhere' }}
+          >
+            {built.logline}
+          </div>
+          <div className="row-between gap-2" style={{ marginTop: 'var(--s2)', alignItems: 'flex-end' }}>
+            <div className="grow" style={{ minWidth: 0 }}>
+              <Meter
+                label="How Much Of A Logline This Is"
+                value={built.score}
+                hint={`${built.filled.length} of the eight parts are in the sentence.`}
+              />
+            </div>
+            <button className="btn btn-sm btn-primary" onClick={() => onUse(built.logline)}>Use This Line</button>
+          </div>
+        </>
+      )}
+      {built && built.logline.length === 0 && (
+        <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+          There is not enough there yet to build a sentence. Start with who it happens to.
+        </div>
+      )}
+      {built && built.notes.length > 0 && (
+        <div style={{ marginTop: 'var(--s3)' }}>
+          <div className="xs dim" style={{ marginBottom: 4 }}>What It Made Of Each Line</div>
+          <div style={{ maxHeight: 260, overflowY: 'auto' }}>
+            {built.notes.map((note, i) => (
+              <div key={`${note.slot}-${i}`} className="xs" style={{ padding: '3px 0', borderTop: i === 0 ? undefined : '1px solid var(--line)', overflowWrap: 'anywhere' }}>
+                <span className="strong">{SLOT_LABEL[note.slot]}</span>
+                <span className="dim"> · {note.raw}</span>
+                <div className="dim">{note.why}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {built && built.missing.length > 0 && (
+        <div className="xs" style={{ marginTop: 'var(--s3)' }}>
+          <span className="dim">Still missing: </span>
+          {built.missing.map((slot) => (
+            <span key={slot} className="chip chip-warning" title={SLOT_EXPLAIN[slot]} style={{ marginRight: 4 }}>{SLOT_LABEL[slot]}</span>
+          ))}
+        </div>
+      )}
+      {built && built.advice.length > 0 && (
+        <ul className="xs dim" style={{ marginTop: 'var(--s2)', paddingLeft: '1.1em' }}>
+          {built.advice.slice(0, 4).map((line) => <li key={line} style={{ overflowWrap: 'anywhere' }}>{line}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function CreateProjectDialog({ onClose }: { onClose: () => void }) {
   const { sim, run } = useGame();
   const [title, setTitle] = useState('');
@@ -564,6 +658,7 @@ function CreateProjectDialog({ onClose }: { onClose: () => void }) {
   const [openGenre, setOpenGenre] = useState<string | null>(null);
   const [contentRating, setContentRating] = useState('');
   const [runtime, setRuntime] = useState<number | null>(null);
+  const [builderOpen, setBuilderOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const television = format === 'series' || format === 'limited_series' || format === 'tv_movie';
@@ -702,8 +797,14 @@ function CreateProjectDialog({ onClose }: { onClose: () => void }) {
       </div>
 
       <div className="field">
-        <label htmlFor="logline">Logline</label>
+        <div className="row-between">
+          <label htmlFor="logline">Logline</label>
+          <button className="link xs" onClick={() => setBuilderOpen((v) => !v)}>
+            {builderOpen ? 'Write It Myself' : 'Build It From Bullet Points'}
+          </button>
+        </div>
         <textarea id="logline" value={logline} onChange={(e) => setLogline(e.target.value)} placeholder="One sentence. What is it about?" />
+        {builderOpen && <LoglineBuilder genres={genres} onUse={setLogline} />}
       </div>
 
       <div className="callout">

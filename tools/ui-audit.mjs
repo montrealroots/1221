@@ -48,6 +48,19 @@ const OVERFLOW_PROBE = `(() => {
     const rect = el.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) continue;
 
+    // Inside something that scrolls sideways on purpose — a tab strip, a wide
+    // table — sitting past the right edge is how scrolling looks, not bleed.
+    // The container itself is still measured; its children are not.
+    let scrollableAncestor = false;
+    for (let parent = el.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+      const ps = getComputedStyle(parent);
+      if (ps.overflowX === 'auto' || ps.overflowX === 'scroll' || ps.overflow === 'auto' || ps.overflow === 'scroll') {
+        scrollableAncestor = true;
+        break;
+      }
+    }
+    if (scrollableAncestor) continue;
+
     const text = (el.textContent || '').trim().slice(0, 70);
     const label = el.tagName.toLowerCase()
       + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\\s+/).join('.') : '');
@@ -133,11 +146,26 @@ for (const size of WIDTHS) {
     await shoot('03-home');
     scrollsSideways = (await probe('home')) || scrollsSideways;
 
+    // Guided mode covers the screen it is explaining, and on a narrow window
+    // the navigation is behind a button. Both have to be dealt with or the
+    // audit only ever measures the home screen.
+    const gotIt = page.getByRole('button', { name: /^got it$/i }).first();
+    if (await gotIt.count()) { await gotIt.click().catch(() => {}); await page.waitForTimeout(400); }
+    const openRail = async () => {
+      const toggle = page.getByRole('button', { name: /toggle navigation/i }).first();
+      if (!(await toggle.count())) return;
+      const railVisible = await page.locator('nav.rail[data-open="true"]').count();
+      if (railVisible === 0) { await toggle.click().catch(() => {}); await page.waitForTimeout(400); }
+    };
+    await openRail();
+
     for (const [label, pattern] of [
       ['world', /^world$/i], ['calendar', /calendar/i], ['bank', /^bank$/i],
       ['character', /character/i], ['relationships', /relationships/i],
       ['property', /^property$/i], ['projects', /projects/i], ['settings', /settings/i],
+      ['casting', /^casting$/i], ['industry', /^industry$/i],
     ]) {
+      await openRail();
       const link = page.getByRole('button', { name: pattern }).first();
       if (!(await link.count())) continue;
       await link.click().catch(() => {});
@@ -145,6 +173,56 @@ for (const size of WIDTHS) {
       scrollsSideways = (await probe(label)) || scrollsSideways;
     }
     await shoot('04-deep');
+
+    // The markets board, which is the widest table in the industry tab.
+    const markets = page.getByRole('tab', { name: /^Markets$/ }).first();
+    if (await markets.count()) {
+      await markets.click().catch(() => {});
+      await page.waitForTimeout(1200);
+      scrollsSideways = (await probe('industry markets')) || scrollsSideways;
+      await page.locator('.list-item').first().click().catch(() => {});
+      await page.waitForTimeout(700);
+      scrollsSideways = (await probe('industry markets open')) || scrollsSideways;
+    }
+
+    // Modals hold the densest text in the game, so they are probed open.
+    await openRail();
+    const casting = page.getByRole('button', { name: /^casting$/i }).first();
+    if (await casting.count()) {
+      await casting.click().catch(() => {});
+      await page.waitForTimeout(1200);
+      const dossier = page.getByRole('button', { name: /^The Project$/ }).first();
+      if (await dossier.count()) {
+        await dossier.click().catch(() => {});
+        await page.waitForTimeout(1000);
+        scrollsSideways = (await probe('project dossier')) || scrollsSideways;
+        await shoot('05-dossier');
+        await page.getByRole('button', { name: /^Close$/ }).first().click().catch(() => {});
+        await page.waitForTimeout(500);
+      }
+    }
+
+    await openRail();
+    const projects = page.getByRole('button', { name: /^projects$/i }).first();
+    if (await projects.count()) {
+      await projects.click().catch(() => {});
+      await page.waitForTimeout(1000);
+      const create = page.getByRole('button', { name: /Start something new/i }).first();
+      if (await create.count()) {
+        await create.click().catch(() => {});
+        await page.waitForTimeout(900);
+        const builder = page.getByRole('button', { name: /Build It From Bullet Points/i }).first();
+        if (await builder.count()) {
+          await builder.click().catch(() => {});
+          await page.waitForTimeout(500);
+          const example = page.getByRole('button', { name: /Fill It With An Example/i }).first();
+          if (await example.count()) await example.click().catch(() => {});
+          await page.waitForTimeout(900);
+        }
+        scrollsSideways = (await probe('new project and logline builder')) || scrollsSideways;
+        await shoot('06-logline');
+      }
+    }
   }
 
   const result = { problems: findings, pageScrollsSideways: scrollsSideways };
