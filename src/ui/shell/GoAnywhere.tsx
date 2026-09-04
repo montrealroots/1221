@@ -6,6 +6,7 @@
  * catalogue items, and every workspace. Keyboard first.
  */
 
+import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGame } from '@/app/game-context';
 import type { Simulation } from '@/engine';
@@ -45,7 +46,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/casting', label: 'Casting', keywords: ['audition', 'role', 'breakdown', 'self tape', 'agent', 'representation'], detail: 'Auditions and representation' },
   { route: '/workspace/projects', label: 'Projects', keywords: ['film', 'movie', 'script', 'write', 'produce', 'direct', 'shoot', 'post', 'release', 'box office', 'distribution'], detail: 'Development to release' },
   { route: '/workspace/company', label: 'Company', keywords: ['studio', 'business', 'found company', 'employees', 'payroll', 'equipment', 'merchandise'], detail: 'Found and run a company' },
-  { route: '/workspace/awards', label: 'Awards', keywords: ['nomination', 'ceremony', 'festival', 'campaign', 'vanguard'], detail: 'Awards and festivals' },
+  { route: '/workspace/awards', label: 'Awards', keywords: ['nomination', 'ceremony', 'festival', 'campaign', 'oscars', 'emmys', 'cannes'], detail: 'Awards and festivals' },
   { route: '/workspace/history', label: 'History', keywords: ['timeline', 'past', 'memories', 'milestones', 'what happened'], detail: 'Everything that has happened' },
   { route: '/workspace/character', label: 'Character', keywords: ['attributes', 'traits', 'skills', 'reputation', 'me', 'stats'], detail: 'Attributes, traits and standing' },
   { route: '/workspace/settings', label: 'Settings', keywords: ['preferences', 'accessibility', 'sandbox', 'motion', 'audio', 'tutorial'], detail: 'Preferences and sandbox' },
@@ -197,7 +198,7 @@ export function GoAnywhere() {
         <div className="search-hint">
           <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
           <span><kbd>↵</kbd> open</span>
-          <span><kbd>esc</kbd> close</span>
+          <span><kbd>Esc</kbd> close</span>
           <span className="grow" />
           <span>{hits.length > 0 ? `${hits.length} result${hits.length === 1 ? '' : 's'}` : ''}</span>
         </div>
@@ -234,7 +235,7 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     const score = scoreMatch(query, { name: person.displayName, aliases: [person.stageName ?? ''], type: 'person' });
     push(
       'People', person.id, person.displayName,
-      `${person.careerTrack}${person.industryRole ? ` · ${person.industryRole.replace(/_/g, ' ')}` : ''}`,
+      `${person.careerTrack}${person.industryRole ? ` · ${titleCaseLabel(person.industryRole.replace(/_/g, ' '))}` : ''}`,
       '/workspace/relationships', score,
     );
   }
@@ -243,7 +244,7 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
   for (const property of Object.values(sim.universe.properties)) {
     if (property.soldAt) continue;
     const score = scoreMatch(query, { name: property.addressLine, aliases: [property.name, property.kind], type: 'property' });
-    push('Property', property.id, property.addressLine, `${property.kind.replace(/_/g, ' ')} · ${CITIES.get(property.locationId)?.name ?? ''}`, '/workspace/property', score);
+    push('Property', property.id, property.addressLine, `${titleCaseLabel(property.kind.replace(/_/g, ' '))} · ${CITIES.get(property.locationId)?.name ?? ''}`, '/workspace/property', score);
   }
   for (const vehicle of Object.values(sim.universe.vehicles)) {
     if (vehicle.soldAt) continue;
@@ -253,17 +254,17 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
   }
   for (const project of Object.values(sim.universe.projects)) {
     const score = scoreMatch(query, { name: project.title, type: 'project' });
-    push('Projects', project.id, project.title, `${project.format.replace(/_/g, ' ')} · ${project.phase.replace(/_/g, ' ')}`, '/workspace/projects', score);
+    push('Projects', project.id, project.title, `${titleCaseLabel(project.format.replace(/_/g, ' '))} · ${titleCaseLabel(project.phase.replace(/_/g, ' '))}`, '/workspace/projects', score);
   }
   for (const company of Object.values(sim.universe.companies)) {
     if (company.dissolvedAt) continue;
     const score = scoreMatch(query, { name: company.name, aliases: [company.legalName], type: 'company' });
-    push('Companies', company.id, company.name, `${company.kind} · ${formatMoneyCompact(company.valuation)}`, '/workspace/company', score);
+    push('Companies', company.id, company.name, `${titleCaseLabel(company.kind)} · ${formatMoneyCompact(company.valuation)}`, '/workspace/company', score);
   }
   for (const asset of Object.values(sim.universe.assets)) {
     if (asset.soldAt || asset.ownerId !== sim.universe.playerId) continue;
     const score = scoreMatch(query, { name: asset.name, aliases: [asset.brand ?? '', ...asset.tags], type: 'asset' });
-    push('Your things', asset.id, asset.name, `${asset.category} · ${formatMoneyCompact(asset.currentValue)}`, '/workspace/shopping', score);
+    push('Your things', asset.id, asset.name, `${titleCaseLabel(asset.category)} · ${formatMoneyCompact(asset.currentValue)}`, '/workspace/shopping', score);
   }
 
   // Reference data: places, cars, brands, buyers.
@@ -277,12 +278,12 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
   }
   for (const model of VEHICLE_MODELS.all()) {
     const score = scoreMatch(query, model);
-    push('Cars for sale', model.id, `${model.make} ${model.name}`, `${model.bodyStyle} · ${model.segment}`, '/workspace/vehicles', score);
+    push('Cars for sale', model.id, `${model.make} ${model.name}`, `${model.bodyStyle} · ${titleCaseLabel(model.segment)}`, '/workspace/vehicles', score);
   }
   for (const item of CATALOG.all()) {
     if (item.category === 'groceries') continue;
     const score = scoreMatch(query, item);
-    push('Things to buy', item.id, item.name, `${item.category} · ${formatMoneyCompact(item.basePrice)}`, '/workspace/shopping', score);
+    push('Things to buy', item.id, item.name, `${titleCaseLabel(item.category)} · ${formatMoneyCompact(item.basePrice)}`, '/workspace/shopping', score);
   }
   for (const buyer of BUYERS.all()) {
     const score = scoreMatch(query, buyer);

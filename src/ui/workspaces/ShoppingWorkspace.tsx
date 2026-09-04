@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
@@ -109,7 +110,7 @@ export function ShoppingWorkspace() {
                   <div className="grow">
                     <div className="small strong">{asset.name}</div>
                     <div className="xs dim">
-                      {asset.brand} · {asset.category} · acquired {formatDate(asset.acquiredAt, sim.homeZone)}
+                      {asset.brand} · {titleCaseLabel(asset.category)} · acquired {formatDate(asset.acquiredAt, sim.homeZone)}
                       {asset.acquiredVia !== 'purchase' && ` · ${asset.acquiredVia}`}
                       {asset.insurancePolicyId && ' · insured'}
                     </div>
@@ -164,7 +165,7 @@ export function ShoppingWorkspace() {
                       {order.items.map((i) => `${i.name}${i.quantity > 1 ? ` ×${i.quantity}` : ''}`).join(', ')}
                     </div>
                     <div className="xs dim">
-                      {formatDate(order.placedAt, sim.homeZone)} · {order.channel.replace(/_/g, ' ')}
+                      {formatDate(order.placedAt, sim.homeZone)} · {titleCaseLabel(order.channel.replace(/_/g, ' '))}
                       {order.deliverAt && ` · arriving ${formatDate(order.deliverAt, sim.homeZone)}`}
                     </div>
                   </div>
@@ -172,7 +173,7 @@ export function ShoppingWorkspace() {
                     <div className="mono small">{formatMoney(order.total)}</div>
                     <div className="xs dim">incl. {formatMoney(order.tax)} tax</div>
                   </div>
-                  <span className="chip">{order.status}</span>
+                  <span className="chip">{titleCaseLabel(order.status)}</span>
                   {order.status === 'delivered' && (
                     <button className="btn btn-sm" onClick={() => run('shop.return', { orderId: order.id })}>Return</button>
                   )}

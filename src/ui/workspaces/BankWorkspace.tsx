@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty, Tabs, Modal } from '@/ui/components/primitives';
@@ -137,7 +138,7 @@ export function BankWorkspace() {
                     <div className="grow">
                       <div className="small strong">{bill.name}</div>
                       <div className="xs dim">
-                        {bill.category} · {bill.frequency} · due {formatDate(bill.nextDueAt, sim.homeZone)}
+                        {titleCaseLabel(bill.category)} · {bill.frequency} · due {formatDate(bill.nextDueAt, sim.homeZone)}
                         {bill.missedCount > 0 && (
                           <span className="negative"> · missed {bill.missedCount}×</span>
                         )}
@@ -174,7 +175,7 @@ export function BankWorkspace() {
                     <tr key={txn.id}>
                       <td className="xs dim nowrap">{formatDate(txn.at, sim.homeZone)}</td>
                       <td className="small">{txn.memo}</td>
-                      <td className="xs dim">{txn.category}</td>
+                      <td className="xs dim">{titleCaseLabel(txn.category)}</td>
                       <td className="num"><MoneyText amount={delta} signed /></td>
                     </tr>
                   );

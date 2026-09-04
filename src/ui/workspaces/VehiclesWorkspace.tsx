@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -22,7 +23,7 @@ export function VehiclesWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Vehicles</div>
-        <h1>{owned.length > 0 ? `${owned.length} vehicle${owned.length === 1 ? '' : 's'}` : 'No vehicle'}</h1>
+        <h1>{owned.length > 0 ? `${owned.length} Vehicle${owned.length === 1 ? '' : 's'}` : 'No Vehicle'}</h1>
         <p className="muted">
           Every car keeps the configuration it left the factory with alongside the one it has now.
           Parts are checked against your exact car before anyone picks up a wrench.
@@ -56,7 +57,7 @@ export function VehiclesWorkspace() {
                   <Stat label="Value" value={<MoneyText amount={vehicle.currentValue} compact />} note={`Paid ${formatMoneyCompact(vehicle.purchasePrice)}`} />
                   <Stat label="Mileage" value={vehicle.mileage.toLocaleString('en-US')} />
                   <Stat label="Power" value={`${vehicle.horsepower} hp`} note={`0–60 in ${vehicle.zeroToSixty.toFixed(1)}s`} />
-                  <Stat label="Acquisition" value={vehicle.acquisition} />
+                  <Stat label="Acquisition" value={titleCaseLabel(vehicle.acquisition)} />
                 </div>
                 <div className="col gap-3">
                   <Meter label="Condition" value={vehicle.condition} />
@@ -128,7 +129,7 @@ function MarketTab({ listings }: { listings: VehicleListing[] }) {
                 <div className="grow">
                   <div className="small strong">{listing.year} {model?.make} {model?.name}</div>
                   <div className="xs dim">
-                    {trim?.name} · {listing.condition} · {listing.mileage.toLocaleString('en-US')} miles · {listing.dealerName}
+                    {trim?.name} · {titleCaseLabel(listing.condition)} · {listing.mileage.toLocaleString('en-US')} miles · {listing.dealerName}
                   </div>
                   <div className="xs dim">
                     {listing.configuration.paint} · {listing.configuration.wheels} · {listing.configuration.interior}
@@ -194,7 +195,7 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
           {categories.map((c) => (
             <button key={c} className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}
               style={category === c ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)' } : undefined}>
-              {c.replace(/_/g, ' ')}
+              {titleCaseLabel(c.replace(/_/g, ' '))}
             </button>
           ))}
         </div>
@@ -209,7 +210,7 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
               <div key={part.id} className="list-item list-static">
                 <div className="grow">
                   <div className="small strong">{part.name}</div>
-                  <div className="xs dim">{part.brand} · {part.category.replace(/_/g, ' ')} · {part.labourHours}h labour</div>
+                  <div className="xs dim">{part.brand} · {titleCaseLabel(part.category.replace(/_/g, ' '))} · {part.labourHours}h labour</div>
                   <div className="xs muted" style={{ marginTop: 2 }}>{part.description}</div>
                   {!verdict.fits && (
                     <div className="xs negative" style={{ marginTop: 2 }}>{verdict.reasons.join(' ')}</div>
@@ -220,9 +221,9 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
                   <div className="row wrap gap-1" style={{ marginTop: 4 }}>
                     {part.effects.horsepower ? <span className="chip chip-positive">+{part.effects.horsepower} hp</span> : null}
                     {part.effects.zeroToSixty ? <span className="chip chip-positive">{part.effects.zeroToSixty.toFixed(2)}s 0–60</span> : null}
-                    {!part.streetLegal && <span className="chip chip-negative">not street legal</span>}
-                    {part.voidsWarranty && <span className="chip chip-warning">voids warranty</span>}
-                    {part.insuranceRelevant && <span className="chip chip-info">tell your insurer</span>}
+                    {!part.streetLegal && <span className="chip chip-negative">Not Street Legal</span>}
+                    {part.voidsWarranty && <span className="chip chip-warning">Voids Warranty</span>}
+                    {part.insuranceRelevant && <span className="chip chip-info">Tell Your Insurer</span>}
                   </div>
                 </div>
                 <span className="mono small">{formatMoney(part.price, { cents: false })}</span>
@@ -260,7 +261,7 @@ function ServiceTab({ vehicleId }: { vehicleId: string }) {
           {kinds.map((kind) => (
             <div key={kind} className="list-item list-static">
               <div className="grow">
-                <div className="small strong" style={{ textTransform: 'capitalize' }}>{kind.replace(/_/g, ' ')}</div>
+                <div className="small strong" style={{ textTransform: 'capitalize' }}>{titleCaseLabel(kind.replace(/_/g, ' '))}</div>
                 <div className="xs dim">
                   {kind === 'scheduled' && 'Routine maintenance. Skipping it costs more later.'}
                   {kind === 'repair' && 'Fixing what is wrong. Price rises as mechanical health falls.'}

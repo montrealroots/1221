@@ -120,7 +120,7 @@ export function CalendarWorkspace() {
               ))}
               {day.industry.slice(0, 1).map((d) => (
                 <span
-                  key={`${day.key}:${d.occurrence.event.id}:${d.phase}`}
+                  key={`${day.key}:${d.occurrence.event.id}:${titleCaseLabel(d.phase)}`}
                   className="cal-event"
                   style={{ borderLeftColor: LEGEND_BY_CATEGORY.industry?.colour }}
                   title={`${occurrenceTitle(d.occurrence)} · ${d.detail}${d.occurrence.verified ? '' : ' · projected from the usual pattern'}`}
@@ -149,7 +149,7 @@ export function CalendarWorkspace() {
         <hr className="divider" />
         <div className="cal-legend">
           {CALENDAR_LEGEND.filter((e) => e.category !== 'system').map((entry) => (
-            <span key={entry.category} className="cal-legend-item" title={entry.description}>
+            <span key={titleCaseLabel(entry.category)} className="cal-legend-item" title={entry.description}>
               <span className="cal-swatch" style={{ background: entry.colour }} />
               {entry.label}
             </span>
@@ -167,7 +167,7 @@ export function CalendarWorkspace() {
           {selectedDay.industry.length > 0 && (
             <div className="list">
               {selectedDay.industry.map((d) => (
-                <div key={`${d.occurrence.event.id}:${d.phase}:${d.detail}`} className="list-item list-static">
+                <div key={`${d.occurrence.event.id}:${titleCaseLabel(d.phase)}:${d.detail}`} className="list-item list-static">
                   <span className="cal-swatch" style={{ background: LEGEND_BY_CATEGORY.industry?.colour, width: 4, height: 32, borderRadius: 2 }} aria-hidden="true" />
                   <div className="grow">
                     <div className="small strong">{occurrenceTitle(d.occurrence)} · {d.detail}</div>
@@ -200,7 +200,7 @@ export function CalendarWorkspace() {
                     </div>
                   </div>
                   {entry.conflicted && <span className="chip chip-negative">Clash</span>}
-                  {entry.status !== 'pending' && <span className="chip">{entry.status}</span>}
+                  {entry.status !== 'pending' && <span className="chip">{titleCaseLabel(entry.status)}</span>}
                 </button>
               ))}
             </div>

@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
@@ -344,11 +345,11 @@ export function TravelWorkspace() {
                     <div className="grow">
                       <div className="small strong">{booking.airlineName} {booking.flightNumber}</div>
                       <div className="xs dim">
-                        {booking.fromAirport} → {booking.toAirport} · {formatDate(booking.departAt, sim.homeZone)} at {formatTime(booking.departAt, sim.homeZone)} · {booking.cabin.replace(/_/g, ' ')}
+                        {booking.fromAirport} → {booking.toAirport} · {formatDate(booking.departAt, sim.homeZone)} at {formatTime(booking.departAt, sim.homeZone)} · {titleCaseLabel(booking.cabin.replace(/_/g, ' '))}
                       </div>
                     </div>
                     <span className="mono small">{formatMoney(booking.fare + booking.taxesFees, { cents: false })}</span>
-                    <span className="chip">{booking.status.replace(/_/g, ' ')}</span>
+                    <span className="chip">{titleCaseLabel(booking.status.replace(/_/g, ' '))}</span>
                     {booking.status === 'booked' && (
                       <button className="btn btn-sm" onClick={() => run('travel.cancel_flight', { bookingId: booking.id })}>Cancel</button>
                     )}
@@ -369,7 +370,7 @@ export function TravelWorkspace() {
                       </div>
                     </div>
                     <span className="mono small">{formatMoney(stay.total, { cents: false })}</span>
-                    <span className="chip">{stay.status.replace(/_/g, ' ')}</span>
+                    <span className="chip">{titleCaseLabel(stay.status.replace(/_/g, ' '))}</span>
                   </div>
                 ))}
               </div>

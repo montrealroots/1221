@@ -7,6 +7,7 @@
  * separate copy of a movie living inside each department.
  */
 
+import { countryOfCity, primaryLanguageOf } from '../content/geography';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type {
@@ -126,6 +127,8 @@ export function registerFilm(sim: Simulation): void {
       if (p.genres.length === 0) throw new CommandError('A project needs at least one genre.');
       const player = s.player;
       const title = p.title?.trim() || generateProjectTitle(s.rng('title', s.counter('project_title')));
+      const company = p.companyId ? s.universe.companies[p.companyId] : undefined;
+      const productionCountry = countryOfCity(company?.headquartersLocationId) ?? countryOfCity(player.currentLocationId) ?? 'us';
 
       const project: Project = {
         id: s.nextId('proj'),
@@ -139,6 +142,8 @@ export function registerFilm(sim: Simulation): void {
         phaseHistory: [{ phase: 'idea', enteredAt: s.now }],
         ownerCompanyId: p.companyId,
         createdById: player.id,
+        productionCountryId: productionCountry,
+        language: primaryLanguageOf(productionCountry),
         attachments: [],
         writerIds: [],
         producerIds: [],

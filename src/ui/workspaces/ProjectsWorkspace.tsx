@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -21,7 +22,7 @@ export function ProjectsWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Projects</div>
-        <h1>{projects.length > 0 ? `${projects.length} project${projects.length === 1 ? '' : 's'}` : 'Nothing in development'}</h1>
+        <h1>{projects.length > 0 ? `${projects.length} Project${projects.length === 1 ? '' : 's'}` : 'Nothing In Development'}</h1>
         <p className="muted">
           One record per film, all the way from an idea to a library title. Every department points at
           the same project, so nothing gets out of step with itself.
@@ -50,7 +51,7 @@ export function ProjectsWorkspace() {
                 >
                   <div className="grow">
                     <div className="small strong">{project.title}</div>
-                    <div className="xs dim">{project.format.replace(/_/g, ' ')} · {project.phase.replace(/_/g, ' ')}</div>
+                    <div className="xs dim">{titleCaseLabel(project.format.replace(/_/g, ' '))} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}</div>
                   </div>
                 </button>
               ))}
@@ -88,7 +89,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
     <div className="col gap-4">
       <Panel
         title={project.title}
-        subtitle={`${project.format.replace(/_/g, ' ')} · ${project.genres.join(', ')} · ${project.logline}`}
+        subtitle={`${titleCaseLabel(project.format.replace(/_/g, ' '))} · ${project.genres.map(titleCaseLabel).join(', ')} · ${project.logline}`}
       >
         <div className="row wrap gap-1" style={{ marginBottom: 'var(--s4)' }}>
           {PROJECT_PHASE_ORDER.map((phase, index) => (
@@ -97,7 +98,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
               className={`chip ${index === currentIndex ? 'chip-accent' : index < currentIndex ? 'chip-positive' : ''}`}
               style={index > currentIndex ? { opacity: 0.4 } : undefined}
             >
-              {phase.replace(/_/g, ' ')}
+              {titleCaseLabel(phase.replace(/_/g, ' '))}
             </span>
           ))}
         </div>
@@ -259,7 +260,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                 <div key={draft.id} className="list-item list-static" style={{ display: 'block' }}>
                   <div className="row-between">
                     <div>
-                      <div className="small strong">{draft.label} {draft.isCurrent && <span className="chip chip-accent">current</span>}</div>
+                      <div className="small strong">{draft.label} {draft.isCurrent && <span className="chip chip-accent">Current</span>}</div>
                       <div className="xs dim">{draft.pages} pages · {formatDate(draft.writtenAt, sim.homeZone)}</div>
                     </div>
                     <span className="mono">{draft.quality}</span>
@@ -295,11 +296,11 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                     <div className="grow">
                       <div className="small strong">{role.characterName}</div>
                       <div className="xs dim">
-                        {role.billing.replace(/_/g, ' ')} · {role.shootDays} days · {formatMoney(role.payLow, { cents: false })}–{formatMoney(role.payHigh, { cents: false })}
+                        {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} days · {formatMoney(role.payLow, { cents: false })}–{formatMoney(role.payHigh, { cents: false })}
                       </div>
                       {cast && <div className="xs positive">Cast: {cast.displayName}</div>}
                     </div>
-                    <span className="chip">{role.status.replace(/_/g, ' ')}</span>
+                    <span className="chip">{titleCaseLabel(role.status.replace(/_/g, ' '))}</span>
                     {role.status === 'open' && (
                       <button className="btn btn-sm" onClick={() => run('cast.open_casting', { roleId: role.id })}>
                         Open casting
@@ -339,7 +340,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                       <td className="num xs mono">{formatMoneyCompact(day.actualCost)}</td>
                       <td className="xs">
                         <span className={`chip ${day.status === 'complete' ? 'chip-positive' : day.status === 'incomplete' ? 'chip-warning' : ''}`}>
-                          {day.status}
+                          {titleCaseLabel(day.status)}
                         </span>
                         {day.incidents.length > 0 && (
                           <span className="xs dim" title={day.incidents.map((i) => i.description).join(' ')}> ⚠</span>
@@ -376,7 +377,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                     <Meter label="" value={progress * 100} />
                   </div>
                   <span className={`chip ${task.status === 'complete' ? 'chip-positive' : task.status === 'blocked' ? 'chip-negative' : ''}`}>
-                    {task.status.replace(/_/g, ' ')}
+                    {titleCaseLabel(task.status.replace(/_/g, ' '))}
                   </span>
                   {task.status === 'ready' && (
                     <button className="btn btn-sm" onClick={() => run('prod.start_post_task', { taskId: task.id })}>Start</button>
@@ -403,7 +404,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   <tbody>
                     {release.campaign.beats.map((beat, i) => (
                       <tr key={i}>
-                        <td className="xs" style={{ textTransform: 'capitalize' }}>{beat.kind.replace(/_/g, ' ')}</td>
+                        <td className="xs" style={{ textTransform: 'capitalize' }}>{titleCaseLabel(beat.kind.replace(/_/g, ' '))}</td>
                         <td className="xs">{formatDate(beat.at, sim.homeZone)}</td>
                         <td className="num xs mono">{formatMoneyCompact(beat.spend)}</td>
                         <td className="num xs mono">{beat.reach ? beat.reach.toLocaleString('en-US') : '—'}</td>
@@ -416,7 +417,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
           )}
 
           {release?.release && (
-            <Panel title="Release" subtitle={`${release.release.strategy.replace(/_/g, ' ')} via ${release.release.distributorName}`}>
+            <Panel title="Release" subtitle={`${titleCaseLabel(release.release.strategy.replace(/_/g, ' '))} via ${release.release.distributorName}`}>
               <div className="grid grid-4" style={{ marginBottom: 'var(--s4)' }}>
                 <Stat label="Opening Weekend" value={formatMoneyCompact(release.openingWeekend)} />
                 <Stat label="Worldwide" value={formatMoneyCompact(release.worldGross)} />

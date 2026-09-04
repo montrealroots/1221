@@ -11,7 +11,7 @@
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
-import type { AwardBody, Festival } from '../domain/model';
+
 
 const V = REFERENCE_VERSION;
 const SIM = {
@@ -102,67 +102,8 @@ export const EXHIBITORS = new Registry<ExhibitorChain>('exhibitors', [
   { id: 'orbit', name: 'Orbit Entertainment', type: 'exhibitor', locationId: 'us-fl-miami', screens: 3900, marketShare: 0.16, openingWeekSplit: 0.47, premiumFormats: ['Orbit Dome'], description: 'Aggressive on premium formats and aggressive on terms.', ...SIM },
 ]);
 
-export const AWARD_BODIES: readonly AwardBody[] = [
-  {
-    id: 'vanguard', name: 'The Vanguard Awards', shortName: 'Vanguards', prestige: 100, kind: 'film',
-    ceremonyMonth: 3, ceremonyDay: 9,
-    categories: ['Best Picture', 'Best Director', 'Best Actor', 'Best Actress', 'Best Supporting Actor', 'Best Supporting Actress', 'Best Original Screenplay', 'Best Adapted Screenplay', 'Best Cinematography', 'Best Editing', 'Best Original Score', 'Best Production Design', 'Best Costume Design', 'Best Sound', 'Best Visual Effects', 'Best Documentary'],
-    eligibilityRule: 'Theatrical release in the prior calendar year, minimum one week in a qualifying market.',
-  },
-  {
-    id: 'continental', name: 'The Continental Awards', shortName: 'Continentals', prestige: 82, kind: 'both',
-    ceremonyMonth: 1, ceremonyDay: 12,
-    categories: ['Best Film Drama', 'Best Film Comedy', 'Best Director', 'Best Actor Drama', 'Best Actress Drama', 'Best Actor Comedy', 'Best Actress Comedy', 'Best Screenplay', 'Best Series Drama', 'Best Series Comedy', 'Best Limited Series', 'Best Actor Series', 'Best Actress Series'],
-    eligibilityRule: 'Released in the prior calendar year. Press-body voted, and the earliest meaningful signal of the season.',
-  },
-  {
-    id: 'beacon', name: 'The Beacon Awards', shortName: 'Beacons', prestige: 88, kind: 'television',
-    ceremonyMonth: 9, ceremonyDay: 15,
-    categories: ['Outstanding Drama Series', 'Outstanding Comedy Series', 'Outstanding Limited Series', 'Outstanding Lead Actor Drama', 'Outstanding Lead Actress Drama', 'Outstanding Lead Actor Comedy', 'Outstanding Lead Actress Comedy', 'Outstanding Supporting Actor', 'Outstanding Supporting Actress', 'Outstanding Writing', 'Outstanding Directing'],
-    eligibilityRule: 'Episodes aired or released between 1 June and 31 May.',
-  },
-  {
-    id: 'performers_guild', name: 'Performers Guild Awards', shortName: 'Guild', prestige: 76, kind: 'guild',
-    ceremonyMonth: 2, ceremonyDay: 23,
-    categories: ['Outstanding Cast', 'Outstanding Male Lead', 'Outstanding Female Lead', 'Outstanding Male Supporting', 'Outstanding Female Supporting', 'Outstanding Stunt Ensemble'],
-    eligibilityRule: 'Voted by working performers. The strongest single predictor of the acting Vanguards.',
-  },
-  {
-    id: 'writers_guild', name: 'Writers Guild Prize', shortName: 'WGP', prestige: 70, kind: 'guild',
-    ceremonyMonth: 2, ceremonyDay: 16,
-    categories: ['Original Screenplay', 'Adapted Screenplay', 'Drama Series', 'Comedy Series'],
-    eligibilityRule: 'Produced under a guild agreement in the prior calendar year.',
-  },
-  {
-    id: 'directors_guild', name: 'Directors Guild Medal', shortName: 'DGM', prestige: 78, kind: 'guild',
-    ceremonyMonth: 2, ceremonyDay: 8,
-    categories: ['Feature Film', 'First-Time Feature', 'Drama Series', 'Comedy Series'],
-    eligibilityRule: 'Directed under a guild agreement in the prior calendar year.',
-  },
-  {
-    id: 'critics_circle', name: 'National Critics Circle', shortName: 'NCC', prestige: 58, kind: 'critics',
-    ceremonyMonth: 1, ceremonyDay: 5,
-    categories: ['Best Film', 'Best Director', 'Best Actor', 'Best Actress', 'Best Screenplay', 'Best Cinematography'],
-    eligibilityRule: 'Voted by accredited critics. Early, influential, and frequently contrarian.',
-  },
-];
-
-export const AWARD_BODY_BY_ID: Readonly<Record<string, AwardBody>> =
-  Object.fromEntries(AWARD_BODIES.map((a) => [a.id, a]));
-
-export const FESTIVALS: readonly Festival[] = [
-  { id: 'alpine', name: 'Alpine Film Festival', locationId: 'us-co-denver', month: 1, day: 22, prestige: 84, premiereRequirement: 'world', categories: ['Grand Jury Prize', 'Audience Award', 'Directing Award', 'Screenwriting Award'], submissionFee: 110, marketAttached: true },
-  { id: 'lumiere', name: 'Lumiere International Film Festival', locationId: 'de-be-berlin', month: 2, day: 13, prestige: 88, premiereRequirement: 'world', categories: ['Golden Lumiere', 'Silver Lumiere', 'Best Director', 'Best Performance'], submissionFee: 130, marketAttached: true },
-  { id: 'meridian_fest', name: 'Meridian Festival', locationId: 'fr-paca-cannes', month: 5, day: 14, prestige: 100, premiereRequirement: 'world', categories: ['Grand Prize', 'Jury Prize', 'Best Director', 'Best Actor', 'Best Actress', 'Best Screenplay'], submissionFee: 160, marketAttached: true },
-  { id: 'coastline', name: 'Coastline Film Festival', locationId: 'it-laz-rome', month: 8, day: 28, prestige: 90, premiereRequirement: 'world', categories: ['Golden Compass', 'Grand Jury Prize', 'Best Director'], submissionFee: 140, marketAttached: true },
-  { id: 'harbourlight', name: 'Harbourlight Festival', locationId: 'ca-on-toronto', month: 9, day: 5, prestige: 86, premiereRequirement: 'international', categories: ['Audience Award', 'Platform Prize', 'Discovery Award'], submissionFee: 125, marketAttached: true },
-  { id: 'southbank', name: 'Southbank Documentary Festival', locationId: 'uk-eng-london', month: 10, day: 9, prestige: 68, premiereRequirement: 'regional', categories: ['Best Documentary', 'Best Direction', 'Impact Award'], submissionFee: 85, marketAttached: false },
-  { id: 'redrock', name: 'Red Rock Genre Festival', locationId: 'us-nm-santafe', month: 6, day: 18, prestige: 52, premiereRequirement: 'none', categories: ['Best Feature', 'Best Horror', 'Best Science Fiction', 'Audience Choice'], submissionFee: 65, marketAttached: false },
-  { id: 'crescent', name: 'Crescent City Shorts', locationId: 'us-la-neworleans', month: 4, day: 11, prestige: 44, premiereRequirement: 'none', categories: ['Best Short', 'Best Student Short', 'Best Animation'], submissionFee: 45, marketAttached: false },
-];
-
-export const FESTIVAL_BY_ID: Readonly<Record<string, Festival>> =
-  Object.fromEntries(FESTIVALS.map((f) => [f.id, f]));
+// The award bodies and festivals are the real ones now: see content/events-data,
+// content/award-bodies and content/festival-rules.
 
 export const GENRES = [
   'action', 'adventure', 'animation', 'biography', 'comedy', 'crime', 'documentary',

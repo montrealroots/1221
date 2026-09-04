@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Meter, Empty } from '@/ui/components/primitives';
@@ -109,7 +110,7 @@ export function WellbeingWorkspace() {
                       </span>
                     ))}
                     {activity.practises?.map((p) => (
-                      <span key={p.key} className="chip" style={{ marginRight: 4 }}>{p.key.replace(/_/g, ' ')}</span>
+                      <span key={p.key} className="chip" style={{ marginRight: 4 }}>{titleCaseLabel(p.key.replace(/_/g, ' '))}</span>
                     ))}
                   </div>
                 </div>

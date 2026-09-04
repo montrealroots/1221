@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -32,7 +33,7 @@ export function PropertyWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Property</div>
-        <h1>{owned.length > 0 ? `${owned.length} propert${owned.length === 1 ? 'y' : 'ies'}` : 'No property yet'}</h1>
+        <h1>{owned.length > 0 ? `${owned.length} Propert${owned.length === 1 ? 'y' : 'ies'}` : 'No Property Yet'}</h1>
         <p className="muted">
           Rent, buy, build from raw land, and design the inside. Buying is showings, offers, counters,
           an inspection, an appraisal and a closing.
@@ -60,7 +61,7 @@ export function PropertyWorkspace() {
               <Panel
                 key={property.id}
                 title={property.addressLine}
-                subtitle={`${property.kind.replace(/_/g, ' ')} · ${CITIES.get(property.locationId)?.name}${property.neighbourhoodId ? ` · ${NEIGHBOURHOODS.get(property.neighbourhoodId)?.name}` : ''}`}
+                subtitle={`${titleCaseLabel(property.kind.replace(/_/g, ' '))} · ${CITIES.get(property.locationId)?.name}${property.neighbourhoodId ? ` · ${NEIGHBOURHOODS.get(property.neighbourhoodId)?.name}` : ''}`}
                 actions={
                   property.ownerId === sim.player.id ? (
                     <button
@@ -106,7 +107,7 @@ export function PropertyWorkspace() {
                   <div className="grow">
                     <div className="small strong">{property.addressLine}</div>
                     <div className="xs dim">
-                      {property.kind.replace(/_/g, ' ')} · {property.bedrooms} bed · {property.interiorSqft.toLocaleString('en-US')} sq ft
+                      {titleCaseLabel(property.kind.replace(/_/g, ' '))} · {property.bedrooms} bed · {property.interiorSqft.toLocaleString('en-US')} sq ft
                       {property.neighbourhoodId && ` · ${NEIGHBOURHOODS.get(property.neighbourhoodId)?.name}`}
                       {' · '}{listing.daysOnMarket} days on market
                     </div>
@@ -150,7 +151,7 @@ export function PropertyWorkspace() {
                         </div>
                       </div>
                       <span className={`chip ${offer.status === 'closed' ? 'chip-positive' : offer.status === 'rejected' ? 'chip-negative' : ''}`}>
-                        {offer.status}
+                        {titleCaseLabel(offer.status)}
                       </span>
                     </div>
 
@@ -304,7 +305,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
                         {project.architectName} · {project.generalContractor} · target {formatDate(project.targetCompletionAt, sim.homeZone)}
                       </div>
                     </div>
-                    <span className="chip">{project.status}</span>
+                    <span className="chip">{titleCaseLabel(project.status)}</span>
                   </div>
 
                   <div className="grid grid-4" style={{ marginBottom: 'var(--s3)' }}>
@@ -327,7 +328,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
                               <td className="small">{phase.name}</td>
                               <td className="xs">
                                 <span className={`chip ${phase.status === 'complete' ? 'chip-positive' : phase.status === 'failed_inspection' ? 'chip-negative' : ''}`}>
-                                  {phase.status.replace(/_/g, ' ')}
+                                  {titleCaseLabel(phase.status.replace(/_/g, ' '))}
                                 </span>
                               </td>
                               <td className="num xs mono">{phase.actualDays} / {phase.plannedDays}</td>
@@ -411,7 +412,7 @@ function InteriorsTab() {
                 <div className="grow">
                   <div className="small strong">{room.name}</div>
                   <div className="xs dim">
-                    {property?.addressLine} · {room.kind} · {room.sqft} sq ft
+                    {property?.addressLine} · {titleCaseLabel(room.kind)} · {room.sqft} sq ft
                     {room.themeId && ` · ${DESIGN_THEMES.find((t) => t.id === room.themeId)?.name}`}
                   </div>
                 </div>

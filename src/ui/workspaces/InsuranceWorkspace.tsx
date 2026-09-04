@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Modal } from '@/ui/components/primitives';
@@ -49,7 +50,7 @@ export function InsuranceWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Insurance</div>
-        <h1>{policies.filter((p) => p.status === 'active').length} active policies</h1>
+        <h1>{policies.filter((p) => p.status === 'active').length} Active Policies</h1>
         <p className="muted">
           {formatMoney(monthlyTotal)} a month. Quote, premium, coverage, claim, decision, renewal or lapse.
         </p>
@@ -105,7 +106,7 @@ export function InsuranceWorkspace() {
                   </div>
                 </div>
                 <span className="mono small">{formatMoney(policy.monthlyPremium)}/mo</span>
-                <span className={`chip ${policy.status === 'active' ? 'chip-positive' : 'chip-negative'}`}>{policy.status}</span>
+                <span className={`chip ${policy.status === 'active' ? 'chip-positive' : 'chip-negative'}`}>{titleCaseLabel(policy.status)}</span>
                 {policy.status === 'active' && (
                   <button
                     className="btn btn-sm"
@@ -141,7 +142,7 @@ export function InsuranceWorkspace() {
                   )}
                 </div>
                 <span className={`chip ${claim.status === 'denied' ? 'chip-negative' : claim.status === 'paid' ? 'chip-positive' : ''}`}>
-                  {claim.status.replace(/_/g, ' ')}
+                  {titleCaseLabel(claim.status.replace(/_/g, ' '))}
                 </span>
               </div>
             ))}

@@ -158,7 +158,7 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     affects: ['The film itself, which dominates', 'Critical standing', 'Precursor wins earlier in the season', 'Campaign spend, at the margin only', 'Eligibility windows and release dates'],
     actions: ['Campaign in specific categories', 'Submit to festivals', 'Accept an acquisition offer out of a festival'],
     connects: ['Projects, because eligibility depends on format and release', 'Bank, because campaigns cost real money', 'Career, because winning moves demand, prestige and your quote'],
-    keywords: ['awards', 'nomination', 'ceremony', 'campaign', 'festival', 'premiere', 'jury', 'won', 'vanguard'],
+    keywords: ['awards', 'nomination', 'ceremony', 'campaign', 'festival', 'premiere', 'jury', 'won', 'oscars', 'emmys', 'cannes'],
     advanced: ['Ballots are private. The audit shows what you could have known and says explicitly that the count is not visible to you.'],
   },
   {

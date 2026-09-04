@@ -1220,6 +1220,12 @@ export interface Project {
   releaseId?: Id;
   distributorName?: string;
   releaseDate?: Instant;
+  /** How it reached the public: theatrical, streaming, network. Set at release; read by the award bodies. */
+  releaseStrategy?: Release['strategy'];
+  /** The language of the dialogue, ISO 639-1. Set when the project is created. */
+  language?: string;
+  /** The country the production belongs to, a SLATE country id. Set when the project is created. */
+  productionCountryId?: string;
 
   /** Results. */
   criticScore?: number;
@@ -1547,6 +1553,8 @@ export interface AwardNomination {
   editionId: Id;
   bodyId: string;
   category: string;
+  /** What the category judges, as SLATE classified it when the nomination was made. */
+  kind?: string;
   projectId?: Id;
   personId?: Id;
   /** Filled at the ceremony. */
@@ -1787,7 +1795,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 13;
+export const SAVE_SCHEMA_VERSION = 14;
 
 export interface SaveMeta {
   id: Id;

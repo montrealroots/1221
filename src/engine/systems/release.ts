@@ -164,6 +164,7 @@ export function registerRelease(sim: Simulation): void {
       project.releaseId = release.id;
       project.distributorName = distributor;
       project.releaseDate = p.openingDate;
+      project.releaseStrategy = p.strategy;
 
       s.schedule({
         at: p.openingDate,

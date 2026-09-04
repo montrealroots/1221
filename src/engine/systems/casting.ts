@@ -18,7 +18,7 @@ import { effectiveAttributes, systemModifier } from '../domain/attributes';
 import { readiness } from './life';
 import { AGENCIES } from '../content/industry';
 import { generatePersonName, generateCharacterName } from '../content/names';
-import { CITIES } from '../content/geography';
+import { CITIES, countryOfCity, primaryLanguageOf } from '../content/geography';
 import { recordCredit } from './film';
 
 export function registerCasting(sim: Simulation): void {
@@ -809,6 +809,9 @@ export function generateOpportunities(sim: Simulation): void {
 }
 
 /** The world keeps making things whether the player is involved or not. */
+/** Where the rest of the world's films come from, when they are not from where you are. */
+const FILM_COUNTRIES = ['us', 'uk', 'fr', 'kr', 'jp', 'in', 'es', 'it', 'de', 'mx', 'cn', 'br', 'ca', 'au', 'hk', 'ie', 'be', 'dk', 'se', 'ar'];
+
 export function seedIndependentProject(sim: Simulation, seed: number): Project | undefined {
   const rng = sim.rng('world_project', seed, Math.floor(sim.now / MS_DAY));
   const player = sim.universe.people[sim.universe.playerId];
@@ -834,6 +837,17 @@ export function seedIndependentProject(sim: Simulation, seed: number): Project |
 
   project.createdById = sim.nextId('person');
   project.productionLocationIds = [player.currentLocationId];
+  // Most of the industry around you is local; some of it is not, which is
+  // how the international categories have anything to judge.
+  const homeCountry = countryOfCity(player.currentLocationId) ?? 'us';
+  const abroad = rng.chance(0.3);
+  const country = abroad ? rng.pick(FILM_COUNTRIES.filter((c) => c !== homeCountry)) : homeCountry;
+  project.productionCountryId = country;
+  project.language = primaryLanguageOf(country);
+  if (abroad) {
+    const capital = CITIES.all().find((c) => c.countryId === country && c.kind === 'capital');
+    if (capital) project.productionLocationIds = [capital.id];
+  }
   project.scriptQuality = rng.int(38, 88);
   project.budget = Math.round(rng.float(0.4, 6) * 5_000_000_00);
   project.greenlitAt = sim.now;
@@ -943,6 +957,12 @@ function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
 
     case 'distribution': {
       project.releaseDate = sim.now;
+      project.releaseStrategy = project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie'
+        ? (rng.chance(0.6) ? 'streaming_exclusive' : 'network')
+        : project.format === 'short' ? 'festival_only'
+        : project.budget >= 15_000_000_00 ? 'wide_theatrical'
+        : project.budget >= 3_000_000_00 ? 'limited_theatrical'
+        : rng.chance(0.5) ? 'platform' : 'streaming_exclusive';
       project.finalQuality = backgroundQuality(sim, project, rng);
       project.criticScore = clamp(Math.round(project.finalQuality + rng.normal(0, 11)), 1, 100);
       project.audienceScore = clamp(Math.round(project.finalQuality * 0.75 + 20 + rng.normal(0, 12)), 1, 100);
