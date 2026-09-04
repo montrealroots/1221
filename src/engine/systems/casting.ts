@@ -897,8 +897,15 @@ export function openWorldCasting(sim: Simulation, project: Project, rng: ReturnT
 
   let opened = 0;
   // A breakdown that describes two parts in the same words is a breakdown
-  // nobody proofread, so each brief is used once per production.
+  // nobody proofread, so each brief is used once per production. The same goes
+  // for the character names: two people called Ellis in one film is a mistake,
+  // not a coincidence.
   const usedBriefs = new Set<string>();
+  const usedNames = new Set(
+    Object.values(sim.universe.roles)
+      .filter((role) => role.projectId === project.id)
+      .map((role) => role.characterName),
+  );
   for (let i = 0; i < count; i++) {
     // A series has a pair of regulars at the top of it; a film has the one.
     const billing: Role['billing'] = i === 0 || (isSeries && i === 1) ? 'lead' : i < 3 ? 'supporting' : 'featured';
@@ -912,7 +919,11 @@ export function openWorldCasting(sim: Simulation, project: Project, rng: ReturnT
       kind: 'cast.create_role',
       payload: {
         projectId: project.id,
-        characterName: generateCharacterName(rng),
+        characterName: (() => {
+          const chosen = generateCharacterName(rng, (name) => usedNames.has(name));
+          usedNames.add(chosen);
+          return chosen;
+        })(),
         billing,
         description: pickBrief(briefs, usedBriefs, rng),
         ageRange: [low, low + rng.int(6, 20)],

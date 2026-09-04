@@ -372,15 +372,55 @@ const WAVE_SHAPES = [
   (place: string, g: string) => `${place}'s ${g} Boom`,
   (place: string, g: string) => `The ${g} Turn In ${place}`,
   (place: string, g: string) => `A ${place} ${g} Moment`,
+  (place: string, g: string) => `The ${g} Years In ${place}`,
+  (place: string, g: string) => `${place} Goes ${g}`,
+  (place: string, g: string) => `The Second Coming Of ${place} ${g}`,
+  (place: string, g: string) => `${g} And The ${place} Slate`,
+  (place: string, g: string) => `The ${place} ${g} Cycle`,
 ];
 
+/** '2nd', '3rd', '11th' — a wave named after the ones before it. */
+function ordinalWave(n: number): string {
+  const rest = n % 100;
+  if (rest >= 11 && rest <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
+}
+
+/**
+ * What a movement gets called.
+ *
+ * Checked against every wave the save has ever named, so a country that goes
+ * through the same genre four times gets four different names for it rather
+ * than the same one back. The ordinal form is the fallback, and it is the one
+ * the trades actually use for a repeat.
+ */
 function waveName(sim: Simulation, countryId: string, genreId: string, rng: Rng): string {
   const place = COUNTRIES.get(countryId)?.name ?? 'World';
   const g = genreName(genreId);
+  const used = new Set(store(sim).history.map((w) => w.name));
   const history = store(sim).history.filter((w) => w.countryId === countryId && w.genreId === genreId).length;
-  if (history > 0) return `The ${history === 1 ? 'Second' : history === 2 ? 'Third' : `${history + 1}th`} ${place} ${g} Wave`;
-  const shape = WAVE_SHAPES[rng.int(0, WAVE_SHAPES.length - 1)]!;
-  return shape(place, g);
+
+  if (history === 0) {
+    for (let attempt = 0; attempt < 40; attempt++) {
+      const shape = WAVE_SHAPES[rng.int(0, WAVE_SHAPES.length - 1)]!;
+      const candidate = shape(place, g);
+      if (!used.has(candidate)) return candidate;
+    }
+  }
+  // A repeat is named for being one, and the number makes it unique by itself.
+  const nth = ordinalWave(Math.max(2, history + 1));
+  const candidate = `The ${nth} ${place} ${g} Wave`;
+  if (!used.has(candidate)) return candidate;
+  for (let n = history + 2; n < history + 40; n++) {
+    const next = `The ${ordinalWave(n)} ${place} ${g} Wave`;
+    if (!used.has(next)) return next;
+  }
+  return `${place} ${g}, ${zonedParts(sim.now, sim.homeZone).year}`;
 }
 
 /** Heat moves once a month: hits warm a genre, saturation cools it, and everything settles toward the country's own nature. */

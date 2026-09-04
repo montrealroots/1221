@@ -100,7 +100,12 @@ export function registerCompany(sim: Simulation): void {
         );
       }
 
-      const name = p.name?.trim() || generateCompanyName(s.rng('company_name', s.counter('company')));
+      // No two companies in the world share a name, real or made here.
+      const existingNames = new Set(Object.values(s.universe.companies).map((c) => c.name.toLowerCase()));
+      const name = p.name?.trim() || generateCompanyName(
+        s.rng('company_name', s.counter('company')),
+        (candidate) => existingNames.has(candidate.toLowerCase()),
+      );
       const companyId = s.nextId('company');
 
       const cash = s.openAccount({

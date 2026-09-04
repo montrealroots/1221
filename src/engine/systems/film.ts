@@ -19,7 +19,7 @@ import { addDays, addMonths, addYears, formatDate, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { buildFactors } from '../core/audit';
 import { BUYERS, GENRE_APPETITE, GENRE_BUDGET_INDEX, type Buyer } from '../content/industry';
-import { generateProjectTitle } from '../content/names';
+import { generateTitle } from '../content/titles';
 import { normaliseTitle, titleTaken } from '../content/filmography';
 import { canonicalGenre, genre, runtimeBandOf } from '../content/genres';
 import { rating } from '../content/ratings';
@@ -148,7 +148,12 @@ export function registerFilm(sim: Simulation): void {
       if (requested && taken(requested) && !p.parentSeriesId && !p.franchiseId) {
         throw new CommandError(`"${requested}" is already a film or series. A title has to be its own; give a sequel or a remake a subtitle or a number.`);
       }
-      const title = requested || generateProjectTitle(s.rng('title', s.counter('project_title')), taken);
+      // Named for what it is: a Korean thriller, a network procedural and a
+      // family animation are not named alike, and neither are their titles.
+      const title = requested || generateTitle(s.rng('title', s.counter('project_title')), {
+        genres: chosen, format: p.format, taken,
+        franchise: p.franchiseId ? s.universe.franchises[p.franchiseId]?.name : undefined,
+      });
       const company = p.companyId ? s.universe.companies[p.companyId] : undefined;
       const productionCountry = countryOfCity(company?.headquartersLocationId) ?? countryOfCity(player.currentLocationId) ?? 'us';
 

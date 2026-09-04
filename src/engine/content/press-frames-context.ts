@@ -121,7 +121,7 @@ export const CLOSES: Readonly<Record<Register, Frame[]>> = {
     { needs: ['title'], write: (f) => `Whatever else, ${f.title} has our attention.` },
     { write: (_f, _v, r) => `There is a version of this that is ${one(r, ['enormous', 'wonderful', 'the best thing on the slate', 'exactly what everybody has been asking for'])}, and it is not a stretch to see it.` },
     { needs: ['dateLabel'], write: (f) => `${f.dateLabel} cannot come soon enough.` },
-    { write: () => 'On this evidence, it is worth being excited about.' },
+    { write: () => 'It has been a long time since anything on this slate looked like this.' },
     { needs: ['cast'], write: () => 'That cast alone is a reason to turn up.' },
   ],
   essay: [
@@ -130,7 +130,7 @@ export const CLOSES: Readonly<Record<Register, Frame[]>> = {
     { needs: ['genres'], write: () => 'Films like this used to be the middle of the business. They are the edge of it now, and that is the story.' },
     { write: () => 'The interesting question was never whether it works, but what a slate made entirely of these would look like.' },
     { needs: ['title'], write: (f) => `${f.title} is the kind of picture that will be read differently in ten years, which is the most any of them can hope for.` },
-    { write: () => 'The answer, as usual, is somewhere in what does not get made.' },
+    { write: () => 'What a whole slate of these would look like is the question nobody at a studio wants asked.' },
   ],
   wire: [
     { write: (_f, v, r) => signOff(r, v) },
