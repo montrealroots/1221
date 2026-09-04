@@ -21,8 +21,11 @@ import { buildFactors } from '../core/audit';
 import { BUYERS, GENRE_APPETITE, GENRE_BUDGET_INDEX, type Buyer } from '../content/industry';
 import { generateProjectTitle } from '../content/names';
 import { normaliseTitle, titleTaken } from '../content/filmography';
+import { canonicalGenre, genre, runtimeBandOf } from '../content/genres';
+import { rating } from '../content/ratings';
 import { filmIncentive } from '../content/tax';
 import { systemModifier } from '../domain/attributes';
+import { activeDeal, adjustStanding, standingWith } from './studio-state';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -122,10 +125,18 @@ export function registerFilm(sim: Simulation): void {
 
   // --- Idea and rights -----------------------------------------------------
 
-  sim.onCommand<{ title?: string; format: ProjectFormat; genres: string[]; logline: string; synopsis?: string; companyId?: Id; targetAudience?: string; comparables?: string[]; parentSeriesId?: Id; franchiseId?: Id }, { projectId: Id }>(
+  sim.onCommand<{ title?: string; format: ProjectFormat; genres: string[]; logline: string; synopsis?: string; companyId?: Id; targetAudience?: string; comparables?: string[]; parentSeriesId?: Id; franchiseId?: Id; contentRating?: string; runtime?: number }, { projectId: Id }>(
     'film.create_project',
     (p, { sim: s }) => {
       if (p.genres.length === 0) throw new CommandError('A project needs at least one genre.');
+      const chosen = p.genres.map(canonicalGenre);
+      for (const id of chosen) {
+        if (!genre(id)) throw new CommandError(`"${id}" is not a genre. Pick from the list.`);
+      }
+      if (p.contentRating && !rating(p.contentRating)) throw new CommandError(`"${p.contentRating}" is not a certificate any board issues.`);
+      if (p.runtime !== undefined && (!Number.isFinite(p.runtime) || p.runtime < 1 || p.runtime > 600)) {
+        throw new CommandError('A runtime is between one minute and ten hours.');
+      }
       const player = s.player;
       // No two things in the world may share a title, real or made here,
       // unless the new one belongs to the same series or franchise.
@@ -146,8 +157,10 @@ export function registerFilm(sim: Simulation): void {
         saveId: s.universe.meta.id,
         title,
         format: p.format,
-        genres: p.genres,
+        genres: chosen,
         logline: p.logline,
+        contentRating: p.contentRating,
+        runtime: p.runtime ?? Math.round((runtimeBandOf(chosen)[0] + runtimeBandOf(chosen)[1]) / 2),
         synopsis: p.synopsis ?? p.logline,
         phase: 'idea',
         phaseHistory: [{ phase: 'idea', enteredAt: s.now }],
@@ -473,11 +486,20 @@ export function registerFilm(sim: Simulation): void {
         .map((id) => BUYERS.get(id))
         .filter((b): b is Buyer => Boolean(b));
 
+      // A company that knows you takes the meeting sooner than one that does not.
       const accessible = candidates.filter((buyer) => {
+        const standing = buyer.studioId ? standingWith(s, 'studio', buyer.studioId) : buyer.networkId ? standingWith(s, 'network', buyer.networkId) : 30;
         const access = player.reputation.professionalReputation * 0.4 + player.reputation.publicFame * 0.2
-          + project.packageValue * 0.3 + (player.representation.agentId ? 20 : 0);
+          + project.packageValue * 0.3 + (player.representation.agentId ? 20 : 0) + (standing - 30) * 0.3;
         return access >= buyer.accessDifficulty - 30;
       });
+      // Under a first-look or overall deal, the company you signed with sees it
+      // first and has its window before anyone else hears a word.
+      const television = project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie';
+      const deal = activeDeal(s, { kind: television ? 'overall' : 'first_look' });
+      const dealBuyer = deal ? BUYERS.get(deal.counterpartyId) : undefined;
+      if (dealBuyer && !accessible.some((b) => b.id === dealBuyer.id)) accessible.unshift(dealBuyer);
+      else if (dealBuyer) { accessible.splice(accessible.findIndex((b) => b.id === dealBuyer.id), 1); accessible.unshift(dealBuyer); }
       if (accessible.length === 0) {
         throw new CommandError(
           'None of those buyers will take the meeting. Build a stronger package, get representation, or start with a smaller company.',
@@ -486,9 +508,15 @@ export function registerFilm(sim: Simulation): void {
 
       advancePhase(s, project, 'packaging');
       const pitches: { buyerId: string; buyerName: string; respondsAt: number }[] = [];
+      if (deal && dealBuyer) {
+        deal.projectsShown++;
+        if (dealBuyer.studioId) adjustStanding(s, 'studio', dealBuyer.studioId, 1, `Brought them ${project.title} first, as agreed.`);
+        if (dealBuyer.networkId) adjustStanding(s, 'network', dealBuyer.networkId, 1, `Brought them ${project.title} first, as agreed.`);
+      }
 
       for (const buyer of accessible.slice(0, 6)) {
-        const respondsAt = addDays(s.now, s.rng('pitch_delay', project.id, buyer.id).int(6, 28), s.homeZone);
+        const exclusive = deal && dealBuyer && buyer.id !== dealBuyer.id ? deal.exclusiveDays : 0;
+        const respondsAt = addDays(s.now, exclusive + (deal && dealBuyer && buyer.id === dealBuyer.id ? s.rng('pitch_delay', project.id, buyer.id).int(4, 12) : s.rng('pitch_delay', project.id, buyer.id).int(6, 28)), s.homeZone);
         s.schedule({
           at: respondsAt,
           kind: 'film.pitch_response',
@@ -821,6 +849,7 @@ function resolvePitch(sim: Simulation, projectId: Id, buyerId: string): void {
   const ask = suggestedBudget(project.format, project.genres, draft?.quality ?? 50);
   const budgetFit = ask >= buyer.budgetFloor && ask <= buyer.budgetCeiling ? 1 : 0.2;
   const appetite = project.genres.reduce((s, g) => s + (GENRE_APPETITE[g] ?? 45), 0) / project.genres.length;
+  const standing = buyer.studioId ? standingWith(sim, 'studio', buyer.studioId) : buyer.networkId ? standingWith(sim, 'network', buyer.networkId) : 30;
 
   const { factors, score } = buildFactors([
     { label: 'The Material', detail: `The draft reads at ${Math.round(draft?.quality ?? 0)} out of 100.`, weight: 0.32, value: (draft?.quality ?? 0) / 100 },
@@ -830,6 +859,7 @@ function resolvePitch(sim: Simulation, projectId: Id, buyerId: string): void {
     { label: 'Their Prestige Bias', detail: `${buyer.name} weighs prestige at ${buyer.prestigeBias} out of 100 against commercial return.`, weight: 0.10, value: remap(buyer.prestigeBias, 0, 100, appetite / 100, (draft?.quality ?? 50) / 100) },
     { label: 'Genres They Will Not Touch', detail: genreAvoid ? `${buyer.name} does not make ${project.genres.filter((g) => buyer.avoids.includes(g)).join(' or ')}.` : 'Nothing here is a hard no for them.', weight: -0.30, value: genreAvoid },
     { label: 'What Is Already On Their Slate', detail: 'Their internal portfolio and exposure, which is not public.', weight: 0.14, value: rng.float(0, 1), knowable: false },
+    { label: 'Your Standing With Them', detail: standing >= 60 ? `${buyer.name} returns your calls. Standing ${Math.round(standing)} out of 100.` : standing <= 15 ? `${buyer.name} remembers what went wrong. Standing ${Math.round(standing)} out of 100.` : `${buyer.name} knows the name and not much more. Standing ${Math.round(standing)} out of 100.`, weight: 0.12, value: standing / 100 },
   ]);
 
   const riskAdjust = remap(buyer.riskAppetite, 0, 100, -0.12, 0.10);
@@ -1005,6 +1035,9 @@ export function registerBuyerOffer(sim: Simulation): void {
       project.greenlitAt = s.now;
       project.distributorName = buyer.name;
       project.studioId = buyer.studioId;
+      project.networkId = buyer.networkId;
+      if (buyer.studioId) adjustStanding(s, 'studio', buyer.studioId, 4, `Took their deal on ${project.title}.`);
+      if (buyer.networkId) adjustStanding(s, 'network', buyer.networkId, 4, `Took their deal on ${project.title}.`);
       advancePhase(s, project, 'financing');
 
       // The buyer funds a production account.

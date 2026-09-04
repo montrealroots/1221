@@ -213,10 +213,15 @@ function liveALife(): Lived {
 
   step('get engaged', () => {
     if (!relationshipId) return undefined;
-    spendTimeTogether(relationshipId, 40, ['chat', 'catch_up', 'celebrate', 'support', 'deep_talk']);
-    const proposal = sim.execute<{ accepted: boolean }>({ kind: 'rel.propose', payload: { relationshipId } });
-    if (!proposal.ok || !proposal.value?.accepted) return undefined;
-    return proposal.value;
+    // A proposal can be turned down, and being turned down is not the world
+    // refusing to let you marry. You put the work in and you ask again.
+    for (let attempt = 0; attempt < 4; attempt++) {
+      spendTimeTogether(relationshipId, 40, ['chat', 'catch_up', 'celebrate', 'support', 'deep_talk']);
+      const proposal = sim.execute<{ accepted: boolean }>({ kind: 'rel.propose', payload: { relationshipId } });
+      if (proposal.ok && proposal.value?.accepted) return proposal.value;
+      sim.advanceTo(sim.now + 60 * MS_DAY);
+    }
+    return undefined;
   });
 
   step('get married', () => {

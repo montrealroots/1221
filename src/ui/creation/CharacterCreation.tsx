@@ -255,9 +255,9 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div className="field">
           <label htmlFor="pronouns">Pronouns</label>
           <select id="pronouns" value={config.pronouns} onChange={(e) => set('pronouns', e.target.value)}>
-            <option value="she/her">she/her</option>
-            <option value="he/him">he/him</option>
-            <option value="they/them">they/them</option>
+            <option value="she/her">She/Her</option>
+            <option value="he/him">He/Him</option>
+            <option value="they/them">They/Them</option>
           </select>
         </div>
       </div>

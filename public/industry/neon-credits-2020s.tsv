@@ -63,7 +63,7 @@ Q100975860	director	Q2832952	Alex Gibney
 Q100975860	director	Q117267107	Suzanne Hillinger		
 Q100975860	subject		COVID-19 pandemic in the United States		
 Q99695342	director	Q3560361	R. J. Cutler		
-Q99695342	cast	Q29564107	ビリー・アイリッシュ	self	
+Q99695342	cast	Q29564107	Billie Eilish	self	
 Q99695342	cast	Q20029978	Finneas O'Connell	self	
 Q99695342	subject		ビリー・アイリッシュ		
 Q76450209	director	Q35980052	Jonas Poher Rasmussen		
@@ -91,7 +91,7 @@ Q104218175	composer	Q297232	Clint Mansell
 Q104218175	producer	Q119904583	Andy Starke		
 Q104218175	cinematographer	Q123036720	Nick Gillespie		
 Q104218175	cast	Q16239937	John Hollingworth		
-Q104218175	cast	Q7306585	リース・シアースミス		
+Q104218175	cast	Q7306585	Reece Shearsmith		
 Q104218175	cast	Q9374505	Mark Monero		
 Q104218175	cast	Q120174053	Ellora Torchia		
 Q104218175	cast	Q27050132	Hayley Squires		
@@ -175,7 +175,7 @@ Q97304180	cast	Q4938228	Mia Benson
 Q97304180	cast	Q562973	Oliver Ford Davies		
 Q97304180	cast	Q207149	Zlatko Burić		
 Q97304180	cast	Q4739791	Amanda Walker		
-Q97304180	cast	Q12340919	ヴィッキ・ベルリン		
+Q97304180	cast	Q12340919	Vicki Berlin		
 Q97304180	cast	Q201279	Woody Harrelson		
 Q97304180	cast	Q112152319	Dolly de Leon		
 Q97304180	cast	Q107413648	Malte Gårdinger		
@@ -184,7 +184,7 @@ Q97304180	cast	Q2280205	Carolina Gynning
 Q97304180	cast	Q231320	Camilla Läckberg		
 Q97304180	cast	Q110710	Sunnyi Melles		
 Q97304180	cast	Q5623988	Henrik Dorsin		
-Q97304180	cast	Q71662	イーリス・ベルベン		
+Q97304180	cast	Q71662	Iris Berben		
 Q97304180	award		Palme d'Or		
 Q97304180	award		Guldbagge Award for Best Film		
 Q97304180	award		European Film Award for Best Film		
@@ -211,14 +211,14 @@ Q113335768	cast	Q47027020	Owen Teague
 Q113335768	cast	Q457991	Siobhan Fallon Hogan		
 Q113335768	cast	Q3993334	Tonye Patano		
 Q113335768	cast	Q67983845	Jefferson White		
-Q113335768	cast	Q36301	アン・ハサウェイ		
+Q113335768	cast	Q36301	Anne Hathaway		
 Q113335768	cast	Q3959303	Shea Whigham		
-Q119111677	director	Q26308335	フィン・ウルフハード		
+Q119111677	director	Q26308335	Finn Wolfhard		
 Q119111677	director	Q113454650	Billy Bryk		
 Q119111677	composer	Q108576606	Jay McCarrol		
 Q119111677	editor	Q106816682	Christine Armstrong		
 Q119111677	cast	Q34618977	Abby Quinn		
-Q119111677	cast	Q26308335	フィン・ウルフハード		
+Q119111677	cast	Q26308335	Finn Wolfhard		
 Q119111677	cast	Q104902570	Fred Hechinger		
 Q119111677	cast	Q108117583	D'Pharaoh Woon-A-Tai		
 Q119111677	cast	Q124535793	Pardis Saremi		
@@ -236,9 +236,9 @@ Q118519174	cast	Q15442521	Neeru Bajwa
 Q118519174	cast	Q973437	Vik Sahay		
 Q118519174	cast	Q110663727	Megan Suri		
 Q118519174	cast	Q28812610	Betty Gabriel		
-Q110263674	director	Q3362157	카스페르 크리스텐센		
+Q110263674	director	Q3362157	Casper Christensen		
 Q110263674	director	Q22115137	Anthony Hines		
-Q110263674	writer	Q3362157	카스페르 크리스텐센		
+Q110263674	writer	Q3362157	Casper Christensen		
 Q110263674	writer	Q22115137	Anthony Hines		
 Q110263674	composer	Q3277239	Magnus Fiennes		
 Q110263674	producer	Q5049340	Cassian Elwes		
@@ -391,14 +391,14 @@ Q116470610	cast	Q6162329	Jason Day
 Q112182515	director	Q289123	Benoît Delhomme		
 Q112182515	writer	Q125961336	Sarah Conradt		
 Q112182515	composer	Q95703355	Anne Nikitin		
-Q112182515	producer	Q36301	アン・ハサウェイ		
+Q112182515	producer	Q36301	Anne Hathaway		
 Q112182515	producer	Q229313	Jessica Chastain		
 Q112182515	producer	Q6120320	Jacques-Henri Bronckart		
 Q112182515	producer	Q63256569	Kelly Carmichael		
 Q112182515	cinematographer	Q289123	Benoît Delhomme		
 Q112182515	editor	Q436837	Juliette Welfling		
 Q112182515	cast	Q229313	Jessica Chastain	Alice	
-Q112182515	cast	Q36301	アン・ハサウェイ	Celine	
+Q112182515	cast	Q36301	Anne Hathaway	Celine	
 Q112182515	cast	Q4753762	Anders Danielsen Lie	Simon	
 Q112182515	cast	Q472282	Josh Charles	Damian	
 Q112182515	cast	Q1809038	Caroline Lagerfelt	Granny Jean	
@@ -507,10 +507,10 @@ Q124615876	cast	Q6789511	Matt Whelan
 Q124615876	cast	Q6451729	Kym Jackson		
 Q124615876	cast	Q16738674	Daisy Ridley		
 Q124615876	cast	Q798656	Brenton Thwaites		
-Q124615876	cast	Q131901449	Q131901449		
-Q124615876	cast	Q131901461	Q131901461		
-Q124615876	cast	Q131901428	Q131901428		
-Q124615876	cast	Q131901479	Q131901479		
+Q124615876	cast	Q131901449	Holly Hargreaves		
+Q124615876	cast	Q131901461	Megan Hollier		
+Q124615876	cast	Q131901428	Deanna Cooney		
+Q124615876	cast	Q131901479	Matthew Parkin		
 Q124615876	cast	Q130362820	Salme Geransar		
 Q133866932	director	Q31637	Jafar Panahi		
 Q133866932	writer	Q31637	Jafar Panahi		
@@ -615,7 +615,7 @@ Q134430061	cast	Q95817312	Diego Calva
 Q134430061	cast	Q4390382	Shiori Kutsuna		
 Q134430061	cast	Q105672772	Aoi Yamada		
 Q134430061	cast	Q1154206	Hidetoshi Nishijima		
-Q133397105	director	Q114919216	다미안 맥카시		
+Q133397105	director	Q114919216	Damian McCarthy		
 Q133397105	composer	Q14566086	Joseph Bishara		
 Q133397105	producer	Q1990920	Roy Lee		
 Q133397105	producer	Q3973445	Steven Schneider		

@@ -100,7 +100,7 @@ Q1397717	producer	Q508875	Margaret Booth
 Q1397717	cinematographer	Q1175411	David M. Walsh		
 Q1397717	editor	Q3307969	Michael A. Stevenson		
 Q1397717	cast	Q4911483	Bill Zuckert		
-Q1397717	cast	Q188459	ゴールディ・ホーン		
+Q1397717	cast	Q188459	Goldie Hawn		
 Q1397717	cast	Q2526445	Yvonne Wilder		
 Q1397717	cast	Q28701102	Tony Regan		
 Q1397717	cast	Q24680582	Rosanna Huffman		
@@ -257,7 +257,7 @@ Q7885542	cast	Q1189312	Dennis Lipscomb
 Q7885542	cast	Q721586	Everett McGill		
 Q7885542	cast	Q1704907	Taylor Mead		
 Q7885542	cast	Q215026	Debbie Harry		
-Q7885542	cast	Q236434	CCH・パウンダー		
+Q7885542	cast	Q236434	CCH Pounder		
 Q7885542	cast	Q3290295	Marcus Reichert		
 Q2363927	director	Q187364	Robert Zemeckis		
 Q2363927	writer	Q187364	Robert Zemeckis		
@@ -311,7 +311,7 @@ Q1216268	composer	Q502923	Dave Grusin
 Q1216268	producer	Q51522	Sydney Pollack		
 Q1216268	cinematographer	Q767938	Owen Roizman		
 Q1216268	editor	Q2277860	Sheldon Kahn		
-Q1216268	costume_designer	Q134584671	Q134584671		
+Q1216268	costume_designer	Q134584671	Bernie Pollack		
 Q1216268	cast	Q746520	Barry Primus		
 Q1216268	cast	Q550928	Josef Sommer		
 Q1216268	cast	Q712180	Wilford Brimley		
@@ -469,9 +469,9 @@ Q2543388	cast	Q2013721	David Dukes
 Q2543388	cast	Q235211	Marsha Mason		
 Q2543388	subject		alcoholism		
 Q2543388	subject		family		
-Q1576981	director	Q42574	ジェームズ・キャメロン		
+Q1576981	director	Q42574	James Cameron		
 Q1576981	director	Q2042487	Ovidio G. Assonitis		
-Q1576981	writer	Q42574	ジェームズ・キャメロン		
+Q1576981	writer	Q42574	James Cameron		
 Q1576981	writer	Q2042487	Ovidio G. Assonitis		
 Q1576981	writer	Q3666404	Charles H. Eglee		
 Q1576981	composer	Q921058	Stelvio Cipriani		
@@ -515,7 +515,7 @@ Q7703837	cast	Q945081	Don Meredith
 Q7703837	cast	Q6178791	Jennifer Salt		
 Q7703837	cast	Q7422718	Sarah Purcell		
 Q7703837	cast	Q1741532	Kim Lankford		
-Q7703837	cast	Q24006466	Q24006466		
+Q7703837	cast	Q24006466	Pat Klous		
 Q7703837	cast	Q108886284	Rod McCary		
 Q7703837	cast	Q138515260	Jim Antonio		
 Q7703837	cast	Q1969220	Ted Shackelford		
@@ -535,7 +535,7 @@ Q566890	cinematographer	Q1406916	Richard Moore
 Q566890	editor	Q3307969	Michael A. Stevenson		
 Q566890	costume_designer	Q451071	Theoni V. Aldredge		
 Q566890	production_designer	Q687997	Dale Hennesy		
-Q566890	cast	Q52392	ティム・カリー		
+Q566890	cast	Q52392	Tim Curry		
 Q566890	cast	Q219546	Albert Finney		
 Q566890	cast	Q552945	Aileen Quinn		
 Q566890	cast	Q240886	Ray Bolger		
@@ -569,7 +569,7 @@ Q980257	cast	Q209186	James Mason
 Q980257	cast	Q212873	Jane Birkin		
 Q980257	cast	Q327963	Richard Vernon		
 Q980257	cast	Q259434	Sylvia Miles		
-Q980257	cast	Q172653	マギー・スミス		
+Q980257	cast	Q172653	Maggie Smith		
 Q980257	cast	Q232876	Diana Rigg		
 Q980257	follows	Q2543979	The Mirror Crack'd		
 Q202211	director	Q51506	Richard Attenborough		
@@ -677,7 +677,7 @@ Q1754224	cast	Q99667962	Debbie Farrington	Alicia
 Q1754224	cast	Q7615728	Stewart Bevan	Edward	
 Q1754224	cast	Q234293	Olivia Hussey	Rebecca the Jewess	
 Q1754224	cast	Q534898	Anthony Andrews	Wilfred of Ivanhoe	
-Q1754224	cast	Q267976	リセット・アンソニー	Lady Rowena	
+Q1754224	cast	Q267976	Lysette Anthony	Lady Rowena	
 Q1754224	cast	Q214309	Sam Neill	Brian de Bois-Guilbert	
 Q1754224	cast	Q441242	Michael Gothard	Lord Athelstane	
 Q1754224	cast	Q499644	Julian Glover	Le Noir Faineant	
@@ -733,7 +733,7 @@ Q1171611	director	Q36844646	Michael Miller
 Q1171611	composer	Q1483469	Peter Bernstein		
 Q1171611	cast	Q382036	Ron Silver		
 Q1171611	cast	Q3644478	Brian Libby		
-Q1171611	cast	Q2673	チャック・ノリス		
+Q1171611	cast	Q2673	Chuck Norris		
 Q1171611	cast	Q515753	Toni Kalem		
 Q1171611	cast	Q1758714	William Finley		
 Q1171611	cast	Q936987	Stephen Furst		
@@ -851,7 +851,7 @@ Q221249	editor	Q1650499	William Steinkamp
 Q221249	cast	Q329784	Charles Durning		
 Q221249	cast	Q449580	Lynne Thigpen		
 Q221249	cast	Q51522	Sydney Pollack		
-Q221249	cast	Q134584671	Q134584671		
+Q221249	cast	Q134584671	Bernie Pollack		
 Q221249	cast	Q22575710	Marjorie Lovett		
 Q221249	cast	Q1405474	Phillip Borsos		
 Q221249	cast	Q5603	Andy Warhol		
@@ -1038,7 +1038,7 @@ Q195710	cast	Q436769	Francesca Annis
 Q195710	cast	Q5593063	Graham McGrath		
 Q195710	cast	Q7061806	Nosher Powell		
 Q195710	cast	Q126606	Bernard Archard		
-Q195710	cast	Q267976	リセット・アンソニー		
+Q195710	cast	Q267976	Lysette Anthony		
 Q195710	cast	Q1173668	David Battley		
 Q195710	cast	Q327747	Bernard Bresslaw		
 Q195710	cast	Q7839304	Trevor Martin		
@@ -1138,8 +1138,8 @@ Q502680	cast	Q83338	Robin Williams
 Q502680	cast	Q202172	Walter Matthau		
 Q502680	cast	Q712914	Jerry Reed		
 Q3567653	producer	Q22673515	Nancy Jones		
-Q3567653	creator	Q598344	マーヴ・グリフィン		
-Q3567653	executive_producer	Q598344	マーヴ・グリフィン		
+Q3567653	creator	Q598344	Merv Griffin		
+Q3567653	executive_producer	Q598344	Merv Griffin		
 Q3567653	executive_producer	Q5577843	Harry Friedman		
 Q3567653	executive_producer	Q6848562	Mike Richards		
 Q3567653	executive_producer	http://www.wikidata.org/.well-known/genid/e578b56ff31f8111a4e0bb705e15e975	http://www.wikidata.org/.well-known/genid/e578b56ff31f8111a4e0bb705e15e975		
@@ -1169,7 +1169,7 @@ Q1624196	cast	Q1754845	William Allen Young
 Q1624196	cast	Q31013	Patti LaBelle		
 Q1624196	cast	Q1700357	John Hancock		
 Q1624196	cast	Q365292	Adolph Caesar		
-Q1624196	cast	Q42101	デンゼル・ワシントン		
+Q1624196	cast	Q42101	Denzel Washington		
 Q1624196	cast	Q2529777	Trey Wilson		
 Q1624196	cast	Q562596	David Alan Grier		
 Q1624196	cast	Q705523	Art Evans		
@@ -1258,7 +1258,7 @@ Q1056376	writer	Q53050	Francesco Rosi
 Q1056376	writer	Q160333	Prosper Mérimée		
 Q1056376	writer	Q460095	Tonino Guerra		
 Q1056376	writer	Q723585	Ludovic Halévy		
-Q1056376	writer	Q723648	アンリ・メイヤック		
+Q1056376	writer	Q723648	Henri Meilhac		
 Q1056376	composer	Q56158	Georges Bizet		
 Q1056376	producer	Q160802	Marcel Dassault		
 Q1056376	producer	Q981229	Alain Poiré		
@@ -1285,9 +1285,9 @@ Q1427274	director	Q3568991	William Tannen
 Q1427274	composer	Q61272	Christopher Franke		
 Q1427274	cinematographer	Q139435455	Peter Moss		
 Q1427274	editor	Q3703188	David Garfield		
-Q1427274	cast	Q463497	ミゲル・フェラー		
+Q1427274	cast	Q463497	Miguel Ferrer		
 Q1427274	cast	Q443592	Roberts Blossom		
-Q1427274	cast	Q239069	ジーン・スマート		
+Q1427274	cast	Q239069	Jean Smart		
 Q1427274	cast	Q586857	Kevin Conway		
 Q1427274	cast	Q1337023	Mark Slade		
 Q1427274	cast	Q443044	Tess Harper		
@@ -1446,7 +1446,7 @@ Q116468	cast	Q250710	Cynthia Rhodes
 Q116468	cast	Q207197	Gene Simmons		
 Q116468	cast	Q456835	Amber Borycki		
 Q116468	cast	Q15707390	Stephen E. Miller		
-Q116468	cast	Q213706	トム・セレック		
+Q116468	cast	Q213706	Tom Selleck		
 Q116468	cast	Q1189389	Chris Mulkey		
 Q116468	cast	Q2330114	Stan Shaw		
 Q116468	cast	Q3293092	Marilyn Schreffler		
@@ -1564,13 +1564,13 @@ Q846679	cast	Q298799	Pat Morita	Mr. Miyagi
 Q846679	cast	Q966693	William Zabka	Johnny Lawrence	
 Q846679	cast	Q207852	Elisabeth Shue	Ali Mills	
 Q846679	cast	Q73346	Ralph Macchio	Daniel LaRusso	
-Q846679	cast	Q16096817	ウィリアム・バセット		
+Q846679	cast	Q16096817	William H. Bassett		
 Q846679	cast	Q1086802	Christopher Kriesa		
 Q846679	cast	Q3155649	Israel Juarbe		
 Q846679	cast	Q458974	Larry Drake		
 Q846679	cast	Q427379	Ronald Thomas		
 Q846679	cast	Q2664625	Chris Casamassa		
-Q846679	cast	Q508795	マーティン・コーヴ		
+Q846679	cast	Q508795	Martin Kove		
 Q846679	cast	Q93421	Randee Heller		
 Q846679	cast	Q292446	Frances Bay		
 Q846679	cast	Q1806031	Larry B. Scott		
@@ -1578,7 +1578,7 @@ Q846679	cast	Q16334488	Todd Lookinland
 Q846679	cast	Q1058602	Chad McQueen		
 Q846679	cast	Q507495	Andrew Shue		
 Q846679	cast	Q991733	Bruce Malmuth		
-Q846679	cast	Q138522326	Q138522326		
+Q846679	cast	Q138522326	Jeffrey Bryan		
 Q7746189	director	Q12411368	Riki Shelach		
 Q7746189	composer	Q7217815	Nachum Heiman		
 Q7746189	producer	Q662934	Avi Lerner		
@@ -1615,7 +1615,7 @@ Q1197684	composer	Q318475	Randy Newman
 Q1197684	producer	Q1279758	Mark Johnson		
 Q1197684	cinematographer	Q49020	Caleb Deschanel		
 Q1197684	editor	Q2357791	Stu Linder		
-Q1197684	costume_designer	Q134584671	Q134584671		
+Q1197684	costume_designer	Q134584671	Bernie Pollack		
 Q1197684	production_designer	Q536264	Angelo P. Graham		
 Q1197684	production_designer	Q970227	Mel Bourne		
 Q1197684	cast	Q712180	Wilford Brimley		
@@ -1650,7 +1650,7 @@ Q504101	cast	Q912103	Brian Doyle-Murray	Piedmont
 Q504101	subject		World War I		
 Q1767812	director	Q3143556	Hy Averback		
 Q1767812	writer	Q22086637	Stu Krieger		
-Q1767812	writer	Q76366401	Q76366401		
+Q1767812	writer	Q76366401	Jeff Burkhart		
 Q1767812	composer	Q694658	Sylvester Levay		
 Q1767812	producer	Q2837687	Allan Carr		
 Q1767812	cinematographer	Q764497	James A. Contner		
@@ -1679,7 +1679,6 @@ Q300360	production_designer	Q2058196	Patrizia von Brandenstein
 Q300360	cast	Q24273014	John DeLuca		
 Q300360	cast	Q3132470	Janet Jones		
 Q300360	cast	Q253977	Roxann Dawson		
-Q300360	cast	Q126121781	Q126121781		
 Q300360	cast	Q234560	Alyson Reed		
 Q300360	cast	Q1515251	Scott Plank		
 Q300360	cast	Q267914	Audrey Landers		
@@ -1989,7 +1988,7 @@ Q671593	cast	Q265333	Leslie Easterbrook
 Q671593	cast	Q504455	Andrew Dice Clay		
 Q319783	director	Q504722	George P. Cosmatos		
 Q319783	writer	Q40026	Sylvester Stallone		
-Q319783	writer	Q42574	ジェームズ・キャメロン		
+Q319783	writer	Q42574	James Cameron		
 Q319783	writer	Q2535855	Kevin Jarre		
 Q319783	composer	Q235077	Jerry Goldsmith		
 Q319783	producer	Q1385214	Mario Kassar		
@@ -1998,7 +1997,7 @@ Q319783	cinematographer	Q436704	Jack Cardiff
 Q319783	editor	Q719827	Mark Goldblatt		
 Q319783	cast	Q431356	Charles Napier		
 Q319783	cast	Q529849	Steven Berkoff		
-Q319783	cast	Q508795	マーティン・コーヴ		
+Q319783	cast	Q508795	Martin Kove		
 Q319783	cast	Q3045427	George Cheung		
 Q319783	cast	Q961431	John Pankow		
 Q319783	cast	Q933856	Peter MacDonald		
@@ -2092,8 +2091,8 @@ Q260548	cast	Q313043	Richard Jenkins
 Q260548	cast	Q1678831	Jake Kasdan		
 Q260548	cast	Q192165	Danny Glover		
 Q260548	cast	Q2439545	Tom Brown		
-Q1406821	director	Q295207	ジョエル・シュマッカー		
-Q1406821	writer	Q295207	ジョエル・シュマッカー		
+Q1406821	director	Q295207	Joel Schumacher		
+Q1406821	writer	Q295207	Joel Schumacher		
 Q1406821	composer	Q77112	David Foster		
 Q1406821	producer	Q469795	Lauren Shuler Donner		
 Q1406821	cinematographer	Q918531	Stephen H. Burum		
@@ -2195,7 +2194,7 @@ Q4326492	composer	Q247293	Lalo Schifrin
 Q4326492	producer	Q709325	Sean S. Cunningham		
 Q4326492	cinematographer	Q28868021	Steven Poster		
 Q4326492	cast	Q6252750	John Philbin		
-Q4326492	cast	Q111372657	Q111372657		
+Q4326492	cast	Q111372657	Shannon Presby		
 Q4326492	cast	Q234712	Lori Loughlin		
 Q4326492	cast	Q1366623	Tom Atkins		
 Q4326492	cast	Q3047282	Eddie Jones		
@@ -2243,7 +2242,7 @@ Q1786324	cast	Q2434326	Tim Thomerson
 Q1786324	cast	Q1508079	George Plimpton		
 Q1786324	cast	Q2263	Tom Hanks		
 Q1786324	cast	Q2469336	Gedde Watanabe		
-Q1786324	cast	Q361610	ザンダー・バークレー		
+Q1786324	cast	Q361610	Xander Berkeley		
 Q1786324	cast	Q2454564	Charles Kalani		
 Q1786324	cast	Q661591	Clyde Kusatsu		
 Q1786324	cast	Q1146351	Allan Arbus		
@@ -2917,7 +2916,7 @@ Q1418251	cast	Q3546332	Nobu McCarthy
 Q1418251	cast	Q3573137	Yuji Okumoto		
 Q1418251	cast	Q3049936	Jeffrey Rogers		
 Q1418251	cast	Q1095435	Clarence Gilyard		
-Q1418251	cast	Q508795	マーティン・コーヴ		
+Q1418251	cast	Q508795	Martin Kove		
 Q1418251	cast	Q991733	Bruce Malmuth		
 Q1418251	cast	Q265218	Tamlyn Tomita		
 Q1418251	cast	Q1058602	Chad McQueen		
@@ -2933,7 +2932,7 @@ Q7828634	writer	Q4707462	Alan Ormsby
 Q7828634	composer	Q435034	Georges Delerue		
 Q7828634	producer	Q7609564	Stephen J. Friedman		
 Q7828634	cinematographer	Q707946	Richard H. Kline		
-Q7828634	costume_designer	Q134584671	Q134584671		
+Q7828634	costume_designer	Q134584671	Bernie Pollack		
 Q7828634	cast	Q550653	Max Wright		
 Q7828634	cast	Q138005	Michael Keaton		
 Q7828634	cast	Q452763	Earl Boen		
@@ -2993,7 +2992,7 @@ Q913674	cast	Q183532	Anne Bancroft
 Q913674	cast	Q232933	Mercedes Ruehl		
 Q3280896	director	Q312088	Mike Newell		
 Q3280896	composer	Q111436	Elmer Bernstein		
-Q3280896	cinematographer	Q279100	ロバート・エルスウィット		
+Q3280896	cinematographer	Q279100	Robert Elswit		
 Q3280896	cast	Q106997	Jamie Lee Curtis		
 Q3280896	cast	Q1189312	Dennis Lipscomb		
 Q3280896	cast	Q311892	William Petersen		
@@ -3033,7 +3032,7 @@ Q884135	producer	Q164581	Tony Adams
 Q884135	cinematographer	Q1586813	Harry Stradling		
 Q884135	cast	Q954606	Stanley Jordan		
 Q884135	cast	Q366834	Phil Hartman		
-Q884135	cast	Q2680	ブルース・ウィリス		
+Q884135	cast	Q2680	Bruce Willis		
 Q884135	cast	Q1868688	Mark Blum		
 Q884135	cast	Q1029099	Jack Gwillim		
 Q884135	cast	Q3760469	George Coe		
@@ -3184,7 +3183,7 @@ Q1545071	cast	Q240774	Frank Whaley
 Q1545071	cast	Q162554	Diane Venora		
 Q1545071	cast	Q233891	Carroll Baker		
 Q1545071	cast	Q922952	Joe Grifasi		
-Q1545071	cast	Q873	メリル・ストリープ		
+Q1545071	cast	Q873	Meryl Streep		
 Q1545071	cast	Q3160617	Jake Dengel		
 Q1545071	cast	Q184805	Tom Waits		
 Q1545071	cast	Q39792	Jack Nicholson		
@@ -3294,7 +3293,7 @@ Q1885532	cast	Q543762	Patrick O'Neal
 Q1885532	cast	Q2199939	David Wohl		
 Q1885532	cast	Q382080	Jack Starrett		
 Q1885532	cast	Q230789	Catherine Hicks		
-Q1885532	cast	Q2864524	Q2864524		
+Q1885532	cast	Q2864524	Art Frankel		
 Q1885532	cast	Q234997	Bonnie Bedelia		
 Q1885532	cast	Q189351	Sean Astin		
 Q1885532	cast	Q267001	Margaret Colin		
@@ -3617,7 +3616,7 @@ Q10945643	cast	Q2657842	Adolfo Aristarain
 Q10945643	cast	Q463860	Ricardo Darín		
 Q10945643	cast	Q746520	Barry Primus		
 Q10945643	cast	Q28147340	Tito Mendoza		
-Q10945643	cast	Q5955900	朱利奥·德·格拉齐亚		
+Q10945643	cast	Q5955900	Julio de Grazia		
 Q10945643	cast	Q28466042	Miguel Ángel Paludi		
 Q10945643	cast	Q1866328	David Spielberg		
 Q10945643	cast	Q1393963	Federico Luppi		
@@ -3936,7 +3935,7 @@ Q1961600	cast	Q2940994	Casey Sander
 Q1961600	cast	Q3516498	Taylor Negron		
 Q1961600	cast	Q215072	John Goodman		
 Q1961600	cast	Q8076902	Ángel Salazar		
-Q1961600	cast	Q953627	マーク・ライデル		
+Q1961600	cast	Q953627	Mark Rydell		
 Q1961600	cast	Q382420	Damon Wayans		
 Q514293	director	Q350422	Walter Hill		
 Q514293	writer	Q282246	Harry Kleiner		
@@ -4029,7 +4028,7 @@ Q2005019	writer	Q1101357	S. S. Wilson
 Q2005019	composer	Q477723	Charles Fox		
 Q2005019	producer	Q370417	Lawrence Turman		
 Q2005019	cinematographer	Q1225238	John McPherson		
-Q2005019	editor	Q1126713	コンラッド・バフ		
+Q2005019	editor	Q1126713	Conrad Buff IV		
 Q2005019	cast	Q464169	Fisher Stevens		
 Q2005019	cast	Q5550123	Gerard Parkes		
 Q2005019	cast	Q261454	Cynthia Gibb		
@@ -4089,7 +4088,7 @@ Q590484	cast	Q498420	M. Emmet Walsh
 Q590484	cast	Q553454	Joe Dallesandro		
 Q590484	cast	Q710180	Grant Heslov		
 Q590484	cast	Q1157743	Dakin Matthews		
-Q590484	cast	Q2680	ブルース・ウィリス	Tom Mix	
+Q590484	cast	Q2680	Bruce Willis	Tom Mix	
 Q590484	cast	Q108510	James Garner	Wyatt Earp	
 Q590484	award		Golden Raspberry Award for Worst Director		
 Q7642918	director	Q117859469	Anna Penido		
@@ -4154,9 +4153,9 @@ Q830556	cast	Q711035	Erick Avari
 Q830556	cast	Q310947	Stephen Baldwin		
 Q830556	cast	Q705477	Steven Bauer		
 Q830556	subject		Cold War		
-Q957844	director	Q725006	チャック・ラッセル		
+Q957844	director	Q725006	Chuck Russell		
 Q957844	writer	Q295445	Frank Darabont		
-Q957844	writer	Q725006	チャック・ラッセル		
+Q957844	writer	Q725006	Chuck Russell		
 Q957844	writer	Q2526263	Kay Linaker		
 Q957844	composer	Q879793	Michael Hoenig		
 Q957844	producer	Q475223	Elliott Kastner		
@@ -4443,7 +4442,7 @@ Q1126637	cast	Q1355395	Gregg Henry
 Q1126637	cast	Q235020	Amy Irving		
 Q1126637	cast	Q3526158	Thuy Thu Le		
 Q1126637	cast	Q727730	Wendell Pierce		
-Q1126637	cast	Q295233	ジョン・レグイザモ		
+Q1126637	cast	Q295233	John Leguizamo		
 Q1126637	cast	Q1239182	Donald Patrick Harvey		
 Q1126637	cast	Q512896	Erik King		
 Q1126637	cast	Q1368141	Holt McCallany		
@@ -4492,7 +4491,7 @@ Q1182423	cinematographer	Q462569	Mac Ahlberg
 Q1182423	cast	Q1964484	Nancy Everhard		
 Q1182423	cast	Q2421740	Thom Bray		
 Q1182423	cast	Q17566665	Nia Peeples		
-Q1182423	cast	Q463497	ミゲル・フェラー		
+Q1182423	cast	Q463497	Miguel Ferrer		
 Q1182423	cast	Q1320797	Greg Evigan		
 Q1182423	cast	Q3516168	Taurean Blacque		
 Q1182423	cast	Q1334420	Elya Baskin		
@@ -4542,7 +4541,7 @@ Q492214	producer	Q380272	Ivan Reitman
 Q492214	producer	Q826535	Bernie Brillstein		
 Q492214	producer	Q1691527	Joe Medjuck		
 Q492214	producer	Q6829024	Michael C. Gross		
-Q492214	cinematographer	Q487094	マイケル・チャップマン		
+Q492214	cinematographer	Q487094	Michael Chapman		
 Q492214	editor	Q323950	Donn Cambern		
 Q492214	cast	Q286890	Harold Ramis	Egon Spengler	
 Q492214	cast	Q336282	Rick Moranis	Louis Tully	
@@ -4575,7 +4574,7 @@ Q1516984	cinematographer	Q448362	John Derek
 Q1516984	editor	Q448362	John Derek		
 Q1516984	cast	Q229477	Bo Derek		
 Q1516984	cast	Q77327022	Leo Damian		
-Q1516984	cast	Q22686	ドナルド・トランプ		
+Q1516984	cast	Q22686	Donald Trump		
 Q1516984	cast	Q945579	Don Murray		
 Q1516984	cast	Q83484	Anthony Quinn		
 Q1516984	cast	Q237221	Julie Newmar		
@@ -4597,7 +4596,7 @@ Q862317	cast	Q279834	Bill Nunn
 Q862317	cast	Q435475	Ethan Phillips		
 Q862317	cast	Q311093	Cary Elwes	Major Cabot Forbes	
 Q862317	cast	Q242717	Jane Alexander	Sarah Blake Sturgis Shaw	
-Q862317	cast	Q42101	デンゼル・ワシントン	Private Silas Trip	
+Q862317	cast	Q42101	Denzel Washington	Private Silas Trip	
 Q862317	cast	Q48337	Morgan Freeman	Sergeant Major John Rawlins	
 Q862317	cast	Q7346816	Robert Lee Minor		
 Q862317	cast	Q7175871	Peter Michael Goetz	Francis Shaw	
@@ -4723,8 +4722,8 @@ Q1427849	cast	Q532169	Lukas Haas
 Q1427849	award		Golden Bear		
 Q1427849	subject		World War II		
 Q1427849	subject		The Holocaust		
-Q1487777	director	Q611429	ルイス・プエンソ		
-Q1487777	writer	Q611429	ルイス・プエンソ		
+Q1487777	director	Q611429	Luis Puenzo		
+Q1487777	writer	Q611429	Luis Puenzo		
 Q1487777	composer	Q1449569	Lee Holdridge		
 Q1487777	cinematographer	Q682888	Félix Monti		
 Q1487777	editor	Q2577230	William M. Anderson		
@@ -4855,7 +4854,7 @@ Q762140	cast	Q95026	Shirley MacLaine
 Q762140	cast	Q3183493	Jonathan Ward		
 Q762140	cast	Q721195	Kevin J. O'Connor		
 Q762140	cast	Q230188	Olympia Dukakis		
-Q762140	cast	Q180453	ドリー・パートン		
+Q762140	cast	Q180453	Dolly Parton		
 Q762140	cast	Q84696	Bibi Besch		
 Q762140	cast	Q262524	Janine Turner		
 Q762140	cast	Q53120	Dylan McDermott		
@@ -4908,7 +4907,7 @@ Q1586077	cast	Q1348071	Jan Tříska
 Q1586077	cast	Q93421	Randee Heller		
 Q1586077	cast	Q469891	Robyn Lively		
 Q1586077	cast	Q5515696	Gabriel Jarret		
-Q1586077	cast	Q508795	マーティン・コーヴ		
+Q1586077	cast	Q508795	Martin Kove		
 Q1586077	cast	Q7143413	Pat E. Johnson		
 Q1586077	cast	Q3935012	Rick Hurst		
 Q1586077	cast	Q6287570	Joseph V. Perry		

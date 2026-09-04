@@ -1221,17 +1221,26 @@ export interface Project {
   distributorName?: string;
   /** The real studio that set it up or released it, when one did. */
   studioId?: string;
+  /** The real network or service that commissioned or aired it, when one did. */
+  networkId?: string;
   releaseDate?: Instant;
   /** How it reached the public: theatrical, streaming, network. Set at release; read by the award bodies. */
   releaseStrategy?: Release['strategy'];
   /** The language of the dialogue, ISO 639-1. Set when the project is created. */
   language?: string;
+  /** The certificate it carries, as a rating id from content/ratings. */
+  contentRating?: string;
+  /** How hard the material runs, 0-100, on the same scale the certificates sit on. */
+  contentSeverity?: number;
+  /** Intended runtime in minutes. */
+  runtime?: number;
   /** The country the production belongs to, a SLATE country id. Set when the project is created. */
   productionCountryId?: string;
 
-  /** Results. */
+  /** Results. Critic score follows the Metascore, audience score the audience share; the full count is in `reception`. */
   criticScore?: number;
   audienceScore?: number;
+  reception?: Reception;
   /** 0-100 finished quality; the single number every result derives from. */
   finalQuality?: number;
   boxOfficeDomestic: Money;
@@ -1244,6 +1253,10 @@ export interface Project {
   seasons?: { number: number; episodeCount: number; orderedAt: Instant; status: string }[];
   parentSeriesId?: Id;
   franchiseId?: Id;
+  /** Set when the project is a real title from a studio's dated slate, released by the world on its day. */
+  catalogueQid?: string;
+  /** Set when the world commissioned it rather than a person. Trimmable once its run is over. */
+  worldCommissioned?: boolean;
 
   greenlitAt?: Instant;
   greenlitById?: Id;
@@ -1255,7 +1268,7 @@ export interface Rights {
   id: Id;
   saveId: Id;
   title: string;
-  sourceKind: 'original' | 'book' | 'article' | 'play' | 'game' | 'format' | 'life_rights' | 'remake' | 'sequel';
+  sourceKind: 'original' | 'book' | 'article' | 'play' | 'game' | 'format' | 'life_rights' | 'remake' | 'sequel' | 'spin_off' | 'adaptation';
   holderId: Id;
   holderKind: 'person' | 'company';
   acquiredFrom: string;
@@ -1276,6 +1289,9 @@ export interface Rights {
   };
   chainOfTitle: { at: Instant; note: string }[];
   status: 'active' | 'expired' | 'reverted' | 'assigned';
+  /** Set when the rights were licensed from a real studio's franchise. */
+  licensorStudioId?: string;
+  franchiseName?: string;
 }
 
 export interface ScriptDraft {
@@ -1461,6 +1477,8 @@ export interface MarketingCampaign {
   intent: number;
   /** -100..100 how they feel about it. */
   sentiment: number;
+  /** Set once the producer has asked the distributor for more prints and advertising. */
+  studioPush?: { at: Instant; granted: boolean; amount: Money };
   socialPostIds: Id[];
   startedAt: Instant;
 }
@@ -1471,6 +1489,11 @@ export interface Release {
   projectId: Id;
   strategy: 'wide_theatrical' | 'limited_theatrical' | 'platform' | 'streaming_exclusive' | 'day_and_date' | 'direct_to_video' | 'network' | 'festival_only';
   distributorName: string;
+  /** The real service that carries it after cinemas, by its pay-one deal, when one applies. */
+  streamingPartnerId?: string;
+  streamingPartnerName?: string;
+  /** The home market whose weekend chart counts it, as a country id. Absent means the United States. */
+  market?: string;
   /** Fraction of gross the distributor keeps. */
   distributorShare: number;
   /** Fraction exhibitors keep of theatrical gross. */
@@ -1505,10 +1528,56 @@ export interface Review {
   source: 'critic' | 'audience' | 'trade';
   publicationName?: string;
   criticName?: string;
+  /** 0-100 on SLATE's scale, whatever the outlet prints. */
   score: number;
   quote: string;
   at: Instant;
   influence: number;
+  /** The real outlet, when the review is from one in the registry. */
+  outletId?: string;
+  /** The score written the way the outlet writes it: stars, a grade, a number. */
+  scaleText?: string;
+  /** How Rotten Tomatoes counts it. */
+  verdict?: 'fresh' | 'rotten';
+  topCritic?: boolean;
+  /** When it landed: at a festival, when the embargo lifted, on release, or later. */
+  wave?: 'festival' | 'embargo' | 'release' | 'late';
+}
+
+/**
+ * How a film or a season was received, counted the way the aggregators count.
+ * Grows in waves as reviews land and audiences arrive; nothing here is set in
+ * one go, and a number that has not been counted yet is absent.
+ */
+export interface Reception {
+  /** When reviews may run. Set by the distributor, or by the player when they control the release. */
+  embargoAt?: Instant;
+  embargoSetBy?: 'distributor' | 'player';
+  /** Rotten Tomatoes. */
+  tomatometer?: number;
+  reviewCount: number;
+  freshCount: number;
+  topCriticsScore?: number;
+  topCriticCount: number;
+  topCriticFresh: number;
+  certifiedFresh: boolean;
+  /** Metacritic. */
+  metascore?: number;
+  metacriticCount: number;
+  /** The weights behind the Metascore, so later reviews can join the average. */
+  metacriticWeight: number;
+  mustSee: boolean;
+  /** Audience score, the share of positive audience ratings. */
+  audienceScore?: number;
+  audienceCount: number;
+  /** IMDb, out of 10, and how many votes stand behind it. */
+  imdbRating?: number;
+  imdbVotes: number;
+  /** CinemaScore, opening night, wide releases only. */
+  cinemaScore?: string;
+  /** The waves that have run. */
+  waves: string[];
+  updatedAt: Instant;
 }
 
 export interface AwardBody {
@@ -1611,6 +1680,272 @@ export interface Franchise {
   totalRevenue: Money;
   merchandiseRevenue: Money;
   startedAt: Instant;
+  /** Set when the franchise is real IP licensed from the studio that owns it. */
+  studioId?: string;
+  catalogueQid?: string;
+  catalogueName?: string;
+  licence?: { kind: 'sequel' | 'remake' | 'spin_off' | 'series'; rightsId: Id; fee: Money };
+}
+
+// ---------------------------------------------------------------------------
+// The studios and networks as they live inside a save
+// ---------------------------------------------------------------------------
+
+export type IndustryNewsKind = 'release' | 'weekend' | 'greenlight' | 'deal' | 'leadership' | 'corporate' | 'standing' | 'slate' | 'year';
+
+export interface IndustryNewsItem {
+  at: Instant;
+  kind: IndustryNewsKind;
+  title: string;
+  detail: string;
+  projectId?: Id;
+}
+
+/** A seat at a studio or network as it stands in this save, once anything about it has changed. */
+export interface LiveLeader {
+  name: string;
+  title: string;
+  /** When they took the seat in this save; absent for a seat held since before the save began. */
+  since?: Instant;
+  /** True when SLATE generated the person to fill a seat that emptied. Never a real person. */
+  generated?: boolean;
+}
+
+export type StudioStrategy = 'steady' | 'franchise_first' | 'prestige' | 'volume' | 'cost_cutting' | 'expansion';
+
+/** What a real studio has done, and how it regards the player, since the save began. Everything here is simulation. */
+export interface StudioState {
+  id: string;
+  saveId: Id;
+  /** 0-100 how the studio regards the player: who returns calls, who gets terms. */
+  standing: number;
+  standingLog: { at: Instant; delta: number; note: string }[];
+  /** 0-100 corporate mood, from results. Drives strategy, slate size and appetite for risk. */
+  confidence: number;
+  strategy: StudioStrategy;
+  /** Multiplier on how many projects the studio puts through in a year. */
+  slateMultiplier: number;
+  /** Drift on the studio's calibrated risk appetite and prestige bias, from results and new leadership. */
+  riskDrift: number;
+  prestigeDrift: number;
+  /** Domestic gross of its releases by calendar year in the save, in cents. */
+  yearGross: Record<string, Money>;
+  yearResults: Record<string, { releases: number; hits: number; flops: number }>;
+  /** The roster as it stands now, once a seat has changed hands in the save. */
+  leadership?: LiveLeader[];
+  leadershipChanges: { at: Instant; left: string; title: string; successor: string; generated: boolean; reason: string }[];
+  parentOverride?: string;
+  ownershipOverride?: string;
+  statusOverride?: string;
+  /** True once the studio has stopped taking on new work in this save. */
+  closing?: boolean;
+  corporate: { eventId: string; outcomeId: string; at: Instant; note: string }[];
+  news: IndustryNewsItem[];
+}
+
+export interface NetworkState {
+  id: string;
+  saveId: Id;
+  standing: number;
+  standingLog: { at: Instant; delta: number; note: string }[];
+  confidence: number;
+  /** The week as it is scheduled now. Linear networks only. */
+  schedule?: NetworkSchedule;
+  /** How the season has gone: averages and what it cost. */
+  seasons?: Record<string, { averageViewers: number; averageDemo: number; renewed: number; cancelled: number; ordered: number }>;
+  leadership?: LiveLeader[];
+  leadershipChanges: { at: Instant; left: string; title: string; successor: string; generated: boolean; reason: string }[];
+  parentOverride?: string;
+  statusOverride?: string;
+  closing?: boolean;
+  corporate: { eventId: string; outcomeId: string; at: Instant; note: string }[];
+  news: IndustryNewsItem[];
+}
+
+/** A first-look or overall deal between the player (or their company) and a real studio or network. */
+export interface TalentDeal {
+  id: Id;
+  saveId: Id;
+  kind: 'first_look' | 'overall';
+  counterpartyKind: 'studio' | 'network';
+  counterpartyId: string;
+  counterpartyName: string;
+  holderId: Id;
+  holderKind: 'person' | 'company';
+  /** Overhead paid to the holder each year of the term, in cents. */
+  annualFee: Money;
+  /** Days the counterparty has to answer before anyone else may see a project. */
+  exclusiveDays: number;
+  startsAt: Instant;
+  endsAt: Instant;
+  status: 'active' | 'ended' | 'expired';
+  endedReason?: string;
+  projectsShown: number;
+  paidTotal: Money;
+}
+
+export interface BoxOfficeEntry {
+  projectId: Id;
+  /** The market the gross belongs to, as a country id. Every market has its own chart. */
+  market: string;
+  title: string;
+  studioId?: string;
+  distributorName: string;
+  /** Friday to Sunday domestic, in cents. */
+  weekend: Money;
+  /** Running domestic total, in cents. */
+  total: Money;
+  theaters: number;
+  /** Weekend of release: 1 is opening. */
+  week: number;
+  /** True when the title is a real one from the record, released by the world on its day. */
+  onRecord: boolean;
+  /** True when it is the player's own picture. */
+  yours: boolean;
+}
+
+export interface BoxOfficeWeekend {
+  /** The Friday, as a date key. */
+  key: string;
+  fridayAt: Instant;
+  entries: BoxOfficeEntry[];
+}
+
+/** One programme in one slot of a network's week. */
+export interface ScheduleSlot {
+  /** 0 Sunday to 6 Saturday. */
+  day: number;
+  /** Minutes from midnight: 1200 is eight o'clock. */
+  start: number;
+  minutes: number;
+  title: string;
+  kind: 'series' | 'movie' | 'news' | 'sport' | 'unscripted' | 'reruns';
+  projectId?: Id;
+  /** Set when the programme is a real one from the record. */
+  catalogueQid?: string;
+  genres: string[];
+  /** True when it is the player's. */
+  yours?: boolean;
+  /** Which season of itself it is in. */
+  season?: number;
+  episodesAired?: number;
+  /** The most recent airing: total viewers in thousands, the 18-49 rating, and the share. */
+  viewers?: number;
+  demo?: number;
+  share?: number;
+  /** Averages across the season so far. */
+  seasonViewers?: number;
+  seasonDemo?: number;
+  standing?: 'new' | 'safe' | 'bubble' | 'cancelled' | 'ended';
+}
+
+export interface NetworkSchedule {
+  /** The television season, as the business writes it: '2026-27'. */
+  season: string;
+  announcedAt: Instant;
+  slots: ScheduleSlot[];
+  renewed: string[];
+  cancelled: string[];
+  ordered: string[];
+}
+
+/** A night's viewing figure worth keeping. */
+export interface Airing {
+  at: Instant;
+  networkId: string;
+  title: string;
+  projectId?: Id;
+  episode?: number;
+  /** Total viewers, in thousands. */
+  viewers: number;
+  /** The 18-49 rating. */
+  demo: number;
+  share: number;
+  yours: boolean;
+}
+
+export interface StreamingChartEntry {
+  title: string;
+  projectId?: Id;
+  catalogueQid?: string;
+  /** Hours viewed in the week, in thousands. */
+  hours: number;
+  /** Weeks on the chart, this one included. */
+  weeks: number;
+  yours: boolean;
+  onRecord: boolean;
+}
+
+export interface StreamingChart {
+  /** The Monday the week began, as a date key. */
+  key: string;
+  at: Instant;
+  serviceId: string;
+  entries: StreamingChartEntry[];
+}
+
+export type RecordCategory =
+  | 'opening_weekend' | 'domestic' | 'worldwide' | 'per_theatre'
+  | 'viewers' | 'demo' | 'streaming_week' | 'streaming_total'
+  | 'tomatometer' | 'imdb' | 'budget' | 'profit';
+
+/** A record set inside this save. Simulation, never the real record. */
+export interface SaveRecord {
+  category: RecordCategory;
+  title: string;
+  projectId?: Id;
+  studioId?: string;
+  networkId?: string;
+  value: number;
+  at: Instant;
+  yours: boolean;
+  note: string;
+}
+
+/** A named movement running in one market: a genre the money has moved to. */
+export interface Wave {
+  id: string;
+  countryId: string;
+  genreId: string;
+  name: string;
+  startedAt: Instant;
+  endedAt?: Instant;
+  /** The highest heat it reached. */
+  peak: number;
+  /** Titles commissioned under it. */
+  titles: number;
+}
+
+/** What one national industry is making, and how warm each genre is there. */
+export interface MarketMood {
+  countryId: string;
+  /** Genre heat, 0-100. Rises with hits, falls with saturation, settles toward the country's own nature. */
+  heat: Record<string, number>;
+  /** The genre combinations most recently commissioned here, newest last. */
+  recent: string[];
+  /** Individual genres most recently commissioned here, newest last. */
+  recentGenres: string[];
+  /** Titles commissioned here since the save began. */
+  commissioned: number;
+  waves: Wave[];
+}
+
+export interface Zeitgeist {
+  markets: Record<string, MarketMood>;
+  lastTick: Instant;
+  /** Every wave that has run, finished or not. */
+  history: Wave[];
+}
+
+export interface TradeItem {
+  id: Id;
+  at: Instant;
+  kind: IndustryNewsKind;
+  headline: string;
+  detail: string;
+  studioId?: string;
+  networkId?: string;
+  projectId?: Id;
 }
 
 // ---------------------------------------------------------------------------
@@ -1797,7 +2132,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 15;
+export const SAVE_SCHEMA_VERSION = 18;
 
 export interface SaveMeta {
   id: Id;
@@ -1907,6 +2242,27 @@ export interface SaveUniverse {
   awardNominations: Record<Id, AwardNomination>;
   festivalSubmissions: Record<Id, FestivalSubmission>;
   franchises: Record<Id, Franchise>;
+
+  /** The real studios and networks as they live in this save, keyed by registry id. */
+  studios: Record<string, StudioState>;
+  networks: Record<string, NetworkState>;
+  /** Ratings worth keeping, newest last. Capped. */
+  airings: Airing[];
+  /** The weekly streaming charts, newest last. Capped. */
+  streamingCharts: StreamingChart[];
+  /** The best of everything that has happened in this save, by category. */
+  saveRecords: Partial<Record<RecordCategory, SaveRecord[]>>;
+  /** What each national industry is in the mood for, and what it has just made. */
+  zeitgeist: Zeitgeist;
+  talentDeals: Record<Id, TalentDeal>;
+  boxOffice: {
+    weekends: BoxOfficeWeekend[];
+    /** Gross by calendar year, market (country id) and studio id ('other' for the rest), in cents. Never trimmed. */
+    yearToDate: Record<string, Record<string, Record<string, Money>>>;
+    /** Weekend lumps waiting to be counted, from the world's own lump-sum releases. */
+    pending: { key: string; entry: BoxOfficeEntry }[];
+  };
+  trade: TradeItem[];
 
   companies: Record<Id, Company>;
   divisions: Record<Id, Division>;

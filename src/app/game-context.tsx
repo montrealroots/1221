@@ -14,7 +14,7 @@ import {
 } from 'react';
 import type { Simulation, CommandResult } from '@/engine';
 import { refreshMeta } from '@/engine';
-import { loadImdbRatings, loadKnownTitles } from '@/engine/content/filmography';
+import { loadImdbRatings, loadKnownTitles, loadBroadcastSeries } from '@/engine/content/filmography';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
 export interface Toast {
@@ -256,6 +256,9 @@ export function GameProvider({
   useEffect(() => {
     void loadKnownTitles().catch(() => {});
     void loadImdbRatings().catch(() => {});
+    // The television grids are built from the record's own schedules, so the
+    // series have to be in hand before the first week of a save airs.
+    void loadBroadcastSeries().catch(() => {});
   }, []);
 
   // --- Autosave -----------------------------------------------------------

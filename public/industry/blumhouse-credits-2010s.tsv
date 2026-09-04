@@ -1,5 +1,5 @@
 qid	role	personQid	name	character	ordinal
-Q1056921	director	Q4790469	アリエル・シュルマン		
+Q1056921	director	Q4790469	Ariel Schulman		
 Q1056921	director	Q5724080	Henry Joost		
 Q1056921	writer	Q716282	Oren Peli		
 Q1056921	writer	Q3675834	Christopher Landon		
@@ -191,7 +191,7 @@ Q16253888	producer	Q59259	Michael Bay
 Q16253888	producer	Q4954920	Bradley Fuller		
 Q16253888	producer	Q13449900	Jason Blum		
 Q16253888	editor	Q18693042	Ken Blackwell		
-Q16253888	cast	Q542843	マシュー・セトル		
+Q16253888	cast	Q542843	Matthew Settle		
 Q16253888	cast	Q20973951	Ana Coto		
 Q16253888	cast	Q258710	Shelley Hennig		
 Q16253888	cast	Q449822	Lin Shaye		
@@ -218,7 +218,7 @@ Q14948589	cast	Q44077	Jessica Alba
 Q14948589	cast	Q23466	Chris Pine		
 Q14948589	cast	Q451974	James Badge Dale		
 Q14948589	cast	Q288656	Shaun White		
-Q14948589	cast	Q6163031	ジェイソン・マンツォーカス		
+Q14948589	cast	Q6163031	Jason Mantzoukas		
 Q14948589	cast	Q16201337	Kevin Bigley		
 Q14948589	cast	Q351290	Patrick Wilson		
 Q14948589	cast	Q107043349	Sandra Lee Gimpel		
@@ -462,7 +462,7 @@ Q20649307	producer	Q5386707	Eric Heisserer
 Q20649307	producer	Q108047434	James Wan		
 Q20649307	editor	Q23876890	Kirk M. Morri		
 Q20649307	editor	Q62015683	Michel Aller		
-Q20649307	costume_designer	Q14566172	Q14566172		
+Q20649307	costume_designer	Q14566172	Kristin M. Burke		
 Q20649307	cast	Q229220	Maria Bello		
 Q20649307	cast	Q234516	Teresa Palmer		
 Q20649307	cast	Q723482	Emily Alyn Lind		
@@ -498,7 +498,7 @@ Q21869840	cast	Q7442359	Sebastian Arcelus
 Q21869840	cast	Q435790	Kim Director		
 Q21869840	cast	Q193659	James McAvoy	Kevin Wendell Crumb	
 Q21869840	cast	Q20882479	Anya Taylor-Joy	Casey Cooke	
-Q21869840	cast	Q2680	ブルース・ウィリス	David Dunn	
+Q21869840	cast	Q2680	Bruce Willis	David Dunn	
 Q21869840	follows	Q650613	Unbreakable		
 Q21869840	followed_by	Q30939513	Glass		
 Q21869840	subject		dissociative identity disorder		
@@ -514,9 +514,9 @@ Q17508638	cast	Q1580624	Lucy Fry
 Q17508638	cast	Q4171972	David Mazouz		
 Q17508638	cast	Q2278533	Matt Walsh		
 Q17508638	cast	Q254205	Ming-Na Wen		
-Q17508638	cast	Q230516	ラダ・ミッチェル		
+Q17508638	cast	Q230516	Radha Mitchell		
 Q17508638	cast	Q199929	Jennifer Morrison		
-Q17508638	cast	Q26213677	ジェイミー・バーナデット		
+Q17508638	cast	Q26213677	Jamie Bernadette		
 Q17508638	subject		supernatural		
 Q22075011	director	Q716373	Phil Joanou		
 Q22075011	writer	Q548479	Ben Garant		
@@ -660,7 +660,7 @@ Q43370948	cast	Q935081	Robert John Burke
 Q43370948	cast	Q214959	Harry Belafonte		
 Q43370948	cast	Q127036	Fred Weller		
 Q43370948	cast	Q710766	Arthur J. Nascarella		
-Q43370948	cast	Q22686	ドナルド・トランプ		
+Q43370948	cast	Q22686	Donald Trump		
 Q43370948	cast	Q4025864	Ashlie Atkinson		
 Q43370948	cast	Q4678990	Adam Driver		
 Q43370948	cast	Q23894602	Laura Harrier		
@@ -850,7 +850,7 @@ Q30939513	cast	Q51489	M. Night Shyamalan
 Q30939513	cast	Q257442	Sarah Paulson		
 Q30939513	cast	Q2165590	Spencer Treat Clark	Joseph Dunn	
 Q30939513	cast	Q20882479	Anya Taylor-Joy	Casey Cooke	
-Q30939513	cast	Q2680	ブルース・ウィリス	David Dunn	
+Q30939513	cast	Q2680	Bruce Willis	David Dunn	
 Q30939513	cast	Q172678	Samuel L. Jackson	Elijah Price	
 Q30939513	cast	Q193659	James McAvoy	Kevin Wendell Crumb	
 Q30939513	follows	Q21869840	Split		

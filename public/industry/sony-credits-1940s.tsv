@@ -134,7 +134,7 @@ Q5167164	cast	Q982177	Larry Fine
 Q5167164	cast	Q4933538	Bob O'Connor		
 Q5245749	director	Q3161467	James W. Horne		
 Q5245749	composer	Q1397968	Lee Zahler		
-Q5245749	producer	Q6490176	Q6490176		
+Q5245749	producer	Q6490176	Larry Darmour		
 Q5245749	cast	Q3259602	Lorna Gray		
 Q5245749	cast	Q5669543	Harry Harvey		
 Q5245749	cast	Q1230751	Don Douglas		
@@ -361,7 +361,7 @@ Q7699180	editor	Q5932751	Hugh Stewart
 Q7699180	cast	Q181887	Rex Harrison		
 Q7705184	director	Q3161467	James W. Horne		
 Q7705184	composer	Q1397968	Lee Zahler		
-Q7705184	producer	Q6490176	Q6490176		
+Q7705184	producer	Q6490176	Larry Darmour		
 Q7705184	cast	Q2580810	William Tracy		
 Q23638547	director	Q7599660	Stanley Hawes		
 Q23638547	composer	Q6697407	Lucio Agostini		
@@ -408,7 +408,7 @@ Q16994427	cast	Q1357250	Jack Holt
 Q7738130	director	Q3161467	James W. Horne		
 Q7738130	writer	Q271824	Edgar Wallace		
 Q7738130	composer	Q1397968	Lee Zahler		
-Q7738130	producer	Q6490176	Q6490176		
+Q7738130	producer	Q6490176	Larry Darmour		
 Q7738130	cast	Q6070234	Iris Meredith		
 Q7738130	cast	Q6131896	James Craven		
 Q7738130	cast	Q7344356	Robert Fiske		
@@ -584,7 +584,7 @@ Q1620394	director	Q55234	Michael Powell
 Q1620394	writer	Q55230	Emeric Pressburger		
 Q1620394	composer	Q207947	Ralph Vaughan Williams		
 Q1620394	producer	Q6259714	John Sutro		
-Q1620394	cinematographer	Q965659	フレディ・ヤング		
+Q1620394	cinematographer	Q965659	Freddie Young		
 Q1620394	editor	Q55260	David Lean		
 Q1620394	cast	Q79005	Anton Walbrook		
 Q1620394	cast	Q531461	Raymond Massey		
@@ -778,13 +778,13 @@ Q583525	followed_by	Q175468	Down to Earth
 Q23020099	composer	Q6697407	Lucio Agostini		
 Q5884614	director	Q3161467	James W. Horne		
 Q5884614	composer	Q1397968	Lee Zahler		
-Q5884614	producer	Q6490176	Q6490176		
+Q5884614	producer	Q6490176	Larry Darmour		
 Q5884614	cast	Q1357250	Jack Holt		
 Q19840207	director	Q769200	Charles Barton		
 Q19840207	composer	Q542481	Saul Chaplin		
 Q19840207	producer	Q936637	Wallace MacDonald		
 Q19840207	cinematographer	Q84650	Franz Planer		
-Q19840207	cast	Q267247	ルーペ・ヴェレス		
+Q19840207	cast	Q267247	Lupe Vélez		
 Q19840207	cast	Q937247	Forrest Tucker		
 Q19840207	cast	Q3126801	Hank Mann		
 Q19840207	cast	Q510115	Marjorie Gateson		
@@ -990,7 +990,7 @@ Q7707414	cast	Q233850	Claire Trevor
 Q7707414	cast	Q3048088	Edmund Cobb		
 Q7707414	cast	Q2978795	Clem Bevans		
 Q7707414	cast	Q3568320	Willard Robertson		
-Q7707414	cast	Q3013243	ダン・ホワイト		
+Q7707414	cast	Q3013243	Dan White		
 Q7707414	cast	Q95002	William Holden		
 Q7707414	cast	Q3607492	Al Ferguson		
 Q7707414	cast	Q18811091	Fred Aldrich		
@@ -1039,7 +1039,7 @@ Q1168382	cast	Q78505	Peter Lorre
 Q7742584	director	Q3161467	James W. Horne		
 Q7742584	writer	Q4867146	Basil Dickey		
 Q7742584	composer	Q1397968	Lee Zahler		
-Q7742584	producer	Q6490176	Q6490176		
+Q7742584	producer	Q6490176	Larry Darmour		
 Q7742584	cast	Q125509	Charles Quigley		
 Q16253059	director	Q542941	Lambert Hillyer		
 Q16253059	writer	Q8040111	Wyndham Gittens		
@@ -1068,7 +1068,7 @@ Q56284225	cast	Q374721	Wild Bill Elliott
 Q7765841	director	Q3161467	James W. Horne		
 Q7765841	writer	Q95870440	Morgan Cox		
 Q7765841	composer	Q1397968	Lee Zahler		
-Q7765841	producer	Q6490176	Q6490176		
+Q7765841	producer	Q6490176	Larry Darmour		
 Q7765841	cast	Q7970279	Warren Hull		
 Q7783687	director	Q62503	Victor Fleming		
 Q7783687	director	Q149507	Charles Vidor		
@@ -1132,9 +1132,9 @@ Q2549028	producer	Q7626755	Stuart Legg
 Q2549028	cast	Q550784	Lorne Greene		
 Q2549028	subject		World War II		
 Q7994659	director	Q3161467	James W. Horne		
-Q7994659	writer	Q5495982	Q5495982		
+Q7994659	writer	Q5495982	Fred Myton		
 Q7994659	composer	Q1397968	Lee Zahler		
-Q7994659	producer	Q6490176	Q6490176		
+Q7994659	producer	Q6490176	Larry Darmour		
 Q7994659	cast	Q6113295	Jack Ingram		
 Q7994659	cast	Q2630976	Buck Jones		
 Q7994659	cast	Q432332	Dorothy Fay		
@@ -1183,7 +1183,7 @@ Q4658627	cast	Q3290613	Sidney Toler
 Q4658627	cast	Q253384	Loretta Young		
 Q4658627	cast	Q6130501	James Burke		
 Q4658627	cast	Q531282	Lee Patrick		
-Q4658627	cast	Q449704	ブランチ・ユーカ		
+Q4658627	cast	Q449704	Blanche Yurka		
 Q4658627	cast	Q233845	Gale Sondergaard		
 Q4658627	cast	Q5669543	Harry Harvey		
 Q4658627	cast	Q14633510	Garry Owen		
@@ -1237,7 +1237,7 @@ Q5016167	cast	Q1281212	Moe Howard
 Q5036739	director	Q3161467	James W. Horne		
 Q5036739	writer	Q4867146	Basil Dickey		
 Q5036739	composer	Q1397968	Lee Zahler		
-Q5036739	producer	Q6490176	Q6490176		
+Q5036739	producer	Q6490176	Larry Darmour		
 Q5036739	cast	Q3017220	Dave O'Brien		
 Q5036739	subject		aviation		
 Q5152257	director	Q547495	John Farrow		
@@ -1400,7 +1400,7 @@ Q7133926	subject		World War II
 Q7133926	subject		skydiving		
 Q7168535	director	Q3161467	James W. Horne		
 Q7168535	composer	Q1397968	Lee Zahler		
-Q7168535	producer	Q6490176	Q6490176		
+Q7168535	producer	Q6490176	Larry Darmour		
 Q7168535	cast	Q6390409	Kenneth MacDonald		
 Q7168535	cast	Q464889	Herbert Rawlinson		
 Q7168535	cast	Q7325683	Richard Fiske		
@@ -1488,7 +1488,7 @@ Q2043040	cast	Q3179026	Jimmy Conlin
 Q2043040	cast	Q460279	Ruth Ford		
 Q2043040	cast	Q3127914	Harry Shannon		
 Q7748080	director	Q4019938	William Berke		
-Q7748080	writer	Q5495982	Q5495982		
+Q7748080	writer	Q5495982	Fred Myton		
 Q7748080	cinematographer	Q4888745	Benjamin H. Kline		
 Q7762999	director	Q7576059	Spencer Gordon Bennet		
 Q7762999	composer	Q1397968	Lee Zahler		
@@ -1523,7 +1523,7 @@ Q196933	cast	Q83410	Cary Grant
 Q7771961	director	Q7576059	Spencer Gordon Bennet		
 Q7771961	writer	Q3127850	Harry L. Fraser		
 Q7771961	composer	Q1397968	Lee Zahler		
-Q7771961	producer	Q6490176	Q6490176		
+Q7771961	producer	Q6490176	Larry Darmour		
 Q7771961	cast	Q374721	Wild Bill Elliott		
 Q23638590	director	Q6129760	James Beveridge		
 Q23638590	cast	Q550784	Lorne Greene		
@@ -1664,7 +1664,7 @@ Q205575	writer	Q313048	Bob Kane
 Q205575	writer	Q464282	Bill Finger		
 Q205575	writer	Q3127850	Harry L. Fraser		
 Q205575	composer	Q1397968	Lee Zahler		
-Q205575	producer	Q19581685	Q19581685		
+Q205575	producer	Q19581685	Rudolph Flothow		
 Q205575	cinematographer	Q1681062	James S. Brown Jr.		
 Q205575	editor	Q5326131	Earl Turner		
 Q205575	cast	Q8004706	William Austin	Alfred Pennyworth	
@@ -1861,7 +1861,7 @@ Q7187320	cast	Q1281212	Moe Howard
 Q66712487	director	Q329972	John Hubley		
 Q66712487	director	Q66712466	Paul Sommer		
 Q66712487	writer	Q3182065	John McLeish		
-Q66712487	composer	Q5336193	Q5336193		
+Q66712487	composer	Q5336193	Eddie Kilfeather		
 Q66712487	producer	Q1173200	Dave Fleischer		
 Q22947514	director	Q6152529	Jane Marsh Beveridge		
 Q22947514	composer	Q506312	Louis Applebaum		
@@ -1870,7 +1870,7 @@ Q7304240	writer	Q23613819	Joseph Hoffman
 Q7304240	producer	Q936637	Wallace MacDonald		
 Q7304240	producer	Q1586470	Harry Cohn		
 Q7304240	editor	Q6143887	James Sweeney		
-Q7304240	cast	Q267247	ルーペ・ヴェレス		
+Q7304240	cast	Q267247	Lupe Vélez		
 Q3933903	director	Q769200	Charles Barton		
 Q3933903	composer	Q332325	John Leipold		
 Q3933903	producer	Q2216676	Sam White		
@@ -1956,7 +1956,7 @@ Q3494033	cast	Q3609064	Edward Peil
 Q3494033	cast	Q295984	Randolph Scott		
 Q3494033	cast	Q3157236	Jack Kinney		
 Q3494033	cast	Q1368948	Glenn Strange		
-Q3494033	cast	Q5343388	ガイ・エドワード・ハーン		
+Q3494033	cast	Q5343388	Edward Hearn		
 Q3494033	cast	Q212048	Glenn Ford		
 Q3494033	cast	Q3179630	Joan Woodbury		
 Q3494033	cast	Q5344786	Edward Pawley		
@@ -2077,7 +2077,7 @@ Q4877678	cast	Q6152241	Jane Frazee
 Q4920289	director	Q264707	B. Reeves Eason		
 Q4920289	director	Q3237273	Lew Landers		
 Q4920289	composer	Q1397968	Lee Zahler		
-Q4920289	producer	Q19581685	Q19581685		
+Q4920289	producer	Q19581685	Rudolph Flothow		
 Q4920289	cast	Q1900383	Mark Roberts		
 Q23018851	producer	Q6129760	James Beveridge		
 Q5002243	director	Q3021400	Del Lord		
@@ -2162,12 +2162,12 @@ Q5884345	editor	Q24036373	Jorge Bustos
 Q5884345	production_designer	Q19300962	Manuel Fontanals		
 Q5884345	cast	Q195371	Cantinflas		
 Q5884345	cast	Q20685322	Roberto Corell		
-Q5884345	cast	Q98931289	罗伯托·坎里多		
+Q5884345	cast	Q98931289	Roberto Cañedo		
 Q5884345	cast	Q56886791	Jacqueline Dalya		
 Q5884345	cast	Q20683868	Luis G. Barreiro		
 Q5884345	cast	Q19430003	Conchita Gentil Arcos		
 Q5884345	cast	Q9076816	Estanislao Shilinsky Bachanska		
-Q5884345	cast	Q5860268	フェルナンド・ソト		
+Q5884345	cast	Q5860268	Fernando Soto		
 Q5884345	cast	Q16646132	Vicente Padula		
 Q5884345	cast	Q1043284	Carlos Villarías		
 Q5688938	director	Q466709	Marcel Varnel		
@@ -2336,7 +2336,7 @@ Q42049355	editor	Q2039974	Otto Meyer
 Q42049355	cast	Q312878	John Carradine		
 Q7729798	director	Q264707	B. Reeves Eason		
 Q7729798	composer	Q1397968	Lee Zahler		
-Q7729798	producer	Q19581685	Q19581685		
+Q7729798	producer	Q19581685	Rudolph Flothow		
 Q7729798	cast	Q2138637	I. Stanford Jolley		
 Q7729798	cast	Q4886665	Ben Welden		
 Q7729798	cast	Q713929	Charles Middleton		
@@ -2366,7 +2366,7 @@ Q3618035	cast	Q229338	Jean Arthur
 Q3618035	cast	Q325398	Phil Brown		
 Q7750368	director	Q934087	William Castle		
 Q7750368	composer	Q377558	Mario Castelnuovo-Tedesco		
-Q7750368	producer	Q19581685	Q19581685		
+Q7750368	producer	Q19581685	Rudolph Flothow		
 Q7750368	cast	Q1418567	Minerva Urecal		
 Q7750368	cast	Q931926	Richard Dix		
 Q7750368	cast	Q3141549	Howard Freeman		
@@ -2388,7 +2388,7 @@ Q5844746	cast	Q235632	Nina Foch
 Q5844746	cast	Q34529	Bela Lugosi		
 Q7774448	director	Q934087	William Castle		
 Q7774448	writer	Q5387613	Eric Taylor		
-Q7774448	producer	Q19581685	Q19581685		
+Q7774448	producer	Q19581685	Rudolph Flothow		
 Q7774448	cast	Q17736942	Charles Pearce Coleman		
 Q7774448	cast	Q1066372	Charles Wagenheim		
 Q7774448	cast	Q3179630	Joan Woodbury		
@@ -2724,7 +2724,7 @@ Q15688570	director	Q3420547	Ray Nazarro
 Q15688570	cast	Q729837	Charles Starrett	Durango Kid	
 Q7712628	director	Q112468713	Paul Burnford		
 Q7712628	writer	Q4704391	Al Martin		
-Q7712628	producer	Q19581685	Q19581685		
+Q7712628	producer	Q19581685	Rudolph Flothow		
 Q7712628	cast	Q1126956	Conrad Nagel		
 Q7712628	cast	Q272061	Margaret Lindsay		
 Q23999747	director	Q745414	George Sherman		
@@ -2750,7 +2750,7 @@ Q38463253	cast	Q3056912	Ernest Cossart
 Q22336658	director	Q1526143	Jules White		
 Q7752085	director	Q3141528	Howard Bretherton		
 Q7752085	composer	Q1397968	Lee Zahler		
-Q7752085	producer	Q19581685	Q19581685		
+Q7752085	producer	Q19581685	Rudolph Flothow		
 Q7752085	cast	Q3078072	Robert Lowery		
 Q7757980	director	Q3237273	Lew Landers		
 Q7757980	writer	Q4819202	Aubrey Wisberg		
@@ -2797,7 +2797,7 @@ Q303095	composer	Q1902096	Marlin Skiles
 Q303095	producer	Q744326	Victor Saville		
 Q303095	cinematographer	Q1668173	Rudolph Maté		
 Q303095	editor	Q1507483	Viola Lawrence		
-Q303095	costume_designer	Q521154	マルセル・ヴェルテス		
+Q303095	costume_designer	Q521154	Marcel Vertès		
 Q303095	costume_designer	Q1685654	Jean Louis		
 Q303095	production_designer	Q505114	Stephen Goosson		
 Q303095	production_designer	Q1827227	Lionel Banks		
@@ -2821,7 +2821,7 @@ Q303095	subject		aviation
 Q7939594	director	Q934087	William Castle		
 Q7939594	writer	Q934087	William Castle		
 Q7939594	composer	Q377558	Mario Castelnuovo-Tedesco		
-Q7939594	producer	Q19581685	Q19581685		
+Q7939594	producer	Q19581685	Rudolph Flothow		
 Q7939594	cast	Q6237453	John Hamilton		
 Q7939594	cast	Q1418567	Minerva Urecal		
 Q7939594	cast	Q931926	Richard Dix		
@@ -3011,7 +3011,7 @@ Q6315848	director	Q934087	William Castle
 Q6315848	writer	Q4819202	Aubrey Wisberg		
 Q6315848	writer	Q5387613	Eric Taylor		
 Q6315848	composer	Q969404	Mischa Bakaleinikoff		
-Q6315848	producer	Q19581685	Q19581685		
+Q6315848	producer	Q19581685	Rudolph Flothow		
 Q6315848	cast	Q312073	Warner Baxter		
 Q6315848	cast	Q3320035	Mona Barrie		
 Q6315848	cast	Q2958830	Charles D. Brown		
@@ -3180,7 +3180,7 @@ Q19363754	cast	Q983420	Chester Morris
 Q7763175	director	Q745414	George Sherman		
 Q7763175	writer	Q3420964	Raymond L. Schrock		
 Q7763175	composer	Q1598922	Herschel Burke Gilbert		
-Q7763175	producer	Q19581685	Q19581685		
+Q7763175	producer	Q19581685	Rudolph Flothow		
 Q7763175	cast	Q166114	Leslie Brooks		
 Q7763175	cast	Q931926	Richard Dix		
 Q7769108	director	Q1291693	Edward Bernds		
@@ -3344,13 +3344,13 @@ Q6172033	writer	Q6123905	Jaime Salvador
 Q6172033	composer	Q5679229	Gonzalo Curiel		
 Q6172033	producer	Q538112	Jacques Gelman		
 Q6172033	cinematographer	Q24203452	Jack Draper		
-Q6172033	cast	Q3290538	华金·科尔德罗		
-Q6172033	cast	Q2083443	ミロスラバ・ステルン		
+Q6172033	cast	Q3290538	Joaquín Cordero		
+Q6172033	cast	Q2083443	Miroslava Stern		
 Q6172033	cast	Q6173172	Ángel Garasa		
 Q6172033	cast	Q195371	Cantinflas		
 Q6172033	cast	Q6752771	Manuel Noriega Ruiz		
 Q6172033	cast	Q3189827	Julio Villarreal		
-Q6172033	cast	Q98931289	罗伯托·坎里多		
+Q6172033	cast	Q98931289	Roberto Cañedo		
 Q6172033	cast	Q2849039	Andrés Soler		
 Q5467102	director	Q361670	John Sturges		
 Q5467102	cast	Q388378	Tom Powers		
@@ -3865,7 +3865,7 @@ Q15046492	composer	Q457727	George Duning
 Q15046492	producer	Q7410926	Samuel Bischoff		
 Q15046492	cast	Q1124735	George Brent		
 Q3898439	director	Q1668173	Rudolph Maté		
-Q3898439	writer	Q2568461	フィリップ・マクドナルド		
+Q3898439	writer	Q2568461	Philip MacDonald		
 Q3898439	writer	Q3308040	Michael Blankfort		
 Q3898439	composer	Q457727	George Duning		
 Q3898439	producer	Q712874	Buddy Adler		
@@ -3974,7 +3974,7 @@ Q7760419	cast	Q271865	Terry Moore
 Q7760419	subject		horse		
 Q7760469	director	Q3011073	D. Ross Lederman		
 Q7760469	composer	Q969404	Mischa Bakaleinikoff		
-Q7760469	producer	Q19581685	Q19581685		
+Q7760469	producer	Q19581685	Rudolph Flothow		
 Q7760469	cinematographer	Q3379087	Philip Tannura		
 Q7760469	cast	Q6523085	Lenore Aubert		
 Q7764168	director	Q361670	John Sturges		
@@ -4050,7 +4050,7 @@ Q4686648	cast	Q3090544	Paul Frees	The Black Knight
 Q4686648	cast	Q5292353	Don C. Harvey	Bartog, Ulric's Aide	
 Q4686648	cast	Q5932391	Hugh Prosser	Lancelot	
 Q4686648	cast	Q2959529	Charles King	Bors	
-Q4686648	cast	Q16089049	Марджори Стэпп	Guinevere	
+Q4686648	cast	Q16089049	Marjorie Stapp	Guinevere	
 Q4686648	cast	Q3258672	Lois Hall	Lady of the Lake	
 Q4686648	cast	Q342537	George Reeves	Galahad	
 Q4686648	cast	Q5808247	Nelson Leigh	King Arthur	

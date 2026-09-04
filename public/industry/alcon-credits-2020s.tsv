@@ -1,13 +1,13 @@
 qid	role	personQid	name	character	ordinal
 Q80322391	director	Q195719	the Wachowskis		
-Q80322391	director	Q9545711	ラナ・ウォシャウスキー		
+Q80322391	director	Q9545711	Lana Wachowski		
 Q80322391	writer	Q40479	David Mitchell		
 Q80322391	writer	Q738114	Aleksandar Hemon		
-Q80322391	writer	Q9545711	ラナ・ウォシャウスキー		
+Q80322391	writer	Q9545711	Lana Wachowski		
 Q80322391	composer	Q57231	Tom Tykwer		
 Q80322391	composer	Q1702351	Johnny Klimek		
 Q80322391	producer	Q1543176	Grant Hill		
-Q80322391	cinematographer	Q585668	ジョン・トール		
+Q80322391	cinematographer	Q585668	John Toll		
 Q80322391	cinematographer	Q5219285	Daniele Massaccesi		
 Q80322391	editor	Q95893714	Joseph Jett Sally		
 Q80322391	cast	Q28655334	Yahya Abdul-Mateen II	Morpheus	
@@ -65,7 +65,7 @@ Q100361125	cinematographer	Q2287450	Simon Duggan
 Q100361125	editor	Q20020631	Margaret Sixel		
 Q100361125	production_designer	Q22075468	Colin Gibson		
 Q100361125	cast	Q20882479	Anya Taylor-Joy	Imperator Furiosa	
-Q100361125	cast	Q54314	クリス・ヘムズワース	Warlord Dementus	
+Q100361125	cast	Q54314	Chris Hemsworth	Warlord Dementus	
 Q100361125	cast	Q5968695	Lachy Hulme	Immortan Joe	
 Q100361125	cast	Q230123	Elsa Pataky	Mr. Norton	
 Q100361125	cast	Q4764239	Angus Sampson	Organic Mechanic	
@@ -87,7 +87,7 @@ Q108628759	cinematographer	Q6504587	Lawrence Sher
 Q108628759	editor	Q72559426	Jeff Groth		
 Q108628759	costume_designer	Q509502	Arianne Phillips		
 Q108628759	production_designer	Q40975025	Mark Friedberg		
-Q108628759	cast	Q19848	レディー・ガガ	Harley Quinn	
+Q108628759	cast	Q19848	Lady Gaga	Harley Quinn	
 Q108628759	cast	Q106674854	Harry Lawtey	Two-Face	
 Q108628759	cast	Q185140	Joaquin Phoenix	Arthur Fleck	
 Q108628759	cast	Q206659	Brendan Gleeson	Jackie Sullivan	

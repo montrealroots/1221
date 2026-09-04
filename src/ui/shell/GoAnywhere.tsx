@@ -15,6 +15,7 @@ import { CATALOG } from '@/engine/content/catalog';
 import { VEHICLE_MODELS } from '@/engine/content/vehicles';
 import { AGENCIES } from '@/engine/content/industry';
 import { STUDIOS } from '@/engine/content/studios';
+import { NETWORKS } from '@/engine/content/networks';
 import { normalise, scoreMatch } from '@/engine/content/reference';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { labelForRoute } from '@/app/game-context';
@@ -45,7 +46,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/education', label: 'Education', keywords: ['class', 'course', 'coach', 'training', 'acting class', 'learn'], detail: 'Classes and coaching' },
   { route: '/workspace/social', label: 'Social', keywords: ['post', 'followers', 'audience', 'brand deal', 'sponsorship', 'creator'], detail: 'Platforms and audience' },
   { route: '/workspace/casting', label: 'Casting', keywords: ['audition', 'role', 'breakdown', 'self tape', 'agent', 'representation'], detail: 'Auditions and representation' },
-  { route: '/workspace/projects', label: 'Projects', keywords: ['film', 'movie', 'script', 'write', 'produce', 'direct', 'shoot', 'post', 'release', 'box office', 'distribution'], detail: 'Development to release' },
+  { route: '/workspace/projects', label: 'Projects', keywords: ['film', 'movie', 'script', 'write', 'produce', 'direct', 'shoot', 'post', 'release', 'box office', 'distribution', 'reviews', 'critics', 'rotten tomatoes', 'metacritic', 'cinemascore', 'embargo'], detail: 'Development to release, reviews and reception' },
   { route: '/workspace/company', label: 'Company', keywords: ['studio', 'business', 'found company', 'employees', 'payroll', 'equipment', 'merchandise'], detail: 'Found and run a company' },
   { route: '/workspace/awards', label: 'Awards', keywords: ['nomination', 'ceremony', 'festival', 'campaign', 'oscars', 'emmys', 'cannes'], detail: 'Awards and festivals' },
   { route: '/workspace/industry', label: 'Industry', keywords: ['studio', 'studios', 'catalogue', 'filmography', 'franchise', 'executives', 'presidents', 'disney', 'universal', 'warner', 'netflix', 'a24'], detail: 'The real studios, their people and their catalogues' },
@@ -290,6 +291,19 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
   for (const studio of STUDIOS.all()) {
     const score = scoreMatch(query, studio);
     push('Industry', studio.id, studio.name, studio.description, '/workspace/industry', score);
+  }
+  for (const network of NETWORKS.all()) {
+    const score = scoreMatch(query, network);
+    push('Industry', network.id, network.name, network.description, '/workspace/industry', score);
+  }
+  for (const page of [
+    { id: 'box-office', type: 'page', name: 'Box Office', aliases: ['weekend', 'market share', 'chart', 'release calendar', 'slate'], description: 'The weekend chart, the year\'s market share and what is dated ahead.' },
+    { id: 'trades', type: 'page', name: 'The Trades', aliases: ['headlines', 'news', 'trade', 'variety', 'deadline'], description: 'Every headline the industry made in your universe.' },
+    { id: 'records', type: 'page', name: 'Records', aliases: ['all time', 'highest grossing', 'biggest', 'most episodes', 'longest running', 'hall of fame'], description: 'The all-time records from the real record, and the ones your universe has set.' },
+    { id: 'schedule', type: 'page', name: 'TV Schedules', aliases: ['primetime', 'grid', 'ratings', 'nielsen', 'upfronts', 'renewal'], description: 'Every linear network\'s week, with what each slot did.' },
+  ]) {
+    const score = scoreMatch(query, page);
+    push('Industry', page.id, page.name, page.description, '/workspace/industry', score);
   }
   for (const agency of AGENCIES.all()) {
     const score = scoreMatch(query, agency);

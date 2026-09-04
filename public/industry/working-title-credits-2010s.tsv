@@ -39,7 +39,7 @@ Q785249	cast	Q28493	Ralph Fiennes
 Q785249	cast	Q2020161	Ed Stoppard		
 Q785249	cast	Q1953405	Katy Brand		
 Q785249	cast	Q215017	Rhys Ifans		
-Q785249	cast	Q172653	マギー・スミス		
+Q785249	cast	Q172653	Maggie Smith		
 Q785249	cast	Q2419414	Sam Kelly		
 Q785249	cast	Q579571	Daniel Mays		
 Q785249	cast	Q519555	Eros Vlahos		
@@ -77,7 +77,7 @@ Q1768087	director	Q7117319	P. J. Pesce
 Q1768087	writer	Q7117319	P. J. Pesce		
 Q1768087	writer	Q16149013	Tom Abrams		
 Q1768087	producer	Q936866	Joe Carnahan		
-Q1768087	producer	Q957821	クリス・フォス		
+Q1768087	producer	Q957821	Chris Foss		
 Q1768087	cinematographer	Q23928454	David Geddes		
 Q1768087	executive_producer	Q936866	Joe Carnahan		
 Q1768087	cast	Q3130357	Martha Higareda		
@@ -132,13 +132,13 @@ Q967478	follows	Q337881	Johnny English
 Q1164753	director	Q1356738	Greg Mottola		
 Q1164753	writer	Q238464	Simon Pegg		
 Q1164753	writer	Q363400	Nick Frost		
-Q1164753	composer	Q346285	デヴィッド・アーノルド		
+Q1164753	composer	Q346285	David Arnold		
 Q1164753	producer	Q1351291	Eric Fellner		
 Q1164753	producer	Q1473065	Tim Bevan		
 Q1164753	producer	Q4586742	Nira Park		
 Q1164753	cinematographer	Q6504587	Lawrence Sher		
 Q1164753	editor	Q436125	Chris Dickens		
-Q1164753	production_designer	Q134289169	Q134289169		
+Q1164753	production_designer	Q134289169	Jefferson Sage		
 Q1164753	cast	Q320204	Jeffrey Tambor		
 Q1164753	cast	Q238464	Simon Pegg		
 Q1164753	cast	Q164328	David Koechner		
@@ -187,7 +187,7 @@ Q681962	cast	Q83492	Gary Oldman	George Smiley
 Q681962	cast	Q200405	John Hurt	Control	
 Q681962	cast	Q6848704	Mike Sarne	Karla	
 Q681962	cast	Q21334577	Peter O'Connor	Fawn	
-Q681962	cast	Q768899	ダーヴィッド・デンシック	Toby Esterhase	
+Q681962	cast	Q768899	David Dencik	Toby Esterhase	
 Q681962	cast	Q558666	Konstantin Khabensky	Polyakov	
 Q681962	cast	Q312712	Mark Strong	Jim Prideaux	
 Q681962	cast	Q444306	Kathy Burke	Connie Sachs	
@@ -342,7 +342,7 @@ Q28234	cinematographer	Q918883	Danny Cohen
 Q28234	editor	Q436125	Chris Dickens		
 Q28234	editor	Q19650466	Melanie Oliver		
 Q28234	production_designer	Q6567687	Eve Stewart		
-Q28234	cast	Q36301	アン・ハサウェイ	Fantine	
+Q28234	cast	Q36301	Anne Hathaway	Fantine	
 Q28234	cast	Q5217562	Daniel Huttlestone	Gavroche	
 Q28234	cast	Q7610660	Stephen Tate	Fauchelevent	
 Q28234	cast	Q16232219	Iwan Lewis	Bahorel	
@@ -375,7 +375,7 @@ Q28234	cast	Q189226	Amanda Seyfried	Cosette
 Q28234	cast	Q111371148	Natalya Wallace	Éponine	
 Q28234	cast	Q29055	Sacha Baron Cohen	Monsieur Thénardier	
 Q28234	cast	Q1110119	Colm Wilkinson	Bishop Myriel	
-Q28234	cast	Q129591	ヒュー・ジャックマン	Jean Valjean	
+Q28234	cast	Q129591	Hugh Jackman	Jean Valjean	
 Q28234	cast	Q170428	Helena Bonham Carter	Madame Thénardier	
 Q28234	cast	Q321770	Aaron Tveit	Enjolras	
 Q28234	cast	Q28288	Eddie Redmayne	Marius Pontmercy	
@@ -397,7 +397,7 @@ Q4668586	cinematographer	Q19667120	John Guleserian
 Q4668586	editor	Q368197	Mark Day		
 Q4668586	cast	Q190386	Rachel McAdams		
 Q4668586	cast	Q456047	Domhnall Gleeson		
-Q4668586	cast	Q6707700	リディア・ウィルソン		
+Q4668586	cast	Q6707700	Lydia Wilson		
 Q4668586	cast	Q1924847	Margot Robbie		
 Q4668586	cast	Q380856	Richard E. Grant		
 Q4668586	cast	Q7184510	Philip Voss		
@@ -444,7 +444,7 @@ Q4981181	cast	Q4491	Anna Faris
 Q4981181	cast	Q19560708	Terence Harvey		
 Q4981181	cast	Q3810251	Joseph Millson		
 Q4981181	cast	Q192021	Simon Baker		
-Q4981181	cast	Q23814	スティーヴン・マーチャント		
+Q4981181	cast	Q23814	Stephen Merchant		
 Q4981181	cast	Q204426	Jane Asher		
 Q4981181	cast	Q472504	Jason Flemyng		
 Q4981181	cast	Q1190134	Rafe Spall		
@@ -465,7 +465,7 @@ Q1768437	executive_producer	Q5622221	Guy East
 Q1768437	executive_producer	Q7812411	Todd Hallowell		
 Q1768437	executive_producer	Q14946922	Nigel Sinclair		
 Q1768437	executive_producer	Q18205036	Tobin Armbrust		
-Q1768437	cast	Q54314	クリス・ヘムズワース		
+Q1768437	cast	Q54314	Chris Hemsworth		
 Q1768437	cast	Q667712	Patrick Baladi		
 Q1768437	cast	Q236839	Natalie Dormer		
 Q1768437	cast	Q15794185	Christian Feist		
@@ -480,7 +480,7 @@ Q1768437	cast	Q957363	Vincent Riotta
 Q1768437	cast	Q920094	Julian Rhind-Tutt		
 Q1768437	cast	Q23015677	Rosalie Wolff		
 Q1768437	cast	Q3806811	Jamie Sives		
-Q1768437	cast	Q140393	ジェームス・ハント		
+Q1768437	cast	Q140393	James Hunt		
 Q1768437	cast	Q3570718	Xavier Laurent		
 Q1768437	cast	Q15990205	James Norton		
 Q1768437	cast	Q65106	Alexandra Maria Lara		
@@ -591,7 +591,7 @@ Q15631013	composer	Q360399	Dario Marianelli
 Q15631013	producer	Q6660371	Liza Chasin		
 Q15631013	cinematographer	Q782204	Salvatore Totino		
 Q15631013	editor	Q975418	Mick Audsley		
-Q15631013	cast	Q82085	サム・ワーシントン		
+Q15631013	cast	Q82085	Sam Worthington		
 Q15631013	cast	Q272972	Robin Wright		
 Q15631013	cast	Q540659	Mark Derwin		
 Q15631013	cast	Q7803404	Tim Dantay		
@@ -664,11 +664,11 @@ Q19347583	editor	Q19650466	Melanie Oliver
 Q19347583	costume_designer	Q5865531	Francisco Delgado López		
 Q19347583	cast	Q28288	Eddie Redmayne	Lili Elbe	
 Q19347583	cast	Q20054091	Rebecca Root		
-Q19347583	cast	Q1098466	Клаус Буе		
+Q19347583	cast	Q1098466	Claus Bue		
 Q19347583	cast	Q5882320	Holly Weston		
 Q19347583	cast	Q63187	Sebastian Koch		
 Q19347583	cast	Q342617	Ben Whishaw		
-Q19347583	cast	Q67194946	妮基·托普高		
+Q19347583	cast	Q67194946	Niki Topgaard		
 Q19347583	cast	Q5388091	Erich Redman		
 Q19347583	cast	Q427019	Matthias Schoenaerts		
 Q19347583	cast	Q439314	Alicia Vikander		
@@ -719,7 +719,7 @@ Q19897575	producer	Q4756660	Andrew Conrad
 Q19897575	producer	Q5026353	Cameron Roach		
 Q19897575	producer	Q7649043	Susie Liggat		
 Q19897575	cast	Q6451452	Kyle Soller		
-Q19897575	cast	Q3298532	マシュー・ベイントン		
+Q19897575	cast	Q3298532	Mathew Baynton		
 Q19897575	cast	Q296505	Rob Lowe		
 Q19897575	cast	Q238877	Jenna Fischer		
 Q19897575	cast	Q64147228	Nigel Barber		
@@ -877,7 +877,7 @@ Q22350825	cast	Q5701514	Peter Dalle
 Q22350825	cast	Q150482	J. K. Simmons		
 Q22350825	cast	Q717194	James D'Arcy		
 Q22350825	cast	Q2640625	Alec Newman		
-Q22350825	cast	Q11977902	ヤーコプ・オフテブロ		
+Q22350825	cast	Q11977902	Jakob Oftebro		
 Q22350825	cast	Q276005	Charlotte Gainsbourg		
 Q22350825	cast	Q342419	Toby Jones		
 Q22350825	cast	Q16889563	Silvia Busuioc		
@@ -885,7 +885,7 @@ Q22350825	cast	Q2290416	Anne Reid
 Q22350825	cast	Q4947838	Rebecca Ferguson		
 Q22350825	cast	Q438161	Genevieve O'Reilly		
 Q22350825	cast	Q1339383	Jonas Karlsson		
-Q22350825	cast	Q768899	ダーヴィッド・デンシック		
+Q22350825	cast	Q768899	David Dencik		
 Q22350825	cast	Q272545	Sofia Helin		
 Q22350825	cast	Q191084	Val Kilmer		
 Q22350825	cast	Q235870	Chloë Sevigny		
@@ -901,7 +901,7 @@ Q27701609	cast	Q28054	Judi Dench	Victoria
 Q27701609	cast	Q111397977	Penny Ryder	Princess Sophie of the Netherlands	
 Q27701609	cast	Q203545	Michael Gambon	Robert Gascoyne-Cecil, 3rd Marquess of Salisbury	
 Q27701609	cast	Q731187	Simon Callow	Giacomo Puccini	
-Q27701609	cast	Q254022	エディ・イザード	Edward VII	
+Q27701609	cast	Q254022	Suzy Eddie Izzard	Edward VII	
 Q27701609	cast	Q231163	Olivia Williams	Jane Spencer, Baroness Churchill	
 Q27701609	cast	Q4724794	Ali Fazal	Abdul Karim	
 Q27701609	cast	Q6273338	Jonathan Harden	Wilhelm II	
@@ -1038,7 +1038,7 @@ Q58701890	cast	Q310932	Ray Winstone
 Q58701890	cast	Q16968300	Steven McRae	Skimbleshanks	
 Q58701890	cast	Q342604	Idris Elba	Macavity	
 Q58701890	cast	Q767499	James Corden	Bustopher Jones	
-Q58701890	cast	Q26876	テイラー・スウィフト	Bombalurina	
+Q58701890	cast	Q26876	Taylor Swift	Bombalurina	
 Q58701890	cast	Q243639	Jason Derulo	Rum Tum Tugger	
 Q58701890	cast	Q26704283	Francesca Hayward	Victoria the White Cat	
 Q58701890	cast	Q28054	Judi Dench	Old Deuteronomy	
@@ -1089,7 +1089,7 @@ Q55076454	cast	Q56222455	Ellise Chappell	Lucy
 Q55076454	cast	Q16208371	Joel Fry	Rocky	
 Q55076454	cast	Q500628	Lamorne Morris		
 Q55076454	cast	Q13217306	Lily James	Ellie	
-Q55076454	cast	Q3472307	サンジーヴ・バスカー	Jed Malik	
+Q55076454	cast	Q3472307	Sanjeev Bhaskar	Jed Malik	
 Q55076454	cast	Q6372303	Karl Theobald	Terry	
 Q55076454	cast	Q637571	Alex Arnold	Gavin	
 Q55076454	cast	Q21872410	Jennifer Armour		
@@ -1101,7 +1101,7 @@ Q55076454	cast	Q261981	Meera Syal	Sheila Malik
 Q55076454	cast	Q4431170	Maryana Spivak	Alexa	
 Q55076454	cast	Q15072706	Javone Prince	Hans	
 Q55076454	cast	Q5362415	Elizabeth Berrington	Hazel	
-Q55076454	cast	Q47447	エド・シーラン		
+Q55076454	cast	Q47447	Ed Sheeran		
 Q55076454	cast	Q6181643	Justin Edwards	Leo	
 Q55076454	cast	Q5620626	Gus Brown	Marcus	
 Q55076454	cast	Q698173	Ana de Armas	Roxanne	

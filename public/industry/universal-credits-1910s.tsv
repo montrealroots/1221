@@ -69,7 +69,7 @@ Q4656838	director	Q3082729	Frank Montgomery
 Q4656838	cast	Q5673686	Harry von Meter		
 Q4656838	cast	Q3320043	Mona Darkfeather		
 Q16038833	director	Q2462046	Phillips Smalley		
-Q16038833	cast	Q15069961	Q15069961		
+Q16038833	cast	Q15069961	Chester Barnett		
 Q16038833	cast	Q271575	Pearl White		
 Q124607347	cast	Q124706076	Sadie Weston	The Artist's Model	
 Q124607347	cast	Q5568098	Glen White	The Artist	
@@ -80,7 +80,7 @@ Q3612843	cast	Q3047245	Eddie Boland
 Q4749893	director	Q719038	Al Christie		
 Q4749893	producer	Q965186	David Horsley		
 Q4749893	cast	Q312656	Lon Chaney		
-Q4749893	cast	Q3047291	エディー・リオンズ		
+Q4749893	cast	Q3047291	Eddie Lyons		
 Q4749893	cast	Q3829379	Lee Moran		
 Q55603874	director	Q2462046	Phillips Smalley		
 Q2878400	director	Q959677	Allan Dwan		
@@ -270,7 +270,7 @@ Q2608675	producer	Q51476	Tod Browning
 Q2608675	cast	Q2826928	Agnes Vernon		
 Q2608675	cast	Q3561346	Richard Rosson		
 Q2608675	cast	Q312656	Lon Chaney		
-Q2608675	cast	Q3047291	エディー・リオンズ		
+Q2608675	cast	Q3047291	Eddie Lyons		
 Q2608675	cast	Q3328076	Murdock MacQuarrie		
 Q3658028	director	Q2837883	Allen Curtis		
 Q3658028	cast	Q450986	Louise Fazenda		
@@ -693,7 +693,7 @@ Q24732	writer	Q2757658	Grace Cunard
 Q24732	cast	Q1357250	Jack Holt		
 Q24732	cast	Q51114	John Ford		
 Q24732	cast	Q2757658	Grace Cunard		
-Q24732	cast	Q16222603	Q16222603		
+Q24732	cast	Q16222603	Neil Hardin		
 Q24732	cast	Q1282938	Eddie Polo		
 Q24732	cast	Q1361838	Francis Ford		
 Q15121732	director	Q2928642	Burton L. King		
@@ -917,7 +917,7 @@ Q5990637	cast	Q2012872	Dorothy Phillips
 Q20804191	director	Q1751525	Lynn Reynolds		
 Q15865631	director	Q3002018	Craig Hutchinson		
 Q3815519	director	Q11349362	Raymond Wells		
-Q3815519	writer	Q5495982	Q5495982		
+Q3815519	writer	Q5495982	Fred Myton		
 Q3815519	cinematographer	Q425713	Gilbert Warrenton		
 Q3815519	cast	Q1308273	Noble Johnson		
 Q3815519	cast	Q359251	Jean Hersholt		
@@ -1228,11 +1228,11 @@ Q978892	cast	Q3026598	Dick La Reno
 Q978892	cast	Q312656	Lon Chaney		
 Q978892	cast	Q3110012	Golda Madden		
 Q21496671	director	Q13435658	Louis William Chaudet		
-Q21496671	writer	Q5495982	Q5495982		
+Q21496671	writer	Q5495982	Fred Myton		
 Q20804176	director	Q1751525	Lynn Reynolds		
 Q5639469	cast	Q1344801	Harry Carey		
 Q3783925	director	Q3612469	Allen Holubar		
-Q3783925	writer	Q5495982	Q5495982		
+Q3783925	writer	Q5495982	Fred Myton		
 Q3783925	cast	Q3749339	Francelia Billington		
 Q3783925	cast	Q2002336	Virginia Lee Corbin		
 Q3783925	cast	Q3612469	Allen Holubar		
@@ -1276,7 +1276,7 @@ Q3005509	cast	Q3568977	William Stowell
 Q3005509	cast	Q5416429	Evelyn Selbie		
 Q13472821	director	Q13435658	Louis William Chaudet		
 Q17479144	director	Q269731	Robert Z. Leonard		
-Q17479144	writer	Q5495982	Q5495982		
+Q17479144	writer	Q5495982	Fred Myton		
 Q17479144	cast	Q271523	Mae Murray		
 Q528198	director	Q51114	John Ford		
 Q528198	writer	Q509576	George Hively		
@@ -1288,16 +1288,16 @@ Q528198	cast	Q972775	Hoot Gibson
 Q13501340	director	Q3942001	Roy Clements		
 Q7713207	director	Q3086867	Fred Kelsey		
 Q7713207	cast	Q1344801	Harry Carey		
-Q13427427	director	Q15864623	Q15864623		
+Q13427427	director	Q15864623	Burton George		
 Q3986088	director	Q3048814	Edwin Stevens		
-Q3986088	cast	Q3712206	Q3712206		
+Q3986088	cast	Q3712206	Dixie Compton		
 Q66115634	director	Q2059335	Henry MacRae		
 Q66115634	cast	Q459580	Claire McDowell		
 Q66115634	cast	Q5342307	Edward Clark		
 Q66115634	cast	Q3082712	Frank Mayo		
 Q66115634	cast	Q731452	Charles Hill Mailes		
 Q63413159	director	Q141673	Jack Conway		
-Q63413159	writer	Q5495982	Q5495982		
+Q63413159	writer	Q5495982	Fred Myton		
 Q63413159	writer	Q6105849	J. Grubb Alexander		
 Q63413159	cast	Q6774486	Martha Mattox		
 Q63413159	cast	Q3832582	Lincoln Stedman		
@@ -1366,7 +1366,7 @@ Q7752856	director	Q3086867	Fred Kelsey
 Q7752856	cast	Q1344801	Harry Carey		
 Q7752872	director	Q2059335	Henry MacRae		
 Q7752872	cast	Q2895417	Ben F. Wilson		
-Q7752872	cast	Q3305788	ネヴァ・ガーバー		
+Q7752872	cast	Q3305788	Neva Gerber		
 Q3988602	director	Q3086867	Fred Kelsey		
 Q3988602	writer	Q3086867	Fred Kelsey		
 Q3988602	cast	Q1344801	Harry Carey		
@@ -1446,7 +1446,7 @@ Q3283278	director	Q2076897	Stuart Paton
 Q3283278	writer	Q6105849	J. Grubb Alexander		
 Q3283278	producer	Q2895417	Ben F. Wilson		
 Q3283278	cast	Q2895417	Ben F. Wilson		
-Q3283278	cast	Q3305788	ネヴァ・ガーバー		
+Q3283278	cast	Q3305788	Neva Gerber		
 Q3283278	cast	Q533315	Francis McDonald		
 Q3283278	cast	Q3341349	Nigel De Brulier		
 Q3283278	cast	Q972775	Hoot Gibson		
@@ -1456,31 +1456,31 @@ Q3523283	cast	Q3612469	Allen Holubar
 Q3523283	cast	Q4024631	Zoe Rae		
 Q3523283	cast	Q3154317	Irene Hunt		
 Q13501761	director	Q13435658	Louis William Chaudet		
-Q13501761	cast	Q3047291	エディー・リオンズ		
+Q13501761	cast	Q3047291	Eddie Lyons		
 Q13501761	cast	Q3047645	Edith Roberts		
 Q13501761	cast	Q3829379	Lee Moran		
 Q18224737	director	Q3612469	Allen Holubar		
 Q3999140	director	Q1373209	Joe De Grasse		
-Q3999140	writer	Q5495982	Q5495982		
+Q3999140	writer	Q5495982	Fred Myton		
 Q3999140	cast	Q3341349	Nigel De Brulier		
 Q3999140	cast	Q2012872	Dorothy Phillips		
 Q3999140	cast	Q312656	Lon Chaney		
 Q13469938	director	Q3942001	Roy Clements		
 Q13469971	director	Q13435658	Louis William Chaudet		
 Q13469971	cast	Q3047645	Edith Roberts		
-Q13469971	cast	Q3047291	エディー・リオンズ		
+Q13469971	cast	Q3047291	Eddie Lyons		
 Q18074429	director	Q3612469	Allen Holubar		
 Q13502585	director	Q3942001	Roy Clements		
 Q4655652	director	Q1373209	Joe De Grasse		
 Q4655652	writer	Q3388109	Harvey Gates		
 Q4655652	cast	Q952875	Carmel Myers		
 Q4655652	cast	Q312656	Lon Chaney		
-Q21425813	director	Q3047291	エディー・リオンズ		
+Q21425813	director	Q3047291	Eddie Lyons		
 Q62595431	director	Q5301514	Douglas Gerrard		
-Q21425874	director	Q3047291	エディー・リオンズ		
+Q21425874	director	Q3047291	Eddie Lyons		
 Q21425874	writer	Q15864632	Leslie T. Peacocke		
-Q21425878	director	Q3047291	エディー・リオンズ		
-Q21425878	writer	Q3047291	エディー・リオンズ		
+Q21425878	director	Q3047291	Eddie Lyons		
+Q21425878	writer	Q3047291	Eddie Lyons		
 Q3602745	director	Q1751735	Paul Powell		
 Q3602745	writer	Q1751735	Paul Powell		
 Q3602745	cast	Q3127608	Harold Goodwin		
@@ -1497,30 +1497,30 @@ Q3220693	cast	Q3556367	Vester Pegg
 Q3220693	cast	Q1344801	Harry Carey		
 Q3220693	cast	Q350905	Sam De Grasse		
 Q3220693	cast	Q453770	Ed "Too Tall" Jones		
-Q21580794	director	Q3047291	エディー・リオンズ		
+Q21580794	director	Q3047291	Eddie Lyons		
 Q3612132	director	Q1751735	Paul Powell		
-Q3612132	writer	Q5495982	Q5495982		
+Q3612132	writer	Q5495982	Fred Myton		
 Q3612132	cast	Q8008167	William Dyer		
 Q3612132	cast	Q952875	Carmel Myers		
 Q3612132	cast	Q1064136	Charles Dorian		
 Q3612132	cast	Q3269223	Lydia Yeamans Titus		
 Q3612132	cast	Q188692	Rudolph Valentino		
-Q21425784	director	Q3047291	エディー・リオンズ		
-Q21425786	director	Q3047291	エディー・リオンズ		
-Q21425789	director	Q3047291	エディー・リオンズ		
+Q21425784	director	Q3047291	Eddie Lyons		
+Q21425786	director	Q3047291	Eddie Lyons		
+Q21425789	director	Q3047291	Eddie Lyons		
 Q21425789	writer	Q15864632	Leslie T. Peacocke		
 Q3645186	director	Q971059	Ida May Park		
 Q3645186	writer	Q971059	Ida May Park		
 Q3645186	cast	Q2012872	Dorothy Phillips		
 Q3645186	cast	Q312656	Lon Chaney		
-Q3645186	cast	Q2414258	ファニタ・ハンセン		
-Q21425799	director	Q3047291	エディー・リオンズ		
-Q21425802	director	Q3047291	エディー・リオンズ		
+Q3645186	cast	Q2414258	Juanita Hansen		
+Q21425799	director	Q3047291	Eddie Lyons		
+Q21425802	director	Q3047291	Eddie Lyons		
 Q5215977	director	Q269731	Robert Z. Leonard		
 Q5215977	writer	Q269731	Robert Z. Leonard		
 Q5215977	cast	Q271523	Mae Murray		
-Q21425810	director	Q3047291	エディー・リオンズ		
-Q21425811	director	Q3047291	エディー・リオンズ		
+Q21425810	director	Q3047291	Eddie Lyons		
+Q21425811	director	Q3047291	Eddie Lyons		
 Q16250229	director	Q269731	Robert Z. Leonard		
 Q16250229	writer	Q269731	Robert Z. Leonard		
 Q16250229	cast	Q3567656	Wheeler Vivian Oakman		
@@ -1529,7 +1529,7 @@ Q16250229	cast	Q3679136	Clarissa Selwynne
 Q3739978	director	Q1751525	Lynn Reynolds		
 Q3739978	cast	Q312656	Lon Chaney		
 Q3739978	cast	Q1273140	Franklyn Farnum		
-Q3739978	cast	Q2414258	ファニタ・ハンセン		
+Q3739978	cast	Q2414258	Juanita Hansen		
 Q5466757	director	Q462440	Lois Weber		
 Q5466757	director	Q2462046	Phillips Smalley		
 Q5466757	writer	Q462440	Lois Weber		
@@ -1539,10 +1539,10 @@ Q5466757	cinematographer	Q6456262	Lawrence Dallin Clawson
 Q5466757	cast	Q5495280	Fred Goodwins		
 Q5466757	cast	Q1753383	Lew Cody		
 Q5466757	cast	Q241019	Mildred Harris		
-Q21425819	director	Q3047291	エディー・リオンズ		
-Q21425822	director	Q3047291	エディー・リオンズ		
-Q21425826	director	Q3047291	エディー・リオンズ		
-Q21425833	director	Q3047291	エディー・リオンズ		
+Q21425819	director	Q3047291	Eddie Lyons		
+Q21425822	director	Q3047291	Eddie Lyons		
+Q21425826	director	Q3047291	Eddie Lyons		
+Q21425833	director	Q3047291	Eddie Lyons		
 Q17478962	director	Q269731	Robert Z. Leonard		
 Q17478962	cinematographer	Q5495749	Fred LeRoy Granville		
 Q17478962	cast	Q271523	Mae Murray		
@@ -1557,12 +1557,12 @@ Q25999905	director	Q3440496	Rollin S. Sturgeon
 Q25999905	writer	Q3568583	William E. Wing		
 Q25999905	cast	Q3321307	Monroe Salisbury		
 Q21752636	director	Q1369749	Rupert Julian		
-Q21425851	director	Q3047291	エディー・リオンズ		
+Q21425851	director	Q3047291	Eddie Lyons		
 Q18340929	director	Q458801	Bess Meredyth		
 Q18340929	director	Q2477748	Wilfred Lucas		
-Q21425863	director	Q3047291	エディー・リオンズ		
-Q21425864	director	Q3047291	エディー・リオンズ		
-Q21425866	director	Q3047291	エディー・リオンズ		
+Q21425863	director	Q3047291	Eddie Lyons		
+Q21425864	director	Q3047291	Eddie Lyons		
+Q21425866	director	Q3047291	Eddie Lyons		
 Q21425866	writer	Q5668611	Harry Edwards		
 Q3880052	director	Q15864632	Leslie T. Peacocke		
 Q3880052	producer	Q61074	Carl Laemmle		
@@ -1576,21 +1576,21 @@ Q96129295	cast	Q14866050	Hector Dion
 Q96129295	cast	Q2892998	Beatrice Van		
 Q7203073	director	Q3371485	Paul Hurst		
 Q7203073	cast	Q972775	Hoot Gibson		
-Q21425875	director	Q3047291	エディー・リオンズ		
+Q21425875	director	Q3047291	Eddie Lyons		
 Q3958248	director	Q51476	Tod Browning		
 Q3958248	writer	Q51476	Tod Browning		
 Q3958248	cast	Q3047645	Edith Roberts		
 Q3958248	cast	Q3127608	Harold Goodwin		
-Q21425880	director	Q3047291	エディー・リオンズ		
+Q21425880	director	Q3047291	Eddie Lyons		
 Q21425880	writer	Q15864632	Leslie T. Peacocke		
-Q21425885	director	Q3047291	エディー・リオンズ		
-Q21425886	director	Q3047291	エディー・リオンズ		
-Q21425889	director	Q3047291	エディー・リオンズ		
+Q21425885	director	Q3047291	Eddie Lyons		
+Q21425886	director	Q3047291	Eddie Lyons		
+Q21425889	director	Q3047291	Eddie Lyons		
 Q7711167	director	Q11288118	William Wolbert		
 Q7711167	cast	Q312656	Lon Chaney		
 Q7711167	cast	Q3321307	Monroe Salisbury		
 Q7719856	director	Q2895417	Ben F. Wilson		
-Q7719856	cast	Q2414258	ファニタ・ハンセン		
+Q7719856	cast	Q2414258	Juanita Hansen		
 Q7719856	cast	Q2745500	Jack Mulhall	Jack James	
 Q3986099	director	Q51476	Tod Browning		
 Q3986099	writer	Q3568583	William E. Wing		
@@ -1622,14 +1622,14 @@ Q3017245	cast	Q3048088	Edmund Cobb
 Q3017245	cast	Q2082402	Winifred Greenwood		
 Q3017245	cast	Q87625	Hans Unterkircher		
 Q3017245	cast	Q3047645	Edith Roberts		
-Q21425804	director	Q3047291	エディー・リオンズ		
+Q21425804	director	Q3047291	Eddie Lyons		
 Q21534771	director	Q5367595	Elsie Jane Wilson		
-Q21534771	writer	Q5495982	Q5495982		
+Q21534771	writer	Q5495982	Fred Myton		
 Q21534771	cast	Q952875	Carmel Myers		
 Q21534771	cast	Q3700499	Thomas Holding		
 Q21534771	cast	Q5673686	Harry von Meter		
 Q21534771	cast	Q3381108	Philo McCullough		
-Q21425817	director	Q3047291	エディー・リオンズ		
+Q21425817	director	Q3047291	Eddie Lyons		
 Q3987071	director	Q600035	William V. Mong		
 Q3987071	cast	Q3666402	Charles Gunn		
 Q3987071	cast	Q600035	William V. Mong		
@@ -1647,7 +1647,7 @@ Q3987257	cast	Q3837650	Louise Lovely
 Q16250880	director	Q971059	Ida May Park		
 Q16250880	cast	Q2012872	Dorothy Phillips		
 Q16250880	cast	Q2745500	Jack Mulhall	Jack Ripley	
-Q21425828	director	Q3047291	エディー・リオンズ		
+Q21425828	director	Q3047291	Eddie Lyons		
 Q3987491	director	Q3612469	Allen Holubar		
 Q3987491	writer	Q3612469	Allen Holubar		
 Q3987491	producer	Q61074	Carl Laemmle		
@@ -1658,7 +1658,7 @@ Q3987491	cast	Q78508	Erich von Stroheim
 Q3987491	cast	Q15830815	Walt Whitman		
 Q3987491	cast	Q3568977	William Stowell		
 Q3987491	cast	Q1421691	Lloyd Hughes		
-Q21425838	director	Q3047291	エディー・リオンズ		
+Q21425838	director	Q3047291	Eddie Lyons		
 Q7743936	director	Q1369749	Rupert Julian		
 Q7743936	producer	Q1369749	Rupert Julian		
 Q7743936	cinematographer	Q5341462	Edward A. Kull		
@@ -1667,12 +1667,12 @@ Q7743936	cast	Q312656	Lon Chaney
 Q7743936	cast	Q3341349	Nigel De Brulier		
 Q7743936	cast	Q1333056	Elmo Lincoln		
 Q7743936	subject		submarine warfare		
-Q21425846	director	Q3047291	エディー・リオンズ		
+Q21425846	director	Q3047291	Eddie Lyons		
 Q7747460	director	Q13217455	Jacques Jaccard		
 Q7747460	writer	Q13217455	Jacques Jaccard		
 Q7747460	cast	Q3305121	Marie Walcamp		
 Q21496674	director	Q1752340	John Francis Dillon		
-Q21496674	writer	Q5495982	Q5495982		
+Q21496674	writer	Q5495982	Fred Myton		
 Q10381583	director	Q2053311	J. P. McGowan		
 Q10381583	writer	Q5899363	Hope Loring		
 Q10381583	cast	Q3013783	Eileen Sedgwick		
@@ -1691,7 +1691,7 @@ Q105438611	director	Q971059	Ida May Park
 Q18340931	director	Q3612469	Allen Holubar		
 Q18340931	writer	Q3612469	Allen Holubar		
 Q18340931	cinematographer	Q5495749	Fred LeRoy Granville		
-Q21425872	director	Q3047291	エディー・リオンズ		
+Q21425872	director	Q3047291	Eddie Lyons		
 Q3220911	director	Q51114	John Ford		
 Q3220911	writer	Q509576	George Hively		
 Q3220911	writer	Q2059335	Henry MacRae		
@@ -1701,7 +1701,7 @@ Q3220911	cast	Q3568966	William Steele
 Q3220911	cast	Q3556367	Vester Pegg		
 Q3220911	cast	Q1344801	Harry Carey		
 Q3220911	cast	Q3319627	Molly Malone		
-Q21425877	director	Q3047291	エディー・リオンズ		
+Q21425877	director	Q3047291	Eddie Lyons		
 Q136472871	director	Q971059	Ida May Park		
 Q136472871	cast	Q2012872	Dorothy Phillips		
 Q136472871	cast	Q3568977	William Stowell		
@@ -1712,7 +1712,7 @@ Q3213047	cast	Q3556367	Vester Pegg
 Q3213047	cast	Q1344801	Harry Carey		
 Q3213047	cast	Q3319627	Molly Malone		
 Q3213047	cast	Q2900271	Betty Schade		
-Q21425892	director	Q3047291	エディー・リオンズ		
+Q21425892	director	Q3047291	Eddie Lyons		
 Q3989580	director	Q3612469	Allen Holubar		
 Q3989580	writer	Q3612469	Allen Holubar		
 Q3989580	cinematographer	Q5495749	Fred LeRoy Granville		
@@ -1723,7 +1723,7 @@ Q3989580	cast	Q2012872	Dorothy Phillips
 Q3989580	cast	Q136646	ZaSu Pitts		
 Q3989580	cast	Q357552	George Fawcett		
 Q3989580	cast	Q312656	Lon Chaney		
-Q21425898	director	Q3047291	エディー・リオンズ		
+Q21425898	director	Q3047291	Eddie Lyons		
 Q21425898	writer	Q15864632	Leslie T. Peacocke		
 Q13502157	director	Q971059	Ida May Park		
 Q13502157	writer	Q971059	Ida May Park		
@@ -1731,10 +1731,10 @@ Q13502157	cast	Q434466	Anna Q. Nilsson
 Q13502157	cast	Q737669	Marin Sais		
 Q21534792	director	Q2076897	Stuart Paton		
 Q15122103	director	Q3942001	Roy Clements		
-Q15122103	writer	Q3047291	エディー・リオンズ		
+Q15122103	writer	Q3047291	Eddie Lyons		
 Q15122103	writer	Q3829379	Lee Moran		
 Q3222989	director	Q51114	John Ford		
-Q3222989	cast	Q3305788	ネヴァ・ガーバー		
+Q3222989	cast	Q3305788	Neva Gerber		
 Q3222989	cast	Q731452	Charles Hill Mailes		
 Q3222989	cast	Q3446564	Ruby Lafayette		
 Q3222989	cast	Q1344801	Harry Carey		
@@ -1746,16 +1746,16 @@ Q4019478	director	Q723983	Harry A. Pollard
 Q4019478	cast	Q278657	A. Edward Sutherland		
 Q4019478	cast	Q3051339	Ella Hall		
 Q4019478	cast	Q2080415	Priscilla Dean		
-Q21425904	director	Q3047291	エディー・リオンズ		
-Q21425906	director	Q3047291	エディー・リオンズ		
-Q21425806	director	Q3047291	エディー・リオンズ		
+Q21425904	director	Q3047291	Eddie Lyons		
+Q21425906	director	Q3047291	Eddie Lyons		
+Q21425806	director	Q3047291	Eddie Lyons		
 Q3576778	director	Q51114	John Ford		
 Q3576778	producer	Q2483415	Pat Powers		
 Q3576778	cast	Q1344801	Harry Carey		
 Q3576778	cast	Q3294078	Mark Fenton		
 Q3576778	cast	Q3038280	J. Farrell MacDonald		
 Q3576778	cast	Q1388924	Chief John Big Tree		
-Q3576778	cast	Q3305788	ネヴァ・ガーバー		
+Q3576778	cast	Q3305788	Neva Gerber		
 Q2819765	director	Q51114	John Ford		
 Q2819765	writer	Q51114	John Ford		
 Q2819765	writer	Q1344801	Harry Carey		
@@ -1770,7 +1770,7 @@ Q2819765	cast	Q5102829	George Kuwa
 Q2819765	cast	Q1344801	Harry Carey		
 Q18565817	director	Q1751525	Lynn Reynolds		
 Q18565817	cinematographer	Q374091	Phil Rosen		
-Q21425860	director	Q3047291	エディー・リオンズ		
+Q21425860	director	Q3047291	Eddie Lyons		
 Q21496684	director	Q1752340	John Francis Dillon		
 Q4672980	director	Q5540696	George Holt		
 Q4672980	cast	Q972775	Hoot Gibson		
@@ -1781,9 +1781,9 @@ Q642740	cast	Q4024631	Zoe Rae
 Q642740	cast	Q3374241	Peggy Pearce		
 Q642740	cast	Q224540	Duke R. Lee		
 Q642740	cast	Q1344801	Harry Carey		
-Q21425778	director	Q3047291	エディー・リオンズ		
-Q21425778	writer	Q3047291	エディー・リオンズ		
-Q21425780	director	Q3047291	エディー・リオンズ		
+Q21425778	director	Q3047291	Eddie Lyons		
+Q21425778	writer	Q3047291	Eddie Lyons		
+Q21425780	director	Q3047291	Eddie Lyons		
 Q278328	director	Q78508	Erich von Stroheim		
 Q278328	writer	Q78508	Erich von Stroheim		
 Q278328	producer	Q61074	Carl Laemmle		
@@ -1808,7 +1808,7 @@ Q2910292	cast	Q3086965	Frederick A. Turner
 Q2910292	cast	Q3679136	Clarissa Selwynne		
 Q2910292	cast	Q4798566	Arthur Edmund Carewe		
 Q2910292	cast	Q3734276	Eugenie Forde		
-Q21425808	director	Q3047291	エディー・リオンズ		
+Q21425808	director	Q3047291	Eddie Lyons		
 Q5366862	director	Q2053311	J. P. McGowan		
 Q5366862	director	Q2059335	Henry MacRae		
 Q5366862	cast	Q1333056	Elmo Lincoln		
@@ -1820,8 +1820,8 @@ Q3747920	producer	Q61074	Carl Laemmle
 Q3747920	cinematographer	Q6456262	Lawrence Dallin Clawson		
 Q3747920	cast	Q2080415	Priscilla Dean		
 Q3747920	cast	Q241019	Mildred Harris		
-Q21425820	director	Q3047291	エディー・リオンズ		
-Q21425824	director	Q3047291	エディー・リオンズ		
+Q21425820	director	Q3047291	Eddie Lyons		
+Q21425824	director	Q3047291	Eddie Lyons		
 Q3120805	director	Q51114	John Ford		
 Q3120805	writer	Q3124696	H. Tipton Steck		
 Q3120805	cast	Q7172168	Pete Morrison		
@@ -1829,14 +1829,14 @@ Q3120805	cast	Q972775	Hoot Gibson
 Q3120805	cast	Q1586453	Harry Chambers		
 Q3120805	cast	Q453770	Ed "Too Tall" Jones		
 Q3120805	cast	Q3129612	Helen Gibson		
-Q21425830	director	Q3047291	エディー・リオンズ		
-Q21425832	director	Q3047291	エディー・リオンズ		
-Q21425835	director	Q3047291	エディー・リオンズ		
-Q21425837	director	Q3047291	エディー・リオンズ		
-Q21580795	director	Q3047291	エディー・リオンズ		
-Q21425839	director	Q3047291	エディー・リオンズ		
-Q21425843	director	Q3047291	エディー・リオンズ		
-Q21425850	director	Q3047291	エディー・リオンズ		
+Q21425830	director	Q3047291	Eddie Lyons		
+Q21425832	director	Q3047291	Eddie Lyons		
+Q21425835	director	Q3047291	Eddie Lyons		
+Q21425837	director	Q3047291	Eddie Lyons		
+Q21580795	director	Q3047291	Eddie Lyons		
+Q21425839	director	Q3047291	Eddie Lyons		
+Q21425843	director	Q3047291	Eddie Lyons		
+Q21425850	director	Q3047291	Eddie Lyons		
 Q2484360	director	Q51114	John Ford		
 Q2484360	writer	Q3124696	H. Tipton Steck		
 Q2484360	producer	Q2483415	Pat Powers		
@@ -1844,12 +1844,12 @@ Q2484360	cast	Q15454331	Charles Le Moyne
 Q2484360	cast	Q3038280	J. Farrell MacDonald		
 Q2484360	cast	Q1344801	Harry Carey		
 Q2484360	cast	Q2916785	Winifred Westover		
-Q21425853	director	Q3047291	エディー・リオンズ		
-Q21425853	writer	Q3047291	エディー・リオンズ		
-Q21425855	director	Q3047291	エディー・リオンズ		
-Q21425857	director	Q3047291	エディー・リオンズ		
-Q21425870	director	Q3047291	エディー・リオンズ		
-Q21425873	director	Q3047291	エディー・リオンズ		
+Q21425853	director	Q3047291	Eddie Lyons		
+Q21425853	writer	Q3047291	Eddie Lyons		
+Q21425855	director	Q3047291	Eddie Lyons		
+Q21425857	director	Q3047291	Eddie Lyons		
+Q21425870	director	Q3047291	Eddie Lyons		
+Q21425873	director	Q3047291	Eddie Lyons		
 Q7252887	director	Q3098625	William Garwood		
 Q7252887	cast	Q217628	Violet Mersereau		
 Q2905317	director	Q51114	John Ford		
@@ -1869,20 +1869,20 @@ Q3213495	cast	Q3038280	J. Farrell MacDonald
 Q3213495	cast	Q2834940	Alfred Allen		
 Q3472403	director	Q51114	John Ford		
 Q3472403	cast	Q3038280	J. Farrell MacDonald		
-Q3472403	cast	Q3305788	ネヴァ・ガーバー		
+Q3472403	cast	Q3305788	Neva Gerber		
 Q3472403	cast	Q1344801	Harry Carey		
-Q21425879	director	Q3047291	エディー・リオンズ		
-Q21425881	director	Q3047291	エディー・リオンズ		
-Q21425882	director	Q3047291	エディー・リオンズ		
-Q21425894	director	Q3047291	エディー・リオンズ		
-Q21425894	writer	Q3047291	エディー・リオンズ		
+Q21425879	director	Q3047291	Eddie Lyons		
+Q21425881	director	Q3047291	Eddie Lyons		
+Q21425882	director	Q3047291	Eddie Lyons		
+Q21425894	director	Q3047291	Eddie Lyons		
+Q21425894	writer	Q3047291	Eddie Lyons		
 Q7717701	director	Q269731	Robert Z. Leonard		
 Q7717701	writer	Q458801	Bess Meredyth		
 Q7717701	producer	Q61074	Carl Laemmle		
 Q7717701	cast	Q271523	Mae Murray		
 Q7717701	cast	Q188692	Rudolph Valentino		
-Q21425793	director	Q3047291	エディー・リオンズ		
-Q21425793	writer	Q3047291	エディー・リオンズ		
+Q21425793	director	Q3047291	Eddie Lyons		
+Q21425793	writer	Q3047291	Eddie Lyons		
 Q7728210	director	Q264707	B. Reeves Eason		
 Q7728210	cast	Q3624290	Arthur Mackley		
 Q7728210	cast	Q972775	Hoot Gibson		
@@ -1897,7 +1897,7 @@ Q3822082	cast	Q600035	William V. Mong
 Q3822082	cast	Q188692	Rudolph Valentino		
 Q7730737	director	Q374091	Phil Rosen		
 Q7730737	cast	Q972775	Hoot Gibson		
-Q21425815	director	Q3047291	エディー・リオンズ		
+Q21425815	director	Q3047291	Eddie Lyons		
 Q3986863	director	Q51476	Tod Browning		
 Q3986863	writer	Q3388109	Harvey Gates		
 Q3986863	cast	Q2080415	Priscilla Dean		
@@ -1957,8 +1957,8 @@ Q3011256	producer	Q51114	John Ford
 Q3011256	cast	Q972775	Hoot Gibson		
 Q3011256	cast	Q3129612	Helen Gibson		
 Q3011256	cast	Q7172168	Pete Morrison		
-Q21425883	director	Q3047291	エディー・リオンズ		
-Q21425887	director	Q3047291	エディー・リオンズ		
+Q21425883	director	Q3047291	Eddie Lyons		
+Q21425887	director	Q3047291	Eddie Lyons		
 Q25217892	director	Q3440496	Rollin S. Sturgeon		
 Q25217892	producer	Q61074	Carl Laemmle		
 Q25217892	cinematographer	Q5341462	Edward A. Kull		
@@ -1978,13 +1978,13 @@ Q3821450	cast	Q7981322	Wellington A. Playter
 Q3821450	cast	Q1230515	Spottiswoode Aitken		
 Q3821450	cast	Q312656	Lon Chaney		
 Q3821450	cast	Q2004176	Gertrude Astor	Adele Hoyt	
-Q21425907	director	Q3047291	エディー・リオンズ		
-Q21425895	director	Q3047291	エディー・リオンズ		
-Q21425896	director	Q3047291	エディー・リオンズ		
+Q21425907	director	Q3047291	Eddie Lyons		
+Q21425895	director	Q3047291	Eddie Lyons		
+Q21425896	director	Q3047291	Eddie Lyons		
 Q18281259	director	Q942487	William C. Dowlan		
 Q18281259	writer	Q6389132	Kenelm Foss		
-Q21425897	director	Q3047291	エディー・リオンズ		
-Q21425900	director	Q3047291	エディー・リオンズ		
+Q21425897	director	Q3047291	Eddie Lyons		
+Q21425900	director	Q3047291	Eddie Lyons		
 Q65066652	director	Q269731	Robert Z. Leonard		
 Q65066652	writer	Q60831125	Harvey F. Thew		
 Q65066652	cast	Q3568318	Willard Louis		
@@ -1992,9 +1992,9 @@ Q65066652	cast	Q271523	Mae Murray
 Q65066652	cast	Q3418255	Ralph Graves		
 Q65066652	cast	Q3702708	Dark Cloud		
 Q4019622	director	Q1751735	Paul Powell		
-Q4019622	writer	Q5495982	Q5495982		
+Q4019622	writer	Q5495982	Fred Myton		
 Q4019622	cast	Q952875	Carmel Myers		
 Q4019622	cast	Q3526153	Thurston Hall		
-Q21425902	director	Q3047291	エディー・リオンズ		
-Q21425908	director	Q3047291	エディー・リオンズ		
-Q21425909	director	Q3047291	エディー・リオンズ		
+Q21425902	director	Q3047291	Eddie Lyons		
+Q21425908	director	Q3047291	Eddie Lyons		
+Q21425909	director	Q3047291	Eddie Lyons		

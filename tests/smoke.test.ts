@@ -54,10 +54,17 @@ describe('a new universe boots and runs', () => {
     const sim = quickSave();
     // A settled character with a job and a roof does not have a crisis every
     // week, so this is measured over a stretch of life rather than a fortnight.
-    sim.advanceTo(sim.now + 300 * MS_DAY);
+    // And it is sampled rather than checked once: a decision the player never
+    // answered expires, so an empty Decision Center at one instant is normal
+    // and an empty one all year is not.
+    let sampledOpen = 0;
+    for (let month = 0; month < 12; month++) {
+      sim.advanceTo(sim.now + 30 * MS_DAY);
+      if (openDecisions(sim).length > 0) sampledOpen++;
+    }
     const raised = Object.keys(sim.universe.decisions).length;
     expect(raised, 'the Decision Center never received anything').toBeGreaterThan(0);
-    expect(openDecisions(sim).length, `${raised} decisions were raised but none are open`).toBeGreaterThan(0);
+    expect(sampledOpen, `${raised} decisions were raised in a year but the Decision Center was empty every month`).toBeGreaterThan(2);
   });
 
   it('keeps money as the sum of postings', () => {

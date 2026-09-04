@@ -174,7 +174,7 @@ Q56743395	cast	Q56605222	Fernand Tauffenberger
 Q56743395	cast	Q50771959	Henriette Moret		
 Q56743395	cast	Q23692145	Théodore Thalès	Jourdan	
 Q3226640	director	Q2037315	Albert Capellani		
-Q3226640	director	Q3130974	アンリ・デフォンテーヌ		
+Q3226640	director	Q3130974	Henri Desfontaines		
 Q3226640	cast	Q3436421	Robert Tourneur		
 Q3226640	cast	Q3441276	Romuald Joubé		
 Q3226640	cast	Q15117539	Louis Ravet		
@@ -395,7 +395,7 @@ Q3549646	director	Q152764	Max Linder
 Q3549646	cast	Q152764	Max Linder		
 Q3549646	cast	Q443788	Stacia Napierkowska		
 Q8843915	director	Q2935103	Camille de Morlhon		
-Q3602844	cast	Q3712206	Q3712206		
+Q3602844	cast	Q3712206	Dixie Compton		
 Q3614815	director	Q3830671	Leopold Wharton		
 Q3614815	cast	Q3666334	Charles Arling		
 Q3614815	cast	Q3780150	Gwendolyn Pates		
@@ -416,7 +416,7 @@ Q3792957	producer	Q3611493	Alfredo Robert
 Q3792957	cast	Q3611493	Alfredo Robert		
 Q8845036	director	Q2935103	Camille de Morlhon		
 Q8845036	cast	Q2232503	Scheffer		
-Q28493752	director	Q3130974	アンリ・デフォンテーヌ		
+Q28493752	director	Q3130974	Henri Desfontaines		
 Q28493752	director	Q3371286	Paul Garbagni		
 Q28493752	writer	Q3371286	Paul Garbagni		
 Q28493752	cast	Q3441276	Romuald Joubé		
@@ -447,7 +447,7 @@ Q17636882	cast	Q2828112	Aimée Tessandier
 Q17636882	cast	Q3093961	Gabriel Signoret		
 Q3474855	director	Q2835300	Alfred Machin		
 Q3474855	cast	Q3340884	Nicolas Ambreville		
-Q3474855	cast	Q3314613	Q3314613		
+Q3474855	cast	Q3314613	Mimir		
 Q3474855	cast	Q1406503	Fernand Gravey		
 Q3474855	cast	Q3569167	Willy Maury		
 Q3474855	cast	Q2865072	Arthur Devère		
@@ -458,7 +458,7 @@ Q3986768	director	Q3830671	Leopold Wharton
 Q3986768	cast	Q3666334	Charles Arling		
 Q3986768	cast	Q3780150	Gwendolyn Pates		
 Q27958525	director	Q1508057	George William Pearson		
-Q27958525	writer	Q34743	ラドヤード・キップリング		
+Q27958525	writer	Q34743	Rudyard Kipling		
 Q27958525	cast	Q5576559	Godfrey Tearle		
 Q138684406	director	http://www.wikidata.org/.well-known/genid/95dcbe0bb3ff88a73dbdee8fcc1da108	http://www.wikidata.org/.well-known/genid/95dcbe0bb3ff88a73dbdee8fcc1da108		
 Q15866281	director	Q15043902	Fred E. Wright		
@@ -472,7 +472,7 @@ Q15866130	director	http://www.wikidata.org/.well-known/genid/ea104308dcce3ba1f13
 Q15866130	cast	Q727791	Irving Cummings		
 Q15866130	cast	Q16028569	Harrish Ingraham		
 Q140266761	director	Q2008943	Romeo Bosetti		
-Q140266761	cast	Q137753484	Q137753484	Caroline	
+Q140266761	cast	Q137753484	Ellen Lowe	Caroline	
 Q17511515	director	Q9145474	Aleksander Hertz		
 Q17511515	cinematographer	Q9199158	Czesław Jakubowicz		
 Q17511515	cast	Q11768818	Maria Duleba		
@@ -801,7 +801,7 @@ Q3281389	director	Q441976	George B. Seitz
 Q3281389	writer	Q441976	George B. Seitz		
 Q3281389	producer	Q1402886	Louis J. Gasnier		
 Q3281389	cast	Q23957	Warner Oland		
-Q3281389	cast	Q3852330	Q3852330		
+Q3281389	cast	Q3852330	Mattie Ferguson		
 Q3281389	cast	Q441976	George B. Seitz		
 Q3281389	cast	Q3046418	Earle Foxe		
 Q3281389	cast	Q271575	Pearl White		

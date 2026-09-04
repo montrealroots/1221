@@ -9,12 +9,12 @@ Q17383896	cast	Q4936315	Tsuru Aoki
 Q17383896	cast	Q74267598	Goro Kino		
 Q17383896	cast	Q30608017	Jack Livingston		
 Q17383896	cast	Q4799246	Arthur Jasmine		
-Q21425776	director	Q3047291	エディー・リオンズ		
+Q21425776	director	Q3047291	Eddie Lyons		
 Q21425776	director	Q3829379	Lee Moran		
-Q21425776	writer	Q3047291	エディー・リオンズ		
+Q21425776	writer	Q3047291	Eddie Lyons		
 Q21425776	writer	Q3829379	Lee Moran		
 Q21425776	cast	Q5086073	Charlotte Merriam		
-Q21425776	cast	Q3047291	エディー・リオンズ		
+Q21425776	cast	Q3047291	Eddie Lyons		
 Q21425776	cast	Q3829379	Lee Moran		
 Q58762348	director	Q56289953	Harry L. Franklin		
 Q58762348	cast	Q3047645	Edith Roberts		
@@ -32,19 +32,19 @@ Q3646857	writer	Q1751525	Lynn Reynolds
 Q3646857	cast	Q3038280	J. Farrell MacDonald		
 Q3646857	cast	Q1344801	Harry Carey		
 Q3646857	cast	Q5495220	Fred Gamble		
-Q21425795	director	Q3047291	エディー・リオンズ		
+Q21425795	director	Q3047291	Eddie Lyons		
 Q54888586	director	Q1993804	Christy Cabanne		
 Q54888586	cast	Q3082712	Frank Mayo		
 Q54888586	cast	Q3185910	Josephine Hill		
-Q21534769	director	Q3047291	エディー・リオンズ		
-Q21534782	director	Q3047291	エディー・リオンズ		
-Q21534782	writer	Q3047291	エディー・リオンズ		
-Q21534801	director	Q3047291	エディー・リオンズ		
+Q21534769	director	Q3047291	Eddie Lyons		
+Q21534782	director	Q3047291	Eddie Lyons		
+Q21534782	writer	Q3047291	Eddie Lyons		
+Q21534801	director	Q3047291	Eddie Lyons		
 Q5366861	director	Q2053311	J. P. McGowan		
 Q5366861	cast	Q1608068	Louise Lorraine		
 Q5366861	cast	Q1333056	Elmo Lincoln		
-Q21496666	director	Q3047291	エディー・リオンズ		
-Q21496668	director	Q3047291	エディー・リオンズ		
+Q21496666	director	Q3047291	Eddie Lyons		
+Q21496668	director	Q3047291	Eddie Lyons		
 Q5701614	director	Q264707	B. Reeves Eason		
 Q5701614	cast	Q972775	Hoot Gibson		
 Q57314405	director	Q56289953	Harry L. Franklin		
@@ -90,27 +90,27 @@ Q27132	director	Q2053311	J. P. McGowan
 Q27132	writer	Q573027	Anthony Coldeway		
 Q27132	cast	Q2053311	J. P. McGowan		
 Q27132	cast	Q1282938	Eddie Polo		
-Q21752722	director	Q3047291	エディー・リオンズ		
+Q21752722	director	Q3047291	Eddie Lyons		
 Q20649406	director	Q942487	William C. Dowlan		
 Q20649406	writer	Q60545775	Violet Clark		
 Q20649406	cast	Q4936315	Tsuru Aoki		
 Q20649406	cast	Q20049104	Magda Lane		
 Q20649406	cast	Q2750636	Yutaka Abe		
 Q20649406	cast	Q76320179	Stanhope Wheatcroft		
-Q21425868	director	Q3047291	エディー・リオンズ		
-Q13469639	director	Q3047291	エディー・リオンズ		
+Q21425868	director	Q3047291	Eddie Lyons		
+Q13469639	director	Q3047291	Eddie Lyons		
 Q13469639	director	Q3829379	Lee Moran		
-Q13469639	writer	Q3047291	エディー・リオンズ		
+Q13469639	writer	Q3047291	Eddie Lyons		
 Q13469639	writer	Q3829379	Lee Moran		
-Q21580744	director	Q3047291	エディー・リオンズ		
-Q21425871	director	Q3047291	エディー・リオンズ		
-Q21496677	director	Q3047291	エディー・リオンズ		
+Q21580744	director	Q3047291	Eddie Lyons		
+Q21425871	director	Q3047291	Eddie Lyons		
+Q21496677	director	Q3047291	Eddie Lyons		
 Q16651290	director	Q3612469	Allen Holubar		
 Q16651290	writer	Q3612469	Allen Holubar		
 Q16651290	cinematographer	Q5495749	Fred LeRoy Granville		
 Q16651290	editor	Q1507483	Viola Lawrence		
 Q16651290	cast	Q188692	Rudolph Valentino		
-Q16651290	cast	Q66619241	Q66619241		
+Q16651290	cast	Q66619241	Emily Chichester		
 Q16651290	cast	Q7341515	Robert Anderson		
 Q16651290	cast	Q5486455	Frank Elliott		
 Q16651290	cast	Q4280517	Margaret Mann		
@@ -141,8 +141,8 @@ Q3887679	cast	Q1344801	Harry Carey
 Q3887679	cast	Q15454331	Charles Le Moyne		
 Q3887679	cast	Q3127608	Harold Goodwin		
 Q3887679	cast	Q3088557	Vola Vale		
-Q21580749	director	Q3047291	エディー・リオンズ		
-Q21580749	writer	Q3047291	エディー・リオンズ		
+Q21580749	director	Q3047291	Eddie Lyons		
+Q21580749	writer	Q3047291	Eddie Lyons		
 Q16590705	director	Q264707	B. Reeves Eason		
 Q16590705	writer	Q117162612	Philip D. Hurn		
 Q16590705	producer	Q264707	B. Reeves Eason		
@@ -159,7 +159,7 @@ Q7339837	director	Q374091	Phil Rosen
 Q7339837	cast	Q972775	Hoot Gibson		
 Q43831007	director	Q56289953	Harry L. Franklin		
 Q43831007	writer	Q117089104	Hal Hoadley		
-Q43831007	cinematographer	Q30228566	Q30228566		
+Q43831007	cinematographer	Q30228566	Gus Peterson		
 Q43831007	cast	Q88633501	Alberta Lee		
 Q43831007	cast	Q2477872	Marguerite Snow		
 Q43831007	cast	Q83541448	Helene Sullivan		
@@ -173,10 +173,10 @@ Q43831007	cast	Q5962263	Mary MacLaren
 Q7498147	director	Q118832489	William F. Adler		
 Q7498147	cinematographer	Q5344039	Edward Laemmle		
 Q7498147	cinematographer	Q118832489	William F. Adler		
-Q21425884	director	Q3047291	エディー・リオンズ		
-Q21580764	director	Q3047291	エディー・リオンズ		
-Q21580767	director	Q3047291	エディー・リオンズ		
-Q21580768	director	Q3047291	エディー・リオンズ		
+Q21425884	director	Q3047291	Eddie Lyons		
+Q21580764	director	Q3047291	Eddie Lyons		
+Q21580767	director	Q3047291	Eddie Lyons		
+Q21580768	director	Q3047291	Eddie Lyons		
 Q7639837	director	Q7909123	Val Paul		
 Q7639837	producer	Q1344801	Harry Carey		
 Q7639837	cinematographer	Q110566584	Harry M. Fowler		
@@ -185,8 +185,8 @@ Q7639837	cast	Q1344801	Harry Carey
 Q7639837	cast	Q66842130	Mignonne Golden		
 Q7639837	cast	Q15454331	Charles Le Moyne		
 Q7639837	cast	Q224540	Duke R. Lee		
-Q21425890	director	Q3047291	エディー・リオンズ		
-Q21425891	director	Q3047291	エディー・リオンズ		
+Q21425890	director	Q3047291	Eddie Lyons		
+Q21425891	director	Q3047291	Eddie Lyons		
 Q63348154	director	Q3343763	Norman Dawn		
 Q63348154	writer	Q5297984	Doris Schroeder		
 Q63348154	cinematographer	Q118186014	Thomas Rea		
@@ -221,7 +221,7 @@ Q3234494	editor	Q65051081	Grant Whytock
 Q3234494	cast	Q153501	Mae Busch		
 Q3234494	cast	Q1383202	Leo White		
 Q3234494	cast	Q3300135	Maude George		
-Q3234494	cast	Q67080274	Q67080274		
+Q3234494	cast	Q67080274	Una Trevelyn		
 Q3234494	cast	Q350905	Sam De Grasse		
 Q3234494	cast	Q43154930	Clyde Fillmore		
 Q3234494	cast	Q106418946	Ruth King		
@@ -261,7 +261,7 @@ Q7738310	cast	Q972775	Hoot Gibson
 Q7743017	director	Q374091	Phil Rosen		
 Q7743017	cast	Q3185910	Josephine Hill		
 Q7743017	cast	Q972775	Hoot Gibson		
-Q21580724	director	Q3047291	エディー・リオンズ		
+Q21580724	director	Q3047291	Eddie Lyons		
 Q930622	director	Q24532	Theodore Wharton		
 Q930622	director	Q264707	B. Reeves Eason		
 Q930622	writer	Q24532	Theodore Wharton		
@@ -285,7 +285,7 @@ Q56241167	writer	Q117162612	Philip D. Hurn
 Q56241167	cinematographer	Q7610440	Stephen S. Norton		
 Q56241167	cinematographer	Q118111253	Howard Oswald		
 Q56241167	cast	Q3082712	Frank Mayo		
-Q56241167	cast	Q66779073	Q66779073		
+Q56241167	cast	Q66779073	Bonnie Hill		
 Q56241167	cast	Q17322152	Harold Miller		
 Q56241167	cast	Q3884278	Ora Carew		
 Q56241167	cast	Q1157279	Dagmar Godowsky		
@@ -299,7 +299,7 @@ Q46604728	cast	Q28976298	Jean Calhoun	Mary Drake
 Q46604728	cast	Q7297507	Ray Gallagher		
 Q46604728	cast	Q738864	Charles West	Gregory Baldi	
 Q3522321	director	Q51114	John Ford		
-Q3522321	writer	Q5076779	Q5076779		
+Q3522321	writer	Q5076779	Charles Dazey		
 Q3522321	writer	Q5488485	Frank Mitchell Dazey		
 Q3522321	writer	Q30127827	Charles J. Wilson		
 Q3522321	producer	Q61074	Carl Laemmle		
@@ -307,7 +307,7 @@ Q3522321	cinematographer	Q3182662	John W. Brown
 Q3522321	cast	Q3269223	Lydia Yeamans Titus		
 Q3522321	cast	Q3294078	Mark Fenton		
 Q3522321	cast	Q5498931	Frederick Vroom		
-Q3522321	cast	Q66013142	Q66013142		
+Q3522321	cast	Q66013142	Cora Drew		
 Q3522321	cast	Q455494	James John Corbett		
 Q3522321	cast	Q3760490	George Fisher		
 Q3522321	cast	Q3430673	Richard Cummings		
@@ -363,7 +363,7 @@ Q3023214	cast	Q322179	Wallace Beery
 Q3991696	director	Q4711151	Albert Russell		
 Q3991696	cast	Q2052901	Gertrude Olmstead		
 Q3991696	cast	Q972775	Hoot Gibson		
-Q21580775	director	Q3047291	エディー・リオンズ		
+Q21580775	director	Q3047291	Eddie Lyons		
 Q16618479	director	Q264707	B. Reeves Eason		
 Q16618479	writer	Q264707	B. Reeves Eason		
 Q16618479	cinematographer	Q2571000	Virgil Miller		
@@ -411,9 +411,9 @@ Q64964603	cast	Q29441010	Alfred Hollingsworth
 Q64964603	cast	Q61455060	Arnold Gray		
 Q64964603	cast	Q1073112	Phyllis Allen		
 Q64964603	cast	Q3047645	Edith Roberts		
-Q21580784	director	Q3047291	エディー・リオンズ		
-Q21580784	writer	Q3047291	エディー・リオンズ		
-Q21580788	director	Q3047291	エディー・リオンズ		
+Q21580784	director	Q3047291	Eddie Lyons		
+Q21580784	writer	Q3047291	Eddie Lyons		
+Q21580788	director	Q3047291	Eddie Lyons		
 Q4540473	director	Q13217455	Jacques Jaccard		
 Q4540473	writer	Q5537552	George C. Hull		
 Q4540473	cinematographer	Q110566584	Harry M. Fowler		
@@ -439,7 +439,7 @@ Q28000940	cast	Q3101830	George Periolat
 Q28000940	cast	Q446120	Marie Prevost		
 Q28000940	cast	Q153501	Mae Busch		
 Q28000940	cast	Q276324	Rose Dione		
-Q21496682	director	Q3047291	エディー・リオンズ		
+Q21496682	director	Q3047291	Eddie Lyons		
 Q2747431	director	Q51114	John Ford		
 Q2747431	writer	Q3388109	Harvey Gates		
 Q2747431	cast	Q5125997	Clara Horton		
@@ -453,7 +453,7 @@ Q5261989	cast	Q1975914	Florence Turner
 Q5261989	cast	Q3269223	Lydia Yeamans Titus		
 Q5261989	cast	Q3942978	Ruth Royce		
 Q15407546	director	Q5344039	Edward Laemmle		
-Q21534763	director	Q3047291	エディー・リオンズ		
+Q21534763	director	Q3047291	Eddie Lyons		
 Q5088925	director	Q732366	Hobart Henley		
 Q5088925	writer	Q60773889	Wallace C. Clifton		
 Q5088925	producer	Q61074	Carl Laemmle		
@@ -523,7 +523,7 @@ Q17183133	composer	Q79043	Hugo Riesenfeld
 Q17183133	producer	Q438472	Irving Thalberg		
 Q17183133	cast	Q2080415	Priscilla Dean		
 Q30644718	cast	Q5566471	Gladys Walton		
-Q21580756	director	Q3047291	エディー・リオンズ		
+Q21580756	director	Q3047291	Eddie Lyons		
 Q3505194	director	Q51114	John Ford		
 Q3505194	writer	Q5537552	George C. Hull		
 Q3505194	cinematographer	Q2571000	Virgil Miller		
@@ -614,7 +614,7 @@ Q3602411	cinematographer	Q718606	Victor Milner
 Q3602411	cast	Q4020138	William Robert Daly		
 Q3602411	cast	Q2965958	Christine Mayo		
 Q3602411	cast	Q1230515	Spottiswoode Aitken		
-Q21580726	director	Q3047291	エディー・リオンズ		
+Q21580726	director	Q3047291	Eddie Lyons		
 Q23751378	director	Q141673	Jack Conway		
 Q23751378	writer	Q5126421	Clarence Budington Kelland		
 Q23751378	producer	Q61074	Carl Laemmle		
@@ -626,7 +626,7 @@ Q3645158	cast	Q275728	Lois Wilson
 Q3645158	cast	Q3938458	Robert D. Walker		
 Q65070206	director	Q2975559	Clarence G. Badger		
 Q65070206	writer	Q5297984	Doris Schroeder		
-Q65070206	cast	Q58448352	Q58448352		
+Q65070206	cast	Q58448352	Daisy Jefferson		
 Q65070206	cast	Q3101795	George Nichols		
 Q65070206	cast	Q446120	Marie Prevost		
 Q1116541	director	Q78508	Erich von Stroheim		
@@ -649,7 +649,7 @@ Q1116541	cast	Q78508	Erich von Stroheim
 Q1116541	cast	Q3263737	Louise H. Emmons		
 Q1116541	cast	Q3012301	Dale Fuller		
 Q1116541	cast	Q265819	Mary Philbin		
-Q1116541	cast	Q3435031	ロバート・エディソン		
+Q1116541	cast	Q3435031	Robert Edeson		
 Q1116541	cast	Q1056847	Cesare Gravina		
 Q630229	director	Q275001	Émile Chautard		
 Q630229	writer	Q5297984	Doris Schroeder		
@@ -1502,7 +1502,7 @@ Q17510412	writer	Q2975586	Robert F. Hill
 Q17083346	director	Q5344039	Edward Laemmle		
 Q17083346	writer	Q3565679	Walter Anthony		
 Q17083346	writer	Q6794994	Max Marcin		
-Q17083346	writer	Q15501585	Q15501585		
+Q17083346	writer	Q15501585	James T. O'Donohoe		
 Q17083346	writer	Q18716302	Charles A. Logue		
 Q17083346	producer	Q61074	Carl Laemmle		
 Q17083346	cinematographer	Q15069965	Jackson Rose		
@@ -1522,6 +1522,8 @@ Q6691088	editor	Q529568	Edward L. Cahn
 Q6691088	cast	Q255846	Betty Compson		
 Q6691088	cast	Q265819	Mary Philbin		
 Q6691088	cast	Q1748282	Norman Kerry		
+Q592543	director	Q8704	Walt Disney		
+Q592543	producer	Q952640	Charles Mintz		
 Q56692194	director	Q16028639	Edgar Lewis		
 Q56692194	writer	Q5540079	George H. Plympton		
 Q56692194	cinematographer	Q5344146	Edward Linden		
@@ -1602,7 +1604,7 @@ Q16251930	cast	Q2004176	Gertrude Astor
 Q60738211	director	Q3053159	Emory Johnson		
 Q60738211	producer	Q61074	Carl Laemmle		
 Q60738211	cinematographer	Q2865185	Arthur L. Todd		
-Q60738211	cast	Q53836255	Q53836255		
+Q60738211	cast	Q53836255	Raymond Keane		
 Q60738211	cast	Q2033847	Oskar Marion		
 Q60738211	cast	Q4886338	Wilson Benge		
 Q60738211	cast	Q1375363	Nigel Barrie		
@@ -1610,7 +1612,7 @@ Q60738211	cast	Q104159986	Marcella Daly
 Q60738211	cast	Q1677155	Jack Pennick		
 Q60738211	cast	Q260305	Barbara Kent		
 Q19864360	director	Q3857950	Millard Webb		
-Q19864360	writer	Q15501585	Q15501585		
+Q19864360	writer	Q15501585	James T. O'Donohoe		
 Q19864360	writer	Q99620939	Joseph A. Mitchell		
 Q19864360	producer	Q61074	Carl Laemmle		
 Q19864360	cinematographer	Q425713	Gilbert Warrenton		
@@ -1638,6 +1640,8 @@ Q3989978	director	Q2831529	Albert S. Rogell
 Q3989978	writer	Q509576	George Hively		
 Q3989978	cast	Q354603	Charles Avery		
 Q3989978	cast	Q4020183	William Welsh		
+Q3540244	director	Q8704	Walt Disney		
+Q3540244	producer	Q952640	Charles Mintz		
 Q3549227	director	Q723983	Harry A. Pollard		
 Q3549227	composer	Q368274	Ernö Rapée		
 Q3549227	producer	Q61074	Carl Laemmle		
@@ -1660,10 +1664,6 @@ Q7993966	director	Q3420565	Ray Taylor
 Q7993966	writer	Q2865139	Arthur Henry Gooden		
 Q7993966	cast	Q936637	Wallace MacDonald		
 Q28064518	director	Q2059335	Henry MacRae		
-Q592543	director	Q8704	Walt Disney		
-Q592543	producer	Q952640	Charles Mintz		
-Q3540244	director	Q8704	Walt Disney		
-Q3540244	producer	Q952640	Charles Mintz		
 Q3597402	director	Q17581410	Melville W. Brown		
 Q3597402	writer	Q1421677	Harry O. Hoyt		
 Q3597402	producer	Q61074	Carl Laemmle		
@@ -1691,12 +1691,15 @@ Q4778227	cast	Q240238	Bessie Love
 Q4778227	cast	Q3193977	Kate Price		
 Q4778227	cast	Q3992510	Tom Moore		
 Q4778227	cast	Q3605092	Addie McPhail		
+Q2925360	director	Q8704	Walt Disney		
 Q54622302	director	Q17581410	Melville W. Brown		
 Q4999940	director	Q83555	Herbert Blaché		
 Q4999940	director	Q2059335	Henry MacRae		
 Q4999940	producer	Q972775	Hoot Gibson		
 Q4999940	cast	Q2177322	Virginia Brown Faire		
 Q48673881	director	Q264707	B. Reeves Eason		
+Q3071556	director	Q457864	Friz Freleng		
+Q3071556	subject		firefighting		
 Q48975933	director	Q1064903	Wesley Ruggles		
 Q48975933	director	Q3357660	Otis B. Thayer		
 Q48975933	writer	Q4812030	Robert Ames Bennet		
@@ -1720,6 +1723,9 @@ Q21527745	editor	Q19281850	Charles Craft
 Q21527745	cast	Q3116109	Marian Nixon		
 Q21527745	cast	Q34529	Bela Lugosi		
 Q21527745	cast	Q4503619	Glenn Tryon		
+Q3143330	director	Q8704	Walt Disney		
+Q3143330	writer	Q8704	Walt Disney		
+Q3143330	producer	Q952640	Charles Mintz		
 Q28000905	director	Q65070545	F. Harmon Weight		
 Q28000905	cinematographer	Q425713	Gilbert Warrenton		
 Q28000905	editor	Q529568	Edward L. Cahn		
@@ -1767,6 +1773,7 @@ Q22975842	cast	Q107579	Ferdinand von Alten
 Q22975842	cast	Q74646	Ralph Arthur Roberts		
 Q22975842	cast	Q91333	Jakob Tiedtke		
 Q22975842	cast	Q89869	Fritz Greiner		
+Q3349855	director	Q8704	Walt Disney		
 Q14949906	director	Q53020	Carmine Gallone		
 Q14949906	director	Q82956	Wiktor Biegański		
 Q14949906	cinematographer	Q89584	Mutz Greenbaum		
@@ -1781,12 +1788,16 @@ Q14949906	cast	Q62809	Olga Chekhova
 Q28105845	director	Q3057356	Ernst Laemmle		
 Q28105845	writer	Q3180956	John B. Clymer		
 Q28105845	cast	Q4725811	Alice Day		
+Q3397863	director	Q8704	Walt Disney		
+Q3397863	producer	Q952640	Charles Mintz		
 Q62761070	director	Q3420565	Ray Taylor		
 Q28064519	director	Q17581410	Melville W. Brown		
 Q28064519	producer	Q61074	Carl Laemmle		
 Q48671241	director	Q264707	B. Reeves Eason		
 Q3486629	director	Q8704	Walt Disney		
 Q3486629	producer	Q8704	Walt Disney		
+Q3061047	director	Q8704	Walt Disney		
+Q3061047	producer	Q5546441	George Winkler		
 Q2783858	director	Q3420565	Ray Taylor		
 Q2783858	director	Q6114297	Jack Nelson		
 Q2783858	cast	Q5647258	Natalie Kingston		
@@ -1816,6 +1827,8 @@ Q3829920	cast	Q1748282	Norman Kerry
 Q27950955	director	Q1064903	Wesley Ruggles		
 Q27950955	producer	Q61074	Carl Laemmle		
 Q27950955	cast	Q3116109	Marian Nixon		
+Q3520962	director	Q8704	Walt Disney		
+Q3520962	producer	Q952640	Charles Mintz		
 Q17007960	director	Q78874	Richard Oswald		
 Q17007960	writer	Q1319487	Franz Schulz		
 Q17007960	cinematographer	Q84650	Franz Planer		
@@ -1926,19 +1939,6 @@ Q8031695	director	Q15998270	Bruce M. Mitchell
 Q8031695	producer	Q61074	Carl Laemmle		
 Q8031695	cast	Q4704974	Al Wilson		
 Q8031695	subject		aviation		
-Q3349855	director	Q8704	Walt Disney		
-Q3397863	director	Q8704	Walt Disney		
-Q3397863	producer	Q952640	Charles Mintz		
-Q3061047	director	Q8704	Walt Disney		
-Q3061047	producer	Q5546441	George Winkler		
-Q3143330	director	Q8704	Walt Disney		
-Q3143330	writer	Q8704	Walt Disney		
-Q3143330	producer	Q952640	Charles Mintz		
-Q3520962	director	Q8704	Walt Disney		
-Q3520962	producer	Q952640	Charles Mintz		
-Q2925360	director	Q8704	Walt Disney		
-Q3071556	director	Q457864	Friz Freleng		
-Q3071556	subject		firefighting		
 Q56550925	director	Q3021400	Del Lord		
 Q56550925	producer	Q1039367	Carl Laemmle Jr.		
 Q3645178	director	Q3371203	Paul Fejos		
@@ -1999,6 +1999,8 @@ Q12126136	producer	Q61074	Carl Laemmle
 Q12126136	cinematographer	Q117804452	Joseph Brotherton		
 Q12126136	cast	Q5336226	Eddie Leonard		
 Q12126136	cast	Q3077399	Josephine Dunn		
+Q7081269	director	Q703759	Walter Lantz		
+Q7081269	producer	Q703759	Walter Lantz		
 Q7092752	director	Q3568727	William James Craft		
 Q7092752	writer	Q1803090	Reginald Denny		
 Q7092752	producer	Q61074	Carl Laemmle		

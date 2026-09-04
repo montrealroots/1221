@@ -1,4 +1,7 @@
 qid	role	personQid	name	character	ordinal
+Q108037985	writer	Q59261604	Yassir Lester		
+Q108037985	producer	Q515161	Kevin Feige		
+Q108037985	cast	Q272019	Don Cheadle		
 Q83430460	writer	Q42244196	Eric Pearson		
 Q83430460	producer	Q515161	Kevin Feige		
 Q83430460	cinematographer	Q617690	Matthew Libatique		
@@ -58,27 +61,27 @@ Q2307877	producer	Q7182133	Phil Lord and Christopher Miller
 Q2307877	producer	Q42898094	Matt Tolmach		
 Q2307877	cast	Q138005	Michael Keaton		
 Q2307877	cast	Q310283	Denis Leary		
-Q2307877	cast	Q2023710	トム・ホランド		
+Q2307877	cast	Q2023710	Tom Holland		
 Q2307877	cast	Q165219	Robert Downey Jr.		
 Q2307877	cast	Q275402	Sam Raimi		
 Q2307877	cast	Q150482	J. K. Simmons		
 Q2307877	cast	Q26213909	Jacob Batalon		
 Q2307877	cast	Q191828	Marisa Tomei		
-Q2307877	cast	Q189489	ゼンデイヤ		
+Q2307877	cast	Q189489	Zendaya		
 Q2307877	cast	Q306403	James Franco		
 Q2307877	cast	Q76478	Kirsten Dunst		
 Q2307877	cast	Q234195	Rosemary Harris		
-Q2307877	cast	Q23891	アンドリュー・ガーフィールド		
+Q2307877	cast	Q23891	Andrew Garfield		
 Q2307877	cast	Q187033	Sally Field		
 Q2307877	cast	Q357998	Marc Webb		
 Q2307877	cast	Q184572	Martin Sheen		
-Q2307877	cast	Q147077	エマ・ストーン		
+Q2307877	cast	Q147077	Emma Stone		
 Q2307877	cast	Q188772	Willem Dafoe		
 Q2307877	cast	Q181899	Cliff Robertson		
 Q2307877	cast	Q16237562	Tony Revolori		
 Q2307877	cast	Q215017	Rhys Ifans		
 Q2307877	cast	Q23894602	Laura Harrier		
-Q2307877	cast	Q165524	トビー・マグワイア		
+Q2307877	cast	Q165524	Tobey Maguire		
 Q136496943	director	Q56321961	Alice Birch		
 Q136496943	writer	Q56321961	Alice Birch		
 Q136496943	producer	Q80966	Cate Blanchett		
@@ -87,6 +90,15 @@ Q136496943	producer	Q131920246	Juliette Howell
 Q136496943	cinematographer	Q105565672	Michał Dymek		
 Q136496943	cast	Q80966	Cate Blanchett		
 Q136496943	cast	Q124457667	Spike Fearn		
+Q23652372	director	Q461315	Juan Carlos Fresnadillo		
+Q23652372	writer	Q4980025	Bryan Cogman		
+Q110994071	director	Q2576503	Will Gluck		
+Q110994071	writer	Q2576503	Will Gluck		
+Q110994071	writer	Q16200571	Keith Bunin		
+Q110994071	producer	Q2576503	Will Gluck		
+Q110994071	cast	http://www.wikidata.org/.well-known/genid/35a33ceb1efd08a775f6e2779cee6ce5	http://www.wikidata.org/.well-known/genid/35a33ceb1efd08a775f6e2779cee6ce5	Edgar Balthazar	
+Q110994071	subject		cat		
+Q110994071	subject		kidnapping		
 Q78161170	director	Q295964	Jon Favreau		
 Q78161170	cast	Q19631217	Neel Sethi		
 Q78161170	follows	Q16857406	The Jungle Book		
@@ -106,7 +118,7 @@ Q115407830	director	Q1782299	Joachim Rønning
 Q115407830	writer	Q942914	Terry Rossio		
 Q115407830	writer	Q943506	Ted Elliott		
 Q115407830	writer	Q1138605	Craig Mazin		
-Q115407830	producer	Q217037	ジェリー・ブラッカイマー		
+Q115407830	producer	Q217037	Jerry Bruckheimer		
 Q115407830	follows	Q10350033	Pirates of the Caribbean: Dead Men Tell no Tales		
 Q109951319	director	Q15972939	Destin Daniel Cretton		
 Q109951319	writer	Q15972939	Destin Daniel Cretton		

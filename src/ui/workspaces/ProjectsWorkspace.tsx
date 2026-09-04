@@ -1,13 +1,20 @@
-import { titleCaseLabel } from '@/engine/core/text';
-import { useState } from 'react';
+import { formatLabel, titleCaseLabel } from '@/engine/core/text';
+import { STUDIOS } from '@/engine/content/studios';
+import { CRAFT_LABEL, craftFocus, genre, genreName, genresByCategory, runtimeBandOf, suggestedPairings } from '@/engine/content/genres';
+import { rating, ratingsFor } from '@/engine/content/ratings';
+import { SLOT_EXPLAIN, SLOT_LABEL, buildLogline } from '@/engine/content/logline';
+import { countryOfCity } from '@/engine/content/geography';
+import { useMemo, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
 import { activeProjects, suggestedBudget, projectProfitLoss, phaseIndex } from '@/engine/systems/film';
 import { postBoard, shootingBoard } from '@/engine/systems/production';
 import { releaseSummary } from '@/engine/systems/release';
+import { receptionSummary } from '@/engine/systems/critics';
+import { AGGREGATOR_RULES } from '@/engine/content/critics';
 import { playerCompanies } from '@/engine/systems/company';
-import { GENRES, BUYERS } from '@/engine/content/industry';
-import { PROJECT_PHASE_ORDER } from '@/engine/domain/model';
+import { BUYERS } from '@/engine/content/industry';
+import { PROJECT_PHASE_ORDER, type ProjectFormat } from '@/engine/domain/model';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate, addDays } from '@/engine/core/time';
 
@@ -51,7 +58,7 @@ export function ProjectsWorkspace() {
                 >
                   <div className="grow">
                     <div className="small strong">{project.title}</div>
-                    <div className="xs dim">{titleCaseLabel(project.format.replace(/_/g, ' '))} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}</div>
+                    <div className="xs dim">{formatLabel(project.format)} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}</div>
                   </div>
                 </button>
               ))}
@@ -73,6 +80,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
   const post = useWorld((s) => postBoard(s, projectId));
   const shooting = useWorld((s) => shootingBoard(s, projectId));
   const release = useWorld((s) => releaseSummary(s, projectId));
+  const campaign = useWorld((s) => Object.values(s.universe.marketingCampaigns).find((c) => c.projectId === projectId));
   const pl = useWorld((s) => projectProfitLoss(s, projectId));
   const companies = useWorld(playerCompanies);
   const roles = useWorld((s) => Object.values(s.universe.roles).filter((r) => r.projectId === projectId));
@@ -89,7 +97,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
     <div className="col gap-4">
       <Panel
         title={project.title}
-        subtitle={`${titleCaseLabel(project.format.replace(/_/g, ' '))} · ${project.genres.map(titleCaseLabel).join(', ')} · ${project.logline}`}
+        subtitle={`${formatLabel(project.format)} · ${project.genres.map(titleCaseLabel).join(', ')} · ${project.logline}`}
       >
         <div className="row wrap gap-1" style={{ marginBottom: 'var(--s4)' }}>
           {PROJECT_PHASE_ORDER.map((phase, index) => (
@@ -232,6 +240,14 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   openingDate: addDays(sim.now, 120, sim.homeZone),
                 })}
                 cta="Plan"
+              />
+            )}
+            {campaign && project.studioId && !campaign.studioPush && (!release || release.release.status === 'planned') && (
+              <ActionRow
+                label={`Ask ${STUDIOS.get(project.studioId)?.shortName ?? 'The Studio'} For More Prints And Advertising`}
+                detail="Once. They decide on your standing with them and what they have seen of the picture; a no costs you a little of both."
+                action={() => run('studio.request_pa', { projectId: project.id })}
+                cta="Ask"
               />
             )}
             {project.finalQuality && !project.releaseId && (
@@ -453,26 +469,77 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             </Panel>
           )}
 
-          {release?.reviews && release.reviews.length > 0 && (
-            <Panel title="Reception" subtitle={`Critics ${project.criticScore ?? '—'} · Audience ${project.audienceScore ?? '—'}`} flush>
-              <div className="list">
-                {release.reviews.map((review) => (
-                  <div key={review.id} className="list-item list-static">
-                    <span className="mono" style={{ minWidth: 34 }}>{review.score}</span>
-                    <div className="grow">
-                      <div className="small strong">{review.publicationName}</div>
-                      <div className="xs muted">“{review.quote}”</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          )}
+          {release && <ReceptionPanel projectId={project.id} />}
 
           {!release && <Empty title="Not Released" body="Finish the film, then plan a campaign and set a release." />}
         </>
       )}
     </div>
+  );
+}
+
+/**
+ * Reception, counted the way the aggregators count it. Nothing shows before
+ * it has been counted; a blank is a blank.
+ */
+function ReceptionPanel({ projectId }: { projectId: string }) {
+  const { sim, run } = useGame();
+  const summary = useWorld((s) => receptionSummary(s, projectId));
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [embargoDays, setEmbargoDays] = useState(7);
+  if (!summary || !project) return null;
+  const r = summary.reception;
+  const release = project.releaseId ? sim.universe.releases[project.releaseId] : undefined;
+  const controls = !project.studioId;
+  const planned = release?.status === 'planned';
+  const statusTone = summary.status === 'Certified Fresh' || summary.status === 'Fresh' ? 'chip-positive' : summary.status === 'Rotten' ? 'chip-negative' : '';
+  const minimum = AGGREGATOR_RULES.metacritic.minimumReviews;
+
+  return (
+    <Panel title="Reception" subtitle={r ? summary.line : 'Nothing counted yet. Reviews land when the embargo lifts.'} flush>
+      {r && r.embargoAt !== undefined && (
+        <div className="xs dim" style={{ padding: 'var(--s2) var(--s4) 0' }}>
+          Embargo lifts {formatDate(r.embargoAt, sim.homeZone)}, set by {r.embargoSetBy === 'player' ? 'you' : project.distributorName ?? 'the distributor'}.
+          {r.embargoSetBy === 'distributor' && release && r.embargoAt >= release.openingDate ? ' Lifting on opening day is what a nervous distributor does.' : ''}
+        </div>
+      )}
+      {planned && controls && (
+        <div className="row wrap gap-2" style={{ padding: 'var(--s2) var(--s4)' }}>
+          <label className="xs dim" htmlFor="embargo-days">Lift The Embargo</label>
+          <select id="embargo-days" className="btn btn-sm" value={embargoDays} onChange={(e) => setEmbargoDays(Number(e.target.value))}>
+            {[14, 10, 7, 5, 3, 1, 0].map((d) => <option key={d} value={d}>{d === 0 ? 'Opening Day' : `${d} Days Before`}</option>)}
+          </select>
+          <button className="btn btn-sm" onClick={() => release && run('crit.set_embargo', { projectId, at: addDays(release.openingDate, -embargoDays, sim.homeZone) + 15 * 60 * 60 * 1000 })}>Set</button>
+        </div>
+      )}
+      {r && r.tomatometer !== undefined && (
+        <div className="grid grid-3" style={{ padding: 'var(--s2) var(--s4)' }}>
+          <Stat label="Tomatometer" value={<>{r.tomatometer}% <span className={`chip ${statusTone}`}>{summary.status}</span></>} note={`${r.reviewCount} Reviews${r.topCriticsScore !== undefined ? ` · Top Critics ${r.topCriticsScore}% Of ${r.topCriticCount}` : ''}`} />
+          <Stat label="Metascore" value={r.metascore !== undefined && r.metacriticCount >= minimum ? <>{r.metascore} <span className={`chip ${summary.band?.colour === 'green' ? 'chip-positive' : summary.band?.colour === 'red' ? 'chip-negative' : 'chip-warning'}`}>{summary.band?.label}</span></> : 'Not Yet Counted'} note={r.metacriticCount >= minimum ? `${r.metacriticCount} Critics${r.mustSee ? ' · Must-See' : ''}` : `${r.metacriticCount} Of ${minimum} Critics Needed`} />
+          <Stat label="CinemaScore" value={r.cinemaScore ?? (release && release.theaterCount >= AGGREGATOR_RULES.cinemaScore.minimumTheaters ? 'Opening Night' : 'Not Polled')} note={r.cinemaScore ? 'Opening-Night Audiences' : release && release.theaterCount < AGGREGATOR_RULES.cinemaScore.minimumTheaters ? 'Wide Releases Only' : undefined} />
+          <Stat label="Audience Score" value={r.audienceScore !== undefined ? `${r.audienceScore}%` : 'Not Yet Counted'} note={r.audienceCount > 0 ? `${r.audienceCount.toLocaleString('en-US')} Ratings` : 'Fills After Release'} />
+          <Stat label="IMDb" value={r.imdbRating !== undefined ? `${r.imdbRating.toFixed(1)}/10` : 'Not Yet Counted'} note={r.imdbVotes > 0 ? `${r.imdbVotes.toLocaleString('en-US')} Votes${r.imdbVotes < AGGREGATOR_RULES.imdb.settledVotes ? ' · Early' : ''}` : undefined} />
+          <Stat label="Counted So Far" value={`${r.waves.length} ${r.waves.length === 1 ? 'Wave' : 'Waves'}`} note={r.waves.map((w) => titleCaseLabel(w)).join(', ') || 'None Yet'} />
+        </div>
+      )}
+      {summary.reviews.length > 0 && (
+        <div className="list">
+          {summary.reviews.map((review) => (
+            <div key={review.id} className="list-item list-static">
+              <span className="mono nowrap" style={{ minWidth: 92 }}>{review.scaleText ?? review.score}</span>
+              <div className="grow" style={{ minWidth: 0 }}>
+                <div className="small strong">{review.publicationName}{review.topCritic ? <span className="chip" style={{ marginLeft: 6 }}>Top Critic</span> : null}</div>
+                <div className="xs muted">“{review.quote}”</div>
+              </div>
+              {review.verdict && <span className={`chip ${review.verdict === 'fresh' ? 'chip-positive' : 'chip-negative'}`}>{titleCaseLabel(review.verdict)}</span>}
+            </div>
+          ))}
+        </div>
+      )}
+      <p className="xs dim" style={{ padding: 'var(--s2) var(--s4) var(--s3)' }}>
+        Real outlets, each in its own scale and taste; no verdict is attributed to a named critic. Counted critics beyond the named ones are in the totals.
+      </p>
+    </Panel>
   );
 }
 
@@ -488,61 +555,266 @@ function ActionRow({ label, detail, action, cta }: { label: string; detail: stri
   );
 }
 
+/** The notes that ship as the example, so the builder can be tried without inventing anything. */
+const LOGLINE_EXAMPLE = [
+  'a retired hitman',
+  'his old crew comes back',
+  'wants out',
+  'the cartel will not let him go',
+  'his daughter pays for it',
+].map((line) => `- ${line}`).join('\n');
+
+/**
+ * Bullet points in, a logline out. It reads each fragment, works out which part
+ * of a logline it is, and builds the sentence — then shows its working, so what
+ * it could not find is named rather than filled in with something plausible.
+ */
+function LoglineBuilder({ genres, onUse }: { genres: readonly string[]; onUse: (line: string) => void }) {
+  const [notes, setNotes] = useState('');
+  const built = useMemo(() => (notes.trim() ? buildLogline(notes, genres) : null), [notes, genres]);
+
+  return (
+    <div className="callout callout-accent" style={{ marginTop: 'var(--s3)' }}>
+      <div className="row-between" style={{ marginBottom: 'var(--s2)' }}>
+        <div className="small strong">The Logline Builder</div>
+        <button className="link xs" onClick={() => setNotes(LOGLINE_EXAMPLE)}>Fill It With An Example</button>
+      </div>
+      <div className="xs dim" style={{ marginBottom: 'var(--s2)' }}>
+        One thought per line. Who it is, what happens to them, what they now want, who is in the way,
+        and what it costs if they fail — in any order, in your own words. This is a parser and a grammar
+        rather than a language model: it runs offline, it never invents a fact you did not type, and the
+        same notes always give you the same line.
+      </div>
+      <textarea
+        aria-label="Bullet Points For The Logline"
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+        placeholder={LOGLINE_EXAMPLE}
+        style={{ minHeight: 108 }}
+      />
+      {built && built.logline.length > 0 && (
+        <>
+          <div
+            className="small strong"
+            style={{ marginTop: 'var(--s3)', padding: 'var(--s3)', background: 'var(--surface-2)', borderRadius: 8, lineHeight: 1.5, overflowWrap: 'anywhere' }}
+          >
+            {built.logline}
+          </div>
+          <div className="row-between gap-2" style={{ marginTop: 'var(--s2)', alignItems: 'flex-end' }}>
+            <div className="grow" style={{ minWidth: 0 }}>
+              <Meter
+                label="How Much Of A Logline This Is"
+                value={built.score}
+                hint={`${built.filled.length} of the eight parts are in the sentence.`}
+              />
+            </div>
+            <button className="btn btn-sm btn-primary" onClick={() => onUse(built.logline)}>Use This Line</button>
+          </div>
+        </>
+      )}
+      {built && built.logline.length === 0 && (
+        <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+          There is not enough there yet to build a sentence. Start with who it happens to.
+        </div>
+      )}
+      {built && built.notes.length > 0 && (
+        <div style={{ marginTop: 'var(--s3)' }}>
+          <div className="xs dim" style={{ marginBottom: 4 }}>What It Made Of Each Line</div>
+          <div style={{ maxHeight: 260, overflowY: 'auto' }}>
+            {built.notes.map((note, i) => (
+              <div key={`${note.slot}-${i}`} className="xs" style={{ padding: '3px 0', borderTop: i === 0 ? undefined : '1px solid var(--line)', overflowWrap: 'anywhere' }}>
+                <span className="strong">{SLOT_LABEL[note.slot]}</span>
+                <span className="dim"> · {note.raw}</span>
+                <div className="dim">{note.why}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {built && built.missing.length > 0 && (
+        <div className="xs" style={{ marginTop: 'var(--s3)' }}>
+          <span className="dim">Still missing: </span>
+          {built.missing.map((slot) => (
+            <span key={slot} className="chip chip-warning" title={SLOT_EXPLAIN[slot]} style={{ marginRight: 4 }}>{SLOT_LABEL[slot]}</span>
+          ))}
+        </div>
+      )}
+      {built && built.advice.length > 0 && (
+        <ul className="xs dim" style={{ marginTop: 'var(--s2)', paddingLeft: '1.1em' }}>
+          {built.advice.slice(0, 4).map((line) => <li key={line} style={{ overflowWrap: 'anywhere' }}>{line}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function CreateProjectDialog({ onClose }: { onClose: () => void }) {
-  const { run } = useGame();
+  const { sim, run } = useGame();
   const [title, setTitle] = useState('');
-  const [format, setFormat] = useState<'feature' | 'series' | 'limited_series' | 'short' | 'documentary'>('feature');
+  const [format, setFormat] = useState<ProjectFormat>('feature');
   const [genres, setGenres] = useState<string[]>(['drama']);
   const [logline, setLogline] = useState('');
+  const [query, setQuery] = useState('');
+  const [openGenre, setOpenGenre] = useState<string | null>(null);
+  const [contentRating, setContentRating] = useState('');
+  const [runtime, setRuntime] = useState<number | null>(null);
+  const [builderOpen, setBuilderOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const television = format === 'series' || format === 'limited_series' || format === 'tv_movie';
+  const home = countryOfCity(sim.player.currentLocationId) ?? 'us';
+  const certificates = useMemo(() => ratingsFor(home, television), [home, television]);
+  const groups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return genresByCategory()
+      .map((group: ReturnType<typeof genresByCategory>[number]) => ({
+        ...group,
+        genres: group.genres.filter((g: { formats: readonly string[]; name: string; description: string }) => (g.formats as readonly string[]).includes(format)
+          && (!q || g.name.toLowerCase().includes(q) || g.description.toLowerCase().includes(q))),
+      }))
+      .filter((group: { genres: unknown[] }) => group.genres.length > 0);
+  }, [format, query]);
+  const band = runtimeBandOf(genres);
+  const focus = craftFocus(genres);
+  const suggested = suggestedPairings(genres).slice(0, 6);
+  const chosenRating = contentRating ? rating(contentRating) : undefined;
+
+  const toggle = (id: string) => {
+    setGenres((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id].slice(0, 3)));
+    setError(null);
+  };
 
   const submit = () => {
-    const result = run('film.create_project', { title, format, genres, logline: logline || 'An untitled project.' });
-    if (result.ok) onClose();
+    if (genres.length === 0) { setError('Pick at least one genre.'); return; }
+    const result = run('film.create_project', {
+      title, format, genres, logline: logline || 'An untitled project.',
+      contentRating: contentRating || undefined,
+      runtime: runtime ?? undefined,
+    });
+    if (result.ok) onClose(); else setError(result.error ?? 'It could not be set up.');
   };
 
   return (
     <Modal
       title="Start A Project"
       onClose={onClose}
+      wide
       footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Create</button></>}
     >
-      <div className="field">
-        <label htmlFor="title">Title</label>
-        <input id="title" type="text" value={title} placeholder="Leave blank and one will be suggested" onChange={(e) => setTitle(e.target.value)} />
-      </div>
-      <div className="field">
-        <label htmlFor="format">Format</label>
-        <select id="format" value={format} onChange={(e) => setFormat(e.target.value as typeof format)}>
-          <option value="feature">Feature</option>
-          <option value="short">Short</option>
-          <option value="series">Series</option>
-          <option value="limited_series">Limited series</option>
-          <option value="documentary">Documentary</option>
-        </select>
-      </div>
-      <div className="field">
-        <label>Genres</label>
-        <div className="row wrap gap-1">
-          {GENRES.map((genre) => (
-            <button
-              key={genre}
-              className="chip"
-              aria-pressed={genres.includes(genre)}
-              style={genres.includes(genre) ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}
-              onClick={() => setGenres((g) => g.includes(genre) ? g.filter((x) => x !== genre) : [...g, genre].slice(0, 3))}
-            >
-              {genre}
-            </button>
-          ))}
+      <div className="grid grid-2">
+        <div className="field">
+          <label htmlFor="title">Title</label>
+          <input id="title" type="text" value={title} placeholder="Leave blank and one will be suggested" onChange={(e) => setTitle(e.target.value)} />
+        </div>
+        <div className="field">
+          <label htmlFor="format">Format</label>
+          <select id="format" value={format} onChange={(e) => { setFormat(e.target.value as ProjectFormat); setRuntime(null); }}>
+            <option value="feature">Feature</option>
+            <option value="short">Short</option>
+            <option value="series">Series</option>
+            <option value="limited_series">Limited Series</option>
+            <option value="documentary">Documentary</option>
+            <option value="tv_movie">TV Movie</option>
+          </select>
         </div>
       </div>
+
       <div className="field">
-        <label htmlFor="logline">Logline</label>
+        <div className="row-between">
+          <label htmlFor="genre-search">Genres <span className="dim">({genres.length} of 3)</span></label>
+          <input
+            id="genre-search" type="text" value={query} placeholder="Search all genres"
+            onChange={(e) => setQuery(e.target.value)} style={{ maxWidth: 220 }}
+          />
+        </div>
+        {genres.length > 0 && (
+          <div className="row wrap gap-1" style={{ marginBottom: 'var(--s2)' }}>
+            {genres.map((id) => (
+              <button key={id} className="chip chip-positive" onClick={() => toggle(id)} title="Remove">{genreName(id)} ✕</button>
+            ))}
+          </div>
+        )}
+        <div style={{ maxHeight: 260, overflowY: 'auto', border: '1px solid var(--line)', borderRadius: 8, padding: 'var(--s2)' }}>
+          {groups.map((group) => (
+            <div key={group.category} style={{ marginBottom: 'var(--s3)' }}>
+              <div className="xs dim" style={{ marginBottom: 4 }}>{group.label}</div>
+              <div className="row wrap gap-1">
+                {group.genres.map((g) => (
+                  <button
+                    key={g.id}
+                    className="chip"
+                    aria-pressed={genres.includes(g.id)}
+                    title={g.description}
+                    style={genres.includes(g.id) ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}
+                    onClick={() => toggle(g.id)}
+                    onMouseEnter={() => setOpenGenre(g.id)}
+                  >
+                    {g.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+          {groups.length === 0 && <div className="small dim">Nothing matches that in this format.</div>}
+        </div>
+        {openGenre && genre(openGenre) && (
+          <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+            <span className="strong">{genre(openGenre)!.name}.</span> {genre(openGenre)!.description} <span className="dim">{genre(openGenre)!.convention}</span>
+          </div>
+        )}
+        {suggested.length > 0 && (
+          <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+            Usually paired with: {suggested.map((g) => (
+              <button key={g.id} className="link" onClick={() => toggle(g.id)}>{g.name}</button>
+            )).reduce<ReactNode[]>((all, node, i) => (i === 0 ? [node] : [...all, ', ', node]), [])}.
+          </div>
+        )}
+      </div>
+
+      <div className="grid grid-2">
+        <div className="field">
+          <label htmlFor="certificate">Certificate</label>
+          <select id="certificate" value={contentRating} onChange={(e) => setContentRating(e.target.value)}>
+            <option value="">Undecided</option>
+            {certificates.map((r: { id: string; code: string; name: string }) => <option key={r.id} value={r.id}>{r.code} — {r.name}</option>)}
+          </select>
+          {chosenRating && (
+            <div className="xs dim">
+              {chosenRating.description} <span className="strong">Permits:</span> {chosenRating.permits} <span className="strong">Limit:</span> {chosenRating.limit}
+              {chosenRating.reach < 1 && <> It leaves about {Math.round(chosenRating.reach * 100)}% of the audience able to buy a ticket.</>}
+            </div>
+          )}
+        </div>
+        <div className="field">
+          <label htmlFor="runtime">Runtime <span className="dim">minutes</span></label>
+          <input
+            id="runtime" type="number" min={1} max={600}
+            value={runtime ?? ''} placeholder={`${Math.round((band[0] + band[1]) / 2)}`}
+            onChange={(e) => setRuntime(e.target.value === '' ? null : Number(e.target.value))}
+          />
+          <div className="xs dim">{genreName(genres[0] ?? 'drama')} usually runs {band[0]} to {band[1]} minutes. Anything from one minute to ten hours is yours to choose.</div>
+        </div>
+      </div>
+
+      <div className="field">
+        <div className="row-between">
+          <label htmlFor="logline">Logline</label>
+          <button className="link xs" onClick={() => setBuilderOpen((v) => !v)}>
+            {builderOpen ? 'Write It Myself' : 'Build It From Bullet Points'}
+          </button>
+        </div>
         <textarea id="logline" value={logline} onChange={(e) => setLogline(e.target.value)} placeholder="One sentence. What is it about?" />
+        {builderOpen && <LoglineBuilder genres={genres} onUse={setLogline} />}
       </div>
+
       <div className="callout">
-        Buyers who might want this: {BUYERS.all().filter((b) => genres.some((g) => b.wants.includes(g))).map((b) => b.name).join(', ') || 'none obviously'}.
+        <div className="small"><span className="strong">What this will be judged on.</span> {focus.map((d) => CRAFT_LABEL[d]).join(', ')} — that is what {genres.map(genreName).join(' and ')} lives or dies on, and it is what the script gets scored against.</div>
+        <div className="small" style={{ marginTop: 'var(--s2)' }}>
+          <span className="dim">Buyers who want this: </span>
+          {BUYERS.all().filter((b) => genres.some((g) => b.wants.includes(g))).slice(0, 8).map((b) => b.name).join(', ') || 'nobody obviously, which is not the same as nobody'}.
+        </div>
       </div>
+      {error && <div className="callout callout-warning small">{error}</div>}
     </Modal>
   );
 }

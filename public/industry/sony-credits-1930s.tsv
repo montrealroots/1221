@@ -2,11 +2,17 @@ qid	role	personQid	name	character	ordinal
 Q2098523	director	Q54068336	Walter Futter		
 Q4708666	director	Q6750998	Manny Gould		
 Q4708666	subject		cat		
+Q2860666	director	Q336424	Ub Iwerks		
+Q2860666	composer	Q2899190	Bert Lewis		
+Q2860666	producer	Q8704	Walt Disney		
 Q27477098	director	Q778789	Bert Glennon		
 Q27477098	writer	Q369404	Jo Swerling		
 Q27477098	producer	Q1586470	Harry Cohn		
 Q27477098	cinematographer	Q960230	Joseph Walker		
 Q27477098	editor	Q1501408	Gene Milford		
+Q2873090	director	Q336424	Ub Iwerks		
+Q2873090	composer	Q598185	Carl W. Stalling		
+Q2873090	producer	Q8704	Walt Disney		
 Q18914888	director	Q269796	Walter Lang		
 Q18914888	producer	Q1586470	Harry Cohn		
 Q18914888	cast	Q2899198	Bert Lytell		
@@ -94,13 +100,16 @@ Q20713925	writer	Q5298462	Dorothy Howell
 Q20713925	producer	Q1586470	Harry Cohn		
 Q20713925	cinematographer	Q322960	Ted Tetzlaff		
 Q20713925	cast	Q405036	Aileen Pringle		
+Q3503640	director	Q336424	Ub Iwerks		
+Q3503640	composer	Q598185	Carl W. Stalling		
+Q3503640	producer	Q8704	Walt Disney		
 Q136547176	director	Q2054936	E. Mason Hopper		
 Q136547176	cast	Q6504102	Lawrence Gray		
 Q136547176	cast	Q530562	Billy Bevan		
 Q136547176	cast	Q2070491	Eileen Percy		
-Q136547176	cast	Q66588084	Q66588084		
+Q136547176	cast	Q66588084	Robert T. Haines		
 Q136547176	cast	Q21209337	John J. Richardson		
-Q136547176	cast	Q138416904	Q138416904		
+Q136547176	cast	Q138416904	Gertrude Bennett		
 Q136547176	cast	Q275728	Lois Wilson		
 Q7713967	director	Q6750998	Manny Gould		
 Q7713967	director	Q41771735	Ben Harrison		
@@ -186,15 +195,6 @@ Q3686858	cast	Q1357250	Jack Holt
 Q3569397	director	Q630819	Burt Gillett		
 Q3569397	composer	Q2899190	Bert Lewis		
 Q3569397	producer	Q8704	Walt Disney		
-Q2860666	director	Q336424	Ub Iwerks		
-Q2860666	composer	Q2899190	Bert Lewis		
-Q2860666	producer	Q8704	Walt Disney		
-Q3503640	director	Q336424	Ub Iwerks		
-Q3503640	composer	Q598185	Carl W. Stalling		
-Q3503640	producer	Q8704	Walt Disney		
-Q2873090	director	Q336424	Ub Iwerks		
-Q2873090	composer	Q598185	Carl W. Stalling		
-Q2873090	producer	Q8704	Walt Disney		
 Q20082773	director	Q555691	Edward Sedgwick		
 Q20082773	producer	Q1586470	Harry Cohn		
 Q20082773	cinematographer	Q322960	Ted Tetzlaff		
@@ -236,7 +236,7 @@ Q124300756	cast	Q20685112	Ramón Pereda
 Q124300756	cast	Q464479	Lupita Tovar		
 Q124300756	cast	Q22687816	Carmen Guerrero Franco		
 Q124300756	cast	Q28065172	Soledad Jiménez		
-Q124300756	cast	Q3425963	레네 카르도나		
+Q124300756	cast	Q3425963	René Cardona		
 Q283303	director	Q51492	Frank Capra		
 Q283303	writer	Q369404	Jo Swerling		
 Q283303	writer	Q2815496	Frank Wead		
@@ -257,7 +257,7 @@ Q283303	cast	Q2166695	Roscoe Karns
 Q283303	cast	Q513849	Bess Flowers		
 Q283303	cast	Q2975569	Clarence Muse		
 Q283303	cast	Q1357250	Jack Holt	Jack Bradon	
-Q283303	cast	Q5343388	ガイ・エドワード・ハーン		
+Q283303	cast	Q5343388	Edward Hearn		
 Q283303	cast	Q203219	Boris Karloff		
 Q283303	subject		aviation		
 Q20649796	director	Q6750998	Manny Gould		
@@ -348,7 +348,7 @@ Q37700782	director	Q1993804	Christy Cabanne
 Q37700782	writer	Q3388109	Harvey Gates		
 Q37700782	cinematographer	Q2837885	Allen G. Siegler		
 Q37700782	editor	Q113336	Gene Havlick		
-Q37700782	cast	Q2474042	ウォルター・ミラー		
+Q37700782	cast	Q2474042	Walter Miller		
 Q37700782	cast	Q3567656	Wheeler Vivian Oakman		
 Q37700782	cast	Q782604	Marceline Day		
 Q37700782	cast	Q5370943	Emerson Treacy		
@@ -663,7 +663,7 @@ Q19363788	cast	Q3216092	Lafe McKee
 Q19363788	cast	Q3126801	Hank Mann		
 Q19363788	cast	Q3296163	Mary Doran		
 Q19363788	cast	Q2630976	Buck Jones		
-Q19363788	cast	Q2474042	ウォルター・ミラー		
+Q19363788	cast	Q2474042	Walter Miller		
 Q608061	director	Q55413	William Dieterle		
 Q608061	writer	Q3162898	Niven Busch		
 Q608061	producer	Q472520	Hal B. Wallis		
@@ -816,7 +816,7 @@ Q1756455	cinematographer	Q322960	Ted Tetzlaff
 Q1756455	cast	Q7343666	Robert Dudley		
 Q1756455	cast	Q4792672	Armand Kaliz		
 Q1756455	cast	Q446120	Marie Prevost		
-Q1756455	cast	Q2474042	ウォルター・ミラー		
+Q1756455	cast	Q2474042	Walter Miller		
 Q1756455	cast	Q1793030	Natalie Moorhead		
 Q1756455	cast	Q1681350	Jameson Thomas		
 Q1756455	cast	Q3265998	Lucy Beaumont		
@@ -1213,7 +1213,7 @@ Q6470636	cast	Q1189404	Dennis O'Keefe
 Q6470636	cast	Q17736942	Charles Pearce Coleman		
 Q6470636	cast	Q21482632	Charles McAvoy		
 Q6470636	cast	Q3035739	Don Brodie		
-Q6470636	cast	Q5343388	ガイ・エドワード・ハーン		
+Q6470636	cast	Q5343388	Edward Hearn		
 Q6470636	cast	Q17497029	Roger Pryor		
 Q6470636	cast	Q726919	Walter Connolly		
 Q2778954	director	Q3420539	Ray McCarey		
@@ -1467,7 +1467,7 @@ Q22350878	cast	Q2745500	Jack Mulhall
 Q22350878	cast	Q329163	Scotty Beckett		
 Q22350878	cast	Q219521	Walter Brennan		
 Q22350878	cast	Q726919	Walter Connolly		
-Q22350878	cast	Q5343388	ガイ・エドワード・ハーン		
+Q22350878	cast	Q5343388	Edward Hearn		
 Q22350878	cast	Q467968	Mary Gordon		
 Q22350878	cast	Q2959529	Charles King		
 Q22350878	cast	Q516390	Robert Young		
@@ -1550,7 +1550,7 @@ Q5518858	cast	Q2959515	Charles K. French
 Q5518858	cast	Q1368948	Glenn Strange		
 Q5518858	cast	Q3607492	Al Ferguson		
 Q60738699	director	Q7576059	Spencer Gordon Bennet		
-Q60738699	producer	Q6490176	Q6490176		
+Q60738699	producer	Q6490176	Larry Darmour		
 Q10297763	director	Q3021400	Del Lord		
 Q10297763	writer	Q5442123	Felix Adler		
 Q10297763	producer	Q1526143	Jules White		
@@ -1762,7 +1762,7 @@ Q1271895	cast	Q3082744	Frank O'Connor
 Q1271895	cast	Q3035739	Don Brodie		
 Q1271895	cast	Q18638539	Edward Keane		
 Q1271895	cast	Q2865150	Arthur Hohl		
-Q1271895	cast	Q5343388	ガイ・エドワード・ハーン		
+Q1271895	cast	Q5343388	Edward Hearn		
 Q1271895	cast	Q2975587	Clarence Wilson		
 Q1271895	cast	Q5402959	Ethan Laidlaw		
 Q1271895	cast	Q3059331	Etienne Girardot		
@@ -2058,7 +2058,7 @@ Q475529	award		National Board of Review Award for Best Film
 Q20814673	director	Q513061	William Nigh		
 Q20814673	writer	Q5916408	Houston Branch		
 Q20814673	composer	Q1397968	Lee Zahler		
-Q20814673	producer	Q6490176	Q6490176		
+Q20814673	producer	Q6490176	Larry Darmour		
 Q20814673	cast	Q1357250	Jack Holt		
 Q19363742	director	Q3011073	D. Ross Lederman		
 Q19363742	writer	Q5662375	Harold Shumate		
@@ -2098,7 +2098,7 @@ Q7292876	cast	Q1486368	Robert Coote
 Q20649636	director	Q7576059	Spencer Gordon Bennet		
 Q20649636	writer	Q13217455	Jacques Jaccard		
 Q20649636	composer	Q1397968	Lee Zahler		
-Q20649636	producer	Q6490176	Q6490176		
+Q20649636	producer	Q6490176	Larry Darmour		
 Q20649636	cast	Q887757	Robert Allen		
 Q24053270	director	Q20685476	David Selman		
 Q24053270	cast	Q729837	Charles Starrett		
@@ -2123,7 +2123,7 @@ Q18914976	cast	Q275440	Lina Basquette
 Q18914976	cast	Q928456	Marc Lawrence		
 Q57780001	director	Q7576059	Spencer Gordon Bennet		
 Q57780001	composer	Q1397968	Lee Zahler		
-Q57780001	producer	Q6490176	Q6490176		
+Q57780001	producer	Q6490176	Larry Darmour		
 Q57780001	cast	Q909904	Ken Maynard		
 Q3705961	director	Q78719	Josef von Sternberg		
 Q3705961	writer	Q332043	Sidney Buchman		
@@ -2433,7 +2433,7 @@ Q10312965	producer	Q349400	Louis Weiss
 Q10312965	producer	Q930598	Kent Taylor		
 Q10312965	producer	Q7347712	Robert Mintz		
 Q10312965	cinematographer	Q5344146	Edward Linden		
-Q10312965	cinematographer	Q5740193	Q5740193		
+Q10312965	cinematographer	Q5740193	Herman Schopp		
 Q10312965	editor	Q5326131	Earl Turner		
 Q10312965	cast	Q1803090	Reginald Denny		
 Q10312965	cast	Q448594	Esther Ralston		
@@ -2492,7 +2492,7 @@ Q1619885	award		Academy Award for Best Production Design
 Q1619885	award		Academy Award for Best Film Editing		
 Q66712135	director	Q336424	Ub Iwerks		
 Q66712135	writer	Q3483089	Sid Marcus		
-Q66712135	composer	Q5336193	Q5336193		
+Q66712135	composer	Q5336193	Eddie Kilfeather		
 Q66712135	composer	Q66712113	Joe DeNat		
 Q66712135	producer	Q952640	Charles Mintz		
 Q18915115	director	Q3011073	D. Ross Lederman		
@@ -2510,7 +2510,7 @@ Q20649799	cast	Q259365	Gene Morgan
 Q20649799	cast	Q262373	Raymond Walburn		
 Q20649799	cast	Q326723	Leon Ames		
 Q7112150	director	Q1117163	Ernest B. Schoedsack		
-Q7112150	producer	Q6490176	Q6490176		
+Q7112150	producer	Q6490176	Larry Darmour		
 Q7112150	cast	Q1357250	Jack Holt		
 Q2046383	director	Q1063870	Charles C. Coleman		
 Q2046383	writer	Q7343810	Robert E. Kent		
@@ -2607,7 +2607,7 @@ Q27964367	cast	Q1677155	Jack Pennick
 Q27964367	cast	Q3496795	Stanley Andrews		
 Q27964367	cast	Q20007134	Frank Marlowe		
 Q27964367	cast	Q931926	Richard Dix		
-Q27964367	cast	Q5343388	ガイ・エドワード・ハーン		
+Q27964367	cast	Q5343388	Edward Hearn		
 Q27964367	cast	Q4020191	William Worthington		
 Q27964367	cast	Q14633510	Garry Owen		
 Q18914985	director	Q3011073	D. Ross Lederman		
@@ -2633,7 +2633,7 @@ Q2028464	director	Q7576059	Spencer Gordon Bennet
 Q2028464	writer	Q5541965	George M. Merrick		
 Q2028464	producer	Q349400	Louis Weiss		
 Q2028464	cinematographer	Q5344146	Edward Linden		
-Q2028464	cinematographer	Q5740193	Q5740193		
+Q2028464	cinematographer	Q5740193	Herman Schopp		
 Q2028464	cast	Q12483097	Frank Monroe Hawks		
 Q2028464	subject		aviation		
 Q7754945	director	Q5597804	Folmar Blangsted		
@@ -2656,7 +2656,7 @@ Q7764547	cast	Q4898911	Betty Mack
 Q7764547	cast	Q1281212	Moe Howard		
 Q7764547	cast	Q3806479	James C. Morton		
 Q7846457	director	Q1117163	Ernest B. Schoedsack		
-Q7846457	producer	Q6490176	Q6490176		
+Q7846457	producer	Q6490176	Larry Darmour		
 Q7846457	cast	Q1357250	Jack Holt		
 Q7920596	director	Q1442462	Gordon Wiles		
 Q7920596	cinematographer	Q348093	Lucien Ballard		
@@ -2750,7 +2750,7 @@ Q5457752	cast	Q1070698	Chester Conklin
 Q5457752	cast	Q1281212	Moe Howard		
 Q5457752	cast	Q4704882	Al Thompson		
 Q37768002	director	Q3237289	Lewis D. Collins		
-Q37768002	producer	Q6490176	Q6490176		
+Q37768002	producer	Q6490176	Larry Darmour		
 Q37768002	cast	Q1357250	Jack Holt		
 Q18914983	director	Q1063870	Charles C. Coleman		
 Q18914983	cast	Q1064346	Charles Farrell		
@@ -2832,7 +2832,7 @@ Q118557649	cast	Q449070	Googie Withers
 Q118557649	cast	Q1916242	Ian Fleming		
 Q118557649	cast	Q4978269	Bruce Seton		
 Q57246576	director	Q3810241	Joseph Levering		
-Q57246576	producer	Q6490176	Q6490176		
+Q57246576	producer	Q6490176	Larry Darmour		
 Q57246576	cast	Q374721	Wild Bill Elliott		
 Q1714688	director	Q3011073	D. Ross Lederman		
 Q1714688	cinematographer	Q4888745	Benjamin H. Kline		
@@ -2875,7 +2875,7 @@ Q16254058	cast	Q1308174	James Flavin
 Q16254058	cast	Q1764618	George Magrill		
 Q16254058	cast	Q445018	Marjorie Main		
 Q16254058	cast	Q450047	Ann Doran		
-Q16254058	cast	Q5343388	ガイ・エドワード・ハーン		
+Q16254058	cast	Q5343388	Edward Hearn		
 Q16254058	cast	Q3236787	Lester Dorr		
 Q16254058	cast	Q5402959	Ethan Laidlaw		
 Q16254058	cast	Q4704035	Al Hill		
@@ -2923,7 +2923,7 @@ Q3497246	cast	Q15469159	John Gallaudet
 Q3497246	cast	Q5489839	Frank Sully		
 Q3497246	cast	Q951224	Howard Hickman		
 Q3497246	cast	Q5272879	Dick Elliott		
-Q3497246	cast	Q3441245	Q3441245		
+Q3497246	cast	Q3441245	Romo Vincent		
 Q3497246	cast	Q367447	Louis Prima		
 Q3497246	cast	Q2006459	Edward LeSaint		
 Q3497246	cast	Q949161	The Three Stooges		
@@ -3035,13 +3035,13 @@ Q7763157	producer	Q349400	Louis Weiss
 Q7763157	producer	Q5541965	George M. Merrick		
 Q7763157	producer	Q6112463	Jack Fier		
 Q7763157	cinematographer	Q5344146	Edward Linden		
-Q7763157	cinematographer	Q5740193	Q5740193		
+Q7763157	cinematographer	Q5740193	Herman Schopp		
 Q7763157	editor	Q5326131	Earl Turner		
 Q7763157	cast	Q1621558	Hobart Bosworth		
 Q7763157	cast	Q5544044	George Rosener		
 Q7763157	cast	Q5623419	Gwen Gaze		
 Q7763157	cast	Q3115415	Grant Withers		
-Q7763157	cast	Q2474042	ウォルター・ミラー		
+Q7763157	cast	Q2474042	Walter Miller		
 Q7763157	subject		sea piracy		
 Q7153523	director	Q3161467	James W. Horne		
 Q7153523	director	Q3420565	Ray Taylor		
@@ -3063,7 +3063,7 @@ Q7153523	cast	Q5342719	Edward Earle
 Q7153523	cast	Q3157200	Jack Harvey		
 Q7153523	cast	Q5487056	Frank Hagney		
 Q7153523	cast	Q743865	Harry Myers		
-Q7153523	cast	Q5343388	ガイ・エドワード・ハーン		
+Q7153523	cast	Q5343388	Edward Hearn		
 Q7153523	cast	Q3048088	Edmund Cobb		
 Q7153523	cast	Q3609064	Edward Peil		
 Q7153523	cast	Q450047	Ann Doran		
@@ -3076,13 +3076,13 @@ Q7153523	cast	Q638925	Cyril Ring
 Q7153523	cast	Q513849	Bess Flowers		
 Q7153523	cast	Q2006459	Edward LeSaint		
 Q7768532	director	Q3470531	Sam Newfield		
-Q7768532	writer	Q5495982	Q5495982		
+Q7768532	writer	Q5495982	Fred Myton		
 Q7768532	composer	Q6536041	Lew Porter		
 Q7768532	producer	Q42293669	Jed Buell		
 Q7768532	cinematographer	Q11351555	Mack Stengler		
 Q7768532	cast	Q863063	Billy Curtis		
 Q7768532	cast	Q5084513	Charlie Becker		
-Q7768532	cast	Q99391182	Q99391182		
+Q7768532	cast	Q99391182	Yvonne Moray		
 Q1128727	director	Q1968780	Alexander Hall		
 Q1128727	writer	Q323516	Morrie Ryskind		
 Q1128727	writer	Q516962	Gladys Lehman		
@@ -3214,7 +3214,7 @@ Q60439398	writer	Q2865347	Arthur T. Horman
 Q60439398	producer	Q936637	Wallace MacDonald		
 Q60439398	editor	Q20684080	Richard Fantl		
 Q4926507	director	Q149507	Charles Vidor		
-Q4926507	writer	Q2568461	フィリップ・マクドナルド		
+Q4926507	writer	Q2568461	Philip MacDonald		
 Q4926507	writer	Q3308040	Michael Blankfort		
 Q4926507	cinematographer	Q348093	Lucien Ballard		
 Q4926507	editor	Q2039974	Otto Meyer		
@@ -3297,7 +3297,7 @@ Q5463431	director	Q3420565	Ray Taylor
 Q5463431	writer	Q7343810	Robert E. Kent		
 Q5463431	composer	Q1569339	Morris Stoloff		
 Q5463431	producer	Q6112463	Jack Fier		
-Q5463431	producer	Q6490176	Q6490176		
+Q5463431	producer	Q6490176	Larry Darmour		
 Q5463431	cinematographer	Q4888745	Benjamin H. Kline		
 Q5463431	editor	Q20684080	Richard Fantl		
 Q5463431	cast	Q4347997	Robert Paige		
@@ -3380,7 +3380,7 @@ Q5694829	cast	Q538222	Jean Rogers
 Q5694829	cast	Q1280760	Ward Bond		
 Q16964000	director	Q3237289	Lewis D. Collins		
 Q16964000	writer	Q329009	Charles Bennett		
-Q16964000	producer	Q6490176	Q6490176		
+Q16964000	producer	Q6490176	Larry Darmour		
 Q16964000	cast	Q1357250	Jack Holt		
 Q66712435	director	Q6750998	Manny Gould		
 Q66712435	director	Q41771735	Ben Harrison		
@@ -3558,7 +3558,7 @@ Q7113752	cast	Q5648287	Hank Bell
 Q7113752	cast	Q19866991	Jack Rockwell		
 Q7113752	cast	Q7325683	Richard Fiske		
 Q7113752	cast	Q2412911	Trevor Bardette		
-Q7113752	cast	Q7963507	ハル・タリアフェロ		
+Q7113752	cast	Q7963507	Wally Wales		
 Q7113752	cast	Q6390409	Kenneth MacDonald		
 Q7113752	cast	Q6775506	Martin Garralaga		
 Q7113752	cast	Q3220136	LeRoy Mason		
@@ -3639,7 +3639,7 @@ Q19866692	cast	Q168355	Don Beddoe
 Q19866692	cast	Q3453610	Ruth Donnelly		
 Q19866692	cast	Q7347666	Robert Middlemass		
 Q19866692	cast	Q3266586	Luis Alberni		
-Q19866692	cast	Q2474042	ウォルター・ミラー		
+Q19866692	cast	Q2474042	Walter Miller		
 Q19866692	cast	Q2975565	Clarence Kolb		
 Q19866692	cast	Q3570220	Wyndham Standing		
 Q17042494	director	Q6750998	Manny Gould		

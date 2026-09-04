@@ -188,8 +188,8 @@ Q5595282	cast	Q2864533	Art Gilmore
 Q5595282	award		Academy Award for Best Live Action Short Film, One-Reel		
 Q5595282	subject		horse		
 Q5595282	subject		horse racing		
-Q5759827	director	Q505780	アンドリュー・L・ストーン		
-Q5759827	writer	Q505780	アンドリュー・L・ストーン		
+Q5759827	director	Q505780	Andrew L. Stone		
+Q5759827	writer	Q505780	Andrew L. Stone		
 Q5759827	composer	Q2621011	William Lava		
 Q5759827	producer	Q2927152	Bryan Foy		
 Q5759827	cinematographer	Q2938894	Carl E. Guthrie		
@@ -368,7 +368,7 @@ Q3231454	cast	Q2864563	Art Smith
 Q3231454	cast	Q1528106	Frank Wilcox		
 Q3231454	cast	Q17581402	Ray Montgomery		
 Q3231454	cast	Q242482	Alexis Smith		
-Q3231454	cast	Q3013243	ダン・ホワイト		
+Q3231454	cast	Q3013243	Dan White		
 Q3231454	cast	Q5488455	Frank Mills		
 Q3231454	cast	Q230126	Dorothy Malone		
 Q3231454	cast	Q436784	Joel McCrea		
@@ -1137,7 +1137,7 @@ Q499639	cast	Q7077756	Odette Myrtil
 Q499639	cast	Q524325	Norma Varden		
 Q499639	cast	Q240076	Farley Granger		
 Q499639	cast	Q919192	Leo G. Carroll		
-Q499639	cast	Q5343388	ガイ・エドワード・ハーン		
+Q499639	cast	Q5343388	Edward Hearn		
 Q499639	cast	Q7374	Alfred Hitchcock		
 Q499639	cast	Q1273140	Franklyn Farnum		
 Q499639	cast	Q3103406	Georges Renavent		
@@ -1451,7 +1451,7 @@ Q3927383	composer	Q1173882	David Buttolph
 Q3927383	cinematographer	Q2399809	Ted McCord		
 Q3927383	editor	Q2042628	Owen Marks		
 Q3927383	cast	Q5335798	Eddie Acuff		
-Q3927383	cast	Q598344	マーヴ・グリフィン		
+Q3927383	cast	Q598344	Merv Griffin		
 Q3927383	cast	Q5920929	Howard St. John		
 Q3927383	cast	Q7328637	Richard Reeves		
 Q3927383	cast	Q3328449	Mushy Callahan		
@@ -1709,7 +1709,7 @@ Q2510764	producer	Q1509535	William Cagney
 Q2510764	cinematographer	Q607280	Harry Stradling		
 Q2510764	cast	Q5373540	Emmett Lynn		
 Q2510764	cast	Q82284	Frank McHugh		
-Q2510764	cast	Q3013243	ダン・ホワイト		
+Q2510764	cast	Q3013243	Dan White		
 Q2510764	cast	Q1673199	Onslow Stevens		
 Q2510764	cast	Q3661794	James Griffith		
 Q2510764	cast	Q7360500	Roland Winters		
@@ -1958,7 +1958,7 @@ Q3964098	cast	Q511926	Margaret Field
 Q3964098	cast	Q2448652	Marie Windsor		
 Q3964098	cast	Q275769	Jeff Donnell		
 Q3964098	cast	Q118184	Mario Siletti		
-Q3964098	cast	Q598344	マーヴ・グリフィン		
+Q3964098	cast	Q598344	Merv Griffin		
 Q3964098	cast	Q450047	Ann Doran		
 Q3964098	cast	Q2448035	Rosemary DeCamp		
 Q3964098	cast	Q2004024	Walter Abel		
@@ -2227,7 +2227,7 @@ Q4120752	cast	Q249968	Lester Matthews
 Q4120752	cast	Q265568	Gayne Whitman		
 Q4120752	cast	Q453549	Ned Glass		
 Q4120752	cast	Q224021	Donna Reed		
-Q4120752	cast	Q598344	マーヴ・グリフィン		
+Q4120752	cast	Q598344	Merv Griffin		
 Q4120752	cast	Q705738	Chuck Connors		
 Q4120752	cast	Q2448652	Marie Windsor		
 Q4120752	cast	Q3157279	Jack Mower		
@@ -2460,7 +2460,7 @@ Q3222667	producer	Q97511	Henry Blanke
 Q3222667	cinematographer	Q919460	John Peverell Marley		
 Q3222667	editor	Q138016504	James Moore		
 Q3222667	costume_designer	Q1949430	Moss Mabry		
-Q3222667	cast	Q598344	マーヴ・グリフィン		
+Q3222667	cast	Q598344	Merv Griffin		
 Q3222667	cast	Q3086867	Fred Kelsey		
 Q3222667	cast	Q16887611	Rico Alaniz		
 Q3222667	cast	Q386389	Paul Brinegar		
@@ -2532,7 +2532,7 @@ Q7334786	cast	Q5136874	Clyde Beatty
 Q119890304	director	Q119872291	Fernand Bankert		
 Q119890304	writer	Q119872291	Fernand Bankert		
 Q119890304	cast	Q117414570	Elmer "Scooter" Lowry		
-Q119890304	cast	Q29261586	Q29261586		
+Q119890304	cast	Q29261586	Evelyn Lovequist		
 Q7619669	director	Q312657	Chuck Jones		
 Q7619669	composer	Q598185	Carl W. Stalling		
 Q7619669	producer	Q974385	Eddie Selzer		
@@ -2561,7 +2561,7 @@ Q3520080	composer	Q350704	Max Steiner
 Q3520080	producer	Q3672555	David Weisbart		
 Q3520080	cinematographer	Q1319095	Robert Burks		
 Q3520080	cast	Q1066372	Charles Wagenheim		
-Q3520080	cast	Q598344	マーヴ・グリフィン		
+Q3520080	cast	Q598344	Merv Griffin		
 Q3520080	cast	Q20738374	Guy Wilkerson		
 Q3520080	cast	Q259453	Nancy Olson		
 Q3520080	cast	Q15663532	Herman Hack		
@@ -2587,6 +2587,21 @@ Q29840950	director	Q312657	Chuck Jones
 Q29840950	writer	Q1928541	Michael Maltese		
 Q29840950	composer	Q598185	Carl W. Stalling		
 Q29840950	editor	Q544350	Treg Brown		
+Q2371533	director	Q983092	David Butler		
+Q2371533	writer	Q262479	Samuel Fuller		
+Q2371533	composer	Q317033	Dimitri Tiomkin		
+Q2371533	producer	Q3672555	David Weisbart		
+Q2371533	cinematographer	Q2571036	Wilfred M. Cline		
+Q2371533	editor	Q17306788	Irene Morra		
+Q2371533	cast	Q313040	James Whitmore		
+Q2371533	cast	Q2938871	Carl Benton Reid		
+Q2371533	cast	Q3808556	Joan Weldon		
+Q2371533	cast	Q3157279	Jack Mower		
+Q2371533	cast	Q1557542	Guy Madison		
+Q2371533	cast	Q1587920	Harvey Lembeck		
+Q2371533	cast	Q1699321	John Beradino		
+Q2371533	cast	Q3420566	Ray Teal		
+Q2371533	cast	Q20742238	Renata Vanni		
 Q773964	director	Q290962	William A. Wellman		
 Q773964	writer	Q1779816	Ernest K. Gann		
 Q773964	composer	Q317033	Dimitri Tiomkin		
@@ -2716,21 +2731,6 @@ Q2165696	cast	Q344758	Gig Young
 Q2165696	cast	Q640093	Alan Hale, Jr.		
 Q2165696	cast	Q1385393	Robert Keith		
 Q2165696	cast	Q672242	Elisabeth Fraser		
-Q2371533	director	Q983092	David Butler		
-Q2371533	writer	Q262479	Samuel Fuller		
-Q2371533	composer	Q317033	Dimitri Tiomkin		
-Q2371533	producer	Q3672555	David Weisbart		
-Q2371533	cinematographer	Q2571036	Wilfred M. Cline		
-Q2371533	editor	Q17306788	Irene Morra		
-Q2371533	cast	Q313040	James Whitmore		
-Q2371533	cast	Q2938871	Carl Benton Reid		
-Q2371533	cast	Q3808556	Joan Weldon		
-Q2371533	cast	Q3157279	Jack Mower		
-Q2371533	cast	Q1557542	Guy Madison		
-Q2371533	cast	Q1587920	Harvey Lembeck		
-Q2371533	cast	Q1699321	John Beradino		
-Q2371533	cast	Q3420566	Ray Teal		
-Q2371533	cast	Q20742238	Renata Vanni		
 Q4728742	director	Q1063493	Robert McKimson		
 Q4728742	composer	Q598185	Carl W. Stalling		
 Q3107357	director	Q72756	Raoul Walsh		
@@ -3009,7 +3009,7 @@ Q1445520	writer	Q506404	Richard L. Breen
 Q1445520	composer	Q2865132	Arthur Hamilton		
 Q1445520	producer	Q1287651	Jack Webb		
 Q1445520	cinematographer	Q1368602	Harold Rosson		
-Q1445520	cast	Q1985385	Q1985385		
+Q1445520	cast	Q1985385	Nick Fatool		
 Q1445520	cast	Q229507	Jayne Mansfield		
 Q1445520	cast	Q205314	Janet Leigh		
 Q1445520	cast	Q76895	Lee Marvin		
@@ -3345,7 +3345,7 @@ Q669592	cast	Q432833	Jane Withers
 Q669592	cast	Q184378	Rock Hudson		
 Q669592	cast	Q380997	Sal Mineo		
 Q669592	cast	Q1072969	Chill Wills		
-Q669592	cast	Q5367378	エルサ・アギーレ		
+Q669592	cast	Q5367378	Elsa Aguirre		
 Q669592	cast	Q458589	Alexander Scourby		
 Q669592	cast	Q83359	James Dean		
 Q669592	cast	Q457265	Elsa Cárdenas		
@@ -3501,7 +3501,7 @@ Q1057548	cast	Q16013366	Stephen Bekassy
 Q1057548	cast	Q17322152	Harold Miller		
 Q1057548	cast	Q1293264	Edward Platt		
 Q1057548	cast	Q1604757	Joseph Calleia		
-Q1057548	cast	Q268587	サラ・モンティエル		
+Q1057548	cast	Q268587	Sara Montiel		
 Q1057548	cast	Q1754382	Creighton Hale		
 Q1057548	cast	Q95076	Joan Fontaine		
 Q1057548	cast	Q219640	Vincent Price		
@@ -3681,7 +3681,7 @@ Q472390	cast	Q357441	Charles Aidman
 Q17096124	director	Q16012000	André de la Varre		
 Q17096124	writer	Q22101636	Owen Crump		
 Q17096124	composer	Q3141567	Howard Jackson		
-Q17096124	producer	Q15793783	Q15793783		
+Q17096124	producer	Q15793783	Cedric Francis		
 Q7810946	director	Q312657	Chuck Jones		
 Q7810946	writer	Q1928541	Michael Maltese		
 Q7810946	composer	Q3090628	Milt Franklyn		
@@ -3772,7 +3772,7 @@ Q2856498	cast	Q3301120	Maurice Marsac
 Q2856498	cast	Q3568616	William Forrest		
 Q2856498	cast	Q3420566	Ray Teal		
 Q2856498	cast	Q456211	Juanita Moore		
-Q2856498	cast	Q3013243	ダン・ホワイト		
+Q2856498	cast	Q3013243	Dan White		
 Q2856498	cast	Q433493	Raymond Bailey		
 Q2856498	cast	Q19698241	Jim Hayward		
 Q2856498	cast	Q439588	Torin Thatcher		
@@ -3862,7 +3862,7 @@ Q614864	cast	Q34012	Marlon Brando	Major Lloyd "Ace" Gruver
 Q614864	cast	Q557482	James Stacy		
 Q614864	cast	Q236394	Martha Scott	Mrs. Webster	
 Q614864	cast	Q275587	Patricia Owens	Eileen Webster	
-Q614864	cast	Q333595	リカルド・モンタルバン	Nakamura	
+Q614864	cast	Q333595	Ricardo Montalbán	Nakamura	
 Q614864	cast	Q974947	Kent Smith	Lt. Gen. Mark Webster	
 Q614864	cast	Q108510	James Garner	Captain Mike Bailey	
 Q614864	cast	Q232588	Miyoshi Umeki	Katsumi Kelly	
@@ -4348,7 +4348,7 @@ Q1462145	director	Q48765	Stanley Donen
 Q1462145	writer	Q919642	Norman Krasna		
 Q1462145	composer	Q959863	Richard Rodney Bennett		
 Q1462145	producer	Q48765	Stanley Donen		
-Q1462145	cinematographer	Q965659	フレディ・ヤング		
+Q1462145	cinematographer	Q965659	Freddie Young		
 Q1462145	editor	Q6112953	Jack Harris		
 Q1462145	costume_designer	Q159694	Christian Dior		
 Q1462145	cast	Q275383	Phyllis Calvert		
@@ -4913,7 +4913,7 @@ Q1214687	cast	Q233891	Carroll Baker
 Q1214687	cast	Q275276	Madlyn Rhue		
 Q1214687	cast	Q230128	Katina Paxinou		
 Q1214687	cast	Q249968	Lester Matthews		
-Q1214687	cast	Q1556803	グスターヴォ・ロホ		
+Q1214687	cast	Q1556803	Gustavo Rojo		
 Q1214687	cast	Q439588	Torin Thatcher		
 Q781608	director	Q55420	Fred Zinnemann		
 Q781608	writer	Q154717	Robert Anderson		

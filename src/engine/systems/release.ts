@@ -12,24 +12,19 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { titleCaseLabel } from '../core/text';
 import { CommandError } from '../core/simulation';
-import type { Franchise, Id, MarketingCampaign, Project, Release, Review } from '../domain/model';
+import type { Franchise, Id, MarketingCampaign, Project, Release } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, formatDate, MS_DAY } from '../core/time';
+import { addDays, formatDate, zonedParts, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { BUYERS, EXHIBITORS, GENRE_APPETITE } from '../content/industry';
-import { advancePhase, computeFinalQuality } from './film';
-import { buildFactors } from '../core/audit';
-
-const CRITIC_PUBLICATIONS = [
-  { name: 'The Ledger', influence: 92, harshness: 1.12 },
-  { name: 'Screen Quarterly', influence: 84, harshness: 1.05 },
-  { name: 'The Reel', influence: 71, harshness: 0.94 },
-  { name: 'Continental Review', influence: 66, harshness: 1.18 },
-  { name: 'Frame Society Journal', influence: 58, harshness: 1.24 },
-  { name: 'Popcorn Index', influence: 44, harshness: 0.82 },
-  { name: 'Northline Post', influence: 52, harshness: 0.98 },
-];
+import { isPlayersProject } from './studio-state';
+import { appetiteOf, genreName } from '../content/genres';
+import { audienceReach, rating } from '../content/ratings';
+import { runEmbargoWave } from './critics';
+import { payOnePartner, NETWORKS } from '../content/networks';
+import { advancePhase } from './film';
 
 // ---------------------------------------------------------------------------
 // Registration
@@ -42,7 +37,7 @@ export function registerRelease(sim: Simulation): void {
   sim.onSchedule('rel.open', (item) => openRelease(sim, item.payload.releaseId as Id));
   sim.onSchedule('rel.box_office_day', (item) => runBoxOfficeDay(sim, item.payload.releaseId as Id, item.payload.day as number));
   sim.onSchedule('rel.streaming_window', (item) => runStreamingWindow(sim, item.payload.releaseId as Id, item.payload.week as number));
-  sim.onSchedule('rel.reviews', (item) => publishReviews(sim, item.payload.projectId as Id));
+  sim.onSchedule('rel.reviews', (item) => runEmbargoWave(sim, item.payload.projectId as Id));
   sim.onSchedule('rel.close', (item) => closeRelease(sim, item.payload.releaseId as Id));
 
   // --- Marketing -----------------------------------------------------------
@@ -95,7 +90,7 @@ export function registerRelease(sim: Simulation): void {
         s.schedule({
           at: Math.max(beat.at, s.now),
           kind: 'rel.marketing_beat',
-          label: `${project.title} — ${beat.kind.replace(/_/g, ' ')}`,
+          label: `${titleCaseLabel(project.title)} — ${beat.kind.replace(/_/g, ' ')}`,
           category: 'marketing',
           payload: { campaignId: campaign.id, index },
           priority: 48,
@@ -136,9 +131,12 @@ export function registerRelease(sim: Simulation): void {
       }
 
       const distributor = p.distributorName ?? project.distributorName ?? 'Self-distributed';
-      const buyer = (project.studioId ? BUYERS.get(project.studioId) : undefined) ?? BUYERS.all().find((b) => b.name === distributor);
+      const buyer = (project.studioId ? BUYERS.get(project.studioId) : undefined) ?? (project.networkId ? BUYERS.get(project.networkId) : undefined) ?? BUYERS.all().find((b) => b.name === distributor);
+      // After cinemas a film goes where its studio's deal says; a series lives where it was commissioned.
+      const partner = project.studioId && (p.strategy !== 'streaming_exclusive' && p.strategy !== 'network') ? payOnePartner(project.studioId) : undefined;
+      const network = project.networkId ? NETWORKS.get(project.networkId) : undefined;
 
-      const maxTheaters = p.theaterCount ?? bookingFootprint(project, p.strategy, buyer?.distributionReach ?? 0.4);
+      const maxTheaters = Math.min(4_400, p.theaterCount ?? bookingFootprint(project, p.strategy, buyer?.distributionReach ?? 0.4));
 
       const openingTheaters = p.strategy === 'platform' ? 6 : maxTheaters;
 
@@ -155,6 +153,9 @@ export function registerRelease(sim: Simulation): void {
         maxTheaterCount: maxTheaters,
         territories: p.territories ?? ['domestic', 'international'],
         windows: buildWindows(s, p.strategy, p.openingDate),
+        streamingPartnerId: partner?.network.id ?? (network ? network.id : undefined),
+        streamingPartnerName: partner?.network.name ?? network?.name,
+        market: project.productionCountryId ?? 'us',
         dailyBoxOffice: [],
         totalDomestic: 0,
         totalInternational: 0,
@@ -171,23 +172,13 @@ export function registerRelease(sim: Simulation): void {
       s.schedule({
         at: p.openingDate,
         kind: 'rel.open',
-        label: `${project.title} Opens`,
+        label: `${titleCaseLabel(project.title)} Opens`,
         category: 'release',
         payload: { releaseId: release.id },
         priority: 12,
         refType: 'project', refId: project.id,
         requiresPlayer: false,
       });
-      s.schedule({
-        at: addDays(p.openingDate, -2, s.homeZone),
-        kind: 'rel.reviews',
-        label: `${project.title} — Reviews Embargo Lifts`,
-        category: 'release',
-        payload: { projectId: project.id },
-        priority: 30,
-        refType: 'project', refId: project.id,
-      });
-
       advancePhase(s, project, 'distribution');
       s.emit('rel.distribution_set', { releaseId: release.id, projectId: project.id, strategy: p.strategy, theaterCount: openingTheaters });
       return { releaseId: release.id, theaterCount: openingTheaters, distributorShare: release.distributorShare };
@@ -226,8 +217,14 @@ export function bookingFootprint(
     const take = clamp(specialty * distributorReach, 0, 1);
     screens += chain.screens * take * (strategy === 'limited_theatrical' ? 0.18 : 1);
   }
-  return Math.max(strategy === 'limited_theatrical' ? 120 : 400, Math.round(screens));
+  // Circuits count screens; the trades count theatres, at about four and a
+  // half screens each. The widest release in the country is about 4,400.
+  const theatres = Math.round(screens / SCREENS_PER_THEATRE);
+  return Math.max(strategy === 'limited_theatrical' ? 25 : 600, theatres);
 }
+
+/** Screens per theatre across the circuits, the ratio the trades' theatre counts imply. */
+export const SCREENS_PER_THEATRE = 4.4;
 
 function buildWindows(sim: Simulation, strategy: Release['strategy'], openingDate: number): Release['windows'] {
   const z = sim.homeZone;
@@ -262,11 +259,18 @@ function executeBeat(sim: Simulation, campaignId: Id, index: number): void {
   const project = sim.universe.projects[campaign.projectId];
   if (!project) return;
 
-  const accountId = project.financingIds.find((id) => (sim.ledger.tryAccount(id)?.balance ?? 0) > 0)
-    ?? (project.ownerCompanyId ? sim.universe.companies[project.ownerCompanyId]?.cashAccountId : undefined)
-    ?? sim.universe.people[project.createdById]?.primaryAccountId;
+  // Whoever can actually cover it pays: the project's own financing first,
+  // then the company behind it, then the producer. Picking the first account
+  // with any money in it and giving up when it cannot cover the beat is how a
+  // fully funded picture ends up with no campaign at all.
+  const candidates = [
+    ...project.financingIds,
+    ...(project.ownerCompanyId ? [sim.universe.companies[project.ownerCompanyId]?.cashAccountId] : []),
+    sim.universe.people[project.createdById]?.primaryAccountId,
+  ].filter((id): id is Id => Boolean(id));
+  const accountId = candidates.find((id) => sim.ledger.availableFunds(id) >= beat.spend);
 
-  if (accountId && sim.ledger.availableFunds(accountId) >= beat.spend) {
+  if (accountId) {
     sim.expense(accountId, beat.spend, `${project.title} — ${beat.kind.replace(/_/g, ' ')}`, 'marketing', { refType: 'project', refId: project.id });
     campaign.spent += beat.spend;
   } else {
@@ -324,78 +328,9 @@ function executeBeat(sim: Simulation, campaignId: Id, index: number): void {
 }
 
 // ---------------------------------------------------------------------------
-// Reviews
+// Reviews live in systems/critics. The schedule kind below is kept so a
+// review date saved before that system existed still fires.
 // ---------------------------------------------------------------------------
-
-function publishReviews(sim: Simulation, projectId: Id): void {
-  const project = sim.universe.projects[projectId];
-  if (!project) return;
-  const quality = project.finalQuality ?? computeFinalQuality(sim, project);
-  const rng = sim.rng('reviews', project.id);
-
-  // Critics and audiences are separate populations with separate tastes.
-  const prestigeLean = project.genres.some((g) => ['drama', 'biography', 'documentary', 'experimental'].includes(g)) ? 8 : -4;
-  const crowdLean = project.genres.some((g) => ['action', 'comedy', 'horror', 'family', 'adventure'].includes(g)) ? 7 : -3;
-
-  const scores: number[] = [];
-  for (const publication of CRITIC_PUBLICATIONS) {
-    const score = clamp(Math.round((quality + prestigeLean) * publication.harshness + rng.normal(0, 11)), 0, 100);
-    scores.push(score);
-    const review: Review = {
-      id: sim.nextId('history'),
-      saveId: sim.universe.meta.id,
-      projectId: project.id,
-      source: 'critic',
-      publicationName: publication.name,
-      criticName: undefined,
-      score,
-      quote: reviewQuote(score, project.title),
-      at: sim.now,
-      influence: publication.influence,
-    };
-    sim.universe.reviews[review.id] = review;
-  }
-
-  const weighted = CRITIC_PUBLICATIONS.reduce((s, p, i) => s + (scores[i] ?? 0) * p.influence, 0)
-    / CRITIC_PUBLICATIONS.reduce((s, p) => s + p.influence, 0);
-  project.criticScore = Math.round(weighted);
-
-  // The audience score lands later, once people have actually seen it.
-  const campaign = Object.values(sim.universe.marketingCampaigns).find((c) => c.projectId === project.id);
-  const expectationGap = campaign ? clamp((campaign.intent - quality) / 3, -12, 12) : 0;
-  project.audienceScore = clamp(Math.round(quality + crowdLean - expectationGap + rng.normal(0, 8)), 0, 100);
-
-  sim.audit({
-    kind: 'rel.reception', subjectType: 'project', subjectId: project.id,
-    question: 'Why did it review the way it did?',
-    summary: `Critics ${project.criticScore} out of 100, audiences ${project.audienceScore}. ${expectationGap > 5 ? 'The marketing promised more than the film delivers.' : expectationGap < -5 ? 'It plays better than the campaign suggested.' : 'Reception is roughly in line with the film.'}`,
-    factors: buildFactors([
-      { label: 'The Finished Film', detail: `Assembled quality is ${quality} out of 100.`, weight: 0.62, value: quality / 100 },
-      { label: 'Genre And Critical Taste', detail: prestigeLean > 0 ? 'Critics are generally warmer to this kind of material.' : 'Critics are generally cooler on this kind of material.', weight: 0.14, value: remap(prestigeLean, -8, 8, 0, 1) },
-      { label: 'Expectation Gap', detail: campaign ? `The campaign drove intent to ${Math.round(campaign.intent)}. Audiences score against what they were promised.` : 'No campaign to set expectations.', weight: -0.14, value: remap(expectationGap, -12, 12, 0, 1) },
-      { label: 'Individual Taste', detail: 'Which critics were assigned it, which nobody controls.', weight: 0.10, value: 0.5, knowable: false },
-    ]).factors,
-    score: quality,
-    outcome: `critics ${project.criticScore}, audience ${project.audienceScore}`,
-  });
-
-  sim.notify({
-    category: 'release',
-    title: `Reviews are in for ${project.title}`,
-    body: `${project.criticScore} out of 100 from critics.`,
-    importance: 66, route: '/workspace/projects',
-  });
-  sim.emit('rel.reviews_published', { projectId: project.id, criticScore: project.criticScore, audienceScore: project.audienceScore });
-}
-
-function reviewQuote(score: number, title: string): string {
-  if (score >= 88) return `The best thing of its kind in years. ${title} is the real article.`;
-  if (score >= 74) return `Confident, controlled and genuinely moving in places.`;
-  if (score >= 60) return `Works more often than it does not, and the cast carries the rest.`;
-  if (score >= 45) return `Competent and forgettable. There is a better film buried in here.`;
-  if (score >= 28) return `Handsomely mounted and completely inert.`;
-  return `A misfire from the first frame. Nobody involved is served by it.`;
-}
 
 // ---------------------------------------------------------------------------
 // Theatrical
@@ -416,7 +351,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, week * 7, sim.homeZone),
         kind: 'rel.streaming_window',
-        label: `${project.title} — Streaming Week ${week + 1}`,
+        label: `${titleCaseLabel(project.title)} — Streaming Week ${week + 1}`,
         category: 'release',
         payload: { releaseId: release.id, week },
         priority: 74,
@@ -430,7 +365,7 @@ function openRelease(sim: Simulation, releaseId: Id): void {
       sim.schedule({
         at: addDays(release.openingDate, day, sim.homeZone),
         kind: 'rel.box_office_day',
-        label: `${project.title} — Box Office Day ${day + 1}`,
+        label: `${titleCaseLabel(project.title)} — Box Office Day ${day + 1}`,
         category: 'release',
         payload: { releaseId: release.id, day },
         priority: 76,
@@ -442,26 +377,57 @@ function openRelease(sim: Simulation, releaseId: Id): void {
   sim.schedule({
     at: addDays(release.openingDate, 95, sim.homeZone),
     kind: 'rel.close',
-    label: `${project.title} — Run Closes`,
+    label: `${titleCaseLabel(project.title)} — Run Closes`,
     category: 'release',
     payload: { releaseId: release.id },
     priority: 40,
     refType: 'project', refId: project.id,
   });
 
-  sim.notify({
-    category: 'release',
-    title: `${project.title} is out`,
-    body: release.theaterCount > 0
-      ? `Opening in ${release.theaterCount.toLocaleString('en-US')} theatres.`
-      : `Streaming on ${release.distributorName}.`,
-    importance: 88, route: '/workspace/projects',
-  });
+  if (isPlayersProject(sim, project)) {
+    sim.notify({
+      category: 'release',
+      title: `${project.title} is out`,
+      body: release.theaterCount > 0
+        ? `Opening in ${release.theaterCount.toLocaleString('en-US')} theatres.`
+        : `Streaming on ${release.distributorName}.`,
+      importance: 88, route: '/workspace/projects',
+    });
+  }
   sim.emit('project.released', {
     projectId: project.id, releaseId: release.id,
     strategy: release.strategy, theaterCount: release.theaterCount,
   });
 }
+
+/**
+ * What a theatre takes on a given day of the week, with Friday as one.
+ *
+ * These are the shape of an ordinary week in an American cinema: Saturday is
+ * the biggest day, Sunday falls away, and midweek is a third of the weekend
+ * with a bump on the discount day. Everything else in the model is calibrated
+ * against Friday, so this curve is what turns one day into a weekend.
+ */
+const WEEKDAY_TAKE: readonly number[] = [
+  0.72, // Sunday
+  0.32, // Monday
+  0.38, // Tuesday, the discount day
+  0.30, // Wednesday
+  0.29, // Thursday
+  1.00, // Friday
+  1.18, // Saturday
+];
+
+/**
+ * The biggest opening day a single theatre has ever taken, in cents, and the
+ * ceiling everything else is a fraction of. SLATE's calibration from the
+ * widest openings on record: about fifty thousand dollars a theatre across
+ * the three days, which is a little over seventeen on the Friday.
+ */
+const CEILING_PER_THEATRE = 16_200_00;
+
+/** A platform release plays to a full house in a handful of theatres, so its per-theatre take is an order up. */
+const PLATFORM_MULTIPLIER = 9;
 
 function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
   const release = sim.universe.releases[releaseId];
@@ -475,28 +441,70 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
   const quality = project.finalQuality ?? 50;
   const critics = project.criticScore ?? quality;
   const audience = project.audienceScore ?? quality;
-  const appetite = project.genres.reduce((s, g) => s + (GENRE_APPETITE[g] ?? 45), 0) / Math.max(1, project.genres.length);
+  const appetite = appetiteOf(project.genres);
 
   // Opening is driven by awareness and intent. Legs are driven by word of mouth.
-  const awareness = campaign?.awareness ?? 25;
-  const intent = campaign?.intent ?? 15;
+  //
+  // A release carries a floor of both on its own: booking two thousand
+  // theatres puts a trailer in front of every audience for a month and a
+  // poster in every lobby, whether anybody paid for a campaign or not. A film
+  // the studio has given up on still opens to something, which is what a dump
+  // in January looks like.
+  const releaseFloor = remap(release.theaterCount, 0, 3_500, 10, 45);
+  const awareness = Math.max(campaign?.awareness ?? 0, releaseFloor);
+  const intent = Math.max(campaign?.intent ?? 0, releaseFloor * 0.45);
 
-  const starPower = project.castIds.reduce((s, id) => s + (sim.universe.people[id]?.reputation.publicFame ?? 0), 0) / Math.max(1, project.castIds.length);
+  // An empty cast list means nobody has been modelled, not that nobody in it
+  // is famous, so it reads as neutral rather than as a penalty.
+  const starPower = project.castIds.length === 0 ? null
+    : project.castIds.reduce((s, id) => s + (sim.universe.people[id]?.reputation.publicFame ?? 0), 0) / project.castIds.length;
+  const weekdayFactor = weekdayTakeOf(sim, release, day);
 
   if (day === 0) {
-    // Opening day admissions.
-    // A series people want more of opens bigger than a standalone; one they
-    // are tired of opens smaller, however good this entry happens to be.
-    const perTheatre = remap(awareness, 0, 100, 120, 2600)
-      * remap(intent, 0, 100, 0.35, 1.9)
-      * remap(appetite, 0, 100, 0.6, 1.35)
-      * remap(starPower, 0, 100, 0.85, 1.35)
-      * franchiseLift(sim, project)
-      * rng.float(0.82, 1.22);
-    const admissions = Math.round(release.theaterCount * perTheatre / 10);
-    const ticketPrice = 1_150;
-    const gross = admissions * ticketPrice;
+    // Opening day, as a fraction of the biggest day a theatre has ever had.
+    //
+    // Awareness is how many people know it exists; intent is how many of
+    // those turn up on the first day rather than waiting. Both curve, because
+    // the difference between ninety and a hundred is worth far more than the
+    // difference between ten and twenty. Everything after that is a
+    // multiplier the business would recognise: what the genre is worth, who
+    // is in it, whether people want more of this series, what certificate it
+    // carries, what else opened, and the weekend itself.
+    const competition = competitionFactor(sim, release);
+    const lift = franchiseLift(sim, project);
+    const luck = rng.float(0.85, 1.18);
+    const reach = Math.pow(clamp(awareness, 0, 100) / 100, 1.55);
+    const conversion = Math.pow(clamp(intent, 0, 100) / 100, 1.05);
+    const genreFactor = remap(appetite, 20, 90, 0.72, 1.2);
+    const starFactor = starPower === null ? 1 : remap(starPower, 0, 100, 0.88, 1.3);
+    const certificate = audienceReach(project.contentRating);
+    const platform = release.strategy === 'platform' ? PLATFORM_MULTIPLIER * remap(critics, 40, 95, 0.5, 1.6) : 1;
+
+    const perTheatre = CEILING_PER_THEATRE * reach * conversion
+      * genreFactor * starFactor * lift * certificate * competition.factor * platform * luck;
+    const gross = Math.round(release.theaterCount * perTheatre * weekdayFactor);
     recordBoxOfficeDay(sim, release, project, day, gross, rng);
+
+    if (isPlayersProject(sim, project)) {
+      sim.audit({
+        kind: 'rel.opening_decided', subjectType: 'project', subjectId: project.id,
+        question: `Why did ${project.title} open the way it did?`,
+        summary: `${formatMoneyCompact(gross)} on opening day across ${release.theaterCount.toLocaleString('en-US')} theatres, ${formatMoney(Math.round(perTheatre * weekdayFactor))} a theatre.`,
+        factors: [
+          { label: 'Awareness', detail: `${Math.round(awareness)} out of 100 know it exists. That is what the campaign bought.`, weight: 0.28, contribution: reach, knowable: true },
+          { label: 'Intent', detail: `${Math.round(intent)} out of 100 of those mean to see it on the first weekend rather than wait.`, weight: 0.22, contribution: conversion, knowable: true },
+          { label: 'Genre Appetite', detail: `${project.genres.map(genreName).join(', ')} reads ${Math.round(appetite)} out of 100 with audiences.`, weight: 0.1, contribution: genreFactor, knowable: true },
+          { label: 'Star Power', detail: starPower === null ? 'Nobody in it is a draw the model knows about.' : `The cast's fame averages ${Math.round(starPower)} out of 100.`, weight: 0.08, contribution: starFactor, knowable: true },
+          { label: 'Franchise', detail: lift === 1 ? 'A standalone. Nothing carried over.' : `Appetite for the series multiplies the opening by ${lift.toFixed(2)}.`, weight: 0.1, contribution: lift, knowable: true },
+          { label: 'Certificate', detail: project.contentRating ? `${rating(project.contentRating)?.code ?? project.contentRating} leaves about ${Math.round(certificate * 100)}% of the audience able to buy a ticket.` : 'Uncertified. The chains treat that cautiously.', weight: 0.1, contribution: certificate, knowable: true },
+          { label: 'Competition', detail: competition.detail, weight: 0.12, contribution: competition.factor, knowable: true },
+          ...(platform !== 1 ? [{ label: 'Platform Release', detail: `A handful of theatres playing to full houses takes ${platform.toFixed(1)} times what a wide house would.`, weight: 0.1, contribution: platform, knowable: true }] : []),
+          { label: 'The Weekend Itself', detail: 'Weather, a game, a mood. Not knowable in advance.', weight: 0.05, contribution: luck, knowable: false },
+        ],
+        seed: `box_office|${release.id}|0`, roll: luck, probability: competition.factor, score: perTheatre / CEILING_PER_THEATRE,
+        outcome: 'opened',
+      });
+    }
     return;
   }
 
@@ -504,27 +512,61 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
   if (!previous) return;
 
   // Word of mouth: the gap between what people expected and what they got.
-  const wordOfMouth = remap(audience - intent * 0.55, -40, 40, 0.72, 1.16);
-  const weekday = (day % 7);
-  const weekdayFactor = weekday === 5 ? 1.55 : weekday === 6 ? 1.35 : weekday === 0 ? 0.98 : 0.62;
-  const decay = Math.pow(0.86 * wordOfMouth, 1) * (day < 7 ? 1 : 0.94);
+  // A picture that plays better than it sold holds; one that sold better than
+  // it plays falls off a cliff in its second weekend. This sets how fast the
+  // run decays and never turns the decay into growth — the best legs on
+  // record hold about seventy per cent week to week, the worst about a third.
+  const wordOfMouth = clamp(audience - intent * 0.55, -20, 45);
+  const daily = remap(wordOfMouth, -20, 45, 0.830, 0.958) * (day < 7 ? 1 : day < 21 ? 0.995 : 0.985);
 
   // Platform releases expand rather than contract in the early weeks.
-  if (release.strategy === 'platform' && day > 6 && release.theaterCount < release.maxTheaterCount) {
+  if (release.strategy === 'platform' && day > 6 && day % 7 === 0 && release.theaterCount < release.maxTheaterCount) {
     const expansion = critics > 72 ? 4.5 : critics > 58 ? 2.4 : 1.15;
     release.theaterCount = Math.min(release.maxTheaterCount, Math.round(release.theaterCount * expansion));
   } else if (day > 21) {
-    release.theaterCount = Math.round(release.theaterCount * 0.82);
+    release.theaterCount = Math.round(release.theaterCount * 0.94);
   }
 
-  const base = previous.domestic / Math.max(0.4, weekdayFactorOf(day - 1));
-  const gross = Math.max(0, Math.round(base * decay * weekdayFactor * rng.float(0.9, 1.1)));
+  // Yesterday's take, lifted back to a Friday, decayed, then set on today.
+  const base = previous.domestic / Math.max(0.2, weekdayTakeOf(sim, release, day - 1));
+  const gross = Math.max(0, Math.round(base * daily * weekdayFactor * rng.float(0.95, 1.05)));
   recordBoxOfficeDay(sim, release, project, day, gross, rng);
 }
 
-function weekdayFactorOf(day: number): number {
-  const weekday = day % 7;
-  return weekday === 5 ? 1.55 : weekday === 6 ? 1.35 : weekday === 0 ? 0.98 : 0.62;
+/** What day of the week the nth day of a run falls on, as a share of a Friday. */
+function weekdayTakeOf(sim: Simulation, release: Release, day: number): number {
+  const weekday = zonedParts(addDays(release.openingDate, day, sim.homeZone), sim.homeZone).weekday;
+  return WEEKDAY_TAKE[weekday] ?? 0.5;
+}
+
+/**
+ * What else is in theatres the weekend a picture opens. Every wide release
+ * opening within three days takes a slice, a big holdover in its second
+ * weekend takes a smaller one, and the slices are capped: nobody loses more
+ * than three tenths of an opening to the calendar.
+ */
+export function competitionFactor(sim: Simulation, release: Release): { factor: number; detail: string } {
+  let haircut = 0;
+  const rivals: string[] = [];
+  for (const other of Object.values(sim.universe.releases)) {
+    if (other.id === release.id || other.theaterCount < 1500) continue;
+    if (other.status !== 'in_release' && other.status !== 'planned') continue;
+    const gap = Math.abs(other.openingDate - release.openingDate) / MS_DAY;
+    const project = sim.universe.projects[other.projectId];
+    if (!project) continue;
+    const campaign = Object.values(sim.universe.marketingCampaigns).find((c) => c.projectId === project.id);
+    const awareness = campaign?.awareness ?? 25;
+    if (gap <= 3) {
+      haircut += remap(awareness, 40, 95, 0.03, 0.12);
+      rivals.push(project.title);
+    } else if (gap >= 5 && gap <= 9 && other.openingDate < release.openingDate && awareness >= 70) {
+      haircut += 0.03;
+      rivals.push(`${project.title} (holdover)`);
+    }
+  }
+  const factor = 1 - clamp(haircut, 0, 0.3);
+  const detail = rivals.length === 0 ? 'A clear weekend. Nothing else of size opened against it.' : `Against ${rivals.slice(0, 3).join(', ')}${rivals.length > 3 ? ` and ${rivals.length - 3} more` : ''}: ${Math.round((1 - factor) * 100)}% off the opening.`;
+  return { factor, detail };
 }
 
 function recordBoxOfficeDay(
@@ -548,6 +590,10 @@ function recordBoxOfficeDay(
 
   if (day === 2) {
     const openingWeekend = release.dailyBoxOffice.slice(0, 3).reduce((s, d) => s + d.domestic, 0);
+    if (!isPlayersProject(sim, project)) {
+      sim.emit('rel.opening_weekend', { projectId: project.id, releaseId: release.id, gross: openingWeekend, theaters: release.theaterCount });
+      return;
+    }
     sim.notify({
       category: 'release',
       title: `${project.title} opened to ${formatMoneyCompact(openingWeekend)}`,
@@ -616,7 +662,7 @@ function runStreamingWindow(sim: Simulation, releaseId: Id, week: number): void 
 
   project.streamingHoursViewed = results.hoursViewed;
 
-  if (week === 0) {
+  if (week === 0 && isPlayersProject(sim, project)) {
     sim.notify({
       category: 'release',
       title: `${project.title} — first week on ${release.distributorName}`,
@@ -725,7 +771,7 @@ function closeRelease(sim: Simulation, releaseId: Id): void {
     outcome: profit >= 0 ? 'profitable' : 'loss',
   });
 
-  sim.remember({
+  if (isPlayersProject(sim, project)) sim.remember({
     category: 'project',
     title: profit >= 0 ? `${project.title} turned a profit` : `${project.title} did not recoup`,
     detail: `${summary} Producer revenue ${formatMoneyCompact(netToProducer)} against ${formatMoneyCompact(project.totalCost)} of cost.`,

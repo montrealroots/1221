@@ -2255,6 +2255,7 @@ are you a mason
 are you listening
 are you smarter than a 5th grader
 are you smarter than a canadian 5th grader
+are you smarter than a celebrity
 are you there chelsea
 are you there god it s me margaret
 area 51
@@ -3169,7 +3170,6 @@ bebe runs after his watch
 bebe s habille tout seul
 bebe s kids
 bebe se noie
-bebe se venge
 bebe soigne son pere
 bebe sur la canebiere
 bebe veut imiter saint martin
@@ -6497,6 +6497,7 @@ damage
 damaged goods
 dame chocolate
 dames
+dames ahoy
 damien omen ii
 damn citizen
 damn yankees
@@ -6585,7 +6586,6 @@ daniel spellbound
 danika
 danny collins
 danny phantom
-dans la tourmente
 dans la vie
 dansaren
 danse des ouled naid
@@ -6666,7 +6666,6 @@ das licht
 das madchen ohne pyjama
 das perfekte geheimnis
 das ratsel der roten orchidee
-das recht der gattin
 das schlangenei
 das schone abenteuer
 das schreckliche madchen
@@ -12437,6 +12436,7 @@ hush hush sweet charlotte
 hush money
 hustle
 hustle flow
+hustruens ret
 hutch the honeybee
 hvis lille pige er du
 hvordan vi slipper af med de andre
@@ -13989,6 +13989,7 @@ just visiting
 just william s luck
 just wright
 just yet but not quite
+juste une illusion
 justice league
 justice league crisis on infinite earths
 justice league crisis on infinite earths part one
@@ -14514,6 +14515,8 @@ koi sugata kitsune goten
 koirat eivat kayta housuja
 koizora
 kojak
+koko lamps aladdin
+koko s courtship
 koko s earth control
 koko s field daze
 koko s germ jam
@@ -14522,6 +14525,7 @@ koko s kink
 koko s magic
 koko s tattoo
 koko s war dogs
+koko smokes
 kokowaah
 kokowaah 2
 kokusai himitsu keisatsu kagi no kagi
@@ -14566,6 +14570,7 @@ kralice
 kramer vs kramer
 krampus
 kraven the hunter
+krazy kat in farm relief
 krazy s race of time
 krazy s shoe shop
 krazy s waterloo
@@ -14652,7 +14657,6 @@ l alpagueur
 l amant de lady chatterley
 l amante di gramigna
 l ame ideale
-l amerique a soif
 l ami de mon amie
 l amore e cieco italia
 l amore ritorna
@@ -14662,7 +14666,7 @@ l amour est un crime parfait
 l amour et psyche
 l amour l apres midi
 l amour par terre
-l an mil
+l an 1000
 l anatomie du conscrit
 l ane de buridan
 l annee derniere a marienbad
@@ -14772,7 +14776,6 @@ la academia
 la bague
 la bamba
 la bande a bouboule
-la bande fantome
 la bataille de gaulle l age de fer
 la bataille de san sebastian
 la belle aux cheveux d or
@@ -14793,6 +14796,7 @@ la boum 2
 la bourse et la vie
 la brouille
 la buche
+la cage
 la cage aux folles
 la cage aux folles 2
 la cage aux folles 3
@@ -15654,6 +15658,7 @@ left behind
 left for dead
 left handed law
 legacy of fear
+legado
 legal eagles
 legally blonde 2 red white blonde
 legally blonde the musical
@@ -15729,7 +15734,6 @@ les as du turf
 les audaces de coeur
 les aventures d anthony
 les aventures d arsene lupin
-les aventures de moby dick
 les aventures de philibert capitaine puceau
 les aventuriers
 les barbouzes
@@ -15754,7 +15758,6 @@ les couloirs du temps les visiteurs 2
 les cowboys
 les debuts d un canotier
 les demoiselles de rochefort
-les depravees
 les deux gamines
 les deux meres
 les deux orphelines
@@ -16970,7 +16973,6 @@ making mr right
 making stars
 making uncle jealous
 mako island of secrets
-mako mermaids an h2o adventure
 maktub
 mal de pierres
 mal mo e the secret mission
@@ -17379,6 +17381,7 @@ max virtuose
 maxed out
 maxie
 maximum overdrive
+maximum pleasure guaranteed
 maximum ride
 maximum risk
 maxxxine
@@ -17454,7 +17457,6 @@ mediterraneo
 medium cool
 medusa
 medusa deluxe
-medusa serie de television colombiana
 mees kees op de planken
 meet danny wilson
 meet dave
@@ -18814,7 +18816,6 @@ napoleon dynamite
 nappily ever after
 napping princess
 naqoyqatsi
-nar sjoman ga i land
 narayana
 narc
 narco saints
@@ -19599,6 +19600,7 @@ ohh nooo mr bill presents
 ohjus
 oil for the lamps of china
 oil for the lamps of china film
+oil s well
 oil s well that ends well
 oiling uncle
 oilspot and lipstick
@@ -20218,7 +20220,6 @@ owly to bed
 owly to bird
 owning mahowny
 oxen
-oy oy oy
 oz the great and powerful
 ozark
 ozzy
@@ -21171,9 +21172,9 @@ powder river
 powder river rustlers
 power
 power ballad
+power book iii raising kanan
 power book iv force
 power dive
-power iii
 power of hope precure full bloom
 power over men
 power rangers megaforce
@@ -27884,6 +27885,7 @@ the dupe
 the durango kid
 the dust factory
 the duxorcist
+the dynasty uconn huskies
 the eagle
 the eagle and the hawk
 the eagle feathers
@@ -29364,6 +29366,7 @@ the january man
 the japon
 the jay bird
 the jayhawkers
+the jazz fool
 the jazz singer
 the jeffersons
 the jennie project
@@ -30520,6 +30523,7 @@ the morning show
 the mortal instruments city of bones
 the mortal storm
 the mortgaged wife
+the mortician
 the mosquito coast
 the most beautiful
 the most precious of cargoes
@@ -34436,6 +34440,7 @@ tutto chiede salvezza
 tuvalu
 tuya s marriage
 tva killar och en tjej
+tvillingebr drene
 twas ever thus
 twas the night before christmas
 twas the night before christmas poem

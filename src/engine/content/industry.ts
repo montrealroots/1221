@@ -7,21 +7,22 @@
  * the day the save starts is the record, and everything after is SLATE, and
  * the interface says which is which.
  *
- * Two television outlets below are still SLATE's own placeholders, marked
- * `simulated`, until the networks step replaces them with the real broadcast
- * and cable networks. The agencies and exhibitor chains are likewise
- * placeholders until their own steps.
+ * The networks are the real ones too (content/networks). The agencies and
+ * exhibitor chains below are still SLATE's own placeholders, marked
+ * `simulated`, until their own steps.
  */
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
 import { STUDIOS, type Studio } from './studios';
+import { NETWORKS, type Network } from './networks';
+import { GENRES_FULL, GENRE_ALIASES, GENRE_IDS, genre } from './genres';
 
 
 const V = REFERENCE_VERSION;
 const SIM = {
   source: 'simulated', confidence: 'high', version: V,
-  note: 'Original to SLATE. Not a real company. A placeholder until the networks step.',
+  note: 'Original to SLATE. Not a real company. A placeholder until its own step.',
 } as const;
 
 export interface Buyer extends ReferenceRecord {
@@ -49,6 +50,8 @@ export interface Buyer extends ReferenceRecord {
   description: string;
   /** Set when the buyer is a real studio in the registry. */
   studioId?: string;
+  /** Set when the buyer is a real network or service in the registry. */
+  networkId?: string;
 }
 
 function buyerOf(studio: Studio): Buyer {
@@ -68,17 +71,26 @@ function buyerOf(studio: Studio): Buyer {
   };
 }
 
-const TV_PLACEHOLDERS: Buyer[] = [
-  { id: 'atlasnet', name: 'Atlas Network', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 12_000_000_00, budgetFloor: 1_500_000_00, riskAppetite: 28, prestigeBias: 34, wants: ['crime', 'medical', 'comedy', 'family', 'legal'], avoids: ['experimental', 'horror'], formats: ['series', 'tv_movie'], slateSize: 22, accessDifficulty: 66, distributionReach: 0.0, description: 'Broadcast. Twenty-two episodes, a timeslot and a lead-in that decides your fate. A placeholder until the real networks arrive.', ...SIM },
-  { id: 'vertexcable', name: 'Vertex', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 20_000_000_00, budgetFloor: 2_500_000_00, riskAppetite: 72, prestigeBias: 88, wants: ['drama', 'crime', 'science fiction', 'limited_series'], avoids: ['family'], formats: ['series', 'limited_series'], slateSize: 8, accessDifficulty: 84, distributionReach: 0.0, description: 'Premium cable. Ten episodes, no notes worth the name, and a habit of making careers. A placeholder until the real networks arrive.', ...SIM },
-];
+function buyerOfNetwork(network: Network): Buyer {
+  return {
+    id: network.id, name: network.name, aliases: network.aliases, type: network.type === 'streaming' ? 'streamer' : 'network', locationId: network.countryId === 'us' ? 'us-ca-losangeles' : 'us-ny-newyork',
+    budgetCeiling: network.budgetCeiling, budgetFloor: network.budgetFloor,
+    riskAppetite: network.riskAppetite, prestigeBias: network.prestigeBias,
+    wants: network.wants, avoids: network.avoids, formats: network.formats, slateSize: network.slateSize,
+    accessDifficulty: network.accessDifficulty, distributionReach: 0,
+    description: network.description, networkId: network.id,
+    source: 'calibrated_estimate', confidence: 'medium', version: V,
+    note: 'A real network. What it commissions and what it pays are SLATE\'s calibration from the public record.',
+  };
+}
 
-export const BUYERS = new Registry<Buyer>('buyers', [...STUDIOS.all().map(buyerOf), ...TV_PLACEHOLDERS]);
+export const BUYERS = new Registry<Buyer>('buyers', [...STUDIOS.all().map(buyerOf), ...NETWORKS.all().map(buyerOfNetwork)]);
 
 /** The fictional buyers earlier saves may still point at, by id, with the real name they map to for history. */
 export const LEGACY_BUYER_NAMES: Readonly<Record<string, string>> = {
   meridian: 'Meridian Pictures', crestwood: 'Crestwood Studios', halcyon: 'Halcyon Entertainment', northgate: 'Northgate Films',
   brightline: 'Brightline Pictures', tessellate: 'Tessellate', lumenplus: 'Lumen+', pinewharf: 'Pine Wharf Media', sablefox: 'Sable & Fox',
+  atlasnet: 'Atlas Network', vertexcable: 'Vertex',
 };
 
 export interface Agency extends ReferenceRecord {
@@ -128,29 +140,26 @@ export const EXHIBITORS = new Registry<ExhibitorChain>('exhibitors', [
 // The award bodies and festivals are the real ones: see content/events-data,
 // content/award-bodies and content/festival-rules.
 
-export const GENRES = [
-  'action', 'adventure', 'animation', 'biography', 'comedy', 'crime', 'documentary',
-  'drama', 'family', 'fantasy', 'horror', 'legal', 'medical', 'musical', 'mystery',
-  'romance', 'science fiction', 'sport', 'thriller', 'war', 'western', 'experimental',
-] as const;
+/**
+ * The genres a project may be built from. The full list, with what each one
+ * is and what makes it good, lives in content/genres; this re-exports the
+ * ids so everything that already asked this module keeps working.
+ */
+export const GENRES: readonly string[] = GENRE_IDS;
 
-export type Genre = (typeof GENRES)[number];
+export type Genre = string;
 
 /** Base audience appetite by genre, 0-100. Feeds greenlight and box office. */
-export const GENRE_APPETITE: Readonly<Record<string, number>> = {
-  action: 78, adventure: 76, animation: 72, biography: 48, comedy: 68, crime: 62,
-  documentary: 32, drama: 54, family: 74, fantasy: 66, horror: 70, legal: 44,
-  medical: 42, musical: 46, mystery: 56, romance: 58, 'science fiction': 74,
-  sport: 48, thriller: 68, war: 44, western: 34, experimental: 14,
-};
+export const GENRE_APPETITE: Readonly<Record<string, number>> = Object.fromEntries([
+  ...GENRES_FULL.map((g) => [g.id, g.appetite]),
+  ...Object.entries(GENRE_ALIASES).map(([alias, id]) => [alias, genre(id)?.appetite ?? 45]),
+]);
 
 /** Typical budget band by genre, as a multiplier on a baseline. */
-export const GENRE_BUDGET_INDEX: Readonly<Record<string, number>> = {
-  action: 2.6, adventure: 2.4, animation: 2.2, biography: 0.7, comedy: 0.6, crime: 0.8,
-  documentary: 0.15, drama: 0.6, family: 1.4, fantasy: 2.2, horror: 0.25, legal: 0.6,
-  medical: 0.6, musical: 1.2, mystery: 0.7, romance: 0.5, 'science fiction': 2.0,
-  sport: 0.8, thriller: 0.8, war: 1.8, western: 1.1, experimental: 0.2,
-};
+export const GENRE_BUDGET_INDEX: Readonly<Record<string, number>> = Object.fromEntries([
+  ...GENRES_FULL.map((g) => [g.id, g.budgetIndex]),
+  ...Object.entries(GENRE_ALIASES).map(([alias, id]) => [alias, genre(id)?.budgetIndex ?? 0.8]),
+]);
 
 export const DEPARTMENTS = [
   'production', 'direction', 'camera', 'grip', 'electric', 'art', 'set_decoration',

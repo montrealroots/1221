@@ -56,11 +56,11 @@ Q12323242	cinematographer	Q22303336	Dirk Brüel
 Q12323242	editor	Q29010906	Grete Møldrup		
 Q12323242	cast	Q12310561	Esben Høilund Carlsen		
 Q12323242	cast	Q1399974	Kim Magnusson		
-Q12323242	cast	Q4569822	Бирте Бакхаусен		
-Q12323242	cast	Q435366	ロッテ・タープ		
+Q12323242	cast	Q4569822	Birthe Backhausen		
+Q12323242	cast	Q435366	Lotte Tarp		
 Q12323242	cast	Q38052694	Poul Erik Christiansen		
 Q12323242	cast	Q2017909	Peter Schrøder		
-Q12323242	cast	Q289924	ギタ・ナービュ		
+Q12323242	cast	Q289924	Ghita Nørby		
 Q6727707	director	Q5626623	Göran Graffman		
 Q6727707	writer	Q55767	Astrid Lindgren		
 Q6727707	composer	Q726556	Bengt Hallberg		
@@ -99,7 +99,7 @@ Q1765389	director	Q714141	Lasse Åberg
 Q1765389	director	Q5783480	Peter Hald		
 Q1765389	writer	Q714141	Lasse Åberg		
 Q1765389	writer	Q5891339	Bo Jonsson		
-Q1765389	writer	Q133105514	Q133105514		
+Q1765389	writer	Q133105514	Marianne Axelsson		
 Q1765389	composer	Q6033801	Bengt Palmers		
 Q1765389	producer	Q5891339	Bo Jonsson		
 Q1765389	cinematographer	Q515579	Jörgen Persson		
@@ -188,7 +188,7 @@ Q1342677	cast	Q1642634	Håkan Serner
 Q1342677	cast	Q530501	Emy Storm		
 Q1342677	cast	Q5626623	Göran Graffman		
 Q1342677	cast	Q4580446	Lena Brogren		
-Q1342677	cast	Q1090835	ヤール・キューレ		
+Q1342677	cast	Q1090835	Jarl Kulle		
 Q1342677	cast	Q264921	Allan Edwall		
 Q1342677	cast	Q175910	Lars Amble		
 Q1342677	cast	Q4945976	Lottie Ejebrant		
@@ -406,7 +406,7 @@ Q237222	award		National Board of Review: Top Ten Films
 Q237222	award		Sundance Film Festival U.S. Dramatic Grand Jury Prize Award		
 Q6321278	director	Q5707215	Mikael Ekman		
 Q6321278	writer	Q343362	Henning Bahs		
-Q6321278	writer	Q1254876	エリック・ボーリング		
+Q6321278	writer	Q1254876	Erik Balling		
 Q6321278	writer	Q5600542	Rolf Börjlind		
 Q6321278	composer	Q2127276	Ragnar Grippe		
 Q6321278	producer	Q5629293	Ingemar Ejve		
@@ -502,7 +502,7 @@ Q10493843	cast	Q4569927	Ing-Marie Carlsson
 Q10493843	cast	Q1378879	Povel Ramel		
 Q10493843	cast	Q208667	Stellan Skarsgård		
 Q10493843	cast	Q4935054	Catharina Alinder		
-Q10493843	cast	Q6062217	オルヤン・ローンバリ		
+Q10493843	cast	Q6062217	Örjan Ramberg		
 Q10493843	cast	Q5958700	Martin Lindström		
 Q10493843	cast	Q4971130	Gunilla Olsson		
 Q10493843	cast	Q3357143	Sverre Anker Ousdal		
@@ -537,11 +537,11 @@ Q1767478	composer	Q6033801	Bengt Palmers
 Q1767478	producer	Q5891339	Bo Jonsson		
 Q1767478	cinematographer	Q95887140	Dan Myhrman		
 Q1767478	cinematographer	Q110311649	Hanno-Heinz Fuchs		
-Q1767478	cinematographer	Q133201112	Q133201112		
+Q1767478	cinematographer	Q133201112	Johan Swedbrink		
 Q1767478	cinematographer	Q133201575	Felix S:t Clair-Renard		
 Q1767478	editor	Q39072720	Sylvia Ingemarsson		
 Q1767478	costume_designer	Q95728308	Ingabritt Adriansson		
-Q1767478	costume_designer	Q133206153	Q133206153		
+Q1767478	costume_designer	Q133206153	Inger Martin		
 Q1767478	production_designer	Q123499235	Catti Åselius-Lidbeck		
 Q1767478	cast	Q1770250	Jon Skolmen		
 Q1767478	cast	Q247626	Barbro Hiort af Ornäs	Stig Helmers mamma	
@@ -554,7 +554,7 @@ Q1767478	cast	Q879616	Björn Granath	herr Jönsson
 Q1767478	cast	Q5746383	Carl-Lennart Fröbergh	styrelseledamot i Brännströms Mekaniska	
 Q1767478	cast	Q117884406	Carl-Henry Cagarp	byråkrat	
 Q1767478	cast	Q4967331	Eva Millberg	Kärran	
-Q1767478	cast	Q133207336	Q133207336	musiker	
+Q1767478	cast	Q133207336	Magnus Granhed	musiker	
 Q1767478	cast	Q95727805	Erika Larsson	Sara Jönsson	
 Q1767478	cast	Q6025688	Klas Olofsson	byråkrat	
 Q1767478	cast	Q5787729	Franz Hanfstingl	Rudi Katz	
@@ -564,7 +564,7 @@ Q1767478	cast	Q4990181	Cecilia Walton	Lotta
 Q1767478	cast	Q5959123	Staffan Ling	Hedlund	
 Q1767478	cast	Q4120288	Jan Carlzon	kypare	
 Q1767478	cast	Q5904739	David Kehoe	Algernon "Algy"	
-Q1767478	cast	Q133207076	Q133207076	musiker	
+Q1767478	cast	Q133207076	Tom Hård af Segerstad	musiker	
 Q1767478	cast	Q5740963	Oskar Franzén	Niklas Jönsson	
 Q1767478	cast	Q1239693	Donald Arthur	skidlärare	
 Q1767478	cast	Q714141	Lasse Åberg	Stig-Helmer Olsson	
@@ -587,7 +587,7 @@ Q10672407	cast	Q112641320	Jan-Olof Ljungqvist	gorilla
 Q10672407	cast	Q509482	Per Grundén	herr Kron	
 Q10672407	cast	Q5958223	Pierre Lindstedt	Edvard	
 Q10672407	cast	Q4944041	Lena Dahlman	Nilla	
-Q10672407	cast	Q467073	사네 살로몬센	Grethe	
+Q10672407	cast	Q467073	Sanne Salomonsen	Grethe	
 Q10672407	cast	Q26994715	Ola Lindegren	Viktor	
 Q10672407	cast	Q5810416	Johan Holm	gorilla	
 Q10672407	cast	Q3195278	Kent Andersson	Frans	
@@ -681,7 +681,7 @@ Q10540168	cast	Q728985	Jan Malmsjö	Ove Bengtsson
 Q10540168	cast	Q1033656	Hans Alfredson	Kolavippen	
 Q10540168	cast	Q114240619	Börje Norrman	prästen	
 Q10540168	cast	Q718280	Mats Bergman	Dummerjöns	
-Q10540168	cast	Q5815932	Q5815932	Sven Råttnos	
+Q10540168	cast	Q5815932	Jim Hughes	Sven Råttnos	
 Q10540168	cast	Q4566037	Lena T. Hansson	Inez	
 Q10540168	cast	Q6195325	Stellan Sundahl	Gösta Nilsson	
 Q10540168	cast	Q4981773	Dora Söderberg	tant Lind	
@@ -738,7 +738,7 @@ Q370707	production_designer	Q513410	Anna Asp
 Q370707	cast	Q38471611	Tine Stochholm		
 Q370707	cast	Q38471618	Thyge Andersen		
 Q370707	cast	Q4954128	Anna Lise Hirsch Bjerrum		
-Q370707	cast	Q508739	トゥーレ・リントハート	Nilen	
+Q370707	cast	Q508739	Thure Lindhardt	Nilen	
 Q370707	cast	Q6233852	Wilhelm Weber		
 Q370707	cast	Q38052336	Fin Olsen		
 Q370707	cast	Q37491683	Jørgen Hansen		
@@ -749,23 +749,23 @@ Q370707	cast	Q38471709	Thomas Bryde Hansen
 Q370707	cast	Q38052333	Jytte Strandberg		
 Q370707	cast	Q203215	Max von Sydow	Lassefar	
 Q370707	cast	Q38054171	Morten Jørgensen		
-Q370707	cast	Q1406018	Нис Банк-Миккельсен		
-Q370707	cast	Q1785294	Бастер Ларсен	Ole Køller	
+Q370707	cast	Q1406018	Nis Bank-Mikkelsen		
+Q370707	cast	Q1785294	Buster Larsen	Ole Køller	
 Q370707	cast	Q4938805	Lena-Pia Bernhardsson		
 Q370707	cast	Q5997051	Troels Munk		
 Q370707	cast	Q4990244	Karen Wegener	madam Olsen	
 Q370707	cast	Q4983789	Kristina Törnqvist		
-Q370707	cast	Q12343372	Троэльс Мунк		
-Q370707	cast	Q792378	阿克塞尔·斯特罗	Kongstrup	
+Q370707	cast	Q12343372	Troels II Munk		
+Q370707	cast	Q792378	Axel Strøbye	Kongstrup	
 Q370707	cast	Q7161534	Pelle Hvenegaard	Pelle	
-Q370707	cast	Q1801286	아스트리드 빌라우메	fru Kongstrup	
-Q370707	cast	Q1797678	라르스 시몬센	Niels Køller	
+Q370707	cast	Q1801286	Astrid Villaume	fru Kongstrup	
+Q370707	cast	Q1797678	Lars Simonsen	Niels Køller	
 Q370707	cast	Q5561206	Troels Asmussen	Rud	
 Q370707	cast	Q71059271	Jørgen Hansen		
 Q370707	cast	Q95895580	Knut Schultheiß		
 Q370707	cast	Q71246985	Henrik Hansen		
-Q370707	cast	Q1800361	Эрик Паске	Foreman	
-Q370707	cast	Q264696	ソフィエ・グロベル	Miss Sine	
+Q370707	cast	Q1800361	Erik Paaske	Foreman	
+Q370707	cast	Q264696	Sofie Gråbøl	Miss Sine	
 Q370707	cast	Q6245458	John Wittig	Schoolteacher	
 Q370707	award		Academy Award for Best International Feature Film		
 Q370707	award		Palme d'Or		
@@ -828,43 +828,43 @@ Q3363736	director	Q203215	Max von Sydow
 Q3363736	writer	Q555324	Klaus Rifbjerg		
 Q3363736	composer	Q1505766	Georg Riedel		
 Q3363736	producer	Q1105516	Katinka Faragó		
-Q3363736	producer	Q3676033	ボー・クリステンセン		
+Q3363736	producer	Q3676033	Bo Christensen		
 Q3363736	cinematographer	Q312290	Sven Nykvist		
 Q3363736	cinematographer	Q19615611	Claus Loof		
 Q3363736	editor	Q5576075	Janus Billeskov Jansen		
-Q3363736	costume_designer	Q112043625	Q112043625		
+Q3363736	costume_designer	Q112043625	Annelise Hauberg		
 Q3363736	costume_designer	Q112049968	Ole Glæsner		
 Q3363736	costume_designer	Q113262985	Pia Myrdal		
 Q3363736	production_designer	Q5821074	Peter Høimark		
 Q3363736	cast	Q38471611	Tine Stochholm		
-Q3363736	cast	Q1800361	Эрик Паске		
-Q3363736	cast	Q5916968	ヘンリック・コイフォード		
+Q3363736	cast	Q1800361	Erik Paaske		
+Q3363736	cast	Q5916968	Henrik Koefoed		
 Q3363736	cast	Q4954128	Anna Lise Hirsch Bjerrum		
-Q3363736	cast	Q253959	올레 에른스트		
-Q3363736	cast	Q5818953	Пол Хюттель		
+Q3363736	cast	Q253959	Ole Ernst		
+Q3363736	cast	Q5818953	Paul Hüttel		
 Q3363736	cast	Q39141039	Lizzie Schwartz		
-Q3363736	cast	Q1744038	Kjeld Norgaard		
+Q3363736	cast	Q1744038	Kjeld Nørgaard		
 Q3363736	cast	Q6233852	Wilhelm Weber		
 Q3363736	cast	Q555324	Klaus Rifbjerg		
-Q3363736	cast	Q4994572	索倫·席特-拉森		
+Q3363736	cast	Q4994572	Søren Sætter-Lassen		
 Q3363736	cast	Q4953972	Anne Grete Hilding		
 Q3363736	cast	Q40012204	Poul Erik Christensen		
 Q3363736	cast	Q4961227	Bodil Lassen		
-Q3363736	cast	Q1776777	딕 케이소		
+Q3363736	cast	Q1776777	Dick Kaysø		
 Q3363736	cast	Q38052333	Jytte Strandberg		
-Q3363736	cast	Q456176	Курт Равн		
-Q3363736	cast	Q4952902	ヴィーベケ・ハストルプ		
+Q3363736	cast	Q456176	Kurt Ravn		
+Q3363736	cast	Q4952902	Vibeke Hastrup		
 Q3363736	cast	Q6007578	Bjarne G. Nielsen		
 Q3363736	cast	Q4962894	Hanne Damian Lindqvist		
-Q3363736	cast	Q4941010	Биргитте Бруун		
+Q3363736	cast	Q4941010	Birgitte Bruun		
 Q3363736	cast	Q12321835	Kim Harris		
-Q3363736	cast	Q4569822	Бирте Бакхаусен		
+Q3363736	cast	Q4569822	Birthe Backhausen		
 Q3363736	cast	Q4916316	Birgitte Price		
-Q3363736	cast	Q17482558	Том Дженсен		
-Q3363736	cast	Q4991153	타미 외스트		
-Q3363736	cast	Q4967254	蒂娜·米克·雷纳德		
-Q3363736	cast	Q289924	ギタ・ナービュ		
-Q3363736	cast	Q3676033	ボー・クリステンセン		
+Q3363736	cast	Q17482558	Tom Jensen		
+Q3363736	cast	Q4991153	Tammi Øst		
+Q3363736	cast	Q4967254	Tine Miehe-Renard		
+Q3363736	cast	Q289924	Ghita Nørby		
+Q3363736	cast	Q3676033	Bo Christensen		
 Q1764347	director	Q714141	Lasse Åberg		
 Q1764347	director	Q5783480	Peter Hald		
 Q1764347	writer	Q714141	Lasse Åberg		
@@ -879,19 +879,19 @@ Q1764347	cinematographer	Q5810911	Håkan Holmberg
 Q1764347	editor	Q39072720	Sylvia Ingemarsson		
 Q1764347	editor	Q73984266	Karin Giernoth		
 Q1764347	costume_designer	Q114413710	Hedvig Andér		
-Q1764347	production_designer	Q133281899	Q133281899		
+Q1764347	production_designer	Q133281899	Styrbjörn Engström		
 Q1764347	cast	Q1770250	Jon Skolmen		
 Q1764347	cast	Q5814708	Sture Hovstadius	bryggseglare	
 Q1764347	cast	Q5603353	Peter Carlsson	mannen med aktersnurran	
 Q1764347	cast	Q4981895	Birgitte Söndergaard	Anna-Vera, Stråholmarens dotter	
 Q1764347	cast	Q133281779	Claes Jansson	Olle	
 Q1764347	cast	Q5627798	Per Eggers	Kajan	
-Q1764347	cast	Q133282247	Q133282247		
+Q1764347	cast	Q133282247	Anders T. Peedu		
 Q1764347	cast	Q114095796	Cecilia Haglund	Alice	
 Q1764347	cast	Q3372998	Johan Rabaeus	Henrik "Henkan" Abrahamsen	
 Q1764347	cast	Q6230390	Björn Wallde	Beckbyxan	
 Q1764347	cast	Q4962690	Lena Lindewall	tävlingsledare	
-Q1764347	cast	Q133282146	Q133282146	Karl-Helmer Olsson, Stig-Helmers son	
+Q1764347	cast	Q133282146	Alexander Bogardi	Karl-Helmer Olsson, Stig-Helmers son	
 Q1764347	cast	Q20019083	Tonchi Percan		
 Q1764347	cast	Q5783508	Lars Haldenberg	Bärsen	
 Q1764347	cast	Q6170399	Gunnar Schyman	bryggseglare	
@@ -899,15 +899,15 @@ Q1764347	cast	Q6195325	Stellan Sundahl	Ture Janzon
 Q1764347	cast	Q247626	Barbro Hiort af Ornäs	Stig-Helmers mamma	
 Q1764347	cast	Q4938805	Lena-Pia Bernhardsson	älskling	
 Q1764347	cast	Q5864256	Bo Gentzel		
-Q1764347	cast	Q133207076	Q133207076		
+Q1764347	cast	Q133207076	Tom Hård af Segerstad		
 Q1764347	cast	Q5551719	Anders Ahlbom	Arne	
 Q1764347	cast	Q4568952	Tor Isedal	Stråholmaren	
 Q1764347	cast	Q4937550	Susanne Barklund	Krisse	
-Q1764347	cast	Q133282163	Q133282163	Söderblom	
-Q1764347	cast	Q133282193	Q133282193		
+Q1764347	cast	Q133282163	Göran Palmborg	Söderblom	
+Q1764347	cast	Q133282193	Anna Frankzén Starrin		
 Q1764347	cast	Q458752	Ewa Fröling	Madeleine "Madde" Abrahamsen	
 Q1764347	cast	Q6194428	Leif Stålhammer		
-Q1764347	cast	Q133282157	Q133282157	Victor Uggla	
+Q1764347	cast	Q133282157	Ole Söderblom	Victor Uggla	
 Q1764347	cast	Q4970327	Ulla-Britt Norrman	frun med aktersnurran	
 Q1764347	cast	Q4355415	Mats Arehn		
 Q1764347	cast	Q4580955	Ulla Skoog	sambon	
@@ -971,7 +971,7 @@ Q10397150	cast	Q1317100	Leif Andrée
 Q10397150	cast	Q5556457	Willie Andréason		
 Q10397150	cast	Q706651	Tomas von Brömssen		
 Q10397150	cast	Q712961	Krister Henriksson		
-Q10397150	cast	Q4945827	Хелен Эгелунд		
+Q10397150	cast	Q4945827	Helene Egelund		
 Q10397150	cast	Q254793	Per Oscarsson		
 Q10397150	cast	Q1437612	Peter Haber		
 Q10397150	cast	Q4570285	Keve Hjelm		

@@ -281,6 +281,63 @@ export function knownTitleCount(): number {
   return knownTitles.size;
 }
 
+// --- Series by broadcaster -----------------------------------------------------
+
+export interface BroadcastSeries {
+  qid: string;
+  title: string;
+  year?: number;
+  kind: TitleKind;
+  broadcaster: string;
+  studioId: string;
+  seasons?: number;
+  episodes?: number;
+  start?: string;
+  end?: string;
+  tomatometer?: number;
+  imdb?: number;
+  slateGenres: string[];
+}
+
+const broadcastSeries: BroadcastSeries[] = [];
+let broadcastLoaded = false;
+
+export function isBroadcastSeriesLoaded(): boolean {
+  return broadcastLoaded;
+}
+
+export function addBroadcastSeries(text: string): number {
+  if (broadcastLoaded) return 0;
+  broadcastLoaded = true;
+  for (const line of text.split('\n').slice(1)) {
+    if (!line) continue;
+    const [qid, title, year, kind, broadcaster, studioId, seasons, episodes, start, end, rt, imdb, genres] = line.split('\t');
+    if (!qid || !title || !broadcaster) continue;
+    broadcastSeries.push({ qid, title, year: num(year), kind: (kind as TitleKind) || 'series', broadcaster, studioId: studioId ?? '', seasons: num(seasons), episodes: num(episodes), start: start || undefined, end: end || undefined, tomatometer: num(rt), imdb: num(imdb), slateGenres: list(genres) });
+  }
+  return broadcastSeries.length;
+}
+
+export async function loadBroadcastSeries(): Promise<number> {
+  if (broadcastLoaded) return 0;
+  const response = await fetch(`${import.meta.env.BASE_URL}industry/series-by-broadcaster.tsv`);
+  if (!response.ok) { broadcastLoaded = true; return 0; }
+  return addBroadcastSeries(await response.text());
+}
+
+/** The series the record says aired on any of these broadcaster names, newest first, one row per series. */
+export function seriesOn(broadcasterNames: readonly string[]): BroadcastSeries[] {
+  const wanted = new Set(broadcasterNames.map((n) => n.toLowerCase()));
+  const seen = new Set<string>();
+  const out: BroadcastSeries[] = [];
+  for (const row of broadcastSeries) {
+    if (!wanted.has(row.broadcaster.toLowerCase()) || seen.has(row.qid)) continue;
+    seen.add(row.qid);
+    out.push(row);
+  }
+  return out.sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.title.localeCompare(b.title));
+}
+
 // --- Views ------------------------------------------------------------------
 
 export interface FranchiseSummary {

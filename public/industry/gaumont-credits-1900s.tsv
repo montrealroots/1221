@@ -4,7 +4,7 @@ Q5264946	writer	Q3788813	William Haggar
 Q1347352	director	Q15045258	Alf Collins		
 Q1550554	director	Q263367	Alice Guy-Blaché		
 Q1550554	director	Q2449654	Victorin-Hippolyte Jasset		
-Q1550554	writer	Q535	ヴィクトル・ユーゴー		
+Q1550554	writer	Q535	Victor Hugo		
 Q1550554	cast	Q1187734	Denise Becker		
 Q3201960	director	Q263367	Alice Guy-Blaché		
 Q3201960	cast	Q3394239	Polin		
@@ -49,6 +49,10 @@ Q3201884	cast	Q2836672	Alice Tissot
 Q3201884	cast	Q3176107	Jeanne Marie-Laurent		
 Q3201884	cast	Q3427123	Renée Carl		
 Q3201884	cast	Q3103631	Georges Wague		
+Q94748	director	Q275011	Émile Cohl		
+Q94748	writer	Q275011	Émile Cohl		
+Q94748	producer	Q275011	Émile Cohl		
+Q94748	cinematographer	Q275011	Émile Cohl		
 Q3479846	director	Q951835	Louis Feuillade		
 Q8823142	director	Q951835	Louis Feuillade		
 Q136163023	director	Q275011	Émile Cohl		
@@ -94,10 +98,6 @@ Q3407451	cast	Q3103631	Georges Wague
 Q3226437	director	Q951835	Louis Feuillade		
 Q3226437	cast	Q3427123	Renée Carl		
 Q13501690	director	Q951835	Louis Feuillade		
-Q94748	director	Q275011	Émile Cohl		
-Q94748	writer	Q275011	Émile Cohl		
-Q94748	producer	Q275011	Émile Cohl		
-Q94748	cinematographer	Q275011	Émile Cohl		
 Q28497233	director	Q951835	Louis Feuillade		
 Q28497233	writer	Q951835	Louis Feuillade		
 Q12310628	director	Q951835	Louis Feuillade		

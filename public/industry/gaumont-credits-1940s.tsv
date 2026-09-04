@@ -1,6 +1,6 @@
 qid	role	personQid	name	character	ordinal
 Q3555109	director	Q3384012	Pierre Billon		
-Q3555109	writer	Q551767	ピエール・ブノア		
+Q3555109	writer	Q551767	Pierre Benoit		
 Q3555109	writer	Q3287700	Marc-Gilbert Sauvajon		
 Q3555109	editor	Q17350631	Madeleine Gug		
 Q3555109	cast	Q3130893	Henri Coutet		
@@ -129,7 +129,7 @@ Q3441704	cast	Q3102293	Georges Bever
 Q3441704	cast	Q533912	Noël Roquevert		
 Q3441704	cast	Q2847794	André Gabriello		
 Q3441704	cast	Q389736	Pauline Carton		
-Q3441704	cast	Q276451	ティルダ・タマール		
+Q3441704	cast	Q276451	Tilda Thamar		
 Q3441704	cast	Q1712227	Julien Carette		
 Q3441704	cast	Q3158212	Jacques Baumer		
 Q3441704	cast	Q3385796	Pierre Larquey		

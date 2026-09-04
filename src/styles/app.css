@@ -300,6 +300,9 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 .panel-head > :first-child { min-width: 0; flex: 1 1 12rem; }
+/* Four actions do not fit across a phone. They wrap onto a second line rather
+   than pushing the card open and bleeding out of its right edge. */
+.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; }
 .panel-head h2, .panel-head h3 { margin: 0; }
 
 .eyebrow {
@@ -312,6 +315,9 @@ a:hover { text-decoration: underline; }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .tabular { font-variant-numeric: tabular-nums; }
 .positive { color: var(--positive); }
+/* A name that is also a way in: a button dressed as a link inside running text. */
+button.link { background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+button.link:hover { color: var(--accent-strong); }
 .negative { color: var(--negative); }
 .warning { color: var(--warning); }
 .small { font-size: var(--size-sm); }
@@ -351,7 +357,9 @@ a:hover { text-decoration: underline; }
 
 .stat { display: flex; flex-direction: column; gap: 2px; }
 .stat-label { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-.stat-value { font-size: var(--size-lg); font-weight: 650; font-variant-numeric: tabular-nums; }
+/* A long value wraps rather than running out of its panel: a list of formats
+   is as much a stat as a number is. */
+.stat-value { font-size: var(--size-lg); font-weight: 650; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; min-width: 0; }
 .stat-note { font-size: var(--size-xs); color: var(--text-muted); }
 
 /* Meters: always paired with a number, never colour alone. */

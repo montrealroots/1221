@@ -38,18 +38,18 @@ Q85747484	cast	Q371430	Iain Glen
 Q85747484	cast	Q106377561	Calam Lynch		
 Q85747484	cast	Q6789245	Matt Rippy		
 Q85747484	cast	Q40228	Claire Forlani		
-Q85747484	cast	Q202765	ケイト・ウィンスレット		
-Q97516297	director	Q36153	ビヨンセ		
+Q85747484	cast	Q202765	Kate Winslet		
+Q97516297	director	Q36153	Beyoncé		
 Q97516297	director	Q1348961	Jake Nava		
 Q97516297	director	Q4926959	Blitz the Ambassador		
 Q97516297	director	Q72157022	Jenn Nkiru		
 Q97516297	director	Q85199611	Ibra Ake		
 Q97516297	director	Q104514764	Emmanuel Adjei		
-Q97516297	writer	Q36153	ビヨンセ		
+Q97516297	writer	Q36153	Beyoncé		
 Q97516297	writer	Q29912279	Yrsa Daley-Ward		
-Q97516297	producer	Q36153	ビヨンセ		
+Q97516297	producer	Q36153	Beyoncé		
 Q97516297	cast	Q23008030	Nyaniso Dzedze		
-Q97516297	cast	Q36153	ビヨンセ		
+Q97516297	cast	Q36153	Beyoncé		
 Q97516297	cast	Q69916881	Warren Masemola		
 Q97516297	cast	Q28039713	Nandi Madida		
 Q97516297	cast	Q65996531	Connie Chiume		
@@ -256,7 +256,7 @@ Q57982258	cinematographer	Q365230	Janusz Kamiński
 Q57982258	costume_designer	Q107098022	Kate Hawley		
 Q57982258	cast	Q81328	Harrison Ford	John Thornton	1
 Q57982258	cast	Q357387	Omar Sy	Perrault	2
-Q57982258	cast	Q16210354	キャラ・ジー	Francoise	3
+Q57982258	cast	Q16210354	Cara Gee	Francoise	3
 Q57982258	cast	Q958385	Dan Stevens	Hal	4
 Q57982258	cast	Q352180	Bradley Whitford	Judge Miller	5
 Q57982258	cast	Q435878	Jean Louisa Kelly	Katie Miller	6
@@ -271,7 +271,7 @@ Q57982258	cast	Q896789	Brad Greenquist	Skagway Dog Seller	17
 Q57982258	cast	Q116443651	Benjamin Hoffman	Deckhand	18
 Q57982258	cast	Q93493716	Aria Lyric Leabu	Alice Miller	20
 Q57982258	cast	Q110720781	Greg Tarzan Davis	Orchard Worker	22
-Q57982258	cast	Q21282402	Q21282402	Proprietor	24
+Q57982258	cast	Q21282402	Karl Makinen	Proprietor	24
 Q57982258	cast	Q100629644	Adam Zastrow	Greasy Man	25
 Q57982258	cast	Q116779232	Kirk Geiger	Weary Climber	26
 Q57982258	cast	Q7704857	Terry Notary	Buck	27
@@ -363,7 +363,7 @@ Q77906196	cast	Q230534	Rebecca Hall
 Q54958420	director	Q7777218	Thea Sharrock		
 Q54958420	writer	Q1378351	Mike White		
 Q54958420	composer	Q674456	Craig Armstrong		
-Q54958420	producer	Q13909	アンジェリーナ・ジョリー		
+Q54958420	producer	Q13909	Angelina Jolie		
 Q54958420	producer	Q24302084	Brigham Taylor		
 Q54958420	producer	Q47465767	Allison Shearmur		
 Q54958420	cinematographer	Q108261	Florian Ballhaus		
@@ -373,7 +373,7 @@ Q54958420	cast	Q23547	Bryan Cranston
 Q54958420	cast	Q42302437	Brooklynn Prince		
 Q54958420	cast	Q316446	Sam Rockwell		
 Q54958420	cast	Q26806	Danny DeVito		
-Q54958420	cast	Q13909	アンジェリーナ・ジョリー		
+Q54958420	cast	Q13909	Angelina Jolie		
 Q101239733	follows	Q13568247	Mickey Mouse		
 Q55762028	director	Q514527	Tom McCarthy		
 Q55762028	writer	Q2343709	Stephan Pastis		
@@ -478,7 +478,7 @@ Q24284363	producer	Q6755521	Marc Platt
 Q24284363	editor	Q7688112	Tatiana S. Riegel		
 Q24284363	executive_producer	Q372311	Glenn Close		
 Q24284363	costume_designer	Q436223	Jenny Beavan		
-Q24284363	cast	Q147077	エマ・ストーン	Cruella de Vil	
+Q24284363	cast	Q147077	Emma Stone	Cruella de Vil	
 Q24284363	cast	Q56876940	Kirby Howell-Baptiste		
 Q24284363	cast	Q63432052	Ed Birch		
 Q24284363	cast	Q6380733	Kayvan Novak		
@@ -494,9 +494,9 @@ Q24284363	followed_by	Q8594	101 Dalmatians
 Q24284363	subject		fashion		
 Q24284363	subject		economic competition		
 Q108549760	director	Q3506634	Swinton O. Scott III		
-Q108549760	writer	Q311704	ジェフ・キニー		
+Q108549760	writer	Q311704	Jeff Kinney		
 Q108549760	composer	Q16734003	John Paesano		
-Q108549760	producer	Q311704	ジェフ・キニー		
+Q108549760	producer	Q311704	Jeff Kinney		
 Q108549760	editor	Q104657673	Sylvain Blais		
 Q105123210	cast	Q30069887	Peyton Elizabeth Lee		
 Q103372692	director	Q1018606	Byron Howard		
@@ -539,7 +539,7 @@ Q23894629	cast	Q54400820	Lauren Ridloff	Makkari
 Q23894629	cast	Q5530706	Gemma Chan	Sersi	
 Q23894629	cast	Q26924801	Brian Tyree Henry	Phastos	
 Q23894629	cast	Q510848	Richard Madden	Ikaris	
-Q23894629	cast	Q13909	アンジェリーナ・ジョリー	Thena	
+Q23894629	cast	Q13909	Angelina Jolie	Thena	
 Q23894629	cast	Q498374	Ma Dong-seok	Gilgamesh	
 Q23894629	cast	Q6443390	Kumail Nanjiani	Kingo Sunen	
 Q23894629	cast	Q374065	Patton Oswalt	Pip the Troll	
@@ -597,7 +597,7 @@ Q105369580	producer	Q15069859	Peter Chernin
 Q105369580	cast	Q7384521	Ryan Simpkins	Alice	
 Q105369580	cast	Q107398980	McCabe Slye	Tommy Slater	
 Q105369580	cast	Q27961165	Emily Rudd	Cindy Berman	
-Q105369580	cast	Q27452406	セイディー・シンク	Ziggy Berman	
+Q105369580	cast	Q27452406	Sadie Sink	Ziggy Berman	
 Q105373024	director	Q62066193	Leigh Janiak		
 Q105373024	writer	Q62066193	Leigh Janiak		
 Q105373024	writer	Q62066197	Phil Graziadei		
@@ -610,7 +610,7 @@ Q105373024	cast	Q62066195	Olivia Scott Welch
 Q105373024	cast	Q6547379	Benjamin Flores Jr.		
 Q105373024	cast	Q104902570	Fred Hechinger		
 Q105373024	cast	Q955739	Kiana Madeira		
-Q105373024	cast	Q27452406	セイディー・シンク		
+Q105373024	cast	Q27452406	Sadie Sink		
 Q105373024	cast	Q98408407	Randy Havens		
 Q38685497	director	Q323076	Shawn Levy		
 Q38685497	writer	Q19031	Zak Penn		
@@ -747,7 +747,7 @@ Q65768589	cast	Q533745	Yuen Wah	Guang Bo
 Q65768589	cast	Q214289	Michelle Yeoh	Ying Nan	
 Q65768589	cast	Q6207885	Jodi Long	Mrs. Chen	
 Q65768589	cast	Q707187	Fala Chen	Ying Li	
-Q65768589	cast	Q18164079	ロニー・チェン	Jon Jon	
+Q65768589	cast	Q18164079	Ronny Chieng	Jon Jon	
 Q65768589	cast	Q108079955	Dallas Liu	Ruihua	
 Q65768589	cast	Q15306031	Awkwafina	Katy	
 Q65768589	follows	Q23894626	Black Widow		
@@ -766,17 +766,17 @@ Q68934496	cast	Q215017	Rhys Ifans	Curt Connors
 Q68934496	cast	Q191828	Marisa Tomei	May Parker	
 Q68934496	cast	Q5649155	Hannibal Buress	Coach Wilson	
 Q68934496	cast	Q296028	Alfred Molina	Doctor Octopus	
-Q68934496	cast	Q2023710	トム・ホランド	Peter Parker	
+Q68934496	cast	Q2023710	Tom Holland	Peter Parker	
 Q68934496	cast	Q3778264	J. B. Smoove	Julius Dell	
-Q68934496	cast	Q189489	ゼンデイヤ	Michelle Jones	
+Q68934496	cast	Q189489	Zendaya	Michelle Jones	
 Q68934496	cast	Q454231	Charlie Cox	Matt Murdock	
 Q68934496	cast	Q26213909	Jacob Batalon	Ned Leeds	
 Q68934496	cast	Q150482	J. K. Simmons	J. Jonah Jameson	
-Q68934496	cast	Q165524	トビー・マグワイア	Peter Parker	
+Q68934496	cast	Q165524	Tobey Maguire	Peter Parker	
 Q68934496	cast	Q16237562	Tony Revolori	Flash Thompson	
 Q68934496	cast	Q24034671	Angourie Rice	Betty Brant	
 Q68934496	cast	Q295964	Jon Favreau	Happy Hogan	
-Q68934496	cast	Q23891	アンドリュー・ガーフィールド	Peter Parker	
+Q68934496	cast	Q23891	Andrew Garfield	Peter Parker	
 Q68934496	cast	Q188772	Willem Dafoe	Norman Osborn	
 Q68934496	cast	Q244674	Benedict Cumberbatch	Stephen Strange	
 Q68934496	cast	Q171905	Jamie Foxx	Electro	
@@ -793,7 +793,7 @@ Q73537423	cinematographer	Q62570965	Mike Gioulakis
 Q73537423	editor	Q123124	Andrew Weisblum		
 Q73537423	editor	Q1621602	Mary Jo Markey		
 Q73537423	cast	Q229313	Jessica Chastain		
-Q73537423	cast	Q23891	アンドリュー・ガーフィールド		
+Q73537423	cast	Q23891	Andrew Garfield		
 Q73537423	cast	Q76652011	Louis Cancelmi		
 Q73537423	cast	Q320052	Vincent D'Onofrio		
 Q73537423	cast	Q239046	Cherry Jones		
@@ -960,7 +960,7 @@ Q56085667	producer	Q461529	Scott Rudin
 Q56085667	producer	Q47498340	Eli Bush		
 Q56085667	cinematographer	Q993210	Bruno Delbonnel		
 Q56085667	editor	Q28123540	Valerio Bonelli		
-Q56085667	production_designer	Q140472388	Q140472388		
+Q56085667	production_designer	Q140472388	Kevin Thompson		
 Q56085667	cast	Q83492	Gary Oldman		
 Q56085667	cast	Q15542608	Wyatt Russell		
 Q56085667	cast	Q984572	Tracy Letts		
@@ -1044,10 +1044,10 @@ Q104830968	cast	Q20882479	Anya Taylor-Joy
 Q104830968	cast	Q4120019	John David Washington		
 Q104830968	cast	Q1924847	Margot Robbie		
 Q104830968	cast	Q41449	Michael Shannon		
-Q104830968	cast	Q4109	クリス・ロック		
+Q104830968	cast	Q4109	Chris Rock		
 Q104830968	cast	Q45772	Christian Bale		
 Q104830968	cast	Q350424	Alessandro Nivola		
-Q104830968	cast	Q26876	テイラー・スウィフト		
+Q104830968	cast	Q26876	Taylor Swift		
 Q104830968	cast	Q309835	Timothy Olyphant		
 Q104830968	cast	Q427019	Matthias Schoenaerts		
 Q104830968	cast	Q36949	Robert De Niro		
@@ -1058,30 +1058,30 @@ Q111598306	director	Q21526588	Mehmet Ada Öztekin
 Q111598306	producer	Q6050021	Saner Ayar		
 Q111598306	creator	Q21526588	Mehmet Ada Öztekin		
 Q111598306	cast	Q6082475	Aras Bulut İynemli		
-Q3604746	director	Q42574	ジェームズ・キャメロン		
-Q3604746	writer	Q42574	ジェームズ・キャメロン		
+Q3604746	director	Q42574	James Cameron		
+Q3604746	writer	Q42574	James Cameron		
 Q3604746	writer	Q6288874	Josh Friedman		
 Q3604746	writer	Q7488257	Shane Salerno		
 Q3604746	writer	Q15069865	Amanda Silver		
 Q3604746	writer	Q17372908	Rick Jaffa		
 Q3604746	composer	Q16195065	Simon Franglen		
-Q3604746	producer	Q42574	ジェームズ・キャメロン		
+Q3604746	producer	Q42574	James Cameron		
 Q3604746	producer	Q132451	Jon Landau		
 Q3604746	cinematographer	Q497075	Russell Carpenter		
-Q3604746	editor	Q42574	ジェームズ・キャメロン		
+Q3604746	editor	Q42574	James Cameron		
 Q3604746	editor	Q533802	John Refoua		
 Q3604746	editor	Q1173825	David Brenner		
 Q3604746	editor	Q2344673	Stephen E. Rivkin		
 Q3604746	cast	Q190162	Zoe Saldaña	Neytiri	
-Q3604746	cast	Q82085	サム・ワーシントン	Jake Sully	
+Q3604746	cast	Q82085	Sam Worthington	Jake Sully	
 Q3604746	cast	Q102124	Sigourney Weaver	Grace Augustine	
 Q3604746	cast	Q115915090	Trinity Jo-Li Bliss	Tuktirey	
 Q3604746	cast	Q224081	Giovanni Ribisi	Parker Selfridge	
 Q3604746	cast	Q75737078	Jamie Flatters	Neteyam	
-Q3604746	cast	Q236434	CCH・パウンダー	Mo'at	
+Q3604746	cast	Q236434	CCH Pounder	Mo'at	
 Q3604746	cast	Q113324836	Bailey Bass	Tsireya	
 Q3604746	cast	Q63140126	Filip Geljo	Aonung	
-Q3604746	cast	Q202765	ケイト・ウィンスレット	Ronal	
+Q3604746	cast	Q202765	Kate Winslet	Ronal	
 Q3604746	cast	Q359325	Cliff Curtis	Tonowari	
 Q3604746	cast	Q24851612	Britain Dalton	Lo'ak	
 Q3604746	cast	Q65966450	Jack Champion	Spider	
@@ -1120,7 +1120,7 @@ Q111943988	cast	Q17388397	Sarah Greene
 Q111943988	cast	Q2866995	Assaad Bouab		
 Q111943988	cast	Q3061229	Eva Birthistle		
 Q111943988	cast	Q7490096	Sharon Horgan		
-Q111943988	cast	Q5565254	クレス・バング		
+Q111943988	cast	Q5565254	Claes Bang		
 Q111943988	cast	Q3735288	Eve Hewson		
 Q111943988	cast	Q18637413	Brian Gleeson		
 Q38526439	director	Q3574497	Zach Cregger		
@@ -1238,7 +1238,7 @@ Q56816969	cast	Q238864	Sophie Okonedo
 Q56816969	cast	Q11721652	Tom Bateman		
 Q56816969	cast	Q27489535	Letitia Wright		
 Q56816969	cast	Q235415	Jennifer Saunders		
-Q56816969	cast	Q296609	ラッセル・ブランド		
+Q56816969	cast	Q296609	Russell Brand		
 Q56816969	cast	Q236309	Dawn French		
 Q56816969	cast	Q60590137	Emma Mackey		
 Q56816969	cast	Q190602	Annette Bening		
@@ -1274,9 +1274,9 @@ Q73537513	cast	Q5450687	Finn Wittrock
 Q73537513	cast	Q698173	Ana de Armas	Melinda Van Allen	
 Q73537513	cast	Q21067271	Lil Rel Howery		
 Q114842711	director	Q124101459	Luke Cormican		
-Q114842711	writer	Q311704	ジェフ・キニー		
+Q114842711	writer	Q311704	Jeff Kinney		
 Q114842711	composer	Q16734003	John Paesano		
-Q114842711	producer	Q311704	ジェフ・キニー		
+Q114842711	producer	Q311704	Jeff Kinney		
 Q114842711	cinematographer	Q75545514	Giuseppe Improta		
 Q114842711	editor	Q104657673	Sylvain Blais		
 Q114842711	cast	Q444117	Erica Cerra		
@@ -1320,7 +1320,7 @@ Q64211112	cast	Q317343	Chiwetel Ejiofor	Karl Mordo	3
 Q64211112	cast	Q234644	Elizabeth Olsen	Wanda Maximoff	
 Q64211112	cast	Q24312969	Lashana Lynch	Maria Rambeau	
 Q64211112	cast	Q27624520	Topo Wresniwiro	Hamir	
-Q64211112	cast	Q234959	ヘイリー・アトウェル	Peggy Carter	
+Q64211112	cast	Q234959	Hayley Atwell	Peggy Carter	
 Q64211112	cast	Q59779478	Jett Klyne	Speed	
 Q64211112	cast	Q313039	John Krasinski	Reed Richards	
 Q64211112	cast	Q16296	Patrick Stewart	Charles Xavier	
@@ -1386,7 +1386,7 @@ Q111950685	cast	Q219512	Jesse Eisenberg
 Q106740037	director	Q62600716	Sophie Hyde		
 Q106740037	writer	Q1953405	Katy Brand		
 Q106740037	composer	Q29868107	Stephen Rennicks		
-Q106740037	producer	Q15206712	애드리언 폴리토스키		
+Q106740037	producer	Q15206712	Adrian Politowski		
 Q106740037	cinematographer	Q113990955	Bryan Mason		
 Q106740037	editor	Q113990955	Bryan Mason		
 Q106740037	cast	Q9009427	Isabella Laughland		
@@ -1399,10 +1399,10 @@ Q106740037	subject		sex work
 Q106740037	subject		parent–child relationship		
 Q106740037	subject		human female sexuality		
 Q106740037	subject		sexual morality		
-Q112299937	composer	Q935609	ダン・ポベンマイヤー		
+Q112299937	composer	Q935609	Dan Povenmire		
 Q112299937	composer	Q5220483	Danny Jacob		
-Q112299937	creator	Q935609	ダン・ポベンマイヤー		
-Q112299937	executive_producer	Q935609	ダン・ポベンマイヤー		
+Q112299937	creator	Q935609	Dan Povenmire		
+Q112299937	executive_producer	Q935609	Dan Povenmire		
 Q108739919	director	Q17513204	David Bruckner		
 Q108739919	writer	Q352010	David S. Goyer		
 Q108739919	writer	Q110095644	Ben Collins and Luke Piotrowski		
@@ -1539,7 +1539,7 @@ Q105319897	cast	Q218800	David Oyelowo
 Q105319897	cast	Q316446	Sam Rockwell		
 Q105319897	cast	Q101237941	Jacob Fortune-Lloyd		
 Q105319897	cast	Q7803772	Tim Key		
-Q105319897	cast	Q7306585	リース・シアースミス		
+Q105319897	cast	Q7306585	Reece Shearsmith		
 Q113471777	director	Q18519749	Jon Watts		
 Q113471777	writer	Q5107425	Chris McKenna		
 Q113471777	writer	Q26268915	Erik Sommers		
@@ -1556,13 +1556,13 @@ Q113471777	cast	Q244674	Benedict Cumberbatch	Stephen Strange
 Q113471777	cast	Q191828	Marisa Tomei	May Parker	
 Q113471777	cast	Q188772	Willem Dafoe	Norman Osborn	
 Q113471777	cast	Q3329808	Benedict Wong	Wong	
-Q113471777	cast	Q189489	ゼンデイヤ	Michelle Jones	
-Q113471777	cast	Q165524	トビー・マグワイア	Peter Parker	
+Q113471777	cast	Q189489	Zendaya	Michelle Jones	
+Q113471777	cast	Q165524	Tobey Maguire	Peter Parker	
 Q113471777	cast	Q296028	Alfred Molina	Doctor Octopus	
-Q113471777	cast	Q2023710	トム・ホランド	Peter Parker	
+Q113471777	cast	Q2023710	Tom Holland	Peter Parker	
 Q113471777	cast	Q26213909	Jacob Batalon	Ned Leeds	
 Q113471777	cast	Q5649155	Hannibal Buress	Coach Wilson	
-Q113471777	cast	Q23891	アンドリュー・ガーフィールド	Peter Parker	
+Q113471777	cast	Q23891	Andrew Garfield	Peter Parker	
 Q113471777	cast	Q150482	J. K. Simmons	J. Jonah Jameson	
 Q113471777	cast	Q311615	Thomas Haden Church	Flint Marko	
 Q113471777	cast	Q3778264	J. B. Smoove	Julius Dell	
@@ -1615,7 +1615,7 @@ Q106729096	cinematographer	Q24075284	Henry Braham
 Q106729096	executive_producer	Q515161	Kevin Feige		
 Q106729096	executive_producer	Q23409539	Louis D'Esposito		
 Q106729096	executive_producer	Q24176186	Victoria Alonso		
-Q106729096	cast	Q503706	クリス・プラット	Peter Quill	
+Q106729096	cast	Q503706	Chris Pratt	Peter Quill	
 Q106729096	cast	Q3395911	Pom Klementieff	Mantis	
 Q106729096	cast	Q525065	Michael Rooker	Yondu Udonta	
 Q106729096	cast	Q205707	Bradley Cooper	Rocket	
@@ -1647,7 +1647,7 @@ Q108444804	cast	Q238900	Judith Light
 Q108444804	cast	Q28493	Ralph Fiennes		
 Q108444804	cast	Q298347	Nicholas Hoult		
 Q108444804	cast	Q20882479	Anya Taylor-Joy		
-Q108444804	cast	Q295233	ジョン・レグイザモ		
+Q108444804	cast	Q295233	John Leguizamo		
 Q108444804	cast	Q107598344	Rob Yang		
 Q108444804	cast	Q311084	Paul Adelstein		
 Q108444804	cast	Q38195662	Hong Chau		
@@ -1675,9 +1675,9 @@ Q65768604	cast	Q3395911	Pom Klementieff	Mantis
 Q65768604	cast	Q44158	Dave Bautista	Drax	
 Q65768604	cast	Q971782	Simon Russell Beale	Dionysus	
 Q65768604	cast	Q129817	Russell Crowe	Zeus	
-Q65768604	cast	Q503706	クリス・プラット	Peter Quill	
+Q65768604	cast	Q503706	Chris Pratt	Peter Quill	
 Q65768604	cast	Q253343	Jaimie Alexander	Lady Sif	
-Q65768604	cast	Q54314	クリス・ヘムズワース	Thor	
+Q65768604	cast	Q54314	Chris Hemsworth	Thor	
 Q65768604	cast	Q205707	Bradley Cooper	Rocket	
 Q65768604	cast	Q113005424	Sasha Hemsworth	Asgardian Kid	
 Q65768604	cast	Q113005335	Manny Spero	Chemo Ward Patient	
@@ -1824,7 +1824,7 @@ Q107324772	cast	Q20752077	Mckenna Grace	Addison	2
 Q107324772	cast	Q78747611	Billy Barratt	Dylan	3
 Q107324772	cast	Q119013229	Orson Hong	Borney	4
 Q107324772	cast	Q119013234	Thomas Boyce	Marcus	5
-Q107324772	cast	Q299138	キッド・カディ	Michael	6
+Q107324772	cast	Q299138	Kid Cudi	Michael	6
 Q107324772	cast	Q2658535	Selenis Leyva	Maria	7
 Q107324772	cast	Q106434634	Hero Hunter	Young Caleb	8
 Q107324772	cast	Q119013253	Carson Minniear	Charlie	9
@@ -1847,11 +1847,11 @@ Q27574320	cast	Q19666388	Teyonah Parris
 Q27574320	cast	Q7296648	Ravi Patel		
 Q27574320	cast	Q230510	Mary Lynn Rajskub		
 Q27574320	cast	Q120567635	Madison Skye Validum		
-Q27574320	cast	Q193676	リュダクリス		
+Q27574320	cast	Q193676	Ludacris		
 Q122363694	director	Q124101459	Luke Cormican		
-Q122363694	writer	Q311704	ジェフ・キニー		
+Q122363694	writer	Q311704	Jeff Kinney		
 Q122363694	composer	Q16734003	John Paesano		
-Q122363694	producer	Q311704	ジェフ・キニー		
+Q122363694	producer	Q311704	Jeff Kinney		
 Q122363694	cast	Q311980	Chris Diamantopoulos		
 Q122363694	cast	Q124101472	Spencer Howell		
 Q122363694	cast	Q444117	Erica Cerra		
@@ -1901,7 +1901,7 @@ Q29226331	cinematographer	Q24075284	Henry Braham
 Q29226331	editor	Q3086942	Fred Raskin		
 Q29226331	cast	Q1319882	Will Poulter	Adam Warlock	
 Q29226331	cast	Q5115999	Chuk Iwuji	High Evolutionary	
-Q29226331	cast	Q503706	クリス・プラット	Peter Quill	
+Q29226331	cast	Q503706	Chris Pratt	Peter Quill	
 Q29226331	cast	Q231237	Karen Gillan	Nebula	
 Q29226331	cast	Q431753	Sean Gunn	Kraglin	
 Q29226331	cast	Q3395911	Pom Klementieff	Mantis	
@@ -1940,7 +1940,7 @@ Q111970110	cast	Q26923777	Drew Tarver	Adolf Hitler
 Q111970110	cast	Q16226409	Timothy Simons	Abraham Lincoln	
 Q111970110	cast	Q483907	Jack Black	Joseph Stalin	
 Q111970110	cast	Q1378118	Rob Corddry	Vladimir Lenin	
-Q111970110	cast	Q18164079	ロニー・チェン	Kublai Khan	
+Q111970110	cast	Q18164079	Ronny Chieng	Kublai Khan	
 Q111970110	cast	Q4241574	Nick Kroll	Galileo Galilei	
 Q111970110	cast	Q449959	Richard Kind	Saint Peter	
 Q111970110	cast	Q220308	Seth Rogen	Noah	
@@ -1991,7 +1991,7 @@ Q24278982	cast	Q81328	Harrison Ford	Indiana Jones
 Q24278982	cast	Q229137	Karen Allen	Marion Ravenwood	
 Q24278982	cast	Q16455	John Rhys-Davies	Sallah	
 Q24278982	cast	Q27624466	Alaa Safi	Rahim	
-Q24278982	cast	Q294647	マッツ・ミケルセン	Jürgen Voller	
+Q24278982	cast	Q294647	Mads Mikkelsen	Jürgen Voller	
 Q24278982	cast	Q120262014	Ethann Isidore	Teddy Kumar	
 Q24278982	cast	Q55081544	Shaunette Renée Wilson	Mason	
 Q24278982	cast	Q611096	Boyd Holbrook	Klaber	
@@ -2004,7 +2004,7 @@ Q24278982	cast	Q57614	Thomas Kretschmann	Colonel Weber
 Q24278982	cast	Q6768382	Mark Killeen	Pontimus	
 Q24278982	follows	Q182373	Indiana Jones and the Kingdom of the Crystal Skull		
 Q111169509	cast	Q63381497	Stephanie Hsu	Shiji Niangniang	
-Q111169509	cast	Q18164079	ロニー・チェン	濟公	
+Q111169509	cast	Q18164079	Ronny Chieng	濟公	
 Q111169509	cast	Q107565301	Rosalie Chiang	Suzy Nakamura	
 Q111169509	cast	Q100724379	Poppy Liu	Princess Iron Fan	
 Q111169509	cast	Q358990	James Hong	Jade Emperor	
@@ -2083,7 +2083,7 @@ Q119439833	cast	Q2928589	Burny Mattinson
 Q108760382	director	Q975410	Yorgos Lanthimos		
 Q108760382	writer	Q59506363	Tony McNamara		
 Q108760382	composer	Q120896583	Jerskin Fendrix		
-Q108760382	producer	Q147077	エマ・ストーン		
+Q108760382	producer	Q147077	Emma Stone		
 Q108760382	producer	Q975410	Yorgos Lanthimos		
 Q108760382	producer	Q16747326	Andrew Lowe		
 Q108760382	producer	Q22075469	Ed Guiney		
@@ -2091,7 +2091,7 @@ Q108760382	cinematographer	Q27057753	Robbie Ryan
 Q108760382	editor	Q60922953	Yorgos Mavropsaridis		
 Q108760382	costume_designer	Q124056402	Holly Waddington		
 Q108760382	production_designer	Q124285507	Shona Heath		
-Q108760382	cast	Q147077	エマ・ストーン	Bella Baxter	
+Q108760382	cast	Q147077	Emma Stone	Bella Baxter	
 Q108760382	cast	Q76278373	Tom Stourton		
 Q108760382	cast	Q459482	Kathryn Hunter		
 Q108760382	cast	Q5111829	Christopher Abbott	Sir Aubrey de la Pole Blessington	
@@ -2202,7 +2202,7 @@ Q121774936	producer	Q7626779	Stuart M. Besser
 Q121774936	producer	Q19878370	Todd Garner		
 Q121774936	cinematographer	Q2434294	Tim Suhrstedt		
 Q121774936	editor	Q122739066	Tim Roche		
-Q121774936	cast	Q18164079	ロニー・チェン		
+Q121774936	cast	Q18164079	Ronny Chieng		
 Q121774936	cast	Q28025952	Yvonne Orji		
 Q121774936	cast	Q1990398	Meredith Hagner		
 Q121774936	cast	Q21067271	Lil Rel Howery		
@@ -2217,7 +2217,7 @@ Q112124858	composer	Q1338827	Marcelo Zarvos
 Q112124858	cast	Q21063227	Andrew Schulz		
 Q112124858	cast	Q3485050	Sinqua Walls		
 Q112124858	cast	Q23894602	Laura Harrier		
-Q112124858	cast	Q59727812	ジャック・ハーロウ		
+Q112124858	cast	Q59727812	Jack Harlow		
 Q112124858	cast	Q16235863	Vince Staples		
 Q112124858	cast	Q322056	Lance Reddick		
 Q112124858	cast	Q7708542	Teyana Taylor		
@@ -2236,7 +2236,7 @@ Q113883193	producer	Q15865116	Peter Del Vecho
 Q113883193	editor	Q27915854	Jeff Draheim		
 Q123690368	director	Q219512	Jesse Eisenberg		
 Q123690368	writer	Q219512	Jesse Eisenberg		
-Q123690368	producer	Q147077	エマ・ストーン		
+Q123690368	producer	Q147077	Emma Stone		
 Q123690368	producer	Q219512	Jesse Eisenberg		
 Q123690368	producer	Q16732230	Dave McCary		
 Q123690368	producer	Q83635184	Ewa Puszczyńska		
@@ -2294,7 +2294,7 @@ Q102180106	cast	Q534925	Leslie Uggams	Blind Al
 Q102180106	cast	Q212064	Channing Tatum	Gambit	
 Q102180106	cast	Q302786	Aaron Stanford	Pyro	
 Q102180106	cast	Q131385237	Jade Lye	Lady Deathstrike	
-Q102180106	cast	Q178348	クリス・エヴァンス	Human Torch	
+Q102180106	cast	Q178348	Chris Evans	Human Torch	
 Q102180106	cast	Q63086179	Emma Corrin	Cassandra Nova	
 Q102180106	cast	Q762782	Rob Delaney	Pete Wisdom	
 Q102180106	cast	Q61926938	Bulk	Blob	
@@ -2309,7 +2309,7 @@ Q102180106	cast	Q22815258	Karan Soni	Dopinder
 Q102180106	cast	Q295498	Henry Cavill	Logan	
 Q102180106	cast	Q4390382	Shiori Kutsuna	Yukio	
 Q102180106	cast	Q162959	Blake Lively	Lady Deadpool	
-Q102180106	cast	Q129591	ヒュー・ジャックマン	Old Man Logan	
+Q102180106	cast	Q129591	Hugh Jackman	Old Man Logan	
 Q102180106	cast	Q131385480	Nilly Cetin	Quill	
 Q102180106	cast	Q192682	Ryan Reynolds	Wade Wilson	
 Q102180106	cast	Q172044	Jennifer Garner	Elektra Natchios	
@@ -2323,7 +2323,7 @@ Q102180106	cast	Q16234095	Ollie Palmer	Bar Patron
 Q102180106	cast	Q118593586	Leemore Marrett Jr.	Minuteman Leader	
 Q102180106	cast	Q116869826	Olin Reynolds	Babypool	
 Q102180106	cast	Q116869858	Inez Reynolds	Kidpool	
-Q102180106	cast	Q105970355	Q105970355	Car Salesman	
+Q102180106	cast	Q105970355	Dywayne Thomas	Car Salesman	
 Q102180106	cast	Q116869845	James Reynolds	Screaming Mutant	
 Q102180106	cast	Q105318922	Paul G. Raymond	TVA Office Agent	
 Q102180106	cast	Q63348501	Harry Holland	Haroldpool	
@@ -2362,7 +2362,7 @@ Q114345051	producer	Q22075469	Ed Guiney
 Q114345051	cinematographer	Q27057753	Robbie Ryan		
 Q114345051	editor	Q60922953	Yorgos Mavropsaridis		
 Q114345051	cast	Q38195662	Hong Chau		
-Q114345051	cast	Q147077	エマ・ストーン		
+Q114345051	cast	Q147077	Emma Stone		
 Q114345051	cast	Q17380672	Margaret Qualley		
 Q114345051	cast	Q1138674	Jesse Plemons		
 Q114345051	cast	Q59248250	Hunter Schafer		
@@ -2410,7 +2410,7 @@ Q124457266	producer	Q7107278	Osnat Shurer
 Q124457266	follows	Q18647981	Moana		
 Q114242678	director	Q26821227	Barry Jenkins		
 Q114242678	writer	Q771104	Jeff Nathanson		
-Q114242678	composer	Q14313	ファレル・ウィリアムス		
+Q114242678	composer	Q14313	Pharrell Williams		
 Q114242678	composer	Q76364	Hans Zimmer		
 Q114242678	composer	Q534151	Mark Mancina		
 Q114242678	composer	Q1646482	Lin-Manuel Miranda		
@@ -2501,9 +2501,9 @@ Q116947706	subject		murder of Reena Virk
 Q111982520	director	Q1782299	Joachim Rønning		
 Q111982520	writer	Q771104	Jeff Nathanson		
 Q111982520	composer	Q273484	Amelia Warner		
-Q111982520	producer	Q217037	ジェリー・ブラッカイマー		
+Q111982520	producer	Q217037	Jerry Bruckheimer		
 Q111982520	producer	Q771104	Jeff Nathanson		
-Q111982520	producer	Q24809566	チャド・オマン		
+Q111982520	producer	Q24809566	Chad Oman		
 Q111982520	cinematographer	Q6174782	Óscar Faura		
 Q111982520	editor	Q70952455	Úna Ní Dhonghaíle		
 Q111982520	cast	Q125426	Jeanette Hain		
@@ -2512,7 +2512,7 @@ Q111982520	cast	Q312380	Christopher Eccleston
 Q111982520	cast	Q16738674	Daisy Ridley		
 Q111982520	cast	Q23712229	Tilda Cobham-Hervey		
 Q111982520	cast	Q15965642	Glenn Fleshler		
-Q111982520	cast	Q707827	キム・ボドゥニア		
+Q111982520	cast	Q707827	Kim Bodnia		
 Q111982520	subject		ガートルード・エダール		
 Q132673387	creator	Q315750	Brad Falchuk		
 Q132673387	creator	Q316844	Ryan Murphy		
@@ -2537,22 +2537,22 @@ Q125585498	cast	Q55395897	Harvey Guillén
 Q125585498	cast	Q41796284	Mabel Cadena		
 Q125585498	cast	Q110273210	Cristo Fernández		
 Q125585498	follows	Q15104217	Alexander and the Terrible, Horrible, No Good, Very Bad Day		
-Q29580929	director	Q42574	ジェームズ・キャメロン		
-Q29580929	writer	Q42574	ジェームズ・キャメロン		
+Q29580929	director	Q42574	James Cameron		
+Q29580929	writer	Q42574	James Cameron		
 Q29580929	writer	Q15069865	Amanda Silver		
 Q29580929	writer	Q17372908	Rick Jaffa		
 Q29580929	composer	Q16195065	Simon Franglen		
-Q29580929	producer	Q42574	ジェームズ・キャメロン		
+Q29580929	producer	Q42574	James Cameron		
 Q29580929	producer	Q132451	Jon Landau		
 Q29580929	cinematographer	Q497075	Russell Carpenter		
 Q29580929	editor	Q1173825	David Brenner		
 Q29580929	production_designer	Q5318704	Dylan Cole		
 Q29580929	production_designer	Q116978158	Ben Procter		
-Q29580929	cast	Q236434	CCH・パウンダー	Mo'at	
+Q29580929	cast	Q236434	CCH Pounder	Mo'at	
 Q29580929	cast	Q190162	Zoe Saldaña	Neytiri	
 Q29580929	cast	Q459348	Oona Castilla Chaplin	Varang	
 Q29580929	cast	Q102124	Sigourney Weaver	Kiri	
-Q29580929	cast	Q82085	サム・ワーシントン	Jake Sully	
+Q29580929	cast	Q82085	Sam Worthington	Jake Sully	
 Q29580929	cast	Q312902	Stephen Lang	Miles Quaritch	
 Q29580929	cast	Q113324836	Bailey Bass		
 Q29580929	cast	Q63140126	Filip Geljo		
@@ -2566,7 +2566,7 @@ Q29580929	cast	Q214289	Michelle Yeoh	Dr. Karina Mogue
 Q29580929	cast	Q115915090	Trinity Jo-Li Bliss		
 Q29580929	cast	Q24851612	Britain Dalton		
 Q29580929	cast	Q4960851	Brendan Cowell		
-Q29580929	cast	Q202765	ケイト・ウィンスレット		
+Q29580929	cast	Q202765	Kate Winslet		
 Q29580929	cast	Q224081	Giovanni Ribisi		
 Q29580929	cast	Q439315	Jemaine Clement		
 Q29580929	cast	Q359325	Cliff Curtis		
@@ -2617,7 +2617,7 @@ Q124408474	writer	Q95125	James L. Brooks
 Q124408474	composer	Q76364	Hans Zimmer		
 Q124408474	producer	Q95125	James L. Brooks		
 Q124408474	producer	Q3090116	Richard Sakai		
-Q124408474	cinematographer	Q279100	ロバート・エルスウィット		
+Q124408474	cinematographer	Q279100	Robert Elswit		
 Q124408474	cast	Q6443390	Kumail Nanjiani		
 Q124408474	cast	Q356303	Albert Brooks		
 Q124408474	cast	Q230534	Rebecca Hall		
@@ -2679,7 +2679,7 @@ Q108124282	cast	Q18045010	Manny Montana	John
 Q108124282	cast	Q66879012	Lyric Ross	Natalie Washington / N.A.T.A.L.I.E.	
 Q108124282	cast	Q591785	Jim Rash	Professor Wilkes	
 Q132189965	director	Q205707	Bradley Cooper		
-Q132189965	production_designer	Q140472388	Q140472388		
+Q132189965	production_designer	Q140472388	Kevin Thompson		
 Q59395971	director	Q26828305	Dean Fleischer Camp		
 Q59395971	writer	Q59396149	Mike Van Waes		
 Q59395971	writer	Q128804388	Chris Kekaniokalani Bright		
@@ -2712,7 +2712,7 @@ Q133539880	cast	Q468443	Linda Lavin
 Q133539880	cast	Q16185735	Nathan Lee Graham		
 Q125421437	cinematographer	Q130391540	Rina Yang		
 Q125421437	editor	Q154690	Jay Rabinowitz		
-Q125421437	cast	Q27452406	セイディー・シンク		
+Q125421437	cast	Q27452406	Sadie Sink		
 Q125421437	cast	Q6939119	Murray Bartlett		
 Q125421437	cast	Q29622423	Kelvin Harrison Jr.		
 Q125421437	cast	Q230383	Kelly Macdonald		
@@ -2726,13 +2726,13 @@ Q126126253	director	Q1866610	Liza Johnson
 Q126126253	director	Q3108788	Glenn Ficarra		
 Q126126253	director	Q3182354	John Requa		
 Q126126253	director	Q18705002	Hanelle Culpepper		
-Q126126253	director	Q137218816	Q137218816		
+Q126126253	director	Q137218816	Gandja Monteiro		
 Q126126253	writer	Q892444	Scott Weinger		
 Q126126253	writer	Q5213495	Dan Fogelman		
 Q126126253	writer	Q59178418	Melissa Glenn		
 Q126126253	writer	Q116196584	Stephen Markley		
 Q126126253	writer	Q119983978	John Hoberg		
-Q126126253	writer	Q133615102	Q133615102		
+Q126126253	writer	Q133615102	Eric Wen		
 Q126126253	composer	Q18630719	Siddhartha Khosla		
 Q126126253	producer	Q119983978	John Hoberg		
 Q126126253	creator	Q5213495	Dan Fogelman		
@@ -2875,7 +2875,7 @@ Q130342708	cast	Q716274	David Lyons
 Q130342708	cast	Q788586	Tim Guinee		
 Q130342708	cast	Q1524102	Deirdre O'Connell		
 Q130342708	cast	Q5748042	Hettienne Park		
-Q130342708	cast	Q107465203	Q107465203		
+Q130342708	cast	Q107465203	Aleyse Shannon		
 Q130342708	cast	Q529478	Julie Ann Emery		
 Q130342708	cast	Q16150323	Amir Arison		
 Q130342708	cast	Q198638	Jonathan Banks		
@@ -2895,7 +2895,7 @@ Q105105219	cast	Q1272489	Ralph Ineson	Galactus
 Q105105219	cast	Q1279993	Ebon Moss-Bachrach	Ben Grimm	
 Q105105219	cast	Q26921822	Paul Walter Hauser		
 Q105105219	cast	Q172261	John Malkovich		
-Q105105219	cast	Q7422640	サラ・ナイルズ		
+Q105105219	cast	Q7422640	Sarah Niles		
 Q105105219	cast	Q234207	Natasha Lyonne		
 Q105105219	cast	Q560286	Mark Gatiss		
 Q133627078	director	Q117026582	Michelle Garza Cervera		
@@ -2931,7 +2931,7 @@ Q112322474	director	Q6124973	Jake Schreier
 Q112322474	writer	Q42244196	Eric Pearson		
 Q112322474	producer	Q515161	Kevin Feige		
 Q112322474	cinematographer	Q28151728	Andrew Droz Palermo		
-Q112322474	editor	Q104168963	Q104168963		
+Q112322474	editor	Q104168963	Angela M. Catanzaro		
 Q112322474	editor	Q106876556	Harry Yoon		
 Q112322474	cast	Q455898	Sebastian Stan	Bucky Barnes	
 Q112322474	cast	Q15542608	Wyatt Russell	John Walker	
@@ -3004,7 +3004,7 @@ Q113244839	cast	Q391359	David Harbour	Alexei Shostakov
 Q113244839	cast	Q1279993	Ebon Moss-Bachrach	Ben Grimm	
 Q113244839	cast	Q6141629	Tenoch Huerta	Namor	
 Q113244839	cast	Q14752155	Pedro Pascal	Reed Richards	
-Q113244839	cast	Q54314	クリス・ヘムズワース	Thor	
+Q113244839	cast	Q54314	Chris Hemsworth	Thor	
 Q113244839	cast	Q16232660	Hannah John-Kamen	Ava Starr	
 Q113244839	cast	Q24004849	Simu Liu	Shang-Chi	
 Q113244839	cast	Q27489535	Letitia Wright	Shuri	
@@ -3027,7 +3027,7 @@ Q113244839	cast	Q165219	Robert Downey Jr.
 Q113244839	cast	Q485901	James Marsden		
 Q113244839	cast	Q316629	Alan Cumming		
 Q113244839	cast	Q16296	Patrick Stewart		
-Q113244839	cast	Q178348	クリス・エヴァンス	Steve Rogers	
+Q113244839	cast	Q178348	Chris Evans	Steve Rogers	
 Q113244839	cast	Q41796284	Mabel Cadena		
 Q113244839	cast	Q113130405	India Rose Hemsworth		
 Q113244839	cast	Q165625	Kathryn Newton	Cassie Lang	
@@ -3085,7 +3085,7 @@ Q118996994	executive_producer	Q24455611	Auliʻi Cravalho
 Q118996994	cast	Q23879973	Frankie Adams	Sina	
 Q118996994	cast	Q1059037	John Tui	Chief Tui	
 Q118996994	cast	Q434301	Rena Owen	Gramma Tala	
-Q118996994	cast	Q126600595	キャサリン・ラガーイア	Moana	
+Q118996994	cast	Q126600595	Catherine Lagaʻaia	Moana	
 Q118996994	cast	Q10738	Dwayne Johnson	Maui	
 Q135321332	director	Q5528242	Gavin Polone		
 Q135321332	writer	Q505689	Andrew Kevin Walker		
@@ -3139,10 +3139,10 @@ Q113244935	producer	Q515161	Kevin Feige
 Q113244935	producer	Q545394	Avi Arad		
 Q113244935	producer	Q141084616	Rachel O'Connor		
 Q113244935	cinematographer	Q28915983	Brett Pawlak		
-Q113244935	cast	Q2023710	トム・ホランド	Peter Parker	
-Q113244935	cast	Q189489	ゼンデイヤ	Michelle Jones	
+Q113244935	cast	Q2023710	Tom Holland	Peter Parker	
+Q113244935	cast	Q189489	Zendaya	Michelle Jones	
 Q113244935	cast	Q26213909	Jacob Batalon	Ned Leeds	
-Q113244935	cast	Q27452406	セイディー・シンク	Jean Grey	
+Q113244935	cast	Q27452406	Sadie Sink	Jean Grey	
 Q113244935	cast	Q11833191	Liza Colón-Zayas	Jean DeWolff	
 Q113244935	cast	Q362616	Jon Bernthal	Frank Castle	
 Q113244935	cast	Q41422	Mark Ruffalo	Bruce Banner	
@@ -3180,8 +3180,8 @@ Q134611972	writer	Q511934	Aline Brosh McKenna
 Q134611972	composer	Q1513322	Theodore Shapiro		
 Q134611972	producer	Q459177	Wendy Finerman		
 Q134611972	cinematographer	Q108261	Florian Ballhaus		
-Q134611972	cast	Q873	メリル・ストリープ		
-Q134611972	cast	Q36301	アン・ハサウェイ		
+Q134611972	cast	Q873	Meryl Streep		
+Q134611972	cast	Q36301	Anne Hathaway		
 Q134611972	cast	Q193517	Emily Blunt		
 Q134611972	cast	Q223117	Stanley Tucci		
 Q134611972	cast	Q241160	Tracie Thoms		
@@ -3192,7 +3192,7 @@ Q134611972	cast	Q188375	Lucy Liu
 Q134611972	cast	Q316596	Justin Theroux		
 Q134611972	cast	Q459925	B. J. Novak		
 Q134611972	cast	Q91012851	Pauline Chalamet		
-Q134611972	cast	Q132778643	Helen J Shen		
+Q134611972	cast	Q132778643	Helen J. Shen		
 Q134611972	cast	Q18348775	Conrad Ricamora		
 Q134611972	cast	Q107087843	Caleb Hearon		
 Q134611972	cast	Q7146146	Patrick Brammall		

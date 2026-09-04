@@ -26,7 +26,7 @@ Q10573547	cast	Q1033656	Hans Alfredson	Edvard Persson
 Q10573547	cast	Q5626688	Gösta Krantz	herr Lundin	
 Q10573547	cast	Q4952169	Berit Hallén	fru Lundin	
 Q10573547	cast	Q4944997	Monica Dominique	Hjördis	
-Q10573547	cast	Q6063990	Стин Расмуссен		
+Q10573547	cast	Q6063990	Steen Rasmussen		
 Q10573547	cast	Q4935965	Tintin Anderzon		
 Q10605495	director	Q114665565	Magnus Nanne		
 Q10605495	writer	Q547466	Viveca Lärn		
@@ -68,14 +68,14 @@ Q1431878	writer	Q25917094	Greg Dinner
 Q1431878	writer	Q25917098	Nick Thiel		
 Q1431878	composer	Q363241	Patrick Doyle		
 Q1431878	producer	Q6245851	John M. Jacobsen		
-Q1431878	producer	Q138866956	Эрик Диш		
+Q1431878	producer	Q138866956	Erik Disch		
 Q1431878	cinematographer	Q6210033	Erling Thurmann-Andersen		
 Q1431878	cinematographer	Q6914535	Morten Skallerud		
 Q1431878	cinematographer	Q11964651	Dan Young		
-Q1431878	cinematographer	Q22010957	Рольв Хаан		
+Q1431878	cinematographer	Q22010957	Rolv Håan		
 Q1431878	cinematographer	Q95808525	Knut Klæbo		
-Q1431878	cinematographer	Q138859361	Q138859361		
-Q1431878	cinematographer	Q138859401	Q138859401		
+Q1431878	cinematographer	Q138859361	Wencke Hovet		
+Q1431878	cinematographer	Q138859401	Frode Wik		
 Q1431878	editor	Q17063139	Pål Gengenbach		
 Q1431878	editor	Q31085760	Niels Pagh Andersen		
 Q1431878	executive_producer	Q25917079	Nigel Wooll		
@@ -89,7 +89,7 @@ Q1431878	cast	Q5622244	Guy Fithen
 Q1431878	cast	Q12007603	Trond Peter Stamsø Munch	Jens	
 Q1431878	cast	Q12003159	Stian Smestad	Håkon Håkonson	
 Q1431878	cast	Q124625982	Harald Brenna	Steine	
-Q1431878	cast	Q138864426	Q138864426	Mary	
+Q1431878	cast	Q138864426	Louisa Milwood-Haigh	Mary	
 Q1431878	cast	Q4952518	Eva von Hanno	Håkons mor	
 Q1431878	cast	Q17100278	John Sigurd Kristensen	Skipslegen	
 Q1431878	cast	Q1929677	Frank Krog	Wernes	
@@ -134,8 +134,8 @@ Q1764322	producer	Q5891339	Bo Jonsson
 Q1764322	cinematographer	Q5714895	Rune Ericson		
 Q1764322	cinematographer	Q133201575	Felix S:t Clair-Renard		
 Q1764322	editor	Q39072720	Sylvia Ingemarsson		
-Q1764322	editor	Q133457820	Q133457820		
-Q1764322	production_designer	Q133281899	Q133281899		
+Q1764322	editor	Q133457820	Marianne Andersson		
+Q1764322	production_designer	Q133281899	Styrbjörn Engström		
 Q1764322	cast	Q580262	Annalisa Ericson	Alice	
 Q1764322	cast	Q4951378	Margo Gunn	Fiona McDougall	
 Q1764322	cast	Q247626	Barbro Hiort af Ornäs	Stig Helmers mamma	
@@ -145,7 +145,7 @@ Q1764322	cast	Q4981864	Helén Söderqvist Henriksson	Anderhages granne
 Q1764322	cast	Q718280	Mats Bergman	Bruno Anderhage	
 Q1764322	cast	Q4977291	Marianne Scheja	Pyttan	
 Q1764322	cast	Q4971408	Pia Oscarsson	fru Anderhage	
-Q1764322	cast	Q133475028	Q133475028	rörmokaren	
+Q1764322	cast	Q133475028	Bruno Johansson	rörmokaren	
 Q1764322	cast	Q6019549	Jan Nygren	toastmasterchefen	
 Q1764322	cast	Q4895701	Bertil Norström	Olofsson, bonde	
 Q1764322	cast	Q133474472	Kobie Kentkuran	slapping på golfbanan	
@@ -154,12 +154,12 @@ Q1764322	cast	Q4980331	Christina Stenius	fru Berglund
 Q1764322	cast	Q6196047	Nils Petter Sundgren	galleribesökare	
 Q1764322	cast	Q3179075	Jimmy Logan	Roderic "Dogleg" McDougall	
 Q1764322	cast	Q5612540	Sydney Coulson	Malcolm	
-Q1764322	cast	Q133467795	Q133467795	Rosie, bartendern på The Laughing Duck	
+Q1764322	cast	Q133467795	Gerrie Rosemary Ferguson	Rosie, bartendern på The Laughing Duck	
 Q1764322	cast	Q95872707	Ulf Björck	slapping på golfbanan	
 Q1764322	cast	Q1770250	Jon Skolmen	Ole Bramserud	
 Q1764322	cast	Q4586988	Ingvar Kjellson	Rutger	
 Q1764322	cast	Q321344	Erland Josephson	kritikern	
-Q1764322	cast	Q133477225	Q133477225	spanske sekreteraren	
+Q1764322	cast	Q133477225	Patrik Sventelius	spanske sekreteraren	
 Q1764322	cast	Q7277963	RUBEN XYZ	Olofssons barnbarn	
 Q1764322	cast	Q6000173	Claes Månsson	länsantikvarie Berglund	
 Q1764322	cast	Q5731968	John Fiske	den skotske TV-reportern	
@@ -167,9 +167,9 @@ Q1764322	cast	Q5891339	Bo Jonsson	lastbilschauffören
 Q1764322	cast	Q276058	Hege Schøyen	Mette Gulbrandsen	
 Q1764322	cast	Q5907051	Paul Kessel	Patric, golftränare	
 Q1764322	cast	Q3847044	Margreth Weivers	fru Olofsson	
-Q1764322	cast	Q133467756	Q133467756	fader Simmons	
+Q1764322	cast	Q133467756	Harry Glass	fader Simmons	
 Q1764322	cast	Q115272495	Anders Ingemarsson	vägarbetaren	
-Q1764322	cast	Q133282157	Q133282157	golfare	
+Q1764322	cast	Q133282157	Ole Söderblom	golfare	
 Q1764322	cast	Q714141	Lasse Åberg	Stig-Helmer Olsson	
 Q1764322	cast	Q2933361	Ove Sellberg	self	
 Q1764322	follows	Q1764347	SOS – en segelsällskapsresa		
@@ -208,13 +208,13 @@ Q1767472	producer	Q4994186	Lars Jönsson
 Q1767472	producer	Q107988641	Lars Dahlquist		
 Q1767472	cinematographer	Q404522	Jens Fischer		
 Q1767472	cinematographer	Q5969956	Lars-Olof Löthwall		
-Q1767472	cinematographer	Q134302746	Q134302746		
-Q1767472	cinematographer	Q134302765	Q134302765		
+Q1767472	cinematographer	Q134302746	Håkan Alamaa		
+Q1767472	cinematographer	Q134302765	Bror Augustsson		
 Q1767472	editor	Q73984266	Karin Giernoth		
 Q1767472	editor	Q75507141	Perry Schaffer		
 Q1767472	executive_producer	Q4994186	Lars Jönsson		
 Q1767472	executive_producer	Q6056692	Steen Priwin		
-Q1767472	production_designer	Q134297607	Q134297607		
+Q1767472	production_designer	Q134297607	Ulla Herdin		
 Q1767472	cast	Q75944165	Göran Martling	en av Fanny och Zacs vänner	
 Q1767472	cast	Q254793	Per Oscarsson	Erik Zander, Fannys morfar	
 Q1767472	cast	Q3427861	Ernst Günther	Gottfrid Pettersson	
@@ -272,7 +272,7 @@ Q1217937	cast	Q4961058	Boel Larsson
 Q1217937	cast	Q79402816	Max Winerdal		
 Q1217937	cast	Q5544199	Puck Ahlsell		
 Q1217937	cast	Q371066	Björn Gustafson		
-Q1217937	cast	Q289924	ギタ・ナービュ		
+Q1217937	cast	Q289924	Ghita Nørby		
 Q1217937	cast	Q1817966	Lennart Hjulström		
 Q1217937	cast	Q201685	Gunilla Nyroos		
 Q1217937	cast	Q4346227	Sif Ruud		
@@ -469,7 +469,7 @@ Q10623223	cast	Q4346227	Sif Ruud
 Q10623223	cast	Q4569882	Philip Zandén		
 Q10623223	cast	Q4129949	Stina Ekblad		
 Q10623223	cast	Q4953564	Anna-Lena Hemström		
-Q10623223	cast	Q289924	ギタ・ナービュ		
+Q10623223	cast	Q289924	Ghita Nørby		
 Q10623223	cast	Q5627798	Per Eggers		
 Q10623223	cast	Q5724629	Loa Falkman		
 Q10623223	cast	Q3373174	Simon Norrthon		
@@ -503,7 +503,7 @@ Q5225914	cast	Q509482	Per Grundén
 Q5225914	cast	Q6171742	Michael Segerström	Knutsson, säkerhetschef på sedeltryckeriet	
 Q5225914	cast	Q5956900	Bernt Lindqvist	polischefen	
 Q5225914	cast	Q6043257	Lars Göran Persson	Andrzej Klucz, maffiachef i Warszawa	
-Q5225914	cast	Q256981	伊冯·沙洛斯克	hotellstäderska i Warszawa	
+Q5225914	cast	Q256981	Yvonne Schaloske	hotellstäderska i Warszawa	
 Q5225914	cast	Q208667	Stellan Skarsgård	Herman Melvin	
 Q5225914	cast	Q1340340	Jan Mybrand	nattvakt på sedeltryckeriet	
 Q5225914	cast	Q1437612	Peter Haber	Dr Max Adrian Busé	
@@ -576,7 +576,7 @@ Q1768770	cast	Q5628839	Gard B. Eidsvold	Arild Hamsun
 Q1768770	cast	Q72768	Ernst Jacobi	Adolf Hitler	
 Q1768770	cast	Q4585283	Erik Hivju	Gabriel Langfeldt	
 Q1768770	cast	Q5628835	Eindride Eidsvold	Tore Hamsun	
-Q1768770	cast	Q289924	ギタ・ナービュ	Marie Hamsun	
+Q1768770	cast	Q289924	Ghita Nørby	Marie Hamsun	
 Q1768770	cast	Q4587296	Per Jansen	Harald Grieg	
 Q1768770	cast	Q1771770	Anette Hoff	Ellinor Hamsun	
 Q1768770	subject		Knut Hamsun		
@@ -737,11 +737,11 @@ Q5963138	cinematographer	Q95887140	Dan Myhrman
 Q5963138	cinematographer	Q133201575	Felix S:t Clair-Renard		
 Q5963138	editor	Q73984078	Dominika Daubenbüchel		
 Q5963138	costume_designer	Q95728308	Ingabritt Adriansson		
-Q5963138	production_designer	Q133536012	Q133536012		
+Q5963138	production_designer	Q133536012	Bengt Svedberg		
 Q5963138	cast	Q460554	Maria Langhammer	Camilla Anderhage	
 Q5963138	cast	Q4969900	Anna Norberg	Rebecka	
 Q5963138	cast	Q6171742	Michael Segerström	Claes Palmstierna	
-Q5963138	cast	Q133566118	Q133566118	Anna	
+Q5963138	cast	Q133566118	Andrea Larsdotter	Anna	
 Q5963138	cast	Q1770250	Jon Skolmen		
 Q5963138	cast	Q718280	Mats Bergman	Bruno Anderhage	
 Q5963138	cast	Q1776879	Magnus Härenstam	doktor Levander	

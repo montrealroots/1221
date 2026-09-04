@@ -35,12 +35,12 @@ Q249235	director	Q55294	Kenneth Branagh
 Q249235	writer	Q3433258	Rita Rudner		
 Q249235	writer	Q6774992	Martin Bergman		
 Q249235	producer	Q55294	Kenneth Branagh		
-Q249235	cinematographer	Q140520966	Q140520966		
+Q249235	cinematographer	Q140520966	Roger Lanser		
 Q249235	editor	Q15783379	Andrew Marcus		
 Q249235	executive_producer	Q89098425	Stephen Evans		
 Q249235	cast	Q168724	Emma Thompson		
 Q249235	cast	Q49017	Hugh Laurie		
-Q249235	cast	Q432357	フィリーダ・ロウ		
+Q249235	cast	Q432357	Phyllida Law		
 Q249235	cast	Q2559165	Tony Slattery		
 Q249235	cast	Q55294	Kenneth Branagh		
 Q249235	cast	Q192912	Stephen Fry		
@@ -89,7 +89,7 @@ Q182727	subject		The Troubles
 Q596844	director	Q469233	Stephen Gyllenhaal		
 Q596844	writer	Q437718	Graham Swift		
 Q596844	composer	Q374754	Carter Burwell		
-Q596844	cinematographer	Q279100	ロバート・エルスウィット		
+Q596844	cinematographer	Q279100	Robert Elswit		
 Q596844	editor	Q515837	Lesley Walker		
 Q596844	costume_designer	Q291686	Lindy Hemming		
 Q596844	cast	Q2094185	Sean Maguire		
@@ -319,7 +319,7 @@ Q391172	subject		family conflict
 Q391172	subject		descent		
 Q109135	director	Q134867	Danny Boyle		
 Q109135	writer	Q337976	John Hodge		
-Q109135	composer	Q272069	デーモン・アルバーン		
+Q109135	composer	Q272069	Damon Albarn		
 Q109135	producer	Q506124	Andrew Macdonald		
 Q109135	cinematographer	Q656924	Brian Tufano		
 Q109135	editor	Q15834300	Masahiro Hirakubo		
@@ -378,12 +378,12 @@ Q324239	cast	Q3418797	Randall Batinkoff
 Q324239	cast	Q291552	Lynn Cohen		
 Q324239	cast	Q230378	Catherine Keener		
 Q324239	cast	Q1334725	Kevin Corrigan		
-Q324239	cast	Q512986	ヴィンセント・パストーレ		
+Q324239	cast	Q512986	Vincent Pastore		
 Q324239	cast	Q143369	Alice Drummond		
 Q324239	cast	Q3810271	Joseph Siravo		
 Q496907	director	Q134867	Danny Boyle		
 Q496907	writer	Q337976	John Hodge		
-Q496907	composer	Q346285	デヴィッド・アーノルド		
+Q496907	composer	Q346285	David Arnold		
 Q496907	producer	Q506124	Andrew Macdonald		
 Q496907	cinematographer	Q656924	Brian Tufano		
 Q496907	editor	Q15834300	Masahiro Hirakubo		
@@ -525,7 +525,7 @@ Q599188	cast	Q138327	Catherine McCormack
 Q599188	cast	Q203545	Michael Gambon		
 Q599188	cast	Q444306	Kathy Burke		
 Q599188	cast	Q913526	Bríd Brennan		
-Q599188	cast	Q873	メリル・ストリープ		
+Q599188	cast	Q873	Meryl Streep		
 Q599188	award		Laurence Olivier Awards		
 Q599188	award		National Board of Review: Top Ten Films		
 Q1424066	director	Q2719916	Anand Tucker		
@@ -588,7 +588,7 @@ Q1481540	cast	Q223741	Brian Molko
 Q1481540	cast	Q6281408	Joseph Beattie		
 Q1481540	cast	Q16107301	Michael Feast		
 Q1481540	cast	Q213567	Jonathan Rhys Meyers		
-Q1481540	cast	Q254022	エディ・イザード		
+Q1481540	cast	Q254022	Suzy Eddie Izzard		
 Q1481540	subject		gender		
 Q1481540	subject		glam rock		
 Q1481540	subject		popular culture		

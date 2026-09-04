@@ -7,7 +7,7 @@
  *
  * Rewrites cache/details.ndjson in place. Safe to run again.
  */
-import { readFileSync, writeFileSync, renameSync } from 'node:fs';
+import { readFileSync, writeFileSync, renameSync, existsSync } from 'node:fs';
 
 const HERE = new URL('./', import.meta.url);
 const detailsPath = new URL('./cache/details.ndjson', HERE);
@@ -16,8 +16,10 @@ const PARALLEL = 3;
 const BATCH = 400;
 
 async function sparql(query, attempt = 0) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 60_000);
   try {
-    const res = await fetch(`https://query.wikidata.org/sparql?query=${encodeURIComponent(query)}`, { headers: { 'User-Agent': UA, Accept: 'application/sparql-results+json' } });
+    const res = await fetch(`https://query.wikidata.org/sparql?query=${encodeURIComponent(query)}`, { headers: { 'User-Agent': UA, Accept: 'application/sparql-results+json' }, signal: controller.signal });
     if (res.status === 429 || res.status >= 500) {
       if (attempt >= 6) throw new Error(`HTTP ${res.status}`);
       await new Promise((r) => setTimeout(r, 3000 * 2 ** attempt));
@@ -29,25 +31,33 @@ async function sparql(query, attempt = 0) {
     if (attempt >= 6) throw error;
     await new Promise((r) => setTimeout(r, 3000 * 2 ** attempt));
     return sparql(query, attempt + 1);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
 const rows = readFileSync(detailsPath, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const ids = new Set();
 const isQ = (s) => /^Q\d+$/.test(s ?? '');
+// A credit with no item behind it (a blank node, "genid" in the URI) has
+// nothing to label and breaks the whole batch it is sent in.
 for (const row of rows) {
-  ids.add(row.qid);
-  for (const p of row.people) ids.add(p.qid);
-  for (const c of row.cast) ids.add(c.qid);
+  if (isQ(row.qid)) ids.add(row.qid);
+  for (const p of row.people) if (isQ(p.qid)) ids.add(p.qid);
+  for (const c of row.cast) if (isQ(c.qid)) ids.add(c.qid);
   for (const key of ['types', 'basedOn', 'series', 'franchise', 'follows', 'followedBy', 'companies', 'distributors', 'broadcasters']) {
     for (const v of row.lists[key] ?? []) { const q = v.split('\t')[0]; if (isQ(q)) ids.add(q); }
   }
 }
 console.log(`items to label: ${ids.size}`);
 
-const labels = new Map();
-const queue = [...ids];
+const labelsPath = new URL('./cache/labels.json', HERE);
+const labels = new Map(existsSync(labelsPath) ? Object.entries(JSON.parse(readFileSync(labelsPath, 'utf8'))) : []);
+const queue = [...ids].filter((q) => !labels.has(q));
+console.log(`already labelled: ${labels.size}; to fetch: ${queue.length}`);
 let done = 0;
+let sinceSave = 0;
+const persist = () => writeFileSync(labelsPath, JSON.stringify(Object.fromEntries(labels)));
 async function worker() {
   while (queue.length > 0) {
     const batch = queue.splice(0, BATCH);
@@ -69,14 +79,18 @@ async function worker() {
         }
       }
       done += batch.length;
-      if (done % 4000 < BATCH) console.log(`labelled ${done}/${ids.size}`);
+      sinceSave += batch.length;
+      console.log(`labelled ${done}/${queue.length + done} (${labels.size} known)`);
+      if (sinceSave >= 4000) { persist(); sinceSave = 0; }
     } catch (error) {
       console.log(`FAIL batch: ${error.message}`);
-      if (batch.length > 50) queue.push(...batch);
+      // A bad request is one id in the batch; halve it until the culprit is alone, then drop it.
+      if (batch.length > 1) queue.push(...batch.slice(0, Math.ceil(batch.length / 2)), ...batch.slice(Math.ceil(batch.length / 2)));
     }
   }
 }
 await Promise.all(Array.from({ length: PARALLEL }, worker));
+persist();
 console.log(`labels found: ${labels.size}`);
 
 let changed = 0;

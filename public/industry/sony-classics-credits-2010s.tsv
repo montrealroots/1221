@@ -83,35 +83,35 @@ Q954182	cinematographer	Q1948700	Morten Søborg
 Q954182	editor	Q2793326	Pernille Bech Christensen		
 Q954182	editor	Q39251153	Morten Egholm		
 Q954182	production_designer	Q79839769	Peter Grant		
-Q954182	cast	Q707827	キム・ボドゥニア		
+Q954182	cast	Q707827	Kim Bodnia		
 Q954182	cast	Q1452177	Paw Henriksen		
-Q954182	cast	Q12337807	Сусанна Юхас		
-Q954182	cast	Q443662	碧尔特·诺伊曼		
+Q954182	cast	Q12337807	Susanne Juhasz		
+Q954182	cast	Q443662	Birthe Neumann		
 Q954182	cast	Q40523737	Eddy Kimani		
 Q954182	cast	Q8000017	Wil Johnson		
 Q954182	cast	Q12305062	Camilla Gottlieb		
 Q954182	cast	Q40523743	Godfrey Ojiambo		
-Q954182	cast	Q11213025	엘세베트 스텐토프트		
+Q954182	cast	Q11213025	Elsebeth Steentoft		
 Q954182	cast	Q38052507	Simon Magaard Holm		
 Q954182	cast	Q469983	Trine Dyrholm		
-Q954182	cast	Q2559831	ボディル・ヨルゲンセン		
+Q954182	cast	Q2559831	Bodil Jørgensen		
 Q954182	cast	Q12331527	Peter Flyvholm		
 Q954182	cast	Q382210	Ulrich Thomsen		
 Q954182	cast	Q723674	Mikael Persbrandt		
-Q954182	cast	Q12337210	スティグ・ハフマイヤー		
-Q954182	cast	Q4938062	Камилла Бендикс		
-Q954182	cast	Q12326235	马丁·布赫		
+Q954182	cast	Q12337210	Stig Hoffmeyer		
+Q954182	cast	Q4938062	Camilla Bendix		
+Q954182	cast	Q12326235	Martin Buch		
 Q954182	cast	Q38054221	Martin Boserup		
-Q954182	cast	Q4568029	アネデ・ストゥヴェルベク		
+Q954182	cast	Q4568029	Anette Støvelbæk		
 Q954182	cast	Q12343199	Tina Gylling Mortensen		
 Q954182	cast	Q3515027	William Jøhnk Nielsen		
-Q954182	cast	Q12323855	라르스 콜룬		
+Q954182	cast	Q12323855	Lars Kaalund		
 Q954182	cast	Q12339512	Toke Lars Bjarke		
-Q954182	cast	Q40523847	Q40523847		
-Q954182	cast	Q4994547	Lars Bom (Olesen)		
+Q954182	cast	Q40523847	Alberte Blichfeldt		
+Q954182	cast	Q4994547	Lars Bom		
 Q954182	cast	Q12333484	Rikke Louise Andersson		
 Q954182	cast	Q7239357	Preben Harris		
-Q954182	cast	Q12319647	Йеспер Ломанн		
+Q954182	cast	Q12319647	Jesper Lohmann		
 Q954182	award		Academy Award for Best International Feature Film		
 Q954182	award		European Film Award for Best Director		
 Q954182	subject		war crime		
@@ -125,7 +125,7 @@ Q645931	award		Academy Award for Best Documentary Feature Film
 Q645931	subject		Great Recession		
 Q3226996	director	Q822240	Oliver Schmitz		
 Q53096	director	Q365726	Nigel Cole		
-Q53096	composer	Q346285	デヴィッド・アーノルド		
+Q53096	composer	Q346285	David Arnold		
 Q53096	producer	Q5111096	Christine Langan		
 Q53096	producer	Q7610883	Stephen Woolley		
 Q53096	cinematographer	Q15303833	John de Borman		
@@ -261,7 +261,7 @@ Q5758155	composer	Q1638196	Alec Puro
 Q5758155	producer	Q7313297	Renn Hawkey		
 Q5758155	cast	Q1279993	Ebon Moss-Bachrach		
 Q5758155	cast	Q389017	Taissa Farmiga		
-Q5758155	cast	Q521624	ダグマーラ・ドミンスク		
+Q5758155	cast	Q521624	Dagmara Domińczyk		
 Q5758155	cast	Q439457	Donna Murphy		
 Q5758155	cast	Q679110	Joshua Leonard		
 Q5758155	cast	Q264840	Vera Farmiga		
@@ -353,7 +353,7 @@ Q4106870	writer	Q364421	Morgan Spurlock
 Q4106870	editor	Q16877194	Thomas M. Vogt		
 Q4106870	cast	Q319204	Brett Ratner		
 Q4106870	cast	Q4914	Jimmy Kimmel		
-Q4106870	cast	Q22686	ドナルド・トランプ		
+Q4106870	cast	Q22686	Donald Trump		
 Q4106870	cast	Q9049	Noam Chomsky		
 Q4106870	cast	Q193156	Ralph Nader		
 Q4106870	cast	Q3772	Quentin Tarantino		
@@ -507,7 +507,7 @@ Q4822876	writer	Q7488885	Shannon Hale
 Q4822876	composer	Q1658300	Ilan Eshkeri		
 Q4822876	producer	Q160219	Stephenie Meyer		
 Q4822876	cinematographer	Q15825311	Larry Smith		
-Q4822876	editor	Q15836717	Q15836717		
+Q4822876	editor	Q15836717	Nick Fenton		
 Q4822876	editor	Q64681734	Nick Fenton		
 Q4822876	cast	Q6108784	Ricky Whittle		
 Q4822876	cast	Q374770	James Callis		
@@ -611,7 +611,7 @@ Q565623	cast	Q234644	Elizabeth Olsen
 Q565623	cast	Q949921	Craig Chester		
 Q565623	cast	Q27687899	Erin Darke		
 Q565623	cast	Q232902	Jennifer Jason Leigh		
-Q565623	cast	Q38119	ダニエル・ラドクリフ		
+Q565623	cast	Q38119	Daniel Radcliffe		
 Q565623	cast	Q20973953	Zach Appelman		
 Q565623	cast	Q1905269	John Cullum		
 Q15052280	director	Q2832952	Alex Gibney		
@@ -681,7 +681,7 @@ Q3522995	cast	Q3609147	Aldo Bufi Landi
 Q3522995	cast	Q133787	Riccardo Scamarcio		
 Q3522995	cast	Q3018042	David Harewood		
 Q3522995	cast	Q3814008	Katy Saunders		
-Q3522995	cast	Q37628	ミラ・キュニス		
+Q3522995	cast	Q37628	Mila Kunis		
 Q3522995	cast	Q131380	Kim Basinger		
 Q3522995	cast	Q17686706	Loan Chabanol		
 Q3522995	cast	Q1090947	Moran Atias		
@@ -785,7 +785,7 @@ Q14511869	cast	Q228931	Marcia Gay Harden
 Q14511869	cast	Q269835	Eileen Atkins		
 Q14511869	cast	Q60659	Ute Lemper		
 Q14511869	cast	Q558301	Hamish Linklater		
-Q14511869	cast	Q147077	エマ・ストーン		
+Q14511869	cast	Q147077	Emma Stone		
 Q14511869	cast	Q138327	Catherine McCormack		
 Q14511869	cast	Q1341507	Lionel Abelanski		
 Q14511869	cast	Q19665711	Jeremy Shamos		
@@ -921,7 +921,7 @@ Q17417520	cast	Q435475	Ethan Phillips
 Q17417520	cast	Q16832529	Ben Rosenfield		
 Q17417520	cast	Q185140	Joaquin Phoenix		
 Q17417520	cast	Q204586	Parker Posey		
-Q17417520	cast	Q147077	エマ・ストーン		
+Q17417520	cast	Q147077	Emma Stone		
 Q17417520	cast	Q7348862	Robert Petkoff		
 Q19363678	director	Q508184	Rebecca Miller		
 Q19363678	writer	Q508184	Rebecca Miller		
@@ -1348,7 +1348,7 @@ Q58313464	cast	Q106982029	Kathryn Wilder	Judith Quiney
 Q58313464	cast	Q170510	Ian McKellen	Henry Wriothesley, 3rd Earl of Southampton	
 Q58313464	cast	Q28054	Judi Dench	Anne Hathaway	
 Q58313464	cast	Q4717408	Alex MacQueen	Thomas Lucy	
-Q58313464	cast	Q6707700	リディア・ウィルソン	Susanna Hall	
+Q58313464	cast	Q6707700	Lydia Wilson	Susanna Hall	
 Q58313464	cast	Q5550023	Gerard Horan	Ben Jonson	
 Q58313464	cast	Q552975	Hadley Fraser	John Hall	
 Q24308041	director	Q15215623	Shana Feste		
@@ -1441,5 +1441,5 @@ Q65924974	cast	Q361465	Gerran Howell
 Q65924974	cast	Q58924367	Jonah Hauer-King		
 Q65924974	cast	Q976176	Saul Rubinek		
 Q65924974	cast	Q203804	Tim Roth		
-Q65924974	cast	Q254022	エディ・イザード		
+Q65924974	cast	Q254022	Suzy Eddie Izzard		
 Q65924974	cast	Q138327	Catherine McCormack		

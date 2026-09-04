@@ -12,7 +12,6 @@ import type { DecisionItem, Id, Person, Project, SimulationTier } from '../domai
 import { clamp, remap } from '../core/rng';
 import { addDays, MS_DAY, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
-import { seedIndependentProject } from '../systems/casting';
 import { ATTRIBUTES, TRAITS, conflictingTraits } from '../domain/attributes';
 import { SKILLS } from '../domain/skills';
 
@@ -228,7 +227,6 @@ function runWorldTick(sim: Simulation): void {
   retier(sim);
   driftNpcCareers(sim);
   expireDecisions(sim);
-  keepIndustryAlive(sim);
   prune(sim);
 }
 
@@ -335,13 +333,11 @@ function expireDecisions(sim: Simulation): void {
   }
 }
 
-/** The industry keeps making things without the player. */
-function keepIndustryAlive(sim: Simulation): void {
-  const casting = Object.values(sim.universe.roles).filter((r) => r.status === 'casting').length;
-  if (casting >= 8) return;
-  const rng = sim.rng('industry_alive', Math.floor(sim.now / (2 * MS_DAY)));
-  if (rng.chance(0.55)) seedIndependentProject(sim, rng.int(0, 99999));
-}
+/**
+ * The industry keeps making things without the player, and it does it on its
+ * own clock: what gets commissioned, where, and in what genre is decided by
+ * systems/zeitgeist so that no two years look the same. Nothing is made here.
+ */
 
 /** Keeps the save from growing without bound over a long life. */
 function prune(sim: Simulation): void {

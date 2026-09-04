@@ -318,7 +318,7 @@ Q2389826	cast	Q153239	Al St. John
 Q2389826	cast	Q16081965	George Bookasta		
 Q2389826	cast	Q359251	Jean Hersholt		
 Q2389826	cast	Q17350188	John Holland		
-Q2389826	cast	Q267247	ルーペ・ヴェレス		
+Q2389826	cast	Q267247	Lupe Vélez		
 Q1068328	director	Q189081	Howard Hughes		
 Q1068328	director	Q263022	Edmund Goulding		
 Q1068328	director	Q381831	James Whale		
@@ -382,26 +382,6 @@ Q27942957	director	Q447240	Elinor Glyn
 Q27942957	producer	Q447240	Elinor Glyn		
 Q27942957	cinematographer	Q774270	Charles Rosher		
 Q27942957	cast	Q4994041	Carl Brisson		
-Q3932521	director	Q555691	Edward Sedgwick		
-Q3932521	director	Q1760495	Malcolm St. Clair		
-Q3932521	director	Q1985392	Nick Grinde		
-Q3932521	writer	Q1443029	Frank Butler		
-Q3932521	cinematographer	Q3306609	Merritt B. Gerstad		
-Q3932521	editor	Q3127897	Harry Reynolds		
-Q3932521	production_designer	Q727904	Cedric Gibbons		
-Q3932521	cast	Q668993	William Haines		
-Q3932521	cast	Q5337205	Edgar Dearing		
-Q3932521	cast	Q461681	Polly Moran		
-Q3932521	cast	Q2959529	Charles King		
-Q3932521	cast	Q718786	Mary Carlisle		
-Q3932521	cast	Q3442320	Roscoe Ates		
-Q3932521	cast	Q3127927	Harry Tenbrook		
-Q3932521	cast	Q3296163	Mary Doran		
-Q3932521	cast	Q1263798	John Miljan		
-Q3932521	cast	Q950376	Cliff Edwards		
-Q3932521	cast	Q2913488	Russell Hopton		
-Q3932521	cast	Q3048566	Edward Nugent		
-Q3932521	cast	Q987741	Edward Brophy		
 Q3213556	director	Q3161328	James Parrott		
 Q3213556	writer	Q332530	Leo McCarey		
 Q3213556	writer	Q3124683	H. M. Walker		
@@ -563,13 +543,13 @@ Q3342589	cast	Q7599484	Stanley Blystone
 Q3041112	director	Q51133	King Vidor		
 Q3041112	writer	Q3566015	Wanda Tuchock		
 Q3041112	producer	Q51133	King Vidor		
-Q3041112	producer	Q242416	マリオン・デイヴィス		
+Q3041112	producer	Q242416	Marion Davies		
 Q3041112	cinematographer	Q743092	Oliver T. Marsh		
 Q3041112	editor	Q509759	Blanche Sewell		
 Q3041112	costume_designer	Q1366554	Adrian		
 Q3041112	production_designer	Q727904	Cedric Gibbons		
 Q3041112	cast	Q3189043	Julia Faye		
-Q3041112	cast	Q242416	マリオン・デイヴィス		
+Q3041112	cast	Q242416	Marion Davies		
 Q3041112	cast	Q152941	George Irving		
 Q3041112	cast	Q95002	William Holden		
 Q3041112	cast	Q507861	Donald Ogden Stewart		
@@ -724,6 +704,26 @@ Q2799763	cast	Q459580	Claire McDowell
 Q2799763	cast	Q284722	Renée Adorée		
 Q2799763	cast	Q503956	John Gilbert		
 Q2799763	cast	Q1126956	Conrad Nagel		
+Q3932521	director	Q555691	Edward Sedgwick		
+Q3932521	director	Q1760495	Malcolm St. Clair		
+Q3932521	director	Q1985392	Nick Grinde		
+Q3932521	writer	Q1443029	Frank Butler		
+Q3932521	cinematographer	Q3306609	Merritt B. Gerstad		
+Q3932521	editor	Q3127897	Harry Reynolds		
+Q3932521	production_designer	Q727904	Cedric Gibbons		
+Q3932521	cast	Q668993	William Haines		
+Q3932521	cast	Q5337205	Edgar Dearing		
+Q3932521	cast	Q461681	Polly Moran		
+Q3932521	cast	Q2959529	Charles King		
+Q3932521	cast	Q718786	Mary Carlisle		
+Q3932521	cast	Q3442320	Roscoe Ates		
+Q3932521	cast	Q3127927	Harry Tenbrook		
+Q3932521	cast	Q3296163	Mary Doran		
+Q3932521	cast	Q1263798	John Miljan		
+Q3932521	cast	Q950376	Cliff Edwards		
+Q3932521	cast	Q2913488	Russell Hopton		
+Q3932521	cast	Q3048566	Edward Nugent		
+Q3932521	cast	Q987741	Edward Brophy		
 Q1724081	director	Q435029	Clarence Brown		
 Q1724081	writer	Q458801	Bess Meredyth		
 Q1724081	writer	Q1294729	Edwin Justus Mayer		
@@ -829,7 +829,7 @@ Q3985804	cast	Q3493013	Spencer Charters
 Q3985804	cast	Q3300132	Maude Eburne		
 Q3985804	cast	Q4885267	Ben Bard		
 Q3985804	cast	Q983420	Chester Morris		
-Q3985804	cast	Q3666101	Q3666101		
+Q3985804	cast	Q3666101	Chance Ward		
 Q531332	director	Q349518	George W. Hill		
 Q531332	writer	Q463883	Frances Marion		
 Q531332	writer	Q503483	Martin Flavin		
@@ -913,7 +913,7 @@ Q7734186	cast	Q372073	Jackie Cooper
 Q18636442	director	Q669045	Harry Beaumont		
 Q18636442	writer	Q7288108	Ralph Spence		
 Q18636442	composer	Q1609199	Herbert Stothart		
-Q18636442	producer	Q242416	マリオン・デイヴィス		
+Q18636442	producer	Q242416	Marion Davies		
 Q18636442	cinematographer	Q743092	Oliver T. Marsh		
 Q18636442	costume_designer	Q1366554	Adrian		
 Q18636442	production_designer	Q727904	Cedric Gibbons		
@@ -921,7 +921,7 @@ Q18636442	cast	Q1383202	Leo White
 Q18636442	cast	Q3938213	Robert Bolder		
 Q18636442	cast	Q441414	Anita Louise		
 Q18636442	cast	Q3946332	Sam Hardy		
-Q18636442	cast	Q242416	マリオン・デイヴィス		
+Q18636442	cast	Q242416	Marion Davies		
 Q18636442	cast	Q2121085	Walter Catlett		
 Q3684158	director	Q457269	Sam Wood		
 Q3684158	writer	Q4648245	A. P. Younger		
@@ -1157,7 +1157,7 @@ Q2567265	cast	Q1367568	Albert Hackett
 Q2567265	cast	Q70692	Paul Panzer		
 Q2567265	cast	Q5354296	Eleanor Hunt		
 Q4643582	director	Q4711536	Albert de Courville		
-Q4643582	writer	Q5781343	沃爾特·哈克特		
+Q4643582	writer	Q5781343	Walter Hackett		
 Q4643582	cinematographer	Q1502973	Geoffrey Faithfull		
 Q4643582	cast	Q629955	Malcolm Keen		
 Q4643582	cast	Q626698	Dennis Neilson-Terry		
@@ -1387,7 +1387,7 @@ Q5288452	cinematographer	Q2864545	Art Lloyd
 Q5288452	editor	Q3430604	Richard C. Currier		
 Q2307917	director	Q269731	Robert Z. Leonard		
 Q2307917	writer	Q275719	Fannie Hurst		
-Q2307917	producer	Q242416	マリオン・デイヴィス		
+Q2307917	producer	Q242416	Marion Davies		
 Q2307917	producer	Q269731	Robert Z. Leonard		
 Q2307917	cinematographer	Q721897	George Barnes		
 Q2307917	editor	Q508875	Margaret Booth		
@@ -1396,7 +1396,7 @@ Q2307917	production_designer	Q727904	Cedric Gibbons
 Q2307917	cast	Q1252598	Douglass Montgomery		
 Q2307917	cast	Q2761863	Richard Bennett		
 Q2307917	cast	Q2378394	Charles Giblyn		
-Q2307917	cast	Q242416	マリオン・デイヴィス		
+Q2307917	cast	Q242416	Marion Davies		
 Q2307917	cast	Q3942974	Ruth Selwyn		
 Q2307917	cast	Q156178	Leslie Howard		
 Q2307917	cast	Q453962	Irene Rich		
@@ -1525,7 +1525,7 @@ Q2091999	cast	Q7152294	Paul McAllister
 Q2091999	cast	Q1294814	Edwin Maxwell		
 Q18636459	director	Q269731	Robert Z. Leonard		
 Q18636459	producer	Q64678	Paul Bern		
-Q18636459	producer	Q242416	マリオン・デイヴィス		
+Q18636459	producer	Q242416	Marion Davies		
 Q18636459	producer	Q269731	Robert Z. Leonard		
 Q18636459	cinematographer	Q743092	Oliver T. Marsh		
 Q18636459	editor	Q508875	Margaret Booth		
@@ -1540,7 +1540,7 @@ Q18636459	cast	Q1833058	Robert McWade
 Q18636459	cast	Q2019352	Emily Fitzroy		
 Q18636459	cast	Q6266258	Johnny Arthur		
 Q18636459	cast	Q325695	Clara Blandick		
-Q18636459	cast	Q242416	マリオン・デイヴィス		
+Q18636459	cast	Q242416	Marion Davies		
 Q18636459	subject		human pregnancy		
 Q3156600	director	Q284911	Marc Allégret		
 Q3156600	writer	Q2831645	Albert Willemetz		
@@ -1917,7 +1917,7 @@ Q3018129	cast	Q1126956	Conrad Nagel
 Q3494058	director	Q430720	Charles Brabin		
 Q3494058	writer	Q5497986	Frederick Hazlitt Brennan		
 Q3494058	composer	Q509538	William Axt		
-Q3494058	producer	Q242416	マリオン・デイヴィス		
+Q3494058	producer	Q242416	Marion Davies		
 Q3494058	cinematographer	Q1368602	Harold Rosson		
 Q3494058	cast	Q987741	Edward Brophy		
 Q3494058	cast	Q1753383	Lew Cody		
@@ -2008,11 +2008,11 @@ Q16002062	composer	Q367032	Alfred Newman
 Q16002062	editor	Q7945464	W. Duncan Mansfield		
 Q16002062	cast	Q1752678	Billie Dove		
 Q7715224	director	Q269731	Robert Z. Leonard		
-Q7715224	producer	Q242416	マリオン・デイヴィス		
+Q7715224	producer	Q242416	Marion Davies		
 Q7715224	producer	Q269731	Robert Z. Leonard		
 Q7715224	cinematographer	Q743092	Oliver T. Marsh		
 Q7715224	editor	Q3127897	Harry Reynolds		
-Q7715224	cast	Q242416	マリオン・デイヴィス		
+Q7715224	cast	Q242416	Marion Davies		
 Q463733	director	Q51133	King Vidor		
 Q463733	writer	Q463883	Frances Marion		
 Q463733	writer	Q1819028	Leonard Praskins		
@@ -2042,7 +2042,7 @@ Q18636421	cinematographer	Q1368602	Harold Rosson
 Q18636421	editor	Q508875	Margaret Booth		
 Q18636421	cast	Q281962	Ernest Torrence		
 Q18636421	cast	Q3125932	Hale Hamilton		
-Q18636421	cast	Q267247	ルーペ・ヴェレス		
+Q18636421	cast	Q267247	Lupe Vélez		
 Q18636421	cast	Q471023	Jimmy Durante		
 Q18636421	cast	Q940686	Lawrence Tibbett		
 Q18636421	cast	Q439668	Karen Morley		
@@ -2234,7 +2234,7 @@ Q3224286	cast	Q3317080	Mitchell Lewis
 Q3224286	cast	Q1210022	Dickie Moore		
 Q3224286	cast	Q3020059	DeWitt Clarke Jennings		
 Q3224286	cast	Q381638	Chrispin Martin		
-Q3224286	cast	Q267247	ルーペ・ヴェレス		
+Q3224286	cast	Q267247	Lupe Vélez		
 Q3224286	cast	Q370280	Raymond Hatton		
 Q3224286	cast	Q3189043	Julia Faye		
 Q7767084	director	Q51123	D. W. Griffith		
@@ -2429,7 +2429,7 @@ Q12102485	cast	Q7172369	Pete the Pup
 Q2563560	director	Q263022	Edmund Goulding		
 Q2563560	writer	Q463883	Frances Marion		
 Q2563560	composer	Q509538	William Axt		
-Q2563560	producer	Q242416	マリオン・デイヴィス		
+Q2563560	producer	Q242416	Marion Davies		
 Q2563560	cinematographer	Q721897	George Barnes		
 Q2563560	editor	Q509576	George Hively		
 Q2563560	costume_designer	Q1366554	Adrian		
@@ -2444,7 +2444,7 @@ Q2563560	cast	Q3290613	Sidney Toler
 Q2563560	cast	Q3356950	Oscar Apfel		
 Q2563560	cast	Q17322152	Harold Miller		
 Q2563560	cast	Q366956	Robert Montgomery		
-Q2563560	cast	Q242416	マリオン・デイヴィス		
+Q2563560	cast	Q242416	Marion Davies		
 Q2563560	cast	Q3038059	Douglass Dumbrille		
 Q2563560	cast	Q18645982	Bert Moorhouse		
 Q2563560	cast	Q136646	ZaSu Pitts		
@@ -2460,7 +2460,7 @@ Q18636396	cinematographer	Q743092	Oliver T. Marsh
 Q18636396	editor	Q15455911	Tom Held		
 Q18636396	cast	Q366956	Robert Montgomery		
 Q5006182	director	Q55234	Michael Powell		
-Q5006182	writer	Q2568461	フィリップ・マクドナルド		
+Q5006182	writer	Q2568461	Philip MacDonald		
 Q5006182	producer	Q6182767	Jerome Jackson		
 Q5006182	cinematographer	Q1502973	Geoffrey Faithfull		
 Q5006182	cast	Q2838955	Garry Marsh		
@@ -2658,7 +2658,7 @@ Q5500151	editor	Q3430604	Richard C. Currier
 Q5583506	director	Q167521	Herbert Wilcox		
 Q5583506	writer	Q1351469	Eric Maschwitz		
 Q5583506	producer	Q167521	Herbert Wilcox		
-Q5583506	cinematographer	Q965659	フレディ・ヤング		
+Q5583506	cinematographer	Q965659	Freddie Young		
 Q5583506	editor	Q20684159	Michael Hankinson		
 Q5583506	cast	Q2476429	Jack Buchanan		
 Q5583506	cast	Q433044	Anna Neagle		
@@ -2744,7 +2744,7 @@ Q3816358	production_designer	Q727904	Cedric Gibbons
 Q3816358	cast	Q162621	Walter Huston		
 Q3816358	cast	Q3317080	Mitchell Lewis		
 Q3816358	cast	Q1126956	Conrad Nagel		
-Q3816358	cast	Q267247	ルーペ・ヴェレス		
+Q3816358	cast	Q267247	Lupe Vélez		
 Q3816358	cast	Q242462	Virginia Bruce		
 Q3816358	cast	Q3077698	Forrester Harvey		
 Q3816358	cast	Q540459	C. Henry Gordon		
@@ -2839,14 +2839,14 @@ Q7156778	award		National Board of Review: Top Ten Films
 Q3907622	director	Q1172930	Alfred Santell		
 Q3907622	writer	Q1035958	Carey Wilson		
 Q3907622	composer	Q509538	William Axt		
-Q3907622	producer	Q242416	マリオン・デイヴィス		
+Q3907622	producer	Q242416	Marion Davies		
 Q3907622	cinematographer	Q721897	George Barnes		
 Q3907622	editor	Q509576	George Hively		
 Q3907622	costume_designer	Q1366554	Adrian		
 Q3907622	production_designer	Q727904	Cedric Gibbons		
 Q3907622	cast	Q71243	Clark Gable		
 Q3907622	cast	Q3018253	David Landau		
-Q3907622	cast	Q242416	マリオン・デイヴィス		
+Q3907622	cast	Q242416	Marion Davies		
 Q3907622	cast	Q5489202	Frank Rice		
 Q3907622	cast	Q3120634	Guinn "Big Boy" Williams		
 Q3907622	cast	Q5488304	Frank McGlynn Sr.		
@@ -3394,7 +3394,7 @@ Q2904440	writer	Q3517047	Ted Sears
 Q2904440	writer	Q3566990	Webb Smith		
 Q2904440	producer	Q8704	Walt Disney		
 Q4919030	director	Q167521	Herbert Wilcox		
-Q4919030	cinematographer	Q965659	フレディ・ヤング		
+Q4919030	cinematographer	Q965659	Freddie Young		
 Q4919030	cast	Q5398505	Esme Percy		
 Q4919030	cast	Q5132964	Clifford Heatherley		
 Q4919030	cast	Q1406503	Fernand Gravey		
@@ -3679,7 +3679,7 @@ Q3105316	director	Q630819	Burt Gillett
 Q3105316	producer	Q8704	Walt Disney		
 Q2616888	director	Q72756	Raoul Walsh		
 Q2616888	writer	Q72984	Bing Crosby		
-Q2616888	writer	Q242416	マリオン・デイヴィス		
+Q2616888	writer	Q242416	Marion Davies		
 Q2616888	writer	Q463883	Frances Marion		
 Q2616888	writer	Q507861	Donald Ogden Stewart		
 Q2616888	composer	Q1609199	Herbert Stothart		
@@ -3691,7 +3691,7 @@ Q2616888	cast	Q3071582	Fifi D'Orsay
 Q2616888	cast	Q366956	Robert Montgomery		
 Q2616888	cast	Q454861	Patsy Kelly		
 Q2616888	cast	Q4935703	Bobby Watson		
-Q2616888	cast	Q242416	マリオン・デイヴィス		
+Q2616888	cast	Q242416	Marion Davies		
 Q2616888	cast	Q322179	Wallace Beery		
 Q2616888	cast	Q725507	Sterling Holloway		
 Q2616888	cast	Q72984	Bing Crosby		
@@ -3934,7 +3934,7 @@ Q12126565	director	Q6114758	Jack Raymond
 Q12126565	writer	Q8023020	Wilson Collison		
 Q12126565	composer	Q6536061	Lew Stone		
 Q12126565	producer	Q167521	Herbert Wilcox		
-Q12126565	cinematographer	Q965659	フレディ・ヤング		
+Q12126565	cinematographer	Q965659	Freddie Young		
 Q12126565	cast	Q7659975	Sydney Howard		
 Q7044207	director	Q7925975	Victor Hanbury		
 Q7044207	writer	Q5490129	Frank Vosper		
@@ -3964,7 +3964,7 @@ Q3898756	production_designer	Q727904	Cedric Gibbons
 Q3898756	cast	Q1673199	Onslow Stevens		
 Q3898756	cast	Q1758264	Alan Mowbray		
 Q3898756	cast	Q3038280	J. Farrell MacDonald		
-Q3898756	cast	Q242416	マリオン・デイヴィス		
+Q3898756	cast	Q242416	Marion Davies		
 Q7165158	director	Q547078	W. S. Van Dyke		
 Q7165158	writer	Q132524	Ayn Rand		
 Q7165158	writer	Q508285	Frances Goodrich		
@@ -4053,7 +4053,7 @@ Q3794927	composer	Q367032	Alfred Newman
 Q3794927	producer	Q72579	Samuel Goldwyn		
 Q3794927	cinematographer	Q166000	Gregg Toland		
 Q3794927	cinematographer	Q2133917	Ray June		
-Q3794927	cinematographer	Q5606353	Q5606353		
+Q3794927	cinematographer	Q5606353	Greg Toland		
 Q3794927	editor	Q974982	Stuart Heisler		
 Q3794927	costume_designer	Q3809666	John W. Harkrider		
 Q3794927	production_designer	Q1247808	Richard Day		
@@ -4119,7 +4119,7 @@ Q7692411	composer	Q598185	Carl W. Stalling
 Q7692411	producer	Q2483415	Pat Powers		
 Q23999959	director	Q2476429	Jack Buchanan		
 Q23999959	producer	Q167521	Herbert Wilcox		
-Q23999959	cinematographer	Q965659	フレディ・ヤング		
+Q23999959	cinematographer	Q965659	Freddie Young		
 Q23999959	editor	Q15455627	Merrill G. White		
 Q23999959	cast	Q2476429	Jack Buchanan	Jack Barrow	
 Q3221022	director	Q457269	Sam Wood		
@@ -4214,7 +4214,7 @@ Q1777093	cast	Q963194	Jimmy Finlayson
 Q1394119	director	Q3040908	Dudley Murphy		
 Q1394119	writer	Q93157	Eugene O'Neill		
 Q1394119	composer	Q6106988	J. Rosamond Johnson		
-Q1394119	producer	Q5559913	Q5559913		
+Q1394119	producer	Q5559913	Gifford A. Cochran		
 Q1394119	cinematographer	Q431611	Ernest Haller		
 Q1394119	production_designer	Q1610333	Herman Rosse		
 Q1394119	cast	Q273233	Paul Robeson		
@@ -4432,7 +4432,7 @@ Q166425	subject		surface warfare
 Q12129798	director	Q6724633	Maclean Rogers		
 Q12129798	writer	Q4895187	Bert Lee		
 Q12129798	producer	Q167521	Herbert Wilcox		
-Q12129798	cinematographer	Q965659	フレディ・ヤング		
+Q12129798	cinematographer	Q965659	Freddie Young		
 Q12129798	cast	Q7659975	Sydney Howard		
 Q2154640	director	Q103788	Mervyn LeRoy		
 Q2154640	writer	Q262728	Norman Reilly Raine		
@@ -4836,7 +4836,7 @@ Q745884	cast	Q390047	Billy Bletcher
 Q745884	cast	Q982177	Larry Fine		
 Q745884	cast	Q1294814	Edwin Maxwell		
 Q745884	cast	Q1597198	Richard Cramer		
-Q745884	cast	Q267247	ルーペ・ヴェレス		
+Q745884	cast	Q267247	Lupe Vélez		
 Q745884	cast	Q516390	Robert Young		
 Q745884	cast	Q3295171	Martha Sleeper		
 Q745884	cast	Q1819392	Leonid Kinskey		
@@ -4912,7 +4912,7 @@ Q3827690	composer	Q1609199	Herbert Stothart
 Q3827690	producer	Q1638070	Hunt Stromberg		
 Q3827690	production_designer	Q8346	Albert Arnold Gillespie		
 Q3827690	cast	Q711642	Ramón Novarro		
-Q3827690	cast	Q267247	ルーペ・ヴェレス		
+Q3827690	cast	Q267247	Lupe Vélez		
 Q6506142	director	Q441976	George B. Seitz		
 Q6506142	producer	Q1873395	Lucien Hubbard		
 Q6506142	cinematographer	Q166000	Gregg Toland		
@@ -5075,7 +5075,7 @@ Q2026605	editor	Q513098	Frank Sullivan
 Q2026605	costume_designer	Q1366554	Adrian		
 Q2026605	production_designer	Q727904	Cedric Gibbons		
 Q2026605	cast	Q574529	Walter Long		
-Q2026605	cast	Q242416	マリオン・デイヴィス		
+Q2026605	cast	Q242416	Marion Davies		
 Q2026605	cast	Q20731016	John Elliott		
 Q2026605	cast	Q436022	Jean Parker		
 Q2026605	cast	Q228904	Hattie McDaniel		
@@ -5129,7 +5129,7 @@ Q3892826	cast	Q1509535	William Cagney
 Q3892826	cast	Q3968233	Stanley Fields		
 Q3892826	cast	Q455912	Marjorie Rambeau		
 Q3892826	cast	Q3263669	Louise Beavers		
-Q3892826	cast	Q267247	ルーペ・ヴェレス		
+Q3892826	cast	Q267247	Lupe Vélez		
 Q3892826	cast	Q18645982	Bert Moorhouse		
 Q3892826	cast	Q5040845	Carl Stockdale		
 Q3892826	cast	Q944719	Stuart Erwin		
@@ -5342,7 +5342,7 @@ Q2281767	cast	Q19881691	Walter Walker	Morel
 Q2281767	cast	Q3127927	Harry Tenbrook		
 Q2281767	cast	Q3179630	Joan Woodbury	une danseuse	
 Q2281767	cast	Q744357	Paul Fix	Angry Citizen	
-Q2281767	cast	Q5343388	ガイ・エドワード・ハーン		
+Q2281767	cast	Q5343388	Edward Hearn		
 Q2281767	cast	Q1344901	Holmes Herbert	Judge	
 Q2281767	award		National Board of Review: Top Ten Films		
 Q7728084	director	Q2898271	Bernard Mainwaring		
@@ -5506,7 +5506,7 @@ Q7749874	cast	Q15498395	Henry Kendall
 Q1219026	director	Q51562	Ernst Lubitsch		
 Q1219026	writer	Q51562	Ernst Lubitsch		
 Q1219026	writer	Q314990	Marcel Achard		
-Q1219026	writer	Q723648	アンリ・メイヤック		
+Q1219026	writer	Q723648	Henri Meilhac		
 Q1219026	writer	Q1356560	Ernest Vajda		
 Q1219026	writer	Q1858461	Samson Raphaelson		
 Q1219026	composer	Q1609199	Herbert Stothart		
@@ -5591,7 +5591,7 @@ Q7758918	director	Q167521	Herbert Wilcox
 Q7758918	writer	Q3038835	Monckton Hoffe		
 Q7758918	composer	Q206667	Oscar Straus		
 Q7758918	producer	Q167521	Herbert Wilcox		
-Q7758918	cinematographer	Q965659	フレディ・ヤング		
+Q7758918	cinematographer	Q965659	Freddie Young		
 Q7758918	editor	Q15455627	Merrill G. White		
 Q7758918	cast	Q433044	Anna Neagle		
 Q3224830	director	Q3127658	Harold Young		
@@ -5944,7 +5944,7 @@ Q1430490	cast	Q530562	Billy Bevan	Jerry Cruncher
 Q1430490	cast	Q957673	Isabel Jewell	The seamstress	
 Q1430490	cast	Q577687	Reginald Owen	Stryver	
 Q1430490	cast	Q661678	Henry B. Walthall	Alexandre Manette	
-Q1430490	cast	Q449704	ブランチ・ユーカ	Madame Defarge	
+Q1430490	cast	Q449704	Blanche Yurka	Madame Defarge	
 Q1430490	cast	Q283178	Elizabeth Allan	Lucie Manette	
 Q1430490	cast	Q3317080	Mitchell Lewis	Ernest Defarge	
 Q1430490	cast	Q1767387	Donald Woods	Charles Darnay	
@@ -6329,7 +6329,7 @@ Q2981279	composer	Q912572	Frank Churchill
 Q2981279	producer	Q8704	Walt Disney		
 Q5151245	director	Q6114758	Jack Raymond		
 Q5151245	producer	Q167521	Herbert Wilcox		
-Q5151245	cinematographer	Q965659	フレディ・ヤング		
+Q5151245	cinematographer	Q965659	Freddie Young		
 Q5151245	cast	Q2476429	Jack Buchanan		
 Q3689340	director	Q2960804	Charley Rogers		
 Q3689340	composer	Q38253	Leroy Shield		
@@ -6408,7 +6408,7 @@ Q2516860	composer	Q310939	William Walton
 Q2516860	producer	Q167521	Herbert Wilcox		
 Q2516860	cinematographer	Q95683	Sepp Allgeier		
 Q2516860	cinematographer	Q452471	Georges Périnal		
-Q2516860	cinematographer	Q965659	フレディ・ヤング		
+Q2516860	cinematographer	Q965659	Freddie Young		
 Q2516860	editor	Q55260	David Lean		
 Q2516860	cast	Q3544351	Penelope Dudley-Ward		
 Q2516860	cast	Q6708323	Lyn Harding		
@@ -6789,7 +6789,7 @@ Q7110646	cast	Q204042	George McFarland
 Q7110646	cast	Q1040783	Carl Switzer		
 Q7160528	director	Q167521	Herbert Wilcox		
 Q7160528	writer	Q440360	Miles Malleson		
-Q7160528	cinematographer	Q965659	フレディ・ヤング		
+Q7160528	cinematographer	Q965659	Freddie Young		
 Q7160528	cast	Q433044	Anna Neagle		
 Q3223678	director	Q928976	David Hand		
 Q3223678	composer	Q912572	Frank Churchill		
@@ -7330,8 +7330,8 @@ Q1297485	composer	Q372544	Lorenzo Barcelata
 Q1297485	producer	Q654434	Fernando de Fuentes		
 Q1297485	cinematographer	Q1489209	Gabriel Figueroa		
 Q1297485	editor	Q654434	Fernando de Fuentes		
-Q1297485	cast	Q4483024	Эстер Фернандес		
-Q1297485	cast	Q3425963	레네 카르도나		
+Q1297485	cast	Q4483024	Esther Fernández		
+Q1297485	cast	Q3425963	René Cardona		
 Q1297485	cast	Q372544	Lorenzo Barcelata		
 Q1297485	cast	Q2839380	Tito Guízar		
 Q4784754	director	Q1452243	Fred C. Newmeyer		
@@ -8087,7 +8087,7 @@ Q1081181	cast	Q454944	Katherine DeMille
 Q1081181	award		National Board of Review: Top Ten Films		
 Q3522827	director	Q547078	W. S. Van Dyke		
 Q3522827	writer	Q508285	Frances Goodrich		
-Q3522827	writer	Q533042	アリス・デュアー・ミラー		
+Q3522827	writer	Q533042	Alice Duer Miller		
 Q3522827	writer	Q1367568	Albert Hackett		
 Q3522827	composer	Q48363	Rudolf Friml		
 Q3522827	producer	Q1638070	Hunt Stromberg		
@@ -8160,7 +8160,7 @@ Q130769	cast	Q3096499	Kenneth Harlan
 Q130769	cast	Q684079	Ralph Lewis		
 Q130769	cast	Q5342719	Edward Earle		
 Q130769	cast	Q2959509	Charles Judels		
-Q130769	cast	Q5343388	ガイ・エドワード・ハーン		
+Q130769	cast	Q5343388	Edward Hearn		
 Q130769	cast	Q5438916	Fay Helm		
 Q130769	cast	Q265422	Jean Acker		
 Q130769	cast	Q2899205	Bert Roach		
@@ -8729,7 +8729,7 @@ Q2548546	director	Q3120903	Gunther von Fritsch
 Q2548546	composer	Q509538	William Axt		
 Q2548546	producer	Q1753034	Pete Smith		
 Q1781187	director	Q435029	Clarence Brown		
-Q1781187	writer	Q533042	アリス・デュアー・ミラー		
+Q1781187	writer	Q533042	Alice Duer Miller		
 Q1781187	writer	Q919642	Norman Krasna		
 Q1781187	writer	Q1700810	John Lee Mahin		
 Q1781187	composer	Q1609199	Herbert Stothart		
@@ -8873,7 +8873,7 @@ Q18636364	cast	Q2913488	Russell Hopton
 Q18636364	cast	Q3035739	Don Brodie		
 Q18636364	cast	Q1638388	Warren Hymer		
 Q18636364	cast	Q5335988	Eddie Dunn		
-Q18636364	cast	Q5343388	ガイ・エドワード・ハーン		
+Q18636364	cast	Q5343388	Edward Hearn		
 Q18636364	cast	Q6237453	John Hamilton		
 Q18636364	cast	Q3929808	Ralph Sanford		
 Q18636364	cast	Q1293126	Edward Norris		
@@ -10355,7 +10355,7 @@ Q727016	cast	Q888891	Bobs Watson
 Q727016	cast	Q6166988	Jay Novello		
 Q727016	cast	Q4020191	William Worthington		
 Q727016	cast	Q459580	Claire McDowell		
-Q727016	cast	Q5343388	ガイ・エドワード・ハーン		
+Q727016	cast	Q5343388	Edward Hearn		
 Q727016	award		Academy Award for Best Actor		
 Q727016	award		Academy Award for Best Story		
 Q3649273	director	Q53005	Alessandro Blasetti		
@@ -10628,7 +10628,7 @@ Q3062614	cast	Q350640	Walter Pidgeon
 Q3062614	cast	Q218638	Joyce Compton		
 Q3062614	cast	Q3483316	Sidney Bracey		
 Q3062614	cast	Q3101481	George Chandler		
-Q3062614	cast	Q5343388	ガイ・エドワード・ハーン		
+Q3062614	cast	Q5343388	Edward Hearn		
 Q3062614	cast	Q744955	Harry Davenport		
 Q3062614	cast	Q295679	Ruth Hussey		
 Q3062614	cast	Q457229	Franchot Tone		
@@ -11545,7 +11545,7 @@ Q227461	cast	Q381638	Chrispin Martin
 Q227461	cast	Q2883905	Barbara Bedford		
 Q227461	cast	Q350640	Walter Pidgeon		
 Q227461	cast	Q3609064	Edward Peil		
-Q227461	cast	Q2474042	ウォルター・ミラー		
+Q227461	cast	Q2474042	Walter Miller		
 Q227461	cast	Q6237453	John Hamilton		
 Q227461	cast	Q105941	Myrna Loy		
 Q227461	cast	Q2831802	Alberto Morin		
@@ -12040,7 +12040,7 @@ Q2875	cast	Q8879489	Tommy Kelly
 Q2875	cast	Q4280517	Margaret Mann		
 Q2875	cast	Q12060557	Shep Houghton		
 Q2875	cast	Q3568410	William Bakewell	the mounted officer	
-Q2875	cast	Q3013243	ダン・ホワイト		
+Q2875	cast	Q3013243	Dan White		
 Q2875	cast	Q316003	Richard Farnsworth		
 Q2875	cast	Q1767677	Leona Roberts	Mrs. Meade	
 Q2875	award		Academy Award for Best Picture		
@@ -12061,7 +12061,7 @@ Q43228	writer	Q1097965	Claudine West
 Q43228	writer	Q1351469	Eric Maschwitz		
 Q43228	composer	Q435177	Richard Addinsell		
 Q43228	producer	Q744326	Victor Saville		
-Q43228	cinematographer	Q965659	フレディ・ヤング		
+Q43228	cinematographer	Q965659	Freddie Young		
 Q43228	editor	Q460299	Charles Frend		
 Q43228	cast	Q116983	Robert Donat		
 Q43228	cast	Q2872141	Austin Trevor		

@@ -1,7 +1,7 @@
 qid	role	personQid	name	character	ordinal
 Q743928	director	Q484779	Luc Besson		
 Q743928	writer	Q484779	Luc Besson		
-Q743928	composer	Q254	ヴォルフガング・アマデウス・モーツァルト		
+Q743928	composer	Q254	Wolfgang Amadeus Mozart		
 Q743928	composer	Q63987	Éric Serra		
 Q743928	producer	Q484779	Luc Besson		
 Q743928	producer	Q3368979	Patrice Ledoux		
@@ -143,7 +143,7 @@ Q190765	cast	Q707500	Michael Wincott	Adrián de Moxica
 Q190765	cast	Q106791	Ángela Molina	Beatriz Enríquez de Arana	
 Q190765	cast	Q2823019	Achero Mañas	Rodrigo de Triana	
 Q190765	cast	Q466388	Steven Waddington	Bartholomew Columbus	
-Q190765	cast	Q310944	フランク・ランジェラ	Luis de Santángel	
+Q190765	cast	Q310944	Frank Langella	Luis de Santángel	
 Q190765	cast	Q19950780	Albert Vidal	Hernando de Talavera	
 Q190765	cast	Q317704	Tchéky Karyo	Martín Alonso Pinzón	
 Q190765	cast	Q106743	Fernando Rey	Antonio de Marchena	
@@ -181,8 +181,8 @@ Q2836442	cast	Q934662	Sotigui Kouyaté
 Q2836442	cast	Q106057	Yves Montand		
 Q2836442	cast	Q504886	Olivier Martinez		
 Q2836442	cast	Q469967	Géraldine Pailhas		
-Q3425555	director	Q611429	ルイス・プエンソ		
-Q3425555	writer	Q611429	ルイス・プエンソ		
+Q3425555	director	Q611429	Luis Puenzo		
+Q3425555	writer	Q611429	Luis Puenzo		
 Q3425555	composer	Q153172	Vangelis		
 Q3425555	producer	Q16192872	John R. Pepper		
 Q3425555	cinematographer	Q682888	Félix Monti		
@@ -303,10 +303,10 @@ Q838013	cast	Q3026948	Didier Bénureau
 Q838013	award		César Award for Best Supporting Actress		
 Q838013	followed_by	Q280063	The Visitors II: The Corridors of Time		
 Q838013	subject		time travel		
-Q1749100	director	Q1398256	ミシェル・ブラン		
+Q1749100	director	Q1398256	Michel Blanc		
 Q1749100	writer	Q382389	Jacques Audiard		
 Q1749100	writer	Q437254	Josiane Balasko		
-Q1749100	writer	Q1398256	ミシェル・ブラン		
+Q1749100	writer	Q1398256	Michel Blanc		
 Q1749100	composer	Q3425709	René-Marc Bini		
 Q1749100	producer	Q325453	Daniel Toscan du Plantier		
 Q1749100	cinematographer	Q707484	Eduardo Serra		
@@ -328,7 +328,7 @@ Q1749100	cast	Q2863316	Arno Chevrier
 Q1749100	cast	Q437254	Josiane Balasko		
 Q1749100	cast	Q366272	Vincent Grass		
 Q1749100	cast	Q722660	David Hallyday		
-Q1749100	cast	Q1398256	ミシェル・ブラン		
+Q1749100	cast	Q1398256	Michel Blanc		
 Q1749100	cast	Q1358453	Marie Mergey		
 Q1749100	cast	Q17521641	Carol Brenner		
 Q1749100	cast	Q2961000	Charlotte Maury-Sentier		
@@ -410,9 +410,9 @@ Q2382933	composer	Q507940	Vladimir Cosma
 Q2382933	cinematographer	Q1859330	Luciano Tovoli		
 Q2382933	editor	Q30727639	Marie-Sophie Dubus		
 Q2382933	cast	Q3386184	Pierre Martot		
-Q2382933	cast	Q223830	ダニー・トレホ		
+Q2382933	cast	Q223830	Danny Trejo		
 Q2382933	cast	Q13608198	François Perrot		
-Q2382933	cast	Q3052647	エマニュエル・クールコル		
+Q2382933	cast	Q3052647	Emmanuel Courcol		
 Q2382933	cast	Q553873	Gil Birmingham		
 Q2382933	cast	Q732682	Manuel Ferreira		
 Q2382933	cast	Q43697	Jean Reno		
@@ -460,7 +460,7 @@ Q106506	costume_designer	Q242868	Jean-Paul Gaultier
 Q106506	production_designer	Q283847	Dan Weil		
 Q106506	cast	Q201985	Maïwenn	Plavalaguna	
 Q106506	cast	Q170576	Milla Jovovich	Leeloo	
-Q106506	cast	Q2680	ブルース・ウィリス	Korben Dallas	
+Q106506	cast	Q2680	Bruce Willis	Korben Dallas	
 Q106506	cast	Q1974917	Stacey McKenzie		
 Q106506	cast	Q223091	Ian Holm	Vito Cornelius	
 Q106506	cast	Q16237639	Kamay Lau		
@@ -542,7 +542,7 @@ Q1050815	composer	Q956822	John Ottman
 Q1050815	producer	Q11813657	Paul Freeman		
 Q1050815	cinematographer	Q1167015	Daryn Okada		
 Q1050815	editor	Q772880	Patrick Lussier		
-Q1050815	editor	Q134008505	Q134008505		
+Q1050815	editor	Q134008505	Lisa Mozden		
 Q1050815	cast	Q4877339	Beau Billingslea		
 Q1050815	cast	Q325814	Matt Winston		
 Q1050815	cast	Q205314	Janet Leigh		

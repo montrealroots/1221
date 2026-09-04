@@ -312,7 +312,7 @@ Q3204040	cast	Q1159055	Dan Duryea
 Q3204040	cast	Q11021151	King Donovan		
 Q3204040	cast	Q2661773	Märta Torén		
 Q3204040	cast	Q500155	Jack Elam		
-Q3204040	cast	Q5831517	艾玛·罗尔丹		
+Q3204040	cast	Q5831517	Emma Roldán		
 Q3822498	director	Q3002119	Crane Wilbur		
 Q3822498	writer	Q3002119	Crane Wilbur		
 Q3822498	producer	Q302605	Aaron Rosenberg		
@@ -609,7 +609,7 @@ Q1307071	cast	Q1251090	Ross Elliott
 Q1307071	cast	Q1229342	Victor Sen Yung		
 Q1307071	cast	Q1385393	Robert Keith		
 Q1307071	cast	Q1364339	John Qualen		
-Q14631568	director	Q86685	レジナルド・ル・ボルグ		
+Q14631568	director	Q86685	Reginald LeBorg		
 Q14631568	writer	Q368786	Harry Essex		
 Q14631568	cinematographer	Q1312577	Russell Metty		
 Q14631568	production_designer	Q1454375	Hilyard M. Brown		
@@ -753,7 +753,7 @@ Q5151875	cast	Q460968	Joe Sawyer
 Q5151875	cast	Q263256	Kirby Grant		
 Q5151875	cast	Q1376991	Hank Worden		
 Q5151875	cast	Q1196052	Russell Simpson		
-Q5151875	cast	Q3013243	ダン・ホワイト		
+Q5151875	cast	Q3013243	Dan White		
 Q5151875	cast	Q23884	Lou Costello		
 Q22336711	director	Q83233	Jacques Cousteau		
 Q22336711	producer	Q22101623	Thomas Mead		
@@ -914,7 +914,7 @@ Q1628022	cast	Q2165643	Ronald Howard
 Q1628022	cast	Q318263	Michael Redgrave		
 Q1628022	cast	Q761490	Peter Jones		
 Q1628022	cast	Q11892477	Sarah Lawson		
-Q1628022	cast	Q862624	ビル・トラヴァース		
+Q1628022	cast	Q862624	Bill Travers		
 Q1628022	cast	Q1334296	Wilfrid Hyde-White		
 Q1628022	award		Cannes Film Festival Award for Best Actor		
 Q1628022	award		Best Screenplay Award		
@@ -979,7 +979,7 @@ Q19897969	cast	Q2831802	Alberto Morin
 Q19897969	cast	Q43883	George Tobias		
 Q19897969	cast	Q919206	Gilbert Roland		
 Q19897969	cast	Q555672	Robert Warwick		
-Q19897969	cast	Q333595	リカルド・モンタルバン		
+Q19897969	cast	Q333595	Ricardo Montalbán		
 Q19897969	cast	Q327714	Robert Cornthwaite		
 Q19897969	cast	Q62558	Cyd Charisse		
 Q7758253	director	Q1668173	Rudolph Maté		
@@ -1316,7 +1316,7 @@ Q2201912	cast	Q202144	Shelley Winters
 Q2201912	cast	Q2622125	Alex Nicol		
 Q2201912	cast	Q1545031	Gregg Palmer		
 Q2201912	cast	Q17171151	Barbara Knudson		
-Q39074512	director	Q86685	レジナルド・ル・ボルグ		
+Q39074512	director	Q86685	Reginald LeBorg		
 Q39074512	writer	Q20487123	Paul Yawitz		
 Q39074512	composer	Q1598922	Herschel Burke Gilbert		
 Q39074512	producer	Q822754	Bernard W. Burton		
@@ -1919,7 +1919,7 @@ Q1198767	writer	Q508452	Eric Ambler
 Q1198767	composer	Q428560	Alan Rawsthorne		
 Q1198767	producer	Q199327	Leslie Norman		
 Q1198767	cinematographer	Q1537995	Gordon Dines		
-Q1198767	editor	Q28608848	ピーター・タナー		
+Q1198767	editor	Q28608848	Peter Tanner		
 Q1198767	cast	Q1585750	Harold Goodwin		
 Q1198767	cast	Q16015333	John Warner		
 Q1198767	cast	Q269872	Virginia McKenna		
@@ -2367,6 +2367,31 @@ Q6720896	producer	Q16740205	Richard Wilson
 Q6720896	cinematographer	Q2938894	Carl E. Guthrie		
 Q6720896	cast	Q3375213	Percy Kilbride		
 Q6720896	cast	Q445018	Marjorie Main		
+Q1219923	director	Q60858	Douglas Sirk		
+Q1219923	writer	Q16083961	Robert Blees		
+Q1219923	composer	Q165686	Frank Skinner		
+Q1219923	producer	Q2754518	Ross Hunter		
+Q1219923	cinematographer	Q1312577	Russell Metty		
+Q1219923	editor	Q3314521	Milton Carruth		
+Q1219923	cast	Q15282108	Robert B. Williams		
+Q1219923	cast	Q372408	Harvey Grant		
+Q1219923	cast	Q1801799	Lance Fuller		
+Q1219923	cast	Q1545031	Gregg Palmer		
+Q1219923	cast	Q3045703	Paul Cavanagh		
+Q1219923	cast	Q184378	Rock Hudson		
+Q1219923	cast	Q7421769	Sara Shane		
+Q1219923	cast	Q204013	Otto Kruger		
+Q1219923	cast	Q1253621	Jack Kelly		
+Q1219923	cast	Q214864	John Mylong		
+Q1219923	cast	Q1556171	Helen Kleeb		
+Q1219923	cast	Q1374999	Alexander Campbell		
+Q1219923	cast	Q435532	Mae Clarke		
+Q1219923	cast	Q231221	Agnes Moorehead		
+Q1219923	cast	Q649892	Robert Williams		
+Q1219923	cast	Q95055	Jane Wyman		
+Q1219923	cast	Q1688172	Judy Nugent		
+Q1219923	cast	Q7377388	Rudolph Anders		
+Q1219923	cast	Q441705	Barbara Rush		
 Q3615131	director	Q3177469	Jerry Hopper		
 Q3615131	writer	Q1809249	Lawrence Roman		
 Q3615131	composer	Q1707096	Joseph E. Gershenson		
@@ -2637,31 +2662,6 @@ Q8048770	production_designer	Q822465	Bernard Herzbrun
 Q8048770	cast	Q264596	Mamie Van Doren		
 Q8048770	cast	Q283335	Rhonda Fleming		
 Q8048770	cast	Q558844	Jeff Chandler		
-Q1219923	director	Q60858	Douglas Sirk		
-Q1219923	writer	Q16083961	Robert Blees		
-Q1219923	composer	Q165686	Frank Skinner		
-Q1219923	producer	Q2754518	Ross Hunter		
-Q1219923	cinematographer	Q1312577	Russell Metty		
-Q1219923	editor	Q3314521	Milton Carruth		
-Q1219923	cast	Q15282108	Robert B. Williams		
-Q1219923	cast	Q372408	Harvey Grant		
-Q1219923	cast	Q1801799	Lance Fuller		
-Q1219923	cast	Q1545031	Gregg Palmer		
-Q1219923	cast	Q3045703	Paul Cavanagh		
-Q1219923	cast	Q184378	Rock Hudson		
-Q1219923	cast	Q7421769	Sara Shane		
-Q1219923	cast	Q204013	Otto Kruger		
-Q1219923	cast	Q1253621	Jack Kelly		
-Q1219923	cast	Q214864	John Mylong		
-Q1219923	cast	Q1556171	Helen Kleeb		
-Q1219923	cast	Q1374999	Alexander Campbell		
-Q1219923	cast	Q435532	Mae Clarke		
-Q1219923	cast	Q231221	Agnes Moorehead		
-Q1219923	cast	Q649892	Robert Williams		
-Q1219923	cast	Q95055	Jane Wyman		
-Q1219923	cast	Q1688172	Judy Nugent		
-Q1219923	cast	Q7377388	Rudolph Anders		
-Q1219923	cast	Q441705	Barbara Rush		
 Q2054175	director	Q1065270	Charles Lamont		
 Q2054175	writer	Q6236039	John Grant		
 Q2054175	composer	Q2621011	William Lava		
@@ -3025,7 +3025,7 @@ Q958007	cast	Q433493	Raymond Bailey
 Q958007	cast	Q1282932	Eddie Parker		
 Q958007	subject		spider		
 Q7733033	director	Q123127569	Edward Freed		
-Q7733033	producer	Q15854394	Q15854394		
+Q7733033	producer	Q15854394	Wilbur T. Blume		
 Q7733033	cast	Q7347635	Robert Merrell Gage		
 Q7733033	award		Academy Award for Best Short Subject, Two-reel		
 Q7733033	subject		Abraham Lincoln		
@@ -3053,7 +3053,7 @@ Q7750018	editor	Q3314521	Milton Carruth
 Q7750018	production_designer	Q323271	Alexander Golitzen		
 Q7750018	cast	Q1376231	Myron Healey		
 Q7750018	cast	Q5489839	Frank Sully		
-Q7750018	cast	Q3013243	ダン・ホワイト		
+Q7750018	cast	Q3013243	Dan White		
 Q7750018	cast	Q1892408	Warren Stevens		
 Q7750018	cast	Q2017853	John Dehner		
 Q7750018	cast	Q2907600	Bob Burns		
@@ -3443,7 +3443,7 @@ Q7305142	cast	Q1971737	Rory Calhoun
 Q7305142	cast	Q542058	Grant Williams		
 Q7305142	cast	Q336689	Leo Gordon		
 Q7305142	cast	Q15663532	Herman Hack		
-Q7305142	cast	Q3013243	ダン・ホワイト		
+Q7305142	cast	Q3013243	Dan White		
 Q7305142	cast	Q471309	Dean Jagger		
 Q7305142	cast	Q1273140	Franklyn Farnum		
 Q7354138	director	Q7323990	Richard Bartlett		
@@ -3707,7 +3707,7 @@ Q5618358	composer	Q1673273	Irving Gertz
 Q5618358	producer	Q925872	William Alland		
 Q5618358	production_designer	Q323271	Alexander Golitzen		
 Q5618358	cast	Q888266	Bob Steele		
-Q5618358	cast	Q16089049	Марджори Стэпп		
+Q5618358	cast	Q16089049	Marjorie Stapp		
 Q5618358	cast	Q176361	Jeffrey Hunter		
 Q5618358	cast	Q345212	Dean Stockwell		
 Q5618358	cast	Q943642	Janice Rule		
@@ -3950,7 +3950,7 @@ Q1986460	cast	Q1370520	Ralph Meeker
 Q1986460	cast	Q36105	Charles Bronson		
 Q1986460	cast	Q235989	Angie Dickinson		
 Q1986460	cast	Q3082744	Frank O'Connor		
-Q1986460	cast	Q268587	サラ・モンティエル		
+Q1986460	cast	Q268587	Sara Montiel		
 Q1986460	cast	Q2939081	Carleton Young		
 Q1986460	cast	Q3442320	Roscoe Ates		
 Q1986460	cast	Q1709931	Billy Miller		
@@ -4024,7 +4024,7 @@ Q7736587	producer	Q4711522	Albert Zugsmith
 Q7736587	cast	Q207405	Zsa Zsa Gabor		
 Q7736587	cast	Q6793331	Maurice Manson		
 Q7736587	cast	Q520819	Lex Barker		
-Q7736587	cast	Q6968147	Q6968147		
+Q7736587	cast	Q6968147	Natalie Darryl		
 Q972001	director	Q1351968	Jack Arnold		
 Q972001	writer	Q325130	Richard Matheson		
 Q972001	producer	Q4711522	Albert Zugsmith		
@@ -4186,7 +4186,7 @@ Q185834	cast	Q84905	Kurt Meisel
 Q185834	cast	Q614160	Jock Mahoney		
 Q185834	cast	Q946859	Keenan Wynn		
 Q185834	cast	Q107599	Alice Treff		
-Q185834	cast	Q88534	ドロテア・ヴィーク		
+Q185834	cast	Q88534	Dorothea Wieck		
 Q185834	cast	Q1239082	Don DeFore		
 Q185834	cast	Q99544	Alexander Engel		
 Q185834	cast	Q145627	John Gavin		
@@ -4752,7 +4752,7 @@ Q2947134	cast	Q155116	Dorothy McGuire
 Q2947134	cast	Q500566	Philip Tonge		
 Q2947134	cast	Q460474	Anna Lee		
 Q2947134	cast	Q3157263	Jack Mather		
-Q2947134	cast	Q3013243	ダン・ホワイト		
+Q2947134	cast	Q3013243	Dan White		
 Q2947134	cast	Q2831802	Alberto Morin		
 Q2947134	cast	Q184378	Rock Hudson		
 Q2947134	cast	Q974947	Kent Smith		

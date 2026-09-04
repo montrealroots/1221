@@ -60,6 +60,8 @@ Q25136433	director	Q3418267	Ralph Ince
 Q18402539	director	Q269796	Walter Lang		
 Q18402539	producer	Q1586470	Harry Cohn		
 Q18402539	cast	Q2033544	Ricardo Cortez		
+Q592543	director	Q8704	Walt Disney		
+Q592543	producer	Q952640	Charles Mintz		
 Q17042751	director	Q3082779	Frank R. Strayer		
 Q17042751	producer	Q1586470	Harry Cohn		
 Q17042751	cast	Q2177322	Virginia Brown Faire		
@@ -96,12 +98,10 @@ Q7769276	producer	Q1586470	Harry Cohn
 Q7769276	cast	Q1357250	Jack Holt		
 Q17066511	director	Q441976	George B. Seitz		
 Q17066511	cast	Q1357250	Jack Holt		
-Q23796808	director	Q3418267	Ralph Ince		
-Q23796808	writer	Q5298462	Dorothy Howell		
-Q592543	director	Q8704	Walt Disney		
-Q592543	producer	Q952640	Charles Mintz		
 Q3540244	director	Q8704	Walt Disney		
 Q3540244	producer	Q952640	Charles Mintz		
+Q23796808	director	Q3418267	Ralph Ince		
+Q23796808	writer	Q5298462	Dorothy Howell		
 Q4690685	director	Q441976	George B. Seitz		
 Q4690685	producer	Q1586470	Harry Cohn		
 Q4690685	editor	Q2865317	Arthur Roberts		
@@ -164,6 +164,8 @@ Q2172512	cast	Q3179992	Joe Bordeaux
 Q2172512	cast	Q3624306	Arthur Rankin		
 Q2172512	cast	Q1357250	Jack Holt	Jack Dorgan	
 Q2172512	cast	Q3418255	Ralph Graves		
+Q3061047	director	Q8704	Walt Disney		
+Q3061047	producer	Q5546441	George Winkler		
 Q1157116	director	Q51492	Frank Capra		
 Q1157116	writer	Q51492	Frank Capra		
 Q1157116	producer	Q51492	Frank Capra		
@@ -203,7 +205,7 @@ Q2229501	cast	Q1749423	Maurice Costello
 Q2229501	cast	Q1230515	Spottiswoode Aitken		
 Q2229501	cast	Q385815	Charles Clary		
 Q2229501	cast	Q3021715	Dell Henderson		
-Q2229501	cast	Q3435031	ロバート・エディソン		
+Q2229501	cast	Q3435031	Robert Edeson		
 Q7762431	director	Q1281943	Alan Crosland		
 Q7762431	producer	Q1586470	Harry Cohn		
 Q7762431	cast	Q443766	Lya De Putti		
@@ -223,8 +225,6 @@ Q27981640	producer	Q1586470	Harry Cohn
 Q27981640	cinematographer	Q2133917	Ray June		
 Q27981640	editor	Q2865317	Arthur Roberts		
 Q27981640	cast	Q460799	Shirley Mason		
-Q3061047	director	Q8704	Walt Disney		
-Q3061047	producer	Q5546441	George Winkler		
 Q3604753	director	Q3082779	Frank R. Strayer		
 Q3604753	writer	Q6382900	Keene Thompson		
 Q3604753	producer	Q1586470	Harry Cohn		
@@ -242,6 +242,10 @@ Q3951528	cinematographer	Q2482428	Harry Jackson
 Q3951528	cast	Q2462725	Sally O'Neil		
 Q3951528	cast	Q634150	Charles Lane		
 Q3951528	cast	Q952875	Carmel Myers		
+Q3050275	director	Q8704	Walt Disney		
+Q3050275	writer	Q8704	Walt Disney		
+Q3050275	composer	Q598185	Carl W. Stalling		
+Q3050275	producer	Q8704	Walt Disney		
 Q2032557	director	Q51492	Frank Capra		
 Q2032557	writer	Q51492	Frank Capra		
 Q2032557	producer	Q1586470	Harry Cohn		
@@ -257,6 +261,16 @@ Q2032557	cast	Q1357250	Jack Holt
 Q2032557	cast	Q2830579	Alan Roscoe		
 Q2032557	cast	Q152941	George Irving		
 Q2032557	subject		aviation		
+Q3231606	director	Q336424	Ub Iwerks		
+Q3231606	composer	Q598185	Carl W. Stalling		
+Q3231606	producer	Q8704	Walt Disney		
+Q338214	director	Q8704	Walt Disney		
+Q338214	composer	Q598185	Carl W. Stalling		
+Q338214	producer	Q8704	Walt Disney		
+Q338214	follows	Q3222924	The Jazz Fool		
+Q338214	followed_by	Q3521221	The Haunted House		
+Q18149847	director	Q6750998	Manny Gould		
+Q18149847	director	Q41771735	Ben Harrison		
 Q3307662	director	Q219499	Erle C. Kenton		
 Q3307662	writer	Q516962	Gladys Lehman		
 Q3307662	writer	Q22019133	Norman Houston		
@@ -274,6 +288,21 @@ Q7295931	director	Q41771735	Ben Harrison
 Q7295931	producer	Q952640	Charles Mintz		
 Q7295931	follows	Q7539968	Sleepy Holler		
 Q7295931	subject		cat		
+Q920733	director	Q336424	Ub Iwerks		
+Q920733	writer	Q8704	Walt Disney		
+Q920733	composer	Q598185	Carl W. Stalling		
+Q920733	producer	Q8704	Walt Disney		
+Q920733	executive_producer	Q8704	Walt Disney		
+Q2275783	director	Q8704	Walt Disney		
+Q2275783	composer	Q598185	Carl W. Stalling		
+Q2275783	producer	Q8704	Walt Disney		
+Q2275783	follows	Q1753096	Plane Crazy		
+Q2275783	followed_by	Q1137749	The Opry House		
+Q2948566	director	Q8704	Walt Disney		
+Q2948566	composer	Q598185	Carl W. Stalling		
+Q2948566	producer	Q8704	Walt Disney		
+Q2948566	follows	Q3567703	When the Cat's Away		
+Q2948566	followed_by	Q1137742	The Plowboy		
 Q2135682	director	Q51492	Frank Capra		
 Q2135682	writer	Q1321778	Owen Davis		
 Q2135682	writer	Q3141566	Howard J. Green		
@@ -291,16 +320,30 @@ Q2135682	cast	Q18638535	Alphonse Ethier
 Q2135682	cast	Q1357250	Jack Holt		
 Q2135682	cast	Q2177322	Virginia Brown Faire		
 Q2135682	cast	Q429966	Dorothy Revier		
-Q2135682	cast	Q5343388	ガイ・エドワード・ハーン		
+Q2135682	cast	Q5343388	Edward Hearn		
 Q54020945	director	Q374091	Phil Rosen		
 Q54020945	cinematographer	Q322960	Ted Tetzlaff		
 Q54020945	editor	Q8010758	William Hamilton		
+Q3222924	director	Q8704	Walt Disney		
+Q3222924	composer	Q598185	Carl W. Stalling		
+Q3222924	producer	Q8704	Walt Disney		
+Q3222924	follows	Q3210080	Mickey's Choo-Choo		
+Q3222924	followed_by	Q338214	Jungle Rhythm		
 Q25136751	director	Q2831529	Albert S. Rogell		
 Q25136751	writer	Q3483497	Sig Herzig		
 Q25136751	producer	Q1586470	Harry Cohn		
 Q25136751	cinematographer	Q512453	James Van Trees		
 Q25136751	editor	Q8010758	William Hamilton		
 Q25136751	cast	Q2899198	Bert Lytell		
+Q3521841	director	Q8704	Walt Disney		
+Q3521841	composer	Q598185	Carl W. Stalling		
+Q3521841	producer	Q8704	Walt Disney		
+Q1137749	director	Q8704	Walt Disney		
+Q1137749	writer	Q8704	Walt Disney		
+Q1137749	composer	Q598185	Carl W. Stalling		
+Q1137749	producer	Q8704	Walt Disney		
+Q1137749	follows	Q2275783	The Barn Dance		
+Q1137749	followed_by	Q3567703	When the Cat's Away		
 Q37801623	director	Q2474020	Joseph Henabery		
 Q37801623	writer	Q5298462	Dorothy Howell		
 Q37801623	producer	Q1586470	Harry Cohn		
@@ -334,52 +377,11 @@ Q3886106	cinematographer	Q322960	Ted Tetzlaff
 Q3886106	costume_designer	Q111577	Howard Greer		
 Q3886106	cast	Q3418267	Ralph Ince		
 Q3886106	cast	Q405036	Aileen Pringle		
-Q3236001	director	Q630819	Burt Gillett		
-Q3236001	composer	Q598185	Carl W. Stalling		
-Q3236001	producer	Q8704	Walt Disney		
-Q3050275	director	Q8704	Walt Disney		
-Q3050275	writer	Q8704	Walt Disney		
-Q3050275	composer	Q598185	Carl W. Stalling		
-Q3050275	producer	Q8704	Walt Disney		
-Q338214	director	Q8704	Walt Disney		
-Q338214	composer	Q598185	Carl W. Stalling		
-Q338214	producer	Q8704	Walt Disney		
-Q338214	follows	Q3222924	ミッキーの浮かれ音楽団		
-Q338214	followed_by	Q3521221	お化け屋敷		
 Q3567703	director	Q8704	Walt Disney		
 Q3567703	composer	Q598185	Carl W. Stalling		
 Q3567703	producer	Q8704	Walt Disney		
-Q3567703	follows	Q1137749	ミッキーのオペラ見学		
-Q3567703	followed_by	Q2948566	裏庭の闘い		
-Q2275783	director	Q8704	Walt Disney		
-Q2275783	composer	Q598185	Carl W. Stalling		
-Q2275783	producer	Q8704	Walt Disney		
-Q2275783	follows	Q1753096	プレーン・クレイジー		
-Q2275783	followed_by	Q1137749	ミッキーのオペラ見学		
-Q1137749	director	Q8704	Walt Disney		
-Q1137749	writer	Q8704	Walt Disney		
-Q1137749	composer	Q598185	Carl W. Stalling		
-Q1137749	producer	Q8704	Walt Disney		
-Q1137749	follows	Q2275783	バーン・ダンス		
-Q1137749	followed_by	Q3567703	ネコの居ぬ間のタップダンス		
-Q3222924	director	Q8704	Walt Disney		
-Q3222924	composer	Q598185	Carl W. Stalling		
-Q3222924	producer	Q8704	Walt Disney		
-Q3222924	follows	Q3210080	ミッキーの汽車旅行		
-Q3222924	followed_by	Q338214	ジャングル・リズム		
-Q3231606	director	Q336424	Ub Iwerks		
-Q3231606	composer	Q598185	Carl W. Stalling		
-Q3231606	producer	Q8704	Walt Disney		
-Q920733	director	Q336424	Ub Iwerks		
-Q920733	writer	Q8704	Walt Disney		
-Q920733	composer	Q598185	Carl W. Stalling		
-Q920733	producer	Q8704	Walt Disney		
-Q920733	executive_producer	Q8704	Walt Disney		
-Q3521841	director	Q8704	Walt Disney		
-Q3521841	composer	Q598185	Carl W. Stalling		
-Q3521841	producer	Q8704	Walt Disney		
-Q2948566	director	Q8704	Walt Disney		
-Q2948566	composer	Q598185	Carl W. Stalling		
-Q2948566	producer	Q8704	Walt Disney		
-Q2948566	follows	Q3567703	ネコの居ぬ間のタップダンス		
-Q2948566	followed_by	Q1137742	ミッキーの畑仕事		
+Q3567703	follows	Q1137749	The Opry House		
+Q3567703	followed_by	Q2948566	The Barnyard Battle		
+Q3236001	director	Q630819	Burt Gillett		
+Q3236001	composer	Q598185	Carl W. Stalling		
+Q3236001	producer	Q8704	Walt Disney		

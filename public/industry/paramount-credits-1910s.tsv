@@ -102,7 +102,7 @@ Q3202201	director	Q3356950	Oscar Apfel
 Q3202201	producer	Q72267	Cecil B. DeMille		
 Q3202201	production_designer	Q646421	Wilfred Buckland		
 Q3202201	cast	Q3086908	Fred Montague		
-Q3202201	cast	Q3435031	ロバート・エディソン		
+Q3202201	cast	Q3435031	Robert Edeson		
 Q3202201	cast	Q3140441	Horace B. Carpenter		
 Q3202201	cast	Q3569342	Winifred Kingston		
 Q3202201	cast	Q1384458	Theodore Roberts		
@@ -152,7 +152,7 @@ Q3521721	cast	Q6582041	Vivian Reed
 Q3521721	cast	Q7933259	Violet MacMillan		
 Q3521721	cast	Q5496592	Fred Woodward		
 Q3521721	cast	Q241019	Mildred Harris		
-Q3521721	cast	Q2414258	ファニタ・ハンセン		
+Q3521721	cast	Q2414258	Juanita Hansen		
 Q3988173	director	Q3356950	Oscar Apfel		
 Q3988173	writer	Q5543713	George Randolph Chester		
 Q3988173	cast	Q1384458	Theodore Roberts		
@@ -229,7 +229,7 @@ Q7990778	cast	Q3086908	Fred Montague
 Q7990778	cast	Q64214339	Lolita Robertson		
 Q7990778	cast	Q27870166	Max Figman		
 Q18709162	director	Q3161300	James Neill		
-Q18709162	cast	Q3435031	ロバート・エディソン		
+Q18709162	cast	Q3435031	Robert Edeson		
 Q4019800	director	Q959677	Allan Dwan		
 Q4019800	writer	Q959677	Allan Dwan		
 Q4019800	producer	Q361208	Adolph Zukor		
@@ -325,7 +325,7 @@ Q1120935	writer	Q463883	Frances Marion
 Q1120935	producer	Q361208	Adolph Zukor		
 Q1120935	producer	Q1160780	Daniel Frohman		
 Q1120935	cast	Q104109	Mary Pickford		
-Q1120935	cast	Q4019946	Q4019946		
+Q1120935	cast	Q4019946	William Buckley		
 Q1120935	cast	Q3624275	Arthur Hoops		
 Q3739197	director	Q1371051	James Kirkwood		
 Q3739197	writer	Q463883	Frances Marion		
@@ -455,7 +455,7 @@ Q18709048	director	Q1621558	Hobart Bosworth
 Q18709048	writer	Q3051562	Elmer Blaney Harris		
 Q18709048	cinematographer	Q349518	George W. Hill		
 Q18709048	cast	Q375092	Forrest Stanley		
-Q18709048	cast	Q28751359	Q28751359		
+Q18709048	cast	Q28751359	Louis Bennison		
 Q18709048	cast	Q16832049	Lela Bliss		
 Q18709048	cast	Q5505059	Fritzi Scheff		
 Q18709048	cast	Q966972	Owen Moore		
@@ -643,7 +643,7 @@ Q2022782	cast	Q3229610	Leo Willis
 Q2022782	cast	Q11837680	Clara Williams		
 Q2022782	cast	Q5536836	George Beban		
 Q17639915	director	Q959677	Allan Dwan		
-Q17639915	cast	Q2414258	ファニタ・ハンセン		
+Q17639915	cast	Q2414258	Juanita Hansen		
 Q17639915	cast	Q1677170	Jack Pickford		
 Q17639915	cast	Q3026598	Dick La Reno		
 Q17639915	cast	Q1357825	Marshall Neilan		
@@ -810,7 +810,7 @@ Q8058393	cast	Q5338686	Edith Taliaferro
 Q3574960	director	Q347864	Edwin Stanton Porter		
 Q3574960	writer	Q562719	David Belasco		
 Q3574960	producer	Q361208	Adolph Zukor		
-Q3574960	cast	Q84573224	Q84573224		
+Q3574960	cast	Q84573224	Maud Granger		
 Q3574960	cast	Q433532	Madge Evans		
 Q3574960	cast	Q17154323	Walter Craven		
 Q3574960	cast	Q62103323	Ruth Cummings		
@@ -998,7 +998,7 @@ Q6984434	cast	Q445333	Leatrice Joy
 Q3874087	director	Q3087083	Frederick A. Thomson		
 Q3874087	producer	Q361208	Adolph Zukor		
 Q3874087	cast	Q95034	John Barrymore		
-Q3874087	cast	Q3813363	Q3813363		
+Q3874087	cast	Q3813363	Katherine Corri Harris		
 Q3874087	cast	Q358379	Adolphe Menjou		
 Q3881809	director	Q744402	James Young		
 Q3881809	writer	Q744402	James Young		
@@ -1183,7 +1183,7 @@ Q18709110	director	Q716651	George Melford
 Q18709110	producer	Q1384661	Jesse Louis Lasky		
 Q18709110	cast	Q947766	Wallace Reid		
 Q3987696	director	Q543630	Sidney Olcott		
-Q3987696	writer	Q60287180	Q60287180		
+Q3987696	writer	Q60287180	Lois Zellner		
 Q3987696	cast	Q15177567	Frank Losee		
 Q3987696	cast	Q3805601	Jack J. Clark		
 Q3987696	cast	Q5464685	Sir Charles Fergusson, 7th Baronet		
@@ -1279,7 +1279,7 @@ Q18709127	writer	Q3129287	Hector Turnbull
 Q18709127	producer	Q1384661	Jesse Louis Lasky		
 Q18709127	cast	Q947766	Wallace Reid		
 Q3793616	director	Q543630	Sidney Olcott		
-Q3793616	cast	Q47490904	Q47490904		
+Q3793616	cast	Q47490904	Harold Vosburgh		
 Q3793616	cast	Q4733604	Alma Tell		
 Q3793616	cast	Q5294068	Donald Brian		
 Q3793616	cast	Q5200661	Cyril Chadwick		
@@ -1466,7 +1466,7 @@ Q3634725	cinematographer	Q6265932	John van den Broek
 Q3634725	production_designer	Q8322786	Ben Carré		
 Q3634725	cast	Q563017	George M. Cohan		
 Q3634725	cast	Q508144	Elsie Ferguson		
-Q3634725	cast	Q2833029	Q2833029		
+Q3634725	cast	Q2833029	Alex Shannon		
 Q3634725	cast	Q3374148	Pedro de Cordoba		
 Q3634725	cast	Q3267394	Lumsden Hare		
 Q13423751	director	Q1307857	Frank Reicher		
@@ -2279,7 +2279,7 @@ Q13423781	writer	Q15069851	Charles E. Whittaker
 Q13423781	producer	Q361208	Adolph Zukor		
 Q13423781	cinematographer	Q13502738	Hal Young		
 Q13423781	cast	Q460360	Lina Cavalieri		
-Q13423781	cast	Q96337274	Q96337274		
+Q13423781	cast	Q96337274	Isabel Berwin		
 Q3202993	director	Q120541	Alfred Edward Green		
 Q3202993	director	Q1357825	Marshall Neilan		
 Q3202993	writer	Q463883	Frances Marion		
@@ -2379,7 +2379,7 @@ Q3067280	producer	Q1707966	Joseph M. Schenck
 Q3067280	cast	Q153239	Al St. John		
 Q3067280	cast	Q1557810	Joe Keaton		
 Q3067280	cast	Q315202	Roscoe Arbuckle		
-Q3067280	cast	Q47843538	Q47843538		
+Q3067280	cast	Q47843538	Ernie Morrison Sr.		
 Q3067280	cast	Q103949	Buster Keaton		
 Q3067280	cast	Q152947	Alice Lake		
 Q19363760	director	Q707999	Victor Schertzinger		
@@ -2580,7 +2580,7 @@ Q3521820	writer	Q6282999	Joseph F. Poland
 Q3521820	producer	Q942822	Thomas H. Ince		
 Q3521820	cinematographer	Q6259569	John Stumar		
 Q3521820	cast	Q1973047	William Conklin		
-Q3521820	cast	Q2414258	ファニタ・ハンセン		
+Q3521820	cast	Q2414258	Juanita Hansen		
 Q3521820	cast	Q1753600	Dorothy Dalton		
 Q3521820	cast	Q3526153	Thurston Hall		
 Q3521820	cast	Q1230515	Spottiswoode Aitken		
@@ -2906,19 +2906,6 @@ Q5216106	cast	Q15830815	Walt Whitman
 Q5216106	cast	Q1421691	Lloyd Hughes		
 Q5216106	cast	Q3157301	Jack Richardson		
 Q5216106	cast	Q30607981	Tom O'Brien		
-Q7736541	director	Q51123	D. W. Griffith		
-Q7736541	writer	Q3496882	Stanner E.V. Taylor		
-Q7736541	producer	Q51123	D. W. Griffith		
-Q7736541	cinematographer	Q329965	Billy Bitzer		
-Q7736541	editor	Q3806731	James Smith		
-Q7736541	cast	Q457293	Richard Barthelmess		
-Q7736541	cast	Q1344716	Robert Harron		
-Q7736541	cast	Q983092	David Butler		
-Q7736541	cast	Q2063267	Tully Marshall		
-Q7736541	cast	Q932255	Carol Dempster		
-Q7736541	cast	Q2461823	Kate Bruce		
-Q7736541	cast	Q357552	George Fawcett		
-Q7736541	cast	Q2185148	Clarine Seymour		
 Q2060270	director	Q72267	Cecil B. DeMille		
 Q2060270	director	Q457269	Sam Wood		
 Q2060270	writer	Q452602	Jeanie MacPherson		
@@ -3260,6 +3247,19 @@ Q17478924	producer	Q361208	Adolph Zukor
 Q18914991	director	Q3177427	Jerome Storm		
 Q18914991	producer	Q942822	Thomas H. Ince		
 Q18914991	cast	Q2960091	Charles Ray		
+Q7736541	director	Q51123	D. W. Griffith		
+Q7736541	writer	Q3496882	Stanner E.V. Taylor		
+Q7736541	producer	Q51123	D. W. Griffith		
+Q7736541	cinematographer	Q329965	Billy Bitzer		
+Q7736541	editor	Q3806731	James Smith		
+Q7736541	cast	Q457293	Richard Barthelmess		
+Q7736541	cast	Q1344716	Robert Harron		
+Q7736541	cast	Q983092	David Butler		
+Q7736541	cast	Q2063267	Tully Marshall		
+Q7736541	cast	Q932255	Carol Dempster		
+Q7736541	cast	Q2461823	Kate Bruce		
+Q7736541	cast	Q357552	George Fawcett		
+Q7736541	cast	Q2185148	Clarine Seymour		
 Q152442	director	Q3154600	Irvin Willat		
 Q152442	writer	Q3154600	Irvin Willat		
 Q152442	writer	Q7966449	Walter Woods		

@@ -38,7 +38,7 @@ Q3574048	writer	Q5912555	Alfred Kjerulf
 Q3574048	producer	Q714521	Ole Olsen		
 Q3574048	cinematographer	Q330778	Axel Graatkjær		
 Q3574048	cast	Q5580481	Axel Boesen		
-Q3574048	cast	Q540098	クララ・ポントピダン		
+Q3574048	cast	Q540098	Clara Pontoppidan		
 Q3574048	cast	Q11309123	Emilie Sannom		
 Q3574048	cast	Q722230	Valdemar Psilander		
 Q3574048	cast	Q4346250	Carlo Wieth		
@@ -54,7 +54,7 @@ Q3574048	cast	Q12305353	Carl Petersen
 Q805243	director	Q760959	August Blom		
 Q805243	writer	Q5912555	Alfred Kjerulf		
 Q805243	cinematographer	Q330778	Axel Graatkjær		
-Q805243	cast	Q6369967	Карен Поульсен		
+Q805243	cast	Q6369967	Karen Poulsen		
 Q805243	cast	Q11309123	Emilie Sannom		
 Q805243	cast	Q12330573	Otto Lagoni		
 Q805243	cast	Q5576060	Svend Bille		
@@ -66,7 +66,7 @@ Q805243	cast	Q722230	Valdemar Psilander
 Q1760129	director	Q760959	August Blom		
 Q1760129	writer	Q265796	Karin Michaëlis		
 Q1760129	cinematographer	Q330778	Axel Graatkjær		
-Q1760129	cast	Q540098	クララ・ポントピダン		
+Q1760129	cast	Q540098	Clara Pontoppidan		
 Q1760129	cast	Q5580481	Axel Boesen		
 Q1760129	cast	Q12312223	Franz Skondrup		
 Q1760129	cast	Q5620970	Otto Detlefsen		
@@ -93,7 +93,7 @@ Q20728388	cast	Q5499260	Frederik Buch
 Q20728388	cast	Q12344244	Zanny Petersen		
 Q20728388	cast	Q5580481	Axel Boesen		
 Q20728388	cast	Q12312559	Frederik Christensen		
-Q20728388	cast	Q5361980	Элит Пио		
+Q20728388	cast	Q5361980	Elith Pio		
 Q20728388	cast	Q5576060	Svend Bille		
 Q20728388	cast	Q12314837	H.C. Nilsen		
 Q20728388	cast	Q12337929	Svend Cathala		
@@ -121,7 +121,7 @@ Q11965181	cast	Q12312223	Franz Skondrup
 Q11965181	cast	Q12336310	Sofus Wolder		
 Q11965181	cast	Q12308846	Doris Langkilde		
 Q11965181	cast	Q12330573	Otto Lagoni		
-Q11965181	cast	Q540098	クララ・ポントピダン		
+Q11965181	cast	Q540098	Clara Pontoppidan		
 Q29044945	director	Q12341571	William Augustinus		
 Q29044945	writer	Q5912555	Alfred Kjerulf		
 Q29044945	cast	Q12320466	Julie Henriksen		
@@ -145,7 +145,7 @@ Q10862557	cast	Q4939437	Augusta Blad
 Q10862557	cast	Q12333416	Richard Christensen		
 Q10862557	cast	Q5809106	Holger Hofman		
 Q10862557	cast	Q4980412	Gudrun Stephensen		
-Q10862557	cast	Q540098	クララ・ポントピダン		
+Q10862557	cast	Q540098	Clara Pontoppidan		
 Q10862557	cast	Q12309841	Elna From		
 Q10862557	cast	Q5499292	Frederik Jacobsen		
 Q10862557	cast	Q12320466	Julie Henriksen		
@@ -164,7 +164,7 @@ Q7930139	cast	Q12330573	Otto Lagoni
 Q7930139	cast	Q11309123	Emilie Sannom		
 Q7930139	cast	Q5499292	Frederik Jacobsen		
 Q7930139	cast	Q1360773	Lau Lauritzen Sr.		
-Q7930139	cast	Q540098	クララ・ポントピダン		
+Q7930139	cast	Q540098	Clara Pontoppidan		
 Q7930139	cast	Q12308846	Doris Langkilde		
 Q7930139	cast	Q12302613	Axel Schultz		
 Q19999546	writer	Q41743408	A. V. Mammen		
@@ -239,6 +239,16 @@ Q20728392	cast	Q2476174	Carl Alstrup
 Q20728392	cast	Q12312223	Franz Skondrup		
 Q20728392	cast	Q2469597	Oscar Stribolt		
 Q20728392	cast	Q12305353	Carl Petersen		
+Q135903632	director	Q958733	Robert Dinesen		
+Q135903632	writer	Q6179392	Laurids Skands		
+Q135903632	cinematographer	Q330778	Axel Graatkjær		
+Q135903632	cinematographer	Q4260799	Johan Ankerstjerne		
+Q135903632	cinematographer	Q15847991	Sophus Wangøe		
+Q135903632	cast	Q2476174	Carl Alstrup	Per Sonne, kunstmaler	
+Q135903632	cast	Q5499292	Frederik Jacobsen	Søren Visby, bankdirektør	
+Q135903632	cast	Q12320033	Johanne Krum-Hunderup	Bankdirektøren kone	
+Q135903632	cast	Q5331524	Ebba Thomsen	Mary, bankdirektørens datter	
+Q135903632	cast	Q12320118	Johannes Ring	Direktør for døveinstitut	
 Q20496137	director	Q958733	Robert Dinesen		
 Q20496137	writer	Q5912555	Alfred Kjerulf		
 Q20496137	cinematographer	Q15847991	Sophus Wangøe		
@@ -469,7 +479,7 @@ Q3226056	writer	Q51127	Carl Theodor Dreyer
 Q3226056	cinematographer	Q41340759	Hans Waagø		
 Q3226056	cast	Q12333416	Richard Christensen		
 Q3226056	cast	Q35984628	Jacoba Jessen		
-Q3226056	cast	Q5361980	Элит Пио		
+Q3226056	cast	Q5361980	Elith Pio		
 Q3226056	cast	Q5825386	Jon Iversen		
 Q3226056	cast	Q5985640	Carl Walther Meyer		
 Q3226056	cast	Q5040469	Carl Lauritzen		
@@ -483,7 +493,7 @@ Q7562386	director	Q5619126	Gunnar Sommerfeldt
 Q7562386	writer	Q12340447	Valdemar Andersen		
 Q7562386	producer	Q5619126	Gunnar Sommerfeldt		
 Q7562386	cinematographer	Q22077084	Louis Larsen		
-Q7562386	cast	Q6369967	Карен Поульсен		
+Q7562386	cast	Q6369967	Karen Poulsen		
 Q7562386	cast	Q6032073	Ingeborg Spangsfeldt		
 Q7562386	cast	Q35985096	Ove Kühl		
 Q7562386	cast	Q12331799	Philip Bech		

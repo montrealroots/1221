@@ -14,6 +14,7 @@ import { createUniverse, defaultConfig } from '@/engine/world/bootstrap';
 import { loadSave, migrate } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Id } from '@/engine/domain/model';
+import { NETWORKS } from '@/engine/content/networks';
 import { STUDIOS, STUDIO_TIER_ORDER, studioForLabel } from '@/engine/content/studios';
 import { STUDIO_STATS } from '@/engine/content/studio-stats';
 import { BUYERS, LEGACY_BUYER_NAMES } from '@/engine/content/industry';
@@ -23,7 +24,8 @@ import {
 } from '@/engine/content/filmography';
 import { generateProjectTitle } from '@/engine/content/names';
 import { makeRng } from '@/engine/core/rng';
-import { studioForBackgroundProject, seedIndependentProject } from '@/engine/systems/casting';
+import { studioForBackgroundProject } from '@/engine/systems/casting';
+import { commissionProject } from '@/engine/systems/zeitgeist';
 
 const INDUSTRY = new URL('../public/industry/', import.meta.url);
 const file = (name: string) => new URL(name, INDUSTRY);
@@ -75,10 +77,10 @@ describe('the studios', () => {
     }
   });
 
-  it('are the buyers a pitch goes to, with two placeholder networks until the networks step', () => {
+  it('are the buyers a pitch goes to, alongside the real networks, with no placeholders left', () => {
     const buyers = BUYERS.all();
     expect(buyers.filter((b) => b.studioId).length).toBe(STUDIOS.all().length);
-    expect(buyers.filter((b) => !b.studioId).map((b) => b.id).sort()).toEqual(['atlasnet', 'vertexcable']);
+    expect(buyers.filter((b) => !b.studioId && !b.networkId)).toEqual([]);
     for (const legacy of Object.keys(LEGACY_BUYER_NAMES)) expect(BUYERS.get(legacy)).toBeUndefined();
     expect(BUYERS.get('disney')?.name).toBe('Walt Disney Studios');
     expect(BUYERS.get('a24')?.type).toBe('indie');
@@ -190,12 +192,15 @@ describe('the world', () => {
     const sim = boot();
     const seen = new Set<string>();
     for (let i = 0; i < 24; i++) {
-      const project = seedIndependentProject(sim, i);
+      const project = commissionProject(sim, 'us', i);
       if (!project) continue;
       if (project.format === 'short') continue;
       expect(project.studioId, project.title).toBeDefined();
       const studio = STUDIOS.get(project.studioId!)!;
-      expect(project.distributorName).toBe(studio.name);
+      // A film is released by its studio; a series is made by one and aired by a network.
+      const television = project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie';
+      if (television && project.networkId) expect(project.distributorName).toBe(NETWORKS.get(project.networkId)?.name);
+      else expect(project.distributorName).toBe(studio.name);
       expect(studio.formats).toContain(project.format);
       expect(project.genres.some((g) => studio.avoids.includes(g))).toBe(false);
       seen.add(studio.id);

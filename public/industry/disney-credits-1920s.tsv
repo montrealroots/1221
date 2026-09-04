@@ -5,7 +5,7 @@ Q16028471	cinematographer	Q657828	Joseph Ruttenberg
 Q16028471	cast	Q17303042	Mario Majeroni		
 Q16028471	cast	Q1056847	Cesare Gravina		
 Q16028471	cast	Q3160884	James A. Marcus		
-Q16028471	cast	Q97697330	Q97697330		
+Q16028471	cast	Q97697330	Regina Quinn		
 Q16028471	cast	Q2062257	George Walsh		
 Q444242	director	Q435029	Clarence Brown		
 Q444242	director	Q1523434	Maurice Tourneur		
@@ -34,14 +34,14 @@ Q3157382	producer	Q134382	William Fox
 Q3157382	cast	Q8018206	William Scott		
 Q3157382	cast	Q39683103	John Cook		
 Q3157382	cast	Q460799	Shirley Mason		
-Q3157382	cast	Q3051754	Q3051754		
+Q3157382	cast	Q3051754	Elsie Bambrick		
 Q2523563	director	Q51114	John Ford		
 Q2523563	writer	Q704053	Jules Furthman		
 Q2523563	cast	Q2630976	Buck Jones		
 Q2523563	cast	Q745994	George Siegmann		
 Q2523563	cast	Q2883905	Barbara Bedford		
 Q2523563	cast	Q3157270	Jack McDonald		
-Q2523563	cast	Q2829333	Q2829333		
+Q2523563	cast	Q2829333	Al Fremont		
 Q2523563	cast	Q3154317	Irene Hunt		
 Q4783371	director	Q3177427	Jerome Storm		
 Q4783371	writer	Q704053	Jules Furthman		
@@ -313,11 +313,13 @@ Q2077021	cast	Q1009495	George O'Brien
 Q2077021	cast	Q3127927	Harry Tenbrook		
 Q2077021	cast	Q292865	Margaret Livingston		
 Q2077021	cast	Q182462	Janet Gaynor	Роза Келли	
-Q2077021	cast	Q3435031	ロバート・エディソン		
+Q2077021	cast	Q3435031	Robert Edeson		
 Q2077021	cast	Q3568919	William Russell		
 Q2077021	cast	Q983092	David Butler		
 Q28130348	director	Q51499	Curtis Bernhardt		
 Q28130348	cast	Q99714	Claire Rommer		
+Q592543	director	Q8704	Walt Disney		
+Q592543	producer	Q952640	Charles Mintz		
 Q22976180	director	Q88001	Fritz Wendhausen		
 Q22976180	writer	Q1551755	Hans Kyser		
 Q22976180	producer	Q62099	Karl Freund		
@@ -380,8 +382,6 @@ Q431093	cast	Q3031861	Sally Eilers
 Q431093	cast	Q182462	Janet Gaynor		
 Q431093	award		Academy Award for Best Actress		
 Q431093	award		Academy Award for Best Cinematography		
-Q592543	director	Q8704	Walt Disney		
-Q592543	producer	Q952640	Charles Mintz		
 Q27958802	director	Q99558	Johannes Guter		
 Q27958802	writer	Q99569	Hans Rameau		
 Q27958802	cinematographer	Q107572	Edgar Ziesemer		
@@ -413,6 +413,9 @@ Q2352876	cast	Q1621558	Hobart Bosworth
 Q2352876	cast	Q6490614	Larry Kent		
 Q2352876	cast	Q329577	Victor McLaglen		
 Q2352876	cast	Q467968	Mary Gordon		
+Q3143330	director	Q8704	Walt Disney		
+Q3143330	writer	Q8704	Walt Disney		
+Q3143330	producer	Q952640	Charles Mintz		
 Q776337	director	Q72756	Raoul Walsh		
 Q776337	director	Q727791	Irving Cummings		
 Q776337	writer	Q387110	Paul Girard Smith		
@@ -505,18 +508,27 @@ Q7775566	cast	Q4800038	Arthur Pusey
 Q7775566	cast	Q107579	Ferdinand von Alten		
 Q7775566	cast	Q108153	Johannes Riemann		
 Q7775566	cast	Q115028	Leopold Kramer		
-Q3143330	director	Q8704	Walt Disney		
-Q3143330	writer	Q8704	Walt Disney		
-Q3143330	producer	Q952640	Charles Mintz		
 Q4880811	director	Q727791	Irving Cummings		
 Q4880811	writer	Q983421	Earl Derr Biggers		
 Q4880811	producer	Q134382	William Fox		
 Q4880811	cinematographer	Q5162627	Conrad Wells		
 Q4880811	cast	Q312073	Warner Baxter		
+Q3050275	director	Q8704	Walt Disney		
+Q3050275	writer	Q8704	Walt Disney		
+Q3050275	composer	Q598185	Carl W. Stalling		
+Q3050275	producer	Q8704	Walt Disney		
 Q12124728	director	Q3372211	Paul Sloane		
 Q12124728	cast	Q2975569	Clarence Muse		
 Q12124728	cast	Q3059562	Eugene Jackson		
 Q12124728	cast	Q1265202	Stepin Fetchit		
+Q3231606	director	Q336424	Ub Iwerks		
+Q3231606	composer	Q598185	Carl W. Stalling		
+Q3231606	producer	Q8704	Walt Disney		
+Q920733	director	Q336424	Ub Iwerks		
+Q920733	writer	Q8704	Walt Disney		
+Q920733	composer	Q598185	Carl W. Stalling		
+Q920733	producer	Q8704	Walt Disney		
+Q920733	executive_producer	Q8704	Walt Disney		
 Q3221822	director	Q51114	John Ford		
 Q3221822	writer	Q3161203	James Kevin McGuinness		
 Q3221822	cast	Q329577	Victor McLaglen		
@@ -529,6 +541,11 @@ Q3221822	cast	Q3530929	Tom Wilson
 Q3221822	cast	Q3038280	J. Farrell MacDonald		
 Q3221822	cast	Q2294197	Slim Summerville		
 Q3221822	cast	Q1677155	Jack Pennick		
+Q2275783	director	Q8704	Walt Disney		
+Q2275783	composer	Q598185	Carl W. Stalling		
+Q2275783	producer	Q8704	Walt Disney		
+Q2275783	follows	Q1753096	Plane Crazy		
+Q2275783	followed_by	Q1137749	The Opry House		
 Q7726562	director	Q72756	Raoul Walsh		
 Q7726562	writer	Q432919	Maxwell Anderson		
 Q7726562	producer	Q134382	William Fox		
@@ -543,6 +560,29 @@ Q7726562	cast	Q28065172	Soledad Jiménez
 Q7726562	cast	Q2907600	Bob Burns		
 Q24041260	director	Q96039	Conrad Wiene		
 Q24041260	cast	Q76646	Ossi Oswalda		
+Q3521221	director	Q8704	Walt Disney		
+Q3521221	composer	Q598185	Carl W. Stalling		
+Q3521221	producer	Q8704	Walt Disney		
+Q3521221	subject		haunted house		
+Q3521221	subject		living skeleton in a work of fiction		
+Q3521841	director	Q8704	Walt Disney		
+Q3521841	composer	Q598185	Carl W. Stalling		
+Q3521841	producer	Q8704	Walt Disney		
+Q1137749	director	Q8704	Walt Disney		
+Q1137749	writer	Q8704	Walt Disney		
+Q1137749	composer	Q598185	Carl W. Stalling		
+Q1137749	producer	Q8704	Walt Disney		
+Q1137749	follows	Q2275783	The Barn Dance		
+Q1137749	followed_by	Q3567703	When the Cat's Away		
+Q2531855	director	Q8704	Walt Disney		
+Q2531855	writer	Q8704	Walt Disney		
+Q2531855	composer	Q598185	Carl W. Stalling		
+Q2531855	producer	Q8704	Walt Disney		
+Q3567703	director	Q8704	Walt Disney		
+Q3567703	composer	Q598185	Carl W. Stalling		
+Q3567703	producer	Q8704	Walt Disney		
+Q3567703	follows	Q1137749	The Opry House		
+Q3567703	followed_by	Q2948566	The Barnyard Battle		
 Q3012092	director	Q3161448	James Tinling		
 Q3012092	composer	Q443047	Con Conrad		
 Q3012092	cinematographer	Q1064479	Charles G. Clarke		
@@ -556,43 +596,3 @@ Q3012092	cast	Q1280760	Ward Bond
 Q3012092	cast	Q40531	John Wayne		
 Q3012092	cast	Q8016366	William Orlamond		
 Q3012092	cast	Q450076	Helen Twelvetrees		
-Q3050275	director	Q8704	Walt Disney		
-Q3050275	writer	Q8704	Walt Disney		
-Q3050275	composer	Q598185	Carl W. Stalling		
-Q3050275	producer	Q8704	Walt Disney		
-Q3521221	director	Q8704	Walt Disney		
-Q3521221	composer	Q598185	Carl W. Stalling		
-Q3521221	producer	Q8704	Walt Disney		
-Q3521221	subject		haunted house		
-Q3521221	subject		living skeleton in a work of fiction		
-Q3567703	director	Q8704	Walt Disney		
-Q3567703	composer	Q598185	Carl W. Stalling		
-Q3567703	producer	Q8704	Walt Disney		
-Q3567703	follows	Q1137749	ミッキーのオペラ見学		
-Q3567703	followed_by	Q2948566	裏庭の闘い		
-Q2275783	director	Q8704	Walt Disney		
-Q2275783	composer	Q598185	Carl W. Stalling		
-Q2275783	producer	Q8704	Walt Disney		
-Q2275783	follows	Q1753096	プレーン・クレイジー		
-Q2275783	followed_by	Q1137749	ミッキーのオペラ見学		
-Q1137749	director	Q8704	Walt Disney		
-Q1137749	writer	Q8704	Walt Disney		
-Q1137749	composer	Q598185	Carl W. Stalling		
-Q1137749	producer	Q8704	Walt Disney		
-Q1137749	follows	Q2275783	バーン・ダンス		
-Q1137749	followed_by	Q3567703	ネコの居ぬ間のタップダンス		
-Q3231606	director	Q336424	Ub Iwerks		
-Q3231606	composer	Q598185	Carl W. Stalling		
-Q3231606	producer	Q8704	Walt Disney		
-Q920733	director	Q336424	Ub Iwerks		
-Q920733	writer	Q8704	Walt Disney		
-Q920733	composer	Q598185	Carl W. Stalling		
-Q920733	producer	Q8704	Walt Disney		
-Q920733	executive_producer	Q8704	Walt Disney		
-Q3521841	director	Q8704	Walt Disney		
-Q3521841	composer	Q598185	Carl W. Stalling		
-Q3521841	producer	Q8704	Walt Disney		
-Q2531855	director	Q8704	Walt Disney		
-Q2531855	writer	Q8704	Walt Disney		
-Q2531855	composer	Q598185	Carl W. Stalling		
-Q2531855	producer	Q8704	Walt Disney		
