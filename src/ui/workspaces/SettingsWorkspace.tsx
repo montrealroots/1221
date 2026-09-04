@@ -158,6 +158,17 @@ export function SettingsWorkspace() {
               Add $1,000,000
             </button>
           </div>
+          <div className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+            A demo picture, staged through the same commands you would use: written, greenlit, funded, cast from the world and boarded — or shot out and in post, for trying the rooms.
+          </div>
+          <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_picture', { to: 'boarded' })}>
+              Stage A Picture, Boarded
+            </button>
+            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_picture', { to: 'post' })}>
+              Stage A Picture In Post
+            </button>
+          </div>
 
           {sandbox.log.length > 0 && (
             <div style={{ marginTop: 'var(--s4)' }}>

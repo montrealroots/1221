@@ -24,6 +24,7 @@ import { playerControls } from './real-people';
 import { boardScript, buildCallSheet, runShootDay, setupsFor, type BoardedDay } from './shoot';
 import { houseLift, sessionLift } from './post';
 import { formatTime } from '../core/time';
+import { titleCaseLabel } from '../core/text';
 import { systemModifier } from '../domain/attributes';
 
 /** Extra days a picture can add for pickups before what did not get shot is cut. */
@@ -175,8 +176,9 @@ export function registerProduction(sim: Simulation): void {
         const callTime = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: night ? 17 : 6 }, zone);
         const scenes = board ? board.scenes : buildSceneList(s, project, placed, pagesPerDay, castIds);
         const city = CITIES.require(locationId);
+        const setting = board?.scenes[0]?.setting ? titleCaseLabel(board.scenes[0].setting.toLowerCase()) : undefined;
         const locationName = board
-          ? (isStage ? `Stage — ${board.scenes[0]?.setting ?? 'Interiors'}` : `${board.scenes[0]?.setting ?? 'Location'}, ${city.name}`)
+          ? (isStage ? `Stage — ${setting ?? 'Interiors'}` : `${setting ?? 'Location'}, ${city.name}`)
           : (isStage ? 'Stage 4' : `${city.name} location`);
 
         const day: ShootDay = {

@@ -408,7 +408,14 @@ input[type="range"] {
 
 table { width: 100%; border-collapse: collapse; font-size: var(--size-sm); }
 th, td { padding: var(--s2) var(--s3); text-align: left; border-bottom: 1px solid var(--line); }
-th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; }
+th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; white-space: nowrap; }
+
+/* A list beside the thing it opens. On a phone the list goes above it. */
+.master-detail { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: var(--s5); align-items: start; }
+@media (max-width: 900px) { .master-detail { grid-template-columns: 1fr; } }
+/* Two panels in a dialog: the search and the terms. One above the other on a phone. */
+.side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
+@media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .table-scroll { overflow-x: auto; }
 

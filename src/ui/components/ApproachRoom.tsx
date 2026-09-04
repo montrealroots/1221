@@ -220,7 +220,7 @@ export function OfferRealDialog({ roleId, onClose }: { roleId: string; onClose: 
             />
           </div>
 
-          <div className="grid" style={{ gridTemplateColumns: 'minmax(240px, 1fr) minmax(220px, 320px)', gap: 'var(--s4)', marginTop: 'var(--s3)' }}>
+          <div className="side-by-side">
             <div className="list" style={{ maxHeight: 380, overflowY: 'auto' }}>
               {rows.length === 0 ? (
                 <Empty title="Nobody Fits" body="Nobody on the record is the age this part is written for. Rewrite the part or search again." />
@@ -420,7 +420,7 @@ export function ApproachCraftDialog({
             />
           </div>
 
-          <div className="grid" style={{ gridTemplateColumns: 'minmax(240px, 1fr) minmax(220px, 320px)', gap: 'var(--s4)', marginTop: 'var(--s3)' }}>
+          <div className="side-by-side">
             <div className="list" style={{ maxHeight: 380, overflowY: 'auto' }}>
               {rows.length === 0 ? (
                 <Empty title="Nobody Found" body="Nothing on the record matches that search in this trade." />

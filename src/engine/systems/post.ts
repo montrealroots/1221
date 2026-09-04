@@ -270,8 +270,8 @@ export function registerPost(sim: Simulation): void {
         title: `${house.name} — visual effects on ${project.title}`,
         compensation: bid.amount,
         paymentSchedule: [
-          { label: 'On award', amount: Math.round(bid.amount * 0.3), dueAt: s.now, paid: false },
-          { label: 'On delivery', amount: bid.amount - Math.round(bid.amount * 0.3), dueAt: addDays(s.now, bid.weeks * 7, s.homeZone), trigger: 'prod.post_task_complete', paid: false },
+          { label: 'On Award', amount: Math.round(bid.amount * 0.3), dueAt: s.now, paid: false },
+          { label: 'On Delivery', amount: bid.amount - Math.round(bid.amount * 0.3), dueAt: addDays(s.now, bid.weeks * 7, s.homeZone), trigger: 'prod.post_task_complete', paid: false },
         ],
         bonuses: [],
         obligations: [{ label: `${plan.shots} shots delivered`, kind: 'delivery', dueAt: addDays(s.now, bid.weeks * 7, s.homeZone), satisfied: false }],
@@ -395,7 +395,7 @@ export function registerPost(sim: Simulation): void {
         partyBKind: 'company',
         title: `Cue ${cue.number} — sync and master licence`,
         compensation: total,
-        paymentSchedule: [{ label: 'Sync fee', amount: p.syncFee, dueAt: s.now, paid: true, paidAt: s.now }, { label: 'Master fee', amount: p.masterFee, dueAt: s.now, paid: true, paidAt: s.now }],
+        paymentSchedule: [{ label: 'Sync Fee', amount: p.syncFee, dueAt: s.now, paid: true, paidAt: s.now }, { label: 'Master Fee', amount: p.masterFee, dueAt: s.now, paid: true, paidAt: s.now }],
         bonuses: [],
         obligations: [],
         startsAt: s.now,
@@ -515,7 +515,7 @@ export function registerPost(sim: Simulation): void {
           partyBKind: 'company',
           title: `${name} — stage hire for ${project.title}`,
           compensation: cost,
-          paymentSchedule: [{ label: 'Stage hire', amount: cost, dueAt: s.now, paid: true, paidAt: s.now }],
+          paymentSchedule: [{ label: 'Stage Hire', amount: cost, dueAt: s.now, paid: true, paidAt: s.now }],
           bonuses: [], obligations: [],
           startsAt: p.from, endsAt: to,
           status: 'executed', signedAt: s.now,
@@ -730,7 +730,7 @@ function bidsArrive(sim: Simulation, projectId: Id, houseIds: string[]): void {
 // ---------------------------------------------------------------------------
 
 function useLabel(use: MusicCue['use']): string {
-  return { score: 'Score', source: 'Source music', needle_drop: 'Needle drop', title: 'Main title', end_credits: 'End credits' }[use];
+  return { score: 'Score', source: 'Source music', needle_drop: 'Needle drop', title: 'Main Title', end_credits: 'End credits' }[use];
 }
 
 function spotCues(sim: Simulation, project: Project, scenes: { number: string; pages: number; kind: string; purpose: string; setting: string }[], pages: number): MusicCue[] {

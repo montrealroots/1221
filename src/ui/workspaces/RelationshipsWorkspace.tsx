@@ -30,7 +30,7 @@ export function RelationshipsWorkspace() {
         </p>
       </div>
 
-      <div className="grid" style={{ gridTemplateColumns: 'minmax(240px, 320px) 1fr', gap: 'var(--s5)' }}>
+      <div className="master-detail">
         <Panel title="Everyone You Know" flush>
           {circle.length === 0 ? (
             <Empty title="Nobody Yet" body="You meet people through work, projects, classes and the places you spend time." />

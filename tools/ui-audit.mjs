@@ -308,6 +308,88 @@ for (const size of WIDTHS) {
         await page.waitForTimeout(400);
       }
     }
+
+  // The rooms of a production: a picture staged through the sandbox into
+  // post, then its script, its shoot with a call sheet open, and post with
+  // the cutting room, the effects bids and the music on screen.
+  await openRail();
+  const settings = page.getByRole('button', { name: /settings/i }).first();
+  if (await settings.count()) {
+    await settings.click().catch(() => {});
+    await page.waitForTimeout(900);
+    const toggle = page.getByRole('checkbox').filter({ hasText: '' }).first();
+    const sandboxLabel = page.getByText(/Enable Sandbox Tools/i).first();
+    if (await sandboxLabel.count()) { await sandboxLabel.click().catch(() => {}); await page.waitForTimeout(400); }
+    void toggle;
+    const stage = page.getByRole('button', { name: /Stage A Picture In Post/i }).first();
+    if (await stage.count()) {
+      await stage.click().catch(() => {});
+      await page.waitForTimeout(6000);
+      await openRail();
+      const projectsAgain = page.getByRole('button', { name: /^projects$/i }).first();
+      if (await projectsAgain.count()) {
+        await projectsAgain.click().catch(() => {});
+        await page.waitForTimeout(1200);
+        const demo = page.locator('.list-item').filter({ hasText: /Long Way Round/ }).first();
+        if (await demo.count()) { await demo.click().catch(() => {}); await page.waitForTimeout(1000); }
+        const scriptTab = page.getByRole('tab', { name: /^Script/ }).first();
+        if (await scriptTab.count()) {
+          await scriptTab.click().catch(() => {});
+          await page.waitForTimeout(900);
+          const showScenes = page.getByRole('button', { name: /Show \d+ Scenes/ }).first();
+          if (await showScenes.count()) { await showScenes.click().catch(() => {}); await page.waitForTimeout(500); }
+          scrollsSideways = (await probe('the script as a document')) || scrollsSideways;
+          await shoot('11-script');
+        }
+        const productionTab = page.getByRole('tab', { name: /^Production/ }).first();
+        if (await productionTab.count()) {
+          await productionTab.click().catch(() => {});
+          await page.waitForTimeout(900);
+          await page.locator('tbody tr').first().click().catch(() => {});
+          await page.waitForTimeout(700);
+          scrollsSideways = (await probe('a shoot day with its call sheet and hours')) || scrollsSideways;
+          await shoot('12-shoot');
+        }
+        const postTab = page.getByRole('tab', { name: /^Post/ }).first();
+        if (await postTab.count()) {
+          await postTab.click().catch(() => {});
+          await page.waitForTimeout(900);
+          const count = page.getByRole('button', { name: /Count The Shots/i }).first();
+          if (await count.count()) { await count.click().catch(() => {}); await page.waitForTimeout(600); }
+          scrollsSideways = (await probe('post: the cutting room, effects and music')) || scrollsSideways;
+          await shoot('13-post');
+        }
+      }
+    }
+  }
+
+  // The actor's side: a tape asked for, and the room where it is shot.
+  await openRail();
+  const castingAgain = page.getByRole('button', { name: /^casting$/i }).first();
+  if (await castingAgain.count()) {
+    await castingAgain.click().catch(() => {});
+    await page.waitForTimeout(1200);
+    const sendTape = page.getByRole('button', { name: /^Send A Tape$/ }).first();
+    if (await sendTape.count()) {
+      await sendTape.click().catch(() => {});
+      await page.waitForTimeout(700);
+      const mine = page.getByRole('tab', { name: /Your Auditions/ }).first();
+      if (await mine.count()) {
+        await mine.click().catch(() => {});
+        await page.waitForTimeout(700);
+        const shootTape = page.getByRole('button', { name: /Shoot The Tape/ }).first();
+        if (await shootTape.count()) {
+          await shootTape.click().catch(() => {});
+          await page.waitForTimeout(700);
+          scrollsSideways = (await probe('the tape dialog')) || scrollsSideways;
+          await shoot('14-tape');
+          await page.getByRole('button', { name: /^Not Yet$/ }).first().click().catch(() => {});
+          await page.waitForTimeout(300);
+        }
+      }
+    }
+  }
+
   }
 
   const result = { problems: findings, pageScrollsSideways: scrollsSideways };

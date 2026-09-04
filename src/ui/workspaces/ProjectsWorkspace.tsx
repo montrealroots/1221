@@ -20,6 +20,7 @@ import { formatDate, addDays } from '@/engine/core/time';
 import { ApproachCraftDialog, OfferRealDialog } from '@/ui/components/ApproachRoom';
 import { CRAFT_ROLE_LABEL, type CraftRole } from '@/engine/content/craft-attributes';
 import { personByQid } from '@/engine/content/people';
+import { CastingRooms, CutRoom, EffectsRoom, HousePicker, MusicRoom, PostHouseLine, ScriptDocument, ShootDayRow, StageBookingPanel } from '@/ui/components/ProductionRooms';
 
 export function ProjectsWorkspace() {
   const projects = useWorld((s) => activeProjects(s, s.player.id));
@@ -49,7 +50,7 @@ export function ProjectsWorkspace() {
           body="Every career here starts with someone deciding to make something. An idea costs nothing; the rights, the script and the money come after."
         />
       ) : (
-        <div className="grid" style={{ gridTemplateColumns: 'minmax(220px, 300px) 1fr', gap: 'var(--s5)' }}>
+        <div className="master-detail">
           <Panel title="Your Slate" flush>
             <div className="list" style={{ maxHeight: 600, overflowY: 'auto' }}>
               {projects.map((project) => (
@@ -300,11 +301,15 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                     </div>
                     <span className="mono">{draft.quality}</span>
                   </div>
-                  <div className="grid grid-3" style={{ marginTop: 'var(--s2)' }}>
-                    <Meter label="Structure" value={draft.structure} />
-                    <Meter label="Dialogue" value={draft.dialogue} />
-                    <Meter label="Characters" value={draft.characters} />
-                  </div>
+                  {draft.isCurrent ? (
+                    <ScriptDocument project={project} draft={draft} />
+                  ) : (
+                    <div className="grid grid-3" style={{ marginTop: 'var(--s2)' }}>
+                      <Meter label="Structure" value={draft.structure} />
+                      <Meter label="Dialogue" value={draft.dialogue} />
+                      <Meter label="Characters" value={draft.characters} />
+                    </div>
+                  )}
                   {draft.coverage && (
                     <div className={`callout ${draft.coverage.verdict === 'recommend' ? 'callout-accent' : draft.coverage.verdict === 'pass' ? 'callout-negative' : ''}`} style={{ marginTop: 'var(--s3)' }}>
                       <strong className="small">Coverage: {draft.coverage.verdict}</strong>
@@ -356,7 +361,13 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             </div>
           </Panel>
 
-          <Panel title="Roles" flush>
+          <Panel
+            title="Roles"
+            actions={project.greenlitAt && roles.length === 0 && project.currentDraftId ? (
+              <button className="btn btn-sm btn-primary" onClick={() => run('cast.break_down_script', { projectId: project.id })}>Break Down The Script</button>
+            ) : undefined}
+            flush
+          >
             {roles.length === 0 ? (
               <Empty title="No Roles Yet" body="Break the script down into parts before you can cast it." />
             ) : (
@@ -367,9 +378,10 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   return (
                     <div key={role.id} className="list-item list-static">
                       <div className="grow">
-                        <div className="small strong">{role.characterName}</div>
+                        <div className="small strong">{role.characterName}{role.archetype ? <span className="chip" style={{ marginLeft: 6 }}>{titleCaseLabel(role.archetype.replace(/_/g, ' '))}</span> : null}</div>
                         <div className="xs dim">
                           {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} days · {formatMoney(role.payLow, { cents: false })}–{formatMoney(role.payHigh, { cents: false })} · ages {role.ageRange[0]}–{role.ageRange[1]}
+                          {role.sceneNumbers && role.sceneNumbers.length > 0 ? ` · ${role.sceneNumbers.length} scenes` : ''}
                         </div>
                         {cast && <div className="xs positive">Cast: {cast.displayName}</div>}
                         {passes.length > 0 && !cast && (
@@ -377,6 +389,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                             Passed: {passes.map((offer) => `${offer.name} at ${formatMoneyCompact(offer.amount)}`).join(', ')}
                           </div>
                         )}
+                        <CastingRooms project={project} role={role} />
                       </div>
                       <span className="chip">{titleCaseLabel(role.status.replace(/_/g, ' '))}</span>
                       {(role.status === 'open' || role.status === 'casting') && (
@@ -415,32 +428,31 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   <tr><th>Day</th><th>Date</th><th>Location</th><th className="num">Pages</th><th className="num">Cost</th><th>Status</th></tr>
                 </thead>
                 <tbody>
-                  {shooting.days.map((day) => (
-                    <tr key={day.id}>
-                      <td className="mono xs">{day.dayNumber}</td>
-                      <td className="xs">{formatDate(day.date, sim.homeZone)}</td>
-                      <td className="xs">{day.locationName}</td>
-                      <td className="num xs mono">{day.completedPages.toFixed(1)} / {day.plannedPages.toFixed(1)}</td>
-                      <td className="num xs mono">{formatMoneyCompact(day.actualCost)}</td>
-                      <td className="xs">
-                        <span className={`chip ${day.status === 'complete' ? 'chip-positive' : day.status === 'incomplete' ? 'chip-warning' : ''}`}>
-                          {titleCaseLabel(day.status)}
-                        </span>
-                        {day.incidents.length > 0 && (
-                          <span className="xs dim" title={day.incidents.map((i) => i.description).join(' ')}> ⚠</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                  {shooting.days.map((day) => <ShootDayRow key={day.id} day={day} project={project} />)}
                 </tbody>
               </table>
             </div>
           )}
+          {shooting.days.length > 0 && (
+            <div style={{ padding: 'var(--s3)' }}>
+              <div className="xs dim">
+                {shooting.pagesShot} of {shooting.pagesPlanned} pages shot · {shooting.hoursWorked} hours on the floor. Click a day for its call sheet and the hours as they happened.
+              </div>
+            </div>
+          )}
         </Panel>
       )}
+      {tab === 'production' && project.greenlitAt && <StageBookingPanel project={project} />}
 
+      {tab === 'post' && post.length > 0 && (
+        <div className="col gap-4">
+          <CutRoom project={project} />
+          <EffectsRoom project={project} />
+          <MusicRoom project={project} />
+        </div>
+      )}
       {tab === 'post' && (
-        <Panel title="Post-production" subtitle="A dependency graph. Nothing starts before what it needs is finished." flush>
+        <Panel title="Post-production" subtitle="A dependency graph. Nothing starts before what it needs is finished. Every task can be placed with a real house." flush>
           {post.length === 0 ? (
             <Empty title="Post Has Not Opened" body="Post opens once the film has been shot." />
           ) : (
@@ -450,9 +462,10 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   <div className="grow">
                     <div className="small strong">{task.name}</div>
                     <div className="xs dim">
-                      {task.vendorName ?? 'Unassigned'} · {task.elapsedDays} of {task.plannedDays} days
+                      {task.vendorName ?? 'Unassigned'}<PostHouseLine task={task} /> · {Math.round(task.elapsedDays)} of {task.plannedDays} days · {formatMoneyCompact(task.budgeted)}
                       {task.quality > 0 && ` · quality ${task.quality}`}
                     </div>
+                    <div style={{ marginTop: 4 }}><HousePicker project={project} task={task} /></div>
                     {blockedBy.length > 0 && (
                       <div className="xs warning">{blockedBy.join(' ')}</div>
                     )}

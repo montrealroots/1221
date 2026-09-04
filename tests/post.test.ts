@@ -437,3 +437,24 @@ describe('stages and lots', () => {
     expect(validateUniverse(sim.universe).errors).toEqual([]);
   });
 });
+
+describe('the sandbox stages a picture', () => {
+  it('walks a demo picture through the same commands into post, and refuses with the sandbox off', () => {
+    const sim = quickSave({ wealth: 'inherited' }, 'stage-demo');
+    const off = sim.execute({ kind: 'sandbox.stage_picture', payload: { to: 'post' } });
+    expect(off.ok).toBe(false);
+    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
+    const staged = sim.execute<{ projectId: Id; phase: string; days: number }>({ kind: 'sandbox.stage_picture', payload: { to: 'post' } });
+    expect(staged.ok, staged.error).toBe(true);
+    const project = sim.universe.projects[staged.value!.projectId] as Project;
+    expect(project.postTaskIds.length).toBeGreaterThan(0);
+    expect(project.shootDayIds.length).toBeGreaterThan(5);
+    expect(project.completedShootDays).toBeGreaterThan(0);
+    expect(sim.universe.shootDays[project.shootDayIds[0]!]?.callSheet).toBeDefined();
+    expect(sim.ledger.audit()).toEqual([]);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    const boarded = sim.execute<{ projectId: Id; phase: string }>({ kind: 'sandbox.stage_picture', payload: { to: 'boarded', title: 'Second Unit' } });
+    expect(boarded.ok, boarded.error).toBe(true);
+    expect(sim.universe.projects[boarded.value!.projectId]?.phase).toBe('preproduction');
+  });
+});
