@@ -1,0 +1,464 @@
+qid	role	personQid	name	character	ordinal
+Q859260	director	Q489095	Kim Tae-gyun		
+Q859260	cast	Q6424117	Ko Chang-seok		
+Q859260	cast	Q484856	Park Hee-soon		
+Q859260	subject		association football		
+Q16181092	director	Q114554707	Lee Jung-ho		
+Q16181092	cast	Q272329	Uhm Jeong-hwa		
+Q485725	director	Q484522	Kim Ji-woon		
+Q485725	writer	Q7137790	Park Hoon-jung		
+Q485725	composer	Q16665451	Mowg		
+Q485725	producer	Q485607	Kim Hyeon-Woo		
+Q485725	cinematographer	Q16731352	Lee Mo-gae		
+Q485725	editor	Q6961113	Nam Na-yeong		
+Q485725	cast	Q380121	Lee Byung-hun		
+Q485725	cast	Q484575	Choi Min-sik		
+Q485725	award		Festival international du film fantastique de Gérardmer		
+Q485725	award		Asian Film Awards		
+Q485725	award		San Sebastián International Film Festival		
+Q485725	award		Brussels International Fantastic Film Festival		
+Q485725	award		Fantasporto		
+Q485725	subject		serial killer		
+Q485725	subject		revenge		
+Q485890	director	Q495879	Jang Hoon		
+Q485890	writer	Q105706397	Jang Minseok		
+Q485890	cinematographer	Q16731352	Lee Mo-gae		
+Q485890	editor	Q6961113	Nam Na-yeong		
+Q485890	cast	Q13423095	Choi Jung-woo		
+Q485890	cast	Q488031	Gang Dong-won		
+Q485890	cast	Q12610546	Yoon Hui-seok		
+Q485890	cast	Q484400	Song Kang-ho		
+Q485890	cast	Q16090195	Park Hyuk-kwon		
+Q485890	cast	Q16726343	Kwon Beom-taek		
+Q485890	cast	Q12615031	Jeon Gook-hwan		
+Q1393064	director	Q490406	Na Hong-jin		
+Q1393064	writer	Q490406	Na Hong-jin		
+Q1393064	composer	Q96239161	Byung-Hoon Lee		
+Q1393064	cinematographer	Q12611792	Lee Sung-jae		
+Q1393064	cast	Q486575	Jo Seong-ha		
+Q1393064	cast	Q4132779	Kim Yun-seok		
+Q1393064	cast	Q490410	Ha Jung-woo		
+Q1393064	award		Sitges Film Festival Best Director award		
+Q4127314	director	Q7561001	Song Il-gon		
+Q4127314	writer	Q7561001	Song Il-gon		
+Q4127314	producer	Q626484	Kim Jeong-hui		
+Q4127314	editor	Q6961113	Nam Na-yeong		
+Q4127314	cast	Q484859	So Ji-sub		
+Q4127314	cast	Q494346	Han Hyo-joo		
+Q5069853	director	Q16262094	Lee Hwan-kyung		
+Q5069853	composer	Q61701116	Lee Dong-June		
+Q5069853	cast	Q7138143	Park Won-sang		
+Q5069853	cast	Q496413	Park Ha-sun		
+Q5069853	cast	Q6409308	Kim Sang-ho		
+Q5069853	cast	Q483704	Cha Tae-hyun		
+Q486586	director	Q106269441	Kim Seok-yoon		
+Q486586	producer	Q6408870	Kim Jho Kwang-soo		
+Q486586	cast	Q490113	Kim Myung-min		
+Q486586	cast	Q483575	Oh Dal-su		
+Q486586	cast	Q485842	Han Ji-min		
+Q486586	followed_by	Q18653838	Detective K: Secret of the Lost Island		
+Q7723375	director	Q114026686	Sohn Young-sung		
+Q7723375	composer	Q3179426	Jo Yeong-wook		
+Q7723375	editor	Q60694258	Kim Seon-min		
+Q7723375	cast	Q482745	Jang Hyuk		
+Q7723375	cast	Q490410	Ha Jung-woo		
+Q7723375	cast	Q484856	Park Hee-soon		
+Q495637	director	Q495879	Jang Hoon		
+Q495637	cinematographer	Q104424941	Kim Woo-hyung		
+Q495637	editor	Q21005858	Kim Sang-bum		
+Q495637	cast	Q12615940	Jung In-gi	Lee Sang-eok	
+Q495637	cast	Q4120056	Ryu Seung-ryong	Hyeon Jeong-Yoon	
+Q495637	cast	Q490635	Shin Ha-kyun	First Lieutenant Kang Eun-Pyo	
+Q495637	cast	Q6424117	Ko Chang-seok	Master-Sergeant Yang Hyo-Sam	
+Q495637	cast	Q2812455	Lee David	Nam Seong-Shik	
+Q495637	cast	Q456609	Kim Ok-vin	Cha Tae-Kyeong	
+Q495637	cast	Q496314	Lee Je-hoon	Captain Shin Il-Young	
+Q495637	cast	Q12594292	Ryu Seung-su	Oh Gi-Yeong	
+Q495637	cast	Q493864	Cho Jin-woong	Yoo Jae-ho	
+Q495637	cast	Q257468	Go Soo	First Lieutenant Kim Soo-Hyeok	
+Q495637	subject		Korean War		
+Q4656045	director	Q114946226	Sang-yoon Lim		
+Q4656045	composer	Q16665451	Mowg		
+Q4656045	editor	Q6961113	Nam Na-yeong		
+Q4656045	cast	Q129484	Kim Dong-jun		
+Q4656045	cast	Q484399	Lee Mi-yeon		
+Q4656045	cast	Q484859	So Ji-sub		
+Q4656045	cast	Q625451	Lee Geung-young		
+Q4656045	cast	Q10855431	Kwak Do-won		
+Q4656045	subject		organized crime		
+Q28289	director	Q15985300	Jung Byung-gil		
+Q28289	writer	Q15985300	Jung Byung-gil		
+Q28289	editor	Q6961113	Nam Na-yeong		
+Q28289	cast	Q11317852	Choi Won-young		
+Q28289	cast	Q6681300	Kim Young-ae		
+Q28289	cast	Q482800	Jung Jae-young		
+Q28289	cast	Q6775198	Jang Gwang		
+Q28289	cast	Q22974905	Jung Hae-gyun		
+Q28289	cast	Q486158	Park Si-hoo		
+Q28289	subject		serial killer		
+Q28289	subject		revenge		
+Q5291511	director	Q12589016	Kim Tae-kyeong		
+Q5291511	editor	Q60694258	Kim Seon-min		
+Q5291511	cast	Q498113	Joo Won		
+Q5291511	cast	Q490918	Park Bo-young		
+Q11216402	director	Q8055191	Yoon Jong-bin		
+Q11216402	writer	Q8055191	Yoon Jong-bin		
+Q11216402	composer	Q3179426	Jo Yeong-wook		
+Q11216402	editor	Q21005858	Kim Sang-bum		
+Q11216402	cast	Q490410	Ha Jung-woo		
+Q11216402	cast	Q493864	Cho Jin-woong		
+Q11216402	cast	Q626185	SHOWBOX Co., Ltd.		
+Q11216402	cast	Q484575	Choi Min-sik		
+Q11216402	cast	Q3179426	Jo Yeong-wook		
+Q11216402	subject		organized crime		
+Q1392031	director	Q24005016	Kim Hyeong-jun		
+Q1392031	writer	Q50804919	Hwang Seong-gu		
+Q1392031	cast	Q484856	Park Hee-soon		
+Q1392031	cast	Q491792	Park Si-yeon		
+Q492485	director	Q562326	Choi Dong-hun		
+Q492485	writer	Q562326	Choi Dong-hun		
+Q492485	writer	Q108940482	Lee Gi-cheol		
+Q492485	composer	Q12582742	Dalpalan		
+Q492485	cinematographer	Q104527889	Choi Young-hwan		
+Q492485	editor	Q116178888	Shin Min-kyung		
+Q492485	production_designer	Q86112333	Lee Ha-jun		
+Q492485	cast	Q12619518	Choi Deok-mun		
+Q492485	cast	Q496491	Kim Soo-hyun		
+Q492485	cast	Q483575	Oh Dal-su		
+Q492485	cast	Q706623	Angelica Lee		
+Q492485	cast	Q4132779	Kim Yun-seok		
+Q492485	cast	Q12617440	Joo Jin-mo		
+Q492485	cast	Q667260	Simon Yam		
+Q492485	cast	Q490635	Shin Ha-kyun		
+Q492485	cast	Q196223	Kim Hye-soo		
+Q492485	cast	Q491318	Lee Jung-jae		
+Q492485	cast	Q253626	Jun Ji-hyun		
+Q492485	cast	Q1321598	Derek Tsang		
+Q492485	cast	Q484471	Kim Hae-suk		
+Q492485	cast	Q12607641	Ye Soo-jung		
+Q8031841	director	Q113687949	Kwon Chil-in		
+Q8031841	cast	Q491424	Lee Jeong-jin		
+Q8031841	cast	Q496384	Lee Min-jung		
+Q5152897	director	Q115016037	Park Hong-soo		
+Q5152897	writer	Q4556301	Kim Su-yeong		
+Q5152897	cast	Q626615	Park Seong-ung		
+Q5152897	cast	Q486575	Jo Seong-ha		
+Q5152897	cast	Q4403408	Yoon Je-moon		
+Q5152897	cast	Q495571	T.O.P		
+Q5152897	cast	Q12624268	Han Ye-ri		
+Q5152897	cast	Q486320	Kim You-jung		
+Q5152897	cast	Q12616172	Jeong Ho-bin		
+Q5152897	cast	Q12612704	Lee Joo-sil		
+Q5152897	cast	Q6680923	Kim Son-gjong		
+Q5152897	cast	Q16082303	Park Ji-il		
+Q16187451	director	Q18539998	Lee Won-suk		
+Q16187451	writer	Q18539998	Lee Won-suk		
+Q16187451	composer	Q16665451	Mowg		
+Q16187451	editor	Q16919965	Kim Chang-ju		
+Q16187451	cast	Q489046	Lee Si-young		
+Q5951794	director	Q6153892	Jang Joon-hwan		
+Q5951794	composer	Q16665451	Mowg		
+Q5951794	producer	Q19940780	Lee Dong-ha		
+Q5951794	cinematographer	Q107352107	Kim Ji-yong		
+Q5951794	editor	Q21005858	Kim Sang-bum		
+Q5951794	cast	Q486338	Yeo Jin-goo		
+Q5951794	cast	Q4132779	Kim Yun-seok		
+Q5951794	cast	Q493864	Cho Jin-woong		
+Q6946250	director	Q16090665	Yoon Jong-chan		
+Q6946250	writer	Q18815658	Yoo Young-a		
+Q6946250	cast	Q483575	Oh Dal-su		
+Q6946250	cast	Q712786	Kang So-ra		
+Q6946250	cast	Q490452	Han Suk-kyu		
+Q6946250	cast	Q496314	Lee Je-hoon		
+Q6946250	cast	Q493864	Cho Jin-woong		
+Q7444445	director	Q16091495	Jang Cheol-soo		
+Q7444445	writer	Q16091495	Jang Cheol-soo		
+Q7444445	cast	Q485314	Park Gi-woong		
+Q7444445	cast	Q496491	Kim Soo-hyun		
+Q7444445	cast	Q488838	Lee Hyun-woo		
+Q14795754	director	Q12624289	Han Jae-rim		
+Q14795754	writer	Q12624289	Han Jae-rim		
+Q14795754	composer	Q6513172	Lee Byung-woo		
+Q14795754	editor	Q27049954	Kim Chang-ju		
+Q14795754	production_designer	Q86112333	Lee Ha-jun		
+Q14795754	cast	Q12612846	Lee Yoon-geon		
+Q14795754	cast	Q484400	Song Kang-ho		
+Q14795754	cast	Q486582	Lee Jong-suk		
+Q14795754	cast	Q196223	Kim Hye-soo		
+Q14795754	cast	Q391965	Cho Jung-seok		
+Q14795754	cast	Q15463476	Jeong Gyu-su		
+Q14795754	cast	Q483517	Baek Yoon-sik	Kim Jongseo	
+Q14795754	cast	Q6714182	Chae Sang-woo	Danjong of Joseon	
+Q14795754	cast	Q18191742	Lee Do-yeob	Kim Seung-gyu	
+Q14795754	cast	Q16080358	Kim Eui-sung	Han Myŏnghoe	
+Q14795754	cast	Q17564667	Yoo Sang-jae	Hong Yun-sung	
+Q14795754	cast	Q12589040	Kim Tae-woo	Munjong of Joseon	
+Q14795754	cast	Q491318	Lee Jung-jae	Sejo of Joseon	
+Q14361469	director	Q12609311	Won Sin-yeon		
+Q14361469	cinematographer	Q491446	Lee Sung-jae		
+Q14361469	cast	Q623436	Gong Yoo		
+Q14361469	cast	Q484856	Park Hee-soon		
+Q16734496	director	Q18815379	Kim Seong-hun		
+Q16734496	writer	Q18815379	Kim Seong-hun		
+Q16734496	cast	Q12604561	Shin Jung-geun		
+Q16734496	cast	Q493864	Cho Jin-woong	박창민	
+Q16734496	cast	Q16176321	Heo Jeong-eun		
+Q16734496	cast	Q489681	Lee Sun-kyun	고건수	
+Q16734496	cast	Q16978733	Shin Dong-mi		
+Q16734496	cast	Q12618118	Lee Ji-hoon		
+Q16734496	cast	Q15977222	Park Bo-gum		
+Q16734496	cast	Q12615563	Jeong Man-sik		
+Q16734496	cast	Q20444493	Jang In-sub		
+Q6444349	director	Q8055191	Yoon Jong-bin		
+Q6444349	writer	Q8055191	Yoon Jong-bin		
+Q6444349	composer	Q3179426	Jo Yeong-wook		
+Q6444349	producer	Q8055191	Yoon Jong-bin		
+Q6444349	editor	Q21005858	Kim Sang-bum		
+Q6444349	cast	Q6515213	Lee Sung-min		
+Q6444349	cast	Q490410	Ha Jung-woo		
+Q6444349	cast	Q12617440	Joo Jin-mo		
+Q6444349	cast	Q498374	Ma Dong-seok		
+Q6444349	cast	Q12610454	Yoon Ji-hye		
+Q6444349	cast	Q625451	Lee Geung-young		
+Q6444349	cast	Q488031	Gang Dong-won		
+Q6444349	cast	Q493864	Cho Jin-woong		
+Q17002286	director	Q109517833	Beom-gu Cho		
+Q17002286	composer	Q134316214	Chang Hyuk-jin		
+Q17002286	cast	Q488817	Jung Woo-sung		
+Q17002286	followed_by	Q72931135	The Divine Move 2: The Wrathful		
+Q7741115	director	Q105705559	Park Jae-hyun		
+Q7741115	cast	Q6714182	Chae Sang-woo		
+Q7741115	cast	Q3659522	Jin Ji-hui		
+Q7741115	cast	Q11252389	Song Sae-byeok		
+Q7741115	cast	Q44260	Ha Ji-won		
+Q7741115	cast	Q6424117	Ko Chang-seok		
+Q7741115	cast	Q15316495	Kang Min-ah		
+Q7741115	cast	Q485672	Gain		
+Q7741115	cast	Q333192	Kang Ye-won		
+Q7741115	cast	Q491095	Joo Sang-wook		
+Q18340952	director	Q18539998	Lee Won-suk		
+Q18340952	composer	Q16665451	Mowg		
+Q18340952	cinematographer	Q107352107	Kim Ji-yong		
+Q18340952	cast	Q497785	Park Shin-hye		
+Q18340952	cast	Q490452	Han Suk-kyu		
+Q18152358	director	Q486039	Jang Jin		
+Q18152358	composer	Q350215	Kim Jung-woo		
+Q18152358	cast	Q493864	Cho Jin-woong		
+Q19801741	director	Q562326	Choi Dong-hun		
+Q19801741	writer	Q562326	Choi Dong-hun		
+Q19801741	writer	Q108940482	Lee Gi-cheol		
+Q19801741	composer	Q12582742	Dalpalan		
+Q19801741	cinematographer	Q104424941	Kim Woo-hyung		
+Q19801741	cast	Q625451	Lee Geung-young	강인국	
+Q19801741	cast	Q490410	Ha Jung-woo	하와이피스톨	
+Q19801741	cast	Q483575	Oh Dal-su	영감	
+Q19801741	cast	Q253626	Jun Ji-hyun	안옥윤	
+Q19801741	cast	Q12619518	Choi Deok-mun	황덕삼	
+Q19801741	cast	Q491318	Lee Jung-jae	염석진	
+Q19801741	cast	Q484471	Kim Hae-suk		
+Q19801741	cast	Q16081558	Park Byeong-eun		
+Q19801741	cast	Q493864	Cho Jin-woong	추상옥	
+Q19801741	cast	Q483011	Cho Seung-woo	Kim Won-bong	
+Q19801741	cast	Q22973199	Kim Hong-pa	Kim Ku	
+Q18653838	director	Q106269441	Kim Seok-yoon		
+Q18653838	producer	Q6408870	Kim Jho Kwang-soo		
+Q18653838	cast	Q490113	Kim Myung-min		
+Q18653838	cast	Q485149	Lee Yeon-hee		
+Q18653838	follows	Q486586	Detective K: Secret of the Virtuous Widow		
+Q17490438	director	Q11264817	Yoo Ha		
+Q17490438	writer	Q11264817	Yoo Ha		
+Q17490438	composer	Q3179426	Jo Yeong-wook		
+Q17490438	editor	Q7137742	Park Gok-ji		
+Q17490438	cast	Q494539	Kim Rae-won		
+Q17490438	cast	Q16173210	Kim Seolhyun		
+Q17490438	cast	Q80758	Lee Min-ho		
+Q17490438	subject		terrorism		
+Q20780511	director	Q21710789	Woo Min-ho		
+Q20780511	writer	Q21710789	Woo Min-ho		
+Q20780511	editor	Q21005858	Kim Sang-bum		
+Q20780511	cast	Q483011	Cho Seung-woo		
+Q20780511	cast	Q27951780	Jo Woo-jin		
+Q20780511	cast	Q483517	Baek Yoon-sik		
+Q20780511	cast	Q22973199	Kim Hong-pa		
+Q20780511	cast	Q12612014	Lee El		
+Q20780511	cast	Q12615563	Jeong Man-sik		
+Q20780511	cast	Q16080358	Kim Eui-sung		
+Q20780511	cast	Q14750424	Jo Jae-yun		
+Q20780511	cast	Q17564517	Bae Seong-woo		
+Q20780511	cast	Q17963974	Kim Dae-myung		
+Q20780511	cast	Q625451	Lee Geung-young		
+Q20780511	cast	Q380121	Lee Byung-hun		
+Q20780511	cast	Q15630925	Kim Byeong-ok		
+Q19896386	director	Q106284877	Aaron Kim		
+Q19896386	composer	Q496848	Lee Jong-su		
+Q19896386	cast	Q489078	Oh Ji-ho		
+Q19896386	cast	Q626806	Hong Seok-cheon		
+Q19896386	cast	Q13482021	Lee Hyo-jung		
+Q19896386	cast	Q6762495	Hong Yeo-jin		
+Q19896386	cast	Q12618041	Ji Yoon-ho		
+Q19896386	cast	Q4291103	Oh Min-suk		
+Q19896386	cast	Q7223424	Ha Joo-hee		
+Q19896386	cast	Q3183655	Kim Min-kyo		
+Q19896386	cast	Q333192	Kang Ye-won		
+Q19939459	director	Q2315679	Kwak Kyung-taek		
+Q19939459	cast	Q4132779	Kim Yun-seok		
+Q19939459	cast	Q11264845	Yoo Hai-jin		
+Q19939459	cast	Q12602952	Song Yeong-chang		
+Q19939459	cast	Q21710318	Lee Jung-eun		
+Q19939459	cast	Q498061	Jang Young-nam		
+Q19939459	cast	Q18815707	Jang Myung-Kap		
+Q19939459	cast	Q28699137	Jung Ho-yeon		
+Q19939459	cast	Q11266572	Lee Jae-yong		
+Q19939459	cast	Q18733692	Jin Sun-Mi		
+Q19939459	cast	Q12597353	Park Hyo-joo		
+Q18180905	director	Q563013	Lee Joon-ik		
+Q18180905	writer	Q563013	Lee Joon-ik		
+Q18180905	composer	Q12597578	Bang Jun-seok		
+Q18180905	producer	Q6843587	Oh Seung-hyeon		
+Q18180905	editor	Q21005858	Kim Sang-bum		
+Q18180905	cast	Q484400	Song Kang-ho	Yeongjo of Joseon	
+Q18180905	cast	Q484471	Kim Hae-suk	Inwon	
+Q18180905	cast	Q27734220	Lee Hyo-je	Jeongjo of Joseon	
+Q18180905	cast	Q102098	Moon Geun-young	Hyegyeong	
+Q18180905	cast	Q7138143	Park Won-sang	Hong Bong-han	
+Q18180905	cast	Q484859	So Ji-sub	Jeongjo of Joseon	
+Q18180905	cast	Q489930	Yoo Ah-in	Crown Prince Sado	
+Q18180905	cast	Q16181177	Seo Yea-ji	Jeongsun	
+Q18180905	cast	Q3659522	Jin Ji-hui	Princess Hwawan	
+Q22973255	director	Q6515626	Lee Yun-ki		
+Q22973255	composer	Q12597578	Bang Jun-seok		
+Q22973255	cast	Q267037	Jeon Do-yeon		
+Q21057612	director	Q26218133	Lee Il-hyung		
+Q21057612	writer	Q26218133	Lee Il-hyung		
+Q21057612	cast	Q491333	Hwang Jung-min		
+Q21057595	director	Q114684585	Kim Tae-gon		
+Q21057595	composer	Q56533074	Kim Tae-seong		
+Q21057595	cast	Q196223	Kim Hye-soo		
+Q24856052	director	Q27915062	Lee Kae-byeok		
+Q24856052	composer	Q12597578	Bang Jun-seok		
+Q19854848	director	Q115210511	Cho Kyu-jang		
+Q19854848	composer	Q56533074	Kim Tae-seong		
+Q19854848	cast	Q494351	Moon Chae-won		
+Q19854848	cast	Q77621	Yoo Yeon-seok		
+Q19854848	cast	Q14750424	Jo Jae-yun		
+Q24113685	director	Q18815379	Kim Seong-hun		
+Q24113685	writer	Q490410	Ha Jung-woo		
+Q24113685	producer	Q107494309	Jang Won-seok		
+Q24113685	cast	Q490984	Nam Ji-hyun		
+Q24113685	cast	Q13471194	Jeong Seok-yong		
+Q24113685	cast	Q12604561	Shin Jung-geun		
+Q24113685	cast	Q16090195	Park Hyuk-kwon		
+Q24113685	cast	Q269742	Bae Doona		
+Q24113685	cast	Q490410	Ha Jung-woo		
+Q24113685	cast	Q483575	Oh Dal-su		
+Q27536739	director	Q21119944	Um Tae-hwa		
+Q27536739	writer	Q21119944	Um Tae-hwa		
+Q27536739	composer	Q12582742	Dalpalan		
+Q27536739	cast	Q27734220	Lee Hyo-je		
+Q27536739	cast	Q19657251	Pak Jong-hwan		
+Q27536739	cast	Q19794862	Oh Hee-joon		
+Q27536739	cast	Q19483651	Kim Hak-sun		
+Q27536739	cast	Q12588757	Kim Tae-han		
+Q27536739	cast	Q18605390	Seo Joo-hee		
+Q27536739	cast	Q20444804	Byun Jin-soo		
+Q27536739	cast	Q9358560	Kim Hee-won		
+Q27536739	cast	Q6771032	Kwon Hae-hyo		
+Q27536739	cast	Q16174686	Um Tae-goo		
+Q27536739	cast	Q488031	Gang Dong-won		
+Q27536739	cast	Q27695643	Shin Eun-soo		
+Q28698824	director	Q495879	Jang Hoon		
+Q28698824	composer	Q3179426	Jo Yeong-wook		
+Q28698824	editor	Q21005858	Kim Sang-bum		
+Q28698824	cast	Q20063575	Ryu Jun-yeol		
+Q28698824	cast	Q11264845	Yoo Hai-jin		
+Q28698824	cast	Q484400	Song Kang-ho		
+Q28698824	cast	Q57614	Thomas Kretschmann	Jürgen Hinzpeter	
+Q21577091	director	Q12609311	Won Sin-yeon		
+Q21577091	writer	Q12625905	Hwang Jo-yun		
+Q21577091	cast	Q490120	Sul Kyung-gu		
+Q21577091	cast	Q16173210	Kim Seolhyun		
+Q21577091	cast	Q483575	Oh Dal-su		
+Q21577091	cast	Q281931	Kim Nam-gil		
+Q30637480	director	Q2315679	Kwak Kyung-taek		
+Q30637480	cast	Q494539	Kim Rae-won		
+Q30637480	cast	Q484471	Kim Hae-suk		
+Q30637480	cast	Q6853641	Jeon Hye-jin		
+Q30637480	cast	Q3936510	Sung Dong-il		
+Q27952232	director	Q106284870	Park In-je		
+Q27952232	cast	Q484575	Choi Min-sik		
+Q23994924	director	Q29017408	Na Hyun		
+Q23994924	writer	Q29017408	Na Hyun		
+Q23994924	composer	Q12597578	Bang Jun-seok		
+Q23994924	cast	Q490452	Han Suk-kyu		
+Q30080183	director	Q109016429	Kim Yu Sung		
+Q30080183	producer	Q490711	Lee Beom-soo		
+Q30080183	cast	Q484366	Min Hyo-rin		
+Q30080183	cast	Q712786	Kang So-ra		
+Q30080183	cast	Q490711	Lee Beom-soo		
+Q30080183	cast	Q318485	Rain	Uhm Bok-dong	
+Q51844664	director	Q105705261	Tae-Gyun Kim		
+Q51844664	writer	Q2315679	Kwak Kyung-taek		
+Q51844664	writer	Q105705261	Tae-Gyun Kim		
+Q51844664	cast	Q4132779	Kim Yun-seok		
+Q48078430	director	Q106269441	Kim Seok-yoon		
+Q48078430	cast	Q490113	Kim Myung-min		
+Q50791455	director	Q113107197	Jung Bum-shik		
+Q50791455	cast	Q33309343	Oh Ah-yeon		
+Q50791455	cast	Q95018299	Yoo Je-yoon		
+Q50791455	cast	Q22973857	Park Sung-hoon		
+Q50791455	cast	Q55737623	Wi  Ha-jun		
+Q50791455	cast	Q95600533	Lee Seung-wook		
+Q50791455	cast	Q55730087	Park Ji-hyun		
+Q50791455	cast	Q61959909	Moon Ye-won		
+Q55392278	director	Q55428	Neil Jordan		
+Q55392278	writer	Q55428	Neil Jordan		
+Q55392278	writer	Q61959893	Ray Wright		
+Q55392278	composer	Q982952	Javier Navarrete		
+Q55392278	producer	Q514913	Lawrence Bender		
+Q55392278	producer	Q13540150	Sidney Kimmel		
+Q55392278	producer	Q22323697	James Flynn		
+Q55392278	producer	Q61959897	John Penotti		
+Q55392278	cinematographer	Q1359957	Seamus McGarvey		
+Q55392278	editor	Q61959898	Nick Emerson		
+Q55392278	cast	Q16235655	Maika Monroe		
+Q55392278	cast	Q449679	Colm Feore		
+Q55392278	cast	Q106365	Isabelle Huppert		
+Q55392278	cast	Q4509	Chloë Grace Moretz		
+Q55392278	cast	Q313042	Stephen Rea		
+Q39071107	director	Q65249497	Noo-ri Park		
+Q39071107	editor	Q21005858	Kim Sang-bum		
+Q39071107	cast	Q20063575	Ryu Jun-yeol		
+Q39071107	cast	Q489475	Yu Ji-tae		
+Q39071107	cast	Q27951780	Jo Woo-jin		
+Q30115167	director	Q21710789	Woo Min-ho		
+Q30115167	writer	Q21710789	Woo Min-ho		
+Q30115167	cast	Q391965	Cho Jung-seok	김인구	
+Q30115167	cast	Q31179557	Kim So-jin		
+Q30115167	cast	Q27951780	Jo Woo-jin		
+Q30115167	cast	Q484400	Song Kang-ho	이두삼	
+Q30115167	cast	Q17487457	Yoo Jae-myung		
+Q30115167	cast	Q17963974	Kim Dae-myung		
+Q30115167	cast	Q27952231	Park Kyung-hye		
+Q30115167	cast	Q492243	Lee Hee-joon		
+Q30115167	cast	Q269742	Bae Doona	김정아	
+Q30115167	cast	Q6515213	Lee Sung-min		
+Q55106096	director	Q114904734	Kim Min-Ho		
+Q55106096	cast	Q484965	Song Ji-hyo		
+Q55106096	cast	Q492682	Kim Sung-oh		
+Q55106096	cast	Q498374	Ma Dong-seok		
+Q55106096	cast	Q4841205	Bae Nu-ri		
+Q55106096	cast	Q55737092	Park Ji-hwan		
+Q55106096	cast	Q17564387	Kim Min-jae		
+Q60054842	director	Q20080385	Han Jun-hee		
+Q65255143	director	Q12609311	Won Sin-yeon		
+Q65255143	cinematographer	Q104216526	Kim Young-ho		
+Q65255143	cast	Q1049366	Kazuki Kitamura		
+Q65255143	cast	Q484575	Choi Min-sik		
+Q65255143	cast	Q55737092	Park Ji-hwan		
+Q65255143	cast	Q484856	Park Hee-soon		
+Q65255143	cast	Q17564569	Sung Yoo-bin		
+Q65255143	cast	Q2699910	Hiroyuki Ikeuchi		
+Q65255143	cast	Q20063575	Ryu Jun-yeol		
+Q65255143	cast	Q11264845	Yoo Hai-jin		
+Q65255143	cast	Q27951780	Jo Woo-jin		
+Q65255143	cast	Q12619754	Choi Yu-hwa		

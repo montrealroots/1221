@@ -1,0 +1,269 @@
+qid	role	personQid	name	character	ordinal
+Q1572852	director	Q55403	Nagisa Ōshima		
+Q1572852	writer	Q55403	Nagisa Ōshima		
+Q1572852	composer	Q7333925	Riichirō Manabe		
+Q1572852	cast	Q944093	Fumio Watanabe		
+Q1572852	cast	Q2698639	Yoshiko Kuga		
+Q50502866	director	Q2476978	Yoshishige Yoshida		
+Q50502866	writer	Q2476978	Yoshishige Yoshida		
+Q2739665	director	Q55402	Yasujirō Ozu		
+Q2739665	writer	Q55402	Yasujirō Ozu		
+Q2739665	writer	Q766235	Ton Satomi		
+Q2739665	writer	Q2004317	Kōgo Noda		
+Q2739665	composer	Q3514176	Takanobu Saitō		
+Q2739665	producer	Q11466508	Shizuo Yamanouchi		
+Q2739665	cinematographer	Q3574300	Yūharu Atsuta		
+Q2739665	editor	Q107157632	Yoshiyasu Hamamura		
+Q2739665	cast	Q236129	Setsuko Hara		
+Q2739665	cast	Q944093	Fumio Watanabe		
+Q2739665	cast	Q7397524	Sadako Sawamura		
+Q2739665	cast	Q3551306	Nobuo Nakamura		
+Q2739665	cast	Q1087997	Keiji Sada		
+Q2739665	cast	Q11355110	Kuniko Miyake		
+Q2739665	cast	Q3482160	Shin Saburi		
+Q2739665	cast	Q2053558	Mariko Okada		
+Q2739665	cast	Q8054591	Yōko Tsukasa		
+Q2739665	cast	Q11403917	Ryūji Kita		
+Q2739665	cast	Q958714	Chishū Ryū		
+Q1962638	director	Q55403	Nagisa Ōshima		
+Q1962638	writer	Q55403	Nagisa Ōshima		
+Q1962638	composer	Q7333925	Riichirō Manabe		
+Q1962638	cast	Q944093	Fumio Watanabe		
+Q1962638	cast	Q3098359	Masahiko Tsugawa		
+Q1632477	director	Q1388372	Keisuke Kinoshita		
+Q1632477	writer	Q1388372	Keisuke Kinoshita		
+Q1632477	composer	Q11518036	Chūji Kinoshita		
+Q1632477	cast	Q1087997	Keiji Sada		
+Q1632477	cast	Q290963	Hideko Takamine		
+Q1632477	cast	Q3049379	Eijirō Tōno		
+Q1632477	cast	Q5968767	Yoshi Katō		
+Q1632477	cast	Q2483977	Nobuko Otowa		
+Q1632477	cast	Q449621	Tatsuya Nakadai		
+Q1632477	cast	Q985882	Masakazu Tamura		
+Q1632477	cast	Q11550298	Yasushi Nagata		
+Q3212936	director	Q2476978	Yoshishige Yoshida		
+Q3212936	writer	Q11623205	Shinji Fujiwara		
+Q3212936	composer	Q1618037	Hikaru Hayashi		
+Q3212936	cast	Q3511677	Sō Yamamura		
+Q3212936	cast	Q3049379	Eijirō Tōno		
+Q3212936	cast	Q555493	Hiroyuki Nagato		
+Q3212936	cast	Q3188302	Jūkichi Uno		
+Q3212936	cast	Q2053558	Mariko Okada		
+Q1189572	director	Q55402	Yasujirō Ozu		
+Q1189572	writer	Q55402	Yasujirō Ozu		
+Q1189572	writer	Q2004317	Kōgo Noda		
+Q1189572	composer	Q3514176	Takanobu Saitō		
+Q1189572	producer	Q11466508	Shizuo Yamanouchi		
+Q1189572	cinematographer	Q3574300	Yūharu Atsuta		
+Q1189572	editor	Q107157632	Yoshiyasu Hamamura		
+Q1189572	cast	Q2025956	Kyōko Kishida		
+Q1189572	cast	Q11403917	Ryūji Kita		
+Q1189572	cast	Q958714	Chishū Ryū		
+Q1189572	cast	Q2053558	Mariko Okada		
+Q1189572	cast	Q3128005	Haruko Sugimura		
+Q1189572	cast	Q1087997	Keiji Sada		
+Q1189572	cast	Q579058	Daisuke Katō		
+Q1189572	cast	Q3067392	Shima Iwashita		
+Q1189572	cast	Q3551306	Nobuo Nakamura		
+Q1189572	cast	Q3049379	Eijirō Tōno		
+Q1189572	cast	Q11355110	Kuniko Miyake		
+Q1189572	subject		alcoholism		
+Q1584406	director	Q445807	Masaki Kobayashi		
+Q1584406	writer	Q3107382	Shinobu Hashimoto		
+Q1584406	composer	Q155467	Tōru Takemitsu		
+Q1584406	cinematographer	Q11454129	Yoshio Miyajima		
+Q1584406	editor	Q119042587	Hisashi Sagara		
+Q1584406	costume_designer	Q131575614	Mitsuzō Ueda		
+Q1584406	cast	Q449621	Tatsuya Nakadai	Tsugumo Hanshirō	
+Q1584406	cast	Q3814269	Kei Satō	Fukushima Masakatsu	
+Q1584406	cast	Q3067392	Shima Iwashita	Tsugumo Miho	
+Q1584406	cast	Q11355290	Masao Mishima	Inaba Tango	
+Q1584406	cast	Q11586838	Akira Ishihama	Chijiiwa Motome	
+Q1584406	cast	Q1861772	Yoshio Inaba	Chijiiwa Jinai	
+Q1584406	cast	Q1321767	Rentarō Mikuni	Saitō Kageyu	
+Q1584406	cast	Q1488230	Tetsurō Tamba	Omodaka Hikokuro	
+Q1584406	cast	Q11367122	Ichirō Nakatani	Yazaki Hayato	
+Q1584406	cast	Q3276455	Akiji Kobayashi		
+Q1584406	subject		suicide		
+Q1584406	subject		samurai		
+Q1584406	subject		seppuku		
+Q1584406	subject		Edo period		
+Q1584406	subject		ronin		
+Q1584406	subject		revenge		
+Q55663978	director	Q263104	Kinuyo Tanaka		
+Q55663978	writer	Q11495507	Masashige Narusawa		
+Q55663978	composer	Q1618037	Hikaru Hayashi		
+Q55663978	cinematographer	Q11454129	Yoshio Miyajima		
+Q55663978	cast	Q3095179	Nakamura Ganjirō II		
+Q55663978	cast	Q3312773	Mieko Takamine		
+Q55663978	cast	Q449621	Tatsuya Nakadai		
+Q55663978	cast	Q11516815	Ineko Arima		
+Q55663978	cast	Q985882	Masakazu Tamura		
+Q65172058	director	Q1111161	Umetsugu Inoue		
+Q65172058	writer	Q1111161	Umetsugu Inoue		
+Q65172058	composer	Q520111	Toshiro Mayuzumi		
+Q65172058	cast	Q2053558	Mariko Okada		
+Q1458080	director	Q707541	Noboru Nakamura		
+Q1458080	writer	Q115057222	Toshihide Gondo		
+Q1458080	composer	Q155467	Tōru Takemitsu		
+Q1458080	producer	Q115057252	Ryōtarō Kuwata		
+Q1458080	cinematographer	Q22023433	Tōichirō Narushima		
+Q1458080	cast	Q3067392	Shima Iwashita		
+Q1458080	cast	Q555493	Hiroyuki Nagato		
+Q1458080	cast	Q3049379	Eijirō Tōno		
+Q1458080	cast	Q922612	Seiji Miyaguchi		
+Q4808490	director	Q1886953	Masahiro Shinoda		
+Q4808490	writer	Q11470181	Nobuo Yamada		
+Q4808490	composer	Q155467	Tōru Takemitsu		
+Q4808490	cast	Q139253	Eiji Okada		
+Q4808490	cast	Q8060755	Yukio Ninagawa		
+Q4808490	cast	Q1488230	Tetsurō Tamba		
+Q4808490	cast	Q1087997	Keiji Sada		
+Q4808490	cast	Q5350011	Eitarō Ozawa		
+Q4808490	cast	Q3067392	Shima Iwashita		
+Q4808490	cast	Q63525	Isao Kimura		
+Q5231850	director	Q7706872	Tetsuji Takechi		
+Q5231850	writer	Q7706872	Tetsuji Takechi		
+Q104452496	director	Q1393410	Minoru Shibuya		
+Q104452496	writer	Q1393410	Minoru Shibuya		
+Q104452496	writer	Q11579476	Yoshio Shirasaka		
+Q104452496	cast	Q11583335	Akemi Mari		
+Q104452496	cast	Q1087997	Keiji Sada		
+Q7127065	director	Q1886953	Masahiro Shinoda		
+Q7127065	composer	Q155467	Tōru Takemitsu		
+Q7127065	cast	Q3119101	Ryō Ikebe		
+Q55664176	director	Q707541	Noboru Nakamura		
+Q55664176	cast	Q63525	Isao Kimura		
+Q55664176	cast	Q1139492	Bunta Sugawara		
+Q11372545	director	Q705405	Yoshitarō Nomura		
+Q11372545	writer	Q26776561	Masato Ide		
+Q11372545	composer	Q424173	Yasushi Akutagawa		
+Q11372545	cinematographer	Q11477910	Takashi Kawamata		
+Q11372545	cast	Q3067392	Shima Iwashita		
+Q11372545	cast	Q143083	Sachiko Hidari		
+Q11372545	cast	Q5968767	Yoshi Katō		
+Q11372545	cast	Q326335	Gō Katō		
+Q11372545	cast	Q139253	Eiji Okada		
+Q3235913	director	Q1389817	Hideo Gosha		
+Q3235913	producer	Q1488230	Tetsurō Tamba		
+Q3235913	cast	Q3189986	Jun Tatara		
+Q3235913	cast	Q1488230	Tetsurō Tamba		
+Q3235913	cast	Q11482771	Mikijirō Hira		
+Q3235913	cast	Q5772396	Hisashi Igawa		
+Q3235913	cast	Q3043193	Kamatari Fujiwara		
+Q98076240	director	Q969527	Heinosuke Gosho		
+Q98076240	cast	Q11414065	Yoshio Yoshida		
+Q98076240	cast	Q6203330	Jitsuko Yoshimura		
+Q98076240	cast	Q3548276	Kin Sugai		
+Q11660853	director	Q1261335	Yōji Yamada		
+Q11660853	writer	Q3107382	Shinobu Hashimoto		
+Q11660853	cast	Q1138444	Chieko Baishō		
+Q11660853	cast	Q464049	Osamu Takizawa		
+Q7413111	director	Q1886953	Masahiro Shinoda		
+Q7413111	composer	Q155467	Tōru Takemitsu		
+Q7413111	cast	Q3549533	Kōji Takahashi		
+Q7413111	subject		ninja		
+Q3506702	director	Q1389817	Hideo Gosha		
+Q3506702	composer	Q3995894	Toshiaki Tsushima		
+Q3506702	cast	Q3067392	Shima Iwashita		
+Q3506702	cast	Q8062653	Yōko Mihara		
+Q3506702	cast	Q326335	Gō Katō		
+Q3506702	cast	Q11482771	Mikijirō Hira		
+Q3506702	cast	Q326517	Kunie Tanaka		
+Q3506702	cast	Q3546233	Kantarō Suga		
+Q3506702	cast	Q3049379	Eijirō Tōno		
+Q3506702	cast	Q11399327	Takeshi Katō		
+Q19360215	director	Q1886953	Masahiro Shinoda		
+Q19360215	writer	Q43736	Yasunari Kawabata		
+Q19360215	composer	Q155467	Tōru Takemitsu		
+Q19360215	cast	Q6383549	Kei Yamamoto		
+Q19360215	cast	Q3546783	Kaoru Yachigusa		
+Q19360215	cast	Q3128005	Haruko Sugimura		
+Q19360215	cast	Q6875103	Misako Watanabe		
+Q19360215	cast	Q3511677	Sō Yamamura		
+Q57197178	director	Q1389817	Hideo Gosha		
+Q57197178	writer	Q1389817	Hideo Gosha		
+Q57197178	writer	Q11439768	Yasuko Ōno		
+Q57197178	composer	Q938538	Masaru Sato		
+Q57197178	producer	Q11384154	Masayuki Satō		
+Q57197178	producer	Q115537402	Gin'ichi Kishimoto		
+Q57197178	cinematographer	Q11644259	Tadashi Sakai		
+Q57197178	editor	Q115537418	Kimi Kamishima		
+Q57197178	cast	Q11367122	Ichirō Nakatani		
+Q57197178	cast	Q11537613	Miyuki Kuwano		
+Q57197178	cast	Q449621	Tatsuya Nakadai		
+Q57197178	cast	Q326517	Kunie Tanaka		
+Q41773336	director	Q969527	Heinosuke Gosho		
+Q41773336	composer	Q3147667	Ichirō Saitō		
+Q41773336	cast	Q3067392	Shima Iwashita		
+Q41773336	cast	Q11364048	Jin Nakayama		
+Q955372	director	Q965902	Kazui Nihonmatsu		
+Q955372	cast	Q22128569	Peggy Neal		
+Q955372	cast	Q11417227	Shun'ya Wazaki		
+Q955372	cast	Q139253	Eiji Okada		
+Q955372	cast	Q11409921	Itoko Harada		
+Q16825813	director	Q2476978	Yoshishige Yoshida		
+Q16825813	cast	Q63525	Isao Kimura		
+Q16825813	cast	Q2053558	Mariko Okada		
+Q16825813	cast	Q6884484	Miyoko Akaza		
+Q2423884	director	Q470779	Kinji Fukasaku		
+Q2423884	writer	Q347412	Edogawa Ranpo		
+Q2423884	composer	Q546592	Isao Tomita		
+Q2423884	cast	Q3545222	Kikko Matsuoka		
+Q2423884	cast	Q63525	Isao Kimura		
+Q2423884	cast	Q134456	Yukio Mishima		
+Q2423884	cast	Q6455065	Kō Nishimura		
+Q2423884	cast	Q1076203	Akihiro Miwa		
+Q2423884	cast	Q1488230	Tetsurō Tamba		
+Q2423884	cast	Q748582	Kōichi Satō		
+Q926134	director	Q55403	Nagisa Ōshima		
+Q926134	writer	Q55403	Nagisa Ōshima		
+Q926134	composer	Q1618037	Hikaru Hayashi		
+Q926134	producer	Q55403	Nagisa Ōshima		
+Q926134	cast	Q5542100	Masao Adachi		
+Q926134	cast	Q3814269	Kei Satō		
+Q926134	cast	Q944093	Fumio Watanabe		
+Q926134	cast	Q55403	Nagisa Ōshima		
+Q926134	subject		capital punishment		
+Q3818308	director	Q965902	Kazui Nihonmatsu		
+Q3818308	composer	Q2296028	Shunsuke Kikuchi		
+Q97315460	director	Q3135268	Hideo Sekigawa		
+Q11416444	director	Q11532317	Kōki Matsuno		
+Q11416444	editor	Q16264721	Kazuo Ōta		
+Q11416444	cast	Q11646709	Nobuo Kaneko		
+Q11416444	cast	Q6455065	Kō Nishimura		
+Q11416444	cast	Q326978	Masumi Okada		
+Q11416444	cast	Q3545222	Kikko Matsuoka		
+Q15912831	director	Q926946	Kōji Wakamatsu		
+Q15912831	composer	Q8046714	Yagi Masao		
+Q4696791	director	Q350739	Susumu Hani		
+Q4696791	cast	Q11553590	Kenzō Kawarasaki		
+Q5964767	director	Q1261335	Yōji Yamada		
+Q5964767	writer	Q1261335	Yōji Yamada		
+Q5964767	writer	Q11539574	Azuma Morisaki		
+Q5964767	composer	Q2225818	Naozumi Yamamoto		
+Q5964767	cinematographer	Q11672729	Tetsuo Takaha		
+Q5964767	editor	Q11584931	Iwao Ishii		
+Q5964767	cast	Q13365028	Sachiko Mitsumoto		
+Q5964767	cast	Q5806741	Taichirō Hirokawa		
+Q5964767	cast	Q1370742	Kiyoshi Atsumi	Torajirō Kuruma	
+Q5964767	cast	Q9206889	Gin Maeda		
+Q5964767	cast	Q1138444	Chieko Baishō	Sakura Kuruma	
+Q5964767	cast	Q958714	Chishū Ryū		
+Q5964767	cast	Q40070	Takashi Shimura		
+Q5964767	followed_by	Q7825291	Tora-san's Cherished Mother		
+Q65172054	director	Q1111161	Umetsugu Inoue		
+Q7825291	director	Q1261335	Yōji Yamada		
+Q7825291	writer	Q1261335	Yōji Yamada		
+Q7825291	writer	Q11461375	Shun'ichi Kobayashi		
+Q7825291	writer	Q21019656	Akira Miyazaki		
+Q7825291	composer	Q2225818	Naozumi Yamamoto		
+Q7825291	cinematographer	Q11672729	Tetsuo Takaha		
+Q7825291	cast	Q1370742	Kiyoshi Atsumi	Torajirō Kuruma	
+Q7825291	cast	Q11383567	Orie Satō		
+Q7825291	cast	Q1138444	Chieko Baishō	Sakura Suwa	
+Q7825291	cast	Q1137049	Tsutomu Yamazaki		
+Q7825291	cast	Q3049379	Eijirō Tōno		
+Q7825291	cast	Q9206889	Gin Maeda		
+Q7825291	follows	Q5964767	It's Tough Being a Man		
+Q7825291	followed_by	Q7825315	Tora-san, His Tender Love		

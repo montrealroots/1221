@@ -1,0 +1,470 @@
+qid	role	personQid	name	character	ordinal
+Q10551819	director	Q445497	Hasse Ekman		
+Q10551819	writer	Q445497	Hasse Ekman		
+Q10551819	composer	Q453176	Erik Nordgren		
+Q10551819	cinematographer	Q3295350	Martin Bodin		
+Q10551819	cast	Q445497	Hasse Ekman		
+Q10647809	director	Q445497	Hasse Ekman		
+Q10647809	writer	Q445497	Hasse Ekman		
+Q10647809	composer	Q453176	Erik Nordgren		
+Q10647809	cinematographer	Q3295350	Martin Bodin		
+Q10647809	editor	Q3357033	Oscar Rosander		
+Q10647809	cast	Q445497	Hasse Ekman		
+Q10647809	cast	Q792878	Bengt Ekerot		
+Q10647809	cast	Q915840	Sigge Fürst		
+Q10647809	cast	Q4988589	Lena Granhagen		
+Q428617	director	Q7546	Ingmar Bergman		
+Q428617	writer	Q7546	Ingmar Bergman		
+Q428617	composer	Q453176	Erik Nordgren		
+Q428617	cinematographer	Q965067	Gunnar Fischer		
+Q428617	editor	Q3357033	Oscar Rosander		
+Q428617	cast	Q264921	Allan Edwall		
+Q428617	cast	Q1090835	ヤール・キューレ		
+Q428617	cast	Q4933952	Kristina Adolphson		
+Q428617	cast	Q433799	Gertrud Fridh		
+Q428617	cast	Q524529	Gunnar Björnstrand		
+Q428617	cast	Q3359397	Sture Lagerwall		
+Q428617	cast	Q608755	Stig Järrel		
+Q428617	cast	Q5807863	Lenn Hjortzberg		
+Q428617	cast	Q1067321	Nils Poppe		
+Q428617	cast	Q5619122	Gunnar Sjöberg		
+Q428617	cast	Q4286136	Georg Funkquist		
+Q428617	cast	Q234921	Bibi Andersson		
+Q428617	award		Greta		
+Q753141	director	Q7546	Ingmar Bergman		
+Q753141	writer	Q4003080	Ulla Isaksson		
+Q753141	composer	Q453176	Erik Nordgren		
+Q753141	producer	Q2837702	Allan Ekelund		
+Q753141	cinematographer	Q312290	Sven Nykvist		
+Q753141	editor	Q3357033	Oscar Rosander		
+Q753141	cast	Q4830260	Axel Düberg	Thin Herdsman	
+Q753141	cast	Q4940833	Gudrun Brost	Frida	
+Q753141	cast	Q4347097	Birgitta Valberg	Märeta	
+Q753141	cast	Q259911	Gunnel Lindblom	Ingeri	
+Q753141	cast	Q4972722	Birgitta Pettersson	Karin	
+Q753141	cast	Q5960786	Oscar Ljung	Simon	
+Q753141	cast	Q4568952	Tor Isedal	Mute Herdsman	
+Q753141	cast	Q264921	Allan Edwall	Beggar	
+Q753141	cast	Q203215	Max von Sydow	Töre	
+Q753141	award		Academy Award for Best International Feature Film		
+Q753141	subject		revenge		
+Q14955367	director	Q16633338	Lennart Olsson		
+Q14955367	writer	Q4355683	Kjell Grede		
+Q14955367	composer	Q453176	Erik Nordgren		
+Q14955367	cinematographer	Q5578298	Lars Björne		
+Q14955367	editor	Q3357033	Oscar Rosander		
+Q14955367	cast	Q518995	Alf Kjellin		
+Q14955367	cast	Q5952923	Lars Lind		
+Q14955367	cast	Q234921	Bibi Andersson		
+Q10683001	director	Q445497	Hasse Ekman		
+Q10683001	writer	Q6085711	Jan-Olof Rydqvist		
+Q10683001	composer	Q6256552	Rune Öfwerman		
+Q10683001	cinematographer	Q3295350	Martin Bodin		
+Q10683001	editor	Q6230493	Lennart Wallén		
+Q10683001	cast	Q5799656	Gunnar Hellström		
+Q10435563	director	Q5541648	Hans Abramson		
+Q10435563	writer	Q3377149	Olle Mattson		
+Q10435563	composer	Q2443762	Torbjörn Iwan Lundquist		
+Q10435563	producer	Q2837702	Allan Ekelund		
+Q10435563	cinematographer	Q5578298	Lars Björne		
+Q10435563	editor	Q6230493	Lennart Wallén		
+Q10435563	cast	Q1282679	Eddie Axberg		
+Q587498	director	Q7546	Ingmar Bergman		
+Q587498	writer	Q7546	Ingmar Bergman		
+Q587498	composer	Q1339	Johann Sebastian Bach		
+Q587498	producer	Q2837702	Allan Ekelund		
+Q587498	cinematographer	Q312290	Sven Nykvist		
+Q587498	cast	Q4409105	Lars Passgård		
+Q587498	cast	Q234923	Harriet Andersson		
+Q587498	cast	Q524529	Gunnar Björnstrand		
+Q587498	cast	Q203215	Max von Sydow		
+Q587498	award		Academy Award for Best International Feature Film		
+Q587498	subject		God in Christianity		
+Q587498	subject		doubt		
+Q587498	subject		delusion		
+Q587498	subject		emptiness		
+Q587498	subject		healing		
+Q587498	subject		faith		
+Q587498	subject		abandonment		
+Q587498	subject		artistic creation		
+Q7859064	director	Q360844	Anthony Asquith		
+Q7859064	writer	Q360844	Anthony Asquith		
+Q7859064	composer	Q453176	Erik Nordgren		
+Q7859064	cinematographer	Q965067	Gunnar Fischer		
+Q7859064	editor	Q3357033	Oscar Rosander		
+Q7859064	cast	Q656035	Michael Crawford		
+Q7859064	cast	Q4973757	Isa Quensel		
+Q7859064	cast	Q862624	ビル・トラヴァース		
+Q7859064	cast	Q373862	Torsten Lilliecrona		
+Q7859064	cast	Q3342667	Noel Willman		
+Q7859064	cast	Q518995	Alf Kjellin		
+Q7859064	cast	Q930691	Peter Vaughan		
+Q7859064	cast	Q2416040	Dorothy Alison		
+Q7859064	cast	Q4707671	Alan Rothwell		
+Q7859064	cast	Q269872	Virginia McKenna		
+Q7859064	cast	Q4949721	Mona Geijer-Falkner		
+Q7859064	cast	Q5261969	Derek Francis		
+Q7859064	cast	Q3437831	Georg Skarstedt		
+Q7859064	cast	Q298908	Patrick McGoohan		
+Q10448345	director	Q5799656	Gunnar Hellström		
+Q10448345	writer	Q4980239	Birgitta Stenberg		
+Q10448345	composer	Q2443762	Torbjörn Iwan Lundquist		
+Q10448345	cinematographer	Q3295350	Martin Bodin		
+Q10448345	editor	Q10719948	Wic' Kjellin		
+Q10448345	cast	Q4938573	Lillevi Bergman		
+Q31892475	director	Q6088358	Gardar Sahlberg		
+Q10635807	director	Q449514	Bo Widerberg		
+Q10635807	writer	Q449514	Bo Widerberg		
+Q10635807	cinematographer	Q381876	Jan Troell		
+Q10635807	editor	Q449514	Bo Widerberg		
+Q10571231	director	Q5541648	Hans Abramson		
+Q10571231	writer	Q5572432	Lars Berglund		
+Q10571231	composer	Q389066	Jan Johansson		
+Q10571231	cinematographer	Q5578298	Lars Björne		
+Q10571231	editor	Q6230493	Lennart Wallén		
+Q10571231	cast	Q234923	Harriet Andersson		
+Q10585620	director	Q445497	Hasse Ekman		
+Q10585620	writer	Q6180619	Bo Sköld		
+Q10585620	cinematographer	Q965067	Gunnar Fischer		
+Q10585620	editor	Q10443013	Carl-Olov Skeppstedt		
+Q10585620	cast	Q524529	Gunnar Björnstrand		
+Q10585620	cast	Q3195278	Kent Andersson		
+Q10585620	cast	Q4569460	Ingvar Hirdwall		
+Q10585620	cast	Q259911	Gunnel Lindblom		
+Q10585620	cast	Q518995	Alf Kjellin		
+Q10585620	cast	Q4346227	Sif Ruud		
+Q464651	director	Q7546	Ingmar Bergman		
+Q464651	writer	Q7546	Ingmar Bergman		
+Q464651	composer	Q6067994	Ivan Renliden		
+Q464651	producer	Q2837702	Allan Ekelund		
+Q464651	cinematographer	Q312290	Sven Nykvist		
+Q464651	editor	Q42066737	Ulla Ryghe		
+Q464651	cast	Q233732	Ingrid Thulin		
+Q464651	cast	Q259911	Gunnel Lindblom		
+Q464651	cast	Q5827113	Håkan Jahnberg		
+Q464651	cast	Q803934	Birger Malmsten		
+Q464651	cast	Q5958638	Jörgen Lindström		
+Q464651	cast	Q2059304	Eduardo Gutiérrez		
+Q464651	subject		death		
+Q464651	subject		God in Christianity		
+Q464651	subject		disease		
+Q464651	subject		doubt		
+Q464651	subject		anxiety		
+Q464651	subject		loneliness		
+Q464651	subject		agnosticism		
+Q464651	subject		psychological repression		
+Q464651	subject		emptiness		
+Q464651	subject		sexual desire		
+Q464651	subject		sibling relationship		
+Q464651	subject		certainty		
+Q464651	subject		faith		
+Q464651	subject		suffering		
+Q464651	subject		abandonment		
+Q4638734	director	Q116760	Vilgot Sjöman		
+Q4638734	writer	Q116760	Vilgot Sjöman		
+Q4638734	writer	Q5780541	Lars Görling		
+Q4638734	composer	Q1505766	Georg Riedel		
+Q4638734	cinematographer	Q965067	Gunnar Fischer		
+Q4638734	cast	Q4935902	Mona Andersson		
+Q4638734	cast	Q5952923	Lars Lind		
+Q4638734	cast	Q1415206	Åke Grönberg		
+Q4638734	cast	Q124463	Willem Fricke		
+Q4638734	cast	Q5388619	Erik Hell		
+Q4638734	cast	Q255967	Lena Nyman		
+Q10725588	director	Q445497	Hasse Ekman		
+Q10725588	writer	Q445497	Hasse Ekman		
+Q10725588	composer	Q1505766	Georg Riedel		
+Q10725588	cinematographer	Q3295350	Martin Bodin		
+Q10725588	editor	Q10443013	Carl-Olov Skeppstedt		
+Q10725588	cast	Q925877	Gösta Ekman		
+Q10725588	cast	Q3437831	Georg Skarstedt		
+Q10725588	cast	Q524529	Gunnar Björnstrand		
+Q10725588	cast	Q5039760	Carl-Gustaf Lindstedt		
+Q10725588	cast	Q6209810	Olof Thunberg		
+Q10546530	director	Q116760	Vilgot Sjöman		
+Q10546530	writer	Q4003080	Ulla Isaksson		
+Q10546530	composer	Q453176	Erik Nordgren		
+Q10546530	cinematographer	Q312290	Sven Nykvist		
+Q10546530	cast	Q548189	Tina Hedström		
+Q10546530	cast	Q4965370	Ellika Mann		
+Q10546530	cast	Q524529	Gunnar Björnstrand		
+Q10546530	cast	Q43326	Lars-Erik Berenett		
+Q10546530	cast	Q4964356	Fillie Lyckow		
+Q10546530	cast	Q455358	Gunn Wållgren		
+Q18331	director	Q1384021	Tage Danielsson		
+Q18331	writer	Q1033656	Hans Alfredson		
+Q18331	writer	Q1384021	Tage Danielsson		
+Q18331	composer	Q5863146	Lars Färnlöf		
+Q18331	cinematographer	Q3295350	Martin Bodin		
+Q18331	editor	Q10443013	Carl-Olov Skeppstedt		
+Q18331	cast	Q925877	Gösta Ekman		
+Q18331	cast	Q254527	Monica Zetterlund		
+Q18331	cast	Q915702	Lars Ekborg		
+Q18331	cast	Q1033656	Hans Alfredson		
+Q18331	cast	Q2904476	Birgitta Andersson		
+Q18331	cast	Q3075079	Katie Rolfsen		
+Q18331	cast	Q1384021	Tage Danielsson		
+Q10698059	director	Q5780541	Lars Görling		
+Q10698059	writer	Q5780541	Lars Görling		
+Q10698059	composer	Q5597693	Ulf Björlin		
+Q10698059	cinematographer	Q5578298	Lars Björne		
+Q10698059	cast	Q1360483	Sven-Bertil Taube		
+Q10532079	director	Q1774766	Jan Halldoff		
+Q10532079	composer	Q5863146	Lars Färnlöf		
+Q10541423	director	Q5950863	Lars-Erik Liedholm		
+Q10541423	writer	Q6201787	Bengt Söderbergh		
+Q10541423	composer	Q3656719	Maurice Karkoff		
+Q10541423	cinematographer	Q965067	Gunnar Fischer		
+Q10541423	cast	Q2850193	Anita Wall		
+Q10541423	cast	Q234921	Bibi Andersson		
+Q6945679	director	Q692841	Arne Sucksdorff		
+Q6945679	writer	Q692841	Arne Sucksdorff		
+Q6945679	cinematographer	Q692841	Arne Sucksdorff		
+Q6945679	cast	Q6213212	Joel Barcellos		
+Q6945679	cast	Q224834	Flávio Migliaccio		
+Q6945679	cast	Q264921	Allan Edwall		
+Q6945679	cast	Q2032241	Dirce Migliaccio		
+Q6945679	award		Greta		
+Q10600874	director	Q1774766	Jan Halldoff		
+Q10600874	writer	Q249792	Stig Claesson		
+Q10600874	cast	Q925877	Gösta Ekman		
+Q228937	director	Q55391	Robert Bresson		
+Q228937	writer	Q55391	Robert Bresson		
+Q228937	composer	Q553384	Jean Wiener		
+Q228937	producer	Q3276488	Mag Bodard		
+Q228937	cinematographer	Q1521771	Ghislain Cloquet		
+Q228937	cast	Q203674	ピエール・クロソウスキー		
+Q228937	cast	Q3426710	René Pascal		
+Q228937	cast	Q447507	Anne Wiazemsky		
+Q228937	subject		injustice		
+Q228937	subject		human condition		
+Q228937	subject		cruelty		
+Q228937	subject		inhumanity		
+Q228937	subject		selfishness		
+Q5736773	director	Q381876	Jan Troell		
+Q5736773	writer	Q4683793	Bengt Forslund		
+Q5736773	composer	Q453176	Erik Nordgren		
+Q5736773	producer	Q4683793	Bengt Forslund		
+Q5736773	cinematographer	Q381876	Jan Troell		
+Q5736773	editor	Q381876	Jan Troell		
+Q5736773	cast	Q3139319	Holger Löwenadler		
+Q5736773	cast	Q3547910	Ulf Palme		
+Q5736773	cast	Q203215	Max von Sydow		
+Q5736773	cast	Q5946532	Birger Lensander		
+Q5736773	cast	Q1282679	Eddie Axberg		
+Q5736773	cast	Q6019095	Börje Nyberg		
+Q5736773	cast	Q264921	Allan Edwall		
+Q5736773	cast	Q5957571	Jan Erik Lindqvist		
+Q5736773	cast	Q4940833	Gudrun Brost		
+Q5736773	cast	Q524529	Gunnar Björnstrand		
+Q5736773	cast	Q4934701	Ulla Akselson		
+Q10608095	director	Q5562919	Torbjörn Axelman		
+Q10608095	writer	Q5562919	Torbjörn Axelman		
+Q10608095	composer	Q453176	Erik Nordgren		
+Q10608095	cinematographer	Q965067	Gunnar Fischer		
+Q10608095	editor	Q10443013	Carl-Olov Skeppstedt		
+Q10608095	cast	Q368539	Sven Tumba		
+Q695255	director	Q7546	Ingmar Bergman		
+Q695255	writer	Q7546	Ingmar Bergman		
+Q695255	composer	Q4107873	Lars Johan Werle		
+Q695255	producer	Q7546	Ingmar Bergman		
+Q695255	cinematographer	Q312290	Sven Nykvist		
+Q695255	editor	Q42066737	Ulla Ryghe		
+Q695255	costume_designer	Q2070709	Max Goldstein		
+Q695255	cast	Q191064	Liv Ullmann		
+Q695255	cast	Q234921	Bibi Andersson		
+Q695255	cast	Q1799576	Margaretha Krook		
+Q695255	cast	Q524529	Gunnar Björnstrand		
+Q10671718	director	Q5736739	Lars Forsberg		
+Q10671718	writer	Q5736739	Lars Forsberg		
+Q10671718	producer	Q4683793	Bengt Forslund		
+Q10671718	cinematographer	Q965067	Gunnar Fischer		
+Q10671718	editor	Q5629293	Ingemar Ejve		
+Q10671718	cast	Q4982811	Kerstin Tidelius		
+Q10671718	cast	Q6240860	Hans Wigren		
+Q14955383	director	Q1774766	Jan Halldoff		
+Q14955383	writer	Q249792	Stig Claesson		
+Q14955383	cast	Q3427935	Per Myrberg		
+Q6544529	director	Q1774766	Jan Halldoff		
+Q6544529	writer	Q249792	Stig Claesson		
+Q6544529	writer	Q1774766	Jan Halldoff		
+Q6544529	cinematographer	Q5731672	Peter Fischer		
+Q6544529	editor	Q10719948	Wic' Kjellin		
+Q6544529	cast	Q4982112	Inger Taube		
+Q6544529	cast	Q5609161	Leif Claesson		
+Q6544529	cast	Q4570285	Keve Hjelm		
+Q6544529	cast	Q792878	Bengt Ekerot		
+Q10608138	director	Q1774766	Jan Halldoff		
+Q10608138	writer	Q249792	Stig Claesson		
+Q10608138	composer	Q5125020	Claes af Geijerstam		
+Q10608138	cinematographer	Q965067	Gunnar Fischer		
+Q10608138	cast	Q4946160	Monica Ekman		
+Q222633	director	Q7546	Ingmar Bergman		
+Q222633	director	Q116760	Vilgot Sjöman		
+Q222633	director	Q982339	Jörn Donner		
+Q222633	director	Q1033656	Hans Alfredson		
+Q222633	director	Q1365463	Gustaf Molander		
+Q222633	director	Q1384021	Tage Danielsson		
+Q222633	director	Q5541648	Hans Abramson		
+Q222633	director	Q5559472	Arne Arnbom		
+Q222633	director	Q5780541	Lars Görling		
+Q222633	writer	Q7546	Ingmar Bergman		
+Q222633	writer	Q9711	Honoré de Balzac		
+Q222633	writer	Q116760	Vilgot Sjöman		
+Q222633	writer	Q321344	Erland Josephson		
+Q222633	writer	Q982339	Jörn Donner		
+Q222633	writer	Q1033656	Hans Alfredson		
+Q222633	writer	Q1365463	Gustaf Molander		
+Q222633	writer	Q1384021	Tage Danielsson		
+Q222633	writer	Q5541648	Hans Abramson		
+Q222633	writer	Q5780541	Lars Görling		
+Q222633	composer	Q1893049	Bo Nilsson		
+Q222633	cinematographer	Q7546	Ingmar Bergman		
+Q222633	cinematographer	Q965067	Gunnar Fischer		
+Q222633	cast	Q4940840	Gunnel Broström		
+Q222633	cast	Q524529	Gunnar Björnstrand		
+Q222633	cast	Q1360483	Sven-Bertil Taube		
+Q222633	cast	Q4988589	Lena Granhagen		
+Q222633	cast	Q233951	Birgit Nilsson		
+Q222633	cast	Q438786	Käbi Laretei		
+Q222633	cast	Q43247	Ingrid Bergman		
+Q222633	cast	Q5541648	Hans Abramson		
+Q222633	cast	Q7546	Ingmar Bergman		
+Q222633	cast	Q234923	Harriet Andersson		
+Q222633	cast	Q915702	Lars Ekborg		
+Q222633	cast	Q1033656	Hans Alfredson		
+Q222633	cast	Q3013752	Daniel Bergman		
+Q222633	cast	Q756765	Inga Landgré		
+Q18238361	director	Q692645	Arne Mattsson		
+Q18238361	cinematographer	Q5578298	Lars Björne		
+Q18238361	editor	Q10443013	Carl-Olov Skeppstedt		
+Q18238361	cast	Q5388619	Erik Hell		
+Q18238361	cast	Q259911	Gunnel Lindblom		
+Q918111	director	Q7546	Ingmar Bergman		
+Q918111	writer	Q7546	Ingmar Bergman		
+Q918111	composer	Q1339	Johann Sebastian Bach		
+Q918111	cinematographer	Q312290	Sven Nykvist		
+Q918111	cast	Q5535803	Georg Rydeberg		
+Q918111	cast	Q5807863	Lenn Hjortzberg		
+Q918111	cast	Q505590	Folke Sundquist		
+Q918111	cast	Q203215	Max von Sydow		
+Q918111	cast	Q275537	Mona Seilitz		
+Q918111	cast	Q6083491	Mikael Rundquist		
+Q918111	cast	Q433799	Gertrud Fridh		
+Q918111	cast	Q233732	Ingrid Thulin		
+Q918111	cast	Q191064	Liv Ullmann		
+Q918111	cast	Q264921	Allan Edwall		
+Q918111	cast	Q446668	Naima Wifstrand		
+Q918111	cast	Q321344	Erland Josephson		
+Q18244154	director	Q925877	Gösta Ekman		
+Q18244154	director	Q1033656	Hans Alfredson		
+Q18244154	director	Q1384021	Tage Danielsson		
+Q18244154	writer	Q1033656	Hans Alfredson		
+Q18244154	writer	Q1384021	Tage Danielsson		
+Q18244154	cast	Q1384021	Tage Danielsson		
+Q18244154	cast	Q1033656	Hans Alfredson		
+Q18244154	cast	Q925877	Gösta Ekman		
+Q10571891	director	Q3372677	Robert Broberg		
+Q10571891	writer	Q3372677	Robert Broberg		
+Q7111668	director	Q369512	Per Åhlin		
+Q7111668	director	Q1384021	Tage Danielsson		
+Q7111668	writer	Q1033656	Hans Alfredson		
+Q7111668	writer	Q1384021	Tage Danielsson		
+Q7111668	composer	Q1554794	Gunnar Svensson		
+Q7111668	cast	Q1384021	Tage Danielsson		
+Q7111668	cast	Q5570057	Rolf Bengtsson		
+Q7111668	cast	Q3427861	Ernst Günther		
+Q7111668	cast	Q1033656	Hans Alfredson		
+Q7111668	cast	Q925877	Gösta Ekman		
+Q784465	director	Q7546	Ingmar Bergman		
+Q784465	writer	Q7546	Ingmar Bergman		
+Q784465	composer	Q1339	Johann Sebastian Bach		
+Q784465	cinematographer	Q312290	Sven Nykvist		
+Q784465	editor	Q42066737	Ulla Ryghe		
+Q784465	costume_designer	Q1912590	Max Goldstein		
+Q784465	cast	Q4586988	Ingvar Kjellson		
+Q784465	cast	Q4347097	Birgitta Valberg		
+Q784465	cast	Q116760	Vilgot Sjöman		
+Q784465	cast	Q792876	Bengt Eklund		
+Q784465	cast	Q4988695	Agda Helin		
+Q784465	cast	Q4830260	Axel Düberg		
+Q784465	cast	Q203215	Max von Sydow		
+Q784465	cast	Q5958794	Rune Lindström		
+Q784465	cast	Q4991090	Brita Öberg		
+Q784465	cast	Q915840	Sigge Fürst		
+Q784465	cast	Q6196586	Frank Sundström		
+Q784465	cast	Q1033656	Hans Alfredson		
+Q784465	cast	Q3437831	Georg Skarstedt		
+Q784465	cast	Q4965370	Ellika Mann		
+Q784465	cast	Q6044556	Willy Peters		
+Q784465	cast	Q247626	Barbro Hiort af Ornäs		
+Q784465	cast	Q1792524	Gösta Prüzelius		
+Q784465	cast	Q524529	Gunnar Björnstrand		
+Q784465	cast	Q175910	Lars Amble		
+Q784465	cast	Q5737456	Karl-Axel Forssberg		
+Q784465	cast	Q5572456	Per Berglund		
+Q784465	cast	Q191064	Liv Ullmann		
+Q1448857	director	Q1774766	Jan Halldoff		
+Q1448857	writer	Q5585213	Bengt Bratt		
+Q1448857	composer	Q5863146	Lars Färnlöf		
+Q1448857	producer	Q4683793	Bengt Forslund		
+Q1448857	cast	Q4946168	Agneta Ekmanner		
+Q1448857	cast	Q756765	Inga Landgré		
+Q1448857	cast	Q5951886	Leif Liljeroth		
+Q1448857	cast	Q4354811	Per Ragnar		
+Q1448857	cast	Q5958925	Åke Lindström		
+Q1448857	cast	Q175910	Lars Amble		
+Q7774496	director	Q449514	Bo Widerberg		
+Q7774496	director	Q703513	Roy Andersson		
+Q532112	director	Q381876	Jan Troell		
+Q532112	writer	Q381876	Jan Troell		
+Q532112	writer	Q4683793	Bengt Forslund		
+Q532112	producer	Q4683793	Bengt Forslund		
+Q532112	cinematographer	Q381876	Jan Troell		
+Q532112	editor	Q381876	Jan Troell		
+Q532112	cast	Q4766191	Ann-Marie Gyllenspetz		
+Q532112	cast	Q792878	Bengt Ekerot		
+Q532112	cast	Q523542	Catti Edfeldt		
+Q532112	cast	Q6179079	Per Sjöstrand		
+Q532112	cast	Q254793	Per Oscarsson		
+Q532112	cast	Q4982811	Kerstin Tidelius		
+Q532112	award		Golden Bear		
+Q1633378	director	Q449514	Bo Widerberg		
+Q1633378	writer	Q449514	Bo Widerberg		
+Q1633378	composer	Q4030	Duke Ellington		
+Q1633378	composer	Q5590576	Wilfred Burns		
+Q1633378	composer	Q5967074	Karl Lundin		
+Q1633378	cinematographer	Q515579	Jörgen Persson		
+Q1633378	editor	Q449514	Bo Widerberg		
+Q1633378	cast	Q5573436	Jonas Bergström		
+Q1633378	cast	Q5958223	Pierre Lindstedt		
+Q1633378	cast	Q3357878	Peter Schildt		
+Q1633378	cast	Q237766	Anita Björk		
+Q1633378	cast	Q4982811	Kerstin Tidelius		
+Q1633378	cast	Q5796139	Roland Hedlund		
+Q1633378	cast	Q5573531	Olof Bergström		
+Q1633378	award		Cannes Film Festival Grand Prix		
+Q1633378	subject		Ådalen shootings		
+Q18244590	director	Q3499423	Stig Björkman		
+Q18244590	writer	Q3499423	Stig Björkman		
+Q18244590	cast	Q2035589	Sven Wollter		
+Q338305	director	Q599315	Olle Hellbom		
+Q338305	writer	Q55767	Astrid Lindgren		
+Q338305	composer	Q389066	Jan Johansson		
+Q338305	composer	Q1079081	Christian Bruhn		
+Q338305	composer	Q1781976	Konrad Elfers		
+Q338305	producer	Q6014455	Olle Nordemar		
+Q338305	cinematographer	Q5596809	Kalle Bergholm		
+Q338305	editor	Q111135728	Jan Persson		
+Q338305	production_designer	Q6180149	Nisse Skoog		
+Q338305	cast	Q2706843	Fredrik Ohlsson		
+Q338305	cast	Q5784706	Staffan Hallerstam		
+Q338305	cast	Q706560	Beppe Wolgers		
+Q338305	cast	Q2054509	Göthe Grefbo		
+Q338305	cast	Q78400	Margot Trooger		
+Q338305	cast	Q45357	Hans Clarin		
+Q338305	cast	Q4990276	Öllegård Wellton		
+Q338305	cast	Q71083	Paul Esser		
+Q338305	cast	Q235108	Inger Nilsson	Pippi Longstocking	
+Q338305	cast	Q448209	Maria Persson	Annika Settergren	
+Q338305	cast	Q1369502	Pär Sundberg	Tommy Settergren	

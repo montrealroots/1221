@@ -31,6 +31,7 @@ import { CITIES, COUNTRIES } from '../content/geography';
 import { INDUSTRY_EVENTS, lookupEvent } from '../content/events-data';
 import { occurrence, occurrenceTitle, type IndustryEventSpec, type Occurrence } from '../content/events';
 import { AWARD_RULES, LEGACY_BODY_NAMES, NOT_CONTESTED } from '../content/award-bodies';
+import { STUDIOS } from '../content/studios';
 import { classifyCategory, isTelevisionKind, PERSON_KINDS, VOTER_PROFILES, type BodyRules, type CategoryKind, type VoterProfile } from '../content/award-rules';
 import { FESTIVAL_RULES, LEGACY_FESTIVAL_NAMES, classifyPrize, type FestivalRules, type PrizeKind } from '../content/festival-rules';
 
@@ -287,6 +288,7 @@ export function registerAwards(sim: Simulation): void {
         s.income(payee, offer.amount, `${offer.buyerName} — acquisition of ${project.title}`, 'royalty', { refType: 'project', refId: project.id });
       }
       project.distributorName = offer.buyerName;
+      if (offer.studioId) project.studioId = offer.studioId;
       project.totalRevenue += offer.amount;
 
       s.resolveDecision('festival_submission', submission.id);
@@ -1216,8 +1218,11 @@ function holdScreening(sim: Simulation, submissionId: Id): void {
     const offerCount = clamp(Math.round(remap(heat, 45, 95, 0, 3)), 0, 3);
     for (let i = 0; i < offerCount; i++) {
       const amount = Math.round(project.totalCost * remap(heat, 45, 100, 0.35, 2.1) * rng.float(0.7, 1.3));
+      const buyers = STUDIOS.all().filter((s) => s.distributes && (s.type === 'specialty' || s.type === 'streamer' || s.type === 'mini_major') && s.formats.includes(project.format as never));
+      const buyer = buyers.length > 0 ? rng.pick(buyers) : undefined;
       submission.acquisitionOffers.push({
-        buyerName: rng.pick(['Northgate Films', 'Brightline Pictures', 'Tessellate', 'Sable & Fox', 'Crestwood Studios']),
+        buyerName: buyer?.name ?? 'An independent distributor',
+        studioId: buyer?.id,
         amount: Math.max(150_000_00, amount),
         territories: rng.chance(0.5) ? ['worldwide'] : ['domestic'],
         at: sim.now,

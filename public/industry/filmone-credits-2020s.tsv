@@ -1,0 +1,103 @@
+qid	role	personQid	name	character	ordinal
+Q96376093	director	Q111687353	Samuel Olatunji		
+Q96376093	producer	Q137794827	Wale Muraina		
+Q96376093	cast	Q19610277	Odunlade Jonathan Adekola		
+Q96376093	cast	Q19666719	Toyin Abraham		
+Q96376093	cast	Q5100347	Chinedu Ikedieze		
+Q96376093	cast	Q32540999	Enyinna Nwigwe		
+Q96376093	cast	Q5102607	Chiwetalu Agu		
+Q96376093	cast	Q18638587	Kehinde Bankole		
+Q96376093	cast	Q19665783	Afeez Oyetoro		
+Q96376093	cast	Q61645204	Bimbo Ademoye		
+Q96376093	cast	Q16733519	Ali Nuhu		
+Q104834984	director	Q107304237	Kayode Kasum		
+Q104834984	producer	Q19666719	Toyin Abraham		
+Q104834984	cast	Q19610277	Odunlade Jonathan Adekola		
+Q104834984	cast	Q19666719	Toyin Abraham	Yetunde	
+Q104834984	cast	Q19957068	Stephanie Coker		
+Q104834984	cast	Q69948669	Mercy Eke		
+Q104834984	cast	Q16234484	Davido		
+Q104834984	cast	Q92951317	MC Lively		
+Q104834984	cast	Q97064578	Broda Shaggi	Kas	
+Q104834984	cast	Q94417427	Mabel Makun		
+Q104834984	cast	Q56249823	Timini Egbuson	Ochuko	
+Q96405854	director	Q24565090	Robert O. Peters		
+Q96405854	producer	Q5097343	Chika Ike		
+Q96405854	cast	Q7067552	Nse Ikpe Etim		
+Q96405854	cast	Q20740574	Eucharia Anunobi		
+Q96405854	cast	Q19665783	Afeez Oyetoro		
+Q96405854	cast	Q29609257	Rachael Okonkwo		
+Q96405854	cast	Q56222340	Omotunde Adebowale David		
+Q96405854	cast	Q19666719	Toyin Abraham		
+Q96405854	cast	Q3393911	Nkem Owoh		
+Q96405854	cast	Q5097343	Chika Ike		
+Q107619010	director	Q52274376	Niyi Akinmolayan		
+Q107619010	writer	Q16218372	Bovi		
+Q107619010	producer	Q113345427	Rukeme David Eruotor		
+Q107619010	producer	Q113345433	Micheal Djaba		
+Q107619010	cast	Q29473046	Theresa Edem		
+Q107619010	cast	Q16218372	Bovi		
+Q107619010	cast	Q19664725	Racheal Oniga		
+Q107619010	cast	Q3393911	Nkem Owoh		
+Q107619010	cast	Q99975935	Sophie Alakija		
+Q107619010	cast	Q28606905	Charles Inojie		
+Q107619010	cast	Q61058851	Zubby Michael		
+Q107619010	cast	Q28839827	Amaechi Muonagor		
+Q107619010	cast	Q112033146	Akah Nnani		
+Q107619010	cast	Q28445294	Francis Sule		
+Q107619010	cast	Q55639319	Binta Ayo Mogaji		
+Q107619010	cast	Q105763656	Venita Akpofure		
+Q107619010	cast	Q77359055	Ada Ameh		
+Q116148045	director	Q97483699	Adebayo Tijani		
+Q116148045	writer	Q19666719	Toyin Abraham		
+Q116148045	producer	Q19666719	Toyin Abraham		
+Q116148045	editor	Q113299039	Steve Sodiya		
+Q116148045	cast	Q26132151	Olumide Oworu		
+Q116148045	cast	Q60194603	Kunle Remi		
+Q116148045	cast	Q108910292	Debbie Shokoya		
+Q116148045	cast	Q113458976	Deborah Shokoya		
+Q116148045	cast	Q19666719	Toyin Abraham		
+Q116148045	cast	Q19609602	Antar Laniyan		
+Q116148045	cast	Q17612552	Bimbo Akintola		
+Q116148045	cast	Q113334567	Tomiwa Tegbe		
+Q116148045	cast	Q59304518	Lilian Afegbai		
+Q116148045	cast	Q117149438	Eso Dike		
+Q130753795	director	Q19610277	Odunlade Jonathan Adekola		
+Q130753795	writer	Q19610277	Odunlade Jonathan Adekola		
+Q130753795	producer	Q19610277	Odunlade Jonathan Adekola		
+Q130753795	cast	Q17859810	Jide Kosoko		
+Q130753795	cast	Q24279412	Shaffy Bello		
+Q130753795	cast	Q19282080	Femi Adebayo		
+Q130753795	cast	Q19610277	Odunlade Jonathan Adekola		
+Q130753795	cast	Q69374356	Eniola Ajao		
+Q130753795	cast	Q21649422	Dele Odule		
+Q130753795	cast	Q19667327	Muyiwa Ademola		
+Q131583971	director	Q97483699	Adebayo Tijani		
+Q131583971	writer	Q19666719	Toyin Abraham		
+Q131583971	composer	Q19666719	Toyin Abraham		
+Q131583971	producer	Q19666719	Toyin Abraham		
+Q131583971	cast	Q63230221	Ronke Odusanya		
+Q131583971	cast	Q130477535	Lizzy Jay		
+Q131583971	cast	Q19666719	Toyin Abraham		
+Q131583971	cast	Q61645204	Bimbo Ademoye		
+Q131583971	cast	Q113312904	Kolawole Oluwasegun Ajeyemi		
+Q131583971	cast	Q19610277	Odunlade Jonathan Adekola		
+Q131583971	cast	Q120749887	Yhemolee		
+Q131583971	cast	Q15458186	Ini Edo		
+Q131450476	director	Q5509254	Funke Akindele-Bello		
+Q131450476	writer	Q5509254	Funke Akindele-Bello		
+Q131450476	cast	Q55085048	Bisola Aiyeola		
+Q131450476	cast	Q56871058	Patience Ozokwor		
+Q131450476	cast	Q108573207	Stan Nze		
+Q131450476	cast	Q126000357	Layi Wasabi		
+Q131450476	cast	Q70206869	Tobi Makinde		
+Q131450476	cast	Q27451833	Nancy Isime		
+Q131450476	cast	Q69877604	Lateef Adedimeji		
+Q131450476	cast	Q38734656	Juliana Olayode		
+Q131450476	cast	Q56222340	Omotunde Adebowale David		
+Q131450476	cast	Q21535528	Falz		
+Q131450476	cast	Q80189007	Destiny Etiko		
+Q131450476	cast	Q13638782	Jackie Appiah		
+Q131450476	cast	Q5509254	Funke Akindele-Bello		
+Q131450476	cast	Q113264860	Chimezie Imo		
+Q131450476	cast	Q63117832	Omowumi Dada		

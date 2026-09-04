@@ -1,0 +1,530 @@
+qid	role	personQid	name	character	ordinal
+Q2143831	director	Q1254876	エリック・ボーリング		
+Q2143831	writer	Q343362	Henning Bahs		
+Q2143831	writer	Q1254876	エリック・ボーリング		
+Q2143831	composer	Q712364	Bent Fabric		
+Q2143831	producer	Q3676033	ボー・クリステンセン		
+Q2143831	cinematographer	Q6321578	Jørgen Skov		
+Q2143831	editor	Q22256457	Ole Steen Nielsen		
+Q2143831	cast	Q984561	Ole Monty		
+Q2143831	cast	Q12315537	Hans Rostrup		
+Q2143831	cast	Q514615	Поуль Бундгаард		
+Q2143831	cast	Q712472	Поуль Райхардт		
+Q2143831	cast	Q2059958	保罗·哈根		
+Q2143831	cast	Q38052404	Kirsten Sloth		
+Q2143831	cast	Q951902	예스페르 랑베르		
+Q2143831	cast	Q1359505	Ernst Meyer		
+Q2143831	cast	Q2483406	Пол Томсен		
+Q2143831	cast	Q4919914	Q4919914		
+Q2143831	cast	Q2106732	Poul Glargaard		
+Q2143831	cast	Q6423777	Q6423777		
+Q2143831	cast	Q926390	Ejner Federspiel		
+Q2143831	cast	Q117470290	Kjeld Noack		
+Q2143831	cast	Q4575975	엘세 마리 한센		
+Q2143831	cast	Q5810678	Valsø Holm		
+Q2143831	cast	Q5619134	Q5619134		
+Q2143831	cast	Q327088	普雷本·卡斯		
+Q2143831	cast	Q788060	Q788060		
+Q2143831	cast	Q4968359	Q4968359		
+Q2143831	cast	Q470023	Helle Virkner		
+Q2143831	cast	Q7825875	Torkil Lauritzen		
+Q2143831	cast	Q12316069	ヘレ・ヘルツ		
+Q2143831	cast	Q35985690	Jytte Elga Olga		
+Q2143831	cast	Q5619073	Gunnar Lemvigh		
+Q2143831	cast	Q38052355	Svend Erik Jensen		
+Q2143831	cast	Q5553217	Гота Андерсен		
+Q2143831	cast	Q35986077	André Sallyman		
+Q2143831	cast	Q15379136	Carl Duering		
+Q2143831	cast	Q12315456	Hans Kristensen		
+Q2143831	cast	Q35984091	Lise Henningsen		
+Q2143831	cast	Q326884	Петер Стеен		
+Q2143831	cast	Q4994578	Caja Heimann		
+Q2143831	cast	Q282693	Tutte Lemkow		
+Q805127	director	Q1254876	エリック・ボーリング		
+Q805127	writer	Q343362	Henning Bahs		
+Q805127	writer	Q371107	Leif Panduro		
+Q805127	writer	Q1254876	エリック・ボーリング		
+Q805127	composer	Q712364	Bent Fabric		
+Q805127	producer	Q3676033	ボー・クリステンセン		
+Q805127	cinematographer	Q6321578	Jørgen Skov		
+Q805127	editor	Q22256457	Ole Steen Nielsen		
+Q805127	cast	Q1277411	Willy Rathnov		
+Q805127	cast	Q443401	키르스텐 발테르		
+Q805127	cast	Q5568137	Jørgen Beck		
+Q805127	cast	Q4919914	Q4919914		
+Q805127	cast	Q712472	Поуль Райхардт		
+Q805127	cast	Q470023	Helle Virkner		
+Q805127	cast	Q514615	Поуль Бундгаард		
+Q805127	cast	Q788060	Q788060		
+Q805127	cast	Q450608	Q450608		
+Q805127	cast	Q3065407	Helge Kjærulff-Schmidt		
+Q805127	cast	Q2908395	Бодил Удсен		
+Q805127	cast	Q712347	Jes Holtsø		
+Q805127	cast	Q12321960	Q12321960		
+Q805127	cast	Q751735	Лис Лёверт		
+Q805127	cast	Q35984091	Lise Henningsen		
+Q805127	cast	Q5553217	Гота Андерсен		
+Q805127	cast	Q12311403	Q12311403		
+Q805127	cast	Q6423777	Q6423777		
+Q805127	cast	Q562944	Freddy Koch		
+Q805127	cast	Q12309570	Einar Nørby		
+Q805127	cast	Q5394313	Erni Arneson		
+Q805127	cast	Q441910	Артур Дженсен		
+Q805127	cast	Q289924	ギタ・ナービュ		
+Q805127	cast	Q1733080	Карл Стеггер		
+Q805127	cast	Q5619134	Q5619134		
+Q805127	cast	Q3398251	Asbjørn Andersen		
+Q805127	cast	Q2059958	保罗·哈根		
+Q805127	cast	Q1359505	Ernst Meyer		
+Q625345	director	Q1254876	エリック・ボーリング		
+Q625345	writer	Q343362	Henning Bahs		
+Q625345	writer	Q1254876	エリック・ボーリング		
+Q625345	composer	Q712364	Bent Fabric		
+Q625345	producer	Q3676033	ボー・クリステンセン		
+Q625345	cinematographer	Q6321578	Jørgen Skov		
+Q625345	editor	Q22256457	Ole Steen Nielsen		
+Q625345	production_designer	Q343362	Henning Bahs		
+Q625345	cast	Q712347	Jes Holtsø		
+Q625345	cast	Q443401	키르스텐 발테르		
+Q625345	cast	Q1277411	Willy Rathnov		
+Q625345	cast	Q1345002	モアテン・グルンヴァルド		
+Q625345	cast	Q514615	Поуль Бундгаард		
+Q625345	cast	Q327088	普雷本·卡斯		
+Q625345	cast	Q788060	Q788060		
+Q625345	cast	Q326884	Петер Стеен		
+Q625345	cast	Q1733080	Карл Стеггер		
+Q625345	cast	Q39141024	Tina Reynold		
+Q625345	cast	Q512847	Бенни Хансен		
+Q625345	cast	Q470023	Helle Virkner		
+Q625345	cast	Q5619134	Q5619134		
+Q625345	cast	Q1359505	Ernst Meyer		
+Q1215294	director	Q1254876	エリック・ボーリング		
+Q1215294	writer	Q343362	Henning Bahs		
+Q1215294	writer	Q1254876	エリック・ボーリング		
+Q1215294	composer	Q712364	Bent Fabric		
+Q1215294	producer	Q3676033	ボー・クリステンセン		
+Q1215294	cinematographer	Q6321578	Jørgen Skov		
+Q1215294	editor	Q22256457	Ole Steen Nielsen		
+Q1215294	production_designer	Q343362	Henning Bahs		
+Q1215294	cast	Q117805854	Annika Persson		
+Q1215294	cast	Q5553217	Гота Андерсен		
+Q1215294	cast	Q2106732	Poul Glargaard		
+Q1215294	cast	Q7559019	Solveig Sundborg		
+Q1215294	cast	Q5716602	Henrik Wiehe		
+Q1215294	cast	Q12338585	Søren Strømberg		
+Q1215294	cast	Q718323	Q718323		
+Q1215294	cast	Q1098803	Q1098803		
+Q1215294	cast	Q1345002	モアテン・グルンヴァルド		
+Q1215294	cast	Q1687317	옌스 오킹		
+Q1215294	cast	Q1359505	Ernst Meyer		
+Q1215294	cast	Q712472	Поуль Райхардт		
+Q1215294	cast	Q12342858	Søren Rode		
+Q1215294	cast	Q42302632	Kai Kilian		
+Q1215294	cast	Q12309389	Эдвард Флеминг		
+Q1215294	cast	Q514615	Поуль Бундгаард		
+Q1215294	cast	Q3398701	Bertel Lauring		
+Q1215294	cast	Q12313814	Герт Бастиан		
+Q1215294	cast	Q4890349	Bent Vejlby		
+Q1215294	cast	Q5568137	Jørgen Beck		
+Q1215294	cast	Q1733080	Карл Стеггер		
+Q1215294	cast	Q788060	Q788060		
+Q1215294	cast	Q4919931	Q4919931		
+Q1215294	cast	Q712347	Jes Holtsø		
+Q1215294	cast	Q12317099	Q12317099		
+Q1215294	cast	Q3398251	Asbjørn Andersen		
+Q1215294	cast	Q12303207	Bent Thalmay		
+Q1215294	cast	Q2483406	Пол Томсен		
+Q1215294	cast	Q5005234	Børge Møller Grimstrup		
+Q1215294	cast	Q441910	Артур Дженсен		
+Q1215294	cast	Q6423777	Q6423777		
+Q1215294	cast	Q443401	키르스텐 발테르		
+Q1215294	cast	Q470023	Helle Virkner		
+Q1215294	cast	Q6232271	Бент Варбург		
+Q1215294	cast	Q951902	예스페르 랑베르		
+Q1215294	cast	Q450608	Q450608		
+Q1215281	director	Q1254876	エリック・ボーリング		
+Q1215281	writer	Q343362	Henning Bahs		
+Q1215281	writer	Q1254876	エリック・ボーリング		
+Q1215281	composer	Q712364	Bent Fabric		
+Q1215281	producer	Q3676033	ボー・クリステンセン		
+Q1215281	cinematographer	Q6321578	Jørgen Skov		
+Q1215281	editor	Q22256457	Ole Steen Nielsen		
+Q1215281	production_designer	Q343362	Henning Bahs		
+Q1215281	cast	Q1359505	Ernst Meyer		
+Q1215281	cast	Q443401	키르스텐 발테르		
+Q1215281	cast	Q712347	Jes Holtsø		
+Q1215281	cast	Q441910	Артур Дженсен		
+Q1215281	cast	Q12317099	Q12317099		
+Q1215281	cast	Q1687317	옌스 오킹		
+Q1215281	cast	Q926390	Ejner Federspiel		
+Q1215281	cast	Q470023	Helle Virkner		
+Q1215281	cast	Q5553217	Гота Андерсен		
+Q1215281	cast	Q6423777	Q6423777		
+Q1215281	cast	Q951902	예스페르 랑베르		
+Q1215281	cast	Q792378	阿克塞尔·斯特罗		
+Q1215281	cast	Q512847	Бенни Хансен		
+Q1215281	cast	Q788060	Q788060		
+Q1215281	cast	Q12342858	Søren Rode		
+Q1215281	cast	Q12317079	홀게르 페르포르트		
+Q1215281	cast	Q514615	Поуль Бундгаард		
+Q1215281	cast	Q2106732	Poul Glargaard		
+Q1215281	cast	Q443688	Birgitte Federspiel		
+Q1215281	cast	Q718323	Q718323		
+Q1215281	cast	Q327088	普雷本·卡斯		
+Q1215281	cast	Q7559019	Solveig Sundborg		
+Q1215281	cast	Q1098725	Claus Nissen		
+Q1215281	cast	Q1345002	モアテン・グルンヴァルド		
+Q1215281	cast	Q6321595	Jørgen Weel		
+Q1215281	cast	Q762475	Per Pallesen		
+Q10713912	director	Q5736749	Lars Lennart Forsberg		
+Q10713912	writer	Q5736749	Lars Lennart Forsberg		
+Q10713912	composer	Q905203	Pugh Rogefeldt		
+Q10713912	cast	Q264921	Allan Edwall		
+Q1192010	director	Q1254876	エリック・ボーリング		
+Q1192010	writer	Q343362	Henning Bahs		
+Q1192010	writer	Q1254876	エリック・ボーリング		
+Q1192010	composer	Q712364	Bent Fabric		
+Q1192010	producer	Q3676033	ボー・クリステンセン		
+Q1192010	cinematographer	Q4241285	Henning Kristiansen		
+Q1192010	cinematographer	Q22255873	Peter Klitgaard		
+Q1192010	editor	Q22256457	Ole Steen Nielsen		
+Q1192010	production_designer	Q343362	Henning Bahs		
+Q1192010	cast	Q2483406	Пол Томсен		
+Q1192010	cast	Q6423777	Q6423777		
+Q1192010	cast	Q346535	Carsten Byhring		
+Q1192010	cast	Q5810678	Valsø Holm		
+Q1192010	cast	Q562944	Freddy Koch		
+Q1192010	cast	Q253959	올레 에른스트		
+Q1192010	cast	Q1733080	Карл Стеггер		
+Q1192010	cast	Q7559019	Solveig Sundborg		
+Q1192010	cast	Q450608	Q450608		
+Q1192010	cast	Q2106732	Poul Glargaard		
+Q1192010	cast	Q11957338	Alf Andersen		
+Q1192010	cast	Q3676033	ボー・クリステンセン		
+Q1192010	cast	Q12317079	홀게르 페르포르트		
+Q1192010	cast	Q1345002	モアテン・グルンヴァルド		
+Q1192010	cast	Q792378	阿克塞尔·斯特罗		
+Q1192010	cast	Q19388015	Alf Andersen		
+Q1192010	cast	Q788060	Q788060		
+Q1192010	cast	Q716993	Arve Opsahl		
+Q1192010	cast	Q718323	Q718323		
+Q1192010	cast	Q12317099	Q12317099		
+Q1192010	cast	Q441562	릴리 베이딩		
+Q1192010	cast	Q322378	Sverre Holm		
+Q1192010	cast	Q712347	Jes Holtsø		
+Q1192010	cast	Q443401	키르스텐 발테르		
+Q1192010	cast	Q514615	Поуль Бундгаард		
+Q625341	director	Q1254876	エリック・ボーリング		
+Q625341	writer	Q343362	Henning Bahs		
+Q625341	writer	Q1254876	エリック・ボーリング		
+Q625341	composer	Q712364	Bent Fabric		
+Q625341	producer	Q3676033	ボー・クリステンセン		
+Q625341	cinematographer	Q19615611	Claus Loof		
+Q625341	editor	Q22256457	Ole Steen Nielsen		
+Q625341	production_designer	Q343362	Henning Bahs		
+Q625341	cast	Q253959	올레 에른스트		
+Q625341	cast	Q718323	Q718323		
+Q625341	cast	Q2106702	Pouel Kern		
+Q625341	cast	Q35984275	Ole Dupont		
+Q625341	cast	Q514615	Поуль Бундгаард		
+Q625341	cast	Q5568137	Jørgen Beck		
+Q625341	cast	Q11957338	Alf Andersen		
+Q625341	cast	Q5394313	Erni Arneson		
+Q625341	cast	Q712347	Jes Holtsø		
+Q625341	cast	Q12338581	Søren Steen		
+Q625341	cast	Q792378	阿克塞尔·斯特罗		
+Q625341	cast	Q6423777	Q6423777		
+Q625341	cast	Q12311403	Q12311403		
+Q625341	cast	Q19388015	Alf Andersen		
+Q625341	cast	Q2059958	保罗·哈根		
+Q625341	cast	Q3065407	Helge Kjærulff-Schmidt		
+Q625341	cast	Q788060	Q788060		
+Q625341	cast	Q2483406	Пол Томсен		
+Q625341	cast	Q712472	Поуль Райхардт		
+Q625341	cast	Q3398701	Bertel Lauring		
+Q625341	cast	Q443401	키르스텐 발테르		
+Q625341	cast	Q326903	Йон Хан-Петерсен		
+Q625341	cast	Q1359505	Ernst Meyer		
+Q625341	cast	Q12321960	Q12321960		
+Q625341	cast	Q1345002	モアテン・グルンヴァルド		
+Q61061048	director	Q1254876	エリック・ボーリング		
+Q61061048	writer	Q343362	Henning Bahs		
+Q61061048	writer	Q1254876	エリック・ボーリング		
+Q61061048	composer	Q712364	Bent Fabric		
+Q61061048	cast	Q718323	Q718323		
+Q61061048	cast	Q1345002	モアテン・グルンヴァルド		
+Q61061048	cast	Q441910	Артур Дженсен		
+Q61061048	cast	Q514615	Поуль Бундгаард	Kjell Jensen	
+Q61061048	cast	Q788060	Q788060	Egon Olsen	
+Q12321532	director	Q5331535	에베 랑베르		
+Q12321532	writer	Q343362	Henning Bahs		
+Q12321532	writer	Q1254876	エリック・ボーリング		
+Q12321532	writer	Q75507336	Sven Aagaard		
+Q12321532	cinematographer	Q19615611	Claus Loof		
+Q12321532	editor	Q29152756	Ole Askman		
+Q12321532	cast	Q3676033	ボー・クリステンセン		
+Q12321532	cast	Q12323846	Lars Høy		
+Q12321532	cast	Q792378	阿克塞尔·斯特罗		
+Q12321532	cast	Q4575957	艾琳·雷默尔		
+Q12321532	cast	Q35985231	Anna-Louise Lefèvre		
+Q12321532	cast	Q1733080	Карл Стеггер		
+Q12321532	cast	Q1624551	ホルガー・ユール・ハンセン		
+Q12321532	cast	Q1806285	Lars Lohmann		
+Q12321532	cast	Q3398251	Asbjørn Andersen		
+Q12321532	cast	Q5341401	Edvin Tiemroth		
+Q12321532	cast	Q35984275	Ole Dupont		
+Q12321532	cast	Q5371276	Emil Hass Christensen		
+Q12321532	cast	Q1415249	Vivi Rau		
+Q12321532	cast	Q3373738	Юэн Билле		
+Q12321532	cast	Q450608	Q450608		
+Q12321532	cast	Q2734382	杰斯·英格斯利夫		
+Q12321532	cast	Q1785294	Бастер Ларсен		
+Q12321532	cast	Q441291	엘렌 빈테르		
+Q12321532	cast	Q2756306	セーレン・スパニング		
+Q12321532	cast	Q12318155	Ilse Rande		
+Q12321532	cast	Q12339677	Tove Wisborg		
+Q12321532	cast	Q1345002	モアテン・グルンヴァルド		
+Q12321532	cast	Q470023	Helle Virkner		
+Q12321532	cast	Q4887166	Bendt Rothe		
+Q12321532	cast	Q2033737	セーレン・ピルマーク		
+Q12321532	cast	Q326884	Петер Стеен		
+Q12321532	cast	Q4941010	Биргитте Бруун		
+Q12321532	cast	Q7879100	Улла Йессен		
+Q12321532	cast	Q12311851	Q12311851		
+Q7751899	director	Q12339535	Tom Hedegaard		
+Q7751899	writer	Q343362	Henning Bahs		
+Q7751899	writer	Q1254876	エリック・ボーリング		
+Q7751899	writer	Q12339535	Tom Hedegaard		
+Q7751899	producer	Q3676033	ボー・クリステンセン		
+Q7751899	cinematographer	Q19615611	Claus Loof		
+Q7751899	editor	Q22256457	Ole Steen Nielsen		
+Q7751899	cast	Q1785299	リリー・ブロベール		
+Q7751899	cast	Q1733080	Карл Стеггер		
+Q7751899	cast	Q926390	Ejner Federspiel		
+Q7751899	cast	Q4994720	オーレ・ソールトフト		
+Q7751899	cast	Q712472	Поуль Райхардт		
+Q7751899	cast	Q441910	Артур Дженсен		
+Q7751899	cast	Q5810678	Valsø Holm		
+Q7751899	cast	Q12306307	クリストファ・ブロ		
+Q7751899	cast	Q2483406	Пол Томсен		
+Q7751899	cast	Q4919914	Q4919914		
+Q7751899	cast	Q5341401	Edvin Tiemroth		
+Q7751899	cast	Q4575957	艾琳·雷默尔		
+Q7751899	cast	Q1776777	딕 케이소		
+Q7751899	cast	Q12305747	Chili Turèll		
+Q7751899	cast	Q788060	Q788060		
+Q7751899	cast	Q5568137	Jørgen Beck		
+Q7751899	cast	Q1359505	Ernst Meyer		
+Q7751899	cast	Q3427638	Elga Olga Svendsen		
+Q7751899	cast	Q1687317	옌스 오킹		
+Q7751899	cast	Q5134044	Else Petersen		
+Q7751899	cast	Q12321981	Q12321981		
+Q7751899	cast	Q5715043	ヘニング・パルナー		
+Q1215282	director	Q1254876	エリック・ボーリング		
+Q1215282	writer	Q343362	Henning Bahs		
+Q1215282	writer	Q1254876	エリック・ボーリング		
+Q1215282	composer	Q712364	Bent Fabric		
+Q1215282	producer	Q3676033	ボー・クリステンセン		
+Q1215282	cinematographer	Q4241285	Henning Kristiansen		
+Q1215282	editor	Q22256457	Ole Steen Nielsen		
+Q1215282	production_designer	Q343362	Henning Bahs		
+Q1215282	production_designer	Q5821074	Peter Høimark		
+Q1215282	cast	Q4575975	엘세 마리 한센		
+Q1215282	cast	Q1359505	Ernst Meyer		
+Q1215282	cast	Q926390	Ejner Federspiel		
+Q1215282	cast	Q562944	Freddy Koch		
+Q1215282	cast	Q450608	Q450608		
+Q1215282	cast	Q514615	Поуль Бундгаард		
+Q1215282	cast	Q1785294	Бастер Ларсен		
+Q1215282	cast	Q12342858	Søren Rode		
+Q1215282	cast	Q35984275	Ole Dupont		
+Q1215282	cast	Q792378	阿克塞尔·斯特罗		
+Q1215282	cast	Q3398251	Asbjørn Andersen		
+Q1215282	cast	Q435310	레네 브뢴둠		
+Q1215282	cast	Q38471664	Togani		
+Q1215282	cast	Q718323	Q718323		
+Q1215282	cast	Q5741469	Эрик Фредериксен		
+Q1215282	cast	Q557595	帕勒·哈尔德		
+Q1215282	cast	Q1098725	Claus Nissen		
+Q1215282	cast	Q1733080	Карл Стеггер		
+Q1215282	cast	Q2347440	ベント・マイディング		
+Q1215282	cast	Q38052375	Finn Bredahl		
+Q1215282	cast	Q2483406	Пол Томсен		
+Q1215282	cast	Q788060	Q788060		
+Q1215282	cast	Q443401	키르스텐 발테르		
+Q1215282	cast	Q1345002	モアテン・グルンヴァルド		
+Q1215282	cast	Q253959	올레 에른스트		
+Q1215282	cast	Q12309389	Эдвард Флеминг		
+Q1215282	cast	Q712347	Jes Holtsø		
+Q12335917	director	Q5492753	Franz Ernst		
+Q12335917	director	Q12339535	Tom Hedegaard		
+Q12335917	writer	Q490802	Anders Bodelsen		
+Q12335917	writer	Q5492753	Franz Ernst		
+Q12335917	producer	Q39141266	Steen Herdel		
+Q12335917	cinematographer	Q487069	Mikael Salomon		
+Q12335917	editor	Q22256457	Ole Steen Nielsen		
+Q12335917	production_designer	Q37491950	Søren Skjær		
+Q12335917	cast	Q38471500	Kristin Bjarnadóttir		
+Q12335917	cast	Q12337939	Svend Gehrs		
+Q12335917	cast	Q22085962	Charlotte Neergaard		
+Q12335917	cast	Q35985790	Ole Møllegaard		
+Q12335917	cast	Q12311560	Flemming Dyjak		
+Q12335917	cast	Q3434386	William Rosenberg		
+Q12335917	cast	Q2106732	Poul Glargaard		
+Q12335917	cast	Q2460108	Gyda Hansen		
+Q12335917	cast	Q5331535	에베 랑베르		
+Q12335917	cast	Q12316429	Henrik Petersen		
+Q12335917	cast	Q6321595	Jørgen Weel		
+Q12335917	cast	Q5715043	ヘニング・パルナー		
+Q12335917	cast	Q10995150	Cæsar		
+Q12335917	cast	Q12323706	Lane Lind		
+Q12335917	cast	Q39141450	René Erp		
+Q12335917	cast	Q3398701	Bertel Lauring		
+Q12335917	cast	Q12330120	Ole Michelsen		
+Q12335917	cast	Q39141316	Charlotte Grumme		
+Q12335917	cast	Q2106702	Pouel Kern		
+Q12335917	cast	Q75507220	Vibeke Steinthal		
+Q12335917	cast	Q4968553	Карен-Лиза Мюнстер		
+Q12335917	cast	Q35984275	Ole Dupont		
+Q12335917	cast	Q4919914	Q4919914		
+Q12335917	cast	Q7559019	Solveig Sundborg		
+Q12335917	cast	Q762475	Per Pallesen		
+Q12335917	cast	Q12324253	Lene Axelsen		
+Q12335917	cast	Q38471671	Aage Poulsen		
+Q12335917	cast	Q12317079	홀게르 페르포르트		
+Q12335917	cast	Q12318155	Ilse Rande		
+Q12335917	cast	Q1687317	옌스 오킹		
+Q12335917	cast	Q6232271	Бент Варбург		
+Q12335917	cast	Q17058211	Jørn Faurschou		
+Q12335917	cast	Q6032938	Ingolf Gabold		
+Q12335917	cast	Q1776777	딕 케이소		
+Q12335917	cast	Q326884	Петер Стеен		
+Q12335917	cast	Q42047053	Sigvard Bennetzen		
+Q12335917	cast	Q12333881	Ruddy Nyegaard		
+Q12335917	cast	Q37491086	Bo Løvetand		
+Q12335917	cast	Q1652175	Peter Ronild		
+Q12335917	cast	Q153463	Allan Simonsen		
+Q626968	director	Q1254876	エリック・ボーリング		
+Q626968	writer	Q343362	Henning Bahs		
+Q626968	writer	Q1254876	エリック・ボーリング		
+Q626968	composer	Q712364	Bent Fabric		
+Q626968	producer	Q3676033	ボー・クリステンセン		
+Q626968	cinematographer	Q19615611	Claus Loof		
+Q626968	editor	Q22256457	Ole Steen Nielsen		
+Q626968	production_designer	Q343362	Henning Bahs		
+Q626968	cast	Q19388015	Alf Andersen		
+Q626968	cast	Q3352613	Otto Leisner		
+Q626968	cast	Q514615	Поуль Бундгаард		
+Q626968	cast	Q4992324	Ole Andreasen		
+Q626968	cast	Q7559019	Solveig Sundborg		
+Q626968	cast	Q450608	Q450608		
+Q626968	cast	Q1359505	Ernst Meyer		
+Q626968	cast	Q5568137	Jørgen Beck		
+Q626968	cast	Q718323	Q718323		
+Q626968	cast	Q926390	Ejner Federspiel		
+Q626968	cast	Q12317099	Q12317099		
+Q626968	cast	Q443401	키르스텐 발테르		
+Q626968	cast	Q1098803	Q1098803		
+Q626968	cast	Q2106702	Pouel Kern		
+Q626968	cast	Q1776777	딕 케이소		
+Q626968	cast	Q12303640	Bjarne Adrian		
+Q626968	cast	Q12309389	Эдвард Флеминг		
+Q626968	cast	Q1345002	モアテン・グルンヴァルド		
+Q626968	cast	Q2483406	Пол Томсен		
+Q626968	cast	Q10297280	Magnus Magnusson		
+Q626968	cast	Q1624551	ホルガー・ユール・ハンセン		
+Q626968	cast	Q7530940	Sisse Reingaard		
+Q626968	cast	Q11957338	Alf Andersen		
+Q626968	cast	Q1733080	Карл Стеггер		
+Q626968	cast	Q2059958	保罗·哈根		
+Q626968	cast	Q2662215	Birger Jensen		
+Q626968	cast	Q5547919	Niels Alsing		
+Q626968	cast	Q12317079	홀게르 페르포르트		
+Q626968	cast	Q788060	Q788060		
+Q626968	cast	Q792378	阿克塞尔·斯特罗		
+Q626968	cast	Q12321960	Q12321960		
+Q626968	cast	Q441910	Артур Дженсен		
+Q626973	director	Q1254876	エリック・ボーリング		
+Q626973	writer	Q343362	Henning Bahs		
+Q626973	writer	Q1254876	エリック・ボーリング		
+Q626973	composer	Q712364	Bent Fabric		
+Q626973	producer	Q3676033	ボー・クリステンセン		
+Q626973	cinematographer	Q19615581	Jeppe M. Jeppesen		
+Q626973	editor	Q22256457	Ole Steen Nielsen		
+Q626973	production_designer	Q343362	Henning Bahs		
+Q626973	cast	Q1575829	Hanne Løye		
+Q626973	cast	Q12317099	Q12317099		
+Q626973	cast	Q42047103	Lisbeth Frandsen		
+Q626973	cast	Q7559019	Solveig Sundborg		
+Q626973	cast	Q514615	Поуль Бундгаард		
+Q626973	cast	Q788060	Q788060		
+Q626973	cast	Q2483406	Пол Томсен		
+Q626973	cast	Q1359505	Ernst Meyer		
+Q626973	cast	Q16063246	Ann Margrethe Schou		
+Q626973	cast	Q1345002	モアテン・グルンヴァルド		
+Q626973	cast	Q2439881	Tom McEwan		
+Q626973	cast	Q38471671	Aage Poulsen		
+Q626973	cast	Q3398701	Bertel Lauring		
+Q626973	cast	Q12317079	홀게르 페르포르트		
+Q626973	cast	Q792378	阿克塞尔·斯特罗		
+Q626973	cast	Q12321968	Q12321968		
+Q626973	cast	Q1098725	Claus Nissen		
+Q626973	cast	Q38052352	Ray Moblak		
+Q626973	cast	Q718323	Q718323		
+Q626973	cast	Q37491071	Jan Jørgensen		
+Q626973	cast	Q5715043	ヘニング・パルナー		
+Q626973	cast	Q12303640	Bjarne Adrian		
+Q626973	cast	Q253959	올레 에른스트		
+Q626973	cast	Q5371276	Emil Hass Christensen		
+Q626973	cast	Q1733080	Карл Стеггер		
+Q626973	cast	Q12309389	Эдвард Флеминг		
+Q626973	cast	Q4919914	Q4919914		
+Q626973	cast	Q12321960	Q12321960		
+Q626973	cast	Q926390	Ejner Federspiel		
+Q626973	cast	Q2662215	Birger Jensen		
+Q626973	cast	Q12331419	Perry Knudsen		
+Q626973	cast	Q450608	Q450608		
+Q626973	cast	Q2735848	Джон Мартинес		
+Q626973	cast	Q443401	키르스텐 발테르		
+Q626973	cast	Q5568137	Jørgen Beck		
+Q625514	director	Q1254876	エリック・ボーリング		
+Q625514	writer	Q343362	Henning Bahs		
+Q625514	writer	Q1254876	エリック・ボーリング		
+Q625514	composer	Q712364	Bent Fabric		
+Q625514	producer	Q3676033	ボー・クリステンセン		
+Q625514	cinematographer	Q19615611	Claus Loof		
+Q625514	editor	Q5450627	Finn Henriksen		
+Q625514	production_designer	Q343362	Henning Bahs		
+Q625514	cast	Q926390	Ejner Federspiel		
+Q625514	cast	Q1277411	Willy Rathnov		
+Q625514	cast	Q788060	Q788060		
+Q625514	cast	Q443401	키르스텐 발테르		
+Q625514	cast	Q38052461	Claus Heil		
+Q625514	cast	Q1776777	딕 케이소		
+Q625514	cast	Q450608	Q450608		
+Q625514	cast	Q435310	레네 브뢴둠		
+Q625514	cast	Q4575957	艾琳·雷默尔		
+Q625514	cast	Q284923	ヴェラ・ゲビューア		
+Q625514	cast	Q12324517	Linda Laursen		
+Q625514	cast	Q762475	Per Pallesen		
+Q625514	cast	Q1345002	モアテン・グルンヴァルド		
+Q625514	cast	Q2483406	Пол Томсен		
+Q625514	cast	Q441910	Артур Дженсен		
+Q625514	cast	Q12321968	Q12321968		
+Q625514	cast	Q5547919	Niels Alsing		
+Q625514	cast	Q12338585	Søren Strømberg		
+Q625514	cast	Q12317099	Q12317099		
+Q625514	cast	Q12309389	Эдвард Флеминг		
+Q625514	cast	Q253959	올레 에른스트		
+Q625514	cast	Q512847	Бенни Хансен		
+Q625514	cast	Q1575829	Hanne Løye		
+Q625514	cast	Q712347	Jes Holtsø		
+Q625514	cast	Q1785294	Бастер Ларсен		
+Q625514	cast	Q718323	Q718323		
+Q625514	cast	Q326903	Йон Хан-Петерсен		
+Q625514	cast	Q792378	阿克塞尔·斯特罗		
+Q625514	cast	Q7559019	Solveig Sundborg		
+Q625514	cast	Q514615	Поуль Бундгаард		
+Q625514	cast	Q12338581	Søren Steen		
+Q625514	cast	Q326884	Петер Стеен		
+Q625514	cast	Q1359505	Ernst Meyer		

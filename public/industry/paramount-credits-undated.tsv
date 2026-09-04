@@ -1,0 +1,102 @@
+qid	role	personQid	name	character	ordinal
+Q132592986	executive_producer	Q3310104	Ethan Spaulding		
+Q132592986	follows	Q18790	The Legend of Korra		
+Q132592986	follows	Q28532730	The Legend of Korra (comics)		
+Q100975104	director	Q64827163	Lars Klevberg		
+Q100975104	producer	Q275402	Sam Raimi		
+Q137176858	executive_producer	Q550381	Dick Wolf		
+Q137176858	executive_producer	Q6387679	Ken Girotti		
+Q137176858	executive_producer	Q7174946	Peter Jankowski		
+Q137176858	executive_producer	Q19665855	Nicole Perlman		
+Q137176858	executive_producer	Q105224613	Michael Weiss		
+Q137176858	cast	Q1343564	Tom Ellis	CIA Agent Colin Glass	
+Q137176858	cast	Q19946099	Nick Gehlfuss	FBI Agent Bill Goodman	
+Q137176858	cast	Q4183875	Necar Zadegan	Deputy Chief of Station Nikki Reynard	
+Q137176858	cast	Q105399212	Natalee Linez	CIA Analyst Gina Gosian	
+Q137176858	subject		Federal Bureau of Investigation		
+Q137176858	subject		Central Intelligence Agency		
+Q129934505	director	Q2499079	Rich Moore		
+Q129934505	writer	Q123754000	Kelly Younger		
+Q129934505	composer	Q1356888	Henry Jackman		
+Q129934505	producer	Q269214	John Lasseter		
+Q129934505	producer	Q5233363	David Ellison		
+Q129934505	producer	Q66086076	Dana Goldberg		
+Q129934505	producer	Q138662557	Stacey Newton		
+Q134416903	executive_producer	Q24335412	Taylor Sheridan		
+Q134416903	cast	Q1060344	Luke Grimes		
+Q136757567	director	Q8005891	William Brent Bell		
+Q136757567	cinematographer	Q15430273	Maxime Alexandre		
+Q136757567	cast	Q237053	Isabelle Fuhrman		
+Q136757567	cast	Q316622	Stephen Moyer		
+Q136757567	cast	Q2369583	Susanne Wuest		
+Q123685301	director	Q3078869	Paul Tibbitt		
+Q123685301	writer	Q47284	Robert Rodriguez		
+Q123685301	writer	Q3259437	Lorene Scafaria		
+Q123685301	composer	Q1513322	Theodore Shapiro		
+Q123685301	composer	Q17150107	Sean Douglas		
+Q123685301	composer	Q72846556	Jonathan Sadoff		
+Q123685301	producer	Q607615	David Dobkin		
+Q140673869	director	Q114415604	Parker Finn		
+Q140673869	writer	Q114415604	Parker Finn		
+Q140673869	cast	Q17380672	Margaret Qualley		
+Q140673869	cast	Q18162913	Callum Turner		
+Q140673869	cast	Q343616	Paul Dano		
+Q140673869	cast	Q95817312	Diego Calva		
+Q134954829	creator	Q6837103	Michelle King		
+Q134954829	creator	Q7346363	Robert King		
+Q65930993	director	Q18558	David Bowers		
+Q65930993	writer	Q5230469	David A. Goodman		
+Q65930993	producer	Q913003	Brian Robbins		
+Q104843483	writer	Q51336953	Geneva Robertson-Dworet		
+Q104843483	writer	Q107526916	Lindsey Anderson Beer		
+Q104843483	producer	Q188137	J. J. Abrams		
+Q104843483	creator	Q159846	Paramount Pictures		
+Q104843483	creator	Q191716	Gene Roddenberry		
+Q104843483	creator	Q798768	Bad Robot Productions		
+Q104843483	creator	Q51336953	Geneva Robertson-Dworet		
+Q104843483	follows	Q15929448	Star Trek Beyond		
+Q128898357	creator	Q432598	Alex Kurtzman		
+Q128898357	creator	Q18386329	Justin Simien		
+Q128898357	creator	Q56760687	Tawny Newsome		
+Q128898357	executive_producer	Q432598	Alex Kurtzman		
+Q128898357	executive_producer	Q7356345	Rod Roddenberry		
+Q128898357	executive_producer	Q18386329	Justin Simien		
+Q128898357	executive_producer	Q56760687	Tawny Newsome		
+Q128898357	executive_producer	Q128899060	Aaron Baiers		
+Q128898357	executive_producer	Q128901670	Trevor Roth		
+Q117350388	creator	Q127685023	Gaia Violo		
+Q117350388	executive_producer	Q432598	Alex Kurtzman		
+Q117350388	executive_producer	Q104144959	ノガ・ランダウ		
+Q117350388	cast	Q105660	Holly Hunter	Nahla Ake	
+Q117350388	cast	Q313789	Robert Picardo	Doctor	
+Q117350388	cast	Q7801308	Tig Notaro	Jett Reno	
+Q117350388	cast	Q127996	Oded Fehr	Charles Vance	
+Q117350388	cast	Q208649	Paul Giamatti	Nus Braka	
+Q117350388	cast	Q137793868	Sandro Rosta	Caleb Mir	
+Q117350388	cast	Q137793874	Karim Diané	Jay-Den Kraag	
+Q117350388	cast	Q127684962	Kerrice Brooks	Sam	
+Q117350388	cast	Q127685004	George Hawkins	Darem Reymi	
+Q117350388	cast	Q116251175	Bella Shepard	Genesis Lythe	
+Q117350388	cast	Q137793880	Zoë Steiner	Tarima Sadal	
+Q117350388	subject		Starfleet Academy		
+Q67225012	director	Q103646	Ron Howard		
+Q67225012	composer	Q318465	Abel Korzeniowski		
+Q2657071	director	Q1999598	Richard Williams		
+Q2657071	writer	Q1999598	Richard Williams		
+Q2657071	writer	Q113513229	Margaret French		
+Q2657071	composer	Q96192321	David Burman		
+Q2657071	composer	Q96192366	David Cullen		
+Q2657071	composer	Q96192403	Peter Shade		
+Q2657071	producer	Q1999598	Richard Williams		
+Q2657071	narrator	Q1403322	Felix Aylmer		
+Q22323873	producer	Q22101659	Leslie Winik		
+Q138757917	director	Q18350026	Damien Chazelle		
+Q138757917	writer	Q18350026	Damien Chazelle		
+Q138757917	cast	Q202589	Cillian Murphy		
+Q138757917	cast	Q4547	Daniel Craig		
+Q138757917	cast	Q156796	Michelle Williams		
+Q138757917	cast	Q76211470	Mia Threapleton		
+Q129933701	director	Q18921842	Don Hall		
+Q129933701	producer	Q269214	John Lasseter		
+Q129933701	producer	Q5233363	David Ellison		
+Q124295940	composer	Q21285432	Giona Ostinelli		

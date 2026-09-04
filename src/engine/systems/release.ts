@@ -35,6 +35,8 @@ const CRITIC_PUBLICATIONS = [
 // Registration
 // ---------------------------------------------------------------------------
 
+const STREAMER_REACH: Readonly<Record<string, number>> = { netflix: 300_000_000, 'amazon-mgm': 200_000_000, apple: 45_000_000 };
+
 export function registerRelease(sim: Simulation): void {
   sim.onSchedule('rel.marketing_beat', (item) => executeBeat(sim, item.payload.campaignId as Id, item.payload.index as number));
   sim.onSchedule('rel.open', (item) => openRelease(sim, item.payload.releaseId as Id));
@@ -134,7 +136,7 @@ export function registerRelease(sim: Simulation): void {
       }
 
       const distributor = p.distributorName ?? project.distributorName ?? 'Self-distributed';
-      const buyer = BUYERS.all().find((b) => b.name === distributor);
+      const buyer = (project.studioId ? BUYERS.get(project.studioId) : undefined) ?? BUYERS.all().find((b) => b.name === distributor);
 
       const maxTheaters = p.theaterCount ?? bookingFootprint(project, p.strategy, buyer?.distributionReach ?? 0.4);
 
@@ -579,8 +581,10 @@ function runStreamingWindow(sim: Simulation, releaseId: Id, week: number): void 
   const audience = project.audienceScore ?? quality;
   const awareness = campaign?.awareness ?? 30;
 
-  const buyer = BUYERS.all().find((b) => b.name === release.distributorName);
-  const subscriberBase = buyer?.type === 'streamer' ? (buyer.id === 'tessellate' ? 260_000_000 : 96_000_000) : 40_000_000;
+  const buyer = (project.studioId ? BUYERS.get(project.studioId) : undefined) ?? BUYERS.all().find((b) => b.name === release.distributorName);
+  // Reachable households by service. SLATE's estimates from the services'
+  // last published membership figures, not live numbers.
+  const subscriberBase = buyer?.type === 'streamer' ? (STREAMER_REACH[buyer.id] ?? 60_000_000) : 40_000_000;
 
   const starPower = project.castIds.reduce((s, id) => s + (sim.universe.people[id]?.reputation.publicFame ?? 0), 0) / Math.max(1, project.castIds.length);
 

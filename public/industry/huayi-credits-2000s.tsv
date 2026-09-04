@@ -1,0 +1,100 @@
+qid	role	personQid	name	character	ordinal
+Q4906329	director	Q716114	Feng Xiaogang		
+Q4906329	writer	Q716114	Feng Xiaogang		
+Q4906329	writer	Q124262148	Li Xiaoming		
+Q4906329	writer	Q124262220	Shih Kang		
+Q4906329	composer	Q3471363	San Bao		
+Q4906329	cinematographer	Q9085512	Zhang Li		
+Q4906329	editor	Q121091437	Zhou Ying		
+Q4906329	cast	Q9332229	Ying Da		
+Q4906329	cast	Q103784	Donald Sutherland		
+Q4906329	cast	Q714188	Rosamund Kwan		
+Q4906329	cast	Q270560	Paul Mazursky		
+Q4906329	cast	Q2658847	Ge You		
+Q4906329	award		Hundred Flowers Award for Best Picture		
+Q3546648	director	Q716114	Feng Xiaogang		
+Q3546648	writer	Q706370	Liu Zhenyun		
+Q3546648	composer	Q508351	Cong Su		
+Q3546648	cinematographer	Q3429304	Zhao Fei		
+Q3546648	cast	Q381074	Fan Bingbing		
+Q3546648	cast	Q2658847	Ge You		
+Q3546648	cast	Q4243707	Zhang Guoli		
+Q3546648	cast	Q510789	Xu Fan		
+Q3546648	award		Hundred Flowers Award for Best Picture		
+Q3174281	director	Q549042	He Ping		
+Q3174281	composer	Q108560	A. R. Rahman		
+Q3174281	cast	Q197471	Zhao Wei		
+Q3174281	cast	Q716069	Jiang Wen		
+Q3174281	cast	Q704233	Wang Xueqi		
+Q3174281	cast	Q1139714	Kiichi Nakai		
+Q3174281	award		Huabiao Award for Outstanding Film		
+Q716883	director	Q1856626	Lu Chuan		
+Q716883	writer	Q1856626	Lu Chuan		
+Q716883	composer	Q123474737	Loudboy		
+Q716883	cinematographer	Q55696518	Cao Yu		
+Q716883	cast	Q11321370	Tobgyal		
+Q716883	cast	Q8070255	Zhang Lei		
+Q716883	award		Golden Horse Award for Best Feature Film		
+Q716883	award		Golden Rooster Award for Best Picture		
+Q716883	award		Hong Kong Film Award for Best Asian Film		
+Q716883	award		Huabiao Award for Outstanding Film		
+Q15902629	director	Q3157531	Jacob Cheung		
+Q15902629	writer	Q3135258	Hideki Mori		
+Q15902629	writer	Q3157531	Jacob Cheung		
+Q15902629	composer	Q443712	Kenji Kawai		
+Q15902629	producer	Q704612	Huang Jianxin		
+Q15902629	cinematographer	Q11656817	Yoshitaka Sakamoto		
+Q15902629	cinematographer	Q19303440	Ardy Lam		
+Q15902629	editor	Q15895583	Kwong Chi-Leung		
+Q15902629	cast	Q851018	Wu Ma		
+Q15902629	cast	Q402179	Ahn Sung-ki		
+Q15902629	cast	Q866794	Wang Zhiwen		
+Q15902629	cast	Q381074	Fan Bingbing		
+Q15902629	cast	Q706667	Nicky Wu		
+Q15902629	cast	Q16766	Andy Lau		
+Q15902629	cast	Q153657	Choi Siwon		
+Q51757	director	Q716114	Feng Xiaogang		
+Q51757	composer	Q314176	Tan Dun		
+Q51757	producer	Q6225989	John Chong		
+Q51757	cast	Q180852	Zhang Ziyi		
+Q51757	cast	Q277193	Daniel Wu		
+Q51757	cast	Q198030	Zhou Xun		
+Q51757	cast	Q2658847	Ge You		
+Q51757	cast	Q701194	Huang Xiaoming		
+Q2652985	director	Q716114	Feng Xiaogang		
+Q2652985	writer	Q6653537	Liu Heng		
+Q2652985	composer	Q60995115	Wang Liguang		
+Q2652985	producer	Q716114	Feng Xiaogang		
+Q2652985	producer	Q6225989	John Chong		
+Q2652985	cinematographer	Q751473	Lü Yue		
+Q2652985	editor	Q6653636	Liu Miaomiao		
+Q2652985	cast	Q7967359	Wang Baoqiang		
+Q2652985	cast	Q712088	Zhang Hanyu		
+Q2652985	cast	Q18119148	Yuan Wenkang		
+Q2652985	cast	Q1140540	Deng Chao		
+Q2652985	cast	Q8986791	Liao Fan		
+Q2652985	cast	Q7801255	Tiffany Tang		
+Q2652985	cast	Q1193336	Hu Jun		
+Q2652985	award		Golden Rooster Award for Best Picture		
+Q2652985	award		Hundred Flowers Award for Best Picture		
+Q2652985	award		Huabiao Award for Outstanding Film		
+Q7750675	director	Q9048569	Teng Huatao		
+Q7750675	cast	Q381074	Fan Bingbing		
+Q7750675	cast	Q16836	Leon Lai		
+Q2602513	director	Q716114	Feng Xiaogang		
+Q2602513	writer	Q716114	Feng Xiaogang		
+Q2602513	cinematographer	Q751473	Lü Yue		
+Q2602513	cast	Q233859	Shu Qi		
+Q2602513	cast	Q2658847	Ge You		
+Q5235176	director	Q5034286	Cao Baoping		
+Q5235176	writer	Q5034286	Cao Baoping		
+Q5235176	composer	Q64814	Dou Wei		
+Q5235176	producer	Q5955907	Tsui Siu-Ming		
+Q5235176	cinematographer	Q8048465	Yang Shu		
+Q5235176	cast	Q198030	Zhou Xun		
+Q5235176	cast	Q712088	Zhang Hanyu		
+Q5235176	cast	Q1140540	Deng Chao		
+Q4912132	director	Q704291	Francis Ng		
+Q4912132	director	Q3290112	Marco Mak		
+Q4912132	cast	Q709773	Pace Wu		
+Q4912132	cast	Q561310	Liu Kang		

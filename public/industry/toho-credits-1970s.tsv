@@ -1,0 +1,537 @@
+qid	role	personQid	name	character	ordinal
+Q1634355	director	Q8006	Akira Kurosawa		
+Q1634355	writer	Q8006	Akira Kurosawa		
+Q1634355	writer	Q3107382	Shinobu Hashimoto		
+Q1634355	writer	Q3135269	Hideo Oguni		
+Q1634355	composer	Q155467	Tōru Takemitsu		
+Q1634355	producer	Q8006	Akira Kurosawa		
+Q1634355	cinematographer	Q974053	Takao Saito		
+Q1634355	cast	Q3043193	Kamatari Fujiwara		
+Q1634355	cast	Q2396232	Tatsuo Matsumura		
+Q1634355	cast	Q326517	Kunie Tanaka		
+Q1634355	cast	Q5772396	Hisashi Igawa		
+Q1634355	cast	Q3544412	Tomoko Naraoka		
+Q1634355	cast	Q3548276	Kin Sugai		
+Q1634355	cast	Q6203330	Jitsuko Yoshimura		
+Q6655623	director	Q380846	Kaneto Shindō		
+Q6655623	cast	Q3814269	Kei Satō		
+Q6655623	cast	Q6418848	Kiwako Taichi		
+Q6655623	cast	Q2483977	Nobuko Otowa		
+Q11488259	director	Q960868	Hiroshi Inagaki		
+Q11488259	writer	Q3135269	Hideo Oguni		
+Q11488259	composer	Q938538	Masaru Sato		
+Q11488259	producer	Q37001	Toshirō Mifune		
+Q11488259	cinematographer	Q6381680	Kazuo Yamada		
+Q11488259	cast	Q37001	Toshirō Mifune		
+Q11488259	cast	Q719551	Shintarō Katsu		
+Q11488259	cast	Q1322220	Yūjirō Ishihara		
+Q11488259	cast	Q873498	Ruriko Asaoka		
+Q11488259	cast	Q2604461	Yorozuya Kinnosuke		
+Q2622991	director	Q150840	Ishirō Honda		
+Q2622991	composer	Q135570	Akira Ifukube		
+Q2622991	producer	Q358702	Samuel Z. Arkoff		
+Q2622991	producer	Q652228	Tomoyuki Tanaka		
+Q2622991	cast	Q418778	Akira Kubo		
+Q2622991	cast	Q1315977	Haruo Nakajima		
+Q2622991	cast	Q1085473	Yoshio Tsuchiya		
+Q2622991	cast	Q3319	Yukiko Kobayashi		
+Q2622991	cast	Q977656	Kenji Sahara		
+Q2622991	subject		Cephalopod		
+Q11484252	director	Q11469371	Michio Yamamoto		
+Q11484252	composer	Q7333925	Riichirō Manabe		
+Q11484252	producer	Q652228	Tomoyuki Tanaka		
+Q200432	director	Q4022909	Yoshimitsu Banno		
+Q200432	writer	Q4022909	Yoshimitsu Banno		
+Q200432	composer	Q7333925	Riichirō Manabe		
+Q200432	producer	Q652228	Tomoyuki Tanaka		
+Q200432	editor	Q8056295	Yoshitami Kuroiwa		
+Q200432	cast	Q2778287	Kenpachirō Satsuma		
+Q200432	cast	Q1315977	Haruo Nakajima		
+Q200432	follows	Q1534456	All Monsters Attack		
+Q200432	followed_by	Q1444750	Godzilla vs. Gigan		
+Q200432	subject		dinosaur		
+Q11416975	director	Q11469371	Michio Yamamoto		
+Q11416975	composer	Q7333925	Riichirō Manabe		
+Q18415413	director	Q2742512	Tomu Uchida		
+Q18415413	writer	Q171601	Daisuke Itō		
+Q18415413	cast	Q2604461	Yorozuya Kinnosuke		
+Q18415413	cast	Q1321767	Rentarō Mikuni		
+Q3483810	director	Q1886953	Masahiro Shinoda		
+Q3483810	writer	Q316217	Shūsaku Endō		
+Q3483810	writer	Q1886953	Masahiro Shinoda		
+Q3483810	composer	Q155467	Tōru Takemitsu		
+Q3483810	cinematographer	Q2025121	Kazuo Miyagawa		
+Q3483810	cast	Q3067392	Shima Iwashita		
+Q3483810	cast	Q318885	Mako		
+Q3483810	cast	Q1488230	Tetsurō Tamba		
+Q3483810	cast	Q5968767	Yoshi Katō		
+Q28940891	director	Q1389817	Hideo Gosha		
+Q28940891	writer	Q1389817	Hideo Gosha		
+Q28940891	writer	Q11576445	Kei Tasaka		
+Q28940891	composer	Q938538	Masaru Sato		
+Q28940891	producer	Q11384154	Masayuki Satō		
+Q28940891	producer	Q11540872	Hideyuki Shiino		
+Q28940891	producer	Q11624213	Sanezumi Fujimoto		
+Q28940891	cinematographer	Q2017139	Kōzō Okazaki		
+Q28940891	editor	Q105734478	Michio Suwa		
+Q28940891	cast	Q7046038	Noboru Ando		
+Q28940891	cast	Q445313	Komaki Kurihara		
+Q28940891	cast	Q449621	Tatsuya Nakadai		
+Q28940891	cast	Q1488230	Tetsurō Tamba		
+Q5209118	director	Q11666353	Toshihiro Iijima		
+Q5209118	cast	Q3276455	Akiji Kobayashi		
+Q1444750	director	Q1332764	Jun Fukuda		
+Q1444750	writer	Q1074930	Shinichi Sekizawa		
+Q1444750	composer	Q135570	Akira Ifukube		
+Q1444750	producer	Q652228	Tomoyuki Tanaka		
+Q1444750	cinematographer	Q5353732	Kiyoshi Hasegawa		
+Q1444750	cast	Q11538621	Tomoko Umeda		
+Q1444750	cast	Q1315977	Haruo Nakajima		
+Q1444750	cast	Q2778287	Kenpachirō Satsuma		
+Q1444750	cast	Q11522975	Kunio Murai		
+Q1444750	cast	Q3543465	Yuriko Hishimi		
+Q1444750	follows	Q200432	Godzilla vs. Hedorah		
+Q1444750	followed_by	Q1742061	Godzilla vs. Megalon		
+Q1444750	subject		dinosaur		
+Q1444750	subject		alien invasion		
+Q3826557	director	Q3028216	Kenji Misumi		
+Q3826557	writer	Q967455	Kazuo Koike		
+Q3826557	producer	Q719551	Shintarō Katsu		
+Q3826557	cast	Q719551	Shintarō Katsu		
+Q3826557	cast	Q6455065	Kō Nishimura		
+Q3826557	cast	Q3544112	Yukiji Asaoka		
+Q3826557	cast	Q330151	Takahiro Tamura		
+Q2878023	director	Q3028216	Kenji Misumi		
+Q2878023	writer	Q967455	Kazuo Koike		
+Q2878023	producer	Q719551	Shintarō Katsu		
+Q2878023	cast	Q1381344	Tomisaburō Wakayama		
+Q2878023	cast	Q7497190	Shin Kishida		
+Q2878023	cast	Q3276455	Akiji Kobayashi		
+Q2878023	cast	Q3547959	Kayo Matsuo		
+Q2878021	director	Q2927754	Buichi Saitō		
+Q2878021	writer	Q967455	Kazuo Koike		
+Q2878021	producer	Q1381344	Tomisaburō Wakayama		
+Q2878021	cinematographer	Q2025121	Kazuo Miyagawa		
+Q2878021	cast	Q11462277	Asao Koike		
+Q2878021	cast	Q1381344	Tomisaburō Wakayama		
+Q2878018	director	Q3028216	Kenji Misumi		
+Q2878018	writer	Q967455	Kazuo Koike		
+Q2878018	producer	Q719551	Shintarō Katsu		
+Q2878018	cast	Q1381344	Tomisaburō Wakayama		
+Q2878018	cast	Q3155131	Isao Yamagata		
+Q2878018	cast	Q326335	Gō Katō		
+Q1813228	director	Q3028216	Kenji Misumi		
+Q1813228	writer	Q614514	Goseki Kojima		
+Q1813228	writer	Q967455	Kazuo Koike		
+Q1813228	producer	Q719551	Shintarō Katsu		
+Q1813228	cast	Q1381344	Tomisaburō Wakayama		
+Q1813228	cast	Q11660938	Shigeru Tsuyuguchi		
+Q1813228	cast	Q7678173	Taketoshi Naito		
+Q1813228	cast	Q944093	Fumio Watanabe		
+Q55662997	director	Q1151683	Kazuo Ikehiro		
+Q55662997	composer	Q2708421	Takeo Watanabe		
+Q55662997	cinematographer	Q2025121	Kazuo Miyagawa		
+Q55662997	cast	Q4346784	Tōru Minegishi		
+Q55662997	cast	Q1054625	Yoshio Harada		
+Q55662997	follows	Q30893947	The Trail of Blood		
+Q2564165	director	Q470779	Kinji Fukasaku		
+Q2564165	writer	Q380846	Kaneto Shindō		
+Q2564165	composer	Q1618037	Hikaru Hayashi		
+Q2564165	cast	Q1488230	Tetsurō Tamba		
+Q2564165	cast	Q143083	Sachiko Hidari		
+Q2564165	subject		World War II		
+Q3210186	director	Q5295445	Kazuo Mori		
+Q3210186	cast	Q1321767	Rentarō Mikuni		
+Q3210186	cast	Q719551	Shintarō Katsu		
+Q3210186	follows	Q14948545	Zatoichi and the One-Armed Swordsman		
+Q3210186	followed_by	Q3210184	Zatoichi in Desperation		
+Q1742061	director	Q1332764	Jun Fukuda		
+Q1742061	writer	Q1074930	Shinichi Sekizawa		
+Q1742061	writer	Q1332764	Jun Fukuda		
+Q1742061	composer	Q7333925	Riichirō Manabe		
+Q1742061	producer	Q652228	Tomoyuki Tanaka		
+Q1742061	cinematographer	Q11639820	Yuzuru Aizawa		
+Q1742061	cast	Q1486734	Robert Dunham		
+Q1742061	cast	Q11457230	Kōtarō Tomita		
+Q1742061	cast	Q11532783	Yutaka Hayashi		
+Q1742061	cast	Q2778287	Kenpachirō Satsuma		
+Q1742061	cast	Q6378082	Katsuhiko Sasaki		
+Q1742061	followed_by	Q251335	Godzilla vs. Mechagodzilla		
+Q1742061	subject		dinosaur		
+Q1742061	subject		insect		
+Q1754737	director	Q3995911	Toshiya Fujita		
+Q1754737	writer	Q844082	Kazuo Kamimura		
+Q1754737	composer	Q11482457	Masaaki Hirao		
+Q1754737	cinematographer	Q6782460	Masaki Tamura		
+Q1754737	editor	Q70510220	Osamu Inoue		
+Q1754737	cast	Q901825	Takeo Chii		
+Q1754737	cast	Q139253	Eiji Okada		
+Q1754737	cast	Q6455065	Kō Nishimura		
+Q1754737	cast	Q4700606	Akemi Negishi		
+Q1754737	cast	Q6884484	Miyoko Akaza		
+Q1754737	cast	Q175900	Meiko Kaji		
+Q1754737	cast	Q3138666	Hitoshi Takagi		
+Q1754737	followed_by	Q840296	Lady Snowblood: Love Song of Vengeance		
+Q1754737	subject		destiny		
+Q1754737	subject		vocation		
+Q1754737	subject		revenge		
+Q1277315	director	Q3028216	Kenji Misumi		
+Q1277315	writer	Q967455	Kazuo Koike		
+Q1277315	producer	Q1254877	Masanori Sanada		
+Q1277315	producer	Q1381344	Tomisaburō Wakayama		
+Q1277315	cast	Q139253	Eiji Okada		
+Q1277315	cast	Q3544106	Shingo Yamashiro		
+Q1277315	cast	Q1381344	Tomisaburō Wakayama		
+Q27961605	director	Q1886953	Masahiro Shinoda		
+Q27961605	writer	Q11470181	Nobuo Yamada		
+Q27961605	composer	Q155467	Tōru Takemitsu		
+Q27961605	cast	Q3547926	Ken'ichi Hagiwara		
+Q8881030	director	Q3482378	Shirō Moritani		
+Q8881030	writer	Q717936	Sakyo Komatsu		
+Q8881030	writer	Q3107382	Shinobu Hashimoto		
+Q8881030	composer	Q938538	Masaru Sato		
+Q8881030	producer	Q652228	Tomoyuki Tanaka		
+Q8881030	cinematographer	Q5209600	Daisaku Kimura		
+Q8881030	cast	Q1488230	Tetsurō Tamba		
+Q8881030	cast	Q720223	Andrew Hughes		
+Q8881030	cast	Q7506115	Shōgo Shimada		
+Q8881030	cast	Q3551306	Nobuo Nakamura		
+Q8881030	cast	Q1054601	Ayumi Ishida		
+Q8881030	cast	Q1315977	Haruo Nakajima		
+Q8881030	cast	Q550784	Lorne Greene		
+Q8881030	cast	Q2992739	Hiroshi Fujioka		
+Q8881030	cast	Q3067366	Keiju Kobayashi		
+Q8881030	cast	Q11429932	Isao Natsuyagi		
+Q8881030	cast	Q2476276	Hideaki Nitani		
+Q7849968	director	Q2096212	Kōichi Saitō		
+Q7849968	writer	Q2096212	Kōichi Saitō		
+Q7849968	writer	Q11364384	Takehiro Nakajima		
+Q7849968	composer	Q7677031	Chikuzan Takahashi		
+Q7849968	editor	Q7820333	Tomoyo Ōshima		
+Q7849968	cast	Q11551229	Kyōko Enami		
+Q7849968	cast	Q6455065	Kō Nishimura		
+Q7849968	cast	Q11608239	Akira Oda		
+Q7849968	cast	Q5114960	Kōjirō Hongō		
+Q7849968	cast	Q11384404	Hideo Satō		
+Q5324296	director	Q1332764	Jun Fukuda		
+Q5324296	writer	Q717936	Sakyo Komatsu		
+Q5324296	producer	Q652228	Tomoyuki Tanaka		
+Q5324296	cinematographer	Q2815117	Shōji Ueda		
+Q5324296	cast	Q139253	Eiji Okada		
+Q5324296	cast	Q3113502	Yūzō Kayama		
+Q5324296	cast	Q1381344	Tomisaburō Wakayama		
+Q5324296	cast	Q2992739	Hiroshi Fujioka		
+Q251335	director	Q1332764	Jun Fukuda		
+Q251335	writer	Q1074930	Shinichi Sekizawa		
+Q251335	writer	Q1332764	Jun Fukuda		
+Q251335	composer	Q938538	Masaru Sato		
+Q251335	producer	Q652228	Tomoyuki Tanaka		
+Q251335	cast	Q5770923	Hiroshi Koizumi		
+Q251335	cast	Q418046	Akihiko Hirata		
+Q251335	cast	Q977656	Kenji Sahara		
+Q251335	cast	Q7497190	Shin Kishida		
+Q251335	follows	Q1742061	Godzilla vs. Megalon		
+Q251335	followed_by	Q1211778	Terror of Mechagodzilla		
+Q251335	subject		dinosaur		
+Q251335	subject		mecha		
+Q251335	subject		alien invasion		
+Q3916257	director	Q3194239	Katsumi Nishikawa		
+Q3916257	cast	Q1198084	Momoe Yamaguchi		
+Q3916257	cast	Q1039595	Tomokazu Miura		
+Q840296	director	Q3995911	Toshiya Fujita		
+Q840296	cinematographer	Q3516103	Tatsuo Suzuki		
+Q840296	cinematographer	Q6782460	Masaki Tamura		
+Q840296	cast	Q7497190	Shin Kishida		
+Q840296	cast	Q1325171	Jūzō Itami		
+Q840296	cast	Q3194480	Kazuko Yoshiyuki		
+Q840296	cast	Q175900	Meiko Kaji		
+Q840296	cast	Q1054625	Yoshio Harada		
+Q840296	cast	Q10947257	Toru Abe		
+Q840296	follows	Q1754737	Lady Snowblood		
+Q2878020	director	Q11678680	Yoshiyuki Kuroda		
+Q2878020	writer	Q967455	Kazuo Koike		
+Q2878020	producer	Q1254877	Masanori Sanada		
+Q2878020	producer	Q1381344	Tomisaburō Wakayama		
+Q2878020	cast	Q1381344	Tomisaburō Wakayama		
+Q2878020	cast	Q63525	Isao Kimura		
+Q3840836	director	Q8480636	Takashi Tsuboshima		
+Q3840836	writer	Q8480828	Hiroshi Nagano		
+Q3840836	composer	Q938538	Masaru Sato		
+Q3840836	cast	Q7779167	Yūki Meguro		
+Q3840836	cast	Q7779224	Shirō Itō		
+Q3840836	cast	Q7779190	Hideko Ezaki		
+Q3840836	cast	Q326517	Kunie Tanaka		
+Q1949295	director	Q1390108	Alexander Mitta		
+Q1949295	writer	Q283859	Edvard Radzinsky		
+Q1949295	composer	Q893609	Boris Tchaikovsky		
+Q1949295	cinematographer	Q4314651	Vladimir Nakhabtsev		
+Q1949295	production_designer	Q4222850	Yuri Kladiyenko		
+Q1949295	cast	Q633916	Oleg Yefremov		
+Q1949295	cast	Q445313	Komaki Kurihara		
+Q1949295	cast	Q461085	Aleksandr Abdulov		
+Q6377202	director	Q3177199	Toshio Masuda		
+Q6377202	writer	Q11390575	Toshio Yasumi		
+Q6377202	composer	Q546592	Isao Tomita		
+Q6377202	producer	Q652228	Tomoyuki Tanaka		
+Q6377202	cast	Q1488230	Tetsurō Tamba		
+Q6377202	cast	Q8054591	Yōko Tsukasa		
+Q6377202	cast	Q3511677	Sō Yamamura		
+Q6377202	cast	Q2025956	Kyōko Kishida		
+Q6377202	cast	Q3547243	Kaoru Yumi		
+Q1634715	director	Q503696	Kei Kumai		
+Q1634715	writer	Q503696	Kei Kumai		
+Q1634715	composer	Q135570	Akira Ifukube		
+Q1634715	cast	Q5350011	Eitarō Ozawa		
+Q1634715	cast	Q445313	Komaki Kurihara		
+Q1634715	cast	Q11548176	Takiko Mizunoe		
+Q1634715	cast	Q263104	Kinuyo Tanaka		
+Q7740087	director	Q2096212	Kōichi Saitō		
+Q7740087	cast	Q175900	Meiko Kaji		
+Q7740087	cast	Q7676003	Taiji Tonoyama		
+Q7740087	cast	Q741184	Ken Takakura		
+Q7740087	cast	Q719551	Shintarō Katsu		
+Q7740087	subject		homelessness		
+Q1211778	director	Q150840	Ishirō Honda		
+Q1211778	composer	Q135570	Akira Ifukube		
+Q1211778	producer	Q652228	Tomoyuki Tanaka		
+Q1211778	producer	Q1606765	Henry G. Saperstein		
+Q1211778	editor	Q8056295	Yoshitami Kuroiwa		
+Q1211778	cast	Q5943462	Toru Kawai		
+Q1211778	cast	Q418046	Akihiko Hirata		
+Q1211778	cast	Q977656	Kenji Sahara		
+Q1211778	cast	Q11394223	Katsumasa Uchida		
+Q1211778	cast	Q3544421	Gorō Mutsumi		
+Q1211778	cast	Q11622546	Tomoko Ai		
+Q1211778	cast	Q720207	Tadao Nakamaru		
+Q1211778	cast	Q6378082	Katsuhiko Sasaki		
+Q1211778	cast	Q7688297	Tatsumi Nikamoto		
+Q1211778	follows	Q251335	Godzilla vs. Mechagodzilla		
+Q1211778	subject		dinosaur		
+Q1211778	subject		mad scientist		
+Q1211778	subject		alien invasion		
+Q4975583	director	Q660352	Tadashi Imai		
+Q4975583	cast	Q3545811	Kimiko Ikegami		
+Q4975583	cast	Q3544176	Kumiko Akiyoshi		
+Q4975583	cast	Q3194806	Keizō Kanie		
+Q4975583	cast	Q836374	Atomu Shimojō		
+Q4975583	cast	Q4388629	Hideji Ōtaki		
+Q11566072	director	Q11463742	Tsugunobu Kotani		
+Q7742393	director	Q55397	Kon Ichikawa		
+Q7742393	writer	Q55397	Kon Ichikawa		
+Q7742393	writer	Q17129170	Norio Osada		
+Q7742393	writer	Q22125037	Shin'ya Hidaka		
+Q7742393	composer	Q1442609	Yūji Ōno		
+Q7742393	producer	Q21699082	Kiichi Ichikawa		
+Q7742393	cinematographer	Q11653897	Kiyoshi Hasegawa		
+Q7742393	editor	Q11653434	Chizuko Osada		
+Q7742393	executive_producer	Q749047	Haruki Kadokawa		
+Q7742393	cast	Q2025956	Kyōko Kishida		
+Q7742393	cast	Q5350011	Eitarō Ozawa		
+Q7742393	cast	Q3312773	Mieko Takamine	Matsuko Inugami	
+Q7742393	cast	Q11478012	Akira Kawaguchi		
+Q7742393	cast	Q271854	Yōko Shimada	Tamayo Nonomiya	
+Q7742393	cast	Q1321767	Rentarō Mikuni		
+Q7742393	cast	Q11256787	Teruhiko Aoi	Sukekiyo Inugami	
+Q7742393	cast	Q6455156	Kōji Ishizaka	Kōsuke Kindaichi	
+Q7742393	award		Hochi Film Award		
+Q7742393	award		Blue Ribbon Awards		
+Q7742393	award		Mainichi Film Awards		
+Q7742393	followed_by	Q11492631	Akuma no temari-uta		
+Q1132905	director	Q3342565	Nobuhiko Obayashi		
+Q1132905	writer	Q11536601	Chiho Katsura		
+Q1132905	composer	Q11342188	Mitsuyoshi Yoshino		
+Q1132905	composer	Q11461363	Asei Kobayashi		
+Q1132905	producer	Q652228	Tomoyuki Tanaka		
+Q1132905	producer	Q3342565	Nobuhiko Obayashi		
+Q1132905	producer	Q11470741	Yorihiko Yamada		
+Q1132905	cinematographer	Q11656817	Yoshitaka Sakamoto		
+Q1132905	editor	Q11460354	Nobuo Ogawa		
+Q1132905	cast	Q3545811	Kimiko Ikegami		
+Q1132905	cast	Q4993796	Yōko Minamida		
+Q1132905	cast	Q11433873	Kumiko Ōba		
+Q1132905	cast	Q11588739	Miki Jimbo		
+Q1132905	follows	Q11501437	Genesis		
+Q1132905	followed_by	Q11195638	DEAD END		
+Q1132905	subject		haunted house		
+Q740703	director	Q3482378	Shirō Moritani		
+Q740703	writer	Q3107382	Shinobu Hashimoto		
+Q740703	writer	Q3179274	Jirō Nitta		
+Q740703	composer	Q424173	Yasushi Akutagawa		
+Q740703	cinematographer	Q5209600	Daisaku Kimura		
+Q740703	cast	Q1488230	Tetsurō Tamba		
+Q740703	cast	Q3113502	Yūzō Kayama		
+Q740703	cast	Q3544176	Kumiko Akiyoshi		
+Q740703	cast	Q445313	Komaki Kurihara		
+Q740703	cast	Q741184	Ken Takakura		
+Q740703	cast	Q1321767	Rentarō Mikuni		
+Q740703	cast	Q3548239	Kin'ya Kitaōji		
+Q740703	cast	Q7506115	Shōgo Shimada		
+Q11572175	director	Q55397	Kon Ichikawa		
+Q11572175	writer	Q55397	Kon Ichikawa		
+Q11572175	writer	Q22125037	Shin'ya Hidaka		
+Q11572175	composer	Q11577303	Shin'ichi Tanabe		
+Q11572175	producer	Q55397	Kon Ichikawa		
+Q11572175	cinematographer	Q11653897	Kiyoshi Hasegawa		
+Q11572175	editor	Q11552102	Michiko Ikeda		
+Q11572175	editor	Q11653434	Chizuko Osada		
+Q11572175	cast	Q3482160	Shin Saburi		
+Q11572175	cast	Q3049379	Eijirō Tōno		
+Q11572175	cast	Q1059833	Reiko Ohara		
+Q11572175	cast	Q8054591	Yōko Tsukasa		
+Q11572175	cast	Q11618211	Mitsuko Kusabue		
+Q11572175	cast	Q6418848	Kiwako Taichi		
+Q11572175	cast	Q11355570	Norihei Miki		
+Q11572175	cast	Q6455156	Kōji Ishizaka	Kōsuke Kindaichi	
+Q11572175	follows	Q11492631	Akuma no temari-uta		
+Q11572175	followed_by	Q11446529	Rhyme of Vengeance		
+Q1199355	director	Q379191	Alex Grasshoff		
+Q1199355	writer	Q8016407	William Overgard		
+Q1199355	composer	Q922499	Maury Laws		
+Q1199355	producer	Q1442364	Jules Bass		
+Q1199355	producer	Q1983712	Arthur Rankin Jr.		
+Q1199355	cinematographer	Q2815117	Shōji Ueda		
+Q1199355	cast	Q1277018	Richard Boone		
+Q1199355	cast	Q272007	Joan Van Ark		
+Q1199355	cast	Q2568027	Steven Keats		
+Q1199355	subject		dinosaur		
+Q2483375	director	Q1332764	Jun Fukuda		
+Q2483375	composer	Q3995894	Toshiaki Tsushima		
+Q2483375	producer	Q652228	Tomoyuki Tanaka		
+Q2483375	cast	Q1027155	Hiroshi Miyauchi		
+Q2483375	cast	Q3119101	Ryō Ikebe		
+Q2483375	cast	Q6782767	Masaya Oki		
+Q2483375	cast	Q3544421	Gorō Mutsumi		
+Q2483375	cast	Q54476590	William Ross		
+Q2483375	cast	Q418046	Akihiko Hirata		
+Q2483375	cast	Q449915	Kensaku Morita		
+Q1756220	director	Q3979357	Sōji Yoshikawa		
+Q1756220	writer	Q502455	Atsushi Yamatoya		
+Q1756220	writer	Q3979357	Sōji Yoshikawa		
+Q1756220	composer	Q1442609	Yūji Ōno		
+Q1756220	followed_by	Q608079	The Castle of Cagliostro		
+Q85766452	director	Q55397	Kon Ichikawa		
+Q85766452	writer	Q193300	Osamu Tezuka		
+Q85766452	writer	Q1377715	Shuntarō Tanikawa		
+Q85766452	composer	Q313281	Michel Legrand		
+Q85766452	composer	Q11560243	Jun Fukamachi		
+Q85766452	cast	Q6782767	Masaya Oki		
+Q85766452	cast	Q3312773	Mieko Takamine		
+Q85766452	cast	Q11618211	Mitsuko Kusabue		
+Q85766452	cast	Q11575288	Ken Tanaka		
+Q85766452	cast	Q11465400	Toshinori Omi		
+Q85766452	cast	Q449621	Tatsuya Nakadai		
+Q85766452	cast	Q11618079	Masao Kusakari		
+Q85766452	cast	Q1381344	Tomisaburō Wakayama		
+Q11446529	director	Q55397	Kon Ichikawa		
+Q11446529	writer	Q55397	Kon Ichikawa		
+Q11446529	writer	Q11536601	Chiho Katsura		
+Q11446529	composer	Q11577303	Shin'ichi Tanabe		
+Q11446529	producer	Q11575384	Osamu Tanaka		
+Q11446529	producer	Q11667859	Kazuo Baba		
+Q11446529	cinematographer	Q11653897	Kiyoshi Hasegawa		
+Q11446529	editor	Q11460354	Nobuo Ogawa		
+Q11446529	editor	Q11653434	Chizuko Osada		
+Q11446529	cast	Q8054591	Yōko Tsukasa		
+Q11446529	cast	Q3098335	Keiko Kishi		
+Q11446529	cast	Q3312773	Mieko Takamine		
+Q11446529	cast	Q4209083	Kie Nakai		
+Q11446529	cast	Q6455156	Kōji Ishizaka	Kōsuke Kindaichi	
+Q11446529	follows	Q11572175	The Devil's Island		
+Q11446529	followed_by	Q11578949	The House of Hanging		
+Q1032603	director	Q3317203	Kōsei Saitō		
+Q1032603	writer	Q11651066	Toshio Kamata		
+Q1032603	composer	Q1739054	Kentarō Haneda		
+Q1032603	producer	Q749047	Haruki Kadokawa		
+Q1032603	cast	Q710876	Jun Etō		
+Q1032603	cast	Q11553590	Kenzō Kawarasaki		
+Q1032603	cast	Q11648469	Hiromitsu Suzuki		
+Q1032603	cast	Q11229073	Raita Ryū		
+Q1032603	cast	Q3543645	Etsuko Shihomi		
+Q1032603	cast	Q11429932	Isao Natsuyagi		
+Q1032603	cast	Q1054683	Hiroko Yakushimaru		
+Q1032603	cast	Q749047	Haruki Kadokawa		
+Q1032603	cast	Q11462277	Asao Koike		
+Q1032603	cast	Q11618079	Masao Kusakari		
+Q1032603	cast	Q351732	Sonny Chiba		
+Q1032603	cast	Q3545136	Tsunehiko Watase		
+Q1032603	cast	Q705522	Hiroyuki Sanada		
+Q1032603	subject		time travel		
+Q2667089	director	Q312258	Jacques Demy		
+Q2667089	writer	Q312258	Jacques Demy		
+Q2667089	writer	Q63498128	Patricia Louisianna Knop		
+Q2667089	composer	Q313281	Michel Legrand		
+Q2667089	producer	Q11468922	Mataichirō Yamamoto		
+Q2667089	cinematographer	Q1428706	Jean Penzer		
+Q2667089	editor	Q117573883	Paul Davies		
+Q2667089	costume_designer	Q3157772	Jacqueline Moreau		
+Q2667089	production_designer	Q822398	Bernard Evein		
+Q2667089	cast	Q115735	Lambert Wilson	Cocky Soldier	
+Q2667089	cast	Q18744868	Jacques Maury	baron de Breteuil	
+Q2667089	cast	Q7024958	Nicholas Amer	M. de Chantilly	
+Q2667089	cast	Q3269518	Lyne Catherine Jeanne Chardonnet	invitée au bal noir	
+Q2667089	cast	Q601599	Martin Potter	Count de Gerodere	
+Q2667089	cast	Q18633969	Consuelo de Haviland	partenaire d'Oscar	
+Q2667089	cast	Q5163513	Constance Chapman	Nanny	
+Q2667089	cast	Q6768391	Mark Kingston	General Jarjayes	
+Q2667089	cast	Q366272	Vincent Grass	Insolent Soldier	
+Q2667089	cast	Q452612	Caroline Loeb	Adele	
+Q2667089	cast	Q3369446	Patrick Floersheim	adversaire du duel	
+Q2667089	cast	Q3142784	Huguette Faget	dame de la cour	
+Q2667089	cast	Q4762572	Angela Thorne	Rose Bertin	
+Q2667089	cast	Q111293331	Andrew Bagley	André Grandier	
+Q2667089	cast	Q88471	Christine Böhm	Marie Antoinette	
+Q2667089	cast	Q1616057	Catriona MacColl	Oscar François de Jarjayes	
+Q2667089	cast	Q5112273	Christopher Ellison	Maximilien Robespierre	
+Q2667089	cast	Q7493303	Shelagh McLeod	Rosalie La Morlière	
+Q2667089	cast	Q328944	Mike Marshall	Nicholas de la Motte	
+Q2667089	cast	Q4770443	Anouska Hempel	Jeanne de Valois-Saint-Rémy	
+Q2667089	cast	Q229920	Patsy Kensit	Oscar François de Jarjayes	
+Q2667089	cast	Q111293374	Gregory Floy	Cardinal de Rohan	
+Q2667089	cast	Q111293339	Terence Budd	Louis XVI of France	
+Q2667089	cast	Q677496	Georges Wilson	François Claude Amour, marquis de Bouillé	
+Q2667089	cast	Q111293386	Michael Petrovitch	Charles Alexandre de Calonne	
+Q2667089	cast	Q6833260	Michael Osborne	Bernard Chatelet	
+Q2667089	cast	Q5573436	Jonas Bergström	Axel von Fersen the Younger	
+Q2667089	cast	Q809100	Barry Stokes	André Grandier	
+Q2667089	cast	Q15489271	Paul Spurrier	Louis Joseph, Dauphin of France	
+Q2667089	cast	Q944097	Susan Margery-Jeaffreson-Lloyd	Yolande de Polastron	
+Q2667089	subject		French Revolution		
+Q4694843	director	Q3474009	Satsuo Yamamoto		
+Q4694843	writer	Q840752	Yoshihiro Hattori		
+Q4694843	composer	Q938538	Masaru Sato		
+Q4694843	cast	Q3545924	Yūko Kotegawa		
+Q4694843	cast	Q1137010	Mieko Harada		
+Q4694843	cast	Q1054660	Shinobu Ōtake		
+Q4694843	cast	Q1321767	Rentarō Mikuni		
+Q7676670	director	Q6381438	Kazuhiko Hasegawa		
+Q7676670	writer	Q9292586	Leonard Schrader		
+Q7676670	composer	Q11372932	Takayuki Inoue		
+Q7676670	cinematographer	Q3516103	Tatsuo Suzuki		
+Q7676670	cast	Q53834	Kiyoshi Kurosawa		
+Q7676670	cast	Q1139492	Bunta Sugawara		
+Q7676670	cast	Q11401957	Kazuo Kitamura		
+Q7676670	cast	Q3814269	Kei Satō		
+Q7676670	cast	Q1060054	Toshiyuki Nishida		
+Q7676670	cast	Q1154170	Kenji Sawada		
+Q7676670	cast	Q3545811	Kimiko Ikegami		
+Q608079	director	Q55400	Hayao Miyazaki		
+Q608079	writer	Q55400	Hayao Miyazaki		
+Q608079	composer	Q1442609	Yūji Ōno		
+Q608079	follows	Q1756220	Mystery of Mamo		
+Q608079	followed_by	Q1154751	Legend of the Gold of Babylon		
+Q11578949	director	Q55397	Kon Ichikawa		
+Q11578949	writer	Q55397	Kon Ichikawa		
+Q11578949	composer	Q11577303	Shin'ichi Tanabe		
+Q11578949	producer	Q55397	Kon Ichikawa		
+Q11578949	cinematographer	Q11653897	Kiyoshi Hasegawa		
+Q11578949	editor	Q11460354	Nobuo Ogawa		
+Q11578949	editor	Q11653434	Chizuko Osada		
+Q11578949	cast	Q443058	Junko Sakurada		
+Q11578949	cast	Q3514156	Takako Irie		
+Q11578949	cast	Q11382739	Yoshiko Sakuma		
+Q11578949	cast	Q11618079	Masao Kusakari		
+Q11578949	cast	Q11256787	Teruhiko Aoi		
+Q11578949	cast	Q11619537	Yūichi Kikuchi		
+Q11578949	cast	Q6455156	Kōji Ishizaka	Kōsuke Kindaichi	
+Q11578949	follows	Q11446529	Rhyme of Vengeance		
+Q11578949	followed_by	Q11571246	The Inugamis		

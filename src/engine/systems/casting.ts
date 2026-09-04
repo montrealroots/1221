@@ -17,6 +17,7 @@ import { buildFactors, type AuditFactor } from '../core/audit';
 import { effectiveAttributes, systemModifier } from '../domain/attributes';
 import { readiness } from './life';
 import { AGENCIES } from '../content/industry';
+import { STUDIOS, type Studio, type StudioFormat } from '../content/studios';
 import { generatePersonName, generateCharacterName } from '../content/names';
 import { CITIES, countryOfCity, primaryLanguageOf } from '../content/geography';
 import { recordCredit } from './film';
@@ -812,6 +813,32 @@ export function generateOpportunities(sim: Simulation): void {
 /** Where the rest of the world's films come from, when they are not from where you are. */
 const FILM_COUNTRIES = ['us', 'uk', 'fr', 'kr', 'jp', 'in', 'es', 'it', 'de', 'mx', 'cn', 'br', 'ca', 'au', 'hk', 'ie', 'be', 'dk', 'se', 'ar'];
 
+/**
+ * Which real studio is behind a project the world made on its own: one that
+ * makes this kind of thing at this size, preferably where the film is from.
+ * The weights are SLATE's; the studios and what they make are the record.
+ */
+export function studioForBackgroundProject(rng: ReturnType<Simulation['rng']>, project: Project): Studio | undefined {
+  const candidates = STUDIOS.all().filter((s) => s.formats.includes(project.format as StudioFormat) && !project.genres.some((g) => s.avoids.includes(g)));
+  if (candidates.length === 0) return undefined;
+  const weights = candidates.map((s) => {
+    let weight = Math.max(1, s.slateSize);
+    if (s.countryId === project.productionCountryId) weight *= 12;
+    else if (s.countryId !== 'us') weight *= 0.1;
+    else if (project.productionCountryId && project.productionCountryId !== 'us') weight *= 0.3;
+    if (project.genres.some((g) => s.wants.includes(g))) weight *= 2;
+    if (project.budget < s.budgetFloor * 0.5 || project.budget > s.budgetCeiling * 1.5) weight *= 0.2;
+    if (!s.distributes) weight *= 0.5;
+    return weight;
+  });
+  let roll = rng.float(0, weights.reduce((a, b) => a + b, 0));
+  for (let i = 0; i < candidates.length; i++) {
+    roll -= weights[i] ?? 0;
+    if (roll <= 0) return candidates[i];
+  }
+  return candidates[candidates.length - 1];
+}
+
 export function seedIndependentProject(sim: Simulation, seed: number): Project | undefined {
   const rng = sim.rng('world_project', seed, Math.floor(sim.now / MS_DAY));
   const player = sim.universe.people[sim.universe.playerId];
@@ -850,6 +877,13 @@ export function seedIndependentProject(sim: Simulation, seed: number): Project |
   }
   project.scriptQuality = rng.int(38, 88);
   project.budget = Math.round(rng.float(0.4, 6) * 5_000_000_00);
+  // Its own stream, so choosing a studio never shifts the draws the rest of
+  // the world makes: a save's trajectory is the same as before studios existed.
+  const studio = studioForBackgroundProject(sim.rng('world_studio', seed, Math.floor(sim.now / MS_DAY)), project);
+  if (studio) {
+    project.studioId = studio.id;
+    project.distributorName = studio.name;
+  }
   project.greenlitAt = sim.now;
   project.phase = 'preproduction';
   project.phaseHistory.push({ phase: 'preproduction', enteredAt: sim.now });
@@ -966,7 +1000,11 @@ function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
       project.finalQuality = backgroundQuality(sim, project, rng);
       project.criticScore = clamp(Math.round(project.finalQuality + rng.normal(0, 11)), 1, 100);
       project.audienceScore = clamp(Math.round(project.finalQuality * 0.75 + 20 + rng.normal(0, 12)), 1, 100);
-      project.distributorName = rng.pick(['Meridian Pictures', 'Harbourline Releasing', 'Ninth Street Films', 'Cormorant Distribution', 'Pale Fire Releasing']);
+      if (!project.distributorName) {
+        const distributor = studioForBackgroundProject(sim.rng('world_studio', project.id), project);
+        project.studioId = distributor?.id;
+        project.distributorName = distributor?.name ?? 'Self-distributed';
+      }
       enter('released', rng.int(60, 120));
       return;
     }

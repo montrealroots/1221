@@ -104,8 +104,18 @@ export function generateCompanyName(rng: Rng): string {
   return `${rng.pick(COMPANY_FIRST)} ${rng.pick(COMPANY_SECOND)}`;
 }
 
-export function generateProjectTitle(rng: Rng): string {
-  return rng.pick(TITLE_PATTERNS)(rng);
+/**
+ * A title nothing else has. `taken` says whether a candidate already belongs
+ * to a real film or series or to a project in this save; the generator keeps
+ * drawing from the same seeded stream until it finds a free one, so the result
+ * is deterministic and never a duplicate.
+ */
+export function generateProjectTitle(rng: Rng, taken: (title: string) => boolean = () => false): string {
+  let title = rng.pick(TITLE_PATTERNS)(rng);
+  for (let attempt = 0; attempt < 60 && taken(title); attempt++) {
+    title = attempt < 40 ? rng.pick(TITLE_PATTERNS)(rng) : `${rng.pick(TITLE_PATTERNS)(rng)}: ${rng.pick(TITLE_NOUNS)}`;
+  }
+  return title;
 }
 
 export function generateCharacterName(rng: Rng): string {

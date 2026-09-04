@@ -1,0 +1,347 @@
+qid	role	personQid	name	character	ordinal
+Q4337545	director	Q240080	Ferdinand Zecca		
+Q4337545	producer	Q240080	Ferdinand Zecca		
+Q16674525	director	Q240080	Ferdinand Zecca		
+Q1212942	director	Q240080	Ferdinand Zecca		
+Q1212942	writer	Q240080	Ferdinand Zecca		
+Q1212942	cinematographer	Q240080	Ferdinand Zecca		
+Q1212942	production_designer	Q240080	Ferdinand Zecca		
+Q1212942	cast	Q240080	Ferdinand Zecca		
+Q1212942	cast	Q3173233	Jean Liézer		
+Q4197925	director	Q240080	Ferdinand Zecca		
+Q15270484	director	Q240080	Ferdinand Zecca		
+Q15270484	producer	Q240080	Ferdinand Zecca		
+Q15270484	production_designer	Q16028648	Vincent Lorant-Heilbronn		
+Q16668840	director	Q240080	Ferdinand Zecca		
+Q8274900	director	Q240080	Ferdinand Zecca		
+Q8274900	writer	Q240080	Ferdinand Zecca		
+Q8274900	subject		alcoholism		
+Q4062213	director	Q240080	Ferdinand Zecca		
+Q20977958	director	Q965654	Segundo de Chomón		
+Q12144304	cinematographer	Q965654	Segundo de Chomón		
+Q21009164	director	Q240080	Ferdinand Zecca		
+Q12146031	director	Q240080	Ferdinand Zecca		
+Q13473013	director	Q240080	Ferdinand Zecca		
+Q13473013	cast	Q3092443	Félix Galipaux		
+Q4217233	director	Q240080	Ferdinand Zecca		
+Q15270585	director	Q240080	Ferdinand Zecca		
+Q4166021	director	Q240080	Ferdinand Zecca		
+Q4166021	director	Q3265656	Lucien Nonguet		
+Q182244	director	Q240080	Ferdinand Zecca		
+Q182244	director	Q3265656	Lucien Nonguet		
+Q182244	cast	Q15982912	Monsieur Moreau	Joseph	
+Q182244	cast	Q15982910	Madame Moreau	Mary	
+Q12147270	director	Q3265656	Lucien Nonguet		
+Q12147270	cinematographer	Q965654	Segundo de Chomón		
+Q12147270	subject		William Tell		
+Q12150767	director	Q3099177	Gaston Velle		
+Q4078527	director	Q965654	Segundo de Chomón		
+Q104875577	director	Q3099177	Gaston Velle		
+Q104875577	cinematographer	Q3099177	Gaston Velle		
+Q4204884	director	Q3265656	Lucien Nonguet		
+Q4204884	director	Q16028648	Vincent Lorant-Heilbronn		
+Q105043860	director	Q240080	Ferdinand Zecca		
+Q105043860	subject		strike		
+Q21646056	director	Q965654	Segundo de Chomón		
+Q4101841	director	Q240080	Ferdinand Zecca		
+Q4101841	director	Q3265656	Lucien Nonguet		
+Q4101841	writer	Q504	Émile Zola		
+Q16652931	director	Q3099177	Gaston Velle		
+Q16652931	cinematographer	Q965654	Segundo de Chomón		
+Q4103097	director	Q3099177	Gaston Velle		
+Q104839373	director	Q3666321	Charles-Lucien Lépine		
+Q4375056	director	Q3666321	Charles-Lucien Lépine		
+Q112166464	director	Q965654	Segundo de Chomón		
+Q4292423	director	Q240080	Ferdinand Zecca		
+Q4292423	director	Q3099177	Gaston Velle		
+Q4292423	writer	Q240080	Ferdinand Zecca		
+Q4292423	writer	Q3099177	Gaston Velle		
+Q4292423	cinematographer	Q3099177	Gaston Velle		
+Q4292423	cast	Q240080	Ferdinand Zecca		
+Q4292423	subject		alcoholism		
+Q3828316	director	Q2037315	Albert Capellani		
+Q3828316	writer	Q2037315	Albert Capellani		
+Q140251340	director	Q3265656	Lucien Nonguet		
+Q16682968	director	Q3099177	Gaston Velle		
+Q15044024	director	Q2037315	Albert Capellani		
+Q15044024	writer	Q2037315	Albert Capellani		
+Q15044024	cinematographer	Q965654	Segundo de Chomón		
+Q15044024	cast	Q59780899	Louise Willy		
+Q15044024	cast	Q518273	André Deed		
+Q15044024	cast	Q19945306	Georges Vinter		
+Q15044024	cast	Q242905	Liane de Pougy		
+Q140268689	director	http://www.wikidata.org/.well-known/genid/2d3b96e4cfc8a4791f33c5c720022bc2	http://www.wikidata.org/.well-known/genid/2d3b96e4cfc8a4791f33c5c720022bc2		
+Q140250593	director	http://www.wikidata.org/.well-known/genid/3958bb7b9331bb6b42e14d80e9d7567a	http://www.wikidata.org/.well-known/genid/3958bb7b9331bb6b42e14d80e9d7567a		
+Q140234734	director	Q3099177	Gaston Velle		
+Q140234734	cast	Q56693003	Fratellini brothers		
+Q140268721	director	Q2037315	Albert Capellani		
+Q3715143	director	Q2037315	Albert Capellani		
+Q3715143	writer	Q2847959	André Heuzé		
+Q140268779	director	Q240080	Ferdinand Zecca		
+Q140268779	director	http://www.wikidata.org/.well-known/genid/24b42e9181037f3dfdb62cbdcf85dda7	http://www.wikidata.org/.well-known/genid/24b42e9181037f3dfdb62cbdcf85dda7		
+Q112147150	director	Q3666321	Charles-Lucien Lépine		
+Q112147150	cinematographer	Q965654	Segundo de Chomón		
+Q140235084	director	http://www.wikidata.org/.well-known/genid/f1b43489967f7f2cb280deebe4d74c68	http://www.wikidata.org/.well-known/genid/f1b43489967f7f2cb280deebe4d74c68		
+Q3821317	director	Q2037315	Albert Capellani		
+Q3821317	writer	Q2847959	André Heuzé		
+Q140234985	director	Q3666321	Charles-Lucien Lépine		
+Q140268826	director	http://www.wikidata.org/.well-known/genid/0a97200dc0c7ab9650e5866a16719e0e	http://www.wikidata.org/.well-known/genid/0a97200dc0c7ab9650e5866a16719e0e		
+Q4530818	director	Q965654	Segundo de Chomón		
+Q4530818	writer	Q240080	Ferdinand Zecca		
+Q3863267	director	Q2037315	Albert Capellani		
+Q3863267	writer	Q2847959	André Heuzé		
+Q140265453	director	Q2037315	Albert Capellani		
+Q3898273	director	Q2037315	Albert Capellani		
+Q3898273	producer	Q240080	Ferdinand Zecca		
+Q3898273	subject		alcoholism		
+Q47498374	director	Q3265656	Lucien Nonguet		
+Q140235123	director	http://www.wikidata.org/.well-known/genid/f0acb14b07bf13b5749c29852ac7fece	http://www.wikidata.org/.well-known/genid/f0acb14b07bf13b5749c29852ac7fece		
+Q3828742	director	Q3666321	Charles-Lucien Lépine		
+Q3828742	writer	Q3666321	Charles-Lucien Lépine		
+Q3828742	cinematographer	Q965654	Segundo de Chomón		
+Q3828742	cast	Q518273	André Deed		
+Q3820127	director	Q2037315	Albert Capellani		
+Q3820127	writer	Q2847959	André Heuzé		
+Q3820847	director	Q2037315	Albert Capellani		
+Q3820847	writer	Q2847959	André Heuzé		
+Q3820847	cast	Q45320627	Gabriel Moreau		
+Q140251734	director	http://www.wikidata.org/.well-known/genid/e5d5a46becb823b702c8577db534da1b	http://www.wikidata.org/.well-known/genid/e5d5a46becb823b702c8577db534da1b		
+Q43227017	director	Q4134172	Georges Hatot		
+Q43227017	cinematographer	Q965654	Segundo de Chomón		
+Q3820942	director	Q2037315	Albert Capellani		
+Q3820942	writer	Q2847959	André Heuzé		
+Q3820840	director	Q2037315	Albert Capellani		
+Q3820840	writer	Q2847959	André Heuzé		
+Q12140064	director	Q240080	Ferdinand Zecca		
+Q12140064	director	Q965654	Segundo de Chomón		
+Q12140064	producer	Q704717	Charles Pathé		
+Q12140064	cinematographer	Q965654	Segundo de Chomón		
+Q18230559	director	http://www.wikidata.org/.well-known/genid/343cdc9488d748e517541515e603c05a	http://www.wikidata.org/.well-known/genid/343cdc9488d748e517541515e603c05a		
+Q18230602	director	http://www.wikidata.org/.well-known/genid/5b4df0ad6f6e321d84156f2371eaf8ec	http://www.wikidata.org/.well-known/genid/5b4df0ad6f6e321d84156f2371eaf8ec		
+Q18230614	director	http://www.wikidata.org/.well-known/genid/5c5dea89f0fc1d2672fd13b2db57eb40	http://www.wikidata.org/.well-known/genid/5c5dea89f0fc1d2672fd13b2db57eb40		
+Q2930331	director	Q951835	Louis Feuillade		
+Q2930331	cast	Q152764	Max Linder		
+Q18230622	director	http://www.wikidata.org/.well-known/genid/160e938bc2cbf55d1454b6f26519496f	http://www.wikidata.org/.well-known/genid/160e938bc2cbf55d1454b6f26519496f		
+Q18230624	director	http://www.wikidata.org/.well-known/genid/be4d691c1bfdf5007012c36bf13e5c59	http://www.wikidata.org/.well-known/genid/be4d691c1bfdf5007012c36bf13e5c59		
+Q18230627	director	http://www.wikidata.org/.well-known/genid/248b8f7c8543fa86597dba912e97f745	http://www.wikidata.org/.well-known/genid/248b8f7c8543fa86597dba912e97f745		
+Q18230630	director	http://www.wikidata.org/.well-known/genid/8ce8209c2916a3f79685ac9da4bb4d1d	http://www.wikidata.org/.well-known/genid/8ce8209c2916a3f79685ac9da4bb4d1d		
+Q18230634	director	http://www.wikidata.org/.well-known/genid/0933fabcf787c6fbf8f264054a289972	http://www.wikidata.org/.well-known/genid/0933fabcf787c6fbf8f264054a289972		
+Q87769622	director	Q965654	Segundo de Chomón		
+Q87769622	cast	Q1294016	Julienne Mathieu		
+Q3664379	director	Q2037315	Albert Capellani		
+Q3664379	writer	Q2037315	Albert Capellani		
+Q3664379	producer	Q240080	Ferdinand Zecca		
+Q3664379	cast	Q3263758	Louise Lagrange		
+Q18230655	director	http://www.wikidata.org/.well-known/genid/1f1c07e720405e3eadbbf5b9dec03dfe	http://www.wikidata.org/.well-known/genid/1f1c07e720405e3eadbbf5b9dec03dfe		
+Q18230679	director	http://www.wikidata.org/.well-known/genid/c7c2fa3646e42706e38a74f20f1696ff	http://www.wikidata.org/.well-known/genid/c7c2fa3646e42706e38a74f20f1696ff		
+Q18230798	director	http://www.wikidata.org/.well-known/genid/0a689321122427ca73a58443cdb7676f	http://www.wikidata.org/.well-known/genid/0a689321122427ca73a58443cdb7676f		
+Q18230598	director	http://www.wikidata.org/.well-known/genid/b60d53b25e400cee77f6b42c16e183bd	http://www.wikidata.org/.well-known/genid/b60d53b25e400cee77f6b42c16e183bd		
+Q18230673	director	http://www.wikidata.org/.well-known/genid/ad30dbf71c3764695900f1958417a506	http://www.wikidata.org/.well-known/genid/ad30dbf71c3764695900f1958417a506		
+Q18230681	director	Q18419047	Léo Lefebvre		
+Q18230681	cinematographer	Q18419047	Léo Lefebvre		
+Q18230688	director	http://www.wikidata.org/.well-known/genid/3d2d707b3c9d1c990c6801bbbd56079b	http://www.wikidata.org/.well-known/genid/3d2d707b3c9d1c990c6801bbbd56079b		
+Q18230690	director	http://www.wikidata.org/.well-known/genid/a74fc21fa328ad61e069040d28bb3167	http://www.wikidata.org/.well-known/genid/a74fc21fa328ad61e069040d28bb3167		
+Q18230692	director	http://www.wikidata.org/.well-known/genid/64bbefa2021d15fb0035e8de8264831e	http://www.wikidata.org/.well-known/genid/64bbefa2021d15fb0035e8de8264831e		
+Q18230706	director	http://www.wikidata.org/.well-known/genid/5e19bae477814a53d9137095d92d6964	http://www.wikidata.org/.well-known/genid/5e19bae477814a53d9137095d92d6964		
+Q18230709	director	http://www.wikidata.org/.well-known/genid/6df863cacd4079578d894f4d99157d73	http://www.wikidata.org/.well-known/genid/6df863cacd4079578d894f4d99157d73		
+Q106437288	subject		Genevieve of Brabant		
+Q18230723	director	http://www.wikidata.org/.well-known/genid/7fee32c943fa48199bb0cd4ddb31f414	http://www.wikidata.org/.well-known/genid/7fee32c943fa48199bb0cd4ddb31f414		
+Q18147154	director	Q2037315	Albert Capellani		
+Q18147154	director	Q3103214	Georges Monca		
+Q16655093	director	Q965654	Segundo de Chomón		
+Q18230605	director	http://www.wikidata.org/.well-known/genid/732f68101bc9d9cb1c257892a5951be0	http://www.wikidata.org/.well-known/genid/732f68101bc9d9cb1c257892a5951be0		
+Q18230685	director	http://www.wikidata.org/.well-known/genid/aca9391fd27d77f094ac1ae8368e2478	http://www.wikidata.org/.well-known/genid/aca9391fd27d77f094ac1ae8368e2478		
+Q3203051	director	Q3309213	Michel Carré		
+Q3203051	writer	Q3309213	Michel Carré		
+Q3203051	cast	Q94976415	Gilberte Sergy		
+Q3203051	cast	Q3176107	Jeanne Marie-Laurent		
+Q3203051	cast	Q21914074	Henri Gouget		
+Q3203051	cast	Q3103631	Georges Wague		
+Q3203051	cast	Q2965780	Christiane Mandelys		
+Q18230759	director	http://www.wikidata.org/.well-known/genid/fd09d827a25aa670e2bfc338e8e5cfe1	http://www.wikidata.org/.well-known/genid/fd09d827a25aa670e2bfc338e8e5cfe1		
+Q18230642	director	http://www.wikidata.org/.well-known/genid/a1c2775d21901e5d431596935824ade1	http://www.wikidata.org/.well-known/genid/a1c2775d21901e5d431596935824ade1		
+Q18230712	director	http://www.wikidata.org/.well-known/genid/e5782b026f41470e71987a19daf447c3	http://www.wikidata.org/.well-known/genid/e5782b026f41470e71987a19daf447c3		
+Q18230718	director	Q965654	Segundo de Chomón		
+Q18230718	writer	Q965654	Segundo de Chomón		
+Q18230718	production_designer	Q965654	Segundo de Chomón		
+Q18230770	director	http://www.wikidata.org/.well-known/genid/57c16ef2657a4d58da4b3f914b931a5e	http://www.wikidata.org/.well-known/genid/57c16ef2657a4d58da4b3f914b931a5e		
+Q18230609	director	Q965654	Segundo de Chomón		
+Q18230609	writer	Q965654	Segundo de Chomón		
+Q18230616	director	http://www.wikidata.org/.well-known/genid/9255f6c5b031a7ff1d0c3deb67b95a24	http://www.wikidata.org/.well-known/genid/9255f6c5b031a7ff1d0c3deb67b95a24		
+Q18230636	director	http://www.wikidata.org/.well-known/genid/da3e50cf606ddba292619e80aee04c14	http://www.wikidata.org/.well-known/genid/da3e50cf606ddba292619e80aee04c14		
+Q2409224	director	Q130704540	Millard Mercury		
+Q18230825	director	Q3099177	Gaston Velle		
+Q16028802	director	Q2037315	Albert Capellani		
+Q16028802	cinematographer	Q965654	Segundo de Chomón		
+Q18230852	director	http://www.wikidata.org/.well-known/genid/d4efd03de0d523cab0b4e05a12e8973e	http://www.wikidata.org/.well-known/genid/d4efd03de0d523cab0b4e05a12e8973e		
+Q18230875	director	http://www.wikidata.org/.well-known/genid/665aab25868013342f4f550dbf3d7ad3	http://www.wikidata.org/.well-known/genid/665aab25868013342f4f550dbf3d7ad3		
+Q18230676	director	Q3131156	Henri Gambart		
+Q18230671	director	http://www.wikidata.org/.well-known/genid/f1a9cb27b9b653f9312cff3bd9a6806c	http://www.wikidata.org/.well-known/genid/f1a9cb27b9b653f9312cff3bd9a6806c		
+Q18230919	director	http://www.wikidata.org/.well-known/genid/59a4cfc813f7e407fbb9b28dc8bd5bf0	http://www.wikidata.org/.well-known/genid/59a4cfc813f7e407fbb9b28dc8bd5bf0		
+Q18230694	director	http://www.wikidata.org/.well-known/genid/d8b8aa1a213d5082374b4adfa3512ace	http://www.wikidata.org/.well-known/genid/d8b8aa1a213d5082374b4adfa3512ace		
+Q3232489	director	http://www.wikidata.org/.well-known/genid/0655c9b29ad2f11634dacb3bada184cf	http://www.wikidata.org/.well-known/genid/0655c9b29ad2f11634dacb3bada184cf		
+Q3232489	cast	Q152764	Max Linder		
+Q18230702	director	http://www.wikidata.org/.well-known/genid/89cf1ecf04415330780096cfaebed78e	http://www.wikidata.org/.well-known/genid/89cf1ecf04415330780096cfaebed78e		
+Q18230721	director	Q240080	Ferdinand Zecca		
+Q18230721	director	Q965654	Segundo de Chomón		
+Q18230721	cinematographer	Q965654	Segundo de Chomón		
+Q18230721	cast	Q1294016	Julienne Mathieu		
+Q16655531	director	Q965654	Segundo de Chomón		
+Q16655531	writer	Q965654	Segundo de Chomón		
+Q16655531	cinematographer	Q965654	Segundo de Chomón		
+Q16655531	cast	Q1294016	Julienne Mathieu		
+Q18230843	director	Q2935103	Camille de Morlhon		
+Q18230843	writer	Q2935103	Camille de Morlhon		
+Q3557887	director	Q240080	Ferdinand Zecca		
+Q3557887	director	Q3265656	Lucien Nonguet		
+Q3557887	writer	Q240080	Ferdinand Zecca		
+Q18230778	director	http://www.wikidata.org/.well-known/genid/bb2461dce1da48fd3541ed985bf17a7f	http://www.wikidata.org/.well-known/genid/bb2461dce1da48fd3541ed985bf17a7f		
+Q3275342	director	Q263367	Alice Guy-Blaché		
+Q3275342	writer	Q263367	Alice Guy-Blaché		
+Q3275342	cinematographer	Q263367	Alice Guy-Blaché		
+Q3275342	subject		human pregnancy		
+Q3275342	subject		desire		
+Q18230808	director	http://www.wikidata.org/.well-known/genid/381dc2417139028bf09c0a31a69435e2	http://www.wikidata.org/.well-known/genid/381dc2417139028bf09c0a31a69435e2		
+Q18230683	director	Q965654	Segundo de Chomón		
+Q18230683	cast	Q1294016	Julienne Mathieu		
+Q18230819	director	http://www.wikidata.org/.well-known/genid/e9a24fe0c566704d09329b2cbb7911f1	http://www.wikidata.org/.well-known/genid/e9a24fe0c566704d09329b2cbb7911f1		
+Q18230834	director	http://www.wikidata.org/.well-known/genid/e594a991db3e1e0770c4014c3a39b979	http://www.wikidata.org/.well-known/genid/e594a991db3e1e0770c4014c3a39b979		
+Q18230836	director	http://www.wikidata.org/.well-known/genid/ba96d534e38f034e1b2265d939aecda0	http://www.wikidata.org/.well-known/genid/ba96d534e38f034e1b2265d939aecda0		
+Q18230845	director	http://www.wikidata.org/.well-known/genid/71df989b46033938741e3c73db67622b	http://www.wikidata.org/.well-known/genid/71df989b46033938741e3c73db67622b		
+Q2225872	director	Q965654	Segundo de Chomón		
+Q2225872	writer	Q965654	Segundo de Chomón		
+Q2225872	cast	Q965654	Segundo de Chomón		
+Q2225872	cast	Q1294016	Julienne Mathieu		
+Q3958717	director	Q2037315	Albert Capellani		
+Q18230865	director	http://www.wikidata.org/.well-known/genid/775a15b5f046ed0307bca60605d8a6d0	http://www.wikidata.org/.well-known/genid/775a15b5f046ed0307bca60605d8a6d0		
+Q18230867	director	http://www.wikidata.org/.well-known/genid/afc2438a469b42f82e298ec2e328026b	http://www.wikidata.org/.well-known/genid/afc2438a469b42f82e298ec2e328026b		
+Q18230607	director	http://www.wikidata.org/.well-known/genid/6b1d613322c4b1d221c0d850bfb40d58	http://www.wikidata.org/.well-known/genid/6b1d613322c4b1d221c0d850bfb40d58		
+Q18230861	director	http://www.wikidata.org/.well-known/genid/63afe0c6cf8ce712e4cc91b22278d211	http://www.wikidata.org/.well-known/genid/63afe0c6cf8ce712e4cc91b22278d211		
+Q112165681	director	Q965654	Segundo de Chomón		
+Q18230854	director	Q3099177	Gaston Velle		
+Q18230651	director	http://www.wikidata.org/.well-known/genid/47c572410d70740a1ea9de32aab13f74	http://www.wikidata.org/.well-known/genid/47c572410d70740a1ea9de32aab13f74		
+Q88572813	director	Q965654	Segundo de Chomón		
+Q88572813	cast	Q1294016	Julienne Mathieu		
+Q18230766	director	Q965654	Segundo de Chomón		
+Q18230766	cast	Q1294016	Julienne Mathieu		
+Q87769109	director	Q965654	Segundo de Chomón		
+Q87769109	cast	Q1294016	Julienne Mathieu		
+Q4193489	director	Q965654	Segundo de Chomón		
+Q4193489	writer	Q965654	Segundo de Chomón		
+Q5966079	director	Q965654	Segundo de Chomón		
+Q5966079	writer	Q965654	Segundo de Chomón		
+Q18230878	director	http://www.wikidata.org/.well-known/genid/5a75100019d094533208dae207916def	http://www.wikidata.org/.well-known/genid/5a75100019d094533208dae207916def		
+Q18230839	director	Q240080	Ferdinand Zecca		
+Q18230714	director	http://www.wikidata.org/.well-known/genid/a1f4ac59b3b190cf8281958e1b0b74c1	http://www.wikidata.org/.well-known/genid/a1f4ac59b3b190cf8281958e1b0b74c1		
+Q18230831	director	http://www.wikidata.org/.well-known/genid/88ca8a3ae53598c084bfc82a2df49a8b	http://www.wikidata.org/.well-known/genid/88ca8a3ae53598c084bfc82a2df49a8b		
+Q18230822	director	http://www.wikidata.org/.well-known/genid/5f4eb035577ceb36e07ae0415cde1465	http://www.wikidata.org/.well-known/genid/5f4eb035577ceb36e07ae0415cde1465		
+Q16654396	director	Q240080	Ferdinand Zecca		
+Q16654396	director	Q965654	Segundo de Chomón		
+Q16654396	writer	Q965654	Segundo de Chomón		
+Q130317866	director	Q965654	Segundo de Chomón		
+Q18230879	director	http://www.wikidata.org/.well-known/genid/572c978822cf2f4779bcd04f7c8c2ed8	http://www.wikidata.org/.well-known/genid/572c978822cf2f4779bcd04f7c8c2ed8		
+Q18230882	director	http://www.wikidata.org/.well-known/genid/5ff7bc6493668d55f42e1285ddee3815	http://www.wikidata.org/.well-known/genid/5ff7bc6493668d55f42e1285ddee3815		
+Q18230885	director	http://www.wikidata.org/.well-known/genid/5efd574ecb09649fb343f3b304c4f56e	http://www.wikidata.org/.well-known/genid/5efd574ecb09649fb343f3b304c4f56e		
+Q18230645	director	http://www.wikidata.org/.well-known/genid/f2ef41e211ac90f5d5f18d614a7b8634	http://www.wikidata.org/.well-known/genid/f2ef41e211ac90f5d5f18d614a7b8634		
+Q18336256	director	http://www.wikidata.org/.well-known/genid/63f345462e306de85bddab03675e657d	http://www.wikidata.org/.well-known/genid/63f345462e306de85bddab03675e657d		
+Q18230804	director	http://www.wikidata.org/.well-known/genid/21d1a7c261bc37f38c07e34c449763bc	http://www.wikidata.org/.well-known/genid/21d1a7c261bc37f38c07e34c449763bc		
+Q18230811	director	http://www.wikidata.org/.well-known/genid/9aaf78fe7ab488760141fdeba7c403a5	http://www.wikidata.org/.well-known/genid/9aaf78fe7ab488760141fdeba7c403a5		
+Q18230817	director	http://www.wikidata.org/.well-known/genid/bcbd2938a1682bafb5b09d82449cd187	http://www.wikidata.org/.well-known/genid/bcbd2938a1682bafb5b09d82449cd187		
+Q18230872	director	http://www.wikidata.org/.well-known/genid/0b1eb59e86fcd828d4ab16fb3b3e0c4a	http://www.wikidata.org/.well-known/genid/0b1eb59e86fcd828d4ab16fb3b3e0c4a		
+Q18230772	director	Q3176716	Jeff Melman		
+Q18230772	director	http://www.wikidata.org/.well-known/genid/faf34b9121b0a2abd7c9670c8e37ca54	http://www.wikidata.org/.well-known/genid/faf34b9121b0a2abd7c9670c8e37ca54		
+Q18230892	director	http://www.wikidata.org/.well-known/genid/2bcef59b3e1e1ed30188ccfd132e4643	http://www.wikidata.org/.well-known/genid/2bcef59b3e1e1ed30188ccfd132e4643		
+Q18230894	director	http://www.wikidata.org/.well-known/genid/0f2b724207e6742fd25cf14e4220579f	http://www.wikidata.org/.well-known/genid/0f2b724207e6742fd25cf14e4220579f		
+Q18230899	director	Q3265656	Lucien Nonguet		
+Q18230903	director	http://www.wikidata.org/.well-known/genid/5880b3b061a82f63ed566981755df2cc	http://www.wikidata.org/.well-known/genid/5880b3b061a82f63ed566981755df2cc		
+Q18230907	director	http://www.wikidata.org/.well-known/genid/51e598135a99efb6c1d925ae65aa8cc2	http://www.wikidata.org/.well-known/genid/51e598135a99efb6c1d925ae65aa8cc2		
+Q18230910	director	http://www.wikidata.org/.well-known/genid/3fd55fc1c23c27d7f473f9e25fbba7bf	http://www.wikidata.org/.well-known/genid/3fd55fc1c23c27d7f473f9e25fbba7bf		
+Q18230912	director	http://www.wikidata.org/.well-known/genid/290f2db3fe2bf5c4889cef190e5f26f2	http://www.wikidata.org/.well-known/genid/290f2db3fe2bf5c4889cef190e5f26f2		
+Q18230916	director	http://www.wikidata.org/.well-known/genid/b2af24e0b09aecdda906bf2776693949	http://www.wikidata.org/.well-known/genid/b2af24e0b09aecdda906bf2776693949		
+Q18230870	director	http://www.wikidata.org/.well-known/genid/4a9c706324154a93428e62ab2f1a0552	http://www.wikidata.org/.well-known/genid/4a9c706324154a93428e62ab2f1a0552		
+Q89514961	director	Q2037315	Albert Capellani		
+Q89514961	cast	Q1294016	Julienne Mathieu		
+Q16545064	director	Q965654	Segundo de Chomón		
+Q16545064	writer	Q965654	Segundo de Chomón		
+Q16545064	cinematographer	Q965654	Segundo de Chomón		
+Q16545064	cast	Q152764	Max Linder		
+Q16545064	cast	Q180505	Loïe Fuller		
+Q16545064	subject		Serpentine dance		
+Q8822922	director	Q2037315	Albert Capellani		
+Q8822922	director	Q2935103	Camille de Morlhon		
+Q8822922	writer	Q2935103	Camille de Morlhon		
+Q8822922	cast	Q3425745	René Alexandre		
+Q8822922	cast	Q2994890	Constant Rémy		
+Q8822922	cast	Q3104216	Germaine Reuver		
+Q4530537	director	Q965654	Segundo de Chomón		
+Q4530537	producer	Q240080	Ferdinand Zecca		
+Q4530537	cinematographer	Q965654	Segundo de Chomón		
+Q18147155	director	Q3103214	Georges Monca		
+Q3817954	director	Q2037315	Albert Capellani		
+Q3817954	writer	Q2037315	Albert Capellani		
+Q3817954	cast	Q3130974	アンリ・デフォンテーヌ		
+Q108502541	director	Q965654	Segundo de Chomón		
+Q108502541	cinematographer	Q965654	Segundo de Chomón		
+Q58896128	director	Q3130559	Henri Andréani		
+Q111745304	director	Q3102599	Georges Denola		
+Q111745304	cast	Q3159044	Jacques Grétillat		
+Q3847882	director	Q2037315	Albert Capellani		
+Q3847882	writer	Q602493	Michel Carré		
+Q18147161	director	Q965654	Segundo de Chomón		
+Q18147161	writer	Q965654	Segundo de Chomón		
+Q3324719	director	Q1427399	Georges Meyer		
+Q3324719	producer	Q1427399	Georges Meyer		
+Q89351324	director	Q965654	Segundo de Chomón		
+Q89351324	cast	Q1294016	Julienne Mathieu		
+Q3433068	director	Q2037315	Albert Capellani		
+Q3433068	cast	Q3103214	Georges Monca		
+Q3946553	director	Q240080	Ferdinand Zecca		
+Q3946553	director	Q2037315	Albert Capellani		
+Q3946553	director	Q3130559	Henri Andréani		
+Q3946553	cast	Q15117539	Louis Ravet		
+Q1212230	director	Q2297234	Charles le Bargy		
+Q1212230	director	Q2637102	André Calmettes		
+Q1212230	writer	Q945057	Henri Lavedan		
+Q1212230	composer	Q150445	Camille Saint-Saëns		
+Q1212230	cast	Q1253224	Jean Angelo		
+Q1212230	cast	Q2297234	Charles le Bargy		
+Q1212230	cast	Q3142788	Huguette Duflos		
+Q1212230	cast	Q2959664	Charles Lorrain		
+Q1212230	cast	Q3440396	Rolla Norman		
+Q1212230	cast	Q2637818	Albert Dieudonné		
+Q1212230	cast	Q293245	Gabrielle Robinne		
+Q1212230	cast	Q3419443	Raphaël Duflos		
+Q1212230	cast	Q2638365	Albert Lambert		
+Q1212230	cast	Q438920	Berthe Bovy		
+Q1248410	director	Q965654	Segundo de Chomón		
+Q1248410	cast	Q965654	Segundo de Chomón		
+Q1248410	cast	Q1294016	Julienne Mathieu		
+Q87771260	director	Q965654	Segundo de Chomón		
+Q87771260	cast	Q1294016	Julienne Mathieu		
+Q16039140	director	Q965654	Segundo de Chomón		
+Q16654058	director	http://www.wikidata.org/.well-known/genid/0c3b1e9ecdb427aa07010219e978a83a	http://www.wikidata.org/.well-known/genid/0c3b1e9ecdb427aa07010219e978a83a		
+Q87902208	director	Q965654	Segundo de Chomón		
+Q87902208	cast	Q1294016	Julienne Mathieu		
+Q18147157	director	Q3103214	Georges Monca		
+Q111745848	director	Q3102599	Georges Denola		
+Q19788141	director	Q965654	Segundo de Chomón		
+Q8840005	director	Q2935103	Camille de Morlhon		
+Q3213179	director	Q2297234	Charles le Bargy		
+Q3213179	director	Q2637102	André Calmettes		
+Q3213179	writer	Q2637102	André Calmettes		
+Q3213179	cast	Q1406925	Cécile Sorel		
+Q3213179	cast	Q2297234	Charles le Bargy		
+Q3213179	cast	Q2959860	Charles Mosnier		
+Q3213179	cast	Q3425745	René Alexandre		
+Q8823532	director	Q2935103	Camille de Morlhon		
+Q8823532	writer	Q2935103	Camille de Morlhon		
+Q6722790	director	Q2637102	André Calmettes		
+Q6722790	writer	Q3309213	Michel Carré		
+Q6722790	cast	Q3371884	Paul Mounet	Macbeth	
+Q6722790	cast	Q3176025	Jeanne Delvair	Lady Macbeth	
+Q8838359	director	Q2935103	Camille de Morlhon		
+Q8838359	writer	Q2935103	Camille de Morlhon		
+Q8839887	director	Q2935103	Camille de Morlhon		
+Q8839887	writer	Q2935103	Camille de Morlhon		
+Q8839887	cast	Q152764	Max Linder		
+Q30543562	director	Q2835300	Alfred Machin		

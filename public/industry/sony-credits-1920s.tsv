@@ -1,0 +1,385 @@
+qid	role	personQid	name	character	ordinal
+Q21869444	director	Q2006459	Edward LeSaint		
+Q21869444	cast	Q434466	Anna Q. Nilsson		
+Q32846886	director	Q2006459	Edward LeSaint		
+Q16253961	director	Q2006459	Edward LeSaint		
+Q16253961	writer	Q60287170	Edith Kennedy		
+Q16253961	producer	Q1586470	Harry Cohn		
+Q16253961	cast	Q453962	Irene Rich		
+Q62595532	director	Q547078	W. S. Van Dyke		
+Q46604678	director	Q349518	George W. Hill		
+Q46604678	cinematographer	Q970432	Norbert Brodine		
+Q7751309	director	Q349518	George W. Hill		
+Q7751309	writer	Q349518	George W. Hill		
+Q7751309	cast	Q668993	William Haines		
+Q7751309	cast	Q5353220	Elaine Hammerstein		
+Q4656827	director	Q219499	Erle C. Kenton		
+Q4656827	editor	Q1253621	Jack Kelly		
+Q4656827	cast	Q668993	William Haines		
+Q4656827	cast	Q391314	Madge Bellamy		
+Q42048545	director	Q3082779	Frank R. Strayer		
+Q42048545	cast	Q429966	Dorothy Revier		
+Q55607104	director	Q286308	Scott Sidney		
+Q18153696	director	Q1345605	James P. Hogan		
+Q18153696	cast	Q5353220	Elaine Hammerstein		
+Q3953549	director	Q460376	Tony Gaudio		
+Q3953549	cast	Q3530860	Tom Ricketts		
+Q3953549	cast	Q3832582	Lincoln Stedman		
+Q3953549	cast	Q2883986	Barbara Luddy		
+Q3953549	cast	Q385815	Charles Clary		
+Q42048557	director	Q3082779	Frank R. Strayer		
+Q42048557	writer	Q356913	Albert Lewin		
+Q42048557	cast	Q429966	Dorothy Revier		
+Q22350778	director	Q3082779	Frank R. Strayer		
+Q22350778	cast	Q3161885	Jane Novak		
+Q20804263	director	Q2006459	Edward LeSaint		
+Q20804263	producer	Q1586470	Harry Cohn		
+Q3567662	director	Q290962	William A. Wellman		
+Q3567662	producer	Q1586470	Harry Cohn		
+Q3567662	cast	Q29913503	Maude Wayne		
+Q3567662	cast	Q3059263	Ethel Wales		
+Q3567662	cast	Q375092	Forrest Stanley		
+Q3567662	cast	Q3530860	Tom Ricketts		
+Q3567662	cast	Q429966	Dorothy Revier		
+Q17050071	director	Q3018197	David Kirkland		
+Q17050071	writer	Q541147	Cosmo Hamilton		
+Q17050071	cast	Q2401015	Dorothy Devore		
+Q6469562	director	Q3992447	Tom Buckingham		
+Q6469562	writer	Q356913	Albert Lewin		
+Q6469562	producer	Q1586470	Harry Cohn		
+Q6469562	cast	Q5353220	Elaine Hammerstein		
+Q7074900	writer	Q6794994	Max Marcin		
+Q7074900	producer	Q1586470	Harry Cohn		
+Q7074900	cast	Q5340082	Edna Murphy		
+Q7074900	cast	Q2899198	Bert Lytell		
+Q3985846	director	Q1421677	Harry O. Hoyt		
+Q3985846	writer	Q6105849	J. Grubb Alexander		
+Q3985846	producer	Q1586470	Harry Cohn		
+Q3985846	cast	Q255846	Betty Compson		
+Q25136433	director	Q3418267	Ralph Ince		
+Q18402539	director	Q269796	Walter Lang		
+Q18402539	producer	Q1586470	Harry Cohn		
+Q18402539	cast	Q2033544	Ricardo Cortez		
+Q17042751	director	Q3082779	Frank R. Strayer		
+Q17042751	producer	Q1586470	Harry Cohn		
+Q17042751	cast	Q2177322	Virginia Brown Faire		
+Q19866414	director	Q3568727	William James Craft		
+Q19866414	cinematographer	Q970432	Norbert Brodine		
+Q19866414	cast	Q429966	Dorothy Revier		
+Q18709066	director	Q269796	Walter Lang		
+Q18709066	writer	Q5342307	Edward Clark		
+Q18709066	cast	Q460799	Shirley Mason		
+Q52715660	director	Q374091	Phil Rosen		
+Q18171829	director	Q3082779	Frank R. Strayer		
+Q18171829	writer	Q5523889	Garrett Fort		
+Q18171829	cast	Q772769	Helene Chadwick		
+Q3519877	director	Q8704	Walt Disney		
+Q16248824	director	Q441976	George B. Seitz		
+Q16248824	producer	Q1586470	Harry Cohn		
+Q16248824	cast	Q1621558	Hobart Bosworth		
+Q19867655	director	Q3568727	William James Craft		
+Q19867655	cast	Q429966	Dorothy Revier		
+Q18708917	director	Q269796	Walter Lang		
+Q18708917	producer	Q1586470	Harry Cohn		
+Q18708917	cinematographer	Q960230	Joseph Walker		
+Q18708917	editor	Q2865317	Arthur Roberts		
+Q18708917	cast	Q4233723	Pauline Garon		
+Q945964	director	Q441976	George B. Seitz		
+Q945964	writer	Q249143	Louella Parsons		
+Q945964	producer	Q1586470	Harry Cohn		
+Q945964	cinematographer	Q960230	Joseph Walker		
+Q945964	cast	Q2062124	Conway Tearle		
+Q945964	cast	Q274222	Dorothy Sebastian		
+Q7769276	director	Q441976	George B. Seitz		
+Q7769276	writer	Q5662375	Harold Shumate		
+Q7769276	producer	Q1586470	Harry Cohn		
+Q7769276	cast	Q1357250	Jack Holt		
+Q17066511	director	Q441976	George B. Seitz		
+Q17066511	cast	Q1357250	Jack Holt		
+Q23796808	director	Q3418267	Ralph Ince		
+Q23796808	writer	Q5298462	Dorothy Howell		
+Q592543	director	Q8704	Walt Disney		
+Q592543	producer	Q952640	Charles Mintz		
+Q3540244	director	Q8704	Walt Disney		
+Q3540244	producer	Q952640	Charles Mintz		
+Q4690685	director	Q441976	George B. Seitz		
+Q4690685	producer	Q1586470	Harry Cohn		
+Q4690685	editor	Q2865317	Arthur Roberts		
+Q4690685	cast	Q1621558	Hobart Bosworth		
+Q4899716	director	Q441976	George B. Seitz		
+Q4899716	writer	Q5537552	George C. Hull		
+Q4899716	producer	Q1586470	Harry Cohn		
+Q4899716	cast	Q429966	Dorothy Revier		
+Q51879718	director	Q64006322	Fred Windemere		
+Q3829793	director	Q441976	George B. Seitz		
+Q3829793	writer	Q3051562	Elmer Blaney Harris		
+Q3829793	producer	Q1586470	Harry Cohn		
+Q3829793	cinematographer	Q960230	Joseph Walker		
+Q3829793	editor	Q2865317	Arthur Roberts		
+Q3829793	cast	Q1357250	Jack Holt		
+Q3829793	cast	Q5297943	Doris Hill		
+Q3829793	cast	Q255846	Betty Compson		
+Q3829793	cast	Q3897541	Pat Harmon		
+Q27981635	director	Q1993804	Christy Cabanne		
+Q27981635	cinematographer	Q960230	Joseph Walker		
+Q27981635	cast	Q930822	Don Alvarado		
+Q27981637	director	Q2485848	Roy William Neill		
+Q27981637	producer	Q1586470	Harry Cohn		
+Q27981637	cinematographer	Q960230	Joseph Walker		
+Q27981637	editor	Q2865317	Arthur Roberts		
+Q27981637	cast	Q439655	Estelle Taylor		
+Q968824	director	Q441976	George B. Seitz		
+Q968824	writer	Q3051562	Elmer Blaney Harris		
+Q968824	producer	Q1586470	Harry Cohn		
+Q968824	cinematographer	Q960230	Joseph Walker		
+Q968824	production_designer	Q505498	Joseph C. Wright		
+Q968824	cast	Q600035	William V. Mong		
+Q968824	cast	Q275728	Lois Wilson		
+Q968824	cast	Q3719462	Edmund Burns		
+Q3707688	director	Q51492	Frank Capra		
+Q3707688	writer	Q51492	Frank Capra		
+Q3707688	producer	Q1586470	Harry Cohn		
+Q3707688	cinematographer	Q960230	Joseph Walker		
+Q3707688	cast	Q1368590	Francis X. Bushman		
+Q3707688	cast	Q18638535	Alphonse Ethier		
+Q3707688	cast	Q3624306	Arthur Rankin		
+Q3707688	cast	Q292865	Margaret Livingston		
+Q3707688	cast	Q772769	Helene Chadwick		
+Q3716304	director	Q51492	Frank Capra		
+Q3716304	writer	Q3051562	Elmer Blaney Harris		
+Q3716304	producer	Q1586470	Harry Cohn		
+Q3716304	cinematographer	Q2133917	Ray June		
+Q3716304	editor	Q2865317	Arthur Roberts		
+Q3716304	cast	Q460799	Shirley Mason		
+Q3716304	cast	Q3568511	William Collier Jr.		
+Q3716304	cast	Q3182840	Johnnie Walker		
+Q3716304	cast	Q2045706	Ernie Adams		
+Q2172512	director	Q51492	Frank Capra		
+Q2172512	director	Q3154600	Irvin Willat		
+Q2172512	producer	Q1586470	Harry Cohn		
+Q2172512	cinematographer	Q960230	Joseph Walker		
+Q2172512	cast	Q5126425	Clarence Burton		
+Q2172512	cast	Q429966	Dorothy Revier		
+Q2172512	cast	Q3179992	Joe Bordeaux		
+Q2172512	cast	Q3624306	Arthur Rankin		
+Q2172512	cast	Q1357250	Jack Holt	Jack Dorgan	
+Q2172512	cast	Q3418255	Ralph Graves		
+Q1157116	director	Q51492	Frank Capra		
+Q1157116	writer	Q51492	Frank Capra		
+Q1157116	producer	Q51492	Frank Capra		
+Q1157116	producer	Q1586470	Harry Cohn		
+Q1157116	cinematographer	Q960230	Joseph Walker		
+Q1157116	editor	Q2865317	Arthur Roberts		
+Q1157116	cast	Q447830	Viola Dana		
+Q1157116	cast	Q3418255	Ralph Graves		
+Q1157116	cast	Q2826799	Aggie Herring		
+Q1157116	cast	Q3227193	Burr McIntosh		
+Q18708929	director	Q269796	Walter Lang		
+Q18708929	cast	Q255846	Betty Compson		
+Q2288328	director	Q51492	Frank Capra		
+Q2288328	writer	Q3051562	Elmer Blaney Harris		
+Q2288328	producer	Q1586470	Harry Cohn		
+Q2288328	cinematographer	Q322960	Ted Tetzlaff		
+Q2288328	editor	Q2865317	Arthur Roberts		
+Q2288328	executive_producer	Q1586470	Harry Cohn		
+Q2288328	cast	Q240238	Bessie Love		
+Q2288328	cast	Q3179992	Joe Bordeaux		
+Q2288328	cast	Q434901	Lionel Belmore		
+Q2288328	cast	Q3182840	Johnnie Walker		
+Q2229501	director	Q51492	Frank Capra		
+Q2229501	writer	Q434645	Sonya Levien		
+Q2229501	producer	Q1586470	Harry Cohn		
+Q2229501	cinematographer	Q322960	Ted Tetzlaff		
+Q2229501	editor	Q2865317	Arthur Roberts		
+Q2229501	cast	Q7109628	Otto Hoffman		
+Q2229501	cast	Q3179992	Joe Bordeaux		
+Q2229501	cast	Q549075	Van Dyke Brooke		
+Q2229501	cast	Q1929752	Jobyna Ralston		
+Q2229501	cast	Q3567656	Wheeler Vivian Oakman		
+Q2229501	cast	Q241019	Mildred Harris		
+Q2229501	cast	Q528428	Douglas Fairbanks Jr.		
+Q2229501	cast	Q3381108	Philo McCullough		
+Q2229501	cast	Q1749423	Maurice Costello		
+Q2229501	cast	Q1230515	Spottiswoode Aitken		
+Q2229501	cast	Q385815	Charles Clary		
+Q2229501	cast	Q3021715	Dell Henderson		
+Q2229501	cast	Q3435031	ロバート・エディソン		
+Q7762431	director	Q1281943	Alan Crosland		
+Q7762431	producer	Q1586470	Harry Cohn		
+Q7762431	cast	Q443766	Lya De Putti		
+Q3822978	director	Q51492	Frank Capra		
+Q3822978	writer	Q3568804	William Conselman		
+Q3822978	producer	Q1586470	Harry Cohn		
+Q3822978	cast	Q3523709	Theodore von Eltz		
+Q3822978	cast	Q3569077	Willie Fung		
+Q3822978	cast	Q3317080	Mitchell Lewis		
+Q3822978	cast	Q4725811	Alice Day		
+Q3822978	cast	Q4019932	William Bailey		
+Q3822978	cast	Q1696340	William Bailey		
+Q3822978	cast	Q292865	Margaret Livingston		
+Q27981640	director	Q117863067	Maurice Marshall		
+Q27981640	writer	Q7608949	Stephen Cooper		
+Q27981640	producer	Q1586470	Harry Cohn		
+Q27981640	cinematographer	Q2133917	Ray June		
+Q27981640	editor	Q2865317	Arthur Roberts		
+Q27981640	cast	Q460799	Shirley Mason		
+Q3061047	director	Q8704	Walt Disney		
+Q3061047	producer	Q5546441	George Winkler		
+Q3604753	director	Q3082779	Frank R. Strayer		
+Q3604753	writer	Q6382900	Keene Thompson		
+Q3604753	producer	Q1586470	Harry Cohn		
+Q3604753	cinematographer	Q322960	Ted Tetzlaff		
+Q3604753	editor	Q139419385	David Berg		
+Q3604753	cast	Q3057512	Erville Alderson		
+Q3604753	cast	Q738864	Charles West		
+Q3604753	cast	Q3946332	Sam Hardy		
+Q3604753	cast	Q1421691	Lloyd Hughes		
+Q3604753	cast	Q292865	Margaret Livingston		
+Q3951528	director	Q1268373	George Archainbaud		
+Q3951528	writer	Q22019133	Norman Houston		
+Q3951528	producer	Q1586470	Harry Cohn		
+Q3951528	cinematographer	Q2482428	Harry Jackson		
+Q3951528	cast	Q2462725	Sally O'Neil		
+Q3951528	cast	Q634150	Charles Lane		
+Q3951528	cast	Q952875	Carmel Myers		
+Q2032557	director	Q51492	Frank Capra		
+Q2032557	writer	Q51492	Frank Capra		
+Q2032557	producer	Q1586470	Harry Cohn		
+Q2032557	cinematographer	Q960230	Joseph Walker		
+Q2032557	cinematographer	Q2754574	Elmer Dyer		
+Q2032557	editor	Q1501408	Gene Milford		
+Q2032557	cast	Q219521	Walter Brennan		
+Q2032557	cast	Q3127608	Harold Goodwin		
+Q2032557	cast	Q434413	Lila Lee		
+Q2032557	cast	Q3418255	Ralph Graves		
+Q2032557	cast	Q3179992	Joe Bordeaux		
+Q2032557	cast	Q1357250	Jack Holt		
+Q2032557	cast	Q2830579	Alan Roscoe		
+Q2032557	cast	Q152941	George Irving		
+Q2032557	subject		aviation		
+Q3307662	director	Q219499	Erle C. Kenton		
+Q3307662	writer	Q516962	Gladys Lehman		
+Q3307662	writer	Q22019133	Norman Houston		
+Q3307662	producer	Q1586470	Harry Cohn		
+Q3307662	cast	Q3946332	Sam Hardy		
+Q3307662	cast	Q94002	Barbara Stanwyck		
+Q3307662	cast	Q2977476	Claude Gillingwater		
+Q7231037	director	Q6750998	Manny Gould		
+Q7231037	director	Q41771735	Ben Harrison		
+Q7231037	producer	Q952640	Charles Mintz		
+Q7231037	subject		cat		
+Q7231037	subject		seamanship		
+Q7295931	director	Q6750998	Manny Gould		
+Q7295931	director	Q41771735	Ben Harrison		
+Q7295931	producer	Q952640	Charles Mintz		
+Q7295931	follows	Q7539968	Sleepy Holler		
+Q7295931	subject		cat		
+Q2135682	director	Q51492	Frank Capra		
+Q2135682	writer	Q1321778	Owen Davis		
+Q2135682	writer	Q3141566	Howard J. Green		
+Q2135682	producer	Q1586470	Harry Cohn		
+Q2135682	cinematographer	Q322960	Ted Tetzlaff		
+Q2135682	cast	Q3086867	Fred Kelsey		
+Q2135682	cast	Q3568511	William Collier Jr.		
+Q2135682	cast	Q18715773	John Roche		
+Q2135682	cast	Q255682	Agnes Ayres		
+Q2135682	cast	Q3126801	Hank Mann		
+Q2135682	cast	Q3182679	John Wallace		
+Q2135682	cast	Q3567656	Wheeler Vivian Oakman		
+Q2135682	cast	Q3059263	Ethel Wales		
+Q2135682	cast	Q18638535	Alphonse Ethier		
+Q2135682	cast	Q1357250	Jack Holt		
+Q2135682	cast	Q2177322	Virginia Brown Faire		
+Q2135682	cast	Q429966	Dorothy Revier		
+Q2135682	cast	Q5343388	ガイ・エドワード・ハーン		
+Q54020945	director	Q374091	Phil Rosen		
+Q54020945	cinematographer	Q322960	Ted Tetzlaff		
+Q54020945	editor	Q8010758	William Hamilton		
+Q25136751	director	Q2831529	Albert S. Rogell		
+Q25136751	writer	Q3483497	Sig Herzig		
+Q25136751	producer	Q1586470	Harry Cohn		
+Q25136751	cinematographer	Q512453	James Van Trees		
+Q25136751	editor	Q8010758	William Hamilton		
+Q25136751	cast	Q2899198	Bert Lytell		
+Q37801623	director	Q2474020	Joseph Henabery		
+Q37801623	writer	Q5298462	Dorothy Howell		
+Q37801623	producer	Q1586470	Harry Cohn		
+Q37801623	cinematographer	Q960230	Joseph Walker		
+Q37801623	editor	Q2865317	Arthur Roberts		
+Q37801623	cast	Q2446692	Ben Lyon		
+Q37801623	cast	Q429966	Dorothy Revier		
+Q37801623	cast	Q3086873	Fred Kohler		
+Q104904922	director	Q117860340	Basil Smith		
+Q104904922	director	Q118192839	Jasper Ewing Brady		
+Q104904922	cinematographer	Q6456262	Lawrence Dallin Clawson		
+Q104904922	cast	Q366358	Jimmie Rodgers		
+Q4332239	director	Q51492	Frank Capra		
+Q4332239	writer	Q434645	Sonya Levien		
+Q4332239	composer	Q969404	Mischa Bakaleinikoff		
+Q4332239	producer	Q1586470	Harry Cohn		
+Q4332239	cinematographer	Q322960	Ted Tetzlaff		
+Q4332239	cast	Q6114758	Jack Raymond		
+Q4332239	cast	Q2898617	Bernard Siegel		
+Q4332239	cast	Q2033544	Ricardo Cortez		
+Q4332239	cast	Q1972434	Julanne Johnston		
+Q4332239	cast	Q5126425	Clarence Burton		
+Q4332239	cast	Q359251	Jean Hersholt		
+Q4332239	cast	Q275440	Lina Basquette		
+Q4332239	cast	Q3179992	Joe Bordeaux		
+Q4332239	cast	Q3189066	Julia Swayne Gordon		
+Q4332239	cast	Q3229638	Leon Janney		
+Q3886106	director	Q2485848	Roy William Neill		
+Q3886106	producer	Q1586470	Harry Cohn		
+Q3886106	cinematographer	Q322960	Ted Tetzlaff		
+Q3886106	costume_designer	Q111577	Howard Greer		
+Q3886106	cast	Q3418267	Ralph Ince		
+Q3886106	cast	Q405036	Aileen Pringle		
+Q3236001	director	Q630819	Burt Gillett		
+Q3236001	composer	Q598185	Carl W. Stalling		
+Q3236001	producer	Q8704	Walt Disney		
+Q3050275	director	Q8704	Walt Disney		
+Q3050275	writer	Q8704	Walt Disney		
+Q3050275	composer	Q598185	Carl W. Stalling		
+Q3050275	producer	Q8704	Walt Disney		
+Q338214	director	Q8704	Walt Disney		
+Q338214	composer	Q598185	Carl W. Stalling		
+Q338214	producer	Q8704	Walt Disney		
+Q338214	follows	Q3222924	ミッキーの浮かれ音楽団		
+Q338214	followed_by	Q3521221	お化け屋敷		
+Q3567703	director	Q8704	Walt Disney		
+Q3567703	composer	Q598185	Carl W. Stalling		
+Q3567703	producer	Q8704	Walt Disney		
+Q3567703	follows	Q1137749	ミッキーのオペラ見学		
+Q3567703	followed_by	Q2948566	裏庭の闘い		
+Q2275783	director	Q8704	Walt Disney		
+Q2275783	composer	Q598185	Carl W. Stalling		
+Q2275783	producer	Q8704	Walt Disney		
+Q2275783	follows	Q1753096	プレーン・クレイジー		
+Q2275783	followed_by	Q1137749	ミッキーのオペラ見学		
+Q1137749	director	Q8704	Walt Disney		
+Q1137749	writer	Q8704	Walt Disney		
+Q1137749	composer	Q598185	Carl W. Stalling		
+Q1137749	producer	Q8704	Walt Disney		
+Q1137749	follows	Q2275783	バーン・ダンス		
+Q1137749	followed_by	Q3567703	ネコの居ぬ間のタップダンス		
+Q3222924	director	Q8704	Walt Disney		
+Q3222924	composer	Q598185	Carl W. Stalling		
+Q3222924	producer	Q8704	Walt Disney		
+Q3222924	follows	Q3210080	ミッキーの汽車旅行		
+Q3222924	followed_by	Q338214	ジャングル・リズム		
+Q3231606	director	Q336424	Ub Iwerks		
+Q3231606	composer	Q598185	Carl W. Stalling		
+Q3231606	producer	Q8704	Walt Disney		
+Q920733	director	Q336424	Ub Iwerks		
+Q920733	writer	Q8704	Walt Disney		
+Q920733	composer	Q598185	Carl W. Stalling		
+Q920733	producer	Q8704	Walt Disney		
+Q920733	executive_producer	Q8704	Walt Disney		
+Q3521841	director	Q8704	Walt Disney		
+Q3521841	composer	Q598185	Carl W. Stalling		
+Q3521841	producer	Q8704	Walt Disney		
+Q2948566	director	Q8704	Walt Disney		
+Q2948566	composer	Q598185	Carl W. Stalling		
+Q2948566	producer	Q8704	Walt Disney		
+Q2948566	follows	Q3567703	ネコの居ぬ間のタップダンス		
+Q2948566	followed_by	Q1137742	ミッキーの畑仕事		

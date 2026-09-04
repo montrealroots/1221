@@ -22,7 +22,7 @@
  * the client writes, which is exactly what the guard is for and exactly what
  * you do not want to find out in production.
  */
-export const SUPPORTED_SCHEMA_VERSION = 14;
+export const SUPPORTED_SCHEMA_VERSION = 15;
 
 /** A save larger than this is refused rather than silently truncated. */
 export const MAX_PAYLOAD_BYTES = 24 * 1024 * 1024;

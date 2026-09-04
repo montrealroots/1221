@@ -1,0 +1,123 @@
+qid	role	personQid	name	character	ordinal
+Q3241699	director	Q51559	Sidney Lumet		
+Q3241699	writer	Q573997	Anthony Shaffer		
+Q3241699	writer	Q678500	Paul Dehn		
+Q3241699	composer	Q959863	Richard Rodney Bennett		
+Q3241699	producer	Q332969	John Knatchbull, 7th Baron Brabourne		
+Q3241699	producer	Q19356936	Richard Goodwin		
+Q3241699	cinematographer	Q489951	Geoffrey Unsworth		
+Q3241699	editor	Q31294	Anne V. Coates		
+Q3241699	costume_designer	Q2803671	Tony Walton		
+Q3241699	production_designer	Q2803671	Tony Walton		
+Q3241699	cast	Q205868	Vernon Dobtcheff		
+Q3241699	cast	Q1507169	George Coulouris		
+Q3241699	cast	Q719529	Colin Blakely		
+Q3241699	cast	Q347879	Vanessa Redgrave		
+Q3241699	cast	Q3938408	Robert Riettii		
+Q3241699	cast	Q1187605	Denis Quilley		
+Q3241699	cast	Q320036	Richard Widmark		
+Q3241699	cast	Q2805798	Jeremy Lloyd		
+Q3241699	cast	Q959863	Richard Rodney Bennett		
+Q3241699	cast	Q312107	Martin Balsam		
+Q3241699	cast	Q204685	John Gielgud	Edward Beddoes	
+Q3241699	cast	Q193146	Anthony Perkins	Hector McQueen	
+Q3241699	cast	Q232477	Jacqueline Bisset	Countess Helena Andrenyi	
+Q3241699	cast	Q230626	Wendy Hiller	Princess Natalia Dragomiroff	
+Q3241699	cast	Q254828	Rachel Roberts	Hildegarde Schmidt	
+Q3241699	cast	Q4573	Sean Connery	Colonel Arbuthnot	
+Q3241699	cast	Q104000	Lauren Bacall	Mrs. Hubbard	
+Q3241699	cast	Q319527	Jean-Pierre Cassel	Pierre Paul Michel	
+Q3241699	cast	Q298777	Michael York	Count Rudolf Andrenyi	
+Q3241699	cast	Q219546	Albert Finney	Hercule Poirot	
+Q3241699	cast	Q43247	Ingrid Bergman	Greta Ohlsson	
+Q3241699	award		Academy Award for Best Supporting Actress		
+Q3241699	award		National Board of Review: Top Ten Films		
+Q3241699	followed_by	Q1059914	Death on the Nile		
+Q3241699	subject		family		
+Q3241699	subject		murder		
+Q3241699	subject		kidnapping		
+Q3241699	subject		detective		
+Q3241699	subject		revenge		
+Q3241699	subject		family relation		
+Q179532	director	Q337226	Bertrand Tavernier		
+Q179532	writer	Q337226	Bertrand Tavernier		
+Q179532	writer	Q978299	Jean Aurenche		
+Q179532	writer	Q3384095	Pierre Bost		
+Q179532	composer	Q677738	Philippe Sarde		
+Q179532	producer	Q1746860	Raymond Danon		
+Q179532	cinematographer	Q728754	Pierre-William Glenn		
+Q179532	editor	Q15783959	Armand Psenny		
+Q179532	executive_producer	Q3418230	Ralph Baum		
+Q179532	cast	Q451637	Christine Pascal		
+Q179532	cast	Q2831251	Albert Husson		
+Q179532	cast	Q3161984	Janine Berdin		
+Q179532	cast	Q21483300	Johnny Wessler		
+Q179532	cast	Q21483432	Henri Pasquale		
+Q179532	cast	Q1122249	Julien Bertheau		
+Q179532	cast	Q106555	Jean Rochefort		
+Q179532	cast	Q2848982	Andrée Tainsy		
+Q179532	cast	Q21483510	Jacques Barrac		
+Q179532	cast	Q3158699	Jacques Denis		
+Q179532	cast	Q21483293	Georges Baconnier		
+Q179532	cast	Q106482	Philippe Noiret		
+Q179532	cast	Q21483479	André San Fratello		
+Q179532	cast	Q21483297	René Morard		
+Q179532	cast	Q21483350	Jean Marigny		
+Q179532	cast	Q21483282	Bernard Frangin		
+Q179532	cast	Q21483262	Liza Braconnier		
+Q179532	cast	Q3528268	Tiffany Tavernier		
+Q179532	cast	Q3573442	Yves Afonso		
+Q179532	cast	Q21483299	Henri Vart		
+Q179532	cast	Q3568923	William Sabatier		
+Q179532	cast	Q3371829	Paul Mercey		
+Q179532	cast	Q21483277	Sacha Bauer		
+Q179532	cast	Q2979692	Clotilde Joano		
+Q179532	cast	Q21483304	Papa Chauvin		
+Q179532	cast	Q370457	Jacques Hilling		
+Q179532	cast	Q534537	Cécile Vassort		
+Q179532	cast	Q21483251	Sylvain Rougerie		
+Q179532	cast	Q274043	Monique Chaumette		
+Q179532	cast	Q21483305	Jacqueline Corot		
+Q179532	cast	Q21483273	Hervé Morel		
+Q179532	award		Silver Bear Grand Jury Prize		
+Q179532	award		Louis Delluc Prize		
+Q1194007	director	Q787176	Philippe Labro		
+Q1194007	writer	Q787176	Philippe Labro		
+Q1194007	composer	Q1930698	Michel Colombier		
+Q1194007	producer	Q2829544	Alain Belmondo		
+Q1194007	cinematographer	Q1428706	Jean Penzer		
+Q1194007	editor	Q3174244	Jean Ravel		
+Q1194007	cast	Q3302084	Max Doria		
+Q1194007	cast	Q1096563	Claude Carliez		
+Q1194007	cast	Q3158733	Jacques Destoop		
+Q1194007	cast	Q3288159	Marc Lamole		
+Q1194007	cast	Q3167093	Jean-Luc Boutté		
+Q1194007	cast	Q106255	Jean-Paul Belmondo		
+Q1194007	cast	Q2853654	Antoine Baud		
+Q1194007	cast	Q3173756	Jean Négroni		
+Q1194007	cast	Q3426003	René Chateau		
+Q1194007	cast	Q3158744	Jacques Dhery		
+Q1194007	cast	Q3369439	Patrick Fierry		
+Q1194007	cast	Q3309000	Michel Berreur		
+Q1194007	cast	Q3557317	Victor Garrivier		
+Q1194007	cast	Q3300341	Maurice Auzel		
+Q1194007	cast	Q3169425	Jean-Pierre Jorris		
+Q1194007	cast	Q2977082	Claude Brosset		
+Q1194007	cast	Q139560	Bruno Cremer		
+Q2364074	director	Q769772	François Leterrier		
+Q2364074	writer	Q769772	François Leterrier		
+Q2364074	writer	Q11693440	Monique Lange		
+Q2364074	composer	Q1698	Serge Gainsbourg		
+Q2364074	cinematographer	Q788300	Jean Badal		
+Q2364074	editor	Q516007	Marie-Josèphe Yoyotte		
+Q2364074	costume_designer	Q521483	Catherine Leterrier		
+Q2364074	cast	Q3169058	Jean-Pierre Bouvier		
+Q2364074	cast	Q3116222	Greg Germain		
+Q2364074	cast	Q378035	Olga Georges-Picot		
+Q2364074	cast	Q451524	Alexandra Stewart		
+Q2364074	cast	Q520725	Charlotte Alexandra		
+Q2364074	cast	Q207592	Sylvia Kristel		
+Q2364074	cast	Q943378	Umberto Orsini		
+Q2364074	cast	Q118488	Jacques Doniol-Valcroze		
+Q2364074	follows	Q2251841	Emmanuelle 2		
+Q2364074	followed_by	Q1338470	Emmanuelle 4		

@@ -1219,6 +1219,8 @@ export interface Project {
   /** Release. */
   releaseId?: Id;
   distributorName?: string;
+  /** The real studio that set it up or released it, when one did. */
+  studioId?: string;
   releaseDate?: Instant;
   /** How it reached the public: theatrical, streaming, network. Set at release; read by the award bodies. */
   releaseStrategy?: Release['strategy'];
@@ -1593,7 +1595,7 @@ export interface FestivalSubmission {
   section?: string;
   screeningAt?: Instant;
   awardsWon: string[];
-  acquisitionOffers: { buyerName: string; amount: Money; territories: string[]; at: Instant; accepted: boolean }[];
+  acquisitionOffers: { buyerName: string; studioId?: string; amount: Money; territories: string[]; at: Instant; accepted: boolean }[];
 }
 
 export interface Franchise {
@@ -1795,7 +1797,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 14;
+export const SAVE_SCHEMA_VERSION = 15;
 
 export interface SaveMeta {
   id: Id;

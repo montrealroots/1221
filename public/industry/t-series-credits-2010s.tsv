@@ -1,0 +1,464 @@
+qid	role	personQid	name	character	ordinal
+Q6349035	director	Q786469	Pooja Bhatt		
+Q6349035	writer	Q16196256	Shagufta Rafiq		
+Q6349035	composer	Q1395430	Himesh Reshammiya		
+Q6349035	producer	Q4902221	Bhushan Kumar		
+Q6349035	cast	Q6165330	Javed Sheikh		
+Q6349035	cast	Q3489680	Gulshan Grover		
+Q6349035	cast	Q7421693	Sara Loren		
+Q6349035	cast	Q1395430	Himesh Reshammiya		
+Q7701702	director	Q3121114	Satish Kaushik		
+Q7701702	cast	Q1395430	Himesh Reshammiya		
+Q5269397	director	Q27947645	Navaniat Singh		
+Q5269397	composer	Q6123534	Jaidev Kumar		
+Q5269397	producer	Q5225533	Darshan Singh Grewal		
+Q5269397	cast	Q7491107	Shavinder Mahal		
+Q5269397	cast	Q7293410	Rannvijay Singh		
+Q5269397	cast	Q1373345	Jimmy Shergill		
+Q5269397	cast	Q16730774	Japji Khaira		
+Q5269397	cast	Q7283589	Rahul Dev		
+Q5269397	cast	Q3401588	Prem Chopra		
+Q5269397	cast	Q2748182	Jaspal Bhatti		
+Q5269397	cast	Q7647021	Surveen Chawla		
+Q5269397	cast	Q4914455	Binnu Dhillon		
+Q7144913	director	Q2332619	Nikhil Advani		
+Q7144913	writer	Q4777994	Anvita Dutt		
+Q7144913	composer	Q2531621	Shankar–Ehsaan–Loy		
+Q7144913	producer	Q2556523	Twinkle Khanna		
+Q7144913	producer	Q4902221	Bhushan Kumar		
+Q7144913	cinematographer	Q7420668	Santosh Thundiyil		
+Q7144913	cast	Q233748	Akshay Kumar		
+Q7144913	cast	Q158558	Dimple Kapadia		
+Q7144913	cast	Q4792483	Armaan Kirmani		
+Q7144913	cast	Q258820	Rishi Kapoor		
+Q7144913	cast	Q465815	Anushka Sharma		
+Q7144913	cast	Q4156562	Hard Kaur		
+Q7144913	follows	Q1140607	We Are Family		
+Q3351117	director	Q652149	Anees Bazmee		
+Q3351117	writer	Q5996234	Ikram Akhtar		
+Q3351117	composer	Q3633978	Pritam Chakraborty		
+Q3351117	producer	Q983053	Sohail Khan		
+Q3351117	producer	Q4902221	Bhushan Kumar		
+Q3351117	cast	Q3123705	Paresh Rawal		
+Q3351117	cast	Q470226	Asin		
+Q3351117	cast	Q9543	Salman Khan		
+Q3351117	cast	Q3089275	Mahesh Manjrekar		
+Q8046324	director	Q23418649	Ksshitij Chaudhary		
+Q8046324	composer	Q17054201	Nitin kumar gupta		
+Q8046324	cast	Q5617958	Gulzar Inder Chahal		
+Q8046324	cast	Q5620246	Gurpreet Ghuggi		
+Q8046324	cast	Q7852064	Tulip Joshi		
+Q8046324	cast	Q312719	Kabir Bedi		
+Q8046324	cast	Q5654381	Harbhajan Mann		
+Q4662712	director	Q3319134	Mohit Suri		
+Q4662712	writer	Q16196256	Shagufta Rafiq		
+Q4662712	composer	Q15340767	Ankit Tiwari		
+Q4662712	producer	Q4902221	Bhushan Kumar		
+Q4662712	producer	Q6933426	Mukesh Bhatt		
+Q4662712	cinematographer	Q61746768	Vishnu Rao		
+Q4662712	cast	Q15055683	Shraddha Kapoor		
+Q4662712	cast	Q6733875	Mahesh Thakur		
+Q4662712	cast	Q4683087	Aditya Roy Kapur		
+Q5443731	director	Q7334493	Rimpy Prince		
+Q5443731	director	Q130525374	Harpreet Singh		
+Q5443731	cast	Q14227261	B. N. Sharma		
+Q5443731	cast	Q16730774	Japji Khaira		
+Q5443731	cast	Q28527620	Roshan Prince		
+Q5443731	cast	Q7426286	Satish Kaul		
+Q5443731	cast	Q4901046	Bhanu Sri Mehra		
+Q5443731	cast	Q115533596	Hobby Dhaliwal		
+Q5443731	cast	Q7290657	Rana Ranbir		
+Q5443731	cast	Q19664342	Karamjit Anmol		
+Q5978161	director	Q23416510	Vinay Sapru		
+Q5978161	director	Q24572162	Radhika Rao		
+Q5978161	composer	Q3633978	Pritam Chakraborty		
+Q5978161	producer	Q4902221	Bhushan Kumar		
+Q5978161	cast	Q944546	Sunny Deol		
+Q5978161	cast	Q2737207	Kangana Ranaut		
+Q6080473	director	Q16734886	Prem Raj		
+Q6080473	writer	Q188671	Preity Zinta		
+Q6080473	writer	Q16734886	Prem Raj		
+Q6080473	composer	Q3469326	Sajid-Wajid		
+Q6080473	producer	Q188671	Preity Zinta		
+Q6080473	cinematographer	Q20649860	Manush Nandan		
+Q6080473	costume_designer	Q7646292	Surily Goel		
+Q6080473	cast	Q106383	Isabelle Adjani		
+Q6080473	cast	Q5527747	Gaurav Chanana		
+Q6080473	cast	Q522232	Shekhar Kapur		
+Q6080473	cast	Q188671	Preity Zinta		
+Q6080473	cast	Q9543	Salman Khan		
+Q6080473	follows	Q7371867	Rowdy Rathore		
+Q6981458	director	Q3439747	Rohan Sippy		
+Q6981458	writer	Q3439747	Rohan Sippy		
+Q6981458	composer	Q5431631	Falak Shabir		
+Q6981458	producer	Q1386330	Ramesh Sippy		
+Q6981458	producer	Q4902221	Bhushan Kumar		
+Q6981458	editor	Q131341204	Aarif Sheikh		
+Q6981458	cast	Q5416436	Evelyn Sharma		
+Q6981458	cast	Q7228529	Pooja Salvi		
+Q6981458	cast	Q6444134	Kunaal Roy Kapur		
+Q6981458	cast	Q4831843	Ayushmann Khurrana		
+Q7260240	cast	Q7423522	Sarbjit Cheema		
+Q16952604	director	Q2738917	Vikram Bhatt		
+Q16952604	writer	Q2738917	Vikram Bhatt		
+Q16952604	writer	Q16832091	Sukhmani Sadana		
+Q16952604	composer	Q6881637	Mithoon		
+Q16952604	producer	Q4902221	Bhushan Kumar		
+Q16952604	producer	Q6437338	Krishan Kumar		
+Q16952604	cinematographer	Q6729879	Pravin Bhatt		
+Q16952604	cast	Q2876219	Mukul Dev		
+Q16952604	cast	Q5250644	Deepraj Rana		
+Q16952604	cast	Q3521637	Karan Singh Grover		
+Q16952604	cast	Q4907449	Bikramjeet Kanwarpal		
+Q16952604	cast	Q158214	Bipasha Basu		
+Q16952604	cast	Q313025	John Abraham		
+Q3127192	director	Q167636	Farah Khan		
+Q3127192	writer	Q17386352	Mayur Puri		
+Q3127192	composer	Q3135937	Vishal–Shekhar		
+Q3127192	producer	Q45870	Gauri Khan		
+Q3127192	cinematographer	Q20649860	Manush Nandan		
+Q3127192	cast	Q2573055	Sonu Sood		
+Q3127192	cast	Q834338	Boman Irani		
+Q3127192	cast	Q159178	Deepika Padukone		
+Q3127192	cast	Q368447	Dino Morea		
+Q3127192	cast	Q560163	Anupam Kher		
+Q3127192	cast	Q9535	Shah Rukh Khan		
+Q3127192	cast	Q187058	アビシェーク・バッチャン		
+Q3127192	cast	Q560178	Jackie Shroff		
+Q3127192	follows	Q14719604	Bang Bang!		
+Q17198963	director	Q21063120	Vishal Pandya		
+Q17198963	writer	Q24668868	Madhuri Banerjee		
+Q17198963	composer	Q6881637	Mithoon		
+Q17198963	producer	Q2738917	Vikram Bhatt		
+Q17198963	producer	Q4902221	Bhushan Kumar		
+Q17198963	cast	Q7647021	Surveen Chawla		
+Q17198963	cast	Q7286062	Rajesh Khera		
+Q17198963	cast	Q3633952	Sushant Singh		
+Q17198963	cast	Q6166404	Jay Bhanushali		
+Q16043869	director	Q725970	David Dhawan		
+Q16043869	writer	Q20107613	Tushar Hiranandani		
+Q16043869	composer	Q3469326	Sajid-Wajid		
+Q16043869	producer	Q7499788	Shobha Kapoor		
+Q16043869	narrator	Q7916220	Varun Dhawan		
+Q16043869	cast	Q7427518	Saurabh Shukla		
+Q16043869	cast	Q2601257	Nargis Fakhri		
+Q16043869	cast	Q560163	Anupam Kher		
+Q16043869	cast	Q4806191	Ashwin Mushran		
+Q16043869	cast	Q3629983	Ileana D'Cruz		
+Q16043869	cast	Q7286468	Raju Kher		
+Q16043869	cast	Q16201528	Manoj Pahwa		
+Q16043869	cast	Q7645139	Supriya Shukla		
+Q16043869	cast	Q23771359	Neel Motwani		
+Q16043869	cast	Q5416436	Evelyn Sharma		
+Q16043869	cast	Q97959576	Kavish Majumdar		
+Q16043869	cast	Q7916220	Varun Dhawan		
+Q16043869	cast	Q312789	Shakti Kapoor		
+Q16043869	cast	Q3496304	Rajpal Yadav		
+Q16043869	cast	Q2815590	Arunoday Singh		
+Q16043869	follows	Q15643554	Jai Ho		
+Q7560766	director	Q117860374	Charudutt Acharya		
+Q7560766	producer	Q3439747	Rohan Sippy		
+Q7560766	cast	Q3632820	Smita Jaykar		
+Q7560766	cast	Q7653555	Swanand Kirkire		
+Q7560766	cast	Q16209728	Raghav Juyal		
+Q7560766	cast	Q4724794	Ali Fazal		
+Q7560766	cast	Q560163	Anupam Kher		
+Q7560766	cast	Q7320290	Rhea Chakraborty		
+Q17157330	director	Q16221279	Divya Khosla Kumar		
+Q17157330	composer	Q3633978	Pritam Chakraborty		
+Q17157330	producer	Q4902221	Bhushan Kumar		
+Q17157330	editor	Q131341204	Aarif Sheikh		
+Q17157330	cast	Q16730962	Himansh Kohli		
+Q18110036	director	Q6986928	Neeraj Pandey		
+Q18110036	writer	Q6986928	Neeraj Pandey		
+Q18110036	composer	Q3765059	M. M. Keeravani		
+Q18110036	producer	Q4902221	Bhushan Kumar		
+Q18110036	cinematographer	Q7633673	Sudeep Chatterjee		
+Q18110036	editor	Q48473040	Shree Narayan Singh		
+Q18110036	cast	Q233748	Akshay Kumar		
+Q18110036	cast	Q113031131	Sanjeev Tyagi		
+Q18110036	cast	Q575917	Danny Denzongpa		
+Q18110036	followed_by	Q27590331	Naam Shabana		
+Q18110036	subject		terrorism		
+Q16841214	director	Q2738917	Vikram Bhatt		
+Q16841214	director	Q7499317	Shivam Nair		
+Q16841214	writer	Q2738917	Vikram Bhatt		
+Q16841214	composer	Q3523638	Devi Sri Prasad		
+Q16841214	producer	Q2738917	Vikram Bhatt		
+Q16841214	producer	Q4902221	Bhushan Kumar		
+Q16841214	cast	Q4802074	Arun Bali		
+Q16841214	cast	Q16201077	Mandana Karimi		
+Q16841214	cast	Q15261702	Manasi Scott		
+Q16841214	cast	Q2738917	Vikram Bhatt		
+Q16841214	cast	Q7040540	Nishigandha Wad		
+Q16841214	cast	Q8073152	Zoa Morani		
+Q16841214	cast	Q3497323	Kunal Khemu		
+Q21107374	director	Q19892693	Bobby Khan		
+Q21107374	composer	Q16732422	Meet Bros		
+Q21107374	cast	Q260794	Sunny Leone		
+Q21107374	cast	Q6894200	Mohit Ahlawat		
+Q21107374	cast	Q6166404	Jay Bhanushali		
+Q21107374	cast	Q7283589	Rahul Dev		
+Q21107374	cast	Q2376253	Rajneesh Duggal		
+Q19824695	director	Q21063120	Vishal Pandya		
+Q19824695	writer	Q2738917	Vikram Bhatt		
+Q19824695	composer	Q24049859	Sunny–Inder Bawra		
+Q19824695	cast	Q1376396	Sharman Joshi		
+Q19824695	cast	Q3521637	Karan Singh Grover		
+Q19824695	cast	Q3046959	Zarine Khan		
+Q19824695	cast	Q16218779	Daisy Shah		
+Q7372496	director	Q18714010	Vikramjit Singh		
+Q7372496	composer	Q15340767	Ankit Tiwari		
+Q7372496	producer	Q4902221	Bhushan Kumar		
+Q7372496	cast	Q1063412	Ranbir Kapoor		
+Q7372496	cast	Q442668	Arjun Rampal		
+Q7372496	cast	Q2312801	Jacqueline Fernandez		
+Q19824736	director	Q7937583	Vivek Agnihotri		
+Q19824736	composer	Q15340767	Ankit Tiwari		
+Q19824736	producer	Q4902221	Bhushan Kumar		
+Q19824736	cinematographer	Q4818122	Attar Singh Saini		
+Q19824736	cast	Q7259368	Pulkit Samrat		
+Q19824736	cast	Q8048050	Yami Gautam		
+Q19824736	cast	Q3057324	Hrishitaa Bhatt		
+Q23013708	director	Q2738917	Vikram Bhatt		
+Q23013708	writer	Q2738917	Vikram Bhatt		
+Q23013708	producer	Q6933426	Mukesh Bhatt		
+Q23013708	cast	Q17318822	Patralekha		
+Q18127580	director	Q6986928	Neeraj Pandey		
+Q18127580	writer	Q6986928	Neeraj Pandey		
+Q18127580	composer	Q19560237	Sanjoy Chowdhury		
+Q18127580	cinematographer	Q7420668	Santosh Thundiyil		
+Q18127580	editor	Q48473040	Shree Narayan Singh		
+Q18127580	cast	Q7286088	Rajesh Sharma		
+Q18127580	cast	Q16200055	Mithu Chakrabarty		
+Q18127580	cast	Q22007335	Disha Patani		
+Q18127580	cast	Q2723699	Kiran More		
+Q18127580	cast	Q10296530	Sushant Singh Rajput		
+Q18127580	cast	Q560163	Anupam Kher		
+Q18127580	cast	Q16762720	Kiara Advani		
+Q18127580	cast	Q23762752	Kumud Mishra		
+Q18127580	cast	Q3236611	Bhumika Chawla		
+Q18127580	cast	Q7296737	Ravindra Mankani	Jagmohan Dalmiya	
+Q18127580	cast	Q27656554	Kranti Prakash Jha	Santosh Lal	
+Q18127580	subject		マヘンドラ・シン・ドーニ		
+Q28458011	director	Q56249709	Milap Zaveri		
+Q28458011	writer	Q56249709	Milap Zaveri		
+Q28458011	composer	Q23760776	Raju Singh		
+Q28458011	cast	Q7933532	Vir Das		
+Q18170349	director	Q13118344	Nishikant Kamat		
+Q18170349	writer	Q41586211	Ritesh Shah		
+Q18170349	composer	Q24049859	Sunny–Inder Bawra		
+Q18170349	producer	Q313025	John Abraham		
+Q18170349	cast	Q97009627	Diya Chalwad		
+Q18170349	cast	Q313025	John Abraham		
+Q18170349	cast	Q7489359	Sharad Kelkar		
+Q18170349	cast	Q13118344	Nishikant Kamat		
+Q18170349	cast	Q331155	Shruti Haasan		
+Q19263959	director	Q16221279	Divya Khosla Kumar		
+Q19263959	composer	Q18921323	Amaal Mallik		
+Q19263959	producer	Q4902221	Bhushan Kumar		
+Q19263959	cast	Q8048050	Yami Gautam		
+Q19263959	cast	Q258820	Rishi Kapoor		
+Q19263959	cast	Q7259368	Pulkit Samrat		
+Q19263959	cast	Q7901587	Urvashi Rautela		
+Q23013811	director	Q21062591	Omung Kumar		
+Q23013811	writer	Q27907199	Utkarshini Vashishtha		
+Q23013811	composer	Q6172986	Jeet Ganguly		
+Q23013811	producer	Q7916535	Vashu Bhagnani		
+Q23013811	editor	Q16902242	Rajesh Pandey		
+Q23013811	cast	Q47059	Aishwarya Rai		
+Q21998267	director	Q16148170	Shawn Arranha		
+Q21998267	composer	Q1395430	Himesh Reshammiya		
+Q21998267	producer	Q7933493	Vipin Reshammiya		
+Q21998267	cast	Q6899937	Monica Dogra		
+Q21998267	cast	Q469945	Naseeruddin Shah		
+Q21998267	cast	Q1395430	Himesh Reshammiya		
+Q21998267	cast	Q22950462	Farah Karimaee		
+Q21998267	cast	Q522232	Shekhar Kapur		
+Q23762915	director	Q4777707	Anubhav Sinha		
+Q23762915	writer	Q4777707	Anubhav Sinha		
+Q23762915	composer	Q15340767	Ankit Tiwari		
+Q23762915	cast	Q16887606	Aditya Seal		
+Q23762915	cast	Q6919169	Mouni Roy		
+Q23762915	cast	Q6365733	Kanwaljit Singh		
+Q23762915	cast	Q863745	Neha Sharma		
+Q23762915	follows	Q7852442	Tum Bin		
+Q27444410	director	Q21063120	Vishal Pandya		
+Q27444410	writer	Q21063120	Vishal Pandya		
+Q27444410	composer	Q6881637	Mithoon		
+Q27444410	producer	Q4902221	Bhushan Kumar		
+Q27444410	cast	Q2376253	Rajneesh Duggal		
+Q27444410	cast	Q1376396	Sharman Joshi		
+Q27444410	cast	Q5408135	Sana Khan		
+Q27444410	cast	Q4507797	Gurmeet Choudhary		
+Q20201985	director	Q15436476	Milan Luthria		
+Q20201985	writer	Q7285862	Rajat Arora		
+Q20201985	producer	Q4902221	Bhushan Kumar		
+Q20201985	editor	Q131341204	Aarif Sheikh		
+Q20201985	cast	Q7489359	Sharad Kelkar		
+Q20201985	cast	Q3053437	Emraan Hashmi		
+Q20201985	cast	Q5397761	Esha Gupta		
+Q20201985	cast	Q7418358	Sanjay Mishra		
+Q20201985	cast	Q146929	Ajay Devgn		
+Q20201985	cast	Q3629983	Ileana D'Cruz		
+Q20201985	cast	Q3557842	Vidyut Jammwal		
+Q28529484	director	Q21062591	Omung Kumar		
+Q28529484	writer	Q29452451	Raaj Shaandilyaa		
+Q28529484	composer	Q3033311	Ismail Darbar		
+Q28529484	composer	Q17080301	Sachin–Jigar		
+Q28529484	producer	Q4902221	Bhushan Kumar		
+Q28529484	cinematographer	Q20736453	Artur Żurawski		
+Q28529484	cast	Q7332372	Riddhi Sen		
+Q28529484	cast	Q7493263	Shekhar Suman		
+Q28529484	cast	Q4683039	Aditi Rao Hydari		
+Q28529484	cast	Q310867	Sanjay Dutt		
+Q28529484	cast	Q7489359	Sharad Kelkar		
+Q28529484	cast	Q7261614	Puru Chibber		
+Q28529484	cast	Q16729510	Sidhant Gupta		
+Q27964501	director	Q22348093	Raja Krishna Menon		
+Q27964501	writer	Q22348093	Raja Krishna Menon		
+Q27964501	composer	Q7282983	Raghu Dixit		
+Q27964501	producer	Q4902221	Bhushan Kumar		
+Q27964501	cast	Q252290	Saif Ali Khan		
+Q27957931	director	Q7402903	Saket Chaudhary		
+Q27957931	composer	Q17080301	Sachin–Jigar		
+Q27957931	producer	Q5278105	Dinesh Vijan		
+Q27957931	cinematographer	Q61989043	Laxman Utekar		
+Q27957931	editor	Q3177812	A. Sreekar Prasad		
+Q27957931	cast	Q3045307	Sanjay Suri		
+Q27957931	cast	Q360927	Irrfan Khan		
+Q27957931	cast	Q30641582	Sumit Gulati		
+Q27957931	cast	Q7286088	Rajesh Sharma		
+Q27957931	cast	Q2433720	Tillotama Shome		
+Q27957931	cast	Q7204147	Saba Qamar		
+Q27957931	cast	Q3633940	Deepak Dobriyal		
+Q27957931	cast	Q2670291	Amrita Singh		
+Q27957931	cast	Q28033782	Mallika Dua		
+Q27957931	cast	Q3494299	Neha Dhupia		
+Q27957931	award		Filmfare Award for Best Film		
+Q26684075	producer	Q4902221	Bhushan Kumar		
+Q26684075	editor	Q131341204	Aarif Sheikh		
+Q26684075	cast	Q614907	Sonakshi Sinha		
+Q25217767	director	Q5278105	Dinesh Vijan		
+Q25217767	composer	Q3633978	Pritam Chakraborty		
+Q25217767	producer	Q5278105	Dinesh Vijan		
+Q25217767	cinematographer	Q3295604	Martin Preiss		
+Q25217767	editor	Q3177812	A. Sreekar Prasad		
+Q25217767	narrator	Q360927	Irrfan Khan		
+Q25217767	cast	Q10950087	Nidhi Subbaiah		
+Q25217767	cast	Q16233540	Kriti Sanon		
+Q25217767	cast	Q10296530	Sushant Singh Rajput		
+Q25217767	cast	Q16202280	Varun Sharma		
+Q25218337	director	Q16732431	Hansal Mehta		
+Q25218337	writer	Q4782324	Apurva Asrani		
+Q25218337	composer	Q17080301	Sachin–Jigar		
+Q25218337	producer	Q4902221	Bhushan Kumar		
+Q25218337	cast	Q2737207	Kangana Ranaut		
+Q29025265	composer	Q30557637	Guru Randhawa		
+Q29025265	producer	Q4902221	Bhushan Kumar		
+Q29025265	cast	Q159166	Vidya Balan	Sulochana	
+Q29025265	cast	Q11766987	Manav Kaul	Ashok Dubey	
+Q55604191	director	Q7359763	Rohit Jugraj Chauhan		
+Q55604191	writer	Q41586211	Ritesh Shah		
+Q55604191	composer	Q17080301	Sachin–Jigar		
+Q55604191	producer	Q4902221	Bhushan Kumar		
+Q48671170	director	Q48473040	Shree Narayan Singh		
+Q48671170	writer	Q7933507	Vipul K Rawal		
+Q48671170	composer	Q612167	Anu Malik		
+Q48671170	producer	Q4902221	Bhushan Kumar		
+Q48671170	editor	Q48473040	Shree Narayan Singh		
+Q48671170	cast	Q319491	Shahid Kapoor		
+Q38804955	director	Q56223198	Akshat Verma		
+Q38804955	composer	Q4746891	Amit Trivedi		
+Q38804955	producer	Q4902221	Bhushan Kumar		
+Q38804955	cinematographer	Q7809275	Tirru		
+Q38804955	cast	Q47059	Aishwarya Rai		
+Q38804955	cast	Q313956	Anil Kapoor		
+Q38804955	cast	Q7285367	Rajkummar Rao		
+Q42322844	director	Q21063120	Vishal Pandya		
+Q42322844	composer	Q24049859	Sunny–Inder Bawra		
+Q42322844	cast	Q6368403	Karan Wahi		
+Q42322844	cast	Q7937536	Vivan Bhatena		
+Q42322844	cast	Q3489680	Gulshan Grover		
+Q42322844	cast	Q7901587	Urvashi Rautela		
+Q42322844	cast	Q16200282	Ihana Dhillon		
+Q30603116	director	Q7631226	Subhash Kapoor		
+Q30603116	writer	Q7631226	Subhash Kapoor		
+Q30603116	producer	Q4902221	Bhushan Kumar		
+Q30603116	cast	Q3489680	Gulshan Grover		
+Q30603116	cast	Q233748	Akshay Kumar		
+Q39670177	director	Q7285318	Raj Kumar Gupta		
+Q39670177	writer	Q41586211	Ritesh Shah		
+Q39670177	composer	Q4746891	Amit Trivedi		
+Q39670177	composer	Q28675855	Tanishk Bagchi		
+Q39670177	executive_producer	Q4902221	Bhushan Kumar		
+Q39670177	executive_producer	Q43396416	Krishan Kumar		
+Q39670177	cast	Q3629983	Ileana D'Cruz		
+Q39670177	cast	Q146929	Ajay Devgn		
+Q39670177	cast	Q7427518	Saurabh Shukla		
+Q53869754	director	Q56249709	Milap Zaveri		
+Q53869754	composer	Q3469326	Sajid-Wajid		
+Q53869754	cast	Q158533	Manoj Bajpai		
+Q53869754	cast	Q313025	John Abraham		
+Q47516672	director	Q16799357	Luv Ranjan		
+Q47516672	writer	Q16799357	Luv Ranjan		
+Q47516672	writer	Q118142982	Rahul Mody		
+Q47516672	producer	Q4902221	Bhushan Kumar		
+Q47516672	editor	Q4701258	Akiv Ali		
+Q47516672	cast	Q6373552	Kartik Aaryan		
+Q47516672	cast	Q7070357	Nushrratt Bharuccha		
+Q47516672	cast	Q7640716	Sunny Singh		
+Q60737647	director	Q16734247	Bhushan Patel		
+Q60737647	producer	Q3631714	Mika Singh		
+Q59725624	director	Q2332619	Nikhil Advani		
+Q59725624	composer	Q15340767	Ankit Tiwari		
+Q59725624	cast	Q313025	John Abraham		
+Q59725624	cast	Q16234243	Mrunal Thakur		
+Q48674144	director	Q4724522	Ali Abbas Zafar		
+Q48674144	writer	Q4724522	Ali Abbas Zafar		
+Q48674144	composer	Q3135937	Vishal–Shekhar		
+Q48674144	producer	Q4818780	Atul Agnihotri		
+Q48674144	cast	Q22007335	Disha Patani		
+Q48674144	cast	Q9550	Katrina Kaif		
+Q48674144	cast	Q9543	Salman Khan		
+Q48674144	cast	Q560178	Jackie Shroff		
+Q81137739	director	Q4851055	Baljit Singh Deo		
+Q81137739	writer	Q5564076	Gippy Grewal		
+Q81137739	producer	Q4902221	Bhushan Kumar		
+Q81137739	producer	Q43396416	Krishan Kumar		
+Q81137739	cast	Q115533596	Hobby Dhaliwal		
+Q81137739	cast	Q81878478	Shehnaaz Kaur Gill		
+Q81137739	cast	Q2876219	Mukul Dev		
+Q81137739	cast	Q3046959	Zarine Khan		
+Q81137739	cast	Q5564076	Gippy Grewal		
+Q81137739	cast	Q7290657	Rana Ranbir		
+Q81137739	cast	Q115135473	Prince Kanwaljit Singh		
+Q81137739	cast	Q7491107	Shavinder Mahal		
+Q56042818	director	Q61989043	Laxman Utekar		
+Q56042818	producer	Q5278105	Dinesh Vijan		
+Q56042818	cast	Q12071488	Pankaj Tripathi		
+Q56042818	cast	Q6373552	Kartik Aaryan		
+Q56042818	cast	Q16233540	Kriti Sanon		
+Q59726725	director	Q72088457	Mikhil Musale		
+Q59726725	composer	Q17080301	Sachin–Jigar		
+Q58411779	director	Q56249709	Milap Zaveri		
+Q58411779	writer	Q56249709	Milap Zaveri		
+Q58411779	composer	Q6098766	Ram Sampath		
+Q58411779	producer	Q2332619	Nikhil Advani		
+Q58411779	producer	Q4902221	Bhushan Kumar		
+Q58411779	producer	Q16221279	Divya Khosla Kumar		
+Q58411779	producer	Q43396416	Krishan Kumar		
+Q58411779	cast	Q7286816	Rakul Preet Singh		
+Q58411779	cast	Q3483111	Sidharth Malhotra		
+Q58411779	cast	Q738291	Riteish Deshmukh		
+Q58411779	cast	Q7685156	Tara Sutaria		
+Q85801296	director	Q27947645	Navaniat Singh		
+Q85801296	writer	Q20195451	Dheeraj Rattan		
+Q85801296	producer	Q146929	Ajay Devgn		
+Q85801296	producer	Q4902221	Bhushan Kumar		
+Q85801296	producer	Q43396416	Krishan Kumar		
+Q85801296	cast	Q18629110	Sonam Bajwa		
+Q85801296	cast	Q24572732	Sardar Sohi		
+Q56291313	director	Q17198699	Soumik Sen		
+Q56291313	producer	Q4902221	Bhushan Kumar		
+Q56291313	cast	Q3053437	Emraan Hashmi		

@@ -1,0 +1,200 @@
+qid	role	personQid	name	character	ordinal
+Q104532857	director	Q101995592	Han Yan		
+Q104532857	writer	Q101995592	Han Yan		
+Q104532857	writer	Q125883859	Yonggan Yu		
+Q104532857	cast	Q22966646	Jackson Yee		
+Q104532857	cast	Q97279335	Liu Haocun		
+Q104532857	award		Huabiao Award for Outstanding Film		
+Q65057399	director	Q716064	Peter Chan		
+Q65057399	writer	Q123512580	Zhang Ji		
+Q65057399	composer	Q634280	Shigeru Umebayashi		
+Q65057399	producer	Q18713162	Jojo Hui		
+Q65057399	producer	Q123514457	Yang Yang		
+Q65057399	cinematographer	Q30951220	Yu Jing-Pin		
+Q65057399	cinematographer	Q123512743	Zhao Xiaoshi		
+Q65057399	cast	Q704130	Huang Bo		
+Q65057399	cast	Q10919337	Wu Gang		
+Q65057399	cast	Q150903	Gong Li		
+Q110474716	director	Q8045213	Xue Xiaolu		
+Q110474716	cast	Q18653730	Zhu Yilong		
+Q110474716	cast	Q24836385	Wu Yanshu		
+Q110474716	cast	Q20062520	Jia Ling		
+Q110474716	cast	Q704130	Huang Bo		
+Q110474716	award		Huabiao Award for Outstanding Film		
+Q120219969	producer	Q116469878	Gong Geer		
+Q120219969	cast	Q127427842	Yang Hao-yu		
+Q120219969	cast	Q125473669	Jiang Qiming		
+Q120219969	cast	Q8916607	Ai Liya		
+Q108800348	director	Q180852	Zhang Ziyi		
+Q108800348	director	Q710715	Wu Jing		
+Q108800348	director	Q893129	Xu Zheng		
+Q108800348	director	Q21018157	Shen Teng		
+Q108800348	award		Huabiao Award for Outstanding Film		
+Q108800348	follows	Q97300316	My People, My Homeland		
+Q107273994	director	Q202597	Chen Kaige		
+Q107273994	director	Q317814	Tsui Hark		
+Q107273994	director	Q702536	Dante Lam		
+Q107273994	writer	Q704612	Huang Jianxin		
+Q107273994	writer	Q8984820	Lan Xiaolong		
+Q107273994	composer	Q30018292	Elliot Leung		
+Q107273994	composer	Q123507535	Wang Zhiyi		
+Q107273994	producer	Q317814	Tsui Hark		
+Q107273994	producer	Q545651	Chen Hong		
+Q107273994	producer	Q702536	Dante Lam		
+Q107273994	producer	Q3335772	Nansun Shi		
+Q107273994	producer	Q8059909	Yu Dong		
+Q107273994	producer	Q123085161	Candy Leung		
+Q107273994	producer	Q123508253	Jiang Defu		
+Q107273994	cinematographer	Q180029	Peter Pau		
+Q107273994	cinematographer	Q124671755	Ding Yu		
+Q107273994	editor	Q317814	Tsui Hark		
+Q107273994	editor	Q123508178	He Yongyi		
+Q107273994	editor	Q123508223	Li Dianshi		
+Q107273994	cast	Q22966646	Jackson Yee		
+Q107273994	cast	Q710715	Wu Jing		
+Q107273994	cast	Q6538673	Li Chen		
+Q107273994	cast	Q111940634	Kevin Lee		
+Q107273994	cast	Q123505862	Gao Mingyu Evans		
+Q107273994	cast	Q9186733	Zhu Yawen		
+Q107273994	cast	Q123505835	John F. Cruz		
+Q107273994	cast	Q1193336	Hu Jun		
+Q107273994	cast	Q8950627	Duan Yihong		
+Q107273994	cast	Q21973376	Elvis Han Dongjun		
+Q107273994	cast	Q8986306	Li Youbin		
+Q107273994	cast	Q110404931	Shi Pengyuan		
+Q107273994	cast	Q15900390	Oho Ou		
+Q107273994	cast	Q1152156	Tang Guoqiang	Mao Zedong	
+Q107273994	cast	Q712088	Zhang Hanyu	Song Shilun	
+Q107273994	cast	Q14768937	Huang Xuan	Mao Anying	
+Q107273994	award		Golden Rooster Award for Best Picture		
+Q107273994	award		Hundred Flowers Award for Best Picture		
+Q107273994	award		Huabiao Award for Outstanding Film		
+Q107273994	followed_by	Q110795632	The Battle at Lake Changjin II		
+Q107273994	subject		Battle of Changjin Reservoir		
+Q124057965	director	Q703779	Chen Sicheng		
+Q124057965	director	Q55708277	Zhang Zhe		
+Q124057965	writer	Q703779	Chen Sicheng		
+Q124057965	producer	Q703779	Chen Sicheng		
+Q124057965	cinematographer	Q123518592	Michael Liu		
+Q124057965	cast	Q21948533	Chen Yao		
+Q124057965	cast	Q704130	Huang Bo		
+Q124057965	cast	Q8969349	Huang Jue		
+Q124057965	cast	Q47668585	Rong Zishan		
+Q124057965	cast	Q7260686	Henry Yu Yang		
+Q124057965	subject		music		
+Q124057965	subject		family		
+Q114593288	director	Q98764882	Tony Chan		
+Q114593288	composer	Q708987	Peter Kam		
+Q114593288	producer	Q98764882	Tony Chan		
+Q114593288	cinematographer	Q8958963	Edmond Fung		
+Q114593288	editor	Q24833911	Ron Chan		
+Q114593288	cast	Q254166	Li Bingbing	周燕	
+Q114593288	cast	Q5443398	Feng Shaofeng	林立	
+Q114593288	cast	Q701194	Huang Xiaoming		
+Q110552864	director	Q60990361	Leo Huang		
+Q109256899	director	Q5034286	Cao Baoping		
+Q109256899	cast	Q70885030	Zhang Youhao		
+Q109256899	cast	Q9321349	Zu Feng		
+Q109256899	cast	Q198030	Zhou Xun		
+Q109256899	cast	Q114690772	Zhou Yi Ran		
+Q109256899	cast	Q704130	Huang Bo		
+Q120725405	director	Q140731996	Xie Junwei		
+Q120725405	writer	Q13677685	Gary Wang		
+Q116042266	director	Q60991465	Er Cheng		
+Q116042266	writer	Q60991465	Er Cheng		
+Q116042266	producer	Q8059909	Yu Dong		
+Q116042266	cinematographer	Q60991465	Er Cheng		
+Q116042266	cast	Q5686316	Huang Lei		
+Q116042266	cast	Q319001	Tony Leung		
+Q116042266	cast	Q21094167	Wang Yibo		
+Q116042266	cast	Q198030	Zhou Xun		
+Q119015196	director	Q20687780	Dong Chengpeng		
+Q119015196	writer	Q20687780	Dong Chengpeng		
+Q119015196	composer	Q106899300	Peng Fei		
+Q119015196	cast	Q704130	Huang Bo		
+Q119015196	cast	Q21094167	Wang Yibo		
+Q108659445	director	Q57966510	Frant Gwo		
+Q108659445	writer	Q57966510	Frant Gwo		
+Q108659445	producer	Q607588	Liu Cixin		
+Q108659445	cast	Q16766	Andy Lau		
+Q108659445	cast	Q708183	Zhang Fengyi		
+Q108659445	cast	Q710715	Wu Jing		
+Q108659445	follows	Q57966215	The Wandering Earth		
+Q127697922	director	Q15727919	Anthony Pun		
+Q127697922	writer	Q116226476	Mak Tin-Shu		
+Q127697922	composer	Q30018292	Elliot Leung		
+Q127697922	producer	Q16766	Andy Lau		
+Q127697922	producer	Q8014107	William Kong		
+Q127697922	producer	Q15727919	Anthony Pun		
+Q127697922	producer	Q123051521	Ivy Ho Wan-Ming		
+Q127697922	cinematographer	Q15727919	Anthony Pun		
+Q127697922	editor	Q5094249	Cheung Ka-fai		
+Q127697922	cast	Q118118024	Leung Chung Hang	Po	
+Q127697922	cast	Q9343509	Tse Kwan-ho	Chainsmoker	
+Q127697922	cast	Q712121	Bowie Lam	Director of Fire Services	
+Q127697922	cast	Q17362624	Fish Liew	Zoe	
+Q127697922	cast	Q16766	Andy Lau	Simon Fan	
+Q127697922	cast	Q100988340	Jeffrey Ngai	Chu	
+Q127697922	cast	Q58182303	DeeGor Ho	Water	
+Q127697922	cast	Q6829249	Michael Chow	Roger Fong	
+Q127697922	cast	Q6652453	Kenny Wong	Lau Siu Keung	
+Q127697922	cast	Q24836385	Wu Yanshu	Mrs. Li	
+Q127697922	cast	Q109227464	Louise Wong	Madam Chan	
+Q127697922	cast	Q55718427	Locker Lam	Finger	
+Q127697922	cast	Q30942475	Wesley Wong	Big B	
+Q127697922	cast	Q717579	Ivana Wong	Kelly Wong	
+Q127697922	cast	Q718036	Michael Wong	Peter Cowen	
+Q127697922	cast	Q716027	Karen Mok	Cecilia Fong	
+Q127697922	cast	Q712178	Kent Cheng	Secretary for Security	
+Q127697922	subject		irradiation		
+Q127697922	subject		disaster risk		
+Q117075097	director	Q66305673	Salvador Simó		
+Q117075097	writer	Q11926431	Ignacio Ferreras		
+Q117075097	composer	Q22958708	Arturo Cardelús		
+Q125469653	director	Q716064	Peter Chan		
+Q125469653	writer	Q18914049	Jiang Feng		
+Q125469653	writer	Q98333449	Shang Yang		
+Q125469653	composer	Q20054060	Natalie Holt		
+Q125469653	producer	Q716064	Peter Chan		
+Q125469653	producer	Q18713162	Jojo Hui		
+Q125469653	cinematographer	Q9114274	Jake Pollock		
+Q125469653	editor	Q6123628	William Chang		
+Q125469653	cast	Q180852	Zhang Ziyi		
+Q125469653	cast	Q9349416	Zhao Liying		
+Q125469653	cast	Q22966646	Jackson Yee		
+Q125469653	cast	Q5960651	Mei Ting		
+Q125469653	cast	Q15924951	Lei Jiayin		
+Q125469653	cast	Q9058907	Eric Wang		
+Q125469653	cast	Q1137458	Yang Mi		
+Q125469653	cast	Q20687780	Dong Chengpeng		
+Q125469653	cast	Q47668337	Li Xian		
+Q125469653	cast	Q5433575	Fan Wei		
+Q125469653	cast	Q126332518	Ci Sha		
+Q125469653	cast	Q9085587	Zhang Zifeng		
+Q125469653	cast	Q8044373	Xie Na		
+Q125469653	cast	Q6550132	Lin Yongjian		
+Q125469653	cast	Q11069194	Zhang Xueying		
+Q125469653	cast	Q28414397	Peng Yuchang		
+Q125469653	cast	Q81234636	Zhao Shuzhen		
+Q135110330	director	Q120147080	Ao Shen		
+Q135110330	writer	Q120147080	Ao Shen		
+Q135110330	composer	Q106899300	Peng Fei		
+Q135110330	producer	Q116469878	Gong Geer		
+Q135110330	cast	Q22774261	Liu Haoran	Su Liuchang	
+Q135110330	cast	Q15914463	Wang Xiao	Jin Chengzong	
+Q135110330	cast	Q83571844	Gao Ye	Lin Yuxiu	
+Q135110330	cast	Q85882628	Wang Zhen'er	Zhao Yifang (Jin's wife)	
+Q135110330	cast	Q9058907	Eric Wang	Wang Guanghai	
+Q135110330	cast	Q7253135	Daichi Harashima	Hideo Ito	
+Q135110330	subject		Nanjing Massacre		
+Q131522509	director	Q703779	Chen Sicheng		
+Q131522509	director	Q117862278	Mo Dai		
+Q131522509	cast	Q7967359	Wang Baoqiang		
+Q131522509	cast	Q22774261	Liu Haoran		
+Q131522509	cast	Q1018752	Xiaoshenyang		
+Q131522509	cast	Q181425	Chow Yun-fat		
+Q131522509	cast	Q9069891	Xi Meijuan		
+Q130494024	director	Q317814	Tsui Hark		
+Q130494024	cast	Q55696321	Xiao Zhan		
+Q130494024	cast	Q97164582	Zhuang Dafei		
+Q130494024	cast	Q700175	Tony Leung Ka-fai		

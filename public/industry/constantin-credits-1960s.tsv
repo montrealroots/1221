@@ -1,0 +1,1615 @@
+qid	role	personQid	name	character	ordinal
+Q1126491	director	Q97799	Werner Jacobs		
+Q1126491	writer	Q119862	Karl Georg Külb		
+Q1126491	composer	Q1717852	Werner Scharfenberger		
+Q1126491	producer	Q1875148	Luggi Waldleitner		
+Q1126491	cinematographer	Q1352050	Erich Claunigk		
+Q1126491	cast	Q111670	Kurt Großkurth		
+Q1126491	cast	Q74843	Peter Kraus		
+Q1126491	cast	Q70331	Cornelia Froboess		
+Q1126491	cast	Q1582442	Hans Schwarz		
+Q1126491	cast	Q69382	Gustav Knuth		
+Q1126491	cast	Q110314	Johanna König		
+Q1126491	cast	Q110080	Karl Lieffen		
+Q1126491	cast	Q1600869	Walter Gross		
+Q1126491	cast	Q67899	Ralf Wolter		
+Q1126491	cast	Q995243	Trude Herr		
+Q2234181	director	Q1579887	Hans Grimm		
+Q2234181	writer	Q1659164	Ilse Lotz-Dupont		
+Q2234181	composer	Q90445	Rolf Alexander Wilhelm		
+Q2234181	producer	Q91077	Franz Seitz Jr.		
+Q2234181	cinematographer	Q24004689	Heinz Schnackertz		
+Q2234181	cast	Q1332673	Elma Karlowa		
+Q2234181	cast	Q87922	Gerlinde Locker		
+Q2234181	cast	Q314033	Harald Juhnke		
+Q2234181	cast	Q76389	Marianne Hold		
+Q2234181	cast	Q106393	Liesl Karlstadt		
+Q2234181	cast	Q107971	Horst Naumann		
+Q2234181	cast	Q2020239	Oliver Grimm		
+Q2234181	cast	Q97343	Claus Biederstaedt		
+Q15834757	director	Q89283	Franz Josef Gottlieb		
+Q15834757	writer	Q52030	Janne Furch		
+Q15834757	composer	Q1511594	Gerhard Froboess		
+Q15834757	producer	Q471141	Sascha-Film		
+Q15834757	cinematographer	Q103130	Sepp Ketterer		
+Q15834757	editor	Q47015679	Herma Sandtner		
+Q15834757	cast	Q72479	Rex Gildo		
+Q15834757	cast	Q105665	Fred Bertelmann		
+Q15834757	cast	Q89117	Peter Weck		
+Q15834757	cast	Q452990	Ljuba Welitsch		
+Q15834757	cast	Q70331	Cornelia Froboess		
+Q15834757	cast	Q1329473	Louise Martini		
+Q1211217	director	Q78920	Harald Reinl		
+Q1211217	writer	Q1684306	Marcel Valmy		
+Q1211217	writer	Q1691105	Julius Joachim Bartsch		
+Q1211217	composer	Q1600243	Heinz Funk		
+Q1211217	producer	Q2108205	Preben Philipsen		
+Q1211217	cinematographer	Q99128	Albert Benitz		
+Q1211217	cast	Q124391	Karl-Heinz Kreienbaum		
+Q1211217	cast	Q110873	Alf Marholm		
+Q1211217	cast	Q1729947	Karl-Heinz Peters		
+Q1211217	cast	Q108114	Ulrich Beiger		
+Q1211217	cast	Q77869	Dieter Eppler		
+Q1211217	cast	Q1894768	Marga Maasberg		
+Q1211217	cast	Q92249	Elisabeth Flickenschildt		
+Q1211217	cast	Q1939400	Mita Ahlefeldt		
+Q1211217	cast	Q126879	Karl-Georg Saebisch		
+Q1211217	cast	Q1610022	Otto Collin		
+Q1211217	cast	Q62353	Karin Dor		
+Q1211217	cast	Q87414	Eddi Arent		
+Q1211217	cast	Q1363955	Josef Dahmen		
+Q1211217	cast	Q78404	Ernst Fritz Fürbringer		
+Q1211217	cast	Q78119	Joachim Fuchsberger		
+Q1211217	cast	Q91058	Fritz Rasp		
+Q1211217	cast	Q1729474	Karin Kernke		
+Q1211217	cast	Q2141485	Reinhold Nietschmann		
+Q865963	director	Q76398	Alfred Vohrer		
+Q865963	writer	Q1600719	Heinz Oskar Wuttig		
+Q865963	composer	Q1609212	Herbert Trantow		
+Q865963	producer	Q215578	Artur Brauner		
+Q865963	cinematographer	Q1793619	Kurt Hasse		
+Q865963	editor	Q1672330	Ira Oberberg		
+Q865963	cast	Q86572	Luise Ullrich		
+Q1896726	director	Q97799	Werner Jacobs		
+Q1896726	writer	Q52030	Janne Furch		
+Q1896726	composer	Q90282	Hans Lang		
+Q1896726	composer	Q1641475	Kurt Nachmann		
+Q1896726	composer	Q1697482	Johannes Fehring		
+Q1896726	producer	Q1608359	Herbert Gruber		
+Q1896726	cinematographer	Q112767	Elio Carniel		
+Q1896726	editor	Q1408139	Arnfried Heyne		
+Q1896726	cast	Q113705	Hans Moser		
+Q1896726	cast	Q15432121	Elisabeth Stiepl		
+Q1896726	cast	Q1284969	Edith Elmay		
+Q1896726	cast	Q87949	Waltraut Haas		
+Q1896726	cast	Q89117	Peter Weck		
+Q1896726	cast	Q94636	Rudolf Prack		
+Q1896726	cast	Q1328116	Hugo Gottschlich		
+Q1896726	cast	Q88153	Сузи Николетти		
+Q1896726	cast	Q89434	Gunther Philipp		
+Q1896726	cast	Q70331	Cornelia Froboess		
+Q1193662	director	Q78920	Harald Reinl		
+Q1193662	writer	Q1697813	Johannes Kai		
+Q1193662	composer	Q91791	Martin Böttcher		
+Q1193662	producer	Q87426	Horst Wendlandt		
+Q1193662	cinematographer	Q1732240	Karl Löb		
+Q1193662	editor	Q21856861	Hermann Ludwig		
+Q1193662	cast	Q108114	Ulrich Beiger		
+Q1193662	cast	Q1323533	Joseph Offenbach		
+Q1193662	cast	Q1028955	Günter Lüdke		
+Q1193662	cast	Q113971	Günther Jerschke		
+Q1193662	cast	Q66769	Mady Rahl		
+Q1193662	cast	Q2285345	Sigrid von Richthofen		
+Q1193662	cast	Q62353	Karin Dor		
+Q1193662	cast	Q1610022	Otto Collin		
+Q1193662	cast	Q90910	Viktor de Kowa		
+Q1193662	cast	Q1600472	Heinz Klevenow		
+Q1193662	cast	Q90045	Hellmut Lange		
+Q1193662	cast	Q86066	Walter Rilla		
+Q1193662	cast	Q87414	Eddi Arent		
+Q1193662	cast	Q119923	Robert Graf		
+Q1193662	cast	Q72511	Siegfried Lowitz		
+Q1198865	director	Q108864	Jürgen Roland		
+Q1198865	writer	Q1684306	Marcel Valmy		
+Q1198865	writer	Q1695161	Wolfgang Menge		
+Q1198865	composer	Q1600243	Heinz Funk		
+Q1198865	producer	Q2108205	Preben Philipsen		
+Q1198865	cinematographer	Q1600405	Heinz Hölscher		
+Q1198865	editor	Q1247263	Herbert Taschner		
+Q1198865	cast	Q97706	Ruth Hausmeister		
+Q1198865	cast	Q87414	Eddi Arent		
+Q1198865	cast	Q1601655	Hela Gruel		
+Q1198865	cast	Q1285188	Edith Teichmann		
+Q1198865	cast	Q76943	Gert Fröbe		
+Q1198865	cast	Q1729947	Karl-Heinz Peters		
+Q1198865	cast	Q43763	Wolfgang Völz		
+Q1198865	cast	Q1505145	Georg Lehn		
+Q1198865	cast	Q100291	Stanislav Ledinek		
+Q1198865	cast	Q1065720	Charles Palent		
+Q1198865	cast	Q62353	Karin Dor		
+Q1198865	cast	Q1579359	Hans Epskamp		
+Q1198865	cast	Q1302797	Henry Lorenzen		
+Q1198865	cast	Q111139	Harry Wüstenhagen		
+Q1198865	cast	Q105681	Helga Feddersen		
+Q1198865	cast	Q77586	Klausjürgen Wussow		
+Q1198865	cast	Q118575	Heinz Weiss		
+Q1198865	cast	Q2285345	Sigrid von Richthofen		
+Q1659480	director	Q78920	Harald Reinl		
+Q1659480	writer	Q75835	Norbert Jacques		
+Q1659480	writer	Q749590	Ladislas Fodor		
+Q1659480	composer	Q2078007	Peter Sandloff		
+Q1659480	producer	Q215578	Artur Brauner		
+Q1659480	cinematographer	Q1732240	Karl Löb		
+Q1659480	editor	Q120187	Hermann Haller		
+Q1659480	cast	Q274158	Daliah Lavi		
+Q1659480	cast	Q68654	Wolfgang Preiss		
+Q1659480	cast	Q1237792	Lou Seitz		
+Q1659480	cast	Q1609280	Herbert Weißbach		
+Q1659480	cast	Q520819	Lex Barker		
+Q1659480	cast	Q99544	Alexander Engel		
+Q1659480	cast	Q99632	Albert Bessler		
+Q1659480	cast	Q87200	Rudolf Forster		
+Q1659480	cast	Q69881	Werner Peters		
+Q1659480	cast	Q1398803	Fausto Tozzi		
+Q1659480	cast	Q3169977	Jean-Roger Caussimon		
+Q1659480	cast	Q88815	Ady Berber		
+Q1659480	cast	Q99719	Rudolf Fernau		
+Q1659480	cast	Q76943	Gert Fröbe		
+Q1659480	cast	Q273804	Laura Solari		
+Q1219434	director	Q103174	Ottokar Runze		
+Q1219434	director	Q108864	Jürgen Roland		
+Q1219434	director	Q253462	Josef von Báky		
+Q1219434	writer	Q85024	Robert A. Stemmle		
+Q1219434	composer	Q96244	Peter Thomas		
+Q1219434	producer	Q87426	Horst Wendlandt		
+Q1219434	cinematographer	Q121175	Richard Angst		
+Q1219434	editor	Q21856861	Hermann Ludwig		
+Q1219434	cast	Q85861	Marianne Hoppe		
+Q1219434	cast	Q55419	Klaus Kinski		
+Q1219434	cast	Q105918	Richard Häussler		
+Q1219434	cast	Q87414	Eddi Arent		
+Q1219434	cast	Q99632	Albert Bessler		
+Q1219434	cast	Q99544	Alexander Engel		
+Q1219434	cast	Q105082	Eva Brumby		
+Q1219434	cast	Q66115	Lil Dagover		
+Q1219434	cast	Q97337	Brigitte Grothum		
+Q1219434	cast	Q72500	Reinhard Kolldehoff		
+Q1219434	cast	Q78119	Joachim Fuchsberger		
+Q1219434	cast	Q99719	Rudolf Fernau		
+Q1219434	cast	Q1285003	Edith Hancke		
+Q1219434	cast	Q1793689	Kurt Jaggberg		
+Q1219434	cast	Q91058	Fritz Rasp		
+Q23566169	director	Q1579173	Hans Dieter Schwarze		
+Q23566169	writer	Q1659164	Ilse Lotz-Dupont		
+Q23566169	composer	Q23061866	Henry Mayer		
+Q23566169	producer	Q91077	Franz Seitz Jr.		
+Q23566169	cinematographer	Q1222980	Dieter Wedekind		
+Q442399	director	Q951821	Terence Fisher		
+Q442399	writer	Q77489	Curt Siodmak		
+Q442399	composer	Q6776613	Martin Slavin		
+Q442399	producer	Q215578	Artur Brauner		
+Q442399	cinematographer	Q121175	Richard Angst		
+Q442399	editor	Q1672330	Ira Oberberg		
+Q442399	cast	Q76383	Hans Söhnker	Professor Moriarty	
+Q442399	cast	Q2428927	Thorley Walters	Dr. Watson	
+Q442399	cast	Q89974	Edith Schultze-Westrum	Mrs. Hudson	
+Q442399	cast	Q180338	Christopher Lee	Sherlock Holmes	
+Q442399	cast	Q1772280	Max Strassberg		
+Q442399	cast	Q3439936	Roland Armontel		
+Q442399	cast	Q77393	Wolfgang Lukschy		
+Q442399	cast	Q516675	Linda Sini		
+Q442399	cast	Q62310	Senta Berger		
+Q442399	cast	Q3751345	Franco Giacobini		
+Q442399	cast	Q2898151	Bernard Lajarrige		
+Q442399	cast	Q1135216	Corrado Annicelli		
+Q442399	cast	Q993905	Bruno Walter Pantel		
+Q442399	cast	Q1754059	Rena Horten		
+Q442399	cast	Q66380	Ivan Desny		
+Q442399	cast	Q70489	Hans Nielsen		
+Q442399	cast	Q85174	Leon Askin		
+Q1216952	director	Q76398	Alfred Vohrer		
+Q1216952	writer	Q45154	Harald G. Petersson		
+Q1216952	writer	Q1507208	Gerhard F. Hummel		
+Q1216952	writer	Q1697813	Johannes Kai		
+Q1216952	composer	Q96244	Peter Thomas		
+Q1216952	producer	Q87426	Horst Wendlandt		
+Q1216952	producer	Q95805093	Jacques Leitienne		
+Q1216952	cinematographer	Q1732240	Karl Löb		
+Q1216952	editor	Q1039969	Carl Otto Bartning		
+Q1216952	cast	Q87414	Eddi Arent		
+Q1216952	cast	Q97481	Jan Hendriks		
+Q1216952	cast	Q88815	Ady Berber		
+Q1216952	cast	Q1460084	Friedrich Joloff		
+Q1216952	cast	Q69578	Gisela Uhlen		
+Q1216952	cast	Q55419	Klaus Kinski		
+Q1216952	cast	Q118392	Pinkas Braun		
+Q1216952	cast	Q69881	Werner Peters		
+Q1216952	cast	Q97354	Sabina Sesselmann		
+Q1216952	cast	Q99529	Siegfried Schürenberg		
+Q1216952	cast	Q70489	Hans Nielsen		
+Q1216952	cast	Q101189	Heinz Drache		
+Q1216952	subject		mad scientist		
+Q1212814	director	Q89283	Franz Josef Gottlieb		
+Q1212814	writer	Q52030	Janne Furch		
+Q1212814	writer	Q1465906	Fritz Böttger		
+Q1212814	composer	Q316615	Franz Grothe		
+Q1212814	cinematographer	Q1222980	Dieter Wedekind		
+Q1212814	cast	Q97652	Georg Thomalla		
+Q1212814	cast	Q1360496	Ernst Waldbrunn		
+Q1212814	cast	Q91502	Sabine Sinjen		
+Q1212814	cast	Q2131269	Raoul Retzer		
+Q1212814	cast	Q107971	Horst Naumann		
+Q1212814	cast	Q87909	Oskar Sima		
+Q1212814	cast	Q38302	Wolf Albach-Retty		
+Q1212814	cast	Q87922	Gerlinde Locker		
+Q1212814	cast	Q113863	Rudolf Vogel		
+Q1212814	cast	Q1245201	Doris Kirchner		
+Q1212814	cast	Q89117	Peter Weck		
+Q1212814	cast	Q89974	Edith Schultze-Westrum		
+Q1212814	cast	Q84979	Sieghardt Rupp		
+Q17321162	director	Q1794270	Kurt Wilhelm		
+Q17321162	writer	Q1600719	Heinz Oskar Wuttig		
+Q17321162	composer	Q83309	Johann Strauss II		
+Q17321162	producer	Q90621	Kurt Ulrich		
+Q17321162	cinematographer	Q89104	Willi Sohm		
+Q17321162	editor	Q13389881	Martha Dübber		
+Q766344	director	Q76398	Alfred Vohrer		
+Q766344	writer	Q45154	Harald G. Petersson		
+Q766344	writer	Q88658	Egon Eis		
+Q766344	writer	Q1507208	Gerhard F. Hummel		
+Q766344	composer	Q91791	Martin Böttcher		
+Q766344	producer	Q87426	Horst Wendlandt		
+Q766344	cinematographer	Q1732240	Karl Löb		
+Q766344	editor	Q1039969	Carl Otto Bartning		
+Q766344	cast	Q1601655	Hela Gruel		
+Q766344	cast	Q1459188	Friedrich G. Beckhaus		
+Q766344	cast	Q99529	Siegfried Schürenberg		
+Q766344	cast	Q95691	Richard Münch		
+Q766344	cast	Q55419	Klaus Kinski		
+Q766344	cast	Q92249	Elisabeth Flickenschildt		
+Q766344	cast	Q87414	Eddi Arent		
+Q766344	cast	Q97337	Brigitte Grothum		
+Q766344	cast	Q1600176	Heinz Engelmann		
+Q766344	cast	Q91306	Hans Paetsch		
+Q766344	cast	Q78119	Joachim Fuchsberger		
+Q766344	cast	Q1690596	Joachim Wolff		
+Q766344	cast	Q1257923	Rudolf Fenner		
+Q766344	cast	Q97481	Jan Hendriks		
+Q639629	director	Q86018	Helmut Ashley		
+Q639629	writer	Q88658	Egon Eis		
+Q639629	writer	Q1507208	Gerhard F. Hummel		
+Q639629	composer	Q96244	Peter Thomas		
+Q639629	producer	Q87426	Horst Wendlandt		
+Q639629	cinematographer	Q1449672	Franz Xaver Lederle		
+Q639629	editor	Q1247263	Herbert Taschner		
+Q639629	cast	Q1444260	Frank Straass		
+Q639629	cast	Q91306	Hans Paetsch		
+Q639629	cast	Q1583248	Hans Zesch-Ballot		
+Q639629	cast	Q113971	Günther Jerschke		
+Q639629	cast	Q88572	Christiane Nielsen		
+Q639629	cast	Q118392	Pinkas Braun		
+Q639629	cast	Q1793326	Kurt A. Jung		
+Q639629	cast	Q1065720	Charles Palent		
+Q639629	cast	Q124463	Willem Fricke		
+Q639629	cast	Q817927	Benno Gellenbeck		
+Q639629	cast	Q86018	Helmut Ashley		
+Q639629	cast	Q100990	Herbert A.E. Böhme		
+Q639629	cast	Q1284207	Edgar Wenzel		
+Q639629	cast	Q94721	Marisa Mell		
+Q639629	cast	Q87913	Adrian Hoven		
+Q639629	cast	Q180338	Christopher Lee		
+Q639629	cast	Q2285345	Sigrid von Richthofen		
+Q639629	cast	Q91058	Fritz Rasp		
+Q639629	cast	Q55419	Klaus Kinski		
+Q639629	cast	Q99430	Wolfgang Büttner		
+Q639629	cast	Q84679	Eric Pohlmann		
+Q639629	cast	Q87414	Eddi Arent		
+Q639629	cast	Q1459188	Friedrich G. Beckhaus		
+Q1199767	director	Q104544	Joe Stöckel		
+Q1199767	director	Q1578456	Hans Albin		
+Q1199767	writer	Q1659164	Ilse Lotz-Dupont		
+Q1199767	producer	Q91077	Franz Seitz Jr.		
+Q1199767	cinematographer	Q24004689	Heinz Schnackertz		
+Q1199767	editor	Q1419473	Ingeborg Taschner		
+Q1199767	cast	Q105915	Thomas Alder		
+Q1199767	cast	Q1582734	Hans Terofal		
+Q1199767	cast	Q1536302	Maria Singer		
+Q1199767	cast	Q1931286	Michl Lang		
+Q1199767	cast	Q45558	Beppo Brem		
+Q1199767	cast	Q1310498	Ingeborg Lapsien		
+Q1199767	cast	Q113705	Hans Moser		
+Q1199767	cast	Q94086	Erika von Thellmann		
+Q1199767	cast	Q451483	Vivi Bach		
+Q1199767	cast	Q1118631	Hans Fitz		
+Q1199767	cast	Q103702	Ruth Stephan		
+Q1199767	cast	Q314033	Harald Juhnke		
+Q1199767	cast	Q85280	Lolita		
+Q1199767	cast	Q100989	Hubert von Meyerinck		
+Q1199767	cast	Q1474494	Maria Stadler		
+Q1651203	director	Q78920	Harald Reinl		
+Q1651203	writer	Q45154	Harald G. Petersson		
+Q1651203	composer	Q91791	Martin Böttcher		
+Q1651203	producer	Q87426	Horst Wendlandt		
+Q1651203	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q1651203	editor	Q120187	Hermann Haller		
+Q1651203	cast	Q520819	Lex Barker		
+Q1651203	cast	Q118556	Uwe Friedrichsen		
+Q1651203	cast	Q87414	Eddi Arent		
+Q1651203	cast	Q1658517	Ilija Ivezić		
+Q1651203	cast	Q817927	Benno Gellenbeck		
+Q1651203	cast	Q62353	Karin Dor		
+Q1651203	cast	Q1645161	Vladimir Medar		
+Q1651203	cast	Q2294329	Slobodan Dimitrijević		
+Q1651203	cast	Q63062	Götz George		
+Q1651203	cast	Q1257923	Rudolf Fenner		
+Q1651203	cast	Q1801921	Rolf Mamero		
+Q1651203	cast	Q552681	Pierre Brice		
+Q1651203	cast	Q1363955	Josef Dahmen		
+Q1651203	cast	Q515442	Antun Nalis		
+Q1651203	cast	Q12628320	Branko Špoljar		
+Q1651203	cast	Q85861	Marianne Hoppe		
+Q1651203	cast	Q165357	Herbert Lom		
+Q1651203	cast	Q67899	Ralf Wolter		
+Q1651203	cast	Q1590034	Mirko Boman		
+Q1651203	followed_by	Q564124	Apache Gold		
+Q564124	director	Q78920	Harald Reinl		
+Q564124	writer	Q45154	Harald G. Petersson		
+Q564124	composer	Q91791	Martin Böttcher		
+Q564124	producer	Q87426	Horst Wendlandt		
+Q564124	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q564124	editor	Q120187	Hermann Haller		
+Q564124	cast	Q547742	Marie Versini		
+Q564124	cast	Q1911921	Milivoje Popović-Mavid		
+Q564124	cast	Q1265853	Dunja Rajter		
+Q564124	cast	Q1144993	Curt Ackermann		
+Q564124	cast	Q1658517	Ilija Ivezić		
+Q564124	cast	Q552681	Pierre Brice		
+Q564124	cast	Q181402	Chris Howland		
+Q564124	cast	Q515442	Antun Nalis		
+Q564124	cast	Q61322	Mario Adorf		
+Q564124	cast	Q110568	Arnold Marquis		
+Q564124	cast	Q1185395	Demeter Bitenc		
+Q564124	cast	Q705423	Gojko Mitić		
+Q564124	cast	Q520819	Lex Barker		
+Q564124	cast	Q91985	Karl Dall		
+Q564124	cast	Q12628320	Branko Špoljar		
+Q564124	cast	Q87414	Eddi Arent		
+Q564124	cast	Q67899	Ralf Wolter		
+Q564124	cast	Q1744455	Walt Barnes		
+Q564124	follows	Q1651203	The Treasure of Silver Lake		
+Q564124	followed_by	Q521876	Last of the Renegades		
+Q2438619	director	Q3219902	Lawrence Huntington		
+Q2438619	writer	Q51541	Nicolas Roeg		
+Q2438619	writer	Q707869	Harry Alan Towers		
+Q2438619	writer	Q3219902	Lawrence Huntington		
+Q2438619	composer	Q7509382	Sidney Torch		
+Q2438619	producer	Q707869	Harry Alan Towers		
+Q2438619	cinematographer	Q2662753	Bob Huke		
+Q2438619	cast	Q77405	Marianne Koch		
+Q2438619	cast	Q86066	Walter Rilla		
+Q2438619	cast	Q457165	Richard Todd		
+Q2438619	cast	Q451483	Vivi Bach		
+Q2438619	cast	Q101884	Albert Lieven		
+Q2496889	director	Q87831	Rolf Olsen		
+Q2496889	writer	Q87831	Rolf Olsen		
+Q2496889	composer	Q1362997	Erwin Halletz		
+Q2496889	producer	Q90017	Karl Spiehs		
+Q2496889	cinematographer	Q1732240	Karl Löb		
+Q2496889	editor	Q1408139	Arnfried Heyne		
+Q2496889	cast	Q89434	Gunther Philipp		
+Q2496889	cast	Q1382348	Evi Kent		
+Q2496889	cast	Q155236	Udo Jürgens		
+Q2496889	cast	Q111670	Kurt Großkurth		
+Q2496889	cast	Q1672541	Irene Mann		
+Q2496889	cast	Q647830	Paul Hörbiger		
+Q2496889	cast	Q87186	Rudolf Carl		
+Q2496889	cast	Q85280	Lolita		
+Q2496889	cast	Q72479	Rex Gildo		
+Q2496889	cast	Q96328	Gerhard Wendland		
+Q2496889	cast	Q451483	Vivi Bach		
+Q2496889	cast	Q25571	Hans Richter		
+Q2496889	cast	Q87909	Oskar Sima		
+Q2496889	cast	Q320589	Gus Backus		
+Q2496889	cast	Q1575879	Hannelore Kramm		
+Q2496889	cast	Q87831	Rolf Olsen		
+Q2496889	cast	Q103702	Ruth Stephan		
+Q2496889	cast	Q1352929	Erich Padalewski		
+Q604928	director	Q89283	Franz Josef Gottlieb		
+Q604928	writer	Q1697813	Johannes Kai		
+Q604928	composer	Q91791	Martin Böttcher		
+Q604928	producer	Q87426	Horst Wendlandt		
+Q604928	producer	Q2108205	Preben Philipsen		
+Q604928	cinematographer	Q121175	Richard Angst		
+Q604928	editor	Q120187	Hermann Haller		
+Q604928	cast	Q107599	Alice Treff		
+Q604928	cast	Q105679	Grit Boettcher		
+Q604928	cast	Q96292	Dieter Borsche		
+Q604928	cast	Q1792990	Kurd Rudolf Pieritz		
+Q604928	cast	Q70309	Charles Régnier		
+Q604928	cast	Q101059	Eva Ingeborg Scholz		
+Q604928	cast	Q100956	Friedrich Schoenfelder		
+Q604928	cast	Q111139	Harry Wüstenhagen		
+Q604928	cast	Q55419	Klaus Kinski		
+Q604928	cast	Q87414	Eddi Arent		
+Q604928	cast	Q78119	Joachim Fuchsberger		
+Q604928	cast	Q69881	Werner Peters		
+Q19278072	director	Q108864	Jürgen Roland		
+Q19278072	writer	Q1697813	Johannes Kai		
+Q19278072	composer	Q107727	Gert Wilden		
+Q19278072	producer	Q100399	Wolf C. Hartwig		
+Q19278072	cinematographer	Q1572555	Klaus von Rautenfeld		
+Q19278072	editor	Q1247263	Herbert Taschner		
+Q19278072	cast	Q77405	Marianne Koch		
+Q19278072	cast	Q496339	Horst Frank		
+Q19278072	cast	Q181402	Chris Howland		
+Q19278072	cast	Q101189	Heinz Drache		
+Q19278072	cast	Q330432	Brad Harris		
+Q19278072	cast	Q15806475	Dorothee Parker		
+Q535573	director	Q69171	Helmut Käutner		
+Q535573	writer	Q69171	Helmut Käutner		
+Q535573	writer	Q69320	Curt Goetz		
+Q535573	composer	Q316615	Franz Grothe		
+Q535573	producer	Q108865	Hans Domnick		
+Q535573	cinematographer	Q97457	Günther Anders		
+Q535573	editor	Q115064	Klaus Dudenhöfer		
+Q535573	cast	Q1504544	Georg Gütlich		
+Q535573	cast	Q60876	Heinz Rühmann		
+Q535573	cast	Q67641	Michael Verhoeven		
+Q535573	cast	Q102050	Fritz Tillmann		
+Q535573	cast	Q70270	Ruth Leuwerik		
+Q535573	cast	Q120570	Hanne Wieder		
+Q535573	cast	Q98024	Paul Dahlke		
+Q535573	cast	Q90910	Viktor de Kowa		
+Q535573	cast	Q110432	Pierre Franckh		
+Q535573	cast	Q111288	Ilse Pagé		
+Q45679	director	Q76398	Alfred Vohrer		
+Q45679	writer	Q45154	Harald G. Petersson		
+Q45679	writer	Q92118	George Hurdalek		
+Q45679	composer	Q96244	Peter Thomas		
+Q45679	producer	Q87426	Horst Wendlandt		
+Q45679	cinematographer	Q1732240	Karl Löb		
+Q45679	editor	Q120187	Hermann Haller		
+Q45679	cast	Q88815	Ady Berber		
+Q45679	cast	Q105918	Richard Häussler		
+Q45679	cast	Q55419	Klaus Kinski		
+Q45679	cast	Q99529	Siegfried Schürenberg		
+Q45679	cast	Q45357	Hans Clarin		
+Q45679	cast	Q104184	Eberhard Junkersdorf		
+Q45679	cast	Q101189	Heinz Drache		
+Q45679	cast	Q126990	Corny Collins		
+Q45679	cast	Q2575526	Wilhelm Vorwerg		
+Q45679	cast	Q92249	Elisabeth Flickenschildt		
+Q45679	cast	Q87414	Eddi Arent		
+Q45679	cast	Q69578	Gisela Uhlen		
+Q45679	cast	Q70489	Hans Nielsen		
+Q45679	cast	Q120522	Rainer Brandt		
+Q45679	cast	Q1290301	Eduard Wandrey		
+Q45679	cast	Q99544	Alexander Engel		
+Q163817	director	Q76398	Alfred Vohrer		
+Q163817	writer	Q45154	Harald G. Petersson		
+Q163817	composer	Q96244	Peter Thomas		
+Q163817	producer	Q87426	Horst Wendlandt		
+Q163817	cinematographer	Q1732240	Karl Löb		
+Q163817	editor	Q120187	Hermann Haller		
+Q163817	cast	Q55419	Klaus Kinski		
+Q163817	cast	Q100291	Stanislav Ledinek		
+Q163817	cast	Q102936	Wolfgang Wahl		
+Q163817	cast	Q100258	Michael Chevalier		
+Q163817	cast	Q1600744	Heinz Petruo		
+Q163817	cast	Q1662793	Inge Langen		
+Q163817	cast	Q87414	Eddi Arent		
+Q163817	cast	Q85744	Kurt von Ruffin		
+Q163817	cast	Q1379168	Eva Ebner		
+Q163817	cast	Q105087	Siegfried Wischnewski		
+Q163817	cast	Q97365	Agnes Windeck		
+Q163817	cast	Q105114	Günter Pfitzmann		
+Q163817	cast	Q99632	Albert Bessler		
+Q163817	cast	Q1600997	Heinz Spitzner		
+Q163817	cast	Q97351	Barbara Rütting		
+Q163817	cast	Q2423600	Thomas Eckelmann		
+Q163817	cast	Q1223875	Dietrich Kerky		
+Q163817	cast	Q97481	Jan Hendriks		
+Q163817	cast	Q101189	Heinz Drache		
+Q163817	cast	Q1317132	Erik von Loewis		
+Q163817	cast	Q99529	Siegfried Schürenberg		
+Q76479	director	Q164562	Sergio Leone		
+Q76479	director	Q945188	Monte Hellman		
+Q76479	writer	Q164562	Sergio Leone		
+Q76479	writer	Q716460	Duccio Tessari		
+Q76479	writer	Q920161	Fernando Di Leo		
+Q76479	composer	Q23848	Ennio Morricone		
+Q76479	producer	Q3623767	Arrigo Colombo		
+Q76479	producer	Q3765652	Giorgio Papi		
+Q76479	cinematographer	Q441964	Massimo Dallamano		
+Q76479	editor	Q3938698	Roberto Cinquini		
+Q76479	executive_producer	Q3751486	Franco Palaggi		
+Q76479	costume_designer	Q438256	Carlo Simi		
+Q76479	production_designer	Q438256	Carlo Simi		
+Q76479	cast	Q43203	Clint Eastwood	Man with No Name	
+Q76479	cast	Q1056178	Umberto Spadaro		
+Q76479	cast	Q117926	José Calvo		
+Q76479	cast	Q1040908	Mario Brega		
+Q76479	cast	Q78953	Joseph Egger		
+Q76479	cast	Q84979	Sieghardt Rupp		
+Q76479	cast	Q704111	Daniel Martín		
+Q76479	cast	Q817356	Benito Stefanelli		
+Q76479	cast	Q604431	Antonio Prieto		
+Q76479	cast	Q3645680	Bruno Carotenuto		
+Q76479	cast	Q1406852	Fernando Sánchez Polack		
+Q76479	cast	Q5700054	Antonio Vico Camarer		
+Q76479	cast	Q106764	Margarita Lozano		
+Q76479	cast	Q5945123	José Riesgo		
+Q76479	cast	Q317110	Gian Maria Volonte		
+Q76479	cast	Q603716	Antonio Molino Rojo		
+Q76479	cast	Q955798	Aldo Sambrell		
+Q76479	cast	Q723742	Lorenzo Robledo		
+Q76479	cast	Q77393	Wolfgang Lukschy		
+Q76479	cast	Q948826	Frank Braña		
+Q76479	cast	Q1709069	José Canalejas		
+Q76479	cast	Q77405	Marianne Koch		
+Q76479	cast	Q7061806	Nosher Powell		
+Q76479	cast	Q251455	Álvaro de Luna Blanco		
+Q76479	cast	Q5944399	José Orjas		
+Q76479	followed_by	Q153677	For a Few Dollars More		
+Q76479	subject		amorality		
+Q76479	subject		rivalry		
+Q76479	subject		enmity		
+Q76479	subject		rootlessness		
+Q18669607	director	Q16937748	Manfred R. Köhler		
+Q18669607	writer	Q16937748	Manfred R. Köhler		
+Q18669607	composer	Q30310679	Fred Strittmatter		
+Q18669607	cinematographer	Q1572555	Klaus von Rautenfeld		
+Q18669607	editor	Q2543690	Walter Boos		
+Q18669607	cast	Q101189	Heinz Drache		
+Q18669607	cast	Q97354	Sabina Sesselmann		
+Q18669607	cast	Q67899	Ralf Wolter		
+Q18669607	cast	Q76399	Elga Andersen		
+Q1216820	director	Q74899	Michael Pfleghar		
+Q1216820	writer	Q1445929	Hansjürgen Pohland		
+Q1216820	composer	Q1600463	Heinz Kiessling		
+Q1216820	cinematographer	Q1360584	Ernst Wild		
+Q1216820	editor	Q17388563	Margot von Schlieffen		
+Q1216820	cast	Q87915	Heidelinde Weis		
+Q1216820	cast	Q78404	Ernst Fritz Fürbringer		
+Q1216820	cast	Q993193	Bruno Dietrich		
+Q1216820	cast	Q77586	Klausjürgen Wussow		
+Q1216820	cast	Q1737622	Peter Schütte		
+Q1216820	cast	Q70251	Walter Giller		
+Q1216820	cast	Q101868	Wolfgang Neuss		
+Q1216820	cast	Q563255	Kessler Twins		
+Q1216820	cast	Q496339	Horst Frank		
+Q1216820	cast	Q1609280	Herbert Weißbach		
+Q1194318	director	Q76398	Alfred Vohrer		
+Q1194318	writer	Q45154	Harald G. Petersson		
+Q1194318	writer	Q77583	Herbert Reinecker		
+Q1194318	composer	Q96244	Peter Thomas		
+Q1194318	producer	Q87426	Horst Wendlandt		
+Q1194318	cinematographer	Q1732240	Karl Löb		
+Q1194318	editor	Q98984	Jutta Hering		
+Q1194318	cast	Q2575526	Wilhelm Vorwerg		
+Q1194318	cast	Q534502	Sophie Hardy		
+Q1194318	cast	Q105138	Kurt Waitzmann		
+Q1194318	cast	Q468273	Anneli Sauli		
+Q1194318	cast	Q97349	Karl John		
+Q1194318	cast	Q101189	Heinz Drache		
+Q1194318	cast	Q2433707	Tilo Freiherr von Berlepsch		
+Q1194318	cast	Q1664759	Jochen Brockmann		
+Q1194318	cast	Q2144589	René Deltgen	Arthur Milton (der „Hexer“) / Gepäckträger	
+Q1194318	cast	Q72511	Siegfried Lowitz		
+Q1194318	cast	Q1792990	Kurd Rudolf Pieritz		
+Q1194318	cast	Q87414	Eddi Arent		
+Q1194318	cast	Q99529	Siegfried Schürenberg		
+Q1194318	cast	Q78400	Margot Trooger		
+Q1194318	cast	Q91319	Carl Lange		
+Q1194318	cast	Q78119	Joachim Fuchsberger		
+Q1194318	cast	Q1618257	Hilde Sessak		
+Q1452673	director	Q3487339	Sobey Martin		
+Q1452673	writer	Q109038	Gustav Kampendonk		
+Q1452673	composer	Q1870731	Lotar Olias		
+Q1452673	producer	Q676498	CCC Film		
+Q1452673	cinematographer	Q2283405	Siegfried Hold		
+Q1452673	editor	Q2546801	Walter Wischniewsky		
+Q1452673	cast	Q264596	Mamie Van Doren		
+Q1452673	cast	Q466120	Freddy Quinn		
+Q1452673	cast	Q706538	Rik Battaglia		
+Q1452673	cast	Q469201	Carlo Croccolo		
+Q1452673	cast	Q299695	Beba Lončar		
+Q19278239	director	Q1373323	Eugenio Martín		
+Q19278239	director	Q94941910	Franz Eichhorn		
+Q19278239	composer	Q1358755	Georges Garvarentz		
+Q19278239	editor	Q97936	Heidi Genée		
+Q19278239	cast	Q314033	Harald Juhnke		
+Q19278239	cast	Q10393797	Wilson Grey		
+Q19278239	cast	Q552681	Pierre Brice		
+Q19278239	cast	Q171261	Emma Penella		
+Q19278239	cast	Q2144589	René Deltgen		
+Q19278239	cast	Q96095	Hans von Borsody		
+Q19278239	cast	Q3105522	Gil Delamare		
+Q15815806	director	Q88333	Ernst Hofbauer		
+Q15815806	writer	Q118570	Hans Billian		
+Q15815806	composer	Q107727	Gert Wilden		
+Q15815806	cinematographer	Q1222980	Dieter Wedekind		
+Q15815806	editor	Q64413904	Elisabeth Kleinert-Neumann		
+Q15815806	cast	Q1332673	Elma Karlowa		
+Q15815806	cast	Q1285003	Edith Hancke		
+Q15815806	cast	Q1624260	Margitta Scherr		
+Q15815806	cast	Q1082808	Christiane Rücker		
+Q15815806	cast	Q63960	Manfred Schnelldorfer		
+Q15815806	cast	Q66769	Mady Rahl		
+Q15815806	cast	Q2692490	Enzi Fuchs		
+Q15815806	cast	Q1575879	Hannelore Kramm		
+Q15815806	cast	Q111670	Kurt Großkurth		
+Q15815806	cast	Q94636	Rudolf Prack		
+Q15815806	cast	Q1555922	Peter W. Staub		
+Q15815806	cast	Q558746	Ann Smyrner		
+Q15815806	cast	Q451483	Vivi Bach		
+Q15815806	cast	Q121431	Levka		
+Q15815806	cast	Q534189	Angelika Bender		
+Q15815806	cast	Q1914358	May Spils		
+Q15815806	cast	Q107599	Alice Treff		
+Q15815806	cast	Q1185395	Demeter Bitenc		
+Q15815806	cast	Q105493	Gerd Vespermann		
+Q15815806	cast	Q320589	Gus Backus		
+Q15815806	cast	Q105915	Thomas Alder		
+Q521876	director	Q78920	Harald Reinl		
+Q521876	writer	Q45154	Harald G. Petersson		
+Q521876	composer	Q91791	Martin Böttcher		
+Q521876	producer	Q87426	Horst Wendlandt		
+Q521876	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q521876	editor	Q120187	Hermann Haller		
+Q521876	cast	Q1590034	Mirko Boman		
+Q521876	cast	Q1658517	Ilija Ivezić		
+Q521876	cast	Q243430	Terence Hill		
+Q521876	cast	Q552681	Pierre Brice		
+Q521876	cast	Q455877	Stole Aranđelović		
+Q521876	cast	Q1681422	Klaus-Hagen Latwesen		
+Q521876	cast	Q62353	Karin Dor		
+Q521876	cast	Q2143586	Renato Baldini		
+Q521876	cast	Q101110	Claus Jurichs		
+Q521876	cast	Q705423	Gojko Mitić		
+Q521876	cast	Q55419	Klaus Kinski		
+Q521876	cast	Q496339	Horst Frank		
+Q521876	cast	Q19644728	Đorđe Nenadović		
+Q521876	cast	Q1144993	Curt Ackermann		
+Q521876	cast	Q1510468	Gerd Duwner		
+Q521876	cast	Q87414	Eddi Arent		
+Q521876	cast	Q737360	Velimir Chytil		
+Q521876	cast	Q330633	Anthony Steel		
+Q521876	cast	Q99529	Siegfried Schürenberg		
+Q521876	cast	Q515442	Antun Nalis		
+Q521876	cast	Q520819	Lex Barker		
+Q521876	follows	Q564124	Apache Gold		
+Q521876	followed_by	Q535427	The Desperado Trail		
+Q15852140	director	Q87831	Rolf Olsen		
+Q15852140	writer	Q87831	Rolf Olsen		
+Q15852140	composer	Q1362997	Erwin Halletz		
+Q15852140	producer	Q90017	Karl Spiehs		
+Q15852140	cinematographer	Q1732240	Karl Löb		
+Q15852140	editor	Q41696673	Karl Aulitzky		
+Q15852140	cast	Q995243	Trude Herr		
+Q15852140	cast	Q87831	Rolf Olsen		
+Q15852140	cast	Q155236	Udo Jürgens		
+Q15852140	cast	Q1659183	Ilse Peternell		
+Q15852140	cast	Q181402	Chris Howland		
+Q15852140	cast	Q89434	Gunther Philipp		
+Q15852140	cast	Q103702	Ruth Stephan		
+Q15852140	cast	Q109383	Wolfgang Jansen		
+Q824706	director	Q88333	Ernst Hofbauer		
+Q824706	director	Q2639352	Alberto Cardone		
+Q824706	writer	Q172433	Jackie Lewis		
+Q824706	writer	Q1677104	Jack Lewis		
+Q824706	composer	Q107727	Gert Wilden		
+Q824706	producer	Q100399	Wolf C. Hartwig		
+Q824706	cinematographer	Q87665	Hans Jura		
+Q824706	editor	Q1247263	Herbert Taschner		
+Q824706	cast	Q118392	Pinkas Braun		
+Q824706	cast	Q722337	Serge Marquand		
+Q824706	cast	Q462654	Olga Schoberová		
+Q824706	cast	Q496339	Horst Frank		
+Q824706	cast	Q2433098	Til Kiwe		
+Q824706	cast	Q3725484	Ennio Girolami		
+Q824706	cast	Q102504	Klaus Havenstein		
+Q824706	cast	Q723742	Lorenzo Robledo		
+Q824706	cast	Q1306668	Wolfgang Hess		
+Q824706	cast	Q66372	Joachim Hansen		
+Q824706	cast	Q1285003	Edith Hancke		
+Q824706	cast	Q2561917	Werner Lieven		
+Q824706	cast	Q78953	Joseph Egger		
+Q824706	cast	Q16185205	Jacques Bézard		
+Q824706	cast	Q330432	Brad Harris		
+Q824706	cast	Q107753	Horst Sachtleben		
+Q824706	cast	Q1602300	Helga Sommerfeld		
+Q824706	cast	Q69881	Werner Peters		
+Q824706	cast	Q3993256	Tony Kendall		
+Q1199724	director	Q78920	Harald Reinl		
+Q1199724	writer	Q109145	Fred Denger		
+Q1199724	writer	Q1691105	Julius Joachim Bartsch		
+Q1199724	composer	Q96244	Peter Thomas		
+Q1199724	producer	Q87426	Horst Wendlandt		
+Q1199724	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q1199724	editor	Q98984	Jutta Hering		
+Q1199724	cast	Q121431	Levka		
+Q1199724	cast	Q77869	Dieter Eppler		
+Q1199724	cast	Q1792990	Kurd Rudolf Pieritz		
+Q1199724	cast	Q69669	Uschi Glas		
+Q1199724	cast	Q2369293	Susanne Juhnke		
+Q1199724	cast	Q1265853	Dunja Rajter		
+Q1199724	cast	Q63586	Ilse Steppat		
+Q1199724	cast	Q99529	Siegfried Schürenberg		
+Q1199724	cast	Q72511	Siegfried Lowitz		
+Q1199724	cast	Q91608	Rudolf Schündler		
+Q1199724	cast	Q62353	Karin Dor		
+Q1199724	cast	Q84330	Harald Leipnitz		
+Q1199724	cast	Q2575526	Wilhelm Vorwerg		
+Q1199724	cast	Q105138	Kurt Waitzmann		
+Q1199724	cast	Q87414	Eddi Arent		
+Q1199724	cast	Q122846	Hartmut Reck		
+Q153677	director	Q164562	Sergio Leone		
+Q153677	writer	Q164562	Sergio Leone		
+Q153677	writer	Q743375	Luciano Vincenzoni		
+Q153677	writer	Q920161	Fernando Di Leo		
+Q153677	writer	Q984596	Sergio Donati		
+Q153677	composer	Q23848	Ennio Morricone		
+Q153677	producer	Q579172	Alberto Grimaldi		
+Q153677	cinematographer	Q441964	Massimo Dallamano		
+Q153677	editor	Q1373284	Eugenio Alabiso		
+Q153677	costume_designer	Q438256	Carlo Simi		
+Q153677	production_designer	Q438256	Carlo Simi		
+Q153677	cast	Q193278	Lee Van Cleef	Douglas Mortimer	
+Q153677	cast	Q1794297	Kurt Zips		
+Q153677	cast	Q1678002	Jacques Herlin		
+Q153677	cast	Q78953	Joseph Egger		
+Q153677	cast	Q518972	Rosemary Dexter		
+Q153677	cast	Q948826	Frank Braña		
+Q153677	cast	Q59897450	Guillermo Méndez		
+Q153677	cast	Q2159451	Roberto Camardiel		
+Q153677	cast	Q2049759	Panos Papadopulos		
+Q153677	cast	Q117926	José Calvo		
+Q153677	cast	Q1040908	Mario Brega		
+Q153677	cast	Q723742	Lorenzo Robledo		
+Q153677	cast	Q521853	Jesús Guzmán		
+Q153677	cast	Q505128	Tomás Blanco		
+Q153677	cast	Q1433036	Ricardo Palacios		
+Q153677	cast	Q3956185	Sergio Mendizábal		
+Q153677	cast	Q920161	Fernando Di Leo		
+Q153677	cast	Q317110	Gian Maria Volonte		
+Q153677	cast	Q66465	Peter Lee Lawrence		
+Q153677	cast	Q1709069	José Canalejas		
+Q153677	cast	Q75261	Werner Abrolat		
+Q153677	cast	Q438256	Carlo Simi		
+Q153677	cast	Q955798	Aldo Sambrell		
+Q153677	cast	Q55419	Klaus Kinski		
+Q153677	cast	Q603716	Antonio Molino Rojo		
+Q153677	cast	Q164562	Sergio Leone		
+Q153677	cast	Q11080901	José Terrón		
+Q153677	cast	Q778794	Dante Maggio		
+Q153677	cast	Q817356	Benito Stefanelli		
+Q153677	cast	Q735221	Luigi Pistilli		
+Q153677	cast	Q43203	Clint Eastwood	Man with No Name	
+Q153677	follows	Q76479	A Fistful of Dollars		
+Q153677	followed_by	Q41483	The Good, the Bad and the Ugly		
+Q1594287	director	Q97799	Werner Jacobs		
+Q1594287	writer	Q118655	Richard Schweizer		
+Q1594287	composer	Q316615	Franz Grothe		
+Q1594287	producer	Q1608359	Herbert Gruber		
+Q1594287	cinematographer	Q121175	Richard Angst		
+Q1594287	editor	Q1408139	Arnfried Heyne		
+Q1594287	cast	Q95713839	Eva Maria Singhammer	Heidi	
+Q1594287	cast	Q1681957	Jan Koester		
+Q1594287	cast	Q75217	Ernst Schröder		
+Q1594287	cast	Q86274	Hans Thimig		
+Q1594287	cast	Q113863	Rudolf Vogel		
+Q1594287	cast	Q2163649	Rolf Moebius		
+Q1594287	cast	Q94636	Rudolf Prack		
+Q1594287	cast	Q69382	Gustav Knuth		
+Q1594287	cast	Q1928016	Michael Janisch		
+Q1594287	cast	Q1930074	Michaela May		
+Q1594287	cast	Q1894973	Margarete Haagen		
+Q1594287	cast	Q90398	Lotte Ledl		
+Q1594287	cast	Q78400	Margot Trooger		
+Q1980455	director	Q76398	Alfred Vohrer		
+Q1980455	director	Q110749	Will Tremper		
+Q1980455	writer	Q77583	Herbert Reinecker		
+Q1980455	composer	Q96244	Peter Thomas		
+Q1980455	producer	Q87426	Horst Wendlandt		
+Q1980455	cinematographer	Q1732240	Karl Löb		
+Q1980455	editor	Q98984	Jutta Hering		
+Q1980455	cast	Q97349	Karl John		
+Q1980455	cast	Q1600997	Heinz Spitzner		
+Q1980455	cast	Q68898	Brigitte Horney		
+Q1980455	cast	Q76398	Alfred Vohrer		
+Q1980455	cast	Q84551	Gisela Hahn		
+Q1980455	cast	Q105138	Kurt Waitzmann		
+Q1980455	cast	Q99632	Albert Bessler		
+Q1980455	cast	Q84926	Robert Hoffmann		
+Q1980455	cast	Q55419	Klaus Kinski		
+Q1980455	cast	Q99529	Siegfried Schürenberg		
+Q1980455	cast	Q2144589	René Deltgen		
+Q1980455	cast	Q78400	Margot Trooger		
+Q1980455	cast	Q101189	Heinz Drache		
+Q1980455	cast	Q2575526	Wilhelm Vorwerg		
+Q1980455	cast	Q87414	Eddi Arent		
+Q1980455	cast	Q1872749	Lu Säuberlich		
+Q1980455	cast	Q100258	Michael Chevalier		
+Q1980455	cast	Q100989	Hubert von Meyerinck		
+Q1980455	cast	Q97351	Barbara Rütting		
+Q1980455	cast	Q107514	Lia Eibenschütz		
+Q1254119	director	Q77890	Kurt Hoffmann		
+Q1254119	writer	Q1600730	Heinz Pauck		
+Q1254119	composer	Q316615	Franz Grothe		
+Q1254119	producer	Q108865	Hans Domnick		
+Q1254119	cinematographer	Q121175	Richard Angst		
+Q1254119	editor	Q111136	Dagmar Hirtz		
+Q1254119	cast	Q90824	Werner Hinz		
+Q1254119	cast	Q60876	Heinz Rühmann		
+Q1254119	cast	Q2157865	Robert Klupp		
+Q1254119	cast	Q2076809	Peter Lühr		
+Q1254119	cast	Q469759	Liselotte Pulver		
+Q1254119	cast	Q102050	Fritz Tillmann		
+Q1254119	cast	Q108972	Klaus Schwarzkopf		
+Q1254119	cast	Q91058	Fritz Rasp		
+Q1254119	cast	Q88530	Tatjana Sais		
+Q200517	director	Q97799	Werner Jacobs		
+Q200517	writer	Q91077	Franz Seitz Jr.		
+Q200517	composer	Q90445	Rolf Alexander Wilhelm		
+Q200517	producer	Q91077	Franz Seitz Jr.		
+Q200517	cinematographer	Q2588835	Wolf Wirth		
+Q200517	editor	Q1419473	Ingeborg Taschner		
+Q200517	cast	Q69382	Gustav Knuth		
+Q200517	cast	Q1445366	Olf Fischer		
+Q200517	cast	Q1452417	Fred Liewehr		
+Q200517	cast	Q1582734	Hans Terofal		
+Q200517	cast	Q78404	Ernst Fritz Fürbringer		
+Q200517	cast	Q45558	Beppo Brem		
+Q200517	cast	Q99288	Hans Quest		
+Q200517	cast	Q109357	Käthe Braun		
+Q200517	cast	Q1894973	Margarete Haagen		
+Q200517	cast	Q89434	Gunther Philipp		
+Q200517	cast	Q67641	Michael Verhoeven		
+Q200517	cast	Q95613	Michael Hinz		
+Q200517	cast	Q87915	Heidelinde Weis		
+Q200517	cast	Q1448341	Franz Muxeneder		
+Q200517	cast	Q97652	Georg Thomalla		
+Q200517	cast	Q1516639	Ilse Petri		
+Q200517	cast	Q107849	Carl Wery		
+Q200517	cast	Q1464037	Friedrich von Thun		
+Q200517	cast	Q91608	Rudolf Schündler		
+Q200517	cast	Q1931286	Michl Lang		
+Q200517	cast	Q89357	Rudolf Rhomberg		
+Q200517	cast	Q2167491	Rosl Mayr		
+Q200517	cast	Q92249	Elisabeth Flickenschildt		
+Q200517	cast	Q43764	Hans Kraus		
+Q200517	follows	Q1808474	Tales of a Young Scamp		
+Q200517	followed_by	Q1657903	Onkel Filser – Allerneueste Lausbubengeschichten		
+Q535427	director	Q78920	Harald Reinl		
+Q535427	writer	Q45154	Harald G. Petersson		
+Q535427	writer	Q1691105	Julius Joachim Bartsch		
+Q535427	composer	Q91791	Martin Böttcher		
+Q535427	producer	Q87426	Horst Wendlandt		
+Q535427	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q535427	editor	Q98984	Jutta Hering		
+Q535427	cast	Q91319	Carl Lange		
+Q535427	cast	Q100258	Michael Chevalier		
+Q535427	cast	Q1690344	Joachim Nottke		
+Q535427	cast	Q1284078	Edgar Ott		
+Q535427	cast	Q2143586	Renato Baldini		
+Q535427	cast	Q1797384	Lutz Moik		
+Q535427	cast	Q1759105	Aleksandar Gavrić		
+Q535427	cast	Q2512412	Veljko Maričić		
+Q535427	cast	Q110568	Arnold Marquis		
+Q535427	cast	Q67899	Ralf Wolter		
+Q535427	cast	Q62353	Karin Dor		
+Q535427	cast	Q552681	Pierre Brice		
+Q535427	cast	Q2294329	Slobodan Dimitrijević		
+Q535427	cast	Q1254786	Dragomir Felba		
+Q535427	cast	Q97609	Thomas Danneberg		
+Q535427	cast	Q89496	Christian Brückner		
+Q535427	cast	Q534502	Sophie Hardy		
+Q535427	cast	Q706538	Rik Battaglia		
+Q535427	cast	Q1120110	Dušan Antonijević		
+Q535427	cast	Q1658517	Ilija Ivezić		
+Q535427	cast	Q105058	Konrad Wagner		
+Q535427	cast	Q520819	Lex Barker		
+Q535427	cast	Q705423	Gojko Mitić		
+Q535427	cast	Q597540	Miha Baloh		
+Q535427	follows	Q521876	Last of the Renegades		
+Q462466	director	Q747522	Don Sharp		
+Q462466	writer	Q510258	Sax Rohmer		
+Q462466	writer	Q707869	Harry Alan Towers		
+Q462466	composer	Q107727	Gert Wilden		
+Q462466	composer	Q91233064	Christopher Whelen		
+Q462466	producer	Q707869	Harry Alan Towers		
+Q462466	cinematographer	Q3057187	Ernest Steward		
+Q462466	editor	Q95907512	John Trumper		
+Q462466	cast	Q721256	Nigel Green	Denis Nayland Smith	
+Q462466	cast	Q180338	Christopher Lee	Fu Manchu	
+Q462466	cast	Q434790	Tsai Chin	Lin Tang	
+Q462466	cast	Q16008151	Harry Brogan		
+Q462466	cast	Q5346778	Edwin Richfield		
+Q462466	cast	Q78119	Joachim Fuchsberger		
+Q462466	cast	Q254265	James Robertson Justice		
+Q462466	cast	Q1593157	Jim Norton		
+Q462466	cast	Q5920311	Howard Marion-Crawford		
+Q462466	cast	Q62353	Karin Dor		
+Q462466	cast	Q3430193	Ric Young		
+Q462466	cast	Q1229686	Peter Mosbacher		
+Q462466	cast	Q86066	Walter Rilla		
+Q462466	cast	Q3180111	Joe Lynch		
+Q462466	followed_by	Q464638	The Brides of Fu Manchu		
+Q999502	director	Q89377	Harald Philipp		
+Q999502	writer	Q109145	Fred Denger		
+Q999502	writer	Q1641475	Kurt Nachmann		
+Q999502	composer	Q96244	Peter Thomas		
+Q999502	cinematographer	Q27950967	Helmut Meewes		
+Q999502	editor	Q2645934	Alfred Srp		
+Q999502	cast	Q1459188	Friedrich G. Beckhaus		
+Q999502	cast	Q75261	Werner Abrolat		
+Q999502	cast	Q1602280	Helga Schlack		
+Q999502	cast	Q118968	Sigfrit Steiner		
+Q999502	cast	Q1347232	George Nader		
+Q999502	cast	Q1584447	Harald Dietl		
+Q999502	cast	Q1505145	Georg Lehn		
+Q999502	cast	Q1944641	Monika Grimm		
+Q999502	cast	Q2641711	Alexander Allerson		
+Q999502	cast	Q496339	Horst Frank		
+Q999502	cast	Q1663299	Ingrid Capelle		
+Q999502	cast	Q1515200	Gert Günther Hoffmann		
+Q999502	cast	Q111288	Ilse Pagé		
+Q999502	cast	Q118575	Heinz Weiss		
+Q999502	cast	Q95691	Richard Münch		
+Q999502	cast	Q468290	Dominique Wilms		
+Q1215151	director	Q78920	Harald Reinl		
+Q1215151	writer	Q45154	Harald G. Petersson		
+Q1215151	writer	Q78920	Harald Reinl		
+Q1215151	writer	Q749590	Ladislas Fodor		
+Q1215151	composer	Q90445	Rolf Alexander Wilhelm		
+Q1215151	producer	Q215578	Artur Brauner		
+Q1215151	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q1215151	editor	Q120187	Hermann Haller		
+Q1215151	cast	Q2217716	Samson Burke	Bleda	
+Q1215151	cast	Q70877	Uwe Beyer	Sigurd	
+Q1215151	cast	Q96852	Fred Williams	Gundomar I	
+Q1215151	cast	Q1081599	Christian Rode	Dietrich of Bern	
+Q1215151	cast	Q1896145	Maria Marlow	Gudrun	
+Q1215151	cast	Q62353	Karin Dor	Brynhild	
+Q1215151	cast	Q1713803	Rolf Henniger	Gunther	
+Q1215151	cast	Q75674	Hilde Weissner	Ute	
+Q1215151	cast	Q105087	Siegfried Wischnewski	Hagen	
+Q1215151	cast	Q817933	Benno Hoffmann	Regin	
+Q1215151	cast	Q96095	Hans von Borsody	Volker von Alzey	
+Q1215151	cast	Q86638	Friedrich von Ledebur	Hildebrand	
+Q1215151	cast	Q165357	Herbert Lom	Attila	
+Q1215151	cast	Q243430	Terence Hill	Giselher	
+Q1215151	cast	Q95747194	Barbara Bold	Hildegund	
+Q1215151	cast	Q2292452	Skip Martin	Alberich, king of the Dwarves	
+Q1215151	cast	Q1708568	Maria Hofen	Frigga	
+Q1215151	cast	Q77869	Dieter Eppler	Rüdiger	
+Q1215668	director	Q86018	Helmut Ashley		
+Q1215668	writer	Q92118	George Hurdalek		
+Q1215668	composer	Q96244	Peter Thomas		
+Q1215668	cinematographer	Q1449672	Franz Xaver Lederle		
+Q1215668	editor	Q2645934	Alfred Srp		
+Q1215668	cast	Q61608	Horst Tappert		
+Q1215668	cast	Q1583826	Hansi Waldherr		
+Q1215668	cast	Q315243	Pierre Richard		
+Q1215668	cast	Q86066	Walter Rilla		
+Q1215668	cast	Q2475274	Ullrich Haupt, Jr.		
+Q1215668	cast	Q103476	Arthur Brauss		
+Q1215668	cast	Q119560	Birke Bruck		
+Q1215668	cast	Q120522	Rainer Brandt		
+Q1215668	cast	Q1347232	George Nader		
+Q1215668	cast	Q3574220	Yvonne Monlaur		
+Q1215668	cast	Q118575	Heinz Weiss		
+Q1215668	cast	Q105635	Axel Scholtz		
+Q1215668	cast	Q1658517	Ilija Ivezić		
+Q1215668	cast	Q95691	Richard Münch		
+Q1215668	cast	Q1602280	Helga Schlack		
+Q1215668	cast	Q104008	Christian Doermer		
+Q24893645	director	Q4888087	Julio Coll		
+Q24893645	composer	Q96072256	José Luis Navarro		
+Q24893645	cinematographer	Q1898959	Mario Pacheco		
+Q24893645	cast	Q611506	António Vilar		
+Q24893645	cast	Q642662	Letícia Román		
+Q24893645	cast	Q948826	Frank Braña		
+Q24893645	cast	Q66418	Peter van Eyck		
+Q24893645	cast	Q5699354	Antonio Pica		
+Q24893645	cast	Q77586	Klausjürgen Wussow		
+Q1624238	director	Q77890	Kurt Hoffmann		
+Q1624238	writer	Q110494	Johanna Sibelius		
+Q1624238	writer	Q1279140	Eberhard Keindorff		
+Q1624238	composer	Q316615	Franz Grothe		
+Q1624238	producer	Q108865	Hans Domnick		
+Q1624238	cinematographer	Q121175	Richard Angst		
+Q1624238	editor	Q111136	Dagmar Hirtz		
+Q1624238	cast	Q122802	Stefan Wigger		
+Q1624238	cast	Q88530	Tatjana Sais		
+Q1624238	cast	Q1284970	Edith Elsholtz		
+Q1624238	cast	Q111069	Joachim Teege		
+Q1624238	cast	Q1745459	Klaus Miedel		
+Q1624238	cast	Q102050	Fritz Tillmann		
+Q1624238	cast	Q109357	Käthe Braun		
+Q1624238	cast	Q469759	Liselotte Pulver		
+Q1624238	cast	Q60876	Heinz Rühmann		
+Q1624238	cast	Q95691	Richard Münch		
+Q1827963	director	Q77890	Kurt Hoffmann		
+Q1827963	writer	Q110494	Johanna Sibelius		
+Q1827963	writer	Q1279140	Eberhard Keindorff		
+Q1827963	composer	Q316615	Franz Grothe		
+Q1827963	producer	Q1575240	Heinz Angermeyer		
+Q1827963	cinematographer	Q121175	Richard Angst		
+Q1827963	editor	Q1098891	Claus von Boro		
+Q1827963	cast	Q84330	Harald Leipnitz	Philippe I, Duke of Orléans	
+Q1827963	cast	Q87915	Heidelinde Weis	Elizabeth Charlotte of the Palatinate, Duchess of Orléans	
+Q1827963	cast	Q1264165	Erwin Linder		
+Q1827963	cast	Q1464037	Friedrich von Thun		
+Q1827963	cast	Q103415	Hans Caninenberg		
+Q1827963	cast	Q122092	Gunnar Möller		
+Q1827963	cast	Q1418014	Robert Dietl		
+Q1827963	cast	Q1729458	Karin Hübner		
+Q1827963	cast	Q97598	Else Quecke		
+Q1827963	cast	Q85823	Herbert Fux		
+Q1827963	cast	Q1640475	Karla Chadimová		
+Q1827963	cast	Q111069	Joachim Teege		
+Q1827963	cast	Q1527314	Gisela Fackeldey		
+Q464638	director	Q747522	Don Sharp		
+Q464638	writer	Q510258	Sax Rohmer		
+Q464638	writer	Q707869	Harry Alan Towers		
+Q464638	writer	Q747522	Don Sharp		
+Q464638	composer	Q1351641	Edmund Crispin		
+Q464638	producer	Q707869	Harry Alan Towers		
+Q464638	producer	Q7087378	Oliver A. Unger		
+Q464638	producer	Q98169075	David Henley		
+Q464638	cinematographer	Q3057187	Ernest Steward		
+Q464638	cast	Q361461	Douglas Wilmer	Denis Nayland Smith	
+Q464638	cast	Q434790	Tsai Chin	Lin Tang	
+Q464638	cast	Q180338	Christopher Lee	Fu Manchu	
+Q464638	cast	Q547742	Marie Versini		
+Q464638	cast	Q89092	Joseph Furst		
+Q464638	cast	Q725674	Burt Kwouk		
+Q464638	cast	Q5044682	Carole Gray		
+Q464638	cast	Q101189	Heinz Drache		
+Q464638	cast	Q3430193	Ric Young		
+Q464638	cast	Q3592768	에블린 델리아		
+Q464638	cast	Q945936	Roger Hanin		
+Q464638	cast	Q1357189	Rupert Davies		
+Q464638	cast	Q84330	Harald Leipnitz		
+Q464638	cast	Q5920311	Howard Marion-Crawford		
+Q464638	follows	Q462466	The Face of Fu Manchu		
+Q464638	followed_by	Q462155	The Vengeance of Fu Manchu		
+Q1192684	director	Q76398	Alfred Vohrer		
+Q1192684	writer	Q77583	Herbert Reinecker		
+Q1192684	composer	Q96244	Peter Thomas		
+Q1192684	producer	Q1467023	Fritz Klotzsch		
+Q1192684	cinematographer	Q1732240	Karl Löb		
+Q1192684	cast	Q1944720	Monika Peitsch		
+Q1192684	cast	Q1618257	Hilde Sessak		
+Q1192684	cast	Q99632	Albert Bessler		
+Q1192684	cast	Q111069	Joachim Teege		
+Q1192684	cast	Q111288	Ilse Pagé		
+Q1192684	cast	Q99529	Siegfried Schürenberg		
+Q1192684	cast	Q103696	Günther Stoll		
+Q1192684	cast	Q97365	Agnes Windeck		
+Q1192684	cast	Q87414	Eddi Arent		
+Q1192684	cast	Q89565	Suzanne Roquette		
+Q1192684	cast	Q2433707	Tilo Freiherr von Berlepsch		
+Q1192684	cast	Q2369293	Susanne Juhnke		
+Q1192684	cast	Q1691177	Jochen Schröder		
+Q1192684	cast	Q121431	Levka		
+Q1192684	cast	Q118392	Pinkas Braun		
+Q1192684	cast	Q105138	Kurt Waitzmann		
+Q1192684	cast	Q2149684	Richard Haller		
+Q1192684	cast	Q69578	Gisela Uhlen		
+Q1192684	cast	Q340480	Achim Strietzel		
+Q1192684	cast	Q100989	Hubert von Meyerinck		
+Q1195955	director	Q87913	Adrian Hoven		
+Q1195955	writer	Q1713895	Wolf Neumeister		
+Q1195955	writer	Q16879277	Rolf Becker		
+Q1195955	composer	Q1606414	Johannes Rediske		
+Q1195955	cinematographer	Q87665	Hans Jura		
+Q1195955	cast	Q88815	Ady Berber		
+Q1195955	cast	Q43890	Norbert Gastell		
+Q1195955	cast	Q314033	Harald Juhnke		
+Q1195955	cast	Q95292	Susanne Uhlen		
+Q1195955	cast	Q87927	Erwin Strahl		
+Q1195955	cast	Q522832	Folco Lulli		
+Q1195955	cast	Q87941	Carl Möhner		
+Q1195955	cast	Q2513270	Vera Comployer		
+Q1195955	cast	Q1546025	Grete Zimmer		
+Q1195955	cast	Q120522	Rainer Brandt		
+Q1195955	cast	Q89119	Hans Putz		
+Q1195955	cast	Q88139	Helga Liné		
+Q1195955	cast	Q750535	Astrid Boner		
+Q1195955	cast	Q87913	Adrian Hoven		
+Q1195955	cast	Q1287372	Rosemarie Fendel		
+Q895749	director	Q89377	Harald Philipp		
+Q895749	writer	Q109145	Fred Denger		
+Q895749	composer	Q91791	Martin Böttcher		
+Q895749	cinematographer	Q1600405	Heinz Hölscher		
+Q895749	editor	Q98984	Jutta Hering		
+Q895749	cast	Q63062	Götz George		
+Q895749	cast	Q1744455	Walt Barnes		
+Q895749	cast	Q110568	Arnold Marquis		
+Q895749	cast	Q713499	Ilija Džuvalekovski		
+Q895749	cast	Q95219606	Vladimir Leib		
+Q895749	cast	Q1582915	Hans W. Hamacher		
+Q895749	cast	Q109556	Inge Landgut		
+Q895749	cast	Q11138528	Marija Crnobori		
+Q895749	cast	Q2423600	Thomas Eckelmann		
+Q895749	cast	Q1515200	Gert Günther Hoffmann		
+Q895749	cast	Q67899	Ralf Wolter		
+Q895749	cast	Q12628320	Branko Špoljar		
+Q895749	cast	Q552681	Pierre Brice		
+Q895749	cast	Q1927184	Michael Cramer		
+Q895749	cast	Q597540	Miha Baloh		
+Q895749	cast	Q1899164	Marion Hartmann		
+Q895749	cast	Q69669	Uschi Glas		
+Q895749	cast	Q1664759	Jochen Brockmann		
+Q895749	cast	Q520819	Lex Barker		
+Q833412	director	Q57316	Volker Schlöndorff		
+Q833412	writer	Q57316	Volker Schlöndorff		
+Q833412	writer	Q78685	Gregor von Rezzori		
+Q833412	writer	Q125056	Niklas Frank		
+Q833412	composer	Q204943	Brian Jones		
+Q833412	producer	Q945766	Rob Houwer		
+Q833412	cinematographer	Q1448640	Franz Rath		
+Q833412	editor	Q1098891	Claus von Boro		
+Q833412	cast	Q2561107	Werner Enke		
+Q833412	cast	Q2581962	Willy Harlander		
+Q833412	cast	Q89446	Hans Peter Hallwachs		
+Q833412	cast	Q60306	Anita Pallenberg		
+Q1306414	director	Q103000	Fritz Umgelter		
+Q1306414	writer	Q984596	Sergio Donati		
+Q1306414	writer	Q2562213	Werner P. Zibaso		
+Q1306414	composer	Q435856	アンジェロ・フランチェスコ・ラヴァニーノ		
+Q1306414	producer	Q984596	Sergio Donati		
+Q1306414	cinematographer	Q1709705	Rolf Kästel		
+Q1306414	editor	Q1247263	Herbert Taschner		
+Q1306414	cast	Q496339	Horst Frank		
+Q1306414	cast	Q105050	Jörg Pleva		
+Q1306414	cast	Q852990	György Bánffy		
+Q1306414	cast	Q91337	Rolf Becker		
+Q1306414	cast	Q101104	Martin Lüttge		
+Q1306414	cast	Q1448787	Franz Rudnick		
+Q1306414	cast	Q103727	Volkert Kraeft		
+Q1306414	cast	Q1042530	Valeria Ciangottini		
+Q1306414	cast	Q1226026	Erzsi Orsolya		
+Q1306414	cast	Q875339	János Csányi		
+Q587685	director	Q76398	Alfred Vohrer		
+Q587685	writer	Q77583	Herbert Reinecker		
+Q587685	composer	Q91791	Martin Böttcher		
+Q587685	producer	Q87426	Horst Wendlandt		
+Q587685	producer	Q2108205	Preben Philipsen		
+Q587685	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q587685	editor	Q98984	Jutta Hering		
+Q587685	cast	Q2038460	Otto Czarski		
+Q587685	cast	Q84330	Harald Leipnitz		
+Q587685	cast	Q107850	Harry Riebauer		
+Q587685	cast	Q86977	Diana Körner		
+Q587685	cast	Q111288	Ilse Pagé		
+Q587685	cast	Q1611961	Hermann Lenschau		
+Q587685	cast	Q97609	Thomas Danneberg		
+Q587685	cast	Q63586	Ilse Steppat		
+Q587685	cast	Q109127	Gudrun Genest		
+Q587685	cast	Q99632	Albert Bessler		
+Q587685	cast	Q91319	Carl Lange		
+Q587685	cast	Q99529	Siegfried Schürenberg		
+Q587685	cast	Q1600997	Heinz Spitzner		
+Q587685	cast	Q55419	Klaus Kinski		
+Q587685	cast	Q2149684	Richard Haller		
+Q587685	cast	Q1452328	Fred Haltiner		
+Q1090816	director	Q13411072	Jeremy Summers		
+Q1090816	writer	Q707869	Harry Alan Towers		
+Q1090816	composer	Q6742447	Malcolm Lockyer		
+Q1090816	producer	Q707869	Harry Alan Towers		
+Q1090816	cinematographer	Q47088256	John von Kotze		
+Q1090816	cast	Q55419	Klaus Kinski		
+Q1090816	cast	Q84979	Sieghardt Rupp		
+Q1090816	cast	Q87951	Maria Perschy		
+Q1090816	cast	Q912097	Brian Donlevy		
+Q1090816	cast	Q1346626	Roy Chiao		
+Q1090816	cast	Q94167	Maria Rohm		
+Q1090816	cast	Q3938408	Robert Riettii		
+Q1090816	cast	Q1357189	Rupert Davies		
+Q1090816	cast	Q366678	Robert Cummings		
+Q1090816	cast	Q1159055	Dan Duryea		
+Q1090816	cast	Q526943	Margaret Lee		
+Q1090816	cast	Q436187	George Raft		
+Q1090816	cast	Q180338	Christopher Lee		
+Q1614265	director	Q77890	Kurt Hoffmann		
+Q1614265	writer	Q1560853	Günter Neumann		
+Q1614265	composer	Q316615	Franz Grothe		
+Q1614265	producer	Q1575240	Heinz Angermeyer		
+Q1614265	cinematographer	Q121175	Richard Angst		
+Q1614265	editor	Q17362751	Gisela Haller		
+Q1614265	cast	Q77777	Hannelore Elsner		
+Q1614265	cast	Q88530	Tatjana Sais		
+Q1614265	cast	Q25571	Hans Richter		
+Q1614265	cast	Q97944	Peter Capell		
+Q1614265	cast	Q152101	Willy Millowitsch		
+Q1614265	cast	Q108972	Klaus Schwarzkopf		
+Q1614265	cast	Q469759	Liselotte Pulver		
+Q1614265	cast	Q111069	Joachim Teege		
+Q1614265	cast	Q100989	Hubert von Meyerinck		
+Q1614265	cast	Q84330	Harald Leipnitz		
+Q1614265	cast	Q1736475	Kathrin Ackermann		
+Q1614265	cast	Q103123	Gila von Weitershausen		
+Q1614265	cast	Q71083	Paul Esser		
+Q1614265	cast	Q89357	Rudolf Rhomberg		
+Q1614265	cast	Q451483	Vivi Bach		
+Q3182856	director	Q945227	Yves Allégret		
+Q3182856	writer	Q7122	Michel Audiard		
+Q3182856	writer	Q945227	Yves Allégret		
+Q3182856	writer	Q3090249	Frédéric Valmain		
+Q3182856	composer	Q1396982	Michel Magne		
+Q3182856	cinematographer	Q1930792	Michel Kelber		
+Q3182856	cast	Q239802	Sylva Koscina		
+Q3182856	cast	Q3311202	Michel de Ré		
+Q3182856	cast	Q29878	Jacques Balutin		
+Q3182856	cast	Q611266	Dub Taylor		
+Q3182856	cast	Q1054390	Mario Pisu		
+Q3182856	cast	Q60539	Horst Buchholz		
+Q3182856	cast	Q3129225	Élisabeth Wiener		
+Q3182856	cast	Q70251	Walter Giller		
+Q3182856	cast	Q1460084	Friedrich Joloff		
+Q3182856	cast	Q3440597	Romain Bouteille		
+Q3182856	cast	Q3173851	Jean Parédès		
+Q1195956	director	Q97799	Werner Jacobs		
+Q1195956	writer	Q77583	Herbert Reinecker		
+Q1195956	composer	Q96244	Peter Thomas		
+Q1195956	producer	Q564960	Constantin Film		
+Q1195956	cinematographer	Q1449672	Franz Xaver Lederle		
+Q1195956	editor	Q2645934	Alfred Srp		
+Q1195956	cast	Q95691	Richard Münch		
+Q1195956	cast	Q2163484	Rolf Jahncke		
+Q1195956	cast	Q119721	Helmut Förnbacher		
+Q1195956	cast	Q118575	Heinz Weiss		
+Q1195956	cast	Q1579096	Hans Daniel		
+Q1195956	cast	Q200507	Paul Müller		
+Q1195956	cast	Q84739	Helga Anders		
+Q1195956	cast	Q214245	Karel Štěpánek		
+Q1195956	cast	Q1347232	George Nader		
+Q1195956	cast	Q2076626	Peter Lehmbrock		
+Q1195956	cast	Q89189	Heinz Reincke		
+Q1195956	cast	Q98541	Helmuth Rudolph		
+Q1195956	cast	Q2591457	Wolfgang Spier		
+Q1195956	cast	Q2591723	Wolfgang Weiser		
+Q1195956	cast	Q77456	Dagmar Lassander		
+Q1195956	cast	Q1450094	Franziska Bronnen		
+Q1195956	cast	Q1601655	Hela Gruel		
+Q1195956	cast	Q2140392	Reiner Brönneke		
+Q1195956	cast	Q2294329	Slobodan Dimitrijević		
+Q1195956	cast	Q1444260	Frank Straass		
+Q1195956	cast	Q1595308	Horst Michael Neutze		
+Q2147926	director	Q77890	Kurt Hoffmann		
+Q2147926	writer	Q77583	Herbert Reinecker		
+Q2147926	composer	Q123378	Hans-Martin Majewski		
+Q2147926	cinematographer	Q121175	Richard Angst		
+Q2147926	editor	Q17362751	Gisela Haller		
+Q2147926	cast	Q1563715	Werner Stock		
+Q2147926	cast	Q90824	Werner Hinz		
+Q2147926	cast	Q103702	Ruth Stephan		
+Q2147926	cast	Q1226205	Dinah Hinz		
+Q2147926	cast	Q993255	Bruno Fritz		
+Q2147926	cast	Q70331	Cornelia Froboess		
+Q2147926	cast	Q1448394	Franz Nicklisch		
+Q2147926	cast	Q97365	Agnes Windeck		
+Q2147926	cast	Q1284970	Edith Elsholtz		
+Q2147926	cast	Q101618	Christian Wolff		
+Q2147926	cast	Q549865	Anita Kupsch		
+Q2147926	cast	Q2577438	Willi Rose		
+Q2147926	cast	Q1254449	Ekkehard Fritsch		
+Q2147926	cast	Q1299753	Ehmi Bessel		
+Q2147926	cast	Q87593	Karl Hellmer		
+Q318864	director	Q78920	Harald Reinl		
+Q318864	writer	Q16937748	Manfred R. Köhler		
+Q318864	composer	Q96244	Peter Thomas		
+Q318864	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q318864	editor	Q120187	Hermann Haller		
+Q318864	cast	Q180338	Christopher Lee		
+Q318864	cast	Q520819	Lex Barker		
+Q318864	cast	Q1082808	Christiane Rücker		
+Q318864	cast	Q91319	Carl Lange		
+Q318864	cast	Q1645161	Vladimir Medar		
+Q318864	cast	Q62353	Karin Dor		
+Q318864	cast	Q77869	Dieter Eppler		
+Q1199544	director	Q1585747	Haro Senft		
+Q1199544	writer	Q111164	Hans Noever		
+Q1199544	composer	Q1352162	Erich Ferstl		
+Q1199544	cinematographer	Q6148731	Jan Čuřík		
+Q1199544	cast	Q123206	Bruno Ganz		
+Q1199544	cast	Q2515237	Verena Buss		
+Q1199544	cast	Q89119	Hans Putz		
+Q1199544	cast	Q1992770	Nina Divíšková		
+Q1199544	cast	Q107514	Lia Eibenschütz		
+Q1199544	cast	Q1165220	Dany Mann		
+Q1199544	cast	Q2129224	Ralf Gregan		
+Q1199544	cast	Q99430	Wolfgang Büttner		
+Q1217591	director	Q87931	Franz Antel		
+Q1217591	writer	Q1641475	Kurt Nachmann		
+Q1217591	composer	Q1522599	Gianni Ferrio		
+Q1217591	producer	Q87931	Franz Antel		
+Q1217591	producer	Q315080	Carl Szokoll		
+Q1217591	cinematographer	Q2283405	Siegfried Hold		
+Q1217591	cast	Q84330	Harald Leipnitz		
+Q1217591	cast	Q1575879	Hannelore Kramm		
+Q1217591	cast	Q87909	Oskar Sima		
+Q1217591	cast	Q791202	Zoltán Basilides		
+Q1217591	cast	Q452990	Ljuba Welitsch		
+Q1217591	cast	Q1098785	Claus Ringer		
+Q1217591	cast	Q3941454	Rosemarie Lindt		
+Q1217591	cast	Q1448341	Franz Muxeneder		
+Q1217591	cast	Q89434	Gunther Philipp		
+Q1217591	cast	Q328944	Mike Marshall		
+Q1217591	cast	Q1711022	Judith Dornys		
+Q1217591	cast	Q2131269	Raoul Retzer		
+Q1217591	cast	Q1697482	Johannes Fehring		
+Q1217591	cast	Q461321	Pascale Petit		
+Q1217591	cast	Q1678002	Jacques Herlin		
+Q1217591	cast	Q249345	Teri Tordai		
+Q1217591	followed_by	Q1475913	Sexy Susan Sins Again		
+Q1217591	subject		prostitution		
+Q2559488	director	Q97799	Werner Jacobs		
+Q2559488	writer	Q45309	Ludwig Thoma		
+Q2559488	writer	Q91077	Franz Seitz Jr.		
+Q2559488	composer	Q90445	Rolf Alexander Wilhelm		
+Q2559488	producer	Q91077	Franz Seitz Jr.		
+Q2559488	cinematographer	Q2588835	Wolf Wirth		
+Q2559488	editor	Q12012268	Jane Seitz		
+Q2559488	cast	Q1381743	Evelyn Gressmann		
+Q2559488	cast	Q207180	Zlatko Čajkovski		
+Q2559488	cast	Q111308	Claus Wilcke		
+Q2559488	cast	Q97652	Georg Thomalla		
+Q2559488	cast	Q44194	Sepp Maier		
+Q2559488	cast	Q43764	Hans Kraus		
+Q2559488	cast	Q100989	Hubert von Meyerinck		
+Q2559488	cast	Q89357	Rudolf Rhomberg		
+Q2559488	cast	Q448508	Chantal Goya		
+Q2559488	cast	Q1464037	Friedrich von Thun		
+Q2559488	cast	Q1582734	Hans Terofal		
+Q2559488	cast	Q43744	Gerd Müller		
+Q2559488	cast	Q104923	Sepp Rist		
+Q2559488	cast	Q96292	Dieter Borsche		
+Q2559488	cast	Q109796	Veronika Fitz		
+Q2559488	cast	Q87486	Karl Schönböck		
+Q2559488	cast	Q92249	Elisabeth Flickenschildt		
+Q2559488	cast	Q87915	Heidelinde Weis		
+Q2559488	cast	Q99288	Hans Quest		
+Q2559488	cast	Q45558	Beppo Brem		
+Q2559488	follows	Q1657903	Onkel Filser – Allerneueste Lausbubengeschichten		
+Q2559488	followed_by	Q1349744	Ludwig auf Freiersfüßen		
+Q1269017	director	Q78920	Harald Reinl		
+Q1269017	writer	Q2163791	Rolf Schulz		
+Q1269017	composer	Q96244	Peter Thomas		
+Q1269017	cinematographer	Q1449672	Franz Xaver Lederle		
+Q1269017	editor	Q120187	Hermann Haller		
+Q1269017	cast	Q98437	Rolf Eden		
+Q1269017	cast	Q99632	Albert Bessler		
+Q1269017	cast	Q15648881	Pietro Ceccarelli		
+Q1269017	cast	Q2149684	Richard Haller		
+Q1269017	cast	Q86370	Claus Holm		
+Q1269017	cast	Q118575	Heinz Weiss		
+Q1269017	cast	Q77869	Dieter Eppler		
+Q1269017	cast	Q1593258	Horst Niendorf		
+Q1269017	cast	Q11686130	Andrzej Zaorski		
+Q1269017	cast	Q1560790	Günter Mack		
+Q1269017	cast	Q99544	Alexander Engel		
+Q1269017	cast	Q70289	Käthe Haack		
+Q1269017	cast	Q1640418	Silvia Solar		
+Q1269017	cast	Q76099	Günther Schramm		
+Q1269017	cast	Q18620104	Claus Tinney		
+Q1269017	cast	Q1573414	Rainer Basedow		
+Q1269017	cast	Q1347232	George Nader		
+Q1269017	cast	Q1583826	Hansi Waldherr		
+Q1269017	cast	Q1356407	Ernest Lenart		
+Q1269017	cast	Q87941	Carl Möhner		
+Q26912299	director	Q51498	Robert Siodmak		
+Q26912299	director	Q506183	Andrew Marton		
+Q26912299	director	Q634875	Sergiu Nicolaescu		
+Q26912299	writer	Q749590	Ladislas Fodor		
+Q26912299	writer	Q1173565	David Ambrose		
+Q26912299	composer	Q288217	Riz Ortolani		
+Q26912299	producer	Q215578	Artur Brauner		
+Q26912299	cinematographer	Q121175	Richard Angst		
+Q26912299	editor	Q2645934	Alfred Srp		
+Q26912299	cast	Q234923	Harriet Andersson	Matasuntha	
+Q26912299	cast	Q86638	Friedrich von Ledebur	Hildebrand	
+Q26912299	cast	Q239802	Sylva Koscina	Theodora	
+Q26912299	cast	Q138149	Florin Piersic	Vitiges	
+Q26912299	cast	Q84926	Robert Hoffmann	Totila	
+Q26912299	cast	Q1334575	Emanoil Petruț	Teia	
+Q26912299	cast	Q1804845	Lang Jeffries	Belisarius	
+Q26912299	cast	Q232840	Honor Blackman	Amalasuntha	
+Q26912299	cast	Q24829	Orson Welles	Justinian I	
+Q26912299	cast	Q1373859	Michael Dunn	Narses	
+Q26912299	cast	Q12735658	Mircea Anghelescu	Aligern	
+Q26912299	cast	Q77869	Dieter Eppler	Thorismund	
+Q26912299	cast	Q6033140	Ingrid Boulting	Julia	
+Q26912299	cast	Q374045	Laurence Harvey	Cethegus Caesarius	
+Q26912299	cast	Q446280	Ewa Strömberg	Rauthgundis	
+Q26912299	cast	Q12719964	Adela Mărculescu	Aspa	
+Q26912299	cast	Q17152359	Ion Dichiseanu	Furius	
+Q1475913	director	Q87931	Franz Antel		
+Q1475913	writer	Q1641475	Kurt Nachmann		
+Q1475913	composer	Q1522599	Gianni Ferrio		
+Q1475913	producer	Q87931	Franz Antel		
+Q1475913	cinematographer	Q1576498	Hanns Matula		
+Q1475913	costume_designer	Q90092	Gerdago		
+Q1475913	cast	Q461321	Pascale Petit		
+Q1475913	cast	Q182402	Daniela Giordano		
+Q1475913	cast	Q1575879	Hannelore Kramm		
+Q1475913	cast	Q1352929	Erich Padalewski		
+Q1475913	cast	Q67899	Ralf Wolter		
+Q1475913	cast	Q249345	Teri Tordai		
+Q1475913	cast	Q1448341	Franz Muxeneder		
+Q1475913	cast	Q274829	Femi Benussi		
+Q1475913	cast	Q176361	Jeffrey Hunter		
+Q1475913	cast	Q3941454	Rosemarie Lindt		
+Q1475913	cast	Q266229	Edwige Fenech		
+Q1475913	cast	Q69382	Gustav Knuth		
+Q1475913	cast	Q1678002	Jacques Herlin		
+Q1475913	cast	Q86564	Heinrich Schweiger		
+Q1475913	cast	Q339123	László Bánhidi		
+Q1475913	cast	Q554857	Carlo Delle Piane		
+Q1475913	cast	Q654567	Béla Ernyey		
+Q1475913	cast	Q84330	Harald Leipnitz		
+Q1475913	follows	Q1217591	The Sweet Sins of Sexy Susan		
+Q1475913	followed_by	Q1475964	House of Pleasure		
+Q15805091	director	Q87831	Rolf Olsen		
+Q15805091	writer	Q87831	Rolf Olsen		
+Q15805091	composer	Q1362997	Erwin Halletz		
+Q15805091	producer	Q1601163	Heinz Willeg		
+Q15805091	cinematographer	Q1449672	Franz Xaver Lederle		
+Q15805091	editor	Q37978954	Renate Willeg		
+Q15805091	cast	Q107971	Horst Naumann		
+Q15805091	cast	Q77567	Karin Schubert		
+Q15805091	cast	Q77581	Fritz Wepper		
+Q15805091	cast	Q63247062	Dorothea Moritz		
+Q15805091	cast	Q89189	Heinz Reincke		
+Q15805091	cast	Q57584	Curd Jürgens		
+Q15805091	cast	Q18620104	Claus Tinney		
+Q15805091	cast	Q1582915	Hans W. Hamacher		
+Q15805091	cast	Q96292	Dieter Borsche		
+Q15805091	cast	Q1944802	Monika Zinnenberg		
+Q15805091	cast	Q100956	Friedrich Schoenfelder		
+Q15805091	cast	Q1082808	Christiane Rücker		
+Q15805091	cast	Q89496	Christian Brückner		
+Q15805091	cast	Q87831	Rolf Olsen		
+Q15805091	cast	Q89565	Suzanne Roquette		
+Q15805091	cast	Q101110	Claus Jurichs		
+Q15805091	cast	Q90039	Friedrich Schütter		
+Q1193961	director	Q76398	Alfred Vohrer		
+Q1193961	writer	Q87426	Horst Wendlandt		
+Q1193961	composer	Q96244	Peter Thomas		
+Q1193961	cinematographer	Q1732240	Karl Löb		
+Q1193961	editor	Q98984	Jutta Hering		
+Q1193961	cast	Q69669	Uschi Glas		
+Q1193961	cast	Q111203	Eric Vaessen		
+Q1193961	cast	Q101884	Albert Lieven		
+Q1193961	cast	Q105052	Beate Hasenau		
+Q1193961	cast	Q1618257	Hilde Sessak		
+Q1193961	cast	Q86058	Ingrid Steeger		
+Q1193961	cast	Q111288	Ilse Pagé		
+Q1193961	cast	Q100989	Hubert von Meyerinck		
+Q1193961	cast	Q1662793	Inge Langen		
+Q1193961	cast	Q1707026	Käte Jöken-König		
+Q1193961	cast	Q85823	Herbert Fux		
+Q1193961	cast	Q91232	Franz-Otto Krüger		
+Q1193961	cast	Q118556	Uwe Friedrichsen		
+Q1193961	cast	Q86370	Claus Holm		
+Q1193961	cast	Q1338367	Maria Litto		
+Q1193961	cast	Q2129378	Ralf Schermuly		
+Q1193961	cast	Q61608	Horst Tappert		
+Q315593	director	Q78920	Harald Reinl		
+Q315593	writer	Q77583	Herbert Reinecker		
+Q315593	writer	Q78920	Harald Reinl		
+Q315593	composer	Q91791	Martin Böttcher		
+Q315593	producer	Q676498	CCC Film		
+Q315593	cinematographer	Q1360465	Ernst Wilhelm Kalinke		
+Q315593	editor	Q120187	Hermann Haller		
+Q315593	cast	Q520819	Lex Barker		
+Q315593	cast	Q1600271	Heinz Giese		
+Q315593	cast	Q706538	Rik Battaglia		
+Q315593	cast	Q11971400	Frederick Tully		
+Q315593	cast	Q1645161	Vladimir Medar		
+Q315593	cast	Q552681	Pierre Brice		
+Q315593	cast	Q87414	Eddi Arent		
+Q315593	cast	Q101110	Claus Jurichs		
+Q315593	cast	Q1582915	Hans W. Hamacher		
+Q315593	cast	Q105138	Kurt Waitzmann		
+Q315593	cast	Q1658517	Ilija Ivezić		
+Q315593	cast	Q1745737	Klaus Sonnenschein		
+Q315593	cast	Q12628320	Branko Špoljar		
+Q315593	cast	Q67899	Ralf Wolter		
+Q315593	cast	Q62353	Karin Dor		
+Q315593	cast	Q95219606	Vladimir Leib		
+Q885812	director	Q5603	Andy Warhol		
+Q885812	writer	Q5603	Andy Warhol		
+Q885812	producer	Q5603	Andy Warhol		
+Q885812	producer	Q383764	Paul Morrissey		
+Q885812	cinematographer	Q5603	Andy Warhol		
+Q885812	executive_producer	Q383764	Paul Morrissey		
+Q885812	cast	Q545396	Viva	self	1
+Q885812	cast	Q15637499	Louis Waldon	self	2
+Q5084384	director	Q97799	Werner Jacobs		
+Q5084384	writer	Q1641475	Kurt Nachmann		
+Q5084384	composer	Q2127808	Raimund Rosenberger		
+Q5084384	cinematographer	Q1537806	Werner Kurz		
+Q5084384	editor	Q37978954	Renate Willeg		
+Q5084384	cast	Q340480	Achim Strietzel		
+Q5084384	cast	Q108255	Erna Sellmer		
+Q5084384	cast	Q1582734	Hans Terofal		
+Q5084384	cast	Q1740198	Peter Ehlebracht		
+Q5084384	cast	Q1600997	Heinz Spitzner		
+Q5084384	cast	Q1583826	Hansi Waldherr		
+Q5084384	cast	Q1285003	Edith Hancke		
+Q5084384	cast	Q115073	Andrea Rau		
+Q5084384	cast	Q67899	Ralf Wolter		
+Q5084384	cast	Q89434	Gunther Philipp		
+Q5084384	cast	Q1716985	Jürgen Barz		
+Q5084384	cast	Q69382	Gustav Knuth		
+Q5084384	cast	Q91608	Rudolf Schündler		
+Q5084384	cast	Q108154	Gerd Frickhöffer		
+Q5084384	cast	Q69444	Karl Michael Vogler		
+Q5084384	cast	Q87831	Rolf Olsen		
+Q5084384	cast	Q98315	Loni Heuser		
+Q5084384	cast	Q152101	Willy Millowitsch		
+Q5084384	cast	Q66370	Heinz Erhardt		
+Q5084384	cast	Q100989	Hubert von Meyerinck		
+Q5084384	cast	Q103123	Gila von Weitershausen		
+Q5084384	cast	Q333187	Karel Gott		
+Q5084384	cast	Q1609280	Herbert Weißbach		
+Q2438601	director	Q78920	Harald Reinl		
+Q2438601	writer	Q2163791	Rolf Schulz		
+Q2438601	composer	Q96244	Peter Thomas		
+Q2438601	producer	Q1601163	Heinz Willeg		
+Q2438601	cinematographer	Q1600405	Heinz Hölscher		
+Q2438601	editor	Q17362751	Gisela Haller		
+Q2438601	cast	Q1889815	Manfred Reddemann		
+Q2438601	cast	Q1930074	Michaela May		
+Q2438601	cast	Q118575	Heinz Weiss		
+Q2438601	cast	Q1471025	Albert Venohr		
+Q2438601	cast	Q99719	Rudolf Fernau		
+Q2438601	cast	Q1782003	Konrad Georg		
+Q2438601	cast	Q47469223	Karl-Heinz Thomas		
+Q2438601	cast	Q109261	Ulli Kinalzik		
+Q2438601	cast	Q85823	Herbert Fux		
+Q2438601	cast	Q597540	Miha Baloh		
+Q2438601	cast	Q1347232	George Nader		
+Q2438601	cast	Q107971	Horst Naumann		
+Q2438601	cast	Q103476	Arthur Brauss		
+Q2438601	cast	Q1681422	Klaus-Hagen Latwesen		
+Q2438601	cast	Q108154	Gerd Frickhöffer		
+Q1432671	director	Q97799	Werner Jacobs		
+Q1432671	writer	Q110494	Johanna Sibelius		
+Q1432671	writer	Q1279140	Eberhard Keindorff		
+Q1432671	composer	Q2127808	Raimund Rosenberger		
+Q1432671	cinematographer	Q1600405	Heinz Hölscher		
+Q1432671	editor	Q120187	Hermann Haller		
+Q1432671	cast	Q91608	Rudolf Schündler		
+Q1432671	cast	Q1942490	Mogens Gadow		
+Q1432671	cast	Q735536	Heintje Simons		
+Q1432671	cast	Q1582734	Hans Terofal		
+Q1432671	cast	Q1555922	Peter W. Staub		
+Q1432671	cast	Q114065	Dagmar Altrichter		
+Q1432671	cast	Q84979	Sieghardt Rupp		
+Q1432671	cast	Q87922	Gerlinde Locker		
+Q1432671	cast	Q1285003	Edith Hancke		
+Q1432671	cast	Q1782003	Konrad Georg		
+Q1432671	cast	Q89189	Heinz Reincke		
+Q1432671	cast	Q3964484	Solvi Stubing		
+Q1432671	cast	Q67899	Ralf Wolter		
+Q18669583	director	Q87831	Rolf Olsen		
+Q18669583	director	Q1995540	Al Adamson		
+Q18669583	writer	Q87831	Rolf Olsen		
+Q18669583	composer	Q1362997	Erwin Halletz		
+Q18669583	cinematographer	Q1600405	Heinz Hölscher		
+Q18669583	editor	Q37978954	Renate Willeg		
+Q18669583	cast	Q1782003	Konrad Georg		
+Q18669583	cast	Q89189	Heinz Reincke		
+Q18669583	cast	Q70276	Karl-Otto Alberty		
+Q18669583	cast	Q57584	Curd Jürgens		
+Q18669583	cast	Q86977	Diana Körner		
+Q18669583	cast	Q102050	Fritz Tillmann		
+Q18669583	cast	Q76653	Heidi Kabel		
+Q18669583	cast	Q77581	Fritz Wepper		
+Q18669583	cast	Q107971	Horst Naumann		

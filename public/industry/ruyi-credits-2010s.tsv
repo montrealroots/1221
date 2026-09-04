@@ -1,0 +1,89 @@
+qid	role	personQid	name	character	ordinal
+Q15977194	director	Q17001256	Leste Chen		
+Q15977194	writer	Q17001256	Leste Chen		
+Q15977194	producer	Q893129	Xu Zheng		
+Q15977194	cinematographer	Q11106147	Charlie Lam		
+Q15977194	editor	Q45402642	Yang Hongyu		
+Q15977194	cast	Q9315976	David Wang		
+Q15977194	cast	Q893129	Xu Zheng		
+Q15977194	cast	Q716027	Karen Mok		
+Q17276718	director	Q465139	Antoine Fuqua		
+Q17276718	writer	Q955336	Kurt Sutter		
+Q17276718	composer	Q106221	James Horner		
+Q17276718	producer	Q28492396	Todd Black		
+Q17276718	cinematographer	Q926054	Mauro Fiore		
+Q17276718	editor	Q533802	John Refoua		
+Q17276718	production_designer	Q3705844	Derek R. Hill		
+Q17276718	cast	Q6837092	Michelle Johnston		
+Q17276718	cast	Q190386	Rachel McAdams		
+Q17276718	cast	Q133313	Jake Gyllenhaal		
+Q17276718	cast	Q18581762	Oona Laurence		
+Q17276718	cast	Q6289778	Joshua Elijah Reese		
+Q17276718	cast	Q156586	Naomie Harris		
+Q17276718	cast	Q229760	Rita Ora		
+Q17276718	cast	Q182763	Forest Whitaker		
+Q17276718	cast	Q20740615	Beau Knapp		
+Q17276718	cast	Q20974056	Skylan Brooks		
+Q17276718	cast	Q6060	50セント		
+Q17276718	cast	Q1325952	Lou DiBella		
+Q17276718	cast	Q955619	Roy Jones Jr.		
+Q17276718	cast	Q4832990	Miguel Gomez		
+Q17276718	cast	Q21517534	Terry Claybon		
+Q17276718	cast	Q423205	Victor Ortiz		
+Q17276718	cast	Q24699898	John Cenatiempo		
+Q17276718	cast	Q18347822	Clare Foley		
+Q17276718	subject		boxing		
+Q24278852	director	Q24263560	Pan Anzi		
+Q24278852	cast	Q6550031	Lin Gengxin		
+Q50143448	director	Q703779	Chen Sicheng		
+Q50143448	writer	Q703779	Chen Sicheng		
+Q50143448	composer	Q1966670	Nathan Wang		
+Q50143448	cast	Q22774261	Liu Haoran		
+Q50143448	cast	Q7967359	Wang Baoqiang		
+Q50143448	follows	Q22100100	Detective Chinatown		
+Q50143448	followed_by	Q85877683	Detective Chinatown 3		
+Q65053995	director	Q202597	Chen Kaige		
+Q65053995	director	Q354554	Ning Hao		
+Q65053995	director	Q704612	Huang Jianxin		
+Q65053995	director	Q893129	Xu Zheng		
+Q65053995	director	Q5613510	Guan Hu		
+Q65053995	director	Q8045213	Xue Xiaolu		
+Q65053995	director	Q8070394	Zhang Yibai		
+Q65053995	director	Q60991474	Wen Muye		
+Q65053995	cast	Q6129284	Song Jia		
+Q65053995	cast	Q22774261	Liu Haoran		
+Q65053995	cast	Q15924951	Lei Jiayin		
+Q65053995	cast	Q7820932	Tong Liya		
+Q65053995	cast	Q9084044	Zhang Jiayi		
+Q65053995	cast	Q55695605	Wang Tianchen		
+Q65053995	cast	Q15900390	Oho Ou		
+Q65053995	cast	Q9058429	Wang Qianyuan		
+Q65053995	cast	Q717757	Liu Tao		
+Q65053995	cast	Q21973376	Elvis Han Dongjun		
+Q65053995	cast	Q9085587	Zhang Zifeng		
+Q65053995	cast	Q2658847	Ge You		
+Q65053995	cast	Q667260	Simon Yam		
+Q65053995	cast	Q707211	Kara Wai		
+Q65053995	cast	Q46608342	Du Jiang		
+Q65053995	cast	Q893129	Xu Zheng		
+Q65053995	cast	Q704130	Huang Bo	Lin Zhiyuan	
+Q65053995	award		Hundred Flowers Award for Best Picture		
+Q65053995	award		Huabiao Award for Outstanding Film		
+Q65053995	followed_by	Q97300316	My People, My Homeland		
+Q69082264	director	Q715330	Andrew Lau		
+Q69082264	writer	Q125883859	Yonggan Yu		
+Q69082264	composer	Q5070332	Chan Kwong-wing		
+Q69082264	composer	Q113620877	Yu-Peng Chen		
+Q69082264	producer	Q715330	Andrew Lau		
+Q69082264	cinematographer	Q715330	Andrew Lau		
+Q69082264	cinematographer	Q8958963	Edmond Fung		
+Q69082264	cast	Q46608342	Du Jiang		
+Q69082264	cast	Q6170442	Yuan Quan		
+Q69082264	cast	Q22338290	Zhang Tian'ai		
+Q69082264	cast	Q117564532	Zhang Yamei		
+Q69082264	cast	Q712088	Zhang Hanyu		
+Q69082264	cast	Q15900390	Oho Ou		
+Q69082264	cast	Q8259870	Li Qin		
+Q69082264	award		Huabiao Award for Outstanding Film		
+Q69082264	subject		aviation accident		
+Q69082264	subject		Sichuan Airlines Flight 8633		

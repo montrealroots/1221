@@ -1,0 +1,136 @@
+qid	role	personQid	name	character	ordinal
+Q2087602	director	Q715330	Andrew Lau		
+Q2087602	writer	Q5584960	Gordon Chang		
+Q2087602	composer	Q5070332	Chan Kwong-wing		
+Q2087602	cinematographer	Q715330	Andrew Lau		
+Q2087602	cast	Q704130	Huang Bo		
+Q2087602	cast	Q144033	Shawn Yue		
+Q2087602	cast	Q311723	Donnie Yen		
+Q2087602	cast	Q233859	Shu Qi		
+Q2087602	cast	Q381561	Anthony Wong		
+Q15040672	director	Q130527425	Qi Zhang		
+Q15040672	cast	Q700175	Tony Leung Ka-fai		
+Q16689838	director	Q15923732	Wang Yuelun		
+Q10868811	director	Q113687948	Tsz Ming Wong		
+Q10868811	composer	Q9435974	Wendyz Zheng		
+Q10868811	composer	Q15924853	Raymond Wong		
+Q10868811	producer	Q98183583	Bo-Chu Chui		
+Q10868811	cinematographer	Q14504755	Kenny Tse		
+Q10868811	editor	Q19854455	Angie Lam		
+Q10868811	cast	Q159577	Jet Li		
+Q10868811	cast	Q7982261	Wen Zhang		
+Q10868811	cast	Q703714	Liu Shishi		
+Q10868811	cast	Q6125013	Michelle Chen		
+Q10868811	cast	Q8266679	Liu Yan		
+Q10868811	cast	Q996607	Stephen Fung		
+Q10868811	cast	Q4922395	Bruce Leung		
+Q15901403	director	Q711914	Gordon Chan		
+Q15901403	writer	Q711914	Gordon Chan		
+Q15901403	cast	Q381561	Anthony Wong		
+Q15901403	cast	Q698533	Ronald Cheng		
+Q15901403	cast	Q338048	Collin Chou		
+Q15901403	cast	Q1140540	Deng Chao		
+Q15901403	cast	Q242676	Liu Yifei		
+Q15901403	followed_by	Q7734998	The Four		
+Q21869292	director	Q1140540	Deng Chao		
+Q21869292	cast	Q1140540	Deng Chao		
+Q21869292	cast	Q2547121	Susan Sun		
+Q19758827	director	Q114598872	Timothy Kendall		
+Q19758827	writer	Q1581345	Brice Beckham		
+Q19758827	composer	Q111777	Nathan Barr		
+Q19758827	producer	Q551876	Justin Lin		
+Q19758827	cast	Q311232	Tyrese Gibson		
+Q19758827	cast	Q685861	Rhys Coiro		
+Q19758827	cast	Q380802	Rick Fox		
+Q19758827	cast	Q272977	Robert Patrick		
+Q19758827	cast	Q231751	Kat Dennings		
+Q19758827	cast	Q376131	Stephen Tobolowsky		
+Q19758827	cast	Q834846	Tong Dawei		
+Q19758827	cast	Q107043349	Sandra Lee Gimpel		
+Q19758827	cast	Q299297	Simon Helberg		
+Q19758827	cast	Q233786	Missi Pyle		
+Q19758827	cast	Q4965465	Brian Thomas Smith		
+Q19758827	cast	Q197471	Zhao Wei		
+Q19758827	cast	Q317563	Sung Kang		
+Q19758827	cast	Q701194	Huang Xiaoming		
+Q21539914	director	Q113990982	Janet Chun		
+Q21539914	producer	Q198030	Zhou Xun		
+Q21095410	director	Q117863751	Hugues Martel		
+Q17500141	director	Q706680	Alec Su		
+Q17500141	writer	Q5161863	Rao Xueman		
+Q17500141	cast	Q8937703	Chen Taisheng		
+Q21428167	director	Q12605698	Ahn Sang-hoon		
+Q21428167	cast	Q1137458	Yang Mi		
+Q10938623	director	Q115097856	Xuan Liang		
+Q10938623	director	Q115097858	Chun Zhang		
+Q10938623	composer	Q345494	Ryuichi Sakamoto		
+Q10938623	composer	Q6127012	Kiyoshi Yoshida		
+Q10938623	award		Huabiao Award for Outstanding Film		
+Q10938623	subject		death		
+Q10938623	subject		love		
+Q10938623	subject		altruistic suicide		
+Q10938623	subject		otherworld		
+Q10938623	subject		human life		
+Q24278853	director	Q7967359	Wang Baoqiang		
+Q24278853	cast	Q7967359	Wang Baoqiang		
+Q26684538	director	Q484686	Kwak Jae-yong		
+Q26684538	cast	Q15900390	Oho Ou		
+Q26684538	cast	Q9080844	Yang Zi		
+Q26684538	cast	Q17012103	Zhang Huiwen		
+Q33123641	director	Q85873998	Yang Zhigang		
+Q33123641	writer	Q85873998	Yang Zhigang		
+Q28045442	director	Q4707732	Pang Ho-cheung		
+Q28045442	writer	Q4707732	Pang Ho-cheung		
+Q28045442	writer	Q111677216	Jimmy Wan Chi-Man		
+Q28045442	writer	Q123130527	Jody Luk Yi-Sam		
+Q28045442	composer	Q708987	Peter Kam		
+Q28045442	composer	Q10482587	Janet Yung		
+Q28045442	composer	Q123131977	Alan Wong Ngai-Lun		
+Q28045442	producer	Q4707732	Pang Ho-cheung		
+Q28045442	cinematographer	Q123132413	Patrick Chou Yi-Hsien		
+Q28045442	editor	Q122998360	Wenders Li		
+Q28045442	cast	Q144033	Shawn Yue		
+Q28045442	cast	Q699415	Paul Chun		
+Q28045442	cast	Q2174226	Miriam Yeung		
+Q28045442	cast	Q9336483	Jiang Mengjie		
+Q28948604	director	Q706680	Alec Su		
+Q28948604	producer	Q23762655	Jimmy Huang		
+Q28948604	cast	Q270674	Ruby Lin		
+Q28948604	cast	Q42373050	Hou Minghao		
+Q28948604	cast	Q15926253	Wang Kai		
+Q28948604	cast	Q20062755	Edward Zhang		
+Q28948604	cast	Q47668117	Deng Enxi		
+Q65053995	director	Q202597	Chen Kaige		
+Q65053995	director	Q354554	Ning Hao		
+Q65053995	director	Q704612	Huang Jianxin		
+Q65053995	director	Q893129	Xu Zheng		
+Q65053995	director	Q5613510	Guan Hu		
+Q65053995	director	Q8045213	Xue Xiaolu		
+Q65053995	director	Q8070394	Zhang Yibai		
+Q65053995	director	Q60991474	Wen Muye		
+Q65053995	cast	Q6129284	Song Jia		
+Q65053995	cast	Q22774261	Liu Haoran		
+Q65053995	cast	Q15924951	Lei Jiayin		
+Q65053995	cast	Q7820932	Tong Liya		
+Q65053995	cast	Q9084044	Zhang Jiayi		
+Q65053995	cast	Q55695605	Wang Tianchen		
+Q65053995	cast	Q15900390	Oho Ou		
+Q65053995	cast	Q9058429	Wang Qianyuan		
+Q65053995	cast	Q717757	Liu Tao		
+Q65053995	cast	Q21973376	Elvis Han Dongjun		
+Q65053995	cast	Q9085587	Zhang Zifeng		
+Q65053995	cast	Q2658847	Ge You		
+Q65053995	cast	Q667260	Simon Yam		
+Q65053995	cast	Q707211	Kara Wai		
+Q65053995	cast	Q46608342	Du Jiang		
+Q65053995	cast	Q893129	Xu Zheng		
+Q65053995	cast	Q704130	Huang Bo	Lin Zhiyuan	
+Q65053995	award		Hundred Flowers Award for Best Picture		
+Q65053995	award		Huabiao Award for Outstanding Film		
+Q65053995	followed_by	Q97300316	My People, My Homeland		
+Q65972529	director	Q66470849	Jiaozi		
+Q65972529	writer	Q66470849	Jiaozi		
+Q65972529	composer	Q47508254	Wan Pin Chu		
+Q65972529	award		Golden Rooster Award for Best Animation		
+Q65972529	award		Huabiao Award for Outstanding Film		
+Q65972529	followed_by	Q131937861	Ne Zha 2		

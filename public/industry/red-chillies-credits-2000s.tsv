@@ -1,0 +1,137 @@
+qid	role	personQid	name	character	ordinal
+Q1255514	director	Q2875168	Aziz Mirza		
+Q1255514	writer	Q18710703	Sanjay Chhel		
+Q1255514	composer	Q2750298	Jatin–Lalit		
+Q1255514	producer	Q9535	Shah Rukh Khan		
+Q1255514	producer	Q158745	Juhi Chawla		
+Q1255514	producer	Q2875168	Aziz Mirza		
+Q1255514	cinematographer	Q2615641	Santosh Sivan		
+Q1255514	cast	Q9535	Shah Rukh Khan		
+Q1255514	cast	Q158745	Juhi Chawla		
+Q1255514	cast	Q3123705	Paresh Rawal		
+Q1255514	cast	Q983571	Johnny Lever		
+Q734008	director	Q2615641	Santosh Sivan		
+Q734008	writer	Q2615641	Santosh Sivan		
+Q734008	composer	Q7416066	Sandeep Chowta		
+Q734008	producer	Q9535	Shah Rukh Khan		
+Q734008	producer	Q158745	Juhi Chawla		
+Q734008	cinematographer	Q2615641	Santosh Sivan		
+Q734008	editor	Q3177812	A. Sreekar Prasad		
+Q734008	narrator	Q3595455	Suresh Oberoi		
+Q734008	cast	Q97097412	Mithilesh Chaturvedi	Kalinga prime minister	
+Q734008	cast	Q7283589	Rahul Dev	Bheem	
+Q734008	cast	Q575917	Danny Denzongpa	Virat	
+Q734008	cast	Q7282998	Raghubir Yadav	Maurya soldier	
+Q734008	cast	Q3595812	Subhashini Ali	Dharma	
+Q734008	cast	Q3595148	Shwetha Menon	Nandaneshwari, the flower seller	
+Q734008	cast	Q3527168	Suresh Menon	Maurya soldier	
+Q734008	cast	Q983571	Johnny Lever	Maurya soldier	
+Q734008	cast	Q5528721	Gayatri Jayaraman	an item number	
+Q734008	cast	Q3595455	Suresh Oberoi	Narrator	
+Q734008	cast	Q7932404	Vineet Kumar Sharma	Sugatra	
+Q734008	cast	Q9535	Shah Rukh Khan	Ashoka	
+Q734008	cast	Q184885	カリーナー・カプール	Karuvaki	
+Q734008	cast	Q7881500	Umesh Mehra	Chandragupta Maurya	
+Q734008	cast	Q5553152	Gerson da Cunha	Bindusara	
+Q734008	cast	Q111905075	Karan Dewani	Ashoka	
+Q734008	cast	Q3057324	Hrishitaa Bhatt	Devi	
+Q734008	cast	Q339896	Ajith Kumar	Susima	
+Q1192353	director	Q3481552	Shashilal K. Nair		
+Q1192353	writer	Q18710703	Sanjay Chhel		
+Q1192353	composer	Q108560	A. R. Rahman		
+Q1192353	producer	Q139266945	Nazir Ahmed		
+Q1192353	cinematographer	Q27925000	S. Kumar		
+Q1192353	cast	Q560178	Jackie Shroff		
+Q1192353	cast	Q9535	Shah Rukh Khan		
+Q1192353	cast	Q158745	Juhi Chawla		
+Q1503700	director	Q167636	Farah Khan		
+Q1503700	writer	Q167636	Farah Khan		
+Q1503700	writer	Q2820242	Abbas Tyrewala		
+Q1503700	composer	Q612167	Anu Malik		
+Q1503700	producer	Q9535	Shah Rukh Khan		
+Q1503700	producer	Q45870	Gauri Khan		
+Q1503700	cinematographer	Q7906130	V. Manikandan		
+Q1503700	editor	Q3959623	Shirish Kunder		
+Q1503700	cast	Q9535	Shah Rukh Khan		
+Q1503700	cast	Q834338	Boman Irani		
+Q1503700	cast	Q983043	Sunil Shetty		
+Q1503700	cast	Q312719	Kabir Bedi		
+Q1503700	cast	Q158266	Bindu		
+Q1503700	cast	Q1612623	Satish Shah		
+Q1503700	cast	Q299136	Amrita Rao		
+Q1503700	cast	Q158136	Kirron Kher		
+Q1503700	cast	Q255076	Sushmita Sen		
+Q1503700	cast	Q469945	Naseeruddin Shah		
+Q1503700	cast	Q167829	Zayed Khan		
+Q1503700	subject		terrorism		
+Q788520	director	Q2721505	Amol Palekar		
+Q788520	composer	Q3765059	M. M. Keeravani		
+Q788520	producer	Q9535	Shah Rukh Khan		
+Q788520	producer	Q45870	Gauri Khan		
+Q788520	cinematographer	Q3930583	Ravi K. Chandran		
+Q788520	editor	Q27733967	Amitabh Shukla		
+Q788520	cast	Q560163	Anupam Kher		
+Q788520	cast	Q9570	Amitabh Bachchan		
+Q788520	cast	Q485557	Rani Mukerji		
+Q788520	cast	Q9535	Shah Rukh Khan		
+Q788520	cast	Q469945	Naseeruddin Shah		
+Q788520	cast	Q158745	Juhi Chawla		
+Q788520	cast	Q3496304	Rajpal Yadav		
+Q788520	cast	Q983043	Sunil Shetty		
+Q330468	director	Q167636	Farah Khan		
+Q330468	writer	Q167636	Farah Khan		
+Q330468	composer	Q3135937	Vishal–Shekhar		
+Q330468	producer	Q9535	Shah Rukh Khan		
+Q330468	producer	Q45870	Gauri Khan		
+Q330468	cinematographer	Q7906130	V. Manikandan		
+Q330468	editor	Q3959623	Shirish Kunder		
+Q330468	costume_designer	Q468442	Karan Johar		
+Q330468	cast	Q1612637	Sanjay Kapoor		
+Q330468	cast	Q2726196	Shreyas Talpade	Pappu Master	
+Q330468	cast	Q233619	Hrithik Roshan		
+Q330468	cast	Q994657	Boney Kapoor	O. K.'s friend	
+Q330468	cast	Q4831766	Ayub Khan		
+Q330468	cast	Q290322	Malaika Arora		
+Q330468	cast	Q7491225	Shawar Ali		
+Q330468	cast	Q3053437	Emraan Hashmi		
+Q330468	cast	Q233748	Akshay Kumar		
+Q330468	cast	Q2700181	Gul Panag		
+Q330468	cast	Q258820	Rishi Kapoor		
+Q330468	cast	Q48619	Bobby Deol		
+Q330468	cast	Q45870	Gauri Khan		
+Q330468	cast	Q2737207	Kangana Ranaut		
+Q330468	cast	Q2475653	Subhash Ghai		
+Q330468	cast	Q1373377	Rakesh Roshan		
+Q330468	cast	Q158214	Bipasha Basu		
+Q330468	cast	Q159178	Deepika Padukone	Santipriya	
+Q330468	cast	Q188671	Preity Zinta		
+Q330468	cast	Q186606	Manisha Koirala		
+Q330468	cast	Q7377094	Sudeepa	the director of Mohabbat Man	
+Q330468	cast	Q485557	Rani Mukerji		
+Q330468	cast	Q9570	Amitabh Bachchan		
+Q330468	cast	Q312781	Imran Khan		
+Q330468	cast	Q47059	Aishwarya Rai		
+Q330468	cast	Q6433821	Kota Srinivasa Rao	the director of Apahij Pyar	
+Q330468	cast	Q465863	Shabana Azmi		
+Q330468	cast	Q560163	Anupam Kher		
+Q330468	cast	Q1373345	Jimmy Shergill		
+Q330468	cast	Q465826	Rekhā		
+Q330468	cast	Q731854	Vivek Oberoi		
+Q330468	cast	Q158266	Bindu	Kamini Arora	
+Q330468	cast	Q7564599	Soumya Seth	Audience	
+Q330468	cast	Q560094	Uday Chopra		
+Q330468	cast	Q158957	Priyanka Chopra		
+Q330468	cast	Q313956	Anil Kapoor		
+Q330468	cast	Q319491	Shahid Kapoor		
+Q330468	cast	Q16239212	Nitesh Pandey	Anwar Singh	
+Q330468	cast	Q232451	Madhuri Dixit		
+Q330468	cast	Q442668	Arjun Rampal	Mukesh Mehra	
+Q862951	director	Q3115713	Priyadarshan		
+Q862951	composer	Q3633978	Pritam Chakraborty		
+Q862951	producer	Q45870	Gauri Khan		
+Q862951	cinematographer	Q7906130	V. Manikandan		
+Q862951	editor	Q4802105	Arun Kumar Aravind		
+Q862951	cast	Q360927	Irrfan Khan		
+Q862951	cast	Q9535	Shah Rukh Khan		
+Q862951	cast	Q80309	Om Puri		
+Q862951	cast	Q290438	Lara Dutta		

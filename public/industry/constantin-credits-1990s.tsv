@@ -1,0 +1,223 @@
+qid	role	personQid	name	character	ordinal
+Q325792	director	Q43754	Willy Bogner		
+Q325792	writer	Q6243108	Tony Williamson		
+Q325792	composer	Q372489	Harold Faltermeyer		
+Q325792	producer	Q61881	Bernd Eichinger		
+Q325792	cinematographer	Q2440371	Tomas Erhart		
+Q325792	editor	Q2074481	Peter Davies		
+Q325792	cast	Q134333	Roger Moore	Sir George Windsor	
+Q325792	cast	Q4932569	Bob Goody		
+Q325792	cast	Q186692	Uwe Ochsenknecht		
+Q325792	cast	Q546551	Shari Belafonte		
+Q325792	cast	Q461605	Marjoe Gortner		
+Q325792	subject		Alps		
+Q2563101	director	Q114800	Niki List		
+Q2563101	director	Q1285191	Gerhard Hahn		
+Q2563101	director	Q1426461	Michael Schaack		
+Q2563101	writer	Q1358893	Ernst Kahl		
+Q2563101	composer	Q1715307	Jörg Evers		
+Q2563101	producer	Q61881	Bernd Eichinger		
+Q2563101	cinematographer	Q1298970	Egon Werdin		
+Q2563101	editor	Q15820142	Ingrid Koller		
+Q139043	director	Q103581	Hajo Gies		
+Q139043	writer	Q99583	Martin Gies		
+Q139043	writer	Q23769229	Axel Götz		
+Q139043	composer	Q457829	Klaus Lage		
+Q139043	producer	Q1560949	Günter Rohrbach		
+Q139043	cinematographer	Q792020	Axel Block		
+Q139043	editor	Q98520	Hannes Nikel		
+Q139043	executive_producer	Q1560949	Günter Rohrbach		
+Q139043	cast	Q98867	Eberhard Feik	Christian Thanner	
+Q139043	cast	Q63062	Götz George	Horst Schimanski	
+Q139043	cast	Q95314	Hannes Jaenicke		
+Q139043	cast	Q1514890	Gerry Jochum		
+Q139043	cast	Q1097635	Claudia Messner		
+Q139043	cast	Q1669533	Martin May		
+Q139043	cast	Q457829	Klaus Lage		
+Q139043	cast	Q566626	Annette Kreft		
+Q139043	cast	Q89694	Dieter Pfaff		
+Q139043	cast	Q90041	Ralf Richter		
+Q139043	cast	Q89424	Wolfram Berger		
+Q6849439	director	Q3023146	Dennis Dimster		
+Q6849439	writer	Q8570	Jonathan Glassner		
+Q6849439	composer	Q353897	Timothy Truman		
+Q6849439	producer	Q7346590	Robert L. Levy		
+Q6849439	producer	Q15128739	Peter Abrams		
+Q6849439	cast	Q255707	Josie Bissett		
+Q6849439	cast	Q485106	Lyman Ward		
+Q6849439	cast	Q467051	Ashley Laurence		
+Q6849439	cast	Q2566819	Whit Hertford		
+Q6849439	cast	Q708777	Brian Bonsall		
+Q6849439	cast	Q947748	John Diehl		
+Q6849439	subject		serial killer		
+Q831717	director	Q503767	Andrew Birkin		
+Q831717	writer	Q503767	Andrew Birkin		
+Q831717	composer	Q62961	Klaus Doldinger		
+Q831717	producer	Q61881	Bernd Eichinger		
+Q831717	cinematographer	Q109714	Dietrich Lohmann		
+Q831717	editor	Q111136	Dagmar Hirtz		
+Q831717	cast	Q576847	Richard Jutras		
+Q831717	cast	Q67881	Hanns Zischler		
+Q831717	cast	Q2161725	Anaïs Jeanneret		
+Q831717	cast	Q3435393	Robert Higden		
+Q831717	cast	Q928366	Charles Berling		
+Q831717	cast	Q269832	Claudine Auger		
+Q831717	cast	Q235351	Greta Scacchi		
+Q831717	cast	Q320052	Vincent D'Onofrio		
+Q831717	cast	Q3162875	Jasmine Roy		
+Q831717	cast	Q232889	Shirley Henderson		
+Q890084	director	Q77593	Uli Edel		
+Q890084	writer	Q896849	Brad Mirman		
+Q890084	composer	Q920963	Graeme Revell		
+Q890084	producer	Q296796	Dino De Laurentiis		
+Q890084	cinematographer	Q5301819	Douglas Milsome		
+Q890084	editor	Q1336198	Thom Noble		
+Q890084	cast	Q1889124	Richard Riehle		
+Q890084	cast	Q1744	Madonna		
+Q890084	cast	Q188772	Willem Dafoe		
+Q890084	cast	Q61356	Jürgen Prochnow		
+Q890084	cast	Q230199	Anne Archer		
+Q890084	cast	Q693301	Mark Rolston		
+Q890084	cast	Q6548158	Lillian Lehman		
+Q890084	cast	Q276269	Joe Mantegna		
+Q890084	cast	Q730943	Charles Hallahan		
+Q890084	cast	Q80405	Julianne Moore		
+Q890084	cast	Q2330114	Stan Shaw		
+Q890084	cast	Q55317698	Bryan Clark		
+Q890084	cast	Q438492	Michael Forest		
+Q890084	cast	Q610862	Jeff Perry		
+Q890084	cast	Q310944	フランク・ランジェラ		
+Q890084	cast	Q461324	John Davis Chandler		
+Q312394	director	Q315062	Bille August		
+Q312394	writer	Q83566	Isabel Allende		
+Q312394	writer	Q315062	Bille August		
+Q312394	composer	Q76364	Hans Zimmer		
+Q312394	producer	Q61881	Bernd Eichinger		
+Q312394	cinematographer	Q515579	Jörgen Persson		
+Q312394	editor	Q5576075	Janus Billeskov Jansen		
+Q312394	production_designer	Q513410	Anna Asp		
+Q312394	cast	Q78428	Jan Niklas		
+Q312394	cast	Q236300	Teri Polo		
+Q312394	cast	Q530176	Franco Diogene		
+Q312394	cast	Q445995	Sarita Choudhury		
+Q312394	cast	Q1443655	Frank Lenart		
+Q312394	cast	Q101797	Winona Ryder		
+Q312394	cast	Q437484	Hannah Taylor-Gordon		
+Q312394	cast	Q271145	María Conchita Alonso		
+Q312394	cast	Q171745	Jeremy Irons		
+Q312394	cast	Q28853845	Hector Vega Mauricio		
+Q312394	cast	Q95223273	Pedro Effe		
+Q312394	cast	Q873	メリル・ストリープ		
+Q312394	cast	Q22575751	Jaime Tirelli		
+Q312394	cast	Q454951	Míriam Colón		
+Q312394	cast	Q12324862	ローン・リンドルフ		
+Q312394	cast	Q3486444	Grace Gummer		
+Q312394	cast	Q1422700	Hans Wyprächtiger		
+Q312394	cast	Q41548	Antonio Banderas		
+Q312394	cast	Q6206488	Joaquín Martínez		
+Q312394	cast	Q36782182	Denys Hawthorne		
+Q312394	cast	Q1781136	Martin Umbach		
+Q312394	cast	Q16336518	Anabela Teixeira		
+Q312394	cast	Q164117	Armin Mueller-Stahl		
+Q312394	cast	Q372311	Glenn Close		
+Q312394	cast	Q16491132	António Assunção		
+Q312394	cast	Q347879	Vanessa Redgrave		
+Q312394	cast	Q1703558	Joost Siedhoff		
+Q312394	cast	Q10329785	Miguel Guilherme		
+Q312394	cast	Q362353	Vincent Gallo		
+Q312394	subject		revenge		
+Q2617594	director	Q553819	Gabriel Axel		
+Q2617594	writer	Q553819	Gabriel Axel		
+Q2617594	composer	Q434392	Per Norgård		
+Q2617594	cinematographer	Q4241285	Henning Kristiansen		
+Q2617594	editor	Q75507370	Jean-François Naudon		
+Q2617594	cast	Q296616	Gabriel Byrne	Feng	
+Q2617594	cast	Q211322	Tom Wilkinson	Horwendill	
+Q2617594	cast	Q349391	Helen Mirren	Gerutha	
+Q2617594	cast	Q45772	Christian Bale	Amleth	
+Q2617594	cast	Q2734382	杰斯·英格斯利夫		
+Q2617594	cast	Q195396	Freddie Jones		
+Q2617594	cast	Q179414	Kate Beckinsale	Ethel	
+Q2617594	cast	Q730353	Richard Dempsey	Sigurd	
+Q2617594	cast	Q2617978	デイビッド・ベイトソン	Hother	
+Q2617594	cast	Q34975	Brian Cox	Aethelwine	
+Q2617594	cast	Q206922	Andy Serkis	Torsten	
+Q2617594	cast	Q530676	Brian Glover		
+Q2617594	cast	Q520651	Ewen Bremner	Frovin	
+Q2617594	cast	Q7425708	Saskia Wickham	Gunvor	
+Q2617594	cast	Q472411	Tony Haygarth	Ragnar	
+Q2617594	cast	Q38052801	Birgit Thøt Jensen		
+Q2617594	cast	Q12317987	Ian Burns		
+Q2617594	cast	Q343463	Mark Williams	Aslak	
+Q2617594	cast	Q466388	Steven Waddington	Ribold	
+Q2628001	director	Q3350388	Oley Sassone		
+Q2628001	producer	Q61881	Bernd Eichinger		
+Q2628001	producer	Q318292	Roger Corman		
+Q2628001	cinematographer	Q66023237	Mark Parry		
+Q2628001	executive_producer	Q318292	Roger Corman		
+Q2628001	cast	Q279225	George Gaynes		
+Q2628001	cast	Q941774	Phillip Van Dyke		
+Q2628001	cast	Q3935047	Ricky Dean Logan		
+Q2628001	cast	Q256112	Mercedes McNab		
+Q2628001	cast	Q17612557	Kat Green		
+Q2628001	cast	Q2421597	Rebecca Staab	Invisible Woman	
+Q2628001	cast	Q2641365	Alex Hyde-White	Mister Fantastic	
+Q2628001	cast	Q981765	Michael Bailey Smith	Thing	
+Q2628001	cast	Q15479218	Joseph Culp	Doctor Doom	
+Q2628001	cast	Q3163273	Jay Underwood	Human Torch	
+Q863484	director	Q77734	Doris Dörrie		
+Q863484	writer	Q77734	Doris Dörrie		
+Q863484	writer	Q1391410	Rolf Basedow		
+Q863484	writer	Q93438513	Ruth Stadler		
+Q863484	composer	Q824324	Roman Bunka		
+Q863484	producer	Q61881	Bernd Eichinger		
+Q863484	producer	Q1277426	Martin Moszkowicz		
+Q863484	cinematographer	Q64581	Theo Bierkens		
+Q863484	editor	Q1626972	Inez Regnier		
+Q863484	costume_designer	Q93438558	Yoshio Yabara		
+Q863484	production_designer	Q93438531	Yvonne Hellings		
+Q863484	cast	Q123177	Nina Petri		
+Q863484	cast	Q1140258	Juan Diego Botto		
+Q863484	cast	Q63296	Maria Schrader		
+Q863484	cast	Q120825	Steffen Wink	Klaus	
+Q863484	cast	Q68468	Otto Sander		
+Q863484	cast	Q66011	Joachim Król		
+Q863484	cast	Q61510	Gottfried John	Herbert	
+Q863484	cast	Q101888	Marie Zielcke		
+Q863484	cast	Q62310	Senta Berger	Unna	
+Q863484	cast	Q71662	イーリス・ベルベン	Rita	
+Q863484	cast	Q62510	Heike Makatsch		
+Q863484	cast	Q452730	Anica Dobra		
+Q863484	cast	Q1287530	Gisela Schneeberger		
+Q863484	cast	Q1110287	Elisabeth Romano		
+Q863484	cast	Q1272182	Oliver Nägele	Fred	
+Q863484	cast	Q1556252	Gustav Peter Wöhler		
+Q863484	cast	Q65105	Franka Potente		
+Q863484	cast	Q84826	Suzanne von Borsody		
+Q863484	cast	Q186692	Uwe Ochsenknecht		
+Q863484	cast	Q86632	Dietmar Schönherr		
+Q863484	subject		happiness		
+Q863484	subject		flight		
+Q863484	subject		Sehnsucht		
+Q706492	director	Q263607	Pat Proft		
+Q706492	writer	Q263607	Pat Proft		
+Q706492	composer	Q367084	Bill Conti		
+Q706492	producer	Q61881	Bernd Eichinger		
+Q706492	producer	Q263607	Pat Proft		
+Q706492	producer	Q2483321	James G. Robinson		
+Q706492	cinematographer	Q556573	Glen MacPherson		
+Q706492	executive_producer	Q1277426	Martin Moszkowicz		
+Q706492	executive_producer	Q3758467	Gary Barber		
+Q706492	cast	Q6530936	Leslie Jones		
+Q706492	cast	Q2820077	Aaron Pearl		
+Q706492	cast	Q298777	Michael York		
+Q706492	cast	Q263607	Pat Proft		
+Q706492	cast	Q82786	Leslie Nielsen		
+Q706492	cast	Q2635096	Melinda McGraw		
+Q706492	cast	Q440604	Shari Lewis		
+Q706492	cast	Q3236707	Les Jones		
+Q706492	cast	Q236181	Sandra Bernhard		
+Q706492	cast	Q434572	Ellie Harvie		
+Q706492	cast	Q318607	Richard Crenna		
+Q706492	cast	Q242722	Kelly Le Brock		
+Q706492	cast	Q3760916	Gerard Plunkett		

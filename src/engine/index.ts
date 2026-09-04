@@ -8,6 +8,7 @@
 
 import { LEGACY_BODY_NAMES } from './content/award-bodies';
 import { LEGACY_FESTIVAL_NAMES } from './content/festival-rules';
+import { BUYERS, LEGACY_BUYER_NAMES } from './content/industry';
 import { countryOfCity, primaryLanguageOf } from './content/geography';
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Id, SaveUniverse } from './domain/model';
@@ -646,6 +647,28 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   });
   if (retired > 0 || withdrawn > 0 || before !== universe.scheduled.length) {
     steps.push(`The award bodies are now the real ones. Retired ${retired} undecided edition${retired === 1 ? '' : 's'} of the earlier fictional bodies and ${withdrawn} pending festival submission${withdrawn === 1 ? '' : 's'}; every decided result was kept as it was.`);
+  }
+
+  // Schema 15: the studios are the real ones. A pitch still waiting on one of
+  // the earlier fictional buyers can never be answered, so it lapses; an offer
+  // from one of them that was never accepted is withdrawn. Every deal already
+  // done keeps the name it was done under: that is history.
+  if (from < 15) {
+    const pending = universe.scheduled.length;
+    universe.scheduled = universe.scheduled.filter((item) => !(item.kind === 'film.pitch_response' && !BUYERS.get(String(item.payload.buyerId))));
+    const lapsed = pending - universe.scheduled.length;
+    let withdrawnOffers = 0;
+    for (const decision of Object.values(universe.decisions)) {
+      if (decision.resolvedAt || decision.dismissedAt) continue;
+      const stale = decision.actions.some((a) => a.commandKind === 'film.accept_buyer_offer' && !BUYERS.get(String(a.payload.buyerId)));
+      if (stale) { decision.dismissedAt = universe.now; withdrawnOffers++; }
+    }
+    if (lapsed > 0 || withdrawnOffers > 0) {
+      const names = Object.values(LEGACY_BUYER_NAMES).slice(0, 3).join(', ');
+      steps.push(`The studios are now the real ones. ${lapsed} pending pitch${lapsed === 1 ? '' : 'es'} and ${withdrawnOffers} open offer${withdrawnOffers === 1 ? '' : 's'} from the earlier fictional buyers (${names} and the rest) lapsed; every deal already done was kept under the name it was done with.`);
+    } else {
+      steps.push('The studios are now the real ones.');
+    }
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

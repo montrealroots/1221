@@ -1,0 +1,442 @@
+qid	role	personQid	name	character	ordinal
+Q67000951	director	Q17129674	Takahiko Kyōgoku		
+Q67000951	writer	Q24871996	Ryō Takada		
+Q67000951	follows	Q58082579	Crayon Shin-chan: Honeymoon Hurricane ~The Lost Hiroshi~		
+Q67000951	followed_by	Q104175555	Crayon Shin-chan: Shrouded in Mystery! The Flowers of Tenkasu Academy		
+Q96376192	director	Q28687612	Haruo Sotozaki		
+Q96376192	composer	Q132433	Yuki Kajiura		
+Q96376192	composer	Q5574911	Go Shiina		
+Q96376192	award		Japan Academy Prize for Animation of the Year		
+Q96376192	award		AMD Award		
+Q56906869	director	Q380608	Paul W. S. Anderson		
+Q56906869	writer	Q380608	Paul W. S. Anderson		
+Q56906869	composer	Q78957	Paul Haslinger		
+Q56906869	producer	Q380608	Paul W. S. Anderson		
+Q56906869	producer	Q15488561	Jeremy Bolt		
+Q56906869	cinematographer	Q556573	Glen MacPherson		
+Q56906869	cast	Q170576	Milla Jovovich		
+Q56906869	cast	Q1682910	Jannik Schümann		
+Q56906869	cast	Q220698	Ron Perlman		
+Q56906869	cast	Q3335620	Nanda Costa		
+Q56906869	cast	Q1342932	ディエゴ・ボネータ		
+Q56906869	cast	Q214227	T. I.		
+Q56906869	cast	Q298551	Tony Jaa		
+Q56906869	cast	Q1154813	MC Jin		
+Q56906869	cast	Q5799862	Josh Helman		
+Q56906869	cast	Q257286	Meagan Good		
+Q56906869	cast	Q17223237	Hirona Yamazaki		
+Q81583691	director	Q17221483	Tetsuo Yajima		
+Q81583691	writer	Q11395106	Atsuhiro Tomioka		
+Q81583691	writer	Q17221483	Tetsuo Yajima		
+Q81583691	composer	Q2007117	Shinji Miyazaki		
+Q81583691	composer	Q24868534	Taiiku Okazaki		
+Q81583691	narrator	Q1202136	Kenyu Horiuchi		
+Q104212243	director	Q113564563	Yusuke Hirota		
+Q104212243	composer	Q97031491	Yūta Bandō		
+Q104212243	producer	Q5349267	Eiko Tanaka		
+Q86751860	director	Q18817634	Naoyoshi Shiotani		
+Q86751860	writer	Q727725	Tow Ubukata		
+Q86751860	composer	Q3573298	Yugo Kanno		
+Q86751860	cast	Q984641	Yūichi Nakamura		
+Q86751860	cast	Q1369257	Yūki Kaji		
+Q86751860	follows	Q60753101	Psycho-Pass: Sinners of the System		
+Q85881954	director	Q11367750	Ryōta Nakano		
+Q85881954	writer	Q11367750	Ryōta Nakano		
+Q85881954	writer	Q21015322	Tomoe Kanno		
+Q85881954	editor	Q11360440	Sōichi Ueno		
+Q85881954	cast	Q1134047	Masaki Suda		
+Q85881954	cast	Q11401995	Yukiya Kitamura		
+Q85881954	cast	Q1092833	Makiko Watanabe		
+Q85881954	cast	Q11678345	Haru Kuroki		
+Q85881954	cast	Q11668492	Tarō Suruga		
+Q85881954	cast	Q1054666	Maho Nonami		
+Q85881954	cast	Q3549551	Mitsuru Hirata		
+Q85881954	cast	Q11552263	Nobue Iketani		
+Q85881954	cast	Q873539	Jun Fubuki		
+Q85881954	cast	Q362277	Kazunari Ninomiya		
+Q85881954	cast	Q1343721	Satoshi Tsumabuki		
+Q59726927	director	Q11594282	Yūichi Fukuda		
+Q59726927	cast	Q6632928	Kento Yamazaki		
+Q59726927	cast	Q9046864	Mitsuki Takahata		
+Q104184744	director	Q720771	Mamoru Hosoda		
+Q104184744	writer	Q720771	Mamoru Hosoda		
+Q104184744	composer	Q24871718	Taisei Iwasaki		
+Q104184744	composer	Q59780390	Ludvig Forssell		
+Q104184744	composer	Q64785133	Miho Hazama		
+Q104184744	composer	Q97031491	Yūta Bandō		
+Q104184744	producer	Q11478754	Genki Kawamura		
+Q104184744	producer	Q11679076	Yūichirō Saitō		
+Q104184744	producer	Q17160580	Nozomu Takahashi		
+Q104184744	editor	Q20042029	Shigeru Nishiyama		
+Q104184744	award		Seiyu Awards Special Award		
+Q104184744	subject		virtual reality		
+Q104184744	subject		self-actualization		
+Q104184744	subject		virtual community		
+Q104184744	subject		virtual world		
+Q104184744	subject		internet culture		
+Q104184744	subject		social networking service		
+Q104184744	subject		doxing		
+Q76769702	director	Q64784608	Chika Nagaoka		
+Q76769702	writer	Q11544786	Takeharu Sakurai		
+Q76769702	composer	Q1036504	Katsuo Ōno		
+Q76769702	cast	Q1204898	Rikiya Koyama	Kogoro Mori	
+Q76769702	cast	Q2719755	Wakana Yamazaki	Ran Mouri	
+Q76769702	cast	Q1193618	Naoko Matsui	Sonoko Suzuki	
+Q76769702	cast	Q1323029	Minami Takayama	Conan Edogawa	
+Q76769702	cast	Q11352498	Miyuki Ichijō	Jodie Starling	
+Q76769702	cast	Q3275906	Takaya Hashi	James Black	
+Q76769702	cast	Q233380	Ikue Ōtani	Mitsuhiko Tsuburaya	
+Q76769702	cast	Q937873	Yukiko Iwai	Ayumi Yoshida	
+Q76769702	cast	Q945665	Wataru Takagi	Genta Kojima	
+Q76769702	cast	Q1057734	Kiyoyuki Yanada	Andre Camel	
+Q76769702	cast	Q266670	Megumi Hayashibara	Ai Haibara	
+Q76769702	cast	Q922430	Shūichi Ikeda	Shuichi Akai	
+Q76769702	cast	Q49563	Noriko Hidaka	Masumi Sera	
+Q76769702	cast	Q8062702	Yū Sugimoto	Yumi Miyamoto	
+Q76769702	cast	Q1208611	Atsuko Tanaka	Mary Sera	
+Q76769702	cast	Q460361	Toshiyuki Morikawa	Shukichi Haneda	
+Q76769702	cast	Q1199055	Ryōtarō Okiayu	Subaru Okiya	
+Q76769702	cast	Q237405	Aya Hirano	白鳩舞子	
+Q76769702	cast	Q11284289	Minami Hamabe	石岡エリー	
+Q76769702	cast	Q775624	Taiten Kusunoki	ジョン・ボイド	
+Q76769702	cast	Q563425	Kenichi Suzumura	井上治	
+Q6434144	director	Q23261	Hideaki Anno		
+Q6434144	director	Q81078	Mahiro Maeda		
+Q6434144	director	Q742757	Kazuya Tsurumaki		
+Q6434144	director	Q11364085	Katsuichi Nakayama		
+Q6434144	writer	Q23261	Hideaki Anno		
+Q6434144	composer	Q2456797	Shirō Sagisu		
+Q6434144	producer	Q106413249	Takatoshi Okajima		
+Q6434144	cinematographer	Q106413077	Toru Fukushi		
+Q6434144	executive_producer	Q23261	Hideaki Anno		
+Q6434144	executive_producer	Q106413219	Tomoyuki Ogata		
+Q6434144	award		Japan Academy Prize for Animation of the Year		
+Q6434144	award		Synergy Award		
+Q6434144	award		AMD Award - Excellence Award		
+Q6434144	subject		human bonding		
+Q56307503	director	Q4679987	Adam Wingard		
+Q56307503	writer	Q942914	Terry Rossio		
+Q56307503	composer	Q266429	Junkie XL		
+Q56307503	producer	Q6780480	Mary Parent		
+Q56307503	producer	Q24809569	Eric McLeod		
+Q56307503	cinematographer	Q22074610	Ben Seresin		
+Q56307503	cast	Q449940	Demián Bichir		
+Q56307503	cast	Q310637	Alexander Skarsgård		
+Q56307503	cast	Q25936414	ミリー・ボビー・ブラウン		
+Q56307503	cast	Q359604	Kyle Chandler		
+Q56307503	cast	Q230534	Rebecca Hall		
+Q56307503	cast	Q457825	Shun Oguri		
+Q56307503	cast	Q106092740	Van Marten		
+Q56307503	cast	Q24189388	Julian Dennison		
+Q56307503	cast	Q26924801	Brian Tyree Henry		
+Q56307503	cast	Q572761	Eiza Gonzalez		
+Q56307503	follows	Q17501972	Godzilla: King of the Monsters		
+Q56307503	followed_by	Q113360912	Godzilla x Kong: The New Empire		
+Q109914608	director	Q99916671	Sunghoo Park		
+Q109914608	writer	Q56346814	Hiroshi Seko		
+Q109914608	composer	Q21019171	Hiroaki Tsutsumi		
+Q109914608	composer	Q120451210	Alisa Okehazama		
+Q109914608	producer	Q11397394	Toshihiro Maeda		
+Q109914608	producer	Q111301520	Hiroaki Matsutani		
+Q109914608	producer	Q111301538	Masaya Saito		
+Q109914608	award		Anime Grand Prix Français		
+Q109914608	award		Japan Expo Awards		
+Q109914608	award		7th Crunchyroll Anime Awards		
+Q106707387	director	Q6782663	Masashi Ando		
+Q106707387	director	Q6782806	Masayuki Miyaji		
+Q106707387	writer	Q20039611	Taku Kishimoto		
+Q106707387	composer	Q11457315	Harumi Fūki		
+Q109844247	director	Q24473864	Susumu Mitsunaka		
+Q109844247	writer	Q11432421	Takahiro Ōkura		
+Q135106237	director	Q1052320	Takashi Yamazaki		
+Q135106237	writer	Q1052320	Takashi Yamazaki		
+Q135106237	composer	Q1351571	Naoki Satō		
+Q115259343	director	Q7497770	Shinsuke Sato		
+Q115259343	writer	Q9116547	Yasuhisa Hara		
+Q115259343	writer	Q11678110	Tsutomu Kuroiwa		
+Q115259343	composer	Q11470666	Yutaka Yamada		
+Q115259343	cinematographer	Q11383017	Akira Sakō		
+Q115259343	editor	Q11376576	Tsuyoshi Imai		
+Q115259343	cast	Q15147328	Kanna Hashimoto		
+Q115259343	cast	Q11671066	Tsutomu Takahashi		
+Q115259343	cast	Q9020575	Yukiyoshi Ozawa		
+Q115259343	cast	Q20041273	Miō Tanaka		
+Q115259343	cast	Q5360024	Takahiro Miura		
+Q115259343	cast	Q11563867	Shinnosuke Mitsushima		
+Q115259343	cast	Q1139734	Etsushi Toyokawa		
+Q115259343	cast	Q11561586	Kiyohiko Shibukawa		
+Q115259343	cast	Q55790091	Takayuki Hamatsu		
+Q115259343	cast	Q17224538	Chihiro Yamamoto		
+Q115259343	cast	Q16264929	Amane Okayama		
+Q115259343	cast	Q1431768	Masaya Katō		
+Q115259343	cast	Q11561434	Nana Seino		
+Q115259343	cast	Q901772	Masahiro Takashima		
+Q115259343	cast	Q11482543	Yūsuke Hirayama		
+Q115259343	cast	Q7813182	Togi Makabe		
+Q115259343	cast	Q65271619	Eishin		
+Q115259343	cast	Q1142115	Hiroshi Tamaki		
+Q115259343	cast	Q748582	Kōichi Satō		
+Q115259343	cast	Q6632928	Kento Yamazaki		
+Q115259343	cast	Q5964561	Ryo Yoshizawa		
+Q115259343	cast	Q983466	Jun Kaname		
+Q115259343	cast	Q1074708	Takao Ōsawa		
+Q115259343	follows	Q59726567	Kingdom		
+Q115259343	followed_by	Q120333108	Kingdom 3: The Flame of Destiny		
+Q111520791	director	Q4209036	Yoshihiro Fukagawa		
+Q111520791	writer	Q11413877	Tomoko Yoshida		
+Q111520791	writer	Q22129918	Keisuke Uyama		
+Q111520791	cast	Q869156	Kento Nakajima		
+Q111520791	cast	Q872110	Kento Nagayama		
+Q111520791	cast	Q11616337	Yumi Wakatsuki		
+Q111520791	cast	Q22129613	Yuki Sakurai		
+Q111520791	cast	Q11534119	Shuntarō Yanagi		
+Q111520791	cast	Q11582757	Hidekazu Mashima		
+Q111520791	cast	Q24866076	Honoka Matsumoto		
+Q111520791	cast	Q983466	Jun Kaname		
+Q111520791	cast	Q5366725	Mitsuhiro Oikawa		
+Q77948675	director	Q900501	Shinji Higuchi		
+Q77948675	writer	Q23261	Hideaki Anno		
+Q77948675	composer	Q2456797	Shirō Sagisu		
+Q77948675	producer	Q23261	Hideaki Anno		
+Q77948675	cast	Q1154206	Hidetoshi Nishijima		
+Q77948675	cast	Q253900	Masami Nagasawa		
+Q77948675	cast	Q1329116	Takumi Saito		
+Q110126272	director	Q335080	Makoto Shinkai		
+Q110126272	writer	Q335080	Makoto Shinkai		
+Q110126272	composer	Q1196122	Radwimps		
+Q110126272	composer	Q21155204	Kazuma Jinnouchi		
+Q111512826	director	Q16263596	Hiroaki Akagi		
+Q111512826	writer	Q11378737	Aki Itami		
+Q111512826	writer	Q30922866	Hiroko Fukuda		
+Q111512826	composer	Q21019171	Hiroaki Tsutsumi		
+Q112664641	director	Q17350112	Yuzuru Tachikawa		
+Q112664641	composer	Q233453	Hiromi Uehara		
+Q115182766	director	Q17350112	Yuzuru Tachikawa		
+Q115182766	writer	Q11544786	Takeharu Sakurai		
+Q115182766	cinematographer	http://www.wikidata.org/.well-known/genid/53cef11adba81bb5312f4eb5531375ed	http://www.wikidata.org/.well-known/genid/53cef11adba81bb5312f4eb5531375ed		
+Q112933606	director	Q115166567	Takumi Doyama		
+Q112933606	writer	Q11411351	Ryōta Kosawa		
+Q112933606	composer	Q11517002	Takayuki Hattori		
+Q112933606	follows	Q101863729	Doraemon: Nobita's Little Star Wars 2021		
+Q112933606	followed_by	Q120379797	Doraemon: Nobita's Earth Symphony		
+Q115053037	director	Q1052320	Takashi Yamazaki		
+Q115053037	writer	Q1052320	Takashi Yamazaki		
+Q115053037	composer	Q1351571	Naoki Satō		
+Q115053037	producer	Q16264125	Minami Ichikawa		
+Q115053037	cinematographer	Q1797629	Kōzō Shibazaki		
+Q115053037	cast	Q1041546	Ryūnosuke Kamiki	Kōichi Shikishima	
+Q115053037	cast	Q1189115	Hidetaka Yoshioka	Kenji Noda	
+Q115053037	cast	Q1052140	Kuranosuke Sasaki	Yōji Ak	
+Q115053037	cast	Q11284289	Minami Hamabe	Noriko Ōishi	
+Q115053037	cast	Q1050102	Yuki Yamada	Shirō Mizushima	
+Q115053037	cast	Q1060139	Sakura Andō	Sumiko Ōta	
+Q115053037	cast	Q6380680	Munetaka Aoki	Sōsaku Tachibana	
+Q115053037	award		Academy Award for Best Visual Effects		
+Q115053037	follows	Q20899737	Shin Godzilla		
+Q115053037	followed_by	Q136700760	Godzilla Minus Zero		
+Q115053037	subject		Godzilla		
+Q113626480	director	Q18763449	Akira Amemiya		
+Q113626480	writer	Q6383621	Keiichi Hasegawa		
+Q113626480	composer	Q2456797	Shirō Sagisu		
+Q113626480	follows	Q100050258	SSSS.Dynazenon		
+Q118727810	director	Q97480683	Akira Tanaka		
+Q118727810	writer	Q17220417	Hideya Hamada		
+Q118727810	cast	Q1193035	Yutaka Takenouchi		
+Q118727810	cast	Q11678345	Haru Kuroki		
+Q117717959	director	Q26372	Takeshi Kitano		
+Q117717959	writer	Q26372	Takeshi Kitano		
+Q117717959	composer	Q3515913	Taro Iwashiro		
+Q117717959	producer	Q26372	Takeshi Kitano		
+Q117717959	producer	Q11430139	Takeshi Natsuno		
+Q117717959	cinematographer	Q2811976	Takeshi Hamada		
+Q117717959	editor	Q26372	Takeshi Kitano		
+Q117717959	editor	Q11444385	Yoshinori Ōta		
+Q117717959	cast	Q1036275	Ryō Kase		
+Q117717959	cast	Q26372	Takeshi Kitano		
+Q117717959	cast	Q1052640	Nao Ōmori		
+Q117717959	cast	Q1154206	Hidetoshi Nishijima		
+Q117717959	cast	Q1067530	Kenichi Endō		
+Q117717959	cast	Q379824	Tadanobu Asano		
+Q116687945	director	Q740758	Hirokazu Koreeda		
+Q116687945	writer	Q11200621	Yūji Sakamoto		
+Q116687945	composer	Q345494	Ryuichi Sakamoto		
+Q116687945	producer	Q11478754	Genki Kawamura		
+Q116687945	cast	Q11630793	Akihiro Kakuta		
+Q116687945	cast	Q3276491	Yūko Tanaka		
+Q116687945	cast	Q118592664	Soya Kurokawa		
+Q116687945	cast	Q683311	Eita Nagayama		
+Q116687945	cast	Q1060139	Sakura Andō		
+Q116687945	cast	Q9046864	Mitsuki Takahata		
+Q116687945	cast	Q114956583	Hinata Hiiragi		
+Q116687945	cast	Q345494	Ryuichi Sakamoto		
+Q116687945	cast	Q1060193	Nakamura Shidō II		
+Q116687945	award		Best Screenplay Award		
+Q116687945	award		Queer Palm		
+Q117305646	director	Q377730	Kazuhiro Furuhashi		
+Q117305646	writer	Q985992	Ichirō Ōkouchi		
+Q47482560	director	Q55400	Hayao Miyazaki		
+Q47482560	writer	Q55400	Hayao Miyazaki		
+Q47482560	composer	Q275900	Joe Hisaishi		
+Q47482560	composer	Q11604296	Kenshi Yonezu		
+Q47482560	producer	Q713511	Toshio Suzuki		
+Q47482560	cinematographer	Q9019103	Atsushi Okui		
+Q47482560	editor	Q1379022	Takeshi Seyama		
+Q47482560	production_designer	Q9045192	Yōji Takeshige		
+Q47482560	award		Academy Award for Best Animated Feature		
+Q47482560	award		BAFTA Award for Best Animated Film		
+Q47482560	award		Ōfuji Noburō Award		
+Q47482560	award		Golden Globe Award for Best Animated Feature Film		
+Q47482560	award		New York Film Critics Circle Award for Best Animated Film		
+Q47482560	award		Los Angeles Film Critics Association Award for Best Animated Film		
+Q47482560	award		Chicago Film Critics Association Award for Best Animated Film		
+Q47482560	award		Dallas-Fort Worth Film Critics Association Award for Best Animated Film		
+Q47482560	award		Florida Film Critics Circle Award for Best Animated Film		
+Q47482560	award		San Francisco Film Critics Circle Award for Best Animated Feature		
+Q133827544	director	Q83913479	Kohei Yoshino		
+Q133827544	composer	Q4118908	Yoshihiro Ike		
+Q133827544	cinematographer	Q110219829	Mitsuru Komiyama		
+Q133827544	editor	Q11376576	Tsuyoshi Imai		
+Q133827544	cast	Q1074708	Takao Ōsawa	Shiro Kaieda	
+Q111597584	director	Q11610834	Saiji Yakumo		
+Q111597584	cast	Q16263824	Yoshihiko Aramaki		
+Q111597584	cast	Q24869028	Masanari Wada		
+Q111597584	cast	Q66365107	Mizuki Umetsu		
+Q111597584	cast	Q5770337	Hiroki Suzuki		
+Q111597584	follows	Q59726884	Touken Ranbu		
+Q127290300	director	Q616943	Kōki Mitani		
+Q127290300	writer	Q616943	Kōki Mitani		
+Q127290300	executive_producer	Q11434154	Tōru Ōta		
+Q127290300	executive_producer	Q16264125	Minami Ichikawa		
+Q127290300	cast	Q253900	Masami Nagasawa		
+Q124577250	director	Q17230470	Shō Miyake		
+Q124577250	composer	Q65228672	Hi'Spec		
+Q124577250	cinematographer	Q11516162	Yūta Tsukinaga		
+Q124577250	cast	Q11275008	Mone Kamishiraishi		
+Q124577250	cast	Q16236888	Hokuto Matsumura		
+Q124577250	cast	Q11561586	Kiyohiko Shibukawa		
+Q124577250	cast	Q40037672	Haruka Imō		
+Q128867471	director	Q17161273	Shō Tsukikawa		
+Q128867471	writer	Q11533147	Tamio Hayashi		
+Q128867471	composer	Q22118332	Shū Kanematsu		
+Q128867471	cinematographer	Q24452356	Kōsuke Yamada		
+Q128867471	cast	Q29585797	Riko Fukumoto		
+Q128867471	cast	Q27150699	Shûhei Uesugi		
+Q128867471	cast	Q3545438	Naho Toda		
+Q128867471	cast	Q11563867	Shinnosuke Mitsushima		
+Q128867471	cast	Q16263805	Miu Arai		
+Q128867471	cast	Q873908	Ken Mitsuishi		
+Q128867471	cast	Q8011075	Eri Tokunaga		
+Q128867471	cast	Q16236888	Hokuto Matsumura		
+Q128867471	cast	Q1041739	Yō Ōizumi		
+Q128867471	cast	Q871576	Kasumi Arimura		
+Q128867471	cast	Q1193022	Miho Kanno		
+Q128867471	cast	Q169248	Rina Kawaei		
+Q123945155	writer	Q3811284	Jun'ichi Miyashita		
+Q123945155	composer	Q1036504	Katsuo Ōno		
+Q123945155	creator	Q313945	Gosho Aoyama		
+Q123945155	follows	Q122932658	The Story of Ai Haibara ~Black Iron Mystery Train~		
+Q123354230	director	Q64784608	Chika Nagaoka		
+Q123354230	writer	Q11432421	Takahiro Ōkura		
+Q123354230	composer	Q3573298	Yugo Kanno		
+Q123354229	director	Q24473864	Susumu Mitsunaka		
+Q123354229	writer	Q24473864	Susumu Mitsunaka		
+Q123354229	composer	Q15905383	Yuki Hayashi		
+Q123354229	composer	Q38118891	Asami Tachibana		
+Q127515049	director	Q20062646	Ayuko Tsukahara		
+Q127515049	cast	Q362254	Takuya Kimura		
+Q124388041	director	Q926096	Tensai Okamura		
+Q124388041	writer	Q3273101	Yōsuke Kuroda		
+Q124388041	composer	Q15905383	Yuki Hayashi		
+Q124313838	director	Q16769769	Rikiya Imaizumi		
+Q124313838	cast	Q40039708	Sara Shida	Hojo	
+Q124313838	cast	Q123406057	Jun Saitō	Ryo Machida	
+Q124313838	cast	Q11397584	Ōshirō Maeda	Hamaguchi	
+Q124313838	cast	Q76288611	Tamaki Shiratori	Miki Ozeki	
+Q124313838	cast	Q53034962	Jin Suzuki	Nakai	
+Q124313838	cast	Q11483455	Yūna Taira	Mano	
+Q124313838	cast	Q1046963	Yōsuke Eguchi	Mr. Tanabe	
+Q124313838	cast	Q11550448	Mei Nagano	Takagi	
+Q124313838	cast	Q59134406	Fumiya Takahashi	Nishikata	
+Q123906765	director	Q125871279	Tatsuya Yoshihara		
+Q123906765	writer	Q56346814	Hiroshi Seko		
+Q123906765	composer	Q11190062	Kensuke Ushio		
+Q131358956	director	Q132431789	Katsuya Shigehara		
+Q131358956	writer	Q11544786	Takeharu Sakurai		
+Q131358956	composer	Q3573298	Yugo Kanno		
+Q134480207	director	Q11478754	Genki Kawamura		
+Q134480207	writer	Q11478754	Genki Kawamura		
+Q134480207	writer	Q122902496	Kentarō Hirase		
+Q134480207	composer	Q1196321	Yasutaka Nakata		
+Q134480207	cast	Q123405494	Yamato Kouchi	Walking man	
+Q134480207	cast	Q362277	Kazunari Ninomiya	Lost man	
+Q134480207	cast	Q108110352	Kotone Hanase	High school student	
+Q134480207	cast	Q11461244	Nana Komatsu	Lost man's partner	
+Q136436677	director	Q117288879	Shota Goshozono		
+Q136436677	writer	Q56346814	Hiroshi Seko		
+Q136436677	writer	Q60231010	Gege Akutami		
+Q136436677	cast	Q16264591	Junya Enoki		
+Q136436677	cast	Q7630810	Subaru Kimura		
+Q136436677	cast	Q1180730	Alan Lee		
+Q136436677	cast	Q21155071	Adam McArthur		
+Q136436677	cast	Q984641	Yūichi Nakamura		
+Q136436677	cast	Q1145291	Daisuke Namikawa		
+Q136436677	cast	Q254368	Megumi Ogata		
+Q136436677	cast	Q459902	Takahiro Sakurai		
+Q136436677	cast	Q4703774	Asami Seto		
+Q136436677	cast	Q5968283	Nobunaga Shimazaki		
+Q136436677	cast	Q1331947	Junichi Suwabe		
+Q136436677	cast	Q15120664	Kaiji Tang		
+Q136436677	cast	Q1255370	Kenjiro Tsuda		
+Q136436677	cast	Q17349748	Yuma Uchida		
+Q136436677	cast	Q136472453	Anne Yatco		
+Q136436677	cast	Q1351599	Kōji Yusa		
+Q131542846	director	Q720771	Mamoru Hosoda		
+Q131542846	writer	Q720771	Mamoru Hosoda		
+Q131542846	composer	Q24871718	Taisei Iwasaki		
+Q131542846	producer	Q11679076	Yūichirō Saitō		
+Q131542846	producer	Q17160580	Nozomu Takahashi		
+Q131542846	creator	Q720771	Mamoru Hosoda		
+Q131542846	editor	Q20042029	Shigeru Nishiyama		
+Q136049243	director	Q137184395	蓮井隆弘		
+Q136049243	writer	Q11432421	Takahiro Ōkura		
+Q136049243	composer	Q3573298	Yugo Kanno		
+Q137640905	director	Q740758	Hirokazu Koreeda		
+Q137640905	writer	Q740758	Hirokazu Koreeda		
+Q137640905	cast	Q1206963	Haruka Ayase		
+Q137640905	cast	Q30301451	Daigo		
+Q137640905	cast	Q11561434	Nana Seino		
+Q137640905	cast	Q50286752	Kanichiro Sato		
+Q137640905	cast	Q114956583	Hinata Hiiragi		
+Q137640905	cast	Q846934	Kayo Noro		
+Q137640905	cast	Q3290855	Mari Hoshino		
+Q137640905	cast	Q17225942	Ayumu Nakajima		
+Q137640905	cast	Q3108327	Min Tanaka		
+Q137640905	cast	Q1059767	Kimiko Yo		
+Q138299163	director	Q74149354	Yusaku Matsumoto		
+Q138299163	writer	Q97901052	Masahiro Yamaura		
+Q138299163	cast	Q138299143	Haruki Mochizuki		
+Q138299163	cast	Q1329116	Takumi Saito		
+Q138299163	cast	Q1139697	Tae Kimura		
+Q138299163	cast	Q6809160	Megumi		
+Q138299163	cast	Q918835	Ataru Nakamura		
+Q138299163	cast	Q1060193	Nakamura Shidō II		
+Q138299163	cast	Q11405393	Seiji Chihara		
+Q138299163	cast	Q24867744	Kaito Yoshimura		
+Q138299163	subject		Ai Haruna		
+Q138299163	subject		trans woman		
+Q133820356	director	Q28018831	Darrin Prescott		
+Q133820356	director	Q63922103	Grant Sputore		
+Q133820356	writer	Q963032	David Callaham		
+Q133820356	composer	Q1356888	Henry Jackman		
+Q133820356	producer	Q6780480	Mary Parent		
+Q133820356	producer	Q16213294	Thomas Tull		
+Q133820356	cinematographer	Q969766	Daniel Mindel		
+Q133820356	production_designer	Q105594608	Stefan Dechant		
+Q133820356	cast	Q519784	Kaitlyn Dever		
+Q133820356	cast	Q958385	Dan Stevens		
+Q133820356	cast	Q348066	Jack O'Connell		
+Q133820356	cast	Q362559	Delroy Lindo		
+Q133820356	cast	Q318249	Matthew Modine		
+Q133820356	cast	Q18161990	Alycia Debnam-Carey		
+Q133820356	cast	Q21170548	Shane Emmett		
+Q133820356	cast	Q214309	Sam Neill		

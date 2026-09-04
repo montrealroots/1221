@@ -1,0 +1,3130 @@
+qid	role	personQid	name	character	ordinal
+Q1306297	director	Q431435	Pernille Fischer Christensen		
+Q1306297	writer	Q431435	Pernille Fischer Christensen		
+Q1306297	writer	Q534829	Kim Fupz Aakeson		
+Q1306297	producer	Q16065149	Sisse Graum Jørgensen		
+Q1306297	cinematographer	Q19463088	Jakob Ihre		
+Q1306297	editor	Q565966	Anne Østerud		
+Q1306297	editor	Q5576075	Janus Billeskov Jansen		
+Q1306297	production_designer	Q95864601	Rasmus Thjellesen		
+Q1306297	cast	Q4939367	米歇尔·比约恩‑安德森		
+Q1306297	cast	Q28939734	Thomas Hwan		
+Q1306297	cast	Q12319537	Jeppe Vig Find		
+Q1306297	cast	Q117906	Pilou Asbæk		
+Q1306297	cast	Q38052491	Peter Christoffersen		
+Q1306297	cast	Q452036	アンヌ・ルイーセ・ハシング		
+Q1306297	cast	Q12306097	Q12306097		
+Q1306297	cast	Q533028	Line Kruse		
+Q1306297	cast	Q40523902	Gustav Fischer Kjærulff		
+Q1306297	cast	Q530997	Jesper Christensen		
+Q1306297	cast	Q6333052	레네 마리아 크리스텐센		
+Q1306297	cast	Q37491193	Coco Hjardemaal		
+Q1306297	cast	Q4990736	Laura Kamis Wrang		
+Q1146575	director	Q1581762	Hans Petter Moland		
+Q1146575	writer	Q534829	Kim Fupz Aakeson		
+Q1146575	composer	Q64602	Halfdan E		
+Q1146575	producer	Q958200	Erik Poppe		
+Q1146575	producer	Q17057524	Per Henry Borch		
+Q1146575	producer	Q19390397	Stein B. Kvae		
+Q1146575	cinematographer	Q524041	Philip Øgaard		
+Q1146575	editor	Q18912980	Jens Christian Fodstad		
+Q1146575	cast	Q1777302	Kjersti Holmen		
+Q1146575	cast	Q1780001	Anders Baasmo Christiansen		
+Q1146575	cast	Q11978210	Jannike Kruse		
+Q1146575	cast	Q4919937	Bjørn Sundquist		
+Q1146575	cast	Q15766036	Henrik Mestad		
+Q1146575	cast	Q5628839	Gard B. Eidsvold		
+Q1146575	cast	Q7652280	Sverre Horge		
+Q1146575	cast	Q12000474	Silje Torp Færavaag		
+Q1146575	cast	Q3924576	Julia Bache-Wiig		
+Q1146575	cast	Q421471	Aksel Hennie		
+Q1146575	cast	Q11983723	Lene Kongsvik Johansen		
+Q1146575	cast	Q6279058	Jorunn Kjellsby		
+Q1146575	cast	Q1780732	Jan Gunnar Røise		
+Q1146575	cast	Q11995196	Per Frisch		
+Q1146575	cast	Q879810	Bjørn Floberg		
+Q1146575	cast	Q6271813	Jon Øigarden		
+Q1146575	cast	Q208667	Stellan Skarsgård		
+Q1146575	cast	Q12009723	Viggo Jønsberg		
+Q1029748	director	Q6155953	Janus Metz Pedersen		
+Q1029748	writer	Q6155953	Janus Metz Pedersen		
+Q1029748	producer	Q12333734	Ronnie Fridthjof		
+Q1029748	editor	Q38402751	Per K. Kirkegaard		
+Q14955487	director	Q6046050	Kristian Petri		
+Q14955487	writer	Q5615837	Magnus Dahlström		
+Q14955487	cinematographer	Q514003	Hoyte van Hoytema		
+Q14955487	cast	Q454250	Sonja Richter		
+Q1194323	director	Q5649107	Hannes Holm		
+Q1194323	writer	Q5649107	Hannes Holm		
+Q1194323	composer	Q5591842	Mattias Bärjed		
+Q1194323	producer	Q1362693	Patrick Ryborn		
+Q1194323	cinematographer	Q1559440	Göran Hallberg		
+Q1194323	editor	Q23917670	Fredrik Morheden		
+Q1194323	costume_designer	Q95667508	Anna Hagert		
+Q1194323	production_designer	Q95229519	Jan-Olof Ågren		
+Q1194323	cast	Q4934424	Marie Ahl	bankanställd	
+Q1194323	cast	Q862460	Bill Skarsgård	Martin	
+Q1194323	cast	Q113560191	Lanna Olsson	discochef	
+Q1194323	cast	Q60484836	Ann-Charlotte Franzén	hyresvärd	
+Q1194323	cast	Q113560196	Jan Axlander	tillståndschef	
+Q1194323	cast	Q65007836	Fredrik Wagner	pundare	
+Q1194323	cast	Q5965520	Gustave Lund	Nalle	
+Q1194323	cast	Q5701514	Peter Dalle	Gösta	
+Q1194323	cast	Q5556149	Tommy Andersson	Rune Eriksson	
+Q1194323	cast	Q5554187	Björn Andersson	förhörspolis	
+Q1194323	cast	Q6058727	Adam Pålsson	Micke	
+Q1194323	cast	Q113560184	Pelle Axnäs	Sven	
+Q1194323	cast	Q5733596	Mats Flink	porrklubbsägare	
+Q1194323	cast	Q113560185	Halvard Walldén	klagande gäst	
+Q1194323	cast	Q454032	Amanda Ooms	Siv	
+Q1194323	cast	Q4935934	Thérèse Andersson	Eva	
+Q1194323	cast	Q551230	Peter Engman	Kenta	
+Q1194323	cast	Q521487	Josefin Ljungman	Jenny	
+Q1194323	cast	Q113560193	Leif Wendin	hoppilandkalle	
+Q1194323	cast	Q5885959	Erik Johansson	Jonte	
+Q1194323	cast	Q5796324	Sten Johan Hedman	KSSS-advokat	
+Q1194323	cast	Q5713200	Stig Engström	Fritz	
+Q1194323	cast	Q4971100	Annika Olsson	Ann-Britt	
+Q1194323	cast	Q6166602	Rico Rönnbäck	snobb	
+Q1194323	cast	Q113560181	Ola Wahlström	polistekniker	
+Q1194323	cast	Q113560187	Annika Arnell	bordellmamma	
+Q1194323	cast	Q6215401	Rasmus Troedsson	Ulf	
+Q1194323	cast	Q374931	Björn Kjellman	Nils	
+Q1194323	cast	Q5712969	Felix Engström	Emil Kåberg	
+Q1194323	cast	Q4955565	Yohanna Idha	strippa	
+Q1194323	cast	Q53103537	Ludde Hagberg	snobb	
+Q1194323	cast	Q4959122	Elin Klinga	Marketta	
+Q1194323	cast	Q113560192	Clary Elfving	strippa	
+Q1194323	cast	Q1317100	Leif Andrée	Stig	
+Q401539	director	Q237255	Pernilla August		
+Q401539	writer	Q237255	Pernilla August		
+Q401539	writer	Q4974223	Lolita Ray		
+Q401539	composer	Q6256349	Sebastian Öberg		
+Q401539	composer	Q112878199	Magnus Jarlbo		
+Q401539	producer	Q34024625	Helena Danielsson		
+Q401539	producer	Q113623514	Ralf Karlsson		
+Q401539	cinematographer	Q1354039	Erik Molberg Hansen		
+Q401539	editor	Q271223	Åsa Mossberg		
+Q401539	costume_designer	Q4955606	Kicki Ilander		
+Q401539	production_designer	Q513410	Anna Asp		
+Q401539	cast	Q228676	Noomi Rapace	Leena	
+Q401539	cast	Q102243167	Håkan Bengtsson	Veikko	
+Q401539	cast	Q513212	Ville Virtanen	Kimmo	
+Q401539	cast	Q5885632	Björn Johansson Boklund	Niklas Lindberg	
+Q401539	cast	Q113623529	Alpha Blad	Marja	
+Q401539	cast	Q514190	Outi Mäenpää	Aili	
+Q401539	cast	Q113623536	Karin Ronnle Svensson	Åse	
+Q401539	cast	Q4961058	Boel Larsson		
+Q401539	cast	Q5568400	Anders Beckman	polis	
+Q401539	cast	Q103941437	Lotten Roos	Inga-Lill	
+Q401539	cast	Q113623528	Junior Blad	Sakari	
+Q401539	cast	Q113623539	Eva Järinge	Ann-Christine	
+Q401539	cast	Q5571781	Simon J. Berger	Bengt Brink	
+Q401539	cast	Q113623531	Selma Cuba	Flisan	
+Q401539	cast	Q5987397	Kenneth Milldoff		
+Q401539	cast	Q521623	Ola Rapace	Johan	
+Q401539	cast	Q4954154	Cecilia Hjalmarsson		
+Q401539	cast	Q3315530	Minna Haapkylä	Helmi	
+Q401539	cast	Q107709302	Anette Lindbäck	Britta, bostadsbolaget	
+Q401539	cast	Q6215401	Rasmus Troedsson	Sten	
+Q401539	cast	Q440384	Tehilla Blad	Leena, 12 år	
+Q401539	cast	Q4972562	Sanna Persson		
+Q401539	cast	Q4935841	Kerstin Andersson	Margareta Persson	
+Q401539	cast	Q113623534	Julia Öhrström-Jönsson	Riita	
+Q401539	award		Nordic Council Film Prize		
+Q401539	subject		alcoholism		
+Q401539	subject		competitive swimming		
+Q16181637	director	Q17104903	Mikkel Magnus		
+Q16181637	director	Q22661649	Wayne McKnight		
+Q16181637	producer	Q17104903	Mikkel Magnus		
+Q16181637	cast	Q3099462	Trond Kirkvaag		
+Q16181637	cast	Q4587939	Knut Lystad		
+Q16181637	cast	Q7816738	Tom Mathisen		
+Q16181637	cast	Q6491638	Lars Mjøen		
+Q5246814	director	Q4215039	Othman Karim		
+Q5246814	writer	Q4215039	Othman Karim		
+Q5246814	cinematographer	Q1276107	Esa Vuorinen		
+Q5246814	cast	Q192165	Danny Glover		
+Q5246814	cast	Q5751918	Peter Gardiner		
+Q5246814	cast	Q6095085	Stefan Sauk		
+Q5246814	cast	Q5588378	Ulf Brunnberg		
+Q5246814	cast	Q4937102	Mina Azarian		
+Q5246814	cast	Q4963919	Regina Lund		
+Q5246814	cast	Q468499	ツヴァ・ノヴォトニー		
+Q5246814	cast	Q5958223	Pierre Lindstedt		
+Q164616	director	Q977624	Daniel Espinosa		
+Q164616	writer	Q983892	Maria Karlsson		
+Q164616	composer	Q1584183	Jon Ekstrand		
+Q164616	cinematographer	Q661100	Aril Wretblad		
+Q164616	editor	Q2416526	Theis Schmidt		
+Q164616	cast	Q28262	Joel Kinnaman		
+Q164616	cast	Q1254792	Dragomir Mrsic		
+Q164616	cast	Q706673	Fares Fares		
+Q164616	cast	Q6006145	Matias Varela		
+Q164616	cast	Q6185714	Joel Spira		
+Q164616	cast	Q2238411	Lisa Henni		
+Q164616	cast	Q448968	德揚·丘基奇		
+Q164616	followed_by	Q3499597	Snabba Cash II		
+Q12312966	director	Q3056540	エリック・クローソン		
+Q12312966	writer	Q3056540	エリック・クローソン		
+Q12312966	cinematographer	Q38402858	Lars Reinholdt		
+Q12312966	editor	Q491248	Anders Refn		
+Q12312966	cast	Q1797681	예스페르 아스홀트		
+Q12312966	cast	Q37490811	Thomas Hedemann		
+Q12312966	cast	Q12316327	Henrik Bruhn		
+Q12312966	cast	Q41236425	Ted Pappas		
+Q12312966	cast	Q12305485	Carsten Kressner		
+Q12312966	cast	Q12331692	ペーター・プラウボー		
+Q12312966	cast	Q40523866	Tonny Thang		
+Q12312966	cast	Q12320667	Jytte Kvinesdal		
+Q12312966	cast	Q12309780	Q12309780		
+Q12312966	cast	Q4945827	Хелен Эгелунд		
+Q12312966	cast	Q3056540	エリック・クローソン		
+Q12312966	cast	Q41236509	Ronny Watt		
+Q12312966	cast	Q4946759	Pil Egholm		
+Q12312966	cast	Q1564096	亨里克·里克加德		
+Q12312966	cast	Q12316483	Henrik Vestergaard		
+Q12312966	cast	Q6251765	Торбен Зеллер		
+Q3089073	director	Q17107235	Anne Sewitsky		
+Q3089073	writer	Q22482805	Ragnhild Tronvoll		
+Q3089073	composer	Q17110728	Stein Berge Svendsen		
+Q3089073	producer	Q19391506	Synnøve Hørsdal		
+Q3089073	cinematographer	Q19462999	Anna Myking		
+Q3089073	editor	Q18912974	Christoffer Heie		
+Q3089073	cast	Q17194694	Henrik Rafaelsen		
+Q3089073	cast	Q11978658	Joachim Rafaelsen		
+Q3089073	cast	Q394570	Agnes Kittelsen		
+Q3089073	cast	Q4976428	마이브리트 세렌스		
+Q3089073	cast	Q5699667	Heine Totland		
+Q3089073	award		Sundance Film Festival World Cinema Dramatic Grand Jury Prize		
+Q16323836	director	Q12305706	Charlotte Sachs Bostrup		
+Q16323836	writer	Q41743398	Iben Gylling		
+Q16323836	cinematographer	Q39251159	Henrik Kristensen		
+Q16323836	editor	Q12301481	Anders Villadsen		
+Q16323836	cast	Q12328928	Niels Vendius		
+Q16323836	cast	Q12316421	Henrik Noél Olesen		
+Q16323836	cast	Q22956207	Anders Juul		
+Q16323836	cast	Q12337161	Stephanie Leon		
+Q16323836	cast	Q18647125	Joshua Berman		
+Q16323836	cast	Q1957570	Mira Wanting		
+Q16323836	cast	Q15987104	Лассе Гульдберг Кампер		
+Q16323836	cast	Q12338732	Taina Anneli Berg		
+Q16323836	cast	Q12306520	克洛斯·里絲·奧斯特加德		
+Q16323836	cast	Q2913347	Nastja Arcel		
+Q16323836	cast	Q12328265	Nanna Koppel		
+Q16323836	cast	Q6056070	エスベン・プレッツマン		
+Q16323836	cast	Q38375452	Q38375452		
+Q16323836	cast	Q12316066	赫勒·多勒里斯		
+Q16323836	cast	Q12309705	Elena Arndt-Jensen		
+Q16323836	cast	Q3066309	니콜라이 코페르니쿠스		
+Q16323836	cast	Q2559831	ボディル・ヨルゲンセン		
+Q16323836	cast	Q443361	Ellen Hillingsø		
+Q16323836	cast	Q19827604	Nikolaj Støvring Hansen		
+Q16323836	follows	Q11735883	Karla & Katrine		
+Q11735883	director	Q12305706	Charlotte Sachs Bostrup		
+Q11735883	writer	Q12318194	Ina Bruhn		
+Q11735883	cinematographer	Q39251159	Henrik Kristensen		
+Q11735883	editor	Q38051129	Birger Møller Jensen		
+Q11735883	cast	Q12318949	Якоб Фалс Нигаард		
+Q11735883	cast	Q443361	Ellen Hillingsø		
+Q11735883	cast	Q12337807	Сусанна Юхас		
+Q11735883	cast	Q2648022	Allan Olsen		
+Q11735883	cast	Q41236301	Jonathan Stahlschmidt		
+Q11735883	cast	Q12328265	Nanna Koppel		
+Q11735883	cast	Q3066309	니콜라이 코페르니쿠스		
+Q11735883	cast	Q12313931	Gitte Siem Christensen		
+Q11735883	cast	Q12327197	Q12327197		
+Q11735883	cast	Q18647125	Joshua Berman		
+Q11735883	cast	Q15987104	Лассе Гульдберг Кампер		
+Q11735883	cast	Q19827604	Nikolaj Støvring Hansen		
+Q11735883	cast	Q12339172	特丽莎·格兰		
+Q11735883	cast	Q12309705	Elena Arndt-Jensen		
+Q11735883	follows	Q4993093	Karla's world		
+Q11735883	followed_by	Q16323836	Karla & Jonas		
+Q1758576	director	Q12327179	Mikkel Nørgaard		
+Q1758576	writer	Q3362157	카스페르 크리스텐센		
+Q1758576	writer	Q3362230	フランク・フヴァム		
+Q1758576	writer	Q12327179	Mikkel Nørgaard		
+Q1758576	producer	Q2773155	Louise Vesth		
+Q1758576	cinematographer	Q19953585	Jacob Banke Olesen		
+Q1758576	editor	Q38402803	Martin Schade		
+Q1758576	editor	Q39251153	Morten Egholm		
+Q1758576	production_designer	Q95864601	Rasmus Thjellesen		
+Q1758576	cast	Q4859424	Barbara Zatler		
+Q1758576	cast	Q40523719	Malte Weis		
+Q1758576	cast	Q327125	Симон Квамм		
+Q1758576	cast	Q712364	Bent Fabric		
+Q1758576	cast	Q16324112	Марие Бах Хансен		
+Q1758576	cast	Q12332902	Rasmus Haxen		
+Q1758576	cast	Q11213025	엘세베트 스텐토프트		
+Q1758576	cast	Q562108	Jørgen Leth		
+Q1758576	cast	Q12325632	Mads Lisby		
+Q1758576	cast	Q481341	雷米		
+Q1758576	cast	Q12333677	Roger Kormind		
+Q1758576	cast	Q12317325	Hother Bøndorff		
+Q1758576	cast	Q517584	Søren Rasted		
+Q1758576	cast	Q12328938	Нильс Вейде		
+Q1758576	cast	Q4994583	Thomas Helmig		
+Q1758576	cast	Q12330120	Ole Michelsen		
+Q1758576	cast	Q3372515	Kenneth Carmohn		
+Q1758576	cast	Q12326969	Q12326969		
+Q1758576	cast	Q37491261	Lea Baastrup Rønne		
+Q1758576	cast	Q12327107	Микаэл Бертелсен		
+Q1758576	cast	Q38052739	Q38052739		
+Q1758576	cast	Q37491252	Paw Terndrup		
+Q1758576	cast	Q3427562	미아 뤼네		
+Q1758576	cast	Q11989253	迈克尔·卡罗		
+Q1758576	cast	Q40523713	Linda Fallentin		
+Q1758576	cast	Q40523707	Kadija Jalloh		
+Q1758576	cast	Q38471193	Claus Damgaard		
+Q1758576	cast	Q1747857	Mads Brügger		
+Q1758576	cast	Q2211149	Sadi Tekelioğlu		
+Q1758576	cast	Q35985836	Dya Josefine Hauch		
+Q1758576	cast	Q12321425	Karoline Munksnæs		
+Q1758576	cast	Q3424845	ラース・ヒョルトショイ		
+Q1758576	cast	Q3362157	카스페르 크리스텐센		
+Q1758576	cast	Q37491133	Marcuz Jess Petersen		
+Q1758576	cast	Q40011970	Marie Mondrup		
+Q1758576	cast	Q3362230	フランク・フヴァム		
+Q1758576	cast	Q3351855	Björn Gustafsson		
+Q1758576	cast	Q41236675	Heidi Petersen		
+Q1758576	cast	Q38052488	Christian Kirk Østergaard		
+Q1758576	cast	Q425708	Niels Helveg Petersen		
+Q1758576	followed_by	Q17165619	Klown Forever		
+Q138026	director	Q1715688	乔根·莱尔丹		
+Q138026	writer	Q1254876	エリック・ボーリング		
+Q138026	writer	Q1991196	Nikolaj Peyk		
+Q138026	composer	Q712364	Bent Fabric		
+Q138026	composer	Q1319598	Henrik Lindstrand		
+Q138026	editor	Q77944366	Per Risager		
+Q2021243	director	Q553932	Arne Lindtner Næss		
+Q2021243	writer	Q553932	Arne Lindtner Næss		
+Q2021243	writer	Q2066199	Peder Hamdahl Næss		
+Q2021243	composer	Q712364	Bent Fabric		
+Q2021243	producer	Q107053584	Rune H. Trondsen		
+Q2021243	cast	Q491015	Anders Hatlo		
+Q2021243	cast	Q1697788	Johannes Joner		
+Q2021243	cast	Q1681799	Jan Grønli		
+Q2021243	cast	Q12006179	Thorbjørn Harr		
+Q2021243	cast	Q11970224	Fridtjof Tangen		
+Q2021243	cast	Q553932	Arne Lindtner Næss		
+Q2021243	cast	Q5761529	Hilde Lyrån		
+Q2021243	cast	Q1675689	Ivar Trygve Nørve		
+Q2021243	cast	Q22344457	Thomas Stene-Johansen	Egon Olsen	
+Q2021243	cast	Q15675689	Jonas Hoff Oftebro	Kjell Jensen	
+Q615237	director	Q246996	Tobias Lindholm		
+Q615237	director	Q18935991	Michael Noer		
+Q615237	writer	Q246996	Tobias Lindholm		
+Q615237	writer	Q18935991	Michael Noer		
+Q615237	producer	Q104512195	René Ezra		
+Q615237	producer	Q104512197	Tomas Radoor		
+Q615237	cinematographer	Q38402809	Magnus Nordenhof Jønck		
+Q615237	editor	Q38402764	Adam Nielsen		
+Q615237	cast	Q4935846	Laila Andersson		
+Q615237	cast	Q76448813	Kjeld Thomsen		
+Q615237	cast	Q246996	Tobias Lindholm		
+Q615237	cast	Q12342859	Søren Thomsen		
+Q615237	cast	Q12330253	Omar Shargawi		
+Q615237	cast	Q16065110	Roland Møller		
+Q615237	cast	Q117906	Pilou Asbæk		
+Q615237	cast	Q28599937	Dulfi al-Jabouri		
+Q615237	cast	Q40523885	Jacob Gredsted		
+Q615237	cast	Q40523872	Sune Nørgaard		
+Q615237	cast	Q71247621	Johnny Nielsen		
+Q615237	cast	Q40523877	Kim Winther		
+Q615237	cast	Q12326875	Mia Maria Back		
+Q615237	award		Dragon Award Best Nordic Film		
+Q7332167	director	Q3847072	Mari Rantasila		
+Q7332167	writer	Q387853	Sinikka Nopola		
+Q7332167	writer	Q635171	Tiina Nopola		
+Q7332167	composer	Q1658005	Iiro Rantala		
+Q7332167	producer	Q16990271	Lasse Saarinen		
+Q7332167	producer	Q25451737	Risto Salomaa		
+Q7332167	cinematographer	Q110671752	Timo Heinänen		
+Q7332167	editor	Q100802469	Tuuli Kuittinen		
+Q7332167	production_designer	Q106520941	Minna Santakari		
+Q7332167	cast	Q6305513	Jukka Rasila	ambulanssimies Repa	
+Q7332167	cast	Q16991154	Puntti Valtonen	ambulanssimies Masa	
+Q7332167	cast	Q11898652	Tuomas Uusitalo	katusoittaja	
+Q7332167	cast	Q16990977	Anna-Maija Tuokko	omahoitaja Pipsa	
+Q7332167	cast	Q11886620	Pantse Syrjä	sairaalan lääkäri Pera	
+Q7332167	cast	Q11866509	Joel Bonsdorff	Robert Rosenbögel	
+Q7332167	cast	Q640801	Ulla Tapaninen		
+Q7332167	cast	Q11880845	Marcus Groth	Bertil Rosenbögel	
+Q7332167	cast	Q11851547	Anna-Maija Valonen		
+Q7332167	cast	Q11855302	Christina Indrenius-Zalewski	Gunvor Rosenbögel	
+Q7332167	cast	Q11217835	Martti Syrjä	sairaalan lääkäri Mara	
+Q7332167	cast	Q11889828	Rainer Kaunisto	konduktööri	
+Q7332167	cast	Q16298692	Severi Heikkilä	Ricky Rapper	
+Q7332167	cast	Q6777340	Martti Suosalo	Lennart Lindberg	
+Q7332167	cast	Q11875011	Lauramaija Luoto	Nelli Perhonen	
+Q7367087	director	Q5041797	Carlos Augusto de Oliveira		
+Q7367087	writer	Q5041797	Carlos Augusto de Oliveira		
+Q7367087	writer	Q12327695	Morten Kirkskov		
+Q7367087	writer	Q29014705	Jens Dahl		
+Q7367087	cinematographer	Q39252913	Philippe Kress		
+Q7367087	editor	Q39252858	Anja Farsig		
+Q7367087	cast	Q2466825	Vivianne Pasmanter		
+Q7367087	cast	Q491315	아네르스 W. 베르텔센		
+Q7367087	cast	Q768899	ダーヴィッド・デンシック		
+Q7367087	cast	Q435097	イーベン・ヤイレ		
+Q7367087	cast	Q10342555	Otávio Martins		
+Q10728727	director	Q777790	Petter Næss		
+Q10728727	writer	Q366281	Lars Saabye Christensen		
+Q10728727	writer	Q17114286	Åse Vikene		
+Q10728727	producer	Q11964456	Dag Alveberg		
+Q10728727	producer	Q19391506	Synnøve Hørsdal		
+Q10728727	cinematographer	Q22281298	Daniel Voldheim		
+Q10728727	cast	Q4566922	Hallvard Holmen		
+Q10728727	cast	Q1771414	Sven Nordin		
+Q10728727	cast	Q5628835	Eindride Eidsvold		
+Q10728727	cast	Q3357143	Sverre Anker Ousdal		
+Q10728727	cast	Q1777302	Kjersti Holmen		
+Q10728727	cast	Q17106899	Andrea Pharo Ronde		
+Q10728727	cast	Q256776	Maria Bonnevie		
+Q2634776	director	Q6176567	Ola Simonsson		
+Q2634776	writer	Q6190781	Johannes Stjärne Nilsson		
+Q2634776	composer	Q5600459	Magnus Börjeson		
+Q2634776	editor	Q4755479	Andreas Jonsson		
+Q2634776	cast	Q4972562	Sanna Persson		
+Q2634776	cast	Q4887823	Bengt Nilsson		
+Q2634776	cast	Q879616	Björn Granath		
+Q12331012	director	Q12321689	Kenneth Kainz		
+Q12331012	writer	Q12321689	Kenneth Kainz		
+Q12331012	writer	Q33157949	Jannik Tai Mosholt		
+Q12331012	cinematographer	Q39252913	Philippe Kress		
+Q12331012	editor	Q38402819	Mikkel E.G. Nielsen		
+Q12331012	cast	Q1703043	Jonas Wandschneider		
+Q12331012	cast	Q12308738	디테 한센		
+Q12331012	cast	Q40523954	Carl Dollerup Stenz		
+Q12331012	cast	Q383754	ニコライ・リー・カース		
+Q12331012	cast	Q116943124	David Petersen		
+Q12331012	cast	Q40523447	Anders Hjerming		
+Q12331012	cast	Q42047365	Karen Back Pedersen		
+Q12331012	cast	Q3194385	Кайа Брюэль		
+Q12331012	cast	Q12331509	Peter Damm-Ottesen		
+Q12331012	cast	Q12339791	特勒尔斯·莫林·塔鲁普		
+Q12331012	cast	Q7295091	라스무스 비에르		
+Q12331012	cast	Q435310	레네 브뢴둠		
+Q12331012	cast	Q438580	シセ・バベット・クヌッセン		
+Q12331012	cast	Q12331656	Питер Миллинг		
+Q12331012	cast	Q12308732	Ditte Arnth		
+Q12331012	cast	Q2033737	セーレン・ピルマーク		
+Q12331012	cast	Q12301028	アリ・カジム		
+Q12331012	cast	Q467073	사네 살로몬센		
+Q7124476	director	Q1692024	Johan Kling		
+Q7124476	writer	Q1692024	Johan Kling		
+Q7124476	composer	Q1505766	Georg Riedel		
+Q7124476	cast	Q4568707	Peter Carlberg		
+Q7124476	cast	Q6219239	Richard Ulfsäter		
+Q7124476	cast	Q4982677	Susanne Thorson		
+Q7124476	cast	Q6171742	Michael Segerström		
+Q7124476	cast	Q508722	Gustaf Skarsgård		
+Q7124476	cast	Q3369268	Philomène Grandin		
+Q7124476	cast	Q1984571	Erica Carlson		
+Q7124476	cast	Q310637	Alexander Skarsgård		
+Q7124476	cast	Q4949423	Moa Gammel		
+Q1758061	director	Q21732931	Grete Salomonsen Hynnekleiv		
+Q1758061	writer	Q21732931	Grete Salomonsen Hynnekleiv		
+Q1758061	composer	Q11996895	Ragnar Bjerkreim		
+Q1758061	producer	Q64590623	Odd Hynnekleiv		
+Q1758061	cinematographer	Q64590623	Odd Hynnekleiv		
+Q1758061	editor	Q113044030	Tore Hynnekleiv		
+Q1758061	costume_designer	Q113044032	Kari Kleiv		
+Q1758061	cast	Q36429	Aylar Lie	Raya	
+Q1758061	cast	Q113045026	Anne Ma Usterud	Kokka	
+Q1758061	cast	Q1189544	デニス・ストーロイ	Yohans far, Johannes Aamot	
+Q1758061	cast	Q113044842	Olav Hynnekleiv	Gustav gårdsgutt	
+Q1758061	cast	Q4951831	Agnete Haaland	Marta Aamot	
+Q1758061	cast	Q131259	Alexander Rybak	Levi	
+Q1758061	cast	Q113044059	Robin Pedersen Daniel	Yohan	
+Q1758061	cast	Q193958	Alejandro Fuentes	Fergemannen	
+Q1758061	cast	Q2348597	Morten Abel	Førskolelærer	
+Q1758061	cast	Q4578840	Jørgen Langhelle	Nome	
+Q1758061	cast	Q113044949	Carol Ann Daniel	Fru Nome	
+Q1758061	cast	Q113044935	Mathilde Berg	Anna	
+Q1758061	cast	Q113044074	Adam Eftevaag	Olai	
+Q1758061	cast	Q113045012	Jens Olai Justvik	Presten	
+Q1758061	cast	Q11991423	Nikolai Naglestad	Fredrik Aamot	
+Q1758061	cast	Q113044032	Kari Kleiv	Katrine	
+Q1758061	cast	Q113044134	Geir Thomassen	Aslak	
+Q1758061	cast	Q208681	Kris Kristofferson	Gamle Yohan	
+Q1758061	cast	Q113044907	Hege O. Enger	Prestefrua	
+Q1758061	cast	Q212524	Carola Häggkvist	self	
+Q10397267	director	Q7825494	Torbjörn Martin		
+Q10397267	director	Q113654377	John Boisen		
+Q10397267	director	Q113654379	Björn Fävremark		
+Q4729965	director	Q12332904	Rasmus Heide		
+Q4729965	cinematographer	Q39252913	Philippe Kress		
+Q4729965	editor	Q41743496	Martin Bønsvig Wehding		
+Q4729965	cast	Q40523565	Gitte Ertbirk		
+Q4729965	cast	Q12342860	Søren Vejby		
+Q4729965	cast	Q323563	オーレ・テストラップ		
+Q4729965	cast	Q12321303	Karen-Lis Ahrenkiel		
+Q4729965	cast	Q7295091	라스무스 비에르		
+Q4729965	cast	Q1797902	夏洛特·菲奇		
+Q4729965	cast	Q41236307	Dan Nielsen		
+Q4729965	cast	Q2651539	Lisa Werlinder		
+Q4729965	cast	Q12327036	米克·欧根达尔		
+Q4729965	cast	Q6858699	Mille Dinesen		
+Q4729965	cast	Q12314126	Гордон Кеннеди		
+Q4729965	cast	Q456176	Курт Равн		
+Q4729965	cast	Q12321300	Karen-Helene Hjort		
+Q4729965	cast	Q12335232	Signe A. Mannov		
+Q4729965	cast	Q213574	Rutger Hauer		
+Q4729965	cast	Q84081	ソーレン・マリン		
+Q4729965	cast	Q5934629	욘 랑에		
+Q4729965	cast	Q12320299	乔纳唐·斯潘格		
+Q4729965	followed_by	Q12301078	All for Two		
+Q10726831	director	Q5581033	Fredrik Boklund		
+Q10726831	writer	Q5623988	Henrik Dorsin		
+Q10726831	writer	Q6219625	Rikard Ulvshammar		
+Q10726831	composer	Q6230094	Jean-Paul Wall		
+Q10726831	producer	Q73984906	Zoula Pitsiava		
+Q10726831	cinematographer	Q106528331	Elvin Lee Chee Peng		
+Q10726831	editor	Q23917670	Fredrik Morheden		
+Q10726831	production_designer	Q95229519	Jan-Olof Ågren		
+Q10726831	cast	Q440826	Maria Lundqvist		
+Q10726831	cast	Q272545	Sofia Helin		
+Q10726831	cast	Q6000173	Claes Månsson		
+Q10726831	cast	Q5760870	Johan Glans	Mårten Dagelid	
+Q10726831	cast	Q279709	Brasse Brännström		
+Q10726831	cast	Q6198216	Allan Svensson		
+Q10726831	cast	Q4990383	Ann Westin		
+Q10726831	cast	Q5867942	Stig Grybe		
+Q10726831	cast	Q5807480	Henrik Hjelt		
+Q10726831	cast	Q4569429	Kjell Bergqvist	Åsa-Nisse	
+Q10726831	cast	Q6171742	Michael Segerström	Klabbarparn	
+Q10726831	cast	Q301452	Sissela Kyle	Kristin	
+Q10726831	cast	Q440773	Ann Petrén	Eulalia	
+Q10726831	cast	Q3372998	Johan Rabaeus	general dealer Sjökvist	
+Q10726831	cast	Q5623988	Henrik Dorsin	Knohultarn	
+Q10423476	director	Q6044601	Axel Petersén		
+Q10423476	writer	Q6044601	Axel Petersén		
+Q10423476	cinematographer	Q6000280	Måns Månsson		
+Q10423476	cast	Q5587565	Johannes Brost		
+Q113580046	director	Q38054105	Alicja Jaworski Björk		
+Q113580046	director	Q113580105	Karin Nilsson		
+Q113580046	director	Q138507912	Lasse Persson		
+Q113580046	writer	Q4970975	Lena Ollmark		
+Q113580046	writer	Q6185152	Anders Sparring		
+Q113580046	writer	Q111749227	Janne Vierth		
+Q113580046	composer	Q5701202	Magnus Dahlberg		
+Q113580046	producer	Q23916626	Lars Blomgren		
+Q113580046	producer	Q113027215	Jan Blomgren		
+Q113580046	cinematographer	Q113182213	Piotr Jaworski		
+Q10517905	director	Q1810251	Björn Runge		
+Q10517905	writer	Q534829	Kim Fupz Aakeson		
+Q10517905	composer	Q4948495	Ebba Forsberg		
+Q10517905	cinematographer	Q1231401	Ulf Brantås		
+Q10517905	cast	Q440773	Ann Petrén		
+Q1592308	director	Q3425142	Morten Tyldum		
+Q1592308	writer	Q7710835	Lars Gudmestad		
+Q1592308	writer	Q16633388	Ulf Ryberg		
+Q1592308	composer	Q22255029	Trond Bjerknæs		
+Q1592308	cinematographer	Q16165163	John Andreas Andersen		
+Q1592308	editor	Q18912969	Vidar Flataukan		
+Q1592308	costume_designer	Q22343425	Karen Fabritius Gram		
+Q1592308	cast	Q17110885	Kyrre Haugen Sydness		
+Q1592308	cast	Q12004583	Synnøve Macody Lund		
+Q1592308	cast	Q17107093	Eivind Sander		
+Q1592308	cast	Q421471	Aksel Hennie		
+Q1592308	cast	Q3369289	ユーリー・ウルゴード		
+Q1592308	cast	Q445772	Nikolaj Coster-Waldau		
+Q1592308	cast	Q11991481	Nils Jørgen Kaalstad		
+Q1592308	cast	Q2636510	Baard Owe		
+Q1592308	award		Saturn Award for Best International Film		
+Q1592308	award		The Amanda Public Choice Award		
+Q1592308	award		Silver nugget for the best Norwegian film		
+Q10539097	director	Q5774637	Anders Grönros		
+Q10539097	writer	Q5774637	Anders Grönros		
+Q10539097	composer	Q112108792	Uno Helmerson		
+Q10539097	composer	Q113585248	Andreas Öhrn		
+Q10539097	producer	Q5737666	Malte Forssell		
+Q10539097	producer	Q6026709	Claes Olsson		
+Q10539097	producer	Q113585256	Per-Erik Svensson		
+Q10539097	cinematographer	Q7296234	Rauno Ronkainen		
+Q10539097	editor	Q5774637	Anders Grönros		
+Q10539097	editor	Q23917670	Fredrik Morheden		
+Q10539097	executive_producer	Q6009003	Christer Nilson		
+Q10539097	executive_producer	Q113585262	Olle Lundquist		
+Q10539097	costume_designer	Q113463786	Charlott Axenström		
+Q10539097	production_designer	Q113463786	Charlott Axenström		
+Q10539097	cast	Q4866920	Basia Frydman	farmor	
+Q10539097	cast	Q113585302	Maja Stenvall	Maja	
+Q10539097	cast	Q2114100	Tom Ljungman	Stefan	
+Q10539097	cast	Q113585292	Olov Häggmark	syster Björn	
+Q10539097	cast	Q113585273	Ludvig Nilsson	Ailu	
+Q10539097	cast	Q1957605	Måns Herngren	regissör	
+Q10539097	cast	Q98381065	Einar Bredefeldt	Fredde	
+Q10539097	cast	Q113585286	Erland Löfgren	Tobbe	
+Q10539097	cast	Q113141399	Anders Hedberg	mannen	
+Q10539097	cast	Q4990632	Birthe Wingren	Katja	
+Q10539097	cast	Q113585267	Erica Midfjäll	Tina	
+Q10539097	cast	Q113585299	André Eriksson	André	
+Q10539097	cast	Q113585278	Mikael Ersson	Martin	
+Q10539097	cast	Q113585275	Alva From	Sandra	
+Q10539097	cast	Q113585284	Olivia Flodin	Lisa	
+Q10539097	cast	Q113585303	Sanna Eriksson	Sanna	
+Q10539097	cast	Q521623	Ola Rapace	kuratorn Georg	
+Q10539097	cast	Q6022496	Mikael Odhag	lärare	
+Q10539097	cast	Q113585297	Monica Goossens	sjuksköterska	
+Q10539097	cast	Q113585290	Tove Olsson	lägerledare	
+Q10539097	cast	Q113585276	Agnes Blåsjö	Frida	
+Q10539097	cast	Q113585298	Kristian Täljeblad	Kristian	
+Q10539097	cast	Q6203413	Filip Tallhamn	musikproducent	
+Q10539097	cast	Q4569887	Thomas Hanzon	Albert	
+Q10539097	cast	Q113585270	Hanna Midfjäll	Cilla	
+Q10468768	director	Q20261527	Richard Holm		
+Q10468768	writer	Q5544444	Stefan Ahnhem		
+Q10468768	cast	Q455316	Angela Kovács		
+Q10470019	director	Q20261527	Richard Holm		
+Q10470019	writer	Q5966938	Lars Bill Lundholm		
+Q10470019	cast	Q455316	Angela Kovács		
+Q10483391	director	Q16632982	Emiliano Goessens		
+Q10483391	cast	Q455316	Angela Kovács		
+Q20033328	director	Q3087215	Frederikke Aspöck		
+Q20033328	writer	Q12307146	Daniel Dencik		
+Q20033328	editor	Q38402803	Martin Schade		
+Q20033328	cast	Q472810	Jakob Eklund		
+Q20033328	cast	Q1045502	카르스텐 비외른룬		
+Q20033328	cast	Q12337161	Stephanie Leon		
+Q1866195	composer	Q185144	Europe		
+Q1866195	cast	Q185144	Europe		
+Q1866195	follows	Q720946	Almost Unplugged		
+Q1889303	director	Q37493592	Philip Einstein Lipski		
+Q1889303	director	Q37494099	索布约恩·克里斯托弗森		
+Q1889303	director	Q37494107	克雷斯顿·维斯特比约·安徒生		
+Q1889303	writer	Q37494099	索布约恩·克里斯托弗森		
+Q1889303	composer	Q26838064	Niklas Schmidt		
+Q1889303	composer	Q86516779	Nicklas Schmidt		
+Q1889303	editor	Q77944366	Per Risager		
+Q3828502	director	Q4970830	Lisa Ohlin		
+Q3828502	writer	Q1902216	Marnie Blok		
+Q3828502	composer	Q566562	Annette Focks		
+Q3828502	producer	Q3081191	Per Holst		
+Q3828502	producer	Q6009003	Christer Nilson		
+Q3828502	cinematographer	Q328489	Dan Laustsen		
+Q3828502	editor	Q603265	Michal Leszczylowski		
+Q3828502	editor	Q22249854	Kasper Leick		
+Q3828502	editor	Q113360649	Anders Nylander		
+Q3828502	costume_designer	Q22309556	Katja Watkins		
+Q3828502	production_designer	Q98755434	Lena Selander		
+Q3828502	production_designer	Q113360632	Benedikt Lange		
+Q3828502	cast	Q5778466	Sven-Åke Gustavsson	professor	
+Q3828502	cast	Q5780169	Stefan Gödicke	Erik Larsson	
+Q3828502	cast	Q5588257	Pär Brundin	Åke, granne	
+Q3828502	cast	Q862460	Bill Skarsgård	Simon Larsson	
+Q3828502	cast	Q265842	Cecilia Nilsson	Inga	
+Q3828502	cast	Q95889150	Karl Martin Eriksson	Isak som liten	
+Q3828502	cast	Q468134	Helen Sjöholm	Karin Larsson	
+Q3828502	cast	Q103544	Katharina Schüttler	Iza	
+Q3828502	cast	Q5582316	Peter Borenstein	rabbin	
+Q3828502	cast	Q4970589	Lena Nylén	Olga	
+Q3828502	cast	Q6241250	Iwar Wiklander	rektor	
+Q3828502	cast	Q5959501	Karl Linnertorp	Isak Lentov	
+Q3828502	cast	Q5710982	Jan-Erik Emretsson	Klas, granne	
+Q3828502	cast	Q5811787	Jan Holmquist	doktor	
+Q3828502	cast	Q214574	Jan Josef Liefers	Ruben Lentov	
+Q3828502	cast	Q110880228	Frederik Nilsson	lärare	
+Q3828502	cast	Q95776157	Jonatan S. Wächter	Simon som liten	
+Q3828502	cast	Q4989332	Josefin Neldén	Mona	
+Q3828502	cast	Q1610685	Hermann Beyer	Ernst Habermann	
+Q3828502	cast	Q95668620	Erica Löfgren	Klara	
+Q10685760	director	Q5954429	Leif Lindblom		
+Q10685760	writer	Q5909740	Johan Kindblom		
+Q10685760	writer	Q6334160	Tomas Tivemark		
+Q10685760	composer	Q5931694	Jimmy Lagnefors		
+Q10685760	producer	Q6178897	Pontus Sjöman		
+Q10685760	cinematographer	Q113613151	Mats Axby		
+Q10685760	editor	Q113613154	David Nordén		
+Q10685760	executive_producer	Q23761738	Fredrik Wikström Nicastro		
+Q10685760	costume_designer	Q2934824	Camilla Thulin		
+Q10685760	production_designer	Q113613153	Henrietta Sterner		
+Q10685760	cast	Q328503	Torkel Petersson	Lars Runke	
+Q10685760	cast	Q5701514	Peter Dalle	Tommy Franzén	
+Q10685760	cast	Q4981861	Nathalie Söderqvist	kommunkvinna	
+Q10685760	cast	Q82025099	Axel Andersson	Nils (pojken)	
+Q10685760	cast	Q113613159	Daniel Träff	Sebastian	
+Q10685760	cast	Q3357878	Peter Schildt	Björn	
+Q10685760	cast	Q4975092	Marie Robertson	Therese	
+Q10685760	cast	Q4954154	Cecilia Hjalmarsson	Linnea	
+Q10685760	cast	Q4949043	Cecilia Frode	terapeut	
+Q10685760	cast	Q4356245	Suzanne Reuter	Lena Svensson	
+Q10685760	cast	Q6198216	Allan Svensson	Gustav Svensson	
+Q10685760	cast	Q740590	Benno Magnusson	self	
+Q10685760	cast	Q367816	Ove Kindvall	self	
+Q10685760	cast	Q5797026	Arne Hegerfors	self	
+Q10685760	cast	Q550930	Ronnie Hellström	self	
+Q10685760	cast	Q161918	Ralf Edström	self	
+Q10685760	cast	Q706608	Björn Nordqvist	self	
+Q10685760	cast	Q963850	Roland Sandberg	self	
+Q6438945	director	Q274653	Ella Lemhagen		
+Q6438945	writer	Q274653	Ella Lemhagen		
+Q6438945	writer	Q4943897	Carina Dahl		
+Q6438945	composer	Q104521876	Fredrik Emilson		
+Q6438945	producer	Q5986037	Tomas Michaelsson		
+Q6438945	producer	Q23916626	Lars Blomgren		
+Q6438945	cinematographer	Q490797	Anders Bohman		
+Q6438945	editor	Q1288811	Thomas Lagerman		
+Q6438945	costume_designer	Q4961685	Moa Li Lemhagen Schalin		
+Q6438945	production_designer	Q18912946	Roger Rosenberg		
+Q6438945	production_designer	Q130393472	Арунас Сепулис		
+Q6438945	cast	Q6171742	Michael Segerström	pastor Hjalmar	
+Q6438945	cast	Q27113807	Severija Janušauskaitė	fängelsevakt	
+Q6438945	cast	Q371066	Björn Gustafson	Pettersson-Jonsson	
+Q6438945	cast	Q113579920	Giedrius Arbačiauskas	Karstens far	
+Q6438945	cast	Q16595781	Ulrika Malmgren	syster Hedvig	
+Q6438945	cast	Q106394036	Jonatan Bökman		
+Q6438945	cast	Q19976720	Karin Franz Körlof	flicka vid kyrkan	
+Q6438945	cast	Q5968659	Rolf Lydahl	hockeytränaren	
+Q6438945	cast	Q3357878	Peter Schildt	läkare	
+Q6438945	cast	Q6242090	Kjell Wilhelmsen	styckmästare Jonsson	
+Q6438945	cast	Q113579855	Jesper Lindberger	Jesús Fernandez	
+Q6438945	cast	Q273862	Alexandra Rapaport	Marianne Fernandez	
+Q6438945	cast	Q2159901	Robin Stegmar	sportkommentator	
+Q6438945	cast	Q3358341	Magnus Roosmann	Herr Wallinder	
+Q6438945	cast	Q706651	Tomas von Brömssen	kommisarie Samnerud	
+Q6438945	cast	Q5724629	Loa Falkman	direktör Persson	
+Q6438945	cast	Q113579866	David Lenneman	Goldie Bernhard	
+Q6438945	cast	Q4946214	Karin Ekström	Solvigg	
+Q6438945	cast	Q113579923	Gabija Siurbyte	sekreterare	
+Q6438945	cast	Q44828	Timbuktu	skötare Remmy	
+Q6438945	cast	Q5920898	Michalis Koutsogiannakis	Fernandez Fernandez	
+Q6438945	cast	Q4946251	Nour El-Refai	barnmorska	
+Q6438945	cast	Q862460	Bill Skarsgård	Richard Persson	
+Q6438945	cast	Q3351855	Björn Gustafsson		
+Q6438945	cast	Q16633391	Edvin Ryding		
+Q6438945	cast	Q107918705	Donatas Simukauskas	barnläkare	
+Q6438945	cast	Q5708865	Martin Eliasson	Karsten	
+Q6438945	cast	Q4962818	Sara Lindh	Karin Persson	
+Q6438945	cast	Q4967482	Natalie Minnevik	Belinda	
+Q6438945	cast	Q439314	Alicia Vikander	Fragancia	
+Q6438945	award		Guldbagge Award for Best Costume Design		
+Q6438945	award		Guldbagge Award for Best Art Direction		
+Q6438945	award		Guldbagge Award for Best Visual Effects		
+Q7742757	director	Q16990919	Roosa Toivonen		
+Q7742757	composer	Q1888492	Tuomas Kantelinen		
+Q7742757	producer	Q1888492	Tuomas Kantelinen		
+Q7388676	director	Q22086041	Niels Nørløv Hansen		
+Q7388676	writer	Q38051206	Lars Mering		
+Q7388676	writer	Q41743493	Claudia Boderke		
+Q7388676	cinematographer	Q7295130	Rasmus Videbæk		
+Q7388676	cinematographer	Q40087671	Rasmus Arrildt		
+Q7388676	editor	Q38051170	Morten Højbjerg		
+Q7388676	editor	Q38402819	Mikkel E.G. Nielsen		
+Q7388676	cast	Q66827404	Anna Stokholm		
+Q7388676	cast	Q3066309	니콜라이 코페르니쿠스		
+Q7388676	cast	Q12326842	メッテ・マンク・プラム		
+Q7388676	cast	Q12301414	Anders Hove		
+Q7388676	cast	Q37491481	Q37491481		
+Q7388676	cast	Q35984275	Ole Dupont		
+Q7388676	cast	Q12306240	クリスティアーネ・ジェレルプ・コッホ		
+Q7388676	cast	Q37491427	Caspar Jexlev Fomsgaard		
+Q7388676	cast	Q35985836	Dya Josefine Hauch		
+Q7388676	cast	Q41236497	Jonas Busekist		
+Q7388676	cast	Q1957570	Mira Wanting		
+Q7388676	cast	Q12339791	特勒尔斯·莫林·塔鲁普		
+Q7388676	cast	Q38052542	Anders Lunden Kjeldsen		
+Q7388676	cast	Q1703043	Jonas Wandschneider		
+Q7388676	cast	Q12324266	Lene Maimu		
+Q7388676	cast	Q41236228	Alexandra Ternstrøm		
+Q7388676	cast	Q12326873	Mia Jexen		
+Q7388676	cast	Q1797728	トロール・リビー		
+Q7388676	cast	Q12335242	Signe Skov		
+Q7388676	cast	Q4981886	Camilla Søeberg		
+Q7388676	cast	Q71247634	Luise Skov		
+Q7388676	cast	Q12334652	Sapphire Gainor		
+Q7388676	cast	Q12339172	特丽莎·格兰		
+Q7388676	cast	Q12338493	Søren Bregendal		
+Q7388676	cast	Q28498467	Mads Reuther		
+Q7388676	cast	Q12304359	布莱恩·莱克		
+Q7388676	cast	Q61954073	Kristine Yde Eriksen（克莉絲汀·伊德·埃里克森）		
+Q7388676	cast	Q12325931	Marco Ilsø		
+Q7388676	cast	Q287329	リーナ・ニューストロン		
+Q7388676	cast	Q491315	아네르스 W. 베르텔센		
+Q7388676	cast	Q4994572	索倫·席特-拉森		
+Q7388676	cast	Q41236286	Anders Sandberg		
+Q7388676	cast	Q12338732	Taina Anneli Berg		
+Q7388676	cast	Q12302308	Aske Bang		
+Q7388676	cast	Q17482558	Том Дженсен		
+Q7388676	cast	Q40523664	Dan Boie		
+Q7388676	followed_by	Q16323851	The Reunion 2: The Funeral		
+Q8027984	director	Q4958460	Alexandra-Therese Keining		
+Q8027984	writer	Q4958460	Alexandra-Therese Keining		
+Q8027984	composer	Q3287902	Marc Collin		
+Q8027984	producer	Q4982324	Josefine Tengblad		
+Q8027984	cinematographer	Q73984468	Ragna Jorming		
+Q8027984	editor	Q4960843	Malin Lindström		
+Q8027984	editor	Q113379131	Lars Gustafson		
+Q8027984	executive_producer	Q34024625	Helena Danielsson		
+Q8027984	costume_designer	Q113565010	Sanna Ekström Forsberg		
+Q8027984	production_designer	Q113565006	Elle Furudahl		
+Q8027984	cast	Q270559	Lena Endre	Elisabeth, Fridas mamma	
+Q8027984	cast	Q113565019	Anna Nygren	lärare i aula	
+Q8027984	cast	Q374931	Björn Kjellman	prästen	
+Q8027984	cast	Q4982324	Josefine Tengblad	Elin	
+Q8027984	cast	Q962847	Joakim Nätterqvist	Tim	
+Q8027984	cast	Q2114100	Tom Ljungman	Oskar	
+Q8027984	cast	Q113565017	Jan Goldring	säkerhetsvakt	
+Q8027984	cast	Q4947890	Ruth Vega Fernandez	Mia	
+Q8027984	cast	Q712961	Krister Henriksson	Lasse, Mias pappa	
+Q8027984	cast	Q3652125	Liv Mjönes	Frida	
+Q4657304	director	Q246996	Tobias Lindholm		
+Q4657304	writer	Q246996	Tobias Lindholm		
+Q4657304	composer	Q433734	Hildur Guðnadóttir		
+Q4657304	producer	Q104512195	René Ezra		
+Q4657304	producer	Q104512197	Tomas Radoor		
+Q4657304	cinematographer	Q38402809	Magnus Nordenhof Jønck		
+Q4657304	editor	Q38402764	Adam Nielsen		
+Q4657304	cast	Q4935288	Q4935288		
+Q4657304	cast	Q12324517	Linda Laursen		
+Q4657304	cast	Q35984275	Ole Dupont		
+Q4657304	cast	Q72214496	Sussie Nøhr		
+Q4657304	cast	Q39141088	Keith Pearson		
+Q4657304	cast	Q117906	Pilou Asbæk		
+Q4657304	cast	Q3896343	ダール・サリム		
+Q4657304	cast	Q40012393	Claus Friis		
+Q4657304	cast	Q38054221	Martin Boserup		
+Q4657304	cast	Q84081	ソーレン・マリン		
+Q4657304	cast	Q40523386	Carsten Eigil Hedegaard		
+Q4657304	cast	Q71247444	Allan Arnby		
+Q4657304	cast	Q16065110	Roland Møller		
+Q4657304	cast	Q40523379	Ole Bager Nielsen		
+Q4657304	award		Bodil Award for Best Danish Film		
+Q4657304	award		Robert Award for Best Danish Film		
+Q4657304	subject		sea piracy		
+Q4657304	subject		piracy off the coast of Somalia		
+Q18289179	director	Q2074912	Peter Flinth		
+Q18289179	writer	Q16633023	Alex Haridi		
+Q18289179	composer	Q350530	Adam Nordén		
+Q18289179	cinematographer	Q1351392	Eric Kress		
+Q18289179	cast	Q4943601	Malin Crépin		
+Q589953	director	Q2867634	Nikolaj Arcel		
+Q589953	writer	Q2867634	Nikolaj Arcel		
+Q589953	writer	Q12303970	Bodil Steensen-Leth		
+Q589953	writer	Q12332906	Rasmus Heisterberg		
+Q589953	composer	Q502957	Gabriel Yared		
+Q589953	composer	Q19721329	Cyrille Aufort		
+Q589953	producer	Q2773155	Louise Vesth		
+Q589953	producer	Q12326773	Meta Louise Foldager		
+Q589953	producer	Q16065149	Sisse Graum Jørgensen		
+Q589953	cinematographer	Q7295130	Rasmus Videbæk		
+Q589953	editor	Q22249854	Kasper Leick		
+Q589953	editor	Q38402819	Mikkel E.G. Nielsen		
+Q589953	executive_producer	Q133730	Lars von Trier		
+Q589953	executive_producer	Q949680	ペーター・アールベーク・ヤンセン		
+Q589953	costume_designer	Q3286466	Manon Rasmussen		
+Q589953	production_designer	Q18912942	Niels Sejer		
+Q589953	production_designer	Q110220313	Nora Sopková		
+Q589953	cast	Q104089204	Karel Polišenský		
+Q589953	cast	Q5251588	ロザリンド・ミンスター	Natasha	
+Q589953	cast	Q2756306	セーレン・スパニング	Münster	
+Q589953	cast	Q5251598	Klaus Tange	Minister	
+Q589953	cast	Q12321349	Karin Rørbech		
+Q589953	cast	Q42302628	Zinnini Elkington		
+Q589953	cast	Q40523502	Julia W. Olsen	Louise Augusta	
+Q589953	cast	Q85311165	Tereza Císařová		
+Q589953	cast	Q5180165	Daniel Bambas		
+Q589953	cast	Q97705695	Jakub Albrecht		
+Q589953	cast	Q1883502	迈斯·尤鲁迈		
+Q589953	cast	Q25921703	Peter Varga		
+Q589953	cast	Q11967773	Erika Guntherová	Lady in Waiting	
+Q589953	cast	Q12040925	Nikol Kouklová		
+Q589953	cast	Q40523800	Frank Rubæk		
+Q589953	cast	Q40523966	Josefine Højbjerg Bitsch		
+Q589953	cast	Q95392172	Petr Janiš		
+Q589953	cast	Q12036659	Michaela Horká		
+Q589953	cast	Q132166080	Milan Rýdl		
+Q589953	cast	Q12312571	Frederik Christian Johansen		
+Q589953	cast	Q102335884	Jitka Jirsová		
+Q589953	cast	Q40523485	Kristian Fjord		
+Q589953	cast	Q95382130	Jan Krafka		
+Q589953	cast	Q12327683	Мортен Хольст		
+Q589953	cast	Q12318966	ヤコブ・ローマン		
+Q589953	cast	Q6096261	Ivan G'Vera		
+Q589953	cast	Q12022016	Ivan Vodochodský		
+Q589953	cast	Q12034374	Lukás Král		
+Q589953	cast	Q28504105	Кеннет М. Кристенсен		
+Q589953	cast	Q469983	Trine Dyrholm	Juliana Maria of Brunswick-Wolfenbüttel	
+Q589953	cast	Q3515027	William Jøhnk Nielsen	Frederick VI of Denmark	
+Q589953	cast	Q5200983	サイロン・メルヴィル	Enevold Brandt	
+Q589953	cast	Q439314	Alicia Vikander	Caroline Matilda of Great Britain	
+Q589953	cast	Q271177	Harriet Walter	Princess Augusta of Saxe-Gotha	
+Q589953	cast	Q5251626	ローラ・ブロ	Louise von Plessen	
+Q589953	cast	Q2735848	Джон Мартинес	Christian Ditlev Reventlow	
+Q589953	cast	Q121237	미켈 푈스고르	Christian VII of Denmark	
+Q589953	cast	Q84081	ソーレン・マリン	Johann Hartmann	
+Q589953	cast	Q768899	ダーヴィッド・デンシック	Ove Høegh-Guldberg	
+Q589953	cast	Q967680	トーマス・W・ガブリエルソン	Carl Schack Rantzau–Ascheberg	
+Q4170147	director	Q4146284	Maarit Lalli		
+Q4170147	writer	Q4146284	Maarit Lalli		
+Q4170147	writer	Q111709005	Henrik Mäki-Tanila		
+Q4170147	composer	Q16983085	Kepa Lehtinen		
+Q4170147	producer	Q4146284	Maarit Lalli		
+Q4170147	cinematographer	Q4146284	Maarit Lalli		
+Q4170147	cinematographer	Q7296234	Rauno Ronkainen		
+Q4170147	cinematographer	Q14883745	Jan Nyman		
+Q4170147	cinematographer	Q16990248	Harri Räty		
+Q4170147	editor	Q4146284	Maarit Lalli		
+Q4170147	editor	Q111709013	Jenny Tervakari		
+Q4170147	production_designer	Q111709042	Anne Karttunen		
+Q4170147	cast	Q11858739	Esko Roine	Akselin vaari	
+Q4170147	cast	Q111708987	Ben Thompson Coon	Joni Eriksson	
+Q4170147	cast	Q111709005	Henrik Mäki-Tanila	Karri	
+Q4170147	cast	Q111708981	Arttu Lähteenmäki	Akseli	
+Q4170147	cast	Q47542190	Tarja Heinula	Peten äiti	
+Q4170147	cast	Q111708975	Elsa Pajanen	Kiira Lahti	
+Q4170147	cast	Q11868919	Kaija Pakarinen	Leena Heinola, terapeutti	
+Q4170147	cast	Q111709127	Karim Al-Rifai	André, "Andu"	
+Q4170147	cast	Q111708973	Anton Thompson Coon	Pete	
+Q4170147	cast	Q11898737	Turkka Mastomäki	poliisi	
+Q4170147	cast	Q5482110	Mats Långbacka	Tomas Eriksson, Jonin isäpuoli	
+Q4170147	cast	Q111708989	Nelly Staff	Jenna, Jonin sisko	
+Q4170147	cast	Q16162749	Juha-Tapio Arola	Kaitsu, Paulan työtoveri, "aamuyömies"	
+Q4170147	cast	Q5485170	Niina Nurminen	Tiina Järvinen, Jonin äiti	
+Q4170147	cast	Q16989760	Mari Perankoski	Paula, Andrén ja Maxin äiti	
+Q4170147	cast	Q1576624	Hannu-Pekka Björkman	Peten isä	
+Q4170147	cast	Q16989612	Marja Packalén	Akselin mummu	
+Q4170147	cast	Q11864497	Ilari Johansson	Akselin isä	
+Q4170147	cast	Q468517	Pamela Tola	tarjoilijatar	
+Q18693398	director	Q11882735	Mikko Kuparinen		
+Q18693398	composer	Q11887619	Pessi Levanto		
+Q18693398	producer	Q11864539	Ilkka Matila		
+Q18693398	editor	Q16989498	Jukka Nykänen		
+Q18693398	cast	Q3313763	Mikko Nousiainen		
+Q18693398	cast	Q11882523	Miina Maasola		
+Q4989688	director	Q4568116	Mikael Marcimain		
+Q4989688	writer	Q4984831	Marietta von Hausswolff von Baumgarten		
+Q4989688	composer	Q5591842	Mattias Bärjed		
+Q4989688	producer	Q16214638	Mimmi Spång		
+Q4989688	cinematographer	Q514003	Hoyte van Hoytema		
+Q4989688	editor	Q113027520	Kristofer Nordin		
+Q4989688	executive_producer	Q5737666	Malte Forssell		
+Q4989688	cast	Q5571781	Simon J. Berger		
+Q4989688	cast	Q5568400	Anders Beckman		
+Q4989688	cast	Q16946447	Jennie Silfverhjelm		
+Q4989688	cast	Q5961385	Claes Ljungmark		
+Q4989688	cast	Q1771414	Sven Nordin		
+Q4989688	cast	Q5799778	Samuel Hellström		
+Q4989688	cast	Q5554187	Björn Andersson		
+Q4989688	cast	Q237255	Pernilla August		
+Q4989688	cast	Q18719284	Josefin Asplund		
+Q4989688	cast	Q16595958	Maria Alm Norell		
+Q4989688	cast	Q4947890	Ruth Vega Fernandez		
+Q4989688	cast	Q4569239	Dag Malmberg		
+Q4989688	cast	Q56599794	Sofia Ka		
+Q4989688	cast	Q514190	Outi Mäenpää		
+Q4989688	cast	Q4354139	Magnus Carlson		
+Q4989688	cast	Q18238317	David Fukamachi Regnfors		
+Q4989688	cast	Q3358372	Magnus Krepper		
+Q4989688	cast	Q138232	Sverrir Gudnason		
+Q4989688	cast	Q16946426	Louise Peterhoff		
+Q4989688	cast	Q4947034	Lena B. Eriksson		
+Q4989688	cast	Q768899	ダーヴィッド・デンシック		
+Q4989688	cast	Q1190263	Kristoffer Joner		
+Q4989688	subject		prostitution		
+Q5139651	director	Q5914012	Mårten Klingberg		
+Q5139651	writer	Q5544553	Erik Ahrnbom		
+Q5139651	composer	Q112108784	Mathias Nille Nilsson		
+Q5139651	producer	Q16214638	Mimmi Spång		
+Q5139651	producer	Q73984590	Rebecka Lafrenz		
+Q5139651	cinematographer	Q6055587	Simon Pramsten		
+Q5139651	editor	Q113379131	Lars Gustafson		
+Q5139651	executive_producer	Q5737666	Malte Forssell		
+Q5139651	costume_designer	Q108121114	Nina Sandström		
+Q5139651	costume_designer	Q113379134	Anna Ågren		
+Q5139651	production_designer	Q18237844	Cian Bornebusch		
+Q5139651	cast	Q1339383	Jonas Karlsson	Maria	
+Q5139651	cast	Q113379139	David Bonté Atterberg	Linus	
+Q5139651	cast	Q110880228	Frederik Nilsson	läkare efter flygkrasch	
+Q5139651	cast	Q3351855	Björn Gustafsson	Albin	
+Q5139651	cast	Q4939230	Karin Bjurström	konsulten	
+Q5139651	cast	Q4569905	Gustav Levin	Peter	
+Q5139651	cast	Q16602173	Karin Lithman	Caroline	
+Q5139651	cast	Q5896787	Miran Kader	sjungande taxichaufför	
+Q5139651	cast	Q4981842	Carina Söderman	Rakel	
+Q5139651	cast	Q4963599	Tanja Lorentzon	nyskild magspecialist	
+Q5139651	cast	Q5554187	Björn Andersson	Harald	
+Q5139651	cast	Q4971973	Anna Parrow	flygvärdinna som vill skiljas	
+Q5139651	cast	Q113379151	Sebastian Sporsén	teknist	
+Q5139651	cast	Q113379153	Anders Axén	ledsen chef	
+Q5139651	cast	Q4568915	Ellen Mattsson	Maria	
+Q5139651	cast	Q47506071	Johan Karlberg	skeptisk journalist	
+Q5139651	cast	Q6237996	Måns Westfelt	Gunnar	
+Q5139651	cast	Q5914012	Mårten Klingberg	Jens	
+Q5139651	cast	Q526570	Sofia Ledarp	Annika	
+Q5139651	cast	Q4569397	Chatarina Larsson	Susanna	
+Q5139651	cast	Q5958592	Jimmy Lindström	arg taxichaufför	
+Q5139651	cast	Q113166872	Rebecka Nyberg Wellén	bartjej	
+Q5139651	cast	Q27994715	Kjell Lundgren	bonde	
+Q5139651	cast	Q4975092	Marie Robertson	Cecilia	
+Q5139651	cast	Q113379152	Julia Marco-Nord	tacksam journalist	
+Q5139651	cast	Q4949026	Eva Fritjofson	socialsekreterare	
+Q5139651	cast	Q113379148	Johan Friberg	läkare med dödsbesked	
+Q5139651	cast	Q4936442	Elmira Arikan	feminist på självförsvarskurs	
+Q5139651	cast	Q271468	Gudrun Schyman	self	
+Q5139651	cast	Q372460	Måns Zelmerlöw	self	
+Q5139651	cast	Q5603329	Olle Carlsson	self	
+Q5139651	cast	Q5499547	Fredrik Virtanen	self	
+Q5139651	cast	Q4975887	Marianne Rundström	self	
+Q5139651	cast	Q113379154	Anna Flemming	self	
+Q5139651	cast	Q4933653	Maria Abrahamsson	self	
+Q5139651	cast	Q865171	Birger Schlaug	self	
+Q5139651	cast	Q713110	Kjell Eriksson	self	
+Q5139651	cast	Q6078305	Douglas Roos	self	
+Q5139651	cast	Q4947429	Hanna Fahl	self	
+Q16686519	director	Q1780665	Roar Uthaug		
+Q16686519	producer	Q19460192	Martin Sundland		
+Q16686519	cinematographer	Q1699611	John Christian Rosenlund		
+Q16686519	executive_producer	Q19460192	Martin Sundland		
+Q16686519	executive_producer	Q109984319	Elle-Beth Lønnestad		
+Q16686519	executive_producer	Q109984324	Are Heidenstrøm		
+Q16686519	cast	Q2419067	Ingrid Bolsø Berdal		
+Q10571193	director	Q6178555	Jens Sjögren		
+Q10571193	writer	Q6178555	Jens Sjögren		
+Q10571193	writer	Q114801506	Kalle Haglund		
+Q10571193	composer	Q114801517	Markus Jägerstedt		
+Q10571193	producer	Q113031583	David Olsson		
+Q10571193	cinematographer	Q6092676	Linus Sandgren		
+Q10571193	editor	Q114801522	Henning Mark		
+Q10571193	costume_designer	Q73985005	Ulrika Sjölin		
+Q10571193	production_designer	Q114801519	Sara Sjögren		
+Q10571193	cast	Q460554	Maria Langhammer	Mona	
+Q10571193	cast	Q114801606	Kristiina Viiala	kyrkogårdskvinna	
+Q10571193	cast	Q114801506	Kalle Haglund	sjuksköterska	
+Q10571193	cast	Q5732350	Christer Fjellström	läkaren	
+Q10571193	cast	Q114801584	Paulina Andersson	Stina	
+Q10571193	cast	Q114801536	Claudia Neij	Miriam Schultess	
+Q10571193	cast	Q114801604	Simon Almkvist	Fredrik	
+Q10571193	cast	Q113148311	Eleonora Gröning	Gunilla	
+Q10571193	cast	Q4989366	Ika Nord	mamma Schultess	
+Q10571193	cast	Q114801582	Henrik Vikman	läraren	
+Q10571193	cast	Q5544544	Leif Ahrle	Stig	
+Q10571193	cast	Q5600640	Bengt C.W. Carlsson	Alvar	
+Q10571193	cast	Q5040382	Carl Johan De Geer	granne	
+Q10571193	cast	Q114801603	Nils Jutblad	Jonas	
+Q10571193	cast	Q6215440	Johan Ulveson	Rolf	
+Q10571193	cast	Q1340011	Fredrik Gunnarsson	pappa Schultess	
+Q10540361	director	Q491200	Anders Nilsson		
+Q10540361	writer	Q16633584	Tage Åström		
+Q10540361	composer	Q6009778	Bengt Nilsson		
+Q10540361	cast	Q472810	Jakob Eklund		
+Q10540363	director	Q20261527	Richard Holm		
+Q10540363	composer	Q6009778	Bengt Nilsson		
+Q10540363	cast	Q472810	Jakob Eklund		
+Q10540363	cast	Q28262	Joel Kinnaman		
+Q10540363	followed_by	Q14955181	Johan Falk: Kodnamn - Lisa		
+Q10540366	director	Q491200	Anders Nilsson		
+Q10540366	writer	Q491200	Anders Nilsson		
+Q10540366	composer	Q6009778	Bengt Nilsson		
+Q10540366	cast	Q472810	Jakob Eklund		
+Q10540365	director	Q20261527	Richard Holm		
+Q10540365	composer	Q6009778	Bengt Nilsson		
+Q10540365	cast	Q472810	Jakob Eklund		
+Q10540365	cast	Q28262	Joel Kinnaman		
+Q10540364	director	Q2960951	Charlotte Brändström		
+Q10540364	writer	Q16633584	Tage Åström		
+Q10540364	composer	Q6009778	Bengt Nilsson		
+Q10540364	cast	Q472810	Jakob Eklund		
+Q10540364	cast	Q28262	Joel Kinnaman		
+Q10540364	follows	Q10540367	Johan Falk: De fredlösa		
+Q1759619	director	Q1782299	Joachim Rønning		
+Q1759619	director	Q3368851	Espen Sandberg		
+Q1759619	writer	Q11995549	Petter Skavlan		
+Q1759619	composer	Q957964	Johan Söderqvist		
+Q1759619	producer	Q1365966	Jeremy Thomas		
+Q1759619	cinematographer	Q1248073	Geir Hartly Andreassen		
+Q1759619	editor	Q22282138	Per Erik Eriksen		
+Q1759619	editor	Q22344487	Martin Stoltz		
+Q1759619	production_designer	Q6371962	Karl Júlíusson		
+Q1759619	cast	Q110878960	Jo Adrian Haavind		
+Q1759619	cast	Q5980945	Ian Bonar		
+Q1759619	cast	Q2033737	セーレン・ピルマーク		
+Q1759619	cast	Q64021942	Eilif Hellum Noraker		
+Q1759619	cast	Q4966287	Elisabeth Matheson		
+Q1759619	cast	Q987906	Katinka Egres		
+Q1759619	cast	Q3530246	Todd Boyce		
+Q1759619	cast	Q95900254	Sam Chapman		
+Q1759619	cast	Q7177704	Peter Wight		
+Q1759619	cast	Q95135548	Perdita Avery		
+Q1759619	cast	Q3286774	Manuel Cauchi	José Luis Bustamante y Rivero	
+Q1759619	cast	Q394570	Agnes Kittelsen	Liv Rockefeller	
+Q1759619	cast	Q2013068	Pål Sverre Hagen	Thor Heyerdahl	
+Q1759619	cast	Q508722	Gustaf Skarsgård	Bengt Danielsson	
+Q1759619	cast	Q7077298	Odd-Magnus Williamson	Erik Hesselberg	
+Q1759619	cast	Q1780001	Anders Baasmo Christiansen	Herman Watzinger	
+Q1759619	cast	Q12006553	Tobias Santelmann	Knut Haugland	
+Q1759619	cast	Q11977902	ヤーコプ・オフテブロ	Torstein Raaby	
+Q1759619	award		The Amanda Public Choice Award		
+Q1759619	award		Silver nugget for the best Norwegian film		
+Q18291982	director	Q5927454	Ulf Kvensler		
+Q18291982	composer	Q350530	Adam Nordén		
+Q18291982	cast	Q4943601	Malin Crépin		
+Q6691675	director	Q23039316	Samuli Valkama		
+Q6691675	cast	Q6315645	Jussi Lampi		
+Q6691675	cast	Q513212	Ville Virtanen		
+Q6691675	cast	Q215523	Emilie de Ravin		
+Q6691675	cast	Q11866431	Jessica Grabowsky		
+Q6691675	cast	Q11868061	Jussi Nikkilä		
+Q6691675	cast	Q1261910	Tiina Lymi		
+Q6691675	cast	Q3462630	Jani Volanen		
+Q4373735	director	Q2074912	Peter Flinth		
+Q4373735	writer	Q4970965	Pernilla Oljelund		
+Q4373735	composer	Q350530	Adam Nordén		
+Q4373735	cinematographer	Q1351392	Eric Kress		
+Q4373735	cast	Q4943601	Malin Crépin	Annika Bengtzon	
+Q7091877	director	Q6149241	Staffan Lindberg		
+Q7091877	writer	Q5972144	Peter Magnusson		
+Q7091877	composer	Q5931694	Jimmy Lagnefors		
+Q7091877	producer	Q4974341	Lena Rehnberg		
+Q7091877	cinematographer	Q6055587	Simon Pramsten		
+Q7091877	editor	Q5993843	Mattias Morheden		
+Q7091877	executive_producer	Q42393953	Åsa Sjöberg		
+Q7091877	executive_producer	Q83358992	Lone Korslund		
+Q7091877	executive_producer	Q95731619	Jessica Ask		
+Q7091877	costume_designer	Q95667508	Anna Hagert		
+Q7091877	production_designer	Q81091168	Anna Paulson		
+Q7091877	cast	Q112606279	Yngve Dahlberg	Druve	
+Q7091877	cast	Q273862	Alexandra Rapaport	Siri	
+Q7091877	cast	Q113389946	Torsten Blomquist	medpassageraren	
+Q7091877	cast	Q5972144	Peter Magnusson	Sven	
+Q7091877	cast	Q113389862	Hanna Ahlström	Josefine	
+Q7091877	cast	Q4982677	Susanne Thorson	Anja	
+Q7091877	cast	Q113389898	Ulrika Ellemark	Sara	
+Q7091877	cast	Q3372692	Katrin Sundberg	skör kvinna	
+Q7091877	cast	Q1991301	Grynet Molvig	Svens mamma	
+Q7091877	cast	Q113389956	Bosse Körling	parkeringsvakten	
+Q7091877	cast	Q113389940	Robert Nordstrand	mäklaren	
+Q7091877	cast	Q6006145	Matias Varela	Jean-Luc	
+Q7091877	cast	Q4990366	Frida Westerdahl	Estelle	
+Q7091877	cast	Q221609	Frida Hallgren	Karin	
+Q7091877	cast	Q6000173	Claes Månsson	prästen	
+Q7091877	cast	Q4569518	Jenny Skavlan	Gitte	
+Q7091877	cast	Q6016924	Henrik Norlén	Johan Pålman	
+Q7091877	cast	Q4957044	Lisbeth Johansson	hustrun	
+Q7091877	cast	Q113389886	Eric Rydman	Robert	
+Q7091877	cast	Q5966500	Adam Lundgren	trött kille	
+Q7091877	cast	Q5914012	Mårten Klingberg	Fredrik	
+Q7091877	cast	Q4569493	Johan Hallström	Magnus	
+Q7091877	cast	Q113240755	Bosse Lyckman	maken	
+Q7091877	cast	Q5234881	David Hellenius	Georg	
+Q7091877	cast	Q1770862	Fredrik Skavlan	self	
+Q7091877	cast	Q4962861	Anna Lindmarker	self	
+Q19702815	director	Q6501872	Laurits Munch-Petersen		
+Q19702815	director	Q110859630	Jacob Ditlev		
+Q19702815	writer	Q6501872	Laurits Munch-Petersen		
+Q19702815	writer	Q110859630	Jacob Ditlev		
+Q19702815	cinematographer	Q38402886	Jan Pallesen		
+Q19702815	editor	Q110859630	Jacob Ditlev		
+Q19702815	cast	Q12338526	索伦·哈奇-福斯伯		
+Q19702815	cast	Q18232118	Q18232118		
+Q19702815	cast	Q12306243	クリスティアーヌ・シャウンブルク＝ミュラー		
+Q19702815	cast	Q15985263	ダニカ・カーチック		
+Q19702815	cast	Q12331785	Петрине Аггер		
+Q19702815	cast	Q452036	アンヌ・ルイーセ・ハシング		
+Q19702815	cast	Q12320299	乔纳唐·斯潘格		
+Q19702815	cast	Q1797728	トロール・リビー		
+Q19702815	cast	Q12300963	亚历山大·维尧姆		
+Q19702815	cast	Q11213025	엘세베트 스텐토프트		
+Q19702815	cast	Q12301414	Anders Hove		
+Q10638747	director	Q4947412	Agneta Fagerström-Olsson		
+Q10638747	writer	Q16633023	Alex Haridi		
+Q10638747	composer	Q350530	Adam Nordén		
+Q10638747	cinematographer	Q6027193	John O. Olsson		
+Q10638747	cast	Q4943601	Malin Crépin		
+Q2618838	director	Q166964	Antti Jokinen		
+Q2618838	writer	Q166964	Antti Jokinen		
+Q2618838	writer	Q1900829	Marko Leino		
+Q2618838	composer	Q1888492	Tuomas Kantelinen		
+Q2618838	producer	Q6771509	Markus Selin		
+Q2618838	cinematographer	Q7296234	Rauno Ronkainen		
+Q2618838	editor	Q11871564	Kimmo Taavila		
+Q2618838	cast	Q3741217	Laura Birn		
+Q2618838	cast	Q454064	Amanda Pilke		
+Q2618838	cast	Q3321553	Krista Kosonen		
+Q2618838	cast	Q11875865	Liisi Tandefelt		
+Q2618838	cast	Q2548961	Peter Franzén		
+Q2618838	award		Jussi Award for Best Photography		
+Q11890922	director	Q3847072	Mari Rantasila		
+Q11890922	writer	Q387853	Sinikka Nopola		
+Q11890922	writer	Q635171	Tiina Nopola		
+Q11890922	writer	Q3847072	Mari Rantasila		
+Q11890922	composer	Q1658005	Iiro Rantala		
+Q11890922	producer	Q16990271	Lasse Saarinen		
+Q11890922	producer	Q25451737	Risto Salomaa		
+Q11890922	cinematographer	Q110671752	Timo Heinänen		
+Q11890922	editor	Q100802469	Tuuli Kuittinen		
+Q11890922	production_designer	Q106520941	Minna Santakari		
+Q11890922	cast	Q11851547	Anna-Maija Valonen		
+Q11890922	cast	Q11881185	Markus Lahtinen	twist-bändin basisti	
+Q11890922	cast	Q640801	Ulla Tapaninen	Elvi Räppääjä	
+Q11890922	cast	Q110889149	Kuutti Saarinen	kultainen Amor	
+Q11890922	cast	Q16298937	Pedro Hietanen	haitaristi veneessä	
+Q11890922	cast	Q11885380	Olivia Ainali	Venla Horsmaniemi	
+Q11890922	cast	Q110889146	Lotta Kuusisto	kuntoiluryhmän vetäjä	
+Q11890922	cast	Q1658005	Iiro Rantala	twist-bändin laulaja-kosketinsoittaja	
+Q11890922	cast	Q11902980	Yrjänä Sauros	twist-bändin kitaristi	
+Q11890922	cast	Q110889148	Matti Kotro	veneen kippari	
+Q11890922	cast	Q7409378	Sami Kuoppamäki	twist-bändin rumpali	
+Q11890922	cast	Q5996347	Juha Muje	Uolevi Horsmaniemi	
+Q11890922	cast	Q5411161	Lauri Karo	Ricky Rapper	
+Q11890922	cast	Q6777340	Martti Suosalo	Lennart Lindberg	
+Q11890922	cast	Q110889139	Venni Uotila	Nelli Perhonen	
+Q10667139	director	Q117859671	Djengo Esmer		
+Q10667139	composer	Q3366848	Thomas Rusiak		
+Q10667139	cast	Q6173420	Simon Settergren		
+Q11899211	director	Q11891797	Saara Cantell		
+Q11899211	writer	Q11891797	Saara Cantell		
+Q11899211	cast	Q11882100	Meri Nenonen		
+Q11899211	cast	Q2379706	Irina Björklund		
+Q10682405	director	Q4947412	Agneta Fagerström-Olsson		
+Q10682405	composer	Q350530	Adam Nordén		
+Q10682405	cinematographer	Q6027193	John O. Olsson		
+Q10682405	cast	Q4943601	Malin Crépin		
+Q10683877	director	Q5649107	Hannes Holm		
+Q10683877	writer	Q5649107	Hannes Holm		
+Q10683877	writer	Q5826445	Anders Jacobsson		
+Q10683877	writer	Q6028050	Sören Olsson		
+Q10683877	composer	Q350530	Adam Nordén		
+Q10683877	producer	Q1362693	Patrick Ryborn		
+Q10683877	cinematographer	Q113613151	Mats Axby		
+Q10683877	editor	Q23917670	Fredrik Morheden		
+Q10683877	production_designer	Q110616198	Pia Wallin Papagiannopoulou		
+Q10683877	cast	Q4568942	Morgan Alling		
+Q10683877	cast	Q107695692	Kajsa Halldén		
+Q10683877	cast	Q113141380	Feline Andersson	Hedda	
+Q10683877	cast	Q4765697	Anja Lundqvist		
+Q10683877	cast	Q5885959	Erik Johansson	Pontus	
+Q10683877	cast	Q17561405	Hanna Elffors Elfström		
+Q10683877	cast	Q6164883	William Ringström		
+Q10683877	cast	Q4945340	Julia Dufvenius	Sabina	
+Q10683877	cast	Q5816067	Julius Jimenez Hugoson	Håkan Bråkan	
+Q10683877	follows	Q1761668	Sune's Summer		
+Q10683877	followed_by	Q15618007	The Anderssons Hit the Road		
+Q32303	director	Q314287	Thomas Vinterberg		
+Q32303	writer	Q246996	Tobias Lindholm		
+Q32303	writer	Q314287	Thomas Vinterberg		
+Q32303	composer	Q16064813	Nikolaj Egelund		
+Q32303	producer	Q314287	Thomas Vinterberg		
+Q32303	producer	Q16065149	Sisse Graum Jørgensen		
+Q32303	producer	Q64924087	Morten Kaufmann		
+Q32303	cinematographer	Q19847395	Charlotte Bruus Christensen		
+Q32303	editor	Q565966	Anne Østerud		
+Q32303	editor	Q5576075	Janus Billeskov Jansen		
+Q32303	cast	Q37491506	Jakob Højlev Jørgensen		
+Q32303	cast	Q76454251	Thomas Winkel Ravn		
+Q32303	cast	Q2882748	Duilio Marzio		
+Q32303	cast	Q41236348	Daniel Engstrup		
+Q32303	cast	Q314287	Thomas Vinterberg		
+Q32303	cast	Q38054221	Martin Boserup		
+Q32303	cast	Q41236586	Øyvind Hagen-Traberg		
+Q32303	cast	Q740244	Thomas Bo Larsen		
+Q32303	cast	Q117450567	Thomas Ravn		
+Q32303	cast	Q72214509	Thomas Rafslund Ravn		
+Q32303	cast	Q41236357	Josefine Gråbøl		
+Q32303	cast	Q35984275	Ole Dupont		
+Q32303	cast	Q40523605	Mona C. Soliman		
+Q32303	cast	Q40523800	Frank Rubæk		
+Q32303	cast	Q1785313	Susse Wold		
+Q32303	cast	Q38052496	Sebastian Bull Sarning		
+Q32303	cast	Q273862	Alexandra Rapaport		
+Q32303	cast	Q42302643	Kim Westi Rasmussen		
+Q32303	cast	Q12339797	Troels Thorsen		
+Q32303	cast	Q61887646	Annika Wedderkopp		
+Q32303	cast	Q6491701	ラース・ランゼ		
+Q32303	cast	Q16064420	Lasse Fogelstrøm		
+Q32303	cast	Q452036	アンヌ・ルイーセ・ハシング		
+Q32303	cast	Q28504113	Nicolai Dahl Hamilton		
+Q32303	cast	Q12320667	Jytte Kvinesdal		
+Q32303	cast	Q40523426	Nina Christrup		
+Q32303	cast	Q879360	ビャールネ・ヘンリックセン		
+Q32303	cast	Q105316352	Karina Fogh Holmkjær		
+Q32303	cast	Q12332926	Rasmus Lind Rubin		
+Q32303	cast	Q294647	マッツ・ミケルセン	Lucas	
+Q32303	award		Nordic Council Film Prize		
+Q32303	award		European Film Award for Best Screenwriter		
+Q32303	subject		mass hysteria		
+Q18290985	director	Q5577136	Håkan Bjerking		
+Q18290985	director	Q18242787	Martin Högdahl		
+Q18290985	writer	Q4974570	Petra Revenue		
+Q18290985	composer	Q317481	Jesper Strömblad		
+Q18290985	composer	Q113138294	Daniel Flores		
+Q18290985	producer	Q5806264	Peter Hiltunen		
+Q18290985	cinematographer	Q15621064	Trond Høines		
+Q18290985	editor	Q23917670	Fredrik Morheden		
+Q18290985	costume_designer	Q112964994	Mimmi Mäenpää		
+Q18290985	costume_designer	Q113109223	Viktoria Mattila		
+Q18290985	production_designer	Q113138306	Emma Skog		
+Q18290985	cast	Q113141385	William Nordberg	Filip	
+Q18290985	cast	Q4569472	Tobias Aspelin	fosterpappa	
+Q18290985	cast	Q4936540	Sara Arnia	skolfröken	
+Q18290985	cast	Q113141400	Lotta Asker	kassörska	
+Q18290985	cast	Q5954220	Jarl Lindblad	Bengt	
+Q18290985	cast	Q1033656	Hans Alfredson	vaktmästaren	
+Q18290985	cast	Q113141384	Hampus Andersson-Grill	Oskar	
+Q18290985	cast	Q4957044	Lisbeth Johansson	Linda, socialsekreterare	
+Q18290985	cast	Q94041857	Vincent Grahl	Tony	
+Q18290985	cast	Q4767561	Anna Ulrica Ericsson	fostermamman	
+Q18290985	cast	Q5965520	Gustave Lund	Arne	
+Q18290985	cast	Q113141398	John Grahl	Niklas	
+Q18290985	cast	Q113141380	Feline Andersson	Pi	
+Q18290985	cast	Q113141377	Philip Olsson	Mik	
+Q18290985	cast	Q5822076	Dick Idman	Bertil	
+Q18290985	cast	Q28650129	Maj-Doris Rimpi	Maria	
+Q18290985	cast	Q113141399	Anders Hedberg	polis	
+Q18290985	cast	Q113141389	Anders Eriksson	socialsekreteraren Kent	
+Q18290985	cast	Q4943186	Katarina Cohen	psykologen	
+Q18290985	cast	Q4968114	Malin Morgan	Lena	
+Q18290985	cast	Q53448724	Pelle Bolander	pappan	
+Q18290985	cast	Q1287755	Julia Sporre	Louise	
+Q18287917	director	Q4947412	Agneta Fagerström-Olsson		
+Q18287917	writer	Q236660	Liza Marklund		
+Q18287917	composer	Q350530	Adam Nordén		
+Q18287917	cinematographer	Q6027193	John O. Olsson		
+Q18287917	cast	Q4943601	Malin Crépin		
+Q18287917	follows	Q10682405	Studio Sex		
+Q18287917	followed_by	Q18291982	Lifetime		
+Q11900483	director	Q5712862	Anders Engström		
+Q11900483	writer	Q4446505	Katariina Souri		
+Q11900483	writer	Q16299713	Mika Karttunen		
+Q11900483	producer	Q6771509	Markus Selin		
+Q11900483	producer	Q11867692	Jukka Helle		
+Q11900483	cinematographer	Q5404962	Jean-Noel Mustonen		
+Q11900483	cast	Q553880	Antti Reini		
+Q11900483	follows	Q17384754	Vares – Garter Snake		
+Q11900483	followed_by	Q11900489	Vares: Gambling Chip		
+Q11849479	director	Q3440926	Johanna Vuoksenmaa		
+Q11849479	writer	Q3440926	Johanna Vuoksenmaa		
+Q11849479	composer	Q6393960	Kerkko Koskinen		
+Q11849479	producer	Q11890724	Riina Hyytiä		
+Q11849479	cast	Q11858828	Essi Hellén		
+Q11849479	cast	Q3183562	Aku Hirviniemi		
+Q11849479	cast	Q6825896	Armi Toivanen		
+Q11849479	cast	Q6825771	Riku Nieminen		
+Q11849616	director	Q3735652	Aku Louhimies		
+Q11849616	writer	Q5547812	Jari Rantala		
+Q11849616	producer	Q3735652	Aku Louhimies		
+Q11849616	producer	Q6771112	Marko Antila		
+Q11849616	producer	Q16299741	Tero Kaukomaa		
+Q11849616	cinematographer	Q7410668	Samu Heikkilä		
+Q11849616	cast	Q7198031	Pirkka-Pekka Petelius		
+Q11849616	cast	Q11856698	Eero Aho		
+Q11849616	cast	Q11866431	Jessica Grabowsky		
+Q18674926	director	Q2548961	Peter Franzén		
+Q18674926	writer	Q2548961	Peter Franzén		
+Q18674926	composer	Q2379706	Irina Björklund		
+Q18674926	composer	Q113287028	Janne Lappalainen		
+Q18674926	producer	Q6771509	Markus Selin		
+Q18674926	producer	Q11867692	Jukka Helle		
+Q18674926	cinematographer	Q11888165	Pini Hellstedt		
+Q18674926	editor	Q11871564	Kimmo Taavila		
+Q18674926	costume_designer	Q11897553	Tiina Kaukanen		
+Q18674926	production_designer	Q5412983	Pirjo Rossi		
+Q18674926	cast	Q2548961	Peter Franzén	Kake	
+Q18674926	cast	Q1329528	Elina Knihtilä	Liisa, Pekan äiti	
+Q18674926	cast	Q16989760	Mari Perankoski	Taina	
+Q18674926	cast	Q113286967	Mio Hamari	Pekka	
+Q18674926	cast	Q3299182	Matleena Kuusniemi	Eeva, äiti	
+Q18674926	cast	Q476764	Samuli Edelmann	Pertti, isä	
+Q18674926	cast	Q113286957	Milja Tuunainen	Suvi	
+Q18674926	cast	Q11865151	Ismo Kallio	Ville, pappa	
+Q18674926	cast	Q95283283	Markku Köngäs	saarnaaja	
+Q18674926	cast	Q11901177	Vieno Saaristo	salmiakkimummo	
+Q18674926	cast	Q29419155	Olavi Angervo	Pete	
+Q18674926	cast	Q16989612	Marja Packalén	mummo	
+Q18674926	cast	Q4957653	Jonna Järnefelt	opettaja	
+Q18674926	cast	Q11898068	Tommi Raitolehto	Teukka	
+Q18674926	cast	Q16299861	Janne Kinnunen	Erkki-serkku	
+Q12301078	director	Q12332904	Rasmus Heide		
+Q12301078	writer	Q491314	Anders Thomas Jensen		
+Q12301078	cinematographer	Q39252913	Philippe Kress		
+Q12301078	editor	Q41743496	Martin Bønsvig Wehding		
+Q12301078	cast	Q12321300	Karen-Helene Hjort		
+Q12301078	cast	Q12327036	米克·欧根达尔		
+Q12301078	cast	Q12313931	Gitte Siem Christensen		
+Q12301078	cast	Q12314126	Гордон Кеннеди		
+Q12301078	cast	Q12333583	Rita Angela		
+Q12301078	cast	Q1801272	로라 크리스텐슨		
+Q12301078	cast	Q35984275	Ole Dupont		
+Q12301078	cast	Q20202411	Adam Ild Rohweder		
+Q12301078	cast	Q12330060	Оле Бойсен		
+Q12301078	cast	Q12308861	Q12308861		
+Q12301078	cast	Q12320299	乔纳唐·斯潘格		
+Q12301078	cast	Q11958211	아네그레테 비아루프 리스		
+Q12301078	cast	Q456176	Курт Равн		
+Q12301078	cast	Q465849	Gordon Kennedy		
+Q12301078	cast	Q40523639	Donna Marie Thyrrestrup		
+Q12301078	cast	Q41730447	Morten Poulsen		
+Q12301078	cast	Q454310	스티네 스텡아데		
+Q12301078	cast	Q12326235	马丁·布赫		
+Q12301078	cast	Q707827	キム・ボドゥニア		
+Q12301078	cast	Q7295091	라스무스 비에르		
+Q12301078	cast	Q12306240	クリスティアーネ・ジェレルプ・コッホ		
+Q12301078	cast	Q41236284	Lene Mølgaard		
+Q12301078	cast	Q12315378	Ганс Хенрик Вётманн		
+Q12301078	cast	Q37491261	Lea Baastrup Rønne		
+Q12301078	cast	Q38052468	Лизе Койфоэд		
+Q12301078	cast	Q37491242	Майкл Франдсен		
+Q12301078	cast	Q40012103	Philip Møller		
+Q12301078	cast	Q12331410	Pernille Schrøder		
+Q12301078	follows	Q4729965	All for One		
+Q12301078	followed_by	Q27908086	Three Heists and a Hamster		
+Q11882433	director	Q15711362	Taru Mäkelä		
+Q11882433	writer	Q16990779	Raija Talvio		
+Q11882433	composer	Q17110728	Stein Berge Svendsen		
+Q11882433	producer	Q11898462	Viktor Tauš		
+Q11882433	producer	Q16298202	Markku Flink		
+Q11882433	cinematographer	Q115496349	Jouko Seppälä		
+Q11882433	editor	Q19460555	Inge-Lise Langfeldt		
+Q11882433	executive_producer	Q15711362	Taru Mäkelä		
+Q11882433	costume_designer	Q107832291	Katarína Štrbová-Bieliková		
+Q11882433	costume_designer	Q137643452	Anne Airaksinen		
+Q11882433	costume_designer	Q137643453	Pinte Kangas		
+Q11882433	production_designer	Q95167222	Jan Kadlec		
+Q11882433	cast	Q132190656	Toni Väisänen		
+Q11882433	cast	Q10857620	Zdeněk Maryška		
+Q11882433	cast	Q16990490	Tarja Siimes		
+Q11882433	cast	Q29418930	Antti Autio		
+Q11882433	cast	Q11868061	Jussi Nikkilä		
+Q11882433	cast	Q530954	Kryštof Hádek		
+Q11882433	cast	Q18184595	Beata Harju		
+Q11882433	cast	Q9369208	Václav Jiráček		
+Q11882433	cast	Q18912647	Mads Sjøgård Pettersen		
+Q11882433	cast	Q7923144	Vesa Vierikko		
+Q11882433	cast	Q553888	Esko Salminen		
+Q11882433	cast	Q132190662	Veikko Seppälä		
+Q11882433	cast	Q22675384	Miroslav Hanuš		
+Q11882433	cast	Q3099620	Redrama		
+Q11882433	cast	Q4410921	Maria Sid		
+Q11882433	cast	Q16989565	Matti Onnismaa		
+Q11882433	cast	Q3183562	Aku Hirviniemi		
+Q11882433	cast	Q12433086	Pirkko Hämäläinen		
+Q11882433	cast	Q16981323	Jukka Kärkkäinen		
+Q11882433	cast	Q132190657	Johanna Tuominen		
+Q11882433	cast	Q5474627	Seela Sella		
+Q11882433	cast	Q132190658	Janne-Markus Katila		
+Q11882433	cast	Q11866085	Jari Nissinen		
+Q11882433	cast	Q12037816	Miroslav Etzler		
+Q11882433	cast	Q132189144	Anssi Lindström		
+Q11882433	cast	Q132190643	Cohlie Brocato		
+Q11882433	cast	Q115898716	Sonja Salminen		
+Q11882433	cast	Q1327883	Elena Leeve		
+Q11882433	cast	Q16989944	Eeva Putro		
+Q11882433	cast	Q132190659	Aarno Heinonen		
+Q11882433	cast	Q25451022	Veera W. Vilo		
+Q11882433	cast	Q262126	Kati Outinen		
+Q11882433	cast	Q1343313	Tommi Korpela		
+Q11882433	cast	Q4978042	Aino Seppo		
+Q11882433	cast	Q11870246	Kasimir Baltzar		
+Q11882433	cast	Q50573308	Jaakko Ohtonen		
+Q11882433	cast	Q132184781	Anna Maria Pie		
+Q11882433	cast	Q3741217	Laura Birn		
+Q11882433	cast	Q132190663	Mikko Patronen		
+Q11882433	cast	Q11896462	Tapio Liinoja		
+Q10672590	director	Q5891679	Jens Jonsson		
+Q10672590	writer	Q983892	Maria Karlsson		
+Q10672590	writer	Q5891679	Jens Jonsson		
+Q10672590	composer	Q1584183	Jon Ekstrand		
+Q10672590	producer	Q23761738	Fredrik Wikström Nicastro		
+Q10672590	cinematographer	Q17154033	Askild Vik Edvardsen		
+Q10672590	editor	Q2416526	Theis Schmidt		
+Q10672590	executive_producer	Q1311883	Michael Hjorth		
+Q10672590	costume_designer	Q33001481	Marie Flyckt		
+Q10672590	production_designer	Q73984834	Lina Nordqvist		
+Q10672590	cast	Q6470520	Saša Petrović	Dragan	
+Q10672590	cast	Q6231549	Martin Wallström	Martin Hägerström	
+Q10672590	cast	Q108839565	Maja Kin	Camilla Westlund	
+Q10672590	cast	Q106114681	Cedomir Djordjevic	Stefanovic	
+Q10672590	cast	Q5555469	Mats Andersson	finnen	
+Q10672590	cast	Q6083198	Hugo Ruiz	Sergio	
+Q10672590	cast	Q16650286	Željko Santrac		
+Q10672590	cast	Q4966147	Madeleine Martin	Nadja	
+Q10672590	cast	Q4971280	Aliette Opheim		
+Q10672590	cast	Q5808244	Gerhard Hoberstorfer		
+Q10672590	cast	Q113061960	Hamdija Causevic		
+Q10672590	cast	Q6241250	Iwar Wiklander		
+Q10672590	cast	Q4941350	Malin Buska	Natalie Krajnic	
+Q10672590	cast	Q113061930	Pablo Leiva Wenger	Pablo	
+Q10672590	cast	Q6006145	Matias Varela	Jorge	
+Q10672590	cast	Q28262	Joel Kinnaman	JW	
+Q10672590	cast	Q448968	德揚·丘基奇	Radovan	
+Q10672590	follows	Q3499597	Snabba Cash II		
+Q15056258	director	Q462572	Torill Kove		
+Q15056258	writer	Q467434	Gunilla Bergström		
+Q15056258	writer	Q5748853	Hans Åke Gabrielsson		
+Q15056258	composer	Q44828	Timbuktu		
+Q15056258	executive_producer	Q19391506	Synnøve Hørsdal		
+Q14955181	director	Q2960951	Charlotte Brändström		
+Q14955181	writer	Q491200	Anders Nilsson		
+Q14955181	writer	Q5789272	Joakim Hansson		
+Q14955181	composer	Q6009778	Bengt Nilsson		
+Q14955181	producer	Q5789272	Joakim Hansson		
+Q14955181	cast	Q472810	Jakob Eklund		
+Q18010022	director	Q4947374	Teresa Fabik		
+Q18010022	writer	Q4947374	Teresa Fabik		
+Q18010022	writer	Q5886919	Lars Yngve Johansson		
+Q18010022	producer	Q6178897	Pontus Sjöman		
+Q18010022	cinematographer	Q490797	Anders Bohman		
+Q18010022	executive_producer	Q1311883	Michael Hjorth		
+Q18010022	cast	Q5386449	Eric Ericson		
+Q18010022	cast	Q706651	Tomas von Brömssen		
+Q18010022	cast	Q6219239	Richard Ulfsäter		
+Q18010022	cast	Q138232	Sverrir Gudnason		
+Q18010022	cast	Q4962014	Anki Lidén		
+Q18010022	cast	Q3370199	Josephine Bornebusch		
+Q18010022	cast	Q5213446	Dan Ekborg		
+Q15053535	director	Q18935991	Michael Noer		
+Q15053535	writer	Q12332906	Rasmus Heisterberg		
+Q15053535	writer	Q18935991	Michael Noer		
+Q15053535	cinematographer	Q38402809	Magnus Nordenhof Jønck		
+Q15053535	editor	Q38402764	Adam Nielsen		
+Q15053535	production_designer	Q111784870	Trine Padmo Olsen		
+Q15053535	cast	Q71247429	Clement Blach Petersen		
+Q15053535	cast	Q16065110	Roland Møller		
+Q15053535	cast	Q6404618	Kidd		
+Q15053535	cast	Q28599937	Dulfi al-Jabouri		
+Q15053535	cast	Q28504104	Peter Zandersen		
+Q15053535	cast	Q121248054	Marina Vorobyeva		
+Q15053535	cast	Q38471187	Oscar Dyekjær Giese		
+Q15053535	cast	Q6333052	레네 마리아 크리스텐센		
+Q15053535	cast	Q21014507	古斯塔夫·吉塞		
+Q15053535	cast	Q40012385	Jacob Guldager		
+Q12331964	director	Q952621	トーマス・ヴィラム・ジェンセン		
+Q12331964	writer	Q30126920	Q30126920		
+Q12331964	cinematographer	Q16865049	Sebastian Blenkov		
+Q12331964	editor	Q12301481	Anders Villadsen		
+Q12331964	cast	Q12319347	杨思·约恩·斯波塔格		
+Q12331964	cast	Q12324627	리스베트 불프		
+Q12331964	cast	Q443361	Ellen Hillingsø		
+Q12331964	cast	Q728020	ラース・ブリグマン		
+Q12331964	cast	Q12327247	米勒·霍夫迈尔·莱费尔特		
+Q12331964	cast	Q30154050	루카스 륑고르 퇴네센		
+Q12331964	cast	Q38052468	Лизе Койфоэд		
+Q12331964	cast	Q7295091	라스무스 비에르		
+Q12331964	cast	Q110808816	Emilia Huusfeldt		
+Q12331964	cast	Q3362157	카스페르 크리스텐센		
+Q12331964	cast	Q12308732	Ditte Arnth		
+Q16246693	director	Q17107091	Mikkel Sandemose		
+Q16246693	writer	Q21160825	John Kåre Raake		
+Q16246693	composer	Q657287	Magnus Beite		
+Q16246693	producer	Q19460192	Martin Sundland		
+Q16246693	producer	Q109984324	Are Heidenstrøm		
+Q16246693	cinematographer	Q22281298	Daniel Voldheim		
+Q16246693	editor	Q112749439	Christian Siebenhertz		
+Q16246693	executive_producer	Q112962866	Roy Anderson		
+Q16246693	costume_designer	Q33001481	Marie Flyckt		
+Q16246693	production_designer	Q95226320	Martin Gant		
+Q16246693	cast	Q4570749	Jens Hultén	Vikingkongen	
+Q16246693	cast	Q112962905	Tor Aksel Mathisen	Sponsormannen	
+Q16246693	cast	Q17110885	Kyrre Haugen Sydness	Sponsorsjef	
+Q16246693	cast	Q4919937	Bjørn Sundquist	Leif	
+Q16246693	cast	Q946273	Nicolai Cleve Broch	Allan	
+Q16246693	cast	Q12009306	Vera Rudi	Åse	
+Q16246693	cast	Q69383248	Maria Annette Tanderø Berglyd	Ragnhild	
+Q16246693	cast	Q12005557	Terje Strømdahl	Henriksen	
+Q16246693	cast	Q272545	Sofia Helin	Elisabeth	
+Q16246693	cast	Q112962897	Rina Kelly	Maren	
+Q16246693	cast	Q112962907	Julian Podolski	Brage	
+Q16246693	cast	Q2013068	Pål Sverre Hagen	Sigurd Svendsen, arkeolog	
+Q16246693	cast	Q112962886	Stefan Cronwall	Viking	
+Q16246693	award		The Amanda Public Choice Award		
+Q16246693	award		Kanon People's Choice Award		
+Q12336657	director	Q1084396	Christoffer Boe		
+Q12336657	writer	Q1084396	Christoffer Boe		
+Q12336657	writer	Q4571079	Simon Pasternak		
+Q12336657	composer	Q70095725	Jonas Struck		
+Q12336657	cinematographer	Q984522	Manuel Alberto Claro		
+Q12336657	editor	Q39252908	Peter Brandt		
+Q12336657	production_designer	Q111459373	Thomas Greve		
+Q12336657	cast	Q12321513	Каспер Лайснер		
+Q12336657	cast	Q12326893	미카엘 보스트루프		
+Q12336657	cast	Q12319629	Jesper Hyldegaard		
+Q12336657	cast	Q12335242	Signe Skov		
+Q12336657	cast	Q40012149	Альфред Бьерре Ларсер		
+Q12336657	cast	Q76946925	Malte Frid-Nielsen		
+Q12336657	cast	Q35985819	Кристиан Хог		
+Q12336657	cast	Q12343106	Q12343106		
+Q12336657	cast	Q37491506	Jakob Højlev Jørgensen		
+Q12336657	cast	Q12332921	Q12332921		
+Q12336657	cast	Q530997	Jesper Christensen		
+Q12336657	cast	Q1797671	ニコラス・ブロ		
+Q12336657	cast	Q40012308	Søren Bang Jensen		
+Q12336657	cast	Q12328718	Niels Boesen		
+Q12336657	cast	Q12322113	Klaus Wegener		
+Q12336657	cast	Q12327678	Morten Hebsgaard		
+Q12336657	cast	Q38054221	Martin Boserup		
+Q12336657	cast	Q40523400	Camilla Lehmann		
+Q12336657	cast	Q117906	Pilou Asbæk		
+Q12336657	cast	Q40523386	Carsten Eigil Hedegaard		
+Q12336657	cast	Q111397111	Malene Beltoft Olsen		
+Q12336657	cast	Q12326259	Мартин Хестбек		
+Q12336657	cast	Q12308732	Ditte Arnth		
+Q12336657	cast	Q40012142	Øyvind Fabricius Holm		
+Q12336657	cast	Q40012158	Maj-Britt Mathiesen		
+Q12336657	cast	Q38054579	Kristian Danholm		
+Q12336657	cast	Q12332236	Poul Smidt		
+Q12336657	cast	Q40012331	Sarah-Sita Lassen		
+Q12336657	cast	Q45038410	Mathilde Passer		
+Q12336657	cast	Q12322908	Кристиан Боланд		
+Q12336657	cast	Q12326088	マリー・トゥーレル・ソーダーバーグ		
+Q12336657	cast	Q117480700	Ferdinand Glad Bach		
+Q12336657	cast	Q35984275	Ole Dupont		
+Q12336657	cast	Q4971707	트리네 팔레센		
+Q15618007	director	Q5649107	Hannes Holm		
+Q15618007	writer	Q6028050	Sören Olsson		
+Q15618007	producer	Q1362693	Patrick Ryborn		
+Q15618007	cast	Q221609	Frida Hallgren		
+Q15618007	cast	Q4765697	Anja Lundqvist		
+Q15618007	cast	Q4568942	Morgan Alling		
+Q15618007	cast	Q4949406	Claudia Galli		
+Q15618007	follows	Q10683877	The Anderssons in Greece		
+Q15618007	followed_by	Q15619286	The Anderssons Rock the Mountains		
+Q18246666	director	Q5788146	Per Hanefjord		
+Q18246666	writer	Q983892	Maria Karlsson		
+Q18246666	cast	Q4949406	Claudia Galli		
+Q18246666	follows	Q23708211	Friends for Life		
+Q18246666	followed_by	Q28502006	The Sea Gives, the Sea Takes		
+Q17381324	director	Q10831873	Aleksi Mäkelä		
+Q17381324	writer	Q11857339	Elias Koskimies		
+Q17381324	writer	Q16299713	Mika Karttunen		
+Q17381324	cast	Q1576624	Hannu-Pekka Björkman		
+Q17381324	cast	Q10831887	Kari Hietalahti		
+Q17381324	cast	Q4661328	Aake Kalliala		
+Q17381324	cast	Q6303995	Jussi Vatanen		
+Q17381324	subject		Finnair Flight 405		
+Q12335915	director	Q185671	Annette K. Olesen		
+Q12335915	writer	Q270911	Åke Sandgren		
+Q12335915	writer	Q490802	Anders Bodelsen		
+Q12335915	writer	Q15835109	Michael W. Horsten		
+Q12335915	writer	Q28657779	Lars K. Andersen		
+Q12335915	cinematographer	Q7295130	Rasmus Videbæk		
+Q12335915	editor	Q39251155	Nicolaj Monberg		
+Q12335915	production_designer	Q95224707	Søren Gam		
+Q12335915	cast	Q12321174	Kamilla Walsøe		
+Q12335915	cast	Q38052459	Poul Storm		
+Q12335915	cast	Q2756306	セーレン・スパニング		
+Q12335915	cast	Q383754	ニコライ・リー・カース		
+Q12335915	cast	Q1045502	카르스텐 비외른룬		
+Q12335915	cast	Q969466	Marina Bouras		
+Q12335915	cast	Q3372515	Kenneth Carmohn		
+Q12335915	cast	Q40012308	Søren Bang Jensen		
+Q12335915	cast	Q12332315	Preben Ravn		
+Q12335915	cast	Q12316265	헤닝 발린 야콥센		
+Q12335915	cast	Q38054221	Martin Boserup		
+Q12335915	cast	Q12326057	Marie-Louise Coninck		
+Q12335915	cast	Q40523516	Katrine Engberg		
+Q12335915	cast	Q84081	ソーレン・マリン		
+Q12335915	cast	Q61887637	トゥエ・アーステッド・ラスムッセン		
+Q12335915	cast	Q12300525	Adam Holm		
+Q12335915	cast	Q12319109	Janni Pedersen		
+Q12335915	cast	Q469983	Trine Dyrholm		
+Q12335915	cast	Q12319347	杨思·约恩·斯波塔格		
+Q12335915	cast	Q12326893	미카엘 보스트루프		
+Q12335915	cast	Q35984275	Ole Dupont		
+Q12335915	cast	Q47012345	Rhea Leman		
+Q12335915	cast	Q12321513	Каспер Лайснер		
+Q12335915	cast	Q384314	イーダ・ドゥインガー		
+Q12335915	cast	Q6491701	ラース・ランゼ		
+Q12335915	cast	Q2347440	ベント・マイディング		
+Q12335915	cast	Q1789215	크리스티안 할켄		
+Q12335915	cast	Q123688830	Vickie Bak Laursen		
+Q12335915	cast	Q3073540	弗莱明·奎斯特·莫勒		
+Q12335915	cast	Q40012299	Klaus Barfod		
+Q12335915	cast	Q94967396	Джеспер Дюпон		
+Q12335915	cast	Q63928336	Biljana Stojkoska		
+Q12335915	cast	Q12327144	Mikkel Beha Erichsen		
+Q12335915	cast	Q12331152	Педер Хольм Йохансен		
+Q12335915	cast	Q1606310	Хенрик Прип		
+Q12335915	cast	Q38471742	Ejnar Brund Gensø		
+Q12335915	cast	Q40012289	Falke Mikailsen		
+Q12335915	cast	Q4991153	타미 외스트		
+Q12335915	cast	Q12327197	Q12327197		
+Q12335915	cast	Q38052486	Sune Kofoed		
+Q10425783	director	Q71818658	Christian Ryltenius		
+Q10425783	writer	Q5909740	Johan Kindblom		
+Q10425783	writer	Q6334160	Tomas Tivemark		
+Q10425783	composer	Q112763994	Henrik Lörstad		
+Q10425783	producer	Q112763993	Jon Nohrstedt		
+Q10425783	editor	Q6188207	Björn Stein		
+Q10425783	followed_by	Q27941646	Bamse And The Witch's Daughter		
+Q17518490	director	Q678310	Niels Arden Oplev		
+Q17518490	writer	Q12303928	Bo Hr. Hansen		
+Q17518490	composer	Q268976	Jacob Groth		
+Q17518490	producer	Q86920655	Thomas Heinesen		
+Q17518490	cinematographer	Q7295130	Rasmus Videbæk		
+Q17518490	editor	Q565966	Anne Østerud		
+Q17518490	costume_designer	Q113262985	Pia Myrdal		
+Q17518490	costume_designer	Q114958802	Anne-Dorthe Eskildsen		
+Q17518490	production_designer	Q111994798	Rie Lykke		
+Q17518490	cast	Q4568552	Steen Stig Lommer		
+Q17518490	cast	Q117906	Pilou Asbæk		
+Q17518490	cast	Q61887633	Jens Malthe Næsby		
+Q17518490	cast	Q438580	シセ・バベット・クヌッセン		
+Q17518490	cast	Q121345215	Christine Gjerulff		
+Q17518490	cast	Q28858062	Villads Bøye		
+Q17518490	cast	Q38052456	Frederik Winther Rasmussen		
+Q17518490	cast	Q491315	아네르스 W. 베르텔센		
+Q17518490	cast	Q452036	アンヌ・ルイーセ・ハシング		
+Q17518490	cast	Q12320461	Джули Карлсен		
+Q17518490	cast	Q12318966	ヤコブ・ローマン		
+Q17518490	cast	Q40523972	Curt Skov		
+Q17518490	cast	Q28554313	Mia Helene Højgaard		
+Q17518490	cast	Q456176	Курт Равн		
+Q17518490	cast	Q4961227	Bodil Lassen		
+Q17518490	cast	Q12327683	Мортен Хольст		
+Q17518490	cast	Q4568029	アネデ・ストゥヴェルベク		
+Q17518490	cast	Q1789215	크리스티안 할켄		
+Q17518490	cast	Q12319347	杨思·约恩·斯波塔格		
+Q17518490	cast	Q768899	ダーヴィッド・デンシック		
+Q17518490	cast	Q106353903	Kasper Dalsgaard		
+Q17518490	cast	Q16064459	莉萨·巴斯特鲁普		
+Q17518490	cast	Q12318939	Q12318939		
+Q17518490	cast	Q12320385	요이마리아 프레데릭센		
+Q17518490	cast	Q454310	스티네 스텡아데		
+Q19384587	director	Q22328216	Grethe Bøe-Waal		
+Q19384587	writer	Q22328216	Grethe Bøe-Waal		
+Q19384587	composer	Q22255029	Trond Bjerknæs		
+Q19384587	producer	Q6245851	John M. Jacobsen		
+Q19384587	producer	Q18912954	Marcus B. Brodersen		
+Q19384587	cinematographer	Q22282641	Gaute Gunnari		
+Q19384587	editor	Q491248	Anders Refn		
+Q19384587	production_designer	Q19460296	Are Sjaastad		
+Q19384587	cast	Q4566166	Line Verndal	moren	
+Q19384587	cast	Q111077089	Bjørn Moan		
+Q19384587	cast	Q17113486	Oddrun Valestrand	Sykepleier	
+Q19384587	cast	Q111077082	Kaisa Gurine Antonsen	Julia	
+Q19384587	cast	Q946273	Nicolai Cleve Broch	faren	
+Q19384587	cast	Q11968230	Evy Kasseth Røsten	Hendriksen	
+Q19384587	cast	Q111077087	Ida Leonora Valestrand Eike	Ida	
+Q19384587	cast	Q111077088	Leonard Valestrand Eike	Sindre	
+Q19384587	cast	Q55041525	Per Kjerstad	Myrmo	
+Q19384587	cast	Q11983246	Lars Arentz-Hansen	Oberst Holm	
+Q19384587	cast	Q6438398	Kristofer Hivju		
+Q15619286	director	Q6255109	Gustaf Åkerblom		
+Q15619286	writer	Q5649107	Hannes Holm		
+Q15619286	cast	Q3358727	Kalle Westerdahl		
+Q15619286	cast	Q521516	Jessica Almenäs		
+Q15619286	cast	Q4765697	Anja Lundqvist		
+Q15619286	cast	Q2058128	Patrik Zackrisson		
+Q15619286	cast	Q4568942	Morgan Alling		
+Q15619286	cast	Q221609	Frida Hallgren		
+Q15619286	cast	Q258053	Ann Wilson		
+Q15619286	cast	Q1389456	Jon Olsson		
+Q15619286	cast	Q5824143	Tony Irving		
+Q15619286	follows	Q15618007	The Anderssons Hit the Road		
+Q15619286	followed_by	Q60172892	Sune vs Sune		
+Q18274653	director	Q274653	Ella Lemhagen		
+Q18274653	writer	Q274653	Ella Lemhagen		
+Q18274653	composer	Q104521876	Fredrik Emilson		
+Q18274653	producer	Q23761738	Fredrik Wikström Nicastro		
+Q18274653	cinematographer	Q490797	Anders Bohman		
+Q18274653	editor	Q1288811	Thomas Lagerman		
+Q18274653	costume_designer	Q4961685	Moa Li Lemhagen Schalin		
+Q18274653	costume_designer	Q113249984	Sofie Cederström		
+Q18274653	production_designer	Q113027222	Teresa Beale		
+Q18274653	cast	Q17561407	Lukas Holgersson	Mats	1
+Q18274653	cast	Q113250159	Olle Krantz	David	2
+Q18274653	cast	Q113250180	Nina Sand	Livli	3
+Q18274653	cast	Q1731306	Shanti Roney	Torkel	4
+Q18274653	cast	Q5958592	Jimmy Lindström	Zeke	5
+Q18274653	cast	Q456176	Курт Равн	William Otto	6
+Q18274653	cast	Q462513	Annika Hallin	Katarina Heed	7
+Q18274653	cast	Q4958072	Lotta Karlge	Susanne	8
+Q18274653	cast	Q5968659	Rolf Lydahl	Bankchef Handelsbanken	9
+Q18274653	cast	Q6242090	Kjell Wilhelmsen	Davids fabror	10
+Q18274653	cast	Q4941964	Lena Carlsson	Livlis mamma	11
+Q18274653	cast	Q5653804	Harald Hamrell	Police	12
+Q18274653	cast	Q5597952	Mats Blomgren	Sten Bergman	13
+Q18274653	cast	Q5555469	Mats Andersson	Polischef Wallén	14
+Q18274653	cast	Q113250209	Stella Rauan Norrthon	Emma	15
+Q18274653	cast	Q23916991	Pontus Eklöf	Roger	16
+Q18274653	cast	Q5922459	Kola Krauze	Wulf	17
+Q18274653	cast	Q113250225	Svante Åhman	Brinck	18
+Q18291583	director	Q18169856	Kicki Kjellin		
+Q18291583	writer	Q28792571	Anna Platt		
+Q18291583	composer	Q112108784	Mathias Nille Nilsson		
+Q18291583	composer	Q112108792	Uno Helmerson		
+Q18291583	producer	Q73985212	Anna Wallmark Avelin		
+Q18291583	cinematographer	Q112108776	Andréas Lennartsson		
+Q18291583	editor	Q4960843	Malin Lindström		
+Q18291583	costume_designer	Q112108878	Anna Wahlin		
+Q18291583	production_designer	Q112108799	Kajsa Severin		
+Q18291583	cast	Q248592	Sarah Dawn Finer	Nathalie	
+Q18291583	cast	Q4941350	Malin Buska	Vanja	
+Q18291583	cast	Q939036	Martin Stenmarck	John	
+Q18291583	cast	Q5701514	Peter Dalle	Hans	
+Q18291583	cast	Q5929413	Andreas La Chenardière	Nils	
+Q18291583	cast	Q112108946	Markus Ernerot	Markus	
+Q18291583	cast	Q5234881	David Hellenius	Tomas	
+Q18291583	cast	Q5708366	Sten Elfström	Börje	
+Q18291583	cast	Q4982258	Lotta Tejle	Britta	
+Q18291583	cast	Q4949423	Moa Gammel	Selma	
+Q18291583	cast	Q4943654	Görel Crona	Katarina	
+Q18291583	cast	Q112108952	Ivan Wahren	bibliotekarie	
+Q18291583	cast	Q4978790	Malou von Sivers	programledare	
+Q18760009	director	Q7672833	Taavi Vartia		
+Q18760009	writer	Q7672833	Taavi Vartia		
+Q18760009	writer	Q110822942	Karoliina Lindgren		
+Q18760009	writer	Q110822944	Niklas Lindgren		
+Q18760009	composer	Q18693443	Panu Aaltio		
+Q18760009	producer	Q23498137	Jarkko Hentula		
+Q18760009	producer	Q110822940	Lilette Botassi		
+Q18760009	cinematographer	Q11882589	Mika Orasmaa		
+Q18760009	editor	Q95851306	Benjamin Mercer		
+Q18760009	executive_producer	Q16298446	Olli Haikka		
+Q18760009	executive_producer	Q110822941	Jorma Reinilä		
+Q18760009	production_designer	Q110822949	Mahi Arvaniti		
+Q18760009	cast	Q6187073	Giannis Stankoglou	Adriana's father	
+Q18760009	cast	Q110822929	Veikka Vainikka	Aleksi	
+Q18760009	cast	Q3564493	Gerasimos Skiadaressis	ACS special agent	
+Q18760009	cast	Q3885119	Giannis Zouganelis	Stefano Karras	
+Q18760009	cast	Q16988853	Ville Myllyrinne	Markku Oksala	
+Q18760009	cast	Q113127322	Stergios Psyris	Crook on the island	
+Q18760009	cast	Q113127323	Ahmet Chatzisouleiman	Crook on the island	
+Q18760009	cast	Q16980753	Nuutti Konttinen	Toni	
+Q18760009	cast	Q61040813	Thanassis Sarantos	Police officer in the hotel	
+Q18760009	cast	Q110822931	Ifigeneia Tzola	Adriana	
+Q18760009	cast	Q12882355	Orfeas Avgoustidis	Ruben Fokas	
+Q18760009	cast	Q6761337	Maria Laina	News Presenter	
+Q18760009	cast	Q56371278	Natalia Dragoumi	Adriana's mother	
+Q18760009	cast	Q943746	Laura Malmivaara	Annika Oksala	
+Q18760009	cast	Q12872518	Efi Papatheodorou	Thekla	
+Q18760009	cast	Q22058320	Joanna Triantafyllidou	Alexandra Costas	
+Q18760009	cast	Q110822936	Panos Kranidiotis	Theo	
+Q18760009	cast	Q113127317	Alkis Botassis	Nikos	
+Q18760009	cast	Q113127319	Christos Kouteas	Nikos' father	
+Q18760009	cast	Q113127320	Sevastos Gerovasilis	Bodyguard	
+Q18760009	cast	Q110822925	Emil Auno	Veeti	
+Q18760009	cast	Q113127318	Yannis Daferanos	Policeman in the car	
+Q18760009	cast	Q113127324	Panos Kampouris	Policeman 2	
+Q14371870	director	Q4992193	Kristian Levring		
+Q14371870	writer	Q491314	Anders Thomas Jensen		
+Q14371870	writer	Q4992193	Kristian Levring		
+Q14371870	composer	Q6244039	Kasper Winding		
+Q14371870	producer	Q16065149	Sisse Graum Jørgensen		
+Q14371870	cinematographer	Q39251172	Q39251172		
+Q14371870	editor	Q2793326	Pernille Bech Christensen		
+Q14371870	costume_designer	Q3706779	Dianna Cilliers		
+Q14371870	production_designer	Q95708178	Anneke Botha		
+Q14371870	cast	Q723674	Mikael Persbrandt		
+Q14371870	cast	Q20979693	Nick Boraine		
+Q14371870	cast	Q170328	Eric Cantona		
+Q14371870	cast	Q24302023	Daniel Janks		
+Q14371870	cast	Q722061	Douglas Henshall		
+Q14371870	cast	Q21518474	Danny Keogh		
+Q14371870	cast	Q342665	Jeffrey Dean Morgan		
+Q14371870	cast	Q262446	Oh Land		
+Q14371870	cast	Q20819079	Grant Swanby		
+Q14371870	cast	Q589827	Michael Raymond-James		
+Q14371870	cast	Q12339512	Toke Lars Bjarke		
+Q14371870	cast	Q1805332	Langley Kirkwood		
+Q14371870	cast	Q69971432	Carel Nel		
+Q14371870	cast	Q637571	Alex Arnold		
+Q14371870	cast	Q21518548	Robert Hobbs		
+Q14371870	cast	Q2262098	Sean Michael		
+Q14371870	cast	Q69916783	Anthony Oseyemi		
+Q14371870	cast	Q5235554	David James		
+Q14371870	cast	Q312702	Jonathan Pryce		
+Q14371870	cast	Q294647	マッツ・ミケルセン		
+Q14371870	cast	Q191644	Eva Green		
+Q18333956	director	Q6078419	Stefan Roos		
+Q18333956	director	Q6176575	Per Simonsson		
+Q18333956	writer	Q6078419	Stefan Roos		
+Q18333956	writer	Q6176575	Per Simonsson		
+Q18333956	composer	Q6242459	Martin Willert		
+Q18333956	producer	Q73984272	Jenny Gilbertsson		
+Q18333956	cinematographer	Q113205091	David Hellman		
+Q18333956	editor	Q73984880	Sarah Jansson Patient		
+Q18333956	executive_producer	Q95670973	Anni Faurbye Fernandez		
+Q18333956	costume_designer	Q4955606	Kicki Ilander		
+Q18333956	production_designer	Q113205104	Per Magnestam		
+Q18333956	cast	Q443555	Gustaf Hammarsten	Kurre	
+Q18333956	cast	Q4953711	Jessica Heribertsson	varulvskvinnan	
+Q18333956	cast	Q1341689	Göran Forsmark	Jansson	
+Q18333956	cast	Q440766	Elisabet Carlsson	Gerda	
+Q18333956	cast	Q5799374	Jonas Hellman-Driessen	Lönnroth	
+Q18333956	cast	Q5795551	Thomas Hedengran	Jönsson	
+Q18333956	cast	Q5547855	Mikael Alsberg	poliskapten	
+Q18333956	cast	Q5866470	Bert Gradin	Bongo	
+Q18333956	cast	Q4980557	Tea Stjärne	Charlie	
+Q18333956	cast	Q4958784	Maria Kim	skuggan	
+Q18333956	cast	Q5039968	Carl Carlswärd	trollet	
+Q18333956	cast	Q508722	Gustaf Skarsgård	trollkarlen	
+Q18333956	follows	Q4992378	Tjuvarnas jul		
+Q18333921	director	Q113166654	Martin Persson		
+Q18333921	writer	Q5972144	Peter Magnusson		
+Q18333921	writer	Q113166654	Martin Persson		
+Q18333921	composer	Q113166659	Björn Eriksson		
+Q18333921	composer	Q113166660	Peder Hammarberg		
+Q18333921	producer	Q56650906	Anette Brantin		
+Q18333921	producer	Q113027215	Jan Blomgren		
+Q18333921	cinematographer	Q113166624	Jonathan Ljunggren		
+Q18333921	editor	Q113166659	Björn Eriksson		
+Q18333921	costume_designer	Q112108878	Anna Wahlin		
+Q18333921	production_designer	Q113166662	Anna Spennare		
+Q18333921	cast	Q16633504	Oskar Thunberg	Jocke	
+Q18333921	cast	Q2238411	Lisa Henni	Brommamamma	
+Q18333921	cast	Q4973901	Julia Ragnarsson	Carola	
+Q18333921	cast	Q113166694	Adam Nordlund	Tompa	
+Q18333921	cast	Q113166861	Andreas Utterhall	Falken	
+Q18333921	cast	Q3372059	Hanna Alström	Henrietta	
+Q18333921	cast	Q4960265	Ann-Sofie Kylin	Stevens mamma	
+Q18333921	cast	Q10654866	Richard Forsgren	Sverker Montelius	
+Q18333921	cast	Q107737041	Veronica Dahlström	Leila	
+Q18333921	cast	Q113166882	Peter Schantli	Mats Hartsman	
+Q18333921	cast	Q113166654	Martin Persson	Martin	
+Q18333921	cast	Q6209547	Fyr Thorwald	VD Hotell Kung Carl	
+Q18333921	cast	Q5990692	Jacob Mohlin	Per Eijerman	
+Q18333921	cast	Q4971280	Aliette Opheim	Amanda	
+Q18333921	cast	Q113166869	Isak Monka	William	
+Q18333921	cast	Q6149241	Staffan Lindberg	Hans Matell	
+Q18333921	cast	Q113166873	Filip Palmgren	Jack Matell	
+Q18333921	cast	Q113166878	Leonardo Rojas Lundgren	barn på buss	
+Q18333921	cast	Q4569493	Johan Hallström	Jens Segelberg	
+Q18333921	cast	Q6256067	Jan Åström	Stevens pappa	
+Q18333921	cast	Q4954994	Sandra Huldt	Malin	
+Q18333921	cast	Q112606279	Yngve Dahlberg	Kjell Tuvegård	
+Q18333921	cast	Q4964696	Ylva Lööf	läkare	
+Q18333921	cast	Q113166880	Petter Roman Waldemarsson	Mackan	
+Q18333921	cast	Q5972144	Peter Magnusson	Anders	
+Q18333921	cast	Q113166872	Rebecka Nyberg Wellén	hånglande tjej	
+Q18333921	cast	Q113166864	Alexandra Buskas	Saga	
+Q18333921	cast	Q439393	Annie Lööf	self	
+Q21935502	director	Q5649107	Hannes Holm		
+Q21935502	writer	Q5649107	Hannes Holm		
+Q21935502	composer	Q5527902	Gaute Storaas		
+Q21935502	producer	Q84346420	Annica Bellander		
+Q21935502	producer	Q84346428	Nicklas Wikström Nicastro		
+Q21935502	cinematographer	Q1559440	Göran Hallberg		
+Q21935502	editor	Q23917670	Fredrik Morheden		
+Q21935502	costume_designer	Q22342876	Camilla Lindblom		
+Q21935502	cast	Q1772740	Filip Berg		
+Q21935502	cast	Q4569397	Chatarina Larsson		
+Q21935502	cast	Q10424735	Bahar Pars		
+Q21935502	cast	Q4940944	Anna-Lena Bergelin		
+Q21935502	cast	Q709448	Johan Widerberg		
+Q21935502	cast	Q1349729	Rolf Lassgård	Ove	
+Q21935502	cast	Q16946257	Ida Engvoll	Sonja	
+Q21935502	award		European Film Award for Best Comedy		
+Q19590783	director	Q246996	Tobias Lindholm		
+Q19590783	writer	Q246996	Tobias Lindholm		
+Q19590783	composer	Q12337732	Sune Rose Wagner		
+Q19590783	producer	Q104512195	René Ezra		
+Q19590783	producer	Q104512197	Tomas Radoor		
+Q19590783	cinematographer	Q38402809	Magnus Nordenhof Jønck		
+Q19590783	editor	Q38402764	Adam Nielsen		
+Q19590783	cast	Q97479213	Christian "Krølle" Pedersen		
+Q19590783	cast	Q3896343	ダール・サリム		
+Q19590783	cast	Q84081	ソーレン・マリン		
+Q19590783	cast	Q16063207	亞历克斯·休·安德森		
+Q19590783	cast	Q28599937	Dulfi al-Jabouri		
+Q19590783	cast	Q117906	Pilou Asbæk		
+Q19590783	cast	Q468499	ツヴァ・ノヴォトニー		
+Q19590783	cast	Q12331785	Петрине Аггер		
+Q19590783	cast	Q5231164	David Barrett		
+Q19590783	cast	Q463472	シャルロッテ・ムンク		
+Q18586579	director	Q29014679	Roni Ezra		
+Q18586579	writer	Q246996	Tobias Lindholm		
+Q18586579	producer	Q104512195	René Ezra		
+Q18586579	producer	Q104512197	Tomas Radoor		
+Q18586579	cinematographer	Q39252913	Philippe Kress		
+Q18586579	editor	Q39252908	Peter Brandt		
+Q18586579	cast	Q984186	ラース・ミケルセン	Lieutenant-Colonel Hintz	
+Q18586579	cast	Q40011927	Emilia Staugaard		
+Q18586579	cast	Q38052496	Sebastian Bull Sarning	Private Lundgren	
+Q18586579	cast	Q61887633	Jens Malthe Næsby		
+Q18586579	cast	Q21014507	古斯塔夫·吉塞	Private Andersen	
+Q18586579	cast	Q35985727	埃利奥特·克罗西特·霍弗	Private Jens-Otto Lassen	
+Q18586579	cast	Q12327676	莫滕·哈奇-福斯伯	Major Fladsaa	
+Q18586579	cast	Q47500092	シモン・セアルス	Captain Holm	
+Q18586579	cast	Q12325085	Lukas Thorsteinsson		
+Q18586579	cast	Q12331243	Пелле Эмиль Хебсгаард	Runner	
+Q18586579	cast	Q12326893	미카엘 보스트루프	Colonel Hartz	
+Q18586579	cast	Q12326249	Martin Greis-Rosenthal	Lieutenant Gjermansen	
+Q18586579	cast	Q41236171	Ari Alexander	Private Justesen	
+Q18586579	cast	Q12326842	メッテ・マンク・プラム	Bondekone	
+Q18586579	cast	Q40012232	ヨアキム・フィェルストロプ	Sergeant Bundgaard	
+Q18586579	cast	Q117906	Pilou Asbæk	Second Lieutenant Sand	
+Q18586579	cast	Q41236291	Mads Ole Langelund Larsen		
+Q18586579	cast	Q1681719	Jan Dose	Lieutenant-Colonel Becker	
+Q18586579	cast	Q95827423	Morten Klode		
+Q18586579	cast	Q12319113	Jannik Lorenzen	Private Gram	
+Q18586579	cast	Q40012198	Йеспер Хагельскер Паш	Major Jepsen	
+Q18451068	director	Q928823	Kjell Sundvall		
+Q18451068	writer	Q4975275	Monica Rolfner		
+Q18451068	composer	Q5803208	Anders Herrlin		
+Q18451068	producer	Q4952587	Carola Hansson		
+Q18451068	producer	Q5789036	Börje Hansson		
+Q18451068	cinematographer	Q10578388	Mats Olofsson		
+Q18451068	cast	Q6215440	Johan Ulveson		
+Q18451068	cast	Q5972144	Peter Magnusson		
+Q18451068	cast	Q4955639	Magdalena In de Betou		
+Q23708215	director	Q4978795	Lisa Siwe		
+Q23708215	writer	Q441247	Martina Haag		
+Q23708215	writer	Q5886919	Lars Yngve Johansson		
+Q23708215	cast	Q521623	Ola Rapace		
+Q23708215	cast	Q441247	Martina Haag		
+Q23708215	cast	Q6222590	Bert-Åke Varg		
+Q19060222	director	Q928823	Kjell Sundvall		
+Q19060222	writer	Q19060198	Niclas Ekström		
+Q19060222	composer	Q6185866	Stefan Sporsén		
+Q19060222	producer	Q22082980	Håkan Hammarén		
+Q19060222	cinematographer	Q6025563	Mats Olofson		
+Q19060222	editor	Q96117907	Håkan Karlsson		
+Q19060222	cast	Q4569429	Kjell Bergqvist		
+Q19060222	cast	Q511661	Eva Röse		
+Q19060222	cast	Q6219239	Richard Ulfsäter		
+Q19060222	cast	Q394570	Agnes Kittelsen		
+Q19060222	cast	Q3356840	Atle Antonsen		
+Q20756648	director	Q26255369	Tilde Harkamp		
+Q20756648	cinematographer	Q51580447	Jesper Tøffner		
+Q20756648	editor	Q38402817	My Thordal		
+Q20756648	cast	Q12330060	Оле Бойсен		
+Q20756648	cast	Q12331051	パトリシア・シューマン		
+Q20756648	cast	Q40011993	Arien Alexander Takiar		
+Q20756648	cast	Q11991366	尼尔斯·埃尔加德		
+Q20756648	cast	Q41730313	Martin Ringsmose		
+Q20756648	cast	Q7295091	라스무스 비에르		
+Q20756648	cast	Q40011955	Sara Masoudi		
+Q20756648	cast	Q12303915	Бо Карлссон		
+Q20756648	cast	Q207149	Zlatko Burić		
+Q20756648	cast	Q40012000	Hircano Soares		
+Q20756648	cast	Q3896343	ダール・サリム		
+Q20756648	cast	Q12301519	Андреас Бо Педерсен		
+Q20756648	cast	Q12308738	디테 한센		
+Q20756648	cast	Q3427596	马丁·布吕格曼		
+Q20756648	cast	Q6251765	Торбен Зеллер		
+Q20756648	cast	Q37491032	Q37491032		
+Q20756648	cast	Q5586759	아담 브릭스		
+Q20756648	cast	Q61887659	Tine Rangan Thiesgaard		
+Q20756648	cast	Q96793350	Q96793350		
+Q20756648	cast	Q40011981	Moowgliie Duissara		
+Q20756648	cast	Q12333991	Runi Lewerissa		
+Q20756648	followed_by	Q28790835	Iqbal & The Superchip		
+Q22661818	director	Q20261527	Richard Holm		
+Q22661818	writer	Q491200	Anders Nilsson		
+Q22661818	writer	Q5789272	Joakim Hansson		
+Q22661818	composer	Q6009778	Bengt Nilsson		
+Q22661818	cast	Q4570749	Jens Hultén		
+Q22661818	cast	Q6213753	Mikael Tornving		
+Q22661818	cast	Q6016924	Henrik Norlén		
+Q22661818	cast	Q5900246	Alexander Karim		
+Q22661818	cast	Q472810	Jakob Eklund	Johan Falk	
+Q19978545	director	Q5957205	Peter Lindmark		
+Q19978545	writer	Q20261527	Richard Holm		
+Q19978545	composer	Q6009778	Bengt Nilsson		
+Q19978545	cast	Q472810	Jakob Eklund		
+Q19978547	director	Q20261527	Richard Holm		
+Q19978547	cast	Q472810	Jakob Eklund		
+Q15401854	director	Q5617100	Alain Darborg		
+Q15401854	writer	Q5617100	Alain Darborg		
+Q15401854	writer	Q106962777	Piotr Marciniak		
+Q15401854	composer	Q115331402	Klas Wahl		
+Q15401854	composer	Q115331405	Anders Niska		
+Q15401854	producer	Q23761738	Fredrik Wikström Nicastro		
+Q15401854	cinematographer	Q95832333	Benjam Orre		
+Q15401854	editor	Q115331412	Rickard Krantz		
+Q15401854	executive_producer	Q1311883	Michael Hjorth		
+Q15401854	executive_producer	Q92904942	Peter Fornstam		
+Q15401854	executive_producer	Q115331441	Karin Wallqvister		
+Q15401854	costume_designer	Q33001481	Marie Flyckt		
+Q15401854	production_designer	Q112761249	Christian Olander		
+Q15401854	cast	Q4978151	Anette Sevreus	kvinnlig polis	
+Q15401854	cast	Q19977084	Christoffer Nordenrot	servitör på kafé	
+Q15401854	cast	Q6076218	Juan Rodríguez	Alejandro	
+Q15401854	cast	Q115331524	Mitcho Batalov	Fisker Karma-ägaren	
+Q15401854	cast	Q23914944	Magnus Sundberg	servitör på ryska handelskammaren	
+Q15401854	cast	Q106963000	Michael Brolin	fångvårdare	
+Q15401854	cast	Q4945780	Andrea Edwards	Anna-Lena Wallentin	
+Q15401854	cast	Q115331506	Alexandra Alegren	Wallentins sekreterare	
+Q15401854	cast	Q115331519	Martin Zetterlund	inkräktare	
+Q15401854	cast	Q16633391	Edvin Ryding	ung Charles	
+Q15401854	cast	Q106114681	Cedomir Djordjevic	grindvakt	
+Q15401854	cast	Q115331482	Tarmo Sakari Hietala	finsk vakt	
+Q15401854	cast	Q4961027	Anki Larsson	skolkurator	
+Q15401854	cast	Q115331503	Victor Gadderus	man på ryska handelskammaren	
+Q15401854	cast	Q5583829	Matti Boustedt	förare i arbetståget	
+Q15401854	cast	Q115331512	Andreas Vaehi	vakt Jakob	
+Q15401854	cast	Q5922459	Kola Krauze	rysk tekniker	
+Q15401854	cast	Q4570749	Jens Hultén	Krantz	
+Q15401854	cast	Q4984908	Malin Levanon	Elin	
+Q15401854	cast	Q2453439	Niklas Falk	Ralf	
+Q15401854	cast	Q4947091	Irma Erixson	mamma Anja	
+Q15401854	cast	Q6036444	Ramtin Parvaneh	vårdare	
+Q15401854	cast	Q5571781	Simon J. Berger	Charles-Ingvar Jönsson	
+Q15401854	cast	Q5900246	Alexander Karim	Ragnar Vanheden	
+Q15401854	cast	Q4982677	Susanne Thorson	Rocky	
+Q15401854	cast	Q328503	Torkel Petersson	Dynamite Harry	
+Q15401854	follows	Q6321287	Jönssonligan spelar högt		
+Q15401854	followed_by	Q60737525	The Jonsson Gang		
+Q17165619	director	Q12327179	Mikkel Nørgaard		
+Q17165619	writer	Q3362157	카스페르 크리스텐센		
+Q17165619	writer	Q3362230	フランク・フヴァム		
+Q17165619	cinematographer	Q19953585	Jacob Banke Olesen		
+Q17165619	editor	Q39251153	Morten Egholm		
+Q17165619	editor	Q70912714	Frederik Strunk		
+Q17165619	production_designer	Q95864601	Rasmus Thjellesen		
+Q17165619	cast	Q35984275	Ole Dupont		
+Q17165619	cast	Q11213025	엘세베트 스텐토프트		
+Q17165619	cast	Q12319661	Jesper Riefensthal		
+Q17165619	cast	Q556170	JR Reed		
+Q17165619	cast	Q3073540	弗莱明·奎斯特·莫勒		
+Q17165619	cast	Q47015733	Kaspar Colling Nielsen		
+Q17165619	cast	Q106819347	Amber Friendly		
+Q17165619	cast	Q3482458	Shondrella Avery		
+Q17165619	cast	Q659009	Jens Christian Grøndahl		
+Q17165619	cast	Q3362157	카스페르 크리스텐센		
+Q17165619	cast	Q12333677	Roger Kormind		
+Q17165619	cast	Q3424845	ラース・ヒョルトショイ		
+Q17165619	cast	Q11989253	迈克尔·卡罗		
+Q17165619	cast	Q37491133	Marcuz Jess Petersen		
+Q17165619	cast	Q30002246	Murray Miller		
+Q17165619	cast	Q12328938	Нильс Вейде		
+Q17165619	cast	Q71247037	Софи Торп		
+Q17165619	cast	Q445772	Nikolaj Coster-Waldau		
+Q17165619	cast	Q35985836	Dya Josefine Hauch		
+Q17165619	cast	Q1344849	Ib Michael		
+Q17165619	cast	Q228638	Isla Fisher		
+Q17165619	cast	Q435097	イーベン・ヤイレ		
+Q17165619	cast	Q219631	Adam Levine		
+Q17165619	cast	Q61887582	Julie Andresen		
+Q17165619	cast	Q40523806	Anne Møen		
+Q17165619	cast	Q3362230	フランク・フヴァム		
+Q17165619	cast	Q3427562	미아 뤼네		
+Q17165619	cast	Q1741530	Kim Leine		
+Q17165619	follows	Q1758576	Klown		
+Q19702971	director	Q23653062	Martin Zandvliet		
+Q19702971	writer	Q23653062	Martin Zandvliet		
+Q19702971	producer	Q12327119	Mikael Rieks		
+Q19702971	cinematographer	Q38054965	Camilla Hjelm Knudsen		
+Q19702971	editor	Q26956051	Molly Malene Stensgaard		
+Q19702971	editor	Q40087778	Per Sandholt		
+Q19702971	costume_designer	Q84599289	Stefanie Bieker		
+Q19702971	production_designer	Q95653017	Gitte Malling		
+Q19702971	cast	Q55230106	Emil Belton		
+Q19702971	cast	Q95285767	Tim Bülow		
+Q19702971	cast	Q5251626	ローラ・ブロ		
+Q19702971	cast	Q124958696	Anthony Straeger		
+Q19702971	cast	Q12326838	Mette Lysdahl		
+Q19702971	cast	Q16065110	Roland Møller		
+Q19702971	cast	Q95656748	Zoe Zandvliet		
+Q19702971	cast	Q37490631	马格努斯·布鲁恩		
+Q19702971	cast	Q23949049	Aaron Koszuta		
+Q19702971	cast	Q1691679	Joel Basman		
+Q19702971	cast	Q121237	미켈 푈스고르		
+Q19702971	cast	Q55525545	Oskar Belton		
+Q19702971	cast	Q15078995	Leon Seidel		
+Q19702971	cast	Q12326885	Майкл Асмуссен		
+Q19702971	cast	Q24238025	Oskar Bökelmann		
+Q19702971	cast	Q27834521	Johnny Melville		
+Q19702971	cast	Q1871731	Louis Hofmann		
+Q19702971	cast	Q40523877	Kim Winther		
+Q19702971	cast	Q12325652	Mads Riisom		
+Q19702971	cast	Q1663302	Levin Henning		
+Q19702971	cast	Q1730255	Karl Alexander Seidel		
+Q19702971	award		Bodil Award for Best Danish Film		
+Q19702971	award		European Film Award for Best Cinematographer		
+Q19702971	award		Robert Award for Best Danish Film		
+Q19702971	award		European Film Award for Best Costume Designer		
+Q19702971	award		European Film Award for Best Hair and Makeup Artist		
+Q19702971	award		IFFR audience award		
+Q19702971	award		Dragon Award Best Nordic Film		
+Q31898797	director	Q26921021	Amanda Kernell		
+Q31898797	writer	Q26921021	Amanda Kernell		
+Q31898797	composer	Q4592336	Frode Fjellheim		
+Q31898797	producer	Q5958670	Lars Lindström		
+Q31898797	producer	Q72882591	Oskar Östergren		
+Q31898797	cinematographer	Q16633431	Petrus Sjövik		
+Q31898797	editor	Q68598113	Anders Skov		
+Q31898797	cast	Q111040261	Jonar Thomasson	Jon-Olov	
+Q31898797	cast	Q111040262	Ánne Biret Somby	Sanna	
+Q31898797	cast	Q6094705	Olle Sarri	Olle	
+Q31898797	cast	Q28650129	Maj-Doris Rimpi	Elle	
+Q19832347	director	Q3087215	Frederikke Aspöck		
+Q19832347	writer	Q534829	Kim Fupz Aakeson		
+Q19832347	cinematographer	Q70070411	Adam Wallensten		
+Q19832347	editor	Q38053645	Mette Zeruneith		
+Q19832347	editor	Q38402803	Martin Schade		
+Q19832347	cast	Q11991366	尼尔斯·埃尔加德		
+Q19832347	cast	Q16064459	莉萨·巴斯特鲁普		
+Q19832347	cast	Q121237	미켈 푈스고르		
+Q19832347	cast	Q41236200	Jacob Moth-Poulsen		
+Q19832347	cast	Q1341671	Jens Albinus		
+Q19832347	cast	Q16201333	Mercedes Cabral		
+Q19832347	cast	Q35984275	Ole Dupont		
+Q19832347	cast	Q12325652	Mads Riisom		
+Q19832347	cast	Q12320459	Джули Агнет Ван		
+Q19832347	cast	Q40523713	Linda Fallentin		
+Q19832347	cast	Q12301381	Anders Brink Madsen		
+Q18967314	director	Q18967371	Charlotte Blom		
+Q18967314	writer	Q18967371	Charlotte Blom		
+Q18967314	editor	Q3080170	Žaklina Stojcevska		
+Q18967314	production_designer	Q113096140	Merete Bostrøm		
+Q18967314	cast	Q394570	Agnes Kittelsen		
+Q18967314	cast	Q1780001	Anders Baasmo Christiansen		
+Q18967314	cast	Q4580829	Linn Skåber		
+Q16933688	director	Q1745266	Klaus Härö		
+Q16933688	writer	Q11851574	Anna Heinämaa		
+Q16933688	composer	Q1515381	Gert Wilden jr.		
+Q16933688	producer	Q11868894	Kai Nordberg		
+Q16933688	producer	Q21442109	Jörg Bundschuh		
+Q16933688	producer	Q26278731	Kaarle Aho		
+Q16933688	producer	Q61787314	Ivo Felt		
+Q16933688	cinematographer	Q11898672	Tuomo Hutri		
+Q16933688	editor	Q2473598	Ueli Christen		
+Q16933688	editor	Q24545784	Tambet Tasuja		
+Q16933688	costume_designer	Q11897553	Tiina Kaukanen		
+Q16933688	cast	Q18421971	Helle Kuningas		
+Q16933688	cast	Q14483665	Piret Kalda		
+Q16933688	cast	Q12363815	Hendrik Toompere		
+Q16933688	cast	Q26278731	Kaarle Aho		
+Q16933688	cast	Q12363814	Hendrik Toompere		
+Q16933688	cast	Q4251347	Kirill Käro	Aleksei	
+Q16933688	cast	Q16405611	Leida Rammo		
+Q16933688	cast	Q16406221	Alina Karmazina		
+Q16933688	cast	Q16406885	Raimo Pass		
+Q16933688	cast	Q11868894	Kai Nordberg		
+Q16933688	cast	Q12364775	Jaak Prints		
+Q16933688	cast	Q22484468	Liisa Koppel	Marta	
+Q16933688	cast	Q16407648	Maria Avdjuško		
+Q16933688	cast	Q1969281	Lembit Ulfsak		
+Q16933688	cast	Q12369759	Maria Klenskaja		
+Q16933688	cast	Q12377832	Ursula Ratasepp	Kadri	
+Q16933688	cast	Q1957484	Märt Avandi	Endel Nelis	
+Q16933688	award		Jussi Award for Best Film		
+Q16933688	award		Jussi Award for Best Leading Actor		
+Q16933688	award		Jussi Award for Best Photography		
+Q19787902	director	Q16633064	Magnus von Horn		
+Q19787902	writer	Q16633064	Magnus von Horn		
+Q19787902	cinematographer	Q18679081	Łukasz Żal		
+Q19787902	editor	Q53566441	Agnieszka Glińska		
+Q19787902	production_designer	Q104174644	Jagna Dobesz		
+Q19787902	cast	Q4568915	Ellen Mattsson		
+Q19787902	cast	Q235108	Inger Nilsson		
+Q19787902	cast	Q5544305	Sven Ahlström		
+Q19787902	cast	Q103094883	Loa Ek		
+Q19787902	cast	Q1354583	Ulrik Munther		
+Q19787902	cast	Q5597952	Mats Blomgren		
+Q19787902	cast	Q9373512	Wiesław Komasa		
+Q17382025	director	Q166964	Antti Jokinen		
+Q17382025	writer	Q166964	Antti Jokinen		
+Q17382025	writer	Q11870379	Katja Kettu		
+Q17382025	producer	Q6771509	Markus Selin		
+Q17382025	producer	Q11867692	Jukka Helle		
+Q17382025	cast	Q7198031	Pirkka-Pekka Petelius		
+Q17382025	cast	Q6825896	Armi Toivanen		
+Q17382025	cast	Q1329528	Elina Knihtilä		
+Q17382025	cast	Q336765	Lauri Tilkanen		
+Q17382025	cast	Q1343313	Tommi Korpela		
+Q17382025	cast	Q8710775	Leea Klemola		
+Q17382025	cast	Q19746019	Johannes Brotherus		
+Q17382025	cast	Q11897571	Tiina Weckström		
+Q17382025	cast	Q3321553	Krista Kosonen		
+Q17382025	cast	Q7451998	Seppo Pääkkönen		
+Q17382025	subject		Nazi Germany		
+Q17382025	subject		Lapland War		
+Q18623843	director	Q12321689	Kenneth Kainz		
+Q18623843	writer	Q491314	Anders Thomas Jensen		
+Q18623843	composer	Q1687501	Jeppe Kaas		
+Q18623843	producer	Q104512190	Nina Lyng		
+Q18623843	producer	Q134487063	Eva Juel Hammerich		
+Q18623843	cinematographer	Q63684967	Lasse Frank Johannessen		
+Q18623843	editor	Q39251155	Nicolaj Monberg		
+Q18623843	costume_designer	Q4955606	Kicki Ilander		
+Q18623843	production_designer	Q131450097	Q131450097		
+Q18623843	cast	Q12331692	ペーター・プラウボー		
+Q18623843	cast	Q730592	アラン・ハイド		
+Q18623843	cast	Q39251155	Nicolaj Monberg		
+Q18623843	cast	Q5251626	ローラ・ブロ		
+Q18623843	cast	Q103736374	Petr Kocourek		
+Q18623843	cast	Q132204957	Petra Maria Scott		
+Q18623843	cast	Q104129071	Jakub Kohl		
+Q18623843	cast	Q12325652	Mads Riisom		
+Q18623843	cast	Q12316421	Henrik Noél Olesen		
+Q18623843	cast	Q3785492	올라프 요하네센		
+Q18623843	cast	Q4129949	Stina Ekblad		
+Q18623843	cast	Q12337951	Svend Johansen		
+Q18623843	cast	Q20202411	Adam Ild Rohweder		
+Q18623843	cast	Q132204951	Michael Hamory		
+Q18623843	cast	Q84081	ソーレン・マリン		
+Q18623843	cast	Q131862960	Monika Pošívalová		
+Q18623843	cast	Q38052471	Oliver Methling Søndergaard		
+Q18623843	cast	Q71247052	Curtis Matthew		
+Q18623843	cast	Q42302646	Q42302646		
+Q18623843	cast	Q16065110	Roland Møller		
+Q18623843	cast	Q131842059	Jim High		
+Q18623843	cast	Q28913414	Rebecca Emilie Sattrup		
+Q18623843	cast	Q108535650	Malthe Miehe-Renard		
+Q18623843	cast	Q132204953	Austa Lea Gohr Jespersen		
+Q18623843	cast	Q12310562	Эсбен Далгаард Андерсен		
+Q18623843	cast	Q12318917	Q12318917		
+Q18623843	cast	Q102260056	Jakub Nemčok		
+Q18623843	cast	Q132204993	Mylena Barrios		
+Q18623843	cast	Q132204954	Julie Knuth Brøllund Hansen		
+Q18623843	cast	Q132204956	Stefania Ómarsdóttir		
+Q18623843	cast	Q132204952	Osvald Boisen		
+Q18623843	cast	Q42302595	Q42302595		
+Q18623843	cast	Q256776	Maria Bonnevie		
+Q18623843	cast	Q131986466	Lucie Furmanová		
+Q18623843	cast	Q16429462	Jóhann G. Jóhannsson		
+Q18623843	cast	Q1687501	Jeppe Kaas		
+Q18623843	cast	Q11977902	ヤーコプ・オフテブロ		
+Q18623843	cast	Q71247650	Niklas Herskind		
+Q18623843	cast	Q132204955	Selma Iljazovski		
+Q18623843	cast	Q12321689	Kenneth Kainz		
+Q18623843	award		Robert Award for Best Score		
+Q18623843	award		Robert Award for Best Costume Design		
+Q18623843	award		Robert Award for Best Children's Film		
+Q18623843	award		Robert Award for Best Visual Effects		
+Q18623843	award		Robert Award for Best Adapted Screenplay		
+Q18623843	followed_by	Q30786909	The Shamer's Daughter II – The Serpent Gift		
+Q19372190	director	Q1780665	Roar Uthaug		
+Q19372190	writer	Q326393	Harald Rosenløw Eeg		
+Q19372190	writer	Q21160825	John Kåre Raake		
+Q19372190	composer	Q657287	Magnus Beite		
+Q19372190	cinematographer	Q1699611	John Christian Rosenlund		
+Q19372190	editor	Q112749439	Christian Siebenhertz		
+Q19372190	cast	Q4430142	Fridtjov Såheim		
+Q19372190	cast	Q1190263	Kristoffer Joner		
+Q19372190	cast	Q740244	Thomas Bo Larsen		
+Q19372190	cast	Q3924580	Arthur Berning		
+Q19372190	cast	Q15675689	Jonas Hoff Oftebro		
+Q19372190	cast	Q1779957	Ane Dahl Torp		
+Q19372190	followed_by	Q56549297	The Quake		
+Q27058612	director	Q4956252	Lisa James Larsson		
+Q27058612	writer	Q448473	モニ・ニルソン＝ブレンストロム		
+Q27058612	composer	Q112761207	Joel Danell		
+Q27058612	producer	Q22205367	Susann Billberg-Rydholm		
+Q27058612	producer	Q107654623	Lotta Westberg		
+Q27058612	cinematographer	Q117451331	Ola Magnestam		
+Q27058612	editor	Q4961662	Hanna Lejonqvist		
+Q27058612	cast	Q103175422	Adam Gutniak	Per Hammar	
+Q27058612	follows	Q1456651	Tsatsiki – vänner för alltid		
+Q19706919	director	Q22927093	Marjut Komulainen		
+Q19706919	writer	Q18633347	Melli Maikkula		
+Q19706919	writer	Q22927093	Marjut Komulainen		
+Q19706919	composer	Q95819117	Janne Storm		
+Q19706919	producer	Q6026709	Claes Olsson		
+Q19706919	cinematographer	Q16990248	Harri Räty		
+Q19706919	editor	Q95819105	Oskar Franzén		
+Q19706919	costume_designer	Q95652357	Karoliina Koiso-Kanttila		
+Q19706919	production_designer	Q63092044	Anu Maja		
+Q19706919	cast	Q6227752	Kari Väänänen	Hurja-Kaarlo	
+Q19706919	cast	Q16299215	Janne Hyytiäinen	poliisi	
+Q19706919	cast	Q115628487	Iivo Suvanto	Pöhkö-Pärnänen	
+Q19706919	cast	Q115628404	Mio Määttä	Kalle Rosvola	
+Q19706919	cast	Q115628483	Emilia Hakkarainen	Pirkko Pärnänen	
+Q19706919	cast	Q115628482	Leevi Virtanen	Auvo Pärnänen	
+Q19706919	cast	Q115628478	Kiia Kokko	Vanamo, Viljan sisko	
+Q19706919	cast	Q6192093	Pekka Strang	Jouni Vainisto, Viljan isä	
+Q19706919	cast	Q115628479	Suvi-Maaria Virta	Tuija Pärnänen	
+Q19706919	cast	Q6303995	Jussi Vatanen	Kulta-Pete	
+Q19706919	cast	Q115628486	Eljas Hyttinen	Vanha Pärnänen	
+Q19706919	cast	Q95652347	Sirkku Ullgren	Vilja-Tuuli Vainisto	
+Q19706919	cast	Q115628477	Merja Pennanen	Virpi, Viljan äiti	
+Q19706919	cast	Q95652350	Ilona Huhta	Hele Rosvola	
+Q19706919	cast	Q11876260	Lotta Lehtikari	Hilda Rosvola	
+Q19706919	cast	Q115628481	Kai Paavilainen	Kimi Pärnänen	
+Q19706919	cast	Q115628489	Oskari Ritola	Ana, videoliikkeen myyjä	
+Q19706919	cast	Q115628488	Timo Aula	kioskinpitäjä	
+Q19976484	director	Q237255	Pernilla August		
+Q19976484	writer	Q241546	Lone Scherfig		
+Q19976484	composer	Q186332	Matti Bye		
+Q19976484	cast	Q1771414	Sven Nordin		
+Q19976484	cast	Q138232	Sverrir Gudnason		
+Q19976484	cast	Q3652125	Liv Mjönes		
+Q19976484	cast	Q16159216	Alba August		
+Q19976484	cast	Q460554	Maria Langhammer		
+Q19976484	cast	Q121237	미켈 푈스고르		
+Q19976484	cast	Q382278	Michael Nyqvist		
+Q19976484	cast	Q19976720	Karin Franz Körlof		
+Q19976484	cast	Q4976329	Sofia Rönnegård		
+Q27941646	director	Q1809801	Maria Blom		
+Q27941646	director	Q71818658	Christian Ryltenius		
+Q27941646	writer	Q73984539	Ida Kjellin		
+Q27941646	writer	Q107642447	Sofie Forsman		
+Q27941646	composer	Q112763994	Henrik Lörstad		
+Q27941646	producer	Q112763993	Jon Nohrstedt		
+Q27941646	editor	Q112763998	Resa Chen		
+Q27941646	editor	Q112764000	Yi San Huang		
+Q27941646	executive_producer	Q23761738	Fredrik Wikström Nicastro		
+Q27941646	follows	Q10425783	Bamse and the City of Thieves		
+Q27941646	followed_by	Q72094836	Bamse and the Thunderbell		
+Q27243409	director	Q11891797	Saara Cantell		
+Q27243409	writer	Q11891797	Saara Cantell		
+Q27243409	writer	Q20253382	Leena Virtanen		
+Q27243409	composer	Q17110728	Stein Berge Svendsen		
+Q27243409	producer	Q16298202	Markku Flink		
+Q27243409	cinematographer	Q42038413	Konsta Sohlberg		
+Q27243409	editor	Q4960843	Malin Lindström		
+Q27243409	costume_designer	Q22309556	Katja Watkins		
+Q27243409	production_designer	Q5412983	Pirjo Rossi		
+Q27243409	cast	Q111372682	Matts Stenlund	Mårten Sjöberg	
+Q27243409	cast	Q23698906	Sonja Halla-aho	Lovisa	
+Q27243409	cast	Q4410921	Maria Sid	Lisbeta Skarp	
+Q27243409	cast	Q6370402	Kari Onstad	Lady Elizabeth Psilander	
+Q27243409	cast	Q108333941	Frank Skog	skomakare Anders	
+Q27243409	cast	Q16990431	Johanna af Schultén	Ulrica Johansdotter	
+Q27243409	cast	Q111372684	Sigge Svahnström	Johan	
+Q27243409	cast	Q3358372	Magnus Krepper	domare Nils Psilander	
+Q27243409	cast	Q12433086	Pirkko Hämäläinen	Ebba Matsenkia	
+Q27243409	cast	Q111372663	Tuulia Eloranta	Anna Eriksdotter	
+Q27243409	cast	Q5711235	Robert Enckell	läkare	
+Q27243409	cast	Q11868919	Kaija Pakarinen	Valborg Magnusdotter	
+Q27243409	cast	Q3372189	Claes Malmberg	kyrkoherre Bryniel Kjellinus	
+Q27243409	cast	Q553880	Antti Reini	Karl Jönsson	
+Q27243409	cast	Q99889794	Elín Petersdóttir	Rakel Larsdotter	
+Q27243409	cast	Q111372673	Julia Korander	Gertrud Bengtsson	
+Q27243409	cast	Q111009931	Clas-Ove Bruun	skarprättare	
+Q27243409	cast	Q43272856	Anssi Niemi	fångvaktare	
+Q27243409	cast	Q16990800	Lauri Tanskanen	Elias Olsson	
+Q27243409	cast	Q4357435	Cris af Enehielm	Karin Persdotter	
+Q32939328	director	Q17100896	Hanne Larsen		
+Q32939328	writer	Q17100896	Hanne Larsen		
+Q32939328	writer	Q95700576	Madeleine Fant		
+Q32939328	writer	Q95755071	Kathrine Valen Zeiner		
+Q32939328	cast	Q5347986	Egil Hegerberg		
+Q32939328	cast	Q221609	Frida Hallgren		
+Q32939328	cast	Q5564966	Gisken Armand		
+Q32939328	award		Nordic Film Days Lübeck		
+Q29384618	director	Q5586697	Johan Brisinger		
+Q29384618	writer	Q441247	Martina Haag		
+Q29384618	writer	Q5586697	Johan Brisinger		
+Q29384618	writer	Q120730730	Mikael Södersten		
+Q29384618	composer	Q5931694	Jimmy Lagnefors		
+Q29384618	producer	Q4974341	Lena Rehnberg		
+Q29384618	cinematographer	Q120730756	Carl Sundberg		
+Q29384618	editor	Q120730780	Fredrik Nordensson		
+Q29384618	executive_producer	Q4982324	Josefine Tengblad		
+Q29384618	executive_producer	Q89399011	Tomas Eskilsson		
+Q29384618	executive_producer	Q95708911	Niva Westlin Dahl		
+Q29384618	executive_producer	Q120730812	Lisa Widén		
+Q29384618	costume_designer	Q95667508	Anna Hagert		
+Q29384618	production_designer	Q89449466	Ulrika von Vegesack		
+Q29384618	cast	Q3939934	Rodolfo Corsato	Rodolfo	
+Q29384618	cast	Q2850193	Anita Wall	Clara	
+Q29384618	cast	Q374931	Björn Kjellman	Gustaf	
+Q29384618	cast	Q28125253	Anton Forsdik	Filip	
+Q29384618	cast	Q4946251	Nour El-Refai	Rita	
+Q29384618	cast	Q4569887	Thomas Hanzon	Nils	
+Q29384618	cast	Q1360483	Sven-Bertil Taube	Anton	
+Q29384618	cast	Q19977253	William Spetz	Fabbe	
+Q29384618	cast	Q4957044	Lisbeth Johansson	Mona	
+Q29384618	cast	Q4966976	Christine Meltzer	Marianne	
+Q29384618	cast	Q104699074	Saga Samuelsson	Emma	
+Q29384618	cast	Q441247	Martina Haag	Camilla	
+Q29384618	cast	Q4569882	Philip Zandén	chef	
+Q29384618	subject		divorce		
+Q29384687	director	Q27068029	Mats Lindberg		
+Q29384687	writer	Q83848	Johan Rheborg		
+Q29384687	writer	Q27068029	Mats Lindberg		
+Q29384687	writer	Q50681754	Stefan Wiik		
+Q29384687	composer	Q6086614	Johan Röhr		
+Q29384687	producer	Q27068041	Niklas Jakobsson		
+Q29384687	producer	Q73984848	Emma Nyberg		
+Q29384687	cinematographer	Q99982215	John Strandh		
+Q29384687	cast	Q712370	Robert Gustafsson		
+Q29384687	cast	Q83848	Johan Rheborg		
+Q29384687	follows	Q19978563	Morran och Tobias		
+Q20737040	director	Q1261910	Tiina Lymi		
+Q20737040	writer	Q1261910	Tiina Lymi		
+Q20737040	writer	Q16298620	Johanna Hartikainen		
+Q20737040	writer	Q23040635	Nina Laurio		
+Q20737040	composer	Q11901046	Vesa Mäkinen		
+Q20737040	producer	Q23040635	Nina Laurio		
+Q20737040	cinematographer	Q131842803	Q131842803		
+Q20737040	editor	Q111109967	Iikka Hesse		
+Q20737040	executive_producer	Q6771509	Markus Selin		
+Q20737040	executive_producer	Q11867692	Jukka Helle		
+Q20737040	costume_designer	Q111337363	Riitta Röpelinen		
+Q20737040	cast	Q30585073	Eedit Patrakka	Anna	
+Q20737040	cast	Q17381341	Lotta Kaihua	Katri Haapasaari	
+Q20737040	cast	Q11852080	Antti Holma	Mikko	
+Q20737040	cast	Q6303995	Jussi Vatanen	Johannes Kinnunen	
+Q20737040	cast	Q16990877	Ville Tiihonen	Tero	
+Q20737040	cast	Q16989612	Marja Packalén	Annan mummo	
+Q20737040	cast	Q11851911	Antero Nieminen	Vaittinen	
+Q20737040	cast	Q42889052	Maaja Hallik	Sirle	
+Q20737040	cast	Q12375353	Sten Karpov	Jaanus	
+Q20737040	cast	Q12358915	Allan Kress	Siim	
+Q20737040	cast	Q3391168	Iina Kuustonen	Ansku	
+Q20737040	cast	Q42904175	Emilia Sinisalo	Susanna	
+Q27536918	director	Q26921021	Amanda Kernell		
+Q27536918	writer	Q26921021	Amanda Kernell		
+Q27536918	composer	Q19280155	Kristian Eidnes Andersen		
+Q27536918	producer	Q5958670	Lars Lindström		
+Q27536918	cinematographer	Q16633431	Petrus Sjövik		
+Q27536918	cinematographer	Q65116634	Sophia Olsson		
+Q27536918	editor	Q68598113	Anders Skov		
+Q27536918	production_designer	Q95890065	Olle Remaeus		
+Q27536918	production_designer	Q110920027	Ebba Forstenberg		
+Q27536918	cast	Q28718098	Lene Cecilia Sparrok		
+Q27536918	cast	Q5571136	Anders Berg		
+Q27536918	cast	Q3372059	Hanna Alström		
+Q27536918	cast	Q4943601	Malin Crépin		
+Q27536918	award		Guldbagge Award for Best Actress in a Leading Role		
+Q27536918	award		Guldbagge Award for Best Screenplay		
+Q27536918	award		Lux Prize		
+Q27536918	award		Biopublikens Award		
+Q27536918	award		Guldbagge Award for Best Editing		
+Q27536918	award		Dragon Award Best Nordic Film		
+Q27536918	subject		discrimination		
+Q27536918	subject		history of the Saami		
+Q27536918	subject		Swedification		
+Q27490504	director	Q16299424	Rike Jokela		
+Q27490504	writer	Q11850164	Aino Havukainen		
+Q27490504	producer	Q11890724	Riina Hyytiä		
+Q27490504	producer	Q81802060	Mahsa Malka		
+Q27490504	cast	Q30585073	Eedit Patrakka		
+Q27490504	cast	Q11852080	Antti Holma		
+Q27490504	cast	Q6825771	Riku Nieminen		
+Q27490504	cast	Q16989732	Sulevi Peltola		
+Q26884608	director	Q958200	Erik Poppe		
+Q26884608	writer	Q326393	Harald Rosenløw Eeg		
+Q26884608	writer	Q28717941	Jan Trygve Røyneland		
+Q26884608	composer	Q957964	Johan Söderqvist		
+Q26884608	producer	Q19390397	Stein B. Kvae		
+Q26884608	producer	Q22260782	Finn Gjerdrum		
+Q26884608	cinematographer	Q1699611	John Christian Rosenlund		
+Q26884608	editor	Q18912972	Einar Egeland		
+Q26884608	production_designer	Q19463415	Peter Bävman		
+Q26884608	production_designer	Q105887773	Åsa Nilsson		
+Q26884608	cast	Q18912930	Herbert Nordrum		
+Q26884608	cast	Q103544	Katharina Schüttler	Anneliese Bräuer	
+Q26884608	cast	Q15675508	Aslak Maurstad		
+Q26884608	cast	Q7820830	Tone Danielsen		
+Q26884608	cast	Q27923705	Tom Styve		
+Q26884608	cast	Q11967952	Espen Sandvik	Captain Magnus P. Sødem	
+Q26884608	cast	Q499354	Andreas Lust	Oberstleutnant Hartwig Pohlman	
+Q26884608	cast	Q17107024	Benjamin Røsler		
+Q26884608	cast	Q57297814	Krister Kern		
+Q26884608	cast	Q104534661	Lars Lund		
+Q26884608	cast	Q115773735	Eric Vorenholt		
+Q26884608	cast	Q63450	Juliane Köhler	Diana Müller	
+Q26884608	cast	Q973271	Rolf Kristian Larsen	Sergeant Brynjar Hammer	
+Q26884608	cast	Q107499202	Arthur Hakalahti	Guardsman Fredrik Seeberg	
+Q26884608	cast	Q11993051	Odd-Audor Ridse Bentsen		
+Q26884608	cast	Q11991336	Nicolay Lange-Nielsen	Nikolai Ramm Østgaard	
+Q26884608	cast	Q22260782	Finn Gjerdrum	Jon Sundby	
+Q26884608	cast	Q111513101	Ingrid Ross Raftemo	Princess Astrid, Mrs. Ferner	
+Q26884608	cast	Q111513098	Sofie Falkgård	Princess Ragnhild, Mrs. Lorentzen	
+Q26884608	cast	Q22328209	Kaare Storemyr	Johan Ludwig Mowinckel	
+Q26884608	cast	Q11974037	Hans Jacob Sand	Birger Ljungberg	
+Q26884608	cast	Q530997	Jesper Christensen	Haakon VII of Norway	
+Q26884608	cast	Q111513097	Magnus Ketil Dobbe	Harald V of Norway	
+Q26884608	cast	Q684168	Karl Markovics	Curt Bräuer	
+Q26884608	cast	Q4585283	Erik Hivju	Birger Eriksen	
+Q26884608	cast	Q111513102	Jan Petter Dickman	Ivar Lykke	
+Q26884608	cast	Q124360	Udo Schenk	Adolf Hitler	
+Q26884608	cast	Q11980547	Ketil Høegh	Halvdan Koht	
+Q26884608	cast	Q11997102	Randolf Walderhaug	Bjart Ording	
+Q26884608	cast	Q25429725	Gerald Pettersen	Johan Nygaardsvold	
+Q26884608	cast	Q468499	ツヴァ・ノヴォトニー	Princess Märtha of Sweden	
+Q26884608	cast	Q7651876	Svein Tindberg	Peder Anker Wedel-Jarlsberg	
+Q26884608	cast	Q1780001	Anders Baasmo Christiansen	Olav V of Norway	
+Q26884608	cast	Q1408194	Torfinn Nag	Kristian Welhaven	
+Q26884608	cast	Q17097336	Jan Frostad	Carl Joachim Hambro	
+Q26884608	award		Kanon People's Choice Award		
+Q25461436	director	Q3735074	Aleksi Salmenperä		
+Q25461436	writer	Q5411720	Pekko Pesonen		
+Q25461436	producer	Q2665374	Dome Karukoski		
+Q25461436	producer	Q4716022	Aleksi Bardy		
+Q25461436	producer	Q11882497	Miia Haavisto		
+Q25461436	cast	Q11866918	Joonas Saartamo		
+Q25461436	cast	Q1327883	Elena Leeve		
+Q25461436	cast	Q2548961	Peter Franzén		
+Q25461436	cast	Q21452356	Saara Kotkaniemi		
+Q25461436	cast	Q3462630	Jani Volanen	Pekka Perä	
+Q25461436	subject		Talvivaara mine		
+Q20653248	director	Q12325636	Mads Matthiesen		
+Q20653248	writer	Q12301397	Anders August		
+Q20653248	writer	Q12325636	Mads Matthiesen		
+Q20653248	writer	Q23653062	Martin Zandvliet		
+Q20653248	cinematographer	Q16633431	Petrus Sjövik		
+Q20653248	editor	Q2793326	Pernille Bech Christensen		
+Q20653248	executive_producer	Q140558980	Q140558980		
+Q20653248	production_designer	Q95742515	Emma Pucci		
+Q20653248	cast	Q2964996	Christian Abart		
+Q20653248	cast	Q12326004	玛丽亚·乌格勒·里克		
+Q20653248	cast	Q5335413	Ed Skrein		
+Q20653248	cast	Q64875514	Aleksandra Yermak		
+Q20653248	cast	Q3560613	Virgile Bramly		
+Q20653248	cast	Q3524303	Thierry Hancisse		
+Q20653248	cast	Q12325931	Marco Ilsø		
+Q20653248	cast	Q12331246	Pelle Koppel		
+Q20653248	cast	Q5238711	David Price		
+Q20653248	cast	Q17374188	Claire Tran		
+Q20653248	cast	Q27999538	Mehdi Senoussi		
+Q20653248	cast	Q95794977	Yvonnick Muller		
+Q28869984	director	Q5946476	Petter Lennstrand		
+Q28869984	writer	Q5946476	Petter Lennstrand		
+Q28869984	writer	Q6024557	Martin Olczak		
+Q28869984	composer	Q54932833	Pär Frid		
+Q28869984	composer	Q99609993	Karl Frid		
+Q28869984	producer	Q4994186	Lars Jönsson		
+Q28869984	cinematographer	Q1354039	Erik Molberg Hansen		
+Q28869984	editor	Q73984307	Kristin Grundström		
+Q28869984	costume_designer	Q4961685	Moa Li Lemhagen Schalin		
+Q28869984	production_designer	Q44466553	Josefin Åsberg		
+Q28869984	cast	Q5946476	Petter Lennstrand	Rydberg	
+Q28869984	cast	Q4982677	Susanne Thorson	mamma	
+Q28869984	cast	Q112965715	Karin Högstrand	doktor	
+Q28869984	cast	Q28869991	Mira Forsell	Pottan	
+Q28869984	cast	Q5386449	Eric Ericson	pappa	
+Q28869984	cast	Q112965709	Niklas Hermansson	Trassel	
+Q28869984	cast	Q112965716	Sofie Gällerspång	receptionist	
+Q28869984	cast	Q5966500	Adam Lundgren	Dennis Kofot	
+Q28869984	cast	Q5602461	Бьорн Карлберг	programledare	
+Q28869984	cast	Q42393956	Margareta Olsson	tant	
+Q28869984	cast	Q6006990	Shebly Niavarani	Babblan Krubblo	
+Q28869984	cast	Q112965712	Frida Johansson	polis	
+Q28869984	cast	Q16946257	Ida Engvoll	Miss Il	
+Q28869984	cast	Q112965714	Marcus Standoft	polis	
+Q28869984	cast	Q5621122	Gustav Funck	Ture	
+Q28869984	award		Berlin International Film Festival		
+Q28869984	award		Zurich Film Festival		
+Q28869984	award		Zlín Film Festival		
+Q28869984	award		Nordic Film Days Lübeck		
+Q27590730	director	Q6155953	Janus Metz Pedersen		
+Q27590730	writer	Q6091579	Ronnie Sandahl		
+Q27590730	composer	Q779451	Vladislav Delay		
+Q27590730	composer	Q1584183	Jon Ekstrand		
+Q27590730	composer	Q70095725	Jonas Struck		
+Q27590730	composer	Q113792002	Carl-Johan Sevedag		
+Q27590730	producer	Q23761738	Fredrik Wikström Nicastro		
+Q27590730	producer	Q112763993	Jon Nohrstedt		
+Q27590730	cinematographer	Q39252894	Niels Thastum		
+Q27590730	editor	Q38402751	Per K. Kirkegaard		
+Q27590730	editor	Q40087778	Per Sandholt		
+Q27590730	costume_designer	Q4955606	Kicki Ilander		
+Q27590730	production_designer	Q73984834	Lina Nordqvist		
+Q27590730	production_designer	Q131933799	Petra Vencelidesová		
+Q27590730	cast	Q3022086	Demetri Goritsas		
+Q27590730	cast	Q5571136	Anders Berg		
+Q27590730	cast	Q5795551	Thomas Hedengran		
+Q27590730	cast	Q95741314	Annika Whittembury		
+Q27590730	cast	Q30122133	Peter Hosking		
+Q27590730	cast	Q102317062	Markéta Krejčová		
+Q27590730	cast	Q20974085	Jason Forbes		
+Q27590730	cast	Q131982105	Kevin Michael Clarke		
+Q27590730	cast	Q131912304	Q131912304		
+Q27590730	cast	Q5712969	Felix Engström		
+Q27590730	cast	Q4966055	Julia Marko-Nord		
+Q27590730	cast	Q132473872	Dan Anders Carrigan		
+Q27590730	cast	Q132473503	Daniel Zappi		
+Q27590730	cast	Q103824897	Pavel Mareš		
+Q27590730	cast	Q112973444	James Sobol Kelly		
+Q27590730	cast	Q8075470	Zuzana Geislerová		
+Q27590730	cast	Q97499980	Leo Borg		
+Q27590730	cast	Q60448463	Michael Pitthan		
+Q27590730	cast	Q111888131	Ben Bradshaw		
+Q27590730	cast	Q7909106	Val Jobara		
+Q27590730	cast	Q132472901	Scott Arthur		
+Q27590730	cast	Q960494	David Bamber		
+Q27590730	cast	Q5961385	Claes Ljungmark		
+Q27590730	cast	Q132472899	Marcus Johansson		
+Q27590730	cast	Q15633756	David Bark-Jones		
+Q27590730	cast	Q21209179	Jane Perry		
+Q27590730	cast	Q95469325	Filip Antonio		
+Q27590730	cast	Q132473501	Logan Hillier		
+Q27590730	cast	Q132473500	Bob Boudreaux		
+Q27590730	cast	Q5597952	Mats Blomgren		
+Q27590730	cast	Q5554187	Björn Andersson		
+Q27590730	cast	Q102362219	Iva Šindelková		
+Q27590730	cast	Q132471415	Miroslav Hořínek		
+Q27590730	cast	Q19977318	Christopher Wagelin		
+Q27590730	cast	Q6091579	Ronnie Sandahl		
+Q27590730	cast	Q132473873	Jennifer K Preston		
+Q27590730	cast	Q131842059	Jim High		
+Q27590730	cast	Q132473871	Alexander Wallén		
+Q27590730	cast	Q132471421	Jamie Marshall		
+Q27590730	cast	Q117421478	Philipp Schenker		
+Q27590730	award		Film d'essai		
+Q27590730	subject		tennis		
+Q27907800	director	Q376995	马丁·米克-雷纳德		
+Q27907800	writer	Q376995	马丁·米克-雷纳德		
+Q27907800	writer	Q38051206	Lars Mering		
+Q27907800	writer	Q41743493	Claudia Boderke		
+Q27907800	cast	Q48836140	Q48836140		
+Q27907800	cast	Q740244	Thomas Bo Larsen		
+Q27907800	cast	Q38052522	Lise Kamp Dahlerup		
+Q27907800	cast	Q48836122	Mingus Hassing Hellemann		
+Q27907800	cast	Q48836130	Laura Lavigne Bie-Olsen		
+Q27907800	cast	Q3427596	马丁·布吕格曼		
+Q27907800	cast	Q57409307	Q57409307		
+Q27907800	cast	Q12301858	安妮·苏菲·埃斯珀森		
+Q27907800	cast	Q37491193	Coco Hjardemaal		
+Q27907800	cast	Q12318889	Jacob Riising		
+Q26768815	director	Q16989960	Marja Pyykkö		
+Q26768815	writer	Q1900829	Marko Leino		
+Q26768815	producer	Q6771509	Markus Selin		
+Q26768815	producer	Q11867692	Jukka Helle		
+Q26768815	cinematographer	Q42038413	Konsta Sohlberg		
+Q26768815	cast	Q11232333	Niko Saarela		
+Q26768815	cast	Q11880982	Marja Salo		
+Q26768815	cast	Q5996347	Juha Muje		
+Q26768815	cast	Q11871564	Kimmo Taavila		
+Q26768815	cast	Q3462349	Marjaana Maijala		
+Q26768815	cast	Q3377711	Petteri Summanen		
+Q26768815	cast	Q7322070	Ria Kataja		
+Q26768815	cast	Q27653748	Santeri Helinheimo Mäntylä		
+Q26768815	followed_by	Q81089885	Man and a Junior		
+Q26768815	subject		single parent		
+Q49101906	director	Q1809801	Maria Blom		
+Q49101906	writer	Q6338882	Anders Weidemann		
+Q49101906	composer	Q6019695	Anders Nygårds		
+Q49101906	producer	Q1362693	Patrick Ryborn		
+Q49101906	cinematographer	Q45461312	Ari Willey		
+Q49101906	cinematographer	Q112108776	Andréas Lennartsson		
+Q49101906	editor	Q73984307	Kristin Grundström		
+Q49101906	editor	Q112843435	Emil Stenberg		
+Q49101906	executive_producer	Q89399011	Tomas Eskilsson		
+Q49101906	executive_producer	Q95901372	Sebastian Leutner		
+Q49101906	executive_producer	Q110931005	Poa Strömberg		
+Q49101906	executive_producer	Q113185183	Fredrik Zander		
+Q49101906	executive_producer	Q113301660	Agneta Perman		
+Q49101906	costume_designer	Q95667508	Anna Hagert		
+Q49101906	production_designer	Q113301610	Betsy Ångerman-Engström		
+Q49101906	cast	Q113303075	Bjanka Spasic	Alia	
+Q49101906	cast	Q113303083	Arman Fanni	idrottslärare	
+Q49101906	cast	Q61940896	Tomas Åhnstrand	Hasse	
+Q49101906	cast	Q4937154	Sofia Bach	fru Axelsson	
+Q49101906	cast	Q5816067	Julius Jimenez Hugoson	Frank	
+Q49101906	cast	Q113301674	Matilda Forss Lindström	Saga	
+Q49101906	cast	Q113301684	Manfred Knapp	Rasmus	
+Q49101906	cast	Q5386449	Eric Ericson	Georg	
+Q49101906	cast	Q112965716	Sofie Gällerspång	fru Möllerström	
+Q49101906	cast	Q4569927	Ing-Marie Carlsson	mormor	
+Q49101906	cast	Q16595521	Bianca Kronlöf	Shirin	
+Q49101906	cast	Q6046973	Johan Petersson	pappa	
+Q49101906	cast	Q6006990	Shebly Niavarani	Axelsson	
+Q49101906	cast	Q221609	Frida Hallgren	mamma	
+Q49101906	cast	Q113152355	Tove Wiréen	lärare	
+Q37928478	director	Q2857657	Antti-Jussi Annila		
+Q37928478	writer	Q543892	Antti Tuuri		
+Q37928478	writer	Q2857657	Antti-Jussi Annila		
+Q37928478	writer	Q3735652	Aku Louhimies		
+Q37928478	composer	Q18693443	Panu Aaltio		
+Q37928478	producer	Q11864539	Ilkka Matila		
+Q37928478	cinematographer	Q7296234	Rauno Ronkainen		
+Q37928478	editor	Q24545784	Tambet Tasuja		
+Q37928478	costume_designer	Q114102169	Eugen Tamberg		
+Q37928478	cast	Q438580	シセ・バベット・クヌッセン	Sara Ketola	
+Q37928478	cast	Q30585073	Eedit Patrakka	Mary	
+Q37928478	cast	Q6094606	Sampo Sarkola	Strang	
+Q37928478	cast	Q1576624	Hannu-Pekka Björkman	Kallonen	
+Q37928478	cast	Q4957653	Jonna Järnefelt	Ella	
+Q37928478	cast	Q2379706	Irina Björklund	Sofia Ketola	
+Q37928478	cast	Q1343313	Tommi Korpela	Jussi Ketola	
+Q37928478	cast	Q513212	Ville Virtanen	John Hill	
+Q37928478	cast	Q11891230	Rosa Salomaa	Mary	
+Q37928478	award		Jussi Award for Best Film		
+Q105117959	director	Q5415035	Eva Dahr		
+Q105117959	writer	Q47012996	Morten Hovland		
+Q105117959	writer	Q112148563	Trond Morten K. Venaasen		
+Q105117959	composer	Q17110728	Stein Berge Svendsen		
+Q105117959	composer	Q112148567	Sindre Hotvedt		
+Q105117959	producer	Q107053584	Rune H. Trondsen		
+Q105117959	cinematographer	Q112148565	Patrik Säfström		
+Q105117959	editor	Q112148569	Lars Apneseth		
+Q105117959	executive_producer	Q4580421	Bente Erichsen		
+Q105117959	executive_producer	Q22318325	Jeanette Sundby		
+Q105117959	executive_producer	Q112148609	Inge Tenvik		
+Q105117959	executive_producer	Q112148613	Rasmus Krogh		
+Q105117959	executive_producer	Q112148615	Holger Hermesmeyer		
+Q105117959	executive_producer	Q112148617	Stig Bech		
+Q105117959	costume_designer	Q22269263	Maria Bohlin		
+Q105117959	production_designer	Q95226320	Martin Gant		
+Q105117959	cast	Q86317565	Bernt Bjørn	Fred Thorstad	
+Q105117959	cast	Q112148579	Henrik Hines Grape	Simen	
+Q105117959	cast	Q112148591	Franziska Tørnquist	Emma	
+Q105117959	cast	Q112148585	Samantha Lawson	nyhetsanker	
+Q105117959	cast	Q26211213	Naomi Lien Hasselberg	Nora	
+Q105117959	cast	Q26212077	Bjørnar Lysfoss Hagesveen	Lars	
+Q105117959	cast	Q17057778	Regine Stokkevåg Eide	Ragnhild	
+Q105117959	cast	Q55041525	Per Kjerstad	Jesper	
+Q105117959	cast	Q112148581	Roger Haugen	politibetjent	
+Q105117959	cast	Q106373	Minh-Khai Phan-Thi	Lady Zhen	
+Q105117959	cast	Q112148588	Ole Vidar Skogheim	Branden	
+Q105117959	cast	Q7310028	Reidar Sørensen	Besten	
+Q80087442	director	Q17382731	Inari Niemi		
+Q80087442	writer	Q17382731	Inari Niemi		
+Q80087442	composer	Q1100918	Joel Melasniemi		
+Q80087442	producer	Q11882497	Miia Haavisto		
+Q80087442	cast	Q3847072	Mari Rantasila		
+Q80087442	cast	Q5410475	Eero Ritala		
+Q80087442	cast	Q1343313	Tommi Korpela		
+Q80087442	cast	Q5493201	Anna Paavilainen		
+Q80087442	cast	Q11884414	Niina Koponen		
+Q80087442	cast	Q6777340	Martti Suosalo		
+Q80087442	cast	Q5404704	Milka Ahlroth		
+Q57280267	director	Q6143437	Ted Kjellsson		
+Q57280267	writer	Q5716554	Henrik Ståhl		
+Q57280267	composer	Q112761207	Joel Danell		
+Q57280267	producer	Q4959214	Anna Knochenhauer		
+Q57280267	producer	Q112964881	Sonja Hermele		
+Q57280267	cinematographer	Q16633431	Petrus Sjövik		
+Q57280267	editor	Q4961662	Hanna Lejonqvist		
+Q57280267	executive_producer	Q16498270	Stefan Baron		
+Q57280267	executive_producer	Q95848677	Mikael Wallén		
+Q57280267	costume_designer	Q112964994	Mimmi Mäenpää		
+Q57280267	costume_designer	Q112965001	Nicolas Richard		
+Q57280267	production_designer	Q112761249	Christian Olander		
+Q57280267	cast	Q5716554	Henrik Ståhl	Otosan	
+Q57280267	cast	Q5957586	Johan Lindqvist	vakt	
+Q57280267	cast	Q112965097	Robert Follin	vakt	
+Q57280267	cast	Q4971280	Aliette Opheim	Speedy	
+Q57280267	cast	Q112965082	Ida Thelin	Gladys 6 år	
+Q57280267	cast	Q112965098	Marika Eserstam Kjellsson	nyhetsuppläsare	
+Q57280267	cast	Q6143437	Ted Kjellsson	nyhetsuppläsare	
+Q57280267	cast	Q112965072	Dante Fleischanderl	Keaton	
+Q57280267	cast	Q112965077	Madeleine Trollvik	sergeanten	
+Q57280267	cast	Q112965083	Josefine Nilssen	Gladys 6 år	
+Q57280267	cast	Q6186189	Richard Sseruwagi	general F. Harrison	
+Q57280267	cast	Q102243167	Håkan Bengtsson	Cyklopen	
+Q57280267	cast	Q112965086	Irene Gómez Aladro	Keaton bebis	
+Q57280267	cast	Q112965085	Charlie Forsberg	Keaton 3 år	
+Q57280267	cast	Q107673547	Ella Rae Rappaport	Gladys	
+Q72094836	director	Q71818658	Christian Ryltenius		
+Q72094836	writer	Q6334160	Tomas Tivemark		
+Q72094836	writer	Q86425506	Fabian Nordlander		
+Q72094836	producer	Q112763993	Jon Nohrstedt		
+Q72094836	producer	Q112798122	Ina Sohlberg		
+Q72094836	follows	Q27941646	Bamse And The Witch's Daughter		
+Q72094836	followed_by	Q107084951	Bamse and the Volcano Island		
+Q56452582	director	Q468499	ツヴァ・ノヴォトニー		
+Q56452582	writer	Q468499	ツヴァ・ノヴォトニー		
+Q56452582	producer	Q86921294	Elisabeth Kvithyll		
+Q56452582	cinematographer	Q5545321	Jonas Alarik		
+Q56452582	cast	Q4580475	Pia Tjelta		
+Q56452582	cast	Q11988240	Marianne Krogh		
+Q56452582	cast	Q1780001	Anders Baasmo Christiansen		
+Q56452582	cast	Q11995196	Per Frisch		
+Q58097247	director	Q4753869	안데르스 마테센		
+Q58097247	director	Q37494099	索布约恩·克里斯托弗森		
+Q58097247	writer	Q4753869	안데르스 마테센		
+Q58097247	composer	Q60458843	Christian Vinten		
+Q58097247	producer	Q2846114	Anders Mastrup		
+Q58097247	producer	Q59781212	Trine Heidegaard		
+Q58097247	producer	Q59781216	Cemille Matthesen		
+Q58097247	cinematographer	Q38053700	Niels Grønlykke		
+Q58097247	editor	Q37493515	Kristian Håskjold		
+Q58097247	followed_by	Q98131841	Checkered Ninja 2		
+Q60581101	director	Q11891797	Saara Cantell		
+Q60581101	writer	Q11892190	Sami Keski-Vähälä		
+Q60581101	composer	Q11851552	Anna-Mari Kähärä		
+Q60581101	producer	Q100898517	Sari Lempiäinen		
+Q60581101	producer	Q110541706	Teea Hyytiä		
+Q60581101	cinematographer	Q110541712	Marita Hällfors		
+Q60581101	editor	Q111445093	Anne Lakanen		
+Q60581101	costume_designer	Q120992163	Auli Turtiainen		
+Q60581101	production_designer	Q106520941	Minna Santakari		
+Q60581101	cast	Q5714773	Henna Vänninen	Martta	
+Q60581101	cast	Q29418930	Antti Autio	Oskari Oikotie	
+Q60581101	cast	Q110576661	Laura Happonen	Heidin äiti	
+Q60581101	cast	Q110576640	Celina Fallström	Onneli	
+Q60581101	cast	Q110576644	Olga Ritvanen	Anneli	
+Q60581101	cast	Q110576657	Selma Cristina Teixeira Santini	nainen Portugalissa	
+Q60581101	cast	Q110576646	Aamu Sorvoja	Heidi	
+Q60581101	cast	Q1386535	Michael Monroe	Unimaailman virkailija	
+Q60581101	cast	Q23698906	Sonja Halla-aho	Anni	
+Q60581101	cast	Q16988853	Ville Myllyrinne	Vekotiitus Vappunen	
+Q60581101	cast	Q3267077	Jani Toivola	kaupunginjohtaja	
+Q60581101	cast	Q6109587	Jaakko Saariluoma	Urho Ulpukka	
+Q60581101	cast	Q11871841	Kiti Kokkonen	Tangelstiina	
+Q60581101	cast	Q11856982	Eija Ahvo	rouva Ruusupuu	
+Q60581101	cast	Q11851476	Anja Pohjola	Ulpukan äiti	
+Q60581101	cast	Q16990431	Johanna af Schultén	rouva Rosina	
+Q60581101	cast	Q1329528	Elina Knihtilä	Tingelstiina	
+Q60581101	follows	Q28720641	Jill, Joy and the Mysterious Stranger		
+Q55955678	director	Q1815816	Markku Pölönen		
+Q55955678	writer	Q1815816	Markku Pölönen		
+Q55955678	writer	Q16298700	Antti Heikkinen		
+Q55955678	composer	Q11887619	Pessi Levanto		
+Q55955678	producer	Q6771509	Markus Selin		
+Q55955678	producer	Q11867692	Jukka Helle		
+Q55955678	producer	Q25451737	Risto Salomaa		
+Q55955678	cinematographer	Q42038413	Konsta Sohlberg		
+Q55955678	editor	Q11871564	Kimmo Taavila		
+Q55955678	cast	Q11882588	Mika Nuojua	Aatos	
+Q55955678	cast	Q16989612	Marja Packalén	opettajatar	
+Q55955678	cast	Q60295240	Konsta Laakso	Veikko	
+Q55955678	cast	Q1576624	Hannu-Pekka Björkman	Kullervo	
+Q55955678	cast	Q3462349	Marjaana Maijala	Ella	
+Q55955678	cast	Q11852273	Antti Virmavirta	Kalevi	
+Q55955678	cast	Q16989641	Sanna-Kaisa Palo	Akuliina	
+Q55955678	cast	Q55955716	Oona Airola	Anni	
+Q56401797	director	Q16300140	Heikki Kujanpää		
+Q56401797	writer	Q11882782	Mikko Reitala		
+Q56401797	writer	Q16300140	Heikki Kujanpää		
+Q56401797	cinematographer	Q26817986	Heikki Färm		
+Q56401797	editor	Q30174093	Jussi Rautaniemi		
+Q56401797	cast	Q6777340	Martti Suosalo		
+Q56401797	cast	Q11886275	Paavo Kinnunen		
+Q56401797	cast	Q11875248	Leena Pöysti		
+Q56401797	cast	Q11868039	Jussi Lehtonen		
+Q56401797	cast	Q3462630	Jani Volanen		
+Q56401797	cast	Q7923144	Vesa Vierikko		
+Q56550943	director	Q15629649	Selma Vilhunen		
+Q56550943	writer	Q15878269	Kirsikka Saari		
+Q56550943	producer	Q67745443	Elli Toivoniemi		
+Q56550943	producer	Q87096608	Venla Hellstedt		
+Q56550943	cast	Q397682	Ville Haapasalo		
+Q56550943	cast	Q523373	Pihla Viitala		
+Q56550943	cast	Q92071276	Rosa Honkonen		
+Q56550943	cast	Q105150265	Jere Ristseppä		
+Q56550943	cast	Q16981080	Katja Küttner		
+Q60172892	follows	Q15619286	The Anderssons Rock the Mountains		
+Q60172892	followed_by	Q76945947	Sune – Best Man		
+Q30126665	director	Q30126686	Gustav Möller		
+Q30126665	writer	Q30126686	Gustav Möller		
+Q30126665	writer	Q72549378	Emil Nygaard Albertsen		
+Q30126665	producer	Q86496606	Lina Flint		
+Q30126665	cinematographer	Q70068118	ジャスパー・スパニング		
+Q30126665	editor	Q70922601	Carla Luffe Heintzelmann		
+Q30126665	production_designer	Q96105435	Gustav Pontoppidan		
+Q30126665	cast	Q38052431	Katinka Evers-Jahnsen		
+Q30126665	cast	Q71247235	카밀라 라우		
+Q30126665	cast	Q40011793	Jessica Dinnage		
+Q30126665	cast	Q12318966	ヤコブ・ローマン		
+Q30126665	cast	Q12319951	Johan Olsen		
+Q30126665	cast	Q12327753	모르텐 툰보		
+Q30126665	cast	Q12330253	Omar Shargawi		
+Q30126665	cast	Q2185527	모르텐 수르발레		
+Q30126665	cast	Q12301381	Anders Brink Madsen		
+Q30126665	cast	Q5251626	ローラ・ブロ		
+Q30126665	cast	Q69505849	Jeanette Lindbæk		
+Q30126665	cast	Q38052491	Peter Christoffersen		
+Q30126665	cast	Q40011809	Simon Bennebjerg		
+Q30126665	cast	Q3365380	Jakob Cedergren		
+Q30126665	award		Sundance Film Festival - Audience Award – Best Foreign Feature Film		
+Q30126665	award		IFFR audience award		
+Q56549297	director	Q16165163	John Andreas Andersen		
+Q56549297	writer	Q326393	Harald Rosenløw Eeg		
+Q56549297	writer	Q21160825	John Kåre Raake		
+Q56549297	composer	Q957964	Johan Söderqvist		
+Q56549297	producer	Q19460192	Martin Sundland		
+Q56549297	cinematographer	Q1699611	John Christian Rosenlund		
+Q56549297	cinematographer	Q16165163	John Andreas Andersen		
+Q56549297	cast	Q1779957	Ane Dahl Torp		
+Q56549297	cast	Q15678075	Stig Amdam		
+Q56549297	cast	Q1190263	Kristoffer Joner		
+Q56549297	cast	Q15675689	Jonas Hoff Oftebro		
+Q56549297	cast	Q17093649	Ingvild Haugstad		
+Q56549297	award		The Amanda Public Choice Award		
+Q56549297	award		Kanon People's Choice Award		
+Q56549297	follows	Q19372190	The Wave		
+Q48550528	director	Q958200	Erik Poppe		
+Q48550528	writer	Q958200	Erik Poppe		
+Q48550528	writer	Q2646396	Anna Bache-Wiig		
+Q48550528	composer	Q8030118	Wolfgang Plagge		
+Q48550528	cinematographer	Q86366041	Martin Otterbeck		
+Q48550528	cast	Q50518177	Andrea Berntzen	Kaja	
+Q48550528	award		European Film Award for Best Cinematographer		
+Q48550528	subject		Utøya massacre		
+Q30782103	director	Q12321487	Kaspar Munk		
+Q30782103	writer	Q12303928	Bo Hr. Hansen		
+Q30782103	writer	Q12321487	Kaspar Munk		
+Q30782103	writer	Q12332116	Poul Berg		
+Q30782103	composer	Q12303928	Bo Hr. Hansen		
+Q30782103	composer	Q15455525	Flemming Nordkrog		
+Q30782103	producer	Q22344625	Silje Hopland Eik		
+Q30782103	producer	Q95670973	Anni Faurbye Fernandez		
+Q30782103	producer	Q104512213	Stinna Lassen		
+Q30782103	cinematographer	Q70070411	Adam Wallensten		
+Q30782103	editor	Q40087822	Lars Therkelsen		
+Q30782103	editor	Q70915552	Anders Albjerg Kristiansen		
+Q30782103	production_designer	Q38054944	Sabine Hviid		
+Q30782103	production_designer	Q139585342	Csaba Lódi		
+Q30782103	cast	Q112954606	Elvira Glahn	Josephine K.	
+Q30782103	cast	Q40020468	Albert Werner	Oscar	
+Q30782103	cast	Q15766036	Henrik Mestad	Mester Millanconda	
+Q30782103	cast	Q112954605	Martin Hylander	Biolog-Henrik	
+Q30782103	cast	Q112954610	Emma Karla Munk Henriksen	Viola	
+Q30782103	cast	Q12331152	Педер Хольм Йохансен	Valla	
+Q30782103	cast	Q112954609	Marie Lund Asholt	Anne Katrine	
+Q30782103	cast	Q4578673	키르스텐 올레센	Thuja	
+Q30782103	cast	Q112954598	Gerda Lie Kaas	Clara	
+Q30782103	cast	Q12335233	Signe Egholm Olsen	Mille	
+Q30782103	cast	Q112954601	Vera Mi Bachmann	Kahla	
+Q30782103	cast	Q66429388	May Lifschitz	Kimæra	
+Q30782103	cast	Q454250	Sonja Richter	Moster Isa	
+Q30782103	cast	Q112954607	Vera Larsson	Alberte	
+Q30782103	cast	Q65230324	Lydmor		
+Q30782103	cast	Q12336438	Сонни Лахи		
+Q30782103	cast	Q12321995	Кит Эйчлер		
+Q60737704	director	Q5346042	Edward af Sillén		
+Q60737704	writer	Q5886919	Lars Yngve Johansson		
+Q60737704	composer	Q955209	Tomas Ledin		
+Q60737704	producer	Q1362693	Patrick Ryborn		
+Q60737704	cinematographer	Q11898672	Tuomo Hutri		
+Q60737704	cast	Q110028394	Náthalie Andersson	Unga Molly	
+Q60737704	cast	Q110028398	Lovisa Bengtsson	Unga Isabella	
+Q60737704	cast	Q5386449	Eric Ericson	Doktor	
+Q60737704	cast	Q110028387	Ola Normelli	Finanskille	
+Q60737704	cast	Q167106	Marie Richardson	Greta	
+Q60737704	cast	Q110028396	Egon Ebbersten	Unga Simon	
+Q60737704	cast	Q110028400	Olof Åhman	Unga Edvin	
+Q60737704	cast	Q5555780	Per Andersson	Kristoffer	
+Q60737704	cast	Q6215440	Johan Ulveson	Rune	
+Q60737704	cast	Q1339383	Jonas Karlsson	Edvin	
+Q60737704	cast	Q110028392	Katerina Pavlou	Bargäst	
+Q60737704	cast	Q463674	Mirja Turestedt	Agnes	
+Q60737704	cast	Q65230571	Christian Hillborg	Simon	
+Q60737704	cast	Q229669	Malin Akerman	Isabella	
+Q60737704	cast	Q4969343	Shima Niavarani	Molly	
+Q60737704	cast	Q83848	Johan Rheborg	Chefen	
+Q60737704	cast	Q110028384	Antonio Tengroth	self	
+Q65229736	director	Q61103371	Miia Tervo		
+Q65229736	writer	Q61103371	Miia Tervo		
+Q65229736	composer	Q5483198	Lau Nau		
+Q65229736	producer	Q81802060	Mahsa Malka		
+Q65229736	cinematographer	Q116259307	Arsen Sarkisiants		
+Q65229736	executive_producer	Q11890724	Riina Hyytiä		
+Q65229736	cast	Q11855239	Chike Ohanwe		
+Q65229736	cast	Q100353921	Amir Escandari		
+Q65229736	cast	Q26720311	Mimosa Willamo		
+Q65229736	cast	Q1576624	Hannu-Pekka Björkman		
+Q65229736	cast	Q468517	Pamela Tola		
+Q65229736	cast	Q11882539	Miitta Sorvali		
+Q65229736	cast	Q55955716	Oona Airola		
+Q65229736	cast	Q7322070	Ria Kataja		
+Q65229736	award		Jussi Award for Best Film		
+Q47459278	director	Q18935991	Michael Noer		
+Q47459278	writer	Q18935991	Michael Noer		
+Q47459278	writer	Q47508118	Jesper Fink		
+Q47459278	producer	Q104512195	René Ezra		
+Q47459278	producer	Q104512197	Tomas Radoor		
+Q47459278	producer	Q113531867	Matilda Appelin		
+Q47459278	cinematographer	Q19097520	Sturla Brandth Grøvlen		
+Q47459278	editor	Q38402764	Adam Nielsen		
+Q47459278	costume_designer	Q73984824	Louize Nissen		
+Q47459278	cast	Q12332899	Расмус Хаммерих		
+Q47459278	cast	Q12326249	Martin Greis-Rosenthal		
+Q47459278	cast	Q3358372	Magnus Krepper		
+Q47459278	cast	Q1789215	크리스티안 할켄		
+Q47459278	cast	Q12338499	Søren Christensen		
+Q47459278	cast	Q289924	ギタ・ナービュ		
+Q47459278	cast	Q21014507	古斯塔夫·吉塞		
+Q47459278	cast	Q71247429	Clement Blach Petersen		
+Q47459278	cast	Q116052422	Q116052422		
+Q47459278	cast	Q30126686	Gustav Möller		
+Q47459278	cast	Q71247314	Adam Fischer		
+Q47459278	cast	Q35985727	埃利奥特·克罗西特·霍弗		
+Q47459278	cast	Q61887597	Clara Rosager		
+Q47459278	cast	Q38471187	Oscar Dyekjær Giese		
+Q47459278	cast	Q12319241	Jens Brenaa		
+Q47459278	cast	Q71246985	Henrik Hansen		
+Q47459278	cast	Q530997	Jesper Christensen		
+Q85971927	director	Q11988342	Marit Moum Aune		
+Q85971927	director	Q17107287	Rasmus A. Sivertsen		
+Q85971927	writer	Q11980337	Karsten Fullu		
+Q85971927	producer	Q17107559	Eirik Smidesang Slåen		
+Q85971927	producer	Q18912952	Ove Heiborg		
+Q85971927	producer	Q107068316	Heidi Palm Sandberg		
+Q85971927	follows	Q4240309	Captain Sabertooth and the Treasure of Lama Rama		
+Q85971927	followed_by	Q133500414	Captain Sabertooth and the Countess of Grel		
+Q81089885	director	Q1261910	Tiina Lymi		
+Q81089885	writer	Q1261910	Tiina Lymi		
+Q81089885	writer	Q28028727	Anna Viitala		
+Q81089885	composer	Q22681343	Juri Seppä		
+Q81089885	producer	Q6771509	Markus Selin		
+Q81089885	producer	Q11867692	Jukka Helle		
+Q81089885	cinematographer	Q42038413	Konsta Sohlberg		
+Q81089885	editor	Q110914972	Joona Louhivuori		
+Q81089885	costume_designer	Q11897553	Tiina Kaukanen		
+Q81089885	production_designer	Q95735697	Sattva-Hanna Toiviainen		
+Q81089885	cast	Q11855239	Chike Ohanwe	sairaanhoitaja	
+Q81089885	cast	Q16989612	Marja Packalén	Anita	
+Q81089885	cast	Q108466793	Ellen Herler	Terttu	
+Q81089885	cast	Q3377711	Petteri Summanen	Antti Pasanen	
+Q81089885	cast	Q11871564	Kimmo Taavila	Peippo	
+Q81089885	cast	Q11888205	Pirjo Lonka	nainen baarista	
+Q81089885	cast	Q3462349	Marjaana Maijala	Anna	
+Q81089885	cast	Q11232333	Niko Saarela	Reponen	
+Q81089885	cast	Q70886115	Olli Rahkonen	Ossi	
+Q81089885	cast	Q111699896	Elsa Lehtinen	Iida Reponen	
+Q81089885	cast	Q5495033	Kaisa Mattila	Pasasen pomo	
+Q81089885	cast	Q11880982	Marja Salo	Enni	
+Q81089885	cast	Q11867028	Jorma Tommila	tarhasetä	
+Q81089885	cast	Q16989760	Mari Perankoski	tarhatäti	
+Q81089885	cast	Q5996347	Juha Muje	Antero	
+Q81089885	cast	Q7322070	Ria Kataja	Pia	
+Q81089885	cast	Q5400422	Sari Siikander	infotyöntekijä	
+Q81089885	cast	Q16989641	Sanna-Kaisa Palo	Tertun mummo	
+Q81089885	cast	Q111699891	Olavi von Bagh	Paavo	
+Q81089885	cast	Q27653748	Santeri Helinheimo Mäntylä	Janne	
+Q81089885	follows	Q26768815	Man and a Baby		
+Q81089885	subject		single parent		
+Q55766341	director	Q28108868	May el-Toukhy		
+Q55766341	writer	Q28108868	May el-Toukhy		
+Q55766341	writer	Q62554555	Maren Louise Käehne		
+Q55766341	composer	Q1584183	Jon Ekstrand		
+Q55766341	producer	Q104153935	Caroline Blanco		
+Q55766341	producer	Q104512195	René Ezra		
+Q55766341	cinematographer	Q70068118	ジャスパー・スパニング		
+Q55766341	cast	Q19772379	Gustav Lindh		
+Q55766341	cast	Q65967312	Carla Philip Røder		
+Q55766341	cast	Q12325623	마스 크나레보르		
+Q55766341	cast	Q107110126	Elias Budde Christensen		
+Q55766341	cast	Q7239361	プレーベン・クレステンセン		
+Q55766341	cast	Q469983	Trine Dyrholm		
+Q55766341	cast	Q72214386	Q72214386		
+Q55766341	cast	Q61887587	Ella Solgaard		
+Q55766341	cast	Q3358372	Magnus Krepper		
+Q55766341	cast	Q71247089	Mathias Skov Rahbæk		
+Q55766341	cast	Q12331609	Peter Khouri		
+Q55766341	cast	Q28805395	Frederikke Dahl Hansen		
+Q55766341	award		Nordic Council Film Prize		
+Q55766341	award		Bodil Award for Best Actress in a Leading Role		
+Q55766341	award		Bodil Award for Best Actor in a Supporting Role		
+Q55766341	award		Bodil Award for Best Danish Film		
+Q55766341	award		Robert Award for Best Actor in a Supporting Role		
+Q55766341	award		Robert Award for Best Danish Film		
+Q55766341	award		Robert Award for Best Actress in a Leading Role		
+Q55766341	award		Robert Award for Best Score		
+Q55766341	award		Robert Award for Best Cinematography		
+Q55766341	award		Sundance Film Festival - Audience Award – Best Foreign Feature Film		
+Q55766341	award		Bodil Award for Best Cinematographer		
+Q55766341	award		Robert Award for Best Sound Design		
+Q55766341	award		Dragon Award Best Nordic Film		
+Q55766341	subject		stepmother–stepson incest		
+Q61742357	director	Q63093263	Markus Lehmusruusu		
+Q61742357	writer	Q387853	Sinikka Nopola		
+Q61742357	writer	Q635171	Tiina Nopola		
+Q61742357	composer	Q1658005	Iiro Rantala		
+Q61742357	producer	Q387853	Sinikka Nopola		
+Q61742357	producer	Q635171	Tiina Nopola		
+Q61742357	producer	Q6771509	Markus Selin		
+Q61742357	producer	Q11867692	Jukka Helle		
+Q61742357	producer	Q25451737	Risto Salomaa		
+Q61742357	cinematographer	Q1258139	Robert Nordström		
+Q61742357	editor	Q110914972	Joona Louhivuori		
+Q61742357	production_designer	Q108759763	Otso Linnalaakso		
+Q61742357	cast	Q106761627	Eelis Kesäläinen	Sylvester Pöntinen	
+Q61742357	cast	Q468517	Pamela Tola		
+Q61742357	cast	Q3742931	Timo Lavikainen	Bill Pöntinen	
+Q61742357	cast	Q4348196	Karoliina Blackburn	Angelika Pöntinen	
+Q61742357	cast	Q16298521	Lari Halme		
+Q61742357	cast	Q18633053	Jenni Kokander		
+Q61742357	cast	Q11902835	Ylermi Rajamaa	Lennart Lindberg	
+Q61742357	cast	Q104203655	Lumi Kallio	Nelli Perhonen	
+Q61742357	cast	Q61742345	Silmu Ståhlberg	Ricky Rapper	
+Q76945947	follows	Q60172892	Sune vs Sune		
+Q76945947	followed_by	Q99231993	Sune – Uppdrag midsommar		
+Q61858326	director	Q450630	Mikael Håfström		
+Q61858326	writer	Q278285	Erlend Loe		
+Q61858326	cast	Q3358341	Magnus Roosmann		
+Q61858326	cast	Q16159216	Alba August		
+Q61858326	cast	Q1339383	Jonas Karlsson	Hannes Råstam	
+Q61858326	cast	Q768899	ダーヴィッド・デンシック	Sture Bergwall	
+Q61858326	subject		Sture Bergwall		
+Q97545058	director	Q7710899	Pål Øie		
+Q97545058	writer	Q72322138	Kjersti Helen Rasmussen		
+Q97545058	cinematographer	Q22249826	Sjur Aarthun		
+Q97545058	cast	Q12006179	Thorbjørn Harr		
+Q97545058	cast	Q20049446	Mikkel Bratt Silset		
+Q97545058	cast	Q42310214	Ingvild Holthe Bygdnes		
+Q97545058	cast	Q4941851	リサ・カーレヘッド		
+Q97545058	award		Kanon People's Choice Award		

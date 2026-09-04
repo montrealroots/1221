@@ -13,7 +13,8 @@ import type { Simulation } from '@/engine';
 import { CITIES, AIRPORTS } from '@/engine/content/geography';
 import { CATALOG } from '@/engine/content/catalog';
 import { VEHICLE_MODELS } from '@/engine/content/vehicles';
-import { BUYERS, AGENCIES } from '@/engine/content/industry';
+import { AGENCIES } from '@/engine/content/industry';
+import { STUDIOS } from '@/engine/content/studios';
 import { normalise, scoreMatch } from '@/engine/content/reference';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { labelForRoute } from '@/app/game-context';
@@ -47,6 +48,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/projects', label: 'Projects', keywords: ['film', 'movie', 'script', 'write', 'produce', 'direct', 'shoot', 'post', 'release', 'box office', 'distribution'], detail: 'Development to release' },
   { route: '/workspace/company', label: 'Company', keywords: ['studio', 'business', 'found company', 'employees', 'payroll', 'equipment', 'merchandise'], detail: 'Found and run a company' },
   { route: '/workspace/awards', label: 'Awards', keywords: ['nomination', 'ceremony', 'festival', 'campaign', 'oscars', 'emmys', 'cannes'], detail: 'Awards and festivals' },
+  { route: '/workspace/industry', label: 'Industry', keywords: ['studio', 'studios', 'catalogue', 'filmography', 'franchise', 'executives', 'presidents', 'disney', 'universal', 'warner', 'netflix', 'a24'], detail: 'The real studios, their people and their catalogues' },
   { route: '/workspace/history', label: 'History', keywords: ['timeline', 'past', 'memories', 'milestones', 'what happened'], detail: 'Everything that has happened' },
   { route: '/workspace/character', label: 'Character', keywords: ['attributes', 'traits', 'skills', 'reputation', 'me', 'stats'], detail: 'Attributes, traits and standing' },
   { route: '/workspace/settings', label: 'Settings', keywords: ['preferences', 'accessibility', 'sandbox', 'motion', 'audio', 'tutorial'], detail: 'Preferences and sandbox' },
@@ -285,9 +287,9 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     const score = scoreMatch(query, item);
     push('Things to buy', item.id, item.name, `${titleCaseLabel(item.category)} · ${formatMoneyCompact(item.basePrice)}`, '/workspace/shopping', score);
   }
-  for (const buyer of BUYERS.all()) {
-    const score = scoreMatch(query, buyer);
-    push('Industry', buyer.id, buyer.name, buyer.description, '/workspace/projects', score);
+  for (const studio of STUDIOS.all()) {
+    const score = scoreMatch(query, studio);
+    push('Industry', studio.id, studio.name, studio.description, '/workspace/industry', score);
   }
   for (const agency of AGENCIES.all()) {
     const score = scoreMatch(query, agency);

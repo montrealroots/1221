@@ -20,6 +20,7 @@ import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/
 import { buildFactors } from '../core/audit';
 import { BUYERS, GENRE_APPETITE, GENRE_BUDGET_INDEX, type Buyer } from '../content/industry';
 import { generateProjectTitle } from '../content/names';
+import { normaliseTitle, titleTaken } from '../content/filmography';
 import { filmIncentive } from '../content/tax';
 import { systemModifier } from '../domain/attributes';
 
@@ -121,12 +122,22 @@ export function registerFilm(sim: Simulation): void {
 
   // --- Idea and rights -----------------------------------------------------
 
-  sim.onCommand<{ title?: string; format: ProjectFormat; genres: string[]; logline: string; synopsis?: string; companyId?: Id; targetAudience?: string; comparables?: string[] }, { projectId: Id }>(
+  sim.onCommand<{ title?: string; format: ProjectFormat; genres: string[]; logline: string; synopsis?: string; companyId?: Id; targetAudience?: string; comparables?: string[]; parentSeriesId?: Id; franchiseId?: Id }, { projectId: Id }>(
     'film.create_project',
     (p, { sim: s }) => {
       if (p.genres.length === 0) throw new CommandError('A project needs at least one genre.');
       const player = s.player;
-      const title = p.title?.trim() || generateProjectTitle(s.rng('title', s.counter('project_title')));
+      // No two things in the world may share a title, real or made here,
+      // unless the new one belongs to the same series or franchise.
+      const taken = (candidate: string) => {
+        const key = normaliseTitle(candidate);
+        return titleTaken(candidate) || Object.values(s.universe.projects).some((other) => normaliseTitle(other.title) === key);
+      };
+      const requested = p.title?.trim();
+      if (requested && taken(requested) && !p.parentSeriesId && !p.franchiseId) {
+        throw new CommandError(`"${requested}" is already a film or series. A title has to be its own; give a sequel or a remake a subtitle or a number.`);
+      }
+      const title = requested || generateProjectTitle(s.rng('title', s.counter('project_title')), taken);
       const company = p.companyId ? s.universe.companies[p.companyId] : undefined;
       const productionCountry = countryOfCity(company?.headquartersLocationId) ?? countryOfCity(player.currentLocationId) ?? 'us';
 
@@ -142,6 +153,8 @@ export function registerFilm(sim: Simulation): void {
         phaseHistory: [{ phase: 'idea', enteredAt: s.now }],
         ownerCompanyId: p.companyId,
         createdById: player.id,
+        parentSeriesId: p.parentSeriesId,
+        franchiseId: p.franchiseId,
         productionCountryId: productionCountry,
         language: primaryLanguageOf(productionCountry),
         attachments: [],
@@ -991,6 +1004,7 @@ export function registerBuyerOffer(sim: Simulation): void {
       project.budgetLocked = true;
       project.greenlitAt = s.now;
       project.distributorName = buyer.name;
+      project.studioId = buyer.studioId;
       advancePhase(s, project, 'financing');
 
       // The buyer funds a production account.

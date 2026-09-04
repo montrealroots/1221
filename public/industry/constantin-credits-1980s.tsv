@@ -1,0 +1,149 @@
+qid	role	personQid	name	character	ordinal
+Q62730	director	Q65321	Wolfgang Petersen		
+Q62730	writer	Q65321	Wolfgang Petersen		
+Q62730	composer	Q62961	Klaus Doldinger		
+Q62730	producer	Q1560949	Günter Rohrbach		
+Q62730	cinematographer	Q62652	Jost Vacano		
+Q62730	editor	Q98520	Hannes Nikel		
+Q62730	executive_producer	Q541554	Mark Damon		
+Q62730	cast	Q96210	Hubertus Bengsch	1st Watch Officer	
+Q62730	cast	Q1669533	Martin May	Fähnrich Ullmann	
+Q62730	cast	Q90041	Ralf Richter	Maat Frenssen	
+Q62730	cast	Q61356	Jürgen Prochnow	Kapitänleutnant	
+Q62730	cast	Q102976	Bernd Tauber	Obersteuermann Kriechbaum	
+Q62730	cast	Q23062965	Joachim Bernhard	Bibelforscher	
+Q62730	cast	Q73899	Klaus Wennemann	Chief Engineer	
+Q62730	cast	Q111263	Oliver Stritzel	Schwalle	
+Q62730	cast	Q112832	Rita Cadillac		
+Q62730	cast	Q103579	Claude-Oliver Rudolph	Ario	
+Q62730	cast	Q186692	Uwe Ochsenknecht	Bootsmann Lamprecht	
+Q62730	cast	Q95580	Martin Semmelrogge	2nd Watch Officer	
+Q62730	cast	Q97620	Jan Fedder	Maat Pilgrim	
+Q62730	cast	Q275247	Herbert Grönemeyer	Leutnant Werner	
+Q62730	cast	Q68468	Otto Sander	Kapitänleutnant Philipp Thomsen	
+Q62730	cast	Q1483964	Konrad Becker	Böckstiegel	
+Q62730	cast	Q85547	Günter Lamprecht	the Captain of the Weser	
+Q62730	cast	Q92095	Heinz Hoenig	Maat Hinrich	
+Q62730	cast	Q69340	Sky du Mont	an officer aboard the Weser	
+Q62730	cast	Q86767	Erwin Leder	Obermaschinist Johann	
+Q62730	subject		World War II		
+Q62730	subject		Battle of the Atlantic		
+Q62730	subject		submarine warfare		
+Q316555	director	Q65321	Wolfgang Petersen		
+Q316555	writer	Q65321	Wolfgang Petersen		
+Q316555	writer	Q102978	Herman Weigel		
+Q316555	composer	Q62961	Klaus Doldinger		
+Q316555	producer	Q61881	Bernd Eichinger		
+Q316555	cinematographer	Q62652	Jost Vacano		
+Q316555	editor	Q12012268	Jane Seitz		
+Q316555	costume_designer	Q113501854	Diemut Remy		
+Q316555	cast	Q100417	Tilo Prückner	Whooshwoozool	
+Q316555	cast	Q638177	Barret Oliver	Bastian Balthazar Bux	
+Q316555	cast	Q2424735	Thomas Hill	Carl Conrad Coreander	
+Q316555	cast	Q178654	Patricia Hayes	Urgl	
+Q316555	cast	Q447533	Tami Stronach	The Childlike Empress	
+Q316555	cast	Q464746	Deep Roy	Gluckuk	
+Q316555	cast	Q266458	Noah Hathaway	Atreyu	
+Q316555	cast	Q766783	Moses Gunn	Cairon	
+Q316555	cast	Q535077	Sydney Bromley	Engywook	
+Q316555	cast	Q75136	Silvia Seidel		
+Q316555	cast	Q325687	Gerald McRaney		
+Q316555	followed_by	Q704732	The NeverEnding Story II: The Next Chapter		
+Q155018	director	Q154490	Jean-Jacques Annaud		
+Q155018	writer	Q503767	Andrew Birkin		
+Q155018	writer	Q981246	Gérard Brach		
+Q155018	writer	Q3141551	Howard Franklin		
+Q155018	writer	Q21004785	Alain Godard		
+Q155018	composer	Q106221	James Horner		
+Q155018	producer	Q61881	Bernd Eichinger		
+Q155018	producer	Q102978	Herman Weigel		
+Q155018	producer	Q718098	Alexandre Mnouchkine		
+Q155018	producer	Q2713078	Franco Cristaldi		
+Q155018	creator	Q154490	Jean-Jacques Annaud		
+Q155018	cinematographer	Q1567717	Tonino Delli Colli		
+Q155018	editor	Q12012268	Jane Seitz		
+Q155018	costume_designer	Q439536	Gabriella Pescucci		
+Q155018	production_designer	Q939842	Dante Ferretti		
+Q155018	cast	Q472419	Leopoldo Trieste	Michael of Cesena	
+Q155018	cast	Q3142466	Lucien Bodard	Bertrand du Pouget	
+Q155018	cast	Q718053	William Hickey	Ubertino of Casale	
+Q155018	cast	Q181936	F. Murray Abraham	Bernard Gui	
+Q155018	cast	Q205868	Vernon Dobtcheff	Hugh of Newcastle	
+Q155018	cast	Q204590	Christian Slater	Adso of Melk	
+Q155018	cast	Q220698	Ron Perlman	Salvatore	
+Q155018	cast	Q4573	Sean Connery	William of Baskerville	
+Q155018	cast	Q121213	Urs Althaus	Venantius	
+Q155018	cast	Q64577	Peter Berling	Jean d'Anneaux	
+Q155018	cast	Q3622665	Aristide Caporale		
+Q155018	cast	Q1752163	Peter Clös		
+Q155018	cast	Q364708	Donald O'Brien	Pietro d'Assisi	
+Q155018	cast	Q1377478	Feodor Chaliapin Jr.		
+Q155018	cast	Q53048	Francesco Maselli		
+Q155018	cast	Q101720	Mark Bellinghaus		
+Q155018	cast	Q1522638	Gianni Rizzo		
+Q155018	cast	Q269310	Kim Rossi Stuart	a novice	
+Q155018	cast	Q503767	Andrew Birkin	Cuthbert of Winchester	
+Q155018	cast	Q3751099	Franco Adducci		
+Q155018	cast	Q15648881	Pietro Ceccarelli		
+Q155018	cast	Q530176	Franco Diogene		
+Q155018	cast	Q1334420	Elya Baskin	Severinus	
+Q155018	cast	Q3847540	Maria Tedeschi		
+Q155018	cast	Q74037	Michael Habeck	Berengar	
+Q155018	cast	Q45233	Helmut Qualtinger	Remigio de Varagine	
+Q155018	cast	Q260909	Valentina Vargas	The Girl	
+Q155018	cast	Q95316	Ludger Pistor		
+Q155018	cast	Q3839775	Luigi Leoni		
+Q155018	cast	Q346540	Michael Lonsdale	The Abbot	
+Q155018	cast	Q84948	Volker Prechtel	Malachia	
+Q155018	cast	Q3750632	Francesco Scali		
+Q155018	cast	Q4015584	Vittorio Zarfati		
+Q155018	award		César Award for Best Foreign Film		
+Q140918	director	Q103581	Hajo Gies		
+Q140918	writer	Q67475	Horst Söhnlein		
+Q140918	writer	Q22268628	Thomas Wittenburg		
+Q140918	composer	Q457829	Klaus Lage		
+Q140918	producer	Q22284876	Hartmut Grund		
+Q140918	cinematographer	Q110387	Jürgen Jürges		
+Q140918	editor	Q17388563	Margot von Schlieffen		
+Q140918	cast	Q98867	Eberhard Feik	Christian Thanner	
+Q140918	cast	Q63062	Götz George	Horst Schimanski	
+Q140918	cast	Q916370	Brigitte Janner		
+Q140918	cast	Q1351919	Erich Bar		
+Q140918	cast	Q90878	Renan Demirkan		
+Q140918	cast	Q123068	Charles Brauer		
+Q140918	cast	Q715111	Rufus		
+Q140918	cast	Q101104	Martin Lüttge		
+Q140918	cast	Q1096563	Claude Carliez		
+Q140918	cast	Q1609147	Herbert Steinmetz		
+Q140918	cast	Q2476310	Ulrich Matschoss		
+Q475800	director	Q77593	Uli Edel		
+Q475800	writer	Q5264772	Desmond Nakano		
+Q475800	composer	Q185343	Mark Knopfler		
+Q475800	producer	Q61881	Bernd Eichinger		
+Q475800	cinematographer	Q1796276	Stefan Czapsky		
+Q475800	editor	Q91260	Peter Przygodda		
+Q475800	cast	Q1147798	John Costelloe		
+Q475800	cast	Q3376545	Peter Dobson		
+Q475800	cast	Q40128	Ricki Lake		
+Q475800	cast	Q329700	Burt Young		
+Q475800	cast	Q463407	Frank Vincent		
+Q475800	cast	Q16120581	Christopher Curry		
+Q475800	cast	Q1373450	Mike Starr		
+Q475800	cast	Q310947	Stephen Baldwin		
+Q475800	cast	Q2156496	David Warshofsky		
+Q475800	cast	Q5146252	Colleen Flynn		
+Q475800	cast	Q1680722	James Lorinz		
+Q475800	cast	Q254431	Alexis Arquette		
+Q475800	cast	Q3161136	James Harper		
+Q475800	cast	Q316446	Sam Rockwell		
+Q475800	cast	Q503289	Michael O'Hare		
+Q475800	cast	Q718382	Mark Boone Junior		
+Q475800	cast	Q312902	Stephen Lang		
+Q475800	cast	Q5112922	Christopher Murney		
+Q475800	cast	Q2935069	Camille Saviola		
+Q475800	cast	Q2675397	Rutanya Alda		
+Q475800	cast	Q551487	Hubert Selby Jr.		
+Q475800	cast	Q17279374	Jerry Rector		
+Q475800	cast	Q421707	Jerry Orbach		
+Q475800	cast	Q232902	Jennifer Jason Leigh		
+Q475800	subject		prostitution		

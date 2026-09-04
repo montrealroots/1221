@@ -1,0 +1,184 @@
+qid	role	personQid	name	character	ordinal
+Q1762006	director	Q55170	Victor Sjöström		
+Q1762006	writer	Q506829	Hjalmar Bergman		
+Q1762006	composer	Q4934796	Emmy Albiin		
+Q1762006	cinematographer	Q1386853	Julius Jaenzon		
+Q1762006	cast	Q3368115	Harald Schwenzen		
+Q1762006	cast	Q4977938	Concordia Selander		
+Q1762006	cast	Q55170	Victor Sjöström		
+Q1762006	cast	Q4935245	Greta Almroth		
+Q1762006	cast	Q2791645	Olof Ås		
+Q1762006	cast	Q5936814	William Larsson		
+Q1361367	director	Q445917	Mauritz Stiller		
+Q1361367	writer	Q445917	Mauritz Stiller		
+Q1361367	writer	Q1365463	Gustaf Molander		
+Q1361367	producer	Q466626	Charles Magnusson		
+Q1361367	cinematographer	Q5826935	Henrik Jaenzon		
+Q1361367	cast	Q1806230	Lars Hanson		
+Q1361367	cast	Q4967830	Karin Molander		
+Q1361367	cast	Q6228569	Anders de Wahl		
+Q1361367	cast	Q3437434	Tora Teje		
+Q3212086	director	Q51127	Carl Theodor Dreyer		
+Q3212086	writer	Q51127	Carl Theodor Dreyer		
+Q3212086	cinematographer	Q3101912	Q3101912		
+Q3212086	cast	Q6086550	Einar Rød		
+Q3212086	cast	Q4935245	Greta Almroth		
+Q3212086	cast	Q4941835	Hildur Carlberg		
+Q2772060	director	Q5588344	John W. Brunius		
+Q2772060	writer	Q5561070	Sam Ask		
+Q2772060	writer	Q5588344	John W. Brunius		
+Q2772060	cinematographer	Q5627286	Hugo Edlund		
+Q2772060	cast	Q5966388	Nils Lundell		
+Q2772060	cast	Q5605604	Gösta Cederlund		
+Q2772060	cast	Q445570	Gösta Ekman		
+Q2772060	cast	Q5588769	Vilhelm Bryde		
+Q2772060	cast	Q6073196	Axel Ringvall		
+Q2772060	cast	Q534569	Mary Johnson		
+Q10540335	director	Q445917	Mauritz Stiller		
+Q10540335	writer	Q445917	Mauritz Stiller		
+Q10540335	composer	Q6323916	Rudolf Sahlberg		
+Q10540335	cinematographer	Q5826935	Henrik Jaenzon		
+Q10540335	cast	Q496081	Jenny Hasselquist		
+Q10540335	cast	Q6204695	Mathias Taube		
+Q10540335	cast	Q6304304	Urho Somersalmi		
+Q10467385	director	Q445917	Mauritz Stiller		
+Q10467385	writer	Q445917	Mauritz Stiller		
+Q10467385	cinematographer	Q5826935	Henrik Jaenzon		
+Q10467385	cast	Q6023372	Nils Ohlin		
+Q10467385	cast	Q6012641	Carl Nissen		
+Q10467385	cast	Q4981607	Karin Swanström		
+Q10467385	cast	Q496081	Jenny Hasselquist		
+Q1193655	director	Q55170	Victor Sjöström		
+Q1193655	writer	Q44519	Selma Lagerlöf		
+Q1193655	composer	Q709470	Jonathan Richman		
+Q1193655	producer	Q466626	Charles Magnusson		
+Q1193655	cinematographer	Q1386853	Julius Jaenzon		
+Q1193655	cast	Q2791645	Olof Ås		
+Q1193655	cast	Q6197973	Tore Svennberg		
+Q1193655	cast	Q55170	Victor Sjöström		
+Q1193655	cast	Q4977938	Concordia Selander		
+Q1193655	cast	Q3135582	Hilda Borgström		
+Q14955412	director	Q3074844	Ivan Hedqvist		
+Q14955412	writer	Q3417505	Ragnar Hyltén-Cavallius		
+Q14955412	cinematographer	Q6238004	Ragnar Westfelt		
+Q14955412	cast	Q2756324	Torsten Bergström		
+Q1438966	director	Q817442	Benjamin Christensen		
+Q1438966	writer	Q817442	Benjamin Christensen		
+Q1438966	composer	Q1807681	Launy Grøndahl		
+Q1438966	cinematographer	Q4260799	Johan Ankerstjerne		
+Q1438966	editor	Q41340712	Edla Hansen		
+Q1438966	cast	Q817442	Benjamin Christensen		
+Q1438966	cast	Q4947369	Kate Fabian		
+Q1438966	cast	Q3362199	Poul Reumert		
+Q1438966	cast	Q1812128	Ib Schønberg		
+Q1438966	cast	Q4964837	Gerda Madsen		
+Q1438966	cast	Q5361980	Элит Пио		
+Q1438966	cast	Q4990644	Karen Winther		
+Q1438966	cast	Q540098	クララ・ポントピダン		
+Q1438966	cast	Q38052677	Else Vermehren		
+Q1438966	cast	Q4954444	Astrid Holm		
+Q1438966	cast	Q3437434	Tora Teje		
+Q1438966	cast	Q2836639	Alice O'Fredericks		
+Q1438966	cast	Q2469597	Oscar Stribolt		
+Q1438966	subject		Inquisition		
+Q1438966	subject		torture		
+Q1438966	subject		superstition		
+Q1438966	subject		hysteria		
+Q1438966	subject		anxiety		
+Q1438966	subject		witch hunt		
+Q1438966	subject		delusion		
+Q1438966	subject		witchcraft		
+Q18244308	director	Q435739	Prince Wilhelm, Duke of Södermanland		
+Q18244308	cinematographer	Q6027716	Oscar Olsson		
+Q18332777	director	Q817208	Bengt Berg		
+Q18332777	writer	Q817208	Bengt Berg		
+Q18332777	cinematographer	Q817208	Bengt Berg		
+Q5079383	director	Q5588344	John W. Brunius		
+Q5079383	writer	Q5561070	Sam Ask		
+Q5079383	writer	Q5588344	John W. Brunius		
+Q5079383	cinematographer	Q5627286	Hugo Edlund		
+Q5079383	cinematographer	Q6238004	Ragnar Westfelt		
+Q5079383	production_designer	Q5718751	Axel Esbensen		
+Q5079383	cast	Q5588769	Vilhelm Bryde	Charles Zukor	
+Q5079383	cast	Q5341393	Edvin Adolphson	restauranggäst	
+Q5079383	cast	Q4980909	Gerda Ström	fru Kent	
+Q5079383	cast	Q6023372	Nils Ohlin	domstolssekreterare	
+Q5079383	cast	Q4983489	Jenny Tschernichin-Larsson	Henrys mor	
+Q5079383	cast	Q445570	Gösta Ekman	Henry Warden	
+Q5079383	cast	Q121541602	Vera Nordling	bestulen miljonärska	
+Q5079383	cast	Q5547688	Tage Almqvist	restauranggäst	
+Q5079383	cast	Q4940969	Pauline Brunius	Louise Kent	
+Q5079383	cast	Q6017611	John Norrman	restauranggäst	
+Q5079383	cast	Q5936814	William Larsson	advokat	
+Q5079383	cast	Q4723091	Alfred Lundberg	domare	
+Q5079383	cast	Q5782638	Justus Hagman	Elises far	
+Q5079383	cast	Q6194182	Albert Ståhl	hovmästare	
+Q5079383	cast	Q5560419	Ragnar Arvedson	restauranggäst	
+Q5079383	cast	Q6012641	Carl Nissen	doktor Lange	
+Q5079383	cast	Q4962716	Astrid Lindgren	kabaretdansös	
+Q5079383	cast	Q6235153	Kurt Welin	restauranggäst	
+Q5079383	cast	Q5587642	Carl Browallius	Henrys far	
+Q5079383	cast	Q5966388	Nils Lundell	kypare	
+Q5079383	cast	Q120646786	Eskil Emanuel Schön	kabaretdansare	
+Q5079383	cast	Q4990644	Karen Winther	Elsie Campbell	
+Q5079383	cast	Q5810656	Thure Holm	musikprofessor	
+Q5079383	cast	Q5957915	Knut Lindroth	doktor Allen	
+Q10713889	director	Q55170	Victor Sjöström		
+Q10713889	writer	Q55170	Victor Sjöström		
+Q10713889	writer	Q506829	Hjalmar Bergman		
+Q10713889	cinematographer	Q1386853	Julius Jaenzon		
+Q10713889	cast	Q6197973	Tore Svennberg		
+Q10713889	cast	Q722861	Nils Asther		
+Q10713889	cast	Q496081	Jenny Hasselquist		
+Q10544134	director	Q322684	Dimitri Buchowetzki		
+Q10544134	writer	Q5857119	Alfred Fekete		
+Q10544134	cinematographer	Q1386853	Julius Jaenzon		
+Q10544134	cast	Q293276	Lydia Potechina		
+Q10544134	cast	Q443674	Aud Egede-Nissen		
+Q10544134	cast	Q102572	Ferry Sikla		
+Q10544134	cast	Q85877	Walter Janssen		
+Q10544134	cast	Q87190	Alfons Fryland		
+Q10544134	cast	Q91159	Guido Herzfeld		
+Q10544134	cast	Q91333	Jakob Tiedtke		
+Q10544134	cast	Q4826	Rosa Valetti		
+Q18332387	director	Q817208	Bengt Berg		
+Q18332387	cinematographer	Q817208	Bengt Berg		
+Q18290407	cinematographer	Q6027716	Oscar Olsson		
+Q18290875	cinematographer	Q5580572	Gustaf Boge		
+Q18242747	director	Q5588344	John W. Brunius		
+Q18242747	writer	Q5588344	John W. Brunius		
+Q18242747	cinematographer	Q5627286	Hugo Edlund		
+Q18242747	cast	Q6179882	Eugen Skjønberg		
+Q18292267	director	Q6256023	Anders Åström		
+Q18292267	writer	Q5737778	Karl-Erik Forsslund		
+Q14955277	cinematographer	Q6255568	Elner Åkesson		
+Q1559662	director	Q445917	Mauritz Stiller		
+Q1559662	writer	Q445917	Mauritz Stiller		
+Q1559662	writer	Q3417505	Ragnar Hyltén-Cavallius		
+Q1559662	creator	Q445917	Mauritz Stiller		
+Q1559662	cinematographer	Q1386853	Julius Jaenzon		
+Q1559662	cast	Q527032	Gerda Lundequist		
+Q1559662	cast	Q496081	Jenny Hasselquist		
+Q1559662	cast	Q5443	Greta Garbo		
+Q1559662	cast	Q5591514	Oscar Byström		
+Q1559662	cast	Q3437878	Mona Mårtenson		
+Q1559662	cast	Q1806230	Lars Hanson		
+Q1559662	cast	Q4994031	Svend Kornbeck		
+Q1559662	cast	Q4981607	Karin Swanström		
+Q16501680	director	Q817208	Bengt Berg		
+Q16501680	cinematographer	Q817208	Bengt Berg		
+Q16503063	director	Q5580572	Gustaf Boge		
+Q16503063	writer	Q331173	Sigfrid Siwertz		
+Q16503063	cinematographer	Q5580572	Gustaf Boge		
+Q18292271	director	Q104866	Rudolf Biebrach		
+Q18292271	director	Q1258190	Paul Karl Lieberenz		
+Q14955321	director	Q374792	Alf Sjöberg		
+Q14955321	writer	Q5954311	Axel Lindblom		
+Q14955321	cinematographer	Q5954311	Axel Lindblom		
+Q14955321	cast	Q3437839	Bengt Djurberg		
+Q14955321	cast	Q4753809	Anders Henrikson		
+Q10524946	director	Q1365463	Gustaf Molander		
+Q10524946	writer	Q88944	Paul Merzbach		
+Q10524946	producer	Q5588769	Vilhelm Bryde		
+Q10524946	cinematographer	Q1386853	Julius Jaenzon		
+Q10524946	cast	Q5341393	Edvin Adolphson		
