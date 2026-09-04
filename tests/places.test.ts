@@ -473,3 +473,32 @@ describe('driving to a shoot', () => {
     expect(arrivedBeforeCall(sim, day.id)).toBe(sim.now <= (day.callSheet?.crewCall ?? day.callTime));
   });
 });
+
+describe('a room for the night', () => {
+  it('takes a room at the hotel you are standing in, once, and that is a bed and a bathroom', () => {
+    const life = aLife('room-1');
+    const sim = life.sim;
+    const notAHotel = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'cafe')!;
+    life.run('go.to', { placeId: notAHotel.id, mode: 'taxi' });
+    const wrong = life.try('place.book_room', {});
+    expect(wrong.ok).toBe(false);
+    expect(wrong.error).toMatch(/hotel/i);
+
+    const hotel = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'hotel')!;
+    life.run('go.to', { placeId: hotel.id, mode: 'taxi' });
+    const funds = sim.ledger.availableFunds(sim.player.primaryAccountId!);
+    const booked = life.run<{ bookingId: Id; hotel: string; total: number; nights: number }>('place.book_room', { nights: 2 });
+    expect(booked.hotel).toBe(hotel.name);
+    expect(booked.nights).toBe(2);
+    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBe(funds - booked.total);
+    expect(hotelRoom(sim, sim.player)?.id).toBe(booked.bookingId);
+    // A second ask reads the room back rather than booking another.
+    const again = life.run<{ bookingId: Id }>('place.book_room', { nights: 2 });
+    expect(again.bookingId).toBe(booked.bookingId);
+    expect(Object.values(sim.universe.hotelBookings).filter((b) => b.hotelName === hotel.name).length).toBe(1);
+    // And it is somewhere to wash and sleep.
+    expect(whatIsHere(sim).canShower).toBe(true);
+    expect(whatIsHere(sim).canSleep).toBe(true);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+});

@@ -367,6 +367,61 @@ export function registerPlaces(sim: Simulation): void {
     },
   );
 
+  // --- A room for the night --------------------------------------------------
+
+  sim.onCommand<
+    { nights?: number; roomClass?: HotelBooking['roomClass']; guestIds?: Id[]; accountId?: Id },
+    { bookingId: Id; hotel: string; nights: number; nightlyRate: Money; total: Money }
+  >(
+    'place.book_room',
+    (p, { sim: s }) => {
+      const person = s.player;
+      const place = currentPlace(s, person);
+      if (!place || place.kind !== 'hotel') throw new CommandError('You are not standing in a hotel. Walk into one first.');
+      const existing = hotelRoom(s, person);
+      if (existing && existing.hotelName === place.name) {
+        return { bookingId: existing.id, hotel: existing.hotelName, nights: existing.nights, nightlyRate: existing.nightlyRate, total: existing.total };
+      }
+      const nights = clamp(Math.round(p.nights ?? 1), 1, 90);
+      // What this hotel charges: its own tier, in its own city, on SLATE's
+      // calibration rather than anybody's rate card.
+      const roomClass = p.roomClass ?? (place.price >= 4 ? 'suite' : place.price >= 3 ? 'deluxe' : 'standard');
+      const classMultiplier: Record<HotelBooking['roomClass'], number> = { standard: 1, deluxe: 1.6, suite: 3.2, penthouse: 8.5 };
+      const nightlyRate = Math.round(150_00 * costOfLiving(place.cityId) * (0.7 + place.price * 0.35) * classMultiplier[roomClass]);
+      const total = nightlyRate * nights;
+      const taxes = Math.round(total * 0.145);
+      const accountId = p.accountId ?? person.primaryAccountId;
+      if (!accountId) throw new CommandError('No account to pay with.');
+      if (s.ledger.availableFunds(accountId) < total + taxes) {
+        throw new CommandError(`${nights} night${nights === 1 ? '' : 's'} at ${formatMoney(nightlyRate)} comes to ${formatMoney(total + taxes)} with tax.`);
+      }
+      s.expense(accountId, total + taxes, `${place.name} — ${nights} night${nights === 1 ? '' : 's'}`, 'travel');
+
+      const booking: HotelBooking = {
+        id: s.nextId('stay'),
+        saveId: s.universe.meta.id,
+        guestIds: [person.id, ...(p.guestIds ?? []).filter((id) => s.universe.people[id])],
+        hotelRefId: place.id,
+        hotelName: place.name,
+        locationId: place.cityId,
+        roomClass,
+        checkInAt: s.now,
+        checkOutAt: addDays(s.now, nights, s.homeZone),
+        nights,
+        nightlyRate,
+        taxesFees: taxes,
+        total: total + taxes,
+        status: 'checked_in',
+        incidentals: 0,
+        bookedAt: s.now,
+      };
+      s.universe.hotelBookings[booking.id] = booking;
+      s.advanceTo(s.now + 15 * MS_MINUTE);
+      s.emit('travel.hotel_booked', { bookingId: booking.id, cityId: place.cityId, nights, total: booking.total });
+      return { bookingId: booking.id, hotel: place.name, nights, nightlyRate, total: booking.total };
+    },
+  );
+
   // --- Seeing something ------------------------------------------------------
 
   sim.onCommand<{ minutes?: number; withPersonIds?: Id[] }, { place: string; minutes: number; cost: Money; note: string; real: boolean }>(

@@ -129,6 +129,9 @@ export function CityWorkspace() {
           {here.place?.actions.includes('watch') && (
             <button className="btn btn-sm" onClick={() => run('life.do_activity', { activityId: 'watch' })}>Watch Something</button>
           )}
+          {here.place?.kind === 'hotel' && !room && (
+            <button className="btn btn-sm btn-primary" onClick={() => run('place.book_room', { nights: 1 })}>Take A Room For The Night</button>
+          )}
           {here.canShower && (
             <button className="btn btn-sm" onClick={() => run('life.shower', {})}>Shower</button>
           )}
