@@ -53,6 +53,11 @@ export interface Wellbeing {
   travelFatigue: number;
   /** Hunger 0-100 where 100 is fed. */
   nourishment: number;
+  /**
+   * 0-100, where 100 is clean and rested-looking. Falls through the day and
+   * faster on a shoot; a shower puts it back. Rooms notice.
+   */
+  hygiene: number;
 }
 
 export interface Reputation {
@@ -132,6 +137,11 @@ export interface Person {
   citizenshipId: string;
   /** Reference city id where they currently are. */
   currentLocationId: string;
+  /**
+   * Where in the city. A place id from content/places, a property id when you
+   * are at home, or absent when you are simply out in the city.
+   */
+  currentPlaceId?: string;
   /** Property id of their home, when they have one. */
   residenceId?: Id;
   householdId?: Id;
@@ -178,6 +188,16 @@ export interface Person {
   archetype?: string;
   /** Professional role for industry NPCs, e.g. 'casting_director'. */
   industryRole?: string;
+  /**
+   * The public record this person came from, when they are a real person.
+   *
+   * Set the first time the player deals with somebody on the roster, which is
+   * when they stop being reference data and start being someone in the save
+   * who can be offered a part, say no, sign a contract and take a credit.
+   * Everything the game shows about them beyond that point is this save's own
+   * history, and the screens say so.
+   */
+  recordQid?: string;
   /** Company the NPC works for, if any. */
   affiliationId?: Id;
   /** Authority to greenlight, in cents. Zero means no authority. */
@@ -454,9 +474,31 @@ export interface Property {
   isPrimaryResidence: boolean;
   /** Rented out to tenants for income. */
   rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
+  /** When the property is a studio lot or a stage: the plant, and who is on it. */
+  lot?: StudioPlant;
   listedForSale?: { price: Money; since: Instant; agentId?: Id };
   soldAt?: Instant;
   createdAt: Instant;
+}
+
+/** A studio lot the player owns, as a working business. */
+export interface StudioPlant {
+  stages: number;
+  /** Square feet of the largest stage. */
+  largestStageSqft: number;
+  /** What SLATE charges the world for a stage day here, in cents. */
+  stageDayRate: Money;
+  /** Monthly cost of keeping the lights on, in cents. */
+  monthlyOverhead: Money;
+  facilities: ('backlot' | 'water_tank' | 'led_volume' | 'post' | 'scoring_stage' | 'workshops' | 'offices')[];
+  /** World productions on the lot right now. */
+  tenants: { projectTitle: string; projectId?: Id; stages: number; from: Instant; to: Instant; dayRate: Money }[];
+  /** Everything the lot has taken in and paid out. */
+  lifetimeIncome: Money;
+  lifetimeOverhead: Money;
+  /** 0-1 share of stage days in use over the last close. */
+  occupancy: number;
+  lastClosedAt?: Instant;
 }
 
 export interface Structure {
@@ -699,6 +741,11 @@ export interface Vehicle {
   soldAt?: Instant;
   /** Litres per 100km equivalent or kWh/100mi, kept abstract. */
   efficiency: number;
+  /**
+   * What is in the tank, 0-100. A car from before fuel was tracked is read as
+   * full the first time somebody looks at it.
+   */
+  fuelPercent?: number;
   horsepower: number;
   zeroToSixty: number;
 }
@@ -1174,6 +1221,8 @@ export interface Project {
 
   /** Key creative and business attachments. */
   attachments: { personId: Id; role: string; attachedAt: Instant; confirmed: boolean }[];
+  /** Every approach made to somebody for a chair on this picture, and the answer. */
+  approaches?: CraftApproach[];
   writerIds: Id[];
   directorId?: Id;
   producerIds: Id[];
@@ -1215,6 +1264,12 @@ export interface Project {
   /** Post. */
   postTaskIds: Id[];
   pictureLockedAt?: Instant;
+  /** Effects: counted, bid on, awarded. */
+  vfx?: VfxPlan;
+  /** Music: spotted, written, licensed. */
+  music?: MusicPlan;
+  /** Stages booked for the shoot. */
+  stageBookings?: StageBooking[];
 
   /** Release. */
   releaseId?: Id;
@@ -1294,6 +1349,56 @@ export interface Rights {
   franchiseName?: string;
 }
 
+/** What a scene is doing, as a breakdown would tag it. */
+export type SceneKind =
+  | 'dialogue' | 'action' | 'set_piece' | 'montage' | 'intimate' | 'crowd' | 'reveal' | 'transition';
+
+/** Anything on the page that costs a department something on the day. */
+export type SceneNeed =
+  | 'stunts' | 'vfx' | 'animals' | 'vehicles' | 'crowd' | 'water' | 'children'
+  | 'weapons' | 'practical_effects' | 'intimacy' | 'night_exterior' | 'period_dress' | 'creature';
+
+/**
+ * One scene of a script, as a breakdown reads it.
+ *
+ * This is what a schedule is built from, what a call sheet lists, and what a
+ * day's work is measured against. A scene is the unit the whole production
+ * process runs on, which is why a script that has no scenes has no
+ * production process to run.
+ */
+export interface Scene {
+  /** '1', '2', '2A' — the number on the slugline. */
+  number: string;
+  interior: boolean;
+  timeOfDay: 'day' | 'night' | 'dawn' | 'dusk';
+  /** The place on the slugline: 'KITCHEN', 'DOCKSIDE WAREHOUSE'. */
+  setting: string;
+  pages: number;
+  kind: SceneKind;
+  /** Character names in it, from the script's own list. */
+  characters: string[];
+  needs: SceneNeed[];
+  /** What the scene is for, in one line. */
+  purpose: string;
+  /** How hard it is to shoot, 1 to 5. Sets setups, and so the hours. */
+  complexity: number;
+}
+
+export type CharacterArchetype =
+  | 'protagonist' | 'deuteragonist' | 'antagonist' | 'love_interest' | 'mentor'
+  | 'foil' | 'confidant' | 'comic_relief' | 'ensemble' | 'day_player';
+
+/** A part as the script writes it, before anybody is cast in it. */
+export interface ScriptCharacter {
+  name: string;
+  archetype: CharacterArchetype;
+  description: string;
+  ageRange: [number, number];
+  sceneCount: number;
+  /** Share of the dialogue, 0 to 100. */
+  lineShare: number;
+}
+
 export interface ScriptDraft {
   id: Id;
   saveId: Id;
@@ -1302,15 +1407,69 @@ export interface ScriptDraft {
   label: string;
   writerIds: Id[];
   pages: number;
-  /** 0-100. */
+  /** 0-100. The craft dimensions weighted by what the genre asks for. */
   quality: number;
   structure: number;
   dialogue: number;
   characters: number;
+  /**
+   * The fourteen craft dimensions, 0-100 each. This is what a draft actually
+   * is: a comedy with a weak humour score is a bad comedy however tight its
+   * structure, and the genre's own weighting is what turns these into the one
+   * number above.
+   */
+  craft: Record<string, number>;
+  /** The script as a breakdown reads it. Empty on a draft written before scenes existed. */
+  scenes: Scene[];
+  /** Every part in it. */
+  scriptCharacters: ScriptCharacter[];
   writtenAt: Instant;
   notes: { at: Instant; fromId: Id; note: string; addressed: boolean }[];
   coverage?: { at: Instant; readerName: string; verdict: 'pass' | 'consider' | 'recommend'; comments: string };
   isCurrent: boolean;
+}
+
+/**
+ * An offer put to somebody by name, and what they said.
+ *
+ * Kept on the role rather than thrown away, for two reasons. It is the record
+ * of who you went to and why they passed, which the player is entitled to see.
+ * And it is what makes a second attempt safe: an offer that has already been
+ * answered is never re-rolled, so a retry cannot book the same person twice or
+ * turn a no into a yes by asking again.
+ */
+export interface RoleOffer {
+  personId: Id;
+  /** The public record behind them, when the person is a real one. */
+  recordQid?: string;
+  name: string;
+  amount: Money;
+  offeredAt: Instant;
+  answer: 'accepted' | 'declined';
+  /** Why, in their words. */
+  reason: string;
+  /** What SLATE reckoned they would take, at the time of asking. */
+  wanted: Money;
+}
+
+/**
+ * An approach made to somebody for a craft job, and what they said.
+ *
+ * The same record a part keeps of its offers, for the chairs. It is what the
+ * player is entitled to see — who you went to and why they passed — and it is
+ * what makes a second approach safe: an answer already given is read back
+ * rather than re-rolled, and coming back needs real money on the table.
+ */
+export interface CraftApproach {
+  personId: Id;
+  recordQid?: string;
+  name: string;
+  role: string;
+  amount: Money;
+  approachedAt: Instant;
+  answer: 'accepted' | 'declined';
+  reason: string;
+  wanted: Money;
 }
 
 export interface Role {
@@ -1320,6 +1479,10 @@ export interface Role {
   characterName: string;
   billing: 'lead' | 'supporting' | 'featured' | 'day_player' | 'voice' | 'cameo';
   description: string;
+  /** What the part is in the story, when it came from a script breakdown. */
+  archetype?: CharacterArchetype;
+  /** The scenes the part is in, by number, when it came from a breakdown. */
+  sceneNumbers?: string[];
   /** Requirements the casting model scores against. */
   requirements: { attributeId: string; weight: number }[];
   ageRange: [number, number];
@@ -1331,6 +1494,8 @@ export interface Role {
   /** When the decision on this role is made. Set when casting opens. */
   decidesAt?: number;
   castPersonId?: Id;
+  /** What the office will take from actors submitting: tapes, the room, or either. */
+  auditionPolicy?: 'tape_only' | 'either' | 'in_person_only';
   contractId?: Id;
   /** People currently in the running. */
   shortlistIds: Id[];
@@ -1340,6 +1505,10 @@ export interface Role {
    * quadratic over a long career.
    */
   auditionIds: Id[];
+  /** Every offer put to somebody by name on this part, and what they said. */
+  offers?: RoleOffer[];
+  /** When the callbacks were held, on a part the world is casting. Absent until they are. */
+  callbacksAt?: Instant;
 }
 
 export type AuditionStage = 'submitted' | 'self_tape' | 'first_read' | 'callback' | 'chemistry_read' | 'screen_test' | 'offer' | 'passed' | 'booked';
@@ -1366,6 +1535,19 @@ export interface Audition {
   feedback?: string;
   scheduledItemId?: Id;
   isPlayer: boolean;
+  /**
+   * Every room this candidate has been in for the part, in order. A casting
+   * decision is made on all of them, not on the first read alone, and the
+   * player can see each one when it is their picture.
+   */
+  rounds?: { stage: AuditionStage; at: Instant; score: number; note: string }[];
+  /** Tape or the room. Set when the player submits; the office decides what it will take. */
+  format?: 'self_tape' | 'in_person';
+  /** When the tape went, and how many takes it took. */
+  tapeSentAt?: Instant;
+  tapeTakes?: number;
+  /** The office got back to you, or pointedly did not. */
+  officeResponse?: { at: Instant; kind: 'callback' | 'hold' | 'pass' | 'silence'; note: string };
 }
 
 export type ContractKind = 'acting' | 'writing' | 'directing' | 'producing' | 'crew' | 'vendor' | 'distribution' | 'license' | 'option' | 'employment';
@@ -1400,6 +1582,38 @@ export interface Contract {
   negotiationHistory: { at: Instant; byId: Id; note: string; offer?: Money }[];
 }
 
+/** What happened in one hour of a shooting day. */
+export type HourKind =
+  | 'call' | 'blocking' | 'lighting' | 'rehearsal' | 'shooting' | 'lunch' | 'company_move'
+  | 'weather_hold' | 'turnaround' | 'wrap' | 'overtime' | 'idle';
+
+export interface HourEntry {
+  at: Instant;
+  kind: HourKind;
+  sceneNumber?: string;
+  /** Setups completed this hour. */
+  setups: number;
+  /** Takes rolled this hour. */
+  takes: number;
+  note: string;
+}
+
+/** The call sheet: what everybody is told the night before. */
+export interface CallSheet {
+  crewCall: Instant;
+  firstShot: Instant;
+  lunch: Instant;
+  wrapTarget: Instant;
+  sunrise?: Instant;
+  sunset?: Instant;
+  daylightMinutes: number;
+  forecast: string;
+  castCalls: { personId: Id; name: string; at: Instant; scenes: string[] }[];
+  /** How the director wants the day shot. */
+  coverage: 'lean' | 'standard' | 'thorough';
+  notes: string[];
+}
+
 export interface ShootDay {
   id: Id;
   saveId: Id;
@@ -1412,7 +1626,22 @@ export interface ShootDay {
   locationId: string;
   locationName: string;
   isStage: boolean;
-  scenes: { sceneNumber: string; pages: number; description: string; castIds: Id[]; shot: boolean }[];
+  /** The lot the stage is on, when it is a stage. */
+  lotId?: string;
+  scenes: {
+    sceneNumber: string; pages: number; description: string; castIds: Id[]; shot: boolean;
+    /** From the script's breakdown, when the day was boarded from one. */
+    setups?: number; setupsDone?: number; takes?: number; complexity?: number;
+    interior?: boolean; timeOfDay?: string; setting?: string; needs?: string[];
+    /** 0-100 for this scene alone. */
+    quality?: number;
+  }[];
+  /** The night before. Absent on a day boarded before call sheets existed. */
+  callSheet?: CallSheet;
+  /** The day, hour by hour. Absent until it has been shot. */
+  hours?: HourEntry[];
+  /** How the director wants it run. Set by prod.direct_day; the first AD's defaults otherwise. */
+  plan?: { coverage: 'lean' | 'standard' | 'thorough'; pushPastTwelve: boolean; dropScenes: string[] };
   plannedPages: number;
   completedPages: number;
   requiredCastIds: Id[];
@@ -1452,6 +1681,85 @@ export interface PostTask {
   /** 0-100 contribution to the finished film. */
   quality: number;
   notes: { at: Instant; note: string }[];
+  /** The real house doing the work, from content/post-houses, when one was chosen. */
+  houseId?: string;
+  /**
+   * Hours the player spent in the room on this task. A cut is made in
+   * sessions; each one moves the task and teaches something.
+   */
+  sessions?: { at: Instant; hours: number; note: string; gain: number }[];
+}
+
+/** One house's answer to a request for a visual effects bid. */
+export interface VfxBid {
+  houseId: string;
+  amount: Money;
+  weeks: number;
+  /** What SLATE expects the work to read at, 0-100, from the house's tier and load. */
+  expectedQuality: number;
+  note: string;
+  at: Instant;
+}
+
+/** The effects on a picture: what the script asks for, who bid, who got it. */
+export interface VfxPlan {
+  /** Shots, counted from the breakdown and the director's coverage. */
+  shots: number;
+  mix: { simple: number; medium: number; hero: number };
+  bids: VfxBid[];
+  awardedHouseId?: string;
+  awardedAt?: Instant;
+  contractId?: Id;
+  brokenDownAt: Instant;
+}
+
+/** One piece of music in the picture: a cue the composer writes, or something licensed. */
+export interface MusicCue {
+  id: Id;
+  number: number;
+  /** What it is for, in words. SLATE never names a real song. */
+  description: string;
+  use: 'score' | 'source' | 'needle_drop' | 'title' | 'end_credits';
+  minutes: number;
+  status: 'spotted' | 'written' | 'recorded' | 'licensed' | 'dropped';
+  /** For licensed music: the two licences a recording needs, and their terms. */
+  licence?: {
+    publisherId: string;
+    labelId: string;
+    syncFee: Money;
+    masterFee: Money;
+    /** Most favoured nations: each side is paid what the other is. */
+    mfn: boolean;
+    term: 'perpetuity' | 'ten_years' | 'festival_only';
+    territory: 'worldwide' | 'domestic';
+    at: Instant;
+    contractId?: Id;
+  };
+}
+
+/** The music on a picture. */
+export interface MusicPlan {
+  cues: MusicCue[];
+  spottedAt?: Instant;
+  composerId?: Id;
+  /** Where the score was recorded, from the registry, when it was. */
+  scoringStageId?: string;
+  recordedAt?: Instant;
+}
+
+/** Stage days booked on a lot. */
+export interface StageBooking {
+  id: Id;
+  /** A real lot from content/post-houses, or the id of a property the player owns. */
+  lotId: string;
+  lotName: string;
+  stages: number;
+  from: Instant;
+  to: Instant;
+  days: number;
+  cost: Money;
+  contractId?: Id;
+  bookedAt: Instant;
 }
 
 export interface MarketingCampaign {
@@ -1953,6 +2261,34 @@ export interface TradeItem {
 // Companies
 // ---------------------------------------------------------------------------
 
+/**
+ * A piece of press published inside a save.
+ *
+ * Written by SLATE in the register of a real outlet, about SLATE's invented
+ * films. It is not an article that publication wrote, and every screen that
+ * shows one says so. The outlet, its masthead and everything factual about it
+ * are the public record; the words are the simulation's.
+ */
+export interface PressItem {
+  id: Id;
+  at: Instant;
+  outletId: string;
+  outletName: string;
+  kind: string;
+  desk: string;
+  register: string;
+  headline: string;
+  standfirst: string;
+  paragraphs: string[];
+  /** What the piece is about, so a project page can find its own coverage. */
+  projectId?: Id;
+  personId?: Id;
+  studioId?: string;
+  networkId?: string;
+  /** True when the story is about the player. */
+  aboutPlayer?: boolean;
+}
+
 export interface Company {
   id: Id;
   saveId: Id;
@@ -2133,7 +2469,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 18;
+export const SAVE_SCHEMA_VERSION = 23;
 
 export interface SaveMeta {
   id: Id;
@@ -2264,6 +2600,8 @@ export interface SaveUniverse {
     pending: { key: string; entry: BoxOfficeEntry }[];
   };
   trade: TradeItem[];
+  /** Everything the press has published in this save, newest last. */
+  press: PressItem[];
 
   companies: Record<Id, Company>;
   divisions: Record<Id, Division>;

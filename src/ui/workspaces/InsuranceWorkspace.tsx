@@ -82,7 +82,7 @@ export function InsuranceWorkspace() {
                     <span className="chip chip-positive">Active</span>
                   </>
                 ) : (
-                  <button className="btn btn-sm" onClick={() => setQuoting(product.line)}>Get a quote</button>
+                  <button className="btn btn-sm" onClick={() => setQuoting(product.line)}>Get A Quote</button>
                 )}
               </div>
             );
@@ -116,7 +116,7 @@ export function InsuranceWorkspace() {
                       claimedAmount: policy.deductible * 4,
                     })}
                   >
-                    File a claim
+                    File A Claim
                   </button>
                 )}
               </div>

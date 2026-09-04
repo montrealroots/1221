@@ -20,6 +20,7 @@ import { CompanyWorkspace } from './CompanyWorkspace';
 import { SocialWorkspace } from './SocialWorkspace';
 import { AwardsWorkspace } from './AwardsWorkspace';
 import { IndustryWorkspace } from './IndustryWorkspace';
+import { CityWorkspace } from './CityWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
@@ -34,6 +35,7 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/vehicles': VehiclesWorkspace,
   '/workspace/shopping': ShoppingWorkspace,
   '/workspace/travel': TravelWorkspace,
+  '/workspace/city': CityWorkspace,
   '/workspace/health': HealthWorkspace,
   '/workspace/insurance': InsuranceWorkspace,
   '/workspace/education': EducationWorkspace,

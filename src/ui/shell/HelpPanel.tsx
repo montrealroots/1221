@@ -66,7 +66,7 @@ export function HelpPanel() {
               <h3>{article.title}</h3>
               {article.route !== route && (
                 <button className="btn btn-sm" onClick={() => navigate(article.route, article.title)}>
-                  Go there
+                  Go There
                 </button>
               )}
             </div>
@@ -117,7 +117,7 @@ export function HelpPanel() {
                 className="btn btn-sm"
                 onClick={() => run('tutorial.set_mode', { advanced: true })}
               >
-                Show the mechanics behind this
+                Show The Mechanics Behind This
               </button>
             )}
           </>

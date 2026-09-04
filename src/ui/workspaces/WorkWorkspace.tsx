@@ -37,7 +37,7 @@ export function WorkWorkspace() {
           actions={
             <>
               <button className="btn btn-sm" onClick={() => run('work.request_promotion', { jobId: job.id })}>
-                Ask for a promotion
+                Ask For A Promotion
               </button>
               <button className="btn btn-sm btn-danger" onClick={() => run('work.resign', { jobId: job.id })}>
                 Resign

@@ -8,7 +8,7 @@ import { MON, TUE, WED, THU, FRI, SAT, fixed, nearest, WIKI, SEARCH, EDITORIAL }
 export const FESTIVALS_B: IndustryEventSpec[] = [
   {
     id: 'san-sebastian', name: 'The San Sebastián International Film Festival', shortName: 'San Sebastián', kind: 'festival', scope: 'film', organiser: 'SSIFF',
-    city: 'San Sebastián', cityId: 'es-pv-sansebastian', countryId: 'es', zone: 'Europe/Madrid', venue: 'Kursaal', editionOffset: 1952,
+    city: 'San Sebastián', cityId: 'es-59-donostiasansebastian', countryId: 'es', zone: 'Europe/Madrid', venue: 'Kursaal', editionOffset: 1952,
     start: nearest(9, 19, FRI), days: 9, nominations: nearest(7, 25, FRI),
     known: { 2026: { start: '2026-09-18', end: '2026-09-26', source: WIKI('San Sebastián International Film Festival') } },
     sections: ['Official Selection', 'New Directors', 'Horizontes Latinos', 'Zabaltegi-Tabakalera', 'Perlak', 'Culinary Zinema', 'Velodrome', 'Made in Spain', 'Zinemira', 'Nest', 'Klasikoak', 'Retrospective', 'Industry (Co-Production Forum, WIP)'],
@@ -47,7 +47,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'busan', name: 'The Busan International Film Festival', shortName: 'BIFF', kind: 'festival', scope: 'film', organiser: 'BIFF',
-    city: 'Busan', cityId: 'kr-26-busan', countryId: 'kr', zone: 'Asia/Seoul', venue: 'Busan Cinema Center', editionOffset: 1995,
+    city: 'Busan', cityId: 'kr-10-busan', countryId: 'kr', zone: 'Asia/Seoul', venue: 'Busan Cinema Center', editionOffset: 1995,
     start: nearest(10, 6, TUE), days: 10, nominations: nearest(9, 4, THU),
     known: {
       2025: { start: '2025-09-17', end: '2025-09-26', source: WIKI('Busan International Film Festival') },
@@ -158,7 +158,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'tallinn', name: 'The Tallinn Black Nights Film Festival', shortName: 'PÖFF', kind: 'festival', scope: 'film', organiser: 'PÖFF',
-    city: 'Tallinn', cityId: 'ee-37-tallinn', countryId: 'ee', zone: 'Europe/Tallinn', editionOffset: 1996,
+    city: 'Tallinn', cityId: 'ee-01-tallinn', countryId: 'ee', zone: 'Europe/Tallinn', editionOffset: 1996,
     start: nearest(11, 6, FRI), days: 15, nominations: nearest(10, 14, WED),
     known: { 2026: { start: '2026-11-06', end: '2026-11-20', source: SEARCH('Tallinn Black Nights 2026 dates') } },
     sections: ['Official Selection – Competition', 'First Feature Competition', 'Baltic Film Competition', 'Critics\' Picks', 'Rebels with a Cause', 'Doc@PÖFF', 'Just Film (youth)', 'PÖFF Shorts', 'Black Nights Stars', 'Industry@Tallinn & Baltic Event'],
@@ -178,7 +178,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'cairo', name: 'The Cairo International Film Festival', shortName: 'CIFF', kind: 'festival', scope: 'film', organiser: 'Egyptian Ministry of Culture',
-    city: 'Cairo', cityId: 'eg-c-cairo', countryId: 'eg', zone: 'Africa/Cairo', venue: 'Cairo Opera House', editionOffset: 1976,
+    city: 'Cairo', cityId: 'eg-11-cairo', countryId: 'eg', zone: 'Africa/Cairo', venue: 'Cairo Opera House', editionOffset: 1976,
     start: nearest(11, 12, THU), days: 10, nominations: nearest(10, 20, TUE),
     known: {},
     sections: ['International Competition', 'Horizons of Arab Cinema Competition', 'International Critics\' Week Competition', 'Cinema of Tomorrow (Short Films)', 'Festival of Festivals', 'International Panorama', 'New Egyptian Cinema', 'Feature Film Classics', 'Tributes', 'Cairo Industry Days', 'Cairo Film Connection'],
@@ -198,7 +198,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'idfa', name: 'The International Documentary Film Festival Amsterdam', shortName: 'IDFA', kind: 'festival', scope: 'documentary', organiser: 'IDFA',
-    city: 'Amsterdam', cityId: 'nl-nh-amsterdam', countryId: 'nl', zone: 'Europe/Amsterdam', venue: 'Royal Theater Tuschinski and Eye Filmmuseum', editionOffset: 1987,
+    city: 'Amsterdam', cityId: 'nl-07-amsterdam', countryId: 'nl', zone: 'Europe/Amsterdam', venue: 'Royal Theater Tuschinski and Eye Filmmuseum', editionOffset: 1987,
     start: nearest(11, 12, THU), days: 11, nominations: nearest(10, 16, THU),
     known: { 2025: { start: '2025-11-13', end: '2025-11-23', source: EDITORIAL } },
     sections: ['International Competition', 'Envision Competition', 'Luminous', 'Frontlight', 'Best of Fests', 'Masters', 'Paradocs', 'Signals', 'Youth Documentary Competition', 'DocLab', 'Retrospective', 'Focus', 'IDFA Forum', 'Docs for Sale', 'IDFA Bertha Fund'],
@@ -218,7 +218,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'marrakech', name: 'The Marrakech International Film Festival', kind: 'festival', scope: 'film', organiser: 'Fondation du Festival International du Film de Marrakech',
-    city: 'Marrakech', cityId: 'ma-07-marrakech', countryId: 'ma', zone: 'Africa/Casablanca', venue: 'Palais des Congrès', editionOffset: 2000,
+    city: 'Marrakech', cityId: 'ma-07-marrakesh', countryId: 'ma', zone: 'Africa/Casablanca', venue: 'Palais des Congrès', editionOffset: 2000,
     start: nearest(11, 28, FRI), days: 9, nominations: nearest(11, 5, WED),
     known: { 2025: { start: '2025-11-28', end: '2025-12-06', source: SEARCH('Marrakech International Film Festival 2025 dates') } },
     sections: ['Official Competition', 'Gala Screenings', 'Special Screenings', '11th Continent', 'Panorama of Moroccan Cinema', 'Jemaa El Fna Square screenings', 'Tributes', 'Conversation With', 'Atlas Workshops (industry)'],
@@ -228,7 +228,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'red-sea', name: 'The Red Sea International Film Festival', kind: 'festival', scope: 'film', organiser: 'Red Sea Film Foundation',
-    city: 'Jeddah', cityId: 'sa-02-jeddah', countryId: 'sa', zone: 'Asia/Riyadh', venue: 'Al-Balad (historic Jeddah)', editionOffset: 2020,
+    city: 'Jeddah', cityId: 'sa-14-jeddah', countryId: 'sa', zone: 'Asia/Riyadh', venue: 'Al-Balad (historic Jeddah)', editionOffset: 2020,
     start: nearest(12, 4, THU), days: 10, nominations: nearest(11, 6, THU),
     known: { 2025: { start: '2025-12-04', end: '2025-12-13', source: SEARCH('Red Sea International Film Festival 2025 dates') } },
     sections: ['Red Sea: Competition', 'Red Sea: Shorts Competition', 'Red Sea: Festival Favourites', 'Red Sea: New Saudi/New Cinema', 'Red Sea: Arab Spectacular', 'Red Sea: International Spectacular', 'Red Sea: Series', 'Red Sea: Treasures', 'Red Sea: Immersive', 'Red Sea Souk (market)', 'Red Sea Labs', 'Red Sea Fund'],
@@ -259,7 +259,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'goteborg', name: 'The Göteborg Film Festival', kind: 'festival', scope: 'film', organiser: 'Göteborg Film Festival',
-    city: 'Gothenburg', cityId: 'se-o-gothenburg', countryId: 'se', zone: 'Europe/Stockholm', venue: 'Draken', editionOffset: 1978,
+    city: 'Gothenburg', cityId: 'se-28-gothenburg', countryId: 'se', zone: 'Europe/Stockholm', venue: 'Draken', editionOffset: 1978,
     start: nearest(1, 23, FRI), days: 10, nominations: nearest(1, 8, THU),
     known: {},
     sections: ['Nordic Competition', 'Ingmar Bergman Competition', 'Nordic Documentary Competition', 'Startsladden (shorts)', 'International Competition', 'Five Continents', 'Voices', 'TV Drama Vision (industry)', 'Nordic Film Market'],
@@ -269,7 +269,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'viennale', name: 'The Viennale', kind: 'festival', scope: 'film', organiser: 'Viennale',
-    city: 'Vienna', cityId: 'at-9-vienna', countryId: 'at', zone: 'Europe/Vienna', venue: 'Gartenbaukino', editionOffset: 1960,
+    city: 'Vienna', cityId: 'at-09-vienna', countryId: 'at', zone: 'Europe/Vienna', venue: 'Gartenbaukino', editionOffset: 1960,
     start: nearest(10, 16, THU), days: 12, nominations: nearest(10, 1, WED),
     known: {},
     sections: ['Features', 'Documentaries', 'Shorts', 'Retrospective (with the Austrian Film Museum)', 'Monographs', 'Historiographies', 'Special Programmes'],
@@ -279,7 +279,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'thessaloniki', name: 'The Thessaloniki International Film Festival', kind: 'festival', scope: 'film', organiser: 'Thessaloniki Film Festival',
-    city: 'Thessaloniki', cityId: 'gr-b-thessaloniki', countryId: 'gr', zone: 'Europe/Athens', venue: 'Olympion', editionOffset: 1959,
+    city: 'Thessaloniki', cityId: 'gr-esye12-thessaloniki', countryId: 'gr', zone: 'Europe/Athens', venue: 'Olympion', editionOffset: 1959,
     start: nearest(10, 30, THU), days: 11, nominations: nearest(10, 10, FRI),
     known: {},
     sections: ['International Competition', 'Meet the Neighbors+', 'Film Forward', '>>Film Forward', 'Open Horizons', 'Greek Film Festival', 'Balkan Survey', 'Special Screenings', 'Agora (industry)'],
@@ -289,7 +289,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'guadalajara', name: 'The Guadalajara International Film Festival', shortName: 'FICG', kind: 'festival', scope: 'film', organiser: 'Universidad de Guadalajara',
-    city: 'Guadalajara', cityId: 'mx-jal-guadalajara', countryId: 'mx', zone: 'America/Mexico_City', editionOffset: 1985,
+    city: 'Guadalajara', cityId: 'mx-14-guadalajara', countryId: 'mx', zone: 'America/Mexico_City', editionOffset: 1985,
     start: nearest(6, 6, FRI), days: 9, nominations: nearest(5, 12, TUE),
     known: {},
     sections: ['Ibero-American Fiction Feature Competition', 'Ibero-American Documentary Competition', 'Mexican Feature Competition', 'Premio Maguey', 'Ibero-American Short Film Competition', 'Animation', 'Galas', 'Guest Country', 'Industry (Co-Production Meeting, Guadalajara Construye)'],
@@ -319,7 +319,7 @@ export const FESTIVALS_B: IndustryEventSpec[] = [
   },
   {
     id: 'warsaw', name: 'The Warsaw Film Festival', kind: 'festival', scope: 'film', organiser: 'Warsaw Film Foundation',
-    city: 'Warsaw', cityId: 'pl-14-warsaw', countryId: 'pl', zone: 'Europe/Warsaw', venue: 'Multikino Złote Tarasy', editionOffset: 1984,
+    city: 'Warsaw', cityId: 'pl-78-warsaw', countryId: 'pl', zone: 'Europe/Warsaw', venue: 'Multikino Złote Tarasy', editionOffset: 1984,
     start: nearest(10, 9, FRI), days: 10, nominations: nearest(9, 18, THU),
     known: {},
     sections: ['International Competition', '1-2 Competition (first and second films)', 'Free Spirit Competition', 'Documentary Competition', 'Short Film Competition', 'Discoveries', 'Special Screenings', 'Family Films', 'CentEast Market'],

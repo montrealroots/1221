@@ -12,6 +12,53 @@ import { deserialise, serialise, PersistenceError, type SaveAdapter, type SaveSl
 const KEY = (slot: Slot) => `slate.save.${slot}`;
 const BACKUP_KEY = (slot: Slot) => `slate.backup.${slot}`;
 
+/**
+ * A save is gzipped before it goes into local storage, because a universe
+ * that has run for a year is several megabytes of JSON and a browser gives
+ * an origin about five. The packed form is marked so an older, plain save
+ * still loads; the marker is not valid JSON, so the two cannot be confused.
+ */
+const PACKED = 'slate.gz1:';
+
+function canPack(): boolean {
+  return typeof CompressionStream !== 'undefined' && typeof DecompressionStream !== 'undefined';
+}
+
+function toBase64(bytes: Uint8Array): string {
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binary);
+}
+
+function fromBase64(text: string): Uint8Array {
+  const binary = atob(text);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+async function pack(json: string): Promise<string> {
+  if (!canPack()) return json;
+  const stream = new Blob([json]).stream().pipeThrough(new CompressionStream('gzip'));
+  const bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+  return PACKED + toBase64(bytes);
+}
+
+async function unpack(raw: string): Promise<string> {
+  if (!raw.startsWith(PACKED)) return raw;
+  if (!canPack()) throw new PersistenceError('This save is packed and this browser cannot unpack it. Open it in a current browser.', false);
+  const bytes = fromBase64(raw.slice(PACKED.length));
+  const stream = new Blob([bytes as unknown as BlobPart]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return new Response(stream).text();
+}
+
+/** How many bytes a stored save takes, packed or not. */
+export function storedBytes(raw: string): number {
+  return raw.length;
+}
+
 function storage(): Storage {
   if (typeof localStorage === 'undefined') {
     throw new PersistenceError('This browser has no local storage available, so saves cannot be kept here.', false);
@@ -40,7 +87,7 @@ export class LocalSaveAdapter implements SaveAdapter {
         continue;
       }
       try {
-        const universe = deserialise(raw);
+        const universe = deserialise(await unpack(raw));
         slots.push({ slot, occupied: true, meta: universe.meta, hasBackup, bytes: raw.length });
       } catch (error) {
         slots.push({
@@ -55,14 +102,14 @@ export class LocalSaveAdapter implements SaveAdapter {
   async load(slot: Slot): Promise<SaveUniverse | null> {
     const raw = storage().getItem(KEY(slot));
     if (!raw) return null;
-    return deserialise(raw);
+    return deserialise(await unpack(raw));
   }
 
   async save(universe: SaveUniverse): Promise<void> {
     const store = storage();
     const slot = universe.meta.slot;
     const previous = store.getItem(KEY(slot));
-    const next = serialise(universe);
+    const next = await pack(serialise(universe));
 
     try {
       // Back up what is already there before overwriting it.
@@ -98,7 +145,7 @@ export class LocalSaveAdapter implements SaveAdapter {
   async restoreBackup(slot: Slot): Promise<SaveUniverse | null> {
     const raw = storage().getItem(BACKUP_KEY(slot));
     if (!raw) return null;
-    const universe = deserialise(raw);
+    const universe = deserialise(await unpack(raw));
     await this.save(universe);
     return universe;
   }

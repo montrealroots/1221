@@ -30,6 +30,8 @@ const WRITE = process.argv.includes('--write');
  */
 function capitaliseWord(word) {
   if (!/[a-z]/.test(word)) return word;
+  // An HTML entity is markup, not a word: '&amp;' is an ampersand.
+  if (/^&[a-z]+;$/i.test(word)) return word;
   // Leading brackets and quotes are skipped; a leading digit is not. '97th' is
   // an ordinal, and '97Th' is nothing at all.
   const first = word.search(/[A-Za-z0-9]/);
@@ -92,15 +94,23 @@ for (const file of files) {
   );
 
   // Headings and buttons written as literal JSX text.
+  //
+  // Matched from the closing tag backwards rather than from the opening one.
+  // An opening tag carries handlers — onClick={() => run(...)} — and an arrow
+  // function has a '>' in it, so anything that tries to read the open tag with
+  // a regex stops in the middle of it and misses the label entirely. That is
+  // most of the buttons in the game, because the formatter wraps them. The
+  // text itself cannot contain a brace or an angle bracket, which is what
+  // keeps this from matching across markup.
   after = after.replace(
-    /(<(h1|h2|h3|h4|h5|h6|label|button|summary|th|legend|dt)(?:\s[^>]*)?>)([A-Za-z][^<>{}\n]*?)(<\/\2>)/g,
-    (whole, open, _tag, text, close) => {
-      if (isProse(text)) return whole;
+    />(\s*)([A-Za-z][^<>{}]*?)(\s*)<\/(h1|h2|h3|h4|h5|h6|label|button|summary|th|legend|dt)>/g,
+    (whole, lead, text, trail, tag) => {
+      if (/\n/.test(text) || isProse(text)) return whole;
       const next = titleCase(text);
       if (next === text) return whole;
       changedStrings++;
       if (samples.length < 25) samples.push(`${text}  ->  ${next}`);
-      return open + next + close;
+      return `>${lead}${next}${trail}</${tag}>`;
     },
   );
 

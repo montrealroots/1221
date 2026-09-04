@@ -20,7 +20,7 @@ export const WORLD_AWARDS: IndustryEventSpec[] = [
   },
   {
     id: 'goya-awards', name: 'The Goya Awards', shortName: 'The Goyas', kind: 'awards', scope: 'film',
-    organiser: 'Academia de las Artes y las Ciencias Cinematográficas de España', city: 'Barcelona in 2026; the host city rotates', cityId: 'es-ct-barcelona', countryId: 'es', zone: 'Europe/Madrid', editionOffset: 1986,
+    organiser: 'Academia de las Artes y las Ciencias Cinematográficas de España', city: 'Barcelona in 2026; the host city rotates', cityId: 'es-cat-barcelona', countryId: 'es', zone: 'Europe/Madrid', editionOffset: 1986,
     start: nearest(2, 14, SAT), days: 1, nominations: nearest(1, 13, TUE),
     known: {
       2025: { start: '2025-02-08', nominations: '2024-12-11', source: WIKI('39th Goya Awards'), note: 'Granada.' },
@@ -67,7 +67,7 @@ export const WORLD_AWARDS: IndustryEventSpec[] = [
   },
   {
     id: 'golden-horse-awards', name: 'The Golden Horse Awards', kind: 'awards', scope: 'film',
-    organiser: 'Taipei Golden Horse Film Festival Executive Committee', city: 'Taipei', cityId: 'tw-tpe-taipei', countryId: 'tw', zone: 'Asia/Taipei', venue: 'Taipei Music Center', editionOffset: 1963,
+    organiser: 'Taipei Golden Horse Film Festival Executive Committee', city: 'Taipei', cityId: 'tw-04-taipei', countryId: 'tw', zone: 'Asia/Taipei', venue: 'Taipei Music Center', editionOffset: 1963,
     start: nearest(11, 22, SAT), days: 1, nominations: nearest(10, 1, WED),
     known: { 2025: { start: '2025-11-22', nominations: '2025-10-01', source: WIKI('62nd Golden Horse Awards') } },
     categories: ['最佳劇情片 (Best Narrative Feature)', '最佳導演 (Best Director)', '最佳男主角 (Best Leading Actor)', '最佳女主角 (Best Leading Actress)', '最佳男配角 (Best Supporting Actor)', '最佳女配角 (Best Supporting Actress)', '最佳新導演 (Best New Director)', '最佳新演員 (Best New Performer)', '最佳原著劇本 (Best Original Screenplay)', '最佳改編劇本 (Best Adapted Screenplay)', '最佳攝影 (Best Cinematography)', '最佳視覺效果 (Best Visual Effects)', '最佳美術設計 (Best Art Direction)', '最佳造型設計 (Best Makeup and Costume Design)', '最佳動作設計 (Best Action Choreography)', '最佳原創電影音樂 (Best Original Film Score)', '最佳原創電影歌曲 (Best Original Film Song)', '最佳剪輯 (Best Film Editing)', '最佳音效 (Best Sound Effects)', '最佳動畫片 (Best Animated Feature)', '最佳紀錄片 (Best Documentary Feature)', '最佳劇情短片 (Best Live Action Short Film)', '最佳動畫短片 (Best Animated Short Film)', '最佳紀錄短片 (Best Documentary Short Film)', '年度台灣傑出電影工作者 (Outstanding Taiwanese Filmmaker of the Year)', '終身成就獎 (Lifetime Achievement Award)', '觀眾票選最佳影片 (Audience Choice Award)'],
@@ -76,7 +76,7 @@ export const WORLD_AWARDS: IndustryEventSpec[] = [
   },
   {
     id: 'hong-kong-film-awards', name: 'The Hong Kong Film Awards', kind: 'awards', scope: 'film',
-    organiser: 'Hong Kong Film Awards Association', city: 'Hong Kong', cityId: 'hk-hk-hongkong', countryId: 'hk', zone: 'Asia/Hong_Kong', venue: 'Hong Kong Cultural Centre', editionOffset: 1982,
+    organiser: 'Hong Kong Film Awards Association', city: 'Hong Kong', cityId: 'hk-hongkong', countryId: 'hk', zone: 'Asia/Hong_Kong', venue: 'Hong Kong Cultural Centre', editionOffset: 1982,
     start: nearest(4, 17, SUN), days: 1, nominations: nearest(2, 10, TUE),
     known: { 2026: { start: '2026-04-19', source: WIKI('44th Hong Kong Film Awards') } },
     categories: ['最佳電影 (Best Film)', '最佳導演 (Best Director)', '最佳編劇 (Best Screenplay)', '最佳男主角 (Best Actor)', '最佳女主角 (Best Actress)', '最佳男配角 (Best Supporting Actor)', '最佳女配角 (Best Supporting Actress)', '最佳新演員 (Best New Performer)', '最佳攝影 (Best Cinematography)', '最佳剪接 (Best Film Editing)', '最佳美術指導 (Best Art Direction)', '最佳服裝造型設計 (Best Costume and Make Up Design)', '最佳動作設計 (Best Action Choreography)', '最佳原創電影音樂 (Best Original Film Score)', '最佳原創電影歌曲 (Best Original Film Song)', '最佳音響效果 (Best Sound Design)', '最佳視覺效果 (Best Visual Effects)', '新晉導演 (Best New Director)', '最佳亞洲華語電影 (Best Asian Chinese Language Film)', '終身成就獎 (Lifetime Achievement Award)', '專業精神獎 (Professional Achievement Award)'],
@@ -110,7 +110,7 @@ export const WORLD_AWARDS: IndustryEventSpec[] = [
   },
   {
     id: 'david-di-donatello', name: 'The David di Donatello Awards', kind: 'awards', scope: 'film',
-    organiser: 'Accademia del Cinema Italiano', city: 'Rome', cityId: 'it-62-rome', countryId: 'it', zone: 'Europe/Rome', venue: 'Cinecittà', editionOffset: 1955,
+    organiser: 'Accademia del Cinema Italiano', city: 'Rome', cityId: 'it-laz-rome', countryId: 'it', zone: 'Europe/Rome', venue: 'Cinecittà', editionOffset: 1955,
     start: nearest(5, 7, WED), days: 1, nominations: nearest(4, 8, TUE),
     known: { 2025: { start: '2025-05-07', source: EDITORIAL } },
     categories: ['Miglior film', 'Miglior regista', 'Miglior esordio alla regia', 'Migliore sceneggiatura originale', 'Migliore sceneggiatura non originale', 'Miglior produttore', 'Migliore attrice protagonista', 'Miglior attore protagonista', 'Migliore attrice non protagonista', 'Miglior attore non protagonista', 'Miglior autore della fotografia', 'Miglior compositore', 'Migliore canzone originale', 'Miglior scenografo', 'Miglior costumista', 'Miglior truccatore', 'Miglior acconciatore', 'Miglior montatore', 'Miglior suono', 'Migliori effetti visivi', 'Miglior documentario', 'Miglior film internazionale', 'Miglior cortometraggio', 'David Giovani', 'David dello spettatore', 'David alla carriera'],
@@ -146,7 +146,7 @@ export const WORLD_AWARDS: IndustryEventSpec[] = [
   },
   {
     id: 'asian-film-awards', name: 'The Asian Film Awards', kind: 'awards', scope: 'film',
-    organiser: 'Asian Film Awards Academy', city: 'Hong Kong', cityId: 'hk-hk-hongkong', countryId: 'hk', zone: 'Asia/Hong_Kong', venue: 'Xiqu Centre, West Kowloon', editionOffset: 2006,
+    organiser: 'Asian Film Awards Academy', city: 'Hong Kong', cityId: 'hk-hongkong', countryId: 'hk', zone: 'Asia/Hong_Kong', venue: 'Xiqu Centre, West Kowloon', editionOffset: 2006,
     start: nearest(3, 16, SUN), days: 1, nominations: nearest(1, 15, THU),
     known: {},
     categories: ['Best Film', 'Best Director', 'Best Actor', 'Best Actress', 'Best Supporting Actor', 'Best Supporting Actress', 'Best New Director', 'Best Newcomer', 'Best Screenplay', 'Best Cinematography', 'Best Editing', 'Best Original Music', 'Best Production Design', 'Best Costume Design', 'Best Sound', 'Best Visual Effects', 'Lifetime Achievement Award', 'Excellence in Asian Cinema Award', 'Next Generation Award'],
@@ -155,7 +155,7 @@ export const WORLD_AWARDS: IndustryEventSpec[] = [
   },
   {
     id: 'irish-film-tv-awards', name: 'The Irish Film and Television Academy Awards', shortName: 'The IFTAs', kind: 'awards', scope: 'both',
-    organiser: 'Irish Film and Television Academy', city: 'Dublin', cityId: 'ie-l-dublin', countryId: 'ie', zone: 'Europe/Dublin', venue: 'Dublin Royal Convention Centre', editionOffset: 2002,
+    organiser: 'Irish Film and Television Academy', city: 'Dublin', cityId: 'ie-lei-dublin', countryId: 'ie', zone: 'Europe/Dublin', venue: 'Dublin Royal Convention Centre', editionOffset: 2002,
     start: nearest(4, 25, FRI), days: 1, nominations: nearest(3, 20, THU),
     known: {},
     categories: ['Best Film', 'Best Director (Film)', 'Best Script (Film)', 'Lead Actor (Film)', 'Lead Actress (Film)', 'Supporting Actor (Film)', 'Supporting Actress (Film)', 'Best Documentary', 'Best Short Film', 'Best Animated Short', 'Best International Film', 'Best Drama', 'Best Director (Drama)', 'Best Script (Drama)', 'Lead Actor (Drama)', 'Lead Actress (Drama)', 'Supporting Actor (Drama)', 'Supporting Actress (Drama)', 'Rising Star', 'Crafts (multiple)', 'Irish Language Award', 'Lifetime Achievement Award'],

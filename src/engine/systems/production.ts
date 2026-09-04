@@ -12,15 +12,23 @@
 import { shootDayWeather } from './weather';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Id, PostTask, PostTaskKind, Project, ShootDay } from '../domain/model';
+import type { Id, Person, PostTask, PostTaskKind, Project, ShootDay } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
-import { CITIES } from '../content/geography';
+import { CITIES, cityTimeZone } from '../content/geography';
 import { costOfLiving, filmIncentive } from '../content/tax';
 import { advancePhase, computeFinalQuality, phaseIndex } from './film';
 import { readiness } from './life';
+import { playerControls } from './real-people';
+import { boardScript, buildCallSheet, runShootDay, setupsFor, type BoardedDay } from './shoot';
+import { houseLift, sessionLift } from './post';
+import { formatTime } from '../core/time';
+import { titleCaseLabel } from '../core/text';
 import { systemModifier } from '../domain/attributes';
+
+/** Extra days a picture can add for pickups before what did not get shot is cut. */
+const PICKUP_SHARE = 0.15;
 
 // ---------------------------------------------------------------------------
 // Post-production dependency graph
@@ -83,6 +91,7 @@ export function blockedReasons(sim: Simulation, taskId: Id): string[] {
 
 export function registerProduction(sim: Simulation): void {
   sim.onSchedule('prod.shoot_day', (item) => shootDay(sim, item.payload.shootDayId as Id));
+  sim.onSchedule('prod.call_sheet', (item) => callSheetOut(sim, item.payload.shootDayId as Id));
   sim.onSchedule('prod.post_tick', (item) => advancePost(sim, item.payload.projectId as Id));
   sim.onSchedule('prod.wrap', (item) => wrapProduction(sim, item.payload.projectId as Id));
   sim.onSchedule('prod.incentive_payout', (item) => payIncentive(sim, item.payload.projectId as Id));
@@ -117,7 +126,6 @@ export function registerProduction(sim: Simulation): void {
         ? remap((director.skills['shot_efficiency'] ?? 25) + (director.skills['coverage_planning'] ?? 25), 0, 200, 0.7, 1.35)
         : 0.85;
       const pagesPerDay = clamp(2.4 * efficiency, 1.1, 5.5);
-      const dayCount = p.shootDays ?? Math.max(6, Math.ceil(pages / pagesPerDay));
 
       const roles = Object.values(s.universe.roles).filter((r) => r.projectId === project.id);
       const castIds = roles.filter((r) => r.castPersonId).map((r) => r.castPersonId as Id);
@@ -127,6 +135,22 @@ export function registerProduction(sim: Simulation): void {
           `${openLeads.length} lead role${openLeads.length === 1 ? ' is' : 's are'} still uncast. You cannot board a schedule without your leads.`,
         );
       }
+
+      // A draft with a breakdown is boarded the way a first AD boards it:
+      // scene by scene, interiors together, nights on their own days. A day
+      // count the producer insists on sets the pace rather than the count.
+      // A draft from before breakdowns existed takes the older path.
+      const castByCharacter = new Map<string, Id>();
+      for (const role of roles) if (role.castPersonId) castByCharacter.set(role.characterName, role.castPersonId);
+      const boarded: BoardedDay[] | undefined = draft && draft.scenes.length > 0
+        ? boardScript(draft, castByCharacter, {
+            pagesPerDay: p.shootDays ? clamp(pages / p.shootDays, 0.8, 8) : pagesPerDay,
+            setupsPerDay: p.shootDays ? clamp(Math.round((pages / p.shootDays) * 6.5), 8, 40) : clamp(Math.round(16 * efficiency), 9, 28),
+            rng: s.rng('board', project.id),
+          })
+        : undefined;
+      const dayCount = boarded ? boarded.length : (p.shootDays ?? Math.max(6, Math.ceil(pages / pagesPerDay)));
+      const zone = CITIES.get(locationId) ? cityTimeZone(locationId) : s.homeZone;
 
       // 70% of budget is above and below the line spend across shooting days.
       const productionBudget = Math.round(project.budget * 0.62);
@@ -144,8 +168,18 @@ export function registerProduction(sim: Simulation): void {
           continue;
         }
         placed++;
-        const callTime = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: 6 }, s.homeZone);
-        const scenes = buildSceneList(s, project, placed, pagesPerDay, castIds);
+        const board = boarded?.[placed - 1];
+        const night = board?.night ?? false;
+        const isStage = board ? board.isStage : placed % 3 === 0;
+        // Crew call in the location's own time: six in the morning, or five
+        // in the afternoon for a night. The date is the home calendar's.
+        const callTime = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: night ? 17 : 6 }, zone);
+        const scenes = board ? board.scenes : buildSceneList(s, project, placed, pagesPerDay, castIds);
+        const city = CITIES.require(locationId);
+        const setting = board?.scenes[0]?.setting ? titleCaseLabel(board.scenes[0].setting.toLowerCase()) : undefined;
+        const locationName = board
+          ? (isStage ? `Stage — ${setting ?? 'Interiors'}` : `${setting ?? 'Location'}, ${city.name}`)
+          : (isStage ? 'Stage 4' : `${city.name} location`);
 
         const day: ShootDay = {
           id: s.nextId('shootday'),
@@ -156,10 +190,10 @@ export function registerProduction(sim: Simulation): void {
           callTime,
           wrapTargetTime: callTime + 12 * MS_HOUR,
           locationId,
-          locationName: placed % 3 === 0 ? 'Stage 4' : `${CITIES.require(locationId).name} location`,
-          isStage: placed % 3 === 0,
+          locationName,
+          isStage,
           scenes,
-          plannedPages: scenes.reduce((sum, sc) => sum + sc.pages, 0),
+          plannedPages: Number(scenes.reduce((sum, sc) => sum + sc.pages, 0).toFixed(1)),
           completedPages: 0,
           requiredCastIds: [...new Set(scenes.flatMap((sc) => sc.castIds))],
           crewCount: clamp(Math.round(remap(project.budget, 1_000_000_00, 200_000_000_00, 22, 260)), 12, 400),
@@ -169,22 +203,10 @@ export function registerProduction(sim: Simulation): void {
           incidents: [],
           overtimeMinutes: 0,
         };
+        if (board) day.callSheet = buildCallSheet(s, day, project, 'standard');
         s.universe.shootDays[day.id] = day;
         project.shootDayIds.push(day.id);
-
-        const item = s.schedule({
-          at: callTime,
-          kind: 'prod.shoot_day',
-          label: `${project.title} — Day ${placed} Of ${dayCount}`,
-          category: 'production',
-          payload: { shootDayId: day.id },
-          priority: 18,
-          refType: 'project', refId: project.id,
-          requiresPlayer: castIds.includes(s.player.id) || project.directorId === s.player.id,
-          locationId,
-          durationMinutes: 720,
-        });
-        day.scheduledItemId = item.id;
+        scheduleShootDay(s, project, day, dayCount);
 
         cursor = addDays(cursor, 1, s.homeZone);
       }
@@ -225,6 +247,55 @@ export function registerProduction(sim: Simulation): void {
       advancePhase(s, project, 'production');
       s.emit('prod.photography_started', { projectId: project.id });
       return { started: true };
+    },
+  );
+
+  // --- Directing the day --------------------------------------------------
+
+  sim.onCommand<
+    { shootDayId: Id; coverage?: 'lean' | 'standard' | 'thorough'; pushPastTwelve?: boolean; dropSceneNumbers?: string[] },
+    { setups: number; plannedPages: number; crewCall: number }
+  >(
+    'prod.direct_day',
+    (p, { sim: s }) => {
+      const day = s.universe.shootDays[p.shootDayId];
+      if (!day) throw new CommandError('No such shooting day.');
+      const project = s.universe.projects[day.projectId];
+      if (!project) throw new CommandError('No such project.');
+      if (project.directorId !== s.player.id && !playerControls(s, project)) {
+        throw new CommandError('That is not your day to run.');
+      }
+      if (day.status !== 'scheduled') throw new CommandError(`Day ${day.dayNumber} has already been shot.`);
+      if (!day.callSheet) throw new CommandError('That day was boarded before call sheets existed. It runs on the first AD\'s plan.');
+
+      const drop = [...new Set(p.dropSceneNumbers ?? [])];
+      for (const number of drop) {
+        if (!day.scenes.some((scene) => scene.sceneNumber === number)) {
+          throw new CommandError(`Scene ${number} is not on the sheet for day ${day.dayNumber}.`);
+        }
+      }
+      if (drop.length >= day.scenes.length) throw new CommandError('You cannot drop every scene on the day. Cancel the day instead.');
+
+      const coverage = p.coverage ?? day.plan?.coverage ?? day.callSheet.coverage;
+      day.plan = { coverage, pushPastTwelve: p.pushPastTwelve ?? day.plan?.pushPastTwelve ?? false, dropScenes: drop };
+      day.callSheet = { ...day.callSheet, coverage };
+      let setups = 0;
+      for (const scene of day.scenes) {
+        scene.setups = setupsFor(scene.pages, scene.complexity ?? 2, coverage);
+        if (!drop.includes(scene.sceneNumber)) setups += scene.setups;
+      }
+      s.audit({
+        kind: 'prod.day_directed', subjectType: 'shootday', subjectId: day.id,
+        question: `How is day ${day.dayNumber} being run?`,
+        summary: `${coverage} coverage, ${setups} setups${day.plan.pushPastTwelve ? ', pushing past twelve hours' : ''}${drop.length > 0 ? `, scene${drop.length === 1 ? '' : 's'} ${drop.join(', ')} dropped` : ''}.`,
+        factors: [
+          { label: 'Coverage', detail: coverage === 'thorough' ? 'More angles for the edit, more hours on the floor.' : coverage === 'lean' ? 'Fewer setups. Faster, and less to cut with.' : 'A standard pass.', weight: 0.6, contribution: coverage === 'thorough' ? 4 : coverage === 'lean' ? -5 : 0, knowable: true },
+          { label: 'Hours', detail: day.plan.pushPastTwelve ? 'The crew works to fourteen. Overtime at penalty rate.' : 'A twelve-hour day.', weight: 0.4, contribution: 0, knowable: true },
+        ],
+        score: setups,
+        outcome: coverage,
+      });
+      return { setups, plannedPages: day.plannedPages, crewCall: day.callSheet.crewCall };
     },
   );
 
@@ -470,6 +541,11 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
     : 0.85;
 
   const castPresent = day.requiredCastIds.filter((id) => !missing.includes(id));
+  if (day.callSheet) {
+    shootBoardedDay(sim, day, project, rng, castPresent, missing, director);
+    return;
+  }
+
   const castFactor = castPresent.length > 0
     ? castPresent.reduce((s, id) => {
         const person = sim.universe.people[id];
@@ -542,6 +618,14 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
   ), 0, 100);
   day.status = day.completedPages >= day.plannedPages * 0.85 ? 'complete' : 'incomplete';
 
+  finishDay(sim, day, project, castPresent, director, cost, overrun);
+}
+
+/** Everything a day does once its footage and its cost are known. */
+function finishDay(
+  sim: Simulation, day: ShootDay, project: Project, castPresent: Id[],
+  director: Person | undefined, cost: Money, overrun: number,
+): void {
   chargeProduction(sim, project, cost, `${project.title} — Day ${day.dayNumber}`);
   project.completedShootDays += 1;
 
@@ -553,6 +637,7 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
     person.wellbeing.energy = clamp(person.wellbeing.energy - 34 * stress, 0, 100);
     person.wellbeing.stress = clamp(person.wellbeing.stress + 7 * stress, 0, 100);
     person.wellbeing.sleepDebt = Math.min(60, person.wellbeing.sleepDebt + 1.6);
+    person.wellbeing.hygiene = clamp(person.wellbeing.hygiene - 26, 0, 100);
     if (person.isPlayer) {
       person.attributes['long_day_endurance'] = clamp((person.attributes['long_day_endurance'] ?? 40) + 0.35, 0, 100);
       person.attributes['take_consistency'] = clamp((person.attributes['take_consistency'] ?? 40) + 0.25, 0, 100);
@@ -581,10 +666,194 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
   sim.emit('prod.day_shot', {
     projectId: project.id, shootDayId: day.id, dayNumber: day.dayNumber,
     pages: day.completedPages, cost, quality: day.footageQuality, overtimeMinutes: overrun,
+    hours: day.hours?.length ?? 0,
   });
 }
 
-function chargeProduction(sim: Simulation, project: Project, amount: Money, memo: string): void {
+/** Puts a day on the calendar, and its call sheet the evening before when the player is on it. */
+function scheduleShootDay(sim: Simulation, project: Project, day: ShootDay, dayCount: number): void {
+  const onIt = day.requiredCastIds.includes(sim.player.id) || project.directorId === sim.player.id;
+  const item = sim.schedule({
+    at: day.callTime,
+    kind: 'prod.shoot_day',
+    label: `${project.title} — Day ${day.dayNumber} Of ${dayCount}`,
+    category: 'production',
+    payload: { shootDayId: day.id },
+    priority: 18,
+    refType: 'project', refId: project.id,
+    requiresPlayer: onIt,
+    locationId: day.locationId,
+    durationMinutes: 720,
+  });
+  day.scheduledItemId = item.id;
+  if (day.callSheet && onIt && day.callTime - 14 * MS_HOUR > sim.now) {
+    sim.schedule({
+      at: day.callTime - 14 * MS_HOUR,
+      kind: 'prod.call_sheet',
+      label: `${project.title} — Call Sheet For Day ${day.dayNumber}`,
+      category: 'production',
+      payload: { shootDayId: day.id },
+      priority: 40,
+      refType: 'shootday', refId: day.id,
+    });
+  }
+}
+
+/** The evening before: the call sheet goes out, and a director decides how to run the day. */
+function callSheetOut(sim: Simulation, shootDayId: Id): void {
+  const day = sim.universe.shootDays[shootDayId];
+  if (!day || day.status !== 'scheduled' || !day.callSheet) return;
+  const project = sim.universe.projects[day.projectId];
+  if (!project) return;
+  const zone = CITIES.get(day.locationId) ? cityTimeZone(day.locationId) : sim.homeZone;
+  const sheet = day.callSheet;
+  const scenes = day.scenes.map((s) => s.sceneNumber).join(', ');
+  const body = `Crew call ${formatTime(sheet.crewCall, zone)}, first shot ${formatTime(sheet.firstShot, zone)}, wrap target ${formatTime(sheet.wrapTarget, zone)}. Scenes ${scenes} at ${day.locationName}. ${sheet.forecast}`;
+  sim.notify({
+    category: 'production',
+    title: `Call Sheet: ${project.title}, Day ${day.dayNumber}`,
+    body, importance: 62, route: '/workspace/projects', refType: 'shootday', refId: day.id,
+  });
+  if (project.directorId === sim.player.id) {
+    sim.requireDecision({
+      urgency: 66, category: 'production',
+      title: `Tomorrow's Day ${day.dayNumber} On ${project.title}`,
+      detail: `${body} Decide how much coverage you want, whether the crew pushes past twelve, and what you would drop if it runs long.`,
+      route: '/workspace/projects', dueAt: sheet.crewCall,
+      refType: 'shootday', refId: day.id,
+    });
+  }
+}
+
+/** A day boarded from the script, run hour by hour. */
+function shootBoardedDay(
+  sim: Simulation, day: ShootDay, project: Project, rng: ReturnType<Simulation['rng']>,
+  castPresent: Id[], missing: Id[], director: Person | undefined,
+): void {
+  const outcome = runShootDay(sim, day, project, rng, castPresent);
+  day.hours = outcome.hours;
+  day.completedPages = outcome.completedPages;
+  day.footageQuality = outcome.footageQuality;
+  day.overtimeMinutes = outcome.overtimeMinutes;
+  day.actualWrapTime = day.callSheet!.crewCall + Math.round(outcome.hoursWorked * MS_HOUR);
+  day.incidents.push(...outcome.incidents);
+  if (missing.length > 0) {
+    day.incidents.push({
+      at: sim.now, kind: 'partial_cast',
+      description: `${missing.length} cast member${missing.length === 1 ? '' : 's'} unavailable. Their scenes shot around them.`,
+      costDelta: 0, timeDeltaMinutes: 60,
+    });
+  }
+  day.actualCost = outcome.cost;
+  day.status = outcome.rolledOver.length === 0 ? 'complete' : 'incomplete';
+  if (outcome.rolledOver.length > 0) rollOver(sim, project, day, outcome.rolledOver);
+  finishDay(sim, day, project, castPresent, director, outcome.cost, outcome.overtimeMinutes);
+}
+
+/**
+ * What did not get shot goes onto a later day: the next scheduled day of the
+ * same kind when there is one, the next day of any kind otherwise, and a
+ * pickup day added to the end when the schedule is spent. Pickups are capped
+ * at a share of the schedule; after that the scene is cut from the picture,
+ * which is what happens on real ones.
+ */
+function rollOver(sim: Simulation, project: Project, day: ShootDay, sceneNumbers: string[]): void {
+  const moving = day.scenes.filter((s) => sceneNumbers.includes(s.sceneNumber) && !s.shot);
+  if (moving.length === 0) return;
+  const later = project.shootDayIds
+    .map((id) => sim.universe.shootDays[id])
+    .filter((d): d is ShootDay => Boolean(d) && d!.status === 'scheduled' && d!.callTime > day.callTime)
+    .sort((a, b) => a.callTime - b.callTime);
+  const night = moving.every((s) => s.timeOfDay === 'night');
+  let target = later.find((d) => d.isStage === day.isStage && d.callSheet !== undefined
+    && d.scenes.every((s) => s.timeOfDay === 'night') === night) ?? later.find((d) => d.callSheet !== undefined);
+
+  if (!target) {
+    const pickups = project.shootDayIds.filter((id) => (sim.universe.shootDays[id]?.dayNumber ?? 0) > project.scheduledShootDays).length;
+    const allowed = Math.max(2, Math.round(project.scheduledShootDays * PICKUP_SHARE));
+    if (pickups >= allowed) {
+      day.incidents.push({
+        at: sim.now, kind: 'scene_cut',
+        description: `Scene${moving.length === 1 ? '' : 's'} ${moving.map((s) => s.sceneNumber).join(', ')} cut from the picture. No days left to shoot ${moving.length === 1 ? 'it' : 'them'}.`,
+        costDelta: 0, timeDeltaMinutes: 0,
+      });
+      sim.notify({
+        category: 'production',
+        title: `${project.title} lost scene${moving.length === 1 ? '' : 's'} ${moving.map((s) => s.sceneNumber).join(', ')}`,
+        body: 'The schedule is spent and the pickups are used. The cut will have to do without.',
+        importance: 70, route: '/workspace/projects', refType: 'project', refId: project.id,
+      });
+      return;
+    }
+    target = addPickupDay(sim, project, day, night);
+  }
+
+  for (const scene of moving) {
+    scene.shot = false;
+    scene.setupsDone = 0;
+    scene.takes = 0;
+    scene.quality = undefined;
+    target.scenes.push({ ...scene });
+    for (const id of scene.castIds) if (!target.requiredCastIds.includes(id)) target.requiredCastIds.push(id);
+  }
+  target.plannedPages = Number(target.scenes.reduce((sum, s) => sum + s.pages, 0).toFixed(1));
+  target.callSheet = buildCallSheet(sim, target, project, target.plan?.coverage ?? target.callSheet?.coverage ?? 'standard');
+  day.incidents.push({
+    at: sim.now, kind: 'rollover',
+    description: `Scene${moving.length === 1 ? '' : 's'} ${moving.map((s) => s.sceneNumber).join(', ')} rolled to day ${target.dayNumber}.`,
+    costDelta: 0, timeDeltaMinutes: 0,
+  });
+}
+
+/** A day added after the last one boarded, on the next working day, at the same rate. */
+function addPickupDay(sim: Simulation, project: Project, like: ShootDay, night: boolean): ShootDay {
+  const days = project.shootDayIds.map((id) => sim.universe.shootDays[id]).filter((d): d is ShootDay => Boolean(d));
+  const last = days.reduce((a, b) => (b.callTime > a.callTime ? b : a), like);
+  const zone = CITIES.get(like.locationId) ? cityTimeZone(like.locationId) : sim.homeZone;
+  let cursor = addDays(last.callTime, 1, sim.homeZone);
+  for (let guard = 0; guard < 10; guard++) {
+    const parts = zonedParts(cursor, sim.homeZone);
+    if (parts.weekday >= 1 && parts.weekday <= 5) break;
+    cursor = addDays(cursor, 1, sim.homeZone);
+  }
+  const parts = zonedParts(cursor, sim.homeZone);
+  const callTime = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: night ? 17 : 6 }, zone);
+  const day: ShootDay = {
+    id: sim.nextId('shootday'),
+    saveId: sim.universe.meta.id,
+    projectId: project.id,
+    dayNumber: days.length + 1,
+    date: callTime,
+    callTime,
+    wrapTargetTime: callTime + 12 * MS_HOUR,
+    locationId: like.locationId,
+    locationName: `Pickups — ${like.locationName}`,
+    isStage: like.isStage,
+    lotId: like.lotId,
+    scenes: [],
+    plannedPages: 0,
+    completedPages: 0,
+    requiredCastIds: [],
+    crewCount: like.crewCount,
+    dailyBudget: like.dailyBudget,
+    actualCost: 0,
+    status: 'scheduled',
+    incidents: [],
+    overtimeMinutes: 0,
+  };
+  day.callSheet = buildCallSheet(sim, day, project, 'standard');
+  sim.universe.shootDays[day.id] = day;
+  project.shootDayIds.push(day.id);
+  scheduleShootDay(sim, project, day, days.length + 1);
+
+  // The wrap waits for the pickups.
+  const wrap = sim.timeline.pending().find((i) => i.kind === 'prod.wrap' && i.refId === project.id);
+  if (wrap && wrap.at < callTime + MS_DAY) sim.timeline.reschedule(wrap.id, addDays(callTime, 2, sim.homeZone));
+  project.productionEndAt = Math.max(project.productionEndAt ?? 0, addDays(callTime, 1, sim.homeZone));
+  return day;
+}
+
+export function chargeProduction(sim: Simulation, project: Project, amount: Money, memo: string): void {
   const accountId = project.financingIds.find((id) => (sim.ledger.tryAccount(id)?.balance ?? 0) > 0) ?? project.financingIds[0];
   if (!accountId) return;
   const available = sim.ledger.availableFunds(accountId);
@@ -721,7 +990,8 @@ function advancePost(sim: Simulation, projectId: Id): void {
         : project.scriptQuality * 0.6 + 25;
       const funding = clamp(task.spent / Math.max(1, task.budgeted), 0.4, 1.2);
 
-      task.quality = clamp(Math.round(craft * funding + rng.normal(0, 8)), 0, 100);
+      // The house that did it and the hours the player put in both show.
+      task.quality = clamp(Math.round(craft * funding + rng.normal(0, 8) + houseLift(task) + sessionLift(task)), 0, 100);
       task.status = 'complete';
       task.completedAt = sim.now;
       task.notes.push({ at: sim.now, note: `Delivered by ${task.vendorName}. Quality ${task.quality}.` });
@@ -853,6 +1123,9 @@ export function shootingBoard(sim: Simulation, projectId: Id) {
     planned: days.length,
     spent: days.reduce((s, d) => s + d.actualCost, 0),
     budgeted: days.reduce((s, d) => s + d.dailyBudget, 0),
+    pagesShot: Number(days.reduce((s, d) => s + d.completedPages, 0).toFixed(1)),
+    pagesPlanned: Number(days.reduce((s, d) => s + d.plannedPages, 0).toFixed(1)),
+    hoursWorked: Number(days.reduce((s, d) => s + (d.hours && d.hours.length > 0 ? ((d.actualWrapTime ?? d.callTime) - d.callTime) / MS_HOUR : 0), 0).toFixed(1)),
   };
 }
 

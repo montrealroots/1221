@@ -4,6 +4,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
 import { companyDashboard, playerCompanies, explainCeiling, COMPANY_ROLES, EQUIPMENT_CATALOG } from '@/engine/systems/company';
 import { CITIES } from '@/engine/content/geography';
+import { GEAR_CALIBRATION_NOTE } from '@/engine/content/gear';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
@@ -28,7 +29,7 @@ export function CompanyWorkspace() {
         <Empty
           title="Nothing Founded"
           body="A production company separates your money from the business's, and is the only way to greenlight anything yourself."
-          action={<button className="btn btn-primary" onClick={() => setFounding(true)}>Found a company</button>}
+          action={<button className="btn btn-primary" onClick={() => setFounding(true)}>Found A Company</button>}
         />
         {founding && <FoundDialog onClose={() => setFounding(false)} />}
       </>
@@ -57,7 +58,7 @@ export function CompanyWorkspace() {
       {selected && <CompanyDetail companyId={selected.id} />}
 
       <div className="row gap-2" style={{ marginTop: 'var(--s5)' }}>
-        <button className="btn" onClick={() => setFounding(true)}>Found another company</button>
+        <button className="btn" onClick={() => setFounding(true)}>Found Another Company</button>
       </div>
 
       {founding && <FoundDialog onClose={() => setFounding(false)} />}
@@ -105,10 +106,10 @@ function CompanyDetail({ companyId }: { companyId: string }) {
             <hr className="divider" />
             <div className="row gap-2">
               <button className="btn btn-sm" onClick={() => run('co.invest', { companyId, amount: 5_000_000 })}>
-                Put in $50,000
+                Put In $50,000
               </button>
               <button className="btn btn-sm" onClick={() => run('co.distribute', { companyId, amount: 5_000_000 })}>
-                Take out $50,000
+                Take Out $50,000
               </button>
             </div>
             <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
@@ -170,7 +171,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                     </div>
                     <span className="mono small">{formatMoneyCompact(employee.annualSalary)}</span>
                     <button className="btn btn-sm btn-danger" onClick={() => run('co.terminate', { employeeId: employee.id })}>
-                      Let go
+                      Let Go
                     </button>
                   </div>
                 );
@@ -204,21 +205,27 @@ function CompanyDetail({ companyId }: { companyId: string }) {
             )}
           </Panel>
 
-          <Panel title="Available" flush>
+          <Panel title="Available" subtitle={GEAR_CALIBRATION_NOTE} flush>
             <div className="list">
               {EQUIPMENT_CATALOG.map((template) => (
-                <div key={template.name} className="list-item list-static">
+                <div key={template.gearId} className="list-item list-static">
                   <div className="grow">
-                    <div className="small strong">{template.name}</div>
-                    <div className="xs dim">{template.brand} · {titleCaseLabel(template.category)} · quality {template.qualityRating}</div>
+                    <div className="small strong">{template.brand} {template.name}</div>
+                    <div className="xs dim">{titleCaseLabel(template.category)} · quality {template.qualityRating}{template.rentalOnly ? ' · rental only' : ''}</div>
+                    <div className="xs muted" style={{ marginTop: 2 }}>{template.about}</div>
                   </div>
-                  <span className="mono small">{formatMoneyCompact(template.price)}</span>
-                  <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, templateName: template.name, acquire: 'rental', days: 30 })}>
-                    Rent 30d
+                  <div style={{ textAlign: 'right' }}>
+                    <div className="mono small">{template.rentalOnly ? '—' : formatMoneyCompact(template.price)}</div>
+                    <div className="xs dim">{formatMoney(template.dailyRental, { cents: false })} a day</div>
+                  </div>
+                  <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, gearId: template.gearId, acquire: 'rental', days: 30 })}>
+                    Rent 30 Days
                   </button>
-                  <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, templateName: template.name, acquire: 'purchase' })}>
-                    Buy
-                  </button>
+                  {!template.rentalOnly && (
+                    <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, gearId: template.gearId, acquire: 'purchase' })}>
+                      Buy
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

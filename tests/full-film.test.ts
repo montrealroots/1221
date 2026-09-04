@@ -19,6 +19,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Id, Project } from '@/engine/domain/model';
 import { PROJECT_PHASE_ORDER } from '@/engine/domain/model';
 import { suggestedBudget } from '@/engine/systems/film';
+import { currentEditionFor, isEligible } from '@/engine/systems/awards';
 
 const MS_DAY = 86_400_000;
 
@@ -314,14 +315,22 @@ describe('the full film', () => {
     const project = sim.universe.projects[made.projectId] as Project;
     expect(project.releaseDate, 'a released film with no release date').toBeDefined();
 
-    // Campaigning for an edition whose window has closed must be refused.
+    // An edition whose window closed before the picture opened cannot have it,
+    // and a campaign aimed at a body whose current edition is that closed one
+    // is refused. A body already on to its next edition is a different
+    // question, which is why the command is only asked when the two agree.
     const stale = Object.values(sim.universe.awardEditions)
       .filter((e) => e.eligibilityEnd < (project.releaseDate as number))
-      .sort((a, b) => b.eligibilityEnd - a.eligibilityEnd)[0];
-    if (stale) {
+      .sort((a, b) => b.eligibilityEnd - a.eligibilityEnd);
+    expect(stale.length).toBeGreaterThan(0);
+    for (const edition of stale.slice(0, 5)) {
+      expect(isEligible(sim, project, edition).ok, `${edition.bodyId} #${edition.editionNumber}`).toBe(false);
+    }
+    const closed = stale.find((e) => currentEditionFor(sim, e.bodyId)?.id === e.id);
+    if (closed) {
       const result = sim.execute({
         kind: 'award.campaign',
-        payload: { projectId: made.projectId, bodyId: stale.bodyId, categories: ['Best Picture'], spend: 100_00 },
+        payload: { projectId: made.projectId, bodyId: closed.bodyId, categories: ['Best Picture'], spend: 100_00 },
       });
       expect(result.ok).toBe(false);
     }

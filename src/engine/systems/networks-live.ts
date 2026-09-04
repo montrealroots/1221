@@ -33,6 +33,8 @@ import { appetiteOf, canonicalGenre, genre, genreName } from '../content/genres'
 import { loadBroadcastSeries, isBroadcastSeriesLoaded, seriesOn, type BroadcastSeries } from '../content/filmography';
 import { titleCaseLabel } from '../core/text';
 import { isPlayersProject, networkState, recordNews, recordTrade } from './studio-state';
+import { generateTitle } from '../content/titles';
+import { normaliseTitle, titleTaken } from '../content/filmography';
 
 const AIRING_CAP = 300;
 const CHART_CAP = 120;
@@ -499,7 +501,7 @@ function runUpfront(sim: Simulation): void {
       if (index < 0) continue;
       const wants = network.wants.length > 0 ? network.wants : ['drama'];
       const genres = [canonicalGenre(wants[rng.int(0, wants.length - 1)] ?? 'drama')];
-      const title = newSeriesTitle(sim, network, rng);
+      const title = newSeriesTitle(sim, network, genres, rng);
       schedule.slots[index] = {
         day: slot.day, start: slot.start, minutes: slot.minutes,
         title, kind: slotKindOf(genres), genres, season: 1, episodesAired: 0, standing: 'new',
@@ -537,16 +539,25 @@ function runUpfront(sim: Simulation): void {
   sim.schedule({ at: nextUpfront(sim), kind: 'net.upfront', label: 'The Upfronts', category: 'system', priority: 84 });
 }
 
-const TITLE_HEADS = ['The', 'Last', 'Second', 'Quiet', 'Hard', 'Open', 'Cold', 'Bright', 'Long', 'Near'];
-const TITLE_TAILS = ['Precinct', 'Ward', 'Harbour', 'Practice', 'Division', 'County', 'Shift', 'Circuit', 'Station', 'Watch', 'Row', 'Line'];
-
-function newSeriesTitle(sim: Simulation, network: Network, rng: Rng): string {
-  for (let attempt = 0; attempt < 20; attempt++) {
-    const candidate = `${TITLE_HEADS[rng.int(0, TITLE_HEADS.length - 1)]} ${TITLE_TAILS[rng.int(0, TITLE_TAILS.length - 1)]}`;
-    const taken = Object.values(sim.universe.networks).some((n) => n.schedule?.slots.some((s) => s.title === candidate));
-    if (!taken) return candidate;
-  }
-  return `${network.shortName} Pilot ${rng.int(100, 999)}`;
+/**
+ * A title for a show a network is ordering.
+ *
+ * Named the way a series in that genre is named — a procedural gets a place
+ * and a unit, a comedy gets an institution, a fantasy gets a court — and
+ * checked against the real record, every other network's grid and every
+ * project in the save, so nothing on television ever shares a name.
+ */
+function newSeriesTitle(sim: Simulation, network: Network, genres: string[], rng: Rng): string {
+  void network;
+  const taken = (candidate: string): boolean => {
+    const key = normaliseTitle(candidate);
+    if (titleTaken(candidate)) return true;
+    if (Object.values(sim.universe.projects).some((p) => normaliseTitle(p.title) === key)) return true;
+    return Object.values(sim.universe.networks).some(
+      (n) => n.schedule?.slots.some((slot) => normaliseTitle(slot.title) === key),
+    );
+  };
+  return generateTitle(rng, { genres, format: 'series', taken });
 }
 
 // ---------------------------------------------------------------------------

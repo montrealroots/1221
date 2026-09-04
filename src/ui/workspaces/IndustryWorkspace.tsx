@@ -30,12 +30,13 @@ import { ALL_TIME, type RecordEntry } from '@/engine/content/records';
 import { LICENCE_KINDS, LICENCE_KIND_LABEL, licenceOdds, licenceStatus, type LicenceKind } from '@/engine/systems/ip';
 import { activeWaves, marketReport, marketsInPlay } from '@/engine/systems/zeitgeist';
 import { PeopleTab, PersonProfile } from '@/ui/components/PeopleTab';
+import { PressTab } from '@/ui/components/PressTab';
 import { awardBoards, awardCoverage, mostAwardedWorks } from '@/engine/content/award-records';
 import { personByQid } from '@/engine/content/people';
 import { CRAFT_ROLE_LABEL } from '@/engine/content/craft-attributes';
 import { SearchEverything } from '@/ui/components/SearchEverything';
 
-type Tab = 'studios' | 'networks' | 'markets' | 'boxoffice' | 'records' | 'trades' | 'people' | 'search';
+type Tab = 'studios' | 'networks' | 'markets' | 'boxoffice' | 'records' | 'trades' | 'press' | 'people' | 'search';
 type Kind = 'all' | 'film' | 'tv';
 type Sort = 'year' | 'gross' | 'tomatometer' | 'imdb' | 'title';
 
@@ -80,6 +81,7 @@ export function IndustryWorkspace() {
         { id: 'boxoffice', label: 'Box Office' },
         { id: 'records', label: 'Records' },
         { id: 'trades', label: 'Trades' },
+        { id: 'press', label: 'The Press' },
         { id: 'people', label: 'People' },
         { id: 'search', label: 'Search' },
       ]} />
@@ -93,6 +95,7 @@ export function IndustryWorkspace() {
       {tab === 'studios' && selectedStudio && <StudioDetail studio={selectedStudio} onBack={() => setSelectedId(null)} />}
       {tab === 'networks' && !selectedNetwork && <NetworkList onSelect={setSelectedId} />}
       {tab === 'networks' && selectedNetwork && <NetworkDetail network={selectedNetwork} onBack={() => setSelectedId(null)} />}
+      {tab === 'press' && <PressTab />}
       {tab === 'people' && <PeopleTab />}
     </>
   );

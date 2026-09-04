@@ -51,16 +51,22 @@ export const STREET_SUFFIXES: readonly string[] = [
 ];
 
 export const COMPANY_FIRST: readonly string[] = [
-  'Amber', 'Anvil', 'Arcadia', 'Ardent', 'Beacon', 'Bellhouse', 'Bright', 'Cardinal', 'Cascade', 'Cobalt',
-  'Compass', 'Crown', 'Ember', 'Fathom', 'Ferrous', 'Foundry', 'Glasshouse', 'Granite', 'Harbour', 'Hollow',
-  'Ironbark', 'Keystone', 'Lantern', 'Longshore', 'Marrow', 'Midnight', 'Northstar', 'Oakhill', 'Overcast', 'Paperbird',
-  'Quarry', 'Redwood', 'Saltbox', 'Sable', 'Sixpence', 'Slate', 'Stonecrop', 'Tallgrass', 'Thistle', 'Undertow',
-  'Vantage', 'Wayfarer', 'Westerly', 'Wildfire', 'Yellowfield',
+  'Amber', 'Anvil', 'Arcadia', 'Ardent', 'Ashgrove', 'Beacon', 'Bellhouse', 'Blackwater', 'Bright',
+  'Cardinal', 'Cascade', 'Cobalt', 'Coldharbour', 'Compass', 'Copperline', 'Crown', 'Deepwater',
+  'Ember', 'Fathom', 'Ferrous', 'Firebreak', 'Foundry', 'Glasshouse', 'Granite', 'Greenwood',
+  'Halyard', 'Harbour', 'Hollow', 'Ironbark', 'Kestrel', 'Keystone', 'Lantern', 'Longshore',
+  'Lowtide', 'Marrow', 'Meridian', 'Midnight', 'Millstone', 'Nightjar', 'Northstar', 'Oakhill',
+  'Overcast', 'Paperbird', 'Pinewood Row', 'Quarry', 'Redwood', 'Rookery', 'Sable', 'Saltbox',
+  'Sixpence', 'Slate', 'Stonecrop', 'Tallgrass', 'Thistle', 'Threadneedle', 'Undertow', 'Vantage',
+  'Wayfarer', 'Westerly', 'Wildfire', 'Windrow', 'Yellowfield', 'Ninebark', 'Fallowfield',
+  'Sparrowhawk', 'Cinderfield', 'Bramblewick', 'Lodestar', 'Quicksilver',
 ];
 
 export const COMPANY_SECOND: readonly string[] = [
-  'Pictures', 'Films', 'Productions', 'Entertainment', 'Media', 'Studios', 'Content', 'Works', 'House', 'Company',
-  'Collective', 'Group', 'Partners', 'Projects', 'Stories',
+  'Pictures', 'Films', 'Productions', 'Entertainment', 'Media', 'Studios', 'Content', 'Works',
+  'House', 'Company', 'Collective', 'Group', 'Partners', 'Projects', 'Stories', 'Features',
+  'Television', 'Picture Company', 'Film Company', 'Motion Pictures', 'Screen', 'Originals',
+  'Development', 'Productions Ltd', 'Labs', 'Studio Group',
 ];
 
 export const TITLE_ADJECTIVES: readonly string[] = [
@@ -100,15 +106,34 @@ export function generateAddress(rng: Rng): string {
   return `${number} ${rng.pick(STREET_NAMES)} ${rng.pick(STREET_SUFFIXES)}`;
 }
 
-export function generateCompanyName(rng: Rng): string {
-  return `${rng.pick(COMPANY_FIRST)} ${rng.pick(COMPANY_SECOND)}`;
+/**
+ * A company name nothing else in the world has.
+ *
+ * Two companies with the same name in one industry is the sort of thing a
+ * player notices immediately, so the check is the same one titles get: draw
+ * again from the same seeded stream until it is free.
+ */
+export function generateCompanyName(rng: Rng, taken: (name: string) => boolean = () => false): string {
+  for (let attempt = 0; attempt < 60; attempt++) {
+    const candidate = `${rng.pick(COMPANY_FIRST)} ${rng.pick(COMPANY_SECOND)}`;
+    if (!taken(candidate)) return candidate;
+  }
+  // Every pairing spoken for, which needs a very long career. A street name
+  // between the two is still a company somebody would put on a door.
+  for (let attempt = 0; attempt < 60; attempt++) {
+    const candidate = `${rng.pick(COMPANY_FIRST)} ${rng.pick(STREET_NAMES)} ${rng.pick(COMPANY_SECOND)}`;
+    if (!taken(candidate)) return candidate;
+  }
+  return `${rng.pick(COMPANY_FIRST)} ${rng.pick(COMPANY_SECOND)} ${rng.int(2, 99)}`;
 }
 
 /**
- * A title nothing else has. `taken` says whether a candidate already belongs
- * to a real film or series or to a project in this save; the generator keeps
- * drawing from the same seeded stream until it finds a free one, so the result
- * is deterministic and never a duplicate.
+ * A title nothing else has, without knowing what it is naming.
+ *
+ * Kept for the handful of places that have no genre to hand. Anything that
+ * knows what it is naming should call `generateTitle` in content/titles, which
+ * names a Korean thriller and a network procedural differently instead of
+ * drawing both from the same seventy nouns.
  */
 export function generateProjectTitle(rng: Rng, taken: (title: string) => boolean = () => false): string {
   let title = rng.pick(TITLE_PATTERNS)(rng);
@@ -118,10 +143,21 @@ export function generateProjectTitle(rng: Rng, taken: (title: string) => boolean
   return title;
 }
 
-export function generateCharacterName(rng: Rng): string {
-  return rng.chance(0.4)
-    ? rng.pick(GIVEN_NAMES)
-    : `${rng.pick(GIVEN_NAMES)} ${rng.pick(FAMILY_NAMES)}`;
+/**
+ * A character's name.
+ *
+ * Names repeat across films, as they do in life, and that is fine. What is not
+ * fine is two characters in the same picture called the same thing, so a
+ * production passes in what it has already used.
+ */
+export function generateCharacterName(rng: Rng, taken: (name: string) => boolean = () => false): string {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const candidate = rng.chance(0.4)
+      ? rng.pick(GIVEN_NAMES)
+      : `${rng.pick(GIVEN_NAMES)} ${rng.pick(FAMILY_NAMES)}`;
+    if (!taken(candidate)) return candidate;
+  }
+  return `${rng.pick(GIVEN_NAMES)} ${rng.pick(FAMILY_NAMES)}`;
 }
 
 export const PRONOUN_OPTIONS: readonly string[] = ['she/her', 'he/him', 'they/them'];

@@ -187,7 +187,7 @@ export const FAN_EVENTS: IndustryEventSpec[] = [
   },
   {
     id: 'mefcc', name: 'Middle East Film & Comic Con', shortName: 'MEFCC', kind: 'fan', scope: 'pop', organiser: 'Informa Markets',
-    city: 'Abu Dhabi', cityId: 'ae-az-abudhabi', countryId: 'ae', zone: 'Asia/Dubai', venue: 'ADNEC', editionOffset: 2011,
+    city: 'Abu Dhabi', cityId: 'ae-01-abudhabi', countryId: 'ae', zone: 'Asia/Dubai', venue: 'ADNEC', editionOffset: 2011,
     start: nearest(4, 18, FRI), days: 3,
     known: {},
     activities: ['Celebrity panels', 'Autographs', 'Artist Alley', 'Cosplay', 'Gaming and anime'],
@@ -208,7 +208,7 @@ export const MARKETS: IndustryEventSpec[] = [
   },
   {
     id: 'cineeurope', name: 'CineEurope', kind: 'market', scope: 'film', organiser: 'Film Expo Group and UNIC',
-    city: 'Barcelona', cityId: 'es-ct-barcelona', countryId: 'es', zone: 'Europe/Madrid', venue: 'CCIB', editionOffset: 1991,
+    city: 'Barcelona', cityId: 'es-cat-barcelona', countryId: 'es', zone: 'Europe/Madrid', venue: 'CCIB', editionOffset: 1991,
     start: nearest(6, 15, MON), days: 4,
     known: {},
     activities: ['Studio presentations for European exhibitors', 'CineEurope Awards', 'Trade show'],
@@ -225,7 +225,7 @@ export const MARKETS: IndustryEventSpec[] = [
   },
   {
     id: 'marche-du-film', name: 'The Marché du Film', kind: 'market', scope: 'film', organiser: 'Festival de Cannes',
-    city: 'Cannes', cityId: 'fr-pac-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals', editionOffset: 1958,
+    city: 'Cannes', cityId: 'fr-paca-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals', editionOffset: 1958,
     start: nearest(5, 13, TUE), days: 9,
     known: { 2026: { start: '2026-05-12', end: '2026-05-20', source: WIKI('2026 Cannes Film Festival'), note: 'Alongside the festival.' } },
     activities: ['The world\'s largest film market', 'Sales screenings', 'Producers Network', 'Cannes Docs', 'Frontières (genre co-production)', 'Cannes Next', 'Goes to Cannes (works in progress)'],
@@ -242,7 +242,7 @@ export const MARKETS: IndustryEventSpec[] = [
   },
   {
     id: 'mipcom', name: 'MIPCOM Cannes', shortName: 'MIPCOM', kind: 'market', scope: 'tv', organiser: 'RX France',
-    city: 'Cannes', cityId: 'fr-pac-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals', editionOffset: 1984,
+    city: 'Cannes', cityId: 'fr-paca-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals', editionOffset: 1984,
     start: nth(10, MON, 2), days: 4,
     known: {},
     activities: ['The world\'s television content market', 'MIPJunior the weekend before', 'Keynotes and screenings', 'Personality of the Year', 'MIPCOM Diversify TV Awards'],

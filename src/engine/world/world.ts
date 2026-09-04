@@ -157,6 +157,80 @@ export function registerWorld(sim: Simulation): void {
     },
   );
 
+  // A whole picture staged in one go, for trying the rooms: written, greenlit,
+  // funded, cast from the world, boarded, and — if asked — shot and in post.
+  // Everything it does goes through the same commands a player uses, so
+  // nothing here can reach a state the game cannot.
+  sim.onCommand<{ to?: 'boarded' | 'shooting' | 'post'; title?: string }, { projectId: Id; phase: string; days: number }>(
+    'sandbox.stage_picture',
+    (p, { sim: s }) => {
+      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
+      const to = p.to ?? 'post';
+      const run = <R>(kind: string, payload: Record<string, unknown>): R => {
+        const result = s.execute<R>({ kind, payload });
+        if (!result.ok) throw new CommandError(`${kind} refused: ${result.error}`);
+        return result.value as R;
+      };
+      const player = s.player;
+      run('sandbox.add_funds', { amount: 600_000_000_00 });
+      run('sandbox.max_attributes', {});
+      let company = Object.values(s.universe.companies).find((c) => c.ownerships.some((o) => o.holderId === player.id) && !c.dissolvedAt);
+      if (!company) {
+        const { companyId } = run<{ companyId: Id }>('co.found', { structure: 'c_corp', kind: 'production', name: 'Demo Pictures', initialCapital: 300_000_000_00 });
+        company = s.universe.companies[companyId]!;
+      }
+      // No title asked for means a fresh one from the title engine, so the
+      // demo never collides with a picture the world already has.
+      const { projectId } = run<{ projectId: Id }>('film.create_project', {
+        ...(p.title ? { title: p.title } : {}), format: 'feature', genres: ['thriller', 'drama'],
+        logline: 'A river pilot has one night to bring a stranded ferry home.', companyId: company.id,
+      });
+      const created = s.universe.projects[projectId]!;
+      run('film.acquire_rights', { projectId, title: created.title, sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: company.id, holderKind: 'company' });
+      run('film.write_draft', { projectId, daysSpent: 40 });
+      run('film.attach_talent', { projectId, personId: player.id, role: 'director', confirmed: true });
+      run('film.attach_talent', { projectId, personId: player.id, role: 'producer', confirmed: true });
+      const project = s.universe.projects[projectId]!;
+      let decision = run<{ greenlit: boolean }>('film.greenlight', { projectId, budget: 40_000_000_00, companyId: company.id });
+      for (let i = 0; i < 8 && !decision.greenlit; i++) {
+        run('film.write_draft', { projectId, daysSpent: 30 });
+        decision = run<{ greenlit: boolean }>('film.greenlight', { projectId, budget: 40_000_000_00, companyId: company.id });
+      }
+      if (!decision.greenlit) throw new CommandError('The demo picture never got a greenlight. Try again.');
+      run('film.arrange_financing', { projectId, sources: [{ kind: 'company', amount: project.budget || 40_000_000_00, name: company.name }] });
+      run('cast.break_down_script', { projectId, includeDayPlayers: false });
+      const roles = Object.values(s.universe.roles).filter((r) => r.projectId === projectId);
+      const actors = Object.values(s.universe.people).filter((q) => !q.isPlayer && q.careerTrack === 'actor');
+      roles.forEach((role, i) => {
+        const actor = actors[i % actors.length];
+        if (!actor) return;
+        run('cast.open_casting', { roleId: role.id, candidateCount: 0 });
+        role.castPersonId = actor.id;
+        role.status = 'cast';
+        if (!project.castIds.includes(actor.id)) project.castIds.push(actor.id);
+        actor.currentLocationId = player.currentLocationId;
+      });
+      run('prod.build_schedule', { projectId, startAt: s.now + 14 * MS_DAY, locationId: player.currentLocationId });
+      let days = 0;
+      if (to !== 'boarded') {
+        s.advanceTo(s.now + 15 * MS_DAY);
+        run('prod.start_photography', { projectId });
+        if (to === 'shooting') {
+          s.advanceTo(s.now + 3 * MS_DAY);
+          days = 3;
+        } else {
+          let guard = 0;
+          while (s.universe.projects[projectId]?.phase === 'production' && guard++ < 40) {
+            s.advanceTo(s.now + 7 * MS_DAY);
+            days += 7;
+          }
+        }
+      }
+      s.universe.sandbox.log.push({ at: s.now, action: `Staged a demo picture to ${to}` });
+      return { projectId, phase: s.universe.projects[projectId]?.phase ?? 'gone', days };
+    },
+  );
+
   // --- Tutorial ------------------------------------------------------------
 
   sim.onCommand<{ tutorialId: string }, { completed: string[] }>(

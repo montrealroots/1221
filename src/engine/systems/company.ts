@@ -14,6 +14,7 @@ import { clamp, remap } from '../core/rng';
 import { addDays, addMonths, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
+import { GEAR } from '../content/gear';
 import { costOfLiving } from '../content/tax';
 import { generateCompanyName, generatePersonName } from '../content/names';
 import { createBill } from './finance';
@@ -52,23 +53,27 @@ export interface EquipmentTemplate {
   price: Money;
   qualityRating: number;
   dailyRental: Money;
+  gearId: string;
+  rentalOnly: boolean;
+  about: string;
 }
 
-export const EQUIPMENT_CATALOG: readonly EquipmentTemplate[] = [
-  { name: 'Digital Cinema Camera', brand: 'Meridian Optics', category: 'camera', price: 78_000_00, qualityRating: 92, dailyRental: 1_450_00 },
-  { name: 'Compact Cinema Camera', brand: 'Meridian Optics', category: 'camera', price: 24_000_00, qualityRating: 74, dailyRental: 480_00 },
-  { name: 'Anamorphic Lens Set', brand: 'Kestrel Glass', category: 'lens', price: 165_000_00, qualityRating: 96, dailyRental: 2_200_00 },
-  { name: 'Spherical Prime Set', brand: 'Kestrel Glass', category: 'lens', price: 62_000_00, qualityRating: 84, dailyRental: 900_00 },
-  { name: 'LED Lighting Package', brand: 'Lantern Grip', category: 'lighting', price: 48_000_00, qualityRating: 80, dailyRental: 750_00 },
-  { name: 'Tungsten Lighting Truck', brand: 'Lantern Grip', category: 'lighting', price: 92_000_00, qualityRating: 78, dailyRental: 1_100_00 },
-  { name: 'Grip Package', brand: 'Lantern Grip', category: 'grip', price: 56_000_00, qualityRating: 76, dailyRental: 820_00 },
-  { name: 'Location Sound Package', brand: 'Harbour Audio', category: 'sound', price: 34_000_00, qualityRating: 86, dailyRental: 520_00 },
-  { name: 'Edit Suite', brand: 'Circuitline', category: 'computer', price: 42_000_00, qualityRating: 88, dailyRental: 400_00 },
-  { name: 'Colour Grading Suite', brand: 'Cobalt Systems', category: 'computer', price: 128_000_00, qualityRating: 94, dailyRental: 1_800_00 },
-  { name: 'Shared Storage Array', brand: 'Circuitline', category: 'storage', price: 38_000_00, qualityRating: 82, dailyRental: 260_00 },
-  { name: 'Camera Truck', brand: 'Northline Transport', category: 'vehicle', price: 145_000_00, qualityRating: 70, dailyRental: 640_00 },
-  { name: 'Technocrane', brand: 'Lantern Grip', category: 'specialty', price: 210_000_00, qualityRating: 90, dailyRental: 3_400_00 },
-];
+/**
+ * The kit, from the real registry. Kept as a template list so the company
+ * workspace and the older command payloads keep working; the source of truth
+ * is content/gear.ts, which says what each thing is and whose it is.
+ */
+export const EQUIPMENT_CATALOG: readonly EquipmentTemplate[] = GEAR.map((g) => ({
+  name: g.name,
+  brand: g.maker,
+  category: g.category,
+  price: g.purchaseCalibration,
+  qualityRating: g.qualityRating,
+  dailyRental: g.dailyRentalCalibration,
+  gearId: g.id,
+  rentalOnly: g.rentalOnly ?? false,
+  about: g.about,
+}));
 
 // ---------------------------------------------------------------------------
 // Registration
@@ -100,7 +105,12 @@ export function registerCompany(sim: Simulation): void {
         );
       }
 
-      const name = p.name?.trim() || generateCompanyName(s.rng('company_name', s.counter('company')));
+      // No two companies in the world share a name, real or made here.
+      const existingNames = new Set(Object.values(s.universe.companies).map((c) => c.name.toLowerCase()));
+      const name = p.name?.trim() || generateCompanyName(
+        s.rng('company_name', s.counter('company')),
+        (candidate) => existingNames.has(candidate.toLowerCase()),
+      );
       const companyId = s.nextId('company');
 
       const cash = s.openAccount({
@@ -349,13 +359,16 @@ export function registerCompany(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ companyId: Id; templateName: string; acquire: 'purchase' | 'rental'; days?: number; projectId?: Id }, { equipmentId: Id; cost: Money }>(
+  sim.onCommand<{ companyId: Id; templateName?: string; gearId?: string; acquire: 'purchase' | 'rental'; days?: number; projectId?: Id }, { equipmentId: Id; cost: Money }>(
     'co.acquire_equipment',
     (p, { sim: s }) => {
       const company = s.universe.companies[p.companyId];
       if (!company) throw new CommandError('No such company.');
-      const template = EQUIPMENT_CATALOG.find((e) => e.name === p.templateName);
+      const template = EQUIPMENT_CATALOG.find((e) => e.gearId === p.gearId || e.name === p.templateName);
       if (!template) throw new CommandError('No such equipment.');
+      if (p.acquire === 'purchase' && template.rentalOnly) {
+        throw new CommandError(`${template.brand} does not sell the ${template.name}. It is rented, with the crew that comes with it.`);
+      }
 
       const days = clamp(p.days ?? 30, 1, 365);
       const cost = p.acquire === 'purchase' ? template.price : template.dailyRental * days;
@@ -545,7 +558,7 @@ function createExecutive(sim: Simulation, company: Company, template: RoleTempla
     interests: [], goals: [], lifestyle: 'comfortable',
     background: `${template.title} at ${company.name}`,
     attributes: {}, traits: [], skills,
-    wellbeing: { energy: 72, stress: 45, sleepDebt: 3, morale: 68, condition: 82, fitness: 55, travelFatigue: 0, nourishment: 72 },
+    wellbeing: { energy: 72, stress: 45, sleepDebt: 3, morale: 68, condition: 82, fitness: 55, travelFatigue: 0, nourishment: 72, hygiene: 80 },
     reputation: {
       publicFame: rng.int(0, 18), audienceAppeal: 50,
       professionalReputation: rng.int(48, 88), reliability: rng.int(60, 95),

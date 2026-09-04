@@ -40,6 +40,11 @@ import { registerStudios, ensureStudioSchedules } from './systems/studios';
 import { registerNetworks, ensureNetworkSchedules } from './systems/networks-live';
 import { registerZeitgeist, ensureZeitgeist, commissionProject } from './systems/zeitgeist';
 import { registerProfessions } from './systems/professions';
+import { registerRealPeople } from './systems/real-people';
+import { registerPress } from './systems/press';
+import { craftFromLegacy } from './content/screenplay';
+import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
+import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -71,6 +76,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerBuyerOffer(sim);
   registerCasting(sim);
   registerProduction(sim);
+  registerPost(sim);
+  registerPlaces(sim);
   registerRelease(sim);
   registerCritics(sim);
   registerFranchises(sim);
@@ -79,6 +86,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerNetworks(sim);
   registerZeitgeist(sim);
   registerProfessions(sim);
+  registerRealPeople(sim);
+  registerPress(sim);
   registerDriving(sim);
   registerAwards(sim);
   registerCompany(sim);
@@ -116,6 +125,8 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
   sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
+  ensureLotsClose(sim);
+  ensureHygieneTick(sim);
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
@@ -467,6 +478,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     ['companies', 'map'], ['divisions', 'map'], ['employees', 'map'],
     ['equipment', 'map'], ['merchandise', 'map'],
     ['scheduled', 'list'], ['audits', 'list'], ['history', 'list'], ['notifications', 'list'],
+    ['press', 'list'],
     ['decisions', 'map'],
   ];
 
@@ -763,6 +775,81 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(filler.length > 0
       ? `The world commissions its own films now, by country and by what is in fashion there. ${filler.length} unstarted filler production${filler.length === 1 ? '' : 's'} and ${clearedRoles} open role${clearedRoles === 1 ? '' : 's'} that existed only to fill the casting page were cleared; everything you were ever attached to was kept.`
       : 'The world commissions its own films now, by country and by what is in fashion there.');
+  }
+
+  if (from < 19) {
+    // You can now go to a real person by name rather than only opening a room.
+    // Every part keeps a record of who was asked, what they were offered and
+    // what they said, so a second attempt reads back the first answer instead
+    // of rolling a new one. Parts that already exist start that record empty —
+    // nothing that was cast before stops being cast.
+    for (const role of Object.values(universe.roles)) role.offers ??= [];
+    steps.push('You can take a part to somebody by name now. Every part keeps the offers put to it and the answers, so asking twice cannot book the same person twice.');
+  }
+
+  if (from < 20) {
+    // The trade press writes about your industry now, in the register each
+    // publication actually writes in. Nothing already in the save changes; the
+    // coverage starts from here, and the one-line trade items a save already
+    // has are kept exactly as they were.
+    record['press'] ??= [];
+    // Every picture keeps the approaches made for its chairs, the same way a
+    // part keeps its offers. Existing projects start that record empty;
+    // nothing already attached comes off.
+    for (const project of Object.values(universe.projects)) project.approaches ??= [];
+    steps.push('The trades cover your industry now. Variety, Deadline, The Hollywood Reporter and the rest each write in their own register, and everything they publish is kept.');
+  }
+
+  if (from < 21) {
+    // A draft is a document now: fourteen craft dimensions, a scene list and a
+    // cast of characters. Every draft already in the save keeps its numbers —
+    // the three it had become three of the fourteen and the rest are filled
+    // from its quality — and its scenes are broken down the first time
+    // anything needs them, rather than being invented here and now.
+    let carried = 0;
+    for (const draft of Object.values(universe.scriptDrafts)) {
+      draft.craft ??= craftFromLegacy(draft.structure, draft.dialogue, draft.characters, draft.quality);
+      draft.scenes ??= [];
+      draft.scriptCharacters ??= [];
+      carried++;
+    }
+    steps.push(carried > 0
+      ? `A script is a document now: fourteen craft dimensions, a scene list and a cast of characters. ${carried} draft${carried === 1 ? '' : 's'} already in the save kept every number ${carried === 1 ? 'it' : 'they'} had.`
+      : 'A script is a document now: fourteen craft dimensions, a scene list and a cast of characters.');
+  }
+
+  if (from < 22) {
+    // Post is work now: effects are counted and bid on by real houses, music
+    // is spotted and licensed from the companies that own it, stages are
+    // booked on real lots and a lot can be owned. Nothing already in a save
+    // changes; a picture that finished post before this keeps its tasks and
+    // its numbers, and simply has no bids or cues on the record.
+    let plants = 0;
+    for (const property of Object.values(universe.properties)) {
+      if ((property.kind === 'studio_lot' || property.kind === 'sound_stage') && property.ownerId && !property.lot) {
+        property.lot = plantForLegacyProperty(property);
+        plants++;
+      }
+    }
+    steps.push(plants > 0
+      ? `Post is work now: bids, cues, stages and lots. ${plants} lot${plants === 1 ? '' : 's'} you already owned ${plants === 1 ? 'is' : 'are'} a working plant.`
+      : 'Post is work now: effects bids from real houses, music licensed from its owners, stages on real lots.');
+  }
+
+  if (from < 23) {
+    // The city is somewhere you move through now: places to go, a tank that
+    // empties, and a day that leaves its mark on you. Everybody in the save
+    // starts clean and every car starts full, which is the kindest reading of
+    // a world that was not tracking either.
+    let people = 0;
+    for (const person of Object.values(universe.people)) {
+      if (person.wellbeing.hygiene === undefined) { person.wellbeing.hygiene = 80; people++; }
+    }
+    let cars = 0;
+    for (const vehicle of Object.values(universe.vehicles)) {
+      if (vehicle.fuelPercent === undefined) { vehicle.fuelPercent = 100; cars++; }
+    }
+    steps.push(`The city is somewhere you go now: restaurants, filling stations, hotels and the sights. ${people} people started clean and ${cars} car${cars === 1 ? '' : 's'} started full.`);
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

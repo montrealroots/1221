@@ -455,6 +455,8 @@ function arriveFlight(sim: Simulation, bookingId: Id): void {
     const toZone = CITIES.require(toCityId).timeZone;
 
     person.currentLocationId = toCityId;
+    // A flight lands you at the airport, not at the last place you were.
+    person.currentPlaceId = undefined;
 
     // Jet lag is real, and it is a function of how many zones you crossed.
     const zoneShiftHours = fromZone && toZone

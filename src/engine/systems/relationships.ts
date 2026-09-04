@@ -765,7 +765,7 @@ export function createChild(sim: Simulation, parentA: Person, parentB: Person, n
     attributes: {},
     traits: [],
     skills: {},
-    wellbeing: { energy: 90, stress: 5, sleepDebt: 0, morale: 80, condition: 95, fitness: 40, travelFatigue: 0, nourishment: 90 },
+    wellbeing: { energy: 90, stress: 5, sleepDebt: 0, morale: 80, condition: 95, fitness: 40, travelFatigue: 0, nourishment: 90, hygiene: 80 },
     reputation: { publicFame: 0, audienceAppeal: 50, professionalReputation: 0, reliability: 50, prestige: 0, industryDemand: 0, controversy: 0 },
     careerTrack: 'none',
     representation: {},

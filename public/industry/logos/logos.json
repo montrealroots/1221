@@ -1024,5 +1024,275 @@
   "author": "Showmax",
   "credit": "https://www.showmax.com/",
   "source": "https://commons.wikimedia.org/wiki/File:Showmax_Logo.svg"
+ },
+ "rotten-tomatoes": {
+  "kind": "outlet",
+  "qid": "Q105584",
+  "file": "Rotten Tomatoes logo.svg",
+  "licence": "Public domain",
+  "author": "Emily Oberman from Pentagram, modified by Throast",
+  "credit": "http://www.adweek.com/wp-content/uploads/2018/03/rotten-tomatoes-blackred-CONTENT-2018.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Rotten_Tomatoes_logo.svg"
+ },
+ "metacritic": {
+  "kind": "outlet",
+  "qid": "Q150248",
+  "file": "Metacritic logo.svg",
+  "licence": "Public domain",
+  "author": "Fandom",
+  "credit": "https://www.metacritic.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Metacritic_logo.svg"
+ },
+ "nyt": {
+  "kind": "outlet",
+  "qid": "Q9684",
+  "file": "NewYorkTimes.svg",
+  "licence": "Public domain",
+  "author": "Unknown authorUnknown author",
+  "credit": "Transferred from the English Wikipedia. http://en.wikipedia.org/wiki/File:NewYorkTimes.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:NewYorkTimes.svg"
+ },
+ "guardian": {
+  "kind": "outlet",
+  "qid": "Q11148",
+  "file": "The Guardian 2018.svg",
+  "licence": "Public domain",
+  "author": "Asvensson",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Guardian_2018.svg"
+ },
+ "washington-post": {
+  "kind": "outlet",
+  "qid": "Q166032",
+  "file": "The Logo of The Washington Post Newspaper.svg",
+  "licence": "Public domain",
+  "author": "The Washington Post",
+  "credit": "https://img.washingtonpost.com/pb/resources/img/twp-masthead-415x57.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Logo_of_The_Washington_Post_Newspaper.svg"
+ },
+ "le-monde": {
+  "kind": "outlet",
+  "qid": "Q12461",
+  "file": "Le Monde.svg",
+  "licence": "Public domain",
+  "author": "Le Mondevectorized by RaphaelQS at English Wikipedia",
+  "credit": "Transferred from en.wikipedia to Commons.",
+  "source": "https://commons.wikimedia.org/wiki/File:Le_Monde.svg"
+ },
+ "reuters": {
+  "kind": "outlet",
+  "qid": "Q130879",
+  "file": "Reuters logo 2024.svg",
+  "licence": "Public domain",
+  "author": "Reuters",
+  "credit": "www.reuters.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Reuters_logo_2024.svg"
+ },
+ "ap": {
+  "kind": "outlet",
+  "qid": "Q40469",
+  "file": "Associated Press logo 2012.svg",
+  "licence": "Public domain",
+  "author": "Associated Press",
+  "credit": "vector data: http://www.ap.org/\ncolors: http://www.ap.org/",
+  "source": "https://commons.wikimedia.org/wiki/File:Associated_Press_logo_2012.svg"
+ },
+ "afp": {
+  "kind": "outlet",
+  "qid": "Q40464",
+  "file": "Agence France-Presse Logo.svg",
+  "licence": "Public domain",
+  "author": "Agence France-Presse",
+  "credit": "www.afp.com/sites/all/themes/custom/afpcom/afpcom-v3/images/logo-afp.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Agence_France-Presse_Logo.svg"
+ },
+ "variety": {
+  "kind": "outlet",
+  "qid": "Q471728",
+  "file": "Variety logo.svg",
+  "licence": "Public domain",
+  "author": "Penske Media Corporation",
+  "credit": "Extracted from official site www.variety.com.",
+  "source": "https://commons.wikimedia.org/wiki/File:Variety_logo.svg"
+ },
+ "hollywood-reporter": {
+  "kind": "outlet",
+  "qid": "Q61503",
+  "file": "The Hollywood Reporter logo.svg",
+  "licence": "Public domain",
+  "author": "Prometheus Global Media",
+  "credit": "http://www.hollywoodreporter.com/sites/default/files/custom/Festival_Dailies/Cannes_Day6REV.pdf",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Hollywood_Reporter_logo.svg"
+ },
+ "deadline": {
+  "kind": "outlet",
+  "qid": "Q4037100",
+  "file": "Deadline.com logo.svg",
+  "licence": "Public domain",
+  "author": "Deadline.com",
+  "credit": "http://www.telluridefilmfestival.org/pdfs/40th_TFF_program_guide_final3.pdf, page 32",
+  "source": "https://commons.wikimedia.org/wiki/File:Deadline.com_logo.svg"
+ },
+ "indiewire": {
+  "kind": "outlet",
+  "qid": "Q6024460",
+  "file": "IndieWire Logo.svg",
+  "licence": "Public domain",
+  "author": "IndieWire",
+  "credit": "Own work using: https://www.indiewire.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:IndieWire_Logo.svg"
+ },
+ "thewrap": {
+  "kind": "outlet",
+  "qid": "Q17042582",
+  "file": "TheWrap.svg",
+  "licence": "Public domain",
+  "author": "TheWrap",
+  "credit": "Own work using: https://www.thewrap.com/wp-content/themes/thewrap-canvas/imgs/thewrap-logo-alt.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:TheWrap.svg"
+ },
+ "nexttv": {
+  "kind": "outlet",
+  "qid": "Q4972128",
+  "file": "Broadcasting&Cable logo.svg",
+  "licence": "Public domain",
+  "author": "™/®Future US, Inc.",
+  "credit": "Vectorised by VulcanSphere",
+  "source": "https://commons.wikimedia.org/wiki/File:Broadcasting%26Cable_logo.svg"
+ },
+ "kinema-junpo": {
+  "kind": "outlet",
+  "qid": "Q1052227",
+  "file": "Kinema Junpo キネマ旬報 logo.png",
+  "licence": "Public domain",
+  "author": "Kinema Junpo",
+  "credit": "http://www.kinejun.com/Portals/0/images/index/1650_LOGO.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Kinema_Junpo_%E3%82%AD%E3%83%8D%E3%83%9E%E6%97%AC%E5%A0%B1_logo.png"
+ },
+ "bollywood-hungama": {
+  "kind": "outlet",
+  "qid": "Q4939834",
+  "file": "Bollywood Hungama logo.svg",
+  "licence": "Public domain",
+  "author": "Bollywood Hungama",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:Bollywood_Hungama_logo.svg"
+ },
+ "sight-and-sound": {
+  "kind": "outlet",
+  "qid": "Q1546271",
+  "file": "Sight and Sound (2021 logo, black).svg",
+  "licence": "Public domain",
+  "author": "Designed by Pentagram partner Marina Willer (source: designweek.co.uk – archived 2 August 2021).",
+  "credit": "Traced in Inkscape based on PNG version at BFI.org (archived URL as of 21 August 2021).",
+  "source": "https://commons.wikimedia.org/wiki/File:Sight_and_Sound_(2021_logo,_black).svg"
+ },
+ "cahiers": {
+  "kind": "outlet",
+  "qid": "Q909176",
+  "file": "Cahiers du Cinéma logo.svg",
+  "licence": "Public domain",
+  "author": "Cahiers du Cinéma",
+  "credit": "Downloaded from LogoVectorSeek.com and cropped in Inkscape.",
+  "source": "https://commons.wikimedia.org/wiki/File:Cahiers_du_Cin%C3%A9ma_logo.svg"
+ },
+ "film-comment": {
+  "kind": "outlet",
+  "qid": "Q4038736",
+  "file": "Film Comment logo.svg",
+  "licence": "Public domain",
+  "author": "Film at Lincoln Center",
+  "credit": "https://www.filmcomment.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Film_Comment_logo.svg"
+ },
+ "vulture": {
+  "kind": "outlet",
+  "qid": "Q27881700",
+  "file": "Vulture wordmark.svg",
+  "licence": "Public domain",
+  "author": "Vulture",
+  "credit": "https://www.vulture.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Vulture_wordmark.svg"
+ },
+ "collider": {
+  "kind": "outlet",
+  "qid": "Q20706938",
+  "file": "Collider website logo.svg",
+  "licence": "Public domain",
+  "author": "Moonrivers",
+  "credit": "Own work based on: File:Collider-logo.png by User:Escapefromarkham derived from official Collider website",
+  "source": "https://commons.wikimedia.org/wiki/File:Collider_website_logo.svg"
+ },
+ "av-club": {
+  "kind": "outlet",
+  "qid": "Q3233970",
+  "file": "The A.V. Club logo.svg",
+  "licence": "Public domain",
+  "author": "The A.V. Club,G/O Media Inc.",
+  "credit": "https://www.avclub.com (archive link)",
+  "source": "https://commons.wikimedia.org/wiki/File:The_A.V._Club_logo.svg"
+ },
+ "box-office-mojo": {
+  "kind": "outlet",
+  "qid": "Q223142",
+  "file": "Box office Mojo.png",
+  "licence": "CC BY-SA 4.0",
+  "author": "MarvinGoku073",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:Box_office_Mojo.png"
+ },
+ "the-numbers": {
+  "kind": "outlet",
+  "qid": "Q17072251",
+  "file": "The Numbers.jpg",
+  "licence": "CC BY-SA 3.0",
+  "author": "The Numbers Website",
+  "credit": "thenumbers.com",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Numbers.jpg"
+ },
+ "letterboxd": {
+  "kind": "outlet",
+  "qid": "Q18709181",
+  "file": "Letterboxd-Logo-H-Pos-RGB.svg",
+  "licence": "Public domain",
+  "author": "Letterboxd",
+  "credit": "Own work based on: Letterboxd 2018 logo (vertical).svg by Yeeno derived from Letterboxd brand",
+  "source": "https://commons.wikimedia.org/wiki/File:Letterboxd-Logo-H-Pos-RGB.svg"
+ },
+ "latimes": {
+  "kind": "outlet",
+  "qid": "Q188515",
+  "file": "Los Angeles Times.svg",
+  "licence": "Public domain",
+  "author": "The original uploader was Jacobolus at English Wikipedia.",
+  "credit": "Transferred from en.wikipedia to Commons by Sdrtirs using CommonsHelper.",
+  "source": "https://commons.wikimedia.org/wiki/File:Los_Angeles_Times.svg"
+ },
+ "wsj": {
+  "kind": "outlet",
+  "qid": "Q164746",
+  "file": "The Wall Street Journal Logo.svg",
+  "licence": "Public domain",
+  "author": "The Wall Street Journal",
+  "credit": "http://www.jetairways.com/EN/EU/Uploads/JetPrivilege/MileageCharLeaflet010909.pdf",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Wall_Street_Journal_Logo.svg"
+ },
+ "ft": {
+  "kind": "outlet",
+  "qid": "Q183399",
+  "file": "Financial Times corporate logo (no background).svg",
+  "licence": "Public domain",
+  "author": "Unknown authorUnknown author; SVG version created by odder (talk)",
+  "credit": "Derived from the Financial Times Identity and Communication Guidelines 2012 and converted into SVG format in Inkscape.",
+  "source": "https://commons.wikimedia.org/wiki/File:Financial_Times_corporate_logo_(no_background).svg"
+ },
+ "bloomberg": {
+  "kind": "outlet",
+  "qid": "Q14270642",
+  "file": "New Bloomberg Logo.svg",
+  "licence": "Public domain",
+  "author": "Bloomberg L.P.",
+  "credit": "Bloomberg",
+  "source": "https://commons.wikimedia.org/wiki/File:New_Bloomberg_Logo.svg"
  }
 }

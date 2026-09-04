@@ -8,6 +8,7 @@ import { CATALOG } from '@/engine/content/catalog';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import type { ConstructionPhase, ConstructionProject } from '@/engine/domain/model';
 import { formatDate } from '@/engine/core/time';
+import { marketStageRate } from '@/engine/systems/post';
 
 type Tab = 'owned' | 'market' | 'offers' | 'build' | 'interiors';
 
@@ -68,7 +69,7 @@ export function PropertyWorkspace() {
                       className="btn btn-sm"
                       onClick={() => run('prop.list_for_sale', { propertyId: property.id, askingPrice: property.marketValue })}
                     >
-                      List for sale
+                      List For Sale
                     </button>
                   ) : undefined
                 }
@@ -90,6 +91,7 @@ export function PropertyWorkspace() {
                     {property.features.map((f) => <span key={f} className="chip">{f}</span>)}
                   </div>
                 )}
+                {property.lot && <LotPanel propertyId={property.id} />}
               </Panel>
             ))}
           </div>
@@ -97,7 +99,12 @@ export function PropertyWorkspace() {
       )}
 
       {tab === 'market' && (
-        <Panel title="On The Market" subtitle={`${listings.length} listings where you are`} flush>
+        <Panel
+          title="On The Market"
+          subtitle={`${listings.length} listings where you are`}
+          actions={<button className="btn btn-sm" onClick={() => run('prop.list_lots', {})}>Find A Studio Lot</button>}
+          flush
+        >
           {listings.length === 0 ? (
             <Empty title="Nothing Listed" body="New listings appear every ten days." />
           ) : (
@@ -107,10 +114,14 @@ export function PropertyWorkspace() {
                   <div className="grow">
                     <div className="small strong">{property.addressLine}</div>
                     <div className="xs dim">
-                      {titleCaseLabel(property.kind.replace(/_/g, ' '))} · {property.bedrooms} bed · {property.interiorSqft.toLocaleString('en-US')} sq ft
+                      {titleCaseLabel(property.kind.replace(/_/g, ' '))}
+                      {property.lot
+                        ? ` · ${property.lot.stages} stage${property.lot.stages === 1 ? '' : 's'} · ${property.interiorSqft.toLocaleString('en-US')} sq ft · overhead ${formatMoneyCompact(property.lot.monthlyOverhead)} a month`
+                        : ` · ${property.bedrooms} bed · ${property.interiorSqft.toLocaleString('en-US')} sq ft`}
                       {property.neighbourhoodId && ` · ${NEIGHBOURHOODS.get(property.neighbourhoodId)?.name}`}
                       {' · '}{listing.daysOnMarket} days on market
                     </div>
+                    {property.lot && <div className="xs muted" style={{ marginTop: 2 }}>{property.name}. A working plant: stages, tenants, a monthly close.</div>}
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <div className="mono">{formatMoneyCompact(listing.askingPrice)}</div>
@@ -160,7 +171,7 @@ export function PropertyWorkspace() {
                         They came back at {formatMoney(offer.counterAmount ?? 0)}.
                         <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
                           <button className="btn btn-sm btn-primary" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: true })}>Accept</button>
-                          <button className="btn btn-sm" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: false })}>Walk away</button>
+                          <button className="btn btn-sm" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: false })}>Walk Away</button>
                         </div>
                       </div>
                     )}
@@ -197,6 +208,56 @@ export function PropertyWorkspace() {
 
       {offerFor && <OfferDialog listingId={offerFor} onClose={() => setOfferFor(null)} />}
     </>
+  );
+}
+
+/** A lot you own, as a business: the plant, the rate, the tenants, the last close. */
+function LotPanel({ propertyId }: { propertyId: string }) {
+  const { sim, run } = useGame();
+  const property = useWorld((s) => s.universe.properties[propertyId]);
+  const [rate, setRate] = useState<number | null>(null);
+  if (!property?.lot) return null;
+  const plant = property.lot;
+  const market = marketStageRate(property.locationId);
+  const current = rate ?? Math.round(plant.stageDayRate / 100);
+  const live = plant.tenants.filter((t) => t.to > sim.now);
+  return (
+    <div style={{ marginTop: 'var(--s4)' }}>
+      <div className="eyebrow">The Plant</div>
+      <div className="grid grid-3" style={{ marginTop: 'var(--s2)' }}>
+        <Stat label="Stages" value={plant.stages} note={`largest ${plant.largestStageSqft.toLocaleString('en-US')} sq ft`} />
+        <Stat label="Occupancy" value={`${Math.round(plant.occupancy * 100)}%`} note={plant.lastClosedAt ? `closed ${formatDate(plant.lastClosedAt, sim.homeZone)}` : 'not closed yet'} />
+        <Stat label="Overhead" value={<MoneyText amount={plant.monthlyOverhead} compact />} note="a month" />
+        <Stat label="Taken In" value={<MoneyText amount={plant.lifetimeIncome} compact />} note="lifetime" />
+        <Stat label="Paid Out" value={<MoneyText amount={plant.lifetimeOverhead} compact />} note="lifetime" />
+        <Stat label="Facilities" value={plant.facilities.map((f) => titleCaseLabel(f.replace(/_/g, ' '))).join(', ')} />
+      </div>
+      <div className="field" style={{ marginTop: 'var(--s3)' }}>
+        <div className="row-between">
+          <label htmlFor={`rate-${propertyId}`} style={{ marginBottom: 0 }}>Stage Day Rate</label>
+          <span className="mono">{formatMoney(current * 100, { cents: false })} <span className="dim xs">(the real lots in town: {formatMoney(market, { cents: false })})</span></span>
+        </div>
+        <div className="row gap-2">
+          <input id={`rate-${propertyId}`} type="range" min={Math.round(market * 0.3 / 100)} max={Math.round(market * 2 / 100)} value={current} onChange={(e) => setRate(Number(e.target.value))} />
+          <button className="btn btn-sm" onClick={() => { run('lot.set_rate', { propertyId, stageDayRate: current * 100 }); setRate(null); }}>Set</button>
+        </div>
+        <div className="xs dim">Undercut the town and the stages fill; overprice and they sit dark. SLATE’s calibration, not a rate card.</div>
+      </div>
+      {live.length > 0 ? (
+        <div className="list" style={{ marginTop: 'var(--s2)' }}>
+          {live.map((tenant, i) => (
+            <div key={i} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{tenant.projectTitle}</div>
+                <div className="xs dim">{tenant.stages} stage{tenant.stages === 1 ? '' : 's'} · until {formatDate(tenant.to, sim.homeZone)} · {tenant.dayRate === 0 ? 'your own picture' : `${formatMoney(tenant.dayRate, { cents: false })} a day`}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Nobody on the lot right now. The month closes, the overhead is paid, and the phone either rings or it does not.</p>
+      )}
+    </div>
   );
 }
 
@@ -279,7 +340,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
       <Panel
         title="Construction"
         subtitle="Land, concept, architect, design, plans, zoning, permits, bids, contracts, then twenty phases of actual building."
-        actions={<button className="btn btn-sm btn-primary" disabled={land.length === 0} onClick={() => setOpen(true)}>Start a build</button>}
+        actions={<button className="btn btn-sm btn-primary" disabled={land.length === 0} onClick={() => setOpen(true)}>Start A Build</button>}
         flush
       >
         {builds.length === 0 ? (
@@ -379,7 +440,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
                     setOpen(false);
                   }}
                 >
-                  Build here
+                  Build Here
                 </button>
               </div>
             </div>
