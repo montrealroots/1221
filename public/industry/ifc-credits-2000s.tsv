@@ -43,7 +43,7 @@ Q2393892	writer	Q3640890	Blayne Weaver
 Q2393892	composer	Q505677	Thurston Moore		
 Q2393892	cast	Q272019	Don Cheadle		
 Q2393892	cast	Q177311	Joseph Gordon-Levitt		
-Q2393892	cast	Q191719	ズーイー・デシャネル		
+Q2393892	cast	Q191719	Zooey Deschanel		
 Q3520170	director	Q7147685	Patrick Stettner		
 Q3520170	writer	Q7147685	Patrick Stettner		
 Q3520170	composer	Q52790802	Alex Lasarenko		
@@ -127,6 +127,11 @@ Q525415	subject		family
 Q525415	subject		Greek Americans		
 Q525415	subject		romantic love		
 Q525415	subject		intercultural marriage		
+Q59423	director	Q289054	Catherine Breillat		
+Q59423	writer	Q289054	Catherine Breillat		
+Q59423	cast	Q449082	Roxane Mesquida		
+Q59423	cast	Q285206	Grégoire Colin		
+Q59423	cast	Q565692	Anne Parillaud		
 Q4053346	director	Q4823022	Austin Chick		
 Q4053346	writer	Q4823022	Austin Chick		
 Q4053346	composer	Q7602605	Startled Insects		
@@ -135,12 +140,7 @@ Q4053346	editor	http://www.wikidata.org/.well-known/genid/5169068ebcbc0a5a6c3fd7
 Q4053346	cast	Q41422	Mark Ruffalo		
 Q4053346	cast	Q6796743	Maya Stange		
 Q4053346	cast	Q232527	Kathleen Robertson		
-Q59423	director	Q289054	Catherine Breillat		
-Q59423	writer	Q289054	Catherine Breillat		
-Q59423	cast	Q449082	Roxane Mesquida		
-Q59423	cast	Q285206	Grégoire Colin		
-Q59423	cast	Q565692	Anne Parillaud		
-Q4879739	director	Q22113138	Q22113138		
+Q4879739	director	Q22113138	Peter Spirer		
 Q4879739	followed_by	Q4879742	Beef II		
 Q5026942	director	Q1606898	Todd Graff		
 Q5026942	writer	Q1606898	Todd Graff		
@@ -220,14 +220,14 @@ Q221852	producer	Q531599	Harvey Weinstein
 Q221852	producer	Q888311	Bob Weinstein		
 Q221852	producer	Q6899972	Monica Hampton		
 Q221852	executive_producer	Q531599	Harvey Weinstein		
-Q221852	cast	Q128799	リッキー・マーティン		
+Q221852	cast	Q128799	Ricky Martin		
 Q221852	cast	Q184650	Donald Rumsfeld		
 Q221852	cast	Q174908	Michael Moore		
 Q221852	cast	Q9545	Tony Blair		
 Q221852	cast	Q207	George W. Bush		
 Q221852	cast	Q714	Stevie Wonder		
 Q221852	cast	Q11975	Britney Spears		
-Q221852	cast	Q48259	ディック・チェイニー		
+Q221852	cast	Q48259	Dick Cheney		
 Q221852	cast	Q19673	Al Gore		
 Q221852	cast	Q47216	Condoleezza Rice		
 Q221852	award		Palme d'Or		
@@ -329,8 +329,8 @@ Q464805	cast	Q229410	Melissa Leo
 Q464805	cast	Q450219	Garcelle Beauvais		
 Q464805	cast	Q228931	Marcia Gay Harden		
 Q464805	cast	Q451938	James Morrison		
-Q4879744	director	Q22113138	Q22113138		
-Q4879744	writer	Q22113138	Q22113138		
+Q4879744	director	Q22113138	Peter Spirer		
+Q4879744	writer	Q22113138	Peter Spirer		
 Q4879744	follows	Q4879742	Beef II		
 Q18351493	director	Q105772317	Fabien Pruvot		
 Q18351493	writer	Q6178305	Jennifer Farrell		
@@ -385,8 +385,8 @@ Q466713	cast	Q3176065	Jeanne Herry
 Q466713	cast	Q573679	Pascal Greggory		
 Q466713	cast	Q19402652	Claudia Coli		
 Q466713	cast	Q429188	Thierry Fortineau		
-Q4377503	director	Q18394725	Q18394725		
-Q4377503	writer	Q18394725	Q18394725		
+Q4377503	director	Q18394725	Tommy Stovall		
+Q4377503	writer	Q18394725	Tommy Stovall		
 Q4377503	cast	Q912401	Brian J. Smith		
 Q4377503	cast	Q260545	Susan Blakely		
 Q4377503	cast	Q7441072	Sean Hennigan		
@@ -635,7 +635,7 @@ Q2916143	cast	Q531532	Jennifer Dundas
 Q742998	director	Q4943297	Laurie Collyer		
 Q742998	writer	Q4943297	Laurie Collyer		
 Q742998	composer	Q15434762	Jack Livesey		
-Q742998	cast	Q223830	ダニー・トレホ		
+Q742998	cast	Q223830	Danny Trejo		
 Q742998	cast	Q7384521	Ryan Simpkins		
 Q742998	cast	Q726142	Giancarlo Esposito		
 Q742998	cast	Q202381	Maggie Gyllenhaal		
@@ -768,7 +768,7 @@ Q4994377	producer	Q924621	Gary Winick
 Q4994377	producer	Q1626388	Karey Kirkpatrick		
 Q4994377	cast	Q1738023	Keir O'Donnell		
 Q4994377	cast	Q267550	Izabella Miko		
-Q4994377	cast	Q191719	ズーイー・デシャネル		
+Q4994377	cast	Q191719	Zooey Deschanel		
 Q4994377	cast	Q302786	Aaron Stanford		
 Q4994377	cast	Q937888	Ryan Donowho		
 Q4994377	cast	Q109324	Christopher Lloyd		
@@ -789,7 +789,7 @@ Q335144	cast	Q187038	David Carradine
 Q335144	cast	Q234564	Erika Christensen		
 Q335144	cast	Q166493	Leo Fitzpatrick		
 Q335144	cast	Q335587	Nick Stahl		
-Q335144	cast	Q271464	テリー・クルーズ		
+Q335144	cast	Q271464	Terry Crews		
 Q335144	cast	Q432743	Gavin Rossdale		
 Q3210899	director	Q131387353	Jennifer Sharp		
 Q3210899	cast	Q7383833	Ryan Alosio		
@@ -941,7 +941,7 @@ Q5888543	cast	Q3049599	Cady McClain
 Q508055	director	Q7087618	Oliver Irving		
 Q508055	writer	Q7087618	Oliver Irving		
 Q508055	cast	Q287572	Rebecca Pidgeon		
-Q508055	cast	Q36767	ロバート・パティンソン		
+Q508055	cast	Q36767	Robert Pattinson		
 Q508055	cast	Q4354055	Jeremy Hardy		
 Q508055	cast	Q6831349	Michael Irving		
 Q3790448	director	Q3771984	Glenn McQuaid		
@@ -1077,7 +1077,7 @@ Q1772792	cast	Q3308101	Michael Cerveris
 Q1772792	cast	Q380095	Christopher Meloni		
 Q1772792	cast	Q472282	Josh Charles		
 Q1772792	cast	Q360426	Max Minghella		
-Q1772792	cast	Q232371	ルーシー・ゴードン		
+Q1772792	cast	Q232371	Lucy Gordon		
 Q1772792	cast	Q943589	Frankie Faison		
 Q1772792	cast	Q26231	Corey Stoll		
 Q1772792	cast	Q310324	Timothy Hutton		
@@ -1207,7 +1207,7 @@ Q1511905	executive_producer	Q20630526	Austin Stark
 Q1511905	cast	Q257271	Loretta Devine		
 Q1511905	cast	Q271471	Verne Troyer		
 Q1511905	cast	Q41449	Michael Shannon		
-Q1511905	cast	Q359488	マイケル・ペーニャ		
+Q1511905	cast	Q359488	Michael Peña		
 Q1511905	cast	Q242552	Grace Zabriskie		
 Q1511905	cast	Q1395654	Irma P. Hall		
 Q1511905	cast	Q188772	Willem Dafoe		

@@ -196,7 +196,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                         {item.rentalEndsAt && ` until ${formatDate(item.rentalEndsAt, sim.homeZone)}`}
                       </div>
                     </div>
-                    <span className="chip">quality {item.qualityRating}</span>
+                    <span className="chip">Quality {item.qualityRating}</span>
                     <span className="mono small">{formatMoneyCompact(item.currentValue)}</span>
                   </div>
                 ))}

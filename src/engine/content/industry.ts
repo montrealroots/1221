@@ -7,21 +7,21 @@
  * the day the save starts is the record, and everything after is SLATE, and
  * the interface says which is which.
  *
- * Two television outlets below are still SLATE's own placeholders, marked
- * `simulated`, until the networks step replaces them with the real broadcast
- * and cable networks. The agencies and exhibitor chains are likewise
- * placeholders until their own steps.
+ * The networks are the real ones too (content/networks). The agencies and
+ * exhibitor chains below are still SLATE's own placeholders, marked
+ * `simulated`, until their own steps.
  */
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
 import { STUDIOS, type Studio } from './studios';
+import { NETWORKS, type Network } from './networks';
 
 
 const V = REFERENCE_VERSION;
 const SIM = {
   source: 'simulated', confidence: 'high', version: V,
-  note: 'Original to SLATE. Not a real company. A placeholder until the networks step.',
+  note: 'Original to SLATE. Not a real company. A placeholder until its own step.',
 } as const;
 
 export interface Buyer extends ReferenceRecord {
@@ -49,6 +49,8 @@ export interface Buyer extends ReferenceRecord {
   description: string;
   /** Set when the buyer is a real studio in the registry. */
   studioId?: string;
+  /** Set when the buyer is a real network or service in the registry. */
+  networkId?: string;
 }
 
 function buyerOf(studio: Studio): Buyer {
@@ -68,17 +70,26 @@ function buyerOf(studio: Studio): Buyer {
   };
 }
 
-const TV_PLACEHOLDERS: Buyer[] = [
-  { id: 'atlasnet', name: 'Atlas Network', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 12_000_000_00, budgetFloor: 1_500_000_00, riskAppetite: 28, prestigeBias: 34, wants: ['crime', 'medical', 'comedy', 'family', 'legal'], avoids: ['experimental', 'horror'], formats: ['series', 'tv_movie'], slateSize: 22, accessDifficulty: 66, distributionReach: 0.0, description: 'Broadcast. Twenty-two episodes, a timeslot and a lead-in that decides your fate. A placeholder until the real networks arrive.', ...SIM },
-  { id: 'vertexcable', name: 'Vertex', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 20_000_000_00, budgetFloor: 2_500_000_00, riskAppetite: 72, prestigeBias: 88, wants: ['drama', 'crime', 'science fiction', 'limited_series'], avoids: ['family'], formats: ['series', 'limited_series'], slateSize: 8, accessDifficulty: 84, distributionReach: 0.0, description: 'Premium cable. Ten episodes, no notes worth the name, and a habit of making careers. A placeholder until the real networks arrive.', ...SIM },
-];
+function buyerOfNetwork(network: Network): Buyer {
+  return {
+    id: network.id, name: network.name, aliases: network.aliases, type: network.type === 'streaming' ? 'streamer' : 'network', locationId: network.countryId === 'us' ? 'us-ca-losangeles' : 'us-ny-newyork',
+    budgetCeiling: network.budgetCeiling, budgetFloor: network.budgetFloor,
+    riskAppetite: network.riskAppetite, prestigeBias: network.prestigeBias,
+    wants: network.wants, avoids: network.avoids, formats: network.formats, slateSize: network.slateSize,
+    accessDifficulty: network.accessDifficulty, distributionReach: 0,
+    description: network.description, networkId: network.id,
+    source: 'calibrated_estimate', confidence: 'medium', version: V,
+    note: 'A real network. What it commissions and what it pays are SLATE\'s calibration from the public record.',
+  };
+}
 
-export const BUYERS = new Registry<Buyer>('buyers', [...STUDIOS.all().map(buyerOf), ...TV_PLACEHOLDERS]);
+export const BUYERS = new Registry<Buyer>('buyers', [...STUDIOS.all().map(buyerOf), ...NETWORKS.all().map(buyerOfNetwork)]);
 
 /** The fictional buyers earlier saves may still point at, by id, with the real name they map to for history. */
 export const LEGACY_BUYER_NAMES: Readonly<Record<string, string>> = {
   meridian: 'Meridian Pictures', crestwood: 'Crestwood Studios', halcyon: 'Halcyon Entertainment', northgate: 'Northgate Films',
   brightline: 'Brightline Pictures', tessellate: 'Tessellate', lumenplus: 'Lumen+', pinewharf: 'Pine Wharf Media', sablefox: 'Sable & Fox',
+  atlasnet: 'Atlas Network', vertexcable: 'Vertex',
 };
 
 export interface Agency extends ReferenceRecord {

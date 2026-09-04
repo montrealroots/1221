@@ -18,6 +18,8 @@ import { effectiveAttributes, systemModifier } from '../domain/attributes';
 import { readiness } from './life';
 import { AGENCIES } from '../content/industry';
 import { STUDIOS, type Studio, type StudioFormat } from '../content/studios';
+import { NETWORKS, type Network } from '../content/networks';
+import { quickReception } from './critics';
 import { generatePersonName, generateCharacterName } from '../content/names';
 import { CITIES, countryOfCity, primaryLanguageOf } from '../content/geography';
 import { recordCredit } from './film';
@@ -839,6 +841,27 @@ export function studioForBackgroundProject(rng: ReturnType<Simulation['rng']>, p
   return candidates[candidates.length - 1];
 }
 
+/** Which real network commissions a series the world made on its own: one that makes that kind of thing, preferably at home. */
+export function networkForBackgroundProject(rng: ReturnType<Simulation['rng']>, project: Project): Network | undefined {
+  const candidates = NETWORKS.all().filter((n) => n.formats.includes(project.format as StudioFormat) && !project.genres.some((g) => n.avoids.includes(g)) && !n.status?.includes('closing'));
+  if (candidates.length === 0) return undefined;
+  const weights = candidates.map((n) => {
+    let weight = Math.max(1, n.slateSize);
+    if (n.countryId === project.productionCountryId) weight *= 12;
+    else if (n.countryId !== 'us') weight *= 0.08;
+    else if (project.productionCountryId && project.productionCountryId !== 'us') weight *= 0.25;
+    if (project.genres.some((g) => n.wants.includes(g))) weight *= 2;
+    if (project.budget < n.budgetFloor * 0.5 || project.budget > n.budgetCeiling * 1.5) weight *= 0.2;
+    return weight;
+  });
+  let roll = rng.float(0, weights.reduce((a, b) => a + b, 0));
+  for (let i = 0; i < candidates.length; i++) {
+    roll -= weights[i] ?? 0;
+    if (roll <= 0) return candidates[i];
+  }
+  return candidates[candidates.length - 1];
+}
+
 export function seedIndependentProject(sim: Simulation, seed: number): Project | undefined {
   const rng = sim.rng('world_project', seed, Math.floor(sim.now / MS_DAY));
   const player = sim.universe.people[sim.universe.playerId];
@@ -879,10 +902,18 @@ export function seedIndependentProject(sim: Simulation, seed: number): Project |
   project.budget = Math.round(rng.float(0.4, 6) * 5_000_000_00);
   // Its own stream, so choosing a studio never shifts the draws the rest of
   // the world makes: a save's trajectory is the same as before studios existed.
+  const television = project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie';
   const studio = studioForBackgroundProject(sim.rng('world_studio', seed, Math.floor(sim.now / MS_DAY)), project);
   if (studio) {
     project.studioId = studio.id;
     project.distributorName = studio.name;
+  }
+  if (television) {
+    const network = networkForBackgroundProject(sim.rng('world_network', seed, Math.floor(sim.now / MS_DAY)), project);
+    if (network) {
+      project.networkId = network.id;
+      project.distributorName = network.name;
+    }
   }
   project.greenlitAt = sim.now;
   project.phase = 'preproduction';
@@ -998,8 +1029,7 @@ function advanceBackgroundProject(sim: Simulation, projectId: Id): void {
         : project.budget >= 3_000_000_00 ? 'limited_theatrical'
         : rng.chance(0.5) ? 'platform' : 'streaming_exclusive';
       project.finalQuality = backgroundQuality(sim, project, rng);
-      project.criticScore = clamp(Math.round(project.finalQuality + rng.normal(0, 11)), 1, 100);
-      project.audienceScore = clamp(Math.round(project.finalQuality * 0.75 + 20 + rng.normal(0, 12)), 1, 100);
+      quickReception(sim, project, sim.rng('world_reception', project.id));
       if (!project.distributorName) {
         const distributor = studioForBackgroundProject(sim.rng('world_studio', project.id), project);
         project.studioId = distributor?.id;

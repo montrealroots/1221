@@ -34,6 +34,8 @@ import { registerFilm, registerBuyerOffer } from './systems/film';
 import { registerCasting, seedIndependentProject } from './systems/casting';
 import { registerProduction } from './systems/production';
 import { registerRelease, registerFranchises } from './systems/release';
+import { registerCritics } from './systems/critics';
+import { registerIpLicensing } from './systems/ip';
 import { registerProfessions } from './systems/professions';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
@@ -67,7 +69,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerCasting(sim);
   registerProduction(sim);
   registerRelease(sim);
+  registerCritics(sim);
   registerFranchises(sim);
+  registerIpLicensing(sim);
   registerProfessions(sim);
   registerDriving(sim);
   registerAwards(sim);

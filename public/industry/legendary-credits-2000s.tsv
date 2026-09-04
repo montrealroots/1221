@@ -1,6 +1,6 @@
 qid	role	personQid	name	character	ordinal
-Q166262	director	Q25191	クリストファー・ノーラン		
-Q166262	writer	Q25191	クリストファー・ノーラン		
+Q166262	director	Q25191	Christopher Nolan		
+Q166262	writer	Q25191	Christopher Nolan		
 Q166262	writer	Q352010	David S. Goyer		
 Q166262	composer	Q76364	Hans Zimmer		
 Q166262	composer	Q213869	James Newton Howard		
@@ -163,7 +163,7 @@ Q328695	cast	Q236822	Kate Bosworth	Lois Lane
 Q328695	cast	Q228928	Eva Marie Saint	Martha Kent	
 Q328695	cast	Q34012	Marlon Brando	Jor-El	
 Q328695	cast	Q485901	James Marsden	Richard White	
-Q328695	cast	Q310944	フランク・ランジェラ	Perry White	
+Q328695	cast	Q310944	Frank Langella	Perry White	
 Q328695	cast	Q3539636	Tristan Lake Leabu		
 Q328695	cast	Q771590	Michael Dougherty		
 Q328695	cast	Q944747	Stephan Bender		
@@ -242,22 +242,22 @@ Q163899	cast	Q2826070	Affif Ben Badra	Warlord
 Q163899	cast	Q1606018	Reece Ritchie	Moha	
 Q163899	cast	Q359325	Cliff Curtis	Tic'Tic	
 Q163899	cast	Q3860373	Mona Hammond	Old Mother	
-Q163899	cast	Q3808718	조 바즈	Chief of Guards	
+Q163899	cast	Q3808718	Joe Vaz	Chief of Guards	
 Q163899	cast	Q6757586	Marco Khan	One-Eye	
 Q163899	cast	Q170515	Omar Sharif	Narrator	
 Q163899	cast	Q387072	Camilla Belle	Evolet	
-Q163872	director	Q25191	クリストファー・ノーラン		
-Q163872	writer	Q25191	クリストファー・ノーラン		
+Q163872	director	Q25191	Christopher Nolan		
+Q163872	writer	Q25191	Christopher Nolan		
 Q163872	writer	Q313048	Bob Kane		
 Q163872	writer	Q352010	David S. Goyer		
 Q163872	writer	Q372788	Jonathan Nolan		
 Q163872	writer	Q464282	Bill Finger		
 Q163872	composer	Q76364	Hans Zimmer		
 Q163872	composer	Q213869	James Newton Howard		
-Q163872	producer	Q25191	クリストファー・ノーラン		
+Q163872	producer	Q25191	Christopher Nolan		
 Q163872	producer	Q242951	Emma Thomas		
 Q163872	producer	Q2740357	Charles Roven		
-Q163872	creator	Q25191	クリストファー・ノーラン		
+Q163872	creator	Q25191	Christopher Nolan		
 Q163872	cinematographer	Q460144	Wally Pfister		
 Q163872	editor	Q1811998	Lee Smith		
 Q163872	executive_producer	Q2740528	Benjamin Melniker		
@@ -333,7 +333,7 @@ Q621493	cast	Q369482	Aziz Ansari
 Q621493	cast	Q374065	Patton Oswalt		
 Q621493	cast	Q816440	Ben Best		
 Q621493	cast	Q211280	Ray Liotta		
-Q621493	cast	Q359488	マイケル・ペーニャ		
+Q621493	cast	Q359488	Michael Peña		
 Q621493	cast	Q289931	Celia Weston		
 Q621493	cast	Q4491	Anna Faris		
 Q621493	cast	Q18666096	Eddie Rouse		
@@ -344,7 +344,7 @@ Q621493	cast	Q336400	Danny McBride
 Q621493	cast	Q1138674	Jesse Plemons		
 Q621493	cast	Q220308	Seth Rogen		
 Q219315	director	Q362824	Todd Phillips		
-Q219315	writer	Q3081957	ジョン・ルーカス		
+Q219315	writer	Q3081957	Jon Lucas		
 Q219315	writer	Q7436898	Scott Moore		
 Q219315	composer	Q1086291	Christophe Beck		
 Q219315	producer	Q362824	Todd Phillips		

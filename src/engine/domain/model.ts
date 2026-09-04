@@ -1221,6 +1221,8 @@ export interface Project {
   distributorName?: string;
   /** The real studio that set it up or released it, when one did. */
   studioId?: string;
+  /** The real network or service that commissioned or aired it, when one did. */
+  networkId?: string;
   releaseDate?: Instant;
   /** How it reached the public: theatrical, streaming, network. Set at release; read by the award bodies. */
   releaseStrategy?: Release['strategy'];
@@ -1229,9 +1231,10 @@ export interface Project {
   /** The country the production belongs to, a SLATE country id. Set when the project is created. */
   productionCountryId?: string;
 
-  /** Results. */
+  /** Results. Critic score follows the Metascore, audience score the audience share; the full count is in `reception`. */
   criticScore?: number;
   audienceScore?: number;
+  reception?: Reception;
   /** 0-100 finished quality; the single number every result derives from. */
   finalQuality?: number;
   boxOfficeDomestic: Money;
@@ -1255,7 +1258,7 @@ export interface Rights {
   id: Id;
   saveId: Id;
   title: string;
-  sourceKind: 'original' | 'book' | 'article' | 'play' | 'game' | 'format' | 'life_rights' | 'remake' | 'sequel';
+  sourceKind: 'original' | 'book' | 'article' | 'play' | 'game' | 'format' | 'life_rights' | 'remake' | 'sequel' | 'spin_off' | 'adaptation';
   holderId: Id;
   holderKind: 'person' | 'company';
   acquiredFrom: string;
@@ -1276,6 +1279,9 @@ export interface Rights {
   };
   chainOfTitle: { at: Instant; note: string }[];
   status: 'active' | 'expired' | 'reverted' | 'assigned';
+  /** Set when the rights were licensed from a real studio's franchise. */
+  licensorStudioId?: string;
+  franchiseName?: string;
 }
 
 export interface ScriptDraft {
@@ -1471,6 +1477,9 @@ export interface Release {
   projectId: Id;
   strategy: 'wide_theatrical' | 'limited_theatrical' | 'platform' | 'streaming_exclusive' | 'day_and_date' | 'direct_to_video' | 'network' | 'festival_only';
   distributorName: string;
+  /** The real service that carries it after cinemas, by its pay-one deal, when one applies. */
+  streamingPartnerId?: string;
+  streamingPartnerName?: string;
   /** Fraction of gross the distributor keeps. */
   distributorShare: number;
   /** Fraction exhibitors keep of theatrical gross. */
@@ -1505,10 +1514,56 @@ export interface Review {
   source: 'critic' | 'audience' | 'trade';
   publicationName?: string;
   criticName?: string;
+  /** 0-100 on SLATE's scale, whatever the outlet prints. */
   score: number;
   quote: string;
   at: Instant;
   influence: number;
+  /** The real outlet, when the review is from one in the registry. */
+  outletId?: string;
+  /** The score written the way the outlet writes it: stars, a grade, a number. */
+  scaleText?: string;
+  /** How Rotten Tomatoes counts it. */
+  verdict?: 'fresh' | 'rotten';
+  topCritic?: boolean;
+  /** When it landed: at a festival, when the embargo lifted, on release, or later. */
+  wave?: 'festival' | 'embargo' | 'release' | 'late';
+}
+
+/**
+ * How a film or a season was received, counted the way the aggregators count.
+ * Grows in waves as reviews land and audiences arrive; nothing here is set in
+ * one go, and a number that has not been counted yet is absent.
+ */
+export interface Reception {
+  /** When reviews may run. Set by the distributor, or by the player when they control the release. */
+  embargoAt?: Instant;
+  embargoSetBy?: 'distributor' | 'player';
+  /** Rotten Tomatoes. */
+  tomatometer?: number;
+  reviewCount: number;
+  freshCount: number;
+  topCriticsScore?: number;
+  topCriticCount: number;
+  topCriticFresh: number;
+  certifiedFresh: boolean;
+  /** Metacritic. */
+  metascore?: number;
+  metacriticCount: number;
+  /** The weights behind the Metascore, so later reviews can join the average. */
+  metacriticWeight: number;
+  mustSee: boolean;
+  /** Audience score, the share of positive audience ratings. */
+  audienceScore?: number;
+  audienceCount: number;
+  /** IMDb, out of 10, and how many votes stand behind it. */
+  imdbRating?: number;
+  imdbVotes: number;
+  /** CinemaScore, opening night, wide releases only. */
+  cinemaScore?: string;
+  /** The waves that have run. */
+  waves: string[];
+  updatedAt: Instant;
 }
 
 export interface AwardBody {
@@ -1611,6 +1666,11 @@ export interface Franchise {
   totalRevenue: Money;
   merchandiseRevenue: Money;
   startedAt: Instant;
+  /** Set when the franchise is real IP licensed from the studio that owns it. */
+  studioId?: string;
+  catalogueQid?: string;
+  catalogueName?: string;
+  licence?: { kind: 'sequel' | 'remake' | 'spin_off' | 'series'; rightsId: Id; fee: Money };
 }
 
 // ---------------------------------------------------------------------------

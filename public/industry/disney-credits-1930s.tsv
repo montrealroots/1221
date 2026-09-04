@@ -1,4 +1,7 @@
 qid	role	personQid	name	character	ordinal
+Q2873090	director	Q336424	Ub Iwerks		
+Q2873090	composer	Q598185	Carl W. Stalling		
+Q2873090	producer	Q8704	Walt Disney		
 Q1146993	director	Q1582782	Hans Tintner		
 Q1146993	writer	Q1582782	Hans Tintner		
 Q1146993	composer	Q110030	Willy Schmidt-Gentner		
@@ -38,6 +41,9 @@ Q1523560	subject		aviation
 Q3388919	director	Q630819	Burt Gillett		
 Q3388919	composer	Q2899190	Bert Lewis		
 Q3388919	producer	Q8704	Walt Disney		
+Q3503640	director	Q336424	Ub Iwerks		
+Q3503640	composer	Q598185	Carl W. Stalling		
+Q3503640	producer	Q8704	Walt Disney		
 Q1198850	director	Q72756	Raoul Walsh		
 Q1198850	producer	Q8025022	Winfield Sheehan		
 Q1198850	creator	Q72756	Raoul Walsh		
@@ -60,12 +66,6 @@ Q1198850	cast	Q5350839	El Brendel
 Q1198850	cast	Q3020059	DeWitt Clarke Jennings		
 Q1198850	cast	Q2063267	Tully Marshall		
 Q1198850	cast	Q1280760	Ward Bond		
-Q3503640	director	Q336424	Ub Iwerks		
-Q3503640	composer	Q598185	Carl W. Stalling		
-Q3503640	producer	Q8704	Walt Disney		
-Q2873090	director	Q336424	Ub Iwerks		
-Q2873090	composer	Q598185	Carl W. Stalling		
-Q2873090	producer	Q8704	Walt Disney		
 Q798692	director	Q369190	Frank Borzage		
 Q798692	writer	Q153120	Rudolf Sieber		
 Q798692	writer	Q1294704	Edwin J. Burke		
@@ -262,7 +262,7 @@ Q5910215	editor	Q20683832	Alex Troffey
 Q5910215	cast	Q20065149	André Cheron		
 Q5910215	cast	Q5350839	El Brendel		
 Q5910215	cast	Q952690	Edmund Lowe		
-Q5910215	cast	Q267247	ルーペ・ヴェレス		
+Q5910215	cast	Q267247	Lupe Vélez		
 Q5910215	cast	Q450862	Lilian Bond		
 Q5910215	cast	Q329577	Victor McLaglen		
 Q3978244	director	Q618330	Rowland V. Lee		
@@ -404,7 +404,7 @@ Q2937895	cast	Q436022	Jean Parker
 Q2937895	cast	Q3298953	Mathilde Comont		
 Q2937895	cast	Q4792672	Armand Kaliz		
 Q5084672	director	Q3059559	Eugene Forde		
-Q5084672	writer	Q2568461	フィリップ・マクドナルド		
+Q5084672	writer	Q2568461	Philip MacDonald		
 Q5084672	composer	Q7411900	Samuel Kaylin		
 Q5084672	producer	Q1697996	John Stone		
 Q5084672	cast	Q3018900	David Torrence		
@@ -1143,7 +1143,7 @@ Q3819803	cast	Q249968	Lester Matthews
 Q3819803	cast	Q223151	James Baker		
 Q3819803	cast	Q3719476	Edmund Mortimer		
 Q3819803	cast	Q274262	Lynn Bari		
-Q3819803	cast	Q5343388	ガイ・エドワード・ハーン		
+Q3819803	cast	Q5343388	Edward Hearn		
 Q3819803	cast	Q1344901	Holmes Herbert		
 Q3819803	cast	Q3046418	Earle Foxe		
 Q3819803	cast	Q1252302	Douglas Fowley		
@@ -1927,7 +1927,7 @@ Q2646648	cast	Q348351	Lee J. Cobb
 Q2646648	cast	Q235289	Ann Sothern		
 Q2646648	cast	Q937865	Ferdinand Gottschalk		
 Q2646648	cast	Q3038059	Douglass Dumbrille		
-Q2646648	cast	Q5343388	ガイ・エドワード・ハーン		
+Q2646648	cast	Q5343388	Edward Hearn		
 Q2646648	cast	Q450964	Virginia Field		
 Q2646648	cast	Q3047248	Eddie Collins		
 Q2646648	cast	Q3371485	Paul Hurst		
@@ -2751,7 +2751,7 @@ Q21527541	cinematographer	Q1159995	Daniel B. Clark
 Q21527541	cast	Q189407	Gloria Stuart		
 Q113629686	director	Q2993484	Connie Rasinski		
 Q113629686	writer	Q6233736	John Foster		
-Q113629686	composer	Q3378966	Q3378966		
+Q113629686	composer	Q3378966	Philip A. Scheib		
 Q113629686	producer	Q927985	Paul Terry		
 Q18164816	director	Q3133460	Herbert I. Leeds		
 Q18164816	writer	Q6685380	Lou Breslow		
@@ -2910,7 +2910,7 @@ Q6053175	writer	Q6685380	Lou Breslow
 Q6053175	composer	Q7411900	Samuel Kaylin		
 Q6053175	producer	Q364342	Darryl F. Zanuck		
 Q6053175	producer	Q7555555	Sol M. Wurtzel		
-Q6053175	cast	Q2474042	ウォルター・ミラー		
+Q6053175	cast	Q2474042	Walter Miller		
 Q6053175	cast	Q2899205	Bert Roach		
 Q6053175	cast	Q5272879	Dick Elliott		
 Q6053175	cast	Q3127612	Harold Huber		
@@ -2957,7 +2957,7 @@ Q13423901	cast	Q4792672	Armand Kaliz
 Q13423901	cast	Q3078072	Robert Lowery		
 Q13423901	cast	Q310413	Don Ameche		
 Q3213652	director	Q727791	Irving Cummings		
-Q3213652	composer	Q15491041	Q15491041		
+Q3213652	composer	Q15491041	Harold Spina		
 Q3213652	producer	Q364342	Darryl F. Zanuck		
 Q3213652	cinematographer	Q708870	Arthur Charles Miller		
 Q3213652	editor	Q778153	Walter A. Thompson		
@@ -3001,7 +3001,7 @@ Q1150581	cast	Q253384	Loretta Young
 Q1150581	cast	Q3496795	Stanley Andrews		
 Q1150581	cast	Q5335988	Eddie Dunn		
 Q1150581	cast	Q3719476	Edmund Mortimer		
-Q1150581	cast	Q2474042	ウォルター・ミラー		
+Q1150581	cast	Q2474042	Walter Miller		
 Q1150581	cast	Q15743462	Chick Chandler		
 Q1150581	cast	Q951224	Howard Hickman		
 Q1150581	cast	Q17328602	Hal K. Dawson		
@@ -3061,7 +3061,7 @@ Q3226031	cast	Q552813	C. Aubrey Smith
 Q3226031	cast	Q739522	Freddie Bartholomew	David Balfour	
 Q3819167	director	Q727791	Irving Cummings		
 Q3819167	writer	Q23062882	Harry Tugend		
-Q3819167	composer	Q15491041	Q15491041		
+Q3819167	composer	Q15491041	Harold Spina		
 Q3819167	cinematographer	Q708870	Arthur Charles Miller		
 Q3819167	costume_designer	Q517831	Gwen Wakeling		
 Q3819167	production_designer	Q1268997	Hans O. Peters		

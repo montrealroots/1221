@@ -60,12 +60,16 @@ Q21527531	writer	Q5916408	Houston Branch
 Q21527531	composer	Q1066383	Charles Wakefield Cadman		
 Q21527531	cinematographer	Q425713	Gilbert Warrenton		
 Q21527531	cast	Q271655	Laura La Plante		
+Q16989055	director	Q3568727	William James Craft		
+Q16989055	writer	Q7495206	Sherman L. Lowe		
+Q16989055	producer	Q61074	Carl Laemmle		
+Q16989055	cast	Q4503619	Glenn Tryon		
 Q5328655	director	Q389128	Monta Bell		
 Q5328655	composer	Q453461	Heinz Eric Roemheld		
 Q5328655	producer	Q61074	Carl Laemmle		
 Q5328655	producer	Q1039367	Carl Laemmle Jr.		
 Q5328655	editor	Q1586652	Harry Marker		
-Q5328655	cast	Q267247	ルーペ・ヴェレス		
+Q5328655	cast	Q267247	Lupe Vélez		
 Q17497952	director	Q732366	Hobart Henley		
 Q17497952	writer	Q1294632	Edwin H. Knopf		
 Q17497952	producer	Q61074	Carl Laemmle		
@@ -89,7 +93,7 @@ Q1194608	cast	Q26935551	Stanley Smith
 Q1194608	cast	Q15995747	William T. Kent		
 Q1194608	cast	Q4503619	Glenn Tryon		
 Q1194608	cast	Q327130	John Boles		
-Q1194608	cast	Q1385295	Q1385295		
+Q1194608	cast	Q1385295	Al Rinker		
 Q1194608	cast	Q72984	Bing Crosby		
 Q1194608	cast	Q641955	Harry Barris		
 Q1194608	cast	Q271655	Laura La Plante		
@@ -101,13 +105,6 @@ Q1194608	cast	Q470182	Paul Whiteman
 Q1194608	cast	Q2294197	Slim Summerville		
 Q1194608	cast	Q272031	Jack White		
 Q1194608	award		Academy Award for Best Production Design		
-Q7445473	director	Q3568727	William James Craft		
-Q7445473	composer	Q453461	Heinz Eric Roemheld		
-Q7445473	producer	Q61074	Carl Laemmle		
-Q7445473	cinematographer	Q708870	Arthur Charles Miller		
-Q7445473	cast	Q2294197	Slim Summerville		
-Q7445473	cast	Q965701	Harry Langdon		
-Q7445473	cast	Q240238	Bessie Love		
 Q21869556	director	Q377920	Harry Joe Brown		
 Q21869556	writer	Q20031325	Marion Jackson		
 Q21869556	producer	Q909904	Ken Maynard		
@@ -138,10 +135,6 @@ Q21869642	writer	Q4889677	Bennett Cohen
 Q21869642	producer	Q909904	Ken Maynard		
 Q21869642	cinematographer	Q2399809	Ted McCord		
 Q21869642	editor	Q5494433	Fred Allen		
-Q16989055	director	Q3568727	William James Craft		
-Q16989055	writer	Q7495206	Sherman L. Lowe		
-Q16989055	producer	Q61074	Carl Laemmle		
-Q16989055	cast	Q4503619	Glenn Tryon		
 Q48674119	director	Q123096	Erich Schönfelder		
 Q48674119	producer	Q1691552	Joe Pasternak		
 Q3631239	director	Q350962	John S. Robertson		
@@ -174,6 +167,13 @@ Q21869710	writer	Q4889677	Bennett Cohen
 Q21869710	producer	Q909904	Ken Maynard		
 Q21869710	cinematographer	Q2399809	Ted McCord		
 Q21869710	editor	Q5494433	Fred Allen		
+Q7445473	director	Q3568727	William James Craft		
+Q7445473	composer	Q453461	Heinz Eric Roemheld		
+Q7445473	producer	Q61074	Carl Laemmle		
+Q7445473	cinematographer	Q708870	Arthur Charles Miller		
+Q7445473	cast	Q2294197	Slim Summerville		
+Q7445473	cast	Q965701	Harry Langdon		
+Q7445473	cast	Q240238	Bessie Love		
 Q21869835	director	Q377920	Harry Joe Brown		
 Q21869835	writer	Q4889677	Bennett Cohen		
 Q21869835	producer	Q909904	Ken Maynard		
@@ -199,6 +199,23 @@ Q7719502	cast	Q255846	Betty Compson
 Q7719502	cast	Q434901	Lionel Belmore		
 Q7719502	cast	Q3302871	May Beatty		
 Q7719502	cast	Q4267490	Jeanette Loff		
+Q7721626	director	Q1369749	Rupert Julian		
+Q7721626	director	Q6264086	John Willard		
+Q7721626	writer	Q3568716	William Hurlbut		
+Q7721626	composer	Q453461	Heinz Eric Roemheld		
+Q7721626	producer	Q1039367	Carl Laemmle Jr.		
+Q7721626	cinematographer	Q645627	Hal Mohr		
+Q7721626	editor	Q6793414	Maurice Pivar		
+Q7721626	cast	Q450076	Helen Twelvetrees		
+Q7721626	cast	Q359251	Jean Hersholt		
+Q7721626	cast	Q439601	Elizabeth Patterson		
+Q7721626	cast	Q960510	Montagu Love		
+Q7721626	cast	Q2905984	Blanche Friderici		
+Q7721626	cast	Q922580	Neil Hamilton		
+Q7721626	cast	Q1755508	Lilyan Tashman		
+Q7721626	cast	Q1809184	Lawrence Grant		
+Q7721626	cast	Q3523709	Theodore von Eltz		
+Q7721626	cast	Q7298829	Raymond Hackett		
 Q21869247	director	Q18543002	Renaud Hoffman		
 Q21869247	writer	Q60902485	Lillian Ducey		
 Q21869247	producer	Q61074	Carl Laemmle		
@@ -302,23 +319,6 @@ Q8075640	cast	Q65496	Gustav Fröhlich
 Q8075640	cast	Q104815	Hermine Sterler		
 Q8075640	cast	Q103351	Charlotte Susa		
 Q8075640	cast	Q95962	Fritz Alberti		
-Q7721626	director	Q1369749	Rupert Julian		
-Q7721626	director	Q6264086	John Willard		
-Q7721626	writer	Q3568716	William Hurlbut		
-Q7721626	composer	Q453461	Heinz Eric Roemheld		
-Q7721626	producer	Q1039367	Carl Laemmle Jr.		
-Q7721626	cinematographer	Q645627	Hal Mohr		
-Q7721626	editor	Q6793414	Maurice Pivar		
-Q7721626	cast	Q450076	Helen Twelvetrees		
-Q7721626	cast	Q359251	Jean Hersholt		
-Q7721626	cast	Q439601	Elizabeth Patterson		
-Q7721626	cast	Q960510	Montagu Love		
-Q7721626	cast	Q2905984	Blanche Friderici		
-Q7721626	cast	Q922580	Neil Hamilton		
-Q7721626	cast	Q1755508	Lilyan Tashman		
-Q7721626	cast	Q1809184	Lawrence Grant		
-Q7721626	cast	Q3523709	Theodore von Eltz		
-Q7721626	cast	Q7298829	Raymond Hackett		
 Q4657413	director	Q51495	William Wyler		
 Q4657413	writer	Q3180956	John B. Clymer		
 Q4657413	producer	Q86560	Paul Kohner		
@@ -617,7 +617,7 @@ Q20006404	cast	Q3189066	Julia Swayne Gordon
 Q20006404	cast	Q2573935	Purnell Pratt		
 Q20006404	cast	Q444371	Lew Ayres		
 Q20006404	cast	Q3395384	Polly Ann Young		
-Q20006404	cast	Q5343388	ガイ・エドワード・ハーン		
+Q20006404	cast	Q5343388	Edward Hearn		
 Q257486	director	Q381831	James Whale		
 Q257486	writer	Q3530853	Tom Reed		
 Q257486	writer	Q4889592	Benn Levy		
@@ -1128,7 +1128,7 @@ Q3149754	subject		Mutiny on the Bounty
 Q20649156	director	Q69843	Kurt Neumann		
 Q20649156	producer	Q1039367	Carl Laemmle Jr.		
 Q20649156	cinematographer	Q2959429	Charles J. Stumar		
-Q20649156	cast	Q2474042	ウォルター・ミラー		
+Q20649156	cast	Q2474042	Walter Miller		
 Q20649156	cast	Q230159	Jane Darwell		
 Q20649156	cast	Q554443	George E. Stone		
 Q20649156	cast	Q2975587	Clarence Wilson		
@@ -1663,7 +1663,7 @@ Q3389130	cast	Q1361838	Francis Ford
 Q3389130	cast	Q3369500	Pat O'Malley		
 Q3389130	cast	Q3381108	Philo McCullough		
 Q3389130	cast	Q3607492	Al Ferguson		
-Q3389130	cast	Q2474042	ウォルター・ミラー		
+Q3389130	cast	Q2474042	Walter Miller		
 Q3389130	subject		sea piracy		
 Q7537384	director	Q703759	Walter Lantz		
 Q7537384	subject		extraterrestrial life		
@@ -1713,7 +1713,7 @@ Q7676136	producer	Q2059335	Henry MacRae
 Q7676136	cinematographer	Q15998376	Richard Fryer		
 Q7676136	editor	Q3672509	Albert Akst		
 Q7676136	cast	Q1361050	Noah Beery Jr.		
-Q7676136	cast	Q2474042	ウォルター・ミラー		
+Q7676136	cast	Q2474042	Walter Miller		
 Q7676136	cast	Q3115415	Grant Withers		
 Q7676136	subject		aviation		
 Q1219330	director	Q1283902	Edgar G. Ulmer		
@@ -1802,7 +1802,7 @@ Q3522461	cast	Q3048088	Edmund Cobb
 Q3522461	cast	Q3178763	Jim Corey		
 Q3522461	cast	Q2053311	J. P. McGowan		
 Q3522461	cast	Q221482	Jim Thorpe		
-Q3522461	cast	Q2474042	ウォルター・ミラー		
+Q3522461	cast	Q2474042	Walter Miller		
 Q3522461	cast	Q6765367	Marion Shilling		
 Q3522461	cast	Q2959515	Charles K. French		
 Q3522461	cast	Q1597198	Richard Cramer		
@@ -1825,13 +1825,13 @@ Q22079546	director	Q69843	Kurt Neumann
 Q22079546	producer	Q16006876	B. F. Zeidman		
 Q22079546	cinematographer	Q2959429	Charles J. Stumar		
 Q22079546	cast	Q18638539	Edward Keane		
-Q22079546	cast	Q2474042	ウォルター・ミラー		
+Q22079546	cast	Q2474042	Walter Miller		
 Q22079546	cast	Q1421566	Arthur Hoyt		
 Q22079546	cast	Q3758989	Gavin Gordon		
 Q22079546	cast	Q275760	Henry Armetta		
 Q22079546	cast	Q3493013	Spencer Charters		
 Q22079546	cast	Q2975587	Clarence Wilson		
-Q22079546	cast	Q5343388	ガイ・エドワード・ハーン		
+Q22079546	cast	Q5343388	Edward Hearn		
 Q22079546	cast	Q2959529	Charles King		
 Q22079546	cast	Q230159	Jane Darwell		
 Q22079546	cast	Q1302593	Richard Carle		
@@ -1989,7 +1989,7 @@ Q1242906	cast	Q218638	Joyce Compton
 Q1242906	cast	Q6170516	Jean De Briac		
 Q1242906	cast	Q2065508	Beryl Mercer		
 Q1242906	cast	Q230099	Irene Dunne		
-Q1242906	cast	Q2474042	ウォルター・ミラー		
+Q1242906	cast	Q2474042	Walter Miller		
 Q1242906	cast	Q3483316	Sidney Bracey		
 Q1242906	cast	Q19881691	Walter Walker		
 Q1242906	cast	Q3830310	Leonard Mudie		
@@ -2074,7 +2074,7 @@ Q3453569	cast	Q507344	William Desmond
 Q3453569	cast	Q913975	Johnny Mack Brown		
 Q3453569	cast	Q3082547	Frank Clark		
 Q3453569	cast	Q221482	Jim Thorpe		
-Q3453569	cast	Q2474042	ウォルター・ミラー		
+Q3453569	cast	Q2474042	Walter Miller		
 Q3453569	cast	Q3140441	Horace B. Carpenter		
 Q3453569	cast	Q5673513	Harry Woods		
 Q3453569	cast	Q3216092	Lafe McKee		
@@ -2357,7 +2357,7 @@ Q15730165	writer	Q932218	László Vadnay
 Q15730165	composer	Q714405	Artur Guttmann		
 Q15730165	producer	Q2033693	Oskar Glück		
 Q15730165	cinematographer	Q92389	Willy Goldberger		
-Q15730165	editor	Q15825011	Q15825011		
+Q15730165	editor	Q15825011	Ladislaus Vidor		
 Q15730165	cast	Q1229931	Karl Paryla		
 Q15730165	cast	Q216144	Franciska Gaal		
 Q15730165	cast	Q955183	S. Z. Sakall		
@@ -2533,7 +2533,7 @@ Q54622147	cast	Q18638535	Alphonse Ethier
 Q54622147	cast	Q522486	Muriel Evans		
 Q54622147	cast	Q13426195	Mahlon Hamilton		
 Q54622147	cast	Q11285698	Ernest Hilliard		
-Q54622147	cast	Q5343388	ガイ・エドワード・ハーン		
+Q54622147	cast	Q5343388	Edward Hearn		
 Q54622147	cast	Q3184059	Josef Swickard		
 Q54622147	cast	Q4801965	Lee Phelps		
 Q54622147	cast	Q18638539	Edward Keane		
@@ -2570,7 +2570,7 @@ Q451717	cast	Q466440	Beulah Bondi
 Q451717	cast	Q3560422	Violet Kemble-Cooper		
 Q451717	cast	Q34529	Bela Lugosi		
 Q451717	cast	Q20065149	André Cheron		
-Q451717	cast	Q2474042	ウォルター・ミラー		
+Q451717	cast	Q2474042	Walter Miller		
 Q451717	cast	Q628009	Frank Lawton		
 Q451717	cast	Q3059381	Etta McDaniel		
 Q451717	cast	Q6170516	Jean De Briac		
@@ -2766,7 +2766,7 @@ Q55259005	writer	Q20684149	Frances Guihan
 Q55259005	producer	Q2630976	Buck Jones		
 Q6692484	director	Q703759	Walter Lantz		
 Q1890292	director	Q2960106	Charles Reisner		
-Q1890292	writer	Q21070397	Q21070397		
+Q1890292	writer	Q21070397	Frank Hummert		
 Q1890292	composer	Q1672151	Alberto Colombo		
 Q1890292	cinematographer	Q3157106	Jack A. Marta		
 Q1890292	production_designer	Q1702018	John Victor Mackay		
@@ -2949,7 +2949,7 @@ Q8000848	writer	Q8040111	Wyndham Gittens
 Q8000848	composer	Q1065815	Charles Previn		
 Q8000848	producer	Q2059335	Henry MacRae		
 Q8000848	cinematographer	Q15998376	Richard Fryer		
-Q8000848	cast	Q2474042	ウォルター・ミラー		
+Q8000848	cast	Q2474042	Walter Miller		
 Q8000848	cast	Q3216092	Lafe McKee		
 Q8000848	cast	Q3082591	Frank Ellis		
 Q8000848	cast	Q913975	Johnny Mack Brown		
@@ -3139,7 +3139,7 @@ Q7303726	cast	Q3564975	Wade Boteler
 Q7303726	cast	Q3181696	John Harmon		
 Q7303726	cast	Q1321739	Philip Ahn		
 Q7303726	cast	Q2748114	Bud Jamison		
-Q7303726	cast	Q5343388	ガイ・エドワード・ハーン		
+Q7303726	cast	Q5343388	Edward Hearn		
 Q7303726	cast	Q722156	Buster Crabbe		
 Q7303726	cast	Q3082744	Frank O'Connor		
 Q7303726	cast	Q1764618	George Magrill		
@@ -3265,7 +3265,7 @@ Q63921224	editor	Q41672663	Maurice Wright
 Q63921224	cast	Q3371485	Paul Hurst	Al Springer	
 Q63921224	cast	Q3035739	Don Brodie	Spud Savage	
 Q63921224	cast	Q5607644	Greta Granstedt	Gladys Hewitt	
-Q63921224	cast	Q63928443	Q63928443	Trilby	
+Q63921224	cast	Q63928443	Sam Lee	Trilby	
 Q63921224	cast	Q1606541	Henry Brandon	Pinky	
 Q63921224	cast	Q3038280	J. Farrell MacDonald	William Barton	
 Q63921224	cast	Q930598	Kent Taylor	Duncan MacLain	
@@ -3273,7 +3273,7 @@ Q63921224	cast	Q18390667	Robert Emmett Keane	Howard Hewitt
 Q63921224	cast	Q21070335	Frances Robinson	Gracie	
 Q63921224	cast	Q63928484	John "Skins" Miller	Eddie Miller	
 Q63921224	cast	Q353142	Addison Richards	Frank Hoefle	
-Q63921224	cast	Q63928411	Q63928411	Shane	
+Q63921224	cast	Q63928411	Al Shaw	Shane	
 Q63921224	cast	Q5298248	Dorothea Kent	Amy Arden	
 Q63921224	cast	Q2960351	Charles Trowbridge	District Attorney Meredith	
 Q63921224	cast	Q20744139	Edward Raquello	Paul Zarinka	

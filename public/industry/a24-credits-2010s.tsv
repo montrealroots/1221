@@ -22,7 +22,7 @@ Q2812249	cast	Q103939	Charlie Sheen
 Q2812249	cast	Q29250	Bill Murray		
 Q1781285	director	Q528949	Harmony Korine		
 Q1781285	writer	Q528949	Harmony Korine		
-Q1781285	composer	Q19004	スクリレックス		
+Q1781285	composer	Q19004	Skrillex		
 Q1781285	creator	Q528949	Harmony Korine		
 Q1781285	cinematographer	Q780280	Benoît Debie		
 Q1781285	editor	Q1252147	Douglas Crise		
@@ -31,7 +31,7 @@ Q1781285	cast	Q83287	Selena Gomez	Faith	2
 Q1781285	cast	Q123174	Vanessa Hudgens	Candy	3
 Q1781285	cast	Q230609	Ashley Benson	Brit	4
 Q1781285	cast	Q3787526	Rachel Korine	Cotty	5
-Q1781285	cast	Q206032	グッチ・メイン	Archie	6
+Q1781285	cast	Q206032	Gucci Mane	Archie	6
 Q1781285	cast	Q229349	Heather Morris	Bess	7
 Q1781285	cast	Q106365051	Emma Holzer	Heather	9
 Q1781285	cast	Q6514072	Lee Irby	History Professor	10
@@ -72,7 +72,7 @@ Q3077738	cast	Q513169	Halston Sage
 Q3077738	cast	Q6755482	Marc Coppola		
 Q3077738	cast	Q13560256	Katie Chang		
 Q3077738	cast	Q44467	Orlando Bloom		
-Q3077738	cast	Q39476	エマ・ワトソン		
+Q3077738	cast	Q39476	Emma Watson		
 Q3077738	cast	Q432743	Gavin Rossdale		
 Q3077738	cast	Q14807038	Israel Broussard		
 Q3077738	cast	Q220949	Rachel Bilson		
@@ -429,7 +429,7 @@ Q21010845	cast	Q450573	Alison Elliott
 Q21010845	cast	Q313650	Billy Crudup		
 Q20001112	director	Q457493	Andrea Arnold		
 Q20001112	writer	Q457493	Andrea Arnold		
-Q20001112	producer	Q20871151	ラース・クヌーセン		
+Q20001112	producer	Q20871151	Lars Knudsen		
 Q20001112	cinematographer	Q27057753	Robbie Ryan		
 Q20001112	editor	Q3179985	Joe Bini		
 Q20001112	executive_producer	Q445117	Trudie Styler		
@@ -489,7 +489,7 @@ Q21528092	editor	Q63124380	Matthew Hannam
 Q21528092	cast	Q3481357	Shane Carruth		
 Q21528092	cast	Q4760836	Andy Hull		
 Q21528092	cast	Q207873	Mary Elizabeth Winstead		
-Q21528092	cast	Q38119	ダニエル・ラドクリフ		
+Q21528092	cast	Q38119	Daniel Radcliffe		
 Q21528092	cast	Q343616	Paul Dano		
 Q21528092	cast	Q23008465	Richard Gross		
 Q21528092	award		Sundance U.S. Directing Award: Dramatic		
@@ -568,7 +568,7 @@ Q22350752	cast	Q3491658	Souléymane Sy Savané
 Q22350752	cast	Q359474	Necro		
 Q22350752	cast	Q15381644	Barkhad Abdi		
 Q22350752	cast	Q7367743	Rose Gregorio		
-Q22350752	cast	Q36767	ロバート・パティンソン		
+Q22350752	cast	Q36767	Robert Pattinson		
 Q22350752	cast	Q232902	Jennifer Jason Leigh		
 Q20875660	director	Q58122376	Elijah Bynum		
 Q20875660	writer	Q58122376	Elijah Bynum		
@@ -697,10 +697,10 @@ Q44727126	cast	Q235198	Holland Taylor
 Q44727126	cast	Q331720	Brad Garrett		
 Q44727126	cast	Q80405	Julianne Moore		
 Q44727126	cast	Q234144	Rita Wilson		
-Q47524071	director	Q54864392	アリ・アスター		
-Q47524071	writer	Q54864392	アリ・アスター		
+Q47524071	director	Q54864392	Ari Aster		
+Q47524071	writer	Q54864392	Ari Aster		
 Q47524071	composer	Q2982657	Colin Stetson		
-Q47524071	producer	Q20871151	ラース・クヌーセン		
+Q47524071	producer	Q20871151	Lars Knudsen		
 Q47524071	producer	Q95826777	Kevin Frakes		
 Q47524071	cinematographer	Q55063679	Paweł Pogorzelski		
 Q47524071	editor	Q60229347	Veronica J. Valentini		
@@ -729,7 +729,7 @@ Q33129472	cinematographer	Q17738918	Yorick Le Saux
 Q33129472	editor	Q16183718	Guy Lecorne		
 Q33129472	cast	Q106275	Juliette Binoche		
 Q33129472	cast	Q390870	Agata Buzek		
-Q33129472	cast	Q36767	ロバート・パティンソン		
+Q33129472	cast	Q36767	Robert Pattinson		
 Q33129472	cast	Q962572	Victor Banerjee		
 Q33129472	cast	Q20974095	Mia Goth		
 Q33129472	cast	Q448837	André 3000		
@@ -824,7 +824,7 @@ Q27703232	cast	Q17486466	Jeremy Bobb
 Q27703232	cast	Q261748	Summer Bishil		
 Q27703232	cast	Q120406	Riki Lindhome		
 Q27703232	cast	Q534915	Patrick Fischler		
-Q27703232	cast	Q23891	アンドリュー・ガーフィールド		
+Q27703232	cast	Q23891	Andrew Garfield		
 Q27703232	cast	Q4965286	Zosia Mamet		
 Q56275505	writer	Q2120623	Ron Leshem		
 Q56275505	writer	Q7407789	Sam Levinson		
@@ -835,15 +835,15 @@ Q56275505	creator	Q7407789	Sam Levinson
 Q56275505	cinematographer	Q47498899	Marcell Rév		
 Q56275505	cinematographer	Q65934565	Andre Chemetoff		
 Q56275505	cinematographer	Q68705433	Drew Daniels		
-Q56275505	executive_producer	Q33240	ドレイク		
-Q56275505	executive_producer	Q189489	ゼンデイヤ		
+Q56275505	executive_producer	Q33240	Drake		
+Q56275505	executive_producer	Q189489	Zendaya		
 Q56275505	executive_producer	Q2120623	Ron Leshem		
 Q56275505	executive_producer	Q7407789	Sam Levinson		
 Q56275505	executive_producer	Q18204789	Future the Prince		
 Q56275505	executive_producer	Q72969485	Kevin Turen		
 Q56275505	narrator	Q102402667	Rue Bennett		
 Q56275505	costume_designer	Q107522103	Heidi Bivens		
-Q56275505	cast	Q63710339	アレクサ・デミー	Maddy Perez	
+Q56275505	cast	Q63710339	Alexa Demie	Maddy Perez	
 Q56275505	cast	Q43397002	Keean Johnson	Daniel	
 Q56275505	cast	Q5147723	Colman Domingo	Ali	
 Q56275505	cast	Q2830641	Alanna Ubach	Suze Howard	
@@ -869,15 +869,15 @@ Q56275505	cast	Q88025736	Nika King	Leslie Bennett
 Q56275505	cast	Q59248250	Hunter Schafer	Jules Vaughn	
 Q56275505	cast	Q16147452	Maude Apatow	Lexi Howard	
 Q56275505	cast	Q49561909	Sydney Sweeney	Cassie Howard	
-Q56275505	cast	Q189489	ゼンデイヤ	Rue Bennett	
+Q56275505	cast	Q189489	Zendaya	Rue Bennett	
 Q56275505	subject		love		
 Q56275505	subject		addiction		
 Q56275505	subject		coming of age		
 Q56275505	subject		diversity		
 Q126942693	producer	Q26913888	Jon Mefford		
 Q126942693	subject		Midsommar		
-Q62083690	director	Q118138652	Q118138652		
-Q62083690	writer	Q118138652	Q118138652		
+Q62083690	director	Q118138652	Kevin McMullin		
+Q62083690	writer	Q118138652	Kevin McMullin		
 Q62083690	producer	Q16533681	Brian Kavanaugh-Jones		
 Q62083690	cast	Q22958363	Alex Neustaedter		
 Q62083690	cast	Q43397002	Keean Johnson		
@@ -885,11 +885,11 @@ Q62083690	cast	Q3959303	Shea Whigham
 Q62083690	cast	Q19019158	Jaeden Martell		
 Q62083690	cast	Q2112295	Mike Hodge		
 Q62083690	cast	Q38238309	Kristine Froseth		
-Q55907451	director	Q54864392	アリ・アスター		
-Q55907451	writer	Q54864392	アリ・アスター		
+Q55907451	director	Q54864392	Ari Aster		
+Q55907451	writer	Q54864392	Ari Aster		
 Q55907451	composer	Q16223599	The Haxan Cloak		
 Q55907451	producer	Q312089	Patrik Andersson		
-Q55907451	producer	Q20871151	ラース・クヌーセン		
+Q55907451	producer	Q20871151	Lars Knudsen		
 Q55907451	cinematographer	Q55063679	Paweł Pogorzelski		
 Q55907451	editor	Q62599631	Lucian Johnston		
 Q55907451	cast	Q5597952	Mats Blomgren		
@@ -1013,7 +1013,7 @@ Q55402791	composer	Q3294137	Mark Korven
 Q55402791	cinematographer	Q26877883	Jarin Blaschke		
 Q55402791	editor	Q63969836	Louise Ford		
 Q55402791	cast	Q188772	Willem Dafoe		
-Q55402791	cast	Q36767	ロバート・パティンソン		
+Q55402791	cast	Q36767	Robert Pattinson		
 Q59551553	director	Q6205847	Joanna Hogg		
 Q59551553	writer	Q6205847	Joanna Hogg		
 Q59551553	producer	Q6205847	Joanna Hogg		
@@ -1044,7 +1044,7 @@ Q56312570	cast	Q79055374	Julia Fox	Julia De Fiore
 Q56312570	cast	Q6846901	Mike Francesa	Gary	
 Q56312570	cast	Q365023	Judd Hirsch	Gooey	
 Q56312570	cast	Q3395911	Pom Klementieff	Lexis	
-Q56312570	cast	Q2121062	ザ・ウィークエンド	Self	
+Q56312570	cast	Q2121062	The Weeknd	Self	
 Q56312570	cast	Q313388	Jonah Hill		
 Q56312570	cast	Q200534	Tilda Swinton	auction house manager	
 Q56312570	cast	Q234207	Natasha Lyonne	a Celtics staff member	

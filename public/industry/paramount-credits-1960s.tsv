@@ -66,7 +66,7 @@ Q113798359	followed_by	Q115655349	Galaxia
 Q2468213	director	Q287451	Martin Ritt		
 Q2468213	writer	Q25871	Michael Wilson		
 Q2468213	writer	Q246419	Ivo Perilli		
-Q2468213	composer	Q435856	アンジェロ・フランチェスコ・ラヴァニーノ		
+Q2468213	composer	Q435856	Angelo Francesco Lavagnino		
 Q2468213	producer	Q296796	Dino De Laurentiis		
 Q2468213	cinematographer	Q1347338	Giuseppe Rotunno		
 Q2468213	costume_designer	Q3852554	Maurizio Chiari		
@@ -905,13 +905,13 @@ Q3607583	cast	Q451811	Robert Preston
 Q3607583	cast	Q3181736	John Henry Faulk		
 Q3607583	cast	Q532176	Ronnie Claire Edwards		
 Q3607583	award		National Board of Review: Top Ten Films		
-Q111514699	director	Q3125897	Q3125897		
+Q111514699	director	Q3125897	Hal Seeger		
 Q111514699	composer	Q3569394	Winston Sharples		
 Q3656571	director	Q4015520	Vittorio Sala		
 Q3656571	writer	Q3605697	Adriano Baracco		
 Q3656571	writer	Q3751533	Franco E. Prosperi		
 Q3656571	composer	Q3939011	Roberto Nicolosi		
-Q3656571	production_designer	Q2778939	ルイジ・スカッチャノーチェ		
+Q3656571	production_designer	Q2778939	Luigi Scaccianoce		
 Q3656571	cast	Q231156	Mina		
 Q3656571	cast	Q228611	Melina Mercouri		
 Q3656571	cast	Q982377	Peppino di Capri		
@@ -936,7 +936,7 @@ Q1758773	cast	Q5544316	George Sawaya
 Q1758773	cast	Q5538420	George Davis		
 Q1758773	cast	Q588745	Tony Bill		
 Q1758773	cast	Q238008	Jill St. John		
-Q1758773	cast	Q3441245	Q3441245		
+Q1758773	cast	Q3441245	Romo Vincent		
 Q1758773	cast	Q441705	Barbara Rush		
 Q1758773	cast	Q215359	Dean Martin		
 Q1758773	cast	Q962647	Dan Blocker		
@@ -1008,7 +1008,7 @@ Q1198073	production_designer	Q2391399	Tambi Larsen
 Q1198073	cast	Q898134	Brandon deWilde		
 Q1198073	cast	Q312084	Melvyn Douglas		
 Q1198073	cast	Q470062	Val Avery		
-Q1198073	cast	Q443121	イヴェット・ヴィッカーズ		
+Q1198073	cast	Q443121	Yvette Vickers		
 Q1198073	cast	Q191027	Patricia Neal		
 Q1198073	cast	Q1280682	John Ashley		
 Q1198073	cast	Q3481794	Sheldon Allman		
@@ -1717,7 +1717,7 @@ Q1754956	cast	Q4248913	Kipp Hamilton
 Q1754956	cast	Q1411217	Joe Brooks		
 Q1754956	cast	Q1376231	Myron Healey		
 Q1754956	cast	Q863063	Billy Curtis		
-Q1754956	cast	Q7372342	Q7372342		
+Q1754956	cast	Q7372342	Roxane Berard		
 Q1754956	cast	Q727786	Raf Vallone		
 Q1754956	cast	Q7181662	Phil Arnold		
 Q1754956	cast	Q4846297	Julie Parrish		
@@ -1727,7 +1727,7 @@ Q1754956	cast	Q82786	Leslie Nielsen
 Q1754956	cast	Q20738374	Guy Wilkerson		
 Q1754956	cast	Q582996	Mike Connors		
 Q1754956	cast	Q529541	Mary Murphy		
-Q1754956	cast	Q3441245	Q3441245		
+Q1754956	cast	Q3441245	Romo Vincent		
 Q1754956	cast	Q313198	Red Buttons		
 Q1754956	cast	Q1680280	James Dobson		
 Q1754956	cast	Q3568884	William Edward Phipps		
@@ -1829,7 +1829,7 @@ Q3427377	cast	Q1340574	Harry Andrews
 Q3427377	cast	Q1306352	Stanley Baker		
 Q3427377	cast	Q470998	Stuart Whitman		
 Q3427377	cast	Q215721	Theodore Bikel		
-Q3427377	cast	Q1064691	ナイジェル・ダヴェンポート		
+Q3427377	cast	Q1064691	Nigel Davenport		
 Q3427377	subject		aviation accident		
 Q112698918	director	Q3787235	Howard Post		
 Q112698918	writer	Q3787235	Howard Post		
@@ -2241,7 +2241,7 @@ Q24905646	cast	Q960707	Rafael Alonso
 Q24905646	cast	Q5954644	Julia Caba Alba		
 Q24905646	cast	Q4762311	Ángel de Andrés		
 Q24905646	cast	Q266319	Soledad Miranda		
-Q24905646	cast	Q14747	산초 그라시아		
+Q24905646	cast	Q14747	Sancho Gracia		
 Q24905646	cast	Q20873093	José Marco Davó		
 Q24905646	cast	Q727726	José Luis López Vázquez		
 Q116787826	director	Q3089911	Shamus Culhane		
@@ -2412,6 +2412,21 @@ Q112700853	writer	Q3135103	Woody Kling
 Q112700853	composer	Q3569394	Winston Sharples		
 Q112700853	follows	Q112700718	Throne for a Loss		
 Q112700853	followed_by	Q112701044	Alter Egotist		
+Q3407419	director	Q455043	Arthur Hiller		
+Q3407419	writer	Q540784	William Peter Blatty		
+Q3407419	composer	Q2635561	Lyn Murray		
+Q3407419	producer	Q7599930	Stanley Rubin		
+Q3407419	cinematographer	Q1252526	Douglas Slocombe		
+Q3407419	cast	Q366678	Robert Cummings		
+Q3407419	cast	Q264713	Cathleen Nesbitt		
+Q3407419	cast	Q453804	Michael Chaplin		
+Q3407419	cast	Q103784	Donald Sutherland		
+Q3407419	cast	Q946859	Keenan Wynn		
+Q3407419	cast	Q95030	Warren Beatty		
+Q3407419	cast	Q2373778	Sydney Tafler		
+Q3407419	cast	Q230023	Leslie Caron		
+Q3407419	cast	Q293067	Hermione Gingold		
+Q3407419	cast	Q589753	Lionel Stander		
 Q24905619	director	Q499951	Rafael Gil		
 Q24905619	writer	Q3186399	José López Rubio		
 Q24905619	composer	Q769080	Augusto Algueró		
@@ -2426,7 +2441,7 @@ Q24905619	cast	Q3573066	María Luisa Ponte
 Q24905619	cast	Q5668767	Alicia Hermida		
 Q24905619	cast	Q343299	Francisco Rabal		
 Q24905619	cast	Q2865947	Arturo Fernández		
-Q24905619	cast	Q14747	산초 그라시아		
+Q24905619	cast	Q14747	Sancho Gracia		
 Q1195447	director	Q262820	John Frankenheimer		
 Q1195447	writer	Q3237296	Lewis John Carlino		
 Q1195447	composer	Q235077	Jerry Goldsmith		
@@ -2517,7 +2532,7 @@ Q3423295	cast	Q6238133	John Harvey
 Q3423295	cast	Q109570	Peter Diamond		
 Q7767688	director	Q630981	George Sidney		
 Q7767688	composer	Q358879	Marty Paich		
-Q7767688	cast	Q3441245	Q3441245		
+Q7767688	cast	Q3441245	Romo Vincent		
 Q7767688	cast	Q735856	Nydia Westman		
 Q7767688	cast	Q22998657	Mary LaRoche		
 Q7767688	cast	Q945494	Craig Hill		
@@ -2587,21 +2602,6 @@ Q7958836	production_designer	Q1229499	Hal Pereira
 Q7958836	cast	Q912097	Brian Donlevy		
 Q7958836	cast	Q325427	Howard Keel		
 Q7958836	cast	Q217033	Jane Russell		
-Q3407419	director	Q455043	Arthur Hiller		
-Q3407419	writer	Q540784	William Peter Blatty		
-Q3407419	composer	Q2635561	Lyn Murray		
-Q3407419	producer	Q7599930	Stanley Rubin		
-Q3407419	cinematographer	Q1252526	Douglas Slocombe		
-Q3407419	cast	Q366678	Robert Cummings		
-Q3407419	cast	Q264713	Cathleen Nesbitt		
-Q3407419	cast	Q453804	Michael Chaplin		
-Q3407419	cast	Q103784	Donald Sutherland		
-Q3407419	cast	Q946859	Keenan Wynn		
-Q3407419	cast	Q95030	Warren Beatty		
-Q3407419	cast	Q2373778	Sydney Tafler		
-Q3407419	cast	Q230023	Leslie Caron		
-Q3407419	cast	Q293067	Hermione Gingold		
-Q3407419	cast	Q589753	Lionel Stander		
 Q841927	director	Q506183	Andrew Marton		
 Q841927	composer	Q313554	Malcolm Arnold		
 Q841927	producer	Q506183	Andrew Marton		
@@ -2702,7 +2702,7 @@ Q5472208	director	Q1804597	Lesley Selander
 Q5472208	writer	Q3498927	Steve Fisher		
 Q5472208	composer	Q3178999	Jimmie Haskell		
 Q5472208	producer	Q4647620	A. C. Lyles		
-Q5472208	cinematographer	Q56607383	Q56607383		
+Q5472208	cinematographer	Q56607383	Lothrop Worth		
 Q5472208	editor	Q21418866	John F. Schreyer		
 Q5472208	production_designer	Q1229499	Hal Pereira		
 Q5472208	cast	Q395494	John Ireland		
@@ -2831,7 +2831,7 @@ Q12169617	cast	Q7555529	Sol Gorss
 Q12169617	cast	Q1340156	Wendell Corey		
 Q12169617	cast	Q2895379	Ben Cooper		
 Q12169617	cast	Q628132	Scott Brady		
-Q12169617	cast	Q3013243	ダン・ホワイト		
+Q12169617	cast	Q3013243	Dan White		
 Q12169617	cast	Q1238919	Don "Red" Barry		
 Q12169617	cast	Q325427	Howard Keel		
 Q12169617	cast	Q861426	Richard Arlen		
@@ -3095,7 +3095,7 @@ Q25994	writer	Q18811907	Massimo De Rita
 Q25994	composer	Q288217	Riz Ortolani		
 Q25994	producer	Q296796	Dino De Laurentiis		
 Q25994	cinematographer	Q247675	Giuseppe Ruzzolini		
-Q25994	editor	Q464098	フランコ・フラティチェリ		
+Q25994	editor	Q464098	Franco Fraticelli		
 Q25994	production_designer	Q3635417	Bartolomeo Scavia		
 Q25994	cast	Q317110	Gian Maria Volonte		
 Q25994	cast	Q4003381	Umberto Di Grazia		
@@ -3185,7 +3185,7 @@ Q2907133	costume_designer	Q234961	Edith Head
 Q2907133	cast	Q3161480	James Westerfield		
 Q2907133	cast	Q729129	Michael Nader		
 Q2907133	cast	Q235221	Sally Kirkland		
-Q2907133	cast	Q333595	リカルド・モンタルバン		
+Q2907133	cast	Q333595	Ricardo Montalbán		
 Q2907133	cast	Q461097	Joanna Pettet		
 Q2907133	cast	Q77298	Terence Stamp		
 Q2907133	cast	Q94992	Karl Malden		
@@ -3249,7 +3249,7 @@ Q3283991	writer	Q12290611	Peter Uvaliev
 Q3283991	composer	Q7052432	Norman Kay		
 Q3283991	producer	Q299419	Carlo Ponti		
 Q3283991	cinematographer	Q1514931	Gerry Turpin		
-Q3283991	editor	Q28608848	ピーター・タナー		
+Q3283991	editor	Q28608848	Peter Tanner		
 Q3283991	cast	Q6730190	Maggie Blye		
 Q3283991	cast	Q5080298	Charles Lloyd-Pack		
 Q3283991	cast	Q6572984	Francisca Tu		
@@ -3445,7 +3445,7 @@ Q517265	award		David di Donatello for Best Director
 Q607179	director	Q51552	Roman Polanski		
 Q607179	writer	Q51552	Roman Polanski		
 Q607179	writer	Q317631	Ira Levin		
-Q607179	composer	Q633180	クリストフ・コメダ		
+Q607179	composer	Q633180	Krzysztof Komeda		
 Q607179	producer	Q934087	William Castle		
 Q607179	cinematographer	Q489559	William A. Fraker		
 Q607179	editor	Q2216597	Sam O'Steen		
@@ -3791,7 +3791,7 @@ Q5708673	cast	Q3260154	Lou Wagner
 Q5708673	cast	Q1738578	Ken Berry		
 Q5708673	cast	Q205314	Janet Leigh		
 Q5708673	cast	Q2348194	Arnold Stang		
-Q5708673	cast	Q598344	マーヴ・グリフィン		
+Q5708673	cast	Q598344	Merv Griffin		
 Q5708673	cast	Q283988	Roddy McDowall		
 Q5708673	cast	Q181799	Richard Dreyfuss		
 Q5708673	cast	Q3655929	Bruce Gordon		
@@ -3876,7 +3876,7 @@ Q2545565	cast	Q104008	Christian Doermer	Fritz
 Q2545565	cast	Q225509	Susannah York	Eleanor	
 Q2545565	cast	Q275383	Phyllis Calvert	Lady Dorothy Haig	
 Q2545565	cast	Q309980	Edward Fox	Aide to Field-Marshal Haig	
-Q2545565	cast	Q172653	マギー・スミス	Music Hall Star	
+Q2545565	cast	Q172653	Maggie Smith	Music Hall Star	
 Q2545565	cast	Q530733	Robert Flemyng	Staff Officer in Gassed Trench	
 Q2545565	cast	Q456949	Marianne Stone	Mill Girl	
 Q2545565	cast	Q319527	Jean-Pierre Cassel	French Colonel	
@@ -3922,7 +3922,7 @@ Q637192	cast	Q43203	Clint Eastwood
 Q637192	cast	Q1346084	Alan Baxter		
 Q3823927	director	Q1018355	Buzz Kulik		
 Q3823927	writer	Q1680994	James Poe		
-Q3823927	composer	Q633180	クリストフ・コメダ		
+Q3823927	composer	Q633180	Krzysztof Komeda		
 Q3823927	producer	Q934087	William Castle		
 Q3823927	cinematographer	Q15263275	Robert B. Hauser		
 Q3823927	editor	Q138603890	Edwin H. Bryant		
@@ -3962,7 +3962,7 @@ Q3422402	writer	Q33801	Ugo Pirro
 Q3422402	composer	Q332761	Otello Profazio		
 Q3422402	producer	Q296796	Dino De Laurentiis		
 Q3422402	cinematographer	Q2286454	Silvano Ippoliti		
-Q3422402	editor	Q464098	フランコ・フラティチェリ		
+Q3422402	editor	Q464098	Franco Fraticelli		
 Q3422402	costume_designer	Q831536	Danilo Donati		
 Q3422402	cast	Q12272445	Asen Milanov		
 Q3422402	cast	Q317110	Gian Maria Volonte		

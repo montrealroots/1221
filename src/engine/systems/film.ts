@@ -1005,6 +1005,7 @@ export function registerBuyerOffer(sim: Simulation): void {
       project.greenlitAt = s.now;
       project.distributorName = buyer.name;
       project.studioId = buyer.studioId;
+      project.networkId = buyer.networkId;
       advancePhase(s, project, 'financing');
 
       // The buyer funds a production account.

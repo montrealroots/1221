@@ -26,8 +26,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "2000s": 701,
    "2010s": 659,
    "2020s": 242,
-   "undated": 25,
-   "NaNs": 3
+   "undated": 28
   },
   "genreShares": {
    "comedy": 0.166,
@@ -135,12 +134,12 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   }
  },
  "universal": {
-  "films": 3901,
+  "films": 3902,
   "series": 181,
-  "titles": 4082,
+  "titles": 4083,
   "byDecade": {
    "1910s": 546,
-   "1920s": 439,
+   "1920s": 440,
    "1930s": 339,
    "1940s": 349,
    "1950s": 329,
@@ -231,7 +230,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
     "gross": 550517357
    },
    {
-    "name": "Q6156907",
+    "name": "Warcraft",
     "count": 1,
     "gross": 433677183
    },
@@ -383,12 +382,12 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   }
  },
  "sony": {
-  "films": 3823,
+  "films": 3824,
   "series": 124,
-  "titles": 3947,
+  "titles": 3948,
   "byDecade": {
    "1910s": 16,
-   "1920s": 78,
+   "1920s": 79,
    "1930s": 436,
    "1940s": 517,
    "1950s": 553,
@@ -399,8 +398,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "2000s": 534,
    "2010s": 444,
    "2020s": 186,
-   "undated": 26,
-   "NaNs": 2
+   "undated": 28
   },
   "genreShares": {
    "drama": 0.198,
@@ -480,7 +478,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
     "gross": 379014294
    },
    {
-    "name": "Q137845245",
+    "name": "Tintin",
     "count": 1,
     "gross": 374000000
    },
@@ -508,12 +506,12 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   }
  },
  "paramount": {
-  "films": 5106,
+  "films": 5109,
   "series": 159,
-  "titles": 5265,
+  "titles": 5268,
   "byDecade": {
    "1910s": 587,
-   "1920s": 714,
+   "1920s": 717,
    "1930s": 821,
    "1940s": 645,
    "1950s": 471,
@@ -524,8 +522,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "2000s": 435,
    "2010s": 264,
    "2020s": 229,
-   "undated": 19,
-   "NaNs": 1
+   "undated": 20
   },
   "genreShares": {
    "comedy": 0.174,
@@ -733,8 +730,8 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
  },
  "amazon-mgm": {
   "films": 4726,
-  "series": 90,
-  "titles": 4816,
+  "series": 91,
+  "titles": 4817,
   "byDecade": {
    "1910s": 3,
    "1920s": 402,
@@ -747,7 +744,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "1990s": 196,
    "2000s": 167,
    "2010s": 140,
-   "2020s": 193,
+   "2020s": 194,
    "undated": 35
   },
   "genreShares": {
@@ -832,7 +829,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
     "gross": 0
    },
    {
-    "name": "Q137845245",
+    "name": "Tintin",
     "count": 2,
     "gross": 0
    },
@@ -856,13 +853,13 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
  },
  "netflix": {
   "films": 110,
-  "series": 1509,
-  "titles": 1619,
+  "series": 1510,
+  "titles": 1620,
   "byDecade": {
    "1980s": 1,
    "2000s": 3,
    "2010s": 527,
-   "2020s": 1058,
+   "2020s": 1059,
    "undated": 30
   },
   "genreShares": {
@@ -907,7 +904,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
     "gross": 0
    },
    {
-    "name": "悪魔城ドラキュラ",
+    "name": "Castlevania",
     "count": 2,
     "gross": 0
    },
@@ -1154,7 +1151,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
     "gross": 449762638
    },
    {
-    "name": "Q6156907",
+    "name": "Warcraft",
     "count": 1,
     "gross": 433677183
    },
@@ -2284,7 +2281,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   ],
   "franchiseCount": 1,
   "top": {
-   "title": "トップガン マーヴェリック",
+   "title": "Top Gun: Maverick",
    "year": "2022",
    "gross": 1443725344
   },
@@ -2347,8 +2344,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "2000s": 137,
    "2010s": 160,
    "2020s": 57,
-   "undated": 5,
-   "NaNs": 1
+   "undated": 6
   },
   "genreShares": {
    "drama": 0.231,
@@ -2430,9 +2426,9 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   }
  },
  "pathe": {
-  "films": 1102,
+  "films": 1101,
   "series": 0,
-  "titles": 1102,
+  "titles": 1101,
   "byDecade": {
    "1900s": 196,
    "1910s": 256,
@@ -2447,7 +2443,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "2000s": 92,
    "2010s": 89,
    "2020s": 38,
-   "undated": 4
+   "undated": 3
   },
   "genreShares": {
    "comedy": 0.294,
@@ -2485,7 +2481,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
     "gross": 290344031
    },
    {
-    "name": "Q137845245",
+    "name": "Tintin",
     "count": 1,
     "gross": 0
    }
@@ -2499,12 +2495,12 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   "topSeries": null
  },
  "gaumont": {
-  "films": 896,
+  "films": 895,
   "series": 2,
-  "titles": 898,
+  "titles": 897,
   "byDecade": {
    "1890s": 2,
-   "1900s": 115,
+   "1900s": 113,
    "1910s": 385,
    "1920s": 22,
    "1930s": 19,
@@ -2516,11 +2512,11 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
    "1990s": 28,
    "2000s": 27,
    "2010s": 70,
-   "2020s": 35
+   "2020s": 36
   },
   "genreShares": {
-   "comedy": 0.372,
-   "drama": 0.29,
+   "comedy": 0.377,
+   "drama": 0.288,
    "action": 0.062,
    "crime": 0.055,
    "adventure": 0.048,
@@ -2541,7 +2537,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   "rtMean": 70,
   "rtSample": 38,
   "awardsPerFilm": 0.66,
-  "filmsPerYear": 4.7,
+  "filmsPerYear": 4.9,
   "franchises": [
    {
     "name": "Asterix",
@@ -2621,7 +2617,7 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   ],
   "franchiseCount": 3,
   "top": {
-   "title": "トップガン マーヴェリック",
+   "title": "Top Gun: Maverick",
    "year": "2022",
    "gross": 1443725344
   },
@@ -3358,12 +3354,12 @@ export const STUDIO_STATS: Readonly<Record<string, StudioStats>> = {
   "topSeries": null
  },
  "nordisk": {
-  "films": 487,
+  "films": 488,
   "series": 1,
-  "titles": 488,
+  "titles": 489,
   "byDecade": {
    "1900s": 9,
-   "1910s": 41,
+   "1910s": 42,
    "1920s": 4,
    "1930s": 3,
    "1940s": 5,

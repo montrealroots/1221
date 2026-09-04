@@ -45,3 +45,15 @@ export function titleCaseLabel(value: string): string {
   if (readsAsProse(value)) return value;
   return value.replace(/\S+/g, capitaliseWord);
 }
+
+/** The formats a project comes in, written the way the trade writes them. */
+const FORMAT_LABELS: Readonly<Record<string, string>> = { feature: 'Feature', short: 'Short', series: 'Series', limited_series: 'Limited Series', documentary: 'Documentary', tv_movie: 'TV Movie' };
+export function formatLabel(format: string): string {
+  return FORMAT_LABELS[format] ?? titleCaseLabel(format.replace(/_/g, ' '));
+}
+
+/** The same formats in a sentence: "makes features", "makes limited series". */
+const FORMAT_PLURALS: Readonly<Record<string, string>> = { feature: 'features', short: 'shorts', series: 'series', limited_series: 'limited series', documentary: 'documentaries', tv_movie: 'TV movies' };
+export function formatPlural(format: string): string {
+  return FORMAT_PLURALS[format] ?? `${format.replace(/_/g, ' ')}s`;
+}

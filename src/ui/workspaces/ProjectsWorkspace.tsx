@@ -1,10 +1,12 @@
-import { titleCaseLabel } from '@/engine/core/text';
+import { formatLabel, titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
 import { activeProjects, suggestedBudget, projectProfitLoss, phaseIndex } from '@/engine/systems/film';
 import { postBoard, shootingBoard } from '@/engine/systems/production';
 import { releaseSummary } from '@/engine/systems/release';
+import { receptionSummary } from '@/engine/systems/critics';
+import { AGGREGATOR_RULES } from '@/engine/content/critics';
 import { playerCompanies } from '@/engine/systems/company';
 import { GENRES, BUYERS } from '@/engine/content/industry';
 import { PROJECT_PHASE_ORDER } from '@/engine/domain/model';
@@ -51,7 +53,7 @@ export function ProjectsWorkspace() {
                 >
                   <div className="grow">
                     <div className="small strong">{project.title}</div>
-                    <div className="xs dim">{titleCaseLabel(project.format.replace(/_/g, ' '))} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}</div>
+                    <div className="xs dim">{formatLabel(project.format)} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}</div>
                   </div>
                 </button>
               ))}
@@ -89,7 +91,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
     <div className="col gap-4">
       <Panel
         title={project.title}
-        subtitle={`${titleCaseLabel(project.format.replace(/_/g, ' '))} · ${project.genres.map(titleCaseLabel).join(', ')} · ${project.logline}`}
+        subtitle={`${formatLabel(project.format)} · ${project.genres.map(titleCaseLabel).join(', ')} · ${project.logline}`}
       >
         <div className="row wrap gap-1" style={{ marginBottom: 'var(--s4)' }}>
           {PROJECT_PHASE_ORDER.map((phase, index) => (
@@ -453,26 +455,77 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             </Panel>
           )}
 
-          {release?.reviews && release.reviews.length > 0 && (
-            <Panel title="Reception" subtitle={`Critics ${project.criticScore ?? '—'} · Audience ${project.audienceScore ?? '—'}`} flush>
-              <div className="list">
-                {release.reviews.map((review) => (
-                  <div key={review.id} className="list-item list-static">
-                    <span className="mono" style={{ minWidth: 34 }}>{review.score}</span>
-                    <div className="grow">
-                      <div className="small strong">{review.publicationName}</div>
-                      <div className="xs muted">“{review.quote}”</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          )}
+          {release && <ReceptionPanel projectId={project.id} />}
 
           {!release && <Empty title="Not Released" body="Finish the film, then plan a campaign and set a release." />}
         </>
       )}
     </div>
+  );
+}
+
+/**
+ * Reception, counted the way the aggregators count it. Nothing shows before
+ * it has been counted; a blank is a blank.
+ */
+function ReceptionPanel({ projectId }: { projectId: string }) {
+  const { sim, run } = useGame();
+  const summary = useWorld((s) => receptionSummary(s, projectId));
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [embargoDays, setEmbargoDays] = useState(7);
+  if (!summary || !project) return null;
+  const r = summary.reception;
+  const release = project.releaseId ? sim.universe.releases[project.releaseId] : undefined;
+  const controls = !project.studioId;
+  const planned = release?.status === 'planned';
+  const statusTone = summary.status === 'Certified Fresh' || summary.status === 'Fresh' ? 'chip-positive' : summary.status === 'Rotten' ? 'chip-negative' : '';
+  const minimum = AGGREGATOR_RULES.metacritic.minimumReviews;
+
+  return (
+    <Panel title="Reception" subtitle={r ? summary.line : 'Nothing counted yet. Reviews land when the embargo lifts.'} flush>
+      {r && r.embargoAt !== undefined && (
+        <div className="xs dim" style={{ padding: 'var(--s2) var(--s4) 0' }}>
+          Embargo lifts {formatDate(r.embargoAt, sim.homeZone)}, set by {r.embargoSetBy === 'player' ? 'you' : project.distributorName ?? 'the distributor'}.
+          {r.embargoSetBy === 'distributor' && release && r.embargoAt >= release.openingDate ? ' Lifting on opening day is what a nervous distributor does.' : ''}
+        </div>
+      )}
+      {planned && controls && (
+        <div className="row wrap gap-2" style={{ padding: 'var(--s2) var(--s4)' }}>
+          <label className="xs dim" htmlFor="embargo-days">Lift The Embargo</label>
+          <select id="embargo-days" className="btn btn-sm" value={embargoDays} onChange={(e) => setEmbargoDays(Number(e.target.value))}>
+            {[14, 10, 7, 5, 3, 1, 0].map((d) => <option key={d} value={d}>{d === 0 ? 'Opening Day' : `${d} Days Before`}</option>)}
+          </select>
+          <button className="btn btn-sm" onClick={() => release && run('crit.set_embargo', { projectId, at: addDays(release.openingDate, -embargoDays, sim.homeZone) + 15 * 60 * 60 * 1000 })}>Set</button>
+        </div>
+      )}
+      {r && r.tomatometer !== undefined && (
+        <div className="grid grid-3" style={{ padding: 'var(--s2) var(--s4)' }}>
+          <Stat label="Tomatometer" value={<>{r.tomatometer}% <span className={`chip ${statusTone}`}>{summary.status}</span></>} note={`${r.reviewCount} Reviews${r.topCriticsScore !== undefined ? ` · Top Critics ${r.topCriticsScore}% Of ${r.topCriticCount}` : ''}`} />
+          <Stat label="Metascore" value={r.metascore !== undefined && r.metacriticCount >= minimum ? <>{r.metascore} <span className={`chip ${summary.band?.colour === 'green' ? 'chip-positive' : summary.band?.colour === 'red' ? 'chip-negative' : 'chip-warning'}`}>{summary.band?.label}</span></> : 'Not Yet Counted'} note={r.metacriticCount >= minimum ? `${r.metacriticCount} Critics${r.mustSee ? ' · Must-See' : ''}` : `${r.metacriticCount} Of ${minimum} Critics Needed`} />
+          <Stat label="CinemaScore" value={r.cinemaScore ?? (release && release.theaterCount >= AGGREGATOR_RULES.cinemaScore.minimumTheaters ? 'Opening Night' : 'Not Polled')} note={r.cinemaScore ? 'Opening-Night Audiences' : release && release.theaterCount < AGGREGATOR_RULES.cinemaScore.minimumTheaters ? 'Wide Releases Only' : undefined} />
+          <Stat label="Audience Score" value={r.audienceScore !== undefined ? `${r.audienceScore}%` : 'Not Yet Counted'} note={r.audienceCount > 0 ? `${r.audienceCount.toLocaleString('en-US')} Ratings` : 'Fills After Release'} />
+          <Stat label="IMDb" value={r.imdbRating !== undefined ? `${r.imdbRating.toFixed(1)}/10` : 'Not Yet Counted'} note={r.imdbVotes > 0 ? `${r.imdbVotes.toLocaleString('en-US')} Votes${r.imdbVotes < AGGREGATOR_RULES.imdb.settledVotes ? ' · Early' : ''}` : undefined} />
+          <Stat label="Counted So Far" value={`${r.waves.length} ${r.waves.length === 1 ? 'Wave' : 'Waves'}`} note={r.waves.map((w) => titleCaseLabel(w)).join(', ') || 'None Yet'} />
+        </div>
+      )}
+      {summary.reviews.length > 0 && (
+        <div className="list">
+          {summary.reviews.map((review) => (
+            <div key={review.id} className="list-item list-static">
+              <span className="mono nowrap" style={{ minWidth: 92 }}>{review.scaleText ?? review.score}</span>
+              <div className="grow" style={{ minWidth: 0 }}>
+                <div className="small strong">{review.publicationName}{review.topCritic ? <span className="chip" style={{ marginLeft: 6 }}>Top Critic</span> : null}</div>
+                <div className="xs muted">“{review.quote}”</div>
+              </div>
+              {review.verdict && <span className={`chip ${review.verdict === 'fresh' ? 'chip-positive' : 'chip-negative'}`}>{titleCaseLabel(review.verdict)}</span>}
+            </div>
+          ))}
+        </div>
+      )}
+      <p className="xs dim" style={{ padding: 'var(--s2) var(--s4) var(--s3)' }}>
+        Real outlets, each in its own scale and taste; no verdict is attributed to a named critic. Counted critics beyond the named ones are in the totals.
+      </p>
+    </Panel>
   );
 }
 
@@ -516,7 +569,7 @@ function CreateProjectDialog({ onClose }: { onClose: () => void }) {
           <option value="feature">Feature</option>
           <option value="short">Short</option>
           <option value="series">Series</option>
-          <option value="limited_series">Limited series</option>
+          <option value="limited_series">Limited Series</option>
           <option value="documentary">Documentary</option>
         </select>
       </div>
@@ -531,7 +584,7 @@ function CreateProjectDialog({ onClose }: { onClose: () => void }) {
               style={genres.includes(genre) ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}
               onClick={() => setGenres((g) => g.includes(genre) ? g.filter((x) => x !== genre) : [...g, genre].slice(0, 3))}
             >
-              {genre}
+              {titleCaseLabel(genre)}
             </button>
           ))}
         </div>

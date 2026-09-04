@@ -13,23 +13,14 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Franchise, Id, MarketingCampaign, Project, Release, Review } from '../domain/model';
+import type { Franchise, Id, MarketingCampaign, Project, Release } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { BUYERS, EXHIBITORS, GENRE_APPETITE } from '../content/industry';
-import { advancePhase, computeFinalQuality } from './film';
-import { buildFactors } from '../core/audit';
-
-const CRITIC_PUBLICATIONS = [
-  { name: 'The Ledger', influence: 92, harshness: 1.12 },
-  { name: 'Screen Quarterly', influence: 84, harshness: 1.05 },
-  { name: 'The Reel', influence: 71, harshness: 0.94 },
-  { name: 'Continental Review', influence: 66, harshness: 1.18 },
-  { name: 'Frame Society Journal', influence: 58, harshness: 1.24 },
-  { name: 'Popcorn Index', influence: 44, harshness: 0.82 },
-  { name: 'Northline Post', influence: 52, harshness: 0.98 },
-];
+import { runEmbargoWave } from './critics';
+import { payOnePartner, NETWORKS } from '../content/networks';
+import { advancePhase } from './film';
 
 // ---------------------------------------------------------------------------
 // Registration
@@ -42,7 +33,7 @@ export function registerRelease(sim: Simulation): void {
   sim.onSchedule('rel.open', (item) => openRelease(sim, item.payload.releaseId as Id));
   sim.onSchedule('rel.box_office_day', (item) => runBoxOfficeDay(sim, item.payload.releaseId as Id, item.payload.day as number));
   sim.onSchedule('rel.streaming_window', (item) => runStreamingWindow(sim, item.payload.releaseId as Id, item.payload.week as number));
-  sim.onSchedule('rel.reviews', (item) => publishReviews(sim, item.payload.projectId as Id));
+  sim.onSchedule('rel.reviews', (item) => runEmbargoWave(sim, item.payload.projectId as Id));
   sim.onSchedule('rel.close', (item) => closeRelease(sim, item.payload.releaseId as Id));
 
   // --- Marketing -----------------------------------------------------------
@@ -136,7 +127,10 @@ export function registerRelease(sim: Simulation): void {
       }
 
       const distributor = p.distributorName ?? project.distributorName ?? 'Self-distributed';
-      const buyer = (project.studioId ? BUYERS.get(project.studioId) : undefined) ?? BUYERS.all().find((b) => b.name === distributor);
+      const buyer = (project.studioId ? BUYERS.get(project.studioId) : undefined) ?? (project.networkId ? BUYERS.get(project.networkId) : undefined) ?? BUYERS.all().find((b) => b.name === distributor);
+      // After cinemas a film goes where its studio's deal says; a series lives where it was commissioned.
+      const partner = project.studioId && (p.strategy !== 'streaming_exclusive' && p.strategy !== 'network') ? payOnePartner(project.studioId) : undefined;
+      const network = project.networkId ? NETWORKS.get(project.networkId) : undefined;
 
       const maxTheaters = p.theaterCount ?? bookingFootprint(project, p.strategy, buyer?.distributionReach ?? 0.4);
 
@@ -155,6 +149,8 @@ export function registerRelease(sim: Simulation): void {
         maxTheaterCount: maxTheaters,
         territories: p.territories ?? ['domestic', 'international'],
         windows: buildWindows(s, p.strategy, p.openingDate),
+        streamingPartnerId: partner?.network.id ?? (network ? network.id : undefined),
+        streamingPartnerName: partner?.network.name ?? network?.name,
         dailyBoxOffice: [],
         totalDomestic: 0,
         totalInternational: 0,
@@ -178,16 +174,6 @@ export function registerRelease(sim: Simulation): void {
         refType: 'project', refId: project.id,
         requiresPlayer: false,
       });
-      s.schedule({
-        at: addDays(p.openingDate, -2, s.homeZone),
-        kind: 'rel.reviews',
-        label: `${project.title} — Reviews Embargo Lifts`,
-        category: 'release',
-        payload: { projectId: project.id },
-        priority: 30,
-        refType: 'project', refId: project.id,
-      });
-
       advancePhase(s, project, 'distribution');
       s.emit('rel.distribution_set', { releaseId: release.id, projectId: project.id, strategy: p.strategy, theaterCount: openingTheaters });
       return { releaseId: release.id, theaterCount: openingTheaters, distributorShare: release.distributorShare };
@@ -324,78 +310,9 @@ function executeBeat(sim: Simulation, campaignId: Id, index: number): void {
 }
 
 // ---------------------------------------------------------------------------
-// Reviews
+// Reviews live in systems/critics. The schedule kind below is kept so a
+// review date saved before that system existed still fires.
 // ---------------------------------------------------------------------------
-
-function publishReviews(sim: Simulation, projectId: Id): void {
-  const project = sim.universe.projects[projectId];
-  if (!project) return;
-  const quality = project.finalQuality ?? computeFinalQuality(sim, project);
-  const rng = sim.rng('reviews', project.id);
-
-  // Critics and audiences are separate populations with separate tastes.
-  const prestigeLean = project.genres.some((g) => ['drama', 'biography', 'documentary', 'experimental'].includes(g)) ? 8 : -4;
-  const crowdLean = project.genres.some((g) => ['action', 'comedy', 'horror', 'family', 'adventure'].includes(g)) ? 7 : -3;
-
-  const scores: number[] = [];
-  for (const publication of CRITIC_PUBLICATIONS) {
-    const score = clamp(Math.round((quality + prestigeLean) * publication.harshness + rng.normal(0, 11)), 0, 100);
-    scores.push(score);
-    const review: Review = {
-      id: sim.nextId('history'),
-      saveId: sim.universe.meta.id,
-      projectId: project.id,
-      source: 'critic',
-      publicationName: publication.name,
-      criticName: undefined,
-      score,
-      quote: reviewQuote(score, project.title),
-      at: sim.now,
-      influence: publication.influence,
-    };
-    sim.universe.reviews[review.id] = review;
-  }
-
-  const weighted = CRITIC_PUBLICATIONS.reduce((s, p, i) => s + (scores[i] ?? 0) * p.influence, 0)
-    / CRITIC_PUBLICATIONS.reduce((s, p) => s + p.influence, 0);
-  project.criticScore = Math.round(weighted);
-
-  // The audience score lands later, once people have actually seen it.
-  const campaign = Object.values(sim.universe.marketingCampaigns).find((c) => c.projectId === project.id);
-  const expectationGap = campaign ? clamp((campaign.intent - quality) / 3, -12, 12) : 0;
-  project.audienceScore = clamp(Math.round(quality + crowdLean - expectationGap + rng.normal(0, 8)), 0, 100);
-
-  sim.audit({
-    kind: 'rel.reception', subjectType: 'project', subjectId: project.id,
-    question: 'Why did it review the way it did?',
-    summary: `Critics ${project.criticScore} out of 100, audiences ${project.audienceScore}. ${expectationGap > 5 ? 'The marketing promised more than the film delivers.' : expectationGap < -5 ? 'It plays better than the campaign suggested.' : 'Reception is roughly in line with the film.'}`,
-    factors: buildFactors([
-      { label: 'The Finished Film', detail: `Assembled quality is ${quality} out of 100.`, weight: 0.62, value: quality / 100 },
-      { label: 'Genre And Critical Taste', detail: prestigeLean > 0 ? 'Critics are generally warmer to this kind of material.' : 'Critics are generally cooler on this kind of material.', weight: 0.14, value: remap(prestigeLean, -8, 8, 0, 1) },
-      { label: 'Expectation Gap', detail: campaign ? `The campaign drove intent to ${Math.round(campaign.intent)}. Audiences score against what they were promised.` : 'No campaign to set expectations.', weight: -0.14, value: remap(expectationGap, -12, 12, 0, 1) },
-      { label: 'Individual Taste', detail: 'Which critics were assigned it, which nobody controls.', weight: 0.10, value: 0.5, knowable: false },
-    ]).factors,
-    score: quality,
-    outcome: `critics ${project.criticScore}, audience ${project.audienceScore}`,
-  });
-
-  sim.notify({
-    category: 'release',
-    title: `Reviews are in for ${project.title}`,
-    body: `${project.criticScore} out of 100 from critics.`,
-    importance: 66, route: '/workspace/projects',
-  });
-  sim.emit('rel.reviews_published', { projectId: project.id, criticScore: project.criticScore, audienceScore: project.audienceScore });
-}
-
-function reviewQuote(score: number, title: string): string {
-  if (score >= 88) return `The best thing of its kind in years. ${title} is the real article.`;
-  if (score >= 74) return `Confident, controlled and genuinely moving in places.`;
-  if (score >= 60) return `Works more often than it does not, and the cast carries the rest.`;
-  if (score >= 45) return `Competent and forgettable. There is a better film buried in here.`;
-  if (score >= 28) return `Handsomely mounted and completely inert.`;
-  return `A misfire from the first frame. Nobody involved is served by it.`;
-}
 
 // ---------------------------------------------------------------------------
 // Theatrical

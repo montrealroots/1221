@@ -140,20 +140,20 @@ Q741823	award		Academy Award for Best Cinematography
 Q741823	award		Academy Award for Best Film Editing		
 Q741823	award		Dallas-Fort Worth Film Critics Association Award for Best Film		
 Q741823	subject		assassination of John F. Kennedy		
-Q170564	director	Q42574	ジェームズ・キャメロン		
-Q170564	writer	Q42574	ジェームズ・キャメロン		
+Q170564	director	Q42574	James Cameron		
+Q170564	writer	Q42574	James Cameron		
 Q170564	writer	Q269895	Gale Anne Hurd		
 Q170564	writer	Q769868	William Wisher Jr.		
 Q170564	composer	Q896786	Brad Fiedel		
-Q170564	producer	Q42574	ジェームズ・キャメロン		
+Q170564	producer	Q42574	James Cameron		
 Q170564	producer	Q269895	Gale Anne Hurd		
 Q170564	producer	Q1385214	Mario Kassar		
 Q170564	cinematographer	Q349588	Adam Greenberg		
-Q170564	editor	Q1126713	コンラッド・バフ		
+Q170564	editor	Q1126713	Conrad Buff IV		
 Q170564	executive_producer	Q269895	Gale Anne Hurd		
 Q170564	cast	Q769868	William Wisher Jr.		
 Q170564	cast	Q1198897	S. Epatha Merkerson		
-Q170564	cast	Q361610	ザンダー・バークレー		
+Q170564	cast	Q361610	Xander Berkeley		
 Q170564	cast	Q378978	Cástulo Guerra		
 Q170564	cast	Q233840	Nikki Cox		
 Q170564	cast	Q3015230	Danny Cooksey		
@@ -211,10 +211,10 @@ Q146673	cast	Q6780492	Mary Pat Gleason
 Q146673	cast	Q18923586	Benjamin Mouton		
 Q146673	cast	Q5089830	Chelcie Ross		
 Q146673	followed_by	Q810012	Basic Instinct 2		
-Q711928	director	Q742622	ピエール・シェンデルフェール		
-Q711928	writer	Q742622	ピエール・シェンデルフェール		
+Q711928	director	Q742622	Pierre Schoendoerffer		
+Q711928	writer	Q742622	Pierre Schoendoerffer		
 Q711928	composer	Q435034	Georges Delerue		
-Q711928	producer	Q742622	ピエール・シェンデルフェール		
+Q711928	producer	Q742622	Pierre Schoendoerffer		
 Q711928	producer	Q3165740	Jean-François Lepetit		
 Q711928	producer	Q26726363	Jacques Kirsner		
 Q711928	cinematographer	Q658017	Bernard Lutic		
@@ -284,7 +284,6 @@ Q3410141	cast	Q3317231	Mitzi Kapture
 Q3410141	cast	Q554218	Stuart Pankin		
 Q3410141	cast	Q679987	Marshall Bell		
 Q3410141	cast	Q344973	Michael Ironside		
-Q3410141	cast	Q28531164	Q28531164		
 Q3410141	cast	Q176945	Colleen Camp		
 Q3410141	cast	Q1152815	Marc McClure		
 Q3410141	cast	Q110374	Bill Paxton		
@@ -407,7 +406,7 @@ Q824389	cast	Q1686261	Jeff Blynn
 Q824389	cast	Q534190	Vyto Ruginis		
 Q824389	cast	Q3022678	Denis Forest		
 Q824389	subject		terrorism		
-Q289598	director	Q295207	ジョエル・シュマッカー		
+Q289598	director	Q295207	Joel Schumacher		
 Q289598	writer	Q16207097	Ebbe Roe Smith		
 Q289598	composer	Q213869	James Newton Howard		
 Q289598	producer	Q695608	Arnold Kopelson		
@@ -534,7 +533,7 @@ Q918901	subject		capital punishment
 Q105801	director	Q60100	Roland Emmerich		
 Q105801	writer	Q60100	Roland Emmerich		
 Q105801	writer	Q119849	Dean Devlin		
-Q105801	composer	Q346285	デヴィッド・アーノルド		
+Q105801	composer	Q346285	David Arnold		
 Q105801	producer	Q119849	Dean Devlin		
 Q105801	producer	Q9012349	Joel B. Michaels		
 Q105801	cinematographer	Q77588	Karl Walter Lindenlaub		
@@ -721,7 +720,7 @@ Q749988	cinematographer	Q15838501	Philippe Le Sourd
 Q749988	cinematographer	Q95767650	Phillipe Léotard		
 Q749988	cinematographer	Q95867172	Roland Savoye		
 Q749988	cinematographer	Q95877525	Adrien Angliviel		
-Q749988	cinematographer	Q134732969	Q134732969		
+Q749988	cinematographer	Q134732969	Sophie Cadet		
 Q749988	editor	Q1168250	Hervé Schneid		
 Q749988	editor	Q74743864	Nacho Ruiz Capillas		
 Q749988	costume_designer	Q242868	Jean-Paul Gaultier		
@@ -736,7 +735,7 @@ Q749988	cast	Q220698	Ron Perlman	One
 Q749988	cast	Q95874652	Léo Rubion	Jeannot	
 Q749988	cast	Q3034988	Dominique Bettenfeld	Bogdan	
 Q749988	cast	Q95858106	Briac Barthélémy	Bouteille	
-Q749988	cast	Q134741067	Q134741067	le garde attaché	
+Q749988	cast	Q134741067	Dominique Chevalier	le garde attaché	
 Q749988	cast	Q3349242	Odile Mallet	Zette	
 Q749988	cast	Q95778069	Pierre Quentin-Faesch	Pipo	
 Q749988	cast	Q2834628	Alexis Pivot	Têtard	
@@ -746,30 +745,30 @@ Q749988	cast	Q22248151	Raphaèle Bouchard	Miette
 Q749988	cast	Q491766	Mathieu Kassovitz		
 Q749988	cast	Q95794627	Ham-Chau Luong	le tatoueur	
 Q749988	cast	Q434168	Judith Vittet	Miette	
-Q749988	cast	Q134741153	Q134741153	Krank à 4 ans	
+Q749988	cast	Q134741153	Buster Verbraeken	Krank à 4 ans	
 Q749988	cast	Q1140135	Cris Huerta	le Père Noël	
-Q749988	cast	Q134733167	Q134733167		
+Q749988	cast	Q134733167	Mady Malroux		
 Q749988	cast	Q3259425	Lorella Cravotta	une femme	
 Q749988	cast	Q2465528	Daniel Emilfork	Krank	
 Q749988	cast	Q2865232	Arthur Mazet		
 Q749988	cast	Q1892037	Mapi Galán	Lune	
-Q749988	cast	Q134741132	Жори Женест	Krank à 36 ans	
+Q749988	cast	Q134741132	Joris Geneste	Krank à 36 ans	
 Q749988	cast	Q3335637	Nane Germon	Miette âgée	
-Q749988	cast	Q134733169	Монетт Малру		
-Q749988	cast	Q134740574	Q134740574	l'Espagnol	
+Q749988	cast	Q134733169	Monette Malroux		
+Q749988	cast	Q134740574	Enrique Villanueva	l'Espagnol	
 Q749988	cast	Q715111	Rufus	la pelade	
 Q749988	cast	Q38554	Dominique Pinon	le scaphandrier	
 Q749988	cast	Q2966477	Christophe Salengro	un soldat	
-Q749988	cast	Q134741125	Q134741125	Krank à 12 ans	
+Q749988	cast	Q134741125	Jérémie Freund	Krank à 12 ans	
 Q749988	cast	Q44375392	Hong-Mai Thomas	la femme du tatoueur	
-Q749988	cast	Q134738486	Рэйчел Буленже	Miette à 43 ans	
+Q749988	cast	Q134738486	Rachel Boulenger	Miette à 43 ans	
 Q749988	cast	Q2121322	Ticky Holgado	le vieux saltimbanque	
 Q749988	cast	Q95853710	Guillaume Billod-Morel	l'enfant du début	
 Q749988	cast	Q95867464	Philippe Beautier	Double Clones	
 Q749988	cast	Q3082910	Frankie Pain	la barmaid	
 Q749988	cast	Q2877830	Babeth Étienne	Miette à 37 ans	
 Q749988	cast	Q705489	Marc Caro	Frère Ange-Joseph	
-Q749988	cast	Q134741040	Q134741040	Glazier	
+Q749988	cast	Q134741040	René Pivot	Glazier	
 Q749988	subject		cloning		
 Q749988	subject		mad scientist		
 Q1211345	director	Q55282	Peter Greenaway		
@@ -883,7 +882,7 @@ Q60021	cast	Q917301	Milena Dravić
 Q60021	cast	Q12908937	Nikola Ristanovski		
 Q60021	cast	Q1652497	Hüseyin Zan		
 Q60021	cast	Q299985	Josif Tatić		
-Q60021	cast	Q2031815	ミリャナ・ヤコヴィッチ		
+Q60021	cast	Q2031815	Mirjana Joković		
 Q60021	cast	Q948201	Velimir Bata Živojinović		
 Q60021	cast	Q12752172	Igor Pervić		
 Q60021	cast	Q1277910	Sergej Trifunović		
@@ -908,7 +907,7 @@ Q60021	cast	Q299977	Bogdan Diklić
 Q60021	cast	Q1564017	Nebojša Glogovac	Таксиста	
 Q60021	cast	Q1252125	Dragan Nikolić	Света	
 Q60021	cast	Q16098918	Nebojša Milovanović		
-Q60021	cast	Q11131917	Мелита Бихали		
+Q60021	cast	Q11131917	Melita Bihali		
 Q60021	award		European Film Academy Critics Award		
 Q60021	subject		breakup of Yugoslavia		
 Q2419843	director	Q550717	Olivier Assayas		

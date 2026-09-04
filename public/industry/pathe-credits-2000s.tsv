@@ -34,7 +34,7 @@ Q5893254	writer	Q711682	Dick Clement
 Q5893254	composer	Q325389	David A. Stewart		
 Q5893254	producer	Q711682	Dick Clement		
 Q5893254	producer	Q5982007	Ian La Frenais		
-Q5893254	producer	Q138339669	Q138339669		
+Q5893254	producer	Q138339669	Tim Palmer		
 Q5893254	cinematographer	Q36911873	David Johnson		
 Q5893254	cast	Q2426357	Natalie Appleton		
 Q5893254	cast	Q192052	Peter Facinelli		
@@ -130,7 +130,7 @@ Q1457891	writer	Q1998648	Robert Llewellyn
 Q1457891	composer	Q1354267	Julian Nott		
 Q1457891	cast	Q731187	Simon Callow	Charles Dickens	
 Q1457891	cast	Q272518	Juliet Stevenson		
-Q1457891	cast	Q202765	ケイト・ウィンスレット		
+Q1457891	cast	Q202765	Kate Winslet		
 Q1457891	cast	Q215017	Rhys Ifans		
 Q1457891	cast	Q237178	Jane Horrocks		
 Q1457891	cast	Q1998648	Robert Llewellyn		
@@ -260,7 +260,7 @@ Q2446893	cast	Q233742	Ludivine Sagnier
 Q2446893	cast	Q3219022	Laurent Bateau		
 Q2446893	cast	Q1647279	Marie Denarnaud		
 Q2446893	cast	Q724208	Yvan Attal		
-Q2446893	cast	Q3088199	纳吉		
+Q2446893	cast	Q3088199	Nagui		
 Q2446893	cast	Q391974	Roschdy Zem		
 Q2446893	cast	Q77298	Terence Stamp		
 Q2446893	cast	Q276005	Charlotte Gainsbourg		
@@ -362,7 +362,7 @@ Q217294	cast	Q7363645	Ron Cook	Derek Ryder
 Q217294	cast	Q718193	Kieran O'Brien	Nathan	
 Q217294	cast	Q5363062	Elizabeth Kelly	Ian's nan	
 Q217294	cast	Q6760356	Margi Clarke		
-Q217294	cast	Q16197218	Хелен Шлезингер	Hilary	
+Q217294	cast	Q16197218	Helen Schlesinger	Hilary	
 Q217294	cast	Q6988281	Neil Bell		
 Q217294	cast	Q238464	Simon Pegg	Mick Middles	
 Q217294	cast	Q520001	Sam Riley		
@@ -390,12 +390,12 @@ Q737904	composer	Q3379553	Philippe Chany
 Q737904	producer	Q298905	Claude Berri		
 Q737904	cinematographer	Q3219153	Laurent Dailland		
 Q737904	editor	Q95710477	Stéphane Pereira		
-Q737904	costume_designer	Q2004181	タニノ・リベラトーレ		
+Q737904	costume_designer	Q2004181	Tanino Liberatore		
 Q737904	costume_designer	Q3379976	Philippe Guillotel		
 Q737904	costume_designer	Q28952310	Florence Sadaune		
 Q737904	production_designer	Q104804686	Hoang Thanh At		
 Q737904	cast	Q3379553	Philippe Chany		
-Q737904	cast	Q1685364	ジャン・ベンギーギ		
+Q737904	cast	Q1685364	Jean Benguigui		
 Q737904	cast	Q3169474	Jean-Pierre Lazzerini		
 Q737904	cast	Q3227983	Michel Crémadès		
 Q737904	cast	Q491766	Mathieu Kassovitz		
@@ -728,7 +728,7 @@ Q1354148	cast	Q1407499	Sonali Kulkarni
 Q1354148	cast	Q980210	Rick Warden		
 Q1354148	cast	Q3959650	Shivaani Ghai		
 Q1354148	cast	Q612167	Anu Malik		
-Q1354148	cast	Q161877	アシャンティ		
+Q1354148	cast	Q161877	Ashanti		
 Q1354148	cast	Q3103793	Georgina Chapman		
 Q5118151	director	Q3376846	Peter Richardson		
 Q5118151	composer	Q638791	Simon Boswell		
@@ -803,7 +803,7 @@ Q3234360	cast	Q3559579	Vincent Desagnat
 Q3234360	cast	Q689494	Dieudonné Mbala Mbala		
 Q3234360	cast	Q1936	Djibril Cissé		
 Q3234360	cast	Q16185740	Tefa		
-Q3234360	cast	Q3021869	デルフィーヌ・ド・トゥルクハイム		
+Q3234360	cast	Q3021869	Delphine de Turckheim		
 Q3234360	cast	Q466527	Patrick Timsit		
 Q3234360	cast	Q2896175	Benjamin Morgaine		
 Q1854561	director	Q134867	Danny Boyle		
@@ -829,7 +829,7 @@ Q2294955	cinematographer	Q5208298	Daf Hobson
 Q2294955	cast	Q5478514	Frances Barber		
 Q2294955	cast	Q2631078	Sophie Winkleman		
 Q2294955	cast	Q1390754	Leo Gregory		
-Q2294955	cast	Q2327154	クラウディア・ウィンクルマン		
+Q2294955	cast	Q2327154	Claudia Winkleman		
 Q2294955	cast	Q522894	Miriam Karlin		
 Q2294955	cast	Q1631684	Iddo Goldberg		
 Q2294955	cast	Q1944303	Rebecca Front		
@@ -907,7 +907,7 @@ Q231998	executive_producer	Q95680977	Jean-Yves Asselin
 Q231998	costume_designer	Q15448576	Pierre-Yves Gayraud		
 Q231998	production_designer	Q50318727	Pierre Quefféléan		
 Q231998	cast	Q579505	Jean-Claude Dreyfus	Administrator Eugene Normandin	
-Q231998	cast	Q296887	フレディ・ハイモア	Raoul Normandin	
+Q231998	cast	Q296887	Freddie Highmore	Raoul Normandin	
 Q231998	cast	Q2930147	Bô Gaultier de Kermoal		
 Q231998	cast	Q3345693	Nozha Khouadra		
 Q231998	cast	Q3502186	Stéphanie Lagarde		
@@ -987,7 +987,7 @@ Q1082924	writer	Q206685	Albert Uderzo
 Q1082924	writer	Q715206	Jean-Michel Charlier		
 Q1082924	writer	Q1031374	Gérard Pirès		
 Q1082924	composer	Q704635	Chris Corner		
-Q1082924	producer	Q3340025	尼古拉斯·阿尔特梅尔		
+Q1082924	producer	Q3340025	Nicolas Altmayer		
 Q1082924	editor	Q27062967	Véronique Lange		
 Q1082924	cast	Q2370901	Frédéric van den Driessche		
 Q1082924	cast	Q1389781	Philippe Torreton		
@@ -1429,7 +1429,7 @@ Q1303634	cast	Q3026917	Didier Becchetti
 Q1303634	cast	Q542048	Dora Doll		
 Q1303634	cast	Q317704	Tchéky Karyo		
 Q1303634	cast	Q3123669	Gérald Thomassin		
-Q1303634	cast	Q3190953	ジェローム・キルシャー		
+Q1303634	cast	Q3190953	Jérôme Kircher		
 Q1303634	cast	Q984019	Jocelyn Quivrin		
 Q1303634	cast	Q2185587	Malik Zidi		
 Q1303634	cast	Q3383813	Pierre Aussedat		
@@ -1473,7 +1473,7 @@ Q472600	producer	Q237207	Kathleen Kennedy
 Q472600	creator	Q345379	Julian Schnabel		
 Q472600	cinematographer	Q365230	Janusz Kamiński		
 Q472600	editor	Q436837	Juliette Welfling		
-Q472600	cast	Q180224	レニー・クラヴィッツ		
+Q472600	cast	Q180224	Lenny Kravitz		
 Q472600	cast	Q382396	Nicolas Le Riche		
 Q472600	cast	Q292760	Marina Hands		
 Q472600	cast	Q234890	Emmanuelle Seigner		
@@ -1919,7 +1919,7 @@ Q1090970	cast	Q21500776	John Sehil
 Q1090970	cast	Q234447	Felicity Jones		
 Q1090970	cast	Q55258	Stephen Frears		
 Q1090970	cast	Q6313750	Junix Inocian		
-Q1090970	cast	Q435097	イーベン・ヤイレ		
+Q1090970	cast	Q435097	Iben Hjejle		
 Q1090970	cast	Q2439560	Tom Burke		
 Q1090970	cast	Q544465	Kathy Bates		
 Q1090970	cast	Q314659	Rupert Friend		

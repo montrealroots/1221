@@ -132,7 +132,7 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
       'You cannot greenlight without an active chain of title. An option expiring within six months blocks it.',
       'Final quality is 34% script, 20% directing, 18% cast, 15% production execution and 13% post.',
       'Theatrical: exhibitors keep about half of domestic, then the distributor fee and prints and advertising come off before profit.',
-    ],
+      'Reviews land in waves from real outlets, each in its own scale: the trades at the premiere, the rest when the embargo lifts, most on release, stragglers after. The Tomatometer is the share of positive reviews, the Metascore a weighted average, CinemaScore an opening-night poll of wide releases, and the audience score and IMDb rating fill as people actually see it. A confident distributor lifts the embargo a week out; a nervous one on opening morning.'],
   },
   {
     id: 'company', route: '/workspace/company', title: 'Company',
@@ -154,12 +154,12 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
   },
   {
     id: 'industry', route: '/workspace/industry', title: 'Industry',
-    what: 'The real studios the universe operates around: who owns them, who runs them, every film and series they have made with its credits, money, ratings and franchises, and what they are doing inside your save.',
-    affects: ['Which buyers take your pitch, since each studio wants what it actually makes', 'Which studio is behind the world\'s own projects', 'Who acquires out of a festival', 'Which titles are taken, because nothing made here may share a name with a real film'],
-    actions: ['Read a studio\'s catalogue and leadership', 'Open any title for its full record', 'See what a studio has set up in your universe'],
-    connects: ['Projects, because pitching goes to these studios', 'Awards, because their films are the competition', 'Casting, because their projects are the world\'s roles'],
-    keywords: ['industry', 'studio', 'studios', 'catalogue', 'filmography', 'franchise', 'ip', 'executives', 'presidents', 'box office', 'rotten tomatoes', 'imdb', 'metacritic'],
-    advanced: ['Everything up to the day your save began is the public record, from Wikidata. Everything after is simulation, and the screen says which is which. A number the record does not have is shown as missing, never estimated.'],
+    what: 'The real studios and networks the universe operates around: who owns them, who runs them, every film and series they have made with its credits, money, ratings and franchises, the output deals between them, and what they are doing inside your save.',
+    affects: ['Which buyers take your pitch, since each studio and network wants what it actually makes', 'Which studio is behind the world\'s own films and which network airs its series', 'Where a film goes after cinemas, because each studio\'s streaming window follows its published deal', 'Who acquires out of a festival', 'Which titles are taken, because nothing made here may share a name with a real film'],
+    actions: ['Read a studio\'s or a network\'s catalogue, leadership and deals', 'Open any title for its full record', 'Ask a studio to license one of its franchises for a sequel, a remake, a spin-off or a series', 'See what a studio or network has set up in your universe'],
+    connects: ['Projects, because pitching goes to these studios and networks', 'Awards, because their films are the competition', 'Casting, because their projects are the world\'s roles'],
+    keywords: ['industry', 'studio', 'studios', 'network', 'networks', 'streaming', 'streamer', 'channel', 'catalogue', 'filmography', 'franchise', 'ip', 'licence', 'license', 'licensing', 'deal', 'deals', 'executives', 'presidents', 'box office', 'rotten tomatoes', 'imdb', 'metacritic'],
+    advanced: ['Everything up to the day your save began is the public record, from Wikidata. Everything after is simulation, and the screen says which is which. A number the record does not have is shown as missing, never estimated.', 'A studio licenses its IP the way studios do: a franchise that is live stays in house, a crown jewel is never for hire, and a title resting in the library is what gets remade. The fee is the studio\'s, charged once against the offer on record, and the studio distributes.'],
   },
   {
     id: 'awards', route: '/workspace/awards', title: 'Awards',

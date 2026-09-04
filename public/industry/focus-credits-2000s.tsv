@@ -13,7 +13,7 @@ Q1752968	director	Q223117	Stanley Tucci
 Q1752968	writer	Q5918945	Howard A. Rodman		
 Q1752968	composer	Q5415472	Evan Lurie		
 Q1752968	cinematographer	Q45928	Maryse Alberti		
-Q1752968	costume_designer	Q136928517	Q136928517		
+Q1752968	costume_designer	Q136928517	Juliet Polcsa		
 Q1752968	cast	Q223117	Stanley Tucci		
 Q1752968	cast	Q223091	Ian Holm		
 Q1752968	cast	Q236399	Hope Davis		
@@ -52,7 +52,7 @@ Q431793	cast	Q349857	Christopher McDonald
 Q431793	cast	Q1489113	Jenny Wade		
 Q431793	cast	Q310060	Crispin Glover		
 Q431793	cast	Q192643	Aaron Eckhart		
-Q431793	cast	Q4109	クリス・ロック		
+Q431793	cast	Q4109	Chris Rock		
 Q431793	cast	Q465914	Steven Culp		
 Q431793	cast	Q1198697	Pruitt Taylor Vince		
 Q431793	cast	Q258334	Sheila Kelley		
@@ -72,7 +72,7 @@ Q429934	cinematographer	Q1174309	David Eggby
 Q429934	cast	Q229225	Claudia Black		
 Q429934	cast	Q370918	Keith David		
 Q429934	cast	Q3237290	Lewis Fitz-Gerald		
-Q429934	cast	Q230516	ラダ・ミッチェル		
+Q429934	cast	Q230516	Radha Mitchell		
 Q429934	cast	Q532180	Cole Hauser		
 Q429934	cast	Q178166	Vin Diesel	Riddick	
 Q429934	followed_by	Q471976	The Chronicles of Riddick		
@@ -132,7 +132,7 @@ Q142292	cast	Q432638	Tomas Milian
 Q142292	cast	Q1151457	D. W. Moffett		
 Q142292	cast	Q3084485	Jsu Garcia		
 Q142292	cast	Q242623	Rena Sofer		
-Q142292	cast	Q463497	ミゲル・フェラー		
+Q142292	cast	Q463497	Miguel Ferrer		
 Q142292	cast	Q272019	Don Cheadle		
 Q142292	cast	Q767868	Eddie Velez		
 Q142292	cast	Q47664	Catherine Zeta-Jones		
@@ -196,7 +196,7 @@ Q165392	cast	Q1189353	Laurence Fox	Lord Rupert Standish
 Q165392	cast	Q531099	Claudie Blakley	The Hon. Mabel Nesbitt	
 Q165392	cast	Q1242707	Adrian Scarborough	Barnes	
 Q165392	cast	Q1306003	Trent Ford	Jeremy Blond	
-Q165392	cast	Q172653	マギー・スミス	Constance, Countess of Trentham	
+Q165392	cast	Q172653	Maggie Smith	Constance, Countess of Trentham	
 Q165392	cast	Q467362	Sophie Thompson	Dorothy	
 Q165392	cast	Q309160	Alan Bates	Mr Jennings	
 Q165392	cast	Q1822943	Meg Wynn Owen	Lewis	
@@ -514,14 +514,14 @@ Q150804	cast	Q3829330	Lech Mackiewicz	Fellow Worker
 Q150804	cast	Q3300246	Maureen Lipman	Mother	
 Q150804	cast	Q2425754	Thomas Lawinky	Schutzpolizei	
 Q150804	cast	Q28466590	Ruth Platt	Janina	
-Q150804	cast	Q7156186	パヴェウ・マワシンスキ		
+Q150804	cast	Q7156186	Paweł Małaszyński		
 Q150804	cast	Q1930601	Michał Żebrowski	Jurek	
 Q150804	cast	Q11818044	Piotr Siejka	Other part	
 Q150804	cast	Q20795525	Morgane Polanski	Girl	
 Q150804	cast	Q3397928	Popeck	Rubenstein	
 Q150804	cast	Q11720892	Jarosław Kopaczewski	Other part	
 Q150804	cast	Q450928	Maja Ostaszewska	Woman with Child	
-Q150804	cast	Q11813973	파벨 부르치크	Polish Workman	
+Q150804	cast	Q11813973	Paweł Burczyk	Polish Workman	
 Q150804	cast	Q11736923	Katarzyna Bargiełowska	Wailing Woman	
 Q150804	cast	Q102450	Axel Prahl		
 Q150804	cast	Q1148690	Cyril Shaps	Mr. Grün	
@@ -546,8 +546,8 @@ Q150804	subject		The Holocaust
 Q150804	subject		Władysław Szpilman		
 Q150804	subject		survival		
 Q214013	director	Q55215	Alejandro González Iñárritu		
-Q214013	writer	Q540725	ギジェルモ・アリアガ		
-Q214013	composer	Q312434	グスターボ・サンタオラヤ		
+Q214013	writer	Q540725	Guillermo Arriaga		
+Q214013	composer	Q312434	Gustavo Santaolalla		
 Q214013	producer	Q55215	Alejandro González Iñárritu		
 Q214013	producer	Q593316	Robert Salerno		
 Q214013	cinematographer	Q1341403	Rodrigo Prieto		
@@ -578,7 +578,7 @@ Q5254044	producer	Q269692	Barry Levinson
 Q5254044	producer	Q7123447	Paddy Cullen		
 Q5254044	producer	Q131519856	Len Amato		
 Q5254044	cinematographer	Q1772301	Alexander Gruszynski		
-Q5254044	cast	Q271464	テリー・クルーズ		
+Q5254044	cast	Q271464	Terry Crews		
 Q5254044	cast	Q275241	Nicole Lyn		
 Q5254044	cast	Q1990727	Essence Atkins		
 Q5254044	cast	Q1139269	Duane Martin		
@@ -790,7 +790,7 @@ Q208269	editor	Q467495	Valdís Óskarsdóttir
 Q208269	executive_producer	Q312751	Charlie Kaufman		
 Q208269	costume_designer	Q107676380	Melissa Toth		
 Q208269	production_designer	Q107676370	Dan Leigh		
-Q208269	cast	Q202765	ケイト・ウィンスレット	Clementine Kruczynski	
+Q208269	cast	Q202765	Kate Winslet	Clementine Kruczynski	
 Q208269	cast	Q40504	Jim Carrey	Joel Barish	
 Q208269	cast	Q436360	Jane Adams		
 Q208269	cast	Q211322	Tom Wilkinson		
@@ -829,7 +829,7 @@ Q309246	director	Q458696	Walter Salles
 Q309246	writer	Q5809	Che Guevara		
 Q309246	writer	Q316310	Alberto Granado		
 Q309246	writer	Q1709607	José Rivera		
-Q309246	composer	Q312434	グスターボ・サンタオラヤ		
+Q309246	composer	Q312434	Gustavo Santaolalla		
 Q309246	composer	Q543506	Jorge Drexler		
 Q309246	producer	Q6833107	Michael Nozik		
 Q309246	producer	Q95666724	Karen Tenkhoff		
@@ -957,7 +957,7 @@ Q913439	subject		drug trafficking
 Q160618	director	Q160726	Ang Lee		
 Q160618	writer	Q460684	Diana Ossana		
 Q160618	writer	Q611672	Larry McMurtry		
-Q160618	composer	Q312434	グスターボ・サンタオラヤ		
+Q160618	composer	Q312434	Gustavo Santaolalla		
 Q160618	producer	Q460684	Diana Ossana		
 Q160618	producer	Q1354081	James Schamus		
 Q160618	creator	Q160726	Ang Lee		
@@ -974,7 +974,7 @@ Q160618	cast	Q2094005	Peter McRobbie
 Q160618	cast	Q231249	Kate Mara		
 Q160618	cast	Q156796	Michelle Williams		
 Q160618	cast	Q1188962	Brooklynn Proulx		
-Q160618	cast	Q36301	アン・ハサウェイ		
+Q160618	cast	Q36301	Anne Hathaway		
 Q160618	cast	Q3952855	Scott Michael Campbell		
 Q160618	cast	Q391359	David Harbour		
 Q160618	cast	Q316647	Randy Quaid		
@@ -1040,21 +1040,21 @@ Q627346	director	Q126098	Michel Gondry
 Q627346	writer	Q40321	Dave Chappelle		
 Q627346	producer	Q40321	Dave Chappelle		
 Q627346	cinematographer	Q439911	Ellen Kuras		
-Q627346	cast	Q15935	カニエ・ウェスト		
+Q627346	cast	Q15935	Kanye West		
 Q627346	cast	Q44857	John Legend		
 Q627346	cast	Q223875	Erykah Badu		
 Q627346	cast	Q38875	Yasiin Bey		
 Q627346	cast	Q536526	Freeway		
 Q627346	cast	Q860283	Bilal		
-Q627346	cast	Q202663	ワイクリフ・ジョン		
+Q627346	cast	Q202663	Wyclef Jean		
 Q627346	cast	Q713964	Lil' Cease		
 Q627346	cast	Q233229	Keyshia Cole		
-Q627346	cast	Q380634	プラーズ		
+Q627346	cast	Q380634	Pras		
 Q627346	cast	Q1106540	Cody Chesnutt		
 Q627346	cast	Q6776086	Martin Luther McCoy		
 Q627346	cast	Q554168	Kool G Rap		
 Q627346	cast	Q232592	Jill Scott		
-Q627346	cast	Q159329	フージーズ		
+Q627346	cast	Q159329	Fugees		
 Q627346	cast	Q286022	Common		
 Q627346	cast	Q535972	Big Daddy Kane		
 Q627346	cast	Q1382233	Pharoahe Monch		
@@ -1064,7 +1064,7 @@ Q627346	cast	Q1052139	The Roots
 Q627346	cast	Q40321	Dave Chappelle		
 Q627346	cast	Q277976	A-Trak		
 Q627346	cast	Q273760	Tiffany Limos		
-Q627346	cast	Q214226	ローリン・ヒル		
+Q627346	cast	Q214226	Lauryn Hill		
 Q627346	cast	Q318755	Talib Kweli		
 Q697155	director	Q6073899	Ol Parker		
 Q697155	writer	Q6073899	Ol Parker		
@@ -1188,14 +1188,14 @@ Q682002	cast	Q439778	Margaret Tyzack
 Q682002	cast	Q234141	Ian McShane		
 Q682002	cast	Q34436	Scarlett Johansson		
 Q682002	cast	Q5534044	Geoff Bell		
-Q682002	cast	Q129591	ヒュー・ジャックマン		
+Q682002	cast	Q129591	Hugh Jackman		
 Q682002	cast	Q1900097	Mark Heap		
 Q682002	cast	Q5112369	Christopher Fulford		
 Q682002	cast	Q5362415	Elizabeth Berrington		
 Q682002	cast	Q1776971	Julia Deakin		
 Q682002	cast	Q261981	Meera Syal		
 Q682002	cast	Q499644	Julian Glover		
-Q682002	cast	Q3472307	サンジーヴ・バスカー		
+Q682002	cast	Q3472307	Sanjeev Bhaskar		
 Q682002	cast	Q25089	Woody Allen		
 Q682002	cast	Q714848	John Light		
 Q682002	cast	Q234546	Romola Garai		
@@ -1305,7 +1305,7 @@ Q1091140	cast	Q269835	Eileen Atkins
 Q1091140	cast	Q314603	Hugh Dancy		
 Q1091140	cast	Q809019	Barry Bostwick		
 Q1091140	cast	Q867813	Claire Danes		
-Q1091140	cast	Q873	メリル・ストリープ		
+Q1091140	cast	Q873	Meryl Streep		
 Q1091140	cast	Q598978	Chuck Cooper		
 Q1091140	cast	Q242555	Mamie Gummer		
 Q1091140	cast	Q229291	Toni Collette		
@@ -1428,7 +1428,7 @@ Q1514641	editor	Q19959481	Jeff Freeman
 Q1514641	cast	Q2046436	Skylar Astin		
 Q1514641	cast	Q6757703	Marco Rodríguez		
 Q1514641	cast	Q316709	Steve Coogan		
-Q1514641	cast	Q2576503	ウィル・グラック		
+Q1514641	cast	Q2576503	Will Gluck		
 Q1514641	cast	Q207852	Elisabeth Shue		
 Q1514641	cast	Q2514422	Nat Faxon		
 Q1514641	cast	Q679987	Marshall Bell		
@@ -1565,7 +1565,7 @@ Q470073	cast	Q234434	Juno Temple	Jane Boleyn, Viscountess Rochford
 Q470073	cast	Q37876	Natalie Portman	Anne Boleyn	
 Q470073	cast	Q6050046	Oliver Coleman	Henry Percy, 6th Earl of Northumberland	
 Q470073	cast	Q457457	Ana Torrent	Catherine of Aragon	
-Q470073	cast	Q23891	アンドリュー・ガーフィールド	Francis Weston	
+Q470073	cast	Q23891	Andrew Garfield	Francis Weston	
 Q470073	cast	Q6834458	Michael Smiley	Physician	
 Q470073	cast	Q1820758	Mark Lewis Jones	Brandon	
 Q470073	cast	Q552026	Alfie Allen	the King's Messenger	
@@ -1774,7 +1774,7 @@ Q696652	cast	Q19665711	Jeremy Shamos
 Q192160	director	Q191755	Jim Jarmusch		
 Q192160	writer	Q191755	Jim Jarmusch		
 Q192160	composer	Q893604	Boris		
-Q192160	producer	Q106715808	Q106715808		
+Q192160	producer	Q106715808	Stacey Smith		
 Q192160	cinematographer	Q457890	Christopher Doyle		
 Q192160	editor	Q154690	Jay Rabinowitz		
 Q192160	production_designer	Q508973	Eugenio Caballero		
@@ -1793,7 +1793,7 @@ Q192160	cast	Q29250	Bill Murray
 Q192160	cast	Q5906088	Héctor Colomé		
 Q192160	cast	Q179576	Gael García Bernal		
 Q192160	cast	Q177993	Hiam Abbass		
-Q192160	cast	Q21501049	Q21501049		
+Q192160	cast	Q21501049	Richard Diment		
 Q192160	cast	Q1342843	Isaach de Bankolé		
 Q483780	director	Q315484	Park Chan-wook		
 Q483780	writer	Q315484	Park Chan-wook		

@@ -36,19 +36,19 @@ Q65070116	director	Q9267785	Gia Coppola
 Q65070116	writer	Q9267785	Gia Coppola		
 Q65070116	writer	Q21334855	Tom Stuart		
 Q65070116	composer	Q2311177	Dev Hynes		
-Q65070116	producer	Q23891	アンドリュー・ガーフィールド		
+Q65070116	producer	Q23891	Andrew Garfield		
 Q65070116	producer	Q28531045	Fred Berger		
 Q65070116	cinematographer	Q16934978	Autumn Durald		
 Q65070116	editor	Q3108697	Glen Scantlebury		
-Q65070116	cast	Q63710339	アレクサ・デミー		
+Q65070116	cast	Q63710339	Alexa Demie		
 Q65070116	cast	Q1249010	Nat Wolff		
 Q65070116	cast	Q313705	Jason Schwartzman		
 Q65070116	cast	Q176945	Colleen Camp		
-Q65070116	cast	Q23891	アンドリュー・ガーフィールド		
+Q65070116	cast	Q23891	Andrew Garfield		
 Q65070116	cast	Q295034	Johnny Knoxville		
 Q65070116	cast	Q46994907	Maya Hawke		
 Q101245195	director	Q3471205	Sam Pollard		
-Q101245195	producer	Q18155812	Q18155812		
+Q101245195	producer	Q18155812	Benjamin Hedin		
 Q101245195	subject		Martin Luther King Jr.		
 Q97760291	director	Q106376817	Steven Kostanski		
 Q60737594	director	Q5933993	Jonathan Jakubowicz		
@@ -83,7 +83,7 @@ Q98761957	producer	Q21066713	Sonny Mallhi
 Q98761957	producer	Q63813765	Adrienne Biddle		
 Q98761957	editor	Q113443041	Zachary Weintraub		
 Q98761957	cast	Q6828106	Michael Abbott Jr.		
-Q98761957	cast	Q361610	ザンダー・バークレー		
+Q98761957	cast	Q361610	Xander Berkeley		
 Q98761957	cast	Q72749	Marin Ireland		
 Q98761957	subject		evil		
 Q98761957	subject		dying		
@@ -111,7 +111,7 @@ Q85966825	subject		parenthood
 Q85966825	subject		coming to terms with the past		
 Q84010999	director	Q140042732	Bill Benz		
 Q84010999	cast	Q2315802	Dakota Johnson		
-Q84010999	cast	Q238795	セイント・ヴィンセント		
+Q84010999	cast	Q238795	St. Vincent		
 Q84010999	cast	Q2940239	Carrie Brownstein		
 Q84010999	cast	Q7813654	Toko Yasuda		
 Q84010999	cast	Q4993338	Ezra Buzzington		
@@ -347,7 +347,7 @@ Q108146664	cast	Q12880360	Makis Papadimitriou
 Q116947749	director	Q114598899	Cecilia Miniucchi		
 Q116947749	writer	Q114598899	Cecilia Miniucchi		
 Q116947749	editor	Q565344	Anne Goursaud		
-Q116947749	cast	Q230516	ラダ・ミッチェル		
+Q116947749	cast	Q230516	Radha Mitchell		
 Q116947749	cast	Q888178	Bob Odenkirk		
 Q116947749	cast	Q3442638	Rosie Fellner		
 Q116947749	cast	Q357762	Danny Huston		
@@ -434,7 +434,7 @@ Q122974345	cast	Q120485790	Jane Widdop
 Q122974345	cast	Q311993	Joel McHale		
 Q122974345	cast	Q298672	Justin Long		
 Q122974345	cast	Q444312	William B. Davis		
-Q122974345	cast	Q42570935	제스 맥러드		
+Q122974345	cast	Q42570935	Jess McLeod		
 Q106555001	director	Q116757241	Brit McAdams		
 Q106555001	writer	Q116757241	Brit McAdams		
 Q106555001	composer	Q1796374	Lyle Workman		
@@ -515,7 +515,7 @@ Q124285697	cast	Q57614	Thomas Kretschmann
 Q124285697	cast	Q234141	Ian McShane		
 Q118402587	director	Q60287379	Ben Brewer		
 Q118402587	composer	Q4166014	Daughn Gibson		
-Q118402587	composer	Q23762787	Q23762787		
+Q118402587	composer	Q23762787	Kristin Kontrol		
 Q118402587	producer	Q42869	Nicolas Cage		
 Q118402587	producer	Q4958510	Braxton Pope		
 Q118402587	cast	Q42869	Nicolas Cage		
@@ -583,7 +583,7 @@ Q124353841	editor	Q58490452	Alex Jacobs
 Q124353841	cast	Q126324927	Lea Rose Sebastianis		
 Q124353841	cast	Q126324935	Timothy Paul McCarthy		
 Q124353841	cast	Q5971790	Lauren-Marie Taylor		
-Q124353841	cast	Q11854876	Q11854876		
+Q124353841	cast	Q11854876	Cameron Love		
 Q124353841	cast	Q61480957	Alexander Oliver		
 Q124353841	cast	Q126324507	Ry Barrett		
 Q124353841	cast	Q126324646	Andrea Pavlovic		
@@ -603,8 +603,8 @@ Q130433127	cast	Q28549988	Bonnie Aarons
 Q130433127	cast	Q979387	Chaz Bono		
 Q130433127	cast	Q453213	Barbara Crampton		
 Q130433127	cast	Q131002879	Krsy Fox		
-Q124852795	director	Q114919216	다미안 맥카시		
-Q124852795	writer	Q114919216	다미안 맥카시		
+Q124852795	director	Q114919216	Damian McCarthy		
+Q124852795	writer	Q114919216	Damian McCarthy		
 Q124852795	composer	Q7325831	Richard G. Mitchell		
 Q124852795	producer	Q100556619	Mette-Marie Kongsved		
 Q124852795	cinematographer	Q122961969	Colm Hogan		
@@ -646,7 +646,7 @@ Q129167045	director	Q298672	Justin Long
 Q129167045	director	Q6375780	Kate Siegel		
 Q129167045	director	Q18205911	Jay Cheel		
 Q129167045	director	Q23761813	Justin Martinez		
-Q129167045	director	Q60833431	Джордан Дауни		
+Q129167045	director	Q60833431	Jordan Downey		
 Q129167045	director	Q130442613	Christian Long		
 Q129167045	director	Q130442615	Virat Pal		
 Q129167045	follows	Q115804740	V/H/S/85		

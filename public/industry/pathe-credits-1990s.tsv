@@ -1,7 +1,7 @@
 qid	role	personQid	name	character	ordinal
 Q3227213	director	Q3131019	Henri Duparc		
 Q3227213	writer	Q3131019	Henri Duparc		
-Q3227213	producer	Q3379934	フィリップ・ゴドー		
+Q3227213	producer	Q3379934	Philippe Godeau		
 Q3227213	cast	Q3335374	Naky Sy Savané		
 Q3227213	cast	Q2941960	Catherine Lachens		
 Q3227213	cast	Q743817	Bamba Bakary		
@@ -79,10 +79,10 @@ Q105755451	cast	Q3369275	Patrick Bouchitey
 Q105755451	cast	Q3350866	Olivier Brocheriou		
 Q105755451	cast	Q274411	Édouard Molinaro		
 Q105755451	cast	Q3713649	Donald Sumpter	Michel	
-Q711928	director	Q742622	ピエール・シェンデルフェール		
-Q711928	writer	Q742622	ピエール・シェンデルフェール		
+Q711928	director	Q742622	Pierre Schoendoerffer		
+Q711928	writer	Q742622	Pierre Schoendoerffer		
 Q711928	composer	Q435034	Georges Delerue		
-Q711928	producer	Q742622	ピエール・シェンデルフェール		
+Q711928	producer	Q742622	Pierre Schoendoerffer		
 Q711928	producer	Q3165740	Jean-François Lepetit		
 Q711928	producer	Q26726363	Jacques Kirsner		
 Q711928	cinematographer	Q658017	Bernard Lutic		
@@ -170,7 +170,7 @@ Q1211134	director	Q969902	Yves Angelo
 Q1211134	writer	Q969902	Yves Angelo		
 Q1211134	writer	Q3171432	Jean Cosmos		
 Q1211134	writer	Q29190197	Véronique Lagrange		
-Q1211134	composer	Q254	ヴォルフガング・アマデウス・モーツァルト		
+Q1211134	composer	Q254	Wolfgang Amadeus Mozart		
 Q1211134	composer	Q255	Ludwig van Beethoven		
 Q1211134	composer	Q7312	Franz Schubert		
 Q1211134	composer	Q7351	Robert Schumann		
@@ -221,7 +221,7 @@ Q3024211	cast	Q448021	Alain Chabat
 Q3024211	cast	Q3288528	Marc de Jonge		
 Q3024211	cast	Q2956299	Chantal Lauby		
 Q3024211	cast	Q3074038	Florence Viala		
-Q3024211	cast	Q42574	ジェームズ・キャメロン		
+Q3024211	cast	Q42574	James Cameron		
 Q3024211	cast	Q109232	Rosanna Arquette		
 Q3024211	cast	Q3350981	Olivier Doran		
 Q3024211	cast	Q3591317	Éric Prat		
@@ -284,7 +284,7 @@ Q282064	cast	Q746932	Pascal Légitimus
 Q282064	cast	Q17521664	Jacques Décombe		
 Q282064	cast	Q957225	Pierre Meyrand		
 Q282064	cast	Q29190046	Patrick Bordier		
-Q282064	cast	Q140530078	Q140530078		
+Q282064	cast	Q140530078	Eugénie Schellen		
 Q758587	director	Q1488882	Gabriel Aghion		
 Q758587	writer	Q466527	Patrick Timsit		
 Q758587	writer	Q1488882	Gabriel Aghion		
@@ -380,7 +380,7 @@ Q593877	cast	Q3047176	Ed Grady
 Q593877	cast	Q5372821	Emma Griffiths Malin	Annabel Leigh	
 Q593877	cast	Q234226	Dominique Swain	Dolores Haze	
 Q593877	cast	Q2678022	Michael Dolan	Richard Schiller	
-Q593877	cast	Q310944	フランク・ランジェラ	Clare Quilty	
+Q593877	cast	Q310944	Frank Langella	Clare Quilty	
 Q593877	cast	Q176455	Melanie Griffith	Charlotte Haze	
 Q593877	cast	Q171745	Jeremy Irons	Humbert Humbert	
 Q593877	award		National Board of Review: Top Ten Films		

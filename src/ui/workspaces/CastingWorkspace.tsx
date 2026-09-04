@@ -1,4 +1,4 @@
-import { titleCaseLabel } from '@/engine/core/text';
+import { formatLabel, titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
@@ -215,7 +215,7 @@ export function CastingWorkspace() {
                   <div className="grow">
                     <div className="small strong">{project.title}</div>
                     <div className="xs dim">
-                      {titleCaseLabel(project.format.replace(/_/g, ' '))} · {project.genres.join(', ')} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}
+                      {formatLabel(project.format)} · {project.genres.map(titleCaseLabel).join(', ')} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}
                       {project.releaseDate && ` · released ${formatDate(project.releaseDate, sim.homeZone)}`}
                     </div>
                   </div>

@@ -1,58 +1,58 @@
 qid	role	personQid	name	character	ordinal
-Q12301736	director	Q5388900	Эрик Ведерсё		
-Q12301736	writer	Q5388900	Эрик Ведерсё		
+Q12301736	director	Q5388900	Erik Wedersøe		
+Q12301736	writer	Q5388900	Erik Wedersøe		
 Q12301736	cinematographer	Q39252996	Henrik Jongdahl		
 Q12301736	editor	Q21914406	Leif Axel Kjeldsen		
 Q12301736	cast	Q16196031	Andrew Grainger		
 Q12301736	cast	Q234921	Bibi Andersson		
 Q12301736	cast	Q530997	Jesper Christensen		
-Q12301736	cast	Q4994556	보네 사뇌		
+Q12301736	cast	Q4994556	Waage Sandø		
 Q12301736	cast	Q15080245	Maria Grazia Bon		
-Q12301736	cast	Q558035	Q558035		
+Q12301736	cast	Q558035	Ann-Mari Max Hansen		
 Q12301736	cast	Q237255	Pernilla August		
 Q12301736	cast	Q41730465	Scott Farrell		
 Q12301736	cast	Q4992023	Reine Brynolfsson		
 Q12301736	cast	Q12313765	Gerard Bidstrup		
-Q12301736	cast	Q2033737	セーレン・ピルマーク		
-Q12301736	cast	Q4970348	莉泽-萝特·鲁合		
+Q12301736	cast	Q2033737	Søren Pilmark		
+Q12301736	cast	Q4970348	Lise-Lotte Norup		
 Q12301736	cast	Q61910099	Asta Kamma August		
 Q2900465	director	Q270911	Åke Sandgren		
 Q2900465	writer	Q491314	Anders Thomas Jensen		
-Q2900465	writer	Q42041897	Bent E. Rasmussen		
+Q2900465	writer	Q42041897	Bent Rasmussen		
 Q2900465	cinematographer	Q328489	Dan Laustsen		
 Q2900465	editor	Q22249854	Kasper Leick		
 Q2900465	production_designer	Q18912942	Niels Sejer		
 Q2900465	cast	Q11994461	Ove Christian Owe		
-Q2900465	cast	Q12308736	迪特·格博尔		
+Q2900465	cast	Q12308736	Ditte Gråbøl		
 Q2900465	cast	Q12332788	Ralf Hollander		
-Q2900465	cast	Q12333598	Роберт Хансен		
+Q2900465	cast	Q12333598	Robert Hansen		
 Q2900465	cast	Q12332902	Rasmus Haxen		
 Q2900465	cast	Q879810	Bjørn Floberg		
-Q2900465	cast	Q1797681	예스페르 아스홀트		
+Q2900465	cast	Q1797681	Jesper Asholt		
 Q2900465	cast	Q2636510	Baard Owe		
-Q2900465	cast	Q721310	오토 브랜덴버그		
-Q2900465	cast	Q3079387	위테 아빌스트룀		
-Q2900465	cast	Q879360	ビャールネ・ヘンリックセン		
-Q12332601	director	Q376995	马丁·米克-雷纳德		
-Q12332601	writer	Q376995	马丁·米克-雷纳德		
+Q2900465	cast	Q721310	Otto Brandenburg		
+Q2900465	cast	Q3079387	Jytte Abildstrøm		
+Q2900465	cast	Q879360	Bjarne Henriksen		
+Q12332601	director	Q376995	Martin Miehe-Renard		
+Q12332601	writer	Q376995	Martin Miehe-Renard		
 Q12332601	cinematographer	Q22255873	Peter Klitgaard		
 Q12332601	editor	Q29010906	Grete Møldrup		
-Q12332601	cast	Q12319049	Ян Линнебьерг		
-Q12332601	cast	Q212661	Асгер Реэр		
-Q12332601	cast	Q2426229	Q2426229		
-Q12332601	cast	Q443662	碧尔特·诺伊曼		
-Q12332601	cast	Q4568482	쇠렌 외스테르고르		
-Q12332601	cast	Q12319166	Джинн Бойл		
+Q12332601	cast	Q12319049	Jan Linnebjerg		
+Q12332601	cast	Q212661	Asger Reher		
+Q12332601	cast	Q2426229	Thomas Mørk		
+Q12332601	cast	Q443662	Birthe Neumann		
+Q12332601	cast	Q4568482	Søren Østergaard		
+Q12332601	cast	Q12319166	Jeanne Boel		
 Q12332601	cast	Q76448738	Thorkild Hansen		
 Q12332601	cast	Q5616296	Jens Basse Dam		
-Q12332601	cast	Q12306241	Q12306241		
+Q12332601	cast	Q12306241	Christiane Bjørg Nielsen		
 Q12332601	cast	Q42302660	Trine Larsen		
-Q12332601	cast	Q5818953	Пол Хюттель		
-Q12332601	cast	Q38052739	Q38052739		
-Q12332601	cast	Q12330053	Оле Фик		
-Q12332601	cast	Q1564096	亨里克·里克加德		
-Q12332601	cast	Q5882039	Хеннинг Енсен		
-Q12332601	cast	Q532025	Йеспер Клейн		
+Q12332601	cast	Q5818953	Paul Hüttel		
+Q12332601	cast	Q38052739	Ole Sørensen		
+Q12332601	cast	Q12330053	Ole Fick		
+Q12332601	cast	Q1564096	Henrik Lykkegaard		
+Q12332601	cast	Q5882039	Henning Jensen		
+Q12332601	cast	Q532025	Jesper Klein		
 Q12332601	cast	Q12338499	Søren Christensen		
 Q11876205	director	Q10831873	Aleksi Mäkelä		
 Q11876205	writer	Q11900893	Venla Mäkelä		
@@ -83,52 +83,52 @@ Q5507608	composer	Q268976	Jacob Groth
 Q5507608	producer	Q16065149	Sisse Graum Jørgensen		
 Q5507608	cinematographer	Q38402755	Lars Vestergaard		
 Q5507608	editor	Q20722016	Søren B. Ebbe		
-Q5507608	cast	Q438580	シセ・バベット・クヌッセン		
+Q5507608	cast	Q438580	Sidse Babett Knudsen		
 Q5507608	cast	Q12334480	Samy Andersen		
-Q5507608	cast	Q491315	아네르스 W. 베르텔센		
-Q5507608	cast	Q12006703	湯米·肯特		
+Q5507608	cast	Q491315	Anders W. Berthelsen		
+Q5507608	cast	Q12006703	Tommy Kenter		
 Q5507608	cast	Q740244	Thomas Bo Larsen		
-Q5507608	cast	Q12326235	马丁·布赫		
-Q5507608	cast	Q1612487	Петер Ауде		
-Q5507608	cast	Q443662	碧尔特·诺伊曼		
+Q5507608	cast	Q12326235	Martin Buch		
+Q5507608	cast	Q1612487	Peter Aude		
+Q5507608	cast	Q443662	Birthe Neumann		
 Q6898216	director	Q5709966	Jonas Elmer		
 Q6898216	writer	Q1991196	Nikolaj Peyk		
 Q6898216	composer	Q64602	Halfdan E		
 Q6898216	cinematographer	Q1948700	Morten Søborg		
 Q6898216	editor	Q38053645	Mette Zeruneith		
-Q6898216	cast	Q3066309	니콜라이 코페르니쿠스		
-Q6898216	cast	Q12301569	安德烈亚斯·耶森		
+Q6898216	cast	Q3066309	Nicolaj Kopernikus		
+Q6898216	cast	Q12301569	Andreas Jessen		
 Q6898216	cast	Q12339589	Torben Steno		
-Q6898216	cast	Q11952430	ヴィガ・ブロ		
-Q6898216	cast	Q2636156	克劳斯·邦丹		
-Q6898216	cast	Q12326235	马丁·布赫		
+Q6898216	cast	Q11952430	Vigga Bro		
+Q6898216	cast	Q2636156	Klaus Bondam		
+Q6898216	cast	Q12326235	Martin Buch		
 Q6898216	cast	Q740244	Thomas Bo Larsen		
-Q6898216	cast	Q12332888	拉斯穆斯·波托夫特		
-Q6898216	cast	Q1797681	예스페르 아스홀트		
-Q6898216	cast	Q12327027	Мишель Кастенхольт		
-Q6898216	cast	Q294647	マッツ・ミケルセン		
-Q6898216	cast	Q438580	シセ・バベット・クヌッセン		
+Q6898216	cast	Q12332888	Rasmus Botoft		
+Q6898216	cast	Q1797681	Jesper Asholt		
+Q6898216	cast	Q12327027	Michel Castenholt		
+Q6898216	cast	Q294647	Mads Mikkelsen		
+Q6898216	cast	Q438580	Sidse Babett Knudsen		
 Q6898216	cast	Q491212	Anders Nyborg		
-Q6898216	cast	Q879360	ビャールネ・ヘンリックセン		
-Q6898216	cast	Q2908395	Бодил Удсен		
-Q6898216	cast	Q12326042	Q12326042		
+Q6898216	cast	Q879360	Bjarne Henriksen		
+Q6898216	cast	Q2908395	Bodil Udsen		
+Q6898216	cast	Q12326042	Marianne Søndergaard Madsen		
 Q6898216	cast	Q12326277	Martin Kongstad		
-Q6898216	cast	Q12326004	玛丽亚·乌格勒·里克		
+Q6898216	cast	Q12326004	Maria Rich		
 Q6898216	cast	Q12313050	Fritze Hedemann		
-Q6898216	cast	Q1797671	ニコラス・ブロ		
+Q6898216	cast	Q1797671	Nicolas Bro		
 Q6898216	cast	Q12321745	Kett Kadagys		
-Q6898216	cast	Q212661	Асгер Реэр		
+Q6898216	cast	Q212661	Asger Reher		
 Q6898216	cast	Q1991196	Nikolaj Peyk		
-Q6898216	cast	Q12339172	特丽莎·格兰		
+Q6898216	cast	Q12339172	Therese Glahn		
 Q6898216	cast	Q12300882	Albert Wichmann		
 Q6898216	cast	Q12316483	Henrik Vestergaard		
-Q6898216	cast	Q12340919	ヴィッキ・ベルリン		
+Q6898216	cast	Q12340919	Vicki Berlin		
 Q6898216	cast	Q12326830	Mette Horn		
 Q497260	director	Q4992193	Kristian Levring		
 Q497260	writer	Q491314	Anders Thomas Jensen		
 Q497260	writer	Q4992193	Kristian Levring		
 Q497260	producer	Q3556804	Vibeke Windeløv		
-Q497260	cinematographer	Q39251172	Q39251172		
+Q497260	cinematographer	Q39251172	Jens Schlosser		
 Q497260	editor	Q7026401	Nicholas Wayman-Harris		
 Q497260	cast	Q232902	Jennifer Jason Leigh		
 Q497260	cast	Q6851300	Miles Anderson		
@@ -245,22 +245,22 @@ Q5428649	cast	Q37490908	Karin Flensborg
 Q5428649	cast	Q5968094	Lars Lunøe		
 Q5428649	cast	Q12322840	Kresten J. Andersen		
 Q5428649	cast	Q3822042	Kim Sønderholm		
-Q5428649	cast	Q12326885	Майкл Асмуссен		
+Q5428649	cast	Q12326885	Michael Asmussen		
 Q5428649	cast	Q12326006	Maria Savery		
 Q5428649	cast	Q12320667	Jytte Kvinesdal		
-Q5428649	cast	Q443662	碧尔特·诺伊曼		
+Q5428649	cast	Q443662	Birthe Neumann		
 Q5428649	cast	Q41730323	Niels Hougaard		
 Q5428649	cast	Q12324268	Lene Poulsen		
 Q5428649	cast	Q41730319	Bo Vilstrup		
 Q5428649	cast	Q15944154	Thomas Bendixen		
 Q5428649	cast	Q41730327	Erik Ryssing		
-Q5428649	cast	Q12337210	スティグ・ハフマイヤー		
-Q5428649	cast	Q384314	イーダ・ドゥインガー		
-Q5428649	cast	Q4575957	艾琳·雷默尔		
+Q5428649	cast	Q12337210	Stig Hoffmeyer		
+Q5428649	cast	Q384314	Ida Dwinger		
+Q5428649	cast	Q4575957	Elin Reimer		
 Q5428649	cast	Q12301893	Anni Bjørn		
 Q5428649	cast	Q7031574	Niels Skousen		
 Q5428649	cast	Q12337890	Sven Ole Schmidt		
-Q5428649	cast	Q4568482	쇠렌 외스테르고르		
+Q5428649	cast	Q4568482	Søren Østergaard		
 Q5428649	cast	Q5575542	Thomas Biehl		
 Q5428649	cast	Q2017909	Peter Schrøder		
 Q5428649	cast	Q4938066	Simone Bendix		
@@ -270,40 +270,40 @@ Q5428649	cast	Q12316399	Henrik Larsen
 Q5428649	cast	Q41730313	Martin Ringsmose		
 Q5428649	cast	Q12301864	Anne Voight Christiansen		
 Q5428649	cast	Q12325640	Mads Nørby		
-Q5428649	cast	Q11991366	尼尔斯·埃尔加德		
+Q5428649	cast	Q11991366	Niels Ellegaard		
 Q5428649	cast	Q12317325	Hother Bøndorff		
 Q5428649	cast	Q7239357	Preben Harris		
 Q1482548	director	Q236148	Susanne Bier		
 Q1482548	writer	Q491314	Anders Thomas Jensen		
 Q1482548	composer	Q363441	Niels Brinck		
-Q1482548	composer	Q12319687	ジェスパー・ウィング・レイズナー		
+Q1482548	composer	Q12319687	Jesper Winge Leisner		
 Q1482548	producer	Q3556804	Vibeke Windeløv		
 Q1482548	cinematographer	Q1948700	Morten Søborg		
 Q1482548	editor	Q2793326	Pernille Bech Christensen		
 Q1482548	editor	Q33436976	Thomas Kragh		
-Q1482548	executive_producer	Q949680	ペーター・アールベーク・ヤンセン		
-Q1482548	cast	Q384314	イーダ・ドゥインガー		
-Q1482548	cast	Q256395	パプリカ・スティーン		
-Q1482548	cast	Q952621	トーマス・ヴィラム・ジェンセン		
-Q1482548	cast	Q12327027	Мишель Кастенхольт		
+Q1482548	executive_producer	Q949680	Peter Aalbæk Jensen		
+Q1482548	cast	Q384314	Ida Dwinger		
+Q1482548	cast	Q256395	Paprika Steen		
+Q1482548	cast	Q952621	Tomas Villum Jensen		
+Q1482548	cast	Q12327027	Michel Castenholt		
 Q1482548	cast	Q15944279	Birgitte Prins		
-Q1482548	cast	Q12337807	Сусанна Юхас		
+Q1482548	cast	Q12337807	Susanne Juhasz		
 Q1482548	cast	Q12334660	Sara Møller Olsen		
-Q1482548	cast	Q383754	ニコライ・リー・カース		
-Q1482548	cast	Q294647	マッツ・ミケルセン		
-Q1482548	cast	Q12315361	한스 헨리크 클레멘센		
+Q1482548	cast	Q383754	Nikolaj Lie Kaas		
+Q1482548	cast	Q294647	Mads Mikkelsen		
+Q1482548	cast	Q12315361	Hans Henrik Clemensen		
 Q1482548	cast	Q4569882	Philip Zandén		
-Q1482548	cast	Q2350192	Стине Бьеррегаард		
-Q1482548	cast	Q38052582	Q38052582		
-Q1482548	cast	Q443662	碧尔特·诺伊曼		
+Q1482548	cast	Q2350192	Stine Bjerregaard		
+Q1482548	cast	Q38052582	Pelle Bang Sørensen		
+Q1482548	cast	Q443662	Birthe Neumann		
 Q1482548	cast	Q491212	Anders Nyborg		
 Q1482548	cast	Q454250	Sonja Richter		
-Q1482548	cast	Q1776674	ウルフ・ピルガード		
+Q1482548	cast	Q1776674	Ulf Pilgaard		
 Q1482548	cast	Q5616296	Jens Basse Dam		
-Q1482548	cast	Q12328868	닐스 올센		
+Q1482548	cast	Q12328868	Niels Olsen		
 Q1482548	cast	Q12343199	Tina Gylling Mortensen		
 Q1482548	cast	Q12333733	Ronnie Hiort Lorenzen		
-Q1482548	cast	Q12315201	Ханна Уиндфельд		
+Q1482548	cast	Q12315201	Hanne Windfeld		
 Q1482548	subject		marriage		
 Q1482548	subject		adultery		
 Q1482548	subject		control		
@@ -314,15 +314,15 @@ Q20494687	director	Q33437307	Pia Bovin
 Q20494687	writer	Q12303928	Bo Hr. Hansen		
 Q20494687	cinematographer	Q19953585	Jacob Banke Olesen		
 Q20494687	editor	Q26956051	Molly Malene Stensgaard		
-Q20494687	cast	Q12331785	Петрине Аггер		
+Q20494687	cast	Q12331785	Petrine Agger		
 Q20494687	cast	Q41236479	Murad Mahmoud		
-Q20494687	cast	Q12319647	Йеспер Ломанн		
-Q20494687	cast	Q12334664	사라 보베르		
+Q20494687	cast	Q12319647	Jesper Lohmann		
+Q20494687	cast	Q12334664	Sarah Boberg		
 Q20494687	cast	Q12300514	Adam Gilbert Jespersen		
 Q20494687	cast	Q12316421	Henrik Noél Olesen		
 Q20494687	cast	Q12300374	Abdel Aziz Mahmoud		
 Q20494687	cast	Q106920954	Iben Kellermann		
-Q20494687	cast	Q8727486	法蘭克·提爾		
+Q20494687	cast	Q8727486	Frank Thiel		
 Q115863234	director	Q4580381	Jo Strømgren		
 Q115863234	director	Q12333954	Runar Hodne		
 Q115863234	writer	Q4580381	Jo Strømgren		
@@ -355,18 +355,18 @@ Q221887	producer	Q104512192	Tine Grew Pfeiffer
 Q221887	cinematographer	Q984522	Manuel Alberto Claro		
 Q221887	editor	Q38402819	Mikkel E.G. Nielsen		
 Q221887	editor	Q39252908	Peter Brandt		
-Q221887	cast	Q1785276	말레네 슈바르츠		
-Q221887	cast	Q4947416	헬레 파그랄리드		
-Q221887	cast	Q326884	Петер Стеен		
-Q221887	cast	Q1797671	ニコラス・ブロ		
+Q221887	cast	Q1785276	Malene Schwartz		
+Q221887	cast	Q4947416	Helle Fagralid		
+Q221887	cast	Q326884	Peter Steen		
+Q221887	cast	Q1797671	Nicolas Bro		
 Q221887	cast	Q12322103	Klaus Mulbjerg		
-Q221887	cast	Q768899	ダーヴィッド・デンシック		
+Q221887	cast	Q768899	David Dencik		
 Q221887	cast	Q41730189	Mercedes Claro Schelin		
-Q221887	cast	Q383754	ニコライ・リー・カース		
+Q221887	cast	Q383754	Nikolaj Lie Kaas		
 Q221887	cast	Q12318600	Isabella Miehe-Renard		
 Q221887	cast	Q37491269	Jens Blegaa		
 Q221887	cast	Q256776	Maria Bonnevie		
-Q221887	cast	Q384314	イーダ・ドゥインガー		
+Q221887	cast	Q384314	Ida Dwinger		
 Q221887	cast	Q712961	Krister Henriksson		
 Q221887	subject		adultery		
 Q221887	subject		romantic love		
@@ -379,21 +379,21 @@ Q1534667	composer	Q46996173	Kåre Bjerkø
 Q1534667	cinematographer	Q38051211	Bo Tengberg		
 Q1534667	editor	Q38051209	Miriam Nørgaard		
 Q1534667	production_designer	Q18912942	Niels Sejer		
-Q1534667	cast	Q12339764	Трине Аппель		
-Q1534667	cast	Q12300838	Аль Агами		
+Q1534667	cast	Q12339764	Trine Appel		
+Q1534667	cast	Q12300838	Al Agami		
 Q1534667	cast	Q12326830	Mette Horn		
 Q1534667	cast	Q12331627	Peter Lambert		
-Q1534667	cast	Q12301439	Андерс Лунд Мадсен		
-Q1534667	cast	Q728020	ラース・ブリグマン		
-Q1534667	cast	Q12330060	Оле Бойсен		
-Q1534667	cast	Q1624551	ホルガー・ユール・ハンセン		
-Q1534667	cast	Q443662	碧尔特·诺伊曼		
+Q1534667	cast	Q12301439	Anders Lund Madsen		
+Q1534667	cast	Q728020	Lars Brygmann		
+Q1534667	cast	Q12330060	Ole Gorter Boisen		
+Q1534667	cast	Q1624551	Holger Juul Hansen		
+Q1534667	cast	Q443662	Birthe Neumann		
 Q1534667	cast	Q38052542	Anders Lunden Kjeldsen		
-Q1534667	cast	Q4568029	アネデ・ストゥヴェルベク		
+Q1534667	cast	Q4568029	Anette Støvelbæk		
 Q1534667	cast	Q1535885	Olaf Nielsen		
-Q1534667	cast	Q323563	オーレ・テストラップ		
-Q1534667	cast	Q12320385	요이마리아 프레데릭센		
-Q1534667	cast	Q3026010	헬라 요프		
+Q1534667	cast	Q323563	Ole Thestrup		
+Q1534667	cast	Q12320385	Joy-Maria Frederiksen		
+Q1534667	cast	Q3026010	Hella Joof		
 Q1534667	cast	Q12312571	Frederik Christian Johansen		
 Q1534667	cast	Q37490676	Maurice Blinkenberg		
 Q1534667	cast	Q38052604	Cecilie Egemose Østerby		
@@ -403,71 +403,71 @@ Q1428455	writer	Q16196081	Jannik Johansen
 Q1428455	cinematographer	Q1351392	Eric Kress		
 Q1428455	editor	Q38402751	Per K. Kirkegaard		
 Q1428455	cast	Q454250	Sonja Richter		
-Q1428455	cast	Q6493935	Лассе Риммер		
-Q1428455	cast	Q1797671	ニコラス・ブロ		
+Q1428455	cast	Q6493935	Lasse Rimmer		
+Q1428455	cast	Q1797671	Nicolas Bro		
 Q1428455	cast	Q12319093	Janek Lesniak		
 Q1428455	cast	Q71247682	Lars Phister		
 Q1428455	cast	Q12342859	Søren Thomsen		
 Q1428455	cast	Q12326667	Merete Nørgaard		
 Q1428455	cast	Q41236256	Asger Gottlieb		
 Q1428455	cast	Q512549	Niels Andersen		
-Q1428455	cast	Q256395	パプリカ・スティーン		
+Q1428455	cast	Q256395	Paprika Steen		
 Q1428455	cast	Q38052505	Kenth Rosenberg		
-Q1428455	cast	Q2735848	Джон Мартинес		
-Q1428455	cast	Q2033737	セーレン・ピルマーク		
+Q1428455	cast	Q2735848	John Martinus		
+Q1428455	cast	Q2033737	Søren Pilmark		
 Q1428455	cast	Q3365380	Jakob Cedergren		
-Q1428455	cast	Q2617978	デイビッド・ベイトソン		
-Q1428455	cast	Q253959	올레 에른스트		
-Q1428455	cast	Q1776674	ウルフ・ピルガード		
+Q1428455	cast	Q2617978	David Bateson		
+Q1428455	cast	Q253959	Ole Ernst		
+Q1428455	cast	Q1776674	Ulf Pilgaard		
 Q1428455	cast	Q35985647	Mogens Holm		
 Q1428455	cast	Q12324917	Lotte Mejlhede		
 Q1428455	cast	Q12338567	Søren Poppel		
 Q1428455	cast	Q37491039	Thomas Gammeltoft		
 Q1428455	cast	Q7147391	Patrick O'Kane		
-Q1428455	cast	Q12314126	Гордон Кеннеди		
-Q1428455	cast	Q728020	ラース・ブリグマン		
+Q1428455	cast	Q12314126	Gordon Kennedy		
+Q1428455	cast	Q728020	Lars Brygmann		
 Q1428455	cast	Q445772	Nikolaj Coster-Waldau		
 Q1428455	cast	Q1687501	Jeppe Kaas		
-Q1428455	cast	Q967680	トーマス・W・ガブリエルソン		
-Q1428455	cast	Q383754	ニコライ・リー・カース		
+Q1428455	cast	Q967680	Thomas W. Gabrielsson		
+Q1428455	cast	Q383754	Nikolaj Lie Kaas		
 Q1428455	cast	Q12326992	Michael Sand		
-Q1428455	cast	Q12301858	安妮·苏菲·埃斯珀森		
+Q1428455	cast	Q12301858	Anne Sofie Espersen		
 Q11858813	director	Q103848045	Hanna Maylett		
 Q11858813	writer	Q15629649	Selma Vilhunen		
 Q11858813	editor	Q16299928	Kimmo Kohtamäki		
 Q11858813	cast	Q7400163	Saila Laakkonen		
 Q11858813	cast	Q17382046	Hennariikka Laaksola		
 Q11858813	subject		virginity		
-Q24910	director	Q256395	パプリカ・スティーン		
+Q24910	director	Q256395	Paprika Steen		
 Q24910	writer	Q534829	Kim Fupz Aakeson		
-Q24910	composer	Q6187841	尼科莱·斯蒂恩		
+Q24910	composer	Q6187841	Nikolaj Steen		
 Q24910	producer	Q86920655	Thomas Heinesen		
 Q24910	cinematographer	Q21553716	Erik Zappon		
 Q24910	editor	Q565966	Anne Østerud		
 Q24910	production_designer	Q79839769	Peter Grant		
-Q24910	cast	Q1801272	로라 크리스텐슨		
-Q24910	cast	Q1045502	카르스텐 비외른룬		
+Q24910	cast	Q1801272	Laura Christensen		
+Q24910	cast	Q1045502	Carsten Bjørnlund		
 Q24910	cast	Q12334668	Sarah Secher Ernst		
-Q24910	cast	Q6179708	詹斯·雅各布·蒂克森		
+Q24910	cast	Q6179708	Jens Jacob Tychsen		
 Q24910	cast	Q12326667	Merete Nørgaard		
-Q24910	cast	Q2033737	セーレン・ピルマーク		
+Q24910	cast	Q2033737	Søren Pilmark		
 Q24910	cast	Q1452177	Paw Henriksen		
-Q24910	cast	Q12327197	Q12327197		
-Q24910	cast	Q12301858	安妮·苏菲·埃斯珀森		
+Q24910	cast	Q12327197	Mikkel Vadsholt		
+Q24910	cast	Q12301858	Anne Sofie Espersen		
 Q24910	cast	Q1582848	Hans Ulrik		
-Q24910	cast	Q4968553	Карен-Лиза Мюнстер		
+Q24910	cast	Q4968553	Karen-Lise Mynster		
 Q24910	cast	Q11995280	Per Scheel-Krüger		
 Q24910	cast	Q5968094	Lars Lunøe		
-Q24910	cast	Q934395	ミケール・ビアクケーア		
+Q24910	cast	Q934395	Mikael Birkkjær		
 Q24910	cast	Q12337275	Stine Prætorius		
-Q24910	cast	Q12315361	한스 헨리크 클레멘센		
-Q24910	cast	Q6491701	ラース・ランゼ		
+Q24910	cast	Q12315361	Hans Henrik Clemensen		
+Q24910	cast	Q6491701	Lars Ranthe		
 Q24910	cast	Q270559	Lena Endre		
-Q24910	cast	Q264696	ソフィエ・グロベル		
+Q24910	cast	Q264696	Sofie Gråbøl		
 Q24910	cast	Q5576476	Henrik Birch		
 Q24910	cast	Q12327484	Mogens Rex		
 Q24910	cast	Q12305700	Charlotte Juul		
-Q24910	cast	Q728020	ラース・ブリグマン		
+Q24910	cast	Q728020	Lars Brygmann		
 Q24910	subject		mourning		
 Q24910	subject		coping		
 Q24910	subject		loss		
@@ -503,68 +503,68 @@ Q990857	director	Q236148	Susanne Bier
 Q990857	writer	Q236148	Susanne Bier		
 Q990857	writer	Q491314	Anders Thomas Jensen		
 Q990857	composer	Q957964	Johan Söderqvist		
-Q990857	producer	Q949680	ペーター・アールベーク・ヤンセン		
+Q990857	producer	Q949680	Peter Aalbæk Jensen		
 Q990857	producer	Q16065149	Sisse Graum Jørgensen		
 Q990857	cinematographer	Q1948700	Morten Søborg		
 Q990857	editor	Q2793326	Pernille Bech Christensen		
 Q990857	editor	Q38402764	Adam Nielsen		
 Q990857	costume_designer	Q108067758	Signe Sejlund		
 Q990857	production_designer	Q33194126	Viggo Bentzon		
-Q990857	cast	Q12328868	닐스 올센		
+Q990857	cast	Q12328868	Niels Olsen		
 Q990857	cast	Q382210	Ulrich Thomsen		
-Q990857	cast	Q3424845	ラース・ヒョルトショイ		
+Q990857	cast	Q3424845	Lars Hjortshøj		
 Q990857	cast	Q12327695	Morten Kirkskov		
-Q990857	cast	Q12301624	Андре Бабикян		
-Q990857	cast	Q5251626	ローラ・ブロ		
+Q990857	cast	Q12301624	André Babikian		
+Q990857	cast	Q5251626	Laura Bro		
 Q990857	cast	Q231951	Connie Nielsen		
-Q990857	cast	Q531678	莎拉·朱尔·沃纳		
-Q990857	cast	Q12339231	Томас Магнуссен		
-Q990857	cast	Q57084996	Q57084996		
+Q990857	cast	Q531678	Sarah Juel Werner		
+Q990857	cast	Q12339231	Thomas Magnussen		
+Q990857	cast	Q57084996	Bjarne Antonisen		
 Q990857	cast	Q1452177	Paw Henriksen		
 Q990857	cast	Q3783619	Hassani Shapi		
 Q990857	cast	Q12327678	Morten Hebsgaard		
 Q990857	cast	Q66091559	Alexis Rodney		
 Q990857	cast	Q12328718	Niels Boesen		
-Q990857	cast	Q383754	ニコライ・リー・カース		
+Q990857	cast	Q383754	Nikolaj Lie Kaas		
 Q990857	cast	Q40012158	Maj-Britt Mathiesen		
 Q990857	cast	Q1098517	Claus Flygare		
 Q990857	cast	Q7816707	Tom Mannion		
-Q990857	cast	Q2347440	ベント・マイディング		
-Q990857	cast	Q12326885	Майкл Асмуссен		
-Q990857	cast	Q6333052	레네 마리아 크리스텐센		
-Q990857	cast	Q6491701	ラース・ランゼ		
-Q990857	cast	Q5916968	ヘンリック・コイフォード		
+Q990857	cast	Q2347440	Bent Mejding		
+Q990857	cast	Q12326885	Michael Asmussen		
+Q990857	cast	Q6333052	Lene Maria Christensen		
+Q990857	cast	Q6491701	Lars Ranthe		
+Q990857	cast	Q5916968	Henrik Koefoed		
 Q990857	cast	Q41730465	Scott Farrell		
-Q990857	cast	Q4955475	ソビョーリ・ホーフェルツ		
-Q990857	cast	Q12332888	拉斯穆斯·波托夫特		
+Q990857	cast	Q4955475	Solbjørg Højfeldt		
+Q990857	cast	Q12332888	Rasmus Botoft		
 Q990857	cast	Q108617211	Kae Bahar		
 Q990857	award		Sundance Film Festival - Audience Award – Best Foreign Feature Film		
 Q990857	subject		love triangle		
 Q990857	subject		sibling relationship		
-Q12329944	director	Q3026010	헬라 요프		
-Q12329944	writer	Q3026010	헬라 요프		
-Q12329944	writer	Q12324918	ロッテ・アンデルセン		
+Q12329944	director	Q3026010	Hella Joof		
+Q12329944	writer	Q3026010	Hella Joof		
+Q12329944	writer	Q12324918	Lotte Andersen		
 Q12329944	writer	Q16196081	Jannik Johansen		
 Q12329944	producer	Q37491039	Thomas Gammeltoft		
 Q12329944	cinematographer	Q1303573	Eigil Bryld		
 Q12329944	editor	Q39251155	Nicolaj Monberg		
 Q12329944	production_designer	Q110254008	Mette Rio		
-Q12329944	cast	Q12308736	迪特·格博尔		
-Q12329944	cast	Q12324918	ロッテ・アンデルセン		
+Q12329944	cast	Q12308736	Ditte Gråbøl		
+Q12329944	cast	Q12324918	Lotte Andersen		
 Q12329944	cast	Q12338512	Søren Fauli		
-Q12329944	cast	Q12325345	레르케 빈테르 아네르센		
-Q12329944	cast	Q3424845	ラース・ヒョルトショイ		
-Q12329944	cast	Q12308272	Q12308272		
+Q12329944	cast	Q12325345	Lærke Winther Andersen		
+Q12329944	cast	Q3424845	Lars Hjortshøj		
+Q12329944	cast	Q12308272	Dennis Otto Hansen		
 Q12329944	cast	Q12304394	Britta Lillesøe		
-Q12329944	cast	Q12341665	森雅·拉赫 - 尼尔森		
-Q12329944	cast	Q12308738	디테 한센		
+Q12329944	cast	Q12341665	Xenia Lach-Nielsen		
+Q12329944	cast	Q12308738	Ditte Hansen		
 Q12329944	cast	Q12343199	Tina Gylling Mortensen		
 Q12329944	cast	Q2233091	Malik Yoba		
-Q12329944	cast	Q2756267	拉尔斯·克努宗		
-Q12329944	cast	Q934395	ミケール・ビアクケーア		
-Q12329944	cast	Q456176	Курт Равн		
-Q12329944	cast	Q3060259	Майкл Морицен		
-Q12329944	cast	Q1612487	Петер Ауде		
+Q12329944	cast	Q2756267	Lars Knutzon		
+Q12329944	cast	Q934395	Mikael Birkkjær		
+Q12329944	cast	Q456176	Kurt Ravn		
+Q12329944	cast	Q3060259	Michael Moritzen		
+Q12329944	cast	Q1612487	Peter Aude		
 Q1126097	director	Q359397	Nicolas Winding Refn		
 Q1126097	writer	Q359397	Nicolas Winding Refn		
 Q1126097	composer	Q12331720	Peter Peter		
@@ -573,10 +573,10 @@ Q1126097	cinematographer	Q1948700	Morten Søborg
 Q1126097	editor	Q565966	Anne Østerud		
 Q1126097	editor	Q5576075	Janus Billeskov Jansen		
 Q1126097	production_designer	Q95864601	Rasmus Thjellesen		
-Q1126097	cast	Q3370087	린세 케슬레르		
+Q1126097	cast	Q3370087	Linse Kessler		
 Q1126097	cast	Q37493650	Camilla Ramonn		
 Q1126097	cast	Q38053632	David Adam		
-Q1126097	cast	Q294647	マッツ・ミケルセン		
+Q1126097	cast	Q294647	Mads Mikkelsen		
 Q1126097	cast	Q41236586	Øyvind Hagen-Traberg		
 Q1126097	cast	Q12324188	Leif Sylvester Petersen		
 Q1126097	cast	Q42047041	Jean Pierre Peulevé		
@@ -606,35 +606,35 @@ Q1073856	cinematographer	Q15148500	Jan Weincke
 Q1073856	editor	Q21914406	Leif Axel Kjeldsen		
 Q1073856	cast	Q2017707	Oliver Golding		
 Q1073856	cast	Q499644	Julian Glover		
-Q1073856	cast	Q4955479	Q4955479		
-Q1073856	cast	Q4983317	옌스 아렌첸		
+Q1073856	cast	Q4955479	Pernille Højmark		
+Q1073856	cast	Q4983317	Jens Arentzen		
 Q1073856	cast	Q138327	Catherine McCormack		
 Q1073856	cast	Q238356	Samantha Bond		
 Q1073856	cast	Q3018042	David Harewood		
-Q1073856	cast	Q435097	イーベン・ヤイレ		
+Q1073856	cast	Q435097	Iben Hjejle		
 Q1073856	cast	Q969466	Marina Bouras		
 Q1073856	cast	Q336486	Ian Hart		
-Q1073856	cast	Q2756306	セーレン・スパニング		
-Q1073856	cast	Q951902	예스페르 랑베르		
+Q1073856	cast	Q2756306	Søren Spanning		
+Q1073856	cast	Q951902	Jesper Langberg		
 Q1073856	cast	Q256164	Derek Jacobi		
 Q1073856	cast	Q5125312	Claire Skinner		
-Q1073856	cast	Q5818953	Пол Хюттель		
+Q1073856	cast	Q5818953	Paul Hüttel		
 Q1073856	cast	Q193659	James McAvoy		
 Q1073856	cast	Q4567772	Rolf Skoglund		
 Q1073856	cast	Q1339383	Jonas Karlsson		
-Q1073856	cast	Q5610610	Ульрик Кольд		
-Q1073856	cast	Q16064677	Q16064677		
-Q1073856	cast	Q212535	헤닝 모리첸		
-Q1073856	cast	Q6179708	詹斯·雅各布·蒂克森		
+Q1073856	cast	Q5610610	Ulrik Cold		
+Q1073856	cast	Q16064677	Niels Bender Mortensen		
+Q1073856	cast	Q212535	Henning Moritzen		
+Q1073856	cast	Q6179708	Jens Jacob Tychsen		
 Q1073856	cast	Q4958871	Melinda Kinnaman		
 Q241710	director	Q373256	Stefan Fjeldmark		
-Q241710	director	Q37494099	索布约恩·克里斯托弗森		
-Q241710	director	Q37494107	克雷斯顿·维斯特比约·安徒生		
+Q241710	director	Q37494099	Thorbjørn Christoffersen		
+Q241710	director	Q37494107	Kresten Vestbjerg Andersen		
 Q241710	writer	Q175510	Mette Heeno		
 Q241710	writer	Q373256	Stefan Fjeldmark		
-Q241710	writer	Q4753869	안데르스 마테센		
-Q241710	composer	Q6063872	Bo Rasmussen		
-Q241710	editor	Q34071007	Мартин Уичманн		
+Q241710	writer	Q4753869	Anders Matthesen		
+Q241710	composer	Q6063872	Bossy Bo		
+Q241710	editor	Q34071007	Martin Wichmann Andersen		
 Q241710	editor	Q77944366	Per Risager		
 Q241710	executive_producer	Q1399974	Kim Magnusson		
 Q241710	narrator	Q12302168	Barry Nougatbranch		
@@ -647,17 +647,17 @@ Q352000	cinematographer	Q16865049	Sebastian Blenkov
 Q352000	editor	Q12301481	Anders Villadsen		
 Q352000	executive_producer	Q1399974	Kim Magnusson		
 Q352000	production_designer	Q18964177	Mia Stensgaard		
-Q352000	cast	Q383754	ニコライ・リー・カース		
-Q352000	cast	Q323563	オーレ・テストラップ		
-Q352000	cast	Q256395	パプリカ・スティーン		
-Q352000	cast	Q7176561	Петер Райхгардт		
-Q352000	cast	Q3437399	ギルド・ルフクヴィスト		
-Q352000	cast	Q1797671	ニコラス・ブロ		
+Q352000	cast	Q383754	Nikolaj Lie Kaas		
+Q352000	cast	Q323563	Ole Thestrup		
+Q352000	cast	Q256395	Paprika Steen		
+Q352000	cast	Q7176561	Peter Reichhardt		
+Q352000	cast	Q3437399	Gyrd Løfqvist		
+Q352000	cast	Q1797671	Nicolas Bro		
 Q352000	cast	Q12331627	Peter Lambert		
-Q352000	cast	Q952621	トーマス・ヴィラム・ジェンセン		
-Q352000	cast	Q12301028	アリ・カジム		
-Q352000	cast	Q6491701	ラース・ランゼ		
-Q352000	cast	Q294647	マッツ・ミケルセン		
+Q352000	cast	Q952621	Tomas Villum Jensen		
+Q352000	cast	Q12301028	Ali Kazim		
+Q352000	cast	Q6491701	Lars Ranthe		
+Q352000	cast	Q294647	Mads Mikkelsen		
 Q352000	cast	Q382210	Ulrich Thomsen		
 Q352000	award		Robert Award for Best Screenplay		
 Q352000	award		Robert Award for Best Danish Film		
@@ -673,11 +673,11 @@ Q459997	producer	Q104512197	Tomas Radoor
 Q459997	cinematographer	Q38402886	Jan Pallesen		
 Q459997	editor	Q39252968	Cathrine Ambus		
 Q459997	production_designer	Q38054944	Sabine Hviid		
-Q459997	cast	Q12319647	Йеспер Ломанн		
+Q459997	cast	Q12319647	Jesper Lohmann		
 Q459997	cast	Q15944202	Torbjørn Hummel		
-Q459997	cast	Q4947416	헬레 파그랄리드		
+Q459997	cast	Q4947416	Helle Fagralid		
 Q459997	cast	Q12321745	Kett Kadagys		
-Q459997	cast	Q12327182	Q12327182		
+Q459997	cast	Q12327182	Mikkel Rosenberg		
 Q459997	cast	Q12325626	Mads Koudal		
 Q459997	cast	Q512549	Niels Andersen		
 Q459997	cast	Q3822042	Kim Sønderholm		
@@ -685,7 +685,7 @@ Q459997	cast	Q6491677	Lars Oluf Larsen
 Q459997	cast	Q6501872	Laurits Munch-Petersen		
 Q459997	cast	Q12327678	Morten Hebsgaard		
 Q459997	cast	Q38052266	Kirsten Breum		
-Q459997	cast	Q4769248	Q4769248		
+Q459997	cast	Q4769248	Annie Birgit Garde		
 Q459997	cast	Q12323795	Lars Bjarke		
 Q459997	cast	Q12321349	Karin Rørbech		
 Q459997	cast	Q12333492	Rikke Wölck		
@@ -703,10 +703,10 @@ Q11991849	producer	Q82969336	Bo Ehrhardt
 Q11991849	cinematographer	Q38051145	Jørgen Johansson		
 Q11991849	editor	Q20722016	Søren B. Ebbe		
 Q11991849	production_designer	Q81832790	Jette Lehmann		
-Q11991849	cast	Q12303108	Беньямин Бое Расмуссен		
+Q11991849	cast	Q12303108	Benjamin Boe Rasmussen		
 Q11991849	cast	Q1452177	Paw Henriksen		
-Q11991849	cast	Q984186	ラース・ミケルセン		
-Q11991849	cast	Q12311098	Фаршад Колги		
+Q11991849	cast	Q984186	Lars Mikkelsen		
+Q11991849	cast	Q12311098	Farshad Kholghi		
 Q11991849	cast	Q12335233	Signe Egholm Olsen		
 Q11991849	cast	Q41236353	Priscilla S. Rasmussen		
 Q11991849	cast	Q12329014	Nils P. Munk		
@@ -714,17 +714,17 @@ Q11991849	cast	Q41236548	Joakim Malling
 Q11991849	cast	Q42047064	Nanna Berg		
 Q11991849	cast	Q41236586	Øyvind Hagen-Traberg		
 Q11991849	cast	Q12331413	Pernille Vallentin		
-Q11991849	cast	Q12321968	Q12321968		
+Q11991849	cast	Q12321968	Kirsten Norholt		
 Q11991849	cast	Q12335246	Signe Vaupel		
-Q11991849	cast	Q12336871	Станислав Севсик		
-Q11991849	cast	Q543266	玛丽亚·斯坦兹		
-Q11991849	cast	Q12311403	Q12311403		
+Q11991849	cast	Q12336871	Stanislav Sevcik		
+Q11991849	cast	Q543266	Maria Stenz		
+Q11991849	cast	Q12311403	Finn Storgaard		
 Q11991849	cast	Q12333891	Rudi Köhnke		
 Q11991849	cast	Q40523938	Mehrdad Zamani		
-Q11991849	cast	Q12306520	克洛斯·里絲·奧斯特加德		
-Q11991849	cast	Q691442	索斯·埃格林德		
-Q11991849	cast	Q12343106	Q12343106		
-Q11991849	cast	Q508739	トゥーレ・リントハート	Steso	
+Q11991849	cast	Q12306520	Claus Riis Østergaard		
+Q11991849	cast	Q691442	Søs Egelind		
+Q11991849	cast	Q12343106	Thomas Corneliussen		
+Q11991849	cast	Q508739	Thure Lindhardt	Steso	
 Q2378130	director	Q1157396	Dagur Kári		
 Q2378130	writer	Q1157396	Dagur Kári		
 Q2378130	writer	Q33436843	Rune Schjøtt		
@@ -734,26 +734,26 @@ Q2378130	producer	Q69886826	Birgitte Skov
 Q2378130	cinematographer	Q984522	Manuel Alberto Claro		
 Q2378130	editor	Q12307146	Daniel Dencik		
 Q2378130	production_designer	Q111351083	Nikolaj Danielsen		
-Q2378130	cast	Q12327107	Микаэл Бертелсен		
+Q2378130	cast	Q12327107	Mikael Bertelsen		
 Q2378130	cast	Q53159364	Angela Bundalovic		
 Q2378130	cast	Q37493972	Peter Harton		
-Q2378130	cast	Q1789215	크리스티안 할켄		
+Q2378130	cast	Q1789215	Kristian Halken		
 Q2378130	cast	Q41236256	Asger Gottlieb		
-Q2378130	cast	Q41236666	Анна Бэшкой Хаугер		
-Q2378130	cast	Q2559831	ボディル・ヨルゲンセン		
+Q2378130	cast	Q41236666	Anne Hauger		
+Q2378130	cast	Q2559831	Bodil Jørgensen		
 Q2378130	cast	Q27186548	Tilly Scott Pedersen		
-Q2378130	cast	Q284923	ヴェラ・ゲビューア		
-Q2378130	cast	Q1797671	ニコラス・ブロ		
-Q2378130	cast	Q12331191	ペデル・ペデルセン		
+Q2378130	cast	Q284923	Vera Gebuhr		
+Q2378130	cast	Q1797671	Nicolas Bro		
+Q2378130	cast	Q12331191	Peder Pedersen		
 Q2378130	cast	Q3365380	Jakob Cedergren		
-Q2378130	cast	Q967680	トーマス・W・ガブリエルソン		
+Q2378130	cast	Q967680	Thomas W. Gabrielsson		
 Q2378130	cast	Q12318024	Ib Tardini		
 Q2378130	cast	Q11959422	Asta Esper Andersen		
 Q2378130	cast	Q11994962	Pauli Ryberg		
-Q2378130	cast	Q4939367	米歇尔·比约恩‑安德森		
-Q2378130	cast	Q3066309	니콜라이 코페르니쿠스		
+Q2378130	cast	Q4939367	Michelle Bjørn-Andersen		
+Q2378130	cast	Q3066309	Nicolaj Kopernikus		
 Q2378130	cast	Q12335343	Simon Bonde		
-Q2378130	cast	Q2185527	모르텐 수르발레		
+Q2378130	cast	Q2185527	Morten Suurballe		
 Q2378130	cast	Q12301414	Anders Hove		
 Q2378130	award		Edda Award for Best Film		
 Q2378130	award		Dragon Award Best Nordic Film		
@@ -784,17 +784,17 @@ Q2438579	composer	Q508223	Antony Genn
 Q2438579	producer	Q37491039	Thomas Gammeltoft		
 Q2438579	cinematographer	Q7295130	Rasmus Videbæk		
 Q2438579	editor	Q38402751	Per K. Kirkegaard		
-Q2438579	cast	Q383754	ニコライ・リー・カース		
-Q2438579	cast	Q12342526	Q12342526		
+Q2438579	cast	Q383754	Nikolaj Lie Kaas		
+Q2438579	cast	Q12342526	Lotte Bergstrøm		
 Q2438579	cast	Q12342859	Søren Thomsen		
-Q2438579	cast	Q1797671	ニコラス・ブロ		
-Q2438579	cast	Q12301858	安妮·苏菲·埃斯珀森		
-Q2438579	cast	Q515231	리스베트 룬크비스트		
-Q2438579	cast	Q12325345	레르케 빈테르 아네르센		
+Q2438579	cast	Q1797671	Nicolas Bro		
+Q2438579	cast	Q12301858	Anne Sofie Espersen		
+Q2438579	cast	Q515231	Lisbet Lundquist		
+Q2438579	cast	Q12325345	Lærke Winther Andersen		
 Q2438579	cast	Q5968094	Lars Lunøe		
 Q2438579	cast	Q41236612	Ane Vinther		
-Q2438579	cast	Q12327705	モルテン・リュツォフト		
-Q2438579	cast	Q1760754	ローラ・ドライスベイク		
+Q2438579	cast	Q12327705	Morten Lützhøft		
+Q2438579	cast	Q1760754	Laura Drasbæk		
 Q1762902	director	Q928823	Kjell Sundvall		
 Q1762902	writer	Q5600542	Rolf Börjlind		
 Q1762902	composer	Q490738	Anders Bagge		
@@ -848,48 +848,48 @@ Q615860	cast	Q551211	Björn Bengtsson
 Q615860	cast	Q1437612	Peter Haber	Martin Beck	
 Q615860	follows	Q1764387	Beck – Sista vittnet		
 Q615860	followed_by	Q1763184	Beck – Flickan i jordkällaren		
-Q5446806	director	Q3026010	헬라 요프		
-Q5446806	writer	Q3026010	헬라 요프		
+Q5446806	director	Q3026010	Hella Joof		
+Q5446806	writer	Q3026010	Hella Joof		
 Q5446806	writer	Q12303928	Bo Hr. Hansen		
 Q5446806	cinematographer	Q38402814	Kim Høgh Mikkelsen		
 Q5446806	editor	Q38402764	Adam Nielsen		
 Q5446806	production_designer	Q110254008	Mette Rio		
-Q5446806	cast	Q12331785	Петрине Аггер		
+Q5446806	cast	Q12331785	Petrine Agger		
 Q5446806	cast	Q40012289	Falke Mikailsen		
 Q5446806	cast	Q11851677	Anne Nielsen		
 Q5446806	cast	Q12301414	Anders Hove		
-Q5446806	cast	Q3026010	헬라 요프		
+Q5446806	cast	Q3026010	Hella Joof		
 Q5446806	cast	Q12333891	Rudi Köhnke		
 Q5446806	cast	Q433444	Beate Bille		
-Q5446806	cast	Q6333052	레네 마리아 크리스텐센		
-Q5446806	cast	Q11980775	克尔斯滕·莱费尔特		
-Q5446806	cast	Q12343372	Троэльс Мунк		
-Q5446806	cast	Q12308736	迪特·格博尔		
-Q5446806	cast	Q12320299	乔纳唐·斯潘格		
+Q5446806	cast	Q6333052	Lene Maria Christensen		
+Q5446806	cast	Q11980775	Kirsten Lehfeldt		
+Q5446806	cast	Q12343372	Troels II Munk		
+Q5446806	cast	Q12308736	Ditte Gråbøl		
+Q5446806	cast	Q12320299	Jonatan Spang		
 Q5446806	cast	Q12333702	Rolf Rasmussen		
 Q5446806	cast	Q12331676	Peter Oliver Hansen		
 Q5446806	cast	Q41236634	Sofie Helqvist		
-Q5446806	cast	Q3427562	미아 뤼네		
+Q5446806	cast	Q3427562	Mia Lyhne		
 Q5446806	cast	Q37491039	Thomas Gammeltoft		
 Q5446806	cast	Q1912647	Max Hansen Jr.		
-Q5446806	cast	Q12306097	Q12306097		
+Q5446806	cast	Q12306097	Christian Mosbæk		
 Q5446806	cast	Q12306485	Claus Gerving		
-Q5446806	cast	Q12325623	마스 크나레보르		
-Q5446806	cast	Q1386832	ジョークレン		
-Q5446806	cast	Q1797728	トロール・リビー		
+Q5446806	cast	Q12325623	Mads Knarreborg		
+Q5446806	cast	Q1386832	Jokeren		
+Q5446806	cast	Q1797728	Troels Lyby		
 Q5446806	cast	Q12343199	Tina Gylling Mortensen		
-Q5446806	cast	Q12318966	ヤコブ・ローマン		
-Q2815428	director	Q2033737	セーレン・ピルマーク		
+Q5446806	cast	Q12318966	Jakob Lohmann		
+Q2815428	director	Q2033737	Søren Pilmark		
 Q2815428	writer	Q12331247	Pelle Møller		
 Q2815428	writer	Q29014679	Roni Ezra		
 Q2815428	composer	Q554775	Frans Bak		
 Q2815428	producer	Q1399974	Kim Magnusson		
 Q2815428	cinematographer	Q39252913	Philippe Kress		
 Q2815428	editor	Q38051170	Morten Højbjerg		
-Q2815428	cast	Q12308738	디테 한센		
+Q2815428	cast	Q12308738	Ditte Hansen		
 Q2815428	cast	Q4568552	Steen Stig Lommer		
 Q2815428	cast	Q762475	Per Pallesen		
-Q2815428	cast	Q12325964	마르그레테 코위투		
+Q2815428	cast	Q12325964	Margrethe Koytu		
 Q574713	director	Q167522	Baltasar Kormákur		
 Q574713	writer	Q167522	Baltasar Kormákur		
 Q574713	composer	Q1397139	Mugison		
@@ -955,7 +955,7 @@ Q22283048	cinematographer	Q22280926	Marius Johansen Hansen
 Q22283048	costume_designer	Q22282658	Bente Karin Ulvik		
 Q22283048	cast	Q7879917	Ulrikke Hansen Døvigen		
 Q22283048	cast	Q3954795	Rolf Sand		
-Q22283048	cast	Q12319347	杨思·约恩·斯波塔格		
+Q22283048	cast	Q12319347	Jens Jørn Spottag		
 Q22283048	cast	Q22283459	Nina Schjeide		
 Q22283048	cast	Q6032529	Ingjerd Egeberg		
 Q22283048	cast	Q11978210	Jannike Kruse		
@@ -978,7 +978,7 @@ Q7237584	cinematographer	Q38051145	Jørgen Johansson
 Q7237584	editor	Q20722016	Søren B. Ebbe		
 Q7237584	production_designer	Q81832790	Jette Lehmann		
 Q7237584	cast	Q95558007	Michal Roneš		
-Q7237584	cast	Q454310	스티네 스텡아데		
+Q7237584	cast	Q454310	Stine Stengade		
 Q7237584	cast	Q101050176	Radim Kalvoda		
 Q7237584	cast	Q6150567	Jana Plodková		
 Q7237584	cast	Q1080249	Christian Heldbo Wienberg		
@@ -986,8 +986,8 @@ Q7237584	cast	Q11880013	Veronika Arichteva
 Q7237584	cast	Q11239843	Bořivoj Navrátil		
 Q7237584	cast	Q102428562	Martin Dusbaba		
 Q7237584	cast	Q12770565	Lucia Vráblicová		
-Q7237584	cast	Q294647	マッツ・ミケルセン		
-Q7237584	cast	Q967680	トーマス・W・ガブリエルソン		
+Q7237584	cast	Q294647	Mads Mikkelsen		
+Q7237584	cast	Q967680	Thomas W. Gabrielsson		
 Q7237584	cast	Q15613882	Anna Veselá		
 Q16411718	director	Q16405752	Katrin Laur		
 Q16411718	writer	Q12358094	Aare Toikka		
@@ -1035,22 +1035,22 @@ Q4110387	cinematographer	Q6244686	Sebastian Winterø
 Q4110387	editor	Q38051170	Morten Højbjerg		
 Q4110387	cast	Q4568552	Steen Stig Lommer		
 Q4110387	cast	Q445772	Nikolaj Coster-Waldau		
-Q4110387	cast	Q12320462	Джули Кристиансен		
+Q4110387	cast	Q12320462	Julie Christiansen		
 Q4110387	cast	Q25750334	Nicklas Søderberg Lundstrøm		
-Q4110387	cast	Q5200983	サイロン・メルヴィル		
-Q4110387	cast	Q12327525	モリー・ブリキスト・エゲリンド		
-Q4110387	cast	Q4968553	Карен-Лиза Мюнстер		
+Q4110387	cast	Q5200983	Cyron Melville		
+Q4110387	cast	Q12327525	Molly Egelind		
+Q4110387	cast	Q4968553	Karen-Lise Mynster		
 Q4110387	cast	Q12338493	Søren Bregendal		
-Q4110387	cast	Q728020	ラース・ブリグマン		
+Q4110387	cast	Q728020	Lars Brygmann		
 Q4110387	cast	Q38052532	Amalie Lindegård		
-Q4110387	cast	Q12305708	シャーロット・シーリング		
+Q4110387	cast	Q12305708	Charlotte Sieling		
 Q4110387	cast	Q116943124	David Petersen		
 Q4110387	cast	Q41236475	Cathrine Bjørn		
-Q4110387	cast	Q186501	セバスチャン・イェセン		
-Q4110387	cast	Q7169413	佩尔尼尔·罗森达尔		
+Q4110387	cast	Q186501	Sebastian Jessen		
+Q4110387	cast	Q7169413	Pernille Rosendahl		
 Q4110387	cast	Q4938066	Simone Bendix		
-Q4110387	cast	Q12321301	Karen Rosenberg		
-Q4110387	cast	Q12325623	마스 크나레보르		
+Q4110387	cast	Q12321301	Karen		
+Q4110387	cast	Q12325623	Mads Knarreborg		
 Q4110387	cast	Q12310008	Emma Leth		
 Q4110387	award		Robert Award for Best Children's Film		
 Q909546	director	Q1019323	Bård Breien		
@@ -1079,17 +1079,17 @@ Q569281	editor	Q26956051	Molly Malene Stensgaard
 Q569281	costume_designer	Q3286466	Manon Rasmussen		
 Q569281	cast	Q12301414	Anders Hove		
 Q569281	cast	Q1341671	Jens Albinus		
-Q569281	cast	Q264696	ソフィエ・グロベル		
+Q569281	cast	Q264696	Sofie Gråbøl		
 Q569281	cast	Q463540	Friðrik Þór Friðriksson		
-Q569281	cast	Q1606310	Хенрик Прип		
-Q569281	cast	Q3427562	미아 뤼네		
-Q569281	cast	Q1967835	ピーター・ガンツェラー		
+Q569281	cast	Q1606310	Henrik Prip		
+Q569281	cast	Q3427562	Mia Lyhne		
+Q569281	cast	Q1967835	Peter Gantzler		
 Q569281	cast	Q551683	Jean-Marc Barr		
-Q569281	cast	Q435097	イーベン・ヤイレ		
+Q569281	cast	Q435097	Iben Hjejle		
 Q569281	cast	Q15635899	Benedikt Erlingsson		
-Q569281	cast	Q3362157	카스페르 크리스텐센		
+Q569281	cast	Q3362157	Casper Christensen		
 Q569281	cast	Q133730	Lars von Trier		
-Q569281	cast	Q6688858	露易丝·梅瑞兹		
+Q569281	cast	Q6688858	Louise Mieritz		
 Q1762876	director	Q928823	Kjell Sundvall		
 Q1762876	writer	Q5600542	Rolf Börjlind		
 Q1762876	composer	Q490738	Anders Bagge		
@@ -1181,29 +1181,29 @@ Q11963321	editor	Q22249854	Kasper Leick
 Q11963321	cast	Q454250	Sonja Richter		
 Q11963321	cast	Q41730394	Dorthe Koefoed		
 Q11963321	cast	Q87764	Rolf Hansen		
-Q11963321	cast	Q4945827	Хелен Эгелунд		
+Q11963321	cast	Q4945827	Helene Egelund		
 Q11963321	cast	Q76946934	Christian Hetland Jepsen		
-Q11963321	cast	Q456176	Курт Равн		
-Q11963321	cast	Q12306520	克洛斯·里絲·奧斯特加德		
+Q11963321	cast	Q456176	Kurt Ravn		
+Q11963321	cast	Q12306520	Claus Riis Østergaard		
 Q11963321	cast	Q4982822	Lene Tiemroth		
-Q11963321	cast	Q12331152	Педер Хольм Йохансен		
-Q11963321	cast	Q491315	아네르스 W. 베르텔센		
-Q11963321	cast	Q12328938	Нильс Вейде		
-Q11963321	cast	Q2185527	모르텐 수르발레		
-Q11963321	cast	Q12331785	Петрине Аггер		
-Q11963321	cast	Q12318905	Джейкоб Вебл		
+Q11963321	cast	Q12331152	Peder Holm Johansen		
+Q11963321	cast	Q491315	Anders W. Berthelsen		
+Q11963321	cast	Q12328938	Niels Weyde		
+Q11963321	cast	Q2185527	Morten Suurballe		
+Q11963321	cast	Q12331785	Petrine Agger		
+Q11963321	cast	Q12318905	Jacob Weble		
 Q11963321	cast	Q6858699	Mille Dinesen		
 Q11963321	cast	Q117450567	Thomas Ravn		
 Q11963321	cast	Q12305485	Carsten Kressner		
 Q11963321	cast	Q41236437	Sus Wilkins		
-Q11963321	cast	Q4567936	Янус Набиль Бэкрави		
+Q11963321	cast	Q4567936	Janus Nabil Bakrawi		
 Q11963321	cast	Q41236442	Ida Randal		
-Q11963321	cast	Q984186	ラース・ミケルセン		
-Q11963321	cast	Q12301569	安德烈亚斯·耶森		
+Q11963321	cast	Q984186	Lars Mikkelsen		
+Q11963321	cast	Q12301569	Andreas Jessen		
 Q11963321	cast	Q42047222	Anne-Dorte Krog		
-Q11963321	cast	Q12325623	마스 크나레보르		
+Q11963321	cast	Q12325623	Mads Knarreborg		
 Q11963321	cast	Q12333700	Rolf Hansen		
-Q11963321	cast	Q967680	トーマス・W・ガブリエルソン		
+Q11963321	cast	Q967680	Thomas W. Gabrielsson		
 Q11963321	cast	Q1712171	Julie Grundtvig Wester		
 Q10263747	director	Q459291	Simon Staho		
 Q10263747	writer	Q459291	Simon Staho		
@@ -1212,25 +1212,25 @@ Q10263747	producer	Q12335248	Sigrid Dyekjær
 Q10263747	cinematographer	Q1351392	Eric Kress		
 Q10263747	editor	Q5576075	Janus Billeskov Jansen		
 Q10263747	cast	Q19842409	Jesper Nyeland Andersen		
-Q10263747	cast	Q2185527	모르텐 수르발레		
-Q10263747	cast	Q2347440	ベント・マイディング		
-Q10263747	cast	Q3060259	Майкл Морицен		
+Q10263747	cast	Q2185527	Morten Suurballe		
+Q10263747	cast	Q2347440	Bent Mejding		
+Q10263747	cast	Q3060259	Michael Moritzen		
 Q10263747	cast	Q228676	Noomi Rapace		
-Q10263747	cast	Q463472	シャルロッテ・ムンク		
+Q10263747	cast	Q463472	Charlotte Munck		
 Q10263747	cast	Q4717857	Alex Suhr		
-Q10263747	cast	Q4578673	키르스텐 올레센		
-Q10263747	cast	Q12325345	레르케 빈테르 아네르센		
+Q10263747	cast	Q4578673	Kirsten Olesen		
+Q10263747	cast	Q12325345	Lærke Winther Andersen		
 Q10263747	cast	Q12327695	Morten Kirkskov		
-Q10263747	cast	Q454310	스티네 스텡아데		
-Q10263747	cast	Q1760754	ローラ・ドライスベイク		
-Q10263747	cast	Q768899	ダーヴィッド・デンシック		
-Q10263747	cast	Q3438890	Улла Хенингсен		
-Q10263747	cast	Q129766	ベネディクト・ハンセン		
+Q10263747	cast	Q454310	Stine Stengade		
+Q10263747	cast	Q1760754	Laura Drasbæk		
+Q10263747	cast	Q768899	David Dencik		
+Q10263747	cast	Q3438890	Ulla Henningsen		
+Q10263747	cast	Q129766	Benedikte Hansen		
 Q10263747	cast	Q469983	Trine Dyrholm		
-Q10263747	cast	Q12324918	ロッテ・アンデルセン		
-Q10263747	cast	Q448968	德揚·丘基奇		
-Q10263747	cast	Q11963712	クリスチャンタフドルップ		
-Q10263747	cast	Q12323855	라르스 콜룬		
+Q10263747	cast	Q12324918	Lotte Andersen		
+Q10263747	cast	Q448968	Dejan Čukić		
+Q10263747	cast	Q11963712	Christian Tafdrup		
+Q10263747	cast	Q12323855	Lars Kaalund		
 Q10263747	cast	Q4938053	Mimmi Benckert Claesson		
 Q10263747	cast	Q41236364	Christopher Palmelund Simonsen		
 Q10263747	cast	Q1341671	Jens Albinus		
@@ -1238,38 +1238,38 @@ Q10263747	cast	Q12326081	Marie Louise Wille
 Q10263747	cast	Q12339254	Thomas Voss		
 Q10263747	cast	Q12326003	Maria Rossing		
 Q10263747	cast	Q433444	Beate Bille		
-Q10263747	cast	Q264696	ソフィエ・グロベル		
-Q10263747	cast	Q508739	トゥーレ・リントハート		
+Q10263747	cast	Q264696	Sofie Gråbøl		
+Q10263747	cast	Q508739	Thure Lindhardt		
 Q10263747	cast	Q12301789	Anne-Lise Gabold		
 Q781684	director	Q4753909	Anders Rønnow Klarlund		
 Q781684	writer	Q4753909	Anders Rønnow Klarlund		
-Q781684	writer	Q12332888	拉斯穆斯·波托夫特		
+Q781684	writer	Q12332888	Rasmus Botoft		
 Q781684	cinematographer	Q1948700	Morten Søborg		
 Q781684	editor	Q26956051	Molly Malene Stensgaard		
 Q781684	cast	Q12324268	Lene Poulsen		
 Q781684	cast	Q4935846	Laila Andersson		
 Q781684	cast	Q4982822	Lene Tiemroth		
-Q781684	cast	Q12006703	湯米·肯特		
-Q781684	cast	Q12321973	Q12321973		
-Q781684	cast	Q951902	예스페르 랑베르		
+Q781684	cast	Q12006703	Tommy Kenter		
+Q781684	cast	Q12321973	Kirsten Peüliche		
+Q781684	cast	Q951902	Jesper Langberg		
 Q781684	cast	Q2106732	Poul Glargaard		
 Q781684	cast	Q12338512	Søren Fauli		
-Q781684	cast	Q6688858	露易丝·梅瑞兹		
+Q781684	cast	Q6688858	Louise Mieritz		
 Q781684	cast	Q11995280	Per Scheel-Krüger		
-Q781684	cast	Q2033737	セーレン・ピルマーク		
+Q781684	cast	Q2033737	Søren Pilmark		
 Q781684	cast	Q37490659	Jan Tjerrild		
 Q781684	cast	Q1912647	Max Hansen Jr.		
-Q781684	cast	Q12326087	Q12326087		
-Q781684	cast	Q12328938	Нильс Вейде		
+Q781684	cast	Q12326087	Marie Schjeldal		
+Q781684	cast	Q12328938	Niels Weyde		
 Q781684	cast	Q116943124	David Petersen		
-Q781684	cast	Q12332888	拉斯穆斯·波托夫特		
-Q781684	cast	Q12325666	Мадс Виллье		
-Q781684	cast	Q12336871	Станислав Севсик		
+Q781684	cast	Q12332888	Rasmus Botoft		
+Q781684	cast	Q12325666	Mads Wille		
+Q781684	cast	Q12336871	Stanislav Sevcik		
 Q781684	cast	Q3822042	Kim Sønderholm		
-Q3190020	director	Q1715688	乔根·莱尔丹		
-Q3190020	director	Q3073540	弗莱明·奎斯特·莫勒		
+Q3190020	director	Q1715688	Jørgen Lerdam		
+Q3190020	director	Q3073540	Flemming Quist Møller		
 Q3190020	director	Q35979547	Anders Sørensen		
-Q3190020	writer	Q3073540	弗莱明·奎斯特·莫勒		
+Q3190020	writer	Q3073540	Flemming Quist Møller		
 Q3190020	composer	Q22255029	Trond Bjerknæs		
 Q3190020	producer	Q3081191	Per Holst		
 Q3190020	producer	Q95700165	Irene Sparre Hjorthøj		
@@ -1286,20 +1286,20 @@ Q4993093	editor	Q38051129	Birger Møller Jensen
 Q4993093	costume_designer	Q73984824	Louize Nissen		
 Q4993093	production_designer	Q111784870	Trine Padmo Olsen		
 Q4993093	cast	Q116943124	David Petersen	Politibetjent	
-Q4993093	cast	Q2756267	拉尔斯·克努宗	Knud	
+Q4993093	cast	Q2756267	Lars Knutzon	Knud	
 Q4993093	cast	Q19827604	Nikolaj Støvring Hansen	Mads Morten	
 Q4993093	cast	Q7553746	Sofie Stougaard	Demonstratrice	
-Q4993093	cast	Q84081	ソーレン・マリン	Mand i skoven	
+Q4993093	cast	Q84081	Søren Malling	Mand i skoven	
 Q4993093	cast	Q12309705	Elena Arndt-Jensen	Karla	
 Q4993093	cast	Q12324015	Laura Rihan	Molly	
 Q4993093	cast	Q443361	Ellen Hillingsø	Rikke	
 Q4993093	cast	Q1452177	Paw Henriksen	Ejnar	
-Q4993093	cast	Q5893592	乔纳森·沃纳·尤尔	Lillebror	
-Q4993093	cast	Q4978683	Биргитте Симонсен	Mollys mor	
-Q4993093	cast	Q3066309	니콜라이 코페르니쿠스	Leif	
+Q4993093	cast	Q5893592	Jonathan Werner Juel	Lillebror	
+Q4993093	cast	Q4978683	Birgitte Simonsen	Mollys mor	
+Q4993093	cast	Q3066309	Nicolaj Kopernikus	Leif	
 Q4993093	cast	Q12333484	Rikke Louise Andersson	Pige i kiosk	
-Q4993093	cast	Q1789215	크리스티안 할켄	Buster	
-Q4993093	cast	Q3438890	Улла Хенингсен	Gudrun	
+Q4993093	cast	Q1789215	Kristian Halken	Buster	
+Q4993093	cast	Q3438890	Ulla Henningsen	Gudrun	
 Q4993093	cast	Q2648022	Allan Olsen	Frank	
 Q4993093	followed_by	Q11735883	Karla & Katrine		
 Q12004262	director	Q22283315	Vibeke Ringen		
@@ -1318,21 +1318,21 @@ Q12004262	cast	Q1801830	Rut Tellefsen
 Q12004262	cast	Q22280963	Luis Engebrigtsen Bye		
 Q12004262	cast	Q113095784	Celine Louise Dyran Smith		
 Q12004262	follows	Q7651880	Svein and the Rat		
-Q12324124	director	Q3056540	エリック・クローソン		
-Q12324124	writer	Q3056540	エリック・クローソン		
+Q12324124	director	Q3056540	Erik Clausen		
+Q12324124	writer	Q3056540	Erik Clausen		
 Q12324124	cinematographer	Q7295130	Rasmus Videbæk		
 Q12324124	editor	Q491248	Anders Refn		
 Q12324124	production_designer	Q95864601	Rasmus Thjellesen		
 Q12324124	cast	Q71247526	Villads Urban Bækholm Clausen		
 Q12324124	cast	Q41730273	Anthony Catallar		
 Q12324124	cast	Q12333702	Rolf Rasmussen		
-Q12324124	cast	Q12308736	迪特·格博尔		
+Q12324124	cast	Q12308736	Ditte Gråbøl		
 Q12324124	cast	Q12301414	Anders Hove		
-Q12324124	cast	Q3056540	エリック・クローソン		
+Q12324124	cast	Q3056540	Erik Clausen		
 Q12324124	cast	Q40523495	Jesper Rosenberg Antonsen		
-Q12324124	cast	Q12309780	Q12309780		
+Q12324124	cast	Q12309780	Elith Nykjær Jørgensen		
 Q12324124	cast	Q12339797	Troels Thorsen		
-Q12324124	cast	Q1797681	예스페르 아스홀트		
+Q12324124	cast	Q1797681	Jesper Asholt		
 Q12324124	cast	Q41730474	Thomas Novotny		
 Q12324124	cast	Q40523866	Tonny Thang		
 Q12324124	cast	Q3470768	Sami Darr		
@@ -1341,7 +1341,7 @@ Q12324124	cast	Q4946759	Pil Egholm
 Q12324124	cast	Q12316327	Henrik Bruhn		
 Q12324124	cast	Q912867	Brian Nielsen		
 Q12324124	cast	Q69996267	Kadhim Faraj		
-Q12324124	cast	Q12336871	Станислав Севсик		
+Q12324124	cast	Q12336871	Stanislav Sevcik		
 Q12324124	cast	Q12326003	Maria Rossing		
 Q940485	director	Q16594792	Åsa Faringer		
 Q940485	director	Q16633067	Ulf Hultberg		
@@ -1390,41 +1390,41 @@ Q10691415	editor	Q23917670	Fredrik Morheden
 Q10691415	cast	Q455316	Angela Kovács		
 Q10691415	cast	Q3433071	Reuben Sallmander		
 Q10691415	cast	Q3366124	Lasse Brandeby		
-Q12343180	director	Q256395	パプリカ・スティーン		
+Q12343180	director	Q256395	Paprika Steen		
 Q12343180	writer	Q491314	Anders Thomas Jensen		
 Q12343180	producer	Q86920655	Thomas Heinesen		
 Q12343180	cinematographer	Q6244686	Sebastian Winterø		
 Q12343180	editor	Q565966	Anne Østerud		
 Q12343180	production_designer	Q81832790	Jette Lehmann		
-Q12343180	cast	Q12301858	安妮·苏菲·埃斯珀森		
-Q12343180	cast	Q12314564	Q12314564		
+Q12343180	cast	Q12301858	Anne Sofie Espersen		
+Q12343180	cast	Q12314564	Guido Päevatalu		
 Q12343180	cast	Q5603361	Ralph Carlsson		
 Q12343180	cast	Q12329474	Nynne Karen Nørlund		
 Q12343180	cast	Q221609	Frida Hallgren		
-Q12343180	cast	Q3066309	니콜라이 코페르니쿠스		
+Q12343180	cast	Q3066309	Nicolaj Kopernikus		
 Q12343180	cast	Q728985	Jan Malmsjö		
-Q12343180	cast	Q728020	ラース・ブリグマン		
-Q12343180	cast	Q6187841	尼科莱·斯蒂恩		
-Q12343180	cast	Q2033737	セーレン・ピルマーク		
+Q12343180	cast	Q728020	Lars Brygmann		
+Q12343180	cast	Q6187841	Nikolaj Steen		
+Q12343180	cast	Q2033737	Søren Pilmark		
 Q12343180	cast	Q347848	Rafael Edholm		
 Q12343180	cast	Q12343182	Tilde Maja Frederiksen		
-Q12343180	cast	Q438580	シセ・バベット・クヌッセン		
-Q12343180	cast	Q7295091	라스무스 비에르		
-Q12343180	cast	Q11980775	克尔斯滕·莱费尔特		
-Q12343180	cast	Q2559831	ボディル・ヨルゲンセン		
-Q12343180	cast	Q5610610	Ульрик Кольд		
-Q12343180	cast	Q12332899	Расмус Хаммерих		
+Q12343180	cast	Q438580	Sidse Babett Knudsen		
+Q12343180	cast	Q7295091	Rasmus Bjerg		
+Q12343180	cast	Q11980775	Kirsten Lehfeldt		
+Q12343180	cast	Q2559831	Bodil Jørgensen		
+Q12343180	cast	Q5610610	Ulrik Cold		
+Q12343180	cast	Q12332899	Rasmus Hammerich		
 Q12343180	cast	Q12328830	Niels Jørgen Riis		
-Q12343180	cast	Q1789215	크리스티안 할켄		
+Q12343180	cast	Q1789215	Kristian Halken		
 Q12343180	cast	Q41236420	Alexander Öhrstrand		
-Q4379574	director	Q11963712	クリスチャンタフドルップ		
-Q4379574	writer	Q11963712	クリスチャンタフドルップ		
+Q4379574	director	Q11963712	Christian Tafdrup		
+Q4379574	writer	Q11963712	Christian Tafdrup		
 Q4379574	cinematographer	Q1354039	Erik Molberg Hansen		
 Q4379574	editor	Q565966	Anne Østerud		
 Q4379574	production_designer	Q95653017	Gitte Malling		
-Q4379574	cast	Q730592	アラン・ハイド		
+Q4379574	cast	Q730592	Allan Hyde		
 Q4379574	cast	Q1712171	Julie Grundtvig Wester		
-Q4379574	cast	Q728020	ラース・ブリグマン		
+Q4379574	cast	Q728020	Lars Brygmann		
 Q4379574	cast	Q443361	Ellen Hillingsø		
 Q1107829	director	Q22093699	Mats Stenberg		
 Q1107829	writer	Q1780665	Roar Uthaug		
@@ -1453,11 +1453,11 @@ Q12307349	producer	Q12326773	Meta Louise Foldager
 Q12307349	cinematographer	Q16865049	Sebastian Blenkov		
 Q12307349	editor	Q271223	Åsa Mossberg		
 Q12307349	production_designer	Q95864601	Rasmus Thjellesen		
-Q12307349	cast	Q491315	아네르스 W. 베르텔센		
+Q12307349	cast	Q491315	Anders W. Berthelsen		
 Q12307349	cast	Q12326106	Marijana Janković		
 Q12307349	cast	Q12343182	Tilde Maja Frederiksen		
-Q12307349	cast	Q443662	碧尔特·诺伊曼		
-Q12307349	cast	Q12319806	约恩·霍耶斯列夫		
+Q12307349	cast	Q443662	Birthe Neumann		
+Q12307349	cast	Q12319806	Joen Højerslev		
 Q12307349	cast	Q469983	Trine Dyrholm		
 Q12307349	cast	Q41236396	Sofia Cukic		
 Q12308608	director	Q5109556	Christian E. Christiansen		
@@ -1465,22 +1465,22 @@ Q12308608	writer	Q5109556	Christian E. Christiansen
 Q12308608	producer	Q2773155	Louise Vesth		
 Q12308608	cinematographer	Q39252899	Ian Hansen		
 Q12308608	editor	Q22281510	Bodil Kjærhauge		
-Q12308608	cast	Q2332110	劳斯·霍比		
-Q12308608	cast	Q1801272	로라 크리스텐슨		
-Q12308608	cast	Q1606310	Хенрик Прип		
-Q12308608	cast	Q3369289	ユーリー・ウルゴード		
+Q12308608	cast	Q2332110	Laus Høybye		
+Q12308608	cast	Q1801272	Laura Christensen		
+Q12308608	cast	Q1606310	Henrik Prip		
+Q12308608	cast	Q3369289	Julie Ølgaard		
 Q12308608	cast	Q4938066	Simone Bendix		
 Q12308608	cast	Q12335246	Signe Vaupel		
-Q12308608	cast	Q12332888	拉斯穆斯·波托夫特		
-Q12308608	cast	Q5567609	Тейс Байер		
-Q12308608	cast	Q12328505	넬 뢴홀트		
-Q12308608	cast	Q4753806	Андерс Хейнриксен		
+Q12308608	cast	Q12332888	Rasmus Botoft		
+Q12308608	cast	Q5567609	Teis Bayer		
+Q12308608	cast	Q12328505	Neel Rønholt		
+Q12308608	cast	Q4753806	Anders Heinrichsen		
 Q12308608	cast	Q12326839	Mette Mai Langer		
-Q12308608	cast	Q12343229	Q12343229		
+Q12308608	cast	Q12343229	Toke Græsborg		
 Q12308608	cast	Q38052524	Anna Eline Levin		
 Q12308608	cast	Q12339254	Thomas Voss		
-Q12308608	cast	Q11963712	クリスチャンタフドルップ		
-Q12308608	cast	Q1797678	라르스 시몬센		
+Q12308608	cast	Q11963712	Christian Tafdrup		
+Q12308608	cast	Q1797678	Lars Simonsen		
 Q12308608	cast	Q117906	Pilou Asbæk		
 Q10481148	director	Q5712862	Anders Engström		
 Q10481148	producer	Q5748071	Johan Fälemark		
@@ -1502,26 +1502,26 @@ Q1772262	director	Q4992193	Kristian Levring
 Q1772262	writer	Q491314	Anders Thomas Jensen		
 Q1772262	composer	Q153469	Krzysztof Penderecki		
 Q1772262	producer	Q16065149	Sisse Graum Jørgensen		
-Q1772262	cinematographer	Q39251172	Q39251172		
+Q1772262	cinematographer	Q39251172	Jens Schlosser		
 Q1772262	editor	Q2793326	Pernille Bech Christensen		
 Q1772262	production_designer	Q81832790	Jette Lehmann		
 Q1772262	cast	Q12320667	Jytte Kvinesdal		
-Q1772262	cast	Q5364963	Эллен Найман		
-Q1772262	cast	Q12318949	Якоб Фалс Нигаард		
-Q1772262	cast	Q1606310	Хенрик Прип		
-Q1772262	cast	Q12330060	Оле Бойсен		
-Q1772262	cast	Q728020	ラース・ブリグマン		
+Q1772262	cast	Q5364963	Ellen Nyman		
+Q1772262	cast	Q12318949	Jakob Fals Nygaard		
+Q1772262	cast	Q1606310	Henrik Prip		
+Q1772262	cast	Q12330060	Ole Gorter Boisen		
+Q1772262	cast	Q728020	Lars Brygmann		
 Q1772262	cast	Q37490937	Elsebeth Nielsen		
-Q1772262	cast	Q84081	ソーレン・マリン		
-Q1772262	cast	Q12327676	莫滕·哈奇-福斯伯		
-Q1772262	cast	Q256395	パプリカ・スティーン		
-Q1772262	cast	Q22122701	Эмма Сегестед Хёг		
+Q1772262	cast	Q84081	Søren Malling		
+Q1772262	cast	Q12327676	Morten Hauch-Fausbøll		
+Q1772262	cast	Q256395	Paprika Steen		
+Q1772262	cast	Q22122701	Emma Sehested Høeg		
 Q1772262	cast	Q12305700	Charlotte Juul		
-Q1772262	cast	Q2908395	Бодил Удсен		
+Q1772262	cast	Q2908395	Bodil Udsen		
 Q1772262	cast	Q42302643	Kim Westi Rasmussen		
-Q1772262	cast	Q454310	스티네 스텡아데		
+Q1772262	cast	Q454310	Stine Stengade		
 Q1772262	cast	Q382210	Ulrich Thomsen		
-Q1772262	cast	Q879360	ビャールネ・ヘンリックセン		
+Q1772262	cast	Q879360	Bjarne Henriksen		
 Q11964923	director	Q13634387	Eva Isaksen		
 Q11964923	writer	Q17114286	Åse Vikene		
 Q11964923	producer	Q16173143	Hilde Berg		
@@ -1540,14 +1540,14 @@ Q11964923	cast	Q455097	Anneke von der Lippe
 Q11964923	cast	Q2419067	Ingrid Bolsø Berdal		
 Q11964923	cast	Q12006179	Thorbjørn Harr		
 Q11964923	cast	Q7710693	Jeppe Beck Laursen		
-Q3482357	director	Q37493867	Q37493867		
-Q3482357	director	Q37494099	索布约恩·克里斯托弗森		
-Q3482357	director	Q37494107	克雷斯顿·维斯特比约·安徒生		
+Q3482357	director	Q37493867	Craig Frank		
+Q3482357	director	Q37494099	Thorbjørn Christoffersen		
+Q3482357	director	Q37494107	Kresten Vestbjerg Andersen		
 Q3482357	writer	Q2867634	Nikolaj Arcel		
 Q3482357	writer	Q12332906	Rasmus Heisterberg		
 Q3482357	composer	Q1319598	Henrik Lindstrand		
 Q3482357	producer	Q59781212	Trine Heidegaard		
-Q3482357	editor	Q34071007	Мартин Уичманн		
+Q3482357	editor	Q34071007	Martin Wichmann Andersen		
 Q3482357	editor	Q38402819	Mikkel E.G. Nielsen		
 Q3482357	editor	Q77944366	Per Risager		
 Q17414840	director	Q17107287	Rasmus A. Sivertsen		
@@ -1564,7 +1564,7 @@ Q10708996	writer	Q1397131	Tom Egeland
 Q10708996	producer	Q16402977	Aage Aaberge		
 Q10708996	producer	Q22328209	Kaare Storemyr		
 Q10708996	cinematographer	Q390981	Harald Paalgard		
-Q10708996	cast	Q448968	德揚·丘基奇		
+Q10708996	cast	Q448968	Dejan Čukić		
 Q10708996	cast	Q455097	Anneke von der Lippe		
 Q10708996	cast	Q17098285	Geir-Atle Johnsen		
 Q10708996	cast	Q17114362	Kalle Øby		
@@ -1573,30 +1573,30 @@ Q10708996	cast	Q15766036	Henrik Mestad
 Q10708996	cast	Q15989117	Ingar Helge Gimle		
 Q10708996	cast	Q12005557	Terje Strømdahl		
 Q10708996	cast	Q5110140	Christian Skolmen		
-Q12310042	director	Q385800	ゲアト・フレドホルム		
+Q12310042	director	Q385800	Gert Fredholm		
 Q12310042	writer	Q12313817	Gert Duve Skovlund		
-Q12310042	writer	Q22303051	米卡埃尔·奥尔森		
-Q12310042	producer	Q22303051	米卡埃尔·奥尔森		
+Q12310042	writer	Q22303051	Mikael Olsen		
+Q12310042	producer	Q22303051	Mikael Olsen		
 Q12310042	cinematographer	Q38051211	Bo Tengberg		
 Q12310042	editor	Q22281510	Bodil Kjærhauge		
 Q12310042	production_designer	Q37491950	Søren Skjær		
-Q12310042	cast	Q12324627	리스베트 불프		
-Q12310042	cast	Q456176	Курт Равн		
-Q12310042	cast	Q12305708	シャーロット・シーリング		
+Q12310042	cast	Q12324627	Lisbeth Wulff		
+Q12310042	cast	Q456176	Kurt Ravn		
+Q12310042	cast	Q12305708	Charlotte Sieling		
 Q12310042	cast	Q12326667	Merete Nørgaard		
 Q12310042	cast	Q12004083	Susan Olsen		
-Q12310042	cast	Q12331099	Q12331099		
-Q12310042	cast	Q12303108	Беньямин Бое Расмуссен		
-Q12310042	cast	Q12325345	레르케 빈테르 아네르센		
+Q12310042	cast	Q12331099	Pauline Rehné		
+Q12310042	cast	Q12303108	Benjamin Boe Rasmussen		
+Q12310042	cast	Q12325345	Lærke Winther Andersen		
 Q12310042	cast	Q12333487	Rikke Lylloff		
-Q12310042	cast	Q12301729	アン・ヒオルト		
-Q12310042	cast	Q1045502	카르스텐 비외른룬		
-Q12310042	cast	Q22303051	米卡埃尔·奥尔森		
+Q12310042	cast	Q12301729	Ann Hjort		
+Q12310042	cast	Q1045502	Carsten Bjørnlund		
+Q12310042	cast	Q22303051	Mikael Olsen		
 Q12310042	cast	Q12335242	Signe Skov		
-Q12310042	cast	Q12319806	约恩·霍耶斯列夫		
-Q12310042	cast	Q12309780	Q12309780		
-Q12310042	cast	Q12327197	Q12327197		
-Q12310042	cast	Q879360	ビャールネ・ヘンリックセン		
+Q12310042	cast	Q12319806	Joen Højerslev		
+Q12310042	cast	Q12309780	Elith Nykjær Jørgensen		
+Q12310042	cast	Q12327197	Mikkel Vadsholt		
+Q12310042	cast	Q879360	Bjarne Henriksen		
 Q12310042	cast	Q116943124	David Petersen		
 Q7332165	director	Q3847072	Mari Rantasila		
 Q7332165	writer	Q387853	Sinikka Nopola		
@@ -1643,7 +1643,7 @@ Q10505285	cast	Q4981640	Emma Swenninger
 Q10505285	cast	Q5544305	Sven Ahlström		
 Q10510527	director	Q104699024	Alexander Moberg		
 Q10510527	writer	Q5927454	Ulf Kvensler		
-Q10510527	cast	Q468499	ツヴァ・ノヴォトニー		
+Q10510527	cast	Q468499	Tuva Novotny		
 Q10510527	cast	Q3433071	Reuben Sallmander		
 Q10510527	cast	Q455316	Angela Kovács		
 Q10510527	cast	Q5564346	Zoltan Bajkai		
@@ -1737,23 +1737,23 @@ Q279255	cinematographer	Q38402755	Lars Vestergaard
 Q279255	editor	Q565966	Anne Østerud		
 Q279255	production_designer	Q37491950	Søren Skjær		
 Q279255	cast	Q37491218	Helene Reingaard Neumann		
-Q279255	cast	Q5251588	ロザリンド・ミンスター		
+Q279255	cast	Q5251588	Rosalinde Mynster		
 Q279255	cast	Q117906	Pilou Asbæk		
 Q279255	cast	Q41236402	Catrine Beck		
 Q279255	cast	Q37491203	Jacob August Ottensten		
 Q279255	cast	Q12320667	Jytte Kvinesdal		
-Q279255	cast	Q12315361	한스 헨리크 클레멘센		
-Q279255	cast	Q12319347	杨思·约恩·斯波塔格		
+Q279255	cast	Q12315361	Hans Henrik Clemensen		
+Q279255	cast	Q12319347	Jens Jørn Spottag		
 Q279255	cast	Q12343120	Thomas Knuth-Winterfeldt		
 Q279255	cast	Q38052532	Amalie Lindegård		
-Q279255	cast	Q531678	莎拉·朱尔·沃纳		
+Q279255	cast	Q531678	Sarah Juel Werner		
 Q279255	cast	Q40523972	Curt Skov		
-Q279255	cast	Q12334664	사라 보베르		
-Q279255	cast	Q1797902	夏洛特·菲奇		
-Q279255	cast	Q491315	아네르스 W. 베르텔센		
+Q279255	cast	Q12334664	Sarah Boberg		
+Q279255	cast	Q1797902	Charlotte Fich		
+Q279255	cast	Q491315	Anders W. Berthelsen		
 Q279255	cast	Q12323950	Lasse Bo Handberg		
 Q279255	cast	Q42047031	Lars Lønnerup		
-Q279255	cast	Q12315378	Ганс Хенрик Вётманн		
+Q279255	cast	Q12315378	Hans Henrik Voetmann		
 Q574998	director	Q133730	Lars von Trier		
 Q574998	writer	Q133730	Lars von Trier		
 Q574998	composer	Q19280155	Kristian Eidnes Andersen		
@@ -1766,22 +1766,22 @@ Q574998	cast	Q276005	Charlotte Gainsbourg
 Q574998	cast	Q188772	Willem Dafoe		
 Q574998	award		Nordic Council Film Prize		
 Q574998	award		European Film Award for Best Cinematographer		
-Q12343734	director	Q952621	トーマス・ヴィラム・ジェンセン		
+Q12343734	director	Q952621	Tomas Villum Jensen		
 Q12343734	writer	Q491314	Anders Thomas Jensen		
 Q12343734	cinematographer	Q41340813	Jan Richter-Friis		
 Q12343734	editor	Q12301481	Anders Villadsen		
 Q12343734	cast	Q2017909	Peter Schrøder		
-Q12343734	cast	Q1797671	ニコラス・ブロ		
-Q12343734	cast	Q1776674	ウルフ・ピルガード		
-Q12343734	cast	Q115988	ビアギッテ・ヨート・ソレンセン		
+Q12343734	cast	Q1797671	Nicolas Bro		
+Q12343734	cast	Q1776674	Ulf Pilgaard		
+Q12343734	cast	Q115988	Birgitte Hjort Sørensen		
 Q12343734	cast	Q61763927	John Reynolds		
-Q12343734	cast	Q2033737	セーレン・ピルマーク		
+Q12343734	cast	Q2033737	Søren Pilmark		
 Q12343734	cast	Q445772	Nikolaj Coster-Waldau		
 Q12343734	cast	Q95220	Blerim Destani		
-Q12343734	cast	Q383754	ニコライ・リー・カース		
+Q12343734	cast	Q383754	Nikolaj Lie Kaas		
 Q12343734	cast	Q12323166	Kurt Dreyer		
 Q12343734	cast	Q529849	Steven Berkoff		
-Q12343734	cast	Q443662	碧尔特·诺伊曼		
+Q12343734	cast	Q443662	Birthe Neumann		
 Q12343734	cast	Q77653	Matthias Hues		
 Q12343734	cast	Q862784	Bille Brown		
 Q12343734	cast	Q1676688	Kee Chan		
@@ -1857,46 +1857,46 @@ Q12327567	writer	Q38051206	Lars Mering
 Q12327567	cinematographer	Q39251159	Henrik Kristensen		
 Q12327567	editor	Q38051129	Birger Møller Jensen		
 Q12327567	editor	Q70916369	Jeppe Bødskov		
-Q12327567	cast	Q12319601	Q12319601		
+Q12327567	cast	Q12319601	Jes Dorph-Petersen		
 Q12327567	cast	Q113843644	Carl Christian Winther		
 Q12327567	cast	Q1452177	Paw Henriksen		
-Q12327567	cast	Q84084	페테르 뮈긴		
-Q12327567	cast	Q17482558	Том Дженсен		
+Q12327567	cast	Q84084	Peter Mygind		
+Q12327567	cast	Q17482558	Tom Jensen		
 Q12327567	cast	Q38052503	Anders Henningsen		
 Q12327567	cast	Q42041906	Marie Trolle Larsen		
 Q12327567	cast	Q12301766	Anna Neye Poulsen		
-Q12327567	cast	Q12320295	Йонас Шмидт		
+Q12327567	cast	Q12320295	Jonas Schmidt		
 Q12327567	cast	Q12326830	Mette Horn		
-Q12327567	cast	Q1744038	Kjeld Norgaard		
+Q12327567	cast	Q1744038	Kjeld Nørgaard		
 Q12327567	cast	Q41236540	Oscar Walsøe Busch		
 Q12327567	cast	Q117906	Pilou Asbæk		
 Q12327567	cast	Q41236228	Alexandra Ternstrøm		
 Q12327567	cast	Q18647125	Joshua Berman		
 Q12327567	cast	Q12339512	Toke Lars Bjarke		
-Q12327567	cast	Q12315378	Ганс Хенрик Вётманн		
-Q12327567	cast	Q12333598	Роберт Хансен		
+Q12327567	cast	Q12315378	Hans Henrik Voetmann		
+Q12327567	cast	Q12333598	Robert Hansen		
 Q12327567	cast	Q12331538	Peter Gilsfort		
 Q12327567	cast	Q65733448	Ida Nielsen		
-Q12330002	director	Q6187841	尼科莱·斯蒂恩		
-Q12330002	writer	Q6187841	尼科莱·斯蒂恩		
+Q12330002	director	Q6187841	Nikolaj Steen		
+Q12330002	writer	Q6187841	Nikolaj Steen		
 Q12330002	writer	Q55318564	Per Nielsen		
 Q12330002	cinematographer	Q47501803	Niels Reedtz Johansen		
 Q12330002	editor	Q38402817	My Thordal		
 Q12330002	cast	Q6178884	Henrik Sjöman		
-Q12330002	cast	Q12309780	Q12309780		
+Q12330002	cast	Q12309780	Elith Nykjær Jørgensen		
 Q12330002	cast	Q1731306	Shanti Roney		
-Q12330002	cast	Q12332899	Расмус Хаммерих		
-Q12330002	cast	Q2559831	ボディル・ヨルゲンセン		
+Q12330002	cast	Q12332899	Rasmus Hammerich		
+Q12330002	cast	Q2559831	Bodil Jørgensen		
 Q12330002	cast	Q5603361	Ralph Carlsson		
 Q12330002	cast	Q7031574	Niels Skousen		
-Q12330002	cast	Q323563	オーレ・テストラップ		
+Q12330002	cast	Q323563	Ole Thestrup		
 Q12330002	cast	Q12324188	Leif Sylvester Petersen		
-Q12330002	cast	Q6187841	尼科莱·斯蒂恩		
+Q12330002	cast	Q6187841	Nikolaj Steen		
 Q12330002	cast	Q104512197	Tomas Radoor		
-Q12330002	cast	Q1801272	로라 크리스텐슨		
-Q12330002	cast	Q1789215	크리스티안 할켄		
-Q12330002	cast	Q7295091	라스무스 비에르		
-Q12330002	cast	Q12333598	Роберт Хансен		
+Q12330002	cast	Q1801272	Laura Christensen		
+Q12330002	cast	Q1789215	Kristian Halken		
+Q12330002	cast	Q7295091	Rasmus Bjerg		
+Q12330002	cast	Q12333598	Robert Hansen		
 Q10611490	director	Q17089131	Antonio Tublén		
 Q10611490	director	Q33436919	Alexander Brøndsted		
 Q10611490	writer	Q17089131	Antonio Tublén		
@@ -1904,23 +1904,23 @@ Q10611490	writer	Q33436919	Alexander Brøndsted
 Q10611490	composer	Q17089131	Antonio Tublén		
 Q10611490	cinematographer	Q23915278	Linus Eklund		
 Q10611490	editor	Q22281510	Bodil Kjærhauge		
-Q10611490	executive_producer	Q949680	ペーター・アールベーク・ヤンセン		
+Q10611490	executive_producer	Q949680	Peter Aalbæk Jensen		
 Q10611490	production_designer	Q73984530	Malin Kihlberg		
-Q10611490	cast	Q468499	ツヴァ・ノヴォトニー		
-Q10611490	cast	Q289924	ギタ・ナービュ		
-Q10611490	cast	Q12339172	特丽莎·格兰		
+Q10611490	cast	Q468499	Tuva Novotny		
+Q10611490	cast	Q289924	Ghita Nørby		
+Q10611490	cast	Q12339172	Therese Glahn		
 Q10611490	cast	Q3358372	Magnus Krepper		
 Q10611490	cast	Q530997	Jesper Christensen		
-Q10611490	cast	Q4947416	헬레 파그랄리드		
+Q10611490	cast	Q4947416	Helle Fagralid		
 Q10611490	cast	Q4951728	Saga Gärde		
 Q10611490	cast	Q5967031	Erik Lundin		
 Q10611490	cast	Q138232	Sverrir Gudnason		
 Q10611490	cast	Q740244	Thomas Bo Larsen		
-Q10611490	cast	Q768899	ダーヴィッド・デンシック		
-Q10611490	cast	Q448968	德揚·丘基奇		
+Q10611490	cast	Q768899	David Dencik		
+Q10611490	cast	Q448968	Dejan Čukić		
 Q10611490	cast	Q5386449	Eric Ericson		
 Q10611490	cast	Q5901036	Patrik Karlson		
-Q10611490	cast	Q1797902	夏洛特·菲奇		
+Q10611490	cast	Q1797902	Charlotte Fich		
 Q10611490	cast	Q5920898	Michalis Koutsogiannakis		
 Q6378229	director	Q3177578	Jesper Ganslandt		
 Q6378229	writer	Q3177578	Jesper Ganslandt		
@@ -2022,13 +2022,13 @@ Q12316769	cinematographer	Q38402858	Lars Reinholdt
 Q12316769	cinematographer	Q39252965	Martin Top Jacobsen		
 Q12316769	editor	Q38054863	Faisel Butt		
 Q12316769	cast	Q12326927	Michael Grønnemose		
-Q12316769	cast	Q4578673	키르스텐 올레센		
+Q12316769	cast	Q4578673	Kirsten Olesen		
 Q12316769	cast	Q38052518	Marcus Nicolas Christensen		
-Q12316769	cast	Q1789215	크리스티안 할켄		
-Q12316769	cast	Q12327247	米勒·霍夫迈尔·莱费尔特		
-Q12316769	cast	Q1776777	딕 케이소		
+Q12316769	cast	Q1789215	Kristian Halken		
+Q12316769	cast	Q12327247	Mille Hoffmeyer Lehfeldt		
+Q12316769	cast	Q1776777	Dick Kaysø		
 Q12316769	cast	Q41236459	Clara Bruun Sandbye		
 Q12316769	cast	Q6776640	Martin Spang Olsen		
 Q12316769	cast	Q41236271	Olivia Holden		
-Q12316769	cast	Q12334664	사라 보베르		
+Q12316769	cast	Q12334664	Sarah Boberg		
 Q12316769	cast	Q38052514	Mads Rømer		

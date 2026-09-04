@@ -18,7 +18,7 @@ Q609597	cast	Q450109	Victor Kilian
 Q609597	cast	Q342537	George Reeves		
 Q609597	cast	Q1790788	Pat O'Brien		
 Q609597	cast	Q359446	Regis Toomey		
-Q609597	cast	Q2474042	ウォルター・ミラー		
+Q609597	cast	Q2474042	Walter Miller		
 Q609597	cast	Q959404	Eric Blore		
 Q609597	cast	Q236396	Geraldine Fitzgerald		
 Q609597	cast	Q447612	Binnie Barnes		
@@ -173,7 +173,7 @@ Q5050448	cast	Q3371485	Paul Hurst
 Q5050448	cast	Q957639	William Hopper		
 Q5050448	cast	Q367053	John Garfield		
 Q5050448	cast	Q283123	Frank Puglia		
-Q5050448	cast	Q2474042	ウォルター・ミラー		
+Q5050448	cast	Q2474042	Walter Miller		
 Q5050448	cast	Q343633	Burgess Meredith		
 Q5050448	cast	Q1790788	Pat O'Brien		
 Q5050448	cast	Q461949	Henry O'Neill		
@@ -198,7 +198,7 @@ Q1428084	cast	Q351838	Arthur Kennedy
 Q1428084	cast	Q367073	Donald Crisp		
 Q1428084	cast	Q6939100	Murray Alper		
 Q1428084	cast	Q888266	Bob Steele		
-Q1428084	cast	Q449704	ブランチ・ユーカ		
+Q1428084	cast	Q449704	Blanche Yurka		
 Q1428084	cast	Q82284	Frank McHugh		
 Q1428084	cast	Q6759499	Margaret Hayes		
 Q1428084	cast	Q233848	Ann Sheridan		
@@ -222,7 +222,7 @@ Q16991985	cast	Q6513452	Lee Dixon
 Q1679816	director	Q55413	William Dieterle		
 Q1679816	writer	Q51575	John Huston		
 Q1679816	writer	Q1600357	Heinz Herald		
-Q1679816	writer	Q1999461	Q1999461		
+Q1679816	writer	Q1999461	Norman Burnstine		
 Q1679816	composer	Q350704	Max Steiner		
 Q1679816	producer	Q72614	Jack Warner		
 Q1679816	producer	Q89510	Wolfgang Reinhardt		
@@ -449,7 +449,7 @@ Q1598010	cast	Q945076	Roy Barcroft
 Q1598010	cast	Q3157279	Jack Mower		
 Q1598010	cast	Q2877860	Hobart Cavanaugh		
 Q1598010	cast	Q3057212	Ernest Whitman		
-Q1598010	cast	Q5343388	ガイ・エドワード・ハーン		
+Q1598010	cast	Q5343388	Edward Hearn		
 Q1598010	cast	Q3493013	Spencer Charters		
 Q1598010	cast	Q461949	Henry O'Neill		
 Q1598010	cast	Q1196052	Russell Simpson		
@@ -745,7 +745,7 @@ Q643220	cast	Q5488455	Frank Mills
 Q643220	cast	Q342537	George Reeves		
 Q643220	cast	Q450109	Victor Kilian		
 Q643220	cast	Q713929	Charles Middleton		
-Q643220	cast	Q2474042	ウォルター・ミラー		
+Q643220	cast	Q2474042	Walter Miller		
 Q643220	cast	Q1971717	Alan Hale		
 Q643220	cast	Q82284	Frank McHugh		
 Q643220	cast	Q951224	Howard Hickman		
@@ -1409,6 +1409,9 @@ Q20814814	producer	Q17479220	William Jacobs
 Q20814814	cinematographer	Q2865185	Arthur L. Todd		
 Q20814814	editor	Q111743	Rudi Fehr		
 Q20814814	cast	Q313046	Eddie Albert		
+Q26720535	director	Q319723	Tex Avery		
+Q26720535	writer	Q1928541	Michael Maltese		
+Q26720535	composer	Q598185	Carl W. Stalling		
 Q2037761	director	Q319723	Tex Avery		
 Q2037761	writer	Q18658490	Dave Monahan		
 Q2037761	composer	Q598185	Carl W. Stalling		
@@ -1641,9 +1644,6 @@ Q3572726	cast	Q166114	Leslie Brooks
 Q3572726	cast	Q17581402	Ray Montgomery		
 Q3572726	cast	Q601358	Phil Silvers		
 Q3572726	subject		World War II		
-Q26720535	director	Q319723	Tex Avery		
-Q26720535	writer	Q1928541	Michael Maltese		
-Q26720535	composer	Q598185	Carl W. Stalling		
 Q4659449	director	Q286104	Jean Negulesco		
 Q4659449	writer	Q22101636	Owen Crump		
 Q4659449	composer	Q2621011	William Lava		
@@ -1944,6 +1944,10 @@ Q16981042	composer	Q5567942	Jack Beaver
 Q16981042	cinematographer	Q810018	Basil Emmott		
 Q16981042	editor	Q951821	Terence Fisher		
 Q16981042	cast	Q1309447	Richard Greene		
+Q101241178	director	Q457864	Friz Freleng		
+Q101241178	writer	Q1928541	Michael Maltese		
+Q101241178	composer	Q598185	Carl W. Stalling		
+Q101241178	producer	Q762558	Leon Schlesinger		
 Q645510	director	Q457864	Friz Freleng		
 Q645510	writer	Q1928541	Michael Maltese		
 Q645510	composer	Q598185	Carl W. Stalling		
@@ -2067,7 +2071,7 @@ Q16939200	cast	Q8010691	William Haade
 Q16939200	cast	Q1368948	Glenn Strange		
 Q16939200	cast	Q280455	Faye Emerson		
 Q16939200	cast	Q1971717	Alan Hale		
-Q16939200	cast	Q3013243	ダン・ホワイト		
+Q16939200	cast	Q3013243	Dan White		
 Q16939200	cast	Q3569064	Willie Best		
 Q16939200	cast	Q3108668	Glen Cavender		
 Q16939200	cast	Q3568320	Willard Robertson		
@@ -2498,10 +2502,6 @@ Q1321622	subject		World War I
 Q1321622	subject		World War II		
 Q1321622	subject		vaudeville		
 Q1321622	subject		George M. Cohan		
-Q101241178	director	Q457864	Friz Freleng		
-Q101241178	writer	Q1928541	Michael Maltese		
-Q101241178	composer	Q598185	Carl W. Stalling		
-Q101241178	producer	Q762558	Leon Schlesinger		
 Q2819697	director	Q670417	Bob Clampett		
 Q2819697	writer	Q589459	Frank Tashlin		
 Q2819697	composer	Q598185	Carl W. Stalling		
@@ -3410,7 +3410,7 @@ Q3204891	cast	Q2899205	Bert Roach
 Q3204891	cast	Q276216	Irene Manning		
 Q3204891	cast	Q5487056	Frank Hagney		
 Q3204891	cast	Q17413878	Bob Reeves		
-Q3204891	cast	Q5343388	ガイ・エドワード・ハーン		
+Q3204891	cast	Q5343388	Edward Hearn		
 Q3204891	cast	Q956920	Dennis Morgan		
 Q3204891	cast	Q7349739	Robert Shayne		
 Q3204891	cast	Q3126801	Hank Mann		
@@ -3422,7 +3422,7 @@ Q3204891	cast	Q3086867	Fred Kelsey
 Q3204891	cast	Q1400299	Nestor Paiva		
 Q3204891	cast	Q3157279	Jack Mower		
 Q3204891	cast	Q3568402	William B. Davidson		
-Q3204891	cast	Q3013243	ダン・ホワイト		
+Q3204891	cast	Q3013243	Dan White		
 Q3204891	cast	Q2464819	Philip Van Zandt		
 Q3204891	cast	Q6282326	Joseph Crehan		
 Q3204891	cast	Q233848	Ann Sheridan		
@@ -5087,7 +5087,7 @@ Q251559	cast	Q233848	Ann Sheridan
 Q251559	cast	Q51575	John Huston		
 Q251559	cast	Q162621	Walter Huston	Howard	
 Q251559	cast	Q955708	Bruce Bennett	James Cody	
-Q251559	cast	Q2865959	阿圖羅·索托·蘭格爾		
+Q251559	cast	Q2865959	Arturo Soto Rangel		
 Q251559	cast	Q16390	Humphrey Bogart	Fred C. Dobbs	
 Q251559	award		Academy Award for Best Director		
 Q251559	award		Academy Award for Best Supporting Actor		

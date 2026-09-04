@@ -1,0 +1,1028 @@
+{
+ "disney": {
+  "kind": "studio",
+  "qid": "Q191224",
+  "file": "Walt Disney Pictures text logo.svg",
+  "licence": "Public domain",
+  "author": "Disney Enterprises, Inc.",
+  "credit": "http://www.wdsmediafile.com/media/IntoTheWoods/writen-material/IntoTheWoods5491d6189e646.pdf, page 10",
+  "source": "https://commons.wikimedia.org/wiki/File:Walt_Disney_Pictures_text_logo.svg"
+ },
+ "universal": {
+  "kind": "studio",
+  "qid": "Q168383",
+  "file": "Universal Pictures 2021 (Blue).svg",
+  "licence": "Public domain",
+  "author": "Universal Studios",
+  "credit": "Brian Jackson Brand vectorized as SVG",
+  "source": "https://commons.wikimedia.org/wiki/File:Universal_Pictures_2021_(Blue).svg"
+ },
+ "warner": {
+  "kind": "studio",
+  "qid": "Q8016302",
+  "file": "Warner Bros. Pictures 2023 (Alt, with wordmark).svg",
+  "licence": "Public domain",
+  "author": "Warner Bros. Entertainment (Warner Bros. Discovery), Chermayeff &amp; Geismar &amp; Haviv",
+  "credit": "Warner Bros. Discovery Brand Guide, direct link",
+  "source": "https://commons.wikimedia.org/wiki/File:Warner_Bros._Pictures_2023_(Alt,_with_wordmark).svg"
+ },
+ "sony": {
+  "kind": "studio",
+  "qid": "Q822314",
+  "file": "Sony Pictures logo.svg",
+  "licence": "Public domain",
+  "author": "Sony Pictures",
+  "credit": "www.sonypictures.net",
+  "source": "https://commons.wikimedia.org/wiki/File:Sony_Pictures_logo.svg"
+ },
+ "paramount": {
+  "kind": "studio",
+  "qid": "Q159846",
+  "file": "Paramount Pictures Logo 2025.svg",
+  "licence": "Public domain",
+  "author": "Paramount Pictures Corporation (Paramount Skydance)",
+  "credit": "https://www.paramountpictures.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Paramount_Pictures_Logo_2025.svg"
+ },
+ "lionsgate": {
+  "kind": "studio",
+  "qid": "Q17076072",
+  "file": "Lionsgate Logo.svg",
+  "licence": "Public domain",
+  "author": "Lionsgate Studios",
+  "credit": "Own work using: https://web.archive.org/web/20160304033729/http://www.scasd.org/cms/lib5/PA01000006/Centricity/Domain/28/Enclosure_Booklet_(Public).pdf, page 3",
+  "source": "https://commons.wikimedia.org/wiki/File:Lionsgate_Logo.svg"
+ },
+ "amazon-mgm": {
+  "kind": "studio",
+  "qid": "Q4740868",
+  "file": "Amazon MGM Studios Logo 2.svg",
+  "licence": "Public domain",
+  "author": "Amazon.com, Inc.",
+  "credit": "https://www.mgm.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Amazon_MGM_Studios_Logo_2.svg"
+ },
+ "netflix": {
+  "kind": "studio",
+  "qid": "Q907311",
+  "file": "Netflix 2015 logo.svg",
+  "licence": "Public domain",
+  "author": "TM/®Netflix Inc.",
+  "credit": "Extracted by Goo16 and modified by Corkythehornetfan from https://www.netflix.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Netflix_2015_logo.svg"
+ },
+ "a24": {
+  "kind": "studio",
+  "qid": "Q16248298",
+  "file": "A24 logo.svg",
+  "licence": "Public domain",
+  "author": "A24",
+  "credit": "https://a24films.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:A24_logo.svg"
+ },
+ "blumhouse": {
+  "kind": "studio",
+  "qid": "Q16984664",
+  "file": "Blumhouse Productions logo.svg",
+  "licence": "Public domain",
+  "author": "Blumhouse Productions",
+  "credit": "http://logos.wikia.com/wiki/File:Blumhouse_Productions.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Blumhouse_Productions_logo.svg"
+ },
+ "focus": {
+  "kind": "studio",
+  "qid": "Q649649",
+  "file": "Focus Features.svg",
+  "licence": "Public domain",
+  "author": "NBCUniversal",
+  "credit": "Own work using: Source",
+  "source": "https://commons.wikimedia.org/wiki/File:Focus_Features.svg"
+ },
+ "sony-classics": {
+  "kind": "studio",
+  "qid": "Q1320443",
+  "file": "Sony Pictures Classics logo.svg",
+  "licence": "Public domain",
+  "author": "Sony Pictures",
+  "credit": "https://www.sonyclassics.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Sony_Pictures_Classics_logo.svg"
+ },
+ "angel": {
+  "kind": "studio",
+  "qid": "Q113659629",
+  "file": "Angel Logo.svg",
+  "licence": "Public domain",
+  "author": "Sombke99",
+  "credit": "Press. angel.com. Retrieved on 2025-08-06.",
+  "source": "https://commons.wikimedia.org/wiki/File:Angel_Logo.svg"
+ },
+ "bleecker": {
+  "kind": "studio",
+  "qid": "Q17985957",
+  "file": "Bleecker Street logo.svg",
+  "licence": "Public domain",
+  "author": "Bleecker Street Media LLC",
+  "credit": "https://logos.fandom.com/wiki/Bleecker_Street",
+  "source": "https://commons.wikimedia.org/wiki/File:Bleecker_Street_logo.svg"
+ },
+ "ifc": {
+  "kind": "studio",
+  "qid": "Q2910457",
+  "file": "IFC Films logo.svg",
+  "licence": "Public domain",
+  "author": "IFC Films",
+  "credit": "https://www.ifcfilms.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:IFC_Films_logo.svg"
+ },
+ "roadside": {
+  "kind": "studio",
+  "qid": "Q7339672",
+  "file": "RoadsideAttractionslogo.jpg",
+  "licence": "CC BY-SA 3.0",
+  "author": "Nateadaniels",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:RoadsideAttractionslogo.jpg"
+ },
+ "toho": {
+  "kind": "studio",
+  "qid": "Q875920",
+  "file": "Toho Logo.svg",
+  "licence": "Public domain",
+  "author": "TOHO CO., LTD.",
+  "credit": "https://www.toho.co.jp/information/LOKI",
+  "source": "https://commons.wikimedia.org/wiki/File:Toho_Logo.svg"
+ },
+ "toei": {
+  "kind": "studio",
+  "qid": "Q1066018",
+  "file": "Toei logo (text).svg",
+  "licence": "Public domain",
+  "author": "Toei Company, Ltd.",
+  "credit": "http://www.toei.co.jp/",
+  "source": "https://commons.wikimedia.org/wiki/File:Toei_logo_(text).svg"
+ },
+ "shochiku": {
+  "kind": "studio",
+  "qid": "Q122549",
+  "file": "Shochiku logo (text).svg",
+  "licence": "Public domain",
+  "author": "Shochiku Company",
+  "credit": "報告書：株主・投資家情報－企業情報｜松竹株式会社",
+  "source": "https://commons.wikimedia.org/wiki/File:Shochiku_logo_(text).svg"
+ },
+ "cj-enm": {
+  "kind": "studio",
+  "qid": "Q56063989",
+  "file": "CJ ENM Logo.svg",
+  "licence": "Public domain",
+  "author": "CJ ENM",
+  "credit": "https://www.cjenm.com/en/",
+  "source": "https://commons.wikimedia.org/wiki/File:CJ_ENM_Logo.svg"
+ },
+ "studiocanal": {
+  "kind": "studio",
+  "qid": "Q2450848",
+  "file": "Studiocanal 2011 logo.svg",
+  "licence": "Public domain",
+  "author": "DBLG",
+  "credit": "http://www.studiocanal.com/fr",
+  "source": "https://commons.wikimedia.org/wiki/File:Studiocanal_2011_logo.svg"
+ },
+ "gaumont": {
+  "kind": "studio",
+  "qid": "Q913462",
+  "file": "Gaumont logo.svg",
+  "licence": "Public domain",
+  "author": "Agence Les Quarte lunes",
+  "credit": "Gaumont-Logo.svg from de.wikipedia",
+  "source": "https://commons.wikimedia.org/wiki/File:Gaumont_logo.svg"
+ },
+ "film4": {
+  "kind": "studio",
+  "qid": "Q5448886",
+  "file": "Film4 logo 2018.svg",
+  "licence": "Public domain",
+  "author": "Film4",
+  "credit": "https://www.film4productions.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Film4_logo_2018.svg"
+ },
+ "dharma": {
+  "kind": "studio",
+  "qid": "Q1207592",
+  "file": "Dharma productions.jpg",
+  "licence": "Public domain",
+  "author": "Rajanadkat",
+  "credit": "Dharma Productions",
+  "source": "https://commons.wikimedia.org/wiki/File:Dharma_productions.jpg"
+ },
+ "globo": {
+  "kind": "studio",
+  "qid": "Q5571070",
+  "file": "Globo Filmes 2022 (vertical).svg",
+  "licence": "Public domain",
+  "author": "Globo Comunicações e Participações S.A.",
+  "credit": "https://storageguiademarcas.blob.core.windows.net/guiamarcas/globo/GloboGuia.pdf",
+  "source": "https://commons.wikimedia.org/wiki/File:Globo_Filmes_2022_(vertical).svg"
+ },
+ "prime-video": {
+  "kind": "network",
+  "qid": "Q4740856",
+  "file": "Prime Video logo (2024).svg",
+  "licence": "Public domain",
+  "author": "Amazon.com, Inc.",
+  "credit": "amazon.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Prime_Video_logo_(2024).svg"
+ },
+ "hulu": {
+  "kind": "network",
+  "qid": "Q1630304",
+  "file": "Hulu logo (2017).svg",
+  "licence": "Public domain",
+  "author": "Hulu, LLC",
+  "credit": "https://www.hulu.com/static/hitch/static/logos/hulu-logo-dark.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Hulu_logo_(2017).svg"
+ },
+ "paramount-plus": {
+  "kind": "network",
+  "qid": "Q27903045",
+  "file": "Paramount Plus.svg",
+  "licence": "Public domain",
+  "author": "Paramount Global - Loyalkaspar",
+  "credit": "Own work using: http://www.paramountplus.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Paramount_Plus.svg"
+ },
+ "apple-tv-plus": {
+  "kind": "network",
+  "qid": "Q62446736",
+  "file": "Apple TV logo.svg",
+  "licence": "Public domain",
+  "author": "Apple Inc.",
+  "credit": "apple.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Apple_TV_logo.svg"
+ },
+ "apple": {
+  "kind": "studio",
+  "qid": "Q108570460",
+  "file": "Apple Studios.svg",
+  "licence": "Public domain",
+  "author": "Original logo by Apple Inc.",
+  "credit": "https://avid.wiki/File:Apple_Studios.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Apple_Studios.svg"
+ },
+ "legendary": {
+  "kind": "studio",
+  "qid": "Q621364",
+  "file": "Legendary Entertainment logo.svg",
+  "licence": "Public domain",
+  "author": "Legendary Entertainment",
+  "credit": "www.legendary.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Legendary_Entertainment_logo.svg"
+ },
+ "neon": {
+  "kind": "studio",
+  "qid": "Q30603559",
+  "file": "Neon (distributor) logo.svg",
+  "licence": "Public domain",
+  "author": "Neon",
+  "credit": "https://neonrated.com/static/neon-logo.f7286f83.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Neon_(distributor)_logo.svg"
+ },
+ "searchlight": {
+  "kind": "studio",
+  "qid": "Q953040",
+  "file": "Searchlight Pictures logo wordmark 3.svg",
+  "licence": "Public domain",
+  "author": "Searchlight Pictures",
+  "credit": "Logopedia",
+  "source": "https://commons.wikimedia.org/wiki/File:Searchlight_Pictures_logo_wordmark_3.svg"
+ },
+ "kadokawa": {
+  "kind": "studio",
+  "qid": "Q11630733",
+  "file": "Kadokawa Daiei Studio Logo.png",
+  "licence": "Public domain",
+  "author": "© KADOKAWA DAIEI STUDIO CO.,LTD.",
+  "credit": "https://www.kd-st.co.jp/",
+  "source": "https://commons.wikimedia.org/wiki/File:Kadokawa_Daiei_Studio_Logo.png"
+ },
+ "constantin": {
+  "kind": "studio",
+  "qid": "Q564960",
+  "file": "Logo Constantin Film.svg",
+  "licence": "Public domain",
+  "author": "Unknown authorUnknown author",
+  "credit": "PDF",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_Constantin_Film.svg"
+ },
+ "bbc-film": {
+  "kind": "studio",
+  "qid": "Q971446",
+  "file": "BBC Film.svg",
+  "licence": "Public domain",
+  "author": "BBC",
+  "credit": "https://dx35vtwkllhj9.cloudfront.net/stx/the-mauritanian/images/credits.pdf",
+  "source": "https://commons.wikimedia.org/wiki/File:BBC_Film.svg"
+ },
+ "t-series": {
+  "kind": "studio",
+  "qid": "Q7667850",
+  "file": "T-series-logo.svg",
+  "licence": "Public domain",
+  "author": "T-Series",
+  "credit": "http://www.tseries.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:T-series-logo.svg"
+ },
+ "ruyi": {
+  "kind": "studio",
+  "qid": "Q25054226",
+  "file": "Wanda Media logo.jpg",
+  "licence": "Public domain",
+  "author": "Wanda Media",
+  "credit": "http://www.rologo.com/wanda-film-new-logo.html",
+  "source": "https://commons.wikimedia.org/wiki/File:Wanda_Media_logo.jpg"
+ },
+ "nordisk": {
+  "kind": "studio",
+  "qid": "Q1891982",
+  "file": "Nordisk films compagni logo.jpg",
+  "licence": "Public domain",
+  "author": "Unknown authorUnknown author",
+  "credit": "http://www.stumfilm.no",
+  "source": "https://commons.wikimedia.org/wiki/File:Nordisk_films_compagni_logo.jpg"
+ },
+ "sf-studios": {
+  "kind": "studio",
+  "qid": "Q177955",
+  "file": "SFS logo primary v red.png",
+  "licence": "CC BY-SA 4.0",
+  "author": "Jenny Sjöö Larsson",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:SFS_logo_primary_v_red.png"
+ },
+ "netflix-service": {
+  "kind": "network",
+  "qid": "Q907311",
+  "file": "Netflix 2015 logo.svg",
+  "licence": "Public domain",
+  "author": "TM/®Netflix Inc.",
+  "credit": "Extracted by Goo16 and modified by Corkythehornetfan from https://www.netflix.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Netflix_2015_logo.svg"
+ },
+ "disney-plus": {
+  "kind": "network",
+  "qid": "Q54958752",
+  "file": "Disney+ 2024.svg",
+  "licence": "Public domain",
+  "author": "Disney Enterprises, Inc.",
+  "credit": "https://static.wikia.nocookie.net/logopedia/images/f/f8/Disney%2B_%282024%29.svg/revision/latest?cb=20240325192610",
+  "source": "https://commons.wikimedia.org/wiki/File:Disney%2B_2024.svg"
+ },
+ "hbo-max": {
+  "kind": "network",
+  "qid": "Q65359104",
+  "file": "HBO Max (2025).svg",
+  "licence": "Public domain",
+  "author": "Original: Warner Bros. Discovery Vector:  LucasJance2006 and Lee6597",
+  "credit": "Own work based on: HBO Max logo (May 2025).png",
+  "source": "https://commons.wikimedia.org/wiki/File:HBO_Max_(2025).svg"
+ },
+ "peacock": {
+  "kind": "network",
+  "qid": "Q67765302",
+  "file": "NBCUniversal Peacock Logo (2026).svg",
+  "licence": "Public domain",
+  "author": "NBCUniversal",
+  "credit": "https://www.peacocktv.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:NBCUniversal_Peacock_Logo_(2026).svg"
+ },
+ "tubi": {
+  "kind": "network",
+  "qid": "Q21189826",
+  "file": "Tubi logo 2024 purple.svg",
+  "licence": "Public domain",
+  "author": "Fox Corporation, Tubi Media Group",
+  "credit": "https://tubitv.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Tubi_logo_2024_purple.svg"
+ },
+ "crunchyroll": {
+  "kind": "network",
+  "qid": "Q1142035",
+  "file": "Crunchyroll 2024.svg",
+  "licence": "Public domain",
+  "author": "Crunchyroll",
+  "credit": "https://www.crunchyroll.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Crunchyroll_2024.svg"
+ },
+ "roku-channel": {
+  "kind": "network",
+  "qid": "Q100254268",
+  "file": "The Roku Channel Logo.svg",
+  "licence": "Public domain",
+  "author": "Roku, Inc.",
+  "credit": "https://therokuchannel.roku.com",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Roku_Channel_Logo.svg"
+ },
+ "pluto-tv": {
+  "kind": "network",
+  "qid": "Q25022235",
+  "file": "Pluto TV logo 2024.svg",
+  "licence": "Public domain",
+  "author": "Paramount Global Streaming",
+  "credit": "Pluto TV",
+  "source": "https://commons.wikimedia.org/wiki/File:Pluto_TV_logo_2024.svg"
+ },
+ "abc": {
+  "kind": "network",
+  "qid": "Q169889",
+  "file": "ABC 2021 Red.svg",
+  "licence": "Public domain",
+  "author": "ABC Entertainment",
+  "credit": "https://abc.com",
+  "source": "https://commons.wikimedia.org/wiki/File:ABC_2021_Red.svg"
+ },
+ "cbs": {
+  "kind": "network",
+  "qid": "Q43380",
+  "file": "CBS logo (2020).svg",
+  "licence": "Public domain",
+  "author": "Paramount Global",
+  "credit": "https://vignette.wikia.nocookie.net/logopedia/images/1/16/CBS_2020.svg/revision/latest?cb=20201009082101",
+  "source": "https://commons.wikimedia.org/wiki/File:CBS_logo_(2020).svg"
+ },
+ "nbc": {
+  "kind": "network",
+  "qid": "Q13974",
+  "file": "NBC logo 2022 (vertical).svg",
+  "licence": "Public domain",
+  "author": "™/®Comcast (via NBCUniversal)",
+  "credit": "Logopedia",
+  "source": "https://commons.wikimedia.org/wiki/File:NBC_logo_2022_(vertical).svg"
+ },
+ "fox": {
+  "kind": "network",
+  "qid": "Q166419",
+  "file": "Fox Broadcasting Company logo (2019).svg",
+  "licence": "Public domain",
+  "author": "Fox Media LLC.",
+  "credit": "https://s.foxdcg.com/foxnow/web/v3-2/img/network/fox.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Fox_Broadcasting_Company_logo_(2019).svg"
+ },
+ "the-cw": {
+  "kind": "network",
+  "qid": "Q212252",
+  "file": "The CW 2024.svg",
+  "licence": "Public domain",
+  "author": "DixonBaxi, Nexstar Media Group, Paramount Global, and Warner Bros. Discovery",
+  "credit": "https://static.wikia.nocookie.net/logopedia/images/b/b1/The_CW_2024.svg/revision/latest?cb=20240112213156",
+  "source": "https://commons.wikimedia.org/wiki/File:The_CW_2024.svg"
+ },
+ "pbs": {
+  "kind": "network",
+  "qid": "Q215616",
+  "file": "PBS (2025).svg",
+  "licence": "Public domain",
+  "author": "™/®Public Broadcasting Service",
+  "credit": "Vectorised by Seba4108 and VulcanSphere. Own work based on: PBS logo 2019.svg  and PBS (2025).png",
+  "source": "https://commons.wikimedia.org/wiki/File:PBS_(2025).svg"
+ },
+ "hbo": {
+  "kind": "network",
+  "qid": "Q23633",
+  "file": "HBO logo.svg",
+  "licence": "Public domain",
+  "author": "Gerard Huerta",
+  "credit": "http://www.hbo.com",
+  "source": "https://commons.wikimedia.org/wiki/File:HBO_logo.svg"
+ },
+ "showtime": {
+  "kind": "network",
+  "qid": "Q23589",
+  "file": "Showtime.svg",
+  "licence": "Public domain",
+  "author": "Paramount Global",
+  "credit": "http://www.sho.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Showtime.svg"
+ },
+ "starz": {
+  "kind": "network",
+  "qid": "Q2422698",
+  "file": "Starz 2022.svg",
+  "licence": "Public domain",
+  "author": "Starz Entertainment Corp. - Loyalkaspar",
+  "credit": "Lionsgate to spin off studio biz, announces new ‘Lionsgate+’ brand for international streaming",
+  "source": "https://commons.wikimedia.org/wiki/File:Starz_2022.svg"
+ },
+ "fx": {
+  "kind": "network",
+  "qid": "Q651228",
+  "file": "FX International logo.svg",
+  "licence": "Public domain",
+  "author": "Disney General Entertainment Content",
+  "credit": "www.foxplay.com",
+  "source": "https://commons.wikimedia.org/wiki/File:FX_International_logo.svg"
+ },
+ "amc": {
+  "kind": "network",
+  "qid": "Q294660",
+  "file": "AMC logo 2019.svg",
+  "licence": "Public domain",
+  "author": "AMC",
+  "credit": "Own work using: https://www.amc.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:AMC_logo_2019.svg"
+ },
+ "usa-network": {
+  "kind": "network",
+  "qid": "Q248713",
+  "file": "USA Network 2020.svg",
+  "licence": "Public domain",
+  "author": "Versant",
+  "credit": "https://logos.fandom.com/wiki/USA_Network/Other",
+  "source": "https://commons.wikimedia.org/wiki/File:USA_Network_2020.svg"
+ },
+ "tnt": {
+  "kind": "network",
+  "qid": "Q688333",
+  "file": "TNT Logo 2016.svg",
+  "licence": "Public domain",
+  "author": "TNT (TV channel)",
+  "credit": "https://www.turner.com/s3fs-public/images_users/TNT_LOGO_FINAL_Rnew.png",
+  "source": "https://commons.wikimedia.org/wiki/File:TNT_Logo_2016.svg"
+ },
+ "tbs": {
+  "kind": "network",
+  "qid": "Q543534",
+  "file": "TBS 2020.svg",
+  "licence": "Public domain",
+  "author": "Warner Bros. Discovery",
+  "credit": "Logopedia",
+  "source": "https://commons.wikimedia.org/wiki/File:TBS_2020.svg"
+ },
+ "paramount-network": {
+  "kind": "network",
+  "qid": "Q47460738",
+  "file": "Paramount Network 2024.svg",
+  "licence": "Public domain",
+  "author": "Paramount Global",
+  "credit": "https://logos.fandom.com/wiki/Paramount_Network?file=Paramount_Network_2024.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Paramount_Network_2024.svg"
+ },
+ "syfy": {
+  "kind": "network",
+  "qid": "Q276542",
+  "file": "SYFY.svg",
+  "licence": "Public domain",
+  "author": "Versant",
+  "credit": "http://logos.wikia.com/wiki/Syfy_(United_States)",
+  "source": "https://commons.wikimedia.org/wiki/File:SYFY.svg"
+ },
+ "bravo": {
+  "kind": "network",
+  "qid": "Q902771",
+  "file": "Bravo 2024.svg",
+  "licence": "Public domain",
+  "author": "NBCUniversal",
+  "credit": "bravotv.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Bravo_2024.svg"
+ },
+ "comedy-central": {
+  "kind": "network",
+  "qid": "Q131439",
+  "file": "Comedy Central 2018.svg",
+  "licence": "Public domain",
+  "author": "Comedy Partners - Loyalkaspar",
+  "credit": "http://comedycentral.mtvnimages.com/press_images/cc-gen.jpg This W3C-unspecified logo was created with Inkscape .",
+  "source": "https://commons.wikimedia.org/wiki/File:Comedy_Central_2018.svg"
+ },
+ "mtv": {
+  "kind": "network",
+  "qid": "Q43359",
+  "file": "MTV-2021.svg",
+  "licence": "Public domain",
+  "author": "Viacom International Inc.",
+  "credit": "mtv.co.uk",
+  "source": "https://commons.wikimedia.org/wiki/File:MTV-2021.svg"
+ },
+ "nickelodeon": {
+  "kind": "network",
+  "qid": "Q154958",
+  "file": "Nickelodeon 2023 logo (outline).svg",
+  "licence": "Public domain",
+  "author": "Viacom International Inc.",
+  "credit": "Own work using: Logopedia",
+  "source": "https://commons.wikimedia.org/wiki/File:Nickelodeon_2023_logo_(outline).svg"
+ },
+ "disney-channel": {
+  "kind": "network",
+  "qid": "Q178837",
+  "file": "2024 Disney Channel text logo.svg",
+  "licence": "Public domain",
+  "author": "Disney Enterprises, Inc.",
+  "credit": "https://disneyplus.com",
+  "source": "https://commons.wikimedia.org/wiki/File:2024_Disney_Channel_text_logo.svg"
+ },
+ "cartoon-network": {
+  "kind": "network",
+  "qid": "Q708290",
+  "file": "Cartoon Network 2010 logo.svg",
+  "licence": "Public domain",
+  "author": "Cartoon Network (Warner Bros. Discovery)",
+  "credit": "https://www.cartoonnetwork.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Cartoon_Network_2010_logo.svg"
+ },
+ "adult-swim": {
+  "kind": "network",
+  "qid": "Q379052",
+  "file": "Adult Swim 2001.png",
+  "licence": "Public domain",
+  "author": "Cartoon Network (Warner Bros. Discovery)",
+  "credit": "http://logos.wikia.com/wiki/File:Adult_Swim_2001.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Adult_Swim_2001.png"
+ },
+ "hallmark-channel": {
+  "kind": "network",
+  "qid": "Q641746",
+  "file": "Hallmark Channel.svg",
+  "licence": "Public domain",
+  "author": "Hallmark Channel",
+  "credit": "Seen in Hallmark website: http://www.hallmarkchannel.com. Ripped from http://foxtel.com.au/cms/groups/webcontent/@fox/@corporate/@dotcom/documents/webcontent/p_010837.pdf",
+  "source": "https://commons.wikimedia.org/wiki/File:Hallmark_Channel.svg"
+ },
+ "lifetime": {
+  "kind": "network",
+  "qid": "Q1319610",
+  "file": "Lifetime logo 1984.svg",
+  "licence": "Public domain",
+  "author": "Hearst-ABC/Viacom Entertainment Services (later A+E Networks)",
+  "credit": "https://static.wikia.nocookie.net/logopedia/images/7/79/Lifetime_logo_1984.svg",
+  "source": "https://commons.wikimedia.org/wiki/File:Lifetime_logo_1984.svg"
+ },
+ "history": {
+  "kind": "network",
+  "qid": "Q1621107",
+  "file": "History (2021).svg",
+  "licence": "Public domain",
+  "author": "A&amp;E Networks",
+  "credit": "http://www.history.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:History_(2021).svg"
+ },
+ "discovery-channel": {
+  "kind": "network",
+  "qid": "Q43404",
+  "file": "2019 Discovery logo.svg",
+  "licence": "Public domain",
+  "author": "Discovery Channel",
+  "credit": "https://xn--discoveryenespaol-txb.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:2019_Discovery_logo.svg"
+ },
+ "freeform": {
+  "kind": "network",
+  "qid": "Q287149",
+  "file": "Freeform 2022 pink.svg",
+  "licence": "Public domain",
+  "author": "Freeform",
+  "credit": "Logopedia",
+  "source": "https://commons.wikimedia.org/wiki/File:Freeform_2022_pink.svg"
+ },
+ "bet": {
+  "kind": "network",
+  "qid": "Q880256",
+  "file": "BET-2021Logo.svg",
+  "licence": "Public domain",
+  "author": "Paramount Global - Sibling Rivalry Studio BlackReverse?2",
+  "credit": "https://bet.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:BET-2021Logo.svg"
+ },
+ "bbc-one": {
+  "kind": "network",
+  "qid": "Q191472",
+  "file": "BBC One logo 2021.svg",
+  "licence": "Public domain",
+  "author": "BBC",
+  "credit": "SVG data from https://logos.fandom.com/wiki/Logopedia, colour palette from https://www.bbc.co.uk/iplayer/guide",
+  "source": "https://commons.wikimedia.org/wiki/File:BBC_One_logo_2021.svg"
+ },
+ "itv": {
+  "kind": "network",
+  "qid": "Q220072",
+  "file": "Itv2024.svg",
+  "licence": "Public domain",
+  "author": "ITV Press Centre",
+  "credit": "https://www.itv.com/presscentre/media-releases/itv-details-corporate-brand-refresh-reinforce-its-three-strategic-pillars",
+  "source": "https://commons.wikimedia.org/wiki/File:Itv2024.svg"
+ },
+ "channel-4": {
+  "kind": "network",
+  "qid": "Q501070",
+  "file": "Channel 4 Logo 2023.svg",
+  "licence": "CC BY-SA 4.0",
+  "author": "LCampC4",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:Channel_4_Logo_2023.svg"
+ },
+ "sky": {
+  "kind": "network",
+  "qid": "Q918390",
+  "file": "SKY Basic Logo.svg",
+  "licence": "Public domain",
+  "author": "Sky Group",
+  "credit": "[1]",
+  "source": "https://commons.wikimedia.org/wiki/File:SKY_Basic_Logo.svg"
+ },
+ "bbc-iplayer": {
+  "kind": "network",
+  "qid": "Q2557489",
+  "file": "BBC iPlayer 2021 (Alt).svg",
+  "licence": "Public domain",
+  "author": "BBC",
+  "credit": "Logopedia, vectorised by Logopedia user CillBill",
+  "source": "https://commons.wikimedia.org/wiki/File:BBC_iPlayer_2021_(Alt).svg"
+ },
+ "canal-plus": {
+  "kind": "network",
+  "qid": "Q1032540",
+  "file": "Logo Canal+ 1995.svg",
+  "licence": "Public domain",
+  "author": "Canal+ - Étienne Robial",
+  "credit": "Own work based on: Canal+.svg:",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_Canal%2B_1995.svg"
+ },
+ "tf1": {
+  "kind": "network",
+  "qid": "Q214683",
+  "file": "Logo TF1 2013.svg",
+  "licence": "Public domain",
+  "author": "Patrick Delobelle (Naked Compagnie) for TF1",
+  "credit": "https://www.1min30.com/wp-content/uploads/2018/02/TF1-logo-1.jpg - vector version",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_TF1_2013.svg"
+ },
+ "france-2": {
+  "kind": "network",
+  "qid": "Q525894",
+  "file": "France 2 2018.svg",
+  "licence": "Public domain",
+  "author": "France Télévisions",
+  "credit": "France Télévisions",
+  "source": "https://commons.wikimedia.org/wiki/File:France_2_2018.svg"
+ },
+ "ard": {
+  "kind": "network",
+  "qid": "Q49727",
+  "file": "Das Erste 2014.svg",
+  "licence": "Public domain",
+  "author": "ARD",
+  "credit": "https://scontent-a-ams.xx.fbcdn.net/hphotos-xap1/t1.0-9/10372028_10152424607348232_5333339711121638690_n.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:Das_Erste_2014.svg"
+ },
+ "zdf": {
+  "kind": "network",
+  "qid": "Q48989",
+  "file": "ZDF logo.svg",
+  "licence": "Public domain",
+  "author": "ZDF",
+  "credit": "Transferred from de.wikipedia to Commons using CommonsHelper.\n(Original text : * Vektordaten: http://www.designtagebuch.de/cd-manuals/ZDF-Styleguide_1-Basis.pdf\n\nFarbinfo: http://www.designtagebuch.de/cd-manuals/ZDF-Styleguide_1-Basis.pdf (RGB #fa7d19))",
+  "source": "https://commons.wikimedia.org/wiki/File:ZDF_logo.svg"
+ },
+ "rtl": {
+  "kind": "network",
+  "qid": "Q155702",
+  "file": "RTL Logo 2021.svg",
+  "licence": "Public domain",
+  "author": "RTL Deutschland",
+  "credit": "Own work using: https://logos.fandom.com",
+  "source": "https://commons.wikimedia.org/wiki/File:RTL_Logo_2021.svg"
+ },
+ "rai-1": {
+  "kind": "network",
+  "qid": "Q258131",
+  "file": "Rai 1 - Logo 2016.svg",
+  "licence": "Public domain",
+  "author": "RAI — Radiotelevisione italiana",
+  "credit": "http://rai.it/",
+  "source": "https://commons.wikimedia.org/wiki/File:Rai_1_-_Logo_2016.svg"
+ },
+ "rtve": {
+  "kind": "network",
+  "qid": "Q1058461",
+  "file": "La 1 2026.svg",
+  "licence": "Public domain",
+  "author": "RTVE",
+  "credit": "https://logos.fandom.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:La_1_2026.svg"
+ },
+ "movistar-plus": {
+  "kind": "network",
+  "qid": "Q16928132",
+  "file": "Movistar Plus+ 2022 logo.svg",
+  "licence": "Public domain",
+  "author": "Movistar Plus+",
+  "credit": "https://www.facebook.com/movistarplus/photos/a.424138321148/10158618287486149/",
+  "source": "https://commons.wikimedia.org/wiki/File:Movistar_Plus%2B_2022_logo.svg"
+ },
+ "nhk": {
+  "kind": "network",
+  "qid": "Q909336",
+  "file": "NHK総合ロゴ2020-.svg",
+  "licence": "Public domain",
+  "author": "ＮＨＫ Ｇ",
+  "credit": "https://www.nhk.or.jp/",
+  "source": "https://commons.wikimedia.org/wiki/File:NHK%E7%B7%8F%E5%90%88%E3%83%AD%E3%82%B42020-.svg"
+ },
+ "fuji-tv": {
+  "kind": "network",
+  "qid": "Q744800",
+  "file": "Fuji Television Logo.svg",
+  "licence": "Public domain",
+  "author": "フジテレビジョン",
+  "credit": "http://www.fujitv.co.jp/",
+  "source": "https://commons.wikimedia.org/wiki/File:Fuji_Television_Logo.svg"
+ },
+ "tv-asahi": {
+  "kind": "network",
+  "qid": "Q908436",
+  "file": "TV Asahi Logo.svg",
+  "licence": "Public domain",
+  "author": "TV Asahi",
+  "credit": "English Wikipedia [1]",
+  "source": "https://commons.wikimedia.org/wiki/File:TV_Asahi_Logo.svg"
+ },
+ "ntv-japan": {
+  "kind": "network",
+  "qid": "Q864910",
+  "file": "Nippon TV logo 2014.svg",
+  "licence": "Public domain",
+  "author": "Nippon Television Network Corp.",
+  "credit": "http://www.ntvhd.co.jp/",
+  "source": "https://commons.wikimedia.org/wiki/File:Nippon_TV_logo_2014.svg"
+ },
+ "tbs-japan": {
+  "kind": "network",
+  "qid": "Q6766400",
+  "file": "Tokyo Broadcasting System logo 2020.svg",
+  "licence": "Public domain",
+  "author": "株式会社TBSホールディングス",
+  "credit": "株式会社TBSホールディングス",
+  "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Broadcasting_System_logo_2020.svg"
+ },
+ "kbs": {
+  "kind": "network",
+  "qid": "Q498825",
+  "file": "KBS logo (2001).svg",
+  "licence": "Public domain",
+  "author": "Korean Broadcasting System",
+  "credit": "https://kmug.co.kr/bbs/board.php?bo_table=design&amp;wr_id=4561169",
+  "source": "https://commons.wikimedia.org/wiki/File:KBS_logo_(2001).svg"
+ },
+ "mbc": {
+  "kind": "network",
+  "qid": "Q482607",
+  "file": "Munhwa Broadcasting Corporation (2023).svg",
+  "licence": "Public domain",
+  "author": "Munhwa Broadcasting Corporation",
+  "credit": "https://with.mbc.co.kr/about/ci/",
+  "source": "https://commons.wikimedia.org/wiki/File:Munhwa_Broadcasting_Corporation_(2023).svg"
+ },
+ "sbs-korea": {
+  "kind": "network",
+  "qid": "Q928831",
+  "file": "Seoul Broadcasting System logo.svg",
+  "licence": "Public domain",
+  "author": "Seoul Broadcasting System",
+  "credit": "Seoul Broadcasting System",
+  "source": "https://commons.wikimedia.org/wiki/File:Seoul_Broadcasting_System_logo.svg"
+ },
+ "tvn": {
+  "kind": "network",
+  "qid": "Q333424",
+  "file": "Logo tvN.svg",
+  "licence": "Public domain",
+  "author": "Stöger Florian D. M.",
+  "credit": "Own work (vectorisation based on http://s.iimg.me/ver3/images/gnb/635034452367707500.png)",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_tvN.svg"
+ },
+ "jtbc": {
+  "kind": "network",
+  "qid": "Q213097",
+  "file": "JTBC logo.svg",
+  "licence": "Public domain",
+  "author": "Enaeq1489",
+  "credit": "Own work",
+  "source": "https://commons.wikimedia.org/wiki/File:JTBC_logo.svg"
+ },
+ "jiostar": {
+  "kind": "network",
+  "qid": "Q5919785",
+  "file": "Disney Star logo.svg",
+  "licence": "Public domain",
+  "author": "Disney Enterprises, Inc.",
+  "credit": "https://www.startv.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Disney_Star_logo.svg"
+ },
+ "iqiyi": {
+  "kind": "network",
+  "qid": "Q15913890",
+  "file": "IQIYI logo (2022).svg",
+  "licence": "Public domain",
+  "author": "iQIYI, Inc.",
+  "credit": "https://www.iqiyi.com/common/biaozhiguifan.html",
+  "source": "https://commons.wikimedia.org/wiki/File:IQIYI_logo_(2022).svg"
+ },
+ "cctv": {
+  "kind": "network",
+  "qid": "Q207936",
+  "file": "CCTVNewLogo.svg",
+  "licence": "Public domain",
+  "author": "中国中央电视台",
+  "credit": "File:CCTVNewLogo.png",
+  "source": "https://commons.wikimedia.org/wiki/File:CCTVNewLogo.svg"
+ },
+ "cbc": {
+  "kind": "network",
+  "qid": "Q1022955",
+  "file": "CBC logo.svg",
+  "licence": "Public domain",
+  "author": "Canadian Broadcasting Corporation",
+  "credit": "https://getlogo.net/canadian-broadcasting-corporation-cbc-logo-vector-svg",
+  "source": "https://commons.wikimedia.org/wiki/File:CBC_logo.svg"
+ },
+ "ctv": {
+  "kind": "network",
+  "qid": "Q767221",
+  "file": "CTV logo 2018.svg",
+  "licence": "Public domain",
+  "author": "Bell Media",
+  "credit": "Own work using: https://www.ctv.ca/Home",
+  "source": "https://commons.wikimedia.org/wiki/File:CTV_logo_2018.svg"
+ },
+ "televisa": {
+  "kind": "network",
+  "qid": "Q80478",
+  "file": "Las Estrellas logo (2016).svg",
+  "licence": "Public domain",
+  "author": "Las Estrellas",
+  "credit": "Televisa.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Las_Estrellas_logo_(2016).svg"
+ },
+ "tv-globo": {
+  "kind": "network",
+  "qid": "Q3587",
+  "file": "TV Globo logo (April 2025).svg",
+  "licence": "Public domain",
+  "author": "TV Globo",
+  "credit": "https://seeklogo.com/vector-logo/617189/tv-globo-2025",
+  "source": "https://commons.wikimedia.org/wiki/File:TV_Globo_logo_(April_2025).svg"
+ },
+ "globoplay": {
+  "kind": "network",
+  "qid": "Q10290155",
+  "file": "Globoplay2020 red.svg",
+  "licence": "Public domain",
+  "author": "Grupo Globo",
+  "credit": "https://globoplay.globo.com",
+  "source": "https://commons.wikimedia.org/wiki/File:Globoplay2020_red.svg"
+ },
+ "abc-australia": {
+  "kind": "network",
+  "qid": "Q3600480",
+  "file": "Australian Broadcasting Corporation logo (1974-).svg",
+  "licence": "Public domain",
+  "author": "Australian Broadcasting Corporation",
+  "credit": "Australian Broadcasting Corporation",
+  "source": "https://commons.wikimedia.org/wiki/File:Australian_Broadcasting_Corporation_logo_(1974-).svg"
+ },
+ "nine-network": {
+  "kind": "network",
+  "qid": "Q1432195",
+  "file": "Nine Network logo (2008).svg",
+  "licence": "Public domain",
+  "author": "The original uploader was Swarve at English Wikipedia.",
+  "credit": "Transferred from en.wikipedia to Commons by JamesR.",
+  "source": "https://commons.wikimedia.org/wiki/File:Nine_Network_logo_(2008).svg"
+ },
+ "seven-network": {
+  "kind": "network",
+  "qid": "Q908659",
+  "file": "Seven Network logo.svg",
+  "licence": "Public domain",
+  "author": "Seven West Media",
+  "credit": "Seven West Media website",
+  "source": "https://commons.wikimedia.org/wiki/File:Seven_Network_logo.svg"
+ },
+ "stan": {
+  "kind": "network",
+  "qid": "Q18643770",
+  "file": "Stan logo.png",
+  "licence": "Public domain",
+  "author": "Nine Entertainment Co. Holdings Limited",
+  "credit": "https://www.stan.com.au/",
+  "source": "https://commons.wikimedia.org/wiki/File:Stan_logo.png"
+ },
+ "showmax": {
+  "kind": "network",
+  "qid": "Q21485165",
+  "file": "Showmax Logo.svg",
+  "licence": "Public domain",
+  "author": "Showmax",
+  "credit": "https://www.showmax.com/",
+  "source": "https://commons.wikimedia.org/wiki/File:Showmax_Logo.svg"
+ }
+}

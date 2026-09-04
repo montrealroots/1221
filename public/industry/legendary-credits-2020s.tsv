@@ -2,14 +2,14 @@ qid	role	personQid	name	character	ordinal
 Q65032692	director	Q97455101	Harry Bradbeer		
 Q65032692	writer	Q6115483	Jack Thorne		
 Q65032692	composer	Q5218424	Daniel Pemberton		
-Q65032692	producer	Q25936414	ミリー・ボビー・ブラウン		
+Q65032692	producer	Q25936414	Millie Bobby Brown		
 Q65032692	cinematographer	Q1524278	Giles Nuttgens		
 Q65032692	production_designer	Q16727831	Michael Carlin		
 Q65032692	cast	Q170428	Helena Bonham Carter	Eudoria Holmes	
 Q65032692	cast	Q99560577	Louis Partridge		
 Q65032692	cast	Q366833	Sam Claflin	Mycroft Holmes	
 Q65032692	cast	Q295498	Henry Cavill	Sherlock Holmes	
-Q65032692	cast	Q25936414	ミリー・ボビー・ブラウン	Enola Holmes	
+Q65032692	cast	Q25936414	Millie Bobby Brown	Enola Holmes	
 Q65032692	followed_by	Q108764447	Enola Holmes 2		
 Q60834962	director	Q548823	Denis Villeneuve		
 Q60834962	writer	Q548823	Denis Villeneuve		
@@ -34,7 +34,7 @@ Q60834962	cast	Q336788	Oscar Isaac	Leto I Atreides
 Q60834962	cast	Q315271	Jason Momoa	Duncan Idaho	
 Q60834962	cast	Q4947838	Rebecca Ferguson	Lady Jessica	
 Q60834962	cast	Q16203767	David Dastmalchian	Piter De Vries	
-Q60834962	cast	Q189489	ゼンデイヤ	Chani	
+Q60834962	cast	Q189489	Zendaya	Chani	
 Q60834962	cast	Q4809088	Roger Yuan		
 Q60834962	cast	Q20171862	Björn Freiberg		
 Q60834962	cast	Q40571737	Babs Olusanmokun		
@@ -65,7 +65,7 @@ Q56307503	producer	Q24809569	Eric McLeod
 Q56307503	cinematographer	Q22074610	Ben Seresin		
 Q56307503	cast	Q449940	Demián Bichir		
 Q56307503	cast	Q310637	Alexander Skarsgård		
-Q56307503	cast	Q25936414	ミリー・ボビー・ブラウン		
+Q56307503	cast	Q25936414	Millie Bobby Brown		
 Q56307503	cast	Q359604	Kyle Chandler		
 Q56307503	cast	Q230534	Rebecca Hall		
 Q56307503	cast	Q457825	Shun Oguri		
@@ -78,9 +78,9 @@ Q56307503	followed_by	Q113360912	Godzilla x Kong: The New Empire
 Q108764447	director	Q97455101	Harry Bradbeer		
 Q108764447	writer	Q6115483	Jack Thorne		
 Q108764447	composer	Q5218424	Daniel Pemberton		
-Q108764447	producer	Q25936414	ミリー・ボビー・ブラウン		
+Q108764447	producer	Q25936414	Millie Bobby Brown		
 Q108764447	cinematographer	Q1524278	Giles Nuttgens		
-Q108764447	cast	Q25936414	ミリー・ボビー・ブラウン	Enola Holmes	
+Q108764447	cast	Q25936414	Millie Bobby Brown	Enola Holmes	
 Q108764447	cast	Q295498	Henry Cavill	Sherlock Holmes	
 Q108764447	cast	Q99560577	Louis Partridge		
 Q108764447	cast	Q170428	Helena Bonham Carter		
@@ -105,7 +105,7 @@ Q108145849	writer	Q109768684	Chris Thomas Devlin
 Q115624081	director	Q7720589	The Bullitts		
 Q115624081	writer	Q7720589	The Bullitts		
 Q115624081	composer	Q7720589	The Bullitts		
-Q115624081	producer	Q62766	ジェイ・Z		
+Q115624081	producer	Q62766	Jay-Z		
 Q115624081	producer	Q3161218	James Lassiter		
 Q115624081	producer	Q7720589	The Bullitts		
 Q115624081	cinematographer	Q21809907	Rob Hardy		
@@ -117,7 +117,7 @@ Q115624081	cast	Q33133445	Tom Glynn-Carney
 Q115624081	cast	Q84315205	Micheal Ward		
 Q115624081	cast	Q218800	David Oyelowo		
 Q115624081	cast	Q7708542	Teyana Taylor		
-Q115624081	cast	Q26926382	ケイレブ・マクラフリン		
+Q115624081	cast	Q26926382	Caleb McLaughlin		
 Q115624081	cast	Q430872	Marianne Jean-Baptiste		
 Q115624081	cast	Q526620	Alfre Woodard		
 Q115624081	cast	Q40571737	Babs Olusanmokun		
@@ -159,7 +159,7 @@ Q107404778	cast	Q310937	Peter Dinklage
 Q107404778	cast	Q16832130	Taylour Paige		
 Q107404778	cast	Q3189038	Julia Davis		
 Q107404778	cast	Q3454165	Kevin Bacon		
-Q107404778	cast	Q7422640	サラ・ナイルズ		
+Q107404778	cast	Q7422640	Sarah Niles		
 Q107404778	cast	Q84304690	Julian Kostov		
 Q107404778	cast	Q2083106	David Yow		
 Q107404778	cast	Q23834468	Macon Blair		
@@ -181,7 +181,7 @@ Q109228991	cast	Q44158	Dave Bautista	Glossu Rabban
 Q109228991	cast	Q469954	Austin Butler	Feyd-Rautha Harkonnen	
 Q109228991	cast	Q234679	Charlotte Rampling	Gaius Helen Mohiam	
 Q109228991	cast	Q22277803	Florence Pugh	Princess Irulan	
-Q109228991	cast	Q189489	ゼンデイヤ	Chani	
+Q109228991	cast	Q189489	Zendaya	Chani	
 Q109228991	cast	Q19877770	Timothée Chalamet	Paul Atreides	
 Q109228991	cast	Q185051	Christopher Walken	Shaddam Corrino IV	
 Q109228991	cast	Q4947838	Rebecca Ferguson	Lady Jessica	
@@ -217,7 +217,7 @@ Q64969653	cast	Q229535	Emily Watson
 Q64969653	cast	Q6192472	Jihae		
 Q64969653	cast	Q53798357	Chris Mason		
 Q64969653	cast	Q231163	Olivia Williams		
-Q64969653	cast	Q12334665	サラ＝ソフィー・ブースニーナ		
+Q64969653	cast	Q12334665	Sarah-Sofie Boussnina		
 Q64969653	cast	Q106881499	Aoife Hinds		
 Q64969653	cast	Q256402	Jodhi May		
 Q64969653	cast	Q158233	Tabu		
@@ -287,7 +287,7 @@ Q130345436	cast	Q3877574	Noah Centineo	Ken Masters
 Q130345436	cast	Q117281953	Callina Liang	Chun-Li	
 Q130345436	cast	Q299222	Cody Rhodes	Guile	
 Q130345436	cast	Q64729746	Orville Peck	Vega	
-Q130345436	cast	Q6060	50セント	Balrog	
+Q130345436	cast	Q6060	50 Cent	Balrog	
 Q130345436	cast	Q315271	Jason Momoa	Blanka	
 Q130345436	cast	Q3557842	Vidyut Jammwal	Dhalsim	
 Q130345436	cast	Q65031068	Olivier Richters	Zangief	

@@ -21,10 +21,16 @@ const HERE = new URL('./', import.meta.url);
 const ROOT = new URL('../../', HERE);
 const OUT = new URL('public/industry/', ROOT);
 mkdirSync(OUT, { recursive: true });
-for (const f of readdirSync(OUT)) unlinkSync(new URL(f, OUT));
+// Only the emitted files are cleared; the logos directory beside them is built by logos.mjs.
+for (const f of readdirSync(OUT)) if (/\.(tsv|txt)$/.test(f)) unlinkSync(new URL(f, OUT));
 
 const resolved = JSON.parse(readFileSync(new URL('./resolved.json', HERE), 'utf8'));
 const lists = JSON.parse(readFileSync(new URL('./cache/lists.json', HERE), 'utf8'));
+const seriesTypesPath = new URL('./cache/series-types.json', HERE);
+const seriesTypes = existsSync(seriesTypesPath) ? JSON.parse(readFileSync(seriesTypesPath, 'utf8')) : {};
+/** A "part of the series" value that is a franchise, not a list or a ranking. */
+const isFranchise = (q) => !seriesTypes[q] || seriesTypes[q].franchise !== false;
+const byBroadcaster = ['qid\ttitle\tyear\tkind\tbroadcaster\tstudioId\tseasons\tepisodes\tstart\tend\trt\timdb\tgenres'];
 const details = new Map();
 for (const line of readFileSync(new URL('./cache/details.ndjson', HERE), 'utf8').split('\n')) {
   if (!line) continue;
@@ -95,7 +101,23 @@ function scoresOf(row) {
   return out;
 }
 
-const year = (row) => (row.date || row.start || '').slice(0, 4);
+// Items whose only label on Wikidata is in a script other than the work's
+// own. The name is the one the film's own credits carry. A title with no
+// label in its own language and no original title on record is left out
+// rather than shown in the wrong script.
+const LABEL_OVERRIDES = { Q60833431: 'Jordan Downey', Q16514655: 'Seamus Walsh', Q109358882: "Peter O'Brien", Q113812358: 'Mo', Q125636937: 'La Cage', Q134025679: 'Legado', Q124295940: 'The Massively Mixed-Up Middle School Mystery', Q4469622: 'That Awful Baby' };
+const LEFT_OUT = new Set(['Q4410648', 'Q16709204', 'Q4339920']);
+for (const q of LEFT_OUT) details.delete(q);
+for (const row of details.values()) {
+  if (LABEL_OVERRIDES[row.qid]) row.label = LABEL_OVERRIDES[row.qid];
+  for (const p of row.people) if (LABEL_OVERRIDES[p.qid]) p.name = LABEL_OVERRIDES[p.qid];
+  for (const c of row.cast) if (LABEL_OVERRIDES[c.qid]) c.name = LABEL_OVERRIDES[c.qid];
+}
+// A date is a date or nothing: an unknown-value node arrives as a URI.
+const isoDate = (v) => (/^\d{4}-\d{2}-\d{2}$/.test(v ?? '') ? v : '');
+// A duration stored in seconds reads as minutes; anything still past ten hours is not a runtime.
+const minutes = (v) => { if (v === undefined || v === null || v === '') return ''; let n = Number(v); if (!Number.isFinite(n) || n <= 0) return ''; if (n > 600) n = Math.round(n / 60); return n > 600 ? '' : n; };
+const year = (row) => (isoDate(row.date) || isoDate(row.start) || '').slice(0, 4);
 const decade = (y) => (y ? `${Math.floor(Number(y) / 10) * 10}s` : 'undated');
 
 // --- per studio ---------------------------------------------------------------
@@ -133,32 +155,38 @@ for (const [studio, labels] of Object.entries(resolved)) {
     const sg = slateGenres(genres);
     const sc = scoresOf(row);
     const directors = row.people.filter((p) => p.role === 'director').map((p) => p.name);
-    const franchise = split(row, 'franchise')[0];
-    const series = split(row, 'series')[0];
+    const franchise = split(row, 'franchise').find(([q]) => isFranchise(q));
+    const series = split(row, 'series').find(([q]) => isFranchise(q));
     const awards = row.lists.awards ?? [];
     const box = row.boxOffice && row.boxOffice.unit === 'United States dollar' ? Math.round(row.boxOffice.amount) : row.boxOffice ? Math.round(row.boxOffice.amount) : '';
     const budget = row.budget ? Math.round(row.budget.amount) : '';
     index.push([
-      row.qid, kind, clean(row.label), clean(row.original) !== clean(row.label) ? clean(row.original) : '', y, row.date ?? '', row.duration ?? '', genres.map(clean).join(';'), sg.join(';'),
+      row.qid, kind, clean(row.label), clean(row.original) !== clean(row.label) ? clean(row.original) : '', y, isoDate(row.date), minutes(row.duration), genres.map(clean).join(';'), sg.join(';'),
       split(row, 'countries').map(([, l]) => clean(l)).join(';'), split(row, 'languages').map(([, l]) => clean(l)).join(';'), (row.lists.mpaa ?? [])[0] ?? '',
       box, row.boxOffice ? row.boxOffice.unit : '', budget, row.budget ? row.budget.unit : '',
       row.imdb ?? '', row.rtId ?? '', row.mcId ?? '', sc.rt ?? '', sc.rtCount ?? '', sc.rtAudience ?? '', sc.rtAverage ?? '', sc.metacritic ?? '', sc.mcCount ?? '',
       sc.imdb ?? '', sc.imdbVotes ?? '',
       franchise ? `${franchise[0]}:${clean(franchise[1])}` : '', series ? `${series[0]}:${clean(series[1])}` : '', split(row, 'basedOn').map(([, l]) => clean(l)).join(';'),
-      row.seasons ?? '', row.episodes ?? '', row.start ?? '', row.end ?? '', [...roles].join(';'), directors.map(clean).join(';'), awards.length,
+      row.seasons ?? '', row.episodes ?? '', isoDate(row.start), isoDate(row.end), [...roles].join(';'), directors.map(clean).join(';'), awards.length,
       split(row, 'companies').map(([, l]) => clean(l)).join(';'), split(row, 'distributors').map(([, l]) => clean(l)).join(';'), split(row, 'broadcasters').map(([, l]) => clean(l)).join(';'),
     ].join('\t'));
     allTitles.add(normalise(row.label));
     if (row.original) allTitles.add(normalise(row.original));
 
     const shard = credits[decade(y)] ??= [CREDIT_HEADER.join('\t')];
-    for (const p of row.people) shard.push([row.qid, p.role, p.qid, clean(p.name), '', ''].join('\t'));
-    const cast = [...row.cast].sort((a, b) => (Number(a.ordinal) || 999) - (Number(b.ordinal) || 999));
+    // A credit with no name on record anywhere is not a credit the screen can show.
+    const named = (x) => x.name && !/^Q\d+$/.test(x.name);
+    for (const p of row.people) if (named(p)) shard.push([row.qid, p.role, p.qid, clean(p.name), '', ''].join('\t'));
+    const cast = [...row.cast].filter(named).sort((a, b) => (Number(a.ordinal) || 999) - (Number(b.ordinal) || 999));
     for (const c of cast.slice(0, 40)) shard.push([row.qid, 'cast', c.qid, clean(c.name), clean(c.character), c.ordinal ?? ''].join('\t'));
     for (const a of awards) shard.push([row.qid, 'award', '', clean(a), '', ''].join('\t'));
     for (const [q, l] of split(row, 'follows')) shard.push([row.qid, 'follows', q ?? '', clean(l), '', ''].join('\t'));
     for (const [q, l] of split(row, 'followedBy')) shard.push([row.qid, 'followed_by', q ?? '', clean(l), '', ''].join('\t'));
     for (const s of row.lists.subjects ?? []) shard.push([row.qid, 'subject', '', clean(s), '', ''].join('\t'));
+
+    if (kind === 'series' || kind === 'limited_series') {
+      for (const [, b] of split(row, 'broadcasters')) byBroadcaster.push([row.qid, clean(row.label), y, kind, clean(b), studio, row.seasons ?? '', row.episodes ?? '', isoDate(row.start), isoDate(row.end), sc.rt ?? '', sc.imdb ?? '', sg.join(';')].join('\t'));
+    }
 
     // Stats: what this studio actually makes.
     const isTv = kind === 'series' || kind === 'limited_series';
@@ -209,6 +237,8 @@ if (imdb.size > 0) {
   console.log(`imdb ratings: ${seen.size}`);
 }
 
+writeFileSync(new URL('series-by-broadcaster.tsv', OUT), byBroadcaster.join('\n') + '\n');
+console.log(`series by broadcaster: ${byBroadcaster.length - 1}`);
 writeFileSync(new URL('titles.txt', OUT), [...allTitles].filter(Boolean).sort().join('\n') + '\n');
 console.log(`titles: ${allTitles.size}`);
 

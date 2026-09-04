@@ -493,8 +493,8 @@ Q131414380	producer	Q8070360	Zhang Xin
 Q131414380	cast	Q25975543	Garance Marillier		
 Q131414380	cast	Q382393	Louis Garrel		
 Q131414380	cast	Q28758234	Ella Rumpf		
-Q131414380	cast	Q13909	アンジェリーナ・ジョリー		
-Q131414380	cast	Q21995180	フィネガン・オールドフィールド		
+Q131414380	cast	Q13909	Angelina Jolie		
+Q131414380	cast	Q21995180	Finnegan Oldfield		
 Q131414380	cast	Q136387763	Anyier Anei		
 Q134086622	director	Q116896306	Amélie Bonnin		
 Q134086622	writer	Q116896306	Amélie Bonnin		
@@ -582,8 +582,6 @@ Q120640544	cast	Q140456758	Giles Coram	Peake	34
 Q120640544	cast	Q140456767	Anthony Schuster	Jock Colville	35
 Q120640544	cast	Q6370118	Karen Westwood	Clementine Churchill	36
 Q120640544	followed_by	Q139564930	De Gaulle: The Sovereign Edge		
-Q140169908	director	Q65278260	Wil Aime		
-Q140169908	writer	Q65278260	Wil Aime		
 Q138212410	director	Q117862017	Jean-Baptiste Saurel		
 Q138212410	writer	Q3525440	Thomas N'Gijol		
 Q138212410	composer	Q2834640	Alexis Rault		
@@ -599,3 +597,5 @@ Q138212410	cast	Q3380605	Philippe Rebbot	le commissaire
 Q138212410	cast	Q137945136	Ahlam Slama		
 Q138212410	cast	Q65569630	Guillaume Bouttemy	un policier scientifique	
 Q138212410	cast	Q125548257	Brahim Bouhlel	Marfoud	
+Q140169908	director	Q65278260	Wil Aime		
+Q140169908	writer	Q65278260	Wil Aime		

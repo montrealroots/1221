@@ -37,7 +37,7 @@ Q3211779	cast	Q3127761	Harry-Max
 Q3211779	cast	Q195365	Jeanne Fusier-Gir		
 Q3211779	cast	Q3260260	Louiguy		
 Q3211779	cast	Q3160279	Jacques de Féraudy		
-Q3211779	cast	Q1826877	Леон Вальтер		
+Q3211779	cast	Q1826877	Léon Walther		
 Q3211779	cast	Q3265100	Luce Fabiole		
 Q3211779	cast	Q389736	Pauline Carton		
 Q3211779	cast	Q3132565	Henry Laverne		
@@ -192,7 +192,7 @@ Q1444707	cast	Q3275588	Madeleine Barbulée
 Q1444707	cast	Q3439555	Roger Vincent		
 Q1444707	cast	Q3172199	Jean Galland		
 Q1444707	cast	Q2831397	Albert Michel		
-Q1444707	cast	Q1826877	Леон Вальтер		
+Q1444707	cast	Q1826877	Léon Walther		
 Q1444707	cast	Q3171608	Jean Debucourt		
 Q1444707	subject		marriage		
 Q1444707	subject		adultery		
@@ -385,7 +385,7 @@ Q2054923	cast	Q3345759	Noël-Noël
 Q2054923	cast	Q106225	Jean Yanne		
 Q2385009	director	Q55391	Robert Bresson		
 Q2385009	writer	Q55391	Robert Bresson		
-Q2385009	composer	Q254	ヴォルフガング・アマデウス・モーツァルト		
+Q2385009	composer	Q254	Wolfgang Amadeus Mozart		
 Q2385009	producer	Q981229	Alain Poiré		
 Q2385009	producer	Q3174790	Jean Thuillier		
 Q2385009	cinematographer	Q544869	Léonce-Henri Burel		
@@ -664,34 +664,6 @@ Q3213518	cast	Q1339711	Jacques Higelin
 Q3213518	cast	Q3421013	Raymond Loyer		
 Q3213518	cast	Q106544	Claude Brasseur		
 Q3213518	cast	Q528160	Dany Saval		
-Q3221159	director	Q1579876	Michel Boisrond		
-Q3221159	writer	Q978299	Jean Aurenche		
-Q3221159	writer	Q3384095	Pierre Bost		
-Q3221159	composer	Q2540023	Paul Misraki		
-Q3221159	cinematographer	Q325970	Christian Matras		
-Q3221159	cast	Q2965432	Christian Lude		
-Q3221159	cast	Q337260	Lino Ventura		
-Q3221159	cast	Q3289363	Marcel Rouzé		
-Q3221159	cast	Q291915	Sandra Milo		
-Q3221159	cast	Q3171001	Jean Brochard		
-Q3221159	cast	Q235429	Paulette Dubost		
-Q3221159	cast	Q536594	Lise Delamare		
-Q3221159	cast	Q730564	Pierre Collet		
-Q3221159	cast	Q106529	Alain Delon		
-Q3221159	cast	Q3130893	Henri Coutet		
-Q3221159	cast	Q451649	Françoise Arnoul		
-Q3221159	cast	Q3127022	Hans Verner		
-Q3221159	cast	Q2977149	Claude Castaing		
-Q3221159	cast	Q3094175	Gaby Basset		
-Q3221159	cast	Q456390	Madeleine LeBeau		
-Q3221159	cast	Q3288665	Marcel Bernier		
-Q3221159	cast	Q106326	Jean-Claude Brialy		
-Q3221159	cast	Q3265471	Lucien Desagneaux		
-Q3221159	cast	Q2750	Bourvil		
-Q3221159	cast	Q3295778	Martine Havet		
-Q3221159	cast	Q3311381	Micheline Luccioni		
-Q3221159	cast	Q2958599	Charles Bouillaud		
-Q3221159	cast	Q738944	Pierre Mondy		
 Q862713	director	Q53003	Roberto Rossellini		
 Q862713	writer	Q53003	Roberto Rossellini		
 Q862713	writer	Q327914	Indro Montanelli		
@@ -723,3 +695,31 @@ Q862713	cast	Q3573514	Yves Brainville
 Q862713	cast	Q106957	Giovanna Ralli		
 Q862713	award		Golden Lion		
 Q862713	subject		World War II		
+Q3221159	director	Q1579876	Michel Boisrond		
+Q3221159	writer	Q978299	Jean Aurenche		
+Q3221159	writer	Q3384095	Pierre Bost		
+Q3221159	composer	Q2540023	Paul Misraki		
+Q3221159	cinematographer	Q325970	Christian Matras		
+Q3221159	cast	Q2965432	Christian Lude		
+Q3221159	cast	Q337260	Lino Ventura		
+Q3221159	cast	Q3289363	Marcel Rouzé		
+Q3221159	cast	Q291915	Sandra Milo		
+Q3221159	cast	Q3171001	Jean Brochard		
+Q3221159	cast	Q235429	Paulette Dubost		
+Q3221159	cast	Q536594	Lise Delamare		
+Q3221159	cast	Q730564	Pierre Collet		
+Q3221159	cast	Q106529	Alain Delon		
+Q3221159	cast	Q3130893	Henri Coutet		
+Q3221159	cast	Q451649	Françoise Arnoul		
+Q3221159	cast	Q3127022	Hans Verner		
+Q3221159	cast	Q2977149	Claude Castaing		
+Q3221159	cast	Q3094175	Gaby Basset		
+Q3221159	cast	Q456390	Madeleine LeBeau		
+Q3221159	cast	Q3288665	Marcel Bernier		
+Q3221159	cast	Q106326	Jean-Claude Brialy		
+Q3221159	cast	Q3265471	Lucien Desagneaux		
+Q3221159	cast	Q2750	Bourvil		
+Q3221159	cast	Q3295778	Martine Havet		
+Q3221159	cast	Q3311381	Micheline Luccioni		
+Q3221159	cast	Q2958599	Charles Bouillaud		
+Q3221159	cast	Q738944	Pierre Mondy		

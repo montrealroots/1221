@@ -49,15 +49,19 @@ Q23794343	cast	Q180665	Sarah Michelle Gellar	Kathryn Merteuil
 Q59824535	follows	Q17047801	Señora Acero		
 Q59824535	followed_by	Q986785	La Reina del Sur		
 Q114429919	director	Q15142000	Jonás Cuarón		
-Q114429919	cast	Q44333953	バッド・バニー		
+Q114429919	cast	Q44333953	Bad Bunny		
 Q114429919	follows	Q111677117	Madame Web		
 Q114429919	followed_by	Q113371337	Venom: The Last Dance		
+Q106195511	director	Q22277301	Chad Stahelski		
+Q106195511	composer	http://www.wikidata.org/.well-known/genid/7e3ecd290acd74d321ee07a09b0dc095	http://www.wikidata.org/.well-known/genid/7e3ecd290acd74d321ee07a09b0dc095		
+Q106195511	producer	Q22277301	Chad Stahelski		
+Q106195511	cast	http://www.wikidata.org/.well-known/genid/4a3370572a687c01905c9b9b69b4ab23	http://www.wikidata.org/.well-known/genid/4a3370572a687c01905c9b9b69b4ab23		
 Q140921103	director	Q6451324	Kyle Newacheck		
 Q140921103	writer	Q132952	Adam Sandler		
 Q140921103	writer	Q7803649	Tim Herlihy		
 Q140921103	cast	Q132952	Adam Sandler		
 Q140921103	cast	Q44561	Kevin James		
-Q140921103	cast	Q4109	クリス・ロック		
+Q140921103	cast	Q4109	Chris Rock		
 Q140921103	cast	Q298658	David Spade		
 Q140921103	cast	Q192217	Rob Schneider		
 Q140921103	cast	Q236527	Maya Rudolph		
@@ -101,27 +105,27 @@ Q2307877	producer	Q7182133	Phil Lord and Christopher Miller
 Q2307877	producer	Q42898094	Matt Tolmach		
 Q2307877	cast	Q138005	Michael Keaton		
 Q2307877	cast	Q310283	Denis Leary		
-Q2307877	cast	Q2023710	トム・ホランド		
+Q2307877	cast	Q2023710	Tom Holland		
 Q2307877	cast	Q165219	Robert Downey Jr.		
 Q2307877	cast	Q275402	Sam Raimi		
 Q2307877	cast	Q150482	J. K. Simmons		
 Q2307877	cast	Q26213909	Jacob Batalon		
 Q2307877	cast	Q191828	Marisa Tomei		
-Q2307877	cast	Q189489	ゼンデイヤ		
+Q2307877	cast	Q189489	Zendaya		
 Q2307877	cast	Q306403	James Franco		
 Q2307877	cast	Q76478	Kirsten Dunst		
 Q2307877	cast	Q234195	Rosemary Harris		
-Q2307877	cast	Q23891	アンドリュー・ガーフィールド		
+Q2307877	cast	Q23891	Andrew Garfield		
 Q2307877	cast	Q187033	Sally Field		
 Q2307877	cast	Q357998	Marc Webb		
 Q2307877	cast	Q184572	Martin Sheen		
-Q2307877	cast	Q147077	エマ・ストーン		
+Q2307877	cast	Q147077	Emma Stone		
 Q2307877	cast	Q188772	Willem Dafoe		
 Q2307877	cast	Q181899	Cliff Robertson		
 Q2307877	cast	Q16237562	Tony Revolori		
 Q2307877	cast	Q215017	Rhys Ifans		
 Q2307877	cast	Q23894602	Laura Harrier		
-Q2307877	cast	Q165524	トビー・マグワイア		
+Q2307877	cast	Q165524	Tobey Maguire		
 Q120152545	director	Q6500314	Lauren Montgomery		
 Q120152545	producer	Q481925	Amy Pascal		
 Q120152545	producer	Q7182133	Phil Lord and Christopher Miller		
@@ -151,7 +155,9 @@ Q108236739	cast	Q600035	William V. Mong
 Q108236739	cast	Q3568410	William Bakewell		
 Q138387114	director	Q4679837	Adam Stein		
 Q138387114	director	Q8063816	Zach Lipovsky		
-Q7992028	creator	Q598344	マーヴ・グリフィン		
+Q106943494	executive_producer	Q107037215	Jeffrey Cranor		
+Q106943494	executive_producer	Q107037216	Joseph Fink		
+Q7992028	creator	Q598344	Merv Griffin		
 Q7992028	cast	Q6179433	Jenny Powell		
 Q7992028	cast	Q7703629	Terri Seymour		
 Q7992028	cast	Q5044567	Carol Smillie		

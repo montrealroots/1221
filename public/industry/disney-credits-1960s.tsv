@@ -85,7 +85,7 @@ Q1840997	director	Q72756	Raoul Walsh
 Q1840997	writer	Q72756	Raoul Walsh		
 Q1840997	writer	Q1343394	Ennio de Concini		
 Q1840997	writer	Q6830105	Michael Elkins		
-Q1840997	composer	Q435856	アンジェロ・フランチェスコ・ラヴァニーノ		
+Q1840997	composer	Q435856	Angelo Francesco Lavagnino		
 Q1840997	composer	Q3939011	Roberto Nicolosi		
 Q1840997	producer	Q72756	Raoul Walsh		
 Q1840997	cinematographer	Q55438	Mario Bava		
@@ -214,7 +214,7 @@ Q3223532	composer	Q712851	Oliver Wallace
 Q3223532	producer	Q8704	Walt Disney		
 Q3223532	producer	Q2549739	Ben Sharpsteen		
 Q3223532	cinematographer	Q28585020	James R. Simon		
-Q3223532	cinematographer	Q28585199	Ллойд Биби		
+Q3223532	cinematographer	Q28585199	Lloyd Beebe		
 Q3223532	cinematographer	Q28604339	Hugh A. Wilmar		
 Q3223532	editor	Q13033819	Norman Palmer		
 Q3223532	executive_producer	Q3057569	Erwin Verity		
@@ -241,7 +241,7 @@ Q2073030	cast	Q930812	James MacArthur	David Balfour
 Q2073030	cast	Q5314482	Duncan Macrae	The Highlander	
 Q2073030	cast	Q1520157	Niall MacGinnis	Shaun	
 Q2073030	cast	Q171450	John Laurie	Uncle Ebenezer	
-Q2073030	cast	Q28600001	Абрахам Баркер	Donald Dhu MacLaren	
+Q2073030	cast	Q28600001	Abe Barker	Donald Dhu MacLaren	
 Q2073030	cast	Q440360	Miles Malleson	Mr. Rankeillor	
 Q2073030	cast	Q5349467	Eileen Way	Jennet Clouston	
 Q2073030	cast	http://www.wikidata.org/.well-known/genid/617f7de21adec8dcf7aee7057a20289a	http://www.wikidata.org/.well-known/genid/617f7de21adec8dcf7aee7057a20289a		
@@ -604,7 +604,7 @@ Q138373	cast	Q200840	Noel Purcell
 Q138373	cast	Q345763	Gary Raymond		
 Q115280658	director	Q3286055	Mannie Davis		
 Q115280658	writer	Q4933084	Bob Kuwahara		
-Q115280658	composer	Q3378966	Q3378966		
+Q115280658	composer	Q3378966	Philip A. Scheib		
 Q7763169	director	Q2064707	William Witney		
 Q7763169	composer	Q1001130	Buddy Bregman		
 Q7763169	producer	Q5531140	Gene Corman		
@@ -826,13 +826,13 @@ Q2236738	cast	Q2832466	Alejandro Rey
 Q2236738	cast	Q713366	Ivan Dixon		
 Q2236738	cast	Q371716	Gary Crosby		
 Q2236738	cast	Q454951	Míriam Colón		
-Q2236738	cast	Q16089049	Марджори Стэпп		
+Q2236738	cast	Q16089049	Marjorie Stapp		
 Q2236738	cast	Q337185	Audie Murphy		
 Q2236738	subject		World War II		
 Q2236738	subject		Pacific War		
 Q115515500	director	Q2993484	Connie Rasinski		
 Q115515500	writer	Q6492005	Larz Bourne		
-Q115515500	composer	Q3378966	Q3378966		
+Q115515500	composer	Q3378966	Philip A. Scheib		
 Q3036113	director	Q926614	Hamilton Luske		
 Q3036113	writer	Q16259813	Bill Berg		
 Q3036113	composer	Q1001114	Buddy Baker		
@@ -868,9 +868,9 @@ Q629076	composer	Q5606338	Francis Chagrin
 Q629076	producer	Q8704	Walt Disney		
 Q629076	cinematographer	Q2058858	Paul Beeson		
 Q629076	cinematographer	Q16014997	Ray Sturgess		
-Q629076	editor	Q28608848	ピーター・タナー		
+Q629076	editor	Q28608848	Peter Tanner		
 Q629076	executive_producer	Q16916370	Hugh Attwooll		
-Q629076	executive_producer	Q28657217	Q28657217		
+Q629076	executive_producer	Q28657217	Peter Manley		
 Q629076	costume_designer	Q436748	Margaret Furse		
 Q629076	production_designer	Q1290770	Vernon Dixon		
 Q629076	production_designer	Q1929519	Michael Stringer		
@@ -923,7 +923,7 @@ Q3342976	composer	Q712851	Oliver Wallace
 Q3342976	producer	Q8704	Walt Disney		
 Q3342976	producer	Q550101	Winston Hibler		
 Q3342976	cinematographer	Q2482423	Jack Couffer		
-Q3342976	cinematographer	Q28585199	Ллойд Биби		
+Q3342976	cinematographer	Q28585199	Lloyd Beebe		
 Q3342976	cinematographer	Q28605546	Donald Wilder		
 Q3342976	cinematographer	http://www.wikidata.org/.well-known/genid/96c8cab5e84f1c9a59c3ff7c21e99d65	http://www.wikidata.org/.well-known/genid/96c8cab5e84f1c9a59c3ff7c21e99d65		
 Q3342976	cinematographer	http://www.wikidata.org/.well-known/genid/bc0bd70e51d68dd6485b0667828e4b29	http://www.wikidata.org/.well-known/genid/bc0bd70e51d68dd6485b0667828e4b29		
@@ -1491,7 +1491,7 @@ Q1452547	cast	Q7183256	Philip Bourneuf
 Q1452547	cast	Q182104	Jessica Tandy		
 Q1452547	cast	Q265706	Susan Strasberg		
 Q1452547	cast	Q1548455	Peter Brocco		
-Q1452547	cast	Q333595	リカルド・モンタルバン		
+Q1452547	cast	Q333595	Ricardo Montalbán		
 Q1452547	cast	Q228699	Sharon Tate		
 Q1452547	cast	Q3541979	Tullio Carminati		
 Q1452547	cast	Q3187880	Juano Hernández		
@@ -1513,7 +1513,7 @@ Q3129651	cinematographer	Q28554440	David Harcourt
 Q3129651	editor	Q28599949	Gordon Stone		
 Q3129651	executive_producer	Q16916370	Hugh Attwooll		
 Q3129651	executive_producer	Q28553690	Peter Bolton		
-Q3129651	executive_producer	Q28657217	Q28657217		
+Q3129651	executive_producer	Q28657217	Peter Manley		
 Q3129651	costume_designer	Q436748	Margaret Furse		
 Q3129651	production_designer	Q1290770	Vernon Dixon		
 Q3129651	cast	Q106001	Maurice Chevalier	Jacques Paganel	
@@ -1632,7 +1632,7 @@ Q657006	cinematographer	Q962142	Alfio Contini
 Q657006	cinematographer	Q1898945	Mario Montuori		
 Q657006	cinematographer	Q2286454	Silvano Ippoliti		
 Q657006	editor	Q456251	Mario Serandrei		
-Q657006	editor	Q28608848	ピーター・タナー		
+Q657006	editor	Q28608848	Peter Tanner		
 Q657006	costume_designer	Q3762801	Giancarlo Bartolini Salimbeni		
 Q657006	production_designer	Q63997	Ken Adam		
 Q657006	cast	Q310150	Stewart Granger	Lot	
@@ -1753,7 +1753,7 @@ Q3204220	writer	Q1375319	Jan de Hartog
 Q3204220	composer	Q313554	Malcolm Arnold		
 Q3204220	producer	Q31225	Mark Robson		
 Q3204220	cinematographer	Q709978	Arthur Ibbetson		
-Q3204220	production_designer	Q3332298	エリオット・スコット		
+Q3204220	production_designer	Q3332298	Elliot Scott		
 Q3204220	cast	Q683299	Stephen Boyd		
 Q3204220	cast	Q314914	Donald Pleasence		
 Q3204220	cast	Q272611	Dolores Hart		
@@ -1771,7 +1771,7 @@ Q587532	composer	Q2117821	Sherman Brothers
 Q587532	producer	Q8704	Walt Disney		
 Q587532	producer	Q715807	James Algar		
 Q587532	cinematographer	Q2482423	Jack Couffer		
-Q587532	cinematographer	Q28585199	Ллойд Биби		
+Q587532	cinematographer	Q28585199	Lloyd Beebe		
 Q587532	editor	Q13033819	Norman Palmer		
 Q587532	executive_producer	Q2482423	Jack Couffer		
 Q587532	executive_producer	Q3057569	Erwin Verity		
@@ -1852,7 +1852,7 @@ Q468484	subject		amphibious warfare
 Q468484	subject		Operation Overlord		
 Q582460	director	Q739606	Georges Franju		
 Q582460	writer	Q81685	François Mauriac		
-Q582460	writer	Q581018	クロード・モーリアック		
+Q582460	writer	Q581018	Claude Mauriac		
 Q582460	writer	Q739606	Georges Franju		
 Q582460	composer	Q105487	Maurice Jarre		
 Q582460	cinematographer	Q325970	Christian Matras		
@@ -2029,7 +2029,7 @@ Q1855824	producer	Q31225	Mark Robson
 Q1855824	cinematographer	Q709978	Arthur Ibbetson		
 Q1855824	cinematographer	Q1380910	Ted Moore		
 Q1855824	editor	Q95778606	Ernest Walter		
-Q1855824	production_designer	Q3332298	エリオット・スコット		
+Q1855824	production_designer	Q3332298	Elliot Scott		
 Q1855824	cast	Q2601188	Allan Cuthbertson		
 Q1855824	cast	Q266313	Diane Baker		
 Q1855824	cast	Q1340574	Harry Andrews		
@@ -2210,7 +2210,7 @@ Q3204131	producer	Q8704	Walt Disney
 Q3204131	producer	Q715807	James Algar		
 Q3204131	cinematographer	Q2482423	Jack Couffer		
 Q3204131	cinematographer	Q6390585	Kenneth Peach		
-Q3204131	cinematographer	Q28585199	Ллойд Биби		
+Q3204131	cinematographer	Q28585199	Lloyd Beebe		
 Q3204131	editor	Q13033819	Norman Palmer		
 Q3204131	executive_producer	Q2482423	Jack Couffer		
 Q3204131	executive_producer	Q3057569	Erwin Verity		
@@ -2271,7 +2271,7 @@ Q663034	cinematographer	Q2058858	Paul Beeson
 Q663034	cinematographer	Q16014997	Ray Sturgess		
 Q663034	editor	Q28599949	Gordon Stone		
 Q663034	executive_producer	Q16916370	Hugh Attwooll		
-Q663034	executive_producer	Q28657217	Q28657217		
+Q663034	executive_producer	Q28657217	Peter Manley		
 Q663034	narrator	Q28657189	Thomasina		
 Q663034	costume_designer	Q436748	Margaret Furse		
 Q663034	production_designer	Q1290770	Vernon Dixon		
@@ -2372,7 +2372,7 @@ Q1337075	cast	Q103863	Peter Ehrlich	Müller
 Q1337075	cast	Q28657556	Ann Noland	Frieda	
 Q1337075	cast	Q1448394	Franz Nicklisch	desk sergeant	
 Q1337075	cast	Q28647198	Bryan Russell	Emil Tischbein	
-Q1337075	cast	Q28657542	Синди Кэсселл	Pony Hütchen	
+Q1337075	cast	Q28657542	Cindy Cassell	Pony Hütchen	
 Q1337075	cast	Q113328	Walter Slezak	Baron	
 Q1337075	cast	Q101059	Eva Ingeborg Scholz	Frau Tischbein	
 Q1337075	cast	Q110721	Elsa Wagner	grandmother	
@@ -2588,7 +2588,7 @@ Q3520701	cast	Q3568321	Willard Parker
 Q3520701	cast	Q450964	Virginia Field		
 Q3520701	cast	Q2428927	Thorley Walters		
 Q3520701	cast	Q934270	Dennis Price		
-Q7732939	director	Q86685	レジナルド・ル・ボルグ		
+Q7732939	director	Q86685	Reginald LeBorg		
 Q7732939	writer	Q23992011	Louis Vittes		
 Q7732939	composer	Q2460039	Buxton Orr		
 Q7732939	producer	Q6988954	Neil McCallum		
@@ -2632,7 +2632,7 @@ Q1195822	cinematographer	Q28554440	David Harcourt
 Q1195822	editor	Q28599949	Gordon Stone		
 Q1195822	executive_producer	Q2865159	Arthur J. Vitarelli		
 Q1195822	executive_producer	Q16916370	Hugh Attwooll		
-Q1195822	executive_producer	Q28657217	Q28657217		
+Q1195822	executive_producer	Q28657217	Peter Manley		
 Q1195822	costume_designer	Q19545140	Anthony Mendleson		
 Q1195822	cast	Q230563	Irene Papas	Sophia	
 Q1195822	cast	Q139712	John Le Mesurier	Anthony Gamble	
@@ -2675,7 +2675,7 @@ Q3227040	composer	Q1368007	Richard Arnell
 Q3227040	producer	Q3435615	Robert L. Joseph		
 Q3227040	cinematographer	Q1252526	Douglas Slocombe		
 Q3227040	editor	Q5499132	Frederick Wilson		
-Q3227040	cast	Q1064691	ナイジェル・ダヴェンポート		
+Q3227040	cast	Q1064691	Nigel Davenport		
 Q3227040	cast	Q51506	Richard Attenborough		
 Q3227040	cast	Q2084116	Freda Jackson		
 Q3227040	cast	Q683299	Stephen Boyd		
@@ -2829,7 +2829,7 @@ Q489149	cast	Q545471	Philip Madoc
 Q489149	cast	Q76943	Gert Fröbe		
 Q489149	cast	Q232879	Lila Kedrova		
 Q489149	cast	Q2895358	Ben Carruthers		
-Q489149	cast	Q1064691	ナイジェル・ダヴェンポート		
+Q489149	cast	Q1064691	Nigel Davenport		
 Q489149	cast	Q5248175	Deborah Baxter		
 Q489149	cast	Q6077601	Isabel Dean		
 Q489149	cast	Q7351545	Roberta Tovey		
@@ -2968,7 +2968,7 @@ Q541414	director	Q78924	Bernhard Wicki
 Q541414	writer	Q1162881	Daniel Taradash		
 Q541414	composer	Q235077	Jerry Goldsmith		
 Q541414	producer	Q302605	Aaron Rosenberg		
-Q541414	cinematographer	Q706993	コンラッド・L・ホール		
+Q541414	cinematographer	Q706993	Conrad Hall		
 Q541414	editor	Q11730837	Joseph Silver		
 Q541414	costume_designer	Q1949430	Moss Mabry		
 Q541414	cast	Q343037	Trevor Howard		
@@ -3438,7 +3438,7 @@ Q2248985	cast	Q28703550	Kit Lloyd	Oliver
 Q2248985	cast	Q28704082	William Mills	David	
 Q2248985	cast	Q728599	Donald May	Edward White, Jr.	
 Q2248985	cast	Q2552694	Madge Blake	Cora Anderson	
-Q2248985	cast	Q5150350	Q5150350	scout at cliff	
+Q2248985	cast	Q5150350	Colyer Dupont	scout at cliff	
 Q2248985	cast	Q973490	Parley Baer	Mayor Hi Plommer	
 Q2248985	cast	Q28705194	Michael Flatley	scout #1, troop #1	
 Q658847	director	Q51495	William Wyler		
@@ -3730,7 +3730,7 @@ Q1165872	cast	Q69645	Fritz Feld
 Q1165872	cast	Q315051	James Brolin		
 Q1165872	cast	Q365550	Dennis Weaver		
 Q1165872	cast	Q3568851	William O'Connell		
-Q1165872	cast	Q272445	リンダ・ハリソン		
+Q1165872	cast	Q272445	Linda Harrison		
 Q1165872	cast	Q2603039	Alexander D'Arcy		
 Q1165872	cast	Q230662	Anita Ekberg		
 Q1165872	cast	Q710862	Brian Keith		
@@ -3767,7 +3767,7 @@ Q847422	cast	Q267051	Polly Bergen
 Q847422	cast	Q148732	Jack Benny		
 Q847422	cast	Q232917	Majel Barrett		
 Q847422	cast	Q176361	Jeffrey Hunter		
-Q847422	cast	Q272445	リンダ・ハリソン		
+Q847422	cast	Q272445	Linda Harrison		
 Q847422	cast	Q434453	Inger Stevens		
 Q847422	cast	Q1066372	Charles Wagenheim		
 Q847422	cast	Q182431	Art Carney		
@@ -3896,7 +3896,7 @@ Q3425605	composer	Q3435063	Robert F. Brunner
 Q3425605	producer	Q8704	Walt Disney		
 Q3425605	producer	Q2165499	Ron W. Miller		
 Q3425605	cinematographer	Q1432783	William E. Snyder		
-Q3425605	editor	Q2394787	Q2394787		
+Q3425605	editor	Q2394787	Marsh Hendry		
 Q3425605	executive_producer	Q3261670	Lou Debney		
 Q3425605	costume_designer	Q862497	Bill Thomas		
 Q3425605	costume_designer	Q2967597	Chuck Keehne		
@@ -3924,7 +3924,7 @@ Q3203845	composer	Q3069430	Mel Leven
 Q3203845	producer	Q8704	Walt Disney		
 Q3203845	producer	Q15977932	Bill Anderson		
 Q3203845	cinematographer	Q1291925	Edward Colman		
-Q3203845	editor	Q2394787	Q2394787		
+Q3203845	editor	Q2394787	Marsh Hendry		
 Q3203845	executive_producer	Q2865159	Arthur J. Vitarelli		
 Q3203845	executive_producer	Q3261670	Lou Debney		
 Q3203845	costume_designer	Q862497	Bill Thomas		
@@ -4280,7 +4280,7 @@ Q2250601	cast	Q1351564	Eric Portman
 Q2250601	cast	Q545471	Philip Madoc		
 Q2250601	cast	Q3017584	David Buck		
 Q2250601	cast	Q1964578	Nanette Newman		
-Q2250601	cast	Q353031	ヴラデク・シェイバル		
+Q2250601	cast	Q353031	Vladek Sheybal		
 Q2250601	cast	Q123351	Michael Caine		
 Q5249504	director	Q6243454	John Krish		
 Q5249504	writer	Q16015529	Ivan Foxwell		
@@ -4351,7 +4351,7 @@ Q59534	cast	Q80739	Charlton Heston	Taylor
 Q59534	cast	Q1233590	Maurice Evans	Dr. Zaius	
 Q59534	cast	Q59824	Kim Hunter	Zira	
 Q59534	cast	Q283988	Roddy McDowall	Cornelius	
-Q59534	cast	Q272445	リンダ・ハリソン		
+Q59534	cast	Q272445	Linda Harrison		
 Q59534	cast	Q323961	Felix Silla		
 Q59534	cast	Q3176442	Jeff Burton		
 Q59534	cast	Q3260154	Lou Wagner		
@@ -4569,7 +4569,7 @@ Q3202604	cast	Q6228714	John Davidson
 Q3202604	cast	Q1001214	Buddy Ebsen		
 Q3202604	cast	Q103157	Kurt Russell		
 Q3202604	cast	Q1289785	Richard Deacon		
-Q3202604	cast	Q188459	ゴールディ・ホーン		
+Q3202604	cast	Q188459	Goldie Hawn		
 Q3202604	cast	Q2895424	Ben Frommer		
 Q3202604	cast	Q447907	Hank Jones		
 Q3202604	cast	Q111921062	Stephen Roberts		
@@ -4638,7 +4638,7 @@ Q186490	composer	Q435034	Georges Delerue
 Q186490	producer	Q4353707	Carter DeHaven		
 Q186490	cinematographer	Q1247974	Edward Scaife		
 Q186490	editor	Q3791526	Russell Lloyd		
-Q186490	costume_designer	Q464011	レオノール・フィニ		
+Q186490	costume_designer	Q464011	Leonor Fini		
 Q186490	cast	Q3181678	John Hallam	Sir Meles	
 Q186490	cast	Q573343	Anthony Higgins	Robert of Loris	
 Q186490	cast	Q735030	Melvyn Hayes	First Entertainer	
@@ -4661,7 +4661,7 @@ Q232000	writer	Q506885	William Goldman
 Q232000	composer	Q212762	Burt Bacharach		
 Q232000	producer	Q6233627	John Foreman		
 Q232000	creator	Q51570	George Roy Hill		
-Q232000	cinematographer	Q706993	コンラッド・L・ホール		
+Q232000	cinematographer	Q706993	Conrad Hall		
 Q232000	editor	Q2735664	John C. Howard		
 Q232000	cast	Q717693	Ted Cassidy	Harvey Logan	
 Q232000	cast	Q41871	Paul Newman	Butch Cassidy	
@@ -4965,7 +4965,7 @@ Q667764	cast	Q728867	Gordon Jackson
 Q667764	cast	Q272075	Celia Johnson		
 Q667764	cast	Q447688	Pamela Franklin		
 Q667764	cast	Q691648	Robert Stephens		
-Q667764	cast	Q172653	マギー・スミス		
+Q667764	cast	Q172653	Maggie Smith		
 Q667764	cast	Q3441481	Rona Anderson		
 Q667764	cast	Q558828	Ann Way		
 Q667764	award		Academy Award for Best Actress		

@@ -356,7 +356,7 @@ Q116051408	cast	Q434843	Fabrizio Bentivoglio
 Q1773078	director	Q515904	Andrzej Żuławski		
 Q1773078	writer	Q515904	Andrzej Żuławski		
 Q1773078	writer	Q2793520	Frederic Tuten		
-Q1773078	composer	Q515087	안드레이 코르진스키		
+Q1773078	composer	Q515087	Andrzej Korzyński		
 Q1773078	producer	Q95734200	Marie-Laure Reyre		
 Q1773078	cinematographer	Q993643	Bruno Nuytten		
 Q1773078	editor	Q30727639	Marie-Sophie Dubus		
@@ -567,7 +567,7 @@ Q165651	cast	Q524529	Gunnar Björnstrand	Filip Landahl
 Q165651	cast	Q4935798	Gerd Andersson		
 Q165651	cast	Q4953107	Sonya Hedenbratt	Aunt Emma	
 Q165651	cast	Q321344	Erland Josephson	Isak Jacobi	
-Q165651	cast	Q1090835	ヤール・キューレ	Gustav Adolf Ekdahl	
+Q165651	cast	Q1090835	Jarl Kulle	Gustav Adolf Ekdahl	
 Q165651	cast	Q1897145	Marie-Hélène Breillat		
 Q165651	cast	Q1792524	Gösta Prüzelius	Doctor Fürstenberg	
 Q165651	cast	Q4982811	Kerstin Tidelius	Henrietta Vergerus	
@@ -662,7 +662,7 @@ Q3896511	cast	Q437381	Yvonne Minton
 Q3896511	cast	Q124472	Armin Jordan		
 Q3896511	cast	Q106254	Martin Sperr		
 Q3896511	cast	Q1175658	David Meyer		
-Q3896511	cast	Q300792	Ааге Хаугланд		
+Q3896511	cast	Q300792	Aage Haugland		
 Q3896511	cast	Q326331	Robert Lloyd		
 Q3896511	cast	Q69586	Edith Clever		
 Q695982	director	Q44426	Rainer Werner Fassbinder		
@@ -838,7 +838,7 @@ Q551552	producer	Q215578	Artur Brauner
 Q551552	cinematographer	Q1657731	Igor Luther		
 Q551552	editor	Q85861506	Halina Prugar-Ketling		
 Q551552	production_designer	Q177219	Allan Starski		
-Q551552	cast	Q60820	ロルフ・ホーホフート		
+Q551552	cast	Q60820	Rolf Hochhuth		
 Q551552	cast	Q78924	Bernhard Wicki		
 Q551552	cast	Q77968	Ben Becker		
 Q551552	cast	Q86718	Elisabeth Trissenaar		
@@ -957,7 +957,7 @@ Q1165071	cast	Q4462365	Jerzy Trela	Jacques-Nicolas Billaud-Varenne
 Q1165071	cast	Q3479446	Serge Merlin	Pierre Philippeaux	
 Q1165071	cast	Q374912	Roger Planchon	Antoine Quentin Fouquier-Tinville	
 Q1165071	cast	Q55366	Bogusław Linda	Louis Antoine de Saint-Just	
-Q1165071	cast	Q936876	フランチシェク・スタロヴィエイスキ	Jacques-Louis David	
+Q1165071	cast	Q936876	Franciszek Starowieyski	Jacques-Louis David	
 Q1165071	cast	Q2752873	Czesław Wołłejko	Marc-Guillaume Alexis Vadier	
 Q1165071	cast	Q111365398	Jean-Loup Wolff	Marie-Jean Hérault de Séchelles	
 Q1165071	cast	Q23767020	Emmanuelle Debever	Louison Danton	
@@ -1142,7 +1142,7 @@ Q1056376	writer	Q53050	Francesco Rosi
 Q1056376	writer	Q160333	Prosper Mérimée		
 Q1056376	writer	Q460095	Tonino Guerra		
 Q1056376	writer	Q723585	Ludovic Halévy		
-Q1056376	writer	Q723648	アンリ・メイヤック		
+Q1056376	writer	Q723648	Henri Meilhac		
 Q1056376	composer	Q56158	Georges Bizet		
 Q1056376	producer	Q160802	Marcel Dassault		
 Q1056376	producer	Q981229	Alain Poiré		
@@ -1267,7 +1267,7 @@ Q3285117	composer	Q507940	Vladimir Cosma
 Q3285117	producer	Q3309858	Michel Gérard		
 Q3285117	producer	Q3385670	Pierre Kalfon		
 Q3285117	cinematographer	Q24931770	Jean Monsigny		
-Q3285117	cast	Q1398256	ミシェル・ブラン		
+Q3285117	cast	Q1398256	Michel Blanc		
 Q3285117	cast	Q3157406	Jackie Sardou		
 Q3285117	cast	Q3010139	Céline Caussimon		
 Q3285117	cast	Q294927	Jerry Lewis		
@@ -1352,7 +1352,7 @@ Q317311	cast	Q171745	Jeremy Irons
 Q317311	cast	Q3336612	Nathalie Juvet		
 Q317311	cast	Q3340048	Nicolas Baby		
 Q317311	cast	Q3166017	Jean-Gabriel Nordmann		
-Q317311	cast	Q550806	ローラン・トポール		
+Q317311	cast	Q550806	Roland Topor		
 Q317311	cast	Q3086041	François Weigel		
 Q317311	cast	Q166562	Ornella Muti		
 Q317311	cast	Q2941960	Catherine Lachens		
@@ -1420,7 +1420,7 @@ Q1192633	director	Q772633	Alexandre Arcady
 Q1192633	writer	Q358356	Francis Veber		
 Q1192633	composer	Q3479307	Serge Franklin		
 Q1192633	producer	Q2829544	Alain Belmondo		
-Q1192633	cinematographer	Q487094	マイケル・チャップマン		
+Q1192633	cinematographer	Q487094	Michael Chapman		
 Q1192633	editor	Q18608669	Joële van Effenterre		
 Q1192633	cast	Q3291592	Marie-Chantal Labelle		
 Q1192633	cast	Q3120048	Guillaume Lemay-Thivierge		
@@ -1438,7 +1438,7 @@ Q1192633	cast	Q3573721	Yves Jacques
 Q1192633	cast	Q3193125	Karen Racicot		
 Q1192633	cast	Q3081650	Francis Reddy		
 Q221750	director	Q106709	Patrice Leconte		
-Q221750	writer	Q1398256	ミシェル・ブラン		
+Q221750	writer	Q1398256	Michel Blanc		
 Q221750	composer	Q288120	Éric Demarsan		
 Q221750	cinematographer	Q707484	Eduardo Serra		
 Q221750	editor	Q533272	Joëlle Hache		
@@ -1660,14 +1660,14 @@ Q176053	cast	Q3361782	Pamela Stanford
 Q176053	cast	Q639888	Jean Carmet		
 Q176053	cast	Q694343	Arno Klarsfeld		
 Q176053	cast	Q3439965	Roland Blanche		
-Q176053	cast	Q1685364	ジャン・ベンギーギ		
+Q176053	cast	Q1685364	Jean Benguigui		
 Q176053	cast	Q3309012	Michel Berto		
 Q176053	cast	Q3157773	Jacqueline Noëlle		
 Q176053	cast	Q3573397	Yveline Ailhaud		
 Q176053	cast	Q3168991	Jean-Pierre Becker		
 Q176053	cast	Q3590957	Éric Averlant		
 Q176053	cast	Q2965646	Christian Sinniger		
-Q176053	cast	Q1398256	ミシェル・ブラン		
+Q176053	cast	Q1398256	Michel Blanc		
 Q176053	cast	Q106508	Gérard Depardieu		
 Q176053	cast	Q531482	Isabelle Renauld		
 Q176053	follows	Q2425788	Les Compères		
@@ -1838,7 +1838,7 @@ Q2386746	cast	Q1215287	Philippine Leroy-Beaulieu
 Q2386746	cast	Q599249	Bernard Blier		
 Q2386746	cast	Q11720892	Jarosław Kopaczewski		
 Q2386746	cast	Q3169876	Jean-Quentin Châtelain		
-Q2386746	cast	Q273825	Божена Дыкель		
+Q2386746	cast	Q273825	Bożena Dykiel		
 Q2386746	cast	Q55367	Zbigniew Zamachowski		
 Q2386746	cast	Q3569553	Wladimir Yordanoff	Captain Lebyadkin	
 Q2386746	cast	Q115735	Lambert Wilson	Nikolai Stavrogin	

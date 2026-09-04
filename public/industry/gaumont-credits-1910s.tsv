@@ -589,6 +589,12 @@ Q2929626	cast	Q1112651	René Dary
 Q2929626	cast	Q327062	René Navarre		
 Q2929626	cast	Q3427123	Renée Carl		
 Q2929626	cast	Q3371765	Paul Manson		
+Q2929638	director	Q951835	Louis Feuillade		
+Q2929638	writer	Q951835	Louis Feuillade		
+Q2929638	cast	Q59680813	Jeanne Saint-Bonnet		
+Q2929638	cast	Q3427123	Renée Carl		
+Q2929638	cast	Q1112651	René Dary		
+Q2929638	cast	Q3371765	Paul Manson		
 Q2929636	director	Q951835	Louis Feuillade		
 Q2929636	writer	Q951835	Louis Feuillade		
 Q2929636	cast	Q1112651	René Dary		
@@ -598,12 +604,6 @@ Q2929636	cast	Q59680813	Jeanne Saint-Bonnet
 Q2929637	director	Q951835	Louis Feuillade		
 Q2929637	cast	Q1112651	René Dary		
 Q2929637	cast	Q3371765	Paul Manson		
-Q2929638	director	Q951835	Louis Feuillade		
-Q2929638	writer	Q951835	Louis Feuillade		
-Q2929638	cast	Q59680813	Jeanne Saint-Bonnet		
-Q2929638	cast	Q3427123	Renée Carl		
-Q2929638	cast	Q1112651	René Dary		
-Q2929638	cast	Q3371765	Paul Manson		
 Q2929639	director	Q951835	Louis Feuillade		
 Q2929639	writer	Q951835	Louis Feuillade		
 Q2929639	cast	Q3427123	Renée Carl		
@@ -1435,7 +1435,7 @@ Q3987619	cast	Q6105728	J. Frank Glendon
 Q3987619	cast	Q72596595	Lillian Kemble		
 Q3987619	cast	Q5488455	Frank Mills		
 Q3987619	cast	Q3942285	Rudolph Cameron		
-Q3987619	cast	Q139619754	Q139619754		
+Q3987619	cast	Q139619754	Jack Curtis		
 Q3830855	director	Q951835	Louis Feuillade		
 Q3830855	writer	Q951835	Louis Feuillade		
 Q3830855	cast	Q3170476	Jean Ayme		
