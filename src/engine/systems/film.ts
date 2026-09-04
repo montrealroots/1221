@@ -416,7 +416,7 @@ export function registerFilm(sim: Simulation): void {
 
   // --- Development and packaging ------------------------------------------
 
-  sim.onCommand<{ projectId: Id; personId: Id; role: string; confirmed?: boolean }, { attached: boolean; packageValue: number }>(
+  sim.onCommand<{ projectId: Id; personId: Id; role: string; confirmed?: boolean; alreadyAgreed?: boolean }, { attached: boolean; packageValue: number }>(
     'film.attach_talent',
     (p, { sim: s }) => {
       const project = s.universe.projects[p.projectId];
@@ -428,7 +428,10 @@ export function registerFilm(sim: Simulation): void {
       }
 
       // Talent above your level says no. That is the point of a package.
-      if (!person.isPlayer) {
+      // Unless they have already been asked and already said yes — an approach
+      // that has been answered is not put to them a second time (see
+      // systems/real-people), because one question deserves the one answer.
+      if (!person.isPlayer && !p.alreadyAgreed) {
         const rng = s.rng('attach', project.id, person.id);
         const draft = project.currentDraftId ? s.universe.scriptDrafts[project.currentDraftId] : undefined;
         const { factors, score } = buildFactors([

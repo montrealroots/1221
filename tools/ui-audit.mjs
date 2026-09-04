@@ -221,6 +221,59 @@ for (const size of WIDTHS) {
         }
         scrollsSideways = (await probe('new project and logline builder')) || scrollsSideways;
         await shoot('06-logline');
+
+        // Make the project, then open the room where you go to somebody by
+        // name. That dialog holds the densest new text in the game: a search
+        // over the whole roster, a set of terms, and an audit underneath.
+        const make = page.getByRole('button', { name: /^Create$/ }).first();
+        if (await make.count()) {
+          await make.click().catch(() => {});
+          await page.waitForTimeout(1200);
+          const castTab = page.getByRole('tab', { name: /^Cast$/ }).first();
+          if (await castTab.count()) {
+            await castTab.click().catch(() => {});
+            await page.waitForTimeout(900);
+            scrollsSideways = (await probe('project cast tab')) || scrollsSideways;
+            const approach = page.getByRole('button', { name: /^Approach Somebody$/ }).first();
+            if (await approach.count()) {
+              await approach.click().catch(() => {});
+              await page.waitForTimeout(1600);
+              // Pick somebody, so the terms panel and the meters are on screen.
+              await page.locator('.modal .list-item').first().click().catch(() => {});
+              await page.waitForTimeout(700);
+              scrollsSideways = (await probe('approach a craft')) || scrollsSideways;
+              await shoot('07-approach');
+              await page.getByRole('button', { name: /^Close$/ }).first().click().catch(() => {});
+              await page.waitForTimeout(500);
+            }
+          }
+        }
+      }
+    }
+
+    // A person's profile, and the tab that keeps the record and the save apart.
+    await openRail();
+    const industry = page.getByRole('button', { name: /^industry$/i }).first();
+    if (await industry.count()) {
+      await industry.click().catch(() => {});
+      await page.waitForTimeout(1200);
+      const people = page.getByRole('tab', { name: /^People$/ }).first();
+      if (await people.count()) {
+        await people.click().catch(() => {});
+        await page.waitForTimeout(1800);
+        scrollsSideways = (await probe('the people tab')) || scrollsSideways;
+        await page.locator('.list-item').first().click().catch(() => {});
+        await page.waitForTimeout(1200);
+        scrollsSideways = (await probe('a person profile')) || scrollsSideways;
+        const inSave = page.getByRole('tab', { name: /^In This Save$/ }).first();
+        if (await inSave.count()) {
+          await inSave.click().catch(() => {});
+          await page.waitForTimeout(700);
+          scrollsSideways = (await probe('a person profile, in this save')) || scrollsSideways;
+        }
+        await shoot('08-profile');
+        await page.getByRole('button', { name: /^Close$/ }).first().click().catch(() => {});
+        await page.waitForTimeout(400);
       }
     }
   }

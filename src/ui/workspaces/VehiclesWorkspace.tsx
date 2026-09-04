@@ -91,7 +91,7 @@ export function VehiclesWorkspace() {
                 <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
                   <button className="btn btn-sm" onClick={() => { setSelectedId(vehicle.id); setTab('modify'); }}>Modify</button>
                   <button className="btn btn-sm" onClick={() => { setSelectedId(vehicle.id); setTab('service'); }}>Service</button>
-                  <button className="btn btn-sm" onClick={() => run('veh.drive', { vehicleId: vehicle.id, miles: 250 })}>Drive 250 miles</button>
+                  <button className="btn btn-sm" onClick={() => run('veh.drive', { vehicleId: vehicle.id, miles: 250 })}>Drive 250 Miles</button>
                 </div>
               </Panel>
             ))}
@@ -190,7 +190,7 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
         <div className="row wrap gap-2">
           <button className="chip" aria-pressed={category === 'all'} onClick={() => setCategory('all')}
             style={category === 'all' ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)' } : undefined}>
-            all
+            All
           </button>
           {categories.map((c) => (
             <button key={c} className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}

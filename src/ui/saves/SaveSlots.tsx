@@ -124,7 +124,7 @@ export function SaveSlots({
                     An empty universe, waiting for someone to live in it.
                   </p>
                   <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
-                    New save
+                    New Save
                   </button>
                 </div>
               );
@@ -145,7 +145,7 @@ export function SaveSlots({
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       {info.hasBackup && (
                         <button className="btn" onClick={() => void load(slot, true)} disabled={working}>
-                          Restore from backup
+                          Restore From Backup
                         </button>
                       )}
                       <button className="btn btn-danger btn-sm" onClick={() => setConfirmDelete(slot)} disabled={working}>
@@ -201,7 +201,7 @@ export function SaveSlots({
                       <div className="row gap-2">
                         {info.hasBackup && (
                           <button className="btn btn-sm grow" onClick={() => void load(slot, true)} disabled={working}>
-                            Restore backup
+                            Restore Backup
                           </button>
                         )}
                         <button className="btn btn-danger btn-sm grow" onClick={() => setConfirmDelete(slot)} disabled={working}>
@@ -237,7 +237,7 @@ export function SaveSlots({
               </p>
             </div>
             <div className="modal-foot">
-              <button className="btn" onClick={() => setConfirmDelete(null)}>Keep it</button>
+              <button className="btn" onClick={() => setConfirmDelete(null)}>Keep It</button>
               <button className="btn btn-danger" onClick={() => void remove(confirmDelete)}>
                 Delete slot {confirmDelete}
               </button>

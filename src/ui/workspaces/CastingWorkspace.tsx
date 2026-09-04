@@ -126,7 +126,7 @@ export function CastingWorkspace() {
                       {project && <DossierButton project={project} roleId={audition.roleId} />}
                       {!audition.decidedAt && audition.performanceScore === undefined && (
                         <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
-                          Prepare and perform
+                          Prepare And Perform
                         </button>
                       )}
                     </div>

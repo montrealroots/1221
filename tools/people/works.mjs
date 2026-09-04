@@ -12,7 +12,11 @@ const HERE = new URL('./', import.meta.url);
 mkdirSync(new URL('./cache/', HERE), { recursive: true });
 const UA = 'SLATE-build/1.0 (film simulator dataset builder; contact via repository)';
 const ENDPOINT = 'https://query.wikidata.org/sparql';
-const LANGS = 'en,mul,ja,ko,zh,fr,de,es,it,sv,da,pt,nl,ru,tr,fa,hi';
+// The label service falls through this list in order and hands back the bare
+// Q-id when it reaches the end. A title nobody can read is worse than no
+// title, so the list is long and anything that still comes back as an id is
+// dropped rather than written.
+const LANGS = 'en,mul,ja,ko,zh,fr,de,es,it,sv,da,pt,nl,ru,tr,fa,hi,cs,pl,ro,eu,ta,ml,ar,he,hu,el,uk,th,vi,id,no,fi,ca,gl,ast,cy,bn,te,mr,kn';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function sparql(query, attempt = 0) {

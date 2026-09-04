@@ -10,7 +10,7 @@
 
 import { useMemo, useState } from 'react';
 import { useGame } from '@/app/game-context';
-import { Panel, Empty, Tabs, Meter, Modal } from '@/ui/components/primitives';
+import { Panel, Empty, Tabs, Meter, Modal, Stat } from '@/ui/components/primitives';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoneyCompact } from '@/engine/core/money';
 import {
@@ -19,6 +19,10 @@ import {
   type PersonRecord, type DerivedAttribute,
 } from '@/engine/content/people';
 import { CRAFT_ROLES, CRAFT_ROLE_LABEL, type CraftRole } from '@/engine/content/craft-attributes';
+import { approachSummary, historyWith, personForRecord } from '@/engine/systems/real-people';
+import { creditRoleOf } from '@/engine/systems/industry-people';
+import { formatMoney } from '@/engine/core/money';
+import { formatDate } from '@/engine/core/time';
 
 const ROLE_TABS: { id: CraftRole | 'all'; label: string }[] = [
   { id: 'all', label: 'Everyone' },
@@ -177,7 +181,7 @@ export function PeopleTab() {
 export function PersonProfile({ person, onClose }: { person: PersonRecord; onClose: () => void }) {
   const { sim } = useGame();
   const [role, setRole] = useState<CraftRole>(primaryRole(person));
-  const [tab, setTab] = useState<'attributes' | 'filmography' | 'awards'>('attributes');
+  const [tab, setTab] = useState<'attributes' | 'filmography' | 'awards' | 'save'>('attributes');
   const [creditFilter, setCreditFilter] = useState('');
 
   const age = ageOf(person, sim.now);
@@ -200,6 +204,25 @@ export function PersonProfile({ person, onClose }: { person: PersonRecord; onClo
     }
     return out;
   }, [sheet]);
+
+  // Two different things, and the screen never lets them touch. Above this line
+  // is the public record. Below it is what happened in this save, which is
+  // simulation and is labelled as simulation wherever it appears.
+  const inSave = personForRecord(sim, person.qid);
+  const history = historyWith(sim, person.qid);
+  const saveWork = useMemo(() => {
+    if (!inSave) return [];
+    return Object.values(sim.universe.projects)
+      .filter((project) => project.castIds.includes(inSave.id)
+        || project.attachments.some((attachment) => attachment.personId === inSave.id))
+      .sort((a, b) => (b.releaseDate ?? b.createdAt) - (a.releaseDate ?? a.createdAt));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inSave, sim, sim.universe.projects]);
+  const saveContracts = useMemo(() => {
+    if (!inSave) return [];
+    return Object.values(sim.universe.contracts).filter((contract) => contract.partyBId === inSave.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inSave, sim]);
 
   const shownCredits = useMemo(() => {
     const q = creditFilter.trim().toLowerCase();
@@ -284,6 +307,7 @@ export function PersonProfile({ person, onClose }: { person: PersonRecord; onClo
         { id: 'attributes', label: 'Attributes', badge: sheet.length },
         { id: 'filmography', label: 'Filmography', badge: credits.length },
         { id: 'awards', label: 'Awards', badge: awards.length },
+        { id: 'save', label: 'In This Save', badge: saveWork.length },
       ]} />
 
       {tab === 'attributes' && (
@@ -371,6 +395,67 @@ export function PersonProfile({ person, onClose }: { person: PersonRecord; onClo
                   </div>
                 ))}
               </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {tab === 'save' && (
+        <div style={{ marginTop: 'var(--s3)' }}>
+          <div className="callout callout-accent">
+            <div className="xs">
+              <span className="strong">Everything on this tab is your save, not the record.</span> What somebody
+              charges, what they took, and what it did are all simulation. None of it happened, and none of it is
+              a claim about {person.name}.
+            </div>
+          </div>
+
+          {!inSave ? (
+            <div className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+              Nothing yet. They come into your world the first time you deal with them, or the first time
+              somebody else in it hires them.
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-3 gap-4" style={{ marginTop: 'var(--s3)' }}>
+                <Stat
+                  label="What They Would Cost"
+                  value={formatMoney(approachSummary(person, role).quote, { cents: false })}
+                  note="SLATE's estimate for one job"
+                />
+                <Stat label="Made With You" value={history.together} note={history.together > 0 ? `best came out at ${Math.round(history.best)}` : 'nothing yet'} />
+                <Stat label="In Your World" value={saveWork.length} note="pictures they are on here" />
+              </div>
+
+              {saveWork.length > 0 && (
+                <div style={{ marginTop: 'var(--s4)' }}>
+                  <div className="xs dim" style={{ marginBottom: 4 }}>What They Are On Here</div>
+                  <div style={{ maxHeight: 260, overflowY: 'auto' }}>
+                    {saveWork.map((project) => (
+                      <div key={project.id} className="xs" style={{ padding: '4px 0', borderTop: '1px solid var(--line)', overflowWrap: 'anywhere' }}>
+                        <span className="strong">{project.title}</span>
+                        <span className="dim"> · {creditRoleOf(project, inSave.id) ?? 'Cast'}</span>
+                        <span className="dim"> · {titleCaseLabel(project.phase.replace(/_/g, ' '))}</span>
+                        {project.releaseDate && <span className="dim"> · {formatDate(project.releaseDate, sim.homeZone)}</span>}
+                        {project.finalQuality !== undefined && <span className="mono dim"> · {Math.round(project.finalQuality)}</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {saveContracts.length > 0 && (
+                <div style={{ marginTop: 'var(--s4)' }}>
+                  <div className="xs dim" style={{ marginBottom: 4 }}>Paper With You</div>
+                  {saveContracts.map((contract) => (
+                    <div key={contract.id} className="xs" style={{ padding: '4px 0', borderTop: '1px solid var(--line)', overflowWrap: 'anywhere' }}>
+                      <span className="strong">{contract.title}</span>
+                      <span className="dim"> · {formatMoney(contract.compensation, { cents: false })}</span>
+                      <span className="dim"> · {titleCaseLabel(contract.status)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </>
           )}
         </div>

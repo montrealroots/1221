@@ -124,7 +124,7 @@ export function CharacterCreation({
           <div className="callout callout-info" style={{ marginBottom: 'var(--s5)' }}>
             Your previous setup was still here, so it has been restored.
             <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(defaultConfig())}>
-              Start over
+              Start Over
             </button>
           </div>
         )}

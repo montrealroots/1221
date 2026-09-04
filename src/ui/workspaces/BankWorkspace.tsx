@@ -79,13 +79,13 @@ export function BankWorkspace() {
                 className="btn btn-sm"
                 onClick={() => run('finance.open_account', { ownerId: sim.player.id, kind: 'savings', name: 'Savings' })}
               >
-                Open savings
+                Open Savings
               </button>
               <button
                 className="btn btn-sm"
                 onClick={() => run('finance.open_account', { ownerId: sim.player.id, kind: 'credit_card', name: 'Credit card', creditLimit: 500_000 })}
               >
-                Apply for a card
+                Apply For A Card
               </button>
             </>
           }
@@ -147,7 +147,7 @@ export function BankWorkspace() {
                     <span className="mono">{formatMoney(bill.amount)}</span>
                     {late && (
                       <button className="btn btn-sm btn-primary" onClick={() => run('finance.pay_bill', { billId: bill.id })}>
-                        Pay now
+                        Pay Now
                       </button>
                     )}
                   </div>

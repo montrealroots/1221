@@ -47,7 +47,7 @@ export function SocialWorkspace() {
                     handle: sim.player.displayName.toLowerCase().replace(/[^a-z0-9]/g, ''),
                   })}
                 >
-                  Create account
+                  Create Account
                 </button>
               </div>
             ))}
@@ -105,7 +105,7 @@ export function SocialWorkspace() {
                     {PLATFORM_BY_ID[selected.platform].bestFor}
                   </p>
                   <button className="btn btn-primary" style={{ marginTop: 'var(--s3)' }} onClick={() => setPosting(true)}>
-                    Make a post
+                    Make A Post
                   </button>
                 </Panel>
               </div>

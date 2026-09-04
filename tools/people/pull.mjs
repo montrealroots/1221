@@ -17,7 +17,11 @@ const CACHE = new URL('./cache/', HERE);
 mkdirSync(CACHE, { recursive: true });
 const UA = 'SLATE-build/1.0 (film simulator dataset builder; contact via repository)';
 const ENDPOINT = 'https://query.wikidata.org/sparql';
-const LANGS = 'en,mul,ja,ko,zh,fr,de,es,it,sv,da,pt,nl,ru,tr,fa,hi';
+// The label service falls through this list in order and hands back the bare
+// Q-id when it reaches the end. A title nobody can read is worse than no
+// title, so the list is long and anything that still comes back as an id is
+// dropped rather than written.
+const LANGS = 'en,mul,ja,ko,zh,fr,de,es,it,sv,da,pt,nl,ru,tr,fa,hi,cs,pl,ro,eu,ta,ml,ar,he,hu,el,uk,th,vi,id,no,fi,ca,gl,ast,cy,bn,te,mr,kn';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -173,8 +177,14 @@ const creditsPath = new URL('./cache/credits.ndjson', HERE);
         const workId = qid(v(row, 'work'));
         const bucket = collected.get(person);
         if (!bucket) continue;
+        // The label service hands back the bare Q-id when nothing on the
+        // language list has a label. That is not a title, so it is not written
+        // as one: the credit is skipped rather than shown to a player as
+        // 'Q140513844'.
+        const label = v(row, 'workLabel');
+        if (!label || label === workId) continue;
         const entry = bucket.get(workId) ?? {
-          qid: workId, title: v(row, 'workLabel'), kind: v(row, 'typeLabel'),
+          qid: workId, title: label, kind: v(row, 'typeLabel'),
           date: v(row, 'date').slice(0, 10), roles: new Set(),
           genres: [], series: [], companies: [],
         };

@@ -88,7 +88,7 @@ export function SettingsWorkspace() {
             <span className="small" style={{ color: 'var(--text)' }}>Advanced Mode — Show The Formulas Behind Outcomes</span>
           </label>
           <div className="row gap-2">
-            <button className="btn btn-sm" onClick={() => run('tutorial.reset')}>Replay tutorials</button>
+            <button className="btn btn-sm" onClick={() => run('tutorial.reset')}>Replay Tutorials</button>
           </div>
           <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
             Replaying tutorials does not touch your save. {tutorial.completed.length} completed.
@@ -103,9 +103,9 @@ export function SettingsWorkspace() {
             <Stat label="Backup" value={sim.universe.meta.backupAvailable ? 'Available' : 'None yet'} />
           </div>
           <div className="row gap-2 wrap">
-            <button className="btn btn-sm" onClick={() => void saveNow()}>Save now</button>
+            <button className="btn btn-sm" onClick={() => void saveNow()}>Save Now</button>
             <button className="btn btn-sm" onClick={() => setValidation(validateUniverse(sim.universe))}>
-              Validate this universe
+              Validate This Universe
             </button>
             <button className="btn btn-sm" onClick={exitToMenu}>Save And Exit</button>
           </div>
@@ -149,10 +149,10 @@ export function SettingsWorkspace() {
 
           <div className="row gap-2 wrap">
             <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.max_attributes')}>
-              Max all attributes
+              Max All Attributes
             </button>
             <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.grant_all_traits')}>
-              Grant all traits
+              Grant All Traits
             </button>
             <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.add_funds', { amount: 100_000_000 })}>
               Add $1,000,000

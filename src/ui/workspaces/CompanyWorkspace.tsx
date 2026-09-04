@@ -28,7 +28,7 @@ export function CompanyWorkspace() {
         <Empty
           title="Nothing Founded"
           body="A production company separates your money from the business's, and is the only way to greenlight anything yourself."
-          action={<button className="btn btn-primary" onClick={() => setFounding(true)}>Found a company</button>}
+          action={<button className="btn btn-primary" onClick={() => setFounding(true)}>Found A Company</button>}
         />
         {founding && <FoundDialog onClose={() => setFounding(false)} />}
       </>
@@ -57,7 +57,7 @@ export function CompanyWorkspace() {
       {selected && <CompanyDetail companyId={selected.id} />}
 
       <div className="row gap-2" style={{ marginTop: 'var(--s5)' }}>
-        <button className="btn" onClick={() => setFounding(true)}>Found another company</button>
+        <button className="btn" onClick={() => setFounding(true)}>Found Another Company</button>
       </div>
 
       {founding && <FoundDialog onClose={() => setFounding(false)} />}
@@ -105,10 +105,10 @@ function CompanyDetail({ companyId }: { companyId: string }) {
             <hr className="divider" />
             <div className="row gap-2">
               <button className="btn btn-sm" onClick={() => run('co.invest', { companyId, amount: 5_000_000 })}>
-                Put in $50,000
+                Put In $50,000
               </button>
               <button className="btn btn-sm" onClick={() => run('co.distribute', { companyId, amount: 5_000_000 })}>
-                Take out $50,000
+                Take Out $50,000
               </button>
             </div>
             <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
@@ -170,7 +170,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                     </div>
                     <span className="mono small">{formatMoneyCompact(employee.annualSalary)}</span>
                     <button className="btn btn-sm btn-danger" onClick={() => run('co.terminate', { employeeId: employee.id })}>
-                      Let go
+                      Let Go
                     </button>
                   </div>
                 );

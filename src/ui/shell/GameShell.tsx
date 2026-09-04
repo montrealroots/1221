@@ -219,7 +219,7 @@ function SaveIndicator() {
   if (saveError) {
     return (
       <button className="btn btn-sm btn-danger" onClick={() => void saveNow()} title={saveError}>
-        Save failed — retry
+        Save Failed — Retry
       </button>
     );
   }

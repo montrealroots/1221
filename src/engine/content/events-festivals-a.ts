@@ -21,7 +21,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'rotterdam', name: 'The International Film Festival Rotterdam', shortName: 'IFFR', kind: 'festival', scope: 'film', organiser: 'IFFR',
-    city: 'Rotterdam', cityId: 'nl-zh-rotterdam', countryId: 'nl', zone: 'Europe/Amsterdam', editionOffset: 1971,
+    city: 'Rotterdam', cityId: 'nl-11-rotterdam', countryId: 'nl', zone: 'Europe/Amsterdam', editionOffset: 1971,
     start: nearest(1, 29, THU), days: 11, nominations: nearest(1, 8, THU),
     known: {},
     sections: ['Tiger Competition', 'Big Screen Competition', 'Bright Future', 'Harbour', 'Limelight', 'Cinema Regained', 'Focus', 'Short & Mid-length', 'Art Directions', 'CineMart', 'Hubert Bals Fund'],
@@ -88,7 +88,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'cph-dox', name: 'CPH:DOX', kind: 'festival', scope: 'documentary', organiser: 'Copenhagen Documentary Film Festival',
-    city: 'Copenhagen', cityId: 'dk-84-copenhagen', countryId: 'dk', zone: 'Europe/Copenhagen', editionOffset: 2002,
+    city: 'Copenhagen', cityId: 'dk-17-copenhagen', countryId: 'dk', zone: 'Europe/Copenhagen', editionOffset: 2002,
     start: nearest(3, 18, WED), days: 12, nominations: nearest(2, 20, THU),
     known: { 2026: { start: '2026-03-11', end: '2026-03-22', source: SEARCH('CPH:DOX 2026 dates') } },
     sections: ['DOX:AWARD', 'F:ACT AWARD', 'NEXT:WAVE', 'NORDIC:DOX', 'HUMAN:RIGHTS', 'New:Vision', 'Special Presentations', 'Sound & Vision', 'Science', 'CPH:CONFERENCE', 'CPH:FORUM', 'CPH:LAB'],
@@ -97,7 +97,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'series-mania', name: 'Series Mania', kind: 'festival', scope: 'tv', organiser: 'Series Mania',
-    city: 'Lille', cityId: 'fr-hdf-lille', countryId: 'fr', zone: 'Europe/Paris', editionOffset: 2009,
+    city: 'Lille', cityId: 'fr-32-lille', countryId: 'fr', zone: 'Europe/Paris', editionOffset: 2009,
     start: nearest(3, 20, FRI), days: 8, nominations: nearest(2, 5, THU),
     known: { 2026: { start: '2026-03-20', end: '2026-03-27', source: SEARCH('Series Mania 2026 dates') } },
     sections: ['International Competition', 'International Panorama', 'French Competition', 'Comedies', 'Short Forms', 'Out of Competition', 'Kids', 'Series Mania Forum', 'Co-Pro Pitching Sessions', 'Buyers Showcase'],
@@ -107,7 +107,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'hkiff', name: 'The Hong Kong International Film Festival', shortName: 'HKIFF', kind: 'festival', scope: 'film', organiser: 'HKIFF Society',
-    city: 'Hong Kong', cityId: 'hk-hk-hongkong', countryId: 'hk', zone: 'Asia/Hong_Kong', editionOffset: 1976,
+    city: 'Hong Kong', cityId: 'hk-hongkong', countryId: 'hk', zone: 'Asia/Hong_Kong', editionOffset: 1976,
     start: nearest(3, 30, MON), days: 14, nominations: nearest(3, 5, THU),
     known: {},
     sections: ['Gala Presentation', 'Young Cinema Competition (Chinese Language and World)', 'Documentary Competition', 'Short Film Competition', 'Firebird Awards', 'Masters & Auteurs', 'Global Vision', 'Hong Kong Panorama', 'Filmmaker in Focus', 'Restored Classics', 'Cine Fan', 'HKIFF Industry Project Market'],
@@ -117,7 +117,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'canneseries', name: 'Canneseries', kind: 'festival', scope: 'tv', organiser: 'Canneseries',
-    city: 'Cannes', cityId: 'fr-pac-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals', editionOffset: 2017,
+    city: 'Cannes', cityId: 'fr-paca-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals', editionOffset: 2017,
     start: nearest(4, 23, THU), days: 6, nominations: nearest(3, 5, THU),
     known: {
       2025: { start: '2025-04-24', end: '2025-04-29', source: WIKI('Canneseries') },
@@ -140,7 +140,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'cannes', name: 'The Cannes Film Festival', shortName: 'Cannes', kind: 'festival', scope: 'film', organiser: 'Festival de Cannes',
-    city: 'Cannes', cityId: 'fr-pac-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals et des Congrès', editionOffset: 1947,
+    city: 'Cannes', cityId: 'fr-paca-cannes', countryId: 'fr', zone: 'Europe/Paris', venue: 'Palais des Festivals et des Congrès', editionOffset: 1947,
     start: nearest(5, 13, TUE), days: 12, nominations: nearest(4, 10, THU),
     known: {
       2025: { start: '2025-05-13', end: '2025-05-24', nominations: '2025-04-10', source: WIKI('2025 Cannes Film Festival') },
@@ -153,7 +153,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'annecy', name: 'The Annecy International Animation Film Festival', shortName: 'Annecy', kind: 'festival', scope: 'animation', organiser: 'CITIA',
-    city: 'Annecy', cityId: 'fr-ara-annecy', countryId: 'fr', zone: 'Europe/Paris', editionOffset: 1959,
+    city: 'Annecy', cityId: 'fr-84-annecy', countryId: 'fr', zone: 'Europe/Paris', editionOffset: 1959,
     start: nearest(6, 9, SUN), days: 7, nominations: nearest(4, 24, THU),
     known: { 2025: { start: '2025-06-08', end: '2025-06-14', source: EDITORIAL } },
     sections: ['Feature Films (Official Competition)', 'Contrechamp', 'Short Films', 'Off-Limits', 'Perspectives', 'TV Films', 'Commissioned Films', 'Graduation Films', 'Immersive Works', 'Young Audiences', 'Annecy Presents', 'Midnight Specials', 'Screening Events', 'Work in Progress', 'Mifa (market)'],
@@ -256,7 +256,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'sarajevo', name: 'The Sarajevo Film Festival', kind: 'festival', scope: 'film', organiser: 'Obala Art Centar',
-    city: 'Sarajevo', cityId: 'ba-bih-sarajevo', countryId: 'ba', zone: 'Europe/Sarajevo', venue: 'National Theatre and the Open Air Cinema', editionOffset: 1994,
+    city: 'Sarajevo', cityId: 'ba-01-sarajevo', countryId: 'ba', zone: 'Europe/Sarajevo', venue: 'National Theatre and the Open Air Cinema', editionOffset: 1994,
     start: nearest(8, 14, FRI), days: 8, nominations: nearest(7, 15, WED),
     known: {},
     sections: ['Competition Programme – Feature Film', 'Competition Programme – Short Film', 'Competition Programme – Student Film', 'Competition Programme – Documentary Film', 'Kinoscope', 'In Focus', 'Open Air', 'Dealing with the Past', 'BH Film', 'Tribute To', 'CineLink Industry Days', 'Talents Sarajevo'],
@@ -266,7 +266,7 @@ export const FESTIVALS_A: IndustryEventSpec[] = [
   },
   {
     id: 'venice', name: 'The Venice International Film Festival', shortName: 'Venice', kind: 'festival', scope: 'film', organiser: 'La Biennale di Venezia',
-    city: 'Venice', cityId: 'it-34-venice', countryId: 'it', zone: 'Europe/Rome', venue: 'Palazzo del Cinema, Lido', editionOffset: 1943,
+    city: 'Venice', cityId: 'it-20-venice', countryId: 'it', zone: 'Europe/Rome', venue: 'Palazzo del Cinema, Lido', editionOffset: 1943,
     start: nearest(9, 1, WED), days: 11, nominations: nearest(7, 23, TUE),
     known: {
       2025: { start: '2025-08-27', end: '2025-09-06', source: WIKI('82nd Venice International Film Festival') },

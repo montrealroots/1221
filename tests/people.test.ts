@@ -29,6 +29,24 @@ beforeAll(() => {
 });
 
 describe('what the record holds', () => {
+  it('never shows an identifier where a title should be', () => {
+    // The label service hands back a bare Q-id when a work has no label in any
+    // language it was asked for. 'Q140513844' is not a film anybody has heard
+    // of, and putting one in front of a player is worse than leaving the
+    // credit out.
+    const idish: string[] = [];
+    for (const person of allPeople()) {
+      for (const credit of creditsFor(person.qid)) {
+        if (/^Q\d+$/.test(credit.title.trim())) idish.push(`${person.name}: ${credit.title}`);
+      }
+      for (const award of awardsFor(person.qid)) {
+        if (/^Q\d+$/.test(award.award.trim())) idish.push(`${person.name}: ${award.award}`);
+        if (award.forWork && /^Q\d+$/.test(award.forWork.trim())) idish.push(`${person.name}: ${award.forWork}`);
+      }
+    }
+    expect(idish, `identifiers used as titles:\n${idish.slice(0, 20).join('\n')}`).toEqual([]);
+  });
+
   it('loads the whole roster, each of them once', () => {
     expect(isPeopleLoaded()).toBe(true);
     const people = allPeople();

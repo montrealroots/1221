@@ -8,8 +8,17 @@
  * name for every title. Reuse is what lets the player recognise a name on a
  * breakdown, and what makes "the one who made that other thing" mean something.
  *
- * They are generated people. None of them is a real director, and nothing in
- * the game should ever present them as one.
+ * Most of them are generated people. None of those is a real director, and
+ * nothing in the game should ever present one as one — they have invented
+ * names and no record behind them.
+ *
+ * Some of them are not generated. A production the world is making can reach
+ * for somebody off the roster the same way the player can, because an industry
+ * where only the player can hire a name is not an industry. Anybody who comes
+ * in that way carries their `recordQid`, which is what every screen reads to
+ * keep the two apart: their filmography and their awards are the public
+ * record; the picture they took in your save is your save's, and is labelled
+ * as such wherever it is shown.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -18,6 +27,9 @@ import type { Rng } from '../core/rng';
 import { clamp } from '../core/rng';
 import { MS_DAY } from '../core/time';
 import { generatePersonName } from '../content/names';
+import { isPeopleLoaded, peopleInRole } from '../content/people';
+import { countryIdForRecord, ensureRealPerson, personForRecord } from './real-people';
+import type { CraftRole } from '../content/craft-attributes';
 
 export type CrewRole = 'director' | 'producer' | 'writer' | 'showrunner';
 
@@ -34,15 +46,92 @@ function reuseChance(poolSize: number): number {
   return Math.min(poolSize / (poolSize + 3.5), 0.93);
 }
 
-function crewPool(sim: Simulation, role: CrewRole, countryId: string): Person[] {
+/**
+ * How many unfinished pictures one person can be on at once.
+ *
+ * A director shoots one thing at a time and preps the next; a producer can
+ * genuinely have several going, which is what a producer is. Whoever is at the
+ * cap is not offered the next job, which is what keeps a working pool working
+ * rather than a handful of names carrying the entire country's slate.
+ */
+const AT_ONCE: Readonly<Record<CrewRole, number>> = {
+  director: 2, showrunner: 2, writer: 3, producer: 4,
+};
+
+/**
+ * Who is already carrying a full plate, counted in one pass over the slate
+ * rather than once per candidate — that scan is quadratic over a long career,
+ * and this runs every time the world commissions anything.
+ */
+function bookedSolid(sim: Simulation, role: CrewRole): Set<Id> {
+  const load = new Map<Id, number>();
+  const add = (id: Id | undefined) => {
+    if (!id) return;
+    load.set(id, (load.get(id) ?? 0) + 1);
+  };
+  for (const project of Object.values(sim.universe.projects)) {
+    if (project.phase === 'released' || project.phase === 'library' || project.phase === 'shelved') continue;
+    if (role === 'director') add(project.directorId);
+    else if (role === 'showrunner') add(project.showrunnerId);
+    else if (role === 'writer') for (const id of project.writerIds) add(id);
+    else for (const id of project.producerIds) add(id);
+  }
+  const busy = new Set<Id>();
+  for (const [id, count] of load) if (count >= AT_ONCE[role]) busy.add(id);
+  return busy;
+}
+
+function crewPool(sim: Simulation, role: CrewRole, countryId: string, busy: Set<Id>): Person[] {
   return Object.values(sim.universe.people).filter(
-    (p) => !p.isPlayer && p.industryRole === role && p.citizenshipId === countryId && !p.aliveUntil,
+    (p) => !p.isPlayer && p.industryRole === role && p.citizenshipId === countryId
+      && !p.aliveUntil && !busy.has(p.id),
   );
+}
+
+/**
+ * How often a production the world is making goes to somebody off the roster
+ * rather than inventing a name. A real name is meant to be an event — you see
+ * one on a breakdown and it means something — so it is the exception.
+ *
+ * There is no writers' craft on the roster, so a writer is always invented.
+ */
+const REAL_NAME_CHANCE: Readonly<Record<CrewRole, number>> = {
+  director: 0.26, showrunner: 0.22, producer: 0.14, writer: 0,
+};
+
+/**
+ * Somebody real who does this job in this country and is not already booked
+ * solid, or nothing when the roster has nobody who fits.
+ */
+function realCrewPerson(sim: Simulation, role: CrewRole, countryId: string, rng: Rng, busy: Set<Id>): Person | undefined {
+  if (role === 'writer' || !isPeopleLoaded()) return undefined;
+  const craft: CraftRole = role === 'showrunner' ? 'showrunner' : role === 'director' ? 'director' : 'producer';
+
+  const candidates = peopleInRole(craft).filter((record) => {
+    if (countryIdForRecord(record) !== countryId) return false;
+    const already = personForRecord(sim, record.qid);
+    return !already || !busy.has(already.id);
+  });
+  if (candidates.length === 0) return undefined;
+
+  // The busiest people get the most work, which is what makes them the busiest.
+  const weights = candidates.map((record) => 1 + (record.creditCount || 1));
+  let roll = rng.float(0, weights.reduce((a, b) => a + b, 0));
+  let chosen = candidates[candidates.length - 1]!;
+  for (let i = 0; i < candidates.length; i++) {
+    roll -= weights[i]!;
+    if (roll <= 0) { chosen = candidates[i]!; break; }
+  }
+  return ensureRealPerson(sim, chosen.qid);
 }
 
 /** Somebody who does this job in this country: usually one who already does. */
 export function ensureCrewPerson(sim: Simulation, role: CrewRole, countryId: string, cityId: string, rng: Rng): Person {
-  const pool = crewPool(sim, role, countryId);
+  // Nobody with a full plate is offered the next job, real or invented. It is
+  // the difference between a country with an industry and a country with four
+  // people in it directing everything.
+  const busy = bookedSolid(sim, role);
+  const pool = crewPool(sim, role, countryId, busy);
   if (pool.length > 0 && rng.chance(reuseChance(pool.length))) {
     // Weighted to the ones who are working: standing is what gets you the job.
     const weights = pool.map((p) => 8 + p.reputation.professionalReputation);
@@ -53,6 +142,13 @@ export function ensureCrewPerson(sim: Simulation, role: CrewRole, countryId: str
       if (roll <= 0) return pool[i]!;
     }
     return pool[pool.length - 1]!;
+  }
+
+  // Nobody in the pool this time. Sometimes that is because the job went to
+  // somebody the player has heard of.
+  if (rng.chance(REAL_NAME_CHANCE[role])) {
+    const real = realCrewPerson(sim, role, countryId, rng, busy);
+    if (real) return real;
   }
 
   const name = generatePersonName(rng);

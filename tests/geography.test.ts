@@ -143,4 +143,41 @@ describe('the city files on disk', () => {
   it('puts the United States somewhere near seventeen thousand towns', () => {
     expect(cityCount('us')).toBeGreaterThan(15_000);
   });
+
+  /**
+   * A city id written into the content is a promise that the place exists. A
+   * festival pointing at a city that is not in the world has no venue, no time
+   * zone and no travel to it, and nothing in the game would say so out loud —
+   * it would just quietly be nowhere. So every one of them is resolved here.
+   */
+  it('resolves every city named anywhere in the content', () => {
+    const known = new Set<string>();
+    for (const file of readdirSync(dir)) {
+      for (const line of readFileSync(`${dir}/${file}`, 'utf8').split('\n')) {
+        const id = line.split('\t')[0];
+        if (id) known.add(id);
+      }
+    }
+
+    const sources: string[] = [];
+    const walk = (folder: string) => {
+      for (const entry of readdirSync(folder, { withFileTypes: true })) {
+        const full = `${folder}/${entry.name}`;
+        if (entry.isDirectory()) walk(full);
+        else if (/\.tsx?$/.test(entry.name)) sources.push(full);
+      }
+    };
+    walk('src');
+
+    const missing: string[] = [];
+    for (const file of sources) {
+      const text = readFileSync(file, 'utf8');
+      const pattern = /(?:cityId|locationId|homeRegionId|currentLocationId):\s*'([a-z]{2}-[a-z0-9-]+)'/g;
+      let match: RegExpExecArray | null;
+      while ((match = pattern.exec(text)) !== null) {
+        if (!known.has(match[1]!)) missing.push(`${file}: ${match[1]}`);
+      }
+    }
+    expect(missing, `city ids in the content that are nowhere in the world:\n${missing.join('\n')}`).toEqual([]);
+  });
 });

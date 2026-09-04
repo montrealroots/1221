@@ -133,7 +133,7 @@ export function WellbeingWorkspace() {
                   className="btn btn-sm"
                   onClick={() => run('life.do_activity', { activityId: activity.id, minutes: duration })}
                 >
-                  Do it
+                  Do It
                 </button>
               </div>
             );

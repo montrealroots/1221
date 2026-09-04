@@ -73,11 +73,11 @@ export function RelationshipsWorkspace() {
                   )}
                   {!isRomantic(selected.rel.type) && relationshipStrength(selected.rel, sim.now) >= 48 && (
                     <button className="btn btn-sm" onClick={() => run('rel.define', { relationshipId: selected.rel.id })}>
-                      Define the relationship
+                      Define The Relationship
                     </button>
                   )}
-                  <button className="btn btn-sm" onClick={() => setDateOpen(true)}>Ask out</button>
-                  <button className="btn btn-sm" onClick={() => setGiftOpen(true)}>Give a gift</button>
+                  <button className="btn btn-sm" onClick={() => setDateOpen(true)}>Ask Out</button>
+                  <button className="btn btn-sm" onClick={() => setGiftOpen(true)}>Give A Gift</button>
                 </>
               }
             >

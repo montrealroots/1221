@@ -68,7 +68,7 @@ export function PropertyWorkspace() {
                       className="btn btn-sm"
                       onClick={() => run('prop.list_for_sale', { propertyId: property.id, askingPrice: property.marketValue })}
                     >
-                      List for sale
+                      List For Sale
                     </button>
                   ) : undefined
                 }
@@ -160,7 +160,7 @@ export function PropertyWorkspace() {
                         They came back at {formatMoney(offer.counterAmount ?? 0)}.
                         <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
                           <button className="btn btn-sm btn-primary" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: true })}>Accept</button>
-                          <button className="btn btn-sm" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: false })}>Walk away</button>
+                          <button className="btn btn-sm" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: false })}>Walk Away</button>
                         </div>
                       </div>
                     )}
@@ -279,7 +279,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
       <Panel
         title="Construction"
         subtitle="Land, concept, architect, design, plans, zoning, permits, bids, contracts, then twenty phases of actual building."
-        actions={<button className="btn btn-sm btn-primary" disabled={land.length === 0} onClick={() => setOpen(true)}>Start a build</button>}
+        actions={<button className="btn btn-sm btn-primary" disabled={land.length === 0} onClick={() => setOpen(true)}>Start A Build</button>}
         flush
       >
         {builds.length === 0 ? (
@@ -379,7 +379,7 @@ function BuildTab({ builds }: { builds: ConstructionProject[] }) {
                     setOpen(false);
                   }}
                 >
-                  Build here
+                  Build Here
                 </button>
               </div>
             </div>

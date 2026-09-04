@@ -293,7 +293,7 @@ export function Home() {
           ) : (
             <div className="col gap-2">
               <p className="small muted">You are not employed.</p>
-              <button className="btn btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Find work</button>
+              <button className="btn btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Find Work</button>
             </div>
           )}
         </Panel>
@@ -351,7 +351,7 @@ export function Home() {
           ) : (
             <div className="col gap-2">
               <p className="small muted">You do not have a place of your own.</p>
-              <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find somewhere</button>
+              <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find Somewhere</button>
             </div>
           )}
         </Panel>

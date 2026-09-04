@@ -178,6 +178,16 @@ export interface Person {
   archetype?: string;
   /** Professional role for industry NPCs, e.g. 'casting_director'. */
   industryRole?: string;
+  /**
+   * The public record this person came from, when they are a real person.
+   *
+   * Set the first time the player deals with somebody on the roster, which is
+   * when they stop being reference data and start being someone in the save
+   * who can be offered a part, say no, sign a contract and take a credit.
+   * Everything the game shows about them beyond that point is this save's own
+   * history, and the screens say so.
+   */
+  recordQid?: string;
   /** Company the NPC works for, if any. */
   affiliationId?: Id;
   /** Authority to greenlight, in cents. Zero means no authority. */
@@ -1313,6 +1323,29 @@ export interface ScriptDraft {
   isCurrent: boolean;
 }
 
+/**
+ * An offer put to somebody by name, and what they said.
+ *
+ * Kept on the role rather than thrown away, for two reasons. It is the record
+ * of who you went to and why they passed, which the player is entitled to see.
+ * And it is what makes a second attempt safe: an offer that has already been
+ * answered is never re-rolled, so a retry cannot book the same person twice or
+ * turn a no into a yes by asking again.
+ */
+export interface RoleOffer {
+  personId: Id;
+  /** The public record behind them, when the person is a real one. */
+  recordQid?: string;
+  name: string;
+  amount: Money;
+  offeredAt: Instant;
+  answer: 'accepted' | 'declined';
+  /** Why, in their words. */
+  reason: string;
+  /** What SLATE reckoned they would take, at the time of asking. */
+  wanted: Money;
+}
+
 export interface Role {
   id: Id;
   saveId: Id;
@@ -1340,6 +1373,8 @@ export interface Role {
    * quadratic over a long career.
    */
   auditionIds: Id[];
+  /** Every offer put to somebody by name on this part, and what they said. */
+  offers?: RoleOffer[];
 }
 
 export type AuditionStage = 'submitted' | 'self_tape' | 'first_read' | 'callback' | 'chemistry_read' | 'screen_test' | 'offer' | 'passed' | 'booked';
@@ -2133,7 +2168,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 18;
+export const SAVE_SCHEMA_VERSION = 19;
 
 export interface SaveMeta {
   id: Id;

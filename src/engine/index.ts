@@ -40,6 +40,7 @@ import { registerStudios, ensureStudioSchedules } from './systems/studios';
 import { registerNetworks, ensureNetworkSchedules } from './systems/networks-live';
 import { registerZeitgeist, ensureZeitgeist, commissionProject } from './systems/zeitgeist';
 import { registerProfessions } from './systems/professions';
+import { registerRealPeople } from './systems/real-people';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -79,6 +80,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerNetworks(sim);
   registerZeitgeist(sim);
   registerProfessions(sim);
+  registerRealPeople(sim);
   registerDriving(sim);
   registerAwards(sim);
   registerCompany(sim);
@@ -763,6 +765,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(filler.length > 0
       ? `The world commissions its own films now, by country and by what is in fashion there. ${filler.length} unstarted filler production${filler.length === 1 ? '' : 's'} and ${clearedRoles} open role${clearedRoles === 1 ? '' : 's'} that existed only to fill the casting page were cleared; everything you were ever attached to was kept.`
       : 'The world commissions its own films now, by country and by what is in fashion there.');
+  }
+
+  if (from < 19) {
+    // You can now go to a real person by name rather than only opening a room.
+    // Every part keeps a record of who was asked, what they were offered and
+    // what they said, so a second attempt reads back the first answer instead
+    // of rolling a new one. Parts that already exist start that record empty —
+    // nothing that was cast before stops being cast.
+    for (const role of Object.values(universe.roles)) role.offers ??= [];
+    steps.push('You can take a part to somebody by name now. Every part keeps the offers put to it and the answers, so asking twice cannot book the same person twice.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

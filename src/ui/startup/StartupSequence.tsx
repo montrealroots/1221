@@ -191,7 +191,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
             <p className="small" style={{ marginTop: 'var(--s1)' }}>{failure.message}</p>
             <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
               <button className="btn btn-primary btn-sm" onClick={() => setAttempt((a) => a + 1)}>
-                Try again
+                Try Again
               </button>
             </div>
           </div>

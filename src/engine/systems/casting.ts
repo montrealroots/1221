@@ -25,6 +25,8 @@ import { generateCharacterName, generatePersonName } from '../content/names';
 import { CITIES } from '../content/geography';
 import { recordCredit } from './film';
 import { titleCaseLabel } from '../core/text';
+import { ageOf, isPeopleLoaded, peopleInRole } from '../content/people';
+import { countryIdForRecord, ensureRealPerson, personForRecord } from './real-people';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
@@ -335,6 +337,9 @@ export function registerCasting(sim: Simulation): void {
 // Mechanics
 // ---------------------------------------------------------------------------
 
+/** How many unreleased pictures anybody takes at once before they are busy. */
+const ACTOR_AT_ONCE = 3;
+
 function defaultRequirements(project: Project, billing: Role['billing']): { attributeId: string; weight: number }[] {
   const genre = project.genres[0] ?? 'drama';
   const byGenre: Record<string, string[]> = {
@@ -363,9 +368,18 @@ function ensureCandidate(sim: Simulation, role: Role, index: number): Person {
   const project = sim.universe.projects[role.projectId];
   const rng = sim.rng('candidate_pool', role.id, index);
 
-  // Reuse existing actors in the world before inventing new ones.
+  // Reuse existing actors in the world before inventing new ones — but not
+  // anyone already carrying a full slate. Somebody shooting three things does
+  // not read for a fourth, and without that the same handful of names end up
+  // in everything the world makes.
+  const load = new Map<Id, number>();
+  for (const other of Object.values(sim.universe.projects)) {
+    if (other.phase === 'released' || other.phase === 'library' || other.phase === 'shelved') continue;
+    for (const id of other.castIds) load.set(id, (load.get(id) ?? 0) + 1);
+  }
   const pool = Object.values(sim.universe.people).filter(
-    (p) => !p.isPlayer && p.careerTrack === 'actor' && !p.aliveUntil,
+    (p) => !p.isPlayer && p.careerTrack === 'actor' && !p.aliveUntil
+      && (load.get(p.id) ?? 0) < ACTOR_AT_ONCE,
   );
   if (pool.length > 24 && rng.chance(0.6)) {
     return rng.pick(pool);
@@ -939,13 +953,80 @@ function pickBrief(briefs: readonly string[], used: Set<string>, rng: ReturnType
 }
 
 /**
+ * How often a name already on a world production is somebody real, by how big
+ * the part is. A lead is where a production spends its name; a featured part
+ * almost never is.
+ */
+const REAL_CAST_CHANCE: Readonly<Record<Role['billing'], number>> = {
+  lead: 0.34, supporting: 0.16, featured: 0.05, day_player: 0, voice: 0.10, cameo: 0.22,
+};
+
+/**
+ * A real actor who could take this part on this production: from the country
+ * it is being made in, the age it is written for as their real date of birth
+ * has it, and not already booked solid or already in this picture.
+ */
+function realActorFor(sim: Simulation, role: Role, project: Project, rng: ReturnType<Simulation['rng']>): Person | undefined {
+  if (!isPeopleLoaded()) return undefined;
+  const countryId = project.productionCountryId;
+  if (!countryId) return undefined;
+
+  // Who is already carrying too much, counted once over the slate rather than
+  // once per candidate: that scan is quadratic over a long career.
+  const load = new Map<Id, number>();
+  for (const other of Object.values(sim.universe.projects)) {
+    if (other.phase === 'released' || other.phase === 'library' || other.phase === 'shelved') continue;
+    for (const id of other.castIds) load.set(id, (load.get(id) ?? 0) + 1);
+  }
+  const inThis = new Set(project.castIds);
+
+  const candidates = peopleInRole('actor').filter((record) => {
+    if (countryIdForRecord(record) !== countryId) return false;
+    const age = ageOf(record, sim.now);
+    if (age === undefined || age < role.ageRange[0] - 4 || age > role.ageRange[1] + 6) return false;
+    const already = personForRecord(sim, record.qid);
+    if (!already) return true;
+    if (inThis.has(already.id)) return false;
+    return (load.get(already.id) ?? 0) < ACTOR_AT_ONCE;
+  });
+  if (candidates.length === 0) return undefined;
+
+  // Bigger parts go to bigger bodies of work.
+  const weights = candidates.map((record) => 1 + (record.creditCount || 1) * (role.billing === 'lead' ? 1.6 : 1));
+  let roll = rng.float(0, weights.reduce((a, b) => a + b, 0));
+  let chosen = candidates[candidates.length - 1]!;
+  for (let i = 0; i < candidates.length; i++) {
+    roll -= weights[i]!;
+    if (roll <= 0) { chosen = candidates[i]!; break; }
+  }
+  return ensureRealPerson(sim, chosen.qid);
+}
+
+/**
  * Somebody is already in it.
  *
  * This is an attachment rather than a casting decision: no room, no reading,
  * no offer. It is how a production has a name on it before the breakdown goes
  * out, and no money moves because none of it is the player's.
+ *
+ * Some of the time the name is somebody real, drawn off the roster the same
+ * way the player draws one. That is what makes a breakdown worth reading: the
+ * picture you are submitting for might have somebody on it you have heard of.
  */
 function attachToRole(sim: Simulation, role: Role, project: Project, rng: ReturnType<Simulation['rng']>): boolean {
+  if (rng.chance(REAL_CAST_CHANCE[role.billing])) {
+    const real = realActorFor(sim, role, project, rng);
+    if (real && !project.castIds.includes(real.id)) {
+      role.status = 'cast';
+      role.castPersonId = real.id;
+      role.decidesAt = undefined;
+      project.castIds.push(real.id);
+      if (!real.creditIds.includes(project.id)) real.creditIds.push(project.id);
+      recordCredit(sim, project, real.id, role.billing, role.characterName);
+      return true;
+    }
+  }
+
   // Nobody plays two parts in the same picture, so a name already on it is
   // passed over. If nobody free turns up, the part goes out to be cast like
   // any other rather than quietly disappearing.

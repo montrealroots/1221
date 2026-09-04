@@ -17,6 +17,9 @@ import { BUYERS } from '@/engine/content/industry';
 import { PROJECT_PHASE_ORDER, type ProjectFormat } from '@/engine/domain/model';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate, addDays } from '@/engine/core/time';
+import { ApproachCraftDialog, OfferRealDialog } from '@/ui/components/ApproachRoom';
+import { CRAFT_ROLE_LABEL, type CraftRole } from '@/engine/content/craft-attributes';
+import { personByQid } from '@/engine/content/people';
 
 export function ProjectsWorkspace() {
   const projects = useWorld((s) => activeProjects(s, s.player.id));
@@ -37,7 +40,7 @@ export function ProjectsWorkspace() {
       </div>
 
       <div className="row gap-2" style={{ marginBottom: 'var(--s5)' }}>
-        <button className="btn btn-primary" onClick={() => setCreating(true)}>Start something new</button>
+        <button className="btn btn-primary" onClick={() => setCreating(true)}>Start Something New</button>
       </div>
 
       {projects.length === 0 ? (
@@ -74,6 +77,18 @@ export function ProjectsWorkspace() {
   );
 }
 
+/**
+ * The chairs a picture has, and what each one is for. A showrunner only appears
+ * on a series, because only a series has one.
+ */
+const CRAFT_CHAIRS: { role: Exclude<CraftRole, 'actor'>; attachment: string; note: string }[] = [
+  { role: 'director', attachment: 'director', note: 'The one whose picture it becomes. Attaching one is what makes a package a package.' },
+  { role: 'showrunner', attachment: 'showrunner', note: 'Runs the room, the writing and the season. A series lives or dies on this chair.' },
+  { role: 'producer', attachment: 'producer', note: 'The one who gets it made. A name here opens doors a script alone will not.' },
+  { role: 'cinematographer', attachment: 'cinematographer', note: 'How it looks, and how fast it can be shot. Chosen with the director, in prep.' },
+  { role: 'composer', attachment: 'composer', note: 'The score. Nothing to write until there is a cut, but the deal is done early.' },
+];
+
 function ProjectDetail({ projectId }: { projectId: string }) {
   const { sim, run } = useGame();
   const project = useWorld((s) => s.universe.projects[projectId]);
@@ -86,6 +101,10 @@ function ProjectDetail({ projectId }: { projectId: string }) {
   const roles = useWorld((s) => Object.values(s.universe.roles).filter((r) => r.projectId === projectId));
   const drafts = useWorld((s) => project?.scriptDraftIds.map((id) => s.universe.scriptDrafts[id]).filter(Boolean) ?? []);
   const [tab, setTab] = useState<'overview' | 'script' | 'cast' | 'production' | 'post' | 'release'>('overview');
+  // Which part you are taking to somebody by name, and which chair you are
+  // trying to fill. Only one of either is ever open.
+  const [offering, setOffering] = useState<string | null>(null);
+  const [approaching, setApproaching] = useState<Exclude<CraftRole, 'actor'> | null>(null);
 
   if (!project) return <Empty title="Gone" body="That project no longer exists." />;
 
@@ -130,7 +149,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
                   sourceKind: 'original', acquisitionKind: 'original', cost: 0,
                 })}
               >
-                Register your own original material
+                Register Your Own Original Material
               </button>
             </div>
           </div>
@@ -300,34 +319,83 @@ function ProjectDetail({ projectId }: { projectId: string }) {
       )}
 
       {tab === 'cast' && (
-        <Panel title="Roles" flush>
-          {roles.length === 0 ? (
-            <Empty title="No Roles Yet" body="Break the script down into parts before you can cast it." />
-          ) : (
+        <div className="col gap-4">
+          <Panel
+            title="The Chairs"
+            subtitle="A picture is who is on it. Go to somebody by name and they can say no."
+            flush
+          >
             <div className="list">
-              {roles.map((role) => {
-                const cast = role.castPersonId ? sim.universe.people[role.castPersonId] : undefined;
-                return (
-                  <div key={role.id} className="list-item list-static">
-                    <div className="grow">
-                      <div className="small strong">{role.characterName}</div>
-                      <div className="xs dim">
-                        {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} days · {formatMoney(role.payLow, { cents: false })}–{formatMoney(role.payHigh, { cents: false })}
+              {CRAFT_CHAIRS.filter((chair) => chair.role !== 'showrunner' || project.format === 'series' || project.format === 'limited_series')
+                .map((chair) => {
+                  const sitting = project.attachments.find((a) => a.role === chair.attachment);
+                  const person = sitting ? sim.universe.people[sitting.personId] : undefined;
+                  const record = person?.recordQid ? personByQid(person.recordQid) : undefined;
+                  return (
+                    <div key={chair.role} className="list-item list-static">
+                      <div className="grow">
+                        <div className="small strong">{CRAFT_ROLE_LABEL[chair.role]}</div>
+                        <div className="xs dim">{chair.note}</div>
+                        {person && (
+                          <div className="xs positive">
+                            {person.displayName}
+                            {record ? ` · ${record.creditCount} credits on the record` : ''}
+                          </div>
+                        )}
                       </div>
-                      {cast && <div className="xs positive">Cast: {cast.displayName}</div>}
+                      {person
+                        ? <span className="chip chip-positive">Attached</span>
+                        : (
+                          <button className="btn btn-sm" onClick={() => setApproaching(chair.role)}>
+                            Approach Somebody
+                          </button>
+                        )}
                     </div>
-                    <span className="chip">{titleCaseLabel(role.status.replace(/_/g, ' '))}</span>
-                    {role.status === 'open' && (
-                      <button className="btn btn-sm" onClick={() => run('cast.open_casting', { roleId: role.id })}>
-                        Open casting
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
-          )}
-        </Panel>
+          </Panel>
+
+          <Panel title="Roles" flush>
+            {roles.length === 0 ? (
+              <Empty title="No Roles Yet" body="Break the script down into parts before you can cast it." />
+            ) : (
+              <div className="list">
+                {roles.map((role) => {
+                  const cast = role.castPersonId ? sim.universe.people[role.castPersonId] : undefined;
+                  const passes = (role.offers ?? []).filter((offer) => offer.answer === 'declined');
+                  return (
+                    <div key={role.id} className="list-item list-static">
+                      <div className="grow">
+                        <div className="small strong">{role.characterName}</div>
+                        <div className="xs dim">
+                          {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} days · {formatMoney(role.payLow, { cents: false })}–{formatMoney(role.payHigh, { cents: false })} · ages {role.ageRange[0]}–{role.ageRange[1]}
+                        </div>
+                        {cast && <div className="xs positive">Cast: {cast.displayName}</div>}
+                        {passes.length > 0 && !cast && (
+                          <div className="xs muted" style={{ marginTop: 2 }}>
+                            Passed: {passes.map((offer) => `${offer.name} at ${formatMoneyCompact(offer.amount)}`).join(', ')}
+                          </div>
+                        )}
+                      </div>
+                      <span className="chip">{titleCaseLabel(role.status.replace(/_/g, ' '))}</span>
+                      {(role.status === 'open' || role.status === 'casting') && (
+                        <button className="btn btn-sm" onClick={() => setOffering(role.id)}>
+                          Offer It To Somebody
+                        </button>
+                      )}
+                      {role.status === 'open' && (
+                        <button className="btn btn-sm" onClick={() => run('cast.open_casting', { roleId: role.id })}>
+                          Open Casting
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </Panel>
+        </div>
       )}
 
       {tab === 'production' && (
@@ -473,6 +541,11 @@ function ProjectDetail({ projectId }: { projectId: string }) {
 
           {!release && <Empty title="Not Released" body="Finish the film, then plan a campaign and set a release." />}
         </>
+      )}
+
+      {offering && <OfferRealDialog roleId={offering} onClose={() => setOffering(null)} />}
+      {approaching && (
+        <ApproachCraftDialog projectId={project.id} role={approaching} onClose={() => setApproaching(null)} />
       )}
     </div>
   );
