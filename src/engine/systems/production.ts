@@ -12,16 +12,17 @@
 import { shootDayWeather } from './weather';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Id, Person, PostTask, PostTaskKind, Project, ShootDay } from '../domain/model';
+import type { Id, Person, PostTask, PostTaskKind, Project, ShootDay, ShootDayKind } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '../core/time';
+import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY, MS_HOUR, type Instant } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
 import { CITIES, cityTimeZone } from '../content/geography';
 import { costOfLiving, filmIncentive } from '../content/tax';
 import { advancePhase, computeFinalQuality, phaseIndex } from './film';
 import { readiness } from './life';
 import { playerControls } from './real-people';
-import { boardScript, buildCallSheet, runShootDay, setupsFor, type BoardedDay } from './shoot';
+import { boardScript, buildCallSheet, runAnimationBlock, runFactualDay, runShootDay, runStoryReelDay, runVoiceSession, setupsFor, type BoardedDay } from './shoot';
+import { EXTRA_POST_BY_KIND, pipelineFor, type Pipeline } from '../content/pipelines';
 import { houseLift, sessionLift } from './post';
 import { formatTime } from '../core/time';
 import { titleCaseLabel } from '../core/text';
@@ -66,6 +67,28 @@ export const POST_TASKS: readonly PostSpec[] = [
   { kind: 'mastering', name: 'Mastering', dependsOn: ['qc'], budgetShare: 0.02, days: 12, qualityWeight: 0.3 },
   { kind: 'delivery', name: 'Delivery', dependsOn: ['mastering', 'subtitles'], budgetShare: 0.01, days: 8, qualityWeight: 0.2 },
 ];
+
+/**
+ * The post graph a project actually runs, from its pipeline. A cartoon has a
+ * story reel, layout, animation and a render; a documentary has transcription,
+ * archive clearance and a legal review; a live-action picture has what it
+ * always had.
+ */
+export function postGraphFor(project: Project): PostSpec[] {
+  const pipeline = pipelineFor(project);
+  return pipeline.post.map((entry) => {
+    const base = POST_SPEC_BY_KIND[entry.kind] ?? EXTRA_POST_BY_KIND[entry.kind];
+    const extra = EXTRA_POST_BY_KIND[entry.kind];
+    return {
+      kind: entry.kind,
+      name: base?.name ?? extra?.name ?? titleCaseLabel(entry.kind.replace(/_/g, ' ')),
+      dependsOn: entry.after,
+      budgetShare: base?.budgetShare ?? extra?.budgetShare ?? 0.02,
+      days: base?.days ?? extra?.days ?? 20,
+      qualityWeight: base?.qualityWeight ?? extra?.qualityWeight ?? 0.5,
+    };
+  });
+}
 
 export const POST_SPEC_BY_KIND: Readonly<Record<string, PostSpec>> =
   Object.fromEntries(POST_TASKS.map((t) => [t.kind, t]));
@@ -134,6 +157,14 @@ export function registerProduction(sim: Simulation): void {
         throw new CommandError(
           `${openLeads.length} lead role${openLeads.length === 1 ? ' is' : 's are'} still uncast. You cannot board a schedule without your leads.`,
         );
+      }
+
+      // What kind of picture this is decides what a day even means.
+      const pipeline = pipelineFor(project);
+      if (pipeline.kind !== 'live_action' && pipeline.kind !== 'unscripted') {
+        return planNonPhotographic(s, project, pipeline, {
+          startAt: p.startAt, locationId, dayCount: p.shootDays, pages, sixDayWeek: p.sixDayWeek ?? false,
+        });
       }
 
       // A draft with a breakdown is boarded the way a first AD boards it:
@@ -541,6 +572,24 @@ function shootDay(sim: Simulation, shootDayId: Id): void {
     : 0.85;
 
   const castPresent = day.requiredCastIds.filter((id) => !missing.includes(id));
+  // A day that is not a shoot day runs on its own engine: a booth, an
+  // animation floor, an interview room, an archive.
+  if (day.kind && day.kind !== 'photography') {
+    const outcome = day.kind === 'voice_session' ? runVoiceSession(sim, day, project, rng, castPresent)
+      : day.kind === 'animation_block' || day.kind === 'stop_motion_unit' ? runAnimationBlock(sim, day, project, rng)
+        : day.kind === 'story_reel' ? runStoryReelDay(sim, day, project, rng)
+          : runFactualDay(sim, day, project, rng, castPresent);
+    day.hours = outcome.hours;
+    day.completedPages = outcome.completedPages;
+    day.footageQuality = outcome.footageQuality;
+    day.output = outcome.output;
+    day.actualCost = outcome.cost;
+    day.actualWrapTime = (day.callSheet?.crewCall ?? day.callTime) + Math.round(outcome.hoursWorked * MS_HOUR);
+    day.incidents.push(...outcome.incidents);
+    day.status = outcome.rolledOver.length === 0 ? 'complete' : 'incomplete';
+    finishDay(sim, day, project, castPresent, director, outcome.cost, 0);
+    return;
+  }
   if (day.callSheet) {
     shootBoardedDay(sim, day, project, rng, castPresent, missing, director);
     return;
@@ -853,6 +902,153 @@ function addPickupDay(sim: Simulation, project: Project, like: ShootDay, night: 
   return day;
 }
 
+/**
+ * A schedule for a picture that is not photographed.
+ *
+ * Animation records its cast in a booth and builds the film in blocks; stop
+ * motion runs units by the week; a documentary sits people down, goes out with
+ * a camera, and spends days in an archive. All of them use the same day record
+ * and the same calendar, because they are all a company of people turning up
+ * somewhere on a date.
+ */
+function planNonPhotographic(
+  sim: Simulation, project: Project, pipeline: Pipeline,
+  options: { startAt: Instant; locationId: string; dayCount?: number; pages: number; sixDayWeek: boolean },
+): { scheduledDays: number; wrapsAt: number; dailyBudget: Money } {
+  const roles = Object.values(sim.universe.roles).filter((r) => r.projectId === project.id);
+  const cast = roles.filter((r) => r.castPersonId);
+  const rng = sim.rng('plan', project.id);
+
+  // What the days are, in the order they happen.
+  const plan: { kind: ShootDayKind; count: number; everyDays: number; castIds: Id[][] }[] = [];
+  if (pipeline.kind === 'animation' || pipeline.kind === 'stop_motion') {
+    const sessions = Math.max(3, Math.min(40, cast.length * 3));
+    plan.push({
+      kind: 'voice_session', count: sessions, everyDays: 3,
+      castIds: Array.from({ length: sessions }, (_, i) => {
+        const role = cast[i % Math.max(1, cast.length)];
+        return role?.castPersonId ? [role.castPersonId] : [];
+      }),
+    });
+    plan.push({ kind: 'story_reel', count: Math.max(4, Math.round(options.pages / 9)), everyDays: 4, castIds: [] });
+    const blocks = options.dayCount ?? Math.max(8, Math.round(options.pages / (pipeline.kind === 'stop_motion' ? 2.2 : 4)));
+    plan.push({ kind: pipeline.kind === 'stop_motion' ? 'stop_motion_unit' : 'animation_block', count: blocks, everyDays: 7, castIds: [] });
+  } else {
+    const interviews = Math.max(3, Math.min(24, cast.length || 8));
+    plan.push({
+      kind: 'interview', count: interviews, everyDays: 4,
+      castIds: Array.from({ length: interviews }, (_, i) => {
+        const role = cast[i % Math.max(1, cast.length)];
+        return role?.castPersonId ? [role.castPersonId] : [];
+      }),
+    });
+    plan.push({ kind: 'verite', count: Math.max(4, Math.round(options.pages / 8)), everyDays: 3, castIds: [] });
+    plan.push({ kind: 'archive', count: Math.max(2, Math.round(options.pages / 22)), everyDays: 6, castIds: [] });
+  }
+
+  const total = plan.reduce((sum, part) => sum + part.count, 0);
+  const productionBudget = Math.round(project.budget * 0.62);
+  const dailyBudget = Math.round(productionBudget / Math.max(1, total));
+  const workDays = options.sixDayWeek ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5];
+  const zone = CITIES.get(options.locationId) ? cityTimeZone(options.locationId) : sim.homeZone;
+  const city = CITIES.require(options.locationId);
+
+  let cursor = options.startAt;
+  let placed = 0;
+  for (const part of plan) {
+    for (let i = 0; i < part.count; i++) {
+      let guard = 0;
+      while (guard++ < 14) {
+        const parts = zonedParts(cursor, sim.homeZone);
+        if (workDays.includes(parts.weekday)) break;
+        cursor = addDays(cursor, 1, sim.homeZone);
+      }
+      const parts = zonedParts(cursor, sim.homeZone);
+      const callTime = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: part.kind === 'voice_session' ? 10 : 9 }, zone);
+      placed++;
+      const castIds = part.castIds[i] ?? [];
+      const day: ShootDay = {
+        id: sim.nextId('shootday'),
+        saveId: sim.universe.meta.id,
+        projectId: project.id,
+        dayNumber: placed,
+        kind: part.kind,
+        date: callTime,
+        callTime,
+        wrapTargetTime: callTime + (part.kind === 'voice_session' ? 5 : 9) * MS_HOUR,
+        locationId: options.locationId,
+        locationName: locationNameFor(part.kind, city.name, rng),
+        isStage: part.kind !== 'verite' && part.kind !== 'archive',
+        scenes: [],
+        plannedPages: Number((options.pages / Math.max(1, total)).toFixed(1)),
+        completedPages: 0,
+        requiredCastIds: castIds,
+        crewCount: crewFor(part.kind, project.budget),
+        dailyBudget,
+        actualCost: 0,
+        status: 'scheduled',
+        incidents: [],
+        overtimeMinutes: 0,
+      };
+      day.callSheet = buildCallSheet(sim, day, project, 'standard');
+      sim.universe.shootDays[day.id] = day;
+      project.shootDayIds.push(day.id);
+      scheduleShootDay(sim, project, day, total);
+      cursor = addDays(cursor, part.everyDays, sim.homeZone);
+    }
+  }
+
+  project.scheduledShootDays = placed;
+  project.productionStartAt = options.startAt;
+  project.productionEndAt = cursor;
+  advancePhase(sim, project, 'preproduction');
+  sim.schedule({
+    at: addDays(cursor, 2, sim.homeZone),
+    kind: 'prod.wrap',
+    label: `${project.title} — Wrap`,
+    category: 'production',
+    payload: { projectId: project.id },
+    priority: 20,
+    refType: 'project', refId: project.id,
+  });
+  sim.remember({
+    category: 'project',
+    title: `${project.title} has a production plan`,
+    detail: `${placed} ${pipeline.units.toLowerCase()} in ${city.name}, starting ${formatDate(options.startAt, sim.homeZone)}. ${pipeline.scheduleNote}`,
+    refs: [{ type: 'project', id: project.id }],
+    significance: 55, public: false,
+  });
+  sim.emit('prod.schedule_built', { projectId: project.id, days: placed, locationId: options.locationId, dailyBudget, pipeline: pipeline.kind });
+  return { scheduledDays: placed, wrapsAt: cursor, dailyBudget };
+}
+
+function crewFor(kind: ShootDayKind, budget: Money): number {
+  const base = clamp(Math.round(remap(budget, 1_000_000_00, 200_000_000_00, 22, 260)), 12, 400);
+  switch (kind) {
+    case 'voice_session': return Math.max(3, Math.round(base * 0.04));
+    case 'story_reel': return Math.max(4, Math.round(base * 0.12));
+    case 'animation_block': return Math.max(8, Math.round(base * 0.8));
+    case 'stop_motion_unit': return Math.max(6, Math.round(base * 0.5));
+    case 'interview': return Math.max(4, Math.round(base * 0.12));
+    case 'verite': return Math.max(2, Math.round(base * 0.06));
+    case 'archive': return Math.max(1, Math.round(base * 0.03));
+    default: return base;
+  }
+}
+
+function locationNameFor(kind: ShootDayKind, cityName: string, rng: ReturnType<Simulation['rng']>): string {
+  switch (kind) {
+    case 'voice_session': return `${rng.pick(['Booth A', 'Booth B', 'Stage 3 Recording', 'The Vocal Booth'])}, ${cityName}`;
+    case 'story_reel': return `Story Department, ${cityName}`;
+    case 'animation_block': return `Animation Floor, ${cityName}`;
+    case 'stop_motion_unit': return `Unit Stage, ${cityName}`;
+    case 'interview': return `${rng.pick(['Interview Set', 'A Room With The Blinds Down', 'The Subject’s Home', 'A Hotel Suite'])}, ${cityName}`;
+    case 'verite': return `Out In ${cityName}`;
+    case 'archive': return `${rng.pick(['The Film Archive', 'A Regional Library', 'A Private Collection'])}, ${cityName}`;
+    default: return `${cityName} location`;
+  }
+}
+
 export function chargeProduction(sim: Simulation, project: Project, amount: Money, memo: string): void {
   const accountId = project.financingIds.find((id) => (sim.ledger.tryAccount(id)?.balance ?? 0) > 0) ?? project.financingIds[0];
   if (!accountId) return;
@@ -906,7 +1102,7 @@ export function openPost(sim: Simulation, projectId: Id): void {
   if (!project || project.postTaskIds.length > 0) return;
 
   const postBudget = Math.round(project.budget * 0.30);
-  for (const spec of POST_TASKS) {
+  for (const spec of postGraphFor(project)) {
     const task: PostTask = {
       id: sim.nextId('posttask'),
       saveId: sim.universe.meta.id,

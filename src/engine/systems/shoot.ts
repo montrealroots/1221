@@ -210,6 +210,8 @@ export function buildCallSheet(sim: Simulation, day: ShootDay, _project: Project
 
 export interface DayOutcome {
   hours: HourEntry[];
+  /** What the day produced, in whatever unit suits it. */
+  output?: ShootDay['output'];
   hoursWorked: number;
   overtimeMinutes: number;
   mealPenalty: boolean;
@@ -399,6 +401,236 @@ export function runShootDay(
   if (weatherHeld > 0) incidents.push({ at: sheet.crewCall, kind: 'weather', description: `${weatherHeld} hour${weatherHeld === 1 ? '' : 's'} held for weather.`, costDelta: 0, timeDeltaMinutes: weatherHeld * 60 });
 
   return { hours, hoursWorked, overtimeMinutes, mealPenalty, completedPages, footageQuality, rolledOver, cost, incidents };
+}
+
+// ---------------------------------------------------------------------------
+// The days that are not shoot days
+// ---------------------------------------------------------------------------
+
+/**
+ * A recording session: one or two actors in a booth, going through lines with
+ * the director and an engineer.
+ *
+ * A voice session is not a shoot day. There is no light to lose and no company
+ * to move; what runs out is the voice. An actor with stamina and technique gets
+ * through the pages; one without is hoarse by the third hour and the session
+ * ends early with half the lines in the can.
+ */
+export function runVoiceSession(sim: Simulation, day: ShootDay, project: Project, rng: Rng, present: Id[]): DayOutcome {
+  const hours: HourEntry[] = [];
+  const incidents: ShootDay['incidents'] = [];
+  const director = project.directorId ? sim.universe.people[project.directorId] : undefined;
+  const d = directorCraft(director);
+  const cast = present.map((id) => sim.universe.people[id]).filter((p): p is Person => Boolean(p));
+  const planned = day.plannedPages > 0 ? Math.round(day.plannedPages * 22) : 60;
+
+  const start = day.callSheet?.crewCall ?? day.callTime;
+  let clock = start;
+  let hour = 0;
+  let done = 0;
+  let quality = 0;
+  let weight = 0;
+
+  hours.push({ at: clock, kind: 'call', setups: 0, takes: 0, note: `${cast.map((p) => p.displayName).join(' and ') || 'The cast'} in the booth. Engineer up, director on the talkback.` });
+  clock += MS_HOUR; hour++;
+
+  const sheets = cast.map((p) => effectiveAttributes(p.attributes, p.traits));
+  const stamina = sheets.length > 0 ? sheets.reduce((sum, a) => sum + (a['vocal_stamina'] ?? 45), 0) / sheets.length : 55;
+  const technique = sheets.length > 0 ? sheets.reduce((sum, a) => sum + (a['voice_over'] ?? 40), 0) / sheets.length : 45;
+  const truth = sheets.length > 0 ? sheets.reduce((sum, a) => sum + (a['emotional_truth'] ?? 45), 0) / sheets.length : 45;
+  const range = sheets.length > 0 ? sheets.reduce((sum, a) => sum + (a['vocal_range'] ?? 45), 0) / sheets.length : 45;
+
+  // Four good hours is a long session. After that the voice goes.
+  const hardStop = 6;
+  while (hour < hardStop && done < planned) {
+    const fatigue = clamp(1 - Math.max(0, hour - 2) * remap(stamina, 20, 95, 0.22, 0.07), 0.25, 1);
+    const rate = (10 + technique / 6 + d.actors / 14) * fatigue * rng.float(0.85, 1.15);
+    const lines = Math.max(1, Math.round(Math.min(planned - done, rate)));
+    const takes = Math.round(lines * clamp(2.4 - technique / 60 + rng.normal(0, 0.4), 1, 6));
+    done += lines;
+    const hourQuality = clamp(truth * 0.4 + technique * 0.3 + range * 0.15 + d.actors * 0.15 + rng.normal(0, 5), 0, 100) * fatigue;
+    quality += hourQuality * lines;
+    weight += lines;
+    hours.push({
+      at: clock, kind: 'shooting', setups: 0, takes,
+      note: fatigue < 0.5
+        ? `${lines} lines, and you can hear the voice going.`
+        : `${lines} lines, ${takes} takes. ${hourQuality > 70 ? 'One of those where the read arrives on the second pass.' : 'Steady work.'}`,
+    });
+    clock += MS_HOUR; hour++;
+    if (fatigue <= 0.3) {
+      incidents.push({ at: clock, kind: 'voice_rest', description: 'Called it: the voice needs a day. The rest of the pages roll.', costDelta: 0, timeDeltaMinutes: 0 });
+      break;
+    }
+  }
+  hours.push({ at: clock, kind: 'wrap', setups: 0, takes: 0, note: done >= planned ? 'Wrapped the session. Everything in the can.' : `Wrapped ${done} of ${planned} lines. The rest goes on another session.` });
+
+  const hoursWorked = Number(((clock - start) / MS_HOUR).toFixed(1));
+  const cost = Math.round(day.dailyBudget * clamp(hoursWorked / 8, 0.35, 1.2));
+  for (const person of cast) {
+    person.attributes['voice_over'] = clamp((person.attributes['voice_over'] ?? 20) + 0.5, 0, 100);
+    person.attributes['vocal_stamina'] = clamp((person.attributes['vocal_stamina'] ?? 30) + 0.3, 0, 100);
+  }
+  return {
+    hours, hoursWorked, overtimeMinutes: 0, mealPenalty: false,
+    completedPages: Number((day.plannedPages * (planned > 0 ? done / planned : 0)).toFixed(1)),
+    footageQuality: weight > 0 ? clamp(Math.round(quality / weight), 0, 100) : 0,
+    rolledOver: done >= planned ? [] : ['lines'],
+    cost, incidents,
+    output: { unit: 'lines', done, planned },
+  };
+}
+
+/**
+ * A week of animation: shots assigned, shots finished.
+ *
+ * Nobody is waiting on the light. What decides the week is how many animators
+ * there are, how hard the shots are, and whether the director's notes arrive
+ * before the work is done rather than after.
+ */
+export function runAnimationBlock(sim: Simulation, day: ShootDay, project: Project, rng: Rng): DayOutcome {
+  const hours: HourEntry[] = [];
+  const incidents: ShootDay['incidents'] = [];
+  const director = project.directorId ? sim.universe.people[project.directorId] : undefined;
+  const d = directorCraft(director);
+  const dp = project.attachments.find((a) => a.role === 'cinematographer');
+  const c = dpCraft(dp ? sim.universe.people[dp.personId] : undefined);
+  const planned = Math.max(1, Math.round(day.plannedPages * 4));
+  const stopMotion = day.kind === 'stop_motion_unit';
+
+  // Seconds a week for stop motion; shots a week for computer animation.
+  const crew = clamp(day.crewCount / (stopMotion ? 6 : 4), 1, 60);
+  const perUnit = stopMotion ? 4.2 : 1.6;
+  const done = Math.max(1, Math.round(Math.min(planned, crew * perUnit * remap(d.efficiency, 20, 95, 0.8, 1.25) * rng.float(0.8, 1.2))));
+
+  const start = day.callSheet?.crewCall ?? day.callTime;
+  hours.push({ at: start, kind: 'call', setups: 0, takes: 0, note: stopMotion ? `${Math.round(crew)} units on the floor.` : `${day.crewCount} on the crew, ${planned} shots assigned.` });
+  hours.push({ at: start + 4 * MS_HOUR, kind: 'shooting', setups: done, takes: 0, note: stopMotion ? `${done} seconds in the can this week.` : `${done} shots through animation.` });
+  const notes = rng.chance(0.35);
+  if (notes) {
+    hours.push({ at: start + 6 * MS_HOUR, kind: 'idle', setups: 0, takes: 0, note: 'Dailies with the director. Half of it goes back for another pass.' });
+  }
+  if (stopMotion && rng.chance(0.18)) {
+    incidents.push({ at: start + 5 * MS_HOUR, kind: 'incident', description: 'A puppet was knocked mid-shot. That shot starts again from frame one.', costDelta: Math.round(day.dailyBudget * 0.08), timeDeltaMinutes: 240 });
+  }
+  hours.push({ at: start + 9 * MS_HOUR, kind: 'wrap', setups: 0, takes: 0, note: done >= planned ? 'The block is finished.' : `${planned - done} ${stopMotion ? 'seconds' : 'shots'} carried into next week.` });
+
+  const kit = kitQuality(sim, project);
+  const quality = clamp(Math.round(
+    d.vision * 0.3 + c.light * 0.2 + kit * 0.12 + remap(crew, 1, 40, 40, 88) * 0.25 + (notes ? 6 : 0) + rng.normal(0, 5),
+  ), 0, 100);
+  const cost = day.dailyBudget + incidents.reduce((sum, i) => sum + i.costDelta, 0);
+  return {
+    hours, hoursWorked: 9, overtimeMinutes: 0, mealPenalty: false,
+    completedPages: Number((day.plannedPages * (done / planned)).toFixed(1)),
+    footageQuality: quality,
+    rolledOver: done >= planned ? [] : [stopMotion ? 'seconds' : 'shots'],
+    cost, incidents,
+    output: { unit: stopMotion ? 'seconds' : 'shots', done, planned },
+  };
+}
+
+/**
+ * A day filming somebody real: an interview, a day out with the camera, or a
+ * day in an archive.
+ *
+ * What you get is what you are given. A subject can be guarded, generous, or
+ * not there at all, and the archive either has the footage or it does not.
+ */
+export function runFactualDay(sim: Simulation, day: ShootDay, project: Project, rng: Rng, present: Id[]): DayOutcome {
+  const hours: HourEntry[] = [];
+  const incidents: ShootDay['incidents'] = [];
+  const director = project.directorId ? sim.universe.people[project.directorId] : undefined;
+  const d = directorCraft(director);
+  const start = day.callSheet?.crewCall ?? day.callTime;
+  const kind = day.kind ?? 'interview';
+  const planned = Math.max(10, Math.round(day.plannedPages * 30));
+  let clock = start;
+  let done = 0;
+  let quality = 50;
+
+  if (kind === 'archive') {
+    hours.push({ at: clock, kind: 'call', setups: 0, takes: 0, note: 'In the archive. Boxes, tapes, and a catalogue that is only mostly right.' });
+    clock += 3 * MS_HOUR;
+    const found = Math.round(planned * rng.float(0.35, 1));
+    done = found;
+    quality = clamp(Math.round(40 + found / Math.max(1, planned) * 45 + rng.normal(0, 8)), 0, 100);
+    hours.push({ at: clock, kind: 'shooting', setups: 0, takes: 0, note: `${found} minutes logged. ${found > planned * 0.8 ? 'More than you hoped for.' : 'Less than the catalogue promised.'}` });
+    clock += 3 * MS_HOUR;
+  } else if (kind === 'verite') {
+    hours.push({ at: clock, kind: 'call', setups: 0, takes: 0, note: 'Out with the camera. Nothing is scheduled and that is the point.' });
+    clock += MS_HOUR;
+    for (let i = 0; i < 5; i++) {
+      const something = rng.chance(0.45 + d.vision / 400);
+      const minutes = something ? Math.round(planned * rng.float(0.1, 0.3)) : 0;
+      done += minutes;
+      hours.push({
+        at: clock, kind: something ? 'shooting' : 'idle', setups: 0, takes: 0,
+        note: something ? `${minutes} minutes worth keeping.` : 'An hour of nothing happening, which is most of this job.',
+      });
+      clock += MS_HOUR;
+    }
+    quality = clamp(Math.round(35 + (done / Math.max(1, planned)) * 45 + d.vision * 0.15 + rng.normal(0, 7)), 0, 100);
+  } else {
+    const subject = present.map((id) => sim.universe.people[id]).find((p): p is Person => Boolean(p));
+    const name = subject?.displayName ?? 'The subject';
+    hours.push({ at: clock, kind: 'call', setups: 0, takes: 0, note: `Two cameras up, ${name} in the chair, water on the table.` });
+    clock += MS_HOUR;
+    const trust = clamp(d.actors * 0.5 + (subject ? (subject.attributes['interview_poise'] ?? 40) * 0.2 : 20) + rng.normal(0, 12), 0, 100);
+    const openUp = trust > 55;
+    for (let i = 0; i < 3; i++) {
+      const minutes = Math.round(planned / 3 * (openUp ? rng.float(0.8, 1.2) : rng.float(0.3, 0.7)));
+      done += minutes;
+      hours.push({
+        at: clock, kind: 'shooting', setups: 0, takes: 0,
+        note: i === 0 ? 'The warm-up questions, which nobody uses.'
+          : openUp ? `${name} stopped performing about forty minutes in. That is the film.`
+            : `${name} is giving you the version they have given before.`,
+      });
+      clock += MS_HOUR;
+    }
+    quality = clamp(Math.round((openUp ? 68 : 44) + d.actors * 0.2 + rng.normal(0, 8)), 0, 100);
+    if (!openUp && rng.chance(0.2)) {
+      incidents.push({ at: clock, kind: 'access', description: `${name} asked for a section to be off the record afterwards.`, costDelta: 0, timeDeltaMinutes: 0 });
+    }
+  }
+
+  hours.push({ at: clock, kind: 'wrap', setups: 0, takes: 0, note: `${done} usable minutes.` });
+  const hoursWorked = Number(((clock - start) / MS_HOUR).toFixed(1));
+  return {
+    hours, hoursWorked, overtimeMinutes: 0, mealPenalty: false,
+    completedPages: Number((day.plannedPages * clamp(done / Math.max(1, planned), 0, 1)).toFixed(1)),
+    footageQuality: quality,
+    rolledOver: [],
+    cost: Math.round(day.dailyBudget * clamp(hoursWorked / 9, 0.4, 1.1)),
+    incidents,
+    output: { unit: 'minutes', done, planned },
+  };
+}
+
+/** A day cutting boards into a story reel. */
+export function runStoryReelDay(sim: Simulation, day: ShootDay, project: Project, rng: Rng): DayOutcome {
+  const director = project.directorId ? sim.universe.people[project.directorId] : undefined;
+  const d = directorCraft(director);
+  const start = day.callSheet?.crewCall ?? day.callTime;
+  const planned = Math.max(1, Math.round(day.plannedPages * 2));
+  const done = Math.max(1, Math.round(Math.min(planned, planned * rng.float(0.6, 1.1) * remap(d.efficiency, 20, 95, 0.8, 1.2))));
+  const quality = clamp(Math.round(d.vision * 0.45 + d.actors * 0.15 + 30 + rng.normal(0, 6)), 0, 100);
+  void sim;
+  return {
+    hours: [
+      { at: start, kind: 'call', setups: 0, takes: 0, note: 'Story department. Boards on the wall, temp voices, a metronome for a score.' },
+      { at: start + 4 * MS_HOUR, kind: 'shooting', setups: done, takes: 0, note: `${done} sequences boarded and cut into the reel.` },
+      { at: start + 8 * MS_HOUR, kind: 'wrap', setups: 0, takes: 0, note: 'Screened it for the room. Half of it works, which is a good day.' },
+    ],
+    hoursWorked: 8, overtimeMinutes: 0, mealPenalty: false,
+    completedPages: Number((day.plannedPages * (done / planned)).toFixed(1)),
+    footageQuality: quality,
+    rolledOver: done >= planned ? [] : ['sequences'],
+    cost: day.dailyBudget,
+    incidents: [],
+    output: { unit: 'sequences', done, planned },
+  };
 }
 
 /**

@@ -161,7 +161,7 @@ export function registerWorld(sim: Simulation): void {
   // funded, cast from the world, boarded, and — if asked — shot and in post.
   // Everything it does goes through the same commands a player uses, so
   // nothing here can reach a state the game cannot.
-  sim.onCommand<{ to?: 'boarded' | 'shooting' | 'post'; title?: string }, { projectId: Id; phase: string; days: number }>(
+  sim.onCommand<{ to?: 'boarded' | 'shooting' | 'post'; title?: string; kind?: 'live_action' | 'animation' | 'documentary' }, { projectId: Id; phase: string; days: number }>(
     'sandbox.stage_picture',
     (p, { sim: s }) => {
       if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
@@ -181,9 +181,13 @@ export function registerWorld(sim: Simulation): void {
       }
       // No title asked for means a fresh one from the title engine, so the
       // demo never collides with a picture the world already has.
+      const shape = p.kind === 'animation'
+        ? { format: 'feature' as const, genres: ['animation', 'family'], logline: 'A lighthouse keeper’s dog learns to sail.' }
+        : p.kind === 'documentary'
+          ? { format: 'documentary' as const, genres: ['documentary'], logline: 'The last crew on a river that is drying up.' }
+          : { format: 'feature' as const, genres: ['thriller', 'drama'], logline: 'A river pilot has one night to bring a stranded ferry home.' };
       const { projectId } = run<{ projectId: Id }>('film.create_project', {
-        ...(p.title ? { title: p.title } : {}), format: 'feature', genres: ['thriller', 'drama'],
-        logline: 'A river pilot has one night to bring a stranded ferry home.', companyId: company.id,
+        ...(p.title ? { title: p.title } : {}), ...shape, companyId: company.id,
       });
       const created = s.universe.projects[projectId]!;
       run('film.acquire_rights', { projectId, title: created.title, sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: company.id, holderKind: 'company' });
@@ -226,7 +230,7 @@ export function registerWorld(sim: Simulation): void {
           }
         }
       }
-      s.universe.sandbox.log.push({ at: s.now, action: `Staged a demo picture to ${to}` });
+      s.universe.sandbox.log.push({ at: s.now, action: `Staged a demo ${p.kind ?? 'live action'} picture to ${to}` });
       return { projectId, phase: s.universe.projects[projectId]?.phase ?? 'gone', days };
     },
   );

@@ -29,6 +29,7 @@ import { titleCaseLabel } from '../core/text';
 import { ageOf, isPeopleLoaded, peopleInRole } from '../content/people';
 import { countryIdForRecord, ensureRealPerson, personForRecord, playerControls } from './real-people';
 import { archetypeLabel, breakDownScript } from '../content/screenplay';
+import { pipelineFor } from '../content/pipelines';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
@@ -677,6 +678,21 @@ function defaultRequirements(project: Project, billing: Role['billing'], archety
     day_player: ['cold_reading', 'take_consistency'],
   };
   const forPart = archetype ? byArchetype[archetype] ?? [] : [];
+
+  // A cartoon is cast on the voice and nothing else: nobody is looking at the
+  // camera awareness of somebody in a booth. A documentary is not cast at all
+  // in this sense — a contributor is judged on whether they will talk.
+  const pipeline = pipelineFor(project);
+  if (pipeline.kind === 'animation' || pipeline.kind === 'stop_motion') {
+    const voice = ['voice_over', 'vocal_range', 'resonance', 'diction', 'emotional_truth', 'vocal_stamina', 'improvisation'];
+    const flavour = (attrs ?? []).filter((a) => ['comedy_timing', 'menace', 'singing', 'dry_comedy', 'romance', 'drama'].includes(a));
+    const combined = [...new Set([...voice.slice(0, billing === 'lead' ? 5 : 4), ...flavour, ...forPart.slice(0, 1)])];
+    return combined.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.08).toFixed(2)) }));
+  }
+  if (pipeline.kind === 'documentary' || pipeline.kind === 'unscripted') {
+    const contributor = ['interview_poise', 'emotional_truth', 'charisma', 'discretion', 'improvisation'];
+    return contributor.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.1).toFixed(2)) }));
+  }
 
   const combined = [...new Set([...forPart, ...(attrs ?? []), ...core])];
   return combined.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.08).toFixed(2)) }));

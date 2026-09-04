@@ -363,6 +363,44 @@ for (const size of WIDTHS) {
     }
   }
 
+  // An animated feature, which is made in a booth and on an animation floor
+  // rather than photographed, and must say so everywhere it is shown.
+  await openRail();
+  const settingsAgain = page.getByRole('button', { name: /settings/i }).first();
+  if (await settingsAgain.count()) {
+    await settingsAgain.click().catch(() => {});
+    await page.waitForTimeout(900);
+    const stageAnimated = page.getByRole('button', { name: /Stage An Animated Feature/i }).first();
+    if (await stageAnimated.count()) {
+      await stageAnimated.click().catch(() => {});
+      await page.waitForTimeout(8000);
+      await openRail();
+      const projectsForAnimation = page.getByRole('button', { name: /^projects$/i }).first();
+      if (await projectsForAnimation.count()) {
+        await projectsForAnimation.click().catch(() => {});
+        await page.waitForTimeout(1200);
+        // Two pictures are staged by now, so open each in turn until the one
+        // that is made in a booth rather than photographed is on screen.
+        const rows = page.locator('.list-item');
+        const count = await rows.count();
+        for (let i = count - 1; i >= 0; i--) {
+          await rows.nth(i).click().catch(() => {});
+          await page.waitForTimeout(900);
+          if (await page.getByRole('tab', { name: /Voice And Animation/ }).count()) break;
+        }
+        const voiceTab = page.getByRole('tab', { name: /Voice And Animation/ }).first();
+        if (await voiceTab.count()) {
+          await voiceTab.click().catch(() => {});
+          await page.waitForTimeout(1000);
+          await page.locator('tbody tr').first().click().catch(() => {});
+          await page.waitForTimeout(700);
+          scrollsSideways = (await probe('an animated feature in production')) || scrollsSideways;
+          await shoot('17-animation');
+        }
+      }
+    }
+  }
+
   // The city: where you are, what is here, and everywhere you could go.
   await openRail();
   const cityNav = page.getByRole('button', { name: /^the city$/i }).first();

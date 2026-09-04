@@ -1626,6 +1626,8 @@ export interface ShootDay {
   locationId: string;
   locationName: string;
   isStage: boolean;
+  /** What kind of day this is. Absent on days boarded before pipelines existed, which are photography. */
+  kind?: ShootDayKind;
   /** The lot the stage is on, when it is a stage. */
   lotId?: string;
   scenes: {
@@ -1654,13 +1656,30 @@ export interface ShootDay {
   overtimeMinutes: number;
   /** 0-100 quality of the footage captured. */
   footageQuality?: number;
+  /**
+   * What this day produced, in the unit that suits it: lines recorded, shots
+   * animated, seconds in the can, usable minutes of interview.
+   */
+  output?: { unit: string; done: number; planned: number };
   scheduledItemId?: Id;
 }
 
 export type PostTaskKind =
   | 'assembly' | 'editors_cut' | 'directors_cut' | 'studio_notes' | 'picture_lock'
   | 'vfx' | 'adr' | 'foley' | 'sound_design' | 'score' | 'music_clearance'
-  | 'mix' | 'color' | 'titles' | 'subtitles' | 'localization' | 'qc' | 'mastering' | 'delivery';
+  | 'mix' | 'color' | 'titles' | 'subtitles' | 'localization' | 'qc' | 'mastering' | 'delivery'
+  // Animation: the film is built rather than photographed.
+  | 'story_reel_lock' | 'layout' | 'animation_final' | 'lighting_render'
+  // Documentary: found footage, and lawyers.
+  | 'transcription' | 'archive_clearance' | 'legal_review';
+
+/**
+ * What a day on the schedule actually is. A cartoon has no shoot days; a
+ * documentary has interview days and days in the archive.
+ */
+export type ShootDayKind =
+  | 'photography' | 'voice_session' | 'story_reel' | 'animation_block'
+  | 'stop_motion_unit' | 'interview' | 'verite' | 'archive' | 'motion_capture';
 
 export interface PostTask {
   id: Id;

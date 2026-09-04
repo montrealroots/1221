@@ -168,6 +168,12 @@ export function SettingsWorkspace() {
             <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_picture', { to: 'post' })}>
               Stage A Picture In Post
             </button>
+            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_picture', { to: 'post', kind: 'animation' })}>
+              Stage An Animated Feature
+            </button>
+            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_picture', { to: 'post', kind: 'documentary' })}>
+              Stage A Documentary
+            </button>
           </div>
 
           {sandbox.log.length > 0 && (
