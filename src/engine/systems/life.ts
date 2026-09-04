@@ -141,12 +141,6 @@ export const ACTIVITY_BY_ID: Readonly<Record<string, ActivityDef>> =
 // ---------------------------------------------------------------------------
 
 export function registerLife(sim: Simulation): void {
-  sim.onSchedule('life.wake', (item) => {
-    const person = sim.universe.people[item.payload.personId as Id];
-    if (!person) return;
-    sim.emit('life.woke', { personId: person.id, at: sim.now });
-  });
-
   sim.onSchedule('life.day_rollover', () => {
     dailyRollover(sim);
     sim.schedule({

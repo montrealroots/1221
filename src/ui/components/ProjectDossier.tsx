@@ -97,10 +97,10 @@ export function ProjectDossier({ project, roleId, onClose }: { project: Project;
       <div className="grid grid-2 gap-4">
         <div>
           <div className="xs dim" style={{ marginBottom: 4 }}>Who Is Making It</div>
-          {project.directorId && <CreditLine project={project} personId={project.directorId} label="Directed by" />}
-          {project.showrunnerId && <CreditLine project={project} personId={project.showrunnerId} label="Run by" />}
-          {project.writerIds.map((id) => <CreditLine key={id} project={project} personId={id} label="Written by" />)}
-          {project.producerIds.map((id) => <CreditLine key={id} project={project} personId={id} label="Produced by" />)}
+          {project.directorId && <CreditLine project={project} personId={project.directorId} label="Directed By" />}
+          {project.showrunnerId && <CreditLine project={project} personId={project.showrunnerId} label="Run By" />}
+          {project.writerIds.map((id) => <CreditLine key={id} project={project} personId={id} label="Written By" />)}
+          {project.producerIds.map((id) => <CreditLine key={id} project={project} personId={id} label="Produced By" />)}
           <div className="xs" style={{ padding: '3px 0' }}>
             <span className="dim">For</span> <span className="strong">{network?.name ?? studio?.name ?? project.distributorName ?? 'Nobody yet'}</span>
           </div>

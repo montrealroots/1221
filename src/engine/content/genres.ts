@@ -195,7 +195,7 @@ export const GENRE_ALIASES: Readonly<Record<string, string>> = {
   'science fiction': 'science-fiction', 'sci-fi': 'science-fiction', scifi: 'science-fiction',
   'rom-com': 'romantic-comedy', 'romantic comedy': 'romantic-comedy', romcom: 'romantic-comedy',
   'coming of age': 'coming-of-age', 'dark comedy': 'dark-comedy', 'black comedy': 'dark-comedy',
-  'film noir': 'film-noir', noir: 'film-noir', 'neo noir': 'neo-noir', 'neo-noir': 'neo-noir',
+  'film noir': 'film-noir', noir: 'film-noir', 'neo noir': 'neo-noir',
   'folk horror': 'folk-horror', 'found footage': 'found-footage', 'game show': 'game-show',
   'fairy tale': 'fairy-tale', 'period drama': 'period-drama', period: 'period-drama',
   'post apocalyptic': 'post-apocalyptic', 'post-apocalypse': 'post-apocalyptic',

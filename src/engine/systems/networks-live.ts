@@ -575,12 +575,14 @@ export const RECORD_LABEL: Readonly<Record<RecordCategory, string>> = {
   per_theatre: 'Best Per-Theatre Average', viewers: 'Most Watched Airing', demo: 'Best Demo Rating',
   streaming_week: 'Biggest Streaming Week', streaming_total: 'Most Hours Viewed', tomatometer: 'Best Reviewed',
   imdb: 'Highest IMDb Rating', budget: 'Most Expensive', profit: 'Most Profitable',
+  award_sweep: 'Most Awarded Title', award_career: 'Most Decorated Career', award_night: 'Best Night At One Ceremony',
 };
 
-export const RECORD_UNIT: Readonly<Record<RecordCategory, 'money' | 'thousands' | 'rating' | 'percent' | 'score'>> = {
+export const RECORD_UNIT: Readonly<Record<RecordCategory, 'money' | 'thousands' | 'rating' | 'percent' | 'score' | 'count'>> = {
   opening_weekend: 'money', domestic: 'money', worldwide: 'money', per_theatre: 'money',
   viewers: 'thousands', demo: 'rating', streaming_week: 'thousands', streaming_total: 'thousands',
   tomatometer: 'percent', imdb: 'score', budget: 'money', profit: 'money',
+  award_sweep: 'count', award_career: 'count', award_night: 'count',
 };
 
 export function formatRecord(category: RecordCategory, value: number): string {
@@ -589,6 +591,7 @@ export function formatRecord(category: RecordCategory, value: number): string {
     case 'thousands': return `${(value / 1000).toFixed(value >= 10_000 ? 1 : 2)}M`;
     case 'rating': return value.toFixed(2);
     case 'percent': return `${Math.round(value)}%`;
+    case 'count': return `${Math.round(value)}`;
     default: return value.toFixed(1);
   }
 }

@@ -379,6 +379,6 @@ function lapseOffer(sim: Simulation, ref: string): void {
   const offer = Object.values(sim.universe.decisions).find((d) => d.refType === 'ip' && d.refId === ref && !d.resolvedAt && !d.dismissedAt);
   if (!offer) return;
   sim.resolveDecision('ip', ref);
-  sim.notify({ category: 'career', title: 'A licence offer lapsed', body: `${offer.title.replace(' will license ', ' withdrew its offer on ')}. Ask again if you still want it.`, importance: 40, route: '/workspace/industry', refType: 'ip', refId: ref });
+  sim.notify({ category: 'career', title: 'A Licence Offer Lapsed', body: `${offer.title.replace(' will license ', ' withdrew its offer on ')}. Ask again if you still want it.`, importance: 40, route: '/workspace/industry', refType: 'ip', refId: ref });
   sim.emit('ip.licence_lapsed', { ref });
 }

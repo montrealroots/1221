@@ -36,7 +36,7 @@ export const FAN_EVENTS: IndustryEventSpec[] = [
     id: 'd23', name: 'D23: The Ultimate Disney Fan Event', shortName: 'D23', kind: 'fan', scope: 'pop', organiser: 'The Walt Disney Company',
     city: 'Anaheim', cityId: 'us-ca-anaheim', countryId: 'us', zone: 'America/Los_Angeles', venue: 'Anaheim Convention Center and Honda Center', cadence: 'even-years',
     start: nearest(8, 11, FRI), days: 3,
-    milestones: [{ label: 'D23 Day at Angel Stadium', rule: nearest(8, 9, WED) }, { label: 'D23 Day at Disneyland', rule: nearest(8, 10, THU) }],
+    milestones: [{ label: 'D23 Day At Angel Stadium', rule: nearest(8, 9, WED) }, { label: 'D23 Day At Disneyland', rule: nearest(8, 10, THU) }],
     known: {
       2024: { start: '2024-08-09', end: '2024-08-11', source: WIKI('D23 (Disney)') },
       2026: { start: '2026-08-14', end: '2026-08-16', source: WIKI('D23 (Disney)'), note: 'D23 Day events at Angel Stadium on August 12 and Disneyland on August 13.' },

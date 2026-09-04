@@ -15,6 +15,7 @@ import {
 import type { Simulation, CommandResult } from '@/engine';
 import { refreshMeta } from '@/engine';
 import { loadImdbRatings, loadKnownTitles, loadBroadcastSeries } from '@/engine/content/filmography';
+import { loadPeople, loadPeopleAwards, loadPeopleCredits } from '@/engine/content/people';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
 export interface Toast {
@@ -259,6 +260,12 @@ export function GameProvider({
     // The television grids are built from the record's own schedules, so the
     // series have to be in hand before the first week of a save airs.
     void loadBroadcastSeries().catch(() => {});
+    // And the people: who they are, everything they are on, and what they have
+    // won. Fetched in that order because a profile is readable without the
+    // last two and unreadable without the first.
+    void loadPeople()
+      .then(() => Promise.all([loadPeopleCredits(), loadPeopleAwards()]))
+      .catch(() => {});
   }, []);
 
   // --- Autosave -----------------------------------------------------------

@@ -87,7 +87,7 @@ for (const file of files) {
   // "Help For This Screen" is worse than one reading it as a sentence.
   // `placeholder` is absent too — a placeholder is a hint, and hints are prose.
   after = after.replace(
-    /\b(title|label)=(")([^"\n]*)\2/g,
+    /(?<![-\w])(title|label)=(")([^"\n]*)\2/g,
     (whole, key, quote, value) => rewrite(whole, `${key}=${quote}`, value, quote),
   );
 

@@ -477,12 +477,6 @@ export function registerCritics(sim: Simulation): void {
   );
 }
 
-/** The embargo wave, for review dates saved before the critics system existed. */
-export function runEmbargoWave(sim: Simulation, projectId: Id): void {
-  const project = sim.universe.projects[projectId];
-  if (project) runReviewWave(sim, project, 'embargo');
-}
-
 /** Everything the screen needs about a project's reception. */
 export function receptionSummary(sim: Simulation, projectId: Id) {
   const project = sim.universe.projects[projectId];

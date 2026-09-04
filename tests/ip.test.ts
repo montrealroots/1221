@@ -151,6 +151,6 @@ describe('licensing real IP', () => {
     expect(licenceStatus(sim, 'blumhouse', PARANORMAL).state).toBe('none');
     const late = sim.execute({ kind: 'film.accept_ip_licence', payload: { offerRef: ref } });
     expect(late.ok).toBe(false);
-    expect(sim.universe.notifications.some((n) => n.title === 'A licence offer lapsed')).toBe(true);
+    expect(sim.universe.notifications.some((n) => n.title === 'A Licence Offer Lapsed')).toBe(true);
   });
 });

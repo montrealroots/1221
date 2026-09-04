@@ -32,6 +32,7 @@ import { INDUSTRY_EVENTS, lookupEvent } from '../content/events-data';
 import { occurrence, occurrenceTitle, type IndustryEventSpec, type Occurrence } from '../content/events';
 import { AWARD_RULES, LEGACY_BODY_NAMES, NOT_CONTESTED } from '../content/award-bodies';
 import { STUDIOS } from '../content/studios';
+import { recordFor } from './networks-live';
 import { classifyCategory, isTelevisionKind, PERSON_KINDS, VOTER_PROFILES, type BodyRules, type CategoryKind, type VoterProfile } from '../content/award-rules';
 import { FESTIVAL_RULES, LEGACY_FESTIVAL_NAMES, classifyPrize, type FestivalRules, type PrizeKind } from '../content/festival-rules';
 
@@ -971,7 +972,70 @@ function holdCeremony(sim: Simulation, editionId: Id): void {
 
   // Finalised history is immutable from here.
   edition.finalised = true;
+  recordTheNight(sim, edition.id, body.name, edition.year);
   sim.emit('award.ceremony_complete', { editionId: edition.id, bodyId: body.id, year: edition.year });
+}
+
+/**
+ * What this ceremony did to the record books.
+ *
+ * Three boards, all of them this save's own history rather than the real one:
+ * the best night any one title had, the most a title has won across a whole
+ * career of ceremonies, and the most decorated person in the save.
+ */
+function recordTheNight(sim: Simulation, editionId: Id, bodyName: string, year: number): void {
+  const won = Object.values(sim.universe.awardNominations).filter((n) => n.editionId === editionId && n.won);
+  if (won.length === 0) return;
+
+  const perProject = new Map<Id, number>();
+  const perPerson = new Map<Id, number>();
+  for (const nomination of won) {
+    if (nomination.projectId) perProject.set(nomination.projectId, (perProject.get(nomination.projectId) ?? 0) + 1);
+    if (nomination.personId) perPerson.set(nomination.personId, (perPerson.get(nomination.personId) ?? 0) + 1);
+  }
+
+  const night = [...perProject.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (night && night[1] > 1) {
+    const project = sim.universe.projects[night[0]];
+    if (project) {
+      recordFor(sim, 'award_night', {
+        title: project.title, projectId: project.id, value: night[1],
+        yours: projectInvolvesPlayer(sim, project.id),
+        note: `${night[1]} at the ${year} ${bodyName}.`,
+      });
+    }
+  }
+
+  // Careers and titles are counted across everything decided so far.
+  const careerWins = new Map<Id, number>();
+  const titleWins = new Map<Id, number>();
+  for (const nomination of Object.values(sim.universe.awardNominations)) {
+    if (!nomination.won) continue;
+    if (nomination.personId) careerWins.set(nomination.personId, (careerWins.get(nomination.personId) ?? 0) + 1);
+    if (nomination.projectId) titleWins.set(nomination.projectId, (titleWins.get(nomination.projectId) ?? 0) + 1);
+  }
+  const career = [...careerWins.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (career) {
+    const person = sim.universe.people[career[0]];
+    if (person) {
+      recordFor(sim, 'award_career', {
+        title: person.stageName ?? person.displayName, value: career[1],
+        yours: person.id === sim.universe.playerId,
+        note: `${career[1]} won in this save.`,
+      });
+    }
+  }
+  const decorated = [...titleWins.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (decorated) {
+    const project = sim.universe.projects[decorated[0]];
+    if (project) {
+      recordFor(sim, 'award_sweep', {
+        title: project.title, projectId: project.id, value: decorated[1],
+        yours: projectInvolvesPlayer(sim, project.id),
+        note: `${decorated[1]} won in this save.`,
+      });
+    }
+  }
 }
 
 function involvesPlayer(sim: Simulation, nomination: AwardNomination): boolean {
