@@ -16,6 +16,7 @@ import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
 import { STUDIOS, type Studio } from './studios';
 import { NETWORKS, type Network } from './networks';
+import { GENRES_FULL, GENRE_ALIASES, GENRE_IDS, genre } from './genres';
 
 
 const V = REFERENCE_VERSION;
@@ -139,29 +140,26 @@ export const EXHIBITORS = new Registry<ExhibitorChain>('exhibitors', [
 // The award bodies and festivals are the real ones: see content/events-data,
 // content/award-bodies and content/festival-rules.
 
-export const GENRES = [
-  'action', 'adventure', 'animation', 'biography', 'comedy', 'crime', 'documentary',
-  'drama', 'family', 'fantasy', 'horror', 'legal', 'medical', 'musical', 'mystery',
-  'romance', 'science fiction', 'sport', 'thriller', 'war', 'western', 'experimental',
-] as const;
+/**
+ * The genres a project may be built from. The full list, with what each one
+ * is and what makes it good, lives in content/genres; this re-exports the
+ * ids so everything that already asked this module keeps working.
+ */
+export const GENRES: readonly string[] = GENRE_IDS;
 
-export type Genre = (typeof GENRES)[number];
+export type Genre = string;
 
 /** Base audience appetite by genre, 0-100. Feeds greenlight and box office. */
-export const GENRE_APPETITE: Readonly<Record<string, number>> = {
-  action: 78, adventure: 76, animation: 72, biography: 48, comedy: 68, crime: 62,
-  documentary: 32, drama: 54, family: 74, fantasy: 66, horror: 70, legal: 44,
-  medical: 42, musical: 46, mystery: 56, romance: 58, 'science fiction': 74,
-  sport: 48, thriller: 68, war: 44, western: 34, experimental: 14,
-};
+export const GENRE_APPETITE: Readonly<Record<string, number>> = Object.fromEntries([
+  ...GENRES_FULL.map((g) => [g.id, g.appetite]),
+  ...Object.entries(GENRE_ALIASES).map(([alias, id]) => [alias, genre(id)?.appetite ?? 45]),
+]);
 
 /** Typical budget band by genre, as a multiplier on a baseline. */
-export const GENRE_BUDGET_INDEX: Readonly<Record<string, number>> = {
-  action: 2.6, adventure: 2.4, animation: 2.2, biography: 0.7, comedy: 0.6, crime: 0.8,
-  documentary: 0.15, drama: 0.6, family: 1.4, fantasy: 2.2, horror: 0.25, legal: 0.6,
-  medical: 0.6, musical: 1.2, mystery: 0.7, romance: 0.5, 'science fiction': 2.0,
-  sport: 0.8, thriller: 0.8, war: 1.8, western: 1.1, experimental: 0.2,
-};
+export const GENRE_BUDGET_INDEX: Readonly<Record<string, number>> = Object.fromEntries([
+  ...GENRES_FULL.map((g) => [g.id, g.budgetIndex]),
+  ...Object.entries(GENRE_ALIASES).map(([alias, id]) => [alias, genre(id)?.budgetIndex ?? 0.8]),
+]);
 
 export const DEPARTMENTS = [
   'production', 'direction', 'camera', 'grip', 'electric', 'art', 'set_decoration',

@@ -37,6 +37,7 @@ import { registerRelease, registerFranchises } from './systems/release';
 import { registerCritics } from './systems/critics';
 import { registerIpLicensing } from './systems/ip';
 import { registerStudios, ensureStudioSchedules } from './systems/studios';
+import { registerNetworks, ensureNetworkSchedules } from './systems/networks-live';
 import { registerProfessions } from './systems/professions';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
@@ -74,6 +75,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerFranchises(sim);
   registerIpLicensing(sim);
   registerStudios(sim);
+  registerNetworks(sim);
   registerProfessions(sim);
   registerDriving(sim);
   registerAwards(sim);
@@ -120,6 +122,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise Appetite', category: 'system', priority: 94 });
   ensureStudioSchedules(sim);
+  ensureNetworkSchedules(sim);
 
   const nextYear = zonedParts(sim.now, z).year + 1;
   sim.schedule({
@@ -393,6 +396,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureSeasons(sim);
   // A save from before the studios lived inside it needs their clocks running.
   ensureStudioSchedules(sim);
+  ensureNetworkSchedules(sim);
   return sim;
 }
 
@@ -691,6 +695,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     record['boxOffice'] ??= { weekends: [], yearToDate: {}, pending: [] };
     record['trade'] ??= [];
     steps.push('The studios and networks now act inside the save: their dated slates release on the day, the weekend box office is counted, and their standing with you is kept.');
+  }
+
+  if (from < 17) {
+    // Television became a schedule rather than a list: a grid every week, a
+    // rating on every airing, a renewal every May, and a chart for the
+    // services. The records a save sets for itself are kept from here too.
+    record['airings'] ??= [];
+    record['streamingCharts'] ??= [];
+    record['saveRecords'] ??= {};
+    steps.push('Television now runs on a schedule: every linear network has a week, every airing has a rating, the services publish a weekly chart, and the records your universe sets are kept.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

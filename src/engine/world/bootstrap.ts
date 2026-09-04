@@ -149,6 +149,7 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     shootDays: {}, postTasks: {}, marketingCampaigns: {}, releases: {}, reviews: {},
     awardEditions: {}, awardNominations: {}, festivalSubmissions: {}, franchises: {},
     studios: {}, networks: {}, talentDeals: {}, boxOffice: { weekends: [], yearToDate: {}, pending: [] }, trade: [],
+    airings: [], streamingCharts: [], saveRecords: {},
     companies: {}, divisions: {}, employees: {}, equipment: {}, merchandise: {},
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
     tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },

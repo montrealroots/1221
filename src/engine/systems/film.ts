@@ -21,6 +21,8 @@ import { buildFactors } from '../core/audit';
 import { BUYERS, GENRE_APPETITE, GENRE_BUDGET_INDEX, type Buyer } from '../content/industry';
 import { generateProjectTitle } from '../content/names';
 import { normaliseTitle, titleTaken } from '../content/filmography';
+import { canonicalGenre, genre, runtimeBandOf } from '../content/genres';
+import { rating } from '../content/ratings';
 import { filmIncentive } from '../content/tax';
 import { systemModifier } from '../domain/attributes';
 import { activeDeal, adjustStanding, standingWith } from './studio-state';
@@ -123,10 +125,18 @@ export function registerFilm(sim: Simulation): void {
 
   // --- Idea and rights -----------------------------------------------------
 
-  sim.onCommand<{ title?: string; format: ProjectFormat; genres: string[]; logline: string; synopsis?: string; companyId?: Id; targetAudience?: string; comparables?: string[]; parentSeriesId?: Id; franchiseId?: Id }, { projectId: Id }>(
+  sim.onCommand<{ title?: string; format: ProjectFormat; genres: string[]; logline: string; synopsis?: string; companyId?: Id; targetAudience?: string; comparables?: string[]; parentSeriesId?: Id; franchiseId?: Id; contentRating?: string; runtime?: number }, { projectId: Id }>(
     'film.create_project',
     (p, { sim: s }) => {
       if (p.genres.length === 0) throw new CommandError('A project needs at least one genre.');
+      const chosen = p.genres.map(canonicalGenre);
+      for (const id of chosen) {
+        if (!genre(id)) throw new CommandError(`"${id}" is not a genre. Pick from the list.`);
+      }
+      if (p.contentRating && !rating(p.contentRating)) throw new CommandError(`"${p.contentRating}" is not a certificate any board issues.`);
+      if (p.runtime !== undefined && (!Number.isFinite(p.runtime) || p.runtime < 1 || p.runtime > 600)) {
+        throw new CommandError('A runtime is between one minute and ten hours.');
+      }
       const player = s.player;
       // No two things in the world may share a title, real or made here,
       // unless the new one belongs to the same series or franchise.
@@ -147,8 +157,10 @@ export function registerFilm(sim: Simulation): void {
         saveId: s.universe.meta.id,
         title,
         format: p.format,
-        genres: p.genres,
+        genres: chosen,
         logline: p.logline,
+        contentRating: p.contentRating,
+        runtime: p.runtime ?? Math.round((runtimeBandOf(chosen)[0] + runtimeBandOf(chosen)[1]) / 2),
         synopsis: p.synopsis ?? p.logline,
         phase: 'idea',
         phaseHistory: [{ phase: 'idea', enteredAt: s.now }],

@@ -1228,6 +1228,12 @@ export interface Project {
   releaseStrategy?: Release['strategy'];
   /** The language of the dialogue, ISO 639-1. Set when the project is created. */
   language?: string;
+  /** The certificate it carries, as a rating id from content/ratings. */
+  contentRating?: string;
+  /** How hard the material runs, 0-100, on the same scale the certificates sit on. */
+  contentSeverity?: number;
+  /** Intended runtime in minutes. */
+  runtime?: number;
   /** The country the production belongs to, a SLATE country id. Set when the project is created. */
   productionCountryId?: string;
 
@@ -1741,6 +1747,10 @@ export interface NetworkState {
   standing: number;
   standingLog: { at: Instant; delta: number; note: string }[];
   confidence: number;
+  /** The week as it is scheduled now. Linear networks only. */
+  schedule?: NetworkSchedule;
+  /** How the season has gone: averages and what it cost. */
+  seasons?: Record<string, { averageViewers: number; averageDemo: number; renewed: number; cancelled: number; ordered: number }>;
   leadership?: LiveLeader[];
   leadershipChanges: { at: Instant; left: string; title: string; successor: string; generated: boolean; reason: string }[];
   parentOverride?: string;
@@ -1797,6 +1807,97 @@ export interface BoxOfficeWeekend {
   key: string;
   fridayAt: Instant;
   entries: BoxOfficeEntry[];
+}
+
+/** One programme in one slot of a network's week. */
+export interface ScheduleSlot {
+  /** 0 Sunday to 6 Saturday. */
+  day: number;
+  /** Minutes from midnight: 1200 is eight o'clock. */
+  start: number;
+  minutes: number;
+  title: string;
+  kind: 'series' | 'movie' | 'news' | 'sport' | 'unscripted' | 'reruns';
+  projectId?: Id;
+  /** Set when the programme is a real one from the record. */
+  catalogueQid?: string;
+  genres: string[];
+  /** True when it is the player's. */
+  yours?: boolean;
+  /** Which season of itself it is in. */
+  season?: number;
+  episodesAired?: number;
+  /** The most recent airing: total viewers in thousands, the 18-49 rating, and the share. */
+  viewers?: number;
+  demo?: number;
+  share?: number;
+  /** Averages across the season so far. */
+  seasonViewers?: number;
+  seasonDemo?: number;
+  standing?: 'new' | 'safe' | 'bubble' | 'cancelled' | 'ended';
+}
+
+export interface NetworkSchedule {
+  /** The television season, as the business writes it: '2026-27'. */
+  season: string;
+  announcedAt: Instant;
+  slots: ScheduleSlot[];
+  renewed: string[];
+  cancelled: string[];
+  ordered: string[];
+}
+
+/** A night's viewing figure worth keeping. */
+export interface Airing {
+  at: Instant;
+  networkId: string;
+  title: string;
+  projectId?: Id;
+  episode?: number;
+  /** Total viewers, in thousands. */
+  viewers: number;
+  /** The 18-49 rating. */
+  demo: number;
+  share: number;
+  yours: boolean;
+}
+
+export interface StreamingChartEntry {
+  title: string;
+  projectId?: Id;
+  catalogueQid?: string;
+  /** Hours viewed in the week, in thousands. */
+  hours: number;
+  /** Weeks on the chart, this one included. */
+  weeks: number;
+  yours: boolean;
+  onRecord: boolean;
+}
+
+export interface StreamingChart {
+  /** The Monday the week began, as a date key. */
+  key: string;
+  at: Instant;
+  serviceId: string;
+  entries: StreamingChartEntry[];
+}
+
+export type RecordCategory =
+  | 'opening_weekend' | 'domestic' | 'worldwide' | 'per_theatre'
+  | 'viewers' | 'demo' | 'streaming_week' | 'streaming_total'
+  | 'tomatometer' | 'imdb' | 'budget' | 'profit';
+
+/** A record set inside this save. Simulation, never the real record. */
+export interface SaveRecord {
+  category: RecordCategory;
+  title: string;
+  projectId?: Id;
+  studioId?: string;
+  networkId?: string;
+  value: number;
+  at: Instant;
+  yours: boolean;
+  note: string;
 }
 
 export interface TradeItem {
@@ -1994,7 +2095,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 16;
+export const SAVE_SCHEMA_VERSION = 17;
 
 export interface SaveMeta {
   id: Id;
@@ -2108,6 +2209,12 @@ export interface SaveUniverse {
   /** The real studios and networks as they live in this save, keyed by registry id. */
   studios: Record<string, StudioState>;
   networks: Record<string, NetworkState>;
+  /** Ratings worth keeping, newest last. Capped. */
+  airings: Airing[];
+  /** The weekly streaming charts, newest last. Capped. */
+  streamingCharts: StreamingChart[];
+  /** The best of everything that has happened in this save, by category. */
+  saveRecords: Partial<Record<RecordCategory, SaveRecord[]>>;
   talentDeals: Record<Id, TalentDeal>;
   boxOffice: {
     weekends: BoxOfficeWeekend[];

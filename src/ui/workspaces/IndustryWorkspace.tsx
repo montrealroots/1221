@@ -19,12 +19,17 @@ import { COUNTRIES } from '@/engine/content/geography';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { addDays, dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { formatLabel, titleCaseLabel } from '@/engine/core/text';
+import { genreName } from '@/engine/content/genres';
 import type { BoxOfficeWeekend, IndustryNewsItem, LiveLeader, Project, ProjectFormat, TradeItem } from '@/engine/domain/model';
 import { activeDeal, effectiveStudio, liveLeadership, marketRank, marketShare, marketsCounted, type CompanyKind } from '@/engine/systems/studio-state';
 import { STRATEGY_LABEL, releaseCalendar, upcomingFor } from '@/engine/systems/studios';
+import {
+  RECORD_LABEL, ensureSeriesLoaded, formatRecord, isLinear, saveRecords, scheduleOf, slotTime, weekGrid,
+} from '@/engine/systems/networks-live';
+import { ALL_TIME, type RecordEntry } from '@/engine/content/records';
 import { LICENCE_KINDS, LICENCE_KIND_LABEL, licenceOdds, licenceStatus, type LicenceKind } from '@/engine/systems/ip';
 
-type Tab = 'studios' | 'networks' | 'boxoffice' | 'trades' | 'people';
+type Tab = 'studios' | 'networks' | 'boxoffice' | 'records' | 'trades' | 'people';
 type Kind = 'all' | 'film' | 'tv';
 type Sort = 'year' | 'gross' | 'tomatometer' | 'imdb' | 'title';
 
@@ -66,11 +71,13 @@ export function IndustryWorkspace() {
         { id: 'studios', label: 'Studios', badge: studios.length },
         { id: 'networks', label: 'Networks', badge: networks.length },
         { id: 'boxoffice', label: 'Box Office' },
+        { id: 'records', label: 'Records' },
         { id: 'trades', label: 'Trades' },
         { id: 'people', label: 'People' },
       ]} />
 
       {tab === 'boxoffice' && <BoxOfficeTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
+      {tab === 'records' && <RecordsTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
       {tab === 'trades' && <TradesTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} onNetwork={(id) => { setTab('networks'); setSelectedId(id); }} />}
       {tab === 'studios' && !selectedStudio && <StudioList onSelect={setSelectedId} />}
       {tab === 'studios' && selectedStudio && <StudioDetail studio={selectedStudio} onBack={() => setSelectedId(null)} />}
@@ -637,6 +644,8 @@ function NetworkDetail({ network, onBack }: { network: Network; onBack: () => vo
           )}
       </Panel>
 
+      {isLinear(network) ? <SchedulePanel networkId={network.id} name={network.shortName} /> : <ChartPanel networkId={network.id} name={network.shortName} />}
+
       <NewsPanel title={`This Year At ${network.shortName}`} news={liveNet.news} />
 
       <Panel title="In Your Universe" subtitle="What it has commissioned since your save began. Simulation, not record." flush>
@@ -1013,5 +1022,259 @@ function TradesTab({ onStudio, onNetwork }: { onStudio: (id: string) => void; on
           </div>
         )}
     </Panel>
+  );
+}
+
+const STANDING_CHIP: Readonly<Record<string, { label: string; className: string }>> = {
+  new: { label: 'New', className: 'chip chip-info' },
+  safe: { label: 'Safe', className: 'chip chip-positive' },
+  bubble: { label: 'On The Bubble', className: 'chip chip-warning' },
+  cancelled: { label: 'Cancelled', className: 'chip chip-negative' },
+  ended: { label: 'Ended', className: 'chip' },
+};
+
+const SLOT_KIND_LABEL: Readonly<Record<string, string>> = {
+  series: 'Series', movie: 'Film', news: 'News', sport: 'Sport', unscripted: 'Unscripted', reruns: 'Repeats',
+};
+
+/** A linear network's week: three hours a night, seven nights, with what each did. */
+function SchedulePanel({ networkId, name }: { networkId: string; name: string }) {
+  const { refresh } = useGame();
+  const [loaded, setLoaded] = useState(isBroadcastSeriesLoaded());
+  useEffect(() => {
+    if (loaded) return;
+    let cancelled = false;
+    ensureSeriesLoaded().then(() => { if (!cancelled) { setLoaded(true); refresh(); } }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [loaded, refresh]);
+  const schedule = useWorld((s) => (loaded ? scheduleOf(s, networkId) : undefined));
+  const grid = useMemo(() => (schedule ? weekGrid(schedule) : []), [schedule]);
+
+  if (!schedule) {
+    return (
+      <Panel title="The Week" subtitle={`What ${name} is running, night by night.`} flush>
+        <Empty title="Loading The Schedule" body="The record's series are being read." />
+      </Panel>
+    );
+  }
+  return (
+    <Panel
+      title="The Week"
+      subtitle={`${schedule.season}. Three hours a night, and the number each one did last time it aired. Simulation, not record.`}
+      flush
+    >
+      <div style={{ overflowX: 'auto' }}>
+        <table className="table">
+          <thead>
+            <tr>
+              <th style={{ whiteSpace: 'nowrap' }}>Night</th>
+              {[1200, 1260, 1320].map((start) => <th key={start} style={{ whiteSpace: 'nowrap' }}>{slotTime(start)}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {grid.map((night) => (
+              <tr key={night.day}>
+                <td className="strong" style={{ whiteSpace: 'nowrap' }}>{night.name}</td>
+                {night.slots.map((slot) => (
+                  <td key={slot.start} style={{ minWidth: 170 }}>
+                    <div className={`small ${slot.yours ? 'strong' : ''} truncate`} style={slot.yours ? { color: 'var(--accent-strong)' } : undefined}>{slot.title}</div>
+                    <div className="xs dim truncate">
+                      {SLOT_KIND_LABEL[slot.kind] ?? slot.kind}
+                      {slot.season ? ` · Season ${slot.season}` : ''}
+                      {slot.genres.length > 0 && slot.kind === 'series' ? ` · ${slot.genres.slice(0, 2).map(genreName).join(', ')}` : ''}
+                    </div>
+                    {slot.viewers !== undefined && (
+                      <div className="xs mono" style={{ marginTop: 2 }}>
+                        {(slot.viewers / 1000).toFixed(2)}M · {slot.demo?.toFixed(2)} demo · {slot.share} share
+                      </div>
+                    )}
+                    <div className="row gap-1" style={{ marginTop: 4 }}>
+                      {slot.standing && <span className={STANDING_CHIP[slot.standing]?.className ?? 'chip'}>{STANDING_CHIP[slot.standing]?.label ?? slot.standing}</span>}
+                      {slot.yours && <span className="chip chip-positive">Yours</span>}
+                      {slot.catalogueQid && <span className="chip">On Record</span>}
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {(schedule.renewed.length > 0 || schedule.cancelled.length > 0) && (
+        <div className="small" style={{ padding: 'var(--s3)' }}>
+          {schedule.renewed.length > 0 && <div><span className="dim">Renewed at the upfronts: </span>{schedule.renewed.join(', ')}.</div>}
+          {schedule.cancelled.length > 0 && <div><span className="dim">Cancelled: </span>{schedule.cancelled.join(', ')}.</div>}
+          {schedule.ordered.length > 0 && <div><span className="dim">Newly ordered: </span>{schedule.ordered.join(', ')}.</div>}
+        </div>
+      )}
+      <p className="xs dim" style={{ padding: '0 var(--s3) var(--s3)' }}>
+        The grid starts from the series the record says were airing here, then plays out in your universe. Viewers are in millions, the demo is the eighteen to forty-nine rating, and the share is of the sets that were on.
+      </p>
+    </Panel>
+  );
+}
+
+/** A streaming service's week: ten deep, in hours. */
+function ChartPanel({ networkId, name }: { networkId: string; name: string }) {
+  const charts = useWorld((s) => s.universe.streamingCharts.filter((c) => c.serviceId === networkId));
+  const latest = charts[charts.length - 1];
+  return (
+    <Panel
+      title="The Weekly Ten"
+      subtitle={latest ? `Hours viewed in the week of ${latest.key}. Simulation, not record.` : `What ${name} publishes every week.`}
+      flush
+    >
+      {!latest || latest.entries.length === 0
+        ? <Empty title="Nothing Charted Yet" body={`${name} has not published a week in your universe yet. The first one comes at the end of a week with something on it.`} />
+        : (
+          <div className="list">
+            {latest.entries.map((entry, i) => (
+              <div key={`${entry.title}|${i}`} className="list-item list-static">
+                <div className="mono small" style={{ minWidth: 28 }}>{i + 1}</div>
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div className={`small ${entry.yours ? 'strong' : ''} truncate`}>{entry.title}</div>
+                  <div className="xs dim">Week {entry.weeks} on the chart</div>
+                </div>
+                <div className="mono small" style={{ whiteSpace: 'nowrap' }}>{(entry.hours / 1000).toFixed(1)}M Hours</div>
+                {entry.yours && <span className="chip chip-positive">Yours</span>}
+                {!entry.yours && entry.onRecord && <span className="chip">On Record</span>}
+              </div>
+            ))}
+          </div>
+        )}
+      <p className="xs dim" style={{ padding: 'var(--s3)' }}>
+        Hours viewed, the way the services publish them. What a service takes from a title is its own business and is not published anywhere, so nothing here claims it.
+      </p>
+    </Panel>
+  );
+}
+
+/** The all-time records from the real record, and the ones this save has set. */
+function RecordsTab({ onStudio }: { onStudio: (id: string) => void }) {
+  const { sim } = useGame();
+  const [board, setBoard] = useState<'film' | 'television' | 'franchise' | 'yours'>('film');
+  const mine = useWorld((s) => saveRecords(s));
+
+  const filmBoards: { key: keyof typeof ALL_TIME.film; label: string; note: string; value: (r: RecordEntry) => string }[] = [
+    { key: 'gross', label: 'Highest Worldwide Gross', note: 'In United States dollars, as the record carries it.', value: (r) => formatMoneyCompact((r.gross ?? 0) * 100) },
+    { key: 'budget', label: 'Most Expensive Ever Made', note: 'Production budget on record, before marketing.', value: (r) => formatMoneyCompact((r.budget ?? 0) * 100) },
+    { key: 'imdb', label: 'Highest Rated On IMDb', note: 'Fifty thousand votes or more.', value: (r) => `${r.imdb?.toFixed(1)} · ${((r.imdbVotes ?? 0) / 1000).toFixed(0)}K Votes` },
+    { key: 'tomatometer', label: 'Best Reviewed', note: 'Tomatometer, sixty reviews or more.', value: (r) => `${r.tomatometer}% · ${r.tomatometerCount} Reviews` },
+    { key: 'awards', label: 'Most Awarded', note: 'Awards the record lists against the title.', value: (r) => `${r.awards} Awards` },
+    { key: 'runtime', label: 'Longest', note: 'Two and a half hours or more.', value: (r) => `${Math.floor((r.runtime ?? 0) / 60)}h ${(r.runtime ?? 0) % 60}m` },
+  ];
+  const tvBoards: { key: keyof typeof ALL_TIME.television; label: string; note: string; value: (r: RecordEntry) => string }[] = [
+    { key: 'episodes', label: 'Most Episodes', note: 'Episodes the record counts.', value: (r) => `${(r.episodes ?? 0).toLocaleString('en-US')} Episodes` },
+    { key: 'seasons', label: 'Most Seasons', note: 'Seasons the record counts.', value: (r) => `${r.seasons} Seasons` },
+    { key: 'longestRun', label: 'Longest Running', note: 'Eight years or more, first air to last.', value: (r) => `${r.years} Years` },
+    { key: 'imdb', label: 'Highest Rated On IMDb', note: 'Twenty thousand votes or more.', value: (r) => `${r.imdb?.toFixed(1)} · ${((r.imdbVotes ?? 0) / 1000).toFixed(0)}K Votes` },
+    { key: 'awards', label: 'Most Awarded', note: 'Awards the record lists against the title.', value: (r) => `${r.awards} Awards` },
+  ];
+
+  const rows = (entries: RecordEntry[], value: (r: RecordEntry) => string) => (
+    <div className="list">
+      {entries.slice(0, 12).map((entry, i) => (
+        <div key={entry.qid} className="list-item list-static" style={{ display: 'block' }}>
+          <div className="row gap-2" style={{ alignItems: 'baseline' }}>
+            <div className="mono small dim" style={{ minWidth: 22 }}>{i + 1}</div>
+            <div className="small strong grow truncate" title={entry.title}>{entry.title}</div>
+          </div>
+          <div className="row-between xs dim" style={{ paddingLeft: 30 }}>
+            <span className="truncate">
+              {entry.year ?? 'Undated'}
+              {entry.studioIds.length > 0 && STUDIOS.get(entry.studioIds[0]!) ? <> · <button className="link" onClick={() => onStudio(entry.studioIds[0]!)}>{STUDIOS.get(entry.studioIds[0]!)!.shortName}</button></> : null}
+            </span>
+            <span className="mono" style={{ whiteSpace: 'nowrap' }}>{value(entry)}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <>
+      <Tabs active={board} onChange={setBoard} tabs={[
+        { id: 'film', label: 'Film' },
+        { id: 'television', label: 'Television' },
+        { id: 'franchise', label: 'Franchises' },
+        { id: 'yours', label: 'Your Universe', badge: mine.length },
+      ]} />
+
+      {board === 'film' && (
+        <>
+          <p className="small muted">Every figure here is one the public record carries for a title in these studios' catalogues, built from {ALL_TIME.builtFrom.toLocaleString('en-US')} of them. Nothing on this page is simulated.</p>
+          <div className="grid grid-2">
+            {filmBoards.map(({ key, label, note, value }) => (
+              <Panel key={key} title={label} subtitle={note} flush>{rows(ALL_TIME.film[key] as RecordEntry[], value)}</Panel>
+            ))}
+          </div>
+          <Panel title="The Biggest Film Of Each Year" subtitle="Worldwide, from the record." flush>
+            <div className="list">
+              {Object.entries(ALL_TIME.film.byYear).sort((a, b) => Number(b[0]) - Number(a[0])).slice(0, 30).map(([year, entry]) => (
+                <div key={year} className="list-item list-static">
+                  <div className="mono small" style={{ minWidth: 52 }}>{year}</div>
+                  <div className="grow small strong truncate">{entry.title}</div>
+                  <div className="mono small" style={{ whiteSpace: 'nowrap' }}>{formatMoneyCompact(entry.gross * 100)}</div>
+                </div>
+              ))}
+            </div>
+          </Panel>
+        </>
+      )}
+
+      {board === 'television' && (
+        <div className="grid grid-2">
+          {tvBoards.map(({ key, label, note, value }) => (
+            <Panel key={key} title={label} subtitle={note} flush>{rows(ALL_TIME.television[key] as RecordEntry[], value)}</Panel>
+          ))}
+        </div>
+      )}
+
+      {board === 'franchise' && (
+        <Panel title="Biggest Franchises" subtitle="Total worldwide gross across every title the record puts in them." flush>
+          <div className="list">
+            {ALL_TIME.franchises.map((f, i) => (
+              <div key={f.qid} className="list-item list-static">
+                <div className="mono small dim" style={{ minWidth: 28 }}>{i + 1}</div>
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div className="small strong truncate">{titleCaseLabel(f.name)}</div>
+                  <div className="xs dim">{f.titles} Titles · {f.firstYear} To {f.lastYear}</div>
+                </div>
+                <div className="mono small" style={{ whiteSpace: 'nowrap' }}>{formatMoneyCompact(f.gross * 100)}</div>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
+      {board === 'yours' && (
+        mine.length === 0
+          ? <Empty title="No Records Yet" body="Your universe has not set a record of its own. The first picture that opens, the first night that airs and the first week on a chart all go on this page." />
+          : (
+            <>
+              <p className="small muted">Everything on this page happened in your universe. It is simulation, and it is measured against nothing but itself.</p>
+              <div className="grid grid-2">
+                {mine.map(({ category, label, entries }) => (
+                  <Panel key={category} title={label} subtitle={RECORD_LABEL[category]} flush>
+                    <div className="list">
+                      {entries.map((entry, i) => (
+                        <div key={`${entry.title}|${i}`} className="list-item list-static">
+                          <div className="mono small dim" style={{ minWidth: 28 }}>{i + 1}</div>
+                          <div className="grow" style={{ minWidth: 0 }}>
+                            <div className={`small ${entry.yours ? 'strong' : ''} truncate`}>{entry.title}</div>
+                            <div className="xs dim truncate">{formatDate(entry.at, sim.homeZone)} · {entry.note}</div>
+                          </div>
+                          <div className="mono small" style={{ whiteSpace: 'nowrap' }}>{formatRecord(category, entry.value)}</div>
+                          {entry.yours && <span className="chip chip-positive">Yours</span>}
+                        </div>
+                      ))}
+                    </div>
+                  </Panel>
+                ))}
+              </div>
+            </>
+          )
+      )}
+    </>
   );
 }

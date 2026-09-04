@@ -299,6 +299,8 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
   for (const page of [
     { id: 'box-office', type: 'page', name: 'Box Office', aliases: ['weekend', 'market share', 'chart', 'release calendar', 'slate'], description: 'The weekend chart, the year\'s market share and what is dated ahead.' },
     { id: 'trades', type: 'page', name: 'The Trades', aliases: ['headlines', 'news', 'trade', 'variety', 'deadline'], description: 'Every headline the industry made in your universe.' },
+    { id: 'records', type: 'page', name: 'Records', aliases: ['all time', 'highest grossing', 'biggest', 'most episodes', 'longest running', 'hall of fame'], description: 'The all-time records from the real record, and the ones your universe has set.' },
+    { id: 'schedule', type: 'page', name: 'TV Schedules', aliases: ['primetime', 'grid', 'ratings', 'nielsen', 'upfronts', 'renewal'], description: 'Every linear network\'s week, with what each slot did.' },
   ]) {
     const score = scoreMatch(query, page);
     push('Industry', page.id, page.name, page.description, '/workspace/industry', score);

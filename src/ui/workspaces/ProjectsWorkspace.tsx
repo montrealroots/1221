@@ -1,6 +1,9 @@
 import { formatLabel, titleCaseLabel } from '@/engine/core/text';
 import { STUDIOS } from '@/engine/content/studios';
-import { useState } from 'react';
+import { CRAFT_LABEL, craftFocus, genre, genreName, genresByCategory, runtimeBandOf, suggestedPairings } from '@/engine/content/genres';
+import { rating, ratingsFor } from '@/engine/content/ratings';
+import { countryOfCity } from '@/engine/content/geography';
+import { useMemo, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
 import { activeProjects, suggestedBudget, projectProfitLoss, phaseIndex } from '@/engine/systems/film';
@@ -9,8 +12,8 @@ import { releaseSummary } from '@/engine/systems/release';
 import { receptionSummary } from '@/engine/systems/critics';
 import { AGGREGATOR_RULES } from '@/engine/content/critics';
 import { playerCompanies } from '@/engine/systems/company';
-import { GENRES, BUYERS } from '@/engine/content/industry';
-import { PROJECT_PHASE_ORDER } from '@/engine/domain/model';
+import { BUYERS } from '@/engine/content/industry';
+import { PROJECT_PHASE_ORDER, type ProjectFormat } from '@/engine/domain/model';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate, addDays } from '@/engine/core/time';
 
@@ -552,60 +555,165 @@ function ActionRow({ label, detail, action, cta }: { label: string; detail: stri
 }
 
 function CreateProjectDialog({ onClose }: { onClose: () => void }) {
-  const { run } = useGame();
+  const { sim, run } = useGame();
   const [title, setTitle] = useState('');
-  const [format, setFormat] = useState<'feature' | 'series' | 'limited_series' | 'short' | 'documentary'>('feature');
+  const [format, setFormat] = useState<ProjectFormat>('feature');
   const [genres, setGenres] = useState<string[]>(['drama']);
   const [logline, setLogline] = useState('');
+  const [query, setQuery] = useState('');
+  const [openGenre, setOpenGenre] = useState<string | null>(null);
+  const [contentRating, setContentRating] = useState('');
+  const [runtime, setRuntime] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const television = format === 'series' || format === 'limited_series' || format === 'tv_movie';
+  const home = countryOfCity(sim.player.currentLocationId) ?? 'us';
+  const certificates = useMemo(() => ratingsFor(home, television), [home, television]);
+  const groups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return genresByCategory()
+      .map((group: ReturnType<typeof genresByCategory>[number]) => ({
+        ...group,
+        genres: group.genres.filter((g: { formats: readonly string[]; name: string; description: string }) => (g.formats as readonly string[]).includes(format)
+          && (!q || g.name.toLowerCase().includes(q) || g.description.toLowerCase().includes(q))),
+      }))
+      .filter((group: { genres: unknown[] }) => group.genres.length > 0);
+  }, [format, query]);
+  const band = runtimeBandOf(genres);
+  const focus = craftFocus(genres);
+  const suggested = suggestedPairings(genres).slice(0, 6);
+  const chosenRating = contentRating ? rating(contentRating) : undefined;
+
+  const toggle = (id: string) => {
+    setGenres((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id].slice(0, 3)));
+    setError(null);
+  };
 
   const submit = () => {
-    const result = run('film.create_project', { title, format, genres, logline: logline || 'An untitled project.' });
-    if (result.ok) onClose();
+    if (genres.length === 0) { setError('Pick at least one genre.'); return; }
+    const result = run('film.create_project', {
+      title, format, genres, logline: logline || 'An untitled project.',
+      contentRating: contentRating || undefined,
+      runtime: runtime ?? undefined,
+    });
+    if (result.ok) onClose(); else setError(result.error ?? 'It could not be set up.');
   };
 
   return (
     <Modal
       title="Start A Project"
       onClose={onClose}
+      wide
       footer={<><button className="btn" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={submit}>Create</button></>}
     >
-      <div className="field">
-        <label htmlFor="title">Title</label>
-        <input id="title" type="text" value={title} placeholder="Leave blank and one will be suggested" onChange={(e) => setTitle(e.target.value)} />
-      </div>
-      <div className="field">
-        <label htmlFor="format">Format</label>
-        <select id="format" value={format} onChange={(e) => setFormat(e.target.value as typeof format)}>
-          <option value="feature">Feature</option>
-          <option value="short">Short</option>
-          <option value="series">Series</option>
-          <option value="limited_series">Limited Series</option>
-          <option value="documentary">Documentary</option>
-        </select>
-      </div>
-      <div className="field">
-        <label>Genres</label>
-        <div className="row wrap gap-1">
-          {GENRES.map((genre) => (
-            <button
-              key={genre}
-              className="chip"
-              aria-pressed={genres.includes(genre)}
-              style={genres.includes(genre) ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}
-              onClick={() => setGenres((g) => g.includes(genre) ? g.filter((x) => x !== genre) : [...g, genre].slice(0, 3))}
-            >
-              {titleCaseLabel(genre)}
-            </button>
-          ))}
+      <div className="grid grid-2">
+        <div className="field">
+          <label htmlFor="title">Title</label>
+          <input id="title" type="text" value={title} placeholder="Leave blank and one will be suggested" onChange={(e) => setTitle(e.target.value)} />
+        </div>
+        <div className="field">
+          <label htmlFor="format">Format</label>
+          <select id="format" value={format} onChange={(e) => { setFormat(e.target.value as ProjectFormat); setRuntime(null); }}>
+            <option value="feature">Feature</option>
+            <option value="short">Short</option>
+            <option value="series">Series</option>
+            <option value="limited_series">Limited Series</option>
+            <option value="documentary">Documentary</option>
+            <option value="tv_movie">TV Movie</option>
+          </select>
         </div>
       </div>
+
+      <div className="field">
+        <div className="row-between">
+          <label htmlFor="genre-search">Genres <span className="dim">({genres.length} of 3)</span></label>
+          <input
+            id="genre-search" type="text" value={query} placeholder="Search all genres"
+            onChange={(e) => setQuery(e.target.value)} style={{ maxWidth: 220 }}
+          />
+        </div>
+        {genres.length > 0 && (
+          <div className="row wrap gap-1" style={{ marginBottom: 'var(--s2)' }}>
+            {genres.map((id) => (
+              <button key={id} className="chip chip-positive" onClick={() => toggle(id)} title="Remove">{genreName(id)} ✕</button>
+            ))}
+          </div>
+        )}
+        <div style={{ maxHeight: 260, overflowY: 'auto', border: '1px solid var(--line)', borderRadius: 8, padding: 'var(--s2)' }}>
+          {groups.map((group) => (
+            <div key={group.category} style={{ marginBottom: 'var(--s3)' }}>
+              <div className="xs dim" style={{ marginBottom: 4 }}>{group.label}</div>
+              <div className="row wrap gap-1">
+                {group.genres.map((g) => (
+                  <button
+                    key={g.id}
+                    className="chip"
+                    aria-pressed={genres.includes(g.id)}
+                    title={g.description}
+                    style={genres.includes(g.id) ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}
+                    onClick={() => toggle(g.id)}
+                    onMouseEnter={() => setOpenGenre(g.id)}
+                  >
+                    {g.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+          {groups.length === 0 && <div className="small dim">Nothing matches that in this format.</div>}
+        </div>
+        {openGenre && genre(openGenre) && (
+          <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+            <span className="strong">{genre(openGenre)!.name}.</span> {genre(openGenre)!.description} <span className="dim">{genre(openGenre)!.convention}</span>
+          </div>
+        )}
+        {suggested.length > 0 && (
+          <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+            Usually paired with: {suggested.map((g) => (
+              <button key={g.id} className="link" onClick={() => toggle(g.id)}>{g.name}</button>
+            )).reduce<ReactNode[]>((all, node, i) => (i === 0 ? [node] : [...all, ', ', node]), [])}.
+          </div>
+        )}
+      </div>
+
+      <div className="grid grid-2">
+        <div className="field">
+          <label htmlFor="certificate">Certificate</label>
+          <select id="certificate" value={contentRating} onChange={(e) => setContentRating(e.target.value)}>
+            <option value="">Undecided</option>
+            {certificates.map((r: { id: string; code: string; name: string }) => <option key={r.id} value={r.id}>{r.code} — {r.name}</option>)}
+          </select>
+          {chosenRating && (
+            <div className="xs dim">
+              {chosenRating.description} <span className="strong">Permits:</span> {chosenRating.permits} <span className="strong">Limit:</span> {chosenRating.limit}
+              {chosenRating.reach < 1 && <> It leaves about {Math.round(chosenRating.reach * 100)}% of the audience able to buy a ticket.</>}
+            </div>
+          )}
+        </div>
+        <div className="field">
+          <label htmlFor="runtime">Runtime <span className="dim">minutes</span></label>
+          <input
+            id="runtime" type="number" min={1} max={600}
+            value={runtime ?? ''} placeholder={`${Math.round((band[0] + band[1]) / 2)}`}
+            onChange={(e) => setRuntime(e.target.value === '' ? null : Number(e.target.value))}
+          />
+          <div className="xs dim">{genreName(genres[0] ?? 'drama')} usually runs {band[0]} to {band[1]} minutes. Anything from one minute to ten hours is yours to choose.</div>
+        </div>
+      </div>
+
       <div className="field">
         <label htmlFor="logline">Logline</label>
         <textarea id="logline" value={logline} onChange={(e) => setLogline(e.target.value)} placeholder="One sentence. What is it about?" />
       </div>
+
       <div className="callout">
-        Buyers who might want this: {BUYERS.all().filter((b) => genres.some((g) => b.wants.includes(g))).map((b) => b.name).join(', ') || 'none obviously'}.
+        <div className="small"><span className="strong">What this will be judged on.</span> {focus.map((d) => CRAFT_LABEL[d]).join(', ')} — that is what {genres.map(genreName).join(' and ')} lives or dies on, and it is what the script gets scored against.</div>
+        <div className="small" style={{ marginTop: 'var(--s2)' }}>
+          <span className="dim">Buyers who want this: </span>
+          {BUYERS.all().filter((b) => genres.some((g) => b.wants.includes(g))).slice(0, 8).map((b) => b.name).join(', ') || 'nobody obviously, which is not the same as nobody'}.
+        </div>
       </div>
+      {error && <div className="callout callout-warning small">{error}</div>}
     </Modal>
   );
 }

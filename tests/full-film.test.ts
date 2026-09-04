@@ -285,6 +285,12 @@ describe('the full film', () => {
     // The studio's share of a theatrical gross is not the gross. Exhibitors
     // keep roughly half, and a distribution fee comes off what is left.
     const gross = project.boxOfficeDomestic + project.boxOfficeInternational;
+    // A picture whose company can cover the campaign spends it. A beat the
+    // first account cannot cover is paid by the next one that can.
+    const mounted = Object.values(sim.universe.marketingCampaigns).find((c) => c.projectId === made.projectId);
+    expect(mounted, 'no campaign').toBeDefined();
+    expect(mounted!.spent, 'the campaign was never actually paid for').toBe(mounted!.budget);
+    expect(mounted!.beats.every((b) => b.executed), 'a beat never ran').toBe(true);
     expect(release!.netToDistributor, 'the distributor never settled').toBeGreaterThan(0);
     expect(release!.netToDistributor, 'the distributor was handed the whole gross').toBeLessThan(gross);
     expect(

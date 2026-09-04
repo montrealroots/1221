@@ -274,8 +274,8 @@ Q106904680	Alice's Wonderland Bakery	2022	series	Disney Jr.	disney	2	50	2022-02-
 Q111943988	Bad Sisters	2022	series	Apple TV	disney	2	18	2022-08-19				comedy;thriller
 Q113429366	Chibiverse	2022	series	Disney Channel	disney			2022-07-30				comedy
 Q111950685	Fleishman Is in Trouble	2022	limited_series	FX on Hulu	disney	1	8	2022-11-17	2022-12-29	87		drama
-Q112299937	Hamster & Gretel	2022	series	Disney Channel	disney	2	50	2022-08-12		81	68	musical;action
-Q112299937	Hamster & Gretel	2022	series	Disney XD	disney	2	50	2022-08-12		81	68	musical;action
+Q112299937	Hamster & Gretel	2022	series	Disney Channel	disney	2	50	2022-08-12		81		musical;action
+Q112299937	Hamster & Gretel	2022	series	Disney XD	disney	2	50	2022-08-12		81		musical;action
 Q140389936	How Not to Draw	2022	series	Disney Channel	disney		29	2022-09-30				comedy;animation
 Q110938022	National Treasure: Edge of History	2022	series	Disney+	disney	1	10	2022-12-14	2023-02-08			adventure
 Q110588565	The Proud Family: Louder and Prouder	2022	series	Disney+	disney	3	29	2022-02-23				animation
@@ -809,7 +809,7 @@ Q23013757	OK K.O.! Let's Be Heroes	2017	series	Cartoon Network	warner	3	112	2017
 Q23001951	Riverdale	2017	series	The CW	warner	7	137	2017-01-26	2023-08-23			drama;romance
 Q23001951	Riverdale	2017	series	Warner TV	warner	7	137	2017-01-26	2023-08-23			drama;romance
 Q30602646	Wacky Races	2017	series	Boomerang	warner	2	78	2017-08-14	2017-08-14			action;family;comedy;fantasy
-Q30014613	Young Sheldon	2017	series	CBS	warner	7	141	2017-09-25	2024-05-16		77	
+Q30014613	Young Sheldon	2017	series	CBS	warner	7	141	2017-09-25	2024-05-16			
 Q39050249	Apple & Onion	2018	series	Cartoon Network	warner	2	76	2018-02-23	2021-12-07			comedy
 Q26812664	Barry	2018	series	HBO	warner	4	32	2018-03-25	2023-05-28			comedy;crime;drama
 Q50809037	Chilling Adventures of Sabrina	2018	series	Netflix	warner	4	36	2018-10-26	2020-12-31			drama;horror;fantasy
