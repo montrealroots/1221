@@ -2,6 +2,7 @@ import { formatLabel, titleCaseLabel } from '@/engine/core/text';
 import { genreName } from '@/engine/content/genres';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { auditionPolicyFor } from '@/engine/systems/casting';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
 import { AGENCIES } from '@/engine/content/industry';
 import { formatMoney } from '@/engine/core/money';
@@ -16,6 +17,7 @@ export function CastingWorkspace() {
   const { sim, run } = useGame();
   const [tab, setTab] = useState<Tab>('breakdowns');
   const [preparing, setPreparing] = useState<string | null>(null);
+  const [taping, setTaping] = useState<string | null>(null);
 
   const player = useWorld((s) => s.player);
   const age = ageOn(player.birthInstant, sim.now, sim.homeZone);
@@ -83,14 +85,23 @@ export function CastingWorkspace() {
                       <div className="xs dim">to {formatMoney(role.payHigh, { cents: false })}</div>
                     </div>
                     {project && <DossierButton project={project} roleId={role.id} />}
-                    <button
-                      className="btn btn-sm"
-                      disabled={submittedRoleIds.has(role.id) || !inRange}
-                      title={!inRange ? `They are looking for ${role.ageRange[0]} to ${role.ageRange[1]}. You are ${age}.` : undefined}
-                      onClick={() => run('cast.submit', { roleId: role.id })}
-                    >
-                      {submittedRoleIds.has(role.id) ? 'Submitted' : inRange ? 'Submit' : 'Wrong Age'}
-                    </button>
+                    {submittedRoleIds.has(role.id) ? (
+                      <span className="chip chip-positive">Submitted</span>
+                    ) : !inRange ? (
+                      <span className="chip" title={`They are looking for ${role.ageRange[0]} to ${role.ageRange[1]}. You are ${age}.`}>Wrong Age</span>
+                    ) : (
+                      <div className="col gap-1" style={{ alignItems: 'flex-end' }}>
+                        <div className="xs dim">{POLICY_LABEL[auditionPolicyFor(sim, role)]}</div>
+                        <div className="row gap-1">
+                          {auditionPolicyFor(sim, role) !== 'in_person_only' && (
+                            <button className="btn btn-sm" onClick={() => run('cast.submit', { roleId: role.id, prefer: 'tape' })}>Send A Tape</button>
+                          )}
+                          {auditionPolicyFor(sim, role) !== 'tape_only' && (
+                            <button className="btn btn-sm btn-primary" onClick={() => run('cast.submit', { roleId: role.id, prefer: 'in_person' })}>Ask For The Room</button>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -115,8 +126,15 @@ export function CastingWorkspace() {
                       <div className="grow">
                         <div className="small strong">{role?.characterName} — {project?.title}</div>
                         <div className="xs dim">
-                          {audition.scheduledAt && `${formatDate(audition.scheduledAt, sim.homeZone)} at ${formatTime(audition.scheduledAt, sim.homeZone)}`}
-                          {audition.locationId && ` · ${CITIES.get(audition.locationId)?.name}`}
+                          {audition.format === 'self_tape' || audition.stage === 'self_tape'
+                            ? (audition.tapeSentAt
+                              ? `Tape sent ${formatDate(audition.tapeSentAt, sim.homeZone)}${audition.tapeTakes ? `, take ${audition.tapeTakes} of ${audition.tapeTakes}` : ''}`
+                              : audition.scheduledAt ? `Tape due ${formatDate(audition.scheduledAt, sim.homeZone)}` : 'Tape')
+                            : audition.scheduledAt && `${formatDate(audition.scheduledAt, sim.homeZone)} at ${formatTime(audition.scheduledAt, sim.homeZone)}`}
+                          {audition.locationId && (audition.format !== 'self_tape') && ` · ${CITIES.get(audition.locationId)?.name}`}
+                          {audition.locationId && audition.format !== 'self_tape' && audition.stage !== 'self_tape' && !audition.decidedAt && sim.player.currentLocationId !== audition.locationId && (
+                            <span className="warning"> · you are not in the city</span>
+                          )}
                           {audition.rank && ` · finished ${audition.rank}`}
                         </div>
                       </div>
@@ -124,12 +142,35 @@ export function CastingWorkspace() {
                         {titleCaseLabel(audition.stage.replace(/_/g, ' '))}
                       </span>
                       {project && <DossierButton project={project} roleId={audition.roleId} />}
-                      {!audition.decidedAt && audition.performanceScore === undefined && (
+                      {!audition.decidedAt && audition.performanceScore === undefined && (audition.format === 'self_tape' || audition.stage === 'self_tape') && !audition.tapeSentAt && (
+                        <button className="btn btn-sm btn-primary" onClick={() => setTaping(audition.id)}>
+                          Shoot The Tape
+                        </button>
+                      )}
+                      {!audition.decidedAt && audition.performanceScore === undefined && audition.format !== 'self_tape' && audition.stage !== 'self_tape' && (
                         <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
                           Prepare And Perform
                         </button>
                       )}
+                      {!audition.decidedAt && audition.stage === 'callback' && !(audition.rounds ?? []).some((r) => r.stage === 'callback') && (
+                        <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
+                          Go To The Callback
+                        </button>
+                      )}
                     </div>
+
+                    {audition.officeResponse && audition.officeResponse.kind !== 'silence' && (
+                      <div className={`callout ${audition.officeResponse.kind === 'callback' ? 'callout-accent' : audition.officeResponse.kind === 'pass' ? 'callout-negative' : ''}`} style={{ marginTop: 'var(--s2)' }}>
+                        <strong className="xs">The Office, {formatDate(audition.officeResponse.at, sim.homeZone)}</strong>
+                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.officeResponse.note}</p>
+                      </div>
+                    )}
+                    {audition.officeResponse?.kind === 'silence' && (
+                      <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>Nothing back from the office. They do not always send the no.</p>
+                    )}
+                    {audition.tapeSentAt && !audition.officeResponse && !audition.decidedAt && (
+                      <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>The tape is with them. Offices take days, sometimes weeks.</p>
+                    )}
 
                     {audition.feedback && (
                       <p className="xs muted" style={{ margin: 'var(--s2) 0 0' }}>{audition.feedback}</p>
@@ -232,7 +273,63 @@ export function CastingWorkspace() {
       )}
 
       {preparing && <PrepareDialog auditionId={preparing} onClose={() => setPreparing(null)} />}
+      {taping && <TapeDialog auditionId={taping} onClose={() => setTaping(null)} />}
     </>
+  );
+}
+
+const POLICY_LABEL: Record<string, string> = {
+  tape_only: 'Tapes only',
+  either: 'Tape or the room',
+  in_person_only: 'In the room only',
+};
+
+function TapeDialog({ auditionId, onClose }: { auditionId: string; onClose: () => void }) {
+  const { sim, run } = useGame();
+  const [hours, setHours] = useState(3);
+  const [takes, setTakes] = useState(3);
+  const audition = sim.universe.auditions[auditionId];
+  const role = audition ? sim.universe.roles[audition.roleId] : undefined;
+
+  const submit = () => {
+    const result = run('cast.send_tape', { auditionId, prepHours: hours, takes });
+    if (result.ok) onClose();
+  };
+
+  return (
+    <Modal
+      title={`Tape For ${role?.characterName ?? 'The Part'}`}
+      onClose={onClose}
+      footer={<><button className="btn" onClick={onClose}>Not Yet</button><button className="btn btn-primary" onClick={submit}>Shoot It And Send It</button></>}
+    >
+      <p className="muted small">
+        A tape is prepared, shot in takes, and sent once. Every take is twenty minutes and a little
+        energy; the best one goes. After that it is out of your hands until the office writes back,
+        which they do in their own time — or not at all.
+      </p>
+      <div className="field">
+        <div className="row-between">
+          <label htmlFor="tape-prep" style={{ marginBottom: 0 }}>Hours Of Preparation</label>
+          <span className="mono">{hours}</span>
+        </div>
+        <input id="tape-prep" type="range" min={0} max={16} value={hours} onChange={(e) => setHours(Number(e.target.value))} />
+      </div>
+      <div className="field">
+        <div className="row-between">
+          <label htmlFor="tape-takes" style={{ marginBottom: 0 }}>Takes</label>
+          <span className="mono">{takes}</span>
+        </div>
+        <input id="tape-takes" type="range" min={1} max={8} value={takes} onChange={(e) => setTakes(Number(e.target.value))} />
+        <div className="row-between xs dim">
+          <span>One and done</span><span>Eight, and the light has gone</span>
+        </div>
+      </div>
+      <div className="callout">
+        {takes === 1 && 'One take. Brave, or careless.'}
+        {takes > 1 && takes < 5 && 'A few takes to find it. What most people do.'}
+        {takes >= 5 && 'You will get the best version you have in you today. It costs the afternoon.'}
+      </div>
+    </Modal>
   );
 }
 

@@ -4,6 +4,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
 import { companyDashboard, playerCompanies, explainCeiling, COMPANY_ROLES, EQUIPMENT_CATALOG } from '@/engine/systems/company';
 import { CITIES } from '@/engine/content/geography';
+import { GEAR_CALIBRATION_NOTE } from '@/engine/content/gear';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
@@ -204,21 +205,27 @@ function CompanyDetail({ companyId }: { companyId: string }) {
             )}
           </Panel>
 
-          <Panel title="Available" flush>
+          <Panel title="Available" subtitle={GEAR_CALIBRATION_NOTE} flush>
             <div className="list">
               {EQUIPMENT_CATALOG.map((template) => (
-                <div key={template.name} className="list-item list-static">
+                <div key={template.gearId} className="list-item list-static">
                   <div className="grow">
-                    <div className="small strong">{template.name}</div>
-                    <div className="xs dim">{template.brand} · {titleCaseLabel(template.category)} · quality {template.qualityRating}</div>
+                    <div className="small strong">{template.brand} {template.name}</div>
+                    <div className="xs dim">{titleCaseLabel(template.category)} · quality {template.qualityRating}{template.rentalOnly ? ' · rental only' : ''}</div>
+                    <div className="xs muted" style={{ marginTop: 2 }}>{template.about}</div>
                   </div>
-                  <span className="mono small">{formatMoneyCompact(template.price)}</span>
-                  <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, templateName: template.name, acquire: 'rental', days: 30 })}>
-                    Rent 30d
+                  <div style={{ textAlign: 'right' }}>
+                    <div className="mono small">{template.rentalOnly ? '—' : formatMoneyCompact(template.price)}</div>
+                    <div className="xs dim">{formatMoney(template.dailyRental, { cents: false })} a day</div>
+                  </div>
+                  <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, gearId: template.gearId, acquire: 'rental', days: 30 })}>
+                    Rent 30 Days
                   </button>
-                  <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, templateName: template.name, acquire: 'purchase' })}>
-                    Buy
-                  </button>
+                  {!template.rentalOnly && (
+                    <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, gearId: template.gearId, acquire: 'purchase' })}>
+                      Buy
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

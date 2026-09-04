@@ -464,9 +464,31 @@ export interface Property {
   isPrimaryResidence: boolean;
   /** Rented out to tenants for income. */
   rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
+  /** When the property is a studio lot or a stage: the plant, and who is on it. */
+  lot?: StudioPlant;
   listedForSale?: { price: Money; since: Instant; agentId?: Id };
   soldAt?: Instant;
   createdAt: Instant;
+}
+
+/** A studio lot the player owns, as a working business. */
+export interface StudioPlant {
+  stages: number;
+  /** Square feet of the largest stage. */
+  largestStageSqft: number;
+  /** What SLATE charges the world for a stage day here, in cents. */
+  stageDayRate: Money;
+  /** Monthly cost of keeping the lights on, in cents. */
+  monthlyOverhead: Money;
+  facilities: ('backlot' | 'water_tank' | 'led_volume' | 'post' | 'scoring_stage' | 'workshops' | 'offices')[];
+  /** World productions on the lot right now. */
+  tenants: { projectTitle: string; projectId?: Id; stages: number; from: Instant; to: Instant; dayRate: Money }[];
+  /** Everything the lot has taken in and paid out. */
+  lifetimeIncome: Money;
+  lifetimeOverhead: Money;
+  /** 0-1 share of stage days in use over the last close. */
+  occupancy: number;
+  lastClosedAt?: Instant;
 }
 
 export interface Structure {
@@ -1227,6 +1249,12 @@ export interface Project {
   /** Post. */
   postTaskIds: Id[];
   pictureLockedAt?: Instant;
+  /** Effects: counted, bid on, awarded. */
+  vfx?: VfxPlan;
+  /** Music: spotted, written, licensed. */
+  music?: MusicPlan;
+  /** Stages booked for the shoot. */
+  stageBookings?: StageBooking[];
 
   /** Release. */
   releaseId?: Id;
@@ -1451,6 +1479,8 @@ export interface Role {
   /** When the decision on this role is made. Set when casting opens. */
   decidesAt?: number;
   castPersonId?: Id;
+  /** What the office will take from actors submitting: tapes, the room, or either. */
+  auditionPolicy?: 'tape_only' | 'either' | 'in_person_only';
   contractId?: Id;
   /** People currently in the running. */
   shortlistIds: Id[];
@@ -1496,6 +1526,13 @@ export interface Audition {
    * player can see each one when it is their picture.
    */
   rounds?: { stage: AuditionStage; at: Instant; score: number; note: string }[];
+  /** Tape or the room. Set when the player submits; the office decides what it will take. */
+  format?: 'self_tape' | 'in_person';
+  /** When the tape went, and how many takes it took. */
+  tapeSentAt?: Instant;
+  tapeTakes?: number;
+  /** The office got back to you, or pointedly did not. */
+  officeResponse?: { at: Instant; kind: 'callback' | 'hold' | 'pass' | 'silence'; note: string };
 }
 
 export type ContractKind = 'acting' | 'writing' | 'directing' | 'producing' | 'crew' | 'vendor' | 'distribution' | 'license' | 'option' | 'employment';
@@ -1629,6 +1666,85 @@ export interface PostTask {
   /** 0-100 contribution to the finished film. */
   quality: number;
   notes: { at: Instant; note: string }[];
+  /** The real house doing the work, from content/post-houses, when one was chosen. */
+  houseId?: string;
+  /**
+   * Hours the player spent in the room on this task. A cut is made in
+   * sessions; each one moves the task and teaches something.
+   */
+  sessions?: { at: Instant; hours: number; note: string; gain: number }[];
+}
+
+/** One house's answer to a request for a visual effects bid. */
+export interface VfxBid {
+  houseId: string;
+  amount: Money;
+  weeks: number;
+  /** What SLATE expects the work to read at, 0-100, from the house's tier and load. */
+  expectedQuality: number;
+  note: string;
+  at: Instant;
+}
+
+/** The effects on a picture: what the script asks for, who bid, who got it. */
+export interface VfxPlan {
+  /** Shots, counted from the breakdown and the director's coverage. */
+  shots: number;
+  mix: { simple: number; medium: number; hero: number };
+  bids: VfxBid[];
+  awardedHouseId?: string;
+  awardedAt?: Instant;
+  contractId?: Id;
+  brokenDownAt: Instant;
+}
+
+/** One piece of music in the picture: a cue the composer writes, or something licensed. */
+export interface MusicCue {
+  id: Id;
+  number: number;
+  /** What it is for, in words. SLATE never names a real song. */
+  description: string;
+  use: 'score' | 'source' | 'needle_drop' | 'title' | 'end_credits';
+  minutes: number;
+  status: 'spotted' | 'written' | 'recorded' | 'licensed' | 'dropped';
+  /** For licensed music: the two licences a recording needs, and their terms. */
+  licence?: {
+    publisherId: string;
+    labelId: string;
+    syncFee: Money;
+    masterFee: Money;
+    /** Most favoured nations: each side is paid what the other is. */
+    mfn: boolean;
+    term: 'perpetuity' | 'ten_years' | 'festival_only';
+    territory: 'worldwide' | 'domestic';
+    at: Instant;
+    contractId?: Id;
+  };
+}
+
+/** The music on a picture. */
+export interface MusicPlan {
+  cues: MusicCue[];
+  spottedAt?: Instant;
+  composerId?: Id;
+  /** Where the score was recorded, from the registry, when it was. */
+  scoringStageId?: string;
+  recordedAt?: Instant;
+}
+
+/** Stage days booked on a lot. */
+export interface StageBooking {
+  id: Id;
+  /** A real lot from content/post-houses, or the id of a property the player owns. */
+  lotId: string;
+  lotName: string;
+  stages: number;
+  from: Instant;
+  to: Instant;
+  days: number;
+  cost: Money;
+  contractId?: Id;
+  bookedAt: Instant;
 }
 
 export interface MarketingCampaign {
@@ -2338,7 +2454,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 21;
+export const SAVE_SCHEMA_VERSION = 22;
 
 export interface SaveMeta {
   id: Id;

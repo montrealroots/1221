@@ -43,6 +43,7 @@ import { registerProfessions } from './systems/professions';
 import { registerRealPeople } from './systems/real-people';
 import { registerPress } from './systems/press';
 import { craftFromLegacy } from './content/screenplay';
+import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -74,6 +75,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerBuyerOffer(sim);
   registerCasting(sim);
   registerProduction(sim);
+  registerPost(sim);
   registerRelease(sim);
   registerCritics(sim);
   registerFranchises(sim);
@@ -121,6 +123,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
   sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
+  ensureLotsClose(sim);
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
@@ -810,6 +813,24 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(carried > 0
       ? `A script is a document now: fourteen craft dimensions, a scene list and a cast of characters. ${carried} draft${carried === 1 ? '' : 's'} already in the save kept every number ${carried === 1 ? 'it' : 'they'} had.`
       : 'A script is a document now: fourteen craft dimensions, a scene list and a cast of characters.');
+  }
+
+  if (from < 22) {
+    // Post is work now: effects are counted and bid on by real houses, music
+    // is spotted and licensed from the companies that own it, stages are
+    // booked on real lots and a lot can be owned. Nothing already in a save
+    // changes; a picture that finished post before this keeps its tasks and
+    // its numbers, and simply has no bids or cues on the record.
+    let plants = 0;
+    for (const property of Object.values(universe.properties)) {
+      if ((property.kind === 'studio_lot' || property.kind === 'sound_stage') && property.ownerId && !property.lot) {
+        property.lot = plantForLegacyProperty(property);
+        plants++;
+      }
+    }
+    steps.push(plants > 0
+      ? `Post is work now: bids, cues, stages and lots. ${plants} lot${plants === 1 ? '' : 's'} you already owned ${plants === 1 ? 'is' : 'are'} a working plant.`
+      : 'Post is work now: effects bids from real houses, music licensed from its owners, stages on real lots.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

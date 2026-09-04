@@ -247,7 +247,9 @@ export function runShootDay(
   // Setups an hour: the crew's size, the DP's speed, the director's
   // efficiency, and whether it is a stage (fast) or a location (slow).
   const crewFactor = clamp(0.7 + day.crewCount / 160, 0.7, 1.5);
-  const baseRate = (1.1 + c.speed / 90 + d.efficiency / 110) * crewFactor * (day.isStage ? 1.15 : 0.9) * remap(ready, 0.4, 1, 0.8, 1.05);
+  // A booked stage on a real lot is built for this; the day runs a little faster on it.
+  const lotLift = day.lotId ? 1.05 : 1;
+  const baseRate = (1.1 + c.speed / 90 + d.efficiency / 110) * crewFactor * (day.isStage ? 1.15 : 0.9) * lotLift * remap(ready, 0.4, 1, 0.8, 1.05);
 
   const weather = shootDayWeather(sim, day.locationId, day.date, day.isStage);
   const weatherFactor = weather.factor;

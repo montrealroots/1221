@@ -32,6 +32,7 @@ import { archetypeLabel, breakDownScript } from '../content/screenplay';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
+  sim.onSchedule('cast.office_response', (item) => officeResponds(sim, item.payload.auditionId as Id));
   // The player's note of a decision day. The decision itself is cast.decide_role.
   sim.onSchedule('cast.decision_due', () => {});
 
@@ -117,7 +118,7 @@ export function registerCasting(sim: Simulation): void {
 
   // --- The player's side ---------------------------------------------------
 
-  sim.onCommand<{ roleId: Id }, { auditionId: Id; stage: AuditionStage }>(
+  sim.onCommand<{ roleId: Id; prefer?: 'tape' | 'in_person' }, { auditionId: Id; stage: AuditionStage; format: 'self_tape' | 'in_person'; policy: Role['auditionPolicy'] }>(
     'cast.submit',
     (p, { sim: s }) => {
       const role = s.universe.roles[p.roleId];
@@ -134,7 +135,22 @@ export function registerCasting(sim: Simulation): void {
         throw new CommandError(`They are looking for ${role.ageRange[0]} to ${role.ageRange[1]}. You are ${age}.`);
       }
 
-      const audition = submitAudition(s, role, player, true);
+      // The office decides what it will take. You can ask for the room or
+      // for a tape; you cannot make them see you if they are only taking tapes.
+      const policy = auditionPolicyFor(s, role);
+      if (p.prefer === 'in_person' && policy === 'tape_only') {
+        throw new CommandError('They are only taking tapes on this one. Send a tape or let it go.');
+      }
+      if (p.prefer === 'tape' && policy === 'in_person_only') {
+        throw new CommandError('They want to see people in the room for this one. No tapes.');
+      }
+      const format: 'self_tape' | 'in_person' = p.prefer === 'tape' ? 'self_tape'
+        : p.prefer === 'in_person' ? 'in_person'
+          : policy === 'tape_only' ? 'self_tape'
+            : policy === 'in_person_only' ? 'in_person'
+              : s.rng('audition_format', role.id, player.id).chance(0.55) ? 'self_tape' : 'in_person';
+
+      const audition = submitAudition(s, role, player, true, format);
       // Now it is your business: the decision date goes on your calendar.
       if (role.decidesAt && role.decidesAt > s.now) {
         const project = s.universe.projects[role.projectId];
@@ -148,7 +164,76 @@ export function registerCasting(sim: Simulation): void {
           refType: 'role', refId: role.id,
         });
       }
-      return { auditionId: audition.id, stage: audition.stage };
+      return { auditionId: audition.id, stage: audition.stage, format, policy };
+    },
+  );
+
+  // Sending a tape: takes cost time and energy and buy a better one, up to a
+  // point. The office gets back to you in its own time, or does not.
+  sim.onCommand<{ auditionId: Id; prepHours?: number; takes?: number }, { performanceScore: number; takes: number; note: string; sentAt: number }>(
+    'cast.send_tape',
+    (p, { sim: s }) => {
+      const audition = s.universe.auditions[p.auditionId];
+      if (!audition) throw new CommandError('No such audition.');
+      if (!audition.isPlayer) throw new CommandError('That is not your audition.');
+      if (audition.decidedAt) throw new CommandError('That audition is already resolved.');
+      if (audition.format !== 'self_tape' && audition.stage !== 'self_tape') throw new CommandError('That one is in the room, not on tape. Turn up to it.');
+      if (audition.tapeSentAt) throw new CommandError('The tape went already. You do not get to send a second one.');
+      const role = s.universe.roles[audition.roleId];
+      const project = s.universe.projects[audition.projectId];
+      if (!role || !project) throw new CommandError('That part is gone.');
+      if (role.status !== 'casting') throw new CommandError('Casting on that role is closed.');
+
+      const player = s.player;
+      const prep = clamp(p.prepHours ?? 0, 0, 24);
+      const takes = clamp(Math.round(p.takes ?? 3), 1, 8);
+      if (player.wellbeing.energy < 8) throw new CommandError('You are too tired to put anything good on tape. Sleep first.');
+
+      if (prep > 0) {
+        s.advanceTo(s.now + prep * 60 * 60 * 1000);
+        player.wellbeing.energy = clamp(player.wellbeing.energy - prep * 3.5, 0, 100);
+        player.attributes['preparation'] = clamp((player.attributes['preparation'] ?? 30) + prep * 0.1, 0, 100);
+      }
+      // Twenty minutes a take, and the best of them is what goes.
+      s.advanceTo(s.now + takes * 20 * 60 * 1000);
+      player.wellbeing.energy = clamp(player.wellbeing.energy - takes * 2, 0, 100);
+
+      const result = scoreAudition(s, audition, prep);
+      const takesLift = Math.min(6, (takes - 1) * 1.5);
+      audition.performanceScore = clamp(result.performance + takesLift, 0, 100);
+      audition.fitScore = result.fit;
+      audition.totalScore = clamp(result.total + takesLift * 0.58, 0, 100);
+      audition.tapeSentAt = s.now;
+      audition.tapeTakes = takes;
+      audition.format = 'self_tape';
+      if (audition.scheduledItemId) s.timeline.cancel(audition.scheduledItemId, s.now);
+      s.resolveDecision('audition', audition.id);
+
+      const note = audition.performanceScore > 78
+        ? `Take ${takes} of ${takes}: the one where it stopped being an audition.`
+        : audition.performanceScore > 58
+          ? 'A clean tape. Well lit, in frame, the reader off camera where they should be.'
+          : audition.performanceScore > 38
+            ? 'It is fine. You can hear the reader breathing and you rushed the last beat.'
+            : 'You sent it because it was due, not because it was ready.';
+
+      s.audit({
+        kind: 'cast.audition_performed', subjectType: 'audition', subjectId: audition.id,
+        question: 'How was the tape?',
+        summary: note,
+        factors: [
+          ...result.factors,
+          { label: 'Takes', detail: takes === 1 ? 'One take. Brave, or careless.' : `${takes} takes; the best one went.`, weight: 0.1, contribution: takesLift / 100, knowable: true },
+        ],
+        score: audition.totalScore,
+        outcome: `${Math.round(audition.totalScore)}`,
+      });
+      player.attributes['self_tape_craft'] = clamp((player.attributes['self_tape_craft'] ?? 20) + 0.5 + takes * 0.08, 0, 100);
+      player.wellbeing.stress = clamp(player.wellbeing.stress + 3, 0, 100);
+      scheduleOfficeResponse(s, audition, role);
+      s.emit('cast.audition_performed', { auditionId: audition.id, roleId: audition.roleId, score: audition.totalScore });
+      s.emit('cast.tape_sent', { auditionId: audition.id, roleId: audition.roleId, takes });
+      return { performanceScore: Math.round(audition.performanceScore), takes, note, sentAt: s.now };
     },
   );
 
@@ -186,6 +271,19 @@ export function registerCasting(sim: Simulation): void {
       audition.performanceScore = result.performance;
       audition.fitScore = result.fit;
       audition.totalScore = result.total;
+      if (audition.stage === 'self_tape' || audition.format === 'self_tape') {
+        audition.tapeSentAt = s.now;
+        audition.tapeTakes ??= 3;
+        audition.format = 'self_tape';
+        if (audition.scheduledItemId) s.timeline.cancel(audition.scheduledItemId, s.now);
+      } else if (audition.stage === 'first_read' && audition.locationId && player.currentLocationId !== audition.locationId) {
+        throw new CommandError(`The room is in ${CITIES.get(audition.locationId)?.name ?? 'another city'} and you are not. Get there first.`);
+      }
+      s.resolveDecision('audition', audition.id);
+      {
+        const role = s.universe.roles[audition.roleId];
+        if (role) scheduleOfficeResponse(s, audition, role);
+      }
 
       s.audit({
         kind: 'cast.audition_performed', subjectType: 'audition', subjectId: audition.id,
@@ -678,7 +776,7 @@ export function auditionsFor(sim: Simulation, role: Role): Audition[] {
   return out;
 }
 
-function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: boolean): Audition {
+function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: boolean, format?: 'self_tape' | 'in_person'): Audition {
   const project = sim.universe.projects[role.projectId];
   const audition: Audition = {
     id: sim.nextId('audition'),
@@ -702,7 +800,9 @@ function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: b
     const at = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: rng.int(10, 17) }, sim.homeZone);
     const locationId = project?.productionLocationIds[0] ?? person.currentLocationId;
 
-    audition.stage = rng.chance(0.55) ? 'self_tape' : 'first_read';
+    const chosen = format ?? (rng.chance(0.55) ? 'self_tape' : 'in_person');
+    audition.format = chosen;
+    audition.stage = chosen === 'self_tape' ? 'self_tape' : 'first_read';
     audition.scheduledAt = at;
     audition.locationId = locationId;
 
@@ -723,7 +823,7 @@ function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: b
     sim.requireDecision({
       urgency: 66, category: 'career',
       title: `${audition.stage === 'self_tape' ? 'Self-tape' : 'Audition'}: ${role.characterName}`,
-      detail: `${project?.title ?? 'A project'}, ${role.billing.replace(/_/g, ' ')}. ${formatDate(at, sim.homeZone)} at ${formatTime(at, sim.homeZone)}${audition.stage === 'self_tape' ? '' : ` in ${CITIES.get(locationId)?.name ?? 'town'}`}. Preparation is the whole game.`,
+      detail: `${project?.title ?? 'A project'}, ${role.billing.replace(/_/g, ' ')}. ${audition.stage === 'self_tape' ? `Tape due ${formatDate(at, sim.homeZone)}. Send it before then; the office will get back to you in its own time.` : `${formatDate(at, sim.homeZone)} at ${formatTime(at, sim.homeZone)} in ${CITIES.get(locationId)?.name ?? 'town'}. Be in the city, be in the room.`} Preparation is the whole game.`,
       route: '/workspace/casting',
       dueAt: at,
       refType: 'audition', refId: audition.id,
@@ -803,6 +903,21 @@ function runAudition(sim: Simulation, auditionId: Id): void {
   const role = sim.universe.roles[audition.roleId];
   if (!person || !role) return;
 
+  // A tape that never went is a tape that never went.
+  if (audition.isPlayer && audition.stage === 'self_tape' && !audition.tapeSentAt) {
+    audition.stage = 'passed';
+    audition.decidedAt = sim.now;
+    audition.feedback = 'The tape was never sent. They cast from the tapes they had.';
+    person.reputation.reliability = clamp(person.reputation.reliability - 3, 0, 100);
+    sim.resolveDecision('audition', audition.id);
+    sim.notify({
+      category: 'career', title: `Tape never sent: ${role.characterName}`,
+      body: 'The due date passed with nothing from you. They moved on.',
+      importance: 58, route: '/workspace/casting',
+    });
+    return;
+  }
+
   // Did the player actually turn up?
   if (audition.isPlayer && audition.stage !== 'self_tape' && audition.locationId && person.currentLocationId !== audition.locationId) {
     audition.stage = 'passed';
@@ -826,10 +941,159 @@ function runAudition(sim: Simulation, auditionId: Id): void {
     audition.performanceScore = result.performance;
     audition.fitScore = result.fit;
     audition.totalScore = result.total;
+    if (audition.isPlayer) scheduleOfficeResponse(sim, audition, role);
   }
 
   sim.resolveDecision('audition', audition.id);
   sim.emit('cast.audition_completed', { auditionId: audition.id, score: audition.totalScore });
+}
+
+// ---------------------------------------------------------------------------
+// The office gets back to you
+// ---------------------------------------------------------------------------
+
+/** What an office will take from actors submitting for a part. Decided once per part. */
+export function auditionPolicyFor(sim: Simulation, role: Role): NonNullable<Role['auditionPolicy']> {
+  if (role.auditionPolicy) return role.auditionPolicy;
+  const rng = sim.rng('audition_policy', role.id);
+  const roll = rng.float(0, 1);
+  role.auditionPolicy = roll < 0.4 ? 'tape_only' : roll < 0.85 ? 'either' : 'in_person_only';
+  return role.auditionPolicy;
+}
+
+/** Puts the office's answer on the calendar: days out, never the same day. */
+function scheduleOfficeResponse(sim: Simulation, audition: Audition, role: Role): void {
+  if (!audition.isPlayer || audition.officeResponse) return;
+  if (sim.timeline.pending().some((i) => i.kind === 'cast.office_response' && i.refId === audition.id)) return;
+  const rng = sim.rng('office_response_when', audition.id);
+  const days = audition.format === 'self_tape' ? rng.int(4, 21) : rng.int(3, 14);
+  const at = addDays(sim.now, days, sim.homeZone);
+  // If the part decides first, the decision is the answer.
+  if (role.decidesAt && role.decidesAt <= at) return;
+  sim.schedule({
+    at, kind: 'cast.office_response',
+    label: `Casting Office — ${role.characterName}`,
+    category: 'career', payload: { auditionId: audition.id },
+    priority: 42, refType: 'audition', refId: audition.id,
+  });
+}
+
+const OFFICE_CALLBACK = [
+  'They loved the tape. They want to see you in the room — details to follow.',
+  'The director watched it twice. Can you come in?',
+  'Good news: you are on the callback list. Hold the dates.',
+  'They responded to the stillness in the second scene. Callback.',
+  'Casting called your rep. They want you back in with the director.',
+  'You are through to the next round. Producer session, in person.',
+  'The office said "that is the closest anyone has come". Callback.',
+  'They are bringing in four people. You are one of them.',
+];
+const OFFICE_HOLD = [
+  'They are holding you. No decision yet; do not book anything on those dates.',
+  'Casting asked for your availability for the shoot dates. That means you are still in it.',
+  'You are pinned. Nothing more than that, but nothing less.',
+  'The office says you are "in the mix". They are seeing more people this week.',
+  'They asked whether you would consider the smaller part if it came to that.',
+  'Still in it. They liked the read; they are not sure about the age.',
+  'No news, which in this office is good news. You have not been released.',
+  'They wrote back to say the tape "landed". Nothing since.',
+];
+const OFFICE_PASS = [
+  'Thank you for the tape. They are going another way on this one.',
+  'They loved the work and it is not going to be you. Both are true.',
+  'The role went in a different direction. They hope to see you for something else.',
+  'Casting released you. The note was kind and short.',
+  'They cast an offer-only name over everyone who read. It happens.',
+  'Not this time. The director felt it needed somebody older.',
+  'They passed. The reader said you were the best of the day, for what that is worth.',
+  'A polite no. Keep the office on your list; they remember tapes.',
+];
+
+/**
+ * The office's answer to a tape or a read, days later. Where you stand in the
+ * field decides it: the top is called back, the middle is held, the rest are
+ * released — or, some of the time, simply never hear, which is also an answer.
+ */
+function officeResponds(sim: Simulation, auditionId: Id): void {
+  const audition = sim.universe.auditions[auditionId];
+  if (!audition || !audition.isPlayer || audition.decidedAt || audition.officeResponse) return;
+  if (audition.totalScore === undefined) return;
+  const role = sim.universe.roles[audition.roleId];
+  const project = sim.universe.projects[audition.projectId];
+  if (!role || !project || role.status !== 'casting') return;
+
+  const field = auditionsFor(sim, role).filter((a) => a.stage !== 'passed');
+  for (const other of field) {
+    if (other.totalScore === undefined && !other.isPlayer) {
+      const result = scoreAudition(sim, other, 0);
+      other.performanceScore = result.performance;
+      other.fitScore = result.fit;
+      other.totalScore = result.total;
+    }
+  }
+  const ranked = field.filter((a) => a.totalScore !== undefined).sort((a, b) => (b.totalScore ?? 0) - (a.totalScore ?? 0));
+  const rank = Math.max(1, ranked.findIndex((a) => a.id === audition.id) + 1);
+  const share = rank / Math.max(1, ranked.length);
+  const rng = sim.rng('office_response', audition.id);
+
+  let kind: NonNullable<Audition['officeResponse']>['kind'];
+  if (share <= 0.2 || rank === 1) kind = 'callback';
+  else if (share <= 0.5) kind = 'hold';
+  else kind = rng.chance(0.65) ? 'pass' : 'silence';
+
+  const pick = (bank: string[]) => bank[rng.int(0, bank.length - 1)]!;
+  const player = sim.universe.people[audition.personId];
+  if (kind === 'callback') {
+    const note = pick(OFFICE_CALLBACK);
+    audition.officeResponse = { at: sim.now, kind, note };
+    if (audition.stage !== 'callback') {
+      const when = sim.rng('callback_schedule', audition.id);
+      const target = addDays(sim.now, when.int(3, 7), sim.homeZone);
+      const parts = zonedParts(target, sim.homeZone);
+      const at = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: when.int(10, 17) }, sim.homeZone);
+      audition.stage = 'callback';
+      audition.scheduledAt = at;
+      const item = sim.schedule({
+        at, kind: 'cast.audition',
+        label: `Callback — ${role.characterName}`,
+        category: 'career', payload: { auditionId: audition.id },
+        priority: 36, refType: 'audition', refId: audition.id,
+        requiresPlayer: true, locationId: audition.locationId, durationMinutes: 60,
+      });
+      audition.scheduledItemId = item.id;
+      sim.requireDecision({
+        urgency: 70, category: 'career',
+        title: `Callback: ${role.characterName}`,
+        detail: `${project.title}. ${note} ${formatDate(at, sim.homeZone)} at ${formatTime(at, sim.homeZone)} in ${CITIES.get(audition.locationId ?? '')?.name ?? 'town'}.`,
+        route: '/workspace/casting', dueAt: at, refType: 'audition', refId: audition.id,
+      });
+    }
+    sim.notify({ category: 'career', title: `Callback: ${role.characterName}`, body: `${project.title}. ${note}`, importance: 70, route: '/workspace/casting', refType: 'audition', refId: audition.id });
+    if (player) player.wellbeing.morale = clamp(player.wellbeing.morale + 6, 0, 100);
+  } else if (kind === 'hold') {
+    const note = pick(OFFICE_HOLD);
+    audition.officeResponse = { at: sim.now, kind, note };
+    sim.notify({ category: 'career', title: `On hold: ${role.characterName}`, body: `${project.title}. ${note}`, importance: 52, route: '/workspace/casting', refType: 'audition', refId: audition.id });
+  } else if (kind === 'pass') {
+    const note = pick(OFFICE_PASS);
+    audition.officeResponse = { at: sim.now, kind, note };
+    audition.stage = 'passed';
+    audition.decidedAt = sim.now;
+    audition.feedback = note;
+    sim.notify({ category: 'career', title: `Released: ${role.characterName}`, body: `${project.title}. ${note}`, importance: 46, route: '/workspace/casting', refType: 'audition', refId: audition.id });
+    if (player) player.wellbeing.morale = clamp(player.wellbeing.morale - 3, 0, 100);
+  } else {
+    // Nothing. The decision day will close it, and the silence is on the record.
+    audition.officeResponse = { at: sim.now, kind, note: 'No reply. Offices do not always send the no.' };
+  }
+  sim.remember({
+    category: 'career',
+    title: kind === 'silence' ? `No word from casting on ${role.characterName}` : `Casting got back to you on ${role.characterName}`,
+    detail: `${project.title}. ${audition.officeResponse.note}`,
+    refs: [{ type: 'project', id: project.id }],
+    significance: kind === 'callback' ? 40 : 22, public: false,
+  });
+  sim.emit('cast.office_responded', { auditionId: audition.id, roleId: role.id, kind });
 }
 
 function decideRole(sim: Simulation, roleId: Id): void {
