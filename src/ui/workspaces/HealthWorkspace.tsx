@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty } from '@/ui/components/primitives';
 import { ensureProviders, activePolicy, upcomingAppointments } from '@/engine/systems/services';
@@ -54,7 +55,7 @@ export function HealthWorkspace() {
             <div className="col gap-2">
               {upcoming.slice(0, 3).map((appointment) => (
                 <div key={appointment.id}>
-                  <div className="small strong">{appointment.kind}</div>
+                  <div className="small strong">{titleCaseLabel(appointment.kind)}</div>
                   <div className="xs dim">
                     {formatDate(appointment.at, sim.homeZone)} at {formatTime(appointment.at, sim.homeZone)}
                   </div>
@@ -72,7 +73,7 @@ export function HealthWorkspace() {
               <div className="grow">
                 <div className="small strong">{provider.name}</div>
                 <div className="xs dim">
-                  {provider.specialty.replace(/_/g, ' ')} · rated {provider.rating.toFixed(1)} · next opening in {provider.leadTimeDays} days
+                  {titleCaseLabel(provider.specialty.replace(/_/g, ' '))} · rated {provider.rating.toFixed(1)} · next opening in {provider.leadTimeDays} days
                 </div>
               </div>
               <span className="mono small">{formatMoney(provider.baseVisitCost, { cents: false })}</span>
@@ -93,7 +94,7 @@ export function HealthWorkspace() {
               <div key={appointment.id} className="list-item list-static">
                 <span className="xs dim nowrap" style={{ minWidth: 100 }}>{formatDate(appointment.at, sim.homeZone)}</span>
                 <div className="grow">
-                  <div className="small">{appointment.kind}</div>
+                  <div className="small">{titleCaseLabel(appointment.kind)}</div>
                   <div className="xs dim">{appointment.outcome ?? appointment.status}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -102,7 +103,7 @@ export function HealthWorkspace() {
                     <div className="xs positive">{formatMoney(appointment.insuranceCovered)} covered</div>
                   )}
                 </div>
-                <span className={`chip ${appointment.status === 'missed' ? 'chip-negative' : ''}`}>{appointment.status}</span>
+                <span className={`chip ${appointment.status === 'missed' ? 'chip-negative' : ''}`}>{titleCaseLabel(appointment.status)}</span>
               </div>
             ))}
           </div>

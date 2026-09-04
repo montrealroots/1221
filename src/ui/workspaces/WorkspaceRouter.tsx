@@ -19,6 +19,7 @@ import { ProjectsWorkspace } from './ProjectsWorkspace';
 import { CompanyWorkspace } from './CompanyWorkspace';
 import { SocialWorkspace } from './SocialWorkspace';
 import { AwardsWorkspace } from './AwardsWorkspace';
+import { IndustryWorkspace } from './IndustryWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
@@ -41,6 +42,7 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/company': CompanyWorkspace,
   '/workspace/social': SocialWorkspace,
   '/workspace/awards': AwardsWorkspace,
+  '/workspace/industry': IndustryWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {

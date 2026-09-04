@@ -1,0 +1,868 @@
+qid	role	personQid	name	character	ordinal
+Q2963587	director	Q1886953	Masahiro Shinoda		
+Q2963587	writer	Q3513969	Taichi Yamada		
+Q2963587	writer	Q11533669	Hyōzō Kashiwabara		
+Q2963587	composer	Q1703134	Shinichiro Ikebe		
+Q2963587	producer	Q7784543	Fujiko Fujio A		
+Q2963587	cinematographer	Q3516103	Tatsuo Suzuki		
+Q2963587	editor	Q11653434	Chizuko Osada		
+Q2963587	cast	Q7497767	Shinsuke Ashida		
+Q2963587	cast	Q3067392	Shima Iwashita		
+Q2963587	cast	Q4388629	Hideji Ōtaki		
+Q2963587	cast	Q841410	Toshiyuki Hosokawa		
+Q2963587	award		Blue Ribbon Award for Best Picture		
+Q719503	director	Q987583	Tsutomu Shibayama		
+Q719503	composer	Q2296028	Shunsuke Kikuchi		
+Q719503	follows	Q1309220	Doraemon: Nobita and the Birth of Japan		
+Q719503	followed_by	Q1122636	Doraemon: Nobita's Dorabian Nights		
+Q719503	subject		extraterrestrial life		
+Q17222044	director	Q11574877	Jirō Shōno		
+Q17222044	writer	Q11651066	Toshio Kamata		
+Q17222044	producer	Q11489564	Toshirō Tokumasu		
+Q17222044	producer	Q11554619	Michitsugu Numata		
+Q17222044	cinematographer	Q11397699	Yonezō Maeda		
+Q17222044	cast	Q1075328	Sanma Akashiya		
+Q17222044	cast	Q284007	Seiko Matsuda		
+Q5894886	director	Q2630544	Shūsuke Kaneko		
+Q5894886	writer	Q2630544	Shūsuke Kaneko		
+Q5894886	composer	Q634280	Shigeru Umebayashi		
+Q5894886	editor	Q11395149	Isao Tomita		
+Q7679375	director	Q1325171	Jūzō Itami		
+Q7679375	writer	Q1325171	Jūzō Itami		
+Q7679375	composer	Q11519976	Toshiyuki Honda		
+Q7679375	producer	Q1325171	Jūzō Itami		
+Q7679375	cast	Q3548603	Yoriko Dōguchi		
+Q7679375	cast	Q7506115	Shōgo Shimada		
+Q7679375	cast	Q542510	Nobuko Miyamoto		
+Q7679375	cast	Q3049379	Eijirō Tōno		
+Q7679375	cast	Q4388629	Hideji Ōtaki		
+Q7679375	cast	Q636593	Akira Takarada		
+Q7679375	cast	Q3098359	Masahiko Tsugawa		
+Q7679375	cast	Q418778	Akira Kubo		
+Q7679375	cast	Q3548276	Kin Sugai		
+Q7687420	director	Q3080378	Yasuo Furuhata		
+Q7687420	composer	Q275900	Joe Hisaishi		
+Q7687420	cast	Q326517	Kunie Tanaka		
+Q7687420	cast	Q1054683	Hiroko Yakushimaru		
+Q7687420	cast	Q6202728	Jinpachi Nezu		
+Q52015286	director	Q7850208	Tsuneo Maeda		
+Q11184587	director	Q1138078	Yukihiko Tsutsumi		
+Q1427655	director	Q11565956	Yukihiro Sawada		
+Q1427655	composer	Q275900	Joe Hisaishi		
+Q1427655	cinematographer	Q418937	Akira Shiizuka		
+Q1122636	director	Q987583	Tsutomu Shibayama		
+Q1122636	writer	Q3376801	Fujiko Fujio		
+Q1122636	composer	Q2296028	Shunsuke Kikuchi		
+Q1122636	producer	Q2094438	Yoshiaki Koizumi		
+Q1122636	follows	Q719503	Doraemon: Nobita and the Animal Planet		
+Q1122636	followed_by	Q719493	Doraemon: Nobita and the Kingdom of Clouds		
+Q1122636	subject		cat		
+Q1464998	director	Q2476752	Kazuki Ōmori		
+Q1464998	writer	Q2476752	Kazuki Ōmori		
+Q1464998	composer	Q135570	Akira Ifukube		
+Q1464998	producer	Q2697380	Shōgo Tomiyama		
+Q1464998	cinematographer	Q11655664	Yoshinori Sekiguchi		
+Q1464998	editor	Q11552102	Michiko Ikeda		
+Q1464998	executive_producer	Q652228	Tomoyuki Tanaka		
+Q1464998	cast	Q2778287	Kenpachirō Satsuma		
+Q1464998	cast	Q5790509	Hurricane Ryu		
+Q1464998	cast	Q874454	Kōsuke Toyohara		
+Q1464998	cast	Q3135661	Megumi Odaka		
+Q1464998	cast	Q3511677	Sō Yamamura		
+Q1464998	cast	Q7973008	Wataru Fukuda		
+Q1464998	cast	Q7349663	Robert Scott Field		
+Q1464998	cast	Q977656	Kenji Sahara		
+Q1464998	cast	Q3276455	Akiji Kobayashi		
+Q1464998	cast	Q6378082	Katsuhiko Sasaki		
+Q1464998	cast	Q3548197	Anna Nakagawa		
+Q1464998	cast	Q1085473	Yoshio Tsuchiya		
+Q1464998	follows	Q1514098	Godzilla vs. Biollante		
+Q1464998	followed_by	Q1284313	Godzilla vs. Mothra		
+Q1464998	subject		World War II		
+Q1464998	subject		dinosaur		
+Q1464998	subject		time travel		
+Q6946427	director	Q2630544	Shūsuke Kaneko		
+Q6946427	composer	Q2578353	Kow Otani		
+Q6946427	editor	Q11395149	Isao Tomita		
+Q7045192	director	Q2630544	Shūsuke Kaneko		
+Q7045192	composer	Q2578353	Kow Otani		
+Q1045889	director	Q178713	Isao Takahata		
+Q1045889	writer	Q178713	Isao Takahata		
+Q1045889	composer	Q11512823	Katsu Hoshi		
+Q1045889	producer	Q713511	Toshio Suzuki		
+Q1045889	producer	Q11071898	Yasuyoshi Tokuma		
+Q1045889	producer	Q11382389	Yoshio Sasaki		
+Q1045889	producer	Q11588056	Ritsuo Isobe		
+Q1045889	editor	Q1379022	Takeshi Seyama		
+Q1045889	executive_producer	Q55400	Hayao Miyazaki		
+Q7284660	director	Q1202851	Kihachi Okamoto		
+Q7284660	composer	Q938538	Masaru Sato		
+Q7284660	cast	Q3959459	Shigeru Kōyama		
+Q7284660	cast	Q938317	Hideyo Amamoto		
+Q7284660	cast	Q6453145	Kyūsaku Shimada		
+Q7284660	cast	Q3074322	Kumi Mizuno		
+Q7284660	cast	Q1370767	Ken Ogata		
+Q7284660	cast	Q3547309	Tanie Kitabayashi		
+Q7284660	cast	Q873529	Kirin Kiki		
+Q7284660	cast	Q873876	Ittoku Kishibe		
+Q7284660	cast	Q11458033	Minori Terada		
+Q11636235	director	Q2487109	Takao Okawara		
+Q11636235	writer	Q2487109	Takao Okawara		
+Q11636235	producer	Q2697380	Shōgo Tomiyama		
+Q11636235	cinematographer	Q6389262	Kenichi Yamada		
+Q11636235	cast	Q579494	Alisa Mizuki		
+Q11580102	writer	Q11413018	Jirō Yoshikawa		
+Q11580102	composer	Q11562431	Naoki Watanabe		
+Q11580102	cast	Q1325171	Jūzō Itami		
+Q11580102	cast	Q11376469	Yūko Nitō		
+Q11580102	cast	Q11369019	Akira Kubo		
+Q11580102	cast	Q11353626	Natsumi Nanase		
+Q11580102	cast	Q11541675	Toshihiko Sakakibara		
+Q11580102	cast	Q11364360	Hiroko Nakajima		
+Q11580102	cast	Q11465945	Yorie Yamashita		
+Q11580102	cast	Q3544184	Shingo Tsurumi		
+Q11580102	cast	Q11359898	Kōichi Ueda		
+Q11580102	cast	Q906047	Fukumi Kuroda		
+Q108151100	director	Q11647735	Ryū Kaneda		
+Q108151100	writer	Q452246	Masakazu Katsura		
+Q108151100	writer	Q11413187	Masahiro Yoshimoto		
+Q108151100	cast	Q11436934	Ken Ōsawa		
+Q108151100	cast	Q3064484	Kaori Sakagami	Ai Amano	
+Q10921857	director	Q3133021	Keiichi Hara		
+Q10921857	composer	Q2296028	Shunsuke Kikuchi		
+Q719493	director	Q987583	Tsutomu Shibayama		
+Q719493	writer	Q3376801	Fujiko Fujio		
+Q719493	composer	Q2296028	Shunsuke Kikuchi		
+Q719493	producer	Q2094438	Yoshiaki Koizumi		
+Q719493	cinematographer	Q139438435	Hideko Takahasi		
+Q719493	editor	Q133277994	Kazuo Inoue		
+Q719493	follows	Q1122636	Doraemon: Nobita's Dorabian Nights		
+Q719493	followed_by	Q975009	Doraemon: Nobita and the Tin Labyrinth		
+Q719493	subject		cat		
+Q1284313	director	Q2487109	Takao Okawara		
+Q1284313	writer	Q2476752	Kazuki Ōmori		
+Q1284313	composer	Q135570	Akira Ifukube		
+Q1284313	producer	Q652228	Tomoyuki Tanaka		
+Q1284313	producer	Q2697380	Shōgo Tomiyama		
+Q1284313	cinematographer	Q11475907	Masahiro Kishimoto		
+Q1284313	cast	Q3135661	Megumi Odaka		
+Q1284313	cast	Q3276455	Akiji Kobayashi		
+Q1284313	cast	Q636593	Akira Takarada		
+Q1284313	cast	Q11396767	Tetsuya Bessho		
+Q1284313	cast	Q265091	Satomi Kobayashi		
+Q1284313	cast	Q5790509	Hurricane Ryu		
+Q1284313	cast	Q11523513	Takehiro Murata		
+Q1284313	cast	Q2778287	Kenpachirō Satsuma		
+Q1284313	follows	Q1464998	Godzilla vs. King Ghidorah		
+Q1284313	followed_by	Q1533972	Godzilla vs. Mechagodzilla II		
+Q1284313	subject		dinosaur		
+Q544747	director	Q1325171	Jūzō Itami		
+Q544747	writer	Q1325171	Jūzō Itami		
+Q544747	composer	Q11519976	Toshiyuki Honda		
+Q544747	cinematographer	Q11397699	Yonezō Maeda		
+Q544747	cast	Q542510	Nobuko Miyamoto		
+Q544747	cast	Q11433687	Yasuo Daichi		
+Q544747	cast	Q11461177	Hōsei Komatsu		
+Q544747	cast	Q636593	Akira Takarada		
+Q544747	cast	Q11357276	Noboru Mitani		
+Q544747	cast	Q4388629	Hideji Ōtaki		
+Q544747	cast	Q11523513	Takehiro Murata		
+Q498375	director	Q55400	Hayao Miyazaki		
+Q498375	writer	Q55400	Hayao Miyazaki		
+Q498375	composer	Q275900	Joe Hisaishi		
+Q498375	producer	Q713511	Toshio Suzuki		
+Q498375	cinematographer	Q9019103	Atsushi Okui		
+Q498375	editor	Q55400	Hayao Miyazaki		
+Q498375	award		Annecy Cristal for a Feature Film		
+Q498375	subject		war		
+Q498375	subject		aviation		
+Q5358747	director	Q1073993	Masayuki Suo		
+Q5358747	writer	Q1073993	Masayuki Suo		
+Q5358747	composer	Q11416967	Yoshikazu Suo		
+Q5358747	producer	Q11538247	Shōji Masui		
+Q5358747	cinematographer	Q11536131	Naoki Kayano		
+Q5358747	editor	Q11619841	Jun'ichi Kikuchi		
+Q5358747	cast	Q873921	Akira Emoto		
+Q5358747	cast	Q847834	Misa Shimizu		
+Q5358747	cast	Q1138347	Masahiro Motoki		
+Q5358747	cast	Q1154179	Naoto Takenaka		
+Q5358747	award		Blue Ribbon Award for Best Picture		
+Q577093	director	Q6883346	Mitsuru Hongo		
+Q577093	cast	Q1954570	Nachi Nozawa		
+Q577093	cast	Q1371733	Keiji Fujiwara		
+Q577093	cast	Q2529130	Tesshō Genda		
+Q577093	cast	Q3857508	Miki Narahashi		
+Q577093	cast	Q2735707	Akiko Yajima		
+Q577093	subject		nursery school teacher		
+Q975009	director	Q987583	Tsutomu Shibayama		
+Q975009	writer	Q3376801	Fujiko Fujio		
+Q975009	composer	Q2296028	Shunsuke Kikuchi		
+Q975009	producer	Q2094438	Yoshiaki Koizumi		
+Q975009	follows	Q719493	Doraemon: Nobita and the Kingdom of Clouds		
+Q975009	followed_by	Q1309533	Doraemon: Nobita's Three Visionary Swordsmen		
+Q975009	subject		cat		
+Q975009	subject		extraterrestrial life		
+Q1533972	director	Q2487109	Takao Okawara		
+Q1533972	writer	Q11355785	Wataru Mimura		
+Q1533972	composer	Q135570	Akira Ifukube		
+Q1533972	producer	Q652228	Tomoyuki Tanaka		
+Q1533972	cinematographer	Q11655664	Yoshinori Sekiguchi		
+Q1533972	cast	Q901772	Masahiro Takashima		
+Q1533972	cast	Q5790509	Hurricane Ryu		
+Q1533972	cast	Q977656	Kenji Sahara		
+Q1533972	cast	Q2778287	Kenpachirō Satsuma		
+Q1533972	cast	Q3135661	Megumi Odaka		
+Q1533972	cast	Q7973008	Wataru Fukuda		
+Q1533972	cast	Q3546876	Akira Nakao		
+Q1533972	follows	Q1284313	Godzilla vs. Mothra		
+Q1533972	followed_by	Q1533970	Godzilla vs. SpaceGodzilla		
+Q1533972	subject		dinosaur		
+Q5592095	director	Q2630544	Shūsuke Kaneko		
+Q5592095	composer	Q2578353	Kow Otani		
+Q37963636	director	Q55397	Kon Ichikawa		
+Q37963636	writer	Q55397	Kon Ichikawa		
+Q1543027	director	Q8006	Akira Kurosawa		
+Q1543027	writer	Q8006	Akira Kurosawa		
+Q1543027	composer	Q1703134	Shinichiro Ikebe		
+Q1543027	cinematographer	Q974053	Takao Saito		
+Q1543027	editor	Q8006	Akira Kurosawa		
+Q1543027	production_designer	Q1552595	Yoshirō Muraki		
+Q1543027	cast	Q5508578	Noriko Honma		
+Q1543027	cast	Q7678130	Takeshi Kusaka		
+Q1543027	cast	Q3201022	Kyōko Kagawa		
+Q1543027	cast	Q3705413	Tetsu Watanabe		
+Q1543027	cast	Q3544624	George Tokoro		
+Q1543027	cast	Q3549551	Mitsuru Hirata		
+Q1543027	cast	Q1189115	Hidetaka Yoshioka		
+Q1543027	cast	Q633278	Akira Terao		
+Q1543027	cast	Q5772396	Hisashi Igawa		
+Q1543027	cast	Q2396232	Tatsuo Matsumura	Hyakken Uchida	
+Q1052531	director	Q2593083	Yoshiaki Kawajiri		
+Q1052531	writer	Q2593083	Yoshiaki Kawajiri		
+Q1052531	composer	Q707593	Kaoru Wada		
+Q1052531	editor	Q11516705	Akara Arisato		
+Q1052531	subject		ninja		
+Q5209075	director	Q1325171	Jūzō Itami		
+Q5209075	composer	Q11519976	Toshiyuki Honda		
+Q5209075	cast	Q3098359	Masahiko Tsugawa		
+Q5209075	cast	Q542510	Nobuko Miyamoto		
+Q5209075	cast	Q1321767	Rentarō Mikuni		
+Q236589	director	Q55397	Kon Ichikawa		
+Q236589	writer	Q55397	Kon Ichikawa		
+Q236589	cast	Q741184	Ken Takakura		
+Q236589	cast	Q852322	Ryudo Uzaki		
+Q236589	cast	Q847834	Misa Shimizu		
+Q236589	cast	Q1139714	Kiichi Nakai		
+Q236589	cast	Q3543902	Koichi Iwaki		
+Q635679	director	Q6883346	Mitsuru Hongo		
+Q635679	composer	Q11618572	Toshiyuki Arakawa		
+Q635679	subject		nursery school teacher		
+Q1309533	director	Q987583	Tsutomu Shibayama		
+Q1309533	composer	Q2296028	Shunsuke Kikuchi		
+Q1309533	follows	Q975009	Doraemon: Nobita and the Tin Labyrinth		
+Q1309533	followed_by	Q1309576	Doraemon: Nobita's Diary on the Creation of the World		
+Q1309533	subject		cat		
+Q1533970	director	Q11466072	Kenshō Yamashita		
+Q1533970	writer	Q3812783	Hiroshi Kashiwabara		
+Q1533970	composer	Q11517002	Takayuki Hattori		
+Q1533970	producer	Q652228	Tomoyuki Tanaka		
+Q1533970	producer	Q2697380	Shōgo Tomiyama		
+Q1533970	cinematographer	Q11475907	Masahiro Kishimoto		
+Q1533970	cast	Q2778287	Kenpachirō Satsuma		
+Q1533970	cast	Q3546876	Akira Nakao		
+Q1533970	cast	Q3135661	Megumi Odaka		
+Q1533970	cast	Q873921	Akira Emoto		
+Q1533970	cast	Q7973008	Wataru Fukuda		
+Q1533970	cast	Q977656	Kenji Sahara		
+Q1533970	follows	Q1533972	Godzilla vs. Mechagodzilla II		
+Q1533970	followed_by	Q1514075	Godzilla vs. Destoroyah		
+Q1533970	subject		dinosaur		
+Q1533970	subject		cloning		
+Q1533970	subject		extraterrestrial life		
+Q2020569	director	Q9038803	Koichi Kawakita		
+Q2020569	composer	Q135570	Akira Ifukube		
+Q2020569	cast	Q2778287	Kenpachirō Satsuma		
+Q2020569	cast	Q266670	Megumi Hayashibara		
+Q2020569	cast	Q3135661	Megumi Odaka		
+Q8047992	director	Q2487109	Takao Okawara		
+Q8047992	writer	Q11355785	Wataru Mimura		
+Q8047992	composer	Q224981	Yoko Kanno		
+Q8047992	producer	Q2697380	Shōgo Tomiyama		
+Q8047992	cinematographer	Q11655664	Yoshinori Sekiguchi		
+Q8047992	editor	Q11460354	Nobuo Ogawa		
+Q8047992	cast	Q11523581	Keaki Mori		
+Q8047992	cast	Q2992739	Hiroshi Fujioka		
+Q8047992	cast	Q1190294	Yasuko Sawaguchi		
+Q8047992	cast	Q542510	Nobuko Miyamoto		
+Q8047992	cast	Q2855248	Saburō Shinoda		
+Q8047992	cast	Q901772	Masahiro Takashima		
+Q8047992	cast	Q1092091	Akaji Maro		
+Q8047992	cast	Q940531	Hiroshi Abe		
+Q8047992	cast	Q7779167	Yūki Meguro		
+Q1048870	director	Q6883346	Mitsuru Hongo		
+Q1048870	writer	Q360638	Yoshito Usui		
+Q1048870	cast	Q1371733	Keiji Fujiwara		
+Q1048870	cast	Q2735707	Akiko Yajima		
+Q1048870	cast	Q1142547	Satomi Kōrogi		
+Q1048870	cast	Q3857508	Miki Narahashi		
+Q5250265	director	Q503696	Kei Kumai		
+Q5250265	writer	Q316217	Shūsaku Endō		
+Q1309576	director	Q987583	Tsutomu Shibayama		
+Q1309576	writer	Q17572	Fujiko F. Fujio		
+Q1309576	composer	Q2296028	Shunsuke Kikuchi		
+Q1309576	follows	Q1309533	Doraemon: Nobita's Three Visionary Swordsmen		
+Q1309576	followed_by	Q1309556	Doraemon: Nobita and the Galaxy Super-express		
+Q1309576	subject		cat		
+Q1309576	subject		insect		
+Q1294193	director	Q725003	Shunya Itō		
+Q1294193	director	Q7770779	Takeshi Shirato		
+Q1294193	writer	Q725003	Shunya Itō		
+Q1294193	writer	Q3812783	Hiroshi Kashiwabara		
+Q1294193	writer	Q7770779	Takeshi Shirato		
+Q1294193	writer	Q7804150	Kazuhide Tomonaga		
+Q1294193	writer	Q7804383	Nobuo Tomisawa		
+Q1294193	composer	Q1442609	Yūji Ōno		
+Q1294193	editor	Q1379022	Takeshi Seyama		
+Q1294193	follows	Q1154751	Legend of the Gold of Babylon		
+Q1294193	followed_by	Q406705	Lupin III: Dead or Alive		
+Q181400	director	Q1749267	Hideyuki Hirayama		
+Q181400	writer	Q2256932	Satoko Okudera		
+Q181400	cinematographer	Q1797629	Kōzō Shibazaki		
+Q181400	editor	Q11478287	Akimasa Kawashima		
+Q181400	cast	Q873484	Aya Okamoto		
+Q181400	cast	Q11484395	Yuriko Hirooka		
+Q181400	cast	Q11384162	Masahiro Satō		
+Q181400	cast	Q6366275	Kaoru Mizuki		
+Q181400	cast	Q11604304	Shiori Yonezawa		
+Q181400	cast	Q11369019	Akira Kubo		
+Q181400	cast	Q11521893	Ayako Sugiyama		
+Q181400	cast	Q1059767	Kimiko Yo		
+Q181400	cast	Q3544865	Takashi Sasano		
+Q1493101	director	Q2630544	Shūsuke Kaneko		
+Q1493101	writer	Q3814183	Kazunori Itō		
+Q1493101	composer	Q2578353	Kow Otani		
+Q1493101	producer	Q11071898	Yasuyoshi Tokuma		
+Q1493101	cinematographer	Q66428101	Junichi Tozawa		
+Q1493101	editor	Q11618633	Shizuo Arakawa		
+Q1493101	cast	Q1143714	Tsuyoshi Ihara		
+Q1493101	cast	Q11260914	Akira Onodera		
+Q1493101	cast	Q644365	Ayako Fujitani		
+Q1493101	cast	Q3027452	Shinobu Nakayama		
+Q1493101	cast	Q902782	Yukijirō Hotaru		
+Q1493101	cast	Q418778	Akira Kubo		
+Q1493101	followed_by	Q2557251	Gamera 2: Attack of Legion		
+Q1514075	director	Q2487109	Takao Okawara		
+Q1514075	writer	Q2476752	Kazuki Ōmori		
+Q1514075	composer	Q135570	Akira Ifukube		
+Q1514075	producer	Q652228	Tomoyuki Tanaka		
+Q1514075	executive_producer	Q652228	Tomoyuki Tanaka		
+Q1514075	cast	Q3546876	Akira Nakao		
+Q1514075	cast	Q2778287	Kenpachirō Satsuma		
+Q1514075	cast	Q5790509	Hurricane Ryu		
+Q1514075	cast	Q3135661	Megumi Odaka		
+Q1514075	cast	Q3074303	Momoko Kōchi		
+Q1514075	cast	Q3548537	Yōko Ishino		
+Q1514075	follows	Q1533970	Godzilla vs. SpaceGodzilla		
+Q1514075	followed_by	Q1768462	Godzilla 2000		
+Q1514075	subject		dinosaur		
+Q750613	director	Q596548	Ryōsuke Hashiguchi		
+Q750613	writer	Q596548	Ryōsuke Hashiguchi		
+Q750613	composer	Q11671113	Kazuya Takahashi		
+Q750613	cast	Q596548	Ryōsuke Hashiguchi		
+Q750613	cast	Q11400001	Shizuka Isami		
+Q750613	cast	Q290086	Miyako Yamaguchi		
+Q750613	cast	Q11522975	Kunio Murai		
+Q750613	cast	Q11626635	Yoshihiko Hakamada		
+Q750613	cast	Q11636687	Banhō Chō		
+Q750613	cast	Q3544674	Toshie Negishi		
+Q750613	cast	Q11618255	Kōta Kusano		
+Q750613	cast	Q188111	Ayumi Hamasaki		
+Q750613	cast	Q1134043	Yoshinori Okada		
+Q750613	award		Tiger Award		
+Q842292	director	Q599392	Yoshifumi Kondō		
+Q842292	writer	Q55400	Hayao Miyazaki		
+Q842292	writer	Q837487	Aoi Hiiragi		
+Q842292	composer	Q1012658	Yuji Nomi		
+Q842292	producer	Q55400	Hayao Miyazaki		
+Q842292	producer	Q713511	Toshio Suzuki		
+Q842292	cinematographer	Q3133373	Kitarō Kōsaka		
+Q842292	editor	Q1379022	Takeshi Seyama		
+Q842292	executive_producer	Q11071898	Yasuyoshi Tokuma		
+Q1134775	director	Q6883346	Mitsuru Hongo		
+Q1134775	cinematographer	Q139438435	Hideko Takahasi		
+Q1134775	cast	Q2462065	Yuriko Fuchizaki		
+Q1134775	cast	Q520669	Hōchū Ōtsuka		
+Q1134775	cast	Q2440809	Hideyuki Tanaka		
+Q1134775	cast	Q1324264	Michie Tomizawa		
+Q1134775	cast	Q728257	Tamao Hayashi		
+Q1134775	cast	Q1371733	Keiji Fujiwara		
+Q1134775	cast	Q2381353	Yumi Takada		
+Q1134775	cast	Q3266376	Shinpachi Tsuji		
+Q1134775	cast	Q2529130	Tesshō Genda		
+Q1134775	cast	Q1093562	Chie Satō		
+Q1134775	cast	Q2723211	Rokurō Naya		
+Q1134775	cast	Q2735707	Akiko Yajima		
+Q1134775	cast	Q556626	Sōichirō Hoshi		
+Q1134775	cast	Q2447488	Kaneto Shiozawa		
+Q1134775	cast	Q3545487	Akiko Hinagata		
+Q1134775	cast	Q4339333	Shinya Ōtaki		
+Q1134775	cast	Q1974745	Teiyū Ichiryūsai		
+Q1134775	cast	Q4298569	Sanae Miyuki		
+Q1134775	cast	Q3847074	Mari Mashiba		
+Q1134775	cast	Q517337	Toshio Furukawa		
+Q1134775	cast	Q3857508	Miki Narahashi		
+Q1134775	subject		nursery school teacher		
+Q1309556	director	Q987583	Tsutomu Shibayama		
+Q1309556	writer	Q11428538	Shōei Tsukada		
+Q1309556	composer	Q2296028	Shunsuke Kikuchi		
+Q1309556	producer	Q11470175	Toshihide Yamada		
+Q1309556	cinematographer	Q139438435	Hideko Takahasi		
+Q1309556	editor	Q5639976	Hajime Okayasu		
+Q1309556	narrator	Q3089633	Hiroko Emori		
+Q1309556	follows	Q1309576	Doraemon: Nobita's Diary on the Creation of the World		
+Q1309556	followed_by	Q1304023	Doraemon: Nobita and the Spiral City		
+Q1309556	subject		cat		
+Q1309556	subject		extraterrestrial life		
+Q1309556	subject		parasitism		
+Q1304023	director	Q987583	Tsutomu Shibayama		
+Q1304023	writer	Q17572	Fujiko F. Fujio		
+Q1304023	composer	Q2296028	Shunsuke Kikuchi		
+Q1304023	follows	Q1309556	Doraemon: Nobita and the Galaxy Super-express		
+Q1304023	followed_by	Q1309600	Doraemon: Nobita's Great Adventure in the South Seas		
+Q1304023	subject		cat		
+Q1304023	subject		extraterrestrial life		
+Q2557251	director	Q2630544	Shūsuke Kaneko		
+Q2557251	writer	Q3814183	Kazunori Itō		
+Q2557251	composer	Q2578353	Kow Otani		
+Q2557251	producer	Q11071898	Yasuyoshi Tokuma		
+Q2557251	producer	Q11384269	Naoki Satō		
+Q2557251	producer	Q17130537	Kazuto Kojima		
+Q2557251	cinematographer	Q66428101	Junichi Tozawa		
+Q2557251	editor	Q11618633	Shizuo Arakawa		
+Q2557251	cast	Q4701171	Akira Ohashi		
+Q2557251	cast	Q3545069	Toshiyuki Nagashima		
+Q2557251	cast	Q644365	Ayako Fujitani		
+Q2557251	cast	Q11586633	Tamotsu Ishibashi		
+Q2557251	cast	Q1055095	Mitsuru Fukikoshi		
+Q2557251	cast	Q902782	Yukijirō Hotaru		
+Q2557251	cast	Q6141871	Mizuho Yoshida		
+Q2557251	cast	Q74427721	Dean Harrington		
+Q2557251	cast	Q873820	Miki Mizuno		
+Q2557251	follows	Q1493101	Gamera: Guardian of the Universe		
+Q2557251	followed_by	Q2091109	Gamera 3: Revenge of Iris		
+Q5675523	director	Q1138125	Yoshimitsu Morita		
+Q5675523	cast	Q1073991	Eri Fukatsu		
+Q5675523	cast	Q3548578	Sei Hiraizumi		
+Q1813350	director	Q11604347	Okihiro Yoneda		
+Q1813350	writer	Q11519798	Masumi Suetani		
+Q1813350	composer	Q1074159	Toshiyuki Watanabe		
+Q1813350	producer	Q2697380	Shōgo Tomiyama		
+Q1813350	cinematographer	Q11655664	Yoshinori Sekiguchi		
+Q1813350	editor	Q11460354	Nobuo Ogawa		
+Q1813350	cast	Q678217	Sayaka Yamaguchi		
+Q1813350	cast	Q3816120	Aki Hano		
+Q1813350	cast	Q3138654	Hitomi Takahashi		
+Q1813350	cast	Q1022003	Megumi Kobayashi		
+Q1813350	cast	Q8956056	Kazuki Futami		
+Q1813350	followed_by	Q2630549	Rebirth of Mothra II		
+Q1199128	director	Q1073993	Masayuki Suo		
+Q1199128	writer	Q1073993	Masayuki Suo		
+Q1199128	composer	Q11416967	Yoshikazu Suo		
+Q1199128	producer	Q11071898	Yasuyoshi Tokuma		
+Q1199128	cinematographer	Q11536131	Naoki Kayano		
+Q1199128	editor	Q11619841	Jun'ichi Kikuchi		
+Q1199128	cast	Q975146	Kōji Yakusho		
+Q1199128	cast	Q1138347	Masahiro Motoki		
+Q1199128	cast	Q1154179	Naoto Takenaka		
+Q1199128	cast	Q7310142	Reiko Kusamura		
+Q1199128	cast	Q3548654	Eriko Watanabe		
+Q1199128	cast	Q7681500	Tamiyo Kusakari		
+Q1199128	cast	Q3549592	Tomiko Ishii		
+Q11313660	director	Q1325171	Jūzō Itami		
+Q11313660	writer	Q1325171	Jūzō Itami		
+Q11313660	composer	Q11519976	Toshiyuki Honda		
+Q11313660	cinematographer	Q11397699	Yonezō Maeda		
+Q11313660	cast	Q542510	Nobuko Miyamoto		
+Q11313660	cast	Q3098359	Masahiko Tsugawa		
+Q11390404	director	Q55397	Kon Ichikawa		
+Q11390404	writer	Q11438777	Ikuko Ōyabu		
+Q11390404	composer	Q11632902	Kensaku Tanikawa		
+Q11390404	producer	Q11427277	Jitsuzō Horiuchi		
+Q11390404	producer	Q11522716	Kōichi Murakami		
+Q11390404	editor	Q11653434	Chizuko Osada		
+Q11390404	costume_designer	Q11500367	Ikuko Saito		
+Q11390404	cast	Q11671113	Kazuya Takahashi		
+Q11390404	cast	Q873876	Ittoku Kishibe		
+Q11390404	cast	Q11449006	Shin Takuma		
+Q11390404	cast	Q4209079	Yūko Asano		
+Q11390404	cast	Q3547893	Hisako Manda		
+Q11390404	cast	Q2025956	Kyōko Kishida		
+Q11390404	cast	Q1139734	Etsushi Toyokawa	Kōsuke Kindaichi	
+Q1195711	director	Q2293429	Kenji Kodama		
+Q1195711	writer	Q11410953	Kazunari Kōchi		
+Q1195711	composer	Q1036504	Katsuo Ōno		
+Q1195711	producer	Q11412834	Masahito Yoshioka		
+Q1195711	producer	Q11631947	Michihiko Suwa		
+Q1195711	cinematographer	Q23683463	Takashi Nomura		
+Q1195711	editor	Q115397751	Terumitsu Okada		
+Q2069229	director	Q6348746	Kaizō Hayashi		
+Q2069229	writer	Q467415	Tsukasa Hōjō		
+Q2069229	cast	Q3959632	Shirō Sano		
+Q2069229	cast	Q1041565	Izumi Inamori		
+Q2069229	cast	Q1155256	Yuki Uchida		
+Q2069229	cast	Q1092091	Akaji Maro		
+Q2069229	cast	Q4235795	Kane Kosugi		
+Q2069229	cast	Q633278	Akira Terao		
+Q2069229	cast	Q1352845	Norika Fujiwara		
+Q1186469	director	Q3133021	Keiichi Hara		
+Q1186469	cast	Q6311453	Jun Hazumi		
+Q1186469	cast	Q1040866	Yuriko Yamamoto		
+Q1186469	cast	Q2447488	Kaneto Shiozawa		
+Q1186469	cast	Q1752760	Keiko Yamamoto		
+Q1186469	cast	Q4339333	Shinya Ōtaki		
+Q1186469	cast	Q3857508	Miki Narahashi		
+Q1186469	cast	Q2280487	Daisuke Gōri		
+Q1186469	cast	Q2735707	Akiko Yajima		
+Q1186469	cast	Q1142856	Fumihiko Tachiki		
+Q1186469	cast	Q1142547	Satomi Kōrogi		
+Q1186469	cast	Q1371733	Keiji Fujiwara		
+Q17049144	director	Q2630544	Shūsuke Kaneko		
+Q17049144	composer	Q2578353	Kow Otani		
+Q17049144	cast	Q468651	Naomi Nishida		
+Q8906440	director	Q6782817	Masayuki Ochiai		
+Q8906440	writer	Q615960	Hideaki Sena		
+Q8906440	composer	Q275900	Joe Hisaishi		
+Q8906440	cast	Q44271	Riona Hazuki		
+Q186572	director	Q55400	Hayao Miyazaki		
+Q186572	writer	Q55400	Hayao Miyazaki		
+Q186572	composer	Q275900	Joe Hisaishi		
+Q186572	producer	Q713511	Toshio Suzuki		
+Q186572	cinematographer	Q9019103	Atsushi Okui		
+Q186572	editor	Q55400	Hayao Miyazaki		
+Q186572	editor	Q1379022	Takeshi Seyama		
+Q186572	executive_producer	Q11071898	Yasuyoshi Tokuma		
+Q186572	award		Japan Academy Prize for Picture of the Year		
+Q186572	award		Animation Kobe Theatrical Film Award		
+Q186572	subject		demon		
+Q2630549	director	Q11354956	Kunio Miyoshi		
+Q2630549	writer	Q652228	Tomoyuki Tanaka		
+Q2630549	composer	Q1074159	Toshiyuki Watanabe		
+Q2630549	producer	Q2697380	Shōgo Tomiyama		
+Q2630549	cinematographer	Q11655664	Yoshinori Sekiguchi		
+Q2630549	cast	Q11476937	Masanao Shimada		
+Q2630549	cast	Q678217	Sayaka Yamaguchi		
+Q2630549	cast	Q3816120	Aki Hano		
+Q2630549	cast	Q1054666	Maho Nonami		
+Q2630549	cast	Q1022003	Megumi Kobayashi		
+Q2630549	follows	Q1813350	Rebirth of Mothra		
+Q2630549	followed_by	Q2630562	Rebirth of Mothra III		
+Q7986258	director	Q8056316	Yoshitomo Yonetani		
+Q7986258	composer	Q2007117	Shinji Miyazaki		
+Q5358611	director	Q616943	Kōki Mitani		
+Q5358611	writer	Q616943	Kōki Mitani		
+Q5358611	composer	Q11517002	Takayuki Hattori		
+Q5358611	cast	Q2511563	Shunji Fujimura		
+Q5358611	cast	Q211553	Ken Watanabe		
+Q5358611	cast	Q1151622	Akira Fuse		
+Q5358611	cast	Q542510	Nobuko Miyamoto		
+Q5358611	cast	Q8056153	Yoshimasa Kondo		
+Q5358611	cast	Q3548260	Zen Kajiwara		
+Q5358611	cast	Q1370797	Keiko Toda		
+Q5358611	cast	Q442924	Kaori Momoi		
+Q5358611	cast	Q1078523	Toshiaki Karasawa		
+Q5358611	cast	Q1138439	Kyōka Suzuki		
+Q5358611	cast	Q841410	Toshiyuki Hosokawa		
+Q5358611	cast	Q1078548	Masahiko Nishimura		
+Q4874843	director	Q11240903	Katsuyuki Motohiro		
+Q4874843	writer	Q7385290	Ryoichi Kimizuka		
+Q4874843	cast	Q3543472	Chōsuke Ikariya		
+Q4874843	cast	Q3545164	Toshio Kakei		
+Q4874843	cast	Q1073991	Eri Fukatsu		
+Q4874843	cast	Q1138318	Yūsuke Santamaria		
+Q4874843	cast	Q906057	Yūji Oda		
+Q4874843	cast	Q873820	Miki Mizuno		
+Q4874843	cast	Q1135347	Toshirō Yanagiba		
+Q4874843	cast	Q1197212	Kyōko Koizumi		
+Q4874843	cast	Q3545470	Kenta Satoi		
+Q266766	director	Q1749267	Hideyuki Hirayama		
+Q266766	composer	Q1139702	Akira Senju		
+Q266766	cast	Q1054666	Maho Nonami		
+Q266766	cast	Q11422725	Jun Kunimura		
+Q266766	cast	Q468651	Naomi Nishida		
+Q266766	cast	Q1137010	Mieko Harada		
+Q266766	cast	Q1139714	Kiichi Nakai		
+Q266766	cast	Q873885	Fumiyo Kohinata		
+Q266766	cast	Q6745643	Mami Kumagai		
+Q1193711	director	Q2293429	Kenji Kodama		
+Q1193711	writer	Q11410953	Kazunari Kōchi		
+Q1193711	composer	Q1036504	Katsuo Ōno		
+Q1193711	producer	Q11631947	Michihiko Suwa		
+Q1193711	cinematographer	Q23683463	Takashi Nomura		
+Q1193711	editor	Q115397827	Terumichi Okada		
+Q1134761	director	Q3133021	Keiichi Hara		
+Q1134761	writer	Q360638	Yoshito Usui		
+Q1134761	cast	Q1355841	Shō Hayami		
+Q1134761	cast	Q2529130	Tesshō Genda		
+Q1134761	cast	Q2405440	Minori Matsushima		
+Q1134761	cast	Q6582083	Tarō Ishida		
+Q1134761	cast	Q1142547	Satomi Kōrogi		
+Q1134761	cast	Q3857508	Miki Narahashi		
+Q1134761	cast	Q2735707	Akiko Yajima		
+Q1134761	cast	Q18735	Kotono Mitsuishi		
+Q1134761	cast	Q1371733	Keiji Fujiwara		
+Q1134761	cast	Q2447488	Kaneto Shiozawa		
+Q1134761	cast	Q333194	Kōichi Yamadera		
+Q1134761	subject		nursery school teacher		
+Q1309600	director	Q987583	Tsutomu Shibayama		
+Q1309600	writer	Q8652073	Nobuaki Kishima		
+Q1309600	composer	Q11436803	Senri Ōe		
+Q1309600	follows	Q1304023	Doraemon: Nobita and the Spiral City		
+Q1309600	followed_by	Q1309611	Doraemon: Nobita Drifts in the Universe		
+Q1309600	subject		cat		
+Q2630562	director	Q11604347	Okihiro Yoneda		
+Q2630562	writer	Q11519798	Masumi Suetani		
+Q2630562	composer	Q1074159	Toshiyuki Watanabe		
+Q2630562	producer	Q2697380	Shōgo Tomiyama		
+Q2630562	cinematographer	Q11655664	Yoshinori Sekiguchi		
+Q2630562	editor	Q11460354	Nobuo Ogawa		
+Q2630562	cast	Q11359898	Kōichi Ueda		
+Q2630562	cast	Q11486611	Misato Tate		
+Q2630562	cast	Q2482576	Tsutomu Kitagawa		
+Q2630562	cast	Q3629056	Atsushi Onita		
+Q2630562	cast	Q1022003	Megumi Kobayashi		
+Q2630562	cast	Q3816120	Aki Hano		
+Q2630562	follows	Q2630549	Rebirth of Mothra II		
+Q2630562	subject		time travel		
+Q531328	director	Q533492	Hideo Nakata		
+Q531328	writer	Q384863	Kōji Suzuki		
+Q531328	composer	Q443712	Kenji Kawai		
+Q531328	producer	Q2389243	Takashige Ichise		
+Q531328	cinematographer	Q11533172	Junichiro Hayashi		
+Q531328	executive_producer	Q11409670	Masato Hara		
+Q531328	cast	Q1142250	Yūko Takeuchi		
+Q531328	cast	Q1191674	Miki Nakatani		
+Q531328	cast	Q11383633	Hitomi Satō		
+Q531328	cast	Q873810	Yutaka Matsushige		
+Q531328	cast	Q8054508	Yoichi Numata		
+Q531328	cast	Q705522	Hiroyuki Sanada		
+Q531328	cast	Q3543366	Rikiya Otaka	Yoichi Asakawa	
+Q531328	cast	Q3078856	Rie Inō	Sadako Yamamura	
+Q531328	cast	Q253909	Nanako Matsushima	Reiko Asakawa	
+Q531328	award		Sitges Film Festival Best Feature-Length Film award		
+Q531328	subject		supernatural		
+Q531328	subject		curse		
+Q531328	subject		hatred		
+Q531328	subject		urban legend		
+Q531328	subject		extrasensory perception		
+Q531328	subject		psychological repression		
+Q531328	subject		revenge		
+Q531328	subject		filicide		
+Q1818004	director	Q9009505	Jōji Iida		
+Q1818004	writer	Q384863	Kōji Suzuki		
+Q1818004	cast	Q705522	Hiroyuki Sanada		
+Q1818004	cast	Q873810	Yutaka Matsushige		
+Q1818004	cast	Q3273740	Daisuke Ban		
+Q1818004	cast	Q3544184	Shingo Tsurumi		
+Q1818004	cast	Q1191674	Miki Nakatani		
+Q1818004	cast	Q253909	Nanako Matsushima		
+Q1818004	cast	Q384863	Kōji Suzuki		
+Q1818004	cast	Q748582	Kōichi Satō		
+Q1818004	cast	Q2399407	Hinako Saeki	Sadako Yamamura	
+Q1818004	follows	Q531328	Ring		
+Q1818004	followed_by	Q1733969	Ring 2		
+Q1818004	subject		death		
+Q1818004	subject		mutation		
+Q1818004	subject		supernatural		
+Q1818004	subject		infection		
+Q1818004	subject		resurrection		
+Q1818004	subject		mortality		
+Q1818004	subject		contamination		
+Q1818004	subject		death of a close person		
+Q100231000	director	Q30924702	Hirotsugu Kawasaki		
+Q100231000	writer	Q11380080	Yasutaka Itō		
+Q100231000	writer	Q30924702	Hirotsugu Kawasaki		
+Q100231000	composer	Q2719242	Kuniaki Haishima		
+Q100231000	producer	Q5349267	Eiko Tanaka		
+Q100231000	producer	Q11551555	Kazuhiko Ikeguchi		
+Q100231000	producer	Q11566163	Kazuya Hamana		
+Q2859045	director	Q3179875	Takashi Koizumi		
+Q2859045	writer	Q8006	Akira Kurosawa		
+Q2859045	composer	Q938538	Masaru Sato		
+Q2859045	producer	Q1620638	Hisao Kurosawa		
+Q2859045	producer	Q11409670	Masato Hara		
+Q2859045	cinematographer	Q2815117	Shōji Ueda		
+Q2859045	editor	Q11657693	Hideto Aga		
+Q2859045	cast	Q5772396	Hisashi Igawa		
+Q2859045	cast	Q5508553	Fumi Dan		
+Q2859045	cast	Q1189115	Hidetaka Yoshioka		
+Q2859045	cast	Q633278	Akira Terao		
+Q2859045	cast	Q1137010	Mieko Harada		
+Q2859045	cast	Q449621	Tatsuya Nakadai		
+Q22125297	director	Q872473	Kazuyuki Izutsu		
+Q22125297	composer	Q11625024	Kōichi Fujino		
+Q22125297	cinematographer	Q2811976	Takeshi Hamada		
+Q22125297	editor	Q11395149	Isao Tomita		
+Q22125297	cast	Q11433225	Kōhei Ōtomo		
+Q22125297	cast	Q1092044	Shigeru Muroi		
+Q22125297	cast	Q11465422	Isao Bitō		
+Q22125297	followed_by	Q11330808	ビッグ・ショー! ハワイに唄えば		
+Q260821	director	Q2293429	Kenji Kodama		
+Q260821	director	Q2545393	Yasuichiro Yamamoto		
+Q260821	writer	Q11410953	Kazunari Kōchi		
+Q260821	composer	Q1036504	Katsuo Ōno		
+Q260821	producer	Q11412834	Masahito Yoshioka		
+Q260821	producer	Q11631947	Michihiko Suwa		
+Q260821	cinematographer	Q23683463	Takashi Nomura		
+Q260821	editor	Q115397751	Terumitsu Okada		
+Q260821	subject		House of Romanov		
+Q864266	director	Q3133021	Keiichi Hara		
+Q864266	writer	Q360638	Yoshito Usui		
+Q864266	cast	Q1022023	Yukari Tamura		
+Q864266	cast	Q2735707	Akiko Yajima		
+Q864266	cast	Q1488230	Tetsurō Tamba		
+Q864266	cast	Q1371733	Keiji Fujiwara		
+Q864266	cast	Q2447488	Kaneto Shiozawa		
+Q864266	cast	Q1142547	Satomi Kōrogi		
+Q864266	cast	Q3857508	Miki Narahashi		
+Q864266	cast	Q1114341	Iemasa Kayumi		
+Q864266	cast	Q3482247	Shinji Ogawa		
+Q864266	subject		nursery school teacher		
+Q1309611	director	Q987583	Tsutomu Shibayama		
+Q1309611	writer	Q8652073	Nobuaki Kishima		
+Q1309611	composer	Q11436803	Senri Ōe		
+Q1309611	follows	Q1309600	Doraemon: Nobita's Great Adventure in the South Seas		
+Q1309611	followed_by	Q707596	Doraemon: Nobita and the Legend of the Sun King		
+Q1309611	subject		cat		
+Q1309611	subject		alien invasion		
+Q16977801	director	Q1749267	Hideyuki Hirayama		
+Q16977801	writer	Q2256932	Satoko Okudera		
+Q16977801	cinematographer	Q1797629	Kōzō Shibazaki		
+Q16977801	editor	Q11478287	Akimasa Kawashima		
+Q16977801	cast	Q1137010	Mieko Harada		
+Q2091109	director	Q2630544	Shūsuke Kaneko		
+Q2091109	writer	Q2630544	Shūsuke Kaneko		
+Q2091109	writer	Q3814183	Kazunori Itō		
+Q2091109	composer	Q2578353	Kow Otani		
+Q2091109	producer	Q1351571	Naoki Satō		
+Q2091109	producer	Q11071898	Yasuyoshi Tokuma		
+Q2091109	cinematographer	Q66428101	Junichi Tozawa		
+Q2091109	editor	Q11395149	Isao Tomita		
+Q2091109	cast	Q11467666	Senri Yamazaki		
+Q2091109	cast	Q902782	Yukijirō Hotaru		
+Q2091109	cast	Q3098359	Masahiko Tsugawa		
+Q2091109	cast	Q4701171	Akira Ohashi		
+Q2091109	cast	Q1932833	Ai Maeda		
+Q2091109	cast	Q1093071	Aki Maeda		
+Q2091109	cast	Q11496946	Tōru Tezuka		
+Q2091109	cast	Q3027452	Shinobu Nakayama		
+Q2091109	cast	Q1356905	Hirofumi Fukuzawa		
+Q2091109	cast	Q1143674	Yukie Nakama		
+Q2091109	cast	Q3055559	Kei Horie		
+Q2091109	cast	Q644365	Ayako Fujitani		
+Q2091109	follows	Q2557251	Gamera 2: Attack of Legion		
+Q1150898	director	Q738544	Shinya Tsukamoto		
+Q1150898	writer	Q738544	Shinya Tsukamoto		
+Q1150898	composer	Q13512180	Chu Ishikawa		
+Q1150898	cinematographer	Q738544	Shinya Tsukamoto		
+Q1150898	editor	Q738544	Shinya Tsukamoto		
+Q1150898	cast	Q1041838	Ryō		
+Q1150898	cast	Q1138347	Masahiro Motoki		
+Q1150898	cast	Q2486480	Renji Ishibashi		
+Q1150898	cast	Q1154179	Naoto Takenaka		
+Q1150898	cast	Q719250	Yasutaka Tsutsui		
+Q1150898	cast	Q379824	Tadanobu Asano		
+Q1150898	cast	Q3543910	Shiho Fujimura		
+Q1150898	cast	Q1092091	Akaji Maro		
+Q1150898	cast	Q2365265	Tomorowo Taguchi		
+Q1768462	director	Q2487109	Takao Okawara		
+Q1768462	writer	Q3812783	Hiroshi Kashiwabara		
+Q1768462	composer	Q11517002	Takayuki Hattori		
+Q1768462	producer	Q2697380	Shōgo Tomiyama		
+Q1768462	executive_producer	Q2697380	Shōgo Tomiyama		
+Q1768462	cast	Q7364570	Ron Yuan		
+Q1768462	cast	Q3959632	Shirō Sano		
+Q1768462	cast	Q2482576	Tsutomu Kitagawa		
+Q1768462	cast	Q555559	François Chau		
+Q1768462	cast	Q940531	Hiroshi Abe		
+Q1768462	cast	Q468651	Naomi Nishida		
+Q1768462	follows	Q1514075	Godzilla vs. Destoroyah		
+Q1768462	followed_by	Q664983	Godzilla vs. Megaguirus		
+Q1768462	subject		dinosaur		
+Q1418326	director	Q178713	Isao Takahata		
+Q1418326	writer	Q178713	Isao Takahata		
+Q1418326	composer	Q107424	Akiko Yano		
+Q1418326	producer	Q713511	Toshio Suzuki		
+Q1418326	producer	Q11527919	Takashi Shōji		
+Q1418326	producer	Q11547811	Seiichiro Ujiie		
+Q1418326	cinematographer	Q9019103	Atsushi Okui		
+Q1418326	editor	Q1379022	Takeshi Seyama		
+Q1418326	executive_producer	Q11071898	Yasuyoshi Tokuma		
+Q1310932	director	Q11562366	Ayumu Watanabe		
+Q1310932	writer	Q17572	Fujiko F. Fujio		
+Q1310932	writer	Q8955362	Nobuyuki Fujimoto		
+Q1310932	composer	Q2296028	Shunsuke Kikuchi		
+Q1310932	producer	Q1136386	Shin-Ei Animation		
+Q1310932	editor	Q5639976	Hajime Okayasu		
+Q1310932	subject		cat		
+Q5231437	director	Q1886953	Masahiro Shinoda		
+Q5231437	writer	Q1886953	Masahiro Shinoda		
+Q5231437	composer	Q1369375	Joji Yuasa		
+Q5231437	cinematographer	Q3516103	Tatsuo Suzuki		
+Q5231437	cast	Q44271	Riona Hazuki		
+Q5231437	cast	Q1139714	Kiichi Nakai		
+Q5231437	cast	Q6202728	Jinpachi Nezu		
+Q5231437	cast	Q3544667	Mayu Tsuruta		
+Q5231437	cast	Q318885	Mako		
+Q5231437	cast	Q987232	Takaya Kamikawa		
+Q5231437	subject		ninja		
+Q868048	director	Q2538092	Kunihiko Yuyama		
+Q868048	writer	Q2532765	Takeshi Shudo		
+Q868048	composer	Q2007117	Shinji Miyazaki		
+Q1733969	director	Q533492	Hideo Nakata		
+Q1733969	writer	Q11671389	Hiroshi Takahashi		
+Q1733969	composer	Q443712	Kenji Kawai		
+Q1733969	producer	Q2389243	Takashige Ichise		
+Q1733969	producer	Q11585298	Shin Ishihara		
+Q1733969	cinematographer	Q605735	Hideo Yamamoto		
+Q1733969	editor	Q11670996	Nobuyuki Takahashi		
+Q1733969	cast	Q3297144	Masako		
+Q1733969	cast	Q253882	Kyoko Fukada		
+Q1733969	cast	Q11383633	Hitomi Satō		
+Q1733969	cast	Q873885	Fumiyo Kohinata		
+Q1733969	cast	Q705522	Hiroyuki Sanada		
+Q1733969	cast	Q3544889	Kenjirō Ishimaru		
+Q1733969	cast	Q1191674	Miki Nakatani		
+Q1733969	cast	Q8054508	Yoichi Numata		
+Q1733969	cast	Q1817586	Yūrei Yanagi		
+Q1733969	cast	Q3543366	Rikiya Otaka	Yoichi Asakawa	
+Q1733969	cast	Q3078856	Rie Inō	Sadako Yamamura	
+Q1733969	cast	Q253909	Nanako Matsushima	Reiko Asakawa	
+Q1733969	subject		supernatural		
+Q1733969	subject		anxiety		
+Q1733969	subject		deviance		
+Q1733969	subject		energy (esotericism)		
+Q1733969	subject		mental energy		
+Q1733969	subject		abandonment		
+Q1733969	subject		psychic ability		
+Q7400471	director	Q6782817	Masayuki Ochiai		
+Q7400471	writer	Q11594285	Yasushi Fukuda		
+Q7400471	cast	Q1193022	Miho Kanno		
+Q7400471	cast	Q3980312	Takeshi Masu		
+Q7400471	cast	Q3814523	Ken Utsui		
+Q7400471	cast	Q1197189	Gorō Inagaki		
+Q7400471	cast	Q1138332	Ren Ōsugi		
+Q2220856	director	Q1279708	Shunichi Nagasaki		
+Q2220856	cast	Q1138332	Ren Ōsugi		
+Q2220856	cast	Q1073861	Yui Natsukawa		
+Q2220856	cast	Q234094	Chiaki Kuriyama		
+Q2220856	cast	Q3544674	Toshie Negishi		
+Q11330808	director	Q872473	Kazuyuki Izutsu		
+Q11330808	editor	Q11395143	Nobuko Tomita		
+Q11330808	cast	Q1142250	Yūko Takeuchi		
+Q11330808	cast	Q1052640	Nao Ōmori		
+Q11330808	cast	Q1092044	Shigeru Muroi		
+Q11330808	cast	Q11465422	Isao Bitō		
+Q11330808	cast	Q3276668	Cha Katō		
+Q11330808	cast	Q181434	Harumi Miyako		
+Q11330808	follows	Q22125297	Amateur Singing Contest		
+Q11330808	followed_by	Q11660971	青いうた〜のど自慢 青春編〜		

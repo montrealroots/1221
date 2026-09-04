@@ -153,12 +153,21 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     advanced: ['Virality is quality to the power 2.4, scaled by platform potential, trait modifiers and posting time. It is never guaranteed.'],
   },
   {
+    id: 'industry', route: '/workspace/industry', title: 'Industry',
+    what: 'The real studios the universe operates around: who owns them, who runs them, every film and series they have made with its credits, money, ratings and franchises, and what they are doing inside your save.',
+    affects: ['Which buyers take your pitch, since each studio wants what it actually makes', 'Which studio is behind the world\'s own projects', 'Who acquires out of a festival', 'Which titles are taken, because nothing made here may share a name with a real film'],
+    actions: ['Read a studio\'s catalogue and leadership', 'Open any title for its full record', 'See what a studio has set up in your universe'],
+    connects: ['Projects, because pitching goes to these studios', 'Awards, because their films are the competition', 'Casting, because their projects are the world\'s roles'],
+    keywords: ['industry', 'studio', 'studios', 'catalogue', 'filmography', 'franchise', 'ip', 'executives', 'presidents', 'box office', 'rotten tomatoes', 'imdb', 'metacritic'],
+    advanced: ['Everything up to the day your save began is the public record, from Wikidata. Everything after is simulation, and the screen says which is which. A number the record does not have is shown as missing, never estimated.'],
+  },
+  {
     id: 'awards', route: '/workspace/awards', title: 'Awards',
     what: 'Edition-specific awards and festivals. The 97th ceremony is a different object from the 98th, and once an edition is finalised its result never changes.',
     affects: ['The film itself, which dominates', 'Critical standing', 'Precursor wins earlier in the season', 'Campaign spend, at the margin only', 'Eligibility windows and release dates'],
     actions: ['Campaign in specific categories', 'Submit to festivals', 'Accept an acquisition offer out of a festival'],
     connects: ['Projects, because eligibility depends on format and release', 'Bank, because campaigns cost real money', 'Career, because winning moves demand, prestige and your quote'],
-    keywords: ['awards', 'nomination', 'ceremony', 'campaign', 'festival', 'premiere', 'jury', 'won', 'vanguard'],
+    keywords: ['awards', 'nomination', 'ceremony', 'campaign', 'festival', 'premiere', 'jury', 'won', 'oscars', 'emmys', 'cannes'],
     advanced: ['Ballots are private. The audit shows what you could have known and says explicitly that the count is not visible to you.'],
   },
   {

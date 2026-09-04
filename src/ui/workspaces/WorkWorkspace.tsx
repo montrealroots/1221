@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty } from '@/ui/components/primitives';
 import { describePay, annualisedPay } from '@/engine/systems/work';
@@ -22,7 +23,7 @@ export function WorkWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Work</div>
-        <h1>{job ? job.title : 'Not employed'}</h1>
+        <h1>{job ? job.title : 'Not Employed'}</h1>
         <p className="muted">
           {job
             ? `${job.employerName} · ${describePay(job)} · ${formatMoneyCompact(annualisedPay(job))} a year`
@@ -85,7 +86,7 @@ export function WorkWorkspace() {
                     </div>
                   </div>
                   <span className={`chip ${application.stage === 'offer' ? 'chip-positive' : application.stage === 'rejected' ? 'chip-negative' : ''}`}>
-                    {application.stage.replace(/_/g, ' ')}
+                    {titleCaseLabel(application.stage.replace(/_/g, ' '))}
                   </span>
                   {application.stage === 'offer' && (
                     <>
@@ -111,7 +112,7 @@ export function WorkWorkspace() {
                   <div className="small strong">{opening.title}</div>
                   <div className="xs dim">
                     {opening.employerName} · {CITIES.get(opening.locationId)?.name} · {opening.hoursPerWeek}h/week
-                    {opening.requirements.length > 0 && ` · needs ${opening.requirements.map((r) => r.skill.replace(/_/g, ' ')).join(', ')}`}
+                    {opening.requirements.length > 0 && ` · needs ${opening.requirements.map((r) => titleCaseLabel(r.skill.replace(/_/g, ' '))).join(', ')}`}
                   </div>
                   <div className="xs muted" style={{ marginTop: 2 }}>{opening.description}</div>
                 </div>

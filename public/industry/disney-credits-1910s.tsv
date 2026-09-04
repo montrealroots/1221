@@ -1,0 +1,153 @@
+qid	role	personQid	name	character	ordinal
+Q7746973	director	Q51123	D. W. Griffith		
+Q7746973	cinematographer	Q329965	Billy Bitzer		
+Q7746973	cast	Q153332	Mae Marsh		
+Q7746973	cast	Q3048762	Edwin August		
+Q7746973	cast	Q966972	Owen Moore		
+Q7746973	cast	Q267718	Blanche Sweet		
+Q7746973	cast	Q629304	Alfred Paget		
+Q7746973	cast	Q738864	Charles West		
+Q7746973	cast	Q1344716	Robert Harron		
+Q7746973	cast	Q731452	Charles Hill Mailes		
+Q2939582	director	Q72756	Raoul Walsh		
+Q2939582	writer	Q72756	Raoul Walsh		
+Q2939582	composer	Q79043	Hugo Riesenfeld		
+Q2939582	cinematographer	Q3102268	Georges Benoît		
+Q2939582	cast	Q21208677	Elsie MacLeod		
+Q2939582	cast	Q3160884	James A. Marcus		
+Q2939582	cast	Q234615	Theda Bara		
+Q2939582	cast	Q767045	Carl Harbaugh		
+Q373126	director	Q3568298	William Senderling Davis		
+Q373126	writer	Q3568298	William Senderling Davis		
+Q373126	producer	Q134382	William Fox		
+Q373126	cast	Q6105976	J. Herbert Frank		
+Q373126	cast	Q3751804	Frank Evans		
+Q373126	cast	Q234615	Theda Bara		
+Q373126	cast	Q23957	Warner Oland		
+Q373126	cast	Q5526709	Gaston Bell		
+Q373126	cast	Q87025757	Carleton Macy		
+Q727334	director	Q72756	Raoul Walsh		
+Q727334	writer	Q72756	Raoul Walsh		
+Q727334	producer	Q134382	William Fox		
+Q727334	cinematographer	Q3102268	Georges Benoît		
+Q727334	cast	Q7355487	Rockliffe Fellowes		
+Q727334	cast	Q434466	Anna Q. Nilsson		
+Q727334	cast	Q3160884	James A. Marcus		
+Q727334	cast	Q767045	Carl Harbaugh		
+Q727334	cast	Q20789793	William Sheer		
+Q727334	cast	Q3127869	Harry McCoy		
+Q3485250	director	Q72756	Raoul Walsh		
+Q3485250	cast	Q234615	Theda Bara		
+Q3520302	director	Q957475	Herbert Brenon		
+Q3520302	writer	Q957475	Herbert Brenon		
+Q3520302	producer	Q134382	William Fox		
+Q3520302	cinematographer	Q374091	Phil Rosen		
+Q3520302	cast	Q4019992	William E. Shay		
+Q3520302	cast	Q234615	Theda Bara		
+Q3520302	cast	Q3500809	Stuart Holmes		
+Q3520302	cast	Q3161874	Jane Lee		
+Q3520302	cast	Q3082633	Frank John William Goldsmith		
+Q3986607	director	Q523961	Frank Powell		
+Q3986607	producer	Q134382	William Fox		
+Q3986607	cast	Q234615	Theda Bara		
+Q7735643	director	Q2709694	J. Gordon Edwards		
+Q7735643	writer	Q2975468	Clara Beranger		
+Q7735643	producer	Q134382	William Fox		
+Q7735643	cast	Q234615	Theda Bara		
+Q7735643	cast	Q3500809	Stuart Holmes		
+Q3717695	director	Q3638954	Bertram Bracken		
+Q3717695	writer	Q3850492	Mary Murillo		
+Q3717695	producer	Q134382	William Fox		
+Q3717695	cast	Q234615	Theda Bara		
+Q3717695	cast	Q2019352	Emily Fitzroy		
+Q3717695	cast	Q3500809	Stuart Holmes		
+Q3717695	cast	Q15117323	Ben Deeley		
+Q3717695	cast	Q3678983	Claire Whitney		
+Q3772910	director	Q6144668	James Vincent		
+Q3772910	writer	Q3850492	Mary Murillo		
+Q3772910	producer	Q134382	William Fox		
+Q3772910	cast	Q234615	Theda Bara		
+Q3772910	cast	Q4733548	Alma Hanlon		
+Q3785052	director	Q2709694	J. Gordon Edwards		
+Q3785052	writer	Q3850492	Mary Murillo		
+Q3785052	cinematographer	Q374091	Phil Rosen		
+Q3785052	cast	Q3500809	Stuart Holmes		
+Q3785052	cast	Q234615	Theda Bara		
+Q3520780	director	Q3638954	Bertram Bracken		
+Q3520780	writer	Q3850492	Mary Murillo		
+Q3520780	producer	Q134382	William Fox		
+Q3520780	cast	Q285483	Mary Martin		
+Q3520780	cast	Q23957	Warner Oland		
+Q3520780	cast	Q7965763	Walter P. Lewis		
+Q3520780	cast	Q234615	Theda Bara		
+Q3520780	cast	Q1384972	James Cooley		
+Q3795157	director	Q2709694	J. Gordon Edwards		
+Q3795157	writer	Q3850492	Mary Murillo		
+Q3795157	producer	Q134382	William Fox		
+Q3795157	cinematographer	Q374091	Phil Rosen		
+Q3795157	cast	Q234615	Theda Bara		
+Q3795157	cast	Q3133457	Herbert Heyes		
+Q4004567	director	Q2709694	J. Gordon Edwards		
+Q4004567	producer	Q2709694	J. Gordon Edwards		
+Q4004567	cinematographer	Q374091	Phil Rosen		
+Q4004567	cast	Q3678983	Claire Whitney		
+Q4004567	cast	Q3133457	Herbert Heyes		
+Q4004567	cast	Q3500809	Stuart Holmes		
+Q4004567	cast	Q234615	Theda Bara		
+Q4004567	cast	Q3666370	Charles Craig		
+Q3842257	director	Q2709694	J. Gordon Edwards		
+Q3842257	producer	Q134382	William Fox		
+Q3842257	costume_designer	Q1507653	George Hopkins		
+Q3842257	cast	Q234615	Theda Bara		
+Q3842257	cast	Q3568318	Willard Louis		
+Q3842257	cast	Q385815	Charles Clary		
+Q3989085	director	Q2709694	J. Gordon Edwards		
+Q3989085	writer	Q2898313	Bernard McConville		
+Q3989085	producer	Q134382	William Fox		
+Q3989085	cast	Q5533061	Genevieve Blinn		
+Q3989085	cast	Q385815	Charles Clary		
+Q3989085	cast	Q234615	Theda Bara		
+Q7769258	director	Q2709694	J. Gordon Edwards		
+Q7769258	director	Q5536879	George Bellamy		
+Q7769258	producer	Q134382	William Fox		
+Q7769258	cinematographer	Q374091	Phil Rosen		
+Q7769258	cast	Q234615	Theda Bara		
+Q7769258	cast	Q5345114	Edward Roseman		
+Q2377481	director	Q2709694	J. Gordon Edwards		
+Q2377481	producer	Q134382	William Fox		
+Q2377481	cinematographer	Q3182661	John W. Boyle		
+Q2377481	costume_designer	Q1507653	George Hopkins		
+Q2377481	production_designer	Q1507653	George Hopkins		
+Q2377481	cast	Q726459	Rex Ingram		
+Q2377481	cast	Q234615	Theda Bara		
+Q2377481	cast	Q2829333	Q2829333		
+Q2377481	cast	Q2830579	Alan Roscoe		
+Q2377481	cast	Q166456	G. Raymond Nye		
+Q2377481	cast	Q4895776	Bertram Grassby		
+Q2377481	cast	Q3133457	Herbert Heyes		
+Q7734737	director	Q2709694	J. Gordon Edwards		
+Q7734737	writer	Q5322025	E. Lloyd Sheldon		
+Q7734737	producer	Q134382	William Fox		
+Q7734737	costume_designer	Q1507653	George Hopkins		
+Q7734737	cast	Q234615	Theda Bara		
+Q3989232	director	Q2709694	J. Gordon Edwards		
+Q3989232	writer	Q1507653	George Hopkins		
+Q3989232	writer	Q2709694	J. Gordon Edwards		
+Q3989232	producer	Q134382	William Fox		
+Q3989232	cinematographer	Q15069922	Q15069922		
+Q3989232	costume_designer	Q1507653	George Hopkins		
+Q3989232	cast	Q234615	Theda Bara		
+Q3989232	cast	Q2830579	Alan Roscoe		
+Q1118664	director	Q2709694	J. Gordon Edwards		
+Q1118664	costume_designer	Q1507653	George Hopkins		
+Q1118664	cast	Q2830579	Alan Roscoe		
+Q1118664	cast	Q234615	Theda Bara		
+Q20092811	director	Q763358	Harry F. Millarde		
+Q20092811	cast	Q3273771	Mabel Julienne Scott		
+Q20092811	cast	Q3806685	James W. Morrison		
+Q20092811	cast	Q3568919	William Russell		
+Q20092811	cast	Q255682	Agnes Ayres		
+Q18210170	director	Q2709694	J. Gordon Edwards		
+Q18210170	writer	Q612110	J. Searle Dawley		
+Q18210170	cinematographer	Q3182661	John W. Boyle		
+Q18210170	cast	Q234615	Theda Bara		

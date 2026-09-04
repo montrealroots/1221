@@ -1,0 +1,33 @@
+qid	role	personQid	name	character	ordinal
+Q905932	director	Q51123	D. W. Griffith		
+Q905932	writer	Q51123	D. W. Griffith		
+Q905932	composer	Q51123	D. W. Griffith		
+Q905932	producer	Q51123	D. W. Griffith		
+Q905932	cinematographer	Q329965	Billy Bitzer		
+Q905932	editor	Q3806731	James Smith		
+Q905932	cast	Q104183	Lillian Gish		
+Q905932	cast	Q457293	Richard Barthelmess		
+Q905932	cast	Q3101419	George Beranger		
+Q905932	cast	Q367073	Donald Crisp		
+Q905932	cast	Q3609064	Edward Peil		
+Q905932	cast	Q3101795	George Nichols		
+Q905932	cast	Q1065512	Kid McCoy		
+Q3136453	director	Q2474020	Joseph Henabery		
+Q3136453	writer	Q104127	Douglas Fairbanks		
+Q3136453	writer	Q2474020	Joseph Henabery		
+Q3136453	producer	Q104127	Douglas Fairbanks		
+Q3136453	cinematographer	Q62503	Victor Fleming		
+Q3136453	cast	Q203219	Boris Karloff		
+Q3136453	cast	Q195022	Frank Campeau		
+Q3136453	cast	Q3839914	Bull Montana		
+Q3136453	cast	Q6766252	Marjorie Daw		
+Q3136453	cast	Q104127	Douglas Fairbanks		
+Q5534710	director	Q62503	Victor Fleming		
+Q5534710	director	Q1258003	Theodore Reed		
+Q5534710	writer	Q104127	Douglas Fairbanks		
+Q5534710	producer	Q104127	Douglas Fairbanks		
+Q5534710	cinematographer	Q3568474	William C. McGann		
+Q5534710	cast	Q684079	Ralph Lewis		
+Q5534710	cast	Q3839914	Bull Montana		
+Q5534710	cast	Q104127	Douglas Fairbanks		
+Q5534710	cast	Q62503	Victor Fleming		

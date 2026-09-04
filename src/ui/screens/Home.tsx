@@ -54,7 +54,7 @@ export function Home() {
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
           {zoneAbbreviation(sim.now, sim.zone)} · {seasonOf(sim.now, sim.zone, city?.latitude ?? 34)}
           {weather && (
-            <> · <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} {weather.condition}</>
+            <> · <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
           )}
         </p>
       </div>
@@ -241,7 +241,7 @@ export function Home() {
                 <div className="grow">
                   <div className="weather-temp mono">{weather.temperature}{unit}</div>
                   <div className="small muted">
-                    {weather.condition} · High {weather.high}{unit} · Low {weather.low}{unit}
+                    {titleCaseLabel(weather.condition)} · High {weather.high}{unit} · Low {weather.low}{unit}
                   </div>
                   <div className="xs dim">
                     Humidity {weather.humidity}% · Wind {weather.fahrenheit ? `${Math.round(weather.windKph * 0.621)} mph` : `${weather.windKph} km/h`}
@@ -253,7 +253,7 @@ export function Home() {
                   const [y, m, d] = day.dateKey.split('-').map(Number);
                   const weekday = WEEKDAY_NAMES[new Date(Date.UTC(y ?? 2026, (m ?? 1) - 1, d ?? 1)).getUTCDay()] ?? '';
                   return (
-                    <div key={day.dateKey} className="weather-day" title={`${day.condition}, ${day.low}${unit} to ${day.high}${unit}`}>
+                    <div key={day.dateKey} className="weather-day" title={`${titleCaseLabel(day.condition)}, ${day.low}${unit} to ${day.high}${unit}`}>
                       <div className="xs dim">{weekday.slice(0, 3)}</div>
                       <div aria-hidden="true">{weatherIcon(day.condition)}</div>
                       <div className="xs mono">{day.high}° / {day.low}°</div>
@@ -326,11 +326,11 @@ export function Home() {
                   <div className="grow">
                     <div className="small strong">{project.title}</div>
                     <div className="xs dim">
-                      {project.format.replace(/_/g, ' ')} · {project.phase.replace(/_/g, ' ')}
-                      {project.genres.length > 0 && ` · ${project.genres.join(', ')}`}
+                      {titleCaseLabel(project.format.replace(/_/g, ' '))} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}
+                      {project.genres.length > 0 && ` · ${project.genres.map(titleCaseLabel).join(', ')}`}
                     </div>
                   </div>
-                  <span className="chip">{project.phase.replace(/_/g, ' ')}</span>
+                  <span className="chip">{titleCaseLabel(project.phase.replace(/_/g, ' '))}</span>
                 </button>
               ))}
             </div>

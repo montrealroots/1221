@@ -1,0 +1,711 @@
+qid	role	personQid	name	character	ordinal
+Q7897667	director	Q660352	Tadashi Imai		
+Q7897667	writer	Q11390575	Toshio Yasumi		
+Q7897667	writer	Q11548763	Yōko Mizuki		
+Q7897667	composer	Q11435901	Masao Ōki		
+Q7897667	cinematographer	Q11363978	Shun'ichirō Nakao		
+Q7897667	cast	Q139253	Eiji Okada		
+Q7897667	cast	Q2698639	Yoshiko Kuga		
+Q7897667	cast	Q464049	Osamu Takizawa		
+Q2394890	director	Q1371306	Mikio Naruse		
+Q2394890	writer	Q43736	Yasunari Kawabata		
+Q2394890	writer	Q445839	Fumiko Hayashi		
+Q2394890	composer	Q2632033	Fumio Hayasaka		
+Q2394890	producer	Q11624213	Sanezumi Fujimoto		
+Q2394890	cast	Q3195097	Ken Uehara		
+Q2394890	cast	Q2081208	Ranko Hanai		
+Q2394890	cast	Q5675970	Haruo Tanaka		
+Q2394890	cast	Q236129	Setsuko Hara		
+Q2394890	cast	Q3128005	Haruko Sugimura		
+Q2394890	cast	Q3511677	Sō Yamamura		
+Q2394890	cast	Q3573159	Yukiko Shimazaki		
+Q2394890	cast	Q3067366	Keiju Kobayashi		
+Q7718822	director	Q150840	Ishirō Honda		
+Q7718822	producer	Q11520413	Sōjirō Motoki		
+Q3010935	director	Q55401	Kenji Mizoguchi		
+Q3010935	writer	Q3572656	Yoshikata Yoda		
+Q3010935	composer	Q2632033	Fumio Hayasaka		
+Q3010935	cast	Q263104	Kinuyo Tanaka		
+Q3010935	cast	Q436121	Noriko Sengoku		
+Q3010935	cast	Q5350012	Eitarō Shindō		
+Q3010935	cast	Q2590475	Masayuki Mori		
+Q3010935	cast	Q3511677	Sō Yamamura		
+Q152105	director	Q8006	Akira Kurosawa		
+Q152105	writer	Q8006	Akira Kurosawa		
+Q152105	writer	Q3107382	Shinobu Hashimoto		
+Q152105	writer	Q3135269	Hideo Oguni		
+Q152105	composer	Q2632033	Fumio Hayasaka		
+Q152105	producer	Q11520413	Sōjirō Motoki		
+Q152105	cinematographer	Q2329908	Asakazu Nakai		
+Q152105	editor	Q8006	Akira Kurosawa		
+Q152105	cast	Q1992367	Bokuzen Hidari		
+Q152105	cast	Q3043193	Kamatari Fujiwara		
+Q152105	cast	Q922612	Seiji Miyaguchi		
+Q152105	cast	Q3551306	Nobuo Nakamura		
+Q152105	cast	Q11505244	Shinichi Himori		
+Q152105	cast	Q40070	Takashi Shimura		
+Q152105	cast	Q3548276	Kin Sugai		
+Q152105	cast	Q15069876	Makoto Kobori		
+Q152105	cast	Q975630	Minoru Chiaki		
+Q152105	cast	Q11646709	Nobuo Kaneko		
+Q152105	cast	Q11380490	Yūnosuke Itō		
+Q152105	cast	Q5508578	Noriko Honma		
+Q152105	cast	Q5675970	Haruo Tanaka		
+Q152105	subject		stomach cancer		
+Q152105	subject		old age		
+Q3350118	director	Q1371306	Mikio Naruse		
+Q3350118	cast	Q3511677	Sō Yamamura		
+Q7659290	director	Q960868	Hiroshi Inagaki		
+Q7659290	writer	Q8006	Akira Kurosawa		
+Q7659290	composer	Q2381947	Ikuma Dan		
+Q7659290	producer	Q652228	Tomoyuki Tanaka		
+Q7749913	director	Q150840	Ishirō Honda		
+Q7749913	writer	Q150840	Ishirō Honda		
+Q7749913	composer	Q3147667	Ichirō Saitō		
+Q7749913	producer	Q652228	Tomoyuki Tanaka		
+Q7749913	cast	Q37001	Toshirō Mifune		
+Q7749913	cast	Q40070	Takashi Shimura		
+Q7749913	cast	Q3043193	Kamatari Fujiwara		
+Q5973637	director	Q150840	Ishirō Honda		
+Q5973637	composer	Q424173	Yasushi Akutagawa		
+Q5973637	cast	Q3572686	Yoshio Kosugi		
+Q5973637	cast	Q3043193	Kamatari Fujiwara		
+Q5973637	cast	Q40070	Takashi Shimura		
+Q97725544	director	Q11406101	Yasuki Chiba		
+Q97725544	writer	Q11373574	Toshirō Ide		
+Q97725544	writer	Q97723141	Fumio Yoshida		
+Q97725544	composer	Q11666478	Nobuo Iida		
+Q97725544	cinematographer	Q97724291	Tadashi Iimura		
+Q97725544	cast	Q236129	Setsuko Hara		
+Q97725544	cast	Q37001	Toshirō Mifune		
+Q97725544	cast	Q11522340	Yōko Sugi		
+Q17056634	director	Q5295445	Kazuo Mori		
+Q17056634	writer	Q8006	Akira Kurosawa		
+Q17056634	producer	Q11520413	Sōjirō Motoki		
+Q17056634	cast	Q975630	Minoru Chiaki		
+Q17056634	cast	Q579058	Daisuke Katō		
+Q17056634	cast	Q37001	Toshirō Mifune		
+Q17056634	cast	Q40070	Takashi Shimura		
+Q4684035	director	Q150840	Ishirō Honda		
+Q4684035	cast	Q3067366	Keiju Kobayashi		
+Q4684035	cast	Q5508578	Noriko Honma		
+Q4684035	cast	Q418778	Akira Kubo		
+Q4684035	cast	Q2081217	Sachiko Murase		
+Q4684035	cast	Q5350011	Eitarō Ozawa		
+Q3819484	director	Q78719	Josef von Sternberg		
+Q3819484	writer	Q78719	Josef von Sternberg		
+Q3819484	composer	Q135570	Akira Ifukube		
+Q3819484	cinematographer	Q78719	Josef von Sternberg		
+Q3819484	production_designer	Q376088	Kono		
+Q3819484	cast	Q4700606	Akemi Negishi		
+Q3819484	cast	Q7506137	Shōji Nakayama		
+Q3819484	subject		Anatahan incident		
+Q5325317	director	Q150840	Ishirō Honda		
+Q5325317	writer	Q3107382	Shinobu Hashimoto		
+Q5325317	composer	Q3574303	Yūji Koseki		
+Q5325317	producer	Q652228	Tomoyuki Tanaka		
+Q5325317	cast	Q40070	Takashi Shimura		
+Q5325317	cast	Q3791680	Ichirō Sugai		
+Q5325317	cast	Q37001	Toshirō Mifune		
+Q5325317	cast	Q1321767	Rentarō Mikuni		
+Q5325317	cast	Q3023117	Denjirō Ōkōchi		
+Q5325317	cast	Q1315977	Haruo Nakajima		
+Q5325317	subject		aviation		
+Q11447160	director	Q1371306	Mikio Naruse		
+Q11447160	composer	Q3147667	Ichirō Saitō		
+Q11447160	producer	Q11624213	Sanezumi Fujimoto		
+Q11447160	cast	Q3312773	Mieko Takamine		
+Q5435046	director	Q150840	Ishirō Honda		
+Q5435046	producer	Q652228	Tomoyuki Tanaka		
+Q860461	director	Q150840	Ishirō Honda		
+Q860461	writer	Q150840	Ishirō Honda		
+Q860461	writer	Q11667241	Shigeru Kayama		
+Q860461	writer	Q17217777	Takeo Murata		
+Q860461	composer	Q135570	Akira Ifukube		
+Q860461	producer	Q652228	Tomoyuki Tanaka		
+Q860461	cinematographer	Q11572382	Masao Tamai		
+Q860461	editor	Q11481929	Kazuji Taira		
+Q860461	cast	Q636593	Akira Takarada		
+Q860461	cast	Q1315977	Haruo Nakajima		
+Q860461	cast	Q3074303	Momoko Kōchi		
+Q860461	cast	Q6132837	Katsumi Tezuka		
+Q860461	cast	Q418046	Akihiko Hirata		
+Q860461	cast	Q40070	Takashi Shimura		
+Q860461	cast	Q3198422	Kokuten Kōdō		
+Q860461	cast	Q3548276	Kin Sugai		
+Q860461	cast	Q977656	Kenji Sahara		
+Q860461	cast	Q150840	Ishirō Honda		
+Q860461	followed_by	Q1273736	Godzilla Raids Again		
+Q860461	subject		dinosaur		
+Q3023914	director	Q1371306	Mikio Naruse		
+Q3023914	writer	Q445839	Fumiko Hayashi		
+Q3023914	composer	Q3147667	Ichirō Saitō		
+Q3023914	producer	Q11624213	Sanezumi Fujimoto		
+Q3023914	cast	Q3574277	Yūko Mochizuki		
+Q3023914	cast	Q11516815	Ineko Arima		
+Q3023914	cast	Q3128005	Haruko Sugimura		
+Q3023914	cast	Q11605835	Chikako Hosokawa		
+Q3023914	cast	Q3195097	Ken Uehara		
+Q3023914	cast	Q579058	Daisuke Katō		
+Q3023914	cast	Q7397524	Sadako Sawamura		
+Q3023914	cast	Q5770923	Hiroshi Koizumi		
+Q1631789	director	Q960868	Hiroshi Inagaki		
+Q1631789	writer	Q221957	Eiji Yoshikawa		
+Q1631789	writer	Q960868	Hiroshi Inagaki		
+Q1631789	composer	Q2381947	Ikuma Dan		
+Q1631789	cast	Q418046	Akihiko Hirata		
+Q1631789	cast	Q3546783	Kaoru Yachigusa		
+Q1631789	cast	Q95002	William Holden		
+Q1631789	cast	Q4383856	Mitsuko Mito		
+Q1631789	cast	Q1321767	Rentarō Mikuni		
+Q1631789	cast	Q3043255	Sōjin Kamiyama		
+Q1631789	cast	Q5350011	Eitarō Ozawa		
+Q1631789	cast	Q579058	Daisuke Katō		
+Q1631789	cast	Q2053558	Mariko Okada		
+Q1631789	cast	Q37001	Toshirō Mifune		
+Q1631789	cast	Q11465036	Onoe Kurōemon II	Takuan Sōhō	
+Q1631789	award		Academy Honorary Award		
+Q189540	director	Q8006	Akira Kurosawa		
+Q189540	writer	Q8006	Akira Kurosawa		
+Q189540	writer	Q3107382	Shinobu Hashimoto		
+Q189540	writer	Q3135269	Hideo Oguni		
+Q189540	composer	Q2632033	Fumio Hayasaka		
+Q189540	producer	Q11520413	Sōjirō Motoki		
+Q189540	cinematographer	Q2329908	Asakazu Nakai		
+Q189540	editor	Q8006	Akira Kurosawa		
+Q189540	cast	Q579058	Daisuke Katō	Shichirōji	
+Q189540	cast	Q63525	Isao Kimura	Katsushirō Okamoto	
+Q189540	cast	Q975630	Minoru Chiaki	Heihachi Hayashida	
+Q189540	cast	Q11428116	Sachio Sakai	a coolie	
+Q189540	cast	Q3572686	Yoshio Kosugi	Mosuke	
+Q189540	cast	Q1315977	Haruo Nakajima	a bandit scout	
+Q189540	cast	Q11670072	Shinpei Takagi	the bandit chief	
+Q189540	cast	Q3155131	Isao Yamagata		
+Q189540	cast	Q922612	Seiji Miyaguchi	Kyūzō	
+Q189540	cast	Q438605	Keiko Tsushima	Shino	
+Q189540	cast	Q40070	Takashi Shimura	Kambei Shimada	
+Q189540	cast	Q11562471	Atsushi Watanabe	a bun seller	
+Q189540	cast	Q3573159	Yukiko Shimazaki	Rikichi's wife	
+Q189540	cast	Q37001	Toshirō Mifune	Kikuchiyo	
+Q189540	cast	Q449621	Tatsuya Nakadai	a samurai	
+Q189540	cast	Q3198422	Kokuten Kōdō	Gisaku	
+Q189540	cast	Q1085473	Yoshio Tsuchiya	Rikichi	
+Q189540	cast	Q1861772	Yoshio Inaba	Gorōbei Katayama	
+Q189540	cast	Q1992367	Bokuzen Hidari	Yohei	
+Q189540	cast	Q3049379	Eijirō Tōno	a thief	
+Q189540	cast	Q3043193	Kamatari Fujiwara	Manzō	
+Q189540	cast	Q436121	Noriko Sengoku		
+Q189540	subject		fencing		
+Q189540	subject		samurai		
+Q189540	subject		deception		
+Q189540	subject		hostage		
+Q189540	subject		Sengoku period		
+Q189540	subject		alcohol intoxication		
+Q189540	subject		premarital sex		
+Q189540	subject		false alarm		
+Q189540	subject		banditry		
+Q189540	subject		misunderstanding		
+Q3065778	director	Q1371306	Mikio Naruse		
+Q3065778	writer	Q43736	Yasunari Kawabata		
+Q3065778	composer	Q3147667	Ichirō Saitō		
+Q3065778	producer	Q11624213	Sanezumi Fujimoto		
+Q3065778	cast	Q236129	Setsuko Hara		
+Q3065778	cast	Q3511677	Sō Yamamura		
+Q3065778	cast	Q3195097	Ken Uehara		
+Q10305518	director	Q3325322	Motoyoshi Oda		
+Q10305518	cinematographer	Q1496807	Katsumi Yanagishima		
+Q10305518	cast	Q3043193	Kamatari Fujiwara		
+Q10305518	cast	Q7500141	Shoichi Hirose		
+Q10305518	cast	Q11055076	Seizaburō Kawazu		
+Q10305518	cast	Q1085473	Yoshio Tsuchiya		
+Q10305518	cast	Q1315977	Haruo Nakajima		
+Q10305518	follows	Q8061454	Yurei Otoko		
+Q8061454	director	Q3325322	Motoyoshi Oda		
+Q8061454	cinematographer	Q6381680	Kazuo Yamada		
+Q8061454	cast	Q5675970	Haruo Tanaka		
+Q8061454	cast	Q1531471	Yū Fujiki		
+Q11661003	director	Q1279806	Nobuo Aoyagi		
+Q11661003	writer	Q11599844	Ryōzō Kasahara		
+Q11661003	composer	Q1088420	Ryōichi Hattori		
+Q11661003	editor	Q11473990	Kōichi Iwashita		
+Q3346017	director	Q1371306	Mikio Naruse		
+Q3346017	writer	Q445839	Fumiko Hayashi		
+Q3346017	composer	Q3147667	Ichirō Saitō		
+Q3346017	producer	Q11624213	Sanezumi Fujimoto		
+Q3346017	cast	Q2053558	Mariko Okada		
+Q3346017	cast	Q3155131	Isao Yamagata		
+Q3346017	cast	Q436121	Noriko Sengoku		
+Q3346017	cast	Q290963	Hideko Takamine		
+Q3346017	cast	Q2590475	Masayuki Mori		
+Q3346017	cast	Q11646709	Nobuo Kaneko		
+Q3346017	cast	Q579058	Daisuke Katō		
+Q1273736	director	Q3325322	Motoyoshi Oda		
+Q1273736	writer	Q11510850	Shigeaki Hidaka		
+Q1273736	writer	Q17217777	Takeo Murata		
+Q1273736	composer	Q938538	Masaru Sato		
+Q1273736	producer	Q652228	Tomoyuki Tanaka		
+Q1273736	cinematographer	Q11642353	Seiichi Endō		
+Q1273736	cast	Q5770923	Hiroshi Koizumi		
+Q1273736	cast	Q40070	Takashi Shimura		
+Q1273736	cast	Q975630	Minoru Chiaki		
+Q1273736	cast	Q1315977	Haruo Nakajima		
+Q1273736	follows	Q860461	Godzilla		
+Q1273736	followed_by	Q1215918	King Kong vs. Godzilla		
+Q1273736	subject		dinosaur		
+Q2483735	director	Q150840	Ishirō Honda		
+Q2483735	composer	Q938538	Masaru Sato		
+Q2483735	producer	Q652228	Tomoyuki Tanaka		
+Q2483735	cast	Q312878	John Carradine		
+Q2483735	cast	Q7381823	Russell Thorson		
+Q2483735	cast	Q3074303	Momoko Kōchi		
+Q2483735	cast	Q3572686	Yoshio Kosugi		
+Q2483735	cast	Q3551306	Nobuo Nakamura		
+Q2483735	cast	Q636593	Akira Takarada		
+Q2483735	cast	Q7346264	Robert Karnes		
+Q2483735	cast	Q4700606	Akemi Negishi		
+Q2483735	cast	Q2421148	Morris Ankrum		
+Q2273270	director	Q8006	Akira Kurosawa		
+Q2273270	writer	Q2632033	Fumio Hayasaka		
+Q2273270	writer	Q3107382	Shinobu Hashimoto		
+Q2273270	writer	Q3135269	Hideo Oguni		
+Q2273270	composer	Q938538	Masaru Sato		
+Q2273270	producer	Q11520413	Sōjirō Motoki		
+Q2273270	cinematographer	Q2329908	Asakazu Nakai		
+Q2273270	cast	Q436121	Noriko Sengoku		
+Q2273270	cast	Q15989146	Hiroshi Tachikawa		
+Q2273270	cast	Q3049379	Eijirō Tōno		
+Q2273270	cast	Q6388173	Ken Mitsuda		
+Q2273270	cast	Q975630	Minoru Chiaki		
+Q2273270	cast	Q3043193	Kamatari Fujiwara		
+Q2273270	cast	Q40070	Takashi Shimura		
+Q2273270	cast	Q4700606	Akemi Negishi		
+Q2273270	cast	Q37001	Toshirō Mifune		
+Q2273270	cast	Q13579834	Masao Shimizu		
+Q6691034	director	Q150840	Ishirō Honda		
+Q3023126	director	Q527646	Shirō Toyoda		
+Q3023126	writer	Q2856394	Sakunosuke Oda		
+Q3023126	writer	Q11390575	Toshio Yasumi		
+Q3023126	composer	Q2381947	Ikuma Dan		
+Q3023126	producer	Q11383593	Ichirō Satō		
+Q3023126	cinematographer	Q11356355	Mitsuo Miura		
+Q3023126	editor	Q11473990	Kōichi Iwashita		
+Q3023126	cast	Q2511572	Chikage Awashima		
+Q3023126	cast	Q5675970	Haruo Tanaka		
+Q3023126	cast	Q1078152	Hisaya Morishige		
+Q3023126	cast	Q8054591	Yōko Tsukasa		
+Q7078553	director	Q150840	Ishirō Honda		
+Q7078553	producer	Q652228	Tomoyuki Tanaka		
+Q7078553	cast	Q3043193	Kamatari Fujiwara		
+Q325621	director	Q960868	Hiroshi Inagaki		
+Q325621	director	Q1332764	Jun Fukuda		
+Q325621	writer	Q960868	Hiroshi Inagaki		
+Q325621	composer	Q2381947	Ikuma Dan		
+Q325621	cast	Q579058	Daisuke Katō		
+Q325621	cast	Q4383856	Mitsuko Mito		
+Q325621	cast	Q2053558	Mariko Okada		
+Q325621	cast	Q1861772	Yoshio Inaba		
+Q325621	cast	Q8056023	Yoshifumi Tajima		
+Q325621	cast	Q3049379	Eijirō Tōno		
+Q325621	cast	Q3546783	Kaoru Yachigusa		
+Q325621	cast	Q1092063	Kōji Tsuruta		
+Q325621	cast	Q3198422	Kokuten Kōdō		
+Q325621	cast	Q1531471	Yū Fujiki		
+Q325621	cast	Q418046	Akihiko Hirata		
+Q325621	cast	Q37001	Toshirō Mifune		
+Q325621	cast	Q3311531	Michiyo Kogure		
+Q7748079	director	Q960868	Hiroshi Inagaki		
+Q7748079	composer	Q7499045	Shirō Fukai		
+Q7748079	cast	Q579058	Daisuke Katō		
+Q7748079	cast	Q3043193	Kamatari Fujiwara		
+Q7748079	cast	Q418046	Akihiko Hirata		
+Q7748079	cast	Q3119101	Ryō Ikebe		
+Q7748079	cast	Q5350011	Eitarō Ozawa		
+Q7748079	cast	Q11669230	Mitsuko Takao		
+Q7748079	cast	Q2053558	Mariko Okada		
+Q7748079	cast	Q5508578	Noriko Honma		
+Q7748079	cast	Q3572686	Yoshio Kosugi		
+Q3222054	director	Q1371306	Mikio Naruse		
+Q3222054	composer	Q3147667	Ichirō Saitō		
+Q3222054	cast	Q4700606	Akemi Negishi		
+Q3222054	cast	Q37001	Toshirō Mifune		
+Q3222054	cast	Q1085473	Yoshio Tsuchiya		
+Q3222054	cast	Q290963	Hideko Takamine		
+Q3222054	cast	Q3067366	Keiju Kobayashi		
+Q3222054	cast	Q5675970	Haruo Tanaka		
+Q3222054	cast	Q975630	Minoru Chiaki		
+Q3222054	cast	Q7397524	Sadako Sawamura		
+Q3222054	cast	Q2081208	Ranko Hanai		
+Q4764420	director	Q210204	Shūe Matsubayashi		
+Q4764420	cast	Q236129	Setsuko Hara		
+Q2870396	director	Q1371306	Mikio Naruse		
+Q2870396	writer	Q276260	Aya Kōda		
+Q2870396	composer	Q3147667	Ichirō Saitō		
+Q2870396	producer	Q11624213	Sanezumi Fujimoto		
+Q2870396	cast	Q263104	Kinuyo Tanaka		
+Q2870396	cast	Q453584	Isuzu Yamada		
+Q2870396	cast	Q290963	Hideko Takamine		
+Q3179062	director	Q150840	Ishirō Honda		
+Q3179062	director	Q3518918	Terry O. Morse		
+Q3179062	writer	Q3518918	Terry O. Morse		
+Q3179062	composer	Q135570	Akira Ifukube		
+Q3179062	producer	Q1975783	Joseph E. Levine		
+Q3179062	editor	Q3518918	Terry O. Morse		
+Q3179062	cast	Q6849403	Mikel Conrad		
+Q3179062	cast	Q358990	James Hong		
+Q3179062	cast	Q40070	Takashi Shimura		
+Q3179062	cast	Q336877	Raymond Burr		
+Q3179062	cast	Q3074303	Momoko Kōchi		
+Q3179062	cast	Q418046	Akihiko Hirata		
+Q3179062	cast	Q636593	Akira Takarada		
+Q3179062	cast	Q977656	Kenji Sahara		
+Q3179062	subject		movie monster		
+Q6426192	director	Q7046211	Nobuo Nakagawa		
+Q6426192	writer	Q5752353	Hideji Hōjō		
+Q6426192	cast	Q147811	Hibari Misora		
+Q6426192	cast	Q11470889	Kyū Sazanka		
+Q6426192	cast	Q456161	Chikage Oogi		
+Q6426192	cast	Q11534357	Eijirō Yanagi		
+Q11673508	director	Q11406101	Yasuki Chiba		
+Q11673508	writer	Q11619626	Ryūzō Kikushima		
+Q11673508	composer	Q135570	Akira Ifukube		
+Q11673508	cast	Q579058	Daisuke Katō		
+Q11673508	cast	Q438605	Keiko Tsushima		
+Q11673508	cast	Q922612	Seiji Miyaguchi		
+Q7165971	director	Q150840	Ishirō Honda		
+Q7292830	director	Q27351	Senkichi Taniguchi		
+Q7292830	cast	Q3119101	Ryō Ikebe		
+Q7292830	cast	Q3546783	Kaoru Yachigusa		
+Q2420676	director	Q150840	Ishirō Honda		
+Q2420676	writer	Q11678449	Ken Kuronuma		
+Q2420676	composer	Q135570	Akira Ifukube		
+Q2420676	producer	Q652228	Tomoyuki Tanaka		
+Q2420676	producer	Q110693797	Frank King		
+Q2420676	cast	Q977656	Kenji Sahara		
+Q2420676	cast	Q418046	Akihiko Hirata		
+Q2420676	cast	Q8056023	Yoshifumi Tajima		
+Q2420676	cast	Q2071797	Yumi Shirakawa		
+Q2420676	cast	Q1315977	Haruo Nakajima		
+Q2420676	followed_by	Q588011	Ghidorah, the Three-Headed Monster		
+Q2420676	subject		insect		
+Q7362798	director	Q1279697	Toshio Sugie		
+Q7362798	cast	Q3043193	Kamatari Fujiwara		
+Q7362798	cast	Q636593	Akira Takarada		
+Q7362798	cast	Q147811	Hibari Misora		
+Q7362798	cast	Q3545150	Izumi Yukimura		
+Q7362798	cast	Q1078152	Hisaya Morishige		
+Q7362798	cast	Q443023	Chiemi Eri		
+Q4407113	director	Q960868	Hiroshi Inagaki		
+Q4407113	writer	Q5752353	Hideji Hōjō		
+Q4407113	composer	Q2381947	Ikuma Dan		
+Q4407113	cinematographer	Q11470128	Kazuo Yamada		
+Q4407113	editor	Q11473990	Kōichi Iwashita		
+Q4407113	cast	Q579058	Daisuke Katō		
+Q4407113	cast	Q2053558	Mariko Okada		
+Q4407113	cast	Q5675970	Haruo Tanaka		
+Q4407113	cast	Q40070	Takashi Shimura		
+Q4407113	cast	Q1092063	Kōji Tsuruta		
+Q4407113	cast	Q975630	Minoru Chiaki		
+Q4407113	cast	Q37001	Toshirō Mifune		
+Q4407113	cast	Q3546783	Kaoru Yachigusa		
+Q3392618	director	Q1371306	Mikio Naruse		
+Q3392618	writer	Q1700094	Kunio Kishida		
+Q3392618	composer	Q3147667	Ichirō Saitō		
+Q3392618	producer	Q11624213	Sanezumi Fujimoto		
+Q3392618	editor	Q106574997	Eiji Ōi		
+Q3392618	cast	Q4700606	Akemi Negishi		
+Q3392618	cast	Q3067366	Keiju Kobayashi		
+Q3392618	cast	Q236129	Setsuko Hara		
+Q3392618	cast	Q3201022	Kyōko Kagawa		
+Q7746839	director	Q527646	Shirō Toyoda		
+Q7746839	composer	Q2381947	Ikuma Dan		
+Q7746839	cast	Q11359731	Kichijirō Ueda		
+Q7746839	cast	Q5675970	Haruo Tanaka		
+Q7746839	cast	Q1992367	Bokuzen Hidari		
+Q7746839	cast	Q1078152	Hisaya Morishige		
+Q7746839	cast	Q3049379	Eijirō Tōno		
+Q7746839	cast	Q3546783	Kaoru Yachigusa		
+Q7746839	cast	Q3119101	Ryō Ikebe		
+Q7746839	cast	Q3544406	Musei Tokugawa		
+Q7746839	cast	Q1315977	Haruo Nakajima		
+Q7746839	cast	Q253862	Yoshiko Yamaguchi		
+Q7746839	cast	Q3572686	Yoshio Kosugi		
+Q7912996	director	Q7046211	Nobuo Nakagawa		
+Q7912996	composer	Q938538	Masaru Sato		
+Q8058468	director	Q150840	Ishirō Honda		
+Q11607033	director	Q11406101	Yasuki Chiba		
+Q11607033	writer	Q11599844	Ryōzō Kasahara		
+Q11607033	composer	Q11529076	Hachirō Matsui		
+Q11607033	producer	Q11624213	Sanezumi Fujimoto		
+Q11607033	cinematographer	Q2329908	Asakazu Nakai		
+Q11607033	cast	Q1078152	Hisaya Morishige		
+Q4656679	director	Q150840	Ishirō Honda		
+Q4656679	cast	Q5770923	Hiroshi Koizumi		
+Q4656679	cast	Q418046	Akihiko Hirata		
+Q4656679	cast	Q456161	Chikage Oogi		
+Q4659135	director	Q150840	Ishirō Honda		
+Q4659135	cast	Q4700606	Akemi Negishi		
+Q4659135	cast	Q3074303	Momoko Kōchi		
+Q4659135	cast	Q636593	Akira Takarada		
+Q4660010	director	Q150840	Ishirō Honda		
+Q4875504	director	Q150840	Ishirō Honda		
+Q4875504	writer	Q11529785	Zenzo Matsuyama		
+Q4875504	composer	Q2097053	Yoshinao Nakada		
+Q4875504	cast	Q8056023	Yoshifumi Tajima		
+Q4875504	cast	Q2071797	Yumi Shirakawa		
+Q4875504	cast	Q11429995	Shizue Natsukawa		
+Q4875504	cast	Q40070	Takashi Shimura		
+Q4875504	cast	Q5770923	Hiroshi Koizumi		
+Q4875504	cast	Q438605	Keiko Tsushima		
+Q4875504	cast	Q37001	Toshirō Mifune		
+Q4875504	cast	Q3043193	Kamatari Fujiwara		
+Q11574336	director	Q1279806	Nobuo Aoyagi		
+Q11574336	composer	Q938538	Masaru Sato		
+Q7080608	director	Q55397	Kon Ichikawa		
+Q7080608	writer	Q55397	Kon Ichikawa		
+Q7080608	cast	Q1054887	Sayuri Yoshinaga		
+Q7091201	director	Q1279697	Toshio Sugie		
+Q7091201	cast	Q147811	Hibari Misora		
+Q7091201	cast	Q443023	Chiemi Eri		
+Q7091201	cast	Q3545150	Izumi Yukimura		
+Q7106602	director	Q11620378	Ryō Hagiwara		
+Q7106602	cast	Q147811	Hibari Misora		
+Q7106602	cast	Q1092063	Kōji Tsuruta		
+Q7106602	cast	Q11470889	Kyū Sazanka		
+Q7548206	director	Q527646	Shirō Toyoda		
+Q7548206	composer	Q2381947	Ikuma Dan		
+Q7548206	cast	Q579058	Daisuke Katō		
+Q7548206	cast	Q1078152	Hisaya Morishige		
+Q7548206	cast	Q418778	Akira Kubo		
+Q7548206	cast	Q3098335	Keiko Kishi		
+Q7548206	cast	Q3119101	Ryō Ikebe		
+Q7548206	cast	Q3546783	Kaoru Yachigusa		
+Q1475995	director	Q8006	Akira Kurosawa		
+Q1475995	writer	Q8006	Akira Kurosawa		
+Q1475995	writer	Q12706	Maxim Gorky		
+Q1475995	writer	Q3135269	Hideo Oguni		
+Q1475995	composer	Q938538	Masaru Sato		
+Q1475995	producer	Q8006	Akira Kurosawa		
+Q1475995	editor	Q8006	Akira Kurosawa		
+Q1475995	cast	Q37001	Toshirō Mifune		
+Q1475995	cast	Q1531471	Yū Fujiki		
+Q1475995	cast	Q4700606	Akemi Negishi		
+Q1475995	cast	Q975630	Minoru Chiaki		
+Q1475995	cast	Q5675970	Haruo Tanaka		
+Q1475995	cast	Q3095179	Nakamura Ganjirō II		
+Q1475995	cast	Q453584	Isuzu Yamada		
+Q1475995	cast	Q3201022	Kyōko Kagawa		
+Q1475995	cast	Q1992367	Bokuzen Hidari		
+Q1475995	cast	Q3043193	Kamatari Fujiwara		
+Q1475995	cast	Q3049379	Eijirō Tōno		
+Q2621366	director	Q150840	Ishirō Honda		
+Q2621366	writer	Q7678126	Takeshi Kimura		
+Q2621366	composer	Q135570	Akira Ifukube		
+Q2621366	producer	Q652228	Tomoyuki Tanaka		
+Q2621366	cinematographer	Q11462473	Hajime Koizumi		
+Q2621366	cast	Q3074303	Momoko Kōchi		
+Q2621366	cast	Q977656	Kenji Sahara		
+Q2621366	cast	Q2071797	Yumi Shirakawa		
+Q2621366	cast	Q3180677	Susumu Fujita		
+Q2621366	cast	Q418046	Akihiko Hirata		
+Q2621366	cast	Q40070	Takashi Shimura		
+Q2621366	cast	Q3572686	Yoshio Kosugi		
+Q2621366	cast	Q1085473	Yoshio Tsuchiya		
+Q2621366	subject		flying saucer		
+Q257818	director	Q8006	Akira Kurosawa		
+Q257818	writer	Q8006	Akira Kurosawa		
+Q257818	writer	Q3107382	Shinobu Hashimoto		
+Q257818	writer	Q3135269	Hideo Oguni		
+Q257818	writer	Q11619626	Ryūzō Kikushima		
+Q257818	composer	Q938538	Masaru Sato		
+Q257818	producer	Q11520413	Sōjirō Motoki		
+Q257818	cinematographer	Q2329908	Asakazu Nakai		
+Q257818	editor	Q8006	Akira Kurosawa		
+Q257818	production_designer	Q1552595	Yoshirō Muraki		
+Q257818	cast	Q11359731	Kichijirō Ueda	Washizu's workman	
+Q257818	cast	Q1531471	Yū Fujiki	Washizu's samurai	
+Q257818	cast	Q11428116	Sachio Sakai	Washizu's samurai	
+Q257818	cast	Q63525	Isao Kimura	Messenger	
+Q257818	cast	Q922612	Seiji Miyaguchi	Messenger	
+Q257818	cast	Q11354933	Eiko Miyoshi	Senior lady-in-waiting	
+Q257818	cast	Q3198422	Kokuten Kōdō	First General	
+Q257818	cast	Q11462277	Asao Koike	Tsuzuki's messenger	
+Q257818	cast	Q11373041	Shōbun Inoue	Tsuzuki's messenger	
+Q257818	cast	Q1861772	Yoshio Inaba	Third Military Commander	
+Q257818	cast	Q11399327	Takeshi Katō	Tsuzuki's samurai	
+Q257818	cast	Q40070	Takashi Shimura	Macduff	
+Q257818	cast	Q37001	Toshirō Mifune	Macbeth	
+Q257818	cast	Q453584	Isuzu Yamada	Lady Macbeth	
+Q257818	cast	Q15989146	Hiroshi Tachikawa	Malcolm	
+Q257818	cast	Q975630	Minoru Chiaki	Banquo	
+Q257818	cast	Q11382174	Takamaru Sasaki	King Duncan	
+Q257818	cast	Q418778	Akira Kubo	Fleance	
+Q257818	cast	Q11558450	Chieko Naniwa	Three Witches	
+Q257818	award		Blue Ribbon Awards		
+Q257818	award		映像技術賞		
+Q3549482	director	Q1371306	Mikio Naruse		
+Q3549482	writer	Q11548763	Yōko Mizuki		
+Q3549482	composer	Q3147667	Ichirō Saitō		
+Q3549482	producer	Q652228	Tomoyuki Tanaka		
+Q3549482	cast	Q3049379	Eijirō Tōno		
+Q3549482	cast	Q3098335	Keiko Kishi		
+Q3549482	cast	Q3195097	Ken Uehara		
+Q3549482	cast	Q2590475	Masayuki Mori		
+Q3549482	cast	Q449621	Tatsuya Nakadai		
+Q3549482	cast	Q290963	Hideko Takamine		
+Q3549482	cast	Q579058	Daisuke Katō		
+Q3549482	cast	Q922612	Seiji Miyaguchi		
+Q8046767	director	Q960868	Hiroshi Inagaki		
+Q8046767	cast	Q2483977	Nobuko Otowa		
+Q8046767	cast	Q1092063	Kōji Tsuruta		
+Q8046767	cast	Q2698639	Yoshiko Kuga		
+Q8046767	cast	Q418046	Akihiko Hirata		
+Q8046767	cast	Q2053558	Mariko Okada		
+Q8046767	cast	Q37001	Toshirō Mifune		
+Q8046767	cast	Q3023117	Denjirō Ōkōchi		
+Q8046767	cast	Q3201022	Kyōko Kagawa		
+Q8046767	followed_by	Q11109995	Yagyu Secret Scrolls part II		
+Q8073527	director	Q210204	Shūe Matsubayashi		
+Q8073527	cast	Q2456624	Keiko Awaji		
+Q8073527	cast	Q40070	Takashi Shimura		
+Q11634561	director	Q527646	Shirō Toyoda		
+Q11634561	writer	Q11390575	Toshio Yasumi		
+Q11634561	composer	Q424173	Yasushi Akutagawa		
+Q11634561	producer	Q11383593	Ichirō Satō		
+Q11634561	cinematographer	Q85425796	Jun Yasumoto		
+Q11634561	editor	Q11473990	Kōichi Iwashita		
+Q11634561	executive_producer	Q11383593	Ichirō Satō		
+Q11634561	production_designer	Q106114262	Yasuhide Kato		
+Q11634561	cast	Q51948009	Nobuo Chiba		
+Q11634561	cast	Q1078152	Hisaya Morishige		
+Q11634561	cast	Q11645806	Hitomi Nozoe		
+Q11634561	cast	Q2483977	Nobuko Otowa		
+Q11634561	cast	Q11553188	Ikio Sawamura		
+Q11634561	cast	Q7497767	Shinsuke Ashida		
+Q11634561	cast	Q3067366	Keiju Kobayashi		
+Q11634561	cast	Q3548215	Arihiro Fujimura		
+Q11634561	cast	Q11357516	Kokinba San'yūtei		
+Q11634561	cast	Q1992367	Bokuzen Hidari		
+Q11634561	cast	Q2511572	Chikage Awashima		
+Q11634561	cast	Q18048324	Akira Sera		
+Q11634561	cast	Q4267751	Junzaburō Ban		
+Q11634561	cast	Q3551313	Ichirō Arishima		
+Q11634561	cast	Q3574277	Yūko Mochizuki		
+Q1060505	director	Q960868	Hiroshi Inagaki		
+Q1060505	writer	Q960868	Hiroshi Inagaki		
+Q1060505	writer	Q973907	Mansaku Itami		
+Q1060505	composer	Q2381947	Ikuma Dan		
+Q1060505	producer	Q652228	Tomoyuki Tanaka		
+Q1060505	editor	Q8056295	Yoshitami Kuroiwa		
+Q1060505	cast	Q290963	Hideko Takamine		
+Q1060505	cast	Q3551306	Nobuo Nakamura		
+Q1060505	cast	Q1992367	Bokuzen Hidari		
+Q1060505	cast	Q958714	Chishū Ryū		
+Q1060505	cast	Q3189986	Jun Tatara		
+Q1060505	cast	Q5675970	Haruo Tanaka		
+Q1060505	cast	Q11666597	Chōko Iida		
+Q1060505	cast	Q922612	Seiji Miyaguchi		
+Q1060505	cast	Q1085473	Yoshio Tsuchiya		
+Q1060505	cast	Q11614741	Hiroshi Akutagawa		
+Q1060505	cast	Q37001	Toshirō Mifune		
+Q1060505	cast	Q3551313	Ichirō Arishima		
+Q1060505	award		Golden Lion		
+Q7561102	director	Q150840	Ishirō Honda		
+Q7561102	composer	Q938538	Masaru Sato		
+Q7561102	producer	Q11624213	Sanezumi Fujimoto		
+Q7561102	cast	Q271861	Akiko Wakabayashi		
+Q7561102	cast	Q4145070	Reiko Dan		
+Q7561102	cast	Q5770923	Hiroshi Koizumi		
+Q7561102	cast	Q4700606	Akemi Negishi		
+Q7561102	cast	Q1085473	Yoshio Tsuchiya		
+Q7561102	cast	Q977656	Kenji Sahara		
+Q3880433	director	Q3816714	Kōzō Saeki		
+Q3880433	cast	Q2071797	Yumi Shirakawa		
+Q3880433	cast	Q2456624	Keiko Awaji		
+Q3880433	cast	Q3074303	Momoko Kōchi		
+Q3880433	cast	Q1992367	Bokuzen Hidari		
+Q3880433	cast	Q147811	Hibari Misora		
+Q3880433	cast	Q3551313	Ichirō Arishima		
+Q3880433	cast	Q977656	Kenji Sahara		
+Q19521568	director	Q1279780	Seiji Hisamatsu		
+Q19521568	writer	Q11390575	Toshio Yasumi		
+Q19521568	cast	Q3546895	Terumi Niki		
+Q19521568	cast	Q11608383	Masao Oda		
+Q19521568	cast	Q3548276	Kin Sugai		
+Q19521568	cast	Q438605	Keiko Tsushima		
+Q19521568	cast	Q3201022	Kyōko Kagawa		
+Q19521568	cast	Q1992367	Bokuzen Hidari		
+Q19521568	cast	Q3574277	Yūko Mochizuki		
+Q19521568	cast	Q1078152	Hisaya Morishige		
+Q19521568	cast	Q11664936	Takao Zushi		
+Q19521568	cast	Q2483977	Nobuko Otowa		
+Q3112809	director	Q150840	Ishirō Honda		
+Q3112809	writer	Q7678126	Takeshi Kimura		
+Q3112809	composer	Q938538	Masaru Sato		
+Q3112809	producer	Q652228	Tomoyuki Tanaka		
+Q3112809	cast	Q1315977	Haruo Nakajima		
+Q3112809	cast	Q977656	Kenji Sahara		
+Q3112809	cast	Q11383707	Makoto Satō		
+Q3112809	cast	Q5350011	Eitarō Ozawa		
+Q3112809	cast	Q6132837	Katsumi Tezuka		
+Q3112809	cast	Q2071797	Yumi Shirakawa		
+Q3112809	cast	Q418046	Akihiko Hirata		
+Q3112809	cast	Q1085473	Yoshio Tsuchiya		
+Q39946	director	Q8006	Akira Kurosawa		
+Q39946	writer	Q8006	Akira Kurosawa		
+Q39946	writer	Q3107382	Shinobu Hashimoto		
+Q39946	writer	Q3135269	Hideo Oguni		
+Q39946	composer	Q938538	Masaru Sato		
+Q39946	producer	Q8006	Akira Kurosawa		
+Q39946	cinematographer	Q107739658	Ichio Yamazaki		
+Q39946	editor	Q8006	Akira Kurosawa		
+Q39946	production_designer	Q1552595	Yoshirō Muraki		
+Q39946	cast	Q422289	Toshiko Higuchi		
+Q39946	cast	Q3198422	Kokuten Kōdō		
+Q39946	cast	Q40070	Takashi Shimura		
+Q39946	cast	Q3180677	Susumu Fujita		
+Q39946	cast	Q37001	Toshirō Mifune		
+Q39946	cast	Q1085473	Yoshio Tsuchiya		
+Q39946	cast	Q1531471	Yū Fujiki		
+Q39946	cast	Q3316207	Misa Uehara		
+Q39946	cast	Q3043193	Kamatari Fujiwara		
+Q39946	cast	Q975630	Minoru Chiaki		
+Q39946	award		Silver Bear for Best Director		
+Q39946	award		FIPRESCI Prize at Berlinale		
+Q11668185	director	Q527646	Shirō Toyoda		
+Q11668185	writer	Q11390575	Toshio Yasumi		
+Q11668185	composer	Q2381947	Ikuma Dan		
+Q11668185	producer	Q11383593	Ichirō Satō		
+Q11668185	editor	Q11473990	Kōichi Iwashita		
+Q11668185	cast	Q1078152	Hisaya Morishige		
+Q11668185	cast	Q4267751	Junzaburō Ban		
+Q11668185	cast	Q1998930	Frankie Sakai		
+Q11668185	followed_by	Q11419070	An Urban Affair		
+Q2665751	director	Q150840	Ishirō Honda		
+Q2665751	writer	Q1074930	Shinichi Sekizawa		
+Q2665751	composer	Q135570	Akira Ifukube		
+Q2665751	producer	Q652228	Tomoyuki Tanaka		
+Q2665751	cast	Q1376231	Myron Healey		
+Q2665751	cast	Q3548276	Kin Sugai		
+Q2665751	cast	Q1085473	Yoshio Tsuchiya		
+Q2665751	cast	Q8056023	Yoshifumi Tajima		
+Q2665751	cast	Q418046	Akihiko Hirata		
+Q2665751	cast	Q1315977	Haruo Nakajima		
+Q519893	director	Q150840	Ishirō Honda		
+Q519893	writer	Q1074930	Shinichi Sekizawa		
+Q519893	composer	Q135570	Akira Ifukube		
+Q519893	producer	Q652228	Tomoyuki Tanaka		
+Q519893	cast	Q3119101	Ryō Ikebe		
+Q519893	cast	Q1085473	Yoshio Tsuchiya		
+Q519893	cast	Q10967045	Minoru Takada		
+Q519893	cast	Q3179269	Takuzō Kumagai		
+Q11565643	director	Q210204	Shūe Matsubayashi		
+Q11565643	composer	Q2381947	Ikuma Dan		
+Q11565643	editor	Q8056295	Yoshitami Kuroiwa		
+Q11565643	cast	Q418778	Akira Kubo		
+Q11565643	cast	Q3119101	Ryō Ikebe		
+Q11565643	cast	Q720223	Andrew Hughes		
+Q11565643	cast	Q3180677	Susumu Fujita		
+Q11565643	cast	Q418046	Akihiko Hirata		
+Q11565643	subject		World War II		
+Q11565643	subject		submarine warfare		
+Q3863048	director	Q3816714	Kōzō Saeki		

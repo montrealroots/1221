@@ -1,0 +1,162 @@
+qid	role	personQid	name	character	ordinal
+Q73539806	director	Q63031397	Amy Koppelman		
+Q73539806	producer	Q445117	Trudie Styler		
+Q73539806	producer	Q1052932	Celine Rattray		
+Q73539806	cast	Q450344	Alysia Reiner		
+Q73539806	cast	Q386249	Michael Gaston		
+Q73539806	cast	Q230641	Jennifer Carpenter		
+Q73539806	cast	Q235333	Britt Robertson		
+Q73539806	cast	Q641352	Josh Hamilton		
+Q73539806	cast	Q5450687	Finn Wittrock		
+Q73539806	cast	Q235020	Amy Irving		
+Q73539806	cast	Q208649	Paul Giamatti		
+Q73539806	cast	Q262772	Eliot Sumner		
+Q73539806	cast	Q189226	Amanda Seyfried		
+Q139071076	director	Q514527	Tom McCarthy		
+Q139071076	writer	Q514527	Tom McCarthy		
+Q139071076	writer	Q13518238	Thomas Bidegain		
+Q139071076	cinematographer	Q1374692	Stuart Dryburgh		
+Q139071076	cast	Q8063863	Zach Woods		
+Q139071076	cast	Q785270	Evan Peters		
+Q139071076	cast	Q276525	Paul Rudd		
+Q139071076	cast	Q7688099	Tatiana Maslany		
+Q139071076	cast	Q208649	Paul Giamatti		
+Q139071076	cast	Q726128	Dylan Baker		
+Q139071076	cast	Q244234	John Turturro		
+Q139071076	cast	Q402764	Jason Clarke		
+Q139071076	cast	Q231203	Amy Ryan		
+Q15270895	director	Q913976	Tony Leondis		
+Q15270895	writer	Q5107425	Chris McKenna		
+Q15270895	writer	Q7818026	Tom Wheeler		
+Q15270895	composer	Q363241	Patrick Doyle		
+Q23794343	director	Q1374828	Roger Kumble		
+Q23794343	writer	Q1374828	Roger Kumble		
+Q23794343	composer	Q496207	Edward Shearmur		
+Q23794343	creator	Q1374828	Roger Kumble		
+Q23794343	executive_producer	Q928022	Neal H. Moritz		
+Q23794343	executive_producer	Q1374828	Roger Kumble		
+Q23794343	executive_producer	Q4878830	Becky Hartman Edwards		
+Q23794343	cast	Q467492	Sophina Brown		
+Q23794343	cast	Q7408695	Samantha Logan		
+Q23794343	cast	Q309900	Peter Gallagher		
+Q23794343	cast	Q451823	Kate Levering		
+Q23794343	cast	Q236269	Nathalie Kelley		
+Q23794343	cast	Q98374614	Taylor Zakhar Perez		
+Q23794343	cast	Q28054098	Duane Henry		
+Q23794343	cast	Q1104885	Coby Bell		
+Q23794343	cast	Q27535222	Taylor John Smith		
+Q23794343	cast	Q180665	Sarah Michelle Gellar	Kathryn Merteuil	
+Q59824535	follows	Q17047801	Señora Acero		
+Q59824535	followed_by	Q986785	La Reina del Sur		
+Q114429919	director	Q15142000	Jonás Cuarón		
+Q114429919	cast	Q44333953	バッド・バニー		
+Q114429919	follows	Q111677117	Madame Web		
+Q114429919	followed_by	Q113371337	Venom: The Last Dance		
+Q140921103	director	Q6451324	Kyle Newacheck		
+Q140921103	writer	Q132952	Adam Sandler		
+Q140921103	writer	Q7803649	Tim Herlihy		
+Q140921103	cast	Q132952	Adam Sandler		
+Q140921103	cast	Q44561	Kevin James		
+Q140921103	cast	Q4109	クリス・ロック		
+Q140921103	cast	Q298658	David Spade		
+Q140921103	cast	Q192217	Rob Schneider		
+Q140921103	cast	Q236527	Maya Rudolph		
+Q140921103	cast	Q229220	Maria Bello		
+Q140921103	cast	Q125106	Salma Hayek		
+Q140921103	cast	Q241749	Bailee Madison		
+Q140921103	cast	Q40248	Julie Bowen		
+Q140921103	cast	Q5259997	Deon Cole		
+Q140921103	follows	Q5611721	Grown Ups 2		
+Q123821164	writer	Q43874	Eddie Murphy		
+Q123821164	producer	Q1239933	Donald Glover		
+Q123821164	cast	Q1239933	Donald Glover		
+Q104904038	director	Q17091099	Jordan Vogt-Roberts		
+Q104904038	producer	Q545394	Avi Arad		
+Q104904038	cast	Q336788	Oscar Isaac		
+Q111631514	director	Q113825474	Vasily Rovenskiy		
+Q113947692	director	Q10327580	Mauro Lima		
+Q113947692	writer	Q10327580	Mauro Lima		
+Q113947692	creator	Q10327580	Mauro Lima		
+Q139694425	director	Q8704	Walt Disney		
+Q120266863	creator	Q4762472	Angela Kang		
+Q120266863	executive_producer	Q481925	Amy Pascal		
+Q56241211	director	Q3106705	Gina Prince-Bythewood		
+Q56241211	writer	Q3106705	Gina Prince-Bythewood		
+Q56241211	composer	Q45852887	Johnnie Spence		
+Q56241211	cinematographer	Q484980	Don Burgess		
+Q56241211	cast	Q266520	Nicholas Hammond		
+Q56241211	cast	Q535967	David White		
+Q56241211	cast	Q261797	Lisa Eilbacher		
+Q56241211	cast	Q959750	Michael Pataki		
+Q2307877	director	Q275402	Sam Raimi		
+Q2307877	director	Q357998	Marc Webb		
+Q2307877	director	Q18519749	Jon Watts		
+Q2307877	producer	Q270533	Laura Ziskin		
+Q2307877	producer	Q481925	Amy Pascal		
+Q2307877	producer	Q515161	Kevin Feige		
+Q2307877	producer	Q536964	Ian Bryce		
+Q2307877	producer	Q545394	Avi Arad		
+Q2307877	producer	Q1027954	Grant Curtis		
+Q2307877	producer	Q7182133	Phil Lord and Christopher Miller		
+Q2307877	producer	Q42898094	Matt Tolmach		
+Q2307877	cast	Q138005	Michael Keaton		
+Q2307877	cast	Q310283	Denis Leary		
+Q2307877	cast	Q2023710	トム・ホランド		
+Q2307877	cast	Q165219	Robert Downey Jr.		
+Q2307877	cast	Q275402	Sam Raimi		
+Q2307877	cast	Q150482	J. K. Simmons		
+Q2307877	cast	Q26213909	Jacob Batalon		
+Q2307877	cast	Q191828	Marisa Tomei		
+Q2307877	cast	Q189489	ゼンデイヤ		
+Q2307877	cast	Q306403	James Franco		
+Q2307877	cast	Q76478	Kirsten Dunst		
+Q2307877	cast	Q234195	Rosemary Harris		
+Q2307877	cast	Q23891	アンドリュー・ガーフィールド		
+Q2307877	cast	Q187033	Sally Field		
+Q2307877	cast	Q357998	Marc Webb		
+Q2307877	cast	Q184572	Martin Sheen		
+Q2307877	cast	Q147077	エマ・ストーン		
+Q2307877	cast	Q188772	Willem Dafoe		
+Q2307877	cast	Q181899	Cliff Robertson		
+Q2307877	cast	Q16237562	Tony Revolori		
+Q2307877	cast	Q215017	Rhys Ifans		
+Q2307877	cast	Q23894602	Laura Harrier		
+Q2307877	cast	Q165524	トビー・マグワイア		
+Q120152545	director	Q6500314	Lauren Montgomery		
+Q120152545	producer	Q481925	Amy Pascal		
+Q120152545	producer	Q7182133	Phil Lord and Christopher Miller		
+Q132732163	director	Q219499	Erle C. Kenton		
+Q132732163	writer	Q1119003	Douglas Z. Doty		
+Q77226045	writer	Q1530813	Glen Mazzara		
+Q77226045	executive_producer	Q39829	Stephen King		
+Q77226045	executive_producer	Q419454	Akiva Goldsman		
+Q77226045	executive_producer	Q1530813	Glen Mazzara		
+Q77226045	cast	Q1378023	Jasper Pääkkönen	Randall Flagg	
+Q77226045	cast	Q16239318	Sam Strike	Roland Deschain	
+Q108236739	director	Q8003454	Willard Mack		
+Q108236739	writer	Q8003454	Willard Mack		
+Q108236739	producer	Q2927152	Bryan Foy		
+Q108236739	cinematographer	Q7373230	Roy Overbaugh		
+Q108236739	editor	Q3528592	Arthur Hilton		
+Q108236739	cast	Q1302593	Richard Carle		
+Q108236739	cast	Q1871332	Lou Tellegen		
+Q108236739	cast	Q8003454	Willard Mack		
+Q108236739	cast	Q2446692	Ben Lyon		
+Q108236739	cast	Q7493014	Sheila Bromley		
+Q108236739	cast	Q104208	Wera Engels		
+Q108236739	cast	Q2977476	Claude Gillingwater		
+Q108236739	cast	Q448594	Esther Ralston		
+Q108236739	cast	Q94134058	Carlyle Moore, Jr.		
+Q108236739	cast	Q600035	William V. Mong		
+Q108236739	cast	Q3568410	William Bakewell		
+Q138387114	director	Q4679837	Adam Stein		
+Q138387114	director	Q8063816	Zach Lipovsky		
+Q7992028	creator	Q598344	マーヴ・グリフィン		
+Q7992028	cast	Q6179433	Jenny Powell		
+Q7992028	cast	Q7703629	Terri Seymour		
+Q7992028	cast	Q5044567	Carol Smillie		
+Q97180814	cast	Q4315752	Boris Nevzorov		
+Q97180814	cast	Q4267991	Marija Aleksandrovna Loegovaja		
+Q97180814	cast	Q4454223	Valentina Telichkina		
+Q97180814	cast	Q2370506	Olga Kabo		
+Q97180814	cast	Q112048	Sergei Puskepalis		

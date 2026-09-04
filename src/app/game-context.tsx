@@ -14,6 +14,7 @@ import {
 } from 'react';
 import type { Simulation, CommandResult } from '@/engine';
 import { refreshMeta } from '@/engine';
+import { loadImdbRatings, loadKnownTitles } from '@/engine/content/filmography';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
 export interface Toast {
@@ -248,6 +249,14 @@ export function GameProvider({
     }, TICK_MS);
     return () => window.clearInterval(handle);
   }, [sim, timeSpeed]);
+
+  // --- The record -----------------------------------------------------------
+  // Every real title, so nothing made here can share a name with one, and the
+  // IMDb ratings the catalogue shows. Neither blocks play if it fails.
+  useEffect(() => {
+    void loadKnownTitles().catch(() => {});
+    void loadImdbRatings().catch(() => {});
+  }, []);
 
   // --- Autosave -----------------------------------------------------------
   useEffect(() => {

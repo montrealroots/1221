@@ -1,0 +1,511 @@
+qid	role	personQid	name	character	ordinal
+Q4996727	director	Q290876	Harold Huth		
+Q4996727	writer	Q1820755	Leslie Arliss		
+Q4996727	producer	Q7964474	Walter C. Mycroft		
+Q4996727	cinematographer	Q1096738	Claude Friese-Greene		
+Q4996727	cast	Q532184	Sebastian Shaw		
+Q4996727	cast	Q5235286	David Hutcheson		
+Q4996727	cast	Q3435320	Greta Gynt		
+Q4996727	cast	Q2476429	Jack Buchanan		
+Q4996727	subject		World War II		
+Q7734629	director	Q957475	Herbert Brenon		
+Q7734629	writer	Q271824	Edgar Wallace		
+Q7734629	producer	Q7964474	Walter C. Mycroft		
+Q7734629	cinematographer	Q1096738	Claude Friese-Greene		
+Q7734629	cinematographer	Q2544657	Walter J. Harvey		
+Q7734629	editor	Q26998237	Monica Kimick		
+Q7734629	cast	Q530875	Basil Radford		
+Q7734629	cast	Q26118	Jack Hawkins		
+Q7734629	cast	Q3381852	Phyllis Brooks		
+Q7734629	cast	Q532184	Sebastian Shaw		
+Q7751286	director	Q7787584	Thomas Bentley		
+Q7751286	writer	Q338543	John Hay Beith		
+Q7751286	producer	Q7964474	Walter C. Mycroft		
+Q7751286	cinematographer	Q1096738	Claude Friese-Greene		
+Q7751286	editor	Q26998237	Monica Kimick		
+Q7751286	cast	Q3435320	Greta Gynt		
+Q7751286	cast	Q5495072	Fred Emney		
+Q7751286	cast	Q2476429	Jack Buchanan		
+Q7751286	cast	Q443284	Kay Walsh		
+Q7751286	subject		World War II		
+Q7751286	subject		seamanship		
+Q6946625	director	Q7964474	Walter C. Mycroft		
+Q6946625	composer	Q1066458	Charles Williams		
+Q6946625	cinematographer	Q2544657	Walter J. Harvey		
+Q7580628	director	Q7964474	Walter C. Mycroft		
+Q3220634	director	Q2419599	Jacques Daniel-Norman		
+Q3220634	writer	Q2365412	Jean Sarment		
+Q3220634	cast	Q3425870	René Blancard		
+Q3220634	cast	Q2982522	Colette Régis		
+Q3220634	cast	Q2834938	Alfred Adam		
+Q3220634	cast	Q3426516	René Lefèvre-Bel		
+Q3220634	cast	Q1448424	Marcel Pérès		
+Q3220634	cast	Q2847395	André Brunot		
+Q3220634	cast	Q3295203	Marthe Mellot		
+Q3220634	cast	Q3289551	Marcelle Géniat		
+Q3220634	cast	Q3103428	Georges Rollin		
+Q3220634	cast	Q3105918	Gilberte Géniat		
+Q3220634	cast	Q3189584	Julien Maffre		
+Q3220634	cast	Q455943	Charles Dullin		
+Q3220634	cast	Q524300	Ginette Leclerc		
+Q3220634	cast	Q3371031	Paul Demange		
+Q3220634	cast	Q430212	Louis Seigner		
+Q3220634	cast	Q3301369	Maurice Salabert		
+Q3220634	cast	Q2830987	Albert Broquin		
+Q3220634	cast	Q3106718	Ginette Baudin		
+Q3220634	cast	Q3166103	Jean-Henri Chambois		
+Q3220634	cast	Q3166157	Jean-Jacques		
+Q3220634	cast	Q2906056	Blanchette Brunoy		
+Q3220634	cast	Q3176179	Jeanne Véniat		
+Q3220634	cast	Q3265477	Lucien Dorval		
+Q3220634	cast	Q201483	Pierre Fresnay		
+Q3220634	cast	Q3419227	Raoul Marco		
+Q3220634	cast	Q1549201	Raymond Bussières		
+Q3220634	cast	Q3370563	Paul Barge		
+Q19898057	director	Q3219902	Lawrence Huntington		
+Q19898057	writer	Q1701554	John Reinhardt		
+Q19898057	composer	Q1066458	Charles Williams		
+Q19898057	producer	Q6219354	John Argyle		
+Q19898057	cinematographer	Q19843131	Ronald Anscombe		
+Q19898057	editor	Q19843132	Flora Newton		
+Q19898057	cast	Q1343896	Wilfrid Lawson		
+Q47495186	director	Q3141528	Howard Bretherton		
+Q47495186	cast	Q602329	Emmett Kelly		
+Q17426202	director	Q3219902	Lawrence Huntington		
+Q17426202	writer	Q3219902	Lawrence Huntington		
+Q17426202	producer	Q1585811	Warwick Ward		
+Q17426202	editor	Q19843132	Flora Newton		
+Q17426202	cast	Q5132938	Clifford Evans		
+Q7754078	director	Q1820755	Leslie Arliss		
+Q7754078	composer	Q1066458	Charles Williams		
+Q7754078	producer	Q6219354	John Argyle		
+Q7754078	cinematographer	Q89241	Günther Krampf		
+Q3023862	director	Q55381	Jacques Becker		
+Q3023862	cinematographer	Q1627381	Nicolas Hayer		
+Q3023862	editor	Q3290731	Marguerite Renoir		
+Q3023862	cast	Q282588	Raymond Rouleau		
+Q3023862	cast	Q3158588	Jacques Courtin		
+Q3023862	cast	Q3336531	Nathalie Alexeief-Darsène		
+Q3023862	cast	Q8327598	Jacques Meyran		
+Q3023862	cast	Q323377	Gaston Modot		
+Q3023862	cast	Q3085009	François Joux		
+Q3023862	cast	Q3103428	Georges Rollin		
+Q3023862	cast	Q3301369	Maurice Salabert		
+Q3023862	cast	Q3171608	Jean Debucourt		
+Q3023862	cast	Q3082209	Franck Maurice		
+Q3023862	cast	Q3158224	Jacques Beauvais		
+Q3023862	cast	Q2980609	Clément Duhour		
+Q3023862	cast	Q3121708	Guy Decomble		
+Q3023862	cast	Q2965007	Christian Argentin		
+Q3023862	cast	Q323175	Maurice Baquet		
+Q3023862	cast	Q3048831	Edy Debray		
+Q3023862	cast	Q518966	Pierre Renoir		
+Q3023862	cast	Q386427	Roger Blin		
+Q3023862	cast	Q301484	Mireille Balin		
+Q3023862	cast	Q533912	Noël Roquevert		
+Q3023862	cast	Q3426907	René Stern		
+Q3023862	cast	Q3302554	Maxime Fabert		
+Q3023862	cast	Q3301108	Maurice Marceau		
+Q2824413	director	Q2693317	Pierre Prévert		
+Q2824413	writer	Q165274	Jacques Prévert		
+Q2824413	composer	Q213661	Joseph Kosma		
+Q2824413	cast	Q3173503	Jean Meyer		
+Q2824413	cast	Q3436265	Robert Scipion		
+Q2824413	cast	Q1712227	Julien Carette		
+Q2824413	cast	Q2959586	Charles Lavialle		
+Q2824413	cast	Q2213031	Fabien Loris		
+Q2824413	cast	Q3426907	René Stern		
+Q2824413	cast	Q3439555	Roger Vincent		
+Q2824413	cast	Q3573608	Yves Deniaud		
+Q2824413	cast	Q1448424	Marcel Pérès		
+Q2824413	cast	Q993521	Marcel Mouloudji		
+Q2824413	cast	Q3104223	Germaine Stainval		
+Q2824413	cast	Q3009837	Cécyl Marcyl		
+Q2824413	cast	Q106126	Simone Signoret		
+Q2824413	cast	Q615795	Jacques Dufilho		
+Q2824413	cast	Q3094192	Gaby Wagner		
+Q2824413	cast	Q355982	Jean Dasté		
+Q2824413	cast	Q3157777	Jacqueline Pagnol		
+Q2824413	cast	Q3189722	Julienne Paroli		
+Q2824413	cast	Q730564	Pierre Collet		
+Q2824413	cast	Q3172331	Jean Gold		
+Q2824413	cast	Q451817	Denise Grey		
+Q2824413	cast	Q4025398	Émile Vardannes		
+Q2824413	cast	Q277980	Paul Frankeur		
+Q2824413	cast	Q386427	Roger Blin		
+Q2824413	cast	Q200525	Louis Daquin		
+Q2824413	cast	Q945890	Pierre Brasseur		
+Q2824413	cast	Q2831527	Albert Rémy		
+Q2824413	cast	Q289588	Étienne Decroux		
+Q2824413	cast	Q3218782	Laure Paillette		
+Q2824413	cast	Q3060221	Eugène Yvernes		
+Q2824413	cast	Q3100677	Geneviève Morel		
+Q2824413	cast	Q3161880	Jane Morlet		
+Q2824413	cast	Q2848115	André Le Gall		
+Q2824413	cast	Q3572232	Yette Lucas		
+Q2824413	cast	Q3265684	Lucien Raimbourg		
+Q2824413	cast	Q323175	Maurice Baquet		
+Q2824413	cast	Q3275739	Madeleine Suffel		
+Q2824413	cast	Q3177135	Jenny Burnay		
+Q2824413	cast	Q1549201	Raymond Bussières		
+Q2824413	cast	Q3172264	Jean Gehret		
+Q3477258	director	Q958955	Pierre Blanchar		
+Q3477258	writer	Q42831	Ivan Turgenev		
+Q3477258	writer	Q2044867	Bernard Zimmer		
+Q3477258	composer	Q123164	Arthur Honegger		
+Q3477258	cinematographer	Q325970	Christian Matras		
+Q3477258	cast	Q3506155	Suzy Carrier		
+Q3477258	cast	Q3275651	Madeleine Geoffroy		
+Q3477258	cast	Q3100677	Geneviève Morel		
+Q3477258	cast	Q3105728	Gilbert Gil		
+Q3477258	cast	Q958955	Pierre Blanchar		
+Q3477258	cast	Q3158807	Jacques Dumesnil		
+Q3477258	cast	Q2871329	Auguste Mourriès		
+Q3477258	cast	Q2367314	Max Dalban		
+Q3477258	cast	Q3290728	Marguerite Moreno		
+Q3477258	cast	Q3292505	Marie Déa		
+Q8031308	director	Q3219902	Lawrence Huntington		
+Q8031308	composer	Q1066458	Charles Williams		
+Q8031308	producer	Q1585811	Warwick Ward		
+Q8031308	cinematographer	Q89241	Günther Krampf		
+Q8031308	cast	Q7352106	Robertson Hare		
+Q12125166	director	Q215137	Karel Lamač		
+Q12125166	composer	Q124735	Charles Williams		
+Q12125166	producer	Q3973164	Stephen Black		
+Q12125166	cinematographer	Q810018	Basil Emmott		
+Q12125166	cast	Q6766329	Marjorie Rhodes		
+Q12125166	cast	Q6908186	Moore Marriott		
+Q12125166	cast	Q4859117	Barbara M. White		
+Q12125166	cast	Q634574	Robert Beatty		
+Q12125166	cast	Q3194071	Kathleen Harrison		
+Q12125166	cast	Q5498555	Frederick Piper		
+Q12125166	cast	Q3847861	Marie Ault		
+Q865580	director	Q52409	Marcel Carné		
+Q865580	writer	Q165274	Jacques Prévert		
+Q865580	composer	Q963302	Maurice Thiriet		
+Q865580	producer	Q3420691	Raymond Borderie		
+Q865580	cinematographer	Q1607471	Roger Hubert		
+Q865580	cinematographer	Q1892611	Marc Fossard		
+Q865580	editor	Q2913463	Henri Rust		
+Q865580	cast	Q945890	Pierre Brasseur	Frédérick Lemaître	
+Q865580	cast	Q309898	Jean-Louis Barrault	Jean-Gaspard Deburau	
+Q865580	cast	Q320471	Marcel Herrand	Pierre François Lacenaire	
+Q865580	cast	Q3263089	Louis Salou	Comte Édouard de Montray	
+Q865580	cast	Q3130946	Henri Delivry		
+Q865580	cast	Q3261897	Louis Florencie	un agent de police	
+Q865580	cast	Q3419502	Raphaël Patorni		
+Q865580	cast	Q3186096	Josselin		
+Q865580	cast	Q3171741	Jean Diener		
+Q865580	cast	Q3438992	Roger Gaillard		
+Q865580	cast	Q26854	Jane Marken	Madame Hermine	
+Q865580	cast	Q710654	Gérard Blain		
+Q865580	cast	Q3439555	Roger Vincent		
+Q865580	cast	Q3386500	Pierre Palau	régisseur des Funambules	
+Q865580	cast	Q2831527	Albert Rémy	Scarpia Barrigni	
+Q865580	cast	Q3421125	Raymond Rognoni	directeur du Grand Théâtre	
+Q865580	cast	Q3121208	Gustave Hamilton		
+Q865580	cast	Q507482	Jacques Castelot	Georges	
+Q865580	cast	Q3289222	Marcel Melrac		
+Q865580	cast	Q639888	Jean Carmet		
+Q865580	cast	Q289588	Étienne Decroux	Anselme Deburau	
+Q865580	cast	Q3172331	Jean Gold		
+Q865580	cast	Q2848366	André Numès Fils		
+Q865580	cast	Q2213031	Fabien Loris	Avril	
+Q865580	cast	Q2871087	Auguste Boverio	le premier auteur	
+Q865580	cast	Q3371031	Paul Demange	le second auteur	
+Q865580	cast	Q1448424	Marcel Pérès	directeur des Funambules	
+Q865580	cast	Q3172982	Jean Lanier		
+Q865580	cast	Q3433516	Rivers Cadet		
+Q865580	cast	Q3179961	Joe Alex		
+Q865580	cast	Q3372260	Paul Temps		
+Q865580	cast	Q3311019	Michel Vadet		
+Q865580	cast	Q2903090	Bill-Bocketts		
+Q865580	cast	Q2830987	Albert Broquin		
+Q865580	cast	Q235617	Arletty	Garance	
+Q865580	cast	Q3271129	Léon Larive		
+Q865580	cast	Q3301396	Maurice Schutz		
+Q865580	cast	Q106126	Simone Signoret		
+Q865580	cast	Q3302069	Max Dejean		
+Q865580	cast	Q777893	Marcelle Monthil	Marie	
+Q12124965	director	Q167521	Herbert Wilcox		
+Q12124965	composer	Q573038	Anthony Collins		
+Q12124965	producer	Q167521	Herbert Wilcox		
+Q12124965	cinematographer	Q89584	Mutz Greenbaum		
+Q12124965	cinematographer	Q942647	Otto Heller		
+Q12124965	cast	Q181887	Rex Harrison		
+Q12124965	cast	Q965379	Robert Morley		
+Q12124965	cast	Q433044	Anna Neagle		
+Q12124965	cast	Q471309	Dean Jagger		
+Q12124965	subject		World War II		
+Q3480723	director	Q2965647	Christian Stengel		
+Q3480723	composer	Q2603157	Francis Lopez		
+Q3480723	producer	Q3420691	Raymond Borderie		
+Q3480723	cinematographer	Q325970	Christian Matras		
+Q3480723	cast	Q3084291	Jean Wall		
+Q3480723	cast	Q599249	Bernard Blier		
+Q3480723	cast	Q3336642	Nathalie Nattier		
+Q3480723	cast	Q3271575	Léonce Corne		
+Q3480723	cast	Q1678088	Jacques Pills		
+Q3480723	cast	Q3349176	Odette Barencey		
+Q3480723	cast	Q3265100	Luce Fabiole		
+Q3480723	cast	Q3288609	Marcel André		
+Q3480723	cast	Q3263089	Louis Salou		
+Q3480723	cast	Q2851509	Annette Poivre		
+Q3480723	cast	Q547182	Jacques Morel		
+Q3480723	cast	Q3171592	Jean Davy		
+Q3480723	cast	Q3159138	Jacques Hélian		
+Q3480723	cast	Q3306423	Mercédès Brare		
+Q3480723	cast	Q3588714	Émile Riandreys		
+Q3480723	cast	Q2848801	André Wasley		
+Q3480723	cast	Q3023003	Denise Benoit		
+Q3480723	cast	Q981564	Jacques Dynam		
+Q3480723	cast	Q1933823	Sophie Desmarets		
+Q3480723	cast	Q3106718	Ginette Baudin		
+Q3480723	cast	Q3435697	Robert Le Fort		
+Q2397960	director	Q468027	Jacqueline Audry		
+Q2397960	writer	Q52249	Colette Audry		
+Q2397960	composer	Q426235	Pierre Sancan		
+Q2397960	cast	Q3171574	Jean Daurand		
+Q2397960	cast	Q3174753	Jean Témerson		
+Q2397960	cast	Q15918454	Liane Daydé		
+Q2397960	cast	Q3242557	Lisette Jambel		
+Q2397960	cast	Q3345941	Noëlle Norman		
+Q2397960	cast	Q3371185	Paul Faivre		
+Q2397960	cast	Q566803	Michel Auclair		
+Q2397960	cast	Q1108200	Colette Darfeuil		
+Q2397960	cast	Q3275729	Madeleine Rousset		
+Q2397960	cast	Q3424931	Renaud Mary		
+Q2397960	cast	Q2847141	André Alerme		
+Q2397960	cast	Q3572489	Yolande Laffon		
+Q2397960	cast	Q3386065	Pierre Magnier		
+Q2397960	cast	Q3385701	Pierre Labry		
+Q2397960	cast	Q3291303	Marianne Hardy		
+Q2397960	cast	Q3290728	Marguerite Moreno		
+Q19877319	director	Q2705246	Jacques de Baroncelli		
+Q19877319	writer	Q176962	Jacques Companéez		
+Q19877319	writer	Q561294	Alex Joffé		
+Q19877319	writer	Q3287700	Marc-Gilbert Sauvajon		
+Q19877319	writer	Q3384197	Pierre Brive		
+Q19877319	writer	Q3489149	Solange Térac		
+Q19877319	composer	Q1972763	Wal-Berg		
+Q19877319	cinematographer	Q325970	Christian Matras		
+Q19877319	cast	Q3171608	Jean Debucourt		
+Q19877319	cast	Q3372260	Paul Temps		
+Q19877319	cast	Q46479	Zarah Leander		
+Q19877319	cast	Q449091	Edwige Feuillère		
+Q19877319	cast	Q3290696	Marguerite Deval		
+Q19877319	cast	Q3385656	Pierre Juvenet		
+Q19877319	cast	Q2982525	Colette Ripert		
+Q19877319	cast	Q529588	Margo Lion		
+Q19877319	cast	Q3103025	Georges Lannes		
+Q19877319	cast	Q1404336	Luigi Almirante		
+Q19877319	cast	Q2964999	Christian Alers		
+Q19877319	cast	Q3069312	Fernand Rauzena		
+Q19877319	cast	Q3104193	Germaine Kerjean		
+Q19877319	cast	Q3301190	Maurice Nasil		
+Q19877319	cast	Q3340022	Nicolas Amato		
+Q19877319	cast	Q3157688	Jacqueline Cartier		
+Q19877319	cast	Q3104204	Germaine Michel		
+Q19877319	cast	Q3290694	Marguerite Ducouret		
+Q19877319	cast	Q1677902	Jacques Berthier		
+Q3234838	director	Q52409	Marcel Carné		
+Q3234838	writer	Q165274	Jacques Prévert		
+Q3234838	composer	Q213661	Joseph Kosma		
+Q3234838	producer	Q2093665	Pierre Laurent		
+Q3234838	cinematographer	Q126367	Philippe Agostini		
+Q3234838	editor	Q3172010	Jean Feyte		
+Q3234838	executive_producer	Q3420691	Raymond Borderie		
+Q3234838	production_designer	Q599840	Alexandre Trauner		
+Q3234838	cast	Q3474061	Saturnin Fabre		
+Q3234838	cast	Q279382	Dany Robin		
+Q3234838	cast	Q3425870	René Blancard		
+Q3234838	cast	Q945890	Pierre Brasseur		
+Q3234838	cast	Q561124	Jacques Perrin		
+Q3234838	cast	Q26854	Jane Marken		
+Q3234838	cast	Q952945	Jean Vilar		
+Q3234838	cast	Q1712227	Julien Carette		
+Q3234838	cast	Q292227	Brigitte Auber		
+Q3234838	cast	Q3588532	Émile Genevois		
+Q3234838	cast	Q2636468	Sylvia Bataille		
+Q3234838	cast	Q3276269	Mady Berry		
+Q3234838	cast	Q2982504	Colette Mareuil		
+Q3234838	cast	Q2213031	Fabien Loris		
+Q3234838	cast	Q461111	Serge Reggiani		
+Q3234838	cast	Q1549201	Raymond Bussières		
+Q3234838	cast	Q3094129	Gabrielle Fontan		
+Q3234838	cast	Q3336642	Nathalie Nattier		
+Q3234838	cast	Q106057	Yves Montand		
+Q2553634	director	Q449087	Jean Delannoy		
+Q2553634	writer	Q47484	André Gide		
+Q2553634	writer	Q449087	Jean Delannoy		
+Q2553634	writer	Q978299	Jean Aurenche		
+Q2553634	writer	Q3384095	Pierre Bost		
+Q2553634	composer	Q251818	Georges Auric		
+Q2553634	cast	Q3442687	Rosine Luguet		
+Q2553634	cast	Q3159426	Jacques Louvigny		
+Q2553634	cast	Q3104204	Germaine Michel		
+Q2553634	cast	Q3241478	Line Noro		
+Q2553634	cast	Q667488	Jean Desailly		
+Q2553634	cast	Q958955	Pierre Blanchar		
+Q2553634	cast	Q3320040	Mona Dol		
+Q2553634	cast	Q234897	Michèle Morgan		
+Q2553634	cast	Q15845467	Hélène Dassonville		
+Q2553634	cast	Q2848934	Andrée Clément		
+Q2553634	cast	Q3073945	Florence Brière		
+Q7190559	director	Q167521	Herbert Wilcox		
+Q7190559	writer	Q7026056	Nicholas Phipps		
+Q7190559	composer	Q573038	Anthony Collins		
+Q7190559	producer	Q167521	Herbert Wilcox		
+Q7190559	cinematographer	Q89584	Mutz Greenbaum		
+Q7190559	editor	Q19843132	Flora Newton		
+Q7190559	cast	Q134333	Roger Moore		
+Q7190559	cast	Q508226	Coral Browne		
+Q7190559	cast	Q1385992	Michael Wilding		
+Q7190559	cast	Q577687	Reginald Owen		
+Q7190559	cast	Q14165764	Maire O'Neill		
+Q7190559	cast	Q433044	Anna Neagle		
+Q7190559	cast	Q3048659	Edward Rigby		
+Q7190559	cast	Q278644	A. E. Matthews		
+Q7190559	cast	Q3173808	Leslie Dwyer		
+Q7190559	cast	Q1527999	Michael Medwin		
+Q7190559	cast	Q2924401	Brenda Bruce		
+Q7271912	director	Q356998	Harold French		
+Q7271912	composer	Q1066458	Charles Williams		
+Q7271912	producer	Q1585811	Warwick Ward		
+Q7271912	cinematographer	Q1351182	Eric Cross		
+Q7271912	editor	Q19843132	Flora Newton		
+Q7271912	cast	Q5261952	Derek Farr		
+Q3415951	director	Q3158633	Jacques Daroy		
+Q3415951	composer	Q1061769	Raymond Gallois-Montbrun		
+Q3415951	cast	Q2833998	Alexandre Rignault		
+Q3415951	cast	Q536594	Lise Delamare		
+Q3415951	cast	Q3175235	Jean d'Yd		
+Q3415951	cast	Q3288866	Marcel Delaître		
+Q3415951	cast	Q3241507	Linette Lemercier		
+Q3415951	cast	Q3425870	René Blancard		
+Q3415951	cast	Q3133123	Henry Valbel		
+Q3415951	cast	Q2906056	Blanchette Brunoy		
+Q3415951	cast	Q1122249	Julien Bertheau		
+Q3458489	director	Q2965647	Christian Stengel		
+Q3458489	writer	Q3426180	René Fauchois		
+Q3458489	cast	Q1668864	Jean-Pierre Mocky		
+Q3458489	cast	Q3313825	Mila Parély		
+Q3458489	cast	Q3439555	Roger Vincent		
+Q3458489	cast	Q3092525	Félix Marten		
+Q3458489	cast	Q3435693	Robert Le Béal		
+Q3458489	cast	Q3175235	Jean d'Yd		
+Q3458489	cast	Q3014311	Daniel Lecourtois		
+Q3458489	cast	Q2830987	Albert Broquin		
+Q3458489	cast	Q2851649	Annie Ducaux		
+Q3458489	cast	Q16222629	André Varennes		
+Q3458489	cast	Q472701	Pierre Richard-Willm		
+Q3458489	cast	Q553331	Jules Berry		
+Q3458489	cast	Q3121708	Guy Decomble		
+Q3458489	cast	Q3100677	Geneviève Morel		
+Q3458489	cast	Q430212	Louis Seigner		
+Q5310154	director	Q4723534	Alfred Travers		
+Q5310154	composer	Q3129963	Stanley Black		
+Q5310154	producer	Q28474534	Louis H. Jackson		
+Q5310154	cinematographer	Q16853354	James Wilson		
+Q5310154	editor	Q26998237	Monica Kimick		
+Q5310154	cast	Q7188549	Phyllis Dixey		
+Q5310154	cast	Q7364869	Ronald Frankau		
+Q5310154	cast	Q165357	Herbert Lom		
+Q5310154	cast	Q7701884	Terence De Marney		
+Q3220340	director	Q2642058	Alexander Esway		
+Q3220340	writer	Q356537	Joseph Kessel		
+Q3220340	cast	Q2965045	Christian Bertola		
+Q3220340	cast	Q3161991	Janine Crispin		
+Q3220340	cast	Q3084291	Jean Wall		
+Q3220340	cast	Q121328	Pierre-Louis		
+Q3220340	cast	Q3426517	René Lefèvre		
+Q3220340	cast	Q3181785	John Howard		
+Q3220340	cast	Q3340859	Nicolas Vogel		
+Q3220340	cast	Q351276	Henri Nassiet		
+Q3220340	cast	Q1549201	Raymond Bussières		
+Q3220340	cast	Q2959861	Charles Moulin		
+Q3220340	cast	Q3014443	Daniel Mendaille		
+Q3220340	cast	Q958955	Pierre Blanchar		
+Q3220340	cast	Q2848115	André Le Gall		
+Q3220340	cast	Q993521	Marcel Mouloudji		
+Q3220340	cast	Q3264716	Luc Andrieux		
+Q6929751	director	Q671455	Montgomery Tully		
+Q6929751	writer	Q671455	Montgomery Tully		
+Q6929751	composer	Q3129963	Stanley Black		
+Q6929751	producer	Q28474534	Louis H. Jackson		
+Q6929751	cinematographer	Q16853354	James Wilson		
+Q6929751	cast	Q7174341	Peter Graves		
+Q7993640	director	Q360844	Anthony Asquith		
+Q7993640	writer	Q544627	Terence Rattigan		
+Q7993640	composer	Q1991393	Nicholas Brodzsky		
+Q7993640	producer	Q487554	Anatole de Grunwald		
+Q7993640	cinematographer	Q436584	Jack Hildyard		
+Q7993640	cast	Q2924401	Brenda Bruce		
+Q7993640	cast	Q440360	Miles Malleson		
+Q7993640	cast	Q230143	Margaret Rutherford		
+Q7993640	cast	Q4941186	Bonar Colleano		
+Q7993640	cast	Q2165643	Ronald Howard		
+Q7993640	cast	Q6297498	Joyce Grenfell		
+Q5176943	director	Q94586	Paul L. Stein		
+Q5176943	writer	Q3157340	Jack Whittingham		
+Q5176943	writer	Q5622480	Guy Morgan		
+Q5176943	composer	Q214202	Hans May		
+Q5176943	producer	Q28474534	Louis H. Jackson		
+Q5176943	cinematographer	Q6909445	Moray Grant		
+Q5176943	cast	Q634574	Robert Beatty		
+Q5176943	cast	Q1922184	Mervyn Johns		
+Q5176943	cast	Q6776197	Martin Miller		
+Q5176943	cast	Q7175594	Peter Madden		
+Q5176943	cast	Q459954	Nova Pilbeam		
+Q5176943	cast	Q214245	Karel Štěpánek		
+Q5176943	cast	Q7364630	Ronald Adam		
+Q5176943	cast	Q1281472	Margaretta Scott		
+Q5176943	subject		mad scientist		
+Q7738484	director	Q212466	Roy Boulting		
+Q7738484	composer	Q6264857	John Wooldridge		
+Q7738484	cinematographer	Q182148	Gilbert Taylor		
+Q7738484	editor	Q7324148	Richard Best		
+Q7738484	cast	Q51506	Richard Attenborough		
+Q2873175	director	Q449087	Jean Delannoy		
+Q2873175	writer	Q540206	Henri Jeanson		
+Q2873175	composer	Q251818	Georges Auric		
+Q2873175	cast	Q3484536	Simone Barillier		
+Q2873175	cast	Q3162020	Janine Viénot		
+Q2873175	cast	Q3018823	René Simon		
+Q2873175	cast	Q3270686	Léon Arvel		
+Q2873175	cast	Q16266895	Moune de Rivel		
+Q2873175	cast	Q3265477	Lucien Dorval		
+Q2873175	cast	Q636950	Jean Chevrier		
+Q2873175	cast	Q3435978	Robert Murzeau		
+Q2873175	cast	Q2982507	Colette Mars		
+Q2873175	cast	Q3159426	Jacques Louvigny		
+Q2873175	cast	Q3385088	Pierre Fromont		
+Q2873175	cast	Q516829	Jeannette Batti		
+Q2873175	cast	Q375290	Robert Hossein		
+Q2873175	cast	Q234897	Michèle Morgan		
+Q2873175	cast	Q3014208	Daniel Ivernel		
+Q2873175	cast	Q3023081	Denise Prêcheur		
+Q2873175	cast	Q3290434	Marfa Dhervilly		
+Q2873175	cast	Q3178815	Jim Gérald		
+Q2873175	cast	Q3104204	Germaine Michel		
+Q2873175	cast	Q168359	Jean Marais		
+Q2873175	cast	Q3572232	Yette Lucas		
+Q2873175	cast	Q3170476	Jean Ayme		
+Q2873175	cast	Q2087651	Philippe Lemaire		
+Q2873175	cast	Q2831141	Albert Duvaleix		
+Q7884160	director	Q3556003	Vernon Sewell		
+Q7884160	writer	Q1344250	Peter Cheyney		
+Q7884160	composer	Q214202	Hans May		
+Q7884160	producer	Q28474534	Louis H. Jackson		
+Q7884160	cinematographer	Q5393660	Ernest Palmer		
+Q7884160	cast	Q1929042	Michael Rennie		
+Q7759019	director	Q2429028	Thorold Dickinson		
+Q7759019	writer	Q4979116	Rodney Ackland		
+Q7759019	composer	Q251818	Georges Auric		
+Q7759019	producer	Q487554	Anatole de Grunwald		
+Q7759019	cinematographer	Q942647	Otto Heller		
+Q7759019	costume_designer	Q2161581	Oliver Messel		
+Q7759019	cast	Q79005	Anton Walbrook		
+Q7759019	cast	Q508329	Yvonne Mitchell		
+Q7759019	cast	Q236718	Edith Evans		
+Q7759019	subject		gambling		

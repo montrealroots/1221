@@ -1,0 +1,284 @@
+qid	role	personQid	name	character	ordinal
+Q4353738	director	Q1203444	Yasuzō Masumura		
+Q4353738	producer	Q6782400	Masaichi Nagata		
+Q4353738	cast	Q40070	Takashi Shimura		
+Q4353738	cast	Q2068913	Eiji Funakoshi		
+Q4353738	cast	Q134456	Yukio Mishima		
+Q4353738	cast	Q1042106	Ayako Wakao		
+Q3222808	director	Q55397	Kon Ichikawa		
+Q3222808	writer	Q55397	Kon Ichikawa		
+Q3222808	writer	Q841464	Toyoko Yamasaki		
+Q3222808	writer	Q11417961	Natto Wada		
+Q3222808	cast	Q180602	Machiko Kyō		
+Q3222808	cast	Q453584	Isuzu Yamada		
+Q3222808	cast	Q1042106	Ayako Wakao		
+Q3222808	cast	Q3514639	Tamao Nakamura		
+Q3794027	director	Q55397	Kon Ichikawa		
+Q3794027	composer	Q424173	Yasushi Akutagawa		
+Q3794027	producer	Q5769989	Hiroaki Fujii		
+Q3794027	producer	Q6782400	Masaichi Nagata		
+Q3794027	cinematographer	Q2025121	Kazuo Miyagawa		
+Q3794027	cast	Q3098335	Keiko Kishi		
+Q3794027	cast	Q263104	Kinuyo Tanaka		
+Q3794027	cast	Q11478025	Hiroshi Kawaguchi		
+Q3794027	cast	Q3811234	Jun Hamamura		
+Q3794027	cast	Q1325171	Jūzō Itami		
+Q3794027	cast	Q2590475	Masayuki Mori		
+Q3794027	cast	Q2025956	Kyōko Kishida		
+Q6269810	director	Q55397	Kon Ichikawa		
+Q6269810	director	Q1203444	Yasuzō Masumura		
+Q6269810	director	Q3131001	Kōzaburō Yoshimura		
+Q6269810	producer	Q6782400	Masaichi Nagata		
+Q6269810	cast	Q3095179	Nakamura Ganjirō II		
+Q6269810	cast	Q143083	Sachiko Hidari		
+Q6269810	cast	Q1042106	Ayako Wakao		
+Q6269810	cast	Q180602	Machiko Kyō		
+Q6269810	cast	Q1994683	Fujiko Yamamoto		
+Q6269810	cast	Q2068913	Eiji Funakoshi		
+Q6269810	cast	Q11478025	Hiroshi Kawaguchi		
+Q7430222	director	Q171601	Daisuke Itō		
+Q7430222	composer	Q3147667	Ichirō Saitō		
+Q7430222	cinematographer	Q2025121	Kazuo Miyagawa		
+Q7430222	cast	Q719225	Ichikawa Raizō VIII		
+Q7430222	cast	Q2456624	Keiko Awaji		
+Q7430222	cast	Q3514639	Tamao Nakamura		
+Q7430222	cast	Q5680642	Ryōsuke Kagawa		
+Q7430222	cast	Q5350011	Eitarō Ozawa		
+Q11147976	director	Q263104	Kinuyo Tanaka		
+Q11147976	writer	Q11417961	Natto Wada		
+Q11147976	composer	Q11518036	Chūji Kinoshita		
+Q11147976	producer	Q6782400	Masaichi Nagata		
+Q11147976	producer	Q17211179	Hiroaki Fujii		
+Q11147976	cinematographer	Q103861851	Kimio Watanabe		
+Q11147976	cast	Q4383856	Mitsuko Mito		
+Q11147976	cast	Q180602	Machiko Kyō		
+Q11147976	cast	Q6388173	Ken Mitsuda		
+Q11147976	cast	Q3667789	Chieko Higashiyama		
+Q11147976	cast	Q2068913	Eiji Funakoshi		
+Q11147976	cast	Q958714	Chishū Ryū		
+Q11147976	cast	Q7397524	Sadako Sawamura		
+Q3032566	director	Q55397	Kon Ichikawa		
+Q3032566	writer	Q11417961	Natto Wada		
+Q3032566	composer	Q424173	Yasushi Akutagawa		
+Q3032566	cast	Q1994683	Fujiko Yamamoto		
+Q3032566	cast	Q1325171	Jūzō Itami		
+Q3032566	cast	Q3514639	Tamao Nakamura		
+Q3032566	cast	Q3543490	Hajime Hana		
+Q3032566	cast	Q2068913	Eiji Funakoshi		
+Q3032566	cast	Q3098335	Keiko Kishi		
+Q3032566	cast	Q2025956	Kyōko Kishida		
+Q3156571	director	Q55397	Kon Ichikawa		
+Q3156571	writer	Q11417961	Natto Wada		
+Q3156571	composer	Q424173	Yasushi Akutagawa		
+Q3156571	cast	Q2068913	Eiji Funakoshi		
+Q3156571	cast	Q1994683	Fujiko Yamamoto		
+Q3156571	cast	Q6875103	Misako Watanabe		
+Q3156571	cast	Q3811234	Jun Hamamura		
+Q3156571	cast	Q2025956	Kyōko Kishida		
+Q98058186	director	Q1111161	Umetsugu Inoue		
+Q98058186	cast	Q180602	Machiko Kyō		
+Q98058186	cast	Q11435881	Minoru Ōki		
+Q98058186	cast	Q11412224	Junko Kanō		
+Q28669168	director	Q1203444	Yasuzō Masumura		
+Q28669168	composer	Q3477774	Sei Ikeno		
+Q5265230	director	Q3028216	Kenji Misumi		
+Q5265230	writer	Q380846	Kaneto Shindō		
+Q5265230	cast	Q3543910	Shiho Fujimura		
+Q5265230	cast	Q11561839	Mayumi Nagisa		
+Q5265230	cast	Q11534357	Eijirō Yanagi		
+Q5265230	cast	Q719225	Ichikawa Raizō VIII		
+Q1092576	director	Q3028216	Kenji Misumi		
+Q1092576	writer	Q11447916	Kan Shimozawa		
+Q1092576	composer	Q135570	Akira Ifukube		
+Q1092576	cast	Q11534357	Eijirō Yanagi		
+Q1092576	cast	Q128154	Shigeru Amachi		
+Q1092576	cast	Q5102284	Chitose Maki		
+Q1092576	cast	Q719551	Shintarō Katsu		
+Q1092576	followed_by	Q1092804	The Tale of Zatoichi Continues		
+Q1092804	director	Q5295445	Kazuo Mori		
+Q1092804	writer	Q4204324	Minoru Inuzuka		
+Q1092804	composer	Q3147667	Ichirō Saitō		
+Q1092804	cast	Q719551	Shintarō Katsu		
+Q1092804	cast	Q11534357	Eijirō Yanagi		
+Q1092804	cast	Q7396487	Saburō Date		
+Q1092804	cast	Q1381344	Tomisaburō Wakayama		
+Q1092804	follows	Q1092576	The Tale of Zatoichi		
+Q1092804	followed_by	Q1151307	New Tale of Zatoichi		
+Q50899184	director	Q11575542	Tokuzō Tanaka		
+Q50899184	writer	Q11669572	Hajime Takaiwa		
+Q120335145	director	Q11575542	Tokuzō Tanaka		
+Q120335145	writer	Q5507364	Fuji Yahiro		
+Q120335145	composer	Q135570	Akira Ifukube		
+Q120335145	cinematographer	Q102357730	Chikashi Makiura		
+Q120335145	cast	Q719225	Ichikawa Raizō VIII	Harima Aoyama	
+Q120335145	cast	Q1381344	Tomisaburō Wakayama	Shindo Genjiro	
+Q120335145	cast	Q11624936	Yukiko Fuji	Okiku	
+Q3005449	director	Q55397	Kon Ichikawa		
+Q3005449	writer	Q723042	Teinosuke Kinugasa		
+Q3005449	writer	Q11417961	Natto Wada		
+Q3005449	composer	Q424173	Yasushi Akutagawa		
+Q3005449	producer	Q6782400	Masaichi Nagata		
+Q3005449	cast	Q1994683	Fujiko Yamamoto		
+Q3005449	cast	Q3095179	Nakamura Ganjirō II		
+Q3005449	cast	Q3811234	Jun Hamamura		
+Q3005449	cast	Q719551	Shintarō Katsu		
+Q3005449	cast	Q719225	Ichikawa Raizō VIII		
+Q3005449	cast	Q2601738	Kazuo Hasegawa		
+Q3005449	cast	Q1042106	Ayako Wakao		
+Q3005449	cast	Q2068913	Eiji Funakoshi		
+Q3005449	cast	Q11534357	Eijirō Yanagi		
+Q3005449	cast	Q7396487	Saburō Date		
+Q1151307	director	Q11575542	Tokuzō Tanaka		
+Q1151307	writer	Q4204324	Minoru Inuzuka		
+Q1151307	composer	Q135570	Akira Ifukube		
+Q1151307	cast	Q719551	Shintarō Katsu		
+Q1151307	follows	Q1092804	The Tale of Zatoichi Continues		
+Q1151307	followed_by	Q6122357	Zatoichi the Fugitive		
+Q25506	director	Q539685	Michael Anderson		
+Q25506	writer	Q959259	Waldo Salt		
+Q25506	composer	Q15458420	Frank Cordell		
+Q25506	producer	Q323445	Harold Hecht		
+Q25506	cinematographer	Q345800	Joseph MacDonald		
+Q25506	cinematographer	Q509671	Burnett Guffey		
+Q25506	editor	Q18624658	Gordon Pilkington		
+Q25506	production_designer	Q530333	Eugène Lourié		
+Q25506	cast	Q436678	Danielle Gaubert		
+Q25506	cast	Q448282	Suzy Parker		
+Q25506	cast	Q720223	Andrew Hughes		
+Q25506	cast	Q336841	George Chakiris		
+Q25506	cast	Q320036	Richard Widmark		
+Q25506	cast	Q102813	Yul Brynner		
+Q25506	cast	Q54476590	William Ross		
+Q25506	cast	Q238884	Shirley Knight		
+Q25506	subject		World War II		
+Q25506	subject		aviation		
+Q133253451	director	Q11456981	Sōkichi Tomimoto		
+Q133253451	writer	Q11613780	Kazuo Funahashi		
+Q133253451	cinematographer	Q51914625	Nobuo Munekawa		
+Q133253451	cast	Q1042106	Ayako Wakao		
+Q133253451	cast	Q11055076	Seizaburō Kawazu		
+Q133253451	cast	Q11380020	Takao Itō		
+Q6387210	director	Q3028216	Kenji Misumi		
+Q6387210	producer	Q5769989	Hiroaki Fujii		
+Q6387210	cast	Q436121	Noriko Sengoku		
+Q6387210	cast	Q1078152	Hisaya Morishige		
+Q6387210	cast	Q719225	Ichikawa Raizō VIII		
+Q6387210	cast	Q3067366	Keiju Kobayashi		
+Q6387210	cast	Q1861772	Yoshio Inaba		
+Q1916669	director	Q7051219	Noriaki Yuasa		
+Q1916669	writer	Q3342135	Niisan Takahashi		
+Q1916669	producer	Q6782400	Masaichi Nagata		
+Q1916669	cast	Q3811234	Jun Hamamura		
+Q1916669	followed_by	Q1959868	Gamera vs. Barugon		
+Q11486174	director	Q11373263	Akira Inoue		
+Q11486174	writer	Q4204324	Minoru Inuzuka		
+Q11486174	composer	Q135570	Akira Ifukube		
+Q11486174	cinematographer	Q11540076	Fujio Morita		
+Q11486174	editor	Q103857334	Hiroshi Yamada		
+Q11486174	cast	Q719551	Shintarō Katsu		
+Q11486174	cast	Q440472	Sachiko Kobayashi		
+Q11486174	follows	Q11486181	Adventures of Zatoichi		
+Q11486174	followed_by	Q11486180	Zatoichi and the Doomed Man		
+Q11486174	subject		prostitution		
+Q1165338	director	Q1394314	Kimiyoshi Yasuda		
+Q1165338	writer	Q5676395	Tetsuro Yoshida		
+Q1165338	composer	Q135570	Akira Ifukube		
+Q1165338	producer	Q6782400	Masaichi Nagata		
+Q1165338	cinematographer	Q11540076	Fujio Morita		
+Q1165338	editor	Q103857334	Hiroshi Yamada		
+Q1165338	cast	Q6883741	Miwa Takada		
+Q1165338	cast	Q16263590	Yoshihiko Aoyama		
+Q1165338	followed_by	Q2577732	Return of Daimajin		
+Q1959868	director	Q3482057	Shigeo Tanaka		
+Q1959868	writer	Q3342135	Niisan Takahashi		
+Q1959868	composer	Q11518036	Chūji Kinoshita		
+Q1959868	producer	Q6782400	Masaichi Nagata		
+Q1959868	cinematographer	Q17209160	Michio Takahashi		
+Q1959868	editor	Q66400417	Tatsuji Nakashizu		
+Q1959868	cast	Q5114960	Kōjirō Hongō		
+Q1959868	cast	Q11551229	Kyōko Enami		
+Q1959868	cast	Q30922735	Shō Natsuki		
+Q1959868	cast	Q2300157	Yoshihiro Hamaguchi		
+Q1959868	cast	Q3791680	Ichirō Sugai		
+Q1959868	follows	Q1916669	Gamera, the Giant Monster		
+Q1959868	followed_by	Q1387041	Gamera vs. Gyaos		
+Q3202016	director	Q1203444	Yasuzō Masumura		
+Q3202016	cast	Q7497767	Shinsuke Ashida		
+Q3202016	cast	Q1042106	Ayako Wakao		
+Q2577732	director	Q3028216	Kenji Misumi		
+Q2577732	writer	Q5676395	Tetsuro Yoshida		
+Q2577732	composer	Q135570	Akira Ifukube		
+Q2577732	producer	Q6782400	Masaichi Nagata		
+Q2577732	cinematographer	Q11540076	Fujio Morita		
+Q2577732	cast	Q3543910	Shiho Fujimura		
+Q2577732	cast	Q5114960	Kōjirō Hongō		
+Q2577732	follows	Q1165338	Daimajin		
+Q2577732	followed_by	Q23706919	Majin Strikes Again		
+Q11579242	director	Q3474009	Satsuo Yamamoto		
+Q11579242	writer	Q3107382	Shinobu Hashimoto		
+Q11579242	producer	Q6782400	Masaichi Nagata		
+Q11579242	cast	Q3049379	Eijirō Tōno	Teizō Azuma	
+Q11579242	cast	Q11576494	Jirō Tamiya	Gorō Zaizen	
+Q11579242	cast	Q330151	Takahiro Tamura	Shūji Satomi	
+Q6388264	director	Q11575542	Tokuzō Tanaka		
+Q6388264	writer	Q11669572	Hajime Takaiwa		
+Q6388264	composer	Q135570	Akira Ifukube		
+Q6388264	cinematographer	Q2025121	Kazuo Miyagawa		
+Q6388264	cast	Q3814269	Kei Satō		
+Q6388264	cast	Q3811234	Jun Hamamura		
+Q6388264	cast	Q6798093	Mayumi Ogawa		
+Q6388264	cast	Q719551	Shintarō Katsu		
+Q6388264	follows	Q11486176	Zatoichi and the Chess Expert		
+Q6388264	followed_by	Q11486177	Zatoichi's Pilgrimage		
+Q1387041	director	Q7051219	Noriaki Yuasa		
+Q1387041	writer	Q3342135	Niisan Takahashi		
+Q1387041	composer	Q11466431	Tadashi Yamauchi		
+Q1387041	producer	Q66403457	Hidemasa Nagata		
+Q1387041	editor	Q66400417	Tatsuji Nakashizu		
+Q1387041	cast	Q66403284	Naoyuki Abe		
+Q1387041	cast	Q5114960	Kōjirō Hongō		
+Q1387041	cast	Q11359731	Kichijirō Ueda		
+Q1387041	follows	Q1959868	Gamera vs. Barugon		
+Q1387041	followed_by	Q2373746	Gamera vs. Viras		
+Q2373746	director	Q7051219	Noriaki Yuasa		
+Q2373746	writer	Q3342135	Niisan Takahashi		
+Q2373746	composer	Q17226562	Kenjirō Hirose		
+Q2373746	producer	Q6782400	Masaichi Nagata		
+Q2373746	cinematographer	Q66404405	Akira Kitazaki		
+Q2373746	cast	Q962197	Carl Craig		
+Q2373746	follows	Q1387041	Gamera vs. Gyaos		
+Q2373746	followed_by	Q670070	Gamera vs. Guiron		
+Q7878325	director	Q7706872	Tetsuji Takechi		
+Q7878325	cast	Q3548770	Noriko Tatsumi		
+Q928997	director	Q1203444	Yasuzō Masumura		
+Q928997	writer	Q347412	Edogawa Ranpo		
+Q928997	composer	Q1618037	Hikaru Hayashi		
+Q928997	cast	Q436121	Noriko Sengoku		
+Q928997	cast	Q2068913	Eiji Funakoshi		
+Q928997	cast	Q6739842	Mako Midori		
+Q670070	director	Q7051219	Noriaki Yuasa		
+Q670070	writer	Q3342135	Niisan Takahashi		
+Q670070	composer	Q2296028	Shunsuke Kikuchi		
+Q670070	producer	Q3472100	Sandy Frank		
+Q670070	producer	Q6782400	Masaichi Nagata		
+Q670070	cinematographer	Q66404405	Akira Kitazaki		
+Q670070	cast	Q2068913	Eiji Funakoshi		
+Q670070	cast	Q11557917	Yūko Hamada		
+Q670070	follows	Q2373746	Gamera vs. Viras		
+Q670070	followed_by	Q1952540	Gamera vs. Jiger		
+Q3410840	director	Q1389817	Hideo Gosha		
+Q3410840	writer	Q3107382	Shinobu Hashimoto		
+Q3410840	composer	Q938538	Masaru Sato		
+Q3410840	creator	Q1087887	Ryōtarō Shiba		
+Q3410840	cast	Q1322220	Yūjirō Ishihara		
+Q3410840	cast	Q1138422	Mitsuko Baishō		
+Q3410840	cast	Q134456	Yukio Mishima		
+Q3410840	cast	Q719551	Shintarō Katsu		
+Q3410840	cast	Q449621	Tatsuya Nakadai		
+Q3797838	director	Q1203444	Yasuzō Masumura		
+Q3797838	cast	Q139253	Eiji Okada		
+Q15925393	director	Q1151683	Kazuo Ikehiro		
+Q15925393	writer	Q3572656	Yoshikata Yoda		
+Q15925393	cast	Q3331779	Hiroki Matsukata		
+Q15924803	director	Q5295445	Kazuo Mori		
+Q15924803	cast	Q3331779	Hiroki Matsukata		

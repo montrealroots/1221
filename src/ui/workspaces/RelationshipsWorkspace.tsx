@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Meter, Empty, Modal, Stat } from '@/ui/components/primitives';
@@ -23,7 +24,7 @@ export function RelationshipsWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Relationships</div>
-        <h1>{circle.length} {circle.length === 1 ? 'person' : 'people'}</h1>
+        <h1>{circle.length} {circle.length === 1 ? 'Person' : 'People'}</h1>
         <p className="muted">
           Seven dimensions, not one bar, and a memory of what actually happened between you.
         </p>
@@ -47,7 +48,7 @@ export function RelationshipsWorkspace() {
                     <div className="grow">
                       <div className="small strong">{person.displayName}</div>
                       <div className="xs dim">
-                        {rel.type.replace(/_/g, ' ')} · {describeRelationship(rel, sim.now)}
+                        {titleCaseLabel(rel.type.replace(/_/g, ' '))} · {describeRelationship(rel, sim.now)}
                       </div>
                     </div>
                     <span className="mono xs">{Math.round(strength)}</span>
@@ -62,7 +63,7 @@ export function RelationshipsWorkspace() {
           <div className="col gap-4">
             <Panel
               title={selected.person.displayName}
-              subtitle={`${selected.rel.type.replace(/_/g, ' ')} · since ${formatDate(selected.rel.since, sim.homeZone)}${selected.rel.isPublic ? ' · public' : ' · private'}`}
+              subtitle={`${titleCaseLabel(selected.rel.type.replace(/_/g, ' '))} · since ${formatDate(selected.rel.since, sim.homeZone)}${selected.rel.isPublic ? ' · public' : ' · private'}`}
               actions={
                 <>
                   {isRomantic(selected.rel.type) && selected.rel.type === 'dating' && (
@@ -164,7 +165,7 @@ export function RelationshipsWorkspace() {
                 >
                   <div className="grow">
                     <div className="small strong">{asset.name}</div>
-                    <div className="xs dim">{asset.brand} · {asset.category}</div>
+                    <div className="xs dim">{asset.brand} · {titleCaseLabel(asset.category)}</div>
                   </div>
                   <span className="mono small">{formatMoney(asset.currentValue, { cents: false })}</span>
                 </button>

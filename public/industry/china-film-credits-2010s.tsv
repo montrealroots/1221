@@ -1,0 +1,493 @@
+qid	role	personQid	name	character	ordinal
+Q16334512	cast	Q706680	Alec Su		
+Q389303	director	Q716114	Feng Xiaogang		
+Q389303	writer	Q9331688	Si Wu		
+Q389303	composer	Q60995115	Wang Liguang		
+Q389303	producer	Q5090832	Chen Kuo-Fu		
+Q389303	producer	Q9058413	Wang Zhonglei		
+Q389303	cinematographer	Q751473	Lü Yue		
+Q389303	editor	Q19853340	Xiao Yang		
+Q389303	cast	Q717442	Chen Daoming		
+Q389303	cast	Q6538673	Li Chen	方达	
+Q389303	cast	Q8989323	Lü Zhong		
+Q389303	cast	Q9085587	Zhang Zifeng		
+Q389303	cast	Q6694937	Lu Yi		
+Q389303	cast	Q470244	Zhang Jingchu		
+Q389303	cast	Q510789	Xu Fan	李元妮	
+Q389303	cast	Q8070192	Zhang Guoqiang	方大强	
+Q389303	cast	Q15929525	Wang Ziwen	小河	
+Q389303	cast	Q61745930	Yong Mei	方家大姑	
+Q389303	award		Hundred Flowers Award for Best Picture		
+Q389303	award		Huabiao Award for Outstanding Film		
+Q389303	subject		earthquake		
+Q389303	subject		natural disaster		
+Q389303	subject		survival		
+Q868745	director	Q747760	Hu Mei		
+Q868745	composer	Q127740	Zhao Jiping		
+Q868745	producer	Q5646675	Han Sanping		
+Q868745	cinematographer	Q180029	Peter Pau		
+Q868745	cast	Q6694937	Lu Yi		
+Q868745	cast	Q198030	Zhou Xun		
+Q868745	cast	Q181425	Chow Yun-fat		
+Q5247265	director	Q114012286	Shen Dong		
+Q5247265	producer	Q5646675	Han Sanping		
+Q5247265	cast	Q1142931	Ray Lui		
+Q5247265	cast	Q710529	Ady An		
+Q5247265	subject		World War II		
+Q1581626	director	Q707336	Wong Jing		
+Q1581626	writer	Q707336	Wong Jing		
+Q1581626	composer	Q15924853	Raymond Wong		
+Q1581626	cast	Q1003099	Xu Jiao		
+Q1581626	cast	Q707288	Mike He		
+Q1581626	cast	Q465248	Barbie Hsu		
+Q1581626	cast	Q16766	Andy Lau		
+Q1581626	cast	Q381074	Fan Bingbing		
+Q5574867	director	Q297058	Xu Jinglei		
+Q5574867	producer	Q316678	Dan Mintz		
+Q5574867	producer	Q5646675	Han Sanping		
+Q5574867	producer	Q8070394	Zhang Yibai		
+Q5574867	cast	Q716027	Karen Mok		
+Q5574867	cast	Q297058	Xu Jinglei		
+Q5574867	cast	Q8264885	Li Ai		
+Q5574867	cast	Q3968236	Stanley Huang		
+Q5574867	cast	Q709773	Pace Wu		
+Q16252119	director	Q9438453	James Yuen		
+Q16252119	producer	Q2865389	Arthur Wong		
+Q16252119	cinematographer	Q4760917	Andy Kwong Ting-Wo		
+Q16252119	cast	Q714449	Alan Tam		
+Q2633399	director	Q716069	Jiang Wen		
+Q2633399	writer	Q716069	Jiang Wen		
+Q2633399	composer	Q275900	Joe Hisaishi		
+Q2633399	producer	Q8421164	Albert Yeung		
+Q2633399	cinematographer	Q3429304	Zhao Fei		
+Q2633399	cast	Q706092	Chen Kun		
+Q2633399	cast	Q6143479	Wenxiang		
+Q2633399	cast	Q1527347	Michelle Bai		
+Q2633399	cast	Q6191594	Jiang Wu		
+Q2633399	cast	Q6132219	Shao Bing		
+Q2633399	cast	Q9076318	Yao Lu		
+Q2633399	cast	Q2658847	Ge You		
+Q2633399	cast	Q9137627	Zhang Mo		
+Q2633399	cast	Q1193336	Hu Jun		
+Q2633399	cast	Q716069	Jiang Wen		
+Q2633399	cast	Q8986791	Liao Fan		
+Q2633399	cast	Q9122112	Zhou Yun		
+Q2633399	cast	Q9116361	Wei Xiao		
+Q2633399	cast	Q6827723	Miao Pu		
+Q2633399	cast	Q706219	Carina Lau		
+Q2633399	cast	Q181425	Chow Yun-fat		
+Q2633399	cast	Q8071079	Zhou Yun		
+Q2633399	cast	Q9348665	Zhao Ming		
+Q2633399	cast	Q716114	Feng Xiaogang		
+Q165685	director	Q251068	Wang Leehom		
+Q165685	writer	Q251068	Wang Leehom		
+Q165685	composer	Q1966670	Nathan Wang		
+Q165685	cast	Q270672	Joan Chen		
+Q165685	cast	Q242676	Liu Yifei		
+Q165685	cast	Q251068	Wang Leehom		
+Q15040688	cast	Q667260	Simon Yam		
+Q2070063	director	Q2300156	Dai Wei		
+Q2070063	writer	Q21000362	Tashi Dawa		
+Q2070063	producer	Q2300156	Dai Wei		
+Q2070063	cast	Q717095	Peter Ho		
+Q327685	director	Q962552	Harald Zwart		
+Q327685	writer	Q1893631	Robert Mark Kamen		
+Q327685	writer	Q5112920	Christopher Murphey		
+Q327685	composer	Q106221	James Horner		
+Q327685	producer	Q40096	Will Smith		
+Q327685	producer	Q228787	Jada Pinkett Smith		
+Q327685	producer	Q365844	Jerry Weintraub		
+Q327685	producer	Q3161218	James Lassiter		
+Q327685	cinematographer	Q132112	Roger Pratt		
+Q327685	editor	Q22074619	Joel Negron		
+Q327685	executive_producer	Q5646675	Han Sanping		
+Q327685	executive_producer	Q23887117	Dany Wolf		
+Q327685	cast	Q221364	Jaden Smith	Dre Parker (德瑞∙帕克	
+Q327685	cast	Q214289	Michelle Yeoh		
+Q327685	cast	Q2529007	Han Wenwen		
+Q327685	cast	Q235511	Taraji P. Henson	Sherry Parker (雪莉∙帕克	
+Q327685	cast	Q36970	Jackie Chan	Mr. Han (韩先生	
+Q327685	cast	Q970882	Yu Rongguang		
+Q327685	cast	Q1366644	Zhenwei Wang		
+Q327685	award		Kids' Choice Award for Favorite Movie		
+Q10895518	director	Q20062558	Li Weiran		
+Q10895518	cast	Q3357465	Sun Honglei		
+Q1090566	director	Q317814	Tsui Hark		
+Q1090566	writer	Q317814	Tsui Hark		
+Q1090566	composer	Q15912438	Wai Lap Wu		
+Q1090566	producer	Q317814	Tsui Hark		
+Q1090566	producer	Q3335772	Nansun Shi		
+Q1090566	producer	Q8059909	Yu Dong		
+Q1090566	executive_producer	Q5646675	Han Sanping		
+Q1090566	executive_producer	Q8059909	Yu Dong		
+Q1090566	executive_producer	Q27510642	Li Ruigang		
+Q1090566	cast	Q709793	Mavis Fan		
+Q1090566	cast	Q448052	Gwei Lun-Mei		
+Q1090566	cast	Q2007213	Louis Fan		
+Q1090566	cast	Q159577	Jet Li		
+Q1090566	cast	Q706092	Chen Kun		
+Q1090566	cast	Q698103	Li Yuchun		
+Q1090566	cast	Q198030	Zhou Xun		
+Q1090566	cast	Q1071583	Gordon Liu		
+Q1090566	award		Hong Kong Film Award for Best Action Choreography		
+Q1074397	director	Q704612	Huang Jianxin		
+Q1074397	director	Q5646675	Han Sanping		
+Q1074397	writer	Q704612	Huang Jianxin		
+Q1074397	writer	Q123371932	Guo Junli		
+Q1074397	writer	Q125628470	Dong Zhe		
+Q1074397	composer	Q47668994	Shu Nan		
+Q1074397	editor	Q60989434	Derek Hui		
+Q1074397	executive_producer	Q5646675	Han Sanping		
+Q1074397	cast	Q700175	Tony Leung Ka-fai		
+Q1074397	cast	Q6538673	Li Chen		
+Q1074397	cast	Q3306578	Qi Yuwu		
+Q1074397	cast	Q277193	Daniel Wu		
+Q1074397	cast	Q701930	Nick Cheung		
+Q1074397	cast	Q712374	Michelle Ye		
+Q1074397	cast	Q251068	Wang Leehom		
+Q1074397	cast	Q9315131	Wang Yuexin		
+Q1074397	cast	Q5619623	Guo Tao		
+Q1074397	cast	Q381074	Fan Bingbing	隆裕太后	
+Q1074397	cast	Q297058	Xu Jinglei		
+Q1074397	cast	Q667260	Simon Yam		
+Q1074397	cast	Q9047762	Tan Kai		
+Q1074397	cast	Q6539189	Li Xuejian		
+Q1074397	cast	Q9056456	Wang Xuebing		
+Q1074397	cast	Q4243707	Zhang Guoli		
+Q1074397	cast	Q2568122	Angelababy		
+Q1074397	cast	Q9090259	Zhang Yishan		
+Q1074397	cast	Q9091890	Zhang Yi		
+Q1074397	cast	Q6653647	Liu Peiqi		
+Q1074397	cast	Q9084044	Zhang Jiayi		
+Q1074397	cast	Q995456	Jing Boran		
+Q1074397	cast	Q8946263	Dong Xuan	Xiang Jingyu	
+Q1074397	cast	Q181425	Chow Yun-fat	Yuan Shikai	
+Q1074397	cast	Q706092	Chen Kun	Zhou Enlai	
+Q1074397	cast	Q391429	Han Geng	Deng Xiaoping	
+Q1074397	cast	Q8986791	Liao Fan	Zhu De	
+Q1074397	cast	Q197424	Zhao Benshan	Duan Qirui	
+Q1074397	cast	Q55432	John Woo	Lin Sen	
+Q1074397	cast	Q10566605	Ma Shaohua	Sun Yat-sen	
+Q1074397	cast	Q8963349	Guo Xiaodong	YU You-Ren	
+Q1074397	cast	Q704233	Wang Xueqi	Cai Yuanpei	
+Q1074397	cast	Q10884150	Fu Xinbo	Gao Junyu	
+Q1074397	cast	Q1142931	Ray Lui	Wu Peifu	
+Q1074397	cast	Q835003	Nie Yuan	Chen Qimei	
+Q1074397	cast	Q8954422	Feng Yuanzheng	Chen Duxiu	
+Q1074397	cast	Q1140540	Deng Chao	Chen Yi	
+Q1074397	cast	Q8259870	Li Qin	Yang Kaihui	
+Q1074397	cast	Q16766	Andy Lau	Tsai E	
+Q1074397	cast	Q712088	Zhang Hanyu	Song Jiaoren	
+Q1074397	award		Huabiao Award for Outstanding Film		
+Q213215	director	Q716114	Feng Xiaogang		
+Q213215	writer	Q706370	Liu Zhenyun		
+Q213215	composer	Q127740	Zhao Jiping		
+Q213215	producer	Q5646675	Han Sanping		
+Q213215	producer	Q7175338	Peter Lam		
+Q213215	producer	Q8421164	Albert Yeung		
+Q213215	cinematographer	Q751473	Lü Yue		
+Q213215	cast	Q95048	Tim Robbins		
+Q213215	cast	Q4243707	Zhang Guoli		
+Q213215	cast	Q8954422	Feng Yuanzheng		
+Q213215	cast	Q5433575	Fan Wei		
+Q213215	cast	Q6539189	Li Xuejian		
+Q213215	cast	Q622660	Alfred Hsing		
+Q213215	cast	Q717442	Chen Daoming		
+Q213215	cast	Q104514	Adrien Brody		
+Q213215	cast	Q510789	Xu Fan		
+Q213215	cast	Q712088	Zhang Hanyu		
+Q213215	cast	Q7267668	Qiao Zhenyu		
+Q213215	award		Huabiao Award for Outstanding Film		
+Q15931526	cast	Q5619584	Guo Degang		
+Q10792815	director	Q16181079	Ki-hwan Oh		
+Q10792815	director	Q16725584	O Ki-hwan		
+Q10792815	cast	Q8998442	Lin Mei-hsiu		
+Q10792815	cast	Q709773	Pace Wu		
+Q10792815	cast	Q8965745	Jiang Jinfu		
+Q10792815	cast	Q711841	Eddie Peng		
+Q10792815	cast	Q8924905	Bai Baihe		
+Q13822679	director	Q716064	Peter Chan		
+Q13822679	writer	Q117845377	Oi-Wah Lam		
+Q13822679	writer	Q123512580	Zhang Ji		
+Q13822679	writer	Q123559919	Zhou Zhiyong		
+Q13822679	composer	Q708987	Peter Kam		
+Q13822679	producer	Q716064	Peter Chan		
+Q13822679	producer	Q18713162	Jojo Hui		
+Q13822679	producer	Q123562643	Teddy Yoon		
+Q13822679	cinematographer	Q457890	Christopher Doyle		
+Q13822679	editor	Q19853340	Xiao Yang		
+Q13822679	cast	Q834846	Tong Dawei		
+Q13822679	cast	Q703687	Du Juan		
+Q13822679	cast	Q701194	Huang Xiaoming		
+Q13822679	cast	Q1140540	Deng Chao		
+Q13822679	award		Golden Rooster Award for Best Picture		
+Q13822679	award		Huabiao Award for Outstanding Film		
+Q16078584	director	Q131358497	Xin Zhang		
+Q16078584	producer	Q3427656	Xu Jian		
+Q4253250	director	Q311179	Stephen Chow		
+Q4253250	director	Q5262121	Derek Kwok		
+Q4253250	writer	Q311179	Stephen Chow		
+Q4253250	composer	Q15924853	Raymond Wong		
+Q4253250	producer	Q311179	Stephen Chow		
+Q4253250	cast	Q233859	Shu Qi		
+Q4253250	cast	Q1048397	Chrissie Chau		
+Q4253250	cast	Q51110	Show Lo		
+Q4253250	cast	Q9198771	Jiro Lee	Sand Monkeys	
+Q4253250	cast	Q7982261	Wen Zhang	Xuanzang	
+Q4253250	cast	Q704130	Huang Bo	Sun Wukong	
+Q4253250	followed_by	Q21450514	Journey to the West: The Demons Strike Back		
+Q3285128	director	Q43416	Keanu Reeves		
+Q3285128	writer	Q71051699	Michael G. Cooney		
+Q3285128	composer	Q5070332	Chan Kwong-wing		
+Q3285128	cinematographer	Q385158	Elliot Davis		
+Q3285128	cast	Q2350460	Iko Uwais		
+Q3285128	cast	Q667260	Simon Yam		
+Q3285128	cast	Q43416	Keanu Reeves		
+Q3285128	cast	Q716027	Karen Mok		
+Q3285128	cast	Q15911124	Tiger Chen		
+Q11837540	director	Q197471	Zhao Wei		
+Q11837540	writer	Q11097097	Li Qiang		
+Q11837540	producer	Q705995	Stanley Kwan		
+Q11837540	executive_producer	Q705995	Stanley Kwan		
+Q11837540	executive_producer	Q5646675	Han Sanping		
+Q11837540	cast	Q391429	Han Geng		
+Q11837540	cast	Q710955	Mark Chao		
+Q552725	director	Q2299195	Fyodor Bondarchuk		
+Q552725	writer	Q4425489	Sergey Snezhkin		
+Q552725	writer	Q21583318	Ilya Tilkin		
+Q552725	composer	Q357014	Angelo Badalamenti		
+Q552725	producer	Q1433134	Alexander Rodnyansky		
+Q552725	producer	Q14848579	Anton Zlatopolsky		
+Q552725	producer	Q15732543	Sergey Melkumov		
+Q552725	cinematographer	Q4337486	Maksim Osadchy		
+Q552725	cast	Q4444563	Yanina Studilina		
+Q552725	cast	Q4494015	Pyotr Fyodorov		
+Q552725	cast	Q57614	Thomas Kretschmann		
+Q552725	cast	Q4077593	Alexey Barabash		
+Q552725	cast	Q2087712	Philippe Reinhardt		
+Q552725	cast	Q97423	Heiner Lauterbach		
+Q552725	cast	Q15270255	Maria Smolnikova		
+Q552725	cast	Q4425121	Andrey Smolyakov		
+Q552725	award		Nika Award for Best Costume Design		
+Q552725	subject		World War II		
+Q552725	subject		Battle of Stalingrad		
+Q3183746	director	Q9039659	Jianjun Sun		
+Q3183746	writer	Q9039659	Jianjun Sun		
+Q3183746	producer	Q5646675	Han Sanping		
+Q3183746	producer	Q7175338	Peter Lam		
+Q3183746	producer	Q8991232	Liu Changle		
+Q3183746	cast	Q470244	Zhang Jingchu		
+Q3183746	cast	Q702401	Lin Chi-ling		
+Q3183746	cast	Q834846	Tong Dawei		
+Q3183746	cast	Q16766	Andy Lau		
+Q20004281	director	Q6503124	Law Wing-cheung		
+Q20004281	writer	Q104848200	Zhenjian Yang		
+Q20004281	producer	Q6503124	Law Wing-cheung		
+Q20004281	cast	Q3608975	Xing Yu		
+Q20004281	cast	Q498343	Nam Hyun-joon		
+Q20004281	cast	Q7613893	Yoo Seung-jun		
+Q11176909	director	Q256958	Ann Hui		
+Q11176909	writer	Q11097097	Li Qiang		
+Q11176909	composer	Q123318375	Eli Marshall		
+Q11176909	producer	Q5646675	Han Sanping		
+Q11176909	producer	Q8014107	William Kong		
+Q11176909	cinematographer	Q7967741	Wang Yu		
+Q11176909	editor	Q15895583	Kwong Chi-Leung		
+Q11176909	editor	Q123318840	Manda Wai		
+Q11176909	cast	Q866794	Wang Zhiwen		
+Q11176909	cast	Q5651487	Hao Lei		
+Q11176909	cast	Q9186733	Zhu Yawen		
+Q11176909	cast	Q270687	Tang Wei		
+Q11176909	cast	Q5443398	Feng Shaofeng		
+Q16078743	director	Q4202961	Raymond Yip		
+Q16078743	cast	Q704291	Francis Ng		
+Q7752052	director	Q74138	Soi Cheang		
+Q7752052	writer	Q7664635	Szeto Kam-Yuen		
+Q7752052	composer	Q504078	Christopher Young		
+Q7752052	cinematographer	Q2865389	Arthur Wong		
+Q7752052	editor	Q5094249	Cheung Ka-fai		
+Q7752052	executive_producer	Q5126527	Clarence Fok		
+Q7752052	cast	Q197355	Zhang Zilin	Nüwa	
+Q7752052	cast	Q181425	Chow Yun-fat	Jade Emperor	
+Q7752052	cast	Q706192	Gigi Leung	Chang'e	
+Q7752052	cast	Q270688	Kelly Chen	Guan Yin	
+Q7752052	cast	Q717095	Peter Ho	Erlang Shen	
+Q7752052	cast	Q311723	Donnie Yen	Sun Wukong	
+Q7752052	cast	Q702527	Joe Chen	Princess Iron Fan	
+Q7752052	cast	Q2007213	Louis Fan	Juling Shen	
+Q7752052	cast	Q16872	Aaron Kwok	Bull Demon King	
+Q20898490	director	Q65060157	Ning Haiqiang		
+Q20898490	director	Q125689450	Zhang Yuzhong		
+Q20898490	writer	Q125628470	Dong Zhe		
+Q20898490	writer	Q125755585	Liu Xingyue		
+Q20898490	cast	Q15928445	Liu Zhibing		
+Q20898490	cast	Q9116335	Yin Xiaotian		
+Q20898490	cast	Q9046092	Tao Zeru		
+Q20898490	cast	Q9061288	Wu Yue		
+Q20898490	cast	Q1152156	Tang Guoqiang		
+Q20898490	cast	Q8250087	Wang Wufu		
+Q20898490	cast	Q1140540	Deng Chao		
+Q20898490	award		Huabiao Award for Outstanding Film		
+Q18391038	director	Q7288869	Raman Hui		
+Q18391038	writer	Q15543953	Alan Yuen		
+Q18391038	composer	Q3635124	Leon Ko		
+Q18391038	producer	Q8014107	William Kong		
+Q18391038	producer	Q8051106	Yee Chung-Man		
+Q18391038	producer	Q15543953	Alan Yuen		
+Q18391038	cinematographer	Q15727919	Anthony Pun		
+Q18391038	editor	Q5094249	Cheung Ka-fai		
+Q18391038	cast	Q8924905	Bai Baihe		
+Q18391038	cast	Q6191594	Jiang Wu		
+Q18391038	cast	Q701597	Elaine Jin		
+Q18391038	cast	Q995456	Jing Boran		
+Q18391038	cast	Q4382637	Wallace Chung		
+Q18391038	cast	Q445608	Eric Tsang		
+Q18391038	cast	Q718163	Sandra Ng		
+Q18391038	cast	Q270687	Tang Wei		
+Q18391038	followed_by	Q27590909	Monster Hunt 2		
+Q25631094	director	Q114681328	Xiaoyu Qin		
+Q25631094	director	Q114681329	Feiyue Wu		
+Q15303493	director	Q154490	Jean-Jacques Annaud		
+Q15303493	writer	Q154490	Jean-Jacques Annaud		
+Q15303493	writer	Q6226674	John Collee		
+Q15303493	writer	Q21004785	Alain Godard		
+Q15303493	writer	Q123551009	Lu Wei		
+Q15303493	composer	Q106221	James Horner		
+Q15303493	producer	Q154490	Jean-Jacques Annaud		
+Q15303493	cinematographer	Q3167640	Jean-Marie Dreujou		
+Q15303493	editor	Q15240452	Reynald Bertrand		
+Q15303493	cast	Q19366459	Ankhnyam Ragchaa		
+Q15303493	cast	Q5443398	Feng Shaofeng		
+Q15303493	cast	Q60994091	Yin Zhusheng		
+Q15303493	cast	Q7491335	Shawn Dou		
+Q15303493	cast	Q1080263	Basen Zhabu		
+Q15303493	award		Golden Rooster Award for Best Picture		
+Q15303493	award		Huabiao Award for Outstanding Film		
+Q24731518	director	Q8985702	Longman Leung		
+Q24731518	director	Q8988948	Sunny Luk		
+Q24731518	writer	Q8985702	Longman Leung		
+Q24731518	writer	Q8988948	Sunny Luk		
+Q24731518	writer	Q116369886	Jack Ng		
+Q24731518	composer	Q708987	Peter Kam		
+Q24731518	producer	Q8014107	William Kong		
+Q24731518	producer	Q123051521	Ivy Ho Wan-Ming		
+Q24731518	cinematographer	Q65056305	Jason Kwan		
+Q24731518	editor	Q24833911	Ron Chan		
+Q24731518	editor	Q123121574	Jordan Goldman		
+Q24731518	cast	Q3545558	Yo Yang		
+Q24731518	cast	Q6146440	Wu Yue		
+Q24731518	cast	Q9003380	Ma Yili		
+Q24731518	cast	Q3272501	Bibi Zhou		
+Q24731518	cast	Q700175	Tony Leung Ka-fai		
+Q24731518	cast	Q478849	Aarif Rahman		
+Q24731518	cast	Q16872	Aaron Kwok		
+Q24731518	cast	Q711841	Eddie Peng		
+Q24731518	cast	Q181425	Chow Yun-fat		
+Q24731518	cast	Q6154296	Janice Man		
+Q24731518	cast	Q717584	Charlie Yeung		
+Q24731518	cast	Q9092868	Chang Kuo-chu		
+Q24731518	follows	Q2089457	Cold War		
+Q18206289	director	Q460297	Yuen Woo-ping		
+Q18206289	writer	Q577234	John Fusco		
+Q18206289	composer	Q1042512	Carlo Siliotto		
+Q18206289	producer	Q183141	Peter Berg		
+Q18206289	producer	Q5085300	Charlie Nguyen		
+Q18206289	cinematographer	Q1367452	Newton Thomas Sigel		
+Q18206289	editor	Q182835	Jeff Betancourt		
+Q18206289	costume_designer	Q455394	Ngila Dickson		
+Q18206289	cast	Q214289	Michelle Yeoh	Yu Shu Lien	
+Q18206289	cast	Q20685076	Chris Pang	Flying Blade	
+Q18206289	cast	Q63170856	Gary Young	Te Junior	
+Q18206289	cast	Q63170878	Darryl Quon	Turtle Ma	
+Q18206289	cast	Q5407935	Eugenia Yuan	Blind Enchantress	
+Q18206289	cast	Q311723	Donnie Yen	Silent Wolf/Meng Sizhao	
+Q18206289	cast	Q4809088	Roger Yuan	Iron Crow	
+Q18206289	cast	Q22984318	Natasha Liu Bordizzo	Snow Vase	
+Q18206289	cast	Q9370666	JuJu Chan	Silver Dart Shi	
+Q18206289	cast	Q7022454	Ngô Thanh Vân	Mantis	
+Q18206289	cast	Q335226	Jason Scott Lee	Hades Dai	
+Q18206289	cast	Q348649	Harry Shum	Wei-Fang	
+Q18206289	follows	Q273978	Crouching Tiger, Hidden Dragon		
+Q27959499	director	Q13359754	Oxide Pang Chun		
+Q27959499	cast	Q714389	Liu Ye		
+Q20717790	director	Q114916677	Xiao Feng		
+Q20717790	cinematographer	Q66587116	Su Shuyang		
+Q20717790	cast	Q104514	Adrien Brody		
+Q20717790	cast	Q837534	Kenny Bee		
+Q20717790	cast	Q381074	Fan Bingbing		
+Q20717790	cast	Q5433575	Fan Wei		
+Q20717790	cast	Q2680	ブルース・ウィリス		
+Q20717790	cast	Q234566	Rumer Willis		
+Q20717790	cast	Q667260	Simon Yam		
+Q20717790	cast	Q380579	Nicholas Tse		
+Q20717790	cast	Q8960661	Geng Le		
+Q20717790	cast	Q8954422	Feng Yuanzheng		
+Q20717790	cast	Q708485	Huang Shengyi		
+Q20717790	cast	Q714389	Liu Ye		
+Q21834546	director	Q311179	Stephen Chow		
+Q21834546	writer	Q311179	Stephen Chow		
+Q21834546	composer	Q15924853	Raymond Wong		
+Q21834546	producer	Q311179	Stephen Chow		
+Q21834546	editor	Q5094249	Cheung Ka-fai		
+Q21834546	executive_producer	Q311179	Stephen Chow		
+Q21834546	cast	Q311179	Stephen Chow		
+Q21834546	cast	Q18710151	Lin Yun		
+Q21834546	cast	Q700315	Zhang Yuqi		
+Q21834546	cast	Q1140540	Deng Chao		
+Q21834546	cast	Q317814	Tsui Hark		
+Q21834546	cast	Q51110	Show Lo		
+Q21834546	cast	Q7982261	Wen Zhang		
+Q21834546	cast	Q6437313	Kris Wu		
+Q21834546	cast	Q28417991	Zhengyu Lu		
+Q21834546	cast	Q9198771	Jiro Lee		
+Q28700669	cast	Q4382637	Wallace Chung		
+Q20716682	director	Q3369535	Huo Jianqi		
+Q20716682	writer	Q8074605	Zou Jingzhi		
+Q20716682	composer	Q110804068	Wang Xiaofeng		
+Q20716682	producer	Q55431	Wong Kar-wai		
+Q20716682	cinematographer	Q123474849	Sun Ming		
+Q20716682	cast	Q2573055	Sonu Sood		
+Q20716682	cast	Q9047762	Tan Kai		
+Q20716682	cast	Q9024740	Purba Rgyal		
+Q20716682	cast	Q1041593	Kent Tong		
+Q20716682	cast	Q701194	Huang Xiaoming		
+Q20716682	cast	Q6704509	Luo Jin		
+Q20716682	award		Huabiao Award for Outstanding Film		
+Q28410427	director	Q715330	Andrew Lau		
+Q28410427	writer	Q704612	Huang Jianxin		
+Q28410427	writer	Q5646675	Han Sanping		
+Q28410427	composer	Q5070332	Chan Kwong-wing		
+Q28410427	composer	Q113620877	Yu-Peng Chen		
+Q28410427	producer	Q5646675	Han Sanping		
+Q28410427	cast	Q60994063	Wang Jingchun		
+Q28410427	cast	Q714389	Liu Ye		
+Q28410427	cast	Q15900390	Oho Ou		
+Q28410427	cast	Q9186733	Zhu Yawen		
+Q28410427	cast	Q22338290	Zhang Tian'ai		
+Q28410427	cast	Q22774261	Liu Haoran		
+Q28410427	cast	Q8259870	Li Qin		
+Q28410427	cast	Q11177530	Huang Zhizhong		
+Q28410427	cast	Q1061218	Ma Tianyu		
+Q28410427	cast	Q12494180	Lay		
+Q28410427	award		Huabiao Award for Outstanding Film		
+Q50395003	cast	Q15031	Xi Jinping		
+Q57966215	director	Q57966510	Frant Gwo		
+Q57966215	writer	Q57966510	Frant Gwo		
+Q57966215	writer	Q116469878	Gong Geer		
+Q57966215	writer	Q123518719	Ye Ruchang		
+Q57966215	writer	Q123521022	Ye Junce		
+Q57966215	writer	Q123521061	Yan Dongxu		
+Q57966215	composer	Q18384253	Roc Chen		
+Q57966215	cinematographer	Q123518592	Michael Liu		
+Q57966215	cinematographer	Q123518620	Linke Zhang		
+Q57966215	editor	Q5094249	Cheung Ka-fai		
+Q57966215	editor	Q123518719	Ye Ruchang		
+Q57966215	cast	Q710715	Wu Jing	刘培强	
+Q57966215	cast	Q8994109	Li Guangjie	王磊	
+Q57966215	cast	Q66796339	Qu Jingjing		
+Q57966215	cast	Q47669877	Zhao Jinmai	韩朵朵	
+Q57966215	cast	Q58303986	Qu Chuxiao	刘启	
+Q57966215	cast	Q707229	Ng Man-tat	韩子昂	
+Q57966215	award		Golden Rooster Award for Best Picture		
+Q57966215	award		Huabiao Award for Outstanding Film		
+Q57966215	followed_by	Q108659445	The Wandering Earth 2		

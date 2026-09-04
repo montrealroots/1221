@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Meter } from '@/ui/components/primitives';
 import { ensureCourses } from '@/engine/systems/services';
@@ -52,7 +53,7 @@ export function EducationWorkspace() {
                     <div className="row wrap gap-1" style={{ marginTop: 'var(--s2)' }}>
                       {Object.entries(enrollment.gains).map(([key, gain]) => (
                         <span key={key} className="chip chip-positive">
-                          {key.replace(/_/g, ' ')} +{gain.toFixed(1)}
+                          {titleCaseLabel(key.replace(/_/g, ' '))} +{gain.toFixed(1)}
                         </span>
                       ))}
                     </div>
@@ -84,7 +85,7 @@ export function EducationWorkspace() {
                   <div className="row wrap gap-1" style={{ marginTop: 4 }}>
                     {course.improves.map((improvement) => (
                       <span key={improvement.key} className="chip">
-                        {improvement.key.replace(/_/g, ' ')} +{improvement.gain}/session
+                        {titleCaseLabel(improvement.key.replace(/_/g, ' '))} +{improvement.gain}/session
                       </span>
                     ))}
                   </div>
@@ -96,7 +97,7 @@ export function EducationWorkspace() {
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <div className="mono small">{formatMoney(course.costPerSession)}</div>
-                  <div className="xs dim">per session</div>
+                  <div className="xs dim">Per Session</div>
                 </div>
                 <button
                   className="btn btn-sm"
@@ -124,7 +125,7 @@ export function EducationWorkspace() {
                       {formatDate(enrollment.startedAt, sim.homeZone)} · {formatMoney(enrollment.totalPaid)} paid
                     </div>
                   </div>
-                  <span className={`chip ${enrollment.status === 'completed' ? 'chip-positive' : ''}`}>{enrollment.status}</span>
+                  <span className={`chip ${enrollment.status === 'completed' ? 'chip-positive' : ''}`}>{titleCaseLabel(enrollment.status)}</span>
                 </div>
               );
             })}

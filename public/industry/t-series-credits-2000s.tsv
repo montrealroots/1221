@@ -1,0 +1,106 @@
+qid	role	personQid	name	character	ordinal
+Q851445	director	Q117844927	Manoj Agrawal		
+Q851445	composer	Q4751271	Anand Raj Anand		
+Q851445	cinematographer	Q17079706	Nirmal Jain		
+Q851445	cast	Q983571	Johnny Lever		
+Q851445	cast	Q485557	Rani Mukerji		
+Q851445	cast	Q1992008	Govinda		
+Q5936551	director	Q725970	David Dhawan		
+Q5936551	composer	Q612167	Anu Malik		
+Q5936551	cinematographer	Q17019633	Manmohan Singh		
+Q5936551	editor	Q725970	David Dhawan		
+Q5936551	cast	Q310867	Sanjay Dutt		
+Q5936551	cast	Q9570	Amitabh Bachchan		
+Q5936551	cast	Q47059	Aishwarya Rai		
+Q5936551	cast	Q146929	Ajay Devgn		
+Q712789	director	Q17019633	Manmohan Singh		
+Q712789	composer	Q6123534	Jaidev Kumar		
+Q712789	producer	Q4902221	Bhushan Kumar		
+Q712789	cast	Q6365733	Kanwaljit Singh		
+Q712789	cast	Q5250154	Deep Dhillon		
+Q712789	cast	Q6982525	Navneet Nishan		
+Q712789	cast	Q5654381	Harbhajan Mann		
+Q712789	cast	Q3530094	Priya Gill		
+Q712789	cast	Q6410090	Kimi Verma		
+Q712789	cast	Q7937602	Vivek Shauq		
+Q712789	cast	Q16201302	Gopi Bhalla		
+Q712789	cast	Q7426223	Satinder Satti		
+Q712789	cast	Q5620246	Gurpreet Ghuggi		
+Q4368256	director	Q6368399	Karan Razdan		
+Q4368256	writer	Q6368399	Karan Razdan		
+Q4368256	composer	Q16195026	Daboo Malik		
+Q4368256	producer	Q7129362	Pammi Baweja		
+Q4368256	cast	Q292958	Amrita Arora		
+Q446129	director	Q1391329	Ram Gopal Varma		
+Q446129	producer	Q1391329	Ram Gopal Varma		
+Q446129	producer	Q5102303	Chitra Subramaniam		
+Q446129	cast	Q45889	Antara Mali		
+Q446129	cast	Q738291	Riteish Deshmukh		
+Q446129	cast	Q6933426	Mukesh Bhatt		
+Q446129	cast	Q187058	アビシェーク・バッチャン		
+Q6204157	director	Q2127494	Rahul Rawail		
+Q6204157	writer	Q18710703	Sanjay Chhel		
+Q6204157	composer	Q4751271	Anand Raj Anand		
+Q6204157	editor	Q2127494	Rahul Rawail		
+Q6204157	cast	Q4802073	Arun Bakshi		
+Q6204157	cast	Q6355198	Kamaal Khan		
+Q6204157	cast	Q1290010	Surekha Sikri		
+Q6204157	cast	Q5289323	Dolly Bindra		
+Q6204157	cast	Q17403438	Shilpi Sharma		
+Q6204157	cast	Q7069964	Nupur Mehta		
+Q6204157	cast	Q7645673	Surendra Pal		
+Q6204157	cast	Q944546	Sunny Deol		
+Q6735915	director	Q5667210	Harry Baweja		
+Q6735915	composer	Q1395430	Himesh Reshammiya		
+Q6735915	producer	Q7129362	Pammi Baweja		
+Q6735915	cinematographer	Q4830919	Ayananka Bose		
+Q6735915	cast	Q560163	Anupam Kher		
+Q6735915	cast	Q48622	Esha Deol		
+Q6735915	cast	Q146929	Ajay Devgn		
+Q6735915	cast	Q255076	Sushmita Sen		
+Q1637089	director	Q3417929	Raj Kanwar		
+Q1637089	writer	Q2820242	Abbas Tyrewala		
+Q1637089	composer	Q612167	Anu Malik		
+Q1637089	producer	Q4902221	Bhushan Kumar		
+Q1637089	cast	Q313956	Anil Kapoor		
+Q1637089	cast	Q9550	Katrina Kaif		
+Q1637089	cast	Q233748	Akshay Kumar		
+Q1637089	cast	Q158214	Bipasha Basu		
+Q3764588	director	Q3115713	Priyadarshan		
+Q3764588	writer	Q6986935	Neeraj Vora		
+Q3764588	composer	Q3633978	Pritam Chakraborty		
+Q3764588	producer	Q4902221	Bhushan Kumar		
+Q3764588	cinematographer	Q7809275	Tirru		
+Q3764588	cast	Q12445334	Manoj Joshi		
+Q3764588	cast	Q3123705	Paresh Rawal		
+Q3764588	cast	Q3595129	Govardhan Asrani		
+Q3764588	cast	Q159166	Vidya Balan		
+Q3764588	cast	Q233748	Akshay Kumar		
+Q3764588	cast	Q3494501	Shiney Ahuja		
+Q3764588	cast	Q263819	アミーシャ・パテル		
+Q3764588	cast	Q7295046	Rasika Joshi		
+Q3764588	cast	Q6379189	Kaveri Jha		
+Q3764588	cast	Q3496304	Rajpal Yadav		
+Q3764588	followed_by	Q67200799	Bhool Bhulaiyaa 2		
+Q16249470	director	Q96694368	Janmendra Ahuja		
+Q16249470	composer	Q4661119	Aadesh Shrivastava		
+Q16249470	cast	Q3191765	Kader Khan		
+Q16249470	cast	Q1992008	Govinda		
+Q1757944	director	Q725970	David Dhawan		
+Q1757944	writer	Q725970	David Dhawan		
+Q1757944	composer	Q7960701	Wajid Khan		
+Q1757944	producer	Q357608	Aditya Chopra		
+Q1757944	producer	Q983053	Sohail Khan		
+Q1757944	cast	Q1992008	Govinda		
+Q1757944	cast	Q944546	Sunny Deol		
+Q1757944	cast	Q9543	Salman Khan		
+Q1757944	cast	Q1203191	Arbaaz Khan		
+Q5381777	director	Q117848393	Ishaan Trivedi		
+Q5381777	composer	Q1395430	Himesh Reshammiya		
+Q5381777	producer	Q16466714	Ravi Agrawal		
+Q5381777	cinematographer	Q4818122	Attar Singh Saini		
+Q5381777	cast	Q5381748	Sonal Sehgal		
+Q5381777	cast	Q7494205	Shenaz Treasurywala		
+Q5381777	cast	Q8065108	Zakir Hussain		
+Q5381777	cast	Q1395430	Himesh Reshammiya		
+Q5381777	cast	Q3123705	Paresh Rawal		

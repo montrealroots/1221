@@ -1,0 +1,34 @@
+qid	role	personQid	name	character	ordinal
+Q7715867	director	Q3482057	Shigeo Tanaka		
+Q48671937	director	Q960868	Hiroshi Inagaki		
+Q48671937	writer	Q16077351	Doe Ching		
+Q48671937	cast	Q5680642	Ryōsuke Kagawa		
+Q48671937	cast	Q17193001	Tatsuya Ishiguro	Nakamuta Kuranosuke	
+Q48671937	cast	Q3545220	Tsumasaburō Bandō	Takasugi Shinsaku	
+Q48671937	cast	Q7385634	Ryūnosuke Tsukigata	Godai Tomoatsu	
+Q130335475	director	Q3482057	Shigeo Tanaka		
+Q130335475	writer	Q11550343	Ryûji Nagami		
+Q130335475	composer	Q3147667	Ichirō Saitō		
+Q130335475	cast	Q20040209	Hideo Saeki		
+Q130335475	cast	Q98717653	Masao Wakahara		
+Q130335475	cast	Q11548523	Michitarō Mizushima		
+Q130335475	subject		Pacific War		
+Q17223397	director	Q171601	Daisuke Itō		
+Q17223397	writer	Q5507364	Fuji Yahiro		
+Q39072834	director	Q171601	Daisuke Itō		
+Q39072834	writer	Q171601	Daisuke Itō		
+Q39072834	cast	Q3545220	Tsumasaburō Bandō		
+Q39072834	cast	Q4383856	Mitsuko Mito		
+Q64221105	director	Q960868	Hiroshi Inagaki		
+Q64221105	writer	Q973907	Mansaku Itami		
+Q64221105	composer	Q11435901	Masao Ōki		
+Q64221105	cast	Q958714	Chishū Ryū		
+Q64221105	cast	Q3128005	Haruko Sugimura		
+Q2005033	director	Q8006	Akira Kurosawa		
+Q2005033	writer	Q8006	Akira Kurosawa		
+Q2005033	writer	Q27351	Senkichi Taniguchi		
+Q2005033	composer	Q135570	Akira Ifukube		
+Q2005033	producer	Q11520413	Sōjirō Motoki		
+Q2005033	cast	Q436121	Noriko Sengoku		
+Q2005033	cast	Q40070	Takashi Shimura		
+Q2005033	cast	Q37001	Toshirō Mifune		

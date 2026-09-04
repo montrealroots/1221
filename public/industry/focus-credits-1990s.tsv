@@ -1,0 +1,129 @@
+qid	role	personQid	name	character	ordinal
+Q1383670	director	Q187720	Nicholas Kazan		
+Q1383670	writer	Q187720	Nicholas Kazan		
+Q1383670	composer	Q504078	Christopher Young		
+Q1383670	cinematographer	Q1685306	Jean-Yves Escoffier		
+Q1383670	editor	Q40627514	Jill Savitt		
+Q1383670	cast	Q2905749	Blair Tefkin		
+Q1383670	cast	Q711035	Erick Avari		
+Q1383670	cast	Q114447	Janel Moloney		
+Q1383670	cast	Q746337	Paul Ben-Victor		
+Q1383670	cast	Q63308	Bess Armstrong		
+Q1383670	cast	Q3952829	Scott Coffey		
+Q1383670	cast	Q3308385	Michael Milhoan		
+Q1383670	cast	Q661591	Clyde Kusatsu		
+Q1383670	cast	Q296928	James Spader		
+Q1383670	cast	Q1605965	Jeanne Bates		
+Q1383670	cast	Q712704	Robert David Hall		
+Q1383670	cast	Q1364838	Fredric Lehne		
+Q1383670	cast	Q686172	William Shockley		
+Q1383670	cast	Q943028	Larry Miller		
+Q1383670	cast	Q234983	Mädchen Amick		
+Q1383670	cast	Q711980	Lam Sheung Yee		
+Q597046	director	Q262608	Abel Ferrara		
+Q597046	writer	Q3875984	Nicholas St. John		
+Q597046	composer	Q3180045	Joe Delia		
+Q597046	producer	Q139418057	Mary Kane		
+Q597046	cast	Q973065	Victor Argo		
+Q597046	cast	Q933662	Frank John Hughes		
+Q597046	cast	Q297744	Chris Penn		
+Q597046	cast	Q7151306	Paul Hipp		
+Q597046	cast	Q203840	Isabella Rossellini		
+Q597046	cast	Q193668	Benicio del Toro		
+Q597046	cast	Q255268	Gretchen Mol		
+Q597046	cast	Q185051	Christopher Walken		
+Q597046	cast	Q7347654	Robert Miano		
+Q597046	cast	Q1338401	John Ventimiglia		
+Q597046	cast	Q7152919	Paul Perri		
+Q597046	cast	Q446704	Amber Smith		
+Q597046	cast	Q362353	Vincent Gallo		
+Q597046	cast	Q229034	Edie Falco		
+Q597046	cast	Q231395	Annabella Sciorra		
+Q597046	cast	Q210076	David Patrick Kelly		
+Q1426532	director	Q504656	Todd Solondz		
+Q1426532	writer	Q504656	Todd Solondz		
+Q1426532	composer	Q7340933	Robbie Kondor		
+Q1426532	producer	Q1354081	James Schamus		
+Q1426532	producer	Q5236616	David Linde		
+Q1426532	cinematographer	Q45928	Maryse Alberti		
+Q1426532	cast	Q434678	Elizabeth Ashley		
+Q1426532	cast	Q296287	Ben Gazzara		
+Q1426532	cast	Q710766	Arthur J. Nascarella		
+Q1426532	cast	Q2597050	Marla Maples		
+Q1426532	cast	Q234514	Camryn Manheim		
+Q1426532	cast	Q362500	Jared Harris		
+Q1426532	cast	Q239145	Molly Shannon		
+Q1426532	cast	Q486103	Lara Flynn Boyle		
+Q1426532	cast	Q726128	Dylan Baker		
+Q1426532	cast	Q861494	Matt Malloy		
+Q1426532	cast	Q16240726	Anne Bobby		
+Q1426532	cast	Q3038028	Douglas McGrath		
+Q1426532	cast	Q273532	Louise Lasser		
+Q1426532	cast	Q180560	Philip Seymour Hoffman		
+Q1426532	cast	Q444187	Cynthia Stevenson		
+Q1426532	cast	Q436360	Jane Adams		
+Q1426532	cast	Q982840	Gerry Becker		
+Q1426532	cast	Q296524	Jon Lovitz		
+Q1426532	award		National Board of Review: Top Ten Films		
+Q1426532	followed_by	Q2661541	Life During Wartime		
+Q1426532	subject		dysfunctional family		
+Q320417	director	Q113119091	Scott Elliott		
+Q320417	writer	Q2001087	Peter Hedges		
+Q320417	writer	Q6531044	Polly Platt		
+Q320417	composer	Q213887	Pat Metheny		
+Q320417	producer	Q549570	Frank Marshall		
+Q320417	cinematographer	Q1359957	Seamus McGarvey		
+Q320417	editor	Q1964826	Naomi Geraghty		
+Q320417	cast	Q675776	Arliss Howard		
+Q320417	cast	Q102124	Sigourney Weaver		
+Q320417	cast	Q310318	David Strathairn		
+Q320417	cast	Q80405	Julianne Moore		
+Q320417	cast	Q2305354	Marc Donato		
+Q320417	cast	Q235870	Chloë Sevigny		
+Q320417	award		National Board of Review Award for Best Supporting Actress		
+Q265984	director	Q190998	Anjelica Huston		
+Q265984	composer	Q736864	Paddy Moloney		
+Q265984	producer	Q55429	Jim Sheridan		
+Q265984	producer	Q190998	Anjelica Huston		
+Q265984	cinematographer	Q572838	Anthony B. Richmond		
+Q265984	cast	Q2863316	Arno Chevrier		
+Q265984	cast	Q190998	Anjelica Huston		
+Q265984	cast	Q180850	Tom Jones		
+Q265984	cast	Q934930	Gerard McSorley		
+Q265984	cast	Q310932	Ray Winstone		
+Q19864377	director	Q114065707	Kwyn Bader		
+Q19864377	cast	Q463536	Hill Harper		
+Q137130	director	Q198567	Jake Scott		
+Q137130	writer	Q2959794	Charles McKeown		
+Q137130	writer	Q8451565	Robert Wade		
+Q137130	writer	Q55861575	Neal Purvis		
+Q137130	composer	Q674456	Craig Armstrong		
+Q137130	producer	Q83492	Gary Oldman		
+Q137130	producer	Q1351291	Eric Fellner		
+Q137130	producer	Q1473065	Tim Bevan		
+Q137130	cinematographer	Q957926	John Mathieson		
+Q137130	cast	Q1388430	Noel Fielding	Brothel Gent	
+Q137130	cast	Q3743320	Jeff Nuttall		
+Q137130	cast	Q545328	Tom Ward	a member of parliament	
+Q137130	cast	Q299684	Claire Rushbrook	Lady Estelle	
+Q137130	cast	Q6369278	Karel Dobrý		
+Q137130	cast	Q317251	Matt Lucas	Sir Oswald	
+Q137130	cast	Q2833080	Alexander Armstrong	Winterburn	
+Q137130	cast	Q7938803	Vladimír Javorský		
+Q137130	cast	Q816568	Ben Miller	Dixon	
+Q137130	cast	Q5980605	Iain Robertson	Rob	
+Q137130	cast	Q5126954	Karel Augusta		
+Q137130	cast	Q359665	David Walliams	Viscount Bilston	
+Q137130	cast	Q134133	Tommy Flanagan	Eddie	
+Q137130	cast	Q3159516	Jacques Mathou		
+Q137130	cast	Q7609915	Stephen Walters	Dennis	
+Q137130	cast	Q2133840	Nicholas Farrell	M.P.'s Secretary	
+Q137130	cast	Q6829578	Michael Culkin		
+Q137130	cast	Q316629	Alan Cumming	Lord Rochester	
+Q137130	cast	Q456291	Christian Camargo		
+Q137130	cast	Q722927	Ken Stott	Thief Taker General Chance	
+Q137130	cast	Q203545	Michael Gambon	Lord Gibson	
+Q137130	cast	Q3338823	Neve McIntosh		
+Q137130	cast	Q168763	Liv Tyler	Lady Rebecca Gibson	
+Q137130	cast	Q7516	Jonny Lee Miller	James MacLaine	
+Q137130	cast	Q207307	Robert Carlyle	William Plunkett	

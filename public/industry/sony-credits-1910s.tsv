@@ -1,0 +1,68 @@
+qid	role	personQid	name	character	ordinal
+Q3602714	director	Q513061	William Nigh		
+Q3602714	cast	Q513061	William Nigh		
+Q3602714	cast	Q960510	Montagu Love		
+Q70979141	director	Q513061	William Nigh		
+Q70979141	writer	Q513061	William Nigh		
+Q70979141	cast	Q295593	Lionel Barrymore		
+Q3989199	director	Q3184456	Joseph A. Golden		
+Q3989199	cast	Q3712206	Q3712206		
+Q3989924	director	Q18580654	Edmund Lawrence		
+Q3989924	writer	Q3811197	Julius Steger		
+Q3989924	cast	Q1158727	Henry Kolker		
+Q3989924	cast	Q2965958	Christine Mayo		
+Q3989924	cast	Q234536	Dorothy Gish		
+Q3989924	cast	Q545475	Edna Mayo		
+Q3990073	director	Q3719053	Edgar Jones		
+Q3990073	cinematographer	Q7000797	Carl Gregory		
+Q3990073	cast	Q181006	John Bowers		
+Q3990073	cast	Q4008236	Valli Valli		
+Q5277784	director	Q3719053	Edgar Jones		
+Q5277784	writer	Q1421677	Harry O. Hoyt		
+Q5277784	producer	Q319682	Louis B. Mayer		
+Q5277784	cast	Q259495	Mary Miles Minter		
+Q3785050	director	Q513061	William Nigh		
+Q3785050	writer	Q513061	William Nigh		
+Q3785050	cast	Q513061	William Nigh		
+Q3785050	cast	Q3703351	David H. Thompson		
+Q3785050	cast	Q4008236	Valli Valli		
+Q1194241	director	Q3719053	Edgar Jones		
+Q1194241	producer	Q319682	Louis B. Mayer		
+Q1194241	cast	Q3990598	Thomas Carrigan		
+Q1194241	cast	Q259495	Mary Miles Minter		
+Q1194241	cast	Q1196052	Russell Simpson		
+Q3878817	director	Q513061	William Nigh		
+Q3878817	writer	Q513061	William Nigh		
+Q3878817	producer	Q513061	William Nigh		
+Q3878817	cast	Q513061	William Nigh		
+Q3878817	cast	Q2477872	Marguerite Snow		
+Q3878817	cast	Q3703351	David H. Thompson		
+Q3986260	director	Q513061	William Nigh		
+Q3986260	director	Q3703351	David H. Thompson		
+Q3986260	writer	Q513061	William Nigh		
+Q3986260	writer	Q1421677	Harry O. Hoyt		
+Q3986260	cast	Q2441973	Irene Fenwick		
+Q3988826	director	Q18580654	Edmund Lawrence		
+Q3988826	writer	Q7382928	Ruth Comfort Mitchell		
+Q3988826	cast	Q358379	Adolphe Menjou		
+Q3988826	cast	Q391663	Mary Boland		
+Q3988834	director	Q3184456	Joseph A. Golden		
+Q3988834	director	Q3811197	Julius Steger		
+Q25218397	director	Q1993804	Christy Cabanne		
+Q25218397	cinematographer	Q15069820	William Fildew		
+Q25218397	cast	Q66490626	Mary Mersch		
+Q25218397	cast	Q7037054	Niles Welch		
+Q25218397	cast	Q24845646	Frances Nelson		
+Q21752623	director	Q15117330	John W. Noble		
+Q21752623	writer	Q251303	June Mathis		
+Q21752623	cast	Q230147	Ethel Barrymore		
+Q16613922	director	Q636252	George D. Baker		
+Q16613922	writer	Q636252	George D. Baker		
+Q16613922	cinematographer	Q21664092	Arthur Martinelli		
+Q16613922	cast	Q3082562	Frank Currier		
+Q16613922	cast	Q295593	Lionel Barrymore		
+Q25199047	director	Q382529	Mark Sandrich		
+Q25199047	writer	Q6548263	Lillie Hayward		
+Q25199047	producer	Q1586470	Harry Cohn		
+Q25199047	editor	Q16002948	Frank Atkinson		
+Q25199047	cast	Q460799	Shirley Mason		

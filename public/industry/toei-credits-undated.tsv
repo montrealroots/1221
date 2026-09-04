@@ -1,0 +1,21 @@
+qid	role	personQid	name	character	ordinal
+Q120333142	director	Q463565	Takashi Shimizu		
+Q120333142	composer	Q3180085	Kousuke Yamashita		
+Q120333142	composer	Q140962984	Alan Simoni		
+Q124947350	director	Q5237900	David N. Weiss		
+Q124947350	composer	Q24005768	Caleb Chan		
+Q18337292	composer	Q4115932	Yoshihisa Hirano		
+Q18337292	followed_by	Q18337293	Tanken Driland: Sennen no Mahō		
+Q18337293	composer	Q4115932	Yoshihisa Hirano		
+Q18337293	follows	Q18337292	Tanken Driland		
+Q115671116	director	Q16766833	Tsuneo Kobayashi		
+Q115671116	creator	Q11527257	Toei tokyo movie studio		
+Q115671116	cast	Q11585591	Fusatarō Ishijima	田中部長刑事	
+Q115671116	cast	Q11530904	Kappei Matsumoto	住田捜査一係長	
+Q115671116	cast	Q11379820	Hisaya Itō	赤木部長刑事	
+Q115671116	cast	Q11449084	Jun Usami	阿川捜査一課長	
+Q115671116	cast	Q3155131	Isao Yamagata	三井主任	
+Q115671116	award		Blue Ribbon Awards for Best Newcomer		
+Q97315448	director	Q3135268	Hideo Sekigawa		
+Q97315448	cast	Q139253	Eiji Okada		
+Q97315448	cast	Q3201022	Kyōko Kagawa		

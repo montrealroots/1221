@@ -1,22 +1,27 @@
 /**
  * SLATE — The entertainment industry registry.
  *
- * Every studio, network, streamer, agency, exhibitor, award body and festival
- * here is ORIGINAL TO SLATE and marked `simulated`. That is deliberate: the
- * game generates greenlight decisions, box-office results, award outcomes and
- * corporate behaviour, and attributing invented business decisions to real
- * companies would present fiction as fact. The structures are modelled on how
- * the real industry works; the names and the actions are SLATE's own.
+ * The studios are the real ones (content/studios), with their real catalogues
+ * behind them (content/filmography). The game generates greenlight decisions,
+ * box-office results and corporate behaviour inside a save; everything up to
+ * the day the save starts is the record, and everything after is SLATE, and
+ * the interface says which is which.
+ *
+ * Two television outlets below are still SLATE's own placeholders, marked
+ * `simulated`, until the networks step replaces them with the real broadcast
+ * and cable networks. The agencies and exhibitor chains are likewise
+ * placeholders until their own steps.
  */
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
-import type { AwardBody, Festival } from '../domain/model';
+import { STUDIOS, type Studio } from './studios';
+
 
 const V = REFERENCE_VERSION;
 const SIM = {
   source: 'simulated', confidence: 'high', version: V,
-  note: 'Original to SLATE. Not a real company.',
+  note: 'Original to SLATE. Not a real company. A placeholder until the networks step.',
 } as const;
 
 export interface Buyer extends ReferenceRecord {
@@ -42,21 +47,39 @@ export interface Buyer extends ReferenceRecord {
   /** Distribution reach: fraction of a wide release they can achieve. */
   distributionReach: number;
   description: string;
+  /** Set when the buyer is a real studio in the registry. */
+  studioId?: string;
 }
 
-export const BUYERS = new Registry<Buyer>('buyers', [
-  { id: 'meridian', name: 'Meridian Pictures', type: 'studio', locationId: 'us-ca-burbank', budgetCeiling: 300_000_000_00, budgetFloor: 25_000_000_00, riskAppetite: 32, prestigeBias: 40, wants: ['action', 'adventure', 'science fiction', 'family', 'thriller'], avoids: ['experimental'], formats: ['feature', 'series'], slateSize: 14, accessDifficulty: 92, distributionReach: 1.0, description: 'The biggest of the majors. Four tentpoles a year and a library that pays for everything else.', ...SIM },
-  { id: 'crestwood', name: 'Crestwood Studios', type: 'studio', locationId: 'us-ca-losangeles', budgetCeiling: 220_000_000_00, budgetFloor: 15_000_000_00, riskAppetite: 45, prestigeBias: 58, wants: ['drama', 'thriller', 'biography', 'crime', 'adventure'], avoids: [], formats: ['feature', 'series', 'limited_series'], slateSize: 12, accessDifficulty: 88, distributionReach: 0.95, description: 'A major with a prestige habit. Wins awards and occasionally loses money doing it.', ...SIM },
-  { id: 'halcyon', name: 'Halcyon Entertainment', type: 'studio', locationId: 'us-ca-burbank', budgetCeiling: 180_000_000_00, budgetFloor: 20_000_000_00, riskAppetite: 25, prestigeBias: 22, wants: ['family', 'animation', 'comedy', 'adventure'], avoids: ['horror', 'crime'], formats: ['feature', 'series'], slateSize: 10, accessDifficulty: 90, distributionReach: 0.98, description: 'Four-quadrant family entertainment and the merchandising machine behind it.', ...SIM },
-  { id: 'northgate', name: 'Northgate Films', type: 'mini_major', locationId: 'us-ny-newyork', budgetCeiling: 60_000_000_00, budgetFloor: 4_000_000_00, riskAppetite: 68, prestigeBias: 82, wants: ['drama', 'comedy', 'biography', 'romance', 'crime'], avoids: ['action'], formats: ['feature', 'limited_series', 'documentary'], slateSize: 16, accessDifficulty: 70, distributionReach: 0.55, description: 'Specialty label. Buys at festivals, campaigns hard, and has a shelf of statues to show for it.', ...SIM },
-  { id: 'brightline', name: 'Brightline Pictures', type: 'mini_major', locationId: 'us-ca-losangeles', budgetCeiling: 45_000_000_00, budgetFloor: 2_000_000_00, riskAppetite: 78, prestigeBias: 45, wants: ['horror', 'thriller', 'science fiction', 'comedy'], avoids: [], formats: ['feature'], slateSize: 18, accessDifficulty: 52, distributionReach: 0.62, description: 'Low budgets, high margins, and a horror slate that funds everything else.', ...SIM },
-  { id: 'tessellate', name: 'Tessellate', type: 'streamer', locationId: 'us-ca-losangeles', budgetCeiling: 200_000_000_00, budgetFloor: 3_000_000_00, riskAppetite: 62, prestigeBias: 50, wants: ['thriller', 'drama', 'documentary', 'science fiction', 'romance', 'comedy'], avoids: [], formats: ['feature', 'series', 'limited_series', 'documentary'], slateSize: 60, accessDifficulty: 74, distributionReach: 0.0, description: 'The volume player. Buys everything, releases everything, and tells nobody what worked.', ...SIM },
-  { id: 'lumenplus', name: 'Lumen+', type: 'streamer', locationId: 'us-wa-seattle', budgetCeiling: 150_000_000_00, budgetFloor: 8_000_000_00, riskAppetite: 44, prestigeBias: 66, wants: ['drama', 'limited_series', 'biography', 'science fiction'], avoids: ['horror'], formats: ['series', 'limited_series', 'feature'], slateSize: 28, accessDifficulty: 80, distributionReach: 0.0, description: 'Fewer, bigger swings. Wants the show people talk about, not the show people finish.', ...SIM },
-  { id: 'atlasnet', name: 'Atlas Network', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 12_000_000_00, budgetFloor: 1_500_000_00, riskAppetite: 28, prestigeBias: 34, wants: ['crime', 'medical', 'comedy', 'family', 'legal'], avoids: ['experimental', 'horror'], formats: ['series', 'tv_movie'], slateSize: 22, accessDifficulty: 66, distributionReach: 0.0, description: 'Broadcast. Twenty-two episodes, a timeslot and a lead-in that decides your fate.', ...SIM },
-  { id: 'vertexcable', name: 'Vertex', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 20_000_000_00, budgetFloor: 2_500_000_00, riskAppetite: 72, prestigeBias: 88, wants: ['drama', 'crime', 'science fiction', 'limited_series'], avoids: ['family'], formats: ['series', 'limited_series'], slateSize: 8, accessDifficulty: 84, distributionReach: 0.0, description: 'Premium cable. Ten episodes, no notes worth the name, and a habit of making careers.', ...SIM },
-  { id: 'pinewharf', name: 'Pine Wharf Media', type: 'indie', locationId: 'us-ga-atlanta', budgetCeiling: 8_000_000_00, budgetFloor: 250_000_00, riskAppetite: 88, prestigeBias: 55, wants: ['horror', 'drama', 'thriller', 'documentary'], avoids: [], formats: ['feature', 'documentary'], slateSize: 12, accessDifficulty: 26, distributionReach: 0.18, description: 'Where a first feature actually gets made. Small money, real credits.', ...SIM },
-  { id: 'sablefox', name: 'Sable & Fox', type: 'indie', locationId: 'uk-eng-london', budgetCeiling: 15_000_000_00, budgetFloor: 500_000_00, riskAppetite: 82, prestigeBias: 78, wants: ['drama', 'biography', 'romance', 'documentary'], avoids: ['action'], formats: ['feature', 'limited_series', 'documentary'], slateSize: 9, accessDifficulty: 44, distributionReach: 0.24, description: 'British independent with a taste for uncomfortable subject matter and European co-financing.', ...SIM },
-]);
+function buyerOf(studio: Studio): Buyer {
+  const type: Buyer['type'] = studio.type === 'major' || studio.type === 'international' ? 'studio'
+    : studio.type === 'streamer' ? 'streamer'
+    : studio.type === 'mini_major' ? 'mini_major'
+    : 'indie';
+  return {
+    id: studio.id, name: studio.name, aliases: studio.aliases, type, locationId: studio.locationId,
+    budgetCeiling: studio.budgetCeiling, budgetFloor: studio.budgetFloor,
+    riskAppetite: studio.riskAppetite, prestigeBias: studio.prestigeBias,
+    wants: studio.wants, avoids: studio.avoids, formats: studio.formats, slateSize: studio.slateSize,
+    accessDifficulty: studio.accessDifficulty, distributionReach: studio.distributionReach,
+    description: studio.description, studioId: studio.id,
+    source: 'calibrated_estimate', confidence: 'medium', version: V,
+    note: 'A real studio. Its taste and budgets are measured from its own catalogue where the record allows and estimated by SLATE where it does not.',
+  };
+}
+
+const TV_PLACEHOLDERS: Buyer[] = [
+  { id: 'atlasnet', name: 'Atlas Network', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 12_000_000_00, budgetFloor: 1_500_000_00, riskAppetite: 28, prestigeBias: 34, wants: ['crime', 'medical', 'comedy', 'family', 'legal'], avoids: ['experimental', 'horror'], formats: ['series', 'tv_movie'], slateSize: 22, accessDifficulty: 66, distributionReach: 0.0, description: 'Broadcast. Twenty-two episodes, a timeslot and a lead-in that decides your fate. A placeholder until the real networks arrive.', ...SIM },
+  { id: 'vertexcable', name: 'Vertex', type: 'network', locationId: 'us-ny-newyork', budgetCeiling: 20_000_000_00, budgetFloor: 2_500_000_00, riskAppetite: 72, prestigeBias: 88, wants: ['drama', 'crime', 'science fiction', 'limited_series'], avoids: ['family'], formats: ['series', 'limited_series'], slateSize: 8, accessDifficulty: 84, distributionReach: 0.0, description: 'Premium cable. Ten episodes, no notes worth the name, and a habit of making careers. A placeholder until the real networks arrive.', ...SIM },
+];
+
+export const BUYERS = new Registry<Buyer>('buyers', [...STUDIOS.all().map(buyerOf), ...TV_PLACEHOLDERS]);
+
+/** The fictional buyers earlier saves may still point at, by id, with the real name they map to for history. */
+export const LEGACY_BUYER_NAMES: Readonly<Record<string, string>> = {
+  meridian: 'Meridian Pictures', crestwood: 'Crestwood Studios', halcyon: 'Halcyon Entertainment', northgate: 'Northgate Films',
+  brightline: 'Brightline Pictures', tessellate: 'Tessellate', lumenplus: 'Lumen+', pinewharf: 'Pine Wharf Media', sablefox: 'Sable & Fox',
+};
 
 export interface Agency extends ReferenceRecord {
   type: 'agency' | 'management' | 'law' | 'publicity';
@@ -102,67 +125,8 @@ export const EXHIBITORS = new Registry<ExhibitorChain>('exhibitors', [
   { id: 'orbit', name: 'Orbit Entertainment', type: 'exhibitor', locationId: 'us-fl-miami', screens: 3900, marketShare: 0.16, openingWeekSplit: 0.47, premiumFormats: ['Orbit Dome'], description: 'Aggressive on premium formats and aggressive on terms.', ...SIM },
 ]);
 
-export const AWARD_BODIES: readonly AwardBody[] = [
-  {
-    id: 'vanguard', name: 'The Vanguard Awards', shortName: 'Vanguards', prestige: 100, kind: 'film',
-    ceremonyMonth: 3, ceremonyDay: 9,
-    categories: ['Best Picture', 'Best Director', 'Best Actor', 'Best Actress', 'Best Supporting Actor', 'Best Supporting Actress', 'Best Original Screenplay', 'Best Adapted Screenplay', 'Best Cinematography', 'Best Editing', 'Best Original Score', 'Best Production Design', 'Best Costume Design', 'Best Sound', 'Best Visual Effects', 'Best Documentary'],
-    eligibilityRule: 'Theatrical release in the prior calendar year, minimum one week in a qualifying market.',
-  },
-  {
-    id: 'continental', name: 'The Continental Awards', shortName: 'Continentals', prestige: 82, kind: 'both',
-    ceremonyMonth: 1, ceremonyDay: 12,
-    categories: ['Best Film Drama', 'Best Film Comedy', 'Best Director', 'Best Actor Drama', 'Best Actress Drama', 'Best Actor Comedy', 'Best Actress Comedy', 'Best Screenplay', 'Best Series Drama', 'Best Series Comedy', 'Best Limited Series', 'Best Actor Series', 'Best Actress Series'],
-    eligibilityRule: 'Released in the prior calendar year. Press-body voted, and the earliest meaningful signal of the season.',
-  },
-  {
-    id: 'beacon', name: 'The Beacon Awards', shortName: 'Beacons', prestige: 88, kind: 'television',
-    ceremonyMonth: 9, ceremonyDay: 15,
-    categories: ['Outstanding Drama Series', 'Outstanding Comedy Series', 'Outstanding Limited Series', 'Outstanding Lead Actor Drama', 'Outstanding Lead Actress Drama', 'Outstanding Lead Actor Comedy', 'Outstanding Lead Actress Comedy', 'Outstanding Supporting Actor', 'Outstanding Supporting Actress', 'Outstanding Writing', 'Outstanding Directing'],
-    eligibilityRule: 'Episodes aired or released between 1 June and 31 May.',
-  },
-  {
-    id: 'performers_guild', name: 'Performers Guild Awards', shortName: 'Guild', prestige: 76, kind: 'guild',
-    ceremonyMonth: 2, ceremonyDay: 23,
-    categories: ['Outstanding Cast', 'Outstanding Male Lead', 'Outstanding Female Lead', 'Outstanding Male Supporting', 'Outstanding Female Supporting', 'Outstanding Stunt Ensemble'],
-    eligibilityRule: 'Voted by working performers. The strongest single predictor of the acting Vanguards.',
-  },
-  {
-    id: 'writers_guild', name: 'Writers Guild Prize', shortName: 'WGP', prestige: 70, kind: 'guild',
-    ceremonyMonth: 2, ceremonyDay: 16,
-    categories: ['Original Screenplay', 'Adapted Screenplay', 'Drama Series', 'Comedy Series'],
-    eligibilityRule: 'Produced under a guild agreement in the prior calendar year.',
-  },
-  {
-    id: 'directors_guild', name: 'Directors Guild Medal', shortName: 'DGM', prestige: 78, kind: 'guild',
-    ceremonyMonth: 2, ceremonyDay: 8,
-    categories: ['Feature Film', 'First-Time Feature', 'Drama Series', 'Comedy Series'],
-    eligibilityRule: 'Directed under a guild agreement in the prior calendar year.',
-  },
-  {
-    id: 'critics_circle', name: 'National Critics Circle', shortName: 'NCC', prestige: 58, kind: 'critics',
-    ceremonyMonth: 1, ceremonyDay: 5,
-    categories: ['Best Film', 'Best Director', 'Best Actor', 'Best Actress', 'Best Screenplay', 'Best Cinematography'],
-    eligibilityRule: 'Voted by accredited critics. Early, influential, and frequently contrarian.',
-  },
-];
-
-export const AWARD_BODY_BY_ID: Readonly<Record<string, AwardBody>> =
-  Object.fromEntries(AWARD_BODIES.map((a) => [a.id, a]));
-
-export const FESTIVALS: readonly Festival[] = [
-  { id: 'alpine', name: 'Alpine Film Festival', locationId: 'us-co-denver', month: 1, day: 22, prestige: 84, premiereRequirement: 'world', categories: ['Grand Jury Prize', 'Audience Award', 'Directing Award', 'Screenwriting Award'], submissionFee: 110, marketAttached: true },
-  { id: 'lumiere', name: 'Lumiere International Film Festival', locationId: 'de-be-berlin', month: 2, day: 13, prestige: 88, premiereRequirement: 'world', categories: ['Golden Lumiere', 'Silver Lumiere', 'Best Director', 'Best Performance'], submissionFee: 130, marketAttached: true },
-  { id: 'meridian_fest', name: 'Meridian Festival', locationId: 'fr-paca-cannes', month: 5, day: 14, prestige: 100, premiereRequirement: 'world', categories: ['Grand Prize', 'Jury Prize', 'Best Director', 'Best Actor', 'Best Actress', 'Best Screenplay'], submissionFee: 160, marketAttached: true },
-  { id: 'coastline', name: 'Coastline Film Festival', locationId: 'it-laz-rome', month: 8, day: 28, prestige: 90, premiereRequirement: 'world', categories: ['Golden Compass', 'Grand Jury Prize', 'Best Director'], submissionFee: 140, marketAttached: true },
-  { id: 'harbourlight', name: 'Harbourlight Festival', locationId: 'ca-on-toronto', month: 9, day: 5, prestige: 86, premiereRequirement: 'international', categories: ['Audience Award', 'Platform Prize', 'Discovery Award'], submissionFee: 125, marketAttached: true },
-  { id: 'southbank', name: 'Southbank Documentary Festival', locationId: 'uk-eng-london', month: 10, day: 9, prestige: 68, premiereRequirement: 'regional', categories: ['Best Documentary', 'Best Direction', 'Impact Award'], submissionFee: 85, marketAttached: false },
-  { id: 'redrock', name: 'Red Rock Genre Festival', locationId: 'us-nm-santafe', month: 6, day: 18, prestige: 52, premiereRequirement: 'none', categories: ['Best Feature', 'Best Horror', 'Best Science Fiction', 'Audience Choice'], submissionFee: 65, marketAttached: false },
-  { id: 'crescent', name: 'Crescent City Shorts', locationId: 'us-la-neworleans', month: 4, day: 11, prestige: 44, premiereRequirement: 'none', categories: ['Best Short', 'Best Student Short', 'Best Animation'], submissionFee: 45, marketAttached: false },
-];
-
-export const FESTIVAL_BY_ID: Readonly<Record<string, Festival>> =
-  Object.fromEntries(FESTIVALS.map((f) => [f.id, f]));
+// The award bodies and festivals are the real ones: see content/events-data,
+// content/award-bodies and content/festival-rules.
 
 export const GENRES = [
   'action', 'adventure', 'animation', 'biography', 'comedy', 'crime', 'documentary',

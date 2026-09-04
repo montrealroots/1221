@@ -1,0 +1,108 @@
+qid	role	personQid	name	character	ordinal
+Q466443	director	Q468442	Karan Johar		
+Q466443	writer	Q468442	Karan Johar		
+Q466443	composer	Q2750298	Jatin–Lalit		
+Q466443	producer	Q771768	Yash Johar		
+Q466443	cast	Q2839215	Alok Nath		
+Q466443	cast	Q9535	Shah Rukh Khan		
+Q466443	cast	Q485557	Rani Mukerji		
+Q466443	cast	Q3785692	Himani Shivpuri		
+Q466443	cast	Q233619	Hrithik Roshan		
+Q466443	cast	Q983571	Johnny Lever		
+Q466443	cast	Q157803	Farida Jalal		
+Q466443	cast	Q2347167	Jugal Hansraj		
+Q466443	cast	Q3632832	Sushma Seth		
+Q466443	cast	Q147395	Kajol	Anjali Sharma Raichand	
+Q466443	cast	Q464932	Jaya Bachchan	Nandini Chandran Raichand	
+Q466443	cast	Q9570	Amitabh Bachchan	Yashvardhan Raichand	
+Q466443	cast	Q184885	カリーナー・カプール	Poo	
+Q5448415	director	Q16214430	Meghna Gulzar		
+Q5448415	writer	Q16214430	Meghna Gulzar		
+Q5448415	composer	Q612167	Anu Malik		
+Q5448415	producer	Q23071438	Jhamu Sughand		
+Q5448415	cinematographer	Q17019633	Manmohan Singh		
+Q5448415	cast	Q3348185	Palash Sen		
+Q5448415	cast	Q3045307	Sanjay Suri		
+Q5448415	cast	Q255076	Sushmita Sen		
+Q5448415	cast	Q158233	Tabu		
+Q507490	director	Q2332619	Nikhil Advani		
+Q507490	writer	Q468442	Karan Johar		
+Q507490	composer	Q2049494	Shankar Mahadevan		
+Q507490	producer	Q468442	Karan Johar		
+Q507490	producer	Q771768	Yash Johar		
+Q507490	cinematographer	Q3617485	Anil Mehta		
+Q507490	editor	Q3948446	Sanjay Sankla		
+Q507490	narrator	Q188671	Preity Zinta		
+Q507490	cast	Q32342	Sonali Bendre		
+Q507490	cast	Q3632832	Sushma Seth		
+Q507490	cast	Q1612637	Sanjay Kapoor		
+Q507490	cast	Q1628810	Lillete Dubey		
+Q507490	cast	Q2341578	Reema Lagoo		
+Q507490	cast	Q9535	Shah Rukh Khan		
+Q507490	cast	Q464932	Jaya Bachchan		
+Q507490	cast	Q252290	Saif Ali Khan		
+Q507490	cast	Q485557	Rani Mukerji		
+Q507490	cast	Q147395	Kajol		
+Q507490	cast	Q165816	Dara Singh		
+Q507490	cast	Q188671	Preity Zinta		
+Q865989	director	Q468442	Karan Johar		
+Q865989	writer	Q468442	Karan Johar		
+Q865989	composer	Q2049494	Shankar Mahadevan		
+Q865989	producer	Q468442	Karan Johar		
+Q865989	producer	Q22275256	Hiroo Johar		
+Q865989	cinematographer	Q3617485	Anil Mehta		
+Q865989	editor	Q3948446	Sanjay Sankla		
+Q865989	cast	Q188671	Preity Zinta		
+Q865989	cast	Q147395	Kajol		
+Q865989	cast	Q158136	Kirron Kher		
+Q865989	cast	Q9570	Amitabh Bachchan		
+Q865989	cast	Q485557	Rani Mukerji		
+Q865989	cast	Q187058	アビシェーク・バッチャン		
+Q865989	cast	Q9535	Shah Rukh Khan		
+Q865989	cast	Q442668	Arjun Rampal		
+Q865989	follows	Q3427552	Dil Jo Bhi Kahey...		
+Q1757944	director	Q725970	David Dhawan		
+Q1757944	writer	Q725970	David Dhawan		
+Q1757944	composer	Q7960701	Wajid Khan		
+Q1757944	producer	Q357608	Aditya Chopra		
+Q1757944	producer	Q983053	Sohail Khan		
+Q1757944	cast	Q1992008	Govinda		
+Q1757944	cast	Q944546	Sunny Deol		
+Q1757944	cast	Q9543	Salman Khan		
+Q1757944	cast	Q1203191	Arbaaz Khan		
+Q1251094	director	Q3515885	Tarun Mansukhani		
+Q1251094	writer	Q3515885	Tarun Mansukhani		
+Q1251094	producer	Q468442	Karan Johar		
+Q1251094	producer	Q22275256	Hiroo Johar		
+Q1251094	cinematographer	Q4830919	Ayananka Bose		
+Q1251094	cast	Q187058	アビシェーク・バッチャン		
+Q1251094	cast	Q48619	Bobby Deol		
+Q1251094	cast	Q158136	Kirron Kher		
+Q1251094	cast	Q834338	Boman Irani		
+Q1251094	cast	Q313025	John Abraham		
+Q1251094	cast	Q158957	Priyanka Chopra		
+Q776098	director	Q7313473	Rensil D'Silva		
+Q776098	writer	Q7313473	Rensil D'Silva		
+Q776098	composer	Q3124942	Salim-Sulaiman		
+Q776098	producer	Q468442	Karan Johar		
+Q776098	cinematographer	Q5710995	Hemant Chaturvedi		
+Q776098	cast	Q7380406	Rupinder Nagra		
+Q776098	cast	Q184885	カリーナー・カプール		
+Q776098	cast	Q731854	Vivek Oberoi		
+Q776098	cast	Q466080	Dia Mirza		
+Q776098	cast	Q80309	Om Puri		
+Q776098	cast	Q252290	Saif Ali Khan		
+Q776098	cast	Q158136	Kirron Kher		
+Q3565236	director	Q4830910	Ayan Mukerji		
+Q3565236	writer	Q7039895	Niranjan Iyengar		
+Q3565236	composer	Q4746891	Amit Trivedi		
+Q3565236	producer	Q468442	Karan Johar		
+Q3565236	cinematographer	Q3617485	Anil Mehta		
+Q3565236	editor	Q21933872	Shan Mohammed		
+Q3565236	cast	Q7645142	Supriya Pathak		
+Q3565236	cast	Q3117676	Rahul Khanna		
+Q3565236	cast	Q6374451	Kashmira Shah		
+Q3565236	cast	Q1063412	Ranbir Kapoor		
+Q3565236	cast	Q272014	Konkona Sen Sharma		
+Q3565236	cast	Q25300613	Shikha Talsania		
+Q3565236	cast	Q560163	Anupam Kher		

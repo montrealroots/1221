@@ -6,6 +6,10 @@
  * system registered, which is the only object the UI ever talks to.
  */
 
+import { LEGACY_BODY_NAMES } from './content/award-bodies';
+import { LEGACY_FESTIVAL_NAMES } from './content/festival-rules';
+import { BUYERS, LEGACY_BUYER_NAMES } from './content/industry';
+import { countryOfCity, primaryLanguageOf } from './content/geography';
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Id, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
@@ -33,7 +37,7 @@ import { registerRelease, registerFranchises } from './systems/release';
 import { registerProfessions } from './systems/professions';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
-import { registerAwards, setUpSeason } from './systems/awards';
+import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
 import { registerCompany } from './systems/company';
 import { registerWorld } from './world/world';
 import { createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig, careerLabel } from './world/bootstrap';
@@ -377,6 +381,9 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  // A save from before the real bodies, or one that skipped a January, needs
+  // this year's editions to exist. Creating them is idempotent.
+  ensureSeasons(sim);
   return sim;
 }
 
@@ -589,6 +596,80 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (owner) { vehicle.locationId = owner.currentLocationId; parked++; }
   }
   if (parked > 0) steps.push(`Placed ${parked} car${parked === 1 ? '' : 's'} where their owners are.`);
+
+  // Schema 14 put the real award bodies in. Every project now says where it
+  // is from, what language it speaks and how it reached the public, which is
+  // what the bodies' rules read. Finalised results under the older fictional
+  // bodies stay exactly as they were: history is not rewritten. Editions of
+  // those bodies that had not yet been decided are retired, since nothing
+  // can decide them now, and their pending entries go with them.
+  let described = 0;
+  for (const project of Object.values(universe.projects)) {
+    const creator = universe.people[project.createdById];
+    const country = project.productionCountryId
+      ?? countryOfCity(project.productionLocationIds[0]) ?? countryOfCity(creator?.currentLocationId) ?? 'us';
+    if (!project.productionCountryId) { project.productionCountryId = country; described++; }
+    project.language ??= primaryLanguageOf(country);
+    if (!project.releaseStrategy && project.releaseDate) {
+      const release = project.releaseId ? universe.releases[project.releaseId] : undefined;
+      project.releaseStrategy = release?.strategy
+        ?? (project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie' ? 'streaming_exclusive'
+          : project.format === 'short' ? 'festival_only'
+          : project.budget >= 15_000_000_00 ? 'wide_theatrical' : 'limited_theatrical');
+    }
+  }
+  if (described > 0) steps.push(`Gave ${described} project${described === 1 ? '' : 's'} a country, a language and a way of reaching the public.`);
+
+  let retired = 0;
+  const retiredEditionIds = new Set<string>();
+  for (const edition of Object.values(universe.awardEditions)) {
+    if (!LEGACY_BODY_NAMES[edition.bodyId] || edition.finalised) continue;
+    retiredEditionIds.add(edition.id);
+    delete universe.awardEditions[edition.id];
+    retired++;
+  }
+  for (const nomination of Object.values(universe.awardNominations)) {
+    if (retiredEditionIds.has(nomination.editionId)) delete universe.awardNominations[nomination.id];
+  }
+  let withdrawn = 0;
+  for (const submission of Object.values(universe.festivalSubmissions)) {
+    if (!LEGACY_FESTIVAL_NAMES[submission.festivalId]) continue;
+    if (submission.status === 'under_review' || submission.status === 'selected') { submission.status = 'withdrawn'; withdrawn++; }
+  }
+  const before = universe.scheduled.length;
+  universe.scheduled = universe.scheduled.filter((item) => {
+    if ((item.kind === 'award.nominations' || item.kind === 'award.ceremony') && retiredEditionIds.has(String(item.payload.editionId))) return false;
+    if ((item.kind === 'fest.decision' || item.kind === 'fest.screening')) {
+      const submission = universe.festivalSubmissions[String(item.payload.submissionId)];
+      if (submission && LEGACY_FESTIVAL_NAMES[submission.festivalId]) return false;
+    }
+    return true;
+  });
+  if (retired > 0 || withdrawn > 0 || before !== universe.scheduled.length) {
+    steps.push(`The award bodies are now the real ones. Retired ${retired} undecided edition${retired === 1 ? '' : 's'} of the earlier fictional bodies and ${withdrawn} pending festival submission${withdrawn === 1 ? '' : 's'}; every decided result was kept as it was.`);
+  }
+
+  // Schema 15: the studios are the real ones. A pitch still waiting on one of
+  // the earlier fictional buyers can never be answered, so it lapses; an offer
+  // from one of them that was never accepted is withdrawn. Every deal already
+  // done keeps the name it was done under: that is history.
+  if (from < 15) {
+    const pending = universe.scheduled.length;
+    universe.scheduled = universe.scheduled.filter((item) => !(item.kind === 'film.pitch_response' && !BUYERS.get(String(item.payload.buyerId))));
+    const lapsed = pending - universe.scheduled.length;
+    let withdrawnOffers = 0;
+    for (const decision of Object.values(universe.decisions)) {
+      if (decision.resolvedAt || decision.dismissedAt) continue;
+      const stale = decision.actions.some((a) => a.commandKind === 'film.accept_buyer_offer' && !BUYERS.get(String(a.payload.buyerId)));
+      if (stale) { decision.dismissedAt = universe.now; withdrawnOffers++; }
+    }
+    if (lapsed > 0 || withdrawnOffers > 0) {
+      const names = Object.values(LEGACY_BUYER_NAMES).slice(0, 3).join(', ');
+      steps.push(`The studios are now the real ones. ${lapsed} pending pitch${lapsed === 1 ? '' : 'es'} and ${withdrawnOffers} open offer${withdrawnOffers === 1 ? '' : 's'} from the earlier fictional buyers (${names} and the rest) lapsed; every deal already done was kept under the name it was done with.`);
+    } else {
+      steps.push('The studios are now the real ones.');
+    }
+  }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);

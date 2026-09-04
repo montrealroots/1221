@@ -74,6 +74,7 @@ const DOMAINS: Domain[] = [
     entries: [
       { route: '/workspace/casting', label: 'Casting', detail: 'Breakdowns, self-tapes, callbacks and offers you can lose.' },
       { route: '/workspace/projects', label: 'Projects', detail: 'Rights, writing, packaging, greenlight, shoot, post, release.' },
+      { route: '/workspace/industry', label: 'Industry', detail: 'The real studios, who runs them, and everything they have made.' },
       { route: '/workspace/awards', label: 'Awards And Festivals', detail: 'Edition-specific, eligibility-gated, and permanent once decided.' },
     ],
   },

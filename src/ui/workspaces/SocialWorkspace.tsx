@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Modal } from '@/ui/components/primitives';
@@ -22,7 +23,7 @@ export function SocialWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Social</div>
-        <h1>{accounts.reduce((s, a) => s + a.followers, 0).toLocaleString('en-US')} followers</h1>
+        <h1>{accounts.reduce((s, a) => s + a.followers, 0).toLocaleString('en-US')} Followers</h1>
         <p className="muted">
           Four platforms with genuinely different mechanics. Reach depends on quality, audience,
           consistency, momentum and timing. Posting guarantees nothing.
@@ -86,7 +87,7 @@ export function SocialWorkspace() {
                     <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>Audience segments</div>
                     {selected.segments.map((segment) => (
                       <div key={segment.key} className="row-between" style={{ padding: '3px 0' }}>
-                        <span className="small">{segment.key.replace(/_/g, ' ')}</span>
+                        <span className="small">{titleCaseLabel(segment.key.replace(/_/g, ' '))}</span>
                         <span className="mono small">{segment.size.toLocaleString('en-US')}</span>
                       </div>
                     ))}
@@ -118,22 +119,22 @@ export function SocialWorkspace() {
                       <div key={post.id} className="list-item list-static">
                         <div className="grow">
                           <div className="small strong">
-                            {post.title} {post.viral && <span className="chip chip-accent">viral</span>}
+                            {post.title} {post.viral && <span className="chip chip-accent">Viral</span>}
                           </div>
                           <div className="xs dim">
-                            {post.format.replace(/_/g, ' ')} · quality {post.quality} ·{' '}
+                            {titleCaseLabel(post.format.replace(/_/g, ' '))} · quality {post.quality} ·{' '}
                             {formatDate(post.postedAt, sim.homeZone)} at {formatTime(post.postedAt, sim.homeZone)}
                           </div>
                         </div>
                         <div style={{ textAlign: 'right' }}>
                           <div className="mono small">{post.metrics.impressions.toLocaleString('en-US')}</div>
-                          <div className="xs dim">impressions</div>
+                          <div className="xs dim">Impressions</div>
                         </div>
                         <div style={{ textAlign: 'right' }}>
                           <div className={`mono small ${post.metrics.followersGained >= 0 ? 'positive' : 'negative'}`}>
                             {post.metrics.followersGained >= 0 ? '+' : ''}{post.metrics.followersGained}
                           </div>
-                          <div className="xs dim">followers</div>
+                          <div className="xs dim">Followers</div>
                         </div>
                       </div>
                     ))}
@@ -155,14 +156,14 @@ export function SocialWorkspace() {
                 <div className="grow">
                   <div className="small strong">{deal.brandName}</div>
                   <div className="xs dim">
-                    {deal.deliverables.map((d) => `${d.delivered}/${d.count} ${d.format.replace(/_/g, ' ')}`).join(', ')} ·
+                    {deal.deliverables.map((d) => `${d.delivered}/${d.count} ${titleCaseLabel(d.format.replace(/_/g, ' '))}`).join(', ')} ·
                     due {formatDate(deal.deadlineAt, sim.homeZone)}
                     {deal.exclusivityCategory && ` · exclusive in ${deal.exclusivityCategory}`}
                   </div>
                 </div>
                 <span className="mono small">{formatMoneyCompact(deal.compensation)}</span>
                 <span className={`chip ${deal.status === 'completed' ? 'chip-positive' : deal.status === 'breached' ? 'chip-negative' : ''}`}>
-                  {deal.status}
+                  {titleCaseLabel(deal.status)}
                 </span>
                 {deal.status === 'offered' && (
                   <>
@@ -215,7 +216,7 @@ function PostDialog({ accountId, onClose }: { accountId: string; onClose: () => 
       <div className="field">
         <label htmlFor="format">Format</label>
         <select id="format" value={format} onChange={(e) => setFormat(e.target.value as PostFormat)}>
-          {platform.formats.map((f) => <option key={f} value={f}>{f.replace(/_/g, ' ')}</option>)}
+          {platform.formats.map((f) => <option key={f} value={f}>{titleCaseLabel(f.replace(/_/g, ' '))}</option>)}
         </select>
       </div>
       <div className="field">

@@ -1,0 +1,746 @@
+qid	role	personQid	name	character	ordinal
+Q275676	writer	Q3082793	Riku Sanjo		
+Q275676	composer	Q3180085	Kousuke Yamashita		
+Q3113058	director	Q285084	Mamoru Oshii		
+Q3113058	director	Q426822	Kōichi Mashimo		
+Q3113058	director	Q2387211	Tomoki Kyoda		
+Q3113058	director	Q3012184	Daisuke Nishio		
+Q3113058	director	Q3482244	Shinji Aramaki		
+Q3113058	director	Q6426456	Koji Sawai		
+Q3113058	producer	Q5349267	Eiko Tanaka		
+Q3113058	producer	Q6244355	John Ledford		
+Q3113058	editor	Q11454127	Ryūji Miyajima		
+Q3113058	executive_producer	Q369396	Kōzō Morishita		
+Q3113058	executive_producer	Q426822	Kōichi Mashimo		
+Q3113058	executive_producer	Q6244355	John Ledford		
+Q3113058	executive_producer	Q6883235	Mitsuhisa Ishikawa		
+Q1194073	director	Q4204341	Tatsuya Nagamine		
+Q1194073	follows	Q1205226	Fresh Pretty Cure!		
+Q1194073	followed_by	Q1202553	Suite PreCure		
+Q3720632	director	Q11531197	Rie Matsumoto		
+Q3720632	composer	Q941314	Yasuharu Takanashi		
+Q5737165	director	Q16264634	Mipo O		
+Q5737165	cast	Q1054660	Shinobu Ōtake		
+Q5737165	cast	Q11422725	Jun Kunimura		
+Q5737165	cast	Q253873	Aoi Miyazaki		
+Q4381638	director	Q39734	Osamu Kaneda		
+Q4381638	composer	Q2308677	Toshihiko Sahashi		
+Q4381638	cast	Q872994	Wakana Matsumoto		
+Q4381638	cast	Q1057620	Akira Sasanuma		
+Q4381638	cast	Q3544889	Kenjirō Ishimaru		
+Q4381638	cast	Q371134	Yūichi Nakamura		
+Q4381638	cast	Q1324264	Michie Tomizawa		
+Q4381638	cast	Q1154288	Dori Sakurada		
+Q4381638	cast	Q1054688	Rina Akiyama		
+Q4381638	cast	Q965157	Tamaki Matsumoto		
+Q4381638	cast	Q563425	Kenichi Suzumura		
+Q4381638	cast	Q719326	Shin-ichiro Miki		
+Q4381638	cast	Q520669	Hōchū Ōtsuka		
+Q4381638	cast	Q903511	Ryo Ueno		
+Q4381638	cast	Q1201334	Toshihiko Seki		
+Q4381638	cast	Q1022017	Yūta Furukawa		
+Q4381638	cast	Q933509	Hiroki Takahashi		
+Q4381638	cast	Q1351599	Kōji Yusa		
+Q4381638	cast	Q718358	Daisuke Ono		
+Q4381638	cast	Q1936365	Kimito Totani		
+Q4381638	cast	Q7310142	Reiko Kusamura		
+Q4381638	cast	Q6432886	Yuko Takayama		
+Q135248	director	Q977721	Ryūta Tasaki		
+Q135248	cast	Q329873	Takashi Ukaji		
+Q135248	cast	Q1333036	Yukana		
+Q135248	cast	Q1134059	Renn Kiriyama		
+Q135248	cast	Q3545470	Kenta Satoi		
+Q135248	cast	Q3572668	Yoshimitsu Shimoyama		
+Q135248	cast	Q7385328	Ryōsuke Miura		
+Q135248	cast	Q1142856	Fumihiko Tachiki		
+Q135248	cast	Q643440	Minehiro Kinomoto		
+Q135248	cast	Q3544614	Kengo Ohkuchi		
+Q135248	cast	Q1372791	Jōji Nakata		
+Q135248	cast	Q3234542	Hikaru Yamamoto		
+Q135248	cast	Q6123669	Shu Watanabe		
+Q135248	cast	Q2839470	Naoko Kouda		
+Q135248	cast	Q271793	Reon Kadena		
+Q135248	cast	Q1093223	Tarō Yamamoto		
+Q135248	cast	Q1076842	Kenji Hamada		
+Q135248	cast	Q1329748	Tomomi Kasai		
+Q135248	cast	Q4922349	Keikō Sakai		
+Q135248	cast	Q1134047	Masaki Suda		
+Q135248	cast	Q1075055	Shingo Nakagawa		
+Q333317	director	Q6426234	Koichi Sakamoto		
+Q333317	writer	Q3082793	Riku Sanjo		
+Q333317	composer	Q4261457	Shuhei Naruse		
+Q333317	cast	Q1329748	Tomomi Kasai		
+Q333317	cast	Q3268541	Rin Asuka		
+Q333317	cast	Q643440	Minehiro Kinomoto		
+Q333317	cast	Q1075055	Shingo Nakagawa		
+Q333317	cast	Q1142856	Fumihiko Tachiki		
+Q333317	cast	Q1139729	Minase Yashiro		
+Q333317	cast	Q442667	Aya Sugimoto		
+Q333317	cast	Q1321759	Nao Nagasawa		
+Q333317	cast	Q1753314	Kumiko Nakano		
+Q333317	cast	Q3234542	Hikaru Yamamoto		
+Q333317	cast	Q1336512	Genki Sudo		
+Q333317	cast	Q1134059	Renn Kiriyama		
+Q333317	cast	Q6123669	Shu Watanabe		
+Q333317	cast	Q11458033	Minori Terada		
+Q333317	cast	Q3275174	Masayuki Deai		
+Q333317	cast	Q1134047	Masaki Suda		
+Q333317	cast	Q2866746	Natsuko Aso		
+Q2054929	director	Q5649872	Hans Canosa		
+Q2054929	writer	Q529735	Gabrielle Zevin		
+Q2054929	composer	Q468482	Kylee		
+Q2054929	cast	Q847834	Misa Shimizu		
+Q2054929	cast	Q468482	Kylee		
+Q2054929	cast	Q228598	Emma Roberts		
+Q2054929	cast	Q864761	Maki Horikita		
+Q2054929	cast	Q5368124	Atsurō Watabe		
+Q2054929	cast	Q360986	Kenichi Matsuyama		
+Q2054929	cast	Q1329065	Yuya Tegoshi		
+Q2054929	cast	Q1068023	Mirei Kiritani		
+Q2054929	cast	Q314133	Anton Yelchin		
+Q1070164	director	Q11434113	Takashi Ōtsuka		
+Q1070164	composer	Q1351571	Naoki Satō		
+Q11315298	director	Q11633519	Keisuke Toyoshima		
+Q7621611	director	Q6313775	Junji Sakamoto		
+Q7621611	cast	Q1054613	Manami Konishi		
+Q7621611	cast	Q840508	Tōru Nakamura		
+Q1592195	director	Q9307621	Katsuya Watanabe		
+Q1592195	cast	Q4209051	Yudai Chiba		
+Q8068310	director	Q185421	Takashi Miike		
+Q8068310	writer	Q860820	Kankurō Kudō		
+Q8068310	composer	Q4118908	Yoshihiro Ike		
+Q8068310	cast	Q3286682	Kazuki Namioka		
+Q8068310	cast	Q1150592	Tsuyoshi Abe		
+Q8068310	cast	Q271886	Riisa Naka		
+Q8068310	cast	Q1040019	Masahiro Inoue		
+Q8068310	cast	Q229347	Nana Mizuki		
+Q8068310	cast	Q632791	Shō Aikawa		
+Q8068310	cast	Q3548210	Sayoko Ohashi		
+Q8068310	cast	Q1138475	Katsuhisa Namase		
+Q2480884	director	Q18544237	Yoshihiro Ueda		
+Q2480884	producer	Q6381449	Kazuhiko Torishima		
+Q2480884	cast	Q259422	Masako Nozawa		
+Q2480884	cast	Q239389	Houko Kuwashima		
+Q2480884	cast	Q1352269	Ryūsei Nakao		
+Q2480884	cast	Q1185197	Masashi Ebara		
+Q1187115	director	Q11599164	Noboru Takemoto		
+Q1187115	writer	Q8188996	Naruhisa Arakawa		
+Q1187115	composer	Q3180085	Kousuke Yamashita		
+Q4189274	director	Q9307621	Katsuya Watanabe		
+Q4189274	writer	Q8188996	Naruhisa Arakawa		
+Q4189274	composer	Q3180085	Kousuke Yamashita		
+Q4189274	cast	Q2271226	Ichirō Nagai		
+Q4189274	cast	Q1139865	Kōji Ishii		
+Q4189274	cast	Q284401	Tomokazu Seki		
+Q4189274	cast	Q1193064	Isao Sasaki		
+Q4189274	cast	Q1022023	Yukari Tamura		
+Q4189274	cast	Q1050116	Ryota Ozawa		
+Q4189274	cast	Q1154469	Kikuko Inoue		
+Q4189274	cast	Q1052326	Junya Ikeda		
+Q4189274	cast	Q1189314	Yumi Sugimoto		
+Q4189274	cast	Q1352269	Ryūsei Nakao		
+Q4189274	cast	Q1187112	Yui Koike		
+Q4189274	cast	Q3544195	Gaku Shindō		
+Q4189274	cast	Q3136257	Hirofumi Nojima		
+Q4189274	cast	Q1186964	Mao Ichimichi		
+Q4189274	cast	Q1050102	Yuki Yamada		
+Q4189274	cast	Q1050107	Kazuki Shimizu		
+Q4189274	cast	Q1137007	Rina Aizawa		
+Q4189274	cast	Q3048607	Nao Oikawa		
+Q4189274	cast	Q1355084	Mitsuko Horie		
+Q4189274	cast	Q535637	Kenji Utsumi		
+Q135234	director	Q6426234	Koichi Sakamoto		
+Q135234	cast	Q7496475	Shiho		
+Q135234	cast	Q5221161	Danté Carver		
+Q135234	cast	Q1134047	Masaki Suda		
+Q135234	cast	Q7385328	Ryōsuke Miura		
+Q135234	cast	Q6133562	Ryuki Takahashi		
+Q135234	cast	Q6123669	Shu Watanabe		
+Q135234	cast	Q6120300	Sota Fukushi		
+Q135234	cast	Q5508577	Yoshiko Sengen		
+Q135234	cast	Q5964561	Ryo Yoshizawa		
+Q135234	cast	Q329873	Takashi Ukaji		
+Q135234	cast	Q3544184	Shingo Tsurumi		
+Q135234	cast	Q1134059	Renn Kiriyama		
+Q135234	cast	Q1207368	Erina Mano		
+Q135259	director	Q11534695	Takayuki Shibazaki		
+Q135259	writer	Q8050028	Yasuko Kobayashi		
+Q135259	composer	Q3275127	Kōtarō Nakagawa		
+Q135259	cast	Q5772314	Hisanori Ōiwa		
+Q135259	cast	Q5508577	Yoshiko Sengen		
+Q135259	cast	Q329873	Takashi Ukaji		
+Q135259	cast	Q6120300	Sota Fukushi		
+Q135259	cast	Q7385328	Ryōsuke Miura		
+Q135259	cast	Q3548545	Jun Watanabe		
+Q135259	cast	Q6123669	Shu Watanabe		
+Q135259	cast	Q1154195	Ken Matsudaira		
+Q135259	cast	Q865519	Seiji Takaiwa		
+Q135259	cast	Q2357671	Miki Sakai		
+Q135259	cast	Q3543750	Mitsuru Karahashi		
+Q135259	cast	Q6132818	Karin Ogino		
+Q135259	subject		time travel		
+Q4115143	director	Q11518792	Yoshikatsu Kimura		
+Q4115143	cast	Q459861	Rina Takeda		
+Q4115143	cast	Q3547949	Noriko Iriyama		
+Q4115143	cast	Q4353136	Tatsuya Naka		
+Q4184311	director	Q969501	Tetsuo Shinohara		
+Q4184311	cast	Q1036665	Noriyuki Higashiyama		
+Q4184311	cast	Q232499	Rinko Kikuchi		
+Q866921	director	Q18016252	Satō Hiroyuki		
+Q866921	composer	Q2562073	Kōhei Tanaka		
+Q135236	director	Q39734	Osamu Kaneda		
+Q135236	writer	Q7506148	Shōji Yonemura		
+Q135236	composer	Q3275127	Kōtarō Nakagawa		
+Q135236	subject		time travel		
+Q4184114	director	Q11543810	Hajime Hashimoto		
+Q4184114	cast	Q2486480	Renji Ishibashi		
+Q4184114	cast	Q684967	Ryūhei Matsuda		
+Q4184114	cast	Q902091	Masanobu Takashima		
+Q4184114	cast	Q2365265	Tomorowo Taguchi		
+Q4184114	cast	Q435625	Koyuki		
+Q4184114	cast	Q873810	Yutaka Matsushige		
+Q4184114	cast	Q1041739	Yō Ōizumi		
+Q4184114	cast	Q3303046	Mayumi Shintani		
+Q4184114	cast	Q1060054	Toshiyuki Nishida		
+Q1085305	director	Q11434113	Takashi Ōtsuka		
+Q1085305	composer	Q1351571	Naoki Satō		
+Q1202553	follows	Q1194073	HeartCatch PreCure!		
+Q1202553	followed_by	Q1368327	Smile PreCure!		
+Q1202553	subject		music		
+Q3720638	composer	Q941314	Yasuharu Takanashi		
+Q4207071	cast	Q4209051	Yudai Chiba		
+Q1135530	director	Q11599164	Noboru Takemoto		
+Q1135530	writer	Q11360809	Kento Shimoyama		
+Q11446429	director	Q7446725	Seiji Chiba		
+Q11446429	writer	Q7446725	Seiji Chiba		
+Q11446429	cast	Q4119009	John Swasey		
+Q11446429	cast	Q459861	Rina Takeda		
+Q11446429	cast	Q4355802	Brittney Karbowski		
+Q11446429	cast	Q16238697	Kyle C. Jones		
+Q11446429	cast	Q7493770	Shelley Calene-Black		
+Q11446429	cast	Q4115622	Luci Christian		
+Q11446429	cast	Q6768492	Mark Laskowski		
+Q11446429	cast	Q5111879	Chris Ayres		
+Q11446429	subject		ninja		
+Q7818888	director	Q382387	Noboru Iguchi		
+Q7818888	cast	Q4923074	Miu Nakamura		
+Q7971338	director	Q11650561	Yoshinari Nishikoori		
+Q7971338	cast	Q3959632	Shirō Sano		
+Q7971338	cast	Q3544865	Takashi Sasano		
+Q7971338	cast	Q1054683	Hiroko Yakushimaru		
+Q7971338	cast	Q3549551	Mitsuru Hirata		
+Q7971338	cast	Q11465400	Toshinori Omi		
+Q4188343	director	Q654110	Kenta Fukasaku		
+Q4188343	cast	Q1137068	Tori Matsuzaka		
+Q4188343	cast	Q2624368	Masaya Kikawada		
+Q4188343	cast	Q1059711	Mei Kurokawa		
+Q4188343	cast	Q940531	Hiroshi Abe		
+Q4188343	cast	Q1208535	Osamu Mukai		
+Q4188343	cast	Q11259198	Noriko Eguchi		
+Q4188343	cast	Q5359301	Eri Murakawa		
+Q4811903	director	Q6383630	Keiichi Satō		
+Q4811903	director	Q61641253	Köken Ergün		
+Q4811903	cast	Q259422	Masako Nozawa		
+Q4811903	cast	Q1343893	Hiroaki Hirata		
+Q4811903	cast	Q355173	Kappei Yamaguchi		
+Q4811903	cast	Q1323728	Bin Shimada		
+Q4811903	cast	Q2529130	Tesshō Genda		
+Q4811903	cast	Q266670	Megumi Hayashibara		
+Q4811903	cast	Q3548239	Kin'ya Kitaōji		
+Q27964580	director	Q185421	Takashi Miike		
+Q27964580	composer	Q846828	Takeshi Kobayashi		
+Q27964580	cast	Q1343721	Satoshi Tsumabuki		
+Q3278127	director	Q11366593	Shōjirō Nakazawa		
+Q3278127	writer	Q8188996	Naruhisa Arakawa		
+Q3278127	cast	Q2444815	Shigeru Chiba		
+Q3278127	cast	Q1022023	Yukari Tamura		
+Q3278127	cast	Q2557715	Misa Watanabe		
+Q3278127	cast	Q3138640	Kyousei Tsukui		
+Q3278127	cast	Q459902	Takahiro Sakurai		
+Q3278127	cast	Q736403	Kenji Ōba		
+Q3278127	cast	Q1185197	Masashi Ebara		
+Q3278127	cast	Q3482247	Shinji Ogawa		
+Q3278127	cast	Q1154469	Kikuko Inoue		
+Q3278127	cast	Q1050107	Kazuki Shimizu		
+Q3278127	cast	Q6383520	Kei Hosogai		
+Q3278127	cast	Q11648643	Katsuhiro Suzuki		
+Q3278127	cast	Q3048607	Nao Oikawa		
+Q3278127	cast	Q1057734	Kiyoyuki Yanada		
+Q3278127	cast	Q1100537	Banjō Ginga		
+Q3278127	cast	Q1132957	Mitsuaki Madono		
+Q3278127	cast	Q1343893	Hiroaki Hirata		
+Q3278127	cast	Q418736	Akira Ishida		
+Q3278127	cast	Q2144837	Arisa Komiya		
+Q3278127	cast	Q1186964	Mao Ichimichi		
+Q3278127	cast	Q50016	Emiri Katō		
+Q3278127	cast	Q1187112	Yui Koike		
+Q3278127	cast	Q1052326	Junya Ikeda		
+Q3278127	cast	Q1050102	Yuki Yamada		
+Q3278127	cast	Q284401	Tomokazu Seki		
+Q3278127	cast	Q5926412	Mami Yamasaki		
+Q3278127	cast	Q1050116	Ryota Ozawa		
+Q3277402	director	Q6426234	Koichi Sakamoto		
+Q3277402	cast	Q1207368	Erina Mano		
+Q3277402	cast	Q6120300	Sota Fukushi		
+Q3277402	cast	Q284401	Tomokazu Seki		
+Q3277402	cast	Q1142856	Fumihiko Tachiki		
+Q3277402	cast	Q6123669	Shu Watanabe		
+Q3277402	cast	Q517337	Toshio Furukawa		
+Q3277402	cast	Q5508577	Yoshiko Sengen		
+Q3277402	cast	Q6432886	Yuko Takayama		
+Q3277402	cast	Q1321759	Nao Nagasawa		
+Q3277402	cast	Q1343946	Yūji Mitsuya		
+Q3277402	cast	Q4253305	Tasuku		
+Q3277402	cast	Q7496475	Shiho		
+Q3277402	cast	Q6133562	Ryuki Takahashi		
+Q3277402	cast	Q1921263	Shunya Shiraishi		
+Q3277402	cast	Q5964561	Ryo Yoshizawa		
+Q3277402	cast	Q1056274	Mikie Hara		
+Q3277402	cast	Q1394701	Demon Kakka		
+Q3278028	director	Q6426234	Koichi Sakamoto		
+Q3278028	writer	Q5276666	Kazuki Nakashima		
+Q3278028	composer	Q4261457	Shuhei Naruse		
+Q3278028	cast	Q5508577	Yoshiko Sengen		
+Q3278028	cast	Q3544184	Shingo Tsurumi		
+Q3278028	cast	Q6120300	Sota Fukushi		
+Q3278028	cast	Q2672733	Tsutomu Isobe		
+Q3278028	cast	Q7385557	Ryutarou Akimoto		
+Q3278028	cast	Q1321759	Nao Nagasawa		
+Q3278028	cast	Q3544629	Ken Nishida		
+Q3278028	cast	Q1056274	Mikie Hara		
+Q3278028	cast	Q2250605	Kasumi Suzuki		
+Q3278028	cast	Q2673689	Ayumi Kinoshita		
+Q3278028	cast	Q6133562	Ryuki Takahashi		
+Q3278028	cast	Q5964561	Ryo Yoshizawa		
+Q3278028	cast	Q7496475	Shiho		
+Q3278028	cast	Q1921263	Shunya Shiraishi		
+Q3278028	cast	Q3274687	Kousei Amano		
+Q6783993	director	Q11598895	Atsushi Takeuchi		
+Q6783993	writer	Q1436820	Henry Gilroy		
+Q6783993	producer	Q4119904	Justin Cook		
+Q6783993	editor	Q4863958	Barry Alexander Brown		
+Q6783993	cast	Q7812408	Todd Haberkorn		
+Q6783993	cast	Q6162394	Jason Douglas		
+Q6783993	cast	Q13560537	Jad Saxton		
+Q6783993	cast	Q2403592	Travis Willingham		
+Q6783993	cast	Q6288921	Jessie Grelle		
+Q6783993	cast	Q6367509	Kara Edwards		
+Q6783993	cast	Q6147164	Jamie Marchi		
+Q6783993	cast	Q4120482	Eric Vale		
+Q6783993	cast	Q2490599	Patrick Seitz		
+Q6783993	cast	Q309756	Freddie Prinze Jr.		
+Q6783993	cast	Q2364867	Laura Bailey		
+Q6783993	cast	Q4119904	Justin Cook		
+Q6783993	cast	Q4115624	Monica Rial		
+Q6783993	cast	Q843552	Vic Mignogna		
+Q860903	director	Q4204341	Tatsuya Nagamine		
+Q860903	writer	Q11648574	Suzuki Osamu		
+Q860903	composer	Q2562073	Kōhei Tanaka		
+Q860903	cinematographer	Q115321835	Takeo Ogiwara		
+Q860903	editor	Q115321902	Nobutaka Maki		
+Q860903	executive_producer	Q2010	Eiichiro Oda		
+Q2071927	director	Q11072244	Junji Shimizu		
+Q2071927	composer	Q941314	Yasuharu Takanashi		
+Q3341462	director	Q1140880	Kōnosuke Uda		
+Q1368327	writer	Q7506148	Shōji Yonemura		
+Q1368327	follows	Q1202553	Suite PreCure		
+Q1368327	followed_by	Q605298	Dokidoki! PreCure		
+Q3720636	director	Q117859489	Narumi Kuroda		
+Q3720636	writer	Q7506148	Shōji Yonemura		
+Q3720636	composer	Q941314	Yasuharu Takanashi		
+Q3272540	director	Q39734	Osamu Kaneda		
+Q3272540	narrator	Q1469886	Kiyoshi Kobayashi		
+Q3277352	director	Q11534695	Takayuki Shibazaki		
+Q3277352	writer	Q8050028	Yasuko Kobayashi		
+Q605298	writer	Q7385611	Ryōta Yamaguchi		
+Q605298	follows	Q1368327	Smile PreCure!		
+Q605298	followed_by	Q15243909	HappinessCharge Pretty Cure!		
+Q1150595	director	Q29600178	Masahiro Hosoda		
+Q1150595	writer	Q11562591	Yūsuke Watanabe		
+Q1150595	composer	Q11381777	Norihito Sumitomo		
+Q1150595	producer	Q11298234	Gyarmath Bogdan		
+Q1150595	producer	Q115342213	Rioko Tominaga		
+Q1150595	cinematographer	Q115342356	Yukihiro Masumoto		
+Q1150595	editor	Q115319902	Shinichi Fukumitsu		
+Q1150595	followed_by	Q17476655	Dragon Ball Z: Resurrection 'F'		
+Q60738463	director	Q6883322	Mitsuo Hashimoto		
+Q60738463	writer	Q544418	Takao Koyama		
+Q7572454	director	Q3482244	Shinji Aramaki		
+Q7572454	writer	Q431443	Leiji Matsumoto		
+Q7572454	composer	Q2626699	Tetsuya Takahashi		
+Q17216902	director	Q6426234	Koichi Sakamoto		
+Q17216902	cast	Q2144837	Arisa Komiya		
+Q17216902	cast	Q11470932	Kasumi Yamaya		
+Q17216902	cast	Q11272873	Dempagumi.inc		
+Q14957141	director	Q977721	Ryūta Tasaki		
+Q14957141	cast	Q1202709	Hiroyuki Yoshino		
+Q14957141	cast	Q1209737	Ryūzaburō Ōtomo		
+Q14957141	cast	Q1142856	Fumihiko Tachiki		
+Q14957141	cast	Q3550818	Tomomitsu Yamaguchi		
+Q14957141	cast	Q4259543	Naoki Kawano		
+Q14957141	cast	Q1315917	Tomomichi Nishimura		
+Q14957141	cast	Q520669	Hōchū Ōtsuka		
+Q14957141	cast	Q1921263	Shunya Shiraishi		
+Q14957141	cast	Q6432886	Yuko Takayama		
+Q14957141	cast	Q6133562	Ryuki Takahashi		
+Q14957141	cast	Q2701270	Keisuke Kato		
+Q14957141	cast	Q4253305	Tasuku		
+Q14957141	cast	Q1204898	Rikiya Koyama		
+Q14957141	cast	Q643440	Minehiro Kinomoto		
+Q14957141	cast	Q3234542	Hikaru Yamamoto		
+Q13407644	director	Q11366593	Shōjirō Nakazawa		
+Q13407644	composer	Q3275127	Kōtarō Nakagawa		
+Q13407644	cast	Q6432886	Yuko Takayama		
+Q13407644	cast	Q11397110	Takahisa Maeyama		
+Q13407644	cast	Q4253305	Tasuku		
+Q13407644	cast	Q1189367	Takanori Jinnai		
+Q13407644	cast	Q1203330	Shugo Oshinari		
+Q13407644	cast	Q1921263	Shunya Shiraishi		
+Q13407644	cast	Q2234501	Ryuji Sainei		
+Q1032047	composer	Q941314	Yasuharu Takanashi		
+Q1032047	follows	Q2071927	Pretty Cure All Stars New Stage: Friends of the Future		
+Q1032047	followed_by	Q15911009	Pretty Cure All Stars New Stage 3: Eternal Friends		
+Q21646939	director	Q5642632	Takeshi Furusawa		
+Q21646939	writer	Q5642632	Takeshi Furusawa		
+Q21646939	cast	Q253882	Kyoko Fukada		
+Q21646939	cast	Q238907	Keiko Kitagawa		
+Q10855668	director	Q1138078	Yukihiko Tsutsumi		
+Q10855668	writer	Q11629459	Yumie Nishiogi		
+Q7286814	director	Q2994628	Seiji Mizushima		
+Q7286814	writer	Q50038	Gen Urobuchi		
+Q7286814	composer	Q11234420	Narasaki		
+Q7286814	followed_by	Q136913300	Expelled from Paradise: Resonance from the Heart		
+Q18124860	director	Q11543810	Hajime Hashimoto		
+Q18124860	cast	Q3543561	Kanji Tsuda		
+Q18124860	cast	Q5752628	Hideo Sakaki		
+Q18124860	cast	Q4259543	Naoki Kawano		
+Q18338868	director	Q2634293	Chiaki Kon		
+Q15243909	director	Q4204341	Tatsuya Nagamine		
+Q15243909	follows	Q605298	Dokidoki! PreCure		
+Q15243909	followed_by	Q18392373	Go! Princess Pretty Cure		
+Q15636270	director	Q11534695	Takayuki Shibazaki		
+Q15636270	writer	Q7506148	Shōji Yonemura		
+Q15636270	cast	Q1201334	Toshihiko Seki		
+Q15636270	cast	Q11639690	Ryo Hayami		
+Q15636270	cast	Q3273248	Kento Handa		
+Q15636270	cast	Q563425	Kenichi Suzumura		
+Q15636270	cast	Q1022186	Kōhei Murakami		
+Q15636270	cast	Q1331936	Hiroshi Kamiya		
+Q15636270	cast	Q3544171	Tomohisa Yuge		
+Q15636270	cast	Q1142856	Fumihiko Tachiki		
+Q15636270	cast	Q4261480	Shun Sugata		
+Q15636270	cast	Q1921263	Shunya Shiraishi		
+Q15636270	cast	Q1206700	Tetsu Inada		
+Q15636270	cast	Q6381660	Kazuo Niibori		
+Q15636270	cast	Q4261875	Tsuyoshi Koyama		
+Q15636270	cast	Q11490868	Jun Shison		
+Q15636270	cast	Q2444815	Shigeru Chiba		
+Q15636270	cast	Q2992739	Hiroshi Fujioka		
+Q15636270	cast	Q11540451	Ai Moritaka		
+Q15636270	cast	Q3545487	Akiko Hinagata		
+Q15636270	cast	Q284401	Tomokazu Seki		
+Q15636270	cast	Q1040019	Masahiro Inoue		
+Q15636270	cast	Q1134059	Renn Kiriyama		
+Q15636270	cast	Q11538764	Riria		
+Q15636270	cast	Q1204249	Hideo Ishikawa		
+Q15636270	cast	Q2096624	Ryo Ryusei		
+Q15636270	cast	Q3155993	Itsuji Itao		
+Q15636270	cast	Q3544950	Haruhiko Jō		
+Q15636270	cast	Q355173	Kappei Yamaguchi		
+Q15636270	follows	Q2908757	Kamen Rider × Super Sentai × Space Sheriff: Super Hero Taisen Z		
+Q15636270	followed_by	Q18659567	Super Hero Taisen GP: Kamen Rider 3		
+Q16941343	director	Q11360816	Ten Shimoyama		
+Q16941343	cast	Q3808463	Jingi Irie		
+Q15260709	director	Q463565	Takashi Shimizu		
+Q15260709	writer	Q449522	Eiko Kadono		
+Q15260709	writer	Q2256932	Satoko Okudera		
+Q15260709	composer	Q3515913	Taro Iwashiro		
+Q15260709	cast	Q379824	Tadanobu Asano		
+Q15260709	cast	Q289729	Rie Miyazawa		
+Q15260709	cast	Q9134836	Ryōhei Hirota		
+Q15260709	cast	Q5359450	Hirofumi Arai		
+Q15260709	cast	Q11414057	Yō Yoshida		
+Q15260709	cast	Q11463509	Fūka Koshiba		
+Q15260709	cast	Q30929496	YURI		
+Q15260709	cast	Q12968085	Michitaka Tsutsui		
+Q15260709	cast	Q3813232	Machiko Ono		
+Q15260709	cast	Q11469186	Hiroshi Yamamoto		
+Q15260709	cast	Q11230028	Lilico		
+Q15260709	cast	Q50029	Minako Kotobuki		
+Q134481097	director	Q1140880	Kōnosuke Uda		
+Q17052913	director	Q185421	Takashi Miike		
+Q17052913	writer	Q17218070	Kikumi Yamagishi		
+Q17052913	composer	Q2947344	Kōji Endō		
+Q17052913	editor	Q11465891	Kenji Yamashita		
+Q17052913	cast	Q1148848	Hideaki Itō		
+Q17052913	cast	Q253690	Kō Shibasaki		
+Q17052913	cast	Q3147664	Ichikawa Danjūrō XIII		
+Q17052913	subject		supernatural		
+Q15284460	director	Q21699046	Hiroshi Ikehata		
+Q15284460	writer	Q11393709	Kazuho Hyōdō		
+Q16138249	subject		alien invasion		
+Q7402171	director	Q6383630	Keiichi Satō		
+Q7402171	writer	Q725387	Masami Kurumada		
+Q7402171	writer	Q1142396	Chihiro Suzuki		
+Q7402171	writer	Q42683416	Tomohiro Suzuki		
+Q7402171	composer	Q4118908	Yoshihiro Ike		
+Q7402171	editor	Q6383630	Keiichi Satō		
+Q7402171	executive_producer	Q725387	Masami Kurumada		
+Q131369352	composer	Q707593	Kaoru Wada		
+Q15147033	director	Q6426234	Koichi Sakamoto		
+Q15147033	writer	Q3082793	Riku Sanjo		
+Q15147033	cast	Q2096624	Ryo Ryusei		
+Q15147033	cast	Q460361	Toshiyuki Morikawa		
+Q15147033	cast	Q2671453	Yū Mizushima		
+Q15147033	cast	Q1041912	Takuma Terashima		
+Q15147033	cast	Q50025	Haruka Tomatsu		
+Q15147033	cast	Q2412745	Ai Orikasa		
+Q15147033	cast	Q11490868	Jun Shison		
+Q15147033	cast	Q333194	Kōichi Yamadera		
+Q15147033	cast	Q11648643	Katsuhiro Suzuki		
+Q15147033	cast	Q11540451	Ai Moritaka		
+Q15147033	cast	Q2406371	Takayuki Sugō		
+Q15147033	cast	Q3543312	Reiko Chiba		
+Q15147033	cast	Q984641	Yūichi Nakamura		
+Q15147033	cast	Q11538764	Riria		
+Q15147033	cast	Q355173	Kappei Yamaguchi		
+Q15147033	cast	Q1365535	Hiroki Yasumoto		
+Q15147033	cast	Q3266625	Yūta Mochizuki		
+Q15147033	cast	Q1371733	Keiji Fujiwara		
+Q15147033	cast	Q2144837	Arisa Komiya		
+Q15147033	cast	Q5752628	Hideo Sakaki		
+Q15147033	cast	Q2444815	Shigeru Chiba		
+Q15147033	cast	Q8979233	Ayuri Konno		
+Q21787529	director	Q11575322	Mitsutoshi Tanaka		
+Q21787529	composer	Q2745564	Michiru Oshima		
+Q21787529	cinematographer	Q1340985	Tetsuo Nagata		
+Q21787529	cast	Q17045865	Kenan Ece		
+Q21787529	cast	Q6087265	Alican Yücesoy		
+Q21787529	cast	Q6087619	Mehmet Özgür		
+Q21787529	cast	Q4390382	Shiori Kutsuna		
+Q21787529	cast	Q5355422	Seiyo Uchino		
+Q21787529	cast	Q3552827	Uğur Polat		
+Q21787529	cast	Q11235234	Yū Tokui		
+Q21787529	cast	Q1134063	Shunsuke Daitō		
+Q18881265	director	Q11436346	Sumio Ōmori		
+Q18881265	cast	Q1139714	Kiichi Nakai		
+Q18881265	cast	Q1135347	Toshirō Yanagiba		
+Q18881265	cast	Q1054588	Emi Wakui		
+Q19839121	creator	Q208582	Akira Toriyama		
+Q19839121	creator	Q24838002	Toyotarō		
+Q19839121	narrator	Q26467292	Enric Isasi-Isasmendi		
+Q19839121	follows	Q477916	Dragon Ball Z		
+Q19839121	follows	Q704651	Dragon Ball Z Kai		
+Q19839121	followed_by	Q123022503	Dragon Ball Daima		
+Q17476655	director	Q11467740	Tadayoshi Yamamuro		
+Q17476655	writer	Q208582	Akira Toriyama		
+Q17476655	composer	Q11381777	Norihito Sumitomo		
+Q17476655	producer	Q115342213	Rioko Tominaga		
+Q17476655	producer	Q115346320	Norihiro Hayashida		
+Q17476655	editor	Q115319902	Shinichi Fukumitsu		
+Q17476655	follows	Q1150595	Dragon Ball Z: Battle of Gods		
+Q17476655	followed_by	Q48781975	Dragon Ball Super: Broly		
+Q18392373	follows	Q15243909	HappinessCharge Pretty Cure!		
+Q18392373	followed_by	Q21566775	Witchy Pretty Cure!		
+Q111108596	composer	Q3573298	Yugo Kanno		
+Q111108596	cinematographer	Q5017479	Satoshi Kuribayashi		
+Q111108596	narrator	Q921468	Daigo		
+Q111108596	narrator	Q11414057	Yō Yoshida		
+Q111108596	narrator	Q11521804	Hana Sugisaki		
+Q21452222	director	Q39734	Osamu Kaneda		
+Q21427628	director	Q969501	Tetsuo Shinohara		
+Q21427628	composer	Q846828	Takeshi Kobayashi		
+Q21427628	cast	Q3616120	Tsubasa Honda		
+Q21427628	cast	Q748582	Kōichi Satō		
+Q6470744	director	Q67684042	Thomas Astruc		
+Q6470744	producer	Q130382354	Alexandre Lippens		
+Q6470744	creator	Q67684042	Thomas Astruc		
+Q6470744	award		Nickelodeon Kids' Choice Awards		
+Q6470744	award		2018 Teen Choice Awards		
+Q6470744	award		2021 Nickelodeon Meus Prêmios Nick		
+Q18605930	director	Q9307621	Katsuya Watanabe		
+Q18605930	writer	Q8050028	Yasuko Kobayashi		
+Q18605930	cast	Q460361	Toshiyuki Morikawa		
+Q18605930	cast	Q3275174	Masayuki Deai		
+Q18605930	cast	Q2673689	Ayumi Kinoshita		
+Q18605930	cast	Q11490868	Jun Shison		
+Q18605930	cast	Q355173	Kappei Yamaguchi		
+Q18605930	cast	Q2096624	Ryo Ryusei		
+Q18605930	cast	Q11538764	Riria		
+Q18605930	cast	Q4687588	Haruka Fukuhara		
+Q18605930	cast	Q11540451	Ai Moritaka		
+Q18605930	cast	Q49573	Aya Hisakawa		
+Q18605930	cast	Q3544614	Kengo Ohkuchi		
+Q18605930	cast	Q8979233	Ayuri Konno		
+Q18605930	cast	Q441288	Jun Fukuyama		
+Q18605930	cast	Q2444815	Shigeru Chiba		
+Q18605930	cast	Q305342	Masaya Onosaka		
+Q18605930	cast	Q1372804	Kōsuke Toriumi		
+Q18605930	cast	Q2412745	Ai Orikasa		
+Q18605930	cast	Q50025	Haruka Tomatsu		
+Q18605930	cast	Q1317610	Kumiko Watanabe		
+Q18605930	cast	Q50033	Yui Horie		
+Q20794988	director	Q11366593	Shōjirō Nakazawa		
+Q20794988	composer	Q3180085	Kousuke Yamashita		
+Q18659567	director	Q11534695	Takayuki Shibazaki		
+Q18659567	writer	Q7506148	Shōji Yonemura		
+Q18659567	follows	Q15636270	Heisei Riders vs. Shōwa Riders: Kamen Rider Taisen feat. Super Sentai		
+Q18659567	followed_by	Q28692272	Kamen Rider × Super Sentai: Ultra Super Hero Taisen		
+Q23542835	director	Q1323347	Shunji Iwai		
+Q23542835	writer	Q1323347	Shunji Iwai		
+Q23542835	cinematographer	Q11589822	Chigi Kanbe		
+Q23542835	editor	Q1323347	Shunji Iwai		
+Q23542835	cast	Q11547785	Tomoko Mariya		
+Q23542835	cast	Q11678345	Haru Kuroki		
+Q23542835	cast	Q11647690	Akio Kaneda		
+Q23542835	cast	Q11418110	Sōkō Wada		
+Q23542835	cast	Q3543927	Gō Ayano		
+Q23542835	cast	Q3029194	Gō Jibiki		
+Q23542835	cast	Q3240936	Lily		
+Q23542835	cast	Q615129	Cocco		
+Q23542835	cast	Q11409640	Hideko Hara		
+Q24529201	director	Q11599164	Noboru Takemoto		
+Q24529201	composer	Q3180085	Kousuke Yamashita		
+Q24034658	director	Q115284237	Takeshi Asai		
+Q24034658	director	Q115284238	Ryo Higuchi		
+Q24034658	cast	Q5360968	Mariya Nishiuchi		
+Q25344366	director	Q11534695	Takayuki Shibazaki		
+Q26963211	director	Q11594282	Yūichi Fukuda		
+Q26963211	cast	Q11648535	Ryohei Suzuki		
+Q22674701	director	Q39734	Osamu Kaneda		
+Q22674701	writer	Q3995906	Toshiki Inoue		
+Q24508595	director	Q11632123	Satoshi Morota		
+Q28006107	director	Q6426234	Koichi Sakamoto		
+Q28006107	followed_by	Q42577311	Kamen Rider Heisei Generations Final: Build & Ex-Aid with Legend Rider		
+Q125599732	director	Q11355248	Yukiko Mishima		
+Q125599732	cast	Q3616120	Tsubasa Honda		
+Q21646817	director	Q60613768	Miyamoto Hiroaki		
+Q21646817	writer	Q11678110	Tsutomu Kuroiwa		
+Q21646817	composer	Q15905383	Yuki Hayashi		
+Q21646817	cinematographer	Q115322152	Naoyuki Wada		
+Q21646817	editor	Q115320327	Masahiro Gotō		
+Q21646817	executive_producer	Q2010	Eiichiro Oda		
+Q108666474	director	Q4204341	Tatsuya Nagamine		
+Q108666474	writer	Q11678110	Tsutomu Kuroiwa		
+Q21396319	director	Q7827421	Tōru Murakawa		
+Q21396319	writer	Q3812783	Hiroshi Kashiwabara		
+Q21396319	cinematographer	Q11377679	Seizō Sengen		
+Q21396319	editor	Q11411786	Shin'ya Tadano		
+Q21396319	cast	Q11254590	Kyōhei Shibata		
+Q21396319	cast	Q11337214	Bengal		
+Q21396319	cast	Q11569870	Ryūji Katagiri		
+Q21396319	cast	Q11470912	Michihiro Yamanishi		
+Q21396319	cast	Q3808463	Jingi Irie		
+Q21396319	cast	Q5964561	Ryo Yoshizawa		
+Q21396319	cast	Q11654068	Kanae Hasebe		
+Q21396319	cast	Q840508	Tōru Nakamura		
+Q21396319	cast	Q11626405	Kenji Kinugasa		
+Q21396319	cast	Q873940	Hiroshi Tachi		
+Q21396319	cast	Q2361739	Nana Kinomi		
+Q21396319	cast	Q11619963	Nanao		
+Q21396319	cast	Q1114137	Kōji Kikkawa		
+Q21396319	cast	Q6991628	Nenji Kobayashi		
+Q21396319	cast	Q11380258	Yōzaburō Itō		
+Q21396319	cast	Q1022042	Atsuko Asano		
+Q21396319	cast	Q3811634	Jutta Yūki		
+Q21396319	follows	Q11278322	Madamada Abunai Deka		
+Q21396319	followed_by	Q124457500	Abudeka Is Back		
+Q21996444	director	Q11366593	Shōjirō Nakazawa		
+Q21996444	composer	Q3180085	Kousuke Yamashita		
+Q21996444	cast	Q18817919	Shunsuke Nishikawa		
+Q21566775	follows	Q18392373	Go! Princess Pretty Cure		
+Q21566775	followed_by	Q28039618	KiraKira Pretty Cure a la Mode		
+Q28067774	director	Q20041278	Yūta Tanaka		
+Q28200953	director	Q11610834	Saiji Yakumo		
+Q28200953	writer	Q3209229	Mari Okada		
+Q28200953	cast	Q11666682	Marie Iitoyo		
+Q28200953	cast	Q5508577	Yoshiko Sengen		
+Q30928537	director	Q969501	Tetsuo Shinohara		
+Q30928537	composer	Q275900	Joe Hisaishi		
+Q30928537	cast	Q1052140	Kuranosuke Sasaki		
+Q30928537	cast	Q910611	Mansai Nomura II		
+Q30928537	cast	Q11480370	Ichikawa Ennosuke IV		
+Q42577311	follows	Q28006107	Kamen Rider Heisei Generations: Dr. Pac-Man vs. Ex-Aid & Ghost with Legend Rider		
+Q42577311	followed_by	Q59278298	Kamen Rider Heisei Generations Forever		
+Q28039618	follows	Q21566775	Witchy Pretty Cure!		
+Q28039618	followed_by	Q45702099	Hug! Pretty Cure		
+Q43303207	director	Q11072244	Junji Shimizu		
+Q43303207	composer	Q34580	Ichirō Mizuki		
+Q28253313	director	Q17118987	Hiroshi Miyamoto		
+Q28253313	writer	Q11425773	Fumi Tsubota		
+Q28253313	composer	Q15905383	Yuki Hayashi		
+Q28253313	producer	Q15905383	Yuki Hayashi		
+Q28683727	director	Q6426234	Koichi Sakamoto		
+Q28683727	writer	Q8188996	Naruhisa Arakawa		
+Q21005926	director	Q30926740	Satoshi Kuwabara		
+Q21005926	writer	Q240225	Kazuki Takahashi		
+Q21005926	producer	Q240225	Kazuki Takahashi		
+Q30930371	director	Q618876	Naoto Kumazawa		
+Q48781975	director	Q4204341	Tatsuya Nagamine		
+Q48781975	writer	Q208582	Akira Toriyama		
+Q48781975	composer	Q11381777	Norihito Sumitomo		
+Q48781975	producer	Q115342213	Rioko Tominaga		
+Q48781975	producer	Q115346320	Norihiro Hayashida		
+Q48781975	editor	Q115320327	Masahiro Gotō		
+Q48781975	follows	Q17476655	Dragon Ball Z: Resurrection 'F'		
+Q48781975	followed_by	Q107656066	Dragon Ball Super: Super Hero		
+Q45702099	director	Q142052	Junichi Sato		
+Q45702099	composer	Q15905383	Yuki Hayashi		
+Q45702099	follows	Q28039618	KiraKira Pretty Cure a la Mode		
+Q45702099	followed_by	Q59417909	Star Twinkle Precure		
+Q55313412	composer	Q15905383	Yuki Hayashi		
+Q59278298	follows	Q42577311	Kamen Rider Heisei Generations Final: Build & Ex-Aid with Legend Rider		
+Q59278298	followed_by	Q72048926	Kamen Rider Reiwa The First Generation		
+Q101086340	writer	Q11671675	Ikuko Takahashi		
+Q101086340	composer	Q2308677	Toshihiko Sahashi		
+Q48758540	director	Q788070	Yōjirō Takita		
+Q48758540	composer	Q6383544	Kei Ogura		
+Q48747708	director	Q11580151	Kazuya Shiraishi		
+Q48747708	narrator	Q2463489	Issei Futamata		
+Q56302233	director	Q2708110	Noriyuki Abe		
+Q56302233	writer	Q10867553	Makoto Uezu		
+Q56302233	composer	Q2603945	Hiroyuki Sawano		
+Q56302233	composer	Q11418136	Takafumi Wada		
+Q56302233	editor	Q115320327	Masahiro Gotō		
+Q50819371	director	Q6426234	Koichi Sakamoto		
+Q50819371	composer	Q3180085	Kousuke Yamashita		
+Q126091602	director	Q11545827	Hideki Takeuchi		
+Q126091602	writer	Q11490344	Yūichi Tokunaga		
+Q126091602	composer	Q11199934	Face 2 fAKE		
+Q126091602	producer	Q11616392	Hiroki Wakamatsu		
+Q126091602	cinematographer	Q11632865	Sōhei Tanikawa		
+Q126091602	editor	Q133980676	Shinji Kawamura		
+Q126091602	cast	Q44606	GACKT		
+Q126091602	cast	Q1060098	Yūsuke Iseya		
+Q126091602	cast	Q11371873	Fumi Nikaidō		
+Q126091602	cast	Q1094947	Masaki Kyomoto		
+Q126091602	followed_by	Q122891366	Fly Me To The Saitama: From Biwa Lake With Love		
+Q81566464	director	Q11468692	Yūki Yamato		
+Q81566464	writer	Q2715024	Miki Aihara		
+Q81566464	writer	Q11468692	Yūki Yamato		
+Q81566464	cast	Q16740530	Hiyori Sakurada		
+Q81566464	cast	Q555515	Takashi Sorimachi		
+Q81566464	cast	Q28068210	Ryōhei Shima		
+Q81566464	cast	Q17129271	Kaisei Kamimura		
+Q81566464	cast	Q22758581	Riho Yoshioka		
+Q81566464	cast	Q3550856	Asuka Kurosawa		
+Q81566464	cast	Q17159535	Hiroya Shimizu		
+Q81566464	cast	Q24838611	Miona Hori		
+Q81566464	cast	Q11655405	Shōtarō Mamiya		
+Q81566464	cast	Q11671113	Kazuya Takahashi		
+Q81566464	cast	Q20038709	Mizuki Itagaki		
+Q81566464	cast	Q255831	Ai Yoshikawa		
+Q56313751	director	Q11434113	Takashi Ōtsuka		
+Q56313751	writer	Q11395106	Atsuhiro Tomioka		
+Q56313751	writer	Q11434113	Takashi Ōtsuka		
+Q56313751	composer	Q2562073	Kōhei Tanaka		
+Q56313751	cinematographer	Q115322152	Naoyuki Wada		
+Q56313751	editor	Q115320327	Masahiro Gotō		
+Q60174582	composer	Q15905383	Yuki Hayashi		
+Q60174582	producer	Q15905383	Yuki Hayashi		
+Q59417909	director	Q60613768	Miyamoto Hiroaki		
+Q59417909	composer	Q15905383	Yuki Hayashi		
+Q59417909	follows	Q45702099	Hug! Pretty Cure		
+Q59417909	followed_by	Q79813404	Healin' Good Pretty Cure		
+Q65270601	director	Q20041278	Yūta Tanaka		
+Q65270601	composer	Q15905383	Yuki Hayashi		

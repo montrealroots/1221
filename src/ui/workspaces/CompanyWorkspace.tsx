@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -124,7 +125,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                   <div key={project.id} className="list-item list-static">
                     <div className="grow">
                       <div className="small strong">{project.title}</div>
-                      <div className="xs dim">{project.phase.replace(/_/g, ' ')} · {formatMoneyCompact(project.budget)}</div>
+                      <div className="xs dim">{titleCaseLabel(project.phase.replace(/_/g, ' '))} · {formatMoneyCompact(project.budget)}</div>
                     </div>
                     {project.totalRevenue > 0 && (
                       <MoneyText amount={project.totalRevenue - project.totalCost} compact signed />
@@ -191,7 +192,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                     <div className="grow">
                       <div className="small strong">{item.name}</div>
                       <div className="xs dim">
-                        {item.brand} · {item.category} · {item.acquiredVia}
+                        {item.brand} · {titleCaseLabel(item.category)} · {item.acquiredVia}
                         {item.rentalEndsAt && ` until ${formatDate(item.rentalEndsAt, sim.homeZone)}`}
                       </div>
                     </div>
@@ -209,7 +210,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                 <div key={template.name} className="list-item list-static">
                   <div className="grow">
                     <div className="small strong">{template.name}</div>
-                    <div className="xs dim">{template.brand} · {template.category} · quality {template.qualityRating}</div>
+                    <div className="xs dim">{template.brand} · {titleCaseLabel(template.category)} · quality {template.qualityRating}</div>
                   </div>
                   <span className="mono small">{formatMoneyCompact(template.price)}</span>
                   <button className="btn btn-sm" onClick={() => run('co.acquire_equipment', { companyId, templateName: template.name, acquire: 'rental', days: 30 })}>
@@ -236,7 +237,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                   <div className="grow">
                     <div className="small strong">{line.name}</div>
                     <div className="xs dim">
-                      {line.category} · {line.unitsSold.toLocaleString('en-US')} of {line.unitsManufactured.toLocaleString('en-US')} sold
+                      {titleCaseLabel(line.category)} · {line.unitsSold.toLocaleString('en-US')} of {line.unitsManufactured.toLocaleString('en-US')} sold
                       {line.unitsReturned > 0 && ` · ${line.unitsReturned} returned`}
                     </div>
                   </div>
@@ -244,7 +245,7 @@ function CompanyDetail({ companyId }: { companyId: string }) {
                     <div className="mono small">{formatMoneyCompact(line.revenue)}</div>
                     <div className="xs dim">{formatMoneyCompact(line.inventoryValue)} inventory</div>
                   </div>
-                  <span className="chip">{line.status.replace(/_/g, ' ')}</span>
+                  <span className="chip">{titleCaseLabel(line.status.replace(/_/g, ' '))}</span>
                 </div>
               ))}
             </div>

@@ -1,0 +1,568 @@
+qid	role	personQid	name	character	ordinal
+Q4896682	director	Q7827421	Tōru Murakawa		
+Q4896682	cast	Q3544620	Chiyoko Shimakura		
+Q4896682	cast	Q6782707	Masato Furuoya		
+Q4896682	cast	Q1154179	Naoto Takenaka		
+Q4896682	cast	Q906057	Yūji Oda		
+Q4896682	cast	Q3543463	Naomi Zaizen		
+Q4896682	cast	Q3276455	Akiji Kobayashi		
+Q4896682	subject		aviation		
+Q1254986	director	Q3012184	Daisuke Nishio		
+Q1254986	writer	Q544418	Takao Koyama		
+Q1254986	composer	Q2296028	Shunsuke Kikuchi		
+Q1254986	cinematographer	Q115323858	Motoaki Ikegami		
+Q1254986	editor	Q115319902	Shinichi Fukumitsu		
+Q984139	director	Q3012184	Daisuke Nishio		
+Q984139	writer	Q544418	Takao Koyama		
+Q984139	composer	Q2296028	Shunsuke Kikuchi		
+Q984139	cinematographer	Q115323858	Motoaki Ikegami		
+Q984139	editor	Q115319902	Shinichi Fukumitsu		
+Q90395094	director	Q7830703	Toyoo Ashida		
+Q90395094	writer	Q11529059	Aya Matsui		
+Q11293734	director	Q4127199	Sergei Vronsky		
+Q11293734	director	Q7827754	Toshio Gotō		
+Q11293734	writer	Q502455	Atsushi Yamatoya		
+Q11293734	writer	Q3553582	Valentin Ezhov		
+Q11293734	cast	Q4091037	Andrei Boltnev		
+Q11293734	cast	Q1488230	Tetsurō Tamba		
+Q11293734	cast	Q3293186	Marina Zudina		
+Q11293734	cast	Q975146	Kōji Yakusho		
+Q11293734	cast	Q55207	Nikita Mikhalkov		
+Q3819758	director	Q6963367	Masayuki Akehi		
+Q3819758	writer	Q4022916	Yoshiyuki Suga		
+Q3819758	composer	Q2706769	Seiji Yokoyama		
+Q3819758	followed_by	Q2602741	Saint Seiya: The Heaven Chapter - Overture		
+Q1255003	director	Q6883322	Mitsuo Hashimoto		
+Q1255003	writer	Q544418	Takao Koyama		
+Q1255003	composer	Q2296028	Shunsuke Kikuchi		
+Q1255003	cinematographer	Q115339975	Masatoshi Fukui		
+Q1255003	editor	Q115319902	Shinichi Fukumitsu		
+Q1815243	director	Q6883322	Mitsuo Hashimoto		
+Q1815243	writer	Q544418	Takao Koyama		
+Q1815243	composer	Q2296028	Shunsuke Kikuchi		
+Q1815243	producer	Q11377330	Chiaki Imada		
+Q1815243	producer	Q115340151	Rikizou Kayano		
+Q1815243	cinematographer	Q115320688	Motoi Takahashi		
+Q1815243	cinematographer	Q115324051	Masaru Sakanishi		
+Q1815243	editor	Q115319902	Shinichi Fukumitsu		
+Q107046350	director	Q11628979	Nobutaka Nishizawa		
+Q123113590	director	Q142052	Junichi Sato		
+Q123113590	writer	Q11278566	Keiko Maruo		
+Q123113590	composer	Q1148342	Takanori Arisawa		
+Q11493388	director	Q4200092	Tetsuo Imazawa		
+Q11493388	creator	Q11484055	IRH Press		
+Q11493388	executive_producer	Q7385496	Ryūhō Ōkawa		
+Q11493388	subject		Ancient Greece		
+Q11493388	subject		Greek mythology		
+Q11493388	subject		Hermes		
+Q11493388	subject		Greco-Roman mysteries		
+Q11353384	writer	Q11353102	Nobuyuki Isshiki		
+Q11353384	cast	Q1046963	Yōsuke Eguchi		
+Q11353384	cast	Q11581203	Tōru Masuoka		
+Q11353384	cast	Q7705350	Teruyoshi Uchimura		
+Q11353384	cast	Q561449	Shinji Takeda		
+Q11353384	cast	Q11557444	Maiko Asano		
+Q11353384	cast	Q6419148	Kiyotaka Nambara		
+Q11353384	cast	Q1054620	Tomoko Yamaguchi		
+Q774058	director	Q3012184	Daisuke Nishio		
+Q774058	writer	Q544418	Takao Koyama		
+Q774058	composer	Q2296028	Shunsuke Kikuchi		
+Q774058	producer	Q11377330	Chiaki Imada		
+Q774058	producer	Q115340458	Tomio Anzai		
+Q774058	cinematographer	Q115340607	Toshiharu Takei		
+Q774058	editor	Q115319902	Shinichi Fukumitsu		
+Q1254983	director	Q3012184	Daisuke Nishio		
+Q1254983	writer	Q544418	Takao Koyama		
+Q1254983	composer	Q2296028	Shunsuke Kikuchi		
+Q1254983	producer	Q11377330	Chiaki Imada		
+Q1254983	producer	Q115340151	Rikizou Kayano		
+Q1254983	editor	Q115319902	Shinichi Fukumitsu		
+Q704353	director	Q142052	Junichi Sato		
+Q704353	director	Q1043203	Takuya Igarashi		
+Q704353	director	Q1369211	Kunihiko Ikuhara		
+Q704353	writer	Q2292589	Yōji Enokido		
+Q704353	writer	Q3976778	Sukehiro Tomita		
+Q704353	writer	Q7385611	Ryōta Yamaguchi		
+Q704353	producer	Q6071903	Iriya Azuma		
+Q704353	producer	Q10314182	Kenji Ota		
+Q2412797	director	Q106271515	Makoto Ishikawa		
+Q2412797	director	Q106282616	Makoto Tsuji		
+Q2412797	composer	Q852322	Ryudo Uzaki		
+Q2412797	followed_by	Q970543	Kamen Rider ZO		
+Q11322972	director	Q11614705	Hiroki Shibata		
+Q11322972	writer	Q3811337	Junki Takegami		
+Q11322972	composer	Q1192498	Koichi Sugiyama		
+Q467331	director	Q5485667	Frank Cappello		
+Q467331	writer	Q1149809	John Allen Nelson		
+Q467331	composer	Q1173903	David C. Williams		
+Q467331	producer	Q1664532	Joel Soisson		
+Q467331	producer	Q5294995	Donald Phillips		
+Q467331	producer	Q131519800	Michael Leahy		
+Q467331	cinematographer	Q15452558	Richard Clabaugh		
+Q467331	editor	Q15437033	Sonny Baskin		
+Q467331	cast	Q712670	Michael Nouri		
+Q467331	cast	Q4412009	Ryo Ishibashi		
+Q467331	cast	Q171363	Viggo Mortensen		
+Q4928181	director	Q4907130	Shinichiro Sawai		
+Q4928181	writer	Q4907130	Shinichiro Sawai		
+Q4928181	writer	Q21019656	Akira Miyazaki		
+Q4928181	composer	Q938538	Masaru Sato		
+Q4928181	cast	Q4116557	Isako Washio		
+Q4928181	cast	Q5508553	Fumi Dan		
+Q116861251	director	Q4200092	Tetsuo Imazawa		
+Q116861251	writer	Q1202851	Kihachi Okamoto		
+Q11197111	director	Q11634484	Yukio Kaizawa		
+Q11197111	composer	Q2296028	Shunsuke Kikuchi		
+Q11197113	director	Q6883322	Mitsuo Hashimoto		
+Q11197113	composer	Q2296028	Shunsuke Kikuchi		
+Q1255010	director	Q18544237	Yoshihiro Ueda		
+Q1255010	writer	Q544418	Takao Koyama		
+Q1255010	composer	Q2296028	Shunsuke Kikuchi		
+Q1255010	producer	Q11377330	Chiaki Imada		
+Q1255010	producer	Q115340458	Tomio Anzai		
+Q1255010	editor	Q115319902	Shinichi Fukumitsu		
+Q543064	director	Q2836036	Shigeyasu Yamauchi		
+Q543064	writer	Q544418	Takao Koyama		
+Q543064	composer	Q2296028	Shunsuke Kikuchi		
+Q543064	producer	Q11377330	Chiaki Imada		
+Q543064	producer	Q115340458	Tomio Anzai		
+Q543064	editor	Q115340735	Tamio Hosoda		
+Q1254956	director	Q18544237	Yoshihiro Ueda		
+Q1254956	composer	Q2296028	Shunsuke Kikuchi		
+Q107093148	director	Q11538585	Atsutoshi Umezawa		
+Q107093148	writer	Q11529059	Aya Matsui		
+Q107093148	composer	Q2308677	Toshihiko Sahashi		
+Q970543	director	Q355957	Keita Amemiya		
+Q970543	writer	Q1089172	Noboru Sugimura		
+Q970543	cast	Q736403	Kenji Ōba		
+Q970543	cast	Q1193064	Isao Sasaki		
+Q970543	follows	Q2412797	Shin Kamen Rider: Prologue		
+Q970543	followed_by	Q3042507	Kamen Rider J		
+Q902304	director	Q11459420	Harume Kosaka		
+Q902304	writer	Q3976778	Sukehiro Tomita		
+Q902304	composer	Q1148342	Takanori Arisawa		
+Q636444	director	Q1369211	Kunihiko Ikuhara		
+Q636444	writer	Q3976778	Sukehiro Tomita		
+Q636444	composer	Q1148342	Takanori Arisawa		
+Q636444	producer	Q6071903	Iriya Azuma		
+Q636444	subject		magical girl		
+Q99978144	director	Q3012184	Daisuke Nishio		
+Q99978144	writer	Q3811337	Junki Takegami		
+Q99978144	composer	Q6899534	Yūsuke Honma		
+Q99978144	subject		association football		
+Q100910749	director	Q11628979	Nobutaka Nishizawa		
+Q100910749	writer	Q4022916	Yoshiyuki Suga		
+Q100910749	writer	Q8652073	Nobuaki Kishima		
+Q100910749	composer	Q11429381	Takanobu Masuda		
+Q100910749	subject		basketball		
+Q100910749	subject		high school student		
+Q3795794	director	Q2708110	Noriyuki Abe		
+Q11197105	director	Q6883322	Mitsuo Hashimoto		
+Q11197105	composer	Q2296028	Shunsuke Kikuchi		
+Q11197110	director	Q6883322	Mitsuo Hashimoto		
+Q11197110	composer	Q2296028	Shunsuke Kikuchi		
+Q1254963	director	Q18544237	Yoshihiro Ueda		
+Q1254963	writer	Q544418	Takao Koyama		
+Q1254963	composer	Q2296028	Shunsuke Kikuchi		
+Q1254963	editor	Q115319902	Shinichi Fukumitsu		
+Q1254963	subject		cloning		
+Q746383	director	Q2836036	Shigeyasu Yamauchi		
+Q746383	writer	Q544418	Takao Koyama		
+Q746383	composer	Q2296028	Shunsuke Kikuchi		
+Q746383	producer	Q115340458	Tomio Anzai		
+Q746383	producer	Q115341170	Tsutomu Tomari		
+Q746383	editor	Q115319902	Shinichi Fukumitsu		
+Q3042507	director	Q355957	Keita Amemiya		
+Q3042507	cast	Q3544331	Yuka Nomura		
+Q3042507	cast	Q3266625	Yūta Mochizuki	Koji Segawa	
+Q3042507	follows	Q970543	Kamen Rider ZO		
+Q3273256	director	Q9307621	Katsuya Watanabe		
+Q120116874	writer	Q11529059	Aya Matsui		
+Q120116874	composer	Q6844117	Keiichi Oku		
+Q1066446	director	Q11614705	Hiroki Shibata		
+Q1066446	writer	Q3976778	Sukehiro Tomita		
+Q1066446	composer	Q1148342	Takanori Arisawa		
+Q1066446	producer	Q6071903	Iriya Azuma		
+Q1066446	executive_producer	Q11669570	Tan Takaiwa		
+Q1066446	follows	Q636444	Sailor Moon R: The Movie		
+Q1066446	followed_by	Q566098	Sailor Moon SuperS: The Movie		
+Q1066446	subject		extraterrestrial life		
+Q1066446	subject		magical girl		
+Q929998	director	Q1243380	Gisaburō Sugii		
+Q929998	composer	Q719205	Tetsuya Komuro		
+Q929998	cast	Q3297162	Masane Tsukayama		
+Q929998	cast	Q2080446	Masakatsu Funaki		
+Q929998	cast	Q1372791	Jōji Nakata		
+Q929998	cast	Q1351041	Unshō Ishizuka		
+Q929998	cast	Q3764794	Ginzō Matsuo		
+Q929998	cast	Q2280487	Daisuke Gōri		
+Q929998	cast	Q2447488	Kaneto Shiozawa		
+Q929998	cast	Q2311628	Hiromi Tsuru		
+Q929998	cast	Q938317	Hideyo Amamoto		
+Q929998	cast	Q6389331	Kenji Haga		
+Q929998	cast	Q2423016	Shōzō Iizuka		
+Q929998	cast	Q7678130	Takeshi Kusaka		
+Q929998	cast	Q3092154	Miki Fujitani		
+Q929998	cast	Q7496428	Shigezō Sasaoka		
+Q929998	cast	Q3573163	Yukimasa Kishino		
+Q4260373	director	Q9307621	Katsuya Watanabe		
+Q4260373	cast	Q2623922	Hiroshi Tsuchida		
+Q4260373	cast	Q4235795	Kane Kosugi		
+Q7061978	creator	Q11484055	IRH Press		
+Q7061978	executive_producer	Q7385496	Ryūhō Ōkawa		
+Q7061978	cast	Q20038382	Hiroaki Aeba		
+Q7061978	cast	Q17349944	Kotoyo Komori		
+Q7061978	cast	Q11544234	Fumizō Tachibanaya		
+Q7061978	cast	Q11561105	Shōgo Shimizu		
+Q7061978	cast	Q6455165	Kōji Nanbara		
+Q7061978	cast	Q11460564	Tomoko Ogawa	指導天使・サウラ	
+Q7061978	cast	Q11618851	Kimiyuki Araya		
+Q7061978	cast	Q11399342	Osamu Katō		
+Q7061978	cast	Q11548789	Kōta Mizumori		
+Q7061978	cast	Q11546561	Ryōma Takemi		
+Q7061978	cast	Q11455099	Kazuko Miyata		
+Q7061978	cast	Q10388307	Urufu Ootsuki	霊界のノストラダムス	
+Q7061978	cast	Q7376358	Ruby Moreno	七次元コントロールゾーンの天使	
+Q7061978	cast	Q11234476	Denden		
+Q7061978	cast	Q18817846	Shintarō Toda		
+Q7061978	cast	Q7681464	Tamio Kageyama		
+Q7061978	cast	Q11584833	Megumi Ishii		
+Q7061978	cast	Q11425383	Nagatoshi Sakamoto	生まれ変わりのドームでの天使	
+Q7061978	cast	Q11360744	Makoto Shimotsuka		
+Q7061978	cast	Q3705413	Tetsu Watanabe		
+Q7061978	cast	Q24876551	Shin Tatsuma		
+Q7061978	cast	Q11586713	Masashi Ishibashi		
+Q7061978	cast	Q11631554	Naoya Makoto		
+Q7061978	cast	Q105261879	Masao Ishiguro		
+Q7061978	cast	Q11614862	Yoshimi Ashikawa		
+Q7061978	cast	Q3545128	Kai Atō		
+Q7061978	cast	Q11551339	Shuntarō Emi		
+Q7061978	award		朝日ベストテン映画祭		
+Q8042573	director	Q3297180	Masaru Konuma		
+Q8042573	cast	Q4119907	Dan Green		
+Q8042573	cast	Q6187115	Jessica Calvello		
+Q8042573	cast	Q6735645	Maiko Kazama		
+Q8042573	cast	Q3545464	Makiko Kuno		
+Q1254966	director	Q2836036	Shigeyasu Yamauchi		
+Q1254966	writer	Q544418	Takao Koyama		
+Q1254966	composer	Q2296028	Shunsuke Kikuchi		
+Q1254966	producer	Q369396	Kōzō Morishita		
+Q1254966	cinematographer	Q115340607	Toshiharu Takei		
+Q1254966	editor	Q115319902	Shinichi Fukumitsu		
+Q1130576	director	Q6883322	Mitsuo Hashimoto		
+Q1130576	writer	Q544418	Takao Koyama		
+Q1130576	composer	Q2296028	Shunsuke Kikuchi		
+Q1130576	producer	Q369396	Kōzō Morishita		
+Q1130576	producer	Q11561196	Kenji Shimizu		
+Q1130576	cinematographer	Q115342044	Masao Shimizu		
+Q1130576	editor	Q115319902	Shinichi Fukumitsu		
+Q1130576	narrator	Q2568004	Jōji Yanami		
+Q6804503	director	Q355957	Keita Amemiya		
+Q6804503	producer	Q3516106	Tatsuya Kimura		
+Q6804503	cast	Q5209018	Dai Matsumoto		
+Q6804503	cast	Q225654	Kazuhiko Inoue		
+Q6804503	cast	Q902782	Yukijirō Hotaru		
+Q6804503	cast	Q3547286	Ami Kawai	Ami	
+Q1473596	director	Q2927184	Bryan Spicer		
+Q1473596	writer	Q11852696	Arne Olsen		
+Q1473596	writer	Q12838215	John Kamps		
+Q1473596	composer	Q920963	Graeme Revell		
+Q1473596	producer	Q559844	Haim Saban		
+Q1473596	producer	Q2056096	Shuki Levy		
+Q1473596	producer	Q7650980	Suzanne Todd		
+Q1473596	editor	Q7976751	Wayne Wahrman		
+Q1473596	executive_producer	Q559844	Haim Saban		
+Q1473596	executive_producer	Q2056096	Shuki Levy		
+Q1473596	cast	Q3376760	Peter Mochrie		
+Q1473596	cast	Q3391203	Paul Goddard		
+Q1473596	cast	Q4346479	Paul Schrier		
+Q1473596	cast	Q1623225	Jamie Croft		
+Q1473596	cast	Q2530612	Gabrielle Fitzpatrick		
+Q1473596	cast	Q1378684	Paul Freeman		
+Q1473596	cast	Q4346032	Jason Narvy		
+Q1473596	cast	Q242577	Amy Jo Johnson	Kimberly Hart	
+Q1473596	cast	Q2550078	Jason David Frank	Tommy Oliver	
+Q1473596	cast	Q7025047	Nicholas Bell	Zordon	
+Q1473596	cast	Q2468138	Johnny Yong Bosch	Adam Park	
+Q1473596	cast	Q2720213	David Yost	Billy Cranston	
+Q1473596	cast	Q4346955	Robert Axelrod	Lord Zedd	
+Q1473596	cast	Q362687	Steve Cardenas	Rocky DeSantos	
+Q1473596	cast	Q4354563	Karan Ashley	Aisha Campbell	
+Q1473596	subject		ninja		
+Q124335567	director	Q11538585	Atsutoshi Umezawa		
+Q124335567	writer	Q11529059	Aya Matsui		
+Q124335567	composer	Q6782373	Masahiro Kawasaki		
+Q609334	director	Q55400	Hayao Miyazaki		
+Q609334	writer	Q55400	Hayao Miyazaki		
+Q609334	composer	Q1058820	Chage and Aska		
+Q609334	producer	Q713511	Toshio Suzuki		
+Q609334	editor	Q1379022	Takeshi Seyama		
+Q7376319	director	Q86675439	Takumi Kimizuka		
+Q7376319	composer	Q132433	Yuki Kajiura		
+Q7376319	cast	Q3545199	Kaho Minami		
+Q7376319	cast	Q1138326	Reiko Takashima		
+Q7376319	cast	Q3548523	Jun Togawa		
+Q7376319	cast	Q6202728	Jinpachi Nezu		
+Q2760773	director	Q1043203	Takuya Igarashi		
+Q2760773	composer	Q1148342	Takanori Arisawa		
+Q566098	director	Q11614705	Hiroki Shibata		
+Q566098	writer	Q2292589	Yōji Enokido		
+Q566098	writer	Q3976778	Sukehiro Tomita		
+Q566098	composer	Q1148342	Takanori Arisawa		
+Q566098	cast	Q917318	Tōru Furuya	Mamoru Chiba	
+Q566098	cast	Q18735	Kotono Mitsuishi	Usagi Tsukino	
+Q566098	cast	Q1324613	Rika Fukami	Sailor Venus	
+Q566098	cast	Q49573	Aya Hisakawa	Sailor Mercury	
+Q566098	cast	Q1324264	Michie Tomizawa	Sailor Mars	
+Q566098	cast	Q254368	Megumi Ogata	Sailor Uranus	
+Q566098	cast	Q1324522	Emi Shinohara	Sailor Jupiter	
+Q566098	cast	Q2405512	Chiyoko Kawashima	Sailor Pluto	
+Q566098	cast	Q2665343	Masako Katsuki	Sailor Neptune	
+Q566098	cast	Q774937	Kae Araki	Chibiusa	
+Q566098	cast	Q1192227	Nobuo Tobita		
+Q566098	cast	Q2665164	Rihoko Yoshida		
+Q566098	cast	Q2421628	Chika Sakamoto		
+Q566098	cast	Q584678	Keiko Han		
+Q566098	cast	Q2623237	Yasuhiro Takato		
+Q566098	cast	Q3342567	Nobuhiko Kazama		
+Q566098	cast	Q540366	Kazuya Nakai		
+Q566098	cast	Q2305052	Kumiko Nishihara		
+Q566098	cast	Q5371077	Emi Uwagawa		
+Q566098	follows	Q1066446	Sailor Moon S: The Movie		
+Q566098	subject		magical girl		
+Q567751	director	Q648285	Hiroshi Watanabe		
+Q567751	writer	Q3814188	Kazuo Yamazaki		
+Q567751	composer	Q11517002	Takayuki Hattori		
+Q567751	followed_by	Q2293951	Slayers Return		
+Q567751	subject		demon		
+Q8042572	director	Q3532618	Toshiharu Ikeda		
+Q8042572	cast	Q7650956	Suzanne Savoy		
+Q8042572	cast	Q7693448	Ted Lewis		
+Q8042572	cast	Q3416058	Rachael Lillis		
+Q8042572	cast	Q2011799	Wayne Grayson		
+Q8042572	cast	Q7437597	Scott Rayow		
+Q8042572	cast	Q11284673	Hakuryu		
+Q8042572	cast	Q1140193	Crispin Freeman		
+Q8042572	cast	Q3544599	Kaori Shimamura		
+Q124478790	director	Q11634484	Yukio Kaizawa		
+Q735669	follows	Q477916	Dragon Ball Z		
+Q735669	followed_by	Q19839121	Dragon Ball Super		
+Q735669	subject		Japanese mythology		
+Q586410	director	Q2836036	Shigeyasu Yamauchi		
+Q586410	writer	Q11529059	Aya Matsui		
+Q586410	composer	Q1012742	Akihito Tokunaga		
+Q586410	cinematographer	Q115324051	Masaru Sakanishi		
+Q586410	editor	Q115319902	Shinichi Fukumitsu		
+Q586410	cast	Q1349299	Hisao Egawa		
+Q586410	cast	Q2280487	Daisuke Gōri		
+Q586410	cast	Q917318	Tōru Furuya		
+Q586410	cast	Q1156143	Hirohiko Kakegawa		
+Q586410	cast	Q3197233	Kinya Aikawa		
+Q586410	cast	Q2311628	Hiromi Tsuru		
+Q586410	cast	Q2568004	Jōji Yanami		
+Q586410	cast	Q2462086	Naoko Watanabe		
+Q586410	cast	Q259422	Masako Nozawa		
+Q586410	cast	Q531846	Masaharu Satō		
+Q586410	cast	Q535637	Kenji Utsumi		
+Q586410	cast	Q1323728	Bin Shimada		
+Q586410	cast	Q2423016	Shōzō Iizuka		
+Q586410	cast	Q933540	Naoki Tatsuta		
+Q11667102	director	Q7504806	Shuji Kataoka		
+Q11667102	cast	Q1385086	Keiichi Tsuchiya		
+Q11667102	subject		car		
+Q124335568	director	Q11072244	Junji Shimizu		
+Q124335568	writer	Q11488104	Yumi Kageyama		
+Q124335568	composer	Q6782373	Masahiro Kawasaki		
+Q2293951	director	Q648285	Hiroshi Watanabe		
+Q2293951	director	Q2538092	Kunihiko Yuyama		
+Q2293951	writer	Q1335454	Hajime Kanzaka		
+Q2293951	composer	Q11517002	Takayuki Hattori		
+Q2293951	follows	Q567751	Slayers The Motion Picture		
+Q2293951	followed_by	Q821973	Slayers Great		
+Q3283135	director	Q11274978	Hiroshi Negishi		
+Q3283135	writer	Q3453959	Ryōe Tsukimura		
+Q3283135	writer	Q11274978	Hiroshi Negishi		
+Q3283135	composer	Q61272	Christopher Franke		
+Q3283135	executive_producer	Q11583227	Tarō Maki		
+Q5251263	director	Q5771077	Hiroshi Sugawara		
+Q5251263	cast	Q3980312	Takeshi Masu		
+Q5251263	cast	Q266676	Namie Amuro		
+Q5251263	cast	Q1093223	Tarō Yamamoto		
+Q5251263	cast	Q1325150	Naohito Fujiki		
+Q3570324	director	Q2609816	Rintaro		
+Q3570324	writer	Q2552684	Nanase Ohkawa		
+Q3570324	writer	Q2609816	Rintaro		
+Q3570324	composer	Q8049939	Yasuaki Shimizu		
+Q8042574	director	Q3532618	Toshiharu Ikeda		
+Q8042574	cast	Q11458033	Minori Terada		
+Q8042574	cast	Q1138332	Ren Ōsugi		
+Q8042574	cast	Q6383533	Kei Marimura		
+Q8042574	cast	Q6187115	Jessica Calvello		
+Q18234002	writer	Q208582	Akira Toriyama		
+Q18234002	composer	Q44315	Hide		
+Q18234002	producer	Q2836036	Shigeyasu Yamauchi		
+Q136681778	director	Q647119	Shun Nakahara		
+Q136681778	writer	Q11378737	Aki Itami		
+Q136681778	cast	Q1139734	Etsushi Toyokawa		
+Q136681778	cast	Q748582	Kōichi Satō		
+Q136681778	cast	Q850650	Honami Suzuki		
+Q967664	director	Q23261	Hideaki Anno		
+Q967664	director	Q742757	Kazuya Tsurumaki		
+Q967664	writer	Q23261	Hideaki Anno		
+Q967664	composer	Q2456797	Shirō Sagisu		
+Q967664	producer	Q6883235	Mitsuhisa Ishikawa		
+Q967664	follows	Q662	Neon Genesis Evangelion		
+Q967664	followed_by	Q1151814	The End of Evangelion		
+Q821973	director	Q648285	Hiroshi Watanabe		
+Q821973	director	Q2538092	Kunihiko Yuyama		
+Q821973	writer	Q1335454	Hajime Kanzaka		
+Q821973	composer	Q11517002	Takayuki Hattori		
+Q821973	producer	Q1065717	J.C.Staff		
+Q821973	follows	Q2293951	Slayers Return		
+Q821973	followed_by	Q2293945	Slayers Gorgeous		
+Q3980547	director	Q6883322	Mitsuo Hashimoto		
+Q3667356	director	Q112844733	Satoshi Kimura		
+Q3667356	composer	Q2578353	Kow Otani		
+Q1151814	director	Q23261	Hideaki Anno		
+Q1151814	director	Q742757	Kazuya Tsurumaki		
+Q1151814	writer	Q23261	Hideaki Anno		
+Q1151814	composer	Q2456797	Shirō Sagisu		
+Q1151814	producer	Q6883235	Mitsuhisa Ishikawa		
+Q1151814	cinematographer	Q11579330	Hisao Shirai		
+Q1151814	editor	Q101141203	Sachiko Miki		
+Q1151814	follows	Q967664	Neon Genesis Evangelion: Death & Rebirth		
+Q131369351	director	Q3012184	Daisuke Nishio		
+Q131369351	composer	Q707593	Kaoru Wada		
+Q11273013	director	Q5771077	Hiroshi Sugawara		
+Q11273013	writer	Q8962630	Yoshikazu Okada		
+Q11273013	producer	Q11496968	Osamu Tezuka		
+Q11273013	producer	Q11613247	Hirotsugu Usui		
+Q11273013	producer	Q11655604	Daisuke Sekiguchi		
+Q11273013	cinematographer	Q6389364	Kenji Takama		
+Q11273013	editor	Q11411786	Shin'ya Tadano		
+Q11273013	cast	Q1134043	Yoshinori Okada	Akihiko Suzuki	
+Q11273013	cast	Q11535988	Mie Kuribayashi		
+Q11273013	cast	Q678217	Sayaka Yamaguchi	Mishio Yokoyama	
+Q11273013	cast	Q11471917	Mayumi Oka		
+Q11273013	cast	Q3052426	Emiri Nakayama	Namie Tōno	
+Q11273013	cast	Q1138534	Asami Mizukawa		
+Q11273013	cast	Q11461976	Yukimi Koyanagi		
+Q11273013	cast	Q11438204	Megumi Ōishi		
+Q11273013	cast	Q11373674	Ken Izawa		
+Q11273013	cast	Q3545444	Kanako Enomoto	Komugi Nishimura	
+Q11273013	cast	Q1041576	Akiko Yada	Natsumi Harada	
+Q11273013	cast	Q11570374	Toshiyuki Makihara		
+Q11273013	cast	Q2699910	Hiroyuki Ikeuchi	Kōsuke Sagawa	
+Q11273013	cast	Q11626635	Yoshihiko Hakamada		
+Q11273013	cast	Q910120	Kazue Fukiishi	Shiori Fujisaki	
+Q2048984	director	Q2056096	Shuki Levy		
+Q2048984	director	Q3019007	David Winning		
+Q2048984	writer	Q2056096	Shuki Levy		
+Q2048984	composer	Q2056096	Shuki Levy		
+Q2048984	producer	Q4354475	Jonathan Tzachor		
+Q2048984	editor	Q1607207	Henry Richardson		
+Q2048984	narrator	Q7346598	Robert L. Manahan		
+Q2048984	cast	Q5761067	Hilary Shepard Turner		
+Q2048984	cast	Q4346032	Jason Narvy		
+Q2048984	cast	Q4346479	Paul Schrier		
+Q2048984	cast	Q2882218	Catherine Sutherland	Katherine Hillard	
+Q2048984	cast	Q2736164	Blake Foster	Justin Stewart	
+Q2048984	cast	Q3303302	Nakia Burrise	Tanya Sloan	
+Q2048984	cast	Q242577	Amy Jo Johnson	Kimberly Hart	
+Q2048984	cast	Q362687	Steve Cardenas	Rocky DeSantos	
+Q2048984	cast	Q2603666	Austin St. John	Jason Lee Scott	
+Q2048984	cast	Q2468138	Johnny Yong Bosch	Adam Park	
+Q2048984	cast	Q2550078	Jason David Frank	Tommy Oliver	
+Q576806	director	Q142052	Junichi Sato		
+Q576806	writer	Q9075027	Takashi Yamada		
+Q576806	composer	Q1148342	Takanori Arisawa		
+Q4876860	director	Q4701166	Akira Nishimori		
+Q11277043	director	Q11634484	Yukio Kaizawa		
+Q11277043	writer	Q2712289	Chiaki J. Konaka		
+Q11277043	composer	Q11459418	Akiko Kosaka		
+Q115898951	writer	Q8050028	Yasuko Kobayashi		
+Q1090711	director	Q23261	Hideaki Anno		
+Q1090711	writer	Q23261	Hideaki Anno		
+Q1090711	writer	Q11622273	Akio Satsukawa		
+Q1090711	composer	Q3275538	Shinkichi Mitsumune		
+Q1090711	producer	Q9124961	Toshimichi Ohtsuki		
+Q1090711	cast	Q1055095	Mitsuru Fukikoshi		
+Q1090711	cast	Q418736	Akira Ishida		
+Q1090711	cast	Q1143674	Yukie Nakama		
+Q1090711	cast	Q266670	Megumi Hayashibara		
+Q1090711	cast	Q3138648	Hitomi Miwa		
+Q1090711	cast	Q3792515	Ikkei Watanabe		
+Q1090711	cast	Q379824	Tadanobu Asano		
+Q1090711	cast	Q866626	Kirari		
+Q1090711	cast	Q11473503	Nana Okada		
+Q1090711	cast	Q529424	Asumi Miwa		
+Q1090711	cast	Q18735	Kotono Mitsuishi		
+Q1090711	cast	Q3549551	Mitsuru Hirata		
+Q1090711	subject		prostitution		
+Q1090711	subject		enjo kōsai		
+Q126891290	composer	Q6212028	Joe Rinoie		
+Q706746	director	Q7688325	Tatsuo Satō		
+Q706746	composer	Q11517002	Takayuki Hattori		
+Q706746	award		Seiun Award - Best Media		
+Q2293945	director	Q648285	Hiroshi Watanabe		
+Q2293945	writer	Q1335454	Hajime Kanzaka		
+Q2293945	composer	Q11517002	Takayuki Hattori		
+Q2293945	follows	Q821973	Slayers Great		
+Q2293945	followed_by	Q2293949	Slayers Premium		
+Q18043207	director	Q1138078	Yukihiko Tsutsumi		
+Q4006754	director	Q1369211	Kunihiko Ikuhara		
+Q4006754	writer	Q2292589	Yōji Enokido		
+Q4006754	composer	Q3275538	Shinkichi Mitsumune		
+Q689114	director	Q1260399	Hiroyuki Kakudō		
+Q689114	writer	Q11497552	Satoru Nishizono		
+Q689114	composer	Q1148342	Takanori Arisawa		
+Q689114	cinematographer	Q3959457	Shigeru Ando		
+Q689114	follows	Q1427169	Digimon Adventure		
+Q689114	followed_by	Q1224659	Digimon Adventure: Our War Game!		
+Q1224659	director	Q720771	Mamoru Hosoda		
+Q1224659	writer	Q605013	Reiko Yoshida		
+Q1224659	composer	Q1148342	Takanori Arisawa		
+Q1224659	follows	Q689114	Digimon Adventure		
+Q1224659	follows	Q1427169	Digimon Adventure		
+Q1224659	followed_by	Q715731	Digimon Adventure 02		
+Q710324	creator	Q2010	Eiichiro Oda		
+Q710324	narrator	Q11938932	Norbert Íbero i de Castro		
+Q710324	narrator	Q111708913	Albert Socias		
+Q108598678	director	Q11538585	Atsutoshi Umezawa		
+Q108598678	writer	Q3976778	Sukehiro Tomita		
+Q108598678	composer	Q11398928	Michiaki Katō		
+Q1138625	director	Q3080378	Yasuo Furuhata		
+Q1138625	writer	Q1138463	Jirō Asada		
+Q1138625	composer	Q345494	Ryuichi Sakamoto		
+Q1138625	cinematographer	Q5209600	Daisaku Kimura		
+Q1138625	cast	Q1189115	Hidetaka Yoshioka		
+Q1138625	cast	Q465268	Yoshiko Tanaka		
+Q1138625	cast	Q6991628	Nenji Kobayashi		
+Q1138625	cast	Q234574	Ryōko Hirosue		
+Q1138625	cast	Q741184	Ken Takakura		
+Q1138625	cast	Q1054660	Shinobu Ōtake		
+Q1138625	cast	Q1320080	Ken Shimura		
+Q1138625	cast	Q373959	Masanobu Andō		
+Q1138625	cast	Q3544412	Tomoko Naraoka		
+Q1138625	award		Japan Academy Prize for Picture of the Year		
+Q1138625	award		Japan Academy Prize for Director of the Year		
+Q1138625	award		Japan Academy Prize for Outstanding Performance by an Actress in a Leading Role		
+Q1138625	award		Japan Academy Prize for Outstanding Performance by an Actor in a Leading Role		
+Q1138625	award		Japan Academy Prize for Screenplay of the Year		
+Q11262515	director	Q470779	Kinji Fukasaku		
+Q11262515	writer	Q380846	Kaneto Shindō		
+Q11262515	composer	Q1354443	Masamichi Amano		
+Q11262515	cinematographer	Q5209600	Daisaku Kimura		
+Q11262515	cast	Q11399327	Takeshi Katō		
+Q11262515	cast	Q2053558	Mariko Okada		
+Q11262515	cast	Q3544664	Sumiko Fuji		
+Q11262515	cast	Q3544865	Takashi Sasano		
+Q11262515	cast	Q8061126	Yumiko Nogawa		
+Q11262515	cast	Q3098359	Masahiko Tsugawa		
+Q11262515	cast	Q2741096	Seizō Fukumoto		
+Q11262515	cast	Q3545199	Kaho Minami		
+Q1044391	director	Q11072244	Junji Shimizu		
+Q1044391	writer	Q240225	Kazuki Takahashi		
+Q1044391	writer	Q8050028	Yasuko Kobayashi		
+Q1044391	executive_producer	Q11669570	Tan Takaiwa		
+Q1044391	followed_by	Q962917	Yu-Gi-Oh! The Movie: Pyramid of Light		

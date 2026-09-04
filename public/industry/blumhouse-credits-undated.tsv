@@ -1,0 +1,15 @@
+qid	role	personQid	name	character	ordinal
+Q56886751	director	Q352460	Todd McFarlane		
+Q56886751	writer	Q352460	Todd McFarlane		
+Q56886751	producer	Q13449900	Jason Blum		
+Q56886751	cast	Q171905	Jamie Foxx		
+Q56886751	cast	Q23365	Jeremy Renner		
+Q56886751	follows	Q1474393	Spawn		
+Q87582900	director	Q40035	Richard Linklater		
+Q87582900	writer	Q40035	Richard Linklater		
+Q87582900	composer	Q153579	Stephen Sondheim		
+Q87582900	cast	Q40638	Blake Jenner		
+Q87582900	cast	Q20973709	Beanie Feldstein		
+Q87582900	cast	Q96886074	Mallory Bechtel		
+Q87582900	cast	Q73367368	Paul Mescal		
+Q87582900	cast	Q16236455	Ben Platt		

@@ -1,0 +1,93 @@
+qid	role	personQid	name	character	ordinal
+Q137558798	director	Q1373742	Johan Renck		
+Q137558798	writer	Q16212750	Roberto Patino		
+Q137558798	writer	Q137568284	David Wiener		
+Q140570538	cast	Q303957	Josh Hartnett		
+Q140570538	cast	Q16238721	Mackenzie Davis		
+Q130367882	director	Q109771236	Nozipho Nkelemba		
+Q130367882	cast	Q100497159	Xolile Tshabalala		
+Q130367882	cast	Q65996531	Connie Chiume		
+Q139499290	cast	Q3624971	Louis Tomlinson		
+Q139499290	cast	Q3626950	Zayn Malik		
+Q117455376	subject		D. B. Cooper		
+Q109597568	director	Q11779170	Michał Rogalski		
+Q130633026	director	Q3218807	Laure de Clermont-Tonnerre		
+Q130633026	director	Q23651358	Garth Davis		
+Q130633026	cast	Q22277803	Florence Pugh		
+Q130633026	cast	Q134079852	Joseph Zada		
+Q130633026	cast	Q5111829	Christopher Abbott		
+Q130633026	cast	Q29650179	Mike Faist		
+Q130633026	cast	Q75242023	Joe Anders		
+Q130633026	cast	Q15731551	Hoon Lee		
+Q130633026	cast	Q984572	Tracy Letts		
+Q130633026	cast	Q267383	Martha Plimpton		
+Q130633026	cast	Q314892	Ciarán Hinds		
+Q136702513	director	Q314287	Thomas Vinterberg		
+Q136702513	writer	Q942932	Eric Roth		
+Q136702513	executive_producer	Q314287	Thomas Vinterberg		
+Q136702513	executive_producer	Q942932	Eric Roth		
+Q136702513	executive_producer	Q5317144	Dustin Thomason		
+Q136702513	executive_producer	Q5499491	Fredrik Logevall		
+Q136702513	executive_producer	Q15069859	Peter Chernin		
+Q136702513	executive_producer	Q28536181	Jenno Topping		
+Q136702513	cast	Q2895523	Ben Miles		
+Q136702513	cast	Q629696	Denis O'Hare		
+Q136702513	cast	Q57147	Michael Fassbender	Joseph P. Kennedy Sr.	
+Q136702513	cast	Q3218677	Laura Donnelly	Rose Kennedy	
+Q136702513	cast	Q2985242	Nick Robinson	Joseph P. Kennedy Jr.	
+Q136702513	cast	Q107996059	Lydia Peckham	Rosemary Kennedy	
+Q136702513	cast	Q124332448	Saura Lightfoot-Leon	Kathleen Cavendish	
+Q136702513	cast	Q83655047	Cole Doman	Lem Billings	
+Q136702513	cast	Q237012	Imogen Poots	Gloria Swanson	
+Q136702513	cast	Q132561364	Miley Locke	Kathleen Cavendish	
+Q136702513	cast	Q113126045	Tipper Seifert-Cleveland	Rosemary Kennedy	
+Q136702513	cast	Q5894640	Hera Hilmar	Inga Arvad	
+Q136702513	cast	Q15542608	Wyatt Russell	Charles Lindbergh	
+Q136702513	cast	Q534915	Patrick Fischler	Arthur Krock	
+Q136702513	cast	Q3649957	Caitlin FitzGerald	Clare Boothe Luce	
+Q136702513	cast	Q114700274	Louis Landau	William Cavendish, Marquess of Hartington	
+Q136702513	cast	Q7352796	Robin Soans	Neville Chamberlain	
+Q136702513	cast	Q4711449	Albert Welling	Winston Churchill	
+Q136702513	cast	Q946117	Toby Huss	Franklin Delano Roosevelt	
+Q136702513	cast	Q45647	Eddie Marsan	J. Edgar Hoover	
+Q131176613	director	Q48847530	Jagoda Szelc		
+Q131176613	director	Q131176625	Klara Kochańska-Bajon		
+Q131176613	writer	Q138307930	Q138307930		
+Q131176613	cast	Q96278792	Weronika Krystek		
+Q131176613	cast	Q28671903	Marta Wągrocka		
+Q131176613	cast	Q56034458	Barbara Wypych		
+Q131176613	cast	Q6729900	Magdalena Różczka		
+Q131176613	cast	Q9359777	Tomasz Tyndyk		
+Q131176613	cast	Q272433	Krystyna Janda		
+Q131176613	cast	Q9276029	Grażyna Bułka		
+Q131176613	cast	Q11714666	Izabela Dąbrowska		
+Q131176613	cast	Q62630898	Weronika Humaj		
+Q135574	director	Q109307645	Dylan Brown		
+Q135574	writer	Q2396165	Jeffrey Price		
+Q135574	writer	Q13586622	Peter S. Seaman		
+Q140770743	creator	Q7173432	Peter Craig		
+Q133554650	director	Q5321636	Toby Haynes		
+Q133554650	writer	Q3476302	Scott Rosenberg		
+Q133554650	writer	Q6288593	Josh Appelbaum		
+Q133554650	executive_producer	Q978649	Greg Berlanti		
+Q133554650	executive_producer	Q3267145	Jeff Pinkner		
+Q133554650	executive_producer	Q3476302	Scott Rosenberg		
+Q133554650	executive_producer	Q4760014	André Nemec		
+Q133554650	executive_producer	Q5321636	Toby Haynes		
+Q133554650	executive_producer	Q6288593	Josh Appelbaum		
+Q133554650	executive_producer	Q63111589	Sarah Schechter		
+Q133554650	production_designer	Q3952822	Scott Chambliss		
+Q133554650	cast	Q26921822	Paul Walter Hauser		
+Q133554650	cast	http://www.wikidata.org/.well-known/genid/132843aa618d683eabdea3bfbd4acb29	http://www.wikidata.org/.well-known/genid/132843aa618d683eabdea3bfbd4acb29	Shaggy Rogers	
+Q133554650	cast	Q20752077	Mckenna Grace	Daphne Blake	
+Q133554650	cast	Q20740858	Abby Ryder Fortson	Velma Dinkley	
+Q133554650	cast	Q27063370	Maxwell Jenkins	Fred Jones	
+Q133554650	cast	Q296577	Frank Welker	Scooby-Doo	
+Q136463396	director	Q24289779	Natalia Leite		
+Q136463396	director	Q96575417	Shannon Murphy		
+Q136463396	producer	Q15069859	Peter Chernin		
+Q136463396	cast	Q38238309	Kristine Froseth		
+Q139586534	director	Q58799185	Paweł Maślona		
+Q139586534	cast	Q100742828	Sandra Drzymalska		
+Q139586534	cast	Q9359683	Tomasz Schuchardt		
+Q138509087	subject		Jeong Kwan		

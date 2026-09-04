@@ -1,0 +1,188 @@
+qid	role	personQid	name	character	ordinal
+Q1439808	director	Q6883346	Mitsuru Hongo		
+Q1439808	writer	Q564197	Oji Hiroi		
+Q1439808	writer	Q6883346	Mitsuru Hongo		
+Q1439808	writer	Q11628553	Hiroyuki Nishimura		
+Q1439808	composer	Q2562073	Kōhei Tanaka		
+Q849869	director	Q185421	Takashi Miike		
+Q849869	writer	Q138256	Saitō Hajime		
+Q849869	composer	Q2947344	Kōji Endō		
+Q849869	cinematographer	Q605735	Hideo Yamamoto		
+Q849869	editor	Q3571997	Yasushi Shimamura		
+Q849869	cast	Q3544106	Shingo Yamashiro		
+Q849869	cast	Q3545145	Narimi Arimori		
+Q849869	cast	Q2651052	Harumi Inoue		
+Q849869	cast	Q4261480	Shun Sugata		
+Q849869	cast	Q5209656	Daisuke Ryū		
+Q849869	cast	Q3486418	Rikiya Yasuoka		
+Q849869	cast	Q1488230	Tetsurō Tamba		
+Q849869	cast	Q2486480	Renji Ishibashi		
+Q849869	cast	Q185421	Takashi Miike		
+Q3992656	director	Q647119	Shun Nakahara		
+Q3992656	cinematographer	Q118746907	Kazuhiro Suzuki		
+Q3992656	cast	Q11422725	Jun Kunimura		
+Q3992656	cast	Q253873	Aoi Miyazaki		
+Q3992656	cast	Q783712	Nozomi Andō		
+Q1532993	director	Q185421	Takashi Miike		
+Q1532993	writer	Q457860	Yasushi Akimoto		
+Q1532993	composer	Q2947344	Kōji Endō		
+Q1532993	producer	Q1351571	Naoki Satō		
+Q1532993	cinematographer	Q3785486	Hideo Yamamoto		
+Q1532993	editor	Q3571997	Yasushi Shimamura		
+Q1532993	cast	Q910120	Kazue Fukiishi		
+Q1532993	cast	Q298249	Anna Nagata		
+Q1532993	cast	Q253690	Kō Shibasaki		
+Q1532993	cast	Q1333086	Shinichi Tsutsumi		
+Q1532993	cast	Q2486480	Renji Ishibashi		
+Q1532993	cast	Q11584203	Chinatsu Yada		
+Q1532993	cast	Q873810	Yutaka Matsushige		
+Q1532993	followed_by	Q2062601	One Missed Call 2		
+Q1532993	subject		supernatural		
+Q3403453	director	Q2296663	Seijun Suzuki		
+Q3403453	composer	Q2745564	Michiru Oshima		
+Q3403453	cast	Q11482771	Mikijirō Hira		
+Q3403453	cast	Q3072118	Saori Yuki		
+Q3403453	cast	Q288114	Joe Odagiri		
+Q3403453	cast	Q180852	Zhang Ziyi		
+Q3403453	cast	Q1054683	Hiroko Yakushimaru		
+Q2183596	director	Q977721	Ryūta Tasaki		
+Q2183596	writer	Q9001294	Yukari Tatsui		
+Q2183596	composer	Q3544622	Yōko Ueno		
+Q2183596	cinematographer	Q118746907	Kazuhiro Suzuki		
+Q2183596	editor	Q66429547	Shogo Hirasawa		
+Q2183596	cast	Q1036386	Kaho		
+Q2183596	cast	Q738476	Susumu Terajima		
+Q2183596	cast	Q6141871	Mizuho Yoshida		
+Q2183596	cast	Q3543561	Kanji Tsuda		
+Q908105	director	Q1187991	Yusuke Yamamoto		
+Q908105	writer	Q2016090	Mamiko Ikeda		
+Q908105	cast	Q1372791	Jōji Nakata		
+Q908105	cast	Q1371733	Keiji Fujiwara		
+Q908105	cast	Q2642327	Etsuko Kozakura		
+Q908105	cast	Q464348	Takehito Koyasu		
+Q908105	cast	Q2311661	Takeshi Kusao		
+Q908105	cast	Q615567	Akiko Hiramatsu		
+Q908105	cast	Q1192204	Ryō Hirohashi		
+Q908105	cast	Q1317610	Kumiko Watanabe		
+Q908105	cast	Q50027	Chiwa Saitō		
+Q908105	cast	Q917318	Tōru Furuya		
+Q908105	cast	Q1137510	Yui Aragaki		
+Q908105	cast	Q418736	Akira Ishida		
+Q908105	cast	Q333194	Kōichi Yamadera		
+Q908105	cast	Q49569	Mamiko Noto		
+Q908105	cast	Q2273472	Nobuyuki Hiyama		
+Q908105	cast	Q1191421	Haruna Ikezawa		
+Q908105	cast	Q592161	Tomoko Kawakami		
+Q5368843	director	Q1138125	Yoshimitsu Morita		
+Q5368843	cast	Q1052140	Kuranosuke Sasaki		
+Q5368843	cast	Q1074004	Takako Tokiwa		
+Q5368843	cast	Q235171	Erika Sawajiri		
+Q5368843	cast	Q238907	Keiko Kitagawa		
+Q5368843	cast	Q1323453	Miyuki Nakajima		
+Q336012	director	Q720771	Mamoru Hosoda		
+Q336012	writer	Q2256932	Satoko Okudera		
+Q336012	composer	Q6127012	Kiyoshi Yoshida		
+Q336012	producer	Q1663983	Jungo Maruta		
+Q336012	executive_producer	Q9128087	Takeshi Yasuda		
+Q336012	award		Japan Academy Prize for Animation of the Year		
+Q336012	award		Mainichi Film Award for Best Animation Film		
+Q336012	award		Animation Kobe Theatrical Film Award		
+Q336012	subject		time travel		
+Q11304292	director	Q1138125	Yoshimitsu Morita		
+Q11304292	composer	Q2745564	Michiru Oshima		
+Q11304292	cast	Q360986	Kenichi Matsuyama		
+Q11304292	cast	Q1045635	Yūki Amami		
+Q11304292	cast	Q238907	Keiko Kitagawa		
+Q11304292	cast	Q1139734	Etsushi Toyokawa		
+Q11304292	cast	Q5752456	Hideko Yoshida		
+Q11304292	cast	Q3549551	Mitsuru Hirata		
+Q44775288	director	Q3342565	Nobuhiko Obayashi		
+Q909318	director	Q142052	Junichi Sato		
+Q909318	writer	Q9076887	Masahiro Yokotani		
+Q909318	producer	Q142052	Junichi Sato		
+Q909318	cast	Q1317610	Kumiko Watanabe		
+Q909318	cast	Q592161	Tomoko Kawakami		
+Q909318	cast	Q2642327	Etsuko Kozakura		
+Q909318	cast	Q50027	Chiwa Saitō		
+Q909318	cast	Q3302262	Hitoshi Nakata		
+Q909318	followed_by	Q1039018	Keroro Gunso the Super Movie 4: Gekishin Dragon Warriors		
+Q589203	director	Q3591389	Éric Valette		
+Q589203	writer	Q185421	Takashi Miike		
+Q589203	writer	Q457860	Yasushi Akimoto		
+Q589203	writer	Q505702	Andrew Klavan		
+Q589203	composer	Q879456	Reinhold Heil		
+Q589203	producer	Q4757652	Andrew Kosove		
+Q589203	producer	Q4972958	Broderick Johnson		
+Q589203	cinematographer	Q556573	Glen MacPherson		
+Q589203	editor	Q17679551	Steve Mirkovich		
+Q589203	cast	Q466842	Ana Claudia Talancón		
+Q589203	cast	Q262652	Azura Skye		
+Q589203	cast	Q257243	Margaret Cho		
+Q589203	cast	Q8000188	Wilbur Fitzgerald		
+Q589203	cast	Q18933	Rhoda Griffis		
+Q589203	cast	Q530646	Ray Wise		
+Q589203	cast	Q3017262	Dave Spector		
+Q589203	cast	Q944681	Jason Beghe		
+Q589203	cast	Q257286	Meagan Good		
+Q589203	cast	Q1259397	Johnny Lewis		
+Q589203	cast	Q26378	Ariel Winter		
+Q589203	cast	Q232397	Shannyn Sossamon		
+Q589203	cast	Q233536	Laura Harring		
+Q589203	cast	Q314485	Edward Burns		
+Q4803404	director	Q3098359	Masahiko Tsugawa		
+Q4803404	cast	Q3544865	Takashi Sasano		
+Q4803404	cast	Q3276290	Jun'ichi Haruta		
+Q4803404	cast	Q11254710	Sansei Shiomi		
+Q4803404	cast	Q3548260	Zen Kajiwara		
+Q4803404	cast	Q1932833	Ai Maeda		
+Q4803404	cast	Q1060054	Toshiyuki Nishida		
+Q4803404	cast	Q1055095	Mitsuru Fukikoshi		
+Q4803404	cast	Q3547893	Hisako Manda		
+Q4803404	cast	Q873921	Akira Emoto		
+Q4803404	cast	Q6582083	Tarō Ishida		
+Q4803404	cast	Q873876	Ittoku Kishibe		
+Q4803404	cast	Q1092091	Akaji Maro		
+Q4803404	cast	Q555493	Hiroyuki Nagato		
+Q18700747	director	Q11543246	Satoko Yokohama		
+Q18700747	writer	Q11543246	Satoko Yokohama		
+Q18700747	composer	Q1969558	Otomo Yoshihide		
+Q18700747	cast	Q11325681	Seiji Nozoe	Ta Tanaka	
+Q18700747	cast	Q360986	Kenichi Matsuyama	Akito Mizuki	
+Q18700747	cast	Q1347933	Kumiko Asō	Machiko Kamiizumi	
+Q17497450	director	Q11451649	Mari Asato		
+Q17497450	writer	Q11451649	Mari Asato		
+Q17497450	producer	Q11451649	Mari Asato		
+Q17497450	cast	Q3113510	Maria Takagi		
+Q17497450	cast	Q2271234	Kōji Seto		
+Q17497450	cast	Q1155343	Ai Kago		
+Q17497450	cast	Q4983522	Kana Tsugihara		
+Q17497450	subject		haunted house		
+Q1648476	director	Q11355112	Ryūta Miyake		
+Q1648476	cast	Q3234563	Hiroki Suzuki		
+Q1648476	cast	Q1319455	Mihiro Kaneko		
+Q1648476	cast	Q567154	Akina Minami		
+Q1648476	subject		haunted house		
+Q1039018	director	Q142052	Junichi Sato		
+Q1039018	writer	Q1192471	Mine Yoshizaki		
+Q1039018	composer	Q11648425	Saeko Suzuki		
+Q1039018	follows	Q909318	Keroro Gunso the Super Movie 3: Keroro vs. Keroro Great Sky Duel		
+Q1039018	followed_by	Q1044964	Keroro Gunso the Super Movie: Creation! Ultimate Keroro, Wonder Space-Time Island		
+Q1576846	director	Q382387	Noboru Iguchi		
+Q1576846	writer	Q382387	Noboru Iguchi		
+Q1576846	composer	Q8049968	Yasuhiko Fukuda		
+Q1576846	cast	Q467247	Sugiura Asami		
+Q1576846	cast	Q1154179	Naoto Takenaka		
+Q1576846	cast	Q22249988	Cay Izumi		
+Q1576846	cast	Q7686508	Tarō Shigaki		
+Q1576846	cast	Q1329116	Takumi Saito		
+Q1576846	cast	Q22250184	Demo Tanaka		
+Q1576846	cast	Q22261042	Yūya Ishikawa		
+Q3514488	director	Q11370741	Kanta Kamei		
+Q3514488	writer	Q605013	Reiko Yoshida		
+Q3514488	composer	Q1139702	Akira Senju		
+Q3031974	director	Q4856835	Banmei Takahashi		
+Q3031974	writer	Q4856835	Banmei Takahashi		
+Q3031974	composer	Q852322	Ryudo Uzaki		
+Q3031974	cast	Q343598	Tatsuya Fujiwara		
+Q3031974	cast	Q1155256	Yuki Uchida		
+Q3031974	subject		Dōgen		

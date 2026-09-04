@@ -1,0 +1,107 @@
+qid	role	personQid	name	character	ordinal
+Q13118224	director	Q117860411	Dilip Naik		
+Q13118224	composer	Q3632994	Mohammed Zahur Khayyam		
+Q13118224	cast	Q677439	Kulbhushan Kharbanda		
+Q1150193	director	Q30876	Yash Chopra		
+Q1150193	writer	Q30876	Yash Chopra		
+Q1150193	composer	Q212512	Hariprasad Chaurasia		
+Q1150193	producer	Q30876	Yash Chopra		
+Q1150193	cinematographer	Q29862890	Kay Gee		
+Q1150193	cast	Q464932	Jaya Bachchan		
+Q1150193	cast	Q9570	Amitabh Bachchan		
+Q1150193	cast	Q677439	Kulbhushan Kharbanda		
+Q1150193	cast	Q379171	Shashi Kapoor		
+Q1150193	cast	Q465826	Rekhā		
+Q1150193	cast	Q1974722	Sanjeev Kumar		
+Q3429798	director	Q7289445	Ramesh Talwar		
+Q3429798	composer	Q3632994	Mohammed Zahur Khayyam		
+Q3429798	producer	Q30876	Yash Chopra		
+Q3429798	cinematographer	Q29862890	Kay Gee		
+Q3429798	cast	Q7653917	Swaroop Sampat		
+Q3429798	cast	Q2700318	Randhir Kapoor		
+Q3429798	cast	Q3401588	Prem Chopra		
+Q3429798	cast	Q3595934	Poonam Dhillon		
+Q3429798	cast	Q465859	Waheeda Rehman		
+Q3429798	cast	Q379171	Shashi Kapoor		
+Q3429798	cast	Q1974722	Sanjeev Kumar		
+Q11023873	director	Q30876	Yash Chopra		
+Q11023873	writer	Q2319562	Javed Akhtar		
+Q11023873	composer	Q5923672	Hridaynath Mangeshkar		
+Q11023873	producer	Q30876	Yash Chopra		
+Q11023873	cast	Q1647814	Iftekhar		
+Q11023873	cast	Q455343	Nilu Phule		
+Q11023873	cast	Q313956	Anil Kapoor		
+Q11023873	cast	Q12445067	Madan Puri		
+Q11023873	cast	Q465859	Waheeda Rehman		
+Q11023873	cast	Q377789	Dilip Kumar		
+Q11023873	cast	Q333443	Amrish Puri		
+Q11023873	cast	Q15930076	Vikas Anand		
+Q11023873	cast	Q2839215	Alok Nath		
+Q11023873	cast	Q14754856	Avtar Gill		
+Q11023873	cast	Q475162	Mohan Agashe		
+Q11023873	cast	Q3489680	Gulshan Grover		
+Q11023873	cast	Q979990	Saeed Jaffrey		
+Q11023873	cast	Q2575841	Rati Agnihotri		
+Q11023873	cast	Q4769639	Annu Kapoor		
+Q11023873	award		Filmfare Award for Best Supporting Actor		
+Q7288607	director	Q55407	Raj Kapoor		
+Q7288607	writer	Q55407	Raj Kapoor		
+Q7288607	writer	Q24284604	Jyoti Swaroop		
+Q7288607	composer	Q7296728	Ravindra Jain		
+Q7288607	producer	Q55407	Raj Kapoor		
+Q7288607	cinematographer	Q16750160	Radhu Karmakar		
+Q7288607	editor	Q55407	Raj Kapoor		
+Q7288607	cast	Q5284706	Divya Rana		
+Q7288607	cast	Q5565038	Gita Siddharth		
+Q7288607	cast	Q7814774	Tom Alter		
+Q7288607	cast	Q337434	Mandakini		
+Q7288607	cast	Q677439	Kulbhushan Kharbanda		
+Q7288607	cast	Q7286234	Rajiv Kapoor		
+Q7288607	cast	Q979990	Saeed Jaffrey		
+Q7288607	cast	Q3595806	A. K. Hangal		
+Q7288607	cast	Q15930605	Urmila Bhatt		
+Q7288607	cast	Q8049698	Yash Pandit		
+Q7288607	cast	Q7299451	Raza Murad		
+Q7288607	award		Filmfare Award for Best Film		
+Q7929084	director	Q30876	Yash Chopra		
+Q7929084	writer	Q544240	Sachin Bhowmick		
+Q7929084	composer	Q7499187	Shiv-Hari		
+Q7929084	producer	Q30876	Yash Chopra		
+Q7929084	cinematographer	Q41914	Manmohan Singh		
+Q7929084	cast	Q313956	Anil Kapoor		
+Q7929084	cast	Q107130	Rajesh Khanna		
+Q7929084	cast	Q33635	Hema Malini		
+Q7929084	cast	Q560163	Anupam Kher		
+Q7929084	cast	Q258820	Rishi Kapoor		
+Q7929084	subject		aviation		
+Q1061735	director	Q30876	Yash Chopra		
+Q1061735	writer	Q4802101	Arun Kaul		
+Q1061735	writer	Q17080342	Sagar Sarhadi		
+Q1061735	writer	Q25349787	Kamna Chandra		
+Q1061735	composer	Q212512	Hariprasad Chaurasia		
+Q1061735	composer	Q1391960	Shivkumar Sharma		
+Q1061735	composer	Q7499187	Shiv-Hari		
+Q1061735	producer	Q30876	Yash Chopra		
+Q1061735	cinematographer	Q17019633	Manmohan Singh		
+Q1061735	costume_designer	Q539765	Bhanu Athaiya		
+Q1061735	costume_designer	Q6986973	Neeta Lulla		
+Q1061735	costume_designer	Q112158557	Leena Daru		
+Q1061735	cast	Q2845331	Anant Mahadevan		
+Q1061735	cast	Q15134222	Manohar Singh		
+Q1061735	cast	Q4901101	Bharat Bhushan		
+Q1061735	cast	Q12415309	Asha Sharma		
+Q1061735	cast	Q7635223	Suhas Joshi		
+Q1061735	cast	Q15930081	Beena Banerjee		
+Q1061735	cast	Q258820	Rishi Kapoor		
+Q1061735	cast	Q6880705	Mita Vashisht		
+Q1061735	cast	Q4673430	Achala Sachdev		
+Q1061735	cast	Q2038656	Vinod Khanna		
+Q1061735	cast	Q7288472	Ram Gopal Bajaj		
+Q1061735	cast	Q270691	Sridevi		
+Q1061735	cast	Q3632832	Sushma Seth		
+Q1061735	cast	Q158745	Juhi Chawla		
+Q1061735	cast	Q560163	Anupam Kher		
+Q1061735	cast	Q465859	Waheeda Rehman		
+Q1061735	cast	Q17417519	Lalit Tiwari		
+Q1061735	award		Filmfare Award for Best Cinematographer		
+Q1061735	award		National Film Award for Best Popular Film Providing Wholesome Entertainment		

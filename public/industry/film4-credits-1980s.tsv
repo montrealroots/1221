@@ -1,0 +1,197 @@
+qid	role	personQid	name	character	ordinal
+Q3424493	director	Q2982601	Colin Gregg		
+Q3424493	cast	Q83492	Gary Oldman		
+Q3424493	cast	Q1991526	John Altman		
+Q3424493	cast	Q287824	Timothy Spall		
+Q1199534	director	Q543700	Jack Gold		
+Q1199534	writer	Q15463177	Charles Wood		
+Q1199534	producer	Q335507	David Puttnam		
+Q1199534	cinematographer	Q19946259	Mike Fash		
+Q1199534	cast	Q2032901	Oscar Quitak		
+Q1199534	cast	Q514403	Jean Heywood		
+Q1199534	cast	Q719529	Colin Blakely		
+Q1199534	cast	Q517562	Nigel Stock		
+Q1199534	cast	Q211831	David Suchet		
+Q1199534	cast	Q739257	George A. Cooper		
+Q1199534	cast	Q470746	David Kelly		
+Q1199534	cast	Q530676	Brian Glover		
+Q1199534	cast	Q5240418	David Threlfall		
+Q1199534	cast	Q200676	Peter Woodthorpe		
+Q1199534	cast	Q233891	Carroll Baker		
+Q160946	director	Q55411	Wim Wenders		
+Q160946	writer	Q294583	Sam Shepard		
+Q160946	writer	Q6456555	L. M. Kit Carson		
+Q160946	composer	Q318374	Ry Cooder		
+Q160946	producer	Q2845576	Anatole Dauman		
+Q160946	cinematographer	Q384784	Robby Müller		
+Q160946	editor	Q91260	Peter Przygodda		
+Q160946	cast	Q314290	Harry Dean Stanton	Travis Henderson	
+Q160946	cast	Q76711	Nastassja Kinski		
+Q160946	cast	Q456639	John Lurie		
+Q160946	cast	Q78924	Bernhard Wicki		
+Q160946	cast	Q136221	Aurore Clément		
+Q160946	cast	Q15461750	Hunter Carson		
+Q160946	cast	Q345212	Dean Stockwell		
+Q160946	cast	Q545396	Viva		
+Q160946	award		Palme d'Or		
+Q160946	award		National Board of Review: Top Ten Films		
+Q6533596	director	Q5105891	Chris Bernard		
+Q6533596	writer	Q20680262	Frank Clarke		
+Q6533596	composer	Q4706709	Alan Gill		
+Q6533596	producer	Q7610883	Stephen Woolley		
+Q6533596	editor	Q515837	Lesley Walker		
+Q6533596	cast	Q6760356	Margi Clarke		
+Q6533596	cast	Q296028	Alfred Molina		
+Q6533596	cast	Q4720730	Alexandra Pigg		
+Q6533596	cast	Q376981	Peter Firth		
+Q6533596	subject		Cold War		
+Q735314	director	Q55258	Stephen Frears		
+Q735314	writer	Q325936	Hanif Kureishi		
+Q735314	composer	Q730252	Stanley Myers		
+Q735314	producer	Q1473065	Tim Bevan		
+Q735314	producer	Q2224483	Sarah Radclyffe		
+Q735314	cinematographer	Q967126	Oliver Stapleton		
+Q735314	editor	Q975418	Mick Audsley		
+Q735314	costume_designer	Q291686	Lindy Hemming		
+Q735314	cast	Q3430805	Richard Graham		
+Q735314	cast	Q531414	Shirley Anne Field		
+Q735314	cast	Q979990	Saeed Jaffrey		
+Q735314	cast	Q432731	Persis Khambatta		
+Q735314	cast	Q4831765	Ayub Khan-Din		
+Q735314	cast	Q4282275	Stephen Marcus		
+Q735314	cast	Q3110935	Gordon Warnecke		
+Q735314	cast	Q166389	Daniel Day-Lewis		
+Q735314	cast	Q5550023	Gerard Horan		
+Q735314	cast	Q32452	Roshan Seth		
+Q735314	award		National Board of Review: Top Ten Films		
+Q203574	director	Q51577	James Ivory		
+Q203574	writer	Q235759	Ruth Prawer Jhabvala		
+Q203574	composer	Q707132	Richard Robbins		
+Q203574	producer	Q732397	Ismail Merchant		
+Q203574	cinematographer	Q452731	Tony Pierce-Roberts		
+Q203574	editor	Q5941371	Humphrey Dixon		
+Q203574	production_designer	Q1522637	Gianni Quaranta		
+Q203574	cast	Q313047	Denholm Elliott		
+Q203574	cast	Q973077	Patrick Godfrey		
+Q203574	cast	Q28054	Judi Dench		
+Q203574	cast	Q1923721	Peter Cellier		
+Q203574	cast	Q707132	Richard Robbins		
+Q203574	cast	Q170428	Helena Bonham Carter		
+Q203574	cast	Q166389	Daniel Day-Lewis		
+Q203574	cast	Q3442508	Rosemary Leach		
+Q203574	cast	Q172653	マギー・スミス		
+Q203574	cast	Q363518	Julian Sands		
+Q203574	cast	Q472216	Rupert Graves		
+Q203574	cast	Q21175978	Matyelok Gibbs		
+Q203574	cast	Q731187	Simon Callow		
+Q203574	award		Academy Award for Best Writing, Adapted Screenplay		
+Q203574	award		BAFTA Award for Best Film		
+Q203574	award		Academy Award for Best Costume Design		
+Q203574	award		Academy Award for Best Production Design		
+Q203574	award		BAFTA Award for Best Actress in a Leading Role		
+Q203574	award		BAFTA Award for Best Actress in a Supporting Role		
+Q203574	award		Golden Globe Award for Best Supporting Actress – Motion Picture		
+Q203574	award		London Film Critics Circle Award for Film of the Year		
+Q203574	award		National Board of Review Award for Best Film		
+Q203574	award		National Board of Review: Top Ten Films		
+Q203574	award		Independent Spirit Award for Best Foreign Film		
+Q203574	award		David di Donatello for Best Foreign Director		
+Q203574	award		Writers Guild of America Award for Best Adapted Screenplay		
+Q5331257	director	Q106599585	Peter Ormrod		
+Q5331257	writer	Q106599585	Peter Ormrod		
+Q5331257	writer	Q121271503	John Kelleher		
+Q5331257	composer	Q983618	Dónal Lunny		
+Q5331257	producer	Q121271503	John Kelleher		
+Q5331257	cinematographer	Q23062886	Arthur Wooster		
+Q5331257	editor	Q95860266	J. Patrick Duffner		
+Q5331257	cast	Q7822253	Tony Doyle		
+Q5331257	cast	Q113117227	Catherine Byrne		
+Q5331257	cast	Q116036859	Takashi Kawahara		
+Q5331257	cast	Q95852739	Stephen Brennan		
+Q5331257	cast	Q5325532	Eamon Morrissey		
+Q5331257	cast	Q3180111	Joe Lynch		
+Q5331257	cast	Q1984549	Niall Tóibín		
+Q5331257	cast	Q123466825	Victora Armstrong		
+Q12124628	director	Q241962	Tom Conti		
+Q12124628	director	Q349391	Helen Mirren		
+Q12124628	director	Q2476952	David Hayman		
+Q12124628	director	Q5078324	Charles Gormley		
+Q12124628	writer	Q241962	Tom Conti		
+Q12124628	writer	Q349391	Helen Mirren		
+Q12124628	writer	Q2476952	David Hayman		
+Q12124628	writer	Q5078324	Charles Gormley		
+Q12124628	composer	Q4833899	BA Robertson		
+Q12124628	producer	Q241962	Tom Conti		
+Q12124628	producer	Q349391	Helen Mirren		
+Q12124628	producer	Q2476952	David Hayman		
+Q12124628	cinematographer	Q1273264	Michael Coulter		
+Q12124628	editor	Q138654858	Q138654858		
+Q12124628	cast	Q241962	Tom Conti		
+Q12124628	cast	Q349391	Helen Mirren		
+Q12124628	cast	Q2476952	David Hayman		
+Q1283391	director	Q316165	Jan Švankmajer		
+Q1283391	writer	Q316165	Jan Švankmajer		
+Q1283391	producer	Q2073385	Peter-Christian Fueter		
+Q1283391	cinematographer	Q95154440	Svatopluk Malý		
+Q1283391	cast	Q1029056	Camilla Power		
+Q1283391	award		Annecy Cristal for a Feature Film		
+Q1058981	director	Q3161017	James Dearden		
+Q1058981	writer	Q3161017	James Dearden		
+Q1058981	composer	Q1867851	Loek Dikker		
+Q1058981	cinematographer	Q460277	Roger Deakins		
+Q1058981	cast	Q173158	Ben Kingsley	Basil Pascali	
+Q1058981	cast	Q349391	Helen Mirren	Lydia Neumann	
+Q1058981	cast	Q944296	T. P. McKenna	Dr. Hogan	
+Q1058981	cast	Q309690	Charles Dance	Anthony Bowles	
+Q1058981	cast	Q205868	Vernon Dobtcheff	Pariente	
+Q1058981	cast	Q463473	Kevork Malikyan	Mardosian	
+Q1058981	cast	Q5308817	George Murcell	Herr Gesing	
+Q1058981	cast	Q979285	Nadim Sawalha	Pasha	
+Q1058981	cast	Q7606111	Stefan Gryff	Izzet Effendi	
+Q1058981	cast	Q4974370	Brook Williams	Turkish Officer	
+Q1058981	subject		espionage		
+Q1058981	subject		dissolution of the Ottoman Empire		
+Q1058981	subject		antiquities trade		
+Q7731009	director	Q6197227	Jim O'Brien		
+Q7731009	writer	Q6247836	John McGrath		
+Q7731009	composer	Q920167	George Fenton		
+Q7731009	producer	Q1701031	John McGrath		
+Q7731009	cinematographer	Q1273264	Michael Coulter		
+Q7731009	cast	Q237178	Jane Horrocks		
+Q7731009	cast	Q230035	Joan Plowright		
+Q7731009	cast	Q272613	Billie Whitelaw		
+Q2897242	director	Q474262	Amos Gitai		
+Q2897242	writer	Q474262	Amos Gitai		
+Q2897242	composer	Q1311188	Markus Stockhausen		
+Q2897242	composer	Q2287827	Simon Stockhausen		
+Q2897242	producer	Q7217442	Marek Rozenbaum		
+Q2897242	cinematographer	Q958139	Henri Alekan		
+Q2897242	cinematographer	Q2895799	Nurith Aviv		
+Q2897242	editor	Q1872918	Luc Barnier		
+Q2897242	editor	Q2853697	Antoine Bonfanti		
+Q2897242	editor	Q3310034	Michel Klochendler		
+Q2897242	editor	Q3846280	Marco Melani		
+Q2897242	cast	Q7338955	Rivka Neumann		
+Q2897242	cast	Q1311188	Markus Stockhausen		
+Q2897242	cast	Q528141	Keren Mor		
+Q2897242	cast	Q1033909	Mark Ivanir		
+Q2897242	cast	Q754063	Veronica Lazăr		
+Q2897242	cast	Q205868	Vernon Dobtcheff		
+Q2897242	cast	Q455584	Juliano Mer-Khamis		
+Q2897242	cast	Q68134	Lisa Kreuzer		
+Q2897242	cast	Q2897859	Bernard Eisenschitz		
+Q7270604	director	Q1702735	Jon Amiel		
+Q7270604	writer	Q3531781	Tony Grisoni		
+Q7270604	composer	Q940995	Michael Convertino		
+Q7270604	cinematographer	Q6848887	Mike Southon		
+Q7270604	editor	Q2074083	Peter Boyle		
+Q7270604	cast	Q1044734	Vittorio Duse		
+Q7270604	cast	Q3132807	Henry Goodman		
+Q7270604	cast	Q5489287	Frank Rozelaar-Green		
+Q8034562	director	Q22110362	James Hendrie		
+Q8034562	composer	Q7518339	Simon Brint		
+Q8034562	cinematographer	Q2159911	Robin Vidgeon		
+Q8034562	cast	Q512456	Shelagh Fraser		
+Q8034562	cast	Q444306	Kathy Burke		
+Q8034562	cast	Q3175896	Lenny Henry		
+Q8034562	award		Academy Award for Best Live Action Short Film		

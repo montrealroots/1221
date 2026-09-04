@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { careerLabel } from '@/engine/world/bootstrap';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -266,13 +267,13 @@ export function CharacterWorkspace() {
                   <div key={id}>
                     <div className="row gap-2">
                       <span className="strong">{trait.name}</span>
-                      <span className="chip">{trait.category}</span>
+                      <span className="chip">{titleCaseLabel(trait.category)}</span>
                     </div>
                     <p className="small muted" style={{ margin: '4px 0' }}>{trait.description}</p>
                     <div className="row wrap gap-1">
                       {Object.entries(trait.attributeMods ?? {}).map(([key, delta]) => (
                         <span key={key} className={`chip ${delta > 0 ? 'chip-positive' : 'chip-negative'}`}>
-                          {key.replace(/_/g, ' ')} {delta > 0 ? '+' : ''}{delta}
+                          {titleCaseLabel(key.replace(/_/g, ' '))} {delta > 0 ? '+' : ''}{delta}
                         </span>
                       ))}
                       {Object.entries(trait.systemMods ?? {}).map(([key, value]) => (

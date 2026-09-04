@@ -1,0 +1,49 @@
+qid	role	personQid	name	character	ordinal
+Q5609195	director	Q113853230	Wayne Coe		
+Q5609195	producer	Q6490536	Larry Huber		
+Q5609195	cinematographer	Q365230	Janusz Kamiński		
+Q5609195	cast	Q8002850	Will Hare		
+Q5609195	cast	Q203960	James Earl Jones		
+Q5609195	cast	Q1152815	Marc McClure		
+Q5609195	cast	Q329734	Brad Dourif		
+Q4450747	director	Q7360826	Rolfe Kanefsky		
+Q6146905	director	Q7353754	Rocco Urbisci		
+Q6146905	cast	Q171905	Jamie Foxx		
+Q54020985	director	Q26702559	Jimmy Lifton		
+Q54020985	follows	Q4191538	Mirror, Mirror		
+Q54020985	followed_by	Q16697777	Mirror, Mirror III: The Voyeur		
+Q4219986	director	Q2601052	Yossi Wein		
+Q4219986	cast	Q327732	Frank Zagarino		
+Q4530697	director	Q3127795	Harry Bromley Davenport		
+Q4530697	writer	Q5226181	Daryl Haney		
+Q4530697	composer	Q3127795	Harry Bromley Davenport		
+Q4530697	cast	Q5226181	Daryl Haney		
+Q4530697	cast	Q369949	Robert Culp		
+Q4530697	cast	Q465628	Andrew Divoff		
+Q4530697	cast	Q725250	Jim Hanks		
+Q4530697	follows	Q3571053	Xtro II: The Second Encounter		
+Q2388774	director	Q103917	Steven Soderbergh		
+Q2388774	writer	Q321917	Spalding Gray		
+Q2388774	composer	Q455964	Cliff Martinez		
+Q2388774	cinematographer	Q385158	Elliot Davis		
+Q2388774	editor	Q7648118	Susan Littenberg		
+Q2388774	cast	Q321917	Spalding Gray		
+Q5145087	director	Q7342009	Robert Bella		
+Q5145087	writer	Q7816948	Tom Morrissey		
+Q5145087	producer	Q7342009	Robert Bella		
+Q5145087	cast	Q316032	John C. McGinley		
+Q1124612	director	Q113119084	Reverge Anselmo		
+Q1124612	composer	Q1382830	Joel McNeely		
+Q1124612	cinematographer	Q1177096	David Watkin		
+Q1124612	cast	Q310012	James Fox		
+Q1124612	cast	Q388204	Robert Glenister		
+Q1124612	cast	Q1592518	Heathcote Williams		
+Q1124612	cast	Q76478	Kirsten Dunst		
+Q1124612	cast	Q335587	Nick Stahl		
+Q1124612	cast	Q228747	Julie Walters		
+Q1124612	cast	Q434033	Paloma Baeza		
+Q1124612	cast	Q440926	Geraldine James		
+Q1124612	cast	Q15485378	John Benfield		
+Q1124612	cast	Q3856179	Michael Higgs		
+Q1124612	cast	Q208746	Nathaniel Parker		
+Q1124612	cast	Q329160	Nicholas Rowe		

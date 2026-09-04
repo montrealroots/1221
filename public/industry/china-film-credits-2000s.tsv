@@ -1,0 +1,366 @@
+qid	role	personQid	name	character	ordinal
+Q4657765	director	Q6694920	Lu Xuechang		
+Q4657765	composer	Q6969236	Nathan McCree		
+Q4657765	producer	Q5646675	Han Sanping		
+Q4657765	cinematographer	Q7967741	Wang Yu		
+Q125346059	director	Q8948254	Ding Yinnan		
+Q125346059	writer	Q125349385	Hu Jianxin		
+Q125346059	cast	Q7560977	Song Chunli		
+Q125346059	cast	Q704233	Wang Xueqi		
+Q125346059	award		Huabiao Award for Outstanding Film		
+Q4906329	director	Q716114	Feng Xiaogang		
+Q4906329	writer	Q716114	Feng Xiaogang		
+Q4906329	writer	Q124262148	Li Xiaoming		
+Q4906329	writer	Q124262220	Shih Kang		
+Q4906329	composer	Q3471363	San Bao		
+Q4906329	cinematographer	Q9085512	Zhang Li		
+Q4906329	editor	Q121091437	Zhou Ying		
+Q4906329	cast	Q9332229	Ying Da		
+Q4906329	cast	Q103784	Donald Sutherland		
+Q4906329	cast	Q714188	Rosamund Kwan		
+Q4906329	cast	Q270560	Paul Mazursky		
+Q4906329	cast	Q2658847	Ge You		
+Q4906329	award		Hundred Flowers Award for Best Picture		
+Q125381393	director	Q125211039	Zhou Youchao		
+Q125381393	writer	Q9036103	Shang Jing		
+Q125381393	cast	Q60990791	Ding Yongdai		
+Q125381393	cast	Q8289237	Sun Haiying		
+Q125381393	cast	Q8984517	Huang Haibo		
+Q125381393	cast	Q9084044	Zhang Jiayi		
+Q125381393	award		Huabiao Award for Outstanding Film		
+Q19794848	director	Q20984065	Song Yeming		
+Q19794848	cast	Q5912659	Hou Yong		
+Q19794848	cast	Q3530675	Tom Butler		
+Q19794848	cast	Q123615667	Mu Lixin		
+Q19794848	award		Golden Rooster Award for Best Picture		
+Q19794848	award		Hundred Flowers Award for Best Picture		
+Q19794848	award		Huabiao Award for Outstanding Film		
+Q71978	director	Q202597	Chen Kaige		
+Q71978	writer	Q202597	Chen Kaige		
+Q71978	writer	Q8045213	Xue Xiaolu		
+Q71978	producer	Q545651	Chen Hong		
+Q71978	cinematographer	Q24175301	Kim Hyung-koo		
+Q71978	cast	Q15955814	Tang Ru-Yun		
+Q71978	cast	Q6653647	Liu Peiqi		
+Q71978	cast	Q6170442	Yuan Quan		
+Q71978	cast	Q1081186	You Yong		
+Q71978	cast	Q12589290	Kim Hye-ri		
+Q71978	cast	Q545651	Chen Hong		
+Q71978	cast	Q15907321	Chen Qiang		
+Q71978	cast	Q7682763	Tang Yun		
+Q71978	cast	Q866794	Wang Zhiwen		
+Q71978	cast	Q202597	Chen Kaige		
+Q71978	award		Huabiao Award for Outstanding Film		
+Q3546648	director	Q716114	Feng Xiaogang		
+Q3546648	writer	Q706370	Liu Zhenyun		
+Q3546648	composer	Q508351	Cong Su		
+Q3546648	cinematographer	Q3429304	Zhao Fei		
+Q3546648	cast	Q381074	Fan Bingbing		
+Q3546648	cast	Q2658847	Ge You		
+Q3546648	cast	Q4243707	Zhang Guoli		
+Q3546648	cast	Q510789	Xu Fan		
+Q3546648	award		Hundred Flowers Award for Best Picture		
+Q10877634	director	Q2552168	Feng Xiaoning		
+Q10877634	composer	Q1026892	Li Ge		
+Q10877634	producer	Q5646675	Han Sanping		
+Q10877634	cast	Q7129633	Pan Changjiang		
+Q470759	director	Q311179	Stephen Chow		
+Q470759	writer	Q311179	Stephen Chow		
+Q470759	writer	Q114690294	Chan Man-Keung		
+Q470759	writer	Q115172887	Kan-Cheung Tsang		
+Q470759	writer	Q122922697	Lola Huo Xin		
+Q470759	composer	Q15924853	Raymond Wong		
+Q470759	producer	Q311179	Stephen Chow		
+Q470759	cinematographer	Q110272795	Hang Sang Poon		
+Q470759	editor	Q19854455	Angie Lam		
+Q470759	production_designer	Q26213673	Oliver Wong		
+Q470759	cast	Q3608975	Xing Yu		
+Q470759	cast	Q706919	Danny Chan		
+Q470759	cast	Q311179	Stephen Chow		
+Q470759	cast	Q701940	Lam Suet		
+Q470759	cast	Q4922395	Bruce Leung		
+Q470759	cast	Q533745	Yuen Wah		
+Q470759	award		Hong Kong Film Award for Best Film		
+Q470759	award		Golden Horse Award for Best Feature Film		
+Q124249580	director	Q2082279	Yin Li		
+Q124249580	writer	Q6653537	Liu Heng		
+Q124249580	cast	Q9061263	Wu Jun		
+Q124249580	cast	Q1152156	Tang Guoqiang		
+Q124249580	award		Hundred Flowers Award for Best Picture		
+Q124249580	award		Huabiao Award for Outstanding Film		
+Q4660175	director	Q3369535	Huo Jianqi		
+Q4660175	producer	Q549042	He Ping		
+Q4660175	producer	Q5646675	Han Sanping		
+Q4660175	cast	Q197471	Zhao Wei		
+Q4660175	cast	Q6694937	Lu Yi		
+Q16689764	director	Q78123716	Zhang Jiarui		
+Q16689764	writer	Q125492285	Jiazong Meng		
+Q16689764	writer	Q125520516	Daju Yuan		
+Q16689764	cast	Q470244	Zhang Jingchu		
+Q16689764	cast	Q9116335	Yin Xiaotian		
+Q16689764	award		Huabiao Award for Outstanding Film		
+Q7093252	director	Q5115171	Chu Yen-ping		
+Q7093252	cast	Q445608	Eric Tsang		
+Q7093252	cast	Q707229	Ng Man-tat		
+Q7093252	cast	Q270674	Ruby Lin		
+Q7985583	director	Q3134110	Herman Yau		
+Q7985583	cast	Q714389	Liu Ye		
+Q7985583	cast	Q465248	Barbie Hsu		
+Q7985583	cast	Q5581667	Gong Beibi		
+Q611370	director	Q202597	Chen Kaige		
+Q611370	writer	Q202597	Chen Kaige		
+Q611370	composer	Q57833	Klaus Badelt		
+Q611370	cinematographer	Q180029	Peter Pau		
+Q611370	cast	Q270681	Cecilia Cheung		
+Q611370	cast	Q545651	Chen Hong		
+Q611370	cast	Q468490	Jang Dong-geon		
+Q611370	cast	Q380579	Nicholas Tse		
+Q611370	cast	Q714389	Liu Ye		
+Q611370	cast	Q705522	Hiroyuki Sanada		
+Q8057664	director	Q3496643	Ma Liwen		
+Q8057664	writer	Q3496643	Ma Liwen		
+Q8057664	composer	Q64814	Dou Wei		
+Q8057664	producer	Q5646675	Han Sanping		
+Q8057664	cast	Q9359759	Jin Yaqin		
+Q15902629	director	Q3157531	Jacob Cheung		
+Q15902629	writer	Q3135258	Hideki Mori		
+Q15902629	writer	Q3157531	Jacob Cheung		
+Q15902629	composer	Q443712	Kenji Kawai		
+Q15902629	producer	Q704612	Huang Jianxin		
+Q15902629	cinematographer	Q11656817	Yoshitaka Sakamoto		
+Q15902629	cinematographer	Q19303440	Ardy Lam		
+Q15902629	editor	Q15895583	Kwong Chi-Leung		
+Q15902629	cast	Q851018	Wu Ma		
+Q15902629	cast	Q402179	Ahn Sung-ki		
+Q15902629	cast	Q866794	Wang Zhiwen		
+Q15902629	cast	Q381074	Fan Bingbing		
+Q15902629	cast	Q706667	Nicky Wu		
+Q15902629	cast	Q16766	Andy Lau		
+Q15902629	cast	Q153657	Choi Siwon		
+Q288173	director	Q188137	J. J. Abrams		
+Q288173	writer	Q188137	J. J. Abrams		
+Q288173	writer	Q432598	Alex Kurtzman		
+Q288173	writer	Q434715	Bruce Geller		
+Q288173	writer	Q467500	Roberto Orci		
+Q288173	composer	Q155124	Michael Giacchino		
+Q288173	producer	Q37079	トム・クルーズ		
+Q288173	producer	Q509219	Paula Wagner		
+Q288173	cinematographer	Q969766	Daniel Mindel		
+Q288173	editor	Q1621602	Mary Jo Markey		
+Q288173	editor	Q3850525	Maryann Brandon		
+Q288173	executive_producer	Q3975906	Stratton Leopold		
+Q288173	executive_producer	Q5646675	Han Sanping		
+Q288173	costume_designer	Q258156	Colleen Atwood		
+Q288173	production_designer	Q3952822	Scott Chambliss		
+Q288173	cast	Q229112	Michelle Monaghan	Julia Meade	
+Q288173	cast	Q37079	トム・クルーズ	Ethan Hunt	
+Q288173	cast	Q310315	Ving Rhames	Luther Stickell	
+Q288173	cast	Q238464	Simon Pegg	Benji Dunn	
+Q288173	cast	Q180560	Philip Seymour Hoffman	Owen Davian	
+Q288173	cast	Q193048	Laurence Fishburne	Theodore Brassel	
+Q288173	cast	Q3265830	Lucille Soong		
+Q288173	cast	Q435677	Paolo Bonacelli		
+Q288173	cast	Q45647	Eddie Marsan	Brownway	
+Q288173	cast	Q302491	Aaron Paul	Rick Meade	
+Q288173	cast	Q744002	Jeff Chase	Davian's bodyguard	
+Q288173	cast	Q7396329	Sabra Williams		
+Q288173	cast	Q7859655	Ty Williams		
+Q288173	cast	Q3643715	Brandon Molale		
+Q288173	cast	Q231730	Sasha Alexander		
+Q288173	cast	Q3045427	George Cheung		
+Q288173	cast	Q13701277	Michael Berry Jr.		
+Q288173	cast	Q6836904	Michelle Arthur		
+Q288173	cast	Q4248899	Kathryn Fiore		
+Q288173	cast	Q614774	Maggie Q	Zhen Lei	
+Q288173	cast	Q18411324	Diane Marshall-Green		
+Q288173	cast	Q3875894	Niccolò Senni		
+Q288173	cast	Q4977510	Bruce French		
+Q288173	cast	Q213567	Jonathan Rhys Meyers	Declan Gormley	
+Q288173	cast	Q432281	Carla Gallo		
+Q288173	cast	Q1189487	Rose Rollins		
+Q288173	cast	Q309592	Greg Grunberg	Kevin	
+Q288173	cast	Q1864504	Jane Daly		
+Q288173	cast	Q966151	José Zúñiga		
+Q288173	cast	Q229426	Keri Russell	Lindsey Farris	
+Q288173	cast	Q3161402	James Shanklin		
+Q288173	cast	Q269830	Bahar Soomekh	Davian's translator	
+Q288173	cast	Q384452	Bellamy Young		
+Q288173	cast	Q3616028	Andrea Sartoretti		
+Q288173	cast	Q1392126	Charles Chun		
+Q288173	cast	Q773355	Timothy Omundson		
+Q288173	cast	Q272166	Tracy Middendorf		
+Q288173	cast	Q969766	Daniel Mindel		
+Q288173	cast	Q5364770	Ellen Bry		
+Q288173	cast	Q6272961	Jonathan Dixon		
+Q288173	follows	Q505790	Mission: Impossible 2		
+Q288173	followed_by	Q628154	Mission: Impossible – Ghost Protocol		
+Q428761	director	Q2082279	Yin Li		
+Q428761	writer	Q6653537	Liu Heng		
+Q428761	composer	Q23304504	Zou Ye		
+Q428761	cinematographer	Q121143715	Wang Xiaolie		
+Q428761	editor	Q123584842	Zhan Hai-Hong		
+Q428761	cast	Q706092	Chen Kun		
+Q428761	cast	Q254166	Li Bingbing		
+Q428761	cast	Q253420	Vivian Hsu		
+Q428761	cast	Q709768	Steven Cheung Chi-hang		
+Q428761	cast	Q8979556	Kuei Ya-lei		
+Q428761	cast	Q701002	Yang Kuei-Mei		
+Q428761	cast	Q254180	Isabella Leong		
+Q428761	cast	Q262468	Athena Chu		
+Q428761	cast	Q9026212	Chin Han		
+Q428761	award		Golden Rooster Award for Best Picture		
+Q428761	award		Huabiao Award for Outstanding Film		
+Q430987	director	Q705226	Wang Quan'an		
+Q430987	writer	Q123551009	Lu Wei		
+Q430987	cinematographer	Q1406196	Lutz Reitemeier		
+Q430987	editor	Q705226	Wang Quan'an		
+Q430987	cast	Q267026	Yu Nan		
+Q430987	award		Golden Bear		
+Q699559	director	Q716064	Peter Chan		
+Q699559	composer	Q5070332	Chan Kwong-wing		
+Q699559	producer	Q716064	Peter Chan		
+Q699559	cinematographer	Q2865389	Arthur Wong		
+Q699559	editor	Q122998360	Wenders Li		
+Q699559	cast	Q297058	Xu Jinglei		
+Q699559	cast	Q310252	Takeshi Kaneshiro		
+Q699559	cast	Q159577	Jet Li		
+Q699559	cast	Q16766	Andy Lau		
+Q699559	award		Hong Kong Film Award for Best Film		
+Q699559	award		Golden Horse Award for Best Feature Film		
+Q609170	director	Q311179	Stephen Chow		
+Q609170	writer	Q311179	Stephen Chow		
+Q609170	composer	Q15924853	Raymond Wong		
+Q609170	producer	Q311179	Stephen Chow		
+Q609170	producer	Q5646675	Han Sanping		
+Q609170	producer	Q98183583	Bo-Chu Chui		
+Q609170	cinematographer	Q110272795	Hang Sang Poon		
+Q609170	editor	Q19854455	Angie Lam		
+Q609170	production_designer	Q26213673	Oliver Wong		
+Q609170	cast	Q700315	Zhang Yuqi		
+Q609170	cast	Q1003099	Xu Jiao		
+Q609170	cast	Q311179	Stephen Chow		
+Q1004392	director	Q202597	Chen Kaige		
+Q1004392	writer	Q202597	Chen Kaige		
+Q1004392	writer	Q2495376	Geling Yan		
+Q1004392	writer	Q5090832	Chen Kuo-Fu		
+Q1004392	composer	Q127740	Zhao Jiping		
+Q1004392	producer	Q5646675	Han Sanping		
+Q1004392	producer	Q8949120	Du Jiayi		
+Q1004392	cinematographer	Q123512743	Zhao Xiaoshi		
+Q1004392	editor	Q121091437	Zhou Ying		
+Q1004392	cast	Q180852	Zhang Ziyi		
+Q1004392	cast	Q9078948	Yu Shaoqun		
+Q1004392	cast	Q9201360	Pan Yueming		
+Q1004392	cast	Q545651	Chen Hong		
+Q1004392	cast	Q3357465	Sun Honglei		
+Q1004392	cast	Q373959	Masanobu Andō		
+Q1004392	cast	Q6809920	Mei Baojiu		
+Q1004392	cast	Q16836	Leon Lai		
+Q1004392	cast	Q704233	Wang Xueqi		
+Q1004392	cast	Q65056483	Wang Peiyu		
+Q1004392	cast	Q466493	Gillian Chung		
+Q1004392	award		Golden Rooster Award for Best Picture		
+Q1004392	award		Huabiao Award for Outstanding Film		
+Q815606	director	Q55432	John Woo		
+Q815606	writer	Q55432	John Woo		
+Q815606	writer	Q8074605	Zou Jingzhi		
+Q815606	composer	Q3515913	Taro Iwashiro		
+Q815606	producer	Q5646675	Han Sanping		
+Q815606	producer	Q7701861	Terence Chang		
+Q815606	cinematographer	Q751473	Lü Yue		
+Q815606	cast	Q834846	Tong Dawei		
+Q815606	cast	Q6129284	Song Jia		
+Q815606	cast	Q5912659	Hou Yong	Lu Su	
+Q815606	cast	Q1081186	You Yong	Liu Bei	
+Q815606	cast	Q702401	Lin Chi-ling	Xiao Qiao	
+Q815606	cast	Q310252	Takeshi Kaneshiro	Zhuge Liang	
+Q815606	cast	Q9084803	Zang Jinsheng	Zhang Fei	
+Q815606	cast	Q319001	Tony Leung	Zhou Yu	
+Q815606	cast	Q1193336	Hu Jun	Zhao Yun	
+Q815606	cast	Q708183	Zhang Fengyi	Cao Cao	
+Q815606	cast	Q1080263	Basen Zhabu	Guan Yu	
+Q815606	cast	Q717432	Chang Chen	Sun Quan	
+Q815606	cast	Q1060193	Nakamura Shidō II	Gan Ning	
+Q815606	cast	Q197471	Zhao Wei	Lady Sun	
+Q703857	director	Q706142	Daniel Lee		
+Q703857	composer	Q10567281	Henry Lai Wan-man		
+Q703857	editor	Q5094249	Cheung Ka-fai		
+Q703857	cast	Q311219	Sammo Hung		
+Q703857	cast	Q614774	Maggie Q		
+Q703857	cast	Q700405	Ti Lung		
+Q703857	cast	Q702542	Vanness Wu		
+Q703857	cast	Q16766	Andy Lau		
+Q703857	cast	Q711527	Andy On		
+Q4185458	director	Q354554	Ning Hao		
+Q4185458	cinematographer	Q15934515	Chi-Ying Chan		
+Q4185458	cast	Q5619623	Guo Tao		
+Q4185458	cast	Q47089845	Wang Xun		
+Q4185458	cast	Q704130	Huang Bo		
+Q1102121	director	Q996607	Stephen Fung		
+Q1102121	composer	Q15924853	Raymond Wong		
+Q1102121	producer	Q311179	Stephen Chow		
+Q1102121	producer	Q5646675	Han Sanping		
+Q1102121	cast	Q277193	Daniel Wu		
+Q1102121	cast	Q700315	Zhang Yuqi		
+Q1102121	cast	Q702549	Leon Jay Williams		
+Q1102121	cast	Q8060276	Yuen Cheung-yan		
+Q2563205	director	Q8975787	Jiang Ping		
+Q2563205	producer	Q7267579	Qi Jia		
+Q2563205	cast	Q36970	Jackie Chan		
+Q7091012	director	Q707336	Wong Jing		
+Q7091012	writer	Q707336	Wong Jing		
+Q7091012	cinematographer	Q16922658	Venus Keung		
+Q7091012	cast	Q531617	Louis Koo		
+Q7091012	cast	Q465248	Barbie Hsu		
+Q7091012	cast	Q6134858	Lam Chi-chung		
+Q7091012	cast	Q2007213	Louis Fan		
+Q7091012	cast	Q6129284	Song Jia		
+Q7091012	cast	Q718163	Sandra Ng		
+Q2900799	director	Q704612	Huang Jianxin		
+Q2900799	director	Q5646675	Han Sanping		
+Q2900799	writer	Q16905846	Wang Xingdong		
+Q2900799	writer	Q112460855	Chen Baoguang		
+Q2900799	composer	Q47668994	Shu Nan		
+Q2900799	cinematographer	Q123512743	Zhao Xiaoshi		
+Q2900799	cast	Q5433575	Fan Wei	Guo Bencai	
+Q2900799	cast	Q8959900	Ge Cunzhuang	Tan Pingshan	
+Q2900799	cast	Q8250144	Wang Bing	Zhang Lan	
+Q2900799	cast	Q700175	Tony Leung Ka-fai	CPPCC member	
+Q2900799	cast	Q510789	Xu Fan	Liao Mengxing	
+Q2900799	cast	Q5581667	Gong Beibi	Red Army female soldier	
+Q2900799	cast	Q714389	Liu Ye	KMT police officer	
+Q2900799	cast	Q36970	Jackie Chan	Reporter	
+Q2900799	cast	Q8954422	Feng Yuanzheng	Philip Fugh	
+Q2900799	cast	Q7967359	Wang Baoqiang	Red Army Fourth Division soldier	
+Q2900799	cast	Q701194	Huang Xiaoming	Li Yinqiao	
+Q2900799	cast	Q545651	Chen Hong	Reporter	
+Q2900799	cast	Q464754	Vivian Wu	Soong Mei-ling	
+Q2900799	cast	Q5619584	Guo Degang	Cameraman	
+Q2900799	cast	Q3357465	Sun Honglei	Hu Liwei	
+Q2900799	cast	Q834846	Tong Dawei	Kong Lingkan	
+Q2900799	cast	Q197471	Zhao Wei	CPPCC member	
+Q2900799	cast	Q717442	Chen Daoming	Yan Jinwen	
+Q2900799	cast	Q271135	Chen Hao	Fu Dongju	
+Q2900799	cast	Q381074	Fan Bingbing		
+Q2900799	cast	Q712088	Zhang Hanyu	Liu Congwen	
+Q2900799	cast	Q708485	Huang Shengyi	Xinhua News Agency broadcaster	
+Q2900799	cast	Q2658847	Ge You	Red Army Fourth Division leader	
+Q2900799	cast	Q9056456	Wang Xuebing	Red Army Fourth Division soldier	
+Q2900799	cast	Q111540515	Huang Wei	Deng Yingchao	
+Q2900799	cast	Q706092	Chen Kun	Chiang Ching-kuo	
+Q2900799	cast	Q8250087	Wang Wufu	Zhu De	
+Q2900799	cast	Q11096407	Li Qiang	Chen Cheng	
+Q2900799	cast	Q1061335	Xu Qing	Soong Ching-ling	
+Q2900799	cast	Q1140540	Deng Chao	Xu Beihong	
+Q2900799	cast	Q55432	John Woo	Liu Wenhui	
+Q2900799	cast	Q85884387	Gu Wei	Chen Yi	
+Q2900799	cast	Q16766	Andy Lau	Yu Jishi	
+Q2900799	cast	Q716114	Feng Xiaogang	Du Yuesheng	
+Q2900799	cast	Q111540551	Sun Jitang	Luo Ronghuan	
+Q2900799	cast	Q111540592	Xie Gang	Gao Gang	
+Q2900799	cast	Q5912659	Hou Yong	Chen Geng	
+Q2900799	cast	Q1081186	You Yong	Pai Chung-hsi	
+Q2900799	cast	Q8045101	Xu Huanshan	YU You-Ren	
+Q2900799	cast	Q716069	Jiang Wen	Mao Renfeng	
+Q2900799	award		Hundred Flowers Award for Best Picture		
+Q2900799	award		Huabiao Award for Outstanding Film		

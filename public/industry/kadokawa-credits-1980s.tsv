@@ -1,0 +1,128 @@
+qid	role	personQid	name	character	ordinal
+Q1895453	director	Q7051219	Noriaki Yuasa		
+Q1895453	writer	Q3342135	Niisan Takahashi		
+Q1895453	composer	Q2296028	Shunsuke Kikuchi		
+Q1895453	producer	Q6782400	Masaichi Nagata		
+Q1895453	producer	Q11603633	Shigeru Shinohara		
+Q1895453	producer	Q66428434	Masaya Tokuyama		
+Q1895453	producer	Q66428513	Hirokazu Ohba		
+Q1895453	cinematographer	Q17209160	Michio Takahashi		
+Q1895453	editor	Q66400417	Tatsuji Nakashizu		
+Q1895453	cast	Q17224810	Yaya		
+Q1895453	cast	Q17129868	Keiko Kudō		
+Q1895453	cast	Q11672118	Toshie Takada		
+Q1895453	cast	Q17158344	Yōko Komatsu		
+Q1895453	cast	Q11340539	Fumiake Mach		
+Q1895453	cast	Q11397593	Kōichi Maeda		
+Q1895453	follows	Q1955548	Gamera vs. Zigra		
+Q18207486	director	Q45253	Shinji Sōmai		
+Q18207486	writer	Q11576017	Yōzō Tanaka		
+Q18207486	producer	Q749047	Haruki Kadokawa		
+Q18207486	producer	Q11431097	Hidenori Taga		
+Q18207486	cinematographer	Q11377679	Seizō Sengen		
+Q18207486	cast	Q11665543	Yuki Kazamatsuri		
+Q18207486	cast	Q11383707	Makoto Satō		
+Q18207486	cast	Q11458033	Minori Terada		
+Q18207486	cast	Q9357411	Toshiya Sakai		
+Q18207486	cast	Q11532937	Shinpei Hayashiya		
+Q18207486	cast	Q11439842	Masaaki Daimon		
+Q18207486	cast	Q11401957	Kazuo Kitamura		
+Q18207486	cast	Q9075588	Shingo Yanagisawa		
+Q18207486	cast	Q1054683	Hiroko Yakushimaru		
+Q18207486	cast	Q3043193	Kamatari Fujiwara		
+Q18207486	cast	Q1321767	Rentarō Mikuni		
+Q18207486	cast	Q873921	Akira Emoto		
+Q18207486	cast	Q873908	Ken Mitsuishi		
+Q18207486	cast	Q3545136	Tsunehiko Watase		
+Q11275116	director	Q3342565	Nobuhiko Obayashi		
+Q11275116	writer	Q11620810	Shōko Hamura		
+Q11275116	producer	Q749047	Haruki Kadokawa		
+Q11275116	cinematographer	Q11656817	Yoshitaka Sakamoto		
+Q11275116	cast	Q11670561	Ryōichi Takayanagi		
+Q11275116	cast	Q1054683	Hiroko Yakushimaru		
+Q1316093	director	Q1469991	Koreyoshi Kurahara		
+Q1316093	writer	Q1469991	Koreyoshi Kurahara		
+Q1316093	composer	Q153172	Vangelis		
+Q1316093	producer	Q11575483	Jūichi Tanaka		
+Q1316093	producer	Q11630863	Masaru Kakutani		
+Q1316093	cinematographer	Q418937	Akira Shiizuka		
+Q1316093	editor	Q1469991	Koreyoshi Kurahara		
+Q1316093	editor	Q11648916	Akira Suzuki		
+Q1316093	cast	Q741184	Ken Takakura		
+Q1316093	cast	Q3511677	Sō Yamamura		
+Q1316093	cast	Q748582	Kōichi Satō		
+Q1316093	cast	Q7497190	Shin Kishida		
+Q1316093	cast	Q7678130	Takeshi Kusaka		
+Q1316093	cast	Q139253	Eiji Okada		
+Q1316093	cast	Q3959459	Shigeru Kōyama		
+Q1316093	cast	Q3545136	Tsunehiko Watase		
+Q1316093	cast	Q3276472	Masako Natsume		
+Q1316093	cast	Q6383695	Keiko Oginome		
+Q22078193	director	Q2609816	Rintaro		
+Q22078193	composer	Q3879138	Nozomi Aoki		
+Q22078193	producer	Q749047	Haruki Kadokawa		
+Q565231	director	Q8006	Akira Kurosawa		
+Q565231	writer	Q8006	Akira Kurosawa		
+Q565231	composer	Q155467	Tōru Takemitsu		
+Q565231	producer	Q573352	Serge Silberman		
+Q565231	cinematographer	Q974053	Takao Saito		
+Q565231	cinematographer	Q2329908	Asakazu Nakai		
+Q565231	cinematographer	Q2815117	Shōji Ueda		
+Q565231	editor	Q8006	Akira Kurosawa		
+Q565231	costume_designer	Q440027	Emi Wada		
+Q565231	production_designer	Q1552595	Yoshirō Muraki		
+Q565231	cast	Q449621	Tatsuya Nakadai	Ichimonji Hidetora	
+Q565231	cast	Q5209656	Daisuke Ryū	Ichimonji Saburo Naotora	
+Q565231	cast	Q633278	Akira Terao	Ichimonji Taro Takatora	
+Q565231	cast	Q3389321	Peter	Kyoami	
+Q565231	cast	Q1137010	Mieko Harada	Lady Kaede	
+Q565231	cast	Q1058422	Jun Tazaki	Ayabe Seiji	
+Q565231	cast	Q3543627	Yoshiko Miyazaki	Lady Sué	
+Q565231	cast	Q5772396	Hisashi Igawa	Kurogane	
+Q565231	cast	Q3544122	Hitoshi Ueki	Fujimaki Nobuhiro	
+Q565231	cast	Q11388760	Kenji Kodama	Samon Shirane	
+Q565231	cast	Q910611	Mansai Nomura II	Tsurumaru	
+Q565231	cast	Q6202728	Jinpachi Nezu	Ichimonji Jiro Masatora	
+Q565231	award		Academy Award for Best Costume Design		
+Q565231	award		Amanda Award for Best Foreign Feature Film		
+Q7813580	director	Q11583138	Mori Masaki		
+Q7813580	writer	Q502455	Atsushi Yamatoya		
+Q7813580	writer	Q11583138	Mori Masaki		
+Q7813580	writer	Q11598854	Yoshio Takeuchi		
+Q7813580	composer	Q11420630	Ryōichi Kuniyoshi		
+Q7813580	producer	Q2609816	Rintaro		
+Q7813580	producer	Q3297177	Masao Maruyama		
+Q7813580	follows	Q11491903	Koi no arashi		
+Q7813580	subject		time travel		
+Q1227508	director	Q53040	Franco Zeffirelli		
+Q1227508	writer	Q53040	Franco Zeffirelli		
+Q1227508	writer	Q1343394	Ennio de Concini		
+Q1227508	composer	Q7317	Giuseppe Verdi		
+Q1227508	composer	Q2343525	Roman Vlad		
+Q1227508	producer	Q962765	Tarak Ben Ammar		
+Q1227508	cinematographer	Q19984997	Daniele Nannuzzi		
+Q1227508	editor	Q360002	Jim Clark		
+Q1227508	production_designer	Q493717	Andrea Crisanti		
+Q1227508	cast	Q776860	Clive Swift		
+Q1227508	cast	Q106482	Philippe Noiret		
+Q1227508	cast	Q3110935	Gordon Warnecke		
+Q1227508	cast	Q10334251	Márcia Breia		
+Q1227508	cast	Q176028	Martin Benson		
+Q1227508	cast	Q19957956	Eva Griffith		
+Q1227508	cast	Q446670	Carlo Bergonzi		
+Q1227508	cast	Q259986	Valentina Cortese		
+Q1227508	cast	Q311716	Franco Nero		
+Q1227508	cast	Q34851	Elizabeth Taylor		
+Q1227508	cast	Q464522	C. Thomas Howell		
+Q1227508	cast	Q493352	Andrea Aureli		
+Q1227508	cast	Q447703	Sophie Ward		
+Q1227508	cast	Q7143554	Pat Heywood		
+Q1227508	cast	Q16455	John Rhys-Davies		
+Q1227508	cast	Q319527	Jean-Pierre Cassel		
+Q1227508	subject		slavery		
+Q2363959	director	Q11330	Masato Harada		
+Q2363959	composer	Q11519976	Toshiyuki Honda		
+Q2363959	producer	Q652228	Tomoyuki Tanaka		
+Q2363959	cast	Q901772	Masahiro Takashima		
+Q2363959	cast	Q461794	Brenda Bakke		
+Q2363959	subject		mecha		

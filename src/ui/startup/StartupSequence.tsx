@@ -7,6 +7,7 @@
  * rather than a spinner that never ends.
  */
 
+import { titleCaseLabel } from '@/engine/core/text';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { resolveAdapter } from '@/engine/persistence/base44';
 import type { SaveAdapter, SaveSlotInfo } from '@/engine/persistence/adapter';
@@ -186,7 +187,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
 
         {failure && (
           <div className="callout callout-negative" style={{ marginTop: 'var(--s5)', textAlign: 'left' }}>
-            <strong>{failure.stage} failed.</strong>
+            <strong>{titleCaseLabel(failure.stage)} failed.</strong>
             <p className="small" style={{ marginTop: 'var(--s1)' }}>{failure.message}</p>
             <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
               <button className="btn btn-primary btn-sm" onClick={() => setAttempt((a) => a + 1)}>

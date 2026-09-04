@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs } from '@/ui/components/primitives';
@@ -74,8 +75,8 @@ export function HistoryWorkspace() {
                     {record.amount !== undefined && record.amount !== 0 && (
                       <span className="mono xs">{formatMoneyCompact(record.amount)}</span>
                     )}
-                    <span className="chip">{record.category}</span>
-                    {record.public && <span className="chip chip-info">public</span>}
+                    <span className="chip">{titleCaseLabel(record.category)}</span>
+                    {record.public && <span className="chip chip-info">Public</span>}
                   </div>
                 ))}
               </div>

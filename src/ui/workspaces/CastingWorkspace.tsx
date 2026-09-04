@@ -1,3 +1,4 @@
+import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
@@ -36,7 +37,7 @@ export function CastingWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Casting</div>
-        <h1>{auditions.filter((a) => !a.decidedAt).length} live auditions</h1>
+        <h1>{auditions.filter((a) => !a.decidedAt).length} Live Auditions</h1>
         <p className="muted">
           You are scored against everyone else who read. Preparation and how rested you are on the day
           are real inputs, and when you do not get it, you can find out why.
@@ -63,14 +64,14 @@ export function CastingWorkspace() {
                     <div className="grow">
                       <div className="small strong">{role.characterName} — {project?.title}</div>
                       <div className="xs dim">
-                        {role.billing.replace(/_/g, ' ')} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
-                        {project && ` · ${project.genres.join(', ')}`}
+                        {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
+                        {project && ` · ${project.genres.map(titleCaseLabel).join(', ')}`}
                       </div>
                       <div className="xs muted" style={{ marginTop: 2 }}>{role.description}</div>
                       <div className="row wrap gap-1" style={{ marginTop: 4 }}>
                         {role.requirements.slice(0, 4).map((requirement) => (
                           <span key={requirement.attributeId} className="chip">
-                            {requirement.attributeId.replace(/_/g, ' ')} {Math.round((player.attributes[requirement.attributeId] ?? 0))}
+                            {titleCaseLabel(requirement.attributeId.replace(/_/g, ' '))} {Math.round((player.attributes[requirement.attributeId] ?? 0))}
                           </span>
                         ))}
                       </div>
@@ -117,7 +118,7 @@ export function CastingWorkspace() {
                         </div>
                       </div>
                       <span className={`chip ${audition.stage === 'booked' || audition.stage === 'offer' ? 'chip-positive' : audition.stage === 'passed' ? 'chip-negative' : ''}`}>
-                        {audition.stage.replace(/_/g, ' ')}
+                        {titleCaseLabel(audition.stage.replace(/_/g, ' '))}
                       </span>
                       {!audition.decidedAt && audition.performanceScore === undefined && (
                         <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
@@ -183,7 +184,7 @@ export function CastingWorkspace() {
                     <div className="grow">
                       <div className="small strong">{agency.name}</div>
                       <div className="xs dim">
-                        Tier {agency.tier} · {agency.type} · signs around {agency.signingThreshold}/100 · you read {Math.round(standing)}
+                        Tier {agency.tier} · {titleCaseLabel(agency.type)} · signs around {agency.signingThreshold}/100 · you read {Math.round(standing)}
                       </div>
                       <div className="xs muted" style={{ marginTop: 2 }}>{agency.description}</div>
                     </div>
@@ -214,7 +215,7 @@ export function CastingWorkspace() {
                   <div className="grow">
                     <div className="small strong">{project.title}</div>
                     <div className="xs dim">
-                      {project.format.replace(/_/g, ' ')} · {project.genres.join(', ')} · {project.phase.replace(/_/g, ' ')}
+                      {titleCaseLabel(project.format.replace(/_/g, ' '))} · {project.genres.join(', ')} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}
                       {project.releaseDate && ` · released ${formatDate(project.releaseDate, sim.homeZone)}`}
                     </div>
                   </div>

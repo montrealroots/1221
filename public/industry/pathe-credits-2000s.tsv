@@ -1,0 +1,2019 @@
+qid	role	personQid	name	character	ordinal
+Q156401	director	Q336206	Nick Park		
+Q156401	director	Q1975096	Peter Lord		
+Q156401	writer	Q336206	Nick Park		
+Q156401	writer	Q1626388	Karey Kirkpatrick		
+Q156401	writer	Q5018672	John O'Farrell		
+Q156401	writer	Q6766943	Mark Burton		
+Q156401	composer	Q313540	John Powell		
+Q156401	composer	Q314623	Harry Gregson-Williams		
+Q156401	producer	Q336206	Nick Park		
+Q156401	producer	Q1975096	Peter Lord		
+Q156401	producer	Q5240003	David Sproxton		
+Q156401	cinematographer	Q5228219	Dave Alex Riddett		
+Q156401	editor	Q30331835	Robert Francis		
+Q156401	award		Genesis Award		
+Q156401	award		Critics' Choice Movie Award for Best Animated Feature		
+Q156401	followed_by	Q60836051	Chicken Run: Dawn of the Nugget		
+Q156401	subject		domestication		
+Q156401	subject		animal husbandry		
+Q156401	subject		escape		
+Q495449	director	Q3241858	Lionel Delplanque		
+Q495449	writer	Q3241858	Lionel Delplanque		
+Q495449	cast	Q443516	Clotilde Courau		
+Q495449	cast	Q3300088	Maud Buquet		
+Q495449	cast	Q2980691	Clément Sibony		
+Q495449	cast	Q1187498	Denis Lavant		
+Q495449	cast	Q576085	François Berléand		
+Q495449	cast	Q79152	Michel Muller		
+Q495449	cast	Q2834405	Alexia Stresi		
+Q495449	cast	Q3559707	Vincent Lecœur		
+Q495449	cast	Q235641	Marie Trintignant		
+Q5893254	director	Q325389	David A. Stewart		
+Q5893254	writer	Q711682	Dick Clement		
+Q5893254	composer	Q325389	David A. Stewart		
+Q5893254	producer	Q711682	Dick Clement		
+Q5893254	producer	Q5982007	Ian La Frenais		
+Q5893254	producer	Q138339669	Q138339669		
+Q5893254	cinematographer	Q36911873	David Johnson		
+Q5893254	cast	Q2426357	Natalie Appleton		
+Q5893254	cast	Q192052	Peter Facinelli		
+Q5893254	cast	Q1340443	Jonathan Cake		
+Q5893254	cast	Q980210	Rick Warden		
+Q5893254	cast	Q2409879	Derek Deadman		
+Q5893254	cast	Q211213	Melanie Blatt		
+Q5893254	cast	Q380884	Corin Redgrave		
+Q5893254	cast	Q2167793	Nicole Appleton		
+Q5913522	director	Q110435090	Julian Kemp		
+Q5913522	composer	Q6769973	Mark Thomas		
+Q5913522	cast	Q230383	Kelly Macdonald		
+Q5913522	cast	Q234128	Miriam Margolyes		
+Q5913522	cast	Q979276	Jason Hughes		
+Q5913522	cast	Q195396	Freddie Jones		
+Q467248	director	Q268881	Mimi Leder		
+Q467248	writer	Q516252	Leslie Dixon		
+Q467248	composer	Q319996	Thomas Newman		
+Q467248	producer	Q15128739	Peter Abrams		
+Q467248	cinematographer	Q967126	Oliver Stapleton		
+Q467248	editor	Q3018722	David Rosenbloom		
+Q467248	cast	Q2305354	Marc Donato		
+Q467248	cast	Q492321	Jay Mohr		
+Q467248	cast	Q1706191	David Ramsey		
+Q467248	cast	Q63304	Kathleen Wilhoite		
+Q467248	cast	Q4653820	Cynthia Ettinger		
+Q467248	cast	Q20892645	Molly Bernard		
+Q467248	cast	Q15288220	Tim de Zarn		
+Q467248	cast	Q170574	Helen Hunt		
+Q467248	cast	Q4023610	Zack Duhame		
+Q467248	cast	Q200841	Jim Caviezel		
+Q467248	cast	Q150916	Jon Bon Jovi		
+Q467248	cast	Q2107148	Liza Snyder		
+Q467248	cast	Q2628916	Tina Lifford		
+Q467248	cast	Q362876	Shawn Pyfrom		
+Q467248	cast	Q25144	Kevin Spacey		
+Q467248	cast	Q822780	Bernard White		
+Q467248	cast	Q3098637	Gary Werntz		
+Q467248	cast	Q489856	Haley Joel Osment		
+Q467248	cast	Q235989	Angie Dickinson		
+Q467248	subject		alcoholism		
+Q1170157	director	Q380237	Michael Winterbottom		
+Q1170157	writer	Q1233018	Frank Cottrell-Boyce		
+Q1170157	composer	Q313639	Michael Nyman		
+Q1170157	producer	Q4756878	Andrew Eaton		
+Q1170157	cinematographer	Q449828	Alwin H. Küchler		
+Q1170157	editor	Q16886395	Trevor Waite		
+Q1170157	cast	Q3292400	Marie Brassard		
+Q1170157	cast	Q234212	Sarah Polley		
+Q1170157	cast	Q1319495	Julian Richings		
+Q1170157	cast	Q170576	Milla Jovovich		
+Q1170157	cast	Q232889	Shirley Henderson		
+Q1170157	cast	Q368037	Wes Bentley		
+Q1170157	cast	Q2439878	Tom McCamus		
+Q1170157	cast	Q76711	Nastassja Kinski		
+Q1170157	cast	Q430804	Peter Mullan		
+Q1170157	followed_by	Q7623955	String Quartets 2, 3 & 4/If & Why		
+Q348013	director	Q240521	Agnès Jaoui		
+Q348013	writer	Q240521	Agnès Jaoui		
+Q348013	writer	Q981203	Jean-Pierre Bacri		
+Q348013	producer	Q2959173	Charles Gassot		
+Q348013	producer	Q131519755	Christian Bérard		
+Q348013	cinematographer	Q3219153	Laurent Dailland		
+Q348013	editor	Q513939	Hervé de Luze		
+Q348013	executive_producer	Q95857708	Jacques Hinstin		
+Q348013	costume_designer	Q29525718	Jackie Budin		
+Q348013	cast	Q1558999	Gérard Lanvin		
+Q348013	cast	Q448021	Alain Chabat		
+Q348013	cast	Q461945	Anne Alvaro		
+Q348013	cast	Q2965785	Christiane Millet		
+Q348013	cast	Q240521	Agnès Jaoui		
+Q348013	cast	Q981203	Jean-Pierre Bacri		
+Q348013	cast	Q2925417	Brigitte Catillon		
+Q348013	award		César Award for Best Supporting Actress		
+Q348013	award		European Film Award for Best Screenwriter		
+Q348013	subject		social environment		
+Q1149916	director	Q106709	Patrice Leconte		
+Q1149916	writer	Q106709	Patrice Leconte		
+Q1149916	writer	Q521870	Claude Faraldo		
+Q1149916	composer	Q3367396	Pascal Estève		
+Q1149916	producer	Q3106353	Gilles Legrand		
+Q1149916	producer	Q15176487	Frédéric Brillion		
+Q1149916	cinematographer	Q707484	Eduardo Serra		
+Q1149916	editor	Q533272	Joëlle Hache		
+Q1149916	costume_designer	Q15448943	Christian Gasc		
+Q1149916	production_designer	Q3156147	Ivan Maussion		
+Q1149916	cast	Q106275	Juliette Binoche		
+Q1149916	cast	Q94882	Emir Kusturica		
+Q1149916	cast	Q106303	Daniel Auteuil		
+Q1149916	subject		capital punishment		
+Q1457891	director	Q452643	Jimmy Murakami		
+Q1457891	writer	Q1998648	Robert Llewellyn		
+Q1457891	composer	Q1354267	Julian Nott		
+Q1457891	cast	Q731187	Simon Callow	Charles Dickens	
+Q1457891	cast	Q272518	Juliet Stevenson		
+Q1457891	cast	Q202765	ケイト・ウィンスレット		
+Q1457891	cast	Q215017	Rhys Ifans		
+Q1457891	cast	Q237178	Jane Horrocks		
+Q1457891	cast	Q1998648	Robert Llewellyn		
+Q1457891	cast	Q203545	Michael Gambon		
+Q271006	director	Q154490	Jean-Jacques Annaud		
+Q271006	writer	Q154490	Jean-Jacques Annaud		
+Q271006	writer	Q21004785	Alain Godard		
+Q271006	composer	Q106221	James Horner		
+Q271006	producer	Q154490	Jean-Jacques Annaud		
+Q271006	producer	Q101204207	John D. Schofield		
+Q271006	cinematographer	Q978222	Robert Fraisse		
+Q271006	editor	Q516046	Noëlle Boisson		
+Q271006	costume_designer	Q1683011	Janty Yates		
+Q271006	cast	Q160432	Jude Law	Vasily Zaytsev	
+Q271006	cast	Q708471	Gabriel Thomson	Sasha Filippov	
+Q271006	cast	Q104791	Ed Harris	Erwin König	
+Q271006	cast	Q104606734	Alexander Schwan	Vasily Zaytsev	
+Q271006	cast	Q88881	Valentin Plătăreanu	Arthur Schmidt	
+Q271006	cast	Q63967	Matthias Habich	Friedrich Paulus	
+Q271006	cast	Q134077	Rachel Weisz	Tania Chernova	
+Q271006	cast	Q211283	Bob Hoskins	Nikita Khrushchev	
+Q271006	cast	Q679794	Robert Stadlober	Spotter	
+Q271006	cast	Q1539614	Gotthard Lange		
+Q271006	cast	Q1605003	Hendrik Arnst		
+Q271006	cast	Q1817916	Lenn Kudrjawizki	Comrade in Train	
+Q271006	cast	Q107438	Werner Daehn	Anosov	
+Q271006	cast	Q223790	Joseph Fiennes	Commissar Danilov	
+Q271006	cast	Q97616	Dan van Husen		
+Q271006	cast	Q28965726	Dana Cebulla		
+Q271006	cast	Q1697763	Marc Bischoff		
+Q271006	cast	Q101973	Markus Majowski		
+Q271006	cast	Q1100074	Clemens Schick	Voigt	
+Q271006	cast	Q1675617	Ivan Shvedoff	Volodya	
+Q271006	cast	Q79075	Eva Mattes	Mother Filippova	
+Q271006	cast	Q102990	Holger Handtke	Baumann	
+Q271006	cast	Q25839	Birol Ünel	Kuklin	
+Q271006	cast	Q792291	Axel Neumann		
+Q271006	cast	Q1929190	Michael Schenk		
+Q271006	cast	Q22675	Tom Wlaschiha	Soldier	
+Q271006	cast	Q1900519	Mark Zak		
+Q271006	cast	Q518436	André Emanuel Kaminski		
+Q271006	cast	Q220698	Ron Perlman	Koulikov	
+Q271006	cast	Q90420	Sophie Rois	Ludmilla	
+Q271006	cast	Q559891	Anna Böttcher		
+Q271006	cast	Q4107061	Gennadi Vengerov	Kushnir	
+Q271006	cast	Q1577922	Hans-Martin Stier		
+Q271006	subject		World War II		
+Q271006	subject		propaganda		
+Q271006	subject		Battle of Stalingrad		
+Q5515510	director	Q15434230	Udayan Prasad		
+Q5515510	writer	Q1811812	Lee Hall		
+Q5515510	composer	Q1361541	Stephen Warbeck		
+Q5515510	cast	Q371430	Iain Glen		
+Q5515510	cast	Q7441149	Sean Landless		
+Q5515510	cast	Q320073	David Bradley		
+Q5515510	cast	Q298838	Billy Connolly		
+Q2986152	director	Q291205	Anne Fontaine		
+Q2986152	writer	Q291205	Anne Fontaine		
+Q2986152	writer	Q784635	Jacques Fieschi		
+Q2986152	composer	Q445096	Jocelyn Pook		
+Q2986152	producer	Q3379502	Philippe Carcassonne		
+Q2986152	cinematographer	Q3167375	Jean-Marc Fabre		
+Q2986152	editor	Q16183718	Guy Lecorne		
+Q2986152	costume_designer	Q5170588	Corinne Jorry		
+Q2986152	production_designer	Q95795592	Sylvain Chauvelot		
+Q2986152	cast	Q3501805	Stéphane Guillon		
+Q2986152	cast	Q271553	Amira Casar		
+Q2986152	cast	Q3052589	Emmanuel Booz		
+Q2986152	cast	Q446883	Natacha Régnier		
+Q2986152	cast	Q3385980	Pierre Londiche		
+Q2986152	cast	Q3286503	Manoëlle Gaillard		
+Q2986152	cast	Q928366	Charles Berling		
+Q2986152	cast	Q576085	François Berléand		
+Q2986152	cast	Q1677882	Karole Rocher		
+Q2986152	cast	Q981315	Michel Bouquet		
+Q2986152	cast	Q921928	Hubert Koundé		
+Q2986152	award		César Award for Best Actor		
+Q2986152	award		Lumière Award for Best Actor		
+Q6529947	director	Q1210511	Didier Bourdon		
+Q6529947	writer	Q1210511	Didier Bourdon		
+Q6529947	cast	Q2861211	Ariane Séguillon		
+Q6529947	cast	Q2821516	Abel Jafri		
+Q6529947	cast	Q3157489	Jacky Nercessian		
+Q6529947	cast	Q17521664	Jacques Décombe		
+Q6529947	cast	Q3052623	Emmanuel Chain		
+Q6529947	cast	Q3165805	Jean-François Pastout		
+Q6529947	cast	Q3103256	Georges Neri		
+Q6529947	cast	Q118782	Wolfgang Pissors		
+Q6529947	cast	Q2977082	Claude Brosset		
+Q6529947	cast	Q1210548	Didier Flamand		
+Q6529947	cast	Q3064393	Fadila Belkebla		
+Q6529947	cast	Q3037222	Dorothée Pousséo		
+Q6529947	cast	Q3529590	Titoff		
+Q6529947	cast	Q746932	Pascal Légitimus		
+Q6529947	cast	Q822345	Bernard Campan		
+Q6529947	cast	Q3334696	Nabil Massad		
+Q6529947	cast	Q3018752	David Saracino		
+Q6529947	cast	Q3456181	Rémy Roubakha		
+Q6529947	cast	Q1099022	Nathalie Roussel		
+Q6529947	cast	Q3293174	Marina Tomé		
+Q6529947	cast	Q2829804	Alain Feydeau		
+Q6529947	cast	Q3560786	Virginie de Clausade		
+Q6529947	cast	Q3072283	Fily Keita		
+Q6529947	cast	Q3171644	Jean Dell		
+Q6529947	cast	Q3380312	Philippe Mareuil		
+Q6529947	cast	Q3058913	Estelle Vincent		
+Q6529947	cast	Q1340950	Eriq Ebouaney		
+Q6529947	cast	Q2966277	Christophe Guybet		
+Q6529947	cast	Q1210511	Didier Bourdon		
+Q6529947	cast	Q3565346	Walid Afkir		
+Q2446893	director	Q724208	Yvan Attal		
+Q2446893	writer	Q448021	Alain Chabat		
+Q2446893	writer	Q724208	Yvan Attal		
+Q2446893	composer	Q356187	Brad Mehldau		
+Q2446893	producer	Q298905	Claude Berri		
+Q2446893	cinematographer	Q1714768	Rémy Chevrin		
+Q2446893	editor	Q65115965	Jennifer Augé		
+Q2446893	executive_producer	Q3385347	Pierre Grunstein		
+Q2446893	costume_designer	Q15820617	Jacqueline Bouchard		
+Q2446893	production_designer	Q16648142	Katia Wyszkop		
+Q2446893	cast	Q1340950	Eriq Ebouaney		
+Q2446893	cast	Q440609	Noémie Lvovsky		
+Q2446893	cast	Q461767	Ophélie Winter		
+Q2446893	cast	Q725519	Keith Allen		
+Q2446893	cast	Q2941969	Catherine Lara		
+Q2446893	cast	Q233742	Ludivine Sagnier		
+Q2446893	cast	Q3219022	Laurent Bateau		
+Q2446893	cast	Q1647279	Marie Denarnaud		
+Q2446893	cast	Q724208	Yvan Attal		
+Q2446893	cast	Q3088199	纳吉		
+Q2446893	cast	Q391974	Roschdy Zem		
+Q2446893	cast	Q77298	Terence Stamp		
+Q2446893	cast	Q276005	Charlotte Gainsbourg		
+Q2446893	cast	Q552639	Gilles Lellouche		
+Q2446893	cast	Q951025	Marc Lavoine		
+Q2446893	cast	Q3554280	Valérie Leboutte		
+Q2446893	cast	Q3010143	Céline Cuignet		
+Q2446893	cast	Q1341507	Lionel Abelanski		
+Q1827484	director	Q382389	Jacques Audiard		
+Q1827484	writer	Q382389	Jacques Audiard		
+Q1827484	writer	Q709951	Tonino Benacquista		
+Q1827484	composer	Q313362	Alexandre Desplat		
+Q1827484	producer	Q3166862	Jean-Louis Livi		
+Q1827484	producer	Q3379502	Philippe Carcassonne		
+Q1827484	cinematographer	Q3298888	Mathieu Vadepied		
+Q1827484	editor	Q436837	Juliette Welfling		
+Q1827484	executive_producer	Q3166917	Jean-Louis Nieuwbourg		
+Q1827484	executive_producer	Q23663968	Alix Raynaud		
+Q1827484	executive_producer	Q105763628	Bernard Marescot		
+Q1827484	costume_designer	Q65116745	Virginie Montel		
+Q1827484	production_designer	Q19606640	Michel Barthélémy		
+Q1827484	cast	Q2625575	Olivia Bonamy		
+Q1827484	cast	Q2964192	Chloé Mons		
+Q1827484	cast	Q2965751	Christiane Cohendy		
+Q1827484	cast	Q3018752	David Saracino		
+Q1827484	cast	Q241043	Emmanuelle Devos		
+Q1827484	cast	Q822232	Bernard Alane		
+Q1827484	cast	Q2930147	Bô Gaultier de Kermoal		
+Q1827484	cast	Q21180542	Patrick Steltzer		
+Q1827484	cast	Q3010188	Céline Samie		
+Q1827484	cast	Q193504	Vincent Cassel		
+Q1827484	cast	Q3219562	Laurent Valo		
+Q1827484	cast	Q3154884	Isabelle Caubère		
+Q1827484	cast	Q3085194	François Loriquet		
+Q1827484	cast	Q3384770	Pierre Diot		
+Q1827484	cast	Q983020	Olivier Gourmet		
+Q1827484	cast	Q3351270	Olivier Perrier		
+Q1827484	subject		cooperation		
+Q1827484	subject		women in the workforce		
+Q1827484	subject		criminality		
+Q3480971	director	Q3501866	Stéphane Kazandjian		
+Q3480971	writer	Q3501866	Stéphane Kazandjian		
+Q3480971	producer	Q2856666	Antoine Rein		
+Q3480971	producer	Q15215569	Caroline Adrian		
+Q3480971	cast	Q3471967	Sandrine Alexi		
+Q3480971	cast	Q207592	Sylvia Kristel		
+Q3480971	cast	Q3560747	Virginie Lanoue		
+Q3480971	cast	Q2829753	Alain Doutey		
+Q3480971	cast	Q3157773	Jacqueline Noëlle		
+Q3480971	cast	Q7422573	Sarah Marshall		
+Q3480971	cast	Q2861263	Ariele Séménoff		
+Q3480971	cast	Q3189352	Julien Baumgartner		
+Q3480971	cast	Q1351652	Jérémie Elkaïm		
+Q3480971	cast	Q3099878	Gaëla Le Devehat		
+Q3480971	cast	Q3299848	Matthias Van Khache		
+Q3480971	cast	Q535487	Armelle Deutsch		
+Q3480971	cast	Q3219012	Laurent Baffie		
+Q466112	director	Q3339755	Nick Hamm		
+Q466112	composer	Q297232	Clint Mansell		
+Q466112	producer	Q15488561	Jeremy Bolt		
+Q466112	producer	Q19587180	Pippa Cross		
+Q466112	cinematographer	Q5257183	Denis Crossan		
+Q466112	editor	Q1436983	Niven Howie		
+Q466112	cast	Q466388	Steven Waddington		
+Q466112	cast	Q1189353	Laurence Fox		
+Q466112	cast	Q236875	Thora Birch		
+Q466112	cast	Q4943576	Gemma Craven		
+Q466112	cast	Q2845494	Anastasia Hille		
+Q466112	cast	Q5372821	Emma Griffiths Malin		
+Q466112	cast	Q1160180	Daniel Brocklebank		
+Q466112	cast	Q6668917	Lolita Chakrabarti		
+Q466112	cast	Q260622	Embeth Davidtz		
+Q466112	cast	Q42581	Keira Knightley		
+Q466112	cast	Q15442823	Jemma Powell		
+Q466112	cast	Q445146	Desmond Harrington		
+Q217294	director	Q380237	Michael Winterbottom		
+Q217294	writer	Q1233018	Frank Cottrell-Boyce		
+Q217294	composer	Q214990	New Order		
+Q217294	producer	Q4756878	Andrew Eaton		
+Q217294	cinematographer	Q384784	Robby Müller		
+Q217294	editor	Q16886395	Trevor Waite		
+Q217294	cast	Q478601	Tony Wilson	Wheel of Fortune director	
+Q217294	cast	Q243041	Siouxsie Sioux		
+Q217294	cast	Q6775187	Martin Coogan		
+Q217294	cast	Q973590	Vini Reilly		
+Q217294	cast	Q1701933	John Thomson	Charles	
+Q217294	cast	Q106662	John Lydon		
+Q217294	cast	Q454481	Kate Magowan	Yvette	
+Q217294	cast	Q5228920	Dave Haslam		
+Q217294	cast	Q232889	Shirley Henderson	Lindsay Wilson	
+Q217294	cast	Q7032594	Nigel Pivaro	actor at Granada	
+Q217294	cast	Q7174421	Peter Gunn		
+Q217294	cast	Q5133927	Clint Boon	Ernie	
+Q217294	cast	Q6848390	Mike Pickering		
+Q217294	cast	Q2322261	Rob Brydon	Ryan Letts	
+Q217294	cast	Q712796	Peter Kay	Don Tonay	
+Q217294	cast	Q725519	Keith Allen	Roger Ames	
+Q217294	cast	Q7363645	Ron Cook	Derek Ryder	
+Q217294	cast	Q718193	Kieran O'Brien	Nathan	
+Q217294	cast	Q5363062	Elizabeth Kelly	Ian's nan	
+Q217294	cast	Q6760356	Margi Clarke		
+Q217294	cast	Q16197218	Хелен Шлезингер	Hilary	
+Q217294	cast	Q6988281	Neil Bell		
+Q217294	cast	Q238464	Simon Pegg	Mick Middles	
+Q217294	cast	Q520001	Sam Riley		
+Q217294	cast	Q118154	Gary Mounfield		
+Q217294	cast	Q454081	Kenny Baker	zookeeper	
+Q217294	cast	Q7153378	Paul Ryder	Pel	
+Q217294	cast	Q498389	Paddy Considine	Rob Gretton	
+Q217294	cast	Q3745787	Fiona Allen	self	
+Q217294	cast	Q7703629	Terri Seymour	self	
+Q217294	cast	Q6270568	Jon DaSilva	self	
+Q217294	cast	Q206922	Andy Serkis	Martin Hannett	
+Q217294	cast	Q636682	Lennie James	Alan Erasmus	
+Q217294	cast	Q5106208	Chris Coghill	Bez	
+Q217294	cast	Q5228854	Dave Gorman	Jon the Postman	
+Q217294	cast	Q312380	Christopher Eccleston	Boethius	
+Q217294	cast	Q7299217	Raymond Waring	Vini Reilly	
+Q217294	cast	Q964372	Rowetta	self	
+Q217294	cast	Q1271614	Sean Harris	Ian Curtis	
+Q217294	cast	Q443327	John Simm	Bernard Sumner	
+Q217294	subject		Tony Wilson		
+Q217294	subject		Factory Records		
+Q737904	director	Q448021	Alain Chabat		
+Q737904	writer	Q448021	Alain Chabat		
+Q737904	composer	Q3379553	Philippe Chany		
+Q737904	producer	Q298905	Claude Berri		
+Q737904	cinematographer	Q3219153	Laurent Dailland		
+Q737904	editor	Q95710477	Stéphane Pereira		
+Q737904	costume_designer	Q2004181	タニノ・リベラトーレ		
+Q737904	costume_designer	Q3379976	Philippe Guillotel		
+Q737904	costume_designer	Q28952310	Florence Sadaune		
+Q737904	production_designer	Q104804686	Hoang Thanh At		
+Q737904	cast	Q3379553	Philippe Chany		
+Q737904	cast	Q1685364	ジャン・ベンギーギ		
+Q737904	cast	Q3169474	Jean-Pierre Lazzerini		
+Q737904	cast	Q3227983	Michel Crémadès		
+Q737904	cast	Q491766	Mathieu Kassovitz		
+Q737904	cast	Q689494	Dieudonné Mbala Mbala		
+Q737904	cast	Q3300366	Maurice Barthélemy		
+Q737904	cast	Q3141565	Isabelle Nanty		
+Q737904	cast	Q346102	Dominique Besnehard		
+Q737904	cast	Q822410	Bernard Farcy		
+Q737904	cast	Q525332	Louis Leterrier		
+Q737904	cast	Q274227	Édouard Baer		
+Q737904	cast	Q204394	Zinedine Soualem		
+Q737904	cast	Q1097113	Claude Rich		
+Q737904	cast	Q554103	Pierre-François Martin-Laval		
+Q737904	cast	Q274398	Édouard Montoute		
+Q737904	cast	Q3086968	Fred Testot		
+Q737904	cast	Q265782	Noémie Lenoir		
+Q737904	cast	Q298905	Claude Berri		
+Q737904	cast	Q3056195	Eriamel		
+Q737904	cast	Q949391	Jean-Paul Rouve		
+Q737904	cast	Q511489	Cyril Raffaelli		
+Q737904	cast	Q312661	Jamel Debbouze		
+Q737904	cast	Q60304	Emma de Caunes		
+Q737904	cast	Q958831	Gérard Darmon		
+Q737904	cast	Q2956299	Chantal Lauby		
+Q737904	cast	Q456360	Marina Foïs		
+Q737904	cast	Q3435572	Robert Kechichian		
+Q737904	cast	Q357387	Omar Sy		
+Q737904	cast	Q1405046	Joël Cantona		
+Q737904	cast	Q981203	Jean-Pierre Bacri		
+Q737904	cast	Q1894524	Pierre Tchernia		
+Q737904	cast	Q18179234	Momo Debbouze		
+Q737904	cast	Q3570732	Xavier Maly		
+Q737904	cast	Q3067268	Fatou N'Diaye		
+Q737904	cast	Q2832900	Alex Berger		
+Q737904	cast	Q658468	Mouss Diouf		
+Q737904	cast	Q106508	Gérard Depardieu	Obelix	
+Q737904	cast	Q310692	Christian Clavier	Asterix	
+Q737904	cast	Q448021	Alain Chabat	Julius Caesar	
+Q737904	award		César Award for Best Costume Design		
+Q737904	follows	Q314642	Asterix & Obelix Take On Caesar		
+Q737904	followed_by	Q273676	Asterix at the Olympic Games		
+Q737904	subject		power		
+Q737904	subject		ancient Egyptian architecture		
+Q737904	subject		rivalry		
+Q695333	director	Q3037936	Doug Headline		
+Q695333	writer	Q2896574	Benoît Lestang		
+Q695333	writer	Q3037936	Doug Headline		
+Q695333	cinematographer	Q1553925	Guillaume Schiffman		
+Q695333	cast	Q1908647	Mathieu Simonet		
+Q695333	cast	Q3008655	Cylia Malki		
+Q695333	cast	Q20723802	Nicky Marbot		
+Q695333	cast	Q2623182	Alexis Loret		
+Q695333	cast	Q18214627	Edwin Kruger		
+Q695333	cast	Q265232	Alice Taglioni		
+Q695333	cast	Q18391209	Éric Névé		
+Q695333	cast	Q15407603	Stéphane Cabel		
+Q695333	cast	Q3051724	Elsa Kikoïne		
+Q695333	cast	Q3009868	Cédric Chevalme		
+Q695333	cast	Q205868	Vernon Dobtcheff		
+Q695333	cast	Q523442	André Wilms		
+Q695333	cast	Q3300109	Maud Le Guénédal		
+Q1234664	director	Q944459	Neil Marshall		
+Q1234664	writer	Q944459	Neil Marshall		
+Q1234664	composer	Q1900455	Mark Thomas		
+Q1234664	producer	Q4965011	Brian Patrick O'Toole		
+Q1234664	cinematographer	Q26924951	Sam McCurdy		
+Q1234664	editor	Q944459	Neil Marshall		
+Q1234664	cast	Q460572	Liam Cunningham		
+Q1234664	cast	Q1377608	Sean Pertwee		
+Q1234664	cast	Q5372762	Emma Cleasby		
+Q1234664	cast	Q5107904	Chris Robson		
+Q1234664	cast	Q5225070	Darren Morfitt		
+Q1234664	cast	Q5180845	Craig Conway		
+Q1234664	cast	Q312133	Kevin McKidd		
+Q1234664	award		Pégase du Festival de Bruxelles		
+Q616986	director	Q449220	Bruce Beresford		
+Q616986	writer	Q922976	Paul Pender		
+Q616986	composer	Q2344678	Stephen Endelman		
+Q616986	producer	Q81520	Pierce Brosnan		
+Q616986	producer	Q108610	Michael Ohoven		
+Q616986	editor	Q5941371	Humphrey Dixon		
+Q616986	executive_producer	Q1898946	Mario Ohoven		
+Q616986	cast	Q22893802	Marian Quinn		
+Q616986	cast	Q229714	Julianna Margulies		
+Q616986	cast	Q2628135	Sophie Vavasseur		
+Q616986	cast	Q24279323	Pat McGrath		
+Q616986	cast	Q267356	John Lynch		
+Q616986	cast	Q81520	Pierce Brosnan		
+Q616986	cast	Q403902	Aidan Quinn		
+Q616986	cast	Q313042	Stephen Rea		
+Q616986	cast	Q309160	Alan Bates		
+Q616986	cast	Q3082687	Frank Kelly		
+Q1475581	director	Q2420333	Menno Meyjes		
+Q1475581	writer	Q2420333	Menno Meyjes		
+Q1475581	composer	Q5213767	Dan Jones		
+Q1475581	cinematographer	Q638941	Lajos Koltai		
+Q1475581	cast	Q563177	Noah Taylor	Adolf Hitler	
+Q1475581	cast	Q732661	Peter Capaldi		
+Q1475581	cast	Q106175	John Cusack		
+Q1475581	cast	Q435312	Molly Parker		
+Q1475581	cast	Q229228	Leelee Sobieski		
+Q1475581	cast	Q271867	Janet Suzman		
+Q1475581	cast	Q382210	Ulrich Thomsen		
+Q1475581	cast	Q312133	Kevin McKidd		
+Q1171645	director	Q677352	Florent-Emilio Siri		
+Q1171645	writer	Q677352	Florent-Emilio Siri		
+Q1171645	writer	Q3165908	Jean-François Tarnowski		
+Q1171645	composer	Q313362	Alexandre Desplat		
+Q1171645	producer	Q15974186	Claude Carrère		
+Q1171645	cinematographer	Q3107175	Giovanni Fiore Coltellacci		
+Q1171645	editor	Q3351050	Olivier Gajan		
+Q1171645	production_designer	Q24051635	Bertrand Seitz		
+Q1171645	cast	Q376261	Angelo Infanti		
+Q1171645	cast	Q441033	Nadia Farès		
+Q1171645	cast	Q1052746	Valerio Mastandrea		
+Q1171645	cast	Q317286	Samy Naceri		
+Q1171645	cast	Q539703	Benoît Magimel		
+Q1171645	cast	Q2850132	Anisia Uzeyman		
+Q1171645	cast	Q166139	Sami Bouajila		
+Q1171645	cast	Q86336	Richard Sammel		
+Q1171645	cast	Q3047449	Edgar Givry		
+Q1171645	cast	Q573679	Pascal Greggory		
+Q1171645	cast	Q3217852	Larbi Naceri		
+Q1171645	subject		organized crime		
+Q3226230	director	Q3032767	Djamel Bensalah		
+Q3226230	writer	Q3032767	Djamel Bensalah		
+Q3226230	writer	Q3106333	Gilles Laurent		
+Q3226230	composer	Q809003	Barry Adamson		
+Q3226230	producer	Q3368979	Patrice Ledoux		
+Q3226230	cast	Q462147	Hélène de Fougerolles		
+Q3226230	cast	Q3367400	Pascal Elbé		
+Q3226230	cast	Q2869522	Atmen Kelif		
+Q3226230	cast	Q437254	Josiane Balasko		
+Q3226230	cast	Q456360	Marina Foïs		
+Q3226230	cast	Q391974	Roschdy Zem		
+Q3226230	cast	Q2903928	Bing Yin		
+Q3226230	cast	Q434287	Julie du Page		
+Q3226230	cast	Q2602323	Yves Rénier		
+Q3226230	cast	Q658468	Mouss Diouf		
+Q3226230	cast	Q3101365	George Aguilar		
+Q3226230	cast	Q3219419	Laurent Olmedo		
+Q3226230	cast	Q1713457	Lorànt Deutsch		
+Q3226230	cast	Q15676192	Isaac Sharry		
+Q3226230	cast	Q3460880	Sacha Bourdo		
+Q3226230	cast	Q3300366	Maurice Barthélemy		
+Q3226230	cast	Q1210548	Didier Flamand		
+Q3226230	cast	Q357387	Omar Sy		
+Q3226230	cast	Q2874769	Axelle Laffont		
+Q3226230	cast	Q23926410	Charley Fouquet	Pamela	
+Q3226230	cast	Q3300994	Maurice Lamy	tailor	
+Q3226230	cast	Q3189442	Julien Courbey	Kader	
+Q3226230	cast	Q728158	Gérard Jugnot	Carlito	
+Q3226230	cast	Q3085933	François Trottier	racing driver	
+Q708825	director	Q713032	Peter Hewitt		
+Q708825	writer	Q713032	Peter Hewitt		
+Q708825	writer	Q1189699	Phil Hughes		
+Q708825	composer	Q932744	Rupert Gregson-Williams		
+Q708825	producer	Q713032	Peter Hewitt		
+Q708825	producer	Q934624	Graham Broadbent		
+Q708825	producer	Q5212274	Damian Jones		
+Q708825	cinematographer	Q4228022	Andy Collins		
+Q708825	editor	Q63884280	Michael Parker		
+Q708825	cast	Q434694	Robert Hardy		
+Q708825	cast	Q459422	Joshua Herdman		
+Q708825	cast	Q4212	Ned Beatty		
+Q708825	cast	Q5267691	Devon Anderson		
+Q708825	cast	Q2926038	Bronagh Gallagher		
+Q708825	cast	Q731187	Simon Callow		
+Q708825	cast	Q229108	Anna Popplewell		
+Q708825	cast	Q467502	Celia Imrie		
+Q708825	cast	Q17021160	Glenn Wrage		
+Q708825	cast	Q444730	Bruce Alexander Cook		
+Q708825	cast	Q5253002	Del Synnott		
+Q708825	cast	Q19190	Rupert Grint		
+Q708825	cast	Q710142	Leslie Phillips		
+Q708825	cast	Q7926149	Victor McGuire		
+Q708825	cast	Q1060758	Adam Godley		
+Q708825	cast	Q501750	Colin Stinton		
+Q708825	cast	Q192912	Stephen Fry		
+Q708825	cast	Q42581	Keira Knightley		
+Q708825	cast	Q208649	Paul Giamatti		
+Q59572	director	Q230448	Jane Campion		
+Q59572	writer	Q230448	Jane Campion		
+Q59572	composer	Q425650	Hilmar Örn Hilmarsson		
+Q59572	producer	Q37459	Nicole Kidman		
+Q59572	cinematographer	Q1226913	Dion Beebe		
+Q59572	cast	Q232902	Jennifer Jason Leigh		
+Q59572	cast	Q4145	Patrice O'Neal		
+Q59572	cast	Q3870096	Nancy La Scala		
+Q59572	cast	Q3454165	Kevin Bacon		
+Q59572	cast	Q710766	Arthur J. Nascarella		
+Q59572	cast	Q167498	Meg Ryan		
+Q59572	cast	Q16729989	Michelle Hurst		
+Q59572	cast	Q41422	Mark Ruffalo		
+Q107270	director	Q193628	Sofia Coppola		
+Q107270	writer	Q193628	Sofia Coppola		
+Q107270	composer	Q1382495	Kevin Shields		
+Q107270	producer	Q193628	Sofia Coppola		
+Q107270	producer	Q750877	Ross Katz		
+Q107270	creator	Q193628	Sofia Coppola		
+Q107270	cinematographer	Q1801792	Lance Acord		
+Q107270	editor	Q3473349	Sarah Flack		
+Q107270	executive_producer	Q56094	Francis Ford Coppola		
+Q107270	executive_producer	Q2675693	Fred Roos		
+Q107270	costume_designer	Q16885863	Nancy Steiner		
+Q107270	production_designer	Q653975	K. K. Barrett		
+Q107270	production_designer	Q107168952	Anne Ross		
+Q107270	cast	Q224081	Giovanni Ribisi	John	
+Q107270	cast	Q34436	Scarlett Johansson	Charlotte	
+Q107270	cast	Q29250	Bill Murray	Bob Harris	
+Q107270	cast	Q7800607	Akiko Takeshita		
+Q107270	cast	Q107169166	Hiroko Kawasaki		
+Q107270	cast	Q23289282	Fumihiro Hayashi		
+Q107270	cast	Q3136279	Hiromix		
+Q107270	cast	Q3545817	Akiko Monō		
+Q107270	cast	Q4701200	Akira Yamaguchi		
+Q107270	cast	Q3543450	Diamond Yukai		
+Q107270	cast	Q4491	Anna Faris		
+Q107270	cast	Q2204039	Takashi Fujii		
+Q107270	cast	Q1136671	François Du Bois		
+Q107270	cast	Q16885863	Nancy Steiner		
+Q107270	cast	Q851515	Akira		
+Q107270	award		Academy Award for Best Writing, Original Screenplay		
+Q107270	award		Golden Globe Award for Best Actor – Motion Picture Musical or Comedy		
+Q107270	award		Online Film Critics Society Award for Best Actor		
+Q107270	award		BAFTA Award for Best Actor in a Leading Role		
+Q107270	award		Online Film Critics Society Award for Best Original Screenplay		
+Q107270	award		Los Angeles Film Critics Association Award for Best Actor		
+Q107270	award		Chlotrudis Award for Best Original Screenplay		
+Q107270	award		Boston Society of Film Critics Award for Best Director		
+Q107270	award		Golden Globe Award for Best Motion Picture – Musical or Comedy		
+Q107270	award		BAFTA Award for Best Actress in a Leading Role		
+Q107270	award		New York Film Critics Circle Award for Best Director		
+Q107270	award		Chlotrudis Award for Best Film		
+Q107270	award		Satellite Award for Best Original Screenplay		
+Q107270	award		BAFTA Award for Best Editing		
+Q107270	award		Golden Globe Award for Best Screenplay		
+Q107270	award		Boston Society of Film Critics Award for Best Actor		
+Q107270	award		Boston Society of Film Critics Award for Best Actress		
+Q107270	award		César Award for Best Foreign Film		
+Q107270	award		Chicago Film Critics Association Award for Best Actor		
+Q107270	award		Chlotrudis Award for Best Director		
+Q107270	award		Independent Spirit Award for Best Screenplay		
+Q107270	award		German Film Award for Best No-German Film		
+Q107270	award		New York Film Critics Circle Award for Best Actor		
+Q107270	award		National Board of Review: Top Ten Films		
+Q107270	award		National Society of Film Critics Award for Best Actor		
+Q107270	award		Independent Spirit Award for Best Director		
+Q107270	award		Independent Spirit Award for Best Male Lead		
+Q107270	award		Bodil Award for Best American Film		
+Q107270	award		Chicago Film Critics Association Award for Best Cinematography		
+Q107270	award		Chicago Film Critics Association Award for Best Screenplay		
+Q107270	award		Florida Film Critics Circle Award for Best Screenplay		
+Q107270	award		San Francisco Film Critics Circle Award for Best Actor		
+Q107270	award		San Francisco Film Critics Circle Award for Best Film		
+Q107270	award		Southeastern Film Critics Association Award for Best Actor		
+Q107270	award		Southeastern Film Critics Association Award for Best Original Screenplay		
+Q107270	award		Toronto Film Critics Association Award for Best Film		
+Q107270	award		Vancouver Film Critics Circle Award for Best Film		
+Q107270	award		Washington D.C. Area Film Critics Association Award for Best Director		
+Q107270	award		Washington D.C. Area Film Critics Association Award for Best Film		
+Q107270	award		Washington D.C. Area Film Critics Association Award for Best Original Screenplay		
+Q107270	award		Writers Guild of America Award for Best Original Screenplay		
+Q107270	award		Toronto Film Critics Association Award for Best Actor		
+Q107270	award		Satellite Award for Best Actor in a Musical or Comedy		
+Q107270	award		International Cinephile Society Award for Best Actor		
+Q107270	subject		friendship		
+Q107270	subject		existentialism		
+Q107270	subject		sympathy		
+Q107270	subject		midlife crisis		
+Q107270	subject		fleeting relationship		
+Q1405305	director	Q218022	Alain Resnais		
+Q1405305	writer	Q2847203	André Barde		
+Q1405305	composer	Q2926777	Bruno Fontaine		
+Q1405305	producer	Q89013673	Bruno Pésery		
+Q1405305	cinematographer	Q116308	Renato Berta		
+Q1405305	editor	Q513939	Hervé de Luze		
+Q1405305	costume_designer	Q29525718	Jackie Budin		
+Q1405305	production_designer	Q1678097	Jacques Saulnier		
+Q1405305	cast	Q106592	Sabine Azéma		
+Q1405305	cast	Q3086494	Françoise Gillard		
+Q1405305	cast	Q3530445	Toinette Laquière		
+Q1405305	cast	Q115735	Lambert Wilson		
+Q1405305	cast	Q30729548	Gwenaëlle Simon		
+Q1405305	cast	Q123135	Pierre Arditi		
+Q1405305	cast	Q965873	Daniel Prévost		
+Q1405305	cast	Q556578	Jalil Lespert		
+Q1405305	cast	Q11337051	Bérangère Allaux		
+Q1405305	cast	Q1166707	Darry Cowl		
+Q1405305	cast	Q3141565	Isabelle Nanty		
+Q1405305	cast	Q304123	Audrey Tautou		
+Q2299632	director	Q1344373	Kevin Macdonald		
+Q2299632	writer	Q680185	Joe Simpson		
+Q2299632	composer	Q1753627	Alex Heffes		
+Q2299632	producer	Q6258406	John Smithson		
+Q2299632	creator	Q1344373	Kevin Macdonald		
+Q2299632	cinematographer	Q47394673	Mike Eley		
+Q2299632	editor	Q27923738	Justine Wright		
+Q2299632	cast	Q680185	Joe Simpson		
+Q2299632	cast	Q923301	Simon Yates		
+Q2299632	cast	Q5540681	Nicholas Aaron		
+Q2299632	subject		climbing		
+Q2901995	director	Q3270014	Léa Fazer		
+Q2901995	writer	Q3270014	Léa Fazer		
+Q2901995	composer	Q3219351	Laurent Levesque		
+Q2901995	cast	Q241043	Emmanuelle Devos		
+Q2901995	cast	Q1187592	Denis Podalydès		
+Q2901995	cast	Q543898	Marianne Basler		
+Q2901995	cast	Q117028	Walo Lüönd		
+Q2901995	cast	Q3474928	Scali Delpeyrat		
+Q2901995	cast	Q123476	Vincent Perez		
+Q1354148	director	Q259348	Gurinder Chadha		
+Q1354148	writer	Q259348	Gurinder Chadha		
+Q1354148	composer	Q612167	Anu Malik		
+Q1354148	producer	Q259348	Gurinder Chadha		
+Q1354148	cinematographer	Q2615641	Santosh Sivan		
+Q1354148	cast	Q560163	Anupam Kher	Mr Bennet	
+Q1354148	cast	Q579995	Namrata Shirodkar	Jane Bennet	
+Q1354148	cast	Q3374204	Peeya Rai Chowdhary	Lydia Bennet	
+Q1354148	cast	Q512006	Daniel Gillies	George Wickham	
+Q1354148	cast	Q192887	Alexis Bledel	Georgiana Darcy	
+Q1354148	cast	Q3635980	Nadira Babbar	Mrs Bennet	
+Q1354148	cast	Q47059	Aishwarya Rai	Elizabeth Bennet	
+Q1354148	cast	Q461278	Martin Henderson	Mr. Darcy	
+Q1354148	cast	Q463585	Indira Varma	Caroline Bingley	
+Q1354148	cast	Q235211	Marsha Mason	Lady Catherine de Bourgh	
+Q1354148	cast	Q208374	Naveen Andrews	Charles Bingley	
+Q1354148	cast	Q3877354	Nitin Ganatra		
+Q1354148	cast	Q1407499	Sonali Kulkarni		
+Q1354148	cast	Q980210	Rick Warden		
+Q1354148	cast	Q3959650	Shivaani Ghai		
+Q1354148	cast	Q612167	Anu Malik		
+Q1354148	cast	Q161877	アシャンティ		
+Q1354148	cast	Q3103793	Georgina Chapman		
+Q5118151	director	Q3376846	Peter Richardson		
+Q5118151	composer	Q638791	Simon Boswell		
+Q5118151	producer	Q6272735	Jonathan Cavendish		
+Q5118151	cast	Q204590	Christian Slater		
+Q5118151	cast	Q229241	Miranda Richardson		
+Q5118151	cast	Q193482	Neve Campbell	Elizabeth II	
+Q5118151	subject		World War II		
+Q696611	director	Q966124	Christopher Smith		
+Q696611	writer	Q966124	Christopher Smith		
+Q696611	composer	Q124060725	The Insects		
+Q696611	producer	Q89033315	Julie Baines		
+Q696611	producer	Q95808340	Jason Newmark		
+Q696611	cinematographer	Q918883	Danny Cohen		
+Q696611	editor	Q16832381	Kate Evans		
+Q696611	cast	Q2053238	Vas Blackwood		
+Q696611	cast	Q958106	Jeremy Sheffield		
+Q696611	cast	Q703676	Joe Anderson		
+Q696611	cast	Q1271614	Sean Harris		
+Q696611	cast	Q1738579	Ken Campbell		
+Q696611	cast	Q65105	Franka Potente		
+Q1823840	director	Q7500332	Shona Auerbach		
+Q1823840	writer	Q4755101	Andrea Gibb		
+Q1823840	composer	Q1753627	Alex Heffes		
+Q1823840	producer	Q1365966	Jeremy Thomas		
+Q1823840	cinematographer	Q7500332	Shona Auerbach		
+Q1823840	executive_producer	Q89098425	Stephen Evans		
+Q1823840	cast	Q2170176	Cal MacAninch		
+Q1823840	cast	Q230308	Emily Mortimer		
+Q1823840	cast	Q169982	Gerard Butler		
+Q1823840	cast	Q6113983	Jack McElhone		
+Q1823840	subject		seamanship		
+Q129813	director	Q1354716	Roger Michell		
+Q129813	writer	Q190379	Ian McEwan		
+Q129813	writer	Q3808679	Joe Penhall		
+Q129813	composer	Q6181852	Jeremy Sams		
+Q129813	cinematographer	Q1585380	Haris Zambarloukos		
+Q129813	editor	Q56102748	Nicolas Gaster		
+Q129813	cast	Q259816	Susan Lynch		
+Q129813	cast	Q3092319	Félicité Du Jeu		
+Q129813	cast	Q4547	Daniel Craig		
+Q129813	cast	Q276182	Anna Maxwell Martin		
+Q129813	cast	Q215017	Rhys Ifans		
+Q129813	cast	Q342617	Ben Whishaw		
+Q129813	cast	Q207179	Bill Nighy		
+Q129813	cast	Q230190	Samantha Morton		
+Q129813	cast	Q296843	Andrew Lincoln		
+Q129813	cast	Q231310	Helen McCrory		
+Q129813	cast	Q380884	Corin Redgrave		
+Q3211892	director	Q3259655	Lorraine Lévy		
+Q3211892	writer	Q1744216	Susie Morgenstern		
+Q3211892	writer	Q3259655	Lorraine Lévy		
+Q3211892	cast	Q1930952	Michel Vuillermoz		
+Q3211892	cast	Q3331536	Myriam Moraly		
+Q3211892	cast	Q3502214	Stéphanie Pasterkamp		
+Q3211892	cast	Q511833	Catherine Jacob		
+Q3211892	cast	Q2941811	Catherine Arditi		
+Q3211892	cast	Q1709756	Joséphine Serre		
+Q3211892	cast	Q201810	Marilou Berry		
+Q3211892	cast	Q2825194	Adrien Jolivet		
+Q3211892	cast	Q3479511	Serge Riaboukine		
+Q3211892	cast	Q3424769	Renan Mazéas		
+Q3211892	cast	Q123135	Pierre Arditi		
+Q3211892	cast	Q562852	Raphaël Personnaz		
+Q3211892	cast	Q3093733	Gabriel Farhi		
+Q3234360	director	Q3084424	François Desagnat		
+Q3234360	director	Q3525578	Thomas Sorriaux		
+Q3234360	cast	Q318991	Gad Elmaleh		
+Q3234360	cast	Q180872	Amélie Mauresmo		
+Q3234360	cast	Q737676	Michaël Youn		
+Q3234360	cast	Q3559579	Vincent Desagnat		
+Q3234360	cast	Q689494	Dieudonné Mbala Mbala		
+Q3234360	cast	Q1936	Djibril Cissé		
+Q3234360	cast	Q16185740	Tefa		
+Q3234360	cast	Q3021869	デルフィーヌ・ド・トゥルクハイム		
+Q3234360	cast	Q466527	Patrick Timsit		
+Q3234360	cast	Q2896175	Benjamin Morgaine		
+Q1854561	director	Q134867	Danny Boyle		
+Q1854561	writer	Q1233018	Frank Cottrell-Boyce		
+Q1854561	composer	Q1701175	John Murphy		
+Q1854561	producer	Q934624	Graham Broadbent		
+Q1854561	producer	Q5212274	Damian Jones		
+Q1854561	cinematographer	Q573164	Anthony Dod Mantle		
+Q1854561	editor	Q15794136	Chris Gill		
+Q1854561	production_designer	Q6769998	Mark Tildesley		
+Q1854561	cast	Q3726488	Enzo Cilenti		
+Q1854561	cast	Q447933	Alun Armstrong		
+Q1854561	cast	Q2031061	Alex Etel		
+Q1854561	cast	Q5112369	Christopher Fulford		
+Q1854561	cast	Q6536858	Lewis McGibbon		
+Q1854561	cast	Q710142	Leslie Phillips		
+Q1854561	cast	Q1337569	Emily Aston		
+Q1854561	cast	Q459800	Daisy Donovan		
+Q1854561	cast	Q439174	James Nesbitt		
+Q2294955	director	Q114496963	Ric Cantor		
+Q2294955	composer	Q377424	Chris Elliott		
+Q2294955	cinematographer	Q5208298	Daf Hobson		
+Q2294955	cast	Q5478514	Frances Barber		
+Q2294955	cast	Q2631078	Sophie Winkleman		
+Q2294955	cast	Q1390754	Leo Gregory		
+Q2294955	cast	Q2327154	クラウディア・ウィンクルマン		
+Q2294955	cast	Q522894	Miriam Karlin		
+Q2294955	cast	Q1631684	Iddo Goldberg		
+Q2294955	cast	Q1944303	Rebecca Front		
+Q2294955	cast	Q258854	Summer Phoenix		
+Q2294955	cast	Q1740088	Kevin Bishop		
+Q2294955	cast	Q241665	Rachel Stevens		
+Q2294955	cast	Q7599998	Stanley Townsend		
+Q721158	director	Q642942	Christophe Barratier		
+Q721158	writer	Q642942	Christophe Barratier		
+Q721158	writer	Q3380254	Philippe Lopes-Curval		
+Q721158	composer	Q594586	Bruno Coulais		
+Q721158	composer	Q642942	Christophe Barratier		
+Q721158	producer	Q124474	Arthur Cohn		
+Q721158	producer	Q561124	Jacques Perrin		
+Q721158	producer	Q65116436	Nicolas Mauvernay		
+Q721158	cinematographer	Q2939262	Carlo Varini		
+Q721158	cinematographer	Q3166190	Jean-Jacques Bouhon		
+Q721158	cinematographer	Q104664526	Dominique Gentil		
+Q721158	editor	Q16683797	Yves Deschamps		
+Q721158	production_designer	Q95789289	François Chauvaud		
+Q721158	cast	Q576085	François Berléand		
+Q721158	cast	Q3381025	Philippe du Janerand		
+Q721158	cast	Q15973762	Thomas Blumenthal		
+Q721158	cast	Q3309161	Michel Caccia		
+Q721158	cast	Q983159	Kad Merad		
+Q721158	cast	Q953208	Maxence Perrin		
+Q721158	cast	Q1210548	Didier Flamand		
+Q721158	cast	Q356301	Jean-Baptiste Maunier		
+Q721158	cast	Q561124	Jacques Perrin		
+Q721158	cast	Q18923539	Théodule Carré-Cassaigne		
+Q721158	cast	Q728158	Gérard Jugnot		
+Q721158	cast	Q3292402	Marie Bunel		
+Q721158	cast	Q3118558	Grégory Gatignol		
+Q721158	cast	Q3168369	Jean-Paul Bonnaire		
+Q721158	cast	Q2862191	Armen Godel		
+Q721158	cast	Q3370850	Paul Chariéras		
+Q721158	award		European Film Award for Best Composer		
+Q721158	subject		pedagogy		
+Q721158	subject		teacher		
+Q721158	subject		social integration		
+Q721158	subject		choral music		
+Q721158	subject		at-risk young person		
+Q721158	subject		disadvantaged		
+Q1516603	director	Q718596	Robert Guédiguian		
+Q1516603	writer	Q3102118	Georges-Marc Benamou		
+Q1516603	writer	Q3106513	Gilles Taurand		
+Q1516603	producer	Q718596	Robert Guédiguian		
+Q1516603	producer	Q95778659	Marc de Bayser		
+Q1516603	producer	Q95866447	Frank Le Wita		
+Q1516603	cinematographer	Q116308	Renato Berta		
+Q1516603	editor	Q104671203	Bernard Sasia		
+Q1516603	cast	Q15727723	Agathe Dronne		
+Q1516603	cast	Q3155759	Istvan Van Heuverzwyn		
+Q1516603	cast	Q981315	Michel Bouquet		
+Q1516603	cast	Q470027	Gisèle Casadesus		
+Q1516603	cast	Q2942055	Catherine Salviat		
+Q1516603	cast	Q3479378	Serge Kribus		
+Q1516603	cast	Q3164973	Jean-Claude Frissung		
+Q1516603	cast	Q2929419	Béatrice Bruno		
+Q1516603	cast	Q556578	Jalil Lespert		
+Q1516603	cast	Q533363	Sarah Grappin		
+Q1516603	cast	Q3118485	Grégoire Oestermann		
+Q1516603	cast	Q3100613	Geneviève Casile		
+Q1516603	cast	Q17521628	Philippe Le Mercier		
+Q1516603	cast	Q3164860	Jean-Claude Bourbault		
+Q231998	director	Q154490	Jean-Jacques Annaud		
+Q231998	writer	Q154490	Jean-Jacques Annaud		
+Q231998	writer	Q21004785	Alain Godard		
+Q231998	composer	Q1361541	Stephen Warbeck		
+Q231998	producer	Q154490	Jean-Jacques Annaud		
+Q231998	producer	Q373861	Jake Eberts		
+Q231998	cinematographer	Q3167640	Jean-Marie Dreujou		
+Q231998	editor	Q516046	Noëlle Boisson		
+Q231998	executive_producer	Q95680977	Jean-Yves Asselin		
+Q231998	costume_designer	Q15448576	Pierre-Yves Gayraud		
+Q231998	production_designer	Q50318727	Pierre Quefféléan		
+Q231998	cast	Q579505	Jean-Claude Dreyfus	Administrator Eugene Normandin	
+Q231998	cast	Q296887	フレディ・ハイモア	Raoul Normandin	
+Q231998	cast	Q2930147	Bô Gaultier de Kermoal		
+Q231998	cast	Q3345693	Nozha Khouadra		
+Q231998	cast	Q3502186	Stéphanie Lagarde		
+Q231998	cast	Q16731320	Maï Anh Le	Naï-Rea	
+Q231998	cast	Q18160518	David Gant		
+Q231998	cast	Q1569159	Rainer Laupichler		
+Q231998	cast	Q1215287	Philippine Leroy-Beaulieu	Mrs. Mathilda Normandin	
+Q231998	cast	Q223745	Guy Pearce	Aidan McRory	
+Q231998	cast	Q3326214	Moussa Maaskri	Saladin	
+Q231998	cast	Q1442770	Franjo Marincic		
+Q231998	award		Genesis Award		
+Q903819	director	Q55428	Neil Jordan		
+Q903819	writer	Q55428	Neil Jordan		
+Q903819	writer	Q944204	Patrick McCabe		
+Q903819	composer	Q27978726	Anna Jordan		
+Q903819	producer	Q7610883	Stephen Woolley		
+Q903819	cinematographer	Q739937	Declan Quinn		
+Q903819	editor	Q15851189	Tony Lawson		
+Q903819	cast	Q3061229	Eva Birthistle		
+Q903819	cast	Q206659	Brendan Gleeson		
+Q903819	cast	Q202589	Cillian Murphy		
+Q903819	cast	Q216179	Bryan Ferry		
+Q903819	cast	Q336486	Ian Hart		
+Q903819	cast	Q313042	Stephen Rea		
+Q903819	cast	Q2957880	Charlene McKenna		
+Q903819	cast	Q707268	Gavin Friday		
+Q903819	cast	Q466388	Steven Waddington		
+Q903819	cast	Q3453629	Ruth Negga		
+Q903819	cast	Q460572	Liam Cunningham		
+Q903819	cast	Q16222253	Laurence Kinlan		
+Q903819	cast	Q88482721	Ruth McCabe		
+Q903819	cast	Q369823	Mary Coughlan		
+Q903819	cast	Q13157692	Páraic Breathnach		
+Q903819	cast	Q317761	Dominic Cooper		
+Q903819	cast	Q944204	Patrick McCabe		
+Q903819	cast	Q58444	Liam Neeson	Father Liam	
+Q903819	subject		Irish Republican Army		
+Q903819	subject		deviance		
+Q903819	subject		The Troubles		
+Q3069838	director	Q3618090	Annie Griffin		
+Q3069838	writer	Q3618090	Annie Griffin		
+Q3069838	composer	Q139486598	Jim Sutherland		
+Q3069838	cinematographer	Q918883	Danny Cohen		
+Q3069838	cast	Q450851	Megan Dodds		
+Q3069838	cast	Q7815969	Tom Goodman-Hill		
+Q3069838	cast	Q1102002	Clive Russell		
+Q3069838	cast	Q528822	Daniela Nardini		
+Q3069838	cast	Q4548368	Amelia Bullmore		
+Q3069838	cast	Q933129	Chris O'Dowd		
+Q3069838	cast	Q15461184	Stuart Milligan		
+Q3069838	cast	Q7294433	Raquel Cassidy		
+Q3069838	cast	Q2903611	Billy Carter		
+Q3069838	cast	Q24357	Lyndsey Marshal		
+Q3069838	cast	Q195452	Selina Cadell		
+Q3069838	cast	Q2067683	Stephen Mangan		
+Q1423667	director	Q55258	Stephen Frears		
+Q1423667	writer	Q650024	Martin Sherman		
+Q1423667	composer	Q920167	George Fenton		
+Q1423667	producer	Q211283	Bob Hoskins		
+Q1423667	cinematographer	Q368085	Andrew Dunn		
+Q1423667	editor	Q21810295	Lucia Zucchetti		
+Q1423667	costume_designer	Q289952	Sandy Powell		
+Q1423667	cast	Q953628	Thomas Allen		
+Q1423667	cast	Q232163	Natalia Tena		
+Q1423667	cast	Q211283	Bob Hoskins		
+Q1423667	cast	Q2935027	Camille O'Sullivan		
+Q1423667	cast	Q336074	Christopher Guest		
+Q1423667	cast	Q342419	Toby Jones		
+Q1423667	cast	Q348906	Will Young		
+Q1423667	cast	Q3442232	Rosalind Halstead		
+Q1423667	cast	Q28054	Judi Dench		
+Q1423667	cast	Q236167	Kelly Reilly		
+Q1423667	subject		Battle of Britain		
+Q1423667	subject		aviation		
+Q1082924	director	Q1031374	Gérard Pirès		
+Q1082924	writer	Q206685	Albert Uderzo		
+Q1082924	writer	Q715206	Jean-Michel Charlier		
+Q1082924	writer	Q1031374	Gérard Pirès		
+Q1082924	composer	Q704635	Chris Corner		
+Q1082924	producer	Q3340025	尼古拉斯·阿尔特梅尔		
+Q1082924	editor	Q27062967	Véronique Lange		
+Q1082924	cast	Q2370901	Frédéric van den Driessche		
+Q1082924	cast	Q1389781	Philippe Torreton		
+Q1082924	cast	Q3164380	Jean-Baptiste Puech		
+Q1082924	cast	Q2874744	Axel Kiener		
+Q1082924	cast	Q469967	Géraldine Pailhas		
+Q1082924	cast	Q3571770	Yannick Laurent		
+Q1082924	cast	Q3300546	Maurice Chan		
+Q1082924	cast	Q3484224	Simon Buret		
+Q1082924	cast	Q3168160	Jean-Michel Tinivelli		
+Q1082924	cast	Q265232	Alice Taglioni		
+Q1082924	cast	Q539703	Benoît Magimel		
+Q1082924	cast	Q606555	Clovis Cornillac		
+Q1082924	cast	Q3009868	Cédric Chevalme		
+Q1082924	cast	Q2966463	Christophe Reymond		
+Q1082924	cast	Q3298698	Mathieu Delarive		
+Q1082924	subject		aviation		
+Q3202764	director	Q1150229	Cédric Kahn		
+Q3202764	writer	Q628872	Ismaël Ferroukhi		
+Q3202764	writer	Q1150229	Cédric Kahn		
+Q3202764	writer	Q23926222	Raphaëlle Valbrune-Desplechin		
+Q3202764	composer	Q502957	Gabriel Yared		
+Q3202764	producer	Q13635614	Olivier Delbosc		
+Q3202764	producer	Q14124196	Marc Missonnier		
+Q3202764	cinematographer	Q3856372	Michel Amathieu		
+Q3202764	cinematographer	Q121331347	Jean Claude Moireau		
+Q3202764	editor	Q516046	Noëlle Boisson		
+Q3202764	costume_designer	Q21334430	Pascaline Chavanne		
+Q3202764	production_designer	Q95786751	Arnaud de Moleron		
+Q3202764	cast	Q11310274	Jean-Marc Stehlé		
+Q3202764	cast	Q557272	Vincent Lindon		
+Q3202764	cast	Q3438360	Rodolphe Pauly		
+Q3202764	cast	Q3340143	Nicolas Briançon		
+Q3202764	cast	Q289032	Isabelle Carré		
+Q1516843	director	Q3876025	Nick Love		
+Q1516843	writer	Q3876025	Nick Love		
+Q1516843	composer	Q139494418	Ivor Guest		
+Q1516843	cast	Q5534044	Geoff Bell		
+Q1516843	cast	Q1058562	Tamer Hassan		
+Q1516843	cast	Q3103793	Georgina Chapman		
+Q1516843	cast	Q2750868	Linda Henry		
+Q1516843	cast	Q712803	Danny Malcom Dyer		
+Q1516843	cast	Q6776129	Martin Marquez		
+Q1516843	cast	Q275865	Camille Coduri		
+Q1516843	cast	Q526529	Andy Linden		
+Q3222546	director	Q3292178	Marie-Pascale Osterrieth		
+Q3222546	writer	Q1931307	Michèle Bernier		
+Q3222546	cast	Q204394	Zinedine Soualem		
+Q3222546	cast	Q107006	Claudia Cardinale		
+Q3222546	cast	Q2851111	Anne Girouard		
+Q3222546	cast	Q3093822	Gabriel Le Doze		
+Q3222546	cast	Q177993	Hiam Abbass		
+Q3222546	cast	Q3167188	Jean-Luc Lemoine		
+Q3222546	cast	Q1931307	Michèle Bernier		
+Q3222546	cast	Q2965646	Christian Sinniger		
+Q3222546	cast	Q3440165	Roland Marchisio		
+Q3222546	cast	Q3501833	Stéphane Hillel		
+Q3222546	cast	Q3591288	Éric Naggar		
+Q3222546	cast	Q3350699	Olivia Brunaux		
+Q3222546	cast	Q3433325	Riton Liebman		
+Q3222546	cast	Q1255329	Simon Abkarian		
+Q3222546	cast	Q3171644	Jean Dell		
+Q3222546	cast	Q16645232	Jean-François Lescurat		
+Q3222546	cast	Q3189137	Julie-Anne Roth		
+Q3222546	cast	Q3166766	Jean-Louis Foulquier		
+Q3222546	cast	Q3074038	Florence Viala		
+Q3222546	cast	Q3155070	Isabelle de Botton		
+Q3222546	cast	Q3191032	Jérôme Pouly		
+Q1367317	director	Q944459	Neil Marshall		
+Q1367317	writer	Q944459	Neil Marshall		
+Q1367317	composer	Q331638	David Julyan		
+Q1367317	producer	Q144896	Christian Colson		
+Q1367317	cinematographer	Q26924951	Sam McCurdy		
+Q1367317	editor	Q974800	Jon Harris		
+Q1367317	costume_designer	Q2713404	Nancy Thompson		
+Q1367317	cast	Q73864	MyAnna Buring		
+Q1367317	cast	Q5987011	Oliver Milburn		
+Q1367317	cast	Q292107	Nora-Jane Noone		
+Q1367317	cast	Q461751	Natalie Mendoza		
+Q1367317	cast	Q293057	Saskia Mulder		
+Q1367317	cast	Q528276	Shauna Macdonald		
+Q1367317	cast	Q437038	Alex Reid		
+Q1367317	followed_by	Q1784414	The Descent Part 2		
+Q594537	director	Q108853732	Frank Passingham		
+Q594537	director	Q110226703	Dave Borthwick		
+Q594537	director	Q113155431	Jean Duval		
+Q594537	writer	Q7149150	Paul B. Davies		
+Q594537	composer	Q6769973	Mark Thomas		
+Q859131	director	Q3163830	Jean-Baptiste Andrea		
+Q859131	writer	Q3163830	Jean-Baptiste Andrea		
+Q859131	composer	Q664025	Harry Manfredini		
+Q859131	cinematographer	Q2149612	Richard Greatrex		
+Q859131	cast	Q188792	David Schwimmer		
+Q859131	cast	Q3950325	Sarah Edmondson		
+Q859131	cast	Q233054	Mimi Rogers		
+Q859131	cast	Q232786	Alice Eve		
+Q859131	cast	Q499644	Julian Glover		
+Q859131	cast	Q229237	Natascha McElhone		
+Q859131	cast	Q501750	Colin Stinton		
+Q859131	cast	Q203205	Jon Polito		
+Q859131	cast	Q238464	Simon Pegg		
+Q2935509	director	Q3063643	Fabien Onteniente		
+Q2935509	writer	Q2646765	Franck Dubosc		
+Q2935509	composer	Q3089649	Frédéric Botton		
+Q2935509	producer	Q95669004	Françoise Galfré		
+Q2935509	producer	Q99483038	Patrick Godeau		
+Q2935509	cinematographer	Q30754754	Jérôme Robert		
+Q2935509	editor	Q23409645	Vincent Tabaillon		
+Q2935509	costume_designer	Q15820617	Jacqueline Bouchard		
+Q2935509	cast	Q2646765	Franck Dubosc		
+Q2935509	cast	Q3350981	Olivier Doran		
+Q2935509	cast	Q692563	Christine Citti		
+Q2935509	cast	Q465157	Frédérique Bel		
+Q2935509	cast	Q2820822	Abbes Zahmani		
+Q2935509	cast	Q289040	Mathilde Seigner		
+Q2935509	cast	Q1558999	Gérard Lanvin		
+Q2935509	cast	Q3048843	Edéa Darcque		
+Q2935509	cast	Q3219419	Laurent Olmedo		
+Q2935509	cast	Q234890	Emmanuelle Seigner		
+Q2935509	cast	Q313199	Ari Vatanen		
+Q2935509	cast	Q2361744	Emmanuelle Galabru		
+Q2935509	cast	Q3051045	Eliott Parillaud		
+Q2935509	cast	Q2929430	Béatrice Costantini		
+Q2935509	cast	Q2898352	Bernard Montiel		
+Q2935509	cast	Q2862330	Armonie Sanders		
+Q2935509	cast	Q586054	Antoine Duléry		
+Q2935509	cast	Q658664	François Levantal		
+Q2935509	cast	Q106544	Claude Brasseur		
+Q2935509	cast	Q3345723	Noémie Elbaz		
+Q2935509	cast	Q239868	Mylène Demongeot		
+Q3306738	director	Q3507270	Sylvie Ayme		
+Q3306738	cast	Q3524860	Thomas Ancora		
+Q3306738	cast	Q266626	Rossy de Palma		
+Q3306738	cast	Q2940076	Caroline Veyt		
+Q3306738	cast	Q461617	Sara Martins		
+Q3306738	cast	Q3479511	Serge Riaboukine		
+Q3306738	cast	Q22209674	Julien Béramis		
+Q3306738	cast	Q287427	Jean-Yves Berteloot		
+Q3306738	cast	Q2850927	Anne-Sophie Franck		
+Q3306738	cast	Q2147787	Nicolas Gob		
+Q3306738	cast	Q257551	Soko		
+Q3306738	cast	Q3369284	Patrick Braoudé		
+Q3306738	cast	Q231096	Léa Seydoux		
+Q3306738	cast	Q3032889	Djena Tsimba		
+Q3306738	cast	Q3168097	Jean-Michel Noirey		
+Q3306738	cast	Q3381025	Philippe du Janerand		
+Q3306738	cast	Q16683528	Xavier Hosten		
+Q3306738	cast	Q3340468	Nicolas Jouxtel		
+Q3306738	cast	Q3034988	Dominique Bettenfeld		
+Q3149949	director	Q3417410	Raffy Shart		
+Q3149949	writer	Q3417410	Raffy Shart		
+Q3149949	cast	Q609514	Urbain Cancelier		
+Q3149949	cast	Q3106251	Gilles Gaston-Dreyfus		
+Q3149949	cast	Q3169250	Jean-Pierre Durand		
+Q3149949	cast	Q1620037	Hippolyte Girardot		
+Q3149949	cast	Q466527	Patrick Timsit		
+Q3149949	cast	Q3086407	Françoise Bertin		
+Q3149949	cast	Q3460570	Sabine Perraud		
+Q3149949	cast	Q441334	Cyrielle Clair		
+Q3149949	cast	Q3369507	Patrick Haudecœur		
+Q3149949	cast	Q3421696	Rebecca Hampton		
+Q3149949	cast	Q3482347	Shirley Bousquet		
+Q3149949	cast	Q737676	Michaël Youn		
+Q3149949	cast	Q3455752	Régis Laspalès		
+Q3149949	cast	Q3298698	Mathieu Delarive		
+Q3149949	cast	Q2864476	Arsène Mosca		
+Q3149949	cast	Q3179414	Jo Prestia		
+Q3149949	cast	Q16539408	Christophe Fluder		
+Q3149949	cast	Q456043	Delphine Chanéac		
+Q3149949	cast	Q3157489	Jacky Nercessian		
+Q3149949	cast	Q462147	Hélène de Fougerolles		
+Q3149949	cast	Q3591229	Éric Le Roch		
+Q3149949	cast	Q548400	Thierry Lhermitte		
+Q3149949	cast	Q3158547	Jacques Ciron		
+Q3149949	cast	Q3559579	Vincent Desagnat		
+Q3149949	cast	Q180886	Med Hondo		
+Q3149949	cast	Q2896175	Benjamin Morgaine		
+Q3149949	cast	Q14913614	Julia Faure		
+Q2811356	director	Q468190	Dany Boon		
+Q2811356	writer	Q468190	Dany Boon		
+Q2811356	composer	Q2087720	Philippe Rombi		
+Q2811356	producer	Q298905	Claude Berri		
+Q2811356	cinematographer	Q3167640	Jean-Marie Dreujou		
+Q2811356	editor	Q1872918	Luc Barnier		
+Q2811356	cast	Q468190	Dany Boon		
+Q2811356	cast	Q291392	Michèle Laroque		
+Q2811356	cast	Q204394	Zinedine Soualem		
+Q2811356	cast	Q3089651	Frédéric Bouraly		
+Q2811356	cast	Q3368859	Patrice Abbou		
+Q2811356	cast	Q3171644	Jean Dell		
+Q2811356	cast	Q2861211	Ariane Séguillon		
+Q2811356	cast	Q1930952	Michel Vuillermoz		
+Q2811356	cast	Q1210548	Didier Flamand		
+Q2811356	cast	Q3099887	Gaëlle Bona		
+Q2811356	cast	Q3218793	Laure Sirieix		
+Q2811356	cast	Q466982	Line Renaud		
+Q2811356	cast	Q3018824	David Strajmayster		
+Q2811356	cast	Q965873	Daniel Prévost		
+Q2811356	cast	Q3157743	Jacqueline Jehanneuf		
+Q2811356	cast	Q1808093	Laurent Gamelon		
+Q2811356	cast	Q1758568	Antoine Chappey		
+Q2811356	cast	Q3524219	Thierry Desroses		
+Q2811356	cast	Q2830250	Alain Sachs		
+Q1514402	director	Q2965696	Christian Volckman		
+Q1514402	writer	Q2834188	Alexandre de La Patellière		
+Q1514402	writer	Q3299877	Matthieu Delaporte		
+Q1514402	composer	Q3339651	Nicholas Dodd		
+Q1514402	producer	Q55595451	Alexis Vonarb		
+Q1514402	producer	Q55595613	Aton Soumache		
+Q1514402	producer	Q95791168	Roch Lener		
+Q1514402	editor	Q3367617	Pascal Tosi		
+Q1514402	award		Annecy Cristal for a Feature Film		
+Q870666	director	Q966124	Christopher Smith		
+Q870666	writer	Q966124	Christopher Smith		
+Q870666	writer	Q6139998	James Moran		
+Q870666	composer	Q2965332	Christian Henson		
+Q870666	producer	Q22075518	Finola Dwyer		
+Q870666	producer	Q95808340	Jason Newmark		
+Q870666	cinematographer	Q18019858	Ed Wild		
+Q870666	cast	Q272116	Laura Harris		
+Q870666	cast	Q526886	Andy Nyman		
+Q870666	cast	Q552162	Tim McInnerny		
+Q870666	cast	Q28039572	Babou Ceesay		
+Q870666	cast	Q531099	Claudie Blakley		
+Q870666	cast	Q40103	Toby Stephens		
+Q870666	cast	Q712803	Danny Malcom Dyer		
+Q1127205	director	Q3219280	Laurent Herbiet		
+Q1127205	writer	Q296698	Costa-Gavras		
+Q1127205	composer	Q2659446	Armand Amar		
+Q1127205	producer	Q3311678	Michèle Ray-Gavras		
+Q1127205	cinematographer	Q786658	Patrick Blossier		
+Q1127205	cast	Q3082237	Franck Pitiot		
+Q1127205	cast	Q3524303	Thierry Hancisse		
+Q1127205	cast	Q3292625	Marie Kremer		
+Q1127205	cast	Q15069855	Bonnafet Tarbouriech		
+Q1127205	cast	Q1785	Charles Aznavour		
+Q1127205	cast	Q3569553	Wladimir Yordanoff		
+Q1127205	cast	Q388744	Guillaume Gallienne		
+Q1127205	cast	Q288009	Éric Caravaca		
+Q1127205	cast	Q2926989	Bruno Solo		
+Q1127205	cast	Q3103489	Georges Siatidis		
+Q1127205	cast	Q3591288	Éric Naggar		
+Q1127205	cast	Q3470839	Samir Guesmi		
+Q1127205	cast	Q3158341	Jacques Boudet		
+Q1127205	cast	Q3570732	Xavier Maly		
+Q1127205	cast	Q3292070	Philippe Chevallier		
+Q1127205	cast	Q236157	Cécile de France		
+Q1127205	cast	Q3437193	Robinson Stévenin		
+Q1127205	cast	Q983020	Olivier Gourmet		
+Q1127205	cast	Q2926866	Bruno Lochet		
+Q1127205	subject		Algerian War		
+Q223367	director	Q55258	Stephen Frears		
+Q223367	writer	Q948122	Peter Morgan		
+Q223367	composer	Q313362	Alexandre Desplat		
+Q223367	producer	Q2849121	Andy Harries		
+Q223367	producer	Q5111096	Christine Langan		
+Q223367	producer	Q7831268	Tracey Seaward		
+Q223367	creator	Q55258	Stephen Frears		
+Q223367	cinematographer	Q382945	Affonso Beato		
+Q223367	editor	Q21810295	Lucia Zucchetti		
+Q223367	executive_producer	Q461529	Scott Rudin		
+Q223367	cast	Q24259570	Mark Bazeley	Alastair Campbell	
+Q223367	cast	Q6777655	Martyn Lewis	Martyn Lewis	
+Q223367	cast	Q2424994	Roger Allam	Robin Janvrin	
+Q223367	cast	Q6259588	John Suchet	John Suchet	
+Q223367	cast	Q6306749	Julia Somerville	Julia Somerville	
+Q223367	cast	Q299483	James Cromwell	Prince Philip, Duke of Edinburgh	
+Q223367	cast	Q152239	Queen Camilla	Queen Camilla	
+Q223367	cast	Q9685	Diana, Princess of Wales	Diana, Princess of Wales	
+Q223367	cast	Q231310	Helen McCrory	Cherie Blair	
+Q223367	cast	Q16239179	Tim McMullan	Stephen Lamport	
+Q223367	cast	Q7839312	Trevor McDonald	Trevor McDonald	
+Q223367	cast	Q349391	Helen Mirren	Elizabeth II	
+Q223367	cast	Q291443	Sylvia Syms	Queen Elizabeth the Queen Mother	
+Q223367	cast	Q7026015	Nicholas Owen	Nicholas Owen	
+Q223367	cast	Q298276	Michael Sheen	Tony Blair	
+Q223367	cast	Q1260893	Alex Jennings	Charles III	
+Q223367	cast	Q111655651	Michel Gay	Dodi Fayed	
+Q223367	cast	Q5365515	Elliot Levey		
+Q223367	cast	Q6360640	Kananu Kirimi		
+Q223367	cast	Q6247810	John McGlynn		
+Q223367	cast	Q529661	Patricia Laffan		
+Q223367	cast	Q253440	Katie McGrath		
+Q223367	cast	Q3076804	Forbes KB		
+Q223367	cast	Q3046377	Earl Cameron		
+Q223367	cast	Q7352796	Robin Soans		
+Q223367	cast	Q5598215	Gray O'Brien		
+Q223367	cast	Q6307163	Julian Firth		
+Q223367	cast	Q118782	Wolfgang Pissors		
+Q223367	award		Academy Award for Best Actress		
+Q223367	award		BAFTA Award for Best Film		
+Q223367	award		Golden Globe Award for Best Actress – Motion Picture Drama		
+Q223367	award		Online Film Critics Society Award for Best Original Screenplay		
+Q223367	award		Los Angeles Film Critics Association Award for Best Actress		
+Q223367	award		Los Angeles Film Critics Association Award for Best Screenplay		
+Q223367	award		Los Angeles Film Critics Association Award for Best Supporting Actor		
+Q223367	award		BAFTA Award for Best Actress in a Leading Role		
+Q223367	award		Satellite Award for Best Original Screenplay		
+Q223367	award		Golden Globe Award for Best Screenplay		
+Q223367	award		Boston Society of Film Critics Award for Best Actress		
+Q223367	award		Broadcast Film Critics Association Award for Best Actress		
+Q223367	award		Chicago Film Critics Association Award for Best Actress		
+Q223367	award		Screen Actors Guild Award for Outstanding Performance by a Female Actor in a Leading Role		
+Q223367	award		National Society of Film Critics Award for Best Actress		
+Q223367	award		New York Film Critics Circle Award for Best Screenplay		
+Q223367	award		Satellite Award for Best Actress – Motion Picture		
+Q223367	award		European Film Award for Best Composer		
+Q223367	award		European Film Award for Best Actress		
+Q223367	award		National Board of Review Award for Best Actress		
+Q223367	award		Online Film Critics Society Award for Best Actress		
+Q223367	award		New York Film Critics Circle Award for Best Actress		
+Q223367	award		Los Angeles Film Critics Association Award for Best Music		
+Q223367	award		Goya Award for Best European Film		
+Q223367	award		Kansas City Film Critics Circle Award for Best Actress		
+Q223367	award		Kansas City Film Critics Circle Award for Best Supporting Actor		
+Q223367	award		Bodil Award for Best Non-American Film		
+Q223367	award		Central Ohio Film Critics Association Award for Best Actress		
+Q223367	award		Chicago Film Critics Association Award for Best Original Screenplay		
+Q223367	award		Las Vegas Film Critics Society Award for Best Actress		
+Q223367	award		Dallas-Fort Worth Film Critics Association Award for Best Actress		
+Q223367	award		Florida Film Critics Circle Award for Best Actress		
+Q223367	award		National Society of Film Critics Award for Best Screenplay		
+Q223367	award		Phoenix Film Critics Society Award for Best Actress		
+Q223367	award		San Diego Film Critics Society Award for Best Actress		
+Q223367	award		San Francisco Bay Area Film Critics Circle Award for Best Actress		
+Q223367	award		Southeastern Film Critics Association Award for Best Actress		
+Q223367	award		Toronto Film Critics Association Award for Best Actress		
+Q223367	award		Toronto Film Critics Association Award for Best Director		
+Q223367	award		Toronto Film Critics Association Award for Best Film		
+Q223367	award		Toronto Film Critics Association Award for Best Supporting Actor		
+Q223367	award		Vancouver Film Critics Circle Award for Best Actress		
+Q223367	award		Washington D.C. Area Film Critics Association Award for Best Actress		
+Q223367	award		London Film Critics Circle Award for British Actress of the Year		
+Q223367	subject		Elizabeth II		
+Q223367	subject		public relations		
+Q223367	subject		British royal family		
+Q223367	subject		death of Diana, Princess of Wales		
+Q827106	director	Q55238	Ken Loach		
+Q827106	writer	Q922492	Paul Laverty		
+Q827106	composer	Q920167	George Fenton		
+Q827106	producer	Q2134946	Rebecca O'Brien		
+Q827106	creator	Q55238	Ken Loach		
+Q827106	cinematographer	Q790767	Barry Ackroyd		
+Q827106	editor	Q18021284	Jonathan Morris		
+Q827106	cast	Q433499	Pádraic Delaney	Teddy O'Donovan	
+Q827106	cast	Q1661235	Mark Wakeling		
+Q827106	cast	Q97959166	Shane Casey	Kevin	
+Q827106	cast	Q202589	Cillian Murphy	Damien O'Donovan	
+Q827106	cast	Q460572	Liam Cunningham	Dan	
+Q827106	cast	Q17232966	William Ruane	Johnny Gogan	
+Q827106	cast	Q7102987	Orla Fitzgerald	Sinéad Ní Shúilleabháin	
+Q827106	cast	Q6147135	Jamie Lomas		
+Q827106	cast	Q3752106	Seán McGinley	Father Denis	
+Q827106	cast	Q2424994	Roger Allam	Sir John Hamilton	
+Q827106	cast	Q5485414	Frank Bourke	Leo	
+Q827106	award		Palme d'Or		
+Q827106	award		European Film Award for Best Cinematographer		
+Q827106	subject		Irish Republican Army		
+Q827106	subject		Irish War of Independence		
+Q827106	subject		Anglo-Irish Treaty		
+Q827106	subject		Irish Civil War		
+Q1137070	director	Q3082197	Franck Mancuso		
+Q1137070	writer	Q3369822	Patrick Rotman		
+Q1137070	composer	Q361333	Krishna Levy		
+Q1137070	editor	Q495055	Andrea Sedláčková		
+Q1137070	cast	Q3524144	Thierry Bosc		
+Q1137070	cast	Q4705677	Alain Meunier		
+Q1137070	cast	Q3292508	Marie Espinosa		
+Q1137070	cast	Q437613	Sophie Barjac		
+Q1137070	cast	Q935804	Laurent Lucas		
+Q1137070	cast	Q1684830	Jean-François Garreaud		
+Q1137070	cast	Q2864476	Arsène Mosca		
+Q1137070	cast	Q3102404	Georges Bécot		
+Q1137070	cast	Q3292649	Marie Lenoir		
+Q1137070	cast	Q3491010	Sophie Mounicot		
+Q1137070	cast	Q3440272	Roland Timsit		
+Q1137070	cast	Q319527	Jean-Pierre Cassel		
+Q1137070	cast	Q3086571	Françoise Pinkwasser		
+Q1137070	cast	Q3340790	Nicolas Silberg		
+Q1137070	cast	Q189422	Jean Dujardin		
+Q1137070	cast	Q75057	Virginie Ledieu		
+Q1137070	cast	Q3380467	Philippe Ogouz		
+Q1137070	cast	Q3264852	Luc Lavandier		
+Q1137070	cast	Q3510165	Sébastien Lalanne		
+Q1137070	cast	Q346857	Aurélien Recoing		
+Q1137070	cast	Q509438	Marie Guillard		
+Q1137070	cast	Q3052723	Emmanuel Guttierez		
+Q1137070	cast	Q552876	Jacques Frantz		
+Q1137070	cast	Q16186115	Jean-Pierre Germain		
+Q1137070	cast	Q2826966	Agnès Blanchot		
+Q5611609	director	Q16197067	Richard Laxton		
+Q5611609	writer	Q1233018	Frank Cottrell-Boyce		
+Q5611609	composer	Q3295597	Martin Phipps		
+Q5611609	producer	Q5040345	Carl Hunter		
+Q5611609	cast	Q7088045	Olivia Colman		
+Q5611609	cast	Q3181741	John Henshaw		
+Q5611609	cast	Q45647	Eddie Marsan		
+Q5611609	cast	Q3179659	Joanna Scanlan		
+Q5611609	cast	Q3329808	Benedict Wong		
+Q5611609	cast	Q468241	Omid Djalili		
+Q5611609	cast	Q1273669	Philip Jackson		
+Q230616	director	Q298905	Claude Berri		
+Q230616	writer	Q298905	Claude Berri		
+Q230616	composer	Q3089649	Frédéric Botton		
+Q230616	producer	Q298905	Claude Berri		
+Q230616	cinematographer	Q395096	Agnès Godard		
+Q230616	editor	Q3084812	François Gédigier		
+Q230616	costume_designer	Q15448535	Sylvie Gautrelet		
+Q230616	cast	Q3420625	Raymond Acquaviva		
+Q230616	cast	Q447709	Firmine Richard		
+Q230616	cast	Q3158547	Jacques Ciron		
+Q230616	cast	Q2161692	Roger Dumas		
+Q230616	cast	Q3219528	Laurent Stocker		
+Q230616	cast	Q2897800	Bernard Dhéran		
+Q230616	cast	Q3385407	Pierre Gérald		
+Q230616	cast	Q3015148	Danièle Lebrun		
+Q230616	cast	Q21707137	Alain Stern		
+Q230616	cast	Q3086407	Françoise Bertin		
+Q230616	cast	Q1712292	Juliette Arnaud		
+Q230616	cast	Q314403	Guillaume Canet		
+Q230616	cast	Q3165711	Jean-François Kopf		
+Q230616	cast	Q2830250	Alain Sachs		
+Q230616	cast	Q20723802	Nicky Marbot		
+Q230616	cast	Q3291803	Marie-France Mignal		
+Q230616	cast	Q304123	Audrey Tautou		
+Q230616	cast	Q3276526	Magalie Madison		
+Q230616	cast	Q1651673	Hélène Surgère		
+Q1303634	director	Q2580403	Laurent Boutonnat		
+Q1303634	writer	Q2580403	Laurent Boutonnat		
+Q1303634	composer	Q2580403	Laurent Boutonnat		
+Q1303634	cast	Q298905	Claude Berri		
+Q1303634	cast	Q983020	Olivier Gourmet		
+Q1303634	cast	Q2980538	Clémence Gautier		
+Q1303634	cast	Q551705	Léo Legrand		
+Q1303634	cast	Q497770	Gaspard Ulliel		
+Q1303634	cast	Q124389	Albert Dupontel		
+Q1303634	cast	Q239341	Marie-Josée Croze		
+Q1303634	cast	Q3026917	Didier Becchetti		
+Q1303634	cast	Q542048	Dora Doll		
+Q1303634	cast	Q317704	Tchéky Karyo		
+Q1303634	cast	Q3123669	Gérald Thomassin		
+Q1303634	cast	Q3190953	ジェローム・キルシャー		
+Q1303634	cast	Q984019	Jocelyn Quivrin		
+Q1303634	cast	Q2185587	Malik Zidi		
+Q1303634	cast	Q3383813	Pierre Aussedat		
+Q1303634	cast	Q686366	Judith Davis		
+Q7112108	director	Q3876025	Nick Love		
+Q7112108	writer	Q3876025	Nick Love		
+Q7112108	composer	Q331638	David Julyan		
+Q7112108	cast	Q191104	Sean Bean		
+Q7112108	cast	Q544038	Dave Legeno		
+Q7112108	cast	Q6829578	Michael Culkin		
+Q7112108	cast	Q850596	John Standing		
+Q7112108	cast	Q211283	Bob Hoskins		
+Q7112108	cast	Q314659	Rupert Friend		
+Q7112108	cast	Q1271614	Sean Harris		
+Q7112108	cast	Q712803	Danny Malcom Dyer		
+Q7112108	cast	Q636682	Lennie James		
+Q582537	director	Q154490	Jean-Jacques Annaud		
+Q582537	writer	Q154490	Jean-Jacques Annaud		
+Q582537	writer	Q981246	Gérard Brach		
+Q582537	composer	Q982952	Javier Navarrete		
+Q582537	producer	Q154490	Jean-Jacques Annaud		
+Q582537	cinematographer	Q3167640	Jean-Marie Dreujou		
+Q582537	editor	Q516046	Noëlle Boisson		
+Q582537	cast	Q9076216	Sergio Peris-Mencheta		
+Q582537	cast	Q3287751	Marc Andréoni		
+Q582537	cast	Q778451	José Garcia		
+Q582537	cast	Q451363	Bernard Haller		
+Q582537	cast	Q6068440	Pedro Casablanc		
+Q582537	cast	Q5927512	Javier Bódalo		
+Q582537	cast	Q462376	Mélanie Bernier		
+Q582537	cast	Q3163137	Javier Botet		
+Q582537	cast	Q715111	Rufus		
+Q582537	cast	Q3119791	Guillaume Delaunay		
+Q582537	cast	Q116314	Jean-Luc Bideau		
+Q582537	cast	Q106544	Claude Brasseur		
+Q582537	cast	Q193504	Vincent Cassel		
+Q472600	director	Q345379	Julian Schnabel		
+Q472600	writer	Q706668	Ronald Harwood		
+Q472600	composer	Q3370807	Paul Cantelon		
+Q472600	producer	Q237207	Kathleen Kennedy		
+Q472600	creator	Q345379	Julian Schnabel		
+Q472600	cinematographer	Q365230	Janusz Kamiński		
+Q472600	editor	Q436837	Juliette Welfling		
+Q472600	cast	Q180224	レニー・クラヴィッツ		
+Q472600	cast	Q382396	Nicolas Le Riche		
+Q472600	cast	Q292760	Marina Hands		
+Q472600	cast	Q234890	Emmanuelle Seigner		
+Q472600	cast	Q19544020	Fiorella Campanella		
+Q472600	cast	Q391297	Agathe de La Fontaine		
+Q472600	cast	Q3082304	Franck Victor		
+Q472600	cast	Q6292322	Patrick Chesnais		
+Q472600	cast	Q461945	Anne Alvaro		
+Q472600	cast	Q3168898	Jean-Philippe Écoffey		
+Q472600	cast	Q1974920	Niels Arestrup		
+Q472600	cast	Q239341	Marie-Josée Croze		
+Q472600	cast	Q60304	Emma de Caunes		
+Q472600	cast	Q319527	Jean-Pierre Cassel		
+Q472600	cast	Q3218807	Laure de Clermont-Tonnerre		
+Q472600	cast	Q3086542	Françoise Lebrun		
+Q472600	cast	Q203215	Max von Sydow		
+Q472600	cast	Q204394	Zinedine Soualem		
+Q472600	cast	Q5626030	Gérard Watkins		
+Q472600	cast	Q437415	Anne Consigny		
+Q472600	cast	Q1342843	Isaach de Bankolé		
+Q472600	cast	Q1396779	Jean-Baptiste Mondino		
+Q472600	cast	Q3066913	Farida Khelfa		
+Q472600	cast	Q707500	Michael Wincott		
+Q472600	cast	Q355835	Mathieu Amalric	Jean-Dominique Bauby	
+Q472600	subject		communication		
+Q472600	subject		care dependency		
+Q472600	subject		Jean-Dominique Bauby		
+Q472600	subject		locked-in syndrome		
+Q472600	subject		physical disability		
+Q7757974	director	Q350717	Michael Apted		
+Q7757974	composer	Q5043563	Carmen Rizzo		
+Q7757974	cinematographer	Q45928	Maryse Alberti		
+Q521484	director	Q307996	Abdellatif Kechiche		
+Q521484	writer	Q307996	Abdellatif Kechiche		
+Q521484	producer	Q298905	Claude Berri		
+Q521484	cinematographer	Q15148925	Lubomir Bakchev		
+Q521484	editor	Q28973683	Ghalya Lacroix		
+Q521484	editor	Q55595926	Camille Toubkis		
+Q521484	production_designer	Q56305364	Benoît Barouh		
+Q521484	cast	Q2926866	Bruno Lochet		
+Q521484	cast	Q3351171	Olivier Loustau		
+Q521484	cast	Q436888	Sabrina Ouazani		
+Q521484	cast	Q2378172	Habib Boufares		
+Q521484	cast	Q18009998	Bouraouïa Marzouk		
+Q521484	cast	Q1044296	Carole Franck		
+Q521484	cast	Q3333007	Mélèze Bouzid		
+Q521484	cast	Q541721	Hafsia Herzi		
+Q521484	award		Louis Delluc Prize		
+Q521484	award		Grand Jury Prize of the Venice Film Festival		
+Q521484	award		European Film Academy Critics Award		
+Q2750096	director	Q2388301	Nabil Ayouch		
+Q2750096	writer	Q2388301	Nabil Ayouch		
+Q2750096	composer	Q361333	Krishna Levy		
+Q2750096	producer	Q373861	Jake Eberts		
+Q2750096	cinematographer	Q15142107	Vincent Mathias		
+Q2750096	editor	Q513939	Hervé de Luze		
+Q2750096	cast	Q3293001	Mariam Fakhr Eddine		
+Q2750096	cast	Q2866995	Assaad Bouab		
+Q2750096	cast	Q537487	Hichem Rostom		
+Q2750096	cast	Q262862	Laura Ramsey		
+Q2750096	cast	Q432780	Hend Sabry		
+Q4526392	director	Q665139	Noel Clarke		
+Q4526392	writer	Q665139	Noel Clarke		
+Q4526392	cast	Q16147338	Fraser Ayres		
+Q4526392	cast	Q20713639	Dominique Tipper		
+Q4526392	cast	Q275865	Camille Coduri		
+Q4526392	cast	Q665139	Noel Clarke		
+Q4526392	cast	Q7430471	Scarlett Alice Johnson		
+Q4526392	cast	Q552341	Plan B		
+Q4526392	cast	Q5442801	Femi Oyeniran		
+Q4526392	cast	Q11849729	Adam Deacon		
+Q4526392	cast	Q3076804	Forbes KB		
+Q4526392	cast	Q7304561	Red Madrell		
+Q4526392	cast	Q1677416	Jacob Anderson		
+Q4526392	cast	Q712803	Danny Malcom Dyer		
+Q4526392	follows	Q4353419	Kidulthood		
+Q4526392	followed_by	Q27959218	Brotherhood		
+Q1112171	director	Q289512	Étienne Chatiliez		
+Q1112171	writer	Q289512	Étienne Chatiliez		
+Q1112171	composer	Q594586	Bruno Coulais		
+Q1112171	cast	Q822232	Bernard Alane		
+Q1112171	cast	Q18610888	Caroline Breton		
+Q1112171	cast	Q3084547	François Duval		
+Q1112171	cast	Q3032767	Djamel Bensalah		
+Q1112171	cast	Q8315472	Patrice Thibaud		
+Q1112171	cast	Q259940	Valérie Lemercier		
+Q1112171	cast	Q2865970	Artus de Penguern		
+Q1112171	cast	Q18169333	Emmanuelle Bouaziz		
+Q1112171	cast	Q3158341	Jacques Boudet		
+Q1112171	cast	Q2852885	Anthony Kavanagh		
+Q1112171	cast	Q3219498	Laurent Saint-Gérard		
+Q1112171	cast	Q440234	Dominique Lavanant		
+Q1112171	cast	Q3167233	Jean-Luc Porraz		
+Q1112171	cast	Q3141565	Isabelle Nanty		
+Q1112171	cast	Q2848415	André Penvern		
+Q1112171	cast	Q3335002	Nadège Beausson-Diagne		
+Q1112171	cast	Q966378	Julie Ferrier		
+Q1112171	cast	Q16540115	Claire Pataut		
+Q1112171	cast	Q3380041	Philippe Hérisson		
+Q1112171	cast	Q106555	Jean Rochefort		
+Q1112171	cast	Q3553660	Valentine Varela		
+Q273676	director	Q117147	Thomas Langmann		
+Q273676	director	Q3089814	Frédéric Forestier		
+Q273676	writer	Q117147	Thomas Langmann		
+Q273676	writer	Q580810	Thierry Arbogast		
+Q273676	writer	Q2833529	Alexandre Charlot		
+Q273676	writer	Q3082192	Franck Magnier		
+Q273676	writer	Q47495704	Olivier Dazat		
+Q273676	composer	Q1471640	Frédéric Talgorn		
+Q273676	producer	Q117147	Thomas Langmann		
+Q273676	producer	Q3191061	Jérôme Seydoux		
+Q273676	cinematographer	Q273782	Aline Bonetto		
+Q273676	cinematographer	Q580810	Thierry Arbogast		
+Q273676	editor	Q8048880	Yannick Kergoat		
+Q273676	editor	Q23409645	Vincent Tabaillon		
+Q273676	production_designer	Q580810	Thierry Arbogast		
+Q273676	cast	Q106508	Gérard Depardieu	Obelix	
+Q273676	cast	Q606555	Clovis Cornillac	Asterix	
+Q273676	cast	Q106529	Alain Delon	Julius Caesar	
+Q273676	cast	Q707158	Nathan Jones		
+Q273676	cast	Q1165205	Dany Brillant		
+Q273676	cast	Q1894524	Pierre Tchernia		
+Q273676	cast	Q242896	Vanessa Hessler		
+Q273676	cast	Q576577	Sim		
+Q273676	cast	Q2360332	Stéphane De Groodt		
+Q273676	cast	Q1835	Zinedine Zidane		
+Q273676	cast	Q3838043	Luca Bizzarri		
+Q273676	cast	Q3559759	Vincent Moscato		
+Q273676	cast	Q3894159	Paolo Kessisoglu		
+Q273676	cast	Q15965529	Hafid F. Benamar		
+Q273676	cast	Q205868	Vernon Dobtcheff		
+Q273676	cast	Q45292	Michael Herbig		
+Q273676	cast	Q193108	Tony Parker		
+Q273676	cast	Q171998	Jean Todt		
+Q273676	cast	Q3643128	Keremcem		
+Q273676	cast	Q360899	Stéphane Rousseau		
+Q273676	cast	Q3037216	Dorothée Jemma		
+Q273676	cast	Q230123	Elsa Pataky		
+Q273676	cast	Q16680413	Tony Gaultier		
+Q273676	cast	Q2423378	Éric Thomas		
+Q273676	cast	Q581617	Fernando Tejero		
+Q273676	cast	Q1343716	Enrico Brignano		
+Q273676	cast	Q8315472	Patrice Thibaud		
+Q273676	cast	Q184249	Kelly Rowland		
+Q273676	cast	Q3328929	Mustapha El Atrassi		
+Q273676	cast	Q9671	Michael Schumacher		
+Q273676	cast	Q105315476	Roland Menou		
+Q273676	cast	Q237152	Mónica Cruz		
+Q273676	cast	Q2646765	Franck Dubosc		
+Q273676	cast	Q778451	José Garcia		
+Q273676	cast	Q2864476	Arsène Mosca		
+Q273676	cast	Q3081533	Francis Lalanne		
+Q273676	cast	Q951671	Rachid Bouchareb		
+Q273676	cast	Q714765	Benoît Poelvoorde	Brutus	
+Q273676	cast	Q3325897	Mouloud Achour		
+Q273676	cast	Q3021819	Delphine Depardieu		
+Q273676	follows	Q737904	Asterix & Obelix: Mission Cleopatra		
+Q273676	followed_by	Q747919	Asterix and Obelix: God Save Britannia		
+Q1144330	director	Q468190	Dany Boon		
+Q1144330	writer	Q468190	Dany Boon		
+Q1144330	writer	Q2833529	Alexandre Charlot		
+Q1144330	writer	Q3082192	Franck Magnier		
+Q1144330	composer	Q2087720	Philippe Rombi		
+Q1144330	producer	Q298905	Claude Berri		
+Q1144330	cinematographer	Q3610	Pierre Aïm		
+Q1144330	editor	Q1872918	Luc Barnier		
+Q1144330	cast	Q3369265	Patrick Bosso		
+Q1144330	cast	Q466982	Line Renaud		
+Q1144330	cast	Q3379789	Philippe Duquesne		
+Q1144330	cast	Q3335002	Nadège Beausson-Diagne		
+Q1144330	cast	Q3259454	Lorenzo Ausilia-Foret		
+Q1144330	cast	Q1799529	Stéphane Freiss		
+Q1144330	cast	Q544050	Jenny Clève		
+Q1144330	cast	Q2966467	Christophe Rossignon		
+Q1144330	cast	Q468190	Dany Boon		
+Q1144330	cast	Q949679	Guy Lecluyse		
+Q1144330	cast	Q347635	Michel Galabru		
+Q1144330	cast	Q3190858	Jérôme Commandeur		
+Q1144330	cast	Q466991	Anne Marivin		
+Q1144330	cast	Q983159	Kad Merad		
+Q1144330	cast	Q204394	Zinedine Soualem		
+Q1144330	cast	Q15974031	Bruno Tuchszer		
+Q1144330	cast	Q3086931	Fred Personne		
+Q1144330	cast	Q227097	Zoé Félix		
+Q1144330	cast	Q2978186	Claude Talpaert		
+Q1144330	award		Audience Award of the Alpe d'Huez International Comedy Film Festival		
+Q1278386	director	Q2094420	Stephan Elliott		
+Q1278386	writer	Q298388	Noël Coward		
+Q1278386	writer	Q2094420	Stephan Elliott		
+Q1278386	composer	Q539155	Marius de Vries		
+Q1278386	producer	Q6132212	James D. Stern		
+Q1278386	producer	Q13522534	Barnaby Thompson		
+Q1278386	cinematographer	Q13581314	Martin Kenzie		
+Q1278386	production_designer	Q79282330	John Beard		
+Q1278386	cast	Q1387430	Pip Torrens		
+Q1278386	cast	Q441078	Charlotte Riley		
+Q1278386	cast	Q163249	Jessica Biel		
+Q1278386	cast	Q706843	Kris Marshall		
+Q1278386	cast	Q310086	Ben Barnes		
+Q1278386	cast	Q957612	Mike Archer		
+Q1278386	cast	Q208590	Kristin Scott Thomas		
+Q1278386	cast	Q162492	Colin Firth		
+Q1278386	cast	Q265208	Katherine Parkinson		
+Q1278386	cast	Q291710	Kimberley Nixon		
+Q1278386	cast	Q1689160	Jim McManus		
+Q1278386	subject		dysfunctional family		
+Q2565497	director	Q3294263	Mark Tonderai		
+Q2565497	writer	Q3294263	Mark Tonderai		
+Q2565497	composer	Q7781455	Theo Green		
+Q2565497	producer	Q6768009	Mark Herbert		
+Q2565497	editor	Q95747083	Victoria Boydell		
+Q2565497	cast	Q8004599	William Ash		
+Q2565497	cast	Q86210	Andreas Wisniewski		
+Q2565497	cast	Q5110934	Christine Bottomley		
+Q1400547	director	Q440453	Lisa Azuelos		
+Q1400547	writer	Q440453	Lisa Azuelos		
+Q1400547	composer	Q3421570	Readymade FC		
+Q1400547	producer	Q440453	Lisa Azuelos		
+Q1400547	editor	Q95886324	Stan Collet		
+Q1400547	cast	Q126892775	Jade-Rose Parker		
+Q1400547	cast	Q510056	Valérie Karsenti		
+Q1400547	cast	Q440348	Christa Theret		
+Q1400547	cast	Q16667921	Olivier Cruveiller		
+Q1400547	cast	Q2965785	Christiane Millet		
+Q1400547	cast	Q3242498	Lise Lamétrie		
+Q1400547	cast	Q2874727	Axel Boute		
+Q1400547	cast	Q3502209	Stéphanie Murat		
+Q1400547	cast	Q2966124	Christophe Bourseiller		
+Q1400547	cast	Q162753	Sophie Marceau		
+Q1400547	cast	Q2202755	Kev Adams		
+Q1400547	cast	Q2833411	Alexandre Astier		
+Q1400547	cast	Q3293619	Marion Chabassol		
+Q1400547	cast	Q1684746	Jean-Claude Dauphin		
+Q1400547	cast	Q3179640	Joana Preiss		
+Q1400547	cast	Q984019	Jocelyn Quivrin		
+Q1400547	cast	Q3092547	Félix Moati		
+Q1400547	cast	Q1714983	Jérémy Kapone		
+Q1400547	cast	Q3260130	Lou Lesage		
+Q1400547	cast	Q456668	Françoise Fabian		
+Q1400547	cast	Q2874744	Axel Kiener		
+Q1400547	cast	Q440453	Lisa Azuelos		
+Q1400547	cast	Q3219022	Laurent Bateau		
+Q1400547	cast	Q3386444	Pierre Niney		
+Q1400547	followed_by	Q135224617	LOL 2.0		
+Q639855	director	Q642942	Christophe Barratier		
+Q639855	writer	Q642942	Christophe Barratier		
+Q639855	writer	Q3189631	Julien Rappeneau		
+Q639855	writer	Q3386595	Pierre Philippe		
+Q639855	composer	Q3423904	Reinhardt Wagner		
+Q639855	producer	Q561124	Jacques Perrin		
+Q639855	producer	Q65116436	Nicolas Mauvernay		
+Q639855	cinematographer	Q2063318	Tom Stern		
+Q639855	editor	Q16683797	Yves Deschamps		
+Q639855	costume_designer	Q56072330	Carine Sarfati		
+Q639855	production_designer	Q327143	Jean Rabasse		
+Q639855	production_designer	Q132127256	Matthieu Beutter		
+Q639855	cast	Q3381025	Philippe du Janerand		
+Q639855	cast	Q3013710	Daniel Benoin		
+Q639855	cast	Q3591220	Éric Laugérias		
+Q639855	cast	Q2387348	Franck Ferrari		
+Q639855	cast	Q606555	Clovis Cornillac		
+Q639855	cast	Q17521763	Christophe Kourotchkine		
+Q639855	cast	Q953208	Maxence Perrin		
+Q639855	cast	Q315243	Pierre Richard		
+Q639855	cast	Q3085412	François Morel		
+Q639855	cast	Q3287898	Marc Citti		
+Q639855	cast	Q291466	Nora Arnezeder		
+Q639855	cast	Q3386585	Pierre Peyrichout		
+Q639855	cast	Q3067845	Fedele Papalia		
+Q639855	cast	Q11290936	Élisabeth Vitali		
+Q639855	cast	Q3189442	Julien Courbey		
+Q639855	cast	Q3370850	Paul Chariéras		
+Q639855	cast	Q3524448	Thierry Nenez		
+Q639855	cast	Q2965070	Christian Bouillette		
+Q639855	cast	Q3591288	Éric Naggar		
+Q639855	cast	Q3501708	Stéphane Debac		
+Q639855	cast	Q117861902	David N. Jahn		
+Q639855	cast	Q3423904	Reinhardt Wagner		
+Q639855	cast	Q3568173	Wilfred Benaïche		
+Q639855	cast	Q728158	Gérard Jugnot		
+Q639855	cast	Q517272	Bernard-Pierre Donnadieu		
+Q639855	cast	Q3173186	Jean Lescot		
+Q639855	cast	Q3085027	François Jérosme		
+Q639855	cast	Q3591317	Éric Prat		
+Q639855	cast	Q3287001	Manuela Gourary		
+Q639855	cast	Q3524389	Thierry Liagre		
+Q639855	cast	Q125701502	Violette Barratier		
+Q639855	cast	Q108212650	Gérard Robert Gratadour		
+Q639855	cast	Q983159	Kad Merad		
+Q639855	cast	Q132127248	Frédéric Papalia		
+Q125076	director	Q134867	Danny Boyle		
+Q125076	director	Q3837845	Loveleen Tandan		
+Q125076	writer	Q931009	Simon Beaufoy		
+Q125076	composer	Q108560	A. R. Rahman		
+Q125076	producer	Q144896	Christian Colson		
+Q125076	cinematographer	Q573164	Anthony Dod Mantle		
+Q125076	editor	Q436125	Chris Dickens		
+Q125076	executive_producer	Q7705620	Tessa Ross		
+Q125076	cast	Q1323013	Tanay Chheda	Jamal Malik	
+Q125076	cast	Q793355	Ayush Mahesh Khedekar	Jamal Malik	
+Q125076	cast	Q3515360	Tanvi Ganesh Lonkar		
+Q125076	cast	Q3089275	Mahesh Manjrekar		
+Q125076	cast	Q2617551	Rubina Ali		
+Q125076	cast	Q360927	Irrfan Khan		
+Q125076	cast	Q313956	Anil Kapoor		
+Q125076	cast	Q16202801	Anand Tiwari		
+Q125076	cast	Q2875132	Azharuddin Mohammed Ismail		
+Q125076	cast	Q4766110	Ankur Vikal		
+Q125076	cast	Q188744	Freida Pinto		
+Q125076	cast	Q1107887	Madhur Mittal		
+Q125076	cast	Q2866593	Ashutosh Lobo Gajiwala		
+Q125076	cast	Q17744435	Faezeh Jalali		
+Q125076	cast	Q6317475	Rajendranath Zutshi		
+Q125076	cast	Q7427518	Saurabh Shukla		
+Q125076	cast	Q245075	Dev Patel	Jamal Malik	
+Q125076	cast	Q3765263	Shruti Seth		
+Q125076	cast	Q4789152	Arfi Lamba		
+Q125076	cast	Q126897193	Anjum Sharma		
+Q125076	award		Academy Award for Best Picture		
+Q125076	award		Academy Award for Best Director		
+Q125076	award		Academy Award for Best Writing, Adapted Screenplay		
+Q125076	award		Academy Award for Best Cinematography		
+Q125076	award		BAFTA Award for Best Film		
+Q125076	award		Academy Award for Best Film Editing		
+Q125076	award		Academy Award for Best Original Score		
+Q125076	award		European Film Award – People's Choice Award for Best European Film		
+Q125076	award		Academy Award for Best Sound		
+Q125076	award		Golden Globe Award for Best Motion Picture – Drama		
+Q125076	award		European Film Award for Best Cinematographer		
+Q125076	award		Golden Globe Award for Best Original Score		
+Q125076	award		National Board of Review Award for Best Film		
+Q125076	award		National Board of Review: Top Ten Films		
+Q125076	award		Dallas-Fort Worth Film Critics Association Award for Best Film		
+Q125076	award		Amanda Award for Best Foreign Feature Film		
+Q125076	subject		memory		
+Q125076	subject		poverty		
+Q125076	subject		organized crime		
+Q125076	subject		social class		
+Q125076	subject		street child		
+Q125076	subject		Bildung		
+Q125076	subject		misery		
+Q731401	director	Q5308381	Paul Andrew Williams		
+Q731401	writer	Q5308381	Paul Andrew Williams		
+Q731401	composer	Q6499384	Laura Rossi		
+Q731401	producer	Q1738645	Kenneth Marshall		
+Q731401	producer	Q125536067	Martin Pope		
+Q731401	cinematographer	Q66724892	Christopher Ross		
+Q731401	cast	Q269749	Jennifer Ellison		
+Q731401	cast	Q705531	Doug Bradley		
+Q731401	cast	Q2700543	Georgia Groome		
+Q731401	cast	Q544038	Dave Legeno		
+Q731401	cast	Q2800093	Steven O'Donnell		
+Q731401	cast	Q206922	Andy Serkis		
+Q731401	subject		serial killer		
+Q13582546	director	Q1027551	Nash Edgerton		
+Q13582546	writer	Q381768	Joel Edgerton		
+Q13582546	composer	Q5493422	François Tétaz		
+Q13582546	producer	Q6688960	Louise Smith		
+Q13582546	cast	Q1967973	Peter Phelps		
+Q13582546	cast	Q381768	Joel Edgerton		
+Q13582546	cast	Q4772688	Anthony Hayes		
+Q13582546	cast	Q3740339	Claire van der Boom		
+Q13582546	cast	Q862208	Bill Hunter		
+Q13582546	cast	Q5239108	David Roberts		
+Q247809	director	Q3340065	Nicolas Bary		
+Q247809	writer	Q3340065	Nicolas Bary		
+Q247809	composer	Q1471640	Frédéric Talgorn		
+Q247809	producer	Q130382354	Alexandre Lippens		
+Q247809	cinematographer	Q15197516	Axel Cosnefroy		
+Q247809	editor	Q27062967	Véronique Lange		
+Q247809	cast	Q16069975	Isabelle de Hertogh		
+Q247809	cast	Q3183397	Jonathan Joss		
+Q247809	cast	Q681451	Armelle		
+Q247809	cast	Q106607	Carole Bouquet		
+Q247809	cast	Q17521628	Philippe Le Mercier		
+Q247809	cast	Q3591162	Éric Godon		
+Q247809	cast	Q2872013	Aurélie Saada		
+Q247809	cast	Q551705	Léo Legrand		
+Q247809	cast	Q2825427	Adèle Exarchopoulos		
+Q247809	cast	Q3528538	Tilly Mandelbrot		
+Q247809	cast	Q3419468	Raphaël Katz		
+Q247809	cast	Q106508	Gérard Depardieu		
+Q247809	cast	Q3524219	Thierry Desroses		
+Q247809	cast	Q3270538	Léo Paget		
+Q247809	cast	Q3591288	Éric Naggar		
+Q247809	cast	Q3148782	Ilona Bachelier		
+Q247809	cast	Q3295476	Martin Jobert		
+Q247809	cast	Q511851	Lola Créton		
+Q247809	cast	Q164976	François Damiens		
+Q247809	cast	Q2362835	Stéphane Bissot		
+Q247809	cast	Q3514504	Talina Boyaci		
+Q247809	cast	Q3286446	Manon Chevallier		
+Q1199756	director	Q2964812	Chris Nahon		
+Q1199756	composer	Q297232	Clint Mansell		
+Q1199756	producer	Q525109	Ronny Yu		
+Q1199756	producer	Q685573	Chris Thompson		
+Q1199756	cast	Q270126	Allison Miller		
+Q1199756	cast	Q37944	Masiela Lusha		
+Q1199756	cast	Q253626	Jun Ji-hyun		
+Q1199756	cast	Q435625	Koyuki		
+Q1199756	cast	Q2846707	Andrew Pleavin		
+Q1199756	cast	Q923265	JJ Feild		
+Q1199756	cast	Q212416	Michael Byrne		
+Q1199756	cast	Q460572	Liam Cunningham		
+Q1199756	cast	Q460898	Colin Salmon		
+Q1199756	subject		ninja		
+Q1190988	director	Q230448	Jane Campion		
+Q1190988	writer	Q230448	Jane Campion		
+Q1190988	composer	Q26436586	Mark Bradshaw		
+Q1190988	producer	Q3161628	Jan Chapman		
+Q1190988	cinematographer	Q17715100	Greig Fraser		
+Q1190988	production_designer	Q1682667	Janet Patterson		
+Q1190988	cast	Q236097	Abbie Cornish	Fanny Brawne	
+Q1190988	cast	Q1375823	Paul Schneider	Charles Armitage Brown	
+Q1190988	cast	Q6272441	Jonathan Aris	Leigh Hunt	
+Q1190988	cast	Q3946647	Samuel Roukin	John Hamilton Reynolds	
+Q1190988	cast	Q342617	Ben Whishaw	John Keats	
+Q1190988	cast	Q16239194	Gerard Monaco	Charles Wentworth Dilke	
+Q1190988	cast	Q736794	Samuel Barnett	Joseph Severn	
+Q1190988	cast	Q3476863	Sebastian Armesto		
+Q1190988	cast	Q740202	Roger Ashton-Griffiths		
+Q1190988	cast	Q312531	Thomas Brodie-Sangster	Samuel Brawne	
+Q1190988	cast	Q598304	Antonia Campbell-Hughes	Abigail O'Donaghue Brown	
+Q1190988	cast	Q4685338	Adrian Schiller		
+Q1190988	cast	Q531099	Claudie Blakley	Mrs Dilke	
+Q1190988	cast	Q261531	Kerry Fox	Fanny's mother	
+Q1190988	cast	Q7088396	Olly Alexander	Tom Keats	
+Q1190988	cast	Q453921	Amanda Hale	Reynolds' Sister	
+Q1190988	award		AACTA Award for Best Cinematography		
+Q1190988	award		AACTA Award for Best Costume Design		
+Q1190988	award		AACTA Award for Best Production Design		
+Q1090970	director	Q55258	Stephen Frears		
+Q1090970	writer	Q515274	Christopher Hampton		
+Q1090970	composer	Q313362	Alexandre Desplat		
+Q1090970	producer	Q352846	Bill Kenwright		
+Q1090970	cinematographer	Q951018	Darius Khondji		
+Q1090970	editor	Q21810295	Lucia Zucchetti		
+Q1090970	executive_producer	Q515274	Christopher Hampton		
+Q1090970	production_designer	Q1423815	Alan MacDonald		
+Q1090970	cast	Q60306	Anita Pallenberg		
+Q1090970	cast	Q271177	Harriet Walter		
+Q1090970	cast	Q21500776	John Sehil		
+Q1090970	cast	Q234447	Felicity Jones		
+Q1090970	cast	Q55258	Stephen Frears		
+Q1090970	cast	Q6313750	Junix Inocian		
+Q1090970	cast	Q435097	イーベン・ヤイレ		
+Q1090970	cast	Q2439560	Tom Burke		
+Q1090970	cast	Q544465	Kathy Bates		
+Q1090970	cast	Q314659	Rupert Friend		
+Q1090970	cast	Q1440403	Rollo Weeks		
+Q1090970	cast	Q159778	Michelle Pfeiffer		
+Q1090970	cast	Q23773993	Joe Sheridan		
+Q1090970	cast	Q719359	Toby Kebbell		
+Q1090970	subject		ageing		
+Q1090970	subject		courtesan		
+Q1090970	subject		age disparity in sexual relationships		
+Q1090970	subject		love triangle		
+Q1090970	subject		romantic love		
+Q1090970	subject		middle age		
+Q1090970	subject		breakup		
+Q3110266	director	Q766656	Christian Carion		
+Q3110266	writer	Q3591327	Éric Raynaud		
+Q3110266	writer	Q108677277	Sergeĭ (Sergeĭ Vasilʹevich) Kostin		
+Q3110266	composer	Q297232	Clint Mansell		
+Q3110266	cinematographer	Q4531815	Walther van den Ende		
+Q3110266	editor	Q495055	Andrea Sedláčková		
+Q3110266	cast	Q4496000	Yevgeny Kharlanov		
+Q3110266	cast	Q1974920	Niels Arestrup		
+Q3110266	cast	Q2834347	Oleksiy Gorbunov		
+Q3110266	cast	Q3380282	Philippe Magnan		
+Q3110266	cast	Q57118	Diane Kruger		
+Q3110266	cast	Q188772	Willem Dafoe		
+Q3110266	cast	Q435437	Ingeborga Dapkūnaitė		
+Q3110266	cast	Q727752	David Soul		
+Q3110266	cast	Q4265604	Vsevolod Shilovsky		
+Q3110266	cast	Q350714	Fred Ward		
+Q3110266	cast	Q94882	Emir Kusturica		
+Q3110266	cast	Q766656	Christian Carion		
+Q3110266	cast	Q4459931	Vladimir Tolstoy		
+Q3110266	cast	Q2857042	Anton Yakovlev		
+Q3110266	cast	Q456257	Dina Korzun		
+Q3110266	cast	Q65106	Alexandra Maria Lara		
+Q3110266	cast	Q314403	Guillaume Canet		
+Q1784414	director	Q974800	Jon Harris		
+Q1784414	writer	Q2057920	James Watkins		
+Q1784414	composer	Q331638	David Julyan		
+Q1784414	producer	Q144896	Christian Colson		
+Q1784414	editor	Q974800	Jon Harris		
+Q1784414	costume_designer	Q2713404	Nancy Thompson		
+Q1784414	cast	Q440007	Anna Skellern		
+Q1784414	cast	Q73864	MyAnna Buring		
+Q1784414	cast	Q5301604	Douglas Hodge		
+Q1784414	cast	Q516505	Axelle Carolyn		
+Q1784414	cast	Q437038	Alex Reid		
+Q1784414	cast	Q292107	Nora-Jane Noone		
+Q1784414	cast	Q714261	Josh Dallas		
+Q1784414	cast	Q461751	Natalie Mendoza		
+Q1784414	cast	Q1748652	Gavan O'Herlihy		
+Q1784414	cast	Q293057	Saskia Mulder		
+Q1784414	cast	Q528276	Shauna Macdonald		
+Q1784414	follows	Q1367317	The Descent		
+Q745690	director	Q3430005	Riad Sattouf		
+Q745690	writer	Q3430005	Riad Sattouf		
+Q745690	writer	Q15170433	Marc Syrigas		
+Q745690	composer	Q3430005	Riad Sattouf		
+Q745690	composer	Q65116145	Lionel Flairs		
+Q745690	composer	Q99683696	Victor Le Masne		
+Q745690	producer	Q2850767	Anne-Dominique Toussaint		
+Q745690	cinematographer	Q122674252	Dominique Colin		
+Q745690	editor	Q95728601	Virginie Bruant		
+Q745690	costume_designer	Q50318749	Mimi Lempicka		
+Q745690	cast	Q3559693	Vincent Lacoste		
+Q745690	cast	Q16832022	Nicolas Wanczycki		
+Q745690	cast	Q230659	Irène Jacob		
+Q745690	cast	Q2940609	Cartman		
+Q745690	cast	Q721397	Jean-Pierre Haigneré		
+Q745690	cast	Q3430005	Riad Sattouf		
+Q745690	cast	Q241043	Emmanuelle Devos		
+Q745690	cast	Q230710	Valeria Golino		
+Q745690	cast	Q3340587	Nicolas Maury		
+Q745690	cast	Q440609	Noémie Lvovsky		
+Q745690	cast	Q126633	Marjane Satrapi		
+Q745690	cast	Q2852965	Anthony Sonigo		
+Q745690	cast	Q3086913	Fred Neidhardt		
+Q7762681	director	Q16220945	Tom Harper		
+Q7762681	writer	Q6115483	Jack Thorne		
+Q7762681	cast	Q1190134	Rafe Spall		
+Q7762681	cast	Q1339924	Steven Mackintosh		
+Q7762681	cast	Q259816	Susan Lynch		
+Q7762681	cast	Q1334874	Thomas Turgoose		
+Q7762681	cast	Q725759	Tony Maudsley		
+Q7762681	cast	Q263743	Holliday Grainger		
+Q2292225	director	Q6271790	Jon Wright		
+Q2292225	writer	Q7610282	Stephen Prentice		
+Q2292225	composer	Q348470	Paul Hartnoll		
+Q2292225	cast	Q295592	Alex Pettyfer		
+Q2292225	cast	Q2460289	Tuppence Middleton		
+Q2292225	cast	Q233006	April Pearson		
+Q2292225	cast	Q562925	Dimitri Leonidas		
+Q2292225	cast	Q1190081	Tom Hopper		
+Q2292225	cast	Q5024374	Calvin Dean		
+Q2292225	cast	Q2302888	Sophie Wu		
+Q2292225	cast	Q1060908	Georgia King		

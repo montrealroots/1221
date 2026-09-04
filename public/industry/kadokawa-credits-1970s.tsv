@@ -1,0 +1,50 @@
+qid	role	personQid	name	character	ordinal
+Q1952540	director	Q4961949	Bret Morrison		
+Q1952540	director	Q7051219	Noriaki Yuasa		
+Q1952540	writer	Q3342135	Niisan Takahashi		
+Q1952540	composer	Q2296028	Shunsuke Kikuchi		
+Q1952540	producer	Q6782400	Masaichi Nagata		
+Q1952540	cast	Q11639690	Ryo Hayami		
+Q1952540	cast	Q30922735	Shō Natsuki		
+Q1952540	cast	Q11435994	Kon Ōmura		
+Q1952540	cast	Q5492788	Franz Gruber		
+Q1952540	follows	Q670070	Gamera vs. Guiron		
+Q1952540	followed_by	Q1955548	Gamera vs. Zigra		
+Q1955548	director	Q7051219	Noriaki Yuasa		
+Q1955548	writer	Q3342135	Niisan Takahashi		
+Q1955548	composer	Q2296028	Shunsuke Kikuchi		
+Q1955548	producer	Q3135266	Hideo Nagata		
+Q1955548	cast	Q11390480	Eiko Yanami		
+Q1955548	cast	Q11425727	Mikiko Tsubouchi		
+Q1955548	follows	Q1952540	Gamera vs. Jiger		
+Q1955548	followed_by	Q1895453	Gamera: Super Monster		
+Q6147890	director	Q6314417	Junya Satō		
+Q6147890	writer	Q11672088	Kōji Takada		
+Q6147890	producer	Q749047	Haruki Kadokawa		
+Q6147890	cinematographer	Q2279154	Shinsaku Himeda		
+Q6147890	cast	Q1075097	Joe Yamanaka		
+Q6147890	cast	Q741184	Ken Takakura		
+Q6147890	cast	Q1532064	Ryoko Nakano		
+Q6147890	cast	Q11429932	Isao Natsuyagi		
+Q6147890	cast	Q1054683	Hiroko Yakushimaru		
+Q6147890	cast	Q7676003	Taiji Tonoyama		
+Q6147890	cast	Q944093	Fumio Watanabe		
+Q6147890	cast	Q1321767	Rentarō Mikuni		
+Q1032603	director	Q3317203	Kōsei Saitō		
+Q1032603	writer	Q11651066	Toshio Kamata		
+Q1032603	composer	Q1739054	Kentarō Haneda		
+Q1032603	producer	Q749047	Haruki Kadokawa		
+Q1032603	cast	Q710876	Jun Etō		
+Q1032603	cast	Q11553590	Kenzō Kawarasaki		
+Q1032603	cast	Q11648469	Hiromitsu Suzuki		
+Q1032603	cast	Q11229073	Raita Ryū		
+Q1032603	cast	Q3543645	Etsuko Shihomi		
+Q1032603	cast	Q11429932	Isao Natsuyagi		
+Q1032603	cast	Q1054683	Hiroko Yakushimaru		
+Q1032603	cast	Q749047	Haruki Kadokawa		
+Q1032603	cast	Q11462277	Asao Koike		
+Q1032603	cast	Q11618079	Masao Kusakari		
+Q1032603	cast	Q351732	Sonny Chiba		
+Q1032603	cast	Q3545136	Tsunehiko Watase		
+Q1032603	cast	Q705522	Hiroyuki Sanada		
+Q1032603	subject		time travel		

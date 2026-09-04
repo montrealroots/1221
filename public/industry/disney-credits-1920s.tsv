@@ -1,0 +1,598 @@
+qid	role	personQid	name	character	ordinal
+Q16028471	director	Q72756	Raoul Walsh		
+Q16028471	writer	Q72756	Raoul Walsh		
+Q16028471	cinematographer	Q657828	Joseph Ruttenberg		
+Q16028471	cast	Q17303042	Mario Majeroni		
+Q16028471	cast	Q1056847	Cesare Gravina		
+Q16028471	cast	Q3160884	James A. Marcus		
+Q16028471	cast	Q97697330	Q97697330		
+Q16028471	cast	Q2062257	George Walsh		
+Q444242	director	Q435029	Clarence Brown		
+Q444242	director	Q1523434	Maurice Tourneur		
+Q444242	writer	Q7341222	Robert A. Dillon		
+Q444242	composer	Q2865169	Arthur Kay		
+Q444242	producer	Q1523434	Maurice Tourneur		
+Q444242	cinematographer	Q5083108	Charles Van Enger		
+Q444242	cast	Q2883905	Barbara Bedford		
+Q444242	cast	Q3157270	Jack McDonald		
+Q444242	cast	Q2830579	Alan Roscoe		
+Q444242	cast	Q322179	Wallace Beery		
+Q444242	cast	Q6990645	Nelson McDowell		
+Q444242	cast	Q83389621	Lillian Hall		
+Q444242	cast	Q5540128	George Hackathorne		
+Q444242	cast	Q203219	Boris Karloff		
+Q444242	cast	Q3185641	Joseph Singleton		
+Q444242	cast	Q3161107	James Gordon		
+Q444242	cast	Q7781895	Theodore Lorch		
+Q444242	cast	Q5670713	Harry Lorraine		
+Q444242	cast	Q7659895	Sydney Deane		
+Q4193723	director	Q5920254	Howard M. Mitchell		
+Q4193723	cast	Q2883905	Barbara Bedford		
+Q3157382	director	Q51114	John Ford		
+Q3157382	writer	Q1250361	Dorothy Yost		
+Q3157382	producer	Q134382	William Fox		
+Q3157382	cast	Q8018206	William Scott		
+Q3157382	cast	Q39683103	John Cook		
+Q3157382	cast	Q460799	Shirley Mason		
+Q3157382	cast	Q3051754	Q3051754		
+Q2523563	director	Q51114	John Ford		
+Q2523563	writer	Q704053	Jules Furthman		
+Q2523563	cast	Q2630976	Buck Jones		
+Q2523563	cast	Q745994	George Siegmann		
+Q2523563	cast	Q2883905	Barbara Bedford		
+Q2523563	cast	Q3157270	Jack McDonald		
+Q2523563	cast	Q2829333	Q2829333		
+Q2523563	cast	Q3154317	Irene Hunt		
+Q4783371	director	Q3177427	Jerome Storm		
+Q4783371	writer	Q704053	Jules Furthman		
+Q4783371	cinematographer	Q504444	Joseph H. August		
+Q4783371	cast	Q437490	Barbara La Marr		
+Q4783371	cast	Q503956	John Gilbert		
+Q4783371	cast	Q2883905	Barbara Bedford		
+Q654469	director	Q51114	John Ford		
+Q654469	writer	Q1250361	Dorothy Yost		
+Q654469	producer	Q134382	William Fox		
+Q654469	cinematographer	Q3017350	David Abel		
+Q654469	cast	Q2421692	Sidney D'Albrook		
+Q654469	cast	Q3099019	Gaston Glass		
+Q654469	cast	Q460799	Shirley Mason		
+Q3874776	director	Q2709694	J. Gordon Edwards		
+Q3874776	composer	Q368274	Ernö Rapée		
+Q3874776	producer	Q134382	William Fox		
+Q3874776	cast	Q217628	Violet Mersereau		
+Q3874776	cast	Q3948292	Sandro Salvini		
+Q3874776	cast	Q16750615	Guido Trento		
+Q3874776	cast	Q3159044	Jacques Grétillat		
+Q3874776	cast	Q1978019	Nerio Bernardi		
+Q3874776	cast	Q7154850	Paulette Duval		
+Q3874776	cast	Q3874467	Nello Carotenuto		
+Q3874776	cast	Q1316687	Ferruccio Biancini		
+Q3222946	director	Q51114	John Ford		
+Q3222946	director	Q3048778	Edwin Carewe		
+Q3222946	writer	Q3372211	Paul Sloane		
+Q3222946	producer	Q134382	William Fox		
+Q3222946	cinematographer	Q657828	Joseph Ruttenberg		
+Q3222946	cast	Q727310	Percy Helton		
+Q3222946	cast	Q255842	Mary Carr		
+Q3222946	subject		aviation		
+Q3222905	director	Q51114	John Ford		
+Q3222905	writer	Q3372211	Paul Sloane		
+Q3222905	producer	Q134382	William Fox		
+Q3222905	cast	Q2063267	Tully Marshall		
+Q3222905	cast	Q5585207	Gordon Griffith		
+Q3222905	cast	Q1361838	Francis Ford		
+Q3222905	cast	Q56755948	Pat Moore		
+Q3222905	cast	Q983092	David Butler		
+Q3222905	cast	Q7934637	Virginia True Boardman		
+Q3222905	cast	Q18436266	William Walling		
+Q3222905	cast	Q459962	Virginia Valli		
+Q3222905	cast	Q8003175	Will Walling		
+Q3222905	cast	Q6669605	Lon Poff		
+Q3222905	cast	Q240238	Bessie Love		
+Q3222905	cast	Q5540128	George Hackathorne		
+Q2934747	director	Q51114	John Ford		
+Q2934747	writer	Q1762306	Robert N. Lee		
+Q2934747	producer	Q134382	William Fox		
+Q2934747	cinematographer	Q3101899	George Schneiderman		
+Q2934747	cast	Q909904	Ken Maynard		
+Q2934747	cast	Q3934887	Richard Tucker		
+Q2934747	cast	Q503956	John Gilbert		
+Q2934747	cast	Q2052901	Gertrude Olmstead		
+Q2934747	cast	Q1971717	Alan Hale		
+Q2934747	cast	Q3564545	W. E. Lawrence		
+Q2934747	cast	Q3157270	Jack McDonald		
+Q2934747	cast	Q229338	Jean Arthur		
+Q2934747	cast	Q3572331	Ynez Seabury		
+Q2934747	cast	Q3734276	Eugenie Forde		
+Q2934747	cast	Q2462046	Phillips Smalley		
+Q2934747	subject		gambling		
+Q3213174	director	Q51114	John Ford		
+Q3213174	cast	Q1748413	Gladys Hulette		
+Q3213174	cast	Q195022	Frank Campeau		
+Q3213174	cast	Q983092	David Butler		
+Q3213174	cast	Q3288255	Marc McDermott		
+Q3213174	cast	Q3047268	Eddie Gribbon		
+Q3225625	director	Q51114	John Ford		
+Q3225625	writer	Q704053	Jules Furthman		
+Q3225625	cinematographer	Q1159995	Daniel B. Clark		
+Q3225625	cast	Q3086873	Fred Kohler		
+Q3225625	cast	Q20684485	Frank Leigh		
+Q3225625	cast	Q911472	Eugene Pallette		
+Q3225625	cast	Q345468	Tom Mix		
+Q3225625	cast	Q195022	Frank Campeau		
+Q3225625	cast	Q3194076	Kathleen Key		
+Q3225625	cast	Q8003175	Will Walling		
+Q3225625	cast	Q3807871	Jennie Lee		
+Q3204011	director	Q51114	John Ford		
+Q3204011	producer	Q134382	William Fox		
+Q3204011	cinematographer	Q3101899	George Schneiderman		
+Q3204011	cast	Q3878588	Norval MacGregor		
+Q3204011	cast	Q3453609	Ruth Clifford		
+Q3204011	cast	Q661678	Henry B. Walthall		
+Q3204011	cast	Q3752767	Frederic Richard Sullivan		
+Q3204011	cast	Q391742	Alma Bennett		
+Q3525944	director	Q51114	John Ford		
+Q3525944	writer	Q51114	John Ford		
+Q3525944	producer	Q134382	William Fox		
+Q3525944	cinematographer	Q1159995	Daniel B. Clark		
+Q3525944	cast	Q345468	Tom Mix		
+Q3525944	cast	Q391742	Alma Bennett		
+Q2836578	director	Q8704	Walt Disney		
+Q3231890	director	Q51114	John Ford		
+Q3231890	writer	Q5079766	Charles Kenyon		
+Q3231890	cinematographer	Q3101899	George Schneiderman		
+Q3231890	cast	Q1621558	Hobart Bosworth		
+Q3231890	cast	Q3161107	James Gordon		
+Q3231890	cast	Q3523709	Theodore von Eltz		
+Q3231890	cast	Q1361838	Francis Ford		
+Q3231890	cast	Q3807871	Jennie Lee		
+Q3231890	cast	Q3750943	Francis Powers		
+Q3231890	cast	Q2422183	Pauline Starke		
+Q477852	director	Q51114	John Ford		
+Q477852	writer	Q5079766	Charles Kenyon		
+Q477852	composer	Q368274	Ernö Rapée		
+Q477852	producer	Q51114	John Ford		
+Q477852	creator	Q51114	John Ford		
+Q477852	cinematographer	Q3101899	George Schneiderman		
+Q477852	editor	Q3127594	Harold D. Schuster		
+Q477852	executive_producer	Q134382	William Fox		
+Q477852	production_designer	Q1666270	William S. Darling		
+Q477852	cast	Q3805637	Jack Richardson		
+Q477852	cast	Q600710	Peggy Cartwright		
+Q477852	cast	Q3127594	Harold D. Schuster		
+Q477852	cast	Q3086873	Fred Kohler		
+Q477852	cast	Q229338	Jean Arthur		
+Q477852	cast	Q3750943	Francis Powers		
+Q477852	cast	Q3161107	James Gordon		
+Q477852	cast	Q3101978	George Waggner		
+Q477852	cast	Q3180966	John B. O'Brien		
+Q477852	cast	Q1009495	George O'Brien		
+Q477852	cast	Q270038	Delbert Mann		
+Q477852	cast	Q1748413	Gladys Hulette		
+Q477852	cast	Q504698	James Welch		
+Q477852	cast	Q3569077	Willie Fung		
+Q477852	cast	Q29969078	James Marcus		
+Q477852	cast	Q3806662	James Marcus		
+Q477852	cast	Q3038280	J. Farrell MacDonald		
+Q477852	cast	Q391314	Madge Bellamy		
+Q477852	cast	Q8003175	Will Walling	Thomas Marsh	
+Q477852	cast	Q5200661	Cyril Chadwick		
+Q477852	cast	Q951877	Sid Jordan		
+Q477852	cast	Q309840	Francis Gary Powers		
+Q477852	cast	Q1124735	George Brent		
+Q3460370	director	Q51114	John Ford		
+Q3460370	writer	Q463883	Frances Marion		
+Q3460370	producer	Q134382	William Fox		
+Q3460370	cinematographer	Q504444	Joseph H. August		
+Q3460370	cast	Q3160884	James A. Marcus		
+Q3460370	cast	Q2698123	Otis Harlan		
+Q3460370	cast	Q3431278	Richard Travers		
+Q3460370	cast	Q3048841	Edythe Chapman		
+Q3460370	cast	Q541189	Ethel Clayton		
+Q3460370	cast	Q391314	Madge Bellamy		
+Q3460370	cast	Q650815	Brandon Hurst		
+Q3460370	cast	Q3057512	Erville Alderson		
+Q3460370	cast	Q936637	Wallace MacDonald		
+Q3460370	cast	Q3807508	Jay Hunt		
+Q3460370	cast	Q3038280	J. Farrell MacDonald		
+Q21869692	director	Q88944	Paul Merzbach		
+Q21869692	writer	Q88944	Paul Merzbach		
+Q21869692	writer	Q15407068	Fanny Carlsen		
+Q21869692	cinematographer	Q1453106	Frederik Fuglsang		
+Q21869692	cast	Q89187	Harry Halm		
+Q21869692	cast	Q1292840	Alexandra Sorina		
+Q21869692	cast	Q105716	Hans Mierendorff		
+Q21869692	cast	Q1711918	Julia Serda		
+Q21869692	cast	Q88668	Anton Pointner		
+Q21869692	cast	Q273861	Marcella Albani		
+Q21869692	cast	Q1512349	Gerhard Ritterband		
+Q21869692	cast	Q5086368	Charly Berger		
+Q21869692	cast	Q112417	Hermann Picha		
+Q21869692	cast	Q89883	Frida Richard		
+Q2063186	director	Q51114	John Ford		
+Q2063186	writer	Q463883	Frances Marion		
+Q2063186	producer	Q10307839	John Lionel Golden		
+Q2063186	cast	Q3038280	J. Farrell MacDonald		
+Q2063186	cast	Q2377047	Aileen Manning		
+Q2063186	cast	Q5200661	Cyril Chadwick		
+Q2063186	cast	Q357552	George Fawcett		
+Q2063186	cast	Q3161300	James Neill		
+Q2063186	cast	Q1009495	George O'Brien		
+Q2063186	cast	Q3750943	Francis Powers		
+Q2063186	cast	Q2068010	Alec B. Francis		
+Q2063186	cast	Q457545	Jacqueline Logan		
+Q3220983	director	Q51114	John Ford		
+Q3220983	cast	Q1009495	George O'Brien		
+Q3220983	cast	Q4895379	Bert Woodruff		
+Q3220983	cast	Q329577	Victor McLaglen		
+Q3220983	cast	Q3038280	J. Farrell MacDonald		
+Q3220983	cast	Q3160884	James A. Marcus		
+Q3220983	cast	Q2888537	Diana Miller		
+Q3220983	cast	Q1752678	Billie Dove		
+Q3220983	cast	Q3609064	Edward Peil		
+Q3220983	cast	Q1361838	Francis Ford		
+Q3220983	cast	Q3126801	Hank Mann		
+Q3220983	cast	Q3128025	Harvey Clark		
+Q7749151	director	Q134382	William Fox		
+Q7749151	director	Q3181549	John G. Blystone		
+Q7749151	writer	Q345468	Tom Mix		
+Q7749151	writer	Q1752678	Billie Dove		
+Q7749151	writer	Q3281729	Malcolm Waite		
+Q7749151	producer	Q134382	William Fox		
+Q7749151	cinematographer	Q1159995	Daniel B. Clark		
+Q7749151	cast	Q1752678	Billie Dove		
+Q7749151	cast	Q345468	Tom Mix		
+Q7749151	cast	Q3281729	Malcolm Waite		
+Q1257244	director	Q51114	John Ford		
+Q1257244	writer	Q51114	John Ford		
+Q1257244	writer	Q1697996	John Stone		
+Q1257244	producer	Q51114	John Ford		
+Q1257244	producer	Q134382	William Fox		
+Q1257244	cinematographer	Q3101899	George Schneiderman		
+Q1257244	cast	Q1871332	Lou Tellegen		
+Q1257244	cast	Q2010462	Phyllis Haver		
+Q1257244	cast	Q3038280	J. Farrell MacDonald		
+Q1257244	cast	Q152941	George Irving		
+Q1257244	cast	Q3807508	Jay Hunt		
+Q1257244	cast	Q3556367	Vester Pegg		
+Q1257244	cast	Q2698123	Otis Harlan		
+Q1257244	cast	Q1009495	George O'Brien		
+Q1257244	cast	Q195022	Frank Campeau		
+Q1257244	cast	Q3530874	Tom Santschi		
+Q1257244	cast	Q2068010	Alec B. Francis		
+Q1257244	cast	Q4983915	Bud Osborne		
+Q1257244	cast	Q174930	Olive Borden		
+Q1257244	cast	Q7245579	Priscilla Bonner		
+Q4655357	director	Q3237311	Lewis Seiler		
+Q4655357	cast	Q72911	Oliver Hardy		
+Q2836739	director	Q8704	Walt Disney		
+Q5447669	director	Q51581	Howard Hawks		
+Q5447669	writer	Q51581	Howard Hawks		
+Q5447669	writer	Q5104089	Louis D. Lighton		
+Q5447669	writer	Q5899363	Hope Loring		
+Q5447669	producer	Q134382	William Fox		
+Q5447669	cinematographer	Q504444	Joseph H. August		
+Q5447669	editor	Q3941424	Rose Smith		
+Q5447669	costume_designer	Q1366554	Adrian		
+Q5447669	production_designer	Q1666270	William S. Darling		
+Q5447669	cast	Q3734506	Eulalie Jensen		
+Q5447669	cast	Q5699738	Heinie Conklin		
+Q5447669	cast	Q1009495	George O'Brien		
+Q5447669	cast	Q8004706	William Austin		
+Q5447669	cast	Q2010462	Phyllis Haver		
+Q5447669	cast	Q3101419	George Beranger		
+Q5447669	cast	Q174930	Olive Borden		
+Q3842260	director	Q55221	Alexander Korda		
+Q3842260	director	Q84630	Karl Hartl		
+Q3842260	writer	Q469963	Béla Balázs		
+Q3842260	composer	Q110030	Willy Schmidt-Gentner		
+Q3842260	producer	Q62099	Karl Freund		
+Q3842260	producer	Q84630	Karl Hartl		
+Q3842260	cinematographer	Q90926	Theodor Sparkuhl		
+Q3842260	cinematographer	Q2156401	Robert Baberske		
+Q3842260	cast	Q87148	Hermann Vallentin		
+Q3842260	cast	Q84340	Harry Liedtke		
+Q3842260	cast	Q90736	Dina Gralla		
+Q3842260	cast	Q99888	Trude Hesterberg		
+Q3842260	cast	Q1700875	John Loder		
+Q3842260	cast	Q448173	María Corda		
+Q3842260	cast	Q4612	Marlene Dietrich		
+Q3842260	cast	Q72890	Camilla Horn		
+Q3842260	cast	Q1029090	Camilla von Hollay		
+Q3842260	cast	Q71182	Maria Paudler		
+Q55635046	director	Q88944	Paul Merzbach		
+Q55635046	producer	Q76659	Frederic Zelnik		
+Q55635046	cinematographer	Q1453106	Frederik Fuglsang		
+Q55635046	cast	Q63781	Alfred Abel		
+Q2077021	director	Q51114	John Ford		
+Q2077021	writer	Q5585737	Gordon Rigby		
+Q2077021	producer	Q51114	John Ford		
+Q2077021	cinematographer	Q209084	Arthur Edeson		
+Q2077021	cast	Q3379006	Philip Ford		
+Q2077021	cast	Q1009495	George O'Brien		
+Q2077021	cast	Q3127927	Harry Tenbrook		
+Q2077021	cast	Q292865	Margaret Livingston		
+Q2077021	cast	Q182462	Janet Gaynor	Роза Келли	
+Q2077021	cast	Q3435031	ロバート・エディソン		
+Q2077021	cast	Q3568919	William Russell		
+Q2077021	cast	Q983092	David Butler		
+Q28130348	director	Q51499	Curtis Bernhardt		
+Q28130348	cast	Q99714	Claire Rommer		
+Q22976180	director	Q88001	Fritz Wendhausen		
+Q22976180	writer	Q1551755	Hans Kyser		
+Q22976180	producer	Q62099	Karl Freund		
+Q22976180	cinematographer	Q90926	Theodor Sparkuhl		
+Q22976180	cast	Q107514	Lia Eibenschütz		
+Q22976180	cast	Q58822	Max Schreck		
+Q22976180	cast	Q993965	Bruno Ziener		
+Q22976180	cast	Q109286	Paul Rehkopf		
+Q22976180	cast	Q1855635	Vladimir Sokoloff		
+Q22976180	cast	Q101079	Auguste Prasch-Grevenberg		
+Q22976180	cast	Q109534	Mathias Wieman		
+Q22976180	cast	Q78880	Mady Christians		
+Q22976180	cast	Q120425	Gertrud de Lalsky		
+Q22976180	cast	Q95784	Werner Fuetterer		
+Q22976180	cast	Q87148	Hermann Vallentin		
+Q368451	director	Q369190	Frank Borzage		
+Q368451	writer	Q817511	Benjamin Glazer		
+Q368451	writer	Q9638408	Joseph Austin Strong		
+Q368451	producer	Q134382	William Fox		
+Q368451	creator	Q369190	Frank Borzage		
+Q368451	cinematographer	Q1356489	Ernest Palmer		
+Q368451	cinematographer	Q1706396	Joseph A. Valentine		
+Q368451	editor	Q5669347	Harry H. Caldwell		
+Q368451	production_designer	Q1586676	Harry Oliver		
+Q368451	cast	Q1752895	Marie Mosquini		
+Q368451	cast	Q275001	Émile Chautard		
+Q368451	cast	Q554443	George E. Stone		
+Q368451	cast	Q182462	Janet Gaynor		
+Q368451	cast	Q4710347	Albert Gran		
+Q368451	cast	Q275760	Henry Armetta		
+Q368451	cast	Q1064346	Charles Farrell		
+Q368451	cast	Q4885267	Ben Bard		
+Q368451	cast	Q5566392	Gladys Brockwell		
+Q368451	cast	Q983092	David Butler		
+Q368451	award		Academy Award for Best Actress		
+Q368451	award		Academy Award for Best Writing, Adapted Screenplay		
+Q368451	award		Academy Award for Best Director (Dramatic Picture)		
+Q431093	director	Q55412	F. W. Murnau		
+Q431093	writer	Q65448	Hermann Sudermann		
+Q431093	writer	Q78758	Carl Mayer		
+Q431093	composer	Q79043	Hugo Riesenfeld		
+Q431093	producer	Q134382	William Fox		
+Q431093	cinematographer	Q774270	Charles Rosher		
+Q431093	cinematographer	Q1351247	Karl Struss		
+Q431093	editor	Q3127594	Harold D. Schuster		
+Q431093	production_designer	Q126854	Rochus Gliese		
+Q431093	cast	Q3047245	Eddie Boland		
+Q431093	cast	Q3038280	J. Farrell MacDonald		
+Q431093	cast	Q292865	Margaret Livingston		
+Q431093	cast	Q2975587	Clarence Wilson		
+Q431093	cast	Q5563216	Gino Corrado		
+Q431093	cast	Q2865156	Arthur Housman		
+Q431093	cast	Q76708	Herman Bing		
+Q431093	cast	Q456757	Jane Winton		
+Q431093	cast	Q731233	Gibson Gowland		
+Q431093	cast	Q4864570	Barry Norton		
+Q431093	cast	Q1009495	George O'Brien		
+Q431093	cast	Q1386549	Robert Parrish		
+Q431093	cast	Q3031861	Sally Eilers		
+Q431093	cast	Q182462	Janet Gaynor		
+Q431093	award		Academy Award for Best Actress		
+Q431093	award		Academy Award for Best Cinematography		
+Q592543	director	Q8704	Walt Disney		
+Q592543	producer	Q952640	Charles Mintz		
+Q27958802	director	Q99558	Johannes Guter		
+Q27958802	writer	Q99569	Hans Rameau		
+Q27958802	cinematographer	Q107572	Edgar Ziesemer		
+Q27958802	cast	Q95784	Werner Fuetterer		
+Q22968238	director	Q96298	Hans Behrendt		
+Q22968238	writer	Q77069	Leonhard Frank		
+Q22968238	writer	Q1319487	Franz Schulz		
+Q22968238	producer	Q98954	Hermann Fellner		
+Q22968238	cinematographer	Q86660	Otto Kanturek		
+Q22968238	cast	Q15999140	Kurt Katch		
+Q22968238	cast	Q433021	Marija Leiko		
+Q22968238	cast	Q647830	Paul Hörbiger		
+Q22968238	cast	Q107788	Gustl Gstettenbaur		
+Q27958887	director	Q96298	Hans Behrendt		
+Q27958887	writer	Q1319487	Franz Schulz		
+Q27958887	producer	Q99510	Hermann Fellner		
+Q27958887	cinematographer	Q90072	Eduard Hoesch		
+Q27958887	cast	Q647830	Paul Hörbiger		
+Q2352876	director	Q51114	John Ford		
+Q2352876	producer	Q51114	John Ford		
+Q2352876	cinematographer	Q3101899	George Schneiderman		
+Q2352876	editor	Q16012219	Margaret Clancey		
+Q2352876	cast	Q1677155	Jack Pennick		
+Q2352876	cast	Q3046418	Earle Foxe		
+Q2352876	cast	Q3190002	June Collyer		
+Q2352876	cast	Q3218072	Larry Kent		
+Q2352876	cast	Q40531	John Wayne		
+Q2352876	cast	Q1621558	Hobart Bosworth		
+Q2352876	cast	Q6490614	Larry Kent		
+Q2352876	cast	Q329577	Victor McLaglen		
+Q2352876	cast	Q467968	Mary Gordon		
+Q776337	director	Q72756	Raoul Walsh		
+Q776337	director	Q727791	Irving Cummings		
+Q776337	writer	Q387110	Paul Girard Smith		
+Q776337	writer	Q1459318	Tom Barry		
+Q776337	producer	Q8025022	Winfield Sheehan		
+Q776337	cinematographer	Q209084	Arthur Edeson		
+Q776337	cinematographer	Q4722701	Alfred G. Hansen		
+Q776337	editor	Q1424861	Louis R. Loeffler		
+Q776337	cast	Q312073	Warner Baxter	The Cisco Kid	
+Q776337	cast	Q275760	Henry Armetta		
+Q776337	cast	Q952690	Edmund Lowe		
+Q776337	cast	Q182229	George Arliss		
+Q776337	cast	Q28065172	Soledad Jiménez		
+Q776337	cast	Q195022	Frank Campeau		
+Q776337	cast	Q29969078	James Marcus		
+Q776337	cast	Q5298332	Dorothy Burgess		
+Q776337	cast	Q7373408	Roy Stewart		
+Q776337	cast	Q3038280	J. Farrell MacDonald		
+Q776337	cast	Q3082747	Frank Nelson		
+Q776337	cast	Q3530874	Tom Santschi		
+Q776337	award		Academy Award for Best Actor		
+Q1941572	director	Q51114	John Ford		
+Q1941572	writer	Q3104391	Gertrude Orr		
+Q1941572	producer	Q51114	John Ford		
+Q1941572	producer	Q447862	Belle Bennett		
+Q1941572	producer	Q922580	Neil Hamilton		
+Q1941572	cast	Q2826799	Aggie Herring		
+Q1941572	cast	Q3734506	Eulalie Jensen		
+Q1941572	cast	Q1386549	Robert Parrish		
+Q1941572	cast	Q447862	Belle Bennett		
+Q1941572	cast	Q40531	John Wayne		
+Q1941572	cast	Q541189	Ethel Clayton		
+Q1941572	cast	Q922580	Neil Hamilton		
+Q1941572	cast	Q329577	Victor McLaglen		
+Q2008801	director	Q51114	John Ford		
+Q2008801	producer	Q51114	John Ford		
+Q2008801	cinematographer	Q1064479	Charles G. Clarke		
+Q2008801	cast	Q3021715	Dell Henderson		
+Q2008801	cast	Q530562	Billy Bevan		
+Q2008801	cast	Q7360827	Rolfe Sedan		
+Q2008801	cast	Q1386549	Robert Parrish		
+Q2008801	cast	Q3038280	J. Farrell MacDonald		
+Q2008801	cast	Q450986	Louise Fazenda		
+Q2008801	cast	Q3530929	Tom Wilson		
+Q22967698	director	Q96298	Hans Behrendt		
+Q22967698	writer	Q114336	Fritz Löhner-Beda		
+Q22967698	composer	Q110030	Willy Schmidt-Gentner		
+Q22967698	producer	Q98954	Hermann Fellner		
+Q22967698	cinematographer	Q86660	Otto Kanturek		
+Q22967698	cast	Q214599	Ernő Verebes		
+Q22967698	cast	Q547273	Truus van Aalten		
+Q22967698	cast	Q86547	Jenny Jugo		
+Q22967698	cast	Q647830	Paul Hörbiger		
+Q22967698	cast	Q75157	Adele Sandrock		
+Q22967698	cast	Q110687	Aribert Wäscher		
+Q22967698	cast	Q1284082	Edgar Pauly		
+Q22967698	cast	Q31152	Hilde Hildebrand		
+Q22967698	cast	Q95356	Georg Alexander		
+Q22967698	cast	Q96186	Ellen Plessow		
+Q3486629	director	Q8704	Walt Disney		
+Q3486629	producer	Q8704	Walt Disney		
+Q7622329	director	Q96039	Conrad Wiene		
+Q7622329	writer	Q76552	Robert Wiene		
+Q7622329	composer	Q102351	Bernard Homola		
+Q7622329	producer	Q99510	Hermann Fellner		
+Q7622329	producer	Q214694	Josef Somlo		
+Q7622329	cinematographer	Q84650	Franz Planer		
+Q7622329	cast	Q104815	Hermine Sterler		
+Q7622329	cast	Q91333	Jakob Tiedtke		
+Q7622329	cast	Q87327	Eugen Neufeld		
+Q7622329	cast	Q2653679	Antonie Jaeckel		
+Q7622329	cast	Q214864	John Mylong		
+Q7622329	cast	Q99888	Trude Hesterberg		
+Q7622329	cast	Q647830	Paul Hörbiger		
+Q7622329	cast	Q63781	Alfred Abel		
+Q7622329	cast	Q1252257	Imre Ráday		
+Q7622329	cast	Q4946519	Lilian Ellis		
+Q7622329	cast	Q327593	Ferdinand Bonn		
+Q7775566	director	Q76552	Robert Wiene		
+Q7775566	writer	Q5343396	Edward Hemmerde		
+Q7775566	producer	Q99510	Hermann Fellner		
+Q7775566	producer	Q214694	Josef Somlo		
+Q7775566	cinematographer	Q86660	Otto Kanturek		
+Q7775566	cinematographer	Q112013	Bruno Timm		
+Q7775566	cast	Q267934	Helene von Bolvary		
+Q7775566	cast	Q2708193	Lili Damita		
+Q7775566	cast	Q1725993	Vivian Gibson		
+Q7775566	cast	Q2545386	Vladimir Gajdarov		
+Q7775566	cast	Q4800038	Arthur Pusey		
+Q7775566	cast	Q107579	Ferdinand von Alten		
+Q7775566	cast	Q108153	Johannes Riemann		
+Q7775566	cast	Q115028	Leopold Kramer		
+Q3143330	director	Q8704	Walt Disney		
+Q3143330	writer	Q8704	Walt Disney		
+Q3143330	producer	Q952640	Charles Mintz		
+Q4880811	director	Q727791	Irving Cummings		
+Q4880811	writer	Q983421	Earl Derr Biggers		
+Q4880811	producer	Q134382	William Fox		
+Q4880811	cinematographer	Q5162627	Conrad Wells		
+Q4880811	cast	Q312073	Warner Baxter		
+Q12124728	director	Q3372211	Paul Sloane		
+Q12124728	cast	Q2975569	Clarence Muse		
+Q12124728	cast	Q3059562	Eugene Jackson		
+Q12124728	cast	Q1265202	Stepin Fetchit		
+Q3221822	director	Q51114	John Ford		
+Q3221822	writer	Q3161203	James Kevin McGuinness		
+Q3221822	cast	Q329577	Victor McLaglen		
+Q3221822	cast	Q4984938	Buddy Roosevelt		
+Q3221822	cast	Q3018900	David Torrence		
+Q3221822	cast	Q2980420	Clyde Cook		
+Q3221822	cast	Q445333	Leatrice Joy		
+Q3221822	cast	Q3734506	Eulalie Jensen		
+Q3221822	cast	Q3530929	Tom Wilson		
+Q3221822	cast	Q3038280	J. Farrell MacDonald		
+Q3221822	cast	Q2294197	Slim Summerville		
+Q3221822	cast	Q1677155	Jack Pennick		
+Q7726562	director	Q72756	Raoul Walsh		
+Q7726562	writer	Q432919	Maxwell Anderson		
+Q7726562	producer	Q134382	William Fox		
+Q7726562	cinematographer	Q209084	Arthur Edeson		
+Q7726562	cast	Q944719	Stuart Erwin		
+Q7726562	cast	Q710260	Willie Keeler		
+Q7726562	cast	Q952690	Edmund Lowe		
+Q7726562	cast	Q329577	Victor McLaglen		
+Q7726562	cast	Q2708193	Lili Damita		
+Q7726562	cast	Q5350839	El Brendel		
+Q7726562	cast	Q28065172	Soledad Jiménez		
+Q7726562	cast	Q2907600	Bob Burns		
+Q24041260	director	Q96039	Conrad Wiene		
+Q24041260	cast	Q76646	Ossi Oswalda		
+Q3012092	director	Q3161448	James Tinling		
+Q3012092	composer	Q443047	Con Conrad		
+Q3012092	cinematographer	Q1064479	Charles G. Clarke		
+Q3012092	cinematographer	Q5083108	Charles Van Enger		
+Q3012092	costume_designer	Q3491060	Sophie Wachner		
+Q3012092	cast	Q439601	Elizabeth Patterson		
+Q3012092	cast	Q3836483	Lois Moran		
+Q3012092	cast	Q3082484	Frank Albertson		
+Q3012092	cast	Q170574	Helen Hunt		
+Q3012092	cast	Q1280760	Ward Bond		
+Q3012092	cast	Q40531	John Wayne		
+Q3012092	cast	Q8016366	William Orlamond		
+Q3012092	cast	Q450076	Helen Twelvetrees		
+Q3050275	director	Q8704	Walt Disney		
+Q3050275	writer	Q8704	Walt Disney		
+Q3050275	composer	Q598185	Carl W. Stalling		
+Q3050275	producer	Q8704	Walt Disney		
+Q3521221	director	Q8704	Walt Disney		
+Q3521221	composer	Q598185	Carl W. Stalling		
+Q3521221	producer	Q8704	Walt Disney		
+Q3521221	subject		haunted house		
+Q3521221	subject		living skeleton in a work of fiction		
+Q3567703	director	Q8704	Walt Disney		
+Q3567703	composer	Q598185	Carl W. Stalling		
+Q3567703	producer	Q8704	Walt Disney		
+Q3567703	follows	Q1137749	ミッキーのオペラ見学		
+Q3567703	followed_by	Q2948566	裏庭の闘い		
+Q2275783	director	Q8704	Walt Disney		
+Q2275783	composer	Q598185	Carl W. Stalling		
+Q2275783	producer	Q8704	Walt Disney		
+Q2275783	follows	Q1753096	プレーン・クレイジー		
+Q2275783	followed_by	Q1137749	ミッキーのオペラ見学		
+Q1137749	director	Q8704	Walt Disney		
+Q1137749	writer	Q8704	Walt Disney		
+Q1137749	composer	Q598185	Carl W. Stalling		
+Q1137749	producer	Q8704	Walt Disney		
+Q1137749	follows	Q2275783	バーン・ダンス		
+Q1137749	followed_by	Q3567703	ネコの居ぬ間のタップダンス		
+Q3231606	director	Q336424	Ub Iwerks		
+Q3231606	composer	Q598185	Carl W. Stalling		
+Q3231606	producer	Q8704	Walt Disney		
+Q920733	director	Q336424	Ub Iwerks		
+Q920733	writer	Q8704	Walt Disney		
+Q920733	composer	Q598185	Carl W. Stalling		
+Q920733	producer	Q8704	Walt Disney		
+Q920733	executive_producer	Q8704	Walt Disney		
+Q3521841	director	Q8704	Walt Disney		
+Q3521841	composer	Q598185	Carl W. Stalling		
+Q3521841	producer	Q8704	Walt Disney		
+Q2531855	director	Q8704	Walt Disney		
+Q2531855	writer	Q8704	Walt Disney		
+Q2531855	composer	Q598185	Carl W. Stalling		
+Q2531855	producer	Q8704	Walt Disney		

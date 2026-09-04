@@ -1,0 +1,114 @@
+qid	role	personQid	name	character	ordinal
+Q140089198	composer	Q6125691	Sergio de la Puente		
+Q140089198	cinematographer	Q85430556	Néstor Calvo Pichardo		
+Q140089198	cast	Q1248916	Maxi Iglesias		
+Q140089198	cast	Q102279832	Margarida Corceiro		
+Q131109039	director	Q34955099	Marina Seresesky		
+Q131109039	composer	Q17651425	Zacarías M. de la Riva		
+Q131109039	cast	Q3621855	Paco León		
+Q109860581	director	Q17190262	Adil El Arbi		
+Q109860581	director	Q19587511	Bilall Fallah		
+Q109860581	writer	Q21066761	Christina Hodson		
+Q109860581	composer	Q20054060	Natalie Holt		
+Q109860581	producer	Q85255683	Kristin Burr		
+Q109860581	cinematographer	Q957926	John Mathieson		
+Q109860581	cast	Q138005	Michael Keaton	Batman	
+Q109860581	cast	Q5973792	Leslie Grace	Barbara Gordon	
+Q109860581	cast	Q150482	J. K. Simmons	Jim Gordon	
+Q109860581	cast	Q193555	Brendan Fraser	Firefly	
+Q109860581	cast	Q42297059	Ivory Aquino	Alysia Yeoh	
+Q109860581	cast	Q18922733	Jacob Scipio		
+Q124034378	director	Q561387	Francis Lawrence		
+Q124034378	cast	Q295148	Peter Stormare	Lucifer	
+Q124034378	cast	Q43416	Keanu Reeves	John Constantine	
+Q124034378	follows	Q219150	Constantine		
+Q110877338	director	Q75079	Chris Columbus		
+Q110877338	cast	Q39476	エマ・ワトソン		
+Q110877338	cast	Q38119	ダニエル・ラドクリフ		
+Q110877338	cast	Q19190	Rupert Grint		
+Q135898677	director	Q270097	Michael Mann		
+Q135898677	writer	Q270097	Michael Mann		
+Q135898677	cast	Q38111	レオナルド・ディカプリオ		
+Q135898677	cast	Q45772	Christian Bale		
+Q51756409	cast	Q2094258	William Harrison Hays		
+Q20814596	director	Q446960	George Miller		
+Q20814596	producer	Q808917	Barrie M. Osborne		
+Q122059239	director	Q114899972	Jeff Wamester		
+Q122059239	follows	Q116919674	Legion of Super-Heroes		
+Q122059239	followed_by	Q123268896	Justice League: Crisis on Infinite Earths		
+Q110483910	director	Q42229	Mel Gibson		
+Q110483910	cast	Q42229	Mel Gibson		
+Q110483910	cast	Q192165	Danny Glover		
+Q110483910	follows	Q429397	Lethal Weapon 4		
+Q140851126	director	Q127869045	Mary Bronstein		
+Q108040972	director	Q4909271	Bill Haller		
+Q108040972	director	Q28942632	Michael Kurinsky		
+Q108040972	writer	Q636303	Paul Dini		
+Q108040972	writer	Q13600413	Tony Cervone		
+Q108040972	composer	Q35488070	Dara Taylor		
+Q108040972	producer	Q13600413	Tony Cervone		
+Q137423795	director	Q287607	Rob Reiner		
+Q137423795	cast	Q336074	Christopher Guest	Nigel Tufnel	
+Q137423795	cast	Q1384181	Michael McKean	David St. Hubbins	
+Q137423795	cast	Q345325	Harry Shearer	Derek Smalls	
+Q137423795	cast	Q131433	Shania Twain	self	
+Q137423795	cast	Q48187	Eric Clapton	self	
+Q137423795	cast	Q218083	Josh Groban	self	
+Q137423795	cast	Q136261919	Valerie Franco	Didi Crockett	
+Q137423795	follows	Q121088318	Spinal Tap II: The End Continues		
+Q2158362	director	Q262130	Richard Donner		
+Q116974275	producer	Q717015	James Gunn		
+Q116974275	producer	Q7176746	Peter Safran		
+Q116974275	follows	Q116921951	Supergirl		
+Q86733550	writer	Q774860	Sara Shepard		
+Q86733550	writer	Q6282683	Joseph Dougherty		
+Q86733550	writer	Q16730869	I. Marlene King		
+Q86733550	composer	Q193534	Sertab Erener		
+Q86733550	composer	Q3856276	Michael Suby		
+Q116910059	director	Q6385039	Andy Muschietti		
+Q116910059	producer	Q717015	James Gunn		
+Q116910059	producer	Q7176746	Peter Safran		
+Q114398289	writer	Q30944662	Kaz Firpo		
+Q114398289	writer	Q98593860	Ryan Firpo		
+Q114398289	producer	Q7176746	Peter Safran		
+Q114398289	cast	Q315271	Jason Momoa		
+Q7734121	director	Q1442364	Jules Bass		
+Q7734121	cast	Q218122	Robert Morse		
+Q133172622	director	Q457864	Friz Freleng		
+Q133172622	composer	Q27925021	Norman Spencer		
+Q136466276	director	Q109016439	Santiago Menghini		
+Q136466276	producer	Q23877023	Gary Dauberman		
+Q136466276	producer	Q108047434	James Wan		
+Q136466276	cast	Q271772	Monica Raymund		
+Q136466276	cast	Q533655	Jay Hernandez		
+Q136466276	cast	Q1364886	Raymond Cruz		
+Q136466276	cast	Q13560453	Edy Ganem		
+Q2657071	director	Q1999598	Richard Williams		
+Q2657071	writer	Q1999598	Richard Williams		
+Q2657071	writer	Q113513229	Margaret French		
+Q2657071	composer	Q96192321	David Burman		
+Q2657071	composer	Q96192366	David Cullen		
+Q2657071	composer	Q96192403	Peter Shade		
+Q2657071	producer	Q1999598	Richard Williams		
+Q2657071	narrator	Q1403322	Felix Aylmer		
+Q140706015	director	Q108422315	Mar Olid		
+Q140706015	editor	Q108851508	Vanessa Marimbert		
+Q140706015	cast	Q2699605	Kira Miró		
+Q140706015	cast	Q20021106	Salva Reina		
+Q140706015	cast	Q105554583	Luna Fulgencio		
+Q111918005	director	Q4717890	Alex Timbers		
+Q111918005	writer	Q543697	John August		
+Q111918005	producer	Q54935516	Derek Frey		
+Q116058594	director	Q205707	Bradley Cooper		
+Q116058594	cast	Q1924847	Margot Robbie		
+Q116058594	cast	Q205707	Bradley Cooper		
+Q117280283	director	Q2067792	Kari Skogland		
+Q117280283	cast	Q26923578	Martin Sensmeier		
+Q117280283	cast	Q553873	Gil Birmingham		
+Q117280283	cast	Q402764	Jason Clarke		
+Q117280283	cast	Q1320494	Scott Eastwood		
+Q117280283	cast	Q553099	Chaske Spencer		
+Q117280283	cast	Q498263	Alan Ruck		
+Q117280283	cast	Q21197590	Kali Reis		
+Q117280283	cast	Q16940304	Tatanka Means		
+Q117280283	follows	Q25339940	Wind River		

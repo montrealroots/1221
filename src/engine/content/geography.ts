@@ -538,3 +538,14 @@ export function nearestAirport(cityId: string): string | undefined {
   }
   return best?.id;
 }
+
+/** The first language a country lists, as an ISO 639-1 code; English when SLATE has nothing. */
+export function primaryLanguageOf(countryId: string | undefined): string {
+  const code = COUNTRIES.get(countryId ?? '')?.languages.split(',')[0]?.trim().split('-')[0]?.toLowerCase();
+  return code || 'en';
+}
+
+/** The country a city is in, or undefined. */
+export function countryOfCity(cityId: string | undefined): string | undefined {
+  return CITIES.get(cityId ?? '')?.countryId;
+}
