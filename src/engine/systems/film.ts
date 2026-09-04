@@ -20,8 +20,9 @@ import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/
 import { buildFactors } from '../core/audit';
 import { BUYERS, GENRE_APPETITE, GENRE_BUDGET_INDEX, type Buyer } from '../content/industry';
 import { generateTitle } from '../content/titles';
+import { breakDownScript, pagesFor, scoreCraft } from '../content/screenplay';
 import { normaliseTitle, titleTaken } from '../content/filmography';
-import { canonicalGenre, genre, runtimeBandOf } from '../content/genres';
+import { CRAFT_DIMENSIONS, CRAFT_LABEL, canonicalGenre, craftWeights, genre, genreName, runtimeBandOf, type CraftDimension } from '../content/genres';
 import { rating } from '../content/ratings';
 import { filmIncentive } from '../content/tax';
 import { systemModifier } from '../domain/attributes';
@@ -342,20 +343,19 @@ export function registerFilm(sim: Simulation): void {
       const rng = s.rng('draft', project.id, version);
       const skillOf = (key: string) => writers.reduce((sum, w) => sum + (w!.skills[key] ?? 0), 0) / writers.length;
 
-      const structure = clamp(skillOf('story_structure') * remap(days, 5, 90, 0.7, 1.15) + rng.normal(0, 7), 0, 100);
-      const dialogue = clamp(skillOf('dialogue') * remap(days, 5, 90, 0.75, 1.12) + rng.normal(0, 8), 0, 100);
-      const characters = clamp(skillOf('character_writing') * remap(days, 5, 90, 0.75, 1.12) + rng.normal(0, 8), 0, 100);
+      // Fourteen dimensions of craft, weighed by what this genre asks for. A
+      // rewrite improves on the previous draft rather than starting over.
+      const scored = scoreCraft(rng, {
+        genres: project.genres, skillOf, days,
+        previous: previous?.craft, rewriteSkill: skillOf('rewriting'),
+      });
 
-      // A rewrite improves on the previous draft rather than starting over.
-      const rewriteSkill = skillOf('rewriting');
-      const base = (structure * 0.36 + dialogue * 0.30 + characters * 0.34);
-      const quality = previous
-        ? clamp(previous.quality + (base - previous.quality) * clamp(0.25 + rewriteSkill / 220, 0.15, 0.7) + rng.normal(1.5, 3), 0, 100)
-        : clamp(base, 0, 100);
-
-      const pages = project.format === 'feature' ? Math.round(rng.int(96, 124))
-        : project.format === 'short' ? rng.int(8, 28)
-          : rng.int(48, 62);
+      // A rewrite keeps the page count and the people in it; the scenes are
+      // re-broken so a longer or shorter draft is a different document.
+      const pages = previous ? clamp(previous.pages + rng.int(-6, 4), 4, 200) : pagesFor(project.format, rng);
+      const breakdown = breakDownScript(s.rng('breakdown', project.id, version), {
+        genres: project.genres, format: project.format, pages,
+      });
 
       const draft: ScriptDraft = {
         id: s.nextId('draft'),
@@ -365,10 +365,13 @@ export function registerFilm(sim: Simulation): void {
         label: p.label ?? (version === 1 ? 'First draft' : `Draft ${version}`),
         writerIds,
         pages,
-        quality: Math.round(quality),
-        structure: Math.round(structure),
-        dialogue: Math.round(dialogue),
-        characters: Math.round(characters),
+        quality: scored.quality,
+        structure: scored.craft.structure,
+        dialogue: scored.craft.dialogue,
+        characters: scored.craft.character,
+        craft: scored.craft,
+        scenes: breakdown.scenes,
+        scriptCharacters: breakdown.characters,
         writtenAt: s.now,
         notes: previous ? previous.notes.map((n) => ({ ...n, addressed: true })) : [],
         isCurrent: true,
@@ -923,18 +926,25 @@ function deliverCoverage(sim: Simulation, draftId: Id): void {
   const perceived = clamp(draft.quality + rng.normal(0, 9), 0, 100);
   const verdict: 'pass' | 'consider' | 'recommend' = perceived > 78 ? 'recommend' : perceived > 58 ? 'consider' : 'pass';
 
-  const weakest = ([['structure', draft.structure], ['dialogue', draft.dialogue], ['characters', draft.characters]] as [string, number][])
-    .sort((a, b) => a[1] - b[1])[0];
+  // A reader judges the draft on what this genre needs from it, not on an
+  // average: a thriller with flat dialogue and real tension is a thriller that
+  // works, and coverage says so.
+  const weights = craftWeights(project.genres);
+  const important = [...CRAFT_DIMENSIONS].sort((a, b) => weights[b] - weights[a]).slice(0, 5);
+  const ranked = [...important].sort((a, b) => (draft.craft[b] ?? 0) - (draft.craft[a] ?? 0));
+  const strongest = ranked[0] ?? 'structure';
+  const weakest = ranked[ranked.length - 1] ?? 'structure';
+  const name = (d: string) => CRAFT_LABEL[d as CraftDimension].toLowerCase();
 
   draft.coverage = {
     at: sim.now,
     readerName: 'Story department',
     verdict,
     comments: verdict === 'recommend'
-      ? `Strong on every axis. The ${draft.structure > draft.dialogue ? 'structure' : 'dialogue'} is the standout.`
+      ? `Strong where it counts for ${project.genres.map(genreName).join(' and ').toLowerCase()}. The ${name(strongest)} is the standout; the ${name(weakest)} is the only place a note would go.`
       : verdict === 'consider'
-        ? `There is something here. The ${weakest?.[0]} is the weak link and it is fixable.`
-        : `Not ready. The ${weakest?.[0]} needs fundamental work before this goes out.`,
+        ? `There is something here. The ${name(strongest)} works; the ${name(weakest)} is the weak link and it is fixable in a draft.`
+        : `Not ready. For a ${project.genres.map(genreName).join(' ').toLowerCase()} the ${name(weakest)} needs fundamental work before this goes out, and the ${name(ranked[ranked.length - 2] ?? weakest)} is not far behind.`,
   };
 
   draft.notes.push({

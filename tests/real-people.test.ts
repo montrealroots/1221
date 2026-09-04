@@ -294,26 +294,39 @@ describe('offering a part to somebody real', () => {
   it('will not take the same money twice, and gives up after three asks', () => {
     // Somebody who will almost certainly pass on a nothing picture, so the
     // test exercises the refusal path rather than the booking path.
+    // Even a big name can say yes to a nothing picture on a good day, so the
+    // test works down the top of the roster until somebody passes the first
+    // lowball; that is the path it is here to exercise.
     const picture = aPicture('offer-nag');
-    const qid = aBigActor();
-    const roleId = aPartFor(picture, qid);
-    const record = allPeople().find((p) => p.qid === qid)!;
-
-    let amount = Math.round(quoteFor(record, 'actor') * 0.15);
+    const ranked = peopleInRole('actor').sort((a, b) => overallFor(b, 'actor') - overallFor(a, 'actor')).slice(0, 8);
+    let qid = ranked[0]!.qid;
+    let roleId = aPartFor(picture, qid);
+    let record = ranked[0]!;
+    let amount = 0;
     let asks = 0;
     let refusedForNagging = false;
-    for (let i = 0; i < 6; i++) {
-      const result = picture.try<{ accepted: boolean }>('cast.offer_real', { roleId, qid, amount });
-      if (result.ok && result.value?.accepted) break;
-      if (!result.ok && /nuisance/i.test(result.error ?? '')) { refusedForNagging = true; break; }
-      if (!result.ok) {
-        // A repeat at the same money is refused before anything is recorded.
-        expect(result.error).toMatch(/at least/i);
+    for (const candidate of ranked) {
+      qid = candidate.qid;
+      record = candidate;
+      roleId = aPartFor(picture, qid);
+      amount = Math.round(quoteFor(record, 'actor') * 0.15);
+      asks = 0;
+      refusedForNagging = false;
+      let saidYesAtOnce = false;
+      for (let i = 0; i < 6; i++) {
+        const result = picture.try<{ accepted: boolean }>('cast.offer_real', { roleId, qid, amount });
+        if (result.ok && result.value?.accepted) { saidYesAtOnce = i === 0; break; }
+        if (!result.ok && /nuisance/i.test(result.error ?? '')) { refusedForNagging = true; break; }
+        if (!result.ok) {
+          // A repeat at the same money is refused before anything is recorded.
+          expect(result.error).toMatch(/at least/i);
+          amount = Math.round(amount * 1.2);
+          continue;
+        }
+        asks++;
         amount = Math.round(amount * 1.2);
-        continue;
       }
-      asks++;
-      amount = Math.round(amount * 1.2);
+      if (!saidYesAtOnce) break;
     }
     const role = picture.sim.universe.roles[roleId] as Role;
     expect(role.offers?.length ?? 0).toBeLessThanOrEqual(3);

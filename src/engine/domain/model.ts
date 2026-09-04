@@ -1306,6 +1306,56 @@ export interface Rights {
   franchiseName?: string;
 }
 
+/** What a scene is doing, as a breakdown would tag it. */
+export type SceneKind =
+  | 'dialogue' | 'action' | 'set_piece' | 'montage' | 'intimate' | 'crowd' | 'reveal' | 'transition';
+
+/** Anything on the page that costs a department something on the day. */
+export type SceneNeed =
+  | 'stunts' | 'vfx' | 'animals' | 'vehicles' | 'crowd' | 'water' | 'children'
+  | 'weapons' | 'practical_effects' | 'intimacy' | 'night_exterior' | 'period_dress' | 'creature';
+
+/**
+ * One scene of a script, as a breakdown reads it.
+ *
+ * This is what a schedule is built from, what a call sheet lists, and what a
+ * day's work is measured against. A scene is the unit the whole production
+ * process runs on, which is why a script that has no scenes has no
+ * production process to run.
+ */
+export interface Scene {
+  /** '1', '2', '2A' — the number on the slugline. */
+  number: string;
+  interior: boolean;
+  timeOfDay: 'day' | 'night' | 'dawn' | 'dusk';
+  /** The place on the slugline: 'KITCHEN', 'DOCKSIDE WAREHOUSE'. */
+  setting: string;
+  pages: number;
+  kind: SceneKind;
+  /** Character names in it, from the script's own list. */
+  characters: string[];
+  needs: SceneNeed[];
+  /** What the scene is for, in one line. */
+  purpose: string;
+  /** How hard it is to shoot, 1 to 5. Sets setups, and so the hours. */
+  complexity: number;
+}
+
+export type CharacterArchetype =
+  | 'protagonist' | 'deuteragonist' | 'antagonist' | 'love_interest' | 'mentor'
+  | 'foil' | 'confidant' | 'comic_relief' | 'ensemble' | 'day_player';
+
+/** A part as the script writes it, before anybody is cast in it. */
+export interface ScriptCharacter {
+  name: string;
+  archetype: CharacterArchetype;
+  description: string;
+  ageRange: [number, number];
+  sceneCount: number;
+  /** Share of the dialogue, 0 to 100. */
+  lineShare: number;
+}
+
 export interface ScriptDraft {
   id: Id;
   saveId: Id;
@@ -1314,11 +1364,22 @@ export interface ScriptDraft {
   label: string;
   writerIds: Id[];
   pages: number;
-  /** 0-100. */
+  /** 0-100. The craft dimensions weighted by what the genre asks for. */
   quality: number;
   structure: number;
   dialogue: number;
   characters: number;
+  /**
+   * The fourteen craft dimensions, 0-100 each. This is what a draft actually
+   * is: a comedy with a weak humour score is a bad comedy however tight its
+   * structure, and the genre's own weighting is what turns these into the one
+   * number above.
+   */
+  craft: Record<string, number>;
+  /** The script as a breakdown reads it. Empty on a draft written before scenes existed. */
+  scenes: Scene[];
+  /** Every part in it. */
+  scriptCharacters: ScriptCharacter[];
   writtenAt: Instant;
   notes: { at: Instant; fromId: Id; note: string; addressed: boolean }[];
   coverage?: { at: Instant; readerName: string; verdict: 'pass' | 'consider' | 'recommend'; comments: string };
@@ -1375,6 +1436,10 @@ export interface Role {
   characterName: string;
   billing: 'lead' | 'supporting' | 'featured' | 'day_player' | 'voice' | 'cameo';
   description: string;
+  /** What the part is in the story, when it came from a script breakdown. */
+  archetype?: CharacterArchetype;
+  /** The scenes the part is in, by number, when it came from a breakdown. */
+  sceneNumbers?: string[];
   /** Requirements the casting model scores against. */
   requirements: { attributeId: string; weight: number }[];
   ageRange: [number, number];
@@ -1397,6 +1462,8 @@ export interface Role {
   auditionIds: Id[];
   /** Every offer put to somebody by name on this part, and what they said. */
   offers?: RoleOffer[];
+  /** When the callbacks were held, on a part the world is casting. Absent until they are. */
+  callbacksAt?: Instant;
 }
 
 export type AuditionStage = 'submitted' | 'self_tape' | 'first_read' | 'callback' | 'chemistry_read' | 'screen_test' | 'offer' | 'passed' | 'booked';
@@ -1423,6 +1490,12 @@ export interface Audition {
   feedback?: string;
   scheduledItemId?: Id;
   isPlayer: boolean;
+  /**
+   * Every room this candidate has been in for the part, in order. A casting
+   * decision is made on all of them, not on the first read alone, and the
+   * player can see each one when it is their picture.
+   */
+  rounds?: { stage: AuditionStage; at: Instant; score: number; note: string }[];
 }
 
 export type ContractKind = 'acting' | 'writing' | 'directing' | 'producing' | 'crew' | 'vendor' | 'distribution' | 'license' | 'option' | 'employment';
@@ -1457,6 +1530,38 @@ export interface Contract {
   negotiationHistory: { at: Instant; byId: Id; note: string; offer?: Money }[];
 }
 
+/** What happened in one hour of a shooting day. */
+export type HourKind =
+  | 'call' | 'blocking' | 'lighting' | 'rehearsal' | 'shooting' | 'lunch' | 'company_move'
+  | 'weather_hold' | 'turnaround' | 'wrap' | 'overtime' | 'idle';
+
+export interface HourEntry {
+  at: Instant;
+  kind: HourKind;
+  sceneNumber?: string;
+  /** Setups completed this hour. */
+  setups: number;
+  /** Takes rolled this hour. */
+  takes: number;
+  note: string;
+}
+
+/** The call sheet: what everybody is told the night before. */
+export interface CallSheet {
+  crewCall: Instant;
+  firstShot: Instant;
+  lunch: Instant;
+  wrapTarget: Instant;
+  sunrise?: Instant;
+  sunset?: Instant;
+  daylightMinutes: number;
+  forecast: string;
+  castCalls: { personId: Id; name: string; at: Instant; scenes: string[] }[];
+  /** How the director wants the day shot. */
+  coverage: 'lean' | 'standard' | 'thorough';
+  notes: string[];
+}
+
 export interface ShootDay {
   id: Id;
   saveId: Id;
@@ -1469,7 +1574,22 @@ export interface ShootDay {
   locationId: string;
   locationName: string;
   isStage: boolean;
-  scenes: { sceneNumber: string; pages: number; description: string; castIds: Id[]; shot: boolean }[];
+  /** The lot the stage is on, when it is a stage. */
+  lotId?: string;
+  scenes: {
+    sceneNumber: string; pages: number; description: string; castIds: Id[]; shot: boolean;
+    /** From the script's breakdown, when the day was boarded from one. */
+    setups?: number; setupsDone?: number; takes?: number; complexity?: number;
+    interior?: boolean; timeOfDay?: string; setting?: string; needs?: string[];
+    /** 0-100 for this scene alone. */
+    quality?: number;
+  }[];
+  /** The night before. Absent on a day boarded before call sheets existed. */
+  callSheet?: CallSheet;
+  /** The day, hour by hour. Absent until it has been shot. */
+  hours?: HourEntry[];
+  /** How the director wants it run. Set by prod.direct_day; the first AD's defaults otherwise. */
+  plan?: { coverage: 'lean' | 'standard' | 'thorough'; pushPastTwelve: boolean; dropScenes: string[] };
   plannedPages: number;
   completedPages: number;
   requiredCastIds: Id[];
@@ -2218,7 +2338,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 20;
+export const SAVE_SCHEMA_VERSION = 21;
 
 export interface SaveMeta {
   id: Id;

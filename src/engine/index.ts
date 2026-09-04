@@ -42,6 +42,7 @@ import { registerZeitgeist, ensureZeitgeist, commissionProject } from './systems
 import { registerProfessions } from './systems/professions';
 import { registerRealPeople } from './systems/real-people';
 import { registerPress } from './systems/press';
+import { craftFromLegacy } from './content/screenplay';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -791,6 +792,24 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // nothing already attached comes off.
     for (const project of Object.values(universe.projects)) project.approaches ??= [];
     steps.push('The trades cover your industry now. Variety, Deadline, The Hollywood Reporter and the rest each write in their own register, and everything they publish is kept.');
+  }
+
+  if (from < 21) {
+    // A draft is a document now: fourteen craft dimensions, a scene list and a
+    // cast of characters. Every draft already in the save keeps its numbers —
+    // the three it had become three of the fourteen and the rest are filled
+    // from its quality — and its scenes are broken down the first time
+    // anything needs them, rather than being invented here and now.
+    let carried = 0;
+    for (const draft of Object.values(universe.scriptDrafts)) {
+      draft.craft ??= craftFromLegacy(draft.structure, draft.dialogue, draft.characters, draft.quality);
+      draft.scenes ??= [];
+      draft.scriptCharacters ??= [];
+      carried++;
+    }
+    steps.push(carried > 0
+      ? `A script is a document now: fourteen craft dimensions, a scene list and a cast of characters. ${carried} draft${carried === 1 ? '' : 's'} already in the save kept every number ${carried === 1 ? 'it' : 'they'} had.`
+      : 'A script is a document now: fourteen craft dimensions, a scene list and a cast of characters.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

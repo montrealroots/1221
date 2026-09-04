@@ -484,7 +484,7 @@ function offersTo(role: Role, personId: Id): RoleOffer[] {
 }
 
 /** Whether the player is the one making this picture. */
-function playerControls(sim: Simulation, project: Project): boolean {
+export function playerControls(sim: Simulation, project: Project): boolean {
   if (project.createdById === sim.universe.playerId) return true;
   if (!project.ownerCompanyId) return false;
   return playerCompanies(sim).some((company) => company.id === project.ownerCompanyId);

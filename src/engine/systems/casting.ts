@@ -9,7 +9,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Audition, AuditionStage, Id, Person, Project, Role } from '../domain/model';
+import type { Audition, AuditionStage, CharacterArchetype, Id, Person, Project, Role } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, ageOn, formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, formatMoneyCompact, type Money } from '../core/money';
@@ -23,10 +23,12 @@ import { NETWORKS, type Network } from '../content/networks';
 import { quickReception } from './critics';
 import { generateCharacterName, generatePersonName } from '../content/names';
 import { CITIES } from '../content/geography';
+import { costOfLiving } from '../content/tax';
 import { recordCredit } from './film';
 import { titleCaseLabel } from '../core/text';
 import { ageOf, isPeopleLoaded, peopleInRole } from '../content/people';
-import { countryIdForRecord, ensureRealPerson, personForRecord } from './real-people';
+import { countryIdForRecord, ensureRealPerson, personForRecord, playerControls } from './real-people';
+import { archetypeLabel, breakDownScript } from '../content/screenplay';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
@@ -167,6 +169,19 @@ export function registerCasting(sim: Simulation): void {
         player.attributes['preparation'] = clamp((player.attributes['preparation'] ?? 30) + gain * 0.2, 0, 100);
       }
 
+      // A callback is a different room from a first read, and is scored as one:
+      // whether the note landed, not whether the technique held.
+      if (audition.stage === 'callback' && !(audition.rounds ?? []).some((r) => r.stage === 'callback')) {
+        const role = s.universe.roles[audition.roleId];
+        const project = s.universe.projects[audition.projectId];
+        if (!role || !project) throw new CommandError('That part is gone.');
+        const round = holdRound(s, audition, role, project, 'callback');
+        player.attributes['direction_absorption'] = clamp((player.attributes['direction_absorption'] ?? 20) + 0.5, 0, 100);
+        player.wellbeing.stress = clamp(player.wellbeing.stress + 5, 0, 100);
+        s.emit('cast.audition_performed', { auditionId: audition.id, roleId: audition.roleId, score: round.score });
+        return { performanceScore: Math.round(round.score), advanced: true, feedback: round.note };
+      }
+
       const result = scoreAudition(s, audition, prep);
       audition.performanceScore = result.performance;
       audition.fitScore = result.fit;
@@ -271,6 +286,194 @@ export function registerCasting(sim: Simulation): void {
     },
   );
 
+  // --- The breakdown: the script's people become parts --------------------
+
+  sim.onCommand<{ projectId: Id; includeDayPlayers?: boolean }, { created: Id[]; skipped: string[] }>(
+    'cast.break_down_script',
+    (p, { sim: s }) => {
+      const project = s.universe.projects[p.projectId];
+      if (!project) throw new CommandError('No such project.');
+      if (!playerControls(s, project)) throw new CommandError('That is not your picture to break down.');
+      const draft = project.currentDraftId ? s.universe.scriptDrafts[project.currentDraftId] : undefined;
+      if (!draft) throw new CommandError('There is no draft to break down. Write one first.');
+
+      // A draft written before scripts had scenes gets them now, from its own
+      // seeded stream, so an old save is broken down the same way a new one is.
+      if (draft.scriptCharacters.length === 0 || draft.scenes.length === 0) {
+        const made = breakDownScript(s.rng('breakdown', project.id, draft.version), {
+          genres: project.genres, format: project.format, pages: draft.pages,
+        });
+        draft.scenes = made.scenes;
+        draft.scriptCharacters = made.characters;
+      }
+
+      const existing = new Set(
+        Object.values(s.universe.roles).filter((r) => r.projectId === project.id).map((r) => r.characterName),
+      );
+      const created: Id[] = [];
+      const skipped: string[] = [];
+      const sceneCount = Math.max(1, draft.scenes.length);
+
+      for (const character of draft.scriptCharacters) {
+        if (character.archetype === 'day_player' && !p.includeDayPlayers) { skipped.push(character.name); continue; }
+        if (existing.has(character.name)) { skipped.push(character.name); continue; }
+
+        const billing: Role['billing'] = character.archetype === 'protagonist' || character.archetype === 'deuteragonist' ? 'lead'
+          : character.archetype === 'antagonist' || character.archetype === 'love_interest' || character.archetype === 'mentor' || character.archetype === 'foil' ? 'supporting'
+          : character.archetype === 'day_player' ? 'day_player'
+          : 'featured';
+        const sceneNumbers = draft.scenes.filter((scene) => scene.characters.includes(character.name)).map((scene) => scene.number);
+        // A part is on set for the days its scenes fall on. Before a schedule
+        // exists that is roughly a day for every two scenes, and a lead who is
+        // in most of it is there for most of the shoot.
+        const shootDays = Math.max(1, Math.ceil(sceneNumbers.length * 0.55));
+        const made = s.execute<{ roleId: Id }>({
+          kind: 'cast.create_role',
+          payload: {
+            projectId: project.id,
+            characterName: character.name,
+            billing,
+            description: `${archetypeLabel(character.archetype)}. ${character.description} In ${sceneNumbers.length} of ${sceneCount} scenes, ${character.lineShare}% of the dialogue.`,
+            requirements: defaultRequirements(project, billing, character.archetype),
+            ageRange: character.ageRange,
+            shootDays,
+          },
+        });
+        if (!made.ok || !made.value) { skipped.push(character.name); continue; }
+        const role = s.universe.roles[made.value.roleId];
+        if (role) {
+          role.archetype = character.archetype;
+          role.sceneNumbers = sceneNumbers;
+        }
+        created.push(made.value.roleId);
+      }
+
+      s.emit('cast.script_broken_down', { projectId: project.id, roles: created.length });
+      return { created, skipped };
+    },
+  );
+
+  // --- The rooms: callbacks, chemistry reads and screen tests -------------
+  //
+  // On the player's own picture, casting is a series of rooms rather than one
+  // score. Each room is scored on what that room actually tests, and the
+  // decision is made on all of them.
+
+  sim.onCommand<{ roleId: Id; personIds: Id[] }, { called: Id[] }>(
+    'cast.callback',
+    (p, { sim: s }) => {
+      const { role, project } = ownRole(s, p.roleId);
+      const called: Id[] = [];
+      for (const personId of p.personIds) {
+        const audition = auditionsFor(s, role).find((a) => a.personId === personId && a.stage !== 'passed');
+        if (!audition) continue;
+        if ((audition.rounds ?? []).some((r) => r.stage === 'callback')) continue;
+        holdRound(s, audition, role, project, 'callback');
+        called.push(personId);
+      }
+      if (called.length === 0) throw new CommandError('Nobody on that list is still in the running for the part.');
+      s.emit('cast.callbacks_held', { roleId: role.id, projectId: project.id, count: called.length });
+      return { called };
+    },
+  );
+
+  sim.onCommand<{ roleId: Id; personId: Id; withPersonId: Id }, { score: number; note: string }>(
+    'cast.chemistry_read',
+    (p, { sim: s }) => {
+      const { role, project } = ownRole(s, p.roleId);
+      const audition = auditionsFor(s, role).find((a) => a.personId === p.personId && a.stage !== 'passed');
+      if (!audition) throw new CommandError('They are not in the running for that part.');
+      const partner = s.universe.people[p.withPersonId];
+      if (!partner) throw new CommandError('No such person to read with.');
+      if (!project.castIds.includes(partner.id)) {
+        throw new CommandError(`${partner.displayName} is not cast in ${project.title}. A chemistry read is with somebody who is already in it.`);
+      }
+      const round = holdRound(s, audition, role, project, 'chemistry_read', partner);
+      s.emit('cast.chemistry_read', { roleId: role.id, projectId: project.id, personId: p.personId, withPersonId: partner.id, score: round.score });
+      return { score: round.score, note: round.note };
+    },
+  );
+
+  sim.onCommand<{ roleId: Id; personIds: Id[] }, { tested: Id[]; cost: Money }>(
+    'cast.screen_test',
+    (p, { sim: s }) => {
+      const { role, project } = ownRole(s, p.roleId);
+      const candidates = p.personIds
+        .map((id) => auditionsFor(s, role).find((a) => a.personId === id && a.stage !== 'passed'))
+        .filter((a): a is Audition => Boolean(a))
+        .filter((a) => !(a.rounds ?? []).some((r) => r.stage === 'screen_test'));
+      if (candidates.length === 0) throw new CommandError('Nobody on that list can be tested: they are out, or they have been tested already.');
+
+      // A screen test is a shooting day in miniature — a stage, a camera, a
+      // crew — and it is paid for out of the picture.
+      const cost = Math.round(28_000_00 * costOfLiving(project.productionLocationIds[0] ?? s.player.currentLocationId) + candidates.length * 6_500_00);
+      const accountId = project.financingIds.find((id) => s.ledger.availableFunds(id) >= cost)
+        ?? (project.ownerCompanyId ? s.universe.companies[project.ownerCompanyId]?.cashAccountId : undefined)
+        ?? s.player.primaryAccountId;
+      if (!accountId || s.ledger.availableFunds(accountId) < cost) {
+        throw new CommandError(`A screen test for ${candidates.length} costs ${formatMoney(cost)}, and there is not that much to hand.`);
+      }
+      s.expense(accountId, cost, `${project.title} — screen tests, ${role.characterName}`, 'production', { refType: 'project', refId: project.id });
+      project.spent += cost;
+
+      for (const audition of candidates) holdRound(s, audition, role, project, 'screen_test');
+      s.emit('cast.screen_tested', { roleId: role.id, projectId: project.id, count: candidates.length, cost });
+      return { tested: candidates.map((a) => a.personId), cost };
+    },
+  );
+
+  sim.onCommand<{ roleId: Id; personId: Id }, { offered: boolean; fee: Money }>(
+    'cast.choose',
+    (p, { sim: s }) => {
+      const { role, project } = ownRole(s, p.roleId);
+      const audition = auditionsFor(s, role).find((a) => a.personId === p.personId && a.stage !== 'passed');
+      if (!audition) throw new CommandError('They are not in the running for that part.');
+      const person = s.universe.people[p.personId];
+      if (!person) throw new CommandError('No such person.');
+      if (project.castIds.includes(person.id)) throw new CommandError(`${person.displayName} is already in this picture.`);
+
+      // Everybody else is told no, and the one chosen is made the offer.
+      for (const other of auditionsFor(s, role)) {
+        if (other.id === audition.id || other.stage === 'passed') continue;
+        other.stage = 'passed';
+        other.decidedAt = s.now;
+        other.feedback = 'They went another way.';
+      }
+      audition.stage = 'offer';
+      audition.decidedAt = s.now;
+      audition.totalScore = decisionScore(audition);
+      role.status = 'offer_out';
+      role.castPersonId = person.id;
+      role.decidesAt = undefined;
+      s.resolveDecision('role', role.id);
+
+      const fee = negotiatedFee(s, role, person);
+      if (person.isPlayer) {
+        // Casting yourself in your own picture is a decision, not a negotiation.
+        s.execute({ kind: 'cast.accept_offer', payload: { roleId: role.id, personId: person.id, amount: fee, accept: true } });
+        return { offered: true, fee };
+      }
+      const rng = s.rng('npc_offer', role.id, person.id);
+      const wanted = person.quote > 0 ? person.quote : fee;
+      const accepts = fee >= wanted * 0.85 || rng.chance(0.45);
+      if (accepts) {
+        s.execute({ kind: 'cast.accept_offer', payload: { roleId: role.id, personId: person.id, amount: fee, accept: true } });
+      } else {
+        audition.stage = 'passed';
+        audition.feedback = 'Passed on the offer. The money was the problem.';
+        role.status = 'casting';
+        role.castPersonId = undefined;
+        s.notify({
+          category: 'career', title: `${person.displayName} passed on ${role.characterName}`,
+          body: `The offer on ${project.title} was ${formatMoney(fee)}; they wanted nearer ${formatMoney(wanted)}. The part is open again.`,
+          importance: 58, route: '/workspace/projects',
+        });
+      }
+      s.emit('cast.chosen', { roleId: role.id, projectId: project.id, personId: person.id, accepted: accepts });
+      return { offered: accepts, fee };
+    },
+  );
+
   sim.onCommand<{ agencyId: string }, { signed: boolean; reason?: string }>(
     'cast.seek_representation',
     (p, { sim: s }) => {
@@ -340,7 +543,12 @@ export function registerCasting(sim: Simulation): void {
 /** How many unreleased pictures anybody takes at once before they are busy. */
 const ACTOR_AT_ONCE = 3;
 
-function defaultRequirements(project: Project, billing: Role['billing']): { attributeId: string; weight: number }[] {
+/**
+ * What a part asks of an actor: the genre's own attributes, the billing's, and
+ * — when the part came from a breakdown — the archetype's. A mentor needs
+ * gravitas and a comic relief needs timing whatever the genre is.
+ */
+function defaultRequirements(project: Project, billing: Role['billing'], archetype?: CharacterArchetype): { attributeId: string; weight: number }[] {
   const genre = project.genres[0] ?? 'drama';
   const byGenre: Record<string, string[]> = {
     action: ['screen_fighting', 'stunt_aptitude', 'physical_presence', 'stamina'],
@@ -358,8 +566,21 @@ function defaultRequirements(project: Project, billing: Role['billing']): { attr
   const core = billing === 'lead'
     ? ['charisma', 'emotional_truth', 'camera_awareness', 'take_consistency']
     : ['take_consistency', 'ensemble_blending', 'direction_absorption'];
+  const byArchetype: Partial<Record<CharacterArchetype, string[]>> = {
+    protagonist: ['charisma', 'emotional_truth', 'stamina'],
+    deuteragonist: ['chemistry', 'ensemble_blending', 'emotional_truth'],
+    antagonist: ['menace', 'restraint', 'charisma'],
+    love_interest: ['chemistry', 'romance', 'vulnerability'],
+    mentor: ['stillness', 'restraint', 'subtext'],
+    foil: ['comedy_timing', 'subtext', 'ensemble_blending'],
+    confidant: ['ensemble_blending', 'active_listening', 'subtext'],
+    comic_relief: ['comedy_timing', 'improvisation', 'physical_comedy'],
+    ensemble: ['ensemble_blending', 'take_consistency'],
+    day_player: ['cold_reading', 'take_consistency'],
+  };
+  const forPart = archetype ? byArchetype[archetype] ?? [] : [];
 
-  const combined = [...new Set([...(attrs ?? []), ...core])];
+  const combined = [...new Set([...forPart, ...(attrs ?? []), ...core])];
   return combined.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.08).toFixed(2)) }));
 }
 
@@ -597,7 +818,10 @@ function runAudition(sim: Simulation, auditionId: Id): void {
     return;
   }
 
-  if (audition.totalScore === undefined) {
+  if (audition.stage === 'callback' && !(audition.rounds ?? []).some((r) => r.stage === 'callback')) {
+    const project = sim.universe.projects[audition.projectId];
+    if (project) holdRound(sim, audition, role, project, 'callback');
+  } else if (audition.totalScore === undefined) {
     const result = scoreAudition(sim, audition, 0);
     audition.performanceScore = result.performance;
     audition.fitScore = result.fit;
@@ -624,6 +848,11 @@ function decideRole(sim: Simulation, roleId: Id): void {
       audition.totalScore = result.total;
     }
   }
+
+  // Nobody is cast off one read. The first time a decision day comes round,
+  // the top of the list is called back — the player gets a real room on the
+  // calendar for it — and the decision is made ten days later on both.
+  if (!role.callbacksAt && holdWorldCallbacks(sim, role, project, auditions)) return;
 
   // Nobody plays two parts in the same picture, so anyone already in it is
   // out of the running for this one however well they read.
@@ -1254,4 +1483,193 @@ function recordBackgroundPerformance(sim: Simulation, project: Project, rng: Ret
   });
 
   sim.emit('film.released', { projectId: project.id, background: true });
+}
+
+
+// ---------------------------------------------------------------------------
+// The rooms
+// ---------------------------------------------------------------------------
+
+/** A part on a picture the player controls, still open to be cast. */
+function ownRole(sim: Simulation, roleId: Id): { role: Role; project: Project } {
+  const role = sim.universe.roles[roleId];
+  if (!role) throw new CommandError('No such part.');
+  const project = sim.universe.projects[role.projectId];
+  if (!project) throw new CommandError('No such project.');
+  if (!playerControls(sim, project)) throw new CommandError('That is not your picture to cast.');
+  if (role.status !== 'casting') throw new CommandError(`${role.characterName} is not being cast right now.`);
+  return { role, project };
+}
+
+/** How much each room weighs in the decision. The later rooms tell you more. */
+const ROUND_WEIGHT: Partial<Record<AuditionStage, number>> = {
+  submitted: 0.6, self_tape: 0.7, first_read: 1, callback: 1.3, chemistry_read: 1.4, screen_test: 1.8,
+};
+
+/** The score a decision is made on: every room, the later ones counting more. */
+export function decisionScore(audition: Audition): number {
+  const rounds = audition.rounds ?? [];
+  if (rounds.length === 0) return audition.totalScore ?? 0;
+  let total = 0;
+  let weight = 0;
+  for (const round of rounds) {
+    const w = ROUND_WEIGHT[round.stage] ?? 1;
+    total += round.score * w;
+    weight += w;
+  }
+  return weight > 0 ? Number((total / weight).toFixed(1)) : audition.totalScore ?? 0;
+}
+
+/**
+ * One room, scored on what that room tests.
+ *
+ * A first read is technique and fit. A callback is whether the note landed.
+ * A chemistry read is the two of them together. A screen test is whether they
+ * hold up with the camera on and the studio in the room. The first read's
+ * score is kept as the first round, so a decision always has the whole
+ * history under it.
+ */
+function holdRound(sim: Simulation, audition: Audition, _role: Role, project: Project, stage: AuditionStage, partner?: Person): { score: number; note: string } {
+  const person = sim.universe.people[audition.personId];
+  if (!person) throw new CommandError('No such person.');
+  if (audition.totalScore === undefined) {
+    const first = scoreAudition(sim, audition, 0);
+    audition.performanceScore = first.performance;
+    audition.fitScore = first.fit;
+    audition.totalScore = first.total;
+  }
+  audition.rounds ??= [];
+  if (audition.rounds.length === 0) {
+    audition.rounds.push({ stage: audition.stage === 'submitted' ? 'first_read' : audition.stage, at: audition.submittedAt, score: Number((audition.totalScore ?? 0).toFixed(1)), note: 'The first read.' });
+  }
+
+  const sheet = effectiveAttributes(person.attributes, person.traits);
+  const fit = audition.fitScore ?? 50;
+  const rng = sim.rng('round', audition.id, stage);
+  const ready = person.isPlayer ? readiness(person) : 78 + rng.normal(0, 8);
+  const noise = rng.normal(0, 7 * systemModifier(person.traits, 'auditionVariance'));
+
+  let score: number;
+  let note: string;
+  switch (stage) {
+    case 'callback': {
+      const absorption = sheet['direction_absorption'] ?? 30;
+      const preparation = sheet['preparation'] ?? 30;
+      const cold = sheet['cold_reading'] ?? 30;
+      score = clamp(fit * 0.3 + absorption * 0.3 + preparation * 0.2 + cold * 0.1 + ready * 0.1 + noise, 0, 100);
+      note = absorption > 65 ? 'Took the note and came back with a different performance.' : absorption > 45 ? 'Adjusted, some of the way.' : 'Gave the same read again, which is not what a callback is for.';
+      break;
+    }
+    case 'chemistry_read': {
+      const mine = ((sheet['chemistry'] ?? 35) + (sheet['chemistry_reads'] ?? 35)) / 2;
+      const theirs = partner ? (effectiveAttributes(partner.attributes, partner.traits)['chemistry'] ?? 35) : 50;
+      const listening = sheet['active_listening'] ?? sheet['ensemble_blending'] ?? 40;
+      score = clamp(mine * 0.4 + theirs * 0.2 + listening * 0.2 + fit * 0.1 + ready * 0.1 + noise, 0, 100);
+      note = score > 70 ? `Something happened in the room with ${partner?.displayName ?? 'the other actor'}.` : score > 50 ? 'Perfectly competent together, which is not the same as chemistry.' : 'Nothing between them, and everybody in the room could see it.';
+      break;
+    }
+    case 'screen_test': {
+      const composure = sheet['screen_test_composure'] ?? 30;
+      const camera = sheet['camera_awareness'] ?? 35;
+      const consistency = sheet['take_consistency'] ?? 40;
+      score = clamp(composure * 0.35 + camera * 0.25 + consistency * 0.2 + fit * 0.1 + ready * 0.1 + noise, 0, 100);
+      note = score > 72 ? 'The camera likes them, and the studio saw it.' : score > 52 ? 'Fine on camera. Nobody in the room was surprised either way.' : 'Smaller on camera than in the room.';
+      break;
+    }
+    default: {
+      score = clamp((audition.totalScore ?? 50) + noise, 0, 100);
+      note = 'Read again.';
+    }
+  }
+
+  const round = { stage, at: sim.now, score: Number(score.toFixed(1)), note };
+  audition.rounds.push(round);
+  audition.stage = stage;
+  audition.totalScore = decisionScore(audition);
+
+  if (person.isPlayer) {
+    sim.audit({
+      kind: 'cast.round_held', subjectType: 'audition', subjectId: audition.id,
+      question: `How did the ${stage.replace(/_/g, ' ')} go?`,
+      summary: note,
+      factors: [
+        { label: 'What The Room Tested', detail: stage === 'callback' ? 'Whether a note changes the performance.' : stage === 'chemistry_read' ? 'The two of you together.' : 'Holding up with the camera on.', weight: 0.6, contribution: score * 0.6, knowable: true },
+        { label: 'How You Were On The Day', detail: `Readiness at ${Math.round(ready)}%.`, weight: 0.1, contribution: ready * 0.1, knowable: true },
+      ],
+      score, outcome: `${Math.round(score)}`,
+    });
+  }
+  void project;
+  return round;
+}
+
+
+/**
+ * The callback round on a part the world is casting.
+ *
+ * The four strongest reads are called back. Each is scored in the callback
+ * room; the player, if among them, gets an appointment rather than a score
+ * — the room runs when they turn up to it. Returns true when a round was
+ * held, which means the decision waits.
+ */
+function holdWorldCallbacks(sim: Simulation, role: Role, project: Project, auditions: Audition[]): boolean {
+  const alreadyIn = new Set(project.castIds);
+  const ranked = auditions
+    .filter((a) => a.stage !== 'passed' && a.totalScore !== undefined && !alreadyIn.has(a.personId))
+    .sort((a, b) => (b.totalScore ?? 0) - (a.totalScore ?? 0));
+  if (ranked.length < 2) return false;
+
+  const called = ranked.slice(0, Math.min(4, ranked.length));
+  role.callbacksAt = sim.now;
+  for (const audition of ranked.slice(called.length)) {
+    audition.stage = 'passed';
+    audition.decidedAt = sim.now;
+    audition.feedback = 'Not called back.';
+    if (audition.isPlayer) {
+      sim.notify({
+        category: 'career', title: `No callback: ${role.characterName}`,
+        body: `${project.title}. ${called.length} people were called back and you were not one of them.`,
+        importance: 40, route: '/workspace/casting',
+      });
+    }
+  }
+
+  const decidesAt = addDays(sim.now, 10, sim.homeZone);
+  role.decidesAt = decidesAt;
+  for (const audition of called) {
+    if (audition.isPlayer) {
+      // A real appointment: the callback is scored when the player is in it.
+      const rng = sim.rng('callback_schedule', audition.id);
+      const target = addDays(sim.now, rng.int(3, 7), sim.homeZone);
+      const parts = zonedParts(target, sim.homeZone);
+      const at = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: rng.int(10, 17) }, sim.homeZone);
+      audition.stage = 'callback';
+      audition.scheduledAt = at;
+      const item = sim.schedule({
+        at, kind: 'cast.audition',
+        label: `Callback — ${role.characterName}`,
+        category: 'career', payload: { auditionId: audition.id },
+        priority: 36, refType: 'audition', refId: audition.id,
+        requiresPlayer: true, locationId: audition.locationId, durationMinutes: 60,
+      });
+      audition.scheduledItemId = item.id;
+      sim.requireDecision({
+        urgency: 70, category: 'career',
+        title: `Callback: ${role.characterName}`,
+        detail: `${project.title}. They want to see you again — ${formatDate(at, sim.homeZone)} at ${formatTime(at, sim.homeZone)}. A callback is about whether the note lands.`,
+        route: '/workspace/casting', dueAt: at, refType: 'audition', refId: audition.id,
+      });
+    } else {
+      holdRound(sim, audition, role, project, 'callback');
+    }
+  }
+
+  sim.schedule({
+    at: decidesAt, kind: 'cast.decide_role',
+    label: `Casting Decision — ${role.characterName} In ${project.title}`,
+    category: 'system', payload: { roleId: role.id }, priority: 38,
+    refType: 'role', refId: role.id,
+  });
+  sim.emit('cast.callbacks_held', { roleId: role.id, projectId: project.id, count: called.length });
+  return true;
 }
