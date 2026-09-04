@@ -14,7 +14,7 @@ import { Panel, Empty, Tabs, Meter, Modal } from '@/ui/components/primitives';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoneyCompact } from '@/engine/core/money';
 import {
-  NOT_IN_RECORD, ageOf, allPeople, awardsFor, companiesOf, confidenceOf, creditsFor,
+  NOT_IN_RECORD, ageIsApproximate, ageOf, allPeople, awardsFor, companiesOf, confidenceOf, creditsFor,
   deriveSheet, franchisesOf, isPeopleLoaded, overallFor, peopleInRole, primaryRole, rolesWithSheets,
   type PersonRecord, type DerivedAttribute,
 } from '@/engine/content/people';
@@ -219,11 +219,14 @@ export function PersonProfile({ person, onClose }: { person: PersonRecord; onClo
       <div className="grid grid-2 gap-4" style={{ marginBottom: 'var(--s3)' }}>
         <div>
           <div className="xs dim" style={{ marginBottom: 4 }}>What The Record Holds</div>
-          {person.birth ? (
+          {person.birth || person.birthYear ? (
             <div className="xs" style={{ padding: '2px 0' }}>
-              <span className="dim">Born</span> <span className="strong">{person.birth}</span>
-              {age !== undefined && <span className="dim"> · {age}{person.death ? ' at death' : ''}</span>}
+              <span className="dim">Born</span> <span className="strong">{person.birth ?? person.birthYear}</span>
+              {age !== undefined && (
+                <span className="dim"> · {age}{person.death ? ' at death' : ''}{ageIsApproximate(person) ? ' or thereabouts' : ''}</span>
+              )}
               {person.bornIn && <span className="dim"> · {person.bornIn}</span>}
+              {ageIsApproximate(person) && <span className="dim"> · the record has the year, not the day</span>}
             </div>
           ) : (
             <div className="xs dim" style={{ padding: '2px 0' }}>No date of birth on record.</div>

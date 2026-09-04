@@ -26,6 +26,14 @@ const readNdjson = (name) => {
 };
 
 const resolved = JSON.parse(readFileSync(new URL('./resolved.json', HERE), 'utf8'));
+/**
+ * How precise each date of birth is, from the record's own precision field.
+ * 11 is a day, 10 a month, 9 a year, anything less is a century. A date that
+ * is not precise to the day is not a birthday, and is not written as one.
+ */
+const precision = existsSync(new URL('./precision.json', HERE))
+  ? JSON.parse(readFileSync(new URL('./precision.json', HERE), 'utf8'))
+  : {};
 const facts = new Map(readNdjson('facts.ndjson').map((f) => [f.qid, f]));
 const credits = new Map(readNdjson('credits.ndjson').map((c) => [c.qid, c.works]));
 const awards = new Map(readNdjson('awards.ndjson').map((a) => [a.qid, a.awards]));
@@ -96,6 +104,13 @@ function creditRoles(role, kind) {
 }
 
 // --- Awards --------------------------------------------------------------
+
+/**
+ * Honours that are not for anything on a screen. They are real and they are
+ * theirs, but they say nothing about how good somebody is at making films, so
+ * they are not counted into what the attributes are read off.
+ */
+const NOT_SCREEN = /espy|athlete|sportsman|sportswoman|laureus|olympic|all-star|mvp|most valuable player|nba |nfl |fifa|ballon d'or|world cup|championship performance|slam dunk|scoring title|rookie of the year|humanitarian award|philanthrop/i;
 
 /** What an award is worth. The scale is SLATE's; the awards are the record's. */
 function awardWeight(name) {
@@ -182,6 +197,7 @@ function evidenceFor(qid, role) {
 
   let wins = 0; let noms = 0; let winScore = 0; let nomScore = 0; let topAward = '';
   for (const award of awards.get(qid) ?? []) {
+    if (NOT_SCREEN.test(award.award)) continue;
     const roles = awardRoles(award.award);
     if (roles.length > 0 && !roles.includes(role)) continue;
     // An award whose name says nothing about the job — a founders award, a
@@ -244,14 +260,22 @@ for (const [name, entry] of Object.entries(resolved)) {
   // director; the sheet is then built on a thin body of work and says so.
   for (const role of entry.roles) if (!evidence[role]) evidence[role] = undefined;
 
+  // A year-only date of birth is a year, not a birthday. It is kept as a year
+  // and never written as the first of January, which is what the record's own
+  // storage makes it look like.
+  const rawBirth = clean(fact.birth ?? entry.birth ?? '');
+  const level = precision[entry.qid]?.precision ?? (rawBirth ? 11 : 0);
+  const birth = level >= 11 ? rawBirth : '';
+  const birthYear = level >= 9 && rawBirth ? rawBirth.slice(0, 4) : '';
+
   peopleRows.push([
     entry.qid, clean(name), entry.roles.join(';'), (entry.listedAs ?? []).join(';'),
-    clean(fact.birth ?? entry.birth ?? ''), clean(fact.death ?? ''), clean(fact.bornIn ?? ''),
+    birth, clean(fact.death ?? ''), clean(fact.bornIn ?? ''),
     (fact.citizenship ?? []).join(';'), clean(fact.gender ?? ''), clean(fact.imdb ?? ''),
     clean(fact.startYear ?? ''), (fact.occupations ?? []).join(';'),
     (fact.memberOf ?? []).join(';'), (fact.employers ?? []).join(';'),
     clean(entry.description ?? ''), String(mine.length), String((awards.get(entry.qid) ?? []).length),
-    JSON.stringify(evidence),
+    JSON.stringify(evidence), birthYear,
   ].join('\t'));
 
   for (const work of mine) {
@@ -281,7 +305,7 @@ for (const [name, entry] of Object.entries(resolved)) {
 const header = (cols) => cols.join('\t');
 writeFileSync(new URL('./people.tsv', OUT), [
   '# The people of the industry, from Wikidata (CC0). The evidence column is counted from the record; the attributes the game shows are derived from it and are SLATE\'s own reading, not published figures.',
-  header(['qid', 'name', 'roles', 'listedAs', 'birth', 'death', 'bornIn', 'citizenship', 'gender', 'imdbId', 'startYear', 'occupations', 'memberOf', 'employers', 'description', 'creditCount', 'awardCount', 'evidence']),
+  header(['qid', 'name', 'roles', 'listedAs', 'birth', 'death', 'bornIn', 'citizenship', 'gender', 'imdbId', 'startYear', 'occupations', 'memberOf', 'employers', 'description', 'creditCount', 'awardCount', 'evidence', 'birthYear']),
   ...peopleRows,
 ].join('\n'));
 

@@ -29,7 +29,10 @@ import {
 import { ALL_TIME, type RecordEntry } from '@/engine/content/records';
 import { LICENCE_KINDS, LICENCE_KIND_LABEL, licenceOdds, licenceStatus, type LicenceKind } from '@/engine/systems/ip';
 import { activeWaves, marketReport, marketsInPlay } from '@/engine/systems/zeitgeist';
-import { PeopleTab } from '@/ui/components/PeopleTab';
+import { PeopleTab, PersonProfile } from '@/ui/components/PeopleTab';
+import { awardBoards, awardCoverage, mostAwardedWorks } from '@/engine/content/award-records';
+import { personByQid } from '@/engine/content/people';
+import { CRAFT_ROLE_LABEL } from '@/engine/content/craft-attributes';
 import { SearchEverything } from '@/ui/components/SearchEverything';
 
 type Tab = 'studios' | 'networks' | 'markets' | 'boxoffice' | 'records' | 'trades' | 'people' | 'search';
@@ -217,6 +220,85 @@ function MarketsTab() {
           </div>
         </Panel>
       )}
+    </>
+  );
+}
+
+/**
+ * The award record boards.
+ *
+ * Counted from what the public record links to the people in this game. It is
+ * not a complete awards history — an award nobody has recorded against a
+ * person is not in here — so the page says how much record it is standing on.
+ */
+function AwardRecordBoards() {
+  const [openQid, setOpenQid] = useState<string | null>(null);
+  const boards = useMemo(() => awardBoards(), []);
+  const coverage = useMemo(() => awardCoverage(), []);
+  const works = useMemo(() => mostAwardedWorks(12), []);
+  const person = openQid ? personByQid(openQid) : undefined;
+
+  if (boards.length === 0) {
+    return <Empty title="The Awards Are Still Loading" body="The record of who has won what comes from the public record, fetched in the background." />;
+  }
+
+  const unit = (board: { unit: string }, value: number): string => {
+    if (board.unit === 'percent') return `${value}%`;
+    if (board.unit === 'age') return `${value}`;
+    if (board.unit === 'years') return `${value}`;
+    return `${value}`;
+  };
+
+  return (
+    <>
+      <p className="small muted">
+        Counted from the {coverage.awards.toLocaleString('en-US')} awards the public record links to the{' '}
+        {coverage.withAwards} people in this game who have one, {coverage.won.toLocaleString('en-US')} of them won.
+        It is what the record holds rather than a complete history: an award nobody recorded against a person is not here,
+        and {coverage.awards - coverage.dated} of them carry no year.
+      </p>
+      <div className="grid grid-2">
+        {boards.map((board) => (
+          <Panel key={board.id} title={board.label} subtitle={board.explain} flush>
+            <div className="list">
+              {board.leaders.map((leader, index) => (
+                <button key={leader.qid} className="list-item" onClick={() => setOpenQid(leader.qid)}>
+                  <div className="mono dim xs" style={{ width: 24, textAlign: 'right', flexShrink: 0 }}>{index + 1}</div>
+                  <div className="grow" style={{ minWidth: 0 }}>
+                    <div className="small strong">{leader.name}</div>
+                    <div className="xs dim" style={{ overflowWrap: 'anywhere' }}>
+                      {leader.roles.map((r) => CRAFT_ROLE_LABEL[r]).join(', ')} · {leader.detail}
+                    </div>
+                  </div>
+                  <div className="mono small strong" style={{ flexShrink: 0 }}>{unit(board, leader.value)}</div>
+                </button>
+              ))}
+            </div>
+          </Panel>
+        ))}
+      </div>
+
+      {works.length > 0 && (
+        <Panel title="Most Decorated Titles" subtitle="Counted from what the roster won, and what they won it for." flush>
+          <div className="list">
+            {works.map((work, index) => (
+              <div key={work.title} className="list-item list-static">
+                <div className="mono dim xs" style={{ width: 24, textAlign: 'right', flexShrink: 0 }}>{index + 1}</div>
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div className="small strong" style={{ overflowWrap: 'anywhere' }}>{work.title}</div>
+                  <div className="xs dim" style={{ overflowWrap: 'anywhere' }}>{work.people.join(', ')}</div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div className="mono small strong">{work.wins}</div>
+                  <div className="xs dim">{work.nominations} nominated</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
+      {person && <PersonProfile person={person} onClose={() => setOpenQid(null)} />}
     </>
   );
 }
@@ -410,8 +492,8 @@ function StudioDetail({ studio, onBack }: { studio: Studio; onBack: () => void }
                       </div>
                     </div>
                     {f.gross > 0 && <span className="chip">{formatMoneyCompact(f.gross * 100)} Gross</span>}
-                    {licence.state === 'licensed' && <span className="chip chip-positive" title="You hold a licence on it in this save">Licensed To You</span>}
-                    {licence.state === 'offered' && <span className="chip chip-warning" title="Answer the offer from Home">Offer Standing</span>}
+                    {licence.state === 'licensed' && <span className="chip chip-positive" title="You hold a licence on it in this save.">Licensed To You</span>}
+                    {licence.state === 'offered' && <span className="chip chip-warning" title="Answer the offer from Home.">Offer Standing</span>}
                     {licence.state === 'asked' && <span className="chip" title={licence.respondsAt ? `They answer by ${formatDate(licence.respondsAt, sim.homeZone)}` : undefined}>Asked</span>}
                     {licence.state === 'none' && <button className="btn btn-sm" onClick={() => setLicensing(f)}>Ask To License</button>}
                   </div>
@@ -446,7 +528,7 @@ function StudioDetail({ studio, onBack }: { studio: Studio; onBack: () => void }
         flush
         actions={(
           <>
-            <input className="search-input" type="search" placeholder="Title, director or franchise" value={query} onChange={(e) => { setQuery(e.target.value); setShown(80); }} aria-label="Search the catalogue" style={{ width: 220 }} />
+            <input className="search-input" type="search" placeholder="Title, director or franchise" value={query} onChange={(e) => { setQuery(e.target.value); setShown(80); }} aria-label="Search The Catalogue" style={{ width: 220 }} />
             <select className="btn btn-sm" style={{ width: 110 }} value={kind} onChange={(e) => { setKind(e.target.value as Kind); setShown(80); }} aria-label="Kind">
               <option value="all">All</option>
               <option value="film">Films</option>
@@ -944,7 +1026,7 @@ function LeadershipPanel({ kind, id, registry }: { kind: CompanyKind; id: string
                 ? <span className="chip chip-warning" title="SLATE named this person to fill a seat that emptied in your universe. Not a real person.">Simulated Successor</span>
                 : record?.source
                   ? <a className="chip chip-positive" href={record.source} target="_blank" rel="noreferrer" title={record.source}>Verified</a>
-                  : <span className="chip" title="From the record, not confirmed this year">On Record</span>}
+                  : <span className="chip" title="From the record, not confirmed this year.">On Record</span>}
             </div>
           );
         })}
@@ -1258,7 +1340,7 @@ function ChartPanel({ networkId, name }: { networkId: string; name: string }) {
 /** The all-time records from the real record, and the ones this save has set. */
 function RecordsTab({ onStudio }: { onStudio: (id: string) => void }) {
   const { sim } = useGame();
-  const [board, setBoard] = useState<'film' | 'television' | 'franchise' | 'yours'>('film');
+  const [board, setBoard] = useState<'film' | 'television' | 'franchise' | 'awards' | 'yours'>('film');
   const mine = useWorld((s) => saveRecords(s));
 
   const filmBoards: { key: keyof typeof ALL_TIME.film; label: string; note: string; value: (r: RecordEntry) => string }[] = [
@@ -1303,6 +1385,7 @@ function RecordsTab({ onStudio }: { onStudio: (id: string) => void }) {
         { id: 'film', label: 'Film' },
         { id: 'television', label: 'Television' },
         { id: 'franchise', label: 'Franchises' },
+        { id: 'awards', label: 'Awards' },
         { id: 'yours', label: 'Your Universe', badge: mine.length },
       ]} />
 
@@ -1352,6 +1435,8 @@ function RecordsTab({ onStudio }: { onStudio: (id: string) => void }) {
           </div>
         </Panel>
       )}
+
+      {board === 'awards' && <AwardRecordBoards />}
 
       {board === 'yours' && (
         mine.length === 0

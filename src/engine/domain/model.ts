@@ -1887,7 +1887,8 @@ export interface StreamingChart {
 export type RecordCategory =
   | 'opening_weekend' | 'domestic' | 'worldwide' | 'per_theatre'
   | 'viewers' | 'demo' | 'streaming_week' | 'streaming_total'
-  | 'tomatometer' | 'imdb' | 'budget' | 'profit';
+  | 'tomatometer' | 'imdb' | 'budget' | 'profit'
+  | 'award_sweep' | 'award_career' | 'award_night';
 
 /** A record set inside this save. Simulation, never the real record. */
 export interface SaveRecord {

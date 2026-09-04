@@ -22,7 +22,6 @@ import { BUYERS, EXHIBITORS, GENRE_APPETITE } from '../content/industry';
 import { isPlayersProject } from './studio-state';
 import { appetiteOf, genreName } from '../content/genres';
 import { audienceReach, rating } from '../content/ratings';
-import { runEmbargoWave } from './critics';
 import { payOnePartner, NETWORKS } from '../content/networks';
 import { advancePhase } from './film';
 
@@ -37,7 +36,6 @@ export function registerRelease(sim: Simulation): void {
   sim.onSchedule('rel.open', (item) => openRelease(sim, item.payload.releaseId as Id));
   sim.onSchedule('rel.box_office_day', (item) => runBoxOfficeDay(sim, item.payload.releaseId as Id, item.payload.day as number));
   sim.onSchedule('rel.streaming_window', (item) => runStreamingWindow(sim, item.payload.releaseId as Id, item.payload.week as number));
-  sim.onSchedule('rel.reviews', (item) => runEmbargoWave(sim, item.payload.projectId as Id));
   sim.onSchedule('rel.close', (item) => closeRelease(sim, item.payload.releaseId as Id));
 
   // --- Marketing -----------------------------------------------------------

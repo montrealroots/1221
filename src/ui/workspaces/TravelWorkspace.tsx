@@ -86,7 +86,7 @@ export function TravelWorkspace() {
         title="Drive"
         subtitle={car ? `Your ${car.year} ${car.make} ${car.model} is here. Fifty real places within a day's drive, or search for any place in range.` : undefined}
         actions={carsHere.length > 1 ? (
-          <select value={car?.id ?? ''} onChange={(e) => setCarId(e.target.value)} aria-label="Which car">
+          <select value={car?.id ?? ''} onChange={(e) => setCarId(e.target.value)} aria-label="Which Car">
             {carsHere.map((v) => <option key={v.id} value={v.id}>{v.year} {v.make} {v.model}</option>)}
           </select>
         ) : undefined}
@@ -112,7 +112,7 @@ export function TravelWorkspace() {
                 placeholder="Find any place within a day's drive"
                 value={driveSearch}
                 onChange={(e) => setDriveSearch(e.target.value)}
-                aria-label="Find a place to drive to"
+                aria-label="Find A Place To Drive To"
                 style={{ flex: '1 1 12rem' }}
               />
               {homeInRange && home && (

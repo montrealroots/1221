@@ -59,7 +59,10 @@ export interface PersonRecord {
   /** The jobs they were listed under, and so the sheets they carry. */
   roles: CraftRole[];
   listedAs: string[];
+  /** A real date of birth, only where the record is precise to the day. */
   birth?: string;
+  /** The year of birth, where the record has one at all. Some records have only this. */
+  birthYear?: string;
   death?: string;
   bornIn?: string;
   citizenship: string[];
@@ -154,7 +157,7 @@ const num = (value: string | undefined): number | undefined => {
 export function addPeople(text: string): number {
   for (const cells of rows(text)) {
     const [qid, name, roles, listedAs, birth, death, bornIn, citizenship, gender, imdbId,
-      startYear, occupations, memberOf, employers, description, creditCount, awardCount, evidence] = cells;
+      startYear, occupations, memberOf, employers, description, creditCount, awardCount, evidence, birthYear] = cells;
     if (!qid || !name) continue;
     let parsed: Partial<Record<CraftRole, RoleEvidence>> = {};
     try { parsed = evidence ? JSON.parse(evidence) : {}; } catch { parsed = {}; }
@@ -162,7 +165,8 @@ export function addPeople(text: string): number {
       qid, name,
       roles: list(roles) as CraftRole[],
       listedAs: list(listedAs),
-      birth: birth || undefined, death: death || undefined, bornIn: bornIn || undefined,
+      birth: birth || undefined, birthYear: birthYear || birth?.slice(0, 4) || undefined,
+      death: death || undefined, bornIn: bornIn || undefined,
       citizenship: list(citizenship), gender: gender || undefined, imdbId: imdbId || undefined,
       startYear: startYear || undefined, occupations: list(occupations),
       memberOf: list(memberOf), employers: list(employers),
@@ -256,14 +260,30 @@ export function peopleInRole(role: CraftRole): PersonRecord[] {
   return allPeople().filter((person) => person.roles.includes(role));
 }
 
-/** Age today, from the record's date of birth. Nothing is guessed when it is missing. */
+/**
+ * Age today, from the record's date of birth.
+ *
+ * A full date gives a real age. A year on its own gives an age that is right
+ * to within a year, and `approximate` says so rather than letting a screen
+ * present it as exact. Nothing is guessed when the record has neither.
+ */
 export function ageOf(person: PersonRecord, now: number): number | undefined {
-  if (!person.birth) return undefined;
-  const born = Date.parse(person.birth);
-  if (Number.isNaN(born)) return undefined;
-  const end = person.death ? Date.parse(person.death) : now;
-  return Math.floor((end - born) / (365.2425 * 24 * 3600 * 1000));
+  if (person.birth) {
+    const born = Date.parse(person.birth);
+    if (!Number.isNaN(born)) {
+      const end = person.death ? Date.parse(person.death) : now;
+      return Math.floor((end - born) / (365.2425 * 24 * 3600 * 1000));
+    }
+  }
+  const year = Number(person.birthYear);
+  if (!year) return undefined;
+  const end = person.death ? Number(person.death.slice(0, 4)) : new Date(now).getUTCFullYear();
+  const age = end - year;
+  return age > 0 && age < 120 ? age : undefined;
 }
+
+/** Whether an age is exact or read off a year alone. */
+export const ageIsApproximate = (person: PersonRecord): boolean => !person.birth && Boolean(person.birthYear);
 
 /**
  * Every distinct title the roster is credited on, with the best metadata any

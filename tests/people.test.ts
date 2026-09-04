@@ -11,7 +11,7 @@
 import { readFileSync } from 'node:fs';
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
-  NOT_IN_RECORD, addPeople, addPeopleAwards, addPeopleCredits, ageOf, allPeople, awardsFor,
+  NOT_IN_RECORD, addPeople, addPeopleAwards, addPeopleCredits, ageIsApproximate, ageOf, allPeople, awardsFor,
   companiesOf, confidenceOf, creditsFor, deriveSheet, franchisesOf, isPeopleLoaded,
   overallFor, personByName, primaryRole, rolesWithSheets, signalsOf,
   SIGNAL_LABEL, type PersonRecord,
@@ -19,6 +19,7 @@ import {
 import { CRAFT_ROLES, attributesForRole } from '@/engine/content/craft-attributes';
 import { ATTRIBUTE_BY_ID } from '@/engine/domain/attributes';
 import { searchEverything, indexCoverage, buildIndex } from '@/engine/content/search';
+import { awardBoards, awardCoverage, mostAwardedWorks, standingOf } from '@/engine/content/award-records';
 
 beforeAll(() => {
   addPeople(readFileSync('public/industry/people.tsv', 'utf8'));
@@ -186,12 +187,37 @@ describe('what SLATE derives from it', () => {
     expect(primaryRole(personByName('Zendaya')!)).toBe('actor');
   });
 
-  it('puts an age on somebody the record has a birthday for', () => {
+  it('puts an age on somebody the record has a birthday for, and says when it is only a year', () => {
     const now = Date.parse('2026-01-01T00:00:00Z');
     const leo = personByName('Leonardo DiCaprio')!;
     expect(ageOf(leo, now)).toBe(51);
-    const unknown: PersonRecord = { ...leo, birth: undefined };
+    expect(ageIsApproximate(leo)).toBe(false);
+
+    // A year on its own gives an age that is right to within a year, and says so.
+    const yearOnly: PersonRecord = { ...leo, birth: undefined, birthYear: '1974' };
+    expect(ageOf(yearOnly, now)).toBe(52);
+    expect(ageIsApproximate(yearOnly)).toBe(true);
+
+    // Nothing at all gives nothing at all.
+    const unknown: PersonRecord = { ...leo, birth: undefined, birthYear: undefined };
     expect(ageOf(unknown, now)).toBeUndefined();
+  });
+
+  it('never reads an age off a date the record is not sure of', () => {
+    // A year-only date of birth comes back from the record looking like the
+    // first of January. Writing it as a birthday made a showrunner win an
+    // award at twelve; it is now kept as a year and only as a year.
+    for (const person of allPeople()) {
+      if (!person.birth) continue;
+      expect(person.birth, `${person.name} has a suspicious birthday`).not.toBe('2000-01-01');
+    }
+    const boards = awardBoards();
+    const youngest = boards.find((b) => b.id === 'youngest');
+    for (const leader of youngest?.leaders ?? []) {
+      const person = personByName(leader.name)!;
+      expect(person.birth, `${leader.name} is on an age board without a full date of birth`).toBeTruthy();
+      expect(leader.value).toBeGreaterThan(3);
+    }
   });
 });
 
@@ -240,5 +266,71 @@ describe('the search', () => {
 
   it('says nothing rather than guessing when nothing matches', () => {
     expect(searchEverything('zzzzqqqxnothing')).toEqual([]);
+  });
+});
+
+describe('the award record boards', () => {
+  it('counts what the record holds, and says how much that is', () => {
+    const coverage = awardCoverage();
+    expect(coverage.awards).toBeGreaterThan(3000);
+    expect(coverage.won).toBeGreaterThan(500);
+    expect(coverage.won).toBeLessThan(coverage.awards);
+    expect(coverage.withAwards).toBeGreaterThan(200);
+    expect(coverage.withAwards).toBeLessThanOrEqual(coverage.people);
+  });
+
+  it('builds a board for every question worth asking, in order', () => {
+    const boards = awardBoards();
+    expect(boards.length).toBeGreaterThan(10);
+    for (const board of boards) {
+      expect(board.label.length).toBeGreaterThan(3);
+      expect(board.explain.length).toBeGreaterThan(10);
+      expect(board.leaders.length).toBeGreaterThan(0);
+      expect(board.leaders.length).toBeLessThanOrEqual(10);
+      for (const leader of board.leaders) {
+        expect(personByName(leader.name), leader.name).toBeDefined();
+        expect(leader.detail.length).toBeGreaterThan(2);
+      }
+      // Every board is sorted the way it says it is.
+      const values = board.leaders.map((l) => l.value);
+      const ascending = board.id === 'youngest';
+      const sorted = [...values].sort((a, b) => (ascending ? a - b : b - a));
+      expect(values, `${board.id} is out of order`).toEqual(sorted);
+    }
+  });
+
+  it('puts the right people at the top of the boards it can be checked on', () => {
+    const boards = awardBoards();
+    const oscars = boards.find((b) => b.id === 'body-academy');
+    expect(oscars, 'no Academy Award board').toBeDefined();
+    // Everybody on an Oscar board has at least one Academy Award on record.
+    for (const leader of oscars!.leaders) {
+      const theirs = awardsFor(leader.qid).filter((a) => a.outcome === 'won' && /academy award|oscar/i.test(a.award));
+      expect(theirs.length, `${leader.name} is on the Oscar board with none`).toBeGreaterThan(0);
+      expect(theirs.length).toBe(leader.value);
+    }
+    // Nobody on the never-won board has ever won.
+    const dry = boards.find((b) => b.id === 'dry');
+    for (const leader of dry?.leaders ?? []) {
+      expect(awardsFor(leader.qid).some((a) => a.outcome === 'won'), `${leader.name} has won something`).toBe(false);
+    }
+  });
+
+  it('gives one person their own standing, matching the boards', () => {
+    const leo = personByName('Leonardo DiCaprio')!;
+    const standing = standingOf(leo.qid)!;
+    expect(standing.won + standing.nominated).toBe(awardsFor(leo.qid).length);
+    expect(standing.bodies.some((b) => b.name === 'Oscars' && b.won > 0)).toBe(true);
+  });
+
+  it('names the most decorated titles from what they were won for', () => {
+    const works = mostAwardedWorks(10);
+    expect(works.length).toBeGreaterThan(3);
+    for (const work of works) {
+      expect(work.title.length).toBeGreaterThan(1);
+      expect(work.people.length).toBeGreaterThan(0);
+      expect(work.wins + work.nominations).toBeGreaterThan(0);
+    }
+    expect(works[0]!.wins).toBeGreaterThanOrEqual(works[works.length - 1]!.wins);
   });
 });
