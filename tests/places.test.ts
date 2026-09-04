@@ -18,7 +18,7 @@ import {
 } from '@/engine/content/places';
 import {
   currentPlace, driveableVehicle, fuelOf, hotelRoom, neighbourhoodKm, placesNear,
-  privacyOf, rangeKm, trafficFactor, whatIsHere,
+  arrivedBeforeCall, privacyOf, rangeKm, recognitionChance, trafficFactor, whatIsHere,
 } from '@/engine/systems/places';
 
 const MS_DAY = 86_400_000;
@@ -369,5 +369,107 @@ describe('two people, in private', () => {
     const away = life.try('rel.intimacy', { personId: partner.id });
     expect(away.ok).toBe(false);
     expect(away.error).toMatch(/is in/i);
+  });
+});
+
+describe('being seen', () => {
+  it('nobody notices an unknown, and a famous face gets recognised', () => {
+    const unknown = aLife('seen-unknown');
+    unknown.sim.player.reputation.publicFame = 2;
+    const bar = placesIn(unknown.sim.player.currentLocationId).find((p) => p.kind === 'bar')!;
+    expect(recognitionChance(unknown.sim, bar, unknown.sim.player)).toBeLessThan(0.05);
+
+    const famous = aLife('seen-famous');
+    famous.sim.player.reputation.publicFame = 92;
+    expect(recognitionChance(famous.sim, bar, famous.sim.player)).toBeGreaterThan(0.4);
+    // A gym is quieter than a club, at the same fame.
+    const club = placesIn(famous.sim.player.currentLocationId).find((p) => p.kind === 'club')!;
+    const gym = placesIn(famous.sim.player.currentLocationId).find((p) => p.kind === 'gym')!;
+    expect(recognitionChance(famous.sim, club, famous.sim.player)).toBeGreaterThan(recognitionChance(famous.sim, gym, famous.sim.player));
+  });
+
+  it('gets a famous player noticed somewhere over an evening out', () => {
+    const life = aLife('seen-evening');
+    const sim = life.sim;
+    sim.player.reputation.publicFame = 95;
+    sim.player.reputation.audienceAppeal = 70;
+    const fameBefore = sim.player.reputation.publicFame;
+    const noticesBefore = sim.universe.notifications.length;
+    const options = placesIn(sim.player.currentLocationId).filter((p) => ['bar', 'restaurant', 'cafe', 'club'].includes(p.kind)).slice(0, 8);
+    for (const place of options) {
+      life.run('go.to', { placeId: place.id, mode: 'taxi' });
+      sim.advanceTo(sim.now + 2 * MS_HOUR);
+    }
+    const after = sim.universe.notifications.slice(noticesBefore);
+    const seen = after.filter((n) => /Recognised|Photographed|ran into|secret/i.test(n.title));
+    expect(seen.length, 'eight nights out and nobody looked up').toBeGreaterThan(0);
+    expect(sim.player.reputation.publicFame).toBeGreaterThan(fameBefore);
+    for (const notice of seen) expect(notice.body.length).toBeGreaterThan(10);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+  });
+
+  it('makes a private relationship public when the two of you are photographed together', () => {
+    const life = aLife('seen-couple');
+    const sim = life.sim;
+    sim.player.reputation.publicFame = 98;
+    const partner = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+    const id = sim.nextId('rel');
+    sim.universe.relationships[id] = {
+      id, saveId: sim.universe.meta.id,
+      aId: sim.player.id < partner.id ? sim.player.id : partner.id,
+      bId: sim.player.id < partner.id ? partner.id : sim.player.id,
+      type: 'dating',
+      dimensions: { familiarity: 80, affection: 80, trust: 75, respect: 70, compatibility: 70, commitment: 55, conflict: 5 },
+      isPublic: false, exclusive: true, since: sim.now - 90 * MS_DAY, lastInteractionAt: sim.now, memories: [],
+    };
+    partner.currentLocationId = sim.player.currentLocationId;
+    const relationship = sim.universe.relationships[id]!;
+
+    const spots = placesIn(sim.player.currentLocationId).filter((p) => ['restaurant', 'bar', 'club'].includes(p.kind));
+    for (const place of spots) {
+      partner.currentPlaceId = place.id;
+      life.run('go.to', { placeId: place.id, mode: 'taxi' });
+      sim.advanceTo(sim.now + 3 * MS_HOUR);
+      if (relationship.isPublic) break;
+    }
+    if (relationship.isPublic) {
+      expect(sim.universe.history.some((h) => /Photographed with/.test(h.title) && h.public)).toBe(true);
+    } else {
+      // Nobody caught them, which is also allowed — but nothing leaked either.
+      expect(sim.universe.history.some((h) => /Photographed with/.test(h.title))).toBe(false);
+    }
+  });
+});
+
+describe('driving to a shoot', () => {
+  it('takes you to the unit base, and only when the day is in this city', () => {
+    const sim = quickSave({ wealth: 'inherited' }, 'to-set');
+    const run = <R,>(kind: string, payload: Record<string, unknown> = {}): R => {
+      const result = sim.execute<R>({ kind, payload });
+      if (!result.ok) throw new Error(`${kind} refused: ${result.error}`);
+      return result.value as R;
+    };
+    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
+    const staged = sim.execute<{ projectId: Id }>({ kind: 'sandbox.stage_picture', payload: { to: 'boarded' } });
+    expect(staged.ok, staged.error).toBe(true);
+    const project = sim.universe.projects[staged.value!.projectId]!;
+    const day = project.shootDayIds.map((id) => sim.universe.shootDays[id]!).find((d) => d.status === 'scheduled')!;
+
+    // Not from another city.
+    const home = sim.player.currentLocationId;
+    sim.player.currentLocationId = home === 'uk-eng-london' ? 'us-ny-newyork' : 'uk-eng-london';
+    const away = sim.execute({ kind: 'go.to', payload: { shootDayId: day.id, mode: 'taxi' } });
+    expect(away.ok).toBe(false);
+    expect(away.error).toMatch(/shoots in/i);
+    sim.player.currentLocationId = home;
+
+    const arrival = run<{ name: string; minutes: number }>('go.to', { shootDayId: day.id, mode: 'taxi' });
+    expect(arrival.name).toContain(`Day ${day.dayNumber}`);
+    expect(sim.player.currentPlaceId).toBe(`shoot:${day.id}`);
+    const here = whatIsHere(sim);
+    expect(here.unitBase?.shootDayId).toBe(day.id);
+    expect(here.place).toBeUndefined();
+    expect(here.canSleep).toBe(false);
+    expect(arrivedBeforeCall(sim, day.id)).toBe(sim.now <= (day.callSheet?.crewCall ?? day.callTime));
   });
 });

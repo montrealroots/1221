@@ -25,7 +25,7 @@ import { CITIES, NEIGHBOURHOODS, cityTimeZone } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import {
   INVENTED_NOTE, PLACE_KIND_LABEL, cuisineOf, menuOf, placesIn, priceOf,
-  REAL_PLACES, type Place, type PlaceAction,
+  REAL_PLACES, type Place, type PlaceAction, type PlaceKind,
 } from '../content/places';
 import { fuelCostCents, usesMiles } from './driving';
 import { readiness } from './life';
@@ -155,6 +155,12 @@ export function rangeKm(vehicle: Vehicle): number {
 // ---------------------------------------------------------------------------
 
 export function registerPlaces(sim: Simulation): void {
+  // Turning up somewhere with people in it is a thing that can be seen.
+  sim.onEvent('go.arrived', 'places.seen', (event, { sim: s }) => {
+    const payload = event.payload as { placeId?: string; cityId?: string };
+    if (payload.placeId && payload.cityId) whoSawYou(s, payload.placeId, payload.cityId);
+  });
+
   sim.onSchedule('place.hygiene_tick', () => {
     decayHygiene(sim);
     armHygiene(sim);
@@ -163,7 +169,7 @@ export function registerPlaces(sim: Simulation): void {
   // --- Getting there --------------------------------------------------------
 
   sim.onCommand<
-    { placeId?: string; propertyId?: Id; home?: boolean; mode?: Mode },
+    { placeId?: string; propertyId?: Id; shootDayId?: Id; home?: boolean; mode?: Mode },
     { placeId?: string; name: string; minutes: number; km: number; cost: Money; mode: Mode; note: string; arrivedAt: number }
   >(
     'go.to',
@@ -172,7 +178,18 @@ export function registerPlaces(sim: Simulation): void {
       const cityId = person.currentLocationId;
 
       let target: { id: string; name: string; neighbourhoodId?: string; cityId: string };
-      if (p.home || p.propertyId) {
+      if (p.shootDayId) {
+        // The unit base for a shooting day: a stage on a lot, or wherever the
+        // company is parked on a location.
+        const day = s.universe.shootDays[p.shootDayId];
+        if (!day) throw new CommandError('No such shooting day.');
+        if (day.locationId !== cityId) {
+          throw new CommandError(`That day shoots in ${CITIES.get(day.locationId)?.name ?? 'another city'} and you are in ${CITIES.get(cityId)?.name ?? 'this one'}. Get there first.`);
+        }
+        if (day.status !== 'scheduled' && day.status !== 'shooting') throw new CommandError('That day is over.');
+        const project = s.universe.projects[day.projectId];
+        target = { id: `shoot:${day.id}`, name: `${day.locationName} — ${project?.title ?? 'Unit Base'}, Day ${day.dayNumber}`, cityId };
+      } else if (p.home || p.propertyId) {
         const propertyId = p.propertyId ?? person.residenceId;
         if (!propertyId) throw new CommandError('You do not have anywhere to go home to yet.');
         const property = s.universe.properties[propertyId];
@@ -491,8 +508,184 @@ export function registerPlaces(sim: Simulation): void {
 }
 
 // ---------------------------------------------------------------------------
+// Being seen
+// ---------------------------------------------------------------------------
+
+/**
+ * Somewhere with people in it. A hotel lobby counts; your own kitchen does not.
+ */
+function isPublic(place: Place | undefined): boolean {
+  if (!place) return false;
+  return !['garage'].includes(place.kind);
+}
+
+/** How likely somebody is to know your face here, right now. */
+export function recognitionChance(sim: Simulation, place: Place, person: Person = sim.player): number {
+  const fame = person.reputation.publicFame / 100;
+  const busy: Partial<Record<PlaceKind, number>> = {
+    club: 1.5, bar: 1.25, restaurant: 1.2, cafe: 1, landmark: 1.35, museum: 0.8,
+    beach: 1.1, park: 0.9, cinema: 1.1, theatre: 1.2, market: 1, hotel: 1.15,
+    gym: 0.7, salon: 0.6, gas_station: 0.5, fast_food: 0.9, viewpoint: 1.2,
+  };
+  const city = CITIES.get(place.cityId);
+  const industry = (city?.industryPresence ?? 30) / 100;
+  return clamp(Math.pow(fame, 1.4) * (busy[place.kind] ?? 1) * (0.55 + industry * 0.8), 0, 0.9);
+}
+
+const FANS = [
+  'Two people at the next table worked out who you were and were kind about it.',
+  'Somebody asked for a photograph on the way in. You said yes.',
+  'A group by the door recognised you and pretended not to, badly.',
+  'The person behind the counter said they had seen the film. They meant it.',
+  'A teenager asked you to sign a receipt because it was all they had.',
+  'Somebody said your name like a question, and you nodded.',
+  'A family asked, politely, and you took the picture yourself because the angle was better.',
+  'Somebody told you what your work meant to them and then apologised for saying it.',
+];
+
+const PHOTOGRAPHED = [
+  'There was a photographer across the street when you came out.',
+  'Somebody with a long lens was waiting by the valet stand.',
+  'A camera went off twice as you got to the car.',
+  'You saw the flash before you saw the man holding it.',
+  'Two of them, on the other side of the road, not hiding.',
+  'A phone came up as you walked past and stayed up.',
+];
+
+const RAN_INTO = [
+  'was two tables over and came across.',
+  'was at the bar and bought you one.',
+  'was on the way out and stopped anyway.',
+  'saw you first, which is its own kind of information.',
+  'was in the corner with somebody you did not recognise.',
+  'has been meaning to call you, apparently.',
+];
+
+/**
+ * What happened when you turned up somewhere.
+ *
+ * Only what the character could actually know is written down: a photographer
+ * you saw is on the record now, and one you did not see is not — that surfaces
+ * later, if it surfaces at all.
+ */
+function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
+  const person = sim.player;
+  const place = placesIn(cityId).find((q) => q.id === placeId);
+  if (!place || !isPublic(place)) return;
+  const rng = sim.rng('seen', placeId, String(Math.floor(sim.now / MS_HOUR)));
+  const chance = recognitionChance(sim, place, person);
+  if (chance <= 0.01) return;
+
+  // The industry drinks where the industry drinks.
+  if (place.industryHaunt && rng.chance(0.22)) {
+    const candidates = Object.values(sim.universe.people).filter((q) =>
+      !q.isPlayer && q.currentLocationId === cityId && q.careerTrack && q.reputation.industryDemand > 35);
+    const met = candidates.length > 0 ? candidates[rng.int(0, candidates.length - 1)] : undefined;
+    if (met) {
+      const existing = Object.values(sim.universe.relationships).find((r) =>
+        !r.endedAt && ((r.aId === person.id && r.bId === met.id) || (r.bId === person.id && r.aId === met.id)));
+      if (existing) {
+        existing.dimensions.familiarity = clamp(existing.dimensions.familiarity + 3, 0, 100);
+        existing.lastInteractionAt = sim.now;
+      }
+      person.reputation.industryDemand = clamp(person.reputation.industryDemand + 0.4, 0, 100);
+      sim.notify({
+        category: 'career',
+        title: `You ran into ${met.stageName ?? met.displayName}`,
+        body: `At ${place.name}. ${met.stageName ?? met.displayName} ${rng.pick(RAN_INTO)}`,
+        importance: 44, route: '/workspace/relationships', refType: 'person', refId: met.id,
+      });
+      sim.emit('place.ran_into', { placeId: place.id, personId: met.id });
+    }
+  }
+
+  if (!rng.chance(chance)) return;
+
+  // Photographed, or simply recognised.
+  const photographed = rng.chance(clamp(person.reputation.publicFame / 140, 0, 0.55));
+  if (!photographed) {
+    person.reputation.publicFame = clamp(person.reputation.publicFame + 0.15, 0, 100);
+    person.reputation.audienceAppeal = clamp(person.reputation.audienceAppeal + 0.2, 0, 100);
+    person.wellbeing.energy = clamp(person.wellbeing.energy - 1.5, 0, 100);
+    sim.notify({
+      category: 'life',
+      title: `Recognised at ${place.name}`,
+      body: rng.pick(FANS),
+      importance: 28, route: '/workspace/city',
+    });
+    sim.emit('place.recognised', { placeId: place.id, photographed: false });
+    return;
+  }
+
+  const noticed = rng.chance(0.62);
+  person.reputation.publicFame = clamp(person.reputation.publicFame + 0.5, 0, 100);
+  person.wellbeing.stress = clamp(person.wellbeing.stress + (noticed ? 4 : 0), 0, 100);
+
+  // Who you were with is the story, when there was somebody.
+  const withPartner = Object.values(sim.universe.relationships).find((r) =>
+    !r.endedAt && ['dating', 'engaged', 'spouse'].includes(r.type)
+    && (r.aId === person.id || r.bId === person.id)
+    && !r.isPublic
+    && sim.universe.people[r.aId === person.id ? r.bId : r.aId]?.currentPlaceId === place.id);
+  if (withPartner) {
+    withPartner.isPublic = true;
+    const other = sim.universe.people[withPartner.aId === person.id ? withPartner.bId : withPartner.aId];
+    sim.remember({
+      category: 'life',
+      title: `Photographed with ${other?.displayName ?? 'somebody'}`,
+      detail: `Outside ${place.name} in ${CITIES.get(place.cityId)?.name}. Whatever it was, it is not private any more.`,
+      refs: [{ type: 'person', id: person.id }],
+      significance: 55, public: true,
+    });
+    sim.notify({
+      category: 'life',
+      title: `The two of you are not a secret any more`,
+      body: `${noticed ? rng.pick(PHOTOGRAPHED) : 'You did not see anybody.'} By morning there were pictures of you and ${other?.displayName ?? 'somebody'} outside ${place.name}.`,
+      importance: 66, route: '/workspace/relationships',
+    });
+    sim.emit('place.photographed', { placeId: place.id, withPersonId: other?.id, wentPublic: true });
+    return;
+  }
+
+  if (noticed) {
+    sim.notify({
+      category: 'life',
+      title: `Photographed at ${place.name}`,
+      body: `${rng.pick(PHOTOGRAPHED)} Whether it runs anywhere is out of your hands.`,
+      importance: 38, route: '/workspace/city',
+    });
+  } else {
+    sim.remember({
+      category: 'life',
+      title: `Pictures of you outside ${place.name}`,
+      detail: `${CITIES.get(place.cityId)?.name}. You did not see anybody take them.`,
+      refs: [{ type: 'person', id: person.id }],
+      significance: 20, public: true,
+    });
+  }
+  sim.emit('place.photographed', { placeId: place.id, noticed, wentPublic: false });
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+/** The shooting day you are standing on, when you are on one. */
+export function unitBaseOf(sim: Simulation, person: Person = sim.player): { label: string; shootDayId: Id } | undefined {
+  if (!person.currentPlaceId?.startsWith('shoot:')) return undefined;
+  const shootDayId = person.currentPlaceId.slice('shoot:'.length) as Id;
+  const day = sim.universe.shootDays[shootDayId];
+  if (!day) return undefined;
+  const project = sim.universe.projects[day.projectId];
+  return { label: `${day.locationName} — ${project?.title ?? 'Unit Base'}, Day ${day.dayNumber}`, shootDayId };
+}
+
+/** Whether somebody was on the unit base before the crew was called. */
+export function arrivedBeforeCall(sim: Simulation, shootDayId: Id, person: Person = sim.player): boolean {
+  const day = sim.universe.shootDays[shootDayId];
+  if (!day || person.currentPlaceId !== `shoot:${shootDayId}`) return false;
+  return sim.now <= (day.callSheet?.crewCall ?? day.callTime);
+}
 
 /** A bathroom you have a right to use, right now. */
 export function bathroomFor(sim: Simulation, person: Person = sim.player): string | undefined {
@@ -562,18 +755,21 @@ function decayHygiene(sim: Simulation): void {
 
 /** Everything you could do where you are standing. */
 export function whatIsHere(sim: Simulation): {
-  place?: Place; property?: Property; city: string; actions: PlaceAction[]; canShower: boolean; canSleep: boolean;
+  place?: Place; property?: Property; unitBase?: { label: string; shootDayId: Id }; city: string;
+  actions: PlaceAction[]; canShower: boolean; canSleep: boolean;
   vehicle?: { vehicle: Vehicle; fuel: number; range: number };
 } {
   const person = sim.player;
   const place = currentPlace(sim, person);
   const property = currentProperty(sim, person);
   const vehicle = driveableVehicle(sim, person);
+  const unitBase = unitBaseOf(sim, person);
   return {
     place,
     property,
+    unitBase,
     city: CITIES.get(person.currentLocationId)?.name ?? person.currentLocationId,
-    actions: place?.actions ?? (property ? ['sleep', 'shower', 'eat'] : []),
+    actions: place?.actions ?? (property ? ['sleep', 'shower', 'eat'] : unitBase ? ['meet'] : []),
     canShower: Boolean(bathroomFor(sim, person)),
     canSleep: Boolean(bedFor(sim, person)),
     vehicle: vehicle ? { vehicle, fuel: fuelOf(vehicle), range: rangeKm(vehicle) } : undefined,

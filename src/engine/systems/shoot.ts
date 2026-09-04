@@ -242,7 +242,10 @@ export function runShootDay(
   const d = directorCraft(director);
   const c = dpCraft(dpPerson);
   const kit = kitQuality(sim, project);
-  const ready = director?.isPlayer ? readiness(director) / 100 : 0.9;
+  // A director who was on the unit base before the crew was called has had the
+  // walk-through, the coffee and the conversation with the DP. It shows.
+  const early = director?.isPlayer && director.currentPlaceId === `shoot:${day.id}`;
+  const ready = director?.isPlayer ? clamp(readiness(director) / 100 * (early ? 1.08 : 1), 0, 1.2) : 0.9;
 
   // Setups an hour: the crew's size, the DP's speed, the director's
   // efficiency, and whether it is a stage (fast) or a location (slow).
