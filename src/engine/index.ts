@@ -41,6 +41,7 @@ import { registerNetworks, ensureNetworkSchedules } from './systems/networks-liv
 import { registerZeitgeist, ensureZeitgeist, commissionProject } from './systems/zeitgeist';
 import { registerProfessions } from './systems/professions';
 import { registerRealPeople } from './systems/real-people';
+import { registerPress } from './systems/press';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -81,6 +82,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerZeitgeist(sim);
   registerProfessions(sim);
   registerRealPeople(sim);
+  registerPress(sim);
   registerDriving(sim);
   registerAwards(sim);
   registerCompany(sim);
@@ -469,6 +471,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     ['companies', 'map'], ['divisions', 'map'], ['employees', 'map'],
     ['equipment', 'map'], ['merchandise', 'map'],
     ['scheduled', 'list'], ['audits', 'list'], ['history', 'list'], ['notifications', 'list'],
+    ['press', 'list'],
     ['decisions', 'map'],
   ];
 
@@ -775,6 +778,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // nothing that was cast before stops being cast.
     for (const role of Object.values(universe.roles)) role.offers ??= [];
     steps.push('You can take a part to somebody by name now. Every part keeps the offers put to it and the answers, so asking twice cannot book the same person twice.');
+  }
+
+  if (from < 20) {
+    // The trade press writes about your industry now, in the register each
+    // publication actually writes in. Nothing already in the save changes; the
+    // coverage starts from here, and the one-line trade items a save already
+    // has are kept exactly as they were.
+    record['press'] ??= [];
+    // Every picture keeps the approaches made for its chairs, the same way a
+    // part keeps its offers. Existing projects start that record empty;
+    // nothing already attached comes off.
+    for (const project of Object.values(universe.projects)) project.approaches ??= [];
+    steps.push('The trades cover your industry now. Variety, Deadline, The Hollywood Reporter and the rest each write in their own register, and everything they publish is kept.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

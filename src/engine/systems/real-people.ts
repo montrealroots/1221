@@ -20,7 +20,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { ContractKind, Id, Person, Project, Role, RoleOffer } from '../domain/model';
+import type { ContractKind, CraftApproach, Id, Person, Project, Role, RoleOffer } from '../domain/model';
 import { clamp } from '../core/rng';
 import { MS_DAY } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
@@ -701,10 +701,23 @@ export function registerRealPeople(sim: Simulation): void {
       const television = project.format === 'series' || project.format === 'limited_series';
       if (p.role === 'showrunner' && !television) throw new CommandError('Only a series has a showrunner.');
 
+      // An answer already given is read back before anything else is checked,
+      // exactly as it is on a part. This is what makes the command safe to
+      // retry: one question, one answer, one attachment, one contract.
+      const priorYes = (project.approaches ?? []).find(
+        (entry) => entry.recordQid === p.qid && entry.role === terms.attachment && entry.answer === 'accepted',
+      );
+      if (priorYes) {
+        return {
+          attached: true, personId: priorYes.personId, name: record.name,
+          amount: priorYes.amount, wanted: priorYes.wanted, reason: priorYes.reason,
+          packageValue: project.packageValue,
+        };
+      }
+
       const person = ensureRealPerson(s, p.qid);
       if (!person) throw new CommandError('Nobody on the record by that name.');
       if (project.attachments.some((a) => a.personId === person.id && a.role === terms.attachment)) {
-        // Already done. Saying so is not the same as doing it twice.
         return {
           attached: true, personId: person.id, name: record.name,
           amount: 0, wanted: quoteFor(record, p.role),
@@ -723,7 +736,23 @@ export function registerRealPeople(sim: Simulation): void {
       const amount = Math.round(p.amount ?? wanted);
       if (amount <= 0) throw new CommandError('An offer has to be for money.');
 
-      const answer = considerApproach(s, record, project, p.role, amount);
+      // Going back is the same negotiation a part has: three asks, each one at
+      // least ten per cent above the last, and each a fresh answer rather than
+      // the first one read out again.
+      const asked = (project.approaches ?? []).filter(
+        (entry) => entry.recordQid === p.qid && entry.role === terms.attachment,
+      );
+      if (asked.length >= MAX_ASKS) {
+        throw new CommandError(`${record.name} has passed ${asked.length} times. Going back a fourth is not an offer, it is a nuisance.`);
+      }
+      const lastAsk = asked[asked.length - 1];
+      if (lastAsk && amount < Math.round(lastAsk.amount * RAISE_FLOOR)) {
+        throw new CommandError(
+          `You offered ${formatMoney(lastAsk.amount)} and they passed. Going back needs at least ${formatMoney(Math.round(lastAsk.amount * RAISE_FLOOR))}.`,
+        );
+      }
+
+      const answer = considerApproach(s, record, project, p.role, amount, asked.length);
       s.audit({
         kind: 'film.real_approach_decided', subjectType: 'project', subjectId: project.id,
         question: `Why did ${record.name} take it, or not?`,
@@ -734,6 +763,15 @@ export function registerRealPeople(sim: Simulation): void {
         seed: answer.seed, roll: answer.roll, probability: answer.probability, score: answer.score,
         outcome: answer.interested ? 'attached' : 'passed',
       });
+
+      const record_: CraftApproach = {
+        personId: person.id, recordQid: record.qid, name: record.name,
+        role: terms.attachment, amount, approachedAt: s.now,
+        answer: answer.interested ? 'accepted' : 'declined',
+        reason: answer.summary, wanted,
+      };
+      project.approaches ??= [];
+      project.approaches.push(record_);
 
       if (!answer.interested) {
         s.emit('film.real_approach_declined', { projectId: project.id, personId: person.id, qid: record.qid, role: p.role, amount });

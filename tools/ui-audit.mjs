@@ -229,7 +229,7 @@ for (const size of WIDTHS) {
         if (await make.count()) {
           await make.click().catch(() => {});
           await page.waitForTimeout(1200);
-          const castTab = page.getByRole('tab', { name: /^Cast$/ }).first();
+          const castTab = page.getByRole('tab', { name: /^Cast/ }).first();
           if (await castTab.count()) {
             await castTab.click().catch(() => {});
             await page.waitForTimeout(900);
@@ -251,13 +251,45 @@ for (const size of WIDTHS) {
       }
     }
 
+    // The trade press: the front page and one publication's profile. The
+    // stories here are set in each outlet's own face, which is the widest
+    // range of type anywhere in the game and the likeliest place for a line
+    // to break out of its box.
+    await openRail();
+    const industryForPress = page.getByRole('button', { name: /^industry$/i }).first();
+    if (await industryForPress.count()) {
+      await industryForPress.click().catch(() => {});
+      await page.waitForTimeout(1200);
+      const pressTab = page.getByRole('tab', { name: /The Press/ }).first();
+      if (await pressTab.count()) {
+        await pressTab.click().catch(() => {});
+        await page.waitForTimeout(2200);
+        scrollsSideways = (await probe('the press front page')) || scrollsSideways;
+        await shoot('09-press');
+        // The tab's accessible name carries its badge — 'The Publications 43' — so
+        // an anchored match never finds it.
+        const publications = page.getByRole('tab', { name: /The Publications/ }).first();
+        if (await publications.count()) {
+          await publications.click().catch(() => {});
+          await page.waitForTimeout(900);
+          scrollsSideways = (await probe('the publications list')) || scrollsSideways;
+          await page.locator('.list-item').first().click().catch(() => {});
+          await page.waitForTimeout(1600);
+          scrollsSideways = (await probe('a publication profile')) || scrollsSideways;
+          await shoot('10-outlet');
+          await page.getByRole('button', { name: /^Close$/ }).first().click().catch(() => {});
+          await page.waitForTimeout(400);
+        }
+      }
+    }
+
     // A person's profile, and the tab that keeps the record and the save apart.
     await openRail();
     const industry = page.getByRole('button', { name: /^industry$/i }).first();
     if (await industry.count()) {
       await industry.click().catch(() => {});
       await page.waitForTimeout(1200);
-      const people = page.getByRole('tab', { name: /^People$/ }).first();
+      const people = page.getByRole('tab', { name: /^People/ }).first();
       if (await people.count()) {
         await people.click().catch(() => {});
         await page.waitForTimeout(1800);
@@ -265,7 +297,7 @@ for (const size of WIDTHS) {
         await page.locator('.list-item').first().click().catch(() => {});
         await page.waitForTimeout(1200);
         scrollsSideways = (await probe('a person profile')) || scrollsSideways;
-        const inSave = page.getByRole('tab', { name: /^In This Save$/ }).first();
+        const inSave = page.getByRole('tab', { name: /In This Save/ }).first();
         if (await inSave.count()) {
           await inSave.click().catch(() => {});
           await page.waitForTimeout(700);

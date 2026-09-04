@@ -1184,6 +1184,8 @@ export interface Project {
 
   /** Key creative and business attachments. */
   attachments: { personId: Id; role: string; attachedAt: Instant; confirmed: boolean }[];
+  /** Every approach made to somebody for a chair on this picture, and the answer. */
+  approaches?: CraftApproach[];
   writerIds: Id[];
   directorId?: Id;
   producerIds: Id[];
@@ -1343,6 +1345,26 @@ export interface RoleOffer {
   /** Why, in their words. */
   reason: string;
   /** What SLATE reckoned they would take, at the time of asking. */
+  wanted: Money;
+}
+
+/**
+ * An approach made to somebody for a craft job, and what they said.
+ *
+ * The same record a part keeps of its offers, for the chairs. It is what the
+ * player is entitled to see — who you went to and why they passed — and it is
+ * what makes a second approach safe: an answer already given is read back
+ * rather than re-rolled, and coming back needs real money on the table.
+ */
+export interface CraftApproach {
+  personId: Id;
+  recordQid?: string;
+  name: string;
+  role: string;
+  amount: Money;
+  approachedAt: Instant;
+  answer: 'accepted' | 'declined';
+  reason: string;
   wanted: Money;
 }
 
@@ -1988,6 +2010,34 @@ export interface TradeItem {
 // Companies
 // ---------------------------------------------------------------------------
 
+/**
+ * A piece of press published inside a save.
+ *
+ * Written by SLATE in the register of a real outlet, about SLATE's invented
+ * films. It is not an article that publication wrote, and every screen that
+ * shows one says so. The outlet, its masthead and everything factual about it
+ * are the public record; the words are the simulation's.
+ */
+export interface PressItem {
+  id: Id;
+  at: Instant;
+  outletId: string;
+  outletName: string;
+  kind: string;
+  desk: string;
+  register: string;
+  headline: string;
+  standfirst: string;
+  paragraphs: string[];
+  /** What the piece is about, so a project page can find its own coverage. */
+  projectId?: Id;
+  personId?: Id;
+  studioId?: string;
+  networkId?: string;
+  /** True when the story is about the player. */
+  aboutPlayer?: boolean;
+}
+
 export interface Company {
   id: Id;
   saveId: Id;
@@ -2168,7 +2218,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 19;
+export const SAVE_SCHEMA_VERSION = 20;
 
 export interface SaveMeta {
   id: Id;
@@ -2299,6 +2349,8 @@ export interface SaveUniverse {
     pending: { key: string; entry: BoxOfficeEntry }[];
   };
   trade: TradeItem[];
+  /** Everything the press has published in this save, newest last. */
+  press: PressItem[];
 
   companies: Record<Id, Company>;
   divisions: Record<Id, Division>;

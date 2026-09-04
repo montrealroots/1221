@@ -20,7 +20,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Id, Project, Role } from '@/engine/domain/model';
 import {
   addPeople, addPeopleAwards, addPeopleCredits, allPeople, ageOf, creditsFor, overallFor,
-  peopleInRole, personByName, primaryRole, rolesWithSheets,
+  peopleInRole, primaryRole, rolesWithSheets,
 } from '@/engine/content/people';
 import {
   approachSummary, candidatesFor, considerApproach, countryIdForRecord, demandOf,
@@ -213,21 +213,31 @@ describe('bringing somebody into a save', () => {
 describe('offering a part to somebody real', () => {
   it('makes exactly one contract, one credit and one booking on a yes', () => {
     const picture = aPicture('offer-once');
-    const qid = aBigActor();
-    const roleId = aPartFor(picture, qid);
 
-    let result = picture.try<{ accepted: boolean; contractId?: Id }>(
-      'cast.offer_real', { roleId, qid, amount: quoteFor(personByName(allPeople().find((p) => p.qid === qid)!.name)!, 'actor') * 3 },
-    );
-    // Money enough that the answer is about the picture, not the fee. If they
-    // still pass, raise and ask again — that is the game working.
-    let raise = 3;
-    while (result.ok && result.value && !result.value.accepted && raise < 20) {
-      raise *= 2;
-      result = picture.try('cast.offer_real', { roleId, qid, amount: quoteFor(allPeople().find((p) => p.qid === qid)!, 'actor') * raise });
+    // Nobody can be bought at any price — that is the point of the model, and
+    // three refusals ends the conversation. So the test goes down the list
+    // until somebody says yes, which is what a producer actually does.
+    const shortlist = peopleInRole('actor')
+      .sort((a, b) => overallFor(b, 'actor') - overallFor(a, 'actor'))
+      .slice(0, 12);
+    let qid = '';
+    let roleId = '';
+    let result: { ok: boolean; error?: string; value?: { accepted: boolean; contractId?: Id } } | undefined;
+    for (const candidate of shortlist) {
+      qid = candidate.qid;
+      roleId = aPartFor(picture, qid);
+      let raise = 3;
+      result = picture.try<{ accepted: boolean; contractId?: Id }>(
+        'cast.offer_real', { roleId, qid, amount: quoteFor(candidate, 'actor') * raise },
+      );
+      while (result.ok && result.value && !result.value.accepted && raise < 12) {
+        raise *= 2;
+        result = picture.try('cast.offer_real', { roleId, qid, amount: quoteFor(candidate, 'actor') * raise });
+      }
+      if (result.ok && result.value?.accepted) break;
     }
-    expect(result.ok, result.error).toBe(true);
-    expect(result.value?.accepted, 'nobody would take the part at twenty times their quote').toBe(true);
+    expect(result?.ok, result?.error).toBe(true);
+    expect(result?.value?.accepted, 'not one of twelve leading actors would take a funded picture').toBe(true);
 
     const role = picture.sim.universe.roles[roleId] as Role;
     const project = picture.sim.universe.projects[picture.projectId] as Project;
@@ -379,21 +389,32 @@ describe('offering a part to somebody real', () => {
 describe('attaching a real craft', () => {
   it('attaches once, with a contract, and says so when asked again', () => {
     const picture = aPicture('attach-once');
-    const director = peopleInRole('director').sort((a, b) => overallFor(b, 'director') - overallFor(a, 'director'))[0]!;
-
-    let amount = quoteFor(director, 'director') * 3;
-    let result = picture.try<{ attached: boolean; contractId?: Id }>(
-      'film.approach_real', { projectId: picture.projectId, qid: director.qid, role: 'director', amount },
-    );
-    let raise = 3;
-    while (result.ok && result.value && !result.value.attached && raise < 24) {
-      raise *= 2;
-      amount = quoteFor(director, 'director') * raise;
-      result = picture.try('film.approach_real', { projectId: picture.projectId, qid: director.qid, role: 'director', amount });
+    // A director can pass three times and then the conversation is over, so
+    // the test works down a shortlist rather than assuming the first one says
+    // yes at any price.
+    const shortlist = peopleInRole('director')
+      .sort((a, b) => overallFor(b, 'director') - overallFor(a, 'director'))
+      .slice(0, 14);
+    let director = shortlist[0]!;
+    let amount = 0;
+    let result: { ok: boolean; error?: string; value?: { attached: boolean; contractId?: Id } } | undefined;
+    for (const candidate of shortlist) {
+      director = candidate;
+      let raise = 3;
+      amount = quoteFor(candidate, 'director') * raise;
+      result = picture.try<{ attached: boolean; contractId?: Id }>(
+        'film.approach_real', { projectId: picture.projectId, qid: candidate.qid, role: 'director', amount },
+      );
+      while (result.ok && result.value && !result.value.attached && raise < 12) {
+        raise *= 2;
+        amount = quoteFor(candidate, 'director') * raise;
+        result = picture.try('film.approach_real', { projectId: picture.projectId, qid: candidate.qid, role: 'director', amount });
+      }
+      if (result.ok && result.value?.attached) break;
     }
-    expect(result.ok, result.error).toBe(true);
-    expect(result.value?.attached).toBe(true);
-    expect(result.value?.contractId, 'a funded picture papers the deal').toBeDefined();
+    expect(result?.ok, result?.error).toBe(true);
+    expect(result?.value?.attached, 'not one of fourteen leading directors would take a funded picture').toBe(true);
+    expect(result?.value?.contractId, 'a funded picture papers the deal').toBeDefined();
 
     const project = picture.sim.universe.projects[picture.projectId] as Project;
     const personId = personForRecord(picture.sim, director.qid)!.id;
