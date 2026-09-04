@@ -169,7 +169,7 @@ export function ensureCrewPerson(sim: Simulation, role: CrewRole, countryId: str
     interests: [], goals: [], lifestyle: 'comfortable', background: `Works as a ${CREW_LABEL[role]}.`,
     attributes: {}, traits: [],
     skills: {},
-    wellbeing: { energy: 68, stress: 52, sleepDebt: 6, morale: 66, condition: 72, fitness: 52, travelFatigue: 12, nourishment: 70 },
+    wellbeing: { energy: 68, stress: 52, sleepDebt: 6, morale: 66, condition: 72, fitness: 52, travelFatigue: 12, nourishment: 70, hygiene: 80 },
     reputation: {
       publicFame: clamp(Math.round(standing * 0.4 + rng.normal(0, 8)), 0, 92),
       audienceAppeal: 50, professionalReputation: standing, reliability: clamp(Math.round(rng.normal(70, 12)), 20, 99),

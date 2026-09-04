@@ -284,7 +284,7 @@ export function ensureRealPerson(sim: Simulation, qid: string): Person | undefin
     attributes: attributesFrom(record),
     traits: [],
     skills: skillsFrom(record),
-    wellbeing: { energy: 72, stress: 45, sleepDebt: 4, morale: 72, condition: 76, fitness: 60, travelFatigue: 8, nourishment: 74 },
+    wellbeing: { energy: 72, stress: 45, sleepDebt: 4, morale: 72, condition: 76, fitness: 60, travelFatigue: 8, nourishment: 74, hygiene: 80 },
     reputation: {
       publicFame: fameOf(record, role),
       audienceAppeal: Math.round(clamp(45 + signals.reception * 45, 20, 96)),

@@ -637,6 +637,7 @@ function finishDay(
     person.wellbeing.energy = clamp(person.wellbeing.energy - 34 * stress, 0, 100);
     person.wellbeing.stress = clamp(person.wellbeing.stress + 7 * stress, 0, 100);
     person.wellbeing.sleepDebt = Math.min(60, person.wellbeing.sleepDebt + 1.6);
+    person.wellbeing.hygiene = clamp(person.wellbeing.hygiene - 26, 0, 100);
     if (person.isPlayer) {
       person.attributes['long_day_endurance'] = clamp((person.attributes['long_day_endurance'] ?? 40) + 0.35, 0, 100);
       person.attributes['take_consistency'] = clamp((person.attributes['take_consistency'] ?? 40) + 0.25, 0, 100);

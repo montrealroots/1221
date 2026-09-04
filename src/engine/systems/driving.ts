@@ -255,9 +255,17 @@ export function registerDriving(sim: Simulation): void {
     if (!person || !to) return;
 
     person.currentLocationId = to.id;
+    person.currentPlaceId = undefined;
     if (vehicle) {
       vehicle.locationId = to.id;
       addMileage(sim, vehicle, km * 0.621371);
+      // The fuel for the drive is paid for when it is booked, so a long run
+      // includes the stops it needs; what is in the tank at the end is
+      // whatever is left after the last one.
+      const litres = (km * Math.max(3, vehicle.efficiency)) / 100;
+      const burned = (litres / 60) * 100;
+      const start = vehicle.fuelPercent ?? 100;
+      vehicle.fuelPercent = Number(clamp(burned > start ? 100 - (burned % 100) : start - burned, 4, 100).toFixed(2));
     }
 
     const hours = minutes / 60;

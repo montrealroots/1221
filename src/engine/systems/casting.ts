@@ -739,7 +739,7 @@ function ensureCandidate(sim: Simulation, role: Role, index: number): Person {
     attributes,
     traits: [],
     skills: {},
-    wellbeing: { energy: rng.int(55, 95), stress: rng.int(10, 55), sleepDebt: 0, morale: rng.int(45, 85), condition: rng.int(70, 96), fitness: rng.int(40, 90), travelFatigue: 0, nourishment: 75 },
+    wellbeing: { energy: rng.int(55, 95), stress: rng.int(10, 55), sleepDebt: 0, morale: rng.int(45, 85), condition: rng.int(70, 96), fitness: rng.int(40, 90), travelFatigue: 0, nourishment: 75, hygiene: 80 },
     reputation: {
       publicFame: clamp(Math.round(calibre * 70 + rng.normal(0, 14)), 0, 96),
       audienceAppeal: rng.int(35, 88),
@@ -1269,7 +1269,7 @@ function ensureAgentPerson(sim: Simulation, agencyId: string): Id {
     interests: [], goals: [], lifestyle: 'lavish', background: `${agency.name}`,
     attributes: {}, traits: [],
     skills: { negotiation: 70 + agency.dealQuality * 0.25, talent_relations: 60 + agency.dealQuality * 0.3, packaging: 55 + agency.dealQuality * 0.35 },
-    wellbeing: { energy: 70, stress: 55, sleepDebt: 4, morale: 70, condition: 78, fitness: 55, travelFatigue: 10, nourishment: 70 },
+    wellbeing: { energy: 70, stress: 55, sleepDebt: 4, morale: 70, condition: 78, fitness: 55, travelFatigue: 10, nourishment: 70, hygiene: 80 },
     reputation: { publicFame: 8, audienceAppeal: 50, professionalReputation: agency.dealQuality, reliability: 82, prestige: 40, industryDemand: 60, controversy: 0 },
     careerTrack: 'agent', representation: {}, quote: 0,
     creditIds: [], nominationIds: [], creditScore: 780,

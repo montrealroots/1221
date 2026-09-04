@@ -27,7 +27,7 @@ export const NOURISHMENT_DRAIN_PER_HOUR = 4.0;
 export function freshWellbeing(): Wellbeing {
   return {
     energy: 82, stress: 18, sleepDebt: 0, morale: 62,
-    condition: 88, fitness: 50, travelFatigue: 0, nourishment: 75,
+    condition: 88, fitness: 50, travelFatigue: 0, nourishment: 75, hygiene: 80,
   };
 }
 
@@ -70,7 +70,10 @@ export function readiness(person: Person): number {
   const nourishPart = remap(w.nourishment, 0, 100, 0.78, 1.05);
   const moralePart = remap(w.morale, 0, 100, 0.82, 1.12);
   const travelPart = remap(w.travelFatigue, 0, 100, 1.0, 0.80);
-  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * travelPart / 1.35, 5, 100);
+  // Turning up to a room having not showered in two days is not nothing, but
+  // it is not much either: a few points, not a career.
+  const cleanPart = remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03);
+  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * travelPart * cleanPart / 1.35, 5, 100);
 }
 
 export function wellbeingSummary(person: Person): string {
@@ -114,14 +117,14 @@ export interface ActivityDef {
 }
 
 export const ACTIVITIES: readonly ActivityDef[] = [
-  { id: 'shower', name: 'Shower and get ready', category: 'care', description: 'Twenty minutes that make the rest of the day possible.', minutes: 25, perHour: { energy: 6, stress: -8, morale: 4 }, requiresHome: true, tags: ['morning', 'grooming'] },
+  { id: 'shower', name: 'Shower and get ready', category: 'care', description: 'Twenty minutes that make the rest of the day possible.', minutes: 25, perHour: { energy: 6, stress: -8, morale: 4, hygiene: 200 }, requiresHome: true, tags: ['morning', 'grooming'] },
   { id: 'nap', name: 'Take a nap', category: 'rest', description: 'A short sleep that takes the edge off without touching your sleep debt much.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: 22, stress: -14, sleepDebt: -0.8 }, tags: ['rest'] },
   { id: 'rest', name: 'Rest', category: 'rest', description: 'Sit down and do nothing in particular.', minutes: 60, variableDuration: { min: 15, max: 240 }, perHour: { energy: 8, stress: -9, morale: 2 }, tags: ['rest'] },
   { id: 'cook', name: 'Cook a meal', category: 'food', description: 'Uses what is in your kitchen. Cheaper and better than ordering.', minutes: 40, perHour: { energy: -3, stress: -4 }, practises: [{ key: 'cooking', kind: 'skill', gain: 1.1 }], requiresHome: true, tags: ['food', 'kitchen'] },
   { id: 'eat_out', name: 'Eat out', category: 'food', description: 'Somebody else cooks and you pay for the privilege.', minutes: 75, perHour: { stress: -6, morale: 5 }, cost: 62_00, tags: ['food', 'social'] },
   { id: 'order_in', name: 'Order delivery', category: 'food', description: 'Fast, convenient, and the most expensive way to eat badly.', minutes: 20, perHour: { stress: -2 }, cost: 38_00, tags: ['food', 'fast'] },
-  { id: 'gym', name: 'Train at the gym', category: 'fitness', description: 'An hour that costs energy now and returns it for months.', minutes: 75, variableDuration: { min: 30, max: 150 }, perHour: { energy: -14, stress: -16, fitness: 2.4, condition: 1.2, morale: 5 }, cost: 0, practises: [{ key: 'fitness', kind: 'skill', gain: 1.8 }], tags: ['health', 'fitness'] },
-  { id: 'run', name: 'Go for a run', category: 'fitness', description: 'Free, immediate, and the fastest way to move stress.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: -12, stress: -18, fitness: 1.9, condition: 0.9, morale: 6 }, practises: [{ key: 'fitness', kind: 'skill', gain: 1.4 }], tags: ['health', 'free'] },
+  { id: 'gym', name: 'Train at the gym', category: 'fitness', description: 'An hour that costs energy now and returns it for months.', minutes: 75, variableDuration: { min: 30, max: 150 }, perHour: { energy: -14, stress: -16, fitness: 2.4, condition: 1.2, morale: 5, hygiene: -18 }, cost: 0, practises: [{ key: 'fitness', kind: 'skill', gain: 1.8 }], tags: ['health', 'fitness'] },
+  { id: 'run', name: 'Go for a run', category: 'fitness', description: 'Free, immediate, and the fastest way to move stress.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: -12, stress: -18, fitness: 1.9, condition: 0.9, morale: 6, hygiene: -22 }, practises: [{ key: 'fitness', kind: 'skill', gain: 1.4 }], tags: ['health', 'free'] },
   { id: 'watch', name: 'Watch something', category: 'leisure', description: 'Research, if you want to call it that.', minutes: 110, variableDuration: { min: 30, max: 300 }, perHour: { energy: 2, stress: -8, morale: 6 }, practises: [{ key: 'script_analysis', kind: 'attribute', gain: 0.35 }], tags: ['leisure', 'research'] },
   { id: 'read', name: 'Read', category: 'leisure', description: 'Slower than watching and considerably better for the work.', minutes: 60, variableDuration: { min: 20, max: 240 }, perHour: { energy: -1, stress: -10, morale: 5 }, practises: [{ key: 'script_analysis', kind: 'attribute', gain: 0.6 }, { key: 'character_writing', kind: 'skill', gain: 0.5 }], tags: ['leisure', 'craft'] },
   { id: 'rehearse', name: 'Rehearse', category: 'creative', description: 'Work on material by yourself. Nobody sees it and it shows on the day.', minutes: 90, variableDuration: { min: 30, max: 240 }, perHour: { energy: -7, stress: 2 }, practises: [{ key: 'preparation', kind: 'attribute', gain: 1.0 }, { key: 'memorization', kind: 'attribute', gain: 0.8 }, { key: 'emotional_truth', kind: 'attribute', gain: 0.35 }], tags: ['craft', 'acting'] },

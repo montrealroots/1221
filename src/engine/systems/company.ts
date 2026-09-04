@@ -558,7 +558,7 @@ function createExecutive(sim: Simulation, company: Company, template: RoleTempla
     interests: [], goals: [], lifestyle: 'comfortable',
     background: `${template.title} at ${company.name}`,
     attributes: {}, traits: [], skills,
-    wellbeing: { energy: 72, stress: 45, sleepDebt: 3, morale: 68, condition: 82, fitness: 55, travelFatigue: 0, nourishment: 72 },
+    wellbeing: { energy: 72, stress: 45, sleepDebt: 3, morale: 68, condition: 82, fitness: 55, travelFatigue: 0, nourishment: 72, hygiene: 80 },
     reputation: {
       publicFame: rng.int(0, 18), audienceAppeal: 50,
       professionalReputation: rng.int(48, 88), reliability: rng.int(60, 95),

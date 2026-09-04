@@ -363,6 +363,33 @@ for (const size of WIDTHS) {
     }
   }
 
+  // The city: where you are, what is here, and everywhere you could go.
+  await openRail();
+  const cityNav = page.getByRole('button', { name: /^the city$/i }).first();
+  if (await cityNav.count()) {
+    await cityNav.click().catch(() => {});
+    await page.waitForTimeout(1400);
+    scrollsSideways = (await probe('the city')) || scrollsSideways;
+    await shoot('15-city');
+    const menu = page.getByRole('button', { name: /See The Menu/i }).first();
+    const firstPlace = page.getByRole('button', { name: /^(Drive|Walk|Taxi|Transit)$/ }).first();
+    if (await firstPlace.count()) {
+      await firstPlace.click().catch(() => {});
+      await page.waitForTimeout(1400);
+      scrollsSideways = (await probe('somewhere in the city')) || scrollsSideways;
+      const menuNow = page.getByRole('button', { name: /See The Menu/i }).first();
+      if (await menuNow.count()) {
+        await menuNow.click().catch(() => {});
+        await page.waitForTimeout(900);
+        scrollsSideways = (await probe('a menu')) || scrollsSideways;
+        await shoot('16-menu');
+        await page.getByRole('button', { name: /^Leave It$/ }).first().click().catch(() => {});
+        await page.waitForTimeout(300);
+      }
+    }
+    void menu;
+  }
+
   // The actor's side: a tape asked for, and the room where it is shot.
   await openRail();
   const castingAgain = page.getByRole('button', { name: /^casting$/i }).first();

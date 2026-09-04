@@ -44,6 +44,7 @@ import { registerRealPeople } from './systems/real-people';
 import { registerPress } from './systems/press';
 import { craftFromLegacy } from './content/screenplay';
 import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
+import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -76,6 +77,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCasting(sim);
   registerProduction(sim);
   registerPost(sim);
+  registerPlaces(sim);
   registerRelease(sim);
   registerCritics(sim);
   registerFranchises(sim);
@@ -124,6 +126,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
   ensureLotsClose(sim);
+  ensureHygieneTick(sim);
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
@@ -831,6 +834,22 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(plants > 0
       ? `Post is work now: bids, cues, stages and lots. ${plants} lot${plants === 1 ? '' : 's'} you already owned ${plants === 1 ? 'is' : 'are'} a working plant.`
       : 'Post is work now: effects bids from real houses, music licensed from its owners, stages on real lots.');
+  }
+
+  if (from < 23) {
+    // The city is somewhere you move through now: places to go, a tank that
+    // empties, and a day that leaves its mark on you. Everybody in the save
+    // starts clean and every car starts full, which is the kindest reading of
+    // a world that was not tracking either.
+    let people = 0;
+    for (const person of Object.values(universe.people)) {
+      if (person.wellbeing.hygiene === undefined) { person.wellbeing.hygiene = 80; people++; }
+    }
+    let cars = 0;
+    for (const vehicle of Object.values(universe.vehicles)) {
+      if (vehicle.fuelPercent === undefined) { vehicle.fuelPercent = 100; cars++; }
+    }
+    steps.push(`The city is somewhere you go now: restaurants, filling stations, hotels and the sights. ${people} people started clean and ${cars} car${cars === 1 ? '' : 's'} started full.`);
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

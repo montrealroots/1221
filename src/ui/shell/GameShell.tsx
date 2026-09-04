@@ -73,6 +73,7 @@ export function GameShell() {
       items: [
         { route: '/workspace/health', label: 'Health', icon: '✚' },
         { route: '/workspace/education', label: 'Education', icon: '✎' },
+        { route: '/workspace/city', label: 'The City', icon: '⌖' },
         { route: '/workspace/travel', label: 'Travel', icon: '✈' },
         { route: '/workspace/character', label: 'Character', icon: '☰' },
         { route: '/workspace/settings', label: 'Settings', icon: '⚙' },

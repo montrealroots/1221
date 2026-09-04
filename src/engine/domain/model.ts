@@ -53,6 +53,11 @@ export interface Wellbeing {
   travelFatigue: number;
   /** Hunger 0-100 where 100 is fed. */
   nourishment: number;
+  /**
+   * 0-100, where 100 is clean and rested-looking. Falls through the day and
+   * faster on a shoot; a shower puts it back. Rooms notice.
+   */
+  hygiene: number;
 }
 
 export interface Reputation {
@@ -132,6 +137,11 @@ export interface Person {
   citizenshipId: string;
   /** Reference city id where they currently are. */
   currentLocationId: string;
+  /**
+   * Where in the city. A place id from content/places, a property id when you
+   * are at home, or absent when you are simply out in the city.
+   */
+  currentPlaceId?: string;
   /** Property id of their home, when they have one. */
   residenceId?: Id;
   householdId?: Id;
@@ -731,6 +741,11 @@ export interface Vehicle {
   soldAt?: Instant;
   /** Litres per 100km equivalent or kWh/100mi, kept abstract. */
   efficiency: number;
+  /**
+   * What is in the tank, 0-100. A car from before fuel was tracked is read as
+   * full the first time somebody looks at it.
+   */
+  fuelPercent?: number;
   horsepower: number;
   zeroToSixty: number;
 }
@@ -2454,7 +2469,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 22;
+export const SAVE_SCHEMA_VERSION = 23;
 
 export interface SaveMeta {
   id: Id;

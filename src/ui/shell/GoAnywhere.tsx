@@ -40,6 +40,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/property', label: 'Property', keywords: ['house', 'home', 'buy house', 'build house', 'rent', 'real estate', 'mansion', 'land', 'construction', 'interior'], detail: 'Buy, build and furnish' },
   { route: '/workspace/vehicles', label: 'Vehicles', keywords: ['car', 'cars', 'buy car', 'service', 'modify', 'garage'], detail: 'Buy, own, service and modify' },
   { route: '/workspace/shopping', label: 'Shopping', keywords: ['buy', 'store', 'groceries', 'clothes', 'watch', 'jewellery', 'wardrobe'], detail: 'Everything you can buy' },
+  { route: '/workspace/city', label: 'The City', keywords: ['eat', 'restaurant', 'food', 'dinner', 'drink', 'bar', 'coffee', 'gas', 'fuel', 'petrol', 'drive', 'walk', 'taxi', 'sights', 'landmark', 'museum', 'park', 'beach', 'gym', 'shower', 'where am i'], detail: 'Where you are and everywhere you could go' },
   { route: '/workspace/travel', label: 'Travel', keywords: ['flight', 'fly', 'hotel', 'trip', 'airport', 'private jet', 'charter'], detail: 'Trips, flights and hotels' },
   { route: '/workspace/health', label: 'Health', keywords: ['doctor', 'dentist', 'chiropractor', 'appointment', 'therapy', 'optometrist'], detail: 'Providers and appointments' },
   { route: '/workspace/insurance', label: 'Insurance', keywords: ['policy', 'claim', 'cover', 'premium'], detail: 'Policies and claims' },

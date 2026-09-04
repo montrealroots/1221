@@ -774,7 +774,7 @@ function makeMinimalNpc(sim: Simulation, id: Id, first: string, last: string, ci
     personality: { openness: 50, conscientiousness: 65, extraversion: 70, agreeableness: 60, emotionalStability: 60, ambition: 60, riskTolerance: 45 },
     interests: [], goals: [], lifestyle: 'comfortable' as const, background: '',
     attributes: {}, traits: [], skills: {},
-    wellbeing: { energy: 70, stress: 30, sleepDebt: 0, morale: 60, condition: 80, fitness: 50, travelFatigue: 0, nourishment: 70 },
+    wellbeing: { energy: 70, stress: 30, sleepDebt: 0, morale: 60, condition: 80, fitness: 50, travelFatigue: 0, nourishment: 70, hygiene: 80 },
     reputation: { publicFame: 0, audienceAppeal: 50, professionalReputation: 50, reliability: 60, prestige: 0, industryDemand: 0, controversy: 0 },
     careerTrack: 'civilian' as const, representation: {}, quote: 0,
     creditIds: [], nominationIds: [], creditScore: 700,
