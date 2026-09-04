@@ -29,8 +29,10 @@ import {
 import { ALL_TIME, type RecordEntry } from '@/engine/content/records';
 import { LICENCE_KINDS, LICENCE_KIND_LABEL, licenceOdds, licenceStatus, type LicenceKind } from '@/engine/systems/ip';
 import { activeWaves, marketReport, marketsInPlay } from '@/engine/systems/zeitgeist';
+import { PeopleTab } from '@/ui/components/PeopleTab';
+import { SearchEverything } from '@/ui/components/SearchEverything';
 
-type Tab = 'studios' | 'networks' | 'markets' | 'boxoffice' | 'records' | 'trades' | 'people';
+type Tab = 'studios' | 'networks' | 'markets' | 'boxoffice' | 'records' | 'trades' | 'people' | 'search';
 type Kind = 'all' | 'film' | 'tv';
 type Sort = 'year' | 'gross' | 'tomatometer' | 'imdb' | 'title';
 
@@ -76,8 +78,10 @@ export function IndustryWorkspace() {
         { id: 'records', label: 'Records' },
         { id: 'trades', label: 'Trades' },
         { id: 'people', label: 'People' },
+        { id: 'search', label: 'Search' },
       ]} />
 
+      {tab === 'search' && <SearchEverything onOpenStudio={(id) => { setTab('studios'); setSelectedId(id); }} onOpenNetwork={(id) => { setTab('networks'); setSelectedId(id); }} />}
       {tab === 'markets' && <MarketsTab />}
       {tab === 'boxoffice' && <BoxOfficeTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
       {tab === 'records' && <RecordsTab onStudio={(id) => { setTab('studios'); setSelectedId(id); }} />}
@@ -86,7 +90,7 @@ export function IndustryWorkspace() {
       {tab === 'studios' && selectedStudio && <StudioDetail studio={selectedStudio} onBack={() => setSelectedId(null)} />}
       {tab === 'networks' && !selectedNetwork && <NetworkList onSelect={setSelectedId} />}
       {tab === 'networks' && selectedNetwork && <NetworkDetail network={selectedNetwork} onBack={() => setSelectedId(null)} />}
-      {tab === 'people' && <Empty title="The People Come After The Networks" body="Presidents, executives, showrunners, directors, producers, actors, cinematographers and composers each get their own step." />}
+      {tab === 'people' && <PeopleTab />}
     </>
   );
 }

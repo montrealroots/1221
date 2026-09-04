@@ -109,6 +109,11 @@ export function studioCatalog(studioId: string): CatalogTitle[] | undefined {
   return byStudio.get(studioId);
 }
 
+/** Every title loaded so far, whichever studio it came in with. For the index. */
+export function everyLoadedTitle(): CatalogTitle[] {
+  return [...byQid.values()];
+}
+
 export function titleByQid(qid: string): CatalogTitle | undefined {
   return byQid.get(qid);
 }

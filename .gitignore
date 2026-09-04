@@ -15,5 +15,6 @@ walkthrough/
 screenshots/
 ui-audit/
 
-# Catalogue pull cache (rebuildable from Wikidata; large)
+# Pull caches (rebuildable from Wikidata; large)
 tools/filmography/cache/
+tools/people/cache/
