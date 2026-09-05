@@ -6,6 +6,8 @@
  * searchable, so typing "how do I buy a house" finds the property article.
  */
 
+import { CITIES_WITH_REAL_GYMS } from '@/engine/content/fitness';
+
 export interface HelpArticle {
   id: string;
   route: string;
@@ -38,10 +40,10 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     id: 'calendar', route: '/workspace/calendar', title: 'Calendar',
     what: 'Every commitment in your life in one place, and the collision detector for all of them. If two things need you at once, this is where you find out.',
     affects: ['Work shifts', 'Auditions and meetings', 'Shoot days', 'Appointments', 'Flights', 'Bills and deadlines', 'Classes', 'Birthdays and anniversaries'],
-    actions: ['Look ahead by month', 'See conflicts flagged before they cost you', 'Open anything to deal with it'],
-    connects: ['Travel, because being in the wrong city means missing things', 'Work, because a missed shift has consequences', 'Production, because a missed shoot day costs a day of budget'],
-    keywords: ['calendar', 'schedule', 'diary', 'conflicts', 'clash', 'when', 'dates', 'what is on'],
-    advanced: ['Two pending items that both require you and overlap in time are flagged as conflicted. Only items requiring your attendance can conflict.'],
+    actions: ['Look ahead by month', 'See conflicts flagged before they cost you', 'Open anything to see what it is and what you can do to it', 'Plan something on a day: the gym, a run, a meal, an hour to read', 'Move, skip or cancel a plan; move or cancel an appointment; pay a bill from its entry'],
+    connects: ['Travel, because being in the wrong city means missing things', 'Wellbeing and The City, because a plan opens as a scene when its time comes', 'Health, because moving an appointment moves the appointment itself', 'Production, because a missed shoot day costs a day of budget'],
+    keywords: ['calendar', 'schedule', 'diary', 'conflicts', 'clash', 'when', 'dates', 'what is on', 'plan', 'plan something', 'reminder', 'reschedule', 'move it'],
+    advanced: ['Two pending items that both require you and overlap in time are flagged as conflicted. Only items requiring your attendance can conflict.', 'A plan is yours to change; a bill, a flight or an observance belongs to the system that made it. When a plan comes due it raises a decision: play it out, just do it, or skip it. The scene finishing is what marks it attended; left alone past its window, it is missed.'],
   },
   {
     id: 'bank', route: '/workspace/bank', title: 'Bank',
@@ -59,10 +61,19 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     id: 'wellbeing', route: '/workspace/wellbeing', title: 'Wellbeing',
     what: 'Energy, stress, sleep debt, condition and morale. Not a medical model — a game state that decides how well you perform at everything else.',
     affects: ['How long you have been awake', 'How much you slept and how well', 'Work and shoot days', 'Travel across time zones', 'Whether you have eaten'],
-    actions: ['Sleep', 'Rest or nap', 'Eat or cook', 'Exercise', 'See a counsellor when stress is high'],
-    connects: ['Casting, because readiness changes how you audition', 'Production, because tired performances cost takes', 'Relationships, because being depleted shows'],
-    keywords: ['energy', 'stress', 'sleep', 'tired', 'exhausted', 'health', 'hungry', 'eat', 'rest', 'burnout'],
-    advanced: ['Readiness combines energy, stress, sleep debt, nourishment, morale and travel fatigue into a single 0 to 100 multiplier used by performance systems.'],
+    actions: ['Sleep', 'Play an activity out — decide how long, see the cost and the clash, do it, see what it did', 'Or just do it, straight through, by the same rules', 'Eat or cook', 'Find a gym in The City and train there', 'See a counsellor when stress is high'],
+    connects: ['Casting, because readiness changes how you audition', 'The City, because the gym is a building with a door and hours', 'Calendar, because anything you play out can be planned for later', 'Relationships, because being depleted shows'],
+    keywords: ['energy', 'stress', 'sleep', 'tired', 'exhausted', 'health', 'hungry', 'eat', 'rest', 'burnout', 'play it out', 'scene', 'workout', 'sore', 'soreness', 'readiness'],
+    advanced: ['Readiness combines energy, stress, sleep debt, nourishment, morale, travel fatigue and soreness into a single 0 to 100 multiplier used by performance systems.', 'A scene in progress stays above every screen until you finish or leave it. Leaving keeps what was already done. Typed text has to be one of the choices on screen; it never does anything on its own.'],
+  },
+  {
+    id: 'city', route: '/workspace/city', title: 'The City',
+    what: 'Where you are standing, what you can do there, and everywhere you could go instead — with what the journey costs in time, money and fuel.',
+    affects: ['Traffic at the hour you set off', 'Whether you have a car here and fuel in it', 'Opening hours', 'Whether a place is real or SLATE’s own'],
+    actions: ['Work out at a gym — walk in, buy a pass or use your membership, decide what today is for, do it one block at a time', 'Eat at a restaurant or café — get there, read the menu, order', 'Look around a landmark', 'Fill the tank', 'Take a hotel room', 'Go home'],
+    connects: ['Wellbeing, because a workout is what moves fitness, condition and tomorrow’s soreness', 'Bank, because every pass, meal and fare is paid for', 'Calendar, because a gym session or a meal can be planned for later', 'Relationships, because a trainer remembers you'],
+    keywords: ['city', 'where am i', 'gym', 'work out', 'workout', 'train', 'membership', 'day pass', 'trainer', 'class', 'restaurant', 'eat here', 'menu', 'drive', 'walk', 'taxi', 'fuel'],
+    advanced: [`The landmarks and the named gyms are real and say only what is on the public record; their hours and prices are SLATE’s calibration and say so. Everything else in the city is SLATE’s own and says that too. Real gyms are listed in ${CITIES_WITH_REAL_GYMS.length} cities; everywhere else the gyms are invented.`],
   },
   {
     id: 'relationships', route: '/workspace/relationships', title: 'Relationships',

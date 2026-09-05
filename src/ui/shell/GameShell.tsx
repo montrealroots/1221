@@ -13,6 +13,7 @@ import { TimeControls } from './TimeControls';
 import { Home } from '@/ui/screens/Home';
 import { World } from '@/ui/screens/World';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
+import { ScenePanel } from '@/ui/components/ScenePanel';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
 
 
@@ -90,6 +91,7 @@ export function GameShell() {
               </nav>
             )}
 
+            <ScenePanel />
             <Screen route={route} />
           </div>
         </main>

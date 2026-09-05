@@ -158,7 +158,8 @@ const PROBE = () => {
   // Every label site in the interface. A fragment here starts every word with
   // a capital; a complete sentence does not have to.
   const LABEL_SITES = 'h1, h2, h3, h4, th, label, button, .chip, .eyebrow, .stat-label, '
-    + '.trait-name, .dest-label, .attr-name, .tab, [role="tab"], .kv-key, .field-label, option';
+    + '.trait-name, .dest-label, .attr-name, .tab, [role="tab"], .kv-key, .field-label, option, '
+    + '.scene-choice-label, .scene .eyebrow, summary';
 
   // Left alone: it is already capitalised, it is a number or symbol, it is an
   // acronym or a real spelling with internal capitals, or it is a unit that
@@ -254,6 +255,7 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
   const check = async (screen) => {
     await page.waitForTimeout(450);
     const got = await page.evaluate(PROBE);
+    if (process.env.SLATE_VERBOSE && got.faults.length === 0 && !got.sideways) console.log(`  ${screen}: ok`);
     if (got.faults.length > 0 || got.sideways) {
       totalFaults += got.faults.length;
       summary.push({ size: size.name, screen, ...got });
@@ -338,6 +340,107 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
       await check(`${slug}--${tabName}`);
     }
 
+    await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));
+      b?.click();
+    });
+    await page.waitForTimeout(600);
+  }
+
+  // A scene, several steps in: the panel above The City, then the gym desk,
+  // the plan, the exercise list, and the cooldown.
+  const city = page.locator('.dest[aria-label^="The City"]').first();
+  if (await city.count()) {
+    await city.click().catch(() => {});
+    await page.waitForTimeout(1100);
+    const dismissCity = page.getByRole('button', { name: /^got it$/i }).first();
+    if (await dismissCity.count()) { await dismissCity.click().catch(() => {}); await page.waitForTimeout(300); }
+    // Gyms sit under the Errands tab; a gym row carries its own Work Out.
+    const errands = page.locator('.tab', { hasText: /^Errands$/ }).first();
+    if (await errands.count()) { await errands.click().catch(() => {}); await page.waitForTimeout(500); }
+    // The list is long and its journeys are planned on render; on a busy
+    // machine it can take a moment, so wait for the row rather than guess.
+    const workOut = page.getByRole('button', { name: /^Work Out$/ }).first();
+    await workOut.waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
+    if (!(await workOut.count())) {
+      const tabs = await page.locator('.tab').allTextContents().catch(() => []);
+      const rows = await page.locator('.list-item .small.strong').allTextContents().catch(() => []);
+      const buttons = [...new Set(await page.locator('.list-item .btn').allTextContents().catch(() => []))];
+      console.log(`  scene-gym: no gym row with Work Out on The City — scene not walked`);
+      console.log(`  scene-gym: tabs [${tabs.map((t) => t.trim()).join(', ')}]; ${rows.length} rows; buttons [${buttons.join(', ')}]; first rows [${rows.slice(0, 6).map((r) => r.trim()).join(' | ')}]`);
+    }
+    if (await workOut.count()) {
+      await workOut.click().catch(() => {});
+      await page.waitForTimeout(800);
+      // Each step is named after the scene panel's own title, so a step
+      // that did not open is visible in the log rather than silently "ok".
+      const sceneTitle = async () => ((await page.locator('.scene h2').first().textContent().catch(() => '')) ?? '').trim() || 'no scene on screen';
+      const sceneCheck = async (name) => check(`${name} (${await sceneTitle()})`);
+      const pickScene = async (label) => {
+        const c = page.locator('.scene-choice').filter({ has: page.locator('.scene-choice-label', { hasText: new RegExp(`^${label}$`) }) }).first();
+        await c.waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
+        if (!(await c.count())) { console.log(`  scene-gym: no choice "${label}" at "${await sceneTitle()}"`); return false; }
+        const before = await sceneTitle();
+        await c.click().catch(() => {});
+        // Every choice the walk takes moves the scene to a new step with its own title.
+        await page.waitForFunction((prev) => (document.querySelector('.scene h2')?.textContent ?? '').trim() !== prev, before, { timeout: 8000 }).catch(() => {});
+        await page.waitForTimeout(300);
+        return true;
+      };
+      await sceneCheck('scene-gym-arrive');
+      for (const mode of ['Walk', 'Drive', 'Taxi', 'Transit']) { if (await pickScene(mode)) break; }
+      await sceneCheck('scene-gym-desk');
+      await pickScene('Buy A Day Pass');
+      await sceneCheck('scene-gym-plan');
+      await pickScene('Strength');
+      await sceneCheck('scene-gym-pick');
+      // One block: the first exercise on offer, at a steady effort. Finish Up
+      // is only offered once something has been done.
+      const firstExercise = ((await page.locator('.scene-choice .scene-choice-label').allTextContents().catch(() => []))
+        .map((t) => t.trim()).find((t) => t && !/^(Something Else|Finish Up)$/.test(t))) ?? '';
+      if (firstExercise) await pickScene(firstExercise.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      await sceneCheck('scene-gym-effort');
+      await pickScene('Steady');
+      await sceneCheck('scene-gym-after-block');
+      await pickScene('Finish Up');
+      await sceneCheck('scene-gym-cooldown');
+      const leave = page.locator('.scene').getByRole('button', { name: /^Leave$/ }).first();
+      if (await leave.count()) { await leave.click().catch(() => {}); await page.waitForTimeout(500); }
+    }
+    await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));
+      b?.click();
+    });
+    await page.waitForTimeout(600);
+  }
+
+  // The calendar's two modals.
+  const calendar = page.locator('.dest[aria-label^="Calendar"]').first();
+  if (await calendar.count()) {
+    await calendar.click().catch(() => {});
+    await page.waitForTimeout(1100);
+    const dismissCal = page.getByRole('button', { name: /^got it$/i }).first();
+    if (await dismissCal.count()) { await dismissCal.click().catch(() => {}); await page.waitForTimeout(300); }
+    await page.locator('.cal-day[data-today="true"]').first().click().catch(() => {});
+    await page.waitForTimeout(500);
+    const planIt = page.getByRole('button', { name: /^Plan Something$/ }).first();
+    if (await planIt.count()) {
+      await planIt.click().catch(() => {});
+      await page.waitForTimeout(500);
+      await check('calendar-plan-form');
+      await page.keyboard.press('Escape').catch(() => {});
+      const never = page.getByRole('button', { name: /^Never Mind$/ }).first();
+      if (await never.count()) await never.click().catch(() => {});
+      await page.waitForTimeout(300);
+    }
+    const firstEntry = page.locator('.list-item').filter({ hasText: /Due|Listings|Inventory|Payout|Draw/ }).first();
+    if (await firstEntry.count()) {
+      await firstEntry.click().catch(() => {});
+      await page.waitForTimeout(500);
+      await check('calendar-entry-detail');
+      await page.getByRole('button', { name: /^Close$/ }).first().click().catch(() => {});
+      await page.waitForTimeout(300);
+    }
     await page.evaluate(() => {
       const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));
       b?.click();

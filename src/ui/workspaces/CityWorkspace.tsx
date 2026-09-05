@@ -20,6 +20,7 @@ import {
 import {
   MODE_LABEL, hotelRoom, placesNear, planJourney, whatIsHere, type Mode,
 } from '@/engine/systems/places';
+import { activeScene } from '@/engine/systems/scenes';
 
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
@@ -38,6 +39,7 @@ export function CityWorkspace() {
   const kinds = GROUPS.find((g) => g.id === group)?.kinds ?? [];
   const near = useWorld((s) => placesNear(s, { mode, limit: 120 }).filter((entry) => kinds.includes(entry.place.kind)));
   const room = useWorld((s) => hotelRoom(s, s.player));
+  const scene = useWorld(activeScene);
   const city = CITIES.get(sim.player.currentLocationId);
   const homeJourney = useMemo(() => {
     const home = sim.player.residenceId ? sim.universe.properties[sim.player.residenceId] : undefined;
@@ -88,7 +90,14 @@ export function CityWorkspace() {
             </button>
           )}
           {here.place?.actions.includes('train') && (
-            <button className="btn btn-sm" onClick={() => run('life.do_activity', { activityId: 'gym' })}>Train Here</button>
+            <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'fitness.gym', input: { placeId: here.place!.id } })}>
+              Work Out
+            </button>
+          )}
+          {here.place && here.place.actions.includes('eat') && menuOf(here.place).length > 0 && (
+            <button className="btn btn-sm" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.meal', input: { placeId: here.place!.id } })}>
+              Eat Here
+            </button>
           )}
           {here.place?.actions.includes('watch') && (
             <button className="btn btn-sm" onClick={() => run('life.do_activity', { activityId: 'watch' })}>Watch Something</button>
@@ -160,13 +169,25 @@ export function CityWorkspace() {
                   <div className="mono small">{formatDuration(journey.minutes * 60_000)}</div>
                   <div className="xs dim">{journey.km} km{journey.cost > 0 ? ` · ${formatMoney(journey.cost, { cents: false })}` : ''}</div>
                 </div>
-                <button
-                  className="btn btn-sm btn-primary"
-                  disabled={sim.player.currentPlaceId === place.id}
-                  onClick={() => run('go.to', { placeId: place.id, mode })}
-                >
-                  {sim.player.currentPlaceId === place.id ? 'Here' : MODE_LABEL[mode]}
-                </button>
+                <div className="row gap-1 wrap" style={{ justifyContent: 'flex-end' }}>
+                  {place.kind === 'gym' && (
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'fitness.gym', input: { placeId: place.id } })}>
+                      Work Out
+                    </button>
+                  )}
+                  {place.actions.includes('eat') && menuOf(place).length > 0 && (
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.meal', input: { placeId: place.id } })}>
+                      Eat Here
+                    </button>
+                  )}
+                  <button
+                    className={`btn btn-sm${place.kind === 'gym' || (place.actions.includes('eat') && menuOf(place).length > 0) ? '' : ' btn-primary'}`}
+                    disabled={sim.player.currentPlaceId === place.id}
+                    onClick={() => run('go.to', { placeId: place.id, mode })}
+                  >
+                    {sim.player.currentPlaceId === place.id ? 'Here' : MODE_LABEL[mode]}
+                  </button>
+                </div>
               </div>
             ))}
           </div>

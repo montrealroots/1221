@@ -56,8 +56,10 @@ const TANK_LITRES = 60;
 export function neighbourhoodKm(cityId: string, a: string | undefined, b: string | undefined): number {
   const city = CITIES.get(cityId);
   const spread = city ? clamp(2 + Math.log10(Math.max(1, city.population)) * 2.6, 3, 26) : 8;
-  if (!a && !b) return spread * 0.35;
-  if (a === b) return spread * 0.18;
+  // One decimal on every path. The two short ones were leaking a raw float
+  // onto the screen as "3.444618236088402 km".
+  if (!a && !b) return Number((spread * 0.35).toFixed(1));
+  if (a === b) return Number((spread * 0.18).toFixed(1));
   const pair = [a ?? 'city', b ?? 'city'].sort().join('|');
   const rng = makeRng(`hood-km:${cityId}:${pair}`);
   return Number((spread * rng.float(0.25, 1)).toFixed(1));

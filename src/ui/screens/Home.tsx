@@ -184,12 +184,22 @@ export function Home() {
                     )}
                   </span>
                 </div>
-                <button className="btn btn-sm" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                  Open Calendar
-                </button>
+                <div className="row gap-2 wrap">
+                  <button className="btn btn-sm" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+                    Open Calendar
+                  </button>
+                  <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+                    Plan Something
+                  </button>
+                </div>
               </>
             ) : (
-              <p className="muted small">Nothing scheduled. The day is yours.</p>
+              <>
+                <p className="muted small">Nothing scheduled. The day is yours.</p>
+                <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+                  Plan Something
+                </button>
+              </>
             )}
 
             {soon.length > 1 && (

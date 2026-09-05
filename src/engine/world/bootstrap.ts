@@ -194,6 +194,8 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     trips: {}, flightBookings: {}, hotelBookings: {},
     socialAccounts: {}, socialPosts: {}, brandDeals: {},
     companies: {},
+    scenes: { version: 2, sessions: {} },
+    memberships: {}, workouts: {}, plans: {},
     industry: {
       briefed: false,
       // Fiction, fixed here so every save tells the same story about itself.
