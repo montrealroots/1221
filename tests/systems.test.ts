@@ -240,35 +240,24 @@ describe('attributes and traits', () => {
     }
   });
 
-  it('refuses to grant conflicting traits even in sandbox', () => {
+  it('never lets the founder hold two traits that contradict each other', () => {
+    // They start with every acting trait that can be held at once, and the
+    // mutually exclusive pairs stay exclusive: that is a fact about people
+    // rather than a limit the game was imposing on the player.
     const sim = quickSave();
-    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-    const result = sim.execute<{ granted: string[]; skipped: { id: string }[] }>({
-      kind: 'sandbox.grant_all_traits', payload: {},
-    });
-    expect(result.ok).toBe(true);
-    expect(result.value?.skipped.length).toBeGreaterThan(0);
-
     const held = sim.player.traits;
+    expect(held.length).toBeGreaterThan(10);
     for (const id of held) {
-      expect(conflictingTraits(held.filter((t) => t !== id), id)).toHaveLength(0);
+      expect(conflictingTraits(held.filter((t) => t !== id), id), id).toHaveLength(0);
     }
   });
 
-  it('maxes every attribute and skill when sandbox asks', () => {
+  it('starts every attribute and skill at the ceiling', () => {
     const sim = quickSave();
-    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-    sim.execute({ kind: 'sandbox.max_attributes', payload: {} });
     for (const attribute of ATTRIBUTES) expect(sim.player.attributes[attribute.id]).toBe(100);
     for (const skill of SKILLS) expect(sim.player.skills[skill.id]).toBe(100);
   });
 
-  it('refuses sandbox tools while sandbox is off', () => {
-    const sim = quickSave();
-    const result = sim.execute({ kind: 'sandbox.max_attributes', payload: {} });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/Sandbox is off/);
-  });
 });
 
 describe('relationships', () => {

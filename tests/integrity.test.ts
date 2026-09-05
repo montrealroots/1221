@@ -177,13 +177,15 @@ describe('malformed and hostile input', () => {
 });
 
 describe('permission boundaries', () => {
-  it('refuses sandbox tools while sandbox is off', () => {
+  it('has no cheat mode left to refuse', () => {
+    // Sandbox is gone. The founder starts at the ceiling of everything, so
+    // there was nothing left for it to give, and a command that can hand out
+    // money or attributes is not something to leave lying in the build.
     const sim = quickSave();
-    expect(sim.universe.sandbox.enabled).toBe(false);
-    for (const kind of ['sandbox.add_funds', 'sandbox.max_attributes', 'sandbox.grant_all_traits']) {
-      const result = sim.execute({ kind, payload: { amount: 1_000_000_00 } });
-      if (result.ok) continue; // a tool that does not exist is covered elsewhere
-      expect(result.error, `${kind} did not mention sandbox`).toMatch(/[Ss]andbox/);
+    for (const kind of ['sandbox.add_funds', 'sandbox.max_attributes', 'sandbox.grant_all_traits', 'sandbox.god_mode', 'sandbox.toggle']) {
+      const result = sim.execute({ kind, payload: { amount: 1_000_000_00, enabled: true } });
+      expect(result.ok, `${kind} still exists`).toBe(false);
+      expect(result.error).toMatch(/unknown command/i);
     }
     expect(sim.ledger.audit()).toEqual([]);
   });

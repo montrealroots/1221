@@ -23,12 +23,10 @@ import { formatMoney } from '@/engine/core/money';
 import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
-import {
-  FOUNDER_ATTRIBUTES, FOUNDER_ATTRIBUTE_BY_ID, FOUNDER_BACKGROUNDS, FOUNDER_BACKGROUND_BY_ID,
-  FOUNDER_TRAITS, FOUNDER_TRAIT_BY_ID, conflictingFounderTraits, instrumentFor,
-} from '@/engine/content/founder';
+import { FOUNDER_BACKGROUNDS, FOUNDER_BACKGROUND_BY_ID } from '@/engine/content/founder';
 import { REMITS, REMIT_BY_ID, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
 import { STRIKE_IS_FICTION } from '@/engine/content/strike';
+import { DISCIPLINES, DISCIPLINE_LABEL, PRODIGY_NOTE, goatTraitsIn } from '@/engine/content/prodigy';
 
 const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -425,6 +423,7 @@ function PersonalStep({
     return [...map.entries()];
   }, []);
 
+
   const toggleTrait = (id: string) => {
     setConfig((c) => {
       if (c.traits.includes(id)) return { ...c, traits: c.traits.filter((t) => t !== id) };
@@ -563,17 +562,9 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   const background = FOUNDER_BACKGROUND_BY_ID[config.founderBackground];
   const shape = SHINGLE_BY_ID[config.shingle];
   const remit = REMIT_BY_ID[config.remit];
-  const instrument = instrumentFor(config.founderBackground);
   const capital = (background?.capital ?? 0);
   const affordable = capital >= (shape?.setup ?? 0);
 
-  const toggleTrait = (id: string) => {
-    const held = config.founderTraits;
-    if (held.includes(id)) { set('founderTraits', held.filter((t) => t !== id)); return; }
-    if (held.length >= 3) return;
-    if (conflictingFounderTraits(held, id).length > 0) return;
-    set('founderTraits', [...held, id]);
-  };
 
   return (
     <div className="col gap-5">
@@ -626,20 +617,13 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         {background && (
           <div className="callout callout-accent" style={{ marginTop: 'var(--s4)' }}>
             <strong className="xs">What That Leaves You With</strong>
-            <div className="row wrap gap-1" style={{ marginTop: 6 }}>
-              {FOUNDER_ATTRIBUTES.filter((a) => (instrument[a.id] ?? 0) >= 50)
-                .sort((a, b) => (instrument[b.id] ?? 0) - (instrument[a.id] ?? 0))
-                .slice(0, 6)
-                .map((a) => (
-                  <span key={a.id} className="chip chip-positive">{a.name} {instrument[a.id]}</span>
-                ))}
-              {FOUNDER_ATTRIBUTES.filter((a) => (instrument[a.id] ?? 0) <= 25)
-                .sort((a, b) => (instrument[a.id] ?? 0) - (instrument[b.id] ?? 0))
-                .slice(0, 3)
-                .map((a) => (
-                  <span key={a.id} className="chip chip-negative">{a.name} {instrument[a.id]}</span>
-                ))}
-            </div>
+            <p className="xs" style={{ margin: '4px 0 0' }}>
+              {formatMoney(background.capital, { cents: false })} in the bank, and
+              {' '}{background.standing >= 0.4 ? 'most of the business takes your call already'
+                : background.standing >= 0.2 ? 'a decent number of people take your call'
+                  : 'almost nobody who matters knows you yet'}.
+              {' '}Not ability — that is not something a previous job could add to or take from.
+            </p>
           </div>
         )}
       </div>
@@ -729,53 +713,39 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
       </div>
 
-      {/* --- How you work -------------------------------------------------- */}
+      {/* --- What you are ------------------------------------------------- */}
       <div className="card">
         <div className="panel-head">
           <div>
-            <h3>How You Work</h3>
-            <p className="muted small">
-              Up to three. Every one of them costs something — a trait that helps everywhere is a
-              bonus, not a character. {config.founderTraits.length} of 3 taken.
-            </p>
+            <h3>What You Are</h3>
+            <p className="muted small">{PRODIGY_NOTE}</p>
           </div>
         </div>
 
         <div className="grid grid-2">
-          {FOUNDER_TRAITS.map((trait) => {
-            const held = config.founderTraits.includes(trait.id);
-            const clash = conflictingFounderTraits(config.founderTraits, trait.id);
-            const full = config.founderTraits.length >= 3 && !held;
-            const suggested = background?.suggestsTrait === trait.id;
-            return (
-              <button
-                key={trait.id}
-                type="button"
-                className={`trait${held ? ' is-selected' : ''}`}
-                aria-pressed={held}
-                disabled={clash.length > 0 || full}
-                title={clash.length > 0
-                  ? `Cannot be held with ${clash.map((id) => FOUNDER_TRAIT_BY_ID[id]?.name ?? id).join(', ')}.`
-                  : full ? 'You have taken three.' : undefined}
-                onClick={() => toggleTrait(trait.id)}
-              >
-                <div className="row-between">
-                  <div className="trait-name">{trait.name}</div>
-                  <span className={`chip${suggested ? ' chip-accent' : ''}`}>
-                    {suggested ? 'Sounds Like You' : trait.category}
-                  </span>
+          {DISCIPLINES.map((discipline) => (
+            <div key={discipline} className="trait is-fixed">
+              <div className="row-between">
+                <div className="trait-name">{DISCIPLINE_LABEL[discipline]}</div>
+                <span className="chip chip-accent">Best Alive</span>
+              </div>
+              {goatTraitsIn(discipline).map((trait) => (
+                <div key={trait.id} style={{ marginTop: 6 }}>
+                  <div className="xs strong">{trait.name}</div>
+                  <div className="xs dim">{trait.description}</div>
                 </div>
-                <div className="trait-desc">{trait.description}</div>
-                <div className="row wrap gap-1" style={{ marginTop: 6 }}>
-                  {Object.entries(trait.attributeMods ?? {}).map(([id, delta]) => (
-                    <span key={id} className={`chip ${delta > 0 ? 'chip-positive' : 'chip-negative'}`}>
-                      {FOUNDER_ATTRIBUTE_BY_ID[id]?.name ?? id} {delta > 0 ? '+' : ''}{delta}
-                    </span>
-                  ))}
-                </div>
-              </button>
-            );
-          })}
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="callout" style={{ marginTop: 'var(--s4)' }}>
+          <strong className="xs">And What That Does Not Buy You</strong>
+          <p className="xs" style={{ margin: '4px 0 0' }}>
+            A company that runs itself, money that does not run out, or an industry that forgives.
+            Being the best there has ever been at making things is not the same as being able to
+            keep the lights on.
+          </p>
         </div>
       </div>
 
@@ -921,51 +891,6 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
           </label>
         </div>
 
-        <hr className="divider" />
-
-        <div className={`sandbox-choice${config.sandbox ? ' is-on' : ''}`}>
-          <label className="row gap-3" style={{ marginBottom: 0, alignItems: 'flex-start' }}>
-            <input
-              type="checkbox" checked={config.sandbox} style={{ width: 'auto', marginTop: '3px' }}
-              onChange={(e) => set('sandbox', e.target.checked)}
-            />
-            <span className="col gap-1">
-              <span className="sandbox-choice-title">Sandbox Mode</span>
-              <span className="small muted">
-                Turn the rules off from the first minute. Sandbox lets you add money, max every
-                attribute, grant every trait and greenlight anything, whatever your character has
-                actually earned. Every sandbox action is written into the save's log, so the game
-                stays honest about what it is. You can switch it on or off later in Settings —
-                but a save that had it from the start says so.
-              </span>
-            </span>
-          </label>
-        </div>
-
-        <hr className="divider" />
-
-        <div className="field-row">
-          <div className="field">
-            <label htmlFor="start-year">Start Year</label>
-            <input
-              id="start-year" type="number" min={2000} max={2100}
-              value={config.startYear} onChange={(e) => set('startYear', Number(e.target.value))}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="start-month">Month</label>
-            <select id="start-month" value={config.startMonth} onChange={(e) => set('startMonth', Number(e.target.value))}>
-              {MONTHS.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="start-day">Day</label>
-            <input
-              id="start-day" type="number" min={1} max={28}
-              value={config.startDay} onChange={(e) => set('startDay', Number(e.target.value))}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -1022,7 +947,6 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Credit Score" value={String(wealth.creditScore)} />
           <Line label="Job" value={config.startWithJob ? 'Yes' : 'Not yet'} />
           <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
-          <Line label="Sandbox" value={config.sandbox ? 'On from the first minute' : 'Off'} />
         </div>
       </div>
 

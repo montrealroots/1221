@@ -69,16 +69,30 @@ describe('the professions on offer', () => {
   });
 });
 
+/**
+ * The founder has every profession already, so the ladder is exercised from a
+ * blank slate — which is what somebody they hire looks like on their first day.
+ */
+function blankSlate(seed: string) {
+  const sim = quickSave({}, seed);
+  sim.player.professions = {};
+  sim.player.industryXp = 0;
+  return sim;
+}
+
 describe('unlocking', () => {
-  it('starts everyone as an actor with nothing unlocked', () => {
+  it('starts the founder with every profession at the top', () => {
     const sim = quickSave({}, 'professions-start');
     expect(sim.player.careerTrack).toBe('actor');
-    expect(Object.keys(sim.player.professions ?? {})).toHaveLength(0);
-    expect(sim.player.industryXp ?? 0).toBeGreaterThanOrEqual(0);
+    // Nothing is left to earn: they are the best living one of each.
+    expect(Object.keys(sim.player.professions ?? {})).toHaveLength(PROFESSIONS.length);
+    for (const def of PROFESSIONS) {
+      expect(sim.player.professions?.[def.id]?.xp, def.id).toBeGreaterThan(0);
+    }
   });
 
   it('refuses without enough experience, and says how much it takes', () => {
-    const sim = quickSave({}, 'professions-poor');
+    const sim = blankSlate('professions-poor');
     sim.player.industryXp = 10;
     const result = sim.execute({ kind: 'profession.unlock', payload: { professionId: 'writer' } });
     expect(result.ok).toBe(false);
@@ -88,7 +102,7 @@ describe('unlocking', () => {
   });
 
   it('spends the experience once, and a retry with the same key spends nothing more', () => {
-    const sim = quickSave({}, 'professions-retry');
+    const sim = blankSlate('professions-retry');
     sim.player.industryXp = 1000;
     const first = sim.execute({ kind: 'profession.unlock', payload: { professionId: 'writer' }, idempotencyKey: 'unlock:writer' });
     expect(first.ok).toBe(true);
@@ -104,7 +118,7 @@ describe('unlocking', () => {
   });
 
   it('enforces prerequisites', () => {
-    const sim = quickSave({}, 'professions-prereq');
+    const sim = blankSlate('professions-prereq');
     sim.player.industryXp = 10_000;
     const early = sim.execute({ kind: 'profession.unlock', payload: { professionId: 'showrunner' } });
     expect(early.ok).toBe(false);
@@ -114,7 +128,7 @@ describe('unlocking', () => {
   });
 
   it('writes the unlock into history', () => {
-    const sim = quickSave({}, 'professions-history');
+    const sim = blankSlate('professions-history');
     sim.player.industryXp = 1000;
     sim.execute({ kind: 'profession.unlock', payload: { professionId: 'director' } });
     expect(sim.universe.history.some((h) => /Became A Director/.test(h.title))).toBe(true);
@@ -123,7 +137,7 @@ describe('unlocking', () => {
 
 describe('traits for a profession', () => {
   function writer(seed: string) {
-    const sim = quickSave({}, seed);
+    const sim = blankSlate(seed);
     sim.player.industryXp = 1000;
     sim.must({ kind: 'profession.unlock', payload: { professionId: 'writer' } });
     return sim;

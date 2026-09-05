@@ -466,22 +466,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     material: 0, buyerHunger: 92, crewDepth: 34, ratesSet: {},
   };
 
+  // Schema 27 removed sandbox. The founder starts maxed at everything, so
+  // there is nothing left for a cheat mode to give them. Any save still
+  // carrying the block loses it here.
+  delete (record as Record<string, unknown>)['sandbox'];
+
   record['idempotency'] ??= {};
   record['counters'] ??= {};
   record['engineFailures'] ??= [];
   record['tutorial'] ??= { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false };
-  record['sandbox'] ??= {
-    enabled: false, maxAttributesApplied: false, allTraitsGranted: false,
-    unlimitedFunds: false, ignoreAuthority: false, godMode: false,
-    allProfessionsUnlocked: false, log: [],
-  };
-  {
-    const sandbox = record['sandbox'] as Record<string, unknown>;
-    if (typeof sandbox['godMode'] !== 'boolean') sandbox['godMode'] = false;
-    if (typeof sandbox['allProfessionsUnlocked'] !== 'boolean') sandbox['allProfessionsUnlocked'] = false;
-    // An earlier build of god mode stored a rating ceiling here. It is gone.
-    delete sandbox['ratingCeiling'];
-  }
 
   if (typeof record['__idCounter'] !== 'number') {
     record['__idCounter'] = 100000;

@@ -25,9 +25,8 @@ const SKILL_DOMAINS: SkillDomain[] = ['writing', 'directing', 'producing', 'exec
 export function CharacterWorkspace() {
   const { sim, run } = useGame();
   const player = useWorld((s) => s.player);
-  // God mode is a declared cheat, so it is meant to be unmistakable: every
-  // attribute, skill and trait it has touched goes gold.
-  const cheating = useWorld((s) => s.universe.sandbox.enabled && s.universe.sandbox.godMode);
+  // Everything on this screen is at the ceiling: the founder is a prodigy.
+  const cheating = true;
   const [tab, setTab] = useState<Tab>('attributes');
   const xp = player.industryXp ?? 0;
   const held = Object.values(player.professions ?? {}).flatMap((p) => p?.traitIds ?? []);
@@ -66,7 +65,7 @@ export function CharacterWorkspace() {
           value={cheating
             ? <span className="god">{Math.round(overallRating(effective))}</span>
             : Math.round(overallRating(effective))}
-          note={cheating ? 'Maxed by sandbox, not earned' : 'Average across all 88'}
+          note="Every one of the 88 at the ceiling"
         />
         <Stat label="Industry XP" value={<span className="mono">{xp.toLocaleString('en-US')}</span>} note="Earned by working. Spent to unlock professions." />
         <Stat label="Credits" value={player.creditIds.length} />

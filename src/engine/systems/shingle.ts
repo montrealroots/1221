@@ -24,7 +24,7 @@ import { clamp } from '../core/rng';
 import { addDays } from '../core/time';
 import { titleCaseLabel } from '../core/text';
 import { SHINGLE_BY_ID, REMIT_BY_ID } from '../content/shingle';
-import { FOUNDER_ATTRIBUTES, instrumentFor } from '../content/founder';
+import { FOUNDER_ATTRIBUTES } from '../content/founder';
 import { MONOPOLY, OPENING_BRIEF, STRIKE_IS_FICTION } from '../content/strike';
 
 /** The company the player runs, if they have opened one yet. */
@@ -358,4 +358,3 @@ export function companyView(sim: Simulation) {
   };
 }
 
-export { instrumentFor };

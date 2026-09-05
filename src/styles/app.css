@@ -907,18 +907,8 @@ kbd {
 .check input[type="checkbox"] { margin-top: 2px; }
 
 /* Sandbox, offered at creation rather than buried in a menu. */
-.sandbox-choice {
-  border: 1px dashed var(--line-strong); border-radius: var(--radius);
-  padding: var(--s3); background: var(--surface-2);
-}
-.sandbox-choice.is-on {
-  border-style: solid; border-color: var(--accent);
-  background: var(--accent-dim);
-}
-.sandbox-choice-title { font-weight: 650; font-size: var(--size-sm); }
 /* A label element makes everything inside it bold. The explanation under the
    heading is body copy and should read like it. */
-.sandbox-choice .small { font-weight: 400; line-height: 1.5; }
 
 /* --------------------------------------------------------------------------
    Headshot

@@ -17,7 +17,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import {
   FOUNDER_ATTRIBUTES, FOUNDER_BACKGROUNDS, FOUNDER_TRAITS,
-  HIGHER_IS_WORSE, conflictingFounderTraits, instrumentFor, traitHasCost,
+  HIGHER_IS_WORSE, conflictingFounderTraits, startingPositionFor, traitHasCost,
 } from '@/engine/content/founder';
 import { REMITS, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
 import { AFTERMATH, MONOPOLY, STRIKE_IS_FICTION } from '@/engine/content/strike';
@@ -42,16 +42,20 @@ describe('the instrument a producer is judged on', () => {
     }
   });
 
-  it('gives every background strengths and real gaps', () => {
+  it('decides money and standing, and never ability', () => {
+    // The founder is maxed at all of it whatever they used to do, so a
+    // background can only change what is in the bank and who takes the call.
     for (const background of FOUNDER_BACKGROUNDS) {
-      const sheet = instrumentFor(background.id);
-      const values = FOUNDER_ATTRIBUTES.map((a) => sheet[a.id]!);
-      expect(Math.max(...values), background.id).toBeGreaterThanOrEqual(50);
-      // Nobody is good at all of it. That is the game.
-      expect(Math.min(...values), background.id).toBeLessThanOrEqual(30);
+      const start = startingPositionFor(background.id);
+      expect(start.capital, background.id).toBeGreaterThan(0);
+      expect(start.standing, background.id).toBeGreaterThanOrEqual(0);
+      expect(start.standing, background.id).toBeLessThanOrEqual(1);
       expect(background.gives.length).toBeGreaterThan(20);
       expect(background.costs.length).toBeGreaterThan(20);
     }
+    // And they are genuinely different starting positions.
+    const capitals = FOUNDER_BACKGROUNDS.map((b) => b.capital);
+    expect(Math.max(...capitals) / Math.min(...capitals)).toBeGreaterThan(10);
   });
 
   it('costs something for every trait', () => {
@@ -86,12 +90,11 @@ describe('the instrument a producer is judged on', () => {
     expect(founderScore(sim, 'negotiation', other?.id)).toBe(0);
   });
 
-  it('moves the player’s instrument by their traits', () => {
-    const plain = aGame('founder-plain', { founderBackground: 'agent', founderTraits: [] });
-    const sharp = aGame('founder-sharp', { founderBackground: 'agent', founderTraits: ['sharp'] });
-    expect(founderScore(sharp, 'negotiation')).toBeGreaterThan(founderScore(plain, 'negotiation'));
-    // And it costs them elsewhere, exactly as the trait says.
-    expect(founderScore(sharp, 'reputation_craft')).toBeLessThan(founderScore(plain, 'reputation_craft'));
+  it('reads the player at the ceiling on every axis', () => {
+    const sim = aGame('founder-maxed');
+    for (const attribute of FOUNDER_ATTRIBUTES) {
+      expect(founderScore(sim, attribute.id), attribute.id).toBe(100);
+    }
   });
 });
 
@@ -202,13 +205,16 @@ describe('changing shape', () => {
     expect(playerCompany(sim)!.shingle).toBe(before);
   });
 
-  it('carries capacity from the shape and the founder’s delegation', () => {
-    const handsOn = aGame('co-hands', { shingle: 'indie', founderBackground: 'showrunner', founderTraits: ['hands_on'] });
-    const delegator = aGame('co-deleg', { shingle: 'indie', founderBackground: 'showrunner', founderTraits: ['delegator'] });
-    expect(capacityOf(delegator, playerCompany(delegator)!))
-      .toBeGreaterThan(capacityOf(handsOn, playerCompany(handsOn)!));
-    // Nobody drops below one, however hands-on they are.
-    expect(capacityOf(handsOn, playerCompany(handsOn)!)).toBeGreaterThanOrEqual(1);
+  it('carries capacity from the shape, and a maxed founder gets the most of it', () => {
+    const small = aGame('co-cap-small', { shingle: 'kitchen_table', founderBackground: 'financier' });
+    const big = aGame('co-cap-big', { shingle: 'indie', founderBackground: 'financier' });
+    expect(capacityOf(big, playerCompany(big)!))
+      .toBeGreaterThan(capacityOf(small, playerCompany(small)!));
+    // Delegation is at the ceiling, so the shape's own number is the floor.
+    for (const sim of [small, big]) {
+      const company = playerCompany(sim)!;
+      expect(capacityOf(sim, company)).toBeGreaterThanOrEqual(SHINGLE_BY_ID[company.shingle]!.capacity);
+    }
   });
 });
 

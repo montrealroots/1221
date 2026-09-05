@@ -31,8 +31,9 @@ function aLife(seed: string, options: { car?: boolean; cityId?: string } = {}): 
     return result.value as R;
   };
   const attempt = <R>(kind: string, payload: Record<string, unknown> = {}) => sim.execute<R>({ kind, payload });
-  sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-  run('sandbox.add_funds', { amount: 20_000_000_00 });
+  // There is no cheat mode any more, so money comes in the way it does in the
+  // game: the ledger is credited directly, which is what income does.
+  sim.income(sim.player.primaryAccountId!, 20_000_000_00, 'Test funding', 'other');
   if (options.cityId) sim.player.currentLocationId = options.cityId;
   if (options.car) {
     const models = Object.values(sim.universe.vehicles);

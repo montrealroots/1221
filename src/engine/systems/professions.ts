@@ -22,7 +22,6 @@ import {
   type ProfessionId,
 } from '../content/professions';
 import { TRAIT_BY_ID, conflictingTraits } from '../domain/attributes';
-import { godMode, logOverride } from './sandbox';
 
 /**
  * What each piece of work is worth. One table, so the economy of experience
@@ -64,18 +63,12 @@ export function registerProfessions(sim: Simulation): void {
         throw new CommandError(`${def.name} needs ${missing.map((id) => PROFESSION_BY_ID[id].name).join(' and ')} first.`);
       }
 
-      // God mode opens it for nothing, and says so rather than quietly
-      // pretending the experience was there.
       const xp = player.industryXp ?? 0;
-      const free = godMode(s);
-      if (!free && xp < def.unlockXp) {
+      if (xp < def.unlockXp) {
         throw new CommandError(`${def.name} takes ${def.unlockXp.toLocaleString('en-US')} XP to unlock. You have ${xp.toLocaleString('en-US')}.`);
       }
-      if (free && xp < def.unlockXp) {
-        logOverride(s, `Opened ${def.name} for nothing. It costs ${def.unlockXp.toLocaleString('en-US')} XP and you had ${xp.toLocaleString('en-US')}.`);
-      }
 
-      player.industryXp = free ? xp : xp - def.unlockXp;
+      player.industryXp = xp - def.unlockXp;
       professions[def.id] = { unlockedAt: s.now, xp: 0, traitIds: [] };
 
       s.remember({
@@ -111,15 +104,9 @@ export function registerProfessions(sim: Simulation): void {
       if (!trait || trait.profession !== def.id) throw new CommandError(`That is not a ${def.name.toLowerCase()}'s trait.`);
       if (progress.traitIds.includes(trait.id)) throw new CommandError(`You already hold ${trait.name}.`);
 
-      // God mode opens every slot. The traits that contradict each other still
-      // contradict each other, because that is a rule of the world rather than
-      // a gate on the player.
       const slots = traitSlotsAt(levelFor(progress.xp));
-      if (!godMode(s) && progress.traitIds.length >= slots) {
+      if (progress.traitIds.length >= slots) {
         throw new CommandError(`Every ${def.name.toLowerCase()} trait slot is taken. The next opens at a higher level.`);
-      }
-      if (godMode(s) && progress.traitIds.length >= slots) {
-        logOverride(s, `Took ${trait.name} with no ${def.name.toLowerCase()} slot open for it.`);
       }
       const conflicts = conflictingTraits(progress.traitIds, trait.id);
       if (conflicts.length > 0) {

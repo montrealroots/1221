@@ -180,11 +180,11 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
   },
   {
     id: 'settings', route: '/workspace/settings', title: 'Settings',
-    what: 'Preferences, accessibility, tutorial control and sandbox tools.',
+    what: 'Preferences, accessibility and tutorial control.',
     affects: [],
-    actions: ['Set time speed', 'Turn on reduced motion', 'Switch guided or advanced mode', 'Replay the tutorial without touching your save', 'Enable sandbox tools'],
+    actions: ['Set time speed', 'Turn on reduced motion', 'Switch guided or advanced mode', 'Replay the tutorial without touching your save'],
     connects: ['Sandbox changes are logged so history stays honest about them'],
-    keywords: ['settings', 'preferences', 'accessibility', 'reduced motion', 'sandbox', 'cheat', 'tutorial', 'reset'],
+    keywords: ['settings', 'preferences', 'accessibility', 'reduced motion', 'tutorial', 'reset'],
   },
   {
     id: 'world', route: '/world', title: 'World',

@@ -23,7 +23,6 @@ import { generateAddress, generatePersonName } from '../content/names';
 import { buildFactors } from '../core/audit';
 import { createBill } from './finance';
 import { amortisedPayment, offeredApr } from './finance';
-import { godMode, logOverride } from './sandbox';
 
 // ---------------------------------------------------------------------------
 // Property shapes
@@ -809,13 +808,7 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
   const roll = rng.next();
   const acceptProbability = clamp(score * 1.05 - 0.18, 0.02, 0.95);
 
-  // God mode: the seller takes it, whatever it is.
-  const cheated = godMode(sim);
-  if (cheated && roll >= acceptProbability) {
-    logOverride(sim, `The seller took ${formatMoney(offer.amount)}. They would not have.`);
-  }
-
-  if (cheated || roll < acceptProbability) {
+  if (roll < acceptProbability) {
     offer.history.push({ at: sim.now, note: 'Seller accepted.' });
     sim.audit({
       kind: 'prop.offer_decided', subjectType: 'offer', subjectId: offer.id,

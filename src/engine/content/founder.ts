@@ -18,6 +18,8 @@
  * it, so nothing goes in here until there is work for it to decide.
  */
 
+import type { Money } from '../core/money';
+
 export type FounderGroup =
   | 'Judgement' | 'The Room' | 'The Money' | 'The Company' | 'Standing';
 
@@ -380,11 +382,10 @@ export interface FounderBackground {
   name: string;
   /** What you were doing when the strike started. */
   what: string;
-  /** What the job left you with. */
+  /** What the job left you with besides the ability, which is total anyway. */
   gives: string;
-  /** What it did not teach you. */
+  /** What it could not give you, none of which is skill. */
   costs: string;
-  attributes: Readonly<Record<string, number>>;
   /** Starting capital in cents, before whatever the player brings themselves. */
   capital: number;
   /** Who already takes your call, as a fraction of the industry. 0-1. */
@@ -399,12 +400,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'You read for somebody else\'s company for nine years and watched them make the wrong three.',
     gives: 'You know material, you know every agent, and you have a drawer of things nobody bought.',
     costs: 'You have never made a payroll or been shouted at by a completion bond.',
-    attributes: {
-      script_judgement: 62, taste: 55, reading_people: 52, note_giving: 50,
-      talent_eye: 45, market_read: 44, negotiation: 34, cashflow: 22,
-      budgeting: 20, financing: 24, operations: 25, hiring: 32,
-      reputation_craft: 40, reputation_money: 20, discretion: 45,
-    },
     capital: 180_000_00,
     standing: 0.42,
     suggestsTrait: 'reader',
@@ -414,12 +409,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'Eleven pictures, on budget, in weather nobody should shoot in.',
     gives: 'You know exactly what a day costs and every crew in three cities will come when you call.',
     costs: 'Nobody has ever asked you what a script should be about.',
-    attributes: {
-      budgeting: 68, cashflow: 60, operations: 62, hiring: 55,
-      stamina: 58, negotiation: 44, delegation: 48, nerve: 45,
-      script_judgement: 26, taste: 28, talent_eye: 30, market_read: 28,
-      reputation_craft: 44, reputation_money: 34, financing: 26,
-    },
     capital: 220_000_00,
     standing: 0.36,
     suggestsTrait: 'penny_wise',
@@ -429,12 +418,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'You represented forty people and packaged whatever the town would take.',
     gives: 'You can read a room, close a deal, and you know what everybody actually earns.',
     costs: 'You have sold pictures. You have never made one.',
-    attributes: {
-      negotiation: 70, reading_people: 64, deal_structure: 58, talent_eye: 56,
-      pitching: 54, discretion: 52, market_read: 48, nerve: 50,
-      budgeting: 22, operations: 24, script_judgement: 36, taste: 34,
-      reputation_craft: 46, reputation_money: 42, cashflow: 30,
-    },
     capital: 340_000_00,
     standing: 0.55,
     suggestsTrait: 'connected',
@@ -444,12 +427,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'Five seasons of your own show, and you were on the picket line for the whole strike.',
     gives: 'Writers trust you completely, and you know what a season actually takes.',
     costs: 'You have always had somebody else worrying about the money.',
-    attributes: {
-      script_judgement: 66, taste: 62, note_giving: 64, talent_eye: 50,
-      reputation_craft: 66, stamina: 54, delegation: 42, nerve: 40,
-      budgeting: 30, financing: 22, cashflow: 24, negotiation: 32,
-      operations: 28, market_read: 40, reputation_money: 24,
-    },
     capital: 260_000_00,
     standing: 0.48,
     suggestsTrait: 'hands_on',
@@ -459,12 +436,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'You put money into pictures for other people and watched most of it come back.',
     gives: 'You can raise it, structure it, and you are not frightened of a bad quarter.',
     costs: 'The creative side is a language you can order dinner in and not much else.',
-    attributes: {
-      financing: 70, deal_structure: 66, cashflow: 62, risk_appetite: 58,
-      negotiation: 56, reputation_money: 60, budgeting: 48, nerve: 52,
-      script_judgement: 24, taste: 22, talent_eye: 26, note_giving: 20,
-      reputation_craft: 18, operations: 42, reading_people: 40,
-    },
     capital: 900_000_00,
     standing: 0.34,
     suggestsTrait: 'sharp',
@@ -474,12 +445,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'You built and sold something that had nothing to do with any of this.',
     gives: 'Capital, and no assumptions at all about how it has to be done.',
     costs: 'Nobody knows you and everybody can tell within about a minute.',
-    attributes: {
-      operations: 58, hiring: 54, delegation: 56, risk_appetite: 55,
-      cashflow: 52, negotiation: 48, stamina: 50, nerve: 46,
-      script_judgement: 18, taste: 20, talent_eye: 18, note_giving: 16,
-      reputation_craft: 10, reputation_money: 30, reading_people: 34,
-    },
     capital: 1_400_000_00,
     standing: 0.08,
     suggestsTrait: 'outsider',
@@ -489,12 +454,6 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     what: 'Three years on a desk outside a door, reading everything that went through it.',
     gives: 'You saw exactly how it is done, from close enough to see the mistakes.',
     costs: 'Everything else. You are starting with nothing, which is the hardest and best version.',
-    attributes: {
-      script_judgement: 40, reading_people: 44, discretion: 50, stamina: 52,
-      talent_eye: 34, taste: 36, operations: 30, hiring: 24,
-      negotiation: 22, budgeting: 20, financing: 14, cashflow: 22,
-      reputation_craft: 14, reputation_money: 8, market_read: 30,
-    },
     capital: 12_000_00,
     standing: 0.05,
   },
@@ -504,16 +463,15 @@ export const FOUNDER_BACKGROUND_BY_ID: Readonly<Record<string, FounderBackground
   Object.fromEntries(FOUNDER_BACKGROUNDS.map((b) => [b.id, b]));
 
 /**
- * The instrument a background leaves you with.
+ * What a background actually decides.
  *
- * Anything the background does not name sits at thirty, which is somebody who
- * has heard of the thing and never had to do it.
+ * Not ability. The founder is the best living writer, director, producer,
+ * showrunner and actor at once, and no previous job makes them better or worse
+ * at any of it. What the old job decides is what they have in the bank and who
+ * picks up the phone — which, in a business where everybody is available and
+ * nobody is buying, is the only thing that varies.
  */
-export function instrumentFor(backgroundId: string): Record<string, number> {
+export function startingPositionFor(backgroundId: string): { capital: Money; standing: number } {
   const background = FOUNDER_BACKGROUND_BY_ID[backgroundId];
-  const out: Record<string, number> = {};
-  for (const attribute of FOUNDER_ATTRIBUTES) {
-    out[attribute.id] = background?.attributes[attribute.id] ?? 30;
-  }
-  return out;
+  return { capital: background?.capital ?? 0, standing: background?.standing ?? 0 };
 }

@@ -9,7 +9,6 @@ export function SettingsWorkspace() {
   const { sim, run, refresh, saveNow, exitToMenu } = useGame();
   const prefs = sim.universe.preferences;
   const tutorial = sim.universe.tutorial;
-  const sandbox = sim.universe.sandbox;
   const load = useWorld(simulationLoad);
   const [validation, setValidation] = useState<ReturnType<typeof validateUniverse> | null>(null);
 
@@ -139,59 +138,6 @@ export function SettingsWorkspace() {
           </div>
         </Panel>
 
-        <Panel title="Sandbox" subtitle="Explicit overrides. Everything here is logged so history stays honest.">
-          {sandbox.godMode && (
-            <p className="god-banner" style={{ marginBottom: 'var(--s3)' }}>
-              God Mode Is On. Nothing will be refused, and the log below is the record of everything it gave you.
-            </p>
-          )}
-          <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
-            <input type="checkbox" style={{ width: 'auto' }} checked={sandbox.enabled}
-              onChange={(e) => run('sandbox.toggle', { enabled: e.target.checked })} />
-            <span className="small" style={{ color: 'var(--text)' }}>Enable Sandbox Tools</span>
-          </label>
-
-          <label className="row gap-2" style={{ marginBottom: 'var(--s3)' }}>
-            <input type="checkbox" style={{ width: 'auto' }} checked={sandbox.godMode} disabled={!sandbox.enabled}
-              onChange={(e) => run('sandbox.god_mode', { enabled: e.target.checked })} />
-            <span className={`small${sandbox.godMode ? ' god' : ''}`} style={sandbox.godMode ? undefined : { color: 'var(--text)' }}>
-              God Mode
-            </span>
-          </label>
-          <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
-            Everything at once. Every attribute, skill and trait maxed and shown in gold; every profession open
-            with no experience spent; every audition booked, every agency signed, and every offer, greenlight,
-            pitch and purchase accepted. Turning it off lets the world say no again — it does not take back what
-            it already gave.
-          </div>
-
-          <div className="row gap-2 wrap">
-            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.max_attributes')}>
-              Max All Attributes
-            </button>
-            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.grant_all_traits')}>
-              Grant All Traits
-            </button>
-            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.unlock_professions')}>
-              Open Every Profession
-            </button>
-            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.add_funds', { amount: 100_000_000 })}>
-              Add $1,000,000
-            </button>
-          </div>
-
-          {sandbox.log.length > 0 && (
-            <div style={{ marginTop: 'var(--s4)' }}>
-              <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>Sandbox log</div>
-              {sandbox.log.slice(-6).reverse().map((entry, i) => (
-                <div key={i} className="xs dim">{formatDate(entry.at, sim.homeZone)} — {entry.action}</div>
-              ))}
-            </div>
-          )}
-          <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-            Conflicting traits stay mutually exclusive even here. Granting them all skips the ones that contradict.
-          </p>
-        </Panel>
       </div>
     </>
   );

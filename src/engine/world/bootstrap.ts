@@ -11,9 +11,14 @@ import type {
   CareerTrack, Person, Personality, SaveMeta, SaveUniverse,
 } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
-import { emptyAttributeSheet, effectiveAttributes, TRAIT_BY_ID, type AttributeSheet } from '../domain/attributes';
-import { emptySkillSheet, type SkillSheet } from '../domain/skills';
-import { FOUNDER_TRAIT_BY_ID, instrumentFor } from '../content/founder';
+import {
+  ALL_TRAITS, ATTRIBUTES, PROFESSION_TRAITS, conflictingTraits, emptyAttributeSheet,
+  effectiveAttributes, TRAIT_BY_ID, type AttributeSheet,
+} from '../domain/attributes';
+import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
+import { FOUNDER_ATTRIBUTES } from '../content/founder';
+import { CEILING, GOAT_TRAITS } from '../content/prodigy';
+import { LEVEL_XP, MAX_PROFESSION_LEVEL, PROFESSIONS, traitSlotsAt } from '../content/professions';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
@@ -79,7 +84,6 @@ export interface NewSaveConfig {
   shingle: string;
   remit: string;
   companyName: string;
-  founderTraits: string[];
 
   /** Starting point */
   startLocationId: string;
@@ -92,16 +96,6 @@ export interface NewSaveConfig {
   startMonth: number;
   startDay: number;
 
-  /**
-   * Whether Sandbox is on from the first minute.
-   *
-   * It is a decision about what kind of save this is, so it belongs here
-   * rather than three menus deep. A sandbox save can hand itself money, max
-   * its attributes and greenlight anything; a straight save has to earn it.
-   * Either way every sandbox action is written into the log, so the save is
-   * always honest about what it is.
-   */
-  sandbox: boolean;
 }
 
 export function defaultPersonality(): Personality {
@@ -124,12 +118,10 @@ export function defaultConfig(): NewSaveConfig {
     shingle: 'boutique',
     remit: 'prestige_drama',
     companyName: '',
-    founderTraits: [],
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
     startWithJob: true, startWithVehicle: true,
     startYear: 2026, startMonth: 3, startDay: 2,
-    sandbox: false,
   };
 }
 
@@ -191,11 +183,6 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
       confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
     },
-    sandbox: {
-      enabled: false, maxAttributesApplied: false, allTraitsGranted: false,
-      unlimitedFunds: false, ignoreAuthority: false,
-      godMode: false, allProfessionsUnlocked: false, log: [],
-    },
     idempotency: {},
     counters: {},
     engineFailures: [],
@@ -203,30 +190,57 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
 }
 
 /** Starting capability from the chosen track and stage. */
-function seedCapability(config: NewSaveConfig): { attributes: AttributeSheet; skills: SkillSheet } {
-  const stage = clamp(config.careerStage, 0, 100) / 100;
-  const attributes = emptyAttributeSheet(8 + Math.round(stage * 22));
-  const skills = emptySkillSheet(4 + Math.round(stage * 18));
+/**
+ * The founder's instrument.
+ *
+ * There is nothing to seed. They are the best living writer, director,
+ * producer, showrunner and actor at once, so every one of the 88 acting
+ * attributes and every skill in every domain starts at the ceiling. Nothing on
+ * the creation screen moves any of it, because there is nowhere for it to go.
+ *
+ * What creation still decides is everything the instrument does not cover:
+ * how much money, who takes your call, and what kind of company you open.
+ */
+/**
+ * Every acting trait that can be held at once, starting from the ones picked.
+ *
+ * The mutually exclusive pairs stay mutually exclusive: those are facts about
+ * people rather than a limit on the player, and a founder who is both a
+ * perfectionist and a one-taker is not a prodigy, it is a contradiction.
+ */
+function allCompatibleTraits(picked: string[]): string[] {
+  const held = [...picked];
+  for (const trait of ALL_TRAITS) {
+    if (held.includes(trait.id)) continue;
+    if (conflictingTraits(held, trait.id).length > 0) continue;
+    held.push(trait.id);
+  }
+  return held;
+}
 
-  const boost = (sheet: Record<string, number>, keys: string[], amount: number) => {
-    for (const key of keys) {
-      if (sheet[key] === undefined) continue;
-      sheet[key] = clamp(sheet[key] + amount, 0, 100);
+/** Every profession, open on day one and at the top of its ladder. */
+function maxedProfessions(at: number): Person['professions'] {
+  const out: NonNullable<Person['professions']> = {};
+  const topXp = LEVEL_XP[LEVEL_XP.length - 1] ?? 0;
+  for (const def of PROFESSIONS) {
+    const slots = traitSlotsAt(MAX_PROFESSION_LEVEL);
+    const traitIds: string[] = [];
+    for (const trait of PROFESSION_TRAITS.filter((t) => t.profession === def.id)) {
+      if (traitIds.length >= slots) break;
+      if (conflictingTraits(traitIds, trait.id).length > 0) continue;
+      traitIds.push(trait.id);
     }
-  };
+    out[def.id] = { unlockedAt: at, xp: topXp, traitIds };
+  }
+  return out;
+}
 
-  const trackBoost = 14 + stage * 34;
-  boost(attributes, ['emotional_truth', 'charisma', 'audition_technique', 'self_tape_craft', 'memorization', 'camera_awareness', 'active_listening'], trackBoost);
 
-  // Personality feeds a handful of attributes that are genuinely dispositional.
-  attributes['charisma'] = clamp((attributes['charisma'] ?? 10) + (config.personality.extraversion - 50) * 0.25, 0, 100);
-  attributes['resilience'] = clamp((attributes['resilience'] ?? 10) + (config.personality.emotionalStability - 50) * 0.3, 0, 100);
-  attributes['preparation'] = clamp((attributes['preparation'] ?? 10) + (config.personality.conscientiousness - 50) * 0.3, 0, 100);
-  attributes['collaboration'] = clamp((attributes['collaboration'] ?? 10) + (config.personality.agreeableness - 50) * 0.25, 0, 100);
-  attributes['career_strategy'] = clamp((attributes['career_strategy'] ?? 10) + (config.personality.ambition - 50) * 0.2, 0, 100);
-  skills['driving'] = clamp((skills['driving'] ?? 5) + 25, 0, 100);
-  skills['cooking'] = clamp((skills['cooking'] ?? 5) + 10, 0, 100);
-
+function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
+  const attributes = emptyAttributeSheet(CEILING);
+  const skills = emptySkillSheet(CEILING);
+  for (const attribute of ATTRIBUTES) attributes[attribute.id] = CEILING;
+  for (const skill of SKILLS) skills[skill.id] = CEILING;
   return { attributes, skills };
 }
 
@@ -281,14 +295,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
 
   const universe = emptyUniverse(meta, now, zone, playerId);
 
-  // Sandbox is a decision about what kind of save this is, made at creation
-  // rather than three menus deep. Turning it on is itself logged, so the save
-  // is always honest about having had it from the start.
-  if (config.sandbox) {
-    universe.sandbox.enabled = true;
-    universe.sandbox.log.push({ at: now, action: 'Sandbox enabled at character creation' });
-  }
-  const { attributes, skills } = seedCapability(config);
+  const { attributes, skills } = seedCapability();
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },
@@ -317,22 +324,29 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lifestyle: config.lifestyle,
     background: config.background,
     attributes,
-    traits: config.traits.filter((t) => TRAIT_BY_ID[t]),
+    // Every acting trait that does not contradict one already held. The
+    // player picked some at creation; the rest come with being the best there
+    // has ever been at it.
+    traits: allCompatibleTraits(config.traits.filter((t) => TRAIT_BY_ID[t])),
     skills,
 
-    // The producer's instrument, from where they came from. Separate from the
-    // acting one above, which the player has because everybody in this world
-    // has one, and which governs nothing they do at a desk.
-    founder: instrumentFor(config.founderBackground),
-    founderTraits: config.founderTraits.filter((t) => FOUNDER_TRAIT_BY_ID[t]),
+    // The producer's instrument, at the ceiling like everything else. Separate
+    // from the acting set above because they measure different jobs, and both
+    // of them are full.
+    founder: Object.fromEntries(FOUNDER_ATTRIBUTES.map((a) => [a.id, CEILING])),
+    // All fourteen G.O.A.T. traits and nothing else. The ordinary producing
+    // traits are built out of trade-offs — a contrarian reads the market
+    // worse — and a trade-off would pull an attribute below the ceiling. Those
+    // belong to the executives this founder hires, not to the founder.
+    founderTraits: GOAT_TRAITS.map((t) => t.id),
     founderBackground: config.founderBackground,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
-    // A career already under way has some experience behind it; a complete
-    // unknown has none. Either way the professions are earned from here.
-    industryXp: Math.round(clamp(config.careerStage, 0, 100) * 3),
-    professions: {},
+    // Nothing is left to earn. Every profession is already open and already at
+    // the top level, with every trait slot it opens filled.
+    industryXp: 0,
+    professions: maxedProfessions(now),
     representation: {},
     quote: config.careerStage > 40 ? Math.round(config.careerStage * 4_000_00) : 0,
     creditIds: [],

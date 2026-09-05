@@ -12,9 +12,6 @@ import type { DecisionItem, Id, Person, SimulationTier } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, MS_DAY } from '../core/time';
 import { CITIES } from '../content/geography';
-import { ATTRIBUTES, TRAITS, conflictingTraits } from '../domain/attributes';
-import { SKILLS } from '../domain/skills';
-import { PROFESSIONS, PROFESSION_BY_ID, type ProfessionId } from '../content/professions';
 
 /** How many people get full-detail simulation. Everything else is cheaper. */
 const TIER_BUDGET: Record<SimulationTier, number> = {
@@ -71,149 +68,13 @@ export function registerWorld(sim: Simulation): void {
     },
   );
 
-  // --- Preferences and sandbox --------------------------------------------
+  // --- Preferences ---------------------------------------------------------
 
   sim.onCommand<Partial<typeof sim.universe.preferences>, { ok: boolean }>(
     'world.set_preferences',
     (p, { sim: s }) => {
       Object.assign(s.universe.preferences, p);
       return { ok: true };
-    },
-  );
-
-  sim.onCommand<{ enabled: boolean }, { enabled: boolean }>(
-    'sandbox.toggle',
-    (p, { sim: s }) => {
-      s.universe.sandbox.enabled = p.enabled;
-      s.universe.sandbox.log.push({ at: s.now, action: p.enabled ? 'Sandbox enabled' : 'Sandbox disabled' });
-      return { enabled: p.enabled };
-    },
-  );
-
-  sim.onCommand<Record<string, never>, { applied: number }>(
-    'sandbox.max_attributes',
-    (_p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first — this is not something to do by accident.');
-      const player = s.player;
-      for (const attribute of ATTRIBUTES) player.attributes[attribute.id] = 100;
-      for (const skill of SKILLS) player.skills[skill.id] = 100;
-      s.universe.sandbox.maxAttributesApplied = true;
-      s.universe.sandbox.log.push({ at: s.now, action: 'Maxed all attributes and skills' });
-      s.remember({
-        category: 'life', title: 'Sandbox: Attributes Maxed',
-        detail: 'All 88 attributes and every skill set to 100 through sandbox tools.',
-        refs: [{ type: 'person', id: player.id }], significance: 1, public: false,
-      });
-      return { applied: ATTRIBUTES.length + SKILLS.length };
-    },
-  );
-
-  sim.onCommand<Record<string, never>, { granted: string[]; skipped: { id: string; reason: string }[] }>(
-    'sandbox.grant_all_traits',
-    (_p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
-      const player = s.player;
-      const granted: string[] = [];
-      const skipped: { id: string; reason: string }[] = [];
-
-      // Even in sandbox, mutually exclusive traits stay mutually exclusive.
-      for (const trait of TRAITS) {
-        if (player.traits.includes(trait.id)) continue;
-        const conflicts = conflictingTraits(player.traits, trait.id);
-        if (conflicts.length > 0) {
-          skipped.push({ id: trait.id, reason: `Conflicts with ${conflicts.join(', ')}.` });
-          continue;
-        }
-        player.traits.push(trait.id);
-        granted.push(trait.id);
-      }
-      s.universe.sandbox.allTraitsGranted = true;
-      s.universe.sandbox.log.push({ at: s.now, action: `Granted ${granted.length} traits` });
-      return { granted, skipped };
-    },
-  );
-
-  /**
-   * God mode on or off.
-   *
-   * Turning it on maxes everything, grants every trait and opens every
-   * profession in one go, because that is what somebody switching it on is
-   * asking for. Turning it off stops the world saying yes to everything — it
-   * does not take back what was already given, because unwinding a career is
-   * worse than having cheated at one.
-   */
-  sim.onCommand<{ enabled: boolean }, { godMode: boolean; professions: string[] }>(
-    'sandbox.god_mode',
-    (p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first — this is not something to do by accident.');
-      s.universe.sandbox.godMode = p.enabled;
-
-      const professions: string[] = [];
-      if (p.enabled) {
-        s.execute({ kind: 'sandbox.max_attributes', payload: {} });
-        s.execute({ kind: 'sandbox.grant_all_traits', payload: {} });
-        const opened = s.execute<{ unlocked: string[] }>({ kind: 'sandbox.unlock_professions', payload: {} });
-        if (opened.ok && opened.value) professions.push(...opened.value.unlocked);
-      }
-
-      s.universe.sandbox.log.push({
-        at: s.now,
-        action: p.enabled
-          ? 'God mode on. Nothing will be refused.'
-          : 'God mode off. The world can say no again.',
-      });
-      s.remember({
-        category: 'life',
-        title: p.enabled ? 'Sandbox: God Mode On' : 'Sandbox: God Mode Off',
-        detail: p.enabled
-          ? 'Every audition books, every representative signs, and everything is accepted. None of it was earned, and the save says so.'
-          : 'The world can refuse things again. What god mode already gave is kept.',
-        refs: [{ type: 'person', id: s.player.id }], significance: 1, public: false,
-      });
-      return { godMode: p.enabled, professions };
-    },
-  );
-
-  /** Every profession opened, with no experience spent on any of them. */
-  sim.onCommand<Record<string, never>, { unlocked: ProfessionId[]; already: ProfessionId[] }>(
-    'sandbox.unlock_professions',
-    (_p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
-      const player = s.player;
-      player.professions ??= {};
-      const unlocked: ProfessionId[] = [];
-      const already: ProfessionId[] = [];
-      for (const def of PROFESSIONS) {
-        if (player.professions[def.id]) { already.push(def.id); continue; }
-        player.professions[def.id] = { unlockedAt: s.now, xp: 0, traitIds: [] };
-        unlocked.push(def.id);
-      }
-      s.universe.sandbox.allProfessionsUnlocked = true;
-      if (unlocked.length > 0) {
-        s.universe.sandbox.log.push({
-          at: s.now,
-          action: `Opened ${unlocked.length} profession${unlocked.length === 1 ? '' : 's'} without spending the experience`,
-        });
-        s.remember({
-          category: 'career', title: 'Sandbox: Every Profession Opened',
-          detail: `${unlocked.map((id) => PROFESSION_BY_ID[id]?.name ?? id).join(', ')}. No industry experience was spent on any of them.`,
-          refs: [{ type: 'person', id: player.id }], significance: 1, public: false,
-        });
-      }
-      return { unlocked, already };
-    },
-  );
-
-  sim.onCommand<{ amount: number }, { credited: number }>(
-    'sandbox.add_funds',
-    (p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
-      const accountId = s.player.primaryAccountId;
-      if (!accountId) throw new CommandError('No account to credit.');
-      s.income(accountId, Math.round(p.amount), 'Sandbox funds', 'sandbox');
-      s.universe.sandbox.unlimitedFunds = true;
-      s.universe.sandbox.log.push({ at: s.now, action: `Added ${p.amount} cents` });
-      return { credited: Math.round(p.amount) };
     },
   );
 

@@ -45,7 +45,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/social', label: 'Social', keywords: ['post', 'followers', 'audience', 'brand deal', 'sponsorship', 'creator'], detail: 'Platforms and audience' },
   { route: '/workspace/history', label: 'History', keywords: ['timeline', 'past', 'memories', 'milestones', 'what happened'], detail: 'Everything that has happened' },
   { route: '/workspace/character', label: 'Character', keywords: ['attributes', 'traits', 'skills', 'reputation', 'me', 'stats'], detail: 'Attributes, traits and standing' },
-  { route: '/workspace/settings', label: 'Settings', keywords: ['preferences', 'accessibility', 'sandbox', 'motion', 'audio', 'tutorial'], detail: 'Preferences and sandbox' },
+  { route: '/workspace/settings', label: 'Settings', keywords: ['preferences', 'accessibility', 'motion', 'audio', 'tutorial'], detail: 'Preferences and accessibility' },
 ];
 
 export function GoAnywhere() {
