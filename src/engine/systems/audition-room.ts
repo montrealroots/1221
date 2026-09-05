@@ -26,14 +26,14 @@ import type {
 } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import type { Rng } from '../core/rng';
-import { MS_MINUTE, addDays } from '../core/time';
+import { MS_MINUTE } from '../core/time';
 import { effectiveAttributes, systemModifier } from '../domain/attributes';
 import { readiness } from './life';
 import {
   CASTING_STAGE_BY_ID, ROOM_SEAT_BY_ID, type CastingStageId, type RoomSeatId,
 } from '../content/casting-industry';
 import {
-  ADJUSTMENTS, BEATS, BEAT_BY_ID, ROOM_VERDICTS, WAITING_ROOM_LINES,
+  ADJUSTMENTS, BEAT_BY_ID, ROOM_VERDICTS, WAITING_ROOM_LINES,
   type Beat, type BeatChoice,
 } from '../content/audition-beats';
 import { CASTING_DIRECTOR_BY_ID, castingDirectorsIn, workingCastingDirectors } from '../content/casting-people';
@@ -42,7 +42,6 @@ import {
   roomNoiseFor, sceneFrameFor, settleFor, smallTalkFor,
 } from '../content/room-dialogue';
 import { generatePersonName } from '../content/names';
-import { titleCaseLabel } from '../core/text';
 import { grantProfessionXp } from './professions';
 
 // ---------------------------------------------------------------------------
@@ -524,7 +523,6 @@ function finishRoom(sim: Simulation, audition: Audition, room: AuditionRoomState
   sim.resolveDecision('audition', audition.id);
   if (audition.scheduledItemId) sim.timeline.cancel(audition.scheduledItemId, sim.now);
   sim.emit('cast.room_finished', { auditionId: audition.id, score, walkedOut: room.walkedOut ?? false });
-  void addDays; void titleCaseLabel; void BEATS;
 }
 
 /** For the screen: the room as it stands, with nothing hidden that the player could see. */

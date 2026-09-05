@@ -48,6 +48,7 @@ import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems
 import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { ensureReactive, registerReactive } from './systems/reactive';
 import { registerAuditionRoom } from './systems/audition-room';
+import { registerCastingOffice } from './systems/casting-office';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -83,6 +84,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPlaces(sim);
   registerReactive(sim);
   registerAuditionRoom(sim);
+  registerCastingOffice(sim);
   registerRelease(sim);
   registerCritics(sim);
   registerFranchises(sim);

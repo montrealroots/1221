@@ -187,7 +187,7 @@ export const ADJUSTMENTS: readonly { note: string; tests: string }[] = [
   { note: 'Less. Half of that.', tests: 'whether there is anything under the size' },
   { note: 'Try it like it is the funniest thing that has ever happened to you.', tests: 'range, and whether you will commit to a bad idea properly' },
   { note: 'Do it to me. Not to the camera, to me.', tests: 'whether you can put it on a person' },
-  { note: 'She has already decided to leave before the scene starts.', tests: 'whether you play the end of the scene at the beginning' },
+  { note: 'She made up her mind about him in the car, before any of this.', tests: 'whether you play the end of the scene at the beginning' },
   { note: 'Have fun with it. Do whatever you want.', tests: 'whether you have anything without instructions' },
   { note: 'Take out all the pauses you love.', tests: 'whether the choices were choices or habits' },
   { note: 'He has said this to her a hundred times before.', tests: 'history, and whether the words wear it' },

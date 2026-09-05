@@ -46,7 +46,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/insurance', label: 'Insurance', keywords: ['policy', 'claim', 'cover', 'premium'], detail: 'Policies and claims' },
   { route: '/workspace/education', label: 'Education', keywords: ['class', 'course', 'coach', 'training', 'acting class', 'learn'], detail: 'Classes and coaching' },
   { route: '/workspace/social', label: 'Social', keywords: ['post', 'followers', 'audience', 'brand deal', 'sponsorship', 'creator'], detail: 'Platforms and audience' },
-  { route: '/workspace/casting', label: 'Casting', keywords: ['audition', 'role', 'breakdown', 'self tape', 'agent', 'representation'], detail: 'Auditions and representation' },
+  { route: '/workspace/casting', label: 'Casting', keywords: ['audition', 'role', 'breakdown', 'self tape', 'agent', 'representation', 'casting director', 'casting office', 'feedback', 'where you stand'], detail: 'Auditions, offices and representation' },
   { route: '/workspace/projects', label: 'Projects', keywords: ['film', 'movie', 'script', 'write', 'produce', 'direct', 'shoot', 'post', 'release', 'box office', 'distribution', 'reviews', 'critics', 'rotten tomatoes', 'metacritic', 'cinemascore', 'embargo'], detail: 'Development to release, reviews and reception' },
   { route: '/workspace/company', label: 'Company', keywords: ['studio', 'business', 'found company', 'employees', 'payroll', 'equipment', 'merchandise'], detail: 'Found and run a company' },
   { route: '/workspace/awards', label: 'Awards', keywords: ['nomination', 'ceremony', 'festival', 'campaign', 'oscars', 'emmys', 'cannes'], detail: 'Awards and festivals' },

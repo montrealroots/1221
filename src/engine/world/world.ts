@@ -238,8 +238,9 @@ export function registerWorld(sim: Simulation): void {
     },
   );
 
-  // An audition the player can walk into, while breakdowns are closed for the
-  // rebuild. Everything it does goes through the same commands the game uses.
+  // An audition the player can walk into on demand, without waiting for a
+  // breakdown to find them. Everything it does goes through the same commands
+  // the game uses, so the room, the office and the feedback are the real ones.
   sim.onCommand<{ stage?: 'first_read' | 'callback' | 'screen_test' | 'chemistry_read' }, { auditionId: Id; roleId: Id; projectId: Id; title: string; character: string }>(
     'sandbox.stage_audition',
     (p, { sim: s }) => {

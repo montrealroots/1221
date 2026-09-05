@@ -169,7 +169,9 @@ export function AuditionRoomDialog({ auditionId, onClose }: { auditionId: string
               <strong className="small">The Door Shuts</strong>
               <p className="small" style={{ margin: '4px 0 0' }}>{verdict.line}</p>
               <p className="xs dim" style={{ margin: '4px 0 0' }}>
-                It goes on the audition as one round. What they decide, and when, is theirs.
+                It goes on the audition as one round. The office writes its own notes on you the
+                moment you are out of the corridor, and some of that comes back through your agent
+                in a week or three. What they decide, and when, is theirs.
               </p>
             </div>
           )}

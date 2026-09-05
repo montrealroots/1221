@@ -1584,6 +1584,53 @@ export interface RoomOccupant {
   notes: { at: Instant; beat: string; note: string; delta: number }[];
 }
 
+/**
+ * How an office reads somebody after a session.
+ *
+ * Not a school report. These are the things a casting office actually decides
+ * about you in the twenty seconds after the door shuts, in the pile they put
+ * you in and the note they type next to your name.
+ */
+export interface SessionRead {
+  /** Whether you were right for this one at all. */
+  right: number;
+  /** The work itself. */
+  read: number;
+  /** Whether the performance changed when it was asked to. */
+  direction: number;
+  /** How you were to have in the room. */
+  inTheRoom: number;
+  /** Whether they would bring you in for something else. */
+  bringBack: number;
+  /** Which pile they put you in. Their own words. */
+  pile: 'yes' | 'maybe' | 'no' | 'wrong_for_this';
+  /** The line typed next to your name in the session notes. */
+  note: string;
+}
+
+/** A running relationship with one casting office. */
+export interface CastingOfficeStanding {
+  /** The real casting director's registry id. */
+  castingDirectorId: string;
+  /** How many times they have seen you, and how many were rooms rather than tapes. */
+  seen: number;
+  roomsHeld: number;
+  /** Every session they have had you in, most recent last. */
+  sessions: { at: Instant; projectTitle: string; characterName: string; read: SessionRead }[];
+  /** Where you sit on their list. */
+  list: 'unknown' | 'watching' | 'shortlist' | 'favourite';
+  /** 0-100. What the office thinks of you, which is not shown as a number. */
+  regard: number;
+  firstSeenAt: Instant;
+  lastSeenAt: Instant;
+  /** Times they have brought you in without a submission. */
+  broughtInDirectly: number;
+  /** Parts they have actually given you. */
+  booked: number;
+  /** Every time your side has rung them for an answer. Offices notice. */
+  chasedAt?: Instant[];
+}
+
 /** An audition being played out, one beat at a time. */
 export interface AuditionRoomState {
   /** Which stage of the process this room is. */
@@ -1669,6 +1716,23 @@ export interface Audition {
   tapeTakes?: number;
   /** The office got back to you, or pointedly did not. */
   officeResponse?: { at: Instant; kind: 'callback' | 'hold' | 'pass' | 'silence'; note: string };
+  /**
+   * What the office actually made of you, once they have watched it. Reaches
+   * the player through their representation rather than directly, the way it
+   * does in life, and only when somebody is willing to pass it on.
+   */
+  sessionRead?: SessionRead;
+  /**
+   * What your agent relayed, and when. Absent when nobody would tell you.
+   *
+   * The grades are only the part of the office's read that was actually
+   * passed on — a kind agent relays two of them, a blunt one relays all five.
+   * There is never a number, because no office gives an actor a number.
+   */
+  relayedFeedback?: {
+    at: Instant; from: string; body: string; blunt: boolean;
+    grades?: { axis: 'right' | 'read' | 'direction' | 'inTheRoom' | 'bringBack'; label: string; grade: string }[];
+  };
 }
 
 export type ContractKind = 'acting' | 'writing' | 'directing' | 'producing' | 'crew' | 'vendor' | 'distribution' | 'license' | 'option' | 'employment';
@@ -2719,6 +2783,12 @@ export interface SaveUniverse {
   awardNominations: Record<Id, AwardNomination>;
   festivalSubmissions: Record<Id, FestivalSubmission>;
   franchises: Record<Id, Franchise>;
+
+  /**
+   * Where the player stands with each casting office, keyed by the real
+   * casting director's registry id. Built up one room at a time.
+   */
+  castingOffices?: Record<string, CastingOfficeStanding>;
 
   /** The real studios and networks as they live in this save, keyed by registry id. */
   studios: Record<string, StudioState>;
