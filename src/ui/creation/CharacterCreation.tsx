@@ -13,7 +13,6 @@ import {
   defaultConfig, wealthNote,
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
-import { TRAITS, TRAIT_BY_ID, conflictingTraits, traitName, type TraitCategory } from '@/engine/domain/attributes';
 import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '@/engine/core/performer';
 import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
@@ -31,13 +30,16 @@ import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
 import { SHINGLE_BY_ID } from '@/engine/content/shingle';
 import { OPENING_BRIEF, STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
+import {
+  MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
+  conflictingPersonalityTraits, personalityTraitsIn,
+} from '@/engine/content/personality-traits';
 import { FOUNDER_TRAITS } from '@/engine/content/founder';
 import { ALL_TRAITS } from '@/engine/domain/attributes';
 
 const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
-const MAX_TRAITS = 4;
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
 
@@ -462,24 +464,13 @@ function PersonalStep({
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
-  const grouped = useMemo(() => {
-    const map = new Map<TraitCategory, typeof TRAITS[number][]>();
-    for (const trait of TRAITS) {
-      if (trait.earnable && !['controversial', 'beloved', 'polarizing'].includes(trait.id)) continue;
-      const list = map.get(trait.category) ?? [];
-      list.push(trait);
-      map.set(trait.category, list);
-    }
-    return [...map.entries()];
-  }, []);
-
-
-  const toggleTrait = (id: string) => {
+  const togglePersonality = (id: string) => {
     setConfig((c) => {
-      if (c.traits.includes(id)) return { ...c, traits: c.traits.filter((t) => t !== id) };
-      if (c.traits.length >= MAX_TRAITS) return c;
-      if (conflictingTraits(c.traits, id).length > 0) return c;
-      return { ...c, traits: [...c.traits, id] };
+      const held = c.personalityTraits;
+      if (held.includes(id)) return { ...c, personalityTraits: held.filter((t) => t !== id) };
+      if (held.length >= MAX_PERSONALITY_TRAITS) return c;
+      if (conflictingPersonalityTraits(held, id).length > 0) return c;
+      return { ...c, personalityTraits: [...held, id] };
     });
   };
 
@@ -527,41 +518,59 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Traits</h2>
+            <h2>Personality</h2>
             <p className="muted small">
-              Pick up to {MAX_TRAITS}. Traits change how systems behave rather than adding points, and some cannot be held together.
+              Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are already
+              the best alive at all five of those. Every one of these costs something, some cannot be
+              held together, and the life half of the game reads all of them.
             </p>
           </div>
-          <span className="chip chip-accent">{config.traits.length} / {MAX_TRAITS}</span>
+          <span className="chip chip-accent">{config.personalityTraits.length} / {MAX_PERSONALITY_TRAITS}</span>
         </div>
 
-        {grouped.map(([category, traits]) => (
-          <div key={category} style={{ marginBottom: 'var(--s4)' }}>
-            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{category}</div>
+        {PERSONALITY_GROUPS.map((group) => (
+          <div key={group} style={{ marginBottom: 'var(--s4)' }}>
+            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group}</div>
             <div className="trait-grid">
-              {traits.map((trait) => {
-                const selected = config.traits.includes(trait.id);
-                const conflicts = conflictingTraits(config.traits, trait.id);
-                const blocked = !selected && (conflicts.length > 0 || config.traits.length >= MAX_TRAITS);
+              {personalityTraitsIn(group).map((trait) => {
+                const selected = config.personalityTraits.includes(trait.id);
+                const conflicts = conflictingPersonalityTraits(config.personalityTraits, trait.id);
+                const blocked = !selected
+                  && (conflicts.length > 0 || config.personalityTraits.length >= MAX_PERSONALITY_TRAITS);
                 return (
                   <button
                     key={trait.id}
                     className="trait"
                     aria-pressed={selected}
                     disabled={blocked}
-                    onClick={() => toggleTrait(trait.id)}
+                    onClick={() => togglePersonality(trait.id)}
                     title={conflicts.length > 0
-                      ? `Cannot be held with ${conflicts.map((c) => TRAIT_BY_ID[c]?.name).join(', ')}.`
+                      ? `Cannot be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
                       : undefined}
                   >
-                    <div className="trait-name">{traitName(trait, { pronouns: config.pronouns, performerTitle: config.performerTitle })}</div>
+                    <div className="trait-name">{trait.name}</div>
                     <div className="trait-desc">{trait.description}</div>
+                    <div className="xs dim" style={{ marginTop: 4 }}>{trait.cost}</div>
                   </button>
                 );
               })}
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Your Craft</h2>
+            <p className="muted small">
+              Not a choice, and not on this page. You hold every acting, writing, directing,
+              producing and showrunning trait in the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of
+              them — because you are the best living practitioner of all five. They are listed on
+              The Company step and on your Character screen.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="card">
@@ -873,7 +882,31 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
-        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Traits</div>
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
+        {config.personalityTraits.length === 0 ? (
+          <p className="muted small">
+            Nothing picked. You will be the best there has ever been at making things and no
+            particular kind of person, which is allowed.
+          </p>
+        ) : (
+          <div className="col gap-3">
+            {config.personalityTraits.map((id) => {
+              const trait = PERSONALITY_TRAIT_BY_ID[id];
+              if (!trait) return null;
+              return (
+                <div key={id}>
+                  <div className="strong small">{trait.name}</div>
+                  <div className="xs muted">{trait.description}</div>
+                  <div className="xs dim" style={{ marginTop: 2 }}>{trait.cost}</div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <div className="card">
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Craft</div>
         {/*
           Not a list of what was picked — nothing is picked. The founder holds
           every trait in the game, and this card used to say "no traits, a

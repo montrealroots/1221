@@ -18,6 +18,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { HotelBooking, Id, Person, Property, Vehicle } from '../domain/model';
+import { personalityOf } from './life';
 import { clamp, makeRng, remap } from '../core/rng';
 import { MS_HOUR, MS_MINUTE, addDays, formatDuration, formatTime, zonedParts } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
@@ -779,7 +780,9 @@ export function ensureHygieneTick(sim: Simulation): void {
 
 function decayHygiene(sim: Simulation): void {
   const person = sim.player;
-  person.wellbeing.hygiene = clamp(person.wellbeing.hygiene - HYGIENE_TICK_HOURS * 2.2, 0, 100);
+  // An orderly person's standards slip slower than a chaotic one's.
+  const drift = personalityOf(person, 'hygieneDrift');
+  person.wellbeing.hygiene = clamp(person.wellbeing.hygiene - HYGIENE_TICK_HOURS * 2.2 * drift, 0, 100);
 }
 
 /** Everything you could do where you are standing. */

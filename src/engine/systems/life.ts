@@ -15,6 +15,7 @@ import { formatMoney, type Money } from '../core/money';
 import { CATALOG, RECIPES, retailPrice } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
+import { personalityModifier } from '../content/personality-traits';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -36,15 +37,19 @@ export function freshWellbeing(): Wellbeing {
  * tick rather than by individual activities, so it stays consistent whether an
  * hour passed by playing or by skipping.
  */
+/** One of this person's personality knobs, or 1 when they hold nothing that touches it. */
+export function personalityOf(person: Person, key: string): number {
+  return personalityModifier(person.personalityTraits ?? [], key);
+}
+
 export function applyElapsedWellbeing(person: Person, hours: number, opts: { asleep?: boolean } = {}): void {
   const w = person.wellbeing;
   if (opts.asleep) return;
 
-  const traitDrain = modifierFor(person, 'stressPerShootDay');
+  const traitDrain = modifierFor(person, 'stressPerShootDay') * personalityOf(person, 'stressGain');
   w.energy = clamp(w.energy - ENERGY_DRAIN_PER_HOUR * hours * (1 + (w.sleepDebt / 24) * 0.5), 0, 100);
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
   w.sleepDebt = Math.min(60, w.sleepDebt + hours * 0.34);
-  w.travelFatigue = clamp(w.travelFatigue - hours * 0.9, 0, 100);
 
   // Running on empty costs you.
   if (w.energy < 15) w.stress = clamp(w.stress + hours * 1.6 * traitDrain, 0, 100);
@@ -54,8 +59,13 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   }
   if (w.stress > 75) w.condition = clamp(w.condition - hours * 0.25, 0, 100);
 
-  const recovery = modifierFor(person, 'recoveryRate');
+  const recovery = modifierFor(person, 'recoveryRate') * personalityOf(person, 'stressRecovery');
   w.stress = clamp(w.stress - hours * 0.35 * recovery, 0, 100);
+
+  // Travel wears off faster on somebody restless and slower on a homebody.
+  // Hygiene is not touched here — places.ts owns that tick, and draining it
+  // in two places would drain it twice.
+  w.travelFatigue = clamp(w.travelFatigue - hours * 0.9 * (2 - personalityOf(person, 'travelFatigue')), 0, 100);
 }
 
 /**
@@ -366,6 +376,9 @@ export function sleepQuality(sim: Simulation, person: Person): number {
 
   quality -= remap(person.wellbeing.stress, 0, 100, 0, 0.24);
   quality += modifierFor(person, 'recoveryRate') * 0.06 - 0.06;
+  // A light sleeper and a night owl both lose here; somebody who can sleep
+  // anywhere gains it back.
+  quality *= personalityOf(person, 'sleepQuality');
 
   const hour = zonedParts(sim.now, sim.zone).hour;
   if (hour >= 1 && hour < 5) quality -= 0.08; // going to bed very late
@@ -376,7 +389,7 @@ export function applySleep(person: Person, hours: number, quality: number): void
   const w = person.wellbeing;
   const effective = hours * quality;
 
-  w.energy = clamp(w.energy + effective * 13.5, 0, 100);
+  w.energy = clamp(w.energy + effective * 13.5 * personalityOf(person, 'energyRecovery'), 0, 100);
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 0.4);
   if (hours < 6) w.sleepDebt += (6 - hours) * 1.35;
   w.stress = clamp(w.stress - effective * 4.2, 0, 100);

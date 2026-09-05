@@ -18,6 +18,7 @@ import {
 import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
 import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '../content/founder';
 import { CEILING, GOAT_TRAITS } from '../content/prodigy';
+import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
 import { LEVEL_XP, PROFESSIONS } from '../content/professions';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
@@ -62,6 +63,8 @@ export interface NewSaveConfig {
 
   /** Personal */
   personality: Personality;
+  /** Personality: who they are. Chosen, up to four, and they cost. */
+  personalityTraits: string[];
   traits: string[];
   interests: string[];
   goals: string[];
@@ -111,7 +114,7 @@ export function defaultConfig(): NewSaveConfig {
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
     personality: defaultPersonality(),
-    traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
+    personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
     companyName: '',
@@ -348,9 +351,15 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lifestyle: config.lifestyle,
     background: config.background,
     attributes,
-    // Every trait in the game. The ones picked at creation are in here too;
-    // there was never anything to choose between.
+    // Every craft trait in the game. Nothing was picked and nothing could
+    // have been: the best living writer, director, producer, showrunner and
+    // actor holds all of them.
     traits: everyTrait(),
+    // Personality is the opposite: the only thing on this character that was
+    // genuinely chosen, and the only trait set that still costs them.
+    personalityTraits: config.personalityTraits
+      .filter((id) => PERSONALITY_TRAIT_BY_ID[id])
+      .slice(0, MAX_PERSONALITY_TRAITS),
     skills,
 
     // The producer's instrument, at the ceiling like everything else. Separate

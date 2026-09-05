@@ -189,6 +189,16 @@ export interface Person {
 
   attributes: AttributeSheet;
   traits: string[];
+  /**
+   * Who they are, as against what they are good at.
+   *
+   * The craft sheet above is automatic for the founder — the best living
+   * writer, director, producer, showrunner and actor holds every trait in
+   * every one of those disciplines. None of that says whether they sleep,
+   * hold a grudge or can be alone in a house. These are chosen, there are
+   * four of them, and unlike the craft traits they cost what they cost.
+   */
+  personalityTraits?: string[];
   skills: SkillSheet;
 
   /**

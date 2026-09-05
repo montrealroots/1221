@@ -17,6 +17,7 @@ import { formatMoney, type Money } from '../core/money';
 import { buildFactors } from '../core/audit';
 import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
+import { personalityModifier } from '../content/personality-traits';
 import { CATALOG } from '../content/catalog';
 
 const ROMANTIC: readonly RelationshipType[] = ['dating', 'engaged', 'spouse'];
@@ -870,7 +871,9 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
 function driftRelationships(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
-  const decayMultiplier = modifierFor(player, 'relationshipDecay');
+  // Craft traits never cost the prodigy; personality always does.
+  const decayMultiplier = modifierFor(player, 'relationshipDecay')
+    * personalityModifier(player.personalityTraits ?? [], 'relationshipDecay');
 
   for (const rel of Object.values(sim.universe.relationships)) {
     if (rel.endedAt) continue;
@@ -889,7 +892,10 @@ function driftRelationships(sim: Simulation): void {
     applyDelta(rel.dimensions, {
       affection: -0.6 * rate * Math.min(weeksSince, 8),
       commitment: isRomantic(rel.type) ? -0.5 * rate * Math.min(weeksSince, 8) : 0,
-      familiarity: -0.2 * (livesWithYou ? 0.2 : 1) * Math.min(weeksSince, 6),
+      // Familiarity took the household discount but not the decay rate, so
+      // somebody loyal lost touch at exactly the pace of somebody detached.
+      // Losing touch is the thing this dimension is, so it reads the rate.
+      familiarity: -0.2 * rate * (livesWithYou ? 0.2 : 1) * Math.min(weeksSince, 6),
       // Friction fades. Without this, conflict only ever goes up, and a
       // relationship anybody has argued in enough times is permanently ruined
       // however well it goes afterwards.
