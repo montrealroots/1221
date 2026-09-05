@@ -13,7 +13,7 @@
 
 import {
   HANDOFF_FIDELITY_BASE, HANDOFF_FIDELITY_RANGE, JOBS, JOB_BY_ID, SELF_FIDELITY,
-  STAGES, STORY_DEPARTMENTS, spreadFor, stackFor, type Job, type Stage,
+  SPREAD_WITH_NO_JOBS, STAGES, STORY_DEPARTMENTS, spreadFor, stackFor, type Job, type Stage,
 } from '../content/authorship';
 
 /**
@@ -84,6 +84,8 @@ export interface StageRead {
 export interface WorkRead {
   script: ScriptRead;
   stages: StageRead[];
+  /** Jobs the chain needs that nobody is holding. Empty on a real crew. */
+  missing: Job[];
   /** The weighted read of the finished thing, before luck. */
   quality: number;
   /** How much of one intention the finished thing is, 0-100. */
@@ -93,6 +95,11 @@ export interface WorkRead {
   jobsInChain: number;
   /** What the stack is worth, and what it is called. */
   stack: ReturnType<typeof stackFor>;
+  /**
+   * What the stack is worth to how the work is received, as one number for
+   * the systems downstream. Coherence is the axis; this is its weight.
+   */
+  receptionMultiplier: number;
   /** How far the outcome can land either side of `quality`. Zero at full stack. */
   spread: number;
   /** The seams that were closed, and the ones that were not. */
@@ -179,8 +186,19 @@ function runStage(stage: Stage, incoming: number, head: Hand | undefined, fideli
  * Nothing here is random. `spread` says how much luck is still to be applied
  * and by whom; at full stack it is zero, and the work is exactly what it reads.
  */
+/** Every job a chain of this kind needs somebody in. */
+export function jobsRequired(isSeries: boolean): Job[] {
+  return JOBS.filter((job) => job !== 'showrunner' || isSeries);
+}
+
+/** The jobs nobody is holding. A chain with any of these cannot be read. */
+export function missingFrom(hands: Assignment['hands'], isSeries: boolean): Job[] {
+  return jobsRequired(isSeries).filter((job) => hands[job] === undefined);
+}
+
 export function readWork(script: ScriptRead, assignment: Assignment): WorkRead {
   const stages = STAGES.filter((s) => !s.seriesOnly || assignment.isSeries);
+  const missing = missingFrom(assignment.hands, assignment.isSeries);
   const out: Record<string, number> = { script: script.overall };
   const reads: StageRead[] = [];
   const seams: WorkRead['seams'] = [];
@@ -215,31 +233,37 @@ export function readWork(script: ScriptRead, assignment: Assignment): WorkRead {
   const quality = clamp100(weighted / weight);
 
   // Which of the jobs in this chain the subject is holding.
-  const jobsInChain = JOBS.filter((job) => {
-    if (job === 'showrunner' && !assignment.isSeries) return false;
-    return assignment.hands[job] !== undefined;
-  });
+  const jobsInChain = jobsRequired(assignment.isSeries);
   const held = jobsInChain.filter((job) => assignment.hands[job]?.id === assignment.subjectId);
   const stack = stackFor(held.length);
 
-  // Coherence is how much of one intention survived, seam by seam, lifted by
-  // the stack. It is its own axis: a picture can be very good and incoherent,
-  // and it is the incoherent ones that get the reviews saying "does not know
-  // what it wants to be".
-  const meanFidelity = reads.length > 0
-    ? reads.reduce((sum, r) => sum + r.fidelity, 0) / reads.length
-    : SELF_FIDELITY;
-  const coherence = clamp100(meanFidelity * 100 * stack.multiplier);
+  // Coherence is how much of one intention survived, seam by seam. It is the
+  // product of the fidelities rather than their mean, because incoherence
+  // compounds: three people each losing a tenth of it does not lose a tenth,
+  // it loses a quarter. Multiplied out it reaches 100 only when every seam is
+  // closed, which is the point — an averaged version saturated at three jobs
+  // and made the fourth one worth nothing.
+  const coherence = clamp100(reads.reduce((product, r) => product * r.fidelity, 1) * 100);
+
+  // A department nobody is running is not a zero, it is an unknown. Reporting
+  // a confident number for a picture with no director was the worst thing this
+  // file did: it said "86, exactly, nothing left to chance" about a film with
+  // no lead. An incomplete crew is maximum uncertainty, never certainty.
+  const spread = missing.length > 0
+    ? SPREAD_WITH_NO_JOBS
+    : spreadFor(held.length, jobsInChain.length);
 
   return {
     script,
     stages: reads,
+    missing,
     quality,
     coherence,
     jobsHeld: held.length,
     jobsInChain: jobsInChain.length,
     stack,
-    spread: spreadFor(held.length, jobsInChain.length),
+    receptionMultiplier: stack.multiplier,
+    spread,
     seams,
   };
 }
@@ -254,6 +278,19 @@ export function readWork(script: ScriptRead, assignment: Assignment): WorkRead {
  */
 export function settle(read: WorkRead, roll: number): number {
   if (read.spread <= 0) return read.quality;
-  const offset = (roll * 2 - 1) * read.spread;
-  return clamp100(read.quality + offset);
+  return clamp100(read.quality + centred(roll) * read.spread);
+}
+
+/**
+ * A uniform roll, bent so outcomes cluster near what was made.
+ *
+ * A flat roll made a picture as likely to land at the bottom of its range as
+ * on its mark, which is not how anything works: most things come out roughly
+ * as they were made and the far ends are rare. This is the inverse of a
+ * symmetric triangular distribution on [-1, 1] — pure, cheap, and it keeps the
+ * extremes reachable rather than impossible.
+ */
+export function centred(roll: number): number {
+  const u = Math.max(0, Math.min(1, roll));
+  return u < 0.5 ? Math.sqrt(2 * u) - 1 : 1 - Math.sqrt(2 * (1 - u));
 }

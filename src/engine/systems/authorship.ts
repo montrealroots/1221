@@ -18,7 +18,7 @@ import {
   JOBS, JOB_BY_ID, STORY_DEPARTMENT_BY_ID, type Job,
 } from '../content/authorship';
 import {
-  capabilityFor, readWork, scriptFrom, settle,
+  capabilityFor, missingFrom, readWork, scriptFrom, settle,
   type Assignment, type Hand, type WorkRead,
 } from '../domain/quality';
 
@@ -96,6 +96,16 @@ export function readCrew(
     hands[job] = handFor(sim, requirePerson(sim, id), job, upstreamId);
   }
 
+  // A department nobody is running cannot be assessed, and guessing at it was
+  // how this returned "86, exactly" for a picture with no lead. Refuse instead.
+  const missing = missingFrom(hands, isSeries);
+  if (missing.length > 0) {
+    const names = missing.map((job) => JOB_BY_ID[job].name.toLowerCase());
+    throw new CommandError(
+      `Nobody is holding ${names.join(' or ')} on this. There is no picture to read until somebody is.`,
+    );
+  }
+
   return readWork(script, { hands, isSeries, subjectId });
 }
 
@@ -112,7 +122,11 @@ export function settleCrew(
   opts: { isSeries?: boolean; subjectId?: Id; title?: string; refType?: string; refId?: Id } = {},
 ): { read: WorkRead; outcome: number } {
   const read = readCrew(sim, crew, opts);
-  const roll = read.spread > 0 ? sim.rng('work', opts.refId ?? 'unfiled', read.jobsHeld).next() : 0;
+  // Seeded on what the work actually is, so re-settling the same picture gives
+  // the same picture. Two unnamed works used to share the seed 'unfiled' and
+  // came out identically; a counter keeps them apart without losing replay.
+  const seed = opts.refId ?? `unfiled:${sim.counter('work_settle')}`;
+  const roll = read.spread > 0 ? sim.rng('work', seed, read.jobsHeld).next() : 0;
   const outcome = settle(read, roll);
   const title = opts.title ?? 'This Piece Of Work';
 
@@ -169,6 +183,7 @@ export function registerAuthorship(sim: Simulation): void {
       departments: Record<string, { name: string; value: number }>;
       quality: number;
       coherence: number;
+      receptionMultiplier: number;
       spread: number;
       low: number;
       high: number;
@@ -189,6 +204,7 @@ export function registerAuthorship(sim: Simulation): void {
       ),
       quality: Math.round(read.quality * 10) / 10,
       coherence: Math.round(read.coherence),
+      receptionMultiplier: read.receptionMultiplier,
       spread: Math.round(read.spread * 10) / 10,
       low: Math.round(Math.max(0, read.quality - read.spread) * 10) / 10,
       high: Math.round(Math.min(100, read.quality + read.spread) * 10) / 10,

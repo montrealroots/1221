@@ -24,7 +24,8 @@ import {
   spreadFor, stackFor, type Job,
 } from '@/engine/content/authorship';
 import {
-  capabilityFor, fidelityBetween, readWork, scriptFrom, settle, type Hand,
+  capabilityFor, centred, fidelityBetween, jobsRequired, missingFrom,
+  readWork, scriptFrom, settle, type Hand,
 } from '@/engine/domain/quality';
 import { readCrew, jobSheet, settleCrew, alignmentBetween } from '@/engine/systems/authorship';
 import { SKILLS } from '@/engine/domain/skills';
@@ -195,12 +196,11 @@ describe('the chain', () => {
 });
 
 describe('the stack', () => {
-  it('never multiplies a department above the top of the scale', () => {
+  it('never pushes anything above the top of the scale', () => {
     for (const step of STACK) {
       expect(step.multiplier).toBeGreaterThanOrEqual(1);
       expect(step.multiplier).toBeLessThanOrEqual(1.3);
     }
-    // Coherence is the only thing it multiplies, and it is still clamped.
     const read = readWork(scriptFrom(sheetAt(CEILING), 'me'), {
       hands: {
         writer: hand('me', 'writer', 100), director: hand('me', 'director', 100),
@@ -210,6 +210,31 @@ describe('the stack', () => {
     });
     expect(read.coherence).toBe(100);
     expect(read.quality).toBe(100);
+    expect(read.receptionMultiplier).toBe(read.stack.multiplier);
+  });
+
+  it('keeps coherence rising all the way to the last job, without saturating', () => {
+    // This is a regression: coherence used to be the mean of the fidelities
+    // times the stack multiplier, which hit 100 at three jobs and made the
+    // fourth one worth nothing at all on that axis.
+    const script = scriptFrom(sheetAt(CEILING), 'me');
+    const other = (job: Job) => hand(`x_${job}`, job, 100, 50);
+    const ladder: Partial<Record<Job, Hand>>[] = [
+      { writer: other('writer'), director: other('director'), producer: other('producer'), actor: other('actor') },
+      { writer: hand('me', 'writer', 100), director: other('director'), producer: other('producer'), actor: other('actor') },
+      { writer: hand('me', 'writer', 100), director: hand('me', 'director', 100), producer: other('producer'), actor: other('actor') },
+      { writer: hand('me', 'writer', 100), director: hand('me', 'director', 100), producer: hand('me', 'producer', 100), actor: other('actor') },
+      { writer: hand('me', 'writer', 100), director: hand('me', 'director', 100), producer: hand('me', 'producer', 100), actor: hand('me', 'actor', 100) },
+    ];
+    const coherences = ladder.map((hands) => readWork(script, { hands, isSeries: false, subjectId: 'me' }).coherence);
+    // The writer is not a seam of its own, so the first two are level. Every
+    // job after that closes one, and only the last reaches the top.
+    expect(coherences[0]).toBe(coherences[1]);
+    for (let i = 2; i < coherences.length; i++) {
+      expect(coherences[i], `job ${i}`).toBeGreaterThan(coherences[i - 1]!);
+    }
+    expect(coherences[coherences.length - 1]).toBe(100);
+    expect(coherences[coherences.length - 2]).toBeLessThan(100);
   });
 
   it('rises with each job and is named at every step', () => {
@@ -283,8 +308,10 @@ describe('read against a real save', () => {
   it('is deterministic: the same save settles the same picture twice', () => {
     const a = quickSave({}, 'authorship-determinism');
     const b = quickSave({}, 'authorship-determinism');
-    const crewA = { writer: a.player.id, director: Object.values(a.universe.people).find((p) => !p.isPlayer)!.id };
-    const crewB = { writer: b.player.id, director: Object.values(b.universe.people).find((p) => !p.isPlayer)!.id };
+    const otherA = Object.values(a.universe.people).find((p) => !p.isPlayer)!.id;
+    const otherB = Object.values(b.universe.people).find((p) => !p.isPlayer)!.id;
+    const crewA = { writer: a.player.id, director: otherA, producer: a.player.id, actor: a.player.id };
+    const crewB = { writer: b.player.id, director: otherB, producer: b.player.id, actor: b.player.id };
     expect(settleCrew(a, crewA, { refId: 'x' }).outcome).toBe(settleCrew(b, crewB, { refId: 'x' }).outcome);
   });
 });
@@ -312,5 +339,104 @@ describe('the planning command', () => {
     const result = sim.execute({ kind: 'work.project', payload: { crew: { writer: 'person_nobody' } } });
     expect(result.ok).toBe(false);
     expect(result.error).toMatch(/not in this save/i);
+  });
+});
+
+describe('a crew with a hole in it', () => {
+  const script = () => scriptFrom(sheetAt(CEILING), 'me');
+  const meIn = (job: Job) => hand('me', job, CEILING);
+
+  it('names every job nobody is holding', () => {
+    expect(jobsRequired(false)).toEqual(['writer', 'director', 'producer', 'actor']);
+    expect(jobsRequired(true)).toContain('showrunner');
+    expect(missingFrom({ writer: meIn('writer') }, false)).toEqual(['director', 'producer', 'actor']);
+    expect(missingFrom({ writer: meIn('writer'), director: meIn('director'), producer: meIn('producer'), actor: meIn('actor') }, false)).toEqual([]);
+    // A showrunner is only missing when it is a series.
+    expect(missingFrom({ writer: meIn('writer'), director: meIn('director'), producer: meIn('producer'), actor: meIn('actor') }, true)).toEqual(['showrunner']);
+  });
+
+  it('is never reported as certain', () => {
+    // The regression this locks: a picture with no lead actor came back as
+    // "86, exactly, nothing left to chance". A department nobody is running is
+    // an unknown, so it is the widest spread there is, never the narrowest.
+    for (const hands of [
+      { writer: meIn('writer') },
+      { writer: meIn('writer'), producer: meIn('producer'), actor: meIn('actor') },
+      { writer: meIn('writer'), director: meIn('director'), producer: meIn('producer') },
+    ]) {
+      const read = readWork(script(), { hands, isSeries: false, subjectId: 'me' });
+      expect(read.missing.length, JSON.stringify(Object.keys(hands))).toBeGreaterThan(0);
+      expect(read.spread, 'an incomplete crew was reported as certain').toBe(16);
+    }
+  });
+
+  it('is refused outright rather than guessed at, against a real save', () => {
+    const sim = quickSave({}, 'authorship-incomplete');
+    const me = sim.player.id;
+    expect(() => readCrew(sim, { writer: me, director: me, producer: me })).toThrow(/lead/i);
+    expect(() => readCrew(sim, { writer: me, producer: me, actor: me })).toThrow(/director/i);
+    expect(() => readCrew(sim, {
+      writer: me, director: me, producer: me, actor: me,
+    }, { isSeries: true })).toThrow(/showrunner/i);
+    // And the complete one still reads.
+    expect(readCrew(sim, { writer: me, director: me, producer: me, actor: me }).quality).toBe(CEILING);
+  });
+});
+
+describe('how the luck falls', () => {
+  it('clusters near what was made rather than spreading flat', () => {
+    expect(centred(0)).toBe(-1);
+    expect(centred(0.5)).toBe(0);
+    expect(centred(1)).toBe(1);
+    // A flat roll made the far ends as likely as the mark. They are not.
+    let middle = 0;
+    let edges = 0;
+    const N = 20_000;
+    for (let i = 0; i < N; i++) {
+      const x = Math.abs(centred(i / N));
+      if (x <= 0.2) middle++;
+      if (x >= 0.8) edges++;
+    }
+    expect(middle / N, 'outcomes do not cluster near the mark').toBeGreaterThan(0.3);
+    expect(edges / N, 'the extremes are too common').toBeLessThan(0.06);
+    expect(middle).toBeGreaterThan(edges * 4);
+  });
+
+  it('is monotone, so a better roll is never a worse picture', () => {
+    const read = readWork(scriptFrom(sheetAt(CEILING), 'me'), {
+      hands: {
+        writer: hand('me', 'writer', 100), director: hand('d', 'director', 72, 55),
+        producer: hand('p', 'producer', 72, 55), actor: hand('a', 'actor', 72, 55),
+      },
+      isSeries: false, subjectId: 'me',
+    });
+    let previous = -Infinity;
+    for (let i = 0; i <= 20; i++) {
+      const value = settle(read, i / 20);
+      expect(value, `roll ${i / 20}`).toBeGreaterThanOrEqual(previous);
+      previous = value;
+    }
+  });
+
+  it('gives two unnamed pieces of work different luck', () => {
+    // They shared the seed 'unfiled' and came out identically.
+    const sim = quickSave({}, 'authorship-unfiled');
+    const me = sim.player.id;
+    const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+    const crew = { writer: me, director: other.id, producer: me, actor: me };
+    const first = settleCrew(sim, crew, { title: 'One' });
+    const second = settleCrew(sim, crew, { title: 'Two' });
+    expect(first.read.spread).toBeGreaterThan(0);
+    expect(second.outcome, 'two separate works settled identically').not.toBe(first.outcome);
+  });
+
+  it('still settles the same named work the same way twice', () => {
+    const sim = quickSave({}, 'authorship-named');
+    const me = sim.player.id;
+    const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+    const crew = { writer: me, director: other.id, producer: me, actor: me };
+    const a = settleCrew(sim, crew, { refId: 'work_alpha' });
+    const b = settleCrew(sim, crew, { refId: 'work_alpha' });
+    expect(b.outcome).toBe(a.outcome);
   });
 });
