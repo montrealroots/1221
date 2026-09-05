@@ -27,6 +27,7 @@ import { rating } from '../content/ratings';
 import { filmIncentive } from '../content/tax';
 import { systemModifier } from '../domain/attributes';
 import { activeDeal, adjustStanding, standingWith } from './studio-state';
+import { REAL_CEILING, godMode, logOverride } from './sandbox';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -99,7 +100,16 @@ export function computeFinalQuality(sim: Simulation, project: Project): number {
   const resourceFactor = remap(Math.log10(Math.max(1, project.budget / expectedBudget) + 1), 0, 0.6, 0.86, 1.10);
 
   const raw = script * 0.34 + directing * 0.20 + castQuality * 0.18 + production * 0.15 + post * 0.13;
-  return clamp(Math.round(raw * resourceFactor), 1, 100);
+  const honest = clamp(Math.round(raw * resourceFactor), 1, 100);
+
+  // God mode: anything the player had a hand in is a masterpiece. Only theirs
+  // — the rest of the world's slate is judged the way it always was, because a
+  // world where every picture is perfect is not a world worth being the best in.
+  if (godMode(sim) && (project.createdById === sim.universe.playerId || project.castIds.includes(sim.universe.playerId))) {
+    logOverride(sim, `${project.title} finished perfect. On its own it was worth ${honest}.`);
+    return REAL_CEILING;
+  }
+  return honest;
 }
 
 /** What a project of this shape ought to cost. */
@@ -451,7 +461,9 @@ export function registerFilm(sim: Simulation): void {
         ]);
         const probability = clamp(score * 1.1 - 0.1, 0.02, 0.94);
         const roll = rng.next();
-        const said_yes = roll < probability;
+        // God mode: they attach, whoever they are.
+        const said_yes = godMode(s) || roll < probability;
+        if (godMode(s) && roll >= probability) logOverride(s, `${person.displayName} attached to ${project.title}. They would not have.`);
 
         s.audit({
           kind: 'film.attachment_decided', subjectType: 'project', subjectId: project.id,
@@ -617,7 +629,8 @@ export function registerFilm(sim: Simulation): void {
       const ownControl = company?.ownerships.some((o) => o.holderId === player.id && o.percent >= 50) ?? false;
       const decisionIsTheirs = ownControl || sandbox || p.force === true;
 
-      const probability = decisionIsTheirs ? 1 : clamp(score * 1.15 - 0.05, 0.05, 0.97);
+      // God mode: it is greenlit.
+      const probability = decisionIsTheirs || godMode(s) ? 1 : clamp(score * 1.15 - 0.05, 0.05, 0.97);
       const roll = rng.next();
       const greenlit = roll < probability;
 
@@ -874,7 +887,8 @@ function resolvePitch(sim: Simulation, projectId: Id, buyerId: string): void {
   ]);
 
   const riskAdjust = remap(buyer.riskAppetite, 0, 100, -0.12, 0.10);
-  const probability = clamp(score * 1.05 + riskAdjust - 0.18, 0.01, 0.88);
+  // God mode: every buyer in town wants it.
+  const probability = godMode(sim) ? 1 : clamp(score * 1.05 + riskAdjust - 0.18, 0.01, 0.88);
   const roll = rng.next();
   const interested = roll < probability;
 

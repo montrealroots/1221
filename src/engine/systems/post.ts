@@ -31,6 +31,7 @@ import { playerControls } from './real-people';
 import { grantProfessionXp } from './professions';
 import { generateProperty } from './property';
 import { readiness } from './life';
+import { godMode, logOverride } from './sandbox';
 
 // ---------------------------------------------------------------------------
 // Calibration
@@ -361,8 +362,13 @@ export function registerPost(sim: Simulation): void {
       const wantedSync = wantedFor(s, project, cue, publisher.posture, term, territory, asks, mfn, 'sync');
       const wantedMaster = wantedFor(s, project, cue, label.posture, term, territory, asks, mfn, 'master');
       const wantedEach = mfn ? Math.max(wantedSync, wantedMaster) : undefined;
-      const syncOk = p.syncFee >= (wantedEach ?? wantedSync) * 0.9;
-      const masterOk = p.masterFee >= (wantedEach ?? wantedMaster) * 0.9;
+      // God mode: they clear it at whatever the picture is offering.
+      const cheated = godMode(s);
+      const syncOk = cheated || p.syncFee >= (wantedEach ?? wantedSync) * 0.9;
+      const masterOk = cheated || p.masterFee >= (wantedEach ?? wantedMaster) * 0.9;
+      if (cheated && (p.syncFee < (wantedEach ?? wantedSync) * 0.9 || p.masterFee < (wantedEach ?? wantedMaster) * 0.9)) {
+        logOverride(s, `${publisher.name} and ${label.name} cleared cue ${cue.number} under their number.`);
+      }
       (cue as MusicCue & { asks?: number }).asks = asks + 1;
 
       if (!syncOk || !masterOk) {

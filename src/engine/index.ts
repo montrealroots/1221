@@ -581,7 +581,18 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Rebuilt the casting-room index on ${indexed} role${indexed === 1 ? '' : 's'}.`);
   }
   record['tutorial'] ??= { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false };
-  record['sandbox'] ??= { enabled: false, maxAttributesApplied: false, allTraitsGranted: false, unlimitedFunds: false, ignoreAuthority: false, log: [] };
+  record['sandbox'] ??= { enabled: false, maxAttributesApplied: false, allTraitsGranted: false, unlimitedFunds: false, ignoreAuthority: false, godMode: false, allProfessionsUnlocked: false, log: [] };
+  // Schema 25 added god mode. A save written before it was not played that
+  // way, so it comes forward with god mode off, and every sandbox action it
+  // already logged is left exactly as it is.
+  {
+    const sandbox = record['sandbox'] as Record<string, unknown>;
+    if (typeof sandbox['godMode'] !== 'boolean') sandbox['godMode'] = false;
+    if (typeof sandbox['allProfessionsUnlocked'] !== 'boolean') sandbox['allProfessionsUnlocked'] = false;
+    // An earlier build of god mode stored a rating ceiling here. It is gone;
+    // drop it rather than carrying a field nothing reads.
+    delete sandbox['ratingCeiling'];
+  }
   if (typeof record['__idCounter'] !== 'number') {
     record['__idCounter'] = 100000;
     steps.push('Reset the id counter above any existing id.');

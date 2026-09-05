@@ -47,6 +47,7 @@ export function CastingWorkspace() {
   // Every casting office that has ever had the player in, and where that left
   // things. Only offices that have actually seen you appear here: you cannot
   // have a standing with somebody you have never read for.
+  const cheating = useWorld((s) => s.universe.sandbox.enabled && s.universe.sandbox.godMode);
   const offices = useWorld(() => officeBook(sim));
   const officeKnowsYou = new Map(offices.map((entry) => [entry.standing.castingDirectorId, entry]));
 
@@ -64,6 +65,14 @@ export function CastingWorkspace() {
           are real inputs, and when you do not get it, you can find out why.
         </p>
       </div>
+
+      {cheating && (
+        <p className="god-banner" style={{ marginBottom: 'var(--s4)' }}>
+          God Mode Is On. Every room you walk into is the best they have seen, every office signs you, and every
+          part is yours. The office notes below are still written honestly, and the sandbox log records what was
+          given rather than earned.
+        </p>
+      )}
 
       <Tabs active={tab} onChange={setTab} tabs={[
         { id: 'breakdowns', label: 'Breakdowns', badge: roles.length },
@@ -86,13 +95,13 @@ export function CastingWorkspace() {
                 return (
                   <div key={role.id} className="list-item list-static">
                     <div className="grow">
-                      <div className="small strong">{role.characterName} — {project?.title}</div>
-                      <div className="xs dim">
+                      <div className="small strong clamp-2">{role.characterName} — {project?.title}</div>
+                      <div className="xs dim clamp-2">
                         {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
                         {project && ` · ${project.genres.map(genreName).join(', ')}`}
                       </div>
                       {office && (
-                        <div className="xs dim">
+                        <div className="xs dim clamp-2">
                           Casting by {office.name}
                           {known && (
                             <span className={known.standing.list === 'favourite' || known.standing.list === 'shortlist' ? 'positive' : undefined}>
@@ -101,11 +110,12 @@ export function CastingWorkspace() {
                           )}
                         </div>
                       )}
-                      <div className="xs muted" style={{ marginTop: 2 }}>{role.description}</div>
+                      <div className="xs muted clamp-3" style={{ marginTop: 2 }}>{role.description}</div>
                       <div className="row wrap gap-1" style={{ marginTop: 4 }}>
                         {role.requirements.slice(0, 4).map((requirement) => (
-                          <span key={requirement.attributeId} className="chip">
-                            {titleCaseLabel(requirement.attributeId.replace(/_/g, ' '))} {Math.round((player.attributes[requirement.attributeId] ?? 0))}
+                          <span key={requirement.attributeId} className={`chip${cheating ? ' chip-god' : ''}`}>
+                            {titleCaseLabel(requirement.attributeId.replace(/_/g, ' '))}{' '}
+                            {Math.round(player.attributes[requirement.attributeId] ?? 0)}
                           </span>
                         ))}
                       </div>
@@ -154,8 +164,8 @@ export function CastingWorkspace() {
                   <div key={audition.id} className="list-item list-static" style={{ display: 'block' }}>
                     <div className="row-between">
                       <div className="grow">
-                        <div className="small strong">{role?.characterName} — {project?.title}</div>
-                        <div className="xs dim">
+                        <div className="small strong clamp-2">{role?.characterName} — {project?.title}</div>
+                        <div className="xs dim clamp-3">
                           {audition.format === 'self_tape' || audition.stage === 'self_tape'
                             ? (audition.tapeSentAt
                               ? `Tape sent ${formatDate(audition.tapeSentAt, sim.homeZone)}${audition.tapeTakes ? `, take ${audition.tapeTakes} of ${audition.tapeTakes}` : ''}`
@@ -188,7 +198,7 @@ export function CastingWorkspace() {
                     {audition.room?.verdict && (
                       <div className="callout" style={{ marginTop: 'var(--s2)' }}>
                         <strong className="xs">{audition.room.walkedOut ? 'You Walked Out' : 'In The Room'}</strong>
-                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.room.verdict.line}</p>
+                        <p className="xs clamp-3" style={{ margin: '2px 0 0' }}>{audition.room.verdict.line}</p>
                         <p className="xs dim" style={{ margin: '2px 0 0' }}>
                           {audition.room.occupants.length} behind the table · {audition.room.played.length} beats
                         </p>
@@ -197,7 +207,7 @@ export function CastingWorkspace() {
                     {audition.officeResponse && audition.officeResponse.kind !== 'silence' && (
                       <div className={`callout ${audition.officeResponse.kind === 'callback' ? 'callout-accent' : audition.officeResponse.kind === 'pass' ? 'callout-negative' : ''}`} style={{ marginTop: 'var(--s2)' }}>
                         <strong className="xs">The Office, {formatDate(audition.officeResponse.at, sim.homeZone)}</strong>
-                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.officeResponse.note}</p>
+                        <p className="xs clamp-3" style={{ margin: '2px 0 0' }}>{audition.officeResponse.note}</p>
                       </div>
                     )}
                     {audition.officeResponse?.kind === 'silence' && (
@@ -212,7 +222,7 @@ export function CastingWorkspace() {
                         <strong className="xs">
                           {audition.relayedFeedback.from === 'Nobody' ? 'Nothing Came Back' : `${audition.relayedFeedback.from}, ${formatDate(audition.relayedFeedback.at, sim.homeZone)}`}
                         </strong>
-                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.relayedFeedback.body}</p>
+                        <p className="xs clamp-3" style={{ margin: '2px 0 0' }}>{audition.relayedFeedback.body}</p>
                         {(audition.relayedFeedback.grades ?? []).length > 0 && (
                           <div className="row wrap gap-1" style={{ marginTop: 6 }}>
                             {audition.relayedFeedback.grades!.map((grade) => (
@@ -231,7 +241,7 @@ export function CastingWorkspace() {
                     )}
                     {!audition.relayedFeedback && audition.sessionRead && (
                       <div className="row-between" style={{ marginTop: 'var(--s2)', alignItems: 'flex-end' }}>
-                        <p className="xs dim" style={{ margin: 0 }}>
+                        <p className="xs dim grow clamp-2" style={{ margin: 0 }}>
                           They have their notes on you. Whether any of it reaches you is up to your agent.
                         </p>
                         <button
@@ -247,7 +257,7 @@ export function CastingWorkspace() {
                     )}
 
                     {audition.feedback && (
-                      <p className="xs muted" style={{ margin: 'var(--s2) 0 0' }}>{audition.feedback}</p>
+                      <p className="xs muted clamp-3" style={{ margin: 'var(--s2) 0 0' }}>{audition.feedback}</p>
                     )}
 
                     {audit && (
@@ -290,17 +300,17 @@ export function CastingWorkspace() {
                   <div key={standing.castingDirectorId} className="list-item list-static" style={{ display: 'block' }}>
                     <div className="row-between">
                       <div className="grow">
-                        <div className="small strong">{entry.name}</div>
-                        <div className="xs dim">
+                        <div className="small strong clamp-2">{entry.name}</div>
+                        <div className="xs dim clamp-2">
                           {[entry.office, entry.where].filter(Boolean).join(' · ')}
                         </div>
-                        {entry.knownFor && <div className="xs muted" style={{ marginTop: 2 }}>{entry.knownFor}</div>}
+                        {entry.knownFor && <div className="xs muted clamp-3" style={{ marginTop: 2 }}>{entry.knownFor}</div>}
                       </div>
                       <span className={`chip ${standing.list === 'favourite' ? 'chip-positive' : standing.list === 'unknown' ? '' : 'chip-accent'}`}>
                         {LIST_LABEL[standing.list]}
                       </span>
                     </div>
-                    <p className="xs" style={{ margin: 'var(--s2) 0 0' }}>{entry.howItStands}</p>
+                    <p className="xs clamp-2" style={{ margin: 'var(--s2) 0 0' }}>{entry.howItStands}</p>
                     <div className="row wrap gap-1" style={{ marginTop: 6 }}>
                       <span className="chip">Seen You {standing.seen === 1 ? 'Once' : `${standing.seen} Times`}</span>
                       {standing.roomsHeld > 0 && <span className="chip">{standing.roomsHeld} In The Room</span>}
@@ -308,7 +318,7 @@ export function CastingWorkspace() {
                       {standing.booked > 0 && <span className="chip chip-positive">Booked You {standing.booked}×</span>}
                     </div>
                     {entry.lastSeen && (
-                      <p className="xs dim" style={{ margin: '6px 0 0' }}>
+                      <p className="xs dim clamp-2" style={{ margin: '6px 0 0' }}>
                         Last in for {entry.lastSeen.characterName} on {entry.lastSeen.projectTitle}, {formatDate(entry.lastSeen.at, sim.homeZone)}.
                       </p>
                     )}
@@ -387,7 +397,9 @@ export function CastingWorkspace() {
                       {project.releaseDate && ` · released ${formatDate(project.releaseDate, sim.homeZone)}`}
                     </div>
                   </div>
-                  {project.criticScore !== undefined && <span className="chip">{project.criticScore} critics</span>}
+                  {project.criticScore !== undefined && (
+                    <span className={`chip${cheating ? ' chip-god' : ''}`}>{project.criticScore} critics</span>
+                  )}
                 </div>
               ))}
             </div>

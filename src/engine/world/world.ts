@@ -17,6 +17,7 @@ import { generateCharacterName } from '../content/names';
 import { ageOn } from '../core/time';
 import { ATTRIBUTES, TRAITS, conflictingTraits } from '../domain/attributes';
 import { SKILLS } from '../domain/skills';
+import { PROFESSIONS, PROFESSION_BY_ID, type ProfessionId } from '../content/professions';
 
 /** How many people get full-detail simulation. Everything else is cheaper. */
 const TIER_BUDGET: Record<SimulationTier, number> = {
@@ -144,6 +145,77 @@ export function registerWorld(sim: Simulation): void {
       s.universe.sandbox.allTraitsGranted = true;
       s.universe.sandbox.log.push({ at: s.now, action: `Granted ${granted.length} traits` });
       return { granted, skipped };
+    },
+  );
+
+  /**
+   * God mode on or off.
+   *
+   * Turning it on maxes everything, grants every trait and opens every
+   * profession in one go, because that is what somebody switching it on is
+   * asking for. Turning it off stops the world saying yes to everything — it
+   * does not take back what was already given, because unwinding a career is
+   * worse than having cheated at one.
+   */
+  sim.onCommand<{ enabled: boolean }, { godMode: boolean; professions: string[] }>(
+    'sandbox.god_mode',
+    (p, { sim: s }) => {
+      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first — this is not something to do by accident.');
+      s.universe.sandbox.godMode = p.enabled;
+
+      const professions: string[] = [];
+      if (p.enabled) {
+        s.execute({ kind: 'sandbox.max_attributes', payload: {} });
+        s.execute({ kind: 'sandbox.grant_all_traits', payload: {} });
+        const opened = s.execute<{ unlocked: string[] }>({ kind: 'sandbox.unlock_professions', payload: {} });
+        if (opened.ok && opened.value) professions.push(...opened.value.unlocked);
+      }
+
+      s.universe.sandbox.log.push({
+        at: s.now,
+        action: p.enabled
+          ? 'God mode on. Nothing will be refused.'
+          : 'God mode off. The world can say no again.',
+      });
+      s.remember({
+        category: 'life',
+        title: p.enabled ? 'Sandbox: God Mode On' : 'Sandbox: God Mode Off',
+        detail: p.enabled
+          ? 'Every audition books, every representative signs, and everything is accepted. None of it was earned, and the save says so.'
+          : 'The world can refuse things again. What god mode already gave is kept.',
+        refs: [{ type: 'person', id: s.player.id }], significance: 1, public: false,
+      });
+      return { godMode: p.enabled, professions };
+    },
+  );
+
+  /** Every profession opened, with no experience spent on any of them. */
+  sim.onCommand<Record<string, never>, { unlocked: ProfessionId[]; already: ProfessionId[] }>(
+    'sandbox.unlock_professions',
+    (_p, { sim: s }) => {
+      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
+      const player = s.player;
+      player.professions ??= {};
+      const unlocked: ProfessionId[] = [];
+      const already: ProfessionId[] = [];
+      for (const def of PROFESSIONS) {
+        if (player.professions[def.id]) { already.push(def.id); continue; }
+        player.professions[def.id] = { unlockedAt: s.now, xp: 0, traitIds: [] };
+        unlocked.push(def.id);
+      }
+      s.universe.sandbox.allProfessionsUnlocked = true;
+      if (unlocked.length > 0) {
+        s.universe.sandbox.log.push({
+          at: s.now,
+          action: `Opened ${unlocked.length} profession${unlocked.length === 1 ? '' : 's'} without spending the experience`,
+        });
+        s.remember({
+          category: 'career', title: 'Sandbox: Every Profession Opened',
+          detail: `${unlocked.map((id) => PROFESSION_BY_ID[id]?.name ?? id).join(', ')}. No industry experience was spent on any of them.`,
+          refs: [{ type: 'person', id: player.id }], significance: 1, public: false,
+        });
+      }
+      return { unlocked, already };
     },
   );
 

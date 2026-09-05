@@ -166,7 +166,8 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     },
     sandbox: {
       enabled: false, maxAttributesApplied: false, allTraitsGranted: false,
-      unlimitedFunds: false, ignoreAuthority: false, log: [],
+      unlimitedFunds: false, ignoreAuthority: false,
+      godMode: false, allProfessionsUnlocked: false, log: [],
     },
     idempotency: {},
     counters: {},

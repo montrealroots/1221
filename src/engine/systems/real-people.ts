@@ -38,6 +38,7 @@ import { CITIES, countryOfCity } from '../content/geography';
 import { playerCompanies } from './company';
 import { titleCaseLabel } from '../core/text';
 import { titleFromGender } from '../core/performer';
+import { godMode, logOverride } from './sandbox';
 
 // ---------------------------------------------------------------------------
 // What somebody is worth
@@ -417,8 +418,30 @@ export function considerApproach(
   const probability = clamp(score * 1.05 - 0.06, 0.01, 0.95);
   const roll = rng.next();
   const refusing = inSave ? willReadFor(sim, inSave) : { ok: true };
-  const interested = refusing.ok && roll < probability;
+  // God mode: everybody says yes, including the ones who had sworn never to
+  // work with the player again.
+  const cheated = godMode(sim);
+  const interested = cheated || (refusing.ok && roll < probability);
+  if (cheated && !(refusing.ok && roll < probability)) {
+    logOverride(sim, `${record.name} said yes to ${project.title}. They would not have.`);
+  }
   void signals;
+
+  if (cheated) {
+    return {
+      interested: true,
+      probability: 1,
+      wants,
+      reasons: [
+        ...factors,
+        { label: 'God Mode', detail: `Sandbox made this a yes. Without it the odds were ${Math.round(probability * 100)} in a hundred.`, weight: 1, contribution: 1, knowable: true },
+      ],
+      summary: `${record.name} is in.`,
+      roll,
+      score: 1,
+      seed: `approach|${project.id}|${record.qid}|${role}|${attempt}|god`,
+    };
+  }
 
   if (!refusing.ok) {
     return {

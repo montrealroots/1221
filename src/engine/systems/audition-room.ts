@@ -43,6 +43,7 @@ import {
 } from '../content/room-dialogue';
 import { generatePersonName } from '../content/names';
 import { grantProfessionXp } from './professions';
+import { REAL_CEILING, godMode, logOverride } from './sandbox';
 
 // ---------------------------------------------------------------------------
 // Filling the chairs
@@ -404,12 +405,12 @@ function playBeat(
     const delta = Math.round(((finalScore - 50) / 5) * interest + favour - frown);
     if (delta === 0) continue;
     occupant.impression = clamp(occupant.impression + delta, 0, 100);
-    const note = reactionNote(occupant, delta, choice);
+    const note = reactionNote(sim, occupant, delta, choice, beat.id, audition.id);
     occupant.notes.push({ at: sim.now, beat: beat.id, note, delta });
     reactions.push({ name: occupant.name, note, delta });
   }
 
-  const note = beatNote(beat, choice, finalScore, room);
+  const note = beatNote(sim, beat, choice, finalScore, room, audition.id);
   const said = spokenAt(beat, room, finalScore, rng);
   room.played.push({ beat: beat.id, choiceId: choice.id, label: choice.label, score: Math.round(finalScore), note, said, at: sim.now });
 
@@ -441,29 +442,121 @@ function spokenAt(beat: Beat, room: AuditionRoomState, score: number, rng: Rng):
   }
 }
 
-function reactionNote(occupant: RoomOccupant, delta: number, choice: BeatChoice): string {
+/**
+ * What one person behind the table visibly did, in four bands.
+ *
+ * Several of each for the same reason the beat notes have several: there are
+ * up to eleven people in the room and nine beats to get through, so one line
+ * per band would have the whole table doing the identical thing all afternoon.
+ */
+const REACTIONS: Readonly<Record<'up_strong' | 'up' | 'down_strong' | 'down', readonly string[]>> = {
+  up_strong: [
+    '{who} sat forward.',
+    '{who} stopped writing and watched.',
+    '{who} looked at the person next to them.',
+    '{who} smiled at something you did and tried not to.',
+    '{who} put the sheet down.',
+    '{who} underlined something and circled it.',
+    '{who} said “again” before you had finished, and meant it as a compliment.',
+  ],
+  up: [
+    '{who} made a note.',
+    '{who} nodded, once.',
+    '{who} wrote something short next to your name.',
+    '{who} looked up for the first time.',
+    '{who} made a small sound of approval and went back to the page.',
+    '{who} ticked something.',
+  ],
+  down_strong: [
+    '{who} looked at the sheet in front of them instead of at you.',
+    '{who} checked the time.',
+    '{who} started reading the next name on the list.',
+    '{who} crossed something out.',
+    '{who} sat back and folded their arms.',
+    '{who} looked at the door.',
+  ],
+  down: [
+    '{who} did not react to {what}.',
+    '{who} wrote nothing at all.',
+    '{who} kept the same expression they came in with.',
+    '{who} shifted in their seat.',
+    '{who} was already thinking about the next one.',
+  ],
+};
+
+function reactionNote(sim: Simulation, occupant: RoomOccupant, delta: number, choice: BeatChoice, beatId: string, auditionId: Id): string {
   const strong = Math.abs(delta) >= 7;
-  if (delta > 0) {
-    return strong
-      ? `${occupant.name} sat forward.`
-      : `${occupant.name} made a note.`;
-  }
-  return strong
-    ? `${occupant.name} looked at the sheet in front of them instead of at you.`
-    : `${occupant.name} did not react to ${choice.label.toLowerCase()}.`;
+  const band = delta > 0 ? (strong ? 'up_strong' : 'up') : (strong ? 'down_strong' : 'down');
+  const bank = REACTIONS[band];
+  const line = bank[sim.rng('reaction', auditionId, beatId, occupant.name).int(0, bank.length - 1)]!;
+  return line.replace('{who}', occupant.name).replace('{what}', choice.label.toLowerCase());
 }
 
-function beatNote(beat: Beat, choice: BeatChoice, score: number, room: AuditionRoomState): string {
+/**
+ * How a beat felt, in the five bands a beat can land in.
+ *
+ * Several ways of saying each, because a room is nine beats long and an actor
+ * having a good day would otherwise be told the same sentence nine times
+ * running. Each is a tail on the choice the player made, so the line reads as
+ * one sentence about one moment rather than a verdict pasted underneath it.
+ */
+const BEAT_TAILS: Readonly<Record<'best' | 'good' | 'flat' | 'poor' | 'bad', readonly string[]>> = {
+  best: [
+    'and it was the best thing you have done in a room this year.',
+    'and the room went quiet in the way you want it to.',
+    'and for a second nobody behind the table was taking notes.',
+    'and it was better than it had ever been in your kitchen.',
+    'and you knew it while it was happening, which almost never happens.',
+    'and somebody behind the table sat forward.',
+    'and it was the version of it you had been chasing all week.',
+    'and there was nothing in it you would take back.',
+  ],
+  good: [
+    'and it landed.',
+    'and it did what it was supposed to do.',
+    'and the room stayed with you the whole way through.',
+    'and it was honest, which is most of it.',
+    'and nothing in it got in its own way.',
+    'and you got out of the scene’s way, which is harder than it sounds.',
+    'and it held.',
+  ],
+  flat: [
+    'Fine. Nobody in the room changed their mind either way.',
+    'It was competent, and competent is not why anybody is in there.',
+    'Nothing wrong with it. Nothing in it either.',
+    'It went by. That is the whole review.',
+    'Perfectly all right, which in a room of twelve people is not enough.',
+    'Neither better nor worse than the last person through the door.',
+  ],
+  poor: [
+    'and you felt it not working while you were doing it.',
+    'and you could hear yourself doing it, which is the end of it.',
+    'and you were a beat behind the whole way.',
+    'and the version in your head never arrived.',
+    'and you pushed, and pushing shows.',
+    'and it stayed on the page.',
+  ],
+  bad: [
+    'and it came apart.',
+    'and there was no getting it back after that.',
+    'and everybody in the room was politely waiting for it to end.',
+    'and you lost the scene about four lines in.',
+    'and it was the worst it has ever been, including the first time you read it.',
+  ],
+};
+
+function beatNote(sim: Simulation, beat: Beat, choice: BeatChoice, score: number, room: AuditionRoomState, auditionId: Id): string {
   if (beat.id === 'first_read' && room.readerQuality < 40) {
     return score > 65
       ? 'The reader gave you nothing and you played it anyway.'
       : 'The reader was flat and it took the scene with it.';
   }
-  if (score > 78) return `${choice.label}, and it was the best thing you have done in a room this year.`;
-  if (score > 62) return `${choice.label}, and it landed.`;
-  if (score > 45) return `${choice.label}. Fine. Nobody in the room changed their mind either way.`;
-  if (score > 28) return `${choice.label}, and you felt it not working while you were doing it.`;
-  return `${choice.label}, and it came apart.`;
+  const band = score > 78 ? 'best' : score > 62 ? 'good' : score > 45 ? 'flat' : score > 28 ? 'poor' : 'bad';
+  const bank = BEAT_TAILS[band];
+  const tail = bank[sim.rng('beat_note', auditionId, beat.id, String(room.index)).int(0, bank.length - 1)]!;
+  // The flat band is written as its own sentence, because "X. Fine." reads
+  // better than "X, and fine."
+  return band === 'flat' ? `${choice.label}. ${tail}` : `${choice.label}, ${tail}`;
 }
 
 /**
@@ -477,8 +570,19 @@ function finishRoom(sim: Simulation, audition: Audition, room: AuditionRoomState
   room.finishedAt = sim.now;
   const weighted = room.occupants.filter((o) => o.sway > 0);
   const totalSway = weighted.reduce((sum, o) => sum + o.sway, 0) || 1;
-  const score = clamp(Math.round(weighted.reduce((sum, o) => sum + o.impression * o.sway, 0) / totalSway), 0, 100);
-  const line = ROOM_VERDICTS.find((v) => score >= v.floor)?.line ?? ROOM_VERDICTS[ROOM_VERDICTS.length - 1]!.line;
+  const honest = clamp(Math.round(weighted.reduce((sum, o) => sum + o.impression * o.sway, 0) / totalSway), 0, 100);
+  // In god mode the room was never going to go any other way, and the log says
+  // so. Everybody behind the table is put at the top of their own scale too,
+  // so nothing downstream reads a room of doubters who somehow loved it.
+  const cheated = godMode(sim);
+  if (cheated) {
+    for (const occupant of room.occupants) occupant.impression = 100;
+    logOverride(sim, `The room could not have gone better. Without god mode it read ${honest}.`);
+  }
+  const score = cheated ? REAL_CEILING : honest;
+  const line = cheated
+    ? 'Nobody in that room has seen anything like it, and all of them said so.'
+    : ROOM_VERDICTS.find((v) => honest >= v.floor)?.line ?? ROOM_VERDICTS[ROOM_VERDICTS.length - 1]!.line;
   room.verdict = { score, line };
 
   const stage = audition.stage === 'submitted' ? 'first_read' : audition.stage;
@@ -502,7 +606,9 @@ function finishRoom(sim: Simulation, audition: Audition, room: AuditionRoomState
   sim.audit({
     kind: 'cast.room_held', subjectType: 'audition', subjectId: audition.id,
     question: 'How did that room go?',
-    summary: `${score} out of 100. ${line}`,
+    summary: cheated
+      ? `${score} out of 100, given by sandbox. Without god mode it read ${honest}.`
+      : `${score} out of 100. ${line}`,
     factors: room.occupants.filter((o) => o.sway > 0).map((o) => ({
       label: o.name,
       detail: `${o.title}. ${o.watchingFor} They left it at ${Math.round(o.impression)} out of 100.`,
@@ -511,7 +617,7 @@ function finishRoom(sim: Simulation, audition: Audition, room: AuditionRoomState
       knowable: false,
     })),
     score,
-    outcome: score >= 70 ? 'strong' : score >= 50 ? 'mixed' : 'weak',
+    outcome: cheated ? 'god mode' : score >= 70 ? 'strong' : score >= 50 ? 'mixed' : 'weak',
   });
   sim.remember({
     category: 'career',

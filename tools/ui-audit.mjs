@@ -73,15 +73,31 @@ const OVERFLOW_PROBE = `(() => {
     // Or sticking out past the right edge of the window.
     const escapesViewport = rect.right > window.innerWidth + 1;
 
-    if (overflowsX || overflowsY || escapesViewport) {
+    // A column squeezed so narrow that its words break a few characters at a
+    // time reads as broken even though nothing has technically overflowed —
+    // "Ezr a…" stacked down the page is not a wrapped word, it is a bug. The
+    // test: a leaf holding real text, no wider than a short word, and much
+    // taller than it is wide.
+    const leaf = el.children.length === 0 && text.length >= 10;
+    const longestWord = leaf ? Math.max(...text.split(/\s+/).map((w) => w.length)) : 0;
+    const crushed = leaf
+      && rect.width > 0 && rect.width < 72
+      && rect.height > rect.width * 1.8
+      && longestWord >= 5;
+
+    if (overflowsX || overflowsY || escapesViewport || crushed) {
       seen.add(key);
       problems.push({
         el: label,
         text,
-        kind: overflowsX ? 'content wider than box' : overflowsY ? 'content taller than box' : 'past the right edge',
+        kind: overflowsX ? 'content wider than box'
+          : overflowsY ? 'content taller than box'
+          : escapesViewport ? 'past the right edge'
+          : 'column crushed too narrow to read',
         by: Math.round(overflowsX ? el.scrollWidth - el.clientWidth
           : overflowsY ? el.scrollHeight - el.clientHeight
-          : rect.right - window.innerWidth),
+          : escapesViewport ? rect.right - window.innerWidth
+          : rect.width),
       });
     }
   }
@@ -467,12 +483,80 @@ for (const size of WIDTHS) {
             }
             scrollsSideways = (await probe('the room, mid-audition')) || scrollsSideways;
             await shoot('20-room-playing');
-            await page.getByRole('button', { name: /Walk Out|Leave/ }).first().click().catch(() => {});
-            await page.waitForTimeout(500);
+            // Close it properly, and make sure it is gone before anything else
+            // is measured — a modal still up makes the next screenshot a lie.
+            for (const label of [/^Walk Out$/, /^Leave$/, /^Close$/]) {
+              const button = page.getByRole('button', { name: label }).first();
+              if (await button.count()) { await button.click().catch(() => {}); await page.waitForTimeout(600); }
+            }
+            await page.keyboard.press('Escape').catch(() => {});
+            await page.waitForTimeout(600);
           }
         }
       }
     }
+  }
+
+  // Where you stand with the offices, which only has anything in it once a
+  // room has actually been played.
+  await openRail();
+  const castingOffices = page.getByRole('button', { name: /^casting$/i }).first();
+  if (await castingOffices.count()) {
+    await castingOffices.click().catch(() => {});
+    await page.waitForTimeout(900);
+    await page.keyboard.press('Escape').catch(() => {});
+    await page.waitForTimeout(400);
+    const officesTab = page.getByRole('tab', { name: /Casting Offices/ }).first();
+    if (await officesTab.count()) {
+      await officesTab.click().catch(() => {});
+      await page.waitForTimeout(800);
+      scrollsSideways = (await probe('where you stand with the casting offices')) || scrollsSideways;
+      await shoot('21-offices');
+    }
+  }
+
+  // God mode, which puts everything in gold and every number on the two
+  // hundred scale. The widest text and the biggest numbers in the game, so if
+  // anything is going to bleed it is this.
+  await openRail();
+  const settingsForGod = page.getByRole('button', { name: /settings/i }).first();
+  if (await settingsForGod.count()) {
+    await settingsForGod.click().catch(() => {});
+    await page.waitForTimeout(900);
+    const godToggle = page.getByRole('checkbox').filter({ hasNot: page.locator('[disabled]') });
+    const labels = page.locator('label').filter({ hasText: /^God Mode$/ });
+    if (await labels.count()) {
+      await labels.first().locator('input[type="checkbox"]').click().catch(() => {});
+      await page.waitForTimeout(1400);
+      scrollsSideways = (await probe('settings, with god mode on')) || scrollsSideways;
+      await shoot('22-god-settings');
+
+      await openRail();
+      const character = page.getByRole('button', { name: /^character$/i }).first();
+      if (await character.count()) {
+        await character.click().catch(() => {});
+        await page.waitForTimeout(1000);
+        scrollsSideways = (await probe('every attribute in gold, out of two hundred')) || scrollsSideways;
+        await shoot('23-god-attributes');
+        const traitsTab = page.getByRole('tab', { name: /^Traits$/ }).first();
+        if (await traitsTab.count()) {
+          await traitsTab.click().catch(() => {});
+          await page.waitForTimeout(800);
+          scrollsSideways = (await probe('every trait in gold')) || scrollsSideways;
+          await shoot('24-god-traits');
+        }
+      }
+
+      await openRail();
+      const castingGold = page.getByRole('button', { name: /^casting$/i }).first();
+      if (await castingGold.count()) {
+        await castingGold.click().catch(() => {});
+        await page.waitForTimeout(1000);
+        scrollsSideways = (await probe('the casting tab in god mode')) || scrollsSideways;
+        await shoot('25-god-casting');
+      }
+    }
+    void godToggle;
   }
 
   // The actor's side: a tape asked for, and the room where it is shot.

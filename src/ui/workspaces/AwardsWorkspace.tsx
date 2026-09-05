@@ -166,6 +166,7 @@ export function AwardsWorkspace() {
 
 function ProjectEligibility({ project, onCampaign }: { project: Project; onCampaign: () => void }) {
   const { sim } = useGame();
+  const cheating = useWorld((s) => s.universe.sandbox.enabled && s.universe.sandbox.godMode);
   const verdicts = useMemo(() => AWARD_BODIES.map((body) => {
     const edition = currentEditionFor(sim, body.id);
     if (!edition) return { body, edition: undefined, ok: false, reason: 'No upcoming edition.' };
@@ -180,7 +181,7 @@ function ProjectEligibility({ project, onCampaign }: { project: Project; onCampa
       <div className="grow" style={{ minWidth: 0 }}>
         <div className="small strong">{project.title}</div>
         <div className="xs dim">
-          Quality {project.finalQuality} · Critics {project.criticScore ?? '—'} ·
+          Quality {cheating ? <span className="god">{project.finalQuality}</span> : project.finalQuality} · Critics {project.criticScore ?? '—'} ·
           {project.releaseDate ? ` Released ${formatDate(project.releaseDate, sim.homeZone)}` : ' Unreleased'}
           {project.releaseStrategy ? ` · ${titleCaseLabel(project.releaseStrategy.replace(/_/g, ' '))}` : ''}
           {project.productionCountryId ? ` · ${project.productionCountryId.toUpperCase()}` : ''}{project.language ? ` · ${project.language.toUpperCase()}` : ''}
@@ -203,6 +204,7 @@ function ProjectEligibility({ project, onCampaign }: { project: Project; onCampa
 
 function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: () => void }) {
   const { sim, run } = useGame();
+  const cheating = useWorld((s) => s.universe.sandbox.enabled && s.universe.sandbox.godMode);
   const project = sim.universe.projects[projectId];
   const options = useMemo(() => AWARD_BODIES
     .map((body) => ({ body, edition: currentEditionFor(sim, body.id) }))
@@ -285,7 +287,11 @@ function CampaignDialog({ projectId, onClose }: { projectId: string; onClose: ()
             Spend has real but sharply diminishing influence. The film itself and its critical standing carry
             most of the weight, and wins earlier in the season matter more than money.
           </div>
-          <Stat label="Project Quality" value={project?.finalQuality ?? '—'} note={`Critics ${project?.criticScore ?? '—'}`} />
+          <Stat
+            label="Project Quality"
+            value={cheating && project ? <span className="god">{project.finalQuality ?? '—'}</span> : project?.finalQuality ?? '—'}
+            note={`Critics ${project?.criticScore ?? '—'}`}
+          />
         </>
       )}
     </Modal>

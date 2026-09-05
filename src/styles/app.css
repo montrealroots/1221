@@ -401,6 +401,17 @@ input[type="range"] {
   color: inherit; font: inherit; cursor: pointer;
 }
 .list-item:last-child { border-bottom: 0; }
+
+/* A row with several fixed-width things on the right of it — a price, a
+   button, a status chip — will squeeze the text column down to a couple of
+   characters a word rather than wrap, which reads as broken even though
+   nothing has technically overflowed. Wrapping the row and giving the text a
+   floor it cannot go below fixes it at every width. */
+.list-item { flex-wrap: wrap; }
+.list-item > .grow { flex: 1 1 14rem; min-width: min(14rem, 100%); }
+@media (max-width: 560px) {
+  .list-item > .grow { flex-basis: 100%; }
+}
 .list-item:hover { background: var(--surface-2); }
 .list-item[aria-selected="true"] { background: var(--accent-dim); }
 .list-static { cursor: default; }
@@ -766,6 +777,25 @@ kbd {
 .attr-row { display: grid; grid-template-columns: 1fr 46px 90px; align-items: center; gap: var(--s3); padding: 3px 0; }
 .attr-name { font-size: var(--size-sm); }
 .attr-value { font-size: var(--size-sm); font-weight: 650; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- God mode ----------
+   Sandbox is a declared cheat, so it is meant to look like one. Everything it
+   has touched is in the clapper gold: the number, the bar, the name and the
+   trait. */
+
+.god { color: var(--accent-strong); }
+.god-value { color: var(--accent-strong); text-shadow: 0 0 12px var(--accent-dim); }
+.attr-row.god-row .attr-name { color: var(--accent); }
+.god-meter > span { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-strong) 100%); }
+.chip-god {
+  background: var(--accent-dim); color: var(--accent-strong);
+  border-color: var(--accent-line); font-weight: 650;
+}
+.god-banner {
+  border: 1px solid var(--accent-line); background: var(--accent-dim);
+  color: var(--accent-strong); border-radius: var(--radius-sm);
+  padding: var(--s2) var(--s3); font-size: var(--size-xs);
+}
 
 /* ---------- Responsive ---------- */
 

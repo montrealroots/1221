@@ -23,6 +23,7 @@ import { NETWORKS, type Network } from '../content/networks';
 import { quickReception } from './critics';
 import { generateCharacterName, generatePersonName } from '../content/names';
 import { castingOfficeFor } from './audition-room';
+import { REAL_CEILING, favoured, godMode, logOverride } from './sandbox';
 import { officesThatWouldCall } from './casting-office';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
@@ -623,12 +624,20 @@ export function registerCasting(sim: Simulation): void {
 
       const probability = clamp(score * 1.2 - 0.05, 0.01, 0.95);
       const roll = rng.next();
-      const signed = roll < probability;
+      // God mode: nobody turns the player down, whoever they are and however
+      // far above their standing the list is.
+      const cheated = godMode(s);
+      const signed = cheated || roll < probability;
+      if (cheated && roll >= probability) {
+        logOverride(s, `${agency.name} signed you. They would not have.`);
+      }
 
       s.audit({
         kind: 'cast.representation_decided', subjectType: 'person', subjectId: player.id,
         question: `Why did ${agency.name} sign me, or not?`,
-        summary: signed ? `${agency.name} signed you.` : `${agency.name} passed. ${standing < agency.signingThreshold ? 'You are below where they sign.' : 'They liked you and their list is full.'}`,
+        summary: cheated
+          ? `${agency.name} signed you, because sandbox told them to. Without god mode the odds were ${Math.round(probability * 100)} in a hundred.`
+          : signed ? `${agency.name} signed you.` : `${agency.name} passed. ${standing < agency.signingThreshold ? 'You are below where they sign.' : 'They liked you and their list is full.'}`,
         factors, seed: `representation|${player.id}|${agency.id}`, roll, probability, score,
         outcome: signed ? 'signed' : 'passed',
       });
@@ -997,6 +1006,26 @@ function scoreAudition(sim: Simulation, audition: Audition, prepHours: number): 
     { label: 'Age Against The Breakdown', detail: `They wrote it for ${role.ageRange[0]} to ${role.ageRange[1]}.`, weight: 0.08, value: ageMatch },
     { label: 'What You Have Done Before', detail: `Industry demand at ${Math.round(demand)} out of 100.`, weight: 0.12, value: demand / 100 },
   ]);
+
+  // God mode. The honest calculation above is kept in the factors, so the
+  // audit still shows what would have happened; what is returned is the top
+  // of the sandbox scale, because that is what god mode is for.
+  if (favoured(sim, person.id)) {
+    logOverride(sim, `Read perfectly for ${role.characterName}. It was worth ${Math.round(total)}.`);
+    return {
+      performance: REAL_CEILING,
+      fit: REAL_CEILING,
+      total: REAL_CEILING,
+      factors: [
+        ...factors,
+        {
+          label: 'God Mode',
+          detail: `Sandbox put this at the top of the scale. Without it, it read ${Math.round(total)} out of 100.`,
+          weight: 1, contribution: 1, knowable: true,
+        },
+      ],
+    };
+  }
 
   return { performance, fit, total, factors };
 }
@@ -1948,6 +1977,15 @@ function holdRound(sim: Simulation, audition: Audition, _role: Role, project: Pr
   audition.rounds ??= [];
   if (audition.rounds.length === 0) {
     audition.rounds.push({ stage: audition.stage === 'submitted' ? 'first_read' : audition.stage, at: audition.submittedAt, score: Number((audition.totalScore ?? 0).toFixed(1)), note: 'The first read.' });
+  }
+
+  if (favoured(sim, person.id)) {
+    logOverride(sim, `The ${stage.replace(/_/g, ' ')} could not have gone better.`);
+    const note = 'Nobody in the building could talk about anything else afterwards.';
+    audition.rounds.push({ stage, at: sim.now, score: REAL_CEILING, note });
+    audition.performanceScore = REAL_CEILING;
+    audition.totalScore = REAL_CEILING;
+    return { score: REAL_CEILING, note };
   }
 
   const sheet = effectiveAttributes(person.attributes, person.traits);

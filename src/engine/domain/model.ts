@@ -2665,6 +2665,17 @@ export interface SandboxState {
   allTraitsGranted: boolean;
   unlimitedFunds: boolean;
   ignoreAuthority: boolean;
+  /**
+   * God mode. Nothing the player asks for is refused: every audition books,
+   * every agency signs, every offer, greenlight and purchase goes through.
+   *
+   * It is a declared cheat, not a hidden one — every override it causes is
+   * written into the log below and marked on whatever it touched, so a save
+   * played this way can never be mistaken for a career that was earned.
+   */
+  godMode: boolean;
+  /** Every profession opened without the experience being spent. */
+  allProfessionsUnlocked: boolean;
   /** Every sandbox action is logged so history stays honest. */
   log: { at: Instant; action: string }[];
 }
@@ -2673,7 +2684,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 24;
+export const SAVE_SCHEMA_VERSION = 25;
 
 export interface SaveMeta {
   id: Id;

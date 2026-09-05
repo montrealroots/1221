@@ -25,6 +25,9 @@ const SKILL_DOMAINS: SkillDomain[] = ['writing', 'directing', 'producing', 'exec
 export function CharacterWorkspace() {
   const { sim, run } = useGame();
   const player = useWorld((s) => s.player);
+  // God mode is a declared cheat, so it is meant to be unmistakable: every
+  // attribute, skill and trait it has touched goes gold.
+  const cheating = useWorld((s) => s.universe.sandbox.enabled && s.universe.sandbox.godMode);
   const [tab, setTab] = useState<Tab>('attributes');
   const xp = player.industryXp ?? 0;
   const held = Object.values(player.professions ?? {}).flatMap((p) => p?.traitIds ?? []);
@@ -50,8 +53,21 @@ export function CharacterWorkspace() {
         </div>
       </div>
 
+      {cheating && (
+        <p className="god-banner" style={{ marginBottom: 'var(--s4)' }}>
+          God Mode Is On. Every attribute, skill and trait is at the top of the scale, and nothing you ask the
+          industry for will be refused. None of it was earned, and the save records every bit of it.
+        </p>
+      )}
+
       <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>
-        <Stat label="Overall Performer Rating" value={Math.round(overallRating(effective))} note="Average across all 88" />
+        <Stat
+          label="Overall Performer Rating"
+          value={cheating
+            ? <span className="god">{Math.round(overallRating(effective))}</span>
+            : Math.round(overallRating(effective))}
+          note={cheating ? 'Maxed by sandbox, not earned' : 'Average across all 88'}
+        />
         <Stat label="Industry XP" value={<span className="mono">{xp.toLocaleString('en-US')}</span>} note="Earned by working. Spent to unlock professions." />
         <Stat label="Credits" value={player.creditIds.length} />
         <Stat label="Quote" value={<span className="mono">{player.quote > 0 ? formatMoney(player.quote, { cents: false }) : '—'}</span>} note="What you can ask per project" />
@@ -94,21 +110,21 @@ export function CharacterWorkspace() {
               const value = effective[attribute.id] ?? 0;
               const modified = Math.round(value) !== Math.round(base);
               return (
-                <div key={attribute.id} className="attr-row" title={attribute.description}>
+                <div key={attribute.id} className={`attr-row${cheating ? ' god-row' : ''}`} title={attribute.description}>
                   <div>
                     <div className="attr-name">{attribute.name}</div>
                     <div className="xs dim">{attribute.description}</div>
                   </div>
-                  <div className="attr-value">
+                  <div className={`attr-value${cheating ? ' god-value' : ''}`}>
                     {Math.round(value)}
-                    {modified && (
+                    {!cheating && modified && (
                       <span className={value > base ? 'positive xs' : 'negative xs'}>
                         {' '}{value > base ? '+' : ''}{Math.round(value - base)}
                       </span>
                     )}
                   </div>
-                  <div className="meter">
-                    <span style={{ width: `${value}%` }} />
+                  <div className={`meter${cheating ? ' god-meter' : ''}`}>
+                    <span style={{ width: '100%' }} />
                   </div>
                 </div>
               );
@@ -244,10 +260,14 @@ export function CharacterWorkspace() {
           {SKILL_DOMAINS.map((domain) => (
             <Panel key={domain} title={domain} subtitle={`Average ${Math.round(domainAverage(player.skills, domain))}`}>
               {SKILLS.filter((s) => s.domain === domain).map((skill) => (
-                <div key={skill.id} className="attr-row" title={skill.description}>
+                <div key={skill.id} className={`attr-row${cheating ? ' god-row' : ''}`} title={skill.description}>
                   <div className="attr-name">{skill.name}</div>
-                  <div className="attr-value">{Math.round(player.skills[skill.id] ?? 0)}</div>
-                  <div className="meter"><span style={{ width: `${player.skills[skill.id] ?? 0}%` }} /></div>
+                  <div className={`attr-value${cheating ? ' god-value' : ''}`}>
+                    {Math.round(player.skills[skill.id] ?? 0)}
+                  </div>
+                  <div className={`meter${cheating ? ' god-meter' : ''}`}>
+                    <span style={{ width: cheating ? '100%' : `${player.skills[skill.id] ?? 0}%` }} />
+                  </div>
                 </div>
               ))}
             </Panel>
@@ -267,8 +287,8 @@ export function CharacterWorkspace() {
                 return (
                   <div key={id}>
                     <div className="row gap-2">
-                      <span className="strong">{traitName(trait, player)}</span>
-                      <span className="chip">{titleCaseLabel(trait.category)}</span>
+                      <span className={`strong${cheating ? ' god' : ''}`}>{traitName(trait, player)}</span>
+                      <span className={`chip${cheating ? ' chip-god' : ''}`}>{titleCaseLabel(trait.category)}</span>
                     </div>
                     <p className="small muted" style={{ margin: '4px 0' }}>{trait.description}</p>
                     <div className="row wrap gap-1">
