@@ -488,7 +488,7 @@ export const NEIGHBOURHOODS = new Registry<Neighbourhood>('neighbourhoods', [
   hood('nyc-uppereast', 'Upper East Side', 'us-ny-newyork', 2.6, 90, 88, 94, 'Doormen, museums and a very specific idea of correct.'),
   hood('nyc-westvillage', 'West Village', 'us-ny-newyork', 3.1, 92, 84, 97, 'Crooked streets, brownstones and the most photographed corners in America.'),
   hood('nyc-brooklynheights', 'Brooklyn Heights', 'us-ny-newyork', 2.4, 86, 86, 90, 'A promenade, a skyline view and quiet that Manhattan cannot buy.'),
-  hood('nyc-astoria', 'Astoria', 'us-ny-newyork', 1.1, 58, 76, 88, 'Where the working actors actually live, next to a studio lot.'),
+  hood('nyc-astoria', 'Astoria', 'us-ny-newyork', 1.1, 58, 76, 88, 'Where the working actors/actresses actually live, next to a studio lot.'),
   hood('nyc-harlem', 'Harlem', 'us-ny-newyork', 1.0, 62, 64, 90, 'History on every block and the best brownstone value left.'),
   hood('atl-buckhead', 'Buckhead', 'us-ga-atlanta', 2.0, 82, 82, 48, 'Big houses, big lawns, and everyone in the industry has an address here.'),
   hood('atl-virginiahighland', 'Virginia-Highland', 'us-ga-atlanta', 1.4, 68, 76, 78, 'Bungalows, porches and a walkable strip.'),

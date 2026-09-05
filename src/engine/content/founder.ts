@@ -144,7 +144,7 @@ export const FOUNDER_ATTRIBUTES: readonly FounderAttribute[] = [
   // --- Standing -----------------------------------------------------------
   {
     id: 'reputation_craft', name: 'Standing With Talent', group: 'Standing',
-    description: 'Whether writers and actors want to work with you specifically, and take less to do it.',
+    description: 'Whether writers and actors/actresses want to work with you specifically, and take less to do it.',
     readBy: 'Who says yes, and what they charge you.',
   },
   {

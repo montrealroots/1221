@@ -67,7 +67,7 @@ export const STORY_DEPARTMENTS: readonly StoryDepartment[] = [
   },
   {
     id: 'dialogue', name: 'Dialogue', weight: 1.05,
-    what: 'Lines an actor wants to say and an audience wants to hear.',
+    what: 'Lines an actor/actress wants to say and an audience wants to hear.',
     from: ['dialogue'],
   },
   {

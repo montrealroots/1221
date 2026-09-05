@@ -65,7 +65,7 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
   },
   {
     id: 'goat_ear', name: 'The Ear', discipline: 'writing',
-    description: 'Nobody in your pages has ever sounded like a person writing dialogue. Actors ask for your scripts by name.',
+    description: 'Nobody in your pages has ever sounded like a person writing dialogue. Actors and actresses ask for your scripts by name.',
   },
   {
     id: 'goat_structure', name: 'Architecture', discipline: 'writing',
@@ -79,7 +79,7 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
   },
   {
     id: 'goat_performance', name: 'Gets The Performance', discipline: 'directing',
-    description: 'Actors do work with you they have never done before and never do again.',
+    description: 'Actors and actresses do work with you they have never done before and never do again.',
   },
   {
     id: 'goat_tone', name: 'Absolute Tone', discipline: 'directing',

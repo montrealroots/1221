@@ -21,6 +21,9 @@ import { ALL_TRAITS, ATTRIBUTES, attributesOf, traitName } from '@/engine/domain
 import { SKILLS } from '@/engine/domain/skills';
 import { CEILING } from '@/engine/content/prodigy';
 import { jobSheet } from '@/engine/systems/authorship';
+import { AFTERMATH, OPENING_BRIEF, OPENING_LINE } from '@/engine/content/strike';
+import { JOB_DEFS, STORY_DEPARTMENTS } from '@/engine/content/authorship';
+import { GOAT_TRAITS } from '@/engine/content/prodigy';
 
 /** The same character, made twice, differing only in the word she or he uses. */
 function pair(seed: string) {
@@ -143,5 +146,31 @@ describe('and nothing else about her differs', () => {
     delete sim.player.performerTitle;
     expect(performerNoun(sim.player)).toBe('Actress');
     expect(careerLabel(sim.player.careerTrack, performerTitleOf(sim.player))).toBe('Actress');
+  });
+});
+
+describe('nothing in the copy leaves the women out', () => {
+  it('never names the job in general with only one of the two words', () => {
+    // Every string a player reads that refers to performers as a group has to
+    // name both. A trait with a nameByTitle is exempt: it carries one word
+    // because it is one person's, and forTitle picks the right half.
+    const strings: [string, string][] = [
+      ...AFTERMATH.flatMap((f) => [[f.id, f.headline] as [string, string], [f.id, f.detail] as [string, string]]),
+      ...OPENING_BRIEF.map((b, i) => [`brief-${i}`, b] as [string, string]),
+      ['opening-line', OPENING_LINE],
+      ...STORY_DEPARTMENTS.map((d) => [d.id, d.what] as [string, string]),
+      ...JOB_DEFS.map((j) => [j.id, j.owns] as [string, string]),
+      ...GOAT_TRAITS.map((t) => [t.id, t.description] as [string, string]),
+      ...ALL_TRAITS.filter((t) => !t.nameByTitle).map((t) => [t.id, t.description] as [string, string]),
+    ];
+    const offenders: string[] = [];
+    for (const [id, text] of strings) {
+      // Strip the paired forms, then look for a bare one left behind.
+      const stripped = text
+        .replace(/actors?\/actress(es)?/gi, '')
+        .replace(/actors? and actress(es)?/gi, '');
+      if (/\bactor(s)?\b/i.test(stripped)) offenders.push(`${id}: ${text.slice(0, 70)}`);
+    }
+    expect(offenders, 'these say actor without actress').toEqual([]);
   });
 });

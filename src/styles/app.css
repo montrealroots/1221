@@ -183,7 +183,7 @@ pre, code, .mono-block {
 }
 
 /* Numbers line up and never wrap mid-figure. */
-.tabular, .money, .stat-value { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tabular, .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 
 html, body, #root { height: 100%; }
@@ -359,7 +359,10 @@ button.link:hover { color: var(--accent-strong); }
 .stat-label { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 /* A long value wraps rather than running out of its panel: a list of formats
    is as much a stat as a number is. */
-.stat-value { font-size: var(--size-lg); font-weight: 650; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; min-width: 0; }
+/* Wraps rather than clips: a stat can hold a person's name as well as a
+   number, and nowrap cut long ones off. break-word keeps a figure like
+   $10,000,000 whole while letting two words fall onto two lines. */
+.stat-value { font-size: var(--size-lg); font-weight: 650; font-variant-numeric: tabular-nums; white-space: normal; overflow-wrap: break-word; min-width: 0; }
 .stat-note { font-size: var(--size-xs); color: var(--text-muted); }
 
 /* Meters: always paired with a number, never colour alone. */

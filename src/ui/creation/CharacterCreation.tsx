@@ -620,7 +620,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
                 <span className="chip chip-accent">{GOAT_LABEL}</span>
               </div>
               <div className="xs dim" style={{ marginTop: 4 }}>
-                Every Attribute {CEILING} · Every Skill {CEILING} · Every Trait
+                Everything At {CEILING} · Every Trait
               </div>
               <div className="row wrap gap-1" style={{ marginTop: 6 }}>
                 {goatTraitsIn(discipline).map((trait) => (

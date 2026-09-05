@@ -316,6 +316,10 @@ describe('the strike the game invented', () => {
     expect(all).toMatch(/opening day/);
     // The old copy said Monday, which is not a day this game has a meaning for.
     expect(all).not.toMatch(/Monday/);
+    // And it does not leave the women out: anywhere the brief names the job in
+    // general it names both halves of it.
+    expect(all, 'the brief says actor without actress').toMatch(/actor\/actress/);
+    expect(all.replace(/actor\/actress/g, '')).not.toMatch(/\bactors?\b/i);
     expect(read.value!.line).toMatch(/opening day/);
     expect(read.value!.line).not.toMatch(/Monday/);
   });

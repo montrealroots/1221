@@ -59,7 +59,7 @@ export const AFTERMATH: readonly StrikeFact[] = [
   {
     id: 'idle_talent',
     headline: 'Everybody Is Free',
-    detail: 'Writers, actors, directors, crew, every department. People who have not taken a meeting in two years will take yours on opening day, because there is nobody else taking meetings.',
+    detail: 'Writers, actors/actresses, directors, crew, every department. People who have not taken a meeting in two years will take yours on opening day, because there is nobody else taking meetings.',
   },
   {
     id: 'hungry_buyers',
@@ -114,25 +114,25 @@ export const MONOPOLY = {
  * that leaves the person reading it.
  */
 export const OPENING_BRIEF: readonly string[] = [
-  'Nineteen months. Long enough that the pictures already shot ran out, then the ones '
-  + 'sitting in the drawer, then the drawer.',
+  'Nineteen months. Long enough that the finished pictures ran out, then the ones still '
+  + 'shooting, then the ones sitting in the drawer, then the drawer.',
 
-  'Overhead does not stop for a strike. The independents went first. Then the ones '
-  + 'carrying debt. Then the ones everybody assumed were too big to go. By the end there '
-  + 'was nobody left on the other side of the table — buyers with schedules to fill, '
-  + 'shareholders asking what was going in them, and not one company still trading.',
+  'Overhead does not stop for a strike. The independents went first, then the ones carrying '
+  + 'debt, then the ones everybody swore were too big to fall. When it ended there was no '
+  + 'other side of the table left — only buyers, holding nineteen months of empty schedule '
+  + 'and nobody still trading to fill it.',
 
-  'It is over now, and nobody wrote a word for nineteen months. Everything written before '
-  + 'it has been read by everyone twice. There is no pile to option and no shelf to raid: '
-  + 'whatever gets made next has to be caused to exist by somebody.',
+  'And not one page was written in all that time. Everything from before has been read by '
+  + 'everyone twice over. There is no pile to option and no shelf to raid, so whatever gets '
+  + 'made next has to be brought into the world by somebody who decides to.',
 
-  'Every writer, every actor, every director and every crew in the business is free on '
-  + 'opening day, because there is nobody else for them to be busy for. You are the first '
-  + 'one to open a door.',
+  'Which leaves every writer, every actor/actress, every director and every crew in the '
+  + 'business free on opening day, because there is nobody else for them to be busy for. '
+  + 'You are the first one to open a door.',
 ];
 
 /** The same, as one line, for anywhere that has room for a sentence and no more. */
 export const OPENING_LINE =
   'Nineteen months of strike took every other production company with it. The buyers still '
-  + 'have schedules to fill and nobody to fill them, and everybody in the business is free '
-  + 'on opening day. Yours is the only door open.';
+  + 'have schedules to fill and nobody left to fill them, and every writer, actor/actress, '
+  + 'director and crew in the business is free on opening day. Yours is the only door open.';
