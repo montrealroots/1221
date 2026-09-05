@@ -18,15 +18,26 @@ import {
   deriveSheet, franchisesOf, isPeopleLoaded, overallFor, peopleInRole, primaryRole, rolesWithSheets,
   type PersonRecord, type DerivedAttribute,
 } from '@/engine/content/people';
-import { CRAFT_ROLES, CRAFT_ROLE_LABEL, type CraftRole } from '@/engine/content/craft-attributes';
+import { CRAFT_ROLES, CRAFT_ROLE_LABEL, CRAFT_ROLE_PLURAL, type CraftRole } from '@/engine/content/craft-attributes';
+import { PERFORMER_NOUN, splitRecordsByTitle, titleFromGender } from '@/engine/core/performer';
 import { approachSummary, historyWith, personForRecord } from '@/engine/systems/real-people';
 import { creditRoleOf } from '@/engine/systems/industry-people';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
+import { liveGrudges, standingWith, willReadFor } from '@/engine/systems/reactive';
+import type { Simulation } from '@/engine/core/simulation';
+import type { Person } from '@/engine/domain/model';
 
-const ROLE_TABS: { id: CraftRole | 'all'; label: string }[] = [
+/** A column in the people list: a craft, or one of the two performer titles. */
+type ListRole = CraftRole | 'actress';
+
+const ROLE_TABS: { id: ListRole | 'all'; label: string }[] = [
   { id: 'all', label: 'Everyone' },
-  ...CRAFT_ROLES.map((role) => ({ id: role, label: `${CRAFT_ROLE_LABEL[role]}s` })),
+  // Actors and actresses are listed apart, the way the business lists them,
+  // so neither is a subheading of the other.
+  ...CRAFT_ROLES.flatMap((role) => (role === 'actor'
+    ? ([{ id: 'actor', label: 'Actors' }, { id: 'actress', label: 'Actresses' }] as { id: ListRole; label: string }[])
+    : ([{ id: role, label: CRAFT_ROLE_PLURAL[role] }] as { id: ListRole; label: string }[]))),
 ];
 
 type Sort = 'rating' | 'name' | 'credits' | 'awards' | 'age';
@@ -35,9 +46,44 @@ const SORT_LABEL: Record<Sort, string> = {
   rating: 'Attributes', name: 'Name', credits: 'Credits', awards: 'Awards Won', age: 'Age',
 };
 
+/**
+ * Where the player stands with somebody, in words.
+ *
+ * Never a number: what somebody privately thinks is not a stat the player gets
+ * to read off a screen. What they can see is what they would be able to tell —
+ * that a call gets returned, or that something happened they have not been
+ * forgiven for.
+ */
+function feelingAbout(sim: Simulation, person: Person): string {
+  const standing = standingWith(sim, person);
+  const grudges = liveGrudges(sim, person);
+  const refusing = !willReadFor(sim, person).ok;
+  if (refusing) return `They are not reading anything of yours at the moment. ${grudges[0]?.reason ?? ''}`.trim();
+  if (grudges.length > 0 && standing < 45) {
+    return `Something happened between you that has not gone away: ${grudges[0]!.reason.toLowerCase()} Your calls still get returned, but not quickly.`;
+  }
+  if (standing >= 70) return 'You have been good to them and they know it. That is worth more than money, and it is also worth money.';
+  if (standing >= 58) return 'They would take the call, and they would read it.';
+  if (standing >= 45) return 'Nothing between you either way. You are somebody they have heard of.';
+  return 'They are cool on you. Whether that is about you or about the business, they have not said.';
+}
+
+/**
+ * Everybody in one column.
+ *
+ * Every craft but acting is one list. Acting is two, split on what the record
+ * states, and anybody the record does not state is listed with the actors
+ * rather than being left out of the building.
+ */
+function peopleFor(role: ListRole) {
+  if (role !== 'actor' && role !== 'actress') return peopleInRole(role);
+  const { actors, actresses, unstated } = splitRecordsByTitle(peopleInRole('actor'));
+  return role === 'actress' ? actresses : [...actors, ...unstated];
+}
+
 export function PeopleTab() {
   const { sim } = useGame();
-  const [role, setRole] = useState<CraftRole | 'all'>('all');
+  const [role, setRole] = useState<ListRole | 'all'>('all');
   const [sort, setSort] = useState<Sort>('rating');
   const [query, setQuery] = useState('');
   const [openQid, setOpenQid] = useState<string | null>(null);
@@ -46,7 +92,7 @@ export function PeopleTab() {
   const loaded = isPeopleLoaded();
   const rows = useMemo(() => {
     if (!loaded) return [];
-    const base = role === 'all' ? allPeople() : peopleInRole(role);
+    const base = role === 'all' ? allPeople() : peopleFor(role);
     const q = query.trim().toLowerCase();
     const filtered = q
       ? base.filter((person) => person.name.toLowerCase().includes(q)
@@ -54,7 +100,9 @@ export function PeopleTab() {
         || franchisesOf(person.qid).some((f) => f.toLowerCase().includes(q)))
       : base;
     return filtered.map((person) => {
-      const shownRole = role === 'all' ? primaryRole(person) : role;
+      // The two performer columns are the same craft underneath: an actress's
+      // sheet is an acting sheet, and is read as one.
+      const shownRole: CraftRole = role === 'all' ? primaryRole(person) : role === 'actress' ? 'actor' : role;
       return {
         person,
         role: shownRole,
@@ -102,7 +150,7 @@ export function PeopleTab() {
           <Tabs active={role} onChange={(id) => { setRole(id); setShown(60); }} tabs={ROLE_TABS.map((tab) => ({
             id: tab.id,
             label: tab.label,
-            badge: tab.id === 'all' ? allPeople().length : peopleInRole(tab.id as CraftRole).length,
+            badge: tab.id === 'all' ? allPeople().length : peopleFor(tab.id as ListRole).length,
           }))} />
           <div className="row wrap gap-1" style={{ marginBottom: 'var(--s3)' }}>
             <span className="xs dim" style={{ alignSelf: 'center' }}>In order of</span>
@@ -130,7 +178,7 @@ export function PeopleTab() {
                 <div className="grow" style={{ minWidth: 0 }}>
                   <div className="small strong">{row.person.name}</div>
                   <div className="xs dim" style={{ overflowWrap: 'anywhere' }}>
-                    {row.person.roles.map((r) => CRAFT_ROLE_LABEL[r]).join(', ')}
+                    {row.person.roles.map((r) => (r === 'actor' ? PERFORMER_NOUN[titleFromGender(row.person.gender) ?? 'actor'] : CRAFT_ROLE_LABEL[r])).join(', ')}
                     {row.age !== undefined && ` · ${row.age}`}
                     {row.credits > 0 && ` · ${row.credits} credit${row.credits === 1 ? '' : 's'}`}
                     {row.won > 0 && ` · ${row.won} won`}
@@ -139,7 +187,7 @@ export function PeopleTab() {
                 </div>
                 <div style={{ width: 128, flexShrink: 0 }}>
                   <Meter
-                    label={CRAFT_ROLE_LABEL[row.role]}
+                    label={row.role === 'actor' ? PERFORMER_NOUN[titleFromGender(row.person.gender) ?? 'actor'] : CRAFT_ROLE_LABEL[row.role]}
                     value={row.overall}
                     hint={row.confidence < 40 ? 'thin evidence' : undefined}
                   />
@@ -417,6 +465,11 @@ export function PersonProfile({ person, onClose }: { person: PersonRecord; onClo
             </div>
           ) : (
             <>
+              <div className="callout" style={{ marginTop: 'var(--s3)' }}>
+                <strong className="small">Where You Stand With Them</strong>
+                <p className="xs" style={{ margin: '4px 0 0' }}>{feelingAbout(sim, inSave)}</p>
+              </div>
+
               <div className="grid grid-3 gap-4" style={{ marginTop: 'var(--s3)' }}>
                 <Stat
                   label="What They Would Cost"

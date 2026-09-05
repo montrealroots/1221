@@ -25,6 +25,7 @@ import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, MS_DAY } from '../core/time';
 import { AGGREGATOR_RULES, OUTLETS, cinemaScoreGrade, isFresh, metacriticBand, reviewTargets, scaleText, type Outlet } from '../content/critics';
 import { computeFinalQuality } from './film';
+import { controversyReviewPenalty } from './reactive';
 
 type Rng = ReturnType<Simulation['rng']>;
 type Wave = 'festival' | 'embargo' | 'release' | 'late' | 'cinemascore' | 'audience' | 'imdb';
@@ -57,6 +58,8 @@ export interface Reads {
   premiered: boolean;
   /** The director's standing, 0-100, or 50 when unknown. */
   standing: number;
+  /** Points off for whatever the picture is carrying in public. Never positive. */
+  heat?: number;
 }
 
 const PRESTIGE_LEAN: Readonly<Record<string, number>> = { drama: 8, biography: 6, documentary: 8, experimental: 12, war: 4, romance: 1, mystery: 1, action: -6, comedy: -3, horror: -2, family: -6, adventure: -4, animation: -1, sport: -1 };
@@ -79,6 +82,7 @@ export function readsOf(sim: Simulation, project: Project): Reads {
     fatigue: franchise ? (franchise.fatigue / 100) * 10 : 0,
     premiered,
     standing: director?.reputation.professionalReputation ?? 50,
+    heat: controversyReviewPenalty(project),
   };
 }
 
@@ -88,7 +92,10 @@ export function outletScore(outlet: Outlet, reads: Reads, genres: string[], rng:
   const prestigePull = ((outlet.prestigeBias - 50) / 50) * (reads.prestige - 50) * 0.4;
   const crowdPull = ((outlet.populism - 50) / 50) * (reads.crowd - 50) * 0.3;
   const standingPull = ((outlet.prestigeBias - 50) / 50) * (reads.standing - 50) * 0.1;
-  const score = reads.quality + prestigePull + crowdPull + standingPull + genreLean + outlet.harshness - reads.expectationGap * 0.5 - reads.fatigue * 0.3 + rng.normal(0, outlet.variance);
+  // A row about the picture is in the review whether the reviewer meant it to
+  // be or not: the harsher outlets lean on it hardest.
+  const heatPull = (reads.heat ?? 0) * (0.6 + (outlet.harshness < 0 ? 0.5 : 0));
+  const score = reads.quality + prestigePull + crowdPull + standingPull + genreLean + outlet.harshness + heatPull - reads.expectationGap * 0.5 - reads.fatigue * 0.3 + rng.normal(0, outlet.variance);
   return clamp(Math.round(score), 0, 100);
 }
 

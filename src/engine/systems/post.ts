@@ -632,6 +632,9 @@ function baseBudgetFor(kind: PostTaskKind, postBudget: Money): Money {
     assembly: 0.04, editors_cut: 0.05, directors_cut: 0.06, studio_notes: 0.01, picture_lock: 0.01,
     vfx: 0.28, adr: 0.03, foley: 0.03, sound_design: 0.06, score: 0.08, music_clearance: 0.04,
     color: 0.05, mix: 0.07, titles: 0.02, subtitles: 0.01, localization: 0.03, qc: 0.01, mastering: 0.02, delivery: 0.01,
+    // The tasks that only exist on some pipelines carry their own share.
+    story_reel_lock: 0.05, layout: 0.08, animation_final: 0.30, lighting_render: 0.16,
+    transcription: 0.03, archive_clearance: 0.09, legal_review: 0.03,
   };
   return Math.round(postBudget * shares[kind]);
 }

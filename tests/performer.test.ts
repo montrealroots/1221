@@ -1,36 +1,49 @@
 /**
- * Actor/Actress.
+ * Actor, or actress.
  *
- * Every label the player reads carries both words, so one page serves
- * everyone. The award categories are the exception the industry insists on,
- * and those have to admit the right people.
+ * They are kept apart, the way the business keeps them apart. Every label
+ * about a person uses their word, the data carries both forms for the labels
+ * that name the job, and no screen makes one a subheading of the other.
  */
 
 import { describe, expect, it } from 'vitest';
-import { categoryAdmits, impliedPerformerTitle, performerTitleOf } from '@/engine/core/performer';
-import { TRAITS } from '@/engine/domain/attributes';
+import {
+  PERFORMER_NOUN, categoryAdmits, impliedPerformerTitle, performerTitleOf,
+} from '@/engine/core/performer';
+import { TRAITS, traitName } from '@/engine/domain/attributes';
 import { careerLabel } from '@/engine/world/bootstrap';
 
 describe('what the player reads', () => {
-  it('names the profession with both words, everywhere it is named', () => {
+  it('carries both forms in the data for every label that names the job', () => {
     const named = TRAITS.filter((t) => /\bAct(or|ress)\b/.test(t.name));
     expect(named.length).toBeGreaterThan(0);
     for (const trait of named) {
-      expect(trait.name, trait.id).toMatch(/\bActor\/Actress\b/);
+      expect(trait.nameByTitle, `${trait.id} names the job but has only one form`).toBeDefined();
+      expect(trait.nameByTitle!.actor).toMatch(/\bActor\b/);
+      expect(trait.nameByTitle!.actress).toMatch(/\bActress\b/);
     }
   });
 
-  it('labels the career the same way, and leaves the others alone', () => {
-    expect(careerLabel('actor')).toBe('Actor/Actress');
+  it('renders one word, for one person, never both at once', () => {
+    for (const trait of TRAITS) {
+      expect(trait.name, trait.id).not.toMatch(/\//);
+      const her = traitName(trait, { pronouns: 'she/her' });
+      const him = traitName(trait, { pronouns: 'he/him' });
+      expect(her, trait.id).not.toMatch(/\//);
+      expect(him, trait.id).not.toMatch(/\//);
+      if (trait.nameByTitle) {
+        expect(her).not.toBe(him);
+        expect(her).toMatch(/Actress/);
+        expect(him).toMatch(/Actor/);
+      }
+    }
+  });
+
+  it('labels the career with one word, and leaves the other crafts alone', () => {
+    expect(careerLabel('actor')).toBe(PERFORMER_NOUN.actor);
+    expect(careerLabel('actor')).not.toMatch(/\//);
     expect(careerLabel('director')).toBe('Director');
     expect(careerLabel('writer')).toBe('Writer');
-  });
-
-  it('never splits the profession into one word', () => {
-    for (const trait of TRAITS) {
-      expect(trait.name, trait.id).not.toMatch(/\bActor\b(?!\/)/);
-      expect(trait.name, trait.id).not.toMatch(/(?<!\/)\bActress\b/);
-    }
   });
 });
 

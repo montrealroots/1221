@@ -363,6 +363,44 @@ for (const size of WIDTHS) {
     }
   }
 
+  // An animated feature, which is made in a booth and on an animation floor
+  // rather than photographed, and must say so everywhere it is shown.
+  await openRail();
+  const settingsAgain = page.getByRole('button', { name: /settings/i }).first();
+  if (await settingsAgain.count()) {
+    await settingsAgain.click().catch(() => {});
+    await page.waitForTimeout(900);
+    const stageAnimated = page.getByRole('button', { name: /Stage An Animated Feature/i }).first();
+    if (await stageAnimated.count()) {
+      await stageAnimated.click().catch(() => {});
+      await page.waitForTimeout(8000);
+      await openRail();
+      const projectsForAnimation = page.getByRole('button', { name: /^projects$/i }).first();
+      if (await projectsForAnimation.count()) {
+        await projectsForAnimation.click().catch(() => {});
+        await page.waitForTimeout(1200);
+        // Two pictures are staged by now, so open each in turn until the one
+        // that is made in a booth rather than photographed is on screen.
+        const rows = page.locator('.list-item');
+        const count = await rows.count();
+        for (let i = count - 1; i >= 0; i--) {
+          await rows.nth(i).click().catch(() => {});
+          await page.waitForTimeout(900);
+          if (await page.getByRole('tab', { name: /Voice And Animation/ }).count()) break;
+        }
+        const voiceTab = page.getByRole('tab', { name: /Voice And Animation/ }).first();
+        if (await voiceTab.count()) {
+          await voiceTab.click().catch(() => {});
+          await page.waitForTimeout(1000);
+          await page.locator('tbody tr').first().click().catch(() => {});
+          await page.waitForTimeout(700);
+          scrollsSideways = (await probe('an animated feature in production')) || scrollsSideways;
+          await shoot('17-animation');
+        }
+      }
+    }
+  }
+
   // The city: where you are, what is here, and everywhere you could go.
   await openRail();
   const cityNav = page.getByRole('button', { name: /^the city$/i }).first();
@@ -388,6 +426,53 @@ for (const size of WIDTHS) {
       }
     }
     void menu;
+  }
+
+  // The room: staged from the sandbox while breakdowns are closed, then
+  // walked into and played a beat at a time.
+  await openRail();
+  const settingsForRoom = page.getByRole('button', { name: /settings/i }).first();
+  if (await settingsForRoom.count()) {
+    await settingsForRoom.click().catch(() => {});
+    await page.waitForTimeout(900);
+    const stageRead = page.getByRole('button', { name: /Stage A First Read/i }).first();
+    if (await stageRead.count()) {
+      await stageRead.click().catch(() => {});
+      await page.waitForTimeout(1500);
+      await openRail();
+      const casting = page.getByRole('button', { name: /^casting$/i }).first();
+      if (await casting.count()) {
+        await casting.click().catch(() => {});
+        await page.waitForTimeout(1000);
+        const mine = page.getByRole('tab', { name: /Your Auditions/ }).first();
+        if (await mine.count()) { await mine.click().catch(() => {}); await page.waitForTimeout(800); }
+        const goIn = page.getByRole('button', { name: /Go To The Room/ }).first();
+        if (await goIn.count()) {
+          await goIn.click().catch(() => {});
+          await page.waitForTimeout(800);
+          scrollsSideways = (await probe('the room, before you go in')) || scrollsSideways;
+          await shoot('18-room-door');
+          const enter = page.getByRole('button', { name: /^Go In$/ }).first();
+          if (await enter.count()) {
+            await enter.click().catch(() => {});
+            await page.waitForTimeout(900);
+            scrollsSideways = (await probe('the room, with everybody in it')) || scrollsSideways;
+            await shoot('19-room');
+            // Play a few beats so the log and the reactions are on screen.
+            for (let i = 0; i < 3; i++) {
+              const choice = page.locator('.list-item').filter({ has: page.locator('.small.strong') }).last();
+              if (!(await choice.count())) break;
+              await choice.click().catch(() => {});
+              await page.waitForTimeout(700);
+            }
+            scrollsSideways = (await probe('the room, mid-audition')) || scrollsSideways;
+            await shoot('20-room-playing');
+            await page.getByRole('button', { name: /Walk Out|Leave/ }).first().click().catch(() => {});
+            await page.waitForTimeout(500);
+          }
+        }
+      }
+    }
   }
 
   // The actor's side: a tape asked for, and the room where it is shot.

@@ -24,8 +24,8 @@ export const CRAFT_ROLE_LABEL: Readonly<Record<CraftRole, string>> = {
 
 export const CRAFT_ROLE_PLURAL: Readonly<Record<CraftRole, string>> = {
   actor: 'Actors', director: 'Directors', producer: 'Producers',
-  showrunner: 'Showrunners', cinematographer: 'Cinematographers', composers: 'Composers',
-} as unknown as Readonly<Record<CraftRole, string>>;
+  showrunner: 'Showrunners', cinematographer: 'Cinematographers', composer: 'Composers',
+};
 
 export interface CraftAttributeDef {
   id: string;

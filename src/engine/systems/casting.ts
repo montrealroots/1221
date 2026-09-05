@@ -22,6 +22,8 @@ import { effectiveStudio } from './studio-state';
 import { NETWORKS, type Network } from '../content/networks';
 import { quickReception } from './critics';
 import { generateCharacterName, generatePersonName } from '../content/names';
+import { castingOfficeFor } from './audition-room';
+import { officesThatWouldCall } from './casting-office';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { recordCredit } from './film';
@@ -29,6 +31,9 @@ import { titleCaseLabel } from '../core/text';
 import { ageOf, isPeopleLoaded, peopleInRole } from '../content/people';
 import { countryIdForRecord, ensureRealPerson, personForRecord, playerControls } from './real-people';
 import { archetypeLabel, breakDownScript } from '../content/screenplay';
+import { pipelineFor } from '../content/pipelines';
+import type { RoleCategory } from '../content/casting-industry';
+import { quoteMultiplierFor } from './reactive';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
@@ -37,9 +42,24 @@ export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.decision_due', () => {});
 
   sim.onSchedule('cast.decide_role', (item) => decideRole(sim, item.payload.roleId as Id));
+
+  // A room played beat by beat cancels its own appointment, so the answer has
+  // to be put on the calendar from the room rather than from the appointment.
+  // Without this the player reads for a part and never hears about it again,
+  // which happens in life but should not be the only thing that happens.
+  sim.onEvent('cast.room_finished', 'cast.office_will_answer', (event, { sim: s }) => {
+    const auditionId = (event.payload as { auditionId?: Id }).auditionId;
+    const audition = auditionId ? s.universe.auditions[auditionId] : undefined;
+    const role = audition ? s.universe.roles[audition.roleId] : undefined;
+    if (audition?.isPlayer && role && role.status === 'casting') scheduleOfficeResponse(s, audition, role);
+    // Runs before the office reads the session, so the feedback can be put
+    // behind the answer rather than in front of it.
+  }, 60);
   sim.onSchedule('world.project_progress', (item) => advanceBackgroundProject(sim, item.payload.projectId as Id));
   sim.onSchedule('cast.opportunity_scan', () => {
     generateOpportunities(sim);
+    // The scan keeps its place on the calendar even while breakdowns are
+    // closed, so turning them back on is one constant and not a migration.
     sim.schedule({ at: addDays(sim.now, 5, sim.homeZone), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
   });
 
@@ -74,7 +94,10 @@ export function registerCasting(sim: Simulation): void {
         auditionIds: [],
       };
       s.universe.roles[role.id] = role;
-      s.emit('cast.role_created', { roleId: role.id, projectId: project.id, billing: p.billing });
+      role.category = roleCategoryOf(role, project);
+      const terms = episodeTermsFor(role, project);
+      if (terms) role.episodes = terms;
+      s.emit('cast.role_created', { roleId: role.id, projectId: project.id, billing: p.billing, category: role.category });
       return { roleId: role.id };
     },
   );
@@ -89,6 +112,12 @@ export function registerCasting(sim: Simulation): void {
       if (!project) throw new CommandError('No such project.');
 
       role.status = 'casting';
+
+      // A production hires its casting office before it puts anything out, and
+      // every breakdown says whose office it is. Fixed once per picture, so the
+      // same casting director sees the player across a whole career.
+      castingOfficeFor(s, project, role, new Date(s.now).getUTCFullYear(), s.rng('casting_office', project.id));
+
       const poolSize = p.candidateCount ?? clamp(Math.round(remap(project.packageValue, 0, 100, 6, 40) * (role.billing === 'lead' ? 0.6 : 1.4)), 4, 60);
 
       // Build a candidate pool of real people who persist in the world.
@@ -325,7 +354,7 @@ export function registerCasting(sim: Simulation): void {
       if (p.accept === false) {
         role.status = 'casting';
         role.castPersonId = undefined;
-        s.emit('cast.offer_declined', { roleId: role.id, personId: p.personId });
+        s.emit('cast.offer_declined', { roleId: role.id, personId: p.personId, amount: p.amount ?? negotiatedFee(s, role, s.universe.people[p.personId]) });
         return { accepted: false };
       }
 
@@ -646,6 +675,61 @@ const ACTOR_AT_ONCE = 3;
  * — when the part came from a breakdown — the archetype's. A mentor needs
  * gravitas and a comic relief needs timing whatever the genre is.
  */
+/**
+ * What a part is actually hired as.
+ *
+ * The billing says how big it is; the category says how it is engaged, which
+ * is a different question and the one the contract answers. A lead on a
+ * series is a series regular, contracted to the show and optioned for years
+ * before anybody has read; the same billing on a film is a weekly deal for
+ * the run of the picture. A part written before categories existed is read
+ * through the same rule rather than being guessed at or left blank.
+ */
+export function roleCategoryOf(role: Role, project: Project | undefined): RoleCategory {
+  if (role.category) return role.category;
+  const series = project?.format === 'series' || project?.format === 'limited_series';
+  const pipeline = project ? pipelineFor(project) : undefined;
+  if (pipeline && (pipeline.kind === 'animation' || pipeline.kind === 'stop_motion')) return 'voice';
+  if (role.billing === 'voice') return 'voice';
+  if (!series) {
+    switch (role.billing) {
+      case 'lead': return 'lead';
+      case 'supporting': return 'supporting';
+      case 'featured': return 'featured';
+      case 'cameo': return 'featured';
+      default: return 'day_player';
+    }
+  }
+  switch (role.billing) {
+    case 'lead': return 'series_regular';
+    case 'supporting': return 'recurring';
+    case 'featured': return 'guest_star';
+    case 'cameo': return 'guest_star';
+    default: return 'co_star';
+  }
+}
+
+/**
+ * How many episodes a part is wanted for, and which season it is.
+ *
+ * A regular is guaranteed a share of the order before they are cast; a guest
+ * is one episode. Read off the series' own season list so it can never be out
+ * of step with the show.
+ */
+export function episodeTermsFor(role: Role, project: Project | undefined): { season: number; ofEpisodes: number; guaranteed: number } | undefined {
+  if (!project || (project.format !== 'series' && project.format !== 'limited_series')) return undefined;
+  if (role.episodes) return { ...role.episodes, guaranteed: role.episodes.guaranteed ?? role.episodes.ofEpisodes };
+  const seasons = project.seasons ?? [];
+  const current = seasons[seasons.length - 1];
+  const season = current?.number ?? 1;
+  const ofEpisodes = current?.episodeCount ?? (project.format === 'limited_series' ? 6 : 10);
+  const category = roleCategoryOf(role, project);
+  const guaranteed = category === 'series_regular' ? Math.max(1, Math.round(ofEpisodes * 0.6))
+    : category === 'recurring' ? Math.max(1, Math.round(ofEpisodes * 0.3))
+      : 1;
+  return { season, ofEpisodes, guaranteed };
+}
+
 function defaultRequirements(project: Project, billing: Role['billing'], archetype?: CharacterArchetype): { attributeId: string; weight: number }[] {
   const genre = project.genres[0] ?? 'drama';
   const byGenre: Record<string, string[]> = {
@@ -677,6 +761,21 @@ function defaultRequirements(project: Project, billing: Role['billing'], archety
     day_player: ['cold_reading', 'take_consistency'],
   };
   const forPart = archetype ? byArchetype[archetype] ?? [] : [];
+
+  // A cartoon is cast on the voice and nothing else: nobody is looking at the
+  // camera awareness of somebody in a booth. A documentary is not cast at all
+  // in this sense — a contributor is judged on whether they will talk.
+  const pipeline = pipelineFor(project);
+  if (pipeline.kind === 'animation' || pipeline.kind === 'stop_motion') {
+    const voice = ['voice_over', 'vocal_range', 'resonance', 'diction', 'emotional_truth', 'vocal_stamina', 'improvisation'];
+    const flavour = (attrs ?? []).filter((a) => ['comedy_timing', 'menace', 'singing', 'dry_comedy', 'romance', 'drama'].includes(a));
+    const combined = [...new Set([...voice.slice(0, billing === 'lead' ? 5 : 4), ...flavour, ...forPart.slice(0, 1)])];
+    return combined.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.08).toFixed(2)) }));
+  }
+  if (pipeline.kind === 'documentary' || pipeline.kind === 'unscripted') {
+    const contributor = ['interview_poise', 'emotional_truth', 'charisma', 'discretion', 'improvisation'];
+    return contributor.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.1).toFixed(2)) }));
+  }
 
   const combined = [...new Set([...forPart, ...(attrs ?? []), ...core])];
   return combined.map((attributeId, i) => ({ attributeId, weight: Number((1 - i * 0.08).toFixed(2)) }));
@@ -800,6 +899,12 @@ function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: b
     const at = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: rng.int(10, 17) }, sim.homeZone);
     const locationId = project?.productionLocationIds[0] ?? person.currentLocationId;
 
+    // Whose office is running it. Fixed the moment the player is in for the
+    // part, so the same casting director sees them across a whole career.
+    const office = project
+      ? castingOfficeFor(sim, project, role, new Date(sim.now).getUTCFullYear(), rng)
+      : undefined;
+
     const chosen = format ?? (rng.chance(0.55) ? 'self_tape' : 'in_person');
     audition.format = chosen;
     audition.stage = chosen === 'self_tape' ? 'self_tape' : 'first_read';
@@ -823,7 +928,7 @@ function submitAudition(sim: Simulation, role: Role, person: Person, isPlayer: b
     sim.requireDecision({
       urgency: 66, category: 'career',
       title: `${audition.stage === 'self_tape' ? 'Self-tape' : 'Audition'}: ${role.characterName}`,
-      detail: `${project?.title ?? 'A project'}, ${role.billing.replace(/_/g, ' ')}. ${audition.stage === 'self_tape' ? `Tape due ${formatDate(at, sim.homeZone)}. Send it before then; the office will get back to you in its own time.` : `${formatDate(at, sim.homeZone)} at ${formatTime(at, sim.homeZone)} in ${CITIES.get(locationId)?.name ?? 'town'}. Be in the city, be in the room.`} Preparation is the whole game.`,
+      detail: `${project?.title ?? 'A project'}, ${role.billing.replace(/_/g, ' ')}. ${audition.stage === 'self_tape' ? `Tape due ${formatDate(at, sim.homeZone)}. Send it before then; the office will get back to you in its own time.` : `${formatDate(at, sim.homeZone)} at ${formatTime(at, sim.homeZone)} in ${CITIES.get(locationId)?.name ?? 'town'}. Be in the city, be in the room.`} Preparation is the whole game.${office ? ` Casting by ${office.name}.` : ''}`,
       route: '/workspace/casting',
       dueAt: at,
       refType: 'audition', refId: audition.id,
@@ -1247,8 +1352,8 @@ export function negotiatedFee(sim: Simulation, role: Role, person: Person | unde
   const negotiation = person.representation.agentId
     ? applyRate(Math.max(base, quoteFloor), 1.12)
     : Math.max(base, quoteFloor);
-  void sim;
-  return Math.max(role.payLow, negotiation);
+  // What they think of you is in the number, and nobody says so out loud.
+  return Math.max(role.payLow, Math.round(negotiation * quoteMultiplierFor(sim, person)));
 }
 
 function ensureAgentPerson(sim: Simulation, agencyId: string): Id {
@@ -1283,7 +1388,26 @@ function ensureAgentPerson(sim: Simulation, agencyId: string): Id {
  * The world generates opportunities. How many, and how good, depends on who
  * the player is and who represents them.
  */
+/**
+ * Whether parts are being sent to the player at all.
+ *
+ * Off while the audition system is rebuilt around how casting actually works.
+ * Nothing already in a save is touched by this: auditions the player has
+ * already been through, their scores, their feedback and their credits all
+ * stay exactly where they are, and the world goes on casting its own pictures
+ * so the industry does not stop. Only new breakdowns reaching the player are
+ * held back, and turning them on again is this one constant.
+ */
+/**
+ * Whether breakdowns go out at all.
+ *
+ * This was shut while the room and the office behind it were rebuilt, so that
+ * nobody played a half-built audition. Both are finished, so it is open.
+ */
+export const BREAKDOWNS_OPEN = true;
+
 export function generateOpportunities(sim: Simulation): void {
+  if (!BREAKDOWNS_OPEN) return;
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
   if (player.careerTrack !== 'actor' && player.creditIds.length === 0 && !player.representation.agentId) return;
@@ -1307,13 +1431,25 @@ export function generateOpportunities(sim: Simulation): void {
     (r) => r.status === 'casting' && !auditionsFor(sim, r).some((a) => a.personId === player.id),
   );
 
+  // Offices that already know the player do not wait for a submission. This is
+  // the whole return on a relationship with a casting director: once you are on
+  // their list they call you in, and once you are a favourite they call you in
+  // for things that were never posted.
+  const calling = new Map(officesThatWouldCall(sim).map((standing) => [standing.castingDirectorId, standing]));
+
   let offered = 0;
   for (const role of openRoles) {
-    if (offered >= count) break;
     const project = sim.universe.projects[role.projectId];
     if (!project || project.createdById === player.id) continue;
     const age = ageOn(player.birthInstant, sim.now, sim.homeZone);
     if (age < role.ageRange[0] - 4 || age > role.ageRange[1] + 6) continue;
+
+    // Who is casting it. A breakdown always says, and it is how an actor knows
+    // whether the office on it is one that has liked them before.
+    const officeYear = new Date(sim.now).getUTCFullYear();
+    const office = castingOfficeFor(sim, project, role, officeYear, rng);
+    const known = office ? calling.get(office.id) : undefined;
+    if (offered >= count && !known) continue;
 
     // What a real breakdown carries: what it is, who is making it, who is
     // already in it, and what the part pays. Nothing about the other people
@@ -1327,15 +1463,22 @@ export function generateOpportunities(sim: Simulation): void {
     const madeBy = project.distributorName ? ` For ${project.distributorName}.` : '';
     const helm = director ? ` Directed by ${director.stageName ?? director.displayName}.` : '';
     const names = attached.length > 0 ? ` Attached: ${attached.join(', ')}.` : '';
+    const cast = office ? ` Casting by ${office.name}.` : '';
+    const asked = known
+      ? known.list === 'favourite'
+        ? ` ${office!.name}'s office asked for you by name.`
+        : ` ${office!.name}'s office wants you in on this one.`
+      : '';
 
     sim.requireDecision({
-      urgency: 52, category: 'career',
-      title: `Breakdown: ${role.characterName}`,
-      detail: `${project.title} — ${project.logline}${helm}${madeBy}${names} ${titleCaseLabel(role.billing.replace(/_/g, ' '))}: ${role.description} Paying ${formatMoney(role.payLow)} to ${formatMoney(role.payHigh)}.`,
+      urgency: known ? 68 : 52, category: 'career',
+      title: known ? `${office!.name} Wants You In: ${role.characterName}` : `Breakdown: ${role.characterName}`,
+      detail: `${project.title} — ${project.logline}${helm}${madeBy}${cast}${names}${asked} ${titleCaseLabel(role.billing.replace(/_/g, ' '))}: ${role.description} Paying ${formatMoney(role.payLow)} to ${formatMoney(role.payHigh)}.`,
       route: '/workspace/casting',
-      actions: [{ label: 'Submit', commandKind: 'cast.submit', payload: { roleId: role.id } }],
+      actions: [{ label: known ? 'Take The Appointment' : 'Submit', commandKind: 'cast.submit', payload: { roleId: role.id } }],
       refType: 'role', refId: role.id,
     });
+    if (known) known.broughtInDirectly += 1;
     offered++;
   }
 

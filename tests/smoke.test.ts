@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { BREAKDOWNS_OPEN } from '@/engine/systems/casting';
 import { quickSave, validateUniverse } from '@/engine';
 import { formatDateTime, MS_DAY } from '@/engine/core/time';
 import { openDecisions, simulationLoad } from '@/engine/world/world';
@@ -64,7 +65,11 @@ describe('a new universe boots and runs', () => {
     }
     const raised = Object.keys(sim.universe.decisions).length;
     expect(raised, 'the Decision Center never received anything').toBeGreaterThan(0);
-    expect(sampledOpen, `${raised} decisions were raised in a year but the Decision Center was empty every month`).toBeGreaterThan(2);
+    // Casting breakdowns are most of what a new actor's first year is made of.
+    // While they are closed for the rebuild the bar is lower, and it goes back
+    // up on its own the moment they reopen — nobody has to remember to raise it.
+    const bar = BREAKDOWNS_OPEN ? 2 : 0;
+    expect(sampledOpen, `${raised} decisions were raised in a year but the Decision Center was empty every month`).toBeGreaterThan(bar);
   });
 
   it('keeps money as the sum of postings', () => {

@@ -20,6 +20,8 @@ import { formatDate, addDays } from '@/engine/core/time';
 import { ApproachCraftDialog, OfferRealDialog } from '@/ui/components/ApproachRoom';
 import { CRAFT_ROLE_LABEL, type CraftRole } from '@/engine/content/craft-attributes';
 import { personByQid } from '@/engine/content/people';
+import { pipelineFor } from '@/engine/content/pipelines';
+import { heatSummary } from '@/engine/systems/reactive';
 import { CastingRooms, CutRoom, EffectsRoom, HousePicker, MusicRoom, PostHouseLine, ScriptDocument, ShootDayRow, StageBookingPanel } from '@/ui/components/ProductionRooms';
 
 export function ProjectsWorkspace() {
@@ -110,6 +112,8 @@ function ProjectDetail({ projectId }: { projectId: string }) {
   if (!project) return <Empty title="Gone" body="That project no longer exists." />;
 
   const currentIndex = phaseIndex(project.phase);
+  const pipeline = pipelineFor(project);
+  const heat = heatSummary(project);
   const rights = project.rightsId ? sim.universe.rights[project.rightsId] : undefined;
   const company = companies[0];
 
@@ -138,6 +142,23 @@ function ProjectDetail({ projectId }: { projectId: string }) {
           <Stat label="Package" value={Math.round(project.packageValue)} note="how buyers see it" />
         </div>
 
+        {heat.heat > 0 && (
+          <div className={`callout ${heat.heat > 45 ? 'callout-negative' : 'callout-warning'}`} style={{ marginTop: 'var(--s4)' }}>
+            <strong>What This Picture Is Carrying.</strong> {heat.note}
+            <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+              {heat.log.slice(-3).reverse().map((entry, i) => (
+                <div key={i}>{formatDate(entry.at, sim.homeZone)} · {entry.note}</div>
+              ))}
+            </div>
+            {Object.values(sim.universe.decisions).some((d) => d.refId === project.id && !d.resolvedAt && d.category === 'business') && (
+              <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
+                <button className="btn btn-sm btn-primary" onClick={() => run('pr.statement', { projectId: project.id })}>Get Ahead Of It</button>
+                <button className="btn btn-sm" onClick={() => run('pr.ride_it_out', { projectId: project.id })}>Say Nothing</button>
+              </div>
+            )}
+          </div>
+        )}
+
         {!rights && (
           <div className="callout callout-warning" style={{ marginTop: 'var(--s4)' }}>
             <strong>No chain of title.</strong> You cannot greenlight or license this until the underlying
@@ -161,7 +182,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
         { id: 'overview', label: 'Overview' },
         { id: 'script', label: 'Script', badge: drafts.length },
         { id: 'cast', label: 'Cast', badge: roles.length },
-        { id: 'production', label: 'Production', badge: shooting.planned },
+        { id: 'production', label: pipeline.kind === 'live_action' ? 'Production' : pipeline.label, badge: shooting.planned },
         { id: 'post', label: 'Post', badge: post.length },
         { id: 'release', label: 'Release' },
       ]} />
@@ -238,8 +259,8 @@ function ProjectDetail({ projectId }: { projectId: string }) {
             )}
             {project.greenlitAt && shooting.planned === 0 && roles.every((r) => r.billing !== 'lead' || r.status === 'cast') && roles.length > 0 && (
               <ActionRow
-                label="Board A Shooting Schedule"
-                detail="Days are placed on the calendar. Cast have to be in the right city on each of them."
+                label={pipeline.scheduleCta}
+                detail={pipeline.scheduleNote}
                 action={() => run('prod.build_schedule', {
                   projectId: project.id,
                   startAt: addDays(sim.now, 45, sim.homeZone),
@@ -413,19 +434,19 @@ function ProjectDetail({ projectId }: { projectId: string }) {
 
       {tab === 'production' && (
         <Panel
-          title="Shooting"
+          title={pipeline.label}
           subtitle={shooting.planned > 0
-            ? `${shooting.shot} of ${shooting.planned} days shot · ${formatMoneyCompact(shooting.spent)} against ${formatMoneyCompact(shooting.budgeted)} planned`
-            : 'Nothing boarded yet'}
+            ? `${shooting.shot} of ${shooting.planned} ${pipeline.units.toLowerCase()} done · ${formatMoneyCompact(shooting.spent)} against ${formatMoneyCompact(shooting.budgeted)} planned`
+            : pipeline.how}
           flush
         >
           {shooting.days.length === 0 ? (
-            <Empty title="No Schedule" body="A schedule needs a greenlight, funded money in the account, and your leads cast." />
+            <Empty title="No Schedule" body={`${pipeline.how} It needs a greenlight, funded money in the account, and your leads cast.`} />
           ) : (
             <div className="table-scroll">
               <table>
                 <thead>
-                  <tr><th>Day</th><th>Date</th><th>Location</th><th className="num">Pages</th><th className="num">Cost</th><th>Status</th></tr>
+                  <tr><th>{pipeline.unit}</th><th>Date</th><th>Where</th><th className="num">Done</th><th className="num">Cost</th><th>Status</th></tr>
                 </thead>
                 <tbody>
                   {shooting.days.map((day) => <ShootDayRow key={day.id} day={day} project={project} />)}

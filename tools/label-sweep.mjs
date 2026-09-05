@@ -54,7 +54,9 @@ for (const file of files) {
       if (/[.?!]$/.test(value) || value.includes(',')) continue;
       const words = value.split(/\s+/);
       const bad = words.filter((word, i) => {
-        const cleaned = word.replace(/^[^A-Za-z]+/, '');
+        // Strip leading punctuation and quotes, but not letters: "Île" starts
+        // with a capital, and stripping the accent off it would say otherwise.
+        const cleaned = word.replace(/^[^\p{L}]+/u, '');
         const first = cleaned[0];
         if (!first) return false;
         if (first !== first.toLowerCase()) return false;

@@ -19,6 +19,7 @@ import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
+import type { PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
 
@@ -37,6 +38,11 @@ export interface NewSaveConfig {
   displayName?: string;
   stageName?: string;
   pronouns: string;
+  /**
+   * Which of the two the business lists them under. Theirs to state; absent,
+   * pronouns decide.
+   */
+  performerTitle?: PerformerTitle;
   /** Local date of birth in the starting city's zone. */
   birthYear: number;
   birthMonth: number;
@@ -272,6 +278,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     stageName: config.stageName?.trim() || undefined,
     portrait: config.portrait,
     pronouns: config.pronouns,
+    performerTitle: config.performerTitle,
     birthInstant,
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
@@ -312,7 +319,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
  */
 export function careerLabel(track: CareerTrack): string {
   const labels: Record<CareerTrack, string> = {
-    none: 'Undecided', actor: 'Actor/Actress', writer: 'Writer', director: 'Director',
+    none: 'Undecided', actor: 'Actor', writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',
     executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working Life',
   };

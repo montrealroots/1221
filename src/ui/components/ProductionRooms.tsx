@@ -15,6 +15,7 @@ import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate, formatTime } from '@/engine/core/time';
 import { CRAFT_DIMENSIONS, CRAFT_LABEL, craftWeights } from '@/engine/content/genres';
 import { SCENE_KIND_LABEL, SCENE_NEED_LABEL, archetypeLabel, breakdownSummary } from '@/engine/content/screenplay';
+import { DAY_KIND_LABEL, DAY_KIND_NOTE } from '@/engine/content/pipelines';
 import { CITIES, cityTimeZone } from '@/engine/content/geography';
 import { HOUSE_RATE_CALIBRATION, POST_HOUSE_BY_ID, RIGHTS_HOLDERS, STAGE_DAY_CALIBRATION, STUDIO_LOTS, housesFor, lotsIn, type PostService } from '@/engine/content/post-houses';
 import { auditionsFor, decisionScore } from '@/engine/systems/casting';
@@ -190,10 +191,14 @@ export function ShootDayRow({ day, project }: { day: ShootDay; project: Project 
   return (
     <>
       <tr onClick={() => setOpen(!open)} style={{ cursor: sheet ? 'pointer' : undefined }}>
-        <td className="mono xs">{day.dayNumber}</td>
+        <td className="mono xs">{day.dayNumber}{day.kind && day.kind !== 'photography' ? <div className="xs dim">{DAY_KIND_LABEL[day.kind]}</div> : null}</td>
         <td className="xs">{formatDate(day.date, sim.homeZone)}{sheet ? ` · call ${formatTime(sheet.crewCall, zone)}` : ''}</td>
         <td className="xs">{day.locationName}</td>
-        <td className="num xs mono">{day.completedPages.toFixed(1)} / {day.plannedPages.toFixed(1)}</td>
+        <td className="num xs mono">
+          {day.output
+            ? `${day.output.done} / ${day.output.planned} ${day.output.unit}`
+            : `${day.completedPages.toFixed(1)} / ${day.plannedPages.toFixed(1)} pages`}
+        </td>
         <td className="num xs mono">{formatMoneyCompact(day.actualCost)}</td>
         <td className="xs">
           <span className={`chip ${day.status === 'complete' ? 'chip-positive' : day.status === 'incomplete' ? 'chip-warning' : ''}`}>
@@ -217,10 +222,15 @@ export function ShootDayRow({ day, project }: { day: ShootDay; project: Project 
                 <span><strong>Daylight</strong> {Math.floor(sheet.daylightMinutes / 60)}h {sheet.daylightMinutes % 60}m</span>
               </div>
               <div className="xs dim">{sheet.forecast}</div>
+              {day.kind && day.kind !== 'photography' && (
+                <div className="xs dim">{DAY_KIND_NOTE[day.kind]}</div>
+              )}
+              {day.scenes.length > 0 && (
               <div className="xs">
                 <strong>Scenes</strong>{' '}
                 {day.scenes.map((s) => `${s.sceneNumber} (${s.pages.toFixed(1)}p${s.setups ? `, ${s.setupsDone ?? 0}/${s.setups} setups` : ''}${s.quality !== undefined ? `, ${s.quality}` : ''})`).join(' · ')}
               </div>
+              )}
               {sheet.castCalls.length > 0 && (
                 <div className="xs"><strong>Cast</strong> {sheet.castCalls.map((c) => `${sim.universe.people[c.personId]?.displayName ?? 'Cast'} ${formatTime(c.at, zone)}`).join(' · ')}</div>
               )}
@@ -246,7 +256,7 @@ export function ShootDayRow({ day, project }: { day: ShootDay; project: Project 
               {day.incidents.length > 0 && (
                 <div className="xs">{day.incidents.map((i, n) => <div key={n} className="warning">{i.description}{i.costDelta ? ` (${formatMoneyCompact(i.costDelta)})` : ''}</div>)}</div>
               )}
-              {canDirect && (
+              {canDirect && day.scenes.length > 0 && (
                 <div><button className="btn btn-sm btn-primary" onClick={(e) => { e.stopPropagation(); setDirecting(true); }}>Direct The Day</button></div>
               )}
             </div>

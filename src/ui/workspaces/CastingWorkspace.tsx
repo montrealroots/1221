@@ -3,6 +3,9 @@ import { genreName } from '@/engine/content/genres';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { auditionPolicyFor } from '@/engine/systems/casting';
+import { officeBook } from '@/engine/systems/casting-office';
+import { CASTING_DIRECTOR_BY_ID } from '@/engine/content/casting-people';
+import { AuditionRoomDialog } from '@/ui/components/AuditionRoom';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
 import { AGENCIES } from '@/engine/content/industry';
 import { formatMoney } from '@/engine/core/money';
@@ -11,13 +14,21 @@ import { CITIES } from '@/engine/content/geography';
 import { redactForPlayer } from '@/engine/core/audit';
 import { DossierButton } from '@/ui/components/ProjectDossier';
 
-type Tab = 'breakdowns' | 'auditions' | 'representation' | 'credits';
+type Tab = 'breakdowns' | 'auditions' | 'offices' | 'representation' | 'credits';
+
+/** How a standing with one office reads to the player. Never a number. */
+const LIST_LABEL: Readonly<Record<'unknown' | 'watching' | 'shortlist' | 'favourite', string>> = {
+  unknown: 'Seen You',
+  watching: 'They Know You',
+  shortlist: 'On Their List',
+  favourite: 'They Ask For You',
+};
 
 export function CastingWorkspace() {
   const { sim, run } = useGame();
   const [tab, setTab] = useState<Tab>('breakdowns');
-  const [preparing, setPreparing] = useState<string | null>(null);
   const [taping, setTaping] = useState<string | null>(null);
+  const [inRoom, setInRoom] = useState<string | null>(null);
 
   const player = useWorld((s) => s.player);
   const age = ageOn(player.birthInstant, sim.now, sim.homeZone);
@@ -32,6 +43,12 @@ export function CastingWorkspace() {
     .sort((a, b) => b.submittedAt - a.submittedAt));
 
   const submittedRoleIds = new Set(auditions.map((a) => a.roleId));
+
+  // Every casting office that has ever had the player in, and where that left
+  // things. Only offices that have actually seen you appear here: you cannot
+  // have a standing with somebody you have never read for.
+  const offices = useWorld(() => officeBook(sim));
+  const officeKnowsYou = new Map(offices.map((entry) => [entry.standing.castingDirectorId, entry]));
 
   const credits = useWorld((s) => player.creditIds
     .map((id) => s.universe.projects[id])
@@ -51,6 +68,7 @@ export function CastingWorkspace() {
       <Tabs active={tab} onChange={setTab} tabs={[
         { id: 'breakdowns', label: 'Breakdowns', badge: roles.length },
         { id: 'auditions', label: 'Your Auditions', badge: auditions.filter((a) => !a.decidedAt).length },
+        { id: 'offices', label: 'Casting Offices', badge: offices.length },
         { id: 'representation', label: 'Representation' },
         { id: 'credits', label: 'Credits', badge: credits.length },
       ]} />
@@ -63,6 +81,8 @@ export function CastingWorkspace() {
             <div className="list">
               {roles.map(({ role, project }) => {
                 const inRange = age >= role.ageRange[0] - 4 && age <= role.ageRange[1] + 6;
+                const office = project?.castingOfficeId ? CASTING_DIRECTOR_BY_ID[project.castingOfficeId] : undefined;
+                const known = office ? officeKnowsYou.get(office.id) : undefined;
                 return (
                   <div key={role.id} className="list-item list-static">
                     <div className="grow">
@@ -71,6 +91,16 @@ export function CastingWorkspace() {
                         {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
                         {project && ` · ${project.genres.map(genreName).join(', ')}`}
                       </div>
+                      {office && (
+                        <div className="xs dim">
+                          Casting by {office.name}
+                          {known && (
+                            <span className={known.standing.list === 'favourite' || known.standing.list === 'shortlist' ? 'positive' : undefined}>
+                              {' · '}{known.howItStands}
+                            </span>
+                          )}
+                        </div>
+                      )}
                       <div className="xs muted" style={{ marginTop: 2 }}>{role.description}</div>
                       <div className="row wrap gap-1" style={{ marginTop: 4 }}>
                         {role.requirements.slice(0, 4).map((requirement) => (
@@ -147,18 +177,23 @@ export function CastingWorkspace() {
                           Shoot The Tape
                         </button>
                       )}
-                      {!audition.decidedAt && audition.performanceScore === undefined && audition.format !== 'self_tape' && audition.stage !== 'self_tape' && (
-                        <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
-                          Prepare And Perform
+                      {!audition.decidedAt && !audition.room?.finishedAt && audition.format !== 'self_tape' && audition.stage !== 'self_tape' && (
+                        <button className="btn btn-sm btn-primary" onClick={() => setInRoom(audition.id)}>
+                          {audition.room ? 'Back Into The Room' : 'Go To The Room'}
                         </button>
                       )}
-                      {!audition.decidedAt && audition.stage === 'callback' && !(audition.rounds ?? []).some((r) => r.stage === 'callback') && (
-                        <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
-                          Go To The Callback
-                        </button>
-                      )}
+
                     </div>
 
+                    {audition.room?.verdict && (
+                      <div className="callout" style={{ marginTop: 'var(--s2)' }}>
+                        <strong className="xs">{audition.room.walkedOut ? 'You Walked Out' : 'In The Room'}</strong>
+                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.room.verdict.line}</p>
+                        <p className="xs dim" style={{ margin: '2px 0 0' }}>
+                          {audition.room.occupants.length} behind the table · {audition.room.played.length} beats
+                        </p>
+                      </div>
+                    )}
                     {audition.officeResponse && audition.officeResponse.kind !== 'silence' && (
                       <div className={`callout ${audition.officeResponse.kind === 'callback' ? 'callout-accent' : audition.officeResponse.kind === 'pass' ? 'callout-negative' : ''}`} style={{ marginTop: 'var(--s2)' }}>
                         <strong className="xs">The Office, {formatDate(audition.officeResponse.at, sim.homeZone)}</strong>
@@ -170,6 +205,45 @@ export function CastingWorkspace() {
                     )}
                     {audition.tapeSentAt && !audition.officeResponse && !audition.decidedAt && (
                       <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>The tape is with them. Offices take days, sometimes weeks.</p>
+                    )}
+
+                    {audition.relayedFeedback && (
+                      <div className="callout" style={{ marginTop: 'var(--s2)' }}>
+                        <strong className="xs">
+                          {audition.relayedFeedback.from === 'Nobody' ? 'Nothing Came Back' : `${audition.relayedFeedback.from}, ${formatDate(audition.relayedFeedback.at, sim.homeZone)}`}
+                        </strong>
+                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.relayedFeedback.body}</p>
+                        {(audition.relayedFeedback.grades ?? []).length > 0 && (
+                          <div className="row wrap gap-1" style={{ marginTop: 6 }}>
+                            {audition.relayedFeedback.grades!.map((grade) => (
+                              <span key={grade.axis} className="chip" title={`${grade.label}: what casting said, as it was passed on.`}>
+                                {grade.label}: <strong>{grade.grade}</strong>
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {audition.relayedFeedback.blunt && (
+                          <p className="xs dim" style={{ margin: '6px 0 0' }}>
+                            That is the office's own note, word for word. Not every agent passes those on.
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    {!audition.relayedFeedback && audition.sessionRead && (
+                      <div className="row-between" style={{ marginTop: 'var(--s2)', alignItems: 'flex-end' }}>
+                        <p className="xs dim" style={{ margin: 0 }}>
+                          They have their notes on you. Whether any of it reaches you is up to your agent.
+                        </p>
+                        <button
+                          className="btn btn-sm"
+                          title={player.representation.agencyName
+                            ? `${player.representation.agencyName} rings the office. Once is normal; a second time in a month is noticed.`
+                            : 'With nobody representing you, that is you ringing a casting office about yourself. They remember.'}
+                          onClick={() => run('cast.chase_feedback', { auditionId: audition.id })}
+                        >
+                          Chase It
+                        </button>
+                      </div>
                     )}
 
                     {audition.feedback && (
@@ -198,6 +272,55 @@ export function CastingWorkspace() {
               })}
             </div>
           )}
+        </Panel>
+      )}
+
+      {tab === 'offices' && (
+        <Panel title="Where You Stand" flush>
+          {offices.length === 0 ? (
+            <Empty
+              title="No Office Has Seen You"
+              body="Read for something. Casting directors keep their own notes, and the ones who like you start bringing you in without being asked."
+            />
+          ) : (
+            <div className="list">
+              {offices.map((entry) => {
+                const standing = entry.standing;
+                return (
+                  <div key={standing.castingDirectorId} className="list-item list-static" style={{ display: 'block' }}>
+                    <div className="row-between">
+                      <div className="grow">
+                        <div className="small strong">{entry.name}</div>
+                        <div className="xs dim">
+                          {[entry.office, entry.where].filter(Boolean).join(' · ')}
+                        </div>
+                        {entry.knownFor && <div className="xs muted" style={{ marginTop: 2 }}>{entry.knownFor}</div>}
+                      </div>
+                      <span className={`chip ${standing.list === 'favourite' ? 'chip-positive' : standing.list === 'unknown' ? '' : 'chip-accent'}`}>
+                        {LIST_LABEL[standing.list]}
+                      </span>
+                    </div>
+                    <p className="xs" style={{ margin: 'var(--s2) 0 0' }}>{entry.howItStands}</p>
+                    <div className="row wrap gap-1" style={{ marginTop: 6 }}>
+                      <span className="chip">Seen You {standing.seen === 1 ? 'Once' : `${standing.seen} Times`}</span>
+                      {standing.roomsHeld > 0 && <span className="chip">{standing.roomsHeld} In The Room</span>}
+                      {standing.broughtInDirectly > 0 && <span className="chip chip-accent">Called You In {standing.broughtInDirectly}×</span>}
+                      {standing.booked > 0 && <span className="chip chip-positive">Booked You {standing.booked}×</span>}
+                    </div>
+                    {entry.lastSeen && (
+                      <p className="xs dim" style={{ margin: '6px 0 0' }}>
+                        Last in for {entry.lastSeen.characterName} on {entry.lastSeen.projectTitle}, {formatDate(entry.lastSeen.at, sim.homeZone)}.
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <p className="xs dim" style={{ padding: 'var(--s3)' }}>
+            What an office actually writes about you is theirs, not yours. This is only what you could work
+            out from how they have treated you.
+          </p>
         </Panel>
       )}
 
@@ -272,7 +395,7 @@ export function CastingWorkspace() {
         </Panel>
       )}
 
-      {preparing && <PrepareDialog auditionId={preparing} onClose={() => setPreparing(null)} />}
+      {inRoom && <AuditionRoomDialog auditionId={inRoom} onClose={() => setInRoom(null)} />}
       {taping && <TapeDialog auditionId={taping} onClose={() => setTaping(null)} />}
     </>
   );
@@ -333,43 +456,3 @@ function TapeDialog({ auditionId, onClose }: { auditionId: string; onClose: () =
   );
 }
 
-function PrepareDialog({ auditionId, onClose }: { auditionId: string; onClose: () => void }) {
-  const { sim, run } = useGame();
-  const [hours, setHours] = useState(4);
-  const audition = sim.universe.auditions[auditionId];
-  const role = audition ? sim.universe.roles[audition.roleId] : undefined;
-
-  const submit = () => {
-    const result = run('cast.perform_audition', { auditionId, prepHours: hours });
-    if (result.ok) onClose();
-  };
-
-  return (
-    <Modal
-      title={`Audition for ${role?.characterName ?? 'the role'}`}
-      onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Not Yet</button><button className="btn btn-primary" onClick={submit}>Prepare And Go In</button></>}
-    >
-      <p className="muted small">
-        Preparation costs hours and energy, and it is one of the largest single inputs into how the
-        room goes. Going in cold is a choice you can make.
-      </p>
-      <div className="field">
-        <div className="row-between">
-          <label htmlFor="prep" style={{ marginBottom: 0 }}>Hours Of Preparation</label>
-          <span className="mono">{hours}</span>
-        </div>
-        <input id="prep" type="range" min={0} max={16} value={hours} onChange={(e) => setHours(Number(e.target.value))} />
-        <div className="row-between xs dim">
-          <span>Cold</span><span>Two full days</span>
-        </div>
-      </div>
-      <div className="callout">
-        {hours === 0 && 'No preparation. Everyone in the room will know.'}
-        {hours > 0 && hours < 4 && 'A pass on the material. Better than nothing.'}
-        {hours >= 4 && hours < 10 && 'Properly prepared. This is what professionals do.'}
-        {hours >= 10 && 'Deeply prepared, at real cost to your energy today.'}
-      </div>
-    </Modal>
-  );
-}

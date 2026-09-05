@@ -12,6 +12,9 @@ import type { DecisionItem, Id, Person, Project, SimulationTier } from '../domai
 import { clamp, remap } from '../core/rng';
 import { addDays, MS_DAY, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
+import { commissionProject } from '../systems/zeitgeist';
+import { generateCharacterName } from '../content/names';
+import { ageOn } from '../core/time';
 import { ATTRIBUTES, TRAITS, conflictingTraits } from '../domain/attributes';
 import { SKILLS } from '../domain/skills';
 
@@ -161,7 +164,7 @@ export function registerWorld(sim: Simulation): void {
   // funded, cast from the world, boarded, and — if asked — shot and in post.
   // Everything it does goes through the same commands a player uses, so
   // nothing here can reach a state the game cannot.
-  sim.onCommand<{ to?: 'boarded' | 'shooting' | 'post'; title?: string }, { projectId: Id; phase: string; days: number }>(
+  sim.onCommand<{ to?: 'boarded' | 'shooting' | 'post'; title?: string; kind?: 'live_action' | 'animation' | 'documentary' }, { projectId: Id; phase: string; days: number }>(
     'sandbox.stage_picture',
     (p, { sim: s }) => {
       if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
@@ -181,9 +184,13 @@ export function registerWorld(sim: Simulation): void {
       }
       // No title asked for means a fresh one from the title engine, so the
       // demo never collides with a picture the world already has.
+      const shape = p.kind === 'animation'
+        ? { format: 'feature' as const, genres: ['animation', 'family'], logline: 'A lighthouse keeper’s dog learns to sail.' }
+        : p.kind === 'documentary'
+          ? { format: 'documentary' as const, genres: ['documentary'], logline: 'The last crew on a river that is drying up.' }
+          : { format: 'feature' as const, genres: ['thriller', 'drama'], logline: 'A river pilot has one night to bring a stranded ferry home.' };
       const { projectId } = run<{ projectId: Id }>('film.create_project', {
-        ...(p.title ? { title: p.title } : {}), format: 'feature', genres: ['thriller', 'drama'],
-        logline: 'A river pilot has one night to bring a stranded ferry home.', companyId: company.id,
+        ...(p.title ? { title: p.title } : {}), ...shape, companyId: company.id,
       });
       const created = s.universe.projects[projectId]!;
       run('film.acquire_rights', { projectId, title: created.title, sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: company.id, holderKind: 'company' });
@@ -226,8 +233,55 @@ export function registerWorld(sim: Simulation): void {
           }
         }
       }
-      s.universe.sandbox.log.push({ at: s.now, action: `Staged a demo picture to ${to}` });
+      s.universe.sandbox.log.push({ at: s.now, action: `Staged a demo ${p.kind ?? 'live action'} picture to ${to}` });
       return { projectId, phase: s.universe.projects[projectId]?.phase ?? 'gone', days };
+    },
+  );
+
+  // An audition the player can walk into on demand, without waiting for a
+  // breakdown to find them. Everything it does goes through the same commands
+  // the game uses, so the room, the office and the feedback are the real ones.
+  sim.onCommand<{ stage?: 'first_read' | 'callback' | 'screen_test' | 'chemistry_read' }, { auditionId: Id; roleId: Id; projectId: Id; title: string; character: string }>(
+    'sandbox.stage_audition',
+    (p, { sim: s }) => {
+      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
+      const player = s.player;
+      const rng = s.rng('stage_audition', s.counter('staged_audition'));
+
+      // A picture of the world's, cast in the city the player is standing in,
+      // so the room is somewhere they can actually get to.
+      const project = commissionProject(s, 'us', `staged-${s.counter('staged_project')}`);
+      if (!project) throw new CommandError('The world would not commission anything to audition for.');
+      project.productionLocationIds = [player.currentLocationId];
+
+      const created = s.execute<{ roleId: Id }>({
+        kind: 'cast.create_role',
+        payload: {
+          projectId: project.id,
+          characterName: generateCharacterName(rng, () => false),
+          billing: 'supporting',
+          description: 'Eight scenes across the middle of it, and the picture turns on one of them.',
+          ageRange: [Math.max(18, ageOn(player.birthInstant, s.now, s.homeZone) - 5), ageOn(player.birthInstant, s.now, s.homeZone) + 8],
+        },
+      });
+      if (!created.ok || !created.value) throw new CommandError(created.error ?? 'The part could not be created.');
+      const role = s.universe.roles[created.value.roleId]!;
+      role.auditionPolicy = 'either';
+      s.execute({ kind: 'cast.open_casting', payload: { roleId: role.id, candidateCount: 6, closesInDays: 21 } });
+
+      const submitted = s.execute<{ auditionId: Id }>({ kind: 'cast.submit', payload: { roleId: role.id, prefer: 'in_person' } });
+      if (!submitted.ok || !submitted.value) throw new CommandError(submitted.error ?? 'The submission was refused.');
+      const audition = s.universe.auditions[submitted.value.auditionId]!;
+      // The appointment is now, and it is where the player is.
+      audition.scheduledAt = s.now;
+      audition.locationId = player.currentLocationId;
+      if (p.stage) audition.stage = p.stage;
+      if (audition.scheduledItemId) {
+        const item = s.timeline.get(audition.scheduledItemId);
+        if (item) s.timeline.reschedule(item.id, s.now + 60 * 60 * 1000);
+      }
+      s.universe.sandbox.log.push({ at: s.now, action: `Staged an audition for ${role.characterName}` });
+      return { auditionId: audition.id, roleId: role.id, projectId: project.id, title: project.title, character: role.characterName };
     },
   );
 

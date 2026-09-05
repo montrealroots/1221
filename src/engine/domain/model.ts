@@ -11,6 +11,7 @@ import type { Instant, TimeZone } from '../core/time';
 import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
+import type { RoleCategory } from '../content/casting-industry';
 import type { AuditRecord, HistoryRecord } from '../core/audit';
 import type { PerformerTitle } from '../core/performer';
 import type { ProfessionId } from '../content/professions';
@@ -58,6 +59,30 @@ export interface Wellbeing {
    * faster on a shoot; a shower puts it back. Rooms notice.
    */
   hygiene: number;
+}
+
+/**
+ * What somebody privately thinks, which is not the same as what they say.
+ *
+ * Ego decides how an offer lands: to somebody who has been told for twenty
+ * years that they are the reason a picture gets made, a lowball is not an
+ * opening position, it is an insult. Loyalty is what you have banked with
+ * them personally. Grudges are the things they have not forgotten, and they
+ * are acted on later, when it costs you something.
+ */
+export interface Disposition {
+  /** 0-100. How much of themselves is invested in being treated a certain way. */
+  ego: number;
+  /** 0-100 toward the player specifically. Fifty is a stranger. */
+  loyalty: number;
+  /** What they have not forgotten. */
+  grudges: { at: Instant; reason: string; weight: number; refType?: string; refId?: Id; actedOnAt?: Instant }[];
+  /** What you did right by them, which they also remember. */
+  favours: { at: Instant; reason: string; weight: number }[];
+  /** When they last did something about how they feel. */
+  lastActedAt?: Instant;
+  /** They will not read anything of yours until this passes. */
+  refusingUntil?: Instant;
 }
 
 export interface Reputation {
@@ -142,6 +167,11 @@ export interface Person {
    * are at home, or absent when you are simply out in the city.
    */
   currentPlaceId?: string;
+  /**
+   * What they privately think of you. Absent until something has happened
+   * between you, and never shown to the player as a number.
+   */
+  disposition?: Disposition;
   /** Property id of their home, when they have one. */
   residenceId?: Id;
   householdId?: Id;
@@ -1264,6 +1294,11 @@ export interface Project {
   /** Post. */
   postTaskIds: Id[];
   pictureLockedAt?: Instant;
+  /**
+   * The casting office running it, from the real registry. Chosen once and
+   * kept, so the same office sees an actor across a career.
+   */
+  castingOfficeId?: string;
   /** Effects: counted, bid on, awarded. */
   vfx?: VfxPlan;
   /** Music: spotted, written, licensed. */
@@ -1285,6 +1320,14 @@ export interface Project {
   language?: string;
   /** The certificate it carries, as a rating id from content/ratings. */
   contentRating?: string;
+  /**
+   * Negative public attention attached to the picture itself, 0-100: who is in
+   * it, what came out about them, what the company did about it. It follows
+   * the film into the reviews and the opening.
+   */
+  controversy?: number;
+  /** Why the picture is carrying heat, in the order it happened. */
+  controversyLog?: { at: Instant; delta: number; note: string; personId?: Id }[];
   /** How hard the material runs, 0-100, on the same scale the certificates sit on. */
   contentSeverity?: number;
   /** Intended runtime in minutes. */
@@ -1479,6 +1522,15 @@ export interface Role {
   characterName: string;
   billing: 'lead' | 'supporting' | 'featured' | 'day_player' | 'voice' | 'cameo';
   description: string;
+  /**
+   * What the part is hired as, in the industry's own categories: a series
+   * regular is contracted to the series, a guest star to an episode, a
+   * co-star to a day. Absent on parts created before categories existed, and
+   * derived from the billing and the format when it is read.
+   */
+  category?: RoleCategory;
+  /** For a series: which season, how many episodes, and how many are guaranteed. */
+  episodes?: { season: number; ofEpisodes: number; guaranteed?: number };
   /** What the part is in the story, when it came from a script breakdown. */
   archetype?: CharacterArchetype;
   /** The scenes the part is in, by number, when it came from a breakdown. */
@@ -1509,6 +1561,120 @@ export interface Role {
   offers?: RoleOffer[];
   /** When the callbacks were held, on a part the world is casting. Absent until they are. */
   callbacksAt?: Instant;
+}
+
+/** Somebody sitting behind the table, and what they are making of you. */
+export interface RoomOccupant {
+  /** Which chair they are in. */
+  seat: string;
+  /** An in-save person, when the room is filled by one. */
+  personId?: Id;
+  /** A real casting director from the public record, when it is one of them. */
+  castingDirectorId?: string;
+  name: string;
+  /** Their job, in the words the room would use. */
+  title: string;
+  /** What this one is watching for. */
+  watchingFor: string;
+  /** How much their opinion moves it, 0-1. */
+  sway: number;
+  /** 0-100. Fifty is the room you walked into. */
+  impression: number;
+  /** What they made of each beat. */
+  notes: { at: Instant; beat: string; note: string; delta: number }[];
+}
+
+/**
+ * How an office reads somebody after a session.
+ *
+ * Not a school report. These are the things a casting office actually decides
+ * about you in the twenty seconds after the door shuts, in the pile they put
+ * you in and the note they type next to your name.
+ */
+export interface SessionRead {
+  /** Whether you were right for this one at all. */
+  right: number;
+  /** The work itself. */
+  read: number;
+  /** Whether the performance changed when it was asked to. */
+  direction: number;
+  /** How you were to have in the room. */
+  inTheRoom: number;
+  /** Whether they would bring you in for something else. */
+  bringBack: number;
+  /** Which pile they put you in. Their own words. */
+  pile: 'yes' | 'maybe' | 'no' | 'wrong_for_this';
+  /** The line typed next to your name in the session notes. */
+  note: string;
+}
+
+/** A running relationship with one casting office. */
+export interface CastingOfficeStanding {
+  /** The real casting director's registry id. */
+  castingDirectorId: string;
+  /** How many times they have seen you, and how many were rooms rather than tapes. */
+  seen: number;
+  roomsHeld: number;
+  /** Every session they have had you in, most recent last. */
+  sessions: { at: Instant; projectTitle: string; characterName: string; read: SessionRead }[];
+  /** Where you sit on their list. */
+  list: 'unknown' | 'watching' | 'shortlist' | 'favourite';
+  /** 0-100. What the office thinks of you, which is not shown as a number. */
+  regard: number;
+  firstSeenAt: Instant;
+  lastSeenAt: Instant;
+  /** Times they have brought you in without a submission. */
+  broughtInDirectly: number;
+  /** Parts they have actually given you. */
+  booked: number;
+  /** Every time your side has rung them for an answer. Offices notice. */
+  chasedAt?: Instant[];
+}
+
+/** An audition being played out, one beat at a time. */
+export interface AuditionRoomState {
+  /** Which stage of the process this room is. */
+  stage: string;
+  occupants: RoomOccupant[];
+  /** The beats this room runs, in order. */
+  beats: string[];
+  /** Which one is next. */
+  index: number;
+  /** 0-100, and high is bad. */
+  nerves: number;
+  /** Whether it is on camera, whether anybody is reading with you, who else is out there. */
+  taped: boolean;
+  hasReader: boolean;
+  readerQuality: number;
+  sidesChanged: boolean;
+  otherActors: number;
+  waitingRoomLine: string;
+  /** Which kind of room this is, so it talks like one. */
+  register?: string;
+  /** What was said to you on the way in, and how they settled you. */
+  greeting?: string;
+  settle?: string;
+  /** How the director framed the scene before you read it. */
+  sceneFrame?: string;
+  /** What the reader is giving you, which is out of your hands. */
+  readerLine?: string;
+  /** The note the director gave, when one was given. */
+  adjustment?: string;
+  adjustmentTests?: string;
+  /** The question they asked afterwards. */
+  smallTalk?: string;
+  /** How they let you out. */
+  goodbye?: string;
+  /** Hours put in before walking through the door. */
+  prepHours?: number;
+  /** What you did, beat by beat, and what it was worth. */
+  played: { beat: string; choiceId: string; label: string; score: number; note: string; said?: string; at: Instant }[];
+  startedAt: Instant;
+  finishedAt?: Instant;
+  /** What the room said once the door shut. */
+  verdict?: { score: number; line: string };
+  /** Set when the player walked out before it was over. */
+  walkedOut?: boolean;
 }
 
 export type AuditionStage = 'submitted' | 'self_tape' | 'first_read' | 'callback' | 'chemistry_read' | 'screen_test' | 'offer' | 'passed' | 'booked';
@@ -1543,11 +1709,30 @@ export interface Audition {
   rounds?: { stage: AuditionStage; at: Instant; score: number; note: string }[];
   /** Tape or the room. Set when the player submits; the office decides what it will take. */
   format?: 'self_tape' | 'in_person';
+  /** The room itself, once the player has walked into it. */
+  room?: AuditionRoomState;
   /** When the tape went, and how many takes it took. */
   tapeSentAt?: Instant;
   tapeTakes?: number;
   /** The office got back to you, or pointedly did not. */
   officeResponse?: { at: Instant; kind: 'callback' | 'hold' | 'pass' | 'silence'; note: string };
+  /**
+   * What the office actually made of you, once they have watched it. Reaches
+   * the player through their representation rather than directly, the way it
+   * does in life, and only when somebody is willing to pass it on.
+   */
+  sessionRead?: SessionRead;
+  /**
+   * What your agent relayed, and when. Absent when nobody would tell you.
+   *
+   * The grades are only the part of the office's read that was actually
+   * passed on — a kind agent relays two of them, a blunt one relays all five.
+   * There is never a number, because no office gives an actor a number.
+   */
+  relayedFeedback?: {
+    at: Instant; from: string; body: string; blunt: boolean;
+    grades?: { axis: 'right' | 'read' | 'direction' | 'inTheRoom' | 'bringBack'; label: string; grade: string }[];
+  };
 }
 
 export type ContractKind = 'acting' | 'writing' | 'directing' | 'producing' | 'crew' | 'vendor' | 'distribution' | 'license' | 'option' | 'employment';
@@ -1626,6 +1811,8 @@ export interface ShootDay {
   locationId: string;
   locationName: string;
   isStage: boolean;
+  /** What kind of day this is. Absent on days boarded before pipelines existed, which are photography. */
+  kind?: ShootDayKind;
   /** The lot the stage is on, when it is a stage. */
   lotId?: string;
   scenes: {
@@ -1654,13 +1841,30 @@ export interface ShootDay {
   overtimeMinutes: number;
   /** 0-100 quality of the footage captured. */
   footageQuality?: number;
+  /**
+   * What this day produced, in the unit that suits it: lines recorded, shots
+   * animated, seconds in the can, usable minutes of interview.
+   */
+  output?: { unit: string; done: number; planned: number };
   scheduledItemId?: Id;
 }
 
 export type PostTaskKind =
   | 'assembly' | 'editors_cut' | 'directors_cut' | 'studio_notes' | 'picture_lock'
   | 'vfx' | 'adr' | 'foley' | 'sound_design' | 'score' | 'music_clearance'
-  | 'mix' | 'color' | 'titles' | 'subtitles' | 'localization' | 'qc' | 'mastering' | 'delivery';
+  | 'mix' | 'color' | 'titles' | 'subtitles' | 'localization' | 'qc' | 'mastering' | 'delivery'
+  // Animation: the film is built rather than photographed.
+  | 'story_reel_lock' | 'layout' | 'animation_final' | 'lighting_render'
+  // Documentary: found footage, and lawyers.
+  | 'transcription' | 'archive_clearance' | 'legal_review';
+
+/**
+ * What a day on the schedule actually is. A cartoon has no shoot days; a
+ * documentary has interview days and days in the archive.
+ */
+export type ShootDayKind =
+  | 'photography' | 'voice_session' | 'story_reel' | 'animation_block'
+  | 'stop_motion_unit' | 'interview' | 'verite' | 'archive' | 'motion_capture';
 
 export interface PostTask {
   id: Id;
@@ -2469,7 +2673,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 23;
+export const SAVE_SCHEMA_VERSION = 24;
 
 export interface SaveMeta {
   id: Id;
@@ -2579,6 +2783,12 @@ export interface SaveUniverse {
   awardNominations: Record<Id, AwardNomination>;
   festivalSubmissions: Record<Id, FestivalSubmission>;
   franchises: Record<Id, Franchise>;
+
+  /**
+   * Where the player stands with each casting office, keyed by the real
+   * casting director's registry id. Built up one room at a time.
+   */
+  castingOffices?: Record<string, CastingOfficeStanding>;
 
   /** The real studios and networks as they live in this save, keyed by registry id. */
   studios: Record<string, StudioState>;

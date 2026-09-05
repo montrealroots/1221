@@ -17,14 +17,17 @@ import { ageOn } from '@/engine/core/time';
 
 const MS_DAY = 86_400_000;
 
-function aWorld(seed: string, options: { strong?: boolean } = {}): { sim: Simulation; open: Role[] } {
+function aWorld(seed: string, options: { strong?: boolean; parts?: number } = {}): { sim: Simulation; open: Role[] } {
   const sim = quickSave({ wealth: 'inherited' }, seed);
   sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
   if (options.strong ?? true) sim.execute({ kind: 'sandbox.max_attributes', payload: {} });
-  for (let i = 0; i < 8; i++) commissionProject(sim, 'us', `${seed}-${i}`);
   const age = ageOn(sim.player.birthInstant, sim.now, sim.homeZone);
-  const open = Object.values(sim.universe.roles).filter((r) => r.status === 'casting' && age >= r.ageRange[0] - 4 && age <= r.ageRange[1] + 6);
-  return { sim, open };
+  const inRange = () => Object.values(sim.universe.roles).filter((r) => r.status === 'casting' && age >= r.ageRange[0] - 4 && age <= r.ageRange[1] + 6);
+  // Commission until there are enough parts the player could actually read
+  // for. How many a picture opens varies, so this counts rather than assumes.
+  const wanted = options.parts ?? 5;
+  for (let i = 0; i < 40 && inRange().length < wanted; i++) commissionProject(sim, 'us', `${seed}-${i}`);
+  return { sim, open: inRange() };
 }
 
 const playerAudition = (sim: Simulation, role: Role): Audition => auditionsFor(sim, role).find((a) => a.isPlayer)!;
