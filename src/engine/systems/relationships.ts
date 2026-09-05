@@ -831,9 +831,11 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
       person.careerTrack = 'civilian';
       person.tier = 'active';
       sim.notify({
-        category: 'family', title: `${person.displayName} turned 18`,
+        category: 'family', title: `${person.displayName} Turned 18`,
         body: 'They are an adult now, with their own life to build.',
-        importance: 70, route: '/workspace/family',
+        // Relationships, not '/workspace/family' — that screen has never
+        // existed, so this link has always landed on nothing.
+        importance: 70, route: '/workspace/relationships',
       });
     }
   }

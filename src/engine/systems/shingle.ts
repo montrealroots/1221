@@ -234,14 +234,14 @@ export function registerShingle(sim: Simulation): void {
       title: `${company.name} Could Not Pay Its Overhead`,
       body: `${formatMoney(due)} was due and there is ${formatMoney(balance)} in the account. Put money in, cut the overhead, or the company closes.`,
       importance: 96,
-      route: '/workspace/company',
+      // No route. The company tab is locked while its features are unbuilt,
+      // and a link to a screen that does not open is worse than no link.
       refType: 'company', refId: company.id,
     });
     sim.requireDecision({
       urgency: 96, category: 'career',
       title: `${company.name} Cannot Make Payroll`,
       detail: `${formatMoney(due)} of overhead is due and the account holds ${formatMoney(balance)}. A company that misses this twice is finished.`,
-      route: '/workspace/company',
       refType: 'company', refId: company.id,
     });
     sim.emit('co.overhead_missed', { companyId: company.id, due, balance });

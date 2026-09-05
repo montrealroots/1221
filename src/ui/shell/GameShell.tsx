@@ -24,9 +24,11 @@ interface RailEntry {
   icon: string;
   badge?: number;
   /**
-   * A tab that exists but whose features are not built. It still opens — the
-   * screen behind it says what is standing and what is not — and it is marked
-   * so nobody goes looking for something that is not there.
+   * A tab that exists and does not open. Its features are not built, so there
+   * is nothing behind it to show; clicking says so and leaves you where you
+   * were. It is listed rather than hidden so it is clear the thing is coming.
+   * The route is only its key here — nothing is registered against it, so a
+   * typed URL lands on the same nothing.
    */
   locked?: boolean;
 }
@@ -152,9 +154,13 @@ export function GameShell() {
                 <button
                   key={item.route}
                   className={`rail-item${item.locked ? ' is-locked' : ''}`}
-                  aria-current={route === item.route ? 'page' : undefined}
+                  aria-current={!item.locked && route === item.route ? 'page' : undefined}
                   aria-label={item.locked ? `${item.label}, Locked, Under Construction` : undefined}
-                  onClick={() => { navigate(item.route, item.label); setRailOpen(false); }}
+                  onClick={() => {
+                    if (item.locked) { game.toast(`${item.label} Is Under Construction.`, 'neutral'); return; }
+                    navigate(item.route, item.label);
+                    setRailOpen(false);
+                  }}
                 >
                   <span className="rail-icon" aria-hidden="true">{item.icon}</span>
                   <span className="grow truncate">{item.label}</span>

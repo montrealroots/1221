@@ -635,7 +635,8 @@ export class Simulation {
     category: string;
     title: string;
     detail: string;
-    route: string;
+    /** Where to act on it. Omitted when the screen for it is not built. */
+    route?: string;
     actions?: { label: string; commandKind: string; payload: Record<string, unknown> }[];
     dueAt?: Instant;
     refType?: string;

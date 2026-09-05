@@ -176,7 +176,6 @@ for (const size of WIDTHS) {
     await openRail();
 
     for (const [label, pattern] of [
-      ['company', /^company$/i],
       ['world', /^world$/i], ['calendar', /calendar/i], ['bank', /^bank$/i],
       ['character', /character/i], ['relationships', /relationships/i],
       ['property', /^property$/i], ['vehicles', /^vehicles$/i],

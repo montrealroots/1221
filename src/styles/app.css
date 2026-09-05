@@ -586,10 +586,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .rail-item:hover { background: var(--surface-2); color: var(--text); }
 .rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
 .rail-icon { width: 18px; text-align: center; flex-shrink: 0; }
-/* A tab whose features are not built. It still opens — the screen behind it
-   says which half is standing — and the lock says not to go looking. */
-.rail-item.is-locked { opacity: 0.62; }
-.rail-item.is-locked:hover { opacity: 1; }
+/* A tab whose features are not built. It does not open: clicking says so and
+   leaves you where you were, and nothing is registered against its route. */
+.rail-item.is-locked { opacity: 0.55; }
+.rail-item.is-locked:hover { opacity: 0.75; background: transparent; color: var(--text-muted); }
 .rail-lock { font-size: 10px; flex-shrink: 0; opacity: 0.8; }
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;

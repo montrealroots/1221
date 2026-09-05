@@ -1413,7 +1413,12 @@ export interface DecisionItem {
   title: string;
   detail: string;
   /** Where the player goes to deal with it. */
-  route: string;
+  /**
+   * Where to send the player to act on it. Optional: a decision about a
+   * part of the game whose screen is not built has nowhere to send them, and
+   * an Open button onto nothing is worse than no Open button.
+   */
+  route?: string;
   /** Optional inline actions the Decision Center can execute directly. */
   actions: { label: string; commandKind: string; payload: Record<string, unknown> }[];
   dueAt?: Instant;

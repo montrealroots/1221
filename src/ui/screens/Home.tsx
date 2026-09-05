@@ -102,9 +102,11 @@ export function Home() {
                           {action.label}
                         </button>
                       ))}
-                      <button className="btn btn-sm" onClick={() => navigate(decision.route)}>
-                        Open
-                      </button>
+                      {decision.route && (
+                        <button className="btn btn-sm" onClick={() => navigate(decision.route!)}>
+                          Open
+                        </button>
+                      )}
                       <button
                         className="btn btn-ghost btn-sm"
                         onClick={() => run('world.dismiss_decision', { decisionId: decision.id })}
