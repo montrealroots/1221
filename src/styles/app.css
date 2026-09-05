@@ -67,7 +67,6 @@
   --shadow-lg: 0 2px 6px rgba(0,0,0,.35), 0 24px 60px rgba(0,0,0,.45);
 
   --nav-h: 56px;
-  --rail-w: 232px;
 
   /* The map. Land has to read as land against water at a glance, which the
      surface tokens are deliberately too close together to do. */
@@ -567,35 +566,34 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 .shell-body { display: flex; flex: 1; min-height: 0; }
 
-.rail {
-  width: var(--rail-w); flex-shrink: 0; overflow-y: auto;
-  background: var(--surface); border-right: 1px solid var(--line);
-  padding: var(--s3) var(--s2);
+/*
+  Where To — the destination grid on Home.
+
+  This replaces a left-hand rail that sat on every screen. Tiles rather than a
+  list, because Home has the width for it and a destination with a line about
+  what is behind it is worth more than a bare label.
+*/
+.dest-grid {
+  display: grid; gap: var(--s2);
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 }
-.rail-group { margin-bottom: var(--s4); }
-.rail-group-label {
-  font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .1em;
-  color: var(--text-dim); font-weight: 650; padding: var(--s2) var(--s3);
+.dest {
+  display: flex; align-items: flex-start; gap: var(--s3); width: 100%;
+  padding: var(--s3); border-radius: var(--radius-sm); text-align: left;
+  background: var(--surface-2); border: 1px solid var(--line);
+  color: var(--text); font: inherit; cursor: pointer; min-width: 0;
 }
-.rail-item {
-  display: flex; align-items: center; gap: var(--s3); width: 100%;
-  padding: var(--s2) var(--s3); border-radius: var(--radius-sm);
-  background: transparent; border: 0; color: var(--text-muted);
-  font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
+.dest:hover { background: var(--surface-3); border-color: var(--line-strong); }
+.dest-icon { font-size: var(--size-md); line-height: 1.2; flex-shrink: 0; width: 20px; text-align: center; }
+.dest-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dest-label {
+  font-size: var(--size-sm); font-weight: 600; display: flex; align-items: center; gap: var(--s2);
 }
-.rail-item:hover { background: var(--surface-2); color: var(--text); }
-.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
-.rail-icon { width: 18px; text-align: center; flex-shrink: 0; }
-/* A tab whose features are not built. It does not open: clicking says so and
-   leaves you where you were, and nothing is registered against its route. */
-.rail-item.is-locked { opacity: 0.55; }
-.rail-item.is-locked:hover { opacity: 0.75; background: transparent; color: var(--text-muted); }
-.rail-lock { font-size: 10px; flex-shrink: 0; opacity: 0.8; }
-.rail-badge {
-  margin-left: auto; font-size: var(--size-xs); font-weight: 700;
-  background: var(--negative); color: #fff; border-radius: 100px;
-  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px;
-}
+.dest-detail { font-size: var(--size-xs); color: var(--text-dim); }
+.dest-lock { font-size: 10px; opacity: 0.8; }
+/* A destination that exists and does not open. Clicking says so. */
+.dest.is-locked { opacity: 0.6; }
+.dest.is-locked:hover { opacity: 0.8; background: var(--surface-2); border-color: var(--line); }
 
 .main {
   flex: 1; overflow-y: auto; min-width: 0;
@@ -808,13 +806,6 @@ kbd {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
-  :root { --rail-w: 0px; }
-  .rail {
-    position: fixed; top: var(--nav-h); bottom: 0; left: 0; width: 260px;
-    z-index: 30; transform: translateX(-100%); transition: transform .2s;
-    box-shadow: var(--shadow-lg);
-  }
-  .rail[data-open="true"] { transform: none; }
   .main { padding: var(--s4) var(--s3); }
   .slot-grid { grid-template-columns: 1fr; }
   .cal-day { min-height: 62px; }
@@ -830,12 +821,11 @@ kbd {
 }
 
 @media (min-width: 901px) {
-  .rail-toggle { display: none; }
 }
 
 /* Print is not a target, but a history export should not be unreadable. */
 @media print {
-  .rail, .topbar, .toasts, .help-panel { display: none !important; }
+  .topbar, .toasts, .help-panel { display: none !important; }
   body { background: #fff; color: #000; }
 }
 

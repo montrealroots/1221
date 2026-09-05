@@ -385,19 +385,29 @@ describe('a year of eating', () => {
     expect(perMeal, `each meal cost $${perMeal.toFixed(2)}`).toBeLessThan(20);
   });
 
-  /**
-   * Not passing, and not quietly dropped.
-   *
-   * A year of autopilot buys about two hundred and fifty meals — around two
-   * thirds of a meal a day. The per-meal price is right; the count is not.
-   *
-   * Removing the job system exposed this rather than causing it: shifts kept
-   * the character awake and burning through nourishment, so the coasting
-   * top-up fired often enough to hide that it tops up to a target instead of
-   * feeding somebody three times a day. Fixing it means reworking what living
-   * on autopilot does, which is its own piece of work.
-   */
-  it.todo('feeds somebody roughly three times a day — autopilot manages two thirds of one');
+  it('feeds somebody roughly three times a day', () => {
+    // This was a todo. applyElapsedWellbeing existed, was exported and was
+    // called by nothing, so a coasted day only ran its sleep: hunger moved ten
+    // points instead of eighty and the autopilot bought two thirds of a meal a
+    // day. The waking day happens now.
+    const sim = quickSave({ wealth: 'modest' }, 'eating-frequency');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    const perDay = meals.length / 365;
+    expect(perDay, `${perDay.toFixed(2)} meals a day`).toBeGreaterThan(2.4);
+    expect(perDay, `${perDay.toFixed(2)} meals a day`).toBeLessThan(5);
+  });
+
+  it('costs what feeding one person costs', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-daily-cost');
+    sim.advanceTo(sim.now + YEAR);
+    const spent = sim.universe.transactions
+      .filter((t) => t.category === 'food')
+      .reduce((sum, t) => sum + Math.abs(t.postings.find((p) => p.amount < 0)?.amount ?? 0), 0);
+    const perDay = spent / 100 / 365;
+    expect(perDay, `food came to $${perDay.toFixed(2)} a day`).toBeGreaterThan(9);
+    expect(perDay, `food came to $${perDay.toFixed(2)} a day`).toBeLessThan(30);
+  });
 
   it('still leans cheap, because this is somebody who did not shop', () => {
     const sim = quickSave({ wealth: 'modest' }, 'eating-cheap');
@@ -415,5 +425,58 @@ describe('a year of eating', () => {
     b.advanceTo(b.now + 120 * 86_400_000);
     const memos = (sim: typeof a) => sim.universe.transactions.filter((t) => t.category === 'food').map((t) => t.memo);
     expect(memos(a)).toEqual(memos(b));
+  });
+});
+
+/**
+ * The waking day.
+ *
+ * applyElapsedWellbeing was written, exported, and called by nothing at all.
+ * A character carried forward by the clock only ever ran their sleep: energy
+ * never drained, stress never built, sleep debt never accrued and hunger moved
+ * a tenth of what it should. They were permanently well rested.
+ *
+ * Turning it on broke two things that had never been under load, and both are
+ * held here: sleep debt could only be paid down out of the part of a night
+ * above five and a half effective hours, which an unattended night never
+ * reaches, so debt climbed to its cap and stayed; and morale moved on a
+ * threshold at the same unreachable point, so it fell every night forever.
+ */
+describe('a day that is not directed', () => {
+  const YEAR2 = 365 * 86_400_000;
+
+  it('drains what a day drains, rather than only what a night does', () => {
+    const sim = quickSave({}, 'awake-drain');
+    const before = { ...sim.player.wellbeing };
+    sim.advanceTo(sim.now + 2 * 86_400_000);
+    // Hunger has to move by more than a night's worth.
+    expect(before.nourishment - sim.player.wellbeing.nourishment + 60).toBeGreaterThan(20);
+  });
+
+  it('does not spiral into the sleep-debt cap over a year', () => {
+    const sim = quickSave({}, 'awake-debt');
+    sim.advanceTo(sim.now + YEAR2);
+    expect(sim.player.wellbeing.sleepDebt, 'sleep debt ran away').toBeLessThan(20);
+  });
+
+  it('does not grind morale and condition to nothing', () => {
+    const sim = quickSave({}, 'awake-morale');
+    sim.advanceTo(sim.now + YEAR2);
+    expect(sim.player.wellbeing.morale, 'morale bottomed out').toBeGreaterThan(35);
+    expect(sim.player.wellbeing.condition, 'condition bottomed out').toBeGreaterThan(35);
+  });
+
+  it('settles into a mediocre equilibrium rather than a collapse or a holiday', () => {
+    // Coasting keeps you going and does not get you to your best. Both halves
+    // of that are the claim.
+    const sim = quickSave({}, 'awake-equilibrium');
+    sim.advanceTo(sim.now + YEAR2);
+    const w = sim.player.wellbeing;
+    for (const [key, value] of Object.entries(w)) {
+      if (key === 'sleepDebt') continue;
+      expect(value, `${key} left the scale`).toBeGreaterThanOrEqual(0);
+      expect(value, `${key} left the scale`).toBeLessThanOrEqual(100);
+    }
+    expect(w.energy, 'a coasting day should still tire somebody out').toBeLessThan(74);
   });
 });

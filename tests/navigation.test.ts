@@ -34,11 +34,17 @@ function registeredRoutes(): Set<string> {
   return routes;
 }
 
-/** Rail entries the shell marks as locked. They deliberately open nothing. */
+/**
+ * Destinations marked as locked. They deliberately open nothing.
+ *
+ * Read from the destination list rather than the shell: the left-hand rail is
+ * gone and Home renders this list, so it is the one place that knows what
+ * exists and what is shut.
+ */
 function lockedRoutes(): Set<string> {
-  const shell = read('ui/shell/GameShell.tsx');
+  const source = read('ui/shell/destinations.ts');
   const locked = new Set<string>();
-  for (const match of shell.matchAll(/\{\s*route:\s*'([^']+)'[^}]*locked:\s*true[^}]*\}/g)) locked.add(match[1]!);
+  for (const match of source.matchAll(/route:\s*'([^']+)'[^}]*locked:\s*true/g)) locked.add(match[1]!);
   return locked;
 }
 
@@ -96,10 +102,26 @@ describe('the locked company tab', () => {
   });
 
   it('tells the player it is under construction rather than navigating', () => {
-    const shell = read('ui/shell/GameShell.tsx');
-    // The click handler returns before navigate when the entry is locked.
-    expect(shell).toMatch(/if \(item\.locked\) \{[^}]*toast\([^)]*Under Construction/);
-    expect(shell).toMatch(/return; \}/);
+    const home = read('ui/screens/Home.tsx');
+    // The click handler returns before navigate when the destination is shut.
+    expect(home).toMatch(/if \(dest\.locked\) \{[^}]*toast\([^)]*Under Construction/);
+    expect(home).toMatch(/return; \}/);
+  });
+
+  it('offers every destination it lists, and lists every screen there is', () => {
+    // The rail is gone; Home renders this list. If the two drift apart a
+    // workspace becomes unreachable without anybody noticing.
+    const registered = registeredRoutes();
+    const listed = new Set<string>();
+    const source = read('ui/shell/destinations.ts');
+    for (const match of source.matchAll(/route:\s*'([^']+)'/g)) listed.add(match[1]!);
+
+    const unreachable = [...registered].filter((r) => !listed.has(r) && r !== '/home');
+    expect(unreachable, 'these screens exist and Home does not offer them').toEqual([]);
+
+    const lockedSet = lockedRoutes();
+    const broken = [...listed].filter((r) => !registered.has(r) && !lockedSet.has(r));
+    expect(broken, 'Home offers these and nothing is behind them').toEqual([]);
   });
 
   it('still runs a company underneath, with nowhere to look at it', () => {

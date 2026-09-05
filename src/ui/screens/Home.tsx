@@ -14,6 +14,7 @@ import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
+import { DESTINATIONS } from '@/ui/shell/destinations';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
@@ -25,7 +26,7 @@ import {
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 
 export function Home() {
-  const { sim, navigate, run } = useGame();
+  const { sim, navigate, run, toast } = useGame();
   const snapshot = useWorld(lifeSnapshot);
   const decisions = useWorld(openDecisions);
   const next = useWorld(nextCommitment);
@@ -55,6 +56,49 @@ export function Home() {
             <> · <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
           )}
         </p>
+      </div>
+
+      {/*
+        Everywhere you can go. This was a rail down the left of every screen;
+        it is here because Home is the hub and a hub that is missing half the
+        building is not one.
+      */}
+      <div className="card" style={{ marginBottom: 'var(--s5)' }}>
+        <div className="panel-head">
+          <div>
+            <h2>Where To</h2>
+            <p className="muted small">
+              Everything in the game. Press <kbd>/</kbd> from anywhere to search it instead.
+            </p>
+          </div>
+        </div>
+        {DESTINATIONS.map((group) => (
+          <div key={group.label} style={{ marginBottom: 'var(--s4)' }}>
+            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group.label}</div>
+            <div className="dest-grid">
+              {group.items.map((dest) => (
+                <button
+                  key={dest.route}
+                  className={`dest${dest.locked ? ' is-locked' : ''}`}
+                  aria-label={dest.locked ? `${dest.label}, Locked, Under Construction` : dest.label}
+                  onClick={() => {
+                    if (dest.locked) { toast(`${dest.label} Is Under Construction.`, 'neutral'); return; }
+                    navigate(dest.route, dest.label);
+                  }}
+                >
+                  <span className="dest-icon" aria-hidden="true">{dest.icon}</span>
+                  <span className="dest-body">
+                    <span className="dest-label">
+                      {dest.label}
+                      {dest.locked && <span className="dest-lock" aria-hidden="true">🔒</span>}
+                    </span>
+                    <span className="dest-detail">{dest.detail}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>

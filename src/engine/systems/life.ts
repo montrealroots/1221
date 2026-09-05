@@ -22,8 +22,16 @@ import { personalityModifier } from '../content/personality-traits';
 // ---------------------------------------------------------------------------
 
 /** Hourly drain applied while awake. */
-export const ENERGY_DRAIN_PER_HOUR = 4.2;
-export const NOURISHMENT_DRAIN_PER_HOUR = 4.0;
+export const ENERGY_DRAIN_PER_HOUR = 3.0;
+/**
+ * How fast somebody gets hungry while awake, per hour.
+ *
+ * Calibrated against what a year of it costs: a little over three meals a
+ * day and about seventeen dollars, which is what one person feeding
+ * themselves in this city actually spends. It was four, back when nothing
+ * called applyElapsedWellbeing and the number never mattered.
+ */
+export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 
 export function freshWellbeing(): Wellbeing {
   return {
@@ -390,11 +398,21 @@ export function applySleep(person: Person, hours: number, quality: number): void
   const effective = hours * quality;
 
   w.energy = clamp(w.energy + effective * 13.5 * personalityOf(person, 'energyRecovery'), 0, 100);
-  w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 0.4);
+  // Debt clears with the whole night, not only with the part of it above five
+  // and a half hours. The old formula only ever paid down the excess, which
+  // was harmless while nothing accrued debt in the first place — once the
+  // waking day started running, an ordinary night cleared about two points
+  // against six accrued and every character spiralled into the cap.
+  w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
   if (hours < 6) w.sleepDebt += (6 - hours) * 1.35;
   w.stress = clamp(w.stress - effective * 4.2, 0, 100);
-  w.condition = clamp(w.condition + (effective > 6.5 ? 1.4 : -0.5), 0, 100);
-  w.morale = clamp(w.morale + (effective > 6.5 ? 2.4 : -1.6), 0, 100);
+  // Proportional, not a step. These used to be a threshold at six and a half
+  // effective hours, which an unattended night never reaches — so a coasting
+  // character lost morale every single night and sat at zero forever. Five
+  // hours of real rest is break-even; more than that helps, less costs.
+  const restful = effective - 5;
+  w.condition = clamp(w.condition + restful * 0.9, 0, 100);
+  w.morale = clamp(w.morale + restful * 1.6, 0, 100);
   w.travelFatigue = clamp(w.travelFatigue - effective * 6, 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
@@ -440,6 +458,9 @@ function applyActivity(sim: Simulation, person: Person, def: ActivityDef, hours:
 const COASTING_ENERGY_CEILING = 74;
 const COASTING_STRESS_FLOOR = 14;
 const COASTING_NOURISHMENT_TARGET = 76;
+
+/** What the unattended day accounts for, sleep included. */
+const HOURS_IN_A_DAY = 24;
 
 export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
@@ -488,9 +509,11 @@ function liveTheUnattendedDay(sim: Simulation): void {
     // A night they did not plan. Shorter, poorer, and it does not clear debt
     // the way a deliberate one does.
     const sinceSlept = person.lastSleptAt === undefined ? Number.POSITIVE_INFINITY : sim.now - person.lastSleptAt;
+    let sleptHours = 0;
     if (sinceSlept >= 20 * MS_HOUR) {
-      const quality = sleepQuality(sim, person) * 0.82;
-      const hours = clamp(6.4 - w.stress * 0.012, 4.2, 7.4);
+      const quality = sleepQuality(sim, person) * 0.95;
+      const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
+      sleptHours = hours;
       applySleep(person, hours, quality);
       person.lastSleptAt = sim.now;
 
@@ -500,6 +523,16 @@ function liveTheUnattendedDay(sim: Simulation): void {
       w.energy = Math.min(w.energy, COASTING_ENERGY_CEILING);
       w.stress = Math.max(w.stress, COASTING_STRESS_FLOOR);
     }
+
+    // And then the rest of the day happens.
+    //
+    // This is the line that was missing. applyElapsedWellbeing existed, was
+    // exported and was called by nothing at all, so a coasted day only ever
+    // ran its sleep: energy never drained, stress never built, sleep debt
+    // never accrued, and hunger moved about ten points instead of eighty. A
+    // character carried forward by the clock was permanently well rested and
+    // ate two thirds of a meal a day.
+    applyElapsedWellbeing(person, Math.max(0, HOURS_IN_A_DAY - sleptHours));
 
     // Meals. Out of the pantry if there is any, otherwise the cheapest thing
     // nearby, and only while they can actually pay for it. Somebody working
