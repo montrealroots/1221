@@ -22,6 +22,7 @@ import { makeRng, type Rng } from '../core/rng';
 import type { Money } from '../core/money';
 import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
+import { REAL_GYMS } from './fitness';
 
 export type PlaceKind =
   | 'restaurant' | 'cafe' | 'bar' | 'fast_food' | 'market'
@@ -318,7 +319,7 @@ const SPECS: readonly Spec[] = [
 const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   restaurant: ['eat', 'meet'], cafe: ['eat', 'drink', 'meet'], bar: ['drink', 'meet'], fast_food: ['eat'],
   market: ['shop'], gas_station: ['refuel', 'shop'], garage: ['service'], hotel: ['sleep', 'shower', 'eat', 'meet'],
-  gym: ['train'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
+  gym: ['train', 'shower'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
   stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'],
 };
@@ -371,6 +372,19 @@ export function placesIn(cityId: string): Place[] {
     minutes: l.minutes ?? MINUTES_BY_KIND[l.kind],
     actions: l.actions.length > 0 ? l.actions : ACTIONS_BY_KIND[l.kind],
   }));
+
+  // The real gyms: a chain's presence here is public record, the rest of the
+  // profile is calibration and says so.
+  for (const gym of REAL_GYMS) {
+    if (gym.cityId !== cityId) continue;
+    out.push({
+      ...gym,
+      real: true,
+      quality: gym.quality ?? 78,
+      minutes: MINUTES_BY_KIND.gym,
+      actions: gym.actions ?? ACTIONS_BY_KIND.gym,
+    });
+  }
 
   const rng = makeRng(`places:${cityId}`);
   const hoods = NEIGHBOURHOODS.childrenOf(cityId);

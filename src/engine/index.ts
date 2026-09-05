@@ -31,6 +31,10 @@ import { registerMedia } from './systems/media';
 import { registerProfessions } from './systems/professions';
 import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { registerDriving } from './systems/driving';
+import { registerScenes } from './systems/scenes';
+import { registerPlans } from './systems/plans';
+import { registerFitness } from './systems/fitness';
+import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
 import { DEFAULT_FOUNDER_DRAW } from './content/shingle';
@@ -68,6 +72,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerDriving(sim);
   registerShingle(sim);
   registerAuthorship(sim);
+  registerFitness(sim);
+  registerPlans(sim);
+  registerScenes(sim);
   registerWorld(sim);
 }
 
@@ -739,6 +746,45 @@ export function migrate(universe: SaveUniverse): MigrationResult {
         ? `Employment was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
         : 'Employment was removed. This save had none.',
     );
+  }
+
+  if (from < 30) {
+    // Schema 30: a day can be lived through text. Scenes in progress, what
+    // people remember as facts, gym passes and workouts, and the plans you
+    // make for yourself all get a home in the save. Nothing already there is
+    // touched: an older save simply has none of them yet.
+    //
+    // A save that carried the reference overlay's `immersion` field keeps its
+    // sessions: they move to `scenes` rather than being dropped.
+    const legacy = record['immersion'] as { activeId?: string; sessions?: Record<string, unknown> } | undefined;
+    const carried = legacy?.sessions ? Object.keys(legacy.sessions).length : 0;
+    if (!record['scenes']) {
+      record['scenes'] = {
+        version: 2,
+        activeId: legacy?.activeId,
+        sessions: Object.fromEntries(
+          Object.entries(legacy?.sessions ?? {}).map(([id, session]) => {
+            const old = session as Record<string, unknown>;
+            return [id, {
+              saveId: universe.meta.id,
+              participantIds: [],
+              committed: [],
+              ...old,
+              // The overlay wrote transcript lines without a speaker.
+              transcript: ((old['transcript'] as { at: number; text: string; who?: string }[] | undefined) ?? [])
+                .map((line) => ({ at: line.at, who: line.who ?? 'world', text: line.text })),
+            }];
+          }),
+        ),
+      };
+    }
+    delete record['immersion'];
+    for (const key of ['memberships', 'workouts', 'plans'] as const) {
+      if (!record[key] || typeof record[key] !== 'object') record[key] = {};
+    }
+    steps.push(carried > 0
+      ? `Scenes, memory, fitness and plans added; ${carried} scene${carried === 1 ? '' : 's'} carried over from the reference overlay.`
+      : 'Scenes, memory, fitness and plans added. This save had none yet.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

@@ -249,6 +249,14 @@ export interface Person {
   /** Primary spending account. */
   primaryAccountId?: Id;
 
+  /**
+   * What this person remembers, as facts rather than dialogue. Absent reads
+   * as nothing yet.
+   */
+  facts?: PersonFact[];
+  /** Training history and how sore they are. Absent reads as untrained. */
+  training?: TrainingRecord;
+
   /** Where an NPC sits in the simulation budget. */
   tier: SimulationTier;
   /** Archetype key used to generate consistent NPC behaviour. */
@@ -1422,7 +1430,201 @@ export interface Preferences {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 29;
+
+// ---------------------------------------------------------------------------
+// Scenes — living a day through text
+// ---------------------------------------------------------------------------
+
+/** One line of what happened in a scene. Bounded; not long-term memory. */
+export interface SceneTranscriptLine {
+  at: Instant;
+  /** 'you', 'world', or a person id for somebody speaking. */
+  who: string;
+  text: string;
+}
+
+export type SceneStatus = 'active' | 'interrupted' | 'completed' | 'abandoned';
+
+/**
+ * A scene in progress, or one that finished. The definition it runs on is
+ * trusted code; what is stored here is where it got to and what it decided.
+ * Every fact a scene commits — money, time, ownership, a relationship — lives
+ * in the system that owns it, not here.
+ */
+export interface SceneSession {
+  id: Id;
+  saveId: Id;
+  definitionId: string;
+  version: number;
+  /** Step revision. A choice made against an old revision is refused. */
+  revision: number;
+  node: string;
+  status: SceneStatus;
+  /** Where it was started; leaving the city or the place interrupts it. */
+  locationId: string;
+  placeId?: string;
+  participantIds: Id[];
+  startedAt: Instant;
+  updatedAt: Instant;
+  endedAt?: Instant;
+  context: Record<string, string | number | boolean | null>;
+  /** Idempotency keys of the operations this scene has committed, in order. */
+  committed: string[];
+  transcript: SceneTranscriptLine[];
+  interruption?: { at: Instant; reason: string; resumable: boolean };
+  /** What raised it, when something did: a plan, an appointment. */
+  refType?: string;
+  refId?: Id;
+}
+
+export interface SceneState {
+  version: 2;
+  /** The one scene in the foreground, if any. */
+  activeId?: Id;
+  sessions: Record<Id, SceneSession>;
+}
+
+// ---------------------------------------------------------------------------
+// What people remember
+// ---------------------------------------------------------------------------
+
+export type PersonFactKind = 'promise' | 'meeting' | 'topic' | 'boundary' | 'preference' | 'goal' | 'event';
+
+/**
+ * A structured thing somebody knows, as against a line of dialogue. A
+ * trainer remembers your goal; a friend remembers you said you would call;
+ * a date remembers you do not drink. These shape what they do next, and they
+ * are the memory that survives the scene that made them.
+ */
+export interface PersonFact {
+  id: Id;
+  at: Instant;
+  kind: PersonFactKind;
+  /** Who it is about, when not the person holding it. */
+  aboutId?: Id;
+  text: string;
+  /** How much it shapes behaviour, 0-100. */
+  weight: number;
+  /** When it stops mattering. Absent means it does not fade. */
+  expiresAt?: Instant;
+  /** Where it came from. */
+  sourceKind: string;
+  refType?: string;
+  refId?: Id;
+}
+
+/** How training has gone: soreness now, and the best of every lift. */
+export interface TrainingRecord {
+  /** 0-100. High soreness lowers readiness and raises injury risk. */
+  soreness: number;
+  sorenessUntil?: Instant;
+  lifts: Record<string, { best: number; sessions: number; lastAt: Instant }>;
+  sessions: number;
+  lastWorkoutAt?: Instant;
+  /** A trainer paid for, until when, and where. The engine checks this, not the screen. */
+  trainer?: { personId: Id; placeId: string; until: Instant };
+  /** The workout under way: what has been done so far, kept by the engine as it happens. */
+  current?: {
+    placeId: string;
+    startedAt: Instant;
+    focus: WorkoutFocus;
+    blocks: WorkoutBlock[];
+    trainerId?: Id;
+    classId?: string;
+    cost: Money;
+    injured: boolean;
+    effects: Record<string, number>;
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Fitness — gyms, passes and workouts
+// ---------------------------------------------------------------------------
+
+export type MembershipProduct = 'day_pass' | 'monthly' | 'annual';
+
+export interface Membership {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  gymName: string;
+  product: MembershipProduct;
+  price: Money;
+  startsAt: Instant;
+  endsAt: Instant;
+  status: 'active' | 'cancelled' | 'lapsed' | 'expired';
+  /** The recurring bill behind a monthly or annual membership. */
+  billId?: Id;
+  visits: number;
+  cancelledAt?: Instant;
+}
+
+export type WorkoutFocus = 'strength' | 'cardio' | 'mobility' | 'class';
+export type WorkoutIntensity = 'easy' | 'steady' | 'hard';
+
+export interface WorkoutBlock {
+  exerciseId: string;
+  sets: number;
+  intensity: WorkoutIntensity;
+  minutes: number;
+  /** True when this block beat the previous best. */
+  progressed: boolean;
+}
+
+export interface Workout {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  gymName: string;
+  at: Instant;
+  minutes: number;
+  focus: WorkoutFocus;
+  blocks: WorkoutBlock[];
+  trainerId?: Id;
+  classId?: string;
+  cost: Money;
+  effects: Record<string, number>;
+  cutShort: boolean;
+  injured: boolean;
+}
+
+// ---------------------------------------------------------------------------
+// Personal plans
+// ---------------------------------------------------------------------------
+
+export type PlanStatus = 'planned' | 'attended' | 'skipped' | 'missed' | 'cancelled';
+
+/**
+ * Something you decided to do at a time. Unlike a bill or a flight, it is
+ * yours to move or drop. When it comes due it opens a scene, or runs the same
+ * scene summarised, and what happened is recorded as one of the five states.
+ */
+export interface PersonalPlan {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  title: string;
+  at: Instant;
+  durationMinutes: number;
+  locationId: string;
+  placeId?: string;
+  /** The scene to open when it is time, and what to open it with. */
+  sceneDefinitionId?: string;
+  sceneInput?: Record<string, string | number | boolean | null>;
+  participantIds: Id[];
+  status: PlanStatus;
+  scheduledItemId: Id;
+  reminderItemId?: Id;
+  /** Minutes before, for the reminder. */
+  reminderMinutes?: number;
+  createdAt: Instant;
+  resolvedAt?: Instant;
+  sceneId?: Id;
+}
+
+export const SAVE_SCHEMA_VERSION = 30;
 
 export interface SaveMeta {
   id: Id;
@@ -1544,6 +1746,15 @@ export interface SaveUniverse {
     /** What the player set as the going rate, by craft. Watched by everybody. */
     ratesSet: Record<string, Money>;
   };
+
+  /** Scenes in progress and recently finished. */
+  scenes: SceneState;
+  /** Gym passes and memberships. */
+  memberships: Record<Id, Membership>;
+  /** Workouts, most recent kept. */
+  workouts: Record<Id, Workout>;
+  /** Things you planned to do. */
+  plans: Record<Id, PersonalPlan>;
 
   scheduled: ScheduledItem[];
   audits: AuditRecord[];

@@ -91,7 +91,9 @@ export function readiness(person: Person): number {
   // Turning up to a room having not showered in two days is not nothing, but
   // it is not much either: a few points, not a career.
   const cleanPart = remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03);
-  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * travelPart * cleanPart / 1.35, 5, 100);
+  // Legs that have not forgiven yesterday's squats. Real, and short-lived.
+  const sorePart = remap(person.training?.soreness ?? 0, 0, 100, 1.0, 0.84);
+  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * travelPart * cleanPart * sorePart / 1.35, 5, 100);
 }
 
 export function wellbeingSummary(person: Person): string {
