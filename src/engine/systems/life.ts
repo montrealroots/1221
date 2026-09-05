@@ -14,15 +14,24 @@ import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_MINUTE, 
 import { formatMoney, type Money } from '../core/money';
 import { CATALOG, RECIPES, retailPrice } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
-import { systemModifier } from '../domain/attributes';
+import { modifierFor } from '../domain/attributes';
+import { personalityModifier } from '../content/personality-traits';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
 // ---------------------------------------------------------------------------
 
 /** Hourly drain applied while awake. */
-export const ENERGY_DRAIN_PER_HOUR = 4.2;
-export const NOURISHMENT_DRAIN_PER_HOUR = 4.0;
+export const ENERGY_DRAIN_PER_HOUR = 3.0;
+/**
+ * How fast somebody gets hungry while awake, per hour.
+ *
+ * Calibrated against what a year of it costs: a little over three meals a
+ * day and about seventeen dollars, which is what one person feeding
+ * themselves in this city actually spends. It was four, back when nothing
+ * called applyElapsedWellbeing and the number never mattered.
+ */
+export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 
 export function freshWellbeing(): Wellbeing {
   return {
@@ -36,15 +45,19 @@ export function freshWellbeing(): Wellbeing {
  * tick rather than by individual activities, so it stays consistent whether an
  * hour passed by playing or by skipping.
  */
+/** One of this person's personality knobs, or 1 when they hold nothing that touches it. */
+export function personalityOf(person: Person, key: string): number {
+  return personalityModifier(person.personalityTraits ?? [], key);
+}
+
 export function applyElapsedWellbeing(person: Person, hours: number, opts: { asleep?: boolean } = {}): void {
   const w = person.wellbeing;
   if (opts.asleep) return;
 
-  const traitDrain = systemModifier(person.traits, 'stressPerShootDay');
+  const traitDrain = modifierFor(person, 'stressPerShootDay') * personalityOf(person, 'stressGain');
   w.energy = clamp(w.energy - ENERGY_DRAIN_PER_HOUR * hours * (1 + (w.sleepDebt / 24) * 0.5), 0, 100);
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
   w.sleepDebt = Math.min(60, w.sleepDebt + hours * 0.34);
-  w.travelFatigue = clamp(w.travelFatigue - hours * 0.9, 0, 100);
 
   // Running on empty costs you.
   if (w.energy < 15) w.stress = clamp(w.stress + hours * 1.6 * traitDrain, 0, 100);
@@ -54,8 +67,13 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   }
   if (w.stress > 75) w.condition = clamp(w.condition - hours * 0.25, 0, 100);
 
-  const recovery = systemModifier(person.traits, 'recoveryRate');
+  const recovery = modifierFor(person, 'recoveryRate') * personalityOf(person, 'stressRecovery');
   w.stress = clamp(w.stress - hours * 0.35 * recovery, 0, 100);
+
+  // Travel wears off faster on somebody restless and slower on a homebody.
+  // Hygiene is not touched here — places.ts owns that tick, and draining it
+  // in two places would drain it twice.
+  w.travelFatigue = clamp(w.travelFatigue - hours * 0.9 * (2 - personalityOf(person, 'travelFatigue')), 0, 100);
 }
 
 /**
@@ -117,22 +135,22 @@ export interface ActivityDef {
 }
 
 export const ACTIVITIES: readonly ActivityDef[] = [
-  { id: 'shower', name: 'Shower and get ready', category: 'care', description: 'Twenty minutes that make the rest of the day possible.', minutes: 25, perHour: { energy: 6, stress: -8, morale: 4, hygiene: 200 }, requiresHome: true, tags: ['morning', 'grooming'] },
-  { id: 'nap', name: 'Take a nap', category: 'rest', description: 'A short sleep that takes the edge off without touching your sleep debt much.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: 22, stress: -14, sleepDebt: -0.8 }, tags: ['rest'] },
+  { id: 'shower', name: 'Shower And Get Ready', category: 'care', description: 'Twenty minutes that make the rest of the day possible.', minutes: 25, perHour: { energy: 6, stress: -8, morale: 4, hygiene: 200 }, requiresHome: true, tags: ['morning', 'grooming'] },
+  { id: 'nap', name: 'Take A Nap', category: 'rest', description: 'A short sleep that takes the edge off without touching your sleep debt much.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: 22, stress: -14, sleepDebt: -0.8 }, tags: ['rest'] },
   { id: 'rest', name: 'Rest', category: 'rest', description: 'Sit down and do nothing in particular.', minutes: 60, variableDuration: { min: 15, max: 240 }, perHour: { energy: 8, stress: -9, morale: 2 }, tags: ['rest'] },
-  { id: 'cook', name: 'Cook a meal', category: 'food', description: 'Uses what is in your kitchen. Cheaper and better than ordering.', minutes: 40, perHour: { energy: -3, stress: -4 }, practises: [{ key: 'cooking', kind: 'skill', gain: 1.1 }], requiresHome: true, tags: ['food', 'kitchen'] },
-  { id: 'eat_out', name: 'Eat out', category: 'food', description: 'Somebody else cooks and you pay for the privilege.', minutes: 75, perHour: { stress: -6, morale: 5 }, cost: 62_00, tags: ['food', 'social'] },
-  { id: 'order_in', name: 'Order delivery', category: 'food', description: 'Fast, convenient, and the most expensive way to eat badly.', minutes: 20, perHour: { stress: -2 }, cost: 38_00, tags: ['food', 'fast'] },
-  { id: 'gym', name: 'Train at the gym', category: 'fitness', description: 'An hour that costs energy now and returns it for months.', minutes: 75, variableDuration: { min: 30, max: 150 }, perHour: { energy: -14, stress: -16, fitness: 2.4, condition: 1.2, morale: 5, hygiene: -18 }, cost: 0, practises: [{ key: 'fitness', kind: 'skill', gain: 1.8 }], tags: ['health', 'fitness'] },
-  { id: 'run', name: 'Go for a run', category: 'fitness', description: 'Free, immediate, and the fastest way to move stress.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: -12, stress: -18, fitness: 1.9, condition: 0.9, morale: 6, hygiene: -22 }, practises: [{ key: 'fitness', kind: 'skill', gain: 1.4 }], tags: ['health', 'free'] },
-  { id: 'watch', name: 'Watch something', category: 'leisure', description: 'Research, if you want to call it that.', minutes: 110, variableDuration: { min: 30, max: 300 }, perHour: { energy: 2, stress: -8, morale: 6 }, practises: [{ key: 'script_analysis', kind: 'attribute', gain: 0.35 }], tags: ['leisure', 'research'] },
+  { id: 'cook', name: 'Cook A Meal', category: 'food', description: 'Uses what is in your kitchen. Cheaper and better than ordering.', minutes: 40, perHour: { energy: -3, stress: -4 }, practises: [{ key: 'cooking', kind: 'skill', gain: 1.1 }], requiresHome: true, tags: ['food', 'kitchen'] },
+  { id: 'eat_out', name: 'Eat Out', category: 'food', description: 'Somebody else cooks and you pay for the privilege.', minutes: 75, perHour: { stress: -6, morale: 5 }, cost: 62_00, tags: ['food', 'social'] },
+  { id: 'order_in', name: 'Order Delivery', category: 'food', description: 'Fast, convenient, and the most expensive way to eat badly.', minutes: 20, perHour: { stress: -2 }, cost: 38_00, tags: ['food', 'fast'] },
+  { id: 'gym', name: 'Train At The Gym', category: 'fitness', description: 'An hour that costs energy now and returns it for months.', minutes: 75, variableDuration: { min: 30, max: 150 }, perHour: { energy: -14, stress: -16, fitness: 2.4, condition: 1.2, morale: 5, hygiene: -18 }, cost: 0, practises: [{ key: 'fitness', kind: 'skill', gain: 1.8 }], tags: ['health', 'fitness'] },
+  { id: 'run', name: 'Go For A Run', category: 'fitness', description: 'Free, immediate, and the fastest way to move stress.', minutes: 45, variableDuration: { min: 20, max: 120 }, perHour: { energy: -12, stress: -18, fitness: 1.9, condition: 0.9, morale: 6, hygiene: -22 }, practises: [{ key: 'fitness', kind: 'skill', gain: 1.4 }], tags: ['health', 'free'] },
+  { id: 'watch', name: 'Watch Something', category: 'leisure', description: 'Research, if you want to call it that.', minutes: 110, variableDuration: { min: 30, max: 300 }, perHour: { energy: 2, stress: -8, morale: 6 }, practises: [{ key: 'script_analysis', kind: 'attribute', gain: 0.35 }], tags: ['leisure', 'research'] },
   { id: 'read', name: 'Read', category: 'leisure', description: 'Slower than watching and considerably better for the work.', minutes: 60, variableDuration: { min: 20, max: 240 }, perHour: { energy: -1, stress: -10, morale: 5 }, practises: [{ key: 'script_analysis', kind: 'attribute', gain: 0.6 }, { key: 'character_writing', kind: 'skill', gain: 0.5 }], tags: ['leisure', 'craft'] },
   { id: 'rehearse', name: 'Rehearse', category: 'creative', description: 'Work on material by yourself. Nobody sees it and it shows on the day.', minutes: 90, variableDuration: { min: 30, max: 240 }, perHour: { energy: -7, stress: 2 }, practises: [{ key: 'preparation', kind: 'attribute', gain: 1.0 }, { key: 'memorization', kind: 'attribute', gain: 0.8 }, { key: 'emotional_truth', kind: 'attribute', gain: 0.35 }], tags: ['craft', 'acting'] },
   { id: 'write', name: 'Write', category: 'creative', description: 'Pages, or the honest attempt at pages.', minutes: 120, variableDuration: { min: 30, max: 360 }, perHour: { energy: -8, stress: 3, morale: 2 }, practises: [{ key: 'page_speed', kind: 'skill', gain: 1.0 }, { key: 'dialogue', kind: 'skill', gain: 0.7 }, { key: 'story_structure', kind: 'skill', gain: 0.6 }], tags: ['craft', 'writing'] },
-  { id: 'errands', name: 'Run errands', category: 'chores', description: 'The unglamorous hour that stops things falling apart.', minutes: 70, perHour: { energy: -6, stress: 3 }, tags: ['chores'] },
+  { id: 'errands', name: 'Run Errands', category: 'chores', description: 'The unglamorous hour that stops things falling apart.', minutes: 70, perHour: { energy: -6, stress: 3 }, tags: ['chores'] },
   { id: 'housework', name: 'Housework', category: 'chores', description: 'Keeps the place in condition, which is worth more than it sounds.', minutes: 60, perHour: { energy: -8, stress: -2 }, requiresHome: true, tags: ['chores', 'home'] },
-  { id: 'socialise', name: 'See friends', category: 'social', description: 'The thing that keeps you a person rather than a career.', minutes: 150, variableDuration: { min: 60, max: 360 }, perHour: { energy: -4, stress: -14, morale: 9 }, cost: 45_00, requiresCompanion: false, tags: ['social', 'relationships'] },
-  { id: 'network', name: 'Industry event', category: 'social', description: 'A room full of people who could change your year.', minutes: 180, perHour: { energy: -9, stress: 6, morale: 2 }, cost: 30_00, practises: [{ key: 'networking', kind: 'attribute', gain: 1.4 }], tags: ['career', 'social'] },
+  { id: 'socialise', name: 'See Friends', category: 'social', description: 'The thing that keeps you a person rather than a career.', minutes: 150, variableDuration: { min: 60, max: 360 }, perHour: { energy: -4, stress: -14, morale: 9 }, cost: 45_00, requiresCompanion: false, tags: ['social', 'relationships'] },
+  { id: 'network', name: 'Industry Event', category: 'social', description: 'A room full of people who could change your year.', minutes: 180, perHour: { energy: -9, stress: 6, morale: 2 }, cost: 30_00, practises: [{ key: 'networking', kind: 'attribute', gain: 1.4 }], tags: ['career', 'social'] },
   { id: 'commute', name: 'Commute', category: 'transport', description: 'Time you do not get back.', minutes: 45, perHour: { energy: -5, stress: 7 }, tags: ['transport'] },
 ];
 
@@ -365,7 +383,10 @@ export function sleepQuality(sim: Simulation, person: Person): number {
   }
 
   quality -= remap(person.wellbeing.stress, 0, 100, 0, 0.24);
-  quality += systemModifier(person.traits, 'recoveryRate') * 0.06 - 0.06;
+  quality += modifierFor(person, 'recoveryRate') * 0.06 - 0.06;
+  // A light sleeper and a night owl both lose here; somebody who can sleep
+  // anywhere gains it back.
+  quality *= personalityOf(person, 'sleepQuality');
 
   const hour = zonedParts(sim.now, sim.zone).hour;
   if (hour >= 1 && hour < 5) quality -= 0.08; // going to bed very late
@@ -376,12 +397,22 @@ export function applySleep(person: Person, hours: number, quality: number): void
   const w = person.wellbeing;
   const effective = hours * quality;
 
-  w.energy = clamp(w.energy + effective * 13.5, 0, 100);
-  w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 0.4);
+  w.energy = clamp(w.energy + effective * 13.5 * personalityOf(person, 'energyRecovery'), 0, 100);
+  // Debt clears with the whole night, not only with the part of it above five
+  // and a half hours. The old formula only ever paid down the excess, which
+  // was harmless while nothing accrued debt in the first place — once the
+  // waking day started running, an ordinary night cleared about two points
+  // against six accrued and every character spiralled into the cap.
+  w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
   if (hours < 6) w.sleepDebt += (6 - hours) * 1.35;
   w.stress = clamp(w.stress - effective * 4.2, 0, 100);
-  w.condition = clamp(w.condition + (effective > 6.5 ? 1.4 : -0.5), 0, 100);
-  w.morale = clamp(w.morale + (effective > 6.5 ? 2.4 : -1.6), 0, 100);
+  // Proportional, not a step. These used to be a threshold at six and a half
+  // effective hours, which an unattended night never reaches — so a coasting
+  // character lost morale every single night and sat at zero forever. Five
+  // hours of real rest is break-even; more than that helps, less costs.
+  const restful = effective - 5;
+  w.condition = clamp(w.condition + restful * 0.9, 0, 100);
+  w.morale = clamp(w.morale + restful * 1.6, 0, 100);
   w.travelFatigue = clamp(w.travelFatigue - effective * 6, 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
@@ -404,7 +435,7 @@ function applyActivity(sim: Simulation, person: Person, def: ActivityDef, hours:
     }
   }
 
-  const trainingGain = systemModifier(person.traits, 'trainingGain');
+  const trainingGain = modifierFor(person, 'trainingGain');
   for (const practice of def.practises ?? []) {
     const sheet = practice.kind === 'attribute' ? person.attributes : person.skills;
     const current = sheet[practice.key] ?? 0;
@@ -427,6 +458,9 @@ function applyActivity(sim: Simulation, person: Person, def: ActivityDef, hours:
 const COASTING_ENERGY_CEILING = 74;
 const COASTING_STRESS_FLOOR = 14;
 const COASTING_NOURISHMENT_TARGET = 76;
+
+/** What the unattended day accounts for, sleep included. */
+const HOURS_IN_A_DAY = 24;
 
 export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
@@ -475,9 +509,11 @@ function liveTheUnattendedDay(sim: Simulation): void {
     // A night they did not plan. Shorter, poorer, and it does not clear debt
     // the way a deliberate one does.
     const sinceSlept = person.lastSleptAt === undefined ? Number.POSITIVE_INFINITY : sim.now - person.lastSleptAt;
+    let sleptHours = 0;
     if (sinceSlept >= 20 * MS_HOUR) {
-      const quality = sleepQuality(sim, person) * 0.82;
-      const hours = clamp(6.4 - w.stress * 0.012, 4.2, 7.4);
+      const quality = sleepQuality(sim, person) * 0.95;
+      const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
+      sleptHours = hours;
       applySleep(person, hours, quality);
       person.lastSleptAt = sim.now;
 
@@ -487,6 +523,16 @@ function liveTheUnattendedDay(sim: Simulation): void {
       w.energy = Math.min(w.energy, COASTING_ENERGY_CEILING);
       w.stress = Math.max(w.stress, COASTING_STRESS_FLOOR);
     }
+
+    // And then the rest of the day happens.
+    //
+    // This is the line that was missing. applyElapsedWellbeing existed, was
+    // exported and was called by nothing at all, so a coasted day only ever
+    // ran its sleep: energy never drained, stress never built, sleep debt
+    // never accrued, and hunger moved about ten points instead of eighty. A
+    // character carried forward by the clock was permanently well rested and
+    // ate two thirds of a meal a day.
+    applyElapsedWellbeing(person, Math.max(0, HOURS_IN_A_DAY - sleptHours));
 
     // Meals. Out of the pantry if there is any, otherwise the cheapest thing
     // nearby, and only while they can actually pay for it. Somebody working
@@ -538,23 +584,54 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
   const col = costOfLiving(person.currentLocationId);
 
   // Somebody feeding themselves without a plan shops, they do not eat out
-  // three times a day. Pick whatever gives the most food for the money.
-  const best = CATALOG.all()
+  // three times a day. They also do not eat one thing for the rest of their
+  // life: taking the single best value in the catalogue every time meant the
+  // same line of pasta five hundred and twenty-seven times in a year, and food
+  // costing under four dollars a day. Pick from the good-value end, weighted,
+  // so it is still somebody being careful with money and not the same meal
+  // forever.
+  const candidates = CATALOG.all()
     .filter((i) => (i.category === 'groceries' || i.category === 'dining') && (i.nourishment ?? 0) > 0)
     .map((i) => {
       const retailer = i.category === 'groceries' ? 'valuemart' : 'cornerstore';
       const cost = Math.max(1, retailPrice(i.id, retailer, col));
       return { item: i, cost, value: (i.nourishment ?? 0) / cost };
     })
-    .sort((a, b) => b.value - a.value)[0];
-  if (!best) return false;
+    .sort((a, b) => b.value - a.value)
+    .slice(0, UNPLANNED_MEAL_CHOICES)
+    .filter((c) => sim.ledger.availableFunds(accountId) >= c.cost);
+  if (candidates.length === 0) return false;
 
-  if (sim.ledger.availableFunds(accountId) < best.cost) return false;
-  sim.expense(accountId, best.cost, `${best.item.name} — eating without a plan`, 'food');
-  w.nourishment = clamp(w.nourishment + (best.item.nourishment ?? 15), 0, 100);
+  const rng = sim.rng('meal', person.id, sim.now);
+  const picked = rng.weighted(candidates, (c) => c.value);
+  sim.expense(accountId, picked.cost, `${picked.item.name} — ${rng.pick(UNPLANNED_MEAL_NOTES)}`, 'food');
+  w.nourishment = clamp(w.nourishment + (picked.item.nourishment ?? 15), 0, 100);
   person.lastAteAt = sim.now;
   return true;
 }
+
+/**
+ * How wide the net is when somebody eats without having shopped.
+ *
+ * Sixteen is the good-value end of the catalogue — staples, a few proteins,
+ * and the occasional bought lunch. Wider than this and a careful person is
+ * eating tasting menus; narrower and they are back to one thing forever.
+ */
+const UNPLANNED_MEAL_CHOICES = 16;
+
+/** Why it was that, this time. Read straight off the bank statement. */
+const UNPLANNED_MEAL_NOTES: readonly string[] = [
+  'eating without a plan',
+  'because it was what was in',
+  'standing up at the counter',
+  'eaten at the desk',
+  'grabbed on the way past',
+  'nothing else in the house',
+  'quickest thing there was',
+  'out of the packet',
+  'because the shop was still open',
+  'not really a meal',
+];
 
 /** How many hours until the player must be somewhere. */
 export function hoursUntilNextCommitment(sim: Simulation): number | undefined {

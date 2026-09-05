@@ -8,13 +8,17 @@ dist
 coverage
 .vite
 
-# Screenshots produced by tools/screenshot.mjs, tools/ui-audit.mjs and
-# tools/walkthrough.mjs. Regenerable from the tools, so they are not carried
+# Screenshots produced by tools/screenshot.mjs, tools/ui-audit.mjs,
+# tools/text-caps.mjs and tools/walkthrough.mjs. Regenerable from the tools, so they are not carried
 # in the repository.
 walkthrough/
 screenshots/
 ui-audit/
+text-caps/
 
 # Pull caches (rebuildable from Wikidata; large)
 tools/filmography/cache/
 tools/people/cache/
+shots/
+shots-company/
+shots-tour/

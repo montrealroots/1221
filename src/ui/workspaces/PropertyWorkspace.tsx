@@ -8,7 +8,6 @@ import { CATALOG } from '@/engine/content/catalog';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import type { ConstructionPhase, ConstructionProject } from '@/engine/domain/model';
 import { formatDate } from '@/engine/core/time';
-import { marketStageRate } from '@/engine/systems/post';
 
 type Tab = 'owned' | 'market' | 'offers' | 'build' | 'interiors';
 
@@ -91,7 +90,6 @@ export function PropertyWorkspace() {
                     {property.features.map((f) => <span key={f} className="chip">{f}</span>)}
                   </div>
                 )}
-                {property.lot && <LotPanel propertyId={property.id} />}
               </Panel>
             ))}
           </div>
@@ -102,7 +100,6 @@ export function PropertyWorkspace() {
         <Panel
           title="On The Market"
           subtitle={`${listings.length} listings where you are`}
-          actions={<button className="btn btn-sm" onClick={() => run('prop.list_lots', {})}>Find A Studio Lot</button>}
           flush
         >
           {listings.length === 0 ? (
@@ -212,54 +209,6 @@ export function PropertyWorkspace() {
 }
 
 /** A lot you own, as a business: the plant, the rate, the tenants, the last close. */
-function LotPanel({ propertyId }: { propertyId: string }) {
-  const { sim, run } = useGame();
-  const property = useWorld((s) => s.universe.properties[propertyId]);
-  const [rate, setRate] = useState<number | null>(null);
-  if (!property?.lot) return null;
-  const plant = property.lot;
-  const market = marketStageRate(property.locationId);
-  const current = rate ?? Math.round(plant.stageDayRate / 100);
-  const live = plant.tenants.filter((t) => t.to > sim.now);
-  return (
-    <div style={{ marginTop: 'var(--s4)' }}>
-      <div className="eyebrow">The Plant</div>
-      <div className="grid grid-3" style={{ marginTop: 'var(--s2)' }}>
-        <Stat label="Stages" value={plant.stages} note={`largest ${plant.largestStageSqft.toLocaleString('en-US')} sq ft`} />
-        <Stat label="Occupancy" value={`${Math.round(plant.occupancy * 100)}%`} note={plant.lastClosedAt ? `closed ${formatDate(plant.lastClosedAt, sim.homeZone)}` : 'not closed yet'} />
-        <Stat label="Overhead" value={<MoneyText amount={plant.monthlyOverhead} compact />} note="a month" />
-        <Stat label="Taken In" value={<MoneyText amount={plant.lifetimeIncome} compact />} note="lifetime" />
-        <Stat label="Paid Out" value={<MoneyText amount={plant.lifetimeOverhead} compact />} note="lifetime" />
-        <Stat label="Facilities" value={plant.facilities.map((f) => titleCaseLabel(f.replace(/_/g, ' '))).join(', ')} />
-      </div>
-      <div className="field" style={{ marginTop: 'var(--s3)' }}>
-        <div className="row-between">
-          <label htmlFor={`rate-${propertyId}`} style={{ marginBottom: 0 }}>Stage Day Rate</label>
-          <span className="mono">{formatMoney(current * 100, { cents: false })} <span className="dim xs">(the real lots in town: {formatMoney(market, { cents: false })})</span></span>
-        </div>
-        <div className="row gap-2">
-          <input id={`rate-${propertyId}`} type="range" min={Math.round(market * 0.3 / 100)} max={Math.round(market * 2 / 100)} value={current} onChange={(e) => setRate(Number(e.target.value))} />
-          <button className="btn btn-sm" onClick={() => { run('lot.set_rate', { propertyId, stageDayRate: current * 100 }); setRate(null); }}>Set</button>
-        </div>
-        <div className="xs dim">Undercut the town and the stages fill; overprice and they sit dark. SLATE’s calibration, not a rate card.</div>
-      </div>
-      {live.length > 0 ? (
-        <div className="list" style={{ marginTop: 'var(--s2)' }}>
-          {live.map((tenant, i) => (
-            <div key={i} className="list-item list-static">
-              <div className="grow">
-                <div className="small strong">{tenant.projectTitle}</div>
-                <div className="xs dim">{tenant.stages} stage{tenant.stages === 1 ? '' : 's'} · until {formatDate(tenant.to, sim.homeZone)} · {tenant.dayRate === 0 ? 'your own picture' : `${formatMoney(tenant.dayRate, { cents: false })} a day`}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Nobody on the lot right now. The month closes, the overhead is paid, and the phone either rings or it does not.</p>
-      )}
-    </div>
-  );
-}
 
 function OfferDialog({ listingId, onClose }: { listingId: string; onClose: () => void }) {
   const { sim, run } = useGame();
@@ -486,7 +435,7 @@ function InteriorsTab() {
                   style={{ width: 150 }}
                   onChange={(e) => run('prop.finish_room', { roomId: room.id, themeId: e.target.value, walls: 'Painted', floor: 'Oak' })}
                 >
-                  <option value="">Choose a theme…</option>
+                  <option value="">Choose A Theme…</option>
                   {DESIGN_THEMES.map((theme) => <option key={theme.id} value={theme.id}>{theme.name}</option>)}
                 </select>
               </div>
@@ -517,7 +466,7 @@ function InteriorsTab() {
                   e.target.value = '';
                 }}
               >
-                <option value="">Buy and place in…</option>
+                <option value="">Buy And Place In…</option>
                 {rooms
                   .filter(({ room }) => !item.roomKinds || item.roomKinds.length === 0 || item.roomKinds.includes(room.kind))
                   .map(({ room }) => <option key={room.id} value={room.id}>{room.name}</option>)}

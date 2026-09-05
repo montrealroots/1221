@@ -49,18 +49,52 @@ if (await begin.count()) {
   await page.waitForTimeout(3000);
   await shoot('07-home');
 
+  // Every workspace the game still has, in the order the rail lists them.
+  const openRail = async () => {
+    const toggle = page.getByRole('button', { name: /toggle navigation/i }).first();
+    if (!(await toggle.count())) return;
+    if ((await page.locator('nav.rail[data-open="true"]').count()) === 0) {
+      await toggle.click().catch(() => {});
+      await page.waitForTimeout(400);
+    }
+  };
+
   for (const [name, pattern] of [
     ['08-world', /^world$/i],
     ['09-calendar', /calendar/i],
-    ['10-bank', /^bank$/i],
+    ['10-wellbeing', /wellbeing/i],
+    ['11-relationships', /relationships/i],
+    ['12-history', /^history$/i],
+    ['13-bank', /^bank$/i],
+    ['14-property', /^property$/i],
+    ['15-vehicles', /^vehicles$/i],
+    ['16-shopping', /^shopping$/i],
+    ['17-insurance', /insurance/i],
+    ['18-work', /^work$/i],
+    ['19-social', /^social$/i],
+    ['20-health', /^health$/i],
+    ['21-education', /education/i],
+    ['22-city', /^the city$/i],
+    ['23-travel', /^travel$/i],
+    ['24-character', /character/i],
+    ['25-settings', /settings/i],
   ]) {
+    await openRail();
     const link = page.getByRole('button', { name: pattern }).first();
-    if (await link.count()) {
-      await link.click().catch(() => {});
-      await page.waitForTimeout(1200);
-      await shoot(name);
-    }
+    if (!(await link.count())) { console.log('  (no rail entry for', name, ')'); continue; }
+    await link.click().catch(() => {});
+    await page.waitForTimeout(1300);
+    // Guided-mode cards cover the screen they are explaining.
+    const gotIt = page.getByRole('button', { name: /^got it$/i }).first();
+    if (await gotIt.count()) { await gotIt.click().catch(() => {}); await page.waitForTimeout(400); }
+    await shoot(name);
   }
+
+  // Go Anywhere, which is how most of the game is actually reached.
+  await page.keyboard.press('/').catch(() => {});
+  await page.waitForTimeout(700);
+  await shoot('26-go-anywhere');
+  await page.keyboard.press('Escape').catch(() => {});
 }
 
 await browser.close();

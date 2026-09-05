@@ -14,8 +14,6 @@ import {
 } from 'react';
 import type { Simulation, CommandResult } from '@/engine';
 import { refreshMeta } from '@/engine';
-import { loadImdbRatings, loadKnownTitles, loadBroadcastSeries } from '@/engine/content/filmography';
-import { loadPeople, loadPeopleAwards, loadPeopleCredits } from '@/engine/content/people';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
 export interface Toast {
@@ -251,22 +249,6 @@ export function GameProvider({
     return () => window.clearInterval(handle);
   }, [sim, timeSpeed]);
 
-  // --- The record -----------------------------------------------------------
-  // Every real title, so nothing made here can share a name with one, and the
-  // IMDb ratings the catalogue shows. Neither blocks play if it fails.
-  useEffect(() => {
-    void loadKnownTitles().catch(() => {});
-    void loadImdbRatings().catch(() => {});
-    // The television grids are built from the record's own schedules, so the
-    // series have to be in hand before the first week of a save airs.
-    void loadBroadcastSeries().catch(() => {});
-    // And the people: who they are, everything they are on, and what they have
-    // won. Fetched in that order because a profile is readable without the
-    // last two and unreadable without the first.
-    void loadPeople()
-      .then(() => Promise.all([loadPeopleCredits(), loadPeopleAwards()]))
-      .catch(() => {});
-  }, []);
 
   // --- Autosave -----------------------------------------------------------
   useEffect(() => {
@@ -344,7 +326,6 @@ const ROUTE_LABELS: Record<string, string> = {
   '/world': 'World',
   '/workspace/calendar': 'Calendar',
   '/workspace/bank': 'Bank',
-  '/workspace/jobs': 'Work',
   '/workspace/wellbeing': 'Wellbeing',
   '/workspace/relationships': 'Relationships',
   '/workspace/property': 'Property',
@@ -356,10 +337,6 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/insurance': 'Insurance',
   '/workspace/education': 'Education',
   '/workspace/social': 'Social',
-  '/workspace/casting': 'Casting',
-  '/workspace/projects': 'Projects',
-  '/workspace/company': 'Company',
-  '/workspace/awards': 'Awards',
   '/workspace/history': 'History',
   '/workspace/character': 'Character',
   '/workspace/settings': 'Settings',

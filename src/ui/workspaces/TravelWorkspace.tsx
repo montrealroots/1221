@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
 import { MAX_DRIVE_KM, drivingOptions, formatDistance, roadKm, vehicleLocation } from '@/engine/systems/driving';
-import { formatPeople, homeCityOf, placeKindLabel, upcomingShoots } from '@/engine/world/place';
+import { formatPeople, homeCityOf, placeKindLabel } from '@/engine/world/place';
 import { missedBy } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import { weatherAt } from '@/engine/systems/weather';
@@ -56,7 +56,6 @@ export function TravelWorkspace() {
 
   const home = homeCityOf(sim);
   const homeInRange = !!home && !!here && home.id !== here.id && roadKm(here, home) <= MAX_DRIVE_KM;
-  const shoots = useWorld((s) => upcomingShoots(s));
 
   const startDrive = (toCityId: string, label: string) => {
     if (!car) return;
@@ -123,20 +122,23 @@ export function TravelWorkspace() {
               {drives.length === 0 && <p className="hint" style={{ padding: 'var(--s3)' }}>Nothing within a day's drive matches.</p>}
               {drives.map((d) => {
                 const sky = weatherAt(sim, d.city.id);
+                const heading = `${d.city.name}${d.city.id === home?.id ? ' · Home' : ''}${placeKindLabel(d.city) ? ` · ${placeKindLabel(d.city)}` : ''}`;
+                const detail = [
+                  d.city.population > 0 ? `${formatPeople(d.city.population)} people` : '',
+                  formatDistance(d, here?.countryId ?? 'us'),
+                  formatDuration(d.minutes * MS_MINUTE),
+                  d.fuelCents > 0 ? `fuel ${formatMoney(d.fuelCents)}` : '',
+                  d.crossesZone ? 'crosses a time zone' : '',
+                  sky ? `${sky.icon} ${sky.temperature}${sky.fahrenheit ? '°F' : '°C'}` : '',
+                ].filter(Boolean).join(' · ');
                 return (
                   <div key={d.city.id} className="list-item">
                     <div className="grow" style={{ minWidth: 0 }}>
-                      <div className="small strong truncate">
+                      <div className="small strong truncate" title={heading}>
                         {d.city.name}{d.city.id === home?.id ? ' · Home' : ''}
                         {placeKindLabel(d.city) && <span className="dim"> · {placeKindLabel(d.city)}</span>}
                       </div>
-                      <div className="xs muted truncate">
-                        {d.city.population > 0 && `${formatPeople(d.city.population)} people · `}
-                        {formatDistance(d, here?.countryId ?? 'us')} · {formatDuration(d.minutes * MS_MINUTE)}
-                        {d.fuelCents > 0 && ` · fuel ${formatMoney(d.fuelCents)}`}
-                        {d.crossesZone && ' · crosses a time zone'}
-                        {sky && ` · ${sky.icon} ${sky.temperature}${sky.fahrenheit ? '°F' : '°C'}`}
-                      </div>
+                      <div className="xs muted">{detail}</div>
                     </div>
                     <button className="btn btn-sm" onClick={() => startDrive(d.city.id, d.city.name)}>Drive There</button>
                   </div>
@@ -150,35 +152,6 @@ export function TravelWorkspace() {
         )}
       </Panel>
 
-      <Panel title="Where Things Are Shooting" subtitle="Projects you are on. Nobody sends you a memo about anyone else's.">
-        {shoots.length === 0 ? (
-          <p className="muted small" style={{ margin: 0 }}>Nothing you are part of has a shoot day scheduled.</p>
-        ) : (
-          <div className="list">
-            {shoots.slice(0, 8).map((shoot) => {
-              const drivable = !!car && !!here && roadKm(here, shoot.city) <= MAX_DRIVE_KM;
-              const isHere = shoot.city.id === player.currentLocationId;
-              return (
-                <div key={`${shoot.projectId}:${shoot.city.id}`} className="list-item">
-                  <div className="grow" style={{ minWidth: 0 }}>
-                    <div className="small strong truncate">{shoot.title} · {shoot.city.name}{shoot.isStage ? ' (Stage)' : ''}</div>
-                    <div className="xs muted truncate">
-                      {shoot.days} day{shoot.days === 1 ? '' : 's'} from {formatDate(shoot.firstDay, sim.zone)}
-                      {isHere ? ' · You are here' : ` · ${formatDistance({ km: cityDistanceKm(player.currentLocationId, shoot.city.id), miles: Math.round(cityDistanceKm(player.currentLocationId, shoot.city.id) * 0.621371) }, here?.countryId ?? 'us')} away`}
-                    </div>
-                  </div>
-                  {!isHere && drivable && car && (
-                    <button className="btn btn-sm" onClick={() => startDrive(shoot.city.id, shoot.city.name)}>Drive There</button>
-                  )}
-                  {!isHere && !drivable && (
-                    <button className="btn btn-sm" onClick={() => { setDestination(shoot.city.id); setTab('flights'); }}>Fly There</button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </Panel>
 
       {driveConfirm && (
         <Modal
@@ -210,7 +183,7 @@ export function TravelWorkspace() {
             <label htmlFor="destination">Going To</label>
             <select id="destination" value={destination} onChange={(e) => setDestination(e.target.value)}>
               {CITIES.all().filter((c) => c.id !== player.currentLocationId).map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
+                <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>
               ))}
             </select>
           </div>
@@ -222,7 +195,7 @@ export function TravelWorkspace() {
             <label htmlFor="cabin">Cabin</label>
             <select id="cabin" value={cabin} onChange={(e) => setCabin(e.target.value as typeof cabin)}>
               <option value="economy">Economy</option>
-              <option value="premium_economy">Premium economy</option>
+              <option value="premium_economy">Premium Economy</option>
               <option value="business">Business</option>
               <option value="first">First</option>
             </select>
@@ -326,7 +299,7 @@ export function TravelWorkspace() {
                     className="btn btn-sm"
                     onClick={() => run('travel.book_hotel', { cityId: destination, checkInAt: departAt, nights, roomClass })}
                   >
-                    {nights} nights
+                    {nights} Nights
                   </button>
                 ))}
               </div>
@@ -366,7 +339,7 @@ export function TravelWorkspace() {
                     <div className="grow">
                       <div className="small strong">{stay.hotelName}</div>
                       <div className="xs dim">
-                        {formatDate(stay.checkInAt, sim.homeZone)} — {formatDate(stay.checkOutAt, sim.homeZone)} · {stay.nights} nights · {stay.roomClass}
+                        {formatDate(stay.checkInAt, sim.homeZone)} — {formatDate(stay.checkOutAt, sim.homeZone)} · {stay.nights} nights · {titleCaseLabel(stay.roomClass)}
                       </div>
                     </div>
                     <span className="mono small">{formatMoney(stay.total, { cents: false })}</span>

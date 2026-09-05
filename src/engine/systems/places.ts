@@ -18,6 +18,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { HotelBooking, Id, Person, Property, Vehicle } from '../domain/model';
+import { personalityOf } from './life';
 import { clamp, makeRng, remap } from '../core/rng';
 import { MS_HOUR, MS_MINUTE, addDays, formatDuration, formatTime, zonedParts } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
@@ -169,7 +170,7 @@ export function registerPlaces(sim: Simulation): void {
   // --- Getting there --------------------------------------------------------
 
   sim.onCommand<
-    { placeId?: string; propertyId?: Id; shootDayId?: Id; home?: boolean; mode?: Mode },
+    { placeId?: string; propertyId?: Id; home?: boolean; mode?: Mode },
     { placeId?: string; name: string; minutes: number; km: number; cost: Money; mode: Mode; note: string; arrivedAt: number }
   >(
     'go.to',
@@ -178,18 +179,7 @@ export function registerPlaces(sim: Simulation): void {
       const cityId = person.currentLocationId;
 
       let target: { id: string; name: string; neighbourhoodId?: string; cityId: string };
-      if (p.shootDayId) {
-        // The unit base for a shooting day: a stage on a lot, or wherever the
-        // company is parked on a location.
-        const day = s.universe.shootDays[p.shootDayId];
-        if (!day) throw new CommandError('No such shooting day.');
-        if (day.locationId !== cityId) {
-          throw new CommandError(`That day shoots in ${CITIES.get(day.locationId)?.name ?? 'another city'} and you are in ${CITIES.get(cityId)?.name ?? 'this one'}. Get there first.`);
-        }
-        if (day.status !== 'scheduled' && day.status !== 'shooting') throw new CommandError('That day is over.');
-        const project = s.universe.projects[day.projectId];
-        target = { id: `shoot:${day.id}`, name: `${day.locationName} — ${project?.title ?? 'Unit Base'}, Day ${day.dayNumber}`, cityId };
-      } else if (p.home || p.propertyId) {
+      if (p.home || p.propertyId) {
         const propertyId = p.propertyId ?? person.residenceId;
         if (!propertyId) throw new CommandError('You do not have anywhere to go home to yet.');
         const property = s.universe.properties[propertyId];
@@ -725,22 +715,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** The shooting day you are standing on, when you are on one. */
-export function unitBaseOf(sim: Simulation, person: Person = sim.player): { label: string; shootDayId: Id } | undefined {
-  if (!person.currentPlaceId?.startsWith('shoot:')) return undefined;
-  const shootDayId = person.currentPlaceId.slice('shoot:'.length) as Id;
-  const day = sim.universe.shootDays[shootDayId];
-  if (!day) return undefined;
-  const project = sim.universe.projects[day.projectId];
-  return { label: `${day.locationName} — ${project?.title ?? 'Unit Base'}, Day ${day.dayNumber}`, shootDayId };
-}
 
-/** Whether somebody was on the unit base before the crew was called. */
-export function arrivedBeforeCall(sim: Simulation, shootDayId: Id, person: Person = sim.player): boolean {
-  const day = sim.universe.shootDays[shootDayId];
-  if (!day || person.currentPlaceId !== `shoot:${shootDayId}`) return false;
-  return sim.now <= (day.callSheet?.crewCall ?? day.callTime);
-}
 
 /** A bathroom you have a right to use, right now. */
 export function bathroomFor(sim: Simulation, person: Person = sim.player): string | undefined {
@@ -805,12 +780,14 @@ export function ensureHygieneTick(sim: Simulation): void {
 
 function decayHygiene(sim: Simulation): void {
   const person = sim.player;
-  person.wellbeing.hygiene = clamp(person.wellbeing.hygiene - HYGIENE_TICK_HOURS * 2.2, 0, 100);
+  // An orderly person's standards slip slower than a chaotic one's.
+  const drift = personalityOf(person, 'hygieneDrift');
+  person.wellbeing.hygiene = clamp(person.wellbeing.hygiene - HYGIENE_TICK_HOURS * 2.2 * drift, 0, 100);
 }
 
 /** Everything you could do where you are standing. */
 export function whatIsHere(sim: Simulation): {
-  place?: Place; property?: Property; unitBase?: { label: string; shootDayId: Id }; city: string;
+  place?: Place; property?: Property; city: string;
   actions: PlaceAction[]; canShower: boolean; canSleep: boolean;
   vehicle?: { vehicle: Vehicle; fuel: number; range: number };
 } {
@@ -818,13 +795,11 @@ export function whatIsHere(sim: Simulation): {
   const place = currentPlace(sim, person);
   const property = currentProperty(sim, person);
   const vehicle = driveableVehicle(sim, person);
-  const unitBase = unitBaseOf(sim, person);
   return {
     place,
     property,
-    unitBase,
     city: CITIES.get(person.currentLocationId)?.name ?? person.currentLocationId,
-    actions: place?.actions ?? (property ? ['sleep', 'shower', 'eat'] : unitBase ? ['meet'] : []),
+    actions: place?.actions ?? (property ? ['sleep', 'shower', 'eat'] : []),
     canShower: Boolean(bathroomFor(sim, person)),
     canSleep: Boolean(bedFor(sim, person)),
     vehicle: vehicle ? { vehicle, fuel: fuelOf(vehicle), range: rangeKm(vehicle) } : undefined,

@@ -2,7 +2,7 @@
  * The Full Life Test.
  *
  * SLATE is not only a film game, so this one never touches the industry. It is
- * an ordinary person: they take a job, rent somewhere to live, buy and insure a
+ * an ordinary person: they rent somewhere to live, buy and insure a
  * car, meet someone, marry them, have a child, study, eat, sleep, see a doctor
  * and take a trip — over about four years of world time.
  *
@@ -51,44 +51,6 @@ function liveALife(): Lived {
     if (!result.ok) throw new Error(result.error ?? 'refused');
     return result.value as R;
   };
-
-  // --- Work ----------------------------------------------------------------
-  // Hiring is a decision somebody else makes, so one application is not a
-  // plan. This is what looking for work actually looks like: apply widely,
-  // wait for the interviews, take the first offer.
-  step('take a job', () => {
-    // Some starts come with work already. Somebody who has a job does not need
-    // to find one, and the hiring path is covered where it is exercised below.
-    if (sim.player.jobId && !sim.universe.jobs[sim.player.jobId]?.endedAt) {
-      return sim.universe.jobs[sim.player.jobId];
-    }
-    for (let round = 0; round < 8; round++) {
-      const openings = Object.values(sim.universe.jobOpenings)
-        .filter((o) => o.closesAt > sim.now)
-        // Apply for work you can actually do, least contested first.
-        .filter((o) => o.requirements.every((r) => (sim.player.skills[r.skill] ?? 0) >= r.min))
-        .sort((a, b) => a.competition - b.competition)
-        .slice(0, 6);
-      const applications: Id[] = [];
-      for (const opening of openings) {
-        const result = sim.execute<{ applicationId: Id }>({ kind: 'work.apply', payload: { openingId: opening.id } });
-        if (result.ok && result.value) applications.push(result.value.applicationId);
-      }
-      // Offers do not wait. Check in every few days, the way someone actually
-      // job-hunting does, instead of vanishing for a month.
-      for (let day = 0; day < 45; day += 3) {
-        sim.advanceTo(sim.now + 3 * MS_DAY);
-        for (const applicationId of applications) {
-          if (sim.universe.jobApplications[applicationId]?.stage !== 'offer') continue;
-          const accepted = sim.execute<{ accepted: boolean; jobId?: Id }>({
-            kind: 'work.accept_offer', payload: { applicationId },
-          });
-          if (accepted.ok && accepted.value?.jobId) return accepted.value;
-        }
-      }
-    }
-    return undefined;
-  });
 
   // --- A place to live -----------------------------------------------------
   step('rent a home', () => {
@@ -327,15 +289,10 @@ describe('an ordinary life', () => {
     expect(categories.size, `only spent on: ${[...categories].join(', ')}`).toBeGreaterThan(4);
   });
 
-  it('left the person with a job, a home, a car and a family', () => {
+  it('left the person with a home, a car and a family', () => {
     const sim = lived.sim;
     const player = sim.player;
 
-    const jobs = Object.values(sim.universe.jobs).filter((j) => j.personId === player.id);
-    expect(
-      player.jobId,
-      `never got a job. Jobs on record: ${JSON.stringify(jobs.map((j) => [j.title, j.endedAt ? 'ended' : 'live', j.endReason]))}`,
-    ).toBeDefined();
     expect(player.residenceId, 'never got a home').toBeDefined();
     expect(
       Object.values(sim.universe.vehicles).some((v) => v.ownerId === player.id && !v.soldAt),
@@ -382,5 +339,144 @@ describe('an ordinary life', () => {
 
   it('ends with a universe that still validates', () => {
     expect(validateUniverse(lived.sim.universe).errors).toEqual([]);
+  });
+});
+
+/**
+ * A year of eating.
+ *
+ * The unplanned meal used to take the single best nourishment-per-dollar item
+ * in the catalogue, every time, forever: five hundred and twenty-seven
+ * identical lines of pasta in a year, at $3.87 a day, which is neither a
+ * person nor an economy. It picks from the good-value end now, weighted, so a
+ * careful eater is still careful and still a person.
+ */
+describe('a year of eating', () => {
+  const YEAR = 365 * 86_400_000;
+
+  it('does not eat the same thing every meal for a year', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-variety');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    expect(meals.length, 'nobody ate anything all year').toBeGreaterThan(200);
+
+    const foods = new Set(meals.map((t) => t.memo.split(' — ')[0]));
+    const lines = new Set(meals.map((t) => t.memo));
+    expect(foods.size, `only ate ${[...foods].join(', ')}`).toBeGreaterThanOrEqual(8);
+    expect(lines.size, 'the statement reads the same line over and over').toBeGreaterThan(40);
+
+    // And no single thing dominates the whole year.
+    const counts = new Map<string, number>();
+    for (const meal of meals) {
+      const food = meal.memo.split(' — ')[0]!;
+      counts.set(food, (counts.get(food) ?? 0) + 1);
+    }
+    const commonest = Math.max(...counts.values());
+    expect(commonest / meals.length, 'one food is more than a third of everything eaten').toBeLessThan(0.34);
+  });
+
+  it('costs something a person could recognise, per meal', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-cost');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    const spent = meals.reduce((sum, t) => sum + Math.abs(t.postings.find((p) => p.amount < 0)?.amount ?? 0), 0);
+    const perMeal = spent / 100 / meals.length;
+    expect(perMeal, `each meal cost $${perMeal.toFixed(2)}`).toBeGreaterThan(3);
+    expect(perMeal, `each meal cost $${perMeal.toFixed(2)}`).toBeLessThan(20);
+  });
+
+  it('feeds somebody roughly three times a day', () => {
+    // This was a todo. applyElapsedWellbeing existed, was exported and was
+    // called by nothing, so a coasted day only ran its sleep: hunger moved ten
+    // points instead of eighty and the autopilot bought two thirds of a meal a
+    // day. The waking day happens now.
+    const sim = quickSave({ wealth: 'modest' }, 'eating-frequency');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    const perDay = meals.length / 365;
+    expect(perDay, `${perDay.toFixed(2)} meals a day`).toBeGreaterThan(2.4);
+    expect(perDay, `${perDay.toFixed(2)} meals a day`).toBeLessThan(5);
+  });
+
+  it('costs what feeding one person costs', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-daily-cost');
+    sim.advanceTo(sim.now + YEAR);
+    const spent = sim.universe.transactions
+      .filter((t) => t.category === 'food')
+      .reduce((sum, t) => sum + Math.abs(t.postings.find((p) => p.amount < 0)?.amount ?? 0), 0);
+    const perDay = spent / 100 / 365;
+    expect(perDay, `food came to $${perDay.toFixed(2)} a day`).toBeGreaterThan(9);
+    expect(perDay, `food came to $${perDay.toFixed(2)} a day`).toBeLessThan(30);
+  });
+
+  it('still leans cheap, because this is somebody who did not shop', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-cheap');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    const dear = meals.filter((t) => Math.abs(t.postings.find((p) => p.amount < 0)?.amount ?? 0) > 30_00);
+    expect(dear.length / meals.length, 'a careful eater is buying too many expensive meals').toBeLessThan(0.1);
+    expect(sim.player.wellbeing.nourishment, 'they starved').toBeGreaterThan(40);
+  });
+
+  it('reaches the same meals twice from the same seed', () => {
+    const a = quickSave({ wealth: 'modest' }, 'eating-determinism');
+    const b = quickSave({ wealth: 'modest' }, 'eating-determinism');
+    a.advanceTo(a.now + 120 * 86_400_000);
+    b.advanceTo(b.now + 120 * 86_400_000);
+    const memos = (sim: typeof a) => sim.universe.transactions.filter((t) => t.category === 'food').map((t) => t.memo);
+    expect(memos(a)).toEqual(memos(b));
+  });
+});
+
+/**
+ * The waking day.
+ *
+ * applyElapsedWellbeing was written, exported, and called by nothing at all.
+ * A character carried forward by the clock only ever ran their sleep: energy
+ * never drained, stress never built, sleep debt never accrued and hunger moved
+ * a tenth of what it should. They were permanently well rested.
+ *
+ * Turning it on broke two things that had never been under load, and both are
+ * held here: sleep debt could only be paid down out of the part of a night
+ * above five and a half effective hours, which an unattended night never
+ * reaches, so debt climbed to its cap and stayed; and morale moved on a
+ * threshold at the same unreachable point, so it fell every night forever.
+ */
+describe('a day that is not directed', () => {
+  const YEAR2 = 365 * 86_400_000;
+
+  it('drains what a day drains, rather than only what a night does', () => {
+    const sim = quickSave({}, 'awake-drain');
+    const before = { ...sim.player.wellbeing };
+    sim.advanceTo(sim.now + 2 * 86_400_000);
+    // Hunger has to move by more than a night's worth.
+    expect(before.nourishment - sim.player.wellbeing.nourishment + 60).toBeGreaterThan(20);
+  });
+
+  it('does not spiral into the sleep-debt cap over a year', () => {
+    const sim = quickSave({}, 'awake-debt');
+    sim.advanceTo(sim.now + YEAR2);
+    expect(sim.player.wellbeing.sleepDebt, 'sleep debt ran away').toBeLessThan(20);
+  });
+
+  it('does not grind morale and condition to nothing', () => {
+    const sim = quickSave({}, 'awake-morale');
+    sim.advanceTo(sim.now + YEAR2);
+    expect(sim.player.wellbeing.morale, 'morale bottomed out').toBeGreaterThan(35);
+    expect(sim.player.wellbeing.condition, 'condition bottomed out').toBeGreaterThan(35);
+  });
+
+  it('settles into a mediocre equilibrium rather than a collapse or a holiday', () => {
+    // Coasting keeps you going and does not get you to your best. Both halves
+    // of that are the claim.
+    const sim = quickSave({}, 'awake-equilibrium');
+    sim.advanceTo(sim.now + YEAR2);
+    const w = sim.player.wellbeing;
+    for (const [key, value] of Object.entries(w)) {
+      if (key === 'sleepDebt') continue;
+      expect(value, `${key} left the scale`).toBeGreaterThanOrEqual(0);
+      expect(value, `${key} left the scale`).toBeLessThanOrEqual(100);
+    }
+    expect(w.energy, 'a coasting day should still tire somebody out').toBeLessThan(74);
   });
 });

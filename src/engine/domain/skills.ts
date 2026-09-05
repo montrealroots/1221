@@ -1,7 +1,7 @@
 /**
  * SLATE — Non-performer skill models.
  *
- * Actors have the 88-attribute sheet. Everyone else gets a skill model suited
+ * Actors and actresses have the 88-attribute sheet. Everyone else gets a skill model suited
  * to their actual job: a line producer is not a bad actor, they are a good
  * line producer, and the simulation should say so.
  */

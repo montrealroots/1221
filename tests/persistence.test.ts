@@ -28,10 +28,9 @@ describe('saves on this device', () => {
   });
 
   it('packs a save to a fraction of its JSON and loads it back whole', async () => {
+    // A save with a few years of life on it, so there is something to compress.
     const sim = quickSave({ wealth: 'inherited' }, 'pack-1');
-    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-    const staged = sim.execute({ kind: 'sandbox.stage_picture', payload: { to: 'post' } });
-    expect(staged.ok, staged.error).toBe(true);
+    sim.advanceTo(sim.now + 3 * 365 * 86_400_000);
     const adapter = new LocalSaveAdapter();
     const json = serialise(sim.universe);
     await adapter.save(sim.universe);

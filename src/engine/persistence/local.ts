@@ -67,7 +67,7 @@ function storage(): Storage {
 }
 
 export class LocalSaveAdapter implements SaveAdapter {
-  readonly name = 'This device';
+  readonly name = 'This Device';
   readonly serverAuthoritative = false;
 
   async listSlots(): Promise<SaveSlotInfo[]> {

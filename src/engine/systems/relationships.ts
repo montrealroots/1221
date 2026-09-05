@@ -16,7 +16,8 @@ import { addDays, addYears, ageOn, formatDate, nextAnniversary, zonedParts, MS_D
 import { formatMoney, type Money } from '../core/money';
 import { buildFactors } from '../core/audit';
 import { costOfLiving } from '../content/tax';
-import { systemModifier } from '../domain/attributes';
+import { modifierFor } from '../domain/attributes';
+import { personalityModifier } from '../content/personality-traits';
 import { CATALOG } from '../content/catalog';
 
 const ROMANTIC: readonly RelationshipType[] = ['dating', 'engaged', 'spouse'];
@@ -533,14 +534,14 @@ interface InteractionDef {
 
 export const INTERACTIONS: Readonly<Record<InteractionKind, InteractionDef>> = {
   chat: { name: 'Chat', minutes: 20, minFamiliarity: 0, effects: { familiarity: 4, affection: 2 }, memoryImpact: 1, memoryDecayDays: 30, goodOutcome: 'Easy conversation. Nothing heavy.', badOutcome: 'A bit flat. Neither of you had much to say.', description: 'Light, low stakes, builds familiarity.' },
-  catch_up: { name: 'Catch up properly', minutes: 90, minFamiliarity: 15, effects: { familiarity: 6, affection: 5, trust: 3 }, memoryImpact: 3, memoryDecayDays: 120, goodOutcome: 'A proper catch-up. You both left it feeling better.', badOutcome: 'You talked past each other for an hour.', description: 'Time and attention, which is what most relationships actually need.' },
-  deep_talk: { name: 'Have a real conversation', minutes: 120, minFamiliarity: 35, effects: { familiarity: 5, affection: 7, trust: 9, commitment: 4 }, memoryImpact: 7, memoryDecayDays: 500, goodOutcome: 'You said something true and they heard it.', badOutcome: 'It got heavy and neither of you handled it well.', description: 'The conversation that changes a relationship, in either direction.' },
-  favour: { name: 'Ask a favour', minutes: 30, minFamiliarity: 30, effects: { trust: -2, affection: -1, conflictRisk: 4 }, memoryImpact: -2, memoryDecayDays: 180, goodOutcome: 'They helped without making it a thing.', badOutcome: 'They said yes and you could tell it cost them.', description: 'Spends relationship capital. Sometimes it is worth it.' },
+  catch_up: { name: 'Catch Up Properly', minutes: 90, minFamiliarity: 15, effects: { familiarity: 6, affection: 5, trust: 3 }, memoryImpact: 3, memoryDecayDays: 120, goodOutcome: 'A proper catch-up. You both left it feeling better.', badOutcome: 'You talked past each other for an hour.', description: 'Time and attention, which is what most relationships actually need.' },
+  deep_talk: { name: 'Have A Real Conversation', minutes: 120, minFamiliarity: 35, effects: { familiarity: 5, affection: 7, trust: 9, commitment: 4 }, memoryImpact: 7, memoryDecayDays: 500, goodOutcome: 'You said something true and they heard it.', badOutcome: 'It got heavy and neither of you handled it well.', description: 'The conversation that changes a relationship, in either direction.' },
+  favour: { name: 'Ask A Favour', minutes: 30, minFamiliarity: 30, effects: { trust: -2, affection: -1, conflictRisk: 4 }, memoryImpact: -2, memoryDecayDays: 180, goodOutcome: 'They helped without making it a thing.', badOutcome: 'They said yes and you could tell it cost them.', description: 'Spends relationship capital. Sometimes it is worth it.' },
   apologise: { name: 'Apologise', minutes: 45, minFamiliarity: 10, effects: { trust: 6, affection: 4, conflictRelief: 22 }, memoryImpact: 5, memoryDecayDays: 300, goodOutcome: 'They accepted it. The air cleared.', badOutcome: 'They were not ready to hear it.', description: 'The only thing that actually clears conflict.' },
-  confront: { name: 'Confront them', minutes: 60, minFamiliarity: 20, effects: { respect: 3, conflictRisk: 18, trust: -4 }, memoryImpact: -6, memoryDecayDays: 420, goodOutcome: 'Hard, honest, and probably necessary.', badOutcome: 'It went badly and now it is worse.', description: 'High risk. Occasionally the only honest option.' },
-  work_together: { name: 'Work together', minutes: 240, minFamiliarity: 5, effects: { familiarity: 8, respect: 7, trust: 4 }, memoryImpact: 4, memoryDecayDays: 400, goodOutcome: 'You work well together and you both noticed.', badOutcome: 'The working styles did not mesh.', description: 'Builds professional respect faster than anything else.' },
-  celebrate: { name: 'Celebrate something', minutes: 180, minFamiliarity: 20, effects: { familiarity: 3, affection: 8, commitment: 3 }, memoryImpact: 6, memoryDecayDays: 700, goodOutcome: 'A genuinely good night.', badOutcome: 'The occasion did not quite land.', description: 'Shared good news becomes a shared memory.' },
-  support: { name: 'Be there for them', minutes: 150, minFamiliarity: 25, effects: { trust: 12, affection: 8, commitment: 6 }, memoryImpact: 10, memoryDecayDays: 0, goodOutcome: 'You showed up when it mattered. They will not forget it.', badOutcome: 'You tried, and it was not what they needed.', description: 'Showing up in a hard moment is remembered permanently.' },
+  confront: { name: 'Confront Them', minutes: 60, minFamiliarity: 20, effects: { respect: 3, conflictRisk: 18, trust: -4 }, memoryImpact: -6, memoryDecayDays: 420, goodOutcome: 'Hard, honest, and probably necessary.', badOutcome: 'It went badly and now it is worse.', description: 'High risk. Occasionally the only honest option.' },
+  work_together: { name: 'Work Together', minutes: 240, minFamiliarity: 5, effects: { familiarity: 8, respect: 7, trust: 4 }, memoryImpact: 4, memoryDecayDays: 400, goodOutcome: 'You work well together and you both noticed.', badOutcome: 'The working styles did not mesh.', description: 'Builds professional respect faster than anything else.' },
+  celebrate: { name: 'Celebrate Something', minutes: 180, minFamiliarity: 20, effects: { familiarity: 3, affection: 8, commitment: 3 }, memoryImpact: 6, memoryDecayDays: 700, goodOutcome: 'A genuinely good night.', badOutcome: 'The occasion did not quite land.', description: 'Shared good news becomes a shared memory.' },
+  support: { name: 'Be There For Them', minutes: 150, minFamiliarity: 25, effects: { trust: 12, affection: 8, commitment: 6 }, memoryImpact: 10, memoryDecayDays: 0, goodOutcome: 'You showed up when it mattered. They will not forget it.', badOutcome: 'You tried, and it was not what they needed.', description: 'Showing up in a hard moment is remembered permanently.' },
 };
 
 // ---------------------------------------------------------------------------
@@ -831,9 +832,11 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
       person.careerTrack = 'civilian';
       person.tier = 'active';
       sim.notify({
-        category: 'family', title: `${person.displayName} turned 18`,
+        category: 'family', title: `${person.displayName} Turned 18`,
         body: 'They are an adult now, with their own life to build.',
-        importance: 70, route: '/workspace/family',
+        // Relationships, not '/workspace/family' — that screen has never
+        // existed, so this link has always landed on nothing.
+        importance: 70, route: '/workspace/relationships',
       });
     }
   }
@@ -868,7 +871,9 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
 function driftRelationships(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
-  const decayMultiplier = systemModifier(player.traits, 'relationshipDecay');
+  // Craft traits never cost the prodigy; personality always does.
+  const decayMultiplier = modifierFor(player, 'relationshipDecay')
+    * personalityModifier(player.personalityTraits ?? [], 'relationshipDecay');
 
   for (const rel of Object.values(sim.universe.relationships)) {
     if (rel.endedAt) continue;
@@ -887,7 +892,10 @@ function driftRelationships(sim: Simulation): void {
     applyDelta(rel.dimensions, {
       affection: -0.6 * rate * Math.min(weeksSince, 8),
       commitment: isRomantic(rel.type) ? -0.5 * rate * Math.min(weeksSince, 8) : 0,
-      familiarity: -0.2 * (livesWithYou ? 0.2 : 1) * Math.min(weeksSince, 6),
+      // Familiarity took the household discount but not the decay rate, so
+      // somebody loyal lost touch at exactly the pace of somebody detached.
+      // Losing touch is the thing this dimension is, so it reads the rate.
+      familiarity: -0.2 * rate * (livesWithYou ? 0.2 : 1) * Math.min(weeksSince, 6),
       // Friction fades. Without this, conflict only ever goes up, and a
       // relationship anybody has argued in enough times is permanently ruined
       // however well it goes afterwards.

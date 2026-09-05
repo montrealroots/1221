@@ -232,7 +232,7 @@ function ModifyTab({ vehicleId }: { vehicleId: string }) {
                   disabled={!verdict.fits}
                   onClick={() => run('veh.book_modification', { vehicleId, partIds: [part.id] })}
                 >
-                  {verdict.fits ? 'Book' : 'Will not fit'}
+                  {verdict.fits ? 'Book' : 'Will Not Fit'}
                 </button>
               </div>
             ))}

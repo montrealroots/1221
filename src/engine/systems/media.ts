@@ -17,7 +17,7 @@ import { clamp, remap } from '../core/rng';
 import { addDays, zonedParts, MS_DAY, MS_MINUTE } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { buildFactors } from '../core/audit';
-import { systemModifier } from '../domain/attributes';
+import { modifierFor } from '../domain/attributes';
 
 // ---------------------------------------------------------------------------
 // Platforms
@@ -273,15 +273,6 @@ export function registerMedia(sim: Simulation): void {
     },
   );
 
-  // A published post that promotes a project feeds the marketing campaign.
-  sim.onEvent('social.post_published', 'marketing.absorb', (event, { sim: s }) => {
-    const { postId } = event.payload as { postId: Id };
-    const post = s.universe.socialPosts[postId];
-    if (!post || post.refType !== 'project' || !post.refId) return;
-    const campaign = Object.values(s.universe.marketingCampaigns).find((c) => c.projectId === post.refId);
-    if (!campaign) return;
-    campaign.socialPostIds.push(post.id);
-  }, 60);
 }
 
 // ---------------------------------------------------------------------------
@@ -358,8 +349,8 @@ function publishPost(sim: Simulation, postId: Id): void {
   );
 
   // --- Virality ------------------------------------------------------------
-  const viralInstinct = systemModifier(owner.traits, 'viralOdds');
-  const socialGrowthTrait = systemModifier(owner.traits, 'socialGrowth');
+  const viralInstinct = modifierFor(owner, 'viralOdds');
+  const socialGrowthTrait = modifierFor(owner, 'socialGrowth');
   const viralProbability = clamp(
     (post.quality / 100) ** 2.4 * 0.16 * platform.viralPotential * viralInstinct * timingFactor,
     0.0005, 0.34,
@@ -618,7 +609,7 @@ function maybeOfferBrandDeal(sim: Simulation): void {
   if (active.length >= 3) return;
 
   const rng = sim.rng('brand_deal', player.id, Math.floor(sim.now / MS_DAY));
-  const appeal = systemModifier(player.traits, 'brandDealOdds');
+  const appeal = modifierFor(player, 'brandDealOdds');
   const bestAccount = accounts.reduce((best, a) => (a.momentum * a.followers > best.momentum * best.followers ? a : best), accounts[0] as SocialAccount);
   const probability = clamp(
     remap(Math.log10(totalFollowers + 1), 3.6, 6.5, 0.005, 0.12) * remap(bestAccount.momentum, 0, 100, 0.4, 1.8) * appeal

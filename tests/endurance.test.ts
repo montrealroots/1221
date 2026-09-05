@@ -189,11 +189,9 @@ describe('a universe left running', () => {
     // These are the collections that take on new records every single tick.
     // Left alone they grow linearly forever and eventually make the save
     // unloadable, so each one has a retention rule behind it.
-    expect(sizes['auditions'], `auditions: ${sizes['auditions']}`).toBeLessThan(6_000);
     expect(sizes['people'], `people: ${sizes['people']}`).toBeLessThan(1_500);
     expect(sizes['scheduled'], `scheduled: ${sizes['scheduled']}`).toBeLessThan(6_000);
     expect(sizes['decisions'], `decisions: ${sizes['decisions']}`).toBeLessThan(500);
-    expect(sizes['jobOpenings'], `jobOpenings: ${sizes['jobOpenings']}`).toBeLessThan(500);
     expect(sizes['vehicleListings'], `vehicleListings: ${sizes['vehicleListings']}`).toBeLessThan(1_000);
     expect(sizes['propertyListings'], `propertyListings: ${sizes['propertyListings']}`).toBeLessThan(1_000);
     expect(sizes['socialPosts'], `socialPosts: ${sizes['socialPosts']}`).toBeLessThan(2_000);
@@ -231,7 +229,7 @@ describe('a universe left running', () => {
       people: Object.keys(u.people).length,
       transactions: u.transactions.length,
       balances: Object.entries(u.accounts).map(([id, a]) => [id, a.balance]).sort(),
-      projects: Object.values(u.projects).map((p) => [p.id, p.phase, p.spent]).sort(),
+      properties: Object.values(u.properties).map((p) => [p.id, p.marketValue]).sort(),
       history: u.history.map((h) => `${h.at}:${h.title}`),
     });
 

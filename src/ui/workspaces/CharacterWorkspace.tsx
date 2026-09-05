@@ -1,22 +1,25 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { careerLabel } from '@/engine/world/bootstrap';
 import { useState } from 'react';
-import { performerNoun } from '@/engine/core/performer';
+import { performerNoun, performerTitleOf } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Tabs } from '@/ui/components/primitives';
 import {
-  ATTRIBUTE_GROUPS, attributesInGroup, conflictingTraits, effectiveAttributes, effectiveSkills,
+  ALL_TRAITS, ATTRIBUTES, ATTRIBUTE_GROUPS, attributesInGroup, attributesOf, conflictingTraits, skillsOf,
   groupAverage, overallRating, traitName, TRAIT_BY_ID, traitsForProfession, type AttributeGroup,
 } from '@/engine/domain/attributes';
 import { SKILLS, domainAverage, type SkillDomain } from '@/engine/domain/skills';
 import {
-  LEVEL_XP, PROFESSIONS, PROFESSION_BY_ID, levelFor, traitSlotsAt, xpToNextLevel,
+  LEVEL_XP, PROFESSIONS, PROFESSION_BY_ID, levelFor, traitSlotsAt, xpToNextLevel, type ProfessionId,
 } from '@/engine/content/professions';
+import { CEILING, GOAT_LABEL, POSITIONS, goatTraitsIn } from '@/engine/content/prodigy';
+import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '@/engine/content/founder';
+import { founderScore } from '@/engine/systems/shingle';
 import { ageOn } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 
-type Tab = 'attributes' | 'professions' | 'skills' | 'traits' | 'standing';
+type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing';
 
 const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((k) => [k.id, k.name]));
 
@@ -25,13 +28,15 @@ const SKILL_DOMAINS: SkillDomain[] = ['writing', 'directing', 'producing', 'exec
 export function CharacterWorkspace() {
   const { sim, run } = useGame();
   const player = useWorld((s) => s.player);
-  const [tab, setTab] = useState<Tab>('attributes');
+  // Everything on this screen is at the ceiling: the founder is the prodigy.
+  const goat = player.prodigy === true;
+  const [tab, setTab] = useState<Tab>('positions');
   const xp = player.industryXp ?? 0;
   const held = Object.values(player.professions ?? {}).flatMap((p) => p?.traitIds ?? []);
-  const skills = effectiveSkills(player.skills, held);
+  const skills = skillsOf(player, held);
   const [group, setGroup] = useState<AttributeGroup>('Craft');
 
-  const effective = effectiveAttributes(player.attributes, player.traits);
+  const effective = attributesOf(player);
   const age = ageOn(player.birthInstant, sim.now, sim.homeZone);
 
   return (
@@ -44,14 +49,27 @@ export function CharacterWorkspace() {
           <div className="eyebrow">Character</div>
           <h1>{player.displayName}</h1>
           <p className="muted">
-            {age} · {careerLabel(player.careerTrack)} · {CITIES.get(player.currentLocationId)?.name}
+            {age} · {careerLabel(player.careerTrack, performerTitleOf(player))} · {CITIES.get(player.currentLocationId)?.name}
             {player.stageName && ` · credited as ${player.stageName}`}
           </p>
         </div>
       </div>
 
+      {goat && (
+        <p className="god-banner" style={{ marginBottom: 'var(--s4)' }}>
+          {GOAT_LABEL} at writing, directing, producing, showrunning and acting. Every attribute, every skill and
+          every trait in the game, all at {CEILING} at once.
+        </p>
+      )}
+
       <div className="grid grid-4" style={{ marginBottom: 'var(--s5)' }}>
-        <Stat label="Overall Performer Rating" value={Math.round(overallRating(effective))} note="Average across all 88" />
+        <Stat
+          label="Overall Performer Rating"
+          value={goat
+            ? <span className="god">{Math.round(overallRating(effective))}</span>
+            : Math.round(overallRating(effective))}
+          note={`All ${ATTRIBUTES.length} at ${CEILING}`}
+        />
         <Stat label="Industry XP" value={<span className="mono">{xp.toLocaleString('en-US')}</span>} note="Earned by working. Spent to unlock professions." />
         <Stat label="Credits" value={player.creditIds.length} />
         <Stat label="Quote" value={<span className="mono">{player.quote > 0 ? formatMoney(player.quote, { cents: false }) : '—'}</span>} note="What you can ask per project" />
@@ -61,6 +79,7 @@ export function CharacterWorkspace() {
         active={tab}
         onChange={setTab}
         tabs={[
+          { id: 'positions', label: GOAT_LABEL, badge: POSITIONS.length },
           { id: 'attributes', label: 'Attributes' },
           { id: 'professions', label: 'Professions', badge: Object.keys(player.professions ?? {}).length || undefined },
           { id: 'skills', label: 'Skills' },
@@ -68,6 +87,87 @@ export function CharacterWorkspace() {
           { id: 'standing', label: 'Standing' },
         ]}
       />
+
+      {tab === 'positions' && (
+        <div className="col gap-4">
+          {POSITIONS.map((position) => {
+            const attributes = position.attributeGroups.flatMap((g) => attributesInGroup(g as AttributeGroup));
+            const positionSkills = SKILLS.filter((k) => position.skillDomains.includes(k.domain));
+            const producing = position.producerSheet ? FOUNDER_ATTRIBUTES : [];
+            const traits = [
+              ...goatTraitsIn(position.id).map((t) => ({ id: t.id, name: t.name, tier: GOAT_LABEL })),
+              ...(position.traitProfession ? traitsForProfession(position.traitProfession as ProfessionId) : [])
+                .map((t) => ({ id: t.id, name: t.name, tier: 'Profession' })),
+              ...(position.performerTraits ? ALL_TRAITS.filter((t) => !t.profession) : [])
+                .map((t) => ({ id: t.id, name: t.name, tier: titleCaseLabel(t.category) })),
+              ...(position.producerTraits ? FOUNDER_TRAITS : [])
+                .map((t) => ({ id: t.id, name: t.name, tier: 'Producing' })),
+            ];
+            const measures = attributes.length + positionSkills.length + producing.length;
+
+            return (
+              <Panel
+                key={position.id}
+                title={position.name}
+                subtitle={`${measures} ${measures === 1 ? 'measure' : 'measures'}, all at ${CEILING} · ${traits.length} traits, all held`}
+                actions={<span className="chip chip-accent">{GOAT_LABEL}</span>}
+              >
+                {producing.length > 0 && (
+                  <>
+                    <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>Producing Attributes</div>
+                    {producing.map((attribute) => (
+                      <div key={attribute.id} className={`attr-row${goat ? ' god-row' : ''}`} title={attribute.description}>
+                        <div className="attr-name">{attribute.name}</div>
+                        <div className={`attr-value${goat ? ' god-value' : ''}`}>{Math.round(founderScore(sim, attribute.id))}</div>
+                        <div className={`meter${goat ? ' god-meter' : ''}`}><span style={{ width: `${founderScore(sim, attribute.id)}%` }} /></div>
+                      </div>
+                    ))}
+                  </>
+                )}
+
+                {attributes.length > 0 && (
+                  <>
+                    <div className="eyebrow" style={{ margin: 'var(--s3) 0 var(--s2)' }}>Performer Attributes</div>
+                    {attributes.map((attribute) => (
+                      <div key={attribute.id} className={`attr-row${goat ? ' god-row' : ''}`} title={attribute.description}>
+                        <div className="attr-name">{attribute.name}</div>
+                        <div className={`attr-value${goat ? ' god-value' : ''}`}>{Math.round(effective[attribute.id] ?? 0)}</div>
+                        <div className={`meter${goat ? ' god-meter' : ''}`}><span style={{ width: `${effective[attribute.id] ?? 0}%` }} /></div>
+                      </div>
+                    ))}
+                  </>
+                )}
+
+                {positionSkills.length > 0 && (
+                  <>
+                    <div className="eyebrow" style={{ margin: 'var(--s3) 0 var(--s2)' }}>Skills</div>
+                    {positionSkills.map((skill) => (
+                      <div key={skill.id} className={`attr-row${goat ? ' god-row' : ''}`} title={skill.description}>
+                        <div className="attr-name">{skill.name}</div>
+                        <div className={`attr-value${goat ? ' god-value' : ''}`}>{Math.round(skills[skill.id] ?? 0)}</div>
+                        <div className={`meter${goat ? ' god-meter' : ''}`}><span style={{ width: `${skills[skill.id] ?? 0}%` }} /></div>
+                      </div>
+                    ))}
+                  </>
+                )}
+
+                <div className="eyebrow" style={{ margin: 'var(--s3) 0 var(--s2)' }}>Traits</div>
+                <div className="row wrap gap-1">
+                  {traits.map((trait) => (
+                    <span
+                      key={trait.id}
+                      className={`chip${trait.tier === GOAT_LABEL ? ' chip-accent' : goat ? ' chip-god' : ''}`}
+                      title={trait.tier}
+                    >
+                      {trait.name}
+                    </span>
+                  ))}
+                </div>
+              </Panel>
+            );
+          })}
+        </div>
+      )}
 
       {tab === 'attributes' && (
         <>
@@ -94,21 +194,21 @@ export function CharacterWorkspace() {
               const value = effective[attribute.id] ?? 0;
               const modified = Math.round(value) !== Math.round(base);
               return (
-                <div key={attribute.id} className="attr-row" title={attribute.description}>
+                <div key={attribute.id} className={`attr-row${goat ? ' god-row' : ''}`} title={attribute.description}>
                   <div>
                     <div className="attr-name">{attribute.name}</div>
                     <div className="xs dim">{attribute.description}</div>
                   </div>
-                  <div className="attr-value">
+                  <div className={`attr-value${goat ? ' god-value' : ''}`}>
                     {Math.round(value)}
-                    {modified && (
+                    {!goat && modified && (
                       <span className={value > base ? 'positive xs' : 'negative xs'}>
                         {' '}{value > base ? '+' : ''}{Math.round(value - base)}
                       </span>
                     )}
                   </div>
-                  <div className="meter">
-                    <span style={{ width: `${value}%` }} />
+                  <div className={`meter${goat ? ' god-meter' : ''}`}>
+                    <span style={{ width: '100%' }} />
                   </div>
                 </div>
               );
@@ -124,7 +224,7 @@ export function CharacterWorkspace() {
             earn working, and each profession then levels on its own work: every one of its skills rises
             with each level, and a trait slot opens at levels 1, 3, 6 and 9.
           </p>
-          <div className="grid grid-2">
+          <div className="grid grid-sheet">
             {PROFESSIONS.map((def) => {
               const progress = player.professions?.[def.id];
               const level = progress ? levelFor(progress.xp) : 0;
@@ -240,14 +340,18 @@ export function CharacterWorkspace() {
       )}
 
       {tab === 'skills' && (
-        <div className="grid grid-2">
+        <div className="grid grid-sheet">
           {SKILL_DOMAINS.map((domain) => (
-            <Panel key={domain} title={domain} subtitle={`Average ${Math.round(domainAverage(player.skills, domain))}`}>
+            <Panel key={domain} title={titleCaseLabel(domain)} subtitle={`Average ${Math.round(domainAverage(player.skills, domain))}`}>
               {SKILLS.filter((s) => s.domain === domain).map((skill) => (
-                <div key={skill.id} className="attr-row" title={skill.description}>
+                <div key={skill.id} className={`attr-row${goat ? ' god-row' : ''}`} title={skill.description}>
                   <div className="attr-name">{skill.name}</div>
-                  <div className="attr-value">{Math.round(player.skills[skill.id] ?? 0)}</div>
-                  <div className="meter"><span style={{ width: `${player.skills[skill.id] ?? 0}%` }} /></div>
+                  <div className={`attr-value${goat ? ' god-value' : ''}`}>
+                    {Math.round(player.skills[skill.id] ?? 0)}
+                  </div>
+                  <div className={`meter${goat ? ' god-meter' : ''}`}>
+                    <span style={{ width: goat ? '100%' : `${player.skills[skill.id] ?? 0}%` }} />
+                  </div>
                 </div>
               ))}
             </Panel>
@@ -267,8 +371,8 @@ export function CharacterWorkspace() {
                 return (
                   <div key={id}>
                     <div className="row gap-2">
-                      <span className="strong">{traitName(trait, player)}</span>
-                      <span className="chip">{titleCaseLabel(trait.category)}</span>
+                      <span className={`strong${goat ? ' god' : ''}`}>{traitName(trait, player)}</span>
+                      <span className={`chip${goat ? ' chip-god' : ''}`}>{titleCaseLabel(trait.category)}</span>
                     </div>
                     <p className="small muted" style={{ margin: '4px 0' }}>{trait.description}</p>
                     <div className="row wrap gap-1">
@@ -279,7 +383,7 @@ export function CharacterWorkspace() {
                       ))}
                       {Object.entries(trait.systemMods ?? {}).map(([key, value]) => (
                         <span key={key} className="chip chip-info">
-                          {key.replace(/([A-Z])/g, ' $1').toLowerCase()} ×{value}
+                          {titleCaseLabel(key.replace(/([A-Z])/g, ' $1'))} ×{value}
                         </span>
                       ))}
                     </div>
@@ -292,7 +396,7 @@ export function CharacterWorkspace() {
       )}
 
       {tab === 'standing' && (
-        <div className="grid grid-2">
+        <div className="grid grid-sheet">
           <Panel title="Reputation" subtitle="Seven separate things. You can be famous and disliked professionally.">
             <div className="col gap-4">
               <Meter label="Public Fame" value={player.reputation.publicFame} hint="How many people know who you are." />

@@ -89,7 +89,12 @@ export function WorldMap({
   return (
     <div className="worldmap-shell">
       <div className="worldmap-bar">
-        <span className="worldmap-readout truncate">
+        <span
+          className="worldmap-readout truncate"
+          title={readout
+            ? `${nameOf(readout)}${cityCount(readout) > 0 ? ` · ${cityCount(readout).toLocaleString('en-US')} places` : ''}`
+            : 'Tap anywhere on the map'}
+        >
           {readout ? nameOf(readout) : 'Tap anywhere on the map'}
           {readout && cityCount(readout) > 0 && (
             <span className="dim"> · {cityCount(readout).toLocaleString('en-US')} places</span>

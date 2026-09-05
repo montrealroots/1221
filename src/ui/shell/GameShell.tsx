@@ -6,7 +6,6 @@
  * recent destinations and favourites all survive moving around.
  */
 
-import { useState } from 'react';
 import { useGame } from '@/app/game-context';
 import { GoAnywhere } from './GoAnywhere';
 import { HelpPanel } from './HelpPanel';
@@ -14,86 +13,18 @@ import { TimeControls } from './TimeControls';
 import { Home } from '@/ui/screens/Home';
 import { World } from '@/ui/screens/World';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
-import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
-import { useWorld } from '@/app/game-context';
 
-interface RailEntry {
-  route: string;
-  label: string;
-  icon: string;
-  badge?: number;
-}
 
 export function GameShell() {
   const game = useGame();
   const { sim, route, navigate, breadcrumbs, searchOpen, setSearchOpen, helpOpen, setHelpOpen, toasts } = game;
-  const [railOpen, setRailOpen] = useState(false);
-
-  const decisions = useWorld((s) => openDecisions(s).length);
-  const unread = useWorld((s) => unreadNotifications(s).length);
-  const player = useWorld((s) => s.player);
-
-  const groups: { label: string; items: RailEntry[] }[] = [
-    {
-      label: 'Life',
-      items: [
-        { route: '/home', label: 'Home', icon: '⌂', badge: decisions },
-        { route: '/world', label: 'World', icon: '◎' },
-        { route: '/workspace/calendar', label: 'Calendar', icon: '▤' },
-        { route: '/workspace/wellbeing', label: 'Wellbeing', icon: '◍' },
-        { route: '/workspace/relationships', label: 'Relationships', icon: '⚭' },
-        { route: '/workspace/history', label: 'History', icon: '❧' },
-      ],
-    },
-    {
-      label: 'Money And Things',
-      items: [
-        { route: '/workspace/bank', label: 'Bank', icon: '▦' },
-        { route: '/workspace/property', label: 'Property', icon: '⌂' },
-        { route: '/workspace/vehicles', label: 'Vehicles', icon: '⛁' },
-        { route: '/workspace/shopping', label: 'Shopping', icon: '⛾' },
-        { route: '/workspace/insurance', label: 'Insurance', icon: '⛨' },
-      ],
-    },
-    {
-      label: 'Work',
-      items: [
-        { route: '/workspace/jobs', label: 'Work', icon: '⛭' },
-        { route: '/workspace/casting', label: 'Casting', icon: '★' },
-        { route: '/workspace/projects', label: 'Projects', icon: '🎬' },
-        { route: '/workspace/company', label: 'Company', icon: '⌗' },
-        { route: '/workspace/industry', label: 'Industry', icon: '◆' },
-        { route: '/workspace/awards', label: 'Awards', icon: '✦' },
-        { route: '/workspace/social', label: 'Social', icon: '◈' },
-      ],
-    },
-    {
-      label: 'Care And Growth',
-      items: [
-        { route: '/workspace/health', label: 'Health', icon: '✚' },
-        { route: '/workspace/education', label: 'Education', icon: '✎' },
-        { route: '/workspace/city', label: 'The City', icon: '⌖' },
-        { route: '/workspace/travel', label: 'Travel', icon: '✈' },
-        { route: '/workspace/character', label: 'Character', icon: '☰' },
-        { route: '/workspace/settings', label: 'Settings', icon: '⚙' },
-      ],
-    },
-  ];
 
   return (
     <div className="shell">
       <a className="skip-link" href="#main">Skip to content</a>
 
       <header className="topbar">
-        <button
-          className="btn btn-ghost btn-sm rail-toggle"
-          onClick={() => setRailOpen((open) => !open)}
-          aria-expanded={railOpen}
-          aria-label="Toggle Navigation"
-        >
-          ☰
-        </button>
 
         <button
           className="topbar-brand btn btn-ghost"
@@ -142,38 +73,6 @@ export function GameShell() {
       </header>
 
       <div className="shell-body">
-        <nav className="rail" data-open={railOpen} aria-label="Main Navigation">
-          {groups.map((group) => (
-            <div key={group.label} className="rail-group">
-              <div className="rail-group-label">{group.label}</div>
-              {group.items.map((item) => (
-                <button
-                  key={item.route}
-                  className="rail-item"
-                  aria-current={route === item.route ? 'page' : undefined}
-                  onClick={() => { navigate(item.route, item.label); setRailOpen(false); }}
-                >
-                  <span className="rail-icon" aria-hidden="true">{item.icon}</span>
-                  <span className="grow truncate">{item.label}</span>
-                  {item.badge !== undefined && item.badge > 0 && (
-                    <span className="rail-badge">{item.badge > 99 ? '99+' : item.badge}</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          ))}
-
-          <div className="rail-group">
-            <div className="rail-group-label">Player</div>
-            <div style={{ padding: 'var(--s2) var(--s3)' }}>
-              <div className="small strong truncate">{player.displayName}</div>
-              <div className="xs dim truncate">
-                {unread > 0 ? `${unread} unread` : 'Nothing unread'}
-              </div>
-            </div>
-          </div>
-        </nav>
-
         <main className="main" id="main" tabIndex={-1}>
           <div className="main-inner">
             {breadcrumbs.length > 1 && (

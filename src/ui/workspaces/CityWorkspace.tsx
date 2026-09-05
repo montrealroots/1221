@@ -39,15 +39,6 @@ export function CityWorkspace() {
   const near = useWorld((s) => placesNear(s, { mode, limit: 120 }).filter((entry) => kinds.includes(entry.place.kind)));
   const room = useWorld((s) => hotelRoom(s, s.player));
   const city = CITIES.get(sim.player.currentLocationId);
-  // Anything you are called to today, and how long it takes to get there.
-  const shootToday = useWorld((s) => Object.values(s.universe.shootDays)
-    .filter((day) => day.status === 'scheduled'
-      && day.locationId === s.player.currentLocationId
-      && day.callTime > s.now - 6 * 3_600_000 && day.callTime < s.now + 30 * 3_600_000
-      && (day.requiredCastIds.includes(s.player.id) || s.universe.projects[day.projectId]?.directorId === s.player.id))
-    .sort((a, b) => a.callTime - b.callTime)
-    .slice(0, 3)
-    .map((day) => ({ day, project: s.universe.projects[day.projectId], journey: planJourney(s, { cityId: day.locationId }, mode) })));
   const homeJourney = useMemo(() => {
     const home = sim.player.residenceId ? sim.universe.properties[sim.player.residenceId] : undefined;
     if (!home || home.locationId !== sim.player.currentLocationId) return undefined;
@@ -59,15 +50,13 @@ export function CityWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">{city?.name ?? 'Somewhere'}</div>
-        <h1>{here.place?.name ?? here.unitBase?.label ?? here.property?.addressLine ?? `Out In ${here.city}`}</h1>
+        <h1>{here.place?.name ?? here.property?.addressLine ?? `Out In ${here.city}`}</h1>
         <p className="muted">
           {here.place
             ? `${PLACE_KIND_LABEL[here.place.kind]}. ${here.place.about} ${here.place.real ? REAL_NOTE : INVENTED_NOTE}`
-            : here.unitBase
-              ? 'The unit base. Trucks, tents, a table of food nobody has time for, and the day about to start.'
-              : here.property
-                ? 'Your own front door. Eat, shower, sleep, or go out.'
-                : 'You are in the city, between places. Everything below is somewhere you could be instead.'}
+            : here.property
+              ? 'Your own front door. Eat, shower, sleep, or go out.'
+              : 'You are in the city, between places. Everything below is somewhere you could be instead.'}
         </p>
       </div>
 
@@ -82,31 +71,6 @@ export function CityWorkspace() {
         />
       </div>
 
-      {shootToday.length > 0 && (
-        <Panel title="On The Call Sheet Today" subtitle="Turning up early is worth something. Turning up at all is worth more.">
-          <div className="list">
-            {shootToday.map(({ day, project, journey }) => (
-              <div key={day.id} className="list-item list-static">
-                <div className="grow">
-                  <div className="small strong">{project?.title} — Day {day.dayNumber}</div>
-                  <div className="xs dim">
-                    {day.locationName}
-                    {day.callSheet ? ` · crew call ${new Date(day.callSheet.crewCall).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}` : ''}
-                    {` · ${formatDuration(journey.minutes * 60_000)} from here`}
-                  </div>
-                </div>
-                <button
-                  className="btn btn-sm btn-primary"
-                  disabled={here.unitBase?.shootDayId === day.id}
-                  onClick={() => run('go.to', { shootDayId: day.id, mode })}
-                >
-                  {here.unitBase?.shootDayId === day.id ? 'You Are Here' : 'Go To Set'}
-                </button>
-              </div>
-            ))}
-          </div>
-        </Panel>
-      )}
 
       <Panel title="Right Here" subtitle="What you can do without going anywhere.">
         <div className="row wrap gap-2">
@@ -143,7 +107,7 @@ export function CityWorkspace() {
           )}
           {homeJourney && here.property?.id !== homeJourney.home.id && (
             <button className="btn btn-sm" onClick={() => run('go.to', { home: true, mode })}>
-              Go Home ({formatDuration(homeJourney.journey.minutes * 60_000)})
+              Go Home ({titleCaseLabel(formatDuration(homeJourney.journey.minutes * 60_000))})
             </button>
           )}
         </div>
@@ -284,7 +248,7 @@ function OrderDialog({ place, onClose }: { place: Place; onClose: () => void }) 
         </div>
       )}
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {formatDuration(place.minutes * 60_000)} at the table. {titleCaseLabel(sim.player.wellbeing.nourishment < 40 ? 'you are hungry' : 'you are not especially hungry')}.
+        {formatDuration(place.minutes * 60_000)} at the table. {sim.player.wellbeing.nourishment < 40 ? 'You are hungry' : 'You are not especially hungry'}.
       </p>
     </Modal>
   );

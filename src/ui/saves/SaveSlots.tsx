@@ -217,8 +217,8 @@ export function SaveSlots({
         </div>
 
         <p className="center dim xs" style={{ marginTop: 'var(--s7)' }}>
-          SLATE {APP_VERSION} · Saves are kept on {adapter.name}
-          {adapter.serverAuthoritative ? ' and the server is authoritative for critical state.' : '.'}
+          SLATE {APP_VERSION} · Saved To {adapter.name}
+          {adapter.serverAuthoritative ? ' · Server Authoritative For Critical State' : ''}
         </p>
       </div>
 

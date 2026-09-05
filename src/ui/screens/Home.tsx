@@ -14,11 +14,11 @@ import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
+import { DESTINATIONS } from '@/ui/shell/destinations';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
-import { activeProjects } from '@/engine/systems/film';
 import { CITIES } from '@/engine/content/geography';
 import {
   formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
@@ -26,13 +26,12 @@ import {
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 
 export function Home() {
-  const { sim, navigate, run } = useGame();
+  const { sim, navigate, run, toast } = useGame();
   const snapshot = useWorld(lifeSnapshot);
   const decisions = useWorld(openDecisions);
   const next = useWorld(nextCommitment);
   const soon = useWorld((s) => upcoming(s, 6));
   const worth = useWorld((s) => netWorth(s, s.player.id));
-  const projects = useWorld((s) => activeProjects(s, s.player.id).slice(0, 3));
   const unread = useWorld(unreadNotifications);
 
   const player = snapshot.player;
@@ -57,6 +56,49 @@ export function Home() {
             <> · <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
           )}
         </p>
+      </div>
+
+      {/*
+        Everywhere you can go. This was a rail down the left of every screen;
+        it is here because Home is the hub and a hub that is missing half the
+        building is not one.
+      */}
+      <div className="card" style={{ marginBottom: 'var(--s5)' }}>
+        <div className="panel-head">
+          <div>
+            <h2>Where To</h2>
+            <p className="muted small">
+              Everything in the game. Press <kbd>/</kbd> from anywhere to search it instead.
+            </p>
+          </div>
+        </div>
+        {DESTINATIONS.map((group) => (
+          <div key={group.label} style={{ marginBottom: 'var(--s4)' }}>
+            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group.label}</div>
+            <div className="dest-grid">
+              {group.items.map((dest) => (
+                <button
+                  key={dest.route}
+                  className={`dest${dest.locked ? ' is-locked' : ''}`}
+                  aria-label={dest.locked ? `${dest.label}, Locked, Under Construction` : dest.label}
+                  onClick={() => {
+                    if (dest.locked) { toast(`${dest.label} Is Under Construction.`, 'neutral'); return; }
+                    navigate(dest.route, dest.label);
+                  }}
+                >
+                  <span className="dest-icon" aria-hidden="true">{dest.icon}</span>
+                  <span className="dest-body">
+                    <span className="dest-label">
+                      {dest.label}
+                      {dest.locked && <span className="dest-lock" aria-hidden="true">🔒</span>}
+                    </span>
+                    <span className="dest-detail">{dest.detail}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
@@ -104,9 +146,11 @@ export function Home() {
                           {action.label}
                         </button>
                       ))}
-                      <button className="btn btn-sm" onClick={() => navigate(decision.route)}>
-                        Open
-                      </button>
+                      {decision.route && (
+                        <button className="btn btn-sm" onClick={() => navigate(decision.route!)}>
+                          Open
+                        </button>
+                      )}
                       <button
                         className="btn btn-ghost btn-sm"
                         onClick={() => run('world.dismiss_decision', { decisionId: decision.id })}
@@ -154,7 +198,7 @@ export function Home() {
                 <div className="col gap-2">
                   {soon.slice(1, 5).map((entry) => (
                     <div key={entry.id} className="row-between">
-                      <span className="small truncate">{titleCaseLabel(entry.title)}</span>
+                      <span className="small truncate" title={titleCaseLabel(entry.title)}>{titleCaseLabel(entry.title)}</span>
                       <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
                     </div>
                   ))}
@@ -283,20 +327,6 @@ export function Home() {
           </div>
         </Panel>
 
-        <Panel title="Work" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Work</button>}>
-          {snapshot.job ? (
-            <div className="col gap-3">
-              <Stat label={snapshot.job.employerName} value={<span style={{ fontSize: 'var(--size-md)' }}>{snapshot.job.title}</span>} />
-              <Meter label="Performance" value={snapshot.job.performance} />
-              <Meter label="Attendance" value={snapshot.job.attendance} />
-            </div>
-          ) : (
-            <div className="col gap-2">
-              <p className="small muted">You are not employed.</p>
-              <button className="btn btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Find Work</button>
-            </div>
-          )}
-        </Panel>
 
         <Panel title="Standing" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/character', 'Character')}>Character</button>}>
           <div className="col gap-3">
@@ -308,34 +338,6 @@ export function Home() {
       </div>
 
       <div className="grid grid-2">
-        <Panel
-          title="What You Are Working On"
-          flush
-          actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>All Projects</button>}
-        >
-          {projects.length === 0 ? (
-            <Empty
-              title="Nothing In Development"
-              body="No script, no shoot, no release. Every career in this game starts with somebody deciding to make something."
-              action={<button className="btn btn-primary btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>Start Something</button>}
-            />
-          ) : (
-            <div className="list">
-              {projects.map((project) => (
-                <button key={project.id} className="list-item" onClick={() => navigate('/workspace/projects', project.title)}>
-                  <div className="grow">
-                    <div className="small strong">{project.title}</div>
-                    <div className="xs dim">
-                      {titleCaseLabel(project.format.replace(/_/g, ' '))} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}
-                      {project.genres.length > 0 && ` · ${project.genres.map(titleCaseLabel).join(', ')}`}
-                    </div>
-                  </div>
-                  <span className="chip">{titleCaseLabel(project.phase.replace(/_/g, ' '))}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </Panel>
 
         <Panel title="Home And Household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
           {snapshot.home ? (

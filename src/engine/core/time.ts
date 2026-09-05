@@ -354,8 +354,24 @@ export function seasonOf(instant: Instant, zone: TimeZone, latitude = 34): Seaso
 export function ageOn(birthInstant: Instant, at: Instant, zone: TimeZone): number {
   const b = zonedParts(birthInstant, zone);
   const n = zonedParts(at, zone);
-  let age = n.year - b.year;
-  if (n.month < b.month || (n.month === b.month && n.day < b.day)) age -= 1;
+  return ageOnDate(b, n);
+}
+
+/**
+ * The same, from plain calendar parts.
+ *
+ * Character creation knows a birthday and a start date as numbers rather than
+ * instants, and it used to do this arithmetic itself as `startYear -
+ * birthYear`. That is wrong for anybody whose birthday has not come round yet
+ * that year: the screen promised a character of 25 and the game handed back
+ * one of 24. There is one definition of how old somebody is, and this is it.
+ */
+export function ageOnDate(
+  born: { year: number; month: number; day: number },
+  at: { year: number; month: number; day: number },
+): number {
+  let age = at.year - born.year;
+  if (at.month < born.month || (at.month === born.month && at.day < born.day)) age -= 1;
   return Math.max(0, age);
 }
 

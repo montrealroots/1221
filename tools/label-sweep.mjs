@@ -11,7 +11,7 @@
  * one — "iPhone", "n-th", "de Havilland" — and those are spelled the way the
  * world spells them.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 /**
@@ -35,13 +35,63 @@ const JOINING_WORDS = new Set([
  */
 const LABEL_KEYS = /\b(name|shortName|label|title|heading|tab|cta|actionLabel)\b/;
 
-const files = execSync('git ls-files "src/engine/content/*.ts" "src/engine/domain/*.ts" "src/engine/content/**/*.ts"', { encoding: 'utf8' })
+/**
+ * Fields that hold a *list* of labels. These reach the screen as chips, one
+ * word each, and a lowercase one shows up there exactly the way a lowercase
+ * `name` does — but no scalar rule catches them, because the label is inside
+ * an array rather than after a colon.
+ */
+const LABEL_ARRAY_KEYS = /\b(features|amenities|perks|highlights|inclusions|equipment|facilities|includes|benefits|palette|materials|finishes|colours)\b/;
+
+const WRITE = process.argv.includes('--write');
+
+const files = execSync('git ls-files "src/engine/**/*.ts" "src/engine/*.ts"', { encoding: 'utf8' })
   .split('\n').filter(Boolean)
-  .filter((f) => !/world-data|records|market-profiles|premise|logline/.test(f));
+  .filter((f) => !/world-data|records|market-profiles|premise|logline|holidays-data|geography-data/.test(f));
 
 const problems = [];
+
+/** Whether one label reads as Title Case. Returns the words that do not. */
+function lowercaseWordsIn(value) {
+  if (/[.?!]$/.test(value)) return [];
+  return value.split(/\s+/).filter((word, i) => {
+    // Strip leading punctuation and quotes, but not letters: "Île" starts
+    // with a capital, and stripping the accent off it would say otherwise.
+    const cleaned = word.replace(/^[^\p{L}]+/u, '');
+    const first = cleaned[0];
+    if (!first) return false;
+    if (first !== first.toLowerCase()) return false;
+    // A name that carries its own capital — tvN, iQIYI, iPhone — is spelled
+    // that way on purpose.
+    if (/[A-Z]/.test(cleaned)) return false;
+    // So is a model designation with a number in it: the Angénieux Optimo
+    // Ultra 12x, the Aputure LS 600d, where the letter means something to
+    // the maker. The digits are checked on the word itself, because the
+    // leading ones are stripped before the first letter is looked at.
+    if (/\d/.test(word)) return false;
+    if (i > 0 && JOINING_WORDS.has(cleaned.toLowerCase())) return false;
+    return true;
+  });
+}
+
 for (const file of files) {
   const lines = readFileSync(file, 'utf8').split('\n');
+
+  // Lists of labels: features: ['Elevator', 'Shared laundry'].
+  lines.forEach((line, index) => {
+    if (!LABEL_ARRAY_KEYS.test(line)) return;
+    const arrays = /\b(features|amenities|perks|highlights|inclusions|equipment|facilities|includes|benefits|palette|materials|finishes|colours):\s*\[([^\]]*)\]/g;
+    let outer;
+    while ((outer = arrays.exec(line)) !== null) {
+      const [, key, body] = outer;
+      for (const entry of body.matchAll(/'((?:[^'\\]|\\.){2,70})'/g)) {
+        const value = entry[1];
+        const bad = lowercaseWordsIn(value);
+        if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
+      }
+    }
+  });
+
   lines.forEach((line, index) => {
     if (!LABEL_KEYS.test(line)) return;
     const re = /\b(name|shortName|label|title|heading|tab|cta|actionLabel):\s*'((?:[^'\\\\]|\\\\.){2,70})'/g;
@@ -49,31 +99,41 @@ for (const file of files) {
     while ((match = re.exec(line)) !== null) {
       const [, key, value] = match;
       // Prose in a label field is caught by the other tool; here we only want
-      // words that begin lowercase. A comma means it is a phrase describing
-      // something — "Bell Media, part of BCE" — rather than a label.
-      if (/[.?!]$/.test(value) || value.includes(',')) continue;
-      const words = value.split(/\s+/);
-      const bad = words.filter((word, i) => {
-        // Strip leading punctuation and quotes, but not letters: "Île" starts
-        // with a capital, and stripping the accent off it would say otherwise.
-        const cleaned = word.replace(/^[^\p{L}]+/u, '');
-        const first = cleaned[0];
-        if (!first) return false;
-        if (first !== first.toLowerCase()) return false;
-        // A name that carries its own capital — tvN, iQIYI, iPhone — is spelled
-        // that way on purpose.
-        if (/[A-Z]/.test(cleaned)) return false;
-        // So is a model designation with a number in it: the Angénieux Optimo
-        // Ultra 12x, the Aputure LS 600d, where the letter means something to
-        // the maker. The digits are checked on the word itself, because the
-        // leading ones are stripped before the first letter is looked at.
-        if (/\d/.test(word)) return false;
-        if (i > 0 && JOINING_WORDS.has(cleaned.toLowerCase())) return false;
-        return true;
-      });
+      // words that begin lowercase.
+      const bad = lowercaseWordsIn(value);
       if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
     }
   });
+}
+
+/**
+ * Title Case for one label: every word starts with a capital, and anything
+ * spelled with its own capitals — iPhone, tvN, LS 600d — is left alone.
+ */
+function toTitleCase(value) {
+  return value.replace(/\S+/g, (word) => {
+    const at = word.search(/\p{L}/u);
+    if (at < 0) return word;
+    const rest = word.slice(at + 1);
+    if (/\p{Lu}/u.test(rest)) return word;
+    if (/\d/.test(word)) return word;
+    return word.slice(0, at) + word[at].toUpperCase() + rest;
+  });
+}
+
+if (WRITE) {
+  const byFileLines = new Map();
+  for (const problem of problems) {
+    if (!byFileLines.has(problem.file)) byFileLines.set(problem.file, readFileSync(problem.file, 'utf8').split('\n'));
+    const lines = byFileLines.get(problem.file);
+    const index = problem.line - 1;
+    const fixed = toTitleCase(problem.value);
+    if (fixed === problem.value) continue;
+    lines[index] = lines[index].split(`'${problem.value}'`).join(`'${fixed}'`);
+  }
+  for (const [file, lines] of byFileLines) writeFileSync(file, lines.join('\n'));
+  console.log(`Rewrote ${problems.length} label${problems.length === 1 ? '' : 's'} across ${byFileLines.size} file${byFileLines.size === 1 ? '' : 's'}.`);
+  process.exit(0);
 }
 
 console.log(`${problems.length} label${problems.length === 1 ? '' : 's'} with a lowercase word`);

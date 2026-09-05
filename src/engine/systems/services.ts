@@ -19,7 +19,7 @@ import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { createBill } from './finance';
 import { generatePersonName } from '../content/names';
-import { systemModifier } from '../domain/attributes';
+import { modifierFor } from '../domain/attributes';
 
 // ---------------------------------------------------------------------------
 // Healthcare
@@ -483,8 +483,6 @@ export function buildQuote(
     if (ref.type === 'vehicle') insuredValue += sim.universe.vehicles[ref.id]?.currentValue ?? 0;
     if (ref.type === 'property') insuredValue += sim.universe.properties[ref.id]?.marketValue ?? 0;
     if (ref.type === 'asset') insuredValue += sim.universe.assets[ref.id]?.currentValue ?? 0;
-    if (ref.type === 'project') insuredValue += sim.universe.projects[ref.id]?.budget ?? 0;
-    if (ref.type === 'equipment') insuredValue += sim.universe.equipment[ref.id]?.currentValue ?? 0;
   }
 
   let premium = product.basePremium > 0
@@ -501,7 +499,7 @@ export function buildQuote(
   if (line === 'health' && person) {
     const age = zonedParts(sim.now, sim.homeZone).year - zonedParts(person.birthInstant, sim.homeZone).year;
     premium = applyRate(premium, remap(age, 20, 65, 0.72, 2.1));
-    premium = applyRate(premium, systemModifier(person.traits, 'injuryRisk'));
+    premium = applyRate(premium, modifierFor(person, 'injuryRisk'));
   }
   if (line === 'production') {
     premium = Math.round(insuredValue * (product.valueRate ?? 0.019));
@@ -673,7 +671,7 @@ function attendSession(sim: Simulation, enrollmentId: Id): void {
     return;
   }
 
-  const trainingGain = systemModifier(person.traits, 'trainingGain');
+  const trainingGain = modifierFor(person, 'trainingGain');
   const focus = clamp(person.wellbeing.energy / 100 * 0.5 + (1 - person.wellbeing.stress / 100) * 0.5, 0.3, 1.1);
   const instructorFactor = remap(course.instructorQuality, 40, 100, 0.7, 1.4);
 

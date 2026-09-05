@@ -1,7 +1,6 @@
 import { TutorialCard } from '@/ui/shell/Tutorial';
 import { CalendarWorkspace } from './CalendarWorkspace';
 import { BankWorkspace } from './BankWorkspace';
-import { WorkWorkspace } from './WorkWorkspace';
 import { WellbeingWorkspace } from './WellbeingWorkspace';
 import { CharacterWorkspace } from './CharacterWorkspace';
 import { SettingsWorkspace } from './SettingsWorkspace';
@@ -14,18 +13,12 @@ import { TravelWorkspace } from './TravelWorkspace';
 import { HealthWorkspace } from './HealthWorkspace';
 import { InsuranceWorkspace } from './InsuranceWorkspace';
 import { EducationWorkspace } from './EducationWorkspace';
-import { CastingWorkspace } from './CastingWorkspace';
-import { ProjectsWorkspace } from './ProjectsWorkspace';
-import { CompanyWorkspace } from './CompanyWorkspace';
 import { SocialWorkspace } from './SocialWorkspace';
-import { AwardsWorkspace } from './AwardsWorkspace';
-import { IndustryWorkspace } from './IndustryWorkspace';
 import { CityWorkspace } from './CityWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
   '/workspace/bank': BankWorkspace,
-  '/workspace/jobs': WorkWorkspace,
   '/workspace/wellbeing': WellbeingWorkspace,
   '/workspace/character': CharacterWorkspace,
   '/workspace/settings': SettingsWorkspace,
@@ -39,12 +32,7 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/health': HealthWorkspace,
   '/workspace/insurance': InsuranceWorkspace,
   '/workspace/education': EducationWorkspace,
-  '/workspace/casting': CastingWorkspace,
-  '/workspace/projects': ProjectsWorkspace,
-  '/workspace/company': CompanyWorkspace,
   '/workspace/social': SocialWorkspace,
-  '/workspace/awards': AwardsWorkspace,
-  '/workspace/industry': IndustryWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {

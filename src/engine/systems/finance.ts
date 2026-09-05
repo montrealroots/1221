@@ -14,8 +14,8 @@ import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
 import { applyRate, formatMoney, splitEvenly } from '../core/money';
 import { addDays, addMonths, addYears, instantFromZoned, zonedParts, MS_DAY } from '../core/time';
-import type { Bill, Id, Job, Person } from '../domain/model';
-import { computeAnnualTax } from '../content/tax';
+import type { Bill, Id, Person } from '../domain/model';
+import { computeAnnualTax, costOfLiving } from '../content/tax';
 import { clamp } from '../core/rng';
 
 export const PAYDAY_PRIORITY = 10;
@@ -93,14 +93,6 @@ export function amortisedPayment(principal: Money, annualRate: number, months: n
 // ---------------------------------------------------------------------------
 
 export function registerFinance(sim: Simulation): void {
-  // --- Scheduled: payday ---------------------------------------------------
-  sim.onSchedule('finance.payday', (item) => {
-    const jobId = item.payload.jobId as Id;
-    const job = sim.universe.jobs[jobId];
-    if (!job || job.endedAt) return;
-    payWages(sim, job);
-  });
-
   // --- Scheduled: a bill falls due ----------------------------------------
   sim.onSchedule('finance.bill_due', (item) => {
     const billId = item.payload.billId as Id;
@@ -431,67 +423,10 @@ export function payBill(sim: Simulation, bill: Bill, accountId: Id, manual: bool
   return true;
 }
 
-/** Pays wages for a period, withholding tax at source. */
-export function payWages(sim: Simulation, job: Job): void {
-  const person = sim.universe.people[job.personId];
-  if (!person) return;
-  const accountId = person.primaryAccountId;
-  if (!accountId) return;
-
-  const gross = job.accruedPay;
-  job.accruedPay = 0;
-  if (gross <= 0) {
-    job.nextPayAt = addDays(job.nextPayAt, 14, sim.homeZone);
-    return;
-  }
-
-  const annualised = estimateAnnualIncome(sim, person, job);
-  const annualTax = computeAnnualTax(annualised, person.currentLocationId, sim.now);
-  const withholdingRate = annualised > 0 ? annualTax.total / annualised : 0;
-  const withheld = applyRate(gross, withholdingRate);
-  const net = gross - withheld;
-
-  const incomeAccount = sim.nominalAccount('income', `Wages: ${job.employerName}`);
-  const taxAccount = sim.nominalAccount('expense', 'Tax withheld');
-  sim.post({
-    memo: `${job.employerName} — ${job.title}`,
-    category: 'salary',
-    postings: [
-      { accountId, amount: net },
-      { accountId: taxAccount.id, amount: withheld },
-      { accountId: incomeAccount.id, amount: -gross },
-    ],
-    refType: 'job',
-    refId: job.id,
-  });
-
-  recordTaxable(sim, person.id, gross, withheld);
-  sim.emit('finance.wages_paid', { jobId: job.id, personId: person.id, gross, net, withheld });
-
-  job.nextPayAt = addDays(sim.now, 14, sim.homeZone);
-  sim.schedule({
-    at: job.nextPayAt,
-    kind: 'finance.payday',
-    label: `Payday — ${job.employerName}`,
-    category: 'finance',
-    payload: { jobId: job.id },
-    priority: PAYDAY_PRIORITY,
-    refType: 'job',
-    refId: job.id,
-  });
-}
-
-export function estimateAnnualIncome(sim: Simulation, person: Person, job?: Job): Money {
+export function estimateAnnualIncome(sim: Simulation, person: Person): Money {
+  // Wages used to be the first term here. There are no jobs any more, so
+  // everything below is what actually arrives in the accounts.
   let annual = 0;
-  const activeJob = job ?? (person.jobId ? sim.universe.jobs[person.jobId] : undefined);
-  if (activeJob && !activeJob.endedAt) {
-    switch (activeJob.payBasis) {
-      case 'salary': annual += activeJob.payRate; break;
-      case 'hourly': annual += activeJob.payRate * activeJob.hoursPerWeek * 52; break;
-      case 'daily': annual += activeJob.payRate * activeJob.workDays.length * 52; break;
-      default: annual += activeJob.payRate; break;
-    }
-  }
   // Trailing twelve months of non-wage income keeps withholding roughly honest.
   const from = sim.now - 365 * MS_DAY;
   const owned = new Set(sim.ledger.accountsOf(person.id).map((a) => a.id));
@@ -647,4 +582,51 @@ export function netWorth(sim: Simulation, ownerId: Id): { cash: Money; assets: M
 /** Splits a payment across several recipients, preserving the exact total. */
 export function distribute(total: Money, shares: number[]): Money[] {
   return shares.length > 0 ? splitEvenly(total, shares.length).map((v, i) => applyRate(total, (shares[i] ?? 0)) || v) : [];
+}
+
+// ---------------------------------------------------------------------------
+// Standing bills
+// ---------------------------------------------------------------------------
+
+/**
+ * The bills that arrive whether or not anybody is earning.
+ *
+ * These lived in the job system, which was the wrong home for them: a phone
+ * plan is not a condition of employment. They outlived it.
+ */
+export function createLivingBills(sim: Simulation, personId: Id, cityId: string, hasHome: boolean): void {
+  const col = costOfLiving(cityId);
+  const person = sim.universe.people[personId];
+  const account = person?.primaryAccountId;
+  const firstOfMonth = nextMonthStart(sim);
+
+  const standing: { name: string; category: string; base: Money }[] = [
+    { name: 'Phone Plan', category: 'utilities', base: 68_00 },
+    { name: 'Internet', category: 'utilities', base: 78_00 },
+    { name: 'Streaming Subscriptions', category: 'subscriptions', base: 46_00 },
+  ];
+  if (hasHome) {
+    standing.push({ name: 'Electricity', category: 'utilities', base: 130_00 });
+    standing.push({ name: 'Water And Refuse', category: 'utilities', base: 82_00 });
+  }
+
+  for (const s of standing) {
+    createBill(sim, {
+      payerId: personId,
+      name: s.name,
+      category: s.category,
+      amount: Math.round(s.base * col),
+      frequency: 'monthly',
+      firstDueAt: firstOfMonth,
+      autopayAccountId: account,
+    });
+  }
+}
+
+/** Nine in the morning on the first of next month. */
+export function nextMonthStart(sim: Simulation): number {
+  const p = zonedParts(sim.now, sim.homeZone);
+  const month = p.month === 12 ? 1 : p.month + 1;
+  const year = p.month === 12 ? p.year + 1 : p.year;
+  return instantFromZoned({ year, month, day: 1, hour: 9 }, sim.homeZone);
 }

@@ -67,7 +67,6 @@
   --shadow-lg: 0 2px 6px rgba(0,0,0,.35), 0 24px 60px rgba(0,0,0,.45);
 
   --nav-h: 56px;
-  --rail-w: 232px;
 
   /* The map. Land has to read as land against water at a glance, which the
      surface tokens are deliberately too close together to do. */
@@ -183,7 +182,7 @@ pre, code, .mono-block {
 }
 
 /* Numbers line up and never wrap mid-figure. */
-.tabular, .money, .stat-value { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tabular, .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 
 html, body, #root { height: 100%; }
@@ -312,7 +311,13 @@ a:hover { text-decoration: underline; }
 
 .muted { color: var(--text-muted); }
 .dim { color: var(--text-dim); }
-.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+/*
+ * A figure is read as one thing. Breaking "+$10,221,240" across two lines, or
+ * splitting "53°F" from its degree sign, is never right however narrow the
+ * column, so numbers stay whole and the box around them gives way instead.
+ */
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mono.wrap { white-space: normal; overflow-wrap: anywhere; }
 .tabular { font-variant-numeric: tabular-nums; }
 .positive { color: var(--positive); }
 /* A name that is also a way in: a button dressed as a link inside running text. */
@@ -338,6 +343,14 @@ button.link:hover { color: var(--accent-strong); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
+/*
+ * A sheet of named rows — attributes, skills — needs a wider column than a
+ * card does. At `grid-2`'s 260px minimum a laptop fits four columns, and a
+ * row of name, value and meter then leaves about seventy pixels for the name,
+ * which breaks "Negotiation" in half. This is the same auto-fit, with a
+ * minimum set by what the longest name actually needs.
+ */
+.grid-sheet { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);
@@ -359,7 +372,10 @@ button.link:hover { color: var(--accent-strong); }
 .stat-label { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 /* A long value wraps rather than running out of its panel: a list of formats
    is as much a stat as a number is. */
-.stat-value { font-size: var(--size-lg); font-weight: 650; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; min-width: 0; }
+/* Wraps rather than clips: a stat can hold a person's name as well as a
+   number, and nowrap cut long ones off. break-word keeps a figure like
+   $10,000,000 whole while letting two words fall onto two lines. */
+.stat-value { font-size: var(--size-lg); font-weight: 650; font-variant-numeric: tabular-nums; white-space: normal; overflow-wrap: break-word; min-width: 0; }
 .stat-note { font-size: var(--size-xs); color: var(--text-muted); }
 
 /* Meters: always paired with a number, never colour alone. */
@@ -401,6 +417,17 @@ input[type="range"] {
   color: inherit; font: inherit; cursor: pointer;
 }
 .list-item:last-child { border-bottom: 0; }
+
+/* A row with several fixed-width things on the right of it — a price, a
+   button, a status chip — will squeeze the text column down to a couple of
+   characters a word rather than wrap, which reads as broken even though
+   nothing has technically overflowed. Wrapping the row and giving the text a
+   floor it cannot go below fixes it at every width. */
+.list-item { flex-wrap: wrap; }
+.list-item > .grow { flex: 1 1 14rem; min-width: min(14rem, 100%); }
+@media (max-width: 560px) {
+  .list-item > .grow { flex-basis: 100%; }
+}
 .list-item:hover { background: var(--surface-2); }
 .list-item[aria-selected="true"] { background: var(--accent-dim); }
 .list-static { cursor: default; }
@@ -417,7 +444,7 @@ th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em
 /* Two panels in a dialog: the search and the terms. One above the other on a phone. */
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
 
 .empty {
@@ -553,30 +580,34 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 .shell-body { display: flex; flex: 1; min-height: 0; }
 
-.rail {
-  width: var(--rail-w); flex-shrink: 0; overflow-y: auto;
-  background: var(--surface); border-right: 1px solid var(--line);
-  padding: var(--s3) var(--s2);
+/*
+  Where To — the destination grid on Home.
+
+  This replaces a left-hand rail that sat on every screen. Tiles rather than a
+  list, because Home has the width for it and a destination with a line about
+  what is behind it is worth more than a bare label.
+*/
+.dest-grid {
+  display: grid; gap: var(--s2);
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 }
-.rail-group { margin-bottom: var(--s4); }
-.rail-group-label {
-  font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .1em;
-  color: var(--text-dim); font-weight: 650; padding: var(--s2) var(--s3);
+.dest {
+  display: flex; align-items: flex-start; gap: var(--s3); width: 100%;
+  padding: var(--s3); border-radius: var(--radius-sm); text-align: left;
+  background: var(--surface-2); border: 1px solid var(--line);
+  color: var(--text); font: inherit; cursor: pointer; min-width: 0;
 }
-.rail-item {
-  display: flex; align-items: center; gap: var(--s3); width: 100%;
-  padding: var(--s2) var(--s3); border-radius: var(--radius-sm);
-  background: transparent; border: 0; color: var(--text-muted);
-  font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
+.dest:hover { background: var(--surface-3); border-color: var(--line-strong); }
+.dest-icon { font-size: var(--size-md); line-height: 1.2; flex-shrink: 0; width: 20px; text-align: center; }
+.dest-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dest-label {
+  font-size: var(--size-sm); font-weight: 600; display: flex; align-items: center; gap: var(--s2);
 }
-.rail-item:hover { background: var(--surface-2); color: var(--text); }
-.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
-.rail-icon { width: 18px; text-align: center; flex-shrink: 0; }
-.rail-badge {
-  margin-left: auto; font-size: var(--size-xs); font-weight: 700;
-  background: var(--negative); color: #fff; border-radius: 100px;
-  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px;
-}
+.dest-detail { font-size: var(--size-xs); color: var(--text-dim); }
+.dest-lock { font-size: 10px; opacity: 0.8; }
+/* A destination that exists and does not open. Clicking says so. */
+.dest.is-locked { opacity: 0.6; }
+.dest.is-locked:hover { opacity: 0.8; background: var(--surface-2); border-color: var(--line); }
 
 .main {
   flex: 1; overflow-y: auto; min-width: 0;
@@ -656,17 +687,17 @@ kbd {
 /* ---------- Calendar ---------- */
 
 .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.cal-weekday { background: var(--surface-2); padding: var(--s2); text-align: center; font-size: var(--size-xs); font-weight: 650; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
+.cal-weekday { background: var(--surface-2); padding: var(--s2); text-align: center; font-size: var(--size-xs); font-weight: 650; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; overflow: hidden; }
 .cal-day { background: var(--surface); min-height: 96px; min-width: 0; padding: var(--s2); display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
 .cal-day > * { min-width: 0; max-width: 100%; }
 .cal-day[data-out="true"] { background: var(--surface-2); opacity: .5; }
 .cal-day[data-today="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
-.cal-daynum { font-size: var(--size-xs); font-weight: 650; color: var(--text-muted); }
+.cal-daynum { font-size: var(--size-xs); font-weight: 650; color: var(--text-muted); white-space: nowrap; }
 .cal-event {
   font-size: 10px; padding: 1px 4px; border-radius: 3px;
   background: var(--surface-3); color: var(--text-muted);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  border-left: 2px solid var(--line-strong); cursor: pointer;
+  border-left: 2px solid var(--event-colour, var(--line-strong)); cursor: pointer;
 }
 .cal-event[data-conflict="true"] { box-shadow: 0 0 0 1px var(--negative); }
 .cal-legend { display: flex; flex-wrap: wrap; gap: var(--s3); font-size: var(--size-xs); }
@@ -763,20 +794,32 @@ kbd {
 
 /* ---------- Attribute sheet ---------- */
 
-.attr-row { display: grid; grid-template-columns: 1fr 46px 90px; align-items: center; gap: var(--s3); padding: 3px 0; }
-.attr-name { font-size: var(--size-sm); }
+.attr-row { display: grid; grid-template-columns: minmax(0, 1fr) 46px minmax(48px, 90px); align-items: center; gap: var(--s3); padding: 3px 0; }
+.attr-name { font-size: var(--size-sm); min-width: 0; }
 .attr-value { font-size: var(--size-sm); font-weight: 650; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- God mode ----------
+   Sandbox is a declared cheat, so it is meant to look like one. Everything it
+   has touched is in the clapper gold: the number, the bar, the name and the
+   trait. */
+
+.god { color: var(--accent-strong); }
+.god-value { color: var(--accent-strong); text-shadow: 0 0 12px var(--accent-dim); }
+.attr-row.god-row .attr-name { color: var(--accent); }
+.god-meter > span { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-strong) 100%); }
+.chip-god {
+  background: var(--accent-dim); color: var(--accent-strong);
+  border-color: var(--accent-line); font-weight: 650;
+}
+.god-banner {
+  border: 1px solid var(--accent-line); background: var(--accent-dim);
+  color: var(--accent-strong); border-radius: var(--radius-sm);
+  padding: var(--s2) var(--s3); font-size: var(--size-xs);
+}
 
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
-  :root { --rail-w: 0px; }
-  .rail {
-    position: fixed; top: var(--nav-h); bottom: 0; left: 0; width: 260px;
-    z-index: 30; transform: translateX(-100%); transition: transform .2s;
-    box-shadow: var(--shadow-lg);
-  }
-  .rail[data-open="true"] { transform: none; }
   .main { padding: var(--s4) var(--s3); }
   .slot-grid { grid-template-columns: 1fr; }
   .cal-day { min-height: 62px; }
@@ -784,6 +827,29 @@ kbd {
 }
 
 @media (max-width: 620px) {
+  /*
+   * A month is seven columns wide however narrow the screen is, which on a
+   * phone leaves about thirty pixels a day — room for two letters. So the day
+   * stops trying to name what is on it and shows one bar per entry in that
+   * category's colour. Nothing is lost: the day is a button, and tapping it
+   * opens the day's own panel with every entry named, timed and placed.
+   */
+  .cal-event {
+    display: block; height: 5px; padding: 0; border-left: 0; border-radius: 2px;
+    background: var(--event-colour, var(--line-strong));
+    /* The name is not laid out at all here rather than laid out and hidden,
+       so nothing is half-drawn behind the bar. It stays in the element for a
+       screen reader, and in the title for a pointer. */
+    font-size: 0; line-height: 0; overflow: hidden;
+  }
+  .cal-more { display: none; }
+  /* Seven columns in a phone's width leaves no room for the letter spacing,
+     and without this "SUN" comes apart into "SU" and "N". */
+  .cal-weekday { padding: var(--s2) 0; letter-spacing: 0; }
+  /* The star and the day number cannot share thirty pixels, and the holiday
+     is already the first bar in the cell. */
+  .cal-holiday-mark { display: none; }
+
   .wordmark { font-size: 34px; letter-spacing: .34em; text-indent: .34em; }
   .clapper { font-size: 54px; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
@@ -792,12 +858,11 @@ kbd {
 }
 
 @media (min-width: 901px) {
-  .rail-toggle { display: none; }
 }
 
 /* Print is not a target, but a history export should not be unreadable. */
 @media print {
-  .rail, .topbar, .toasts, .help-panel { display: none !important; }
+  .topbar, .toasts, .help-panel { display: none !important; }
   body { background: #fff; color: #000; }
 }
 
@@ -877,18 +942,8 @@ kbd {
 .check input[type="checkbox"] { margin-top: 2px; }
 
 /* Sandbox, offered at creation rather than buried in a menu. */
-.sandbox-choice {
-  border: 1px dashed var(--line-strong); border-radius: var(--radius);
-  padding: var(--s3); background: var(--surface-2);
-}
-.sandbox-choice.is-on {
-  border-style: solid; border-color: var(--accent);
-  background: var(--accent-dim);
-}
-.sandbox-choice-title { font-weight: 650; font-size: var(--size-sm); }
 /* A label element makes everything inside it bold. The explanation under the
    heading is body copy and should read like it. */
-.sandbox-choice .small { font-weight: 400; line-height: 1.5; }
 
 /* --------------------------------------------------------------------------
    Headshot
@@ -1010,7 +1065,7 @@ kbd {
 
 .weather-now { display: flex; align-items: center; gap: var(--s3); min-width: 0; }
 .weather-icon { font-size: 2.4rem; line-height: 1; flex: none; }
-.weather-temp { font-size: var(--size-xl); font-weight: 650; line-height: 1.1; }
+.weather-temp { font-size: var(--size-xl); font-weight: 650; line-height: 1.1; white-space: nowrap; }
 .weather-week {
   display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s2);
   margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line);

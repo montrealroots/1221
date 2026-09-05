@@ -11,15 +11,22 @@ import type {
   CareerTrack, Person, Personality, SaveMeta, SaveUniverse,
 } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
-import { emptyAttributeSheet, effectiveAttributes, TRAIT_BY_ID, type AttributeSheet } from '../domain/attributes';
-import { emptySkillSheet, type SkillSheet } from '../domain/skills';
+import {
+  ALL_TRAITS, ATTRIBUTES, PROFESSION_TRAITS, emptyAttributeSheet,
+  attributesOf, type AttributeSheet,
+} from '../domain/attributes';
+import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
+import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '../content/founder';
+import { CEILING, GOAT_TRAITS } from '../content/prodigy';
+import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
+import { LEVEL_XP, PROFESSIONS } from '../content/professions';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
-import type { PerformerTitle } from '../core/performer';
+import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
 
@@ -44,6 +51,8 @@ export interface NewSaveConfig {
    */
   performerTitle?: PerformerTitle;
   /** Local date of birth in the starting city's zone. */
+  /** A second passport, for somebody naturalised where they live now. */
+  secondCitizenshipId?: string;
   birthYear: number;
   birthMonth: number;
   birthDay: number;
@@ -54,6 +63,8 @@ export interface NewSaveConfig {
 
   /** Personal */
   personality: Personality;
+  /** Personality: who they are. Chosen, up to four, and they cost. */
+  personalityTraits: string[];
   traits: string[];
   interests: string[];
   goals: string[];
@@ -67,27 +78,26 @@ export interface NewSaveConfig {
    */
   careerStage: number;
 
+  /**
+   * The company.
+   *
+   * There is one decision here and it is the name. The shop is an independent
+   * production company, founded and wholly owned by the character, and it
+   * opens on the morning the save starts. The strike ended every other one, so
+   * this is the only production company trading.
+   */
+  companyName: string;
+
   /** Starting point */
   startLocationId: string;
   housing: StartingHousing;
   wealth: StartingWealth;
-  startWithJob: boolean;
   startWithVehicle: boolean;
   /** World start date, local to the starting city. */
   startYear: number;
   startMonth: number;
   startDay: number;
 
-  /**
-   * Whether Sandbox is on from the first minute.
-   *
-   * It is a decision about what kind of save this is, so it belongs here
-   * rather than three menus deep. A sandbox save can hand itself money, max
-   * its attributes and greenlight anything; a straight save has to earn it.
-   * Either way every sandbox action is written into the log, so the save is
-   * always honest about what it is.
-   */
-  sandbox: boolean;
 }
 
 export function defaultPersonality(): Personality {
@@ -103,16 +113,49 @@ export function defaultConfig(): NewSaveConfig {
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
     personality: defaultPersonality(),
-    traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
+    personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
+    companyName: '',
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
-    startWithJob: true, startWithVehicle: true,
+    startWithVehicle: true,
     startYear: 2026, startMonth: 3, startDay: 2,
-    sandbox: false,
   };
 }
+
+/**
+ * What the company has in the bank the morning it opens.
+ *
+ * Ten million, which is roughly one modest feature or a season of something
+ * cheap — enough to make a first thing without asking anybody, and nowhere
+ * near enough to make a second one if the first does not come back. It is not
+ * the character's own money and it is not a reward: it is the starting
+ * position, the same way the wealth level is.
+ *
+ * At the independent's overhead it is a long runway, so the clock on this save
+ * is not the rent. It is what a production costs.
+ */
+export const FOUNDING_CAPITAL: Money = 10_000_000_00;
+
+/**
+ * What passes through the founder's account on the way in: the capital above,
+ * plus the cost of opening the doors. It is theirs for the few lines it takes
+ * to found the company and then it is the company's.
+ */
+export const FOUNDING_STAKE: Money = FOUNDING_CAPITAL + 220_000_00;
+
+/** The shop every save opens with. There is no choice and no other shape. */
+export const FOUNDING_SHINGLE = 'indie';
+
+/**
+ * What it says it is for, on the morning it opens: nothing yet.
+ *
+ * A company that has never made anything has not earned a remit, and picking
+ * one before the first picture would be a promise about work that does not
+ * exist. It is declared later, by what gets made.
+ */
+export const FOUNDING_REMIT = 'anything';
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
   nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Nothing behind you and rent due.' },
@@ -141,7 +184,6 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     playerId,
     people: {}, relationships: {}, households: {},
     accounts: {}, transactions: [], bills: {}, creditProfiles: {}, taxYears: {},
-    jobs: {}, jobOpenings: {}, jobApplications: {},
     properties: {}, structures: {}, rooms: {}, zones: {}, furnishings: {},
     propertyListings: {}, propertyOffers: {}, realEstateAgents: {},
     constructionProjects: {}, constructionPhases: {}, changeOrders: {},
@@ -151,22 +193,26 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     courses: {}, enrollments: {},
     trips: {}, flightBookings: {}, hotelBookings: {},
     socialAccounts: {}, socialPosts: {}, brandDeals: {},
-    projects: {}, rights: {}, scriptDrafts: {}, roles: {}, auditions: {}, contracts: {},
-    shootDays: {}, postTasks: {}, marketingCampaigns: {}, releases: {}, reviews: {},
-    awardEditions: {}, awardNominations: {}, festivalSubmissions: {}, franchises: {},
-    studios: {}, networks: {}, talentDeals: {}, boxOffice: { weekends: [], yearToDate: {}, pending: [] }, trade: [], press: [],
-    airings: [], streamingCharts: [], saveRecords: {}, zeitgeist: { markets: {}, lastTick: 0, history: [] },
-    companies: {}, divisions: {}, employees: {}, equipment: {}, merchandise: {},
+    companies: {},
+    industry: {
+      briefed: false,
+      // Fiction, fixed here so every save tells the same story about itself.
+      strikeMonths: 19,
+      // The premise: there is nobody else.
+      rivals: 0,
+      // Nobody wrote for nineteen months.
+      material: 0,
+      buyerHunger: 92,
+      // The grips went into construction and have not all come back.
+      crewDepth: 34,
+      ratesSet: {},
+    },
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
     tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
       confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
-    },
-    sandbox: {
-      enabled: false, maxAttributesApplied: false, allTraitsGranted: false,
-      unlimitedFunds: false, ignoreAuthority: false, log: [],
     },
     idempotency: {},
     counters: {},
@@ -175,30 +221,50 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
 }
 
 /** Starting capability from the chosen track and stage. */
-function seedCapability(config: NewSaveConfig): { attributes: AttributeSheet; skills: SkillSheet } {
-  const stage = clamp(config.careerStage, 0, 100) / 100;
-  const attributes = emptyAttributeSheet(8 + Math.round(stage * 22));
-  const skills = emptySkillSheet(4 + Math.round(stage * 18));
+/**
+ * The founder's instrument.
+ *
+ * There is nothing to seed. They are the best living writer, director,
+ * producer, showrunner and actor at once, so every one of the 88 acting
+ * attributes and every skill in every domain starts at the ceiling. Nothing on
+ * the creation screen moves any of it, because there is nowhere for it to go.
+ *
+ * What creation still decides is everything the instrument does not cover:
+ * how much money, who takes your call, and what kind of company you open.
+ */
+/**
+ * Every trait in the game, held at once.
+ *
+ * For anybody else this list is incoherent: half of these are alternatives to
+ * the other half, and every one of them is paid for with a weakness somewhere.
+ * The prodigy flag is what makes it hold — it does not add anything, it stops
+ * a trait subtracting, so the sheet that started at the ceiling stays there.
+ * Nobody else in the save gets this.
+ */
+function everyTrait(): string[] {
+  return ALL_TRAITS.map((trait) => trait.id);
+}
 
-  const boost = (sheet: Record<string, number>, keys: string[], amount: number) => {
-    for (const key of keys) {
-      if (sheet[key] === undefined) continue;
-      sheet[key] = clamp(sheet[key] + amount, 0, 100);
-    }
-  };
+/** Every profession, open on day one, at the top of its ladder, all traits taken. */
+function maxedProfessions(at: number): Person['professions'] {
+  const out: NonNullable<Person['professions']> = {};
+  const topXp = LEVEL_XP[LEVEL_XP.length - 1] ?? 0;
+  for (const def of PROFESSIONS) {
+    out[def.id] = {
+      unlockedAt: at,
+      xp: topXp,
+      traitIds: PROFESSION_TRAITS.filter((t) => t.profession === def.id).map((t) => t.id),
+    };
+  }
+  return out;
+}
 
-  const trackBoost = 14 + stage * 34;
-  boost(attributes, ['emotional_truth', 'charisma', 'audition_technique', 'self_tape_craft', 'memorization', 'camera_awareness', 'active_listening'], trackBoost);
 
-  // Personality feeds a handful of attributes that are genuinely dispositional.
-  attributes['charisma'] = clamp((attributes['charisma'] ?? 10) + (config.personality.extraversion - 50) * 0.25, 0, 100);
-  attributes['resilience'] = clamp((attributes['resilience'] ?? 10) + (config.personality.emotionalStability - 50) * 0.3, 0, 100);
-  attributes['preparation'] = clamp((attributes['preparation'] ?? 10) + (config.personality.conscientiousness - 50) * 0.3, 0, 100);
-  attributes['collaboration'] = clamp((attributes['collaboration'] ?? 10) + (config.personality.agreeableness - 50) * 0.25, 0, 100);
-  attributes['career_strategy'] = clamp((attributes['career_strategy'] ?? 10) + (config.personality.ambition - 50) * 0.2, 0, 100);
-  skills['driving'] = clamp((skills['driving'] ?? 5) + 25, 0, 100);
-  skills['cooking'] = clamp((skills['cooking'] ?? 5) + 10, 0, 100);
-
+function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
+  const attributes = emptyAttributeSheet(CEILING);
+  const skills = emptySkillSheet(CEILING);
+  for (const attribute of ATTRIBUTES) attributes[attribute.id] = CEILING;
+  for (const skill of SKILLS) skills[skill.id] = CEILING;
   return { attributes, skills };
 }
 
@@ -243,7 +309,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    careerLabel: careerLabel('actor'),
+    careerLabel: careerLabel('actor', config.performerTitle ?? impliedPerformerTitle(config.pronouns)),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -253,14 +319,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
 
   const universe = emptyUniverse(meta, now, zone, playerId);
 
-  // Sandbox is a decision about what kind of save this is, made at creation
-  // rather than three menus deep. Turning it on is itself logged, so the save
-  // is always honest about having had it from the start.
-  if (config.sandbox) {
-    universe.sandbox.enabled = true;
-    universe.sandbox.log.push({ at: now, action: 'Sandbox enabled at character creation' });
-  }
-  const { attributes, skills } = seedCapability(config);
+  const { attributes, skills } = seedCapability();
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },
@@ -282,6 +341,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     birthInstant,
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
+    ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),
     currentLocationId: config.startLocationId,
     personality: config.personality,
     interests: config.interests,
@@ -289,15 +349,34 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lifestyle: config.lifestyle,
     background: config.background,
     attributes,
-    traits: config.traits.filter((t) => TRAIT_BY_ID[t]),
+    // Every craft trait in the game. Nothing was picked and nothing could
+    // have been: the best living writer, director, producer, showrunner and
+    // actor holds all of them.
+    traits: everyTrait(),
+    // Personality is the opposite: the only thing on this character that was
+    // genuinely chosen, and the only trait set that still costs them.
+    personalityTraits: config.personalityTraits
+      .filter((id) => PERSONALITY_TRAIT_BY_ID[id])
+      .slice(0, MAX_PERSONALITY_TRAITS),
     skills,
+
+    // The producer's instrument, at the ceiling like everything else. Separate
+    // from the acting set above because they measure different jobs, and both
+    // of them are full.
+    founder: Object.fromEntries(FOUNDER_ATTRIBUTES.map((a) => [a.id, CEILING])),
+    // All fourteen G.O.A.T. traits and all nineteen ordinary producing ones.
+    // The ordinary set is built out of trade-offs — a contrarian reads the
+    // market worse — and the prodigy flag below is what stops the trade-off
+    // half applying to the one person it was never going to apply to.
+    founderTraits: [...GOAT_TRAITS.map((t) => t.id), ...FOUNDER_TRAITS.map((t) => t.id)],
+    prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
-    // A career already under way has some experience behind it; a complete
-    // unknown has none. Either way the professions are earned from here.
-    industryXp: Math.round(clamp(config.careerStage, 0, 100) * 3),
-    professions: {},
+    // Nothing is left to earn. Every profession is already open and already at
+    // the top level, with every trait slot it opens filled.
+    industryXp: 0,
+    professions: maxedProfessions(now),
     representation: {},
     quote: config.careerStage > 40 ? Math.round(config.careerStage * 4_000_00) : 0,
     creditIds: [],
@@ -314,12 +393,16 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
 }
 
 /**
- * The track as a word. The industry keeps two words for one profession and
- * the label carries both, so the same page reads for everyone who opens it.
+ * The track as a word, in the word this person uses.
+ *
+ * The industry has always kept actor and actress apart — separate awards,
+ * separate categories, separate columns in a trade paper — so the label is
+ * never printed without knowing whose it is. Every other track reads the same
+ * for everybody.
  */
-export function careerLabel(track: CareerTrack): string {
+export function careerLabel(track: CareerTrack, title: PerformerTitle = 'actor'): string {
   const labels: Record<CareerTrack, string> = {
-    none: 'Undecided', actor: 'Actor', writer: 'Writer', director: 'Director',
+    none: 'Undecided', actor: PERFORMER_NOUN[title], writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',
     executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working Life',
   };
@@ -330,7 +413,7 @@ export function careerLabel(track: CareerTrack): string {
 export function playerAttributes(universe: SaveUniverse): AttributeSheet {
   const player = universe.people[universe.playerId];
   if (!player) return {};
-  return effectiveAttributes(player.attributes, player.traits);
+  return attributesOf(player);
 }
 
 export const WEALTH_PROFILES = WEALTH_PROFILE;

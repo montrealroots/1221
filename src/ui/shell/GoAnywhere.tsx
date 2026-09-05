@@ -13,9 +13,6 @@ import type { Simulation } from '@/engine';
 import { CITIES, AIRPORTS } from '@/engine/content/geography';
 import { CATALOG } from '@/engine/content/catalog';
 import { VEHICLE_MODELS } from '@/engine/content/vehicles';
-import { AGENCIES } from '@/engine/content/industry';
-import { STUDIOS } from '@/engine/content/studios';
-import { NETWORKS } from '@/engine/content/networks';
 import { normalise, scoreMatch } from '@/engine/content/reference';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { labelForRoute } from '@/app/game-context';
@@ -34,7 +31,6 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/world', label: 'World', keywords: ['discover', 'browse', 'explore'], detail: 'Everything there is to do' },
   { route: '/workspace/calendar', label: 'Calendar', keywords: ['schedule', 'diary', 'conflicts', 'dates'], detail: 'Every commitment you have' },
   { route: '/workspace/bank', label: 'Bank', keywords: ['money', 'accounts', 'bills', 'credit', 'transactions', 'tax'], detail: 'Accounts, bills and credit' },
-  { route: '/workspace/jobs', label: 'Work', keywords: ['job', 'employment', 'shifts', 'career', 'apply', 'hire'], detail: 'Ordinary employment' },
   { route: '/workspace/wellbeing', label: 'Wellbeing', keywords: ['energy', 'stress', 'sleep', 'health', 'rest', 'eat'], detail: 'Energy, stress and rest' },
   { route: '/workspace/relationships', label: 'Relationships', keywords: ['friends', 'dating', 'family', 'spouse', 'partner', 'marriage', 'children'], detail: 'Everyone you know' },
   { route: '/workspace/property', label: 'Property', keywords: ['house', 'home', 'buy house', 'build house', 'rent', 'real estate', 'mansion', 'land', 'construction', 'interior'], detail: 'Buy, build and furnish' },
@@ -46,14 +42,9 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/insurance', label: 'Insurance', keywords: ['policy', 'claim', 'cover', 'premium'], detail: 'Policies and claims' },
   { route: '/workspace/education', label: 'Education', keywords: ['class', 'course', 'coach', 'training', 'acting class', 'learn'], detail: 'Classes and coaching' },
   { route: '/workspace/social', label: 'Social', keywords: ['post', 'followers', 'audience', 'brand deal', 'sponsorship', 'creator'], detail: 'Platforms and audience' },
-  { route: '/workspace/casting', label: 'Casting', keywords: ['audition', 'role', 'breakdown', 'self tape', 'agent', 'representation', 'casting director', 'casting office', 'feedback', 'where you stand'], detail: 'Auditions, offices and representation' },
-  { route: '/workspace/projects', label: 'Projects', keywords: ['film', 'movie', 'script', 'write', 'produce', 'direct', 'shoot', 'post', 'release', 'box office', 'distribution', 'reviews', 'critics', 'rotten tomatoes', 'metacritic', 'cinemascore', 'embargo'], detail: 'Development to release, reviews and reception' },
-  { route: '/workspace/company', label: 'Company', keywords: ['studio', 'business', 'found company', 'employees', 'payroll', 'equipment', 'merchandise'], detail: 'Found and run a company' },
-  { route: '/workspace/awards', label: 'Awards', keywords: ['nomination', 'ceremony', 'festival', 'campaign', 'oscars', 'emmys', 'cannes'], detail: 'Awards and festivals' },
-  { route: '/workspace/industry', label: 'Industry', keywords: ['studio', 'studios', 'catalogue', 'filmography', 'franchise', 'executives', 'presidents', 'disney', 'universal', 'warner', 'netflix', 'a24'], detail: 'The real studios, their people and their catalogues' },
   { route: '/workspace/history', label: 'History', keywords: ['timeline', 'past', 'memories', 'milestones', 'what happened'], detail: 'Everything that has happened' },
   { route: '/workspace/character', label: 'Character', keywords: ['attributes', 'traits', 'skills', 'reputation', 'me', 'stats'], detail: 'Attributes, traits and standing' },
-  { route: '/workspace/settings', label: 'Settings', keywords: ['preferences', 'accessibility', 'sandbox', 'motion', 'audio', 'tutorial'], detail: 'Preferences and sandbox' },
+  { route: '/workspace/settings', label: 'Settings', keywords: ['preferences', 'accessibility', 'motion', 'audio', 'tutorial'], detail: 'Preferences and accessibility' },
 ];
 
 export function GoAnywhere() {
@@ -256,15 +247,6 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     const score = scoreMatch(query, { name: label, aliases: [vehicle.make, vehicle.model], type: 'vehicle' });
     push('Vehicles', vehicle.id, label, `${vehicle.mileage.toLocaleString('en-US')} miles · ${formatMoneyCompact(vehicle.currentValue)}`, '/workspace/vehicles', score);
   }
-  for (const project of Object.values(sim.universe.projects)) {
-    const score = scoreMatch(query, { name: project.title, type: 'project' });
-    push('Projects', project.id, project.title, `${titleCaseLabel(project.format.replace(/_/g, ' '))} · ${titleCaseLabel(project.phase.replace(/_/g, ' '))}`, '/workspace/projects', score);
-  }
-  for (const company of Object.values(sim.universe.companies)) {
-    if (company.dissolvedAt) continue;
-    const score = scoreMatch(query, { name: company.name, aliases: [company.legalName], type: 'company' });
-    push('Companies', company.id, company.name, `${titleCaseLabel(company.kind)} · ${formatMoneyCompact(company.valuation)}`, '/workspace/company', score);
-  }
   for (const asset of Object.values(sim.universe.assets)) {
     if (asset.soldAt || asset.ownerId !== sim.universe.playerId) continue;
     const score = scoreMatch(query, { name: asset.name, aliases: [asset.brand ?? '', ...asset.tags], type: 'asset' });
@@ -288,27 +270,6 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     if (item.category === 'groceries') continue;
     const score = scoreMatch(query, item);
     push('Things to buy', item.id, item.name, `${titleCaseLabel(item.category)} · ${formatMoneyCompact(item.basePrice)}`, '/workspace/shopping', score);
-  }
-  for (const studio of STUDIOS.all()) {
-    const score = scoreMatch(query, studio);
-    push('Industry', studio.id, studio.name, studio.description, '/workspace/industry', score);
-  }
-  for (const network of NETWORKS.all()) {
-    const score = scoreMatch(query, network);
-    push('Industry', network.id, network.name, network.description, '/workspace/industry', score);
-  }
-  for (const page of [
-    { id: 'box-office', type: 'page', name: 'Box Office', aliases: ['weekend', 'market share', 'chart', 'release calendar', 'slate'], description: 'The weekend chart, the year\'s market share and what is dated ahead.' },
-    { id: 'trades', type: 'page', name: 'The Trades', aliases: ['headlines', 'news', 'trade', 'variety', 'deadline'], description: 'Every headline the industry made in your universe.' },
-    { id: 'records', type: 'page', name: 'Records', aliases: ['all time', 'highest grossing', 'biggest', 'most episodes', 'longest running', 'hall of fame'], description: 'The all-time records from the real record, and the ones your universe has set.' },
-    { id: 'schedule', type: 'page', name: 'TV Schedules', aliases: ['primetime', 'grid', 'ratings', 'nielsen', 'upfronts', 'renewal'], description: 'Every linear network\'s week, with what each slot did.' },
-  ]) {
-    const score = scoreMatch(query, page);
-    push('Industry', page.id, page.name, page.description, '/workspace/industry', score);
-  }
-  for (const agency of AGENCIES.all()) {
-    const score = scoreMatch(query, agency);
-    push('Industry', agency.id, agency.name, agency.description, '/workspace/casting', score);
   }
 
   // Rank, then cap each group so one category cannot flood the list.

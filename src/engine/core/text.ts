@@ -57,3 +57,25 @@ const FORMAT_PLURALS: Readonly<Record<string, string>> = { feature: 'features', 
 export function formatPlural(format: string): string {
   return FORMAT_PLURALS[format] ?? `${format.replace(/_/g, ' ')}s`;
 }
+
+/**
+ * The things you can own and buy, written the way the game writes them
+ * everywhere else. The stored keys are terse and American; the labels are the
+ * game's own spelling, in Title Case like every other label.
+ */
+const CATEGORY_LABELS: Readonly<Record<string, string>> = {
+  jewelry: 'Jewellery',
+  groceries: 'Groceries',
+  prepared_food: 'Prepared Food',
+  clothing: 'Clothing',
+  footwear: 'Footwear',
+  watch: 'Watches',
+  furniture: 'Furniture',
+  appliance: 'Appliances',
+  electronics: 'Electronics',
+  art: 'Art',
+  accessory: 'Accessories',
+};
+export function categoryLabel(category: string): string {
+  return CATEGORY_LABELS[category] ?? titleCaseLabel(category.replace(/_/g, ' '));
+}

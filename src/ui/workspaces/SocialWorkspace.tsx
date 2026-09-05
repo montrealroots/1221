@@ -234,10 +234,10 @@ function PostDialog({ accountId, onClose }: { accountId: string; onClose: () => 
         <label htmlFor="topic">Topic</label>
         <select id="topic" value={topic} onChange={(e) => setTopic(e.target.value)}>
           <option value="general">General</option>
-          <option value="behind_the_scenes">Behind the scenes</option>
-          <option value="craft">Craft and process</option>
+          <option value="behind_the_scenes">Behind The Scenes</option>
+          <option value="craft">Craft And Process</option>
           <option value="personal">Personal</option>
-          <option value="promotion">Promoting something</option>
+          <option value="promotion">Promoting Something</option>
         </select>
       </div>
 

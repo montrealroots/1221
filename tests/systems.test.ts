@@ -1,11 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { franchiseLift, recordFranchiseEntry } from '@/engine/systems/release';
 import { quickSave } from '@/engine';
-import type { Id, Project } from '@/engine/domain/model';
 import { MS_DAY } from '@/engine/core/time';
 import { checkFitment, PARTS, VEHICLE_MODELS } from '@/engine/content/vehicles';
 import { fitmentSubject, createVehicle } from '@/engine/systems/vehicles';
-import { POST_TASKS, openPost, blockedReasons } from '@/engine/systems/production';
 import { CONSTRUCTION_PHASES } from '@/engine/systems/property';
 import { computeAnnualTax, salesTaxRate, propertyTaxRate, resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { conflictingTraits, TRAITS, ATTRIBUTES, effectiveAttributes, ACTING_TRAITS, ALL_TRAITS, PROFESSION_TRAITS } from '@/engine/domain/attributes';
@@ -102,60 +99,6 @@ describe('vehicle fitment', () => {
   });
 });
 
-describe('post-production dependencies', () => {
-  it('declares a graph with no cycles', () => {
-    const seen = new Map<string, number>();
-    const visit = (kind: string, stack: string[]): void => {
-      if (stack.includes(kind)) throw new Error(`Cycle: ${[...stack, kind].join(' -> ')}`);
-      if (seen.has(kind)) return;
-      const spec = POST_TASKS.find((t) => t.kind === kind);
-      for (const dep of spec?.dependsOn ?? []) visit(dep, [...stack, kind]);
-      seen.set(kind, 1);
-    };
-    expect(() => { for (const task of POST_TASKS) visit(task.kind, []); }).not.toThrow();
-  });
-
-  it('will not colour a picture that is not locked', () => {
-    const sim = quickSave();
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['drama'], logline: 'A test.' },
-    });
-    const projectId = created.value?.projectId as Id;
-    const project = sim.universe.projects[projectId];
-    if (!project) throw new Error('project missing');
-    project.completedShootDays = 1;
-    project.budget = 10_000_000_00;
-    openPost(sim, projectId);
-
-    const colour = Object.values(sim.universe.postTasks).find((t) => t.projectId === projectId && t.kind === 'color');
-    expect(colour?.status).toBe('blocked');
-    expect(blockedReasons(sim, colour?.id ?? '').length).toBeGreaterThan(0);
-
-    const result = sim.execute({ kind: 'prod.start_post_task', payload: { taskId: colour?.id } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/cannot start yet/);
-  });
-
-  it('lets assembly start immediately because nothing precedes it', () => {
-    const sim = quickSave();
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['drama'], logline: 'A test.' },
-    });
-    const projectId = created.value?.projectId as Id;
-    const project = sim.universe.projects[projectId];
-    if (!project) throw new Error('project missing');
-    project.completedShootDays = 1;
-    project.budget = 10_000_000_00;
-    openPost(sim, projectId);
-
-    const assembly = Object.values(sim.universe.postTasks).find((t) => t.projectId === projectId && t.kind === 'assembly');
-    expect(assembly?.status).toBe('ready');
-    expect(sim.execute({ kind: 'prod.start_post_task', payload: { taskId: assembly?.id } }).ok).toBe(true);
-  });
-});
-
 describe('construction dependencies', () => {
   it('declares a graph with no cycles', () => {
     const visit = (phase: string, stack: string[]): void => {
@@ -180,104 +123,6 @@ describe('construction dependencies', () => {
   });
 });
 
-describe('authority and rights', () => {
-  it('refuses a greenlight from someone with no authority', () => {
-    const sim = quickSave();
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['action'], logline: 'Expensive.' },
-    });
-    const projectId = created.value?.projectId as Id;
-    sim.execute({ kind: 'film.write_draft', payload: { projectId } });
-    sim.execute({
-      kind: 'film.acquire_rights',
-      payload: { projectId, title: 'Expensive', sourceKind: 'original', acquisitionKind: 'original', cost: 0 },
-    });
-
-    const result = sim.execute({ kind: 'film.greenlight', payload: { projectId, budget: 250_000_000_00 } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/authority/);
-  });
-
-  it('refuses a greenlight with no chain of title', () => {
-    const sim = quickSave();
-    sim.universe.sandbox.enabled = true;
-    sim.universe.sandbox.ignoreAuthority = true;
-
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'short', genres: ['drama'], logline: 'No rights.' },
-    });
-    const projectId = created.value?.projectId as Id;
-    sim.execute({ kind: 'film.write_draft', payload: { projectId } });
-
-    const result = sim.execute({ kind: 'film.greenlight', payload: { projectId, budget: 100_000_00 } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/chain of title/);
-  });
-
-  it('refuses a greenlight when the option is about to lapse', () => {
-    const sim = quickSave({ wealth: 'wealthy' });
-    sim.universe.sandbox.enabled = true;
-    sim.universe.sandbox.ignoreAuthority = true;
-
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['drama'], logline: 'Optioned.' },
-    });
-    const projectId = created.value?.projectId as Id;
-    sim.execute({ kind: 'film.write_draft', payload: { projectId } });
-    sim.execute({
-      kind: 'film.acquire_rights',
-      payload: {
-        projectId, title: 'A book', sourceKind: 'book',
-        acquisitionKind: 'option', cost: 25_000_00, optionMonths: 2,
-      },
-    });
-
-    const result = sim.execute({ kind: 'film.greenlight', payload: { projectId, budget: 1_000_000_00 } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/expires/);
-  });
-
-  it('lets a company greenlight inside its ceiling and refuses beyond it', () => {
-    const sim = quickSave({ wealth: 'inherited' });
-    const savings = Object.values(sim.universe.accounts).find((a) => a.kind === 'savings');
-    expect(savings).toBeDefined();
-
-    // Capital has to actually exist in the account it is drawn from.
-    const overreach = sim.execute({
-      kind: 'co.found',
-      payload: { structure: 'llc', kind: 'production', initialCapital: 2_000_000_00 },
-    });
-    expect(overreach.ok).toBe(false);
-    expect(overreach.error).toMatch(/filing fees/);
-
-    const founded = sim.execute<{ companyId: Id; greenlightCeiling: number }>({
-      kind: 'co.found',
-      payload: { structure: 'llc', kind: 'production', initialCapital: 2_000_000_00, accountId: savings?.id },
-    });
-    expect(founded.ok).toBe(true);
-    const companyId = founded.value?.companyId as Id;
-    const ceiling = founded.value?.greenlightCeiling ?? 0;
-    expect(ceiling).toBeGreaterThan(0);
-
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['drama'], logline: 'Inside the ceiling.', companyId },
-    });
-    const projectId = created.value?.projectId as Id;
-    sim.execute({ kind: 'film.write_draft', payload: { projectId } });
-    sim.execute({
-      kind: 'film.acquire_rights',
-      payload: { projectId, title: 'Original', sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: companyId, holderKind: 'company' },
-    });
-
-    const tooBig = sim.execute({ kind: 'film.greenlight', payload: { projectId, budget: ceiling * 10, companyId } });
-    expect(tooBig.ok).toBe(false);
-    expect(tooBig.error).toMatch(/cannot support|authority/);
-  });
-});
 
 describe('tax by jurisdiction', () => {
   it('charges no state income tax where there is none', () => {
@@ -395,35 +240,31 @@ describe('attributes and traits', () => {
     }
   });
 
-  it('refuses to grant conflicting traits even in sandbox', () => {
+  it('gives the founder every trait, and keeps them exclusive for everybody else', () => {
+    // The founder is the one exception in the save: they hold the whole list,
+    // contradictory pairs included, and the prodigy flag is what stops the
+    // penalty half of each one applying. Nobody else gets that, and the
+    // command that hands a trait out still refuses a conflicting pick.
     const sim = quickSave();
-    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-    const result = sim.execute<{ granted: string[]; skipped: { id: string }[] }>({
-      kind: 'sandbox.grant_all_traits', payload: {},
-    });
-    expect(result.ok).toBe(true);
-    expect(result.value?.skipped.length).toBeGreaterThan(0);
+    expect(sim.player.prodigy).toBe(true);
+    expect(sim.player.traits).toHaveLength(ALL_TRAITS.length);
 
-    const held = sim.player.traits;
-    for (const id of held) {
-      expect(conflictingTraits(held.filter((t) => t !== id), id)).toHaveLength(0);
+    const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+    expect(other.prodigy).toBeFalsy();
+    for (const id of other.traits) {
+      expect(conflictingTraits(other.traits.filter((t) => t !== id), id), id).toHaveLength(0);
     }
+
+    // And the rule is still enforced where a trait is actually chosen.
+    expect(conflictingTraits(['writer_page_machine'], 'writer_polisher').length).toBeGreaterThan(0);
   });
 
-  it('maxes every attribute and skill when sandbox asks', () => {
+  it('starts every attribute and skill at the ceiling', () => {
     const sim = quickSave();
-    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-    sim.execute({ kind: 'sandbox.max_attributes', payload: {} });
     for (const attribute of ATTRIBUTES) expect(sim.player.attributes[attribute.id]).toBe(100);
     for (const skill of SKILLS) expect(sim.player.skills[skill.id]).toBe(100);
   });
 
-  it('refuses sandbox tools while sandbox is off', () => {
-    const sim = quickSave();
-    const result = sim.execute({ kind: 'sandbox.max_attributes', payload: {} });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/Sandbox is off/);
-  });
 });
 
 describe('relationships', () => {
@@ -462,158 +303,55 @@ describe('relationships', () => {
   });
 });
 
-describe('franchises', () => {
-  /** A released picture, good enough to build on, owned by the player. */
-  const madeAHit = (seed: string) => {
-    const sim = quickSave({ wealth: 'inherited' }, seed);
-    const savings = Object.values(sim.universe.accounts).find((a) => a.kind === 'savings');
-    const co = sim.execute<{ companyId: Id }>({
-      kind: 'co.found',
-      payload: { structure: 'llc', kind: 'production', initialCapital: 2_000_000_00, accountId: savings?.id },
-    });
-    const created = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['action'], logline: 'The first one.', companyId: co.value?.companyId },
-    });
-    const projectId = created.value?.projectId as Id;
-    sim.execute({ kind: 'film.write_draft', payload: { projectId } });
-    sim.execute({
-      kind: 'film.acquire_rights',
-      payload: {
-        projectId, title: 'Original', sourceKind: 'original', acquisitionKind: 'original',
-        cost: 0, holderId: co.value?.companyId, holderKind: 'company',
-      },
-    });
-    const project = sim.universe.projects[projectId] as Project;
-    // Stand the film up as delivered and well received, so the test is about
-    // what a franchise does rather than about getting one made.
-    project.phase = 'library';
-    project.finalQuality = 78;
-    project.criticScore = 74;
-    project.audienceScore = 80;
-    project.totalRevenue = 300_000_000_00;
-    project.totalCost = 90_000_000_00;
-    return { sim, projectId, companyId: co.value?.companyId as Id };
-  };
 
-  it('starts a franchise on a picture that earned one', () => {
-    const { sim, projectId } = madeAHit('franchise-start');
-    const result = sim.execute<{ franchiseId: Id; strength: number }>({
-      kind: 'film.start_franchise', payload: { projectId, name: 'The Undertow Saga' },
-    });
-    expect(result.ok, result.error).toBe(true);
-    expect(result.value?.strength).toBeGreaterThan(0);
+/**
+ * The car you were promised at creation.
+ *
+ * "Start With A Car" is ticked by default, and it used to be a box that did
+ * nothing for most starts. The listing was priced off checking plus savings
+ * and then paid for out of checking alone, so a comfortable character silently
+ * got no car while a wealthy one did, and the floor price meant anybody poor
+ * got nothing at all with no explanation on the screen they had just ticked.
+ */
+describe('the starting vehicle', () => {
+  const WEALTHS = ['scraping', 'modest', 'comfortable', 'wealthy', 'inherited'] as const;
 
-    const franchise = sim.universe.franchises[result.value?.franchiseId as Id];
-    expect(franchise, 'no franchise record was created').toBeDefined();
-    expect(franchise!.projectIds).toContain(projectId);
-    expect(sim.universe.projects[projectId]?.franchiseId).toBe(franchise!.id);
+  const ownedBy = (sim: ReturnType<typeof quickSave>) =>
+    Object.values(sim.universe.vehicles).filter((v) => v.ownerId === sim.player.id && !v.soldAt);
+
+  it('actually arrives at every wealth level that could afford one', () => {
+    for (const wealth of WEALTHS) {
+      const sim = quickSave({ wealth, startWithVehicle: true }, `car-${wealth}`);
+      expect(ownedBy(sim).length, `${wealth} ticked the box and got no car`).toBe(1);
+      expect(sim.ledger.audit(), wealth).toEqual([]);
+    }
   });
 
-  it('refuses to build on a film nobody liked', () => {
-    const { sim, projectId } = madeAHit('franchise-flop');
-    const project = sim.universe.projects[projectId] as Project;
-    project.finalQuality = 22;
-    project.criticScore = 18;
-    project.audienceScore = 30;
-
-    const result = sim.execute({ kind: 'film.start_franchise', payload: { projectId } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/did not land/);
+  it('leaves them solvent afterwards rather than spending the last of it', () => {
+    for (const wealth of WEALTHS) {
+      const sim = quickSave({ wealth, startWithVehicle: true }, `car-solvent-${wealth}`);
+      const left = sim.universe.accounts[sim.player.primaryAccountId!]?.balance ?? 0;
+      expect(left, `${wealth} was left with ${left}`).toBeGreaterThan(0);
+    }
   });
 
-  it('refuses to build on rights that do not include sequels', () => {
-    const { sim, projectId } = madeAHit('franchise-rights');
-    const rightsId = (sim.universe.projects[projectId] as Project).rightsId as Id;
-    sim.universe.rights[rightsId]!.scope.sequelRights = false;
-
-    const result = sim.execute({ kind: 'film.start_franchise', payload: { projectId } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/sequels/);
+  it('gives a bigger start a better car than a smaller one', () => {
+    const poor = quickSave({ wealth: 'scraping', startWithVehicle: true }, 'car-poor');
+    const rich = quickSave({ wealth: 'wealthy', startWithVehicle: true }, 'car-rich');
+    expect(ownedBy(rich)[0]!.purchasePrice ?? 0).toBeGreaterThan(ownedBy(poor)[0]!.purchasePrice ?? 0);
   });
 
-  it('will not start two franchises on the same picture', () => {
-    const { sim, projectId } = madeAHit('franchise-twice');
-    expect(sim.execute({ kind: 'film.start_franchise', payload: { projectId } }).ok).toBe(true);
-    const again = sim.execute({ kind: 'film.start_franchise', payload: { projectId } });
-    expect(again.ok).toBe(false);
-    expect(again.error).toMatch(/already part of/);
+  it('says so plainly when somebody genuinely cannot afford anything', () => {
+    // Forty dollars. No car is the right answer, and it is stated rather than
+    // left as a ticked box that quietly did nothing.
+    const sim = quickSave({ wealth: 'nothing', startWithVehicle: true }, 'car-broke');
+    expect(ownedBy(sim)).toHaveLength(0);
+    expect(sim.universe.notifications.some((n) => /No Car Yet/.test(n.title))).toBe(true);
   });
 
-  it('lifts a sequel while appetite holds and drags it once fatigue sets in', () => {
-    const { sim, projectId, companyId } = madeAHit('franchise-lift');
-    const started = sim.execute<{ franchiseId: Id }>({ kind: 'film.start_franchise', payload: { projectId } });
-    const franchiseId = started.value?.franchiseId as Id;
-
-    const sequel = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['action'], logline: 'The next one.', companyId },
-    });
-    const sequelId = sequel.value?.projectId as Id;
-    const added = sim.execute({ kind: 'film.add_to_franchise', payload: { franchiseId, projectId: sequelId } });
-    expect(added.ok, added.error).toBe(true);
-
-    const sequelProject = sim.universe.projects[sequelId] as Project;
-    const franchise = sim.universe.franchises[franchiseId]!;
-
-    // Appetite high and nobody tired of it yet: the sequel opens bigger.
-    franchise.strength = 80;
-    franchise.fatigue = 5;
-    expect(franchiseLift(sim, sequelProject)).toBeGreaterThan(1);
-
-    // Run into the ground: the same picture opens smaller.
-    franchise.strength = 30;
-    franchise.fatigue = 90;
-    expect(franchiseLift(sim, sequelProject)).toBeLessThan(1);
-
-    // A standalone is unaffected either way.
-    const standalone = sim.execute<{ projectId: Id }>({
-      kind: 'film.create_project',
-      payload: { format: 'feature', genres: ['drama'], logline: 'Nothing to do with it.', companyId },
-    });
-    expect(franchiseLift(sim, sim.universe.projects[standalone.value?.projectId as Id] as Project)).toBe(1);
-  });
-
-  it('spends appetite on a weak entry and buys it back on a strong one', () => {
-    const { sim, projectId, companyId } = madeAHit('franchise-entries');
-    const started = sim.execute<{ franchiseId: Id }>({ kind: 'film.start_franchise', payload: { projectId } });
-    const franchise = sim.universe.franchises[started.value?.franchiseId as Id]!;
-
-    const entry = (quality: number, revenue: number) => {
-      const made = sim.execute<{ projectId: Id }>({
-        kind: 'film.create_project',
-        payload: { format: 'feature', genres: ['action'], logline: 'Another.', companyId },
-      });
-      const p = sim.universe.projects[made.value?.projectId as Id] as Project;
-      p.franchiseId = franchise.id;
-      p.finalQuality = quality;
-      p.criticScore = quality;
-      p.audienceScore = quality;
-      p.totalRevenue = revenue;
-      p.totalCost = 100_000_000_00;
-      return p;
-    };
-
-    const strongBefore = franchise.strength;
-    recordFranchiseEntry(sim, entry(85, 400_000_000_00), 300_000_000_00);
-    expect(franchise.strength, 'a hit did not raise appetite').toBeGreaterThan(strongBefore);
-
-    const afterHit = franchise.strength;
-    recordFranchiseEntry(sim, entry(28, 40_000_000_00), -60_000_000_00);
-    expect(franchise.strength, 'a dud did not cost anything').toBeLessThan(afterHit);
-
-    // Every entry costs novelty, whichever way it went.
-    expect(franchise.fatigue, 'three entries left the series as fresh as it started').toBeGreaterThan(0);
-    expect(franchise.projectIds.length).toBe(3);
-  });
-
-  it('lets appetite recover while the series rests', () => {
-    const { sim, projectId } = madeAHit('franchise-rest');
-    const started = sim.execute<{ franchiseId: Id }>({ kind: 'film.start_franchise', payload: { projectId } });
-    const franchise = sim.universe.franchises[started.value?.franchiseId as Id]!;
-    franchise.fatigue = 70;
-
-    sim.advanceTo(sim.now + 365 * MS_DAY);
-    expect(franchise.fatigue, 'a year away did not cool anything off').toBeLessThan(70);
+  it('gives nobody a car when the box is not ticked', () => {
+    const sim = quickSave({ wealth: 'inherited', startWithVehicle: false }, 'car-none');
+    expect(ownedBy(sim)).toHaveLength(0);
+    expect(sim.universe.notifications.some((n) => /No Car Yet/.test(n.title))).toBe(false);
   });
 });

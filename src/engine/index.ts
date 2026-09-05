@@ -6,10 +6,6 @@
  * system registered, which is the only object the UI ever talks to.
  */
 
-import { LEGACY_BODY_NAMES } from './content/award-bodies';
-import { LEGACY_FESTIVAL_NAMES } from './content/festival-rules';
-import { BUYERS, LEGACY_BUYER_NAMES } from './content/industry';
-import { countryOfCity, primaryLanguageOf } from './content/geography';
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Id, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
@@ -17,12 +13,14 @@ import { addDays, addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY } 
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { titleCaseLabel } from './core/text';
+import { performerTitleOf } from './core/performer';
+
+import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { CITIES } from './content/geography';
 import { costOfLiving } from './content/tax';
 
-import { registerFinance, recomputeCreditScore, netWorth } from './systems/finance';
+import { registerFinance, recomputeCreditScore, netWorth, createLivingBills } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
-import { registerWork, refreshOpenings, createLivingBills, JOB_TEMPLATES, hire, annualisedOpeningPay } from './systems/work';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
 import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
@@ -30,31 +28,21 @@ import { registerCommerce } from './systems/commerce';
 import { registerTravel } from './systems/travel';
 import { registerServices, ensureProviders, ensureCourses } from './systems/services';
 import { registerMedia } from './systems/media';
-import { registerFilm, registerBuyerOffer } from './systems/film';
-import { registerCasting } from './systems/casting';
-import { registerProduction } from './systems/production';
-import { registerRelease, registerFranchises } from './systems/release';
-import { registerCritics } from './systems/critics';
-import { registerIpLicensing } from './systems/ip';
-import { registerStudios, ensureStudioSchedules } from './systems/studios';
-import { registerNetworks, ensureNetworkSchedules } from './systems/networks-live';
-import { registerZeitgeist, ensureZeitgeist, commissionProject } from './systems/zeitgeist';
 import { registerProfessions } from './systems/professions';
-import { registerRealPeople } from './systems/real-people';
-import { registerPress } from './systems/press';
-import { craftFromLegacy } from './content/screenplay';
-import { performerTitleOf } from './core/performer';
-import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
 import { ensureHygieneTick, registerPlaces } from './systems/places';
-import { ensureReactive, registerReactive } from './systems/reactive';
-import { registerAuditionRoom } from './systems/audition-room';
-import { registerCastingOffice } from './systems/casting-office';
 import { registerDriving } from './systems/driving';
-import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
-import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
-import { registerCompany } from './systems/company';
 import { registerWorld } from './world/world';
-import { createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig, careerLabel } from './world/bootstrap';
+import { registerShingle } from './systems/shingle';
+import { DEFAULT_FOUNDER_DRAW } from './content/shingle';
+import { registerAuthorship } from './systems/authorship';
+import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from './content/founder';
+import { CEILING, GOAT_TRAITS } from './content/prodigy';
+import { ALL_TRAITS, ATTRIBUTES } from './domain/attributes';
+import { SKILLS } from './domain/skills';
+import {
+  createUniverse, defaultConfig, WEALTH_PROFILES, careerLabel,
+  FOUNDING_STAKE, FOUNDING_CAPITAL, FOUNDING_SHINGLE, FOUNDING_REMIT, type NewSaveConfig,
+} from './world/bootstrap';
 
 export * from './world/bootstrap';
 export { Simulation };
@@ -67,7 +55,6 @@ export type { Command, CommandResult };
 export function registerAllSystems(sim: Simulation): void {
   registerFinance(sim);
   registerLife(sim);
-  registerWork(sim);
   registerRelationships(sim);
   registerProperty(sim);
   registerPropertyReactors(sim);
@@ -76,35 +63,13 @@ export function registerAllSystems(sim: Simulation): void {
   registerTravel(sim);
   registerServices(sim);
   registerMedia(sim);
-  registerFilm(sim);
-  registerBuyerOffer(sim);
-  registerCasting(sim);
-  registerProduction(sim);
-  registerPost(sim);
   registerPlaces(sim);
-  registerReactive(sim);
-  registerAuditionRoom(sim);
-  registerCastingOffice(sim);
-  registerRelease(sim);
-  registerCritics(sim);
-  registerFranchises(sim);
-  registerIpLicensing(sim);
-  registerStudios(sim);
-  registerNetworks(sim);
-  registerZeitgeist(sim);
   registerProfessions(sim);
-  registerRealPeople(sim);
-  registerPress(sim);
   registerDriving(sim);
-  registerAwards(sim);
-  registerCompany(sim);
+  registerShingle(sim);
+  registerAuthorship(sim);
   registerWorld(sim);
 }
-
-/** How many times a recurring bill lands in a year. */
-const BILLINGS_PER_YEAR: Record<string, number> = {
-  weekly: 52, biweekly: 26, monthly: 12, quarterly: 4, annual: 1, once: 0,
-};
 
 /** Recurring world processes every save needs running. */
 function armWorldClock(sim: Simulation): void {
@@ -128,31 +93,26 @@ function armWorldClock(sim: Simulation): void {
     label: 'Statement Close', category: 'system', priority: 8,
     recurrence: { unit: 'month', interval: 1 },
   });
-  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New Job Listings', category: 'career', priority: 60 });
   sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
   sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
-  ensureLotsClose(sim);
   ensureHygieneTick(sim);
-  ensureReactive(sim);
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
   sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship Drift', category: 'system', priority: 90 });
-  sim.schedule({ at: addDays(sim.now, 5, z), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
-  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'franchise.cool_off', label: 'Franchise Appetite', category: 'system', priority: 94 });
-  ensureStudioSchedules(sim);
-  ensureNetworkSchedules(sim);
-  ensureZeitgeist(sim);
-
-  const nextYear = zonedParts(sim.now, z).year + 1;
-  sim.schedule({
-    at: instantFromZoned({ year: nextYear, month: 1, day: 2, hour: 3 }, z),
-    kind: 'award.season_setup',
-    label: 'Awards Season', category: 'system', priority: 80,
-  });
 }
+
+/**
+ * The cheapest thing that still counts as a car.
+ *
+ * Somebody starting with nothing and a ticked box owns a twenty-year-old
+ * something, not nothing at all. Low enough that tax, registration and plates
+ * — which add about two fifths to the sticker — still fit inside the poorest
+ * start that ticked the box.
+ */
+const BEATER_PRICE = 600_00;
 
 /** Builds the player's starting situation and the world around it. */
 function populateWorld(sim: Simulation, config: NewSaveConfig): void {
@@ -168,12 +128,16 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const checking = sim.openAccount({
     id: sim.nextId('account'),
     kind: 'checking',
-    name: 'Everyday checking',
+    name: 'Everyday Checking',
     ownerId: player.id,
     institution: 'Northbank',
     openedAt: sim.now,
     last4: '4417',
-    balance: wealth.checking,
+    // Personal money, plus the founding stake. The stake is here for the few
+    // lines it takes to open the company and then it is gone into the
+    // business; what is left afterwards is exactly the wealth level's own
+    // money, so a founder can still be broke while running a company.
+    balance: wealth.checking + FOUNDING_STAKE,
   });
   player.primaryAccountId = checking.id;
 
@@ -236,15 +200,32 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
   recomputeCreditScore(sim, player.id);
 
+  // --- The company --------------------------------------------------------
+  // The whole premise: the strike ended every other production company, and
+  // the player opens the only one trading. Founded through the same command a
+  // player would use, so nothing here can reach a state the game cannot.
+  {
+    // An independent, opened this morning, wholly owned by the character. No
+    // choice of shape and no fallback to a smaller one: the stake is sized to
+    // this shingle, so it always opens. `must` rather than `execute` because a
+    // save without the company is not a save this game can play.
+    sim.must({
+      kind: 'co.found',
+      payload: {
+        name: config.companyName.trim() || `${player.lastName} Pictures`,
+        shingle: FOUNDING_SHINGLE,
+        remit: FOUNDING_REMIT,
+        capital: FOUNDING_CAPITAL,
+      },
+    });
+  }
+
   // --- The world that already exists -------------------------------------
   ensureAgents(sim, cityId);
   ensureProviders(sim, cityId);
   ensureCourses(sim, cityId);
-  refreshOpenings(sim);
   refreshListings(sim);
   refreshInventory(sim);
-  setUpSeason(sim, zonedParts(sim.now, sim.homeZone).year);
-  setUpSeason(sim, zonedParts(sim.now, sim.homeZone).year + 1);
 
   // --- Housing ------------------------------------------------------------
   if (config.housing !== 'couch') {
@@ -303,16 +284,28 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     const listings = Object.values(sim.universe.vehicleListings)
       .filter((l) => l.status === 'active')
       .sort((a, b) => a.price - b.price);
-    const affordable = listings.find((l) => l.price <= Math.max(12_000_00, wealth.checking + wealth.savings));
-    const chosen = affordable ?? listings[0];
+    // Budgeted against the account that will actually pay. It used to be
+    // priced off checking plus savings and then paid out of checking alone,
+    // so a comfortable start silently got no car while a wealthy one did. A
+    // third of the purse, because tax, registration and plates add roughly
+    // two fifths again on top of the sticker.
+    const purse = sim.ledger.availableFunds(checking.id);
+    const budget = Math.round(purse * 0.33);
+    // The best car the budget actually reaches, rather than always the
+    // cheapest one with its price rewritten — which is how a modest start
+    // ended up owning a fifteen-hundred-dollar Range Rover.
+    const chosen = listings.filter((l) => l.price <= budget).sort((a, b) => b.price - a.price)[0]
+      ?? listings[0];
     if (chosen) {
-      chosen.price = Math.min(chosen.price, Math.max(6_500_00, Math.round((wealth.checking + wealth.savings) * 0.55)));
+      // Nothing in the lot is within reach: they own something old instead.
+      if (chosen.price > budget) chosen.price = Math.max(BEATER_PRICE, Math.min(chosen.price, budget));
       const result = sim.execute<{ vehicleId: Id }>({
         kind: 'veh.purchase',
         payload: { listingId: chosen.id, acquisition: 'cash', accountId: checking.id },
       });
       if (!result.ok) {
-        // Could not afford anything: that is a legitimate starting position.
+        // Genuinely destitute. A legitimate starting position, and said out
+        // loud rather than left as a box that was ticked and did nothing.
         sim.notify({
           category: 'vehicles', title: 'No Car Yet',
           body: 'You could not afford one at the start. Public transport and rideshares for now.',
@@ -322,45 +315,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     }
   }
 
-  // --- Employment ---------------------------------------------------------
-  // The starting job has to be one the starting life can be lived on. Handing
-  // somebody a twelve-hour-a-week reading gig and a flat whose rent is twice
-  // what it pays is not a hard start, it is an unplayable one: they are broke
-  // inside a year no matter what the player does.
-  if (config.startWithJob) {
-    const openings = Object.values(sim.universe.jobOpenings);
-    const annualOutgoings = Object.values(sim.universe.bills)
-      .filter((b) => b.payerId === player.id && b.active)
-      .reduce((sum, bill) => sum + bill.amount * (BILLINGS_PER_YEAR[bill.frequency] ?? 12), 0);
-    const needed = Math.round(annualOutgoings * 1.25);
-
-    const canLiveOnIt = openings.filter((o) => annualisedOpeningPay(o) >= needed);
-    const pool = canLiveOnIt.length > 0 ? canLiveOnIt : openings;
-
-    // Within what is affordable, take the job that suits an actor: something
-    // near the industry, or the flexible work that fits around auditions.
-    const preferred = pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
-      ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
-      ?? pool[0];
-
-    // If nothing on the board pays for the life, take the best-paying thing
-    // going rather than something that guarantees insolvency.
-    const chosen = canLiveOnIt.length > 0
-      ? preferred
-      : [...openings].sort((a, b) => annualisedOpeningPay(b) - annualisedOpeningPay(a))[0];
-    if (chosen) hire(sim, player, chosen);
-  }
-
-  // --- Health cover -------------------------------------------------------
-  const job = player.jobId ? sim.universe.jobs[player.jobId] : undefined;
-  if (job?.benefits.health) {
-    const quote = sim.execute<{ quoteId: Id }>({ kind: 'ins.quote', payload: { line: 'health' } });
-    if (quote.ok && quote.value) {
-      const policy = sim.universe.insurancePolicies[quote.value.quoteId];
-      if (policy) policy.monthlyPremium = Math.round(policy.monthlyPremium * 0.28);
-      sim.execute({ kind: 'ins.purchase', payload: { quoteId: quote.value.quoteId, accountId: checking.id } });
-    }
-  }
+  // Health cover used to arrive with a job that had benefits. With no jobs
+  // there is no employer cover: a policy is something you go and buy.
 
   // --- Social presence ----------------------------------------------------
   const handle = `${config.firstName}${config.lastName}`.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -369,15 +325,6 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     payload: { platform: 'lumen', handle, displayName: player.displayName },
   });
 
-  // --- The industry is already running -----------------------------------
-  // A save opens with the world already mid-production on a few things, in
-  // the player's own market and abroad.
-  // The two at home are already casting, so there is something to be seen for
-  // on day one; the rest are simply being made somewhere else.
-  const startHome = countryOfCity(sim.universe.people[sim.universe.playerId]?.currentLocationId) ?? 'us';
-  for (const [i, market] of [startHome, startHome, 'us', 'uk', 'kr', 'fr'].entries()) {
-    commissionProject(sim, market, `seed-${i}`, i < 2);
-  }
 
   // --- Opening history ----------------------------------------------------
   sim.remember({
@@ -400,7 +347,7 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
-  sim.universe.meta.careerLabel = careerLabel(player.careerTrack);
+  sim.universe.meta.careerLabel = careerLabel(player.careerTrack, performerTitleOf(player));
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);
@@ -422,11 +369,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   registerAllSystems(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
-  ensureSeasons(sim);
   // A save from before the studios lived inside it needs their clocks running.
-  ensureStudioSchedules(sim);
-  ensureNetworkSchedules(sim);
-  ensureZeitgeist(sim);
   return sim;
 }
 
@@ -467,7 +410,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     ['people', 'map'], ['relationships', 'map'], ['households', 'map'],
     ['accounts', 'map'], ['transactions', 'list'], ['bills', 'map'],
     ['creditProfiles', 'map'], ['taxYears', 'map'],
-    ['jobs', 'map'], ['jobOpenings', 'map'], ['jobApplications', 'map'],
     ['properties', 'map'], ['structures', 'map'], ['rooms', 'map'], ['zones', 'map'],
     ['furnishings', 'map'], ['propertyListings', 'map'], ['propertyOffers', 'map'],
     ['realEstateAgents', 'map'], ['constructionProjects', 'map'],
@@ -478,15 +420,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     ['insurancePolicies', 'map'], ['insuranceClaims', 'map'], ['courses', 'map'],
     ['enrollments', 'map'], ['trips', 'map'], ['flightBookings', 'map'],
     ['hotelBookings', 'map'], ['socialAccounts', 'map'], ['socialPosts', 'map'],
-    ['brandDeals', 'map'], ['projects', 'map'], ['rights', 'map'],
-    ['scriptDrafts', 'map'], ['roles', 'map'], ['auditions', 'map'], ['contracts', 'map'],
-    ['shootDays', 'map'], ['postTasks', 'map'], ['marketingCampaigns', 'map'],
-    ['releases', 'map'], ['reviews', 'map'], ['awardEditions', 'map'],
-    ['awardNominations', 'map'], ['festivalSubmissions', 'map'], ['franchises', 'map'],
-    ['companies', 'map'], ['divisions', 'map'], ['employees', 'map'],
-    ['equipment', 'map'], ['merchandise', 'map'],
+    ['brandDeals', 'map'], ['companies', 'map'],
     ['scheduled', 'list'], ['audits', 'list'], ['history', 'list'], ['notifications', 'list'],
-    ['press', 'list'],
     ['decisions', 'map'],
   ];
 
@@ -497,9 +432,28 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
+  // Schema 26 is the pivot: the player runs a production company in a world
+  // where the strike ended every other one. A save from before it has no
+  // industry state at all, so it is given the opening one.
+  record['industry'] ??= {
+    briefed: false, strikeMonths: 19, rivals: 0,
+    material: 0, buyerHunger: 92, crewDepth: 34, ratesSet: {},
+  };
+
+  // Schema 27 removed sandbox. The founder starts maxed at everything, so
+  // there is nothing left for a cheat mode to give them. Any save still
+  // carrying the block loses it here.
+  delete (record as Record<string, unknown>)['sandbox'];
+
   record['idempotency'] ??= {};
   record['counters'] ??= {};
   record['engineFailures'] ??= [];
+  record['tutorial'] ??= { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false };
+
+  if (typeof record['__idCounter'] !== 'number') {
+    record['__idCounter'] = 100000;
+    steps.push('Reset the id counter above any existing id.');
+  }
 
   // Schema 10 put the clock on real time. A save from before it carries the
   // old 'standard' speed, which ran a world minute for every real second.
@@ -510,10 +464,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
 
   // Schema 11 put every label in Title Case. Labels are written into the save
-  // when they are created — a scheduled item keeps the words it was given — so
-  // an older save would have gone on reading 'New day' forever while a fresh
-  // one read 'New Day'. Repair them in place rather than leaving two builds
-  // worth of capitalisation in one universe.
+  // when they are created, so an older save would go on reading 'New day'
+  // forever while a fresh one read 'New Day'.
   let relabelled = 0;
   const relabel = <T extends Record<string, unknown>>(rows: T[] | undefined, field: keyof T & string) => {
     for (const row of rows ?? []) {
@@ -534,81 +486,31 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
   }
 
-  // Schema 9 also denormalised the billing block onto the project so a credit
-  // outlives the simulation of the person who earned it. Rebuild it from the
-  // attachments an older save already has.
-  const projects = record['projects'] as Record<string, {
-    credits?: unknown[]; castIds?: string[]; writerIds?: string[]; producerIds?: string[];
-    directorId?: string; showrunnerId?: string;
-  }>;
-  const peopleById = record['people'] as Record<string, { displayName?: string; stageName?: string }>;
-  let credited = 0;
-  for (const project of Object.values(projects)) {
-    if (Array.isArray(project.credits)) continue;
-    const credits: { personId: string; name: string; role: string }[] = [];
-    const add = (personId: string | undefined, role: string) => {
-      if (!personId) return;
-      const person = peopleById[personId];
-      if (!person) return;
-      credits.push({ personId, name: person.stageName ?? person.displayName ?? 'Uncredited', role });
-    };
-    for (const id of project.castIds ?? []) add(id, 'cast');
-    for (const id of project.writerIds ?? []) add(id, 'writer');
-    for (const id of project.producerIds ?? []) add(id, 'producer');
-    add(project.directorId, 'director');
-    add(project.showrunnerId, 'showrunner');
-    project.credits = credits;
-    credited++;
-  }
-  if (credited > 0) steps.push(`Rebuilt the credit list on ${credited} project${credited === 1 ? '' : 's'}.`);
-
-  // Schema 9 moved casting rooms onto the role. A save written before that has
-  // the auditions but no index, so rebuild it from the auditions themselves
-  // rather than losing anybody's casting history.
-  const roles = record['roles'] as Record<string, { id: string; auditionIds?: string[] }>;
-  const auditions = record['auditions'] as Record<string, { id: string; roleId: string }>;
-  let indexed = 0;
-  for (const role of Object.values(roles)) {
-    if (Array.isArray(role.auditionIds)) continue;
-    role.auditionIds = [];
-    indexed++;
-  }
-  if (indexed > 0) {
-    for (const audition of Object.values(auditions)) {
-      const role = roles[audition.roleId];
-      if (role?.auditionIds && !role.auditionIds.includes(audition.id)) role.auditionIds.push(audition.id);
-    }
-    steps.push(`Rebuilt the casting-room index on ${indexed} role${indexed === 1 ? '' : 's'}.`);
-  }
-  record['tutorial'] ??= { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false };
-  record['sandbox'] ??= { enabled: false, maxAttributesApplied: false, allTraitsGranted: false, unlimitedFunds: false, ignoreAuthority: false, log: [] };
-  if (typeof record['__idCounter'] !== 'number') {
-    record['__idCounter'] = 100000;
-    steps.push('Reset the id counter above any existing id.');
-  }
-
-  // Every record must belong to this save and nothing else.
-  const saveId = universe.meta.id;
-  let reassigned = 0;
-  for (const [key, shape] of collections) {
-    const value = record[key];
-    const entries = shape === 'map'
-      ? Object.values(value as Record<string, { saveId?: string }>)
-      : (value as { saveId?: string }[]);
-    for (const entity of entries) {
-      if (entity && typeof entity === 'object' && 'saveId' in entity && entity.saveId !== saveId) {
-        entity.saveId = saveId;
-        reassigned++;
+  // Every record must belong to this save and nothing else. Cross-save
+  // contamination is the one corruption that is invisible until it matters.
+  {
+    const saveId = universe.meta.id;
+    let reassigned = 0;
+    for (const [key, shape] of collections) {
+      const value = record[key];
+      const entries = shape === 'map'
+        ? Object.values(value as Record<string, { saveId?: string }>)
+        : (value as { saveId?: string }[]);
+      for (const entity of entries) {
+        if (entity && typeof entity === 'object' && 'saveId' in entity && entity.saveId !== saveId) {
+          entity.saveId = saveId;
+          reassigned++;
+        }
       }
     }
+    if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
   }
-  if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
 
-  // Schema 12 made everyone an actor to begin with and moved the other
-  // tracks into professions unlocked in the game. A save whose player was a
-  // writer keeps being a writer: the profession is unlocked at level two so
-  // their standing is not lost, their skills are exactly as they were, and
-  // their experience is read from the reputation they had already built.
+  // Schema 12 made everyone an actor to begin with and moved the other tracks
+  // into professions unlocked in the game. A save whose player was a writer
+  // keeps being a writer: the profession is unlocked at level two so their
+  // standing is not lost, their skills are exactly as they were, and their
+  // experience is read from the reputation they had already built.
   for (const person of Object.values(universe.people)) {
     if (!person.isPlayer) continue;
     if (person.industryXp === undefined) {
@@ -630,225 +532,10 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
-  // Schema 13 gave every car a location. A car from before is wherever its
-  // owner is now, which is the only honest guess and the one that changes
-  // nothing about what the player can do today.
-  let parked = 0;
-  for (const vehicle of Object.values(universe.vehicles)) {
-    if (vehicle.locationId) continue;
-    const owner = universe.people[vehicle.ownerId];
-    if (owner) { vehicle.locationId = owner.currentLocationId; parked++; }
-  }
-  if (parked > 0) steps.push(`Placed ${parked} car${parked === 1 ? '' : 's'} where their owners are.`);
-
-  // Schema 14 put the real award bodies in. Every project now says where it
-  // is from, what language it speaks and how it reached the public, which is
-  // what the bodies' rules read. Finalised results under the older fictional
-  // bodies stay exactly as they were: history is not rewritten. Editions of
-  // those bodies that had not yet been decided are retired, since nothing
-  // can decide them now, and their pending entries go with them.
-  let described = 0;
-  for (const project of Object.values(universe.projects)) {
-    const creator = universe.people[project.createdById];
-    const country = project.productionCountryId
-      ?? countryOfCity(project.productionLocationIds[0]) ?? countryOfCity(creator?.currentLocationId) ?? 'us';
-    if (!project.productionCountryId) { project.productionCountryId = country; described++; }
-    project.language ??= primaryLanguageOf(country);
-    if (!project.releaseStrategy && project.releaseDate) {
-      const release = project.releaseId ? universe.releases[project.releaseId] : undefined;
-      project.releaseStrategy = release?.strategy
-        ?? (project.format === 'series' || project.format === 'limited_series' || project.format === 'tv_movie' ? 'streaming_exclusive'
-          : project.format === 'short' ? 'festival_only'
-          : project.budget >= 15_000_000_00 ? 'wide_theatrical' : 'limited_theatrical');
-    }
-  }
-  if (described > 0) steps.push(`Gave ${described} project${described === 1 ? '' : 's'} a country, a language and a way of reaching the public.`);
-
-  let retired = 0;
-  const retiredEditionIds = new Set<string>();
-  for (const edition of Object.values(universe.awardEditions)) {
-    if (!LEGACY_BODY_NAMES[edition.bodyId] || edition.finalised) continue;
-    retiredEditionIds.add(edition.id);
-    delete universe.awardEditions[edition.id];
-    retired++;
-  }
-  for (const nomination of Object.values(universe.awardNominations)) {
-    if (retiredEditionIds.has(nomination.editionId)) delete universe.awardNominations[nomination.id];
-  }
-  let withdrawn = 0;
-  for (const submission of Object.values(universe.festivalSubmissions)) {
-    if (!LEGACY_FESTIVAL_NAMES[submission.festivalId]) continue;
-    if (submission.status === 'under_review' || submission.status === 'selected') { submission.status = 'withdrawn'; withdrawn++; }
-  }
-  const before = universe.scheduled.length;
-  universe.scheduled = universe.scheduled.filter((item) => {
-    if ((item.kind === 'award.nominations' || item.kind === 'award.ceremony') && retiredEditionIds.has(String(item.payload.editionId))) return false;
-    if ((item.kind === 'fest.decision' || item.kind === 'fest.screening')) {
-      const submission = universe.festivalSubmissions[String(item.payload.submissionId)];
-      if (submission && LEGACY_FESTIVAL_NAMES[submission.festivalId]) return false;
-    }
-    return true;
-  });
-  if (retired > 0 || withdrawn > 0 || before !== universe.scheduled.length) {
-    steps.push(`The award bodies are now the real ones. Retired ${retired} undecided edition${retired === 1 ? '' : 's'} of the earlier fictional bodies and ${withdrawn} pending festival submission${withdrawn === 1 ? '' : 's'}; every decided result was kept as it was.`);
-  }
-
-  // Schema 15: the studios are the real ones. A pitch still waiting on one of
-  // the earlier fictional buyers can never be answered, so it lapses; an offer
-  // from one of them that was never accepted is withdrawn. Every deal already
-  // done keeps the name it was done under: that is history.
-  if (from < 15) {
-    const pending = universe.scheduled.length;
-    universe.scheduled = universe.scheduled.filter((item) => !(item.kind === 'film.pitch_response' && !BUYERS.get(String(item.payload.buyerId))));
-    const lapsed = pending - universe.scheduled.length;
-    let withdrawnOffers = 0;
-    for (const decision of Object.values(universe.decisions)) {
-      if (decision.resolvedAt || decision.dismissedAt) continue;
-      const stale = decision.actions.some((a) => a.commandKind === 'film.accept_buyer_offer' && !BUYERS.get(String(a.payload.buyerId)));
-      if (stale) { decision.dismissedAt = universe.now; withdrawnOffers++; }
-    }
-    if (lapsed > 0 || withdrawnOffers > 0) {
-      const names = Object.values(LEGACY_BUYER_NAMES).slice(0, 3).join(', ');
-      steps.push(`The studios are now the real ones. ${lapsed} pending pitch${lapsed === 1 ? '' : 'es'} and ${withdrawnOffers} open offer${withdrawnOffers === 1 ? '' : 's'} from the earlier fictional buyers (${names} and the rest) lapsed; every deal already done was kept under the name it was done with.`);
-    } else {
-      steps.push('The studios are now the real ones.');
-    }
-  }
-
-  if (from < 16) {
-    // The studios and networks now live inside the save: their standing with
-    // the player, their results, their dated slate playing out, the weekend
-    // chart and the trades. Nothing already in the save is touched; the new
-    // collections start empty and the world fills them from here.
-    record['studios'] ??= {};
-    record['networks'] ??= {};
-    record['talentDeals'] ??= {};
-    record['boxOffice'] ??= { weekends: [], yearToDate: {}, pending: [] };
-    record['trade'] ??= [];
-    steps.push('The studios and networks now act inside the save: their dated slates release on the day, the weekend box office is counted, and their standing with you is kept.');
-  }
-
-  if (from < 17) {
-    // Television became a schedule rather than a list: a grid every week, a
-    // rating on every airing, a renewal every May, and a chart for the
-    // services. The records a save sets for itself are kept from here too.
-    record['airings'] ??= [];
-    record['streamingCharts'] ??= [];
-    record['saveRecords'] ??= {};
-    steps.push('Television now runs on a schedule: every linear network has a week, every airing has a rating, the services publish a weekly chart, and the records your universe sets are kept.');
-  }
-
-  if (from < 18) {
-    // The world stopped making films to fill a casting page and started
-    // commissioning them the way an industry does: by country, by what that
-    // country makes, and by what is warm there this year. The filler that was
-    // only ever there to have something open is cleared out — but nothing the
-    // player ever touched goes with it.
-    record['zeitgeist'] ??= { markets: {}, lastTick: 0, history: [] };
-    const touched = new Set<string>();
-    const player = universe.people[universe.playerId];
-    for (const id of player?.creditIds ?? []) touched.add(id);
-    for (const contract of Object.values(universe.contracts)) if (contract.projectId) touched.add(contract.projectId);
-    for (const audition of Object.values(universe.auditions)) {
-      const role = universe.roles[audition.roleId];
-      if (role?.projectId) touched.add(role.projectId);
-    }
-    for (const nomination of Object.values(universe.awardNominations)) if (nomination.projectId) touched.add(nomination.projectId);
-    for (const submission of Object.values(universe.festivalSubmissions)) if (submission.projectId) touched.add(submission.projectId);
-
-    const filler = Object.values(universe.projects).filter((p) => p.createdById !== universe.playerId
-      && !p.catalogueQid
-      && !p.ownerCompanyId
-      && !touched.has(p.id)
-      && (p.logline === 'An independent production, casting now.' || p.phase === 'preproduction' || p.phase === 'idea'));
-    let clearedRoles = 0;
-    for (const project of filler) {
-      for (const role of Object.values(universe.roles)) {
-        if (role.projectId !== project.id) continue;
-        delete universe.roles[role.id];
-        clearedRoles++;
-      }
-      delete universe.projects[project.id];
-    }
-    // Any decision or scheduled item pointing at something that is gone goes too.
-    for (const decision of Object.values(universe.decisions)) {
-      if (decision.refType === 'role' && decision.refId && !universe.roles[decision.refId]) decision.dismissedAt = universe.now;
-      if (decision.refType === 'project' && decision.refId && !universe.projects[decision.refId]) decision.dismissedAt = universe.now;
-    }
-    universe.scheduled = universe.scheduled.filter((item) => {
-      if (item.refType === 'project' && item.refId && !universe.projects[item.refId]) return false;
-      if (item.refType === 'role' && item.refId && !universe.roles[item.refId]) return false;
-      return true;
-    });
-    steps.push(filler.length > 0
-      ? `The world commissions its own films now, by country and by what is in fashion there. ${filler.length} unstarted filler production${filler.length === 1 ? '' : 's'} and ${clearedRoles} open role${clearedRoles === 1 ? '' : 's'} that existed only to fill the casting page were cleared; everything you were ever attached to was kept.`
-      : 'The world commissions its own films now, by country and by what is in fashion there.');
-  }
-
-  if (from < 19) {
-    // You can now go to a real person by name rather than only opening a room.
-    // Every part keeps a record of who was asked, what they were offered and
-    // what they said, so a second attempt reads back the first answer instead
-    // of rolling a new one. Parts that already exist start that record empty —
-    // nothing that was cast before stops being cast.
-    for (const role of Object.values(universe.roles)) role.offers ??= [];
-    steps.push('You can take a part to somebody by name now. Every part keeps the offers put to it and the answers, so asking twice cannot book the same person twice.');
-  }
-
-  if (from < 20) {
-    // The trade press writes about your industry now, in the register each
-    // publication actually writes in. Nothing already in the save changes; the
-    // coverage starts from here, and the one-line trade items a save already
-    // has are kept exactly as they were.
-    record['press'] ??= [];
-    // Every picture keeps the approaches made for its chairs, the same way a
-    // part keeps its offers. Existing projects start that record empty;
-    // nothing already attached comes off.
-    for (const project of Object.values(universe.projects)) project.approaches ??= [];
-    steps.push('The trades cover your industry now. Variety, Deadline, The Hollywood Reporter and the rest each write in their own register, and everything they publish is kept.');
-  }
-
-  if (from < 21) {
-    // A draft is a document now: fourteen craft dimensions, a scene list and a
-    // cast of characters. Every draft already in the save keeps its numbers —
-    // the three it had become three of the fourteen and the rest are filled
-    // from its quality — and its scenes are broken down the first time
-    // anything needs them, rather than being invented here and now.
-    let carried = 0;
-    for (const draft of Object.values(universe.scriptDrafts)) {
-      draft.craft ??= craftFromLegacy(draft.structure, draft.dialogue, draft.characters, draft.quality);
-      draft.scenes ??= [];
-      draft.scriptCharacters ??= [];
-      carried++;
-    }
-    steps.push(carried > 0
-      ? `A script is a document now: fourteen craft dimensions, a scene list and a cast of characters. ${carried} draft${carried === 1 ? '' : 's'} already in the save kept every number ${carried === 1 ? 'it' : 'they'} had.`
-      : 'A script is a document now: fourteen craft dimensions, a scene list and a cast of characters.');
-  }
-
-  if (from < 22) {
-    // Post is work now: effects are counted and bid on by real houses, music
-    // is spotted and licensed from the companies that own it, stages are
-    // booked on real lots and a lot can be owned. Nothing already in a save
-    // changes; a picture that finished post before this keeps its tasks and
-    // its numbers, and simply has no bids or cues on the record.
-    let plants = 0;
-    for (const property of Object.values(universe.properties)) {
-      if ((property.kind === 'studio_lot' || property.kind === 'sound_stage') && property.ownerId && !property.lot) {
-        property.lot = plantForLegacyProperty(property);
-        plants++;
-      }
-    }
-    steps.push(plants > 0
-      ? `Post is work now: bids, cues, stages and lots. ${plants} lot${plants === 1 ? '' : 's'} you already owned ${plants === 1 ? 'is' : 'are'} a working plant.`
-      : 'Post is work now: effects bids from real houses, music licensed from its owners, stages on real lots.');
-  }
-
+  // Schema 23 made the city somewhere you move through. Everybody in an older
+  // save starts clean and every car starts full, which is the kindest reading
+  // of a world that was not tracking either.
   if (from < 23) {
-    // The city is somewhere you move through now: places to go, a tank that
-    // empties, and a day that leaves its mark on you. Everybody in the save
-    // starts clean and every car starts full, which is the kindest reading of
-    // a world that was not tracking either.
     let people = 0;
     for (const person of Object.values(universe.people)) {
       if (person.wellbeing.hygiene === undefined) { person.wellbeing.hygiene = 80; people++; }
@@ -860,16 +547,205 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`The city is somewhere you go now: restaurants, filling stations, hotels and the sights. ${people} people started clean and ${cars} car${cars === 1 ? '' : 's'} started full.`);
   }
 
-  if (from < 24) {
-    // The industry remembers now. Nobody in the save is given a grudge they
-    // did not earn: everybody starts with no history and forms one from here.
-    steps.push('The industry has a memory now: what people privately think of you, what they have not forgotten, and what they do about it later.');
+  /**
+   * Schema 26 removed the film and television half of the game.
+   *
+   * Projects, rights, drafts, roles, auditions, contracts, shoot days, post,
+   * releases, reviews, awards, festivals, franchises, studios, networks, the
+   * box office and the trade press are gone, along with everything that
+   * scheduled work against them.
+   *
+   * This is a deletion, not a repair, and it is reported as one. A save that
+   * had a career in it will say so in the migration report rather than quietly
+   * losing it, and the life half — the money, the property, the cars, the
+   * people, the city — comes through untouched.
+   */
+  if (from < 26) {
+    const dropped: string[] = [];
+    const drop = (key: string, label: string) => {
+      const value = record[key];
+      const count = Array.isArray(value) ? value.length : value && typeof value === 'object' ? Object.keys(value).length : 0;
+      if (count > 0) dropped.push(`${count} ${label}`);
+      delete record[key];
+    };
+    drop('projects', 'projects');
+    drop('rights', 'rights deals');
+    drop('scriptDrafts', 'script drafts');
+    drop('roles', 'roles');
+    drop('auditions', 'auditions');
+    drop('contracts', 'contracts');
+    drop('shootDays', 'shoot days');
+    drop('postTasks', 'post tasks');
+    drop('marketingCampaigns', 'campaigns');
+    drop('releases', 'releases');
+    drop('reviews', 'reviews');
+    drop('awardEditions', 'award editions');
+    drop('awardNominations', 'nominations');
+    drop('festivalSubmissions', 'festival submissions');
+    drop('franchises', 'franchises');
+    drop('castingOffices', 'casting-office standings');
+    drop('studios', 'studios');
+    drop('networks', 'networks');
+    drop('airings', 'airings');
+    drop('streamingCharts', 'streaming charts');
+    drop('saveRecords', 'record categories');
+    drop('zeitgeist', 'zeitgeist');
+    drop('talentDeals', 'talent deals');
+    drop('boxOffice', 'box-office ledger');
+    drop('trade', 'trade items');
+    drop('press', 'press items');
+    drop('divisions', 'company divisions');
+    drop('employees', 'employees');
+    drop('equipment', 'equipment');
+    drop('merchandise', 'merchandise lines');
+
+    // Anything on the calendar that belonged to the removed half goes with it,
+    // or the scheduler wakes up to handlers that are not there any more.
+    const deadPrefixes = [
+      'cast.', 'film.', 'prod.', 'post.', 'rel.', 'crit.', 'award.', 'fest.',
+      'studio.', 'network.', 'franchise.', 'ip.', 'press.', 'trade.', 'company.',
+      'zeitgeist.', 'world.project_progress', 'box.', 'tape.',
+    ];
+    const scheduled = record['scheduled'] as { kind: string }[];
+    const before = scheduled.length;
+    record['scheduled'] = scheduled.filter((item) => !deadPrefixes.some((prefix) => item.kind.startsWith(prefix)));
+    const cancelled = before - (record['scheduled'] as unknown[]).length;
+
+    // Decisions pointing at things that no longer exist would sit in the tray
+    // forever with nothing behind them.
+    const decisions = record['decisions'] as Record<string, { refType?: string; route?: string }>;
+    let closed = 0;
+    for (const [id, decision] of Object.entries(decisions)) {
+      const stale = ['project', 'role', 'audition', 'release', 'contract', 'draft', 'company'].includes(decision.refType ?? '')
+        || (decision.route ?? '').startsWith('/workspace/casting')
+        || (decision.route ?? '').startsWith('/workspace/projects');
+      if (stale) { delete decisions[id]; closed++; }
+    }
+
+    // Credits are a list of project ids that no longer resolve.
+    let uncredited = 0;
+    for (const person of Object.values(universe.people)) {
+      if ((person.creditIds?.length ?? 0) > 0) { person.creditIds = []; uncredited++; }
+    }
+
+    steps.push(
+      dropped.length > 0
+        ? `The film and television half of the game was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'}, closed ${closed} decision${closed === 1 ? '' : 's'} and cleared the credits on ${uncredited} ${uncredited === 1 ? 'person' : 'people'}. None of it can be recovered from this save.`
+        : 'The film and television half of the game was removed. This save had nothing in it.',
+    );
+  }
+
+  if (from < 28) {
+    // Schema 28: the founder is the once-in-a-lifetime one. Every attribute,
+    // every skill, every producing attribute and every trait in the game, all
+    // at the top of their scale at the same time. Nothing is taken away from
+    // an older save — the sheets only ever go up, and the history, money and
+    // relationships in the save are untouched.
+    const player = universe.people[universe.playerId];
+    if (player) {
+      for (const attribute of ATTRIBUTES) {
+        player.attributes[attribute.id] = Math.max(player.attributes[attribute.id] ?? 0, CEILING);
+      }
+      for (const skill of SKILLS) {
+        player.skills[skill.id] = Math.max(player.skills[skill.id] ?? 0, CEILING);
+      }
+      player.founder = Object.fromEntries(
+        FOUNDER_ATTRIBUTES.map((a) => [a.id, Math.max(player.founder?.[a.id] ?? 0, CEILING)]),
+      );
+      player.traits = [...new Set([...player.traits, ...ALL_TRAITS.map((t) => t.id)])];
+      player.founderTraits = [...new Set([
+        ...(player.founderTraits ?? []),
+        ...GOAT_TRAITS.map((t) => t.id),
+        ...FOUNDER_TRAITS.map((t) => t.id),
+      ])];
+      player.prodigy = true;
+      steps.push(
+        `${player.displayName} is the prodigy: ${ATTRIBUTES.length} attributes, ${SKILLS.length} skills and `
+        + `${FOUNDER_ATTRIBUTES.length} producing attributes at ${CEILING}, and all `
+        + `${player.traits.length + player.founderTraits.length} traits held at once.`,
+      );
+    }
+    // And nobody else acquires one. A G.O.A.T. trait on a second person would
+    // make the word meaningless, and the founder traits belong to whoever the
+    // save gave them to.
+    const goatIds = new Set(GOAT_TRAITS.map((t) => t.id));
+    let stripped = 0;
+    for (const person of Object.values(universe.people)) {
+      if (person.isPlayer) continue;
+      const before = person.founderTraits?.length ?? 0;
+      if (before === 0) continue;
+      person.founderTraits = person.founderTraits!.filter((id) => !goatIds.has(id));
+      if (person.founderTraits.length !== before) stripped++;
+    }
+    if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There is one.`);
+  }
+
+  if (from < 29) {
+    // Schema 29: the job system is gone. There are no shifts, no listings, no
+    // applications and no wages — the player runs a production company and
+    // that is the only work there is.
+    const dropped: string[] = [];
+    for (const [key, label] of [['jobs', 'jobs'], ['jobOpenings', 'listings'], ['jobApplications', 'applications']] as const) {
+      const value = record[key];
+      const count = value && typeof value === 'object' ? Object.keys(value).length : 0;
+      if (count > 0) dropped.push(`${count} ${label}`);
+      delete record[key];
+    }
+    for (const person of Object.values(universe.people)) {
+      delete (person as unknown as Record<string, unknown>)['jobId'];
+    }
+    // A payday or a shift on the calendar would wake a handler that is not
+    // there any more.
+    const scheduled = record['scheduled'] as { kind: string }[];
+    const before = scheduled.length;
+    record['scheduled'] = scheduled.filter(
+      (item) => !item.kind.startsWith('work.') && item.kind !== 'finance.payday',
+    );
+    const cancelled = before - (record['scheduled'] as unknown[]).length;
+
+    // And any decision or notification pointing at the screen that went.
+    const decisions = record['decisions'] as Record<string, { route?: string; category?: string }>;
+    let closed = 0;
+    for (const [id, decision] of Object.entries(decisions)) {
+      if ((decision.route ?? '').startsWith('/workspace/jobs')) { delete decisions[id]; closed++; }
+    }
+
+    // With no wages, a founder pays themselves out of the company they own.
+    // Older saves get the draw and the standing order that pays it.
+    for (const company of Object.values(universe.companies)) {
+      if (typeof company.founderDraw !== 'number') company.founderDraw = DEFAULT_FOUNDER_DRAW;
+    }
+    const playerCompanyId = universe.playerCompanyId;
+    const hasDraw = (record['scheduled'] as { kind: string }[]).some((i) => i.kind === 'co.draw');
+    if (playerCompanyId && !hasDraw) {
+      (record['scheduled'] as unknown[]).push({
+        id: `sched_draw_${playerCompanyId}`,
+        saveId: universe.meta.id,
+        at: addMonths(universe.now, 1, universe.homeZone),
+        kind: 'co.draw',
+        label: "Founder's Draw",
+        category: 'finance',
+        payload: { companyId: playerCompanyId },
+        priority: 14,
+        status: 'pending',
+        refType: 'company',
+        refId: playerCompanyId,
+        recurrence: { unit: 'month', interval: 1 },
+      });
+    }
+
+    steps.push(
+      dropped.length > 0
+        ? `Employment was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
+        : 'Employment was removed. This save had none.',
+    );
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
   return { migrated: true, from, to: SAVE_SCHEMA_VERSION, steps, problems };
 }
+
 
 // ---------------------------------------------------------------------------
 // Validation
@@ -922,7 +798,6 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   check('person', Object.values(universe.people));
   check('property', Object.values(universe.properties));
   check('vehicle', Object.values(universe.vehicles));
-  check('project', Object.values(universe.projects));
   check('account', Object.values(universe.accounts));
   check('scheduled', universe.scheduled);
 
@@ -946,43 +821,6 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     checked++;
     if (!universe.people[rel.aId] || !universe.people[rel.bId]) {
       errors.push(`Relationship ${rel.id} references a person who does not exist.`);
-    }
-  }
-
-  // Projects must not claim cast who do not exist.
-  for (const project of Object.values(universe.projects)) {
-    checked++;
-    for (const castId of project.castIds) {
-      if (!universe.people[castId]) {
-        errors.push(`Project ${project.title} lists a cast member '${castId}' who does not exist.`);
-        break;
-      }
-    }
-    if (project.spent > project.budget + project.contingency && project.budgetLocked) {
-      warnings.push(`${project.title} has spent ${formatMoneyCompact(project.spent)} against a locked budget of ${formatMoneyCompact(project.budget)}.`);
-    }
-  }
-
-  // Post-production dependencies must never be violated.
-  for (const task of Object.values(universe.postTasks)) {
-    checked++;
-    if (task.status !== 'complete' && task.status !== 'in_progress') continue;
-    const siblings = Object.values(universe.postTasks).filter((t) => t.projectId === task.projectId);
-    for (const dep of task.dependsOn) {
-      const upstream = siblings.find((t) => t.kind === dep);
-      if (upstream && upstream.status !== 'complete' && task.status === 'complete') {
-        errors.push(`Post task '${task.name}' completed while '${upstream.name}' is still ${upstream.status}. Dependency violated.`);
-      }
-    }
-  }
-
-  // Award history must be stable.
-  for (const edition of Object.values(universe.awardEditions)) {
-    checked++;
-    if (!edition.finalised) continue;
-    const noms = Object.values(universe.awardNominations).filter((n) => n.editionId === edition.id);
-    if (noms.length > 0 && noms.every((n) => n.won === undefined)) {
-      errors.push(`Award edition ${edition.id} is finalised but no winner was recorded.`);
     }
   }
 
