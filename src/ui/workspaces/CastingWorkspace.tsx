@@ -3,6 +3,7 @@ import { genreName } from '@/engine/content/genres';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { auditionPolicyFor } from '@/engine/systems/casting';
+import { AuditionRoomDialog } from '@/ui/components/AuditionRoom';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
 import { AGENCIES } from '@/engine/content/industry';
 import { formatMoney } from '@/engine/core/money';
@@ -16,8 +17,8 @@ type Tab = 'breakdowns' | 'auditions' | 'representation' | 'credits';
 export function CastingWorkspace() {
   const { sim, run } = useGame();
   const [tab, setTab] = useState<Tab>('breakdowns');
-  const [preparing, setPreparing] = useState<string | null>(null);
   const [taping, setTaping] = useState<string | null>(null);
+  const [inRoom, setInRoom] = useState<string | null>(null);
 
   const player = useWorld((s) => s.player);
   const age = ageOn(player.birthInstant, sim.now, sim.homeZone);
@@ -147,18 +148,23 @@ export function CastingWorkspace() {
                           Shoot The Tape
                         </button>
                       )}
-                      {!audition.decidedAt && audition.performanceScore === undefined && audition.format !== 'self_tape' && audition.stage !== 'self_tape' && (
-                        <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
-                          Prepare And Perform
+                      {!audition.decidedAt && !audition.room?.finishedAt && audition.format !== 'self_tape' && audition.stage !== 'self_tape' && (
+                        <button className="btn btn-sm btn-primary" onClick={() => setInRoom(audition.id)}>
+                          {audition.room ? 'Back Into The Room' : 'Go To The Room'}
                         </button>
                       )}
-                      {!audition.decidedAt && audition.stage === 'callback' && !(audition.rounds ?? []).some((r) => r.stage === 'callback') && (
-                        <button className="btn btn-sm btn-primary" onClick={() => setPreparing(audition.id)}>
-                          Go To The Callback
-                        </button>
-                      )}
+
                     </div>
 
+                    {audition.room?.verdict && (
+                      <div className="callout" style={{ marginTop: 'var(--s2)' }}>
+                        <strong className="xs">{audition.room.walkedOut ? 'You Walked Out' : 'In The Room'}</strong>
+                        <p className="xs" style={{ margin: '2px 0 0' }}>{audition.room.verdict.line}</p>
+                        <p className="xs dim" style={{ margin: '2px 0 0' }}>
+                          {audition.room.occupants.length} behind the table · {audition.room.played.length} beats
+                        </p>
+                      </div>
+                    )}
                     {audition.officeResponse && audition.officeResponse.kind !== 'silence' && (
                       <div className={`callout ${audition.officeResponse.kind === 'callback' ? 'callout-accent' : audition.officeResponse.kind === 'pass' ? 'callout-negative' : ''}`} style={{ marginTop: 'var(--s2)' }}>
                         <strong className="xs">The Office, {formatDate(audition.officeResponse.at, sim.homeZone)}</strong>
@@ -272,7 +278,7 @@ export function CastingWorkspace() {
         </Panel>
       )}
 
-      {preparing && <PrepareDialog auditionId={preparing} onClose={() => setPreparing(null)} />}
+      {inRoom && <AuditionRoomDialog auditionId={inRoom} onClose={() => setInRoom(null)} />}
       {taping && <TapeDialog auditionId={taping} onClose={() => setTaping(null)} />}
     </>
   );
@@ -333,43 +339,3 @@ function TapeDialog({ auditionId, onClose }: { auditionId: string; onClose: () =
   );
 }
 
-function PrepareDialog({ auditionId, onClose }: { auditionId: string; onClose: () => void }) {
-  const { sim, run } = useGame();
-  const [hours, setHours] = useState(4);
-  const audition = sim.universe.auditions[auditionId];
-  const role = audition ? sim.universe.roles[audition.roleId] : undefined;
-
-  const submit = () => {
-    const result = run('cast.perform_audition', { auditionId, prepHours: hours });
-    if (result.ok) onClose();
-  };
-
-  return (
-    <Modal
-      title={`Audition for ${role?.characterName ?? 'the role'}`}
-      onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Not Yet</button><button className="btn btn-primary" onClick={submit}>Prepare And Go In</button></>}
-    >
-      <p className="muted small">
-        Preparation costs hours and energy, and it is one of the largest single inputs into how the
-        room goes. Going in cold is a choice you can make.
-      </p>
-      <div className="field">
-        <div className="row-between">
-          <label htmlFor="prep" style={{ marginBottom: 0 }}>Hours Of Preparation</label>
-          <span className="mono">{hours}</span>
-        </div>
-        <input id="prep" type="range" min={0} max={16} value={hours} onChange={(e) => setHours(Number(e.target.value))} />
-        <div className="row-between xs dim">
-          <span>Cold</span><span>Two full days</span>
-        </div>
-      </div>
-      <div className="callout">
-        {hours === 0 && 'No preparation. Everyone in the room will know.'}
-        {hours > 0 && hours < 4 && 'A pass on the material. Better than nothing.'}
-        {hours >= 4 && hours < 10 && 'Properly prepared. This is what professionals do.'}
-        {hours >= 10 && 'Deeply prepared, at real cost to your energy today.'}
-      </div>
-    </Modal>
-  );
-}

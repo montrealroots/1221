@@ -428,6 +428,53 @@ for (const size of WIDTHS) {
     void menu;
   }
 
+  // The room: staged from the sandbox while breakdowns are closed, then
+  // walked into and played a beat at a time.
+  await openRail();
+  const settingsForRoom = page.getByRole('button', { name: /settings/i }).first();
+  if (await settingsForRoom.count()) {
+    await settingsForRoom.click().catch(() => {});
+    await page.waitForTimeout(900);
+    const stageRead = page.getByRole('button', { name: /Stage A First Read/i }).first();
+    if (await stageRead.count()) {
+      await stageRead.click().catch(() => {});
+      await page.waitForTimeout(1500);
+      await openRail();
+      const casting = page.getByRole('button', { name: /^casting$/i }).first();
+      if (await casting.count()) {
+        await casting.click().catch(() => {});
+        await page.waitForTimeout(1000);
+        const mine = page.getByRole('tab', { name: /Your Auditions/ }).first();
+        if (await mine.count()) { await mine.click().catch(() => {}); await page.waitForTimeout(800); }
+        const goIn = page.getByRole('button', { name: /Go To The Room/ }).first();
+        if (await goIn.count()) {
+          await goIn.click().catch(() => {});
+          await page.waitForTimeout(800);
+          scrollsSideways = (await probe('the room, before you go in')) || scrollsSideways;
+          await shoot('18-room-door');
+          const enter = page.getByRole('button', { name: /^Go In$/ }).first();
+          if (await enter.count()) {
+            await enter.click().catch(() => {});
+            await page.waitForTimeout(900);
+            scrollsSideways = (await probe('the room, with everybody in it')) || scrollsSideways;
+            await shoot('19-room');
+            // Play a few beats so the log and the reactions are on screen.
+            for (let i = 0; i < 3; i++) {
+              const choice = page.locator('.list-item').filter({ has: page.locator('.small.strong') }).last();
+              if (!(await choice.count())) break;
+              await choice.click().catch(() => {});
+              await page.waitForTimeout(700);
+            }
+            scrollsSideways = (await probe('the room, mid-audition')) || scrollsSideways;
+            await shoot('20-room-playing');
+            await page.getByRole('button', { name: /Walk Out|Leave/ }).first().click().catch(() => {});
+            await page.waitForTimeout(500);
+          }
+        }
+      }
+    }
+  }
+
   // The actor's side: a tape asked for, and the room where it is shot.
   await openRail();
   const castingAgain = page.getByRole('button', { name: /^casting$/i }).first();

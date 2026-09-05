@@ -11,6 +11,7 @@ import type { Instant, TimeZone } from '../core/time';
 import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
+import type { RoleCategory } from '../content/casting-industry';
 import type { AuditRecord, HistoryRecord } from '../core/audit';
 import type { PerformerTitle } from '../core/performer';
 import type { ProfessionId } from '../content/professions';
@@ -1293,6 +1294,11 @@ export interface Project {
   /** Post. */
   postTaskIds: Id[];
   pictureLockedAt?: Instant;
+  /**
+   * The casting office running it, from the real registry. Chosen once and
+   * kept, so the same office sees an actor across a career.
+   */
+  castingOfficeId?: string;
   /** Effects: counted, bid on, awarded. */
   vfx?: VfxPlan;
   /** Music: spotted, written, licensed. */
@@ -1516,6 +1522,15 @@ export interface Role {
   characterName: string;
   billing: 'lead' | 'supporting' | 'featured' | 'day_player' | 'voice' | 'cameo';
   description: string;
+  /**
+   * What the part is hired as, in the industry's own categories: a series
+   * regular is contracted to the series, a guest star to an episode, a
+   * co-star to a day. Absent on parts created before categories existed, and
+   * derived from the billing and the format when it is read.
+   */
+  category?: RoleCategory;
+  /** For a series: which season, how many episodes, and how many are guaranteed. */
+  episodes?: { season: number; ofEpisodes: number; guaranteed?: number };
   /** What the part is in the story, when it came from a script breakdown. */
   archetype?: CharacterArchetype;
   /** The scenes the part is in, by number, when it came from a breakdown. */
@@ -1546,6 +1561,73 @@ export interface Role {
   offers?: RoleOffer[];
   /** When the callbacks were held, on a part the world is casting. Absent until they are. */
   callbacksAt?: Instant;
+}
+
+/** Somebody sitting behind the table, and what they are making of you. */
+export interface RoomOccupant {
+  /** Which chair they are in. */
+  seat: string;
+  /** An in-save person, when the room is filled by one. */
+  personId?: Id;
+  /** A real casting director from the public record, when it is one of them. */
+  castingDirectorId?: string;
+  name: string;
+  /** Their job, in the words the room would use. */
+  title: string;
+  /** What this one is watching for. */
+  watchingFor: string;
+  /** How much their opinion moves it, 0-1. */
+  sway: number;
+  /** 0-100. Fifty is the room you walked into. */
+  impression: number;
+  /** What they made of each beat. */
+  notes: { at: Instant; beat: string; note: string; delta: number }[];
+}
+
+/** An audition being played out, one beat at a time. */
+export interface AuditionRoomState {
+  /** Which stage of the process this room is. */
+  stage: string;
+  occupants: RoomOccupant[];
+  /** The beats this room runs, in order. */
+  beats: string[];
+  /** Which one is next. */
+  index: number;
+  /** 0-100, and high is bad. */
+  nerves: number;
+  /** Whether it is on camera, whether anybody is reading with you, who else is out there. */
+  taped: boolean;
+  hasReader: boolean;
+  readerQuality: number;
+  sidesChanged: boolean;
+  otherActors: number;
+  waitingRoomLine: string;
+  /** Which kind of room this is, so it talks like one. */
+  register?: string;
+  /** What was said to you on the way in, and how they settled you. */
+  greeting?: string;
+  settle?: string;
+  /** How the director framed the scene before you read it. */
+  sceneFrame?: string;
+  /** What the reader is giving you, which is out of your hands. */
+  readerLine?: string;
+  /** The note the director gave, when one was given. */
+  adjustment?: string;
+  adjustmentTests?: string;
+  /** The question they asked afterwards. */
+  smallTalk?: string;
+  /** How they let you out. */
+  goodbye?: string;
+  /** Hours put in before walking through the door. */
+  prepHours?: number;
+  /** What you did, beat by beat, and what it was worth. */
+  played: { beat: string; choiceId: string; label: string; score: number; note: string; said?: string; at: Instant }[];
+  startedAt: Instant;
+  finishedAt?: Instant;
+  /** What the room said once the door shut. */
+  verdict?: { score: number; line: string };
+  /** Set when the player walked out before it was over. */
+  walkedOut?: boolean;
 }
 
 export type AuditionStage = 'submitted' | 'self_tape' | 'first_read' | 'callback' | 'chemistry_read' | 'screen_test' | 'offer' | 'passed' | 'booked';
@@ -1580,6 +1662,8 @@ export interface Audition {
   rounds?: { stage: AuditionStage; at: Instant; score: number; note: string }[];
   /** Tape or the room. Set when the player submits; the office decides what it will take. */
   format?: 'self_tape' | 'in_person';
+  /** The room itself, once the player has walked into it. */
+  room?: AuditionRoomState;
   /** When the tape went, and how many takes it took. */
   tapeSentAt?: Instant;
   tapeTakes?: number;

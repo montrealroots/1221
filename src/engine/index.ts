@@ -47,6 +47,7 @@ import { performerTitleOf } from './core/performer';
 import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
 import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { ensureReactive, registerReactive } from './systems/reactive';
+import { registerAuditionRoom } from './systems/audition-room';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -81,6 +82,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPost(sim);
   registerPlaces(sim);
   registerReactive(sim);
+  registerAuditionRoom(sim);
   registerRelease(sim);
   registerCritics(sim);
   registerFranchises(sim);

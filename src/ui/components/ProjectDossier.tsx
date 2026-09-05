@@ -22,6 +22,8 @@ import { NETWORKS } from '@/engine/content/networks';
 import { CRAFT_LABEL, craftFocus, genre, genreName, runtimeBandOf } from '@/engine/content/genres';
 import { rating } from '@/engine/content/ratings';
 import { otherWorkOf } from '@/engine/systems/industry-people';
+import { episodeTermsFor, roleCategoryOf } from '@/engine/systems/casting';
+import { ROLE_CATEGORY_BY_ID } from '@/engine/content/casting-industry';
 import type { Project, Role } from '@/engine/domain/model';
 
 const LANGUAGE_NAMES: Readonly<Record<string, string>> = {
@@ -128,6 +130,21 @@ export function ProjectDossier({ project, roleId, onClose }: { project: Project;
         </div>
       </div>
 
+      {(project.format === 'series' || project.format === 'limited_series') && (
+        <div style={{ marginTop: 'var(--s4)' }}>
+          <div className="xs dim" style={{ marginBottom: 4 }}>The Series</div>
+          <div className="xs" style={{ overflowWrap: 'anywhere' }}>
+            {(() => {
+              const seasons = project.seasons ?? [];
+              const current = seasons[seasons.length - 1];
+              if (!current) return 'A first season, not yet ordered to a number of episodes.';
+              const aired = seasons.filter((x) => x.status === 'aired' || x.status === 'complete').length;
+              return `Season ${current.number}, ${current.episodeCount} episodes${aired > 0 ? ` · ${aired} season${aired === 1 ? '' : 's'} already made` : ''}${current.status ? ` · ${titleCaseLabel(current.status.replace(/_/g, ' '))}` : ''}`;
+            })()}
+          </div>
+        </div>
+      )}
+
       <div style={{ marginTop: 'var(--s4)' }}>
         <div className="xs dim" style={{ marginBottom: 4 }}>Cast Attached</div>
         {attached.length === 0 ? (
@@ -138,7 +155,7 @@ export function ProjectDossier({ project, roleId, onClose }: { project: Project;
             return (
               <div key={role.id} className="xs" style={{ padding: '3px 0', overflowWrap: 'anywhere' }}>
                 <span className="strong">{person?.stageName ?? person?.displayName ?? 'Not named'}</span>
-                <span className="dim"> as {role.characterName} · {titleCaseLabel(role.billing.replace(/_/g, ' '))}</span>
+                <span className="dim"> as {role.characterName} · {ROLE_CATEGORY_BY_ID[roleCategoryOf(role, project)].name}</span>
               </div>
             );
           })
@@ -157,8 +174,13 @@ export function ProjectDossier({ project, roleId, onClose }: { project: Project;
                   <div className="grow" style={{ minWidth: 0 }}>
                     <div className="small strong">{role.characterName}</div>
                     <div className="xs dim">
-                      {titleCaseLabel(role.billing.replace(/_/g, ' '))} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
+                      {ROLE_CATEGORY_BY_ID[roleCategoryOf(role, project)].name} · {role.shootDays} shoot days · ages {role.ageRange[0]}–{role.ageRange[1]}
+                      {(() => {
+                        const terms = episodeTermsFor(role, project);
+                        return terms ? ` · season ${terms.season}, ${terms.guaranteed} of ${terms.ofEpisodes} episodes` : '';
+                      })()}
                     </div>
+                    <div className="xs muted">{ROLE_CATEGORY_BY_ID[roleCategoryOf(role, project)].what}</div>
                     <div className="xs muted" style={{ overflowWrap: 'anywhere' }}>{role.description}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>

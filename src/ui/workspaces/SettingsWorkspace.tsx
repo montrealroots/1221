@@ -175,6 +175,17 @@ export function SettingsWorkspace() {
               Stage A Documentary
             </button>
           </div>
+          <div className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+            An audition you can walk into, while breakdowns are closed for the rebuild. It appears under Casting, in Your Auditions.
+          </div>
+          <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_audition', {})}>
+              Stage A First Read
+            </button>
+            <button className="btn btn-sm" disabled={!sandbox.enabled} onClick={() => run('sandbox.stage_audition', { stage: 'callback' })}>
+              Stage A Callback
+            </button>
+          </div>
 
           {sandbox.log.length > 0 && (
             <div style={{ marginTop: 'var(--s4)' }}>

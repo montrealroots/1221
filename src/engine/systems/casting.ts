@@ -30,6 +30,7 @@ import { ageOf, isPeopleLoaded, peopleInRole } from '../content/people';
 import { countryIdForRecord, ensureRealPerson, personForRecord, playerControls } from './real-people';
 import { archetypeLabel, breakDownScript } from '../content/screenplay';
 import { pipelineFor } from '../content/pipelines';
+import type { RoleCategory } from '../content/casting-industry';
 import { quoteMultiplierFor } from './reactive';
 
 export function registerCasting(sim: Simulation): void {
@@ -78,7 +79,10 @@ export function registerCasting(sim: Simulation): void {
         auditionIds: [],
       };
       s.universe.roles[role.id] = role;
-      s.emit('cast.role_created', { roleId: role.id, projectId: project.id, billing: p.billing });
+      role.category = roleCategoryOf(role, project);
+      const terms = episodeTermsFor(role, project);
+      if (terms) role.episodes = terms;
+      s.emit('cast.role_created', { roleId: role.id, projectId: project.id, billing: p.billing, category: role.category });
       return { roleId: role.id };
     },
   );
@@ -650,6 +654,61 @@ const ACTOR_AT_ONCE = 3;
  * — when the part came from a breakdown — the archetype's. A mentor needs
  * gravitas and a comic relief needs timing whatever the genre is.
  */
+/**
+ * What a part is actually hired as.
+ *
+ * The billing says how big it is; the category says how it is engaged, which
+ * is a different question and the one the contract answers. A lead on a
+ * series is a series regular, contracted to the show and optioned for years
+ * before anybody has read; the same billing on a film is a weekly deal for
+ * the run of the picture. A part written before categories existed is read
+ * through the same rule rather than being guessed at or left blank.
+ */
+export function roleCategoryOf(role: Role, project: Project | undefined): RoleCategory {
+  if (role.category) return role.category;
+  const series = project?.format === 'series' || project?.format === 'limited_series';
+  const pipeline = project ? pipelineFor(project) : undefined;
+  if (pipeline && (pipeline.kind === 'animation' || pipeline.kind === 'stop_motion')) return 'voice';
+  if (role.billing === 'voice') return 'voice';
+  if (!series) {
+    switch (role.billing) {
+      case 'lead': return 'lead';
+      case 'supporting': return 'supporting';
+      case 'featured': return 'featured';
+      case 'cameo': return 'featured';
+      default: return 'day_player';
+    }
+  }
+  switch (role.billing) {
+    case 'lead': return 'series_regular';
+    case 'supporting': return 'recurring';
+    case 'featured': return 'guest_star';
+    case 'cameo': return 'guest_star';
+    default: return 'co_star';
+  }
+}
+
+/**
+ * How many episodes a part is wanted for, and which season it is.
+ *
+ * A regular is guaranteed a share of the order before they are cast; a guest
+ * is one episode. Read off the series' own season list so it can never be out
+ * of step with the show.
+ */
+export function episodeTermsFor(role: Role, project: Project | undefined): { season: number; ofEpisodes: number; guaranteed: number } | undefined {
+  if (!project || (project.format !== 'series' && project.format !== 'limited_series')) return undefined;
+  if (role.episodes) return { ...role.episodes, guaranteed: role.episodes.guaranteed ?? role.episodes.ofEpisodes };
+  const seasons = project.seasons ?? [];
+  const current = seasons[seasons.length - 1];
+  const season = current?.number ?? 1;
+  const ofEpisodes = current?.episodeCount ?? (project.format === 'limited_series' ? 6 : 10);
+  const category = roleCategoryOf(role, project);
+  const guaranteed = category === 'series_regular' ? Math.max(1, Math.round(ofEpisodes * 0.6))
+    : category === 'recurring' ? Math.max(1, Math.round(ofEpisodes * 0.3))
+      : 1;
+  return { season, ofEpisodes, guaranteed };
+}
+
 function defaultRequirements(project: Project, billing: Role['billing'], archetype?: CharacterArchetype): { attributeId: string; weight: number }[] {
   const genre = project.genres[0] ?? 'drama';
   const byGenre: Record<string, string[]> = {
