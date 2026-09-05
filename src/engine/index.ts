@@ -14,6 +14,7 @@ import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { titleCaseLabel } from './core/text';
 import { performerTitleOf } from './core/performer';
+
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { CITIES } from './content/geography';
 import { costOfLiving } from './content/tax';
@@ -34,12 +35,14 @@ import { registerDriving } from './systems/driving';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
 import { registerAuthorship } from './systems/authorship';
-import { SHINGLE_BY_ID } from './content/shingle';
-import { FOUNDER_ATTRIBUTES, FOUNDER_BACKGROUND_BY_ID, FOUNDER_TRAITS } from './content/founder';
+import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from './content/founder';
 import { CEILING, GOAT_TRAITS } from './content/prodigy';
 import { ALL_TRAITS, ATTRIBUTES } from './domain/attributes';
 import { SKILLS } from './domain/skills';
-import { createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig, careerLabel } from './world/bootstrap';
+import {
+  createUniverse, defaultConfig, WEALTH_PROFILES, careerLabel,
+  FOUNDING_STAKE, FOUNDING_CAPITAL, FOUNDING_SHINGLE, FOUNDING_REMIT, type NewSaveConfig,
+} from './world/bootstrap';
 
 export * from './world/bootstrap';
 export { Simulation };
@@ -127,10 +130,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     institution: 'Northbank',
     openedAt: sim.now,
     last4: '4417',
-    // Personal money, plus whatever the founder's old job left them with. The
-    // background's capital is what the creation screen promised them, and it
-    // is what they will open the company on.
-    balance: wealth.checking + (FOUNDER_BACKGROUND_BY_ID[config.founderBackground]?.capital ?? 0),
+    // Personal money, plus the founding stake. The stake is here for the few
+    // lines it takes to open the company and then it is gone into the
+    // business; what is left afterwards is exactly the wealth level's own
+    // money, so a founder can still be broke while running a company.
+    balance: wealth.checking + FOUNDING_STAKE,
   });
   player.primaryAccountId = checking.id;
 
@@ -198,30 +202,19 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // the player opens the only one trading. Founded through the same command a
   // player would use, so nothing here can reach a state the game cannot.
   {
-    const name = config.companyName.trim() || `${player.lastName} ${SHINGLE_BY_ID[config.shingle]?.id === 'studio' ? 'Studios' : 'Pictures'}`;
-    // The money from the old job goes into the business. Household money —
-    // whatever the wealth level gave them — stays theirs, because a founder
-    // with no rent money is a choice, not a default.
-    const business = FOUNDER_BACKGROUND_BY_ID[config.founderBackground]?.capital ?? 0;
-    const shape = SHINGLE_BY_ID[config.shingle];
-    const founded = sim.execute({
+    // An independent, opened this morning, wholly owned by the character. No
+    // choice of shape and no fallback to a smaller one: the stake is sized to
+    // this shingle, so it always opens. `must` rather than `execute` because a
+    // save without the company is not a save this game can play.
+    sim.must({
       kind: 'co.found',
       payload: {
-        name, shingle: config.shingle, remit: config.remit,
-        capital: Math.max(0, business - (shape?.setup ?? 0)),
+        name: config.companyName.trim() || `${player.lastName} Pictures`,
+        shingle: FOUNDING_SHINGLE,
+        remit: FOUNDING_REMIT,
+        capital: FOUNDING_CAPITAL,
       },
     });
-    if (!founded.ok) {
-      // A founder who cannot afford the shape they picked opens the smallest
-      // one instead, rather than starting with no company at all.
-      sim.execute({
-        kind: 'co.found',
-        payload: {
-          name, shingle: 'kitchen_table', remit: config.remit,
-          capital: Math.max(0, business - (SHINGLE_BY_ID['kitchen_table']?.setup ?? 0)),
-        },
-      });
-    }
   }
 
   // --- The world that already exists -------------------------------------
@@ -377,7 +370,7 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
-  sim.universe.meta.careerLabel = careerLabel(player.careerTrack);
+  sim.universe.meta.careerLabel = careerLabel(player.careerTrack, performerTitleOf(player));
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);

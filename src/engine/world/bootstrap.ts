@@ -25,7 +25,7 @@ import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
-import type { PerformerTitle } from '../core/performer';
+import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
 
@@ -76,13 +76,11 @@ export interface NewSaveConfig {
   /**
    * The company.
    *
-   * Where the founder came from, what shape of shop they open, what it is for
-   * and what it is called. The strike ended every other production company, so
-   * this is the only one there will be.
+   * There is one decision here and it is the name. The shop is an independent
+   * production company, founded and wholly owned by the character, and it
+   * opens on the morning the save starts. The strike ended every other one, so
+   * this is the only production company trading.
    */
-  founderBackground: string;
-  shingle: string;
-  remit: string;
   companyName: string;
 
   /** Starting point */
@@ -114,9 +112,6 @@ export function defaultConfig(): NewSaveConfig {
     traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
-    founderBackground: 'development_exec',
-    shingle: 'boutique',
-    remit: 'prestige_drama',
     companyName: '',
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
@@ -124,6 +119,39 @@ export function defaultConfig(): NewSaveConfig {
     startYear: 2026, startMonth: 3, startDay: 2,
   };
 }
+
+/**
+ * What the company has in the bank the morning it opens.
+ *
+ * Ten million, which is roughly one modest feature or a season of something
+ * cheap — enough to make a first thing without asking anybody, and nowhere
+ * near enough to make a second one if the first does not come back. It is not
+ * the character's own money and it is not a reward: it is the starting
+ * position, the same way the wealth level is.
+ *
+ * At the independent's overhead it is a long runway, so the clock on this save
+ * is not the rent. It is what a production costs.
+ */
+export const FOUNDING_CAPITAL: Money = 10_000_000_00;
+
+/**
+ * What passes through the founder's account on the way in: the capital above,
+ * plus the cost of opening the doors. It is theirs for the few lines it takes
+ * to found the company and then it is the company's.
+ */
+export const FOUNDING_STAKE: Money = FOUNDING_CAPITAL + 220_000_00;
+
+/** The shop every save opens with. There is no choice and no other shape. */
+export const FOUNDING_SHINGLE = 'indie';
+
+/**
+ * What it says it is for, on the morning it opens: nothing yet.
+ *
+ * A company that has never made anything has not earned a remit, and picking
+ * one before the first picture would be a promise about work that does not
+ * exist. It is declared later, by what gets made.
+ */
+export const FOUNDING_REMIT = 'anything';
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
   nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Nothing behind you and rent due.' },
@@ -278,7 +306,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    careerLabel: careerLabel('actor'),
+    careerLabel: careerLabel('actor', config.performerTitle ?? impliedPerformerTitle(config.pronouns)),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -331,7 +359,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // market worse — and the prodigy flag below is what stops the trade-off
     // half applying to the one person it was never going to apply to.
     founderTraits: [...GOAT_TRAITS.map((t) => t.id), ...FOUNDER_TRAITS.map((t) => t.id)],
-    founderBackground: config.founderBackground,
     prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
@@ -356,12 +383,16 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
 }
 
 /**
- * The track as a word. The industry keeps two words for one profession and
- * the label carries both, so the same page reads for everyone who opens it.
+ * The track as a word, in the word this person uses.
+ *
+ * The industry has always kept actor and actress apart — separate awards,
+ * separate categories, separate columns in a trade paper — so the label is
+ * never printed without knowing whose it is. Every other track reads the same
+ * for everybody.
  */
-export function careerLabel(track: CareerTrack): string {
+export function careerLabel(track: CareerTrack, title: PerformerTitle = 'actor'): string {
   const labels: Record<CareerTrack, string> = {
-    none: 'Undecided', actor: 'Actor', writer: 'Writer', director: 'Director',
+    none: 'Undecided', actor: PERFORMER_NOUN[title], writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',
     executive: 'Executive', agent: 'Agent', creator: 'Creator', civilian: 'Working Life',
   };

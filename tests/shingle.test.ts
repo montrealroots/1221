@@ -22,6 +22,7 @@ import {
 import { REMITS, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
 import { AFTERMATH, MONOPOLY, STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { capacityOf, companyView, founderScore, playerCompany } from '@/engine/systems/shingle';
+import { FOUNDING_CAPITAL, FOUNDING_SHINGLE } from '@/engine/world/bootstrap';
 
 const aGame = (seed: string, config: Record<string, unknown> = {}) =>
   quickSave({ wealth: 'inherited', ...config }, seed);
@@ -109,7 +110,7 @@ describe('opening the doors', () => {
   });
 
   it('takes the setup cost out and puts the rest in the company', () => {
-    const sim = aGame('co-capital', { shingle: 'boutique', founderBackground: 'agent' });
+    const sim = aGame('co-capital');
     const company = playerCompany(sim)!;
     const shape = SHINGLE_BY_ID[company.shingle]!;
     const companyCash = sim.universe.accounts[company.cashAccountId]?.balance ?? 0;
@@ -118,12 +119,33 @@ describe('opening the doors', () => {
     expect(sim.ledger.audit()).toEqual([]);
   });
 
-  it('falls back to the smallest shop rather than leaving you with no company', () => {
-    // An assistant has twelve thousand and a studio costs millions.
-    const sim = aGame('co-broke', { shingle: 'studio', founderBackground: 'assistant', wealth: 'nothing' });
-    const company = playerCompany(sim);
-    expect(company).toBeDefined();
-    expect(company!.shingle).toBe('kitchen_table');
+  it('opens as an independent on day one, whatever the character has of their own', () => {
+    // There is no choice of shape any more and no fallback to a smaller one:
+    // the founding stake is sized to this shingle, so a character with forty
+    // dollars to their name still opens the same company as anybody else.
+    for (const wealth of ['nothing', 'inherited'] as const) {
+      const sim = quickSave({ wealth }, `co-open-${wealth}`);
+      const company = playerCompany(sim);
+      expect(company, wealth).toBeDefined();
+      expect(company!.shingle, wealth).toBe(FOUNDING_SHINGLE);
+      expect(company!.foundedAt, wealth).toBe(sim.universe.meta.createdAt);
+      // Wholly owned by the character who was just created.
+      expect(company!.founderId).toBe(sim.player.id);
+      expect(company!.ownerships).toEqual([{ holderId: sim.player.id, holderKind: 'person', percent: 1 }]);
+      // And the ten million is in the company, not in their pocket.
+      expect(sim.universe.accounts[company!.cashAccountId]?.balance, wealth).toBe(FOUNDING_CAPITAL);
+      expect(sim.ledger.audit()).toEqual([]);
+    }
+  });
+
+  it('leaves the character exactly the money their wealth level gave them', () => {
+    // The stake passes through their account and goes straight into the
+    // business. A founder can be running a ten million dollar company and
+    // still be unable to pay their own rent, which is the point.
+    const sim = quickSave({ wealth: 'scraping' }, 'co-personal');
+    const personal = sim.universe.accounts[sim.player.primaryAccountId!]?.balance ?? 0;
+    expect(personal).toBeLessThan(10_000_00);
+    expect(personal).toBeGreaterThan(0);
   });
 
   it('will not open a second one', () => {
@@ -183,31 +205,38 @@ describe('overhead is the clock', () => {
 
 describe('changing shape', () => {
   it('costs the difference to grow and standing to shrink', () => {
-    const sim = aGame('co-grow', { founderBackground: 'financier', shingle: 'kitchen_table' });
-    const company = playerCompany(sim)!;
-    const reputation = company.reputation;
-    const grew = sim.execute({ kind: 'co.change_shape', payload: { shingle: 'boutique' } });
+    // Every save now opens as an independent, so growing means the studio and
+    // shrinking means anything under it.
+    const sim = aGame('co-grow');
+    const reputation = playerCompany(sim)!.reputation;
+    const grew = sim.execute({ kind: 'co.change_shape', payload: { shingle: 'studio' } });
     expect(grew.ok, grew.error).toBe(true);
-    expect(playerCompany(sim)!.shingle).toBe('boutique');
+    expect(playerCompany(sim)!.shingle).toBe('studio');
     expect(playerCompany(sim)!.reputation).toBe(reputation);
 
-    const shrank = sim.execute({ kind: 'co.change_shape', payload: { shingle: 'kitchen_table' } });
+    const shrank = sim.execute({ kind: 'co.change_shape', payload: { shingle: 'boutique' } });
     expect(shrank.ok).toBe(true);
     // Everybody can see you did it.
     expect(playerCompany(sim)!.reputation).toBeLessThan(reputation);
   });
 
   it('refuses a shape the company cannot afford, and leaves it as it was', () => {
-    const sim = aGame('co-cannot-grow', { founderBackground: 'assistant', shingle: 'kitchen_table', wealth: 'nothing' });
-    const before = playerCompany(sim)!.shingle;
+    const sim = aGame('co-cannot-grow');
+    const company = playerCompany(sim)!;
+    // Spend the account down to under what the step up costs.
+    sim.expense(company.cashAccountId, (sim.universe.accounts[company.cashAccountId]?.balance ?? 0) - 100_00, 'Test spend', 'business');
+    const before = company.shingle;
     const refused = sim.execute({ kind: 'co.change_shape', payload: { shingle: 'studio' } });
     expect(refused.ok).toBe(false);
+    expect(refused.error).toMatch(/costs/i);
     expect(playerCompany(sim)!.shingle).toBe(before);
   });
 
   it('carries capacity from the shape, and a maxed founder gets the most of it', () => {
-    const small = aGame('co-cap-small', { shingle: 'kitchen_table', founderBackground: 'financier' });
-    const big = aGame('co-cap-big', { shingle: 'indie', founderBackground: 'financier' });
+    const small = aGame('co-cap-small');
+    small.must({ kind: 'co.change_shape', payload: { shingle: 'boutique' } });
+    const big = aGame('co-cap-big');
+    big.must({ kind: 'co.change_shape', payload: { shingle: 'studio' } });
     expect(capacityOf(big, playerCompany(big)!))
       .toBeGreaterThan(capacityOf(small, playerCompany(small)!));
     // Delegation is at the ceiling, so the shape's own number is the floor.

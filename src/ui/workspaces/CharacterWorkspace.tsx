@@ -1,7 +1,7 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { careerLabel } from '@/engine/world/bootstrap';
 import { useState } from 'react';
-import { performerNoun } from '@/engine/core/performer';
+import { performerNoun, performerTitleOf } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Tabs } from '@/ui/components/primitives';
 import {
@@ -49,7 +49,7 @@ export function CharacterWorkspace() {
           <div className="eyebrow">Character</div>
           <h1>{player.displayName}</h1>
           <p className="muted">
-            {age} · {careerLabel(player.careerTrack)} · {CITIES.get(player.currentLocationId)?.name}
+            {age} · {careerLabel(player.careerTrack, performerTitleOf(player))} · {CITIES.get(player.currentLocationId)?.name}
             {player.stageName && ` · credited as ${player.stageName}`}
           </p>
         </div>

@@ -7,24 +7,26 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Stat } from '@/ui/components/primitives';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   defaultConfig, wealthNote,
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, traitName, type TraitCategory } from '@/engine/domain/attributes';
-import { impliedPerformerTitle, type PerformerTitle } from '@/engine/core/performer';
+import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '@/engine/core/performer';
 import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import type { Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
-import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
+import {
+  APP_VERSION, WEALTH_PROFILES, FOUNDING_CAPITAL, FOUNDING_SHINGLE,
+} from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
-import { FOUNDER_BACKGROUNDS, FOUNDER_BACKGROUND_BY_ID } from '@/engine/content/founder';
-import { REMITS, REMIT_BY_ID, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
+import { SHINGLE_BY_ID } from '@/engine/content/shingle';
 import { STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, goatTraitsIn } from '@/engine/content/prodigy';
 
@@ -189,6 +191,11 @@ export function CharacterCreation({
 }
 
 // ---------------------------------------------------------------------------
+
+/** The word this character is billed with, chosen or implied by their pronouns. */
+function titleOf(config: NewSaveConfig): PerformerTitle {
+  return config.performerTitle ?? impliedPerformerTitle(config.pronouns);
+}
 
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
@@ -559,161 +566,49 @@ function PersonalStep({
 }
 
 function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
-  const background = FOUNDER_BACKGROUND_BY_ID[config.founderBackground];
-  const shape = SHINGLE_BY_ID[config.shingle];
-  const remit = REMIT_BY_ID[config.remit];
-  const capital = (background?.capital ?? 0);
-  const affordable = capital >= (shape?.setup ?? 0);
-
+  const shape = SHINGLE_BY_ID[FOUNDING_SHINGLE]!;
+  const placeholder = `${config.lastName || 'Your Name'} Pictures`;
 
   return (
     <div className="col gap-5">
+      {/* --- What opens ---------------------------------------------------- */}
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>The Company</h2>
+            <h2>Your Company</h2>
             <p className="muted small">
-              The strike ran nineteen months and took every other production company with it. The
-              buyers still have schedules to fill and nobody to fill them. You are opening the only
-              door in town.
-            </p>
-          </div>
-        </div>
-        <p className="xs dim" style={{ margin: 0 }}>{STRIKE_IS_FICTION}</p>
-      </div>
-
-      {/* --- Where you came from ------------------------------------------ */}
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h3>What You Were Doing When It Started</h3>
-            <p className="muted small">
-              The strike ended the companies, not the people. Where you came from is most of what
-              you are good at, all of who returns your calls, and how much you have to start with.
+              An independent production company, founded and wholly owned by you, open for
+              business on your first morning. There is one thing to decide and it is the name.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-2">
-          {FOUNDER_BACKGROUNDS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`trait${config.founderBackground === option.id ? ' is-selected' : ''}`}
-              aria-pressed={config.founderBackground === option.id}
-              onClick={() => set('founderBackground', option.id)}
-            >
-              <div className="row-between">
-                <div className="trait-name">{option.name}</div>
-                <span className="chip mono">{formatMoney(option.capital, { cents: false })}</span>
-              </div>
-              <div className="trait-desc">{option.what}</div>
-              <div className="xs positive" style={{ marginTop: 6 }}>{option.gives}</div>
-              <div className="xs negative" style={{ marginTop: 2 }}>{option.costs}</div>
-            </button>
-          ))}
+        <div className="grid grid-3">
+          <Stat label="Opens" value="Day One" note="The morning the save starts" />
+          <Stat
+            label="Owned By"
+            value={`${config.firstName || 'You'} ${config.lastName}`.trim() || 'You'}
+            note="One hundred per cent, no partners"
+          />
+          <Stat
+            label="In The Bank"
+            value={formatMoney(FOUNDING_CAPITAL, { cents: false })}
+            note="Roughly one modest picture"
+          />
         </div>
 
-        {background && (
-          <div className="callout callout-accent" style={{ marginTop: 'var(--s4)' }}>
-            <strong className="xs">What That Leaves You With</strong>
-            <p className="xs" style={{ margin: '4px 0 0' }}>
-              {formatMoney(background.capital, { cents: false })} in the bank, and
-              {' '}{background.standing >= 0.4 ? 'most of the business takes your call already'
-                : background.standing >= 0.2 ? 'a decent number of people take your call'
-                  : 'almost nobody who matters knows you yet'}.
-              {' '}Not ability — that is not something a previous job could add to or take from.
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* --- The shape of the shop ---------------------------------------- */}
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h3>What Kind Of Shop</h3>
-            <p className="muted small">
-              Overhead is charged every month whether anything is shooting or not. A company that
-              cannot pay it stops being a company, so this is the most consequential thing on the
-              page.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-2">
-          {SHINGLE_SHAPES.map((option) => {
-            const canAfford = capital >= option.setup;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                className={`trait${config.shingle === option.id ? ' is-selected' : ''}`}
-                aria-pressed={config.shingle === option.id}
-                disabled={!canAfford}
-                title={canAfford ? undefined : `You would have ${formatMoney(capital, { cents: false })} and this costs ${formatMoney(option.setup, { cents: false })} to open.`}
-                onClick={() => set('shingle', option.id)}
-              >
-                <div className="row-between">
-                  <div className="trait-name">{option.name}</div>
-                  <span className={`chip mono${canAfford ? '' : ' chip-negative'}`}>
-                    {formatMoney(option.setup, { cents: false })}
-                  </span>
-                </div>
-                <div className="trait-desc">{option.what}</div>
-                <div className="row wrap gap-1" style={{ marginTop: 6 }}>
-                  <span className="chip">{formatMoney(option.overhead, { cents: false })} A Month</span>
-                  <span className="chip">{option.capacity} At A Time</span>
-                  <span className="chip">{option.seats} {option.seats === 1 ? 'Desk' : 'Desks'}</span>
-                </div>
-                <div className="xs dim" style={{ marginTop: 6 }}>{option.suits}</div>
-                <div className="xs negative" style={{ marginTop: 2 }}>{option.cannot}</div>
-              </button>
-            );
-          })}
-        </div>
-
-        {!affordable && (
-          <div className="callout callout-negative" style={{ marginTop: 'var(--s4)' }}>
-            You cannot open that on {formatMoney(capital, { cents: false })}. Pick something smaller
-            or come from somewhere with more money.
-          </div>
-        )}
-      </div>
-
-      {/* --- What it is for ------------------------------------------------ */}
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h3>What It Is For</h3>
-            <p className="muted small">
-              A remit is a promise about what you will make. Buyers price against it, talent decides
-              whether to come to you on it, and critics judge the work by what you said you were
-              trying to do.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-2">
-          {REMITS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`trait${config.remit === option.id ? ' is-selected' : ''}`}
-              aria-pressed={config.remit === option.id}
-              onClick={() => set('remit', option.id)}
-            >
-              <div className="row-between">
-                <div className="trait-name">{option.name}</div>
-                <span className="chip">Prestige {option.prestige}</span>
-              </div>
-              <div className="trait-desc">{option.what}</div>
-            </button>
-          ))}
+        <div className="callout" style={{ marginTop: 'var(--s4)' }}>
+          <strong className="xs">The Strike</strong>
+          <p className="xs" style={{ margin: '4px 0 0' }}>{STRIKE_IS_FICTION}</p>
+          <p className="xs" style={{ margin: '6px 0 0' }}>
+            It ended every other production company. The buyers still have schedules to fill and
+            nobody to fill them, and every writer, actor and crew in the business is free on
+            Monday. Yours is the only door open.
+          </p>
         </div>
       </div>
 
-      {/* --- What you are ------------------------------------------------- */}
+      {/* --- What you are -------------------------------------------------- */}
       <div className="card">
         <div className="panel-head">
           <div><h3>What You Are</h3></div>
@@ -747,7 +642,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             id="company-name"
             type="text"
             value={config.companyName}
-            placeholder={`${config.lastName || 'Your Name'} ${shape?.id === 'studio' ? 'Studios' : 'Pictures'}`}
+            placeholder={placeholder}
             onChange={(e) => set('companyName', e.target.value)}
           />
           <p className="xs dim" style={{ marginTop: 4 }}>
@@ -756,20 +651,16 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           </p>
         </div>
 
-        {shape && remit && background && (
-          <div className="callout callout-accent">
-            <strong className="xs">Opening Day</strong>
-            <p className="xs" style={{ margin: '4px 0 0' }}>
-              {config.companyName.trim() || `${config.lastName || 'Your Name'} ${shape.id === 'studio' ? 'Studios' : 'Pictures'}`}
-              {' — '}{shape.name.toLowerCase()} making {remit.name.toLowerCase()}, opened by
-              {' '}{background.name.toLowerCase()} with {formatMoney(capital, { cents: false })}.
-              {' '}{formatMoney(shape.setup, { cents: false })} to open the doors leaves
-              {' '}{formatMoney(Math.max(0, capital - shape.setup), { cents: false })} to work with, and
-              {' '}{formatMoney(shape.overhead, { cents: false })} a month going out from the first
-              month whether you have made anything or not.
-            </p>
-          </div>
-        )}
+        <div className="callout callout-accent">
+          <strong className="xs">Opening Day</strong>
+          <p className="xs" style={{ margin: '4px 0 0' }}>
+            {config.companyName.trim() || placeholder} — an independent with
+            {' '}{formatMoney(FOUNDING_CAPITAL, { cents: false })} in the account,
+            {' '}{shape.capacity} projects at a time, and
+            {' '}{formatMoney(shape.overhead, { cents: false })} a month going out from the first
+            month whether you have made anything or not.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -909,7 +800,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {FOUNDER_BACKGROUND_BY_ID[config.founderBackground]?.name ?? 'Producer'} · {city?.name}
+            {age} · {PERFORMER_NOUN[titleOf(config)]} And Founder · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>
@@ -922,7 +813,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
-          <Line label="Billed As" value={(config.performerTitle ?? impliedPerformerTitle(config.pronouns)) === 'actress' ? 'Actress' : 'Actor'} />
+          <Line label="Billed As" value={PERFORMER_NOUN[titleOf(config)]} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
