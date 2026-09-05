@@ -33,6 +33,7 @@ import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { registerDriving } from './systems/driving';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
+import { registerAuthorship } from './systems/authorship';
 import { SHINGLE_BY_ID } from './content/shingle';
 import { FOUNDER_ATTRIBUTES, FOUNDER_BACKGROUND_BY_ID, FOUNDER_TRAITS } from './content/founder';
 import { CEILING, GOAT_TRAITS } from './content/prodigy';
@@ -64,6 +65,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerProfessions(sim);
   registerDriving(sim);
   registerShingle(sim);
+  registerAuthorship(sim);
   registerWorld(sim);
 }
 
