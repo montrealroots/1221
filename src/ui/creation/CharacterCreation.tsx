@@ -808,13 +808,6 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
         <div className="col gap-3">
           <label className="row gap-2" style={{ marginBottom: 0 }}>
             <input
-              type="checkbox" checked={config.startWithJob} style={{ width: 'auto' }}
-              onChange={(e) => set('startWithJob', e.target.checked)}
-            />
-            <span className="small" style={{ color: 'var(--text)' }}>Start With A Job</span>
-          </label>
-          <label className="row gap-2" style={{ marginBottom: 0 }}>
-            <input
               type="checkbox" checked={config.startWithVehicle} style={{ width: 'auto' }}
               onChange={(e) => set('startWithVehicle', e.target.checked)}
             />
@@ -876,7 +869,6 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
           <Line label="Credit Score" value={String(wealth.creditScore)} />
-          <Line label="Job" value={config.startWithJob ? 'Yes' : 'Not yet'} />
           <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
         </div>
       </div>

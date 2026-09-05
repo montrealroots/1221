@@ -192,7 +192,6 @@ describe('a universe left running', () => {
     expect(sizes['people'], `people: ${sizes['people']}`).toBeLessThan(1_500);
     expect(sizes['scheduled'], `scheduled: ${sizes['scheduled']}`).toBeLessThan(6_000);
     expect(sizes['decisions'], `decisions: ${sizes['decisions']}`).toBeLessThan(500);
-    expect(sizes['jobOpenings'], `jobOpenings: ${sizes['jobOpenings']}`).toBeLessThan(500);
     expect(sizes['vehicleListings'], `vehicleListings: ${sizes['vehicleListings']}`).toBeLessThan(1_000);
     expect(sizes['propertyListings'], `propertyListings: ${sizes['propertyListings']}`).toBeLessThan(1_000);
     expect(sizes['socialPosts'], `socialPosts: ${sizes['socialPosts']}`).toBeLessThan(2_000);

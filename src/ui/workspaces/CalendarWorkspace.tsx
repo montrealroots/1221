@@ -201,7 +201,6 @@ const MONTHS = [
 
 function routeForCategory(category: string): string {
   const map: Record<string, string> = {
-    work: '/workspace/jobs', career: '/workspace/jobs',
     finance: '/workspace/bank', health: '/workspace/health',
     personal: '/workspace/relationships', family: '/workspace/relationships',
     education: '/workspace/education', property: '/workspace/property',

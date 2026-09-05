@@ -68,7 +68,6 @@ export function GameShell() {
       label: 'Work',
       items: [
         { route: '/workspace/company', label: 'Company', icon: '🎬', locked: true },
-        { route: '/workspace/jobs', label: 'Work', icon: '⛭' },
         { route: '/workspace/social', label: 'Social', icon: '◈' },
       ],
     },

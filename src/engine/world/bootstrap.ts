@@ -92,7 +92,6 @@ export interface NewSaveConfig {
   startLocationId: string;
   housing: StartingHousing;
   wealth: StartingWealth;
-  startWithJob: boolean;
   startWithVehicle: boolean;
   /** World start date, local to the starting city. */
   startYear: number;
@@ -120,7 +119,7 @@ export function defaultConfig(): NewSaveConfig {
     companyName: '',
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
-    startWithJob: true, startWithVehicle: true,
+    startWithVehicle: true,
     startYear: 2026, startMonth: 3, startDay: 2,
   };
 }
@@ -185,7 +184,6 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     playerId,
     people: {}, relationships: {}, households: {},
     accounts: {}, transactions: [], bills: {}, creditProfiles: {}, taxYears: {},
-    jobs: {}, jobOpenings: {}, jobApplications: {},
     properties: {}, structures: {}, rooms: {}, zones: {}, furnishings: {},
     propertyListings: {}, propertyOffers: {}, realEstateAgents: {},
     constructionProjects: {}, constructionPhases: {}, changeOrders: {},

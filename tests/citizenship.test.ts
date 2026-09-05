@@ -1,6 +1,14 @@
 /**
  * Two passports.
  *
+ * NOTE: the rule below currently has no caller. It was read by job
+ * applications, and the job system has been removed — the player runs a
+ * production company and that is the only work there is. The arithmetic is
+ * kept and tested because the company will hire writers, crew and cast, and
+ * hiring somebody in a country they cannot work in is the same question. The
+ * field, the picker and the display are all live; only the enforcement is
+ * waiting for something to enforce.
+ *
  * Born in one country, naturalised in the one they moved to and live in now,
  * carrying both for the rest of their life. An ordinary biography in this
  * business, and one the save could not express.
@@ -17,7 +25,6 @@ import {
   canWorkIn, citizenshipLabel, citizenshipsOf, countryOfCity, isCitizenOf, workRefusalFor,
 } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
-import { refreshOpenings } from '@/engine/systems/work';
 
 const dual = { citizenshipId: 'us', secondCitizenshipId: 'ca' };
 
@@ -100,34 +107,4 @@ describe('against a real save', () => {
     expect(citizenshipsOf(sim.player)).toHaveLength(1);
   });
 
-  it('refuses a job application abroad, and takes it once the passport is there', () => {
-    const sim = quickSave({}, 'cit-apply');
-    refreshOpenings(sim);
-    const home = Object.values(sim.universe.jobOpenings).find((o) => countryOfCity(o.locationId) === 'us');
-    expect(home, 'no job at home to test with').toBeDefined();
-
-    // Move the listing abroad and it is refused.
-    home!.locationId = abroad().id;
-    const refused = sim.execute({ kind: 'work.apply', payload: { openingId: home!.id } });
-    expect(refused.ok).toBe(false);
-    expect(refused.error).toMatch(/not a citizen/i);
-
-    // Give them the passport and the same application goes through.
-    sim.player.secondCitizenshipId = 'ca';
-    const accepted = sim.execute({ kind: 'work.apply', payload: { openingId: home!.id } });
-    expect(accepted.ok, accepted.error).toBe(true);
-  });
-
-  it('reads an applicant’s real age rather than subtracting years', () => {
-    // work.apply used to compare this year with their birth year, which makes
-    // somebody born in June a year older than they are every January to May.
-    const sim = quickSave({}, 'cit-age');
-    refreshOpenings(sim);
-    const opening = Object.values(sim.universe.jobOpenings)[0]!;
-    opening.locationId = sim.player.currentLocationId;
-    opening.minimumAge = 99;
-    const result = sim.execute({ kind: 'work.apply', payload: { openingId: opening.id } });
-    expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/at least 99/);
-  });
 });

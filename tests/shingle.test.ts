@@ -19,7 +19,7 @@ import {
   FOUNDER_ATTRIBUTES, FOUNDER_BACKGROUNDS, FOUNDER_TRAITS,
   HIGHER_IS_WORSE, conflictingFounderTraits, startingPositionFor, traitHasCost,
 } from '@/engine/content/founder';
-import { REMITS, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
+import { DEFAULT_FOUNDER_DRAW, REMITS, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
 import { AFTERMATH, MONOPOLY, OPENING_BRIEF, STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { capacityOf, companyView, founderScore, playerCompany } from '@/engine/systems/shingle';
 import { FOUNDING_CAPITAL, FOUNDING_SHINGLE } from '@/engine/world/bootstrap';
@@ -358,5 +358,103 @@ describe('it all holds together', () => {
     expect(sim.ledger.audit()).toEqual([]);
     const report = validateUniverse(sim.universe);
     expect(report.errors).toEqual([]);
+  });
+});
+
+/**
+ * The founder's draw.
+ *
+ * There are no jobs in this game any more, so there are no wages. Somebody who
+ * wholly owns a production company does not go hungry beside it — they pay
+ * themselves out of it. It is the only personal income there is, and every
+ * dollar of it is a dollar the company cannot put on a screen.
+ */
+describe('paying yourself', () => {
+  it('starts every company with a draw', () => {
+    const sim = aGame('draw-default');
+    const company = playerCompany(sim)!;
+    expect(company.founderDraw).toBe(DEFAULT_FOUNDER_DRAW);
+    expect(company.founderDraw).toBeGreaterThan(0);
+  });
+
+  it('moves money from the company to the founder, monthly', () => {
+    const sim = aGame('draw-monthly');
+    const company = playerCompany(sim)!;
+    const personal = sim.player.primaryAccountId!;
+    const before = { me: sim.universe.accounts[personal]!.balance, co: sim.universe.accounts[company.cashAccountId]!.balance };
+
+    sim.advanceTo(sim.now + 95 * MS_DAY);
+    const after = { me: sim.universe.accounts[personal]!.balance, co: sim.universe.accounts[company.cashAccountId]!.balance };
+
+    expect(after.me, 'nothing was ever paid out').toBeGreaterThan(before.me);
+    expect(after.co, 'the company did not pay for it').toBeLessThan(before.co);
+    expect(sim.ledger.audit()).toEqual([]);
+    // Three months, three draws.
+    const draws = sim.universe.transactions.filter((t) => /founder's draw/i.test(t.memo));
+    expect(draws.length).toBe(3);
+  });
+
+  it('is the only income there is, and it keeps a life solvent', () => {
+    const sim = quickSave({ wealth: 'scraping' }, 'draw-solvent');
+    const personal = sim.player.primaryAccountId!;
+    sim.advanceTo(sim.now + 3 * 365 * MS_DAY);
+    expect(sim.universe.accounts[personal]!.balance, 'the founder went broke').toBeGreaterThan(0);
+    // Nothing else pays them anything.
+    const wages = sim.universe.transactions.filter((t) => t.category === 'salary');
+    expect(wages, 'something is still paying wages').toEqual([]);
+  });
+
+  it('can be changed, and says what it costs the company', () => {
+    const sim = aGame('draw-set');
+    const result = sim.execute<{ draw: number; monthsOfRunway: number; note: string }>({
+      kind: 'co.set_draw', payload: { amount: 30_000_00 },
+    });
+    expect(result.ok, result.error).toBe(true);
+    expect(playerCompany(sim)!.founderDraw).toBe(30_000_00);
+    expect(result.value!.note).toMatch(/a month/);
+    expect(result.value!.monthsOfRunway).toBeGreaterThan(0);
+  });
+
+  it('can be set to nothing, for somebody putting everything back in', () => {
+    const sim = aGame('draw-zero');
+    expect(sim.execute({ kind: 'co.set_draw', payload: { amount: 0 } }).ok).toBe(true);
+    expect(playerCompany(sim)!.founderDraw).toBe(0);
+    const personal = sim.player.primaryAccountId!;
+    const before = sim.universe.accounts[personal]!.balance;
+    sim.advanceTo(sim.now + 95 * MS_DAY);
+    expect(sim.universe.accounts[personal]!.balance).toBeLessThanOrEqual(before);
+  });
+
+  it('refuses a draw the company cannot carry for even a month', () => {
+    const sim = aGame('draw-greedy');
+    const company = playerCompany(sim)!;
+    const cash = sim.universe.accounts[company.cashAccountId]!.balance;
+    const refused = sim.execute({ kind: 'co.set_draw', payload: { amount: cash * 2 } });
+    expect(refused.ok).toBe(false);
+    expect(refused.error).toMatch(/cannot carry/i);
+    expect(playerCompany(sim)!.founderDraw).toBe(DEFAULT_FOUNDER_DRAW);
+  });
+
+  it('refuses a negative draw', () => {
+    const sim = aGame('draw-negative');
+    expect(sim.execute({ kind: 'co.set_draw', payload: { amount: -1 } }).ok).toBe(false);
+  });
+
+  it('says so when the company cannot pay it in full', () => {
+    const sim = aGame('draw-short');
+    const company = playerCompany(sim)!;
+    // Spend the company down to less than one month of draw.
+    const cash = sim.universe.accounts[company.cashAccountId]!.balance;
+    sim.expense(company.cashAccountId, cash - 100_00, 'Test spend', 'business');
+    sim.advanceTo(sim.now + 40 * MS_DAY);
+    expect(sim.universe.notifications.some((n) => /Draw Came Up Short|No Draw This Month/.test(n.title))).toBe(true);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('counts the draw in the runway, because it is money going out', () => {
+    const sim = aGame('draw-runway');
+    const withDraw = companyView(sim)!.monthsOfRunway;
+    sim.must({ kind: 'co.set_draw', payload: { amount: 0 } });
+    expect(companyView(sim)!.monthsOfRunway).toBeGreaterThan(withDraw);
   });
 });

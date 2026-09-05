@@ -56,15 +56,6 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     ],
   },
   {
-    id: 'jobs', route: '/workspace/jobs', title: 'Work',
-    what: 'Ordinary employment. You never have to become famous; you can get a job, show up, and build a life on it.',
-    affects: ['Your skills against what the listing asks for', 'Your work history', 'How you come across', 'How contested the role is', 'Whether you turned up rested'],
-    actions: ['Apply for a listing', 'Attend an interview', 'Accept or decline an offer', 'Ask for a promotion', 'Request time off', 'Resign'],
-    connects: ['Calendar, because shifts occupy real hours', 'Bank, because wages arrive withheld', 'Casting, because a shift and an audition can collide'],
-    keywords: ['job', 'work', 'apply', 'interview', 'shift', 'promotion', 'quit', 'fired', 'salary', 'employment'],
-    advanced: ['Three missed shifts in a row ends the job. Attendance and performance both feed promotion odds.'],
-  },
-  {
     id: 'wellbeing', route: '/workspace/wellbeing', title: 'Wellbeing',
     what: 'Energy, stress, sleep debt, condition and morale. Not a medical model — a game state that decides how well you perform at everything else.',
     affects: ['How long you have been awake', 'How much you slept and how well', 'Work and shoot days', 'Travel across time zones', 'Whether you have eaten'],

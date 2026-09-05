@@ -264,9 +264,6 @@ function prune(sim: Simulation): void {
   for (const [id, listing] of Object.entries(sim.universe.vehicleListings)) {
     if (listing.status !== 'active' && sim.now - listing.listedAt > 90 * MS_DAY) delete sim.universe.vehicleListings[id];
   }
-  for (const [id, opening] of Object.entries(sim.universe.jobOpenings)) {
-    if (opening.closesAt < sim.now - 30 * MS_DAY) delete sim.universe.jobOpenings[id];
-  }
   // Social posts stop being interesting once they stop earning.
   const posts = Object.entries(sim.universe.socialPosts);
   if (posts.length > 900) {
@@ -289,7 +286,6 @@ function prune(sim: Simulation): void {
   }
   for (const agent of Object.values(sim.universe.realEstateAgents)) referenced.add(agent.personId);
   for (const provider of Object.values(sim.universe.healthProviders)) if (provider.personId) referenced.add(provider.personId);
-  for (const job of Object.values(sim.universe.jobs)) referenced.add(job.personId);
 
   const people = Object.values(sim.universe.people);
   if (people.length > POPULATION_BUDGET) {
@@ -342,13 +338,11 @@ export function socialCircle(sim: Simulation) {
 export function lifeSnapshot(sim: Simulation) {
   const player = sim.player;
   const city = CITIES.get(player.currentLocationId);
-  const job = player.jobId ? sim.universe.jobs[player.jobId] : undefined;
   const home = player.residenceId ? sim.universe.properties[player.residenceId] : undefined;
 
   return {
     player,
     city,
-    job,
     home,
     householdSize: player.householdId
       ? (sim.universe.households[player.householdId]?.memberIds.length ?? 1)

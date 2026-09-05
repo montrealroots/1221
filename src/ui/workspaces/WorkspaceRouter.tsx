@@ -1,7 +1,6 @@
 import { TutorialCard } from '@/ui/shell/Tutorial';
 import { CalendarWorkspace } from './CalendarWorkspace';
 import { BankWorkspace } from './BankWorkspace';
-import { WorkWorkspace } from './WorkWorkspace';
 import { WellbeingWorkspace } from './WellbeingWorkspace';
 import { CharacterWorkspace } from './CharacterWorkspace';
 import { SettingsWorkspace } from './SettingsWorkspace';
@@ -20,7 +19,6 @@ import { CityWorkspace } from './CityWorkspace';
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
   '/workspace/bank': BankWorkspace,
-  '/workspace/jobs': WorkWorkspace,
   '/workspace/wellbeing': WellbeingWorkspace,
   '/workspace/character': CharacterWorkspace,
   '/workspace/settings': SettingsWorkspace,

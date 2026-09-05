@@ -169,12 +169,17 @@ describe('traits for a profession', () => {
 describe('experience is earned from work', () => {
 
 
-  it('ordinary shifts earn industry experience over a month', () => {
-    const sim = quickSave({ startWithJob: true }, 'professions-shifts');
-    const start = sim.player.industryXp ?? 0;
-    sim.advanceTo(sim.now + 30 * 86_400_000);
-    expect(sim.player.industryXp ?? 0).toBeGreaterThan(start);
-  });
+  /**
+   * Industry experience used to come from working ordinary shifts, and the
+   * job system has been removed. Nothing earns it now.
+   *
+   * It costs the founder nothing — every profession is already unlocked at the
+   * top of its ladder, so there is nothing left to spend experience on. It
+   * will matter for the people the company hires, who start from nothing and
+   * have to get good at something. Left as a todo so the runner says so on
+   * every run rather than a green suite implying the ladder still works.
+   */
+  it.todo('earns industry experience from work — nothing does, since the job system went');
 });
 
 describe('an older save', () => {

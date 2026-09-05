@@ -237,8 +237,6 @@ export interface Person {
   industryXp?: number;
   /** The professions they have unlocked, by id. Absent reads as none. */
   professions?: Partial<Record<ProfessionId, ProfessionProgress>>;
-  /** Employment record id for their ordinary job, if any. */
-  jobId?: Id;
   representation: Representation;
   /** Market rate for one project, in cents. Drives offers. */
   quote: Money;
@@ -359,81 +357,6 @@ export interface Household {
   formedAt: Instant;
   dissolvedAt?: Instant;
   historyNotes: { at: Instant; note: string }[];
-}
-
-// ---------------------------------------------------------------------------
-// Employment
-// ---------------------------------------------------------------------------
-
-export type PayBasis = 'hourly' | 'salary' | 'daily' | 'per_project' | 'commission';
-
-export interface Job {
-  id: Id;
-  saveId: Id;
-  personId: Id;
-  employerName: string;
-  employerRefId?: string;
-  title: string;
-  /** 'retail' | 'hospitality' | 'office' | 'trade' | 'industry' | ... */
-  sector: string;
-  locationId: string;
-  payBasis: PayBasis;
-  /** Cents per hour, per day, or per year depending on basis. */
-  payRate: Money;
-  hoursPerWeek: number;
-  /** Days of week worked, 0=Sunday. */
-  workDays: number[];
-  startHour: number;
-  endHour: number;
-  level: number;
-  ladder: string[];
-  /** 0-100 rating from the employer. */
-  performance: number;
-  attendance: number;
-  benefits: { health: boolean; dental: boolean; vision: boolean; retirement: boolean; paidLeave: number };
-  startedAt: Instant;
-  endedAt?: Instant;
-  endReason?: string;
-  /** Consecutive missed shifts; three is a problem. */
-  missedShifts: number;
-  /** Cents accrued but not yet paid. */
-  accruedPay: Money;
-  nextPayAt: Instant;
-}
-
-export interface JobOpening {
-  id: Id;
-  saveId: Id;
-  employerName: string;
-  title: string;
-  sector: string;
-  locationId: string;
-  payBasis: PayBasis;
-  payRate: Money;
-  hoursPerWeek: number;
-  requirements: { skill: string; min: number }[];
-  minimumAge: number;
-  description: string;
-  competition: number;
-  postedAt: Instant;
-  closesAt: Instant;
-  benefits: Job['benefits'];
-}
-
-export type ApplicationStage = 'submitted' | 'screening' | 'interview' | 'offer' | 'hired' | 'rejected' | 'withdrawn';
-
-export interface JobApplication {
-  id: Id;
-  saveId: Id;
-  personId: Id;
-  openingId: Id;
-  stage: ApplicationStage;
-  submittedAt: Instant;
-  interviewAt?: Instant;
-  decidedAt?: Instant;
-  /** 0-100 score from the hiring evaluation. */
-  score?: number;
-  note?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -1328,6 +1251,15 @@ export interface Company {
 
   /** Monthly overhead, in cents, before anybody is paid. */
   overhead: Money;
+  /**
+   * What the founder pays themselves out of it each month.
+   *
+   * With no job system there are no wages, and somebody who wholly owns a
+   * company does not go hungry beside it — they take a draw. It is money the
+   * company then cannot spend on a picture, which is the whole tension: every
+   * dollar you live on is a dollar that is not on the screen.
+   */
+  founderDraw: Money;
   /** How many projects it can carry before the work suffers. */
   capacity: number;
 
@@ -1490,7 +1422,7 @@ export interface Preferences {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 28;
+export const SAVE_SCHEMA_VERSION = 29;
 
 export interface SaveMeta {
   id: Id;
@@ -1543,10 +1475,6 @@ export interface SaveUniverse {
   bills: Record<Id, Bill>;
   creditProfiles: Record<Id, CreditProfile>;
   taxYears: Record<Id, TaxYearRecord>;
-
-  jobs: Record<Id, Job>;
-  jobOpenings: Record<Id, JobOpening>;
-  jobApplications: Record<Id, JobApplication>;
 
   properties: Record<Id, Property>;
   structures: Record<Id, Structure>;

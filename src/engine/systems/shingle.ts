@@ -23,7 +23,7 @@ import { formatMoney } from '../core/money';
 import { clamp } from '../core/rng';
 import { addDays } from '../core/time';
 import { titleCaseLabel } from '../core/text';
-import { SHINGLE_BY_ID, REMIT_BY_ID } from '../content/shingle';
+import { SHINGLE_BY_ID, REMIT_BY_ID, DEFAULT_FOUNDER_DRAW } from '../content/shingle';
 import { FOUNDER_ATTRIBUTES, HIGHER_IS_WORSE } from '../content/founder';
 import { SYSTEM_HIGHER_IS_WORSE } from '../domain/attributes';
 import { MONOPOLY, OPENING_BRIEF, OPENING_LINE, STRIKE_IS_FICTION } from '../content/strike';
@@ -169,6 +169,7 @@ export function registerShingle(sim: Simulation): void {
         strategy: p.strategy?.trim() || remit.what,
         cashAccountId: cashAccount.id,
         overhead: shape.overhead,
+        founderDraw: DEFAULT_FOUNDER_DRAW,
         capacity: shape.capacity,
         reputation: Math.round(20 + (player.founder?.['reputation_money'] ?? 0) * 0.3),
         standingWithTalent: Math.round(20 + (player.founder?.['reputation_craft'] ?? 0) * 0.4),
@@ -179,6 +180,19 @@ export function registerShingle(sim: Simulation): void {
       };
       s.universe.companies[companyId] = company;
       s.universe.playerCompanyId = companyId;
+
+      // The founder pays themselves monthly out of what they own. There are
+      // no wages in this game; this is the whole of somebody's personal income.
+      s.schedule({
+        at: addDays(s.now, 30, s.homeZone),
+        kind: 'co.draw',
+        label: `${name} — Founder's Draw`,
+        category: 'finance',
+        payload: { companyId },
+        priority: 14,
+        refType: 'company', refId: companyId,
+        recurrence: { unit: 'month', interval: 1 },
+      });
 
       // Overhead starts immediately and does not stop.
       s.schedule({
@@ -246,6 +260,70 @@ export function registerShingle(sim: Simulation): void {
     });
     sim.emit('co.overhead_missed', { companyId: company.id, due, balance });
   });
+
+  /**
+   * The founder's draw, paid monthly.
+   *
+   * A transfer between two accounts the same person owns, so nothing is
+   * created — but it is money the company no longer has, which is the point.
+   * If it cannot be paid in full, what is there is paid and the shortfall is
+   * said out loud rather than quietly skipped.
+   */
+  sim.onSchedule('co.draw', (item) => {
+    const company = sim.universe.companies[item.payload.companyId as Id];
+    if (!company || company.dissolvedAt) return;
+    const founder = sim.universe.people[company.founderId];
+    const to = founder?.primaryAccountId;
+    if (!to || company.founderDraw <= 0) return;
+
+    const available = sim.universe.accounts[company.cashAccountId]?.balance ?? 0;
+    const paid = Math.min(company.founderDraw, Math.max(0, available));
+    if (paid > 0) {
+      sim.transfer(company.cashAccountId, to, paid, `${company.name} — founder's draw`, 'business');
+    }
+    if (paid < company.founderDraw) {
+      sim.notify({
+        category: 'finance',
+        title: paid > 0 ? 'Your Draw Came Up Short' : 'No Draw This Month',
+        body: paid > 0
+          ? `${company.name} could only pay ${formatMoney(paid)} of your ${formatMoney(company.founderDraw)}. You live on what the company can spare.`
+          : `${company.name} has nothing to pay you with. You have no other income.`,
+        importance: 88,
+        refType: 'company', refId: company.id,
+      });
+    }
+  });
+
+  /**
+   * Changing what you pay yourself.
+   *
+   * The only lever on personal income there is. Raising it eats the company's
+   * runway; lowering it means living on less.
+   */
+  sim.onCommand<{ amount: Money }, { draw: Money; monthsOfRunway: number; note: string }>(
+    'co.set_draw',
+    (p, { sim: s }) => {
+      const company = requireCompany(s);
+      if (!Number.isFinite(p.amount) || p.amount < 0) throw new CommandError('A draw cannot be negative.');
+      const amount = Math.round(p.amount);
+      const cash = s.universe.accounts[company.cashAccountId]?.balance ?? 0;
+      const monthly = company.overhead + amount;
+      const months = monthly > 0 ? Math.floor(cash / monthly) : Infinity;
+      if (months < 1 && amount > 0) {
+        throw new CommandError(
+          `${company.name} cannot carry ${formatMoney(amount)} a month on top of ${formatMoney(company.overhead)} of overhead with ${formatMoney(cash)} in the account.`,
+        );
+      }
+      company.founderDraw = amount;
+      return {
+        draw: amount,
+        monthsOfRunway: Number.isFinite(months) ? months : 0,
+        note: amount === 0
+          ? 'You are paying yourself nothing. Everything the company has stays in it, and you live on whatever else you have.'
+          : `${formatMoney(amount)} a month. With overhead that is ${formatMoney(monthly)} going out, and ${months} months of it in the account.`,
+      };
+    },
+  );
 
   /**
    * Changing shape.
@@ -360,7 +438,10 @@ export function companyView(sim: Simulation) {
     cash,
     capacity: capacityOf(sim, company),
     /** How many months the company can pay its overhead with what it has. */
-    monthsOfRunway: company.overhead > 0 ? Math.floor(cash / company.overhead) : Infinity,
+    /** Overhead and the founder's draw together, which is what actually goes out. */
+    monthsOfRunway: company.overhead + company.founderDraw > 0
+      ? Math.floor(cash / (company.overhead + company.founderDraw))
+      : Infinity,
     instrument: FOUNDER_ATTRIBUTES.map((attribute) => ({
       ...attribute,
       value: founderScore(sim, attribute.id),

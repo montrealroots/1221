@@ -326,7 +326,6 @@ const ROUTE_LABELS: Record<string, string> = {
   '/world': 'World',
   '/workspace/calendar': 'Calendar',
   '/workspace/bank': 'Bank',
-  '/workspace/jobs': 'Work',
   '/workspace/wellbeing': 'Wellbeing',
   '/workspace/relationships': 'Relationships',
   '/workspace/property': 'Property',

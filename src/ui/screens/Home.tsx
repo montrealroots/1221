@@ -283,20 +283,6 @@ export function Home() {
           </div>
         </Panel>
 
-        <Panel title="Work" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Work</button>}>
-          {snapshot.job ? (
-            <div className="col gap-3">
-              <Stat label={snapshot.job.employerName} value={<span style={{ fontSize: 'var(--size-md)' }}>{snapshot.job.title}</span>} />
-              <Meter label="Performance" value={snapshot.job.performance} />
-              <Meter label="Attendance" value={snapshot.job.attendance} />
-            </div>
-          ) : (
-            <div className="col gap-2">
-              <p className="small muted">You are not employed.</p>
-              <button className="btn btn-sm" onClick={() => navigate('/workspace/jobs', 'Work')}>Find Work</button>
-            </div>
-          )}
-        </Panel>
 
         <Panel title="Standing" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/character', 'Character')}>Character</button>}>
           <div className="col gap-3">

@@ -19,9 +19,8 @@ import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/profess
 import { CITIES } from './content/geography';
 import { costOfLiving } from './content/tax';
 
-import { registerFinance, recomputeCreditScore, netWorth } from './systems/finance';
+import { registerFinance, recomputeCreditScore, netWorth, createLivingBills } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
-import { registerWork, refreshOpenings, createLivingBills, JOB_TEMPLATES, hire, annualisedOpeningPay } from './systems/work';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
 import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
@@ -34,6 +33,7 @@ import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { registerDriving } from './systems/driving';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
+import { DEFAULT_FOUNDER_DRAW } from './content/shingle';
 import { registerAuthorship } from './systems/authorship';
 import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from './content/founder';
 import { CEILING, GOAT_TRAITS } from './content/prodigy';
@@ -55,7 +55,6 @@ export type { Command, CommandResult };
 export function registerAllSystems(sim: Simulation): void {
   registerFinance(sim);
   registerLife(sim);
-  registerWork(sim);
   registerRelationships(sim);
   registerProperty(sim);
   registerPropertyReactors(sim);
@@ -71,11 +70,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerAuthorship(sim);
   registerWorld(sim);
 }
-
-/** How many times a recurring bill lands in a year. */
-const BILLINGS_PER_YEAR: Record<string, number> = {
-  weekly: 52, biweekly: 26, monthly: 12, quarterly: 4, annual: 1, once: 0,
-};
 
 /** Recurring world processes every save needs running. */
 function armWorldClock(sim: Simulation): void {
@@ -99,7 +93,6 @@ function armWorldClock(sim: Simulation): void {
     label: 'Statement Close', category: 'system', priority: 8,
     recurrence: { unit: 'month', interval: 1 },
   });
-  sim.schedule({ at: addDays(sim.now, 7, z), kind: 'work.refresh_openings', label: 'New Job Listings', category: 'career', priority: 60 });
   sim.schedule({ at: addDays(sim.now, 10, z), kind: 'prop.refresh_listings', label: 'New Property Listings', category: 'property', priority: 65 });
   sim.schedule({ at: addDays(sim.now, 14, z), kind: 'veh.refresh_inventory', label: 'Dealer Inventory', category: 'vehicles', priority: 68 });
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
@@ -231,7 +224,6 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   ensureAgents(sim, cityId);
   ensureProviders(sim, cityId);
   ensureCourses(sim, cityId);
-  refreshOpenings(sim);
   refreshListings(sim);
   refreshInventory(sim);
 
@@ -323,45 +315,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     }
   }
 
-  // --- Employment ---------------------------------------------------------
-  // The starting job has to be one the starting life can be lived on. Handing
-  // somebody a twelve-hour-a-week reading gig and a flat whose rent is twice
-  // what it pays is not a hard start, it is an unplayable one: they are broke
-  // inside a year no matter what the player does.
-  if (config.startWithJob) {
-    const openings = Object.values(sim.universe.jobOpenings);
-    const annualOutgoings = Object.values(sim.universe.bills)
-      .filter((b) => b.payerId === player.id && b.active)
-      .reduce((sum, bill) => sum + bill.amount * (BILLINGS_PER_YEAR[bill.frequency] ?? 12), 0);
-    const needed = Math.round(annualOutgoings * 1.25);
-
-    const canLiveOnIt = openings.filter((o) => annualisedOpeningPay(o) >= needed);
-    const pool = canLiveOnIt.length > 0 ? canLiveOnIt : openings;
-
-    // Within what is affordable, take the job that suits an actor: something
-    // near the industry, or the flexible work that fits around auditions.
-    const preferred = pool.find((o) => JOB_TEMPLATES.some((t) => t.title === o.title && t.industryAdjacency > 0.3))
-      ?? pool.find((o) => o.sector === 'hospitality' || o.sector === 'gig' || o.sector === 'services')
-      ?? pool[0];
-
-    // If nothing on the board pays for the life, take the best-paying thing
-    // going rather than something that guarantees insolvency.
-    const chosen = canLiveOnIt.length > 0
-      ? preferred
-      : [...openings].sort((a, b) => annualisedOpeningPay(b) - annualisedOpeningPay(a))[0];
-    if (chosen) hire(sim, player, chosen);
-  }
-
-  // --- Health cover -------------------------------------------------------
-  const job = player.jobId ? sim.universe.jobs[player.jobId] : undefined;
-  if (job?.benefits.health) {
-    const quote = sim.execute<{ quoteId: Id }>({ kind: 'ins.quote', payload: { line: 'health' } });
-    if (quote.ok && quote.value) {
-      const policy = sim.universe.insurancePolicies[quote.value.quoteId];
-      if (policy) policy.monthlyPremium = Math.round(policy.monthlyPremium * 0.28);
-      sim.execute({ kind: 'ins.purchase', payload: { quoteId: quote.value.quoteId, accountId: checking.id } });
-    }
-  }
+  // Health cover used to arrive with a job that had benefits. With no jobs
+  // there is no employer cover: a policy is something you go and buy.
 
   // --- Social presence ----------------------------------------------------
   const handle = `${config.firstName}${config.lastName}`.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -455,7 +410,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     ['people', 'map'], ['relationships', 'map'], ['households', 'map'],
     ['accounts', 'map'], ['transactions', 'list'], ['bills', 'map'],
     ['creditProfiles', 'map'], ['taxYears', 'map'],
-    ['jobs', 'map'], ['jobOpenings', 'map'], ['jobApplications', 'map'],
     ['properties', 'map'], ['structures', 'map'], ['rooms', 'map'], ['zones', 'map'],
     ['furnishings', 'map'], ['propertyListings', 'map'], ['propertyOffers', 'map'],
     ['realEstateAgents', 'map'], ['constructionProjects', 'map'],
@@ -724,6 +678,67 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       if (person.founderTraits.length !== before) stripped++;
     }
     if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There is one.`);
+  }
+
+  if (from < 29) {
+    // Schema 29: the job system is gone. There are no shifts, no listings, no
+    // applications and no wages — the player runs a production company and
+    // that is the only work there is.
+    const dropped: string[] = [];
+    for (const [key, label] of [['jobs', 'jobs'], ['jobOpenings', 'listings'], ['jobApplications', 'applications']] as const) {
+      const value = record[key];
+      const count = value && typeof value === 'object' ? Object.keys(value).length : 0;
+      if (count > 0) dropped.push(`${count} ${label}`);
+      delete record[key];
+    }
+    for (const person of Object.values(universe.people)) {
+      delete (person as unknown as Record<string, unknown>)['jobId'];
+    }
+    // A payday or a shift on the calendar would wake a handler that is not
+    // there any more.
+    const scheduled = record['scheduled'] as { kind: string }[];
+    const before = scheduled.length;
+    record['scheduled'] = scheduled.filter(
+      (item) => !item.kind.startsWith('work.') && item.kind !== 'finance.payday',
+    );
+    const cancelled = before - (record['scheduled'] as unknown[]).length;
+
+    // And any decision or notification pointing at the screen that went.
+    const decisions = record['decisions'] as Record<string, { route?: string; category?: string }>;
+    let closed = 0;
+    for (const [id, decision] of Object.entries(decisions)) {
+      if ((decision.route ?? '').startsWith('/workspace/jobs')) { delete decisions[id]; closed++; }
+    }
+
+    // With no wages, a founder pays themselves out of the company they own.
+    // Older saves get the draw and the standing order that pays it.
+    for (const company of Object.values(universe.companies)) {
+      if (typeof company.founderDraw !== 'number') company.founderDraw = DEFAULT_FOUNDER_DRAW;
+    }
+    const playerCompanyId = universe.playerCompanyId;
+    const hasDraw = (record['scheduled'] as { kind: string }[]).some((i) => i.kind === 'co.draw');
+    if (playerCompanyId && !hasDraw) {
+      (record['scheduled'] as unknown[]).push({
+        id: `sched_draw_${playerCompanyId}`,
+        saveId: universe.meta.id,
+        at: addMonths(universe.now, 1, universe.homeZone),
+        kind: 'co.draw',
+        label: "Founder's Draw",
+        category: 'finance',
+        payload: { companyId: playerCompanyId },
+        priority: 14,
+        status: 'pending',
+        refType: 'company',
+        refId: playerCompanyId,
+        recurrence: { unit: 'month', interval: 1 },
+      });
+    }
+
+    steps.push(
+      dropped.length > 0
+        ? `Employment was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
+        : 'Employment was removed. This save had none.',
+    );
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

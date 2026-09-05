@@ -72,7 +72,6 @@ const DOMAINS: Domain[] = [
     label: 'Career And Money',
     blurb: 'The unglamorous machinery underneath all of it.',
     entries: [
-      { route: '/workspace/jobs', label: 'Employment', detail: 'Apply, interview, work shifts, get promoted, or get let go.' },
       { route: '/workspace/bank', label: 'Finance', detail: 'Accounts, bills, credit, loans and tax that depends on where you live.' },
       { route: '/workspace/character', label: 'Character', detail: '88 attributes, 42 traits, professional skills and seven reputations.' },
     ],

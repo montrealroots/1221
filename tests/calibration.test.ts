@@ -15,18 +15,9 @@
 
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { scoreCandidate } from '@/engine/systems/work';
 import { rngFor } from '@/engine/core/rng';
-import type { JobOpening, Person } from '@/engine/domain/model';
 
-const TRIALS = 400;
 
-/** Share of trials that came out true. */
-function rate(trials: number, run: (i: number) => boolean): number {
-  let hits = 0;
-  for (let i = 0; i < trials; i++) if (run(i)) hits++;
-  return hits / trials;
-}
 
 describe('the random number generator', () => {
   it('is uniform enough to build a model on', () => {
@@ -66,76 +57,6 @@ describe('the random number generator', () => {
   });
 });
 
-describe('hiring', () => {
-  const sim = quickSave({}, 'calibration-hiring');
-
-  /** A candidate with every relevant dial set to one level. */
-  const candidate = (level: number): Person => {
-    const base = sim.player;
-    return {
-      ...base,
-      id: `cand-${level}`,
-      skills: Object.fromEntries(Object.keys(base.skills).map((k) => [k, level])),
-      attributes: Object.fromEntries(Object.keys(base.attributes).map((k) => [k, level])),
-      personality: { ...base.personality, extraversion: level, agreeableness: level },
-    } as Person;
-  };
-
-  const opening = (competition: number): JobOpening => ({
-    ...(Object.values(sim.universe.jobOpenings)[0] as JobOpening),
-    id: `open-${competition}`,
-    competition,
-    requirements: [{ skill: 'operations', min: 40 }],
-  });
-
-  it('rates a stronger candidate above a weaker one, every time', () => {
-    let previous = -1;
-    for (const level of [10, 30, 50, 70, 90]) {
-      const { score } = scoreCandidate(sim, candidate(level), opening(50));
-      expect(score, `a candidate at ${level} did not out-score the one below`).toBeGreaterThan(previous);
-      previous = score;
-    }
-  });
-
-  it('makes a contested listing harder than an uncontested one', () => {
-    // One listing against another is mostly noise: who else applied is an
-    // unknowable factor worth more than the competition gap. Averaging over
-    // many listings is what shows whether competition is doing anything.
-    const meanScore = (competition: number) => {
-      let total = 0;
-      for (let i = 0; i < 200; i++) {
-        total += scoreCandidate(sim, candidate(60), { ...opening(competition), id: `o-${competition}-${i}` }).score;
-      }
-      return total / 200;
-    };
-    expect(meanScore(90)).toBeLessThan(meanScore(10));
-  });
-
-  it('never becomes a foregone conclusion in either direction', () => {
-    // Across many openings, a mid-level candidate sometimes wins and
-    // sometimes does not. A model that is always one or the other is broken.
-    const passRate = rate(TRIALS, (i) => {
-      const person = candidate(55);
-      const listing = opening(40 + (i % 40));
-      const { score } = scoreCandidate(sim, { ...person, id: `c${i}` } as Person, { ...listing, id: `o${i}` });
-      const probability = Math.min(0.92, Math.max(0.03, score * 1.25 - 0.06));
-      return rngFor('calibration', 'hire', String(i)).next() < probability;
-    });
-    expect(passRate, `a mid-level candidate passed ${(passRate * 100).toFixed(0)}% of screens`).toBeGreaterThan(0.1);
-    expect(passRate, `a mid-level candidate passed ${(passRate * 100).toFixed(0)}% of screens`).toBeLessThan(0.9);
-  });
-
-  it('gives a beginner a real chance at work that asks for nothing', () => {
-    const beginner = candidate(8);
-    const entryLevel = { ...opening(45), requirements: [] };
-    const { score } = scoreCandidate(sim, beginner, entryLevel);
-    const probability = Math.min(0.92, Math.max(0.03, score * 1.25 - 0.06));
-    // Not a certainty, but not the 3% floor either: an ordinary person has to
-    // be able to get an ordinary job.
-    expect(probability, `a beginner's chance at entry-level work was ${(probability * 100).toFixed(0)}%`).toBeGreaterThan(0.2);
-  });
-});
-
 describe('reproducibility', () => {
   it('gives two identical seeds the same world, and different seeds different ones', () => {
     // The film industry is gone, so what a seed has to reproduce now is the
@@ -146,7 +67,6 @@ describe('reproducibility', () => {
       return [
         Object.values(sim.universe.people).map((p) => p.displayName).sort().join(','),
         Object.values(sim.universe.propertyListings).map((l) => `${l.propertyId}|${l.askingPrice}`).sort().join(','),
-        Object.values(sim.universe.jobOpenings).map((o) => `${o.title}|${o.payRate}`).sort().join(','),
       ].join('\n');
     };
     expect(shape('twin')).toEqual(shape('twin'));

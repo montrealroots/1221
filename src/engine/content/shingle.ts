@@ -132,3 +132,14 @@ export const REMITS: readonly Remit[] = [
 
 export const REMIT_BY_ID: Readonly<Record<string, Remit>> =
   Object.fromEntries(REMITS.map((r) => [r.id, r]));
+
+/**
+ * What a founder pays themselves a month, by default.
+ *
+ * An ordinary life in this game runs to about twenty-six thousand a year once
+ * rent, utilities, food and the standing bills are counted. This is
+ * comfortably above that and nowhere near enough to trouble the company, so a
+ * new save is solvent without the player having to think about it on the first
+ * morning — and it is a number they can move in either direction.
+ */
+export const DEFAULT_FOUNDER_DRAW: Money = 12_000_00;
