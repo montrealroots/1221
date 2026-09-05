@@ -37,6 +37,7 @@ import { standingWith, willReadFor } from './reactive';
 import { CITIES, countryOfCity } from '../content/geography';
 import { playerCompanies } from './company';
 import { titleCaseLabel } from '../core/text';
+import { titleFromGender } from '../core/performer';
 
 // ---------------------------------------------------------------------------
 // What somebody is worth
@@ -267,8 +268,11 @@ export function ensureRealPerson(sim: Simulation, qid: string): Person | undefin
     stageName: record.name,
     // The record states a gender for many of them and says nothing about how
     // anybody wishes to be addressed. The game does not guess: it uses their
-    // name, and they/them where a pronoun is unavoidable.
+    // name, and they/them where a pronoun is unavoidable. Where the record
+    // does state a gender, it decides which of the two titles they are listed
+    // under, because that is a statement of the record rather than a guess.
     pronouns: 'they/them',
+    performerTitle: titleFromGender(record.gender),
     birthInstant: sim.now - age * 365.25 * MS_DAY,
     homeRegionId: cityId,
     citizenshipId: countryOfCity(cityId) ?? 'us',

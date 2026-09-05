@@ -43,6 +43,7 @@ import { registerProfessions } from './systems/professions';
 import { registerRealPeople } from './systems/real-people';
 import { registerPress } from './systems/press';
 import { craftFromLegacy } from './content/screenplay';
+import { performerTitleOf } from './core/performer';
 import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
 import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { ensureReactive, registerReactive } from './systems/reactive';
@@ -621,7 +622,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       person.careerTrack = 'actor';
     } else if (track === 'civilian' || track === 'none') {
       person.careerTrack = 'actor';
-      steps.push(`${person.displayName} now starts as an actor/actress, as everyone does.`);
+      steps.push(`${person.displayName} now starts as ${performerTitleOf(person) === 'actress' ? 'an actress' : 'an actor'}, as everyone does.`);
     }
   }
 

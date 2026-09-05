@@ -1,11 +1,12 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { careerLabel } from '@/engine/world/bootstrap';
 import { useState } from 'react';
+import { performerNoun } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Tabs } from '@/ui/components/primitives';
 import {
   ATTRIBUTE_GROUPS, attributesInGroup, conflictingTraits, effectiveAttributes, effectiveSkills,
-  groupAverage, overallRating, TRAIT_BY_ID, traitsForProfession, type AttributeGroup,
+  groupAverage, overallRating, traitName, TRAIT_BY_ID, traitsForProfession, type AttributeGroup,
 } from '@/engine/domain/attributes';
 import { SKILLS, domainAverage, type SkillDomain } from '@/engine/domain/skills';
 import {
@@ -119,7 +120,7 @@ export function CharacterWorkspace() {
       {tab === 'professions' && (
         <div className="col gap-4">
           <p className="muted small" style={{ margin: 0 }}>
-            You are an actor/actress. Everything else in the industry is unlocked with the experience you
+            You are {performerNoun(player).toLowerCase() === 'actress' ? 'an actress' : 'an actor'}. Everything else in the industry is unlocked with the experience you
             earn working, and each profession then levels on its own work: every one of its skills rises
             with each level, and a trait slot opens at levels 1, 3, 6 and 9.
           </p>
@@ -203,7 +204,7 @@ export function CharacterWorkspace() {
                             if (!trait) return null;
                             return (
                               <div key={id}>
-                                <div className="strong small">{trait.name}</div>
+                                <div className="strong small">{traitName(trait, player)}</div>
                                 <div className="xs muted">{trait.description}</div>
                               </div>
                             );
@@ -266,7 +267,7 @@ export function CharacterWorkspace() {
                 return (
                   <div key={id}>
                     <div className="row gap-2">
-                      <span className="strong">{trait.name}</span>
+                      <span className="strong">{traitName(trait, player)}</span>
                       <span className="chip">{titleCaseLabel(trait.category)}</span>
                     </div>
                     <p className="small muted" style={{ margin: '4px 0' }}>{trait.description}</p>

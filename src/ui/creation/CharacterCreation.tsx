@@ -12,7 +12,8 @@ import {
   defaultConfig, wealthNote, careerLabel,
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
-import { TRAITS, TRAIT_BY_ID, conflictingTraits, type TraitCategory } from '@/engine/domain/attributes';
+import { TRAITS, TRAIT_BY_ID, conflictingTraits, traitName, type TraitCategory } from '@/engine/domain/attributes';
+import { impliedPerformerTitle, type PerformerTitle } from '@/engine/core/performer';
 import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
@@ -260,6 +261,18 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <option value="they/them">They/Them</option>
           </select>
         </div>
+        <div className="field">
+          <label htmlFor="performer-title">Billed As</label>
+          <select
+            id="performer-title"
+            value={config.performerTitle ?? impliedPerformerTitle(config.pronouns)}
+            onChange={(e) => set('performerTitle', e.target.value as PerformerTitle)}
+          >
+            <option value="actor">Actor</option>
+            <option value="actress">Actress</option>
+          </select>
+          <p className="xs dim" style={{ marginTop: 4 }}>Which of the two the business lists you under, and which award categories are open to you.</p>
+        </div>
       </div>
         </div>
       </div>
@@ -487,7 +500,7 @@ function PersonalStep({
                       ? `Cannot be held with ${conflicts.map((c) => TRAIT_BY_ID[c]?.name).join(', ')}.`
                       : undefined}
                   >
-                    <div className="trait-name">{trait.name}</div>
+                    <div className="trait-name">{traitName(trait, { pronouns: config.pronouns, performerTitle: config.performerTitle })}</div>
                     <div className="trait-desc">{trait.description}</div>
                   </button>
                 );
@@ -806,6 +819,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
+          <Line label="Billed As" value={(config.performerTitle ?? impliedPerformerTitle(config.pronouns)) === 'actress' ? 'Actress' : 'Actor'} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
@@ -835,7 +849,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
               if (!trait) return null;
               return (
                 <div key={id}>
-                  <div className="strong small">{trait.name}</div>
+                  <div className="strong small">{traitName(trait, { pronouns: config.pronouns, performerTitle: config.performerTitle })}</div>
                   <div className="xs muted">{trait.description}</div>
                 </div>
               );

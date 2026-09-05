@@ -176,12 +176,20 @@ export function overallRating(sheet: AttributeSheet): number {
 // ---------------------------------------------------------------------------
 
 import type { ProfessionId } from '../content/professions';
+import { performerTitleOf, type PerformerTitle } from '../core/performer';
 
 export type TraitCategory = 'Talent' | 'Method' | 'Temperament' | 'Public' | 'Social' | 'Life';
 
 export interface TraitDef {
   id: string;
   name: string;
+  /**
+   * The two forms of a name that carries the word, for the traits where the
+   * business has one of each: a method actor and a method actress. The plain
+   * name is the actor's, and a screen that knows whose sheet it is renders
+   * the right one through `traitName`.
+   */
+  nameByTitle?: Readonly<Record<PerformerTitle, string>>;
   category: TraitCategory;
   description: string;
   /**
@@ -205,11 +213,11 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'natural_talent', name: 'Natural Talent', category: 'Talent', description: 'Things that take others years took you months. Craft starts high but coasting is a real risk.', attributeMods: { emotional_truth: 10, charisma: 6, subtext: 6 }, systemMods: { trainingGain: 0.85 }, conflictsWith: ['late_bloomer'] },
   { id: 'late_bloomer', name: 'Late Bloomer', category: 'Talent', description: 'Slow to start, hard to stop. Growth compounds instead of plateauing.', attributeMods: { emotional_truth: -4, charisma: -3 }, systemMods: { trainingGain: 1.35, ageCurveShift: 8 }, conflictsWith: ['natural_talent', 'prodigy'] },
   { id: 'prodigy', name: 'Prodigy', category: 'Talent', description: 'Extraordinary young ability, and the scrutiny that comes with it.', attributeMods: { emotional_truth: 14, memorization: 10, direction_absorption: 8 }, systemMods: { youthBonus: 1.4, burnoutRisk: 1.35 }, conflictsWith: ['late_bloomer'] },
-  { id: 'method_actor', name: 'Method Actor/Actress', category: 'Method', description: 'You live inside the part. The results can be extraordinary and the cost is real.', attributeMods: { emotional_truth: 12, vulnerability: 8, grief: 6 }, systemMods: { stressPerShootDay: 1.5, castingPrestige: 1.15, crewFriction: 1.2 }, conflictsWith: ['technical_actor'] },
-  { id: 'technical_actor', name: 'Technical Actor/Actress', category: 'Method', description: 'Precision, repeatability and a director who never worries about the edit.', attributeMods: { take_consistency: 14, continuity_awareness: 10, direction_absorption: 8, eyeline_discipline: 6 }, systemMods: { stressPerShootDay: 0.8, scheduleEfficiency: 1.12 }, conflictsWith: ['method_actor'] },
+  { id: 'method_actor', name: 'Method Actor', nameByTitle: { actor: 'Method Actor', actress: 'Method Actress' }, category: 'Method', description: 'You live inside the part. The results can be extraordinary and the cost is real.', attributeMods: { emotional_truth: 12, vulnerability: 8, grief: 6 }, systemMods: { stressPerShootDay: 1.5, castingPrestige: 1.15, crewFriction: 1.2 }, conflictsWith: ['technical_actor'] },
+  { id: 'technical_actor', name: 'Technical Actor', nameByTitle: { actor: 'Technical Actor', actress: 'Technical Actress' }, category: 'Method', description: 'Precision, repeatability and a director who never worries about the edit.', attributeMods: { take_consistency: 14, continuity_awareness: 10, direction_absorption: 8, eyeline_discipline: 6 }, systemMods: { stressPerShootDay: 0.8, scheduleEfficiency: 1.12 }, conflictsWith: ['method_actor'] },
   { id: 'chameleon', name: 'Chameleon', category: 'Method', description: 'Audiences forget it is you. Casting directors love it; star vehicles do not.', attributeMods: { character_construction: 12, dialect_acquisition: 10, mask_and_mime: 8 }, systemMods: { rangePenalty: 0.6, fameGrowth: 0.85, castingPrestige: 1.1 } },
   { id: 'star_quality', name: 'Star Quality', category: 'Talent', description: 'The camera simply prefers you. It is not fair and it is not earned.', attributeMods: { charisma: 14, magnetism: 12, photogenic_quality: 10 }, systemMods: { fameGrowth: 1.35, quoteMultiplier: 1.25, castingPrestige: 0.95 } },
-  { id: 'character_actor', name: 'Character Actor/Actress', category: 'Talent', description: 'Never the lead, never out of work, always the best thing in it.', attributeMods: { character_construction: 10, ensemble_blending: 10 }, systemMods: { leadCastingOdds: 0.55, supportCastingOdds: 1.5, careerLongevity: 1.3 } },
+  { id: 'character_actor', name: 'Character Actor', nameByTitle: { actor: 'Character Actor', actress: 'Character Actress' }, category: 'Talent', description: 'Never the lead, never out of work, always the best thing in it.', attributeMods: { character_construction: 10, ensemble_blending: 10 }, systemMods: { leadCastingOdds: 0.55, supportCastingOdds: 1.5, careerLongevity: 1.3 } },
   { id: 'comedic_instinct', name: 'Comedic Instinct', category: 'Talent', description: 'You hear the joke inside the line before anyone points at it.', attributeMods: { comedy_timing: 14, dry_comedy: 8, broad_comedy: 8, improvisation: 6 } },
   { id: 'dramatic_gravitas', name: 'Dramatic Gravitas', category: 'Talent', description: 'When you say something serious, a room believes it.', attributeMods: { drama: 12, tragedy: 10, restraint: 8, resonance: 6 } },
   { id: 'action_ready', name: 'Action Ready', category: 'Talent', description: 'Insurance says yes, stunt coordinators say yes, and you do your own work.', attributeMods: { stunt_aptitude: 14, screen_fighting: 12, stamina: 10, injury_resilience: 8 }, systemMods: { stuntInsuranceCost: 0.7, injuryRisk: 0.85 } },
@@ -388,4 +396,15 @@ export function effectiveSkills(sheet: Record<string, number>, traits: readonly 
 /** Traits belonging to one profession. */
 export function traitsForProfession(profession: ProfessionId): TraitDef[] {
   return PROFESSION_TRAITS.filter((t) => t.profession === profession);
+}
+
+/**
+ * A trait's name as it reads on one person's sheet.
+ *
+ * Most traits read the same for everybody. The three that name the job —
+ * method, technical, character — carry both forms, and this picks theirs.
+ */
+export function traitName(trait: TraitDef, person?: { pronouns: string; performerTitle?: PerformerTitle | undefined }): string {
+  if (!trait.nameByTitle || !person) return trait.name;
+  return trait.nameByTitle[performerTitleOf(person)];
 }
