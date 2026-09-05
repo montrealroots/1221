@@ -1,4 +1,4 @@
-import { titleCaseLabel } from '@/engine/core/text';
+import { categoryLabel, titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Meter, Empty, Modal, Stat } from '@/ui/components/primitives';
@@ -165,7 +165,7 @@ export function RelationshipsWorkspace() {
                 >
                   <div className="grow">
                     <div className="small strong">{asset.name}</div>
-                    <div className="xs dim">{asset.brand} · {titleCaseLabel(asset.category)}</div>
+                    <div className="xs dim">{asset.brand} · {categoryLabel(asset.category)}</div>
                   </div>
                   <span className="mono small">{formatMoney(asset.currentValue, { cents: false })}</span>
                 </button>

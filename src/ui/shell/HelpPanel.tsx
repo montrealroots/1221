@@ -51,7 +51,7 @@ export function HelpPanel() {
                   <button key={result.id} className="list-item" onClick={() => { setPinned(result.id); setQuery(''); }}>
                     <div className="grow">
                       <div className="small strong">{result.title}</div>
-                      <div className="xs dim truncate">{result.what}</div>
+                      <div className="xs dim truncate" title={result.what}>{result.what}</div>
                     </div>
                   </button>
                 ))}

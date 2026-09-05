@@ -342,7 +342,7 @@ export function CharacterWorkspace() {
       {tab === 'skills' && (
         <div className="grid grid-2">
           {SKILL_DOMAINS.map((domain) => (
-            <Panel key={domain} title={domain} subtitle={`Average ${Math.round(domainAverage(player.skills, domain))}`}>
+            <Panel key={domain} title={titleCaseLabel(domain)} subtitle={`Average ${Math.round(domainAverage(player.skills, domain))}`}>
               {SKILLS.filter((s) => s.domain === domain).map((skill) => (
                 <div key={skill.id} className={`attr-row${goat ? ' god-row' : ''}`} title={skill.description}>
                   <div className="attr-name">{skill.name}</div>
@@ -383,7 +383,7 @@ export function CharacterWorkspace() {
                       ))}
                       {Object.entries(trait.systemMods ?? {}).map(([key, value]) => (
                         <span key={key} className="chip chip-info">
-                          {key.replace(/([A-Z])/g, ' $1').toLowerCase()} ×{value}
+                          {titleCaseLabel(key.replace(/([A-Z])/g, ' $1'))} ×{value}
                         </span>
                       ))}
                     </div>

@@ -122,20 +122,23 @@ export function TravelWorkspace() {
               {drives.length === 0 && <p className="hint" style={{ padding: 'var(--s3)' }}>Nothing within a day's drive matches.</p>}
               {drives.map((d) => {
                 const sky = weatherAt(sim, d.city.id);
+                const heading = `${d.city.name}${d.city.id === home?.id ? ' · Home' : ''}${placeKindLabel(d.city) ? ` · ${placeKindLabel(d.city)}` : ''}`;
+                const detail = [
+                  d.city.population > 0 ? `${formatPeople(d.city.population)} people` : '',
+                  formatDistance(d, here?.countryId ?? 'us'),
+                  formatDuration(d.minutes * MS_MINUTE),
+                  d.fuelCents > 0 ? `fuel ${formatMoney(d.fuelCents)}` : '',
+                  d.crossesZone ? 'crosses a time zone' : '',
+                  sky ? `${sky.icon} ${sky.temperature}${sky.fahrenheit ? '°F' : '°C'}` : '',
+                ].filter(Boolean).join(' · ');
                 return (
                   <div key={d.city.id} className="list-item">
                     <div className="grow" style={{ minWidth: 0 }}>
-                      <div className="small strong truncate">
+                      <div className="small strong truncate" title={heading}>
                         {d.city.name}{d.city.id === home?.id ? ' · Home' : ''}
                         {placeKindLabel(d.city) && <span className="dim"> · {placeKindLabel(d.city)}</span>}
                       </div>
-                      <div className="xs muted truncate">
-                        {d.city.population > 0 && `${formatPeople(d.city.population)} people · `}
-                        {formatDistance(d, here?.countryId ?? 'us')} · {formatDuration(d.minutes * MS_MINUTE)}
-                        {d.fuelCents > 0 && ` · fuel ${formatMoney(d.fuelCents)}`}
-                        {d.crossesZone && ' · crosses a time zone'}
-                        {sky && ` · ${sky.icon} ${sky.temperature}${sky.fahrenheit ? '°F' : '°C'}`}
-                      </div>
+                      <div className="xs muted">{detail}</div>
                     </div>
                     <button className="btn btn-sm" onClick={() => startDrive(d.city.id, d.city.name)}>Drive There</button>
                   </div>
@@ -296,7 +299,7 @@ export function TravelWorkspace() {
                     className="btn btn-sm"
                     onClick={() => run('travel.book_hotel', { cityId: destination, checkInAt: departAt, nights, roomClass })}
                   >
-                    {nights} nights
+                    {nights} Nights
                   </button>
                 ))}
               </div>
@@ -336,7 +339,7 @@ export function TravelWorkspace() {
                     <div className="grow">
                       <div className="small strong">{stay.hotelName}</div>
                       <div className="xs dim">
-                        {formatDate(stay.checkInAt, sim.homeZone)} — {formatDate(stay.checkOutAt, sim.homeZone)} · {stay.nights} nights · {stay.roomClass}
+                        {formatDate(stay.checkInAt, sim.homeZone)} — {formatDate(stay.checkOutAt, sim.homeZone)} · {stay.nights} nights · {titleCaseLabel(stay.roomClass)}
                       </div>
                     </div>
                     <span className="mono small">{formatMoney(stay.total, { cents: false })}</span>

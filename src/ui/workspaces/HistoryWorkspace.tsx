@@ -53,7 +53,7 @@ export function HistoryWorkspace() {
                 style={category === name ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}
                 onClick={() => setCategory(name)}
               >
-                {name}
+                {name === 'all' ? 'Everything' : titleCaseLabel(name)}
               </button>
             ))}
           </div>
@@ -106,7 +106,7 @@ export function HistoryWorkspace() {
                         <div className="small strong">{audit.question}</div>
                         <div className="xs muted">{audit.summary}</div>
                       </div>
-                      <span className="chip">{audit.outcome}</span>
+                      <span className="chip">{titleCaseLabel(audit.outcome)}</span>
                     </div>
                   </summary>
 

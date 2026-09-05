@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
@@ -94,7 +95,7 @@ export function CalendarWorkspace() {
                 <span
                   key={`${day.key}:${holiday.name}`}
                   className="cal-event"
-                  style={{ borderLeftColor: LEGEND_BY_CATEGORY.holiday?.colour, opacity: holiday.type === 'public' ? 1 : 0.7 }}
+                  style={{ '--event-colour': LEGEND_BY_CATEGORY.holiday?.colour, opacity: holiday.type === 'public' ? 1 : 0.7 } as CSSProperties}
                   title={holidayLabel(holiday)}
                 >
                   {holiday.name === holiday.englishName ? titleCaseLabel(holiday.name) : holiday.name}
@@ -105,14 +106,14 @@ export function CalendarWorkspace() {
                   key={entry.id}
                   className="cal-event"
                   data-conflict={entry.conflicted}
-                  style={{ borderLeftColor: LEGEND_BY_CATEGORY[entry.category]?.colour }}
+                  style={{ '--event-colour': LEGEND_BY_CATEGORY[entry.category]?.colour } as CSSProperties}
                   title={titleCaseLabel(entry.title)}
                 >
                   {titleCaseLabel(entry.title)}
                 </span>
               ))}
               {day.entries.length > roomFor(day) && (
-                <span className="xs dim">+{day.entries.length - roomFor(day)} more</span>
+                <span className="xs dim cal-more">+{day.entries.length - roomFor(day)} more</span>
               )}
             </button>
           ))}

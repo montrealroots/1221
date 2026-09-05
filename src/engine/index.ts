@@ -128,7 +128,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const checking = sim.openAccount({
     id: sim.nextId('account'),
     kind: 'checking',
-    name: 'Everyday checking',
+    name: 'Everyday Checking',
     ownerId: player.id,
     institution: 'Northbank',
     openedAt: sim.now,

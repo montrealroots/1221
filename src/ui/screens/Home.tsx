@@ -198,7 +198,7 @@ export function Home() {
                 <div className="col gap-2">
                   {soon.slice(1, 5).map((entry) => (
                     <div key={entry.id} className="row-between">
-                      <span className="small truncate">{titleCaseLabel(entry.title)}</span>
+                      <span className="small truncate" title={titleCaseLabel(entry.title)}>{titleCaseLabel(entry.title)}</span>
                       <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
                     </div>
                   ))}

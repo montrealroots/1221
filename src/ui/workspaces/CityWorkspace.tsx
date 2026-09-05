@@ -107,7 +107,7 @@ export function CityWorkspace() {
           )}
           {homeJourney && here.property?.id !== homeJourney.home.id && (
             <button className="btn btn-sm" onClick={() => run('go.to', { home: true, mode })}>
-              Go Home ({formatDuration(homeJourney.journey.minutes * 60_000)})
+              Go Home ({titleCaseLabel(formatDuration(homeJourney.journey.minutes * 60_000))})
             </button>
           )}
         </div>
@@ -248,7 +248,7 @@ function OrderDialog({ place, onClose }: { place: Place; onClose: () => void }) 
         </div>
       )}
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {formatDuration(place.minutes * 60_000)} at the table. {titleCaseLabel(sim.player.wellbeing.nourishment < 40 ? 'you are hungry' : 'you are not especially hungry')}.
+        {formatDuration(place.minutes * 60_000)} at the table. {sim.player.wellbeing.nourishment < 40 ? 'You are hungry' : 'You are not especially hungry'}.
       </p>
     </Modal>
   );

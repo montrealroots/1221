@@ -208,8 +208,15 @@ export function LocationPicker({
             data-selected={c.id === cityId ? 'true' : undefined}
             onClick={() => onPick(c)}
           >
-            <span className="picker-option-name truncate">{c.name}</span>
-            <span className="picker-option-meta truncate">
+            <span className="picker-option-name truncate" title={c.name}>{c.name}</span>
+            <span
+              className="picker-option-meta truncate"
+              title={[
+                REGIONS.get(c.parentId)?.name ?? COUNTRIES.get(c.countryId)?.name,
+                c.population > 0 ? `${c.population.toLocaleString('en-US')} people` : '',
+                c.industryPresence > 0 ? `industry ${c.industryPresence}/100` : '',
+              ].filter(Boolean).join(' · ')}
+            >
               {REGIONS.get(c.parentId)?.name ?? COUNTRIES.get(c.countryId)?.name}
               {c.population > 0 && ` · ${c.population.toLocaleString('en-US')} people`}
               {c.industryPresence > 0 && ` · industry ${c.industryPresence}/100`}

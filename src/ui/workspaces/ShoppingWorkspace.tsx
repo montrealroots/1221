@@ -1,4 +1,4 @@
-import { titleCaseLabel } from '@/engine/core/text';
+import { categoryLabel, titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
@@ -45,12 +45,12 @@ export function ShoppingWorkspace() {
             {CATEGORIES.map((c) => (
               <button key={c} className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}
                 style={category === c ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}>
-                {c}
+                {categoryLabel(c)}
               </button>
             ))}
           </div>
 
-          <Panel title={category} flush>
+          <Panel title={categoryLabel(category)} flush>
             {catalogue.length === 0 ? (
               <Empty title="Nothing Stocked" body="No retailer near you carries that category." />
             ) : (
@@ -110,7 +110,7 @@ export function ShoppingWorkspace() {
                   <div className="grow">
                     <div className="small strong">{asset.name}</div>
                     <div className="xs dim">
-                      {asset.brand} · {titleCaseLabel(asset.category)} · acquired {formatDate(asset.acquiredAt, sim.homeZone)}
+                      {asset.brand} · {categoryLabel(asset.category)} · acquired {formatDate(asset.acquiredAt, sim.homeZone)}
                       {asset.acquiredVia !== 'purchase' && ` · ${asset.acquiredVia}`}
                       {asset.insurancePolicyId && ' · insured'}
                     </div>

@@ -85,7 +85,7 @@ export function EducationWorkspace() {
                   <div className="row wrap gap-1" style={{ marginTop: 4 }}>
                     {course.improves.map((improvement) => (
                       <span key={improvement.key} className="chip">
-                        {titleCaseLabel(improvement.key.replace(/_/g, ' '))} +{improvement.gain}/session
+                        {titleCaseLabel(improvement.key.replace(/_/g, ' '))} +{improvement.gain} Per Session
                       </span>
                     ))}
                   </div>

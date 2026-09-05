@@ -683,7 +683,7 @@ kbd {
   font-size: 10px; padding: 1px 4px; border-radius: 3px;
   background: var(--surface-3); color: var(--text-muted);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  border-left: 2px solid var(--line-strong); cursor: pointer;
+  border-left: 2px solid var(--event-colour, var(--line-strong)); cursor: pointer;
 }
 .cal-event[data-conflict="true"] { box-shadow: 0 0 0 1px var(--negative); }
 .cal-legend { display: flex; flex-wrap: wrap; gap: var(--s3); font-size: var(--size-xs); }
@@ -813,6 +813,23 @@ kbd {
 }
 
 @media (max-width: 620px) {
+  /*
+   * A month is seven columns wide however narrow the screen is, which on a
+   * phone leaves about thirty pixels a day — room for two letters. So the day
+   * stops trying to name what is on it and shows one bar per entry in that
+   * category's colour. Nothing is lost: the day is a button, and tapping it
+   * opens the day's own panel with every entry named, timed and placed.
+   */
+  .cal-event {
+    display: block; height: 5px; padding: 0; border-left: 0; border-radius: 2px;
+    background: var(--event-colour, var(--line-strong));
+    /* The name is not laid out at all here rather than laid out and hidden,
+       so nothing is half-drawn behind the bar. It stays in the element for a
+       screen reader, and in the title for a pointer. */
+    font-size: 0; line-height: 0; overflow: hidden;
+  }
+  .cal-more { display: none; }
+
   .wordmark { font-size: 34px; letter-spacing: .34em; text-indent: .34em; }
   .clapper { font-size: 54px; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
