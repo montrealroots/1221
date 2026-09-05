@@ -83,7 +83,7 @@ export function ShoppingWorkspace() {
                         e.target.value = '';
                       }}
                     >
-                      <option value="">Buy from…</option>
+                      <option value="">Buy From…</option>
                       {retailers.map((r) => (
                         <option key={r.id} value={r.id}>
                           {r.name} — {formatMoney(r.price, { cents: r.price < 10000 })}

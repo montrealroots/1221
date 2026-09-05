@@ -183,7 +183,7 @@ export function TravelWorkspace() {
             <label htmlFor="destination">Going To</label>
             <select id="destination" value={destination} onChange={(e) => setDestination(e.target.value)}>
               {CITIES.all().filter((c) => c.id !== player.currentLocationId).map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
+                <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>
               ))}
             </select>
           </div>
@@ -195,7 +195,7 @@ export function TravelWorkspace() {
             <label htmlFor="cabin">Cabin</label>
             <select id="cabin" value={cabin} onChange={(e) => setCabin(e.target.value as typeof cabin)}>
               <option value="economy">Economy</option>
-              <option value="premium_economy">Premium economy</option>
+              <option value="premium_economy">Premium Economy</option>
               <option value="business">Business</option>
               <option value="first">First</option>
             </select>

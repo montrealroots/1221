@@ -435,7 +435,7 @@ function InteriorsTab() {
                   style={{ width: 150 }}
                   onChange={(e) => run('prop.finish_room', { roomId: room.id, themeId: e.target.value, walls: 'Painted', floor: 'Oak' })}
                 >
-                  <option value="">Choose a theme…</option>
+                  <option value="">Choose A Theme…</option>
                   {DESIGN_THEMES.map((theme) => <option key={theme.id} value={theme.id}>{theme.name}</option>)}
                 </select>
               </div>
@@ -466,7 +466,7 @@ function InteriorsTab() {
                   e.target.value = '';
                 }}
               >
-                <option value="">Buy and place in…</option>
+                <option value="">Buy And Place In…</option>
                 {rooms
                   .filter(({ room }) => !item.roomKinds || item.roomKinds.length === 0 || item.roomKinds.includes(room.kind))
                   .map(({ room }) => <option key={room.id} value={room.id}>{room.name}</option>)}

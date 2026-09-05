@@ -219,8 +219,8 @@ function AskOutDialog({ relationshipId, name, onClose }: { relationshipId: strin
         <select id="activity" value={activity} onChange={(e) => setActivity(e.target.value)}>
           <option value="dinner">Dinner</option>
           <option value="drinks">Drinks</option>
-          <option value="film">See something</option>
-          <option value="walk">A walk somewhere</option>
+          <option value="film">See Something</option>
+          <option value="walk">A Walk Somewhere</option>
         </select>
       </div>
       <div className="field-row">

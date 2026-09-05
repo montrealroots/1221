@@ -224,7 +224,7 @@ export function CharacterWorkspace() {
             earn working, and each profession then levels on its own work: every one of its skills rises
             with each level, and a trait slot opens at levels 1, 3, 6 and 9.
           </p>
-          <div className="grid grid-2">
+          <div className="grid grid-sheet">
             {PROFESSIONS.map((def) => {
               const progress = player.professions?.[def.id];
               const level = progress ? levelFor(progress.xp) : 0;
@@ -340,7 +340,7 @@ export function CharacterWorkspace() {
       )}
 
       {tab === 'skills' && (
-        <div className="grid grid-2">
+        <div className="grid grid-sheet">
           {SKILL_DOMAINS.map((domain) => (
             <Panel key={domain} title={titleCaseLabel(domain)} subtitle={`Average ${Math.round(domainAverage(player.skills, domain))}`}>
               {SKILLS.filter((s) => s.domain === domain).map((skill) => (
@@ -396,7 +396,7 @@ export function CharacterWorkspace() {
       )}
 
       {tab === 'standing' && (
-        <div className="grid grid-2">
+        <div className="grid grid-sheet">
           <Panel title="Reputation" subtitle="Seven separate things. You can be famous and disliked professionally.">
             <div className="col gap-4">
               <Meter label="Public Fame" value={player.reputation.publicFame} hint="How many people know who you are." />

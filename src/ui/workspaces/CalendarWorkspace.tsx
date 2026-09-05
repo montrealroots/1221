@@ -89,7 +89,7 @@ export function CalendarWorkspace() {
             >
               <div className="row-between">
                 <span className="cal-daynum">{day.dayOfMonth}</span>
-                {day.holidays.length > 0 && <span className="xs dim" title={day.holidays.map(holidayLabel).join(', ')}>✦</span>}
+                {day.holidays.length > 0 && <span className="xs dim cal-holiday-mark" title={day.holidays.map(holidayLabel).join(', ')}>✦</span>}
               </div>
               {day.holidays.slice(0, 1).map((holiday) => (
                 <span

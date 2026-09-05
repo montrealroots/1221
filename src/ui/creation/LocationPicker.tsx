@@ -146,7 +146,7 @@ export function LocationPicker({
             onChange={(e) => { setCountryId(e.target.value); setRegionId(''); setQuery(''); }}
           >
             {countries.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
+              <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>
             ))}
           </select>
           <p className="hint">
@@ -208,7 +208,7 @@ export function LocationPicker({
             data-selected={c.id === cityId ? 'true' : undefined}
             onClick={() => onPick(c)}
           >
-            <span className="picker-option-name truncate" title={c.name}>{c.name}</span>
+            <span className="picker-option-name truncate" title={c.name} data-source="gazetteer">{c.name}</span>
             <span
               className="picker-option-meta truncate"
               title={[

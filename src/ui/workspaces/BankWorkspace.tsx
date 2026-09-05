@@ -375,8 +375,8 @@ function LoanDialog({ onClose }: { onClose: () => void }) {
       <div className="field">
         <label htmlFor="product">Product</label>
         <select id="product" value={product} onChange={(e) => setProduct(e.target.value as 'personal' | 'auto')}>
-          <option value="personal">Personal loan</option>
-          <option value="auto">Auto loan</option>
+          <option value="personal">Personal Loan</option>
+          <option value="auto">Auto Loan</option>
         </select>
       </div>
       <div className="field-row">

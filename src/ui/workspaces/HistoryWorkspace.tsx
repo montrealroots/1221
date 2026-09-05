@@ -133,7 +133,7 @@ export function HistoryWorkspace() {
                         </div>
                         {audit.seed && (
                           <div className="xs dim" style={{ marginTop: 4 }}>
-                            This outcome is reproducible from the seed <span className="mono">{audit.seed}</span>. It will never silently reroll.
+                            This outcome is reproducible from the seed <span className="mono wrap">{audit.seed}</span>. It will never silently reroll.
                           </div>
                         )}
                       </div>

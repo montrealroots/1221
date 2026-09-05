@@ -340,7 +340,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <label htmlFor="citizenship">Citizenship</label>
           <select id="citizenship" value={config.citizenshipId} onChange={(e) => set('citizenshipId', e.target.value)}>
             {[...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name))
-              .map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
           </select>
           <p className="xs dim" style={{ marginTop: 4 }}>
             You can take work in a country you hold a passport for. Anywhere else needs an arrangement.
@@ -357,7 +357,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             {[...COUNTRIES.all()]
               .filter((c) => c.id !== config.citizenshipId)
               .sort((a, b) => a.name.localeCompare(b.name))
-              .map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
           </select>
           <p className="xs dim" style={{ marginTop: 4 }}>
             {homeCountryId && !citizenOfHome

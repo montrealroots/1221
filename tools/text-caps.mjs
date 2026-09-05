@@ -132,7 +132,23 @@ const PROBE = () => {
       note('crushed', el, `${Math.round(box.width)}px wide for ${el.scrollWidth}px of text`);
     }
 
-    // 6. Bleeding out of the viewport, with no pane to scroll it back.
+    // 6. A single word broken across two lines. Wrapping a sentence is
+    //    normal; wrapping "SUN" into "SU" and "N", or the seventeenth into
+    //    "1" and "7", is a column too narrow for what is in it. Nothing is
+    //    clipped, so no overflow check sees it — only the layout does.
+    if (leaf && !/\s/.test(text) && text.length <= 12) {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      // One rect per text node, not per line: "{value}°{unit}" is three nodes
+      // sitting side by side. What matters is how many distinct lines they
+      // occupy, so the rects are grouped by where their tops land.
+      const tops = new Set([...range.getClientRects()].map((r) => Math.round(r.top)));
+      if (tops.size > 1) {
+        note('word-broken', el, `"${text}" laid out across ${tops.size} lines in ${Math.round(box.width)}px`);
+      }
+    }
+
+    // 7. Bleeding out of the viewport, with no pane to scroll it back.
     if ((box.right > window.innerWidth + 1 || box.left < -1) && !inScrollable(el)) {
       note('bleeding', el, `spans ${Math.round(box.left)}..${Math.round(box.right)} in ${window.innerWidth}px`);
     }
@@ -142,7 +158,7 @@ const PROBE = () => {
   // Every label site in the interface. A fragment here starts every word with
   // a capital; a complete sentence does not have to.
   const LABEL_SITES = 'h1, h2, h3, h4, th, label, button, .chip, .eyebrow, .stat-label, '
-    + '.trait-name, .dest-label, .attr-name, .tab, [role="tab"], .kv-key, .field-label';
+    + '.trait-name, .dest-label, .attr-name, .tab, [role="tab"], .kv-key, .field-label, option';
 
   // Left alone: it is already capitalised, it is a number or symbol, it is an
   // acronym or a real spelling with internal capitals, or it is a unit that
@@ -152,6 +168,18 @@ const PROBE = () => {
   const UNITS = new Set(['mi', 'km', 'kg', 'lb', 'lbs', 'ft', 'in', 'hr', 'hrs', 'h', 'm', 'min',
     'mins', 'sec', 's', 'am', 'pm', 'st', 'nd', 'rd', 'th', 'x', 'v', 'vs', 'ea',
     'hp', 'mpg', 'mph', 'kph', 'rpm', 'kw', 'nm', 'db', 'sqft', 'sq', 'oz', 'ml', 'l', 'g']);
+
+  /*
+   * Particles inside a real name. SLATE's own labels are Title Case to the
+   * letter, but a place is spelled the way the world spells it: Rio de
+   * Janeiro, Isle of Man, Dar es Salaam, Fond du Lac, les Escaldes. Those
+   * come out of a gazetteer, and capitalising them would not be tidier, it
+   * would be wrong.
+   */
+  const PARTICLES = new Set(['a', 'an', 'and', 'at', 'by', 'da', 'das', 'de', 'del', 'della',
+    'des', 'di', 'do', 'dos', 'du', 'el', 'es', 'for', 'from', 'in', 'la', 'las', 'le', 'les',
+    'los', 'na', 'nad', 'of', 'on', 'or', 'te', 'the', 'to', 'ter', 'van', 'von', 'bin', 'al',
+    'ap', 'ibn', 'och', 'sur', 'sous', 'upon', 'y', "'n", "'n'"]);
 
   const wordIsFine = (word) => {
     const cleaned = word.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
@@ -164,6 +192,13 @@ const PROBE = () => {
     if (/\p{Lu}/u.test(cleaned.slice(1))) return true;
     // A unit hanging off a figure: 6 mi, 27 min, 9 am.
     if (UNITS.has(cleaned.toLowerCase())) return true;
+    // A particle inside a real name. Checked before and after stripping the
+    // punctuation, because "'n'" in Town 'n' Country is one of them.
+    if (PARTICLES.has(cleaned.toLowerCase())) return true;
+    if (PARTICLES.has(word.toLowerCase())) return true;
+    // A descriptor the gazetteer appends to disambiguate a place, which is
+    // part of the source data rather than a label the game wrote.
+    if (/^\(.*\)$/.test(word)) return true;
     return false;
   };
 
@@ -172,6 +207,10 @@ const PROBE = () => {
   const isSentence = (t) => /[.!?]$/.test(t) || t.split(/\s+/).length > 12;
 
   for (const el of document.querySelectorAll(LABEL_SITES)) {
+    // A name out of a real gazetteer is not a label the game wrote. It is
+    // spelled the way the world spells it — Klagenfurt am Wörthersee, Rožnov
+    // pod Radhoštěm, Town 'n' Country — and Title Case would make it wrong.
+    if (el.closest('[data-source="gazetteer"]')) continue;
     const style = getComputedStyle(el);
     if (style.display === 'none' || style.visibility === 'hidden') continue;
     if (style.textTransform === 'uppercase' || style.textTransform === 'capitalize') continue;
@@ -183,8 +222,12 @@ const PROBE = () => {
       .trim()
       .replace(/\s+/g, ' ');
     if (!own || own.length < 2) continue;
-    if (isSentence(own)) continue;
-    const bad = own.split(/\s+/).filter((w) => !wordIsFine(w));
+    // The game's convention for a choice is "Label — what it means". The half
+    // before the dash is the label; the half after it is a sentence.
+    const label = own.split(/\s+—\s+/)[0].trim();
+    if (!label || label.length < 2) continue;
+    if (isSentence(label)) continue;
+    const bad = label.split(/\s+/).filter((w) => !wordIsFine(w));
     if (bad.length > 0) note('lowercase', el, `lowercase: ${bad.join(', ')}`);
   }
 
