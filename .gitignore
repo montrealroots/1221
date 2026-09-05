@@ -18,3 +18,5 @@ ui-audit/
 # Pull caches (rebuildable from Wikidata; large)
 tools/filmography/cache/
 tools/people/cache/
+shots/
+shots-company/
