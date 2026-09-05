@@ -483,8 +483,6 @@ export function buildQuote(
     if (ref.type === 'vehicle') insuredValue += sim.universe.vehicles[ref.id]?.currentValue ?? 0;
     if (ref.type === 'property') insuredValue += sim.universe.properties[ref.id]?.marketValue ?? 0;
     if (ref.type === 'asset') insuredValue += sim.universe.assets[ref.id]?.currentValue ?? 0;
-    if (ref.type === 'project') insuredValue += sim.universe.projects[ref.id]?.budget ?? 0;
-    if (ref.type === 'equipment') insuredValue += sim.universe.equipment[ref.id]?.currentValue ?? 0;
   }
 
   let premium = product.basePremium > 0

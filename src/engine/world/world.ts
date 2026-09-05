@@ -8,13 +8,10 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { DecisionItem, Id, Person, Project, SimulationTier } from '../domain/model';
+import type { DecisionItem, Id, Person, SimulationTier } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, MS_DAY, type Instant } from '../core/time';
+import { addDays, MS_DAY } from '../core/time';
 import { CITIES } from '../content/geography';
-import { commissionProject } from '../systems/zeitgeist';
-import { generateCharacterName } from '../content/names';
-import { ageOn } from '../core/time';
 import { ATTRIBUTES, TRAITS, conflictingTraits } from '../domain/attributes';
 import { SKILLS } from '../domain/skills';
 import { PROFESSIONS, PROFESSION_BY_ID, type ProfessionId } from '../content/professions';
@@ -27,22 +24,10 @@ const TIER_BUDGET: Record<SimulationTier, number> = {
   dormant: Number.POSITIVE_INFINITY,
 };
 
-/**
- * How long a settled casting room is kept before the NPC reads in it are
- * released. Long enough that a player looking back over a season still sees who
- * was up for what; short enough that a ten-year career does not carry tens of
- * thousands of dead records.
- */
-const AUDITION_RETENTION_DAYS = 540;
 
 /** How long answered or expired decisions stay in the save. */
 const DECISION_RETENTION_DAYS = 180;
 
-/**
- * How long a finished project the player had nothing to do with keeps its cast
- * individually simulated. After this it becomes a credit list.
- */
-const PROJECT_ARCHIVE_YEARS = 8;
 
 /** How many people the world simulates at once, at any tier. */
 const POPULATION_BUDGET = 1200;
@@ -232,130 +217,6 @@ export function registerWorld(sim: Simulation): void {
     },
   );
 
-  // A whole picture staged in one go, for trying the rooms: written, greenlit,
-  // funded, cast from the world, boarded, and — if asked — shot and in post.
-  // Everything it does goes through the same commands a player uses, so
-  // nothing here can reach a state the game cannot.
-  sim.onCommand<{ to?: 'boarded' | 'shooting' | 'post'; title?: string; kind?: 'live_action' | 'animation' | 'documentary' }, { projectId: Id; phase: string; days: number }>(
-    'sandbox.stage_picture',
-    (p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
-      const to = p.to ?? 'post';
-      const run = <R>(kind: string, payload: Record<string, unknown>): R => {
-        const result = s.execute<R>({ kind, payload });
-        if (!result.ok) throw new CommandError(`${kind} refused: ${result.error}`);
-        return result.value as R;
-      };
-      const player = s.player;
-      run('sandbox.add_funds', { amount: 600_000_000_00 });
-      run('sandbox.max_attributes', {});
-      let company = Object.values(s.universe.companies).find((c) => c.ownerships.some((o) => o.holderId === player.id) && !c.dissolvedAt);
-      if (!company) {
-        const { companyId } = run<{ companyId: Id }>('co.found', { structure: 'c_corp', kind: 'production', name: 'Demo Pictures', initialCapital: 300_000_000_00 });
-        company = s.universe.companies[companyId]!;
-      }
-      // No title asked for means a fresh one from the title engine, so the
-      // demo never collides with a picture the world already has.
-      const shape = p.kind === 'animation'
-        ? { format: 'feature' as const, genres: ['animation', 'family'], logline: 'A lighthouse keeper’s dog learns to sail.' }
-        : p.kind === 'documentary'
-          ? { format: 'documentary' as const, genres: ['documentary'], logline: 'The last crew on a river that is drying up.' }
-          : { format: 'feature' as const, genres: ['thriller', 'drama'], logline: 'A river pilot has one night to bring a stranded ferry home.' };
-      const { projectId } = run<{ projectId: Id }>('film.create_project', {
-        ...(p.title ? { title: p.title } : {}), ...shape, companyId: company.id,
-      });
-      const created = s.universe.projects[projectId]!;
-      run('film.acquire_rights', { projectId, title: created.title, sourceKind: 'original', acquisitionKind: 'original', cost: 0, holderId: company.id, holderKind: 'company' });
-      run('film.write_draft', { projectId, daysSpent: 40 });
-      run('film.attach_talent', { projectId, personId: player.id, role: 'director', confirmed: true });
-      run('film.attach_talent', { projectId, personId: player.id, role: 'producer', confirmed: true });
-      const project = s.universe.projects[projectId]!;
-      let decision = run<{ greenlit: boolean }>('film.greenlight', { projectId, budget: 40_000_000_00, companyId: company.id });
-      for (let i = 0; i < 8 && !decision.greenlit; i++) {
-        run('film.write_draft', { projectId, daysSpent: 30 });
-        decision = run<{ greenlit: boolean }>('film.greenlight', { projectId, budget: 40_000_000_00, companyId: company.id });
-      }
-      if (!decision.greenlit) throw new CommandError('The demo picture never got a greenlight. Try again.');
-      run('film.arrange_financing', { projectId, sources: [{ kind: 'company', amount: project.budget || 40_000_000_00, name: company.name }] });
-      run('cast.break_down_script', { projectId, includeDayPlayers: false });
-      const roles = Object.values(s.universe.roles).filter((r) => r.projectId === projectId);
-      const actors = Object.values(s.universe.people).filter((q) => !q.isPlayer && q.careerTrack === 'actor');
-      roles.forEach((role, i) => {
-        const actor = actors[i % actors.length];
-        if (!actor) return;
-        run('cast.open_casting', { roleId: role.id, candidateCount: 0 });
-        role.castPersonId = actor.id;
-        role.status = 'cast';
-        if (!project.castIds.includes(actor.id)) project.castIds.push(actor.id);
-        actor.currentLocationId = player.currentLocationId;
-      });
-      run('prod.build_schedule', { projectId, startAt: s.now + 14 * MS_DAY, locationId: player.currentLocationId });
-      let days = 0;
-      if (to !== 'boarded') {
-        s.advanceTo(s.now + 15 * MS_DAY);
-        run('prod.start_photography', { projectId });
-        if (to === 'shooting') {
-          s.advanceTo(s.now + 3 * MS_DAY);
-          days = 3;
-        } else {
-          let guard = 0;
-          while (s.universe.projects[projectId]?.phase === 'production' && guard++ < 40) {
-            s.advanceTo(s.now + 7 * MS_DAY);
-            days += 7;
-          }
-        }
-      }
-      s.universe.sandbox.log.push({ at: s.now, action: `Staged a demo ${p.kind ?? 'live action'} picture to ${to}` });
-      return { projectId, phase: s.universe.projects[projectId]?.phase ?? 'gone', days };
-    },
-  );
-
-  // An audition the player can walk into on demand, without waiting for a
-  // breakdown to find them. Everything it does goes through the same commands
-  // the game uses, so the room, the office and the feedback are the real ones.
-  sim.onCommand<{ stage?: 'first_read' | 'callback' | 'screen_test' | 'chemistry_read' }, { auditionId: Id; roleId: Id; projectId: Id; title: string; character: string }>(
-    'sandbox.stage_audition',
-    (p, { sim: s }) => {
-      if (!s.universe.sandbox.enabled) throw new CommandError('Sandbox is off. Turn it on first.');
-      const player = s.player;
-      const rng = s.rng('stage_audition', s.counter('staged_audition'));
-
-      // A picture of the world's, cast in the city the player is standing in,
-      // so the room is somewhere they can actually get to.
-      const project = commissionProject(s, 'us', `staged-${s.counter('staged_project')}`);
-      if (!project) throw new CommandError('The world would not commission anything to audition for.');
-      project.productionLocationIds = [player.currentLocationId];
-
-      const created = s.execute<{ roleId: Id }>({
-        kind: 'cast.create_role',
-        payload: {
-          projectId: project.id,
-          characterName: generateCharacterName(rng, () => false),
-          billing: 'supporting',
-          description: 'Eight scenes across the middle of it, and the picture turns on one of them.',
-          ageRange: [Math.max(18, ageOn(player.birthInstant, s.now, s.homeZone) - 5), ageOn(player.birthInstant, s.now, s.homeZone) + 8],
-        },
-      });
-      if (!created.ok || !created.value) throw new CommandError(created.error ?? 'The part could not be created.');
-      const role = s.universe.roles[created.value.roleId]!;
-      role.auditionPolicy = 'either';
-      s.execute({ kind: 'cast.open_casting', payload: { roleId: role.id, candidateCount: 6, closesInDays: 21 } });
-
-      const submitted = s.execute<{ auditionId: Id }>({ kind: 'cast.submit', payload: { roleId: role.id, prefer: 'in_person' } });
-      if (!submitted.ok || !submitted.value) throw new CommandError(submitted.error ?? 'The submission was refused.');
-      const audition = s.universe.auditions[submitted.value.auditionId]!;
-      // The appointment is now, and it is where the player is.
-      audition.scheduledAt = s.now;
-      audition.locationId = player.currentLocationId;
-      if (p.stage) audition.stage = p.stage;
-      if (audition.scheduledItemId) {
-        const item = s.timeline.get(audition.scheduledItemId);
-        if (item) s.timeline.reschedule(item.id, s.now + 60 * 60 * 1000);
-      }
-      s.universe.sandbox.log.push({ at: s.now, action: `Staged an audition for ${role.characterName}` });
-      return { auditionId: audition.id, roleId: role.id, projectId: project.id, title: project.title, character: role.characterName };
-    },
-  );
 
   // --- Tutorial ------------------------------------------------------------
 
@@ -440,20 +301,6 @@ function retier(sim: Simulation): void {
     if (rel.endedAt) continue;
     if (rel.aId === player.id) known.add(rel.bId);
     if (rel.bId === player.id) known.add(rel.aId);
-  }
-  for (const project of Object.values(sim.universe.projects)) {
-    if (!['preproduction', 'production', 'post', 'marketing', 'distribution'].includes(project.phase)) continue;
-    const involves = project.createdById === player.id || project.castIds.includes(player.id)
-      || project.writerIds.includes(player.id) || project.directorId === player.id;
-    if (!involves) continue;
-    for (const id of [...project.castIds, ...project.writerIds, ...project.producerIds, project.directorId]) {
-      if (id) known.add(id);
-    }
-  }
-  for (const employee of Object.values(sim.universe.employees)) {
-    if (employee.departedAt) continue;
-    const company = sim.universe.companies[employee.companyId];
-    if (company?.ownerships.some((o) => o.holderId === player.id)) known.add(employee.personId);
   }
 
   let activeCount = 0;
@@ -543,28 +390,6 @@ function expireDecisions(sim: Simulation): void {
 function prune(sim: Simulation): void {
   sim.timeline.prune(sim.now, 400);
 
-  // Auditions are the fastest-growing record in the universe: every open role
-  // draws a room full of NPCs. The player's own auditions are career history
-  // and are kept; a stranger's read for a part that was cast two years ago is
-  // not, and the audit record already preserves what the player was told about
-  // it. Rooms are only cleared once the role itself is settled.
-  const auditionCutoff = sim.now - AUDITION_RETENTION_DAYS * MS_DAY;
-  for (const role of Object.values(sim.universe.roles)) {
-    if (role.status !== 'cast' && role.status !== 'closed') continue;
-    if (role.auditionIds.length === 0) continue;
-    const kept: Id[] = [];
-    for (const id of role.auditionIds) {
-      const audition = sim.universe.auditions[id];
-      if (!audition) continue;
-      const settled = audition.decidedAt !== undefined && audition.decidedAt < auditionCutoff;
-      if (audition.isPlayer || audition.personId === role.castPersonId || !settled) {
-        kept.push(id);
-        continue;
-      }
-      delete sim.universe.auditions[id];
-    }
-    role.auditionIds = kept;
-  }
 
   // Decisions the player answered, ignored or let expire stop taking up room.
   for (const [id, decision] of Object.entries(sim.universe.decisions)) {
@@ -592,81 +417,28 @@ function prune(sim: Simulation): void {
   }
   // Dormant NPCs with no ties to anything are released.
   //
-  // A project that finished a decade ago and never involved the player stops
-  // holding its cast in the simulation. The credit itself is permanent — it was
-  // written onto the project when they were cast — so the billing block still
-  // reads correctly; what is released is the individual simulation of a day
-  // player nobody has thought about since. Without this, every film ever made
-  // pins its whole cast forever and the population of a long save only grows.
-  const archiveCutoff = sim.now - PROJECT_ARCHIVE_YEARS * 365 * MS_DAY;
-  const archived: Project[] = [];
+  // Anybody the player actually knows, or who holds a job in the world the
+  // player deals with, is pinned. The rest are the individual simulation of
+  // somebody nobody has thought about in years, and letting them go is what
+  // keeps a long save from growing without limit.
   const referenced = new Set<Id>([sim.universe.playerId]);
   for (const rel of Object.values(sim.universe.relationships)) { referenced.add(rel.aId); referenced.add(rel.bId); }
-  for (const project of Object.values(sim.universe.projects)) {
-    if (isArchivable(sim, project, archiveCutoff)) {
-      archived.push(project);
-      continue;
-    }
-    for (const id of [...project.castIds, ...project.writerIds, ...project.producerIds, project.directorId, project.createdById]) {
-      if (id) referenced.add(id);
-    }
+  for (const household of Object.values(sim.universe.households)) {
+    for (const id of household.memberIds) referenced.add(id);
   }
-  // An archived project still pins whoever ran it, so the film has an author.
-  for (const project of archived) {
-    for (const id of [project.directorId, project.createdById, project.showrunnerId]) {
-      if (id) referenced.add(id);
-    }
-  }
-  for (const employee of Object.values(sim.universe.employees)) referenced.add(employee.personId);
   for (const agent of Object.values(sim.universe.realEstateAgents)) referenced.add(agent.personId);
   for (const provider of Object.values(sim.universe.healthProviders)) if (provider.personId) referenced.add(provider.personId);
-  for (const nomination of Object.values(sim.universe.awardNominations)) if (nomination.personId) referenced.add(nomination.personId);
+  for (const job of Object.values(sim.universe.jobs)) referenced.add(job.personId);
 
   const people = Object.values(sim.universe.people);
   if (people.length > POPULATION_BUDGET) {
     const droppable = people
       .filter((p) => p.tier === 'dormant' && !referenced.has(p.id))
       .slice(0, people.length - POPULATION_BUDGET);
-    if (droppable.length > 0) {
-      const dropped = new Set(droppable.map((p) => p.id));
-      for (const person of droppable) delete sim.universe.people[person.id];
-      // Unlink them from the archived work so nothing points at a person who
-      // is no longer there. `credits` keeps the names.
-      for (const project of archived) {
-        project.castIds = project.castIds.filter((id) => !dropped.has(id));
-        project.writerIds = project.writerIds.filter((id) => !dropped.has(id));
-        project.producerIds = project.producerIds.filter((id) => !dropped.has(id));
-        project.attachments = project.attachments.filter((a) => !dropped.has(a.personId));
-      }
-    }
+    for (const person of droppable) delete sim.universe.people[person.id];
   }
 }
 
-/**
- * Whether a project has been finished and forgotten for long enough that the
- * world no longer needs to simulate the people in it. Anything the player
- * touched is never archived: their own history stays fully alive.
- */
-function isArchivable(sim: Simulation, project: Project, cutoff: Instant): boolean {
-  if (project.phase !== 'library' && project.phase !== 'shelved') return false;
-  const playerId = sim.universe.playerId;
-  if (
-    project.createdById === playerId
-    || project.directorId === playerId
-    || project.showrunnerId === playerId
-    || project.castIds.includes(playerId)
-    || project.writerIds.includes(playerId)
-    || project.producerIds.includes(playerId)
-  ) return false;
-  if (project.ownerCompanyId) {
-    const company = sim.universe.companies[project.ownerCompanyId];
-    if (company?.ownerships.some((o) => o.holderId === playerId)) return false;
-  }
-  const concluded = project.releaseDate
-    ?? project.phaseHistory[project.phaseHistory.length - 1]?.enteredAt
-    ?? project.createdAt;
-  return concluded < cutoff;
-}
 
 // ---------------------------------------------------------------------------
 // Read models
@@ -720,10 +492,6 @@ export function lifeSnapshot(sim: Simulation) {
     householdSize: player.householdId
       ? (sim.universe.households[player.householdId]?.memberIds.length ?? 1)
       : 1,
-    activeProjects: Object.values(sim.universe.projects).filter(
-      (p) => ['development', 'packaging', 'preproduction', 'production', 'post'].includes(p.phase)
-        && (p.createdById === player.id || p.castIds.includes(player.id) || p.directorId === player.id || p.writerIds.includes(player.id)),
-    ).length,
     openDecisions: openDecisions(sim).length,
     unread: unreadNotifications(sim).length,
   };
@@ -741,7 +509,6 @@ export function simulationLoad(sim: Simulation) {
     transactions: sim.universe.transactions.length,
     history: sim.universe.history.length,
     audits: sim.universe.audits.length,
-    projects: Object.keys(sim.universe.projects).length,
     estimatedBytes: estimateSize(sim),
   };
 }
@@ -755,8 +522,7 @@ function estimateSize(sim: Simulation): number {
     u.scheduled.length * 320 +
     u.history.length * 280 +
     u.audits.length * 620 +
-    Object.keys(u.socialPosts).length * 420 +
-    Object.keys(u.projects).length * 2200
+    Object.keys(u.socialPosts).length * 420
   );
 }
 

@@ -1,26 +1,22 @@
 /**
  * God mode.
  *
- * Sandbox used to be a stat editor. With god mode on the world stops saying no
- * to the player entirely: every audition books, every agency signs, and every
- * offer, greenlight, pitch and purchase goes through.
+ * Sandbox is a stat editor. God mode is the other half of it: with it on the
+ * world stops refusing the player things — every seller takes the offer, every
+ * profession opens with no experience spent, and every trait slot is free.
  *
- * The two things these tests care about most are the two easiest to get wrong.
- * One: nothing leaves the nought-to-a-hundred scale every formula in the game
- * is built for — god mode puts the player at the top of it, it does not raise
- * it. Two: none of it is hidden. Every override is logged, and a save played
- * this way can be recognised as one.
+ * The thing these tests care about most is that none of it is hidden. Every
+ * override is logged and left in the audit next to the honest number, and a
+ * save played this way can be recognised as one.
  */
 
 import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import type { Id } from '@/engine/domain/model';
-import { AGENCIES } from '@/engine/content/industry';
 import { PROFESSIONS } from '@/engine/content/professions';
-import { ATTRIBUTES, TRAITS, effectiveAttributes } from '@/engine/domain/attributes';
+import { ATTRIBUTES, PROFESSION_TRAITS, TRAITS } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
-import { REAL_CEILING, godMode, ratingLabel, transcend } from '@/engine/systems/sandbox';
+import { favoured, godMode } from '@/engine/systems/sandbox';
 
 function aGame(seed: string, { god = false } = {}) {
   const sim = quickSave({ wealth: 'inherited' }, seed);
@@ -45,9 +41,8 @@ describe('turning it on', () => {
   it('does everything at once', () => {
     const { sim } = aGame('god-everything', { god: true });
     expect(godMode(sim)).toBe(true);
-
-    for (const attribute of ATTRIBUTES) expect(sim.player.attributes[attribute.id]).toBe(REAL_CEILING);
-    for (const skill of SKILLS) expect(sim.player.skills[skill.id]).toBe(REAL_CEILING);
+    for (const attribute of ATTRIBUTES) expect(sim.player.attributes[attribute.id]).toBe(100);
+    for (const skill of SKILLS) expect(sim.player.skills[skill.id]).toBe(100);
     // Every trait that does not contradict one already held.
     expect(sim.player.traits.length).toBeGreaterThan(TRAITS.length / 2);
     for (const def of PROFESSIONS) expect(sim.player.professions?.[def.id]).toBeDefined();
@@ -64,7 +59,7 @@ describe('turning it on', () => {
     for (const def of PROFESSIONS) expect(sim.player.professions?.[def.id]).toBeDefined();
   });
 
-  it('turning it off puts the ceiling back and keeps what was given', () => {
+  it('turning it off keeps what was given', () => {
     const { sim, run } = aGame('god-off-again', { god: true });
     const traits = sim.player.traits.length;
     run('sandbox.god_mode', { enabled: false });
@@ -73,111 +68,54 @@ describe('turning it on', () => {
     expect(sim.player.traits).toHaveLength(traits);
     for (const def of PROFESSIONS) expect(sim.player.professions?.[def.id]).toBeDefined();
   });
-});
 
-describe('it never leaves the scale the game is built for', () => {
-  it('puts the player at the top of the real ceiling and no higher', () => {
-    const { sim } = aGame('god-ceiling', { god: true });
-    expect(transcend(sim, 12)).toBe(REAL_CEILING);
-    const effective = effectiveAttributes(sim.player.attributes, sim.player.traits);
-    for (const value of Object.values(effective)) expect(value).toBeLessThanOrEqual(REAL_CEILING);
-  });
-
-  it('keeps every score the player earns inside nought to a hundred', () => {
-    const { sim, run } = aGame('god-inrange', { god: true });
-    const staged = run<{ auditionId: Id }>('sandbox.stage_audition', {});
-    run('cast.enter_room', { auditionId: staged.auditionId, prepHours: 0 });
-    run('cast.leave_room', { auditionId: staged.auditionId });
-    const audition = sim.universe.auditions[staged.auditionId]!;
-    for (const value of [audition.performanceScore, audition.totalScore, audition.room?.verdict?.score]) {
-      if (value === undefined) continue;
-      expect(value).toBeGreaterThanOrEqual(0);
-      expect(value).toBeLessThanOrEqual(REAL_CEILING);
-    }
-    for (const occupant of audition.room!.occupants) {
-      expect(occupant.impression).toBeLessThanOrEqual(REAL_CEILING);
-    }
-  });
-
-  it('names the top of the scale, in Title Case like every other label', () => {
-    expect(ratingLabel(REAL_CEILING, 'work')).toBe('Masterpiece');
-    expect(ratingLabel(REAL_CEILING)).toBe('The Best There Is');
-    for (const score of [0, 30, 45, 60, 75, 90, 100]) {
-      for (const of of ['person', 'work'] as const) {
-        for (const word of ratingLabel(score, of).split(' ')) {
-          expect(word[0]).toBe(word[0]!.toUpperCase());
-        }
-      }
-    }
-  });
-
-  it('changes nothing at all when god mode is off', () => {
-    const { sim } = aGame('god-normal');
-    expect(transcend(sim, 63)).toBe(63);
-    expect(godMode(sim)).toBe(false);
+  it('is only kind to the player', () => {
+    const { sim } = aGame('god-favoured', { god: true });
+    expect(favoured(sim, sim.universe.playerId)).toBe(true);
+    const other = Object.values(sim.universe.people).find((p) => p.id !== sim.universe.playerId);
+    expect(favoured(sim, other?.id)).toBe(false);
+    expect(favoured(sim, undefined)).toBe(false);
   });
 });
 
 describe('nothing is refused', () => {
-  it('signs the player to any agency, however far above them it is', () => {
-    const { sim, run } = aGame('god-agency', { god: true });
-    // The hardest list in the game to get on.
-    const hardest = [...AGENCIES.all()].filter((a) => a.type === 'agency')
-      .sort((a, b) => b.signingThreshold - a.signingThreshold)[0]!;
-    const result = run<{ signed: boolean }>('cast.seek_representation', { agencyId: hardest.id });
-    expect(result.signed).toBe(true);
-    expect(sim.player.representation.agencyName).toBe(hardest.name);
+  it('has a seller take an offer they would have laughed at', () => {
+    const { sim, run } = aGame('god-offer', { god: true });
+    const listing = Object.values(sim.universe.propertyListings).find((l) => l.status === 'active');
+    expect(listing, 'the world should have something for sale').toBeDefined();
+
+    // A quarter of the asking price, which no motivated seller takes.
+    const lowball = Math.round(listing!.askingPrice * 0.25);
+    run('prop.make_offer', { listingId: listing!.id, amount: lowball, financingKind: 'cash' });
+    sim.advanceTo(sim.now + 20 * 86_400_000);
+    const offer = Object.values(sim.universe.propertyOffers).find((o) => o.propertyId === listing!.propertyId);
+    expect(offer).toBeDefined();
+    expect(['accepted', 'pending_inspection', 'closing', 'closed']).toContain(offer!.status);
   });
 
-  it('books every audition the player is in', () => {
-    const { sim, run } = aGame('god-audition', { god: true });
-    const staged = run<{ auditionId: Id; roleId: Id }>('sandbox.stage_audition', {});
-    const first = run<{ choices: { id: string }[] }>('cast.enter_room', { auditionId: staged.auditionId, prepHours: 0 });
-    let choices = first.choices;
-    let guard = 0;
-    while (guard++ < 20) {
-      const step: { done: boolean; next?: { choices: { id: string }[] } } =
-        run('cast.play_beat', { auditionId: staged.auditionId, choiceId: choices[choices.length - 1]!.id });
-      if (step.done) break;
-      choices = step.next!.choices;
+  it('opens a profession trait slot that has not been earned', () => {
+    const { sim } = aGame('god-slots', { god: true });
+    // A profession that actually has traits to take.
+    const def = PROFESSIONS.find((p) => PROFESSION_TRAITS.some((t) => t.profession === p.id))!;
+    expect(def, 'some profession should have traits').toBeDefined();
+    const traits = PROFESSION_TRAITS.filter((t) => t.profession === def.id);
+    // Level one opens one slot; taking more than that is what god mode allows.
+    let taken = 0;
+    for (const trait of traits) {
+      if (sim.execute({ kind: 'profession.pick_trait', payload: { professionId: def.id, traitId: trait.id } }).ok) taken++;
     }
-    // Even taking the worst option at every beat.
-    const audition = sim.universe.auditions[staged.auditionId]!;
-    expect(audition.room!.verdict!.score).toBe(REAL_CEILING);
-    expect(audition.totalScore).toBe(REAL_CEILING);
-  });
-
-  it('puts the player top of the field however good everyone else is', () => {
-    const { sim, run } = aGame('god-field', { god: true });
-    const staged = run<{ auditionId: Id; roleId: Id }>('sandbox.stage_audition', {});
-    const role = sim.universe.roles[staged.roleId]!;
-    sim.advanceTo(role.decidesAt! + 60 * 60 * 1000);
-    const audition = sim.universe.auditions[staged.auditionId]!;
-    expect(audition.stage).not.toBe('passed');
+    expect(taken).toBeGreaterThan(1);
+    expect(sim.player.professions![def.id]!.traitIds.length).toBe(taken);
   });
 });
 
 describe('it never pretends any of it was earned', () => {
   it('writes every override into the log', () => {
     const { sim, run } = aGame('god-log', { god: true });
-    const before = sim.universe.sandbox.log.length;
-    const staged = run<{ auditionId: Id }>('sandbox.stage_audition', {});
-    run('cast.enter_room', { auditionId: staged.auditionId, prepHours: 0 });
-    run('cast.leave_room', { auditionId: staged.auditionId });
-    const log = sim.universe.sandbox.log;
-    expect(log.length).toBeGreaterThan(before);
-    expect(log.some((entry) => entry.action.startsWith('God mode:'))).toBe(true);
-  });
-
-  it('keeps the honest number in the audit under the given one', () => {
-    const { sim, run } = aGame('god-audit', { god: true });
-    const staged = run<{ auditionId: Id }>('sandbox.stage_audition', {});
-    run('cast.enter_room', { auditionId: staged.auditionId, prepHours: 0 });
-    run('cast.leave_room', { auditionId: staged.auditionId });
-    const audit = sim.historian.auditFor('audition', staged.auditionId);
-    expect(audit).toBeDefined();
-    expect(audit!.summary).toMatch(/without god mode/i);
-    expect(audit!.outcome).toBe('god mode');
+    const listing = Object.values(sim.universe.propertyListings).find((l) => l.status === 'active')!;
+    run('prop.make_offer', { listingId: listing.id, amount: Math.round(listing.askingPrice * 0.25), financingKind: 'cash' });
+    sim.advanceTo(sim.now + 20 * 86_400_000);
+    expect(sim.universe.sandbox.log.some((entry) => entry.action.startsWith('God mode:'))).toBe(true);
   });
 
   it('caps the log rather than growing it forever', () => {
@@ -205,14 +143,14 @@ describe('it never pretends any of it was earned', () => {
 });
 
 describe('an ordinary save is untouched', () => {
-  it('refuses things exactly as it always did', () => {
+  it('still refuses a lowball', () => {
     const sim: Simulation = quickSave({ wealth: 'modest' }, 'no-god');
     expect(godMode(sim)).toBe(false);
-    // The top agency does not sign an unknown.
-    const hardest = [...AGENCIES.all()].filter((a) => a.type === 'agency')
-      .sort((a, b) => b.signingThreshold - a.signingThreshold)[0]!;
-    const attempt = sim.execute<{ signed: boolean }>({ kind: 'cast.seek_representation', payload: { agencyId: hardest.id } });
-    expect(attempt.ok).toBe(true);
-    expect(attempt.value!.signed).toBe(false);
+    const listing = Object.values(sim.universe.propertyListings).find((l) => l.status === 'active')!;
+    sim.execute({ kind: 'prop.make_offer', payload: { listingId: listing.id, amount: Math.round(listing.askingPrice * 0.25), financingKind: 'cash' } });
+    sim.advanceTo(sim.now + 20 * 86_400_000);
+    const offer = Object.values(sim.universe.propertyOffers).find((o) => o.propertyId === listing.propertyId);
+    if (offer) expect(offer.status).not.toBe('accepted');
+    expect(sim.universe.sandbox.log).toEqual([]);
   });
 });

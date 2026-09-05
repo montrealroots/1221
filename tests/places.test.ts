@@ -17,8 +17,7 @@ import {
   cuisineOf, landmarksIn, menuOf, placesIn, priceOf,
 } from '@/engine/content/places';
 import {
-  currentPlace, driveableVehicle, fuelOf, hotelRoom, neighbourhoodKm, placesNear,
-  arrivedBeforeCall, privacyOf, rangeKm, recognitionChance, trafficFactor, whatIsHere,
+  currentPlace, driveableVehicle, fuelOf, hotelRoom, neighbourhoodKm, placesNear, privacyOf, rangeKm, recognitionChance, trafficFactor, whatIsHere,
 } from '@/engine/systems/places';
 
 const MS_DAY = 86_400_000;
@@ -320,57 +319,6 @@ describe('what is here', () => {
   });
 });
 
-describe('two people, in private', () => {
-  it('needs somewhere private, a partner, and the two of you in the same city', () => {
-    const life = aLife('intimacy-1');
-    const sim = life.sim;
-    const stranger = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
-    const notTogether = life.try('rel.intimacy', { personId: stranger.id });
-    expect(notTogether.ok).toBe(false);
-
-    // Somebody the player is actually with.
-    const partner = Object.values(sim.universe.people).find((p) => !p.isPlayer && Math.abs((sim.now - p.birthInstant)) > 20 * 365 * 24 * MS_HOUR)!;
-    const relationship = Object.values(sim.universe.relationships).find((r) => !r.endedAt && (r.aId === partner.id || r.bId === partner.id) && (r.aId === sim.player.id || r.bId === sim.player.id))
-      ?? (() => {
-        const id = sim.nextId('rel');
-        sim.universe.relationships[id] = {
-          id, saveId: sim.universe.meta.id, aId: sim.player.id < partner.id ? sim.player.id : partner.id,
-          bId: sim.player.id < partner.id ? partner.id : sim.player.id, type: 'dating',
-          dimensions: { familiarity: 80, affection: 78, trust: 74, respect: 70, compatibility: 72, commitment: 60, conflict: 8 },
-          isPublic: false, exclusive: true, since: sim.now - 200 * MS_DAY, lastInteractionAt: sim.now - MS_DAY,
-          memories: [],
-        };
-        return sim.universe.relationships[id]!;
-      })();
-    relationship.type = 'dating';
-    relationship.dimensions = { familiarity: 80, affection: 78, trust: 74, respect: 70, compatibility: 72, commitment: 60, conflict: 8 };
-    partner.currentLocationId = sim.player.currentLocationId;
-
-    const bar = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'bar')!;
-    life.run('go.to', { placeId: bar.id, mode: 'taxi' });
-    const inPublic = life.try('rel.intimacy', { personId: partner.id });
-    expect(inPublic.ok).toBe(false);
-    expect(inPublic.error).toMatch(/private/i);
-
-    life.run('travel.book_hotel', { cityId: sim.player.currentLocationId, checkInAt: sim.now, nights: 1, roomClass: 'standard' });
-    const affection = relationship.dimensions.affection;
-    const result = life.run<{ happened: boolean; reason: string }>('rel.intimacy', { personId: partner.id });
-    expect(result.reason.length).toBeGreaterThan(8);
-    if (result.happened) {
-      expect(relationship.dimensions.affection).toBeGreaterThan(affection);
-      expect(relationship.memories.some((m) => m.kind === 'private')).toBe(true);
-      // Nothing explicit is ever written down.
-      for (const memory of relationship.memories) expect(memory.summary.length).toBeLessThan(120);
-    }
-    expect(validateUniverse(sim.universe).errors).toEqual([]);
-
-    // Somebody far away is not an option.
-    partner.currentLocationId = partner.currentLocationId === 'uk-eng-london' ? 'us-ny-newyork' : 'uk-eng-london';
-    const away = life.try('rel.intimacy', { personId: partner.id });
-    expect(away.ok).toBe(false);
-    expect(away.error).toMatch(/is in/i);
-  });
-});
 
 describe('being seen', () => {
   it('nobody notices an unknown, and a famous face gets recognised', () => {
@@ -441,38 +389,6 @@ describe('being seen', () => {
   });
 });
 
-describe('driving to a shoot', () => {
-  it('takes you to the unit base, and only when the day is in this city', () => {
-    const sim = quickSave({ wealth: 'inherited' }, 'to-set');
-    const run = <R,>(kind: string, payload: Record<string, unknown> = {}): R => {
-      const result = sim.execute<R>({ kind, payload });
-      if (!result.ok) throw new Error(`${kind} refused: ${result.error}`);
-      return result.value as R;
-    };
-    sim.execute({ kind: 'sandbox.toggle', payload: { enabled: true } });
-    const staged = sim.execute<{ projectId: Id }>({ kind: 'sandbox.stage_picture', payload: { to: 'boarded' } });
-    expect(staged.ok, staged.error).toBe(true);
-    const project = sim.universe.projects[staged.value!.projectId]!;
-    const day = project.shootDayIds.map((id) => sim.universe.shootDays[id]!).find((d) => d.status === 'scheduled')!;
-
-    // Not from another city.
-    const home = sim.player.currentLocationId;
-    sim.player.currentLocationId = home === 'uk-eng-london' ? 'us-ny-newyork' : 'uk-eng-london';
-    const away = sim.execute({ kind: 'go.to', payload: { shootDayId: day.id, mode: 'taxi' } });
-    expect(away.ok).toBe(false);
-    expect(away.error).toMatch(/shoots in/i);
-    sim.player.currentLocationId = home;
-
-    const arrival = run<{ name: string; minutes: number }>('go.to', { shootDayId: day.id, mode: 'taxi' });
-    expect(arrival.name).toContain(`Day ${day.dayNumber}`);
-    expect(sim.player.currentPlaceId).toBe(`shoot:${day.id}`);
-    const here = whatIsHere(sim);
-    expect(here.unitBase?.shootDayId).toBe(day.id);
-    expect(here.place).toBeUndefined();
-    expect(here.canSleep).toBe(false);
-    expect(arrivedBeforeCall(sim, day.id)).toBe(sim.now <= (day.callSheet?.crewCall ?? day.callTime));
-  });
-});
 
 describe('a room for the night', () => {
   it('takes a room at the hotel you are standing in, once, and that is a bed and a bathroom', () => {

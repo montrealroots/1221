@@ -18,7 +18,6 @@ import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world
 import { nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
-import { activeProjects } from '@/engine/systems/film';
 import { CITIES } from '@/engine/content/geography';
 import {
   formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
@@ -32,7 +31,6 @@ export function Home() {
   const next = useWorld(nextCommitment);
   const soon = useWorld((s) => upcoming(s, 6));
   const worth = useWorld((s) => netWorth(s, s.player.id));
-  const projects = useWorld((s) => activeProjects(s, s.player.id).slice(0, 3));
   const unread = useWorld(unreadNotifications);
 
   const player = snapshot.player;
@@ -308,34 +306,6 @@ export function Home() {
       </div>
 
       <div className="grid grid-2">
-        <Panel
-          title="What You Are Working On"
-          flush
-          actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>All Projects</button>}
-        >
-          {projects.length === 0 ? (
-            <Empty
-              title="Nothing In Development"
-              body="No script, no shoot, no release. Every career in this game starts with somebody deciding to make something."
-              action={<button className="btn btn-primary btn-sm" onClick={() => navigate('/workspace/projects', 'Projects')}>Start Something</button>}
-            />
-          ) : (
-            <div className="list">
-              {projects.map((project) => (
-                <button key={project.id} className="list-item" onClick={() => navigate('/workspace/projects', project.title)}>
-                  <div className="grow">
-                    <div className="small strong">{project.title}</div>
-                    <div className="xs dim">
-                      {titleCaseLabel(project.format.replace(/_/g, ' '))} · {titleCaseLabel(project.phase.replace(/_/g, ' '))}
-                      {project.genres.length > 0 && ` · ${project.genres.map(titleCaseLabel).join(', ')}`}
-                    </div>
-                  </div>
-                  <span className="chip">{titleCaseLabel(project.phase.replace(/_/g, ' '))}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </Panel>
 
         <Panel title="Home And Household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
           {snapshot.home ? (

@@ -299,18 +299,6 @@ describe('migrations and validation', () => {
     expect(result.problems[0]).toMatch(/newer version/);
   });
 
-  it('restores a missing collection rather than rejecting an old save', () => {
-    const sim = quickSave();
-    sim.universe.meta.schemaVersion = 1;
-    delete (sim.universe as unknown as Record<string, unknown>)['merchandise'];
-    delete (sim.universe as unknown as Record<string, unknown>)['franchises'];
-
-    const result = migrate(sim.universe);
-    expect(result.migrated).toBe(true);
-    expect(sim.universe.merchandise).toEqual({});
-    expect(sim.universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
-    expect(validateUniverse(sim.universe).ok).toBe(true);
-  });
 
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();

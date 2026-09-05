@@ -13,9 +13,6 @@ import type { Simulation } from '@/engine';
 import { CITIES, AIRPORTS } from '@/engine/content/geography';
 import { CATALOG } from '@/engine/content/catalog';
 import { VEHICLE_MODELS } from '@/engine/content/vehicles';
-import { AGENCIES } from '@/engine/content/industry';
-import { STUDIOS } from '@/engine/content/studios';
-import { NETWORKS } from '@/engine/content/networks';
 import { normalise, scoreMatch } from '@/engine/content/reference';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { labelForRoute } from '@/app/game-context';
@@ -256,15 +253,6 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     const score = scoreMatch(query, { name: label, aliases: [vehicle.make, vehicle.model], type: 'vehicle' });
     push('Vehicles', vehicle.id, label, `${vehicle.mileage.toLocaleString('en-US')} miles · ${formatMoneyCompact(vehicle.currentValue)}`, '/workspace/vehicles', score);
   }
-  for (const project of Object.values(sim.universe.projects)) {
-    const score = scoreMatch(query, { name: project.title, type: 'project' });
-    push('Projects', project.id, project.title, `${titleCaseLabel(project.format.replace(/_/g, ' '))} · ${titleCaseLabel(project.phase.replace(/_/g, ' '))}`, '/workspace/projects', score);
-  }
-  for (const company of Object.values(sim.universe.companies)) {
-    if (company.dissolvedAt) continue;
-    const score = scoreMatch(query, { name: company.name, aliases: [company.legalName], type: 'company' });
-    push('Companies', company.id, company.name, `${titleCaseLabel(company.kind)} · ${formatMoneyCompact(company.valuation)}`, '/workspace/company', score);
-  }
   for (const asset of Object.values(sim.universe.assets)) {
     if (asset.soldAt || asset.ownerId !== sim.universe.playerId) continue;
     const score = scoreMatch(query, { name: asset.name, aliases: [asset.brand ?? '', ...asset.tags], type: 'asset' });
@@ -289,14 +277,6 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
     const score = scoreMatch(query, item);
     push('Things to buy', item.id, item.name, `${titleCaseLabel(item.category)} · ${formatMoneyCompact(item.basePrice)}`, '/workspace/shopping', score);
   }
-  for (const studio of STUDIOS.all()) {
-    const score = scoreMatch(query, studio);
-    push('Industry', studio.id, studio.name, studio.description, '/workspace/industry', score);
-  }
-  for (const network of NETWORKS.all()) {
-    const score = scoreMatch(query, network);
-    push('Industry', network.id, network.name, network.description, '/workspace/industry', score);
-  }
   for (const page of [
     { id: 'box-office', type: 'page', name: 'Box Office', aliases: ['weekend', 'market share', 'chart', 'release calendar', 'slate'], description: 'The weekend chart, the year\'s market share and what is dated ahead.' },
     { id: 'trades', type: 'page', name: 'The Trades', aliases: ['headlines', 'news', 'trade', 'variety', 'deadline'], description: 'Every headline the industry made in your universe.' },
@@ -305,10 +285,6 @@ function search(sim: Simulation, rawQuery: string): Hit[] {
   ]) {
     const score = scoreMatch(query, page);
     push('Industry', page.id, page.name, page.description, '/workspace/industry', score);
-  }
-  for (const agency of AGENCIES.all()) {
-    const score = scoreMatch(query, agency);
-    push('Industry', agency.id, agency.name, agency.description, '/workspace/casting', score);
   }
 
   // Rank, then cap each group so one category cannot flood the list.

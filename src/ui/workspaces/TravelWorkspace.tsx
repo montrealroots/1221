@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
 import { MAX_DRIVE_KM, drivingOptions, formatDistance, roadKm, vehicleLocation } from '@/engine/systems/driving';
-import { formatPeople, homeCityOf, placeKindLabel, upcomingShoots } from '@/engine/world/place';
+import { formatPeople, homeCityOf, placeKindLabel } from '@/engine/world/place';
 import { missedBy } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import { weatherAt } from '@/engine/systems/weather';
@@ -56,7 +56,6 @@ export function TravelWorkspace() {
 
   const home = homeCityOf(sim);
   const homeInRange = !!home && !!here && home.id !== here.id && roadKm(here, home) <= MAX_DRIVE_KM;
-  const shoots = useWorld((s) => upcomingShoots(s));
 
   const startDrive = (toCityId: string, label: string) => {
     if (!car) return;
@@ -150,35 +149,6 @@ export function TravelWorkspace() {
         )}
       </Panel>
 
-      <Panel title="Where Things Are Shooting" subtitle="Projects you are on. Nobody sends you a memo about anyone else's.">
-        {shoots.length === 0 ? (
-          <p className="muted small" style={{ margin: 0 }}>Nothing you are part of has a shoot day scheduled.</p>
-        ) : (
-          <div className="list">
-            {shoots.slice(0, 8).map((shoot) => {
-              const drivable = !!car && !!here && roadKm(here, shoot.city) <= MAX_DRIVE_KM;
-              const isHere = shoot.city.id === player.currentLocationId;
-              return (
-                <div key={`${shoot.projectId}:${shoot.city.id}`} className="list-item">
-                  <div className="grow" style={{ minWidth: 0 }}>
-                    <div className="small strong truncate">{shoot.title} · {shoot.city.name}{shoot.isStage ? ' (Stage)' : ''}</div>
-                    <div className="xs muted truncate">
-                      {shoot.days} day{shoot.days === 1 ? '' : 's'} from {formatDate(shoot.firstDay, sim.zone)}
-                      {isHere ? ' · You are here' : ` · ${formatDistance({ km: cityDistanceKm(player.currentLocationId, shoot.city.id), miles: Math.round(cityDistanceKm(player.currentLocationId, shoot.city.id) * 0.621371) }, here?.countryId ?? 'us')} away`}
-                    </div>
-                  </div>
-                  {!isHere && drivable && car && (
-                    <button className="btn btn-sm" onClick={() => startDrive(shoot.city.id, shoot.city.name)}>Drive There</button>
-                  )}
-                  {!isHere && !drivable && (
-                    <button className="btn btn-sm" onClick={() => { setDestination(shoot.city.id); setTab('flights'); }}>Fly There</button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </Panel>
 
       {driveConfirm && (
         <Modal

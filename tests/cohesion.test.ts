@@ -11,14 +11,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { CORPORATE_EVENTS } from '@/engine/content/corporate-events';
-import { STUDIOS } from '@/engine/content/studios';
-import { NETWORKS } from '@/engine/content/networks';
-import { GENRES_FULL, GENRE_ALIASES, canonicalGenre, genre } from '@/engine/content/genres';
-import { RATINGS, RATING_SYSTEMS } from '@/engine/content/ratings';
 import { ATTRIBUTES, TRAITS, ALL_TRAITS } from '@/engine/domain/attributes';
-import { CRAFT_ATTRIBUTES, CRAFT_ROLES, attributesForRole } from '@/engine/content/craft-attributes';
-import { AGENCIES, BUYERS } from '@/engine/content/industry';
 import { COUNTRIES } from '@/engine/content/geography';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
@@ -38,46 +31,18 @@ function duplicates<T>(items: readonly T[], key: (item: T) => string): string[] 
 
 describe('nothing is defined twice', () => {
   it('keeps every registry id unique', () => {
-    expect(duplicates(GENRES_FULL, (g) => g.id)).toEqual([]);
-    expect(duplicates(RATINGS, (r) => r.id)).toEqual([]);
-    expect(duplicates(RATING_SYSTEMS, (s) => s.id)).toEqual([]);
     expect(duplicates(ATTRIBUTES, (a) => a.id)).toEqual([]);
     expect(duplicates(ALL_TRAITS, (t) => t.id)).toEqual([]);
-    expect(duplicates(CRAFT_ATTRIBUTES, (a) => a.id)).toEqual([]);
-    expect(duplicates(STUDIOS.all(), (s) => s.id)).toEqual([]);
-    expect(duplicates(NETWORKS.all(), (n) => n.id)).toEqual([]);
-    expect(duplicates(AGENCIES.all(), (a) => a.id)).toEqual([]);
-    expect(duplicates(BUYERS.all(), (b) => b.id)).toEqual([]);
     expect(duplicates(COUNTRIES.all(), (c) => c.id)).toEqual([]);
-    expect(duplicates(CORPORATE_EVENTS, (e) => e.id)).toEqual([]);
   });
 
   it('keeps every name unique where a name is how you find the thing', () => {
-    expect(duplicates(GENRES_FULL, (g) => g.name)).toEqual([]);
-    expect(duplicates(STUDIOS.all(), (s) => s.name)).toEqual([]);
-    expect(duplicates(NETWORKS.all(), (n) => n.name)).toEqual([]);
     expect(duplicates(ATTRIBUTES, (a) => a.name)).toEqual([]);
-    expect(duplicates(CRAFT_ATTRIBUTES, (a) => `${a.role}|${a.name}`)).toEqual([]);
     // A certificate's name repeats across boards on purpose — "General" is a
     // rung in four systems — so it is the pair that has to be unique.
-    expect(duplicates(RATINGS, (r) => `${r.system}|${r.name}`)).toEqual([]);
   });
 
-  it('keeps an outcome id unique inside its own event, and lets it repeat across events', () => {
-    for (const event of CORPORATE_EVENTS) {
-      expect(duplicates(event.outcomes, (o) => o.id), event.id).toEqual([]);
-      const total = event.outcomes.reduce((sum, outcome) => sum + outcome.chance, 0);
-      expect(Math.abs(total - 1), `${event.id} outcomes sum to ${total}`).toBeLessThan(0.001);
-    }
-  });
 
-  it('never aliases a genre to itself or to something that is not there', () => {
-    for (const [alias, target] of Object.entries(GENRE_ALIASES)) {
-      expect(alias, 'an alias that is its own target').not.toBe(target);
-      expect(genre(target), `${alias} points at ${target}, which does not exist`).toBeDefined();
-      expect(canonicalGenre(alias)).toBe(target);
-    }
-  });
 });
 
 describe('everything is wired to something', () => {
@@ -117,31 +82,9 @@ describe('everything is wired to something', () => {
     }
   });
 
-  it('points every craft attribute at a craft that exists', () => {
-    for (const attribute of CRAFT_ATTRIBUTES) {
-      expect(CRAFT_ROLES).toContain(attribute.role);
-      expect(attribute.id.startsWith(`${attribute.role}.`)).toBe(true);
-    }
-    for (const role of CRAFT_ROLES) {
-      if (role === 'actor') continue;
-      expect(attributesForRole(role).length, role).toBeGreaterThan(15);
-    }
-  });
 });
 
 describe('a fact stated twice is stated the same way', () => {
-  it('keeps a corporate event and its company saying the same thing', () => {
-    for (const event of CORPORATE_EVENTS) {
-      const subject = event.subjectKind === 'studio' ? STUDIOS.get(event.subjectId) : NETWORKS.get(event.subjectId);
-      expect(subject, `${event.id} is about ${event.subjectId}, which is not in the registry`).toBeDefined();
-      // The event's record line is the same public fact the company's own
-      // entry carries. If one is edited and the other is not, this fails.
-      const status = (subject as { status?: string }).status;
-      if (status) {
-        expect(event.record, `${event.id} and ${event.subjectId} disagree about what is happening`).toBe(status);
-      }
-    }
-  });
 
   it('gives every trait a category the interface knows how to show', () => {
     const categories = new Set(TRAITS.map((t) => t.category));

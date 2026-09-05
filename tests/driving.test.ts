@@ -15,11 +15,11 @@ import { CITIES, addCountryCities } from '@/engine/content/geography';
 import {
   DRIVE_OPTIONS, MAX_DRIVE_KM, driveMinutes, drivingOptions, estimateDrive, fuelCostCents, roadKm,
 } from '@/engine/systems/driving';
-import { placeProfile, upcomingShoots } from '@/engine/world/place';
+import { placeProfile } from '@/engine/world/place';
 import { formatLocal, currencyInfo, hasRate } from '@/engine/content/currency';
 import { sunTimes, formatDaylight } from '@/engine/core/sun';
 import { languageNames } from '@/engine/content/languages';
-import { instantFromZoned, MS_HOUR, zonedParts } from '@/engine/core/time';
+import { instantFromZoned, zonedParts } from '@/engine/core/time';
 
 const la = CITIES.get('us-ca-losangeles')!;
 const sanDiego = CITIES.get('us-ca-sandiego')!;
@@ -204,18 +204,6 @@ describe('a place, as it is to somebody standing in it', () => {
     expect(paris.units.temperature).toBe('C');
   });
 
-  it('only lists shoots the player is actually on', () => {
-    const sim = quickSave({}, 'place-shoots');
-    sim.advanceTo(sim.now + 30 * 24 * MS_HOUR);
-    for (const shoot of upcomingShoots(sim)) {
-      const project = sim.universe.projects[shoot.projectId]!;
-      const me = sim.player.id;
-      expect(
-        project.castIds.includes(me) || project.directorId === me || project.writerIds.includes(me)
-        || project.attachments.some((a) => a.personId === me),
-      ).toBe(true);
-    }
-  });
 });
 
 describe('money as each country writes it', () => {

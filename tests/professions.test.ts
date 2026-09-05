@@ -153,37 +153,7 @@ describe('traits for a profession', () => {
 });
 
 describe('experience is earned from work', () => {
-  it('a draft the player writes raises their writing, and a better draft raises it more', () => {
-    const sim = quickSave({}, 'professions-draft');
-    sim.player.industryXp = 1000;
-    sim.must({ kind: 'profession.unlock', payload: { professionId: 'writer' } });
 
-    const { projectId } = sim.must<{ projectId: string }>({
-      kind: 'film.create_project',
-      payload: { title: 'The Long Take', format: 'feature', genres: ['drama'], logline: 'A film about films.' },
-    });
-    const before = sim.player.professions!.writer!.xp;
-    const skillBefore = sim.player.skills['story_structure'] ?? 0;
-    sim.must({ kind: 'film.write_draft', payload: { projectId, daysSpent: 30 } });
-    const after = sim.player.professions!.writer!.xp;
-    expect(after).toBeGreaterThan(before);
-    expect(sim.player.industryXp).toBeGreaterThan(0);
-    // Reaching level two raises every writing skill.
-    sim.player.professions!.writer!.xp = (LEVEL_XP[1] ?? 0) - 1;
-    sim.must({ kind: 'film.write_draft', payload: { projectId, daysSpent: 30 } });
-    expect(levelFor(sim.player.professions!.writer!.xp)).toBeGreaterThanOrEqual(2);
-    expect(sim.player.skills['story_structure'] ?? 0).toBeGreaterThan(skillBefore);
-  });
-
-  it('a draft written before the profession is unlocked earns it nothing', () => {
-    const sim = quickSave({}, 'professions-locked');
-    const { projectId } = sim.must<{ projectId: string }>({
-      kind: 'film.create_project',
-      payload: { title: 'Unheard', format: 'feature', genres: ['drama'], logline: 'Nobody is listening yet.' },
-    });
-    sim.must({ kind: 'film.write_draft', payload: { projectId, daysSpent: 20 } });
-    expect(sim.player.professions?.writer).toBeUndefined();
-  });
 
   it('ordinary shifts earn industry experience over a month', () => {
     const sim = quickSave({ startWithJob: true }, 'professions-shifts');

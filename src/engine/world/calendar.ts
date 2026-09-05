@@ -8,8 +8,6 @@
  */
 
 import { holidaysOn, type HolidayEntry } from '../content/holidays';
-import { eventsOnDay, type EventDay } from '../content/events';
-import { INDUSTRY_EVENTS, lookupEvent } from '../content/events-data';
 import type { Simulation } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
 import type { Id } from '../domain/model';
@@ -23,7 +21,7 @@ export type CalendarCategory =
   | 'work' | 'career' | 'finance' | 'health' | 'personal' | 'family' | 'education'
   | 'property' | 'vehicles' | 'travel' | 'production' | 'release' | 'marketing'
   | 'awards' | 'social' | 'business' | 'holiday' | 'birthday' | 'system'
-  | 'industry';
+;
 
 export interface CalendarLegendEntry {
   category: CalendarCategory;
@@ -51,7 +49,6 @@ export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'travel', label: 'Travel', colour: '#5d8a9e', description: 'Flights, hotels and trips.' },
   { category: 'social', label: 'Social', colour: '#9c6f9e', description: 'Scheduled posts and campaign beats.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
-  { category: 'industry', label: 'Industry', colour: '#d9a441', description: 'Award shows, festivals, markets and fan events.' },
   { category: 'birthday', label: 'Birthday', colour: '#c98b8b', description: 'Birthdays of people you know.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];
@@ -86,8 +83,6 @@ export interface CalendarDay {
   season: Season;
   entries: CalendarEntry[];
   holidays: HolidayEntry[];
-  /** What the industry is doing that day: ceremonies, festivals, nominations. */
-  industry: EventDay[];
 }
 
 // ---------------------------------------------------------------------------
@@ -176,7 +171,6 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
       season: seasonOf(date, zone, latitude),
       entries: entries.filter((e) => e.at >= dayStart && e.at < dayEnd),
       holidays: holidaysOn(date, zone, countryId, regionId),
-      industry: eventsOnDay(INDUSTRY_EVENTS, key, lookupEvent),
     });
   }
   return days;

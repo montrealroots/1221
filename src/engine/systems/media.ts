@@ -273,15 +273,6 @@ export function registerMedia(sim: Simulation): void {
     },
   );
 
-  // A published post that promotes a project feeds the marketing campaign.
-  sim.onEvent('social.post_published', 'marketing.absorb', (event, { sim: s }) => {
-    const { postId } = event.payload as { postId: Id };
-    const post = s.universe.socialPosts[postId];
-    if (!post || post.refType !== 'project' || !post.refId) return;
-    const campaign = Object.values(s.universe.marketingCampaigns).find((c) => c.projectId === post.refId);
-    if (!campaign) return;
-    campaign.socialPostIds.push(post.id);
-  }, 60);
 }
 
 // ---------------------------------------------------------------------------

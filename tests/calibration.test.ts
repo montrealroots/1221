@@ -136,62 +136,18 @@ describe('hiring', () => {
   });
 });
 
-describe('the industry over many years', () => {
-  it('spreads results rather than giving every film the same outcome', () => {
-    const sim = quickSave({}, 'calibration-industry');
-    sim.advanceTo(sim.now + 12 * 365 * 86_400_000);
-
-    const released = Object.values(sim.universe.projects).filter((p) => (p.finalQuality ?? 0) > 0 && p.totalRevenue > 0);
-    expect(released.length, 'twelve years produced no finished films').toBeGreaterThan(40);
-
-    const multiples = released.map((p) => p.totalRevenue / Math.max(1, p.budget)).sort((a, b) => a - b);
-    const at = (q: number) => multiples[Math.floor(multiples.length * q)] ?? 0;
-
-    // Some films lose money and some make a lot. A distribution that is flat,
-    // or that never loses, means the model is not doing anything.
-    //
-    // The share that loses is asserted directly rather than as "the tenth
-    // percentile is under 1". Across seeds the model loses money on roughly
-    // one film in ten (9-12% over four seeds, on this and the previous
-    // routing of award nominations), so a threshold at exactly 10% fails
-    // on the seed's coin flip, not on the model. A quarter of that is the
-    // floor a broken model would not clear.
-    const losers = multiples.filter((m) => m < 1).length / multiples.length;
-    expect(losers, `only ${(losers * 100).toFixed(1)}% of films lost money`).toBeGreaterThan(0.025);
-    expect(at(0.9), 'the best tenth of films were not hits').toBeGreaterThan(1.2);
-    expect(at(0.9) / Math.max(0.01, at(0.1)), 'results are too tightly bunched to be a distribution').toBeGreaterThan(2);
-
-    // Quality has to matter. Better films should do better on average.
-    const quality = released.map((p) => p.finalQuality ?? 0).sort((a, b) => a - b);
-    const median = quality[Math.floor(quality.length / 2)] ?? 50;
-    const good = released.filter((p) => (p.finalQuality ?? 0) > median);
-    const poor = released.filter((p) => (p.finalQuality ?? 0) <= median);
-    const mean = (xs: typeof released) => xs.reduce((s, p) => s + p.totalRevenue / Math.max(1, p.budget), 0) / Math.max(1, xs.length);
-    expect(mean(good), 'better films did not earn more than worse ones').toBeGreaterThan(mean(poor));
-  }, 600_000);
-
-  it('does not let critics and audiences agree perfectly', () => {
-    const sim = quickSave({}, 'calibration-reception');
-    sim.advanceTo(sim.now + 8 * 365 * 86_400_000);
-    const scored = Object.values(sim.universe.projects).filter((p) => p.criticScore && p.audienceScore);
-    expect(scored.length).toBeGreaterThan(20);
-    const disagreements = scored.filter((p) => Math.abs((p.criticScore ?? 0) - (p.audienceScore ?? 0)) > 8);
-    expect(
-      disagreements.length / scored.length,
-      'critics and audiences agreed on almost everything, which is not how reception works',
-    ).toBeGreaterThan(0.2);
-  }, 600_000);
-});
-
 describe('reproducibility', () => {
-  it('gives two identical seeds the same industry, and different seeds different ones', () => {
+  it('gives two identical seeds the same world, and different seeds different ones', () => {
+    // The film industry is gone, so what a seed has to reproduce now is the
+    // life around the player: who they meet, what is for sale, what it costs.
     const shape = (seed: string) => {
       const sim = quickSave({}, seed);
-      sim.advanceTo(sim.now + 4 * 365 * 86_400_000);
-      return Object.values(sim.universe.projects)
-        .map((p) => `${p.title}|${p.phase}|${p.totalRevenue}`)
-        .sort()
-        .join('\n');
+      sim.advanceTo(sim.now + 2 * 365 * 86_400_000);
+      return [
+        Object.values(sim.universe.people).map((p) => p.displayName).sort().join(','),
+        Object.values(sim.universe.propertyListings).map((l) => `${l.propertyId}|${l.askingPrice}`).sort().join(','),
+        Object.values(sim.universe.jobOpenings).map((o) => `${o.title}|${o.payRate}`).sort().join(','),
+      ].join('\n');
     };
     expect(shape('twin')).toEqual(shape('twin'));
     expect(shape('twin')).not.toEqual(shape('other'));

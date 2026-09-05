@@ -154,36 +154,3 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
   };
 }
 
-/**
- * Where things the player is part of are shooting next.
- *
- * Only projects the player is actually on — cast, attached, directing or
- * writing. What some other production is doing on the other side of the
- * world is not something a working actor gets a memo about.
- */
-export function upcomingShoots(sim: Simulation): { projectId: string; title: string; city: City; firstDay: number; days: number; isStage: boolean }[] {
-  const player = sim.player;
-  const mine = Object.values(sim.universe.projects).filter((p) =>
-    p.castIds.includes(player.id)
-    || p.directorId === player.id
-    || p.writerIds.includes(player.id)
-    || p.attachments.some((a) => a.personId === player.id));
-
-  const out: { projectId: string; title: string; city: City; firstDay: number; days: number; isStage: boolean }[] = [];
-  for (const project of mine) {
-    const ahead = project.shootDayIds
-      .map((id) => sim.universe.shootDays[id])
-      .filter((d): d is NonNullable<typeof d> => !!d && d.status === 'scheduled' && d.date >= sim.now);
-    const byPlace = new Map<string, { firstDay: number; days: number; isStage: boolean }>();
-    for (const day of ahead) {
-      const entry = byPlace.get(day.locationId);
-      if (entry) { entry.days++; entry.firstDay = Math.min(entry.firstDay, day.date); entry.isStage = entry.isStage && day.isStage; }
-      else byPlace.set(day.locationId, { firstDay: day.date, days: 1, isStage: day.isStage });
-    }
-    for (const [locationId, entry] of byPlace) {
-      const city = CITIES.get(locationId);
-      if (city) out.push({ projectId: project.id, title: project.title, city, ...entry });
-    }
-  }
-  return out.sort((a, b) => a.firstDay - b.firstDay);
-}
