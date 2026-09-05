@@ -303,3 +303,55 @@ describe('relationships', () => {
   });
 });
 
+
+/**
+ * The car you were promised at creation.
+ *
+ * "Start With A Car" is ticked by default, and it used to be a box that did
+ * nothing for most starts. The listing was priced off checking plus savings
+ * and then paid for out of checking alone, so a comfortable character silently
+ * got no car while a wealthy one did, and the floor price meant anybody poor
+ * got nothing at all with no explanation on the screen they had just ticked.
+ */
+describe('the starting vehicle', () => {
+  const WEALTHS = ['scraping', 'modest', 'comfortable', 'wealthy', 'inherited'] as const;
+
+  const ownedBy = (sim: ReturnType<typeof quickSave>) =>
+    Object.values(sim.universe.vehicles).filter((v) => v.ownerId === sim.player.id && !v.soldAt);
+
+  it('actually arrives at every wealth level that could afford one', () => {
+    for (const wealth of WEALTHS) {
+      const sim = quickSave({ wealth, startWithVehicle: true }, `car-${wealth}`);
+      expect(ownedBy(sim).length, `${wealth} ticked the box and got no car`).toBe(1);
+      expect(sim.ledger.audit(), wealth).toEqual([]);
+    }
+  });
+
+  it('leaves them solvent afterwards rather than spending the last of it', () => {
+    for (const wealth of WEALTHS) {
+      const sim = quickSave({ wealth, startWithVehicle: true }, `car-solvent-${wealth}`);
+      const left = sim.universe.accounts[sim.player.primaryAccountId!]?.balance ?? 0;
+      expect(left, `${wealth} was left with ${left}`).toBeGreaterThan(0);
+    }
+  });
+
+  it('gives a bigger start a better car than a smaller one', () => {
+    const poor = quickSave({ wealth: 'scraping', startWithVehicle: true }, 'car-poor');
+    const rich = quickSave({ wealth: 'wealthy', startWithVehicle: true }, 'car-rich');
+    expect(ownedBy(rich)[0]!.purchasePrice ?? 0).toBeGreaterThan(ownedBy(poor)[0]!.purchasePrice ?? 0);
+  });
+
+  it('says so plainly when somebody genuinely cannot afford anything', () => {
+    // Forty dollars. No car is the right answer, and it is stated rather than
+    // left as a ticked box that quietly did nothing.
+    const sim = quickSave({ wealth: 'nothing', startWithVehicle: true }, 'car-broke');
+    expect(ownedBy(sim)).toHaveLength(0);
+    expect(sim.universe.notifications.some((n) => /No Car Yet/.test(n.title))).toBe(true);
+  });
+
+  it('gives nobody a car when the box is not ticked', () => {
+    const sim = quickSave({ wealth: 'inherited', startWithVehicle: false }, 'car-none');
+    expect(ownedBy(sim)).toHaveLength(0);
+    expect(sim.universe.notifications.some((n) => /No Car Yet/.test(n.title))).toBe(false);
+  });
+});

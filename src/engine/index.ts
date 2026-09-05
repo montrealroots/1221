@@ -111,6 +111,16 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
 }
 
+/**
+ * The cheapest thing that still counts as a car.
+ *
+ * Somebody starting with nothing and a ticked box owns a twenty-year-old
+ * something, not nothing at all. Low enough that tax, registration and plates
+ * — which add about two fifths to the sticker — still fit inside the poorest
+ * start that ticked the box.
+ */
+const BEATER_PRICE = 600_00;
+
 /** Builds the player's starting situation and the world around it. */
 function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const player = sim.player;
@@ -282,16 +292,28 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     const listings = Object.values(sim.universe.vehicleListings)
       .filter((l) => l.status === 'active')
       .sort((a, b) => a.price - b.price);
-    const affordable = listings.find((l) => l.price <= Math.max(12_000_00, wealth.checking + wealth.savings));
-    const chosen = affordable ?? listings[0];
+    // Budgeted against the account that will actually pay. It used to be
+    // priced off checking plus savings and then paid out of checking alone,
+    // so a comfortable start silently got no car while a wealthy one did. A
+    // third of the purse, because tax, registration and plates add roughly
+    // two fifths again on top of the sticker.
+    const purse = sim.ledger.availableFunds(checking.id);
+    const budget = Math.round(purse * 0.33);
+    // The best car the budget actually reaches, rather than always the
+    // cheapest one with its price rewritten — which is how a modest start
+    // ended up owning a fifteen-hundred-dollar Range Rover.
+    const chosen = listings.filter((l) => l.price <= budget).sort((a, b) => b.price - a.price)[0]
+      ?? listings[0];
     if (chosen) {
-      chosen.price = Math.min(chosen.price, Math.max(6_500_00, Math.round((wealth.checking + wealth.savings) * 0.55)));
+      // Nothing in the lot is within reach: they own something old instead.
+      if (chosen.price > budget) chosen.price = Math.max(BEATER_PRICE, Math.min(chosen.price, budget));
       const result = sim.execute<{ vehicleId: Id }>({
         kind: 'veh.purchase',
         payload: { listingId: chosen.id, acquisition: 'cash', accountId: checking.id },
       });
       if (!result.ok) {
-        // Could not afford anything: that is a legitimate starting position.
+        // Genuinely destitute. A legitimate starting position, and said out
+        // loud rather than left as a box that was ticked and did nothing.
         sim.notify({
           category: 'vehicles', title: 'No Car Yet',
           body: 'You could not afford one at the start. Public transport and rideshares for now.',
