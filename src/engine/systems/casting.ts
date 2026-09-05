@@ -42,6 +42,8 @@ export function registerCasting(sim: Simulation): void {
   sim.onSchedule('world.project_progress', (item) => advanceBackgroundProject(sim, item.payload.projectId as Id));
   sim.onSchedule('cast.opportunity_scan', () => {
     generateOpportunities(sim);
+    // The scan keeps its place on the calendar even while breakdowns are
+    // closed, so turning them back on is one constant and not a migration.
     sim.schedule({ at: addDays(sim.now, 5, sim.homeZone), kind: 'cast.opportunity_scan', label: 'Casting Breakdowns', category: 'career', priority: 72 });
   });
 
@@ -1300,7 +1302,20 @@ function ensureAgentPerson(sim: Simulation, agencyId: string): Id {
  * The world generates opportunities. How many, and how good, depends on who
  * the player is and who represents them.
  */
+/**
+ * Whether parts are being sent to the player at all.
+ *
+ * Off while the audition system is rebuilt around how casting actually works.
+ * Nothing already in a save is touched by this: auditions the player has
+ * already been through, their scores, their feedback and their credits all
+ * stay exactly where they are, and the world goes on casting its own pictures
+ * so the industry does not stop. Only new breakdowns reaching the player are
+ * held back, and turning them on again is this one constant.
+ */
+export const BREAKDOWNS_OPEN = false;
+
 export function generateOpportunities(sim: Simulation): void {
+  if (!BREAKDOWNS_OPEN) return;
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
   if (player.careerTrack !== 'actor' && player.creditIds.length === 0 && !player.representation.agentId) return;
