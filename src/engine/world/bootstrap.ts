@@ -13,6 +13,7 @@ import type {
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import { emptyAttributeSheet, effectiveAttributes, TRAIT_BY_ID, type AttributeSheet } from '../domain/attributes';
 import { emptySkillSheet, type SkillSheet } from '../domain/skills';
+import { FOUNDER_TRAIT_BY_ID, instrumentFor } from '../content/founder';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
@@ -67,6 +68,19 @@ export interface NewSaveConfig {
    */
   careerStage: number;
 
+  /**
+   * The company.
+   *
+   * Where the founder came from, what shape of shop they open, what it is for
+   * and what it is called. The strike ended every other production company, so
+   * this is the only one there will be.
+   */
+  founderBackground: string;
+  shingle: string;
+  remit: string;
+  companyName: string;
+  founderTraits: string[];
+
   /** Starting point */
   startLocationId: string;
   housing: StartingHousing;
@@ -106,6 +120,11 @@ export function defaultConfig(): NewSaveConfig {
     traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
+    founderBackground: 'development_exec',
+    shingle: 'boutique',
+    remit: 'prestige_drama',
+    companyName: '',
+    founderTraits: [],
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
     startWithJob: true, startWithVehicle: true,
@@ -152,6 +171,19 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     trips: {}, flightBookings: {}, hotelBookings: {},
     socialAccounts: {}, socialPosts: {}, brandDeals: {},
     companies: {},
+    industry: {
+      briefed: false,
+      // Fiction, fixed here so every save tells the same story about itself.
+      strikeMonths: 19,
+      // The premise: there is nobody else.
+      rivals: 0,
+      // Nobody wrote for nineteen months.
+      material: 0,
+      buyerHunger: 92,
+      // The grips went into construction and have not all come back.
+      crewDepth: 34,
+      ratesSet: {},
+    },
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
     tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },
     preferences: {
@@ -287,6 +319,13 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     attributes,
     traits: config.traits.filter((t) => TRAIT_BY_ID[t]),
     skills,
+
+    // The producer's instrument, from where they came from. Separate from the
+    // acting one above, which the player has because everybody in this world
+    // has one, and which governs nothing they do at a desk.
+    founder: instrumentFor(config.founderBackground),
+    founderTraits: config.founderTraits.filter((t) => FOUNDER_TRAIT_BY_ID[t]),
+    founderBackground: config.founderBackground,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',

@@ -1,7 +1,7 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Personal, Career, Starting Point, Review, then Start.
+ * Identity, Personal, The Company, Starting Point, Review, then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -9,7 +9,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  defaultConfig, wealthNote, careerLabel,
+  defaultConfig, wealthNote,
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { TRAITS, TRAIT_BY_ID, conflictingTraits, traitName, type TraitCategory } from '@/engine/domain/attributes';
@@ -19,13 +19,18 @@ import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import type { Personality } from '@/engine/domain/model';
-import { PROFESSIONS, PROFESSION_BY_ID } from '@/engine/content/professions';
 import { formatMoney } from '@/engine/core/money';
 import { APP_VERSION, WEALTH_PROFILES } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
+import {
+  FOUNDER_ATTRIBUTES, FOUNDER_ATTRIBUTE_BY_ID, FOUNDER_BACKGROUNDS, FOUNDER_BACKGROUND_BY_ID,
+  FOUNDER_TRAITS, FOUNDER_TRAIT_BY_ID, conflictingFounderTraits, instrumentFor,
+} from '@/engine/content/founder';
+import { REMITS, REMIT_BY_ID, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
+import { STRIKE_IS_FICTION } from '@/engine/content/strike';
 
-const STEPS = ['Identity', 'Personal', 'Career', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const MAX_TRAITS = 4;
@@ -555,73 +560,256 @@ function PersonalStep({
 }
 
 function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+  const background = FOUNDER_BACKGROUND_BY_ID[config.founderBackground];
+  const shape = SHINGLE_BY_ID[config.shingle];
+  const remit = REMIT_BY_ID[config.remit];
+  const instrument = instrumentFor(config.founderBackground);
+  const capital = (background?.capital ?? 0);
+  const affordable = capital >= (shape?.setup ?? 0);
+
+  const toggleTrait = (id: string) => {
+    const held = config.founderTraits;
+    if (held.includes(id)) { set('founderTraits', held.filter((t) => t !== id)); return; }
+    if (held.length >= 3) return;
+    if (conflictingFounderTraits(held, id).length > 0) return;
+    set('founderTraits', [...held, id]);
+  };
+
   return (
-    <div className="card">
-      <div className="panel-head">
-        <div>
-          <h2>Career</h2>
-          <p className="muted small">
-            Everyone starts in front of the camera. The rest of the industry is unlocked in the game,
-            with experience you earn by working, and developed from there.
-          </p>
+    <div className="col gap-5">
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>The Company</h2>
+            <p className="muted small">
+              The strike ran nineteen months and took every other production company with it. The
+              buyers still have schedules to fill and nobody to fill them. You are opening the only
+              door in town.
+            </p>
+          </div>
         </div>
+        <p className="xs dim" style={{ margin: 0 }}>{STRIKE_IS_FICTION}</p>
       </div>
 
-      <div className="trait is-fixed" aria-current="true" style={{ marginBottom: 'var(--s5)' }}>
-        <div className="trait-name">{careerLabel('actor')}</div>
-        <div className="trait-desc">Auditions, rooms, callbacks and the long climb from day player to lead.</div>
-      </div>
-
-      <div className="field">
-        <div className="row-between">
-          <label htmlFor="stage" style={{ marginBottom: 0 }}>How far along are you?</label>
-          <span className="mono small">{config.careerStage}</span>
+      {/* --- Where you came from ------------------------------------------ */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h3>What You Were Doing When It Started</h3>
+            <p className="muted small">
+              The strike ended the companies, not the people. Where you came from is most of what
+              you are good at, all of who returns your calls, and how much you have to start with.
+            </p>
+          </div>
         </div>
-        <input
-          id="stage" type="range" min={0} max={85}
-          value={config.careerStage}
-          onChange={(e) => set('careerStage', Number(e.target.value))}
-        />
-        <div className="row-between xs dim">
-          <span>Nobody knows your name</span>
-          <span>Already established</span>
+
+        <div className="grid grid-2">
+          {FOUNDER_BACKGROUNDS.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={`trait${config.founderBackground === option.id ? ' is-selected' : ''}`}
+              aria-pressed={config.founderBackground === option.id}
+              onClick={() => set('founderBackground', option.id)}
+            >
+              <div className="row-between">
+                <div className="trait-name">{option.name}</div>
+                <span className="chip mono">{formatMoney(option.capital, { cents: false })}</span>
+              </div>
+              <div className="trait-desc">{option.what}</div>
+              <div className="xs positive" style={{ marginTop: 6 }}>{option.gives}</div>
+              <div className="xs negative" style={{ marginTop: 2 }}>{option.costs}</div>
+            </button>
+          ))}
         </div>
-      </div>
 
-      <div className="callout callout-accent">
-        {config.careerStage < 10 && 'Complete unknown. Everything has to be earned, and the story is better for it.'}
-        {config.careerStage >= 10 && config.careerStage < 35 && 'You have done a little. A few credits, some contacts, no leverage yet.'}
-        {config.careerStage >= 35 && config.careerStage < 60 && 'A working professional. People return your calls and you have a quote.'}
-        {config.careerStage >= 60 && 'Established. Doors open, and the expectations that come with that are real.'}
-      </div>
-
-      <hr className="divider" />
-
-      <div className="panel-head">
-        <div>
-          <h3>What You Can Grow Into</h3>
-          <p className="muted small">
-            Each profession is unlocked with industry experience and then has its own skills to raise
-            and its own traits to pick, level by level. You start with {Math.round(config.careerStage * 3)} XP.
-          </p>
-        </div>
-      </div>
-
-      <div className="grid grid-2">
-        {PROFESSIONS.map((profession) => (
-          <div key={profession.id} className="trait is-fixed">
-            <div className="row-between">
-              <div className="trait-name">{profession.name}</div>
-              <span className="chip">{profession.unlockXp.toLocaleString('en-US')} XP</span>
-            </div>
-            <div className="trait-desc">{profession.blurb}</div>
-            <div className="xs dim" style={{ marginTop: 6 }}>
-              {profession.earnedBy}
-              {profession.requires.length > 0
-                && ` Needs ${profession.requires.map((id) => PROFESSION_BY_ID[id].name).join(' and ')} first.`}
+        {background && (
+          <div className="callout callout-accent" style={{ marginTop: 'var(--s4)' }}>
+            <strong className="xs">What That Leaves You With</strong>
+            <div className="row wrap gap-1" style={{ marginTop: 6 }}>
+              {FOUNDER_ATTRIBUTES.filter((a) => (instrument[a.id] ?? 0) >= 50)
+                .sort((a, b) => (instrument[b.id] ?? 0) - (instrument[a.id] ?? 0))
+                .slice(0, 6)
+                .map((a) => (
+                  <span key={a.id} className="chip chip-positive">{a.name} {instrument[a.id]}</span>
+                ))}
+              {FOUNDER_ATTRIBUTES.filter((a) => (instrument[a.id] ?? 0) <= 25)
+                .sort((a, b) => (instrument[a.id] ?? 0) - (instrument[b.id] ?? 0))
+                .slice(0, 3)
+                .map((a) => (
+                  <span key={a.id} className="chip chip-negative">{a.name} {instrument[a.id]}</span>
+                ))}
             </div>
           </div>
-        ))}
+        )}
+      </div>
+
+      {/* --- The shape of the shop ---------------------------------------- */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h3>What Kind Of Shop</h3>
+            <p className="muted small">
+              Overhead is charged every month whether anything is shooting or not. A company that
+              cannot pay it stops being a company, so this is the most consequential thing on the
+              page.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-2">
+          {SHINGLE_SHAPES.map((option) => {
+            const canAfford = capital >= option.setup;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                className={`trait${config.shingle === option.id ? ' is-selected' : ''}`}
+                aria-pressed={config.shingle === option.id}
+                disabled={!canAfford}
+                title={canAfford ? undefined : `You would have ${formatMoney(capital, { cents: false })} and this costs ${formatMoney(option.setup, { cents: false })} to open.`}
+                onClick={() => set('shingle', option.id)}
+              >
+                <div className="row-between">
+                  <div className="trait-name">{option.name}</div>
+                  <span className={`chip mono${canAfford ? '' : ' chip-negative'}`}>
+                    {formatMoney(option.setup, { cents: false })}
+                  </span>
+                </div>
+                <div className="trait-desc">{option.what}</div>
+                <div className="row wrap gap-1" style={{ marginTop: 6 }}>
+                  <span className="chip">{formatMoney(option.overhead, { cents: false })} A Month</span>
+                  <span className="chip">{option.capacity} At A Time</span>
+                  <span className="chip">{option.seats} {option.seats === 1 ? 'Desk' : 'Desks'}</span>
+                </div>
+                <div className="xs dim" style={{ marginTop: 6 }}>{option.suits}</div>
+                <div className="xs negative" style={{ marginTop: 2 }}>{option.cannot}</div>
+              </button>
+            );
+          })}
+        </div>
+
+        {!affordable && (
+          <div className="callout callout-negative" style={{ marginTop: 'var(--s4)' }}>
+            You cannot open that on {formatMoney(capital, { cents: false })}. Pick something smaller
+            or come from somewhere with more money.
+          </div>
+        )}
+      </div>
+
+      {/* --- What it is for ------------------------------------------------ */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h3>What It Is For</h3>
+            <p className="muted small">
+              A remit is a promise about what you will make. Buyers price against it, talent decides
+              whether to come to you on it, and critics judge the work by what you said you were
+              trying to do.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-2">
+          {REMITS.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={`trait${config.remit === option.id ? ' is-selected' : ''}`}
+              aria-pressed={config.remit === option.id}
+              onClick={() => set('remit', option.id)}
+            >
+              <div className="row-between">
+                <div className="trait-name">{option.name}</div>
+                <span className="chip">Prestige {option.prestige}</span>
+              </div>
+              <div className="trait-desc">{option.what}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* --- How you work -------------------------------------------------- */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h3>How You Work</h3>
+            <p className="muted small">
+              Up to three. Every one of them costs something — a trait that helps everywhere is a
+              bonus, not a character. {config.founderTraits.length} of 3 taken.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-2">
+          {FOUNDER_TRAITS.map((trait) => {
+            const held = config.founderTraits.includes(trait.id);
+            const clash = conflictingFounderTraits(config.founderTraits, trait.id);
+            const full = config.founderTraits.length >= 3 && !held;
+            const suggested = background?.suggestsTrait === trait.id;
+            return (
+              <button
+                key={trait.id}
+                type="button"
+                className={`trait${held ? ' is-selected' : ''}`}
+                aria-pressed={held}
+                disabled={clash.length > 0 || full}
+                title={clash.length > 0
+                  ? `Cannot be held with ${clash.map((id) => FOUNDER_TRAIT_BY_ID[id]?.name ?? id).join(', ')}.`
+                  : full ? 'You have taken three.' : undefined}
+                onClick={() => toggleTrait(trait.id)}
+              >
+                <div className="row-between">
+                  <div className="trait-name">{trait.name}</div>
+                  <span className={`chip${suggested ? ' chip-accent' : ''}`}>
+                    {suggested ? 'Sounds Like You' : trait.category}
+                  </span>
+                </div>
+                <div className="trait-desc">{trait.description}</div>
+                <div className="row wrap gap-1" style={{ marginTop: 6 }}>
+                  {Object.entries(trait.attributeMods ?? {}).map(([id, delta]) => (
+                    <span key={id} className={`chip ${delta > 0 ? 'chip-positive' : 'chip-negative'}`}>
+                      {FOUNDER_ATTRIBUTE_BY_ID[id]?.name ?? id} {delta > 0 ? '+' : ''}{delta}
+                    </span>
+                  ))}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* --- The name ------------------------------------------------------ */}
+      <div className="card">
+        <div className="field">
+          <label htmlFor="company-name">What It Is Called</label>
+          <input
+            id="company-name"
+            type="text"
+            value={config.companyName}
+            placeholder={`${config.lastName || 'Your Name'} ${shape?.id === 'studio' ? 'Studios' : 'Pictures'}`}
+            onChange={(e) => set('companyName', e.target.value)}
+          />
+          <p className="xs dim" style={{ marginTop: 4 }}>
+            It goes on everything you make, and it is the only production company name anybody in
+            the business will say for a while.
+          </p>
+        </div>
+
+        {shape && remit && background && (
+          <div className="callout callout-accent">
+            <strong className="xs">Opening Day</strong>
+            <p className="xs" style={{ margin: '4px 0 0' }}>
+              {config.companyName.trim() || `${config.lastName || 'Your Name'} ${shape.id === 'studio' ? 'Studios' : 'Pictures'}`}
+              {' — '}{shape.name.toLowerCase()} making {remit.name.toLowerCase()}, opened by
+              {' '}{background.name.toLowerCase()} with {formatMoney(capital, { cents: false })}.
+              {' '}{formatMoney(shape.setup, { cents: false })} to open the doors leaves
+              {' '}{formatMoney(Math.max(0, capital - shape.setup), { cents: false })} to work with, and
+              {' '}{formatMoney(shape.overhead, { cents: false })} a month going out from the first
+              month whether you have made anything or not.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -806,7 +994,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {careerLabel('actor')} · {city?.name}
+            {age} · {FOUNDER_BACKGROUND_BY_ID[config.founderBackground]?.name ?? 'Producer'} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>

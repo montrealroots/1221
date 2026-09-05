@@ -185,6 +185,19 @@ export interface Person {
   traits: string[];
   skills: SkillSheet;
 
+  /**
+   * The producer's instrument, and the traits that go with it.
+   *
+   * A second, separate set from the acting one above. The player has it; so do
+   * the executives they hire. Anybody who is only ever in front of a camera
+   * does not, and reading it on them would be reading a number that was never
+   * set. Absent means not a producer.
+   */
+  founder?: Record<string, number>;
+  founderTraits?: string[];
+  /** Where they came from before they were doing this. */
+  founderBackground?: string;
+
   wellbeing: Wellbeing;
   reputation: Reputation;
 
@@ -1257,6 +1270,13 @@ export interface PressItem {
   aboutPlayer?: boolean;
 }
 
+/**
+ * The player's production company.
+ *
+ * After the strike there is one of these that matters, and it is theirs. It
+ * holds the money, the material, the people and the standing, and every
+ * decision the game asks about is finally a decision this company made.
+ */
 export interface Company {
   id: Id;
   saveId: Id;
@@ -1268,16 +1288,26 @@ export interface Company {
   founderId: Id;
   headquartersPropertyId?: Id;
   headquartersLocationId: string;
+
+  /** The shape of the shop: kitchen table, boutique, independent, studio. */
+  shingle: string;
+  /** What the company says it is for. Buyers and talent both read it. */
+  remit: string;
+  /** In the founder's words. Shown on the company's own page. */
   strategy: string;
-  divisionIds: Id[];
-  employeeIds: Id[];
+
   cashAccountId: Id;
   creditAccountId?: Id;
-  projectIds: Id[];
-  rightsIds: Id[];
-  equipmentIds: Id[];
+
+  /** Monthly overhead, in cents, before anybody is paid. */
+  overhead: Money;
+  /** How many projects it can carry before the work suffers. */
+  capacity: number;
+
   /** 0-100 how the industry regards the company. */
   reputation: number;
+  /** 0-100 what talent thinks of working here, which is not the same thing. */
+  standingWithTalent: number;
   /** Maximum single-project greenlight the company can support, in cents. */
   greenlightCeiling: Money;
   valuation: Money;
@@ -1448,7 +1478,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 25;
+export const SAVE_SCHEMA_VERSION = 26;
 
 export interface SaveMeta {
   id: Id;
@@ -1549,6 +1579,31 @@ export interface SaveUniverse {
    * can be written for one. Nothing creates them any more.
    */
   companies: Record<Id, Company>;
+  /** The company the player runs. Set the moment the save is made. */
+  playerCompanyId?: Id;
+
+  /**
+   * The state of the industry after the strike.
+   *
+   * The strike is invented for this game and the save says so, so that a
+   * screenshot of any of it can never be read as an account of a real one.
+   */
+  industry: {
+    /** Whether the aftermath opening has been shown. */
+    briefed: boolean;
+    /** How many months the stoppage ran. Fiction, and fixed at creation. */
+    strikeMonths: number;
+    /** Production companies still trading besides the player's. */
+    rivals: number;
+    /** 0-100 how much unmade material is sitting in the world. Starts at nothing. */
+    material: number;
+    /** 0-100 how badly the buyers need something to put out. */
+    buyerHunger: number;
+    /** 0-100 how much of the crew base is still reachable. */
+    crewDepth: number;
+    /** What the player set as the going rate, by craft. Watched by everybody. */
+    ratesSet: Record<string, Money>;
+  };
 
   scheduled: ScheduledItem[];
   audits: AuditRecord[];

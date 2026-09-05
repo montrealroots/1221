@@ -32,6 +32,9 @@ import { registerProfessions } from './systems/professions';
 import { ensureHygieneTick, registerPlaces } from './systems/places';
 import { registerDriving } from './systems/driving';
 import { registerWorld } from './world/world';
+import { registerShingle } from './systems/shingle';
+import { SHINGLE_BY_ID } from './content/shingle';
+import { FOUNDER_BACKGROUND_BY_ID } from './content/founder';
 import { createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig, careerLabel } from './world/bootstrap';
 
 export * from './world/bootstrap';
@@ -57,6 +60,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPlaces(sim);
   registerProfessions(sim);
   registerDriving(sim);
+  registerShingle(sim);
   registerWorld(sim);
 }
 
@@ -118,7 +122,10 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     institution: 'Northbank',
     openedAt: sim.now,
     last4: '4417',
-    balance: wealth.checking,
+    // Personal money, plus whatever the founder's old job left them with. The
+    // background's capital is what the creation screen promised them, and it
+    // is what they will open the company on.
+    balance: wealth.checking + (FOUNDER_BACKGROUND_BY_ID[config.founderBackground]?.capital ?? 0),
   });
   player.primaryAccountId = checking.id;
 
@@ -180,6 +187,37 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     });
   }
   recomputeCreditScore(sim, player.id);
+
+  // --- The company --------------------------------------------------------
+  // The whole premise: the strike ended every other production company, and
+  // the player opens the only one trading. Founded through the same command a
+  // player would use, so nothing here can reach a state the game cannot.
+  {
+    const name = config.companyName.trim() || `${player.lastName} ${SHINGLE_BY_ID[config.shingle]?.id === 'studio' ? 'Studios' : 'Pictures'}`;
+    // The money from the old job goes into the business. Household money —
+    // whatever the wealth level gave them — stays theirs, because a founder
+    // with no rent money is a choice, not a default.
+    const business = FOUNDER_BACKGROUND_BY_ID[config.founderBackground]?.capital ?? 0;
+    const shape = SHINGLE_BY_ID[config.shingle];
+    const founded = sim.execute({
+      kind: 'co.found',
+      payload: {
+        name, shingle: config.shingle, remit: config.remit,
+        capital: Math.max(0, business - (shape?.setup ?? 0)),
+      },
+    });
+    if (!founded.ok) {
+      // A founder who cannot afford the shape they picked opens the smallest
+      // one instead, rather than starting with no company at all.
+      sim.execute({
+        kind: 'co.found',
+        payload: {
+          name, shingle: 'kitchen_table', remit: config.remit,
+          capital: Math.max(0, business - (SHINGLE_BY_ID['kitchen_table']?.setup ?? 0)),
+        },
+      });
+    }
+  }
 
   // --- The world that already exists -------------------------------------
   ensureAgents(sim, cityId);
@@ -312,6 +350,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     payload: { platform: 'lumen', handle, displayName: player.displayName },
   });
 
+
   // --- Opening history ----------------------------------------------------
   sim.remember({
     category: 'life',
@@ -418,6 +457,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       steps.push(`Added missing collection '${key}'.`);
     }
   }
+
+  // Schema 26 is the pivot: the player runs a production company in a world
+  // where the strike ended every other one. A save from before it has no
+  // industry state at all, so it is given the opening one.
+  record['industry'] ??= {
+    briefed: false, strikeMonths: 19, rivals: 0,
+    material: 0, buyerHunger: 92, crewDepth: 34, ratesSet: {},
+  };
 
   record['idempotency'] ??= {};
   record['counters'] ??= {};
