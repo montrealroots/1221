@@ -14,7 +14,7 @@ import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_MINUTE, 
 import { formatMoney, type Money } from '../core/money';
 import { CATALOG, RECIPES, retailPrice } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
-import { systemModifier } from '../domain/attributes';
+import { modifierFor } from '../domain/attributes';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -40,7 +40,7 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   const w = person.wellbeing;
   if (opts.asleep) return;
 
-  const traitDrain = systemModifier(person.traits, 'stressPerShootDay');
+  const traitDrain = modifierFor(person, 'stressPerShootDay');
   w.energy = clamp(w.energy - ENERGY_DRAIN_PER_HOUR * hours * (1 + (w.sleepDebt / 24) * 0.5), 0, 100);
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
   w.sleepDebt = Math.min(60, w.sleepDebt + hours * 0.34);
@@ -54,7 +54,7 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   }
   if (w.stress > 75) w.condition = clamp(w.condition - hours * 0.25, 0, 100);
 
-  const recovery = systemModifier(person.traits, 'recoveryRate');
+  const recovery = modifierFor(person, 'recoveryRate');
   w.stress = clamp(w.stress - hours * 0.35 * recovery, 0, 100);
 }
 
@@ -365,7 +365,7 @@ export function sleepQuality(sim: Simulation, person: Person): number {
   }
 
   quality -= remap(person.wellbeing.stress, 0, 100, 0, 0.24);
-  quality += systemModifier(person.traits, 'recoveryRate') * 0.06 - 0.06;
+  quality += modifierFor(person, 'recoveryRate') * 0.06 - 0.06;
 
   const hour = zonedParts(sim.now, sim.zone).hour;
   if (hour >= 1 && hour < 5) quality -= 0.08; // going to bed very late
@@ -404,7 +404,7 @@ function applyActivity(sim: Simulation, person: Person, def: ActivityDef, hours:
     }
   }
 
-  const trainingGain = systemModifier(person.traits, 'trainingGain');
+  const trainingGain = modifierFor(person, 'trainingGain');
   for (const practice of def.practises ?? []) {
     const sheet = practice.kind === 'attribute' ? person.attributes : person.skills;
     const current = sheet[practice.key] ?? 0;

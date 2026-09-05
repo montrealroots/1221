@@ -240,16 +240,23 @@ describe('attributes and traits', () => {
     }
   });
 
-  it('never lets the founder hold two traits that contradict each other', () => {
-    // They start with every acting trait that can be held at once, and the
-    // mutually exclusive pairs stay exclusive: that is a fact about people
-    // rather than a limit the game was imposing on the player.
+  it('gives the founder every trait, and keeps them exclusive for everybody else', () => {
+    // The founder is the one exception in the save: they hold the whole list,
+    // contradictory pairs included, and the prodigy flag is what stops the
+    // penalty half of each one applying. Nobody else gets that, and the
+    // command that hands a trait out still refuses a conflicting pick.
     const sim = quickSave();
-    const held = sim.player.traits;
-    expect(held.length).toBeGreaterThan(10);
-    for (const id of held) {
-      expect(conflictingTraits(held.filter((t) => t !== id), id), id).toHaveLength(0);
+    expect(sim.player.prodigy).toBe(true);
+    expect(sim.player.traits).toHaveLength(ALL_TRAITS.length);
+
+    const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+    expect(other.prodigy).toBeFalsy();
+    for (const id of other.traits) {
+      expect(conflictingTraits(other.traits.filter((t) => t !== id), id), id).toHaveLength(0);
     }
+
+    // And the rule is still enforced where a trait is actually chosen.
+    expect(conflictingTraits(['writer_page_machine'], 'writer_polisher').length).toBeGreaterThan(0);
   });
 
   it('starts every attribute and skill at the ceiling', () => {

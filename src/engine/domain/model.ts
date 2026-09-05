@@ -198,6 +198,17 @@ export interface Person {
   /** Where they came from before they were doing this. */
   founderBackground?: string;
 
+  /**
+   * The once-in-a-lifetime one, and there is exactly one of them in a save.
+   *
+   * They hold every attribute, every skill and every trait in the game at the
+   * top of its scale at the same time. For anybody else that combination is
+   * incoherent — most traits are alternatives to each other and all of them
+   * are paid for with a weakness somewhere. The flag says the payment does not
+   * apply here: it never adds anything, it only refuses to subtract.
+   */
+  prodigy?: boolean;
+
   wellbeing: Wellbeing;
   reputation: Reputation;
 
@@ -1458,7 +1469,7 @@ export interface Preferences {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 27;
+export const SAVE_SCHEMA_VERSION = 28;
 
 export interface SaveMeta {
   id: Id;

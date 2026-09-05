@@ -346,28 +346,86 @@ export function conflictingTraits(held: readonly string[], candidate: string): s
   return [...out];
 }
 
-/** Attribute sheet with trait modifiers folded in and clamped to 0-100. */
-export function effectiveAttributes(sheet: AttributeSheet, traits: readonly string[]): AttributeSheet {
+/**
+ * Somebody for whom traits are read.
+ *
+ * The prodigy flag is the founder's, and only the founder's. They hold every
+ * trait in the game at once, which for anybody else would be incoherent — half
+ * of these are alternatives to the other half, and most of them are paid for
+ * with a weakness somewhere else. For the one person who is the best living
+ * writer, director, producer, showrunner and actor, a trait costs nothing.
+ * That is the whole meaning of the flag: it does not add anything, it only
+ * refuses to subtract.
+ */
+export interface TraitHolder {
+  traits: readonly string[];
+  prodigy?: boolean;
+}
+
+/** System knobs where a bigger number is the worse outcome. */
+export const SYSTEM_HIGHER_IS_WORSE: ReadonlySet<string> = new Set([
+  'stressPerShootDay', 'injuryRisk', 'relationshipDecay', 'burnoutRisk',
+  'crewFriction', 'criticalScrutiny', 'audienceVariance', 'overrunOdds',
+  'draftDays', 'coverageDays', 'decisionDays', 'dealDays', 'healthDrain',
+]);
+
+/**
+ * Attribute sheet with trait modifiers folded in and clamped to 0-100.
+ *
+ * `floor` is the lowest any attribute may be dragged to. It exists for the
+ * prodigy, whose sheet is at the ceiling and must stay there however many
+ * traits they are carrying.
+ */
+export function effectiveAttributes(
+  sheet: AttributeSheet,
+  traits: readonly string[],
+  opts: { floor?: number } = {},
+): AttributeSheet {
   const out: AttributeSheet = { ...sheet };
   for (const tid of traits) {
     const mods = TRAIT_BY_ID[tid]?.attributeMods;
     if (!mods) continue;
     for (const [aid, delta] of Object.entries(mods)) {
       if (out[aid] === undefined) continue;
-      out[aid] = Math.max(0, Math.min(100, (out[aid] ?? 0) + delta));
+      const base = out[aid] ?? 0;
+      const floor = Math.min(opts.floor ?? 0, base);
+      out[aid] = Math.max(floor, Math.min(100, base + delta));
     }
   }
   return out;
 }
 
-/** Product of every trait's multiplier for a named system knob. Default 1. */
-export function systemModifier(traits: readonly string[], key: string): number {
+/** The same, read from the person, so the prodigy's floor is not forgotten. */
+export function attributesOf(person: TraitHolder & { attributes: AttributeSheet }): AttributeSheet {
+  return effectiveAttributes(person.attributes, person.traits, { floor: person.prodigy ? 100 : 0 });
+}
+
+/**
+ * Product of every trait's multiplier for a named system knob. Default 1.
+ *
+ * `favourableOnly` keeps the side of each multiplier that helps and discards
+ * the side that hurts — which direction that is depends on the knob, so it is
+ * read from SYSTEM_HIGHER_IS_WORSE rather than assumed.
+ */
+export function systemModifier(
+  traits: readonly string[],
+  key: string,
+  opts: { favourableOnly?: boolean } = {},
+): number {
+  const worseWhenHigher = SYSTEM_HIGHER_IS_WORSE.has(key);
   let value = 1;
   for (const tid of traits) {
     const m = TRAIT_BY_ID[tid]?.systemMods?.[key];
-    if (typeof m === 'number') value *= m;
+    if (typeof m !== 'number') continue;
+    if (opts.favourableOnly && (worseWhenHigher ? m > 1 : m < 1)) continue;
+    value *= m;
   }
   return value;
+}
+
+/** The same, read from the person. A trait never costs the prodigy anything. */
+export function modifierFor(person: TraitHolder, key: string): number {
+  return systemModifier(person.traits, key, { favourableOnly: person.prodigy === true });
 }
 
 /** Additive version, for knobs like `luckyBreakCharges` that count rather than scale. */
@@ -381,16 +439,27 @@ export function systemCount(traits: readonly string[], key: string): number {
 }
 
 /** A skill sheet with every held trait's skill modifiers applied. */
-export function effectiveSkills(sheet: Record<string, number>, traits: readonly string[]): Record<string, number> {
+export function effectiveSkills(
+  sheet: Record<string, number>,
+  traits: readonly string[],
+  opts: { floor?: number } = {},
+): Record<string, number> {
   const out: Record<string, number> = { ...sheet };
   for (const id of traits) {
     const trait = TRAIT_BY_ID[id];
     if (!trait?.skillMods) continue;
     for (const [key, delta] of Object.entries(trait.skillMods)) {
-      out[key] = Math.max(0, Math.min(100, (out[key] ?? 0) + delta));
+      const base = out[key] ?? 0;
+      const floor = Math.min(opts.floor ?? 0, base);
+      out[key] = Math.max(floor, Math.min(100, base + delta));
     }
   }
   return out;
+}
+
+/** The same, read from the person, so the prodigy's floor is not forgotten. */
+export function skillsOf(person: TraitHolder & { skills: Record<string, number> }, extra: readonly string[] = []): Record<string, number> {
+  return effectiveSkills(person.skills, [...person.traits, ...extra], { floor: person.prodigy ? 100 : 0 });
 }
 
 /** Traits belonging to one profession. */

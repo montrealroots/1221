@@ -24,7 +24,8 @@ import { clamp } from '../core/rng';
 import { addDays } from '../core/time';
 import { titleCaseLabel } from '../core/text';
 import { SHINGLE_BY_ID, REMIT_BY_ID } from '../content/shingle';
-import { FOUNDER_ATTRIBUTES } from '../content/founder';
+import { FOUNDER_ATTRIBUTES, HIGHER_IS_WORSE } from '../content/founder';
+import { SYSTEM_HIGHER_IS_WORSE } from '../domain/attributes';
 import { MONOPOLY, OPENING_BRIEF, STRIKE_IS_FICTION } from '../content/strike';
 
 /** The company the player runs, if they have opened one yet. */
@@ -51,12 +52,17 @@ export function requireCompany(sim: Simulation): Company {
 export function founderScore(sim: Simulation, attributeId: string, personId?: Id): number {
   const person = sim.universe.people[personId ?? sim.universe.playerId];
   if (!person?.founder) return 0;
-  let value = person.founder[attributeId] ?? 0;
+  const base = person.founder[attributeId] ?? 0;
+  let value = base;
   for (const traitId of person.founderTraits ?? []) {
     const mod = FOUNDER_TRAIT_MODS[traitId]?.[attributeId];
     if (mod) value += mod;
   }
-  return clamp(value, 0, 100);
+  // The prodigy holds every trait there is. For anybody else each one is paid
+  // for somewhere; for them it is not, so nothing drags the sheet off the
+  // ceiling it started on.
+  const floor = person.prodigy ? Math.min(base, 100) : 0;
+  return clamp(value, floor, 100);
 }
 
 // Built once from the content so the hot path is not filtering an array.
@@ -67,10 +73,14 @@ const FOUNDER_TRAIT_MODS: Readonly<Record<string, Readonly<Record<string, number
 /** A system multiplier from the founder's traits, multiplied together. */
 export function founderModifier(sim: Simulation, key: string, personId?: Id): number {
   const person = sim.universe.people[personId ?? sim.universe.playerId];
+  const worseWhenHigher = SYSTEM_HIGHER_IS_WORSE.has(key) || HIGHER_IS_WORSE.has(key);
   let out = 1;
   for (const traitId of person?.founderTraits ?? []) {
     const mod = FOUNDER_TRAITS.find((t) => t.id === traitId)?.systemMods?.[key];
-    if (mod !== undefined) out *= mod;
+    if (mod === undefined) continue;
+    // Same rule as the attribute floor: a trait never costs the prodigy.
+    if (person?.prodigy && (worseWhenHigher ? mod > 1 : mod < 1)) continue;
+    out *= mod;
   }
   return out;
 }

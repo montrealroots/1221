@@ -12,13 +12,13 @@ import type {
 } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import {
-  ALL_TRAITS, ATTRIBUTES, PROFESSION_TRAITS, conflictingTraits, emptyAttributeSheet,
-  effectiveAttributes, TRAIT_BY_ID, type AttributeSheet,
+  ALL_TRAITS, ATTRIBUTES, PROFESSION_TRAITS, emptyAttributeSheet,
+  attributesOf, type AttributeSheet,
 } from '../domain/attributes';
 import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
-import { FOUNDER_ATTRIBUTES } from '../content/founder';
+import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '../content/founder';
 import { CEILING, GOAT_TRAITS } from '../content/prodigy';
-import { LEVEL_XP, MAX_PROFESSION_LEVEL, PROFESSIONS, traitSlotsAt } from '../content/professions';
+import { LEVEL_XP, PROFESSIONS } from '../content/professions';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
@@ -202,35 +202,28 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
  * how much money, who takes your call, and what kind of company you open.
  */
 /**
- * Every acting trait that can be held at once, starting from the ones picked.
+ * Every trait in the game, held at once.
  *
- * The mutually exclusive pairs stay mutually exclusive: those are facts about
- * people rather than a limit on the player, and a founder who is both a
- * perfectionist and a one-taker is not a prodigy, it is a contradiction.
+ * For anybody else this list is incoherent: half of these are alternatives to
+ * the other half, and every one of them is paid for with a weakness somewhere.
+ * The prodigy flag is what makes it hold — it does not add anything, it stops
+ * a trait subtracting, so the sheet that started at the ceiling stays there.
+ * Nobody else in the save gets this.
  */
-function allCompatibleTraits(picked: string[]): string[] {
-  const held = [...picked];
-  for (const trait of ALL_TRAITS) {
-    if (held.includes(trait.id)) continue;
-    if (conflictingTraits(held, trait.id).length > 0) continue;
-    held.push(trait.id);
-  }
-  return held;
+function everyTrait(): string[] {
+  return ALL_TRAITS.map((trait) => trait.id);
 }
 
-/** Every profession, open on day one and at the top of its ladder. */
+/** Every profession, open on day one, at the top of its ladder, all traits taken. */
 function maxedProfessions(at: number): Person['professions'] {
   const out: NonNullable<Person['professions']> = {};
   const topXp = LEVEL_XP[LEVEL_XP.length - 1] ?? 0;
   for (const def of PROFESSIONS) {
-    const slots = traitSlotsAt(MAX_PROFESSION_LEVEL);
-    const traitIds: string[] = [];
-    for (const trait of PROFESSION_TRAITS.filter((t) => t.profession === def.id)) {
-      if (traitIds.length >= slots) break;
-      if (conflictingTraits(traitIds, trait.id).length > 0) continue;
-      traitIds.push(trait.id);
-    }
-    out[def.id] = { unlockedAt: at, xp: topXp, traitIds };
+    out[def.id] = {
+      unlockedAt: at,
+      xp: topXp,
+      traitIds: PROFESSION_TRAITS.filter((t) => t.profession === def.id).map((t) => t.id),
+    };
   }
   return out;
 }
@@ -324,22 +317,22 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lifestyle: config.lifestyle,
     background: config.background,
     attributes,
-    // Every acting trait that does not contradict one already held. The
-    // player picked some at creation; the rest come with being the best there
-    // has ever been at it.
-    traits: allCompatibleTraits(config.traits.filter((t) => TRAIT_BY_ID[t])),
+    // Every trait in the game. The ones picked at creation are in here too;
+    // there was never anything to choose between.
+    traits: everyTrait(),
     skills,
 
     // The producer's instrument, at the ceiling like everything else. Separate
     // from the acting set above because they measure different jobs, and both
     // of them are full.
     founder: Object.fromEntries(FOUNDER_ATTRIBUTES.map((a) => [a.id, CEILING])),
-    // All fourteen G.O.A.T. traits and nothing else. The ordinary producing
-    // traits are built out of trade-offs — a contrarian reads the market
-    // worse — and a trade-off would pull an attribute below the ceiling. Those
-    // belong to the executives this founder hires, not to the founder.
-    founderTraits: GOAT_TRAITS.map((t) => t.id),
+    // All fourteen G.O.A.T. traits and all nineteen ordinary producing ones.
+    // The ordinary set is built out of trade-offs — a contrarian reads the
+    // market worse — and the prodigy flag below is what stops the trade-off
+    // half applying to the one person it was never going to apply to.
+    founderTraits: [...GOAT_TRAITS.map((t) => t.id), ...FOUNDER_TRAITS.map((t) => t.id)],
     founderBackground: config.founderBackground,
+    prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
@@ -379,7 +372,7 @@ export function careerLabel(track: CareerTrack): string {
 export function playerAttributes(universe: SaveUniverse): AttributeSheet {
   const player = universe.people[universe.playerId];
   if (!player) return {};
-  return effectiveAttributes(player.attributes, player.traits);
+  return attributesOf(player);
 }
 
 export const WEALTH_PROFILES = WEALTH_PROFILE;

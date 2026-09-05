@@ -26,7 +26,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { FOUNDER_BACKGROUNDS, FOUNDER_BACKGROUND_BY_ID } from '@/engine/content/founder';
 import { REMITS, REMIT_BY_ID, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
 import { STRIKE_IS_FICTION } from '@/engine/content/strike';
-import { DISCIPLINES, DISCIPLINE_LABEL, PRODIGY_NOTE, goatTraitsIn } from '@/engine/content/prodigy';
+import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, goatTraitsIn } from '@/engine/content/prodigy';
 
 const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -716,10 +716,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       {/* --- What you are ------------------------------------------------- */}
       <div className="card">
         <div className="panel-head">
-          <div>
-            <h3>What You Are</h3>
-            <p className="muted small">{PRODIGY_NOTE}</p>
-          </div>
+          <div><h3>What You Are</h3></div>
         </div>
 
         <div className="grid grid-2">
@@ -727,25 +724,18 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <div key={discipline} className="trait is-fixed">
               <div className="row-between">
                 <div className="trait-name">{DISCIPLINE_LABEL[discipline]}</div>
-                <span className="chip chip-accent">Best Alive</span>
+                <span className="chip chip-accent">{GOAT_LABEL}</span>
               </div>
-              {goatTraitsIn(discipline).map((trait) => (
-                <div key={trait.id} style={{ marginTop: 6 }}>
-                  <div className="xs strong">{trait.name}</div>
-                  <div className="xs dim">{trait.description}</div>
-                </div>
-              ))}
+              <div className="xs dim" style={{ marginTop: 4 }}>
+                Every Attribute {CEILING} · Every Skill {CEILING} · Every Trait
+              </div>
+              <div className="row wrap gap-1" style={{ marginTop: 6 }}>
+                {goatTraitsIn(discipline).map((trait) => (
+                  <span key={trait.id} className="chip chip-accent">{trait.name}</span>
+                ))}
+              </div>
             </div>
           ))}
-        </div>
-
-        <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-          <strong className="xs">And What That Does Not Buy You</strong>
-          <p className="xs" style={{ margin: '4px 0 0' }}>
-            A company that runs itself, money that does not run out, or an industry that forgives.
-            Being the best there has ever been at making things is not the same as being able to
-            keep the lights on.
-          </p>
         </div>
       </div>
 

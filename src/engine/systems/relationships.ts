@@ -16,7 +16,7 @@ import { addDays, addYears, ageOn, formatDate, nextAnniversary, zonedParts, MS_D
 import { formatMoney, type Money } from '../core/money';
 import { buildFactors } from '../core/audit';
 import { costOfLiving } from '../content/tax';
-import { systemModifier } from '../domain/attributes';
+import { modifierFor } from '../domain/attributes';
 import { CATALOG } from '../content/catalog';
 
 const ROMANTIC: readonly RelationshipType[] = ['dating', 'engaged', 'spouse'];
@@ -868,7 +868,7 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
 function driftRelationships(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
-  const decayMultiplier = systemModifier(player.traits, 'relationshipDecay');
+  const decayMultiplier = modifierFor(player, 'relationshipDecay');
 
   for (const rel of Object.values(sim.universe.relationships)) {
     if (rel.endedAt) continue;

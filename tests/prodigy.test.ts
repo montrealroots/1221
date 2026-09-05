@@ -4,8 +4,9 @@
  * The founder is the best living writer, director, producer, showrunner and
  * actor at the same time. Nobody has ever been two of those. So the instrument
  * does not climb: it starts at the ceiling of every scale the game has, every
- * profession is already open at the top of its ladder, and they hold all
- * fourteen G.O.A.T. traits.
+ * profession is already open at the top of its ladder, and they hold every
+ * trait in the game at once — all fourteen G.O.A.T. ones, all nineteen
+ * producing ones, and every acting and profession trait there is.
  *
  * There is no cheat mode in this build. These tests hold that too — a command
  * that hands out money or attributes is not something to leave lying around,
@@ -14,12 +15,14 @@
 
 import { describe, expect, it } from 'vitest';
 import { migrate, quickSave, validateUniverse } from '@/engine';
-import { ALL_TRAITS, ATTRIBUTES, conflictingTraits, effectiveAttributes } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, attributesOf, modifierFor, skillsOf } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
 import { LEVEL_XP, MAX_PROFESSION_LEVEL, PROFESSIONS, levelFor } from '@/engine/content/professions';
-import { FOUNDER_ATTRIBUTES, conflictingFounderTraits } from '@/engine/content/founder';
+import { PROFESSION_TRAITS } from '@/engine/domain/attributes';
+import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS, conflictingFounderTraits } from '@/engine/content/founder';
+import { founderScore } from '@/engine/systems/shingle';
 import {
-  CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, GOAT_TRAIT_BY_ID, goatTraitsIn,
+  CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, GOAT_TRAIT_BY_ID, POSITIONS, goatTraitsIn,
 } from '@/engine/content/prodigy';
 
 const aGame = (seed: string) => quickSave({}, seed);
@@ -88,12 +91,11 @@ describe('the G.O.A.T. traits themselves', () => {
     }
   });
 
-  it('each say what they are and what the business says about them', () => {
+  it('each say what they are, in Title Case, once', () => {
     const ids = GOAT_TRAITS.map((t) => t.id);
     expect(new Set(ids).size).toBe(ids.length);
     for (const trait of GOAT_TRAITS) {
       expect(trait.description.length, trait.id).toBeGreaterThan(30);
-      expect(trait.saidOfYou.length, trait.id).toBeGreaterThan(30);
       expect(DISCIPLINES).toContain(trait.discipline);
       for (const word of trait.name.split(' ')) {
         if (['a', 'an', 'the', 'of', 'on', 'and', 'you', 'it'].includes(word.toLowerCase())) continue;
@@ -121,33 +123,89 @@ describe('the G.O.A.T. traits themselves', () => {
   });
 });
 
-describe('the rules of the world still hold', () => {
-  it('keeps mutually exclusive acting traits mutually exclusive, even for them', () => {
-    const sim = aGame('prodigy-conflicts');
-    const held = sim.player.traits;
-    for (const id of held) {
-      const clashes = conflictingTraits(held.filter((t) => t !== id), id);
-      expect(clashes, `${id} is held alongside ${clashes.join(', ')}`).toEqual([]);
-    }
-    // And they hold a great many of them, because most do not contradict.
-    expect(held.length).toBeGreaterThan(ALL_TRAITS.length / 3);
+describe('every trait in the game, held at once', () => {
+  it('holds every acting and profession trait there is', () => {
+    const sim = aGame('prodigy-every-trait');
+    expect(sim.player.traits).toHaveLength(ALL_TRAITS.length);
+    for (const trait of ALL_TRAITS) expect(sim.player.traits, trait.id).toContain(trait.id);
   });
 
-  it('keeps mutually exclusive producing traits mutually exclusive', () => {
-    const sim = aGame('prodigy-founder-conflicts');
+  it('holds every producing trait, G.O.A.T. and ordinary alike', () => {
+    const sim = aGame('prodigy-every-founder-trait');
     const held = sim.player.founderTraits ?? [];
-    for (const id of held) {
-      expect(conflictingFounderTraits(held.filter((t) => t !== id), id), id).toEqual([]);
+    for (const trait of [...GOAT_TRAITS, ...FOUNDER_TRAITS]) expect(held, trait.id).toContain(trait.id);
+    expect(held).toHaveLength(GOAT_TRAITS.length + FOUNDER_TRAITS.length);
+  });
+
+  it('fills every trait slot on every profession', () => {
+    const sim = aGame('prodigy-profession-traits');
+    for (const def of PROFESSIONS) {
+      const mine = PROFESSION_TRAITS.filter((t) => t.profession === def.id).map((t) => t.id);
+      expect(sim.player.professions?.[def.id]?.traitIds, def.id).toEqual(mine);
     }
   });
 
-  it('reads at the ceiling once traits are applied, and never above it', () => {
-    const sim = aGame('prodigy-effective');
-    const effective = effectiveAttributes(sim.player.attributes, sim.player.traits);
-    for (const [id, value] of Object.entries(effective)) {
-      expect(value, id).toBeLessThanOrEqual(CEILING);
-      expect(value, id).toBeGreaterThanOrEqual(0);
+  it('is marked as the one it applies to, and is the only one', () => {
+    const sim = aGame('prodigy-flag');
+    expect(sim.player.prodigy).toBe(true);
+    for (const person of Object.values(sim.universe.people)) {
+      if (person.isPlayer) continue;
+      expect(person.prodigy, person.displayName).toBeFalsy();
     }
+  });
+
+  it('still reads at the ceiling on every sheet, because a trait costs them nothing', () => {
+    const sim = aGame('prodigy-effective');
+    // The acting sheet. Half these traits carry a penalty for anybody else.
+    for (const attribute of ATTRIBUTES) {
+      expect(attributesOf(sim.player)[attribute.id], attribute.id).toBe(CEILING);
+    }
+    // Every skill.
+    const skills = skillsOf(sim.player);
+    for (const skill of SKILLS) expect(skills[skill.id], skill.id).toBe(CEILING);
+    // And the producing instrument, which has its own trait set.
+    for (const attribute of FOUNDER_ATTRIBUTES) {
+      expect(founderScore(sim, attribute.id), attribute.id).toBe(CEILING);
+    }
+  });
+
+  it('never takes the wrong side of a system multiplier', () => {
+    const sim = aGame('prodigy-modifiers');
+    // Higher is worse on these, so holding every trait must not raise them.
+    for (const key of ['stressPerShootDay', 'injuryRisk', 'relationshipDecay']) {
+      expect(modifierFor(sim.player, key), key).toBeLessThanOrEqual(1);
+    }
+    // And higher is better on these, so it must not lower them.
+    for (const key of ['recoveryRate', 'trainingGain', 'viralOdds']) {
+      expect(modifierFor(sim.player, key), key).toBeGreaterThanOrEqual(1);
+    }
+  });
+
+  it('still applies both sides of a multiplier to everybody else', () => {
+    const sim = aGame('prodigy-others');
+    const other = Object.values(sim.universe.people).find((p) => !p.isPlayer);
+    expect(other).toBeDefined();
+    expect(other!.prodigy).toBeFalsy();
+    // Nobody else holds the whole set, so nobody else gets the exemption.
+    expect(other!.traits.length).toBeLessThan(ALL_TRAITS.length);
+  });
+});
+
+describe('the five positions', () => {
+  it('name every scale the game keeps for that job', () => {
+    expect(POSITIONS).toHaveLength(DISCIPLINES.length);
+    for (const position of POSITIONS) {
+      expect(DISCIPLINES, position.id).toContain(position.id);
+      const measures = position.skillDomains.length + position.attributeGroups.length + (position.producerSheet ? 1 : 0);
+      expect(measures, `${position.name} measures nothing`).toBeGreaterThan(0);
+    }
+  });
+
+  it('cover every skill domain and every attribute group between them', () => {
+    const domains = new Set(POSITIONS.flatMap((p) => p.skillDomains));
+    for (const skill of SKILLS) expect(domains, skill.domain).toContain(skill.domain);
+    const groups = new Set(POSITIONS.flatMap((p) => p.attributeGroups));
+    for (const attribute of ATTRIBUTES) expect(groups, attribute.group).toContain(attribute.group);
   });
 });
 

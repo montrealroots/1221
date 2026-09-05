@@ -34,7 +34,10 @@ import { registerDriving } from './systems/driving';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
 import { SHINGLE_BY_ID } from './content/shingle';
-import { FOUNDER_BACKGROUND_BY_ID } from './content/founder';
+import { FOUNDER_ATTRIBUTES, FOUNDER_BACKGROUND_BY_ID, FOUNDER_TRAITS } from './content/founder';
+import { CEILING, GOAT_TRAITS } from './content/prodigy';
+import { ALL_TRAITS, ATTRIBUTES } from './domain/attributes';
+import { SKILLS } from './domain/skills';
 import { createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig, careerLabel } from './world/bootstrap';
 
 export * from './world/bootstrap';
@@ -659,6 +662,51 @@ export function migrate(universe: SaveUniverse): MigrationResult {
         ? `The film and television half of the game was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'}, closed ${closed} decision${closed === 1 ? '' : 's'} and cleared the credits on ${uncredited} ${uncredited === 1 ? 'person' : 'people'}. None of it can be recovered from this save.`
         : 'The film and television half of the game was removed. This save had nothing in it.',
     );
+  }
+
+  if (from < 28) {
+    // Schema 28: the founder is the once-in-a-lifetime one. Every attribute,
+    // every skill, every producing attribute and every trait in the game, all
+    // at the top of their scale at the same time. Nothing is taken away from
+    // an older save — the sheets only ever go up, and the history, money and
+    // relationships in the save are untouched.
+    const player = universe.people[universe.playerId];
+    if (player) {
+      for (const attribute of ATTRIBUTES) {
+        player.attributes[attribute.id] = Math.max(player.attributes[attribute.id] ?? 0, CEILING);
+      }
+      for (const skill of SKILLS) {
+        player.skills[skill.id] = Math.max(player.skills[skill.id] ?? 0, CEILING);
+      }
+      player.founder = Object.fromEntries(
+        FOUNDER_ATTRIBUTES.map((a) => [a.id, Math.max(player.founder?.[a.id] ?? 0, CEILING)]),
+      );
+      player.traits = [...new Set([...player.traits, ...ALL_TRAITS.map((t) => t.id)])];
+      player.founderTraits = [...new Set([
+        ...(player.founderTraits ?? []),
+        ...GOAT_TRAITS.map((t) => t.id),
+        ...FOUNDER_TRAITS.map((t) => t.id),
+      ])];
+      player.prodigy = true;
+      steps.push(
+        `${player.displayName} is the prodigy: ${ATTRIBUTES.length} attributes, ${SKILLS.length} skills and `
+        + `${FOUNDER_ATTRIBUTES.length} producing attributes at ${CEILING}, and all `
+        + `${player.traits.length + player.founderTraits.length} traits held at once.`,
+      );
+    }
+    // And nobody else acquires one. A G.O.A.T. trait on a second person would
+    // make the word meaningless, and the founder traits belong to whoever the
+    // save gave them to.
+    const goatIds = new Set(GOAT_TRAITS.map((t) => t.id));
+    let stripped = 0;
+    for (const person of Object.values(universe.people)) {
+      if (person.isPlayer) continue;
+      const before = person.founderTraits?.length ?? 0;
+      if (before === 0) continue;
+      person.founderTraits = person.founderTraits!.filter((id) => !goatIds.has(id));
+      if (person.founderTraits.length !== before) stripped++;
+    }
+    if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There is one.`);
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
