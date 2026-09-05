@@ -45,6 +45,7 @@ import { registerPress } from './systems/press';
 import { craftFromLegacy } from './content/screenplay';
 import { ensureLotsClose, plantForLegacyProperty, registerPost } from './systems/post';
 import { ensureHygieneTick, registerPlaces } from './systems/places';
+import { ensureReactive, registerReactive } from './systems/reactive';
 import { registerDriving } from './systems/driving';
 import { LEVEL_XP, PROFESSION_BY_ID, type ProfessionId } from './content/professions';
 import { ensureSeasons, registerAwards, setUpSeason } from './systems/awards';
@@ -78,6 +79,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerProduction(sim);
   registerPost(sim);
   registerPlaces(sim);
+  registerReactive(sim);
   registerRelease(sim);
   registerCritics(sim);
   registerFranchises(sim);
@@ -127,6 +129,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'prop.market_tick', label: 'Property Market', category: 'system', priority: 92 });
   ensureLotsClose(sim);
   ensureHygieneTick(sim);
+  ensureReactive(sim);
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
@@ -850,6 +853,12 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       if (vehicle.fuelPercent === undefined) { vehicle.fuelPercent = 100; cars++; }
     }
     steps.push(`The city is somewhere you go now: restaurants, filling stations, hotels and the sights. ${people} people started clean and ${cars} car${cars === 1 ? '' : 's'} started full.`);
+  }
+
+  if (from < 24) {
+    // The industry remembers now. Nobody in the save is given a grudge they
+    // did not earn: everybody starts with no history and forms one from here.
+    steps.push('The industry has a memory now: what people privately think of you, what they have not forgotten, and what they do about it later.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

@@ -21,6 +21,7 @@ import { ApproachCraftDialog, OfferRealDialog } from '@/ui/components/ApproachRo
 import { CRAFT_ROLE_LABEL, type CraftRole } from '@/engine/content/craft-attributes';
 import { personByQid } from '@/engine/content/people';
 import { pipelineFor } from '@/engine/content/pipelines';
+import { heatSummary } from '@/engine/systems/reactive';
 import { CastingRooms, CutRoom, EffectsRoom, HousePicker, MusicRoom, PostHouseLine, ScriptDocument, ShootDayRow, StageBookingPanel } from '@/ui/components/ProductionRooms';
 
 export function ProjectsWorkspace() {
@@ -112,6 +113,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
 
   const currentIndex = phaseIndex(project.phase);
   const pipeline = pipelineFor(project);
+  const heat = heatSummary(project);
   const rights = project.rightsId ? sim.universe.rights[project.rightsId] : undefined;
   const company = companies[0];
 
@@ -139,6 +141,23 @@ function ProjectDetail({ projectId }: { projectId: string }) {
           <Stat label="Script" value={project.scriptQuality ? Math.round(project.scriptQuality) : '—'} note="out of 100" />
           <Stat label="Package" value={Math.round(project.packageValue)} note="how buyers see it" />
         </div>
+
+        {heat.heat > 0 && (
+          <div className={`callout ${heat.heat > 45 ? 'callout-negative' : 'callout-warning'}`} style={{ marginTop: 'var(--s4)' }}>
+            <strong>What This Picture Is Carrying.</strong> {heat.note}
+            <div className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+              {heat.log.slice(-3).reverse().map((entry, i) => (
+                <div key={i}>{formatDate(entry.at, sim.homeZone)} · {entry.note}</div>
+              ))}
+            </div>
+            {Object.values(sim.universe.decisions).some((d) => d.refId === project.id && !d.resolvedAt && d.category === 'business') && (
+              <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
+                <button className="btn btn-sm btn-primary" onClick={() => run('pr.statement', { projectId: project.id })}>Get Ahead Of It</button>
+                <button className="btn btn-sm" onClick={() => run('pr.ride_it_out', { projectId: project.id })}>Say Nothing</button>
+              </div>
+            )}
+          </div>
+        )}
 
         {!rights && (
           <div className="callout callout-warning" style={{ marginTop: 'var(--s4)' }}>

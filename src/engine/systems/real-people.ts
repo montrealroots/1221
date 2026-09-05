@@ -33,6 +33,7 @@ import {
 } from '../content/people';
 import { isScreenAward } from '../content/award-records';
 import { CRAFT_ROLE_LABEL, type CraftRole } from '../content/craft-attributes';
+import { standingWith, willReadFor } from './reactive';
 import { CITIES, countryOfCity } from '../content/geography';
 import { playerCompanies } from './company';
 import { titleCaseLabel } from '../core/text';
@@ -372,6 +373,12 @@ export function considerApproach(
   // The industry runs on who you have already been in a room with.
   const history = historyWith(sim, record.qid);
 
+  // What they think of you personally, from everything that has passed between
+  // you. A stranger reads at fifty; somebody you have treated well reads
+  // higher, and somebody carrying a grudge reads lower and may not read at all.
+  const inSave = personForRecord(sim, record.qid);
+  const feeling = inSave ? standingWith(sim, inSave) : 50;
+
   const { factors, score } = buildFactors([
     { label: 'The Script', detail: `It reads at ${Math.round(script)} out of 100.`, weight: 0.30, value: script / 100 },
     { label: 'The Money', detail: `${Math.round(money * 100)}% of what SLATE reckons they are worth for this.`, weight: 0.26, value: clamp(money / 1.15, 0, 1) },
@@ -387,6 +394,14 @@ export function considerApproach(
       value: clamp(history.together / 3, 0, 1) * clamp(0.45 + history.best / 140, 0, 1),
     },
     { label: 'How Busy They Are', detail: `They are at ${demandOf(record, role)} out of 100 for demand.`, weight: -0.24, value: demandOf(record, role) / 100 },
+    {
+      label: 'How They Feel About You',
+      detail: feeling >= 62 ? 'You have been good to them, and they know it.'
+        : feeling >= 45 ? 'Nothing between you either way.'
+          : 'Something has happened between you that they have not forgotten.',
+      weight: 0.16,
+      value: feeling / 100,
+    },
     { label: 'What Else Is On Their Desk', detail: 'The other things they were sent this month, which you do not get to see.', weight: 0.14, value: rng.float(0, 1), knowable: false },
     // Asking again is not free. Somebody who has already passed once has said
     // what they think of it, and the second read starts from there.
@@ -397,8 +412,22 @@ export function considerApproach(
 
   const probability = clamp(score * 1.05 - 0.06, 0.01, 0.95);
   const roll = rng.next();
-  const interested = roll < probability;
+  const refusing = inSave ? willReadFor(sim, inSave) : { ok: true };
+  const interested = refusing.ok && roll < probability;
   void signals;
+
+  if (!refusing.ok) {
+    return {
+      interested: false,
+      probability: 0,
+      wants,
+      reasons: factors,
+      summary: refusing.reason ?? `${record.name} is not reading anything of yours.`,
+      roll,
+      score: 0,
+      seed: `approach|${project.id}|${record.qid}|${role}|${attempt}|refused`,
+    };
+  }
 
   return {
     interested,
@@ -639,7 +668,7 @@ export function registerRealPeople(sim: Simulation): void {
       role.offers.push(offer);
 
       if (!answer.interested) {
-        s.emit('cast.real_offer_declined', { roleId: role.id, projectId: project.id, personId: person.id, qid: record.qid, amount });
+        s.emit('cast.real_offer_declined', { roleId: role.id, projectId: project.id, personId: person.id, qid: record.qid, amount, wanted });
         return { accepted: false, personId: person.id, name: record.name, amount, wanted, reason: answer.summary };
       }
 

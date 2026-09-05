@@ -24,6 +24,7 @@ import { appetiteOf, genreName } from '../content/genres';
 import { audienceReach, rating } from '../content/ratings';
 import { payOnePartner, NETWORKS } from '../content/networks';
 import { advancePhase } from './film';
+import { audienceFatigue, controversyFactor, fatigueFactor } from './reactive';
 
 // ---------------------------------------------------------------------------
 // Registration
@@ -478,8 +479,13 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
     const certificate = audienceReach(project.contentRating);
     const platform = release.strategy === 'platform' ? PLATFORM_MULTIPLIER * remap(critics, 40, 95, 0.5, 1.6) : 1;
 
+    const heat = controversyFactor(project);
+    // What else the audience has been fed lately, which is not this film's
+    // fault and is this film's problem.
+    const fatigue = audienceFatigue(sim, project.genres);
+    const tired = fatigueFactor(fatigue);
     const perTheatre = CEILING_PER_THEATRE * reach * conversion
-      * genreFactor * starFactor * lift * certificate * competition.factor * platform * luck;
+      * genreFactor * starFactor * lift * certificate * competition.factor * platform * heat * tired * luck;
     const gross = Math.round(release.theaterCount * perTheatre * weekdayFactor);
     recordBoxOfficeDay(sim, release, project, day, gross, rng);
 
@@ -497,6 +503,8 @@ function runBoxOfficeDay(sim: Simulation, releaseId: Id, day: number): void {
           { label: 'Certificate', detail: project.contentRating ? `${rating(project.contentRating)?.code ?? project.contentRating} leaves about ${Math.round(certificate * 100)}% of the audience able to buy a ticket.` : 'Uncertified. The chains treat that cautiously.', weight: 0.1, contribution: certificate, knowable: true },
           { label: 'Competition', detail: competition.detail, weight: 0.12, contribution: competition.factor, knowable: true },
           ...(platform !== 1 ? [{ label: 'Platform Release', detail: `A handful of theatres playing to full houses takes ${platform.toFixed(1)} times what a wide house would.`, weight: 0.1, contribution: platform, knowable: true }] : []),
+          ...(heat !== 1 ? [{ label: 'What The Picture Is Carrying', detail: `${project.controversy} out of 100 of public heat. Some of it sells tickets and more of it does not.`, weight: 0.1, contribution: heat, knowable: true }] : []),
+          ...(tired < 1 ? [{ label: 'What The Audience Has Had Enough Of', detail: `${fatigue} out of 100 fatigue with ${project.genres.map(genreName).join(' and ')} after everything else that has opened.`, weight: 0.1, contribution: tired, knowable: true }] : []),
           { label: 'The Weekend Itself', detail: 'Weather, a game, a mood. Not knowable in advance.', weight: 0.05, contribution: luck, knowable: false },
         ],
         seed: `box_office|${release.id}|0`, roll: luck, probability: competition.factor, score: perTheatre / CEILING_PER_THEATRE,

@@ -30,6 +30,7 @@ import { ageOf, isPeopleLoaded, peopleInRole } from '../content/people';
 import { countryIdForRecord, ensureRealPerson, personForRecord, playerControls } from './real-people';
 import { archetypeLabel, breakDownScript } from '../content/screenplay';
 import { pipelineFor } from '../content/pipelines';
+import { quoteMultiplierFor } from './reactive';
 
 export function registerCasting(sim: Simulation): void {
   sim.onSchedule('cast.audition', (item) => runAudition(sim, item.payload.auditionId as Id));
@@ -326,7 +327,7 @@ export function registerCasting(sim: Simulation): void {
       if (p.accept === false) {
         role.status = 'casting';
         role.castPersonId = undefined;
-        s.emit('cast.offer_declined', { roleId: role.id, personId: p.personId });
+        s.emit('cast.offer_declined', { roleId: role.id, personId: p.personId, amount: p.amount ?? negotiatedFee(s, role, s.universe.people[p.personId]) });
         return { accepted: false };
       }
 
@@ -1263,8 +1264,8 @@ export function negotiatedFee(sim: Simulation, role: Role, person: Person | unde
   const negotiation = person.representation.agentId
     ? applyRate(Math.max(base, quoteFloor), 1.12)
     : Math.max(base, quoteFloor);
-  void sim;
-  return Math.max(role.payLow, negotiation);
+  // What they think of you is in the number, and nobody says so out loud.
+  return Math.max(role.payLow, Math.round(negotiation * quoteMultiplierFor(sim, person)));
 }
 
 function ensureAgentPerson(sim: Simulation, agencyId: string): Id {

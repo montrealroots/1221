@@ -60,6 +60,30 @@ export interface Wellbeing {
   hygiene: number;
 }
 
+/**
+ * What somebody privately thinks, which is not the same as what they say.
+ *
+ * Ego decides how an offer lands: to somebody who has been told for twenty
+ * years that they are the reason a picture gets made, a lowball is not an
+ * opening position, it is an insult. Loyalty is what you have banked with
+ * them personally. Grudges are the things they have not forgotten, and they
+ * are acted on later, when it costs you something.
+ */
+export interface Disposition {
+  /** 0-100. How much of themselves is invested in being treated a certain way. */
+  ego: number;
+  /** 0-100 toward the player specifically. Fifty is a stranger. */
+  loyalty: number;
+  /** What they have not forgotten. */
+  grudges: { at: Instant; reason: string; weight: number; refType?: string; refId?: Id; actedOnAt?: Instant }[];
+  /** What you did right by them, which they also remember. */
+  favours: { at: Instant; reason: string; weight: number }[];
+  /** When they last did something about how they feel. */
+  lastActedAt?: Instant;
+  /** They will not read anything of yours until this passes. */
+  refusingUntil?: Instant;
+}
+
 export interface Reputation {
   /** How many people know who you are, 0-100. */
   publicFame: number;
@@ -142,6 +166,11 @@ export interface Person {
    * are at home, or absent when you are simply out in the city.
    */
   currentPlaceId?: string;
+  /**
+   * What they privately think of you. Absent until something has happened
+   * between you, and never shown to the player as a number.
+   */
+  disposition?: Disposition;
   /** Property id of their home, when they have one. */
   residenceId?: Id;
   householdId?: Id;
@@ -1285,6 +1314,14 @@ export interface Project {
   language?: string;
   /** The certificate it carries, as a rating id from content/ratings. */
   contentRating?: string;
+  /**
+   * Negative public attention attached to the picture itself, 0-100: who is in
+   * it, what came out about them, what the company did about it. It follows
+   * the film into the reviews and the opening.
+   */
+  controversy?: number;
+  /** Why the picture is carrying heat, in the order it happened. */
+  controversyLog?: { at: Instant; delta: number; note: string; personId?: Id }[];
   /** How hard the material runs, 0-100, on the same scale the certificates sit on. */
   contentSeverity?: number;
   /** Intended runtime in minutes. */
@@ -2488,7 +2525,7 @@ export interface SandboxState {
 // The universe
 // ---------------------------------------------------------------------------
 
-export const SAVE_SCHEMA_VERSION = 23;
+export const SAVE_SCHEMA_VERSION = 24;
 
 export interface SaveMeta {
   id: Id;

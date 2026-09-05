@@ -23,6 +23,9 @@ import { approachSummary, historyWith, personForRecord } from '@/engine/systems/
 import { creditRoleOf } from '@/engine/systems/industry-people';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
+import { liveGrudges, standingWith, willReadFor } from '@/engine/systems/reactive';
+import type { Simulation } from '@/engine/core/simulation';
+import type { Person } from '@/engine/domain/model';
 
 const ROLE_TABS: { id: CraftRole | 'all'; label: string }[] = [
   { id: 'all', label: 'Everyone' },
@@ -34,6 +37,28 @@ type Sort = 'rating' | 'name' | 'credits' | 'awards' | 'age';
 const SORT_LABEL: Record<Sort, string> = {
   rating: 'Attributes', name: 'Name', credits: 'Credits', awards: 'Awards Won', age: 'Age',
 };
+
+/**
+ * Where the player stands with somebody, in words.
+ *
+ * Never a number: what somebody privately thinks is not a stat the player gets
+ * to read off a screen. What they can see is what they would be able to tell —
+ * that a call gets returned, or that something happened they have not been
+ * forgiven for.
+ */
+function feelingAbout(sim: Simulation, person: Person): string {
+  const standing = standingWith(sim, person);
+  const grudges = liveGrudges(sim, person);
+  const refusing = !willReadFor(sim, person).ok;
+  if (refusing) return `They are not reading anything of yours at the moment. ${grudges[0]?.reason ?? ''}`.trim();
+  if (grudges.length > 0 && standing < 45) {
+    return `Something happened between you that has not gone away: ${grudges[0]!.reason.toLowerCase()} Your calls still get returned, but not quickly.`;
+  }
+  if (standing >= 70) return 'You have been good to them and they know it. That is worth more than money, and it is also worth money.';
+  if (standing >= 58) return 'They would take the call, and they would read it.';
+  if (standing >= 45) return 'Nothing between you either way. You are somebody they have heard of.';
+  return 'They are cool on you. Whether that is about you or about the business, they have not said.';
+}
 
 export function PeopleTab() {
   const { sim } = useGame();
@@ -417,6 +442,11 @@ export function PersonProfile({ person, onClose }: { person: PersonRecord; onClo
             </div>
           ) : (
             <>
+              <div className="callout" style={{ marginTop: 'var(--s3)' }}>
+                <strong className="small">Where You Stand With Them</strong>
+                <p className="xs" style={{ margin: '4px 0 0' }}>{feelingAbout(sim, inSave)}</p>
+              </div>
+
               <div className="grid grid-3 gap-4" style={{ marginTop: 'var(--s3)' }}>
                 <Stat
                   label="What They Would Cost"
