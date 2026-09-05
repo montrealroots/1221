@@ -27,7 +27,7 @@ import {
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
 import { SHINGLE_BY_ID } from '@/engine/content/shingle';
-import { STRIKE_IS_FICTION } from '@/engine/content/strike';
+import { OPENING_BRIEF, STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, goatTraitsIn } from '@/engine/content/prodigy';
 
 const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
@@ -588,7 +588,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <Stat
             label="Owned By"
             value={`${config.firstName || 'You'} ${config.lastName}`.trim() || 'You'}
-            note="One hundred per cent, no partners"
+            note="100% Ownership"
           />
           <Stat
             label="In The Bank"
@@ -599,19 +599,17 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
 
         <div className="callout" style={{ marginTop: 'var(--s4)' }}>
           <strong className="xs">The Strike</strong>
-          <p className="xs" style={{ margin: '4px 0 0' }}>{STRIKE_IS_FICTION}</p>
-          <p className="xs" style={{ margin: '6px 0 0' }}>
-            It ended every other production company. The buyers still have schedules to fill and
-            nobody to fill them, and every writer, actor and crew in the business is free on
-            Monday. Yours is the only door open.
-          </p>
+          {OPENING_BRIEF.map((beat, i) => (
+            <p key={i} className="xs" style={{ margin: i === 0 ? '6px 0 0' : '8px 0 0' }}>{beat}</p>
+          ))}
+          <p className="xs dim" style={{ margin: '10px 0 0', fontStyle: 'italic' }}>{STRIKE_IS_FICTION}</p>
         </div>
       </div>
 
       {/* --- What you are -------------------------------------------------- */}
       <div className="card">
         <div className="panel-head">
-          <div><h3>What You Are</h3></div>
+          <div><h3>Your Craft</h3></div>
         </div>
 
         <div className="grid grid-2">

@@ -26,7 +26,7 @@ import { titleCaseLabel } from '../core/text';
 import { SHINGLE_BY_ID, REMIT_BY_ID } from '../content/shingle';
 import { FOUNDER_ATTRIBUTES, HIGHER_IS_WORSE } from '../content/founder';
 import { SYSTEM_HIGHER_IS_WORSE } from '../domain/attributes';
-import { MONOPOLY, OPENING_BRIEF, STRIKE_IS_FICTION } from '../content/strike';
+import { MONOPOLY, OPENING_BRIEF, OPENING_LINE, STRIKE_IS_FICTION } from '../content/strike';
 
 /** The company the player runs, if they have opened one yet. */
 export function playerCompany(sim: Simulation): Company | undefined {
@@ -337,11 +337,11 @@ export function registerShingle(sim: Simulation): void {
   );
 
   /** Reading the morning brief. Shown once. */
-  sim.onCommand<Record<string, never>, { brief: string; disclaimer: string }>(
+  sim.onCommand<Record<string, never>, { brief: readonly string[]; line: string; disclaimer: string }>(
     'co.read_brief',
     (_p, { sim: s }) => {
       s.universe.industry.briefed = true;
-      return { brief: OPENING_BRIEF, disclaimer: STRIKE_IS_FICTION };
+      return { brief: OPENING_BRIEF, line: OPENING_LINE, disclaimer: STRIKE_IS_FICTION };
     },
   );
 }

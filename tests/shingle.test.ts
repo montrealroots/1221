@@ -20,7 +20,7 @@ import {
   HIGHER_IS_WORSE, conflictingFounderTraits, startingPositionFor, traitHasCost,
 } from '@/engine/content/founder';
 import { REMITS, SHINGLE_BY_ID, SHINGLE_SHAPES } from '@/engine/content/shingle';
-import { AFTERMATH, MONOPOLY, STRIKE_IS_FICTION } from '@/engine/content/strike';
+import { AFTERMATH, MONOPOLY, OPENING_BRIEF, STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { capacityOf, companyView, founderScore, playerCompany } from '@/engine/systems/shingle';
 import { FOUNDING_CAPITAL, FOUNDING_SHINGLE } from '@/engine/world/bootstrap';
 
@@ -297,12 +297,27 @@ describe('the strike the game invented', () => {
     expect(MONOPOLY.quoteFloor).toBeLessThan(1);
   });
 
-  it('hands the disclaimer over with the brief', () => {
+  it('hands the disclaimer over with the brief, and the brief is told in beats', () => {
     const sim = aGame('strike-brief');
-    const read = sim.execute<{ brief: string; disclaimer: string }>({ kind: 'co.read_brief', payload: {} });
+    const read = sim.execute<{ brief: readonly string[]; line: string; disclaimer: string }>({
+      kind: 'co.read_brief', payload: {},
+    });
     expect(read.ok).toBe(true);
     expect(read.value!.disclaimer).toBe(STRIKE_IS_FICTION);
     expect(sim.universe.industry.briefed).toBe(true);
+
+    // Four beats, each carrying one fact the game actually models.
+    expect(read.value!.brief).toEqual(OPENING_BRIEF);
+    expect(OPENING_BRIEF.length).toBe(4);
+    for (const beat of OPENING_BRIEF) expect(beat.length).toBeGreaterThan(80);
+    const all = OPENING_BRIEF.join(' ');
+    expect(all, 'the length of the stoppage is the first thing said').toMatch(/Nineteen months/);
+    expect(all, 'the empty drawer is the whole opening problem').toMatch(/no pile to option/i);
+    expect(all).toMatch(/opening day/);
+    // The old copy said Monday, which is not a day this game has a meaning for.
+    expect(all).not.toMatch(/Monday/);
+    expect(read.value!.line).toMatch(/opening day/);
+    expect(read.value!.line).not.toMatch(/Monday/);
   });
 });
 

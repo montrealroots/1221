@@ -59,7 +59,7 @@ export const AFTERMATH: readonly StrikeFact[] = [
   {
     id: 'idle_talent',
     headline: 'Everybody Is Free',
-    detail: 'Writers, actors, directors, crew, every department. People who have not taken a meeting in years will take yours, because there is nobody else taking meetings.',
+    detail: 'Writers, actors, directors, crew, every department. People who have not taken a meeting in two years will take yours on opening day, because there is nobody else taking meetings.',
   },
   {
     id: 'hungry_buyers',
@@ -74,7 +74,7 @@ export const AFTERMATH: readonly StrikeFact[] = [
   {
     id: 'goodwill',
     headline: 'And Everyone Is Watching You',
-    detail: 'You are the first one to open a door since it ended. What you pay the first writer you hire will be known by every writer in the business inside a week.',
+    detail: 'You are the first one to open a door since it ended. What you pay the first writer you hire will be known by every writer in the business inside a week, and it will be the number they all quote back at you.',
   },
 ];
 
@@ -105,9 +105,34 @@ export const MONOPOLY = {
   scrutiny: 1.8,
 } as const;
 
-/** What the player is told, once, on the first morning. */
-export const OPENING_BRIEF =
-  'The strike ended nineteen months after it started, and it took every other production '
-  + 'company with it. The buyers still have schedules to fill and nobody to fill them. '
-  + 'Every writer, every actor, every crew in the business is available on Monday. '
-  + 'You have a company, whatever is in the account, and the only open door in town.';
+/**
+ * What the player is told, once, on the first morning.
+ *
+ * Written as four beats rather than a paragraph, so the screen can lay them
+ * out and so each one carries a single fact the game actually models: how long
+ * it ran, what it did to the companies, what it did to the drawer, and where
+ * that leaves the person reading it.
+ */
+export const OPENING_BRIEF: readonly string[] = [
+  'Nineteen months. Long enough that the pictures already shot ran out, then the ones '
+  + 'sitting in the drawer, then the drawer.',
+
+  'Overhead does not stop for a strike. The independents went first. Then the ones '
+  + 'carrying debt. Then the ones everybody assumed were too big to go. By the end there '
+  + 'was nobody left on the other side of the table — buyers with schedules to fill, '
+  + 'shareholders asking what was going in them, and not one company still trading.',
+
+  'It is over now, and nobody wrote a word for nineteen months. Everything written before '
+  + 'it has been read by everyone twice. There is no pile to option and no shelf to raid: '
+  + 'whatever gets made next has to be caused to exist by somebody.',
+
+  'Every writer, every actor, every director and every crew in the business is free on '
+  + 'opening day, because there is nobody else for them to be busy for. You are the first '
+  + 'one to open a door.',
+];
+
+/** The same, as one line, for anywhere that has room for a sentence and no more. */
+export const OPENING_LINE =
+  'Nineteen months of strike took every other production company with it. The buyers still '
+  + 'have schedules to fill and nobody to fill them, and everybody in the business is free '
+  + 'on opening day. Yours is the only door open.';
