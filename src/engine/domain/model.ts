@@ -159,6 +159,12 @@ export interface Person {
   /** Reference city id where they are from. */
   homeRegionId: string;
   citizenshipId: string;
+  /**
+   * A second passport. Born in one country, naturalised in the one they live
+   * in now, and they carry both for the rest of their life. Absent for most
+   * people, and never the same as the first.
+   */
+  secondCitizenshipId?: string;
   /** Reference city id where they currently are. */
   currentLocationId: string;
   /**

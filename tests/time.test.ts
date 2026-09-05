@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { createSave, defaultConfig } from '@/engine';
 import {
-  addDays, addMonths, addYears, ageOn, dateKey, daysBetween, daysInMonth,
+  addDays, addMonths, addYears, ageOn, ageOnDate, dateKey, daysBetween, daysInMonth,
   endOfDay, formatDate, formatDuration, formatTime, instantFromZoned, isLeapYear,
   nextAnniversary, nthWeekdayOfMonth, parseDateKey, sameLocalDay, seasonOf,
   startOfDay, zoneOffsetMs, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
@@ -227,5 +228,55 @@ describe('durations round to the unit they show', () => {
     expect(formatDuration(45 * MS_MINUTE)).toBe('45 minutes');
     expect(formatDuration(MS_MINUTE)).toBe('1 minute');
     expect(formatDuration(30 * 1000)).toBe('less than a minute');
+  });
+});
+
+/**
+ * How old somebody is, once.
+ *
+ * Character creation used to work this out as `startYear - birthYear`, which
+ * is right only for somebody whose birthday has already passed that year. A
+ * character born in June starting a save in March was promised 25 on the
+ * creation screen and handed 24 by the game. There is one definition now and
+ * both callers use it; these hold that it is the right one.
+ */
+describe('age, from a date rather than a subtraction', () => {
+  it('has not counted a birthday that has not happened yet', () => {
+    const born = { year: 2001, month: 6, day: 14 };
+    // The exact case that was wrong: a June birthday, a March start.
+    expect(ageOnDate(born, { year: 2026, month: 3, day: 2 })).toBe(24);
+    // The day before, on and after the birthday.
+    expect(ageOnDate(born, { year: 2026, month: 6, day: 13 })).toBe(24);
+    expect(ageOnDate(born, { year: 2026, month: 6, day: 14 })).toBe(25);
+    expect(ageOnDate(born, { year: 2026, month: 6, day: 15 })).toBe(25);
+    expect(ageOnDate(born, { year: 2026, month: 12, day: 31 })).toBe(25);
+  });
+
+  it('never goes negative, however the dates are given', () => {
+    expect(ageOnDate({ year: 2030, month: 1, day: 1 }, { year: 2026, month: 1, day: 1 })).toBe(0);
+    expect(ageOnDate({ year: 2026, month: 1, day: 1 }, { year: 2026, month: 1, day: 1 })).toBe(0);
+  });
+
+  it('agrees with the instant version the world clock uses', () => {
+    const zone = 'America/Los_Angeles';
+    for (const [bm, bd, sm, sd] of [[6, 14, 3, 2], [1, 1, 12, 31], [12, 31, 1, 1], [3, 2, 3, 2]]) {
+      const birth = instantFromZoned({ year: 2001, month: bm!, day: bd!, hour: 9, minute: 0 }, zone);
+      const at = instantFromZoned({ year: 2026, month: sm!, day: sd!, hour: 9, minute: 0 }, zone);
+      expect(
+        ageOn(birth, at, zone),
+        `born ${bm}/${bd}, measured ${sm}/${sd}`,
+      ).toBe(ageOnDate({ year: 2001, month: bm!, day: bd! }, { year: 2026, month: sm!, day: sd! }));
+    }
+  });
+
+  it('is the age a new save actually gives the player', () => {
+    // The screen's promise and the game's answer, from the same config.
+    const config = { ...defaultConfig(), firstName: 'Age', lastName: 'Check' };
+    const sim = createSave(1, 'age-agreement', config);
+    const promised = ageOnDate(
+      { year: config.birthYear, month: config.birthMonth, day: config.birthDay },
+      { year: config.startYear, month: config.startMonth, day: config.startDay },
+    );
+    expect(ageOn(sim.player.birthInstant, sim.now, sim.homeZone)).toBe(promised);
   });
 });

@@ -26,9 +26,13 @@ import {
 } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
+import { ageOnDate } from '@/engine/core/time';
+import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
 import { SHINGLE_BY_ID } from '@/engine/content/shingle';
 import { OPENING_BRIEF, STRIKE_IS_FICTION } from '@/engine/content/strike';
-import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, goatTraitsIn } from '@/engine/content/prodigy';
+import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
+import { FOUNDER_TRAITS } from '@/engine/content/founder';
+import { ALL_TRAITS } from '@/engine/domain/attributes';
 
 const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -192,6 +196,19 @@ export function CharacterCreation({
 
 // ---------------------------------------------------------------------------
 
+/**
+ * How old they are on the morning the save starts.
+ *
+ * Through the engine's own definition rather than subtracting years, which
+ * was out by one for anybody whose birthday falls after the start date.
+ */
+function ageAtStart(config: NewSaveConfig): number {
+  return ageOnDate(
+    { year: config.birthYear, month: config.birthMonth, day: config.birthDay },
+    { year: config.startYear, month: config.startMonth, day: config.startDay },
+  );
+}
+
 /** The word this character is billed with, chosen or implied by their pronouns. */
 function titleOf(config: NewSaveConfig): PerformerTitle {
   return config.performerTitle ?? impliedPerformerTitle(config.pronouns);
@@ -202,6 +219,11 @@ type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) =
 function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   const home = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
+  // Whether they hold a passport for the country they actually live in. When
+  // they do not, the second-citizenship field is the one that matters.
+  const homeCountryId = home?.countryId;
+  const citizenOfHome = homeCountryId !== undefined
+    && isCitizenOf({ citizenshipId: config.citizenshipId, secondCitizenshipId: config.secondCitizenshipId }, homeCountryId);
 
   // Most people are from where they are, so that is the default and the
   // birthplace follows the home town until somebody says it should not. Once
@@ -318,7 +340,28 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             {[...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name))
               .map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
-          <p className="xs dim" style={{ marginTop: 4 }}>Affects where you can work without arrangement.</p>
+          <p className="xs dim" style={{ marginTop: 4 }}>
+            You can take work in a country you hold a passport for. Anywhere else needs an arrangement.
+          </p>
+        </div>
+        <div className="field">
+          <label htmlFor="citizenship-second">Second Citizenship (Optional)</label>
+          <select
+            id="citizenship-second"
+            value={config.secondCitizenshipId ?? ''}
+            onChange={(e) => set('secondCitizenshipId', e.target.value || undefined)}
+          >
+            <option value="">None</option>
+            {[...COUNTRIES.all()]
+              .filter((c) => c.id !== config.citizenshipId)
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+          </select>
+          <p className="xs dim" style={{ marginTop: 4 }}>
+            {homeCountryId && !citizenOfHome
+              ? `You live in ${COUNTRIES.get(homeCountryId)?.name ?? 'somewhere'} and are not a citizen of it. Naturalised there? Say so here.`
+              : 'Born in one country, naturalised in another, and you carry both.'}
+          </p>
         </div>
       </div>
 
@@ -398,7 +441,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       )}
 
       <div className="callout">
-        You will be <strong>{config.startYear - config.birthYear}</strong> when the save begins.
+        You will be <strong>{ageAtStart(config)}</strong> when the save begins.
       </div>
     </div>
   );
@@ -778,7 +821,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
 function ReviewStep({ config }: { config: NewSaveConfig }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
-  const age = config.startYear - config.birthYear;
+  const age = ageAtStart(config);
   const wealth = WEALTH_PROFILES[config.wealth];
 
   return (
@@ -814,7 +857,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Billed As" value={PERFORMER_NOUN[titleOf(config)]} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
-          <Line label="Citizenship" value={COUNTRIES.get(config.citizenshipId)?.name ?? '—'} />
+          <Line label={config.secondCitizenshipId ? 'Citizenships' : 'Citizenship'} value={citizenshipLabel(config)} />
         </div>
 
         <div className="card">
@@ -831,22 +874,21 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 
       <div className="card">
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Traits</div>
-        {config.traits.length === 0 ? (
-          <p className="muted small">No traits. A blank slate, which is its own kind of advantage.</p>
-        ) : (
-          <div className="col gap-2">
-            {config.traits.map((id) => {
-              const trait = TRAIT_BY_ID[id];
-              if (!trait) return null;
-              return (
-                <div key={id}>
-                  <div className="strong small">{traitName(trait, { pronouns: config.pronouns, performerTitle: config.performerTitle })}</div>
-                  <div className="xs muted">{trait.description}</div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        {/*
+          Not a list of what was picked — nothing is picked. The founder holds
+          every trait in the game, and this card used to say "no traits, a
+          blank slate", which was the last thing the player read before
+          committing and it was false.
+        */}
+        <p className="small">
+          <strong>All {ALL_TRAITS.length + GOAT_TRAITS.length + FOUNDER_TRAITS.length} Of Them.</strong>
+          {' '}Every acting and profession trait in the game, every producing trait, and all
+          {' '}{GOAT_TRAITS.length} G.O.A.T. traits, held at once.
+        </p>
+        <p className="xs dim" style={{ margin: '6px 0 0' }}>
+          For anybody else that list contradicts itself and most of it is paid for with a weakness
+          somewhere. Not here: a trait never costs you anything.
+        </p>
       </div>
 
       <div className="callout callout-accent">
@@ -878,7 +920,7 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
   if (step === 0) {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
-    const age = config.startYear - config.birthYear;
+    const age = ageAtStart(config);
     if (age < 16) issues.push('Your character has to be at least 16 when the save begins.');
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That is not a valid day of the month.');

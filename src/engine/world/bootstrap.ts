@@ -50,6 +50,8 @@ export interface NewSaveConfig {
    */
   performerTitle?: PerformerTitle;
   /** Local date of birth in the starting city's zone. */
+  /** A second passport, for somebody naturalised where they live now. */
+  secondCitizenshipId?: string;
   birthYear: number;
   birthMonth: number;
   birthDay: number;
@@ -338,6 +340,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     birthInstant,
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
+    ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),
     currentLocationId: config.startLocationId,
     personality: config.personality,
     interests: config.interests,

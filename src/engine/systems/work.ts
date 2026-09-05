@@ -8,9 +8,10 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
+import { workRefusalFor } from '../domain/citizenship';
 import type { ApplicationStage, Id, Job, JobApplication, JobOpening, PayBasis, Person } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '../core/time';
+import { addDays, ageOn, formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
@@ -139,8 +140,15 @@ export function registerWork(sim: Simulation): void {
       if (opening.closesAt < s.now) throw new CommandError('That listing has closed.');
       const person = s.player;
 
-      const age = zonedParts(s.now, s.homeZone).year - zonedParts(person.birthInstant, s.homeZone).year;
+      // Their real age, not this year minus their birth year — somebody born
+      // in June is not yet nineteen in March.
+      const age = ageOn(person.birthInstant, s.now, s.homeZone);
       if (age < opening.minimumAge) throw new CommandError(`You must be at least ${opening.minimumAge} for that role.`);
+
+      // The creation screen has always said citizenship decides where you can
+      // work without an arrangement. This is the rule it was promising.
+      const refusal = workRefusalFor(person, opening.locationId);
+      if (refusal) throw new CommandError(refusal);
 
       const existing = Object.values(s.universe.jobApplications).find(
         (a) => a.openingId === p.openingId && a.personId === person.id && !['rejected', 'withdrawn'].includes(a.stage),
