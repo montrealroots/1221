@@ -159,6 +159,25 @@ describe('when the time comes', () => {
     expect(sim.ledger.audit()).toEqual([]);
   });
 
+  it('does not ask about a plan whose scene is already under way', () => {
+    const sim = aLife();
+    const { planId } = gymPlan(sim, 1);
+    const plan = sim.universe.plans[planId]!;
+    sim.advanceTo(plan.at - 30 * MS_MINUTE);
+    must(sim, 'plan.attend', { planId, mode: 'play' });
+    expect(activeScene(sim)?.refId).toBe(planId);
+    sim.advanceTo(plan.at + 5 * MS_MINUTE);
+    expect(Object.values(sim.universe.decisions).some((d) => d.refId === planId && !d.resolvedAt)).toBe(false);
+    expect(plan.status).toBe('planned');
+    // Even past its window, a plan being played is not missed.
+    sim.advanceTo(plan.at + (plan.durationMinutes + LAPSE_GRACE_MINUTES + 5) * MS_MINUTE);
+    expect(plan.status).toBe('planned');
+    const scene = activeScene(sim)!;
+    must(sim, 'scene.skip', { sceneId: scene.id, revision: scene.revision });
+    expect(plan.status).toBe('attended');
+    expect(sim.universe.scheduled.some((i) => i.kind === 'plan.lapse' && i.status === 'pending')).toBe(false);
+  });
+
   it('walking out of the scene before anything happened leaves the plan standing', () => {
     const sim = aLife();
     const { planId } = gymPlan(sim, 2);

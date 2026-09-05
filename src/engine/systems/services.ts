@@ -235,6 +235,26 @@ export function registerServices(sim: Simulation): void {
     },
   );
 
+  // Moving an appointment moves its calendar item with it: one owner, one
+  // fact, checked for a clash the same way booking is.
+  sim.onCommand<{ appointmentId: Id; at: number }, { at: number }>(
+    'health.reschedule',
+    (p, { sim: s }) => {
+      const appointment = s.universe.appointments[p.appointmentId];
+      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment cannot be moved.');
+      if (!Number.isFinite(p.at) || p.at <= s.now) throw new CommandError('Move it somewhere in the future.');
+      const clash = s.timeline.conflicts(p.at, appointment.durationMinutes, appointment.scheduledItemId)[0];
+      if (clash) throw new CommandError(`That slot collides with "${clash.label}". Pick another time.`);
+      appointment.at = p.at;
+      if (appointment.scheduledItemId) {
+        const item = s.timeline.get(appointment.scheduledItemId);
+        if (item && item.status === 'pending') s.timeline.reschedule(item.id, p.at);
+      }
+      s.resolveDecision('appointment', appointment.id);
+      return { at: appointment.at };
+    },
+  );
+
   // --- Insurance -----------------------------------------------------------
 
   sim.onCommand<{ line: InsuranceLine; coveredRefs?: { type: string; id: Id }[]; holderId?: Id }, { premium: Money; deductible: Money; coverageLimit: Money; quoteId: Id }>(

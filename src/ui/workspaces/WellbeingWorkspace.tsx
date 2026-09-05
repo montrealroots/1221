@@ -3,14 +3,22 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Meter, Empty } from '@/ui/components/primitives';
 import { ACTIVITIES, readiness, wellbeingSummary } from '@/engine/systems/life';
+import { activeScene } from '@/engine/systems/scenes';
 import { RECIPES, CATALOG } from '@/engine/content/catalog';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
+/** The wellbeing keys as labels. `sleepDebt` is stored camel-cased and shown as two words. */
+const WELLBEING_LABEL: Readonly<Record<string, string>> = {
+  energy: 'Energy', stress: 'Stress', sleepDebt: 'Sleep Debt', morale: 'Morale', condition: 'Condition',
+  fitness: 'Fitness', travelFatigue: 'Travel Fatigue', nourishment: 'Nourishment', hygiene: 'Hygiene',
+};
+
 export function WellbeingWorkspace() {
-  const { sim, run } = useGame();
+  const { sim, run, navigate } = useGame();
   const player = useWorld((s) => s.player);
   const pantry = useWorld((s) => Object.values(s.universe.pantry));
+  const scene = useWorld(activeScene);
   const [minutes, setMinutes] = useState<Record<string, number>>({});
 
   const w = player.wellbeing;
@@ -48,7 +56,7 @@ export function WellbeingWorkspace() {
             <Meter label="Travel Fatigue" value={w.travelFatigue} invert />
             <div>
               <div className="row-between xs" style={{ marginBottom: 3 }}>
-                <span className="muted">Sleep debt</span>
+                <span className="muted">Sleep Debt</span>
                 <span className="mono">{w.sleepDebt.toFixed(1)} hours</span>
               </div>
               <div className="meter meter-negative">
@@ -84,7 +92,7 @@ export function WellbeingWorkspace() {
                       disabled={!possible}
                       onClick={() => run('life.cook', { recipeId: recipe.id })}
                     >
-                      {possible ? 'Cook' : 'Missing items'}
+                      {possible ? 'Cook' : 'Missing Items'}
                     </button>
                   </div>
                 );
@@ -94,7 +102,7 @@ export function WellbeingWorkspace() {
         </Panel>
       </div>
 
-      <Panel title="How You Spend The Day" subtitle="Everything here takes real world time and changes real state." flush>
+      <Panel title="How You Spend The Day" subtitle="Play a thing out and decide as you go, or just do it. Both take real time and change real state." flush>
         <div className="list">
           {ACTIVITIES.map((activity) => {
             const duration = minutes[activity.id] ?? activity.minutes;
@@ -106,7 +114,7 @@ export function WellbeingWorkspace() {
                   <div className="xs dim" style={{ marginTop: 2 }}>
                     {Object.entries(activity.perHour).map(([key, value]) => (
                       <span key={key} className={value > 0 ? 'positive' : 'negative'} style={{ marginRight: 8 }}>
-                        {key} {value > 0 ? '+' : ''}{value}/h
+                        {WELLBEING_LABEL[key] ?? titleCaseLabel(key)} {value > 0 ? '+' : ''}{value}/h
                       </span>
                     ))}
                     {activity.practises?.map((p) => (
@@ -129,12 +137,32 @@ export function WellbeingWorkspace() {
                   <div className="xs dim">{duration} min</div>
                   {activity.cost ? <div className="xs mono">{formatMoney(activity.cost)}</div> : null}
                 </div>
-                <button
-                  className="btn btn-sm"
-                  onClick={() => run('life.do_activity', { activityId: activity.id, minutes: duration })}
-                >
-                  Do It
-                </button>
+                {activity.id === 'gym' ? (
+                  <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/city', 'The City')}>
+                    Find A Gym
+                  </button>
+                ) : activity.id === 'cook' ? (
+                  <span className="xs dim">Pick a recipe above</span>
+                ) : (
+                  <div className="row gap-1">
+                    <button
+                      className="btn btn-sm btn-primary"
+                      disabled={Boolean(scene)}
+                      title={scene ? 'Finish or leave the scene you are in first.' : undefined}
+                      onClick={() => run('scene.start', { definitionId: 'wellbeing.activity', input: { activityId: activity.id, minutes: duration } })}
+                    >
+                      Play It Out
+                    </button>
+                    <button
+                      className="btn btn-sm"
+                      disabled={Boolean(scene)}
+                      title={scene ? 'Finish or leave the scene you are in first.' : 'The same thing, straight through.'}
+                      onClick={() => run('scene.quick', { definitionId: 'wellbeing.activity', input: { activityId: activity.id, minutes: duration } }, { idempotencyKey: `quick:${activity.id}:${sim.now}` })}
+                    >
+                      Just Do It
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}

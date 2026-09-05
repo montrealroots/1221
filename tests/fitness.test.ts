@@ -70,7 +70,10 @@ describe('the real gyms', () => {
   it('reach the cities they reach, and no more', () => {
     expect(new Set(REAL_GYMS.map((g) => g.id)).size).toBe(REAL_GYMS.length);
     expect(CITIES_WITH_REAL_GYMS.length).toBe(new Set(REAL_GYMS.map((g) => g.cityId)).size);
-    expect(CITIES_WITH_REAL_GYMS.length).toBeLessThan(20);
+    // The numbers the game states about itself. Change them here when the
+    // list changes, and nowhere else.
+    expect(REAL_GYMS).toHaveLength(25);
+    expect(CITIES_WITH_REAL_GYMS).toHaveLength(13);
     for (const gym of REAL_GYMS) expect(gym.about, gym.id).toMatch(/SLATE|record|Pumping Iron/);
   });
 

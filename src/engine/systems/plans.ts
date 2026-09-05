@@ -17,7 +17,7 @@ import { MS_MINUTE, formatDuration, formatTime } from '../core/time';
 import type { Id, PersonalPlan } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { placesIn } from '../content/places';
-import { sceneDefinition, type SceneInput } from './scenes';
+import { activeScene, sceneDefinition, type SceneInput } from './scenes';
 
 export const MAX_PLAN_MINUTES = 12 * 60;
 export const MIN_PLAN_MINUTES = 5;
@@ -100,6 +100,9 @@ export function registerPlans(sim: Simulation): void {
   sim.onSchedule('plan.personal', (item) => {
     const plan = sim.universe.plans[item.payload['planId'] as Id];
     if (!plan || plan.status !== 'planned') return;
+    // Started early and still going: there is nothing to ask.
+    const scene = activeScene(sim);
+    if (scene && scene.refType === 'plan' && scene.refId === plan.id) return;
     const def = plan.sceneDefinitionId ? sceneDefinition(plan.sceneDefinitionId) : undefined;
     const actions: { label: string; commandKind: string; payload: Record<string, unknown> }[] = [];
     if (def) {
@@ -139,6 +142,16 @@ export function registerPlans(sim: Simulation): void {
   sim.onSchedule('plan.lapse', (item) => {
     const plan = sim.universe.plans[item.payload['planId'] as Id];
     if (!plan || plan.status !== 'planned') return;
+    // Still being played: the window waits. The scene finishing settles it.
+    const scene = activeScene(sim);
+    if (scene && scene.refType === 'plan' && scene.refId === plan.id) {
+      sim.schedule({
+        at: sim.now + LAPSE_GRACE_MINUTES * MS_MINUTE,
+        kind: 'plan.lapse', label: `${plan.title} Window`, category: 'system', priority: 130,
+        payload: { planId: plan.id }, refType: 'plan-lapse', refId: plan.id,
+      });
+      return;
+    }
     settle(sim, plan, 'missed');
     sim.notify({
       category: 'personal', title: `Missed: ${plan.title}`,
