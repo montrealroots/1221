@@ -31,6 +31,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/world', label: 'World', keywords: ['discover', 'browse', 'explore'], detail: 'Everything there is to do' },
   { route: '/workspace/calendar', label: 'Calendar', keywords: ['schedule', 'diary', 'conflicts', 'dates'], detail: 'Every commitment you have' },
   { route: '/workspace/bank', label: 'Bank', keywords: ['money', 'accounts', 'bills', 'credit', 'transactions', 'tax'], detail: 'Accounts, bills and credit' },
+  { route: '/workspace/company', label: 'Company', keywords: ['studio', 'production company', 'slate', 'develop', 'produce', 'picture', 'film', 'series'], detail: 'Locked — under construction' },
   { route: '/workspace/jobs', label: 'Work', keywords: ['job', 'employment', 'shifts', 'career', 'apply', 'hire'], detail: 'Ordinary employment' },
   { route: '/workspace/wellbeing', label: 'Wellbeing', keywords: ['energy', 'stress', 'sleep', 'health', 'rest', 'eat'], detail: 'Energy, stress and rest' },
   { route: '/workspace/relationships', label: 'Relationships', keywords: ['friends', 'dating', 'family', 'spouse', 'partner', 'marriage', 'children'], detail: 'Everyone you know' },

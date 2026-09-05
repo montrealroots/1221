@@ -538,23 +538,54 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
   const col = costOfLiving(person.currentLocationId);
 
   // Somebody feeding themselves without a plan shops, they do not eat out
-  // three times a day. Pick whatever gives the most food for the money.
-  const best = CATALOG.all()
+  // three times a day. They also do not eat one thing for the rest of their
+  // life: taking the single best value in the catalogue every time meant the
+  // same line of pasta five hundred and twenty-seven times in a year, and food
+  // costing under four dollars a day. Pick from the good-value end, weighted,
+  // so it is still somebody being careful with money and not the same meal
+  // forever.
+  const candidates = CATALOG.all()
     .filter((i) => (i.category === 'groceries' || i.category === 'dining') && (i.nourishment ?? 0) > 0)
     .map((i) => {
       const retailer = i.category === 'groceries' ? 'valuemart' : 'cornerstore';
       const cost = Math.max(1, retailPrice(i.id, retailer, col));
       return { item: i, cost, value: (i.nourishment ?? 0) / cost };
     })
-    .sort((a, b) => b.value - a.value)[0];
-  if (!best) return false;
+    .sort((a, b) => b.value - a.value)
+    .slice(0, UNPLANNED_MEAL_CHOICES)
+    .filter((c) => sim.ledger.availableFunds(accountId) >= c.cost);
+  if (candidates.length === 0) return false;
 
-  if (sim.ledger.availableFunds(accountId) < best.cost) return false;
-  sim.expense(accountId, best.cost, `${best.item.name} — eating without a plan`, 'food');
-  w.nourishment = clamp(w.nourishment + (best.item.nourishment ?? 15), 0, 100);
+  const rng = sim.rng('meal', person.id, sim.now);
+  const picked = rng.weighted(candidates, (c) => c.value);
+  sim.expense(accountId, picked.cost, `${picked.item.name} — ${rng.pick(UNPLANNED_MEAL_NOTES)}`, 'food');
+  w.nourishment = clamp(w.nourishment + (picked.item.nourishment ?? 15), 0, 100);
   person.lastAteAt = sim.now;
   return true;
 }
+
+/**
+ * How wide the net is when somebody eats without having shopped.
+ *
+ * Sixteen is the good-value end of the catalogue — staples, a few proteins,
+ * and the occasional bought lunch. Wider than this and a careful person is
+ * eating tasting menus; narrower and they are back to one thing forever.
+ */
+const UNPLANNED_MEAL_CHOICES = 16;
+
+/** Why it was that, this time. Read straight off the bank statement. */
+const UNPLANNED_MEAL_NOTES: readonly string[] = [
+  'eating without a plan',
+  'because it was what was in',
+  'standing up at the counter',
+  'eaten at the desk',
+  'grabbed on the way past',
+  'nothing else in the house',
+  'quickest thing there was',
+  'out of the packet',
+  'because the shop was still open',
+  'not really a meal',
+];
 
 /** How many hours until the player must be somewhere. */
 export function hoursUntilNextCommitment(sim: Simulation): number | undefined {

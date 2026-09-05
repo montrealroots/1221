@@ -384,3 +384,66 @@ describe('an ordinary life', () => {
     expect(validateUniverse(lived.sim.universe).errors).toEqual([]);
   });
 });
+
+/**
+ * A year of eating.
+ *
+ * The unplanned meal used to take the single best nourishment-per-dollar item
+ * in the catalogue, every time, forever: five hundred and twenty-seven
+ * identical lines of pasta in a year, at $3.87 a day, which is neither a
+ * person nor an economy. It picks from the good-value end now, weighted, so a
+ * careful eater is still careful and still a person.
+ */
+describe('a year of eating', () => {
+  const YEAR = 365 * 86_400_000;
+
+  it('does not eat the same thing every meal for a year', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-variety');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    expect(meals.length, 'nobody ate anything all year').toBeGreaterThan(200);
+
+    const foods = new Set(meals.map((t) => t.memo.split(' — ')[0]));
+    const lines = new Set(meals.map((t) => t.memo));
+    expect(foods.size, `only ate ${[...foods].join(', ')}`).toBeGreaterThanOrEqual(8);
+    expect(lines.size, 'the statement reads the same line over and over').toBeGreaterThan(40);
+
+    // And no single thing dominates the whole year.
+    const counts = new Map<string, number>();
+    for (const meal of meals) {
+      const food = meal.memo.split(' — ')[0]!;
+      counts.set(food, (counts.get(food) ?? 0) + 1);
+    }
+    const commonest = Math.max(...counts.values());
+    expect(commonest / meals.length, 'one food is more than a third of everything eaten').toBeLessThan(0.34);
+  });
+
+  it('costs something a person could recognise', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-cost');
+    sim.advanceTo(sim.now + YEAR);
+    const spent = sim.universe.transactions
+      .filter((t) => t.category === 'food')
+      .reduce((sum, t) => sum + Math.abs(t.postings.find((p) => p.amount < 0)?.amount ?? 0), 0);
+    const perDay = spent / 100 / 365;
+    expect(perDay, `food came to $${perDay.toFixed(2)} a day`).toBeGreaterThan(6);
+    expect(perDay, `food came to $${perDay.toFixed(2)} a day`).toBeLessThan(45);
+  });
+
+  it('still leans cheap, because this is somebody who did not shop', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'eating-cheap');
+    sim.advanceTo(sim.now + YEAR);
+    const meals = sim.universe.transactions.filter((t) => t.category === 'food');
+    const dear = meals.filter((t) => Math.abs(t.postings.find((p) => p.amount < 0)?.amount ?? 0) > 30_00);
+    expect(dear.length / meals.length, 'a careful eater is buying too many expensive meals').toBeLessThan(0.1);
+    expect(sim.player.wellbeing.nourishment, 'they starved').toBeGreaterThan(40);
+  });
+
+  it('reaches the same meals twice from the same seed', () => {
+    const a = quickSave({ wealth: 'modest' }, 'eating-determinism');
+    const b = quickSave({ wealth: 'modest' }, 'eating-determinism');
+    a.advanceTo(a.now + 120 * 86_400_000);
+    b.advanceTo(b.now + 120 * 86_400_000);
+    const memos = (sim: typeof a) => sim.universe.transactions.filter((t) => t.category === 'food').map((t) => t.memo);
+    expect(memos(a)).toEqual(memos(b));
+  });
+});

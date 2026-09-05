@@ -14,6 +14,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { quickSave } from '@/engine';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { serialise } from '@/engine/persistence/adapter';
@@ -163,5 +164,68 @@ describe('progress only runs forwards', () => {
       world_now: 0,
       playtime_seconds: 0,
     }, incoming)).toThrow(/Clear the slot/);
+  });
+});
+
+/**
+ * Entity ids repeat across saves, and that is the design: the id counter is
+ * per-universe, so save 1 and save 2 both hold a person_000001 and a company
+ * with the same id. What keeps them apart is the save_id stamped on every
+ * record, which validateUniverse checks on the way in.
+ *
+ * That makes one specific mistake catastrophic and easy to make: a backend
+ * lookup that filters on subject_id or idempotency_key and forgets save_id
+ * would find another save's row and hand back its result — a finalised award
+ * from one universe replayed into another, or a retry silently answered from
+ * somebody else's history. These read the shipped function sources and hold
+ * the rule that no such filter exists.
+ */
+describe('every server lookup is scoped to one save', () => {
+  const dir = new URL('../base44/functions/', import.meta.url);
+  const sources = ['recordOfficialResult', 'saveUniverse', 'loadUniverse', 'clearSlot']
+    .map((name) => [name, readFileSync(new URL(`${name}/entry.js`, dir), 'utf8')] as const);
+
+  it('ships the four functions this test knows about', () => {
+    for (const [name, source] of sources) {
+      expect(source.length, name).toBeGreaterThan(200);
+    }
+  });
+
+  it('never filters on an entity id without naming the save it belongs to', () => {
+    const offenders: string[] = [];
+    for (const [name, source] of sources) {
+      // Every .filter({ ... }) call in the file, with its object literal.
+      for (const match of source.matchAll(/\.filter\(\s*(\{[\s\S]*?\})\s*\)/g)) {
+        const clause = match[1] ?? '';
+        const scopedByEntity = /subject_id|idempotency_key/.test(clause);
+        if (scopedByEntity && !/save_id/.test(clause)) {
+          offenders.push(`${name}: ${clause.replace(/\s+/g, ' ').slice(0, 90)}`);
+        }
+      }
+    }
+    expect(offenders, 'a lookup could reach into another save').toEqual([]);
+  });
+
+  it('scopes the official-result lookup by save, kind and subject together', () => {
+    const source = sources.find(([n]) => n === 'recordOfficialResult')![1];
+    const clause = /SlateOfficialResult\.filter\(\s*(\{[\s\S]*?\})\s*\)/.exec(source)?.[1] ?? '';
+    expect(clause).toMatch(/save_id/);
+    expect(clause).toMatch(/subject_id/);
+    expect(clause).toMatch(/kind/);
+  });
+
+  it('scopes the retry receipt by save as well as key', () => {
+    const source = sources.find(([n]) => n === 'saveUniverse')![1];
+    const clause = /SlateCommandReceipt\.filter\(\s*(\{[\s\S]*?\})\s*\)/.exec(source)?.[1] ?? '';
+    expect(clause).toMatch(/save_id/);
+    expect(clause).toMatch(/idempotency_key/);
+  });
+
+  it('requires save_id on both server entities that carry an entity id', () => {
+    for (const entity of ['SlateOfficialResult', 'SlateCommandReceipt']) {
+      const schema = JSON.parse(readFileSync(new URL(`../base44/entities/${entity}.json`, import.meta.url), 'utf8'));
+      expect(schema.required, entity).toContain('save_id');
+      expect(schema.properties.save_id, entity).toBeTruthy();
+    }
   });
 });
