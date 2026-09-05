@@ -69,25 +69,6 @@ const DOMAINS: Domain[] = [
     ],
   },
   {
-    label: 'Film And Television',
-    blurb: 'One canonical project, idea to library.',
-    entries: [
-      { route: '/workspace/casting', label: 'Casting', detail: 'Breakdowns, self-tapes, callbacks and offers you can lose.' },
-      { route: '/workspace/projects', label: 'Projects', detail: 'Rights, writing, packaging, greenlight, shoot, post, release.' },
-      { route: '/workspace/industry', label: 'Industry', detail: 'The real studios, who runs them, and everything they have made.' },
-      { route: '/workspace/awards', label: 'Awards And Festivals', detail: 'Edition-specific, eligibility-gated, and permanent once decided.' },
-    ],
-  },
-  {
-    label: 'Business',
-    blurb: 'From one person with a laptop to a studio with a slate.',
-    entries: [
-      { route: '/workspace/company', label: 'Companies', detail: 'Found one, capitalise it, staff it, and earn the right to scale.' },
-      { route: '/workspace/company', label: 'Equipment', detail: 'Own or rent the gear that raises what you can produce.' },
-      { route: '/workspace/company', label: 'Merchandise', detail: 'Manufacture, sell through, and write down what does not move.' },
-    ],
-  },
-  {
     label: 'Career And Money',
     blurb: 'The unglamorous machinery underneath all of it.',
     entries: [

@@ -60,11 +60,6 @@ export function GameShell() {
       label: 'Work',
       items: [
         { route: '/workspace/jobs', label: 'Work', icon: '⛭' },
-        { route: '/workspace/casting', label: 'Casting', icon: '★' },
-        { route: '/workspace/projects', label: 'Projects', icon: '🎬' },
-        { route: '/workspace/company', label: 'Company', icon: '⌗' },
-        { route: '/workspace/industry', label: 'Industry', icon: '◆' },
-        { route: '/workspace/awards', label: 'Awards', icon: '✦' },
         { route: '/workspace/social', label: 'Social', icon: '◈' },
       ],
     },

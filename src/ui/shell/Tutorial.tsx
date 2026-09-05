@@ -32,16 +32,6 @@ export const TUTORIALS: Readonly<Record<string, TutorialStep>> = {
     title: 'Every Balance Has A Cause',
     body: 'Balances are the sum of transactions, never a number someone typed. Anything you see here can be traced back to the thing that caused it.',
   },
-  '/workspace/casting': {
-    id: 'casting',
-    title: 'You Can Lose The Part',
-    body: 'You are scored against everyone else who read. Preparation and how rested you are on the day are real inputs, and when you do not get it, you can find out why.',
-  },
-  '/workspace/projects': {
-    id: 'projects',
-    title: 'One Project, All The Way Through',
-    body: 'There is one record per film. Writing, casting, the shoot, post, marketing and the result all point at it, so nothing ever gets out of step with itself.',
-  },
   '/workspace/property': {
     id: 'property',
     title: 'Buying Is A Process',
@@ -56,11 +46,6 @@ export const TUTORIALS: Readonly<Record<string, TutorialStep>> = {
     id: 'social',
     title: 'Posting Guarantees Nothing',
     body: 'Reach depends on quality, your audience, consistency, momentum and timing. Going viral is a roll you can improve the odds of and never buy outright.',
-  },
-  '/workspace/company': {
-    id: 'company',
-    title: 'Scale Has To Be Earned',
-    body: 'What a company can commit to comes from its cash, its library and its track record. That is why a new production company cannot greenlight a tentpole on day one.',
   },
   '/workspace/relationships': {
     id: 'relationships',
