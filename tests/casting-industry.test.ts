@@ -15,6 +15,10 @@ import {
   CASTING_STAGES, CASTING_STAGE_BY_ID, DEAL_TERMS, ELIGIBILITY_ROUTES, ROLE_CATEGORIES,
   ROOM_SEATS, ROOM_SEAT_BY_ID, SELF_TAPE_SPEC, SIDES_KINDS, SPECIAL_SKILLS, SUBMISSION_CHANNELS,
 } from '@/engine/content/casting-industry';
+import {
+  CASTING_DIRECTORS, CASTING_DIRECTOR_BY_ID, CASTING_RECORD_NOTE, castingDirectorsIn, workingCastingDirectors,
+} from '@/engine/content/casting-people';
+import { CITIES } from '@/engine/content/geography';
 
 const attributeIds = new Set(ATTRIBUTES.map((a) => a.id));
 
@@ -179,5 +183,49 @@ describe('the union', () => {
     expect(byId.direct!.selfSubmit).toBe(false);
     expect(byId.offer_only!.selfSubmit).toBe(false);
     expect(byId.actors_access!.selfSubmit).toBe(true);
+  });
+});
+
+describe('the casting directors', () => {
+  it('are real people whose city is on the map and whose dates make sense', () => {
+    expect(CASTING_DIRECTORS.length).toBeGreaterThan(25);
+    expect(new Set(CASTING_DIRECTORS.map((c) => c.id)).size).toBe(CASTING_DIRECTORS.length);
+    expect(new Set(CASTING_DIRECTORS.map((c) => c.qid)).size).toBe(CASTING_DIRECTORS.length);
+    for (const person of CASTING_DIRECTORS) {
+      expect(person.qid, person.name).toMatch(/^Q\d+$/);
+      expect(person.where.length, person.name).toBeGreaterThan(3);
+      // A city id is only carried when the map actually resolves it; anywhere
+      // else stays in the record's own words rather than being relocated.
+      for (const city of person.cityIds) expect(CITIES.get(city), `${person.name} works out of ${city}`).toBeDefined();
+      expect(person.knownFor.length, person.name).toBeGreaterThan(20);
+      expect(person.office.length, person.name).toBeGreaterThan(4);
+      if (person.born !== undefined) {
+        expect(person.born, person.name).toBeGreaterThan(1900);
+        expect(person.born, person.name).toBeLessThan(2010);
+      }
+      if (person.died !== undefined && person.born !== undefined) {
+        expect(person.died, person.name).toBeGreaterThan(person.born);
+      }
+    }
+  });
+
+  it('does not send the dead to your audition', () => {
+    const working = workingCastingDirectors(2026).map((c) => c.id);
+    expect(working).not.toContain('marion-dougherty');
+    expect(working).not.toContain('lynn-stalmaster');
+    expect(working).not.toContain('mali-finn');
+    expect(working).toContain('nina-gold');
+    expect(castingDirectorsIn('us-ny-newyork', { year: 2026 }).every((c) => c.died === undefined || c.died >= 2026)).toBe(true);
+    expect(castingDirectorsIn('uk-eng-london', { year: 2026 }).length).toBeGreaterThan(2);
+    expect(castingDirectorsIn('us-ca-losangeles', { year: 2026 }).length).toBeGreaterThan(3);
+  });
+
+  it('says where its facts came from', () => {
+    expect(CASTING_RECORD_NOTE).toMatch(/public record/);
+    expect(CASTING_RECORD_NOTE).toMatch(/simulation/);
+    // The one office the record actually names is marked as the record's.
+    const telsey = CASTING_DIRECTOR_BY_ID['bernard-telsey']!;
+    expect(telsey.officeNamed).toBe(true);
+    expect(telsey.office).toBe('Telsey + Company');
   });
 });
