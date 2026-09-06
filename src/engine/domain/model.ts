@@ -1179,10 +1179,23 @@ export interface FlightBooking {
   fare: Money;
   taxesFees: Money;
   bags: number;
-  status: 'booked' | 'checked_in' | 'flown' | 'cancelled' | 'refunded' | 'changed';
+  status: 'booked' | 'checked_in' | 'flown' | 'cancelled' | 'refunded' | 'changed' | 'missed';
   refundable: boolean;
   loyaltyMilesEarned: number;
   bookedAt: Instant;
+  /** The day, as it was played or just done. */
+  bag?: 'carry_on' | 'checked';
+  seatChoice?: string;
+  /** Bag fee, seat fee: what the day added to the fare. */
+  extras?: Money;
+  checkedInAt?: Instant;
+  boardedAt?: Instant;
+  delayMinutes?: number;
+  bagsClaimedAt?: Instant;
+  bagLost?: boolean;
+  bagReturnedAt?: Instant;
+  /** Set when the airline moved you or you moved yourself; points at the booking that replaced this one. */
+  replacedBy?: Id;
 }
 
 export interface HotelBooking {
@@ -1764,7 +1777,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 36;
+export const SAVE_SCHEMA_VERSION = 37;
 
 export interface SaveMeta {
   id: Id;

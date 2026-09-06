@@ -7,7 +7,9 @@ import { formatPeople, homeCityOf, placeKindLabel } from '@/engine/world/place';
 import { missedBy } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import { weatherAt } from '@/engine/systems/weather';
-import { searchFlights, privateAircraftOptions, estimateFlightMinutes } from '@/engine/systems/travel';
+import { searchFlights, privateAircraftOptions, estimateFlightMinutes, REAL_CARRIER_NOTE, REAL_HOTEL_NOTE, REAL_JET_NOTE } from '@/engine/systems/travel';
+import { flyable } from '@/engine/systems/journey';
+import { activeScene } from '@/engine/systems/scenes';
 import { CITIES, cityDistanceKm, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate, formatTime, addDays, formatDuration, MS_MINUTE } from '@/engine/core/time';
@@ -22,6 +24,7 @@ export function TravelWorkspace() {
   const [cabin, setCabin] = useState<'economy' | 'premium_economy' | 'business' | 'first'>('economy');
 
   const player = useWorld((s) => s.player);
+  const scene = useWorld(activeScene);
   const departAt = addDays(sim.now, daysOut, sim.homeZone);
   const flights = useWorld((s) => (destination !== s.player.currentLocationId ? searchFlights(s, s.player.currentLocationId, destination, departAt) : []));
   const aircraft = privateAircraftOptions(player.currentLocationId, destination);
@@ -219,7 +222,7 @@ export function TravelWorkspace() {
       ]} />
 
       {tab === 'flights' && (
-        <Panel title="Flights" subtitle="Fares rise sharply as departure approaches." flush>
+        <Panel title="Flights" subtitle={`Fares rise sharply as departure approaches. ${REAL_CARRIER_NOTE}`} flush>
           {flights.length === 0 ? (
             <Empty title="No Route" body="Pick a different destination." />
           ) : (
@@ -251,7 +254,7 @@ export function TravelWorkspace() {
       )}
 
       {tab === 'private' && (
-        <Panel title="Private Charter" subtitle="Range and runway length are real constraints, not price tiers." flush>
+        <Panel title="Private Charter" subtitle={`Range and runway length are real constraints, not price tiers. ${REAL_JET_NOTE}`} flush>
           <div className="list">
             {aircraft.map((option) => (
               <div key={option.id} className="list-item list-static">
@@ -280,7 +283,7 @@ export function TravelWorkspace() {
       )}
 
       {tab === 'hotels' && (
-        <Panel title="Hotels" subtitle={`In ${there?.name}`} flush>
+        <Panel title="Hotels" subtitle={`In ${there?.name}. ${REAL_HOTEL_NOTE}`} flush>
           <div className="list">
             {(['standard', 'deluxe', 'suite', 'penthouse'] as const).map((roomClass) => (
               <div key={roomClass} className="list-item list-static">
@@ -323,8 +326,20 @@ export function TravelWorkspace() {
                     </div>
                     <span className="mono small">{formatMoney(booking.fare + booking.taxesFees, { cents: false })}</span>
                     <span className="chip">{titleCaseLabel(booking.status.replace(/_/g, ' '))}</span>
+                    {(booking.status === 'booked' || booking.status === 'checked_in') && flyable(sim, booking).ok && (
+                      <>
+                        <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'travel.flight', input: { bookingId: booking.id }, refType: 'flight', refId: booking.id })}>Play It Out</button>
+                        <button className="btn btn-sm" onClick={() => run('travel.fly', { bookingId: booking.id }, { idempotencyKey: `fly:${booking.id}` })}>Just Go</button>
+                      </>
+                    )}
+                    {booking.status === 'missed' && !booking.replacedBy && (
+                      <button className="btn btn-sm btn-primary" onClick={() => run('travel.rebook', { bookingId: booking.id }, { idempotencyKey: `rebook:${booking.id}` })}>Rebook</button>
+                    )}
                     {booking.status === 'booked' && (
-                      <button className="btn btn-sm" onClick={() => run('travel.cancel_flight', { bookingId: booking.id })}>Cancel</button>
+                      <>
+                        <button className="btn btn-sm" onClick={() => run('travel.change_flight', { bookingId: booking.id, departAt: addDays(booking.departAt, 1, sim.homeZone) })} title="Move it a day later. The fare's rules decide the fee.">Move It A Day</button>
+                        <button className="btn btn-sm" onClick={() => run('travel.cancel_flight', { bookingId: booking.id })}>Cancel</button>
+                      </>
                     )}
                   </div>
                 ))}

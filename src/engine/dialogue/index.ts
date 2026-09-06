@@ -15,6 +15,7 @@ const LOADERS: Readonly<Record<string, () => Promise<{ default?: DialogueChunk }
   health: () => import('./chunks/health'),
   property: () => import('./chunks/property'),
   social: () => import('./chunks/social'),
+  travel: () => import('./chunks/travel'),
   vehicles: () => import('./chunks/vehicles'),
 };
 

@@ -126,7 +126,7 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
   },
   {
     id: 'travel', route: '/workspace/travel', title: 'Travel',
-    what: 'Trips, commercial flights, private charter and hotels. Travel is what ties geography, the calendar and your location together.',
+    what: 'Anywhere else in the world: flights, hotels, private charter and driving between cities, with time zones and jet lag that follow you. Airlines, hotel brands and aircraft types are real names; every route, fare, property and rate is SLATE\'s own and says so. A booked flight is a day: three hours before it leaves it asks on Home, and you play it out (packing, the run to the airport, the desk and a seat, the gate with its delays and cancellations, the air, the carousel where a bag can go missing, the hotel desk) or just go. The gate closes forty-five minutes before departure on a player who never went, and a missed flight is what the fare says it is. Move a flight for the fare\'s fee, or cancel it. Whether a country wants a visa is real-world data SLATE does not carry.',
     affects: ['Distance and airport connectivity', 'How far ahead you book', 'Cabin, which changes both price and how wrecked you arrive', 'Aircraft range and runway length for private charter'],
     actions: ['Plan a trip', 'Search and book flights', 'Charter privately', 'Book a hotel', 'Cancel a booking'],
     connects: ['Calendar, because a flight occupies a day', 'Casting and Production, because being in the wrong city means missing work', 'Wellbeing, because time zones cost you'],

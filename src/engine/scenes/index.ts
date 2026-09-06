@@ -12,6 +12,7 @@ import './compose';
 import './counter';
 import './date';
 import './dealer';
+import './flight';
 import './gym';
 import './inspection';
 import './meal';

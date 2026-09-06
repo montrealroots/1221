@@ -39,6 +39,7 @@ import { registerDating } from './systems/dating';
 import { registerViewings } from './systems/viewings';
 import { ensureInteriors, registerPurchase } from './systems/purchase';
 import { registerCare } from './systems/care';
+import { registerJourney } from './systems/journey';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -83,6 +84,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerViewings(sim);
   registerPurchase(sim);
   registerCare(sim);
+  registerJourney(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -840,6 +842,12 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     for (const policy of Object.values(universe.insurancePolicies)) {
       if ((policy.line === 'health' || policy.line === 'dental' || policy.line === 'vision') && policy.carrier === 'Northbank Insurance') policy.carrier = 'Northbank Health';
     }
+  }
+
+  if (from < 37) {
+    // Schema 37: a flight booking carries the day as it was played (the bag,
+    // the seat, the delay, the bags on arrival) and can be missed or moved.
+    // All optional; nothing already in the save is touched.
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

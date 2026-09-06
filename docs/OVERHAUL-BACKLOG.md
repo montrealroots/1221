@@ -22,7 +22,7 @@ before any delivery claim.
 | A2 | One authoritative clock, `advanceTo`, seeded named random streams | Done | `src/engine/core/time.ts`, `rng(stream, …)` |
 | A3 | Ledger in integer minor units, balanced, retry-safe purchases | Done | `src/engine/core/ledger.ts`; `ledger.audit()` asserted in tests |
 | A4 | Stable entity ids across every feature | Done | `src/engine/core/ids.ts` |
-| A5 | New state inside `SaveUniverse` with versions and migrations; older saves survive | Done (schema 36) | `src/engine/domain/model.ts`, `migrate()` in `src/engine/index.ts` |
+| A5 | New state inside `SaveUniverse` with versions and migrations; older saves survive | Done (schema 37) | `src/engine/domain/model.ts`, `migrate()` in `src/engine/index.ts` |
 | A6 | Scene text describes committed facts only | Done | `SceneRuntime.commit` is the only way a scene changes the world |
 | A7 | Existing validation gate kept green | Done | `npm run validate`, `node tools/cohesion.mjs` |
 | A8 | Cloud persistence of the new fields exercised live on Base44 | Blocked | Needs deployment credentials; codec covered by tests only |
@@ -71,9 +71,10 @@ before any delivery claim.
 | D11 | Shopping: 100 real branded products per category; basket, checkout, delivery, returns, use | Blocked (data) / Partial (flow) | Purchase, return, wardrobe, outfits, sell exist. Real catalogues need a feed; variants are not counted as products. |
 | D12 | Insurance: real providers, full applicable coverage, quotes → claims → settlements | Partial | Quote, purchase, claim, renewal exist on simulated lines. Real provider identities Not imported. |
 | D13 | YouTube / Instagram / X / Twitch as distinct in-game platforms with parity checklists | Not started | Four fictional platforms exist. No parity claim is made. |
-| D14 | Travel: documents, seating, baggage, check-in, connections, delays, local transport, changed plans | Partial | Plan, book, charter, hotels, drive, arrival, time zones. Journey stages Not started. |
+| D14 | Travel: documents, seating, baggage, check-in, connections, delays, local transport, changed plans | Done (the day) / Blocked (visa data) | Stage 9. `src/engine/systems/journey.ts`, `src/engine/scenes/flight.ts`, `src/engine/dialogue/chunks/travel.ts`, tests/journey.test.ts (11). Three hours before a flight it asks on Home: play the day, just go, or stay home; the gate closes forty-five minutes before departure on a player who never went, and a missed flight is what the fare says (refundable comes back, the rest is gone) with the next flight to rebook for the change fee. Played, it is packing (a bag in the hold with its fee or carry-on, and the documents the route needs), the run to the airport by cab, train or your own car with its time and cost, the desk and a seat (a window, an aisle, paid legroom), the gate where the flight is on time, late (the arrival moves with it) or cancelled and rebooked by the airline at no cost, the hours in the air spent sleeping, working or watching with their effects, the carousel where a checked bag can fail to arrive and comes back two days later with a travel-cover claim to file, and the way into town or to the hotel, whose room is ready or not yet. Moving a flight costs the fare's fee plus any difference. Real airlines, hotel brands and aircraft types are used by name as public record; every route, schedule, fare, property and rate is SLATE's own and says so. **Blocked (data):** whether a country wants a visa is real-world data this tree does not carry; the day says so instead of pretending to check. Connections are a stop count on the fare, not a played change of plane. |
 | D15 | History workspace left as-is | Done | Only its tab label was re-cased (Why Did This Happen?), per the global tab cleanup. |
 | D16 | Film/TV and every other system get the same treatment | Not started as scenes | Existing pipelines untouched by this batch. |
+| D17 | Real motorcycles, boats and private jets as owned assets with their customization, beside the cars | Not started (planned) | Asked for by the player during stage 9. Task 58: public-record makes and models, SLATE's own prices, the customization each kind actually has, through the same dealership, garage and insurance systems. |
 
 ## E. Interface renewal and editorial
 
@@ -96,7 +97,7 @@ before any delivery claim.
 | F2 | Seeded selection among eligible variants; per-save exposure tracking | Done | `speak()` filters for what is true (outcome, move, voice, what the speaker knows, flags, chemistry), relaxes only the voice, falls back and says so, chooses seeded and weighted away from what the save has heard; `dialogue.seen` in the save, bounded to 2,000 ids, never the text. `preview()` for views records nothing. |
 | F3 | Validation: missing ids, broken branches, unreachable content, normalized and near duplicates | Done | tests/dialogue.test.ts and `node tools/dialogue-check.mjs`: ids unique and placed, follow-ups resolve, every declared expectation covered (reachability by declaration), normalised duplicates fail, near-twins at Jaccard ≥ 0.85 fail, count printed. Editorial review is a person's. |
 | F4 | Chunked loading by section; saves carry references, not the library | Done | `loadAllSections()` pulls each section as its own file as the app starts (dynamic import); a scene that speaks first gets the fallback. Saves hold ids and times only. |
-| F5 | 100,001 distinct approved entries across a coverage matrix and per-section allocations | Blocked (content production) | **382 distinct entries** in five sections (property 122, dating 112, vehicles 59, health 52, social 37) at the time of writing — `node tools/dialogue-check.mjs` prints today's figure. The gym, meal, run and wellbeing scenes still carry their lines in code and are next to move. The target is a months-long authored programme with a section allocation this tree does not yet carry; nothing is counted from templates, combinations, slot variants or promises. |
+| F5 | 100,001 distinct approved entries across a coverage matrix and per-section allocations | Blocked (content production) | **437 distinct entries** in six sections (property 122, dating 112, vehicles 59, travel 55, health 52, social 37) at the time of writing — `node tools/dialogue-check.mjs` prints today's figure. The gym, meal, run and wellbeing scenes still carry their lines in code and are next to move. The target is a months-long authored programme with a section allocation this tree does not yet carry; nothing is counted from templates, combinations, slot variants or promises. |
 
 ## G. Game-wide AI integration
 
@@ -111,7 +112,7 @@ before any delivery claim.
 
 | Id | Requirement | State |
 | --- | --- | --- |
-| H1 | Real vs fictional with provenance, currency, as-of date, coverage | Done for gyms, places, people; Blocked for the 100-record catalogues (no feed) |
+| H1 | Real vs fictional with provenance, currency, as-of date, coverage | Done for gyms, places, people, airlines, hotel brands and aircraft types (names as public record, everything priced as SLATE's own); Blocked for the 100-record catalogues and visa rules (no feed) |
 | H2 | No scraping of private app data | Done — none attempted |
 | H3 | External data access tracked as concrete dependencies | Done — this file and `docs/IMMERSION-COVERAGE.md` |
 
@@ -126,7 +127,8 @@ before any delivery claim.
 7. Stage 7 — the rest of the home journey: the counter call, the inspection, the appraisal, closing day, moving in and furnishing (C4). **Done.**
 8. Parked at the player's instruction — the company engine, the strike and the business instrument (tasks 38, 39, 40), and with them C6.
 9. Stage 8 — the health visit (D6). **Done.**
-10. Next — the travel journey's stages (D14); banking depth (D8); restaurants and shops as conversations (D1); the gym, meal, run and wellbeing lines into the library (F5).
+10. Stage 9 — the flight as a day (D14), with real airlines, hotel brands and aircraft types by name. **Done.**
+11. Next — real motorcycles, boats and private jets as owned assets with their customization (D17); banking depth (D8); restaurants and shops as conversations (D1); the gym, meal, run and wellbeing lines into the library (F5).
 
 Everything Blocked stays Blocked until its dependency is supplied; it is not
 re-labelled to look finished.

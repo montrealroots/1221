@@ -7,6 +7,7 @@ import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type Ca
 import { formatDate, formatDuration, formatTime, zonedParts, addDays, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { POSTPONE_DAYS, canPostpone, closingNumbers, furnishable } from '@/engine/systems/purchase';
 import { attendable as visitAttendable } from '@/engine/systems/care';
+import { flyable as flightFlyable } from '@/engine/systems/journey';
 import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { activeScene, sceneDefinition } from '@/engine/systems/scenes';
@@ -259,6 +260,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const offer = useWorld((s) => (entry.refType === 'offer' && entry.refId ? s.universe.propertyOffers[entry.refId] : undefined));
   const offerKind = useWorld((s) => (entry.refType === 'offer' ? s.timeline.get(entry.id)?.kind : undefined));
   const movingHome = useWorld((s) => (entry.refType === 'property' && entry.refId && s.timeline.get(entry.id)?.kind === 'prop.moving_day' ? s.universe.properties[entry.refId] : undefined));
+  const flight = useWorld((s) => (entry.refType === 'flight' && entry.refId ? s.universe.flightBookings[entry.refId] : undefined));
   const showingCan = showing ? viewable(sim, showing) : { ok: false as const, reason: undefined };
   const dateCan = date ? dateAttendable(sim, date) : { ok: false as const, reason: undefined };
   const legend = LEGEND_BY_CATEGORY[entry.category];
@@ -426,6 +428,24 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </>
       )}
 
+      {flight && (
+        <>
+          <p className="small muted">
+            {flight.airlineName} {flight.flightNumber}, {flight.fromAirport} to {flight.toAirport}, {formatTime(flight.departAt, sim.homeZone)}. {flight.status === 'booked' ? 'Three hours before it leaves, the day can be played; the gate closes forty-five minutes before.' : `This flight is ${flight.status.replace(/_/g, ' ')}.`}
+          </p>
+          <div className="row wrap gap-2">
+            {(flight.status === 'booked' || flight.status === 'checked_in') && flightFlyable(sim, flight).ok && (
+              <>
+                <button className="btn btn-sm btn-primary" disabled={Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'travel.flight', input: { bookingId: flight.id }, refType: 'flight', refId: flight.id }))}>Play It Out</button>
+                <button className="btn btn-sm" onClick={() => after(run('travel.fly', { bookingId: flight.id }, { idempotencyKey: `fly:${flight.id}` }))}>Just Go</button>
+              </>
+            )}
+            {flight.status === 'booked' && <button className="btn btn-ghost btn-sm" onClick={() => after(run('travel.cancel_flight', { bookingId: flight.id }))}>Cancel It</button>}
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>Open Travel</button>
+          </div>
+        </>
+      )}
+
       {bill && (
         <div className="row wrap gap-2">
           <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it is due, if the money is there.' : 'No longer active.'}</span>
@@ -434,7 +454,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </div>
       )}
 
-      {!plan && !appointment && !bill && !date && !showing && !offer && !movingHome && (
+      {!plan && !appointment && !bill && !date && !showing && !offer && !movingHome && !flight && (
         <div className="row wrap gap-2">
           <span className="small muted grow">
             {entry.status === 'observance'

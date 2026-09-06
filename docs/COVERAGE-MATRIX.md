@@ -23,9 +23,9 @@ route has no line in the body of this file. That check is part of the
 gate, so a command cannot be added without a place in the matrix.
 
 Counts in this file are the code's own on the day it was written
-(stage 8): 131 commands, 60 scheduled kinds, 133 events, 20 event
-listeners, 13 scenes, 19 routes, 45 test files, 667 tests passing, 2
-recorded as todo, schema 36, 382 dialogue entries.
+(stage 9): 142 commands, 62 scheduled kinds, 138 events, 21 event
+listeners, 14 scenes, 19 routes, 46 test files, 678 tests passing, 2
+recorded as todo, schema 37, 437 dialogue entries.
 
 ## Surfaces
 
@@ -35,7 +35,7 @@ recorded as todo, schema 36, 382 dialogue entries.
 | --- | --- | --- | --- |
 | `/home` | Home | Where To (every destination), What Needs You (decisions with their actions, unread notifications with Open), What Happens Next, How You Are, Where You Are, Weather, Money, Standing, Home And Household | world, wellbeing, weather, finance |
 | `/world` | World | Places by kind where you are, journeys, the Right Here actions of the place you are at | places, driving, geography |
-| `/workspace/calendar` | Calendar | Days with every commitment; detail for a plan, appointment (Play It Out, Just Go, Skip It, move, cancel), bill, flight, observance, date, showing, inspection, appraisal, closing or moving day with the owning system's actions; Plan Something | scheduler, plans, dating, viewings, purchase, care, holidays |
+| `/workspace/calendar` | Calendar | Days with every commitment; detail for a plan, appointment (Play It Out, Just Go, Skip It, move, cancel), bill, flight (Play It Out, Just Go, Cancel It), observance, date, showing, inspection, appraisal, closing or moving day with the owning system's actions; Plan Something | scheduler, plans, dating, viewings, purchase, care, holidays |
 | `/workspace/wellbeing` | Wellbeing | Energy, stress, sleep, hygiene, readiness; every activity played out or just done; cooking | wellbeing, life |
 | `/workspace/relationships` | Relationships | Everyone you know; interactions; Ask Out with activity, place and time; Dates panel with states | relationships, dating |
 | `/workspace/history` | History (Why Did This Happen?) | `timeline`, `why` — left as-is except the tab label | audit |
@@ -49,7 +49,7 @@ recorded as todo, schema 36, 382 dialogue entries.
 | `/workspace/health` | Health | Providers, appointments (Play It Out, Just Go), prescriptions (Collect It), history with outcomes | services, care |
 | `/workspace/education` | Education | Courses, enrolment, sessions | education |
 | `/workspace/city` | The City | Where you are, what is here, Work Out / Eat Here / Look At The Cars / Go And See It | places, geography |
-| `/workspace/travel` | Travel | `flights`, `hotels`, `private`, `bookings` | travel |
+| `/workspace/travel` | Travel | `flights` (real carriers, SLATE's fares), `hotels` (real brands, SLATE's rates), `private` (real aircraft types), `bookings` (Play It Out, Just Go, Rebook, Move It A Day, Cancel) | travel, journey |
 | `/workspace/character` | Character | `attributes`, `skills`, `traits`, `professions`, `positions`, `standing` | people, professions |
 | `/workspace/settings` | Settings | Preferences, tutorial, the save | world, persistence |
 
@@ -72,6 +72,7 @@ Anywhere (`/`) searches all of it.
 | `property.closing` | Home decision, Calendar, Property offers | `prop.close`, `prop.postpone_closing`, `prop.walk_from_closing`, `prop.move_in` | Yes | tests/purchase.test.ts |
 | `property.movein` | Home decision, Calendar, Property owned | `prop.move_in`, `prop.furnish_room` | Yes | tests/purchase.test.ts |
 | `health.visit` | Home decision, Calendar, Health | `health.check_in`, `health.consult`, `health.pay`, `health.book` | Yes (`health.attend` is the same visit without the scene) | tests/care.test.ts |
+| `travel.flight` | Home decision, Calendar, Travel bookings | `travel.pack`, `travel.to_airport`, `travel.check_in_flight`, `travel.board`, `travel.inflight`, `travel.claim_bags`, `travel.to_hotel` | Yes (`travel.fly` is the same day by its defaults) | tests/journey.test.ts |
 | `social.compose` | Social | `social.create_post` | Yes | tests/compose.test.ts |
 
 The runtime (`scene.start`, `scene.choose`, `scene.skip`, `scene.quick`,
@@ -84,9 +85,10 @@ interruption on leaving the city or the place, free text resolved offline.
 A decision is raised by the engine, carries the actions the owning system
 handles (`world.take_decision_action`, `world.dismiss_decision`), and is
 resolved by the system, never by the click that opened it. Today the
-engine asks about: a plan coming due; a date coming round; an
-appointment coming round, an unpaid medical bill, and results that want
-another look; a showing coming round; a seller's counter, an inspection report, closing day and
+engine asks about: a plan coming due; a date coming round; a flight three
+hours before it leaves, a missed flight to rebook, and a lost bag to claim
+for; an appointment coming round, an unpaid medical bill, and results that
+want another look; a showing coming round; a seller's counter, an inspection report, closing day and
 moving day on a home you are buying; a salesperson calling back about a car; insuring something
 you have just bought, or telling your insurer about a part; a car due for
 service, not road legal, or failed at inspection; registration overdue; a
@@ -108,6 +110,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Home: view, offer, counter, inspect, appraise, close, move in, furnish | Implemented | `prop.book_showing` → `prop.showing` → `property.viewing` → `prop.make_offer` → `prop.offer_response` → `property.counter` (`prop.respond_to_counter`, `prop.counter_lapse`) → `prop.inspection` → `property.inspection` (`prop.inspection_decision`, `prop.inspection_lapse`) → `prop.appraisal` → `prop.closing` → `property.closing` (`prop.close`, `prop.postpone_closing`, `prop.walk_from_closing`, `prop.closing_lapse`) → `prop.moving_day` → `property.movein` (`prop.move_in`, `prop.furnish_room`) | Lapsed, skipped, away in another city, no money for any offer, thanked and left, a second visit greeted as one, a missed one held against you; a counter left unanswered (withdrawn, deposit back), the seller's two rounds, a lender's refusal on a number, an inspection walked or read from another city, walked away from, waived by silence; an appraisal you can carry (the gap on the table) and one you cannot (the purchase ends, deposit back); a closing you are short at, delayed once, walked from (deposit forfeited), never came to (deposit forfeited), or declined by the lender at the table; moving day left for later; a room you cannot afford. **Gap:** selling a home you own is a command without a scene. |
 | Social: create content with reactions | Implemented (scene and reactions) / Partial (consequences) | `social.compose` → `social.create_post` → `social.publish` → `social.reactions` a day on → the post row and a notification | Not enough energy for the long version, a format the platform refuses, start again from the review, a flop. **Gap:** consequences beyond followers, momentum and brand deals (`social.respond_to_deal`, `social.deal_deadline`) are not modelled. |
 | Health: book, attend, be seen, pay, collect, follow up | Implemented (beyond the six named) | `health.book` → `health.appointment` → `health.visit` (`health.check_in`, `health.consult`, `health.pay`) or `health.attend` → `health.results` → `health.fill_prescription` → `health.dose` → follow up booked | Late by an hour (no-show, fee, the doctor remembers), skipped (`health.skip`), away in another city, a card the practice does not take, no card, short at the desk (the bill asks), the wrong door for the complaint, tests that want another look, a prescription left uncollected (`health.rx_lapse`) |
+| Travel: book, pack, get there, check in, the gate, the air, the carousel, the hotel | Implemented (beyond the six named) | `travel.book_flight` → `travel.depart` → `travel.flight` (`travel.pack`, `travel.to_airport`, `travel.check_in_flight`, `travel.board`, `travel.inflight`, `travel.claim_bags`, `travel.to_hotel`) or `travel.fly` → `travel.arrive` → `travel.check_in` | Never went (`travel.gate_closes`, the fare's rules), stayed home (`travel.no_show`), away in another city, late to the airport, an airline cancellation rebooked at no cost, a delay that moves the arrival, a bag lost and returned (`travel.bag_returned`) with a claim under travel cover, a room not ready, a flight moved for the fee (`travel.change_flight`), rebooked after a miss (`travel.rebook`) |
 | Film/TV: prepare for and carry out an obligation | Blocked (dependency) | — | There is no production or shoot-day pipeline in this tree to put the player on a call sheet; `work.project` is a script-read calculator. The company engine (task 38) is the dependency. No scene is claimed. |
 
 ## Feature areas and subfeatures
@@ -240,7 +243,9 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Subfeature | State | Code | On screen | Tests | Gap |
 | --- | --- | --- | --- | --- | --- |
 | Plan, book and cancel flights, hotels, private charter; drive between cities; arrival; time zones | Implemented | `travel.plan_trip`, `travel.book_flight`, `travel.cancel_flight`, `travel.book_hotel`, `travel.charter_private`, `travel.drive`, `travel.depart`, `travel.arrive`, `travel.check_in`, `travel.check_out`, `travel.drive_arrive` | `/workspace/travel` | tests/navigation.test.ts, tests/driving.test.ts | — |
-| Documents, seating, baggage, check-in, connections, delays, local transport, changed plans | Not started | — | — | — | Journey stages are not built |
+| Documents, packing, the run to the airport, seating, baggage, the gate, delays and cancellations, the air, the carousel, local transport, the hotel desk | Implemented | `travel.departure_due`, `travel.gate_closes`, `travel.pack`, `travel.to_airport`, `travel.check_in_flight`, `travel.board`, `travel.inflight`, `travel.claim_bags`, `travel.bag_returned`, `travel.to_hotel`, `travel.fly`, `travel.no_show`, `travel.flight` | Travel bookings, Calendar, Home | tests/journey.test.ts | Connections are a stop count on the fare, not a played change of plane |
+| Changed plans: move a flight, rebook after a miss, cancel | Implemented | `travel.change_flight`, `travel.rebook`, `travel.cancel_flight` | Travel bookings, Home | tests/journey.test.ts | — |
+| Real airlines, hotel brands and aircraft types | Implemented (names) / Blocked (data) | `AIRLINES`, `airlinesFor`, `HOTEL_BRANDS`, `PRIVATE_AIRCRAFT` in `src/engine/systems/travel.ts` | Travel, with the note beside each | tests/journey.test.ts | Names are public record; routes, schedules, fares, properties and rates are SLATE's own. Visa rules are not carried. |
 
 ### Character, professions, work
 
@@ -275,7 +280,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Versioned library with stable ids, eligibility, tone, cooldown, follow-ups | Implemented | `src/engine/dialogue/schema.ts`, `library.ts` |
 | Seeded selection; per-save exposure; chunked loading | Implemented | `speak()`, `dialogue.seen` bounded to 2,000 ids, `loadAllSections()` |
 | Validation: unique ids, reachability by declared expectation (including facts), normalised duplicates, near-twins | Implemented | tests/dialogue.test.ts, `node tools/dialogue-check.mjs` |
-| 100,001 distinct entries | Blocked (content production) | 382 today: property 122, dating 112, vehicles 59, health 52, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
+| 100,001 distinct entries | Blocked (content production) | 437 today: property 122, dating 112, vehicles 59, travel 55, health 52, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
 
 ## Game-wide AI integration
 
@@ -286,7 +291,7 @@ and this is what each part of it covers today:
 | Part | What it is here | Covers | Does not cover |
 | --- | --- | --- | --- |
 | Director | The scene runtime: nodes, choices, commits, interruption, resume, skip | All eight scenes | A loop that plans a day or improvises a scene |
-| Dialogue | The library: eligibility by what is true, seeded choice, exposure | Dating, property, vehicles, health, social | Gym, meal, run, wellbeing, and every workspace's prose |
+| Dialogue | The library: eligibility by what is true, seeded choice, exposure | Dating, property, vehicles, health, travel, social | Gym, meal, run, wellbeing, and every workspace's prose |
 | Memory | Structured facts on people | Trainers, salespeople, dates, agents, inspectors, closers, doctors | Everyone else |
 | Interpreter | Free text resolved to a choice, leave, skip, help, or refused | Every scene | Sentences that are not one of the choices |
 | Simulation | Commands, schedules, events, audit | Everything above | — |
@@ -295,10 +300,11 @@ and this is what each part of it covers today:
 ## Data honesty
 
 **Real, stated from the public record and labelled as such:** geography,
-time zones and currencies; public holidays; award shows, festivals and fan
-events; award bodies and their rules; networks, studios and their logos
-with licences recorded; industry people and their filmographies; landmarks;
-25 gyms in 13 cities.
+time zones, currencies and airports; public holidays; award shows, festivals
+and fan events; award bodies and their rules; networks, studios and their
+logos with licences recorded; industry people and their filmographies;
+landmarks; 25 gyms in 13 cities; airline, hotel-brand and aircraft-type
+names (with every route, fare, property and rate SLATE's own).
 
 **SLATE's own, labelled as such on screen:** every home on the market,
 every car on a lot, every product in a shop, every insurer, every provider
@@ -316,6 +322,8 @@ climate model, not a forecast), and every line of dialogue.
 | Real insurers and products | Blocked (data) | Simulated lines, labelled; health, dental and vision policies name a carrier a practice may or may not take | Health desk | tests/care.test.ts | No carrier data imported |
 | Every relevant real gym worldwide | A licensed venue catalogue |
 | YouTube / Instagram / X / Twitch parity | A platform-by-platform checklist and the product decision to name them |
+| Visa rules by passport and destination | A maintained rules feed; the flight day says it does not check |
+| Real motorcycles, boats and private jets to own, with customization | Planned (task 58); public-record models with SLATE's own prices, like the cars |
 
 No private app data is scraped. No real post or message is ever sent as a
 side effect of play.
@@ -338,7 +346,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 131 commands, 60 scheduled kinds, 133 events emitted, 20 event listeners, 13 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 142 commands, 62 scheduled kinds, 138 events emitted, 21 event listeners, 14 scenes, 19 routes.
 
 ### Commands
 
@@ -363,7 +371,7 @@ Generated by `node tools/inventory.mjs --markdown`. 131 commands, 60 scheduled k
 | scene | `scene.choose` `scene.leave` `scene.quick` `scene.resume` `scene.skip` `scene.start` | `src/engine/systems/scenes.ts` |
 | shop | `shop.purchase` `shop.return` `shop.save_outfit` `shop.sell_asset` | `src/engine/systems/commerce.ts` |
 | social | `social.create_account` `social.create_post` `social.respond_to_deal` | `src/engine/systems/media.ts` |
-| travel | `travel.book_flight` `travel.book_hotel` `travel.cancel_flight` `travel.charter_private` `travel.drive` `travel.plan_trip` | `src/engine/systems/driving.ts`, `src/engine/systems/travel.ts` |
+| travel | `travel.board` `travel.book_flight` `travel.book_hotel` `travel.cancel_flight` `travel.change_flight` `travel.charter_private` `travel.check_in_flight` `travel.claim_bags` `travel.drive` `travel.fly` `travel.inflight` `travel.no_show` `travel.pack` `travel.plan_trip` `travel.rebook` `travel.to_airport` `travel.to_hotel` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/travel.ts` |
 | tutorial | `tutorial.complete` `tutorial.dismiss` `tutorial.reset` `tutorial.set_mode` | `src/engine/world/world.ts` |
 | veh | `veh.book_modification` `veh.book_service` `veh.drive` `veh.purchase` `veh.remove_modification` `veh.sell` | `src/engine/systems/vehicles.ts` |
 | viewing | `viewing.arrive` `viewing.ask` `viewing.look` `viewing.skip` `viewing.summary` | `src/engine/systems/viewings.ts` |
@@ -391,7 +399,7 @@ Generated by `node tools/inventory.mjs --markdown`. 131 commands, 60 scheduled k
 | rel | `rel.anniversary` `rel.birthday` `rel.date` `rel.drift` `rel.wedding` | `src/engine/systems/dating.ts`, `src/engine/systems/relationships.ts` |
 | shop | `shop.deliver` `shop.pantry_expiry` | `src/engine/systems/commerce.ts` |
 | social | `social.deal_deadline` `social.decay_tick` `social.payout` `social.publish` `social.reactions` | `src/engine/systems/media.ts` |
-| travel | `travel.arrive` `travel.check_in` `travel.check_out` `travel.depart` `travel.drive_arrive` | `src/engine/systems/driving.ts`, `src/engine/systems/travel.ts` |
+| travel | `travel.arrive` `travel.bag_returned` `travel.check_in` `travel.check_out` `travel.depart` `travel.drive_arrive` `travel.gate_closes` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/travel.ts` |
 | veh | `veh.depreciate` `veh.install_parts` `veh.refresh_inventory` `veh.registration_due` `veh.service_appointment` | `src/engine/systems/vehicles.ts` |
 | viewing | `viewing.lapse` | `src/engine/systems/viewings.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
@@ -421,7 +429,7 @@ Generated by `node tools/inventory.mjs --markdown`. 131 commands, 60 scheduled k
 | scene | `scene.started` | `src/engine/systems/scenes.ts` |
 | shop | `shop.asset_acquired` `shop.asset_sold` `shop.order_delivered` `shop.order_placed` `shop.pantry_expired` `shop.returned` | `src/engine/systems/commerce.ts` |
 | social | `social.account_created` `social.deal_accepted` `social.deal_breached` `social.deal_completed` `social.deal_offered` `social.earnings_paid` `social.post_published` `social.reactions` | `src/engine/systems/media.ts` |
-| travel | `travel.arrived` `travel.charter_booked` `travel.checked_in` `travel.checked_out` `travel.departed` `travel.drive_started` `travel.flight_booked` `travel.flight_cancelled` `travel.hotel_booked` `travel.trip_planned` | `src/engine/systems/driving.ts`, `src/engine/systems/places.ts`, `src/engine/systems/travel.ts` |
+| travel | `travel.arrived` `travel.bag_lost` `travel.bag_returned` `travel.charter_booked` `travel.checked_in` `travel.checked_out` `travel.departed` `travel.departure_due` `travel.drive_started` `travel.flight_booked` `travel.flight_cancelled` `travel.flight_missed` `travel.flight_rebooked` `travel.hotel_booked` `travel.trip_planned` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/places.ts`, `src/engine/systems/travel.ts` |
 | veh | `veh.inventory_refreshed` | `src/engine/systems/vehicles.ts` |
 | vehicle | `vehicle.delivered` `vehicle.modification_booked` `vehicle.modification_removed` `vehicle.modified` `vehicle.purchased` `vehicle.serviced` `vehicle.sold` | `src/engine/systems/dealership.ts`, `src/engine/systems/vehicles.ts` |
 | world | `world.day_rollover` | `src/engine/systems/life.ts` |
@@ -439,6 +447,7 @@ Generated by `node tools/inventory.mjs --markdown`. 131 commands, 60 scheduled k
 | rel | `rel.date_scheduled` | `src/engine/systems/dating.ts` |
 | scene | `scene.abandoned` `scene.completed` | `src/engine/systems/dating.ts`, `src/engine/systems/plans.ts` |
 | social | `social.deal_completed` `social.post_published` | `src/engine/systems/professions.ts` |
+| travel | `travel.departure_due` | `src/engine/systems/journey.ts` |
 | work | `work.shift_worked` | `src/engine/systems/professions.ts` |
 
 ### Scenes
@@ -456,6 +465,7 @@ Generated by `node tools/inventory.mjs --markdown`. 131 commands, 60 scheduled k
 | `property.viewing` | `src/engine/scenes/viewing.ts` |
 | `rel.date` | `src/engine/scenes/date.ts` |
 | `social.compose` | `src/engine/scenes/compose.ts` |
+| `travel.flight` | `src/engine/scenes/flight.ts` |
 | `vehicles.dealer` | `src/engine/scenes/dealer.ts` |
 | `wellbeing.activity` | `src/engine/scenes/activity.ts` |
 
