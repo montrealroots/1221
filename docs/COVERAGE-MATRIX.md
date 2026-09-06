@@ -42,6 +42,7 @@ recorded as todo, schema 41, 465 dialogue entries.
 | `/workspace/bank` | Bank | `accounts` (products to open, cover, cards with their statement and minimum, standing orders), `bills`, `statements`, `transactions`, `credit`, `tax` | finance, banking |
 | `/workspace/property` | Property | `owned` (Move In, Furnish It, List For Sale), `market`, `offers` (Take The Call, Walk It With The Inspector, Read The Report, Sit At The Table, Sign Remotely), `build`, `interiors` | property, viewings, purchase, construction, interiors |
 | `/workspace/vehicles` | Vehicles | `garage` (At Home: the garage, the driveway and the dock with what is in them; then each thing with its own figures, where it is kept, and its own way out: Drive, Ride, A Day On The Water, Fly It, plus Move It and Name It), `market` (by lot, six to a city, with On The Table), `service`, `modify` (parts for the kind you own) | vehicles, dealership, driving, storage |
+| `/workspace/casting` | Casting | Locked; no screen registered. The door is listed on Home and Go Anywhere does not offer it. The industry engine behind it is untouched | deferred to the industry milestone |
 | `/workspace/shopping` | Shopping | `shop`, `orders`, `owned`, `wardrobe` | commerce |
 | `/workspace/insurance` | Insurance | Policies, quotes, claims, renewals; motor, marine and aviation lines each offering only what they cover | insurance |
 | `/workspace/company` | Company | Locked in the shell (Under Construction) until the company engine lands | company (task 38) |
