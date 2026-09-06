@@ -1021,6 +1021,38 @@ export interface Appointment {
   outcome?: string;
   scheduledItemId?: Id;
   followUpAt?: Instant;
+  /** What you said brought you in. */
+  complaint?: string;
+  checkedInAt?: Instant;
+  consultedAt?: Instant;
+  testsOrderedAt?: Instant;
+  resultsAt?: Instant;
+  resultOutcome?: 'clear' | 'follow_up';
+  prescriptionId?: Id;
+  paidAt?: Instant;
+  followUpDays?: number;
+  conditionGain?: number;
+}
+
+/** A course of something the provider wrote, collected at a pharmacy and taken over days. Simulated; not medical advice. */
+export interface Prescription {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  appointmentId: Id;
+  providerId: Id;
+  medication: string;
+  purpose: string;
+  days: number;
+  dosesPerDay: number;
+  cost: Money;
+  insuranceCovered: Money;
+  outOfPocket: Money;
+  writtenAt: Instant;
+  filledAt?: Instant;
+  dosesTaken: number;
+  nextDoseAt?: Instant;
+  status: 'written' | 'filled' | 'finished' | 'lapsed';
 }
 
 export type InsuranceLine =
@@ -1732,7 +1764,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 35;
+export const SAVE_SCHEMA_VERSION = 36;
 
 export interface SaveMeta {
   id: Id;
@@ -1814,6 +1846,7 @@ export interface SaveUniverse {
 
   healthProviders: Record<Id, HealthProvider>;
   appointments: Record<Id, Appointment>;
+  prescriptions?: Record<Id, Prescription>;
   insurancePolicies: Record<Id, InsurancePolicy>;
   insuranceClaims: Record<Id, InsuranceClaim>;
   courses: Record<Id, Course>;

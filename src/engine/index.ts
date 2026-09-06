@@ -38,6 +38,7 @@ import { registerDealership } from './systems/dealership';
 import { registerDating } from './systems/dating';
 import { registerViewings } from './systems/viewings';
 import { ensureInteriors, registerPurchase } from './systems/purchase';
+import { registerCare } from './systems/care';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -81,6 +82,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDating(sim);
   registerViewings(sim);
   registerPurchase(sim);
+  registerCare(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -828,6 +830,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // optional; nothing already in the save is touched. Homes bought or
     // rented from the market get an interior the first time the save loads
     // (see ensureInteriors), so the rooms you already live in become rooms.
+  }
+
+  if (from < 36) {
+    // Schema 36: prescriptions, and an appointment that remembers what you
+    // came in about, whether tests were ordered, and whether it was paid.
+    // Health, dental and vision policies name the carrier providers know.
+    universe.prescriptions ??= {};
+    for (const policy of Object.values(universe.insurancePolicies)) {
+      if ((policy.line === 'health' || policy.line === 'dental' || policy.line === 'vision') && policy.carrier === 'Northbank Insurance') policy.carrier = 'Northbank Health';
+    }
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

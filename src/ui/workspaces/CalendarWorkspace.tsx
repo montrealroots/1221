@@ -6,6 +6,7 @@ import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, zonedParts, addDays, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { POSTPONE_DAYS, canPostpone, closingNumbers, furnishable } from '@/engine/systems/purchase';
+import { attendable as visitAttendable } from '@/engine/systems/care';
 import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { activeScene, sceneDefinition } from '@/engine/systems/scenes';
@@ -324,6 +325,13 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
             {sim.universe.healthProviders[appointment.providerId]?.name ?? 'Your provider'}. {formatMoney(appointment.outOfPocket)} out of pocket.
             {appointment.status === 'scheduled' ? ' Cancelling inside a day of it costs a fee.' : ` This appointment was ${appointment.status}.`}
           </p>
+          {appointment.status === 'scheduled' && visitAttendable(sim, appointment).ok && (
+            <div className="row wrap gap-2" style={{ marginBottom: 'var(--s2)' }}>
+              <button className="btn btn-sm btn-primary" disabled={Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'health.visit', input: { appointmentId: appointment.id }, refType: 'appointment', refId: appointment.id }))}>Play It Out</button>
+              <button className="btn btn-sm" onClick={() => after(run('health.attend', { appointmentId: appointment.id }, { idempotencyKey: `attend:${appointment.id}` }))}>Just Go</button>
+              <button className="btn btn-sm" onClick={() => after(run('health.skip', { appointmentId: appointment.id }))}>Skip It</button>
+            </div>
+          )}
           {appointment.status === 'scheduled' && (
             <div className="row wrap gap-2" style={{ alignItems: 'end' }}>
               <div className="col gap-1">

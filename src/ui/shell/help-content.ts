@@ -135,9 +135,9 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
   },
   {
     id: 'health', route: '/workspace/health', title: 'Health',
-    what: 'Simulated healthcare: providers, appointments, costs and recovery. This is a game system, not medical advice.',
-    affects: ['Provider quality', 'Whether you have insurance and what it covers', 'Whether you turn up', 'How long the wait is'],
-    actions: ['Book with a provider', 'Attend or cancel', 'See a counsellor when stress is high'],
+    what: 'Simulated healthcare: providers, appointments, costs and recovery. This is a game system, not medical advice. An appointment coming round asks on Home: play it out, just go, or skip it, and an hour of silence is a no-show with a fee. Played, it is the desk (your card in network, out of network, or none), the room where you say what brought you in, an exam that ends in nothing, tests or a prescription, the bill, and a follow up you can book before you leave. Results come two days later on their own; a prescription is collected at a pharmacy and taken over days; the provider remembers you.',
+    affects: ['Provider quality', 'Whether you have insurance, what it covers and whether the practice takes it', 'Whether you turn up', 'What you say brought you in'],
+    actions: ['Book with a provider', 'Play the visit out, just go, or skip it', 'Collect a prescription', 'Book the follow up', 'See a counsellor when stress is high'],
     connects: ['Insurance, which decides what you pay', 'Bank, for the out-of-pocket cost', 'Wellbeing, because care restores condition', 'Calendar, because appointments are commitments'],
     keywords: ['doctor', 'dentist', 'health', 'appointment', 'chiropractor', 'therapy', 'counselling', 'optometrist', 'urgent care'],
   },

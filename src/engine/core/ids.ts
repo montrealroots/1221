@@ -11,7 +11,7 @@ export type Id = string;
 
 /** Collections are namespaced so an id is self-describing in logs and audits. */
 export type IdNamespace =
-  | 'save' | 'person' | 'household' | 'account' | 'txn' | 'posting' | 'bill'
+  | 'save' | 'person' | 'household' | 'account' | 'txn' | 'posting' | 'bill' | 'rx'
   | 'job' | 'shift' | 'application' | 'employer'
   | 'rel' | 'relmem' | 'event' | 'sched' | 'cal'
   | 'prop' | 'listing' | 'offer' | 'build' | 'room' | 'furn'

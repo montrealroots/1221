@@ -18,3 +18,4 @@ import './meal';
 import './movein';
 import './run';
 import './viewing';
+import './visit';

@@ -25,7 +25,7 @@ import { modifierFor } from '../domain/attributes';
 // Healthcare
 // ---------------------------------------------------------------------------
 
-const SPECIALTIES: { key: HealthProvider['specialty']; label: string; baseCost: number; minutes: number; leadDays: [number, number]; conditionGain: number; description: string }[] = [
+export const SPECIALTIES: { key: HealthProvider['specialty']; label: string; baseCost: number; minutes: number; leadDays: [number, number]; conditionGain: number; description: string }[] = [
   { key: 'primary', label: 'Primary Care', baseCost: 180_00, minutes: 40, leadDays: [3, 21], conditionGain: 6, description: 'Annual checks, referrals and the person who knows your history.' },
   { key: 'dentist', label: 'Dentistry', baseCost: 220_00, minutes: 50, leadDays: [7, 40], conditionGain: 4, description: 'Cleanings, fillings and the appointment everybody postpones.' },
   { key: 'optometrist', label: 'Optometry', baseCost: 160_00, minutes: 35, leadDays: [4, 25], conditionGain: 3, description: 'Eye exams and prescriptions.' },
@@ -57,7 +57,8 @@ export function ensureProviders(sim: Simulation, cityId: string): HealthProvider
         : `Dr. ${name.first} ${name.last}`,
       specialty: spec.key,
       locationId: cityId,
-      acceptsInsurance: ['Northbank Health', 'Meridian Health', 'Vantage Care'],
+      // Most practices take the carrier the game sells; a few do not, and say so at the desk.
+      acceptsInsurance: rng.chance(0.75) ? ['Northbank Health', rng.pick(['Meridian Health', 'Vantage Care'])] : ['Meridian Health', 'Vantage Care'],
       baseVisitCost: Math.round(spec.baseCost * col * remap(quality, 40, 100, 0.85, 1.35)),
       quality,
       leadTimeDays: rng.int(spec.leadDays[0], spec.leadDays[1]),
@@ -155,7 +156,11 @@ export function ensureCourses(sim: Simulation, cityId: string): Course[] {
 // ---------------------------------------------------------------------------
 
 export function registerServices(sim: Simulation): void {
-  sim.onSchedule('health.appointment', (item) => attendAppointment(sim, item.payload.appointmentId as Id));
+  // An appointment coming round is the care system's to ask about: play it,
+  // just go, or skip it. Nothing is attended by the clock alone.
+  sim.onSchedule('health.appointment', (item) => {
+    sim.emit('health.appointment_due', { appointmentId: item.payload.appointmentId, itemId: item.id });
+  });
   sim.onSchedule('ins.renewal', (item) => renewPolicy(sim, item.payload.policyId as Id));
   sim.onSchedule('edu.session', (item) => attendSession(sim, item.payload.enrollmentId as Id));
 
@@ -178,8 +183,8 @@ export function registerServices(sim: Simulation): void {
         throw new CommandError(`That slot collides with "${conflicts[0]?.label}". Pick another time.`);
       }
 
-      const policy = activePolicy(s, player.id, provider.specialty === 'dentist' ? 'dental' : provider.specialty === 'optometrist' ? 'vision' : 'health');
-      const { covered, outOfPocket } = splitCost(provider.baseVisitCost, policy);
+      const policy = policyFor(s, provider);
+      const { covered, outOfPocket } = splitCost(provider.baseVisitCost, inNetwork(provider, policy) ? policy : undefined);
 
       const appointment: Appointment = {
         id: s.nextId('appt'),
@@ -465,7 +470,7 @@ export function registerServices(sim: Simulation): void {
 // Mechanics
 // ---------------------------------------------------------------------------
 
-function nextOpening(sim: Simulation, provider: HealthProvider): number {
+export function nextOpening(sim: Simulation, provider: HealthProvider): number {
   const target = addDays(sim.now, provider.leadTimeDays, sim.homeZone);
   const parts = zonedParts(target, sim.homeZone);
   // Practices work weekdays; push a weekend booking to Monday.
@@ -481,7 +486,17 @@ export function activePolicy(sim: Simulation, holderId: Id, line: InsuranceLine)
   );
 }
 
-function splitCost(cost: Money, policy: InsurancePolicy | undefined): { covered: Money; outOfPocket: Money } {
+/** The policy that would pay for this provider's line of work, if you hold one. */
+export function policyFor(sim: Simulation, provider: HealthProvider): InsurancePolicy | undefined {
+  return activePolicy(sim, sim.player.id, provider.specialty === 'dentist' ? 'dental' : provider.specialty === 'optometrist' ? 'vision' : 'health');
+}
+
+/** Whether the practice takes the carrier on your card. */
+export function inNetwork(provider: HealthProvider, policy: InsurancePolicy | undefined): boolean {
+  return Boolean(policy && provider.acceptsInsurance.includes(policy.carrier));
+}
+
+export function splitCost(cost: Money, policy: InsurancePolicy | undefined): { covered: Money; outOfPocket: Money } {
   if (!policy) return { covered: 0, outOfPocket: cost };
   const afterDeductible = Math.max(0, cost - policy.deductible);
   const covered = Math.min(applyRate(afterDeductible, policy.coinsurance), policy.coverageLimit || afterDeductible);
@@ -535,69 +550,102 @@ export function buildQuote(
     deductible: product.deductible,
     coverageLimit: product.coverageLimit > 0 ? product.coverageLimit : Math.round(insuredValue * 1.1),
     coinsurance: product.coinsurance,
-    carrier: line === 'production' || line === 'equipment' ? 'Gable Underwriting' : 'Northbank Insurance',
+    carrier: line === 'production' || line === 'equipment' ? 'Gable Underwriting' : line === 'health' || line === 'dental' || line === 'vision' ? 'Northbank Health' : 'Northbank Insurance',
   };
 }
 
-function attendAppointment(sim: Simulation, appointmentId: Id): void {
+/** A no-show, from wherever you were: the practice charges for it. */
+export function missAppointment(sim: Simulation, appointment: Appointment, why: string): void {
+  if (appointment.status !== 'scheduled') return;
+  const person = sim.universe.people[appointment.personId];
+  appointment.status = 'missed';
+  if (appointment.scheduledItemId) sim.timeline.cancel(appointment.scheduledItemId, sim.now);
+  sim.resolveDecision('appointment', appointment.id);
+  const fee = Math.round(appointment.cost * 0.4);
+  const accountId = person?.primaryAccountId;
+  if (accountId && sim.ledger.availableFunds(accountId) >= fee) {
+    sim.expense(accountId, fee, 'Missed appointment fee', 'health', { refType: 'appointment', refId: appointment.id });
+  }
+  sim.notify({
+    category: 'health', title: 'Missed Appointment',
+    body: `${why} Practices charge for a no-show: ${formatMoney(fee)}.`,
+    importance: 55, route: '/workspace/health', refType: 'appointment', refId: appointment.id,
+  });
+  sim.emit('health.appointment_missed', { appointmentId: appointment.id, fee });
+}
+
+/** The bill at the desk: paid if the money is there, otherwise it sits as an unpaid bill that asks. */
+export function chargeVisit(sim: Simulation, appointment: Appointment): { paid: boolean } {
+  const provider = sim.universe.healthProviders[appointment.providerId];
+  const person = sim.universe.people[appointment.personId];
+  const accountId = person?.primaryAccountId;
+  if (appointment.paidAt) return { paid: true };
+  if (!accountId || appointment.outOfPocket <= 0) { appointment.paidAt = sim.now; return { paid: true }; }
+  if (sim.ledger.availableFunds(accountId) >= appointment.outOfPocket) {
+    sim.expense(accountId, appointment.outOfPocket, `${appointment.kind} — ${provider?.name ?? 'provider'}`, 'health', { refType: 'appointment', refId: appointment.id });
+    appointment.paidAt = sim.now;
+    return { paid: true };
+  }
+  sim.requireDecision({
+    urgency: 70, category: 'health',
+    title: 'Unpaid Medical Bill',
+    detail: `${formatMoney(appointment.outOfPocket)} is owed to ${provider?.name ?? 'the practice'}.`,
+    route: '/workspace/health',
+    actions: [{ label: 'Pay It', commandKind: 'health.pay', payload: { appointmentId: appointment.id } }],
+    refType: 'appointment', refId: appointment.id,
+  });
+  return { paid: false };
+}
+
+/** What the visit does for you: the same rule whether played or just done. */
+export function applyCare(sim: Simulation, appointment: Appointment, fit = 1): number {
+  const provider = sim.universe.healthProviders[appointment.providerId];
+  const person = sim.universe.people[appointment.personId];
+  if (!provider || !person) return 0;
+  const spec = SPECIALTIES.find((sp) => sp.key === provider.specialty);
+  const gain = (spec?.conditionGain ?? 5) * remap(provider.quality, 40, 100, 0.7, 1.4) * fit;
+  person.wellbeing.condition = clamp(person.wellbeing.condition + gain, 0, 100);
+  if (provider.specialty === 'counseling') {
+    person.wellbeing.stress = clamp(person.wellbeing.stress - 18 * fit, 0, 100);
+    person.wellbeing.morale = clamp(person.wellbeing.morale + 8 * fit, 0, 100);
+  }
+  if (provider.specialty === 'physical_therapy' || provider.specialty === 'chiropractor') {
+    person.attributes['injury_resilience'] = clamp((person.attributes['injury_resilience'] ?? 40) + 1.2 * fit, 0, 100);
+  }
+  appointment.conditionGain = Math.round((appointment.conditionGain ?? 0) + gain);
+  return gain;
+}
+
+/**
+ * Just going: the whole visit by the same rules as the played one, with the
+ * plain reason for being there and no conversation. Used by the short
+ * version and by anything that needs an appointment attended in one step.
+ */
+export function completeAppointment(sim: Simulation, appointmentId: Id): void {
   const appointment = sim.universe.appointments[appointmentId];
   if (!appointment || appointment.status !== 'scheduled') return;
   const provider = sim.universe.healthProviders[appointment.providerId];
   const person = sim.universe.people[appointment.personId];
   if (!provider || !person) return;
-
   if (person.currentLocationId !== appointment.locationId) {
-    appointment.status = 'missed';
-    sim.notify({
-      category: 'health', title: 'Missed Appointment',
-      body: `You were not in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}. Practices charge for a no-show.`,
-      importance: 55, route: '/workspace/health',
-    });
-    const accountId = person.primaryAccountId;
-    const fee = Math.round(appointment.cost * 0.4);
-    if (accountId && sim.ledger.availableFunds(accountId) >= fee) {
-      sim.expense(accountId, fee, 'Missed appointment fee', 'health', { refType: 'appointment', refId: appointment.id });
-    }
+    missAppointment(sim, appointment, `You were not in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}.`);
     return;
   }
-
-  const accountId = person.primaryAccountId;
-  if (accountId && appointment.outOfPocket > 0) {
-    if (sim.ledger.availableFunds(accountId) >= appointment.outOfPocket) {
-      sim.expense(accountId, appointment.outOfPocket, `${appointment.kind} — ${provider.name}`, 'health', { refType: 'appointment', refId: appointment.id });
-    } else {
-      sim.requireDecision({
-        urgency: 70, category: 'health',
-        title: 'Unpaid Medical Bill',
-        detail: `${formatMoney(appointment.outOfPocket)} is owed to ${provider.name}.`,
-        route: '/workspace/health',
-        refType: 'appointment', refId: appointment.id,
-      });
-    }
-  }
-
-  const spec = SPECIALTIES.find((s) => s.key === provider.specialty);
-  const gain = (spec?.conditionGain ?? 5) * remap(provider.quality, 40, 100, 0.7, 1.4);
-  person.wellbeing.condition = clamp(person.wellbeing.condition + gain, 0, 100);
-  if (provider.specialty === 'counseling') {
-    person.wellbeing.stress = clamp(person.wellbeing.stress - 18, 0, 100);
-    person.wellbeing.morale = clamp(person.wellbeing.morale + 8, 0, 100);
-  }
-  if (provider.specialty === 'physical_therapy' || provider.specialty === 'chiropractor') {
-    person.attributes['injury_resilience'] = clamp((person.attributes['injury_resilience'] ?? 40) + 1.2, 0, 100);
-  }
-
+  const spec = SPECIALTIES.find((sp) => sp.key === provider.specialty);
+  appointment.checkedInAt ??= sim.now;
+  appointment.consultedAt ??= sim.now;
+  const gain = applyCare(sim, appointment);
   appointment.status = 'completed';
-  appointment.outcome = provider.specialty === 'primary'
-    ? 'Routine check. Nothing of concern.'
-    : `${spec?.label ?? 'Visit'} complete.`;
-
+  appointment.outcome ??= provider.specialty === 'primary' ? 'Routine check. Nothing of concern.' : `${spec?.label ?? 'Visit'} complete.`;
+  if (provider.specialty === 'primary') appointment.followUpAt ??= addYears(sim.now, 1, sim.homeZone);
+  if (appointment.scheduledItemId) sim.timeline.cancel(appointment.scheduledItemId, sim.now);
+  sim.resolveDecision('appointment', appointment.id);
+  const { paid } = chargeVisit(sim, appointment);
   if (provider.specialty === 'primary') {
-    appointment.followUpAt = addYears(sim.now, 1, sim.homeZone);
     sim.notify({
       category: 'health', title: 'Checkup Complete',
-      body: `${provider.name} suggests coming back in a year. ${formatMoney(appointment.outOfPocket)} out of pocket.`,
-      importance: 30, route: '/workspace/health',
+      body: `${provider.name} suggests coming back in a year. ${paid ? `${formatMoney(appointment.outOfPocket)} out of pocket.` : `${formatMoney(appointment.outOfPocket)} still owed.`}`,
+      importance: 30, route: '/workspace/health', refType: 'appointment', refId: appointment.id,
     });
   }
   sim.emit('health.appointment_completed', { appointmentId: appointment.id, providerId: provider.id, conditionGain: gain });
