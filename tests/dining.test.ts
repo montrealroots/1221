@@ -18,7 +18,7 @@ import { MS_MINUTE } from '@/engine/core/time';
 import type { DiningVisit, RetailVisit } from '@/engine/domain/model';
 import { menuOf, placesIn, type Place } from '@/engine/content/places';
 import { shoppableRetailers } from '@/engine/content/catalog';
-import { REAL_RETAILERS, tradesIn } from '@/engine/content/brands';
+import { ALL_RETAILERS, tradesIn } from '@/engine/content/brands';
 import { CITIES } from '@/engine/content/geography';
 import {
   GOOD_TIP, MAX_WAIT_MINUTES, SERVICE_SHARE, billFor, cookMinutes, openVisit, serviceOf, staffOf, standingAt, waitFor,
@@ -257,7 +257,7 @@ describe('the shop floor', () => {
   it('gives every chain that trades here, and only in the market it really trades in', () => {
     const population = CITIES.get(LA)!.population;
     const here = placesIn(LA).filter((p) => p.retailerId);
-    const expected = REAL_RETAILERS.filter((r) => r.kind !== 'online' && tradesIn(r, LA, population));
+    const expected = ALL_RETAILERS.filter((r) => r.kind !== 'online' && tradesIn(r, LA, population));
     expect(here.length).toBe(expected.length);
     expect(here.length).toBeGreaterThan(30);
     expect(new Set(here.map((p) => p.id)).size).toBe(here.length);

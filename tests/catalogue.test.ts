@@ -12,7 +12,7 @@ import { describe, expect, it } from 'vitest';
 import {
   CATALOG, RETAILERS, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableItemsIn, shoppableRetailers,
 } from '@/engine/content/catalog';
-import { REAL_RETAILERS, marketOf, tradesIn } from '@/engine/content/brands';
+import { ALL_RETAILERS, REGIONAL_RETAILERS, coverageFor, coverageReport, marketOf, tradesIn } from '@/engine/content/brands';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { CITIES } from '@/engine/content/geography';
 import { placesIn } from '@/engine/content/places';
@@ -21,6 +21,15 @@ import { MINIMUM_ASSORTMENT, aislesAt, assortmentAt, frontTableAt } from '@/engi
 
 const LA = 'us-ca-losangeles';
 const LONDON = 'uk-eng-london';
+
+/** A city in each market with authored local retail, biggest first. */
+const WORLD_CITIES = [
+  LA, LONDON, 'fr-idf-paris', 'jp-13-tokyo', 'au-nsw-sydney',
+  'br-27-saopaulo', 'in-16-mumbai', 'tr-34-istanbul', 'za-06-johannesburg',
+  'kr-11-seoul', 'mx-cmx-mexicocity', 'pl-78-warsaw', 'se-26-stockholm',
+  'id-04-jakarta', 'th-40-bangkok', 'ar-07-buenosaires', 'cl-12-santiago',
+  'ae-du-dubai', 'ke-05-nairobi', 'ng-05-lagos',
+];
 
 /** The aisles the interface shows, and the floor a shop puts out. */
 const SHOPPING_CATEGORIES = [
@@ -73,27 +82,27 @@ describe('the real catalogue', () => {
   it('puts a chain only in the market it really trades in', () => {
     const laPop = CITIES.get(LA)!.population;
     const londonPop = CITIES.get(LONDON)!.population;
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'tesco')!, LONDON, londonPop)).toBe(true);
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'tesco')!, LA, laPop)).toBe(false);
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'trader_joes')!, LA, laPop)).toBe(true);
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'trader_joes')!, LONDON, londonPop)).toBe(false);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'tesco')!, LONDON, londonPop)).toBe(true);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'tesco')!, LA, laPop)).toBe(false);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'trader_joes')!, LA, laPop)).toBe(true);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'trader_joes')!, LONDON, londonPop)).toBe(false);
     expect(marketOf(LA)).toBe('us');
     expect(marketOf(LONDON)).toBe('uk');
   });
 
   it('keeps a flagship only house where its flagship actually is', () => {
-    const harrods = REAL_RETAILERS.find((r) => r.id === 'harrods')!;
+    const harrods = ALL_RETAILERS.find((r) => r.id === 'harrods')!;
     expect(harrods.flagshipCities).toContain(LONDON);
     expect(tradesIn(harrods, LONDON, 8_900_000)).toBe(true);
     expect(tradesIn(harrods, LA, 3_900_000)).toBe(false);
   });
 
   it('does not put a maison in a town that could not hold one', () => {
-    const hermes = REAL_RETAILERS.find((r) => r.id === 'hermes')!;
+    const hermes = ALL_RETAILERS.find((r) => r.id === 'hermes')!;
     expect(tradesIn(hermes, 'us-ca-losangeles', 3_900_000)).toBe(true);
     expect(tradesIn(hermes, 'us-ia-ames', 66_000)).toBe(false);
     // A discounter, on the other hand, is everywhere there are people.
-    const aldi = REAL_RETAILERS.find((r) => r.id === 'aldi')!;
+    const aldi = ALL_RETAILERS.find((r) => r.id === 'aldi')!;
     expect(tradesIn(aldi, 'de-be-berlin', 3_600_000)).toBe(true);
   });
 
@@ -168,7 +177,7 @@ describe('every shop floor is a real shop floor', () => {
   it('carries at least a hundred real things in every branch, everywhere it trades', () => {
     const sim = quickSave({}, 'assortment');
     const thin: string[] = [];
-    for (const cityId of [LA, LONDON, 'fr-idf-paris', 'jp-13-tokyo', 'au-nsw-sydney']) {
+    for (const cityId of WORLD_CITIES) {
       for (const place of placesIn(cityId).filter((p) => p.retailerId)) {
         const count = assortmentAt(sim, place).length;
         if (count < MINIMUM_ASSORTMENT) thin.push(`${place.name} in ${cityId}: ${count}`);
@@ -196,5 +205,67 @@ describe('every shop floor is a real shop floor', () => {
     expect(front.length).toBeGreaterThan(0);
     expect(front.length).toBeLessThan(assortmentAt(sim, shop).length);
     for (const stocked of front) expect(stocked.featured).toBe(true);
+  });
+});
+
+
+describe('the rest of the world has its own shops', () => {
+  it('puts a country’s own chains in that country and nowhere else', () => {
+    const cases: [string, string, string][] = [
+      ['biedronka', 'pl-78-warsaw', LA],
+      ['shoprite', 'za-06-johannesburg', LONDON],
+      ['dmart', 'in-16-mumbai', LA],
+      ['bim', 'tr-34-istanbul', 'fr-idf-paris'],
+      ['pao_de_acucar', 'br-27-saopaulo', LA],
+      ['emart', 'kr-11-seoul', 'jp-13-tokyo'],
+      ['oxxo', 'mx-cmx-mexicocity', LONDON],
+      ['albert_heijn', 'nl-nh-amsterdam', LA],
+      ['asda', LONDON, LA],
+    ];
+    for (const [id, home, away] of cases) {
+      const chain = ALL_RETAILERS.find((r) => r.id === id);
+      expect(chain, `${id} is not in the registry`).toBeDefined();
+      expect(tradesIn(chain!, home, 3_000_000), `${id} is missing from ${home}`).toBe(true);
+      expect(tradesIn(chain!, away, 3_000_000), `${id} turned up in ${away}`).toBe(false);
+    }
+  });
+
+  it('gives a shop floor to a city outside Europe and North America', () => {
+    for (const cityId of ['br-27-saopaulo', 'in-16-mumbai', 'tr-34-istanbul', 'ng-05-lagos', 'kr-11-seoul']) {
+      const shops = placesIn(cityId).filter((p) => p.retailerId);
+      expect(shops.length, `nothing to shop at in ${cityId}`).toBeGreaterThan(10);
+      // And at least one of them is a chain from that country rather than an import.
+      const market = cityId.split('-')[0]!;
+      const local = shops.filter((p) => ALL_RETAILERS.find((r) => r.id === p.retailerId)?.markets.includes(market));
+      expect(local.length, `every shop in ${cityId} is an import`).toBeGreaterThan(0);
+    }
+  });
+
+  it('never lists the same chain twice', () => {
+    const ids = ALL_RETAILERS.map((r) => r.id);
+    expect(new Set(ids).size, 'a retailer id is used twice').toBe(ids.length);
+    expect(REGIONAL_RETAILERS.length).toBeGreaterThan(80);
+  });
+
+  it('reports coverage as what is authored locally, not what reaches everywhere', () => {
+    const us = coverageFor('us');
+    const gh = coverageFor('gh');
+    expect(us.local).toBeGreaterThan(gh.local);
+    expect(us.band).toBe('deep');
+    expect(gh.band).toBe('thin');
+    // A worldwide chain reaching everywhere must not be counted as local depth.
+    expect(us.worldwide).toBe(gh.worldwide);
+    expect(us.worldwide).toBeGreaterThan(0);
+  });
+
+  it('reports every market it covers, worst served first, and says nothing it cannot', () => {
+    const report = coverageReport();
+    expect(report.length).toBeGreaterThan(60);
+    for (let i = 1; i < report.length; i++) {
+      expect(report[i]!.local).toBeGreaterThanOrEqual(report[i - 1]!.local);
+    }
+    // The report is only ever about markets somebody authored. It never
+    // implies the other hundred and seventy countries are covered.
+    expect(report.every((r) => r.local > 0)).toBe(true);
   });
 });

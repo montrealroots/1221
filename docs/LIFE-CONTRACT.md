@@ -187,9 +187,15 @@ answer says what would make it yes.
 
 ## 11. Build order
 
-1. **Done this milestone.** Company tab canned; Casting locked; founder premise
-   out of creation; a hundred real items in every branch; aisles.
-2. Retailer coverage to every major market, with a coverage report by country.
+1. **Done.** Company tab canned; Casting locked; founder premise out of
+   creation; a hundred real items in every branch; aisles.
+2. **Done.** 300 real chains across 79 markets, each in the countries it really
+   trades in, with `npm run coverage:retail` printing the honest per-country
+   picture: nine markets deep, twelve workable, fifty-eight thin, and every
+   other country in the world falling back to plainly simulated shops that say
+   so on screen. Also in: the kit shops for section 6 — Adorama, Samy's, Wex,
+   Thomann, Panavision and ARRI Rental for hire, Angels Costumes, Western
+   Costume and Tirelli for wardrobe, M·A·C, Ben Nye and Charles Fox for makeup.
 3. Getting dressed, properly.
 4. The house: pantry, recipes, appliances, objects in rooms.
 5. The phone: YouTube in full, then the other three.
@@ -208,24 +214,21 @@ answer says what would make it yes.
 | Live retail stock and prices | A licensed retail data feed | Real names, SLATE's calibrated prices, labelled |
 | This season's real listings and show schedules | A licensed events feed | Real venues and real seasons; the specific card is SLATE's |
 | 100,001 dialogue entries | A writing programme; 1,107 written | The tool prints the true number every run |
-| Base44 live persistence | A Base44 project and credentials | See below |
+| Base44 live persistence | A Base44 project and credentials | Steps 2 and 3 are built; see below |
+| Retail depth outside the rich world | More authoring, not a feed | 58 markets are thin and `npm run coverage:retail` names every one |
 
-### Base44: the actual fix
+### Base44: two of three done
 
-The server functions, entity schemas and guards are written and unit tested.
-What has never happened is a deploy against a live project. Three steps close it,
-and only the first needs the player:
+`docs/BASE44.md` is the full path. In short:
 
-1. **Create the Base44 project and supply credentials.** Without this, nothing
-   downstream can be exercised, and the state stays honestly reported as
-   unverified rather than passed.
-2. **A contract test that runs the real function handlers against a stubbed
-   SDK.** This can be built now and turns "unverified" into "verified except the
-   network hop": every guard, the idempotency key, forward-progress, ledger
-   balance, cross-save isolation, the size cap and the backup.
-3. **A smoke script** run once after deploy that exercises save, reload, a
-   conflicting write from a second tab, and a clear-slot, and prints pass or
-   fail per guard.
+1. **The project.** Yours: one signup, then `npm run base44:deploy`. Nothing in
+   the config needs editing.
+2. **Done.** `npm run base44:contract` — 22 checks running the real handlers
+   against an in-memory SDK. It found a real bug: clearing a slot left its save
+   id behind, so a cleared slot refused the next life started in it.
+3. **Done.** `npm run base44:smoke -- --slot 3` — eleven checks against a live
+   deployment, restoring whatever was in the slot, exiting 78 with "nothing was
+   tested" rather than a pass when credentials are absent.
 
-Step 2 is buildable without the player and is on the list. Steps 1 and 3 need
-the account.
+Live persistence stays reported as unverified until step 3 runs green against a
+real deployment.

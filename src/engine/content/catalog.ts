@@ -10,7 +10,7 @@
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
 import { CITIES } from './geography';
-import { REAL_RETAILERS, tradesIn, type RealRetailer } from './brands';
+import { ALL_RETAILERS, tradesIn, type RealRetailer } from './brands';
 import {
   REAL_ACCESSORIES, REAL_APPLIANCES, REAL_APPLIANCES_MORE, REAL_ART, REAL_BOOKS, REAL_CLOTHING,
   REAL_ELECTRONICS, REAL_EQUIPMENT, REAL_FOOTWEAR, REAL_FOOTWEAR_MORE, REAL_FURNITURE, REAL_FURNITURE_MORE,
@@ -84,7 +84,7 @@ const KIND_TO_TYPE: Readonly<Record<RealRetailer['kind'], Retailer['type']>> = {
 };
 
 export const RETAILERS = new Registry<Retailer>('retailers', [
-  ...REAL_RETAILERS.map(fromReal),
+  ...ALL_RETAILERS.map(fromReal),
   ...LEGACY_RETAILERS,
 ]);
 
@@ -293,7 +293,7 @@ export function retailersFor(category: string, cityId: string): Retailer[] {
   const population = CITIES.get(cityId)?.population ?? 0;
   return shoppableRetailers().filter((r) => {
     if (!r.categories.includes(category)) return false;
-    const real = REAL_RETAILERS.find((x) => x.id === r.id);
+    const real = ALL_RETAILERS.find((x) => x.id === r.id);
     if (!real) return r.locations.length === 0 || r.locations.includes(cityId);
     // Online only chains reach everywhere; a floor needs a city that supports one.
     if (real.kind === 'online') return real.markets.length === 0 || real.markets.includes(cityId.split('-')[0] ?? '');

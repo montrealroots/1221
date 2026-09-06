@@ -24,11 +24,9 @@ import loadUniverse from '../base44/functions/loadUniverse/entry.js';
 import clearSlot from '../base44/functions/clearSlot/entry.js';
 import { SUPPORTED_SCHEMA_VERSION } from '../base44/shared/guard.js';
 
-type Handler = (req: Request) => Promise<Response>;
-
-const save = saveUniverse as unknown as Handler;
-const load = loadUniverse as unknown as Handler;
-const clear = clearSlot as unknown as Handler;
+const save = saveUniverse;
+const load = loadUniverse;
+const clear = clearSlot;
 
 function post(body: unknown): Request {
   return new Request('https://slate.test/fn', {
@@ -46,7 +44,7 @@ async function body(res: Response): Promise<Record<string, unknown> & { ok: bool
 /** A real save, serialised the way the browser serialises one. */
 function aPayload(slot = 1, seed = 'b44'): { payload: string; saveId: string } {
   const sim = quickSave({}, seed);
-  sim.universe.meta.slot = slot;
+  sim.universe.meta.slot = slot as 1 | 2 | 3;
   sim.universe.meta.playtimeSeconds = 60;
   return { payload: serialise(sim.universe), saveId: sim.universe.meta.id };
 }

@@ -29,6 +29,21 @@ const JOINING_WORDS = new Set([
 ]);
 
 /**
+ * Real names that are not Title Case, and must not be "corrected".
+ *
+ * The house rule is Title Case for every label SLATE writes. It does not
+ * apply to a real company's own name: dm is lowercase on the shopfront and
+ * Pick n Pay has a lowercase n on the sign, and rewriting either of them
+ * would make the game wrong rather than tidy. Anything added here has to be
+ * a name somebody else chose, verifiable on their own signage.
+ */
+const REAL_NAMES_AS_WRITTEN = new Set([
+  'dm',                 // German drugstore chain; lowercase in its own logo.
+  'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
+  'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
+]);
+
+/**
  * Fields that hold a label rather than prose or a key. `category` and `group`
  * are deliberately absent: those are identifiers with their own label maps,
  * and capitalising them would break every lookup that uses them.
@@ -89,7 +104,7 @@ for (const file of files) {
       for (const entry of body.matchAll(/'((?:[^'\\]|\\.){2,70})'/g)) {
         const value = entry[1];
         const bad = lowercaseWordsIn(value);
-        if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
+        if (bad.length > 0 && !REAL_NAMES_AS_WRITTEN.has(value)) problems.push({ file, line: index + 1, key, value, bad });
       }
     }
   });
@@ -103,7 +118,7 @@ for (const file of files) {
       // Prose in a label field is caught by the other tool; here we only want
       // words that begin lowercase.
       const bad = lowercaseWordsIn(value);
-      if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
+      if (bad.length > 0 && !REAL_NAMES_AS_WRITTEN.has(value)) problems.push({ file, line: index + 1, key, value, bad });
     }
     // A title built from a template — `${bill.name} Is Unpaid` — reaches the
     // screen the same way. The slots are set aside and the words around them

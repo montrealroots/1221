@@ -24,7 +24,7 @@ import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
 import { REAL_GYMS } from './fitness';
 import { shoppableRetailers } from './catalog';
-import { REAL_RETAILERS, tradesIn } from './brands';
+import { ALL_RETAILERS, tradesIn } from './brands';
 
 export type PlaceKind =
   | 'restaurant' | 'cafe' | 'bar' | 'fast_food' | 'market'
@@ -504,7 +504,7 @@ export function placesIn(cityId: string): Place[] {
   // catalogue and the street agree with each other. The id carries the chain
   // rather than a number, so adding a chain never moves an existing shop.
   for (const retailer of shoppableRetailers()) {
-    const real = REAL_RETAILERS.find((r) => r.id === retailer.id);
+    const real = ALL_RETAILERS.find((r) => r.id === retailer.id);
     if (!real || real.kind === 'online') continue;
     if (!tradesIn(real, cityId, city.population)) continue;
     const hood = hoods.length > 0 ? hoods[Math.abs(hashOf(`${cityId}:${retailer.id}`)) % hoods.length] : undefined;

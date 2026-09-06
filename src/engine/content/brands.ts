@@ -252,7 +252,178 @@ export const REAL_RETAILERS: readonly RealRetailer[] = [
   shop({ id: 'vestiaire', name: 'Vestiaire Collective', kind: 'online', tier: 3, priceMultiplier: 0.60, categories: ['clothing', 'footwear', 'accessory', 'jewelry'], markets: ANY, minimumCity: 0, online: true, deliveryDays: 8, description: 'French resale platform for second-hand designer fashion.' }),
 ];
 
-export const RETAILER_REGISTRY = new Registry<RealRetailer>('retailers_real', REAL_RETAILERS);
+/**
+ * The rest of the world.
+ *
+ * The chains above are the ones a European or North American player meets
+ * first. These are the ones everybody else meets first, and a shop in São
+ * Paulo, Lagos, Mumbai, Seoul or Istanbul should be a shop from there rather
+ * than an American one with the sign changed. Same rules: the company and the
+ * countries it trades in are public record; the branch, the rail and the price
+ * are SLATE's.
+ */
+export const REGIONAL_RETAILERS: readonly RealRetailer[] = [
+  // --- Latin America ------------------------------------------------------------------------
+  shop({ id: 'pao_de_acucar', name: 'Pão De Açúcar', kind: 'grocery', tier: 3, priceMultiplier: 1.12, categories: ['groceries', 'household'], markets: ['br'], minimumCity: 100_000, online: true, deliveryDays: 1, description: 'Brazilian supermarket chain, part of Grupo Pão de Açúcar.' }),
+  shop({ id: 'extra_br', name: 'Extra', kind: 'grocery', tier: 2, priceMultiplier: 0.95, categories: ['groceries', 'household', 'electronics'], markets: ['br'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Brazilian hypermarket banner.' }),
+  shop({ id: 'magazine_luiza', name: 'Magazine Luiza', kind: 'department', tier: 2, priceMultiplier: 1.00, categories: ['electronics', 'appliance', 'furniture', 'home'], markets: ['br'], minimumCity: 60_000, online: true, deliveryDays: 4, description: 'Brazilian retailer of electronics, appliances and furniture.' }),
+  shop({ id: 'casas_bahia', name: 'Casas Bahia', kind: 'department', tier: 2, priceMultiplier: 1.02, categories: ['electronics', 'appliance', 'furniture'], markets: ['br'], minimumCity: 60_000, online: true, deliveryDays: 5, description: 'Brazilian furniture and electronics chain.' }),
+  shop({ id: 'renner', name: 'Renner', kind: 'department', tier: 2, priceMultiplier: 0.94, categories: ['clothing', 'footwear', 'accessory', 'home'], markets: ['br'], minimumCity: 100_000, online: true, deliveryDays: 4, description: 'Brazilian fashion department store chain.' }),
+  shop({ id: 'riachuelo', name: 'Riachuelo', kind: 'department', tier: 2, priceMultiplier: 0.90, categories: ['clothing', 'footwear', 'accessory'], markets: ['br'], minimumCity: 100_000, online: true, deliveryDays: 4, description: 'Brazilian clothing retailer.' }),
+  shop({ id: 'havaianas_store', name: 'Havaianas', kind: 'footwear', tier: 2, priceMultiplier: 1.00, categories: ['footwear', 'accessory'], markets: ANY, minimumCity: 250_000, online: true, deliveryDays: 4, description: 'Brazilian footwear brand, part of Alpargatas.' }),
+  shop({ id: 'soriana', name: 'Soriana', kind: 'grocery', tier: 2, priceMultiplier: 0.94, categories: ['groceries', 'household'], markets: ['mx'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Mexican supermarket chain.' }),
+  shop({ id: 'chedraui', name: 'Chedraui', kind: 'grocery', tier: 2, priceMultiplier: 0.92, categories: ['groceries', 'household', 'clothing'], markets: ['mx', 'us'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Mexican supermarket group, which also owns El Super in the United States.' }),
+  shop({ id: 'liverpool_mx', name: 'Liverpool', kind: 'department', tier: 4, priceMultiplier: 1.34, categories: ['clothing', 'footwear', 'accessory', 'home', 'appliance'], markets: ['mx'], minimumCity: 150_000, online: true, deliveryDays: 3, description: 'Mexican department store chain, trading since 1847.' }),
+  shop({ id: 'palacio_hierro', name: 'El Palacio De Hierro', kind: 'department', tier: 5, priceMultiplier: 1.68, categories: ['clothing', 'footwear', 'accessory', 'jewelry', 'watch', 'home'], markets: ['mx'], minimumCity: 400_000, online: true, deliveryDays: 3, description: 'Mexican luxury department store.' }),
+  shop({ id: 'oxxo', name: 'OXXO', kind: 'convenience', tier: 2, priceMultiplier: 1.28, categories: ['groceries', 'prepared'], markets: ['mx', 'co', 'cl', 'pe', 'br'], minimumCity: 10_000, online: false, deliveryDays: 0, description: 'Mexican convenience-store chain, part of FEMSA.' }),
+  shop({ id: 'falabella', name: 'Falabella', kind: 'department', tier: 3, priceMultiplier: 1.18, categories: ['clothing', 'footwear', 'accessory', 'home', 'appliance', 'electronics'], markets: ['cl', 'pe', 'co', 'ar'], minimumCity: 100_000, online: true, deliveryDays: 4, description: 'Chilean department store group trading across South America.' }),
+  shop({ id: 'ripley', name: 'Ripley', kind: 'department', tier: 3, priceMultiplier: 1.14, categories: ['clothing', 'footwear', 'home', 'electronics'], markets: ['cl', 'pe'], minimumCity: 100_000, online: true, deliveryDays: 4, description: 'Chilean department store chain.' }),
+  shop({ id: 'jumbo_cl', name: 'Jumbo', kind: 'grocery', tier: 3, priceMultiplier: 1.10, categories: ['groceries', 'household'], markets: ['cl', 'ar', 'co'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'South American hypermarket banner of Cencosud.' }),
+  shop({ id: 'exito', name: 'Éxito', kind: 'grocery', tier: 2, priceMultiplier: 0.98, categories: ['groceries', 'household', 'clothing'], markets: ['co'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Colombian retail chain.' }),
+  shop({ id: 'coto', name: 'Coto', kind: 'grocery', tier: 2, priceMultiplier: 0.96, categories: ['groceries', 'household'], markets: ['ar'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Argentine supermarket chain.' }),
+
+  // --- South Asia ---------------------------------------------------------------------------------
+  shop({ id: 'dmart', name: 'DMart', kind: 'grocery', tier: 1, priceMultiplier: 0.80, categories: ['groceries', 'household', 'clothing'], markets: ['in'], minimumCity: 100_000, online: true, deliveryDays: 2, description: 'Indian value retail chain, operated by Avenue Supermarts.' }),
+  shop({ id: 'reliance_fresh', name: 'Reliance Fresh', kind: 'grocery', tier: 2, priceMultiplier: 0.92, categories: ['groceries', 'household'], markets: ['in'], minimumCity: 80_000, online: true, deliveryDays: 1, description: 'Indian grocery chain, part of Reliance Retail.' }),
+  shop({ id: 'croma', name: 'Croma', kind: 'electronics', tier: 3, priceMultiplier: 1.02, categories: ['electronics', 'appliance'], markets: ['in'], minimumCity: 200_000, online: true, deliveryDays: 3, description: 'Indian electronics chain, part of the Tata group.' }),
+  shop({ id: 'shoppers_stop', name: 'Shoppers Stop', kind: 'department', tier: 3, priceMultiplier: 1.22, categories: ['clothing', 'footwear', 'accessory', 'home'], markets: ['in'], minimumCity: 250_000, online: true, deliveryDays: 4, description: 'Indian department store chain.' }),
+  shop({ id: 'lifestyle_in', name: 'Lifestyle', kind: 'department', tier: 3, priceMultiplier: 1.16, categories: ['clothing', 'footwear', 'accessory'], markets: ['in'], minimumCity: 250_000, online: true, deliveryDays: 4, description: 'Indian fashion retailer, part of the Landmark Group.' }),
+  shop({ id: 'westside', name: 'Westside', kind: 'department', tier: 3, priceMultiplier: 1.10, categories: ['clothing', 'footwear', 'home'], markets: ['in'], minimumCity: 200_000, online: true, deliveryDays: 4, description: 'Indian retail chain, part of Trent and the Tata group.' }),
+  shop({ id: 'fabindia', name: 'Fabindia', kind: 'boutique', tier: 3, priceMultiplier: 1.20, categories: ['clothing', 'home', 'household'], markets: ['in'], minimumCity: 200_000, online: true, deliveryDays: 4, description: 'Indian retailer of handloom textiles and homeware.' }),
+  shop({ id: 'tanishq', name: 'Tanishq', kind: 'jeweller', tier: 4, priceMultiplier: 1.00, categories: ['jewelry', 'watch'], markets: ['in'], minimumCity: 200_000, online: true, deliveryDays: 5, description: 'Indian jewellery brand, part of Titan and the Tata group.' }),
+
+  // --- East Asia ---------------------------------------------------------------------------------------
+  shop({ id: 'aeon', name: 'AEON', kind: 'grocery', tier: 2, priceMultiplier: 0.98, categories: ['groceries', 'household', 'clothing'], markets: ['jp', 'my', 'vn', 'th', 'kh'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Japanese retail group operating across Asia.' }),
+  shop({ id: 'ito_yokado', name: 'Ito-Yokado', kind: 'grocery', tier: 3, priceMultiplier: 1.06, categories: ['groceries', 'household', 'clothing'], markets: ['jp'], minimumCity: 100_000, online: true, deliveryDays: 1, description: 'Japanese superstore chain, part of Seven & i Holdings.' }),
+  shop({ id: 'don_quijote', name: 'Don Quijote', kind: 'department', tier: 2, priceMultiplier: 0.92, categories: ['groceries', 'household', 'electronics', 'clothing'], markets: ['jp', 'sg', 'th', 'hk'], minimumCity: 150_000, online: false, deliveryDays: 0, description: 'Japanese discount chain known for its dense, late-opening stores.' }),
+  shop({ id: 'bic_camera', name: 'Bic Camera', kind: 'electronics', tier: 3, priceMultiplier: 1.00, categories: ['electronics', 'appliance', 'equipment'], markets: ['jp'], minimumCity: 200_000, online: true, deliveryDays: 2, description: 'Japanese electronics retail chain.' }),
+  shop({ id: 'loft_jp', name: 'Loft', kind: 'homeware', tier: 3, priceMultiplier: 1.10, categories: ['household', 'home', 'accessory'], markets: ['jp'], minimumCity: 200_000, online: true, deliveryDays: 3, description: 'Japanese variety and lifestyle store chain.' }),
+  shop({ id: 'beams', name: 'BEAMS', kind: 'boutique', tier: 4, priceMultiplier: 1.44, categories: ['clothing', 'footwear', 'accessory'], markets: ['jp'], minimumCity: 300_000, online: true, deliveryDays: 4, description: 'Japanese select shop and clothing label, founded in Harajuku in 1976.' }),
+  shop({ id: 'united_arrows', name: 'United Arrows', kind: 'boutique', tier: 4, priceMultiplier: 1.52, categories: ['clothing', 'footwear', 'accessory'], markets: ['jp'], minimumCity: 300_000, online: true, deliveryDays: 4, description: 'Japanese select shop known for tailoring and imported labels.' }),
+  shop({ id: 'lotte_department', name: 'Lotte Department Store', kind: 'department', tier: 4, priceMultiplier: 1.40, categories: ['clothing', 'footwear', 'accessory', 'groceries', 'home'], markets: ['kr'], minimumCity: 200_000, online: true, deliveryDays: 2, description: 'South Korean department store chain.' }),
+  shop({ id: 'shinsegae', name: 'Shinsegae', kind: 'department', tier: 5, priceMultiplier: 1.62, categories: ['clothing', 'footwear', 'accessory', 'jewelry', 'home'], markets: ['kr'], minimumCity: 300_000, online: true, deliveryDays: 2, description: 'South Korean luxury department store group.' }),
+  shop({ id: 'emart', name: 'Emart', kind: 'grocery', tier: 2, priceMultiplier: 0.94, categories: ['groceries', 'household', 'electronics'], markets: ['kr'], minimumCity: 100_000, online: true, deliveryDays: 1, description: 'South Korean hypermarket chain.' }),
+  shop({ id: 'olive_young', name: 'Olive Young', kind: 'pharmacy', tier: 2, priceMultiplier: 1.04, categories: ['household', 'pharmacy', 'accessory'], markets: ['kr'], minimumCity: 80_000, online: true, deliveryDays: 1, description: 'South Korean health and beauty chain, part of CJ.' }),
+  shop({ id: 'miniso', name: 'MINISO', kind: 'homeware', tier: 1, priceMultiplier: 0.70, categories: ['household', 'home', 'accessory'], markets: ANY, minimumCity: 150_000, online: false, deliveryDays: 0, description: 'Chinese variety retailer with stores in many countries.' }),
+  shop({ id: 'skp', name: 'SKP', kind: 'department', tier: 5, priceMultiplier: 1.74, categories: ['clothing', 'footwear', 'accessory', 'jewelry', 'watch'], markets: ['cn'], minimumCity: 1_000_000, online: false, deliveryDays: 0, description: 'Chinese luxury department store group.' }),
+
+  // --- Southeast Asia -------------------------------------------------------------------------------------
+  shop({ id: 'fairprice', name: 'FairPrice', kind: 'grocery', tier: 2, priceMultiplier: 0.96, categories: ['groceries', 'household'], markets: ['sg'], minimumCity: 50_000, online: true, deliveryDays: 1, description: 'Singaporean supermarket cooperative run by NTUC Enterprise.' }),
+  shop({ id: 'mustafa', name: 'Mustafa Centre', kind: 'department', tier: 2, priceMultiplier: 0.90, categories: ['groceries', 'electronics', 'clothing', 'jewelry', 'household'], markets: ['sg'], flagshipCities: ['sg-sg-singapore'], minimumCity: 0, online: false, deliveryDays: 0, description: 'Singaporean department store in Little India, open around the clock.' }),
+  shop({ id: 'central_th', name: 'Central', kind: 'department', tier: 4, priceMultiplier: 1.32, categories: ['clothing', 'footwear', 'accessory', 'home', 'groceries'], markets: ['th'], minimumCity: 150_000, online: true, deliveryDays: 3, description: 'Thai department store group.' }),
+  shop({ id: 'big_c', name: 'Big C', kind: 'grocery', tier: 2, priceMultiplier: 0.92, categories: ['groceries', 'household', 'clothing'], markets: ['th', 'vn', 'kh', 'la'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Thai hypermarket chain.' }),
+  shop({ id: 'sm_store', name: 'The SM Store', kind: 'department', tier: 3, priceMultiplier: 1.10, categories: ['clothing', 'footwear', 'accessory', 'home', 'appliance'], markets: ['ph'], minimumCity: 100_000, online: true, deliveryDays: 4, description: 'Philippine department store chain, part of SM Investments.' }),
+  shop({ id: 'mercury_drug', name: 'Mercury Drug', kind: 'pharmacy', tier: 2, priceMultiplier: 1.06, categories: ['household', 'pharmacy'], markets: ['ph'], minimumCity: 40_000, online: false, deliveryDays: 0, description: 'Philippine pharmacy chain.' }),
+  shop({ id: 'indomaret', name: 'Indomaret', kind: 'convenience', tier: 2, priceMultiplier: 1.14, categories: ['groceries', 'household'], markets: ['id'], minimumCity: 20_000, online: false, deliveryDays: 0, description: 'Indonesian convenience-store chain.' }),
+  shop({ id: 'alfamart', name: 'Alfamart', kind: 'convenience', tier: 2, priceMultiplier: 1.12, categories: ['groceries', 'household'], markets: ['id', 'ph'], minimumCity: 20_000, online: false, deliveryDays: 0, description: 'Indonesian convenience-store chain.' }),
+  shop({ id: 'ninety_nine_speedmart', name: '99 Speedmart', kind: 'convenience', tier: 1, priceMultiplier: 0.94, categories: ['groceries', 'household'], markets: ['my'], minimumCity: 20_000, online: false, deliveryDays: 0, description: 'Malaysian mini-market chain.' }),
+
+  // --- Middle East ------------------------------------------------------------------------------------------
+  shop({ id: 'lulu', name: 'Lulu Hypermarket', kind: 'grocery', tier: 2, priceMultiplier: 0.96, categories: ['groceries', 'household', 'electronics', 'clothing'], markets: ['ae', 'sa', 'qa', 'om', 'kw', 'bh', 'in', 'eg'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Gulf hypermarket chain based in Abu Dhabi.' }),
+  shop({ id: 'spinneys', name: 'Spinneys', kind: 'grocery', tier: 4, priceMultiplier: 1.30, categories: ['groceries', 'household'], markets: ['ae', 'lb', 'eg', 'qa'], minimumCity: 100_000, online: true, deliveryDays: 1, description: 'Middle Eastern supermarket chain.' }),
+  shop({ id: 'level_shoes', name: 'Level Shoes', kind: 'footwear', tier: 5, priceMultiplier: 1.70, categories: ['footwear', 'accessory'], markets: ['ae'], flagshipCities: ['ae-du-dubai'], minimumCity: 0, online: true, deliveryDays: 3, description: 'Dubai Mall footwear destination operated by the Chalhoub Group.' }),
+  shop({ id: 'jarir', name: 'Jarir Bookstore', kind: 'electronics', tier: 3, priceMultiplier: 1.04, categories: ['electronics', 'books', 'household'], markets: ['sa', 'ae', 'kw', 'qa', 'bh'], minimumCity: 100_000, online: true, deliveryDays: 2, description: 'Saudi retailer of books, stationery and electronics.' }),
+  shop({ id: 'panda_sa', name: 'Panda', kind: 'grocery', tier: 2, priceMultiplier: 0.94, categories: ['groceries', 'household'], markets: ['sa'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Saudi supermarket chain.' }),
+  shop({ id: 'boyner', name: 'Boyner', kind: 'department', tier: 3, priceMultiplier: 1.14, categories: ['clothing', 'footwear', 'accessory', 'home'], markets: ['tr'], minimumCity: 150_000, online: true, deliveryDays: 3, description: 'Turkish department store chain.' }),
+  shop({ id: 'beymen', name: 'Beymen', kind: 'department', tier: 5, priceMultiplier: 1.70, categories: ['clothing', 'footwear', 'accessory', 'jewelry'], markets: ['tr'], minimumCity: 400_000, online: true, deliveryDays: 3, description: 'Turkish luxury department store.' }),
+  shop({ id: 'lc_waikiki', name: 'LC Waikiki', kind: 'highstreet', tier: 1, priceMultiplier: 0.72, categories: ['clothing', 'footwear'], markets: ['tr', 'ro', 'pl', 'eg', 'ma', 'kz', 'rs', 'bg'], minimumCity: 60_000, online: true, deliveryDays: 4, description: 'Turkish clothing retailer trading across Europe, the Middle East and Central Asia.' }),
+  shop({ id: 'migros_tr', name: 'Migros Türkiye', kind: 'grocery', tier: 2, priceMultiplier: 0.98, categories: ['groceries', 'household'], markets: ['tr'], minimumCity: 60_000, online: true, deliveryDays: 1, description: 'Turkish supermarket chain, independent of the Swiss cooperative of the same origin.' }),
+  shop({ id: 'bim', name: 'BİM', kind: 'grocery', tier: 1, priceMultiplier: 0.74, categories: ['groceries', 'household'], markets: ['tr', 'ma', 'eg'], minimumCity: 20_000, online: false, deliveryDays: 0, description: 'Turkish hard-discount grocery chain.' }),
+
+  // --- Africa ----------------------------------------------------------------------------------------------------
+  shop({ id: 'shoprite', name: 'Shoprite', kind: 'grocery', tier: 2, priceMultiplier: 0.90, categories: ['groceries', 'household'], markets: ['za', 'na', 'zm', 'ao', 'gh', 'mz', 'bw'], minimumCity: 50_000, online: true, deliveryDays: 2, description: 'South African supermarket group, the largest in Africa.' }),
+  shop({ id: 'checkers', name: 'Checkers', kind: 'grocery', tier: 3, priceMultiplier: 1.08, categories: ['groceries', 'household'], markets: ['za', 'na', 'bw'], minimumCity: 80_000, online: true, deliveryDays: 1, description: 'South African supermarket chain, part of the Shoprite group.' }),
+  shop({ id: 'pick_n_pay', name: 'Pick n Pay', kind: 'grocery', tier: 2, priceMultiplier: 0.98, categories: ['groceries', 'household', 'clothing'], markets: ['za', 'zm', 'na', 'bw', 'zw'], minimumCity: 50_000, online: true, deliveryDays: 2, description: 'South African supermarket chain.' }),
+  shop({ id: 'woolworths_za', name: 'Woolworths', kind: 'department', tier: 4, priceMultiplier: 1.32, categories: ['groceries', 'clothing', 'home', 'prepared'], markets: ['za', 'na', 'bw', 'ke'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'South African retailer of food, clothing and homeware, unrelated to the Australian chain.' }),
+  shop({ id: 'naivas', name: 'Naivas', kind: 'grocery', tier: 2, priceMultiplier: 0.96, categories: ['groceries', 'household'], markets: ['ke'], minimumCity: 50_000, online: true, deliveryDays: 2, description: 'Kenyan supermarket chain.' }),
+  shop({ id: 'spar_int', name: 'SPAR', kind: 'grocery', tier: 2, priceMultiplier: 1.04, categories: ['groceries', 'household'], markets: ['za', 'ie', 'at', 'nl', 'no', 'hu', 'in', 'ng', 'zw'], minimumCity: 15_000, online: false, deliveryDays: 0, description: 'International grocery brand run as a network of independent retailers.' }),
+  shop({ id: 'jumia', name: 'Jumia', kind: 'online', tier: 2, priceMultiplier: 0.94, categories: ['electronics', 'clothing', 'household', 'home', 'appliance'], markets: ['ng', 'ke', 'eg', 'gh', 'ci', 'ma', 'sn', 'tn', 'ug'], minimumCity: 0, online: true, deliveryDays: 5, description: 'Pan-African online marketplace listed in New York in 2019.' }),
+
+  // --- Northern and Eastern Europe --------------------------------------------------------------------------------------
+  shop({ id: 'ica', name: 'ICA', kind: 'grocery', tier: 2, priceMultiplier: 1.02, categories: ['groceries', 'household'], markets: ['se'], minimumCity: 15_000, online: true, deliveryDays: 1, description: 'Swedish grocery group run with independent retailers.' }),
+  shop({ id: 'rema_1000', name: 'Rema 1000', kind: 'grocery', tier: 1, priceMultiplier: 0.86, categories: ['groceries', 'household'], markets: ['no', 'dk'], minimumCity: 10_000, online: false, deliveryDays: 0, description: 'Norwegian discount grocery chain.' }),
+  shop({ id: 'prisma_fi', name: 'Prisma', kind: 'grocery', tier: 2, priceMultiplier: 0.98, categories: ['groceries', 'household', 'clothing', 'electronics'], markets: ['fi', 'ee'], minimumCity: 30_000, online: true, deliveryDays: 1, description: 'Finnish hypermarket chain, part of the S Group.' }),
+  shop({ id: 'stockmann', name: 'Stockmann', kind: 'department', tier: 4, priceMultiplier: 1.42, categories: ['clothing', 'footwear', 'accessory', 'home', 'groceries'], markets: ['fi', 'ee', 'lv'], minimumCity: 100_000, online: true, deliveryDays: 3, description: 'Finnish department store, trading since 1862.' }),
+  shop({ id: 'illums_bolighus', name: 'Illums Bolighus', kind: 'homeware', tier: 5, priceMultiplier: 1.66, categories: ['furniture', 'home', 'household'], markets: ['dk', 'se'], minimumCity: 150_000, online: true, deliveryDays: 5, description: 'Danish design department store on Strøget in Copenhagen.' }),
+  shop({ id: 'elgiganten', name: 'Elgiganten', kind: 'electronics', tier: 2, priceMultiplier: 1.00, categories: ['electronics', 'appliance'], markets: ['se', 'dk', 'no', 'fi'], minimumCity: 30_000, online: true, deliveryDays: 2, description: 'Nordic electronics chain, part of Elkjøp.' }),
+  shop({ id: 'biedronka', name: 'Biedronka', kind: 'grocery', tier: 1, priceMultiplier: 0.78, categories: ['groceries', 'household'], markets: ['pl'], minimumCity: 10_000, online: false, deliveryDays: 0, description: 'Polish discount grocery chain, owned by Jerónimo Martins.' }),
+  shop({ id: 'zabka', name: 'Żabka', kind: 'convenience', tier: 2, priceMultiplier: 1.18, categories: ['groceries', 'prepared'], markets: ['pl'], minimumCity: 10_000, online: false, deliveryDays: 0, description: 'Polish convenience-store chain.' }),
+  shop({ id: 'empik', name: 'Empik', kind: 'bookshop', tier: 3, priceMultiplier: 1.06, categories: ['books', 'electronics', 'household'], markets: ['pl'], minimumCity: 50_000, online: true, deliveryDays: 3, description: 'Polish retailer of books, music and media.' }),
+  shop({ id: 'rossmann', name: 'Rossmann', kind: 'pharmacy', tier: 2, priceMultiplier: 0.96, categories: ['household', 'pharmacy'], markets: ['de', 'pl', 'hu', 'cz', 'tr', 'es', 'al'], minimumCity: 20_000, online: true, deliveryDays: 2, description: 'German health and beauty retailer.' }),
+  shop({ id: 'dm_drogerie', name: 'dm', kind: 'pharmacy', tier: 2, priceMultiplier: 0.94, categories: ['household', 'pharmacy'], markets: ['de', 'at', 'cz', 'hu', 'hr', 'si', 'sk', 'bg', 'ro'], minimumCity: 20_000, online: true, deliveryDays: 2, description: 'German drugstore chain.' }),
+  shop({ id: 'kaufland', name: 'Kaufland', kind: 'grocery', tier: 1, priceMultiplier: 0.84, categories: ['groceries', 'household'], markets: ['de', 'pl', 'cz', 'sk', 'ro', 'bg', 'hr', 'md'], minimumCity: 25_000, online: false, deliveryDays: 0, description: 'German hypermarket chain, part of the Schwarz Group.' }),
+  shop({ id: 'billa', name: 'BILLA', kind: 'grocery', tier: 2, priceMultiplier: 1.00, categories: ['groceries', 'household'], markets: ['at', 'cz', 'sk', 'bg', 'ro', 'it'], minimumCity: 15_000, online: true, deliveryDays: 1, description: 'Austrian supermarket chain, part of REWE Group.' }),
+  shop({ id: 'saturn', name: 'Saturn', kind: 'electronics', tier: 2, priceMultiplier: 0.99, categories: ['electronics', 'appliance'], markets: ['de', 'at', 'lu'], minimumCity: 60_000, online: true, deliveryDays: 2, description: 'German electronics chain, part of Ceconomy.' }),
+  shop({ id: 'manor', name: 'Manor', kind: 'department', tier: 3, priceMultiplier: 1.26, categories: ['clothing', 'footwear', 'home', 'groceries'], markets: ['ch'], minimumCity: 40_000, online: true, deliveryDays: 3, description: 'Swiss department store chain.' }),
+  shop({ id: 'albert_heijn', name: 'Albert Heijn', kind: 'grocery', tier: 3, priceMultiplier: 1.06, categories: ['groceries', 'household', 'prepared'], markets: ['nl', 'be'], minimumCity: 15_000, online: true, deliveryDays: 1, description: 'Dutch supermarket chain, part of Ahold Delhaize.' }),
+  shop({ id: 'jumbo_nl', name: 'Jumbo', kind: 'grocery', tier: 2, priceMultiplier: 0.96, categories: ['groceries', 'household'], markets: ['nl', 'be'], minimumCity: 15_000, online: true, deliveryDays: 1, description: 'Dutch supermarket chain, unrelated to the South American banner.' }),
+  shop({ id: 'hema', name: 'HEMA', kind: 'department', tier: 2, priceMultiplier: 0.90, categories: ['household', 'home', 'clothing', 'groceries'], markets: ['nl', 'be', 'fr', 'de', 'lu'], minimumCity: 20_000, online: true, deliveryDays: 3, description: 'Dutch variety store chain, trading since 1926.' }),
+  shop({ id: 'bijenkorf', name: 'De Bijenkorf', kind: 'department', tier: 5, priceMultiplier: 1.60, categories: ['clothing', 'footwear', 'accessory', 'home', 'jewelry'], markets: ['nl'], minimumCity: 150_000, online: true, deliveryDays: 3, description: 'Dutch luxury department store chain.' }),
+  shop({ id: 'colruyt', name: 'Colruyt', kind: 'grocery', tier: 1, priceMultiplier: 0.86, categories: ['groceries', 'household'], markets: ['be', 'fr', 'lu'], minimumCity: 15_000, online: true, deliveryDays: 1, description: 'Belgian discount supermarket chain.' }),
+  shop({ id: 'coolblue', name: 'Coolblue', kind: 'electronics', tier: 3, priceMultiplier: 1.02, categories: ['electronics', 'appliance'], markets: ['nl', 'be', 'de'], minimumCity: 0, online: true, deliveryDays: 1, description: 'Dutch electronics retailer.' }),
+
+  // --- Western Europe, filling the gaps ---------------------------------------------------------------------------------
+  shop({ id: 'leclerc', name: 'E.Leclerc', kind: 'grocery', tier: 1, priceMultiplier: 0.88, categories: ['groceries', 'household', 'electronics'], markets: ['fr', 'pl', 'pt', 'si'], minimumCity: 15_000, online: true, deliveryDays: 2, description: 'French retail cooperative of independent hypermarkets.' }),
+  shop({ id: 'intermarche', name: 'Intermarché', kind: 'grocery', tier: 2, priceMultiplier: 0.92, categories: ['groceries', 'household'], markets: ['fr', 'pt', 'be', 'pl'], minimumCity: 10_000, online: true, deliveryDays: 2, description: 'French supermarket group of independent retailers.' }),
+  shop({ id: 'auchan', name: 'Auchan', kind: 'grocery', tier: 2, priceMultiplier: 0.93, categories: ['groceries', 'household', 'electronics', 'clothing'], markets: ['fr', 'pl', 'pt', 'es', 'hu', 'ro', 'ua'], minimumCity: 40_000, online: true, deliveryDays: 2, description: 'French hypermarket group.' }),
+  shop({ id: 'darty', name: 'Darty', kind: 'electronics', tier: 2, priceMultiplier: 1.02, categories: ['electronics', 'appliance'], markets: ['fr', 'be'], minimumCity: 40_000, online: true, deliveryDays: 2, description: 'French electrical goods retailer, part of Fnac Darty.' }),
+  shop({ id: 'sephora', name: 'Sephora', kind: 'pharmacy', tier: 4, priceMultiplier: 1.24, categories: ['accessory', 'household'], markets: ANY, minimumCity: 150_000, online: true, deliveryDays: 3, description: 'French beauty retail chain, part of LVMH.' }),
+  shop({ id: 'ulta', name: 'Ulta Beauty', kind: 'pharmacy', tier: 3, priceMultiplier: 1.10, categories: ['accessory', 'household'], markets: ['us'], minimumCity: 60_000, online: true, deliveryDays: 3, description: 'American beauty retail chain.' }),
+  shop({ id: 'douglas', name: 'Douglas', kind: 'pharmacy', tier: 3, priceMultiplier: 1.16, categories: ['accessory', 'household'], markets: ['de', 'nl', 'pl', 'it', 'es', 'at', 'fr', 'ch'], minimumCity: 60_000, online: true, deliveryDays: 3, description: 'German beauty retail chain.' }),
+  shop({ id: 'mecca', name: 'MECCA', kind: 'pharmacy', tier: 4, priceMultiplier: 1.26, categories: ['accessory', 'household'], markets: ['au', 'nz'], minimumCity: 100_000, online: true, deliveryDays: 3, description: 'Australian beauty retailer.' }),
+  shop({ id: 'decathlon', name: 'Decathlon', kind: 'sportswear', tier: 1, priceMultiplier: 0.68, categories: ['equipment', 'clothing', 'footwear'], markets: ANY, minimumCity: 60_000, online: true, deliveryDays: 3, description: 'French sporting goods retailer.' }),
+  shop({ id: 'eataly', name: 'Eataly', kind: 'grocery', tier: 4, priceMultiplier: 1.42, categories: ['groceries', 'prepared', 'household'], markets: ['it', 'us', 'jp', 'ae', 'ca', 'kr', 'se'], minimumCity: 400_000, online: true, deliveryDays: 3, description: 'Italian food hall and grocery chain founded in Turin in 2007.' }),
+  shop({ id: 'conad', name: 'Conad', kind: 'grocery', tier: 2, priceMultiplier: 0.96, categories: ['groceries', 'household'], markets: ['it'], minimumCity: 15_000, online: true, deliveryDays: 1, description: 'Italian retail cooperative.' }),
+  shop({ id: 'unieuro', name: 'Unieuro', kind: 'electronics', tier: 2, priceMultiplier: 1.02, categories: ['electronics', 'appliance'], markets: ['it'], minimumCity: 40_000, online: true, deliveryDays: 2, description: 'Italian electronics retail chain.' }),
+  shop({ id: 'continente', name: 'Continente', kind: 'grocery', tier: 2, priceMultiplier: 0.94, categories: ['groceries', 'household'], markets: ['pt'], minimumCity: 20_000, online: true, deliveryDays: 1, description: 'Portuguese hypermarket chain, part of Sonae.' }),
+  shop({ id: 'worten', name: 'Worten', kind: 'electronics', tier: 2, priceMultiplier: 1.02, categories: ['electronics', 'appliance'], markets: ['pt', 'es'], minimumCity: 30_000, online: true, deliveryDays: 2, description: 'Portuguese electronics chain, part of Sonae.' }),
+
+  // --- Britain and Ireland, filling the gaps ------------------------------------------------------------------------------
+  shop({ id: 'asda', name: 'Asda', kind: 'grocery', tier: 1, priceMultiplier: 0.88, categories: ['groceries', 'household', 'clothing'], markets: ['uk'], minimumCity: 20_000, online: true, deliveryDays: 1, description: 'British supermarket chain.' }),
+  shop({ id: 'coop_uk', name: 'Co-op', kind: 'convenience', tier: 2, priceMultiplier: 1.10, categories: ['groceries', 'household'], markets: ['uk'], minimumCity: 5_000, online: true, deliveryDays: 1, description: 'British consumer cooperative running convenience stores.' }),
+  shop({ id: 'iceland_uk', name: 'Iceland', kind: 'grocery', tier: 1, priceMultiplier: 0.84, categories: ['groceries', 'household'], markets: ['uk', 'ie'], minimumCity: 15_000, online: true, deliveryDays: 2, description: 'British frozen food supermarket chain.' }),
+  shop({ id: 'primark', name: 'Primark', kind: 'highstreet', tier: 1, priceMultiplier: 0.42, categories: ['clothing', 'footwear', 'accessory', 'home'], markets: ['uk', 'ie', 'es', 'de', 'fr', 'nl', 'it', 'us', 'pt', 'be', 'at', 'pl'], minimumCity: 40_000, online: false, deliveryDays: 0, description: 'Irish clothing retailer, part of Associated British Foods.' }),
+  shop({ id: 'next_uk', name: 'Next', kind: 'highstreet', tier: 2, priceMultiplier: 1.00, categories: ['clothing', 'footwear', 'accessory', 'home', 'furniture'], markets: ['uk', 'ie'], minimumCity: 30_000, online: true, deliveryDays: 2, description: 'British clothing and homeware retailer.' }),
+  shop({ id: 'superdrug', name: 'Superdrug', kind: 'pharmacy', tier: 2, priceMultiplier: 0.96, categories: ['household', 'pharmacy', 'accessory'], markets: ['uk', 'ie'], minimumCity: 20_000, online: true, deliveryDays: 2, description: 'British health and beauty chain.' }),
+  shop({ id: 'argos', name: 'Argos', kind: 'department', tier: 2, priceMultiplier: 0.96, categories: ['electronics', 'appliance', 'furniture', 'home', 'equipment'], markets: ['uk', 'ie'], minimumCity: 20_000, online: true, deliveryDays: 1, description: 'British catalogue retailer, owned by Sainsbury\'s.' }),
+  shop({ id: 'jd_sports', name: 'JD Sports', kind: 'sportswear', tier: 2, priceMultiplier: 1.06, categories: ['footwear', 'clothing'], markets: ['uk', 'ie', 'fr', 'de', 'es', 'nl', 'us', 'au'], minimumCity: 40_000, online: true, deliveryDays: 3, description: 'British sports fashion retailer.' }),
+  shop({ id: 'halfords', name: 'Halfords', kind: 'hardware', tier: 2, priceMultiplier: 1.00, categories: ['equipment', 'household'], markets: ['uk', 'ie'], minimumCity: 30_000, online: true, deliveryDays: 2, description: 'British retailer of motoring and cycling goods.' }),
+  shop({ id: 'screwfix', name: 'Screwfix', kind: 'hardware', tier: 2, priceMultiplier: 0.94, categories: ['household', 'equipment'], markets: ['uk', 'ie', 'fr'], minimumCity: 20_000, online: true, deliveryDays: 1, description: 'British trade tools and hardware retailer, part of Kingfisher.' }),
+
+  // --- North America and Oceania, filling the gaps -------------------------------------------------------------------------
+  shop({ id: 'metro_ca', name: 'Metro', kind: 'grocery', tier: 2, priceMultiplier: 1.02, categories: ['groceries', 'household', 'pharmacy'], markets: ['ca'], minimumCity: 25_000, online: true, deliveryDays: 1, description: 'Canadian grocery chain.' }),
+  shop({ id: 'sobeys', name: 'Sobeys', kind: 'grocery', tier: 2, priceMultiplier: 1.02, categories: ['groceries', 'household'], markets: ['ca'], minimumCity: 20_000, online: true, deliveryDays: 1, description: 'Canadian supermarket chain.' }),
+  shop({ id: 'canadian_tire', name: 'Canadian Tire', kind: 'hardware', tier: 2, priceMultiplier: 1.00, categories: ['household', 'equipment', 'appliance', 'home'], markets: ['ca'], minimumCity: 20_000, online: true, deliveryDays: 3, description: 'Canadian retailer of automotive, hardware and sporting goods.' }),
+  shop({ id: 'hudsons_bay', name: "Hudson's Bay", kind: 'department', tier: 3, priceMultiplier: 1.24, categories: ['clothing', 'footwear', 'accessory', 'home'], markets: ['ca'], minimumCity: 100_000, online: true, deliveryDays: 3, description: 'Canadian department store chain, the successor to a company chartered in 1670.' }),
+  shop({ id: 'shoppers_drug_mart', name: 'Shoppers Drug Mart', kind: 'pharmacy', tier: 2, priceMultiplier: 1.10, categories: ['household', 'pharmacy', 'accessory', 'groceries'], markets: ['ca'], minimumCity: 15_000, online: true, deliveryDays: 2, description: 'Canadian pharmacy chain, part of Loblaw Companies.' }),
+  shop({ id: 'indigo', name: 'Indigo', kind: 'bookshop', tier: 3, priceMultiplier: 1.04, categories: ['books', 'home', 'household'], markets: ['ca'], minimumCity: 50_000, online: true, deliveryDays: 3, description: 'Canadian bookshop chain.' }),
+  shop({ id: 'bunnings', name: 'Bunnings', kind: 'hardware', tier: 2, priceMultiplier: 0.94, categories: ['household', 'equipment', 'home'], markets: ['au', 'nz'], minimumCity: 20_000, online: true, deliveryDays: 3, description: 'Australian home-improvement chain, part of Wesfarmers.' }),
+  shop({ id: 'jb_hifi', name: 'JB Hi-Fi', kind: 'electronics', tier: 2, priceMultiplier: 0.98, categories: ['electronics', 'appliance'], markets: ['au', 'nz'], minimumCity: 40_000, online: true, deliveryDays: 2, description: 'Australian electronics retail chain.' }),
+  shop({ id: 'harvey_norman', name: 'Harvey Norman', kind: 'department', tier: 2, priceMultiplier: 1.04, categories: ['electronics', 'appliance', 'furniture', 'home'], markets: ['au', 'nz', 'ie', 'sg', 'my'], minimumCity: 40_000, online: true, deliveryDays: 4, description: 'Australian retailer of electronics, furniture and bedding.' }),
+  shop({ id: 'kmart_au', name: 'Kmart', kind: 'department', tier: 1, priceMultiplier: 0.66, categories: ['clothing', 'home', 'household', 'furniture'], markets: ['au', 'nz'], minimumCity: 20_000, online: true, deliveryDays: 3, description: 'Australian discount department store, part of Wesfarmers and separate from the American chain.' }),
+  shop({ id: 'chemist_warehouse', name: 'Chemist Warehouse', kind: 'pharmacy', tier: 1, priceMultiplier: 0.86, categories: ['household', 'pharmacy', 'accessory'], markets: ['au', 'nz'], minimumCity: 20_000, online: true, deliveryDays: 2, description: 'Australian discount pharmacy chain.' }),
+  shop({ id: 'the_warehouse', name: 'The Warehouse', kind: 'department', tier: 1, priceMultiplier: 0.74, categories: ['household', 'clothing', 'home', 'electronics'], markets: ['nz'], minimumCity: 15_000, online: true, deliveryDays: 3, description: 'New Zealand discount department store chain.' }),
+
+  // --- The kit: what an independent film is actually shot with ------------------------------------------------------------
+  shop({ id: 'adorama', name: 'Adorama', kind: 'electronics', tier: 3, priceMultiplier: 0.97, categories: ['electronics', 'equipment'], markets: ['us'], flagshipCities: ['us-ny-newyork'], minimumCity: 0, online: true, deliveryDays: 2, description: 'New York photography and video retailer.' }),
+  shop({ id: 'samys_camera', name: "Samy's Camera", kind: 'electronics', tier: 3, priceMultiplier: 1.00, categories: ['electronics', 'equipment'], markets: ['us'], flagshipCities: ['us-ca-losangeles'], minimumCity: 0, online: true, deliveryDays: 2, description: 'Los Angeles camera retailer and rental house.' }),
+  shop({ id: 'wex_photo', name: 'Wex Photo Video', kind: 'electronics', tier: 3, priceMultiplier: 1.00, categories: ['electronics', 'equipment'], markets: ['uk'], minimumCity: 200_000, online: true, deliveryDays: 2, description: 'British photography and video retailer.' }),
+  shop({ id: 'thomann', name: 'Thomann', kind: 'electronics', tier: 2, priceMultiplier: 0.94, categories: ['electronics', 'equipment'], markets: EU.concat(['uk']), minimumCity: 0, online: true, deliveryDays: 4, description: 'German musical instrument and audio retailer.' }),
+  shop({ id: 'guitar_center', name: 'Guitar Center', kind: 'electronics', tier: 2, priceMultiplier: 1.04, categories: ['electronics', 'equipment'], markets: ['us'], minimumCity: 100_000, online: true, deliveryDays: 3, description: 'American musical instrument retail chain.' }),
+  shop({ id: 'panavision', name: 'Panavision', kind: 'electronics', tier: 5, priceMultiplier: 1.00, categories: ['equipment'], markets: ANY, flagshipCities: WORLD_CITIES, minimumCity: 0, online: false, deliveryDays: 0, description: 'Camera and optics rental house, founded in 1954; its cameras are hired, not sold.' }),
+  shop({ id: 'arri_rental', name: 'ARRI Rental', kind: 'electronics', tier: 5, priceMultiplier: 1.00, categories: ['equipment'], markets: ANY, flagshipCities: WORLD_CITIES, minimumCity: 0, online: false, deliveryDays: 0, description: 'Rental arm of the German camera and lighting manufacturer.' }),
+  shop({ id: 'angels_costumes', name: 'Angels Costumes', kind: 'boutique', tier: 5, priceMultiplier: 1.00, categories: ['clothing', 'accessory'], markets: ['uk'], flagshipCities: ['uk-eng-london'], minimumCity: 0, online: false, deliveryDays: 0, description: 'London costumier, family run since 1840 and the oldest in the business.' }),
+  shop({ id: 'western_costume', name: 'Western Costume', kind: 'boutique', tier: 5, priceMultiplier: 1.00, categories: ['clothing', 'accessory'], markets: ['us'], flagshipCities: ['us-ca-losangeles'], minimumCity: 0, online: false, deliveryDays: 0, description: 'Los Angeles costume house, in business since 1912.' }),
+  shop({ id: 'tirelli', name: 'Tirelli Costumi', kind: 'boutique', tier: 5, priceMultiplier: 1.00, categories: ['clothing', 'accessory'], markets: ['it'], flagshipCities: ['it-laz-rome'], minimumCity: 0, online: false, deliveryDays: 0, description: 'Roman costume house, founded in 1964 and known for period film work.' }),
+  shop({ id: 'mac_cosmetics', name: 'M·A·C Cosmetics', kind: 'pharmacy', tier: 3, priceMultiplier: 1.14, categories: ['accessory'], markets: ANY, minimumCity: 150_000, online: true, deliveryDays: 3, description: 'Canadian cosmetics brand founded in Toronto in 1984, part of Estée Lauder.' }),
+  shop({ id: 'ben_nye', name: 'Ben Nye Makeup', kind: 'pharmacy', tier: 4, priceMultiplier: 1.00, categories: ['accessory'], markets: ['us'], flagshipCities: ['us-ca-losangeles'], minimumCity: 0, online: true, deliveryDays: 3, description: 'Los Angeles theatrical and film makeup manufacturer, founded by a studio makeup artist.' }),
+  shop({ id: 'charles_fox', name: 'Charles Fox', kind: 'pharmacy', tier: 4, priceMultiplier: 1.00, categories: ['accessory'], markets: ['uk'], flagshipCities: ['uk-eng-london'], minimumCity: 0, online: true, deliveryDays: 3, description: 'London theatrical makeup and costume supplier, trading since 1878.' }),
+];
+
+/** Everything, the first list and the regional one. */
+export const ALL_RETAILERS: readonly RealRetailer[] = [...REAL_RETAILERS, ...REGIONAL_RETAILERS];
+
+export const RETAILER_REGISTRY = new Registry<RealRetailer>('retailers_real', ALL_RETAILERS);
 
 /** The market a city belongs to, read from the front of its id. */
 export function marketOf(cityId: string): string {
@@ -268,4 +439,66 @@ export function tradesIn(retailer: RealRetailer, cityId: string, population: num
   if (retailer.flagshipCities) return retailer.flagshipCities.includes(cityId);
   if (retailer.markets.length > 0 && !retailer.markets.includes(marketOf(cityId))) return false;
   return population >= retailer.minimumCity;
+}
+
+// ---------------------------------------------------------------------------
+// Coverage, reported rather than implied
+// ---------------------------------------------------------------------------
+
+/** How well a country is served by the real chains this build knows. */
+export interface MarketCoverage {
+  market: string;
+  /**
+   * Chains authored for this country specifically. This is the honest signal:
+   * a worldwide chain reaching everywhere says nothing about whether the local
+   * high street has been written.
+   */
+  local: number;
+  /** Chains SLATE does not gate to a market, which reach here as well. */
+  worldwide: number;
+  /** Local grocers, so the weekly shop can be somewhere from there. */
+  grocers: number;
+  /** Whether the local chains alone can supply food, clothes and a television. */
+  essentials: boolean;
+  band: 'deep' | 'workable' | 'thin' | 'none';
+}
+
+const ESSENTIAL_CATEGORIES = ['groceries', 'clothing', 'electronics'];
+
+/** Every country code any chain in this build trades in. */
+export function coveredMarkets(): string[] {
+  const seen = new Set<string>();
+  for (const retailer of ALL_RETAILERS) {
+    for (const market of retailer.markets) seen.add(market);
+    for (const city of retailer.flagshipCities ?? []) seen.add(city.split('-')[0] ?? '');
+  }
+  seen.delete('');
+  return [...seen].sort();
+}
+
+/**
+ * What a player living in this country would actually find. `worldwide` is the
+ * count of chains that SLATE does not gate to a market at all, which reach
+ * everywhere; they are counted here because they are genuinely there.
+ */
+export function coverageFor(market: string): MarketCoverage {
+  const local = ALL_RETAILERS.filter((r) =>
+    r.markets.includes(market)
+    || (r.flagshipCities ?? []).some((c) => c.startsWith(`${market}-`)));
+  const worldwide = ALL_RETAILERS.filter((r) => r.markets.length === 0 && !r.flagshipCities).length;
+  const categories = new Set(local.flatMap((r) => r.categories));
+  const grocers = local.filter((r) => r.kind === 'grocery' || r.kind === 'convenience').length;
+  const essentials = ESSENTIAL_CATEGORIES.every((c) => categories.has(c)) && grocers > 0;
+  const band = local.length >= 20 ? 'deep'
+    : local.length >= 10 ? 'workable'
+      : local.length > 0 ? 'thin'
+        : 'none';
+  return { market, local: local.length, worldwide, grocers, essentials, band };
+}
+
+/** Every market this build has authored retail for, worst served first. */
+export function coverageReport(): MarketCoverage[] {
+  return coveredMarkets()
+    .map(coverageFor)
+    .sort((a, b) => a.local - b.local || a.market.localeCompare(b.market));
 }
