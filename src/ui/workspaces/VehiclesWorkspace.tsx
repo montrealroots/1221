@@ -1,9 +1,10 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Meter, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
-import { MAX_CRUISE_HOURS, availableParts, craftOf, hourlyCostOf, profileOf, roadworthy, serviceEstimate, upkeepFor, vehicleKind } from '@/engine/systems/vehicles';
+import { Panel, Stat, Meter, Empty, Tabs, MoneyText, Modal } from '@/ui/components/primitives';
+import { MAX_CRUISE_HOURS, NAME_MAX, availableParts, craftOf, crewFor, hourlyCostOf, profileOf, roadworthy, serviceEstimate, vehicleKind } from '@/engine/systems/vehicles';
 import { activeScene } from '@/engine/systems/scenes';
+import { KEEPING_LABEL, homeSpaces, keepingLabel, keepingOptions, type KeepingOption } from '@/engine/systems/storage';
 import { carName, dealershipsIn, fullName, listingKind, lotOf, lotSells, openDeals, roundsLeft } from '@/engine/systems/dealership';
 import { KIND_PROFILE, KINDS, REAL_MAKE_NOTE, VEHICLE_MODELS, FACTORY_OPTIONS, PARTS, bodyStyleLabel, trimOf, type PartCategory, type VehicleKind } from '@/engine/content/vehicles';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
@@ -24,6 +25,9 @@ export function VehiclesWorkspace() {
   const { sim, run, navigate } = useGame();
   const [tab, setTab] = useState<Tab>('garage');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [moving, setMoving] = useState<string | null>(null);
+  const [naming, setNaming] = useState<string | null>(null);
+  const home = useWorld((s) => (s.player.residenceId ? homeSpaces(s, s.player.residenceId) : undefined));
 
   const owned = useWorld((s) => Object.values(s.universe.vehicles)
     .filter((v) => v.ownerId === s.player.id && !v.soldAt)
@@ -84,6 +88,16 @@ export function VehiclesWorkspace() {
         </Panel>
       )}
 
+      {tab === 'garage' && home && (
+        <Panel title="At Home" subtitle={home.property.addressLine}>
+          <div className="grid grid-3">
+            <Stat label="Garage" value={home.garage.spaces > 0 ? `${home.garage.used} Of ${home.garage.spaces} Spaces` : 'None'} note={home.garage.spaces > 0 ? 'A motorcycle takes half a space; a trailered boat takes two.' : 'No covered space at this address.'} />
+            <Stat label="Driveway" value={home.driveway.spaces > 0 ? `${home.driveway.used} Of ${home.driveway.spaces} Spaces` : 'None'} note={home.driveway.spaces > 0 ? 'Outside. The weather gets at what stands here.' : undefined} />
+            <Stat label="Dock" value={home.dockFeet > 0 ? `Up To ${home.dockFeet} Ft` : 'None'} note={home.dockFeet > 0 ? (home.dockVehicleId ? 'Something is at it.' : 'Free, and yours.') : undefined} />
+          </div>
+        </Panel>
+      )}
+
       {tab === 'garage' && (
         owned.length === 0 ? (
           <Empty title="Nothing In The Garage" body="Browse what is for sale: cars, motorcycles, boats and aircraft. You can pay cash, finance or lease." />
@@ -93,13 +107,14 @@ export function VehiclesWorkspace() {
               const kind = vehicleKind(vehicle);
               const profile = KIND_PROFILE[kind];
               const craft = craftOf(sim, vehicle);
-              const upkeep = upkeepFor(sim, vehicle);
+              const crew = crewFor(sim, vehicle);
               const hourly = hourlyCostOf(sim, vehicle);
+              const kept = vehicle.keeping;
               return (
               <Panel
                 key={vehicle.id}
-                title={fullName(vehicle.year, vehicle.make, vehicle.model)}
-                subtitle={`${profile.label} · ${trimOf(vehicle.catalogId, vehicle.trim)?.name ?? vehicle.trim} · ${vehicle.vin}${vehicle.deliveryDueAt ? ` · Arriving ${formatDate(vehicle.deliveryDueAt, sim.zone)}` : ''}`}
+                title={vehicle.nickname ? vehicle.nickname : fullName(vehicle.year, vehicle.make, vehicle.model)}
+                subtitle={`${vehicle.nickname ? `${fullName(vehicle.year, vehicle.make, vehicle.model)} · ` : ''}${profile.label} · ${trimOf(vehicle.catalogId, vehicle.trim)?.name ?? vehicle.trim} · ${vehicle.vin}${vehicle.deliveryDueAt ? ` · Arriving ${formatDate(vehicle.deliveryDueAt, sim.zone)}` : ''}`}
                 actions={vehicle.deliveryDueAt
                   ? <span className="chip chip-accent">On Its Way</span>
                   : <button className="btn btn-sm btn-danger" onClick={() => run('veh.sell', { vehicleId: vehicle.id })}>Sell</button>}
@@ -111,8 +126,9 @@ export function VehiclesWorkspace() {
                   {kind === 'motorcycle' && <Stat label="Power" value={`${vehicle.horsepower} hp`} note={`0–60 in ${vehicle.zeroToSixty.toFixed(1)}s${craft?.topSpeed ? ` · ${craft.topSpeed} mph` : ''}`} />}
                   {kind === 'boat' && <Stat label="Length" value={`${craft?.lengthFeet ?? '—'} ft`} note={`${vehicle.horsepower} hp${craft?.topSpeed ? ` · ${craft.topSpeed} knots` : ''}${craft?.berths ? ` · ${craft.berths} berths` : ''}`} />}
                   {kind === 'jet' && <Stat label="Range" value={`${(craft?.rangeKm ?? 0).toLocaleString('en-US')} km`} note={`${craft?.seats ?? '—'} seats · needs ${(craft?.runwayFeet ?? 0).toLocaleString('en-US')} ft`} />}
-                  {upkeep > 0
-                    ? <Stat label={kind === 'boat' ? 'Berth' : 'Hangar And Crew'} value={`${formatMoney(upkeep, { cents: false })} a month`} note={hourly > 0 ? `${formatMoney(hourly, { cents: false })} an hour under way` : undefined} />
+                  <Stat label="Kept At" value={kept ? KEEPING_LABEL[kept.kind] : 'Nowhere Yet'} note={kept ? `${keepingLabel(sim, vehicle).split(' · ')[1] ?? ''}${kept.monthly > 0 ? ` · ${formatMoney(kept.monthly, { cents: false })} a month` : ' · nothing a month'}` : undefined} />
+                  {crew > 0
+                    ? <Stat label="Crew" value={`${formatMoney(crew, { cents: false })} a month`} note={hourly > 0 ? `${formatMoney(hourly, { cents: false })} an hour under way` : undefined} />
                     : <Stat label="Acquisition" value={titleCaseLabel(vehicle.acquisition)} />}
                 </div>
                 <div className="col gap-3">
@@ -151,6 +167,8 @@ export function VehiclesWorkspace() {
                   {kind === 'motorcycle' && <button className="btn btn-sm" disabled={Boolean(vehicle.deliveryDueAt)} title={vehicle.deliveryDueAt ? 'Not delivered yet.' : undefined} onClick={() => run('veh.drive', { vehicleId: vehicle.id, miles: 150 })}>Ride 150 Miles</button>}
                   {kind === 'boat' && <button className="btn btn-sm" disabled={Boolean(vehicle.deliveryDueAt)} title={vehicle.deliveryDueAt ? 'Not delivered yet.' : `${DAY_ON_THE_WATER} hours out and back, about ${formatMoney(hourly * DAY_ON_THE_WATER, { cents: false })} in fuel.`} onClick={() => run('veh.cruise', { vehicleId: vehicle.id, hours: DAY_ON_THE_WATER })}>A Day On The Water</button>}
                   {kind === 'jet' && <button className="btn btn-sm" disabled={Boolean(vehicle.deliveryDueAt)} title={vehicle.deliveryDueAt ? 'Not delivered yet.' : 'Pick a destination on the Private tab of Travel.'} onClick={() => navigate('/workspace/travel', 'Travel')}>Fly It</button>}
+                  <button className="btn btn-sm" disabled={Boolean(vehicle.deliveryDueAt) || kept?.kind === 'transient'} title={kept?.kind === 'transient' ? 'Away from home on a ramp. It has to be flown back before it can be kept anywhere.' : 'Where it is kept, and what that costs.'} onClick={() => setMoving(vehicle.id)}>Move It</button>
+                  {(kind === 'jet' || kind === 'boat') && <button className="btn btn-sm" onClick={() => setNaming(vehicle.id)}>{vehicle.nickname ? 'Rename It' : 'Name It'}</button>}
                 </div>
               </Panel>
               );
@@ -168,7 +186,65 @@ export function VehiclesWorkspace() {
       {tab === 'service' && (
         selected ? <ServiceTab vehicleId={selected.id} /> : <Empty title="No Vehicle" body="Buy something first." />
       )}
+
+      {moving && <KeepingModal vehicleId={moving} onClose={() => setMoving(null)} />}
+      {naming && <NameModal vehicleId={naming} onClose={() => setNaming(null)} />}
     </>
+  );
+}
+
+function KeepingModal({ vehicleId, onClose }: { vehicleId: string; onClose: () => void }) {
+  const { sim, run } = useGame();
+  const vehicle = useWorld((s) => s.universe.vehicles[vehicleId]);
+  const options = useWorld((s) => (s.universe.vehicles[vehicleId] ? keepingOptions(s, s.universe.vehicles[vehicleId]!) : []));
+  if (!vehicle) return null;
+  const current = vehicle.keeping;
+  const isCurrent = (o: KeepingOption) => Boolean(current) && current!.kind === o.kind && current!.propertyId === o.propertyId && current!.airportId === o.airportId && (o.kind === 'trailer' ? current!.placeId === o.spot : current!.placeId === o.placeId);
+  const move = (o: KeepingOption) => {
+    const result = run('stor.keep', { vehicleId, kind: o.kind, propertyId: o.propertyId, placeId: o.kind === 'trailer' ? undefined : o.placeId, airportId: o.airportId });
+    if (result.ok) onClose();
+  };
+  return (
+    <Modal title={`Where To Keep The ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}`} onClose={onClose} footer={<button className="btn" onClick={onClose}>Leave It</button>}>
+      <p className="small muted">Now: {keepingLabel(sim, vehicle)}{current && current.monthly > 0 ? `, ${formatMoney(current.monthly, { cents: false })} a month` : ''}. A move starts the new bill in thirty days and ends the old one today. Indoors is worth a little on the insurance; outside costs a little, and the weather takes its share.</p>
+      {options.length === 0 ? <Empty title="Nowhere To Keep It" body="Nothing in this city takes it." /> : (
+        <div className="list">
+          {options.map((o, i) => (
+            <div key={`${o.kind}:${o.propertyId ?? o.placeId ?? o.airportId ?? i}`} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{o.label} · {o.where}</div>
+                <div className="xs dim">{o.detail} {o.exposure === 'indoors' ? 'Indoors.' : o.exposure === 'covered' ? 'Under cover.' : 'Outside.'}</div>
+                {!o.available && o.reason && <div className="xs negative">{o.reason}</div>}
+              </div>
+              <span className="mono small">{!o.available ? '—' : o.monthly > 0 ? `${formatMoney(o.monthly, { cents: false })}/mo` : 'Free'}</span>
+              <button className="btn btn-sm btn-primary" disabled={!o.available || isCurrent(o)} onClick={() => move(o)}>{isCurrent(o) ? 'Kept Here' : 'Keep It Here'}</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </Modal>
+  );
+}
+
+function NameModal({ vehicleId, onClose }: { vehicleId: string; onClose: () => void }) {
+  const { run } = useGame();
+  const vehicle = useWorld((s) => s.universe.vehicles[vehicleId]);
+  const [name, setName] = useState(vehicle?.nickname ?? '');
+  if (!vehicle) return null;
+  const kind = vehicleKind(vehicle);
+  const save = () => { const r = run('veh.name', { vehicleId, name }); if (r.ok) onClose(); };
+  return (
+    <Modal
+      title={`Name The ${vehicle.make} ${vehicle.model}`}
+      onClose={onClose}
+      footer={<>
+        {vehicle.nickname && <button className="btn" onClick={() => { const r = run('veh.name', { vehicleId, name: null }); if (r.ok) onClose(); }}>Take The Name Off</button>}
+        <button className="btn btn-primary" disabled={name.trim().length === 0} onClick={save}>Name It</button>
+      </>}
+    >
+      <p className="small muted">{kind === 'jet' ? 'On the manifest from today and on the tail from the next repaint. Drake has Air Drake; what is yours?' : 'On the transom and in the harbourmaster’s book.'} Up to {NAME_MAX} characters.</p>
+      <input className="input" style={{ width: '100%' }} value={name} maxLength={NAME_MAX} placeholder={kind === 'jet' ? 'Air Something' : 'Something Sea'} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') save(); }} />
+    </Modal>
   );
 }
 

@@ -19,7 +19,7 @@ import {
   FACTORY_OPTIONS, KIND_PROFILE, MANUFACTURERS, PARTS, VEHICLE_MODELS, checkFitment, kindOf, partsFor, type VehicleKind,
 } from '@/engine/content/vehicles';
 import {
-  MAX_CRUISE_HOURS, NOT_A_BOAT, NOT_FOR_THE_ROAD, craftOf, dealerPlaceFor, fitmentSubject, hourlyCostOf, refreshInventory, upkeepFor, vehicleKind,
+  MAX_CRUISE_HOURS, NOT_A_BOAT, NOT_FOR_THE_ROAD, craftOf, dealerPlaceFor, fitmentSubject, hourlyCostOf, refreshInventory, vehicleKind,
 } from '@/engine/systems/vehicles';
 import { dealershipsIn, findingByText, fullName, listingKind, listingsAt, lotOf, lotSells, tradeInCandidates } from '@/engine/systems/dealership';
 import { driveableVehicle } from '@/engine/systems/places';
@@ -107,7 +107,6 @@ describe('the catalogue', () => {
         for (const option of trim.availableOptions) expect(FACTORY_OPTIONS.get(option), `${model.id} ${option}`).toBeDefined();
         if (model.kind === 'boat' || model.kind === 'jet') {
           expect(trim.craft?.hourlyOperating, `${model.id} ${trim.id}`).toBeGreaterThan(0);
-          expect(trim.craft?.monthlyKeep, `${model.id} ${trim.id}`).toBeGreaterThan(0);
         }
         if (model.kind === 'jet') {
           expect(trim.craft?.rangeKm).toBeGreaterThan(1_000);
@@ -285,23 +284,25 @@ describe('a motorcycle', () => {
 });
 
 describe('a boat', () => {
-  it('costs a berth every month from the day it is bought until the day it is sold', () => {
+  it('is kept somewhere from the day it is bought, paying for it monthly, until the day it is sold', () => {
     const sim = aLife();
     const { vehicle } = buy(sim, 'boat');
     expect(vehicleKind(vehicle)).toBe('boat');
-    expect(vehicle.upkeepBillId).toBeDefined();
-    const bill = sim.universe.bills[vehicle.upkeepBillId!]!;
-    expect(bill.name).toMatch(/^Berth — /);
-    expect(bill.amount).toBe(upkeepFor(sim, vehicle));
-    expect(bill.amount).toBeGreaterThan(0);
-    expect(bill.active).toBe(true);
-    expect(bill.refId).toBe(vehicle.id);
-    // Bought twice would not mean billed twice.
+    expect(vehicle.upkeepBillId).toBeUndefined();
+    expect(vehicle.keeping).toBeDefined();
+    expect(['berth', 'dry_stack', 'trailer', 'private_dock']).toContain(vehicle.keeping!.kind);
     const bills = () => Object.values(sim.universe.bills).filter((b) => b.refType === 'vehicle' && b.refId === vehicle.id);
-    expect(bills()).toHaveLength(1);
-
+    if (vehicle.keeping!.monthly > 0) {
+      const bill = sim.universe.bills[vehicle.keeping!.billId!]!;
+      expect(bill.name).toMatch(/^(Berth|Dry Stack) — /);
+      expect(bill.amount).toBe(vehicle.keeping!.monthly);
+      expect(bill.active).toBe(true);
+      expect(bill.refId).toBe(vehicle.id);
+      expect(bills()).toHaveLength(1);
+    }
     must(sim, 'veh.sell', { vehicleId: vehicle.id });
-    expect(bills()[0]!.active).toBe(false);
+    expect(bills().every((b) => !b.active)).toBe(true);
+    expect(sim.universe.vehicles[vehicle.id]!.keeping).toBeUndefined();
   });
 
   it('counts hours, burns fuel by the hour, will not go on the road, and is serviced every hundred hours', () => {
@@ -368,7 +369,7 @@ describe('a boat', () => {
     pick(sim, /^Pay Cash$/);
     pick(sim, /^Not Now$/);
     const keys = sceneView(sim, activeScene(sim)!);
-    expect(keys.text).toMatch(/The berth bills monthly/);
+    expect(keys.text).toMatch(/It goes to (marina berth|dry stack|on a trailer at home|private dock)/);
   });
 });
 
@@ -377,7 +378,9 @@ describe('a private jet', () => {
     const sim = aLife('fleet-jet', 150_000_000_00);
     const { vehicle: jet } = buy(sim, 'jet', (l) => (VEHICLE_MODELS.get(l.catalogId.split(':')[0]!)?.trims[0]?.craft?.rangeKm ?? 0) >= 2_000);
     expect(vehicleKind(jet)).toBe('jet');
-    expect(sim.universe.bills[jet.upkeepBillId!]!.name).toMatch(/^Hangar And Crew — /);
+    expect(jet.keeping?.kind).toBe('hangar');
+    expect(sim.universe.bills[jet.keeping!.billId!]!.name).toMatch(/^Hangar — /);
+    expect(sim.universe.bills[jet.crewBillId!]!.name).toMatch(/^Crew — /);
     expect(attempt(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: jet.id }] }).error).toMatch(/aviation insurance, not auto/);
     const quote = must<{ quoteId: string }>(sim, 'ins.quote', { line: 'aviation', coveredRefs: [{ type: 'vehicle', id: jet.id }] });
     must(sim, 'ins.purchase', { quoteId: quote.quoteId });

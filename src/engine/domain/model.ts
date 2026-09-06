@@ -471,6 +471,10 @@ export interface Property {
   insurancePolicyId?: Id;
   /** Structures on the parcel. */
   structureIds: Id[];
+  /** Covered spaces for road vehicles. Absent on a home from before, and read from its kind, features and structures instead. */
+  garageSpaces?: number;
+  /** The longest boat a private dock here takes, in feet. Absent means no dock. */
+  dockFeet?: number;
   isPrimaryResidence: boolean;
   /** Rented out to tenants for income. */
   rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
@@ -712,6 +716,34 @@ export interface VehicleConfiguration {
  */
 export type VehicleKind = 'car' | 'motorcycle' | 'boat' | 'jet';
 
+/**
+ * Where a vehicle is kept when it is not being used. A road vehicle in a
+ * home's garage, on its driveway, on the street or in a paid unit; a boat at
+ * a marina berth, in a dry stack, on a trailer at home or at a private dock;
+ * an aircraft in a private or shared hangar, on a tie-down, or on the ramp
+ * of an airport it was flown to.
+ */
+export type KeepingKind =
+  | 'garage' | 'driveway' | 'street' | 'storage_unit'
+  | 'berth' | 'dry_stack' | 'trailer' | 'private_dock'
+  | 'hangar' | 'shared_hangar' | 'tie_down' | 'transient';
+
+export interface VehicleKeeping {
+  kind: KeepingKind;
+  cityId: string;
+  /** The home whose garage, driveway, dock or trailer space it is. */
+  propertyId?: Id;
+  /** The marina, storage yard or boat yard. */
+  placeId?: string;
+  /** The airport. */
+  airportId?: string;
+  since: Instant;
+  /** What it costs a month, after cost of living. Zero at home. */
+  monthly: Money;
+  /** The bill for it, when it costs anything. Ends when the vehicle moves or is sold. */
+  billId?: Id;
+}
+
 export interface Vehicle {
   id: Id;
   saveId: Id;
@@ -774,10 +806,18 @@ export interface Vehicle {
   /** The deal it was bought under, if it was bought at a dealership. */
   dealId?: Id;
   /**
-   * A boat's berth or a jet's hangar: the monthly bill that keeps it somewhere
-   * with somebody watching it. Ends when it is sold. Absent on road vehicles.
+   * The berth or hangar bill from before keeping was a place. Read once by the
+   * schema 39 migration and left alone after; new saves never set it.
    */
   upkeepBillId?: Id;
+  /** The crew retainer for a crewed yacht or an aircraft. Ends when it is sold. */
+  crewBillId?: Id;
+  /** What its owner calls it: the name on a tail or a transom. */
+  nickname?: string;
+  /** Where it is kept now. Absent on a vehicle from before keeping existed, until it is placed. */
+  keeping?: VehicleKeeping;
+  /** An aircraft's hangar at home while it sits on a ramp somewhere else. The hangar is still paid for. */
+  homeKeeping?: VehicleKeeping;
 }
 
 export interface VehicleModification {
@@ -1796,7 +1836,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 38;
+export const SAVE_SCHEMA_VERSION = 39;
 
 export interface SaveMeta {
   id: Id;

@@ -17,6 +17,7 @@ import { clamp, remap } from '../core/rng';
 import { addDays, formatDate, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { CITIES, NEIGHBOURHOODS } from '../content/geography';
+import { isWaterfront } from '../content/places';
 import { costOfLiving, propertyTaxRate } from '../content/tax';
 import { CATALOG, retailPrice } from '../content/catalog';
 import { generateAddress, generatePersonName } from '../content/names';
@@ -41,10 +42,10 @@ export const PROPERTY_PROFILES: Readonly<Record<PropertyKind, KindProfile>> = {
   apartment: { bedrooms: [0, 3], sqft: [420, 1400], lotMultiplier: [0, 0], priceMultiplier: [0.55, 0.95], features: ['Elevator', 'Doorman', 'Shared Laundry', 'Balcony'], rentable: true },
   condo: { bedrooms: [1, 4], sqft: [700, 2200], lotMultiplier: [0, 0], priceMultiplier: [0.75, 1.25], features: ['Concierge', 'Gym', 'Pool', 'Parking Space'], rentable: true },
   townhouse: { bedrooms: [2, 5], sqft: [1200, 2800], lotMultiplier: [1.1, 1.6], priceMultiplier: [0.9, 1.5], features: ['Private Entrance', 'Roof Terrace', 'Garage'], rentable: true },
-  house: { bedrooms: [2, 6], sqft: [1300, 3600], lotMultiplier: [2, 5], priceMultiplier: [0.95, 2.0], features: ['Garden', 'Garage', 'Fireplace', 'Study'], rentable: true },
-  villa: { bedrooms: [3, 7], sqft: [2800, 6500], lotMultiplier: [3, 9], priceMultiplier: [2.2, 4.5], features: ['Pool', 'Courtyard', 'Guest Suite', 'Wine Cellar'], rentable: false },
-  mansion: { bedrooms: [5, 12], sqft: [7000, 22000], lotMultiplier: [6, 40], priceMultiplier: [5, 18], features: ['Pool', 'Screening Room', 'Gym', 'Staff Quarters', 'Tennis Court', 'Wine Cellar', 'Gated'], rentable: false },
-  estate: { bedrooms: [6, 16], sqft: [12000, 45000], lotMultiplier: [40, 400], priceMultiplier: [9, 40], features: ['Gatehouse', 'Stables', 'Screening Room', 'Guest Houses', 'Helipad', 'Vineyard'], rentable: false },
+  house: { bedrooms: [2, 6], sqft: [1300, 3600], lotMultiplier: [2, 5], priceMultiplier: [0.95, 2.0], features: ['Garden', 'Garage', 'Fireplace', 'Study', 'Private Dock'], rentable: true },
+  villa: { bedrooms: [3, 7], sqft: [2800, 6500], lotMultiplier: [3, 9], priceMultiplier: [2.2, 4.5], features: ['Pool', 'Courtyard', 'Guest Suite', 'Wine Cellar', 'Private Dock'], rentable: false },
+  mansion: { bedrooms: [5, 12], sqft: [7000, 22000], lotMultiplier: [6, 40], priceMultiplier: [5, 18], features: ['Pool', 'Screening Room', 'Gym', 'Staff Quarters', 'Tennis Court', 'Wine Cellar', 'Gated', 'Private Dock'], rentable: false },
+  estate: { bedrooms: [6, 16], sqft: [12000, 45000], lotMultiplier: [40, 400], priceMultiplier: [9, 40], features: ['Gatehouse', 'Stables', 'Screening Room', 'Guest Houses', 'Helipad', 'Vineyard', 'Private Dock'], rentable: false },
   penthouse: { bedrooms: [2, 6], sqft: [2400, 9000], lotMultiplier: [0, 0], priceMultiplier: [3.5, 12], features: ['Private Elevator', 'Terrace', 'Skyline View', 'Concierge'], rentable: false },
   ranch: { bedrooms: [3, 8], sqft: [2600, 9000], lotMultiplier: [200, 3000], priceMultiplier: [1.6, 6], features: ['Barn', 'Paddocks', 'Well', 'Workshop'], rentable: false },
   farm: { bedrooms: [2, 6], sqft: [1600, 4500], lotMultiplier: [300, 4000], priceMultiplier: [1.1, 4], features: ['Barn', 'Orchard', 'Irrigation', 'Equipment Shed'], rentable: false },
@@ -716,8 +717,10 @@ export function generateProperty(
   const hoodMultiplier = hood?.priceMultiplier ?? 1;
   const marketValue = Math.round(city.medianHomePriceCents * priceMultiplier * hoodMultiplier);
 
-  const featureCount = rng.int(1, Math.min(5, profile.features.length));
-  const features = rng.shuffle(profile.features).slice(0, featureCount);
+  // A dock only where there is water; a garage counted so the cars know.
+  const pool = isWaterfront(city) ? profile.features : profile.features.filter((f) => f !== 'Private Dock');
+  const featureCount = rng.int(1, Math.min(5, pool.length));
+  const features = rng.shuffle(pool).slice(0, featureCount);
 
   const property: Property = {
     id: sim.nextId('prop'),

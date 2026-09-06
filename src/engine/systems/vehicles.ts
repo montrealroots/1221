@@ -26,8 +26,13 @@ import { createBill, amortisedPayment, loanRefusal, offeredApr } from './finance
 const DOC_FEE: Money = 85_00;
 /** How long you can be out on a boat in one go, in hours. */
 export const MAX_CRUISE_HOURS = 10;
+/** Launching a trailered boat: the ramp fee before cost of living, and the time. */
+export const RAMP_FEE: Money = 30_00;
+export const RAMP_MINUTES = 45;
 
 export const WAITING_ON_DELIVERY = 'That has not been delivered yet.';
+/** A name on a tail or a transom. */
+export const NAME_MAX = 30;
 export const NOT_A_BOAT = 'That is not a boat.';
 export const NOT_FOR_THE_ROAD = 'That does not go on the road.';
 export const ROUGH_WATER = 'A storm is on the water. Nobody sensible is going out in it.';
@@ -66,11 +71,11 @@ export function craftOf(sim: Simulation, vehicle: Vehicle): CraftSpec | undefine
   return { ...base, rangeKm: base.rangeKm === undefined ? undefined : rangeKm, topSpeed: base.topSpeed === undefined ? undefined : topSpeed };
 }
 
-/** What a boat or a jet costs a month at its berth or hangar, where it is kept. */
-export function upkeepFor(sim: Simulation, vehicle: Vehicle): Money {
+/** What a crewed boat or an aircraft costs a month in crew and standing maintenance, wherever it is kept. */
+export function crewFor(sim: Simulation, vehicle: Vehicle): Money {
   const craft = trimOf(vehicle.catalogId, vehicle.trim)?.craft;
-  if (!craft?.monthlyKeep) return 0;
-  return Math.round(craft.monthlyKeep * costOfLiving(vehicle.locationId ?? sim.player.currentLocationId));
+  if (!craft?.crewMonthly) return 0;
+  return Math.round(craft.crewMonthly * costOfLiving(vehicle.locationId ?? sim.player.currentLocationId));
 }
 
 /** What an hour under way costs, in fuel, crew and wear, where the boat or jet is. */
@@ -316,7 +321,7 @@ export function registerVehicles(sim: Simulation): void {
         condition: listing.condition === 'new' ? 100 : clamp(100 - listing.mileage / 2200, 45, 96),
       });
       if (deal) vehicle.dealId = deal.id;
-      ensureUpkeep(s, vehicle, accountId);
+      ensureCrew(s, vehicle, accountId);
 
       if (p.acquisition === 'leased') {
         vehicle.leaseEndsAt = addDays(s.now, (quote.months ?? 36) * 30, s.homeZone);
@@ -574,21 +579,29 @@ export function registerVehicles(sim: Simulation): void {
       const weather = weatherAt(s, player.currentLocationId);
       if (weather && (weather.precipitation === 'storm' || weather.windKph > 50)) throw new CommandError(ROUGH_WATER);
 
-      const cost = hourlyCostOf(s, vehicle) * hours;
+      // A trailered boat is launched at the ramp for a fee and the time it
+      // takes; a dry-stacked one is put in by the yard while you park.
+      const trailered = vehicle.keeping?.kind === 'trailer';
+      const stacked = vehicle.keeping?.kind === 'dry_stack';
+      const ramp = trailered ? Math.round(RAMP_FEE * costOfLiving(player.currentLocationId)) : 0;
+      const cost = hourlyCostOf(s, vehicle) * hours + ramp;
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (cost > 0 && s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`${hours} hour${hours === 1 ? '' : 's'} on the water is about ${formatMoney(cost)} in fuel and you cannot cover it.`);
+        throw new CommandError(`${hours} hour${hours === 1 ? '' : 's'} on the water is about ${formatMoney(cost)} in fuel${ramp > 0 ? ' and the ramp' : ''} and you cannot cover it.`);
       }
-      if (cost > 0) s.expense(accountId, cost, `Fuel — ${vehicle.make} ${vehicle.model}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
+      if (ramp > 0) s.expense(accountId, ramp, `Launch ramp — ${vehicle.make} ${vehicle.model}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
+      if (cost - ramp > 0) s.expense(accountId, cost - ramp, `Fuel — ${vehicle.make} ${vehicle.model}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
 
+      if (trailered) s.advanceTo(s.now + RAMP_MINUTES * 60 * 1000);
+      if (stacked) s.advanceTo(s.now + 30 * 60 * 1000);
       s.advanceTo(s.now + hours * 60 * 60 * 1000);
       const rough = weather ? weather.windKph > 30 || weather.precipitation === 'rain' : false;
       player.wellbeing.energy = clamp(player.wellbeing.energy - hours * (rough ? 4 : 2.5), 0, 100);
       player.wellbeing.stress = clamp(player.wellbeing.stress - hours * (rough ? 1 : 2.5), 0, 100);
       player.wellbeing.morale = clamp(player.wellbeing.morale + Math.min(10, hours * 1.5), 0, 100);
       addMileage(s, vehicle, hours);
-      s.emit('vehicle.cruised', { vehicleId: vehicle.id, hours, cost, rough });
+      s.emit('vehicle.cruised', { vehicleId: vehicle.id, hours, cost, rough, ramp });
       s.remember({
         category: 'vehicle',
         title: `${hours} Hour${hours === 1 ? '' : 's'} On The ${vehicle.make} ${vehicle.model}`,
@@ -598,21 +611,45 @@ export function registerVehicles(sim: Simulation): void {
       return { hours: vehicle.mileage, cost, serviceDue: vehicle.mileage >= vehicle.nextServiceDueMileage };
     },
   );
+
+  // --- A name on the side ------------------------------------------------------
+
+  sim.onCommand<{ vehicleId: Id; name: string | null }, { name?: string }>(
+    'veh.name',
+    (p, { sim: s }) => {
+      const vehicle = s.universe.vehicles[p.vehicleId];
+      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You do not own that vehicle.');
+      if (p.name === null || p.name.trim() === '') {
+        vehicle.nickname = undefined;
+        return {};
+      }
+      const name = p.name.replace(/\s+/g, ' ').trim();
+      if (name.length > NAME_MAX) throw new CommandError(`A name is at most ${NAME_MAX} characters.`);
+      if (!/^[\p{L}\p{N}][\p{L}\p{N} .'&-]*$/u.test(name)) throw new CommandError('Letters, numbers, spaces and a little punctuation.');
+      vehicle.nickname = name;
+      s.emit('vehicle.named', { vehicleId: vehicle.id, name });
+      s.remember({
+        category: 'vehicle', title: `Named The ${vehicle.make} ${vehicle.model} ${name}`,
+        detail: vehicleKind(vehicle) === 'jet' ? 'On the tail from the next repaint; on the manifest from today.' : vehicleKind(vehicle) === 'boat' ? 'On the transom, in the harbourmaster\'s book.' : 'What you call it, anyway.',
+        refs: [{ type: 'vehicle', id: vehicle.id }], significance: 10, public: false,
+      });
+      return { name };
+    },
+  );
 }
 
 /**
- * A boat needs a berth and a jet needs a hangar, and both need somebody paid
- * to watch them. The bill starts a month out, ends when the thing is sold, and
- * is only ever created once.
+ * A crewed yacht and any aircraft need people on retainer whether or not
+ * they move. The bill starts a month out, ends when the thing is sold, and is
+ * only ever created once. Where the thing is kept is the keeping system's bill.
  */
-export function ensureUpkeep(sim: Simulation, vehicle: Vehicle, accountId: Id): void {
-  if (vehicle.upkeepBillId || vehicle.soldAt) return;
-  const amount = upkeepFor(sim, vehicle);
+export function ensureCrew(sim: Simulation, vehicle: Vehicle, accountId: Id): void {
+  if (vehicle.soldAt || vehicle.crewBillId) return;
+  const amount = crewFor(sim, vehicle);
   if (amount <= 0) return;
-  const kind = vehicleKind(vehicle);
   const bill = createBill(sim, {
     payerId: vehicle.ownerId,
-    name: kind === 'boat' ? `Berth — ${vehicle.make} ${vehicle.model}` : `Hangar And Crew — ${vehicle.make} ${vehicle.model}`,
+    name: `Crew — ${vehicle.make} ${vehicle.model}`,
     category: 'transport',
     amount,
     frequency: 'monthly',
@@ -620,7 +657,12 @@ export function ensureUpkeep(sim: Simulation, vehicle: Vehicle, accountId: Id): 
     autopayAccountId: accountId,
     refType: 'vehicle', refId: vehicle.id,
   });
-  vehicle.upkeepBillId = bill.id;
+  vehicle.crewBillId = bill.id;
+}
+
+/** One line of a vehicle's name: what its owner calls it, or what it is. */
+export function displayName(vehicle: Pick<Vehicle, 'nickname' | 'year' | 'make' | 'model'>): string {
+  return vehicle.nickname?.trim() || `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1044,10 +1086,14 @@ function renewRegistration(sim: Simulation, vehicleId: Id): void {
 }
 
 function depreciateAll(sim: Simulation): void {
+  let count = 0;
   for (const vehicle of Object.values(sim.universe.vehicles)) {
     if (vehicle.soldAt) continue;
     revalue(sim, vehicle);
+    count += 1;
   }
+  // The month's tick, for anything that wears or charges by the month standing still.
+  sim.emit('vehicle.revalued', { count });
 }
 
 /** Where the work gets done, by what it is. SLATE's own shops. */

@@ -264,7 +264,7 @@ export function registerTravel(sim: Simulation): void {
         saveId: s.universe.meta.id,
         passengerIds: passengers,
         airlineCode: 'PVT',
-        airlineName: owned ? `Your ${aircraft.name}` : `Private charter (${aircraft.name})`,
+        airlineName: owned ? (owned.nickname ? owned.nickname : `Your ${aircraft.name}`) : `Private charter (${aircraft.name})`,
         flightNumber: `PVT${s.counter('charter')}`,
         vehicleId: owned?.id,
         // The codes, as an airline booking carries them, so the day reads
@@ -552,12 +552,14 @@ export function arriveFlight(sim: Simulation, bookingId: Id): void {
 
   const durationHours = (booking.arriveAt - booking.departAt) / MS_HOUR;
 
-  // Your own aircraft lands where you do, and the hours go in its logbook.
+  // Your own aircraft lands where you do, the hours go in its logbook, and
+  // where it sleeps tonight is the keeping system's to decide.
   if (booking.vehicleId) {
     const jet = sim.universe.vehicles[booking.vehicleId];
     if (jet && !jet.soldAt) {
       jet.locationId = toCityId;
       addMileage(sim, jet, Math.max(1, Math.round(durationHours)));
+      sim.emit('vehicle.relocated', { vehicleId: jet.id, cityId: toCityId, airportId: toAirport?.id });
     }
   }
 
@@ -669,7 +671,7 @@ function ownedAsAircraft(sim: Simulation, vehicle: Vehicle): AircraftLike {
   const craft = craftOf(sim, vehicle);
   return {
     id: vehicle.id,
-    name: `${vehicle.make} ${vehicle.model}`,
+    name: vehicle.nickname ? `${vehicle.nickname} (${vehicle.make} ${vehicle.model})` : `${vehicle.make} ${vehicle.model}`,
     category: 'Your Aircraft',
     seats: craft?.seats ?? 4,
     rangeKm: craft?.rangeKm ?? 2_000,

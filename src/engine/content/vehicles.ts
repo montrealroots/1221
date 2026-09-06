@@ -60,8 +60,8 @@ export interface CraftSpec {
   runwayFeet?: number;
   /** Boats and jets: an hour under way, in fuel, crew and wear. Cents. */
   hourlyOperating?: Money;
-  /** Boats and jets: a month at a berth or in a hangar with a crew on call, before cost of living. Cents. */
-  monthlyKeep?: Money;
+  /** A crewed boat or any aircraft: the crew on retainer and the standing maintenance a month, before cost of living. Where it is kept is charged separately. Cents. */
+  crewMonthly?: Money;
 }
 
 export interface VehicleTrim {
@@ -524,109 +524,109 @@ export const VEHICLE_MODELS = new Registry<VehicleModel>('vehicle_models', [
 
   // --- Boats. Real builders and models; every figure SLATE's own. ------------
   model({ kind: 'boat', id: 'bostonwhaler_montauk190', name: 'Montauk 190', make: 'bostonwhaler', body: 'center_console', segment: 'compact', years: [2015, 2030], seats: 8, dep: 0.09, maint: 0.9, ins: 0.9, tags: ['unsinkable', 'fishing', 'first boat'], collectorAfter: 25, trims: [
-    boat('150', '150 Outboard', 62_000, 150, 6.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Centre console'], { lengthFeet: 19, seats: 8, topSpeed: 38, hourlyOperating: 55_00, monthlyKeep: 450_00 }),
-    boat('200', '200 Outboard', 68_000, 200, 8.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Centre console', 'T-top ready'], { lengthFeet: 19, seats: 8, topSpeed: 42, hourlyOperating: 68_00, monthlyKeep: 450_00 }),
+    boat('150', '150 Outboard', 62_000, 150, 6.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Centre console'], { lengthFeet: 19, seats: 8, topSpeed: 38, hourlyOperating: 55_00 }),
+    boat('200', '200 Outboard', 68_000, 200, 8.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Centre console', 'T-top ready'], { lengthFeet: 19, seats: 8, topSpeed: 42, hourlyOperating: 68_00 }),
   ] }),
   model({ kind: 'boat', id: 'bostonwhaler_outrage280', name: 'Outrage 280', make: 'bostonwhaler', body: 'center_console', segment: 'midsize', years: [2018, 2030], seats: 12, dep: 0.10, maint: 1.2, ins: 1.1, tags: ['offshore', 'fishing', 'family'], trims: [
-    boat('twin300', 'Twin 300 Outboards', 330_000, 600, 26, 'outboard', BOAT_OFFSHORE, ['Hardtop', 'Joystick piloting', 'Livewell'], { lengthFeet: 28, seats: 12, topSpeed: 50, hourlyOperating: 190_00, monthlyKeep: 1_100_00 }),
+    boat('twin300', 'Twin 300 Outboards', 330_000, 600, 26, 'outboard', BOAT_OFFSHORE, ['Hardtop', 'Joystick piloting', 'Livewell'], { lengthFeet: 28, seats: 12, topSpeed: 50, hourlyOperating: 190_00 }),
   ] }),
   model({ kind: 'boat', id: 'searay_slx260', name: 'SLX 260', make: 'searay', body: 'bowrider', segment: 'midsize', years: [2017, 2030], seats: 12, dep: 0.12, maint: 1.0, ins: 1.0, tags: ['lake', 'family', 'day boat'], trims: [
-    boat('base', 'SLX 260', 205_000, 380, 14, 'sterndrive', BOAT_DAY, ['Bow seating', 'Swim platform', 'Premium audio'], { lengthFeet: 26, seats: 12, topSpeed: 47, hourlyOperating: 110_00, monthlyKeep: 800_00 }),
+    boat('base', 'SLX 260', 205_000, 380, 14, 'sterndrive', BOAT_DAY, ['Bow seating', 'Swim platform', 'Premium audio'], { lengthFeet: 26, seats: 12, topSpeed: 47, hourlyOperating: 110_00 }),
   ] }),
   model({ kind: 'boat', id: 'searay_sundancer320', name: 'Sundancer 320', make: 'searay', body: 'express_cruiser', segment: 'midsize', years: [2018, 2030], seats: 10, dep: 0.12, maint: 1.3, ins: 1.1, tags: ['weekender', 'cabin', 'family'], trims: [
-    boat('base', 'Sundancer 320', 420_000, 700, 30, 'outboard', BOAT_CRUISER, ['Cabin with berth', 'Galley', 'Hardtop'], { lengthFeet: 32, seats: 10, berths: 2, topSpeed: 46, hourlyOperating: 230_00, monthlyKeep: 1_400_00 }),
+    boat('base', 'Sundancer 320', 420_000, 700, 30, 'outboard', BOAT_CRUISER, ['Cabin with berth', 'Galley', 'Hardtop'], { lengthFeet: 32, seats: 10, berths: 2, topSpeed: 46, hourlyOperating: 230_00 }),
   ] }),
   model({ kind: 'boat', id: 'mastercraft_xt23', name: 'XT23', make: 'mastercraft', body: 'wake', segment: 'sports', years: [2017, 2030], seats: 16, dep: 0.13, maint: 1.0, ins: 1.1, tags: ['wakeboard', 'surf', 'lake'], trims: [
-    boat('base', 'XT23', 190_000, 430, 12, 'inboard', BOAT_WAKE, ['Surf system', 'Ballast', 'Tower with racks'], { lengthFeet: 23, seats: 16, topSpeed: 44, hourlyOperating: 95_00, monthlyKeep: 700_00 }),
+    boat('base', 'XT23', 190_000, 430, 12, 'inboard', BOAT_WAKE, ['Surf system', 'Ballast', 'Tower with racks'], { lengthFeet: 23, seats: 16, topSpeed: 44, hourlyOperating: 95_00 }),
   ] }),
   model({ kind: 'boat', id: 'mastercraft_x24', name: 'X24', make: 'mastercraft', body: 'wake', segment: 'sports', years: [2019, 2030], seats: 18, dep: 0.13, maint: 1.05, ins: 1.15, tags: ['wakeboard', 'surf', 'flagship'], trims: [
-    boat('base', 'X24', 230_000, 522, 14, 'inboard', BOAT_WAKE, ['Surf system', 'Touchscreen helm', 'Tower with racks'], { lengthFeet: 24, seats: 18, topSpeed: 45, hourlyOperating: 105_00, monthlyKeep: 750_00 }),
+    boat('base', 'X24', 230_000, 522, 14, 'inboard', BOAT_WAKE, ['Surf system', 'Touchscreen helm', 'Tower with racks'], { lengthFeet: 24, seats: 18, topSpeed: 45, hourlyOperating: 105_00 }),
   ] }),
   model({ kind: 'boat', id: 'malibu_wakesetter23lsv', name: 'Wakesetter 23 LSV', make: 'malibu', body: 'wake', segment: 'sports', years: [2016, 2030], seats: 15, dep: 0.13, maint: 1.0, ins: 1.1, tags: ['wakeboard', 'surf', 'lake'], trims: [
-    boat('base', 'Wakesetter 23 LSV', 200_000, 450, 12, 'inboard', BOAT_WAKE, ['Surf Gate', 'Power Wedge', 'Tower with racks'], { lengthFeet: 23, seats: 15, topSpeed: 44, hourlyOperating: 95_00, monthlyKeep: 700_00 }),
+    boat('base', 'Wakesetter 23 LSV', 200_000, 450, 12, 'inboard', BOAT_WAKE, ['Surf Gate', 'Power Wedge', 'Tower with racks'], { lengthFeet: 23, seats: 15, topSpeed: 44, hourlyOperating: 95_00 }),
   ] }),
   model({ kind: 'boat', id: 'chriscraft_launch27', name: 'Launch 27', make: 'chriscraft', body: 'runabout', segment: 'luxury', years: [2016, 2030], seats: 10, dep: 0.10, maint: 1.2, ins: 1.1, tags: ['runabout', 'teak', 'style'], collectorAfter: 20, trims: [
-    boat('base', 'Launch 27', 265_000, 380, 15, 'sterndrive', BOAT_DAY, ['Teak trim', 'Bow seating', 'Heritage styling'], { lengthFeet: 27, seats: 10, topSpeed: 48, hourlyOperating: 120_00, monthlyKeep: 850_00 }),
+    boat('base', 'Launch 27', 265_000, 380, 15, 'sterndrive', BOAT_DAY, ['Teak trim', 'Bow seating', 'Heritage styling'], { lengthFeet: 27, seats: 10, topSpeed: 48, hourlyOperating: 120_00 }),
   ] }),
   model({ kind: 'boat', id: 'cobalt_r6', name: 'R6', make: 'cobalt', body: 'bowrider', segment: 'midsize', years: [2018, 2030], seats: 12, dep: 0.12, maint: 0.95, ins: 1.0, tags: ['lake', 'family', 'quality'], trims: [
-    boat('base', 'R6', 150_000, 350, 13, 'sterndrive', BOAT_DAY, ['Swim step', 'Bow seating'], { lengthFeet: 25, seats: 12, topSpeed: 46, hourlyOperating: 100_00, monthlyKeep: 750_00 }),
+    boat('base', 'R6', 150_000, 350, 13, 'sterndrive', BOAT_DAY, ['Swim step', 'Bow seating'], { lengthFeet: 25, seats: 12, topSpeed: 46, hourlyOperating: 100_00 }),
   ] }),
   model({ kind: 'boat', id: 'gradywhite_canyon336', name: 'Canyon 336', make: 'gradywhite', body: 'center_console', segment: 'midsize', years: [2016, 2030], seats: 14, dep: 0.10, maint: 1.25, ins: 1.1, tags: ['offshore', 'fishing', 'built to last'], trims: [
-    boat('twin300', 'Twin 300 Outboards', 480_000, 600, 27, 'outboard', BOAT_OFFSHORE, ['Hardtop', 'Head compartment', 'Livewells'], { lengthFeet: 33, seats: 14, topSpeed: 50, hourlyOperating: 210_00, monthlyKeep: 1_300_00 }),
+    boat('twin300', 'Twin 300 Outboards', 480_000, 600, 27, 'outboard', BOAT_OFFSHORE, ['Hardtop', 'Head compartment', 'Livewells'], { lengthFeet: 33, seats: 14, topSpeed: 50, hourlyOperating: 210_00 }),
   ] }),
   model({ kind: 'boat', id: 'axopar_37xc', name: '37 XC Cross Cabin', make: 'axopar', body: 'express_cruiser', segment: 'midsize', years: [2018, 2030], seats: 10, dep: 0.11, maint: 1.1, ins: 1.05, tags: ['adventure', 'cabin', 'nordic'], trims: [
-    boat('twin300', 'Twin 300 Outboards', 370_000, 600, 24, 'outboard', BOAT_CRUISER, ['Enclosed cabin', 'Aft berth', 'Sliding roof'], { lengthFeet: 37, seats: 10, berths: 2, topSpeed: 48, hourlyOperating: 200_00, monthlyKeep: 1_500_00 }),
+    boat('twin300', 'Twin 300 Outboards', 370_000, 600, 24, 'outboard', BOAT_CRUISER, ['Enclosed cabin', 'Aft berth', 'Sliding roof'], { lengthFeet: 37, seats: 10, berths: 2, topSpeed: 48, hourlyOperating: 200_00 }),
   ] }),
   model({ kind: 'boat', id: 'beneteau_oceanis401', name: 'Oceanis 40.1', make: 'beneteau', body: 'sailing_yacht', segment: 'midsize', years: [2020, 2030], seats: 8, dep: 0.08, maint: 1.1, ins: 0.9, tags: ['sailing', 'cruising', 'weekends away'], trims: [
-    boat('base', 'Oceanis 40.1', 360_000, 45, 1.2, 'sail', BOAT_SAIL, ['Three cabins', 'Furling mainsail', 'Bow thruster ready'], { lengthFeet: 41, seats: 8, berths: 6, topSpeed: 9, hourlyOperating: 28_00, monthlyKeep: 1_600_00 }),
+    boat('base', 'Oceanis 40.1', 360_000, 45, 1.2, 'sail', BOAT_SAIL, ['Three cabins', 'Furling mainsail', 'Bow thruster ready'], { lengthFeet: 41, seats: 8, berths: 6, topSpeed: 9, hourlyOperating: 28_00 }),
   ] }),
   model({ kind: 'boat', id: 'beneteau_oceanis511', name: 'Oceanis 51.1', make: 'beneteau', body: 'sailing_yacht', segment: 'fullsize', years: [2018, 2030], seats: 10, dep: 0.08, maint: 1.3, ins: 1.0, tags: ['sailing', 'bluewater', 'space'], trims: [
-    boat('base', 'Oceanis 51.1', 720_000, 80, 1.8, 'sail', BOAT_SAIL, ['Four cabins', 'Electric winches', 'Generator ready'], { lengthFeet: 51, seats: 10, berths: 8, topSpeed: 10, hourlyOperating: 40_00, monthlyKeep: 2_400_00 }),
+    boat('base', 'Oceanis 51.1', 720_000, 80, 1.8, 'sail', BOAT_SAIL, ['Four cabins', 'Electric winches', 'Generator ready'], { lengthFeet: 51, seats: 10, berths: 8, topSpeed: 10, hourlyOperating: 40_00 }),
   ] }),
   model({ kind: 'boat', id: 'jeanneau_sunodyssey410', name: 'Sun Odyssey 410', make: 'jeanneau', body: 'sailing_yacht', segment: 'midsize', years: [2019, 2030], seats: 8, dep: 0.08, maint: 1.1, ins: 0.9, tags: ['sailing', 'cruising', 'walkaround deck'], trims: [
-    boat('base', 'Sun Odyssey 410', 380_000, 45, 1.2, 'sail', BOAT_SAIL, ['Walkaround deck', 'Three cabins', 'Furling mainsail'], { lengthFeet: 41, seats: 8, berths: 6, topSpeed: 9, hourlyOperating: 28_00, monthlyKeep: 1_600_00 }),
+    boat('base', 'Sun Odyssey 410', 380_000, 45, 1.2, 'sail', BOAT_SAIL, ['Walkaround deck', 'Three cabins', 'Furling mainsail'], { lengthFeet: 41, seats: 8, berths: 6, topSpeed: 9, hourlyOperating: 28_00 }),
   ] }),
   model({ kind: 'boat', id: 'azimut_55', name: 'Azimut 55', make: 'azimut', body: 'motor_yacht', segment: 'luxury', years: [2016, 2030], seats: 12, dep: 0.11, maint: 2.0, ins: 1.4, tags: ['yacht', 'flybridge', 'italian'], trims: [
-    boat('base', 'Azimut 55', 1_900_000, 1_450, 80, 'shaft', BOAT_YACHT, ['Flybridge', 'Three cabins', 'Crew cabin'], { lengthFeet: 55, seats: 12, berths: 6, topSpeed: 31, hourlyOperating: 650_00, monthlyKeep: 9_500_00 }),
+    boat('base', 'Azimut 55', 1_900_000, 1_450, 80, 'shaft', BOAT_YACHT, ['Flybridge', 'Three cabins', 'Crew cabin'], { lengthFeet: 55, seats: 12, berths: 6, topSpeed: 31, hourlyOperating: 650_00, crewMonthly: 550_000 }),
   ] }),
   model({ kind: 'boat', id: 'azimut_72', name: 'Azimut 72', make: 'azimut', body: 'motor_yacht', segment: 'luxury', years: [2017, 2030], seats: 14, dep: 0.11, maint: 2.4, ins: 1.5, tags: ['yacht', 'flybridge', 'crewed'], trims: [
-    boat('base', 'Azimut 72', 3_400_000, 2_400, 130, 'shaft', BOAT_YACHT, ['Flybridge', 'Four cabins', 'Crew quarters', 'Gyro stabiliser ready'], { lengthFeet: 72, seats: 14, berths: 8, topSpeed: 32, hourlyOperating: 1_050_00, monthlyKeep: 16_000_00 }),
+    boat('base', 'Azimut 72', 3_400_000, 2_400, 130, 'shaft', BOAT_YACHT, ['Flybridge', 'Four cabins', 'Crew quarters', 'Gyro stabiliser ready'], { lengthFeet: 72, seats: 14, berths: 8, topSpeed: 32, hourlyOperating: 1_050_00, crewMonthly: 950_000 }),
   ] }),
   model({ kind: 'boat', id: 'princess_v55', name: 'V55', make: 'princess', body: 'motor_yacht', segment: 'luxury', years: [2018, 2030], seats: 12, dep: 0.11, maint: 2.0, ins: 1.4, tags: ['yacht', 'sports cruiser', 'british'], trims: [
-    boat('base', 'V55', 2_000_000, 1_500, 85, 'shaft', BOAT_YACHT, ['Three cabins', 'Sunroof', 'Tender garage'], { lengthFeet: 58, seats: 12, berths: 6, topSpeed: 36, hourlyOperating: 700_00, monthlyKeep: 10_000_00 }),
+    boat('base', 'V55', 2_000_000, 1_500, 85, 'shaft', BOAT_YACHT, ['Three cabins', 'Sunroof', 'Tender garage'], { lengthFeet: 58, seats: 12, berths: 6, topSpeed: 36, hourlyOperating: 700_00, crewMonthly: 600_000 }),
   ] }),
   model({ kind: 'boat', id: 'sunseeker_predator65', name: 'Predator 65', make: 'sunseeker', body: 'motor_yacht', segment: 'luxury', years: [2019, 2030], seats: 14, dep: 0.11, maint: 2.4, ins: 1.5, tags: ['yacht', 'performance', 'status'], trims: [
-    boat('base', 'Predator 65', 3_100_000, 2_400, 130, 'shaft', BOAT_YACHT, ['Three cabins', 'Crew cabin', 'Beach club', 'Tender garage'], { lengthFeet: 65, seats: 14, berths: 6, topSpeed: 38, hourlyOperating: 1_000_00, monthlyKeep: 15_000_00 }),
+    boat('base', 'Predator 65', 3_100_000, 2_400, 130, 'shaft', BOAT_YACHT, ['Three cabins', 'Crew cabin', 'Beach club', 'Tender garage'], { lengthFeet: 65, seats: 14, berths: 6, topSpeed: 38, hourlyOperating: 1_000_00, crewMonthly: 850_000 }),
   ] }),
   model({ kind: 'boat', id: 'riva_aquarivasuper', name: 'Aquariva Super', make: 'riva', body: 'runabout', segment: 'luxury', years: [2015, 2030], seats: 8, dep: 0.07, maint: 2.2, ins: 1.6, tags: ['runabout', 'mahogany', 'collector'], collectorAfter: 10, trims: [
-    boat('base', 'Aquariva Super', 920_000, 740, 40, 'shaft', BOAT_DAY, ['Mahogany deck', 'Twin diesels', 'Convertible top'], { lengthFeet: 33, seats: 8, topSpeed: 41, hourlyOperating: 380_00, monthlyKeep: 3_000_00 }),
+    boat('base', 'Aquariva Super', 920_000, 740, 40, 'shaft', BOAT_DAY, ['Mahogany deck', 'Twin diesels', 'Convertible top'], { lengthFeet: 33, seats: 8, topSpeed: 41, hourlyOperating: 380_00 }),
   ] }),
   model({ kind: 'boat', id: 'riva_rivamare', name: 'Rivamare', make: 'riva', body: 'runabout', segment: 'luxury', years: [2016, 2030], seats: 10, dep: 0.08, maint: 2.2, ins: 1.6, tags: ['runabout', 'style', 'status'], collectorAfter: 12, trims: [
-    boat('base', 'Rivamare', 1_400_000, 800, 45, 'shaft', BOAT_DAY, ['Convertible top', 'Cabin', 'Mahogany and steel'], { lengthFeet: 39, seats: 10, berths: 2, topSpeed: 40, hourlyOperating: 420_00, monthlyKeep: 3_600_00 }),
+    boat('base', 'Rivamare', 1_400_000, 800, 45, 'shaft', BOAT_DAY, ['Convertible top', 'Cabin', 'Mahogany and steel'], { lengthFeet: 39, seats: 10, berths: 2, topSpeed: 40, hourlyOperating: 420_00 }),
   ] }),
 
   // --- Private aircraft. Real types; seats, range and runway rounded from the makers' published figures; prices and costs SLATE's own. ---
   model({ kind: 'jet', id: 'cirrus_visionsf50', name: 'Vision SF50', make: 'cirrus', body: 'very_light_jet', segment: 'compact', years: [2017, 2030], seats: 5, dep: 0.07, maint: 1.0, ins: 1.0, tags: ['personal jet', 'single engine', 'parachute'], trims: [
-    jet('g2plus', 'Vision SF50 G2+', 3_300_000, 1_800, 65, JET_LIGHT, ['Whole-airframe parachute', 'Safe Return autoland', 'Single pilot'], { seats: 5, rangeKm: 2_200, runwayFeet: 3_200, topSpeed: 560, hourlyOperating: 1_100_00, monthlyKeep: 9_000_00 }),
+    jet('g2plus', 'Vision SF50 G2+', 3_300_000, 1_800, 65, JET_LIGHT, ['Whole-airframe parachute', 'Safe Return autoland', 'Single pilot'], { seats: 5, rangeKm: 2_200, runwayFeet: 3_200, topSpeed: 560, hourlyOperating: 1_100_00, crewMonthly: 600_000 }),
   ] }),
   model({ kind: 'jet', id: 'hondajet_eliteii', name: 'HondaJet Elite II', make: 'hondajet', body: 'light_jet', segment: 'compact', years: [2019, 2030], seats: 7, dep: 0.07, maint: 1.2, ins: 1.0, tags: ['light jet', 'over the wing engines', 'efficient'], trims: [
-    jet('base', 'HondaJet Elite II', 7_500_000, 4_100, 90, JET_LIGHT, ['Over-the-wing engine mounts', 'Fully private lavatory', 'Single pilot'], { seats: 7, rangeKm: 2_900, runwayFeet: 3_700, topSpeed: 780, hourlyOperating: 1_900_00, monthlyKeep: 18_000_00 }),
+    jet('base', 'HondaJet Elite II', 7_500_000, 4_100, 90, JET_LIGHT, ['Over-the-wing engine mounts', 'Fully private lavatory', 'Single pilot'], { seats: 7, rangeKm: 2_900, runwayFeet: 3_700, topSpeed: 780, hourlyOperating: 1_900_00, crewMonthly: 900_000 }),
   ] }),
   model({ kind: 'jet', id: 'embraer_phenom100ev', name: 'Phenom 100EV', make: 'embraer', body: 'very_light_jet', segment: 'compact', years: [2017, 2030], seats: 6, dep: 0.07, maint: 1.1, ins: 1.0, tags: ['entry jet', 'single pilot', 'efficient'], trims: [
-    jet('base', 'Phenom 100EV', 5_000_000, 3_400, 80, JET_LIGHT, ['Prodigy Touch flight deck', 'Single pilot'], { seats: 6, rangeKm: 2_200, runwayFeet: 3_200, topSpeed: 740, hourlyOperating: 1_600_00, monthlyKeep: 15_000_00 }),
+    jet('base', 'Phenom 100EV', 5_000_000, 3_400, 80, JET_LIGHT, ['Prodigy Touch flight deck', 'Single pilot'], { seats: 6, rangeKm: 2_200, runwayFeet: 3_200, topSpeed: 740, hourlyOperating: 1_600_00, crewMonthly: 850_000 }),
   ] }),
   model({ kind: 'jet', id: 'embraer_phenom300e', name: 'Phenom 300E', make: 'embraer', body: 'light_jet', segment: 'midsize', years: [2018, 2030], seats: 9, dep: 0.07, maint: 1.3, ins: 1.05, tags: ['light jet', 'best seller', 'single pilot'], trims: [
-    jet('base', 'Phenom 300E', 10_500_000, 6_900, 130, JET_LIGHT, ['Bossa Nova interior', 'Runway overrun awareness', 'Single pilot'], { seats: 9, rangeKm: 3_700, runwayFeet: 3_200, topSpeed: 840, hourlyOperating: 2_300_00, monthlyKeep: 24_000_00 }),
+    jet('base', 'Phenom 300E', 10_500_000, 6_900, 130, JET_LIGHT, ['Bossa Nova interior', 'Runway overrun awareness', 'Single pilot'], { seats: 9, rangeKm: 3_700, runwayFeet: 3_200, topSpeed: 840, hourlyOperating: 2_300_00, crewMonthly: 1_200_000 }),
   ] }),
   model({ kind: 'jet', id: 'cessna_citationcj4', name: 'Citation CJ4 Gen2', make: 'cessna', body: 'light_jet', segment: 'midsize', years: [2021, 2030], seats: 9, dep: 0.07, maint: 1.3, ins: 1.05, tags: ['light jet', 'single pilot', 'workhorse'], trims: [
-    jet('base', 'Citation CJ4 Gen2', 11_000_000, 7_200, 140, JET_LIGHT, ['Garmin G3000', 'Single pilot', 'Wireless cabin management'], { seats: 9, rangeKm: 4_000, runwayFeet: 3_400, topSpeed: 830, hourlyOperating: 2_400_00, monthlyKeep: 25_000_00 }),
+    jet('base', 'Citation CJ4 Gen2', 11_000_000, 7_200, 140, JET_LIGHT, ['Garmin G3000', 'Single pilot', 'Wireless cabin management'], { seats: 9, rangeKm: 4_000, runwayFeet: 3_400, topSpeed: 830, hourlyOperating: 2_400_00, crewMonthly: 1_250_000 }),
   ] }),
   model({ kind: 'jet', id: 'pilatus_pc24', name: 'PC-24', make: 'pilatus', body: 'light_jet', segment: 'midsize', years: [2018, 2030], seats: 10, dep: 0.06, maint: 1.3, ins: 1.05, tags: ['versatile', 'rough strips', 'cargo door'], trims: [
-    jet('base', 'PC-24', 12_000_000, 6_800, 140, JET_LIGHT, ['Cargo door', 'Unpaved runway capable', 'Flat floor cabin'], { seats: 10, rangeKm: 3_700, runwayFeet: 2_900, topSpeed: 815, hourlyOperating: 2_500_00, monthlyKeep: 26_000_00 }),
+    jet('base', 'PC-24', 12_000_000, 6_800, 140, JET_LIGHT, ['Cargo door', 'Unpaved runway capable', 'Flat floor cabin'], { seats: 10, rangeKm: 3_700, runwayFeet: 2_900, topSpeed: 815, hourlyOperating: 2_500_00, crewMonthly: 1_300_000 }),
   ] }),
   model({ kind: 'jet', id: 'cessna_citationlatitude', name: 'Citation Latitude', make: 'cessna', body: 'midsize_jet', segment: 'fullsize', years: [2015, 2030], seats: 9, dep: 0.07, maint: 1.5, ins: 1.1, tags: ['midsize', 'flat floor', 'stand up cabin'], trims: [
-    jet('base', 'Citation Latitude', 19_000_000, 11_700, 200, JET_MID, ['Six foot cabin', 'Flat floor', 'Garmin G5000'], { seats: 9, rangeKm: 5_000, runwayFeet: 3_600, topSpeed: 830, hourlyOperating: 3_100_00, monthlyKeep: 34_000_00 }),
+    jet('base', 'Citation Latitude', 19_000_000, 11_700, 200, JET_MID, ['Six foot cabin', 'Flat floor', 'Garmin G5000'], { seats: 9, rangeKm: 5_000, runwayFeet: 3_600, topSpeed: 830, hourlyOperating: 3_100_00, crewMonthly: 1_600_000 }),
   ] }),
   model({ kind: 'jet', id: 'bombardier_challenger3500', name: 'Challenger 3500', make: 'bombardier', body: 'super_midsize_jet', segment: 'fullsize', years: [2022, 2030], seats: 10, dep: 0.07, maint: 1.7, ins: 1.15, tags: ['super midsize', 'coast to coast', 'quiet cabin'], trims: [
-    jet('base', 'Challenger 3500', 27_000_000, 14_600, 240, JET_MID, ['Nuage seats', 'Voice-controlled cabin', 'Autothrottle'], { seats: 10, rangeKm: 6_200, runwayFeet: 4_800, topSpeed: 870, hourlyOperating: 3_900_00, monthlyKeep: 45_000_00 }),
+    jet('base', 'Challenger 3500', 27_000_000, 14_600, 240, JET_MID, ['Nuage seats', 'Voice-controlled cabin', 'Autothrottle'], { seats: 10, rangeKm: 6_200, runwayFeet: 4_800, topSpeed: 870, hourlyOperating: 3_900_00, crewMonthly: 2_200_000 }),
   ] }),
   model({ kind: 'jet', id: 'gulfstream_g280', name: 'G280', make: 'gulfstream', body: 'super_midsize_jet', segment: 'fullsize', years: [2015, 2030], seats: 10, dep: 0.07, maint: 1.7, ins: 1.15, tags: ['super midsize', 'range', 'gulfstream cabin'], trims: [
-    jet('base', 'G280', 25_000_000, 15_200, 250, JET_MID, ['PlaneView280 flight deck', 'Fresh air system', 'Two cabin zones'], { seats: 10, rangeKm: 6_700, runwayFeet: 4_800, topSpeed: 870, hourlyOperating: 4_000_00, monthlyKeep: 46_000_00 }),
+    jet('base', 'G280', 25_000_000, 15_200, 250, JET_MID, ['PlaneView280 flight deck', 'Fresh air system', 'Two cabin zones'], { seats: 10, rangeKm: 6_700, runwayFeet: 4_800, topSpeed: 870, hourlyOperating: 4_000_00, crewMonthly: 2_200_000 }),
   ] }),
   model({ kind: 'jet', id: 'dassault_falcon2000lxs', name: 'Falcon 2000LXS', make: 'dassault', body: 'large_jet', segment: 'luxury', years: [2015, 2030], seats: 10, dep: 0.07, maint: 2.0, ins: 1.2, tags: ['large cabin', 'short field', 'french'], trims: [
-    jet('base', 'Falcon 2000LXS', 37_000_000, 14_000, 260, JET_LARGE, ['Inboard slats', 'Wide cabin', 'EASy III flight deck'], { seats: 10, rangeKm: 7_400, runwayFeet: 4_700, topSpeed: 880, hourlyOperating: 4_600_00, monthlyKeep: 55_000_00 }),
+    jet('base', 'Falcon 2000LXS', 37_000_000, 14_000, 260, JET_LARGE, ['Inboard slats', 'Wide cabin', 'EASy III flight deck'], { seats: 10, rangeKm: 7_400, runwayFeet: 4_700, topSpeed: 880, hourlyOperating: 4_600_00, crewMonthly: 2_800_000 }),
   ] }),
   model({ kind: 'jet', id: 'dassault_falcon8x', name: 'Falcon 8X', make: 'dassault', body: 'long_range_jet', segment: 'luxury', years: [2016, 2030], seats: 14, dep: 0.07, maint: 2.3, ins: 1.3, tags: ['long range', 'three engines', 'quiet'], trims: [
-    jet('base', 'Falcon 8X', 60_000_000, 20_400, 340, JET_LONG, ['Three engines', 'FalconEye head-up display', 'Three cabin zones'], { seats: 14, rangeKm: 11_900, runwayFeet: 6_000, topSpeed: 900, hourlyOperating: 5_600_00, monthlyKeep: 75_000_00 }),
+    jet('base', 'Falcon 8X', 60_000_000, 20_400, 340, JET_LONG, ['Three engines', 'FalconEye head-up display', 'Three cabin zones'], { seats: 14, rangeKm: 11_900, runwayFeet: 6_000, topSpeed: 900, hourlyOperating: 5_600_00, crewMonthly: 3_800_000 }),
   ] }),
   model({ kind: 'jet', id: 'gulfstream_g650er', name: 'G650ER', make: 'gulfstream', body: 'long_range_jet', segment: 'luxury', years: [2015, 2030], seats: 19, dep: 0.07, maint: 2.5, ins: 1.4, tags: ['ultra long range', 'flagship', 'status'], trims: [
-    jet('base', 'G650ER', 72_000_000, 33_800, 480, JET_LONG, ['Four living areas', 'Panoramic windows', 'Low cabin altitude'], { seats: 19, rangeKm: 13_900, runwayFeet: 6_000, topSpeed: 950, hourlyOperating: 6_200_00, monthlyKeep: 90_000_00 }),
+    jet('base', 'G650ER', 72_000_000, 33_800, 480, JET_LONG, ['Four living areas', 'Panoramic windows', 'Low cabin altitude'], { seats: 19, rangeKm: 13_900, runwayFeet: 6_000, topSpeed: 950, hourlyOperating: 6_200_00, crewMonthly: 4_500_000 }),
   ] }),
   model({ kind: 'jet', id: 'gulfstream_g700', name: 'G700', make: 'gulfstream', body: 'long_range_jet', segment: 'luxury', years: [2024, 2030], seats: 19, dep: 0.07, maint: 2.6, ins: 1.45, tags: ['ultra long range', 'newest', 'tallest cabin'], trims: [
-    jet('base', 'G700', 80_000_000, 36_600, 500, JET_LONG, ['Five living areas', 'Circadian lighting', 'Ultra-galley'], { seats: 19, rangeKm: 14_300, runwayFeet: 6_250, topSpeed: 956, hourlyOperating: 6_600_00, monthlyKeep: 95_000_00 }),
+    jet('base', 'G700', 80_000_000, 36_600, 500, JET_LONG, ['Five living areas', 'Circadian lighting', 'Ultra-galley'], { seats: 19, rangeKm: 14_300, runwayFeet: 6_250, topSpeed: 956, hourlyOperating: 6_600_00, crewMonthly: 4_800_000 }),
   ] }),
   model({ kind: 'jet', id: 'bombardier_global7500', name: 'Global 7500', make: 'bombardier', body: 'long_range_jet', segment: 'luxury', years: [2018, 2030], seats: 19, dep: 0.07, maint: 2.6, ins: 1.45, tags: ['ultra long range', 'four zones', 'status'], trims: [
-    jet('base', 'Global 7500', 78_000_000, 37_400, 500, JET_LONG, ['Four living spaces', 'Full-size bed', 'Smooth Flex wing'], { seats: 19, rangeKm: 14_200, runwayFeet: 5_800, topSpeed: 956, hourlyOperating: 6_800_00, monthlyKeep: 92_000_00 }),
+    jet('base', 'Global 7500', 78_000_000, 37_400, 500, JET_LONG, ['Four living spaces', 'Full-size bed', 'Smooth Flex wing'], { seats: 19, rangeKm: 14_200, runwayFeet: 5_800, topSpeed: 956, hourlyOperating: 6_800_00, crewMonthly: 4_700_000 }),
   ] }),
 ]);
 

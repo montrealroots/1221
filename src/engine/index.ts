@@ -41,6 +41,7 @@ import { registerViewings } from './systems/viewings';
 import { ensureInteriors, registerPurchase } from './systems/purchase';
 import { registerCare } from './systems/care';
 import { registerJourney } from './systems/journey';
+import { ensureKeepings, registerStorage } from './systems/storage';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -86,6 +87,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPurchase(sim);
   registerCare(sim);
   registerJourney(sim);
+  registerStorage(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -391,6 +393,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   registerAllSystems(sim);
   // The rooms you already live in become rooms (idempotent; see purchase.ts).
   ensureInteriors(sim);
+  // Everything you own is kept somewhere (idempotent; see storage.ts).
+  ensureKeepings(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -864,6 +868,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       if (!listing.kind) listing.kind = kindOf(listing.catalogId.split(':')[0] ?? '');
     }
     steps.push('Vehicles and listings stamped with their kind.');
+  }
+
+  if (from < 39) {
+    // Schema 39: every vehicle is kept somewhere, homes know their garage
+    // and their dock, and a boat or an aircraft may carry a name. The
+    // placing itself happens when the save is loaded and the systems are
+    // there to ask (ensureKeepings); an old berth-and-crew bill becomes the
+    // keeping bill rather than a second charge. Nothing is removed.
+    steps.push('Vehicles to be placed in garages, berths and hangars on load.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

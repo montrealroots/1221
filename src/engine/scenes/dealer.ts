@@ -28,6 +28,7 @@ import {
 import { preview } from '../dialogue/library';
 import { KIND_PROFILE, type VehicleKind } from '../content/vehicles';
 import { financeRefusal, purchaseQuote, vehicleKind } from '../systems/vehicles';
+import { keepingLabel } from '../systems/storage';
 
 /** How the scene talks about what the lot sells. */
 interface Words {
@@ -377,7 +378,7 @@ export const DEALER_SCENE = defineScene({
           eyebrow: vehicle ? vehicleName(vehicle) : '',
           text: due > 0
             ? `${WORDS[listingKind(listingOfDeal(sim, deal))].brought} on ${formatDate(due, sim.zone)}${deal.terms.repairs.length > 0 ? `, with the work done first: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}` : ''}. Until then it is theirs to get ready.`
-            : `The keys are in your hand.${deal.terms.repairs.length > 0 ? ` The work you asked for is done: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}.` : ''} It is yours.${vehicle?.upkeepBillId ? ` ${vehicleKind(vehicle) === 'boat' ? 'The berth' : 'The hangar and crew'} bills monthly from here.` : ''}`,
+            : `The keys are in your hand.${deal.terms.repairs.length > 0 ? ` The work you asked for is done: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}.` : ''} It is yours.${vehicle?.keeping ? ` It goes to ${keepingLabel(sim, vehicle).toLowerCase()}${vehicle.keeping.monthly > 0 ? `, ${formatMoney(vehicle.keeping.monthly)} a month` : ''}.` : ''}${vehicle?.crewBillId ? ' The crew bill monthly from here.' : ''}`,
           choices: [{ id: 'done', label: 'Back To The Day', aliases: ['done', 'ok', 'finish'], tone: 'primary' }],
           facts: vehicle ? [
             { label: 'Insured', value: vehicle.insurancePolicyId ? 'Yes' : 'No' },

@@ -1,4 +1,5 @@
 import { titleCaseLabel } from '@/engine/core/text';
+import { dockFeetOf, garageSpacesOf, hasDriveway } from '@/engine/systems/storage';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -96,6 +97,8 @@ export function PropertyWorkspace() {
                   {property.monthlyRent && property.tenure === 'rented' && (
                     <Stat label="Rent" value={<span className="mono">{formatMoney(property.monthlyRent)}/mo</span>} />
                   )}
+                  <Stat label="Garage" value={garageSpacesOf(sim, property) > 0 ? `${garageSpacesOf(sim, property)} Space${garageSpacesOf(sim, property) === 1 ? '' : 's'}` : 'None'} note={hasDriveway(property) ? 'And a driveway' : undefined} />
+                  {dockFeetOf(property) > 0 && <Stat label="Dock" value={`Up To ${dockFeetOf(property)} Ft`} note="A private dock. A boat kept here costs nothing a month." />}
                 </div>
                 <div className="col gap-3">
                   <Meter label="Condition" value={property.condition} hint="Decays slowly without maintenance." />

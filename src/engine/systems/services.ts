@@ -18,6 +18,7 @@ import { applyRate, formatMoney, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { createBill } from './finance';
+import { keepingInsuranceFactor } from './storage';
 import { KIND_PROFILE, type VehicleKind } from '../content/vehicles';
 import { vehicleKind } from './vehicles';
 import { generatePersonName } from '../content/names';
@@ -105,6 +106,16 @@ export const INSURANCE_PRODUCTS: readonly InsuranceProduct[] = [
   { line: 'marine', label: 'Marine', basePremium: 0, valueRate: 0.015, deductible: 2_500_00, coverageLimit: 0, coinsurance: 1, description: 'Hull and liability for a boat. Required by any marina worth berthing in. Undisclosed work on the boat is grounds for denial.' },
   { line: 'aviation', label: 'Aviation', basePremium: 0, valueRate: 0.012, deductible: 25_000_00, coverageLimit: 0, coinsurance: 1, description: 'Hull and liability for an aircraft, priced on the airframe and the crew. Nothing flies without it.' },
 ];
+
+/** The worst exposure among the vehicles on a quote, as a premium factor. */
+function keepingFactorFor(sim: Simulation, coveredRefs: readonly { type: string; id: Id }[]): number {
+  let factor = 1;
+  for (const ref of coveredRefs) {
+    const vehicle = ref.type === 'vehicle' ? sim.universe.vehicles[ref.id] : undefined;
+    if (vehicle) factor = Math.max(factor, keepingInsuranceFactor(vehicle));
+  }
+  return factor;
+}
 
 /** Which line covers a vehicle of this kind, and the reason a wrong line is refused. */
 export function vehicleLineFor(kind: VehicleKind): InsuranceLine {
@@ -553,6 +564,8 @@ export function buildQuote(
     if (modified) premium = applyRate(premium, 1.22);
     // A motorcycle is priced harder than a car of the same value: it falls over.
     if (coveredRefs.some((r) => { const v = sim.universe.vehicles[r.id]; return v && vehicleKind(v) === 'motorcycle'; })) premium = applyRate(premium, 1.4);
+    // Where it sleeps: a garage is worth a little, the street costs.
+    premium = applyRate(premium, keepingFactorFor(sim, coveredRefs));
   }
   if ((line === 'marine' || line === 'aviation') && person) {
     const modified = coveredRefs.some((r) => (sim.universe.vehicles[r.id]?.currentConfiguration.modificationIds.length ?? 0) > 0);
@@ -561,6 +574,7 @@ export function buildQuote(
     const oldest = Math.min(...coveredRefs.map((r) => sim.universe.vehicles[r.id]?.year ?? 9999));
     const age = Number.isFinite(oldest) && oldest < 9999 ? Math.max(0, zonedParts(sim.now, sim.homeZone).year - oldest) : 0;
     premium = applyRate(premium, 1 + Math.min(0.5, age * 0.03));
+    premium = applyRate(premium, keepingFactorFor(sim, coveredRefs));
   }
   if (line === 'health' && person) {
     const age = zonedParts(sim.now, sim.homeZone).year - zonedParts(person.birthInstant, sim.homeZone).year;

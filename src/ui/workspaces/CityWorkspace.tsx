@@ -26,7 +26,7 @@ import { lotSells } from '@/engine/systems/dealership';
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
   { id: 'see', label: 'See Something', kinds: ['landmark', 'museum', 'park', 'beach', 'viewpoint', 'cinema', 'theatre', 'stadium'] },
-  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'market', 'salon', 'shop', 'dealership'] },
+  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'market', 'salon', 'shop', 'dealership', 'marina', 'storage'] },
   { id: 'stay', label: 'Stay Out', kinds: ['hotel', 'club'] },
 ];
 
