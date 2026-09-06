@@ -14,6 +14,7 @@ import { addDays, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { CATALOG, RETAILERS, retailPrice, retailersFor, shoppableItemsIn, type CatalogItem } from '../content/catalog';
 import { costOfLiving, salesTaxRate } from '../content/tax';
+import { defaultColour, guessMaterial } from '../content/wardrobe';
 
 export interface CartLine {
   catalogId: string;
@@ -27,7 +28,10 @@ export function registerCommerce(sim: Simulation): void {
     sim.schedule({ at: addDays(sim.now, 3, sim.homeZone), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
   });
 
-  sim.onCommand<{ retailerId: string; lines: CartLine[]; channel?: Order['channel']; accountId?: Id; giftFor?: Id }, { orderId: Id; total: Money; deliverAt?: number }>(
+  sim.onCommand<
+    { retailerId: string; lines: CartLine[]; channel?: Order['channel']; accountId?: Id; giftFor?: Id; colours?: Record<string, string> },
+    { orderId: Id; total: Money; deliverAt?: number }
+  >(
     'shop.purchase',
     (p, { sim: s }) => {
       const retailer = RETAILERS.get(p.retailerId);
@@ -90,6 +94,7 @@ export function registerCommerce(sim: Simulation): void {
         paidFromAccountId: accountId,
         createdAssetIds: [],
         giftFor: p.giftFor,
+        colours: p.colours,
       };
       s.universe.orders[order.id] = order;
 
@@ -252,6 +257,7 @@ function deliverOrder(sim: Simulation, orderId: Id): void {
         purchasePrice: line.unitPrice,
         acquiredVia: order.giftFor ? 'gift' : 'purchase',
         giftedById: order.giftFor ? player.id : undefined,
+        colour: order.colours?.[line.catalogId],
       });
       order.createdAssetIds.push(asset.id);
     }
@@ -265,6 +271,8 @@ export function createAsset(
   spec: {
     ownerId: Id; catalogItem: CatalogItem; purchasePrice: Money;
     acquiredVia: OwnedAsset['acquiredVia']; giftedById?: Id; ownerKind?: 'person' | 'company';
+    /** The colourway chosen at the counter, where the thing comes in colours. */
+    colour?: string;
   },
 ): OwnedAsset {
   const owner = sim.universe.people[spec.ownerId];
@@ -287,7 +295,15 @@ export function createAsset(
     locationPropertyId: owner?.residenceId,
     provenance: [{ at: sim.now, note: spec.acquiredVia === 'gift' ? 'Received as a gift.' : `Purchased for ${formatMoney(spec.purchasePrice)}.` }],
     wardrobe: item.slot
-      ? { slot: item.slot, formality: item.formality ?? 30, season: item.seasons ?? ['Spring', 'Summer', 'Autumn', 'Winter'], colour: 'Black' }
+      ? {
+        slot: item.slot,
+        formality: item.formality ?? 30,
+        season: item.seasons ?? ['Spring', 'Summer', 'Autumn', 'Winter'],
+        colour: spec.colour ?? defaultColour(item.id, item.name, item.slot),
+        material: guessMaterial(item.name, item.slot, item.subcategory),
+        cleanliness: 100,
+        timesWorn: 0,
+      }
       : undefined,
     tags: item.tags,
   };

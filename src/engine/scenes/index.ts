@@ -11,6 +11,7 @@ import './closing';
 import './compose';
 import './counter';
 import './date';
+import './dress';
 import './dealer';
 import './flight';
 import './gym';

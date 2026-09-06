@@ -18,6 +18,7 @@ import type { Id, Person, RetailVisit } from '../domain/model';
 import { RETAILERS, retailPrice, shoppableItemsIn, type CatalogItem, type Retailer } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
 import { placeById, type Place } from '../content/places';
+import { COLOURS, SAFE_COLOURS } from '../content/wardrobe';
 import type { DialogueTone } from '../dialogue/schema';
 import { factsOf, rememberFact, tallyFact, tallyOf } from './memory';
 import { makeBackgroundPerson, peopleOf } from './people';
@@ -169,6 +170,28 @@ export interface Stocked {
   fittable: boolean;
   /** Whether the floor is pushing it this fortnight. */
   featured: boolean;
+  /** The colours this branch has it in, if it is a thing that comes in colours. */
+  colourways: string[];
+}
+
+/** How many colours a shop carries one thing in. */
+const COLOURWAYS = 4;
+
+/**
+ * The colours this branch has a thing in. Seeded on the branch, the item and
+ * the fortnight, so it is the same rail all fortnight and a different rail in
+ * the next town. The safe colours come first because that is how shops buy.
+ */
+export function colourwaysFor(sim: Simulation, place: Place, item: CatalogItem, fortnight: number): string[] {
+  if (!item.slot) return [];
+  const rng = sim.rng('retail_colour', place.id, item.id, String(fortnight));
+  const pool = COLOURS.filter((c) => (item.slot === 'watch' || item.slot === 'jewellery'
+    ? c.family === 'metal'
+    : c.family !== 'metal'));
+  const safe = pool.filter((c) => SAFE_COLOURS.includes(c.id));
+  const rest = rng.shuffle(pool.filter((c) => !SAFE_COLOURS.includes(c.id)));
+  const picked = [...rng.shuffle(safe).slice(0, 2), ...rest].slice(0, COLOURWAYS);
+  return picked.map((c) => c.id);
 }
 
 /**
@@ -195,6 +218,7 @@ export function assortmentAt(sim: Simulation, place: Place, category?: string): 
       price: retailPrice(item.id, retailer.id, col),
       fittable: FITTABLE.includes(item.category),
       featured: front.has(item.id),
+      colourways: colourwaysFor(sim, place, item, fortnight),
     }))
     .sort((a, b) => Number(b.featured) - Number(a.featured)
       || a.item.category.localeCompare(b.item.category)
@@ -346,7 +370,7 @@ export function registerRetail(sim: Simulation): void {
   );
 
   /** Into the basket, or back on the rail. Nothing is charged either way. */
-  sim.onCommand<{ visitId: Id; catalogId: string; take?: boolean }, { basket: string[]; running: Money }>(
+  sim.onCommand<{ visitId: Id; catalogId: string; take?: boolean; colour?: string }, { basket: string[]; running: Money; colour?: string }>(
     'retail.basket',
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
@@ -357,12 +381,20 @@ export function registerRetail(sim: Simulation): void {
       const wrongSize = visit.tried.find((t) => t.catalogId === p.catalogId)?.verdict === 'wrong_size';
       if (wrongSize && p.take !== false) throw new CommandError(`They do not have the ${stocked.item.name} in your size.`);
 
-      if (p.take === false) visit.basket = visit.basket.filter((id) => id !== p.catalogId);
-      else if (!visit.basket.includes(p.catalogId)) visit.basket.push(p.catalogId);
+      if (p.take === false) {
+        visit.basket = visit.basket.filter((id) => id !== p.catalogId);
+        delete (visit.colours ??= {})[p.catalogId];
+      } else {
+        if (!visit.basket.includes(p.catalogId)) visit.basket.push(p.catalogId);
+        if (stocked.colourways.length > 0) {
+          const wanted = p.colour && stocked.colourways.includes(p.colour) ? p.colour : stocked.colourways[0]!;
+          (visit.colours ??= {})[p.catalogId] = wanted;
+        }
+      }
 
       const shelf = stockAt(s, place);
       const running = visit.basket.reduce((sum, id) => sum + (shelf.find((x) => x.item.id === id)?.price ?? 0), 0);
-      return { basket: [...visit.basket], running };
+      return { basket: [...visit.basket], running, colour: visit.colours?.[p.catalogId] };
     },
   );
 
@@ -418,7 +450,7 @@ export function registerRetail(sim: Simulation): void {
 
       const result = s.must<{ orderId: Id; total: Money }>({
         kind: 'shop.purchase',
-        payload: { retailerId: visit.retailerId, lines, channel: 'in_store', accountId: p.accountId },
+        payload: { retailerId: visit.retailerId, lines, channel: 'in_store', accountId: p.accountId, colours: visit.colours },
         idempotencyKey: `retail.pay:${visit.id}`,
       });
 

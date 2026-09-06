@@ -45,6 +45,7 @@ import { ensureKeepings, registerStorage } from './systems/storage';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
+import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -94,6 +95,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
+  registerWardrobe(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -393,6 +395,7 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // The accounts a life starts with sit on products like any other, so a new
   // save has the same fees, cover and rates a loaded one does.
   ensureProducts(sim);
+  ensureWardrobe(sim);
   return sim;
 }
 
@@ -406,6 +409,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureKeepings(sim);
   // Every account sits on a product (idempotent; see banking.ts).
   ensureProducts(sim);
+  ensureWardrobe(sim);
   ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
@@ -916,6 +920,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.diningVisits ??= {};
     universe.retailVisits ??= {};
     steps.push('Rooms and shop floors ready to be walked into.');
+  }
+
+  if (from < 43) {
+    // Schema 43: clothes have a colour, a cloth, a state of cleanliness and a
+    // history of being worn, and a person has what they currently have on.
+    // Everything already owned keeps its price, its condition and its slot; the
+    // new fields are filled in on load from what the thing is, so no wardrobe
+    // is emptied and nothing is re-bought.
+    universe.wornRecords ??= {};
+    steps.push('Wardrobe given colour, cloth and a memory of being worn.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

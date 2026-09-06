@@ -6,6 +6,7 @@
  * it. Private relationships stay private until something makes them public.
  */
 
+import { plural } from '../core/text';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type {
@@ -712,7 +713,7 @@ function holdWedding(sim: Simulation, relationshipId: Id, budget: Money, guests:
   rel.exclusive = true;
   rel.since = sim.now;
   applyDelta(rel.dimensions, { commitment: 35, affection: 12, trust: 10 });
-  addMemory(sim, rel, { kind: 'wedding', summary: `You got married, with ${guests} people there.`, impact: 22, decayDays: 0 });
+  addMemory(sim, rel, { kind: 'wedding', summary: `You got married, with ${plural(guests, 'person', 'people')} there.`, impact: 22, decayDays: 0 });
 
   // Households merge.
   const household = player.householdId ? sim.universe.households[player.householdId] : undefined;

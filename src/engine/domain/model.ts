@@ -229,6 +229,8 @@ export interface Person {
   reputation: Reputation;
 
   careerTrack: CareerTrack;
+  /** Asset ids currently on. Absent means nothing has been put on deliberately. */
+  wearing?: Id[];
   /**
    * Industry experience: earned from auditions, shoot days, credits, shifts
    * and the rest, spent to unlock professions. Absent on people from before
@@ -860,6 +862,8 @@ export interface RetailVisit {
   tried: { catalogId: string; verdict: string }[];
   /** Catalogue ids in your hands at the counter. */
   basket: string[];
+  /** The colour chosen for each thing in the basket, where it comes in colours. */
+  colours?: Record<string, string>;
   orderId?: Id;
   spent: Money;
   status: RetailStatus;
@@ -1121,7 +1125,22 @@ export interface OwnedAsset {
   /** Provenance chain for luxury goods. */
   provenance: { at: Instant; note: string }[];
   /** Wardrobe-specific. */
-  wardrobe?: { slot: string; formality: number; season: string[]; colour: string };
+  wardrobe?: {
+    slot: string;
+    formality: number;
+    season: string[];
+    colour: string;
+    /** What it is made of, which decides warmth, wear and how it is cleaned. */
+    material?: string;
+    /** 0-100. Falls as it is worn; a wash or the cleaner puts it back. */
+    cleanliness?: number;
+    /** Times it has been out of the wardrobe. */
+    timesWorn?: number;
+    lastWornAt?: Instant;
+    /** Somewhere other than your wardrobe: at the cleaner, at the tailor. */
+    awayUntil?: Instant;
+    awayReason?: string;
+  };
   soldAt?: Instant;
   tags: string[];
 }
@@ -1137,6 +1156,25 @@ export interface Outfit {
   /** Score derived from constituent items. */
   styleScore: number;
   createdAt: Instant;
+  /** Times this exact set has been worn, and when it last was. */
+  timesWorn?: number;
+  lastWornAt?: Instant;
+}
+
+/** A day you were dressed, kept so the world can notice a repeat. */
+export interface WornRecord {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  at: Instant;
+  assetIds: Id[];
+  /** The saved outfit it matched, if it matched one. */
+  outfitId?: Id;
+  occasion: string;
+  /** 0-100 what the mirror gave it. */
+  verdict: number;
+  /** Whether anybody with a camera was there. */
+  photographed: boolean;
 }
 
 export interface Order {
@@ -1161,6 +1199,8 @@ export interface Order {
   returnWindowEndsAt?: Instant;
   refundedAmount?: Money;
   giftFor?: Id;
+  /** The colourway chosen at the counter for each line that comes in colours. */
+  colours?: Record<string, string>;
 }
 
 export interface PantryItem {
@@ -1974,7 +2014,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 42;
+export const SAVE_SCHEMA_VERSION = 43;
 
 export interface SaveMeta {
   id: Id;
@@ -2050,6 +2090,8 @@ export interface SaveUniverse {
   standingOrders?: Record<Id, StandingOrder>;
   /** Sittings at a table or a counter. Absent on a save from before rooms had staff. */
   diningVisits?: Record<Id, DiningVisit>;
+  /** What was worn on which day. Absent on a save from before getting dressed. */
+  wornRecords?: Record<Id, WornRecord>;
   /** Visits to a shop floor. Absent on a save from before shops had a floor. */
   retailVisits?: Record<Id, RetailVisit>;
   dates: Record<Id, DateRecord>;

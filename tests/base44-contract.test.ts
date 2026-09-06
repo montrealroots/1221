@@ -119,7 +119,9 @@ describe('the payload', () => {
     });
     const res = await save(post({ slot: 1, payload: future }));
     expect(res.status).toBe(409);
-    expect((await body(res)).error).toMatch(/format 43 and this deployment understands 42/);
+    // Written from the constants so a schema bump never breaks this test.
+    expect((await body(res)).error)
+      .toMatch(new RegExp(`format ${SUPPORTED_SCHEMA_VERSION + 1} and this deployment understands ${SUPPORTED_SCHEMA_VERSION}`));
   });
 
   it('agrees with the engine about what format this build writes', () => {

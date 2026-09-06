@@ -1,13 +1,15 @@
-import { categoryLabel, titleCaseLabel } from '@/engine/core/text';
+import { categoryLabel, plural, titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
-import { shoppingCatalogue, wardrobeOf } from '@/engine/systems/commerce';
+import { shoppingCatalogue } from '@/engine/systems/commerce';
 import { placesIn } from '@/engine/content/places';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
 import { retailerAt, standingAt } from '@/engine/systems/retail';
 import { activeScene } from '@/engine/systems/scenes';
+import { NEEDS_WASHING, appraise, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
+import { COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
@@ -26,7 +28,11 @@ export function ShoppingWorkspace() {
 
   const catalogue = useWorld((s) => shoppingCatalogue(s, category));
   const owned = useWorld((s) => Object.values(s.universe.assets).filter((a) => a.ownerId === s.player.id && !a.soldAt));
-  const wardrobe = useWorld((s) => wardrobeOf(s, s.player.id));
+  const wardrobe = useWorld((s) => wardrobeView(s, s.player.id));
+  const onNow = useWorld((s) => wearing(s, s.player.id));
+  const mirror = useWorld((s) => appraise(s, wearing(s, s.player.id)));
+  const looks = useWorld((s) => Object.values(s.universe.outfits).filter((o) => o.personId === s.player.id));
+  const now = useWorld((s) => s.now);
   const orders = useWorld((s) => Object.values(s.universe.orders).filter((o) => o.buyerId === s.player.id).sort((a, b) => b.placedAt - a.placedAt));
   const scene = useWorld(activeScene);
   const storefronts = useWorld((s) => placesIn(s.player.currentLocationId)
@@ -111,7 +117,7 @@ export function ShoppingWorkspace() {
                       <div className="xs dim">
                         {item.brand} · quality {item.quality}
                         {item.depreciation < 0 && <span className="positive"> · appreciates</span>}
-                        {item.shelfLifeDays && ` · keeps ${item.shelfLifeDays} days`}
+                        {item.shelfLifeDays ? ` · keeps ${plural(item.shelfLifeDays, 'day')}` : null}
                       </div>
                     </div>
                     <input
@@ -177,28 +183,109 @@ export function ShoppingWorkspace() {
       )}
 
       {tab === 'wardrobe' && (
-        <div className="grid grid-2">
-          {Object.entries(wardrobe).map(([slot, items]) => (
-            <Panel key={slot} title={slot} flush>
+        <>
+          <Panel
+            title="What You Have On"
+            subtitle={onNow.length === 0 ? 'Nothing you chose.' : `${verdictLabel(mirror.verdict)} — ${mirror.verdict} of 100 for ${mirror.code.name.toLowerCase()}.`}
+            actions={
+              <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.dress' })}>
+                Get Dressed
+              </button>
+            }
+            flush
+          >
+            {onNow.length === 0 ? (
+              <Empty title="Not Dressed" body="Open the wardrobe and put something on, slot by slot." />
+            ) : (
+              <>
+                <div className="list">
+                  {onNow.map((asset) => (
+                    <div key={asset.id} className="list-item list-static">
+                      <div className="grow">
+                        <div className="small strong">{asset.name}</div>
+                        <div className="xs dim">
+                          {SLOT_LABEL[asset.wardrobe!.slot as Slot] ?? asset.wardrobe!.slot}
+                          {' · '}{colourOf(asset.wardrobe!.colour).name}
+                          {' · '}{materialOf(asset.wardrobe!.material).name}
+                          {(asset.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING ? ' · Needs Washing' : ''}
+                        </div>
+                      </div>
+                      <button className="btn btn-sm" onClick={() => run('wear.take_off', { assetId: asset.id })}>Take Off</button>
+                    </div>
+                  ))}
+                </div>
+                {mirror.notes.length > 0 && (
+                  <div className="callout" style={{ marginTop: 'var(--s3)' }}>
+                    <strong className="xs">The Mirror</strong>
+                    {mirror.notes.map((note, i) => (
+                      <p key={i} className="xs" style={{ margin: i === 0 ? '6px 0 0' : '4px 0 0' }}>
+                        {note.weight < 0 ? '— ' : '+ '}{note.text}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </Panel>
+
+          {looks.length > 0 && (
+            <Panel title="Saved Looks" subtitle="Put the whole thing back on in one go." flush>
               <div className="list">
-                {items.map((asset) => (
-                  <div key={asset.id} className="list-item list-static">
+                {looks.map((look) => (
+                  <div key={look.id} className="list-item list-static">
                     <div className="grow">
-                      <div className="small">{asset.name}</div>
+                      <div className="small strong">{look.name}</div>
                       <div className="xs dim">
-                        formality {asset.wardrobe?.formality} · condition {Math.round(asset.condition)}
+                        {plural(look.assetIds.length, 'Piece')} · Formality {look.formality}
+                        {look.timesWorn ? ` · Worn ${plural(look.timesWorn, 'Time')}` : ' · Never Worn'}
                       </div>
                     </div>
-                    <span className="mono xs">{formatMoney(asset.currentValue, { cents: false })}</span>
+                    <button className="btn btn-sm" onClick={() => run('wear.outfit', { outfitId: look.id })}>Wear It</button>
                   </div>
                 ))}
               </div>
             </Panel>
-          ))}
-          {Object.keys(wardrobe).length === 0 && (
-            <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be assembled into outfits." />
           )}
-        </div>
+
+          <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>{COLOUR_NOTE}</p>
+
+          {wardrobe.length === 0 ? (
+            <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be put on and assembled into looks." />
+          ) : (
+            <div className="grid grid-2">
+              {wardrobe.map(({ slot, label, on, options }) => (
+                <Panel key={slot} title={label} subtitle={on ? `On: ${on.name}` : undefined} flush>
+                  <div className="list">
+                    {options.map((asset) => {
+                      const away = Boolean(asset.wardrobe!.awayUntil && asset.wardrobe!.awayUntil > now);
+                      const isOn = on?.id === asset.id;
+                      return (
+                        <div key={asset.id} className="list-item list-static">
+                          <div className="grow">
+                            <div className="small">{asset.name}</div>
+                            <div className="xs dim">
+                              {colourOf(asset.wardrobe!.colour).name}
+                              {' · '}{materialOf(asset.wardrobe!.material).name}
+                              {' · Condition '}{Math.round(asset.condition)}
+                              {asset.wardrobe!.timesWorn ? ` · Worn ${plural(asset.wardrobe!.timesWorn, 'Time')}` : ''}
+                              {(asset.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING ? ' · Needs Washing' : ''}
+                              {away ? ` · ${titleCaseLabel(asset.wardrobe!.awayReason ?? 'away')}` : ''}
+                            </div>
+                          </div>
+                          {isOn ? (
+                            <button className="btn btn-sm" onClick={() => run('wear.take_off', { assetId: asset.id })}>Take Off</button>
+                          ) : (
+                            <button className="btn btn-sm" disabled={away} onClick={() => run('wear.put_on', { assetId: asset.id })}>Put On</button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Panel>
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       {tab === 'orders' && (
