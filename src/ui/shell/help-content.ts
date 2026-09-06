@@ -91,7 +91,7 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
   },
   {
     id: 'property', route: '/workspace/property', title: 'Property',
-    what: 'Renting, buying, building and furnishing. Buying a home is a process, not a button: showings, offers, counters, inspection, appraisal, financing and closing.',
+    what: 'Renting, buying, building and furnishing. Buying a home is a process, not a button: showings, offers, counters, inspection, appraisal, financing and closing. A house on the market can be viewed: book a showing, or walk in now if you are in the city; the agent is at the door, the rooms show their condition, and the offer is made from the hall or from the form, by the same rules.',
     affects: ['What you can put down and cover in closing costs', 'Your credit score and income against the payment', 'How motivated the seller is', 'Whether the appraisal supports the price'],
     actions: ['Book a showing', 'Make an offer', 'Respond to a counter', 'Act on inspection findings', 'Rent somewhere', 'Buy land and build on it', 'Design rooms and buy furnishings', 'List a property for sale'],
     connects: ['Bank, for the mortgage and closing costs', 'Taxes, which depend on the jurisdiction', 'Insurance, which a lender requires', 'Utilities, which start when you own', 'Wellbeing, because where you sleep affects how you sleep'],
@@ -117,7 +117,7 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
   },
   {
     id: 'social', route: '/workspace/social', title: 'Social',
-    what: 'Four platforms with genuinely different mechanics and one audience engine underneath. Posting is not a guarantee of anything.',
+    what: 'Four platforms with genuinely different mechanics and one audience engine underneath. Posting is not a guarantee of anything. Compose a post as a scene — format, angle, hook, effort — or use the quick form; a day after it goes up the audience says what it thought, in words that follow the numbers.',
     affects: ['Content quality, from your skill, the effort you put in and the gear you own', 'Your existing audience and its affinity', 'How consistently you post', 'Recent momentum', 'Time of day', 'Your public profile'],
     actions: ['Create an account', 'Make and publish a post', 'Schedule a post', 'Accept or decline a brand deal'],
     connects: ['Bank, because creator earnings and sponsorship are income', 'Marketing, because a post about a project feeds its campaign', 'Reputation, because virality moves fame'],

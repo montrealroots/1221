@@ -10,6 +10,7 @@ import { CITIES } from '@/engine/content/geography';
 import { activeScene, sceneDefinition } from '@/engine/systems/scenes';
 import { attendable } from '@/engine/systems/plans';
 import { activityOf, dateAttendable, placeOfDate } from '@/engine/systems/dating';
+import { viewable } from '@/engine/systems/viewings';
 import type { DateStatus } from '@/engine/domain/model';
 import { placesNear } from '@/engine/systems/places';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
@@ -252,6 +253,8 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const appointment = useWorld((s) => (entry.refType === 'appointment' && entry.refId ? s.universe.appointments[entry.refId] : undefined));
   const bill = useWorld((s) => (entry.refType === 'bill' && entry.refId ? s.universe.bills[entry.refId] : undefined));
   const date = useWorld((s) => (entry.refType === 'date' && entry.refId ? s.universe.dates[entry.refId] : undefined));
+  const showing = useWorld((s) => (entry.refType === 'listing' && entry.refId && s.timeline.get(entry.id)?.kind === 'prop.showing' ? s.universe.propertyListings[entry.refId] : undefined));
+  const showingCan = showing ? viewable(sim, showing) : { ok: false as const, reason: undefined };
   const dateCan = date ? dateAttendable(sim, date) : { ok: false as const, reason: undefined };
   const legend = LEGEND_BY_CATEGORY[entry.category];
   const status = statusOf(sim, entry);
@@ -360,6 +363,21 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </>
       )}
 
+      {showing && (
+        <>
+          <p className="small muted">
+            A showing at {sim.universe.properties[showing.propertyId]?.addressLine ?? 'the house'}, {formatMoney(showing.askingPrice)} asking.
+            {showing.viewedByPlayer ? ' You have seen it.' : showingCan.ok ? ' Go over any time you are in the city; when it comes round it will ask.' : showingCan.reason ? ` ${showingCan.reason}` : ''}
+          </p>
+          <div className="row wrap gap-2">
+            <button className="btn btn-sm btn-primary" disabled={!showingCan.ok || Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'property.viewing', input: { listingId: showing.id }, refType: 'listing', refId: showing.id }))}>Play It Out</button>
+            <button className="btn btn-sm" disabled={!showingCan.ok || Boolean(busy)} onClick={() => after(run('viewing.summary', { listingId: showing.id }, { idempotencyKey: `showing:${showing.id}:${entry.at}` }))}>Just Look Around</button>
+            <button className="btn btn-sm" onClick={() => after(run('viewing.skip', { listingId: showing.id }))}>Skip It</button>
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Open Property</button>
+          </div>
+        </>
+      )}
+
       {bill && (
         <div className="row wrap gap-2">
           <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it is due, if the money is there.' : 'No longer active.'}</span>
@@ -368,7 +386,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </div>
       )}
 
-      {!plan && !appointment && !bill && !date && (
+      {!plan && !appointment && !bill && !date && !showing && (
         <div className="row wrap gap-2">
           <span className="small muted grow">
             {entry.status === 'observance'

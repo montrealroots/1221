@@ -88,9 +88,9 @@ interface text; it does not flatten how a person talks.
 ## The count, honestly
 
 Run `node tools/dialogue-check.mjs` for today's figure. At the time of
-writing the library holds **under two hundred distinct entries** across two
-sections, dating and vehicles, moved out of the code that used to carry
-them inline; the scenes for the gym, meals, runs and wellbeing still carry
+writing the library holds **under three hundred distinct entries** across four
+sections (dating, property, vehicles and social), moved out of the code that
+used to carry them inline; the scenes for the gym, meals, runs and wellbeing still carry
 their lines in code and are next to move.
 
 The directive's target is 100,001 distinct, original, reachable entries.

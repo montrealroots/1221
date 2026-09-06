@@ -1248,6 +1248,8 @@ export interface SocialPost {
   brandDealId?: Id;
   /** Days of decay processing still owed. */
   decayDaysRemaining: number;
+  /** What the audience said a day on, as the library put it. Absent until then. */
+  reactions?: { at: Instant; band: 'hit' | 'fine' | 'flop'; comments: string[]; summary: string };
 }
 
 export interface BrandDeal {
@@ -1721,7 +1723,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 33;
+export const SAVE_SCHEMA_VERSION = 34;
 
 export interface SaveMeta {
   id: Id;

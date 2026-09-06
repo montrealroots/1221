@@ -31,7 +31,7 @@ function jaccard(a: string, b: string): number {
 function covers(line: DialogueLine, expectation: DialogueExpectation, result?: string, move?: string, tone?: string, flags?: readonly string[]): boolean {
   if (line.purpose !== expectation.purpose) return false;
   if (expectation.beat && line.beat !== expectation.beat) return false;
-  return eligible([line], { result, move, tone: tone as never, flags, facts: [] }).length === 1;
+  return eligible([line], { result, move, tone: tone as never, flags, facts: expectation.facts ?? [] }).length === 1;
 }
 
 describe('the library as data', () => {
@@ -60,7 +60,7 @@ describe('the library as data', () => {
         const tones = expectation.tone ?? [undefined];
         for (const result of results) for (const move of moves) for (const tone of tones) {
           const hit = chunk.lines.some((l) => covers(l, expectation, result, move, tone, expectation.flags));
-          expect(hit, `${section}: ${expectation.purpose}/${expectation.beat ?? '*'} result=${result ?? '*'} move=${move ?? '*'} tone=${tone ?? '*'} flags=${(expectation.flags ?? []).join(',')}`).toBe(true);
+          expect(hit, `${section}: ${expectation.purpose}/${expectation.beat ?? '*'} result=${result ?? '*'} move=${move ?? '*'} tone=${tone ?? '*'} flags=${(expectation.flags ?? []).join(',')} facts=${(expectation.facts ?? []).join(',')}`).toBe(true);
         }
       }
     }

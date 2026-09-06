@@ -36,6 +36,7 @@ import { registerPlans } from './systems/plans';
 import { registerFitness } from './systems/fitness';
 import { registerDealership } from './systems/dealership';
 import { registerDating } from './systems/dating';
+import { registerViewings } from './systems/viewings';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -77,6 +78,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerFitness(sim);
   registerDealership(sim);
   registerDating(sim);
+  registerViewings(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -810,6 +812,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Schema 33: the save keeps which lines of the dialogue library it has
     // heard, and when, so a voice does not repeat itself. Never the text.
     if (!record['dialogue']) record['dialogue'] = { version: 1, seen: {} };
+  }
+
+  if (from < 34) {
+    // Schema 34: a post can carry what the audience said a day on. Nothing
+    // already in the save is touched; older posts simply have no reactions.
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

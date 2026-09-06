@@ -60,6 +60,8 @@ export interface DialogueExpectation {
   move?: readonly string[];
   tone?: readonly DialogueTone[];
   flags?: readonly string[];
+  /** Facts the world will hand over when it asks; lines that require them must exist. */
+  facts?: readonly string[];
 }
 
 export interface DialogueChunk {

@@ -9,6 +9,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { speak } from '../dialogue/library';
 import { CommandError } from '../core/simulation';
 import type {
   AudienceSegment, BrandDeal, Id, Person, PlatformId, PostFormat, SocialAccount, SocialPost,
@@ -79,7 +80,7 @@ export const PLATFORM_BY_ID: Readonly<Record<PlatformId, PlatformDef>> =
   Object.fromEntries(PLATFORMS.map((p) => [p.id, p])) as Record<PlatformId, PlatformDef>;
 
 /** Effort in minutes and quality ceiling by format. */
-const FORMAT_PROFILE: Record<PostFormat, { minMinutes: number; maxMinutes: number; qualityCeiling: number; impressionsBias: number }> = {
+export const FORMAT_PROFILE: Record<PostFormat, { minMinutes: number; maxMinutes: number; qualityCeiling: number; impressionsBias: number }> = {
   long_video: { minMinutes: 180, maxMinutes: 2400, qualityCeiling: 100, impressionsBias: 0.85 },
   short_video: { minMinutes: 25, maxMinutes: 420, qualityCeiling: 88, impressionsBias: 1.55 },
   livestream: { minMinutes: 60, maxMinutes: 300, qualityCeiling: 78, impressionsBias: 0.6 },
@@ -111,6 +112,7 @@ export function registerMedia(sim: Simulation): void {
   });
   sim.onSchedule('social.deal_deadline', (item) => checkDealDeadline(sim, item.payload.dealId as Id));
   sim.onSchedule('social.payout', (item) => payCreatorEarnings(sim, item.payload.accountId as Id));
+  sim.onSchedule('social.reactions', (item) => settleReactions(sim, item.payload.postId as Id));
 
   sim.onCommand<{ platform: PlatformId; handle: string; displayName?: string; bio?: string; ownerId?: Id; ownerKind?: SocialAccount['ownerKind'] }, { accountId: Id }>(
     'social.create_account',
@@ -165,7 +167,7 @@ export function registerMedia(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ accountId: Id; format: PostFormat; title: string; body?: string; effortMinutes: number; topic?: string; refType?: string; refId?: Id; scheduledFor?: number; brandDealId?: Id }, { postId: Id; publishesAt: number; projectedQuality: number }>(
+  sim.onCommand<{ accountId: Id; format: PostFormat; title: string; body?: string; effortMinutes: number; topic?: string; refType?: string; refId?: Id; scheduledFor?: number; brandDealId?: Id; craft?: PostCraft }, { postId: Id; publishesAt: number; projectedQuality: number }>(
     'social.create_post',
     (p, { sim: s }) => {
       const account = s.universe.socialAccounts[p.accountId];
@@ -180,7 +182,7 @@ export function registerMedia(sim: Simulation): void {
       const owner = s.universe.people[account.ownerId];
       if (!owner) throw new CommandError('That account has no owner.');
 
-      const quality = computePostQuality(s, owner, p.format, effort);
+      const quality = clamp(computePostQuality(s, owner, p.format, effort) + craftBonus(p.craft), 0, 100);
 
       const post: SocialPost = {
         id: s.nextId('post'),
@@ -310,6 +312,70 @@ export function computePostQuality(sim: Simulation, owner: Person, format: PostF
   const readinessPenalty = remap(owner.wellbeing.energy, 0, 100, 0.78, 1.05);
 
   return clamp(Math.round(base * effortFactor * readinessPenalty), 3, profile.qualityCeiling);
+}
+
+/**
+ * The choices made while composing. They are a small, deterministic part of
+ * quality — craft on top of skill, effort and gear — and never the whole of
+ * it; the audience is the audience.
+ */
+export interface PostCraft {
+  angle: string;
+  hook: string;
+}
+
+export const CRAFT_ANGLES: readonly { id: string; label: string; aliases: string[]; detail: string; bonus: number; topic: string }[] = [
+  { id: 'behind', label: 'Behind The Scenes', aliases: ['behind', 'bts', 'process'], detail: 'What it is like to make the thing.', bonus: 3, topic: 'work' },
+  { id: 'take', label: 'A Take On The Business', aliases: ['take', 'opinion', 'business'], detail: 'Something you think that others do not say.', bonus: 4, topic: 'industry' },
+  { id: 'personal', label: 'Something Personal', aliases: ['personal', 'me', 'life'], detail: 'A day, a place, a person. Risky and warm.', bonus: 2, topic: 'life' },
+  { id: 'reply', label: 'A Reply To The Noise', aliases: ['reply', 'response', 'discourse'], detail: 'Joining a conversation that is already loud.', bonus: 1, topic: 'discourse' },
+];
+
+export const CRAFT_HOOKS: readonly { id: string; label: string; aliases: string[]; detail: string; bonus: number }[] = [
+  { id: 'plain', label: 'Say It Plainly', aliases: ['plain', 'straight', 'simple'], detail: 'No tricks. Lands with people who already like you.', bonus: 1 },
+  { id: 'question', label: 'Open With A Question', aliases: ['question', 'ask'], detail: 'People answer questions. That is the whole trick.', bonus: 3 },
+  { id: 'cold', label: 'Start In The Middle', aliases: ['cold', 'middle', 'in medias res'], detail: 'No preamble. The first second is the hook.', bonus: 4 },
+  { id: 'tease', label: 'Tease It', aliases: ['tease', 'wait for it'], detail: 'Works once, then they know.', bonus: 2 },
+];
+
+export function craftBonus(craft: PostCraft | undefined): number {
+  if (!craft) return 0;
+  const angle = CRAFT_ANGLES.find((a) => a.id === craft.angle);
+  const hook = CRAFT_HOOKS.find((h) => h.id === craft.hook);
+  if (!angle || !hook) throw new CommandError('That is not a way to make a post SLATE knows.');
+  return angle.bonus + hook.bonus;
+}
+
+/** The register a format lands in, for the audience's words. */
+export function formatVibe(format: PostFormat): 'video' | 'photo' | 'text' {
+  if (format === 'long_video' || format === 'short_video' || format === 'livestream' || format === 'reel') return 'video';
+  if (format === 'photo' || format === 'carousel' || format === 'story') return 'photo';
+  return 'text';
+}
+
+/** A day on: how it did, in one word, and what four people said. */
+function settleReactions(sim: Simulation, postId: Id): void {
+  const post = sim.universe.socialPosts[postId];
+  if (!post || post.status !== 'published' || post.reactions) return;
+  const account = sim.universe.socialAccounts[post.accountId];
+  if (!account) return;
+  const engagement = post.metrics.impressions > 0 ? (post.metrics.likes + post.metrics.comments * 3) / post.metrics.impressions : 0;
+  const band: 'hit' | 'fine' | 'flop' = post.viral || (post.quality >= 65 && engagement >= 0.04) ? 'hit' : post.quality >= 40 ? 'fine' : 'flop';
+  const vibe = formatVibe(post.format);
+  const comments: string[] = [];
+  for (let i = 0; i < 3; i++) {
+    const said = speak(sim, { section: 'social', purpose: 'comment', beat: 'reactions' }, { result: band, flags: [vibe] }, `${post.id}:${i}`);
+    if (!said.fallback && !comments.includes(said.text)) comments.push(said.text);
+  }
+  const summary = speak(sim, { section: 'social', purpose: 'settled', beat: 'reactions' }, { result: band }, post.id).text;
+  post.reactions = { at: sim.now, band, comments, summary };
+  const platform = PLATFORM_BY_ID[post.platform];
+  sim.notify({
+    category: 'social', title: `"${post.title}" A Day On`,
+    body: `${summary}${comments.length > 0 ? ` "${comments[0]}"` : ''} ${post.metrics.impressions.toLocaleString('en-US')} impressions on ${platform.name}.`,
+    importance: band === 'hit' ? 55 : 35, route: '/workspace/social', refType: 'post', refId: post.id,
+  });
+  sim.emit('social.reactions', { postId: post.id, band, comments });
 }
 
 function publishPost(sim: Simulation, postId: Id): void {
@@ -468,6 +534,12 @@ function publishPost(sim: Simulation, postId: Id): void {
     postId: post.id, accountId: account.id, platform: account.platform,
     impressions, followersGained: net, viral: post.viral, revenue: post.revenue,
     topic: post.topic, refType: post.refType, refId: post.refId,
+  });
+
+  // A day on, the audience has had its say.
+  sim.schedule({
+    at: sim.now + MS_DAY, kind: 'social.reactions', label: `Reactions — ${post.title}`, category: 'social',
+    payload: { postId: post.id }, priority: 75, refType: 'post', refId: post.id,
   });
 }
 

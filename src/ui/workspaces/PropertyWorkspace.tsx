@@ -8,11 +8,14 @@ import { CATALOG } from '@/engine/content/catalog';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import type { ConstructionPhase, ConstructionProject } from '@/engine/domain/model';
 import { formatDate } from '@/engine/core/time';
+import { activeScene } from '@/engine/systems/scenes';
+import { tomorrowAt } from '@/engine/core/time';
 
 type Tab = 'owned' | 'market' | 'offers' | 'build' | 'interiors';
 
 export function PropertyWorkspace() {
   const { sim, run } = useGame();
+  const scene = useWorld(activeScene);
   const [tab, setTab] = useState<Tab>('owned');
 
   const owned = useWorld((s) => Object.values(s.universe.properties)
@@ -74,7 +77,7 @@ export function PropertyWorkspace() {
                 }
               >
                 <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
-                  <Stat label="Tenure" value={property.tenure} />
+                  <Stat label="Tenure" value={titleCaseLabel(property.tenure.replace(/_/g, ' '))} />
                   <Stat label="Value" value={<MoneyText amount={property.marketValue} compact />} />
                   <Stat label="Size" value={`${property.interiorSqft.toLocaleString('en-US')} sq ft`} note={`${property.bedrooms} bed · ${property.bathrooms} bath`} />
                   {property.monthlyRent && property.tenure === 'rented' && (
@@ -126,13 +129,17 @@ export function PropertyWorkspace() {
                       <div className="xs dim">or {formatMoney(property.monthlyRent)}/mo</div>
                     )}
                   </div>
-                  <div className="row gap-1">
+                  <div className="row gap-1 wrap" style={{ justifyContent: 'flex-end' }}>
                     {property.monthlyRent && (
                       <button className="btn btn-sm" onClick={() => run('prop.rent', { propertyId: property.id, months: 12 })}>
                         Rent
                       </button>
                     )}
-                    <button className="btn btn-sm btn-primary" onClick={() => setOfferFor(listing.id)}>Offer</button>
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} title={listing.viewedByPlayer ? 'You have seen it. Go again if you like.' : undefined} onClick={() => run('scene.start', { definitionId: 'property.viewing', input: { listingId: listing.id }, refType: 'listing', refId: listing.id })}>
+                      {listing.viewedByPlayer ? 'See It Again' : 'View It Now'}
+                    </button>
+                    <button className="btn btn-sm" onClick={() => run('prop.book_showing', { listingId: listing.id, at: tomorrowAt(sim.now, 11, sim.homeZone) })}>Book A Viewing</button>
+                    <button className="btn btn-sm" onClick={() => setOfferFor(listing.id)}>Offer</button>
                   </div>
                 </div>
               ))}

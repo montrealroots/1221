@@ -137,10 +137,10 @@ export function registerProperty(sim: Simulation): void {
   sim.onSchedule('prop.offer_response', (item) => respondToOffer(sim, item.payload.offerId as Id));
   sim.onSchedule('prop.inspection', (item) => runInspection(sim, item.payload.offerId as Id));
   sim.onSchedule('prop.closing', (item) => closeTransaction(sim, item.payload.offerId as Id));
+  // A showing coming round is the viewing system's to ask about: play it,
+  // look around, or skip it. Nothing is marked seen by the clock alone.
   sim.onSchedule('prop.showing', (item) => {
-    const listing = sim.universe.propertyListings[item.payload.listingId as Id];
-    if (listing) listing.viewedByPlayer = true;
-    sim.emit('prop.showing_attended', { listingId: item.payload.listingId });
+    sim.emit('prop.showing_due', { listingId: item.payload.listingId, itemId: item.id });
   });
   sim.onSchedule('build.phase_tick', (item) => advanceConstruction(sim, item.payload.projectId as Id));
   sim.onSchedule('prop.market_tick', () => {
@@ -182,28 +182,9 @@ export function registerProperty(sim: Simulation): void {
       const player = s.player;
 
       const downPayment = p.downPayment ?? (p.financingKind === 'cash' ? p.amount : Math.round(p.amount * 0.2));
-      if (downPayment > p.amount) throw new CommandError('The deposit cannot exceed the offer.');
-
-      // You must be able to actually complete. Lenders check; so do we.
+      const refusal = offerRefusal(s, p.amount, p.financingKind, downPayment);
+      if (refusal) throw new CommandError(refusal);
       const accountId = player.primaryAccountId;
-      const liquid = accountId ? s.ledger.accountsOf(player.id).filter((a) => a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash').reduce((sum, a) => sum + a.balance, 0) : 0;
-      const closingEstimate = Math.round(p.amount * 0.028);
-      if (liquid < downPayment + closingEstimate) {
-        throw new CommandError(
-          `You need about ${formatMoney(downPayment + closingEstimate)} liquid for the deposit and closing costs. You have ${formatMoney(liquid)}.`,
-        );
-      }
-      if (p.financingKind !== 'cash') {
-        const borrow = p.amount - downPayment;
-        const apr = offeredApr(player.creditScore, 'mortgage');
-        const payment = amortisedPayment(borrow, apr, 360);
-        const monthlyIncome = estimateMonthlyIncome(s, player.id);
-        if (monthlyIncome > 0 && payment > monthlyIncome * 0.45) {
-          throw new CommandError(
-            `A lender will not approve this. The payment would be ${formatMoney(payment)} a month against income of about ${formatMoney(monthlyIncome)}.`,
-          );
-        }
-      }
 
       const earnest = Math.round(p.amount * 0.01);
       if (accountId) {
@@ -633,6 +614,35 @@ function estimateMonthlyIncome(sim: Simulation, personId: Id): Money {
     if (delta > 0 && ['salary', 'contract', 'royalty', 'creator', 'sponsorship'].includes(txn.category)) total += delta;
   }
   return Math.round(total / 6);
+}
+
+/**
+ * Why an offer could not be made, or nothing: a deposit larger than the
+ * offer, too little liquid for the deposit and closing, a payment a lender
+ * will not carry. The command applies it; the viewing shows it.
+ */
+export function offerRefusal(sim: Simulation, amount: Money, financingKind: PropertyOffer['financingKind'], downPayment?: Money): string | undefined {
+  const player = sim.player;
+  const down = downPayment ?? (financingKind === 'cash' ? amount : Math.round(amount * 0.2));
+  if (down > amount) return 'The deposit cannot exceed the offer.';
+  // You must be able to actually complete. Lenders check; so do we.
+  const liquid = player.primaryAccountId
+    ? sim.ledger.accountsOf(player.id).filter((a) => a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash').reduce((sum, a) => sum + a.balance, 0)
+    : 0;
+  const closingEstimate = Math.round(amount * 0.028);
+  if (liquid < down + closingEstimate) {
+    return `You need about ${formatMoney(down + closingEstimate)} liquid for the deposit and closing costs. You have ${formatMoney(liquid)}.`;
+  }
+  if (financingKind !== 'cash') {
+    const borrow = amount - down;
+    const apr = offeredApr(player.creditScore, 'mortgage');
+    const payment = amortisedPayment(borrow, apr, 360);
+    const monthlyIncome = estimateMonthlyIncome(sim, player.id);
+    if (monthlyIncome > 0 && payment > monthlyIncome * 0.45) {
+      return `A lender will not approve this. The payment would be ${formatMoney(payment)} a month against income of about ${formatMoney(monthlyIncome)}.`;
+    }
+  }
+  return undefined;
 }
 
 export function generateProperty(

@@ -7,8 +7,10 @@
  */
 
 import './activity';
+import './compose';
 import './date';
 import './dealer';
 import './gym';
 import './meal';
 import './run';
+import './viewing';

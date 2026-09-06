@@ -397,3 +397,9 @@ export function nthWeekdayOfMonth(year: number, month: number, weekday: number, 
   const delta = (lastWeekday - weekday + 7) % 7;
   return addDays(last, -delta + (n + 1) * 7, zone);
 }
+
+/** The next day at a given local hour: the default for anything booked "tomorrow". */
+export function tomorrowAt(now: Instant, hour: number, zone: TimeZone): Instant {
+  const parts = zonedParts(addDays(now, 1, zone), zone);
+  return instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour, minute: 0 }, zone);
+}
