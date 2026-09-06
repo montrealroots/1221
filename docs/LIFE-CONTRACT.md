@@ -196,7 +196,16 @@ answer says what would make it yes.
    so on screen. Also in: the kit shops for section 6 — Adorama, Samy's, Wex,
    Thomann, Panavision and ARRI Rental for hire, Angels Costumes, Western
    Costume and Tirelli for wardrobe, M·A·C, Ben Nye and Charles Fox for makeup.
-3. Getting dressed, properly.
+3. **Done.** Getting dressed, properly: sixteen pegs became twenty when
+   jewellery split into earrings, necklace, ring and bracelet, so a chain and a
+   pair of earrings are worn at the same time rather than competing. Forty
+   colours, twenty-two cloths read from the product's own name, thirteen dress
+   codes, and a mirror that says what is wrong and never stops you. Clothes
+   wear, soil, and go to the cleaner. And the wardrobe has two sides: every
+   garment says who it is cut for, the shop leads with your rack and sells you
+   the other one on request, and the four aisles nobody had built — underwear,
+   socks, earrings, necklaces and chains — carry over a hundred real branded
+   products each for men and each for women, 859 in all.
 4. The house: pantry, recipes, appliances, objects in rooms.
 5. The phone: YouTube in full, then the other three.
 6. The independent film: kit shops, rental, shoot days.

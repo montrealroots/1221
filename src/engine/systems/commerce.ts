@@ -15,6 +15,7 @@ import { applyRate, formatMoney, type Money } from '../core/money';
 import { CATALOG, RETAILERS, retailPrice, retailersFor, shoppableItemsIn, type CatalogItem } from '../content/catalog';
 import { costOfLiving, salesTaxRate } from '../content/tax';
 import { defaultColour, guessMaterial } from '../content/wardrobe';
+import { preferenceOf, shows } from './wardrobe';
 
 export interface CartLine {
   catalogId: string;
@@ -365,14 +366,17 @@ function expirePantry(sim: Simulation): void {
 }
 
 /** What the player can buy right now, in one place, for the shopping UI. */
-export function shoppingCatalogue(sim: Simulation, category?: string) {
+export function shoppingCatalogue(sim: Simulation, category?: string, everything = false) {
   const cityId = sim.player.currentLocationId;
   const col = costOfLiving(cityId);
+  const preference = preferenceOf(sim, sim.player.id);
   const results: { item: CatalogItem; retailers: { id: string; name: string; price: Money; deliveryDays: number }[] }[] = [];
 
   for (const item of shoppableItemsIn(cityId)) {
     if (category && item.category !== category) continue;
     if (item.category === 'dining') continue;
+    // The rack you are shown, unless you asked for the whole floor.
+    if (!everything && !shows(item.audience, preference)) continue;
     const stores = retailersFor(item.category, cityId).filter((r) => r.categories.includes(item.category));
     if (stores.length === 0) continue;
     results.push({

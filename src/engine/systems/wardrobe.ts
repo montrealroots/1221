@@ -16,12 +16,13 @@ import { CommandError } from '../core/simulation';
 import { clamp } from '../core/rng';
 import { MS_DAY, MS_MINUTE, daysBetween, seasonOf } from '../core/time';
 import { formatMoney } from '../core/money';
+import { impliedPerformerTitle } from '../core/performer';
 import { plural } from '../core/text';
 import type { Id, OwnedAsset, Outfit, Person, WornRecord } from '../domain/model';
 import { CATALOG } from '../content/catalog';
 import {
-  COLOUR_BY_ID, COVERED_BY_OUTFIT, ESSENTIAL_SLOTS, SLOTS, SLOT_LABEL, codeFor, colourOf, defaultColour,
-  guessMaterial, materialOf,
+  COLOUR_BY_ID, COVERED_BY_OUTFIT, ESSENTIAL_SLOTS, JEWELLERY_SLOTS, SLOTS, SLOT_LABEL, codeFor, colourOf, defaultColour,
+  guessMaterial, materialOf, type Audience,
   type DressCode, type Slot,
 } from '../content/wardrobe';
 import { CITIES } from '../content/geography';
@@ -75,6 +76,32 @@ export function ensureWardrobe(sim: Simulation): void {
     w.cleanliness ??= 100;
     w.timesWorn ??= 0;
   }
+}
+
+/**
+ * Which rack the shop leads with for this person.
+ *
+ * Set deliberately if they have set it; otherwise the actor or actress title
+ * decides, because that is the only thing the game already knows. Neither is
+ * a lock: `shows` below lets everything through on 'both', and the shop has
+ * a toggle for the rest of the catalogue whatever this says.
+ */
+export function preferenceOf(sim: Simulation, personId: Id): 'men' | 'women' | 'both' {
+  const person = sim.universe.people[personId];
+  if (!person) return 'both';
+  if (person.wardrobePreference) return person.wardrobePreference;
+  // The same rule the credits use: the title if it is set, otherwise the one
+  // the pronouns imply. Both are only a starting point, and both are one
+  // button away from being changed.
+  const title = person.performerTitle ?? impliedPerformerTitle(person.pronouns);
+  return title === 'actress' ? 'women' : 'men';
+}
+
+/** Whether a rack shows to somebody. Unisex shows to everybody, always. */
+export function shows(audience: Audience | undefined, preference: 'men' | 'women' | 'both'): boolean {
+  if (preference === 'both') return true;
+  if (audience === undefined || audience === 'unisex') return true;
+  return audience === preference;
 }
 
 /** Everything of yours with a wardrobe slot, that you have not sold. */
@@ -191,15 +218,17 @@ function colourNotes(worn: OwnedAsset[]): Note[] {
     notes.push({ kind: 'good', weight: 4, text: 'Belt and shoes agree with each other, which is the smallest thing and the one people notice.' });
   }
 
-  // Metals.
+  // Metals. Every peg that holds metal counts, not just the watch: earrings,
+  // a chain, a ring and a bracelet each have their own now, and mixing across
+  // them is exactly the thing this note is for.
   const metals = worn
-    .filter((a) => ['watch', 'jewellery'].includes(a.wardrobe!.slot))
+    .filter((a) => a.wardrobe!.slot === 'watch' || JEWELLERY_SLOTS.includes(a.wardrobe!.slot as Slot))
     .map((a) => colourOf(a.wardrobe!.colour))
     .filter((c) => c.family === 'metal');
   const warmMetal = metals.some((m) => m.id === 'gold' || m.id === 'rose_gold');
   const coolMetal = metals.some((m) => m.id === 'silver' || m.id === 'steel' || m.id === 'platinum');
   if (warmMetal && coolMetal) {
-    notes.push({ kind: 'clash', weight: -6, text: 'Gold and silver on the same wrist. Deliberate on some people; on most, an oversight.' });
+    notes.push({ kind: 'clash', weight: -6, text: 'Gold and silver at the same time. Deliberate on some people; on most, an oversight.' });
   }
 
   // How loud the whole thing is.
@@ -516,6 +545,17 @@ export function registerWardrobe(sim: Simulation): void {
         kind: 'shop.save_outfit',
         payload: { name, assetIds: worn.map((a) => a.id) },
       });
+    },
+  );
+
+  sim.onCommand<{ preference: 'men' | 'women' | 'both' }, { preference: string }>(
+    'wear.set_preference',
+    (p, { sim: s }) => {
+      if (!['men', 'women', 'both'].includes(p.preference)) throw new CommandError('That is not one of the racks.');
+      // A preference, not a lock: it decides what a shop leads with and
+      // nothing else. Everything stays buyable and everything stays wearable.
+      s.player.wardrobePreference = p.preference;
+      return { preference: p.preference };
     },
   );
 }

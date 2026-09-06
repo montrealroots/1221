@@ -22,6 +22,7 @@ import { COLOURS, SAFE_COLOURS } from '../content/wardrobe';
 import type { DialogueTone } from '../dialogue/schema';
 import { factsOf, rememberFact, tallyFact, tallyOf } from './memory';
 import { makeBackgroundPerson, peopleOf } from './people';
+import { shows } from './wardrobe';
 import { wardrobeOf } from './commerce';
 
 /**
@@ -199,16 +200,20 @@ export function colourwaysFor(sim: Simulation, place: Place, item: CatalogItem, 
  * puts a rail out, and the rail changes with the fortnight, seeded so the same
  * fortnight in the same shop is the same rail.
  */
-export function assortmentAt(sim: Simulation, place: Place, category?: string): Stocked[] {
+export function assortmentAt(sim: Simulation, place: Place, category?: string, rack?: 'men' | 'women' | 'both'): Stocked[] {
   const retailer = retailerAt(place);
   if (!retailer) return [];
   const col = costOfLiving(place.cityId);
   const fortnight = Math.floor(sim.now / (14 * 24 * 60 * 60 * 1000));
   const rng = sim.rng('retail_stock', place.id, String(fortnight));
+  // A real branch carries both racks. `rack` narrows what is shown to
+  // somebody standing in it; the branch's own stock, and the hundred things
+  // every branch promises, are counted without it.
   const eligible = shoppableItemsIn(place.cityId).filter((item) =>
     item.category !== 'dining'
     && (retailer.categories.includes(item.category) || retailer.categories.includes(item.subcategory))
-    && (category === undefined || item.category === category));
+    && (category === undefined || item.category === category)
+    && (rack === undefined || shows(item.audience, rack)));
   // The front table is what has been pushed to the front this fortnight; the
   // rest of the shop is still the rest of the shop.
   const front = new Set(rng.shuffle([...eligible]).slice(0, SHELF).map((i) => i.id));

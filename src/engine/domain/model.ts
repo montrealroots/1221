@@ -232,6 +232,14 @@ export interface Person {
   /** Asset ids currently on. Absent means nothing has been put on deliberately. */
   wearing?: Id[];
   /**
+   * Which rack a shop leads with, and which side the dressing room offers
+   * first. Nothing is refused either way: 'both' shows everything, and even
+   * on 'men' or 'women' the whole catalogue is one toggle away and anything
+   * bought can be worn. Absent means it has never been set, and the actor or
+   * actress title decides until it is.
+   */
+  wardrobePreference?: 'men' | 'women' | 'both';
+  /**
    * Industry experience: earned from auditions, shoot days, credits, shifts
    * and the rest, spent to unlock professions. Absent on people from before
    * professions existed and on NPCs, and read as zero.
@@ -2014,7 +2022,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 43;
+export const SAVE_SCHEMA_VERSION = 44;
 
 export interface SaveMeta {
   id: Id;

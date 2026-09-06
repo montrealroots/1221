@@ -16,6 +16,8 @@
 import { REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from './catalog-types';
 
+import { jewellerySlotFor } from './wardrobe';
+
 const V = REFERENCE_VERSION;
 const REAL = {
   source: 'calibrated_estimate', confidence: 'high', version: V,
@@ -39,6 +41,11 @@ export interface RealGood extends ReferenceRecord {
   slot?: string;
   formality?: number;
   seasons?: string[];
+  /**
+   * Who the thing is cut for. A shop leads with what fits you and will still
+   * sell you anything: nothing in SLATE is refused on this.
+   */
+  audience?: 'men' | 'women' | 'unisex';
   roomKinds?: string[];
   qualityContribution?: number;
   /**
@@ -779,7 +786,11 @@ const jw = (
   quality: number, depreciation: number, tags: string[] = [],
 ): RealGood => good({
   id, name, category: 'jewelry', subcategory: sub, basePrice: price, brand,
-  tags: ['jewellery', sub, ...tags], quality, depreciation, slot: 'jewellery', formality: 60, seasons: ALL_YEAR,
+  tags: ['jewellery', sub, ...tags], quality, depreciation,
+  // Earrings, a necklace, a ring and a bracelet each have their own peg, so a
+  // piece goes on the one it belongs to rather than competing for a single
+  // jewellery slot. Anything that is none of the four keeps that slot.
+  slot: jewellerySlotFor(sub, name), formality: 60, seasons: ALL_YEAR,
 });
 
 export const REAL_JEWELLERY: readonly RealGood[] = [

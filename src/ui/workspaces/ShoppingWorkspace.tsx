@@ -8,8 +8,8 @@ import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
 import { retailerAt, standingAt } from '@/engine/systems/retail';
 import { activeScene } from '@/engine/systems/scenes';
-import { NEEDS_WASHING, appraise, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
-import { COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
+import { NEEDS_WASHING, appraise, preferenceOf, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
+import { AUDIENCE_LABEL, COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
@@ -25,8 +25,10 @@ export function ShoppingWorkspace() {
   const [tab, setTab] = useState<Tab>('shop');
   const [category, setCategory] = useState('groceries');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [everything, setEverything] = useState(false);
 
-  const catalogue = useWorld((s) => shoppingCatalogue(s, category));
+  const catalogue = useWorld((s) => shoppingCatalogue(s, category, everything));
+  const rack = useWorld((s) => preferenceOf(s, s.player.id));
   const owned = useWorld((s) => Object.values(s.universe.assets).filter((a) => a.ownerId === s.player.id && !a.soldAt));
   const wardrobe = useWorld((s) => wardrobeView(s, s.player.id));
   const onNow = useWorld((s) => wearing(s, s.player.id));
@@ -50,6 +52,23 @@ export function ShoppingWorkspace() {
           jurisdiction, and what arrives becomes something you actually own.
         </p>
         <p className="xs dim">{REAL_GOODS_NOTE} {REAL_RETAILER_NOTE}</p>
+      </div>
+
+      <div className="row" style={{ gap: 'var(--s2)', alignItems: 'center', marginBottom: 'var(--s3)', flexWrap: 'wrap' }}>
+        <span className="xs dim">Showing</span>
+        {(['men', 'women', 'both'] as const).map((option) => (
+          <button
+            key={option}
+            className={`btn btn-sm${rack === option ? ' btn-primary' : ''}`}
+            onClick={() => run('wear.set_preference', { preference: option })}
+          >
+            {option === 'both' ? 'Everything' : AUDIENCE_LABEL[option]}
+          </button>
+        ))}
+        <label className="xs dim" style={{ display: 'inline-flex', gap: 6, alignItems: 'center', marginLeft: 'var(--s2)' }}>
+          <input type="checkbox" checked={everything} onChange={(e) => setEverything(e.target.checked)} />
+          Show The Whole Floor Anyway
+        </label>
       </div>
 
       <Tabs active={tab} onChange={setTab} tabs={[

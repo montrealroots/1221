@@ -17,6 +17,9 @@ import {
   REAL_GROCERIES, REAL_HOME, REAL_HOUSEHOLD, REAL_JEWELLERY, REAL_JEWELLERY_MORE, REAL_TOP_UP, REAL_WATCHES,
   type RealGood,
 } from './goods';
+import { REAL_INTIMATES } from './intimates';
+import { REAL_ADORNMENT } from './adornment';
+import { withAudience } from './audience';
 
 const V = REFERENCE_VERSION;
 const SIM = { source: 'simulated', confidence: 'high', version: V, note: 'Original to SLATE.' } as const;
@@ -115,6 +118,11 @@ export interface CatalogItem extends ReferenceRecord {
   slot?: string;
   formality?: number;
   seasons?: string[];
+  /**
+   * Who the thing is cut for. A shop leads with what fits you and will still
+   * sell you anything: nothing in SLATE is refused on this.
+   */
+  audience?: 'men' | 'women' | 'unisex';
   /** Furniture only. */
   roomKinds?: string[];
   qualityContribution?: number;
@@ -241,14 +249,21 @@ const LEGACY_ITEMS: readonly CatalogItem[] = [
   item({ id: 'light_kit', name: 'LED Lighting Kit', category: 'electronics', subcategory: 'lighting', basePrice: 1_400_00, brand: 'Circuitline', tags: ['content', 'self tape'], quality: 76, depreciation: 0.20 }),
 ].map((i) => ({ ...i, tags: [...i.tags, 'legacy'] }));
 
-/** Everything real, in the shape the commerce engine already speaks. */
-const REAL_ITEMS: readonly CatalogItem[] = ([] as RealGood[]).concat(
+/**
+ * Everything real, in the shape the commerce engine already speaks.
+ *
+ * `withAudience` stamps each wardrobe row with who it is cut for. The
+ * intimates and adornment files say so on every row themselves and pass
+ * through unchanged; everything else is decided in content/audience.ts.
+ */
+const REAL_ITEMS: readonly CatalogItem[] = withAudience(([] as RealGood[]).concat(
   REAL_GROCERIES as RealGood[], REAL_CLOTHING as RealGood[], REAL_FOOTWEAR as RealGood[], REAL_FOOTWEAR_MORE as RealGood[],
   REAL_ACCESSORIES as RealGood[], REAL_WATCHES as RealGood[], REAL_JEWELLERY as RealGood[], REAL_JEWELLERY_MORE as RealGood[],
   REAL_ELECTRONICS as RealGood[], REAL_FURNITURE as RealGood[], REAL_FURNITURE_MORE as RealGood[], REAL_HOME as RealGood[],
   REAL_APPLIANCES as RealGood[], REAL_APPLIANCES_MORE as RealGood[], REAL_HOUSEHOLD as RealGood[],
   REAL_EQUIPMENT as RealGood[], REAL_ART as RealGood[], REAL_BOOKS as RealGood[], REAL_TOP_UP as RealGood[],
-) as unknown as CatalogItem[];
+  REAL_INTIMATES as RealGood[], REAL_ADORNMENT as RealGood[],
+)) as unknown as CatalogItem[];
 
 export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...LEGACY_ITEMS]);
 

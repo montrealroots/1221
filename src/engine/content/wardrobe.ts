@@ -9,14 +9,63 @@
  * have an opinion, which is what the world does.
  */
 
-/** The pegs an outfit hangs on, in the order you get dressed. */
-export const SLOTS = ['base', 'top', 'bottom', 'outfit', 'outerwear', 'shoes', 'socks', 'belt', 'watch', 'jewellery', 'bag', 'eyewear', 'hat', 'scarf', 'gloves', 'tie'] as const;
+/**
+ * The pegs an outfit hangs on, in the order you get dressed.
+ *
+ * Jewellery is four pegs rather than one, because earrings, a chain, a ring
+ * and a bracelet are worn at the same time and a single slot would make you
+ * choose between them. `jewellery` stays for everything that is none of
+ * those — cufflinks, a brooch, a body chain — and because saves written
+ * before the split still carry it.
+ */
+export const SLOTS = [
+  'base', 'top', 'bottom', 'outfit', 'outerwear', 'shoes', 'socks', 'belt', 'watch',
+  'earrings', 'necklace', 'ring', 'bracelet', 'jewellery', 'bag', 'eyewear', 'hat', 'scarf', 'gloves', 'tie',
+] as const;
 export type Slot = (typeof SLOTS)[number];
 
 export const SLOT_LABEL: Readonly<Record<Slot, string>> = {
   base: 'Underneath', top: 'Top', bottom: 'Bottom', outfit: 'One Piece', outerwear: 'Coat',
-  shoes: 'Shoes', socks: 'Socks', belt: 'Belt', watch: 'Watch', jewellery: 'Jewellery',
+  shoes: 'Shoes', socks: 'Socks', belt: 'Belt', watch: 'Watch',
+  earrings: 'Earrings', necklace: 'Necklace', ring: 'Ring', bracelet: 'Bracelet', jewellery: 'Jewellery',
   bag: 'Bag', eyewear: 'Eyewear', hat: 'Hat', scarf: 'Scarf', gloves: 'Gloves', tie: 'Tie',
+};
+
+/** The four pegs the one old jewellery slot became, plus the one it kept. */
+export const JEWELLERY_SLOTS: readonly Slot[] = ['earrings', 'necklace', 'ring', 'bracelet', 'jewellery'];
+
+/**
+ * Which peg a piece of jewellery hangs on, from what kind of thing it is.
+ *
+ * Used when the catalogue does not say, and when a save written before the
+ * split is opened: a necklace that has been sitting in the one jewellery slot
+ * moves to its own without the player losing it.
+ */
+export function jewellerySlotFor(subcategory: string, name = ''): Slot {
+  // The subcategory is what the catalogue says the thing is, so it decides on
+  // its own first. Reading the name at the same time gets it wrong on pieces
+  // whose names borrow another peg's word: a Panthère Chain Bracelet is a
+  // bracelet, and a Diamonds By The Yard Necklace is a necklace.
+  return readSlot(subcategory.toLowerCase()) ?? readSlot(name.toLowerCase()) ?? 'jewellery';
+}
+
+function readSlot(text: string): Slot | undefined {
+  if (text.length === 0) return undefined;
+  // Cufflinks first: they are none of the four, and "cuff" would otherwise
+  // read them as a bracelet.
+  if (/cufflink|cuff link|brooch|body chain|tie pin|tie bar|lapel/.test(text)) return 'jewellery';
+  if (/earring|ear cuff|ear crawler|huggie|stud|hoop/.test(text)) return 'earrings';
+  if (/bracelet|bangle|\bcuffs?\b|tennis/.test(text)) return 'bracelet';
+  if (/necklace|pendant|chain|choker|strand|riviere|rivière|collier|pearl/.test(text)) return 'necklace';
+  if (/\bring\b|\bband\b|solitaire|engagement|signet/.test(text)) return 'ring';
+  return undefined;
+}
+
+/** Who a garment is cut for. Nothing is refused; this is what a shop shows first. */
+export type Audience = 'men' | 'women' | 'unisex';
+
+export const AUDIENCE_LABEL: Readonly<Record<Audience, string>> = {
+  men: "Men's", women: "Women's", unisex: 'Unisex',
 };
 
 /** Slots an outfit is not really dressed without. */
@@ -146,6 +195,10 @@ const SLOT_PALETTE: Readonly<Record<string, readonly string[]>> = {
   belt: ['black', 'brown', 'chocolate', 'tan'],
   bag: ['black', 'brown', 'tan', 'navy', 'chocolate', 'oxblood'],
   watch: ['steel', 'silver', 'gold', 'rose_gold', 'platinum', 'black'],
+  earrings: ['gold', 'silver', 'platinum', 'rose_gold'],
+  necklace: ['gold', 'silver', 'platinum', 'rose_gold'],
+  ring: ['gold', 'silver', 'platinum', 'rose_gold'],
+  bracelet: ['gold', 'silver', 'platinum', 'rose_gold'],
   jewellery: ['gold', 'silver', 'platinum', 'rose_gold'],
   socks: ['black', 'charcoal', 'navy', 'grey', 'burgundy'],
   underwear: ['white', 'black', 'grey', 'navy'],
@@ -234,7 +287,7 @@ export function guessMaterial(name: string, slot: string, subcategory: string): 
   switch (slot) {
     case 'outfit': return 'worsted';
     case 'watch': return 'metal';
-    case 'jewellery': return 'gemstone';
+    case 'earrings': case 'necklace': case 'ring': case 'bracelet': case 'jewellery': return 'gemstone';
     case 'shoes': return 'leather';
     case 'bag': return 'leather';
     case 'belt': return 'leather';

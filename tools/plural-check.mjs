@@ -25,29 +25,31 @@ const COUNTABLE = [
 ];
 
 /**
- * Expressions that cannot be one, with the reason each is allowed.
+ * Phrases that cannot print "1 things", with the reason each is allowed.
  *
- * Keyed by `file:line`, so moving the code re-opens the question rather than
- * carrying the exemption along with it silently.
+ * Keyed by file and by a fragment of the line itself rather than by line
+ * number, so ordinary edits above it do not re-open a question somebody has
+ * already answered — while moving or rewriting the phrase itself does.
  */
-const ALLOWED = new Map(Object.entries({
+const ALLOWED = {
   // Figures printed to a decimal place read correctly at one: "1.0 hours".
-  'src/engine/scenes/flight.ts:138': 'One decimal place, so "1.0 hours" is right.',
-  'src/engine/systems/life.ts:208': 'One decimal place.',
-  'src/engine/systems/life.ts:656': 'One decimal place.',
-  'src/engine/systems/relationships.ts:335': 'One decimal place.',
-  // Populations, printed with thousands separators. Never one person.
-  'src/ui/workspaces/TravelWorkspace.tsx:132': 'A city population.',
-  'src/ui/creation/LocationPicker.tsx:216': 'A city population.',
-  'src/ui/creation/LocationPicker.tsx:221': 'A city population.',
-  'src/ui/screens/Home.tsx:295': 'A country population.',
-  'src/ui/screens/Home.tsx:405': 'A city population.',
-  'src/engine/index.ts:591': 'A world population.',
-  'src/engine/systems/media.ts:520': 'An impression count, in the thousands.',
+  'src/engine/scenes/flight.ts': ['Math.round(hours * 10) / 10'],
+  'src/engine/systems/life.ts': ['hours.toFixed(1)', 'available.toFixed(1)'],
+  'src/engine/systems/relationships.ts': ['monthsTogether.toFixed(1)'],
+  // Populations and impression counts, printed with thousands separators.
+  'src/ui/workspaces/TravelWorkspace.tsx': ['formatPeople(d.city.population)'],
+  'src/ui/creation/LocationPicker.tsx': ['c.population.toLocaleString'],
+  'src/ui/screens/Home.tsx': ['place.countryPopulation.toLocaleString', 'formatPeople(place.cityPopulation)'],
+  'src/engine/index.ts': ['${people} people'],
+  'src/engine/systems/media.ts': ['impressions.toLocaleString'],
   // "A cocktail thing", "a summer thing" — a noun, not a count of things.
-  'src/engine/systems/wardrobe.ts:255': 'A kind of occasion, not a count.',
-  'src/engine/systems/wardrobe.ts:275': 'A kind of season, not a count.',
-}));
+  'src/engine/systems/wardrobe.ts': ['at a ${code.name.toLowerCase()} thing', 'is not a ${season.toLowerCase()} thing'],
+};
+
+/** Whether this exact line has already been decided about. */
+function allowed(file, line) {
+  return (ALLOWED[file] ?? []).some((fragment) => line.includes(fragment));
+}
 
 const ROOT = 'src';
 /**
@@ -77,9 +79,8 @@ for (const file of walk(ROOT)) {
     if (/\bplural\(/.test(line)) return;
     const match = line.match(PATTERN);
     if (!match) return;
-    const at = `${file}:${i + 1}`;
-    if (ALLOWED.has(at)) return;
-    findings.push({ at, text: line.trim().slice(0, 120), matched: match[0] });
+    if (allowed(file, line)) return;
+    findings.push({ at: `${file}:${i + 1}`, text: line.trim().slice(0, 120), matched: match[0] });
   });
 }
 

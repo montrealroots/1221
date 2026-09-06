@@ -45,6 +45,8 @@ import { ensureKeepings, registerStorage } from './systems/storage';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
+import { jewellerySlotFor } from './content/wardrobe';
+import { CATALOG } from './content/catalog';
 import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
 import './scenes';
 import { registerWorld } from './world/world';
@@ -930,6 +932,26 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // is emptied and nothing is re-bought.
     universe.wornRecords ??= {};
     steps.push('Wardrobe given colour, cloth and a memory of being worn.');
+  }
+
+  if (from < 44) {
+    // Schema 44: jewellery stopped being one peg. Earrings, a necklace, a ring
+    // and a bracelet are worn at the same time, so each has its own slot, and
+    // everything already owned is moved to the right one from what it is.
+    // Nothing is lost: a piece that is none of the four keeps the old slot.
+    let moved = 0;
+    for (const asset of Object.values(universe.assets)) {
+      const w = asset.wardrobe as { slot?: string } | undefined;
+      if (!w || w.slot !== 'jewellery') continue;
+      const item = asset.catalogId ? CATALOG.get(asset.catalogId) : undefined;
+      const slot = jewellerySlotFor(item?.subcategory ?? '', asset.name);
+      if (slot === 'jewellery') continue;
+      w.slot = slot;
+      moved++;
+    }
+    // Anything on you that has moved slot is still on you: `wearing` is a list
+    // of ids, so the peg changing underneath it does not take it off.
+    steps.push(`Jewellery split into earrings, necklace, ring and bracelet (${moved} moved).`);
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
