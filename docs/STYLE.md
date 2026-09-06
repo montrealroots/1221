@@ -7,8 +7,10 @@ place are named at the end.
 ## Labels: Title Case, every word
 
 Tabs, buttons, tiles, headings, menu items, chips, column heads, form labels,
-decision actions, choice labels in a scene: every word capitalised, including
-the short ones. **Skip To Event**, **Buy A Day Pass**, **Why Did This
+decision actions, choice labels in a scene, and the title of a decision or a
+notification (its body is prose): every word capitalised, including the short
+ones, whether the label is written out or built from a template around a
+name — **Showing At 9440 Fairhaven Drive**, **Paid Off The Car Loan**. **Skip To Event**, **Buy A Day Pass**, **Why Did This
 Happen?**, **Play It Out**. This is the one rule the player has asked for by
 name, and it is applied without exceptions for articles or prepositions.
 
@@ -82,7 +84,12 @@ the id and the screen.
 ## What holds it in place
 
 - `tools/label-sweep.mjs` — every label string in the engine content is Title
-  Case (`--write` re-cases what it can).
+  Case, including titles built from templates with the slots set aside
+  (`--write` re-cases the plain ones). It fails the gate when a label slips.
+- `tools/inventory.mjs --check` — every command, scene and route has a line
+  in `docs/COVERAGE-MATRIX.md`, and the matrix's appendix matches the code.
+- `npm run gate` — typecheck, lint, tests, then the label sweep, the dialogue
+  check and the inventory check in one go.
 - `tools/text-caps.mjs` — every screen at five widths: nothing clipped,
   crushed, cut off or bleeding; non-sentence text capitalised; words not
   broken in half; the gym scene and both calendar modals included.

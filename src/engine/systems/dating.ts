@@ -544,7 +544,7 @@ function standUp(sim: Simulation, date: DateRecord, why: string): void {
     importance: 55, route: '/workspace/relationships', refType: 'date', refId: date.id,
   });
   sim.remember({
-    category: 'relationship', title: `Stood ${other.displayName} up`, detail: why,
+    category: 'relationship', title: `Stood ${other.displayName} Up`, detail: why,
     refs: [{ type: 'person', id: other.id }, { type: 'relationship', id: rel.id }], significance: 30, public: false,
   });
   sim.emit('date.stood_up', { dateId: date.id, personId: other.id });
@@ -617,7 +617,7 @@ function finishDate(sim: Simulation, date: DateRecord, cutShort: boolean): { out
     body: summary, importance: 45, route: '/workspace/relationships', refType: 'date', refId: date.id,
   });
   sim.remember({
-    category: 'relationship', title: `${activityOf(date).label} with ${other.displayName}`, detail: summary,
+    category: 'relationship', title: `${activityOf(date).label} With ${other.displayName}`, detail: summary,
     refs: [{ type: 'person', id: other.id }, { type: 'relationship', id: rel.id }], significance: outcome === 'good' ? 35 : 20, public: false, amount: date.spent || undefined,
   });
   sim.emit('rel.date_resolved', { relationshipId: rel.id, wentWell: outcome === 'good', spent: date.spent, dateId: date.id, outcome });

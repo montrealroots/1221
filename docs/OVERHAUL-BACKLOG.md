@@ -102,8 +102,8 @@ before any delivery claim.
 
 | Id | Requirement | State | Gap |
 | --- | --- | --- | --- |
-| G1 | Inventory of routes, workspaces, panels, commands, scheduled events, notifications | Done (this stage) | 16 workspaces, 99 commands, 44 schedule kinds, 103 events at the time of writing — see `docs/COVERAGE-MATRIX.md`. |
-| G2 | Coverage matrix mapping each interaction to system, commands, events, persistence, UI entry, tests | Partial | Stage 6 fills it feature by feature. |
+| G1 | Inventory of routes, workspaces, panels, commands, scheduled events, notifications | Done | Read from the code by `node tools/inventory.mjs` and written into `docs/COVERAGE-MATRIX.md`; `--check` fails when the document is behind the code or a command, scene or route has no line in the matrix. 119 commands, 51 scheduled kinds, 117 events, 12 listeners, 8 scenes, 19 routes at the time of writing. |
+| G2 | Coverage matrix mapping each interaction to system, commands, events, persistence, UI entry, tests | Done (as a record) | `docs/COVERAGE-MATRIX.md`: every feature area and the subfeatures the directive names, each with its state, the commands and scenes that carry it, where it is on screen, the tests that hold it, and the gap or the dependency by name. Data-blocked items are listed separately from unbuilt ones. |
 | G3 | Shared interaction service: director, dialogue, memory, interpreter, simulation | Partial | Scenes + intent + memory are the deterministic half. No director loop, no model. |
 | G4 | Backend provider adapter with validation, revision checks, timeouts, budgets, caching | Not started | B10. |
 
@@ -121,8 +121,9 @@ before any delivery claim.
 2. Stage 2 — the vehicle journey (C2, D10 lifecycle). **Done.**
 3. Stage 3 — the date journey (C3). **Done.**
 4. Stage 4 — the dialogue library foundation (F1–F4). **Done.** F5 stays blocked on content.
-5. Stage 5 — home, social and film journeys (C4–C6).
-6. Stage 6 — the coverage matrix reconciled against the code (G2).
+5. Stage 5 — home, social and film journeys (C4–C6). **Done** for C4 (partial, named) and C5; C6 is blocked on the company engine and says so.
+6. Stage 6 — the coverage matrix reconciled against the code (G2). **Done.**
+7. Next — the company engine (task 38), which unblocks C6; the counter-offer, closing and moving-day scenes (C4); the gym, meal, run and wellbeing lines into the library (F5); the interaction families that still have no scene (D1, D6, D8, D14).
 
 Everything Blocked stays Blocked until its dependency is supplied; it is not
 re-labelled to look finished.

@@ -1,5 +1,8 @@
 # Living A Day Through Text — Coverage
 
+> The record of the immersion batch, kept as written. The current state of
+> every feature area, reconciled against the code, is `docs/COVERAGE-MATRIX.md`.
+
 What the immersion batch delivered, what it delivered in part, and what it
 did not, against the specification in the kit's CLAUDE-START-HERE.md. Every
 line here is one of three things: **implemented** (built, wired to the

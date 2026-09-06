@@ -337,7 +337,7 @@ export function registerDealership(sim: Simulation): void {
       importance: 55, route: '/workspace/vehicles', refType: 'vehicle', refId: vehicle.id,
     });
     sim.remember({
-      category: 'vehicle', title: `The ${vehicleName(vehicle)} was delivered`,
+      category: 'vehicle', title: `The ${vehicleName(vehicle)} Was Delivered`,
       detail: lot ? `Brought round by ${lot.name}.` : 'Brought round by the dealer.',
       refs: [{ type: 'vehicle', id: vehicle.id }], significance: 30, public: false,
     });

@@ -625,7 +625,7 @@ function installParts(sim: Simulation, vehicleId: Id, partIds: string[]): void {
     if (!verdict.fits) {
       sim.notify({
         category: 'vehicles',
-        title: `${part.name} could not be fitted`,
+        title: `${part.name} Could Not Be Fitted`,
         body: verdict.reasons.join(' '),
         importance: 60, route: '/workspace/vehicles',
       });
@@ -669,7 +669,7 @@ function installParts(sim: Simulation, vehicleId: Id, partIds: string[]): void {
     if (!part.streetLegal) {
       sim.requireDecision({
         urgency: 55, category: 'vehicles',
-        title: `${vehicle.make} ${vehicle.model} is not road legal`,
+        title: `${vehicle.make} ${vehicle.model} Is Not Road Legal`,
         detail: `${part.name} is not street legal where the car is registered. It will fail inspection and can be cited.`,
         route: '/workspace/vehicles',
         refType: 'vehicle', refId: vehicle.id,
@@ -680,7 +680,7 @@ function installParts(sim: Simulation, vehicleId: Id, partIds: string[]): void {
       if (policy) {
         sim.requireDecision({
           urgency: 48, category: 'vehicles',
-          title: `Tell your insurer about ${part.name}`,
+          title: `Tell Your Insurer About ${part.name}`,
           detail: 'An undisclosed modification is grounds for a denied claim.',
           route: '/workspace/insurance',
           refType: 'vehicle', refId: vehicle.id,
@@ -787,7 +787,7 @@ export function addMileage(sim: Simulation, vehicle: Vehicle, miles: number): vo
     sim.requireDecision({
       urgency: vehicle.mechanicalHealth < 55 ? 72 : 45,
       category: 'vehicles',
-      title: `${vehicle.make} ${vehicle.model} is due for service`,
+      title: `${vehicle.make} ${vehicle.model} Is Due For Service`,
       detail: `${vehicle.mileage.toLocaleString('en-US')} miles. Skipping it costs more later.`,
       route: '/workspace/vehicles',
       actions: [{ label: 'Book Service', commandKind: 'veh.book_service', payload: { vehicleId: vehicle.id, kind: 'scheduled' } }],
@@ -806,9 +806,9 @@ export function addMileage(sim: Simulation, vehicle: Vehicle, miles: number): vo
 
 function serviceLabel(kind: ServiceRecord['kind']): string {
   const labels: Record<ServiceRecord['kind'], string> = {
-    scheduled: 'Scheduled service', repair: 'Repair', recall: 'Recall work',
+    scheduled: 'Scheduled Service', repair: 'Repair', recall: 'Recall Work',
     inspection: 'Inspection', tires: 'Tires', detail: 'Detailing',
-    bodywork: 'Body and paint', warranty: 'Warranty service',
+    bodywork: 'Body And Paint', warranty: 'Warranty Service',
   };
   return labels[kind];
 }
@@ -840,7 +840,7 @@ function performService(sim: Simulation, vehicleId: Id, kind: ServiceRecord['kin
     if (!accountId || sim.ledger.availableFunds(accountId) < cost) {
       sim.requireDecision({
         urgency: 76, category: 'vehicles',
-        title: `Cannot pay for ${serviceLabel(kind).toLowerCase()}`,
+        title: `Cannot Pay For ${serviceLabel(kind)}`,
         detail: `The shop quoted ${formatMoney(cost)} on the ${vehicle.make} ${vehicle.model}. The work has not been done.`,
         route: '/workspace/vehicles',
         refType: 'vehicle', refId: vehicle.id,
@@ -890,7 +890,7 @@ function renewRegistration(sim: Simulation, vehicleId: Id): void {
   if (fees.inspectionRequired && illegalMods.length > 0) {
     sim.requireDecision({
       urgency: 74, category: 'vehicles',
-      title: `${vehicle.make} ${vehicle.model} failed inspection`,
+      title: `${vehicle.make} ${vehicle.model} Failed Inspection`,
       detail: `${illegalMods.map((m) => m?.name).join(', ')} ${illegalMods.length === 1 ? 'is' : 'are'} not street legal here. Registration cannot be renewed until removed.`,
       route: '/workspace/vehicles',
       refType: 'vehicle', refId: vehicle.id,

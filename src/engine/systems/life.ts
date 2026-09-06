@@ -214,7 +214,7 @@ export function registerLife(sim: Simulation): void {
       if (crossed.length > 0) {
         s.notify({
           category: 'schedule',
-          title: `You slept through ${crossed.length} commitment${crossed.length === 1 ? '' : 's'}`,
+          title: `You Slept Through ${crossed.length} Commitment${crossed.length === 1 ? '' : 's'}`,
           body: crossed.map((c) => c.label).join(', '),
           importance: 70,
           route: '/workspace/calendar',

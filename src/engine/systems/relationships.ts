@@ -303,7 +303,7 @@ export function registerRelationships(sim: Simulation): void {
       const other = s.universe.people[otherParty(rel, s.player.id)];
       s.remember({
         category: 'relationship',
-        title: `Started seeing ${other?.displayName ?? 'someone'}`,
+        title: `Started Seeing ${other?.displayName ?? 'Someone'}`,
         detail: rel.exclusive ? 'Exclusively.' : 'Not exclusively.',
         refs: [{ type: 'relationship', id: rel.id }, { type: 'person', id: other?.id ?? '' }],
         significance: 55, public: rel.isPublic,
@@ -687,7 +687,7 @@ export function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan)
 
   sim.notify({
     category: 'relationships',
-    title: `Date with ${other.displayName}`,
+    title: `Date With ${other.displayName}`,
     body: wentWell ? 'It went well.' : 'It was a difficult evening.',
     importance: 45, route: '/workspace/relationships',
   });
@@ -815,7 +815,7 @@ export function createChild(sim: Simulation, parentA: Person, parentB: Person, n
   sim.schedule({
     at: nextAnniversary(zonedParts(sim.now, sim.homeZone).month, zonedParts(sim.now, sim.homeZone).day, addDays(sim.now, 1, sim.homeZone), sim.homeZone),
     kind: 'rel.birthday',
-    label: `${child.displayName}'s birthday`,
+    label: `${child.displayName}'s Birthday`,
     category: 'family',
     payload: { personId: child.id },
     priority: 70,
@@ -863,7 +863,7 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
     if (rel) {
       sim.requireDecision({
         urgency: 48, category: 'family',
-        title: `${person.displayName} turns ${age} today`,
+        title: `${person.displayName} Turns ${age} Today`,
         detail: 'Marking it costs almost nothing and is remembered for a long time.',
         route: '/workspace/relationships',
         refType: 'person', refId: person.id,
@@ -874,7 +874,7 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
   sim.schedule({
     at: addYears(sim.now, 1, sim.homeZone),
     kind: 'rel.birthday',
-    label: `${person.displayName}'s birthday`,
+    label: `${person.displayName}'s Birthday`,
     category: 'family',
     payload: { personId: person.id },
     priority: 70,
@@ -931,7 +931,7 @@ function driftRelationships(sim: Simulation): void {
       const other = sim.universe.people[otherParty(rel, player.id)];
       sim.notify({
         category: 'relationships',
-        title: `Things ended with ${other?.displayName ?? 'someone'}`,
+        title: `Things Ended With ${other?.displayName ?? 'Someone'}`,
         body: 'You had not spoken properly in months.',
         importance: 65, route: '/workspace/relationships',
       });

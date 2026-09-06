@@ -289,7 +289,7 @@ export function registerDriving(sim: Simulation): void {
       });
       sim.notify({
         category: 'travel',
-        title: `You are in ${to.name}`,
+        title: `You Are In ${to.name}`,
         body: `${formatDistance({ km, miles: Math.round(km * 0.621371) }, to.countryId)} and ${formatDuration(minutes * MS_MINUTE)} later. Local time is now ${to.timeZone.replace(/_/g, ' ')}.`,
         importance: 50, route: '/home',
       });

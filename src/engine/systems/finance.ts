@@ -374,7 +374,7 @@ export function attemptBillPayment(sim: Simulation, bill: Bill): void {
     sim.requireDecision({
       urgency: Math.min(95, 55 + bill.missedCount * 15),
       category: 'finance',
-      title: `${bill.name} is unpaid`,
+      title: `${bill.name} Is Unpaid`,
       detail: `${formatMoney(bill.amount)} was due and there were not enough available funds. ${bill.missedCount >= 3 ? 'This has now gone to collections.' : `Missed ${bill.missedCount} time${bill.missedCount === 1 ? '' : 's'}.`}`,
       route: '/workspace/bank',
       actions: [{ label: 'Pay Now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
@@ -416,7 +416,7 @@ export function payBill(sim: Simulation, bill: Bill, accountId: Id, manual: bool
         debt.closedAt = sim.now;
         bill.active = false;
         sim.remember({
-          category: 'finance', title: `Paid off ${debt.name}`,
+          category: 'finance', title: `Paid Off ${debt.name}`,
           detail: `${debt.name} is settled in full.`,
           refs: [{ type: 'account', id: debt.id }], significance: 55, public: false,
         });
@@ -505,7 +505,7 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
     sim.income(accountId, record.balance, `${year} tax refund`, 'tax', { refType: 'tax', refId: record.id });
     sim.notify({
       category: 'finance',
-      title: `${year} tax refund`,
+      title: `${year} Tax Refund`,
       body: `You overpaid by ${formatMoney(record.balance)}. It has been deposited.`,
       route: '/workspace/bank',
       importance: 45,
@@ -515,14 +515,14 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
     if (sim.ledger.availableFunds(accountId) >= owed) {
       sim.expense(accountId, owed, `${year} tax payment`, 'tax', { refType: 'tax', refId: record.id });
       sim.notify({
-        category: 'finance', title: `${year} taxes paid`,
+        category: 'finance', title: `${year} Taxes Paid`,
         body: `You owed ${formatMoney(owed)} beyond what was withheld. It has been paid.`,
         route: '/workspace/bank', importance: 55,
       });
     } else {
       sim.requireDecision({
         urgency: 88, category: 'finance',
-        title: `${year} taxes owed`,
+        title: `${year} Taxes Owed`,
         detail: `You owe ${formatMoney(owed)} that was not withheld and cannot cover it from your primary account.`,
         route: '/workspace/bank',
         refType: 'tax', refId: record.id,

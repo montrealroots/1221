@@ -80,7 +80,7 @@ export function registerProfessions(sim: Simulation): void {
       });
       s.notify({
         category: 'career',
-        title: `You are now a ${def.name}`,
+        title: `You Are Now A ${def.name}`,
         body: `${def.earnedBy} Every level raises all of its skills, and a trait slot is open now.`,
         importance: 70, route: '/workspace/character',
       });
@@ -221,7 +221,7 @@ export function grantProfessionXp(sim: Simulation, person: Person, professionId:
     if (person.isPlayer) {
       sim.notify({
         category: 'career',
-        title: `${def.name} level ${level}`,
+        title: `${def.name} Level ${level}`,
         body: `All ${def.skillIds.length} ${def.name.toLowerCase()} skills rose.${slotOpened ? ' A new trait slot is open.' : ''}`,
         importance: 55 + level * 2, route: '/workspace/character',
       });

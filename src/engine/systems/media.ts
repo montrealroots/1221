@@ -472,7 +472,7 @@ function publishPost(sim: Simulation, postId: Id): void {
   if (!account.monetisationEnabled && account.followers >= platform.monetisationThreshold) {
     account.monetisationEnabled = true;
     sim.notify({
-      category: 'social', title: `Monetisation unlocked on ${platform.name}`,
+      category: 'social', title: `Monetisation Unlocked On ${platform.name}`,
       body: `@${account.handle} has passed ${platform.monetisationThreshold.toLocaleString('en-US')} followers.`,
       importance: 62, route: '/workspace/social',
     });
@@ -509,14 +509,14 @@ function publishPost(sim: Simulation, postId: Id): void {
 
   if (post.viral) {
     sim.notify({
-      category: 'social', title: `"${post.title}" is going viral`,
+      category: 'social', title: `"${post.title}" Is Going Viral`,
       body: `${impressions.toLocaleString('en-US')} impressions and ${net.toLocaleString('en-US')} new followers on ${platform.name}.`,
       importance: 74, route: '/workspace/social',
     });
     owner.reputation.publicFame = clamp(owner.reputation.publicFame + remap(impressions, 100_000, 20_000_000, 0.4, 6), 0, 100);
     sim.remember({
       category: 'social',
-      title: `A post broke out on ${platform.name}`,
+      title: `A Post Broke Out On ${platform.name}`,
       detail: `"${post.title}" reached ${impressions.toLocaleString('en-US')} people.`,
       refs: [{ type: 'post', id: post.id }],
       significance: 45, public: true,
@@ -723,7 +723,7 @@ function maybeOfferBrandDeal(sim: Simulation): void {
 
   sim.requireDecision({
     urgency: 58, category: 'career',
-    title: `${brand.name} wants to work with you`,
+    title: `${brand.name} Wants To Work With You`,
     detail: `${formatMoney(compensation)} for ${count} ${format.replace(/_/g, ' ')}${count === 1 ? '' : 's'} on ${platform.name}, due within ${Math.round((deal.deadlineAt - sim.now) / MS_DAY)} days.${deal.exclusivityCategory ? ` Exclusive in ${deal.exclusivityCategory} for the term.` : ''}`,
     route: '/workspace/social',
     actions: [
@@ -775,7 +775,7 @@ function checkDealDeadline(sim: Simulation, dealId: Id): void {
     sim.expense(accountId, deal.paidAmount, `${deal.brandName} — advance returned`, 'sponsorship', { refType: 'deal', refId: deal.id });
   }
   sim.notify({
-    category: 'career', title: `You missed the ${deal.brandName} deadline`,
+    category: 'career', title: `You Missed The ${deal.brandName} Deadline`,
     body: `${outstanding} deliverable${outstanding === 1 ? '' : 's'} were never posted. The advance has been returned and it will be remembered.`,
     importance: 76, route: '/workspace/social',
   });

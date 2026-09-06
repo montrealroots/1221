@@ -630,7 +630,7 @@ function renewPolicy(sim: Simulation, policyId: Id): void {
   if (Math.abs(policy.monthlyPremium - oldPremium) > oldPremium * 0.1) {
     sim.notify({
       category: 'insurance',
-      title: `${policy.line} premium changed`,
+      title: `${policy.line} Premium Changed`,
       body: `${formatMoney(oldPremium)} to ${formatMoney(policy.monthlyPremium)} a month at renewal.`,
       importance: 45, route: '/workspace/insurance',
     });
@@ -687,7 +687,7 @@ function attendSession(sim: Simulation, enrollmentId: Id): void {
     enrollment.totalPaid += course.costPerSession;
   } else {
     enrollment.status = 'dropped';
-    sim.notify({ category: 'education', title: `Dropped from ${course.name}`, body: 'The session fee could not be paid.', importance: 50, route: '/workspace/education' });
+    sim.notify({ category: 'education', title: `Dropped From ${course.name}`, body: 'The session fee could not be paid.', importance: 50, route: '/workspace/education' });
     return;
   }
 

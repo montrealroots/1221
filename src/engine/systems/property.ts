@@ -329,7 +329,7 @@ export function registerProperty(sim: Simulation): void {
       s.emit('prop.rented', { propertyId: property.id, personId: player.id, monthlyRent: property.monthlyRent, months: p.months });
       s.remember({
         category: 'property',
-        title: `Moved into ${property.addressLine}`,
+        title: `Moved Into ${property.addressLine}`,
         detail: `${formatMoney(property.monthlyRent)} a month, ${p.months}-month lease.`,
         refs: [{ type: 'property', id: property.id }],
         significance: 50, public: false, amount: property.monthlyRent,
@@ -412,7 +412,7 @@ export function registerProperty(sim: Simulation): void {
 
       s.remember({
         category: 'property',
-        title: `Broke ground on ${p.name}`,
+        title: `Broke Ground On ${p.name}`,
         detail: `${p.structures.length} structure${p.structures.length === 1 ? '' : 's'}, budget ${formatMoney(p.budget)}, targeting ${formatDate(project.targetCompletionAt, s.homeZone)}.`,
         refs: [{ type: 'build', id: project.id }, { type: 'property', id: property.id }],
         significance: 70, public: false, amount: p.budget,
@@ -846,7 +846,7 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
     });
     sim.requireDecision({
       urgency: 78, category: 'property',
-      title: `Counteroffer on ${property.addressLine}`,
+      title: `Counteroffer On ${property.addressLine}`,
       detail: `They came back at ${formatMoney(counter)}. You offered ${formatMoney(offer.amount)}.`,
       route: '/workspace/property',
       actions: [
@@ -870,7 +870,7 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
     factors, seed: `offer_response|${offer.id}|${offer.amount}`, roll, probability: acceptProbability, score,
     outcome: 'rejected',
   });
-  sim.notify({ category: 'property', title: `Offer rejected: ${property.addressLine}`, body: `They turned down ${formatMoney(offer.amount)}.`, importance: 50, route: '/workspace/property' });
+  sim.notify({ category: 'property', title: `Offer Rejected: ${property.addressLine}`, body: `They turned down ${formatMoney(offer.amount)}.`, importance: 50, route: '/workspace/property' });
   sim.emit('prop.offer_rejected', { offerId: offer.id });
 }
 
@@ -906,7 +906,7 @@ function acceptOffer(sim: Simulation, offer: PropertyOffer): void {
 
   sim.notify({
     category: 'property',
-    title: `Offer accepted: ${property?.addressLine}`,
+    title: `Offer Accepted: ${property?.addressLine}`,
     body: `Closing is set for ${formatDate(closingAt, sim.homeZone)}.`,
     importance: 78, route: '/workspace/property',
   });
@@ -951,7 +951,7 @@ function runInspection(sim: Simulation, offerId: Id): void {
   if (findings.some((f) => f.severity === 'major') || total > offer.amount * 0.03) {
     sim.requireDecision({
       urgency: 82, category: 'property',
-      title: `Inspection findings on ${property.addressLine}`,
+      title: `Inspection Findings On ${property.addressLine}`,
       detail: `${findings.length} item${findings.length === 1 ? '' : 's'}, roughly ${formatMoney(total)} of work. You can proceed, renegotiate, or walk away and get your deposit back.`,
       route: '/workspace/property',
       actions: [
@@ -1164,7 +1164,7 @@ function advanceConstruction(sim: Simulation, projectId: Id): void {
     project.status = 'stalled';
     sim.requireDecision({
       urgency: 70, category: 'property',
-      title: `${project.name} is stalled`,
+      title: `${project.name} Is Stalled`,
       detail: 'Every remaining phase is blocked. Something needs resolving before work can continue.',
       route: '/workspace/property',
       refType: 'build', refId: project.id,
@@ -1211,7 +1211,7 @@ function advanceConstruction(sim: Simulation, projectId: Id): void {
         project.status = 'stalled';
         sim.requireDecision({
           urgency: 90, category: 'property',
-          title: `${project.name} cannot be funded`,
+          title: `${project.name} Cannot Be Funded`,
           detail: `The next draw of ${formatMoney(due)} could not be paid. Crews stop until it is.`,
           route: '/workspace/property',
           refType: 'build', refId: project.id,
@@ -1284,7 +1284,7 @@ function raiseConstructionEvent(sim: Simulation, projectId: Id, phase: Construct
   sim.requireDecision({
     urgency: template.by === 'inspector' ? 80 : 66,
     category: 'property',
-    title: `Change order on ${project.name}`,
+    title: `Change Order On ${project.name}`,
     detail: `${template.description} ${formatMoney(order.costDelta)} and ${template.days} days. ${template.by === 'inspector' ? 'This is required to pass inspection.' : 'You can refuse, but the work stops here.'}`,
     route: '/workspace/property',
     actions: [
@@ -1362,13 +1362,13 @@ function completeBuild(sim: Simulation, projectId: Id): void {
   const overBudget = project.spent - (project.budget - project.contingency);
   sim.remember({
     category: 'property',
-    title: `${project.name} is finished`,
+    title: `${project.name} Is Finished`,
     detail: `${totalSqft.toLocaleString('en-US')} square feet. Spent ${formatMoney(project.spent)}${overBudget > 0 ? `, ${formatMoney(overBudget)} over the original budget` : ', inside budget'}. Completed ${formatDate(sim.now, sim.homeZone)}.`,
     refs: [{ type: 'build', id: project.id }, { type: 'property', id: property.id }],
     significance: 88, public: false, amount: project.spent,
   });
   sim.notify({
-    category: 'property', title: `${project.name} is complete`,
+    category: 'property', title: `${project.name} Is Complete`,
     body: 'The certificate of occupancy is issued. You can move in.',
     importance: 82, route: '/workspace/property',
   });
