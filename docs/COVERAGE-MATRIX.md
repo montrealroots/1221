@@ -62,7 +62,8 @@ Anywhere (`/`) searches all of it.
 | --- | --- | --- | --- | --- |
 | `fitness.gym` | Calendar plan, The City, Wellbeing | `go.to`, `gym.check_in`, `gym.buy_pass`, `gym.hire_trainer`, `gym.train_block`, `gym.take_class`, `gym.finish_workout` | Yes | tests/scene-definitions.test.ts, tests/fitness.test.ts, tests/plans.test.ts |
 | `wellbeing.activity` | Wellbeing | `life.do_activity` | Yes | tests/scene-definitions.test.ts |
-| `life.meal` | The City, World | `go.to`, `place.order` | Yes | tests/scene-definitions.test.ts |
+| `life.meal` | The City, World | `go.to`, `dine.arrive`, `dine.wait`, `dine.leave`, `dine.order`, `dine.settle` | Yes | tests/scene-definitions.test.ts, tests/dining.test.ts |
+| `life.shop` | Shopping, The City | `go.to`, `retail.enter`, `retail.handle`, `retail.try_on`, `retail.basket`, `retail.walk_out`, `retail.pay`, `shop.purchase` | Yes (it looks and leaves; it never spends for you) | tests/dining.test.ts |
 | `life.run` | Wellbeing | `go.to`, `life.do_activity` | Yes | tests/scene-definitions.test.ts |
 | `vehicles.dealer` | Vehicles market, The City | `go.to`, `deal.open`, `deal.inspect`, `deal.test_drive`, `deal.set_terms`, `deal.offer`, `deal.walk_away`, `deal.sign`, `veh.purchase`, `ins.quote`, `ins.purchase` | Yes | tests/dealership.test.ts |
 | `rel.date` | Home decision, Calendar, Relationships | `life.shower`, `shop.purchase`, `go.to`, `date.check_in`, `date.beat`, `date.close`, `date.finish` | Yes | tests/dating.test.ts |
@@ -145,7 +146,10 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | --- | --- | --- | --- | --- | --- |
 | Energy, stress, sleep, hygiene, readiness including soreness | Implemented | `life.sleep`, `life.shower`, `life.eat`, `life.cook`, `life.day_rollover` | `/workspace/wellbeing`, Home | tests/systems.test.ts, tests/full-life.test.ts | — |
 | Every activity playable with choices, resources, time, results | Implemented | `wellbeing.activity`, `life.run`, `life.do_activity` | Play It Out on each | tests/scene-definitions.test.ts | Cooking keeps its recipe flow, no scene of its own |
-| Meals out | Implemented | `life.meal`, `place.order` | The City | tests/scene-definitions.test.ts | Reservations and company at the table are not built |
+| Meals out, played as a room | Implemented | `life.meal`, `dine.arrive`, `dine.wait`, `dine.order`, `dine.settle`, `staffOf`, `standingAt` | The City, the scene panel | tests/dining.test.ts, tests/scene-definitions.test.ts | Booking a table ahead is not built; company at the table goes through the quick order rather than the scene |
+| The door: a host who knows your face, a quoted wait, a table by your standing, and a walkout they remember | Implemented | `waitFor`, `tableFor`, `standingAt`, `dine.leave`, `MAX_WAIT_MINUTES` | The Door, A Wait | tests/dining.test.ts | The queue ahead of you is a quoted number, not named parties |
+| The order and the bill: a server with a recommendation, service added at a table, the tip yours to set, and both remembered | Implemented | `dine.order`, `dine.settle`, `billFor`, `SERVICE_SHARE`, `TIP_SHARES`, `tallyFact` | The Menu, The Bill | tests/dining.test.ts | A counter pays with the order and has no tip line |
+| A counter that takes the money with the order, and a table that does not | Implemented | `serviceOf`, `dine.order` | The Counter | tests/dining.test.ts | — |
 
 ### Gyms and fitness
 
@@ -231,7 +235,12 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 
 | Subfeature | State | Code | On screen | Tests | Gap |
 | --- | --- | --- | --- | --- | --- |
-| Purchase, delivery, returns, wardrobe, outfits, selling assets, pantry | Implemented | `shop.purchase`, `shop.deliver`, `shop.return`, `shop.save_outfit`, `shop.sell_asset`, `shop.pantry_expiry` | `/workspace/shopping` | tests/systems.test.ts, tests/full-life.test.ts | Basket and checkout as a scene not built |
+| Purchase, delivery, returns, wardrobe, outfits, selling assets, pantry | Implemented | `shop.purchase`, `shop.deliver`, `shop.return`, `shop.save_outfit`, `shop.sell_asset`, `shop.pantry_expiry` | `/workspace/shopping` | tests/systems.test.ts, tests/full-life.test.ts | — |
+| A shop you walk into: a storefront per chain in every city it operates in, keyed to the chain so no id moves | Implemented | `placesIn` storefronts, `Place.retailerId`, `retailerAt` | Shops You Can Walk Into, The City | tests/dining.test.ts | Online only chains have no door, which is the point |
+| The floor: somebody on it who knows your face, a rail that changes with the fortnight, and a price before tax | Implemented | `assistantAt`, `stockAt`, `retail.enter`, `retail.handle`, `standingAt` | The Floor | tests/dining.test.ts | Stock is a seeded sample of the chain's catalogue, not a modelled inventory with counts |
+| The fitting room: a verdict on the fit, once per thing, and a size they may not have | Implemented | `retail.try_on`, `fitOf`, `FITTABLE`, `VERDICT_LABEL` | The Fitting Room | tests/dining.test.ts | No alterations, no ordering your size in from another branch |
+| The counter: the basket priced before you say yes, then charged through the one purchase engine, in store, once | Implemented | `retail.quote`, `retail.pay` wrapping `shop.purchase` with an idempotency key | The Counter | tests/dining.test.ts | The quote is before tax; the till adds what the jurisdiction wants |
+| Walking out with nothing, and a floor that remembers a browser from a buyer | Implemented | `retail.walk_out`, `standingFlags`, `tallyFact` | Leave With Nothing | tests/dining.test.ts | — |
 | 100 real branded products per category | Blocked (data) | SLATE's catalogue | `shop` tab | — | Needs licensed product data; variants are not counted as products |
 
 ### Banking
@@ -378,7 +387,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled kinds, 157 events emitted, 25 event listeners, 14 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 167 commands, 65 scheduled kinds, 165 events emitted, 25 event listeners, 15 scenes, 19 routes.
 
 ### Commands
 
@@ -389,6 +398,7 @@ Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled k
 | co | `co.change_shape` `co.found` `co.read_brief` `co.set_draw` `co.set_rate` | `src/engine/systems/shingle.ts` |
 | date | `date.attend` `date.beat` `date.cancel` `date.check_in` `date.close` `date.finish` `date.reschedule` `date.skip` | `src/engine/systems/dating.ts` |
 | deal | `deal.inspect` `deal.offer` `deal.open` `deal.set_terms` `deal.sign` `deal.test_drive` `deal.walk_away` | `src/engine/systems/dealership.ts` |
+| dine | `dine.arrive` `dine.leave` `dine.order` `dine.settle` `dine.wait` | `src/engine/systems/dining.ts` |
 | edu | `edu.drop` `edu.enroll` | `src/engine/systems/services.ts` |
 | finance | `finance.create_bill` `finance.open_account` `finance.pay_bill` `finance.pay_debt` `finance.take_loan` `finance.transfer` | `src/engine/systems/finance.ts` |
 | go | `go.to` | `src/engine/systems/places.ts` |
@@ -401,6 +411,7 @@ Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled k
 | profession | `profession.pick_trait` `profession.unlock` | `src/engine/systems/professions.ts` |
 | prop | `prop.add_room` `prop.add_zone` `prop.book_showing` `prop.buy_furnishing` `prop.close` `prop.finish_room` `prop.furnish_room` `prop.inspection_decision` `prop.inspection_walk` `prop.list_for_sale` `prop.make_offer` `prop.move_in` `prop.postpone_closing` `prop.rent` `prop.respond_to_counter` `prop.walk_from_closing` | `src/engine/systems/property.ts`, `src/engine/systems/purchase.ts` |
 | rel | `rel.ask_out` `rel.define` `rel.end` `rel.give_gift` `rel.have_child` `rel.interact` `rel.intimacy` `rel.meet` `rel.plan_wedding` `rel.propose` | `src/engine/systems/places.ts`, `src/engine/systems/relationships.ts` |
+| retail | `retail.basket` `retail.enter` `retail.handle` `retail.pay` `retail.quote` `retail.try_on` `retail.walk_out` | `src/engine/systems/retail.ts` |
 | scene | `scene.choose` `scene.leave` `scene.quick` `scene.resume` `scene.skip` `scene.start` | `src/engine/systems/scenes.ts` |
 | shop | `shop.purchase` `shop.return` `shop.save_outfit` `shop.sell_asset` | `src/engine/systems/commerce.ts` |
 | social | `social.create_account` `social.create_post` `social.respond_to_deal` | `src/engine/systems/media.ts` |
@@ -450,6 +461,7 @@ Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled k
 | co | `co.founded` `co.overhead_missed` `co.rate_set` `co.reshaped` | `src/engine/systems/shingle.ts` |
 | date | `date.beat` `date.cancelled` `date.closed` `date.started` `date.stood_up` `date.they_cancelled` | `src/engine/systems/dating.ts` |
 | deal | `deal.agreed` `deal.opened` `deal.signed` `deal.walked` | `src/engine/systems/dealership.ts` |
+| dine | `dine.arrived` `dine.left` `dine.ordered` `dine.seated` `dine.settled` | `src/engine/systems/dining.ts` |
 | edu | `edu.completed` `edu.enrolled` | `src/engine/systems/services.ts` |
 | finance | `finance.account_opened` `finance.bill_missed` `finance.bill_paid` `finance.loan_taken` `finance.tax_reconciled` | `src/engine/systems/finance.ts` |
 | fitness | `fitness.workout_completed` | `src/engine/systems/fitness.ts` |
@@ -464,6 +476,7 @@ Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled k
 | prop | `prop.appraised` `prop.closing_due` `prop.closing_failed` `prop.closing_postponed` `prop.counter_answered` `prop.counter_lapsed` `prop.furnishing_added` `prop.inspection_complete` `prop.inspection_decided` `prop.inspection_waived` `prop.listed` `prop.listings_refreshed` `prop.moved_in` `prop.moving_day_due` `prop.offer_accepted` `prop.offer_countered` `prop.offer_rejected` `prop.offer_submitted` `prop.rented` `prop.room_finished` `prop.room_furnished` `prop.showing_attended` `prop.showing_due` `prop.showing_missed` | `src/engine/systems/property.ts`, `src/engine/systems/purchase.ts`, `src/engine/systems/viewings.ts` |
 | property | `property.purchased` | `src/engine/systems/property.ts` |
 | rel | `rel.ask_out_declined` `rel.became_partners` `rel.birthday` `rel.child_added` `rel.created` `rel.date_resolved` `rel.date_scheduled` `rel.ended` `rel.engaged` `rel.gift_given` `rel.interaction` `rel.intimacy` `rel.married` `rel.proposal_declined` `rel.wedding_planned` | `src/engine/systems/dating.ts`, `src/engine/systems/places.ts`, `src/engine/systems/relationships.ts` |
+| retail | `retail.entered` `retail.left` `retail.tried` | `src/engine/systems/retail.ts` |
 | scene | `scene.started` | `src/engine/systems/scenes.ts` |
 | shop | `shop.asset_acquired` `shop.asset_sold` `shop.order_delivered` `shop.order_placed` `shop.pantry_expired` `shop.returned` | `src/engine/systems/commerce.ts` |
 | social | `social.account_created` `social.deal_accepted` `social.deal_breached` `social.deal_completed` `social.deal_offered` `social.earnings_paid` `social.post_published` `social.reactions` | `src/engine/systems/media.ts` |
@@ -497,6 +510,7 @@ Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled k
 | `health.visit` | `src/engine/scenes/visit.ts` |
 | `life.meal` | `src/engine/scenes/meal.ts` |
 | `life.run` | `src/engine/scenes/run.ts` |
+| `life.shop` | `src/engine/scenes/shop.ts` |
 | `property.closing` | `src/engine/scenes/closing.ts` |
 | `property.counter` | `src/engine/scenes/counter.ts` |
 | `property.inspection` | `src/engine/scenes/inspection.ts` |

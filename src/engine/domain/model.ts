@@ -803,6 +803,69 @@ export interface StandingOrder {
   endedReason?: string;
 }
 
+/** How a room serves you: over a counter, or at a table with a bill at the end. */
+export type DiningService = 'counter' | 'table';
+
+export type DiningStatus = 'waiting' | 'seated' | 'ordered' | 'served' | 'settled' | 'left';
+
+/** One sitting: the door, the table, the order, the bill and the tip. */
+export interface DiningVisit {
+  id: Id;
+  saveId: Id;
+  placeId: string;
+  cityId: string;
+  service: DiningService;
+  /** The one on the door. Absent where there is no door person. */
+  hostId?: Id;
+  /** The one who takes the order and brings the bill. */
+  serverId: Id;
+  partySize: number;
+  /** Other people at the table, where you brought somebody. */
+  guestIds: Id[];
+  arrivedAt: Instant;
+  /** Minutes they said it would be. */
+  quotedWait: number;
+  /** Minutes you actually stood there. */
+  waitedMinutes: number;
+  /** Where they put you: the window, the bar, the back, the terrace. */
+  table: string;
+  items: { name: string; price: Money }[];
+  subtotal: Money;
+  serviceCharge: Money;
+  tip: Money;
+  total: Money;
+  status: DiningStatus;
+  accountId?: Id;
+  orderedAt?: Instant;
+  servedAt?: Instant;
+  settledAt?: Instant;
+  /** What the room thought of you, for the next time. */
+  note?: string;
+}
+
+export type RetailStatus = 'browsing' | 'fitting' | 'bought' | 'left';
+
+/** One visit to a shop: the greeting, what you tried, and what you took home. */
+export interface RetailVisit {
+  id: Id;
+  saveId: Id;
+  placeId: string;
+  retailerId: string;
+  cityId: string;
+  assistantId: Id;
+  arrivedAt: Instant;
+  /** Catalogue ids you have picked up. */
+  handled: string[];
+  /** Catalogue ids you have tried on, and what the mirror said. */
+  tried: { catalogId: string; verdict: string }[];
+  /** Catalogue ids in your hands at the counter. */
+  basket: string[];
+  orderId?: Id;
+  spent: Money;
+  status: RetailStatus;
+  leftAt?: Instant;
+}
+
 export interface VehicleKeeping {
   kind: KeepingKind;
   cityId: string;
@@ -1911,7 +1974,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 41;
+export const SAVE_SCHEMA_VERSION = 42;
 
 export interface SaveMeta {
   id: Id;
@@ -1985,6 +2048,10 @@ export interface SaveUniverse {
   accountStatements?: Record<Id, AccountStatement>;
   /** Transfers the bank makes for you. Absent on a save from before standing orders. */
   standingOrders?: Record<Id, StandingOrder>;
+  /** Sittings at a table or a counter. Absent on a save from before rooms had staff. */
+  diningVisits?: Record<Id, DiningVisit>;
+  /** Visits to a shop floor. Absent on a save from before shops had a floor. */
+  retailVisits?: Record<Id, RetailVisit>;
   dates: Record<Id, DateRecord>;
   /** Absent on a save that has not heard a line yet. */
   dialogue?: DialogueState;

@@ -43,6 +43,8 @@ import { registerCare } from './systems/care';
 import { registerJourney } from './systems/journey';
 import { ensureKeepings, registerStorage } from './systems/storage';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
+import { registerDining } from './systems/dining';
+import { registerRetail } from './systems/retail';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -90,6 +92,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerJourney(sim);
   registerStorage(sim);
   registerBanking(sim);
+  registerDining(sim);
+  registerRetail(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -902,6 +906,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.accountStatements ??= {};
     universe.standingOrders ??= {};
     steps.push('Bank products, statements and standing orders ready.');
+  }
+
+  if (from < 42) {
+    // Schema 42: a room has a host and a server, a shop floor has somebody on
+    // it, and both remember you. Nothing before this had a sitting or a visit
+    // recorded, so both collections start empty; the storefronts themselves are
+    // read from the catalogue rather than stored, so no save is rewritten.
+    universe.diningVisits ??= {};
+    universe.retailVisits ??= {};
+    steps.push('Rooms and shop floors ready to be walked into.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

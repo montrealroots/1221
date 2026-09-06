@@ -18,5 +18,6 @@ import './inspection';
 import './meal';
 import './movein';
 import './run';
+import './shop';
 import './viewing';
 import './visit';

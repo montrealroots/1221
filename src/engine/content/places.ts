@@ -23,6 +23,7 @@ import type { Money } from '../core/money';
 import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
 import { REAL_GYMS } from './fitness';
+import { RETAILERS } from './catalog';
 
 export type PlaceKind =
   | 'restaurant' | 'cafe' | 'bar' | 'fast_food' | 'market'
@@ -68,6 +69,8 @@ export interface Place {
   sells?: LotSells;
   /** A marina's water: how big a boat its longest slips take, in feet. SLATE's calibration even at a real marina. */
   maxSlipFeet?: number;
+  /** A storefront's chain. Absent on anything that is not a shop you can walk into. */
+  retailerId?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -495,7 +498,46 @@ export function placesIn(cityId: string): Place[] {
       } as Place & { cuisineId?: string });
     }
   }
+
+  // Storefronts. Every chain that is not online only has a door here, so the
+  // catalogue and the street agree with each other. The id carries the chain
+  // rather than a number, so adding a chain never moves an existing shop.
+  for (const retailer of RETAILERS.all()) {
+    if (retailer.type === 'online') continue;
+    if (retailer.locations.length > 0 && !retailer.locations.includes(cityId)) continue;
+    const hood = hoods.length > 0 ? hoods[Math.abs(hashOf(`${cityId}:${retailer.id}`)) % hoods.length] : undefined;
+    out.push({
+      id: `${cityId}:shop:${retailer.id}`,
+      name: retailer.name,
+      kind: retailer.type === 'grocery' ? 'market' : 'shop',
+      cityId,
+      neighbourhoodId: hood?.id,
+      about: `${retailer.description} ${SHOP_STREET[retailer.tier - 1] ?? SHOP_STREET[2]!}`,
+      real: false,
+      quality: Math.round(Math.min(98, 44 + retailer.tier * 10)),
+      price: Math.max(1, Math.min(4, Math.round(retailer.tier * 0.8))) as 1 | 2 | 3 | 4,
+      minutes: MINUTES_BY_KIND.shop,
+      actions: ['shop'],
+      retailerId: retailer.id,
+    });
+  }
   return out;
+}
+
+/** A line about the street the shop is on, by how dear it is. */
+const SHOP_STREET: readonly string[] = [
+  'A retail park unit with its own car park.',
+  'On the high street, between a bank and a phone shop.',
+  'A corner site with two windows onto the street.',
+  'A dressed window on the good street, and a doorman who is not called one.',
+  'By appointment as much as by the door, on the street where the rents are announced.',
+];
+
+/** A small, stable hash so a shop lands in the same neighbourhood every time. */
+function hashOf(text: string): number {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (Math.imul(h, 31) + text.charCodeAt(i)) | 0;
+  return h;
 }
 
 function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, rng: Rng): string {

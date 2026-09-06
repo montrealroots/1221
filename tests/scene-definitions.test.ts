@@ -185,14 +185,27 @@ describe('a meal out', () => {
     pick(sim, first);
     expect(activeScene(sim)!.node).toBe('arrive');
     pick(sim, 'go:walk');
-    expect(activeScene(sim)!.node).toBe('menu');
+    expect(activeScene(sim)!.node).toBe('door');
     expect(activeScene(sim)!.placeId).toBe(first.slice(6));
+    pick(sim, 'in');
+    // A busy room quotes a wait before it seats you; a quiet one does not.
+    if (activeScene(sim)!.node === 'wait') {
+      expect(choices(sim)).toContain('stay');
+      pick(sim, 'stay');
+    }
+    expect(activeScene(sim)!.node).toBe('menu');
     const dish = choices(sim).find((c) => c.startsWith('dish:'))!;
     pick(sim, dish);
     expect(choices(sim)).toContain('order');
     const fed = sim.player.wellbeing.nourishment;
     const funds = sim.ledger.availableFunds(sim.player.primaryAccountId!);
     pick(sim, 'order');
+    // A counter takes the money with the order; a table brings a bill.
+    if (activeScene(sim)!.node === 'eat') {
+      pick(sim, 'bill');
+      expect(activeScene(sim)!.node).toBe('bill');
+      pick(sim, 'tip:18');
+    }
     expect(activeScene(sim)!.node).toBe('reflect');
     expect(sim.player.wellbeing.nourishment).toBeGreaterThan(fed);
     expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBeLessThan(funds);

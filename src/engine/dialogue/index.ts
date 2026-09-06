@@ -12,8 +12,10 @@ import type { DialogueChunk } from './schema';
 
 const LOADERS: Readonly<Record<string, () => Promise<{ default?: DialogueChunk } & Record<string, unknown>>>> = {
   dating: () => import('./chunks/dating'),
+  dining: () => import('./chunks/dining'),
   health: () => import('./chunks/health'),
   property: () => import('./chunks/property'),
+  retail: () => import('./chunks/retail'),
   social: () => import('./chunks/social'),
   travel: () => import('./chunks/travel'),
   vehicles: () => import('./chunks/vehicles'),
