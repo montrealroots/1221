@@ -23,8 +23,15 @@ import { factsOf, rememberFact, tallyFact, tallyOf } from './memory';
 import { makeBackgroundPerson, peopleOf } from './people';
 import { wardrobeOf } from './commerce';
 
-/** How many things the floor puts in front of you at once. */
+/**
+ * How many things are on the front table — the small rotating selection the
+ * shop leads with. It is not the assortment: the assortment is everything the
+ * chain carries in this market, and it is hundreds of things deep.
+ */
 export const SHELF = 12;
+
+/** The fewest real products a shop floor is allowed to carry. */
+export const MINIMUM_ASSORTMENT = 100;
 
 /** Minutes it takes to look at one thing properly. */
 export const HANDLE_MINUTES = 4;
@@ -169,7 +176,7 @@ export interface Stocked {
  * puts a rail out, and the rail changes with the fortnight, seeded so the same
  * fortnight in the same shop is the same rail.
  */
-export function stockAt(sim: Simulation, place: Place, category?: string): Stocked[] {
+export function assortmentAt(sim: Simulation, place: Place, category?: string): Stocked[] {
   const retailer = retailerAt(place);
   if (!retailer) return [];
   const col = costOfLiving(place.cityId);
@@ -179,16 +186,44 @@ export function stockAt(sim: Simulation, place: Place, category?: string): Stock
     item.category !== 'dining'
     && (retailer.categories.includes(item.category) || retailer.categories.includes(item.subcategory))
     && (category === undefined || item.category === category));
-  const shelf = rng.shuffle([...eligible]).slice(0, SHELF);
-  const featured = new Set(shelf.slice(0, 2).map((i) => i.id));
-  return shelf
+  // The front table is what has been pushed to the front this fortnight; the
+  // rest of the shop is still the rest of the shop.
+  const front = new Set(rng.shuffle([...eligible]).slice(0, SHELF).map((i) => i.id));
+  return eligible
     .map((item) => ({
       item,
       price: retailPrice(item.id, retailer.id, col),
       fittable: FITTABLE.includes(item.category),
-      featured: featured.has(item.id),
+      featured: front.has(item.id),
     }))
-    .sort((a, b) => a.item.category.localeCompare(b.item.category) || a.price - b.price);
+    .sort((a, b) => Number(b.featured) - Number(a.featured)
+      || a.item.category.localeCompare(b.item.category)
+      || a.item.subcategory.localeCompare(b.item.subcategory)
+      || a.price - b.price);
+}
+
+/**
+ * What a shop carries. Kept as the old name because everything already asks
+ * for it that way; it is the whole assortment now, not a twelve-item rail.
+ */
+export function stockAt(sim: Simulation, place: Place, category?: string): Stocked[] {
+  return assortmentAt(sim, place, category);
+}
+
+/** The aisles this shop has, in the order they are walked, with their depth. */
+export function aislesAt(sim: Simulation, place: Place): { category: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const stocked of assortmentAt(sim, place)) {
+    counts.set(stocked.item.category, (counts.get(stocked.item.category) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([category, count]) => ({ category, count }))
+    .sort((a, b) => b.count - a.count || a.category.localeCompare(b.category));
+}
+
+/** The front table: what the shop is leading with this fortnight. */
+export function frontTableAt(sim: Simulation, place: Place): Stocked[] {
+  return assortmentAt(sim, place).filter((s) => s.featured);
 }
 
 /** Whether the shop keeps anything at all. A market with no rail is not a shop. */

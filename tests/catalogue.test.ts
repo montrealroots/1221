@@ -16,6 +16,8 @@ import { REAL_RETAILERS, marketOf, tradesIn } from '@/engine/content/brands';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { CITIES } from '@/engine/content/geography';
 import { placesIn } from '@/engine/content/places';
+import { quickSave } from '@/engine';
+import { MINIMUM_ASSORTMENT, aislesAt, assortmentAt, frontTableAt } from '@/engine/systems/retail';
 
 const LA = 'us-ca-losangeles';
 const LONDON = 'uk-eng-london';
@@ -158,5 +160,41 @@ describe('a national brand stays in its nation', () => {
     for (const item of shoppableItemsIn(LA)) counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
     const short = SHOPPING_CATEGORIES.filter((c) => (counts.get(c) ?? 0) < 100);
     expect(short, `short in Los Angeles: ${short.join(', ')}`).toEqual([]);
+  });
+});
+
+
+describe('every shop floor is a real shop floor', () => {
+  it('carries at least a hundred real things in every branch, everywhere it trades', () => {
+    const sim = quickSave({}, 'assortment');
+    const thin: string[] = [];
+    for (const cityId of [LA, LONDON, 'fr-idf-paris', 'jp-13-tokyo', 'au-nsw-sydney']) {
+      for (const place of placesIn(cityId).filter((p) => p.retailerId)) {
+        const count = assortmentAt(sim, place).length;
+        if (count < MINIMUM_ASSORTMENT) thin.push(`${place.name} in ${cityId}: ${count}`);
+      }
+    }
+    expect(thin, `these branches are thinner than a hundred things: ${thin.join('; ')}`).toEqual([]);
+  });
+
+  it('walks the aisles rather than a twelve item rail', () => {
+    const sim = quickSave({}, 'aisles');
+    const shop = placesIn(LA).find((p) => p.retailerId === 'nordstrom')!;
+    const aisles = aislesAt(sim, shop);
+    expect(aisles.length).toBeGreaterThan(2);
+    const total = aisles.reduce((sum, a) => sum + a.count, 0);
+    expect(total).toBe(assortmentAt(sim, shop).length);
+    for (const aisle of aisles) {
+      expect(assortmentAt(sim, shop, aisle.category).length, aisle.category).toBe(aisle.count);
+    }
+  });
+
+  it('leads with a front table that changes with the fortnight and is not the whole shop', () => {
+    const sim = quickSave({}, 'front');
+    const shop = placesIn(LA).find((p) => p.retailerId === 'ikea')!;
+    const front = frontTableAt(sim, shop);
+    expect(front.length).toBeGreaterThan(0);
+    expect(front.length).toBeLessThan(assortmentAt(sim, shop).length);
+    for (const stocked of front) expect(stocked.featured).toBe(true);
   });
 });

@@ -1,13 +1,12 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Personal, The Company, Starting Point, Review, then Start.
+ * Identity, Personal, Your Craft, Starting Point, Review, then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Stat } from '@/ui/components/primitives';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   defaultConfig, wealthNote,
@@ -21,14 +20,12 @@ import type { City } from '@/engine/content/geography';
 import type { Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
 import {
-  APP_VERSION, WEALTH_PROFILES, FOUNDING_CAPITAL, FOUNDING_SHINGLE,
+  APP_VERSION, WEALTH_PROFILES,
 } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { titleCaseLabel } from '@/engine/core/text';
 import { ageOnDate } from '@/engine/core/time';
 import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
-import { SHINGLE_BY_ID } from '@/engine/content/shingle';
-import { OPENING_BRIEF, STRIKE_IS_FICTION } from '@/engine/content/strike';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
 import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
@@ -37,7 +34,7 @@ import {
 import { FOUNDER_TRAITS } from '@/engine/content/founder';
 import { ALL_TRAITS } from '@/engine/domain/attributes';
 
-const STEPS = ['Identity', 'Personal', 'The Company', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Personal', 'Your Craft', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
@@ -567,7 +564,7 @@ function PersonalStep({
               Not a choice, and not on this page. You hold every acting, writing, directing,
               producing and showrunning trait in the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of
               them — because you are the best living practitioner of all five. They are listed on
-              The Company step and on your Character screen.
+              the Your Craft step and on your Character screen.
             </p>
           </div>
         </div>
@@ -618,50 +615,20 @@ function PersonalStep({
 }
 
 function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
-  const shape = SHINGLE_BY_ID[FOUNDING_SHINGLE]!;
-  const placeholder = `${config.lastName || 'Your Name'} Pictures`;
+  void set;
 
   return (
     <div className="col gap-5">
-      {/* --- What opens ---------------------------------------------------- */}
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h2>Your Company</h2>
-            <p className="muted small">
-              An independent production company, founded and wholly owned by you, open for
-              business on your first morning. There is one thing to decide and it is the name.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-3">
-          <Stat label="Opens" value="Day One" note="The morning the save starts" />
-          <Stat
-            label="Owned By"
-            value={`${config.firstName || 'You'} ${config.lastName}`.trim() || 'You'}
-            note="100% Ownership"
-          />
-          <Stat
-            label="In The Bank"
-            value={formatMoney(FOUNDING_CAPITAL, { cents: false })}
-            note="Roughly one modest picture"
-          />
-        </div>
-
-        <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-          <strong className="xs">The Strike</strong>
-          {OPENING_BRIEF.map((beat, i) => (
-            <p key={i} className="xs" style={{ margin: i === 0 ? '6px 0 0' : '8px 0 0' }}>{beat}</p>
-          ))}
-          <p className="xs dim" style={{ margin: '10px 0 0', fontStyle: 'italic' }}>{STRIKE_IS_FICTION}</p>
-        </div>
-      </div>
-
       {/* --- What you are -------------------------------------------------- */}
       <div className="card">
         <div className="panel-head">
-          <div><h3>Your Craft</h3></div>
+          <div>
+            <h2>Your Craft</h2>
+            <p className="muted small">
+              You are a {PERFORMER_NOUN[titleOf(config)].toLowerCase()}, and you are the best there
+              has ever been at all of it. Nothing here is chosen, because nothing here is missing.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-2">
@@ -684,31 +651,21 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
       </div>
 
-      {/* --- The name ------------------------------------------------------ */}
+      {/* --- What is not here yet ------------------------------------------ */}
       <div className="card">
-        <div className="field">
-          <label htmlFor="company-name">What It Is Called</label>
-          <input
-            id="company-name"
-            type="text"
-            value={config.companyName}
-            placeholder={placeholder}
-            onChange={(e) => set('companyName', e.target.value)}
-          />
-          <p className="xs dim" style={{ marginTop: 4 }}>
-            It goes on everything you make, and it is the only production company name anybody in
-            the business will say for a while.
-          </p>
+        <div className="panel-head">
+          <div><h3>The Work Itself</h3></div>
         </div>
-
-        <div className="callout callout-accent">
-          <strong className="xs">Opening Day</strong>
-          <p className="xs" style={{ margin: '4px 0 0' }}>
-            {config.companyName.trim() || placeholder} — an independent with
-            {' '}{formatMoney(FOUNDING_CAPITAL, { cents: false })} in the account,
-            {' '}{shape.capacity} projects at a time, and
-            {' '}{formatMoney(shape.overhead, { cents: false })} a month going out from the first
-            month whether you have made anything or not.
+        <div className="callout">
+          <strong className="xs">Under Construction</strong>
+          <p className="xs" style={{ margin: '6px 0 0' }}>
+            Casting, auditions, productions and everything the career is made of are being rebuilt
+            for a later milestone. The Casting tab is in the game and locked until that work lands.
+          </p>
+          <p className="xs" style={{ margin: '8px 0 0' }}>
+            This build is the life around the work: where you live, who you know, what you own,
+            what you wear, what you eat, where you go and how you keep yourself standing. Start
+            there, and the career opens on top of a life that already exists.
           </p>
         </div>
       </div>
@@ -843,7 +800,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {PERFORMER_NOUN[titleOf(config)]} And Founder · {city?.name}
+            {age} · {PERFORMER_NOUN[titleOf(config)]} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>
@@ -900,7 +857,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       <div className="card">
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Craft</div>
         {/*
-          Not a list of what was picked — nothing is picked. The founder holds
+          Not a list of what was picked — nothing is picked. You hold
           every trait in the game, and this card used to say "no traits, a
           blank slate", which was the last thing the player read before
           committing and it was false.
