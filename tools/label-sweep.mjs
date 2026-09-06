@@ -84,6 +84,8 @@ for (const file of files) {
     let outer;
     while ((outer = arrays.exec(line)) !== null) {
       const [, key, body] = outer;
+      // A list of lists is a list of ids, not labels: facilities: [['weights', 'floor'], ...].
+      if (body.trim().startsWith('[')) continue;
       for (const entry of body.matchAll(/'((?:[^'\\]|\\.){2,70})'/g)) {
         const value = entry[1];
         const bad = lowercaseWordsIn(value);
@@ -102,6 +104,19 @@ for (const file of files) {
       // words that begin lowercase.
       const bad = lowercaseWordsIn(value);
       if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
+    }
+    // A title built from a template — `${bill.name} Is Unpaid` — reaches the
+    // screen the same way. The slots are set aside and the words around them
+    // are held to the same rule; a slot stands in as a capitalised word so a
+    // possessive after it ("'s Birthday") reads as one, and the words around
+    // it still have to carry their own capital.
+    const template = /\b(title|label|heading|cta|actionLabel):\s*`([^`]{2,160})`/g;
+    while ((match = template.exec(line)) !== null) {
+      const [, key, raw] = match;
+      const value = raw.replace(/\$\{[^}]*\}/g, 'Slot').replace(/\s+/g, ' ').trim();
+      if (!value) continue;
+      const bad = lowercaseWordsIn(value);
+      if (bad.length > 0) problems.push({ file, line: index + 1, key, value: raw, bad, template: true });
     }
   });
 }
@@ -127,6 +142,7 @@ if (WRITE) {
     if (!byFileLines.has(problem.file)) byFileLines.set(problem.file, readFileSync(problem.file, 'utf8').split('\n'));
     const lines = byFileLines.get(problem.file);
     const index = problem.line - 1;
+    if (problem.template) continue;
     const fixed = toTitleCase(problem.value);
     if (fixed === problem.value) continue;
     lines[index] = lines[index].split(`'${problem.value}'`).join(`'${fixed}'`);
@@ -144,3 +160,5 @@ console.log('');
 for (const problem of problems.slice(0, 40)) {
   console.log(`  ${problem.file}:${problem.line}  ${problem.key}: "${problem.value}"  (${problem.bad.join(', ')})`);
 }
+
+process.exit(problems.length > 0 ? 1 : 0);

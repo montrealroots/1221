@@ -2,7 +2,8 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Modal } from '@/ui/components/primitives';
-import { INSURANCE_PRODUCTS, buildQuote } from '@/engine/systems/services';
+import { INSURANCE_PRODUCTS, buildQuote, vehicleLineFor } from '@/engine/systems/services';
+import { vehicleKind } from '@/engine/systems/vehicles';
 import type { InsuranceLine } from '@/engine/domain/model';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -161,9 +162,9 @@ function QuoteDialog({ line, onClose }: { line: InsuranceLine; onClose: () => vo
 
   const candidates = useWorld((s) => {
     const out: { type: string; id: string; label: string; value: number }[] = [];
-    if (line === 'auto') {
+    if (line === 'auto' || line === 'marine' || line === 'aviation') {
       for (const vehicle of Object.values(s.universe.vehicles)) {
-        if (vehicle.ownerId === s.player.id && !vehicle.soldAt) {
+        if (vehicle.ownerId === s.player.id && !vehicle.soldAt && vehicleLineFor(vehicleKind(vehicle)) === line) {
           out.push({ type: 'vehicle', id: vehicle.id, label: `${vehicle.year} ${vehicle.make} ${vehicle.model}`, value: vehicle.currentValue });
         }
       }

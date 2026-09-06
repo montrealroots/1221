@@ -23,22 +23,26 @@ import type { Money } from '../core/money';
 import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
 import { REAL_GYMS } from './fitness';
+import { shoppableRetailers } from './catalog';
+import { REAL_RETAILERS, tradesIn } from './brands';
 
 export type PlaceKind =
   | 'restaurant' | 'cafe' | 'bar' | 'fast_food' | 'market'
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
-  | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop';
+  | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
+  | 'marina' | 'storage';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
   cinema: 'Cinema', theatre: 'Theatre', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
+  dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
 };
 
 /** What you can do somewhere. */
-export type PlaceAction = 'eat' | 'drink' | 'refuel' | 'sleep' | 'shower' | 'train' | 'watch' | 'visit' | 'shop' | 'meet' | 'service';
+export type PlaceAction = 'eat' | 'drink' | 'refuel' | 'sleep' | 'shower' | 'train' | 'watch' | 'visit' | 'shop' | 'meet' | 'service' | 'browse';
 
 export interface Place {
   id: string;
@@ -62,6 +66,12 @@ export interface Place {
   industryHaunt?: boolean;
   /** For a landmark that charges: SLATE's calibrated admission in cents, before cost of living. */
   admissionCalibration?: number;
+  /** A dealership's stock in trade. Absent on anything that is not a lot. */
+  sells?: LotSells;
+  /** A marina's water: how big a boat its longest slips take, in feet. SLATE's calibration even at a real marina. */
+  maxSlipFeet?: number;
+  /** A storefront's chain. Absent on anything that is not a shop you can walk into. */
+  retailerId?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -76,6 +86,16 @@ interface RealPlace extends Omit<Place, 'quality' | 'price' | 'minutes' | 'real'
 }
 
 const LANDMARKS: readonly RealPlace[] = [
+  // --- Marinas. The harbour and its name are public record; slip counts, sizes and rates are SLATE's. ---
+  { id: 'la-marina-del-rey', name: 'Marina del Rey', kind: 'marina', cityId: 'us-ca-losangeles', about: 'A man-made small-craft harbour on the Westside, dug out of the Ballona wetlands and opened in 1965; one of the largest of its kind in the world.', opened: 1965, actions: ['visit'], minutes: 60, quality: 84, price: 3, maxSlipFeet: 150 },
+  { id: 'sf-marina-yacht-harbor', name: 'San Francisco Marina Yacht Harbor', kind: 'marina', cityId: 'us-ca-sanfrancisco', about: 'The city’s own small-boat harbour on the Marina waterfront, with the Golden Gate in view from the breakwater.', actions: ['visit'], minutes: 60, quality: 80, price: 3, maxSlipFeet: 65 },
+  { id: 'ny-north-cove', name: 'North Cove Marina', kind: 'marina', cityId: 'us-ny-newyork', about: 'A marina at Battery Park City on the Hudson, tucked behind Brookfield Place, that takes yachts up to superyacht size.', actions: ['visit'], minutes: 60, quality: 88, price: 4, maxSlipFeet: 180 },
+  { id: 'chi-burnham-harbor', name: 'Burnham Harbor', kind: 'marina', cityId: 'us-il-chicago', about: 'A Chicago Park District harbour between Museum Campus and Northerly Island, open for the lake season.', actions: ['visit'], minutes: 60, quality: 76, price: 2, maxSlipFeet: 65 },
+  { id: 'yvr-coal-harbour', name: 'Coal Harbour Marina', kind: 'marina', cityId: 'ca-bc-vancouver', about: 'A marina on the downtown waterfront beside Stanley Park, with float planes coming and going off the end of it.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 120 },
+  { id: 'ldn-st-katharine', name: 'St Katharine Docks Marina', kind: 'marina', cityId: 'uk-eng-london', about: 'A marina in the old dock basins beside Tower Bridge, entered through a lock off the Thames.', opened: 1828, actions: ['visit'], minutes: 60, quality: 84, price: 4, maxSlipFeet: 130 },
+  { id: 'mia-miami-beach-marina', name: 'Miami Beach Marina', kind: 'marina', cityId: 'us-fl-miami', about: 'A marina at the south end of Miami Beach on Government Cut, with the cruise ships passing the end of the docks.', actions: ['visit'], minutes: 60, quality: 86, price: 4, maxSlipFeet: 250 },
+  { id: 'sea-elliott-bay', name: 'Elliott Bay Marina', kind: 'marina', cityId: 'us-wa-seattle', about: 'A private marina at the foot of Magnolia bluff on Elliott Bay, with the downtown skyline across the water.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 100 },
+
   // --- Los Angeles ---------------------------------------------------------
   { id: 'la-griffith', name: 'Griffith Observatory', kind: 'viewpoint', cityId: 'us-ca-losangeles', about: 'A public observatory on the south slope of Mount Hollywood, given to the city by Griffith J. Griffith and open free to the public since it was built.', opened: 1935, actions: ['visit'], minutes: 120, admissionCalibration: 0 },
   { id: 'la-hollywood-sign', name: 'The Hollywood Sign', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'Erected as "Hollywoodland" to advertise a housing development, shortened in 1949 and rebuilt in 1978. You can walk up to look at it; you cannot walk to it.', opened: 1923, actions: ['visit'], minutes: 150 },
@@ -299,7 +319,7 @@ const CLUB_NAMES = ['Basement 9', 'The Meridian Room', 'Nightshift', 'Vault'];
 // Generating a city's places
 // ---------------------------------------------------------------------------
 
-interface Spec { kind: PlaceKind; count: (industry: number, population: number) => number; }
+interface Spec { kind: PlaceKind; count: (industry: number, population: number, waterfront: boolean) => number; }
 
 const SPECS: readonly Spec[] = [
   { kind: 'restaurant', count: (i, p) => Math.min(12, 4 + Math.round(i / 20) + Math.round(Math.log10(Math.max(1, p)))) },
@@ -314,6 +334,53 @@ const SPECS: readonly Spec[] = [
   { kind: 'hotel', count: (i) => (i > 50 ? 3 : 2) },
   { kind: 'salon', count: () => 1 },
   { kind: 'club', count: (i) => (i > 60 ? 2 : 1) },
+  // Last, so adding it moved nothing that was already there: the same city
+  // still has the same places with the same ids. The three car lots came
+  // first; the bike shop, the boat yard and the aircraft broker were added
+  // after them, so the first three ids still mean what they meant.
+  { kind: 'dealership', count: () => 6 },
+  // A storage yard everywhere; a marina only where there is water. Added after
+  // the lots, so nothing before them moved.
+  { kind: 'storage', count: () => 1 },
+  { kind: 'marina', count: (_i, _p, waterfront) => (waterfront ? 1 : 0) },
+];
+
+/** City tags that put it on water a boat can be kept in. */
+const WATERFRONT_TAGS = ['beach', 'coastal', 'harbour', 'island', 'riviera'];
+
+export function isWaterfront(city: { tags: string[] }): boolean {
+  return city.tags.some((t) => WATERFRONT_TAGS.includes(t));
+}
+
+const MARINA_NAMES = ['Harbour Point Marina', 'Westbank Yacht Harbor', 'The Basin Marina', 'Breakwater Marina', 'Kingfisher Yacht Basin'];
+const STORAGE_NAMES = ['Lockbox Vehicle Storage', 'Northline Secure Storage', 'The Vault Garage', 'Keystone Car Storage'];
+
+/** What a lot sells. */
+export type LotSells = 'car' | 'motorcycle' | 'boat' | 'jet';
+
+/**
+ * Six lots to a city, by what they sell: the new-car mall, the used lot and
+ * the classic dealer; then the motorcycle dealer, the boat yard and the
+ * aircraft broker. Named by position so a listing can find its lot.
+ */
+const DEALERSHIP_NAMES: readonly ((city: string) => string)[] = [
+  (city) => `${city} Auto Mall`,
+  () => 'Crossroads Auto Sales',
+  () => 'Meridian Classic Motors',
+  () => 'Northline Motorcycles',
+  (city) => `${city} Yacht And Boat Sales`,
+  (city) => `${city} Jet Center`,
+];
+
+const DEALERSHIP_SELLS: readonly LotSells[] = ['car', 'car', 'car', 'motorcycle', 'boat', 'jet'];
+
+const DEALERSHIP_ABOUT: readonly ((where: string) => string)[] = [
+  (where) => `New and certified cars in ${where}, every make under one roof. Somebody will find you within a minute of parking.`,
+  (where) => `A used lot in ${where}. Prices on the windscreen, and every one of them is a starting point.`,
+  (where) => `Classics and collector cars in ${where}. They know what they have, and they will wait for the right buyer.`,
+  (where) => `Motorcycles in ${where}, new and used, from the makes you have heard of. Helmets on the wall and a workshop out the back.`,
+  (where) => `Boats and yachts in ${where}, on trailers, on hard standing and in the water. Ask for a sea trial.`,
+  (where) => `Aircraft sales at the executive terminal near ${where}. Pre-owned jets on the ramp, factory orders by appointment, and a demonstration flight for anyone serious.`,
 ];
 
 const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
@@ -321,7 +388,8 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   market: ['shop'], gas_station: ['refuel', 'shop'], garage: ['service'], hotel: ['sleep', 'shower', 'eat', 'meet'],
   gym: ['train', 'shower'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
-  stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'],
+  stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
+  marina: ['visit'], storage: ['visit'],
 };
 
 function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
@@ -340,6 +408,8 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
     case 'market': return rng.pick(MARKET_NAMES);
     case 'gas_station': return rng.pick(FUEL_NAMES);
     case 'garage': return rng.pick(GARAGE_NAMES);
+    case 'marina': return rng.pick(MARINA_NAMES);
+    case 'storage': return rng.pick(STORAGE_NAMES);
     case 'gym': return rng.pick(GYM_NAMES);
     case 'cinema': return rng.pick(CINEMA_NAMES);
     case 'hotel': return rng.pick(HOTEL_NAMES);
@@ -352,7 +422,8 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
 const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   restaurant: 95, cafe: 35, bar: 75, fast_food: 25, market: 30, gas_station: 10, garage: 120,
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
-  viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35,
+  viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
+  marina: 60, storage: 20,
 };
 
 /**
@@ -391,11 +462,16 @@ export function placesIn(cityId: string): Place[] {
   const industry = city.industryPresence;
   const used = new Set(out.map((p) => p.name.toLowerCase()));
 
+  const waterfront = isWaterfront(city);
+  const realMarinas = out.filter((p) => p.kind === 'marina').length;
   for (const spec of SPECS) {
-    const count = Math.max(1, spec.count(industry, city.population));
+    // A city with a real marina on the record does not get an invented one as well.
+    const wanted = spec.kind === 'marina' && realMarinas > 0 ? 0 : spec.count(industry, city.population, waterfront);
+    const count = spec.kind === 'marina' ? wanted : Math.max(1, wanted);
     for (let i = 0; i < count; i++) {
       const cuisine = spec.kind === 'restaurant' ? rng.pick(CUISINES) : undefined;
-      let name = nameFor(spec.kind, rng, cuisine);
+      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine);
+      if (spec.kind === 'marina' && rng.chance(0.5)) name = `${city.name} ${rng.pick(['Yacht Harbor', 'Marina', 'Yacht Basin'])}`;
       let guard = 0;
       while (used.has(name.toLowerCase()) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
       used.add(name.toLowerCase());
@@ -410,18 +486,60 @@ export function placesIn(cityId: string): Place[] {
         kind: spec.kind,
         cityId,
         neighbourhoodId: hood?.id,
-        about: aboutFor(spec.kind, cuisine, hood?.name ?? city.name, rng),
+        about: spec.kind === 'dealership' ? (DEALERSHIP_ABOUT[i % DEALERSHIP_ABOUT.length] ?? DEALERSHIP_ABOUT[0]!)(hood?.name ?? city.name) : aboutFor(spec.kind, cuisine, hood?.name ?? city.name, rng),
         real: false,
         quality: Math.round(Math.min(98, 40 + prestige * 0.4 + rng.float(0, 26))),
         price,
         minutes: MINUTES_BY_KIND[spec.kind],
         actions: ACTIONS_BY_KIND[spec.kind],
         industryHaunt: industry > 60 && (spec.kind === 'bar' || spec.kind === 'restaurant') && rng.chance(0.3),
+        sells: spec.kind === 'dealership' ? DEALERSHIP_SELLS[i % DEALERSHIP_SELLS.length] : undefined,
+        maxSlipFeet: spec.kind === 'marina' ? rng.pick([45, 65, 80, 100]) : undefined,
         cuisineId: cuisine?.id,
       } as Place & { cuisineId?: string });
     }
   }
+
+  // Storefronts. Every chain that is not online only has a door here, so the
+  // catalogue and the street agree with each other. The id carries the chain
+  // rather than a number, so adding a chain never moves an existing shop.
+  for (const retailer of shoppableRetailers()) {
+    const real = REAL_RETAILERS.find((r) => r.id === retailer.id);
+    if (!real || real.kind === 'online') continue;
+    if (!tradesIn(real, cityId, city.population)) continue;
+    const hood = hoods.length > 0 ? hoods[Math.abs(hashOf(`${cityId}:${retailer.id}`)) % hoods.length] : undefined;
+    out.push({
+      id: `${cityId}:shop:${retailer.id}`,
+      name: retailer.name,
+      kind: retailer.type === 'grocery' ? 'market' : 'shop',
+      cityId,
+      neighbourhoodId: hood?.id,
+      about: `${retailer.description} ${SHOP_STREET[retailer.tier - 1] ?? SHOP_STREET[2]!}`,
+      real: false,
+      quality: Math.round(Math.min(98, 44 + retailer.tier * 10)),
+      price: Math.max(1, Math.min(4, Math.round(retailer.tier * 0.8))) as 1 | 2 | 3 | 4,
+      minutes: MINUTES_BY_KIND.shop,
+      actions: ['shop'],
+      retailerId: retailer.id,
+    });
+  }
   return out;
+}
+
+/** A line about the street the shop is on, by how dear it is. */
+const SHOP_STREET: readonly string[] = [
+  'A retail park unit with its own car park.',
+  'On the high street, between a bank and a phone shop.',
+  'A corner site with two windows onto the street.',
+  'A dressed window on the good street, and a doorman who is not called one.',
+  'By appointment as much as by the door, on the street where the rents are announced.',
+];
+
+/** A small, stable hash so a shop lands in the same neighbourhood every time. */
+function hashOf(text: string): number {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (Math.imul(h, 31) + text.charCodeAt(i)) | 0;
+  return h;
 }
 
 function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, rng: Rng): string {
@@ -466,6 +584,8 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     case 'market': return `Groceries in ${where}. Everything a kitchen needs and a queue at six.`;
     case 'gas_station': return `Fuel and a shop in ${where}. Open when you need it.`;
     case 'garage': return `A workshop in ${where}. Servicing, diagnostics and an honest estimate.`;
+    case 'marina': return `A marina in ${where}. Slips by the foot, a fuel dock, and a harbourmaster who knows every boat by its owner.`;
+    case 'storage': return `Secure indoor vehicle storage in ${where}. Alarmed, dry, and charged by the month.`;
     case 'gym': return `Weights and space in ${where}. ${rng.pick(['Chalk allowed.', 'Open at five.', 'No mirrors, no music.'])}`;
     case 'cinema': return `A cinema in ${where}. ${rng.pick(['Two screens and a projectionist who cares.', 'Reclining seats and an eight-dollar soda.', 'Repertory on Sundays.'])}`;
     case 'hotel': return `Rooms in ${where}. ${rng.pick(['A lobby people meet in.', 'Quiet, and the bar stays open.', 'Clean, central and no surprises.'])}`;

@@ -3,12 +3,20 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
 import { shoppingCatalogue, wardrobeOf } from '@/engine/systems/commerce';
+import { placesIn } from '@/engine/content/places';
+import { REAL_GOODS_NOTE } from '@/engine/content/goods';
+import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
+import { retailerAt, standingAt } from '@/engine/systems/retail';
+import { activeScene } from '@/engine/systems/scenes';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
 type Tab = 'shop' | 'owned' | 'wardrobe' | 'orders';
 
-const CATEGORIES = ['groceries', 'clothing', 'footwear', 'watch', 'jewelry', 'furniture', 'appliance', 'electronics', 'art'];
+const CATEGORIES = [
+  'groceries', 'clothing', 'footwear', 'accessory', 'watch', 'jewelry',
+  'furniture', 'home', 'household', 'appliance', 'electronics', 'equipment', 'art', 'books',
+];
 
 export function ShoppingWorkspace() {
   const { sim, run } = useGame();
@@ -20,6 +28,11 @@ export function ShoppingWorkspace() {
   const owned = useWorld((s) => Object.values(s.universe.assets).filter((a) => a.ownerId === s.player.id && !a.soldAt));
   const wardrobe = useWorld((s) => wardrobeOf(s, s.player.id));
   const orders = useWorld((s) => Object.values(s.universe.orders).filter((o) => o.buyerId === s.player.id).sort((a, b) => b.placedAt - a.placedAt));
+  const scene = useWorld(activeScene);
+  const storefronts = useWorld((s) => placesIn(s.player.currentLocationId)
+    .filter((p) => Boolean(p.retailerId))
+    .map((p) => ({ place: p, retailer: retailerAt(p)!, standing: standingAt(s, p), here: s.player.currentPlaceId === p.id }))
+    .sort((a, b) => Number(b.here) - Number(a.here) || a.retailer.tier - b.retailer.tier));
 
   return (
     <>
@@ -30,6 +43,7 @@ export function ShoppingWorkspace() {
           One engine for all of it. Prices move with local cost of living, sales tax follows your
           jurisdiction, and what arrives becomes something you actually own.
         </p>
+        <p className="xs dim">{REAL_GOODS_NOTE} {REAL_RETAILER_NOTE}</p>
       </div>
 
       <Tabs active={tab} onChange={setTab} tabs={[
@@ -41,7 +55,42 @@ export function ShoppingWorkspace() {
 
       {tab === 'shop' && (
         <>
-          <div className="row wrap gap-2" style={{ marginBottom: 'var(--s4)' }}>
+          <Panel
+            title="Shops You Can Walk Into"
+            subtitle="The list below orders it to your door. These have a floor, somebody on it, and a fitting room."
+            flush
+          >
+            {storefronts.length === 0 ? (
+              <Empty title="No Shop Floor Here" body="Nothing in this city has a door SLATE knows the inside of. The catalogue below still delivers." />
+            ) : (
+              <div className="list">
+                {storefronts.slice(0, 8).map(({ place, retailer, standing, here }) => (
+                  <div key={place.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">
+                        {place.name}
+                        {here ? <span className="chip chip-positive" style={{ marginLeft: 6 }}>You Are Here</span> : null}
+                      </div>
+                      <div className="xs dim">
+                        {retailer.categories.map((c) => categoryLabel(c)).join(', ')}
+                        {' · '}{'$'.repeat(Math.max(1, Math.min(4, Math.round(retailer.tier * 0.8))))}
+                        {standing.regular ? ' · They Know You' : standing.visits > 0 ? ` · ${standing.visits} Visits` : ''}
+                      </div>
+                    </div>
+                    <button
+                      className={`btn btn-sm${here ? ' btn-primary' : ''}`}
+                      disabled={Boolean(scene)}
+                      onClick={() => run('scene.start', { definitionId: 'life.shop', input: { placeId: place.id } })}
+                    >
+                      {here ? 'Have A Look Round' : 'Go And Look'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Panel>
+
+          <div className="row wrap gap-2" style={{ margin: 'var(--s4) 0' }}>
             {CATEGORIES.map((c) => (
               <button key={c} className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}
                 style={category === c ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' } : undefined}>

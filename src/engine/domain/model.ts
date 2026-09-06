@@ -471,6 +471,10 @@ export interface Property {
   insurancePolicyId?: Id;
   /** Structures on the parcel. */
   structureIds: Id[];
+  /** Covered spaces for road vehicles. Absent on a home from before, and read from its kind, features and structures instead. */
+  garageSpaces?: number;
+  /** The longest boat a private dock here takes, in feet. Absent means no dock. */
+  dockFeet?: number;
   isPrimaryResidence: boolean;
   /** Rented out to tenants for income. */
   rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
@@ -594,8 +598,17 @@ export interface PropertyOffer {
   inspectionAt?: Instant;
   inspectionFindings?: { item: string; severity: 'minor' | 'moderate' | 'major'; estimate: Money }[];
   appraisalValue?: Money;
+  /** What the lender will not cover after a low appraisal; the buyer brings it to the table. */
+  appraisalGap?: Money;
   closingCosts?: Money;
   agentId?: Id;
+  /** How many times the seller has come back with a number. */
+  counterRounds?: number;
+  /** When the inspection contingency was answered, by you or by silence. */
+  inspectionDecidedAt?: Instant;
+  /** The seller allows one delay to closing. */
+  postponedOnce?: boolean;
+  closedAt?: Instant;
   history: { at: Instant; note: string }[];
 }
 
@@ -696,18 +709,193 @@ export interface VehicleConfiguration {
   modificationIds: Id[];
 }
 
+/**
+ * What kind of thing a vehicle is. A car and a motorcycle count miles on the
+ * road; a boat and a jet count hours, cost money standing still, and are
+ * bought, insured and worked on by people who do only that.
+ */
+export type VehicleKind = 'car' | 'motorcycle' | 'boat' | 'jet';
+
+/**
+ * Where a vehicle is kept when it is not being used. A road vehicle in a
+ * home's garage, on its driveway, on the street or in a paid unit; a boat at
+ * a marina berth, in a dry stack, on a trailer at home or at a private dock;
+ * an aircraft in a private or shared hangar, on a tie-down, or on the ramp
+ * of an airport it was flown to.
+ */
+export type KeepingKind =
+  | 'garage' | 'driveway' | 'street' | 'storage_unit'
+  | 'berth' | 'dry_stack' | 'trailer' | 'private_dock'
+  | 'hangar' | 'shared_hangar' | 'tie_down' | 'transient';
+
+/**
+ * A place in the queue for a slip at a marina, for one boat at one length.
+ * The deposit is held while you wait and comes back whichever way it ends.
+ * A slip that comes free is offered to whoever is first, and holds for a
+ * week; letting it go puts you at the back rather than off the list.
+ */
+export interface BerthWaitlist {
+  id: Id;
+  saveId: Id;
+  marinaPlaceId: string;
+  cityId: string;
+  /** The band you are waiting in, by the longest boat it takes, in feet. */
+  bandFeet: number;
+  vehicleId: Id;
+  /** How many are in front of you. Zero means the next one is yours. */
+  ahead: number;
+  joinedAt: Instant;
+  /** Held while you wait, returned when it ends. */
+  deposit: Money;
+  status: 'waiting' | 'offered' | 'taken' | 'left' | 'lapsed';
+  offeredAt?: Instant;
+  offerExpiresAt?: Instant;
+  /** How many times a slip has been offered and let go. */
+  passed: number;
+  endedAt?: Instant;
+}
+
+/**
+ * A month on an account, as the bank sends it: what it opened at, what went
+ * in and out, what they charged, and what it closed at. Written when the
+ * statement cycles, and never edited after.
+ */
+export interface AccountStatement {
+  id: Id;
+  saveId: Id;
+  accountId: Id;
+  /** The month it covers, as YYYY-MM in the home zone. */
+  period: string;
+  openedAt: Instant;
+  closedAt: Instant;
+  openingBalance: Money;
+  credits: Money;
+  debits: Money;
+  fees: Money;
+  interest: Money;
+  closingBalance: Money;
+  /** On a card: what is owed by the due date, and the least they will take. */
+  minimumDue?: Money;
+  dueAt?: Instant;
+  transactionCount: number;
+}
+
+/**
+ * A transfer the bank makes for you on a day of the month, from one of your
+ * accounts to another. Stops when you say, or when it cannot be paid.
+ */
+export interface StandingOrder {
+  id: Id;
+  saveId: Id;
+  ownerId: Id;
+  name: string;
+  fromAccountId: Id;
+  toAccountId: Id;
+  amount: Money;
+  /** Day of the month it runs, 1 to 28. */
+  dayOfMonth: number;
+  active: boolean;
+  createdAt: Instant;
+  lastRunAt?: Instant;
+  /** Times it could not be paid. Three and the bank gives up on it. */
+  missed: number;
+  endedAt?: Instant;
+  endedReason?: string;
+}
+
+/** How a room serves you: over a counter, or at a table with a bill at the end. */
+export type DiningService = 'counter' | 'table';
+
+export type DiningStatus = 'waiting' | 'seated' | 'ordered' | 'served' | 'settled' | 'left';
+
+/** One sitting: the door, the table, the order, the bill and the tip. */
+export interface DiningVisit {
+  id: Id;
+  saveId: Id;
+  placeId: string;
+  cityId: string;
+  service: DiningService;
+  /** The one on the door. Absent where there is no door person. */
+  hostId?: Id;
+  /** The one who takes the order and brings the bill. */
+  serverId: Id;
+  partySize: number;
+  /** Other people at the table, where you brought somebody. */
+  guestIds: Id[];
+  arrivedAt: Instant;
+  /** Minutes they said it would be. */
+  quotedWait: number;
+  /** Minutes you actually stood there. */
+  waitedMinutes: number;
+  /** Where they put you: the window, the bar, the back, the terrace. */
+  table: string;
+  items: { name: string; price: Money }[];
+  subtotal: Money;
+  serviceCharge: Money;
+  tip: Money;
+  total: Money;
+  status: DiningStatus;
+  accountId?: Id;
+  orderedAt?: Instant;
+  servedAt?: Instant;
+  settledAt?: Instant;
+  /** What the room thought of you, for the next time. */
+  note?: string;
+}
+
+export type RetailStatus = 'browsing' | 'fitting' | 'bought' | 'left';
+
+/** One visit to a shop: the greeting, what you tried, and what you took home. */
+export interface RetailVisit {
+  id: Id;
+  saveId: Id;
+  placeId: string;
+  retailerId: string;
+  cityId: string;
+  assistantId: Id;
+  arrivedAt: Instant;
+  /** Catalogue ids you have picked up. */
+  handled: string[];
+  /** Catalogue ids you have tried on, and what the mirror said. */
+  tried: { catalogId: string; verdict: string }[];
+  /** Catalogue ids in your hands at the counter. */
+  basket: string[];
+  orderId?: Id;
+  spent: Money;
+  status: RetailStatus;
+  leftAt?: Instant;
+}
+
+export interface VehicleKeeping {
+  kind: KeepingKind;
+  cityId: string;
+  /** The home whose garage, driveway, dock or trailer space it is. */
+  propertyId?: Id;
+  /** The marina, storage yard or boat yard. */
+  placeId?: string;
+  /** The airport. */
+  airportId?: string;
+  since: Instant;
+  /** What it costs a month, after cost of living. Zero at home. */
+  monthly: Money;
+  /** The bill for it, when it costs anything. Ends when the vehicle moves or is sold. */
+  billId?: Id;
+}
+
 export interface Vehicle {
   id: Id;
   saveId: Id;
   ownerId: Id;
   ownerKind: 'person' | 'company';
+  /** Absent on a vehicle from before there was anything but cars; read as a car. */
+  kind?: VehicleKind;
   catalogId: string;
   make: string;
   model: string;
   year: number;
   trim: string;
   bodyStyle: string;
-  powertrain: 'gas' | 'diesel' | 'hybrid' | 'phev' | 'ev';
+  powertrain: 'gas' | 'diesel' | 'hybrid' | 'phev' | 'ev' | 'turbofan';
   vin: string;
   /** The car as it left the factory. Never changes. */
   factoryConfiguration: VehicleConfiguration;
@@ -748,6 +936,26 @@ export interface Vehicle {
   fuelPercent?: number;
   horsepower: number;
   zeroToSixty: number;
+  /**
+   * A car bought for delivery is not with you until the dealer brings it.
+   * Absent once it has arrived, and on every car from before deals existed.
+   */
+  deliveryDueAt?: Instant;
+  /** The deal it was bought under, if it was bought at a dealership. */
+  dealId?: Id;
+  /**
+   * The berth or hangar bill from before keeping was a place. Read once by the
+   * schema 39 migration and left alone after; new saves never set it.
+   */
+  upkeepBillId?: Id;
+  /** The crew retainer for a crewed yacht or an aircraft. Ends when it is sold. */
+  crewBillId?: Id;
+  /** What its owner calls it: the name on a tail or a transom. */
+  nickname?: string;
+  /** Where it is kept now. Absent on a vehicle from before keeping existed, until it is placed. */
+  keeping?: VehicleKeeping;
+  /** An aircraft's hangar at home while it sits on a ramp somewhere else. The hangar is still paid for. */
+  homeKeeping?: VehicleKeeping;
 }
 
 export interface VehicleModification {
@@ -787,6 +995,8 @@ export interface ServiceRecord {
 export interface VehicleListing {
   id: Id;
   saveId: Id;
+  /** Absent on a listing from before there was anything but cars; read as a car. */
+  kind?: VehicleKind;
   catalogId: string;
   condition: 'new' | 'used' | 'certified' | 'collector';
   year: number;
@@ -797,8 +1007,89 @@ export interface VehicleListing {
   configuration: VehicleConfiguration;
   status: ListingStatus;
   listedAt: Instant;
-  /** How much the dealer will move, as a fraction. */
+  /** How much the dealer will move, as a fraction. Never shown. */
   negotiationRoom: number;
+  /** The dealership place this car sits on. Absent on listings from before dealerships were places. */
+  dealerPlaceId?: string;
+}
+
+/**
+ * A conversation about one car at one dealership, from the first look to the
+ * signature or the walk to the door. The dealer's floor is theirs and is not
+ * on the record; what they have said is.
+ */
+export type VehicleDealStatus = 'open' | 'agreed' | 'signed' | 'walked' | 'expired';
+
+export interface VehicleDealTerms {
+  /** What the dealer will allow against the car you bring, if you bring one. */
+  tradeInVehicleId?: Id;
+  tradeInValue?: Money;
+  /** Drive it away today, or have it brought to you. */
+  delivery: 'collect' | 'deliver';
+  /** Things the dealer has agreed to put right before handover. */
+  repairs: string[];
+}
+
+export interface VehicleDeal {
+  id: Id;
+  saveId: Id;
+  listingId: Id;
+  dealerPlaceId: string;
+  salespersonId: Id;
+  status: VehicleDealStatus;
+  askingPrice: Money;
+  /** The dealer's latest number; the asking price until they move. */
+  currentAsk: Money;
+  /** Your latest number, if you have made one. */
+  lastOffer?: Money;
+  agreedPrice?: Money;
+  rounds: number;
+  /** What the dealer has said, most recent last. */
+  said: string[];
+  inspected: boolean;
+  /** What you found looking it over; each one is a lever. */
+  findings: string[];
+  testDriven: boolean;
+  terms: VehicleDealTerms;
+  openedAt: Instant;
+  expiresAt: Instant;
+  closedAt?: Instant;
+  vehicleId?: Id;
+}
+
+/**
+ * A date, from the asking to the walk home. Planned until it comes round;
+ * under way while it is being played; then attended, or one of the ways it
+ * did not happen, each of which the other person remembers differently.
+ */
+export type DateStatus = 'planned' | 'underway' | 'attended' | 'skipped' | 'stood_up' | 'they_cancelled' | 'cancelled';
+
+export interface DateRecord {
+  id: Id;
+  saveId: Id;
+  relationshipId: Id;
+  personId: Id;
+  scheduledItemId: Id;
+  at: Instant;
+  durationMinutes: number;
+  activityId: string;
+  placeId?: string;
+  locationId: string;
+  budget: Money;
+  status: DateStatus;
+  /** How the evening is going while it is under way, 0-100; how it went, after. */
+  chemistry: number;
+  beats: number;
+  spent: Money;
+  /** What you talked about, for the other person to remember. */
+  topics: string[];
+  /** What you said you would do afterwards. */
+  promises: string[];
+  outcome?: 'good' | 'mixed' | 'poor';
+  /** They were late, or did not come. */
+  showed?: 'there' | 'late' | 'no_show';
+  sceneId?: Id;
+  closedAt?: Instant;
 }
 
 // ---------------------------------------------------------------------------
@@ -924,11 +1215,44 @@ export interface Appointment {
   outcome?: string;
   scheduledItemId?: Id;
   followUpAt?: Instant;
+  /** What you said brought you in. */
+  complaint?: string;
+  checkedInAt?: Instant;
+  consultedAt?: Instant;
+  testsOrderedAt?: Instant;
+  resultsAt?: Instant;
+  resultOutcome?: 'clear' | 'follow_up';
+  prescriptionId?: Id;
+  paidAt?: Instant;
+  followUpDays?: number;
+  conditionGain?: number;
+}
+
+/** A course of something the provider wrote, collected at a pharmacy and taken over days. Simulated; not medical advice. */
+export interface Prescription {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  appointmentId: Id;
+  providerId: Id;
+  medication: string;
+  purpose: string;
+  days: number;
+  dosesPerDay: number;
+  cost: Money;
+  insuranceCovered: Money;
+  outOfPocket: Money;
+  writtenAt: Instant;
+  filledAt?: Instant;
+  dosesTaken: number;
+  nextDoseAt?: Instant;
+  status: 'written' | 'filled' | 'finished' | 'lapsed';
 }
 
 export type InsuranceLine =
   | 'health' | 'dental' | 'vision' | 'auto' | 'renters' | 'homeowners'
-  | 'valuables' | 'travel' | 'life' | 'umbrella' | 'business' | 'production' | 'equipment';
+  | 'valuables' | 'travel' | 'life' | 'umbrella' | 'business' | 'production' | 'equipment'
+  | 'marine' | 'aviation';
 
 export interface InsurancePolicy {
   id: Id;
@@ -1050,10 +1374,25 @@ export interface FlightBooking {
   fare: Money;
   taxesFees: Money;
   bags: number;
-  status: 'booked' | 'checked_in' | 'flown' | 'cancelled' | 'refunded' | 'changed';
+  status: 'booked' | 'checked_in' | 'flown' | 'cancelled' | 'refunded' | 'changed' | 'missed';
   refundable: boolean;
   loyaltyMilesEarned: number;
   bookedAt: Instant;
+  /** The day, as it was played or just done. */
+  bag?: 'carry_on' | 'checked';
+  seatChoice?: string;
+  /** Bag fee, seat fee: what the day added to the fare. */
+  extras?: Money;
+  checkedInAt?: Instant;
+  boardedAt?: Instant;
+  delayMinutes?: number;
+  bagsClaimedAt?: Instant;
+  bagLost?: boolean;
+  bagReturnedAt?: Instant;
+  /** Set when the airline moved you or you moved yourself; points at the booking that replaced this one. */
+  replacedBy?: Id;
+  /** The owned aircraft it is flown in, when it is not a charter or an airline. */
+  vehicleId?: Id;
 }
 
 export interface HotelBooking {
@@ -1160,6 +1499,8 @@ export interface SocialPost {
   brandDealId?: Id;
   /** Days of decay processing still owed. */
   decayDaysRemaining: number;
+  /** What the audience said a day on, as the library put it. Absent until then. */
+  reactions?: { at: Instant; band: 'hit' | 'fine' | 'flop'; comments: string[]; summary: string };
 }
 
 export interface BrandDeal {
@@ -1477,6 +1818,15 @@ export interface SceneSession {
   refId?: Id;
 }
 
+/**
+ * What this save has heard from the dialogue library: ids and when, bounded,
+ * never the text. Selection weights away from what has been heard.
+ */
+export interface DialogueState {
+  version: 1;
+  seen: Record<string, { n: number; at: Instant }>;
+}
+
 export interface SceneState {
   version: 2;
   /** The one scene in the foreground, if any. */
@@ -1624,7 +1974,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 30;
+export const SAVE_SCHEMA_VERSION = 42;
 
 export interface SaveMeta {
   id: Id;
@@ -1691,6 +2041,20 @@ export interface SaveUniverse {
   changeOrders: Record<Id, ChangeOrder>;
 
   vehicles: Record<Id, Vehicle>;
+  vehicleDeals: Record<Id, VehicleDeal>;
+  /** Places in the queue for a marina slip. Absent on a save from before there were queues. */
+  berthWaitlists?: Record<Id, BerthWaitlist>;
+  /** Monthly statements, oldest pruned. Absent on a save from before statements. */
+  accountStatements?: Record<Id, AccountStatement>;
+  /** Transfers the bank makes for you. Absent on a save from before standing orders. */
+  standingOrders?: Record<Id, StandingOrder>;
+  /** Sittings at a table or a counter. Absent on a save from before rooms had staff. */
+  diningVisits?: Record<Id, DiningVisit>;
+  /** Visits to a shop floor. Absent on a save from before shops had a floor. */
+  retailVisits?: Record<Id, RetailVisit>;
+  dates: Record<Id, DateRecord>;
+  /** Absent on a save that has not heard a line yet. */
+  dialogue?: DialogueState;
   vehicleListings: Record<Id, VehicleListing>;
   vehicleModifications: Record<Id, VehicleModification>;
   serviceRecords: Record<Id, ServiceRecord>;
@@ -1702,6 +2066,7 @@ export interface SaveUniverse {
 
   healthProviders: Record<Id, HealthProvider>;
   appointments: Record<Id, Appointment>;
+  prescriptions?: Record<Id, Prescription>;
   insurancePolicies: Record<Id, InsurancePolicy>;
   insuranceClaims: Record<Id, InsuranceClaim>;
   courses: Record<Id, Course>;

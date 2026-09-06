@@ -1,4 +1,5 @@
 import { titleCaseLabel } from '@/engine/core/text';
+import { dockFeetOf, garageSpacesOf, hasDriveway } from '@/engine/systems/storage';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
@@ -7,12 +8,17 @@ import { CITIES, NEIGHBOURHOODS } from '@/engine/content/geography';
 import { CATALOG } from '@/engine/content/catalog';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import type { ConstructionPhase, ConstructionProject } from '@/engine/domain/model';
-import { formatDate } from '@/engine/core/time';
+import { MS_HOUR, formatDate, tomorrowAt } from '@/engine/core/time';
+import { activeScene } from '@/engine/systems/scenes';
+import { POSTPONE_DAYS, canPostpone, closingNumbers, furnishable, roomsFor } from '@/engine/systems/purchase';
+import type { PropertyOffer } from '@/engine/domain/model';
 
 type Tab = 'owned' | 'market' | 'offers' | 'build' | 'interiors';
 
 export function PropertyWorkspace() {
   const { sim, run } = useGame();
+  const scene = useWorld(activeScene);
+  const here = (offer: PropertyOffer) => sim.universe.properties[offer.propertyId]?.locationId === sim.player.currentLocationId;
   const [tab, setTab] = useState<Tab>('owned');
 
   const owned = useWorld((s) => Object.values(s.universe.properties)
@@ -63,23 +69,36 @@ export function PropertyWorkspace() {
                 title={property.addressLine}
                 subtitle={`${titleCaseLabel(property.kind.replace(/_/g, ' '))} · ${CITIES.get(property.locationId)?.name}${property.neighbourhoodId ? ` · ${NEIGHBOURHOODS.get(property.neighbourhoodId)?.name}` : ''}`}
                 actions={
-                  property.ownerId === sim.player.id ? (
-                    <button
-                      className="btn btn-sm"
-                      onClick={() => run('prop.list_for_sale', { propertyId: property.id, askingPrice: property.marketValue })}
-                    >
-                      List For Sale
-                    </button>
-                  ) : undefined
+                  <div className="row wrap gap-1">
+                    {property.ownerId === sim.player.id && sim.player.residenceId !== property.id && (
+                      <>
+                        <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !furnishable(sim, property.id).ok} title={furnishable(sim, property.id).reason} onClick={() => run('scene.start', { definitionId: 'property.movein', input: { propertyId: property.id }, refType: 'property', refId: property.id })}>Move In</button>
+                        <button className="btn btn-sm" onClick={() => run('prop.move_in', { propertyId: property.id }, { idempotencyKey: `movein:${property.id}` })}>Just Move In</button>
+                      </>
+                    )}
+                    {sim.player.residenceId === property.id && roomsFor(sim, property.id).length > 0 && (
+                      <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !furnishable(sim, property.id).ok} title={furnishable(sim, property.id).reason} onClick={() => run('scene.start', { definitionId: 'property.movein', input: { propertyId: property.id }, refType: 'property', refId: property.id })}>Furnish It</button>
+                    )}
+                    {property.ownerId === sim.player.id && (
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => run('prop.list_for_sale', { propertyId: property.id, askingPrice: property.marketValue })}
+                      >
+                        List For Sale
+                      </button>
+                    )}
+                  </div>
                 }
               >
                 <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
-                  <Stat label="Tenure" value={property.tenure} />
+                  <Stat label="Tenure" value={titleCaseLabel(property.tenure.replace(/_/g, ' '))} />
                   <Stat label="Value" value={<MoneyText amount={property.marketValue} compact />} />
                   <Stat label="Size" value={`${property.interiorSqft.toLocaleString('en-US')} sq ft`} note={`${property.bedrooms} bed · ${property.bathrooms} bath`} />
                   {property.monthlyRent && property.tenure === 'rented' && (
                     <Stat label="Rent" value={<span className="mono">{formatMoney(property.monthlyRent)}/mo</span>} />
                   )}
+                  <Stat label="Garage" value={garageSpacesOf(sim, property) > 0 ? `${garageSpacesOf(sim, property)} Space${garageSpacesOf(sim, property) === 1 ? '' : 's'}` : 'None'} note={hasDriveway(property) ? 'And a driveway' : undefined} />
+                  {dockFeetOf(property) > 0 && <Stat label="Dock" value={`Up To ${dockFeetOf(property)} Ft`} note="A private dock. A boat kept here costs nothing a month." />}
                 </div>
                 <div className="col gap-3">
                   <Meter label="Condition" value={property.condition} hint="Decays slowly without maintenance." />
@@ -126,13 +145,17 @@ export function PropertyWorkspace() {
                       <div className="xs dim">or {formatMoney(property.monthlyRent)}/mo</div>
                     )}
                   </div>
-                  <div className="row gap-1">
+                  <div className="row gap-1 wrap" style={{ justifyContent: 'flex-end' }}>
                     {property.monthlyRent && (
                       <button className="btn btn-sm" onClick={() => run('prop.rent', { propertyId: property.id, months: 12 })}>
                         Rent
                       </button>
                     )}
-                    <button className="btn btn-sm btn-primary" onClick={() => setOfferFor(listing.id)}>Offer</button>
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} title={listing.viewedByPlayer ? 'You have seen it. Go again if you like.' : undefined} onClick={() => run('scene.start', { definitionId: 'property.viewing', input: { listingId: listing.id }, refType: 'listing', refId: listing.id })}>
+                      {listing.viewedByPlayer ? 'See It Again' : 'View It Now'}
+                    </button>
+                    <button className="btn btn-sm" onClick={() => run('prop.book_showing', { listingId: listing.id, at: tomorrowAt(sim.now, 11, sim.homeZone) })}>Book A Viewing</button>
+                    <button className="btn btn-sm" onClick={() => setOfferFor(listing.id)}>Offer</button>
                   </div>
                 </div>
               ))}
@@ -165,24 +188,49 @@ export function PropertyWorkspace() {
 
                     {offer.status === 'countered' && (
                       <div className="callout callout-warning" style={{ marginTop: 'var(--s2)' }}>
-                        They came back at {formatMoney(offer.counterAmount ?? 0)}.
-                        <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
-                          <button className="btn btn-sm btn-primary" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: true })}>Accept</button>
+                        They came back at {formatMoney(offer.counterAmount ?? 0)}. They will wait until {formatDate(offer.respondBy, sim.homeZone)}.
+                        <div className="row wrap gap-2" style={{ marginTop: 'var(--s2)' }}>
+                          <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'property.counter', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Take The Call</button>
+                          <button className="btn btn-sm" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: true })}>Accept</button>
                           <button className="btn btn-sm" onClick={() => run('prop.respond_to_counter', { offerId: offer.id, accept: false })}>Walk Away</button>
                         </div>
                       </div>
                     )}
 
-                    {offer.inspectionFindings && offer.inspectionFindings.length > 0 && (
+                    {offer.inspectionFindings && (
                       <div className="callout" style={{ marginTop: 'var(--s2)' }}>
-                        <strong className="small">Inspection found:</strong>
-                        <ul className="xs" style={{ margin: '4px 0 0', paddingLeft: 'var(--s4)' }}>
-                          {offer.inspectionFindings.map((finding, i) => (
-                            <li key={i}>
-                              {finding.item} — {finding.severity}, about {formatMoney(finding.estimate, { cents: false })}
-                            </li>
-                          ))}
-                        </ul>
+                        <strong className="small">{offer.inspectionFindings.length === 0 ? 'A clean inspection.' : 'Inspection found:'}</strong>
+                        {offer.inspectionFindings.length > 0 && (
+                          <ul className="xs" style={{ margin: '4px 0 0', paddingLeft: 'var(--s4)' }}>
+                            {offer.inspectionFindings.map((finding, i) => (
+                              <li key={i}>
+                                {finding.item} — {finding.severity}, about {formatMoney(finding.estimate, { cents: false })}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {offer.status === 'accepted' && !offer.inspectionDecidedAt && (
+                          <div className="row wrap gap-2" style={{ marginTop: 'var(--s2)' }}>
+                            <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !here(offer)} title={here(offer) ? undefined : 'You are not in the city the house is in.'} onClick={() => run('scene.start', { definitionId: 'property.inspection', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Walk It With The Inspector</button>
+                            <button className="btn btn-sm" disabled={Boolean(scene)} onClick={() => run('scene.quick', { definitionId: 'property.inspection', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Read The Report</button>
+                            <button className="btn btn-sm" onClick={() => run('prop.inspection_decision', { offerId: offer.id, proceed: true })}>Proceed Anyway</button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {offer.status === 'accepted' && offer.closingAt && (
+                      <div className={`callout ${sim.now >= offer.closingAt - 12 * MS_HOUR ? 'callout-warning' : ''}`} style={{ marginTop: 'var(--s2)' }}>
+                        {sim.now >= offer.closingAt - 12 * MS_HOUR
+                          ? `Closing day. ${formatMoney(closingNumbers(sim, offer).cashToClose)} to close${closingNumbers(sim, offer).shortfall > 0 ? `; you are ${formatMoney(closingNumbers(sim, offer).shortfall)} short` : ''}.`
+                          : `Closing is set for ${formatDate(offer.closingAt, sim.homeZone)}.${offer.appraisalGap ? ` The appraisal came in short; you bring ${formatMoney(offer.appraisalGap)} more to the table.` : ''}`}
+                        {sim.now >= offer.closingAt - 12 * MS_HOUR && (
+                          <div className="row wrap gap-2" style={{ marginTop: 'var(--s2)' }}>
+                            <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !here(offer)} title={here(offer) ? undefined : 'You are not in the city the house is in.'} onClick={() => run('scene.start', { definitionId: 'property.closing', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Sit At The Table</button>
+                            <button className="btn btn-sm" onClick={() => run('prop.close', { offerId: offer.id }, { idempotencyKey: `close:${offer.id}` })}>Sign Remotely</button>
+                            {canPostpone(offer) && <button className="btn btn-sm" onClick={() => run('prop.postpone_closing', { offerId: offer.id })}>Ask For {POSTPONE_DAYS} More Days</button>}
+                          </div>
+                        )}
                       </div>
                     )}
 

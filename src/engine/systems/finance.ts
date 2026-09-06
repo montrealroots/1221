@@ -9,6 +9,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
+import { countWithdrawal } from './banking';
 import type { Account } from '../core/ledger';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
@@ -80,6 +81,18 @@ export function offeredApr(score: number, product: 'card' | 'auto' | 'mortgage' 
 }
 
 /** Standard amortising payment for a loan. */
+/**
+ * Why a lender would say no before the paperwork: the score they want for
+ * the product. Read by the screens that offer finance, so a choice that
+ * will be refused is closed with the reason rather than failing when pressed.
+ */
+export function loanRefusal(sim: Simulation, borrowerId: Id, product: 'card' | 'auto' | 'mortgage' | 'personal'): string | undefined {
+  const score = sim.universe.creditProfiles[borrowerId]?.score ?? 600;
+  const minimum = product === 'mortgage' ? 620 : product === 'auto' ? 580 : 600;
+  if (score < minimum) return `A ${product} loan needs a score of at least ${minimum}. Yours is ${score}.`;
+  return undefined;
+}
+
 export function amortisedPayment(principal: Money, annualRate: number, months: number): Money {
   if (months <= 0) return principal;
   if (annualRate <= 0) return Math.ceil(principal / months);
@@ -101,9 +114,10 @@ export function registerFinance(sim: Simulation): void {
     attemptBillPayment(sim, bill);
   });
 
-  // --- Scheduled: monthly interest and statement --------------------------
+  // --- Scheduled: the month turns over -------------------------------------
+  // Interest, fees and statements are the banking system's (see banking.ts);
+  // what is left here is the score, which is read from all of it.
   sim.onSchedule('finance.month_close', () => {
-    accrueInterest(sim);
     for (const person of Object.values(sim.universe.people)) {
       if (person.isPlayer || person.tier === 'full') recomputeCreditScore(sim, person.id);
     }
@@ -165,6 +179,8 @@ export function registerFinance(sim: Simulation): void {
         );
       }
       const txn = s.transfer(p.fromAccountId, p.toAccountId, p.amount, p.memo ?? 'Transfer', 'transfer');
+      // A savings product counts what leaves it, and charges past the allowance.
+      countWithdrawal(s, p.fromAccountId);
       return { transactionId: txn.id };
     },
   );
@@ -190,12 +206,10 @@ export function registerFinance(sim: Simulation): void {
   sim.onCommand<{ borrowerId: Id; principal: Money; months: number; product: 'auto' | 'mortgage' | 'personal'; depositAccountId?: Id; refType?: string; refId?: Id; name?: string }, { accountId: Id; monthlyPayment: Money; apr: number }>(
     'finance.take_loan',
     (p, { sim: s }) => {
+      const refusal = loanRefusal(s, p.borrowerId, p.product);
+      if (refusal) throw new CommandError(refusal);
       const profile = s.universe.creditProfiles[p.borrowerId];
       const score = profile?.score ?? 600;
-      const minimum = p.product === 'mortgage' ? 620 : p.product === 'auto' ? 580 : 600;
-      if (score < minimum) {
-        throw new CommandError(`A ${p.product} loan needs a score of at least ${minimum}. Yours is ${score}.`);
-      }
       const apr = offeredApr(score, p.product);
       const monthlyPayment = amortisedPayment(p.principal, apr, p.months);
 
@@ -364,7 +378,7 @@ export function attemptBillPayment(sim: Simulation, bill: Bill): void {
     sim.requireDecision({
       urgency: Math.min(95, 55 + bill.missedCount * 15),
       category: 'finance',
-      title: `${bill.name} is unpaid`,
+      title: `${bill.name} Is Unpaid`,
       detail: `${formatMoney(bill.amount)} was due and there were not enough available funds. ${bill.missedCount >= 3 ? 'This has now gone to collections.' : `Missed ${bill.missedCount} time${bill.missedCount === 1 ? '' : 's'}.`}`,
       route: '/workspace/bank',
       actions: [{ label: 'Pay Now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
@@ -406,7 +420,7 @@ export function payBill(sim: Simulation, bill: Bill, accountId: Id, manual: bool
         debt.closedAt = sim.now;
         bill.active = false;
         sim.remember({
-          category: 'finance', title: `Paid off ${debt.name}`,
+          category: 'finance', title: `Paid Off ${debt.name}`,
           detail: `${debt.name} is settled in full.`,
           refs: [{ type: 'account', id: debt.id }], significance: 55, public: false,
         });
@@ -495,7 +509,7 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
     sim.income(accountId, record.balance, `${year} tax refund`, 'tax', { refType: 'tax', refId: record.id });
     sim.notify({
       category: 'finance',
-      title: `${year} tax refund`,
+      title: `${year} Tax Refund`,
       body: `You overpaid by ${formatMoney(record.balance)}. It has been deposited.`,
       route: '/workspace/bank',
       importance: 45,
@@ -505,14 +519,14 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
     if (sim.ledger.availableFunds(accountId) >= owed) {
       sim.expense(accountId, owed, `${year} tax payment`, 'tax', { refType: 'tax', refId: record.id });
       sim.notify({
-        category: 'finance', title: `${year} taxes paid`,
+        category: 'finance', title: `${year} Taxes Paid`,
         body: `You owed ${formatMoney(owed)} beyond what was withheld. It has been paid.`,
         route: '/workspace/bank', importance: 55,
       });
     } else {
       sim.requireDecision({
         urgency: 88, category: 'finance',
-        title: `${year} taxes owed`,
+        title: `${year} Taxes Owed`,
         detail: `You owe ${formatMoney(owed)} that was not withheld and cannot cover it from your primary account.`,
         route: '/workspace/bank',
         refType: 'tax', refId: record.id,
@@ -524,6 +538,11 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
 }
 
 /** Monthly interest on revolving debt and interest earned on savings. */
+/**
+ * Interest the old way, for anything the banking system does not close: kept
+ * so a save that never reaches a month boundary in a test still behaves, and
+ * so nothing that called this breaks. New months go through `closeMonth`.
+ */
 export function accrueInterest(sim: Simulation): void {
   for (const account of Object.values(sim.universe.accounts)) {
     if (account.nominal || account.closedAt) continue;

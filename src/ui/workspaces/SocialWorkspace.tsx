@@ -1,11 +1,14 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { activeScene } from '@/engine/systems/scenes';
 import { Panel, Stat, Meter, Empty, Modal } from '@/ui/components/primitives';
 import { PLATFORMS, PLATFORM_BY_ID, accountSummary, sponsorshipRate, computePostQuality } from '@/engine/systems/media';
 import type { PostFormat } from '@/engine/domain/model';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate, formatTime } from '@/engine/core/time';
+
+const REACTION_LABEL: Record<'hit' | 'fine' | 'flop', string> = { hit: 'A Hit', fine: 'Fine', flop: 'A Flop' };
 
 export function SocialWorkspace() {
   const { sim, run } = useGame();
@@ -13,6 +16,7 @@ export function SocialWorkspace() {
   const deals = useWorld((s) => Object.values(s.universe.brandDeals).filter((d) => d.personId === s.player.id).sort((a, b) => b.offeredAt - a.offeredAt));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [posting, setPosting] = useState(false);
+  const scene = useWorld(activeScene);
 
   const selected = accounts.find((a) => a.id === selectedId) ?? accounts[0];
   const summary = useWorld((s) => (selected ? accountSummary(s, selected.id) : undefined));
@@ -104,7 +108,10 @@ export function SocialWorkspace() {
                   <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
                     {PLATFORM_BY_ID[selected.platform].bestFor}
                   </p>
-                  <button className="btn btn-primary" style={{ marginTop: 'var(--s3)' }} onClick={() => setPosting(true)}>
+                  <button className="btn btn-primary" style={{ marginTop: 'var(--s3)', marginRight: 'var(--s2)' }} disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'social.compose', input: { accountId: selected.id } })}>
+                    Compose It
+                  </button>
+                  <button className="btn" style={{ marginTop: 'var(--s3)' }} onClick={() => setPosting(true)}>
                     Make A Post
                   </button>
                 </Panel>
@@ -125,6 +132,17 @@ export function SocialWorkspace() {
                             {titleCaseLabel(post.format.replace(/_/g, ' '))} · quality {post.quality} ·{' '}
                             {formatDate(post.postedAt, sim.homeZone)} at {formatTime(post.postedAt, sim.homeZone)}
                           </div>
+                          {post.reactions ? (
+                            <div className="xs" style={{ marginTop: 4 }}>
+                              <span className={`chip ${post.reactions.band === 'hit' ? 'chip-accent' : ''}`}>{REACTION_LABEL[post.reactions.band]}</span>{' '}
+                              <span className="muted">{post.reactions.summary}</span>
+                              {post.reactions.comments.length > 0 && (
+                                <div className="dim" style={{ marginTop: 2 }}>{post.reactions.comments.map((c) => `“${c}”`).join(' · ')}</div>
+                              )}
+                            </div>
+                          ) : post.status === 'published' ? (
+                            <div className="xs muted" style={{ marginTop: 4 }}>The audience gets a day.</div>
+                          ) : null}
                         </div>
                         <div style={{ textAlign: 'right' }}>
                           <div className="mono small">{post.metrics.impressions.toLocaleString('en-US')}</div>

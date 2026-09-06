@@ -14,6 +14,11 @@ import { addDays, MS_HOUR, MS_MINUTE, zoneOffsetMs } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { AIRPORTS, CITIES, cityDistanceKm, nearestAirport } from '../content/geography';
 import { costOfLiving } from '../content/tax';
+import type { Vehicle } from '../domain/model';
+import { addMileage, craftOf, hourlyCostOf, requireInHand, vehicleKind } from './vehicles';
+
+/** Landing, handling and parking at the far end, before cost of living. SLATE's own. */
+const LANDING_FEES: Money = 650_00;
 
 export interface FlightOption {
   airlineCode: string;
@@ -29,27 +34,87 @@ export interface FlightOption {
   refundableSurcharge: number;
 }
 
-const AIRLINES: { code: string; name: string; quality: number }[] = [
-  { code: 'MR', name: 'Meridian Air', quality: 82 },
-  { code: 'NC', name: 'Northern Cross', quality: 74 },
-  { code: 'PA', name: 'Pacifica Airways', quality: 68 },
-  { code: 'AT', name: 'Atlantic Union', quality: 71 },
-  { code: 'SK', name: 'Skyline Direct', quality: 54 },
+/**
+ * Real airlines. Name, IATA code and home country are public record; the
+ * quality figure is SLATE's own calibration of cabin and reliability, and
+ * every route, schedule and fare the game shows is SLATE's own, not the
+ * airline's. A route is flown by the home carriers of either end and, on
+ * long haul, by the carriers that connect the world through their hubs.
+ */
+export interface Airline { code: string; name: string; countryId: string; quality: number; longHaul: boolean }
+
+export const AIRLINES: readonly Airline[] = [
+  { code: 'DL', name: 'Delta Air Lines', countryId: 'us', quality: 76, longHaul: true },
+  { code: 'UA', name: 'United Airlines', countryId: 'us', quality: 72, longHaul: true },
+  { code: 'AA', name: 'American Airlines', countryId: 'us', quality: 70, longHaul: true },
+  { code: 'B6', name: 'JetBlue', countryId: 'us', quality: 71, longHaul: false },
+  { code: 'WN', name: 'Southwest Airlines', countryId: 'us', quality: 66, longHaul: false },
+  { code: 'AS', name: 'Alaska Airlines', countryId: 'us', quality: 74, longHaul: false },
+  { code: 'AC', name: 'Air Canada', countryId: 'ca', quality: 72, longHaul: true },
+  { code: 'BA', name: 'British Airways', countryId: 'gb', quality: 74, longHaul: true },
+  { code: 'VS', name: 'Virgin Atlantic', countryId: 'gb', quality: 77, longHaul: true },
+  { code: 'U2', name: 'easyJet', countryId: 'gb', quality: 60, longHaul: false },
+  { code: 'FR', name: 'Ryanair', countryId: 'ie', quality: 52, longHaul: false },
+  { code: 'AF', name: 'Air France', countryId: 'fr', quality: 75, longHaul: true },
+  { code: 'KL', name: 'KLM', countryId: 'nl', quality: 76, longHaul: true },
+  { code: 'LH', name: 'Lufthansa', countryId: 'de', quality: 77, longHaul: true },
+  { code: 'IB', name: 'Iberia', countryId: 'es', quality: 70, longHaul: true },
+  { code: 'AZ', name: 'ITA Airways', countryId: 'it', quality: 68, longHaul: true },
+  { code: 'TK', name: 'Turkish Airlines', countryId: 'tr', quality: 78, longHaul: true },
+  { code: 'EK', name: 'Emirates', countryId: 'ae', quality: 86, longHaul: true },
+  { code: 'QR', name: 'Qatar Airways', countryId: 'qa', quality: 88, longHaul: true },
+  { code: 'SQ', name: 'Singapore Airlines', countryId: 'sg', quality: 90, longHaul: true },
+  { code: 'CX', name: 'Cathay Pacific', countryId: 'hk', quality: 84, longHaul: true },
+  { code: 'JL', name: 'Japan Airlines', countryId: 'jp', quality: 85, longHaul: true },
+  { code: 'NH', name: 'ANA', countryId: 'jp', quality: 86, longHaul: true },
+  { code: 'KE', name: 'Korean Air', countryId: 'kr', quality: 80, longHaul: true },
+  { code: 'QF', name: 'Qantas', countryId: 'au', quality: 80, longHaul: true },
+  { code: 'NZ', name: 'Air New Zealand', countryId: 'nz', quality: 82, longHaul: true },
+  { code: 'LA', name: 'LATAM Airlines', countryId: 'cl', quality: 70, longHaul: true },
+  { code: 'AM', name: 'Aeroméxico', countryId: 'mx', quality: 68, longHaul: true },
+  { code: 'ET', name: 'Ethiopian Airlines', countryId: 'et', quality: 71, longHaul: true },
+  { code: 'SA', name: 'South African Airways', countryId: 'za', quality: 66, longHaul: true },
+  { code: 'AI', name: 'Air India', countryId: 'in', quality: 62, longHaul: true },
+  { code: '6E', name: 'IndiGo', countryId: 'in', quality: 66, longHaul: false },
 ];
+
+/** The carriers that would plausibly fly a route: home carriers of either end first, then the world's connectors on long haul. */
+export function airlinesFor(fromCountryId: string | undefined, toCountryId: string | undefined, km: number): Airline[] {
+  const home = AIRLINES.filter((a) => a.countryId === fromCountryId || a.countryId === toCountryId);
+  const domestic = fromCountryId === toCountryId;
+  const pool = domestic ? home : [...home, ...AIRLINES.filter((a) => a.longHaul && !home.includes(a))];
+  const usable = km > 3500 ? pool.filter((a) => a.longHaul) : pool;
+  return usable.length > 0 ? usable : AIRLINES.filter((a) => a.longHaul);
+}
+
+/** What the Travel screen says beside a real name. */
+export const REAL_CARRIER_NOTE = 'A real airline. The route, the schedule and the fare are SLATE\'s own.';
+export const REAL_HOTEL_NOTE = 'A real hotel brand. The property, the rate and the room are SLATE\'s own.';
+export const REAL_JET_NOTE = 'A real aircraft type; seats, range and runway are manufacturer figures, rounded. The hourly rate is SLATE\'s own.';
 
 const CABIN_MULTIPLIER: Record<FlightBooking['cabin'], number> = {
   economy: 1, premium_economy: 1.85, business: 4.2, first: 8.5, private: 0,
 };
 
+/**
+ * Real aircraft types for charter. Seats, range and runway are the makers'
+ * published figures, rounded; the hourly rate is SLATE's own calibration of
+ * the charter market, not a quote from anyone.
+ */
 const PRIVATE_AIRCRAFT = [
-  { id: 'light_jet', name: 'Light Jet', seats: 7, rangeKm: 3200, hourlyRate: 4_200_00, runwayFeet: 4500 },
-  { id: 'midsize_jet', name: 'Midsize Jet', seats: 9, rangeKm: 5600, hourlyRate: 6_800_00, runwayFeet: 5200 },
-  { id: 'heavy_jet', name: 'Heavy Jet', seats: 14, rangeKm: 11000, hourlyRate: 11_500_00, runwayFeet: 6000 },
-  { id: 'ultra_long', name: 'Ultra Long Range', seats: 16, rangeKm: 14800, hourlyRate: 16_400_00, runwayFeet: 6500 },
+  { id: 'phenom_300', name: 'Embraer Phenom 300', category: 'Light Jet', seats: 7, rangeKm: 3700, hourlyRate: 4_200_00, runwayFeet: 3200 },
+  { id: 'citation_latitude', name: 'Cessna Citation Latitude', category: 'Midsize Jet', seats: 9, rangeKm: 5000, hourlyRate: 6_300_00, runwayFeet: 3600 },
+  { id: 'challenger_350', name: 'Bombardier Challenger 350', category: 'Super Midsize Jet', seats: 10, rangeKm: 5900, hourlyRate: 7_800_00, runwayFeet: 4800 },
+  { id: 'g650er', name: 'Gulfstream G650ER', category: 'Ultra Long Range', seats: 19, rangeKm: 13900, hourlyRate: 15_500_00, runwayFeet: 6000 },
+  { id: 'global_7500', name: 'Bombardier Global 7500', category: 'Ultra Long Range', seats: 19, rangeKm: 14200, hourlyRate: 16_400_00, runwayFeet: 5800 },
 ] as const;
 
 export function registerTravel(sim: Simulation): void {
-  sim.onSchedule('travel.depart', (item) => departFlight(sim, item.payload.bookingId as Id));
+  // Three hours before a flight is the journey system's to ask about: play the
+  // day, just go, or stay home. Somebody else's flight simply departs.
+  sim.onSchedule('travel.depart', (item) => {
+    sim.emit('travel.departure_due', { bookingId: item.payload.bookingId, itemId: item.id });
+  });
   sim.onSchedule('travel.arrive', (item) => arriveFlight(sim, item.payload.bookingId as Id));
   sim.onSchedule('travel.check_in', (item) => checkIntoHotel(sim, item.payload.bookingId as Id));
   sim.onSchedule('travel.check_out', (item) => checkOutOfHotel(sim, item.payload.bookingId as Id));
@@ -139,70 +204,26 @@ export function registerTravel(sim: Simulation): void {
       }
       s.expense(accountId, total, `${option.airlineName} ${option.flightNumber}`, 'travel');
 
-      const booking: FlightBooking = {
-        id: s.nextId('flight'),
-        saveId: s.universe.meta.id,
-        tripId: p.tripId,
-        passengerIds: passengers,
-        airlineCode: option.airlineCode,
-        airlineName: option.airlineName,
-        flightNumber: option.flightNumber,
-        fromAirport: option.fromAirport,
-        toAirport: option.toAirport,
-        departAt: option.departAt,
-        arriveAt: option.arriveAt,
-        cabin: p.cabin,
-        seats: passengers.map((_, i) => `${12 + i}${'ABCDEF'[i % 6]}`),
-        fare,
-        taxesFees: taxes,
-        bags: passengers.length,
-        status: 'booked',
-        refundable: p.refundable ?? false,
-        loyaltyMilesEarned: Math.round(cityDistanceKm(fromCity, p.toCityId) * 0.62 * (p.cabin === 'business' ? 1.5 : p.cabin === 'first' ? 2 : 1)),
-        bookedAt: s.now,
-      };
-      s.universe.flightBookings[booking.id] = booking;
-
-      if (p.tripId) {
-        const trip = s.universe.trips[p.tripId];
-        if (trip) { trip.bookingIds.push(booking.id); trip.spent += total; trip.status = 'booked'; }
-      }
-
-      // Getting to the airport is part of the commitment.
-      s.schedule({
-        at: option.departAt - 2 * MS_HOUR,
-        kind: 'travel.depart',
-        label: `${option.airlineName} ${option.flightNumber} To ${CITIES.require(p.toCityId).name}`,
-        category: 'travel',
-        payload: { bookingId: booking.id },
-        priority: 15,
-        refType: 'flight', refId: booking.id,
-        requiresPlayer: passengers.includes(player.id),
-        locationId: fromCity,
-        durationMinutes: Math.round((option.arriveAt - option.departAt) / MS_MINUTE) + 120,
-      });
-      s.schedule({
-        at: option.arriveAt,
-        kind: 'travel.arrive',
-        label: `Arrive In ${CITIES.require(p.toCityId).name}`,
-        category: 'travel',
-        payload: { bookingId: booking.id },
-        priority: 15,
-        refType: 'flight', refId: booking.id,
-      });
-
+      const booking = createFlightBooking(s, { fromCity, toCity: p.toCityId, option, cabin: p.cabin, passengers, fare, taxes, refundable: p.refundable ?? false, tripId: p.tripId });
       s.emit('travel.flight_booked', { bookingId: booking.id, fromCity, toCity: p.toCityId, cabin: p.cabin, total });
       return { bookingId: booking.id, fare: total, arriveAt: option.arriveAt };
     },
   );
 
-  sim.onCommand<{ toCityId: string; departAt: number; aircraftId: string; passengerIds?: Id[]; accountId?: Id }, { bookingId: Id; cost: Money; arriveAt: number }>(
+  sim.onCommand<{ toCityId: string; departAt: number; aircraftId?: string; vehicleId?: Id; passengerIds?: Id[]; accountId?: Id }, { bookingId: Id; cost: Money; arriveAt: number }>(
     'travel.charter_private',
     (p, { sim: s }) => {
       const player = s.player;
       const fromCity = player.currentLocationId;
-      const aircraft = PRIVATE_AIRCRAFT.find((a) => a.id === p.aircraftId);
+      // Your own aircraft flies at what it costs to run; a charter flies at
+      // the market's rate. Either way the route is checked against the
+      // aircraft, not the price.
+      const owned = p.vehicleId ? ownedAircraft(s, p.vehicleId) : undefined;
+      const aircraft = owned
+        ? ownedAsAircraft(s, owned)
+        : PRIVATE_AIRCRAFT.find((a) => a.id === p.aircraftId);
       if (!aircraft) throw new CommandError('No such aircraft type.');
+      if (owned && (owned.locationId ?? fromCity) !== fromCity) throw new CommandError(`The ${owned.make} ${owned.model} is in ${CITIES.get(owned.locationId ?? '')?.name ?? 'another city'}.`);
 
       const distance = cityDistanceKm(fromCity, p.toCityId);
       if (distance > aircraft.rangeKm) {
@@ -213,6 +234,7 @@ export function registerTravel(sim: Simulation): void {
 
       const fromAirportId = nearestAirport(fromCity);
       const toAirportId = nearestAirport(p.toCityId);
+      const fromAirport = fromAirportId ? AIRPORTS.get(fromAirportId) : undefined;
       const toAirport = toAirportId ? AIRPORTS.get(toAirportId) : undefined;
       if (toAirport && toAirport.runwayFeet < aircraft.runwayFeet) {
         throw new CommandError(
@@ -224,13 +246,17 @@ export function registerTravel(sim: Simulation): void {
       if (passengers.length > aircraft.seats) throw new CommandError(`A ${aircraft.name} seats ${aircraft.seats}.`);
 
       const hours = distance / 800 + 0.6;
-      const cost = Math.round(aircraft.hourlyRate * hours * 1.18);
+      const cost = owned
+        ? Math.round(aircraft.hourlyRate * hours + LANDING_FEES * costOfLiving(p.toCityId))
+        : Math.round(aircraft.hourlyRate * hours * 1.18);
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`Chartering a ${aircraft.name} on that route is about ${formatMoney(cost)}.`);
+        throw new CommandError(owned
+          ? `Flying the ${aircraft.name} there is about ${formatMoney(cost)} in fuel, crew and fees.`
+          : `Chartering a ${aircraft.name} on that route is about ${formatMoney(cost)}.`);
       }
-      s.expense(accountId, cost, `Private charter — ${aircraft.name}`, 'travel');
+      s.expense(accountId, cost, owned ? `Flight — ${aircraft.name}` : `Private charter — ${aircraft.name}`, 'travel', owned ? { refType: 'vehicle', refId: owned.id } : undefined);
 
       const arriveAt = p.departAt + Math.round(hours * MS_HOUR);
       const booking: FlightBooking = {
@@ -238,10 +264,13 @@ export function registerTravel(sim: Simulation): void {
         saveId: s.universe.meta.id,
         passengerIds: passengers,
         airlineCode: 'PVT',
-        airlineName: `Private charter (${aircraft.name})`,
+        airlineName: owned ? (owned.nickname ? owned.nickname : `Your ${aircraft.name}`) : `Private charter (${aircraft.name})`,
         flightNumber: `PVT${s.counter('charter')}`,
-        fromAirport: fromAirportId ?? '',
-        toAirport: toAirportId ?? '',
+        vehicleId: owned?.id,
+        // The codes, as an airline booking carries them, so the day reads
+        // the same city off either kind of booking.
+        fromAirport: fromAirport?.iata ?? fromAirportId ?? '',
+        toAirport: toAirport?.iata ?? toAirportId ?? '',
         departAt: p.departAt,
         arriveAt,
         cabin: 'private',
@@ -259,7 +288,7 @@ export function registerTravel(sim: Simulation): void {
       s.schedule({
         at: p.departAt - 25 * MS_MINUTE,
         kind: 'travel.depart',
-        label: `Private Charter To ${CITIES.require(p.toCityId).name}`,
+        label: `${owned ? 'Fly' : 'Private Charter'} To ${CITIES.require(p.toCityId).name}`,
         category: 'travel',
         payload: { bookingId: booking.id },
         priority: 15,
@@ -275,7 +304,7 @@ export function registerTravel(sim: Simulation): void {
         refType: 'flight', refId: booking.id,
       });
 
-      s.emit('travel.charter_booked', { bookingId: booking.id, aircraft: aircraft.id, cost, toCity: p.toCityId });
+      s.emit('travel.charter_booked', { bookingId: booking.id, aircraft: aircraft.id, cost, toCity: p.toCityId, vehicleId: owned?.id });
       return { bookingId: booking.id, cost, arriveAt };
     },
   );
@@ -300,7 +329,8 @@ export function registerTravel(sim: Simulation): void {
       }
       s.expense(accountId, total + taxes, `Hotel — ${city.name}`, 'travel');
 
-      const hotelNames = ['The Meridian', 'Harbourstone House', 'The Lantern', 'Kestrel Hotel', 'The Northfield'];
+      // Real hotel brands, chosen by the room you asked for; the property and the rate are SLATE's own.
+      const hotelNames = HOTEL_BRANDS[p.roomClass];
       const booking: HotelBooking = {
         id: s.nextId('stay'),
         saveId: s.universe.meta.id,
@@ -355,6 +385,7 @@ export function registerTravel(sim: Simulation): void {
 
       booking.status = booking.refundable ? 'refunded' : 'cancelled';
       s.timeline.cancelFor('flight', booking.id, s.now);
+      s.resolveDecision('flight', booking.id);
       if (refund > 0) {
         const accountId = s.player.primaryAccountId;
         if (accountId) s.income(accountId, refund, `Refund — ${booking.airlineName} ${booking.flightNumber}`, 'travel', { refType: 'flight', refId: booking.id });
@@ -364,6 +395,14 @@ export function registerTravel(sim: Simulation): void {
     },
   );
 }
+
+/** Real hotel brands by the kind of room. Names are public record; every property, rate and room is SLATE's own. */
+export const HOTEL_BRANDS: Readonly<Record<HotelBooking['roomClass'], readonly string[]>> = {
+  standard: ['Holiday Inn Express', 'Hampton by Hilton', 'ibis', 'Premier Inn', 'Courtyard by Marriott'],
+  deluxe: ['Hilton', 'Marriott', 'Hyatt Regency', 'Novotel', 'Sheraton'],
+  suite: ['InterContinental', 'Sofitel', 'JW Marriott', 'Conrad', 'Park Hyatt'],
+  penthouse: ['Four Seasons', 'The Ritz-Carlton', 'Mandarin Oriental', 'The Peninsula', 'Waldorf Astoria'],
+};
 
 // ---------------------------------------------------------------------------
 // Mechanics
@@ -389,9 +428,10 @@ export function searchFlights(sim: Simulation, fromCityId: string, toCityId: str
 
   const options: FlightOption[] = [];
   const count = clamp(Math.round(2 + connectivity * 4), 2, 6);
+  const carriers = rng.shuffle([...airlinesFor(CITIES.get(fromCityId)?.countryId, CITIES.get(toCityId)?.countryId, km)]);
 
   for (let i = 0; i < count; i++) {
-    const airline = AIRLINES[i % AIRLINES.length] as (typeof AIRLINES)[number];
+    const airline = carriers[i % carriers.length]!;
     const stops = connectivity > 0.7 && i < 2 ? 0 : rng.chance(0.55 - connectivity * 0.4) ? 1 : 0;
     const duration = baseMinutes + stops * rng.int(75, 190);
     const offsetHours = rng.float(-4, 10) + i * 1.5;
@@ -425,7 +465,68 @@ export function searchFlights(sim: Simulation, fromCityId: string, toCityId: str
   return options.sort((a, b) => a.departAt - b.departAt);
 }
 
-function departFlight(sim: Simulation, bookingId: Id): void {
+/** The booking record and its two calendar items, once the fare is paid. Shared with rebooking and moving a flight. */
+export function createFlightBooking(
+  sim: Simulation,
+  spec: { fromCity: string; toCity: string; option: FlightOption; cabin: FlightBooking['cabin']; passengers: Id[]; fare: Money; taxes: Money; refundable: boolean; tripId?: Id },
+): FlightBooking {
+  const { option, passengers } = spec;
+  const player = sim.player;
+  const booking: FlightBooking = {
+    id: sim.nextId('flight'),
+    saveId: sim.universe.meta.id,
+    tripId: spec.tripId,
+    passengerIds: passengers,
+    airlineCode: option.airlineCode,
+    airlineName: option.airlineName,
+    flightNumber: option.flightNumber,
+    fromAirport: option.fromAirport,
+    toAirport: option.toAirport,
+    departAt: option.departAt,
+    arriveAt: option.arriveAt,
+    cabin: spec.cabin,
+    seats: passengers.map((_, i) => `${12 + i}${'ABCDEF'[i % 6]}`),
+    fare: spec.fare,
+    taxesFees: spec.taxes,
+    bags: passengers.length,
+    status: 'booked',
+    refundable: spec.refundable,
+    loyaltyMilesEarned: Math.round(cityDistanceKm(spec.fromCity, spec.toCity) * 0.62 * (spec.cabin === 'business' ? 1.5 : spec.cabin === 'first' ? 2 : 1)),
+    bookedAt: sim.now,
+  };
+  sim.universe.flightBookings[booking.id] = booking;
+
+  if (spec.tripId) {
+    const trip = sim.universe.trips[spec.tripId];
+    if (trip) { trip.bookingIds.push(booking.id); trip.spent += spec.fare + spec.taxes; trip.status = 'booked'; }
+  }
+
+  // Getting to the airport is part of the commitment: the day asks three hours before.
+  sim.schedule({
+    at: option.departAt - 3 * MS_HOUR,
+    kind: 'travel.depart',
+    label: `${option.airlineName} ${option.flightNumber} To ${CITIES.require(spec.toCity).name}`,
+    category: 'travel',
+    payload: { bookingId: booking.id },
+    priority: 15,
+    refType: 'flight', refId: booking.id,
+    requiresPlayer: passengers.includes(player.id),
+    locationId: spec.fromCity,
+    durationMinutes: Math.round((option.arriveAt - option.departAt) / MS_MINUTE) + 180,
+  });
+  sim.schedule({
+    at: option.arriveAt,
+    kind: 'travel.arrive',
+    label: `Arrive In ${CITIES.require(spec.toCity).name}`,
+    category: 'travel',
+    payload: { bookingId: booking.id },
+    priority: 15,
+    refType: 'flight', refId: booking.id,
+  });
+  return booking;
+}
+
+export function departFlight(sim: Simulation, bookingId: Id): void {
   const booking = sim.universe.flightBookings[bookingId];
   if (!booking || booking.status !== 'booked') return;
   booking.status = 'checked_in';
@@ -437,9 +538,12 @@ function departFlight(sim: Simulation, bookingId: Id): void {
   sim.emit('travel.departed', { bookingId, toAirport: booking.toAirport });
 }
 
-function arriveFlight(sim: Simulation, bookingId: Id): void {
+export function arriveFlight(sim: Simulation, bookingId: Id): void {
   const booking = sim.universe.flightBookings[bookingId];
-  if (!booking || booking.status === 'cancelled') return;
+  if (!booking || booking.status === 'cancelled' || booking.status === 'missed' || booking.status === 'changed' || booking.status === 'refunded' || booking.status === 'flown') return;
+  // A private aircraft with its passenger not yet aboard has not left: it
+  // waits at the terminal, and the crew's hold decides what happens next.
+  if (booking.cabin === 'private' && booking.passengerIds.includes(sim.universe.playerId) && !booking.boardedAt) return;
   booking.status = 'flown';
 
   const toAirport = AIRPORTS.byName(booking.toAirport) ?? AIRPORTS.all().find((a) => a.iata === booking.toAirport);
@@ -447,6 +551,17 @@ function arriveFlight(sim: Simulation, bookingId: Id): void {
   if (!toCityId) return;
 
   const durationHours = (booking.arriveAt - booking.departAt) / MS_HOUR;
+
+  // Your own aircraft lands where you do, the hours go in its logbook, and
+  // where it sleeps tonight is the keeping system's to decide.
+  if (booking.vehicleId) {
+    const jet = sim.universe.vehicles[booking.vehicleId];
+    if (jet && !jet.soldAt) {
+      jet.locationId = toCityId;
+      addMileage(sim, jet, Math.max(1, Math.round(durationHours)));
+      sim.emit('vehicle.relocated', { vehicleId: jet.id, cityId: toCityId, airportId: toAirport?.id });
+    }
+  }
 
   for (const passengerId of booking.passengerIds) {
     const person = sim.universe.people[passengerId];
@@ -489,7 +604,7 @@ function arriveFlight(sim: Simulation, bookingId: Id): void {
   });
 }
 
-function checkIntoHotel(sim: Simulation, bookingId: Id): void {
+export function checkIntoHotel(sim: Simulation, bookingId: Id): void {
   const booking = sim.universe.hotelBookings[bookingId];
   if (!booking || booking.status !== 'booked') return;
   booking.status = 'checked_in';
@@ -538,6 +653,62 @@ export function privateAircraftOptions(fromCityId: string, toCityId: string) {
           : undefined,
     };
   });
+}
+
+interface AircraftLike { id: string; name: string; category: string; seats: number; rangeKm: number; hourlyRate: Money; runwayFeet: number }
+
+/** An aircraft you own, in hand, or the reason it is not. */
+export function ownedAircraft(sim: Simulation, vehicleId: Id): Vehicle {
+  const vehicle = sim.universe.vehicles[vehicleId];
+  if (!vehicle || vehicle.soldAt || vehicle.ownerId !== sim.player.id) throw new CommandError('You do not own that aircraft.');
+  if (vehicleKind(vehicle) !== 'jet') throw new CommandError('That does not fly.');
+  requireInHand(vehicle);
+  return vehicle;
+}
+
+/** Your own aircraft in the shape the charter arithmetic reads: the craft figures as they stand, and what an hour costs you. */
+function ownedAsAircraft(sim: Simulation, vehicle: Vehicle): AircraftLike {
+  const craft = craftOf(sim, vehicle);
+  return {
+    id: vehicle.id,
+    name: vehicle.nickname ? `${vehicle.nickname} (${vehicle.make} ${vehicle.model})` : `${vehicle.make} ${vehicle.model}`,
+    category: 'Your Aircraft',
+    seats: craft?.seats ?? 4,
+    rangeKm: craft?.rangeKm ?? 2_000,
+    hourlyRate: hourlyCostOf(sim, vehicle),
+    runwayFeet: craft?.runwayFeet ?? 4_000,
+  };
+}
+
+/** The aircraft you own, in this city, against a route: what it would cost you to fly it there, and whether it can. */
+export function ownedAircraftOptions(sim: Simulation, toCityId: string) {
+  const fromCityId = sim.player.currentLocationId;
+  const distance = cityDistanceKm(fromCityId, toCityId);
+  const toAirportId = nearestAirport(toCityId);
+  const toAirport = toAirportId ? AIRPORTS.get(toAirportId) : undefined;
+  return Object.values(sim.universe.vehicles)
+    .filter((v) => !v.soldAt && v.ownerId === sim.player.id && vehicleKind(v) === 'jet')
+    .map((vehicle) => {
+      const a = ownedAsAircraft(sim, vehicle);
+      const hours = distance / 800 + 0.6;
+      const here = (vehicle.locationId ?? fromCityId) === fromCityId && !vehicle.deliveryDueAt;
+      const rangeOk = distance <= a.rangeKm;
+      const runwayOk = !toAirport || toAirport.runwayFeet >= a.runwayFeet;
+      return {
+        ...a,
+        vehicleId: vehicle.id,
+        estimatedCost: Math.round(a.hourlyRate * hours + LANDING_FEES * costOfLiving(toCityId)),
+        estimatedHours: Number(hours.toFixed(1)),
+        available: here && rangeOk && runwayOk,
+        reason: !here
+          ? vehicle.deliveryDueAt ? 'Not delivered yet.' : `It is in ${CITIES.get(vehicle.locationId ?? '')?.name ?? 'another city'}.`
+          : !rangeOk
+            ? `Range is ${a.rangeKm.toLocaleString('en-US')} km; the route is ${Math.round(distance).toLocaleString('en-US')} km.`
+            : !runwayOk
+              ? `${toAirport?.name} cannot take this aircraft.`
+              : undefined,
+      };
+    });
 }
 
 /** Travel time by road, for same-region movement. */

@@ -23,7 +23,7 @@ export function GameShell() {
 
   return (
     <div className="shell">
-      <a className="skip-link" href="#main">Skip to content</a>
+      <a className="skip-link" href="#main">Skip To Content</a>
 
       <header className="topbar">
 

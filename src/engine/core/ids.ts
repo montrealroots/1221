@@ -11,7 +11,7 @@ export type Id = string;
 
 /** Collections are namespaced so an id is self-describing in logs and audits. */
 export type IdNamespace =
-  | 'save' | 'person' | 'household' | 'account' | 'txn' | 'posting' | 'bill'
+  | 'save' | 'person' | 'household' | 'account' | 'txn' | 'posting' | 'bill' | 'rx'
   | 'job' | 'shift' | 'application' | 'employer'
   | 'rel' | 'relmem' | 'event' | 'sched' | 'cal'
   | 'prop' | 'listing' | 'offer' | 'build' | 'room' | 'furn'
@@ -24,7 +24,8 @@ export type IdNamespace =
   | 'company' | 'division' | 'employee' | 'equip' | 'franchise' | 'merch'
   | 'order' | 'item' | 'asset' | 'policy' | 'claim' | 'appt' | 'provider'
   | 'course' | 'history' | 'audit' | 'notice' | 'decision' | 'idem'
-  | 'scene' | 'fact' | 'membership' | 'workout' | 'plan';
+  | 'scene' | 'fact' | 'membership' | 'workout' | 'plan' | 'deal' | 'date' | 'berth'
+  | 'statement' | 'standing' | 'dining' | 'retail';
 
 const COUNTER_KEY = '__idCounter';
 

@@ -16,6 +16,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { roadworthy } from './vehicles';
 import { CommandError } from '../core/simulation';
 import type { HotelBooking, Id, Person, Property, Vehicle } from '../domain/model';
 import { personalityOf } from './life';
@@ -130,7 +131,7 @@ export function planJourney(sim: Simulation, to: { neighbourhoodId?: string; cit
 /** The car you could drive right now: yours, in this city, with fuel in it. */
 export function driveableVehicle(sim: Simulation, person: Person = sim.player): Vehicle | undefined {
   return Object.values(sim.universe.vehicles).find((v) =>
-    !v.soldAt && v.ownerId === person.id && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
+    !v.soldAt && !v.deliveryDueAt && v.ownerId === person.id && roadworthy(v) && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
 }
 
 /** How much of a tank a distance eats, as a percentage. */
@@ -638,7 +639,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
       person.reputation.industryDemand = clamp(person.reputation.industryDemand + 0.4, 0, 100);
       sim.notify({
         category: 'career',
-        title: `You ran into ${met.stageName ?? met.displayName}`,
+        title: `You Ran Into ${met.stageName ?? met.displayName}`,
         body: `At ${place.name}. ${met.stageName ?? met.displayName} ${rng.pick(RAN_INTO)}`,
         importance: 44, route: '/workspace/relationships', refType: 'person', refId: met.id,
       });
@@ -656,7 +657,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
     person.wellbeing.energy = clamp(person.wellbeing.energy - 1.5, 0, 100);
     sim.notify({
       category: 'life',
-      title: `Recognised at ${place.name}`,
+      title: `Recognised At ${place.name}`,
       body: rng.pick(FANS),
       importance: 28, route: '/workspace/city',
     });
@@ -686,7 +687,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
     });
     sim.notify({
       category: 'life',
-      title: `The two of you are not a secret any more`,
+      title: `The Two Of You Are Not A Secret Any More`,
       body: `${noticed ? rng.pick(PHOTOGRAPHED) : 'You did not see anybody.'} By morning there were pictures of you and ${other?.displayName ?? 'somebody'} outside ${place.name}.`,
       importance: 66, route: '/workspace/relationships',
     });
@@ -697,14 +698,14 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
   if (noticed) {
     sim.notify({
       category: 'life',
-      title: `Photographed at ${place.name}`,
+      title: `Photographed At ${place.name}`,
       body: `${rng.pick(PHOTOGRAPHED)} Whether it runs anywhere is out of your hands.`,
       importance: 38, route: '/workspace/city',
     });
   } else {
     sim.remember({
       category: 'life',
-      title: `Pictures of you outside ${place.name}`,
+      title: `Pictures Of You Outside ${place.name}`,
       detail: `${CITIES.get(place.cityId)?.name}. You did not see anybody take them.`,
       refs: [{ type: 'person', id: person.id }],
       significance: 20, public: true,

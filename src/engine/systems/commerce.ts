@@ -12,7 +12,7 @@ import type { AssetCategory, Id, Order, OwnedAsset, PantryItem } from '../domain
 import { clamp } from '../core/rng';
 import { addDays, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
-import { CATALOG, RETAILERS, retailPrice, retailersFor, type CatalogItem } from '../content/catalog';
+import { CATALOG, RETAILERS, retailPrice, retailersFor, shoppableItemsIn, type CatalogItem } from '../content/catalog';
 import { costOfLiving, salesTaxRate } from '../content/tax';
 
 export interface CartLine {
@@ -354,7 +354,7 @@ export function shoppingCatalogue(sim: Simulation, category?: string) {
   const col = costOfLiving(cityId);
   const results: { item: CatalogItem; retailers: { id: string; name: string; price: Money; deliveryDays: number }[] }[] = [];
 
-  for (const item of CATALOG.all()) {
+  for (const item of shoppableItemsIn(cityId)) {
     if (category && item.category !== category) continue;
     if (item.category === 'dining') continue;
     const stores = retailersFor(item.category, cityId).filter((r) => r.categories.includes(item.category));

@@ -81,3 +81,26 @@ function prune(facts: PersonFact[], now: number): void {
   facts.length = 0;
   facts.push(...kept);
 }
+
+/**
+ * Records a fact that happens over and over — a dish always ordered, a tip
+ * always left — and counts it in the one fact's weight rather than in a pile
+ * of identical facts. `step` is what one occurrence is worth; the weight is
+ * capped at 100, so a tally saturates rather than growing forever.
+ */
+export function tallyFact(
+  sim: Simulation, personId: Id,
+  spec: Omit<FactSpec, 'weight'> & { step: number },
+): number {
+  const { step, ...rest } = spec;
+  const held = factsOf(sim, personId).find((f) => f.kind === rest.kind && f.aboutId === rest.aboutId && f.text === rest.text);
+  const weight = Math.min(100, (held?.weight ?? 0) + step);
+  rememberFact(sim, personId, { ...rest, weight });
+  return Math.round(weight / step);
+}
+
+/** How many times a tallied fact has happened, from the weight it carries. */
+export function tallyOf(facts: readonly PersonFact[], text: string, step: number): number {
+  const held = facts.find((f) => f.text === text);
+  return held ? Math.round(held.weight / step) : 0;
+}

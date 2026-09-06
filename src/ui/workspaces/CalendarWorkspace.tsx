@@ -4,11 +4,17 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
-import { formatDate, formatDuration, formatTime, zonedParts, addDays, instantFromZoned, MS_DAY, MS_MINUTE } from '@/engine/core/time';
+import { formatDate, formatDuration, formatTime, zonedParts, addDays, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
+import { POSTPONE_DAYS, canPostpone, closingNumbers, furnishable } from '@/engine/systems/purchase';
+import { attendable as visitAttendable } from '@/engine/systems/care';
+import { flyable as flightFlyable } from '@/engine/systems/journey';
 import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { activeScene, sceneDefinition } from '@/engine/systems/scenes';
 import { attendable } from '@/engine/systems/plans';
+import { activityOf, dateAttendable, placeOfDate } from '@/engine/systems/dating';
+import { viewable } from '@/engine/systems/viewings';
+import type { DateStatus } from '@/engine/domain/model';
 import { placesNear } from '@/engine/systems/places';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
 
@@ -238,6 +244,10 @@ function fromLocalInput(value: string, zone: string): number | undefined {
  * skipped or dropped; an appointment moved or cancelled; a bill paid; a
  * flight opened where it lives; an observance only looked at.
  */
+const DATE_STATUS_WORD: Readonly<Record<DateStatus, string>> = {
+  planned: 'planned', underway: 'under way', attended: 'attended', skipped: 'skipped', stood_up: 'missed, because you did not go', they_cancelled: 'called off by them', cancelled: 'cancelled',
+};
+
 function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
   const { sim, run, navigate } = useGame();
   const scene = useWorld(activeScene);
@@ -245,6 +255,14 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const plan = useWorld((s) => (entry.refType === 'plan' && entry.refId ? s.universe.plans[entry.refId] : undefined));
   const appointment = useWorld((s) => (entry.refType === 'appointment' && entry.refId ? s.universe.appointments[entry.refId] : undefined));
   const bill = useWorld((s) => (entry.refType === 'bill' && entry.refId ? s.universe.bills[entry.refId] : undefined));
+  const date = useWorld((s) => (entry.refType === 'date' && entry.refId ? s.universe.dates[entry.refId] : undefined));
+  const showing = useWorld((s) => (entry.refType === 'listing' && entry.refId && s.timeline.get(entry.id)?.kind === 'prop.showing' ? s.universe.propertyListings[entry.refId] : undefined));
+  const offer = useWorld((s) => (entry.refType === 'offer' && entry.refId ? s.universe.propertyOffers[entry.refId] : undefined));
+  const offerKind = useWorld((s) => (entry.refType === 'offer' ? s.timeline.get(entry.id)?.kind : undefined));
+  const movingHome = useWorld((s) => (entry.refType === 'property' && entry.refId && s.timeline.get(entry.id)?.kind === 'prop.moving_day' ? s.universe.properties[entry.refId] : undefined));
+  const flight = useWorld((s) => (entry.refType === 'flight' && entry.refId ? s.universe.flightBookings[entry.refId] : undefined));
+  const showingCan = showing ? viewable(sim, showing) : { ok: false as const, reason: undefined };
+  const dateCan = date ? dateAttendable(sim, date) : { ok: false as const, reason: undefined };
   const legend = LEGEND_BY_CATEGORY[entry.category];
   const status = statusOf(sim, entry);
   const city = entry.locationId ? CITIES.get(entry.locationId)?.name : undefined;
@@ -309,6 +327,13 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
             {sim.universe.healthProviders[appointment.providerId]?.name ?? 'Your provider'}. {formatMoney(appointment.outOfPocket)} out of pocket.
             {appointment.status === 'scheduled' ? ' Cancelling inside a day of it costs a fee.' : ` This appointment was ${appointment.status}.`}
           </p>
+          {appointment.status === 'scheduled' && visitAttendable(sim, appointment).ok && (
+            <div className="row wrap gap-2" style={{ marginBottom: 'var(--s2)' }}>
+              <button className="btn btn-sm btn-primary" disabled={Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'health.visit', input: { appointmentId: appointment.id }, refType: 'appointment', refId: appointment.id }))}>Play It Out</button>
+              <button className="btn btn-sm" onClick={() => after(run('health.attend', { appointmentId: appointment.id }, { idempotencyKey: `attend:${appointment.id}` }))}>Just Go</button>
+              <button className="btn btn-sm" onClick={() => after(run('health.skip', { appointmentId: appointment.id }))}>Skip It</button>
+            </div>
+          )}
           {appointment.status === 'scheduled' && (
             <div className="row wrap gap-2" style={{ alignItems: 'end' }}>
               <div className="col gap-1">
@@ -323,6 +348,104 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </>
       )}
 
+      {date && (
+        <>
+          <p className="small muted">
+            {activityOf(date).label} with {sim.universe.people[date.personId]?.displayName ?? 'somebody'}{placeOfDate(date) ? ` at ${placeOfDate(date)!.name}` : ''}.
+            {date.status === 'planned' ? (dateCan.ok ? ' It is time.' : dateCan.reason ? ` ${dateCan.reason}` : '') : date.status === 'underway' ? ' Under way.' : ` This date was ${DATE_STATUS_WORD[date.status]}.`}
+          </p>
+          {(date.status === 'planned' || date.status === 'underway') && (
+            <>
+              <div className="row wrap gap-2">
+                <button className="btn btn-sm btn-primary" disabled={!dateCan.ok || Boolean(busy)} title={busy ?? (dateCan.ok ? undefined : dateCan.reason)} onClick={() => after(run('date.attend', { dateId: date.id, mode: 'play' }, { idempotencyKey: `date:${date.id}:play` }))}>Play It Out</button>
+                <button className="btn btn-sm" disabled={!dateCan.ok || Boolean(busy)} onClick={() => after(run('date.attend', { dateId: date.id, mode: 'summary' }, { idempotencyKey: `date:${date.id}:summary` }))}>Just Do It</button>
+                {date.status === 'planned' && <button className="btn btn-sm" onClick={() => after(run('date.skip', { dateId: date.id }))}>Skip It</button>}
+                {date.status === 'planned' && <button className="btn btn-ghost btn-sm" onClick={() => after(run('date.cancel', { dateId: date.id }))}>Cancel It</button>}
+                <button className="btn btn-sm" onClick={() => navigate('/workspace/relationships', 'Relationships')}>Open Relationships</button>
+              </div>
+              {date.status === 'planned' && (
+                <div className="row wrap gap-2" style={{ alignItems: 'end', marginTop: 'var(--s3)' }}>
+                  <div className="col gap-1">
+                    <label htmlFor="date-when" className="xs dim">Move It To</label>
+                    <input id="date-when" type="datetime-local" value={when} onChange={(e) => setWhen(e.target.value)} />
+                  </div>
+                  <button className="btn btn-sm" onClick={() => { const at = moveTo(); if (at) after(run('date.reschedule', { dateId: date.id, at })); }}>Move</button>
+                </div>
+              )}
+            </>
+          )}
+        </>
+      )}
+
+      {showing && (
+        <>
+          <p className="small muted">
+            A showing at {sim.universe.properties[showing.propertyId]?.addressLine ?? 'the house'}, {formatMoney(showing.askingPrice)} asking.
+            {showing.viewedByPlayer ? ' You have seen it.' : showingCan.ok ? ' Go over any time you are in the city; when it comes round it will ask.' : showingCan.reason ? ` ${showingCan.reason}` : ''}
+          </p>
+          <div className="row wrap gap-2">
+            <button className="btn btn-sm btn-primary" disabled={!showingCan.ok || Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'property.viewing', input: { listingId: showing.id }, refType: 'listing', refId: showing.id }))}>Play It Out</button>
+            <button className="btn btn-sm" disabled={!showingCan.ok || Boolean(busy)} onClick={() => after(run('viewing.summary', { listingId: showing.id }, { idempotencyKey: `showing:${showing.id}:${entry.at}` }))}>Just Look Around</button>
+            <button className="btn btn-sm" onClick={() => after(run('viewing.skip', { listingId: showing.id }))}>Skip It</button>
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Open Property</button>
+          </div>
+        </>
+      )}
+
+      {offer && (
+        <>
+          <p className="small muted">
+            {offerKind === 'prop.inspection' && `The inspector goes through ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'} on the day. The report comes to you afterwards and asks: walk it with them, read it, decide.`}
+            {offerKind === 'prop.appraisal' && `The lender's appraiser values ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}. A short appraisal means more cash at the table, or the end of the purchase if you cannot carry it.`}
+            {offerKind === 'prop.closing' && `Closing on ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}: ${formatMoney(closingNumbers(sim, offer).cashToClose)} to close. ${sim.now >= (offer.closingAt ?? 0) - 12 * MS_HOUR ? 'The table is set.' : 'When it comes round it will ask.'}`}
+            {!['prop.inspection', 'prop.appraisal', 'prop.closing'].includes(offerKind ?? '') && 'Part of a purchase in progress.'}
+          </p>
+          <div className="row wrap gap-2">
+            {offerKind === 'prop.closing' && sim.now >= (offer.closingAt ?? 0) - 12 * MS_HOUR && offer.status === 'accepted' && (
+              <>
+                <button className="btn btn-sm btn-primary" disabled={Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'property.closing', input: { offerId: offer.id }, refType: 'offer', refId: offer.id }))}>Sit At The Table</button>
+                <button className="btn btn-sm" onClick={() => after(run('prop.close', { offerId: offer.id }, { idempotencyKey: `close:${offer.id}` }))}>Sign Remotely</button>
+                {canPostpone(offer) && <button className="btn btn-sm" onClick={() => after(run('prop.postpone_closing', { offerId: offer.id }))}>Ask For {POSTPONE_DAYS} More Days</button>}
+              </>
+            )}
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Open Property</button>
+          </div>
+        </>
+      )}
+
+      {movingHome && (
+        <>
+          <p className="small muted">Moving day at {movingHome.addressLine}. {sim.player.residenceId === movingHome.id ? 'You already live there.' : 'The keys are yours; the rooms are empty.'}</p>
+          <div className="row wrap gap-2">
+            {sim.player.residenceId !== movingHome.id && (
+              <>
+                <button className="btn btn-sm btn-primary" disabled={Boolean(busy) || !furnishable(sim, movingHome.id).ok} title={busy ?? furnishable(sim, movingHome.id).reason} onClick={() => after(run('scene.start', { definitionId: 'property.movein', input: { propertyId: movingHome.id }, refType: 'property', refId: movingHome.id }))}>Play It Out</button>
+                <button className="btn btn-sm" onClick={() => after(run('prop.move_in', { propertyId: movingHome.id }, { idempotencyKey: `movein:${movingHome.id}` }))}>Just Move In</button>
+              </>
+            )}
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Open Property</button>
+          </div>
+        </>
+      )}
+
+      {flight && (
+        <>
+          <p className="small muted">
+            {flight.airlineName} {flight.flightNumber}, {flight.fromAirport} to {flight.toAirport}, {formatTime(flight.departAt, sim.homeZone)}. {flight.status === 'booked' ? 'Three hours before it leaves, the day can be played; the gate closes forty-five minutes before.' : `This flight is ${flight.status.replace(/_/g, ' ')}.`}
+          </p>
+          <div className="row wrap gap-2">
+            {(flight.status === 'booked' || flight.status === 'checked_in') && flightFlyable(sim, flight).ok && (
+              <>
+                <button className="btn btn-sm btn-primary" disabled={Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'travel.flight', input: { bookingId: flight.id }, refType: 'flight', refId: flight.id }))}>Play It Out</button>
+                <button className="btn btn-sm" onClick={() => after(run('travel.fly', { bookingId: flight.id }, { idempotencyKey: `fly:${flight.id}` }))}>Just Go</button>
+              </>
+            )}
+            {flight.status === 'booked' && <button className="btn btn-ghost btn-sm" onClick={() => after(run('travel.cancel_flight', { bookingId: flight.id }))}>Cancel It</button>}
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>Open Travel</button>
+          </div>
+        </>
+      )}
+
       {bill && (
         <div className="row wrap gap-2">
           <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it is due, if the money is there.' : 'No longer active.'}</span>
@@ -331,7 +454,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </div>
       )}
 
-      {!plan && !appointment && !bill && (
+      {!plan && !appointment && !bill && !date && !showing && !offer && !movingHome && !flight && (
         <div className="row wrap gap-2">
           <span className="small muted grow">
             {entry.status === 'observance'

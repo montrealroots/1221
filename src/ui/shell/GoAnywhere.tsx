@@ -112,29 +112,33 @@ export function GoAnywhere() {
                 <>
                   <div className="search-group-label">Favourites</div>
                   {favourites.map((entry) => (
-                    <button key={entry.route} className="search-result" onClick={() => navigate(entry.route, entry.label)}>
-                      <span aria-hidden="true">★</span>
-                      <span className="grow">{entry.label}</span>
-                    </button>
+                    <div key={entry.route} className="search-row">
+                      <button className="search-result grow" onClick={() => navigate(entry.route, entry.label)}>
+                        <span className="grow">{entry.label}</span>
+                      </button>
+                      <button className="btn btn-ghost btn-sm" onClick={() => toggleFavourite(entry)} aria-label={`Unfavourite ${entry.label}`}>
+                        Unfavourite
+                      </button>
+                    </div>
                   ))}
                 </>
               )}
               {recent.length > 0 && (
                 <>
                   <div className="search-group-label">Recent</div>
-                  {recent.map((entry) => (
-                    <button key={entry.route} className="search-result" onClick={() => navigate(entry.route, entry.label)}>
-                      <span aria-hidden="true">↺</span>
-                      <span className="grow">{entry.label}</span>
-                      <button
-                        className="btn btn-ghost btn-sm"
-                        onClick={(e) => { e.stopPropagation(); toggleFavourite(entry); }}
-                        aria-label={`Favourite ${entry.label}`}
-                      >
-                        ★
-                      </button>
-                    </button>
-                  ))}
+                  {recent.map((entry) => {
+                    const saved = favourites.some((f) => f.route === entry.route);
+                    return (
+                      <div key={entry.route} className="search-row">
+                        <button className="search-result grow" onClick={() => navigate(entry.route, entry.label)}>
+                          <span className="grow">{entry.label}</span>
+                        </button>
+                        <button className="btn btn-ghost btn-sm" onClick={() => toggleFavourite(entry)} aria-label={`${saved ? 'Unfavourite' : 'Favourite'} ${entry.label}`}>
+                          {saved ? 'Unfavourite' : 'Favourite'}
+                        </button>
+                      </div>
+                    );
+                  })}
                 </>
               )}
               <div className="search-group-label">Everywhere you can go</div>

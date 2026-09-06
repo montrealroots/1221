@@ -9,6 +9,14 @@
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
+import { CITIES } from './geography';
+import { REAL_RETAILERS, tradesIn, type RealRetailer } from './brands';
+import {
+  REAL_ACCESSORIES, REAL_APPLIANCES, REAL_APPLIANCES_MORE, REAL_ART, REAL_BOOKS, REAL_CLOTHING,
+  REAL_ELECTRONICS, REAL_EQUIPMENT, REAL_FOOTWEAR, REAL_FOOTWEAR_MORE, REAL_FURNITURE, REAL_FURNITURE_MORE,
+  REAL_GROCERIES, REAL_HOME, REAL_HOUSEHOLD, REAL_JEWELLERY, REAL_JEWELLERY_MORE, REAL_TOP_UP, REAL_WATCHES,
+  type RealGood,
+} from './goods';
 
 const V = REFERENCE_VERSION;
 const SIM = { source: 'simulated', confidence: 'high', version: V, note: 'Original to SLATE.' } as const;
@@ -25,9 +33,25 @@ export interface Retailer extends ReferenceRecord {
   online: boolean;
   deliveryDays: number;
   description: string;
+  /** Country codes the chain really trades in. Empty means SLATE does not gate it. */
+  markets?: string[];
+  /** Only these cities, for a house that really is flagship only. */
+  flagshipCities?: string[];
+  /** Smallest city SLATE will put a branch in. */
+  minimumCity?: number;
+  /**
+   * Kept only so a save written before the real chains arrived still resolves
+   * its old orders. Never offered, never given a storefront.
+   */
+  legacy?: boolean;
 }
 
-export const RETAILERS = new Registry<Retailer>('retailers', [
+/**
+ * The twelve chains SLATE invented before the real ones arrived. They are kept
+ * so an old save's orders still resolve; they are never offered and never get
+ * a storefront. Everything a player sees now is a real chain.
+ */
+const LEGACY_RETAILERS: readonly Retailer[] = [
   { id: 'valuemart', name: 'ValueMart', type: 'grocery', tier: 1, priceMultiplier: 0.82, categories: ['groceries', 'household', 'clothing'], locations: [], online: true, deliveryDays: 2, description: 'Everything, cheaply, under fluorescent light.', ...SIM },
   { id: 'greenrow', name: 'Green Row Market', type: 'grocery', tier: 3, priceMultiplier: 1.35, categories: ['groceries', 'prepared'], locations: [], online: true, deliveryDays: 1, description: 'Organic produce and a cheese counter with opinions.', ...SIM },
   { id: 'cornerstore', name: 'The Corner Store', type: 'grocery', tier: 2, priceMultiplier: 1.15, categories: ['groceries'], locations: [], online: false, deliveryDays: 0, description: 'Two blocks away, open late, forty percent more expensive.', ...SIM },
@@ -40,7 +64,34 @@ export const RETAILERS = new Registry<Retailer>('retailers', [
   { id: 'meridian_time', name: 'Meridian Timepieces', type: 'jeweller', tier: 5, priceMultiplier: 1.0, categories: ['watch', 'jewelry'], locations: ['us-ca-losangeles', 'us-ny-newyork', 'uk-eng-london', 'ae-du-dubai'], online: false, deliveryDays: 0, description: 'Authorised dealer. Waiting lists on the pieces you actually want.', ...SIM },
   { id: 'silverbend', name: 'Silverbend Jewellers', type: 'jeweller', tier: 3, priceMultiplier: 1.0, categories: ['jewelry'], locations: [], online: true, deliveryDays: 7, description: 'Engagement rings, repairs and an honest appraisal.', ...SIM },
   { id: 'everline', name: 'Everline', type: 'online', tier: 2, priceMultiplier: 0.95, categories: ['groceries', 'household', 'electronics', 'clothing', 'home', 'furniture'], locations: [], online: true, deliveryDays: 2, description: 'Ships anything within two days and knows too much about you.', ...SIM },
+].map((r) => ({ ...r, legacy: true } as Retailer));
+
+/** A real chain, in the shape the commerce engine already speaks. */
+function fromReal(r: RealRetailer): Retailer {
+  return {
+    id: r.id, name: r.name, type: KIND_TO_TYPE[r.kind], tier: r.tier, priceMultiplier: r.priceMultiplier,
+    categories: r.categories, locations: r.flagshipCities ?? [], online: r.online, deliveryDays: r.deliveryDays,
+    description: r.description, markets: r.markets, flagshipCities: r.flagshipCities, minimumCity: r.minimumCity,
+    source: r.source, confidence: r.confidence, version: r.version, note: r.note,
+  };
+}
+
+const KIND_TO_TYPE: Readonly<Record<RealRetailer['kind'], Retailer['type']>> = {
+  grocery: 'grocery', convenience: 'grocery', warehouse: 'department', department: 'department',
+  highstreet: 'boutique', boutique: 'boutique', maison: 'boutique', footwear: 'boutique', sportswear: 'boutique',
+  electronics: 'electronics', furniture: 'furniture', homeware: 'furniture', jeweller: 'jeweller', watch: 'jeweller',
+  bookshop: 'service', pharmacy: 'service', hardware: 'service', gallery: 'service', online: 'online',
+};
+
+export const RETAILERS = new Registry<Retailer>('retailers', [
+  ...REAL_RETAILERS.map(fromReal),
+  ...LEGACY_RETAILERS,
 ]);
+
+/** The real chains, the only ones the game offers. */
+export function shoppableRetailers(): Retailer[] {
+  return RETAILERS.all().filter((r) => !r.legacy);
+}
 
 export interface CatalogItem extends ReferenceRecord {
   type: 'product';
@@ -67,6 +118,8 @@ export interface CatalogItem extends ReferenceRecord {
   /** Furniture only. */
   roomKinds?: string[];
   qualityContribution?: number;
+  /** Countries a national brand is actually sold in. Absent means everywhere. */
+  markets?: string[];
 }
 
 function item(spec: Omit<CatalogItem, 'type' | 'source' | 'confidence' | 'version' | 'note'>): CatalogItem {
@@ -76,7 +129,11 @@ function item(spec: Omit<CatalogItem, 'type' | 'source' | 'confidence' | 'versio
 const g = (id: string, name: string, sub: string, price: number, shelf: number, unit: string, nourishment: number, quality = 55): CatalogItem =>
   item({ id, name, category: 'groceries', subcategory: sub, basePrice: price, brand: 'Market', tags: ['grocery', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment });
 
-export const CATALOG = new Registry<CatalogItem>('catalog', [
+/**
+ * The items SLATE invented before the real catalogue arrived, kept so an old
+ * save's owned assets still resolve. They are not offered on any shop floor.
+ */
+const LEGACY_ITEMS: readonly CatalogItem[] = [
   // --- Groceries ---
   g('milk', 'Milk', 'dairy', 4_29, 10, 'half gallon', 8),
   g('eggs', 'Eggs', 'dairy', 5_49, 24, 'dozen', 14),
@@ -153,6 +210,25 @@ export const CATALOG = new Registry<CatalogItem>('catalog', [
   item({ id: 'fridge_std', name: 'Refrigerator', category: 'appliance', subcategory: 'kitchen', basePrice: 1_450_00, brand: 'Circuitline', tags: ['kitchen', 'storage'], quality: 60, depreciation: 0.12, roomKinds: ['kitchen'], qualityContribution: 10 }),
   item({ id: 'range_pro', name: 'Professional Range', category: 'appliance', subcategory: 'kitchen', basePrice: 11_500_00, brand: 'Atelier Maison', tags: ['kitchen', 'cooking'], quality: 94, depreciation: 0.10, roomKinds: ['kitchen'], qualityContribution: 20 }),
   item({ id: 'washer_dryer', name: 'Washer and Dryer', category: 'appliance', subcategory: 'laundry', basePrice: 2_300_00, brand: 'Circuitline', tags: ['laundry'], quality: 62, depreciation: 0.13, roomKinds: ['laundry'], qualityContribution: 8 }),
+  // --- The rest of a room: what a house is furnished with, room by room ---
+  item({ id: 'coffee_table', name: 'Coffee Table', category: 'furniture', subcategory: 'living', basePrice: 420_00, brand: 'Form House', tags: ['living'], quality: 58, depreciation: 0.18, roomKinds: ['living', 'den'], qualityContribution: 6 }),
+  item({ id: 'armchair', name: 'Reading Armchair', category: 'furniture', subcategory: 'seating', basePrice: 640_00, brand: 'Form House', tags: ['living', 'reading'], quality: 60, depreciation: 0.18, roomKinds: ['living', 'den', 'bedroom', 'office'], qualityContribution: 6 }),
+  item({ id: 'floor_lamp', name: 'Floor Lamp', category: 'furniture', subcategory: 'lighting', basePrice: 260_00, brand: 'Form House', tags: ['lighting'], quality: 55, depreciation: 0.15, roomKinds: ['living', 'den', 'bedroom', 'office', 'foyer'], qualityContribution: 4 }),
+  item({ id: 'bookcase', name: 'Bookcase', category: 'furniture', subcategory: 'storage', basePrice: 780_00, brand: 'Form House', tags: ['storage', 'books'], quality: 62, depreciation: 0.12, roomKinds: ['living', 'den', 'office'], qualityContribution: 7 }),
+  item({ id: 'curtains', name: 'Lined Curtains', category: 'furniture', subcategory: 'window', basePrice: 520_00, brand: 'Form House', tags: ['window', 'sleep'], quality: 56, depreciation: 0.20, roomKinds: ['living', 'bedroom', 'dining'], qualityContribution: 5 }),
+  item({ id: 'sideboard', name: 'Walnut Sideboard', category: 'furniture', subcategory: 'storage', basePrice: 1_900_00, brand: 'Atelier Maison', tags: ['dining', 'storage'], quality: 80, depreciation: 0.08, roomKinds: ['dining', 'living', 'foyer'], qualityContribution: 10 }),
+  item({ id: 'pendant_light', name: 'Pendant Light', category: 'furniture', subcategory: 'lighting', basePrice: 520_00, brand: 'Form House', tags: ['lighting'], quality: 64, depreciation: 0.10, roomKinds: ['dining', 'kitchen', 'foyer'], qualityContribution: 6 }),
+  item({ id: 'bar_stools', name: 'Pair Of Bar Stools', category: 'furniture', subcategory: 'seating', basePrice: 380_00, brand: 'Form House', tags: ['kitchen'], quality: 54, depreciation: 0.18, roomKinds: ['kitchen'], qualityContribution: 5 }),
+  item({ id: 'cookware_set', name: 'Cookware Set', category: 'appliance', subcategory: 'kitchen', basePrice: 450_00, brand: 'Form House', tags: ['kitchen', 'cooking'], quality: 66, depreciation: 0.12, roomKinds: ['kitchen'], qualityContribution: 5 }),
+  item({ id: 'dishwasher', name: 'Dishwasher', category: 'appliance', subcategory: 'kitchen', basePrice: 1_100_00, brand: 'Circuitline', tags: ['kitchen'], quality: 62, depreciation: 0.13, roomKinds: ['kitchen'], qualityContribution: 7 }),
+  item({ id: 'bedside_pair', name: 'Pair Of Bedside Tables', category: 'furniture', subcategory: 'bedroom', basePrice: 640_00, brand: 'Form House', tags: ['bedroom'], quality: 58, depreciation: 0.15, roomKinds: ['bedroom'], qualityContribution: 6 }),
+  item({ id: 'wardrobe', name: 'Wardrobe', category: 'furniture', subcategory: 'storage', basePrice: 1_400_00, brand: 'Form House', tags: ['bedroom', 'storage'], quality: 60, depreciation: 0.12, roomKinds: ['bedroom'], qualityContribution: 8 }),
+  item({ id: 'bath_set', name: 'Bathroom Set', category: 'furniture', subcategory: 'bathroom', basePrice: 380_00, brand: 'Form House', tags: ['bathroom', 'towels'], quality: 56, depreciation: 0.25, roomKinds: ['bathroom'], qualityContribution: 6 }),
+  item({ id: 'vanity_mirror', name: 'Vanity Mirror', category: 'furniture', subcategory: 'bathroom', basePrice: 560_00, brand: 'Form House', tags: ['bathroom'], quality: 62, depreciation: 0.10, roomKinds: ['bathroom'], qualityContribution: 6 }),
+  item({ id: 'heated_rail', name: 'Heated Towel Rail', category: 'appliance', subcategory: 'bathroom', basePrice: 420_00, brand: 'Circuitline', tags: ['bathroom'], quality: 64, depreciation: 0.12, roomKinds: ['bathroom'], qualityContribution: 4 }),
+  item({ id: 'office_chair', name: 'Office Chair', category: 'furniture', subcategory: 'office', basePrice: 690_00, brand: 'Form House', tags: ['office', 'work'], quality: 66, depreciation: 0.18, roomKinds: ['office'], qualityContribution: 7 }),
+  item({ id: 'storage_cabinets', name: 'Storage Cabinets', category: 'furniture', subcategory: 'storage', basePrice: 900_00, brand: 'Form House', tags: ['storage'], quality: 56, depreciation: 0.12, roomKinds: ['laundry', 'garage', 'foyer'], qualityContribution: 6 }),
+  item({ id: 'outdoor_set', name: 'Outdoor Table And Chairs', category: 'furniture', subcategory: 'outdoor', basePrice: 1_150_00, brand: 'Form House', tags: ['outside', 'entertaining'], quality: 60, depreciation: 0.20, roomKinds: ['outside'], qualityContribution: 8 }),
 
   // --- Electronics ---
   item({ id: 'laptop', name: 'Laptop', category: 'electronics', subcategory: 'computer', basePrice: 2_400_00, brand: 'Circuitline', tags: ['work', 'writing', 'editing'], quality: 72, depreciation: 0.32 }),
@@ -163,7 +239,42 @@ export const CATALOG = new Registry<CatalogItem>('catalog', [
   item({ id: 'camera_mirrorless', name: 'Mirrorless Camera', category: 'electronics', subcategory: 'camera', basePrice: 3_200_00, brand: 'Circuitline', tags: ['content', 'filming'], quality: 80, depreciation: 0.22 }),
   item({ id: 'mic_shotgun', name: 'Shotgun Microphone', category: 'electronics', subcategory: 'audio', basePrice: 890_00, brand: 'Circuitline', tags: ['content', 'sound'], quality: 78, depreciation: 0.18 }),
   item({ id: 'light_kit', name: 'LED Lighting Kit', category: 'electronics', subcategory: 'lighting', basePrice: 1_400_00, brand: 'Circuitline', tags: ['content', 'self tape'], quality: 76, depreciation: 0.20 }),
-]);
+].map((i) => ({ ...i, tags: [...i.tags, 'legacy'] }));
+
+/** Everything real, in the shape the commerce engine already speaks. */
+const REAL_ITEMS: readonly CatalogItem[] = ([] as RealGood[]).concat(
+  REAL_GROCERIES as RealGood[], REAL_CLOTHING as RealGood[], REAL_FOOTWEAR as RealGood[], REAL_FOOTWEAR_MORE as RealGood[],
+  REAL_ACCESSORIES as RealGood[], REAL_WATCHES as RealGood[], REAL_JEWELLERY as RealGood[], REAL_JEWELLERY_MORE as RealGood[],
+  REAL_ELECTRONICS as RealGood[], REAL_FURNITURE as RealGood[], REAL_FURNITURE_MORE as RealGood[], REAL_HOME as RealGood[],
+  REAL_APPLIANCES as RealGood[], REAL_APPLIANCES_MORE as RealGood[], REAL_HOUSEHOLD as RealGood[],
+  REAL_EQUIPMENT as RealGood[], REAL_ART as RealGood[], REAL_BOOKS as RealGood[], REAL_TOP_UP as RealGood[],
+) as unknown as CatalogItem[];
+
+export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...LEGACY_ITEMS]);
+
+/** Everything a shop will actually put in front of you. */
+export function shoppableItems(): CatalogItem[] {
+  return REAL_ITEMS as CatalogItem[];
+}
+
+/**
+ * Whether this product is on a shelf in this city. A national brand is gated
+ * to the countries it is really sold in; everything else is left alone.
+ */
+export function soldIn(item: CatalogItem, cityId: string): boolean {
+  if (!item.markets || item.markets.length === 0) return true;
+  return item.markets.includes(cityId.split('-')[0] ?? '');
+}
+
+/** Everything a shop in this city will put in front of you. */
+export function shoppableItemsIn(cityId: string): CatalogItem[] {
+  return REAL_ITEMS.filter((i) => soldIn(i as CatalogItem, cityId)) as CatalogItem[];
+}
+
+/** Whether an item is one of the ones kept only for old saves. */
+export function isLegacyItem(item: { tags: string[] }): boolean {
+  return item.tags.includes('legacy');
+}
 
 /** Retail price for an item at a retailer in a city, before tax. */
 export function retailPrice(itemId: string, retailerId: string, costOfLivingMultiplier: number): Money {
@@ -173,10 +284,21 @@ export function retailPrice(itemId: string, retailerId: string, costOfLivingMult
   return Math.round(it.basePrice * r.priceMultiplier * localised);
 }
 
+/**
+ * The real chains selling that category to somebody standing in that city.
+ * The market is the chain's own trading territory, which is public record; the
+ * size threshold and the branch itself are SLATE's calibration.
+ */
 export function retailersFor(category: string, cityId: string): Retailer[] {
-  return RETAILERS.all().filter(
-    (r) => r.categories.includes(category) && (r.locations.length === 0 || r.locations.includes(cityId)),
-  );
+  const population = CITIES.get(cityId)?.population ?? 0;
+  return shoppableRetailers().filter((r) => {
+    if (!r.categories.includes(category)) return false;
+    const real = REAL_RETAILERS.find((x) => x.id === r.id);
+    if (!real) return r.locations.length === 0 || r.locations.includes(cityId);
+    // Online only chains reach everywhere; a floor needs a city that supports one.
+    if (real.kind === 'online') return real.markets.length === 0 || real.markets.includes(cityId.split('-')[0] ?? '');
+    return tradesIn(real, cityId, population);
+  });
 }
 
 export interface Recipe extends ReferenceRecord {

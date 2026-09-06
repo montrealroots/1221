@@ -24,6 +24,7 @@ import { registerLife, startOfLocalDay } from './systems/life';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
 import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
+import { kindOf } from './content/vehicles';
 import { registerCommerce } from './systems/commerce';
 import { registerTravel } from './systems/travel';
 import { registerServices, ensureProviders, ensureCourses } from './systems/services';
@@ -34,6 +35,16 @@ import { registerDriving } from './systems/driving';
 import { registerScenes } from './systems/scenes';
 import { registerPlans } from './systems/plans';
 import { registerFitness } from './systems/fitness';
+import { registerDealership } from './systems/dealership';
+import { registerDating } from './systems/dating';
+import { registerViewings } from './systems/viewings';
+import { ensureInteriors, registerPurchase } from './systems/purchase';
+import { registerCare } from './systems/care';
+import { registerJourney } from './systems/journey';
+import { ensureKeepings, registerStorage } from './systems/storage';
+import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
+import { registerDining } from './systems/dining';
+import { registerRetail } from './systems/retail';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -73,6 +84,16 @@ export function registerAllSystems(sim: Simulation): void {
   registerShingle(sim);
   registerAuthorship(sim);
   registerFitness(sim);
+  registerDealership(sim);
+  registerDating(sim);
+  registerViewings(sim);
+  registerPurchase(sim);
+  registerCare(sim);
+  registerJourney(sim);
+  registerStorage(sim);
+  registerBanking(sim);
+  registerDining(sim);
+  registerRetail(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -288,8 +309,10 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   // --- Vehicle ------------------------------------------------------------
   if (config.startWithVehicle) {
+    // A car, specifically: the bike lot's cheapest is not what somebody
+    // starting out with a car is picturing.
     const listings = Object.values(sim.universe.vehicleListings)
-      .filter((l) => l.status === 'active')
+      .filter((l) => l.status === 'active' && (l.kind ?? 'car') === 'car')
       .sort((a, b) => a.price - b.price);
     // Budgeted against the account that will actually pay. It used to be
     // priced off checking plus savings and then paid out of checking alone,
@@ -367,6 +390,9 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   const sim = new Simulation(universe);
   registerAllSystems(sim);
   populateWorld(sim, config);
+  // The accounts a life starts with sit on products like any other, so a new
+  // save has the same fees, cover and rates a loaded one does.
+  ensureProducts(sim);
   return sim;
 }
 
@@ -374,6 +400,13 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  // The rooms you already live in become rooms (idempotent; see purchase.ts).
+  ensureInteriors(sim);
+  // Everything you own is kept somewhere (idempotent; see storage.ts).
+  ensureKeepings(sim);
+  // Every account sits on a product (idempotent; see banking.ts).
+  ensureProducts(sim);
+  ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -785,6 +818,104 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(carried > 0
       ? `Scenes, memory, fitness and plans added; ${carried} scene${carried === 1 ? '' : 's'} carried over from the reference overlay.`
       : 'Scenes, memory, fitness and plans added. This save had none yet.');
+  }
+
+  if (from < 31) {
+    // Schema 31: a car is bought across a table. Deals — the conversation
+    // about one car at one dealership — get a home; a car can be waiting on
+    // delivery; a listing knows which dealership it sits on. Nothing already
+    // in the save is touched.
+    if (!record['vehicleDeals']) record['vehicleDeals'] = {};
+  }
+
+  if (from < 32) {
+    // Schema 32: a date is a record from the asking to the walk home. A date
+    // already on the calendar from before keeps its scheduled item and gets a
+    // record when it comes round. Nothing already in the save is touched.
+    if (!record['dates']) record['dates'] = {};
+  }
+
+  if (from < 33) {
+    // Schema 33: the save keeps which lines of the dialogue library it has
+    // heard, and when, so a voice does not repeat itself. Never the text.
+    if (!record['dialogue']) record['dialogue'] = { version: 1, seen: {} };
+  }
+
+  if (from < 34) {
+    // Schema 34: a post can carry what the audience said a day on. Nothing
+    // already in the save is touched; older posts simply have no reactions.
+  }
+  if (from < 35) {
+    // Schema 35: an offer carries its counter rounds, when the inspection was
+    // answered, whether closing was delayed once and the appraisal gap. All
+    // optional; nothing already in the save is touched. Homes bought or
+    // rented from the market get an interior the first time the save loads
+    // (see ensureInteriors), so the rooms you already live in become rooms.
+  }
+
+  if (from < 36) {
+    // Schema 36: prescriptions, and an appointment that remembers what you
+    // came in about, whether tests were ordered, and whether it was paid.
+    // Health, dental and vision policies name the carrier providers know.
+    universe.prescriptions ??= {};
+    for (const policy of Object.values(universe.insurancePolicies)) {
+      if ((policy.line === 'health' || policy.line === 'dental' || policy.line === 'vision') && policy.carrier === 'Northbank Insurance') policy.carrier = 'Northbank Health';
+    }
+  }
+
+  if (from < 37) {
+    // Schema 37: a flight booking carries the day as it was played (the bag,
+    // the seat, the delay, the bags on arrival) and can be missed or moved.
+    // All optional; nothing already in the save is touched.
+  }
+
+  if (from < 38) {
+    // Schema 38: vehicles and listings carry what kind of thing they are.
+    // Everything from before is a car, and is stamped so from the catalogue
+    // rather than guessed; nothing else about it is touched.
+    for (const vehicle of Object.values(universe.vehicles)) {
+      if (!vehicle.kind) vehicle.kind = kindOf(vehicle.catalogId);
+    }
+    for (const listing of Object.values(universe.vehicleListings)) {
+      if (!listing.kind) listing.kind = kindOf(listing.catalogId.split(':')[0] ?? '');
+    }
+    steps.push('Vehicles and listings stamped with their kind.');
+  }
+
+  if (from < 39) {
+    // Schema 39: every vehicle is kept somewhere, homes know their garage
+    // and their dock, and a boat or an aircraft may carry a name. The
+    // placing itself happens when the save is loaded and the systems are
+    // there to ask (ensureKeepings); an old berth-and-crew bill becomes the
+    // keeping bill rather than a second charge. Nothing is removed.
+    steps.push('Vehicles to be placed in garages, berths and hangars on load.');
+  }
+
+  if (from < 40) {
+    // Schema 40: a queue for a marina slip. Nothing existing has one, and
+    // the collection is created empty the first time somebody joins.
+    universe.berthWaitlists ??= {};
+    steps.push('Marina waiting lists ready.');
+  }
+
+  if (from < 41) {
+    // Schema 41: bank products, statements and standing orders. Accounts from
+    // before are matched to the product they most resemble on load, so a
+    // checking account keeps its balance and gains a fee and cover it did
+    // not have. Nothing is closed and no balance is touched.
+    universe.accountStatements ??= {};
+    universe.standingOrders ??= {};
+    steps.push('Bank products, statements and standing orders ready.');
+  }
+
+  if (from < 42) {
+    // Schema 42: a room has a host and a server, a shop floor has somebody on
+    // it, and both remember you. Nothing before this had a sitting or a visit
+    // recorded, so both collections start empty; the storefronts themselves are
+    // read from the catalogue rather than stored, so no save is rewritten.
+    universe.diningVisits ??= {};
+    universe.retailVisits ??= {};
+    steps.push('Rooms and shop floors ready to be walked into.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

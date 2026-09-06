@@ -63,7 +63,8 @@ describe('the places', () => {
     expect(la.filter((p) => !p.real).length).toBeGreaterThan(15);
     expect(la.find((p) => p.name === 'Griffith Observatory')?.real).toBe(true);
     for (const place of la) {
-      expect(place.name.length).toBeGreaterThan(2);
+      // Two characters is a real shop sign (RH), so the guard is against a blank one.
+      expect(place.name.trim().length).toBeGreaterThanOrEqual(2);
       expect(PLACE_KIND_LABEL[place.kind]).toBeDefined();
       expect(place.quality).toBeGreaterThanOrEqual(0);
       expect(place.quality).toBeLessThanOrEqual(100);

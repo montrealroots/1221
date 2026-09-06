@@ -598,13 +598,12 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
   color: var(--text); font: inherit; cursor: pointer; min-width: 0;
 }
 .dest:hover { background: var(--surface-3); border-color: var(--line-strong); }
-.dest-icon { font-size: var(--size-md); line-height: 1.2; flex-shrink: 0; width: 20px; text-align: center; }
 .dest-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .dest-label {
   font-size: var(--size-sm); font-weight: 600; display: flex; align-items: center; gap: var(--s2);
 }
 .dest-detail { font-size: var(--size-xs); color: var(--text-dim); }
-.dest-lock { font-size: 10px; opacity: 0.8; }
+.dest-lock { margin-left: var(--s2); font-size: 10px; vertical-align: middle; }
 /* A destination that exists and does not open. Clicking says so. */
 .dest.is-locked { opacity: 0.6; }
 .dest.is-locked:hover { opacity: 0.8; background: var(--surface-2); border-color: var(--line); }
@@ -671,6 +670,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
   padding: var(--s3) var(--s5); background: none; border: 0;
   color: inherit; font: inherit; text-align: left; cursor: pointer;
 }
+.search-row { display: flex; align-items: center; gap: var(--s1); }
+.search-row > .search-result { flex: 1 1 auto; min-width: 0; }
 .search-result:hover, .search-result[aria-selected="true"] { background: var(--surface-2); }
 .search-result[aria-selected="true"] { box-shadow: inset 2px 0 0 var(--accent); }
 .search-hint {
@@ -1107,11 +1108,10 @@ kbd {
    -------------------------------------------------------------------------- */
 
 .weather-now { display: flex; align-items: center; gap: var(--s3); min-width: 0; }
-.weather-icon { font-size: 2.4rem; line-height: 1; flex: none; }
 .weather-temp { font-size: var(--size-xl); font-weight: 650; line-height: 1.1; white-space: nowrap; }
 .weather-week {
   display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s2);
   margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line);
 }
 .weather-day { text-align: center; min-width: 0; }
-.weather-day > div:nth-child(2) { font-size: 1.3rem; line-height: 1.4; }
+.weather-cond { line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
