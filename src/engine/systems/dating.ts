@@ -31,6 +31,7 @@ import {
 import { addMemory, applyDelta, isRomantic, otherParty, resolveDate, type DatePlan } from './relationships';
 import { rememberFact } from './memory';
 import { activeScene } from './scenes';
+import { speak } from '../dialogue/library';
 
 export const EARLY_MINUTES = 60;
 export const LATE_MINUTES = 60;
@@ -329,13 +330,15 @@ export function registerDating(sim: Simulation): void {
         addMemory(s, rel, { kind: 'stood_up_by_them', summary: `${other.firstName} did not come.`, impact: -3, decayDays: 120, refType: 'date', refId: date.id });
         rememberFact(s, other.id, { kind: 'promise', aboutId: s.player.id, text: `Owes ${s.player.firstName} an evening, after not turning up.`, weight: 50, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: s.now + 60 * MS_DAY });
         s.advanceTo(s.now + 30 * MS_MINUTE);
+        const message = speak(s, { section: 'dating', purpose: 'checkin', beat: 'message' }, { result: 'no_show', tone: toneOf(other) }, date.id);
         s.notify({
           category: 'relationships', title: `${other.firstName} Is Not Coming`,
-          body: `A message, twenty minutes after you sat down: "I am so sorry. Something came up. Let me make it up to you."`,
+          body: `A message, twenty minutes after you sat down: "${message.text}"`,
           importance: 45, route: '/workspace/relationships', refType: 'date', refId: date.id,
         });
         s.emit('date.they_cancelled', { dateId: date.id, personId: other.id });
-        return { showed: 'no_show', line: 'Half an hour. Then the message.', cost: 0 };
+        const line = speak(s, { section: 'dating', purpose: 'checkin', beat: 'door' }, { result: 'no_show', tone: toneOf(other) }, date.id);
+        return { showed: 'no_show', line: line.text, cost: 0 };
       }
       const late = roll < noShow + 0.2;
       date.status = 'underway';
@@ -352,13 +355,11 @@ export function registerDating(sim: Simulation): void {
         date.spent += cost;
       }
       s.emit('date.started', { dateId: date.id, personId: other.id, late });
-      return {
-        showed: date.showed,
-        line: late
-          ? `${other.firstName} is ${LATE_BY_MINUTES} minutes late and apologises twice. ${activityOf(date).opener}`
-          : `${other.firstName} is there first. ${activityOf(date).opener}`,
-        cost,
-      };
+      const line = speak(s, { section: 'dating', purpose: 'checkin', beat: 'door' }, {
+        result: late ? 'late' : 'there', tone: toneOf(other),
+        vars: { first: other.firstName, late: String(LATE_BY_MINUTES), opener: activityOf(date).opener },
+      }, date.id);
+      return { showed: date.showed, line: line.text, cost };
     },
   );
 
@@ -401,7 +402,7 @@ export function registerDating(sim: Simulation): void {
         if (!date.topics.includes(topic)) date.topics.push(topic);
       }
       s.advanceTo(s.now + BEAT_MINUTES * MS_MINUTE);
-      const reply = replyFor(move.id, result, toneOf(other), rng);
+      const reply = replyFor(s, move.id, result, toneOf(other), `${date.id}:${date.beats}`);
       s.emit('date.beat', { dateId: date.id, move: move.id, result, chemistry: date.chemistry });
       return { result, reply, chemistry: date.chemistry, delta, spent, beatsLeft: MAX_BEATS - date.beats };
     },
@@ -419,37 +420,32 @@ export function registerDating(sim: Simulation): void {
       const other = partnerOf(s, date);
       const rel = relationshipOf(s, date);
       const rng = s.rng('close', date.id);
-      let reply = '';
       let accepted = true;
       switch (close.id) {
         case 'walk':
           s.advanceTo(s.now + 20 * MS_MINUTE);
           date.chemistry = clamp(date.chemistry + 4, 0, 100);
-          reply = rng.pick([`${other.firstName} walks slower than they need to.`, 'Twenty minutes of streets and neither of you hurries.', `At the door ${other.firstName} says thank you like they mean it.`]);
           break;
         case 'kiss': {
-          const yes = date.chemistry >= 75 || (isRomantic(rel.type) && date.chemistry >= 60) || rng.chance((date.chemistry - 55) / 40);
-          accepted = yes;
-          date.chemistry = clamp(date.chemistry + (yes ? 8 : -6), 0, 100);
-          reply = yes ? rng.pick(['They kiss you back.', 'Yes. That answers that.']) : rng.pick(['They turn their cheek, kindly. "Not tonight."', 'A hand on your chest. "Not yet."']);
+          accepted = date.chemistry >= 75 || (isRomantic(rel.type) && date.chemistry >= 60) || rng.chance((date.chemistry - 55) / 40);
+          date.chemistry = clamp(date.chemistry + (accepted ? 8 : -6), 0, 100);
           break;
         }
         case 'call':
         case 'again':
           date.promises.push(close.promise ?? close.id);
-          reply = close.id === 'call'
-            ? rng.pick([`"Do." ${other.firstName} means it.`, '"You had better."'])
-            : rng.pick([`"I would like that." ${other.firstName} lets you arrange it.`, '"Yes. You pick the place."']);
           date.chemistry = clamp(date.chemistry + 2, 0, 100);
           break;
         case 'night':
-          reply = rng.pick(['You thank them. They thank you. A cab each.', `${other.firstName} says goodnight at the kerb.`]);
           break;
         default:
           throw new CommandError('That is not a way to end the evening.');
       }
+      const reply = speak(s, { section: 'dating', purpose: 'close', beat: 'door' }, {
+        move: close.id, result: accepted ? 'accepted' : 'declined', tone: toneOf(other), chemistry: date.chemistry, vars: { first: other.firstName },
+      }, date.id);
       s.emit('date.closed', { dateId: date.id, move: close.id, accepted });
-      return { reply, accepted };
+      return { reply: reply.text, accepted };
     },
   );
 

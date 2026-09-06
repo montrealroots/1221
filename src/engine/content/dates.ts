@@ -8,8 +8,9 @@
  * worth and the relationship keeps the score.
  */
 
-import type { Rng } from '../core/rng';
+import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
+import { speak } from '../dialogue/library';
 import type { PlaceKind } from './places';
 
 export interface DateActivity {
@@ -76,64 +77,18 @@ export function toneOf(person: Person): Tone {
   return 'guarded';
 }
 
-const REPLIES: Readonly<Record<MoveKind, Readonly<Record<MoveResult, readonly string[]>>>> = {
-  ask: {
-    good: ['They light up, and you get the long version.', 'Nobody has asked them that in a while. They tell you.', 'They answer properly, and then ask you the same thing back.'],
-    flat: ['They give you the short version.', 'A polite answer. The subject does not catch.', 'They tell you, and the conversation waits for the next thing.'],
-    bad: ['Wrong question. Something closes behind their eyes for a moment.', 'They answer, and you can tell they have answered it too many times.'],
-  },
-  share: {
-    good: ['They lean in. That was the right thing to give them.', 'They laugh in the right place and remember a thing of their own.', 'You can see them file it away. In a good way.'],
-    flat: ['They nod. It lands somewhere, but not far.', 'A story that was better in your head.', 'They are listening; they are just not sure why you told them that.'],
-    bad: ['Too much, too early. They look at their glass.', 'You hear it as you say it, and so do they.'],
-  },
-  listen: {
-    good: ['They talk, and then talk some more, and then catch themselves and grin.', 'Given the room, they say something they had not planned to.', 'You learn three things. One of them matters.'],
-    flat: ['They talk for a while about nothing in particular.', 'A comfortable silence, then a small story.', 'You listen. It is fine.'],
-    bad: ['They run out of things to say and you have nothing ready.', 'The quiet gets long. They check the time.'],
-  },
-  joke: {
-    good: ['They laugh — properly, head back.', 'They laugh and then say you should not have said that, and laugh again.', 'It lands. They steal the punchline for later.'],
-    flat: ['A smile. Not a laugh.', 'They get it. That is all.', 'Half a laugh, out of kindness.'],
-    bad: ['It does not land. The silence is the joke now.', 'They do the face people do when they are deciding whether you meant it.'],
-  },
-  flirt: {
-    good: ['They hold your eye a beat longer than they need to.', 'They flirt back, better than you did.', 'Something in the air changes and neither of you mentions it.'],
-    flat: ['They smile and change the subject, gently.', 'Noted, not returned. Not refused either.'],
-    bad: ['Too soon. They sit back a little.', 'They laugh it off and the temperature drops a degree.'],
-  },
-  deep: {
-    good: ['They go quiet, then say something true back. That is the evening now.', 'They put their glass down. "Say that again."', 'It lands where it was aimed. They take your hand for a second.'],
-    flat: ['They hear it. They are not ready to answer it.', 'A long pause, then something safe.'],
-    bad: ['Too heavy for the table you are at. They look for the waiter.', 'They say "wow", and not the good kind.'],
-  },
-  work: {
-    good: ['Turns out they have opinions about the business, and good ones.', 'They ask the sharp question, and you realise you like being asked it.', 'Shop talk, but the kind that turns into something else.'],
-    flat: ['They ask a polite question about it. You answer. That is that.', 'They know the names. They do not care about the names.'],
-    bad: ['You have been talking about work for eleven minutes. They have counted.', 'They glaze. Politely, but they glaze.'],
-  },
-  order: {
-    good: ['Another round, and the evening gets its second wind.', 'They say they should not, and then they do.'],
-    flat: ['Another round. The conversation carries on where it was.', 'Drinks arrive. Nothing changes but the glasses.'],
-    bad: ['They cover their glass. "I am fine, actually."', 'One too many. You can feel the evening tilt.'],
-  },
-  phone: {
-    good: ['You glance down. They are gracious about it. Once.'],
-    flat: ['You check it. They wait. Something is spent.'],
-    bad: ['They see you look, and see you look again, and stop talking until you look up.', '"Anything important?" It was not.'],
-  },
-};
-
-const COLOUR: Readonly<Record<Tone, Readonly<Record<MoveResult, readonly string[]>>>> = {
-  warm: { good: ['They are easy to be with.', 'They make it easy.'], flat: ['They are kind about it.'], bad: ['They are kind about it, which is worse.'] },
-  dry: { good: ['They have a line for it, and it is a good one.', 'They are funnier than you expected.'], flat: ['A dry remark. Fair.'], bad: ['The remark they make about it is very dry indeed.'] },
-  guarded: { good: ['They open a door they usually keep shut.', 'That is more than they give most people.'], flat: ['They keep something back.'], bad: ['The shutters come down, gently.'] },
-};
-
-/** How they answer a move, in their own voice. Seeded, so the same evening reads the same twice. */
-export function replyFor(move: MoveKind, result: MoveResult, tone: Tone, rng: Rng): string {
-  const line = rng.pick([...REPLIES[move][result]]);
-  return rng.chance(0.45) ? `${line} ${rng.pick([...COLOUR[tone][result]])}` : line;
+/**
+ * How they answer a move, in their own voice: the library's line for the
+ * move and the outcome, filtered by tone, and sometimes a second sentence
+ * of colour. Seeded, so the same evening reads the same twice; recorded,
+ * so the same person does not say the same thing next week.
+ */
+export function replyFor(sim: Simulation, move: MoveKind, result: MoveResult, tone: Tone, salt: string | number): string {
+  const main = speak(sim, { section: 'dating', purpose: 'reply', beat: 'table' }, { move, result, tone }, salt);
+  const rng = sim.rng('colour', String(salt), move, result);
+  if (!rng.chance(0.45)) return main.text;
+  const colour = speak(sim, { section: 'dating', purpose: 'colour', beat: 'table' }, { tone, result }, salt);
+  return colour.fallback ? main.text : `${main.text} ${colour.text}`;
 }
 
 export interface CloseMove {

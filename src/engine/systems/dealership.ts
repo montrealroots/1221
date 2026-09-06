@@ -26,6 +26,8 @@ import { makeBackgroundPerson, peopleOf } from './people';
 import { factsOf, rememberFact } from './memory';
 import { createRelationship, findRelationship } from './relationships';
 import { applyDealerRepairs, dealerPlaceFor } from './vehicles';
+import { speak } from '../dialogue/library';
+import type { DialogueTone } from '../dialogue/schema';
 
 export const DEAL_DAYS = 7;
 export const CALLBACK_HOLD_DAYS = 3;
@@ -232,46 +234,37 @@ function say(deal: VehicleDeal, line: string): void {
   if (deal.said.length > 12) deal.said.splice(0, deal.said.length - 12);
 }
 
-function warm(person: Person): boolean {
-  return person.personality.agreeableness >= 60;
+/** The voice a salesperson answers in. Read from who they are, never rolled. */
+export function sellerTone(person: Person): DialogueTone {
+  return person.personality.agreeableness >= 60 ? 'warm' : 'firm';
 }
 
-function counterLine(sim: Simulation, person: Person, ask: Money, round: number): string {
-  const rng = sim.rng('sales-line', person.id, round);
-  const options = warm(person)
-    ? [
-      `I can meet you part of the way. ${formatMoney(ask)}.`,
-      `Let me see what I can do. Say ${formatMoney(ask)}.`,
-      `That is fair of you to ask. ${formatMoney(ask)} and we are close.`,
-    ]
-    : [
-      `${formatMoney(ask)}. That is me moving.`,
-      `I will not insult you with a number. ${formatMoney(ask)}.`,
-      `I have got a manager to answer to. ${formatMoney(ask)}.`,
-    ];
-  return rng.pick(options);
+/** What a salesperson knows about the player, as the library's conditions name it. */
+export function sellerKnows(sim: Simulation, sellerId: Id): string[] {
+  const facts = factsOf(sim, sellerId, { aboutId: sim.player.id });
+  const known: string[] = [];
+  if (facts.some((f) => f.kind === 'event' && f.text.startsWith('Bought'))) known.push('bought');
+  if (facts.some((f) => f.kind === 'event' && f.text.startsWith('Walked away'))) known.push('walked');
+  if (facts.some((f) => f.kind === 'topic' && f.text.startsWith('Drove'))) known.push('drove');
+  return known;
 }
 
-function refuseLine(sim: Simulation, person: Person, round: number): string {
-  const rng = sim.rng('sales-refuse', person.id, round);
-  return rng.pick(warm(person)
-    ? ['I would love to, and I cannot. Come up and we will talk.', 'That is not a number I can take upstairs.']
-    : ['No. That is not a serious offer.', 'You know what it is worth. So do I.']);
-}
-
-function acceptLine(sim: Simulation, person: Person, price: Money): string {
-  const rng = sim.rng('sales-accept', person.id, price);
-  return rng.pick([
-    `${formatMoney(price)}. Done. Let me get the paperwork.`,
-    `You have got a deal at ${formatMoney(price)}.`,
-    `${formatMoney(price)} it is. Shake on it.`,
-  ]);
-}
-
-function finalLine(person: Person, ask: Money): string {
-  return warm(person)
-    ? `${formatMoney(ask)} is the best I can do, honestly. That is where it stays.`
-    : `${formatMoney(ask)}. That is the number. It does not move again.`;
+function sellerSays(sim: Simulation, deal: VehicleDeal, purpose: string, beat: string, extra: { result?: string; move?: string; flags?: string[]; vars?: Record<string, string> } = {}): string {
+  const seller = sim.universe.people[deal.salespersonId];
+  const listing = sim.universe.vehicleListings[deal.listingId];
+  const vars = {
+    first: seller?.firstName ?? 'They',
+    car: listing ? carName(listing) : 'the car',
+    ask: formatMoney(deal.currentAsk),
+    price: formatMoney(deal.agreedPrice ?? deal.currentAsk),
+    ...extra.vars,
+  };
+  const spoken = speak(sim, { section: 'vehicles', purpose, beat }, {
+    tone: seller ? sellerTone(seller) : undefined,
+    facts: seller ? sellerKnows(sim, seller.id) : [],
+    result: extra.result, move: extra.move, flags: extra.flags, vars,
+  }, `${deal.id}:${deal.rounds}:${deal.said.length}`);
+  return spoken.text;
 }
 
 // ---------------------------------------------------------------------------
@@ -306,7 +299,7 @@ export function registerDealership(sim: Simulation): void {
     deal.currentAsk = price;
     deal.closedAt = undefined;
     deal.expiresAt = addDays(sim.now, CALLBACK_HOLD_DAYS, sim.homeZone);
-    say(deal, `${seller.firstName} called. They will do ${formatMoney(price)} if you come in this week.`);
+    say(deal, sellerSays(sim, deal, 'callback', 'phone'));
     sim.schedule({
       at: deal.expiresAt, kind: 'deal.expire', label: `Deal On The ${carName(listing)}`, category: 'vehicles',
       payload: { dealId: deal.id }, priority: 70, refType: 'deal', refId: deal.id,
@@ -392,10 +385,8 @@ export function registerDealership(sim: Simulation): void {
         expiresAt: addDays(s.now, DEAL_DAYS, s.homeZone),
       };
       const before = visitsBefore(s, seller.id);
-      say(deal, before > 1
-        ? `${seller.firstName} remembers you. "Back for another look? The ${carName(listing)} is ${formatMoney(listing.price)}."`
-        : `${seller.firstName} walks you over. "The ${carName(listing)}. ${formatMoney(listing.price)} on the screen, and I can tell you everything about it."`);
       s.universe.vehicleDeals[deal.id] = deal;
+      say(deal, sellerSays(s, deal, 'open', 'car', { flags: [before > 1 ? 'returning' : 'first_visit'] }));
       pruneDeals(s);
       s.schedule({
         at: deal.expiresAt, kind: 'deal.expire', label: `Deal On The ${carName(listing)}`, category: 'vehicles',
@@ -418,10 +409,7 @@ export function registerDealership(sim: Simulation): void {
       deal.inspected = true;
       deal.findings = findingsFor(s, listing).map((f) => f.text);
       const levers = deal.findings.filter((t) => (findingByText(t)?.leverage ?? 0) > 0);
-      const seller = s.universe.people[deal.salespersonId];
-      say(deal, levers.length > 0
-        ? `${seller?.firstName ?? 'They'} watches you look. "Nothing you would not expect at the price."`
-        : `${seller?.firstName ?? 'They'} lets you look. "Take your time. It speaks for itself."`);
+      say(deal, sellerSays(s, deal, 'inspect', 'car', { flags: [levers.length > 0 ? 'levers' : 'clean'] }));
       return { findings: deal.findings };
     },
   );
@@ -438,7 +426,7 @@ export function registerDealership(sim: Simulation): void {
       deal.testDriven = true;
       const impression = impressionOf(s, listing);
       rememberFact(s, deal.salespersonId, { kind: 'topic', aboutId: s.player.id, text: `Drove the ${carName(listing)}.`, weight: 25, sourceKind: 'deal', expiresAt: s.now + 120 * MS_DAY });
-      say(deal, `Back on the lot. "So?"`);
+      say(deal, sellerSays(s, deal, 'drive', 'back'));
       return { impression };
     },
   );
@@ -449,10 +437,9 @@ export function registerDealership(sim: Simulation): void {
     'deal.set_terms',
     (p, { sim: s }) => {
       const deal = requireOpen(s, p.dealId, ['open', 'agreed']);
-      const seller = s.universe.people[deal.salespersonId];
       if (p.delivery) {
         deal.terms.delivery = p.delivery;
-        say(deal, p.delivery === 'deliver' ? `"We can bring it to you. Give us a few days to get it ready."` : `"Collecting it? It will be washed and out front."`);
+        say(deal, `"${sellerSays(s, deal, 'terms', 'numbers', { move: p.delivery })}"`);
       }
       if (p.tradeInVehicleId !== undefined) {
         if (p.tradeInVehicleId === null) {
@@ -463,7 +450,7 @@ export function registerDealership(sim: Simulation): void {
           if (!vehicle) throw new CommandError('That is not a car you can trade in here.');
           deal.terms.tradeInVehicleId = vehicle.id;
           deal.terms.tradeInValue = tradeInAllowance(s, deal, vehicle);
-          say(deal, `${seller?.firstName ?? 'They'} walks round your ${vehicleName(vehicle)} twice. "I can allow ${formatMoney(deal.terms.tradeInValue)} against it."`);
+          say(deal, sellerSays(s, deal, 'terms', 'numbers', { move: 'tradein', vars: { trade: vehicleName(vehicle), value: formatMoney(deal.terms.tradeInValue) } }));
         }
       }
       if (p.repairs) {
@@ -471,7 +458,7 @@ export function registerDealership(sim: Simulation): void {
         const allowed = deal.findings.map((t) => findingByText(t)?.repair).filter((r): r is string => Boolean(r));
         for (const repair of p.repairs) if (!allowed.includes(repair)) throw new CommandError('You can only ask them to fix what you found.');
         deal.terms.repairs = [...new Set(p.repairs)];
-        if (deal.terms.repairs.length > 0) say(deal, `"${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')} — fine. But that comes off what I can do on the price."`);
+        if (deal.terms.repairs.length > 0) say(deal, `"${sellerSays(s, deal, 'terms', 'numbers', { move: 'repairs', vars: { repairs: deal.terms.repairs.map((r) => r.toLowerCase()).join(', ') } })}"`);
       }
       return { terms: deal.terms, tradeInValue: deal.terms.tradeInValue };
     },
@@ -485,15 +472,14 @@ export function registerDealership(sim: Simulation): void {
       const deal = requireOpen(s, p.dealId, ['open']);
       const price = Math.round(p.price);
       if (!Number.isFinite(price) || price <= 0) throw new CommandError('Offer a number.');
-      const seller = s.universe.people[deal.salespersonId];
-      if (!seller) throw new CommandError(NO_SUCH_DEAL);
+      if (!s.universe.people[deal.salespersonId]) throw new CommandError(NO_SUCH_DEAL);
 
       // Meeting their number is always accepted, and never for more than they asked.
       if (price >= deal.currentAsk) {
         deal.agreedPrice = deal.currentAsk;
         deal.lastOffer = deal.currentAsk;
         deal.status = 'agreed';
-        say(deal, acceptLine(s, seller, deal.currentAsk));
+        say(deal, sellerSays(s, deal, 'accept', 'numbers'));
         s.emit('deal.agreed', { dealId: deal.id, price: deal.currentAsk });
         return { status: 'accepted', ask: deal.currentAsk, said: lastSaid(deal) };
       }
@@ -508,18 +494,18 @@ export function registerDealership(sim: Simulation): void {
       if (price >= floor) {
         deal.agreedPrice = price;
         deal.status = 'agreed';
-        say(deal, acceptLine(s, seller, price));
+        say(deal, sellerSays(s, deal, 'accept', 'numbers'));
         s.emit('deal.agreed', { dealId: deal.id, price });
         return { status: 'accepted', ask: price, said: lastSaid(deal) };
       }
       if (price < floor * 0.9) {
-        say(deal, last ? finalLine(seller, deal.currentAsk) : refuseLine(s, seller, deal.rounds));
+        say(deal, sellerSays(s, deal, last ? 'final' : 'refuse', 'numbers'));
         return { status: last ? 'final' : 'refused', ask: deal.currentAsk, said: lastSaid(deal) };
       }
       // Already at their floor: there is nowhere left to go, and they say so.
       if (deal.currentAsk <= floor) {
         deal.rounds = MAX_ROUNDS;
-        say(deal, finalLine(seller, deal.currentAsk));
+        say(deal, sellerSays(s, deal, 'final', 'numbers'));
         return { status: 'final', ask: deal.currentAsk, said: lastSaid(deal) };
       }
       const skill = clamp((s.player.skills['negotiation'] ?? 10) / 100, 0, 1);
@@ -527,7 +513,7 @@ export function registerDealership(sim: Simulation): void {
       let counter = Math.round(deal.currentAsk - (deal.currentAsk - price) * move);
       counter = Math.max(floor, Math.min(counter, deal.currentAsk - 100));
       deal.currentAsk = counter;
-      say(deal, last ? finalLine(seller, counter) : counterLine(s, seller, counter, deal.rounds));
+      say(deal, sellerSays(s, deal, last ? 'final' : 'counter', 'numbers'));
       return { status: last ? 'final' : 'countered', ask: counter, said: lastSaid(deal) };
     },
   );
@@ -580,7 +566,6 @@ export function registerDealership(sim: Simulation): void {
       deal.vehicleId = result.value.vehicleId;
       s.timeline.cancelFor('deal', deal.id, s.now);
       s.resolveDecision('deal', deal.id);
-      const seller = s.universe.people[deal.salespersonId];
       rememberFact(s, deal.salespersonId, {
         kind: 'event', aboutId: s.player.id,
         text: `Bought the ${carName(listing)} for ${formatMoney(deal.agreedPrice ?? listing.price)}.`,
@@ -588,7 +573,7 @@ export function registerDealership(sim: Simulation): void {
       });
       const make = VEHICLE_MODELS.get(listing.catalogId.split(':')[0] ?? '')?.make;
       if (make) rememberFact(s, deal.salespersonId, { kind: 'preference', aboutId: s.player.id, text: `Drives a ${make}.`, weight: 20, sourceKind: 'deal' });
-      say(deal, `${seller?.firstName ?? 'They'} shakes your hand. "Enjoy it."`);
+      say(deal, sellerSays(s, deal, 'sign', 'desk'));
       s.emit('deal.signed', { dealId: deal.id, vehicleId: result.value.vehicleId, price: deal.agreedPrice });
       return result.value;
     },

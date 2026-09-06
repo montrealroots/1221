@@ -806,6 +806,12 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (!record['dates']) record['dates'] = {};
   }
 
+  if (from < 33) {
+    // Schema 33: the save keeps which lines of the dialogue library it has
+    // heard, and when, so a voice does not repeat itself. Never the text.
+    if (!record['dialogue']) record['dialogue'] = { version: 1, seen: {} };
+  }
+
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
   return { migrated: true, from, to: SAVE_SCHEMA_VERSION, steps, problems };

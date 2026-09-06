@@ -10,7 +10,8 @@
  * Promises made at the door are noticed three days later.
  */
 
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { loadAllSections } from '@/engine/dialogue';
 import { loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
@@ -76,6 +77,8 @@ function beginning(sim: Simulation, date: DateRecord): void {
   sim.advanceTo(date.at);
   if (date.placeId) must(sim, 'go.to', { placeId: date.placeId, mode: 'taxi' });
 }
+
+beforeAll(async () => { await loadAllSections(); });
 
 describe('arranging', () => {
   it('asking with a place makes a record that the calendar item points at', () => {

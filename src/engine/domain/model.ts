@@ -1565,6 +1565,15 @@ export interface SceneSession {
   refId?: Id;
 }
 
+/**
+ * What this save has heard from the dialogue library: ids and when, bounded,
+ * never the text. Selection weights away from what has been heard.
+ */
+export interface DialogueState {
+  version: 1;
+  seen: Record<string, { n: number; at: Instant }>;
+}
+
 export interface SceneState {
   version: 2;
   /** The one scene in the foreground, if any. */
@@ -1712,7 +1721,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 32;
+export const SAVE_SCHEMA_VERSION = 33;
 
 export interface SaveMeta {
   id: Id;
@@ -1781,6 +1790,8 @@ export interface SaveUniverse {
   vehicles: Record<Id, Vehicle>;
   vehicleDeals: Record<Id, VehicleDeal>;
   dates: Record<Id, DateRecord>;
+  /** Absent on a save that has not heard a line yet. */
+  dialogue?: DialogueState;
   vehicleListings: Record<Id, VehicleListing>;
   vehicleModifications: Record<Id, VehicleModification>;
   serviceRecords: Record<Id, ServiceRecord>;

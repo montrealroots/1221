@@ -10,7 +10,8 @@
  * car. The salesperson remembers all of it.
  */
 
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { loadAllSections } from '@/engine/dialogue';
 import { loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
@@ -70,6 +71,8 @@ function open(sim: Simulation, condition?: VehicleListing['condition']) {
   const { dealId } = must<{ dealId: string; salespersonId: string }>(sim, 'deal.open', { placeId, listingId: listing.id });
   return { deal: sim.universe.vehicleDeals[dealId]!, listing, placeId };
 }
+
+beforeAll(async () => { await loadAllSections(); });
 
 describe('the lot', () => {
   it('gives every city three dealerships, and every listing sits on one of them', () => {
@@ -394,7 +397,9 @@ describe('walking away, and coming back', () => {
     const second = open(sim);
     if (second.placeId === first.placeId) {
       expect(second.deal.salespersonId).toBe(first.deal.salespersonId);
-      expect(second.deal.said[0]).toMatch(/remembers you/);
+      // The greeting is the one for somebody who bought here, in the salesperson's own words.
+      expect(second.deal.said[0]).toContain(sim.universe.people[second.deal.salespersonId]!.firstName);
+      expect(second.deal.said[0]).not.toMatch(/Anything in particular|I can tell you everything/);
       // A customer gets a little more room.
       expect(floorOf(sim, second.deal)).toBeLessThan(Math.round(second.listing.price * (1 - second.listing.negotiationRoom)));
     }

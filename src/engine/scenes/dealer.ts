@@ -23,10 +23,10 @@ import { MODE_LABEL, driveableVehicle, planJourney, type Mode } from '../systems
 import { localHour } from '../systems/fitness';
 import {
   DEALER_CLOSE, DEALER_OPEN, carName, dealFor, dealOf, findingByText, lastSaid, listingsAt, roundsLeft,
-  salespersonAt, tradeInAllowance, tradeInCandidates, vehicleName, visitsBefore,
+  salespersonAt, sellerKnows, sellerTone, tradeInAllowance, tradeInCandidates, vehicleName, visitsBefore,
 } from '../systems/dealership';
+import { preview } from '../dialogue/library';
 import { financeRefusal, purchaseQuote } from '../systems/vehicles';
-import { factsOf } from '../systems/memory';
 import { defineScene, unknownStep, type SceneChoice, type SceneRuntime } from '../systems/scenes';
 
 /** The offers on the table beside their number, as fractions of it. */
@@ -85,17 +85,13 @@ function journeyChoices(sim: Simulation, place: Place): SceneChoice[] {
 
 function sellerLine(sim: Simulation, session: SceneSession): string {
   const seller = salespersonAt(sim, str(session, 'placeId'));
-  if (!seller) return 'Somebody comes over from the office before you have shut the door.';
-  const player = sim.player;
-  const walked = factsOf(sim, seller.id, { kind: 'event', aboutId: player.id }).find((f) => f.text.startsWith('Walked away'));
-  const bought = factsOf(sim, seller.id, { kind: 'event', aboutId: player.id }).find((f) => f.text.startsWith('Bought'));
-  const drove = factsOf(sim, seller.id, { kind: 'topic', aboutId: player.id })[0];
-  if (bought) return `${seller.firstName} is out of the office before you have parked. "How is it treating you? Looking for a second one?"`;
-  if (walked) return `${seller.firstName} recognises you. "Thought you might be back. ${walked.text.replace('Walked away from the', 'The')} is still here."`;
-  if (drove) return `${seller.firstName} remembers you. "${drove.text.replace('Drove the', 'You drove the')} Still thinking about it?"`;
-  return visitsBefore(sim, seller.id) > 0
-    ? `${seller.firstName} again. "Back for another look?"`
-    : `${seller.firstName} comes over, hand out. "Anything in particular, or just looking?"`;
+  if (!seller) return preview(sim, { section: 'vehicles', purpose: 'greet', beat: 'lot' }, { flags: ['nobody'] }, session.id).text;
+  const known = sellerKnows(sim, seller.id);
+  const listing = str(session, 'listingId') ? sim.universe.vehicleListings[str(session, 'listingId')] : undefined;
+  const flags = known.length > 0 ? [] : [visitsBefore(sim, seller.id) > 0 ? 'returning' : 'first_visit'];
+  return preview(sim, { section: 'vehicles', purpose: 'greet', beat: 'lot' }, {
+    tone: sellerTone(seller), facts: known, flags, vars: { first: seller.firstName, car: listing ? carName(listing) : 'the car' },
+  }, session.id).text;
 }
 
 function conditionLabel(listing: VehicleListing): string {
