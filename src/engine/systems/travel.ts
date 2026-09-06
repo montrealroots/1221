@@ -14,6 +14,11 @@ import { addDays, MS_HOUR, MS_MINUTE, zoneOffsetMs } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { AIRPORTS, CITIES, cityDistanceKm, nearestAirport } from '../content/geography';
 import { costOfLiving } from '../content/tax';
+import type { Vehicle } from '../domain/model';
+import { addMileage, craftOf, hourlyCostOf, requireInHand, vehicleKind } from './vehicles';
+
+/** Landing, handling and parking at the far end, before cost of living. SLATE's own. */
+const LANDING_FEES: Money = 650_00;
 
 export interface FlightOption {
   airlineCode: string;
@@ -205,13 +210,20 @@ export function registerTravel(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ toCityId: string; departAt: number; aircraftId: string; passengerIds?: Id[]; accountId?: Id }, { bookingId: Id; cost: Money; arriveAt: number }>(
+  sim.onCommand<{ toCityId: string; departAt: number; aircraftId?: string; vehicleId?: Id; passengerIds?: Id[]; accountId?: Id }, { bookingId: Id; cost: Money; arriveAt: number }>(
     'travel.charter_private',
     (p, { sim: s }) => {
       const player = s.player;
       const fromCity = player.currentLocationId;
-      const aircraft = PRIVATE_AIRCRAFT.find((a) => a.id === p.aircraftId);
+      // Your own aircraft flies at what it costs to run; a charter flies at
+      // the market's rate. Either way the route is checked against the
+      // aircraft, not the price.
+      const owned = p.vehicleId ? ownedAircraft(s, p.vehicleId) : undefined;
+      const aircraft = owned
+        ? ownedAsAircraft(s, owned)
+        : PRIVATE_AIRCRAFT.find((a) => a.id === p.aircraftId);
       if (!aircraft) throw new CommandError('No such aircraft type.');
+      if (owned && (owned.locationId ?? fromCity) !== fromCity) throw new CommandError(`The ${owned.make} ${owned.model} is in ${CITIES.get(owned.locationId ?? '')?.name ?? 'another city'}.`);
 
       const distance = cityDistanceKm(fromCity, p.toCityId);
       if (distance > aircraft.rangeKm) {
@@ -222,6 +234,7 @@ export function registerTravel(sim: Simulation): void {
 
       const fromAirportId = nearestAirport(fromCity);
       const toAirportId = nearestAirport(p.toCityId);
+      const fromAirport = fromAirportId ? AIRPORTS.get(fromAirportId) : undefined;
       const toAirport = toAirportId ? AIRPORTS.get(toAirportId) : undefined;
       if (toAirport && toAirport.runwayFeet < aircraft.runwayFeet) {
         throw new CommandError(
@@ -233,13 +246,17 @@ export function registerTravel(sim: Simulation): void {
       if (passengers.length > aircraft.seats) throw new CommandError(`A ${aircraft.name} seats ${aircraft.seats}.`);
 
       const hours = distance / 800 + 0.6;
-      const cost = Math.round(aircraft.hourlyRate * hours * 1.18);
+      const cost = owned
+        ? Math.round(aircraft.hourlyRate * hours + LANDING_FEES * costOfLiving(p.toCityId))
+        : Math.round(aircraft.hourlyRate * hours * 1.18);
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`Chartering a ${aircraft.name} on that route is about ${formatMoney(cost)}.`);
+        throw new CommandError(owned
+          ? `Flying the ${aircraft.name} there is about ${formatMoney(cost)} in fuel, crew and fees.`
+          : `Chartering a ${aircraft.name} on that route is about ${formatMoney(cost)}.`);
       }
-      s.expense(accountId, cost, `Private charter — ${aircraft.name}`, 'travel');
+      s.expense(accountId, cost, owned ? `Flight — ${aircraft.name}` : `Private charter — ${aircraft.name}`, 'travel', owned ? { refType: 'vehicle', refId: owned.id } : undefined);
 
       const arriveAt = p.departAt + Math.round(hours * MS_HOUR);
       const booking: FlightBooking = {
@@ -247,10 +264,13 @@ export function registerTravel(sim: Simulation): void {
         saveId: s.universe.meta.id,
         passengerIds: passengers,
         airlineCode: 'PVT',
-        airlineName: `Private charter (${aircraft.name})`,
+        airlineName: owned ? `Your ${aircraft.name}` : `Private charter (${aircraft.name})`,
         flightNumber: `PVT${s.counter('charter')}`,
-        fromAirport: fromAirportId ?? '',
-        toAirport: toAirportId ?? '',
+        vehicleId: owned?.id,
+        // The codes, as an airline booking carries them, so the day reads
+        // the same city off either kind of booking.
+        fromAirport: fromAirport?.iata ?? fromAirportId ?? '',
+        toAirport: toAirport?.iata ?? toAirportId ?? '',
         departAt: p.departAt,
         arriveAt,
         cabin: 'private',
@@ -268,7 +288,7 @@ export function registerTravel(sim: Simulation): void {
       s.schedule({
         at: p.departAt - 25 * MS_MINUTE,
         kind: 'travel.depart',
-        label: `Private Charter To ${CITIES.require(p.toCityId).name}`,
+        label: `${owned ? 'Fly' : 'Private Charter'} To ${CITIES.require(p.toCityId).name}`,
         category: 'travel',
         payload: { bookingId: booking.id },
         priority: 15,
@@ -284,7 +304,7 @@ export function registerTravel(sim: Simulation): void {
         refType: 'flight', refId: booking.id,
       });
 
-      s.emit('travel.charter_booked', { bookingId: booking.id, aircraft: aircraft.id, cost, toCity: p.toCityId });
+      s.emit('travel.charter_booked', { bookingId: booking.id, aircraft: aircraft.id, cost, toCity: p.toCityId, vehicleId: owned?.id });
       return { bookingId: booking.id, cost, arriveAt };
     },
   );
@@ -521,6 +541,9 @@ export function departFlight(sim: Simulation, bookingId: Id): void {
 export function arriveFlight(sim: Simulation, bookingId: Id): void {
   const booking = sim.universe.flightBookings[bookingId];
   if (!booking || booking.status === 'cancelled' || booking.status === 'missed' || booking.status === 'changed' || booking.status === 'refunded' || booking.status === 'flown') return;
+  // A private aircraft with its passenger not yet aboard has not left: it
+  // waits at the terminal, and the crew's hold decides what happens next.
+  if (booking.cabin === 'private' && booking.passengerIds.includes(sim.universe.playerId) && !booking.boardedAt) return;
   booking.status = 'flown';
 
   const toAirport = AIRPORTS.byName(booking.toAirport) ?? AIRPORTS.all().find((a) => a.iata === booking.toAirport);
@@ -528,6 +551,15 @@ export function arriveFlight(sim: Simulation, bookingId: Id): void {
   if (!toCityId) return;
 
   const durationHours = (booking.arriveAt - booking.departAt) / MS_HOUR;
+
+  // Your own aircraft lands where you do, and the hours go in its logbook.
+  if (booking.vehicleId) {
+    const jet = sim.universe.vehicles[booking.vehicleId];
+    if (jet && !jet.soldAt) {
+      jet.locationId = toCityId;
+      addMileage(sim, jet, Math.max(1, Math.round(durationHours)));
+    }
+  }
 
   for (const passengerId of booking.passengerIds) {
     const person = sim.universe.people[passengerId];
@@ -619,6 +651,62 @@ export function privateAircraftOptions(fromCityId: string, toCityId: string) {
           : undefined,
     };
   });
+}
+
+interface AircraftLike { id: string; name: string; category: string; seats: number; rangeKm: number; hourlyRate: Money; runwayFeet: number }
+
+/** An aircraft you own, in hand, or the reason it is not. */
+export function ownedAircraft(sim: Simulation, vehicleId: Id): Vehicle {
+  const vehicle = sim.universe.vehicles[vehicleId];
+  if (!vehicle || vehicle.soldAt || vehicle.ownerId !== sim.player.id) throw new CommandError('You do not own that aircraft.');
+  if (vehicleKind(vehicle) !== 'jet') throw new CommandError('That does not fly.');
+  requireInHand(vehicle);
+  return vehicle;
+}
+
+/** Your own aircraft in the shape the charter arithmetic reads: the craft figures as they stand, and what an hour costs you. */
+function ownedAsAircraft(sim: Simulation, vehicle: Vehicle): AircraftLike {
+  const craft = craftOf(sim, vehicle);
+  return {
+    id: vehicle.id,
+    name: `${vehicle.make} ${vehicle.model}`,
+    category: 'Your Aircraft',
+    seats: craft?.seats ?? 4,
+    rangeKm: craft?.rangeKm ?? 2_000,
+    hourlyRate: hourlyCostOf(sim, vehicle),
+    runwayFeet: craft?.runwayFeet ?? 4_000,
+  };
+}
+
+/** The aircraft you own, in this city, against a route: what it would cost you to fly it there, and whether it can. */
+export function ownedAircraftOptions(sim: Simulation, toCityId: string) {
+  const fromCityId = sim.player.currentLocationId;
+  const distance = cityDistanceKm(fromCityId, toCityId);
+  const toAirportId = nearestAirport(toCityId);
+  const toAirport = toAirportId ? AIRPORTS.get(toAirportId) : undefined;
+  return Object.values(sim.universe.vehicles)
+    .filter((v) => !v.soldAt && v.ownerId === sim.player.id && vehicleKind(v) === 'jet')
+    .map((vehicle) => {
+      const a = ownedAsAircraft(sim, vehicle);
+      const hours = distance / 800 + 0.6;
+      const here = (vehicle.locationId ?? fromCityId) === fromCityId && !vehicle.deliveryDueAt;
+      const rangeOk = distance <= a.rangeKm;
+      const runwayOk = !toAirport || toAirport.runwayFeet >= a.runwayFeet;
+      return {
+        ...a,
+        vehicleId: vehicle.id,
+        estimatedCost: Math.round(a.hourlyRate * hours + LANDING_FEES * costOfLiving(toCityId)),
+        estimatedHours: Number(hours.toFixed(1)),
+        available: here && rangeOk && runwayOk,
+        reason: !here
+          ? vehicle.deliveryDueAt ? 'Not delivered yet.' : `It is in ${CITIES.get(vehicle.locationId ?? '')?.name ?? 'another city'}.`
+          : !rangeOk
+            ? `Range is ${a.rangeKm.toLocaleString('en-US')} km; the route is ${Math.round(distance).toLocaleString('en-US')} km.`
+            : !runwayOk
+              ? `${toAirport?.name} cannot take this aircraft.`
+              : undefined,
+      };
+    });
 }
 
 /** Travel time by road, for same-region movement. */

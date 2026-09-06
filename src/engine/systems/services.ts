@@ -18,6 +18,8 @@ import { applyRate, formatMoney, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { createBill } from './finance';
+import { KIND_PROFILE, type VehicleKind } from '../content/vehicles';
+import { vehicleKind } from './vehicles';
 import { generatePersonName } from '../content/names';
 import { modifierFor } from '../domain/attributes';
 
@@ -100,7 +102,14 @@ export const INSURANCE_PRODUCTS: readonly InsuranceProduct[] = [
   { line: 'business', label: 'Business', basePremium: 340_00, deductible: 5_000_00, coverageLimit: 2_000_000_00, coinsurance: 1, description: 'General liability for a company that employs people.' },
   { line: 'production', label: 'Production', basePremium: 0, valueRate: 0.019, deductible: 25_000_00, coverageLimit: 0, coinsurance: 1, description: 'Required before a completion bond. Priced on the budget.' },
   { line: 'equipment', label: 'Equipment', basePremium: 0, valueRate: 0.0085, deductible: 2_500_00, coverageLimit: 0, coinsurance: 1, description: 'Cameras, lenses and lighting against damage and theft.' },
+  { line: 'marine', label: 'Marine', basePremium: 0, valueRate: 0.015, deductible: 2_500_00, coverageLimit: 0, coinsurance: 1, description: 'Hull and liability for a boat. Required by any marina worth berthing in. Undisclosed work on the boat is grounds for denial.' },
+  { line: 'aviation', label: 'Aviation', basePremium: 0, valueRate: 0.012, deductible: 25_000_00, coverageLimit: 0, coinsurance: 1, description: 'Hull and liability for an aircraft, priced on the airframe and the crew. Nothing flies without it.' },
 ];
+
+/** Which line covers a vehicle of this kind, and the reason a wrong line is refused. */
+export function vehicleLineFor(kind: VehicleKind): InsuranceLine {
+  return KIND_PROFILE[kind].insuranceLine;
+}
 
 // ---------------------------------------------------------------------------
 // Courses
@@ -266,6 +275,18 @@ export function registerServices(sim: Simulation): void {
     'ins.quote',
     (p, { sim: s }) => {
       const holderId = p.holderId ?? s.player.id;
+      // A boat is not covered by a motor policy, nor a jet by a marine one:
+      // the line has to be the kind's own, or the quote is refused here
+      // rather than at the claim.
+      for (const ref of p.coveredRefs ?? []) {
+        if (ref.type !== 'vehicle') continue;
+        const vehicle = s.universe.vehicles[ref.id];
+        if (!vehicle) continue;
+        const wanted = vehicleLineFor(vehicleKind(vehicle));
+        if (p.line === 'auto' || p.line === 'marine' || p.line === 'aviation') {
+          if (p.line !== wanted) throw new CommandError(`A ${KIND_PROFILE[vehicleKind(vehicle)].label.toLowerCase()} is covered by ${wanted} insurance, not ${p.line}.`);
+        }
+      }
       const quote = buildQuote(s, holderId, p.line, p.coveredRefs ?? []);
       const policy: InsurancePolicy = {
         id: s.nextId('policy'),
@@ -362,7 +383,7 @@ export function registerServices(sim: Simulation): void {
 
       // Undisclosed modifications are exactly the thing that gets a claim denied.
       let denialReason: string | undefined;
-      if (policy.line === 'auto' && p.refType === 'vehicle' && p.refId) {
+      if ((policy.line === 'auto' || policy.line === 'marine' || policy.line === 'aviation') && p.refType === 'vehicle' && p.refId) {
         const vehicle = s.universe.vehicles[p.refId];
         const undisclosed = vehicle?.currentConfiguration.modificationIds
           .map((id) => s.universe.vehicleModifications[id])
@@ -530,6 +551,16 @@ export function buildQuote(
     premium = applyRate(premium, remap(drivingSkill, 0, 100, 1.35, 0.78));
     const modified = coveredRefs.some((r) => (sim.universe.vehicles[r.id]?.currentConfiguration.modificationIds.length ?? 0) > 0);
     if (modified) premium = applyRate(premium, 1.22);
+    // A motorcycle is priced harder than a car of the same value: it falls over.
+    if (coveredRefs.some((r) => { const v = sim.universe.vehicles[r.id]; return v && vehicleKind(v) === 'motorcycle'; })) premium = applyRate(premium, 1.4);
+  }
+  if ((line === 'marine' || line === 'aviation') && person) {
+    const modified = coveredRefs.some((r) => (sim.universe.vehicles[r.id]?.currentConfiguration.modificationIds.length ?? 0) > 0);
+    if (modified) premium = applyRate(premium, 1.12);
+    // An older hull or airframe costs more to insure than a new one.
+    const oldest = Math.min(...coveredRefs.map((r) => sim.universe.vehicles[r.id]?.year ?? 9999));
+    const age = Number.isFinite(oldest) && oldest < 9999 ? Math.max(0, zonedParts(sim.now, sim.homeZone).year - oldest) : 0;
+    premium = applyRate(premium, 1 + Math.min(0.5, age * 0.03));
   }
   if (line === 'health' && person) {
     const age = zonedParts(sim.now, sim.homeZone).year - zonedParts(person.birthInstant, sim.homeZone).year;
@@ -550,7 +581,7 @@ export function buildQuote(
     deductible: product.deductible,
     coverageLimit: product.coverageLimit > 0 ? product.coverageLimit : Math.round(insuredValue * 1.1),
     coinsurance: product.coinsurance,
-    carrier: line === 'production' || line === 'equipment' ? 'Gable Underwriting' : line === 'health' || line === 'dental' || line === 'vision' ? 'Northbank Health' : 'Northbank Insurance',
+    carrier: line === 'production' || line === 'equipment' ? 'Gable Underwriting' : line === 'health' || line === 'dental' || line === 'vision' ? 'Northbank Health' : line === 'marine' ? 'Northbank Marine' : line === 'aviation' ? 'Gable Aviation' : 'Northbank Insurance',
   };
 }
 

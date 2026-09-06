@@ -63,6 +63,8 @@ export interface Place {
   industryHaunt?: boolean;
   /** For a landmark that charges: SLATE's calibrated admission in cents, before cost of living. */
   admissionCalibration?: number;
+  /** A dealership's stock in trade. Absent on anything that is not a lot. */
+  sells?: LotSells;
 }
 
 // ---------------------------------------------------------------------------
@@ -316,24 +318,38 @@ const SPECS: readonly Spec[] = [
   { kind: 'salon', count: () => 1 },
   { kind: 'club', count: (i) => (i > 60 ? 2 : 1) },
   // Last, so adding it moved nothing that was already there: the same city
-  // still has the same places with the same ids.
-  { kind: 'dealership', count: () => 3 },
+  // still has the same places with the same ids. The three car lots came
+  // first; the bike shop, the boat yard and the aircraft broker were added
+  // after them, so the first three ids still mean what they meant.
+  { kind: 'dealership', count: () => 6 },
 ];
 
+/** What a lot sells. */
+export type LotSells = 'car' | 'motorcycle' | 'boat' | 'jet';
+
 /**
- * Three lots to a city, by what they sell: the new-car mall, the used lot and
- * the classic dealer. Named by position so a listing can find its lot.
+ * Six lots to a city, by what they sell: the new-car mall, the used lot and
+ * the classic dealer; then the motorcycle dealer, the boat yard and the
+ * aircraft broker. Named by position so a listing can find its lot.
  */
 const DEALERSHIP_NAMES: readonly ((city: string) => string)[] = [
   (city) => `${city} Auto Mall`,
   () => 'Crossroads Auto Sales',
   () => 'Meridian Classic Motors',
+  () => 'Northline Motorcycles',
+  (city) => `${city} Yacht And Boat Sales`,
+  (city) => `${city} Jet Center`,
 ];
+
+const DEALERSHIP_SELLS: readonly LotSells[] = ['car', 'car', 'car', 'motorcycle', 'boat', 'jet'];
 
 const DEALERSHIP_ABOUT: readonly ((where: string) => string)[] = [
   (where) => `New and certified cars in ${where}, every make under one roof. Somebody will find you within a minute of parking.`,
   (where) => `A used lot in ${where}. Prices on the windscreen, and every one of them is a starting point.`,
   (where) => `Classics and collector cars in ${where}. They know what they have, and they will wait for the right buyer.`,
+  (where) => `Motorcycles in ${where}, new and used, from the makes you have heard of. Helmets on the wall and a workshop out the back.`,
+  (where) => `Boats and yachts in ${where}, on trailers, on hard standing and in the water. Ask for a sea trial.`,
+  (where) => `Aircraft sales at the executive terminal near ${where}. Pre-owned jets on the ramp, factory orders by appointment, and a demonstration flight for anyone serious.`,
 ];
 
 const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
@@ -437,6 +453,7 @@ export function placesIn(cityId: string): Place[] {
         minutes: MINUTES_BY_KIND[spec.kind],
         actions: ACTIONS_BY_KIND[spec.kind],
         industryHaunt: industry > 60 && (spec.kind === 'bar' || spec.kind === 'restaurant') && rng.chance(0.3),
+        sells: spec.kind === 'dealership' ? DEALERSHIP_SELLS[i % DEALERSHIP_SELLS.length] : undefined,
         cuisineId: cuisine?.id,
       } as Place & { cuisineId?: string });
     }

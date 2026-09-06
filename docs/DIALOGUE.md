@@ -88,10 +88,13 @@ interface text; it does not flatten how a person talks.
 ## The count, honestly
 
 Run `node tools/dialogue-check.mjs` for today's figure. At the time of
-writing the library holds **under three hundred distinct entries** across four
-sections (dating, property, vehicles and social), moved out of the code that
-used to carry them inline; the scenes for the gym, meals, runs and wellbeing still carry
-their lines in code and are next to move.
+writing the library holds **465 distinct entries** across six sections
+(property 122, dating 112, vehicles 87, travel 55, health 52, social 37),
+moved out of the code that used to carry them inline; the scenes for the
+gym, meals, runs and wellbeing still carry their lines in code and are next
+to move. The vehicles section speaks to what is being sold: a line about a
+car is never said about a boat, and the bike shop, the boat yard and the
+aircraft broker each have their own.
 
 The directive's target is 100,001 distinct, original, reachable entries.
 That is a content-production programme, not an engineering task: at a

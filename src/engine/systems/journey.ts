@@ -42,6 +42,8 @@ import { arriveFlight, checkIntoHotel, createFlightBooking, departFlight, search
 export const WINDOW_HOURS = 3;
 /** Minutes before departure the gate closes. */
 export const GATE_CLOSE_MINUTES = 45;
+/** A private aircraft waits for its passenger; its crew hold this long past the booked time before they go home. */
+export const CREW_HOLD_HOURS = 3;
 export const PACK_MINUTES = 20;
 export const DESK_MINUTES = 15;
 export const BAG_CLAIM_MINUTES = 25;
@@ -64,8 +66,9 @@ export function bookingOf(sim: Simulation, id: Id): FlightBooking {
   return booking;
 }
 
+/** The city an airport code names. A charter from before carried the airport's id instead of its code; both are read. */
 export function cityOfAirport(iata: string): string | undefined {
-  return AIRPORTS.all().find((a) => a.iata === iata)?.parentId;
+  return (AIRPORTS.get(iata) ?? AIRPORTS.all().find((a) => a.iata === iata))?.parentId;
 }
 
 export function fromCityOf(booking: FlightBooking): string | undefined {
@@ -77,7 +80,7 @@ export function toCityOf(booking: FlightBooking): string | undefined {
 }
 
 export function airportName(iata: string): string {
-  return AIRPORTS.all().find((a) => a.iata === iata)?.name ?? iata;
+  return (AIRPORTS.get(iata) ?? AIRPORTS.all().find((a) => a.iata === iata))?.name ?? iata;
 }
 
 /** Whether the day can start now: yours, still booked, you are in the right city, the window is open, the gate is not shut. */
@@ -87,7 +90,7 @@ export function flyable(sim: Simulation, booking: FlightBooking): { ok: boolean;
   if (booking.boardedAt) return { ok: false, reason: 'You are already on it.' };
   if (sim.player.currentLocationId !== fromCityOf(booking)) return { ok: false, reason: NOT_HERE };
   if (sim.now < booking.departAt - WINDOW_HOURS * MS_HOUR) return { ok: false, reason: `It leaves at ${formatTime(booking.departAt, sim.zone)}; the day starts three hours before.` };
-  if (sim.now > booking.departAt - GATE_CLOSE_MINUTES * MS_MINUTE && !booking.checkedInAt) return { ok: false, reason: 'The gate has closed.' };
+  if (sim.now > closesAt(booking) && !booking.checkedInAt) return { ok: false, reason: booking.cabin === 'private' ? 'The crew have gone home.' : 'The gate has closed.' };
   return { ok: true };
 }
 
@@ -171,7 +174,13 @@ export function airportRuns(sim: Simulation, booking: FlightBooking): AirportRun
 }
 
 export function gateOpen(sim: Simulation, booking: FlightBooking): boolean {
+  if (booking.cabin === 'private') return sim.now <= booking.departAt + CREW_HOLD_HOURS * MS_HOUR;
   return sim.now <= booking.departAt - GATE_CLOSE_MINUTES * MS_MINUTE;
+}
+
+/** When a flight is missed by not being there: the gate, or the end of a private crew's hold. */
+function closesAt(booking: FlightBooking): number {
+  return booking.cabin === 'private' ? booking.departAt + CREW_HOLD_HOURS * MS_HOUR : booking.departAt - GATE_CLOSE_MINUTES * MS_MINUTE;
 }
 
 /** The hotel waiting for you where the flight lands, if you booked one around the arrival. */
@@ -225,7 +234,7 @@ function pack(sim: Simulation, booking: FlightBooking, bag: BagChoice): { fee: M
   sim.resolveDecision('flight', booking.id);
   // The gate still closes; it just does not close on a player who is on the way.
   sim.schedule({
-    at: booking.departAt - GATE_CLOSE_MINUTES * MS_MINUTE, kind: 'travel.gate_closes', label: `Gate Closes — ${booking.flightNumber}`, category: 'system',
+    at: closesAt(booking), kind: 'travel.gate_closes', label: booking.cabin === 'private' ? `Crew Hold Ends — ${booking.flightNumber}` : `Gate Closes — ${booking.flightNumber}`, category: 'system',
     payload: { bookingId: booking.id }, priority: 80, refType: 'flight', refId: booking.id,
   });
   return { fee, documents: documentsFor(sim, booking) };
@@ -242,7 +251,7 @@ function toAirport(sim: Simulation, booking: FlightBooking, mode: Mode): { minut
   sim.player.currentPlaceId = undefined;
   sim.player.wellbeing.energy = clamp(sim.player.wellbeing.energy - 3, 0, 100);
   const late = !gateOpen(sim, booking);
-  if (late) missFlight(sim, booking, 'You reached the airport after the gate had closed.');
+  if (late) missFlight(sim, booking, booking.cabin === 'private' ? 'You reached the terminal after the crew had gone home.' : 'You reached the airport after the gate had closed.');
   return { minutes: run.minutes, cost: run.cost, late };
 }
 
@@ -428,6 +437,27 @@ export function registerJourney(sim: Simulation): void {
       missFlight(s, booking, `You were not in ${CITIES.get(fromCityOf(booking) ?? '')?.name ?? 'the city'} for it.`);
       return;
     }
+    if (booking.cabin === 'private') {
+      // No desk, no gate: the aircraft waits at the private terminal, and the
+      // crew hold for a couple of hours before the day is off.
+      s.requireDecision({
+        urgency: 70, category: 'travel',
+        title: `Fly To ${toCity}`,
+        detail: `${booking.airlineName} is ready at the private terminal for ${formatTime(booking.departAt, s.zone)}. It waits for you; the crew hold ${CREW_HOLD_HOURS} hours past that, then go home.`,
+        route: '/workspace/travel',
+        actions: [
+          { label: 'Go To The Aircraft', commandKind: 'travel.fly', payload: { bookingId: booking.id } },
+          { label: 'Stay Home', commandKind: 'travel.no_show', payload: { bookingId: booking.id } },
+        ],
+        dueAt: closesAt(booking),
+        refType: 'flight', refId: booking.id,
+      });
+      s.schedule({
+        at: closesAt(booking), kind: 'travel.gate_closes', label: `Crew Hold Ends — ${booking.flightNumber}`, category: 'system',
+        payload: { bookingId: booking.id }, priority: 80, refType: 'flight', refId: booking.id,
+      });
+      return;
+    }
     s.requireDecision({
       urgency: 75, category: 'travel',
       title: `Fly To ${toCity}`,
@@ -454,7 +484,7 @@ export function registerJourney(sim: Simulation): void {
       // A day in play still has to reach the desk in time; the desk decides.
       return;
     }
-    missFlight(sim, booking, 'The gate closed without you.');
+    missFlight(sim, booking, booking.cabin === 'private' ? 'The crew waited as long as they could and went home.' : 'The gate closed without you.');
   });
 
   sim.onSchedule('travel.bag_returned', (item) => {
@@ -493,6 +523,28 @@ export function registerJourney(sim: Simulation): void {
       const run = airportRuns(s, booking).find((r) => !r.disabled) ?? airportRuns(s, booking)[1]!;
       const { late } = toAirport(s, booking, run.mode);
       if (late) return { delayMinutes: 0, cancelled: false, missed: true };
+      if (booking.cabin === 'private') {
+        // Straight through the private terminal to the aircraft. If you are
+        // past the booked time the aircraft has waited, and the arrival moves
+        // with you; nothing about it is cancelled or delayed by anyone else.
+        booking.checkedInAt = s.now;
+        booking.status = 'checked_in';
+        if (s.now > booking.departAt) {
+          const slip = s.now - booking.departAt;
+          booking.departAt = s.now;
+          booking.arriveAt += slip;
+          for (const item of s.timeline.pending()) if (item.kind === 'travel.arrive' && item.refId === booking.id) s.timeline.reschedule(item.id, booking.arriveAt);
+        }
+        cancelKind(s, 'travel.gate_closes', booking.id);
+        s.resolveDecision('flight', booking.id);
+        booking.boardedAt = s.now;
+        s.advanceTo(Math.max(s.now, booking.departAt));
+        s.emit('travel.departed', { bookingId: booking.id, toAirport: booking.toAirport });
+        const air = inflight(s, booking, 'work');
+        booking.bagsClaimedAt = s.now;
+        const hotel = toHotel(s, booking, 'taxi');
+        return { landedIn: air.landedIn, delayMinutes: 0, cancelled: false, missed: false, hotel: hotel.hotel };
+      }
       checkIn(s, booking, 'keep');
     }
     const gate = board(s, booking);

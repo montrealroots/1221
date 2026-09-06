@@ -23,9 +23,9 @@ route has no line in the body of this file. That check is part of the
 gate, so a command cannot be added without a place in the matrix.
 
 Counts in this file are the code's own on the day it was written
-(stage 9): 142 commands, 62 scheduled kinds, 138 events, 21 event
-listeners, 14 scenes, 19 routes, 46 test files, 678 tests passing, 2
-recorded as todo, schema 37, 437 dialogue entries.
+(stage 10): 143 commands, 62 scheduled kinds, 139 events, 21 event
+listeners, 14 scenes, 19 routes, 47 test files, 696 tests passing, 2
+recorded as todo, schema 38, 465 dialogue entries.
 
 ## Surfaces
 
@@ -41,9 +41,9 @@ recorded as todo, schema 37, 437 dialogue entries.
 | `/workspace/history` | History (Why Did This Happen?) | `timeline`, `why` — left as-is except the tab label | audit |
 | `/workspace/bank` | Bank | `accounts`, `transactions`, `bills`, `credit`, `tax` | finance |
 | `/workspace/property` | Property | `owned` (Move In, Furnish It, List For Sale), `market`, `offers` (Take The Call, Walk It With The Inspector, Read The Report, Sit At The Table, Sign Remotely), `build`, `interiors` | property, viewings, purchase, construction, interiors |
-| `/workspace/vehicles` | Vehicles | `garage`, `market` (by lot, with On The Table), `service`, `modify` | vehicles, dealership, driving |
+| `/workspace/vehicles` | Vehicles | `garage` (cars, motorcycles, boats and aircraft, each with its own figures and its own way out: Drive, Ride, A Day On The Water, Fly It), `market` (by lot, six to a city, with On The Table), `service`, `modify` (parts for the kind you own) | vehicles, dealership, driving |
 | `/workspace/shopping` | Shopping | `shop`, `orders`, `owned`, `wardrobe` | commerce |
-| `/workspace/insurance` | Insurance | Policies, quotes, claims, renewals | insurance |
+| `/workspace/insurance` | Insurance | Policies, quotes, claims, renewals; motor, marine and aviation lines each offering only what they cover | insurance |
 | `/workspace/company` | Company | Locked in the shell (Under Construction) until the company engine lands | company (task 38) |
 | `/workspace/social` | Social | Platforms you are on and not on; account stats; Compose It and Make A Post; Posts with reactions; Brand Deals | media |
 | `/workspace/health` | Health | Providers, appointments (Play It Out, Just Go), prescriptions (Collect It), history with outcomes | services, care |
@@ -206,14 +206,19 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 
 | Subfeature | State | Code | On screen | Tests | Gap |
 | --- | --- | --- | --- | --- | --- |
-| Three lots per city as places; inventory refreshed | Implemented | `src/engine/content/places.ts` (dealership), `veh.refresh_inventory` | `market` tab by lot, The City | tests/dealership.test.ts | — |
+| Six lots per city as places (three car lots, the motorcycle dealer, the boat yard, the aircraft broker); each stocked with its own kind every fortnight | Implemented | `src/engine/content/places.ts` (dealership, `sells`), `veh.refresh_inventory`, `dealerPlaceFor` | `market` tab by lot, The City (Look At The Cars, Bikes, Boats, Aircraft) | tests/dealership.test.ts, tests/fleet.test.ts | — |
+| Real motorcycles, boats and private aircraft as owned assets: public-record makes and models, SLATE's own prices and figures, each kind with its own craft figures (top speed, length, berths, seats, range, runway) | Implemented (names) / Blocked (data) | `KIND_PROFILE`, `CraftSpec`, `kindOf`, `craftOf` in `src/engine/content/vehicles.ts`; 24 motorcycles, 20 boats, 14 aircraft | Garage cards and listing rows by kind, with the calibration note | tests/fleet.test.ts | Real per-market inventory with provenance needs a licensed feed, as for cars |
+| Looked over, taken out and talked about as what it is: kind-specific findings and repairs, a ride, a sea trial or a demonstration flight, a trade-in of the same kind only, delivery to a berth or a ferry flight, no lease on a boat | Implemented | `findingsFor`, `impressionOf`, `tradeInCandidates(kind)`, `kindFact`; `WORDS` in `src/engine/scenes/dealer.ts`; kind lines in `src/engine/dialogue/chunks/vehicles.ts` | `vehicles.dealer` | tests/fleet.test.ts | — |
+| Hours rather than miles on a boat or an aircraft; a berth or a hangar and crew billed monthly until sold; service intervals, wear and value by kind; a day on the water with fuel, weather and wellbeing | Implemented | `ensureUpkeep`, `addMileage`, `revalue`, `serviceEstimate`, `veh.cruise`, `vehicle.cruised` | Garage (Berth, Hangar And Crew, A Day On The Water), Bank bills | tests/fleet.test.ts | A boat trip is a command with effects, not a played scene |
+| Your own aircraft through private travel: flown at what it costs to run, checked against range and runway, waits for a late passenger, lands where you do and stays there | Implemented | `travel.charter_private` with `vehicleId`, `ownedAircraftOptions`, `CREW_HOLD_HOURS`; `arriveFlight` moves the aircraft and logs the hours | Travel `private` tab (Your Own Aircraft), Garage (Fly It), Home (Go To The Aircraft) | tests/fleet.test.ts | The private flight is the short day (`travel.fly`), not the played airline scene |
+| Parts made for each kind, with fitment by kind, body style and prerequisites: 20 for motorcycles, 20 for boats, 15 for aircraft, none of them a car's | Implemented | `PartFitment.kinds`, `checkFitment`, `partsFor`; range and top-speed effects through `craftOf` | `modify` tab | tests/fleet.test.ts, tests/systems.test.ts | — |
 | Salesperson who remembers you; inspection, test drive, rounds against a hidden floor, final price | Implemented | `deal.open`, `deal.inspect`, `deal.test_drive`, `deal.offer`, `deal.set_terms`, `deal.walk_away`, `deal.sign`, `deal.callback`, `deal.expire` | `vehicles.dealer`, On The Table | tests/dealership.test.ts | — |
 | Cash, finance, lease through the loan book; the lender's refusal shown | Implemented | `veh.purchase`, `financeRefusal` | Terms step | tests/dealership.test.ts | — |
 | Trade-in that comes off what you owe | Implemented | `tradeInAllowance` | Trade-in step | tests/dealership.test.ts | — |
 | Delivery as a calendar item; not in hand until it arrives; agreed repairs | Implemented | `deal.delivery`, `applyDealerRepairs` | Delivery chip | tests/dealership.test.ts | — |
 | Registration fees, depreciation, insurance from the same chair | Implemented | `veh.registration_due`, `veh.depreciate`, `ins.quote`, `ins.purchase` | Garage | tests/dealership.test.ts, tests/systems.test.ts | — |
 | Use, fuel, service, modification, resale | Implemented | `veh.drive`, `place.refuel`, `veh.book_service`, `veh.service_appointment`, `veh.book_modification`, `veh.install_parts`, `veh.remove_modification`, `veh.sell` | `garage`, `service`, `modify` | tests/driving.test.ts, tests/systems.test.ts | — |
-| 100 distinct real vehicles per market with provenance | Blocked (data) | SLATE's models, labelled | Listings | — | Needs a licensed dealer inventory feed |
+| 100 distinct real vehicles per market with provenance | Blocked (data) | Real makes and models across four kinds, with SLATE's own figures, labelled | Listings | — | Needs a licensed dealer inventory feed |
 
 ### Shopping
 
@@ -227,6 +232,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Subfeature | State | Code | On screen | Tests | Gap |
 | --- | --- | --- | --- | --- | --- |
 | Quote, purchase, claim, decision, payout, renewal, lapse | Implemented | `ins.quote`, `ins.purchase`, `ins.file_claim`, `ins.renewal` | `/workspace/insurance` | tests/systems.test.ts | — |
+| Motor, marine and aviation lines: a boat is refused on a motor policy and a jet on a marine one; undisclosed work aboard denies a claim on any of them; a motorcycle and an older hull or airframe are priced harder | Implemented | `vehicleLineFor`, `buildQuote`, `INSURANCE_PRODUCTS` (marine, aviation) | Insurance quotes, the dealer's broker | tests/fleet.test.ts | Carriers are SLATE's own, as before |
 | Real providers and products | Blocked (data) | Simulated lines, labelled | — | — | No carrier data imported |
 
 ### Social platforms
@@ -242,7 +248,8 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 
 | Subfeature | State | Code | On screen | Tests | Gap |
 | --- | --- | --- | --- | --- | --- |
-| Plan, book and cancel flights, hotels, private charter; drive between cities; arrival; time zones | Implemented | `travel.plan_trip`, `travel.book_flight`, `travel.cancel_flight`, `travel.book_hotel`, `travel.charter_private`, `travel.drive`, `travel.depart`, `travel.arrive`, `travel.check_in`, `travel.check_out`, `travel.drive_arrive` | `/workspace/travel` | tests/navigation.test.ts, tests/driving.test.ts | — |
+| Plan, book and cancel flights, hotels, private charter or your own aircraft; drive between cities; arrival; time zones | Implemented | `travel.plan_trip`, `travel.book_flight`, `travel.cancel_flight`, `travel.book_hotel`, `travel.charter_private`, `travel.drive`, `travel.depart`, `travel.arrive`, `travel.check_in`, `travel.check_out`, `travel.drive_arrive` | `/workspace/travel` | tests/navigation.test.ts, tests/driving.test.ts, tests/fleet.test.ts | — |
+| A private flight has no desk and no gate: the aircraft waits at the terminal, the crew hold three hours past the booked time, the arrival moves with a late passenger, and a charter from before is read by its airport code | Implemented | `CREW_HOLD_HOURS`, `closesAt`, the private branch of `travel.fly` and of `journey.due`; `cityOfAirport` | Home (Go To The Aircraft, Stay Home) | tests/fleet.test.ts | — |
 | Documents, packing, the run to the airport, seating, baggage, the gate, delays and cancellations, the air, the carousel, local transport, the hotel desk | Implemented | `travel.departure_due`, `travel.gate_closes`, `travel.pack`, `travel.to_airport`, `travel.check_in_flight`, `travel.board`, `travel.inflight`, `travel.claim_bags`, `travel.bag_returned`, `travel.to_hotel`, `travel.fly`, `travel.no_show`, `travel.flight` | Travel bookings, Calendar, Home | tests/journey.test.ts | Connections are a stop count on the fare, not a played change of plane |
 | Changed plans: move a flight, rebook after a miss, cancel | Implemented | `travel.change_flight`, `travel.rebook`, `travel.cancel_flight` | Travel bookings, Home | tests/journey.test.ts | — |
 | Real airlines, hotel brands and aircraft types | Implemented (names) / Blocked (data) | `AIRLINES`, `airlinesFor`, `HOTEL_BRANDS`, `PRIVATE_AIRCRAFT` in `src/engine/systems/travel.ts` | Travel, with the note beside each | tests/journey.test.ts | Names are public record; routes, schedules, fares, properties and rates are SLATE's own. Visa rules are not carried. |
@@ -280,7 +287,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Versioned library with stable ids, eligibility, tone, cooldown, follow-ups | Implemented | `src/engine/dialogue/schema.ts`, `library.ts` |
 | Seeded selection; per-save exposure; chunked loading | Implemented | `speak()`, `dialogue.seen` bounded to 2,000 ids, `loadAllSections()` |
 | Validation: unique ids, reachability by declared expectation (including facts), normalised duplicates, near-twins | Implemented | tests/dialogue.test.ts, `node tools/dialogue-check.mjs` |
-| 100,001 distinct entries | Blocked (content production) | 437 today: property 122, dating 112, vehicles 59, travel 55, health 52, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
+| 100,001 distinct entries | Blocked (content production) | 465 today: property 122, dating 112, vehicles 87, travel 55, health 52, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
 
 ## Game-wide AI integration
 
@@ -304,7 +311,10 @@ time zones, currencies and airports; public holidays; award shows, festivals
 and fan events; award bodies and their rules; networks, studios and their
 logos with licences recorded; industry people and their filmographies;
 landmarks; 25 gyms in 13 cities; airline, hotel-brand and aircraft-type
-names (with every route, fare, property and rate SLATE's own).
+names (with every route, fare, property and rate SLATE's own); the makes
+and models of every car, motorcycle, boat and private aircraft on a lot
+(with every specification, price, option and running cost SLATE's own
+calibration, said so on the screen).
 
 **SLATE's own, labelled as such on screen:** every home on the market,
 every car on a lot, every product in a shop, every insurer, every provider
@@ -323,7 +333,6 @@ climate model, not a forecast), and every line of dialogue.
 | Every relevant real gym worldwide | A licensed venue catalogue |
 | YouTube / Instagram / X / Twitch parity | A platform-by-platform checklist and the product decision to name them |
 | Visa rules by passport and destination | A maintained rules feed; the flight day says it does not check |
-| Real motorcycles, boats and private jets to own, with customization | Planned (task 58); public-record models with SLATE's own prices, like the cars |
 
 No private app data is scraped. No real post or message is ever sent as a
 side effect of play.
@@ -337,7 +346,7 @@ side effect of play.
 - Two tests are recorded as todo, not passed: nothing earns industry
   experience from work since the job system went, and nothing raises a
   decision on a fresh save yet.
-- **Base44 live persistence** of a save at schema 34 is not exercised here;
+- **Base44 live persistence** of a save at schema 38 is not exercised here;
   the adapter's codec and the guard are tested, the deployment is not.
   Reported as unavailable, not as passing.
 - **Two live tabs** are refused at the server by clock and playtime and are
@@ -346,7 +355,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 142 commands, 62 scheduled kinds, 138 events emitted, 21 event listeners, 14 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 143 commands, 62 scheduled kinds, 139 events emitted, 21 event listeners, 14 scenes, 19 routes.
 
 ### Commands
 
@@ -373,7 +382,7 @@ Generated by `node tools/inventory.mjs --markdown`. 142 commands, 62 scheduled k
 | social | `social.create_account` `social.create_post` `social.respond_to_deal` | `src/engine/systems/media.ts` |
 | travel | `travel.board` `travel.book_flight` `travel.book_hotel` `travel.cancel_flight` `travel.change_flight` `travel.charter_private` `travel.check_in_flight` `travel.claim_bags` `travel.drive` `travel.fly` `travel.inflight` `travel.no_show` `travel.pack` `travel.plan_trip` `travel.rebook` `travel.to_airport` `travel.to_hotel` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/travel.ts` |
 | tutorial | `tutorial.complete` `tutorial.dismiss` `tutorial.reset` `tutorial.set_mode` | `src/engine/world/world.ts` |
-| veh | `veh.book_modification` `veh.book_service` `veh.drive` `veh.purchase` `veh.remove_modification` `veh.sell` | `src/engine/systems/vehicles.ts` |
+| veh | `veh.book_modification` `veh.book_service` `veh.cruise` `veh.drive` `veh.purchase` `veh.remove_modification` `veh.sell` | `src/engine/systems/vehicles.ts` |
 | viewing | `viewing.arrive` `viewing.ask` `viewing.look` `viewing.skip` `viewing.summary` | `src/engine/systems/viewings.ts` |
 | work | `work.project` | `src/engine/systems/authorship.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
@@ -431,7 +440,7 @@ Generated by `node tools/inventory.mjs --markdown`. 142 commands, 62 scheduled k
 | social | `social.account_created` `social.deal_accepted` `social.deal_breached` `social.deal_completed` `social.deal_offered` `social.earnings_paid` `social.post_published` `social.reactions` | `src/engine/systems/media.ts` |
 | travel | `travel.arrived` `travel.bag_lost` `travel.bag_returned` `travel.charter_booked` `travel.checked_in` `travel.checked_out` `travel.departed` `travel.departure_due` `travel.drive_started` `travel.flight_booked` `travel.flight_cancelled` `travel.flight_missed` `travel.flight_rebooked` `travel.hotel_booked` `travel.trip_planned` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/places.ts`, `src/engine/systems/travel.ts` |
 | veh | `veh.inventory_refreshed` | `src/engine/systems/vehicles.ts` |
-| vehicle | `vehicle.delivered` `vehicle.modification_booked` `vehicle.modification_removed` `vehicle.modified` `vehicle.purchased` `vehicle.serviced` `vehicle.sold` | `src/engine/systems/dealership.ts`, `src/engine/systems/vehicles.ts` |
+| vehicle | `vehicle.cruised` `vehicle.delivered` `vehicle.modification_booked` `vehicle.modification_removed` `vehicle.modified` `vehicle.purchased` `vehicle.serviced` `vehicle.sold` | `src/engine/systems/dealership.ts`, `src/engine/systems/vehicles.ts` |
 | world | `world.day_rollover` | `src/engine/systems/life.ts` |
 
 ### Event listeners

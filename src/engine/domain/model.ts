@@ -705,18 +705,27 @@ export interface VehicleConfiguration {
   modificationIds: Id[];
 }
 
+/**
+ * What kind of thing a vehicle is. A car and a motorcycle count miles on the
+ * road; a boat and a jet count hours, cost money standing still, and are
+ * bought, insured and worked on by people who do only that.
+ */
+export type VehicleKind = 'car' | 'motorcycle' | 'boat' | 'jet';
+
 export interface Vehicle {
   id: Id;
   saveId: Id;
   ownerId: Id;
   ownerKind: 'person' | 'company';
+  /** Absent on a vehicle from before there was anything but cars; read as a car. */
+  kind?: VehicleKind;
   catalogId: string;
   make: string;
   model: string;
   year: number;
   trim: string;
   bodyStyle: string;
-  powertrain: 'gas' | 'diesel' | 'hybrid' | 'phev' | 'ev';
+  powertrain: 'gas' | 'diesel' | 'hybrid' | 'phev' | 'ev' | 'turbofan';
   vin: string;
   /** The car as it left the factory. Never changes. */
   factoryConfiguration: VehicleConfiguration;
@@ -764,6 +773,11 @@ export interface Vehicle {
   deliveryDueAt?: Instant;
   /** The deal it was bought under, if it was bought at a dealership. */
   dealId?: Id;
+  /**
+   * A boat's berth or a jet's hangar: the monthly bill that keeps it somewhere
+   * with somebody watching it. Ends when it is sold. Absent on road vehicles.
+   */
+  upkeepBillId?: Id;
 }
 
 export interface VehicleModification {
@@ -803,6 +817,8 @@ export interface ServiceRecord {
 export interface VehicleListing {
   id: Id;
   saveId: Id;
+  /** Absent on a listing from before there was anything but cars; read as a car. */
+  kind?: VehicleKind;
   catalogId: string;
   condition: 'new' | 'used' | 'certified' | 'collector';
   year: number;
@@ -1057,7 +1073,8 @@ export interface Prescription {
 
 export type InsuranceLine =
   | 'health' | 'dental' | 'vision' | 'auto' | 'renters' | 'homeowners'
-  | 'valuables' | 'travel' | 'life' | 'umbrella' | 'business' | 'production' | 'equipment';
+  | 'valuables' | 'travel' | 'life' | 'umbrella' | 'business' | 'production' | 'equipment'
+  | 'marine' | 'aviation';
 
 export interface InsurancePolicy {
   id: Id;
@@ -1196,6 +1213,8 @@ export interface FlightBooking {
   bagReturnedAt?: Instant;
   /** Set when the airline moved you or you moved yourself; points at the booking that replaced this one. */
   replacedBy?: Id;
+  /** The owned aircraft it is flown in, when it is not a charter or an airline. */
+  vehicleId?: Id;
 }
 
 export interface HotelBooking {
@@ -1777,7 +1796,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 37;
+export const SAVE_SCHEMA_VERSION = 38;
 
 export interface SaveMeta {
   id: Id;

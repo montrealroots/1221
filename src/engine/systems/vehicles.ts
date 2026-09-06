@@ -14,28 +14,81 @@ import { clamp, remap } from '../core/rng';
 import { addDays, addYears, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import {
-  FACTORY_OPTIONS, MANUFACTURERS, PARTS, VEHICLE_MODELS, checkFitment, partsFor, trimOf,
-  type BodyStyle, type FitmentSubject, type PartCategory, type Powertrain,
+  FACTORY_OPTIONS, KIND_PROFILE, MANUFACTURERS, PARTS, VEHICLE_MODELS, checkFitment, kindOf, partsFor, trimOf,
+  type BodyStyle, type CraftSpec, type FitmentSubject, type KindProfile, type PartCategory, type Powertrain, type VehicleKind,
 } from '../content/vehicles';
 import { CITIES } from '../content/geography';
 import { placesIn, type Place } from '../content/places';
 import { costOfLiving, vehicleFees } from '../content/tax';
+import { weatherAt } from './weather';
 import { createBill, amortisedPayment, loanRefusal, offeredApr } from './finance';
 
-const SERVICE_INTERVAL_MILES = 7_500;
 const DOC_FEE: Money = 85_00;
+/** How long you can be out on a boat in one go, in hours. */
+export const MAX_CRUISE_HOURS = 10;
 
-export const WAITING_ON_DELIVERY = 'That car has not been delivered yet.';
+export const WAITING_ON_DELIVERY = 'That has not been delivered yet.';
+export const NOT_A_BOAT = 'That is not a boat.';
+export const NOT_FOR_THE_ROAD = 'That does not go on the road.';
+export const ROUGH_WATER = 'A storm is on the water. Nobody sensible is going out in it.';
+
+/** What kind of thing a vehicle is. One from before there was anything but cars is a car. */
+export function vehicleKind(vehicle: Pick<Vehicle, 'kind' | 'catalogId'>): VehicleKind {
+  return vehicle.kind ?? kindOf(vehicle.catalogId);
+}
+
+export function profileOf(vehicle: Pick<Vehicle, 'kind' | 'catalogId'>): KindProfile {
+  return KIND_PROFILE[vehicleKind(vehicle)];
+}
+
+/** Something that can be driven on a road: a car or a motorcycle. */
+export function roadworthy(vehicle: Pick<Vehicle, 'kind' | 'catalogId'>): boolean {
+  const kind = vehicleKind(vehicle);
+  return kind === 'car' || kind === 'motorcycle';
+}
 
 /**
- * Which lot in a city sells a car in this condition: the new-car mall, the
- * used lot or the classic dealer. Every city has all three; a city that
- * somehow has fewer gets the last one there is.
+ * The craft figures as they stand: the trim's, plus what the parts on it
+ * have added to range or top speed. Absent on a car.
  */
-export function dealerPlaceFor(cityId: string, condition: VehicleListing['condition']): Place | undefined {
+export function craftOf(sim: Simulation, vehicle: Vehicle): CraftSpec | undefined {
+  const base = trimOf(vehicle.catalogId, vehicle.trim)?.craft;
+  if (!base) return undefined;
+  let rangeKm = base.rangeKm ?? 0;
+  let topSpeed = base.topSpeed ?? 0;
+  for (const modId of vehicle.currentConfiguration.modificationIds) {
+    const mod = sim.universe.vehicleModifications[modId];
+    if (!mod || mod.removedAt) continue;
+    const part = PARTS.get(mod.partCatalogId);
+    rangeKm += part?.effects.rangeKm ?? 0;
+    topSpeed += part?.effects.topSpeed ?? 0;
+  }
+  return { ...base, rangeKm: base.rangeKm === undefined ? undefined : rangeKm, topSpeed: base.topSpeed === undefined ? undefined : topSpeed };
+}
+
+/** What a boat or a jet costs a month at its berth or hangar, where it is kept. */
+export function upkeepFor(sim: Simulation, vehicle: Vehicle): Money {
+  const craft = trimOf(vehicle.catalogId, vehicle.trim)?.craft;
+  if (!craft?.monthlyKeep) return 0;
+  return Math.round(craft.monthlyKeep * costOfLiving(vehicle.locationId ?? sim.player.currentLocationId));
+}
+
+/** What an hour under way costs, in fuel, crew and wear, where the boat or jet is. */
+export function hourlyCostOf(sim: Simulation, vehicle: Vehicle): Money {
+  const craft = trimOf(vehicle.catalogId, vehicle.trim)?.craft;
+  if (!craft?.hourlyOperating) return 0;
+  return Math.round(craft.hourlyOperating * costOfLiving(vehicle.locationId ?? sim.player.currentLocationId));
+}
+
+/**
+ * Which lot in a city sells this: for a car, the new-car mall, the used lot or
+ * the classic dealer by condition; for anything else, the one place in town
+ * that sells that kind. A city that somehow has fewer gets the last one there is.
+ */
+export function dealerPlaceFor(cityId: string, condition: VehicleListing['condition'], kind: VehicleKind = 'car'): Place | undefined {
   const lots = placesIn(cityId).filter((p) => p.kind === 'dealership');
   if (lots.length === 0) return undefined;
-  const index = condition === 'collector' ? 2 : condition === 'used' ? 1 : 0;
+  const index = kind === 'car' ? (condition === 'collector' ? 2 : condition === 'used' ? 1 : 0) : KIND_PROFILE[kind].lotIndex;
   return lots[Math.min(index, lots.length - 1)];
 }
 
@@ -263,6 +316,7 @@ export function registerVehicles(sim: Simulation): void {
         condition: listing.condition === 'new' ? 100 : clamp(100 - listing.mileage / 2200, 45, 96),
       });
       if (deal) vehicle.dealId = deal.id;
+      ensureUpkeep(s, vehicle, accountId);
 
       if (p.acquisition === 'leased') {
         vehicle.leaseEndsAt = addDays(s.now, (quote.months ?? 36) * 30, s.homeZone);
@@ -497,11 +551,76 @@ export function registerVehicles(sim: Simulation): void {
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
       requireInHand(vehicle);
+      if (!roadworthy(vehicle)) throw new CommandError(NOT_FOR_THE_ROAD);
       addMileage(s, vehicle, p.miles);
       const serviceDue = vehicle.mileage >= vehicle.nextServiceDueMileage;
       return { mileage: vehicle.mileage, serviceDue };
     },
   );
+
+  // --- A boat, out ---------------------------------------------------------
+
+  sim.onCommand<{ vehicleId: Id; hours: number; accountId?: Id }, { hours: number; cost: Money; serviceDue: boolean }>(
+    'veh.cruise',
+    (p, { sim: s }) => {
+      const vehicle = s.universe.vehicles[p.vehicleId];
+      if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      requireInHand(vehicle);
+      if (vehicleKind(vehicle) !== 'boat') throw new CommandError(NOT_A_BOAT);
+      const player = s.player;
+      if ((vehicle.locationId ?? player.currentLocationId) !== player.currentLocationId) throw new CommandError('The boat is in another city.');
+      const hours = clamp(Math.round(p.hours), 1, MAX_CRUISE_HOURS);
+      if (player.wellbeing.energy < 12) throw new CommandError('You are too tired to take a boat out today.');
+      const weather = weatherAt(s, player.currentLocationId);
+      if (weather && (weather.precipitation === 'storm' || weather.windKph > 50)) throw new CommandError(ROUGH_WATER);
+
+      const cost = hourlyCostOf(s, vehicle) * hours;
+      const accountId = p.accountId ?? player.primaryAccountId;
+      if (!accountId) throw new CommandError('No account to pay from.');
+      if (cost > 0 && s.ledger.availableFunds(accountId) < cost) {
+        throw new CommandError(`${hours} hour${hours === 1 ? '' : 's'} on the water is about ${formatMoney(cost)} in fuel and you cannot cover it.`);
+      }
+      if (cost > 0) s.expense(accountId, cost, `Fuel — ${vehicle.make} ${vehicle.model}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
+
+      s.advanceTo(s.now + hours * 60 * 60 * 1000);
+      const rough = weather ? weather.windKph > 30 || weather.precipitation === 'rain' : false;
+      player.wellbeing.energy = clamp(player.wellbeing.energy - hours * (rough ? 4 : 2.5), 0, 100);
+      player.wellbeing.stress = clamp(player.wellbeing.stress - hours * (rough ? 1 : 2.5), 0, 100);
+      player.wellbeing.morale = clamp(player.wellbeing.morale + Math.min(10, hours * 1.5), 0, 100);
+      addMileage(s, vehicle, hours);
+      s.emit('vehicle.cruised', { vehicleId: vehicle.id, hours, cost, rough });
+      s.remember({
+        category: 'vehicle',
+        title: `${hours} Hour${hours === 1 ? '' : 's'} On The ${vehicle.make} ${vehicle.model}`,
+        detail: rough ? 'Rough going. Worth it anyway.' : weather ? `${weather.condition}, ${weather.temperature} degrees.` : 'Out and back.',
+        refs: [{ type: 'vehicle', id: vehicle.id }], significance: 18, public: false, amount: cost,
+      });
+      return { hours: vehicle.mileage, cost, serviceDue: vehicle.mileage >= vehicle.nextServiceDueMileage };
+    },
+  );
+}
+
+/**
+ * A boat needs a berth and a jet needs a hangar, and both need somebody paid
+ * to watch them. The bill starts a month out, ends when the thing is sold, and
+ * is only ever created once.
+ */
+export function ensureUpkeep(sim: Simulation, vehicle: Vehicle, accountId: Id): void {
+  if (vehicle.upkeepBillId || vehicle.soldAt) return;
+  const amount = upkeepFor(sim, vehicle);
+  if (amount <= 0) return;
+  const kind = vehicleKind(vehicle);
+  const bill = createBill(sim, {
+    payerId: vehicle.ownerId,
+    name: kind === 'boat' ? `Berth — ${vehicle.make} ${vehicle.model}` : `Hangar And Crew — ${vehicle.make} ${vehicle.model}`,
+    category: 'transport',
+    amount,
+    frequency: 'monthly',
+    firstDueAt: addDays(sim.now, 30, sim.homeZone),
+    autopayAccountId: accountId,
+    refType: 'vehicle', refId: vehicle.id,
+  });
+  vehicle.upkeepBillId = bill.id;
 }
 
 // ---------------------------------------------------------------------------
@@ -517,6 +636,7 @@ export function fitmentSubject(sim: Simulation, vehicle: Vehicle): FitmentSubjec
 
   const model = VEHICLE_MODELS.get(vehicle.catalogId);
   return {
+    kind: vehicleKind(vehicle),
     modelId: vehicle.catalogId,
     make: vehicle.make,
     year: vehicle.year,
@@ -558,11 +678,13 @@ export function createVehicle(
     modificationIds: [],
   };
 
+  const profile = KIND_PROFILE[model.kind];
   const vehicle: Vehicle = {
     id: sim.nextId('veh'),
     saveId: sim.universe.meta.id,
     ownerId: spec.ownerId,
     ownerKind: spec.ownerKind ?? 'person',
+    kind: model.kind,
     locationId: cityId,
     catalogId: model.id,
     make: model.make,
@@ -590,7 +712,7 @@ export function createVehicle(
       voided: false,
     },
     serviceRecordIds: [],
-    nextServiceDueMileage: spec.mileage + SERVICE_INTERVAL_MILES,
+    nextServiceDueMileage: spec.mileage + profile.serviceInterval,
     efficiency: trim.efficiency,
     horsepower: trim.horsepower,
     zeroToSixty: trim.zeroToSixty,
@@ -601,7 +723,7 @@ export function createVehicle(
   sim.schedule({
     at: vehicle.registrationExpiresAt,
     kind: 'veh.registration_due',
-    label: `Registration Renewal — ${vehicle.make} ${vehicle.model}`,
+    label: `${profile.document} Renewal — ${vehicle.make} ${vehicle.model}`,
     category: 'vehicles',
     payload: { vehicleId: vehicle.id },
     priority: 62,
@@ -751,9 +873,10 @@ export function revalue(sim: Simulation, vehicle: Vehicle): Money {
     value = trim.msrp * Math.pow(1 - model.depreciationRate, ageYears);
   }
 
-  // Mileage and condition.
-  const expectedMiles = ageYears * 11_500;
-  const mileageFactor = clamp(1 - (vehicle.mileage - expectedMiles) / 260_000, 0.55, 1.22);
+  // Use and condition, in whatever this kind counts.
+  const profile = profileOf(vehicle);
+  const expectedUse = ageYears * profile.expectedPerYear;
+  const mileageFactor = clamp(1 - (vehicle.mileage - expectedUse) / profile.useSpan, 0.55, 1.22);
   const conditionFactor = remap(vehicle.condition, 0, 100, 0.42, 1.08);
 
   value *= mileageFactor * conditionFactor;
@@ -778,17 +901,19 @@ export function revalue(sim: Simulation, vehicle: Vehicle): Money {
   return vehicle.currentValue;
 }
 
+/** Use, in whatever this kind counts: miles on the road, hours on the water or in the air. */
 export function addMileage(sim: Simulation, vehicle: Vehicle, miles: number): void {
+  const profile = profileOf(vehicle);
   vehicle.mileage += Math.max(0, Math.round(miles));
-  vehicle.mechanicalHealth = clamp(vehicle.mechanicalHealth - miles / 3200, 0, 100);
-  vehicle.condition = clamp(vehicle.condition - miles / 9000, 0, 100);
+  vehicle.mechanicalHealth = clamp(vehicle.mechanicalHealth - miles / profile.wearDivisor, 0, 100);
+  vehicle.condition = clamp(vehicle.condition - miles / profile.conditionDivisor, 0, 100);
 
   if (vehicle.mileage >= vehicle.nextServiceDueMileage) {
     sim.requireDecision({
       urgency: vehicle.mechanicalHealth < 55 ? 72 : 45,
       category: 'vehicles',
       title: `${vehicle.make} ${vehicle.model} Is Due For Service`,
-      detail: `${vehicle.mileage.toLocaleString('en-US')} miles. Skipping it costs more later.`,
+      detail: `${vehicle.mileage.toLocaleString('en-US')} ${profile.unit}. Skipping it costs more later.`,
       route: '/workspace/vehicles',
       actions: [{ label: 'Book Service', commandKind: 'veh.book_service', payload: { vehicleId: vehicle.id, kind: 'scheduled' } }],
       refType: 'vehicle', refId: vehicle.id,
@@ -822,7 +947,7 @@ export function serviceEstimate(sim: Simulation, vehicle: Vehicle, kind: Service
     tires: 1_450_00, detail: 340_00, bodywork: 3_800_00, warranty: 0,
   };
   const healthPenalty = kind === 'repair' ? remap(vehicle.mechanicalHealth, 100, 0, 1, 3.2) : 1;
-  return Math.round((base[kind] ?? 400_00) * index * col * healthPenalty);
+  return Math.round((base[kind] ?? 400_00) * index * col * healthPenalty * profileOf(vehicle).serviceCostIndex);
 }
 
 function performService(sim: Simulation, vehicleId: Id, kind: ServiceRecord['kind'], description: string): void {
@@ -861,7 +986,7 @@ function performService(sim: Simulation, vehicleId: Id, kind: ServiceRecord['kin
     cost,
     coveredByWarranty: underWarranty,
     performedAt: sim.now,
-    shopName: underWarranty ? `${vehicle.make} Dealer Service` : 'Meridian Auto Works',
+    shopName: underWarranty ? `${vehicle.make} Dealer Service` : shopFor(vehicleKind(vehicle)),
     healthDelta,
   };
   sim.universe.serviceRecords[record.id] = record;
@@ -869,7 +994,7 @@ function performService(sim: Simulation, vehicleId: Id, kind: ServiceRecord['kin
 
   vehicle.mechanicalHealth = clamp(vehicle.mechanicalHealth + healthDelta, 0, 100);
   if (kind === 'detail' || kind === 'bodywork') vehicle.condition = clamp(vehicle.condition + (kind === 'bodywork' ? 12 : 5), 0, 100);
-  if (kind === 'scheduled') vehicle.nextServiceDueMileage = vehicle.mileage + SERVICE_INTERVAL_MILES;
+  if (kind === 'scheduled') vehicle.nextServiceDueMileage = vehicle.mileage + profileOf(vehicle).serviceInterval;
 
   sim.resolveDecision('vehicle', vehicle.id, 'vehicles');
   revalue(sim, vehicle);
@@ -903,7 +1028,7 @@ function renewRegistration(sim: Simulation, vehicleId: Id): void {
     vehicle.registrationExpiresAt = addYears(sim.now, 1, sim.homeZone);
     sim.schedule({
       at: vehicle.registrationExpiresAt, kind: 'veh.registration_due',
-      label: `Registration Renewal — ${vehicle.make} ${vehicle.model}`,
+      label: `${profileOf(vehicle).document} Renewal — ${vehicle.make} ${vehicle.model}`,
       category: 'vehicles', payload: { vehicleId: vehicle.id }, priority: 62,
       refType: 'vehicle', refId: vehicle.id,
     });
@@ -925,19 +1050,80 @@ function depreciateAll(sim: Simulation): void {
   }
 }
 
+/** Where the work gets done, by what it is. SLATE's own shops. */
+function shopFor(kind: VehicleKind): string {
+  return kind === 'boat' ? 'Harbour Yard' : kind === 'jet' ? 'Meridian Aero Services' : 'Meridian Auto Works';
+}
+
+/** How many of each kind a city's lots carry per fortnight. */
+const STOCK_RANGE: Readonly<Record<VehicleKind, [number, number]>> = { car: [12, 20], motorcycle: [4, 7], boat: [3, 5], jet: [1, 3] };
+
+/** The colours, wheels and interiors a lot describes its stock with, by kind. */
+const STOCK_LOOKS: Readonly<Record<VehicleKind, { paint: string[]; wheels: string[]; interior: string[] }>> = {
+  car: {
+    paint: ['Obsidian Black', 'Glacier White', 'Nardo Grey', 'Racing Blue', 'Signal Red', 'Forest Green', 'Champagne'],
+    wheels: ['18" Alloy', '19" Alloy', '20" Forged', '21" Split-Spoke', '22" Polished'],
+    interior: ['Black Leather', 'Tan Leather', 'Grey Cloth', 'Cream Nappa', 'Red Nappa', 'Alcantara'],
+  },
+  motorcycle: {
+    paint: ['Gloss Black', 'Ducati Red', 'Racing Blue', 'Matte Grey', 'British Racing Green', 'Vivid Orange', 'Pearl White'],
+    wheels: ['Cast Alloy', 'Spoked', 'Forged Alloy', 'Carbon'],
+    interior: ['Stock Saddle', 'Comfort Saddle', 'Brown Leather Saddle', 'Alcantara Saddle'],
+  },
+  boat: {
+    paint: ['White Hull', 'Navy Hull', 'Black Hull', 'Seafoam Hull', 'Whaler Blue Hull', 'Mahogany Hull', 'Grey Hull'],
+    wheels: ['Single Outboard', 'Twin Outboards', 'Triple Outboards', 'Sterndrive', 'Twin Inboards', 'Twin Shaft Diesels', 'Sails And Diesel'],
+    interior: ['White Vinyl', 'Grey Vinyl', 'Teak And Cream', 'Navy And Teak', 'Ivory Leather', 'Walnut And Ivory'],
+  },
+  jet: {
+    paint: ['White With Blue Stripe', 'White With Silver Stripe', 'Matte Grey', 'Pearl White', 'Charcoal With Gold Line', 'White With Red Cheatline'],
+    wheels: ['Standard Gear', 'Standard Gear', 'Standard Gear'],
+    interior: ['Cream Leather', 'Tan Leather And Walnut', 'Grey Leather And Carbon', 'Ivory And Gloss Ebony', 'Cognac Leather'],
+  },
+};
+
 export function refreshInventory(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
   const cityId = player.currentLocationId;
 
+  // A fortnight's stock is seeded by the fortnight, so refreshing twice in
+  // the same one would list the same cars twice. This fortnight's unsold
+  // stock here is replaced, except anything somebody is at the table over.
+  const bucket = Math.floor(sim.now / (14 * MS_DAY));
+  const held = new Set(Object.values(sim.universe.vehicleDeals).filter((d) => d.status === 'open' || d.status === 'agreed').map((d) => d.listingId));
   for (const [id, listing] of Object.entries(sim.universe.vehicleListings)) {
-    if (listing.status !== 'active' || sim.now - listing.listedAt > 60 * MS_DAY) delete sim.universe.vehicleListings[id];
+    if (listing.status !== 'active' || sim.now - listing.listedAt > 60 * MS_DAY) { delete sim.universe.vehicleListings[id]; continue; }
+    if (listing.locationId === cityId && Math.floor(listing.listedAt / (14 * MS_DAY)) === bucket && !held.has(id)) delete sim.universe.vehicleListings[id];
   }
 
-  const rng = sim.rng('vehicle_inventory', cityId, Math.floor(sim.now / (14 * MS_DAY)));
+  const rng = sim.rng('vehicle_inventory', cityId, bucket);
+  let total = 0;
+  for (const kind of ['car', 'motorcycle', 'boat', 'jet'] as const) {
+    if (!dealerPlaceFor(cityId, 'new', kind)) continue;
+    total += stockLot(sim, cityId, kind, rng);
+  }
+  // The car somebody is at the table over was regenerated too, identically;
+  // the fresh copy goes, the one on the table stays.
+  const keyOf = (l: VehicleListing) => `${l.catalogId}|${l.year}|${l.mileage}|${l.price}|${l.configuration.paint}|${l.configuration.interior}`;
+  const heldKeys = new Set([...held].map((id) => sim.universe.vehicleListings[id]).filter((l): l is VehicleListing => Boolean(l)).map(keyOf));
+  for (const [id, listing] of Object.entries(sim.universe.vehicleListings)) {
+    if (listing.status === 'active' && listing.locationId === cityId && !held.has(id) && heldKeys.has(keyOf(listing))) {
+      delete sim.universe.vehicleListings[id];
+      total -= 1;
+    }
+  }
+  sim.emit('veh.inventory_refreshed', { cityId, count: total });
+}
+
+/** One kind's fortnight of stock on its lot. Returns how many were listed. */
+function stockLot(sim: Simulation, cityId: string, kind: VehicleKind, rng: ReturnType<Simulation['rng']>): number {
   const currentYear = new Date(sim.now).getUTCFullYear();
-  const models = VEHICLE_MODELS.all();
-  const count = rng.int(12, 20);
+  const models = VEHICLE_MODELS.all().filter((m) => m.kind === kind);
+  if (models.length === 0) return 0;
+  const [low, high] = STOCK_RANGE[kind];
+  const count = rng.int(low, high);
+  const looks = STOCK_LOOKS[kind];
 
   for (let i = 0; i < count; i++) {
     const model = rng.weighted(models, (m) => {
@@ -956,7 +1142,10 @@ export function refreshInventory(sim: Simulation): void {
         : clamp(currentYear - rng.int(1, 9), model.years[0], currentYear);
 
     const age = Math.max(0, currentYear - year);
-    const mileage = condition === 'new' ? rng.int(3, 40) : Math.round(age * rng.int(6_500, 15_500));
+    const perYear = KIND_PROFILE[kind].expectedPerYear;
+    const mileage = condition === 'new'
+      ? (kind === 'car' ? rng.int(3, 40) : kind === 'motorcycle' ? rng.int(1, 12) : rng.int(1, 8))
+      : Math.round(age * perYear * rng.float(0.55, 1.35));
 
     let price = trim.msrp;
     if (condition !== 'new') {
@@ -970,21 +1159,23 @@ export function refreshInventory(sim: Simulation): void {
     const options = rng.shuffle(trim.availableOptions).slice(0, optionCount);
     price += options.reduce((s, id) => s + (FACTORY_OPTIONS.get(id)?.price ?? 0), 0);
 
+    const lot = dealerPlaceFor(cityId, condition, kind);
     const listing: VehicleListing = {
       id: sim.nextId('veh'),
       saveId: sim.universe.meta.id,
+      kind,
       catalogId: `${model.id}:${trim.id}`,
       condition,
       year,
       mileage,
       price,
       locationId: cityId,
-      dealerName: dealerPlaceFor(cityId, condition)?.name ?? dealerName(model.parentId, condition),
-      dealerPlaceId: dealerPlaceFor(cityId, condition)?.id,
+      dealerName: lot?.name ?? dealerName(model.parentId, condition),
+      dealerPlaceId: lot?.id,
       configuration: {
-        paint: rng.pick(['Obsidian Black', 'Glacier White', 'Nardo Grey', 'Racing Blue', 'Signal Red', 'Forest Green', 'Champagne']),
-        wheels: rng.pick(['18" Alloy', '19" Alloy', '20" Forged', '21" Split-Spoke', '22" Polished']),
-        interior: rng.pick(['Black Leather', 'Tan Leather', 'Grey Cloth', 'Cream Nappa', 'Red Nappa', 'Alcantara']),
+        paint: rng.pick(looks.paint),
+        wheels: rng.pick(looks.wheels),
+        interior: rng.pick(looks.interior),
         options,
         modificationIds: [],
       },
@@ -994,7 +1185,7 @@ export function refreshInventory(sim: Simulation): void {
     };
     sim.universe.vehicleListings[listing.id] = listing;
   }
-  sim.emit('veh.inventory_refreshed', { cityId, count });
+  return count;
 }
 
 function dealerName(makeId: string, condition: string): string {

@@ -7,7 +7,8 @@ import { formatPeople, homeCityOf, placeKindLabel } from '@/engine/world/place';
 import { missedBy } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import { weatherAt } from '@/engine/systems/weather';
-import { searchFlights, privateAircraftOptions, estimateFlightMinutes, REAL_CARRIER_NOTE, REAL_HOTEL_NOTE, REAL_JET_NOTE } from '@/engine/systems/travel';
+import { searchFlights, privateAircraftOptions, ownedAircraftOptions, estimateFlightMinutes, REAL_CARRIER_NOTE, REAL_HOTEL_NOTE, REAL_JET_NOTE } from '@/engine/systems/travel';
+import { roadworthy } from '@/engine/systems/vehicles';
 import { flyable } from '@/engine/systems/journey';
 import { activeScene } from '@/engine/systems/scenes';
 import { CITIES, cityDistanceKm, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
@@ -28,6 +29,7 @@ export function TravelWorkspace() {
   const departAt = addDays(sim.now, daysOut, sim.homeZone);
   const flights = useWorld((s) => (destination !== s.player.currentLocationId ? searchFlights(s, s.player.currentLocationId, destination, departAt) : []));
   const aircraft = privateAircraftOptions(player.currentLocationId, destination);
+  const ownAircraft = useWorld((s) => (destination !== s.player.currentLocationId ? ownedAircraftOptions(s, destination) : []));
   const bookings = useWorld((s) => Object.values(s.universe.flightBookings).sort((a, b) => b.bookedAt - a.bookedAt));
   const stays = useWorld((s) => Object.values(s.universe.hotelBookings).sort((a, b) => b.bookedAt - a.bookedAt));
 
@@ -35,7 +37,7 @@ export function TravelWorkspace() {
   const there = CITIES.get(destination);
 
   // --- Driving --------------------------------------------------------------
-  const cars = useWorld((s) => Object.values(s.universe.vehicles).filter((v) => v.ownerId === s.player.id && v.ownerKind === 'person'));
+  const cars = useWorld((s) => Object.values(s.universe.vehicles).filter((v) => v.ownerId === s.player.id && v.ownerKind === 'person' && !v.soldAt && roadworthy(v)));
   const carsHere = cars.filter((v) => vehicleLocation(sim, v) === player.currentLocationId);
   const [carId, setCarId] = useState(carsHere[0]?.id ?? '');
   const car = carsHere.find((v) => v.id === carId) ?? carsHere[0];
@@ -250,6 +252,35 @@ export function TravelWorkspace() {
               ))}
             </div>
           )}
+        </Panel>
+      )}
+
+      {tab === 'private' && ownAircraft.length > 0 && (
+        <Panel title="Your Own Aircraft" subtitle="Flown at what it costs you to run: fuel, crew and the fees at the far end. It lands where you do and stays there until you fly it on." flush>
+          <div className="list">
+            {ownAircraft.map((option) => (
+              <div key={option.vehicleId} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{option.name}</div>
+                  <div className="xs dim">
+                    {option.seats} seats · {option.rangeKm.toLocaleString('en-US')} km range · needs {option.runwayFeet.toLocaleString('en-US')} ft
+                  </div>
+                  {!option.available && <div className="xs negative">{option.reason}</div>}
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div className="mono small">{formatMoneyCompact(option.estimatedCost)}</div>
+                  <div className="xs dim">{option.estimatedHours}h</div>
+                </div>
+                <button
+                  className="btn btn-sm btn-primary"
+                  disabled={!option.available}
+                  onClick={() => run('travel.charter_private', { toCityId: destination, departAt, vehicleId: option.vehicleId })}
+                >
+                  Fly It
+                </button>
+              </div>
+            ))}
+          </div>
         </Panel>
       )}
 

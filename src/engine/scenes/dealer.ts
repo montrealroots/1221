@@ -22,11 +22,39 @@ import { CITIES } from '../content/geography';
 import { MODE_LABEL, driveableVehicle, planJourney, type Mode } from '../systems/places';
 import { localHour } from '../systems/fitness';
 import {
-  DEALER_CLOSE, DEALER_OPEN, carName, dealFor, dealOf, findingByText, lastSaid, listingsAt, roundsLeft,
+  DEALER_CLOSE, DEALER_OPEN, carName, dealFor, dealOf, findingByText, kindFact, lastSaid, listingKind, listingsAt, lotSells, roundsLeft,
   salespersonAt, sellerKnows, sellerTone, tradeInAllowance, tradeInCandidates, vehicleName, visitsBefore,
 } from '../systems/dealership';
 import { preview } from '../dialogue/library';
-import { financeRefusal, purchaseQuote } from '../systems/vehicles';
+import { KIND_PROFILE, type VehicleKind } from '../content/vehicles';
+import { financeRefusal, purchaseQuote, vehicleKind } from '../systems/vehicles';
+
+/** How the scene talks about what the lot sells. */
+interface Words {
+  noun: string;
+  plural: string;
+  /** Where the stock is: 'out front', 'on the ramp'. */
+  where: string;
+  drive: string;
+  driveAliases: string[];
+  driveDetail: string;
+  another: string;
+  tradeIn: string;
+  delivery: string;
+  deliveryDetail: string;
+  brought: string;
+}
+
+const WORDS: Readonly<Record<VehicleKind, Words>> = {
+  car: { noun: 'car', plural: 'cars', where: 'out front', drive: 'Take It For A Drive', driveAliases: ['drive', 'test drive', 'test'], driveDetail: 'Half an hour on the road.', another: 'Look At Another Car', tradeIn: 'Trade In A Car', delivery: 'Ask For Delivery', deliveryDetail: 'A few days. They get it ready first.', brought: 'They will bring it round' },
+  motorcycle: { noun: 'bike', plural: 'bikes', where: 'in the showroom', drive: 'Take It For A Ride', driveAliases: ['ride', 'test ride', 'test', 'drive'], driveDetail: 'Half an hour on the road.', another: 'Look At Another Bike', tradeIn: 'Trade In A Bike', delivery: 'Ask For Delivery', deliveryDetail: 'A few days. They get it ready first.', brought: 'They will bring it round in the van' },
+  boat: { noun: 'boat', plural: 'boats', where: 'on the water and the hard standing', drive: 'Take It Out On The Water', driveAliases: ['sea trial', 'take it out', 'test', 'drive'], driveDetail: 'An hour on the water with the broker aboard.', another: 'Look At Another Boat', tradeIn: 'Trade In A Boat', delivery: 'Ask For Delivery To A Berth', deliveryDetail: 'A few days. They commission it first.', brought: 'They will deliver it to a berth' },
+  jet: { noun: 'aircraft', plural: 'aircraft', where: 'on the ramp', drive: 'Take A Demonstration Flight', driveAliases: ['demo flight', 'demonstration', 'fly', 'test', 'drive'], driveDetail: 'An hour in the air with their pilot.', another: 'Look At Another Aircraft', tradeIn: 'Trade In An Aircraft', delivery: 'Ask For A Ferry Flight', deliveryDetail: 'A few days. They position it to your home airport.', brought: 'They will ferry it to your home airport' },
+};
+
+function wordsFor(place: Place): Words {
+  return WORDS[lotSells(place)];
+}
 import { defineScene, unknownStep, type SceneChoice, type SceneRuntime } from '../systems/scenes';
 
 /** The offers on the table beside their number, as fractions of it. */
@@ -83,14 +111,15 @@ function journeyChoices(sim: Simulation, place: Place): SceneChoice[] {
   return out;
 }
 
-function sellerLine(sim: Simulation, session: SceneSession): string {
+function sellerLine(sim: Simulation, session: SceneSession, place: Place): string {
   const seller = salespersonAt(sim, str(session, 'placeId'));
-  if (!seller) return preview(sim, { section: 'vehicles', purpose: 'greet', beat: 'lot' }, { flags: ['nobody'] }, session.id).text;
+  const kind = kindFact(lotSells(place));
+  if (!seller) return preview(sim, { section: 'vehicles', purpose: 'greet', beat: 'lot' }, { flags: ['nobody'], facts: [kind] }, session.id).text;
   const known = sellerKnows(sim, seller.id);
   const listing = str(session, 'listingId') ? sim.universe.vehicleListings[str(session, 'listingId')] : undefined;
   const flags = known.length > 0 ? [] : [visitsBefore(sim, seller.id) > 0 ? 'returning' : 'first_visit'];
   return preview(sim, { section: 'vehicles', purpose: 'greet', beat: 'lot' }, {
-    tone: sellerTone(seller), facts: known, flags, vars: { first: seller.firstName, car: listing ? carName(listing) : 'the car' },
+    tone: sellerTone(seller), facts: [...known, kind], flags, vars: { first: seller.firstName, car: listing ? carName(listing) : `the ${wordsFor(place).noun}` },
   }, session.id).text;
 }
 
@@ -98,10 +127,15 @@ function conditionLabel(listing: VehicleListing): string {
   return listing.condition === 'new' ? 'New' : listing.condition === 'certified' ? 'Certified' : listing.condition === 'collector' ? 'Collector' : 'Used';
 }
 
+function usageLabel(listing: VehicleListing): string {
+  const profile = KIND_PROFILE[listingKind(listing)];
+  return `${listing.mileage.toLocaleString('en-US')} ${profile.unit === 'miles' ? 'mi' : 'hrs'}`;
+}
+
 function carFacts(deal: VehicleDeal, listing: VehicleListing) {
   const facts = [
     { label: deal.status === 'agreed' ? 'Agreed' : 'Asking', value: formatMoney(deal.status === 'agreed' ? (deal.agreedPrice ?? deal.currentAsk) : deal.currentAsk) },
-    { label: 'Condition', value: `${conditionLabel(listing)} · ${listing.mileage.toLocaleString('en-US')} mi` },
+    { label: 'Condition', value: `${conditionLabel(listing)} · ${usageLabel(listing)}` },
     { label: 'Colour', value: `${listing.configuration.paint} · ${listing.configuration.interior}` },
     { label: 'Options', value: listing.configuration.options.length > 0 ? `${listing.configuration.options.length} fitted` : 'Standard' },
   ];
@@ -116,6 +150,7 @@ function termsFacts(sim: Simulation, deal: VehicleDeal) {
     { label: 'Rounds Left', value: `${roundsLeft(deal)}` },
     { label: 'Delivery', value: deal.terms.delivery === 'deliver' ? 'They bring it' : 'You collect' },
   ];
+  void sim;
   if (deal.terms.tradeInVehicleId) {
     const trade = sim.universe.vehicles[deal.terms.tradeInVehicleId];
     facts.push({ label: 'Trade-In', value: trade ? `${vehicleName(trade)} · ${formatMoney(deal.terms.tradeInValue ?? 0)}` : formatMoney(deal.terms.tradeInValue ?? 0) });
@@ -131,7 +166,7 @@ function netCredit(sim: Simulation, deal: VehicleDeal): Money {
   return Math.max(0, (deal.terms.tradeInValue ?? 0) - owed);
 }
 
-function payChoices(sim: Simulation, deal: VehicleDeal): SceneChoice[] {
+function payChoices(sim: Simulation, deal: VehicleDeal, kind: VehicleKind): SceneChoice[] {
   const price = deal.agreedPrice ?? deal.currentAsk;
   const credit = netCredit(sim, deal);
   const cash = purchaseQuote(sim, price, 'cash', { tradeInCredit: credit });
@@ -142,7 +177,7 @@ function payChoices(sim: Simulation, deal: VehicleDeal): SceneChoice[] {
   const out: SceneChoice[] = [
     { id: 'sign:cash', label: 'Pay Cash', aliases: ['cash', 'outright', 'pay'], detail: `${formatMoney(cash.cashDue)} today`, tone: 'primary', disabled: short(cash.cashDue) },
     { id: 'sign:financed', label: `Finance Over ${FINANCE_MONTHS} Months`, aliases: ['finance', 'loan', 'financed'], detail: `${formatMoney(finance.cashDue)} today · ${formatMoney(finance.monthlyPayment ?? 0)} a month`, disabled: financeRefusal(sim, finance) ?? short(finance.cashDue) },
-    { id: 'sign:leased', label: `Lease For ${LEASE_MONTHS} Months`, aliases: ['lease', 'leased'], detail: `${formatMoney(lease.cashDue)} today · ${formatMoney(lease.monthlyPayment ?? 0)} a month`, disabled: short(lease.cashDue) },
+    { id: 'sign:leased', label: `Lease For ${LEASE_MONTHS} Months`, aliases: ['lease', 'leased'], detail: `${formatMoney(lease.cashDue)} today · ${formatMoney(lease.monthlyPayment ?? 0)} a month`, disabled: kind === 'boat' ? 'Boats are not leased here. Cash or finance.' : short(lease.cashDue) },
   ];
   return out;
 }
@@ -190,12 +225,13 @@ export const DEALER_SCENE = defineScene({
           eyebrow: 'Getting there',
           text: `${place.about} ${INVENTED_NOTE}${open ? '' : ` It is closed. ${hoursLine()}`}`,
           choices: journeyChoices(sim, place),
-          facts: [{ label: 'Hours', value: `${DEALER_OPEN}:00 – ${DEALER_CLOSE}:00` }, { label: 'Cars', value: `${listingsAt(sim, place.id).length} on the lot` }],
+          facts: [{ label: 'Hours', value: `${DEALER_OPEN}:00 – ${DEALER_CLOSE}:00` }, { label: KIND_PROFILE[lotSells(place)].plural, value: `${listingsAt(sim, place.id).length} on the lot` }],
           canSkip: false,
         };
       }
       case 'lot': {
         const cars = listingsAt(sim, place.id);
+        const words = wordsFor(place);
         const wanted = str(session, 'listingId');
         const choices: SceneChoice[] = cars
           .sort((a, b) => (a.id === wanted ? -1 : b.id === wanted ? 1 : 0))
@@ -205,14 +241,14 @@ export const DEALER_SCENE = defineScene({
             return {
               id: `car:${l.id}`, label: open ? `Back To The ${carName(l)}` : l.id === wanted ? `The ${carName(l)} You Came For` : carName(l),
               aliases: [carName(l).toLowerCase(), l.configuration.paint.toLowerCase()],
-              detail: `${conditionLabel(l)} · ${l.mileage.toLocaleString('en-US')} mi · ${formatMoney(l.price)} · ${l.configuration.paint}`,
+              detail: `${conditionLabel(l)} · ${usageLabel(l)} · ${formatMoney(l.price)} · ${l.configuration.paint}`,
             };
           });
         choices.push({ id: 'out', label: 'Walk Out', aliases: ['out', 'leave', 'nothing'] });
         return {
           title: place.name,
           eyebrow: 'The lot',
-          text: `${sellerLine(sim, session)} ${cars.length === 0 ? 'The lot is empty today; stock comes in every couple of weeks.' : `${cars.length} car${cars.length === 1 ? '' : 's'} out front.`}`,
+          text: `${sellerLine(sim, session, place)} ${cars.length === 0 ? 'The lot is empty today; stock comes in every couple of weeks.' : `${cars.length} ${cars.length === 1 ? words.noun : words.plural} ${words.where}.`}`,
           choices,
           canSkip: false,
         };
@@ -221,11 +257,12 @@ export const DEALER_SCENE = defineScene({
         const deal = dealOfSession(sim, session);
         const listing = listingOfDeal(sim, deal);
         const seller = sim.universe.people[deal.salespersonId];
+        const words = WORDS[listingKind(listing)];
         const choices: SceneChoice[] = [
           { id: 'inspect', label: 'Look It Over', aliases: ['inspect', 'look', 'check'], detail: 'Twenty minutes. What you find is a lever.', disabled: deal.inspected ? 'You have looked it over.' : undefined },
-          { id: 'drive', label: 'Take It For A Drive', aliases: ['drive', 'test drive', 'test'], detail: 'Half an hour on the road.', disabled: deal.testDriven ? 'You have driven it.' : sim.player.wellbeing.energy < 10 ? 'You are too tired to drive anything today.' : undefined },
+          { id: 'drive', label: words.drive, aliases: words.driveAliases, detail: words.driveDetail, disabled: deal.testDriven ? 'You have taken it out.' : sim.player.wellbeing.energy < 10 ? 'You are too tired to take anything out today.' : undefined },
           { id: 'numbers', label: deal.status === 'agreed' ? 'Back To The Paperwork' : 'Talk Numbers', aliases: ['numbers', 'price', 'talk', 'negotiate', 'offer'], tone: 'primary' },
-          { id: 'another', label: 'Look At Another Car', aliases: ['another', 'back', 'lot'] },
+          { id: 'another', label: words.another, aliases: ['another', 'back', 'lot'] },
           { id: 'walk', label: 'Walk Away', aliases: ['walk', 'no', 'leave it'], tone: 'danger', detail: 'Ends this conversation. They will remember it.' },
         ];
         return {
@@ -255,12 +292,13 @@ export const DEALER_SCENE = defineScene({
             if (repair && !deal.terms.repairs.includes(repair)) choices.push({ id: `repair:${repair}`, label: `Ask Them To ${repair}`, aliases: [repair.toLowerCase()], detail: 'Comes off what they can do on the price.' });
           }
         }
-        if (tradeInCandidates(sim).length > 0 && !deal.terms.tradeInVehicleId) choices.push({ id: 'tradein', label: 'Trade In A Car', aliases: ['trade', 'trade in', 'part exchange'] });
-        if (deal.terms.tradeInVehicleId) choices.push({ id: 'notrade', label: 'Keep Your Car Out Of It', aliases: ['no trade', 'keep it'] });
+        const words = WORDS[listingKind(listing)];
+        if (tradeInCandidates(sim, listingKind(listing)).length > 0 && !deal.terms.tradeInVehicleId) choices.push({ id: 'tradein', label: words.tradeIn, aliases: ['trade', 'trade in', 'part exchange'] });
+        if (deal.terms.tradeInVehicleId) choices.push({ id: 'notrade', label: 'Keep Yours Out Of It', aliases: ['no trade', 'keep it'] });
         choices.push(deal.terms.delivery === 'deliver'
           ? { id: 'collect', label: 'Collect It Yourself', aliases: ['collect', 'pick up'] }
-          : { id: 'deliver', label: 'Ask For Delivery', aliases: ['deliver', 'delivery', 'bring it'], detail: 'A few days. They get it ready first.' });
-        choices.push({ id: 'back', label: 'Back To The Car', aliases: ['back', 'car'] });
+          : { id: 'deliver', label: words.delivery, aliases: ['deliver', 'delivery', 'bring it', 'ferry'], detail: words.deliveryDetail });
+        choices.push({ id: 'back', label: `Back To The ${words.noun.charAt(0).toUpperCase()}${words.noun.slice(1)}`, aliases: ['back', 'car', words.noun] });
         choices.push({ id: 'walk', label: 'Walk Away', aliases: ['walk', 'no', 'leave it'], tone: 'danger' });
         return {
           title: deal.status === 'agreed' ? `Agreed At ${formatMoney(deal.agreedPrice ?? deal.currentAsk)}` : 'The Numbers',
@@ -273,10 +311,10 @@ export const DEALER_SCENE = defineScene({
       }
       case 'tradein': {
         const deal = dealOfSession(sim, session);
-        const cars = tradeInCandidates(sim);
+        const cars = tradeInCandidates(sim, listingKind(listingOfDeal(sim, deal)));
         const choices: SceneChoice[] = cars.map((v) => ({
           id: `trade:${v.id}`, label: `The ${vehicleName(v)}`, aliases: [vehicleName(v).toLowerCase(), v.model.toLowerCase()],
-          detail: `${v.mileage.toLocaleString('en-US')} mi · they would allow about ${formatMoney(tradeInAllowance(sim, deal, v))}${v.loanAccountId ? ' · still on finance' : ''}`,
+          detail: `${v.mileage.toLocaleString('en-US')} ${KIND_PROFILE[vehicleKind(v)].unit === 'miles' ? 'mi' : 'hrs'} · they would allow about ${formatMoney(tradeInAllowance(sim, deal, v))}${v.loanAccountId ? ' · still on finance' : ''}`,
         }));
         choices.push({ id: 'back', label: 'Never Mind', aliases: ['back', 'no', 'cancel'] });
         return {
@@ -292,7 +330,7 @@ export const DEALER_SCENE = defineScene({
         const listing = listingOfDeal(sim, deal);
         const price = deal.agreedPrice ?? deal.currentAsk;
         const cash = purchaseQuote(sim, price, 'cash', { tradeInCredit: netCredit(sim, deal) });
-        const choices = payChoices(sim, deal);
+        const choices = payChoices(sim, deal, listingKind(listing));
         choices.push({ id: 'sleep', label: 'Sleep On It', aliases: ['sleep', 'later', 'think'], detail: `The deal holds until ${formatDate(deal.expiresAt, sim.zone)}.` });
         choices.push({ id: 'walk', label: 'Walk Away', aliases: ['walk', 'no'], tone: 'danger' });
         return {
@@ -338,13 +376,13 @@ export const DEALER_SCENE = defineScene({
           title: due > 0 ? 'On Its Way' : 'The Keys',
           eyebrow: vehicle ? vehicleName(vehicle) : '',
           text: due > 0
-            ? `They will bring it round on ${formatDate(due, sim.zone)}${deal.terms.repairs.length > 0 ? `, with the work done first: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}` : ''}. Until then it is theirs to get ready.`
-            : `The keys are in your hand.${deal.terms.repairs.length > 0 ? ` The work you asked for is done: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}.` : ''} It is yours.`,
+            ? `${WORDS[listingKind(listingOfDeal(sim, deal))].brought} on ${formatDate(due, sim.zone)}${deal.terms.repairs.length > 0 ? `, with the work done first: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}` : ''}. Until then it is theirs to get ready.`
+            : `The keys are in your hand.${deal.terms.repairs.length > 0 ? ` The work you asked for is done: ${deal.terms.repairs.map((r) => r.toLowerCase()).join(', ')}.` : ''} It is yours.${vehicle?.upkeepBillId ? ` ${vehicleKind(vehicle) === 'boat' ? 'The berth' : 'The hangar and crew'} bills monthly from here.` : ''}`,
           choices: [{ id: 'done', label: 'Back To The Day', aliases: ['done', 'ok', 'finish'], tone: 'primary' }],
           facts: vehicle ? [
             { label: 'Insured', value: vehicle.insurancePolicyId ? 'Yes' : 'No' },
             { label: 'Registered In', value: CITIES.get(vehicle.registeredIn)?.name ?? vehicle.registeredIn },
-            { label: 'Service Due', value: `${vehicle.nextServiceDueMileage.toLocaleString('en-US')} mi` },
+            { label: 'Service Due', value: `${vehicle.nextServiceDueMileage.toLocaleString('en-US')} ${KIND_PROFILE[vehicleKind(vehicle)].unit === 'miles' ? 'mi' : 'hrs'}` },
           ] : undefined,
           canSkip: false,
           canLeave: false,
@@ -457,7 +495,9 @@ export const DEALER_SCENE = defineScene({
       case 'signed': {
         const vehicleId = str(session, 'vehicleId');
         if (choiceId === 'quote') {
-          const quote = ctx.commit<{ premium: Money; quoteId: Id }>('quote', { kind: 'ins.quote', payload: { line: 'auto', coveredRefs: [{ type: 'vehicle', id: vehicleId }] } });
+          const bought = sim.universe.vehicles[vehicleId];
+          const line = bought ? KIND_PROFILE[vehicleKind(bought)].insuranceLine : 'auto';
+          const quote = ctx.commit<{ premium: Money; quoteId: Id }>('quote', { kind: 'ins.quote', payload: { line, coveredRefs: [{ type: 'vehicle', id: vehicleId }] } });
           session.context['premium'] = quote.premium;
           session.context['quoteId'] = quote.quoteId;
           return;
@@ -490,7 +530,7 @@ export const DEALER_SCENE = defineScene({
     let dealId = str(session, 'dealId');
     if (!dealId) {
       const listingId = str(session, 'listingId');
-      if (!listingId) throw new CommandError('Pick a car first. The short version needs to know which one.');
+      if (!listingId) throw new CommandError('Pick one first. The short version needs to know which.');
       const opened = ctx.commit<{ dealId: Id }>(`open:${listingId}`, { kind: 'deal.open', payload: { placeId: place.id, listingId } });
       dealId = opened.dealId;
       session.context['dealId'] = dealId;

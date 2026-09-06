@@ -16,6 +16,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { roadworthy } from './vehicles';
 import { CommandError } from '../core/simulation';
 import type { HotelBooking, Id, Person, Property, Vehicle } from '../domain/model';
 import { personalityOf } from './life';
@@ -130,7 +131,7 @@ export function planJourney(sim: Simulation, to: { neighbourhoodId?: string; cit
 /** The car you could drive right now: yours, in this city, with fuel in it. */
 export function driveableVehicle(sim: Simulation, person: Person = sim.player): Vehicle | undefined {
   return Object.values(sim.universe.vehicles).find((v) =>
-    !v.soldAt && !v.deliveryDueAt && v.ownerId === person.id && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
+    !v.soldAt && !v.deliveryDueAt && v.ownerId === person.id && roadworthy(v) && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
 }
 
 /** How much of a tank a distance eats, as a percentage. */

@@ -11,7 +11,7 @@ import { relationshipStrength, compatibilityBetween } from '@/engine/systems/rel
 
 describe('vehicle fitment', () => {
   const subject = (overrides: Partial<ReturnType<typeof fitmentSubject>> = {}) => ({
-    modelId: 'toyota_corolla', make: 'toyota', year: 2022, trimId: 'le',
+    kind: 'car' as const, modelId: 'toyota_corolla', make: 'toyota', year: 2022, trimId: 'le',
     powertrain: 'gas' as const, bodyStyle: 'sedan' as const, installedCategories: [],
     ...overrides,
   });

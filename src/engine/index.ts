@@ -24,6 +24,7 @@ import { registerLife, startOfLocalDay } from './systems/life';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
 import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
+import { kindOf } from './content/vehicles';
 import { registerCommerce } from './systems/commerce';
 import { registerTravel } from './systems/travel';
 import { registerServices, ensureProviders, ensureCourses } from './systems/services';
@@ -300,8 +301,10 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   // --- Vehicle ------------------------------------------------------------
   if (config.startWithVehicle) {
+    // A car, specifically: the bike lot's cheapest is not what somebody
+    // starting out with a car is picturing.
     const listings = Object.values(sim.universe.vehicleListings)
-      .filter((l) => l.status === 'active')
+      .filter((l) => l.status === 'active' && (l.kind ?? 'car') === 'car')
       .sort((a, b) => a.price - b.price);
     // Budgeted against the account that will actually pay. It used to be
     // priced off checking plus savings and then paid out of checking alone,
@@ -848,6 +851,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Schema 37: a flight booking carries the day as it was played (the bag,
     // the seat, the delay, the bags on arrival) and can be missed or moved.
     // All optional; nothing already in the save is touched.
+  }
+
+  if (from < 38) {
+    // Schema 38: vehicles and listings carry what kind of thing they are.
+    // Everything from before is a car, and is stamped so from the catalogue
+    // rather than guessed; nothing else about it is touched.
+    for (const vehicle of Object.values(universe.vehicles)) {
+      if (!vehicle.kind) vehicle.kind = kindOf(vehicle.catalogId);
+    }
+    for (const listing of Object.values(universe.vehicleListings)) {
+      if (!listing.kind) listing.kind = kindOf(listing.catalogId.split(':')[0] ?? '');
+    }
+    steps.push('Vehicles and listings stamped with their kind.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

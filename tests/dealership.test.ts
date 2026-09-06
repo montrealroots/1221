@@ -75,10 +75,11 @@ function open(sim: Simulation, condition?: VehicleListing['condition']) {
 beforeAll(async () => { await loadAllSections(); });
 
 describe('the lot', () => {
-  it('gives every city three dealerships, and every listing sits on one of them', () => {
+  it('gives every city six lots, three of them selling cars, and every listing sits on one of them', () => {
     const sim = aLife();
     const lots = dealershipsIn(sim);
-    expect(lots).toHaveLength(3);
+    expect(lots).toHaveLength(6);
+    expect(lots.filter((l) => (l.sells ?? 'car') === 'car')).toHaveLength(3);
     expect(lots.map((l) => l.name)).toContain('Crossroads Auto Sales');
     const listings = Object.values(sim.universe.vehicleListings).filter((l) => l.status === 'active');
     expect(listings.length).toBeGreaterThan(5);

@@ -21,6 +21,7 @@ import {
   MODE_LABEL, hotelRoom, placesNear, planJourney, whatIsHere, type Mode,
 } from '@/engine/systems/places';
 import { activeScene } from '@/engine/systems/scenes';
+import { lotSells } from '@/engine/systems/dealership';
 
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
@@ -96,7 +97,7 @@ export function CityWorkspace() {
           )}
           {here.place?.actions.includes('browse') && (
             <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'vehicles.dealer', input: { placeId: here.place!.id } })}>
-              Look At The Cars
+              {lookLabel(here.place)}
             </button>
           )}
           {here.place && here.place.actions.includes('eat') && menuOf(here.place).length > 0 && (
@@ -182,7 +183,7 @@ export function CityWorkspace() {
                   )}
                   {place.kind === 'dealership' && (
                     <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'vehicles.dealer', input: { placeId: place.id } })}>
-                      Look At The Cars
+                      {lookLabel(place)}
                     </button>
                   )}
                   {place.actions.includes('eat') && menuOf(place).length > 0 && (
@@ -283,4 +284,10 @@ function OrderDialog({ place, onClose }: { place: Place; onClose: () => void }) 
       </p>
     </Modal>
   );
+}
+
+/** What the button on a lot says, by what the lot sells. */
+function lookLabel(place: Place): string {
+  const sells = lotSells(place);
+  return sells === 'motorcycle' ? 'Look At The Bikes' : sells === 'boat' ? 'Look At The Boats' : sells === 'jet' ? 'Look At The Aircraft' : 'Look At The Cars';
 }
