@@ -22,7 +22,7 @@ before any delivery claim.
 | A2 | One authoritative clock, `advanceTo`, seeded named random streams | Done | `src/engine/core/time.ts`, `rng(stream, …)` |
 | A3 | Ledger in integer minor units, balanced, retry-safe purchases | Done | `src/engine/core/ledger.ts`; `ledger.audit()` asserted in tests |
 | A4 | Stable entity ids across every feature | Done | `src/engine/core/ids.ts` |
-| A5 | New state inside `SaveUniverse` with versions and migrations; older saves survive | Done (schema 30) | `src/engine/domain/model.ts`, `migrate()` in `src/engine/index.ts` |
+| A5 | New state inside `SaveUniverse` with versions and migrations; older saves survive | Done (schema 31) | `src/engine/domain/model.ts`, `migrate()` in `src/engine/index.ts` |
 | A6 | Scene text describes committed facts only | Done | `SceneRuntime.commit` is the only way a scene changes the world |
 | A7 | Existing validation gate kept green | Done | `npm run validate`, `node tools/cohesion.mjs` |
 | A8 | Cloud persistence of the new fields exercised live on Base44 | Blocked | Needs deployment credentials; codec covered by tests only |
@@ -32,12 +32,12 @@ before any delivery claim.
 | Id | Requirement | State | Where / gap |
 | --- | --- | --- | --- |
 | B1 | Content-driven `SceneDefinition` with typed context, entities, place, participants, availability, time, quoted costs, effects, interruptions, follow-ups | Partial | `src/engine/systems/scenes.ts`: `available`, `start`, `view`, `choose`, `summarise`, `resume`, `placeBound`. Interruptions are engine-level (leaving the city or place); per-scene interruption sources (a call, a changed price) are not declared per definition yet. |
-| B2 | Discover → inspect → discuss → plan → review → act → outcome → follow up, domain-specific | Partial | Gym, meal, run and wellbeing scenes follow it. Vehicles, property, dating, banking, social, film do not have scenes yet (C-rows). |
+| B2 | Discover → inspect → discuss → plan → review → act → outcome → follow up, domain-specific | Partial | Gym, meal, run, wellbeing and the dealership follow it. Property, dating, banking, social and film do not have scenes yet (C-rows). |
 | B3 | Detailed play and Skip To The End on the same rules | Done | `scene.quick`, `summarise()` |
 | B4 | One foreground scene, resumable, survives save/reload | Done | `activeScene`, `scene.resume`; tests/scenes.test.ts |
 | B5 | Interruption on travel, appointments, messages, availability, funds, reload, leaving | Partial | Leaving the city/place and reload are handled; a due appointment or an incoming message does not yet interrupt a scene. |
 | B6 | Step revision tokens and per-operation idempotency keys; two tabs | Done / Partial | Revisions and keys are in; two tabs are refused at the server by clock and playtime (`base44/shared/guard.js`), not by an in-memory revision, and that is not exercised in a browser. |
-| B7 | Structured NPC memory distinct from transcripts | Done (narrow) | `src/engine/systems/memory.ts`; only trainers read and write it. |
+| B7 | Structured NPC memory distinct from transcripts | Done (narrow) | `src/engine/systems/memory.ts`; trainers and car salespeople read and write it (goals, preferences, meetings, what you drove, what you walked away from, what you bought). |
 | B8 | NPCs with independent goals and availability | Partial | Existing world tiers and schedules; no per-NPC goal loop. |
 | B9 | Free text → validated structured intent; ambiguity asks; unsupported says so; never silent success | Done (offline) | `src/engine/systems/intent.ts`; no language model, no network. |
 | B10 | AI provider adapter with server-side secrets, timeouts, budgets, offline fallback | Not started | No provider is wired; every scene is deterministic. |
@@ -47,7 +47,7 @@ before any delivery claim.
 | Id | Journey | State | Where / gap |
 | --- | --- | --- | --- |
 | C1 | Calendar plan → venue → gym pass → workout with choices → wellbeing → saved follow-up | Done | `docs/IMMERSION-COVERAGE.md`; walked in the browser; 53 tests |
-| C2 | Inspect and purchase a car, then insure, collect and use it | Not started | Stage 2. Existing: `veh.purchase/sell/drive/book_service/book_modification`, `ins.quote/purchase`, `travel.drive`. Needed: dealership scene, salesperson memory, negotiation (price, financing, trade-in, delivery, repairs), delivery as a calendar item, handover, second visits. |
+| C2 | Inspect and purchase a car, then insure, collect and use it | Done | Stage 2. `src/engine/systems/dealership.ts`, `src/engine/scenes/dealer.ts`, tests/dealership.test.ts (21). Every city has three lots as places; a salesperson made on the first deal who remembers you; look it over (findings are levers), test drive, offers in rounds against a floor that is never shown, trade-in that comes off what you owe and moves the old car off the books, delivery as a calendar item with the car not in hand until it arrives, agreed repairs done free and on the record, cash / finance / lease through the existing loan book and bills, insurance quoted and bought from the same chair, walking away remembered with a callback when you were close, cooling-off, expiry, a second visit that is a second visit; Skip To The End on the same rules. Use, service, modify and resale are the existing garage. |
 | C3 | Arrange and attend a date | Not started | Stage 3. Existing: `rel.ask_out`, `rel.date_scheduled/resolved`. Needed: the date as a scene with beats, memory and outcomes through validated commands. |
 | C4 | Buy and furnish a home | Not started as a scene | Existing commands cover shortlist → showing → offer → counter → inspection → close → furnish (`prop.*`, tests/property). Needed: a viewing scene with rooms and questions, an agent who remembers, moving day. |
 | C5 | Create social content with audience reactions | Not started as a scene | Existing: `social.create_post`, deals, earnings. Needed: composing as a scene, reactions over simulation time, consequences on relationships and career. |
@@ -58,7 +58,7 @@ before any delivery claim.
 
 | Id | Area | State | Where / gap |
 | --- | --- | --- | --- |
-| D1 | World: explore, enter, talk, inspect, services, return with consequences | Partial | Places, journeys, visits, orders, rooms, Right Here actions, Work Out / Eat Here. Talking to people inside a place is not a scene yet. |
+| D1 | World: explore, enter, talk, inspect, services, return with consequences | Partial | Places, journeys, visits, orders, rooms, Right Here actions, Work Out / Eat Here / Look At The Cars. The dealership is the first place where talking to the person there is the scene; restaurants, shops and the rest are not yet. |
 | D2 | Calendar: entity-specific detail and owning-system actions; plans; invitations; RSVPs; preparation; distinct states | Partial | Detail and actions Done (plan, appointment, bill, flight, observance). Invitations and RSVPs between people, and travel preparation prompts, Not started. |
 | D3 | Wellbeing: playable activities with choices, resources, time, results, routines | Done | `wellbeing.activity` scene; cooking keeps its recipe flow; readiness includes soreness. Routines (a recurring plan) Not started. |
 | D4 | Gyms: search, facilities, hours, passes, memberships, classes, trainers, check-in, changing rooms, workouts, progression, rests, recovery, renewal, cancellation | Done | `src/engine/systems/fitness.ts`, `src/engine/content/fitness.ts`, `src/engine/scenes/gym.ts` |
@@ -67,7 +67,7 @@ before any delivery claim.
 | D7 | Relationships and the in-game Raya | Not started (Raya) | Persistent relationships exist (`rel.*`). Raya — onboarding, profiles, discovery, matches, conversations, privacy, membership — is a separate implementation; nothing claims parity. |
 | D8 | Banking: accounts, cards, premium products, statements, pending/posted, scheduled payments, fees, limits, interest, debt; international/offshore with FX | Partial | Accounts, transfers, bills, loans, credit and tax exist. Payment instruments, statements, pending vs posted, premium products, multi-currency and FX Not started. |
 | D9 | Property: 100 distinct real homes per market with provenance; full lifecycle | Blocked (data) / Partial (lifecycle) | Lifecycle commands exist through closing, furnishing, renting and selling. Real listings need a licensed feed; procedural homes are labelled SLATE's. |
-| D10 | Vehicles: 100 distinct real vehicles per market; full lifecycle | Blocked (data) / Partial (lifecycle) | Purchase, sell, drive, service, modify exist. Dealership, negotiation, financing, trade-in, delivery, registration: Stage 2. Real per-market inventory with provenance needs a feed. |
+| D10 | Vehicles: 100 distinct real vehicles per market; full lifecycle | Blocked (data) / Done (lifecycle) | Dealership, inspection, test drive, negotiation, financing, trade-in, delivery, registration fees, insurance, use, service, modification and resale are all built (C2). Real per-market inventory with provenance needs a licensed feed; the catalogue is SLATE's models and the listings say so. |
 | D11 | Shopping: 100 real branded products per category; basket, checkout, delivery, returns, use | Blocked (data) / Partial (flow) | Purchase, return, wardrobe, outfits, sell exist. Real catalogues need a feed; variants are not counted as products. |
 | D12 | Insurance: real providers, full applicable coverage, quotes → claims → settlements | Partial | Quote, purchase, claim, renewal exist on simulated lines. Real provider identities Not imported. |
 | D13 | YouTube / Instagram / X / Twitch as distinct in-game platforms with parity checklists | Not started | Four fictional platforms exist. No parity claim is made. |
@@ -118,7 +118,7 @@ before any delivery claim.
 ## Order of work
 
 1. Stage 1 — this file, the emoji cleanup, the style convention, the guard test. **Done.**
-2. Stage 2 — the vehicle journey (C2, D10 lifecycle).
+2. Stage 2 — the vehicle journey (C2, D10 lifecycle). **Done.**
 3. Stage 3 — the date journey (C3).
 4. Stage 4 — the dialogue library foundation (F1–F4).
 5. Stage 5 — home, social and film journeys (C4–C6).

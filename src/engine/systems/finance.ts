@@ -80,6 +80,18 @@ export function offeredApr(score: number, product: 'card' | 'auto' | 'mortgage' 
 }
 
 /** Standard amortising payment for a loan. */
+/**
+ * Why a lender would say no before the paperwork: the score they want for
+ * the product. Read by the screens that offer finance, so a choice that
+ * will be refused is closed with the reason rather than failing when pressed.
+ */
+export function loanRefusal(sim: Simulation, borrowerId: Id, product: 'card' | 'auto' | 'mortgage' | 'personal'): string | undefined {
+  const score = sim.universe.creditProfiles[borrowerId]?.score ?? 600;
+  const minimum = product === 'mortgage' ? 620 : product === 'auto' ? 580 : 600;
+  if (score < minimum) return `A ${product} loan needs a score of at least ${minimum}. Yours is ${score}.`;
+  return undefined;
+}
+
 export function amortisedPayment(principal: Money, annualRate: number, months: number): Money {
   if (months <= 0) return principal;
   if (annualRate <= 0) return Math.ceil(principal / months);
@@ -190,12 +202,10 @@ export function registerFinance(sim: Simulation): void {
   sim.onCommand<{ borrowerId: Id; principal: Money; months: number; product: 'auto' | 'mortgage' | 'personal'; depositAccountId?: Id; refType?: string; refId?: Id; name?: string }, { accountId: Id; monthlyPayment: Money; apr: number }>(
     'finance.take_loan',
     (p, { sim: s }) => {
+      const refusal = loanRefusal(s, p.borrowerId, p.product);
+      if (refusal) throw new CommandError(refusal);
       const profile = s.universe.creditProfiles[p.borrowerId];
       const score = profile?.score ?? 600;
-      const minimum = p.product === 'mortgage' ? 620 : p.product === 'auto' ? 580 : 600;
-      if (score < minimum) {
-        throw new CommandError(`A ${p.product} loan needs a score of at least ${minimum}. Yours is ${score}.`);
-      }
       const apr = offeredApr(score, p.product);
       const monthlyPayment = amortisedPayment(p.principal, apr, p.months);
 

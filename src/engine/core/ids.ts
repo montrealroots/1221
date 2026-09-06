@@ -24,7 +24,7 @@ export type IdNamespace =
   | 'company' | 'division' | 'employee' | 'equip' | 'franchise' | 'merch'
   | 'order' | 'item' | 'asset' | 'policy' | 'claim' | 'appt' | 'provider'
   | 'course' | 'history' | 'audit' | 'notice' | 'decision' | 'idem'
-  | 'scene' | 'fact' | 'membership' | 'workout' | 'plan';
+  | 'scene' | 'fact' | 'membership' | 'workout' | 'plan' | 'deal';
 
 const COUNTER_KEY = '__idCounter';
 

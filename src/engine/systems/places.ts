@@ -130,7 +130,7 @@ export function planJourney(sim: Simulation, to: { neighbourhoodId?: string; cit
 /** The car you could drive right now: yours, in this city, with fuel in it. */
 export function driveableVehicle(sim: Simulation, person: Person = sim.player): Vehicle | undefined {
   return Object.values(sim.universe.vehicles).find((v) =>
-    !v.soldAt && v.ownerId === person.id && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
+    !v.soldAt && !v.deliveryDueAt && v.ownerId === person.id && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
 }
 
 /** How much of a tank a distance eats, as a percentage. */

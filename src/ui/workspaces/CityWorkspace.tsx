@@ -25,7 +25,7 @@ import { activeScene } from '@/engine/systems/scenes';
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
   { id: 'see', label: 'See Something', kinds: ['landmark', 'museum', 'park', 'beach', 'viewpoint', 'cinema', 'theatre', 'stadium'] },
-  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'market', 'salon', 'shop'] },
+  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'market', 'salon', 'shop', 'dealership'] },
   { id: 'stay', label: 'Stay Out', kinds: ['hotel', 'club'] },
 ];
 
@@ -92,6 +92,11 @@ export function CityWorkspace() {
           {here.place?.actions.includes('train') && (
             <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'fitness.gym', input: { placeId: here.place!.id } })}>
               Work Out
+            </button>
+          )}
+          {here.place?.actions.includes('browse') && (
+            <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'vehicles.dealer', input: { placeId: here.place!.id } })}>
+              Look At The Cars
             </button>
           )}
           {here.place && here.place.actions.includes('eat') && menuOf(here.place).length > 0 && (
@@ -175,13 +180,18 @@ export function CityWorkspace() {
                       Work Out
                     </button>
                   )}
+                  {place.kind === 'dealership' && (
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'vehicles.dealer', input: { placeId: place.id } })}>
+                      Look At The Cars
+                    </button>
+                  )}
                   {place.actions.includes('eat') && menuOf(place).length > 0 && (
                     <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.meal', input: { placeId: place.id } })}>
                       Eat Here
                     </button>
                   )}
                   <button
-                    className={`btn btn-sm${place.kind === 'gym' || (place.actions.includes('eat') && menuOf(place).length > 0) ? '' : ' btn-primary'}`}
+                    className={`btn btn-sm${place.kind === 'gym' || place.kind === 'dealership' || (place.actions.includes('eat') && menuOf(place).length > 0) ? '' : ' btn-primary'}`}
                     disabled={sim.player.currentPlaceId === place.id}
                     onClick={() => run('go.to', { placeId: place.id, mode })}
                   >

@@ -22,7 +22,7 @@ import { MS_MINUTE, formatDuration, zoneOffsetMs, MS_HOUR, type Instant } from '
 import type { Id, Vehicle } from '../domain/model';
 import { CITIES, distanceKm, type City } from '../content/geography';
 import { VEHICLE_MODELS } from '../content/vehicles';
-import { addMileage } from './vehicles';
+import { WAITING_ON_DELIVERY, addMileage } from './vehicles';
 
 /** A long day at the wheel. Further than this is a flight, or two days. */
 export const MAX_DRIVE_KM = 650;
@@ -201,6 +201,7 @@ export function registerDriving(sim: Simulation): void {
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle) throw new CommandError('That car does not exist.');
       if (vehicle.ownerId !== player.id || vehicle.ownerKind !== 'person') throw new CommandError('That is not your car.');
+      if (vehicle.deliveryDueAt) throw new CommandError(WAITING_ON_DELIVERY);
 
       const from = CITIES.get(player.currentLocationId);
       const to = CITIES.get(p.toCityId);

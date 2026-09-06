@@ -28,17 +28,18 @@ export type PlaceKind =
   | 'restaurant' | 'cafe' | 'bar' | 'fast_food' | 'market'
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
-  | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop';
+  | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
   cinema: 'Cinema', theatre: 'Theatre', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
+  dealership: 'Dealership',
 };
 
 /** What you can do somewhere. */
-export type PlaceAction = 'eat' | 'drink' | 'refuel' | 'sleep' | 'shower' | 'train' | 'watch' | 'visit' | 'shop' | 'meet' | 'service';
+export type PlaceAction = 'eat' | 'drink' | 'refuel' | 'sleep' | 'shower' | 'train' | 'watch' | 'visit' | 'shop' | 'meet' | 'service' | 'browse';
 
 export interface Place {
   id: string;
@@ -314,6 +315,25 @@ const SPECS: readonly Spec[] = [
   { kind: 'hotel', count: (i) => (i > 50 ? 3 : 2) },
   { kind: 'salon', count: () => 1 },
   { kind: 'club', count: (i) => (i > 60 ? 2 : 1) },
+  // Last, so adding it moved nothing that was already there: the same city
+  // still has the same places with the same ids.
+  { kind: 'dealership', count: () => 3 },
+];
+
+/**
+ * Three lots to a city, by what they sell: the new-car mall, the used lot and
+ * the classic dealer. Named by position so a listing can find its lot.
+ */
+const DEALERSHIP_NAMES: readonly ((city: string) => string)[] = [
+  (city) => `${city} Auto Mall`,
+  () => 'Crossroads Auto Sales',
+  () => 'Meridian Classic Motors',
+];
+
+const DEALERSHIP_ABOUT: readonly ((where: string) => string)[] = [
+  (where) => `New and certified cars in ${where}, every make under one roof. Somebody will find you within a minute of parking.`,
+  (where) => `A used lot in ${where}. Prices on the windscreen, and every one of them is a starting point.`,
+  (where) => `Classics and collector cars in ${where}. They know what they have, and they will wait for the right buyer.`,
 ];
 
 const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
@@ -321,7 +341,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   market: ['shop'], gas_station: ['refuel', 'shop'], garage: ['service'], hotel: ['sleep', 'shower', 'eat', 'meet'],
   gym: ['train', 'shower'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
-  stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'],
+  stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
 };
 
 function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
@@ -352,7 +372,7 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
 const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   restaurant: 95, cafe: 35, bar: 75, fast_food: 25, market: 30, gas_station: 10, garage: 120,
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
-  viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35,
+  viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
 };
 
 /**
@@ -395,7 +415,7 @@ export function placesIn(cityId: string): Place[] {
     const count = Math.max(1, spec.count(industry, city.population));
     for (let i = 0; i < count; i++) {
       const cuisine = spec.kind === 'restaurant' ? rng.pick(CUISINES) : undefined;
-      let name = nameFor(spec.kind, rng, cuisine);
+      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine);
       let guard = 0;
       while (used.has(name.toLowerCase()) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
       used.add(name.toLowerCase());
@@ -410,7 +430,7 @@ export function placesIn(cityId: string): Place[] {
         kind: spec.kind,
         cityId,
         neighbourhoodId: hood?.id,
-        about: aboutFor(spec.kind, cuisine, hood?.name ?? city.name, rng),
+        about: spec.kind === 'dealership' ? (DEALERSHIP_ABOUT[i % DEALERSHIP_ABOUT.length] ?? DEALERSHIP_ABOUT[0]!)(hood?.name ?? city.name) : aboutFor(spec.kind, cuisine, hood?.name ?? city.name, rng),
         real: false,
         quality: Math.round(Math.min(98, 40 + prestige * 0.4 + rng.float(0, 26))),
         price,

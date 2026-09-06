@@ -34,6 +34,7 @@ import { registerDriving } from './systems/driving';
 import { registerScenes } from './systems/scenes';
 import { registerPlans } from './systems/plans';
 import { registerFitness } from './systems/fitness';
+import { registerDealership } from './systems/dealership';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -73,6 +74,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerShingle(sim);
   registerAuthorship(sim);
   registerFitness(sim);
+  registerDealership(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -785,6 +787,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(carried > 0
       ? `Scenes, memory, fitness and plans added; ${carried} scene${carried === 1 ? '' : 's'} carried over from the reference overlay.`
       : 'Scenes, memory, fitness and plans added. This save had none yet.');
+  }
+
+  if (from < 31) {
+    // Schema 31: a car is bought across a table. Deals — the conversation
+    // about one car at one dealership — get a home; a car can be waiting on
+    // delivery; a listing knows which dealership it sits on. Nothing already
+    // in the save is touched.
+    if (!record['vehicleDeals']) record['vehicleDeals'] = {};
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

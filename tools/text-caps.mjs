@@ -355,6 +355,25 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
     await page.waitForTimeout(1100);
     const dismissCity = page.getByRole('button', { name: /^got it$/i }).first();
     if (await dismissCity.count()) { await dismissCity.click().catch(() => {}); await page.waitForTimeout(300); }
+    // Each step is named after the scene panel's own title, so a step that
+    // did not open is visible in the log rather than silently "ok".
+    const sceneTitle = async () => ((await page.locator('.scene h2').first().textContent().catch(() => '')) ?? '').trim() || 'no scene on screen';
+    const sceneCheck = async (name) => check(`${name} (${await sceneTitle()})`);
+    const pickScene = async (label) => {
+      const c = page.locator('.scene-choice').filter({ has: page.locator('.scene-choice-label', { hasText: new RegExp(`^${label}$`) }) }).first();
+      await c.waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
+      if (!(await c.count())) { console.log(`  scene: no choice "${label}" at "${await sceneTitle()}"`); return false; }
+      const before = await sceneTitle();
+      await c.click().catch(() => {});
+      // Every choice the walk takes moves the scene to a new step with its own title.
+      await page.waitForFunction((prev) => (document.querySelector('.scene h2')?.textContent ?? '').trim() !== prev, before, { timeout: 8000 }).catch(() => {});
+      await page.waitForTimeout(300);
+      return true;
+    };
+    const leaveScene = async () => {
+      const leave = page.locator('.scene').getByRole('button', { name: /^Leave$/ }).first();
+      if (await leave.count()) { await leave.click().catch(() => {}); await page.waitForTimeout(500); }
+    };
     // Gyms sit under the Errands tab; a gym row carries its own Work Out.
     const errands = page.locator('.tab', { hasText: /^Errands$/ }).first();
     if (await errands.count()) { await errands.click().catch(() => {}); await page.waitForTimeout(500); }
@@ -372,21 +391,6 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
     if (await workOut.count()) {
       await workOut.click().catch(() => {});
       await page.waitForTimeout(800);
-      // Each step is named after the scene panel's own title, so a step
-      // that did not open is visible in the log rather than silently "ok".
-      const sceneTitle = async () => ((await page.locator('.scene h2').first().textContent().catch(() => '')) ?? '').trim() || 'no scene on screen';
-      const sceneCheck = async (name) => check(`${name} (${await sceneTitle()})`);
-      const pickScene = async (label) => {
-        const c = page.locator('.scene-choice').filter({ has: page.locator('.scene-choice-label', { hasText: new RegExp(`^${label}$`) }) }).first();
-        await c.waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
-        if (!(await c.count())) { console.log(`  scene-gym: no choice "${label}" at "${await sceneTitle()}"`); return false; }
-        const before = await sceneTitle();
-        await c.click().catch(() => {});
-        // Every choice the walk takes moves the scene to a new step with its own title.
-        await page.waitForFunction((prev) => (document.querySelector('.scene h2')?.textContent ?? '').trim() !== prev, before, { timeout: 8000 }).catch(() => {});
-        await page.waitForTimeout(300);
-        return true;
-      };
       await sceneCheck('scene-gym-arrive');
       for (const mode of ['Walk', 'Drive', 'Taxi', 'Transit']) { if (await pickScene(mode)) break; }
       await sceneCheck('scene-gym-desk');
@@ -404,8 +408,43 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
       await sceneCheck('scene-gym-after-block');
       await pickScene('Finish Up');
       await sceneCheck('scene-gym-cooldown');
-      const leave = page.locator('.scene').getByRole('button', { name: /^Leave$/ }).first();
-      if (await leave.count()) { await leave.click().catch(() => {}); await page.waitForTimeout(500); }
+      await leaveScene();
+    }
+
+    // The dealership, on the same tab: the lot, a car, the numbers, the paperwork.
+    // Lots open at nine and the day starts before that, so the clock moves on
+    // an hour at a time until they are, through the same menu the player uses.
+    for (let i = 0; i < 3; i++) {
+      const closed = await page.locator('.scene-choice.is-disabled[title*="closed"]').count().catch(() => 0);
+      const hour = Number(((await page.locator('.topbar-clock strong').textContent().catch(() => '')) ?? '').match(/^(\d+):/)?.[1] ?? 12);
+      const morning = /AM$/.test(((await page.locator('.topbar-clock strong').textContent().catch(() => '')) ?? '').trim()) && hour < 9 && hour !== 12;
+      if (!closed && !morning) break;
+      await page.getByRole('button', { name: /^Advance/ }).first().click().catch(() => {});
+      await page.waitForTimeout(300);
+      await page.getByRole('menuitem', { name: /One Hour/ }).first().click().catch(() => {});
+      await page.waitForTimeout(600);
+      const anyway = page.getByRole('button', { name: /^Advance Anyway$/ }).first();
+      if (await anyway.count()) { await anyway.click().catch(() => {}); await page.waitForTimeout(600); }
+    }
+    const lookAtCars = page.getByRole('button', { name: /^Look At The Cars$/ }).first();
+    await lookAtCars.waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
+    if (!(await lookAtCars.count())) console.log('  scene-dealer: no dealership row with Look At The Cars on The City — scene not walked');
+    if (await lookAtCars.count()) {
+      await lookAtCars.click().catch(() => {});
+      await page.waitForTimeout(800);
+      await sceneCheck('scene-dealer-arrive');
+      for (const mode of ['Walk', 'Drive', 'Taxi', 'Transit']) { if (await pickScene(mode)) break; }
+      await sceneCheck('scene-dealer-lot');
+      const firstCar = ((await page.locator('.scene-choice .scene-choice-label').allTextContents().catch(() => []))
+        .map((t) => t.trim()).find((t) => t && t !== 'Walk Out')) ?? '';
+      if (firstCar) await pickScene(firstCar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      await sceneCheck('scene-dealer-car');
+      await pickScene('Look It Over');
+      await pickScene('Talk Numbers');
+      await sceneCheck('scene-dealer-numbers');
+      await pickScene('Accept .*');
+      await sceneCheck('scene-dealer-agreed');
+      await leaveScene();
     }
     await page.evaluate(() => {
       const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));

@@ -18,9 +18,7 @@ import { MS_DAY, MS_MINUTE, addDays, formatDate, formatTime, instantFromZoned, z
 import { formatMoney, type Money } from '../core/money';
 import { clamp, remap } from '../core/rng';
 import type { Id, Membership, MembershipProduct, Person, TrainingRecord, Workout, WorkoutBlock, WorkoutFocus, WorkoutIntensity } from '../domain/model';
-import { countryOfCity } from '../domain/citizenship';
 import { CITIES } from '../content/geography';
-import { generatePersonName } from '../content/names';
 import { placesIn, type Place } from '../content/places';
 import { costOfLiving } from '../content/tax';
 import {
@@ -30,6 +28,7 @@ import {
 import { readiness } from './life';
 import { rememberFact } from './memory';
 import { createRelationship, findRelationship } from './relationships';
+import { makeBackgroundPerson, peopleOf } from './people';
 
 export const WORKOUTS_KEPT = 200;
 /** The refusals the scene and the system both give, stated once. */
@@ -110,61 +109,27 @@ export function classesSoon(sim: Simulation, profile: GymProfile): { def: ClassD
 /** The trainers who work at a gym. Made once, then the same people every time. */
 export function ensureTrainers(sim: Simulation, placeId: string): Person[] {
   const key = `trainer:${placeId}`;
-  const existing = Object.values(sim.universe.people).filter((p) => p.archetype === key);
+  const existing = peopleOf(sim, key);
   if (existing.length >= 2) return existing;
   const { place } = gymAt(sim, placeId);
   const made: Person[] = [...existing];
   for (let i = existing.length; i < 2; i++) {
     const rng = sim.rng('trainer', placeId, i);
-    const name = generatePersonName(rng);
-    const age = rng.int(26, 46);
-    const person: Person = {
-      id: sim.nextId('person'),
-      saveId: sim.universe.meta.id,
-      isPlayer: false,
-      firstName: name.first,
-      lastName: name.last,
-      displayName: `${name.first} ${name.last}`,
-      pronouns: rng.pick(['she/her', 'he/him', 'they/them']),
-      birthInstant: sim.now - Math.round(age * 365.25 * MS_DAY),
-      homeRegionId: place.cityId,
-      citizenshipId: countryOfCity(place.cityId) ?? 'us',
-      currentLocationId: place.cityId,
-      personality: {
-        openness: rng.int(35, 80), conscientiousness: rng.int(60, 95), extraversion: rng.int(55, 90),
-        agreeableness: rng.int(45, 85), emotionalStability: rng.int(50, 90), ambition: rng.int(40, 85), riskTolerance: rng.int(25, 70),
-      },
-      interests: ['training', rng.pick(['running', 'climbing', 'cooking', 'surfing', 'boxing', 'yoga'])],
-      goals: [],
-      lifestyle: 'modest',
+    made.push(makeBackgroundPerson(sim, {
+      rng, archetype: key, industryRole: 'personal_trainer', cityId: place.cityId,
       background: `Personal trainer at ${place.name}.`,
-      attributes: {},
-      traits: [],
+      interests: ['training', rng.pick(['running', 'climbing', 'cooking', 'surfing', 'boxing', 'yoga'])],
       skills: { fitness: rng.int(72, 96) },
-      wellbeing: { energy: 85, stress: 15, sleepDebt: 0, morale: 75, condition: 90, fitness: rng.int(80, 96), travelFatigue: 0, nourishment: 85, hygiene: 85 },
-      reputation: { publicFame: 0, audienceAppeal: 50, professionalReputation: rng.int(40, 80), reliability: rng.int(60, 95), prestige: 0, industryDemand: 0, controversy: 0 },
-      careerTrack: 'civilian',
-      representation: {},
-      quote: 0,
-      creditIds: [],
-      nominationIds: [],
-      creditScore: 0,
-      tier: 'background',
-      archetype: key,
-      industryRole: 'personal_trainer',
-      greenlightAuthority: 0,
-      createdAt: sim.now,
-    };
-    sim.universe.people[person.id] = person;
-    made.push(person);
+      age: [26, 46],
+      personality: { conscientiousness: rng.int(60, 95), extraversion: rng.int(55, 90) },
+    }));
   }
   return made;
 }
 
 /** The trainers already made for a gym. Reads only; a view must not create people. */
 export function trainersAt(sim: Simulation, placeId: string): Person[] {
-  const key = `trainer:${placeId}`;
-  return Object.values(sim.universe.people).filter((p) => p.archetype === key);
+  return peopleOf(sim, `trainer:${placeId}`);
 }
 
 export function trainerAt(sim: Simulation, placeId: string, trainerId: Id): Person {

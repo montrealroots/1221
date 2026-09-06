@@ -18,10 +18,124 @@ import {
   type BodyStyle, type FitmentSubject, type PartCategory, type Powertrain,
 } from '../content/vehicles';
 import { CITIES } from '../content/geography';
+import { placesIn, type Place } from '../content/places';
 import { costOfLiving, vehicleFees } from '../content/tax';
-import { createBill, amortisedPayment, offeredApr } from './finance';
+import { createBill, amortisedPayment, loanRefusal, offeredApr } from './finance';
 
 const SERVICE_INTERVAL_MILES = 7_500;
+const DOC_FEE: Money = 85_00;
+
+export const WAITING_ON_DELIVERY = 'That car has not been delivered yet.';
+
+/**
+ * Which lot in a city sells a car in this condition: the new-car mall, the
+ * used lot or the classic dealer. Every city has all three; a city that
+ * somehow has fewer gets the last one there is.
+ */
+export function dealerPlaceFor(cityId: string, condition: VehicleListing['condition']): Place | undefined {
+  const lots = placesIn(cityId).filter((p) => p.kind === 'dealership');
+  if (lots.length === 0) return undefined;
+  const index = condition === 'collector' ? 2 : condition === 'used' ? 1 : 0;
+  return lots[Math.min(index, lots.length - 1)];
+}
+
+/** The numbers on the paperwork for one price and one way of paying. */
+export interface PurchaseQuote {
+  price: Money;
+  salesTax: Money;
+  registration: Money;
+  docFee: Money;
+  /** Everything before any trade-in comes off. */
+  total: Money;
+  /** What leaves your account today, after a trade-in credit. */
+  cashDue: Money;
+  monthlyPayment?: Money;
+  down?: Money;
+  months?: number;
+  apr?: number;
+  borrow?: Money;
+  tradeInCredit: Money;
+}
+
+/**
+ * The same arithmetic the purchase runs, for reading before signing. Fees
+ * are the jurisdiction's where you stand; the rate is the one your credit
+ * gets; a trade-in credit comes off the cash due, or off what is borrowed.
+ */
+export function purchaseQuote(
+  sim: Simulation, price: Money, acquisition: Vehicle['acquisition'],
+  opts: { downPayment?: Money; termMonths?: number; tradeInCredit?: Money } = {},
+): PurchaseQuote {
+  const player = sim.player;
+  const fees = vehicleFees(player.currentLocationId, sim.now);
+  const salesTax = applyRate(price, fees.purchaseTaxRate);
+  const registration = Math.max(fees.registrationMinimum, applyRate(price, fees.registrationRate));
+  const total = price + salesTax + registration + DOC_FEE;
+  const credit = Math.max(0, opts.tradeInCredit ?? 0);
+  if (acquisition === 'financed') {
+    const down = opts.downPayment ?? Math.round(price * 0.12);
+    const months = opts.termMonths ?? 60;
+    const apr = offeredApr(player.creditScore, 'auto');
+    const borrow = price - down - credit;
+    const monthlyPayment = borrow > 0 ? amortisedPayment(borrow, apr, months) : 0;
+    return { price, salesTax, registration, docFee: DOC_FEE, total, cashDue: down + salesTax + registration + DOC_FEE, monthlyPayment, down, months, apr, borrow, tradeInCredit: credit };
+  }
+  if (acquisition === 'leased') {
+    const residual = Math.round(price * 0.58);
+    const months = opts.termMonths ?? 36;
+    const down = opts.downPayment ?? Math.round(price * 0.08);
+    const monthlyPayment = Math.ceil((price - residual) / months + (price * 0.0022));
+    return { price, salesTax, registration, docFee: DOC_FEE, total, cashDue: Math.max(0, down + registration + DOC_FEE - credit), monthlyPayment, down, months, tradeInCredit: credit };
+  }
+  return { price, salesTax, registration, docFee: DOC_FEE, total, cashDue: Math.max(0, total - credit), tradeInCredit: credit };
+}
+
+/**
+ * Why finance would be refused for a quote, or nothing: the lender's score
+ * rule, a deposit that covers the car, and a payment your income will not
+ * carry. The purchase applies it; the paperwork step shows it.
+ */
+export function financeRefusal(sim: Simulation, quote: PurchaseQuote, borrowerId: Id = sim.player.id): string | undefined {
+  const lender = loanRefusal(sim, borrowerId, 'auto');
+  if (lender) return lender;
+  if ((quote.borrow ?? 0) <= 0) return 'The deposit covers the whole price. Buy it outright instead.';
+  const monthlyIncome = monthlyIncomeEstimate(sim, borrowerId);
+  if (monthlyIncome > 0 && (quote.monthlyPayment ?? 0) > monthlyIncome * 0.28) {
+    return `A lender will not approve that. ${formatMoney(quote.monthlyPayment ?? 0)} a month against income of about ${formatMoney(monthlyIncome)} is too much.`;
+  }
+  return undefined;
+}
+
+/** A car you cannot drive, sell or book in yet, because it is not with you. */
+export function requireInHand(vehicle: Vehicle): void {
+  if (vehicle.deliveryDueAt) throw new CommandError(WAITING_ON_DELIVERY);
+}
+
+/**
+ * What the dealer agreed to put right before handover, done at no charge and
+ * on the record as a repair, so the history shows it.
+ */
+export function applyDealerRepairs(sim: Simulation, vehicle: Vehicle, repairs: readonly string[], shopName: string): void {
+  for (const description of repairs) {
+    const record: ServiceRecord = {
+      id: sim.nextId('service'),
+      saveId: sim.universe.meta.id,
+      vehicleId: vehicle.id,
+      kind: 'repair',
+      description: `${description} — agreed at sale`,
+      mileage: vehicle.mileage,
+      cost: 0,
+      coveredByWarranty: false,
+      performedAt: sim.now,
+      shopName,
+      healthDelta: 6,
+    };
+    sim.universe.serviceRecords[record.id] = record;
+    vehicle.serviceRecordIds.push(record.id);
+    vehicle.mechanicalHealth = clamp(vehicle.mechanicalHealth + 6, 0, 100);
+    vehicle.condition = clamp(vehicle.condition + 3, 0, 100);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Registration
@@ -42,7 +156,7 @@ export function registerVehicles(sim: Simulation): void {
 
   // --- Purchase ------------------------------------------------------------
 
-  sim.onCommand<{ listingId: Id; acquisition: Vehicle['acquisition']; downPayment?: Money; termMonths?: number; accountId?: Id; negotiate?: boolean }, { vehicleId: Id; paid: Money; monthlyPayment?: Money }>(
+  sim.onCommand<{ listingId: Id; acquisition: Vehicle['acquisition']; downPayment?: Money; termMonths?: number; accountId?: Id; negotiate?: boolean; dealId?: Id }, { vehicleId: Id; paid: Money; monthlyPayment?: Money; deliveryDueAt?: number }>(
     'veh.purchase',
     (p, { sim: s }) => {
       const listing = s.universe.vehicleListings[p.listingId];
@@ -56,63 +170,85 @@ export function registerVehicles(sim: Simulation): void {
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
 
-      // Negotiation is real: a dealer moves within their room.
+      // A deal made across the table fixes the price and carries its terms.
+      // Without one, negotiation is one seeded haggle at the counter.
+      const deal = p.dealId ? s.universe.vehicleDeals[p.dealId] : undefined;
+      if (p.dealId && (!deal || deal.listingId !== listing.id)) throw new CommandError('That deal is not for this car.');
+      if (deal && deal.status !== 'agreed') throw new CommandError('Agree a price before you sign.');
       let price = listing.price;
-      if (p.negotiate) {
+      if (deal) {
+        price = deal.agreedPrice ?? listing.price;
+      } else if (p.negotiate) {
         const rng = s.rng('negotiate', listing.id);
         const skill = clamp((player.skills['negotiation'] ?? 10) / 100, 0, 1);
         const movement = listing.negotiationRoom * clamp(0.25 + skill * 0.85 + rng.float(-0.15, 0.15), 0, 1);
         price = Math.round(price * (1 - movement));
       }
 
-      const fees = vehicleFees(player.currentLocationId, s.now);
-      const salesTax = applyRate(price, fees.purchaseTaxRate);
-      const registration = Math.max(fees.registrationMinimum, applyRate(price, fees.registrationRate));
-      const docFee = 8_50_0;
-      const total = price + salesTax + registration + docFee;
-
-      let cashDue = total;
-      let loanAccountId: Id | undefined;
-      let monthlyPayment: Money | undefined;
-
-      if (p.acquisition === 'financed') {
-        const down = p.downPayment ?? Math.round(price * 0.12);
-        const borrow = price - down;
-        if (borrow <= 0) throw new CommandError('The deposit covers the whole price. Buy it outright instead.');
-        const months = p.termMonths ?? 60;
-        const apr = offeredApr(player.creditScore, 'auto');
-        const payment = amortisedPayment(borrow, apr, months);
-        const monthlyIncome = monthlyIncomeEstimate(s, player.id);
-        if (monthlyIncome > 0 && payment > monthlyIncome * 0.28) {
-          throw new CommandError(
-            `A lender will not approve that. ${formatMoney(payment)} a month against income of about ${formatMoney(monthlyIncome)} is too much.`,
-          );
+      // The car you bring: what they allow for it comes off what you owe
+      // today, once whatever is still owed on it has been cleared.
+      const tradeIn = deal?.terms.tradeInVehicleId ? s.universe.vehicles[deal.terms.tradeInVehicleId] : undefined;
+      let tradeCredit: Money = 0;
+      let tradePayoff: Money = 0;
+      if (deal?.terms.tradeInVehicleId) {
+        if (!tradeIn || tradeIn.soldAt || tradeIn.ownerId !== player.id) throw new CommandError('The car you were trading in is not yours to trade.');
+        if (tradeIn.acquisition === 'leased') throw new CommandError('A leased car cannot be traded in.');
+        requireInHand(tradeIn);
+        tradeCredit = deal.terms.tradeInValue ?? 0;
+        if (tradeIn.loanAccountId) {
+          const loan = s.ledger.tryAccount(tradeIn.loanAccountId);
+          tradePayoff = loan ? Math.max(0, -loan.balance) : 0;
+          if (tradePayoff > tradeCredit) {
+            throw new CommandError(`You owe ${formatMoney(tradePayoff)} on the ${tradeIn.year} ${tradeIn.make} ${tradeIn.model} and they will only allow ${formatMoney(tradeCredit)} for it.`);
+          }
         }
-        cashDue = down + salesTax + registration + docFee;
-        monthlyPayment = payment;
-      } else if (p.acquisition === 'leased') {
-        const residual = Math.round(price * 0.58);
-        const months = p.termMonths ?? 36;
-        const down = p.downPayment ?? Math.round(price * 0.08);
-        monthlyPayment = Math.ceil((price - residual) / months + (price * 0.0022));
-        cashDue = down + registration + docFee;
       }
+      const netCredit = Math.max(0, tradeCredit - tradePayoff);
 
-      if (s.ledger.availableFunds(accountId) < cashDue) {
-        throw new CommandError(`You need ${formatMoney(cashDue)} to drive this away and you have ${formatMoney(s.ledger.availableFunds(accountId))}.`);
-      }
-
+      const quote = purchaseQuote(s, price, p.acquisition, { downPayment: p.downPayment, termMonths: p.termMonths, tradeInCredit: netCredit });
       if (p.acquisition === 'financed') {
-        const down = p.downPayment ?? Math.round(price * 0.12);
+        const refusal = financeRefusal(s, quote);
+        if (refusal) throw new CommandError(refusal);
+      }
+      if (s.ledger.availableFunds(accountId) < quote.cashDue) {
+        throw new CommandError(`You need ${formatMoney(quote.cashDue)} to drive this away and you have ${formatMoney(s.ledger.availableFunds(accountId))}.`);
+      }
+
+      let loanAccountId: Id | undefined;
+      if (p.acquisition === 'financed') {
         const result = s.execute<{ accountId: Id; monthlyPayment: Money }>({
           kind: 'finance.take_loan',
-          payload: { borrowerId: player.id, principal: price - down, months: p.termMonths ?? 60, product: 'auto', name: `Auto loan — ${model.make} ${model.name}` },
+          payload: { borrowerId: player.id, principal: quote.borrow, months: quote.months, product: 'auto', name: `Auto loan — ${model.make} ${model.name}` },
         });
         if (!result.ok) throw new CommandError(result.error ?? 'Financing was declined.');
         loanAccountId = result.value?.accountId;
       }
 
-      s.expense(accountId, cashDue, `${model.make} ${model.name} ${trim.name}`, 'transport', { refType: 'listing', refId: listing.id });
+      // The trade-in changes hands: its value comes in, its loan goes out,
+      // and it is off the books before the new car goes on them.
+      if (tradeIn && deal) {
+        s.income(accountId, tradeCredit, `Trade-in — ${tradeIn.year} ${tradeIn.make} ${tradeIn.model}`, 'transport', { refType: 'vehicle', refId: tradeIn.id });
+        if (tradeIn.loanAccountId && tradePayoff > 0) {
+          s.post({
+            memo: `Loan payoff — ${tradeIn.make} ${tradeIn.model}`,
+            category: 'transport',
+            postings: [{ accountId: tradeIn.loanAccountId, amount: tradePayoff }, { accountId, amount: -tradePayoff }],
+            refType: 'vehicle', refId: tradeIn.id,
+          });
+          const loan = s.ledger.tryAccount(tradeIn.loanAccountId);
+          if (loan) loan.closedAt = s.now;
+        }
+        tradeIn.soldAt = s.now;
+        s.timeline.cancelFor('vehicle', tradeIn.id, s.now);
+        for (const bill of Object.values(s.universe.bills)) {
+          if (bill.refType === 'vehicle' && bill.refId === tradeIn.id) bill.active = false;
+        }
+        s.emit('vehicle.sold', { vehicleId: tradeIn.id, proceeds: tradeCredit, net: netCredit, tradedIn: true });
+      }
+
+      // The gross goes out; the credit already came in above, so the account
+      // moves by exactly the cash due.
+      s.expense(accountId, quote.cashDue + netCredit, `${model.make} ${model.name} ${trim.name}`, 'transport', { refType: 'listing', refId: listing.id });
 
       const vehicle = createVehicle(s, {
         ownerId: player.id,
@@ -126,18 +262,19 @@ export function registerVehicles(sim: Simulation): void {
         loanAccountId,
         condition: listing.condition === 'new' ? 100 : clamp(100 - listing.mileage / 2200, 45, 96),
       });
+      if (deal) vehicle.dealId = deal.id;
 
       if (p.acquisition === 'leased') {
-        vehicle.leaseEndsAt = addDays(s.now, (p.termMonths ?? 36) * 30, s.homeZone);
-        vehicle.leaseMileageCap = (p.termMonths ?? 36) / 12 * 12000;
+        vehicle.leaseEndsAt = addDays(s.now, (quote.months ?? 36) * 30, s.homeZone);
+        vehicle.leaseMileageCap = (quote.months ?? 36) / 12 * 12000;
       }
 
-      if (monthlyPayment && p.acquisition === 'leased') {
+      if (quote.monthlyPayment && p.acquisition === 'leased') {
         createBill(s, {
           payerId: player.id,
           name: `Lease — ${model.make} ${model.name}`,
           category: 'transport',
-          amount: monthlyPayment,
+          amount: quote.monthlyPayment,
           frequency: 'monthly',
           firstDueAt: addDays(s.now, 30, s.homeZone),
           autopayAccountId: accountId,
@@ -146,19 +283,38 @@ export function registerVehicles(sim: Simulation): void {
         });
       }
 
+      // Delivered cars are theirs until they arrive; collected cars get any
+      // agreed work done before the keys change hands.
+      let deliveryDueAt: number | undefined;
+      const dealerName = deal ? (placesIn(listing.locationId).find((pl) => pl.id === deal.dealerPlaceId)?.name ?? listing.dealerName) : listing.dealerName;
+      if (deal?.terms.delivery === 'deliver') {
+        const rng = s.rng('delivery', deal.id);
+        deliveryDueAt = addDays(s.now, rng.int(2, 5), s.homeZone);
+        vehicle.deliveryDueAt = deliveryDueAt;
+        vehicle.locationId = listing.locationId;
+        s.schedule({
+          at: deliveryDueAt, kind: 'deal.delivery',
+          label: `Delivery — ${listing.year} ${model.make} ${model.name}`,
+          category: 'vehicles', payload: { vehicleId: vehicle.id, dealId: deal.id }, priority: 60,
+          refType: 'vehicle', refId: vehicle.id, locationId: listing.locationId,
+        });
+      } else if (deal && deal.terms.repairs.length > 0) {
+        applyDealerRepairs(s, vehicle, deal.terms.repairs, dealerName);
+      }
+
       listing.status = 'sold';
       s.emit('vehicle.purchased', {
-        vehicleId: vehicle.id, ownerId: player.id, price, total: cashDue,
-        acquisition: p.acquisition, locationId: player.currentLocationId,
+        vehicleId: vehicle.id, ownerId: player.id, price, total: quote.cashDue,
+        acquisition: p.acquisition, locationId: player.currentLocationId, dealId: deal?.id,
       });
       s.remember({
         category: 'vehicle',
         title: `Bought a ${listing.year} ${model.make} ${model.name}`,
-        detail: `${trim.name}, ${listing.condition}, ${listing.mileage.toLocaleString('en-US')} miles. ${formatMoney(price)}${p.acquisition === 'financed' ? ' financed' : p.acquisition === 'leased' ? ' leased' : ' in cash'}.`,
+        detail: `${trim.name}, ${listing.condition}, ${listing.mileage.toLocaleString('en-US')} miles. ${formatMoney(price)}${p.acquisition === 'financed' ? ' financed' : p.acquisition === 'leased' ? ' leased' : ' in cash'}${deal ? ` from ${dealerName}` : ''}${tradeIn ? `, trading in the ${tradeIn.year} ${tradeIn.make} ${tradeIn.model}` : ''}.`,
         refs: [{ type: 'vehicle', id: vehicle.id }],
         significance: 55, public: false, amount: price,
       });
-      return { vehicleId: vehicle.id, paid: cashDue, monthlyPayment };
+      return { vehicleId: vehicle.id, paid: quote.cashDue, monthlyPayment: quote.monthlyPayment, deliveryDueAt };
     },
   );
 
@@ -167,6 +323,7 @@ export function registerVehicles(sim: Simulation): void {
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      requireInHand(vehicle);
       if (vehicle.acquisition === 'leased') throw new CommandError('You cannot sell a leased vehicle. Return it at the end of the term.');
 
       const accountId = p.accountId ?? s.player.primaryAccountId;
@@ -227,6 +384,7 @@ export function registerVehicles(sim: Simulation): void {
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      requireInHand(vehicle);
       if (vehicle.acquisition === 'leased') throw new CommandError('You cannot modify a leased vehicle.');
       if (p.partIds.length === 0) throw new CommandError('Choose at least one part.');
 
@@ -315,6 +473,7 @@ export function registerVehicles(sim: Simulation): void {
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      requireInHand(vehicle);
       const estimate = serviceEstimate(s, vehicle, p.kind);
       const at = p.at ?? addDays(s.now, 3, s.homeZone);
       const item = s.schedule({
@@ -337,6 +496,7 @@ export function registerVehicles(sim: Simulation): void {
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      requireInHand(vehicle);
       addMileage(s, vehicle, p.miles);
       const serviceDue = vehicle.mileage >= vehicle.nextServiceDueMileage;
       return { mileage: vehicle.mileage, serviceDue };
@@ -819,7 +979,8 @@ export function refreshInventory(sim: Simulation): void {
       mileage,
       price,
       locationId: cityId,
-      dealerName: dealerName(model.parentId, condition),
+      dealerName: dealerPlaceFor(cityId, condition)?.name ?? dealerName(model.parentId, condition),
+      dealerPlaceId: dealerPlaceFor(cityId, condition)?.id,
       configuration: {
         paint: rng.pick(['Obsidian Black', 'Glacier White', 'Nardo Grey', 'Racing Blue', 'Signal Red', 'Forest Green', 'Champagne']),
         wheels: rng.pick(['18" Alloy', '19" Alloy', '20" Forged', '21" Split-Spoke', '22" Polished']),

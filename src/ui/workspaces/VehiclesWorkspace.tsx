@@ -1,8 +1,10 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Meter, Empty, Tabs, Modal, MoneyText } from '@/ui/components/primitives';
+import { Panel, Stat, Meter, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
 import { availableParts, serviceEstimate } from '@/engine/systems/vehicles';
+import { activeScene } from '@/engine/systems/scenes';
+import { carName, dealershipsIn, lotOf, openDeals, roundsLeft } from '@/engine/systems/dealership';
 import { VEHICLE_MODELS, FACTORY_OPTIONS, PARTS, trimOf, type PartCategory } from '@/engine/content/vehicles';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -17,6 +19,8 @@ export function VehiclesWorkspace() {
 
   const owned = useWorld((s) => Object.values(s.universe.vehicles).filter((v) => v.ownerId === s.player.id && !v.soldAt));
   const listings = useWorld((s) => Object.values(s.universe.vehicleListings).filter((l) => l.status === 'active'));
+  const deals = useWorld((s) => openDeals(s));
+  const scene = useWorld((s) => activeScene(s));
   const selected = owned.find((v) => v.id === selectedId) ?? owned[0];
 
   return (
@@ -41,6 +45,35 @@ export function VehiclesWorkspace() {
         ]}
       />
 
+      {tab === 'garage' && deals.length > 0 && (
+        <Panel title="On The Table" subtitle="Conversations you have not finished. A deal holds for a week; an agreed price for as long as it says." flush>
+          <div className="list">
+            {deals.map((deal) => {
+              const listing = sim.universe.vehicleListings[deal.listingId];
+              const lot = dealershipsIn(sim).find((l) => l.id === deal.dealerPlaceId);
+              const seller = sim.universe.people[deal.salespersonId];
+              return (
+                <div key={deal.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{listing ? carName(listing) : 'A car that has gone'}</div>
+                    <div className="xs dim">
+                      {deal.status === 'agreed' ? `Agreed at ${formatMoney(deal.agreedPrice ?? deal.currentAsk)}` : `Their number is ${formatMoney(deal.currentAsk)} · ${roundsLeft(deal)} round${roundsLeft(deal) === 1 ? '' : 's'} left`}
+                      {lot ? ` · ${lot.name}` : ''}{seller ? ` · ${seller.displayName}` : ''} · until {formatDate(deal.expiresAt, sim.zone)}
+                    </div>
+                  </div>
+                  <div className="row gap-1 wrap" style={{ justifyContent: 'flex-end' }}>
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !lot} onClick={() => run('scene.start', { definitionId: 'vehicles.dealer', input: { placeId: deal.dealerPlaceId, dealId: deal.id } })}>
+                      Back To The Dealer
+                    </button>
+                    <button className="btn btn-sm" onClick={() => run('deal.walk_away', { dealId: deal.id })}>Let It Go</button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Panel>
+      )}
+
       {tab === 'garage' && (
         owned.length === 0 ? (
           <Empty title="Nothing In The Garage" body="Browse what is for sale. You can pay cash, finance or lease." />
@@ -50,8 +83,10 @@ export function VehiclesWorkspace() {
               <Panel
                 key={vehicle.id}
                 title={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
-                subtitle={`${trimOf(vehicle.catalogId, vehicle.trim)?.name ?? vehicle.trim} · ${vehicle.vin}`}
-                actions={<button className="btn btn-sm btn-danger" onClick={() => run('veh.sell', { vehicleId: vehicle.id })}>Sell</button>}
+                subtitle={`${trimOf(vehicle.catalogId, vehicle.trim)?.name ?? vehicle.trim} · ${vehicle.vin}${vehicle.deliveryDueAt ? ` · Arriving ${formatDate(vehicle.deliveryDueAt, sim.zone)}` : ''}`}
+                actions={vehicle.deliveryDueAt
+                  ? <span className="chip chip-accent">On Its Way</span>
+                  : <button className="btn btn-sm btn-danger" onClick={() => run('veh.sell', { vehicleId: vehicle.id })}>Sell</button>}
               >
                 <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
                   <Stat label="Value" value={<MoneyText amount={vehicle.currentValue} compact />} note={`Paid ${formatMoneyCompact(vehicle.purchasePrice)}`} />
@@ -91,7 +126,7 @@ export function VehiclesWorkspace() {
                 <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
                   <button className="btn btn-sm" onClick={() => { setSelectedId(vehicle.id); setTab('modify'); }}>Modify</button>
                   <button className="btn btn-sm" onClick={() => { setSelectedId(vehicle.id); setTab('service'); }}>Service</button>
-                  <button className="btn btn-sm" onClick={() => run('veh.drive', { vehicleId: vehicle.id, miles: 250 })}>Drive 250 Miles</button>
+                  <button className="btn btn-sm" disabled={Boolean(vehicle.deliveryDueAt)} title={vehicle.deliveryDueAt ? 'Not delivered yet.' : undefined} onClick={() => run('veh.drive', { vehicleId: vehicle.id, miles: 250 })}>Drive 250 Miles</button>
                 </div>
               </Panel>
             ))}
@@ -113,63 +148,66 @@ export function VehiclesWorkspace() {
 }
 
 function MarketTab({ listings }: { listings: VehicleListing[] }) {
-  const { run } = useGame();
-  const [buying, setBuying] = useState<string | null>(null);
+  const { sim, run } = useGame();
+  const scene = useWorld((s) => activeScene(s));
+  const lots = useWorld((s) => dealershipsIn(s));
+  const elsewhere = listings.filter((l) => !lots.some((lot) => lot.id === lotOf(l)));
+
+  const row = (listing: VehicleListing, lotId?: string) => {
+    const [modelId, trimId] = String(listing.catalogId).split(':');
+    const model = VEHICLE_MODELS.get(modelId ?? '');
+    const trim = trimOf(modelId ?? '', trimId ?? '');
+    return (
+      <div key={listing.id} className="list-item list-static">
+        <div className="grow">
+          <div className="small strong">{listing.year} {model?.make} {model?.name}</div>
+          <div className="xs dim">
+            {trim?.name} · {titleCaseLabel(listing.condition)} · {listing.mileage.toLocaleString('en-US')} miles
+          </div>
+          <div className="xs dim">
+            {listing.configuration.paint} · {listing.configuration.wheels} · {listing.configuration.interior}
+            {listing.configuration.options.length > 0 &&
+              ` · ${listing.configuration.options.map((o) => FACTORY_OPTIONS.get(o)?.name).filter(Boolean).join(', ')}`}
+          </div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div className="mono">{formatMoneyCompact(listing.price)}</div>
+          <div className="xs dim">{trim ? `${trim.horsepower} hp` : ''}</div>
+        </div>
+        {lotId ? (
+          <div className="row gap-1 wrap" style={{ justifyContent: 'flex-end' }}>
+            <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'vehicles.dealer', input: { placeId: lotId, listingId: listing.id } })}>
+              Go And See It
+            </button>
+            <button className="btn btn-sm" disabled={Boolean(scene)} title="The short version: one look, one offer, their counter, cash, collect." onClick={() => run('scene.quick', { definitionId: 'vehicles.dealer', input: { placeId: lotId, listingId: listing.id } })}>
+              Just Buy It
+            </button>
+          </div>
+        ) : <span className="xs dim">Not in this city</span>}
+      </div>
+    );
+  };
 
   return (
     <>
-      <Panel title="For Sale" subtitle={`${listings.length} vehicles near you`} flush>
-        <div className="list">
-          {listings.map((listing) => {
-            const [modelId, trimId] = String(listing.catalogId).split(':');
-            const model = VEHICLE_MODELS.get(modelId ?? '');
-            const trim = trimOf(modelId ?? '', trimId ?? '');
-            return (
-              <div key={listing.id} className="list-item list-static">
-                <div className="grow">
-                  <div className="small strong">{listing.year} {model?.make} {model?.name}</div>
-                  <div className="xs dim">
-                    {trim?.name} · {titleCaseLabel(listing.condition)} · {listing.mileage.toLocaleString('en-US')} miles · {listing.dealerName}
-                  </div>
-                  <div className="xs dim">
-                    {listing.configuration.paint} · {listing.configuration.wheels} · {listing.configuration.interior}
-                    {listing.configuration.options.length > 0 &&
-                      ` · ${listing.configuration.options.map((o) => FACTORY_OPTIONS.get(o)?.name).filter(Boolean).join(', ')}`}
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div className="mono">{formatMoneyCompact(listing.price)}</div>
-                  <div className="xs dim">{trim ? `${trim.horsepower} hp` : ''}</div>
-                </div>
-                <button className="btn btn-sm btn-primary" onClick={() => setBuying(listing.id)}>Buy</button>
-              </div>
-            );
-          })}
-        </div>
-      </Panel>
-
-      {buying && (
-        <Modal title="Buy This Vehicle" onClose={() => setBuying(null)}>
-          <p className="muted small">
-            Cash avoids interest. Financing needs your income to support the payment. A lease is cheaper
-            monthly and you own nothing at the end.
-          </p>
-          <div className="col gap-2">
-            {(['cash', 'financed', 'leased'] as const).map((method) => (
-              <button
-                key={method}
-                className="btn btn-block"
-                onClick={() => {
-                  const result = run('veh.purchase', { listingId: buying, acquisition: method, negotiate: true });
-                  if (result.ok) setBuying(null);
-                }}
-              >
-                {method === 'cash' ? 'Pay cash (and negotiate)' : method === 'financed' ? 'Finance over 60 months' : 'Lease for 36 months'}
-              </button>
-            ))}
-          </div>
-        </Modal>
+      {lots.map((lot) => {
+        const cars = listings.filter((l) => lotOf(l) === lot.id).sort((a, b) => a.price - b.price);
+        return (
+          <Panel key={lot.id} title={lot.name} subtitle={`${lot.about} ${cars.length} car${cars.length === 1 ? '' : 's'} on the lot.`} flush>
+            {cars.length === 0
+              ? <Empty title="Nothing On The Lot" body="Stock comes in every couple of weeks." />
+              : <div className="list">{cars.map((l) => row(l, lot.id))}</div>}
+          </Panel>
+        );
+      })}
+      {elsewhere.length > 0 && (
+        <Panel title="Elsewhere" subtitle="Listed in another city. Go there to see them." flush>
+          <div className="list">{elsewhere.map((l) => row(l))}</div>
+        </Panel>
       )}
+      <p className="xs dim">
+        Prices on the windscreen are SLATE’s calibration against the city, not a quote from anybody; every one is a starting point. {sim.player.currentPlaceId ? '' : 'Going to see a car takes you there.'}
+      </p>
     </>
   );
 }

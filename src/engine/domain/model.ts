@@ -748,6 +748,13 @@ export interface Vehicle {
   fuelPercent?: number;
   horsepower: number;
   zeroToSixty: number;
+  /**
+   * A car bought for delivery is not with you until the dealer brings it.
+   * Absent once it has arrived, and on every car from before deals existed.
+   */
+  deliveryDueAt?: Instant;
+  /** The deal it was bought under, if it was bought at a dealership. */
+  dealId?: Id;
 }
 
 export interface VehicleModification {
@@ -797,8 +804,54 @@ export interface VehicleListing {
   configuration: VehicleConfiguration;
   status: ListingStatus;
   listedAt: Instant;
-  /** How much the dealer will move, as a fraction. */
+  /** How much the dealer will move, as a fraction. Never shown. */
   negotiationRoom: number;
+  /** The dealership place this car sits on. Absent on listings from before dealerships were places. */
+  dealerPlaceId?: string;
+}
+
+/**
+ * A conversation about one car at one dealership, from the first look to the
+ * signature or the walk to the door. The dealer's floor is theirs and is not
+ * on the record; what they have said is.
+ */
+export type VehicleDealStatus = 'open' | 'agreed' | 'signed' | 'walked' | 'expired';
+
+export interface VehicleDealTerms {
+  /** What the dealer will allow against the car you bring, if you bring one. */
+  tradeInVehicleId?: Id;
+  tradeInValue?: Money;
+  /** Drive it away today, or have it brought to you. */
+  delivery: 'collect' | 'deliver';
+  /** Things the dealer has agreed to put right before handover. */
+  repairs: string[];
+}
+
+export interface VehicleDeal {
+  id: Id;
+  saveId: Id;
+  listingId: Id;
+  dealerPlaceId: string;
+  salespersonId: Id;
+  status: VehicleDealStatus;
+  askingPrice: Money;
+  /** The dealer's latest number; the asking price until they move. */
+  currentAsk: Money;
+  /** Your latest number, if you have made one. */
+  lastOffer?: Money;
+  agreedPrice?: Money;
+  rounds: number;
+  /** What the dealer has said, most recent last. */
+  said: string[];
+  inspected: boolean;
+  /** What you found looking it over; each one is a lever. */
+  findings: string[];
+  testDriven: boolean;
+  terms: VehicleDealTerms;
+  openedAt: Instant;
+  expiresAt: Instant;
+  closedAt?: Instant;
+  vehicleId?: Id;
 }
 
 // ---------------------------------------------------------------------------
@@ -1624,7 +1677,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 30;
+export const SAVE_SCHEMA_VERSION = 31;
 
 export interface SaveMeta {
   id: Id;
@@ -1691,6 +1744,7 @@ export interface SaveUniverse {
   changeOrders: Record<Id, ChangeOrder>;
 
   vehicles: Record<Id, Vehicle>;
+  vehicleDeals: Record<Id, VehicleDeal>;
   vehicleListings: Record<Id, VehicleListing>;
   vehicleModifications: Record<Id, VehicleModification>;
   serviceRecords: Record<Id, ServiceRecord>;
