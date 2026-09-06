@@ -72,6 +72,11 @@ export interface DesignTheme {
   materials: string[];
 }
 
+/** A seller comes back with a number at most this many times. */
+export const MAX_SELLER_COUNTERS = 2;
+/** Days a countered offer stays open for your answer. */
+export const COUNTER_DAYS = 2;
+
 export const DESIGN_THEMES: readonly DesignTheme[] = [
   { id: 'warm_minimal', name: 'Warm Minimal', description: 'Few things, all of them good. Plaster, oak and linen.', coherenceBonus: 1.18, palette: ['Bone', 'Oat', 'Clay', 'Charcoal'], materials: ['Lime Plaster', 'White Oak', 'Linen', 'Travertine'] },
   { id: 'mid_century', name: 'Mid-Century', description: 'Walnut, low profiles, and a lot of confident angles.', coherenceBonus: 1.15, palette: ['Walnut', 'Mustard', 'Teal', 'Cream'], materials: ['Walnut', 'Brass', 'Wool Boucle', 'Terrazzo'] },
@@ -136,7 +141,11 @@ export function registerProperty(sim: Simulation): void {
   });
   sim.onSchedule('prop.offer_response', (item) => respondToOffer(sim, item.payload.offerId as Id));
   sim.onSchedule('prop.inspection', (item) => runInspection(sim, item.payload.offerId as Id));
-  sim.onSchedule('prop.closing', (item) => closeTransaction(sim, item.payload.offerId as Id));
+  // Closing day is the purchase system's to ask about: sit at the table,
+  // sign remotely, or ask for a few more days. Nothing closes by the clock.
+  sim.onSchedule('prop.closing', (item) => {
+    sim.emit('prop.closing_due', { offerId: item.payload.offerId, itemId: item.id });
+  });
   // A showing coming round is the viewing system's to ask about: play it,
   // look around, or skip it. Nothing is marked seen by the clock alone.
   sim.onSchedule('prop.showing', (item) => {
@@ -234,9 +243,16 @@ export function registerProperty(sim: Simulation): void {
           offer.status = 'withdrawn';
           offer.history.push({ at: s.now, note: 'You walked away.' });
           refundEarnest(s, offer);
+          const listing = s.universe.propertyListings[offer.listingId];
+          if (listing && listing.status === 'pending') listing.status = 'active';
+          s.emit('prop.counter_answered', { offerId: offer.id, accept: false, walked: true });
           return { status: offer.status };
         }
+        if (!Number.isFinite(p.counterAmount) || p.counterAmount <= 0) throw new CommandError('Counter with a number.');
+        const refusal = offerRefusal(s, p.counterAmount, offer.financingKind, offer.financingKind === 'cash' ? p.counterAmount : Math.round(p.counterAmount * 0.2));
+        if (refusal) throw new CommandError(refusal);
         offer.amount = p.counterAmount;
+        offer.downPayment = offer.financingKind === 'cash' ? p.counterAmount : Math.round(p.counterAmount * 0.2);
         offer.status = 'submitted';
         offer.respondBy = addDays(s.now, 2, s.homeZone);
         offer.history.push({ at: s.now, note: `You countered at ${formatMoney(p.counterAmount)}.` });
@@ -246,22 +262,28 @@ export function registerProperty(sim: Simulation): void {
           payload: { offerId: offer.id }, priority: 40,
           refType: 'offer', refId: offer.id,
         });
+        s.emit('prop.counter_answered', { offerId: offer.id, accept: false, counterAmount: p.counterAmount });
         return { status: offer.status };
       }
 
       offer.amount = offer.counterAmount ?? offer.amount;
+      offer.downPayment = offer.financingKind === 'cash' ? offer.amount : Math.round(offer.amount * 0.2);
       offer.history.push({ at: s.now, note: `You accepted the counter at ${formatMoney(offer.amount)}.` });
+      s.emit('prop.counter_answered', { offerId: offer.id, accept: true });
       acceptOffer(s, offer);
       return { status: offer.status };
     },
   );
 
-  sim.onCommand<{ offerId: Id; proceed: boolean; renegotiate?: Money }, { status: string }>(
+  sim.onCommand<{ offerId: Id; proceed: boolean; renegotiate?: Money }, { status: string; reduced?: boolean }>(
     'prop.inspection_decision',
     (p, { sim: s }) => {
       const offer = s.universe.propertyOffers[p.offerId];
       if (!offer) throw new CommandError('No such offer.');
       if (!offer.inspectionFindings) throw new CommandError('The inspection has not happened yet.');
+      if (offer.status !== 'accepted') throw new CommandError('That purchase is no longer open.');
+      if (offer.inspectionDecidedAt) throw new CommandError('The inspection contingency has already been answered.');
+      offer.inspectionDecidedAt = s.now;
 
       if (!p.proceed) {
         offer.status = 'withdrawn';
@@ -270,9 +292,11 @@ export function registerProperty(sim: Simulation): void {
         s.timeline.cancelFor('offer', offer.id, s.now);
         const listing = s.universe.propertyListings[offer.listingId];
         if (listing) listing.status = 'active';
+        s.emit('prop.inspection_decided', { offerId: offer.id, proceed: false });
         return { status: offer.status };
       }
 
+      let reduced: boolean | undefined;
       if (p.renegotiate !== undefined) {
         const rng = s.rng('reneg', offer.id);
         const listing = s.universe.propertyListings[offer.listingId];
@@ -280,14 +304,18 @@ export function registerProperty(sim: Simulation): void {
         const findings = offer.inspectionFindings.reduce((sum, f) => sum + f.estimate, 0);
         const reasonable = reduction <= findings * 1.2;
         const accepted = reasonable && rng.chance(clamp(0.35 + (listing?.sellerMotivation ?? 50) / 160, 0.2, 0.9));
+        if (!Number.isFinite(p.renegotiate) || p.renegotiate <= 0 || p.renegotiate >= offer.amount) throw new CommandError('Ask for a number under the price.');
+        reduced = accepted;
         if (accepted) {
           offer.amount = p.renegotiate;
+          offer.downPayment = offer.financingKind === 'cash' ? offer.amount : Math.round(offer.amount * 0.2);
           offer.history.push({ at: s.now, note: `Seller accepted a reduction to ${formatMoney(p.renegotiate)} for the inspection findings.` });
         } else {
           offer.history.push({ at: s.now, note: `Seller refused a reduction to ${formatMoney(p.renegotiate)}. The original price stands.` });
         }
       }
-      return { status: offer.status };
+      s.emit('prop.inspection_decided', { offerId: offer.id, proceed: true, renegotiate: p.renegotiate, reduced });
+      return { status: offer.status, reduced };
     },
   );
 
@@ -477,36 +505,9 @@ export function registerProperty(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ roomId: Id; themeId?: string; walls?: string; floor?: string; ceiling?: string; lighting?: string; accountId?: Id }, { cost: Money; quality: number }>(
+  sim.onCommand<FinishRoomSpec, { cost: Money; quality: number }>(
     'prop.finish_room',
-    (p, { sim: s }) => {
-      const room = s.universe.rooms[p.roomId];
-      if (!room) throw new CommandError('No such room.');
-      const structure = s.universe.structures[room.structureId];
-      const property = structure ? s.universe.properties[structure.propertyId] : undefined;
-      if (!property) throw new CommandError('That room is not attached to a property.');
-
-      const accountId = p.accountId ?? s.player.primaryAccountId;
-      if (!accountId) throw new CommandError('No account to pay from.');
-
-      const col = costOfLiving(property.locationId);
-      const changes = [p.walls, p.floor, p.ceiling, p.lighting].filter(Boolean).length;
-      const cost = Math.round(room.sqft * 34_00 * col * (changes / 4 || 0.25));
-      if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`Finishing ${room.name} costs about ${formatMoney(cost)}.`);
-      }
-      s.expense(accountId, cost, `Finishes — ${room.name}`, 'home', { refType: 'room', refId: room.id });
-
-      if (p.themeId) room.themeId = p.themeId;
-      if (p.walls) room.finishes.walls = p.walls;
-      if (p.floor) room.finishes.floor = p.floor;
-      if (p.ceiling) room.finishes.ceiling = p.ceiling;
-      if (p.lighting) room.finishes.lighting = p.lighting;
-
-      recomputeRoomQuality(s, room.id);
-      s.emit('prop.room_finished', { roomId: room.id, cost, quality: room.quality });
-      return { cost, quality: room.quality };
-    },
+    (p, { sim: s }) => finishRoom(s, p),
   );
 
   sim.onCommand<{ roomId: Id; name: string; purpose: string }, { zoneId: Id }>(
@@ -528,51 +529,9 @@ export function registerProperty(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ catalogId: string; roomId?: Id; zoneId?: Id; propertyId: Id; retailerId?: string; accountId?: Id; quantity?: number }, { furnishingIds: Id[]; cost: Money }>(
+  sim.onCommand<BuyFurnishingSpec, { furnishingIds: Id[]; cost: Money }>(
     'prop.buy_furnishing',
-    (p, { sim: s }) => {
-      const catalogItem = CATALOG.get(p.catalogId);
-      if (!catalogItem) throw new CommandError('No such item.');
-      const property = s.universe.properties[p.propertyId];
-      if (!property) throw new CommandError('No such property.');
-
-      const accountId = p.accountId ?? s.player.primaryAccountId;
-      if (!accountId) throw new CommandError('No account to pay from.');
-
-      const quantity = clamp(p.quantity ?? 1, 1, 20);
-      const unit = retailPrice(catalogItem.id, p.retailerId ?? 'formhouse', costOfLiving(property.locationId));
-      const cost = unit * quantity;
-      if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`${catalogItem.name} costs ${formatMoney(unit)} each, ${formatMoney(cost)} in total.`);
-      }
-      s.expense(accountId, cost, `${catalogItem.name}${quantity > 1 ? ` x${quantity}` : ''}`, 'home', { refType: 'property', refId: property.id });
-
-      const ids: Id[] = [];
-      for (let i = 0; i < quantity; i++) {
-        const furnishing: Furnishing = {
-          id: s.nextId('furn'),
-          saveId: s.universe.meta.id,
-          zoneId: p.zoneId,
-          roomId: p.roomId,
-          propertyId: property.id,
-          catalogId: catalogItem.id,
-          name: catalogItem.name,
-          category: catalogItem.category,
-          purchasePrice: unit,
-          currentValue: unit,
-          condition: 100,
-          purchasedAt: s.now,
-          qualityContribution: catalogItem.qualityContribution ?? Math.round(catalogItem.quality / 8),
-        };
-        s.universe.furnishings[furnishing.id] = furnishing;
-        ids.push(furnishing.id);
-        if (p.zoneId) s.universe.zones[p.zoneId]?.furnishingIds.push(furnishing.id);
-      }
-
-      if (p.roomId) recomputeRoomQuality(s, p.roomId);
-      s.emit('prop.furnishing_added', { propertyId: property.id, catalogId: catalogItem.id, quantity, cost });
-      return { furnishingIds: ids, cost };
-    },
+    (p, { sim: s }) => buyFurnishing(s, p),
   );
 
   sim.onCommand<{ propertyId: Id; askingPrice: Money; agentId?: Id }, { listingId: Id }>(
@@ -601,10 +560,106 @@ export function registerProperty(sim: Simulation): void {
 }
 
 // ---------------------------------------------------------------------------
+// Rooms: finishing and furnishing, one rule for the command and for a scene
+// ---------------------------------------------------------------------------
+
+export interface FinishRoomSpec { roomId: Id; themeId?: string; walls?: string; floor?: string; ceiling?: string; lighting?: string; accountId?: Id }
+export interface BuyFurnishingSpec { catalogId: string; roomId?: Id; zoneId?: Id; propertyId: Id; retailerId?: string; accountId?: Id; quantity?: number }
+
+/** What finishing a room the way the spec says would cost, before anything is paid. */
+export function finishCost(sim: Simulation, spec: FinishRoomSpec): Money {
+  const room = sim.universe.rooms[spec.roomId];
+  if (!room) return 0;
+  const structure = sim.universe.structures[room.structureId];
+  const property = structure ? sim.universe.properties[structure.propertyId] : undefined;
+  if (!property) return 0;
+  const changes = [spec.walls, spec.floor, spec.ceiling, spec.lighting].filter(Boolean).length;
+  return Math.round(room.sqft * 34_00 * costOfLiving(property.locationId) * (changes / 4 || 0.25));
+}
+
+export function finishRoom(sim: Simulation, p: FinishRoomSpec): { cost: Money; quality: number } {
+  const room = sim.universe.rooms[p.roomId];
+  if (!room) throw new CommandError('No such room.');
+  const structure = sim.universe.structures[room.structureId];
+  const property = structure ? sim.universe.properties[structure.propertyId] : undefined;
+  if (!property) throw new CommandError('That room is not attached to a property.');
+
+  const accountId = p.accountId ?? sim.player.primaryAccountId;
+  if (!accountId) throw new CommandError('No account to pay from.');
+
+  const cost = finishCost(sim, p);
+  if (sim.ledger.availableFunds(accountId) < cost) {
+    throw new CommandError(`Finishing ${room.name} costs about ${formatMoney(cost)}.`);
+  }
+  sim.expense(accountId, cost, `Finishes — ${room.name}`, 'home', { refType: 'room', refId: room.id });
+
+  if (p.themeId) room.themeId = p.themeId;
+  if (p.walls) room.finishes.walls = p.walls;
+  if (p.floor) room.finishes.floor = p.floor;
+  if (p.ceiling) room.finishes.ceiling = p.ceiling;
+  if (p.lighting) room.finishes.lighting = p.lighting;
+
+  recomputeRoomQuality(sim, room.id);
+  sim.emit('prop.room_finished', { roomId: room.id, cost, quality: room.quality });
+  return { cost, quality: room.quality };
+}
+
+/** The price of one catalogue item delivered to a property, before anything is paid. */
+export function furnishingPrice(sim: Simulation, catalogId: string, propertyId: Id, retailerId = 'formhouse'): Money {
+  const property = sim.universe.properties[propertyId];
+  if (!property || !CATALOG.get(catalogId)) return 0;
+  return retailPrice(catalogId, retailerId, costOfLiving(property.locationId));
+}
+
+export function buyFurnishing(sim: Simulation, p: BuyFurnishingSpec): { furnishingIds: Id[]; cost: Money } {
+  const catalogItem = CATALOG.get(p.catalogId);
+  if (!catalogItem) throw new CommandError('No such item.');
+  const property = sim.universe.properties[p.propertyId];
+  if (!property) throw new CommandError('No such property.');
+
+  const accountId = p.accountId ?? sim.player.primaryAccountId;
+  if (!accountId) throw new CommandError('No account to pay from.');
+
+  const quantity = clamp(p.quantity ?? 1, 1, 20);
+  const unit = retailPrice(catalogItem.id, p.retailerId ?? 'formhouse', costOfLiving(property.locationId));
+  const cost = unit * quantity;
+  if (sim.ledger.availableFunds(accountId) < cost) {
+    throw new CommandError(`${catalogItem.name} costs ${formatMoney(unit)} each, ${formatMoney(cost)} in total.`);
+  }
+  sim.expense(accountId, cost, `${catalogItem.name}${quantity > 1 ? ` x${quantity}` : ''}`, 'home', { refType: 'property', refId: property.id });
+
+  const ids: Id[] = [];
+  for (let i = 0; i < quantity; i++) {
+    const furnishing: Furnishing = {
+      id: sim.nextId('furn'),
+      saveId: sim.universe.meta.id,
+      zoneId: p.zoneId,
+      roomId: p.roomId,
+      propertyId: property.id,
+      catalogId: catalogItem.id,
+      name: catalogItem.name,
+      category: catalogItem.category,
+      purchasePrice: unit,
+      currentValue: unit,
+      condition: 100,
+      purchasedAt: sim.now,
+      qualityContribution: catalogItem.qualityContribution ?? Math.round(catalogItem.quality / 8),
+    };
+    sim.universe.furnishings[furnishing.id] = furnishing;
+    ids.push(furnishing.id);
+    if (p.zoneId) sim.universe.zones[p.zoneId]?.furnishingIds.push(furnishing.id);
+  }
+
+  if (p.roomId) recomputeRoomQuality(sim, p.roomId);
+  sim.emit('prop.furnishing_added', { propertyId: property.id, catalogId: catalogItem.id, quantity, cost });
+  return { furnishingIds: ids, cost };
+}
+
+// ---------------------------------------------------------------------------
 // Mechanics
 // ---------------------------------------------------------------------------
 
-function estimateMonthlyIncome(sim: Simulation, personId: Id): Money {
+export function estimateMonthlyIncome(sim: Simulation, personId: Id): Money {
   const from = sim.now - 180 * MS_DAY;
   const owned = new Set(sim.ledger.accountsOf(personId).map((a) => a.id));
   let total = 0;
@@ -831,11 +886,12 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
     return;
   }
 
-  // Counter or reject.
-  if (ratio > 0.88 && rng.chance(0.72)) {
+  // Counter or reject. A seller comes back with a number at most twice.
+  if (ratio > 0.88 && (offer.counterRounds ?? 0) < MAX_SELLER_COUNTERS && rng.chance(0.72)) {
     const counter = Math.round(listing.askingPrice * rng.float(0.965, 1.0));
     offer.status = 'countered';
     offer.counterAmount = counter;
+    offer.counterRounds = (offer.counterRounds ?? 0) + 1;
     offer.history.push({ at: sim.now, note: `Seller countered at ${formatMoney(counter)}.` });
     sim.audit({
       kind: 'prop.offer_decided', subjectType: 'offer', subjectId: offer.id,
@@ -844,25 +900,15 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
       factors, seed: `offer_response|${offer.id}|${offer.amount}`, roll, probability: acceptProbability, score,
       outcome: 'countered',
     });
-    sim.requireDecision({
-      urgency: 78, category: 'property',
-      title: `Counteroffer On ${property.addressLine}`,
-      detail: `They came back at ${formatMoney(counter)}. You offered ${formatMoney(offer.amount)}.`,
-      route: '/workspace/property',
-      actions: [
-        { label: 'Accept The Counter', commandKind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: true } },
-        { label: 'Walk Away', commandKind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: false } },
-      ],
-      dueAt: addDays(sim.now, 2, sim.homeZone),
-      refType: 'offer', refId: offer.id,
-    });
-    sim.emit('prop.offer_countered', { offerId: offer.id, counterAmount: counter });
+    offer.respondBy = addDays(sim.now, COUNTER_DAYS, sim.homeZone);
+    sim.emit('prop.offer_countered', { offerId: offer.id, counterAmount: counter, round: offer.counterRounds, respondBy: offer.respondBy });
     return;
   }
 
   offer.status = 'rejected';
   offer.history.push({ at: sim.now, note: 'Seller rejected the offer.' });
   refundEarnest(sim, offer);
+  if (listing.status === 'pending') listing.status = 'active';
   sim.audit({
     kind: 'prop.offer_decided', subjectType: 'offer', subjectId: offer.id,
     question: 'Why was my offer refused?',
@@ -948,84 +994,61 @@ function runInspection(sim: Simulation, offerId: Id): void {
   const total = findings.reduce((s, f) => s + f.estimate, 0);
   offer.history.push({ at: sim.now, note: `Inspection found ${findings.length} item${findings.length === 1 ? '' : 's'} totalling about ${formatMoney(total)}.` });
 
-  if (findings.some((f) => f.severity === 'major') || total > offer.amount * 0.03) {
-    sim.requireDecision({
-      urgency: 82, category: 'property',
-      title: `Inspection Findings On ${property.addressLine}`,
-      detail: `${findings.length} item${findings.length === 1 ? '' : 's'}, roughly ${formatMoney(total)} of work. You can proceed, renegotiate, or walk away and get your deposit back.`,
-      route: '/workspace/property',
-      actions: [
-        { label: 'Proceed Anyway', commandKind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: true } },
-        { label: 'Walk Away', commandKind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: false } },
-      ],
-      dueAt: addDays(sim.now, 4, sim.homeZone),
-      refType: 'offer', refId: offer.id,
-    });
-  }
-  sim.emit('prop.inspection_complete', { offerId: offer.id, findings, total });
+  const significant = findings.some((f) => f.severity === 'major') || total > offer.amount * 0.03;
+  sim.emit('prop.inspection_complete', { offerId: offer.id, findings, total, significant });
 }
 
-function closeTransaction(sim: Simulation, offerId: Id): void {
-  const offer = sim.universe.propertyOffers[offerId];
-  if (!offer || offer.status !== 'accepted') return;
-  const property = sim.universe.properties[offer.propertyId];
-  const buyer = sim.universe.people[offer.buyerId];
-  if (!property || !buyer) return;
+export type ClosingOutcome =
+  | { closed: true; cashPaid: Money; monthlyPayment?: Money }
+  | { closed: false; reason: 'not_open' | 'insufficient_funds' | 'financing_declined'; detail: string };
 
-  const rng = sim.rng('closing', offer.id);
-
-  // Appraisal can come in low, which is a real and common failure mode.
-  if (offer.contingencies.includes('appraisal')) {
-    const appraisal = Math.round(property.marketValue * rng.float(0.93, 1.06));
-    offer.appraisalValue = appraisal;
-    if (appraisal < offer.amount * 0.97 && offer.financingKind !== 'cash') {
-      const gap = offer.amount - appraisal;
-      offer.history.push({ at: sim.now, note: `Appraisal came in at ${formatMoney(appraisal)}, ${formatMoney(gap)} under the price. The lender will only finance to the appraised value.` });
-      const accountId = buyer.primaryAccountId;
-      const canCoverGap = accountId ? sim.ledger.availableFunds(accountId) >= offer.downPayment + gap : false;
-      if (!canCoverGap) {
-        offer.status = 'withdrawn';
-        refundEarnest(sim, offer);
-        const listing = sim.universe.propertyListings[offer.listingId];
-        if (listing) listing.status = 'active';
-        sim.notify({
-          category: 'property', title: 'Purchase Fell Through',
-          body: `The appraisal on ${property.addressLine} came in ${formatMoney(gap)} low and you could not cover the gap. Your deposit has been returned.`,
-          importance: 85, route: '/workspace/property',
-        });
-        sim.emit('prop.closing_failed', { offerId: offer.id, reason: 'appraisal_gap', gap });
-        return;
-      }
-    }
-  }
-
-  const accountId = buyer.primaryAccountId;
-  if (!accountId) return;
-
-  const closingCosts = Math.round(offer.amount * 0.026);
-  offer.closingCosts = closingCosts;
+/** What closing needs at the table today, from the offer as it stands. */
+export function closingCash(offer: PropertyOffer): { closingCosts: Money; cashNeeded: Money } {
+  const closingCosts = offer.closingCosts ?? Math.round(offer.amount * 0.026);
+  const gap = offer.appraisalGap ?? 0;
   const cashNeeded = offer.financingKind === 'cash'
     ? offer.amount - offer.earnestMoney + closingCosts
-    : offer.downPayment - offer.earnestMoney + closingCosts;
+    : offer.downPayment + gap - offer.earnestMoney + closingCosts;
+  return { closingCosts, cashNeeded };
+}
+
+/**
+ * The closing itself: the money moves, the deed changes hands, the universe
+ * reacts. The appraisal has already happened a week before (the purchase
+ * system's business); what can still go wrong at the table is the cash and
+ * the lender, and both are reported rather than thrown so a scene can say so.
+ */
+export function closeTransaction(sim: Simulation, offerId: Id): ClosingOutcome {
+  const offer = sim.universe.propertyOffers[offerId];
+  if (!offer || offer.status !== 'accepted') return { closed: false, reason: 'not_open', detail: 'That purchase is not open to close.' };
+  const property = sim.universe.properties[offer.propertyId];
+  const buyer = sim.universe.people[offer.buyerId];
+  if (!property || !buyer) return { closed: false, reason: 'not_open', detail: 'That house is gone.' };
+
+  const accountId = buyer.primaryAccountId;
+  if (!accountId) return { closed: false, reason: 'insufficient_funds', detail: 'You have no account to pay from.' };
+
+  const { closingCosts, cashNeeded } = closingCash(offer);
+  offer.closingCosts = closingCosts;
 
   if (sim.ledger.availableFunds(accountId) < cashNeeded) {
     offer.status = 'withdrawn';
     refundEarnest(sim, offer);
     const listing = sim.universe.propertyListings[offer.listingId];
     if (listing) listing.status = 'active';
-    sim.notify({
-      category: 'property', title: 'Closing Failed',
-      body: `You needed ${formatMoney(cashNeeded)} at closing on ${property.addressLine} and did not have it.`,
-      importance: 88, route: '/workspace/property',
-    });
+    sim.timeline.cancelFor('offer', offer.id, sim.now);
+    const detail = `You needed ${formatMoney(cashNeeded)} at closing on ${property.addressLine} and had ${formatMoney(sim.ledger.availableFunds(accountId))}.`;
+    offer.history.push({ at: sim.now, note: `Closing failed. ${detail}` });
+    sim.notify({ category: 'property', title: 'Closing Failed', body: `${detail} Your deposit has been returned.`, importance: 88, route: '/workspace/property' });
     sim.emit('prop.closing_failed', { offerId: offer.id, reason: 'insufficient_funds' });
-    return;
+    return { closed: false, reason: 'insufficient_funds', detail };
   }
 
   // Mortgage first, so the cash requirement is the deposit rather than the price.
   let mortgageAccountId: Id | undefined;
+  let monthlyPayment: Money | undefined;
   if (offer.financingKind !== 'cash') {
-    const borrow = offer.amount - offer.downPayment;
+    const borrow = offer.amount - offer.downPayment - (offer.appraisalGap ?? 0);
     const result = sim.execute<{ accountId: Id; monthlyPayment: Money; apr: number }>({
       kind: 'finance.take_loan',
       payload: {
@@ -1037,13 +1060,19 @@ function closeTransaction(sim: Simulation, offerId: Id): void {
     if (!result.ok) {
       offer.status = 'withdrawn';
       refundEarnest(sim, offer);
-      sim.notify({ category: 'property', title: 'Financing Declined', body: result.error ?? 'The lender declined.', importance: 88, route: '/workspace/property' });
+      const listing = sim.universe.propertyListings[offer.listingId];
+      if (listing) listing.status = 'active';
+      sim.timeline.cancelFor('offer', offer.id, sim.now);
+      const detail = result.error ?? 'The lender declined.';
+      offer.history.push({ at: sim.now, note: `Financing declined at closing. ${detail}` });
+      sim.notify({ category: 'property', title: 'Financing Declined', body: `${detail} Your deposit has been returned.`, importance: 88, route: '/workspace/property' });
       sim.emit('prop.closing_failed', { offerId: offer.id, reason: 'financing_declined' });
-      return;
+      return { closed: false, reason: 'financing_declined', detail };
     }
     mortgageAccountId = result.value?.accountId;
-    // The loan funds the purchase directly.
-    sim.expense(accountId, offer.downPayment - offer.earnestMoney, `Down payment — ${property.addressLine}`, 'housing', { refType: 'property', refId: property.id });
+    monthlyPayment = result.value?.monthlyPayment;
+    // The loan funds the purchase directly; the buyer brings the deposit and any appraisal gap.
+    sim.expense(accountId, offer.downPayment + (offer.appraisalGap ?? 0) - offer.earnestMoney, `Down payment — ${property.addressLine}`, 'housing', { refType: 'property', refId: property.id });
   } else {
     sim.expense(accountId, offer.amount - offer.earnestMoney, `Purchase — ${property.addressLine}`, 'housing', { refType: 'property', refId: property.id });
   }
@@ -1059,9 +1088,11 @@ function closeTransaction(sim: Simulation, offerId: Id): void {
   property.marketValue = Math.max(property.marketValue, offer.amount);
 
   offer.status = 'closed';
+  offer.closedAt = sim.now;
   offer.history.push({ at: sim.now, note: `Closed at ${formatMoney(offer.amount)}. Closing costs ${formatMoney(closingCosts)}.` });
   const listing = sim.universe.propertyListings[offer.listingId];
   if (listing) listing.status = 'sold';
+  sim.timeline.cancelFor('offer', offer.id, sim.now);
 
   // This is the event that makes the rest of the universe react.
   sim.emit('property.purchased', {
@@ -1076,9 +1107,10 @@ function closeTransaction(sim: Simulation, offerId: Id): void {
     refs: [{ type: 'property', id: property.id }],
     significance: 82, public: false, amount: offer.amount,
   });
+  return { closed: true, cashPaid: cashNeeded, monthlyPayment };
 }
 
-function refundEarnest(sim: Simulation, offer: PropertyOffer): void {
+export function refundEarnest(sim: Simulation, offer: PropertyOffer): void {
   const buyer = sim.universe.people[offer.buyerId];
   const accountId = buyer?.primaryAccountId;
   if (!accountId || offer.earnestMoney <= 0) return;

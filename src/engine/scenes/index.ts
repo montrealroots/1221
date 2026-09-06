@@ -7,10 +7,14 @@
  */
 
 import './activity';
+import './closing';
 import './compose';
+import './counter';
 import './date';
 import './dealer';
 import './gym';
+import './inspection';
 import './meal';
+import './movein';
 import './run';
 import './viewing';

@@ -23,9 +23,9 @@ route has no line in the body of this file. That check is part of the
 gate, so a command cannot be added without a place in the matrix.
 
 Counts in this file are the code's own on the day it was written
-(commit after `db88366`): 119 commands, 51 scheduled kinds, 117 events,
-12 event listeners, 8 scenes, 19 routes, 43 test files, 631 tests passing,
-2 recorded as todo, schema 34, 275 dialogue entries.
+(stage 7): 125 commands, 56 scheduled kinds, 126 events, 19 event
+listeners, 12 scenes, 19 routes, 44 test files, 655 tests passing, 2
+recorded as todo, schema 35, 330 dialogue entries.
 
 ## Surfaces
 
@@ -35,12 +35,12 @@ Counts in this file are the code's own on the day it was written
 | --- | --- | --- | --- |
 | `/home` | Home | Where To (every destination), What Needs You (decisions with their actions, unread notifications with Open), What Happens Next, How You Are, Where You Are, Weather, Money, Standing, Home And Household | world, wellbeing, weather, finance |
 | `/world` | World | Places by kind where you are, journeys, the Right Here actions of the place you are at | places, driving, geography |
-| `/workspace/calendar` | Calendar | Days with every commitment; detail for a plan, appointment, bill, flight, observance, date or showing with the owning system's actions; Plan Something | scheduler, plans, dating, viewings, holidays |
+| `/workspace/calendar` | Calendar | Days with every commitment; detail for a plan, appointment, bill, flight, observance, date, showing, inspection, appraisal, closing or moving day with the owning system's actions; Plan Something | scheduler, plans, dating, viewings, purchase, holidays |
 | `/workspace/wellbeing` | Wellbeing | Energy, stress, sleep, hygiene, readiness; every activity played out or just done; cooking | wellbeing, life |
 | `/workspace/relationships` | Relationships | Everyone you know; interactions; Ask Out with activity, place and time; Dates panel with states | relationships, dating |
 | `/workspace/history` | History (Why Did This Happen?) | `timeline`, `why` — left as-is except the tab label | audit |
 | `/workspace/bank` | Bank | `accounts`, `transactions`, `bills`, `credit`, `tax` | finance |
-| `/workspace/property` | Property | `owned`, `market`, `offers`, `build`, `interiors` | property, viewings, construction, interiors |
+| `/workspace/property` | Property | `owned` (Move In, Furnish It, List For Sale), `market`, `offers` (Take The Call, Walk It With The Inspector, Read The Report, Sit At The Table, Sign Remotely), `build`, `interiors` | property, viewings, purchase, construction, interiors |
 | `/workspace/vehicles` | Vehicles | `garage`, `market` (by lot, with On The Table), `service`, `modify` | vehicles, dealership, driving |
 | `/workspace/shopping` | Shopping | `shop`, `orders`, `owned`, `wardrobe` | commerce |
 | `/workspace/insurance` | Insurance | Policies, quotes, claims, renewals | insurance |
@@ -67,6 +67,10 @@ Anywhere (`/`) searches all of it.
 | `vehicles.dealer` | Vehicles market, The City | `go.to`, `deal.open`, `deal.inspect`, `deal.test_drive`, `deal.set_terms`, `deal.offer`, `deal.walk_away`, `deal.sign`, `veh.purchase`, `ins.quote`, `ins.purchase` | Yes | tests/dealership.test.ts |
 | `rel.date` | Home decision, Calendar, Relationships | `life.shower`, `shop.purchase`, `go.to`, `date.check_in`, `date.beat`, `date.close`, `date.finish` | Yes | tests/dating.test.ts |
 | `property.viewing` | Home decision, Calendar, Property market | `viewing.arrive`, `viewing.look`, `viewing.ask`, `prop.make_offer` | Yes (`viewing.summary` is the same seeing without the scene) | tests/viewing.test.ts |
+| `property.counter` | Home decision, Property offers | `prop.respond_to_counter` | Yes | tests/purchase.test.ts |
+| `property.inspection` | Home decision, Property offers | `prop.inspection_walk`, `prop.inspection_decision` | Yes | tests/purchase.test.ts |
+| `property.closing` | Home decision, Calendar, Property offers | `prop.close`, `prop.postpone_closing`, `prop.walk_from_closing`, `prop.move_in` | Yes | tests/purchase.test.ts |
+| `property.movein` | Home decision, Calendar, Property owned | `prop.move_in`, `prop.furnish_room` | Yes | tests/purchase.test.ts |
 | `social.compose` | Social | `social.create_post` | Yes | tests/compose.test.ts |
 
 The runtime (`scene.start`, `scene.choose`, `scene.skip`, `scene.quick`,
@@ -80,7 +84,8 @@ A decision is raised by the engine, carries the actions the owning system
 handles (`world.take_decision_action`, `world.dismiss_decision`), and is
 resolved by the system, never by the click that opened it. Today the
 engine asks about: a plan coming due; a date coming round; a showing
-coming round; a salesperson calling back about a car; insuring something
+coming round; a seller's counter, an inspection report, closing day and
+moving day on a home you are buying; a salesperson calling back about a car; insuring something
 you have just bought, or telling your insurer about a part; a car due for
 service, not road legal, or failed at inspection; registration overdue; a
 bill unpaid, a medical bill unpaid, or taxes owed; a service you cannot
@@ -98,7 +103,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Gym: plan → venue → pass → workout with choices → wellbeing → follow-up | Implemented | `plan.create` → decision → `fitness.gym` → soreness, recovery scheduled (`fitness.recovery`), the plan marked attended by the scene finishing | Too tired, no pass, closed, displaced by travel, walked out mid-workout, missed past its window (`plan.lapse`), a second visit where the trainer remembers your goal |
 | Car: inspect, buy, insure, collect, use | Implemented | `vehicles.dealer` → `deal.sign` → `deal.delivery` → the car in hand → `veh.drive`, `place.refuel`, `veh.book_service`, `veh.book_modification`, `veh.sell` | Closed lot, lowball refused, a final price, under water on a trade-in, no funds, walked away and called back (`deal.callback`), cooling-off, expiry (`deal.expire`), a second visit that is a second visit, the lender's refusal shown on the finance line |
 | Date: arrange and attend | Implemented | `rel.ask_out` with activity, place and time → `rel.date` due → decision → `rel.date` scene → `date.finish` is the only thing that changes the relationship → `date.follow_up` three days on | Late, not coming, stood up (`date.lapse`), cancelled on the day with or without notice (`date.cancel`), moved (`date.reschedule`), skipped (`date.skip`), left early, a promise at the door kept or broken |
-| Home: view, offer, close, furnish | Partial | `prop.book_showing` → `prop.showing` → decision → `property.viewing` (or `viewing.summary`, `viewing.skip`) → `prop.make_offer` → `prop.offer_response` → `prop.respond_to_counter` → `prop.inspection` → `prop.inspection_decision` → `prop.closing` → `prop.add_room`, `prop.add_zone`, `prop.buy_furnishing`, `prop.finish_room` | Lapsed (`viewing.lapse`), skipped, away in another city, no money for any offer with the reason on the line, thanked and left, a second visit greeted as one, a missed one held against you. **Gap:** the counter-offer conversation, closing day, moving day and furnishing are commands with no scene. |
+| Home: view, offer, counter, inspect, appraise, close, move in, furnish | Implemented | `prop.book_showing` → `prop.showing` → `property.viewing` → `prop.make_offer` → `prop.offer_response` → `property.counter` (`prop.respond_to_counter`, `prop.counter_lapse`) → `prop.inspection` → `property.inspection` (`prop.inspection_decision`, `prop.inspection_lapse`) → `prop.appraisal` → `prop.closing` → `property.closing` (`prop.close`, `prop.postpone_closing`, `prop.walk_from_closing`, `prop.closing_lapse`) → `prop.moving_day` → `property.movein` (`prop.move_in`, `prop.furnish_room`) | Lapsed, skipped, away in another city, no money for any offer, thanked and left, a second visit greeted as one, a missed one held against you; a counter left unanswered (withdrawn, deposit back), the seller's two rounds, a lender's refusal on a number, an inspection walked or read from another city, walked away from, waived by silence; an appraisal you can carry (the gap on the table) and one you cannot (the purchase ends, deposit back); a closing you are short at, delayed once, walked from (deposit forfeited), never came to (deposit forfeited), or declined by the lender at the table; moving day left for later; a room you cannot afford. **Gap:** selling a home you own is a command without a scene. |
 | Social: create content with reactions | Implemented (scene and reactions) / Partial (consequences) | `social.compose` → `social.create_post` → `social.publish` → `social.reactions` a day on → the post row and a notification | Not enough energy for the long version, a format the platform refuses, start again from the review, a flop. **Gap:** consequences beyond followers, momentum and brand deals (`social.respond_to_deal`, `social.deal_deadline`) are not modelled. |
 | Film/TV: prepare for and carry out an obligation | Blocked (dependency) | — | There is no production or shoot-day pipeline in this tree to put the player on a call sheet; `work.project` is a script-read calculator. The company engine (task 38) is the dependency. No scene is claimed. |
 
@@ -110,8 +115,8 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | --- | --- | --- | --- | --- | --- |
 | Places of 23 kinds in every city, with hours, prices, journeys | Implemented | `src/engine/content/places.ts`, `place.visit`, `go.to` | `/world`, `/workspace/city` | tests/places.test.ts, tests/navigation.test.ts | — |
 | Enter and act: order, refuel, book a room, photograph, run into people | Implemented | `place.order`, `place.refuel`, `place.book_room`, `place.hygiene_tick` | Right Here actions | tests/places.test.ts | — |
-| Talk to the person there as a scene | Partial | `vehicles.dealer`, `property.viewing` | Look At The Cars, View It Now | tests/dealership.test.ts, tests/viewing.test.ts | Restaurants, shops, salons, hotels and the rest have no conversation scene |
-| Return with consequences | Partial | Salesperson and agent facts in `src/engine/systems/memory.ts`; trainer facts | Second visits in the two scenes | tests/memory.test.ts | Other places do not remember you |
+| Talk to the person there as a scene | Partial | `vehicles.dealer`, `property.viewing`, `property.inspection`, `property.closing` | Look At The Cars, View It Now, the inspector at the kerb, the escrow table | tests/dealership.test.ts, tests/viewing.test.ts, tests/purchase.test.ts | Restaurants, shops, salons, hotels and the rest have no conversation scene |
+| Return with consequences | Partial | Salesperson, agent, inspector and closer facts in `src/engine/systems/memory.ts`; trainer facts | Second visits | tests/memory.test.ts, tests/purchase.test.ts | Other places do not remember you |
 | Real places | Partial, labelled | `REAL_PLACES` (landmarks) and `REAL_GYMS` in 13 cities, each stating public record only | The City, help panel reads the count from the data | tests/places.test.ts, tests/fitness.test.ts | Everything else is SLATE's own and says so |
 | Geography: 252 countries, 3,865 regions, 170,911 cities; time zones; one world clock | Implemented | `src/engine/content/geography.ts`, `src/engine/core/time.ts`, `world.tick`, `world.day_rollover` | Everywhere | tests/geography.test.ts, tests/world-map.test.ts, tests/time.test.ts, tests/realclock.test.ts | — |
 | Weather | Implemented, labelled as a climate model | `src/engine/systems/weather.ts` | Home | tests/weather.test.ts | Not a forecast service, and says so |
@@ -160,7 +165,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Persistent relationships with seven dimensions; meet, interact, define, gift, propose, wedding, family, end | Implemented | `rel.meet`, `rel.interact`, `rel.define`, `rel.give_gift`, `rel.propose`, `rel.plan_wedding`, `rel.have_child`, `rel.intimacy`, `rel.end`, `rel.drift`, `rel.birthday`, `rel.anniversary`, `rel.wedding` | `/workspace/relationships` | tests/systems.test.ts, tests/full-life.test.ts | — |
 | Asking out with activity, place and time; the date as a record with states | Implemented | `rel.ask_out`, `rel.date`, `date.*` | Ask Out dialog, Dates panel | tests/dating.test.ts | — |
 | The date played, in their own voice | Implemented | `rel.date` scene, dating dialogue section | Home, Calendar, Relationships | tests/dating.test.ts, tests/dialogue.test.ts | — |
-| NPC memory: facts, weighted, expiring, bounded | Implemented | `src/engine/systems/memory.ts` | Second visits | tests/memory.test.ts | Only trainers, salespeople, dates and agents write facts |
+| NPC memory: facts, weighted, expiring, bounded | Implemented | `src/engine/systems/memory.ts` | Second visits | tests/memory.test.ts | Only trainers, salespeople, dates, agents, inspectors and closers write facts |
 | The in-game Raya: onboarding, profiles, discovery, matches, conversations, privacy, membership | Not started | — | — | — | A separate implementation; nothing claims parity with the real app |
 
 ### Banking and money
@@ -179,10 +184,14 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | --- | --- | --- | --- | --- | --- |
 | Listings refreshed every ten days; market drift | Implemented | `prop.refresh_listings`, `prop.market_tick` | `market` tab | tests/calibration.test.ts, tests/endurance.test.ts | — |
 | Showings booked, asked about, played, looked around, skipped, lapsed, missed | Implemented | `prop.book_showing`, `prop.showing`, `viewing.arrive`, `viewing.look`, `viewing.ask`, `viewing.summary`, `viewing.skip`, `viewing.lapse` | Property market, Calendar, Home | tests/viewing.test.ts | — |
-| Offers, responses, counters, inspection, closing | Implemented (commands) | `prop.make_offer`, `prop.offer_response`, `prop.respond_to_counter`, `prop.inspection`, `prop.inspection_decision`, `prop.closing` | `offers` tab, Home decisions | tests/full-life.test.ts | No scene for the counter conversation or closing day |
+| Offers, the seller's answer, the counter as a call, two rounds, a lapse | Implemented | `prop.make_offer`, `prop.offer_response`, `prop.respond_to_counter`, `prop.counter_lapse`, `property.counter` | `offers` tab, Home decisions | tests/purchase.test.ts | The counter is one round of numbers per call, not a haggle |
+| Inspection: findings by severity, walked or read, money off, walking away, silence as a yes | Implemented | `prop.inspection`, `prop.inspection_walk`, `prop.inspection_decision`, `prop.inspection_lapse`, `property.inspection` | `offers` tab, Home decisions | tests/purchase.test.ts | — |
+| Appraisal a week before closing; the gap carried or the purchase ended | Implemented | `prop.appraisal` | `offers` tab, Calendar | tests/purchase.test.ts | — |
+| Closing day: the table, the numbers, sign, one delay, walk and forfeit, no-show and forfeit, remote signing | Implemented | `prop.closing`, `prop.close`, `prop.postpone_closing`, `prop.walk_from_closing`, `prop.closing_lapse`, `property.closing` | `offers` tab, Calendar, Home decisions | tests/purchase.test.ts | — |
+| Moving in: the old lease ended, moving day asks, the rooms | Implemented | `prop.move_in`, `prop.moving_day`, `property.movein` | `owned` tab, Calendar, Home decisions | tests/purchase.test.ts | — |
 | Renting, listing for sale | Implemented | `prop.rent`, `prop.list_for_sale` | `owned`, `market` | tests/full-life.test.ts | — |
 | Building from land; change orders | Implemented | `build.start`, `build.phase_tick`, `build.decide_change_order` | `build` tab | tests/systems.test.ts | — |
-| Rooms, zones, furnishing | Implemented (commands) | `prop.add_room`, `prop.add_zone`, `prop.buy_furnishing`, `prop.finish_room` | `interiors` tab | tests/systems.test.ts | No moving-day or furnishing scene |
+| Rooms, zones, furnishing; every market home has the rooms its listing described | Implemented | `prop.add_room`, `prop.add_zone`, `prop.buy_furnishing`, `prop.finish_room`, `prop.furnish_room` (one priced commit per room), `ensureInterior` | `interiors` tab, `property.movein` | tests/purchase.test.ts, tests/systems.test.ts | — |
 | 100 distinct real homes per market with provenance | Blocked (data) | Procedural homes labelled SLATE's | Market rows | — | Needs a licensed listings feed with as-of dates |
 
 ### Vehicles
@@ -261,7 +270,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Versioned library with stable ids, eligibility, tone, cooldown, follow-ups | Implemented | `src/engine/dialogue/schema.ts`, `library.ts` |
 | Seeded selection; per-save exposure; chunked loading | Implemented | `speak()`, `dialogue.seen` bounded to 2,000 ids, `loadAllSections()` |
 | Validation: unique ids, reachability by declared expectation (including facts), normalised duplicates, near-twins | Implemented | tests/dialogue.test.ts, `node tools/dialogue-check.mjs` |
-| 100,001 distinct entries | Blocked (content production) | 275 today: dating 112, property 67, vehicles 59, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
+| 100,001 distinct entries | Blocked (content production) | 330 today: property 122, dating 112, vehicles 59, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
 
 ## Game-wide AI integration
 
@@ -273,7 +282,7 @@ and this is what each part of it covers today:
 | --- | --- | --- | --- |
 | Director | The scene runtime: nodes, choices, commits, interruption, resume, skip | All eight scenes | A loop that plans a day or improvises a scene |
 | Dialogue | The library: eligibility by what is true, seeded choice, exposure | Dating, property, vehicles, social | Gym, meal, run, wellbeing, and every workspace's prose |
-| Memory | Structured facts on people | Trainers, salespeople, dates, agents | Everyone else |
+| Memory | Structured facts on people | Trainers, salespeople, dates, agents, inspectors, closers | Everyone else |
 | Interpreter | Free text resolved to a choice, leave, skip, help, or refused | Every scene | Sentences that are not one of the choices |
 | Simulation | Commands, schedules, events, audit | Everything above | — |
 | Provider adapter (validation, revision checks, timeouts, budgets, caching) | Not started | — | Backlog row G4 |
@@ -323,7 +332,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 119 commands, 51 scheduled kinds, 117 events emitted, 12 event listeners, 8 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 125 commands, 56 scheduled kinds, 126 events emitted, 19 event listeners, 12 scenes, 19 routes.
 
 ### Commands
 
@@ -343,7 +352,7 @@ Generated by `node tools/inventory.mjs --markdown`. 119 commands, 51 scheduled k
 | place | `place.book_room` `place.order` `place.refuel` `place.visit` | `src/engine/systems/places.ts` |
 | plan | `plan.attend` `plan.cancel` `plan.create` `plan.reschedule` `plan.skip` | `src/engine/systems/plans.ts` |
 | profession | `profession.pick_trait` `profession.unlock` | `src/engine/systems/professions.ts` |
-| prop | `prop.add_room` `prop.add_zone` `prop.book_showing` `prop.buy_furnishing` `prop.finish_room` `prop.inspection_decision` `prop.list_for_sale` `prop.make_offer` `prop.rent` `prop.respond_to_counter` | `src/engine/systems/property.ts` |
+| prop | `prop.add_room` `prop.add_zone` `prop.book_showing` `prop.buy_furnishing` `prop.close` `prop.finish_room` `prop.furnish_room` `prop.inspection_decision` `prop.inspection_walk` `prop.list_for_sale` `prop.make_offer` `prop.move_in` `prop.postpone_closing` `prop.rent` `prop.respond_to_counter` `prop.walk_from_closing` | `src/engine/systems/property.ts`, `src/engine/systems/purchase.ts` |
 | rel | `rel.ask_out` `rel.define` `rel.end` `rel.give_gift` `rel.have_child` `rel.interact` `rel.intimacy` `rel.meet` `rel.plan_wedding` `rel.propose` | `src/engine/systems/places.ts`, `src/engine/systems/relationships.ts` |
 | scene | `scene.choose` `scene.leave` `scene.quick` `scene.resume` `scene.skip` `scene.start` | `src/engine/systems/scenes.ts` |
 | shop | `shop.purchase` `shop.return` `shop.save_outfit` `shop.sell_asset` | `src/engine/systems/commerce.ts` |
@@ -372,7 +381,7 @@ Generated by `node tools/inventory.mjs --markdown`. 119 commands, 51 scheduled k
 | life | `life.day_rollover` | `src/engine/systems/life.ts` |
 | place | `place.hygiene_tick` | `src/engine/systems/places.ts` |
 | plan | `plan.lapse` `plan.personal` `plan.reminder` | `src/engine/systems/plans.ts` |
-| prop | `prop.closing` `prop.inspection` `prop.market_tick` `prop.offer_response` `prop.refresh_listings` `prop.showing` | `src/engine/systems/property.ts` |
+| prop | `prop.appraisal` `prop.closing_lapse` `prop.closing` `prop.counter_lapse` `prop.inspection_lapse` `prop.inspection` `prop.market_tick` `prop.moving_day` `prop.offer_response` `prop.refresh_listings` `prop.showing` | `src/engine/systems/property.ts`, `src/engine/systems/purchase.ts` |
 | rel | `rel.anniversary` `rel.birthday` `rel.date` `rel.drift` `rel.wedding` | `src/engine/systems/dating.ts`, `src/engine/systems/relationships.ts` |
 | shop | `shop.deliver` `shop.pantry_expiry` | `src/engine/systems/commerce.ts` |
 | social | `social.deal_deadline` `social.decay_tick` `social.payout` `social.publish` `social.reactions` | `src/engine/systems/media.ts` |
@@ -400,7 +409,7 @@ Generated by `node tools/inventory.mjs --markdown`. 119 commands, 51 scheduled k
 | place | `place.ordered` `place.photographed` `place.ran_into` `place.recognised` `place.refuelled` `place.visited` | `src/engine/systems/places.ts` |
 | plan | `plan.created` `plan.settled` | `src/engine/systems/plans.ts` |
 | profession | `profession.levelled` `profession.unlocked` | `src/engine/systems/professions.ts` |
-| prop | `prop.closing_failed` `prop.furnishing_added` `prop.inspection_complete` `prop.listed` `prop.listings_refreshed` `prop.moved_in` `prop.offer_accepted` `prop.offer_countered` `prop.offer_rejected` `prop.offer_submitted` `prop.rented` `prop.room_finished` `prop.showing_attended` `prop.showing_due` `prop.showing_missed` | `src/engine/systems/property.ts`, `src/engine/systems/viewings.ts` |
+| prop | `prop.appraised` `prop.closing_due` `prop.closing_failed` `prop.closing_postponed` `prop.counter_answered` `prop.counter_lapsed` `prop.furnishing_added` `prop.inspection_complete` `prop.inspection_decided` `prop.inspection_waived` `prop.listed` `prop.listings_refreshed` `prop.moved_in` `prop.moving_day_due` `prop.offer_accepted` `prop.offer_countered` `prop.offer_rejected` `prop.offer_submitted` `prop.rented` `prop.room_finished` `prop.room_furnished` `prop.showing_attended` `prop.showing_due` `prop.showing_missed` | `src/engine/systems/property.ts`, `src/engine/systems/purchase.ts`, `src/engine/systems/viewings.ts` |
 | property | `property.purchased` | `src/engine/systems/property.ts` |
 | rel | `rel.ask_out_declined` `rel.became_partners` `rel.birthday` `rel.child_added` `rel.created` `rel.date_resolved` `rel.date_scheduled` `rel.ended` `rel.engaged` `rel.gift_given` `rel.interaction` `rel.intimacy` `rel.married` `rel.proposal_declined` `rel.wedding_planned` | `src/engine/systems/dating.ts`, `src/engine/systems/places.ts`, `src/engine/systems/relationships.ts` |
 | scene | `scene.started` | `src/engine/systems/scenes.ts` |
@@ -418,7 +427,7 @@ Generated by `node tools/inventory.mjs --markdown`. 119 commands, 51 scheduled k
 | edu | `edu.completed` | `src/engine/systems/professions.ts` |
 | finance | `finance.bill_missed` `finance.bill_paid` | `src/engine/systems/finance.ts` |
 | go | `go.arrived` | `src/engine/systems/places.ts` |
-| prop | `prop.showing_due` | `src/engine/systems/viewings.ts` |
+| prop | `prop.closing_due` `prop.counter_answered` `prop.inspection_complete` `prop.inspection_decided` `prop.moved_in` `prop.offer_accepted` `prop.offer_countered` `prop.showing_due` | `src/engine/systems/purchase.ts`, `src/engine/systems/viewings.ts` |
 | property | `property.purchased` | `src/engine/systems/property.ts` |
 | rel | `rel.date_scheduled` | `src/engine/systems/dating.ts` |
 | scene | `scene.abandoned` `scene.completed` | `src/engine/systems/dating.ts`, `src/engine/systems/plans.ts` |
@@ -432,6 +441,10 @@ Generated by `node tools/inventory.mjs --markdown`. 119 commands, 51 scheduled k
 | `fitness.gym` | `src/engine/scenes/gym.ts` |
 | `life.meal` | `src/engine/scenes/meal.ts` |
 | `life.run` | `src/engine/scenes/run.ts` |
+| `property.closing` | `src/engine/scenes/closing.ts` |
+| `property.counter` | `src/engine/scenes/counter.ts` |
+| `property.inspection` | `src/engine/scenes/inspection.ts` |
+| `property.movein` | `src/engine/scenes/movein.ts` |
 | `property.viewing` | `src/engine/scenes/viewing.ts` |
 | `rel.date` | `src/engine/scenes/date.ts` |
 | `social.compose` | `src/engine/scenes/compose.ts` |

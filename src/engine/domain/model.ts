@@ -594,8 +594,17 @@ export interface PropertyOffer {
   inspectionAt?: Instant;
   inspectionFindings?: { item: string; severity: 'minor' | 'moderate' | 'major'; estimate: Money }[];
   appraisalValue?: Money;
+  /** What the lender will not cover after a low appraisal; the buyer brings it to the table. */
+  appraisalGap?: Money;
   closingCosts?: Money;
   agentId?: Id;
+  /** How many times the seller has come back with a number. */
+  counterRounds?: number;
+  /** When the inspection contingency was answered, by you or by silence. */
+  inspectionDecidedAt?: Instant;
+  /** The seller allows one delay to closing. */
+  postponedOnce?: boolean;
+  closedAt?: Instant;
   history: { at: Instant; note: string }[];
 }
 
@@ -1723,7 +1732,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 34;
+export const SAVE_SCHEMA_VERSION = 35;
 
 export interface SaveMeta {
   id: Id;

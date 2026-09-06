@@ -4,7 +4,8 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
-import { formatDate, formatDuration, formatTime, zonedParts, addDays, instantFromZoned, MS_DAY, MS_MINUTE } from '@/engine/core/time';
+import { formatDate, formatDuration, formatTime, zonedParts, addDays, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
+import { POSTPONE_DAYS, canPostpone, closingNumbers, furnishable } from '@/engine/systems/purchase';
 import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { activeScene, sceneDefinition } from '@/engine/systems/scenes';
@@ -254,6 +255,9 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const bill = useWorld((s) => (entry.refType === 'bill' && entry.refId ? s.universe.bills[entry.refId] : undefined));
   const date = useWorld((s) => (entry.refType === 'date' && entry.refId ? s.universe.dates[entry.refId] : undefined));
   const showing = useWorld((s) => (entry.refType === 'listing' && entry.refId && s.timeline.get(entry.id)?.kind === 'prop.showing' ? s.universe.propertyListings[entry.refId] : undefined));
+  const offer = useWorld((s) => (entry.refType === 'offer' && entry.refId ? s.universe.propertyOffers[entry.refId] : undefined));
+  const offerKind = useWorld((s) => (entry.refType === 'offer' ? s.timeline.get(entry.id)?.kind : undefined));
+  const movingHome = useWorld((s) => (entry.refType === 'property' && entry.refId && s.timeline.get(entry.id)?.kind === 'prop.moving_day' ? s.universe.properties[entry.refId] : undefined));
   const showingCan = showing ? viewable(sim, showing) : { ok: false as const, reason: undefined };
   const dateCan = date ? dateAttendable(sim, date) : { ok: false as const, reason: undefined };
   const legend = LEGEND_BY_CATEGORY[entry.category];
@@ -378,6 +382,42 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </>
       )}
 
+      {offer && (
+        <>
+          <p className="small muted">
+            {offerKind === 'prop.inspection' && `The inspector goes through ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'} on the day. The report comes to you afterwards and asks: walk it with them, read it, decide.`}
+            {offerKind === 'prop.appraisal' && `The lender's appraiser values ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}. A short appraisal means more cash at the table, or the end of the purchase if you cannot carry it.`}
+            {offerKind === 'prop.closing' && `Closing on ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}: ${formatMoney(closingNumbers(sim, offer).cashToClose)} to close. ${sim.now >= (offer.closingAt ?? 0) - 12 * MS_HOUR ? 'The table is set.' : 'When it comes round it will ask.'}`}
+            {!['prop.inspection', 'prop.appraisal', 'prop.closing'].includes(offerKind ?? '') && 'Part of a purchase in progress.'}
+          </p>
+          <div className="row wrap gap-2">
+            {offerKind === 'prop.closing' && sim.now >= (offer.closingAt ?? 0) - 12 * MS_HOUR && offer.status === 'accepted' && (
+              <>
+                <button className="btn btn-sm btn-primary" disabled={Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'property.closing', input: { offerId: offer.id }, refType: 'offer', refId: offer.id }))}>Sit At The Table</button>
+                <button className="btn btn-sm" onClick={() => after(run('prop.close', { offerId: offer.id }, { idempotencyKey: `close:${offer.id}` }))}>Sign Remotely</button>
+                {canPostpone(offer) && <button className="btn btn-sm" onClick={() => after(run('prop.postpone_closing', { offerId: offer.id }))}>Ask For {POSTPONE_DAYS} More Days</button>}
+              </>
+            )}
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Open Property</button>
+          </div>
+        </>
+      )}
+
+      {movingHome && (
+        <>
+          <p className="small muted">Moving day at {movingHome.addressLine}. {sim.player.residenceId === movingHome.id ? 'You already live there.' : 'The keys are yours; the rooms are empty.'}</p>
+          <div className="row wrap gap-2">
+            {sim.player.residenceId !== movingHome.id && (
+              <>
+                <button className="btn btn-sm btn-primary" disabled={Boolean(busy) || !furnishable(sim, movingHome.id).ok} title={busy ?? furnishable(sim, movingHome.id).reason} onClick={() => after(run('scene.start', { definitionId: 'property.movein', input: { propertyId: movingHome.id }, refType: 'property', refId: movingHome.id }))}>Play It Out</button>
+                <button className="btn btn-sm" onClick={() => after(run('prop.move_in', { propertyId: movingHome.id }, { idempotencyKey: `movein:${movingHome.id}` }))}>Just Move In</button>
+              </>
+            )}
+            <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Open Property</button>
+          </div>
+        </>
+      )}
+
       {bill && (
         <div className="row wrap gap-2">
           <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it is due, if the money is there.' : 'No longer active.'}</span>
@@ -386,7 +426,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </div>
       )}
 
-      {!plan && !appointment && !bill && !date && !showing && (
+      {!plan && !appointment && !bill && !date && !showing && !offer && !movingHome && (
         <div className="row wrap gap-2">
           <span className="small muted grow">
             {entry.status === 'observance'

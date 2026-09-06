@@ -37,6 +37,7 @@ import { registerFitness } from './systems/fitness';
 import { registerDealership } from './systems/dealership';
 import { registerDating } from './systems/dating';
 import { registerViewings } from './systems/viewings';
+import { ensureInteriors, registerPurchase } from './systems/purchase';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -79,6 +80,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDealership(sim);
   registerDating(sim);
   registerViewings(sim);
+  registerPurchase(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -380,6 +382,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  // The rooms you already live in become rooms (idempotent; see purchase.ts).
+  ensureInteriors(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -817,6 +821,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   if (from < 34) {
     // Schema 34: a post can carry what the audience said a day on. Nothing
     // already in the save is touched; older posts simply have no reactions.
+  }
+  if (from < 35) {
+    // Schema 35: an offer carries its counter rounds, when the inspection was
+    // answered, whether closing was delayed once and the appraisal gap. All
+    // optional; nothing already in the save is touched. Homes bought or
+    // rented from the market get an interior the first time the save loads
+    // (see ensureInteriors), so the rooms you already live in become rooms.
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
