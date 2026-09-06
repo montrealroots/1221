@@ -879,6 +879,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push('Vehicles to be placed in garages, berths and hangars on load.');
   }
 
+  if (from < 40) {
+    // Schema 40: a queue for a marina slip. Nothing existing has one, and
+    // the collection is created empty the first time somebody joins.
+    universe.berthWaitlists ??= {};
+    steps.push('Marina waiting lists ready.');
+  }
+
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
   steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
   return { migrated: true, from, to: SAVE_SCHEMA_VERSION, steps, problems };

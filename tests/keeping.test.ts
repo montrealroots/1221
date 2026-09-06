@@ -23,8 +23,8 @@ import { dealershipsIn, listingsAt, lotSells } from '@/engine/systems/dealership
 import { generateProperty, moveIn } from '@/engine/systems/property';
 import { buildQuote } from '@/engine/systems/services';
 import {
-  DRIVEWAY_SPACES, MOTORCYCLE_SPACE, TRAILER_SPACES, dockFeetOf, garageSpacesOf, hasDriveway, homeSpaces, keepingLabel, keepingOptions,
-  marinasIn, placeVehicle, slipsAt, ensureKeepings,
+  DRIVEWAY_SPACES, MOTORCYCLE_SPACE, OFFER_DAYS, TRAILER_SPACES, boatLength, dockFeetOf, garageSpacesOf, hasDriveway, homeSpaces,
+  keepingLabel, keepingOptions, marinasIn, openWaitlists, placeVehicle, slipsAt, ensureKeepings,
 } from '@/engine/systems/storage';
 import { localHour } from '@/engine/systems/fitness';
 
@@ -265,6 +265,141 @@ describe('boats', () => {
     expect(keepingOptions(sim, another).find((o) => o.kind === 'private_dock')!.reason).toMatch(/already at the dock/);
     const yacht = aThing(sim, 'azimut_55');
     expect(keepingOptions(sim, yacht).find((o) => o.kind === 'private_dock')!.reason).toMatch(/takes 40 ft/);
+  });
+});
+
+describe('a marina with nothing free', () => {
+  /** Berth my own boats at a marina until the band this one needs is full. */
+  function fillBand(sim: Simulation, marina: { id: string; name: string }, modelId: string): number {
+    let guard = 0;
+    for (;;) {
+      const probe = aThing(sim, modelId);
+      const feet = boatLength(sim, probe);
+      const band = slipsAt(sim, marina as never).find((b) => feet <= b.upTo)!;
+      if (band.free === 0) { probe.soldAt = sim.now; return band.upTo; }
+      must(sim, 'stor.keep', { vehicleId: probe.id, kind: 'berth', placeId: marina.id });
+      if (guard++ > 30) throw new Error('Could not fill the band');
+    }
+  }
+
+  it('takes your name and a deposit, and refuses the queue while a slip is free', () => {
+    const sim = aLife('keeping-queue', 400_000_000_00);
+    const marina = marinasIn(LA)[0]!;
+    // While something is free, queueing is the wrong thing to do.
+    const early = aThing(sim, 'mastercraft_xt23');
+    expect(attempt(sim, 'stor.join_waitlist', { vehicleId: early.id, placeId: marina.id }).error).toMatch(/Take it rather than queue/);
+
+    const bandFeet = fillBand(sim, marina, 'azimut_72');
+    const mine = aThing(sim, 'azimut_72');
+    const option = keepingOptions(sim, mine).find((o) => o.kind === 'berth' && o.placeId === marina.id)!;
+    expect(option.available).toBe(false);
+    expect(option.waitable).toBe(true);
+    expect(option.reason).toMatch(/put your name down/i);
+    expect(option.deposit).toBeGreaterThan(0);
+    expect(option.waitMonths).toBeGreaterThan(0);
+
+    const before = sim.ledger.account(sim.player.primaryAccountId!).balance;
+    const joined = must<{ waitlistId: string; ahead: number; deposit: number }>(sim, 'stor.join_waitlist', { vehicleId: mine.id, placeId: marina.id });
+    expect(joined.deposit).toBe(option.deposit);
+    expect(sim.ledger.account(sim.player.primaryAccountId!).balance).toBe(before - joined.deposit);
+    const entry = sim.universe.berthWaitlists![joined.waitlistId]!;
+    expect(entry.status).toBe('waiting');
+    expect(entry.bandFeet).toBe(bandFeet);
+    expect(openWaitlists(sim)).toHaveLength(1);
+    expect(attempt(sim, 'stor.join_waitlist', { vehicleId: mine.id, placeId: marina.id }).error).toMatch(/already down/);
+
+    // Leaving gives the deposit back and clears the queue.
+    const left = must<{ refunded: number }>(sim, 'stor.leave_waitlist', { waitlistId: entry.id });
+    expect(left.refunded).toBe(joined.deposit);
+    expect(sim.ledger.account(sim.player.primaryAccountId!).balance).toBe(before);
+    expect(openWaitlists(sim)).toHaveLength(0);
+    expect(sim.universe.berthWaitlists![entry.id]!.status).toBe('left');
+  });
+
+  it('calls when a slip comes free, holds it a week, and puts the boat in the water when you take it', () => {
+    const sim = aLife('keeping-offer', 400_000_000_00);
+    const marina = marinasIn(LA)[0]!;
+    fillBand(sim, marina, 'azimut_72');
+    const mine = aThing(sim, 'azimut_72');
+    placeVehicle(sim, mine);
+    const { waitlistId } = must<{ waitlistId: string }>(sim, 'stor.join_waitlist', { vehicleId: mine.id, placeId: marina.id });
+
+    // Months go by until they call.
+    let offered = false;
+    for (let month = 0; month < 12 && !offered; month++) {
+      sim.advanceTo(sim.now + 31 * MS_DAY);
+      offered = sim.universe.berthWaitlists![waitlistId]!.status === 'offered';
+    }
+    expect(offered).toBe(true);
+    const entry = sim.universe.berthWaitlists![waitlistId]!;
+    expect(entry.ahead).toBe(0);
+    expect(entry.offerExpiresAt! - entry.offeredAt!).toBe(OFFER_DAYS * MS_DAY);
+    const ask = Object.values(sim.universe.decisions).find((d) => d.refType === 'berth' && d.refId === entry.id && !d.resolvedAt);
+    expect(ask).toBeDefined();
+    expect(ask!.actions.map((a) => a.label)).toEqual(['Take The Slip', 'Let It Go']);
+    expect(sim.timeline.pending().some((i) => i.kind === 'stor.offer_lapse' && i.refId === entry.id)).toBe(true);
+
+    const before = sim.ledger.account(sim.player.primaryAccountId!).balance;
+    const taken = must<{ monthly: number; where: string }>(sim, 'stor.take_slip', { waitlistId });
+    expect(taken.where).toBe(marina.name);
+    expect(sim.universe.vehicles[mine.id]!.keeping?.kind).toBe('berth');
+    expect(sim.universe.vehicles[mine.id]!.keeping?.placeId).toBe(marina.id);
+    expect(sim.universe.vehicles[mine.id]!.keeping?.monthly).toBe(taken.monthly);
+    expect(sim.universe.berthWaitlists![waitlistId]!.status).toBe('taken');
+    // The deposit comes back and the offer's clock is cancelled.
+    expect(sim.ledger.account(sim.player.primaryAccountId!).balance).toBe(before + entry.deposit);
+    expect(sim.timeline.pending().some((i) => i.kind === 'stor.offer_lapse' && i.refId === entry.id)).toBe(false);
+    expect(Object.values(sim.universe.decisions).some((d) => d.refType === 'berth' && d.refId === entry.id && !d.resolvedAt)).toBe(false);
+  });
+
+  it('puts you at the back when you let a slip go, and when the offer runs out on its own', () => {
+    const sim = aLife('keeping-pass', 400_000_000_00);
+    const marina = marinasIn(LA)[0]!;
+    fillBand(sim, marina, 'azimut_72');
+    const mine = aThing(sim, 'azimut_72');
+    placeVehicle(sim, mine);
+    const { waitlistId } = must<{ waitlistId: string }>(sim, 'stor.join_waitlist', { vehicleId: mine.id, placeId: marina.id });
+    // Going to the back of a queue for a slip that size is a long wait, and
+    // an offer only stands a week, so the clock is walked in short steps
+    // rather than months at a time or the call would be missed.
+    const offer = (days = 48 * 31) => {
+      for (let step = 0; step * 5 < days; step++) {
+        if (sim.universe.berthWaitlists![waitlistId]!.status === 'offered') return true;
+        sim.advanceTo(sim.now + 5 * MS_DAY);
+      }
+      return sim.universe.berthWaitlists![waitlistId]!.status === 'offered';
+    };
+    expect(offer()).toBe(true);
+    const passed = must<{ ahead: number }>(sim, 'stor.pass_slip', { waitlistId });
+    expect(passed.ahead).toBeGreaterThanOrEqual(2);
+    const back = sim.universe.berthWaitlists![waitlistId]!;
+    expect(back.status).toBe('waiting');
+    expect(back.passed).toBe(1);
+    expect(back.deposit).toBeGreaterThan(0);
+    expect(sim.timeline.pending().some((i) => i.kind === 'stor.offer_lapse' && i.refId === waitlistId)).toBe(false);
+
+    // The second time, say nothing and let the week run out.
+    expect(offer()).toBe(true);
+    sim.advanceTo(sim.now + (OFFER_DAYS + 1) * MS_DAY);
+    const lapsed = sim.universe.berthWaitlists![waitlistId]!;
+    expect(lapsed.status).toBe('waiting');
+    expect(lapsed.passed).toBe(2);
+    expect(lapsed.ahead).toBeGreaterThanOrEqual(2);
+  });
+
+  it('gives the deposit back and drops the queue when the boat is sold', () => {
+    const sim = aLife('keeping-sold', 400_000_000_00);
+    const marina = marinasIn(LA)[0]!;
+    fillBand(sim, marina, 'azimut_72');
+    const mine = aThing(sim, 'azimut_72');
+    placeVehicle(sim, mine);
+    const { waitlistId, deposit } = must<{ waitlistId: string; deposit: number }>(sim, 'stor.join_waitlist', { vehicleId: mine.id, placeId: marina.id });
+    const before = sim.ledger.account(sim.player.primaryAccountId!).balance;
+    must(sim, 'veh.sell', { vehicleId: mine.id });
+    expect(sim.universe.berthWaitlists![waitlistId]!.status).toBe('left');
+    expect(openWaitlists(sim)).toHaveLength(0);
+    expect(sim.ledger.history(sim.player.primaryAccountId!, 10).some((t) => t.memo.startsWith('Deposit returned — '))).toBe(true);
+    expect(sim.ledger.account(sim.player.primaryAccountId!).balance).toBeGreaterThan(before + deposit - 1);
   });
 });
 

@@ -18,7 +18,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Id, KeepingKind, Property, Vehicle, VehicleKeeping } from '../domain/model';
+import type { BerthWaitlist, Id, KeepingKind, Property, Vehicle, VehicleKeeping } from '../domain/model';
 import { clamp } from '../core/rng';
 import { MS_DAY, addDays, formatDate } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
@@ -45,6 +45,12 @@ export const TRAILER_SPACES = 2;
 export const DRIVEWAY_SPACES = 2;
 
 const STORAGE_UNIT: Readonly<Record<'car' | 'motorcycle', Money>> = { car: 260_00, motorcycle: 110_00 };
+/** How long an offered slip is held for you. */
+export const OFFER_DAYS = 7;
+/** The deposit to join a queue, as a share of a month at that berth. */
+export const WAITLIST_DEPOSIT_SHARE = 1;
+/** What letting an offered slip go puts back in front of you. */
+export const PASSED_PENALTY: readonly [number, number] = [2, 5];
 /** Per foot per month. */
 const BERTH_PER_FOOT: Money = 24_00;
 const DRY_STACK_PER_FOOT: Money = 14_00;
@@ -80,6 +86,7 @@ export const KEEPING_LABEL: Readonly<Record<KeepingKind, string>> = {
 export const NO_ROOM = 'There is no room there.';
 export const TOO_BIG = 'It does not fit there.';
 export const NOT_HERE = 'That is not in the city the vehicle is in.';
+export const NOT_A_BOAT_FOR_A_SLIP = 'Only a boat waits for a slip.';
 
 // ---------------------------------------------------------------------------
 // Homes: how many spaces, and whether there is water at the end of the garden
@@ -156,7 +163,7 @@ const SLIP_BANDS: readonly { upTo: number; base: number }[] = [
   { upTo: 30, base: 80 }, { upTo: 45, base: 40 }, { upTo: 65, base: 16 }, { upTo: 100, base: 6 }, { upTo: 150, base: 2 }, { upTo: 250, base: 1 },
 ];
 
-export interface SlipBand { upTo: number; total: number; taken: number; mine: number; free: number; perFoot: Money }
+export interface SlipBand { upTo: number; total: number; taken: number; mine: number; free: number; perFoot: Money; waiting: number }
 
 export function marinasIn(cityId: string): Place[] {
   return placesIn(cityId).filter((p) => p.kind === 'marina');
@@ -181,7 +188,11 @@ export function slipsAt(sim: Simulation, marina: Place): SlipBand[] {
     const total = Math.max(1, Math.round(band.base * scale));
     const taken = Math.min(total, Math.round(total * rng.float(0.55, 0.95)));
     const mineHere = mine.filter((v) => bandFor(boatLength(sim, v)) === band.upTo).length;
-    return { upTo: band.upTo, total, taken, mine: mineHere, free: Math.max(0, total - taken - mineHere), perFoot: Math.round(BERTH_PER_FOOT * clamp(marina.quality / 75, 0.7, 1.8)) };
+    const free = Math.max(0, total - taken - mineHere);
+    const queue = waitlistsAt(sim, marina.id, band.upTo);
+    const waiting = queue.reduce((most, w) => Math.max(most, w.ahead + 1), 0)
+      || (free > 0 ? 0 : Math.max(1, Math.round((total - free) * rng.float(0.04, 0.2))));
+    return { upTo: band.upTo, total, taken, mine: mineHere, free, waiting, perFoot: Math.round(BERTH_PER_FOOT * clamp(marina.quality / 75, 0.7, 1.8)) };
   });
 }
 
@@ -191,6 +202,122 @@ function bandFor(feet: number): number {
 
 export function boatLength(sim: Simulation, vehicle: Vehicle): number {
   return craftOf(sim, vehicle)?.lengthFeet ?? trimOf(vehicle.catalogId, vehicle.trim)?.craft?.lengthFeet ?? 20;
+}
+
+/** The band a boat of this length waits in. Exported so a screen can name it. */
+export function slipBandFor(feet: number): number {
+  return bandFor(feet);
+}
+
+// ---------------------------------------------------------------------------
+// The queue for a slip
+// ---------------------------------------------------------------------------
+
+export function waitlists(sim: Simulation): BerthWaitlist[] {
+  return Object.values(sim.universe.berthWaitlists ?? {});
+}
+
+/** The queues you are in that have not ended. */
+export function openWaitlists(sim: Simulation): BerthWaitlist[] {
+  return waitlists(sim).filter((w) => w.status === 'waiting' || w.status === 'offered').sort((a, b) => a.joinedAt - b.joinedAt);
+}
+
+function waitlistsAt(sim: Simulation, marinaPlaceId: string, bandFeet: number): BerthWaitlist[] {
+  return openWaitlists(sim).filter((w) => w.marinaPlaceId === marinaPlaceId && w.bandFeet === bandFeet);
+}
+
+/** The queue this boat is in at this marina, if it is in one. */
+export function waitlistFor(sim: Simulation, vehicleId: Id, marinaPlaceId?: string): BerthWaitlist | undefined {
+  return openWaitlists(sim).find((w) => w.vehicleId === vehicleId && (!marinaPlaceId || w.marinaPlaceId === marinaPlaceId));
+}
+
+/** What a month at that berth would cost, which is also the deposit to wait for one. */
+export function berthMonthly(sim: Simulation, marina: Place, feet: number): Money {
+  const band = slipsAt(sim, marina).find((b) => feet <= b.upTo);
+  if (!band) return 0;
+  return Math.round(band.perFoot * feet * col(marina.cityId));
+}
+
+/** How long a queue at this length usually takes, in months, so the screen can say. */
+export function waitMonths(sim: Simulation, marina: Place, feet: number): number {
+  const band = slipsAt(sim, marina).find((b) => feet <= b.upTo);
+  if (!band) return 0;
+  // Bigger slips turn over more slowly, and a longer queue is a longer wait.
+  return Math.max(1, Math.round((band.waiting + 1) / turnoverPerMonth(sim, marina, band)));
+}
+
+/** Slips of a band that come free in a month, on average. Never zero. */
+function turnoverPerMonth(sim: Simulation, marina: Place, band: SlipBand): number {
+  const rate = band.upTo <= 30 ? 0.03 : band.upTo <= 45 ? 0.02 : band.upTo <= 65 ? 0.012 : 0.008;
+  void sim; void marina;
+  return Math.max(0.2, band.total * rate);
+}
+
+function endWaitlist(sim: Simulation, entry: BerthWaitlist, status: BerthWaitlist['status']): void {
+  if (entry.status !== 'waiting' && entry.status !== 'offered') return;
+  entry.status = status;
+  entry.endedAt = sim.now;
+  const accountId = sim.player.primaryAccountId;
+  if (entry.deposit > 0 && accountId) {
+    const marina = placesIn(entry.cityId).find((p) => p.id === entry.marinaPlaceId);
+    sim.income(accountId, entry.deposit, `Deposit returned — ${marina?.name ?? 'the marina'}`, 'transport', { refType: 'berth', refId: entry.id });
+  }
+  cancelKind(sim, 'stor.offer_lapse', entry.id);
+  sim.resolveDecision('berth', entry.id);
+}
+
+function cancelKind(sim: Simulation, kind: string, refId: Id): void {
+  for (const item of sim.timeline.pending()) if (item.kind === kind && item.refId === refId) sim.timeline.cancel(item.id, sim.now);
+}
+
+/** A slip has come free and it is yours if you want it. */
+function offerSlip(sim: Simulation, entry: BerthWaitlist): void {
+  const marina = placesIn(entry.cityId).find((p) => p.id === entry.marinaPlaceId);
+  const vehicle = sim.universe.vehicles[entry.vehicleId];
+  if (!marina || !vehicle || vehicle.soldAt) { endWaitlist(sim, entry, 'lapsed'); return; }
+  entry.status = 'offered';
+  entry.ahead = 0;
+  entry.offeredAt = sim.now;
+  entry.offerExpiresAt = addDays(sim.now, OFFER_DAYS, sim.homeZone);
+  const monthly = berthMonthly(sim, marina, boatLength(sim, vehicle));
+  sim.schedule({
+    at: entry.offerExpiresAt, kind: 'stor.offer_lapse', label: `Slip Offer At ${marina.name}`, category: 'vehicles',
+    payload: { waitlistId: entry.id }, priority: 62, refType: 'berth', refId: entry.id,
+  });
+  sim.requireDecision({
+    urgency: 44, category: 'vehicles',
+    title: `A Slip Has Come Free At ${marina.name}`,
+    detail: `Up to ${entry.bandFeet} ft, ${formatMoney(monthly)} a month, for the ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}. They will hold it ${OFFER_DAYS} days. Let it go and you go to the back of the queue.`,
+    route: '/workspace/vehicles',
+    actions: [
+      { label: 'Take The Slip', commandKind: 'stor.take_slip', payload: { waitlistId: entry.id } },
+      { label: 'Let It Go', commandKind: 'stor.pass_slip', payload: { waitlistId: entry.id } },
+    ],
+    dueAt: entry.offerExpiresAt,
+    refType: 'berth', refId: entry.id,
+  });
+  sim.notify({
+    category: 'vehicles', title: `${marina.name} Called`,
+    body: `A slip up to ${entry.bandFeet} ft is free. They will hold it until ${formatDate(entry.offerExpiresAt, sim.zone)}.`,
+    importance: 48, route: '/workspace/vehicles', refType: 'berth', refId: entry.id,
+  });
+}
+
+/** A month has gone by: the queues move, and whoever reaches the front is called. */
+function advanceWaitlists(sim: Simulation): void {
+  for (const entry of openWaitlists(sim)) {
+    if (entry.status === 'offered') continue;
+    const vehicle = sim.universe.vehicles[entry.vehicleId];
+    const marina = placesIn(entry.cityId).find((p) => p.id === entry.marinaPlaceId);
+    if (!vehicle || vehicle.soldAt || !marina) { endWaitlist(sim, entry, 'lapsed'); continue; }
+    const band = slipsAt(sim, marina).find((b) => b.upTo === entry.bandFeet);
+    if (!band) { endWaitlist(sim, entry, 'lapsed'); continue; }
+    const rng = sim.rng('waitlist', entry.id, Math.floor(sim.now / (30 * MS_DAY)));
+    const freed = Math.round(turnoverPerMonth(sim, marina, band) + rng.float(-0.4, 0.9));
+    if (freed <= 0) continue;
+    entry.ahead = Math.max(0, entry.ahead - freed);
+    if (entry.ahead === 0) offerSlip(sim, entry);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -239,6 +366,16 @@ export interface KeepingOption {
   airportId?: string;
   /** For a trailer at home: which part of the home it stands on. */
   spot?: 'garage' | 'driveway';
+  /** A berth with nothing free that you could put your name down for. */
+  waitable?: boolean;
+  /** The queue you are already in here. */
+  waitlistId?: Id;
+  waitAhead?: number;
+  waitOffered?: boolean;
+  /** Roughly how long the queue takes, in months. */
+  waitMonths?: number;
+  /** What putting your name down costs, held and returned. */
+  deposit?: Money;
 }
 
 function col(cityId: string): number {
@@ -311,9 +448,23 @@ export function keepingOptions(sim: Simulation, vehicle: Vehicle): KeepingOption
       const band = bands.find((b) => feet <= b.upTo);
       const fits = Boolean(band) && feet <= (marina.maxSlipFeet ?? 65);
       const free = band ? band.free > 0 || (vehicle.keeping?.kind === 'berth' && vehicle.keeping.placeId === marina.id) : false;
+      const queued = waitlistFor(sim, vehicle.id, marina.id);
+      const offered = queued?.status === 'offered';
+      const detail = !band ? 'Nothing that size.'
+        : `A slip up to ${band.upTo} ft at ${formatMoney(band.perFoot)} a foot; ${band.free} free${band.waiting > 0 ? `, ${band.waiting} waiting` : ''}.`;
+      const reason = !fits ? `${marina.name} takes boats up to ${marina.maxSlipFeet ?? 65} ft.`
+        : free || offered ? undefined
+          : queued ? `You are ${queued.ahead === 0 ? 'first' : `number ${queued.ahead + 1}`} in the queue here.`
+            : 'Nothing free at that length. You can put your name down.';
       out.push({
-        kind: 'berth', label: KEEPING_LABEL.berth, where: marina.name, detail: band ? `A slip up to ${band.upTo} ft at ${formatMoney(band.perFoot)} a foot; ${band.free} free.` : 'Nothing that size.',
-        monthly: band ? Math.round(band.perFoot * feet * c) : 0, exposure: 'outdoors', available: fits && free, reason: !fits ? `${marina.name} takes boats up to ${marina.maxSlipFeet ?? 65} ft.` : free ? undefined : 'No slip free at that length. Ask again next month.', placeId: marina.id,
+        kind: 'berth', label: KEEPING_LABEL.berth, where: marina.name, detail,
+        monthly: band ? Math.round(band.perFoot * feet * c) : 0, exposure: 'outdoors', available: fits && (free || offered), reason, placeId: marina.id,
+        waitable: Boolean(fits && band && !free && !queued),
+        waitlistId: queued?.id,
+        waitAhead: queued?.ahead,
+        waitOffered: offered,
+        waitMonths: fits && band && !free ? waitMonths(sim, marina, feet) : undefined,
+        deposit: fits && band ? Math.round(band.perFoot * feet * c * WAITLIST_DEPOSIT_SHARE) : 0,
       });
     }
     for (const yard of dryStacksIn(cityId)) {
@@ -408,7 +559,21 @@ export function applyKeeping(sim: Simulation, vehicle: Vehicle, option: KeepingO
 /** Places a thing where it would go by default, and says so if that is the street or the ramp. */
 export function placeVehicle(sim: Simulation, vehicle: Vehicle, accountId?: Id): KeepingOption | undefined {
   const option = defaultKeeping(sim, vehicle);
-  if (!option) return undefined;
+  if (!option) {
+    // Nowhere in this city takes it. Said out loud rather than left as a
+    // thing you own that is quietly nowhere.
+    const kind = vehicleKind(vehicle);
+    sim.notify({
+      category: 'vehicles', title: `Nowhere To Keep The ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}`,
+      body: kind === 'boat'
+        ? 'Every marina here is full at that length, it is too long to trailer or rack, and there is no dock at home. Put your name down for a slip, or find water somewhere else.'
+        : kind === 'jet'
+          ? 'There is no hangar or tie-down for it at the airport here.'
+          : 'There is nowhere in this city to put it.',
+      importance: 55, route: '/workspace/vehicles', refType: 'vehicle', refId: vehicle.id,
+    });
+    return undefined;
+  }
   applyKeeping(sim, vehicle, option, accountId);
   if (option.kind === 'street' || option.kind === 'driveway' || option.kind === 'tie_down') {
     sim.notify({
@@ -505,6 +670,8 @@ export function registerStorage(sim: Simulation): void {
     vehicle.keeping = undefined;
     vehicle.homeKeeping = undefined;
     vehicle.storedAtPropertyId = undefined;
+    // A boat that has gone does not need the slip it was waiting for.
+    for (const entry of openWaitlists(s)) if (entry.vehicleId === vehicleId) endWaitlist(s, entry, 'left');
   });
 
   sim.onEvent('prop.moved_in', 'storage.rehome', (event, { sim: s }) => {
@@ -518,7 +685,13 @@ export function registerStorage(sim: Simulation): void {
     if (vehicle && !vehicle.soldAt) landed(s, vehicle, cityId);
   });
 
-  sim.onEvent('vehicle.revalued', 'storage.exposure', (_event, { sim: s }) => monthlyExposure(s));
+  sim.onEvent('vehicle.revalued', 'storage.exposure', (_event, { sim: s }) => { monthlyExposure(s); advanceWaitlists(s); });
+
+  sim.onSchedule('stor.offer_lapse', (item) => {
+    const entry = sim.universe.berthWaitlists?.[item.payload['waitlistId'] as Id];
+    if (!entry || entry.status !== 'offered') return;
+    passSlip(sim, entry, 'The offer ran out.');
+  });
 
   sim.onCommand<{ vehicleId: Id; kind: KeepingKind; propertyId?: Id; placeId?: string; airportId?: string; accountId?: Id }, { kind: KeepingKind; monthly: Money; where: string }>(
     'stor.keep',
@@ -544,6 +717,9 @@ export function registerStorage(sim: Simulation): void {
         throw new CommandError(`${option.where} wants ${formatMoney(option.monthly)} a month and you cannot show the first month.`);
       }
       applyKeeping(s, vehicle, option, accountId);
+      // Taking a berth you were queueing for ends the queue and returns the deposit.
+      const queued = option.kind === 'berth' ? waitlistFor(s, vehicle.id, option.placeId) : undefined;
+      if (queued) endWaitlist(s, queued, 'taken');
       s.remember({
         category: 'vehicle', title: `Moved The ${vehicle.make} ${vehicle.model} To ${option.where}`,
         detail: `${KEEPING_LABEL[option.kind]}${option.monthly > 0 ? `, ${formatMoney(option.monthly)} a month from ${formatDate(addDays(s.now, 30, s.homeZone), s.homeZone)}` : ', nothing a month'}.`,
@@ -552,6 +728,124 @@ export function registerStorage(sim: Simulation): void {
       return { kind: option.kind, monthly: option.monthly, where: option.where };
     },
   );
+
+  sim.onCommand<{ vehicleId: Id; placeId: string; accountId?: Id }, { waitlistId: Id; ahead: number; deposit: Money; months: number }>(
+    'stor.join_waitlist',
+    (p, { sim: s }) => {
+      const vehicle = s.universe.vehicles[p.vehicleId];
+      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You do not own that boat.');
+      if (vehicleKind(vehicle) !== 'boat') throw new CommandError(NOT_A_BOAT_FOR_A_SLIP);
+      const cityId = vehicle.locationId ?? s.player.currentLocationId;
+      const marina = marinasIn(cityId).find((m) => m.id === p.placeId);
+      if (!marina) throw new CommandError('That marina is not in the city the boat is in.');
+      if (waitlistFor(s, vehicle.id, marina.id)) throw new CommandError('Your name is already down there.');
+      const feet = boatLength(s, vehicle);
+      if (feet > (marina.maxSlipFeet ?? 65)) throw new CommandError(`${marina.name} takes boats up to ${marina.maxSlipFeet ?? 65} ft.`);
+      const band = slipsAt(s, marina).find((b) => feet <= b.upTo);
+      if (!band) throw new CommandError(`${marina.name} has nothing that size.`);
+      if (band.free > 0) throw new CommandError('There is a slip free at that length. Take it rather than queue for it.');
+
+      const deposit = Math.round(band.perFoot * feet * col(cityId) * WAITLIST_DEPOSIT_SHARE);
+      const accountId = p.accountId ?? s.player.primaryAccountId;
+      if (!accountId) throw new CommandError('No account to pay from.');
+      if (s.ledger.availableFunds(accountId) < deposit) {
+        throw new CommandError(`${marina.name} holds a deposit of ${formatMoney(deposit)} while you wait, and you cannot cover it.`);
+      }
+      s.expense(accountId, deposit, `Waiting list deposit — ${marina.name}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
+
+      s.universe.berthWaitlists ??= {};
+      const entry: BerthWaitlist = {
+        id: s.nextId('berth'),
+        saveId: s.universe.meta.id,
+        marinaPlaceId: marina.id,
+        cityId,
+        bandFeet: band.upTo,
+        vehicleId: vehicle.id,
+        ahead: Math.max(0, band.waiting),
+        joinedAt: s.now,
+        deposit,
+        status: 'waiting',
+        passed: 0,
+      };
+      s.universe.berthWaitlists[entry.id] = entry;
+      const months = waitMonths(s, marina, feet);
+      s.emit('berth.queued', { waitlistId: entry.id, marinaPlaceId: marina.id, ahead: entry.ahead });
+      s.remember({
+        category: 'vehicle', title: `Put Your Name Down At ${marina.name}`,
+        detail: `${entry.ahead} in front of you for a slip up to ${band.upTo} ft. About ${months} month${months === 1 ? '' : 's'}, they say. ${formatMoney(deposit)} held.`,
+        refs: [{ type: 'vehicle', id: vehicle.id }], significance: 12, public: false,
+      });
+      return { waitlistId: entry.id, ahead: entry.ahead, deposit, months };
+    },
+  );
+
+  sim.onCommand<{ waitlistId: Id }, { refunded: Money }>(
+    'stor.leave_waitlist',
+    (p, { sim: s }) => {
+      const entry = s.universe.berthWaitlists?.[p.waitlistId];
+      if (!entry || (entry.status !== 'waiting' && entry.status !== 'offered')) throw new CommandError('You are not in that queue.');
+      const deposit = entry.deposit;
+      endWaitlist(s, entry, 'left');
+      s.emit('berth.left', { waitlistId: entry.id });
+      return { refunded: deposit };
+    },
+  );
+
+  sim.onCommand<{ waitlistId: Id; accountId?: Id }, { monthly: Money; where: string }>(
+    'stor.take_slip',
+    (p, { sim: s }) => {
+      const entry = s.universe.berthWaitlists?.[p.waitlistId];
+      if (!entry || entry.status !== 'offered') throw new CommandError('There is no slip on offer.');
+      if (s.now > (entry.offerExpiresAt ?? 0)) throw new CommandError('That offer has run out.');
+      const vehicle = s.universe.vehicles[entry.vehicleId];
+      const marina = placesIn(entry.cityId).find((m) => m.id === entry.marinaPlaceId);
+      if (!vehicle || vehicle.soldAt || !marina) throw new CommandError('That boat is gone.');
+      const monthly = berthMonthly(s, marina, boatLength(s, vehicle));
+      const accountId = p.accountId ?? s.player.primaryAccountId;
+      // The deposit comes back, so the month is covered by it in all but name.
+      applyKeeping(s, vehicle, {
+        kind: 'berth', label: KEEPING_LABEL.berth, where: marina.name, detail: '', monthly,
+        exposure: 'outdoors', available: true, placeId: marina.id,
+      }, accountId);
+      endWaitlist(s, entry, 'taken');
+      s.emit('berth.taken', { waitlistId: entry.id, vehicleId: vehicle.id, monthly });
+      s.remember({
+        category: 'vehicle', title: `Took The Slip At ${marina.name}`,
+        detail: `The ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`} is in the water. ${formatMoney(monthly)} a month.`,
+        refs: [{ type: 'vehicle', id: vehicle.id }], significance: 20, public: false,
+      });
+      return { monthly, where: marina.name };
+    },
+  );
+
+  sim.onCommand<{ waitlistId: Id }, { ahead: number }>(
+    'stor.pass_slip',
+    (p, { sim: s }) => {
+      const entry = s.universe.berthWaitlists?.[p.waitlistId];
+      if (!entry || entry.status !== 'offered') throw new CommandError('There is no slip on offer.');
+      passSlip(s, entry, 'You let it go.');
+      return { ahead: entry.ahead };
+    },
+  );
+}
+
+/** Letting an offered slip go, or letting the offer run out: to the back of the queue. */
+function passSlip(sim: Simulation, entry: BerthWaitlist, why: string): void {
+  const marina = placesIn(entry.cityId).find((p) => p.id === entry.marinaPlaceId);
+  const rng = sim.rng('waitlist_pass', entry.id, entry.passed);
+  entry.status = 'waiting';
+  entry.passed += 1;
+  entry.ahead = rng.int(PASSED_PENALTY[0], PASSED_PENALTY[1]);
+  entry.offeredAt = undefined;
+  entry.offerExpiresAt = undefined;
+  cancelKind(sim, 'stor.offer_lapse', entry.id);
+  sim.resolveDecision('berth', entry.id);
+  sim.notify({
+    category: 'vehicles', title: `Back In The Queue At ${marina?.name ?? 'The Marina'}`,
+    body: `${why} There are ${entry.ahead} in front of you again.`,
+    importance: 30, route: '/workspace/vehicles', refType: 'berth', refId: entry.id,
+  });
+  sim.emit('berth.passed', { waitlistId: entry.id, ahead: entry.ahead });
 }
 
 /**

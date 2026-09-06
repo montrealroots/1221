@@ -728,6 +728,33 @@ export type KeepingKind =
   | 'berth' | 'dry_stack' | 'trailer' | 'private_dock'
   | 'hangar' | 'shared_hangar' | 'tie_down' | 'transient';
 
+/**
+ * A place in the queue for a slip at a marina, for one boat at one length.
+ * The deposit is held while you wait and comes back whichever way it ends.
+ * A slip that comes free is offered to whoever is first, and holds for a
+ * week; letting it go puts you at the back rather than off the list.
+ */
+export interface BerthWaitlist {
+  id: Id;
+  saveId: Id;
+  marinaPlaceId: string;
+  cityId: string;
+  /** The band you are waiting in, by the longest boat it takes, in feet. */
+  bandFeet: number;
+  vehicleId: Id;
+  /** How many are in front of you. Zero means the next one is yours. */
+  ahead: number;
+  joinedAt: Instant;
+  /** Held while you wait, returned when it ends. */
+  deposit: Money;
+  status: 'waiting' | 'offered' | 'taken' | 'left' | 'lapsed';
+  offeredAt?: Instant;
+  offerExpiresAt?: Instant;
+  /** How many times a slip has been offered and let go. */
+  passed: number;
+  endedAt?: Instant;
+}
+
 export interface VehicleKeeping {
   kind: KeepingKind;
   cityId: string;
@@ -1836,7 +1863,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 39;
+export const SAVE_SCHEMA_VERSION = 40;
 
 export interface SaveMeta {
   id: Id;
@@ -1904,6 +1931,8 @@ export interface SaveUniverse {
 
   vehicles: Record<Id, Vehicle>;
   vehicleDeals: Record<Id, VehicleDeal>;
+  /** Places in the queue for a marina slip. Absent on a save from before there were queues. */
+  berthWaitlists?: Record<Id, BerthWaitlist>;
   dates: Record<Id, DateRecord>;
   /** Absent on a save that has not heard a line yet. */
   dialogue?: DialogueState;

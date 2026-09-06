@@ -23,9 +23,9 @@ route has no line in the body of this file. That check is part of the
 gate, so a command cannot be added without a place in the matrix.
 
 Counts in this file are the code's own on the day it was written
-(stage 11): 145 commands, 62 scheduled kinds, 143 events, 25 event
-listeners, 14 scenes, 19 routes, 48 test files, 708 tests passing, 2
-recorded as todo, schema 39, 465 dialogue entries.
+(stage 11): 149 commands, 63 scheduled kinds, 147 events, 25 event
+listeners, 14 scenes, 19 routes, 48 test files, 712 tests passing, 2
+recorded as todo, schema 40, 465 dialogue entries.
 
 ## Surfaces
 
@@ -213,7 +213,8 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Hours rather than miles on a boat or an aircraft; a berth or a hangar and crew billed monthly until sold; service intervals, wear and value by kind; a day on the water with fuel, weather and wellbeing | Implemented | `ensureUpkeep`, `addMileage`, `revalue`, `serviceEstimate`, `veh.cruise`, `vehicle.cruised` | Garage (Berth, Hangar And Crew, A Day On The Water), Bank bills | tests/fleet.test.ts | A boat trip is a command with effects, not a played scene |
 | Your own aircraft through private travel: flown at what it costs to run, checked against range and runway, waits for a late passenger, lands where you do and stays there | Implemented | `travel.charter_private` with `vehicleId`, `ownedAircraftOptions`, `CREW_HOLD_HOURS`; `arriveFlight` moves the aircraft and logs the hours | Travel `private` tab (Your Own Aircraft), Garage (Fly It), Home (Go To The Aircraft) | tests/fleet.test.ts | The private flight is the short day (`travel.fly`), not the played airline scene |
 | Parts made for each kind, with fitment by kind, body style and prerequisites: 20 for motorcycles, 20 for boats, 15 for aircraft, none of them a car's | Implemented | `PartFitment.kinds`, `checkFitment`, `partsFor`; range and top-speed effects through `craftOf` | `modify` tab | tests/fleet.test.ts, tests/systems.test.ts | — |
-| Where each thing is kept: a home garage with the spaces its kind, features and built structures give it (a motorcycle takes half, a trailered boat takes two), the driveway, the street, a paid unit; a marina berth by the foot where the marina has a slip that long, a dry stack, a trailer at home, a private dock; a private or shared hangar, a tie-down, or a foreign ramp | Implemented | `src/engine/systems/storage.ts`: `KeepingKind`, `keepingOptions`, `defaultKeeping`, `placeVehicle`, `applyKeeping`, `homeSpaces`, `garageSpacesOf`, `dockFeetOf`, `slipsAt`, `stor.keep` | Vehicles At Home panel, Kept At on every card, Move It, Property garage and dock | tests/keeping.test.ts | A berth freed by another owner is a seeded share, not a waiting list you join |
+| Where each thing is kept: a home garage with the spaces its kind, features and built structures give it (a motorcycle takes half, a trailered boat takes two), the driveway, the street, a paid unit; a marina berth by the foot where the marina has a slip that long, a dry stack, a trailer at home, a private dock; a private or shared hangar, a tie-down, or a foreign ramp | Implemented | `src/engine/systems/storage.ts`: `KeepingKind`, `keepingOptions`, `defaultKeeping`, `placeVehicle`, `applyKeeping`, `homeSpaces`, `garageSpacesOf`, `dockFeetOf`, `slipsAt`, `stor.keep` | Vehicles At Home panel, Kept At on every card, Move It, Property garage and dock | tests/keeping.test.ts | — |
+| The queue for a slip when a marina is full at your length: your name down for a deposit, a place in the line, slips that come free month by month at a rate the band turns over at, a call that holds the slip a week, and the back of the queue if you let it go or say nothing | Implemented | `BerthWaitlist`, `stor.join_waitlist`, `stor.leave_waitlist`, `stor.take_slip`, `stor.pass_slip`, `stor.offer_lapse`, `advanceWaitlists`, `waitMonths` | Waiting For A Slip panel, Put Your Name Down and Take The Slip in the move sheet, the call on Home | tests/keeping.test.ts | Other owners' boats are still a seeded share, so the queue ahead of you is a number rather than named people |
 | What keeping costs and does: a monthly bill that ends when it moves or sells, condition lost standing outside, a premium that falls in a garage and rises on the street, a ramp fee and the time to launch a trailered boat, nightly ramp fees away from home while the hangar is still paid | Implemented | `applyKeeping` bills, `monthlyExposure`, `INSURANCE_FACTOR`, `settleTransient`, `RAMP_FEE` in `veh.cruise` | Bank bills, the quote, the garage card | tests/keeping.test.ts | — |
 | Placement that happens on its own: bought things are put away, moving home moves the cars and says when one loses its cover, a landing aircraft goes to its hangar at home or a ramp away | Implemented | `storage.place`, `storage.rehome`, `storage.landed` listeners on `vehicle.purchased`, `prop.moved_in`, `vehicle.relocated` | Notifications | tests/keeping.test.ts | — |
 | A crew retainer separate from where the thing sleeps: a crewed yacht or any aircraft pays people whether or not it moves | Implemented | `crewFor`, `ensureCrew`, `CraftSpec.crewMonthly` | Crew on the garage card, Bank bills | tests/fleet.test.ts, tests/keeping.test.ts | — |
@@ -355,7 +356,7 @@ side effect of play.
 - Two tests are recorded as todo, not passed: nothing earns industry
   experience from work since the job system went, and nothing raises a
   decision on a fresh save yet.
-- **Base44 live persistence** of a save at schema 39 is not exercised here;
+- **Base44 live persistence** of a save at schema 40 is not exercised here;
   the adapter's codec and the guard are tested, the deployment is not.
   Reported as unavailable, not as passing.
 - **Two live tabs** are refused at the server by clock and playtime and are
@@ -364,7 +365,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 145 commands, 62 scheduled kinds, 143 events emitted, 25 event listeners, 14 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 149 commands, 63 scheduled kinds, 147 events emitted, 25 event listeners, 14 scenes, 19 routes.
 
 ### Commands
 
@@ -389,7 +390,7 @@ Generated by `node tools/inventory.mjs --markdown`. 145 commands, 62 scheduled k
 | scene | `scene.choose` `scene.leave` `scene.quick` `scene.resume` `scene.skip` `scene.start` | `src/engine/systems/scenes.ts` |
 | shop | `shop.purchase` `shop.return` `shop.save_outfit` `shop.sell_asset` | `src/engine/systems/commerce.ts` |
 | social | `social.create_account` `social.create_post` `social.respond_to_deal` | `src/engine/systems/media.ts` |
-| stor | `stor.keep` | `src/engine/systems/storage.ts` |
+| stor | `stor.join_waitlist` `stor.keep` `stor.leave_waitlist` `stor.pass_slip` `stor.take_slip` | `src/engine/systems/storage.ts` |
 | travel | `travel.board` `travel.book_flight` `travel.book_hotel` `travel.cancel_flight` `travel.change_flight` `travel.charter_private` `travel.check_in_flight` `travel.claim_bags` `travel.drive` `travel.fly` `travel.inflight` `travel.no_show` `travel.pack` `travel.plan_trip` `travel.rebook` `travel.to_airport` `travel.to_hotel` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/travel.ts` |
 | tutorial | `tutorial.complete` `tutorial.dismiss` `tutorial.reset` `tutorial.set_mode` | `src/engine/world/world.ts` |
 | veh | `veh.book_modification` `veh.book_service` `veh.cruise` `veh.drive` `veh.name` `veh.purchase` `veh.remove_modification` `veh.sell` | `src/engine/systems/vehicles.ts` |
@@ -418,6 +419,7 @@ Generated by `node tools/inventory.mjs --markdown`. 145 commands, 62 scheduled k
 | rel | `rel.anniversary` `rel.birthday` `rel.date` `rel.drift` `rel.wedding` | `src/engine/systems/dating.ts`, `src/engine/systems/relationships.ts` |
 | shop | `shop.deliver` `shop.pantry_expiry` | `src/engine/systems/commerce.ts` |
 | social | `social.deal_deadline` `social.decay_tick` `social.payout` `social.publish` `social.reactions` | `src/engine/systems/media.ts` |
+| stor | `stor.offer_lapse` | `src/engine/systems/storage.ts` |
 | travel | `travel.arrive` `travel.bag_returned` `travel.check_in` `travel.check_out` `travel.depart` `travel.drive_arrive` `travel.gate_closes` | `src/engine/systems/driving.ts`, `src/engine/systems/journey.ts`, `src/engine/systems/travel.ts` |
 | veh | `veh.depreciate` `veh.install_parts` `veh.refresh_inventory` `veh.registration_due` `veh.service_appointment` | `src/engine/systems/vehicles.ts` |
 | viewing | `viewing.lapse` | `src/engine/systems/viewings.ts` |
@@ -427,6 +429,7 @@ Generated by `node tools/inventory.mjs --markdown`. 145 commands, 62 scheduled k
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| berth | `berth.left` `berth.passed` `berth.queued` `berth.taken` | `src/engine/systems/storage.ts` |
 | build | `build.change_order_decided` `build.change_order_raised` `build.completed` `build.phase_complete` `build.started` | `src/engine/systems/property.ts` |
 | co | `co.founded` `co.overhead_missed` `co.rate_set` `co.reshaped` | `src/engine/systems/shingle.ts` |
 | date | `date.beat` `date.cancelled` `date.closed` `date.started` `date.stood_up` `date.they_cancelled` | `src/engine/systems/dating.ts` |

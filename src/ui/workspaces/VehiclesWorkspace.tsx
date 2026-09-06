@@ -4,11 +4,12 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, Empty, Tabs, MoneyText, Modal } from '@/ui/components/primitives';
 import { MAX_CRUISE_HOURS, NAME_MAX, availableParts, craftOf, crewFor, hourlyCostOf, profileOf, roadworthy, serviceEstimate, vehicleKind } from '@/engine/systems/vehicles';
 import { activeScene } from '@/engine/systems/scenes';
-import { KEEPING_LABEL, homeSpaces, keepingLabel, keepingOptions, type KeepingOption } from '@/engine/systems/storage';
+import { KEEPING_LABEL, OFFER_DAYS, homeSpaces, keepingLabel, keepingOptions, openWaitlists, type KeepingOption } from '@/engine/systems/storage';
 import { carName, dealershipsIn, fullName, listingKind, lotOf, lotSells, openDeals, roundsLeft } from '@/engine/systems/dealership';
 import { KIND_PROFILE, KINDS, REAL_MAKE_NOTE, VEHICLE_MODELS, FACTORY_OPTIONS, PARTS, bodyStyleLabel, trimOf, type PartCategory, type VehicleKind } from '@/engine/content/vehicles';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
+import { placesIn } from '@/engine/content/places';
 import type { Vehicle, VehicleListing } from '@/engine/domain/model';
 
 /** How many hours a day on the water is, from the garage card. */
@@ -28,6 +29,7 @@ export function VehiclesWorkspace() {
   const [moving, setMoving] = useState<string | null>(null);
   const [naming, setNaming] = useState<string | null>(null);
   const home = useWorld((s) => (s.player.residenceId ? homeSpaces(s, s.player.residenceId) : undefined));
+  const queues = useWorld((s) => openWaitlists(s));
 
   const owned = useWorld((s) => Object.values(s.universe.vehicles)
     .filter((v) => v.ownerId === s.player.id && !v.soldAt)
@@ -80,6 +82,38 @@ export function VehiclesWorkspace() {
                       Back To The Dealer
                     </button>
                     <button className="btn btn-sm" onClick={() => run('deal.walk_away', { dealId: deal.id })}>Let It Go</button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Panel>
+      )}
+
+      {tab === 'garage' && queues.length > 0 && (
+        <Panel title="Waiting For A Slip" subtitle="Marinas fill up. A deposit holds your place, and comes back whichever way it ends." flush>
+          <div className="list">
+            {queues.map((entry) => {
+              const boat = sim.universe.vehicles[entry.vehicleId];
+              const marina = placesIn(entry.cityId).find((p) => p.id === entry.marinaPlaceId);
+              const offered = entry.status === 'offered';
+              return (
+                <div key={entry.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{marina?.name ?? 'A marina'} · up to {entry.bandFeet} ft</div>
+                    <div className="xs dim">
+                      {boat ? (boat.nickname ?? fullName(undefined, boat.make, boat.model)) : 'A boat that has gone'} ·{' '}
+                      {offered
+                        ? `A slip is yours until ${formatDate(entry.offerExpiresAt ?? sim.now, sim.zone)}`
+                        : entry.ahead === 0 ? 'Next in line' : `${entry.ahead} in front of you`}
+                      {entry.passed > 0 ? ` · passed ${entry.passed} time${entry.passed === 1 ? '' : 's'}` : ''}
+                      {' · '}{formatMoney(entry.deposit, { cents: false })} held
+                    </div>
+                  </div>
+                  <div className="row gap-1 wrap" style={{ justifyContent: 'flex-end' }}>
+                    {offered && <button className="btn btn-sm btn-primary" onClick={() => run('stor.take_slip', { waitlistId: entry.id })}>Take The Slip</button>}
+                    {offered && <button className="btn btn-sm" onClick={() => run('stor.pass_slip', { waitlistId: entry.id })}>Let It Go</button>}
+                    {!offered && <button className="btn btn-sm" onClick={() => run('stor.leave_waitlist', { waitlistId: entry.id })}>Leave The Queue</button>}
                   </div>
                 </div>
               );
@@ -204,6 +238,8 @@ function KeepingModal({ vehicleId, onClose }: { vehicleId: string; onClose: () =
     const result = run('stor.keep', { vehicleId, kind: o.kind, propertyId: o.propertyId, placeId: o.kind === 'trailer' ? undefined : o.placeId, airportId: o.airportId });
     if (result.ok) onClose();
   };
+  const queue = (o: KeepingOption) => { run('stor.join_waitlist', { vehicleId, placeId: o.placeId }); };
+  const takeSlip = (o: KeepingOption) => { const r = run('stor.take_slip', { waitlistId: o.waitlistId }); if (r.ok) onClose(); };
   return (
     <Modal title={`Where To Keep The ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}`} onClose={onClose} footer={<button className="btn" onClick={onClose}>Leave It</button>}>
       <p className="small muted">Now: {keepingLabel(sim, vehicle)}{current && current.monthly > 0 ? `, ${formatMoney(current.monthly, { cents: false })} a month` : ''}. A move starts the new bill in thirty days and ends the old one today. Indoors is worth a little on the insurance; outside costs a little, and the weather takes its share.</p>
@@ -215,9 +251,21 @@ function KeepingModal({ vehicleId, onClose }: { vehicleId: string; onClose: () =
                 <div className="small strong">{o.label} · {o.where}</div>
                 <div className="xs dim">{o.detail} {o.exposure === 'indoors' ? 'Indoors.' : o.exposure === 'covered' ? 'Under cover.' : 'Outside.'}</div>
                 {!o.available && o.reason && <div className="xs negative">{o.reason}</div>}
+                {o.waitable && (
+                  <div className="xs warning">
+                    About {o.waitMonths} month{o.waitMonths === 1 ? '' : 's'} on the list. {formatMoney(o.deposit ?? 0, { cents: false })} held while you wait, returned whichever way it ends.
+                  </div>
+                )}
+                {o.waitOffered && <div className="xs positive">A slip is being held for you. Take it within {OFFER_DAYS} days.</div>}
               </div>
-              <span className="mono small">{!o.available ? '—' : o.monthly > 0 ? `${formatMoney(o.monthly, { cents: false })}/mo` : 'Free'}</span>
-              <button className="btn btn-sm btn-primary" disabled={!o.available || isCurrent(o)} onClick={() => move(o)}>{isCurrent(o) ? 'Kept Here' : 'Keep It Here'}</button>
+              <span className="mono small">{!o.available && !o.waitable && !o.waitlistId ? '—' : o.monthly > 0 ? `${formatMoney(o.monthly, { cents: false })}/mo` : 'Free'}</span>
+              {o.waitOffered
+                ? <button className="btn btn-sm btn-primary" onClick={() => takeSlip(o)}>Take The Slip</button>
+                : o.waitlistId
+                  ? <button className="btn btn-sm" onClick={() => run('stor.leave_waitlist', { waitlistId: o.waitlistId })}>Leave The Queue</button>
+                  : o.waitable
+                    ? <button className="btn btn-sm" onClick={() => queue(o)}>Put Your Name Down</button>
+                    : <button className="btn btn-sm btn-primary" disabled={!o.available || isCurrent(o)} onClick={() => move(o)}>{isCurrent(o) ? 'Kept Here' : 'Keep It Here'}</button>}
             </div>
           ))}
         </div>
