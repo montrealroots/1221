@@ -10,7 +10,7 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  CATALOG, RETAILERS, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableRetailers,
+  CATALOG, RETAILERS, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableItemsIn, shoppableRetailers,
 } from '@/engine/content/catalog';
 import { REAL_RETAILERS, marketOf, tradesIn } from '@/engine/content/brands';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
@@ -130,5 +130,33 @@ describe('the real catalogue', () => {
       expect(retailer.priceMultiplier, retailer.id).toBeGreaterThan(0);
       expect(retailer.description.trim().length, retailer.id).toBeGreaterThan(10);
     }
+  });
+});
+
+describe('a national brand stays in its nation', () => {
+  it('does not sell a British loaf in California, or an American one in London', () => {
+    const la = shoppableItemsIn(LA).map((i) => i.id);
+    const london = shoppableItemsIn(LONDON).map((i) => i.id);
+    expect(la).not.toContain('g_hovis');
+    expect(la).not.toContain('g_warburtons');
+    expect(london).toContain('g_hovis');
+    expect(london).not.toContain('g_dave_killer');
+    expect(la).toContain('g_dave_killer');
+  });
+
+  it('leaves a brand that really is everywhere alone', () => {
+    for (const city of [LA, LONDON, 'fr-idf-paris']) {
+      const ids = shoppableItemsIn(city).map((i) => i.id);
+      expect(ids, city).toContain('g_barilla');
+      expect(ids, city).toContain('c_levis_501');
+      expect(ids, city).toContain('w_rolex_sub_date');
+    }
+  });
+
+  it('keeps a hundred in every aisle even after the market gate', () => {
+    const counts = new Map<string, number>();
+    for (const item of shoppableItemsIn(LA)) counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
+    const short = SHOPPING_CATEGORIES.filter((c) => (counts.get(c) ?? 0) < 100);
+    expect(short, `short in Los Angeles: ${short.join(', ')}`).toEqual([]);
   });
 });

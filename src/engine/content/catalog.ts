@@ -118,6 +118,8 @@ export interface CatalogItem extends ReferenceRecord {
   /** Furniture only. */
   roomKinds?: string[];
   qualityContribution?: number;
+  /** Countries a national brand is actually sold in. Absent means everywhere. */
+  markets?: string[];
 }
 
 function item(spec: Omit<CatalogItem, 'type' | 'source' | 'confidence' | 'version' | 'note'>): CatalogItem {
@@ -253,6 +255,20 @@ export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...L
 /** Everything a shop will actually put in front of you. */
 export function shoppableItems(): CatalogItem[] {
   return REAL_ITEMS as CatalogItem[];
+}
+
+/**
+ * Whether this product is on a shelf in this city. A national brand is gated
+ * to the countries it is really sold in; everything else is left alone.
+ */
+export function soldIn(item: CatalogItem, cityId: string): boolean {
+  if (!item.markets || item.markets.length === 0) return true;
+  return item.markets.includes(cityId.split('-')[0] ?? '');
+}
+
+/** Everything a shop in this city will put in front of you. */
+export function shoppableItemsIn(cityId: string): CatalogItem[] {
+  return REAL_ITEMS.filter((i) => soldIn(i as CatalogItem, cityId)) as CatalogItem[];
 }
 
 /** Whether an item is one of the ones kept only for old saves. */

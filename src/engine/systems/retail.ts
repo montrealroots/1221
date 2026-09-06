@@ -15,7 +15,7 @@ import { clamp } from '../core/rng';
 import { MS_MINUTE } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
 import type { Id, Person, RetailVisit } from '../domain/model';
-import { CATALOG, RETAILERS, retailPrice, type CatalogItem, type Retailer } from '../content/catalog';
+import { RETAILERS, retailPrice, shoppableItemsIn, type CatalogItem, type Retailer } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
 import { placeById, type Place } from '../content/places';
 import type { DialogueTone } from '../dialogue/schema';
@@ -175,7 +175,7 @@ export function stockAt(sim: Simulation, place: Place, category?: string): Stock
   const col = costOfLiving(place.cityId);
   const fortnight = Math.floor(sim.now / (14 * 24 * 60 * 60 * 1000));
   const rng = sim.rng('retail_stock', place.id, String(fortnight));
-  const eligible = CATALOG.all().filter((item) =>
+  const eligible = shoppableItemsIn(place.cityId).filter((item) =>
     item.category !== 'dining'
     && (retailer.categories.includes(item.category) || retailer.categories.includes(item.subcategory))
     && (category === undefined || item.category === category));

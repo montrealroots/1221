@@ -41,6 +41,11 @@ export interface RealGood extends ReferenceRecord {
   seasons?: string[];
   roomKinds?: string[];
   qualityContribution?: number;
+  /**
+   * Countries the product is actually sold in, where it is a national brand
+   * rather than one you find everywhere. Absent means SLATE does not gate it.
+   */
+  markets?: string[];
 }
 
 function good(spec: Omit<RealGood, 'type' | 'source' | 'confidence' | 'version' | 'note'>): RealGood {
@@ -68,7 +73,15 @@ const dr = (
   tags: ['grocery', 'drink', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment: 2,
 });
 
-export const REAL_GROCERIES: readonly RealGood[] = [
+/** National brands, and where they are actually on a shelf. */
+const NATIONAL: Readonly<Record<string, string[]>> = {"g_hovis": ["uk", "ie"], "g_warburtons": ["uk", "ie"], "g_jacobs_crackers": ["uk", "ie"], "g_carrs": ["uk", "ie"], "g_weetabix": ["uk", "ie"], "g_yeo_valley": ["uk", "ie"], "g_wilja": ["uk", "ie"], "g_marmite": ["uk", "ie"], "g_colmans": ["uk", "ie"], "g_burford_eggs": ["uk", "ie"], "g_donald_russell": ["uk", "ie"], "g_loch_duart": ["uk", "ie"], "g_yorkshire_tea": ["uk", "ie"], "g_monmouth": ["uk", "ie"], "d_beavertown": ["uk", "ie"], "g_kewpie": ["jp"], "g_ippodo": ["jp"], "g_koshihikari": ["jp"], "g_dave_killer": ["us"], "g_thomas_muffins": ["us"], "g_vital_farms": ["us"], "g_bell_evans": ["us"], "g_creekstone": ["us"], "g_snake_river": ["us"], "g_applegate": ["us"], "g_raos": ["us"], "g_cheerios": ["us", "ca"], "g_king_arthur": ["us"], "g_skippy": ["us"], "g_la_brea": ["us"], "g_earthbound": ["us"], "g_organicgirl": ["us"], "g_idaho": ["us"], "g_diamond_crystal": ["us", "ca"], "g_stumptown": ["us"], "g_blue_bottle": ["us", "jp", "kr"], "g_counter_culture": ["us"], "g_cabot_cheddar": ["us"], "g_tillamook": ["us"], "d_topo_chico": ["us", "mx"], "d_lacroix": ["us", "ca"], "d_modelo": ["us", "mx"], "d_pacifico": ["us", "mx"], "d_sierra_nevada": ["us"], "d_lagunitas": ["us"], "d_brooklyn_lager": ["us"], "g_poilane": ["fr", "uk", "us"], "g_echire": ["fr", "uk", "us", "jp"], "g_frantoia": ["it", "uk", "us"], "g_esselunga": ["it"]};
+
+/** Stamps a national brand with its market. Everything else is left ungated. */
+function national(items: RealGood[]): RealGood[] {
+  return items.map((i) => (NATIONAL[i.id] ? { ...i, markets: NATIONAL[i.id] } : i));
+}
+
+export const REAL_GROCERIES: readonly RealGood[] = national([
   // --- Dairy and chilled --------------------------------------------------------------------
   gr('g_kerrygold', 'Kerrygold Butter', 'Kerrygold', 'dairy', 6_49, 60, 'Half Pound', 6, 74),
   gr('g_lurpak', 'Lurpak Slightly Salted', 'Lurpak', 'dairy', 5_99, 60, 'Pack', 6, 72),
@@ -258,7 +271,7 @@ export const REAL_GROCERIES: readonly RealGood[] = [
   dr('d_campari', 'Campari', 'Campari', 'alcohol', 32_00, 7200, 'Bottle', 78),
   dr('d_aperol', 'Aperol', 'Aperol', 'alcohol', 26_00, 7200, 'Bottle', 72),
   dr('d_carpano', 'Carpano Antica Formula', 'Carpano', 'alcohol', 38_00, 1080, 'Bottle', 88),
-];
+]);
 
 /** Something you wear. `slot` is the wardrobe peg; `formality` is 0 to 100. */
 const cl = (

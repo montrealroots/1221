@@ -13,12 +13,19 @@ import type { DialogueChunk } from './schema';
 const LOADERS: Readonly<Record<string, () => Promise<{ default?: DialogueChunk } & Record<string, unknown>>>> = {
   dating: () => import('./chunks/dating'),
   dining: () => import('./chunks/dining'),
+  fitness: () => import('./chunks/fitness'),
   health: () => import('./chunks/health'),
+  money: () => import('./chunks/money'),
+  nightlife: () => import('./chunks/nightlife'),
+  people: () => import('./chunks/people'),
   property: () => import('./chunks/property'),
   retail: () => import('./chunks/retail'),
   social: () => import('./chunks/social'),
+  street: () => import('./chunks/street'),
   travel: () => import('./chunks/travel'),
+  wellbeing: () => import('./chunks/wellbeing'),
   vehicles: () => import('./chunks/vehicles'),
+  work: () => import('./chunks/work'),
 };
 
 export const SECTIONS: readonly string[] = Object.keys(LOADERS);
