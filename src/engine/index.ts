@@ -35,6 +35,7 @@ import { registerScenes } from './systems/scenes';
 import { registerPlans } from './systems/plans';
 import { registerFitness } from './systems/fitness';
 import { registerDealership } from './systems/dealership';
+import { registerDating } from './systems/dating';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -75,6 +76,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerAuthorship(sim);
   registerFitness(sim);
   registerDealership(sim);
+  registerDating(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -795,6 +797,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // delivery; a listing knows which dealership it sits on. Nothing already
     // in the save is touched.
     if (!record['vehicleDeals']) record['vehicleDeals'] = {};
+  }
+
+  if (from < 32) {
+    // Schema 32: a date is a record from the asking to the walk home. A date
+    // already on the calendar from before keeps its scheduled item and gets a
+    // record when it comes round. Nothing already in the save is touched.
+    if (!record['dates']) record['dates'] = {};
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

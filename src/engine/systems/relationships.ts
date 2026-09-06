@@ -15,6 +15,8 @@ import { clamp, remap } from '../core/rng';
 import { addDays, addYears, ageOn, formatDate, nextAnniversary, zonedParts, MS_DAY } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
 import { buildFactors } from '../core/audit';
+import { placesIn } from '../content/places';
+import { DATE_ACTIVITY_BY_ID } from '../content/dates';
 import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
@@ -117,7 +119,6 @@ export function compatibilityBetween(a: Person, b: Person): number {
 // ---------------------------------------------------------------------------
 
 export function registerRelationships(sim: Simulation): void {
-  sim.onSchedule('rel.date', (item) => resolveDate(sim, item.payload.relationshipId as Id, item.payload.plan as DatePlan));
   sim.onSchedule('rel.birthday', (item) => celebrateBirthday(sim, item.payload.personId as Id));
   sim.onSchedule('rel.anniversary', (item) => {
     const rel = sim.universe.relationships[item.payload.relationshipId as Id];
@@ -209,12 +210,20 @@ export function registerRelationships(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ personId: Id; activityId: string; at: number; locationId?: string; budget?: Money }, { scheduledItemId: Id; accepted: boolean; reason?: string }>(
+  sim.onCommand<{ personId: Id; activityId: string; at: number; locationId?: string; budget?: Money; placeId?: string }, { scheduledItemId: Id; accepted: boolean; reason?: string }>(
     'rel.ask_out',
     (p, { sim: s }) => {
       const player = s.player;
       const other = s.universe.people[p.personId];
       if (!other) throw new CommandError('No such person.');
+      if (!(p.at > s.now)) throw new CommandError('Pick a time that has not gone.');
+      const activity = DATE_ACTIVITY_BY_ID[p.activityId];
+      if (!activity) throw new CommandError('That is not a way to spend an evening SLATE knows.');
+      if (p.placeId) {
+        const place = placesIn(p.locationId ?? player.currentLocationId).find((pl) => pl.id === p.placeId);
+        if (!place) throw new CommandError('That place is not in that city.');
+        if (!activity.placeKinds.includes(place.kind)) throw new CommandError(`${place.name} is not somewhere for ${activity.label.toLowerCase()}.`);
+      }
       let rel = findRelationship(s, player.id, other.id);
       if (!rel) rel = createRelationship(s, player.id, other.id, 'acquaintance');
 
@@ -259,6 +268,7 @@ export function registerRelationships(sim: Simulation): void {
         activityId: p.activityId,
         locationId: p.locationId ?? player.currentLocationId,
         budget: p.budget ?? 90_00,
+        placeId: p.placeId,
       };
       const item = s.schedule({
         at: p.at,
@@ -270,9 +280,9 @@ export function registerRelationships(sim: Simulation): void {
         refType: 'relationship', refId: rel.id,
         requiresPlayer: true,
         locationId: plan.locationId,
-        durationMinutes: 180,
+        durationMinutes: activity.minutes,
       });
-      s.emit('rel.date_scheduled', { relationshipId: rel.id, at: p.at });
+      s.emit('rel.date_scheduled', { relationshipId: rel.id, at: p.at, scheduledItemId: item.id, personId: other.id, plan });
       return { scheduledItemId: item.id, accepted: true };
     },
   );
@@ -610,9 +620,15 @@ export interface DatePlan {
   activityId: string;
   locationId: string;
   budget: Money;
+  /** Where, if a place was chosen when asking. */
+  placeId?: string;
 }
 
-function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan): void {
+/**
+ * The date resolved in one roll, as it was before dates were played: kept for
+ * a date already on the calendar from an older save, which has no record.
+ */
+export function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan): void {
   const rel = sim.universe.relationships[relationshipId];
   if (!rel || rel.endedAt) return;
   const player = sim.universe.people[sim.universe.playerId];

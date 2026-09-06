@@ -9,6 +9,8 @@ import { formatMoney } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { activeScene, sceneDefinition } from '@/engine/systems/scenes';
 import { attendable } from '@/engine/systems/plans';
+import { activityOf, dateAttendable, placeOfDate } from '@/engine/systems/dating';
+import type { DateStatus } from '@/engine/domain/model';
 import { placesNear } from '@/engine/systems/places';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
 
@@ -238,6 +240,10 @@ function fromLocalInput(value: string, zone: string): number | undefined {
  * skipped or dropped; an appointment moved or cancelled; a bill paid; a
  * flight opened where it lives; an observance only looked at.
  */
+const DATE_STATUS_WORD: Readonly<Record<DateStatus, string>> = {
+  planned: 'planned', underway: 'under way', attended: 'attended', skipped: 'skipped', stood_up: 'missed, because you did not go', they_cancelled: 'called off by them', cancelled: 'cancelled',
+};
+
 function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
   const { sim, run, navigate } = useGame();
   const scene = useWorld(activeScene);
@@ -245,6 +251,8 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const plan = useWorld((s) => (entry.refType === 'plan' && entry.refId ? s.universe.plans[entry.refId] : undefined));
   const appointment = useWorld((s) => (entry.refType === 'appointment' && entry.refId ? s.universe.appointments[entry.refId] : undefined));
   const bill = useWorld((s) => (entry.refType === 'bill' && entry.refId ? s.universe.bills[entry.refId] : undefined));
+  const date = useWorld((s) => (entry.refType === 'date' && entry.refId ? s.universe.dates[entry.refId] : undefined));
+  const dateCan = date ? dateAttendable(sim, date) : { ok: false as const, reason: undefined };
   const legend = LEGEND_BY_CATEGORY[entry.category];
   const status = statusOf(sim, entry);
   const city = entry.locationId ? CITIES.get(entry.locationId)?.name : undefined;
@@ -323,6 +331,35 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </>
       )}
 
+      {date && (
+        <>
+          <p className="small muted">
+            {activityOf(date).label} with {sim.universe.people[date.personId]?.displayName ?? 'somebody'}{placeOfDate(date) ? ` at ${placeOfDate(date)!.name}` : ''}.
+            {date.status === 'planned' ? (dateCan.ok ? ' It is time.' : dateCan.reason ? ` ${dateCan.reason}` : '') : date.status === 'underway' ? ' Under way.' : ` This date was ${DATE_STATUS_WORD[date.status]}.`}
+          </p>
+          {(date.status === 'planned' || date.status === 'underway') && (
+            <>
+              <div className="row wrap gap-2">
+                <button className="btn btn-sm btn-primary" disabled={!dateCan.ok || Boolean(busy)} title={busy ?? (dateCan.ok ? undefined : dateCan.reason)} onClick={() => after(run('date.attend', { dateId: date.id, mode: 'play' }, { idempotencyKey: `date:${date.id}:play` }))}>Play It Out</button>
+                <button className="btn btn-sm" disabled={!dateCan.ok || Boolean(busy)} onClick={() => after(run('date.attend', { dateId: date.id, mode: 'summary' }, { idempotencyKey: `date:${date.id}:summary` }))}>Just Do It</button>
+                {date.status === 'planned' && <button className="btn btn-sm" onClick={() => after(run('date.skip', { dateId: date.id }))}>Skip It</button>}
+                {date.status === 'planned' && <button className="btn btn-ghost btn-sm" onClick={() => after(run('date.cancel', { dateId: date.id }))}>Cancel It</button>}
+                <button className="btn btn-sm" onClick={() => navigate('/workspace/relationships', 'Relationships')}>Open Relationships</button>
+              </div>
+              {date.status === 'planned' && (
+                <div className="row wrap gap-2" style={{ alignItems: 'end', marginTop: 'var(--s3)' }}>
+                  <div className="col gap-1">
+                    <label htmlFor="date-when" className="xs dim">Move It To</label>
+                    <input id="date-when" type="datetime-local" value={when} onChange={(e) => setWhen(e.target.value)} />
+                  </div>
+                  <button className="btn btn-sm" onClick={() => { const at = moveTo(); if (at) after(run('date.reschedule', { dateId: date.id, at })); }}>Move</button>
+                </div>
+              )}
+            </>
+          )}
+        </>
+      )}
+
       {bill && (
         <div className="row wrap gap-2">
           <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it is due, if the money is there.' : 'No longer active.'}</span>
@@ -331,7 +368,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         </div>
       )}
 
-      {!plan && !appointment && !bill && (
+      {!plan && !appointment && !bill && !date && (
         <div className="row wrap gap-2">
           <span className="small muted grow">
             {entry.status === 'observance'

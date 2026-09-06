@@ -854,6 +854,41 @@ export interface VehicleDeal {
   vehicleId?: Id;
 }
 
+/**
+ * A date, from the asking to the walk home. Planned until it comes round;
+ * under way while it is being played; then attended, or one of the ways it
+ * did not happen, each of which the other person remembers differently.
+ */
+export type DateStatus = 'planned' | 'underway' | 'attended' | 'skipped' | 'stood_up' | 'they_cancelled' | 'cancelled';
+
+export interface DateRecord {
+  id: Id;
+  saveId: Id;
+  relationshipId: Id;
+  personId: Id;
+  scheduledItemId: Id;
+  at: Instant;
+  durationMinutes: number;
+  activityId: string;
+  placeId?: string;
+  locationId: string;
+  budget: Money;
+  status: DateStatus;
+  /** How the evening is going while it is under way, 0-100; how it went, after. */
+  chemistry: number;
+  beats: number;
+  spent: Money;
+  /** What you talked about, for the other person to remember. */
+  topics: string[];
+  /** What you said you would do afterwards. */
+  promises: string[];
+  outcome?: 'good' | 'mixed' | 'poor';
+  /** They were late, or did not come. */
+  showed?: 'there' | 'late' | 'no_show';
+  sceneId?: Id;
+  closedAt?: Instant;
+}
+
 // ---------------------------------------------------------------------------
 // Possessions and commerce
 // ---------------------------------------------------------------------------
@@ -1677,7 +1712,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 31;
+export const SAVE_SCHEMA_VERSION = 32;
 
 export interface SaveMeta {
   id: Id;
@@ -1745,6 +1780,7 @@ export interface SaveUniverse {
 
   vehicles: Record<Id, Vehicle>;
   vehicleDeals: Record<Id, VehicleDeal>;
+  dates: Record<Id, DateRecord>;
   vehicleListings: Record<Id, VehicleListing>;
   vehicleModifications: Record<Id, VehicleModification>;
   serviceRecords: Record<Id, ServiceRecord>;

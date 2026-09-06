@@ -111,7 +111,7 @@ export function Home() {
             </button>
           ) : undefined}
         >
-          {decisions.length === 0 ? (
+          {decisions.length === 0 && unread.length === 0 ? (
             <Empty
               title="Nothing Pressing"
               body="No bills overdue, no offers expiring, no conflicts on the calendar. Go and do something you want to do."
@@ -165,6 +165,22 @@ export function Home() {
                   {decisions.length - 6} more waiting.
                 </div>
               )}
+            </div>
+          )}
+          {unread.length > 0 && (
+            <div className="list">
+              {unread.slice(0, 6).map((note) => (
+                <div key={note.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{titleCaseLabel(note.title)}</div>
+                    <div className="xs muted">{note.body}</div>
+                  </div>
+                  <span className="xs dim nowrap">{formatRelative(note.at, sim.now)}</span>
+                  {note.route && (
+                    <button className="btn btn-sm" onClick={() => navigate(note.route!, titleCaseLabel(note.title))}>Open</button>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </Panel>

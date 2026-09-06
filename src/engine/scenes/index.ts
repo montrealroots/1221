@@ -7,6 +7,7 @@
  */
 
 import './activity';
+import './date';
 import './dealer';
 import './gym';
 import './meal';
