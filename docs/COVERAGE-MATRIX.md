@@ -23,9 +23,9 @@ route has no line in the body of this file. That check is part of the
 gate, so a command cannot be added without a place in the matrix.
 
 Counts in this file are the code's own on the day it was written
-(stage 11): 149 commands, 63 scheduled kinds, 147 events, 25 event
-listeners, 14 scenes, 19 routes, 48 test files, 712 tests passing, 2
-recorded as todo, schema 40, 465 dialogue entries.
+(stage 12): 155 commands, 65 scheduled kinds, 157 events, 25 event
+listeners, 14 scenes, 19 routes, 49 test files, 729 tests passing, 2
+recorded as todo, schema 41, 465 dialogue entries.
 
 ## Surfaces
 
@@ -39,7 +39,7 @@ recorded as todo, schema 40, 465 dialogue entries.
 | `/workspace/wellbeing` | Wellbeing | Energy, stress, sleep, hygiene, readiness; every activity played out or just done; cooking | wellbeing, life |
 | `/workspace/relationships` | Relationships | Everyone you know; interactions; Ask Out with activity, place and time; Dates panel with states | relationships, dating |
 | `/workspace/history` | History (Why Did This Happen?) | `timeline`, `why` — left as-is except the tab label | audit |
-| `/workspace/bank` | Bank | `accounts`, `transactions`, `bills`, `credit`, `tax` | finance |
+| `/workspace/bank` | Bank | `accounts` (products to open, cover, cards with their statement and minimum, standing orders), `bills`, `statements`, `transactions`, `credit`, `tax` | finance, banking |
 | `/workspace/property` | Property | `owned` (Move In, Furnish It, List For Sale), `market`, `offers` (Take The Call, Walk It With The Inspector, Read The Report, Sit At The Table, Sign Remotely), `build`, `interiors` | property, viewings, purchase, construction, interiors |
 | `/workspace/vehicles` | Vehicles | `garage` (At Home: the garage, the driveway and the dock with what is in them; then each thing with its own figures, where it is kept, and its own way out: Drive, Ride, A Day On The Water, Fly It, plus Move It and Name It), `market` (by lot, six to a city, with On The Table), `service`, `modify` (parts for the kind you own) | vehicles, dealership, driving, storage |
 | `/workspace/shopping` | Shopping | `shop`, `orders`, `owned`, `wardrobe` | commerce |
@@ -234,6 +234,19 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Purchase, delivery, returns, wardrobe, outfits, selling assets, pantry | Implemented | `shop.purchase`, `shop.deliver`, `shop.return`, `shop.save_outfit`, `shop.sell_asset`, `shop.pantry_expiry` | `/workspace/shopping` | tests/systems.test.ts, tests/full-life.test.ts | Basket and checkout as a scene not built |
 | 100 real branded products per category | Blocked (data) | SLATE's catalogue | `shop` tab | — | Needs licensed product data; variants are not counted as products |
 
+### Banking
+
+| Subfeature | State | Code | On screen | Tests | Gap |
+| --- | --- | --- | --- | --- | --- |
+| Accounts opened on a product with a minimum, a monthly fee a balance waives and a rate; closed when nothing points at them, with the money moved out | Implemented | `BANK_PRODUCTS` (two institutions, eleven products), `bank.open`, `bank.close`, `openingRefusal`, `monthlyFeeFor` | Bank accounts, Open An Account | tests/banking.test.ts | Every rate, fee and limit is SLATE's own; no real bank is named |
+| Cover: off until switched on, spends like money up to the limit, charges each time the balance goes below zero, and cannot be switched off while you are in it | Implemented | `bank.set_overdraft`, `chargeCover`, `availableFunds` | Switch Cover On, the account line | tests/banking.test.ts | Charged once an episode rather than once an item |
+| Savings that counts withdrawals and charges past its allowance; certificates that lock the money for a term and take back a share of the interest when broken | Implemented | `countWithdrawal`, `breakingCost`, `matureCertificate`, `bank.close` | Break It, the account line | tests/banking.test.ts | — |
+| A card cycle: the statement closes, a minimum is due three weeks later, clearing it costs nothing, carrying costs interest on what is carried, late costs a fee and a mark | Implemented | `closeCardCycle`, `minimumFor`, `bank.pay_card`, `CARD_GRACE_DAYS` | Cards panel, the statement decision on Home | tests/banking.test.ts | — |
+| Standing orders between your own accounts on a day of the month, stopped by you or by three they cannot pay | Implemented | `bank.create_standing_order`, `bank.cancel_standing_order`, `runStandingOrders`, `STANDING_ORDER_STRIKES` | Standing Orders panel | tests/banking.test.ts | — |
+| Monthly statements that chain: one opens where the last closed, with credits, debits, charges and interest | Implemented | `closeMonth`, `writeStatement`, `statements` | Statements tab | tests/banking.test.ts | Two years kept per account, then pruned |
+| International, offshore and multi-currency with FX | Not started | — | — | — | The world carries currencies; no account holds one but the home currency, and nothing converts |
+| Pending versus posted | Not modelled | — | — | — | Every posting in the ledger is immediate; there is no float to show |
+
 ### Insurance
 
 | Subfeature | State | Code | On screen | Tests | Gap |
@@ -356,7 +369,7 @@ side effect of play.
 - Two tests are recorded as todo, not passed: nothing earns industry
   experience from work since the job system went, and nothing raises a
   decision on a fresh save yet.
-- **Base44 live persistence** of a save at schema 40 is not exercised here;
+- **Base44 live persistence** of a save at schema 41 is not exercised here;
   the adapter's codec and the guard are tested, the deployment is not.
   Reported as unavailable, not as passing.
 - **Two live tabs** are refused at the server by clock and playtime and are
@@ -365,12 +378,13 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 149 commands, 63 scheduled kinds, 147 events emitted, 25 event listeners, 14 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 155 commands, 65 scheduled kinds, 157 events emitted, 25 event listeners, 14 scenes, 19 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| bank | `bank.cancel_standing_order` `bank.close` `bank.create_standing_order` `bank.open` `bank.pay_card` `bank.set_overdraft` | `src/engine/systems/banking.ts` |
 | build | `build.decide_change_order` `build.start` | `src/engine/systems/property.ts` |
 | co | `co.change_shape` `co.found` `co.read_brief` `co.set_draw` `co.set_rate` | `src/engine/systems/shingle.ts` |
 | date | `date.attend` `date.beat` `date.cancel` `date.check_in` `date.close` `date.finish` `date.reschedule` `date.skip` | `src/engine/systems/dating.ts` |
@@ -402,6 +416,7 @@ Generated by `node tools/inventory.mjs --markdown`. 149 commands, 63 scheduled k
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| bank | `bank.day` `bank.month` | `src/engine/systems/banking.ts` |
 | build | `build.phase_tick` | `src/engine/systems/property.ts` |
 | co | `co.draw` `co.overhead` | `src/engine/systems/shingle.ts` |
 | date | `date.follow_up` `date.lapse` | `src/engine/systems/dating.ts` |
@@ -429,6 +444,7 @@ Generated by `node tools/inventory.mjs --markdown`. 149 commands, 63 scheduled k
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| bank | `bank.card_late` `bank.card_paid` `bank.closed` `bank.matured` `bank.opened` `bank.overdraft_set` `bank.overdrawn` `bank.standing_order_created` `bank.standing_order_ran` `bank.standing_order_stopped` | `src/engine/systems/banking.ts` |
 | berth | `berth.left` `berth.passed` `berth.queued` `berth.taken` | `src/engine/systems/storage.ts` |
 | build | `build.change_order_decided` `build.change_order_raised` `build.completed` `build.phase_complete` `build.started` | `src/engine/systems/property.ts` |
 | co | `co.founded` `co.overhead_missed` `co.rate_set` `co.reshaped` | `src/engine/systems/shingle.ts` |

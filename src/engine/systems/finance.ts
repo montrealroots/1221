@@ -9,6 +9,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
+import { countWithdrawal } from './banking';
 import type { Account } from '../core/ledger';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
@@ -113,9 +114,10 @@ export function registerFinance(sim: Simulation): void {
     attemptBillPayment(sim, bill);
   });
 
-  // --- Scheduled: monthly interest and statement --------------------------
+  // --- Scheduled: the month turns over -------------------------------------
+  // Interest, fees and statements are the banking system's (see banking.ts);
+  // what is left here is the score, which is read from all of it.
   sim.onSchedule('finance.month_close', () => {
-    accrueInterest(sim);
     for (const person of Object.values(sim.universe.people)) {
       if (person.isPlayer || person.tier === 'full') recomputeCreditScore(sim, person.id);
     }
@@ -177,6 +179,8 @@ export function registerFinance(sim: Simulation): void {
         );
       }
       const txn = s.transfer(p.fromAccountId, p.toAccountId, p.amount, p.memo ?? 'Transfer', 'transfer');
+      // A savings product counts what leaves it, and charges past the allowance.
+      countWithdrawal(s, p.fromAccountId);
       return { transactionId: txn.id };
     },
   );
@@ -534,6 +538,11 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
 }
 
 /** Monthly interest on revolving debt and interest earned on savings. */
+/**
+ * Interest the old way, for anything the banking system does not close: kept
+ * so a save that never reaches a month boundary in a test still behaves, and
+ * so nothing that called this breaks. New months go through `closeMonth`.
+ */
 export function accrueInterest(sim: Simulation): void {
   for (const account of Object.values(sim.universe.accounts)) {
     if (account.nominal || account.closedAt) continue;

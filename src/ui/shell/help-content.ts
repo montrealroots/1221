@@ -98,6 +98,11 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     keywords: ['house', 'home', 'buy a house', 'rent', 'apartment', 'mansion', 'build a house', 'construction', 'land', 'interior', 'furniture', 'design', 'mortgage', 'real estate'],
     advanced: [
       'A lender refuses when the payment would exceed roughly 45% of measured income.',
+      'Every account sits on a product with its own minimum, monthly fee, waiver and rate. The fee stops the month the balance clears the waiver.',
+      'Cover is switched off until you switch it on. On, the balance can go below zero up to the limit and each time it does costs the fee. Off, the payment is simply refused.',
+      'A savings product counts what leaves it and charges past its allowance. A certificate locks the money for its term; breaking it early gives back a share of the interest.',
+      'A card runs a cycle: the statement closes monthly, the minimum is due three weeks later, clearing it in full costs nothing, and what you carry is what interest is charged on. Late is a fee and a mark on the record.',
+      'A standing order moves money between your own accounts on a day of the month, and the bank gives up on it after three it cannot pay.',
       'Construction runs a dependency graph. Insulation waits on mechanical, electrical, plumbing and envelope.',
     ],
   },

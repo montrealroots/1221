@@ -42,6 +42,7 @@ import { ensureInteriors, registerPurchase } from './systems/purchase';
 import { registerCare } from './systems/care';
 import { registerJourney } from './systems/journey';
 import { ensureKeepings, registerStorage } from './systems/storage';
+import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -88,6 +89,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCare(sim);
   registerJourney(sim);
   registerStorage(sim);
+  registerBanking(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -384,6 +386,9 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   const sim = new Simulation(universe);
   registerAllSystems(sim);
   populateWorld(sim, config);
+  // The accounts a life starts with sit on products like any other, so a new
+  // save has the same fees, cover and rates a loaded one does.
+  ensureProducts(sim);
   return sim;
 }
 
@@ -395,6 +400,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureInteriors(sim);
   // Everything you own is kept somewhere (idempotent; see storage.ts).
   ensureKeepings(sim);
+  // Every account sits on a product (idempotent; see banking.ts).
+  ensureProducts(sim);
+  ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -884,6 +892,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // the collection is created empty the first time somebody joins.
     universe.berthWaitlists ??= {};
     steps.push('Marina waiting lists ready.');
+  }
+
+  if (from < 41) {
+    // Schema 41: bank products, statements and standing orders. Accounts from
+    // before are matched to the product they most resemble on load, so a
+    // checking account keeps its balance and gains a fee and cover it did
+    // not have. Nothing is closed and no balance is touched.
+    universe.accountStatements ??= {};
+    universe.standingOrders ??= {};
+    steps.push('Bank products, statements and standing orders ready.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

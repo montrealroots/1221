@@ -755,6 +755,54 @@ export interface BerthWaitlist {
   endedAt?: Instant;
 }
 
+/**
+ * A month on an account, as the bank sends it: what it opened at, what went
+ * in and out, what they charged, and what it closed at. Written when the
+ * statement cycles, and never edited after.
+ */
+export interface AccountStatement {
+  id: Id;
+  saveId: Id;
+  accountId: Id;
+  /** The month it covers, as YYYY-MM in the home zone. */
+  period: string;
+  openedAt: Instant;
+  closedAt: Instant;
+  openingBalance: Money;
+  credits: Money;
+  debits: Money;
+  fees: Money;
+  interest: Money;
+  closingBalance: Money;
+  /** On a card: what is owed by the due date, and the least they will take. */
+  minimumDue?: Money;
+  dueAt?: Instant;
+  transactionCount: number;
+}
+
+/**
+ * A transfer the bank makes for you on a day of the month, from one of your
+ * accounts to another. Stops when you say, or when it cannot be paid.
+ */
+export interface StandingOrder {
+  id: Id;
+  saveId: Id;
+  ownerId: Id;
+  name: string;
+  fromAccountId: Id;
+  toAccountId: Id;
+  amount: Money;
+  /** Day of the month it runs, 1 to 28. */
+  dayOfMonth: number;
+  active: boolean;
+  createdAt: Instant;
+  lastRunAt?: Instant;
+  /** Times it could not be paid. Three and the bank gives up on it. */
+  missed: number;
+  endedAt?: Instant;
+  endedReason?: string;
+}
+
 export interface VehicleKeeping {
   kind: KeepingKind;
   cityId: string;
@@ -1863,7 +1911,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 40;
+export const SAVE_SCHEMA_VERSION = 41;
 
 export interface SaveMeta {
   id: Id;
@@ -1933,6 +1981,10 @@ export interface SaveUniverse {
   vehicleDeals: Record<Id, VehicleDeal>;
   /** Places in the queue for a marina slip. Absent on a save from before there were queues. */
   berthWaitlists?: Record<Id, BerthWaitlist>;
+  /** Monthly statements, oldest pruned. Absent on a save from before statements. */
+  accountStatements?: Record<Id, AccountStatement>;
+  /** Transfers the bank makes for you. Absent on a save from before standing orders. */
+  standingOrders?: Record<Id, StandingOrder>;
   dates: Record<Id, DateRecord>;
   /** Absent on a save that has not heard a line yet. */
   dialogue?: DialogueState;
