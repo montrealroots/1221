@@ -17,7 +17,9 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_MINUTE } from '@/engine/core/time';
 import type { DiningVisit, RetailVisit } from '@/engine/domain/model';
 import { menuOf, placesIn, type Place } from '@/engine/content/places';
-import { RETAILERS } from '@/engine/content/catalog';
+import { shoppableRetailers } from '@/engine/content/catalog';
+import { REAL_RETAILERS, tradesIn } from '@/engine/content/brands';
+import { CITIES } from '@/engine/content/geography';
 import {
   GOOD_TIP, MAX_WAIT_MINUTES, SERVICE_SHARE, billFor, cookMinutes, openVisit, serviceOf, staffOf, standingAt, waitFor,
 } from '@/engine/systems/dining';
@@ -252,20 +254,35 @@ describe('the shop floor', () => {
     return place;
   }
 
-  it('gives every chain that is not online only a door in a city it operates in', () => {
+  it('gives every chain that trades here, and only in the market it really trades in', () => {
+    const population = CITIES.get(LA)!.population;
     const here = placesIn(LA).filter((p) => p.retailerId);
-    const expected = RETAILERS.all().filter((r) => r.type !== 'online' && (r.locations.length === 0 || r.locations.includes(LA)));
+    const expected = REAL_RETAILERS.filter((r) => r.kind !== 'online' && tradesIn(r, LA, population));
     expect(here.length).toBe(expected.length);
+    expect(here.length).toBeGreaterThan(30);
     expect(new Set(here.map((p) => p.id)).size).toBe(here.length);
     for (const place of here) expect(retailerAt(place)).toBeDefined();
-    // Online only stays online only: no door for it anywhere.
-    expect(here.some((p) => p.retailerId === 'everline')).toBe(false);
+    // Online only stays online only, and a British grocer does not turn up in California.
+    expect(here.some((p) => p.retailerId === 'amazon')).toBe(false);
+    expect(here.some((p) => p.retailerId === 'tesco')).toBe(false);
+    expect(here.some((p) => p.retailerId === 'whole_foods')).toBe(true);
+    // A chain SLATE invented before the real ones is never given a door.
+    expect(here.some((p) => p.retailerId === 'hallidays')).toBe(false);
+    expect(shoppableRetailers().some((r) => r.legacy)).toBe(false);
+  });
+
+  it('puts a British grocer in Britain and a flagship only where the flagship is', () => {
+    const london = placesIn('uk-eng-london').filter((p) => p.retailerId);
+    expect(london.some((p) => p.retailerId === 'tesco')).toBe(true);
+    expect(london.some((p) => p.retailerId === 'harrods')).toBe(true);
+    expect(london.some((p) => p.retailerId === 'trader_joes')).toBe(false);
+    expect(placesIn(LA).some((p) => p.retailerId === 'harrods')).toBe(false);
   });
 
   it('names the storefront for the chain, so the id never moves when a chain is added', () => {
-    const shop = aShop(aLife(), 'hallidays');
-    expect(shop.id).toBe(`${LA}:shop:hallidays`);
-    expect(shop.name).toBe("Halliday's");
+    const shop = aShop(aLife(), 'nordstrom');
+    expect(shop.id).toBe(`${LA}:shop:nordstrom`);
+    expect(shop.name).toBe('Nordstrom');
   });
 
   it('puts one assistant on the floor and keeps them', () => {
@@ -278,7 +295,7 @@ describe('the shop floor', () => {
 
   it('puts out a rail that is the same rail all fortnight and only what the chain stocks', () => {
     const sim = aLife();
-    const shop = aShop(sim, 'hallidays');
+    const shop = aShop(sim, 'nordstrom');
     const retailer = retailerAt(shop)!;
     const morning = stockAt(sim, shop);
     expect(morning.length).toBeGreaterThan(0);
@@ -292,7 +309,7 @@ describe('the shop floor', () => {
 
   it('walks a basket to the counter and charges it through the one purchase engine', () => {
     const sim = aLife('buying');
-    const shop = aShop(sim, 'hallidays');
+    const shop = aShop(sim, 'nordstrom');
     walkTo(sim, shop);
     const entered = sim.execute<{ visitId: string }>({ kind: 'retail.enter', payload: { placeId: shop.id } });
     expect(entered.ok, entered.error).toBe(true);
@@ -318,7 +335,7 @@ describe('the shop floor', () => {
 
   it('does not charge twice when the same counter is rung twice', () => {
     const sim = aLife('retry');
-    const shop = aShop(sim, 'hallidays');
+    const shop = aShop(sim, 'nordstrom');
     walkTo(sim, shop);
     const visitId = sim.execute<{ visitId: string }>({ kind: 'retail.enter', payload: { placeId: shop.id } }).value!.visitId;
     const stocked = stockAt(sim, shop)[0]!;
@@ -334,7 +351,7 @@ describe('the shop floor', () => {
 
   it('only lets you try on the things you would try on, and only once each', () => {
     const sim = aLife('fitting');
-    const shop = aShop(sim, 'hallidays');
+    const shop = aShop(sim, 'nordstrom');
     walkTo(sim, shop);
     const visitId = sim.execute<{ visitId: string }>({ kind: 'retail.enter', payload: { placeId: shop.id } }).value!.visitId;
     const shelf = stockAt(sim, shop);
@@ -355,7 +372,7 @@ describe('the shop floor', () => {
 
   it('refuses to bag something the mirror said was the wrong size', () => {
     const sim = aLife('sizes');
-    const shop = aShop(sim, 'hallidays');
+    const shop = aShop(sim, 'nordstrom');
     walkTo(sim, shop);
     const visitId = sim.execute<{ visitId: string }>({ kind: 'retail.enter', payload: { placeId: shop.id } }).value!.visitId;
     const visit = sim.universe.retailVisits![visitId]!;
@@ -370,7 +387,7 @@ describe('the shop floor', () => {
 
   it('remembers a browser who never buys, separately from a buyer', () => {
     const sim = aLife('browser');
-    const shop = aShop(sim, 'basewear');
+    const shop = aShop(sim, 'uniqlo');
     walkTo(sim, shop);
     for (let i = 0; i < 2; i++) {
       const visitId = sim.execute<{ visitId: string }>({ kind: 'retail.enter', payload: { placeId: shop.id } }).value!.visitId;

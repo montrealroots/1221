@@ -13,7 +13,9 @@ import { CommandError, type Simulation } from '../core/simulation';
 import { MS_MINUTE, formatDuration } from '../core/time';
 import { formatMoney } from '../core/money';
 import type { SceneSession } from '../domain/model';
-import { INVENTED_NOTE, placesIn, type Place } from '../content/places';
+import { placesIn, type Place } from '../content/places';
+import { REAL_RETAILER_NOTE } from '../content/brands';
+import { REAL_GOODS_NOTE } from '../content/goods';
 import { preview, speak } from '../dialogue/library';
 import { MODE_LABEL, driveableVehicle, placesNear, planJourney, type Mode } from '../systems/places';
 import {
@@ -90,7 +92,7 @@ export const SHOP_SCENE = defineScene({
         return {
           title: 'Where To Shop',
           eyebrow: 'On Foot From Here',
-          text: `Every chain here is SLATE's own. ${INVENTED_NOTE}`,
+          text: `Every chain here is a real one. ${REAL_RETAILER_NOTE}`,
           choices: near.map(({ place, journey }) => ({
             id: `place:${place.id}`, label: place.name, aliases: [place.name],
             detail: `${tagOf(place)} · ${formatDuration(journey.minutes * MS_MINUTE)} on foot`,
@@ -110,7 +112,7 @@ export const SHOP_SCENE = defineScene({
         return {
           title: place.name,
           eyebrow: tagOf(place),
-          text: `${place.about} ${INVENTED_NOTE}`,
+          text: `${place.about} ${REAL_RETAILER_NOTE}`,
           choices,
           canSkip: true,
         };
@@ -124,7 +126,7 @@ export const SHOP_SCENE = defineScene({
         return {
           title: 'The Door',
           eyebrow: place.name,
-          text: `${place.about}\n\n${say(sim, 'greet', 'door', { flags, tone: toneOf(assistant) }, `${place.id}:greet`, false)}`,
+          text: `${place.about} ${REAL_RETAILER_NOTE}\n\n${say(sim, 'greet', 'door', { flags, tone: toneOf(assistant) }, `${place.id}:greet`, false)}`,
           facts: [
             { label: 'On The Floor', value: assistant.displayName },
             { label: 'Standing', value: standing.regular ? 'A Regular' : standing.visits > 0 ? `${standing.visits} Visits` : 'First Time' },
@@ -187,6 +189,7 @@ export const SHOP_SCENE = defineScene({
           facts: [
             { label: 'Brand', value: stocked.item.brand },
             { label: 'Quality', value: `${stocked.item.quality} / 100` },
+            { label: 'The Price', value: 'SLATE’s Own' },
             ...(tried ? [{ label: 'The Mirror', value: VERDICT_LABEL[tried.verdict as Verdict] }] : []),
           ],
           choices,
@@ -202,7 +205,7 @@ export const SHOP_SCENE = defineScene({
         return {
           title: 'The Counter',
           eyebrow: place.name,
-          text: `${lines.map((l) => l?.item.name ?? 'Something').join(', ')}. Before tax it is ${formatMoney(subtotal)}; the till adds what the state wants.`,
+          text: `${lines.map((l) => l?.item.name ?? 'Something').join(', ')}. Before tax it is ${formatMoney(subtotal)}; the till adds what the state wants. ${REAL_GOODS_NOTE}`,
           facts: [{ label: 'Before Tax', value: formatMoney(subtotal) }],
           choices: [
             { id: 'pay', label: 'Pay For It', aliases: ['pay', 'yes', 'buy'], tone: 'primary' },

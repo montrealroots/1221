@@ -4,6 +4,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
 import { shoppingCatalogue, wardrobeOf } from '@/engine/systems/commerce';
 import { placesIn } from '@/engine/content/places';
+import { REAL_GOODS_NOTE } from '@/engine/content/goods';
+import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
 import { retailerAt, standingAt } from '@/engine/systems/retail';
 import { activeScene } from '@/engine/systems/scenes';
 import { formatMoney } from '@/engine/core/money';
@@ -11,7 +13,10 @@ import { formatDate } from '@/engine/core/time';
 
 type Tab = 'shop' | 'owned' | 'wardrobe' | 'orders';
 
-const CATEGORIES = ['groceries', 'clothing', 'footwear', 'watch', 'jewelry', 'furniture', 'appliance', 'electronics', 'art'];
+const CATEGORIES = [
+  'groceries', 'clothing', 'footwear', 'accessory', 'watch', 'jewelry',
+  'furniture', 'home', 'household', 'appliance', 'electronics', 'equipment', 'art', 'books',
+];
 
 export function ShoppingWorkspace() {
   const { sim, run } = useGame();
@@ -38,6 +43,7 @@ export function ShoppingWorkspace() {
           One engine for all of it. Prices move with local cost of living, sales tax follows your
           jurisdiction, and what arrives becomes something you actually own.
         </p>
+        <p className="xs dim">{REAL_GOODS_NOTE} {REAL_RETAILER_NOTE}</p>
       </div>
 
       <Tabs active={tab} onChange={setTab} tabs={[
