@@ -38,7 +38,7 @@ export function HistoryWorkspace() {
         onChange={setTab}
         tabs={[
           { id: 'timeline', label: 'Timeline' },
-          { id: 'why', label: 'Why did this happen?' },
+          { id: 'why', label: 'Why Did This Happen?' },
         ]}
       />
 

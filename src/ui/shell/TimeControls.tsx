@@ -36,9 +36,9 @@ export function TimeControls() {
           className="btn btn-ghost btn-sm"
           onClick={() => setSpeed(speed === 'paused' ? 'live' : 'paused')}
           aria-pressed={speed === 'paused'}
-          title={speed === 'paused' ? 'Resume time' : 'Pause time'}
+          title={speed === 'paused' ? 'Resume Time' : 'Pause Time'}
         >
-          {speed === 'paused' ? '▶' : '❚❚'}
+          {speed === 'paused' ? 'Play' : 'Pause'}
         </button>
         <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
         <AdvanceMenu

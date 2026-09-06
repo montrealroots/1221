@@ -9,7 +9,7 @@ import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE } from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
-import { forecastFor, weatherAt, weatherIcon } from '@/engine/systems/weather';
+import { forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
@@ -53,7 +53,7 @@ export function Home() {
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
           {zoneAbbreviation(sim.now, sim.zone)} · {seasonOf(sim.now, sim.zone, city?.latitude ?? 34)}
           {weather && (
-            <> · <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
+            <> · {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
           )}
         </p>
       </div>
@@ -86,11 +86,10 @@ export function Home() {
                     navigate(dest.route, dest.label);
                   }}
                 >
-                  <span className="dest-icon" aria-hidden="true">{dest.icon}</span>
                   <span className="dest-body">
                     <span className="dest-label">
                       {dest.label}
-                      {dest.locked && <span className="dest-lock" aria-hidden="true">🔒</span>}
+                      {dest.locked && <span className="chip dest-lock" aria-hidden="true">Locked</span>}
                     </span>
                     <span className="dest-detail">{dest.detail}</span>
                   </span>
@@ -291,7 +290,6 @@ export function Home() {
           {weather && city && (
             <Panel title="Weather" tight actions={<span className="chip">{weather.climateName}</span>}>
               <div className="weather-now">
-                <span className="weather-icon" aria-hidden="true">{weather.icon}</span>
                 <div className="grow">
                   <div className="weather-temp mono">{weather.temperature}{unit}</div>
                   <div className="small muted">
@@ -309,7 +307,7 @@ export function Home() {
                   return (
                     <div key={day.dateKey} className="weather-day" title={`${titleCaseLabel(day.condition)}, ${day.low}${unit} to ${day.high}${unit}`}>
                       <div className="xs dim">{weekday.slice(0, 3)}</div>
-                      <div aria-hidden="true">{weatherIcon(day.condition)}</div>
+                      <div className="xs weather-cond">{weatherShort(day.condition)}</div>
                       <div className="xs mono">{day.high}° / {day.low}°</div>
                     </div>
                   );

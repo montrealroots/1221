@@ -100,7 +100,7 @@ export function World() {
           const unit = weather.fahrenheit ? '°F' : '°C';
           return (
             <p className="small dim" style={{ marginTop: 'var(--s1)' }}>
-              <span aria-hidden="true">{weather.icon}</span> {weather.temperature}{unit} and {weather.condition.toLowerCase()} in {city.name} right now,
+              {weather.temperature}{unit} and {weather.condition.toLowerCase()} in {city.name} right now,
               {' '}high {weather.high}{unit}, low {weather.low}{unit}. {weather.climateName} climate.
             </p>
           );

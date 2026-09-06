@@ -129,7 +129,7 @@ export function TravelWorkspace() {
                   formatDuration(d.minutes * MS_MINUTE),
                   d.fuelCents > 0 ? `fuel ${formatMoney(d.fuelCents)}` : '',
                   d.crossesZone ? 'crosses a time zone' : '',
-                  sky ? `${sky.icon} ${sky.temperature}${sky.fahrenheit ? '°F' : '°C'}` : '',
+                  sky ? `${sky.temperature}${sky.fahrenheit ? '°F' : '°C'} ${sky.short}` : '',
                 ].filter(Boolean).join(' · ');
                 return (
                   <div key={d.city.id} className="list-item">

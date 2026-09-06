@@ -51,12 +51,13 @@ export interface WeatherNow extends DayWeather {
   temperatureC: number;
   /** One line for a header. */
   summary: string;
-  icon: string;
+  /** The condition in one short word, for a column with no room for two. */
+  short: string;
 }
 
-const ICONS: Record<WeatherCondition, string> = {
-  Clear: '☀️', 'Partly Cloudy': '⛅', Overcast: '☁️', Drizzle: '🌦️', Rain: '🌧️',
-  Thunderstorm: '⛈️', Snow: '❄️', Fog: '🌫️', Windy: '💨',
+const SHORT: Record<WeatherCondition, string> = {
+  Clear: 'Clear', 'Partly Cloudy': 'Cloudy', Overcast: 'Overcast', Drizzle: 'Drizzle', Rain: 'Rain',
+  Thunderstorm: 'Storm', Snow: 'Snow', Fog: 'Fog', Windy: 'Windy',
 };
 
 /** A stable integer for a local day, so noise can be keyed on it. */
@@ -158,7 +159,7 @@ export function weatherAt(sim: Simulation, cityId: string, instant: Instant = si
     ...day,
     temperature,
     temperatureC: Math.round(temperatureC),
-    icon: ICONS[day.condition],
+    short: SHORT[day.condition],
     summary: `${temperature}${unit} ${day.condition.toLowerCase()}, high ${day.high}${unit}, low ${day.low}${unit}`,
   };
 }
@@ -172,8 +173,8 @@ export function forecastFor(sim: Simulation, cityId: string, days = 7, from: Ins
   return out;
 }
 
-export function weatherIcon(condition: WeatherCondition): string {
-  return ICONS[condition];
+export function weatherShort(condition: WeatherCondition): string {
+  return SHORT[condition];
 }
 
 /**

@@ -118,11 +118,11 @@ describe('the places', () => {
     expect(baselineTemperature(0)).toBeGreaterThan(baselineTemperature(50));
   });
 
-  it('describe a day in one line with a matching icon', () => {
+  it('describe a day in one line, with a short word for the condition', () => {
     const now = weatherAt(sim, 'us-ca-losangeles');
     expect(now).toBeTruthy();
     expect(now!.summary).toMatch(/°F/);
-    expect(now!.icon.length).toBeGreaterThan(0);
+    expect(now!.short).toMatch(/^[A-Z][a-z]+$/);
     expect(now!.temperature).toBeGreaterThanOrEqual(now!.low - 1);
     expect(now!.temperature).toBeLessThanOrEqual(now!.high + 1);
   });

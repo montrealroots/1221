@@ -59,7 +59,7 @@ export const RUN_SCENE = defineScene({
   view(sim, session) {
     const player = sim.player;
     const weather = weatherAt(sim, player.currentLocationId);
-    const sky = weather ? `${weather.icon} ${weather.temperature}${weather.fahrenheit ? '°F' : '°C'}, ${weather.condition}.` : '';
+    const sky = weather ? `${weather.temperature}${weather.fahrenheit ? '°F' : '°C'}, ${weather.condition}.` : '';
     switch (session.node) {
       case 'route': {
         const spots = placesNear(sim, { mode: 'walk', limit: 120 })

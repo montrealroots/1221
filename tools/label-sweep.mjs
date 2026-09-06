@@ -84,6 +84,8 @@ for (const file of files) {
     let outer;
     while ((outer = arrays.exec(line)) !== null) {
       const [, key, body] = outer;
+      // A list of lists is a list of ids, not labels: facilities: [['weights', 'floor'], ...].
+      if (body.trim().startsWith('[')) continue;
       for (const entry of body.matchAll(/'((?:[^'\\]|\\.){2,70})'/g)) {
         const value = entry[1];
         const bad = lowercaseWordsIn(value);
