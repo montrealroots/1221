@@ -299,7 +299,9 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Subfeature | State | Code | On screen | Tests | Gap |
 | --- | --- | --- | --- | --- | --- |
 | History left as-is | Untouched | `sim.remember`, `sim.audit` | `/workspace/history` | tests/authorship.test.ts | Only the tab label was re-cased |
-| Preferences, three save slots, one world clock, persistence guard | Implemented | `world.set_preferences`, `src/engine/index.ts`, `base44/shared/guard.js` | `/workspace/settings`, save slots | tests/persistence.test.ts, tests/server-guards.test.ts, tests/base44-adapter.test.ts | Live Base44 writes are not exercised here |
+| Preferences, three save slots, one world clock, persistence guard | Implemented | `world.set_preferences`, `src/engine/index.ts`, `base44/shared/guard.js` | `/workspace/settings`, save slots | tests/persistence.test.ts, tests/server-guards.test.ts, tests/base44-adapter.test.ts | — |
+| The Base44 server functions, executed | Implemented | `base44/functions/*/entry.js` run for real against `tests/fakes/base44-sdk.ts` | — | tests/base44-contract.test.ts (22) | Proves every guard, ordering rule and error path except the network hop and Base44's own row-level security |
+| Live Base44 persistence on a deployment | Blocked (account) | `tools/base44-smoke.mjs`, `npm run base44:deploy`, `docs/BASE44.md` | — | Runs on demand; exits 78 and says nothing was tested when credentials are absent | Needs a Base44 project. Reported as unverified until the smoke test runs green, never as passed |
 | Tutorial | Implemented | `tutorial.set_mode`, `tutorial.complete`, `tutorial.dismiss`, `tutorial.reset` | Got It cards | tests/smoke.test.ts (one todo: nothing raises a decision on a fresh save yet) | — |
 
 ## Interface and editorial

@@ -24,9 +24,16 @@ export default async function (req) {
     const [row] = await base44.entities.SlateSave.filter({ slot });
     if (!row) return Response.json(ok({ slot, cleared: false, reason: 'That slot was already empty.' }));
 
+    // Clearing has to release the slot as well as empty it. The forward
+    // progress guard compares against whatever the row still claims, so a
+    // cleared row that kept its save id, its clock and its playtime would
+    // refuse the next universe started in that slot. The backup survives.
     await base44.entities.SlateSave.update(row.id, {
       backup_payload: row.payload || row.backup_payload || '',
       payload: '',
+      save_id: '',
+      world_now: 0,
+      playtime_seconds: 0,
       deleted_at: new Date().toISOString(),
     });
 
