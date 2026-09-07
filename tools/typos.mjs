@@ -81,6 +81,8 @@ const MISSPELLINGS = {
 const REAL_DOUBLES = new Set([
   'had', 'that', 'is', 'sang', 'no', 'so', 'long', 'well',
   'tam', 'joseph', 'dan', 'winston', 'hubba', 'rules', 'cayenne', 'know',
+  // Under Armour's Armour Fleece line. The stutter is the real name, not a slip.
+  'armour',
 ]);
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

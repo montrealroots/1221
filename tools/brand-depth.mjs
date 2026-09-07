@@ -21,7 +21,9 @@ export const TARGET = 100;
 /** The brands held to it, and nothing on here is aspirational. */
 const HEADLINE = [
   'Nike', 'Jordan', 'Adidas', 'New Balance',
-  'Louis Vuitton', 'Gucci',
+  'Under Armour', 'Puma', 'Reebok', 'Asics', 'Converse', 'Vans',
+  'Louis Vuitton', 'Gucci', 'Prada', 'Dior', 'Chanel', 'Hermès',
+  'Balenciaga', 'Saint Laurent', 'Bottega Veneta',
 ];
 
 const counts = new Map();

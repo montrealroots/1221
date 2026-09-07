@@ -95,6 +95,10 @@ const REAL_NAMES = [
   'Harbour Bridge', 'Darling Harbour', 'Circular Quay', 'Pearl Harbor',
   // Product and brand names that carry one of these words.
   'Colorful Standard', 'Grey Label', 'Metre Cube',
+  // Houses and sportswear brands that print themselves this way, everywhere.
+  'Under Armour', 'Run Favourite', 'Nail Colour',
+  // Under Armour spells its own product lines the same way it spells itself.
+  'HeatGear Armour', 'ColdGear Armour', 'Armour Fleece', 'Gameday Armour',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

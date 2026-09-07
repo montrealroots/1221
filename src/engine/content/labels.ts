@@ -20,9 +20,12 @@
 import { REFERENCE_VERSION } from './reference';
 import type { RealGood } from './goods';
 
+/** What every row in a maison's catalog says about where its numbers came from. */
+export const HOUSE_NOTE = 'A real piece, named as public record. Price, quality and wear are SLATE’s own calibration.';
+
 const REAL = {
   source: 'calibrated_estimate', confidence: 'high', version: REFERENCE_VERSION,
-  note: 'A real piece, named as public record. Price, quality and wear are SLATE’s own calibration.',
+  note: HOUSE_NOTE,
 } as const;
 
 const ALL_YEAR = ['Spring', 'Summer', 'Autumn', 'Winter'];
