@@ -30,6 +30,7 @@ import {
   REAL_PLACES, type Place, type PlaceAction, type PlaceKind,
 } from '../content/places';
 import { fuelCostCents, usesMiles } from './driving';
+import { licenseCheck, licenseValid } from './documents';
 import { readiness } from './life';
 
 export type Mode = 'walk' | 'drive' | 'taxi' | 'transit' | 'cycle';
@@ -130,6 +131,9 @@ export function planJourney(sim: Simulation, to: { neighbourhoodId?: string; cit
 
 /** The car you could drive right now: yours, in this city, with fuel in it. */
 export function driveableVehicle(sim: Simulation, person: Person = sim.player): Vehicle | undefined {
+  // No license, no car to drive: the scenes that pick a mode fall back to a
+  // cab, and the wheel says why when asked directly.
+  if (!licenseValid(sim, person)) return undefined;
   return Object.values(sim.universe.vehicles).find((v) =>
     !v.soldAt && !v.deliveryDueAt && v.ownerId === person.id && roadworthy(v) && (v.locationId ?? person.currentLocationId) === person.currentLocationId);
 }
@@ -219,6 +223,8 @@ export function registerPlaces(sim: Simulation): void {
       const journey = planJourney(s, target, mode, person);
       const vehicle = mode === 'drive' ? driveableVehicle(s, person) : undefined;
       if (mode === 'drive') {
+        const license = licenseCheck(s, person);
+        if (!license.ok) throw new CommandError(license.reason ?? 'No license.');
         if (!vehicle) throw new CommandError('You have no car here. Walk, take transit, or call a cab.');
         if (fuelOf(vehicle) < journey.fuelUsed) {
           throw new CommandError(`${vehicle.year} ${vehicle.make} ${vehicle.model} has ${Math.round(fuelOf(vehicle))}% in the tank, which will not make ${journey.km} km. Fill up first.`);

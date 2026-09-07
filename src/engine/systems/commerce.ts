@@ -17,6 +17,9 @@ import { costOfLiving, salesTaxRate } from '../content/tax';
 import { defaultColour, guessMaterial } from '../content/wardrobe';
 import { preferenceOf, shows } from './wardrobe';
 
+/** Kit worth this much in one order is worth covering. */
+export const EQUIPMENT_FLOOR: Money = 2_500_00;
+
 export interface CartLine {
   catalogId: string;
   quantity: number;
@@ -119,6 +122,18 @@ export function registerCommerce(sim: Simulation): void {
       }
 
       s.emit('shop.order_placed', { orderId: order.id, retailerId: retailer.id, total, itemCount: items.length });
+      // Kit and its cover go together: a package worth insuring is offered
+      // equipment cover the day it is bought, from a company that writes it.
+      const kitValue = items.filter((i) => i.category === 'kit').reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
+      if (kitValue >= EQUIPMENT_FLOOR) {
+        s.requireDecision({
+          urgency: 42, category: 'insurance', refType: 'order', refId: order.id,
+          title: 'Cover The Kit',
+          detail: `${formatMoney(kitValue)} of production kit in one order. Equipment cover against damage and theft is what a rental house would insist on, and a specialist writes it.`,
+          route: '/workspace/insurance',
+          actions: [{ label: 'Get A Quote', commandKind: 'ins.quote', payload: { line: 'equipment', coveredRefs: [] } }],
+        });
+      }
       return { orderId: order.id, total, deliverAt: order.deliverAt };
     },
   );

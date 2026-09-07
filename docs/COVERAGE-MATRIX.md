@@ -191,8 +191,8 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Accounts, transfers, bills, loans, debt, credit, tax, month close | Implemented | `finance.open_account`, `finance.transfer`, `finance.create_bill`, `finance.pay_bill`, `finance.take_loan`, `finance.pay_debt`, `finance.bill_due`, `finance.month_close`, `finance.tax_year` | `/workspace/bank` | tests/money.test.ts, tests/integrity.test.ts | — |
 | Ledger conservation and idempotent money | Implemented | `sim.execute` idempotency keys, `src/engine/core/ledger.ts` | — | tests/integrity.test.ts, tests/endurance.test.ts | — |
 | Company draw, rate, overhead, brief | Partial | `co.found`, `co.set_draw`, `co.set_rate`, `co.change_shape`, `co.read_brief`, `co.draw`, `co.overhead` | Locked workspace | tests/shingle.test.ts | The company engine is task 38 |
-| Cards, statements, pending vs posted, scheduled payments, fees, limits, premium products | Not started | — | — | — | — |
-| International and offshore accounts with FX | Not started | — | — | — | — |
+| Cards, statements, scheduled payments, fees, limits, premium products | Implemented | See Banking below: `bank.open`, `closeCardCycle`, the real cards in `content/wealth.ts` | Bank | tests/banking.test.ts, tests/wealth.test.ts | Pending versus posted is not modelled |
+| International and offshore accounts | Implemented (home currency) | `bank.apply_private`, `bank.private_open`, `PRIVATE_BANKS` | Bank, Private Banking | tests/wealth.test.ts | The account is booked abroad and reported; it is held in the home currency, and nothing converts |
 
 ### Property
 
@@ -219,6 +219,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Real motorcycles, boats and private aircraft as owned assets: public-record makes and models, SLATE's own prices and figures, each kind with its own craft figures (top speed, length, berths, seats, range, runway) | Implemented (names) / Blocked (data) | `KIND_PROFILE`, `CraftSpec`, `kindOf`, `craftOf` in `src/engine/content/vehicles.ts`; 24 motorcycles, 20 boats, 14 aircraft | Garage cards and listing rows by kind, with the calibration note | tests/fleet.test.ts | Real per-market inventory with provenance needs a licensed feed, as for cars |
 | Looked over, taken out and talked about as what it is: kind-specific findings and repairs, a ride, a sea trial or a demonstration flight, a trade-in of the same kind only, delivery to a berth or a ferry flight, no lease on a boat | Implemented | `findingsFor`, `impressionOf`, `tradeInCandidates(kind)`, `kindFact`; `WORDS` in `src/engine/scenes/dealer.ts`; kind lines in `src/engine/dialogue/chunks/vehicles.ts` | `vehicles.dealer` | tests/fleet.test.ts | — |
 | Hours rather than miles on a boat or an aircraft; a berth or a hangar and crew billed monthly until sold; service intervals, wear and value by kind; a day on the water with fuel, weather and wellbeing | Implemented | `ensureUpkeep`, `addMileage`, `revalue`, `serviceEstimate`, `veh.cruise`, `vehicle.cruised` | Garage (Berth, Hangar And Crew, A Day On The Water), Bank bills | tests/fleet.test.ts | A boat trip is a command with effects, not a played scene |
+| The wheel wants a license: no valid license, no car to drive across town or between cities, and the scenes that pick a way to get somewhere call a cab instead; nobody quotes motor cover without one | Implemented | `licenseCheck`, `licenseValid`; `travel.drive`, `go.to`, `driveableVehicle` | The City, Travel, the license reason at the wheel | tests/papers.test.ts | A foreign license drives anywhere; the exchange is offered, not enforced |
 | Your own aircraft through private travel: flown at what it costs to run, checked against range and runway, waits for a late passenger, lands where you do and stays there | Implemented | `travel.charter_private` with `vehicleId`, `ownedAircraftOptions`, `CREW_HOLD_HOURS`; `arriveFlight` moves the aircraft and logs the hours | Travel `private` tab (Your Own Aircraft), Garage (Fly It), Home (Go To The Aircraft) | tests/fleet.test.ts | The private flight is the short day (`travel.fly`), not the played airline scene |
 | Parts made for each kind, with fitment by kind, body style and prerequisites: 20 for motorcycles, 20 for boats, 15 for aircraft, none of them a car's | Implemented | `PartFitment.kinds`, `checkFitment`, `partsFor`; range and top-speed effects through `craftOf` | `modify` tab | tests/fleet.test.ts, tests/systems.test.ts | — |
 | Where each thing is kept: a home garage with the spaces its kind, features and built structures give it (a motorcycle takes half, a trailered boat takes two), the driveway, the street, a paid unit; a marina berth by the foot where the marina has a slip that long, a dry stack, a trailer at home, a private dock; a private or shared hangar, a tie-down, or a foreign ramp | Implemented | `src/engine/systems/storage.ts`: `KeepingKind`, `keepingOptions`, `defaultKeeping`, `placeVehicle`, `applyKeeping`, `homeSpaces`, `garageSpacesOf`, `dockFeetOf`, `slipsAt`, `stor.keep` | Vehicles At Home panel, Kept At on every card, Move It, Property garage and dock | tests/keeping.test.ts | — |
@@ -302,7 +303,10 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | A card cycle: the statement closes, a minimum is due three weeks later, clearing it costs nothing, carrying costs interest on what is carried, late costs a fee and a mark | Implemented | `closeCardCycle`, `minimumFor`, `bank.pay_card`, `CARD_GRACE_DAYS` | Cards panel, the statement decision on Home | tests/banking.test.ts | — |
 | Standing orders between your own accounts on a day of the month, stopped by you or by three they cannot pay | Implemented | `bank.create_standing_order`, `bank.cancel_standing_order`, `runStandingOrders`, `STANDING_ORDER_STRIKES` | Standing Orders panel | tests/banking.test.ts | — |
 | Monthly statements that chain: one opens where the last closed, with credits, debits, charges and interest | Implemented | `closeMonth`, `writeStatement`, `statements` | Statements tab | tests/banking.test.ts | Two years kept per account, then pruned |
-| International, offshore and multi-currency with FX | Not started | — | — | — | The world carries currencies; no account holds one but the home currency, and nothing converts |
+| The real cards on the shelf beside SLATE's own: the Platinum, the Sapphire Reserve, the Venture X, the Strata Elite, the British Platinum, each with the fee its issuer publishes, billed monthly here, and issued only where it is issued | Implemented | `REAL_CARDS`, `cardProduct`, `realCardsFor` in `src/engine/content/wealth.ts`; `openingRefusal` (`NOT_ISSUED_HERE`) | Open An Account, Cards | tests/wealth.test.ts | Issuer, network and published fee are public record; the starting limit and the score wanted are SLATE's calibration |
+| The black card, and the others nobody applies for: the Centurion (both sides of the Atlantic), the J.P. Morgan Reserve, the Coutts Silk, the Dubai First Royale. Invited when the reported rule is met — a year on the Platinum at a quarter of a million, or a private-bank relationship — with the invitation as a decision, an initiation fee taken once, and no second card of the same kind | Implemented | `invitationStanding`, `trailingSpend`, `considerInvitations`, `Person.invitations`, `INVITATION_ONLY`; `bank.invited` | Private Banking (Cards That Are Not Applied For), Decision Center | tests/wealth.test.ts | How an issuer really decides is not published by anyone; the rule is SLATE's reading of what is widely reported and says so on screen |
+| Private and offshore banks: 58 real banks in their real jurisdictions, from Zürich and Geneva to Singapore, Jersey, George Town and New York, each with a minimum labelled published or reported. An application wants a valid passport and the minimum, takes the bank's weeks, moves the deposit exactly once when the account opens or declines with the reason; a retried application is one application. Offshore is relative to where you live, and an offshore account is reported under the Common Reporting Standard, with the FBAR named for an American over ten thousand | Implemented | `PRIVATE_BANKS`, `bank.apply_private`, `bank.private_open`, `privateBankOf`, `isOffshore`, `PrivateApplication`, `REPORTING_NOTE`, `FBAR_NOTE` | Bank, Private Banking | tests/wealth.test.ts | Held in the home currency; nothing converts. The reporting is a notice and a memory, not a line on the tax return yet |
+| Multi-currency with FX | Not started | — | — | — | The world carries currencies; no account holds one but the home currency, and nothing converts |
 | Pending versus posted | Not modelled | — | — | — | Every posting in the ledger is immediate; there is no float to show |
 
 ### Insurance
@@ -311,7 +315,8 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | --- | --- | --- | --- | --- | --- |
 | Quote, purchase, claim, decision, payout, renewal, lapse | Implemented | `ins.quote`, `ins.purchase`, `ins.file_claim`, `ins.renewal` | `/workspace/insurance` | tests/systems.test.ts | — |
 | Motor, marine and aviation lines: a boat is refused on a motor policy and a jet on a marine one; undisclosed work aboard denies a claim on any of them; a motorcycle and an older hull or airframe are priced harder | Implemented | `vehicleLineFor`, `buildQuote`, `INSURANCE_PRODUCTS` (marine, aviation) | Insurance quotes, the dealer's broker | tests/fleet.test.ts | Carriers are SLATE's own, as before |
-| Real providers and products | Blocked (data) | Simulated lines, labelled | — | — | No carrier data imported |
+| Real insurers, everywhere: 2,296 companies that really sell insurance, listed country by country for all 252 countries (194 named, 22 through their metropole, 32 local-only with a reason, 4 with no market and a reason), held by `tools/insurer-coverage.mjs` in the gate. A quote is written by a company that writes that line where the holder lives, or refused with the reason; the holder can pick any that does, and the same company is always the same amount dearer or cheaper. Specialists come through a broker only where nobody local writes the line: Athos and Front Row for kit, Jewelers Mutual for the jewelry, Pantaenius for the hull, Global Aerospace for the airframe. Sixty-four state health schemes named under the private cover | Implemented | `INSURERS_BY_COUNTRY`, `insurersFor`, `insurerCoverageOf`, `GLOBAL_SPECIALISTS`, `STATE_HEALTH`, `carrierFactor` in `src/engine/content/insurers.ts`; `carriersFor`, `buildQuote`, `nobodyWrites`, `healthCarriersIn` in `src/engine/systems/services.ts`; `ins.quote` with `carrier` | Insurance, Get A Quote (Who Writes It) | tests/insurers.test.ts | Which lines a company writes is SLATE's reading of its public business; every premium, deductible and limit is SLATE's calibration. A practice takes real carriers now, and an old save's policies were moved to a real company at schema 47 without losing a number, a premium or a claim |
+| Hand in hand: the house asks to be insured the day it closes, a piece worth fifteen thousand asks for a valuables rider as you collect it, kit worth twenty-five hundred in one order asks for equipment cover, and motor cover is refused to somebody without a license | Implemented | `prop.close`, `jewel.collect` (`VALUABLES_FLOOR`), `shop.purchase` (`EQUIPMENT_FLOOR`), `ins.quote` (`licenseCheck`) | Decision Center | tests/purchase.test.ts, tests/papers.test.ts | Travel cover is not yet offered inside the trip |
 
 ### Social platforms
 
@@ -330,6 +335,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | A private flight has no desk and no gate: the aircraft waits at the terminal, the crew hold three hours past the booked time, the arrival moves with a late passenger, and a charter from before is read by its airport code | Implemented | `CREW_HOLD_HOURS`, `closesAt`, the private branch of `travel.fly` and of `journey.due`; `cityOfAirport` | Home (Go To The Aircraft, Stay Home) | tests/fleet.test.ts | — |
 | Documents, packing, the run to the airport, seating, baggage, the gate, delays and cancellations, the air, the carousel, local transport, the hotel desk | Implemented | `travel.departure_due`, `travel.gate_closes`, `travel.pack`, `travel.to_airport`, `travel.check_in_flight`, `travel.board`, `travel.inflight`, `travel.claim_bags`, `travel.bag_returned`, `travel.to_hotel`, `travel.fly`, `travel.no_show`, `travel.flight` | Travel bookings, Calendar, Home | tests/journey.test.ts | Connections are a stop count on the fare, not a played change of plane |
 | Changed plans: move a flight, rebook after a miss, cancel | Implemented | `travel.change_flight`, `travel.rebook`, `travel.cancel_flight` | Travel bookings, Home | tests/journey.test.ts | — |
+| A border wants a passport: an international booking refuses, before any money moves, for every passenger whose passport is missing, expired, lost or still at the office; under six months left warns and never refuses; an emergency document from a consulate gets you home and nowhere else; the desk refuses check-in on the same rule; the trip refuses as one thing | Implemented | `passportCheck`, `passportStatus` in `src/engine/systems/documents.ts`; `travel.book_flight`, `documentsFor`, `checkIn` | Travel, Book The Trip (the passport line), the flight day | tests/papers.test.ts | Visa rules are not carried, and the six-month rule warns for every border rather than knowing which enforce it |
 | Real airlines, hotel brands and aircraft types | Implemented (names) / Blocked (data) | `AIRLINES`, `airlinesFor`, `HOTEL_BRANDS`, `PRIVATE_AIRCRAFT` in `src/engine/systems/travel.ts` | Travel, with the note beside each | tests/journey.test.ts | Names are public record; routes, schedules, fares, properties and rates are SLATE's own. Visa rules are not carried. |
 
 ### Character, professions, work
@@ -339,6 +345,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Attributes, skills, traits, professions, positions, standing; the prodigy at 100 | Implemented | `profession.unlock`, `profession.pick_trait` | `/workspace/character` | tests/prodigy.test.ts, tests/professions.test.ts, tests/personality.test.ts, tests/citizenship.test.ts | — |
 | Reading a script for a project | Partial | `work.project` | — | tests/professions.test.ts (one todo: nothing earns industry experience since the job system went) | A calculator, not a pipeline |
 | Production company, strike, business instrument | Blocked (dependency) | `co.*` foundations | Company locked | tests/shingle.test.ts | Tasks 38, 39, 40 |
+| The papers in your wallet: a passport for each citizenship from the real authority (199 countries issue their own, 52 carry a metropole's, one issues none and says why) and a driver's license from the real state, provincial or national office (72 offices named), issued at a plausible date on a new life or an old save; renewal in the last year for a fee and a wait, expedited where the office offers it; lost at home is a replacement, lost abroad is a consulate; a first license is a knowledge test today and a road test in weeks whose pass depends on how you drive, retaken until it is a pass; a license swaps without a test where the country swaps and says so where it does not; every one runs out on a date, is asked about ninety days before, and is marked expired the month it goes | Implemented | `PASSPORT_AUTHORITIES`, `LICENSE_AUTHORITIES`, `REGIONAL_LICENSE_OFFICES`, `LICENSE_EXCHANGE` in `src/engine/content/documents.ts`; `ensurePapers`, `doc.apply_passport`, `doc.report_lost`, `doc.apply_license`, `doc.renew_license`, `doc.exchange_license`, `doc.passport_ready`, `doc.road_test`, `doc.license_ready`, `doc.month` in `src/engine/systems/documents.ts`; `tools/document-coverage.mjs` in the gate | Character, Papers | tests/papers.test.ts | The authority, the validity and the tests are public record; the fee and the wait are SLATE's calibration and say so. A visa is not a document SLATE carries |
 
 ### History, settings, tutorial
 
@@ -392,7 +399,13 @@ and fan events; award bodies and their rules; networks, studios and their
 logos with licences recorded; industry people and their filmographies;
 landmarks; 25 gyms in 13 cities; eight marinas named where a city has one
 on the record; airline, hotel-brand and aircraft-type names (with every
-route, fare, property and rate SLATE's own); the makes and models of every
+route, fare, property and rate SLATE's own); the insurers that sell in
+each country (with the lines they write SLATE's reading and every premium
+SLATE's own); the passport and license authorities and their validity and
+tests (with the fees and waits SLATE's own); the real cards, their issuers,
+networks and published fees (with invitation rules labelled as reported);
+the private banks and their jurisdictions (with minimums labelled
+published or reported); the makes and models of every
 car, motorcycle, boat and private aircraft on a lot (with every
 specification, price, option and running cost SLATE's own calibration,
 said so on the screen). Slip counts and sizes, hangar and berth rates,
@@ -400,7 +413,7 @@ garage capacities and ramp fees are SLATE's own everywhere, including at a
 real marina or a real airport.
 
 **SLATE's own, labelled as such on screen:** every home on the market,
-every car on a lot, every product in a shop, every insurer, every provider
+every car on a lot, every product in a shop, every provider
 and every medication (simulated care, not medical advice), the four social
 platforms, every agent, salesperson, trainer and date, the weather (a
 climate model, not a forecast), and every line of dialogue.
@@ -412,7 +425,8 @@ climate model, not a forecast), and every line of dialogue.
 | 100 real homes per market | A licensed listings feed with provenance and as-of dates |
 | 100 real vehicles per market | A licensed dealer inventory feed |
 | 100 real products per category | Licensed product catalogues; variants not counted |
-| Real insurers and products | Blocked (data) | Simulated lines, labelled; health, dental and vision policies name a carrier a practice may or may not take | Health desk | tests/care.test.ts | No carrier data imported |
+| Real insurance rate books | Every company is real; the premium it quotes is SLATE's calibration, and a licensed rating feed would be needed for the real one |
+| An issuer's real invitation rule | Nobody outside the issuer has it; SLATE uses what is widely reported and labels it so |
 | Every relevant real gym worldwide | A licensed venue catalogue |
 | YouTube / Instagram / X / Twitch parity | A platform-by-platform checklist and the product decision to name them |
 | Visa rules by passport and destination | A maintained rules feed; the flight day says it does not check |
@@ -438,19 +452,20 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 194 commands, 69 scheduled kinds, 168 events emitted, 25 event listeners, 18 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 200 commands, 74 scheduled kinds, 176 events emitted, 25 event listeners, 18 scenes, 19 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| bank | `bank.cancel_standing_order` `bank.close` `bank.create_standing_order` `bank.open` `bank.pay_card` `bank.set_overdraft` | `src/engine/systems/banking.ts` |
+| bank | `bank.apply_private` `bank.cancel_standing_order` `bank.close` `bank.create_standing_order` `bank.open` `bank.pay_card` `bank.set_overdraft` | `src/engine/systems/banking.ts` |
 | build | `build.decide_change_order` `build.start` | `src/engine/systems/property.ts` |
 | co | `co.change_shape` `co.found` `co.read_brief` `co.set_draw` `co.set_rate` | `src/engine/systems/shingle.ts` |
 | costume | `costume.alter` `costume.approve` `costume.cancel` `costume.collect` `costume.commission` `costume.fitting` `costume.look` `costume.make` | `src/engine/systems/costume.ts` |
 | date | `date.attend` `date.beat` `date.cancel` `date.check_in` `date.close` `date.finish` `date.reschedule` `date.skip` | `src/engine/systems/dating.ts` |
 | deal | `deal.inspect` `deal.offer` `deal.open` `deal.set_terms` `deal.sign` `deal.test_drive` `deal.walk_away` | `src/engine/systems/dealership.ts` |
 | dine | `dine.arrive` `dine.leave` `dine.order` `dine.settle` `dine.wait` | `src/engine/systems/dining.ts` |
+| doc | `doc.apply_license` `doc.apply_passport` `doc.exchange_license` `doc.renew_license` `doc.report_lost` | `src/engine/systems/documents.ts` |
 | edu | `edu.drop` `edu.enroll` | `src/engine/systems/services.ts` |
 | finance | `finance.create_bill` `finance.open_account` `finance.pay_bill` `finance.pay_debt` `finance.take_loan` `finance.transfer` | `src/engine/systems/finance.ts` |
 | go | `go.to` | `src/engine/systems/places.ts` |
@@ -481,12 +496,13 @@ Generated by `node tools/inventory.mjs --markdown`. 194 commands, 69 scheduled k
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| bank | `bank.day` `bank.month` | `src/engine/systems/banking.ts` |
+| bank | `bank.day` `bank.month` `bank.private_open` | `src/engine/systems/banking.ts` |
 | build | `build.phase_tick` | `src/engine/systems/property.ts` |
 | co | `co.draw` `co.overhead` | `src/engine/systems/shingle.ts` |
 | costume | `costume.fitting_due` `costume.ready` | `src/engine/systems/costume.ts` |
 | date | `date.follow_up` `date.lapse` | `src/engine/systems/dating.ts` |
 | deal | `deal.callback` `deal.delivery` `deal.expire` | `src/engine/systems/dealership.ts` |
+| doc | `doc.license_ready` `doc.month` `doc.passport_ready` `doc.road_test` | `src/engine/systems/documents.ts` |
 | edu | `edu.session` | `src/engine/systems/services.ts` |
 | finance | `finance.bill_due` `finance.month_close` `finance.tax_year` | `src/engine/systems/finance.ts` |
 | fitness | `fitness.recovery` | `src/engine/systems/fitness.ts` |
@@ -511,13 +527,14 @@ Generated by `node tools/inventory.mjs --markdown`. 194 commands, 69 scheduled k
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| bank | `bank.card_late` `bank.card_paid` `bank.closed` `bank.matured` `bank.opened` `bank.overdraft_set` `bank.overdrawn` `bank.standing_order_created` `bank.standing_order_ran` `bank.standing_order_stopped` | `src/engine/systems/banking.ts` |
+| bank | `bank.card_late` `bank.card_paid` `bank.closed` `bank.invited` `bank.matured` `bank.opened` `bank.overdraft_set` `bank.overdrawn` `bank.private_applied` `bank.private_declined` `bank.private_opened` `bank.standing_order_created` `bank.standing_order_ran` `bank.standing_order_stopped` | `src/engine/systems/banking.ts` |
 | berth | `berth.left` `berth.passed` `berth.queued` `berth.taken` | `src/engine/systems/storage.ts` |
 | build | `build.change_order_decided` `build.change_order_raised` `build.completed` `build.phase_complete` `build.started` | `src/engine/systems/property.ts` |
 | co | `co.founded` `co.overhead_missed` `co.rate_set` `co.reshaped` | `src/engine/systems/shingle.ts` |
 | date | `date.beat` `date.cancelled` `date.closed` `date.started` `date.stood_up` `date.they_cancelled` | `src/engine/systems/dating.ts` |
 | deal | `deal.agreed` `deal.opened` `deal.signed` `deal.walked` | `src/engine/systems/dealership.ts` |
 | dine | `dine.arrived` `dine.left` `dine.ordered` `dine.seated` `dine.settled` | `src/engine/systems/dining.ts` |
+| doc | `doc.applied` `doc.issued` `doc.lost` `doc.test_failed` | `src/engine/systems/documents.ts` |
 | edu | `edu.completed` `edu.enrolled` | `src/engine/systems/services.ts` |
 | finance | `finance.account_opened` `finance.bill_missed` `finance.bill_paid` `finance.loan_taken` `finance.tax_reconciled` | `src/engine/systems/finance.ts` |
 | fitness | `fitness.workout_completed` | `src/engine/systems/fitness.ts` |

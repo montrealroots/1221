@@ -39,6 +39,9 @@ import {
 import { makeBackgroundPerson, peopleOf } from './people';
 import { factsOf, rememberFact, tallyFact, tallyOf } from './memory';
 
+/** A piece worth this much is worth scheduling on a valuables policy. */
+export const VALUABLES_FLOOR: Money = 15_000_00;
+
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
@@ -480,6 +483,15 @@ export function registerJewellery(sim: Simulation): void {
         public: false,
         amount: commission.quotedPrice,
       });
+      if (asset.currentValue >= VALUABLES_FLOOR) {
+        s.requireDecision({
+          urgency: 40, category: 'insurance', refType: 'asset', refId: asset.id,
+          title: 'Add It To Your Valuables Cover',
+          detail: `${describeSpec(commission)} is worth ${formatMoney(asset.currentValue)}. A scheduled valuables policy is how a piece like it is really insured; a house policy caps jewelry low.`,
+          route: '/workspace/insurance',
+          actions: [{ label: 'Get A Quote', commandKind: 'ins.quote', payload: { line: 'valuables', coveredRefs: [{ type: 'asset', id: asset.id }] } }],
+        });
+      }
       return { assetId: asset.id, paid: balance, description: describeSpec(commission) };
     },
   );

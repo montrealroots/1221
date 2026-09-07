@@ -26,6 +26,7 @@ import { execSync } from 'node:child_process';
 const JOINING_WORDS = new Set([
   'a', 'an', 'and', 'at', 'by', 'de', 'del', 'della', 'di', 'da', 'du', 'for', 'from', 'in',
   'la', 'le', 'of', 'on', 'or', 'the', 'to', 'van', 'von', 'with', 'bin', 'al',
+  'à',  // Banque Internationale à Luxembourg, as the bank writes it.
 ]);
 
 /**

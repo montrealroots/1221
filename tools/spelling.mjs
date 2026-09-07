@@ -101,6 +101,8 @@ const REAL_NAMES = [
   'HeatGear Armour', 'ColdGear Armour', 'Armour Fleece', 'Gameday Armour',
   // MAC, Creamsource and Sony print these product names this way worldwide.
   'Micro Colour', 'Face Colour', 'Cream Colour Base', 'Duo Fibre', 'Fibre Gel', 'Bravia Theatre',
+  // Offices and insurers that spell themselves that way.
+  'National Driver Licence Service', 'Driving Licence Testing Centre', 'Defence Health',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

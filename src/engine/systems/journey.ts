@@ -32,6 +32,7 @@ import { costOfLiving } from '../content/tax';
 import { activeScene } from './scenes';
 import { planJourney, driveableVehicle, type Mode } from './places';
 import { activePolicy } from './services';
+import { passportCheck } from './documents';
 import { arriveFlight, checkIntoHotel, createFlightBooking, departFlight, searchFlights } from './travel';
 
 // ---------------------------------------------------------------------------
@@ -107,15 +108,17 @@ export function documentsFor(sim: Simulation, booking: FlightBooking): Documents
   const to = countryOfCity(toCityOf(booking));
   const international = Boolean(from && to && from !== to);
   const me = sim.player;
-  const passport = COUNTRIES.get(me.citizenshipId)?.name ?? me.citizenshipId;
-  if (!international) return { international, passport, ok: true, note: 'A domestic flight. Photo identification and the boarding pass.' };
-  const home = me.citizenshipId === to || me.secondCitizenshipId === to;
-  return {
-    international, passport, ok: true,
-    note: home
-      ? `A border, and your own. Your ${passport} passport takes you home.`
-      : `A border. Your ${passport} passport. Whether ${COUNTRIES.get(to ?? '')?.name ?? 'the country'} wants a visa with it is real-world data SLATE does not carry, so it does not pretend to check.`,
-  };
+  if (!international) return { international, passport: COUNTRIES.get(me.citizenshipId)?.name ?? me.citizenshipId, ok: true, note: 'A domestic flight. Photo identification and the boarding pass.' };
+  // The passport in the wallet, not the citizenship on the file: an expired
+  // or lost one is a closed desk, and one with months to spare gets a warning.
+  const check = passportCheck(sim, me, to);
+  const passport = COUNTRIES.get(check.passport?.issuerId ?? me.citizenshipId)?.name ?? me.citizenshipId;
+  if (!check.ok) return { international, passport, ok: false, note: check.reason ?? 'No passport.' };
+  const home = check.passport?.issuerId === to;
+  const base = home
+    ? `A border, and your own. Your ${passport} passport takes you home.`
+    : `A border. Your ${passport} passport. Whether ${COUNTRIES.get(to ?? '')?.name ?? 'the country'} wants a visa with it is real-world data SLATE does not carry, so it does not pretend to check.`;
+  return { international, passport, ok: true, note: check.warning ? `${base} ${check.warning}` : base };
 }
 
 export function bagFee(sim: Simulation, booking: FlightBooking): Money {
@@ -259,6 +262,8 @@ function checkIn(sim: Simulation, booking: FlightBooking, seatId: string): { sea
   if (booking.status !== 'booked') throw new CommandError(`That flight is ${booking.status.replace(/_/g, ' ')}.`);
   if (!booking.bag) throw new CommandError('Pack first.');
   if (!gateOpen(sim, booking)) { missFlight(sim, booking, 'The desk had closed.'); throw new CommandError('The desk has closed; the flight has gone without you.'); }
+  const papers = documentsFor(sim, booking);
+  if (!papers.ok) throw new CommandError(`The desk will not check you in. ${papers.note}`);
   const option = seatOptions(sim, booking).find((o) => o.id === seatId);
   if (!option) throw new CommandError('That is not a seat on offer.');
   pay(sim, option.cost, 'Seat selection', booking);

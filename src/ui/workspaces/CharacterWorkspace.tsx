@@ -17,9 +17,14 @@ import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '@/engine/content/founder';
 import { founderScore } from '@/engine/systems/shingle';
 import { ageOn } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
-import { CITIES } from '@/engine/content/geography';
+import { formatDate, MS_DAY } from '@/engine/core/time';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
+import { DOCUMENT_NOTE, licenseAuthorityFor, passportAuthorityFor } from '@/engine/content/documents';
+import { SIX_MONTH_NOTE, exchangeOffer, regionOfCity, residenceCityOf, statusOf } from '@/engine/systems/documents';
+import type { IdentityDocument } from '@/engine/domain/model';
+import { countryOfCity } from '@/engine/content/geography';
 
-type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing';
+type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing' | 'papers';
 
 const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((k) => [k.id, k.name]));
 
@@ -85,8 +90,11 @@ export function CharacterWorkspace() {
           { id: 'skills', label: 'Skills' },
           { id: 'traits', label: 'Traits', badge: player.traits.length },
           { id: 'standing', label: 'Standing' },
+          { id: 'papers', label: 'Papers' },
         ]}
       />
+
+      {tab === 'papers' && <PapersTab />}
 
       {tab === 'positions' && (
         <div className="col gap-4">
@@ -440,5 +448,111 @@ export function CharacterWorkspace() {
         </div>
       )}
     </>
+  );
+}
+
+/** A document on screen: who issued it, its number, its dates and what it is right now. */
+function DocumentLine({ doc, none }: { doc: IdentityDocument | undefined; none: string }) {
+  const { sim } = useGame();
+  if (!doc) return <div className="xs dim">{none}</div>;
+  const state = statusOf(sim, doc);
+  const chip = state === 'valid' ? 'chip-positive' : state === 'applied' ? '' : 'chip-negative';
+  const stateLabel = state === 'valid' ? (doc.emergency ? 'Emergency Document' : 'Valid') : state === 'applied' ? (doc.roadTestAt ? 'Learner' : 'At The Office') : state === 'expired' ? 'Expired' : 'Lost';
+  const days = Math.floor((doc.expiresAt - sim.now) / MS_DAY);
+  return (
+    <div className="list-item list-static">
+      <div className="grow">
+        <div className="small strong">{doc.authority}{doc.regionId ? ` · ${COUNTRIES.get(doc.issuerId)?.name ?? doc.issuerId}` : ` · ${COUNTRIES.get(doc.issuerId)?.name ?? doc.issuerId}`}</div>
+        <div className="xs dim">
+          {state === 'applied'
+            ? doc.roadTestAt ? `Road test ${formatDate(doc.roadTestAt, sim.homeZone)}` : `Due ${formatDate(doc.readyAt ?? sim.now, sim.homeZone)}`
+            : `${doc.number} · issued ${formatDate(doc.issuedAt, sim.homeZone)} · ${state === 'valid' ? `runs out ${formatDate(doc.expiresAt, sim.homeZone)} (${days} days)` : `ran out ${formatDate(doc.expiresAt, sim.homeZone)}`}`}
+        </div>
+      </div>
+      <span className={`chip ${chip}`}>{stateLabel}</span>
+    </div>
+  );
+}
+
+function PapersTab() {
+  const { sim, run } = useGame();
+  const player = useWorld((s) => s.player);
+  const papers = player.documents ?? {};
+  const passportAuthority = passportAuthorityFor(player.citizenshipId);
+  const secondAuthority = player.secondCitizenshipId ? passportAuthorityFor(player.secondCitizenshipId) : undefined;
+  const homeCity = residenceCityOf(sim, player);
+  const licenseAuthority = licenseAuthorityFor(countryOfCity(homeCity) ?? player.citizenshipId, regionOfCity(homeCity));
+  const exchange = exchangeOffer(sim, player);
+  const passportState = statusOf(sim, papers.passport);
+  const licenseState = statusOf(sim, papers.license);
+  const renewable = (doc: IdentityDocument | undefined) => doc ? doc.status !== 'applied' && (statusOf(sim, doc) !== 'valid' || doc.expiresAt - sim.now < 365 * MS_DAY || Boolean(doc.emergency)) : true;
+  return (
+    <div className="col gap-4">
+      <Panel
+        title="Passport"
+        subtitle={passportAuthority ? `${passportAuthority.authority.authority} issues a ${COUNTRIES.get(passportAuthority.issuerId)?.name ?? ''} passport for ${passportAuthority.authority.validityYears} years, ${formatMoney(passportAuthority.authority.fee)}, about ${passportAuthority.authority.weeks} weeks${passportAuthority.authority.expedite ? `, or ${passportAuthority.authority.expedite.weeks} for ${formatMoney(passportAuthority.authority.expedite.fee)} more` : ''}.` : 'Nobody issues you one.'}
+        flush
+        actions={
+          <>
+            {renewable(papers.passport) && passportAuthority && (
+              <button className="btn btn-sm btn-primary" onClick={() => run('doc.apply_passport', { which: 'passport' })}>
+                {passportState === 'none' || passportState === 'lost' || passportState === 'expired' ? 'Apply For A Passport' : 'Renew It'}
+              </button>
+            )}
+            {renewable(papers.passport) && passportAuthority?.authority.expedite && (
+              <button className="btn btn-sm" onClick={() => run('doc.apply_passport', { which: 'passport', expedite: true })}>Expedite</button>
+            )}
+            {papers.passport && passportState !== 'lost' && passportState !== 'applied' && (
+              <button className="btn btn-sm" onClick={() => run('doc.report_lost', { kind: 'passport' })}>Report It Lost</button>
+            )}
+          </>
+        }
+      >
+        <div className="list">
+          <DocumentLine doc={papers.passport} none="You hold no passport." />
+          {player.secondCitizenshipId && (
+            <>
+              <DocumentLine doc={papers.secondPassport} none={`No ${COUNTRIES.get(player.secondCitizenshipId)?.name ?? ''} passport yet.`} />
+              {renewable(papers.secondPassport) && secondAuthority && (
+                <div className="list-item list-static">
+                  <div className="grow xs dim">{secondAuthority.authority.authority}: {formatMoney(secondAuthority.authority.fee)}, {secondAuthority.authority.weeks} weeks.</div>
+                  <button className="btn btn-sm" onClick={() => run('doc.apply_passport', { which: 'secondPassport' })}>Apply For The Second Passport</button>
+                </div>
+              )}
+            </>
+          )}
+          <div className="list-item list-static"><div className="xs dim">{SIX_MONTH_NOTE}</div></div>
+        </div>
+      </Panel>
+
+      <Panel
+        title="Driver’s License"
+        subtitle={licenseAuthority ? `${licenseAuthority.office} licenses drivers from ${licenseAuthority.authority.minAge}: ${licenseAuthority.authority.tests.map((t) => t === 'knowledge' ? 'a knowledge test' : t === 'road' ? 'a road test' : t === 'hazard' ? 'a hazard test' : 'an eye test').join(', ')}, ${formatMoney(licenseAuthority.authority.fee)}, good for ${licenseAuthority.authority.validityYears} years.` : 'Nobody where you live issues one SLATE knows of.'}
+        flush
+        actions={
+          <>
+            {(licenseState === 'none' || (licenseState === 'expired' && !papers.license)) && licenseAuthority && (
+              <button className="btn btn-sm btn-primary" onClick={() => run('doc.apply_license', {})}>Apply For A License</button>
+            )}
+            {papers.license && licenseState !== 'applied' && renewable(papers.license) && (
+              <button className="btn btn-sm btn-primary" onClick={() => run('doc.renew_license', {})}>{licenseState === 'valid' ? 'Renew It' : 'Replace It'}</button>
+            )}
+            {papers.license && licenseState !== 'lost' && licenseState !== 'applied' && (
+              <button className="btn btn-sm" onClick={() => run('doc.report_lost', { kind: 'license' })}>Report It Lost</button>
+            )}
+            {exchange?.exchangeable && (
+              <button className="btn btn-sm" onClick={() => run('doc.exchange_license', {})}>Exchange It Here</button>
+            )}
+          </>
+        }
+      >
+        <div className="list">
+          <DocumentLine doc={papers.license} none="You hold no driver’s license. Nothing with a wheel moves for you until you do; the scenes call a cab." />
+          {exchange && <div className="list-item list-static"><div className="xs dim">{exchange.note}</div></div>}
+        </div>
+      </Panel>
+
+      <p className="xs dim">{DOCUMENT_NOTE}</p>
+    </div>
   );
 }

@@ -177,12 +177,16 @@ function liveALife(): Lived {
     if (!relationshipId) return undefined;
     // A proposal can be turned down, and being turned down is not the world
     // refusing to let you marry. You put the work in and you ask again.
+    let refused: string | undefined;
     for (let attempt = 0; attempt < 4; attempt++) {
       spendTimeTogether(relationshipId, 40, ['chat', 'catch_up', 'celebrate', 'support', 'deep_talk']);
       const proposal = sim.execute<{ accepted: boolean }>({ kind: 'rel.propose', payload: { relationshipId } });
       if (proposal.ok && proposal.value?.accepted) return proposal.value;
+      if (!proposal.ok) refused = proposal.error;
       sim.advanceTo(sim.now + 60 * MS_DAY);
     }
+    // Turned down four times is the world's answer; refused is a defect, and the reason is the message.
+    if (refused) throw new Error(refused);
     return undefined;
   });
 

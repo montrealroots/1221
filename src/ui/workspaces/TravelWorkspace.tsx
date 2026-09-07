@@ -11,6 +11,7 @@ import { searchFlights, privateAircraftOptions, ownedAircraftOptions, estimateFl
 import { AIRBNB_UNAVAILABLE } from '@/engine/content/hotels';
 import { roadworthy } from '@/engine/systems/vehicles';
 import { flyable } from '@/engine/systems/journey';
+import { passportStatus } from '@/engine/systems/documents';
 import { activeScene } from '@/engine/systems/scenes';
 import { CITIES, cityDistanceKm, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
@@ -43,6 +44,14 @@ export function TravelWorkspace() {
   const chosenFlight = flights.find((f) => f.flightNumber === (flightPick ?? flights[0]?.flightNumber));
   // Stays are priced from the night you actually arrive, which is the flight's arrival.
   const checkInAt = chosenFlight?.arriveAt ?? departAt;
+  // The border, before the money: the passport in the wallet against the
+  // country at the far end. Domestic needs nothing but the boarding pass.
+  const border = useWorld((s) => {
+    const to = CITIES.get(destination)?.countryId;
+    const from = CITIES.get(s.player.currentLocationId)?.countryId;
+    if (!to || !from || to === from) return undefined;
+    return passportStatus(s, s.player, to);
+  });
   const stayChoices = useMemo(() => (there ? stayOptions(sim, destination, checkInAt, nights) : []), [sim, there, destination, checkInAt, nights]);
   const stayCover = there ? stayCoverageOf(there.countryId) : { kind: 'unaccounted' as const };
   const chosenStay = stayChoices.find((st) => stayKey(st) === stayPick);
@@ -308,6 +317,19 @@ export function TravelWorkspace() {
 
           <Panel title="Book The Trip" subtitle="The flight there, the place to stay, and the flight back, as one booking. If any part fails nothing is charged." flush>
             <div className="list">
+              {border && (
+                <div className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{border.ok ? 'Passport' : 'No Passport For This Border'}</div>
+                    <div className={`xs ${border.ok ? 'dim' : 'negative'}`}>
+                      {border.ok
+                        ? `${border.passport?.authority ?? 'Your passport'} · ${border.daysLeft ?? 0} days left.${border.warning ? ` ${border.warning}` : ''}`
+                        : border.reason}
+                    </div>
+                  </div>
+                  <span className={`chip ${border.ok ? (border.warning ? '' : 'chip-positive') : 'chip-negative'}`}>{border.ok ? (border.warning ? 'Under Six Months' : 'In Order') : 'Refused'}</span>
+                </div>
+              )}
               <div className="list-item list-static">
                 <div className="grow">
                   <div className="small strong">
@@ -325,7 +347,7 @@ export function TravelWorkspace() {
                 </label>
                 <button
                   className="btn btn-sm btn-primary"
-                  disabled={!chosenFlight}
+                  disabled={!chosenFlight || (border ? !border.ok : false)}
                   onClick={() => chosenFlight && run('travel.book_trip', {
                     toCityId: destination, departAt: chosenFlight.departAt, cabin, airlineCode: chosenFlight.airlineCode, nights,
                     returnAt: returning ? addDays(chosenFlight.arriveAt, nights, sim.zone) : undefined,

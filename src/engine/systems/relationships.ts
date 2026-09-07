@@ -330,7 +330,9 @@ export function registerRelationships(sim: Simulation): void {
       const ringQuality = ring ? clamp(remap(ring.currentValue, 0, 80_000_00, 0, 1), 0, 1) : 0;
 
       const monthsTogether = (s.now - rel.since) / (30.44 * MS_DAY);
-      const rng = s.rng('propose', rel.id);
+      // A new roll each time you ask: the same person, asked again a year on,
+      // is not bound to the answer they gave the first time.
+      const rng = s.rng('propose', rel.id, s.counter(`propose:${rel.id}`));
       const { factors, score } = buildFactors([
         { label: 'How Strong The Relationship Is', detail: `Overall strength is ${Math.round(relationshipStrength(rel, s.now))} out of 100.`, weight: 0.38, value: relationshipStrength(rel, s.now) / 100 },
         { label: 'How Long You Have Been Together', detail: `${monthsTogether.toFixed(1)} months.`, weight: 0.24, value: clamp(monthsTogether / 24, 0, 1) },

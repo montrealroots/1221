@@ -11,6 +11,7 @@
  */
 
 import { beforeAll, describe, expect, it } from 'vitest';
+import { insurerByName } from '@/engine/content/insurers';
 import { loadAllSections } from '@/engine/dialogue';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
@@ -141,7 +142,9 @@ describe('the visit, played', () => {
     const covered = aLife('care-insured', 200_000_00);
     insured(covered);
     const policy = activePolicy(covered, covered.player.id, 'health')!;
-    expect(policy.carrier).toBe('Northbank Health');
+    // A real company that writes health cover where they live, never SLATE's own.
+    expect(insurerByName(policy.carrier)?.lines).toContain('health');
+    expect(policy.carrier).not.toMatch(/Northbank|Meridian|Vantage/);
     const who = ensureProviders(covered, covered.player.currentLocationId).find((p) => p.specialty !== 'dentist' && p.specialty !== 'optometrist' && inNetwork(p, policyFor(covered, p)));
     const outside = ensureProviders(covered, covered.player.currentLocationId).find((p) => p.specialty !== 'dentist' && p.specialty !== 'optometrist' && !inNetwork(p, policyFor(covered, p)));
     if (who) {

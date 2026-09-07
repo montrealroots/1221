@@ -692,6 +692,17 @@ export function registerPurchase(sim: Simulation): void {
         if (here) rememberFact(s, closer.id, { kind: 'meeting', aboutId: s.player.id, text: `Closed ${property.addressLine} for ${s.player.firstName}.`, weight: 30, sourceKind: 'closing', refType: 'offer', refId: offer.id, expiresAt: addDays(s.now, 365, s.homeZone) });
         const who = agentOfOffer(s, offer);
         if (who) rememberFact(s, who.person.id, { kind: 'event', aboutId: s.player.id, text: `Sold ${s.player.firstName} ${property.addressLine} for ${formatMoney(offer.amount)}.`, weight: 45, sourceKind: 'closing', refType: 'property', refId: property.id, expiresAt: addDays(s.now, 730, s.homeZone) });
+        // The house and its cover go together: a lender requires it and an
+        // owner regrets its absence, so the question is asked the same day.
+        if (property.ownerId === s.player.id && !property.insurancePolicyId) {
+          s.requireDecision({
+            urgency: 58, category: 'insurance', refType: 'property', refId: property.id,
+            title: `Insure ${property.addressLine}`,
+            detail: `It is yours as of today and nothing covers it. A real insurer where you live writes homeowners cover; the quote is a click away.`,
+            route: '/workspace/insurance',
+            actions: [{ label: 'Get A Quote', commandKind: 'ins.quote', payload: { line: 'homeowners', coveredRefs: [{ type: 'property', id: property.id }] } }],
+          });
+        }
         if (s.player.residenceId !== property.id) {
           s.schedule({
             at: addDays(s.now, MOVING_DAY_DAYS, s.homeZone), kind: 'prop.moving_day', label: `Moving Day — ${property.addressLine}`, category: 'property',

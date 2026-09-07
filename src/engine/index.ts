@@ -50,6 +50,9 @@ import { CATALOG } from './content/catalog';
 import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
 import { registerJewellery } from './systems/jewellery';
 import { registerCostume } from './systems/costume';
+import { registerDocuments } from './systems/documents';
+import { insurersFor } from './content/insurers';
+import { countryOfCity } from './content/geography';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -102,6 +105,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerWardrobe(sim);
   registerJewellery(sim);
   registerCostume(sim);
+  registerDocuments(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -970,6 +974,38 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 47) {
+    // Schema 47: papers in the wallet, real insurers, private banks.
+    //
+    // The player's passport and license are issued the first time the
+    // systems register, from the real authority for where they are from, so
+    // nothing is written here for them. Policies written by SLATE's own
+    // insurers, which no longer exist, are moved to a real company that
+    // writes that line where the holder lives; the policy keeps its number,
+    // its premium and its claims. A practice that took the old carriers now
+    // takes the real ones in its city.
+    universe.privateApplications ??= {};
+    const OLD_CARRIERS = new Set(['Northbank Health', 'Northbank Insurance', 'Northbank Marine', 'Gable Underwriting', 'Gable Aviation', 'Meridian Health', 'Vantage Care']);
+    let moved = 0;
+    for (const policy of Object.values(universe.insurancePolicies ?? {})) {
+      if (!OLD_CARRIERS.has(policy.carrier)) continue;
+      const holder = universe.people[policy.holderId];
+      const homeCity = holder ? (holder.residenceId ? universe.properties[holder.residenceId]?.locationId : undefined) ?? holder.homeRegionId : undefined;
+      const countryId = countryOfCity(homeCity) ?? holder?.citizenshipId ?? 'us';
+      const real = insurersFor(countryId, policy.line)[0];
+      if (real) { policy.carrier = real.name; moved += 1; }
+    }
+    let practices = 0;
+    for (const provider of Object.values(universe.healthProviders ?? {})) {
+      if (!provider.acceptsInsurance.some((name) => OLD_CARRIERS.has(name))) continue;
+      const countryId = countryOfCity(provider.locationId) ?? 'us';
+      const names = [...insurersFor(countryId, 'health'), ...insurersFor(countryId, 'dental'), ...insurersFor(countryId, 'vision')].filter((o) => o.how !== 'broker').map((o) => o.name);
+      provider.acceptsInsurance = names.length > 0 ? [...new Set(names)] : provider.acceptsInsurance;
+      practices += 1;
+    }
+    steps.push(`Real insurers: ${moved} policies moved from SLATE’s own carriers to a company that writes that line where you live, ${practices} practices now take them. Passports, licenses and private banks ready.`);
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

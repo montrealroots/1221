@@ -126,6 +126,36 @@ export interface Representation {
   signedAt?: Instant;
 }
 
+export type DocumentKind = 'passport' | 'license';
+
+/** A passport or a driver's license, as the authority issued it. */
+export interface IdentityDocument {
+  kind: DocumentKind;
+  /** The country whose authority issued it. */
+  issuerId: string;
+  /** The office, as it names itself: HM Passport Office, California DMV. */
+  authority: string;
+  number: string;
+  issuedAt: Instant;
+  expiresAt: Instant;
+  /** `applied` is a renewal or a first application still at the office; a learner between the tests is `applied` too. */
+  status: 'valid' | 'expired' | 'lost' | 'applied';
+  /** A license: the state or province whose office issued it. */
+  regionId?: string;
+  /** An emergency travel document from a consulate: good for the journey home and nothing else. */
+  emergency?: boolean;
+  appliedAt?: Instant;
+  readyAt?: Instant;
+  /** A learner who passed the knowledge test: when the road test is booked. */
+  roadTestAt?: Instant;
+}
+
+export interface IdentityPapers {
+  passport?: IdentityDocument;
+  secondPassport?: IdentityDocument;
+  license?: IdentityDocument;
+}
+
 export interface Person {
   id: Id;
   saveId: Id;
@@ -165,6 +195,18 @@ export interface Person {
    * people, and never the same as the first.
    */
   secondCitizenshipId?: string;
+  /**
+   * The papers in their wallet: a passport for each citizenship, and a
+   * driver's license. Issued by the real authority for where they are from
+   * (content/documents). Absent on a person nothing has asked about yet;
+   * `ensurePapers` issues them the first time it matters.
+   */
+  documents?: IdentityPapers;
+  /**
+   * Cards that cannot be applied for, offered. Product id to the instant of
+   * the invitation. The Centurion is the reason this exists.
+   */
+  invitations?: Record<string, Instant>;
   /** Reference city id where they currently are. */
   currentLocationId: string;
   /**
@@ -770,6 +812,25 @@ export interface BerthWaitlist {
  * in and out, what they charged, and what it closed at. Written when the
  * statement cycles, and never edited after.
  */
+/**
+ * An application to a private bank. The account does not exist until the
+ * bank's checks are done, weeks later; the deposit moves then, once, or the
+ * application is declined with a reason.
+ */
+export interface PrivateApplication {
+  id: Id;
+  saveId: Id;
+  bankId: string;
+  applicantId: Id;
+  deposit: Money;
+  fromAccountId: Id;
+  appliedAt: Instant;
+  readyAt: Instant;
+  status: 'pending' | 'opened' | 'declined';
+  accountId?: Id;
+  reason?: string;
+}
+
 export interface AccountStatement {
   id: Id;
   saveId: Id;
@@ -2167,7 +2228,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 46;
+export const SAVE_SCHEMA_VERSION = 47;
 
 export interface SaveMeta {
   id: Id;
@@ -2239,6 +2300,8 @@ export interface SaveUniverse {
   berthWaitlists?: Record<Id, BerthWaitlist>;
   /** Monthly statements, oldest pruned. Absent on a save from before statements. */
   accountStatements?: Record<Id, AccountStatement>;
+  /** Applications to private banks, pending and decided. */
+  privateApplications?: Record<Id, PrivateApplication>;
   /** Transfers the bank makes for you. Absent on a save from before standing orders. */
   standingOrders?: Record<Id, StandingOrder>;
   /** Sittings at a table or a counter. Absent on a save from before rooms had staff. */

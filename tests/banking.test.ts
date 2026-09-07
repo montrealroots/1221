@@ -53,7 +53,9 @@ describe('the products', () => {
   it('are all coherent, and every one says who sells it', () => {
     expect(BANK_PRODUCTS.length).toBeGreaterThanOrEqual(11);
     for (const product of BANK_PRODUCTS) {
-      expect(productLabel(product)).toMatch(/^(Northbank|Meridian Private) /);
+      // SLATE's own two banks, or a real issuer named as itself.
+      if (!product.real) expect(productLabel(product)).toMatch(/^(Northbank|Meridian Private) /);
+      else expect(product.annualFee).toBeDefined();
       expect(product.about.length).toBeGreaterThan(20);
       expect(product.perks.length).toBeGreaterThan(0);
       if (product.family === 'card') {

@@ -23,6 +23,9 @@ import { KIND_PROFILE, type VehicleKind } from '../content/vehicles';
 import { vehicleKind } from './vehicles';
 import { generatePersonName } from '../content/names';
 import { modifierFor } from '../domain/attributes';
+import { COUNTRIES, countryOfCity } from '../content/geography';
+import { BROKER_NOTE, STATE_HEALTH, carrierFactor, insurerCoverageOf, insurersFor, type InsurerOffer } from '../content/insurers';
+import { licenseCheck, residenceCountryOf } from './documents';
 
 // ---------------------------------------------------------------------------
 // Healthcare
@@ -40,6 +43,13 @@ export const SPECIALTIES: { key: HealthProvider['specialty']; label: string; bas
   { key: 'counseling', label: 'Counselling', baseCost: 240_00, minutes: 55, leadDays: [5, 30], conditionGain: 3, description: 'Talking to someone about the pressure. Moves stress more than anything else does.' },
 ];
 
+/** The real companies a practice in this country could be in network with: health, dental and vision, its own market only. */
+export function healthCarriersIn(countryId: string): string[] {
+  const names = [...insurersFor(countryId, 'health'), ...insurersFor(countryId, 'dental'), ...insurersFor(countryId, 'vision')]
+    .filter((o) => o.how !== 'broker').map((o) => o.name);
+  return [...new Set(names)];
+}
+
 export function ensureProviders(sim: Simulation, cityId: string): HealthProvider[] {
   const existing = Object.values(sim.universe.healthProviders).filter((p) => p.locationId === cityId);
   if (existing.length >= SPECIALTIES.length) return existing;
@@ -47,6 +57,7 @@ export function ensureProviders(sim: Simulation, cityId: string): HealthProvider
   const rng = sim.rng('providers', cityId);
   const col = costOfLiving(cityId);
   const created: HealthProvider[] = [];
+  const carriers = healthCarriersIn(countryOfCity(cityId) ?? 'us');
 
   for (const spec of SPECIALTIES) {
     if (existing.some((p) => p.specialty === spec.key)) continue;
@@ -60,8 +71,9 @@ export function ensureProviders(sim: Simulation, cityId: string): HealthProvider
         : `Dr. ${name.first} ${name.last}`,
       specialty: spec.key,
       locationId: cityId,
-      // Most practices take the carrier the game sells; a few do not, and say so at the desk.
-      acceptsInsurance: rng.chance(0.75) ? ['Northbank Health', rng.pick(['Meridian Health', 'Vantage Care'])] : ['Meridian Health', 'Vantage Care'],
+      // Most practices take every carrier that writes health cover in the
+      // country; some take half of them, and say so at the desk.
+      acceptsInsurance: rng.chance(0.75) ? carriers : carriers.filter((_, i) => i % 2 === 0),
       baseVisitCost: Math.round(spec.baseCost * col * remap(quality, 40, 100, 0.85, 1.35)),
       quality,
       leadTimeDays: rng.int(spec.leadDays[0], spec.leadDays[1]),
@@ -282,10 +294,15 @@ export function registerServices(sim: Simulation): void {
 
   // --- Insurance -----------------------------------------------------------
 
-  sim.onCommand<{ line: InsuranceLine; coveredRefs?: { type: string; id: Id }[]; holderId?: Id }, { premium: Money; deductible: Money; coverageLimit: Money; quoteId: Id }>(
+  sim.onCommand<{ line: InsuranceLine; coveredRefs?: { type: string; id: Id }[]; holderId?: Id; carrier?: string }, { premium: Money; deductible: Money; coverageLimit: Money; quoteId: Id; carrier: string }>(
     'ins.quote',
     (p, { sim: s }) => {
       const holderId = p.holderId ?? s.player.id;
+      // Motor cover is written for a driver: no license, no quote.
+      if (p.line === 'auto' && holderId === s.player.id) {
+        const license = licenseCheck(s, s.player);
+        if (!license.ok) throw new CommandError(`Nobody writes motor cover for someone without a license. ${license.reason ?? ''}`.trim());
+      }
       // A boat is not covered by a motor policy, nor a jet by a marine one:
       // the line has to be the kind's own, or the quote is refused here
       // rather than at the claim.
@@ -298,7 +315,7 @@ export function registerServices(sim: Simulation): void {
           if (p.line !== wanted) throw new CommandError(`A ${KIND_PROFILE[vehicleKind(vehicle)].label.toLowerCase()} is covered by ${wanted} insurance, not ${p.line}.`);
         }
       }
-      const quote = buildQuote(s, holderId, p.line, p.coveredRefs ?? []);
+      const quote = buildQuote(s, holderId, p.line, p.coveredRefs ?? [], p.carrier);
       const policy: InsurancePolicy = {
         id: s.nextId('policy'),
         saveId: s.universe.meta.id,
@@ -319,7 +336,7 @@ export function registerServices(sim: Simulation): void {
         quotedAt: s.now,
       };
       s.universe.insurancePolicies[policy.id] = policy;
-      return { premium: quote.premium, deductible: quote.deductible, coverageLimit: quote.coverageLimit, quoteId: policy.id };
+      return { premium: quote.premium, deductible: quote.deductible, coverageLimit: quote.coverageLimit, quoteId: policy.id, carrier: quote.carrier };
     },
   );
 
@@ -355,7 +372,7 @@ export function registerServices(sim: Simulation): void {
       // Link the policy to what it covers.
       for (const ref of policy.coveredRefs) {
         if (ref.type === 'vehicle') { const v = s.universe.vehicles[ref.id]; if (v) v.insurancePolicyId = policy.id; }
-        if (ref.type === 'property') { const pr = s.universe.properties[ref.id]; if (pr) pr.insurancePolicyId = policy.id; }
+        if (ref.type === 'property') { const pr = s.universe.properties[ref.id]; if (pr) { pr.insurancePolicyId = policy.id; s.resolveDecision('property', pr.id, 'insurance'); } }
         if (ref.type === 'asset') { const a = s.universe.assets[ref.id]; if (a) { a.insurancePolicyId = policy.id; s.resolveDecision('asset', a.id, 'insurance'); } }
       }
 
@@ -535,11 +552,33 @@ export function splitCost(cost: Money, policy: InsurancePolicy | undefined): { c
   return { covered, outOfPocket: cost - covered };
 }
 
+/** Who would write this line for the holder, where they live. Empty when nobody does. */
+export function carriersFor(sim: Simulation, holderId: Id, line: InsuranceLine): { countryId: string; offers: InsurerOffer[]; stateScheme?: string } {
+  const person = sim.universe.people[holderId] ?? sim.player;
+  const countryId = residenceCountryOf(sim, person);
+  return { countryId, offers: insurersFor(countryId, line), stateScheme: line === 'health' ? STATE_HEALTH[countryId] : undefined };
+}
+
+/** Why nobody writes a line somewhere, in a person's words. */
+export function nobodyWrites(countryId: string, line: InsuranceLine): string {
+  const cover = insurerCoverageOf(countryId);
+  const where = COUNTRIES.get(countryId)?.name ?? countryId;
+  if (cover.kind === 'none' || cover.kind === 'local_only') return `Nobody SLATE can name writes ${line} cover in ${where}. ${cover.reason}`;
+  return `Nobody writes ${line} cover in ${where}, and no specialist places it there through a broker.`;
+}
+
 export function buildQuote(
-  sim: Simulation, holderId: Id, line: InsuranceLine, coveredRefs: { type: string; id: Id }[],
-): { premium: Money; deductible: Money; coverageLimit: Money; coinsurance: number; carrier: string } {
+  sim: Simulation, holderId: Id, line: InsuranceLine, coveredRefs: { type: string; id: Id }[], carrier?: string,
+): { premium: Money; deductible: Money; coverageLimit: Money; coinsurance: number; carrier: string; how: InsurerOffer['how']; note?: string } {
   const product = INSURANCE_PRODUCTS.find((p) => p.line === line);
   if (!product) throw new CommandError(`No insurance product for ${line}.`);
+
+  // A real company that writes this line where the holder lives, or the
+  // one they asked for if it does. Nobody at all is a refusal with a reason.
+  const { countryId, offers } = carriersFor(sim, holderId, line);
+  if (offers.length === 0) throw new CommandError(nobodyWrites(countryId, line));
+  const chosen = carrier ? offers.find((o) => o.name === carrier) : offers[0]!;
+  if (!chosen) throw new CommandError(`${carrier} does not write ${line} cover where you live.`);
 
   const person = sim.universe.people[holderId];
   const cityId = person?.currentLocationId ?? 'us-ca-losangeles';
@@ -590,12 +629,18 @@ export function buildQuote(
   ).length;
   premium = applyRate(premium, 1 + priorClaims * 0.09);
 
+  // The same company is always the same amount dearer or cheaper, so the
+  // choice between two real names is a choice.
+  premium = applyRate(premium, carrierFactor(chosen.name));
+
   return {
     premium: Math.max(8_00, premium),
     deductible: product.deductible,
     coverageLimit: product.coverageLimit > 0 ? product.coverageLimit : Math.round(insuredValue * 1.1),
     coinsurance: product.coinsurance,
-    carrier: line === 'production' || line === 'equipment' ? 'Gable Underwriting' : line === 'health' || line === 'dental' || line === 'vision' ? 'Northbank Health' : line === 'marine' ? 'Northbank Marine' : line === 'aviation' ? 'Gable Aviation' : 'Northbank Insurance',
+    carrier: chosen.name,
+    how: chosen.how,
+    note: chosen.how === 'broker' ? BROKER_NOTE : undefined,
   };
 }
 
@@ -700,7 +745,16 @@ function renewPolicy(sim: Simulation, policyId: Id): void {
   const policy = sim.universe.insurancePolicies[policyId];
   if (!policy || policy.status !== 'active') return;
 
-  const quote = buildQuote(sim, policy.holderId, policy.line, policy.coveredRefs);
+  // Renewed with the same company where it still writes the line; moved to
+  // one that does, and said so, where it no longer does.
+  let quote: ReturnType<typeof buildQuote>;
+  try {
+    quote = buildQuote(sim, policy.holderId, policy.line, policy.coveredRefs, policy.carrier);
+  } catch {
+    quote = buildQuote(sim, policy.holderId, policy.line, policy.coveredRefs);
+    sim.notify({ category: 'finance', title: `${policy.carrier} No Longer Writes Your ${titleCaseLabel(policy.line)} Cover`, body: `Moved to ${quote.carrier}, which does, at renewal.`, importance: 45, route: '/workspace/insurance' });
+    policy.carrier = quote.carrier;
+  }
   const oldPremium = policy.monthlyPremium;
   policy.monthlyPremium = quote.premium;
   policy.endsAt = addYears(sim.now, 1, sim.homeZone);

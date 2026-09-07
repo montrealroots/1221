@@ -69,8 +69,8 @@ function choose(sim: Simulation, choiceId: string) {
   return must<{ status: string }>(sim, 'scene.choose', { sceneId: scene.id, revision: scene.revision, choiceId });
 }
 
-function decisionFor(sim: Simulation, refType: string, refId: string) {
-  return Object.values(sim.universe.decisions).find((d) => d.refType === refType && d.refId === refId && !d.resolvedAt);
+function decisionFor(sim: Simulation, refType: string, refId: string, category?: string) {
+  return Object.values(sim.universe.decisions).find((d) => d.refType === refType && d.refId === refId && !d.resolvedAt && (!category || d.category === category));
 }
 
 function pendingKinds(sim: Simulation, refId: string): string[] {
@@ -423,12 +423,14 @@ describe('the appraisal and closing day', () => {
     expect(outcome.closed).toBe(true);
     expect(decisionFor(sim, 'offer', offer.id)).toBeUndefined();
     sim.advanceTo(addDays(sim.now, MOVING_DAY_DAYS, sim.homeZone) + MS_HOUR);
-    const moving = decisionFor(sim, 'property', property.id)!;
+    // The house asks two things of you now: to insure it, and to move in.
+    expect(decisionFor(sim, 'property', property.id, 'insurance')?.title).toMatch(/^Insure /);
+    const moving = decisionFor(sim, 'property', property.id, 'property')!;
     expect(moving.title).toMatch(/^Moving Day At /);
     expect(moving.actions.map((a) => a.label)).toEqual(['Play It Out', 'Just Move In']);
     must(sim, 'prop.move_in', { propertyId: property.id });
     expect(sim.player.residenceId).toBe(property.id);
-    expect(decisionFor(sim, 'property', property.id)).toBeUndefined();
+    expect(decisionFor(sim, 'property', property.id, 'property')).toBeUndefined();
     expect(attempt(sim, 'prop.move_in', { propertyId: property.id }).error).toMatch(/already live/);
   });
 

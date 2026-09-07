@@ -10,6 +10,7 @@
  */
 
 import { beforeAll, describe, expect, it } from 'vitest';
+import { insurerByName } from '@/engine/content/insurers';
 import { loadAllSections } from '@/engine/dialogue';
 import { loadSave, migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
@@ -339,7 +340,7 @@ describe('a boat', () => {
     expect(attempt(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: vehicle.id }] }).error).toMatch(/marine insurance, not auto/);
     const quote = must<{ quoteId: string; premium: number }>(sim, 'ins.quote', { line: 'marine', coveredRefs: [{ type: 'vehicle', id: vehicle.id }] });
     const { policyId } = must<{ policyId: string }>(sim, 'ins.purchase', { quoteId: quote.quoteId });
-    expect(sim.universe.insurancePolicies[policyId]!.carrier).toBe('Northbank Marine');
+    expect(insurerByName(sim.universe.insurancePolicies[policyId]!.carrier)?.lines).toContain('marine');
 
     // A tracker the insurer was never told about.
     must(sim, 'veh.book_modification', { vehicleId: vehicle.id, partIds: ['boat_tracker'] });

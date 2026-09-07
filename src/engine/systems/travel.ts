@@ -43,6 +43,8 @@ import {
   type HotelBrand, type RoomClass,
 } from '../content/hotels';
 import { placesIn } from '../content/places';
+import { countryOfCity } from '../content/geography';
+import { passportCheck } from './documents';
 import { makeBackgroundPerson, peopleOf } from './people';
 import { plural } from '../core/text';
 import { rememberFact } from './memory';
@@ -149,6 +151,21 @@ export function registerTravel(sim: Simulation): void {
       if (!option) throw new CommandError('No flights available on that route.');
 
       const passengers = p.passengerIds ?? [player.id];
+      // A border wants a passport from everybody on the booking, before any
+      // money moves: missing, expired, lost or still at the office refuses
+      // here rather than at the desk. Six months left warns and never refuses.
+      const toCountry = countryOfCity(p.toCityId);
+      const fromCountry = countryOfCity(fromCity);
+      let documentNote: string | undefined;
+      if (toCountry && fromCountry && toCountry !== fromCountry) {
+        for (const id of passengers) {
+          const person = s.universe.people[id];
+          if (!person) continue;
+          const check = passportCheck(s, person, toCountry);
+          if (!check.ok) throw new CommandError(check.reason ?? 'No passport.');
+          if (check.warning && !documentNote) documentNote = check.warning;
+        }
+      }
       const baseFare = option.fares[p.cabin];
       const refundSurcharge = p.refundable ? applyRate(baseFare, option.refundableSurcharge) : 0;
       const fare = (baseFare + refundSurcharge) * passengers.length;
@@ -164,7 +181,10 @@ export function registerTravel(sim: Simulation): void {
 
       const booking = createFlightBooking(s, { fromCity, toCity: p.toCityId, option, cabin: p.cabin, passengers, fare, taxes, refundable: p.refundable ?? false, tripId: p.tripId });
       s.emit('travel.flight_booked', { bookingId: booking.id, fromCity, toCity: p.toCityId, cabin: p.cabin, total });
-      return { bookingId: booking.id, fare: total, arriveAt: option.arriveAt };
+      if (documentNote && fromCity === player.currentLocationId) {
+        s.notify({ category: 'papers', title: 'Check Your Passport Before You Go', body: documentNote, importance: 45, route: '/workspace/character', refType: 'flight', refId: booking.id });
+      }
+      return { bookingId: booking.id, fare: total, arriveAt: option.arriveAt, documentNote };
     },
   );
 
