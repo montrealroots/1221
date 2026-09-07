@@ -3,7 +3,7 @@
  * holds all of it together.
  *
  * Every person in a save is SLATE's own. These are the words relationships
- * are actually conducted in: the check-in, the favour, the apology, the row,
+ * are actually conducted in: the check-in, the favor, the apology, the row,
  * the long silence and the one who always answers.
  */
 
@@ -40,7 +40,7 @@ const LINES: DialogueLine[] = [
   P('ask', 'catch', 'money.1', '"Are you all right for money? I am asking properly."', { when: { tone: ['warm'] } }),
   P('ask', 'catch', 'money.2', '"I am not going to ask what you got paid. I am going to sit here until you tell me."', { when: { tone: ['dry'] } }),
 
-  // --- The favour -------------------------------------------------------------------------------------------------
+  // --- The favor -------------------------------------------------------------------------------------------------
   P('favour', 'ask', 'small.1', '"Can I ask you something and you can absolutely say no?"', {}),
   P('favour', 'ask', 'small.2', '"Two hours on Saturday. That is the whole ask."', {}),
   P('favour', 'ask', 'big.1', 'They take a breath before they say it, which tells you the size of it before the words do.', { when: { flags: ['big'] }, speaker: 'narrator' }),
@@ -76,11 +76,11 @@ const LINES: DialogueLine[] = [
   P('row', 'argue', 'cool.1', 'The temperature drops and what is left is the actual disagreement, which is smaller and harder.', { speaker: 'narrator' }),
   P('row', 'argue', 'cool.2', '"I do not want to do this. Can we not do this."', { when: { tone: ['warm'] } }),
   P('row', 'argue', 'end.1', 'Nothing is resolved. Everybody is tired. That is the end of it for tonight.', { when: { result: ['unresolved'] }, speaker: 'narrator' }),
-  P('row', 'argue', 'end.2', '"I am going to go before I say something I have to apologise for on Thursday."', { when: { result: ['unresolved'] } }),
+  P('row', 'argue', 'end.2', '"I am going to go before I say something I have to apologize for on Thursday."', { when: { result: ['unresolved'] } }),
 
   // --- Family ---------------------------------------------------------------------------------------------------------
   P('family', 'call', 'parent.1', '"You never ring. I am not complaining, I am observing."', { when: { flags: ['parent'] } }),
-  P('family', 'call', 'parent.2', 'Forty minutes about a neighbour you have never met, and you would not trade it.', { when: { flags: ['parent'] }, speaker: 'narrator' }),
+  P('family', 'call', 'parent.2', 'Forty minutes about a neighbor you have never met, and you would not trade it.', { when: { flags: ['parent'] }, speaker: 'narrator' }),
   P('family', 'call', 'parent.3', '"Are you eating? Properly, not out of a box."', { when: { flags: ['parent'], tone: ['warm'] } }),
   P('family', 'call', 'parent.4', '"Somebody at the shop said they saw you on the television. I said that will be him."', { when: { flags: ['parent', 'famous'] } }),
   P('family', 'call', 'sibling.1', '"You are going to have to talk to them, you know. Not me. You."', { when: { flags: ['sibling'] } }),

@@ -4,7 +4,7 @@
  * You stand at the wardrobe with somewhere to be. Slot by slot, from what you
  * actually own in the condition it is actually in. The mirror has an opinion
  * before you leave rather than after, and it is specific: it names the shoes,
- * it names the colour, it names the thing that needs washing. It never stops
+ * it names the color, it names the thing that needs washing. It never stops
  * you. Leaving in it is the commit — that is when the clock moves, the clothes
  * wear, and the day goes on the record so the world can notice a repeat.
  */
@@ -47,7 +47,7 @@ function say(
   return (record ? speak(sim, query, ctx, salt) : preview(sim, query, ctx, salt)).text;
 }
 
-/** How a garment reads on one line: colour, cloth, and what is wrong with it. */
+/** How a garment reads on one line: color, cloth, and what is wrong with it. */
 /** What the mirror says before you have looked at it properly. */
 function mirrorLine(verdict: string, mentions: number): string {
   if (mentions === 0) return `${verdict}. Nothing the mirror would argue with.`;

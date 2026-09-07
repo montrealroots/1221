@@ -1,21 +1,21 @@
 /**
- * SLATE — what a piece of jewellery is actually made of.
+ * SLATE — what a piece of jewelry is actually made of.
  *
  * A commission is a conversation about five things: what the piece is, what
  * metal it is in, what stone goes in it, how that stone is cut and graded, and
  * how it is held. Everything here is the real vocabulary a bench uses, because
  * the whole point of the room is that somebody is asking you questions a real
- * jeweller would ask.
+ * jeweler would ask.
  *
  * What is fact and what is SLATE's own arithmetic:
  *
  * - **Fact.** Karat and millesimal fineness (18k is 750 parts per thousand).
- *   The GIA colour scale, D to Z. The GIA clarity scale, Flawless to I3. The
+ *   The GIA color scale, D to Z. The GIA clarity scale, Flawless to I3. The
  *   named diamond cuts. The Mohs hardness figures. These are published
  *   standards and are stated as they are.
  * - **SLATE's arithmetic.** Every price. What a carat of a given grade costs
  *   moves constantly with the market, so what you see is a calibration
- *   against local cost of living and the jeweller's own tier, and the game
+ *   against local cost of living and the jeweler's own tier, and the game
  *   says so wherever it prints a number.
  */
 
@@ -35,7 +35,7 @@ export interface Metal {
   costFactor: number;
   /** How well it takes a knock, 0 to 100. Softer golds mark more easily. */
   hardness: number;
-  /** Which colour a piece in this metal reads as, for the mirror. */
+  /** Which color a piece in this metal reads as, for the mirror. */
   colour: string;
   /** Whether a resize is straightforward. Some of these fight the torch. */
   resizable: boolean;
@@ -47,7 +47,7 @@ export const METALS: readonly Metal[] = [
   { id: 'gold_9', name: '9 Karat Yellow Gold', fineness: 375, costFactor: 5.5, hardness: 62, colour: 'gold', resizable: true, about: '375 parts gold. Hard wearing, paler than you might expect, and legal to call gold in Britain but not everywhere.' },
   { id: 'gold_14', name: '14 Karat Yellow Gold', fineness: 585, costFactor: 8.5, hardness: 58, colour: 'gold', resizable: true, about: '585 parts gold. The American default: enough gold to look it, hard enough to wear daily.' },
   { id: 'gold_18', name: '18 Karat Yellow Gold', fineness: 750, costFactor: 12, hardness: 52, colour: 'gold', resizable: true, about: '750 parts gold. What the maisons use. Warmer, softer, and it marks.' },
-  { id: 'gold_22', name: '22 Karat Yellow Gold', fineness: 916, costFactor: 15, hardness: 38, colour: 'gold', resizable: true, about: '916 parts gold. The colour of a wedding in South Asia, and soft enough to bend by hand.' },
+  { id: 'gold_22', name: '22 Karat Yellow Gold', fineness: 916, costFactor: 15, hardness: 38, colour: 'gold', resizable: true, about: '916 parts gold. The color of a wedding in South Asia, and soft enough to bend by hand.' },
   { id: 'white_gold_18', name: '18 Karat White Gold', fineness: 750, costFactor: 12.5, hardness: 56, colour: 'silver', resizable: true, about: 'Gold alloyed white and rhodium plated. The plating wears and wants redoing every few years.' },
   { id: 'rose_gold_18', name: '18 Karat Rose Gold', fineness: 750, costFactor: 12, hardness: 58, colour: 'rose_gold', resizable: true, about: 'Gold with copper in it. Harder than yellow, and it does not fade the way people fear.' },
   { id: 'platinum', name: 'Platinum', fineness: 950, costFactor: 16, hardness: 66, colour: 'platinum', resizable: true, about: '950 parts platinum. Heavy, white all the way through, and it develops a patina rather than wearing away.' },
@@ -74,9 +74,9 @@ export interface Stone {
   mohs: number;
   /** SLATE's calibration of what a carat costs at a middling grade. */
   perCarat: PerCarat;
-  /** Whether the GIA colour and clarity scales apply. They are diamond scales. */
+  /** Whether the GIA color and clarity scales apply. They are diamond scales. */
   graded: boolean;
-  /** The colour the mirror reads it as. */
+  /** The color the mirror reads it as. */
   colour: string;
   about: string;
 }
@@ -87,19 +87,19 @@ export const STONES: readonly Stone[] = [
   { id: 'lab_diamond', name: 'Laboratory Grown Diamond', mohs: 10, perCarat: 900_00, graded: true, colour: 'white', about: 'Chemically a diamond, grown rather than mined, graded on the same scales and a fraction of the price.' },
   { id: 'moissanite', name: 'Moissanite', mohs: 9.25, perCarat: 180_00, graded: false, colour: 'white', about: 'Brighter than a diamond and not pretending to be one. The stone people buy when they have done the reading.' },
   { id: 'sapphire', name: 'Blue Sapphire', mohs: 9, perCarat: 1_400_00, graded: false, colour: 'royal_blue', about: 'Corundum, hard enough for daily wear, and the blue everybody means when they say sapphire.' },
-  { id: 'pink_sapphire', name: 'Pink Sapphire', mohs: 9, perCarat: 1_100_00, graded: false, colour: 'blush', about: 'The same stone as a blue sapphire, coloured differently by what was in the ground.' },
+  { id: 'pink_sapphire', name: 'Pink Sapphire', mohs: 9, perCarat: 1_100_00, graded: false, colour: 'blush', about: 'The same stone as a blue sapphire, colored differently by what was in the ground.' },
   { id: 'ruby', name: 'Ruby', mohs: 9, perCarat: 3_800_00, graded: false, colour: 'scarlet', about: 'Red corundum. A fine one costs more per carat than a diamond and almost nobody knows that.' },
   { id: 'emerald', name: 'Emerald', mohs: 7.75, perCarat: 2_600_00, graded: false, colour: 'emerald', about: 'Beryl, softer than it looks, and almost always with inclusions the trade calls a garden.' },
   { id: 'aquamarine', name: 'Aquamarine', mohs: 7.75, perCarat: 240_00, graded: false, colour: 'pale_blue', about: 'The other beryl. Big clean stones are ordinary, which makes them affordable and underrated.' },
   { id: 'tanzanite', name: 'Tanzanite', mohs: 6.5, perCarat: 620_00, graded: false, colour: 'purple', about: 'Found in one place on earth and nowhere else. Soft, so not a ring you wear to do the washing up.' },
   { id: 'opal', name: 'Opal', mohs: 5.75, perCarat: 320_00, graded: false, colour: 'off_white', about: 'Fire inside water. It can crack from a change in temperature and it is worth it anyway.' },
   { id: 'pearl', name: 'Cultured Pearl', mohs: 2.75, perCarat: 90_00, graded: false, colour: 'off_white', about: 'Not a stone at all. Soft, dislikes perfume, and needs restringing every couple of years.' },
-  { id: 'jade', name: 'Jadeite Jade', mohs: 6.75, perCarat: 1_900_00, graded: false, colour: 'forest', about: 'Tough rather than hard, and the finest imperial green is one of the dearest materials in jewellery.' },
+  { id: 'jade', name: 'Jadeite Jade', mohs: 6.75, perCarat: 1_900_00, graded: false, colour: 'forest', about: 'Tough rather than hard, and the finest imperial green is one of the dearest materials in jewelry.' },
   { id: 'amethyst', name: 'Amethyst', mohs: 7, perCarat: 28_00, graded: false, colour: 'purple', about: 'Quartz. Was worth a fortune until Brazil turned up with rather a lot of it.' },
   { id: 'garnet', name: 'Garnet', mohs: 7.25, perCarat: 45_00, graded: false, colour: 'oxblood', about: 'The stone in your grandmother’s brooch. Deep, warm, and cheap for what it is.' },
   { id: 'topaz', name: 'Topaz', mohs: 8, perCarat: 55_00, graded: false, colour: 'pale_blue', about: 'Hard, clear, and mostly blue because somebody irradiated it. That is normal and disclosed.' },
   { id: 'onyx', name: 'Black Onyx', mohs: 7, perCarat: 18_00, graded: false, colour: 'black', about: 'Flat black chalcedony. What a signet ring is set with when it is set with anything.' },
-  { id: 'turquoise', name: 'Turquoise', mohs: 5.5, perCarat: 60_00, graded: false, colour: 'teal', about: 'Porous, soft, and it changes colour from the oil on your skin. Some people count that as the point.' },
+  { id: 'turquoise', name: 'Turquoise', mohs: 5.5, perCarat: 60_00, graded: false, colour: 'teal', about: 'Porous, soft, and it changes color from the oil on your skin. Some people count that as the point.' },
 ];
 
 export const STONE_BY_ID: Readonly<Record<string, Stone>> = Object.fromEntries(STONES.map((s) => [s.id, s]));
@@ -137,7 +137,7 @@ export const CUTS: readonly Cut[] = [
   { id: 'cushion', name: 'Cushion', yieldFactor: 1.03, about: 'A softened square, the old mine cut brought forward. Warmer, less clinical.' },
   { id: 'radiant', name: 'Radiant', yieldFactor: 0.98, about: 'A brilliant cut in a rectangle. The compromise between an emerald cut and a round.' },
   { id: 'heart', name: 'Heart', yieldFactor: 1.14, about: 'Difficult to cut well and easy to cut badly. Under a carat it stops reading as a heart.' },
-  { id: 'baguette', name: 'Baguette', yieldFactor: 0.9, about: 'A small step-cut rectangle. Almost always a side stone rather than the centre.' },
+  { id: 'baguette', name: 'Baguette', yieldFactor: 0.9, about: 'A small step-cut rectangle. Almost always a side stone rather than the center.' },
   { id: 'cabochon', name: 'Cabochon', yieldFactor: 0.82, about: 'Polished domed, not faceted. What opal, turquoise and star sapphires want.' },
 ];
 
@@ -148,9 +148,9 @@ export function cutOf(id: string | undefined): Cut {
 }
 
 /**
- * Colour, on the GIA D to Z scale.
+ * Color, on the GIA D to Z scale.
  *
- * D is colourless and Z is light yellow or brown; the letters and their bands
+ * D is colorless and Z is light yellow or brown; the letters and their bands
  * are the published scale. `factor` is SLATE's own multiplier on price.
  */
 export interface ColourGrade {
@@ -162,13 +162,13 @@ export interface ColourGrade {
 }
 
 export const COLOUR_GRADES: readonly ColourGrade[] = [
-  { id: 'd', name: 'D', band: 'Colourless', factor: 1.6, about: 'The top of the scale. Nothing above it, and most people cannot tell it from an F.' },
-  { id: 'e', name: 'E', band: 'Colourless', factor: 1.45, about: 'Colourless. A gemmologist finds a trace under laboratory light.' },
-  { id: 'f', name: 'F', band: 'Colourless', factor: 1.32, about: 'Colourless, and the last grade where that word is used without qualification.' },
-  { id: 'g', name: 'G', band: 'Near Colourless', factor: 1.15, about: 'Near colourless, and the grade the trade quietly recommends. Face up it looks white.' },
-  { id: 'h', name: 'H', band: 'Near Colourless', factor: 1.0, about: 'Near colourless. White in a white metal, and the sensible middle of the scale.' },
-  { id: 'i', name: 'I', band: 'Near Colourless', factor: 0.88, about: 'A hint of warmth from the side. Invisible once it is set and on a hand.' },
-  { id: 'j', name: 'J', band: 'Near Colourless', factor: 0.78, about: 'Warm enough to notice against a D, and nothing at all in yellow gold.' },
+  { id: 'd', name: 'D', band: 'Colorless', factor: 1.6, about: 'The top of the scale. Nothing above it, and most people cannot tell it from an F.' },
+  { id: 'e', name: 'E', band: 'Colorless', factor: 1.45, about: 'Colorless. A gemologist finds a trace under laboratory light.' },
+  { id: 'f', name: 'F', band: 'Colorless', factor: 1.32, about: 'Colorless, and the last grade where that word is used without qualification.' },
+  { id: 'g', name: 'G', band: 'Near Colorless', factor: 1.15, about: 'Near colorless, and the grade the trade quietly recommends. Face up it looks white.' },
+  { id: 'h', name: 'H', band: 'Near Colorless', factor: 1.0, about: 'Near colorless. White in a white metal, and the sensible middle of the scale.' },
+  { id: 'i', name: 'I', band: 'Near Colorless', factor: 0.88, about: 'A hint of warmth from the side. Invisible once it is set and on a hand.' },
+  { id: 'j', name: 'J', band: 'Near Colorless', factor: 0.78, about: 'Warm enough to notice against a D, and nothing at all in yellow gold.' },
   { id: 'k', name: 'K', band: 'Faint', factor: 0.66, about: 'Faint yellow. Set it in gold and it reads as intentional rather than as a compromise.' },
   { id: 'm', name: 'M', band: 'Faint', factor: 0.54, about: 'Visibly warm. Cheap for the weight, and honest about what it is.' },
 ];
@@ -223,18 +223,18 @@ export interface PieceKind {
   grams: number;
   /** How long the bench takes, in weeks, before anything is added for the stone. */
   weeks: number;
-  /** Whether a centre stone makes sense at all. */
+  /** Whether a center stone makes sense at all. */
   takesStone: boolean;
   about: string;
 }
 
 export const PIECE_KINDS: readonly PieceKind[] = [
   { id: 'solitaire_ring', name: 'Solitaire Ring', slot: 'ring', grams: 4, weeks: 5, takesStone: true, about: 'One stone, held up, nothing else asking for attention.' },
-  { id: 'engagement_ring', name: 'Engagement Ring', slot: 'ring', grams: 5, weeks: 6, takesStone: true, about: 'A centre stone and whatever you want around it. The one people keep the box for.' },
+  { id: 'engagement_ring', name: 'Engagement Ring', slot: 'ring', grams: 5, weeks: 6, takesStone: true, about: 'A center stone and whatever you want around it. The one people keep the box for.' },
   { id: 'eternity_band', name: 'Eternity Band', slot: 'ring', grams: 4, weeks: 5, takesStone: true, about: 'Stones the whole way round. Cannot be resized afterwards, so the fitting matters.' },
   { id: 'wedding_band', name: 'Wedding Band', slot: 'ring', grams: 5, weeks: 3, takesStone: false, about: 'Plain, or milled, or hammered. It has to survive forty years of not being taken off.' },
   { id: 'signet_ring', name: 'Signet Ring', slot: 'ring', grams: 9, weeks: 4, takesStone: true, about: 'A flat face to engrave, or a slab of onyx. Worn on the little finger, traditionally.' },
-  { id: 'cocktail_ring', name: 'Cocktail Ring', slot: 'ring', grams: 8, weeks: 6, takesStone: true, about: 'Large, and not apologising for it. The whole idea is that it is seen from across a room.' },
+  { id: 'cocktail_ring', name: 'Cocktail Ring', slot: 'ring', grams: 8, weeks: 6, takesStone: true, about: 'Large, and not apologizing for it. The whole idea is that it is seen from across a room.' },
   { id: 'pendant', name: 'Pendant', slot: 'necklace', grams: 3, weeks: 4, takesStone: true, about: 'One stone on a chain. The simplest thing a bench can make well.' },
   { id: 'chain', name: 'Chain', slot: 'necklace', grams: 22, weeks: 4, takesStone: false, about: 'Links, by the gram. Cuban, rope, box, figaro; the weight is the price.' },
   { id: 'riviere', name: 'Rivière Necklace', slot: 'necklace', grams: 14, weeks: 10, takesStone: true, about: 'A river of graduated stones with no metal showing. The bench will want a year of your patience.' },
@@ -259,7 +259,7 @@ export interface Setting {
   name: string;
   /** What the setting adds to the bench time, in weeks. */
   weeks: number;
-  /** What it adds to the labour, as a multiplier on the metal cost. */
+  /** What it adds to the labor, as a multiplier on the metal cost. */
   labour: number;
   /** How well it protects the stone, 0 to 100. */
   protection: number;
@@ -270,10 +270,10 @@ export const SETTINGS: readonly Setting[] = [
   { id: 'solitaire', name: 'Four Claw Solitaire', weeks: 0, labour: 1, protection: 55, about: 'Four claws and daylight underneath. The most light into the stone and the least metal around it.' },
   { id: 'six_claw', name: 'Six Claw', weeks: 0, labour: 1.1, protection: 66, about: 'Two more claws than it needs, which is the point. Tiffany made it famous in 1886.' },
   { id: 'bezel', name: 'Bezel', weeks: 1, labour: 1.35, protection: 92, about: 'A collar of metal all the way round. The safest setting there is, and the one that snags on nothing.' },
-  { id: 'halo', name: 'Halo', weeks: 1, labour: 1.6, protection: 74, about: 'Small stones ringing the centre so it reads a size larger than it weighs.' },
+  { id: 'halo', name: 'Halo', weeks: 1, labour: 1.6, protection: 74, about: 'Small stones ringing the center so it reads a size larger than it weighs.' },
   { id: 'pave', name: 'Pavé', weeks: 2, labour: 1.9, protection: 62, about: 'The metal disappears under stones. Beautiful, and a repair bill waiting when one drops.' },
   { id: 'channel', name: 'Channel', weeks: 1, labour: 1.5, protection: 86, about: 'Stones sunk in a groove between two walls. Nothing sticks up and nothing catches.' },
-  { id: 'three_stone', name: 'Three Stone', weeks: 1, labour: 1.45, protection: 64, about: 'A centre with a shoulder each side. Past, present, future, if you like that sort of thing.' },
+  { id: 'three_stone', name: 'Three Stone', weeks: 1, labour: 1.45, protection: 64, about: 'A center with a shoulder each side. Past, present, future, if you like that sort of thing.' },
   { id: 'tension', name: 'Tension', weeks: 2, labour: 1.8, protection: 48, about: 'The stone held by the spring of the metal alone. Looks like a trick and cannot be resized.' },
   { id: 'cluster', name: 'Cluster', weeks: 1, labour: 1.55, protection: 70, about: 'Many stones reading as one larger one. Victorian, and back in fashion roughly always.' },
   { id: 'rubover', name: 'Rub Over', weeks: 1, labour: 1.3, protection: 88, about: 'The metal burnished over the girdle. A quieter cousin of the bezel, flush to the finger.' },
@@ -293,4 +293,4 @@ export function settingOf(id: string | undefined): Setting {
  * of a given grade costs is a live market SLATE has no feed for, so the money
  * is the game's own arithmetic and is labelled that way.
  */
-export const JEWELLERY_NOTE = 'Karat, the GIA colour and clarity scales and the named cuts are published standards, used as published. Every price here is SLATE’s own calibration, not a quotation from the trade.';
+export const JEWELLERY_NOTE = 'Karat, the GIA color and clarity scales and the named cuts are published standards, used as published. Every price here is SLATE’s own calibration, not a quotation from the trade.';

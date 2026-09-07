@@ -34,10 +34,10 @@ export type PlaceKind =
   | 'marina' | 'storage' | 'jeweller';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
-  jeweller: 'Jeweller',
+  jeweller: 'Jeweler',
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
-  cinema: 'Cinema', theatre: 'Theatre', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
+  cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
 };
@@ -87,12 +87,12 @@ interface RealPlace extends Omit<Place, 'quality' | 'price' | 'minutes' | 'real'
 }
 
 const LANDMARKS: readonly RealPlace[] = [
-  // --- Marinas. The harbour and its name are public record; slip counts, sizes and rates are SLATE's. ---
-  { id: 'la-marina-del-rey', name: 'Marina del Rey', kind: 'marina', cityId: 'us-ca-losangeles', about: 'A man-made small-craft harbour on the Westside, dug out of the Ballona wetlands and opened in 1965; one of the largest of its kind in the world.', opened: 1965, actions: ['visit'], minutes: 60, quality: 84, price: 3, maxSlipFeet: 150 },
-  { id: 'sf-marina-yacht-harbor', name: 'San Francisco Marina Yacht Harbor', kind: 'marina', cityId: 'us-ca-sanfrancisco', about: 'The city’s own small-boat harbour on the Marina waterfront, with the Golden Gate in view from the breakwater.', actions: ['visit'], minutes: 60, quality: 80, price: 3, maxSlipFeet: 65 },
+  // --- Marinas. The harbor and its name are public record; slip counts, sizes and rates are SLATE's. ---
+  { id: 'la-marina-del-rey', name: 'Marina del Rey', kind: 'marina', cityId: 'us-ca-losangeles', about: 'A man-made small-craft harbor on the Westside, dug out of the Ballona wetlands and opened in 1965; one of the largest of its kind in the world.', opened: 1965, actions: ['visit'], minutes: 60, quality: 84, price: 3, maxSlipFeet: 150 },
+  { id: 'sf-marina-yacht-harbor', name: 'San Francisco Marina Yacht Harbor', kind: 'marina', cityId: 'us-ca-sanfrancisco', about: 'The city’s own small-boat harbor on the Marina waterfront, with the Golden Gate in view from the breakwater.', actions: ['visit'], minutes: 60, quality: 80, price: 3, maxSlipFeet: 65 },
   { id: 'ny-north-cove', name: 'North Cove Marina', kind: 'marina', cityId: 'us-ny-newyork', about: 'A marina at Battery Park City on the Hudson, tucked behind Brookfield Place, that takes yachts up to superyacht size.', actions: ['visit'], minutes: 60, quality: 88, price: 4, maxSlipFeet: 180 },
-  { id: 'chi-burnham-harbor', name: 'Burnham Harbor', kind: 'marina', cityId: 'us-il-chicago', about: 'A Chicago Park District harbour between Museum Campus and Northerly Island, open for the lake season.', actions: ['visit'], minutes: 60, quality: 76, price: 2, maxSlipFeet: 65 },
-  { id: 'yvr-coal-harbour', name: 'Coal Harbour Marina', kind: 'marina', cityId: 'ca-bc-vancouver', about: 'A marina on the downtown waterfront beside Stanley Park, with float planes coming and going off the end of it.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 120 },
+  { id: 'chi-burnham-harbor', name: 'Burnham Harbor', kind: 'marina', cityId: 'us-il-chicago', about: 'A Chicago Park District harbor between Museum Campus and Northerly Island, open for the lake season.', actions: ['visit'], minutes: 60, quality: 76, price: 2, maxSlipFeet: 65 },
+  { id: 'yvr-coal-harbour', name: 'Coal Harbor Marina', kind: 'marina', cityId: 'ca-bc-vancouver', about: 'A marina on the downtown waterfront beside Stanley Park, with float planes coming and going off the end of it.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 120 },
   { id: 'ldn-st-katharine', name: 'St Katharine Docks Marina', kind: 'marina', cityId: 'uk-eng-london', about: 'A marina in the old dock basins beside Tower Bridge, entered through a lock off the Thames.', opened: 1828, actions: ['visit'], minutes: 60, quality: 84, price: 4, maxSlipFeet: 130 },
   { id: 'mia-miami-beach-marina', name: 'Miami Beach Marina', kind: 'marina', cityId: 'us-fl-miami', about: 'A marina at the south end of Miami Beach on Government Cut, with the cruise ships passing the end of the docks.', actions: ['visit'], minutes: 60, quality: 86, price: 4, maxSlipFeet: 250 },
   { id: 'sea-elliott-bay', name: 'Elliott Bay Marina', kind: 'marina', cityId: 'us-wa-seattle', about: 'A private marina at the foot of Magnolia bluff on Elliott Bay, with the downtown skyline across the water.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 100 },
@@ -133,7 +133,7 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'sf-golden-gate', name: 'Golden Gate Bridge', kind: 'landmark', cityId: 'us-ca-sanfrancisco', about: 'Joseph Strauss and Irving Morrow’s suspension bridge across the strait, painted International Orange.', opened: 1937, actions: ['visit'], minutes: 90 },
   { id: 'sf-golden-gate-park', name: 'Golden Gate Park', kind: 'park', cityId: 'us-ca-sanfrancisco', about: 'A thousand acres of park running to the ocean, with the de Young and the Academy of Sciences in it.', opened: 1870, actions: ['visit'], minutes: 120 },
   { id: 'atl-piedmont', name: 'Piedmont Park', kind: 'park', cityId: 'us-ga-atlanta', about: 'Midtown’s park, with the skyline over the lake.', opened: 1904, actions: ['visit', 'train'], minutes: 90 },
-  { id: 'atl-fox', name: 'Fox Theatre', kind: 'theatre', cityId: 'us-ga-atlanta', about: 'A Moorish-revival picture palace on Peachtree Street, saved from demolition in the 1970s.', opened: 1929, actions: ['watch', 'visit'], minutes: 180 },
+  { id: 'atl-fox', name: 'Fox Theater', kind: 'theatre', cityId: 'us-ga-atlanta', about: 'A Moorish-revival picture palace on Peachtree Street, saved from demolition in the 1970s.', opened: 1929, actions: ['watch', 'visit'], minutes: 180 },
   { id: 'chi-art-institute', name: 'The Art Institute Of Chicago', kind: 'museum', cityId: 'us-il-chicago', about: 'A museum and school on Michigan Avenue, with the lions outside.', opened: 1879, actions: ['visit'], minutes: 180, admissionCalibration: 3_200 },
   { id: 'chi-millennium', name: 'Millennium Park', kind: 'park', cityId: 'us-il-chicago', about: 'A park over a rail yard in the Loop, with Kapoor’s Cloud Gate in it.', opened: 2004, actions: ['visit'], minutes: 75 },
   { id: 'yvr-stanley', name: 'Stanley Park', kind: 'park', cityId: 'ca-bc-vancouver', about: 'A thousand acres of rainforest and seawall on the peninsula north of downtown.', opened: 1888, actions: ['visit', 'train'], minutes: 120 },
@@ -148,7 +148,7 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'prg-charles-bridge', name: 'Charles Bridge', kind: 'landmark', cityId: 'cz-52-prague', about: 'A stone bridge over the Vltava begun under Charles IV, lined with baroque statues.', opened: 1402, actions: ['visit'], minutes: 60 },
   { id: 'bud-parliament', name: 'The Hungarian Parliament Building', kind: 'landmark', cityId: 'hu-05-budapest', about: 'Steindl’s neo-Gothic parliament on the Pest bank of the Danube.', opened: 1902, actions: ['visit'], minutes: 90, admissionCalibration: 3_000 },
   { id: 'syd-opera-house', name: 'Sydney Opera House', kind: 'theatre', cityId: 'au-nsw-sydney', about: 'Jørn Utzon’s shells on Bennelong Point, finished long after he left the project.', opened: 1973, actions: ['watch', 'visit'], minutes: 150, admissionCalibration: 4_500 },
-  { id: 'syd-bondi', name: 'Bondi Beach', kind: 'beach', cityId: 'au-nsw-sydney', about: 'A kilometre of sand in the eastern suburbs, with the coastal walk south to Coogee.', actions: ['visit', 'train'], minutes: 120 },
+  { id: 'syd-bondi', name: 'Bondi Beach', kind: 'beach', cityId: 'au-nsw-sydney', about: 'A kilometer of sand in the eastern suburbs, with the coastal walk south to Coogee.', actions: ['visit', 'train'], minutes: 120 },
   { id: 'mel-ngv', name: 'National Gallery Of Victoria', kind: 'museum', cityId: 'au-vic-melbourne', about: 'Australia’s oldest public art museum, on St Kilda Road.', opened: 1861, actions: ['visit'], minutes: 150 },
   { id: 'wlg-te-papa', name: 'Te Papa Tongarewa', kind: 'museum', cityId: 'nz-wgn-wellington', about: 'New Zealand’s national museum on the Wellington waterfront. Free to enter.', opened: 1998, actions: ['visit'], minutes: 180 },
   { id: 'dub-trinity', name: 'Trinity College Library', kind: 'museum', cityId: 'ie-lei-dublin', about: 'The Long Room, and the Book of Kells beneath it.', opened: 1732, actions: ['visit'], minutes: 90, admissionCalibration: 2_000 },
@@ -158,7 +158,7 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'tok-senso-ji', name: 'Sensō-ji', kind: 'landmark', cityId: 'jp-13-tokyo', about: 'A Buddhist temple in Asakusa, the oldest in Tokyo, approached through the Kaminarimon.', opened: 645, actions: ['visit'], minutes: 90 },
   { id: 'seo-gyeongbokgung', name: 'Gyeongbokgung', kind: 'landmark', cityId: 'kr-11-seoul', about: 'The main palace of the Joseon dynasty, rebuilt after the Japanese occupation.', opened: 1395, actions: ['visit'], minutes: 120, admissionCalibration: 300 },
   { id: 'vegas-strip', name: 'The Las Vegas Strip', kind: 'landmark', cityId: 'us-nv-lasvegas', about: 'Four miles of Las Vegas Boulevard south of the city line, which is why the big resorts are not in Las Vegas at all.', actions: ['visit', 'drink'], minutes: 120 },
-  { id: 'nola-french-quarter', name: 'The French Quarter', kind: 'landmark', cityId: 'us-la-neworleans', about: 'The Vieux Carré, the oldest neighbourhood in the city, laid out in 1718.', opened: 1718, actions: ['visit', 'drink', 'eat'], minutes: 120 },
+  { id: 'nola-french-quarter', name: 'The French Quarter', kind: 'landmark', cityId: 'us-la-neworleans', about: 'The Vieux Carré, the oldest neighborhood in the city, laid out in 1718.', opened: 1718, actions: ['visit', 'drink', 'eat'], minutes: 120 },
   { id: 'mia-south-beach', name: 'South Beach', kind: 'beach', cityId: 'us-fl-miami', about: 'The barrier-island end of Miami Beach, with the Art Deco district behind it.', actions: ['visit'], minutes: 120 },
   { id: 'nm-santa-fe-plaza', name: 'The Santa Fe Plaza', kind: 'landmark', cityId: 'us-nm-santafe', about: 'The Spanish colonial plaza at the end of the Camino Real, laid out when the city was founded.', opened: 1610, actions: ['visit'], minutes: 75 },
   { id: 'nm-georgia-okeeffe', name: 'Georgia O’Keeffe Museum', kind: 'museum', cityId: 'us-nm-santafe', about: 'A museum on Johnson Street holding the largest collection of O’Keeffe’s work anywhere.', opened: 1997, actions: ['visit'], minutes: 120, admissionCalibration: 2_000 },
@@ -316,7 +316,7 @@ const HOTEL_NAMES = ['The Wren Hotel', 'Hotel Meridian', 'The Standing Stone', '
 const SALON_NAMES = ['Chair Six', 'The Grooming Room', 'Marlow & Co.', 'The Cutting Room'];
 const CLUB_NAMES = ['Basement 9', 'The Meridian Room', 'Nightshift', 'Vault'];
 /**
- * Independent benches. There is no national chain of bench jewellers, so
+ * Independent benches. There is no national chain of bench jewelers, so
  * unlike the shops these are SLATE's own the way its restaurants are: a
  * workshop above a shop, one or two people, a torch and a bench peg.
  */
@@ -350,7 +350,7 @@ const SPECS: readonly Spec[] = [
   // the lots, so nothing before them moved.
   { kind: 'storage', count: () => 1 },
   { kind: 'marina', count: (_i, _p, waterfront) => (waterfront ? 1 : 0) },
-  // A bench jeweller, added after everything else so no existing place id moved.
+  // A bench jeweler, added after everything else so no existing place id moved.
   { kind: 'jeweller', count: () => 1 },
 ];
 
@@ -361,7 +361,7 @@ export function isWaterfront(city: { tags: string[] }): boolean {
   return city.tags.some((t) => WATERFRONT_TAGS.includes(t));
 }
 
-const MARINA_NAMES = ['Harbour Point Marina', 'Westbank Yacht Harbor', 'The Basin Marina', 'Breakwater Marina', 'Kingfisher Yacht Basin'];
+const MARINA_NAMES = ['Harbor Point Marina', 'Westbank Yacht Harbor', 'The Basin Marina', 'Breakwater Marina', 'Kingfisher Yacht Basin'];
 const STORAGE_NAMES = ['Lockbox Vehicle Storage', 'Northline Secure Storage', 'The Vault Garage', 'Keystone Car Storage'];
 
 /** What a lot sells. */
@@ -511,7 +511,7 @@ export function placesIn(cityId: string): Place[] {
   }
 
   // Storefronts. Every chain that is not online only has a door here, so the
-  // catalogue and the street agree with each other. The id carries the chain
+  // catalog and the street agree with each other. The id carries the chain
   // rather than a number, so adding a chain never moves an existing shop.
   for (const retailer of shoppableRetailers()) {
     const real = ALL_RETAILERS.find((r) => r.id === retailer.id);
@@ -545,7 +545,7 @@ const SHOP_STREET: readonly string[] = [
   'By appointment as much as by the door, on the street where the rents are announced.',
 ];
 
-/** A small, stable hash so a shop lands in the same neighbourhood every time. */
+/** A small, stable hash so a shop lands in the same neighborhood every time. */
 function hashOf(text: string): number {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (Math.imul(h, 31) + text.charCodeAt(i)) | 0;
@@ -599,7 +599,7 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     case 'gym': return `Weights and space in ${where}. ${rng.pick(['Chalk allowed.', 'Open at five.', 'No mirrors, no music.'])}`;
     case 'cinema': return `A cinema in ${where}. ${rng.pick(['Two screens and a projectionist who cares.', 'Reclining seats and an eight-dollar soda.', 'Repertory on Sundays.'])}`;
     case 'hotel': return `Rooms in ${where}. ${rng.pick(['A lobby people meet in.', 'Quiet, and the bar stays open.', 'Clean, central and no surprises.'])}`;
-    case 'salon': return `Cutting and colour in ${where}.`;
+    case 'salon': return `Cutting and color in ${where}.`;
     case 'club': return `Late in ${where}. ${rng.pick(['A queue after eleven.', 'Low ceilings and a good sound system.'])}`;
     case 'jeweller': return `A working bench in ${where}. ${rng.pick([
       'One goldsmith, a torch, and a wait for everything.',

@@ -3,7 +3,7 @@
  *
  * Searches the actual universe, not a list of menu names: people you know,
  * properties you own, projects you are on, vehicles, companies, cities,
- * catalogue items, and every workspace. Keyboard first.
+ * catalog items, and every workspace. Keyboard first.
  */
 
 import { titleCaseLabel } from '@/engine/core/text';
@@ -134,7 +134,7 @@ export function GoAnywhere() {
                           <span className="grow">{entry.label}</span>
                         </button>
                         <button className="btn btn-ghost btn-sm" onClick={() => toggleFavourite(entry)} aria-label={`${saved ? 'Unfavourite' : 'Favourite'} ${entry.label}`}>
-                          {saved ? 'Unfavourite' : 'Favourite'}
+                          {saved ? 'Unfavourite' : 'Favorite'}
                         </button>
                       </div>
                     );

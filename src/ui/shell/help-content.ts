@@ -79,7 +79,7 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     id: 'relationships', route: '/workspace/relationships', title: 'Relationships',
     what: 'Everyone you know, across seven dimensions rather than one bar: familiarity, affection, trust, respect, compatibility, commitment and conflict.',
     affects: ['How often you actually see each other', 'What you have done together and to each other', 'Underlying compatibility', 'Unresolved conflict, which poisons the rest'],
-    actions: ['Talk, catch up or have a real conversation', 'Ask someone out — dinner, drinks, coffee, a film or a walk, at a place you pick', 'Play the date out: get ready, get there, the table, the door', 'Keep the promise you made at the door', 'Give a gift', 'Apologise', 'Define the relationship', 'Propose', 'Plan a wedding', 'Start a family'],
+    actions: ['Talk, catch up or have a real conversation', 'Ask someone out — dinner, drinks, coffee, a film or a walk, at a place you pick', 'Play the date out: get ready, get there, the table, the door', 'Keep the promise you made at the door', 'Give a gift', 'Apologize', 'Define the relationship', 'Propose', 'Plan a wedding', 'Start a family'],
     connects: ['Calendar, because dates are commitments', 'Bank, because dates and weddings cost money', 'Household, because marriage merges one', 'Publicity, if a relationship becomes public'],
     keywords: ['friends', 'dating', 'date', 'ask out', 'dinner', 'drinks', 'promise', 'relationship', 'marriage', 'propose', 'wedding', 'family', 'children', 'kids', 'partner', 'breakup', 'divorce'],
     advanced: [

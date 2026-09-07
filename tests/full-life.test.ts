@@ -346,7 +346,7 @@ describe('an ordinary life', () => {
  * A year of eating.
  *
  * The unplanned meal used to take the single best nourishment-per-dollar item
- * in the catalogue, every time, forever: five hundred and twenty-seven
+ * in the catalog, every time, forever: five hundred and twenty-seven
  * identical lines of pasta in a year, at $3.87 a day, which is neither a
  * person nor an economy. It picks from the good-value end now, weighted, so a
  * careful eater is still careful and still a person.
@@ -375,7 +375,7 @@ describe('a year of eating', () => {
     expect(commonest / meals.length, 'one food is more than a third of everything eaten').toBeLessThan(0.34);
   });
 
-  it('costs something a person could recognise, per meal', () => {
+  it('costs something a person could recognize, per meal', () => {
     const sim = quickSave({ wealth: 'modest' }, 'eating-cost');
     sim.advanceTo(sim.now + YEAR);
     const meals = sim.universe.transactions.filter((t) => t.category === 'food');

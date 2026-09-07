@@ -575,7 +575,7 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
   }
 
   if (!person.isPlayer) {
-    // NPCs feed themselves off-screen; their money is not modelled.
+    // NPCs feed themselves off-screen; their money is not modeled.
     w.nourishment = clamp(w.nourishment + 30, 0, 100);
     person.lastAteAt = sim.now;
     return true;
@@ -587,7 +587,7 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
 
   // Somebody feeding themselves without a plan shops, they do not eat out
   // three times a day. They also do not eat one thing for the rest of their
-  // life: taking the single best value in the catalogue every time meant the
+  // life: taking the single best value in the catalog every time meant the
   // same line of pasta five hundred and twenty-seven times in a year, and food
   // costing under four dollars a day. Pick from the good-value end, weighted,
   // so it is still somebody being careful with money and not the same meal
@@ -615,7 +615,7 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
 /**
  * How wide the net is when somebody eats without having shopped.
  *
- * Sixteen is the good-value end of the catalogue — staples, a few proteins,
+ * Sixteen is the good-value end of the catalog — staples, a few proteins,
  * and the occasional bought lunch. Wider than this and a careful person is
  * eating tasting menus; narrower and they are back to one thing forever.
  */

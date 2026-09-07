@@ -4,12 +4,12 @@
  * ── What this is and is not ─────────────────────────────────────────────────
  *
  * The writers' strike in this game is INVENTED. It is not an account of any
- * real labour action, and nothing in this file reports what any real guild,
+ * real labor action, and nothing in this file reports what any real guild,
  * studio, union, executive or writer did, said, wanted or agreed to. Real
  * strikes in this industry have happened and are a matter of public record;
  * this is not one of them, and the game never claims otherwise.
  *
- * What is modelled is the shape of an aftermath: a long stoppage ends, and the
+ * What is modeled is the shape of an aftermath: a long stoppage ends, and the
  * companies that were carrying debt and overhead through it are gone. That is
  * an ordinary consequence of a long stoppage in any industry. The specifics
  * below — how long, how many folded, what is left in the drawer — are the
@@ -23,7 +23,7 @@
 
 export const STRIKE_IS_FICTION =
   'The strike in this game is invented for it. It is not an account of any real '
-  + 'labour action, and no real guild, company or person said or did any of what '
+  + 'labor action, and no real guild, company or person said or did any of what '
   + 'follows.';
 
 /** How the world explains itself on the first morning. */

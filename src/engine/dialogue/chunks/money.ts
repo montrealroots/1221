@@ -57,7 +57,7 @@ const LINES: DialogueLine[] = [
   // --- The good month ----------------------------------------------------------------------------------------------
   M('flush', 'account', 'in.1', 'The money lands and the app shows a number that takes a second to parse.', { when: { result: ['paid_in'] }, speaker: 'narrator', role: 'world' }),
   M('flush', 'account', 'in.2', '"That has cleared. Do you want to leave it there or shall we do something more interesting with it?"', { when: { result: ['paid_in'] } }),
-  M('flush', 'account', 'in.3', 'A cheque with more zeroes on it than you have had before, and the strange flatness of it just being a number in an app by Thursday.', { when: { result: ['paid_in'] }, speaker: 'narrator', role: 'world' }),
+  M('flush', 'account', 'in.3', 'A check with more zeroes on it than you have had before, and the strange flatness of it just being a number in an app by Thursday.', { when: { result: ['paid_in'] }, speaker: 'narrator', role: 'world' }),
   M('flush', 'account', 'advice.1', '"Keep six months of costs where you can reach it and stop thinking about the rest for a year."', { when: { move: ['advise'] } }),
   M('flush', 'account', 'advice.2', '"A quarter of that is not yours. It is the tax office’s and it is only visiting."', { when: { move: ['advise'], tone: ['dry'] } }),
   M('flush', 'account', 'advice.3', '"The mistake everybody in your business makes is treating a good year like a salary."', { when: { move: ['advise'], tone: ['firm'] } }),

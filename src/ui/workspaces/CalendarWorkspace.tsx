@@ -241,7 +241,7 @@ function fromLocalInput(value: string, zone: string): number | undefined {
 /**
  * One entry, opened. What it is, what state it is in, and the things its
  * owning system lets you do to it — a plan can be played, done, moved,
- * skipped or dropped; an appointment moved or cancelled; a bill paid; a
+ * skipped or dropped; an appointment moved or canceled; a bill paid; a
  * flight opened where it lives; an observance only looked at.
  */
 const DATE_STATUS_WORD: Readonly<Record<DateStatus, string>> = {
@@ -325,7 +325,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <>
           <p className="small muted">
             {sim.universe.healthProviders[appointment.providerId]?.name ?? 'Your provider'}. {formatMoney(appointment.outOfPocket)} out of pocket.
-            {appointment.status === 'scheduled' ? ' Cancelling inside a day of it costs a fee.' : ` This appointment was ${appointment.status}.`}
+            {appointment.status === 'scheduled' ? ' Canceling inside a day of it costs a fee.' : ` This appointment was ${appointment.status}.`}
           </p>
           {appointment.status === 'scheduled' && visitAttendable(sim, appointment).ok && (
             <div className="row wrap gap-2" style={{ marginBottom: 'var(--s2)' }}>

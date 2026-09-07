@@ -9,7 +9,7 @@
  *
  * Every number is the dealership system's. This decides what to ask and in
  * what order; `deal.*` and `veh.purchase` decide what it costs and what it
- * does, and the summarised version runs the same commands with sensible
+ * does, and the summarized version runs the same commands with sensible
  * defaults: one look, one offer, their counter, cash, collect.
  */
 
@@ -137,7 +137,7 @@ function carFacts(deal: VehicleDeal, listing: VehicleListing) {
   const facts = [
     { label: deal.status === 'agreed' ? 'Agreed' : 'Asking', value: formatMoney(deal.status === 'agreed' ? (deal.agreedPrice ?? deal.currentAsk) : deal.currentAsk) },
     { label: 'Condition', value: `${conditionLabel(listing)} · ${usageLabel(listing)}` },
-    { label: 'Colour', value: `${listing.configuration.paint} · ${listing.configuration.interior}` },
+    { label: 'Color', value: `${listing.configuration.paint} · ${listing.configuration.interior}` },
     { label: 'Options', value: listing.configuration.options.length > 0 ? `${listing.configuration.options.length} fitted` : 'Standard' },
   ];
   if (deal.inspected) facts.push({ label: 'Found', value: deal.findings.join(' ') });

@@ -1,5 +1,5 @@
 /**
- * The jeweller's, and having a piece made.
+ * The jeweler's, and having a piece made.
  *
  * Two things are held here. That the money is safe: a deposit is taken once, a
  * balance is settled once, exactly one piece is created, and a retried request
@@ -35,7 +35,7 @@ function aLife(seed = 'jewel'): Simulation {
 /** The bench in the city the player is standing in. */
 function benchIn(sim: Simulation) {
   const place = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'jeweller');
-  expect(place, 'no bench jeweller in this city').toBeDefined();
+  expect(place, 'no bench jeweler in this city').toBeDefined();
   return place!;
 }
 
@@ -55,16 +55,16 @@ function balanceOf(sim: Simulation): number {
 }
 
 describe('the room itself', () => {
-  it('puts a bench jeweller in every city, and knows a maison when it sees one', () => {
+  it('puts a bench jeweler in every city, and knows a maison when it sees one', () => {
     const sim = aLife();
     const here = placesIn(sim.player.currentLocationId);
     const bench = here.filter((p) => p.kind === 'jeweller');
     expect(bench.length, 'no independent bench').toBeGreaterThanOrEqual(1);
     expect(isJeweller(bench[0])).toBe(true);
 
-    // A real house on the street is a jeweller too; a supermarket is not.
+    // A real house on the street is a jeweler too; a supermarket is not.
     const houses = here.filter((p) => isJeweller(p) && p.retailerId);
-    expect(houses.length, 'no named jeweller trades here').toBeGreaterThan(0);
+    expect(houses.length, 'no named jeweler trades here').toBeGreaterThan(0);
     const market = here.find((p) => p.kind === 'market');
     if (market) expect(isJeweller(market)).toBe(false);
   });
@@ -146,7 +146,7 @@ describe('the quote', () => {
   });
 });
 
-describe('what the jeweller says before you pay', () => {
+describe('what the jeweler says before you pay', () => {
   it('warns that titanium cannot be sized', () => {
     const notes = cautionsFor({ ...A_RING, metal: 'titanium' });
     expect(notes.some((n) => /cannot be sized/i.test(n))).toBe(true);
@@ -356,7 +356,7 @@ describe('changing your mind', () => {
     expect(sim.universe.commissions![made.commissionId]!.cancelledReason).toMatch(/did not come back/i);
   });
 
-  it('cancels once, and cancelling again does nothing at all', () => {
+  it('cancels once, and canceling again does nothing at all', () => {
     const sim = aLife();
     const place = benchIn(sim);
     const made = must<{ commissionId: string }>(sim, 'jewel.commission', { placeId: place.id, ...A_RING });
@@ -369,7 +369,7 @@ describe('changing your mind', () => {
   });
 });
 
-describe('what else a jeweller does', () => {
+describe('what else a jeweler does', () => {
   function aPiece(sim: Simulation, spec: Spec = A_RING): string {
     const place = benchIn(sim);
     const made = must<{ commissionId: string }>(sim, 'jewel.commission', { placeId: place.id, ...spec });
@@ -443,7 +443,7 @@ describe('what else a jeweller does', () => {
 describe('the vocabulary is the real one', () => {
   it('uses the GIA scales as published, D to Z and Flawless to Included', () => {
     expect(COLOUR_GRADES[0]!.name).toBe('D');
-    expect(COLOUR_GRADES[0]!.band).toBe('Colourless');
+    expect(COLOUR_GRADES[0]!.band).toBe('Colorless');
     expect(CLARITIES.map((c) => c.name)).toEqual(['FL', 'IF', 'VVS1', 'VVS2', 'VS1', 'VS2', 'SI1', 'SI2', 'I1']);
     // Better grades cost more, all the way down both scales.
     for (let i = 1; i < COLOUR_GRADES.length; i++) {

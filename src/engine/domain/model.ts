@@ -234,7 +234,7 @@ export interface Person {
   /**
    * Which rack a shop leads with, and which side the dressing room offers
    * first. Nothing is refused either way: 'both' shows everything, and even
-   * on 'men' or 'women' the whole catalogue is one toggle away and anything
+   * on 'men' or 'women' the whole catalog is one toggle away and anything
    * bought can be worn. Absent means it has never been set, and the actor or
    * actress title decides until it is.
    */
@@ -269,7 +269,7 @@ export interface Person {
 
   /** Where an NPC sits in the simulation budget. */
   tier: SimulationTier;
-  /** Archetype key used to generate consistent NPC behaviour. */
+  /** Archetype key used to generate consistent NPC behavior. */
   archetype?: string;
   /** Professional role for industry NPCs, e.g. 'casting_director'. */
   industryRole?: string;
@@ -701,7 +701,7 @@ export interface ConstructionProject {
   actualCompletionAt?: Instant;
   phaseIds: Id[];
   changeOrderIds: Id[];
-  /** Planned structures, realised as the build progresses. */
+  /** Planned structures, realized as the build progresses. */
   plannedStructures: { kind: Structure['kind']; sqft: number; floors: number }[];
 }
 
@@ -864,13 +864,13 @@ export interface RetailVisit {
   cityId: string;
   assistantId: Id;
   arrivedAt: Instant;
-  /** Catalogue ids you have picked up. */
+  /** Catalog ids you have picked up. */
   handled: string[];
-  /** Catalogue ids you have tried on, and what the mirror said. */
+  /** Catalog ids you have tried on, and what the mirror said. */
   tried: { catalogId: string; verdict: string }[];
-  /** Catalogue ids in your hands at the counter. */
+  /** Catalog ids in your hands at the counter. */
   basket: string[];
-  /** The colour chosen for each thing in the basket, where it comes in colours. */
+  /** The color chosen for each thing in the basket, where it comes in colors. */
   colours?: Record<string, string>;
   orderId?: Id;
   spent: Money;
@@ -939,7 +939,7 @@ export interface Vehicle {
   nextServiceDueMileage: number;
   storedAtPropertyId?: Id;
   soldAt?: Instant;
-  /** Litres per 100km equivalent or kWh/100mi, kept abstract. */
+  /** Liters per 100km equivalent or kWh/100mi, kept abstract. */
   efficiency: number;
   /**
    * What is in the tank, 0-100. A car from before fuel was tracked is read as
@@ -1212,7 +1212,7 @@ export interface Commission {
   piece: string;
   metal: string;
   stone: string;
-  /** Carats of the centre stone. Zero when there is no stone. */
+  /** Carats of the center stone. Zero when there is no stone. */
   carats: number;
   cut: string;
   colourGrade?: string;
@@ -1232,7 +1232,7 @@ export interface Commission {
   collectedAt?: Instant;
   /** The finished piece, once it exists. */
   assetId?: Id;
-  /** Why it was cancelled, when it was. */
+  /** Why it was canceled, when it was. */
   cancelledReason?: string;
 }
 
@@ -1273,7 +1273,7 @@ export interface Order {
   returnWindowEndsAt?: Instant;
   refundedAmount?: Money;
   giftFor?: Id;
-  /** The colourway chosen at the counter for each line that comes in colours. */
+  /** The colorway chosen at the counter for each line that comes in colors. */
   colours?: Record<string, string>;
 }
 
@@ -1967,7 +1967,7 @@ export interface PersonFact {
   /** Who it is about, when not the person holding it. */
   aboutId?: Id;
   text: string;
-  /** How much it shapes behaviour, 0-100. */
+  /** How much it shapes behavior, 0-100. */
   weight: number;
   /** When it stops mattering. Absent means it does not fade. */
   expiresAt?: Instant;
@@ -2063,7 +2063,7 @@ export type PlanStatus = 'planned' | 'attended' | 'skipped' | 'missed' | 'cancel
 /**
  * Something you decided to do at a time. Unlike a bill or a flight, it is
  * yours to move or drop. When it comes due it opens a scene, or runs the same
- * scene summarised, and what happened is recorded as one of the five states.
+ * scene summarized, and what happened is recorded as one of the five states.
  */
 export interface PersonalPlan {
   id: Id;
@@ -2166,7 +2166,7 @@ export interface SaveUniverse {
   diningVisits?: Record<Id, DiningVisit>;
   /** What was worn on which day. Absent on a save from before getting dressed. */
   wornRecords?: Record<Id, WornRecord>;
-  /** Pieces being made for you at a bench. Absent before jewellers had one. */
+  /** Pieces being made for you at a bench. Absent before jewelers had one. */
   commissions?: Record<Id, Commission>;
   /** Visits to a shop floor. Absent on a save from before shops had a floor. */
   retailVisits?: Record<Id, RetailVisit>;

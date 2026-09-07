@@ -2,8 +2,8 @@
  * Real logos for the studios and networks, from Wikidata's logo property via
  * Wikimedia Commons, normalised to one frame so they sit evenly on a card.
  *
- * Every file's licence and author are recorded in logos.json beside the
- * images; a logo whose licence Commons does not state is left out. Where an
+ * Every file's license and author are recorded in logos.json beside the
+ * images; a logo whose license Commons does not state is left out. Where an
  * item has no logo on record, the game shows a monogram instead: nothing is
  * drawn by hand to stand in for a real mark.
  *
@@ -71,7 +71,7 @@ for (let i = 0; i < allQids.length; i += 200) {
 }
 console.log(`items with a logo on record: ${logoOf.size} of ${allQids.length}`);
 
-// 2. Licence and author from Commons, once per file.
+// 2. License and author from Commons, once per file.
 const infoCache = new Map();
 async function fileInfo(file) {
   if (infoCache.has(file)) return infoCache.get(file);
@@ -110,7 +110,7 @@ for (const item of wanted) {
   try {
     const info = await fileInfo(file);
     await sleep(PAUSE);
-    if (!info || !info.licence) { delete manifest[item.id]; console.log(`${item.id.padEnd(18)} ${file}: no licence stated, skipped`); continue; }
+    if (!info || !info.licence) { delete manifest[item.id]; console.log(`${item.id.padEnd(18)} ${file}: no license stated, skipped`); continue; }
     const bytes = await fileBytes(info.url);
     await sleep(PAUSE);
     const dataUrl = `data:${info.mime.startsWith('image/svg') ? 'image/png' : info.mime};base64,${bytes.toString('base64')}`;

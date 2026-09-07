@@ -8,7 +8,7 @@
  * and you walk out knowing how tomorrow is going to feel.
  *
  * Every number is the fitness system's. This decides what to ask and in what
- * order; `gym.*` decides what it costs and what it does, and the summarised
+ * order; `gym.*` decides what it costs and what it does, and the summarized
  * version of this scene runs the same commands with sensible defaults.
  */
 

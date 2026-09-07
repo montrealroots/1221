@@ -614,7 +614,7 @@ export function registerBanking(sim: Simulation): void {
     (p, { sim: s }) => {
       const order = s.universe.standingOrders?.[p.orderId];
       if (!order || !order.active) throw new CommandError('There is no standing order like that.');
-      stopOrder(s, order, 'You cancelled it.');
+      stopOrder(s, order, 'You canceled it.');
       return { stopped: true };
     },
   );

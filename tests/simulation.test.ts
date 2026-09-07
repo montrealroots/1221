@@ -323,7 +323,7 @@ describe('migrations and validation', () => {
   });
 });
 
-describe('the decision centre', () => {
+describe('the decision center', () => {
   it('sorts overdue items above everything else', () => {
     const sim = quickSave();
     sim.advanceTo(sim.now + 120 * MS_DAY);

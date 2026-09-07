@@ -171,17 +171,17 @@ export interface Stocked {
   fittable: boolean;
   /** Whether the floor is pushing it this fortnight. */
   featured: boolean;
-  /** The colours this branch has it in, if it is a thing that comes in colours. */
+  /** The colors this branch has it in, if it is a thing that comes in colors. */
   colourways: string[];
 }
 
-/** How many colours a shop carries one thing in. */
+/** How many colors a shop carries one thing in. */
 const COLOURWAYS = 4;
 
 /**
- * The colours this branch has a thing in. Seeded on the branch, the item and
+ * The colors this branch has a thing in. Seeded on the branch, the item and
  * the fortnight, so it is the same rail all fortnight and a different rail in
- * the next town. The safe colours come first because that is how shops buy.
+ * the next town. The safe colors come first because that is how shops buy.
  */
 export function colourwaysFor(sim: Simulation, place: Place, item: CatalogItem, fortnight: number): string[] {
   if (!item.slot) return [];
@@ -196,7 +196,7 @@ export function colourwaysFor(sim: Simulation, place: Place, item: CatalogItem, 
 }
 
 /**
- * What is out on the floor today. The chain's whole catalogue is not: a shop
+ * What is out on the floor today. The chain's whole catalog is not: a shop
  * puts a rail out, and the rail changes with the fortnight, seeded so the same
  * fortnight in the same shop is the same rail.
  */

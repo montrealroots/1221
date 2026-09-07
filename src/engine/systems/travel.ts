@@ -378,7 +378,7 @@ export function registerTravel(sim: Simulation): void {
     'travel.cancel_flight',
     (p, { sim: s }) => {
       const booking = s.universe.flightBookings[p.bookingId];
-      if (!booking || booking.status !== 'booked') throw new CommandError('That booking cannot be cancelled.');
+      if (!booking || booking.status !== 'booked') throw new CommandError('That booking cannot be canceled.');
       const refund = booking.refundable
         ? booking.fare + booking.taxesFees
         : booking.departAt - s.now > 24 * MS_HOUR ? applyRate(booking.fare, 0.25) : 0;

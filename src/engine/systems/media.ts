@@ -29,7 +29,7 @@ export interface PlatformDef {
   name: string;
   tagline: string;
   formats: PostFormat[];
-  /** How much the algorithm favours new creators over existing reach, 0-1. */
+  /** How much the algorithm favors new creators over existing reach, 0-1. */
   discoveryBias: number;
   /** How heavily the algorithm rewards consistency. */
   consistencyWeight: number;
@@ -51,7 +51,7 @@ export const PLATFORMS: readonly PlatformDef[] = [
     formats: ['long_video', 'short_video', 'livestream'],
     discoveryBias: 0.35, consistencyWeight: 0.9, viralPotential: 1.0,
     baseCpm: 480, monetisationThreshold: 1000, halfLifeDays: 21,
-    bestFor: 'Depth. Watch time compounds and the back catalogue keeps earning for years.',
+    bestFor: 'Depth. Watch time compounds and the back catalog keeps earning for years.',
   },
   {
     id: 'pulse', name: 'Pulse', tagline: 'Short video, ruthless algorithm, no memory.',

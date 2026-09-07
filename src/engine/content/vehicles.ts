@@ -1,11 +1,11 @@
 /**
- * SLATE — Vehicle catalogue and parts fitment.
+ * SLATE — Vehicle catalog and parts fitment.
  *
  * Manufacturer names are real and widely known. Every specification, price and
  * option here is a SLATE calibration, not a manufacturer figure, and the
  * registry says so on every record.
  *
- * The important part is fitment: a part exists in the catalogue does NOT mean
+ * The important part is fitment: a part exists in the catalog does NOT mean
  * it can go on your car. Every part declares which makes, models, years,
  * powertrains and trims it fits, what it depends on, whether it stays street
  * legal, whether it voids warranty and what it does to performance and value.
@@ -89,7 +89,7 @@ export interface VehicleModel extends ReferenceRecord {
   kind: VehicleKind;
   bodyStyle: BodyStyle;
   segment: 'compact' | 'midsize' | 'fullsize' | 'sports' | 'super' | 'luxury' | 'utility' | 'commercial';
-  /** Model years the catalogue covers. */
+  /** Model years the catalog covers. */
   years: [number, number];
   seats: number;
   trims: VehicleTrim[];
@@ -140,7 +140,7 @@ export interface Part extends ReferenceRecord {
   category: PartCategory;
   brand: string;
   price: Money;
-  /** Shop labour hours to install. */
+  /** Shop labor hours to install. */
   labourHours: number;
   fitment: PartFitment;
   /** Other part categories that must already be installed. */
@@ -367,7 +367,7 @@ export const VEHICLE_MODELS = new Registry<VehicleModel>('vehicle_models', [
   ] }),
   model({ id: 'tesla_models', name: 'Model S', make: 'tesla', body: 'sedan', segment: 'luxury', years: [2015, 2030], seats: 5, dep: 0.21, maint: 0.7, ins: 1.4, tags: ['ev', 'luxury', 'fast'], trims: [
     trim('lr', 'Long Range', 79_000, 670, 3.1, 120, 'awd', 'ev', ['opt_premium_audio', 'opt_autopilot', 'opt_carbon_pack'], ['Glass roof', 'Premium interior']),
-    trim('plaid', 'Plaid', 94_000, 1020, 1.99, 102, 'awd', 'ev', ['opt_premium_audio', 'opt_autopilot', 'opt_carbon_pack', 'opt_track_mode'], ['Carbon fibre spoiler', 'Track mode']),
+    trim('plaid', 'Plaid', 94_000, 1020, 1.99, 102, 'awd', 'ev', ['opt_premium_audio', 'opt_autopilot', 'opt_carbon_pack', 'opt_track_mode'], ['Carbon fiber spoiler', 'Track mode']),
   ] }),
   model({ id: 'bmw_3series', name: '3 Series', make: 'bmw', body: 'sedan', segment: 'midsize', years: [2015, 2030], seats: 5, dep: 0.20, maint: 1.35, ins: 1.2, tags: ['sport sedan', 'daily'], trims: [
     trim('330i', '330i', 46_500, 255, 5.6, 30, 'rwd', 'gas', [...COMFORT, ...PERF], ['Sport seats', 'Adaptive suspension']),
@@ -401,7 +401,7 @@ export const VEHICLE_MODELS = new Registry<VehicleModel>('vehicle_models', [
     trim('autobiography', 'Autobiography', 122_000, 523, 4.3, 18, 'awd', 'gas', [...COMFORT, 'opt_rear_entertainment'], ['Meridian audio', 'Semi-aniline leather']),
   ] }),
   model({ id: 'ferrari_296', name: '296 GTB', make: 'ferrari', body: 'coupe', segment: 'super', years: [2022, 2030], seats: 2, dep: 0.06, maint: 3.2, ins: 3.0, tags: ['supercar', 'collector', 'weekend'], collectorAfter: 8, trims: [
-    trim('gtb', 'GTB', 338_000, 819, 2.9, 18, 'rwd', 'phev', ['opt_carbon_pack', 'opt_racing_seats', 'opt_lift_axle'], ['Carbon fibre package option', 'Adaptive dampers']),
+    trim('gtb', 'GTB', 338_000, 819, 2.9, 18, 'rwd', 'phev', ['opt_carbon_pack', 'opt_racing_seats', 'opt_lift_axle'], ['Carbon fiber package option', 'Adaptive dampers']),
     trim('assetto', 'Assetto Fiorano', 388_000, 819, 2.8, 18, 'rwd', 'phev', ['opt_carbon_pack', 'opt_racing_seats'], ['Multimatic dampers', 'Carbon aero']),
   ] }),
   model({ id: 'lamborghini_huracan', name: 'Huracan', make: 'lamborghini', body: 'coupe', segment: 'super', years: [2015, 2029], seats: 2, dep: 0.08, maint: 3.0, ins: 3.2, tags: ['supercar', 'loud', 'status'], collectorAfter: 10, trims: [
@@ -458,7 +458,7 @@ export const VEHICLE_MODELS = new Registry<VehicleModel>('vehicle_models', [
   ] }),
   model({ kind: 'motorcycle', id: 'bmw_r1300gs', name: 'R 1300 GS', make: 'bmw', body: 'adventure', segment: 'luxury', years: [2024, 2030], seats: 2, dep: 0.12, maint: 1.2, ins: 1.2, tags: ['adventure', 'touring', 'round the world'], trims: [
     bike('base', 'R 1300 GS', 19_000, 145, 3.4, 50, 130, MOTO_ADV, ['Boxer engine', 'Shaft drive', 'Ride modes']),
-    bike('adventure', 'R 1300 GS Adventure', 22_500, 145, 3.5, 48, 128, MOTO_ADV, ['30 litre tank', 'Adaptive ride height', 'Engine bars']),
+    bike('adventure', 'R 1300 GS Adventure', 22_500, 145, 3.5, 48, 128, MOTO_ADV, ['30 liter tank', 'Adaptive ride height', 'Engine bars']),
   ] }),
   model({ kind: 'motorcycle', id: 'bmw_s1000rr', name: 'S 1000 RR', make: 'bmw', body: 'sportbike', segment: 'super', years: [2015, 2030], seats: 1, dep: 0.14, maint: 1.4, ins: 2.0, tags: ['superbike', 'track', 'electronics'], trims: [
     bike('base', 'S 1000 RR', 18_000, 205, 2.9, 40, 188, MOTO_SPORT, ['Shift assistant', 'Cornering ABS', 'Ride modes']),
@@ -524,8 +524,8 @@ export const VEHICLE_MODELS = new Registry<VehicleModel>('vehicle_models', [
 
   // --- Boats. Real builders and models; every figure SLATE's own. ------------
   model({ kind: 'boat', id: 'bostonwhaler_montauk190', name: 'Montauk 190', make: 'bostonwhaler', body: 'center_console', segment: 'compact', years: [2015, 2030], seats: 8, dep: 0.09, maint: 0.9, ins: 0.9, tags: ['unsinkable', 'fishing', 'first boat'], collectorAfter: 25, trims: [
-    boat('150', '150 Outboard', 62_000, 150, 6.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Centre console'], { lengthFeet: 19, seats: 8, topSpeed: 38, hourlyOperating: 55_00 }),
-    boat('200', '200 Outboard', 68_000, 200, 8.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Centre console', 'T-top ready'], { lengthFeet: 19, seats: 8, topSpeed: 42, hourlyOperating: 68_00 }),
+    boat('150', '150 Outboard', 62_000, 150, 6.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Center console'], { lengthFeet: 19, seats: 8, topSpeed: 38, hourlyOperating: 55_00 }),
+    boat('200', '200 Outboard', 68_000, 200, 8.5, 'outboard', BOAT_DAY, ['Unsinkable hull', 'Center console', 'T-top ready'], { lengthFeet: 19, seats: 8, topSpeed: 42, hourlyOperating: 68_00 }),
   ] }),
   model({ kind: 'boat', id: 'bostonwhaler_outrage280', name: 'Outrage 280', make: 'bostonwhaler', body: 'center_console', segment: 'midsize', years: [2018, 2030], seats: 12, dep: 0.10, maint: 1.2, ins: 1.1, tags: ['offshore', 'fishing', 'family'], trims: [
     boat('twin300', 'Twin 300 Outboards', 330_000, 600, 26, 'outboard', BOAT_OFFSHORE, ['Hardtop', 'Joystick piloting', 'Livewell'], { lengthFeet: 28, seats: 12, topSpeed: 50, hourlyOperating: 190_00 }),
@@ -643,7 +643,7 @@ export const FACTORY_OPTIONS = new Registry<FactoryOption>('factory_options', [
   option('opt_perf_brakes', 'Performance Brake Package', 'brakes', 3_800, { zeroToSixty: -0.05, valueRetention: 0.5 }),
   option('opt_sport_suspension', 'Sport Suspension', 'suspension', 2_400, { zeroToSixty: -0.1, valueRetention: 0.45 }),
   option('opt_sport_exhaust', 'Sport Exhaust', 'exhaust', 3_200, { horsepower: 8, valueRetention: 0.55 }),
-  option('opt_carbon_pack', 'Carbon Fibre Package', 'exterior', 9_500, { zeroToSixty: -0.05, valueRetention: 0.7 }),
+  option('opt_carbon_pack', 'Carbon Fiber Package', 'exterior', 9_500, { zeroToSixty: -0.05, valueRetention: 0.7 }),
   option('opt_perf_tires', 'Performance Tires', 'tires', 1_200, { zeroToSixty: -0.1, valueRetention: 0.1 }),
   option('opt_autopilot', 'Advanced Autonomy Package', 'electronics', 8_000, { valueRetention: 0.3 }),
   option('opt_track_mode', 'Track Package', 'performance', 5_500, { zeroToSixty: -0.1, valueRetention: 0.55 }),
@@ -662,7 +662,7 @@ export const FACTORY_OPTIONS = new Registry<FactoryOption>('factory_options', [
   // Motorcycles.
   option('opt_moto_heated_grips', 'Heated Grips', 'comfort', 300, { valueRetention: 0.3 }),
   option('opt_moto_alarm', 'Factory Alarm', 'security', 350, { valueRetention: 0.3 }),
-  option('opt_moto_tpms', 'Tyre Pressure Monitoring', 'electronics', 250, { valueRetention: 0.2 }),
+  option('opt_moto_tpms', 'Tire Pressure Monitoring', 'electronics', 250, { valueRetention: 0.2 }),
   option('opt_moto_quickshifter', 'Quickshifter', 'electronics', 650, { zeroToSixty: -0.1, valueRetention: 0.5 }),
   option('opt_moto_ti_exhaust', 'Titanium Sports Exhaust', 'exhaust', 2_800, { horsepower: 8, valueRetention: 0.5 }),
   option('opt_moto_forged_wheels', 'Forged Wheels', 'wheels', 3_200, { zeroToSixty: -0.1, valueRetention: 0.6 }),
@@ -721,11 +721,11 @@ const JET: PartFitment = { kinds: ['jet'], makes: [], models: [] };
 
 export const PARTS = new Registry<Part>('parts', [
   // Cosmetic — mostly universal, mostly legal, mostly value-neutral.
-  part('paint_respray_std', 'Standard Respray', 'paint', 'Local Body Shop', 4_500, 24, UNIVERSAL, { valueDelta: -80_000, condition: 4 }, { insurance: true }, 'A colour change done properly. Non-original paint costs you at resale, every time.'),
+  part('paint_respray_std', 'Standard Respray', 'paint', 'Local Body Shop', 4_500, 24, UNIVERSAL, { valueDelta: -80_000, condition: 4 }, { insurance: true }, 'A color change done properly. Non-original paint costs you at resale, every time.'),
   part('paint_respray_show', 'Show-Quality Respray', 'paint', 'Concours Refinishing', 18_000, 80, UNIVERSAL, { valueDelta: 120_000, condition: 10 }, { insurance: true }, 'Bare-metal preparation and a finish that holds up under a spotlight.'),
   part('wrap_satin', 'Satin Vinyl Wrap', 'wrap', 'Cover Culture', 4_200, 20, UNIVERSAL, { valueDelta: 0, condition: 2 }, {}, 'Reversible, protects the paint underneath, and comes off without a trace.'),
   part('wrap_chrome', 'Chrome Vinyl Wrap', 'wrap', 'Cover Culture', 7_800, 26, UNIVERSAL, { valueDelta: 0 }, { legal: false, insurance: true }, 'Illegal in several jurisdictions for the glare it throws at other drivers.'),
-  part('ppf_full', 'Full-Body Paint Protection Film', 'ppf', 'ClearGuard', 7_500, 22, UNIVERSAL, { valueDelta: 250_000, condition: 6 }, {}, 'Invisible armour. Pays for itself on resale for anything above sixty thousand.'),
+  part('ppf_full', 'Full-Body Paint Protection Film', 'ppf', 'ClearGuard', 7_500, 22, UNIVERSAL, { valueDelta: 250_000, condition: 6 }, {}, 'Invisible armor. Pays for itself on resale for anything above sixty thousand.'),
 
   // Wheels and tires — fitment matters.
   part('wheels_forged_19', '19-inch Forged Wheels', 'wheels', 'Apex Forged', 6_400, 3, { makes: [], models: [], bodyStyles: ['sedan', 'coupe', 'hatchback', 'wagon', 'roadster'] }, { zeroToSixty: -0.08, valueRecovery: 0.35 }, { insurance: true }, 'Lighter than cast wheels, which the car feels everywhere.'),
@@ -754,7 +754,7 @@ export const PARTS = new Registry<Part>('parts', [
   part('seats_bucket', 'Fixed-Back Bucket Seats', 'seats', 'Apex Forged', 4_800, 4, { makes: [], models: [], bodyStyles: ['coupe', 'sedan', 'hatchback', 'roadster'] }, { zeroToSixty: -0.04, valueRecovery: 0.2 }, { insurance: true }, 'Twenty kilos lighter and completely unsuitable for a long drive.'),
   part('wheel_alcantara', 'Alcantara Steering Wheel', 'steering_wheel', 'Atelier Trim', 1_600, 1.5, UNIVERSAL, { valueRecovery: 0.25 }, {}, 'Better grip, and it wears visibly within two years.'),
   part('uphol_full_leather', 'Full Custom Leather Retrim', 'upholstery', 'Atelier Trim', 9_800, 40, UNIVERSAL, { valueDelta: 200_000, condition: 8 }, {}, 'Done well, it lifts an old interior completely. Done cheaply, it halves the car.'),
-  part('trim_carbon_interior', 'Carbon Fibre Interior Trim', 'trim', 'Atelier Trim', 3_400, 8, UNIVERSAL, { valueRecovery: 0.3 }, {}, 'Real weave, laid properly, in place of the plastic.'),
+  part('trim_carbon_interior', 'Carbon Fiber Interior Trim', 'trim', 'Atelier Trim', 3_400, 8, UNIVERSAL, { valueRecovery: 0.3 }, {}, 'Real weave, laid properly, in place of the plastic.'),
 
   // Electronics.
   part('info_headunit', 'Modern Head Unit Retrofit', 'infotainment', 'Northline Audio', 1_900, 4, { makes: [], models: [], years: [2015, 2021] }, { valueDelta: 90_000 }, {}, 'Only worth doing on an older car whose original screen has aged badly.'),
@@ -773,8 +773,8 @@ export const PARTS = new Registry<Part>('parts', [
   part('moto_fork_cartridges', 'Fork Cartridge Kit', 'suspension', 'Meridian Dynamics', 1_300, 4, MOTO, { zeroToSixty: -0.02, valueRecovery: 0.2 }, { voids: true }, 'The front end most bikes should have shipped with. Set up for your weight, once.'),
   part('moto_rear_shock', 'Fully Adjustable Rear Shock', 'suspension', 'Meridian Dynamics', 1_500, 3, MOTO, { valueRecovery: 0.25 }, { voids: true }, 'Preload, compression, rebound. Feels like a different motorcycle over a bad road.'),
   part('moto_brake_master', 'Radial Master Cylinder And Pads', 'brakes', 'Halton Racing', 700, 2, MOTO, { zeroToSixty: -0.02, valueRecovery: 0.2 }, { insurance: true }, 'Feel at the lever that the stock pump never had.'),
-  part('moto_tyres_sport', 'Sport Tyres', 'tires', 'Vanguard Rubber', 420, 1.5, MOTO, { zeroToSixty: -0.08, efficiency: -1 }, {}, 'Grip you can feel in the first corner and mileage you can feel at the till.'),
-  part('moto_tyres_touring', 'Touring Tyres', 'tires', 'Vanguard Rubber', 380, 1.5, MOTO, { efficiency: 1 }, {}, 'Twice the miles of the sport tyre and fine in the rain.'),
+  part('moto_tyres_sport', 'Sport Tires', 'tires', 'Vanguard Rubber', 420, 1.5, MOTO, { zeroToSixty: -0.08, efficiency: -1 }, {}, 'Grip you can feel in the first corner and mileage you can feel at the till.'),
+  part('moto_tyres_touring', 'Touring Tires', 'tires', 'Vanguard Rubber', 380, 1.5, MOTO, { efficiency: 1 }, {}, 'Twice the miles of the sport tire and fine in the rain.'),
   part('moto_seat_comfort', 'Comfort Seat', 'seats', 'Atelier Trim', 520, 0.5, MOTO, { valueRecovery: 0.3 }, {}, 'Wider and softer. The difference between three hours and six.'),
   part('moto_windscreen_touring', 'Touring Windscreen', 'windscreen', 'ClearGuard', 260, 0.5, { ...MOTO, bodyStyles: ['adventure', 'tourer', 'naked', 'classic'] }, { valueRecovery: 0.2 }, {}, 'Taller. Moves the wind from your helmet to somewhere above it.'),
   part('moto_panniers', 'Hard Panniers And Top Box', 'luggage', 'Apex Forged', 1_800, 2, { ...MOTO, bodyStyles: ['adventure', 'tourer', 'classic', 'cruiser'] }, { valueRecovery: 0.35 }, {}, 'Lockable, waterproof, and the bike becomes the thing you leave on.'),
@@ -788,8 +788,8 @@ export const PARTS = new Registry<Part>('parts', [
   part('moto_wrap', 'Vinyl Wrap', 'wrap', 'Cover Culture', 900, 8, MOTO, { valueDelta: 0, condition: 1 }, {}, 'Comes off clean when you sell.'),
 
   // --- Boats. ---
-  part('boat_antifoul', 'Antifoul And Bottom Paint', 'hull', 'Harbour Yard', 2_800, 10, BOAT, { condition: 6, topSpeed: 1, efficiency: -1 }, {}, 'A clean bottom is a knot and a tenth of the fuel. Due every season whether you like it or not.'),
-  part('boat_prop_stainless', 'Stainless Steel Propeller', 'propeller', 'Halton Marine', 1_400, 2, { ...BOAT, bodyStyles: ['center_console', 'bowrider', 'wake', 'runabout', 'express_cruiser'] }, { topSpeed: 2, zeroToSixty: -0.2, valueRecovery: 0.3 }, {}, 'Holds its shape at speed where aluminium flexes. Costs a lot more when you hit something.'),
+  part('boat_antifoul', 'Antifoul And Bottom Paint', 'hull', 'Harbor Yard', 2_800, 10, BOAT, { condition: 6, topSpeed: 1, efficiency: -1 }, {}, 'A clean bottom is a knot and a tenth of the fuel. Due every season whether you like it or not.'),
+  part('boat_prop_stainless', 'Stainless Steel Propeller', 'propeller', 'Halton Marine', 1_400, 2, { ...BOAT, bodyStyles: ['center_console', 'bowrider', 'wake', 'runabout', 'express_cruiser'] }, { topSpeed: 2, zeroToSixty: -0.2, valueRecovery: 0.3 }, {}, 'Holds its shape at speed where aluminum flexes. Costs a lot more when you hit something.'),
   part('boat_repower', 'Outboard Repower', 'engine', 'Halton Marine', 28_000, 24, { ...BOAT, bodyStyles: ['center_console', 'bowrider', 'express_cruiser'] }, { horsepower: 60, topSpeed: 5, efficiency: 3, valueRecovery: 0.45, condition: 8 }, { insurance: true }, 'New engines on an old hull. The single best thing you can do for a tired boat, and it shows in the price you get.'),
   part('boat_trim_tabs', 'Trim Tabs', 'hull', 'Meridian Marine', 1_900, 5, { ...BOAT, bodyStyles: ['center_console', 'bowrider', 'runabout', 'express_cruiser'] }, { topSpeed: 1, efficiency: -1, valueRecovery: 0.3 }, {}, 'Gets the bow down sooner and the ride flat in a chop.'),
   part('boat_chartplotter', 'Chartplotter And Sounder', 'navigation', 'Northline Marine', 4_200, 6, BOAT, { valueRecovery: 0.35 }, {}, 'Where you are, what is under you, and how to get home in the dark.'),
@@ -799,22 +799,22 @@ export const PARTS = new Registry<Part>('parts', [
   part('boat_tower', 'Wake Tower', 'tower', 'Apex Marine', 7_500, 10, { ...BOAT, bodyStyles: ['bowrider', 'runabout'] }, { valueRecovery: 0.3 }, {}, 'Turns a day boat into a tow boat. Board racks and a high tow point.'),
   part('boat_ballast_bags', 'Ballast Bags And Pumps', 'hull', 'Apex Marine', 1_900, 3, { ...BOAT, bodyStyles: ['wake', 'bowrider'] }, { valueRecovery: 0.15, topSpeed: -2 }, {}, 'Weight where you want the wake. The boat is slower everywhere else.'),
   part('boat_underwater_lights', 'Underwater Lights', 'lighting', 'Northline Marine', 2_400, 5, BOAT, { valueRecovery: 0.25 }, {}, 'Blue at the swim step at night. Fish come to look.'),
-  part('boat_teak_synthetic', 'Synthetic Teak Decking', 'deck', 'Harbour Yard', 9_800, 30, BOAT, { valueDelta: 400_000, condition: 6 }, {}, 'Looks like teak, never needs oiling, hot underfoot in August.'),
+  part('boat_teak_synthetic', 'Synthetic Teak Decking', 'deck', 'Harbor Yard', 9_800, 30, BOAT, { valueDelta: 400_000, condition: 6 }, {}, 'Looks like teak, never needs oiling, hot underfoot in August.'),
   part('boat_upholstery', 'Marine Upholstery Retrim', 'upholstery', 'Atelier Trim', 6_500, 24, BOAT, { valueDelta: 350_000, condition: 8 }, {}, 'Sun and salt take the seats first. New vinyl takes years off the boat.'),
-  part('boat_bimini', 'Bimini And Enclosure', 'canvas', 'Harbour Yard', 3_800, 6, { ...BOAT, bodyStyles: ['center_console', 'bowrider', 'runabout', 'wake', 'sailing_yacht'] }, { valueRecovery: 0.3 }, {}, 'Shade, and an enclosure for the day the weather turns.'),
-  part('boat_sails_laminate', 'Laminate Sail Wardrobe', 'canvas', 'Harbour Yard', 28_000, 12, { ...BOAT, bodyStyles: ['sailing_yacht'] }, { topSpeed: 1, valueRecovery: 0.35, condition: 4 }, {}, 'Holds its shape in a breeze where Dacron bags. A knot upwind, honestly.'),
+  part('boat_bimini', 'Bimini And Enclosure', 'canvas', 'Harbor Yard', 3_800, 6, { ...BOAT, bodyStyles: ['center_console', 'bowrider', 'runabout', 'wake', 'sailing_yacht'] }, { valueRecovery: 0.3 }, {}, 'Shade, and an enclosure for the day the weather turns.'),
+  part('boat_sails_laminate', 'Laminate Sail Wardrobe', 'canvas', 'Harbor Yard', 28_000, 12, { ...BOAT, bodyStyles: ['sailing_yacht'] }, { topSpeed: 1, valueRecovery: 0.35, condition: 4 }, {}, 'Holds its shape in a breeze where Dacron bags. A knot upwind, honestly.'),
   part('boat_generator', 'Generator Install', 'power', 'Halton Marine', 19_000, 40, { ...BOAT, bodyStyles: ['express_cruiser', 'sailing_yacht', 'motor_yacht'] }, { valueRecovery: 0.4 }, { insurance: true }, 'Air conditioning at anchor and a kettle that works. Needs a survey afterwards.'),
   part('boat_watermaker', 'Watermaker', 'power', 'Halton Marine', 14_000, 20, { ...BOAT, bodyStyles: ['sailing_yacht', 'motor_yacht'] }, { valueRecovery: 0.35 }, { requires: ['power'] }, 'Fresh water from the sea. Needs the generator to run it.'),
   part('boat_gyro', 'Gyro Stabiliser Retrofit', 'hull', 'Meridian Marine', 95_000, 120, { ...BOAT, bodyStyles: ['motor_yacht'] }, { valueRecovery: 0.55, condition: 2 }, { insurance: true }, 'Takes the roll out at anchor and under way. People who have one will not go back.'),
   part('boat_bow_thruster', 'Bow Thruster Retrofit', 'controls', 'Meridian Marine', 12_000, 40, { ...BOAT, bodyStyles: ['express_cruiser', 'sailing_yacht', 'motor_yacht'] }, { valueRecovery: 0.45 }, { insurance: true }, 'A hole through the bow and a marina you can get out of in a crosswind.'),
   part('boat_tracker', 'GPS Tracker And Geofence', 'tracking', 'ClearGuard', 600, 2, BOAT, { valueRecovery: 0.2 }, { insurance: true }, 'Tells you if the boat moves when you are not on it.'),
 
-  // --- Aircraft. Every figure SLATE's own; a completion centre would quote differently. ---
+  // --- Aircraft. Every figure SLATE's own; a completion center would quote differently. ---
   part('jet_wifi', 'Cabin Connectivity Retrofit', 'connectivity', 'Northline Aero', 320_000, 80, JET, { valueRecovery: 0.5 }, {}, 'Satellite broadband at altitude. On an older airframe it is the first thing a buyer asks about.'),
-  part('jet_avionics', 'Avionics Upgrade', 'avionics', 'Threshold Avionics', 450_000, 160, { ...JET, years: [2015, 2021] }, { valueRecovery: 0.55 }, { insurance: true }, 'A modern flight deck in an older jet. Weeks in the shop, and a different aeroplane to fly.'),
+  part('jet_avionics', 'Avionics Upgrade', 'avionics', 'Threshold Avionics', 450_000, 160, { ...JET, years: [2015, 2021] }, { valueRecovery: 0.55 }, { insurance: true }, 'A modern flight deck in an older jet. Weeks in the shop, and a different airplane to fly.'),
   part('jet_adsb', 'ADS-B Out Compliance', 'avionics', 'Threshold Avionics', 60_000, 24, { ...JET, years: [2015, 2019] }, { valueRecovery: 0.4 }, {}, 'Required in controlled airspace almost everywhere. An older airframe without it is grounded, not cheap.'),
   part('jet_evs', 'Enhanced Vision Retrofit', 'avionics', 'Threshold Avionics', 380_000, 120, JET, { valueRecovery: 0.45 }, {}, 'Infrared through the cloud on the head-up display. Lower minimums into airports that fog in.'),
-  part('jet_cabin_refurb', 'Cabin Refurbishment', 'cabin', 'Atelier Aero', 650_000, 400, JET, { valueDelta: 30_000_000, condition: 14 }, {}, 'Seats, veneer, carpet, headliner. Months at a completion centre and the cabin is new.'),
+  part('jet_cabin_refurb', 'Cabin Refurbishment', 'cabin', 'Atelier Aero', 650_000, 400, JET, { valueDelta: 30_000_000, condition: 14 }, {}, 'Seats, veneer, carpet, headliner. Months at a completion center and the cabin is new.'),
   part('jet_seats_config', 'Cabin Reconfiguration', 'seats', 'Atelier Aero', 280_000, 200, JET, { valueRecovery: 0.35 }, {}, 'A divan where four seats were, or the other way round. Certified, weighed, documented.'),
   part('jet_ife', 'Cabin Management And Entertainment', 'infotainment', 'Northline Aero', 190_000, 100, JET, { valueRecovery: 0.4 }, {}, 'Screens, lighting, shades and the galley from one panel.'),
   part('jet_galley', 'Galley Upgrade', 'cabin', 'Atelier Aero', 140_000, 80, { ...JET, bodyStyles: ['midsize_jet', 'super_midsize_jet', 'large_jet', 'long_range_jet'] }, { valueRecovery: 0.4 }, {}, 'A convection oven and an espresso machine. The crew will thank you.'),
@@ -823,8 +823,8 @@ export const PARTS = new Registry<Part>('parts', [
   part('jet_livery', 'Custom Livery', 'wrap', 'Concours Aero', 90_000, 100, JET, { valueDelta: 0 }, { conflicts: ['paint'] }, 'Stripes and a tail design over the existing paint. Yours, and the next owner\'s to remove.'),
   part('jet_winglets', 'Winglet Retrofit', 'winglets', 'Meridian Aero', 600_000, 300, { ...JET, bodyStyles: ['light_jet', 'midsize_jet', 'super_midsize_jet', 'large_jet'] }, { rangeKm: 350, efficiency: -6, valueRecovery: 0.5 }, { insurance: true }, 'Less drag at the tips, more range at the end of the day, and a shape people notice on the ramp.'),
   part('jet_aux_tank', 'Auxiliary Fuel Tank', 'power', 'Meridian Aero', 550_000, 300, { ...JET, bodyStyles: ['midsize_jet', 'super_midsize_jet', 'large_jet', 'long_range_jet'] }, { rangeKm: 700, valueRecovery: 0.45 }, { insurance: true }, 'Range at the cost of baggage space and a supplemental type certificate.'),
-  part('jet_engine_program', 'Engine Maintenance Programme Enrolment', 'engine', 'Halton Aero', 900_000, 8, JET, { valueRecovery: 0.85, condition: 4 }, { insurance: true }, 'The engines are covered by the hour from now on. A jet not on a programme sells for a great deal less.'),
-  part('jet_tracker', 'Flight Data And Tracking Suite', 'tracking', 'ClearGuard', 45_000, 16, JET, { valueRecovery: 0.3 }, { insurance: true }, 'Where the aeroplane is, what the crew did with it, and what the engines saw.'),
+  part('jet_engine_program', 'Engine Maintenance Program Enrolment', 'engine', 'Halton Aero', 900_000, 8, JET, { valueRecovery: 0.85, condition: 4 }, { insurance: true }, 'The engines are covered by the hour from now on. A jet not on a program sells for a great deal less.'),
+  part('jet_tracker', 'Flight Data And Tracking Suite', 'tracking', 'ClearGuard', 45_000, 16, JET, { valueRecovery: 0.3 }, { insurance: true }, 'Where the airplane is, what the crew did with it, and what the engines saw.'),
 ]);
 
 // ---------------------------------------------------------------------------
@@ -852,7 +852,7 @@ export interface FitmentVerdict {
 /**
  * Decides whether a part may be installed. This is the guard that stops a
  * player bolting a Ferrari brake kit onto a Corolla because both exist in the
- * catalogue.
+ * catalog.
  */
 export function checkFitment(part: Part, subject: FitmentSubject): FitmentVerdict {
   const reasons: string[] = [];
@@ -907,7 +907,7 @@ function categoryLabel(category: PartCategory): string {
   return category.replace(/_/g, ' ');
 }
 
-/** Parts that could fit a given vehicle, for the modification catalogue UI. */
+/** Parts that could fit a given vehicle, for the modification catalog UI. */
 export function partsFor(subject: FitmentSubject, category?: PartCategory): Part[] {
   return PARTS.all()
     .filter((p) => (!category || p.category === category))
@@ -929,7 +929,7 @@ export function trimOf(modelId: string, trimId: string): VehicleTrim | undefined
   return VEHICLE_MODELS.get(modelId)?.trims.find((t) => t.id === trimId);
 }
 
-/** What kind of thing a catalogue model is. Anything unknown is a car. */
+/** What kind of thing a catalog model is. Anything unknown is a car. */
 export function kindOf(modelId: string): VehicleKind {
   return VEHICLE_MODELS.get(modelId)?.kind ?? 'car';
 }

@@ -2,7 +2,7 @@
  * The city you move through.
  *
  * Going somewhere takes time in traffic, in a car with fuel in it or a cab you
- * pay for. Eating is a menu and a bill. Filling up is litres and money.
+ * pay for. Eating is a menu and a bill. Filling up is liters and money.
  * Sleeping and showering need somewhere you have a right to be. The landmarks
  * are real and say so; everything else is SLATE's and says that.
  */
@@ -40,7 +40,7 @@ function aLife(seed: string, options: { car?: boolean; cityId?: string } = {}): 
     void models;
     const listing = sim.execute<{ vehicleId: Id }>({ kind: 'veh.purchase', payload: { modelId: 'accord', trimId: 'ex', condition: 'new', acquisition: 'cash' } });
     if (!listing.ok) {
-      // Whatever the catalogue's first model is, buy that instead.
+      // Whatever the catalog's first model is, buy that instead.
       const any = sim.execute<{ vehicleId: Id }>({ kind: 'veh.refresh_inventory', payload: {} });
       void any;
     }
@@ -323,7 +323,7 @@ describe('what is here', () => {
 
 
 describe('being seen', () => {
-  it('nobody notices an unknown, and a famous face gets recognised', () => {
+  it('nobody notices an unknown, and a famous face gets recognized', () => {
     const unknown = aLife('seen-unknown');
     unknown.sim.player.reputation.publicFame = 2;
     const bar = placesIn(unknown.sim.player.currentLocationId).find((p) => p.kind === 'bar')!;

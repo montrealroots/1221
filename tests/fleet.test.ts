@@ -93,7 +93,7 @@ function pick(sim: Simulation, label: RegExp) {
 
 beforeAll(async () => { await loadAllSections(); });
 
-describe('the catalogue', () => {
+describe('the catalog', () => {
   it('carries real makes for every kind, with every figure marked as a calibration', () => {
     const byKind = (kind: VehicleKind) => VEHICLE_MODELS.all().filter((m) => m.kind === kind);
     expect(byKind('motorcycle').length).toBeGreaterThanOrEqual(20);
@@ -491,7 +491,7 @@ describe('saves from before', () => {
     expect(result.migrated).toBe(true);
     expect(result.steps.some((s) => s.includes('stamped with their kind'))).toBe(true);
     for (const v of Object.values(sim.universe.vehicles)) expect(v.kind).toBe('car');
-    // Stamped from the catalogue, never guessed: the car lots' stock is cars,
+    // Stamped from the catalog, never guessed: the car lots' stock is cars,
     // and anything the new lots carried is what it is.
     for (const l of Object.values(sim.universe.vehicleListings)) expect(l.kind).toBe(kindOf(l.catalogId.split(':')[0]!));
     expect(Object.values(sim.universe.vehicleListings).filter((l) => l.kind === 'car').length).toBeGreaterThan(5);

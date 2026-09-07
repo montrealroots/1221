@@ -45,7 +45,7 @@ export function TravelWorkspace() {
   const [driveConfirm, setDriveConfirm] = useState<{ toCityId: string; label: string; arriveAt: number; missed: CalendarEntry[] } | null>(null);
   const [driveSearch, setDriveSearch] = useState('');
 
-  // The real neighbourhood: pull in every town in the country you stand in.
+  // The real neighborhood: pull in every town in the country you stand in.
   useEffect(() => {
     const countryId = here?.countryId;
     if (!countryId || isCountryLoaded(countryId)) return;

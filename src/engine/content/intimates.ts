@@ -11,7 +11,7 @@
  * hundred men's socks, a hundred women's. Every brand and every product line
  * is a real one. Every price, quality figure and wear rate is SLATE's own
  * calibration against local cost of living and is labelled as such — the same
- * standard as the rest of the catalogue, and the same honesty about which
+ * standard as the rest of the catalog, and the same honesty about which
  * half is fact and which half is the game's own arithmetic.
  */
 
@@ -153,9 +153,9 @@ export const MENS_UNDERWEAR: readonly RealGood[] = [
   un('u_m_prada_logo_trunk', 'Prada Logo Cotton Trunk', 'Prada', 'trunk', 120_00, 'men', 85),
   un('u_m_balenciaga_boxer', 'Balenciaga Logo Cotton Boxer Brief', 'Balenciaga', 'boxer brief', 165_00, 'men', 84),
   // --- Sport, technical and merino ------------------------------------------------------------------
-  un('u_m_ua_tech_boxerjock', 'Under Armour Tech 6" Boxerjock', 'Under Armour', 'boxer brief', 25_00, 'men', 74),
-  un('u_m_ua_charged_cotton', 'Under Armour Charged Cotton 6" Boxerjock', 'Under Armour', 'boxer brief', 22_00, 'men', 72),
-  un('u_m_ua_isochill', 'Under Armour Iso-Chill Boxerjock', 'Under Armour', 'boxer brief', 32_00, 'men', 78),
+  un('u_m_ua_tech_boxerjock', 'Under Armor Tech 6" Boxerjock', 'Under Armor', 'boxer brief', 25_00, 'men', 74),
+  un('u_m_ua_charged_cotton', 'Under Armor Charged Cotton 6" Boxerjock', 'Under Armor', 'boxer brief', 22_00, 'men', 72),
+  un('u_m_ua_isochill', 'Under Armor Iso-Chill Boxerjock', 'Under Armor', 'boxer brief', 32_00, 'men', 78),
   un('u_m_nike_drifit_trunk', 'Nike Dri-FIT Essential Micro Trunk', 'Nike', 'trunk', 26_00, 'men', 73),
   un('u_m_nike_ultra_stretch', 'Nike Dri-FIT Ultra Stretch Boxer Brief', 'Nike', 'boxer brief', 30_00, 'men', 75),
   un('u_m_adidas_active_flex', 'Adidas Active Flex Cotton Trunk', 'Adidas', 'trunk', 24_00, 'men', 70),
@@ -205,12 +205,12 @@ export const WOMENS_UNDERWEAR: readonly RealGood[] = [
   un('u_w_natori_bliss', 'Natori Bliss Perfection Contour Bra', 'Natori', 'bra', 68_00, 'women', 85),
   un('u_w_chantelle_norah', 'Chantelle Norah Comfort Bra', 'Chantelle', 'bra', 82_00, 'women', 88),
   un('u_w_chantelle_cest', 'Chantelle C Magnifique Bra', 'Chantelle', 'bra', 78_00, 'women', 87),
-  un('u_w_simone_perele_delice', 'Simone Pérèle Délice 3D Moulded Bra', 'Simone Pérèle', 'bra', 95_00, 'women', 90),
-  un('u_w_simone_perele_caresse', 'Simone Pérèle Caresse Moulded Bra', 'Simone Pérèle', 'bra', 88_00, 'women', 89),
+  un('u_w_simone_perele_delice', 'Simone Pérèle Délice 3D Molded Bra', 'Simone Pérèle', 'bra', 95_00, 'women', 90),
+  un('u_w_simone_perele_caresse', 'Simone Pérèle Caresse Molded Bra', 'Simone Pérèle', 'bra', 88_00, 'women', 89),
   un('u_w_aubade_bahia', 'Aubade Bahia Half Cup Bra', 'Aubade', 'bra', 130_00, 'women', 91),
   un('u_w_empreinte_cassiopee', 'Empreinte Cassiopée Full Cup Bra', 'Empreinte', 'bra', 155_00, 'women', 93),
   un('u_w_primadonna_deauville', 'PrimaDonna Deauville Full Cup Bra', 'PrimaDonna', 'bra', 145_00, 'women', 92),
-  un('u_w_freya_idol', 'Freya Idol Moulded Balcony Bra', 'Freya', 'bra', 58_00, 'women', 82),
+  un('u_w_freya_idol', 'Freya Idol Molded Balcony Bra', 'Freya', 'bra', 58_00, 'women', 82),
   un('u_w_fantasie_fusion', 'Fantasie Fusion Full Cup Bra', 'Fantasie', 'bra', 62_00, 'women', 84),
   un('u_w_panache_envy', 'Panache Envy Balconnet Bra', 'Panache', 'bra', 55_00, 'women', 82),
   un('u_w_elomi_matilda', 'Elomi Matilda Plunge Bra', 'Elomi', 'bra', 60_00, 'women', 83),
@@ -368,7 +368,7 @@ export const MENS_SOCKS: readonly RealGood[] = [
   sk('s_m_nike_spark_lightweight', 'Nike Spark Lightweight No Show Running Sock', 'Nike', 'sport', 18_00, 'men', 80, 16),
   sk('s_m_adidas_cushioned', 'Adidas Cushioned Crew Sock', 'Adidas', 'sport', 12_00, 'men', 72, 20),
   sk('s_m_adidas_alphaskin', 'Adidas Alphaskin Ankle Sock', 'Adidas', 'sport', 14_00, 'men', 76, 18),
-  sk('s_m_ua_heatgear_sock', 'Under Armour HeatGear No Show Sock', 'Under Armour', 'sport', 14_00, 'men', 74, 16),
+  sk('s_m_ua_heatgear_sock', 'Under Armor HeatGear No Show Sock', 'Under Armor', 'sport', 14_00, 'men', 74, 16),
   sk('s_m_puma_crew_sock', 'Puma Sport Crew Sock', 'Puma', 'sport', 10_00, 'men', 68, 20),
   sk('s_m_nb_run_sock', 'New Balance Run Flat Knit No Show Sock', 'New Balance', 'sport', 14_00, 'men', 76, 16),
   sk('s_m_lulu_power_stride', 'Lululemon Power Stride Crew Sock', 'Lululemon', 'sport', 18_00, 'men', 82, 22),
@@ -394,7 +394,7 @@ export const MENS_SOCKS: readonly RealGood[] = [
   sk('s_m_sockwell_circulator', 'Sockwell Circulator Compression Sock', 'Sockwell', 'sport', 26_00, 'men', 82, 22),
   sk('s_m_heat_holders', 'Heat Holders Original Thermal Sock', 'Heat Holders', 'boot', 16_00, 'men', 74, 18, WINTER),
   sk('s_m_silverpoint_sock', 'Silverpoint Comfort Hiker Sock', 'Silverpoint', 'boot', 18_00, 'men', 78, 18),
-  sk('s_m_rohner_fibre_tech', 'Rohner Fibre Tech Trekking Sock', 'Rohner', 'boot', 24_00, 'men', 84, 20),
+  sk('s_m_rohner_fibre_tech', 'Rohner Fiber Tech Trekking Sock', 'Rohner', 'boot', 24_00, 'men', 84, 20),
   sk('s_m_kunert_sock', 'Kunert Sensual Cotton Sock', 'Kunert', 'dress', 18_00, 'men', 80, 56),
   sk('s_m_camano_sock', 'Camano Comfort Cotton Sock', 'Camano', 'casual', 10_00, 'men', 70, 34),
   // --- Everyday multipacks, the ones that vanish ------------------------------------------------------
@@ -502,7 +502,7 @@ export const WOMENS_SOCKS: readonly RealGood[] = [
   sk('s_w_nike_everyday_plus', 'Nike Everyday Plus Cushioned Ankle Sock', 'Nike', 'sport', 14_00, 'women', 76, 20),
   sk('s_w_nike_one_sock', 'Nike One Dri-FIT Crew Sock', 'Nike', 'sport', 16_00, 'women', 78, 20),
   sk('s_w_adidas_superlite_w', 'Adidas Superlite No Show Sock', 'Adidas', 'sport', 12_00, 'women', 72, 18),
-  sk('s_w_ua_essential_w', 'Under Armour Essential No Show Sock', 'Under Armour', 'sport', 14_00, 'women', 74, 16),
+  sk('s_w_ua_essential_w', 'Under Armor Essential No Show Sock', 'Under Armor', 'sport', 14_00, 'women', 74, 16),
   sk('s_w_balega_hidden_w', 'Balega Hidden Comfort Sock', 'Balega', 'sport', 16_00, 'women', 84, 18),
   sk('s_w_feetures_w', 'Feetures Elite Max Cushion Mini Crew Sock', 'Feetures', 'sport', 20_00, 'women', 84, 18),
   sk('s_w_darn_tough_w_hiker', 'Darn Tough Women’s Hiker Micro Crew Sock', 'Darn Tough', 'sport', 26_00, 'women', 92, 20),

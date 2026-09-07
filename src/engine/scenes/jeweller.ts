@@ -1,5 +1,5 @@
 /**
- * The jeweller's.
+ * The jeweler's.
  *
  * Two things happen in this room and they are not the same thing. You can look
  * at what is in the case, which is shopping. Or you can sit down at the far end
@@ -10,7 +10,7 @@
  * The design is deliberately a conversation with an order to it — piece, metal,
  * stone, grade, setting — because that is the order a real one goes in, and
  * because each answer changes what the next question sensibly offers. The
- * jeweller says the awkward things out loud before you pay: that titanium
+ * jeweler says the awkward things out loud before you pay: that titanium
  * cannot be sized, that an emerald is oiled, that a pearl in a ring is a
  * decision. It never refuses the order. It is your money and your piece.
  */
@@ -69,18 +69,18 @@ function placeOf(sim: Simulation, session: SceneSession): Place {
 export const JEWELLER_SCENE = defineScene({
   id: 'life.jeweller',
   version: 1,
-  title: 'The Jeweller',
+  title: 'The Jeweler',
   placeBound: true,
 
   available(sim) {
     const place = placeById(sim.player.currentLocationId, sim.player.currentPlaceId ?? '');
-    if (!isJeweller(place)) return { ok: false, reason: 'You are not at a jeweller.' };
+    if (!isJeweller(place)) return { ok: false, reason: 'You are not at a jeweler.' };
     return { ok: true };
   },
 
   start(sim) {
     const place = placeById(sim.player.currentLocationId, sim.player.currentPlaceId ?? '');
-    if (!isJeweller(place)) throw new CommandError('You are not at a jeweller.');
+    if (!isJeweller(place)) throw new CommandError('You are not at a jeweler.');
     return {
       node: 'counter',
       context: {
@@ -239,7 +239,7 @@ export const JEWELLER_SCENE = defineScene({
           return {
             title: 'Not A Graded Stone',
             eyebrow: stoneOf(spec.stone).name,
-            text: 'The colour and clarity scales are diamond scales. This one is judged by eye, and by whoever is holding it.',
+            text: 'The color and clarity scales are diamond scales. This one is judged by eye, and by whoever is holding it.',
             choices: [{ id: 'skip_grade', label: 'Go On', tone: 'primary', aliases: ['on', 'next'] }],
             canSkip: true,
           };
@@ -247,12 +247,12 @@ export const JEWELLER_SCENE = defineScene({
         const stage = String(session.context['gradeStage'] ?? 'colour');
         if (stage === 'colour') {
           return {
-            title: 'Colour',
+            title: 'Color',
             eyebrow: 'The GIA Scale, D To Z',
-            text: said || line(sim, 'design', 'colour', {}, `${session.id}:colour`, false),
+            text: said || line(sim, 'design', 'colour', {}, `${session.id}:color`, false),
             choices: [
               ...COLOUR_GRADES.map((g) => ({
-                id: `colour:${g.id}`, label: `${g.name} — ${g.band}`, aliases: [g.id], detail: g.about,
+                id: `color:${g.id}`, label: `${g.name} — ${g.band}`, aliases: [g.id], detail: g.about,
               })),
               { id: 'back', label: 'Back', aliases: ['back'] },
             ],
@@ -366,7 +366,7 @@ export const JEWELLER_SCENE = defineScene({
         });
         session.context['line'] = result.regular
           ? 'They bring out three things without being asked, because they remember what you looked at last time.'
-          : 'Everything comes out one at a time, on a grey cloth, and goes back before the next one appears.';
+          : 'Everything comes out one at a time, on a gray cloth, and goes back before the next one appears.';
         return;
       }
       if (choiceId === 'services') {
@@ -445,7 +445,7 @@ export const JEWELLER_SCENE = defineScene({
         ctx.go('setting');
         return;
       }
-      if (choiceId.startsWith('colour:')) {
+      if (choiceId.startsWith('color:')) {
         session.context['colourGrade'] = colourGradeOf(choiceId.slice(7)).id;
         session.context['gradeStage'] = 'clarity';
         session.context['line'] = '';

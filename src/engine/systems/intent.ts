@@ -87,7 +87,7 @@ function overlap(typed: string[], choice: IntentChoice): number {
  * Resolves typed text against the choices on screen.
  *
  * Exact match on a label, id or alias wins. A bare number or ordinal picks by
- * position. A runtime phrase — leave, skip, help — is honoured when typed on
+ * position. A runtime phrase — leave, skip, help — is honored when typed on
  * its own. Otherwise the words are compared: a clear best is taken, two close
  * ones are offered back, and anything below the bar is unsupported.
  */

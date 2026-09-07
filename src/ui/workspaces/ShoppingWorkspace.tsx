@@ -88,7 +88,7 @@ export function ShoppingWorkspace() {
             flush
           >
             {storefronts.length === 0 ? (
-              <Empty title="No Shop Floor Here" body="Nothing in this city has a door SLATE knows the inside of. The catalogue below still delivers." />
+              <Empty title="No Shop Floor Here" body="Nothing in this city has a door SLATE knows the inside of. The catalog below still delivers." />
             ) : (
               <div className="list">
                 {storefronts.slice(0, 8).map(({ place, retailer, standing, here }) => (

@@ -1,7 +1,7 @@
 /**
- * SLATE — Commerce catalogue.
+ * SLATE — Commerce catalog.
  *
- * Retailers, groceries, prepared food, clothing, watches, jewellery, furniture,
+ * Retailers, groceries, prepared food, clothing, watches, jewelry, furniture,
  * electronics and services. Brands are original to SLATE; prices are
  * calibrated to plausible ranges and then adjusted by the local cost-of-living
  * index at the point of sale.
@@ -28,7 +28,7 @@ export interface Retailer extends ReferenceRecord {
   type: 'grocery' | 'department' | 'boutique' | 'electronics' | 'furniture' | 'jeweller' | 'restaurant' | 'service' | 'dealer' | 'online';
   /** 1 = discount, 5 = luxury. */
   tier: 1 | 2 | 3 | 4 | 5;
-  /** Multiplier on catalogue base price. */
+  /** Multiplier on catalog base price. */
   priceMultiplier: number;
   categories: string[];
   /** Cities where it operates. Empty means everywhere. */
@@ -138,7 +138,7 @@ const g = (id: string, name: string, sub: string, price: number, shelf: number, 
   item({ id, name, category: 'groceries', subcategory: sub, basePrice: price, brand: 'Market', tags: ['grocery', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment });
 
 /**
- * The items SLATE invented before the real catalogue arrived, kept so an old
+ * The items SLATE invented before the real catalog arrived, kept so an old
  * save's owned assets still resolve. They are not offered on any shop floor.
  */
 const LEGACY_ITEMS: readonly CatalogItem[] = [
@@ -193,7 +193,7 @@ const LEGACY_ITEMS: readonly CatalogItem[] = [
   item({ id: 'oxfords', name: 'Oxford Shoes', category: 'footwear', subcategory: 'formal', basePrice: 620_00, brand: "Halliday's", tags: ['formal', 'resoleable'], quality: 84, depreciation: 0.10, slot: 'shoes', formality: 90, seasons: ['Spring', 'Autumn', 'Winter'] }),
   item({ id: 'heels_designer', name: 'Designer Heels', category: 'footwear', subcategory: 'formal', basePrice: 985_00, brand: 'Northfield & Co.', tags: ['formal', 'red carpet'], quality: 88, depreciation: 0.22, slot: 'shoes', formality: 92, seasons: ['Spring', 'Summer', 'Autumn', 'Winter'] }),
 
-  // --- Watches and jewellery ---
+  // --- Watches and jewelry ---
   item({ id: 'watch_field', name: 'Field Watch', category: 'watch', subcategory: 'tool', basePrice: 425_00, brand: 'Kestrel Instruments', tags: ['everyday'], quality: 58, depreciation: 0.20 }),
   item({ id: 'watch_diver', name: 'Dive Watch', category: 'watch', subcategory: 'sport', basePrice: 3_900_00, brand: 'Meridian', tags: ['everyday', 'holds value'], quality: 82, depreciation: 0.02 }),
   item({ id: 'watch_dress', name: 'Dress Watch', category: 'watch', subcategory: 'dress', basePrice: 8_600_00, brand: 'Meridian', tags: ['formal', 'holds value'], quality: 88, depreciation: 0.01 }),

@@ -39,7 +39,7 @@ const LINES: DialogueLine[] = [
   room('kitchen', 'good', 2, 'Somebody spent money in here, and spent it well.'),
   room('kitchen', 'excellent', 1, 'The kitchen is the house. You could stop the viewing here and it would be a fair decision.'),
   room('kitchen', 'excellent', 2, 'Every surface in here has been thought about. {first} lets you have the silence.'),
-  room('living', 'worn', 1, 'The living room carpet remembers a dog and a previous colour.'),
+  room('living', 'worn', 1, 'The living room carpet remembers a dog and a previous color.'),
   room('living', 'worn', 2, 'A ceiling stain in the corner that {first} does not mention until you look at it.'),
   room('living', 'fair', 1, 'A living room that would look better with your things in it and nothing on the walls.'),
   room('living', 'fair', 2, 'Good proportions, tired paint. That is a weekend, not a builder.'),
@@ -56,7 +56,7 @@ const LINES: DialogueLine[] = [
   room('bedroom', 'excellent', 1, 'You could sleep in this room tonight and wake up better.'),
   room('bedroom', 'excellent', 2, 'The bedroom has a view somebody paid for, and it will be in the price.'),
   room('bathroom', 'worn', 1, 'The bathroom grout has given up. {first} says "cosmetic", which is what they say.'),
-  room('bathroom', 'worn', 2, 'A bathroom from a decade that liked that colour.'),
+  room('bathroom', 'worn', 2, 'A bathroom from a decade that liked that color.'),
   room('bathroom', 'fair', 1, 'A bathroom that is fine. Water pressure is decent; you check.'),
   room('bathroom', 'fair', 2, 'Tiles that are not yours, plumbing that is sound.'),
   room('bathroom', 'good', 1, 'A good bathroom, recently done, done properly.'),
@@ -103,7 +103,7 @@ const LINES: DialogueLine[] = [
   A('call', 'counter', 'walked.2', '"Your call. I will tell them. If they come down later I will let you know, and they sometimes do."', { when: { result: ['walked'], tone: ['warm'] } }),
 
   // --- The inspection, room by room with the inspector -------------------------------------
-  A('inspect', 'meet', 'kerb.1', '{first} is at the kerb with a clipboard and a torch, and has already been under the house. "Walk with me. I will show you what I wrote down."', { when: { flags: ['work'] }, speaker: 'narrator', role: 'inspector' }),
+  A('inspect', 'meet', 'kerb.1', '{first} is at the curb with a clipboard and a torch, and has already been under the house. "Walk with me. I will show you what I wrote down."', { when: { flags: ['work'] }, speaker: 'narrator', role: 'inspector' }),
   A('inspect', 'meet', 'kerb.2', '{first} has the report in a folder and the look of somebody who has seen worse. "None of this is a surprise for a house this age. Come and see."', { when: { flags: ['work'] }, speaker: 'narrator', role: 'inspector' }),
   A('inspect', 'meet', 'clean.1', '{first} is leaning on the van with the report already signed. "Short list. You bought well, or you got lucky."', { when: { flags: ['clean'] }, speaker: 'narrator', role: 'inspector' }),
   A('inspect', 'meet', 'clean.2', '{first} hands you two pages where there are usually six. "Nothing I would lose sleep over. I looked hard."', { when: { flags: ['clean'] }, speaker: 'narrator', role: 'inspector' }),

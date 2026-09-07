@@ -3,7 +3,7 @@
  *
  * Three passes, all resumable and all cached to disk:
  *   facts   — born, from, citizenship, what they do, who they work for
- *   credits — every film and programme they are on, in every capacity
+ *   credits — every film and program they are on, in every capacity
  *   awards  — every award won and every nomination, with the work it was for
  *
  * Episodes are left out on purpose: a filmography is the things somebody made,

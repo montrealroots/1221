@@ -3,7 +3,7 @@
  *
  * HOME for immediate life, WORLD for discovery, workspaces for deep work, and
  * Go Anywhere over the top of all of it. Context is preserved: breadcrumbs,
- * recent destinations and favourites all survive moving around.
+ * recent destinations and favorites all survive moving around.
  */
 
 import { useGame } from '@/app/game-context';

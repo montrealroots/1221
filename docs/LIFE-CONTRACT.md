@@ -79,7 +79,7 @@ chain in different countries, because it really does.
 
 ## 4. Getting dressed
 
-**The ask:** "actually getting to wear the things in my wardrobe — this colour
+**The ask:** "actually getting to wear the things in my wardrobe — this color
 shirt with these pants and this jewellery, or this suit."
 
 **What that means concretely.** Not an outfit score. A dressing act:

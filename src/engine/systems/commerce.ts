@@ -272,7 +272,7 @@ export function createAsset(
   spec: {
     ownerId: Id; catalogItem: CatalogItem; purchasePrice: Money;
     acquiredVia: OwnedAsset['acquiredVia']; giftedById?: Id; ownerKind?: 'person' | 'company';
-    /** The colourway chosen at the counter, where the thing comes in colours. */
+    /** The colorway chosen at the counter, where the thing comes in colors. */
     colour?: string;
   },
 ): OwnedAsset {

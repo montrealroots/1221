@@ -80,7 +80,7 @@ export function toneOf(person: Person): Tone {
 /**
  * How they answer a move, in their own voice: the library's line for the
  * move and the outcome, filtered by tone, and sometimes a second sentence
- * of colour. Seeded, so the same evening reads the same twice; recorded,
+ * of color. Seeded, so the same evening reads the same twice; recorded,
  * so the same person does not say the same thing next week.
  */
 export function replyFor(sim: Simulation, move: MoveKind, result: MoveResult, tone: Tone, salt: string | number): string {

@@ -1,7 +1,7 @@
 /**
- * The jeweller's — the counter, the loupe, and the five questions.
+ * The jeweler's — the counter, the loupe, and the five questions.
  *
- * A jeweller talks differently from a shop assistant. They are slower, they
+ * A jeweler talks differently from a shop assistant. They are slower, they
  * are specific, and the good ones tell you the awkward thing before you pay
  * rather than after. Nothing here refuses an order or hurries a decision; it
  * is a room where people are used to somebody taking a month to make up their
@@ -47,8 +47,8 @@ const LINES: DialogueLine[] = [
   D('design', 'piece', 'ask.5', 'They draw three shapes without looking down and turn the pad towards you.'),
 
   D('design', 'metal', 'ask.1', '“And in what? That decides more than people think.”'),
-  D('design', 'metal', 'ask.2', 'A tray of sample bands, all the same shape and none of them the same colour.'),
-  D('design', 'metal', 'ask.3', '“Try them against your hand. Half of this is what your skin does to the colour.”'),
+  D('design', 'metal', 'ask.2', 'A tray of sample bands, all the same shape and none of them the same color.'),
+  D('design', 'metal', 'ask.3', '“Try them against your hand. Half of this is what your skin does to the color.”'),
   D('design', 'metal', 'ask.4', '“Whatever you pick, I will tell you what it will do in ten years. That is free.”'),
   D('design', 'metal', 'ask.5', '“Heavier is not better. It is just heavier. It does last longer, though.”'),
 
@@ -70,7 +70,7 @@ const LINES: DialogueLine[] = [
   D('design', 'cut', 'ask.4', 'They tilt the tray so the light moves across it, which is the entire argument.'),
   D('design', 'cut', 'ask.5', '“Ignore what is fashionable. You are keeping this longer than the fashion lasts.”'),
 
-  D('design', 'colour', 'ask.1', '“Colour next. D at the top, Z at the bottom, and almost nobody can tell D from F.”'),
+  D('design', 'colour', 'ask.1', '“Color next. D at the top, Z at the bottom, and almost nobody can tell D from F.”'),
   D('design', 'colour', 'ask.2', '“In yellow gold you can drop two grades and save real money without anybody knowing.”'),
   D('design', 'colour', 'ask.3', 'They lay a stone face down on white card, which is the only way the scale means anything.'),
   D('design', 'colour', 'ask.4', '“G is where I would spend. Above it you are paying for a certificate.”'),
@@ -100,7 +100,7 @@ const LINES: DialogueLine[] = [
 
   // --- Looking, and leaving without buying -------------------------------------------------------------
   D('browse', 'case', 'look.1', 'Everything comes out one at a time and goes back before the next one appears. That is deliberate.'),
-  D('browse', 'case', 'look.2', 'The cloth is grey because everything looks better on grey, and everybody in the trade knows it.'),
+  D('browse', 'case', 'look.2', 'The cloth is gray because everything looks better on gray, and everybody in the trade knows it.'),
   D('browse', 'case', 'look.3', 'You put something on, hold your hand out, and do the thing everybody does with their fingers spread.'),
   D('browse', 'case', 'look.4', 'The light in here is doing at least a third of the work and nobody pretends otherwise.'),
   D('browse', 'case', 'look.5', 'You ask the price of one thing and are shown three others in the same breath.'),

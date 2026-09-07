@@ -1,5 +1,5 @@
 /**
- * SLATE — colour, cloth and what the room expects you to wear.
+ * SLATE — color, cloth and what the room expects you to wear.
  *
  * None of this is fashion advice and none of it is a rule anybody has to
  * follow. It is the set of conventions a mirror in a game can reasonably
@@ -12,7 +12,7 @@
 /**
  * The pegs an outfit hangs on, in the order you get dressed.
  *
- * Jewellery is four pegs rather than one, because earrings, a chain, a ring
+ * Jewelry is four pegs rather than one, because earrings, a chain, a ring
  * and a bracelet are worn at the same time and a single slot would make you
  * choose between them. `jewellery` stays for everything that is none of
  * those — cufflinks, a brooch, a body chain — and because saves written
@@ -27,22 +27,22 @@ export type Slot = (typeof SLOTS)[number];
 export const SLOT_LABEL: Readonly<Record<Slot, string>> = {
   base: 'Underneath', top: 'Top', bottom: 'Bottom', outfit: 'One Piece', outerwear: 'Coat',
   shoes: 'Shoes', socks: 'Socks', belt: 'Belt', watch: 'Watch',
-  earrings: 'Earrings', necklace: 'Necklace', ring: 'Ring', bracelet: 'Bracelet', jewellery: 'Jewellery',
+  earrings: 'Earrings', necklace: 'Necklace', ring: 'Ring', bracelet: 'Bracelet', jewellery: 'Jewelry',
   bag: 'Bag', eyewear: 'Eyewear', hat: 'Hat', scarf: 'Scarf', gloves: 'Gloves', tie: 'Tie',
 };
 
-/** The four pegs the one old jewellery slot became, plus the one it kept. */
+/** The four pegs the one old jewelry slot became, plus the one it kept. */
 export const JEWELLERY_SLOTS: readonly Slot[] = ['earrings', 'necklace', 'ring', 'bracelet', 'jewellery'];
 
 /**
- * Which peg a piece of jewellery hangs on, from what kind of thing it is.
+ * Which peg a piece of jewelry hangs on, from what kind of thing it is.
  *
- * Used when the catalogue does not say, and when a save written before the
- * split is opened: a necklace that has been sitting in the one jewellery slot
+ * Used when the catalog does not say, and when a save written before the
+ * split is opened: a necklace that has been sitting in the one jewelry slot
  * moves to its own without the player losing it.
  */
 export function jewellerySlotFor(subcategory: string, name = ''): Slot {
-  // The subcategory is what the catalogue says the thing is, so it decides on
+  // The subcategory is what the catalog says the thing is, so it decides on
   // its own first. Reading the name at the same time gets it wrong on pieces
   // whose names borrow another peg's word: a Panthère Chain Bracelet is a
   // bracelet, and a Diamonds By The Yard Necklace is a necklace.
@@ -75,7 +75,7 @@ export const ESSENTIAL_SLOTS: readonly Slot[] = ['top', 'bottom', 'shoes'];
 export const COVERED_BY_OUTFIT: readonly Slot[] = ['top', 'bottom'];
 
 // ---------------------------------------------------------------------------
-// Colour
+// Color
 // ---------------------------------------------------------------------------
 
 export type ColourFamily = 'neutral' | 'earth' | 'cool' | 'warm' | 'bold' | 'pastel' | 'metal';
@@ -94,8 +94,8 @@ export const COLOURS: readonly Colour[] = [
   // --- Neutrals ---------------------------------------------------------------
   { id: 'black', name: 'Black', family: 'neutral', depth: 96, volume: 20 },
   { id: 'charcoal', name: 'Charcoal', family: 'neutral', depth: 82, volume: 14 },
-  { id: 'grey', name: 'Grey', family: 'neutral', depth: 55, volume: 10 },
-  { id: 'light_grey', name: 'Light Grey', family: 'neutral', depth: 30, volume: 10 },
+  { id: 'grey', name: 'Gray', family: 'neutral', depth: 55, volume: 10 },
+  { id: 'light_grey', name: 'Light Gray', family: 'neutral', depth: 30, volume: 10 },
   { id: 'white', name: 'White', family: 'neutral', depth: 4, volume: 22 },
   { id: 'off_white', name: 'Off White', family: 'neutral', depth: 12, volume: 12 },
   { id: 'ecru', name: 'Ecru', family: 'neutral', depth: 18, volume: 10 },
@@ -149,23 +149,23 @@ export function colourOf(id: string | undefined): Colour {
 }
 
 /**
- * Said out loud wherever a colourway is shown, because it is a calibration and
- * not a fact about the product. Which colours a real garment actually shipped
+ * Said out loud wherever a colorway is shown, because it is a calibration and
+ * not a fact about the product. Which colors a real garment actually shipped
  * in, in which season, is not public data at this scale.
  */
-export const COLOUR_NOTE = 'The colourway is the one your copy came in, chosen by SLATE from what the piece would plausibly be made in. It is not a claim about the season the maker actually offered.';
+export const COLOUR_NOTE = 'The colorway is the one your copy came in, chosen by SLATE from what the piece would plausibly be made in. It is not a claim about the season the maker actually offered.';
 
 /**
- * The colour a thing is when nobody chose one.
+ * The color a thing is when nobody chose one.
  *
- * A shop floor sells colourways and records which one you carried out. Every
- * other way of acquiring clothes — an order placed from the catalogue, a gift,
- * a save written before colour existed — has to decide for itself, and
+ * A shop floor sells colorways and records which one you carried out. Every
+ * other way of acquiring clothes — an order placed from the catalog, a gift,
+ * a save written before color existed — has to decide for itself, and
  * deciding black every time gives you a wardrobe that looks like a funeral.
  *
- * So: if the name states a colour, that is the colour. Otherwise take one from
+ * So: if the name states a color, that is the color. Otherwise take one from
  * what that slot is usually made in, keyed to the item's own id, so the same
- * product is always the same colour in every save and nothing shifts under a
+ * product is always the same color in every save and nothing shifts under a
  * player who reloads.
  */
 export function defaultColour(itemId: string, name: string, slot: string): string {
@@ -179,11 +179,11 @@ export function defaultColour(itemId: string, name: string, slot: string): strin
   return palette[hash % palette.length]!;
 }
 
-/** Longest first, so "Light Grey" is not read as "Grey" and "Royal Blue" not as "Blue". */
+/** Longest first, so "Light Gray" is not read as "Gray" and "Royal Blue" not as "Blue". */
 const COLOURS_BY_NAME_LENGTH: readonly Colour[] = [...COLOURS].sort((a, b) => b.name.length - a.name.length);
 
 /**
- * What each slot tends to come in. Not every colour in the book: a belt is not
+ * What each slot tends to come in. Not every color in the book: a belt is not
  * mustard and a suit is not fuchsia, whatever the runway did last season.
  */
 const SLOT_PALETTE: Readonly<Record<string, readonly string[]>> = {
@@ -209,7 +209,7 @@ const SLOT_PALETTE: Readonly<Record<string, readonly string[]>> = {
   default: ['black', 'navy', 'charcoal', 'grey', 'brown', 'olive'],
 };
 
-/** Colours that go with everything, so a wardrobe of them is never wrong. */
+/** Colors that go with everything, so a wardrobe of them is never wrong. */
 export const SAFE_COLOURS: readonly string[] = ['black', 'charcoal', 'grey', 'navy', 'white', 'off_white', 'ecru'];
 
 // ---------------------------------------------------------------------------

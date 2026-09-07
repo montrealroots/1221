@@ -578,7 +578,7 @@ export function placeVehicle(sim: Simulation, vehicle: Vehicle, accountId?: Id):
   if (option.kind === 'street' || option.kind === 'driveway' || option.kind === 'tie_down') {
     sim.notify({
       category: 'vehicles', title: `The ${vehicle.make} ${vehicle.model} Is ${option.kind === 'tie_down' ? 'On The Ramp' : option.kind === 'street' ? 'On The Street' : 'On The Driveway'}`,
-      body: option.kind === 'tie_down' ? `No hangar for it at ${option.where}, so it is tied down outside. The weather will get at it.` : `No room in the garage at ${option.where}. It is outside, and the weather and the neighbourhood will get at it.`,
+      body: option.kind === 'tie_down' ? `No hangar for it at ${option.where}, so it is tied down outside. The weather will get at it.` : `No room in the garage at ${option.where}. It is outside, and the weather and the neighborhood will get at it.`,
       importance: 42, route: '/workspace/vehicles', refType: 'vehicle', refId: vehicle.id,
     });
   }

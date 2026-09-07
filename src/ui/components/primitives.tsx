@@ -53,8 +53,8 @@ export function Stat({
 }
 
 /**
- * A meter always shows its number. Colour alone is never the signal, because
- * colour alone is not accessible.
+ * A meter always shows its number. Color alone is never the signal, because
+ * color alone is not accessible.
  */
 export function Meter({
   label, value, max = 100, tone, hint, invert,

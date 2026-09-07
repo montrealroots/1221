@@ -5,10 +5,10 @@
  * A plan is different: it is yours. You put it on the calendar, you can move
  * it or drop it, and when the time comes it asks whether you want to play it
  * out, get it done, or let it go. What happened is recorded as exactly one of
- * planned, attended, skipped, missed or cancelled.
+ * planned, attended, skipped, missed or canceled.
  *
  * A plan can carry a scene. Attending opens that scene; getting it done runs
- * the same scene summarised, by the same rules; the scene finishing is what
+ * the same scene summarized, by the same rules; the scene finishing is what
  * marks the plan attended — not the click that opened it.
  */
 

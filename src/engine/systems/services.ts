@@ -96,7 +96,7 @@ export const INSURANCE_PRODUCTS: readonly InsuranceProduct[] = [
   { line: 'auto', label: 'Auto', basePremium: 0, valueRate: 0.0038, deductible: 1_000_00, coverageLimit: 500_000_00, coinsurance: 1, description: 'Required to drive. Undisclosed modifications are grounds for denial.' },
   { line: 'renters', label: 'Renters', basePremium: 28_00, deductible: 500_00, coverageLimit: 60_000_00, coinsurance: 1, description: 'Covers your things, not the building.' },
   { line: 'homeowners', label: 'Homeowners', basePremium: 0, valueRate: 0.00055, deductible: 2_500_00, coverageLimit: 0, coinsurance: 1, description: 'Required by any lender. Covers the structure and the contents.' },
-  { line: 'valuables', label: 'Valuables', basePremium: 0, valueRate: 0.0016, deductible: 500_00, coverageLimit: 0, coinsurance: 1, description: 'Scheduled cover for watches, jewellery and art. Worth having the moment a single item passes fifteen thousand.' },
+  { line: 'valuables', label: 'Valuables', basePremium: 0, valueRate: 0.0016, deductible: 500_00, coverageLimit: 0, coinsurance: 1, description: 'Scheduled cover for watches, jewelry and art. Worth having the moment a single item passes fifteen thousand.' },
   { line: 'travel', label: 'Travel', basePremium: 68_00, deductible: 250_00, coverageLimit: 50_000_00, coinsurance: 1, description: 'Cancellations, medical abroad and lost bags.' },
   { line: 'life', label: 'Life', basePremium: 74_00, deductible: 0, coverageLimit: 1_000_000_00, coinsurance: 1, description: 'For the people who depend on you.' },
   { line: 'umbrella', label: 'Umbrella Liability', basePremium: 42_00, deductible: 0, coverageLimit: 5_000_000_00, coinsurance: 1, description: 'Sits above your other policies. Cheap, and the thing that protects an estate.' },
@@ -246,7 +246,7 @@ export function registerServices(sim: Simulation): void {
     'health.cancel',
     (p, { sim: s }) => {
       const appointment = s.universe.appointments[p.appointmentId];
-      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment cannot be cancelled.');
+      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment cannot be canceled.');
       const lateFee = appointment.at - s.now < 24 * MS_DAY / 24 ? Math.round(appointment.cost * 0.35) : 0;
       appointment.status = 'cancelled';
       if (appointment.scheduledItemId) s.timeline.cancel(appointment.scheduledItemId, s.now);

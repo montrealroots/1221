@@ -18,7 +18,7 @@ import { execSync } from 'node:child_process';
  * Words that stay lowercase inside a real name.
  *
  * SLATE's own labels are Title Case to the letter — "D23 Day At Angel
- * Stadium". A real organisation's name is spelled the way that organisation
+ * Stadium". A real organization's name is spelled the way that organization
  * spells it: "The Producers Guild of America Awards", "The Globe and Mail",
  * "Sight and Sound". Capitalising those would not be tidier, it would be
  * wrong, so the joining words inside a name are allowed — never at the front.

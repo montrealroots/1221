@@ -220,7 +220,7 @@ export const REAL_GROCERIES: readonly RealGood[] = national([
   dr('d_liquid_iv', 'Liquid I.V. Hydration Multiplier', 'Liquid I.V.', 'beverage', 24_99, 540, 'Box', 62),
 
   // --- Beer ----------------------------------------------------------------------------------
-  dr('d_guinness', 'Guinness Draught', 'Guinness', 'alcohol', 12_99, 300, 'Four Pack', 82),
+  dr('d_guinness', 'Guinness Draft', 'Guinness', 'alcohol', 12_99, 300, 'Four Pack', 82),
   dr('d_heineken', 'Heineken', 'Heineken', 'alcohol', 11_49, 240, 'Six Pack', 62),
   dr('d_stella', 'Stella Artois', 'Stella Artois', 'alcohol', 11_99, 240, 'Six Pack', 62),
   dr('d_peroni', 'Peroni Nastro Azzurro', 'Peroni', 'alcohol', 12_49, 240, 'Six Pack', 66),
@@ -364,7 +364,7 @@ export const REAL_CLOTHING: readonly RealGood[] = [
   cl('c_suitsupply_havana', 'Suitsupply Havana Suit', 'Suitsupply', 'suit', 599_00, 'outfit', 84, 74, 0.24, SPRING_AUTUMN_WINTER),
   cl('c_hugo_boss_suit', 'BOSS Slim Fit Wool Suit', 'BOSS', 'suit', 895_00, 'outfit', 84, 76, 0.24, SPRING_AUTUMN_WINTER),
   cl('c_paul_smith_suit', 'Paul Smith Soho Fit Suit', 'Paul Smith', 'suit', 1_450_00, 'outfit', 86, 84, 0.20, SPRING_AUTUMN_WINTER),
-  cl('c_thom_browne_suit', 'Thom Browne Classic Grey Suit', 'Thom Browne', 'suit', 3_290_00, 'outfit', 88, 92, 0.18, SPRING_AUTUMN_WINTER),
+  cl('c_thom_browne_suit', 'Thom Browne Classic Gray Suit', 'Thom Browne', 'suit', 3_290_00, 'outfit', 88, 92, 0.18, SPRING_AUTUMN_WINTER),
   cl('c_tom_ford_oconnor', "Tom Ford O'Connor Suit", 'Tom Ford', 'suit', 5_390_00, 'outfit', 92, 96, 0.16, ALL_YEAR),
   cl('c_brioni_suit', 'Brioni Wool Suit', 'Brioni', 'suit', 7_450_00, 'outfit', 94, 98, 0.14, ALL_YEAR),
   cl('c_kiton_suit', 'Kiton Cashmere Suit', 'Kiton', 'suit', 9_800_00, 'outfit', 95, 99, 0.14, ALL_YEAR),
@@ -765,7 +765,7 @@ export const REAL_WATCHES: readonly RealGood[] = [
   // --- Independents and the very top -------------------------------------------------------------------
   wa('w_fpjourne_bleu', 'F.P. Journe Chronomètre Bleu', 'F.P. Journe', 'dress', 42_000_00, 99, -0.10, ['grail', 'collector']),
   wa('w_fpjourne_octa', 'F.P. Journe Octa Automatique Lune', 'F.P. Journe', 'complication', 89_000_00, 100, -0.06, ['collector']),
-  wa('w_moser_streamliner', 'H. Moser & Cie Streamliner Centre Seconds', 'H. Moser & Cie', 'sport', 24_900_00, 96, -0.02, ['collector']),
+  wa('w_moser_streamliner', 'H. Moser & Cie Streamliner Center Seconds', 'H. Moser & Cie', 'sport', 24_900_00, 96, -0.02, ['collector']),
   wa('w_bulgari_octo', 'Bulgari Octo Finissimo Automatic', 'Bulgari', 'dress', 15_400_00, 94, 0.02),
   wa('w_piaget_altiplano', 'Piaget Altiplano Ultimate', 'Piaget', 'dress', 27_400_00, 95, 0.01),
   wa('w_piaget_polo', 'Piaget Polo Date', 'Piaget', 'sport', 13_100_00, 92, 0.03),
@@ -789,7 +789,7 @@ const jw = (
   tags: ['jewellery', sub, ...tags], quality, depreciation,
   // Earrings, a necklace, a ring and a bracelet each have their own peg, so a
   // piece goes on the one it belongs to rather than competing for a single
-  // jewellery slot. Anything that is none of the four keeps that slot.
+  // jewelry slot. Anything that is none of the four keeps that slot.
   slot: jewellerySlotFor(sub, name), formality: 60, seasons: ALL_YEAR,
 });
 
@@ -874,7 +874,7 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_ipad_pro', 'Apple iPad Pro 13 Inch', 'Apple', 'tablet', 1_299_00, 92, 0.36, ['work', 'sides']),
   el('e_ipad_air', 'Apple iPad Air', 'Apple', 'tablet', 599_00, 84, 0.38, ['sides']),
   el('e_kindle_paperwhite', 'Amazon Kindle Paperwhite', 'Amazon', 'tablet', 159_00, 78, 0.34, ['reading']),
-  el('e_kobo_libra', 'Kobo Libra Colour', 'Kobo', 'tablet', 219_00, 80, 0.32, ['reading']),
+  el('e_kobo_libra', 'Kobo Libra Color', 'Kobo', 'tablet', 219_00, 80, 0.32, ['reading']),
   el('e_vision_pro', 'Apple Vision Pro', 'Apple', 'headset', 3_499_00, 90, 0.50),
 
   // --- Stills cameras ---------------------------------------------------------------------------------
@@ -923,7 +923,7 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_osmo_pocket', 'DJI Osmo Pocket 3', 'DJI', 'camera', 519_00, 84, 0.30, ['content']),
   el('e_gopro13', 'GoPro Hero 13 Black', 'GoPro', 'camera', 399_00, 84, 0.32, ['content']),
   el('e_sachtler_tripod', 'Sachtler Flowtech 75 Tripod', 'Sachtler', 'support', 2_195_00, 92, 0.12, ['production']),
-  el('e_manfrotto_tripod', 'Manfrotto 055 Aluminium Tripod', 'Manfrotto', 'support', 269_00, 78, 0.16),
+  el('e_manfrotto_tripod', 'Manfrotto 055 Aluminum Tripod', 'Manfrotto', 'support', 269_00, 78, 0.16),
 
   // --- Sound -------------------------------------------------------------------------------------------------
   el('e_shure_sm7b', 'Shure SM7B', 'Shure', 'audio', 399_00, 92, 0.08, ['podcast', 'voice']),
@@ -1381,7 +1381,7 @@ export const REAL_EQUIPMENT: readonly RealGood[] = [
   eq('q_vessel_bag', 'Vessel Player IV Golf Bag', 'Vessel', 'golf', 495_00, 92, 0.14, ['golf']),
 ];
 
-/** The rest of the jewellery box: the houses above, plus the ones people actually wear. */
+/** The rest of the jewelry box: the houses above, plus the ones people actually wear. */
 export const REAL_JEWELLERY_MORE: readonly RealGood[] = [
   jw('j_cartier_love_ring', 'Cartier Love Ring', 'Cartier', 'ring', 2_060_00, 92, 0.00),
   jw('j_cartier_clou_ring', 'Cartier Juste Un Clou Ring', 'Cartier', 'ring', 2_450_00, 92, 0.00),
@@ -1529,11 +1529,11 @@ export const REAL_APPLIANCES_MORE: readonly RealGood[] = [
  * Art. The artists are real and named as public record, and so is the kind of
  * work each of them makes. What is offered here is a work of that kind, priced
  * on SLATE's own calibration of that artist's market: it is not a specific
- * catalogued piece, it is not a claim that any particular work is for sale,
+ * cataloged piece, it is not a claim that any particular work is for sale,
  * and it is not an appraisal. Editions and prints are where most of this
  * market actually is, and that is where most of this list sits.
  */
-export const ART_NOTE = 'A real artist, and a work of the kind they make. The piece, its availability and its price are SLATE\'s own; no specific catalogued work is being offered.';
+export const ART_NOTE = 'A real artist, and a work of the kind they make. The piece, its availability and its price are SLATE\'s own; no specific cataloged work is being offered.';
 
 const ar = (
   id: string, name: string, artist: string, sub: string, price: number,
@@ -1626,7 +1626,7 @@ export const REAL_ART: readonly RealGood[] = [
   ar('r_tuymans_painting', 'Luc Tuymans Oil On Canvas', 'Luc Tuymans', 'painting', 1_300_000_00, 95, -0.02, ['investment']),
   ar('r_owens_painting', 'Laura Owens Mixed Media On Canvas', 'Laura Owens', 'painting', 640_000_00, 93, -0.02),
   ar('r_katz_painting', 'Alex Katz Oil On Linen', 'Alex Katz', 'painting', 780_000_00, 94, -0.02, ['investment']),
-  ar('r_scully_painting', 'Sean Scully Oil On Aluminium', 'Sean Scully', 'painting', 690_000_00, 93, -0.01),
+  ar('r_scully_painting', 'Sean Scully Oil On Aluminum', 'Sean Scully', 'painting', 690_000_00, 93, -0.01),
   ar('r_riley_painting', 'Bridget Riley Acrylic On Canvas', 'Bridget Riley', 'painting', 2_400_000_00, 98, -0.03, ['investment', 'insured']),
   ar('r_kusama_infinity', 'Yayoi Kusama Infinity Nets Painting', 'Yayoi Kusama', 'painting', 3_900_000_00, 99, -0.04, ['investment', 'insured']),
   ar('r_nara_painting', 'Yoshitomo Nara Acrylic On Canvas', 'Yoshitomo Nara', 'painting', 4_600_000_00, 98, -0.05, ['investment', 'insured']),
@@ -1697,7 +1697,7 @@ export const REAL_BOOKS: readonly RealGood[] = [
   bk('b_actors_art_craft', "The Actor's Art And Craft", 'William Esper', 'acting', 20_00, 90),
   bk('b_year_of_the_king', 'Year Of The King', 'Antony Sher', 'acting', 22_00, 90),
   bk('b_empty_space', 'The Empty Space', 'Peter Brook', 'acting', 17_00, 96),
-  bk('b_towards_poor_theatre', 'Towards A Poor Theatre', 'Jerzy Grotowski', 'acting', 30_00, 90),
+  bk('b_towards_poor_theatre', 'Towards A Poor Theater', 'Jerzy Grotowski', 'acting', 30_00, 90),
   bk('b_letters_to_a_young_actor', 'Letters To A Young Actor', 'Robert Brustein', 'acting', 18_00, 84),
 
   // --- The business, and how it really went ----------------------------------------------------------------

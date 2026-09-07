@@ -346,7 +346,7 @@ describe('a marina with nothing free', () => {
     expect(sim.universe.vehicles[mine.id]!.keeping?.placeId).toBe(marina.id);
     expect(sim.universe.vehicles[mine.id]!.keeping?.monthly).toBe(taken.monthly);
     expect(sim.universe.berthWaitlists![waitlistId]!.status).toBe('taken');
-    // The deposit comes back and the offer's clock is cancelled.
+    // The deposit comes back and the offer's clock is canceled.
     expect(sim.ledger.account(sim.player.primaryAccountId!).balance).toBe(before + entry.deposit);
     expect(sim.timeline.pending().some((i) => i.kind === 'stor.offer_lapse' && i.refId === entry.id)).toBe(false);
     expect(Object.values(sim.universe.decisions).some((d) => d.refType === 'berth' && d.refId === entry.id && !d.resolvedAt)).toBe(false);

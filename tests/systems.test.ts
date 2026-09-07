@@ -76,7 +76,7 @@ describe('vehicle fitment', () => {
     expect(sim.universe.vehicles[vehicle.id]?.warranty.voided).toBe(true);
   });
 
-  it('never lets the catalogue offer a part that would not fit', () => {
+  it('never lets the catalog offer a part that would not fit', () => {
     const sim = quickSave();
     for (const model of VEHICLE_MODELS.all().slice(0, 6)) {
       const trim = model.trims[0];
@@ -88,7 +88,7 @@ describe('vehicle fitment', () => {
         purchasePrice: trim.msrp, acquisition: 'cash', condition: 100,
       });
       const s = fitmentSubject(sim, vehicle);
-      // A part the catalogue offers must at minimum pass the vehicle-shape checks.
+      // A part the catalog offers must at minimum pass the vehicle-shape checks.
       for (const part of PARTS.all()) {
         const verdict = checkFitment(part, s);
         if (verdict.fits) {

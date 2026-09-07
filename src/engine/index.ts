@@ -678,7 +678,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
     steps.push(
       dropped.length > 0
-        ? `The film and television half of the game was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'}, closed ${closed} decision${closed === 1 ? '' : 's'} and cleared the credits on ${uncredited} ${uncredited === 1 ? 'person' : 'people'}. None of it can be recovered from this save.`
+        ? `The film and television half of the game was removed. Dropped ${dropped.join(', ')}, canceled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'}, closed ${closed} decision${closed === 1 ? '' : 's'} and cleared the credits on ${uncredited} ${uncredited === 1 ? 'person' : 'people'}. None of it can be recovered from this save.`
         : 'The film and television half of the game was removed. This save had nothing in it.',
     );
   }
@@ -784,7 +784,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
     steps.push(
       dropped.length > 0
-        ? `Employment was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
+        ? `Employment was removed. Dropped ${dropped.join(', ')}, canceled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
         : 'Employment was removed. This save had none.',
     );
   }
@@ -879,7 +879,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   if (from < 38) {
     // Schema 38: vehicles and listings carry what kind of thing they are.
-    // Everything from before is a car, and is stamped so from the catalogue
+    // Everything from before is a car, and is stamped so from the catalog
     // rather than guessed; nothing else about it is touched.
     for (const vehicle of Object.values(universe.vehicles)) {
       if (!vehicle.kind) vehicle.kind = kindOf(vehicle.catalogId);
@@ -920,24 +920,24 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Schema 42: a room has a host and a server, a shop floor has somebody on
     // it, and both remember you. Nothing before this had a sitting or a visit
     // recorded, so both collections start empty; the storefronts themselves are
-    // read from the catalogue rather than stored, so no save is rewritten.
+    // read from the catalog rather than stored, so no save is rewritten.
     universe.diningVisits ??= {};
     universe.retailVisits ??= {};
     steps.push('Rooms and shop floors ready to be walked into.');
   }
 
   if (from < 43) {
-    // Schema 43: clothes have a colour, a cloth, a state of cleanliness and a
+    // Schema 43: clothes have a color, a cloth, a state of cleanliness and a
     // history of being worn, and a person has what they currently have on.
     // Everything already owned keeps its price, its condition and its slot; the
     // new fields are filled in on load from what the thing is, so no wardrobe
     // is emptied and nothing is re-bought.
     universe.wornRecords ??= {};
-    steps.push('Wardrobe given colour, cloth and a memory of being worn.');
+    steps.push('Wardrobe given color, cloth and a memory of being worn.');
   }
 
   if (from < 44) {
-    // Schema 44: jewellery stopped being one peg. Earrings, a necklace, a ring
+    // Schema 44: jewelry stopped being one peg. Earrings, a necklace, a ring
     // and a bracelet are worn at the same time, so each has its own slot, and
     // everything already owned is moved to the right one from what it is.
     // Nothing is lost: a piece that is none of the four keeps the old slot.
@@ -953,11 +953,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     // Anything on you that has moved slot is still on you: `wearing` is a list
     // of ids, so the peg changing underneath it does not take it off.
-    steps.push(`Jewellery split into earrings, necklace, ring and bracelet (${moved} moved).`);
+    steps.push(`Jewelry split into earrings, necklace, ring and bracelet (${moved} moved).`);
   }
 
   if (from < 45) {
-    // Schema 45: a jeweller will make you something. Nothing already owned
+    // Schema 45: a jeweler will make you something. Nothing already owned
     // changes; the collection simply starts empty.
     universe.commissions ??= {};
     steps.push('Commissions ready: a bench will now make you a piece.');

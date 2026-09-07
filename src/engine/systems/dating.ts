@@ -522,8 +522,8 @@ function cancel(sim: Simulation, date: DateRecord, shortNotice: boolean): void {
   sim.timeline.cancel(date.scheduledItemId, sim.now);
   sim.timeline.cancelFor('date', date.id, sim.now);
   applyDelta(rel.dimensions, shortNotice ? { affection: -4, conflict: 3, trust: -1 } : { affection: -1 });
-  addMemory(sim, rel, { kind: 'date_cancelled', summary: shortNotice ? 'You cancelled on the day.' : 'You cancelled, with notice.', impact: shortNotice ? -4 : -1, decayDays: shortNotice ? 120 : 30, refType: 'date', refId: date.id });
-  rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: shortNotice ? `Cancelled ${activityOf(date).label.toLowerCase()} on the day.` : `Cancelled ${activityOf(date).label.toLowerCase()}, with notice.`, weight: shortNotice ? 40 : 15, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 90 * MS_DAY });
+  addMemory(sim, rel, { kind: 'date_cancelled', summary: shortNotice ? 'You canceled on the day.' : 'You canceled, with notice.', impact: shortNotice ? -4 : -1, decayDays: shortNotice ? 120 : 30, refType: 'date', refId: date.id });
+  rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: shortNotice ? `Canceled ${activityOf(date).label.toLowerCase()} on the day.` : `Canceled ${activityOf(date).label.toLowerCase()}, with notice.`, weight: shortNotice ? 40 : 15, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 90 * MS_DAY });
   sim.emit('date.cancelled', { dateId: date.id, personId: other.id, shortNotice });
 }
 

@@ -28,7 +28,7 @@ function aLife(seed = 'dress'): Simulation {
   return sim;
 }
 
-/** Puts a real catalogue garment in the wardrobe, in the colour named. */
+/** Puts a real catalog garment in the wardrobe, in the color named. */
 function own(sim: Simulation, catalogId: string, colour: string): OwnedAsset {
   const item = CATALOG.require(catalogId);
   const asset = createAsset(sim, {
@@ -46,7 +46,7 @@ function put(sim: Simulation, assetId: Id): void {
 beforeAll(async () => { await loadAllSections(); });
 
 describe('the wardrobe', () => {
-  it('gives every garment a colour, a cloth and a state of cleanliness', () => {
+  it('gives every garment a color, a cloth and a state of cleanliness', () => {
     const sim = aLife();
     const jeans = own(sim, 'c_levis_501', 'indigo');
     expect(jeans.wardrobe?.colour).toBe('indigo');
@@ -66,9 +66,9 @@ describe('the wardrobe', () => {
     expect(guessMaterial('Eres Les Essentiels Swimsuit', 'outfit', 'sport')).toBe('nylon');
   });
 
-  it('gives a thing a colour it would really come in, and the same one every time', () => {
+  it('gives a thing a color it would really come in, and the same one every time', () => {
     // Before this, everything was written out as black, which is a placeholder
-    // rather than a choice. The colour has to be stable across loads or a
+    // rather than a choice. The color has to be stable across loads or a
     // wardrobe would reshuffle itself under a player who reopened the save.
     const once = defaultColour('c_suitsupply_havana', 'Suitsupply Havana Suit', 'outfit');
     expect(defaultColour('c_suitsupply_havana', 'Suitsupply Havana Suit', 'outfit')).toBe(once);
@@ -76,9 +76,9 @@ describe('the wardrobe', () => {
     // A suit does not come in fuchsia; a belt does not come in mustard.
     expect(['navy', 'charcoal', 'black', 'grey', 'burgundy', 'forest']).toContain(once);
     expect(['black', 'brown', 'chocolate', 'tan']).toContain(defaultColour('c_belt', 'Anderson\'s Woven Belt', 'belt'));
-    // And when the name states a colour, that is the colour, longest match first.
+    // And when the name states a color, that is the color, longest match first.
     expect(defaultColour('x', 'Drake\'s Navy Wool Tie', 'top')).toBe('navy');
-    expect(defaultColour('x', 'Sunspel Light Grey Sweatshirt', 'top')).toBe('light_grey');
+    expect(defaultColour('x', 'Sunspel Light Gray Sweatshirt', 'top')).toBe('light_grey');
     expect(defaultColour('x', 'Ralph Lauren Royal Blue Oxford', 'top')).toBe('royal_blue');
   });
 
@@ -417,7 +417,7 @@ describe('the dress code', () => {
     }
   });
 
-  it('knows a colour by its family', () => {
+  it('knows a color by its family', () => {
     expect(colourOf('brown').family).toBe('earth');
     expect(colourOf('navy').family).toBe('cool');
     expect(colourOf('gold').family).toBe('metal');

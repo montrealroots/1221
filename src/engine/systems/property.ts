@@ -84,7 +84,7 @@ export const DESIGN_THEMES: readonly DesignTheme[] = [
   { id: 'industrial', name: 'Industrial', description: 'Concrete, steel and honest structure left visible.', coherenceBonus: 1.10, palette: ['Concrete', 'Black', 'Rust', 'Ash'], materials: ['Polished Concrete', 'Blackened Steel', 'Reclaimed Timber'] },
   { id: 'classic', name: 'Classic', description: 'Mouldings, symmetry and furniture that outlives you.', coherenceBonus: 1.22, palette: ['Ivory', 'Navy', 'Oxblood', 'Gilt'], materials: ['Mahogany', 'Marble', 'Silk', 'Brass'] },
   { id: 'coastal', name: 'Coastal', description: 'Light, air, and finishes that survive salt.', coherenceBonus: 1.12, palette: ['White', 'Sea Glass', 'Sand', 'Driftwood'], materials: ['Bleached Oak', 'Rattan', 'Cotton', 'Limestone'] },
-  { id: 'maximalist', name: 'Maximalist', description: 'Pattern, colour and nothing left plain.', coherenceBonus: 1.08, palette: ['Emerald', 'Fuchsia', 'Gold', 'Cobalt'], materials: ['Velvet', 'Lacquer', 'Malachite', 'Brass'] },
+  { id: 'maximalist', name: 'Maximalist', description: 'Pattern, color and nothing left plain.', coherenceBonus: 1.08, palette: ['Emerald', 'Fuchsia', 'Gold', 'Cobalt'], materials: ['Velvet', 'Lacquer', 'Malachite', 'Brass'] },
 ];
 
 // ---------------------------------------------------------------------------
@@ -104,7 +104,7 @@ interface PhaseSpec {
 }
 
 export const CONSTRUCTION_PHASES: readonly PhaseSpec[] = [
-  { phase: 'concept', name: 'Concept And Programme', dependsOn: [], budgetShare: 0.005, days: 14, riskRate: 0.05 },
+  { phase: 'concept', name: 'Concept And Program', dependsOn: [], budgetShare: 0.005, days: 14, riskRate: 0.05 },
   { phase: 'architect', name: 'Appoint Architect', dependsOn: ['concept'], budgetShare: 0.02, days: 21, riskRate: 0.08 },
   { phase: 'design', name: 'Schematic Design', dependsOn: ['architect'], budgetShare: 0.045, days: 45, riskRate: 0.18 },
   { phase: 'plans', name: 'Construction Documents', dependsOn: ['design'], budgetShare: 0.035, days: 40, riskRate: 0.14 },
@@ -605,7 +605,7 @@ export function finishRoom(sim: Simulation, p: FinishRoomSpec): { cost: Money; q
   return { cost, quality: room.quality };
 }
 
-/** The price of one catalogue item delivered to a property, before anything is paid. */
+/** The price of one catalog item delivered to a property, before anything is paid. */
 export function furnishingPrice(sim: Simulation, catalogId: string, propertyId: Id, retailerId = 'formhouse'): Money {
   const property = sim.universe.properties[propertyId];
   if (!property || !CATALOG.get(catalogId)) return 0;

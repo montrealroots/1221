@@ -30,7 +30,7 @@ export interface CalendarLegendEntry {
   description: string;
 }
 
-/** One legend, used by every calendar surface so colours never disagree. */
+/** One legend, used by every calendar surface so colors never disagree. */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'work', label: 'Work', colour: '#6b8cae', description: 'Shifts and ordinary employment.' },
   { category: 'career', label: 'Career', colour: '#c9a227', description: 'Auditions, interviews, meetings and breakdowns.' },

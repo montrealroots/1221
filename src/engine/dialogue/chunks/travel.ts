@@ -48,7 +48,7 @@ const LINES: DialogueLine[] = [
   N('gate', 'board', 'ontime.2', 'The gate fills, the gate empties, and you are in the tube with the cold air and the small window.', { when: { result: ['ontime'] } }),
   N('gate', 'board', 'delayed.1', 'The board changes while you watch it. {delay} minutes, then another announcement that says the same thing in more words.', { when: { result: ['delayed'] } }),
   N('gate', 'board', 'delayed.2', 'Delayed. A gate full of people learning to sit on the floor. {delay} minutes that become a coffee, then a second one.', { when: { result: ['delayed'] } }),
-  N('gate', 'board', 'cancelled.1', 'Cancelled. The word goes up on the board and a queue forms at the desk before the announcement finishes.', { when: { result: ['cancelled'] } }),
+  N('gate', 'board', 'cancelled.1', 'Canceled. The word goes up on the board and a queue forms at the desk before the announcement finishes.', { when: { result: ['cancelled'] } }),
   N('gate', 'board', 'cancelled.2', 'The gate agent has the look of somebody who will be saying the same sentence two hundred times. The flight is not going.', { when: { result: ['cancelled'] } }),
 
   // --- The air ------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ const LINES: DialogueLine[] = [
   N('air', 'cabin', 'business.sleep.1', 'The seat goes flat and so do you. You wake somewhere over an ocean with no idea which.', { when: { flags: ['business', 'sleep'] } }),
   N('air', 'cabin', 'business.work.1', 'A desk in the sky with a glass of something beside it. You work because the seat makes it feel like a choice.', { when: { flags: ['business', 'work'] } }),
   N('air', 'cabin', 'business.watch.1', 'A screen the size of a small television and a blanket somebody folded. You watch one film properly.', { when: { flags: ['business', 'watch'] } }),
-  N('air', 'cabin', 'first.sleep.1', 'A door, a bed, pyjamas that are not yours. You sleep like the cabin is a room, because it is.', { when: { flags: ['first', 'sleep'] } }),
+  N('air', 'cabin', 'first.sleep.1', 'A door, a bed, pajamas that are not yours. You sleep like the cabin is a room, because it is.', { when: { flags: ['first', 'sleep'] } }),
   N('air', 'cabin', 'first.work.1', 'You work at a table with a cloth on it, and somebody takes the cup away before it is empty.', { when: { flags: ['first', 'work'] } }),
   N('air', 'cabin', 'first.watch.1', 'You watch a film in a seat that was built for exactly that, and it is the best the film has ever looked.', { when: { flags: ['first', 'watch'] } }),
   N('air', 'cabin', 'private.sleep.1', 'A cabin with nobody in it but you and the people you brought. You sleep across three seats without asking.', { when: { flags: ['private', 'sleep'] } }),

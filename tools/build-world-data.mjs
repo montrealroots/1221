@@ -207,7 +207,7 @@ const ts = `/**
 export interface RawCountry {
   id: string; iso2: string; name: string; capital: string;
   continent: string; currency: string; population: number;
-  /** Land area in square kilometres. */
+  /** Land area in square kilometers. */
   areaKm2: number;
   /** The currency's name as GeoNames gives it: "Dollar", "Yen", "Pound". */
   currencyName: string;

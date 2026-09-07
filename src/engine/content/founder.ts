@@ -318,7 +318,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   },
   {
     id: 'outsider', name: 'From Outside', category: 'Reputation',
-    description: 'You are not from here and it shows. Nobody owes you a favour and nobody has a file on you either.',
+    description: 'You are not from here and it shows. Nobody owes you a favor and nobody has a file on you either.',
     attributeMods: { reputation_craft: -8, reputation_money: -8, risk_appetite: 8 },
     systemMods: { inboundOpportunities: 0.7, freshEyes: 1.2 },
     conflictsWith: ['connected'],

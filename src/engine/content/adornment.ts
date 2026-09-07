@@ -1,13 +1,13 @@
 /**
  * SLATE — earrings and chains, real, and a hundred of each for each side.
  *
- * Jewellery used to hang on one peg, so a chain and a pair of earrings could
+ * Jewelry used to hang on one peg, so a chain and a pair of earrings could
  * not be worn at once. They have their own pegs now, and this is what goes on
  * them: four hundred products, a hundred men's earrings, a hundred women's, a
  * hundred men's necklaces and chains, a hundred women's.
  *
  * A note on who wears what. Most of this is genuinely worn by everybody, and
- * a great deal of the fine jewellery here is sold from the same case to the
+ * a great deal of the fine jewelry here is sold from the same case to the
  * same people whatever the house's marketing says. The split below follows
  * how the houses themselves merchandise the pieces — a Cuban link at fifteen
  * millimetres sits in the men's case, a pearl drop in the women's — and it
@@ -99,7 +99,7 @@ export const MENS_EARRINGS: readonly RealGood[] = [
   er('e_m_seb_brown_earring', 'Seb Brown Wonky Stud Earring', 'Seb Brown', 'stud', 240_00, 'men', 84, 0.18),
   er('e_m_bleue_burnham_earring', 'Bleue Burnham Rose Stud Earring', 'Bleue Burnham', 'stud', 380_00, 'men', 86, 0.16),
   er('e_m_alighieri_earring', 'Alighieri The Fragmented Ear Cuff', 'Alighieri', 'cuff', 210_00, 'men', 82, 0.20),
-  er('e_m_duffy_earring', 'Duffy Jewellery Silver Hoop', 'Duffy Jewellery', 'hoop', 150_00, 'men', 80, 0.22),
+  er('e_m_duffy_earring', 'Duffy Jewelry Silver Hoop', 'Duffy Jewelry', 'hoop', 150_00, 'men', 80, 0.22),
   er('e_m_stolen_girlfriend_earring', 'Stolen Girlfriends Club Halo Stud', 'Stolen Girlfriends Club', 'stud', 130_00, 'men', 78, 0.24),
   er('e_m_loren_stewart_hoop', 'Loren Stewart Gold Huggie Hoop', 'Loren Stewart', 'hoop', 320_00, 'men', 85, 0.16),
   er('e_m_otiumberg_hoop_m', 'Otiumberg Chunky Hoop Earring', 'Otiumberg', 'hoop', 165_00, 'men', 82, 0.20),
@@ -136,7 +136,7 @@ export const MENS_EARRINGS: readonly RealGood[] = [
   er('e_m_orelia_stud', 'Orelia Silver Stud Earring', 'Orelia', 'stud', 30_00, 'men', 62, 0.44),
   er('e_m_accessorize_stud', 'Accessorize Sterling Silver Stud', 'Accessorize', 'stud', 18_00, 'men', 54, 0.50),
   er('e_m_claires_stud', 'Claire’s Stainless Steel Stud', 'Claire’s', 'stud', 10_00, 'men', 44, 0.58),
-  er('e_m_hm_stud_m', 'H&M Silver Coloured Stud Earring', 'H&M', 'stud', 12_00, 'men', 44, 0.58),
+  er('e_m_hm_stud_m', 'H&M Silver Colored Stud Earring', 'H&M', 'stud', 12_00, 'men', 44, 0.58),
   er('e_m_zara_hoop_m', 'Zara Metal Hoop Earring', 'Zara', 'hoop', 18_00, 'men', 48, 0.56),
   er('e_m_asos_stud', 'ASOS Design Sterling Silver Stud Earring', 'ASOS Design', 'stud', 16_00, 'men', 50, 0.54),
   er('e_m_topman_hoop', 'Topman Sterling Silver Hoop Earring', 'Topman', 'hoop', 20_00, 'men', 52, 0.52),
@@ -216,7 +216,7 @@ export const WOMENS_EARRINGS: readonly RealGood[] = [
   er('e_w_messika_move_earring', 'Messika Move Uno Diamond Earrings', 'Messika', 'diamond', 3_100_00, 'women', 90, 0.08),
   er('e_w_messika_glam_azone', 'Messika Glam’Azone Diamond Earrings', 'Messika', 'diamond', 5_400_00, 'women', 91, 0.08),
   er('e_w_repossi_berbere_earring', 'Repossi Berbère Ear Cuff, Rose Gold', 'Repossi', 'cuff', 2_600_00, 'women', 91, 0.08),
-  // --- High jewellery and stones ------------------------------------------------------------------------
+  // --- High jewelry and stones ------------------------------------------------------------------------
   er('e_w_graff_studs_w', 'Graff Diamond Stud Earrings, Two Carat Total', 'Graff', 'diamond', 28_000_00, 'women', 97, 0.0),
   er('e_w_graff_butterfly_earring', 'Graff Butterfly Silhouette Earrings', 'Graff', 'diamond', 22_500_00, 'women', 97, 0.0),
   er('e_w_harry_winston_cluster_w', 'Harry Winston Winston Cluster Earrings', 'Harry Winston', 'diamond', 46_000_00, 'women', 98, 0.0),
@@ -280,7 +280,7 @@ export const WOMENS_EARRINGS: readonly RealGood[] = [
   er('e_w_ania_haie_w', 'Ania Haie Gold Chunky Hoop Earrings', 'Ania Haie', 'hoop', 70_00, 'women', 70, 0.36),
   er('e_w_orelia_w', 'Orelia Molten Drop Earrings', 'Orelia', 'drop', 35_00, 'women', 62, 0.44),
   er('e_w_accessorize_w', 'Accessorize Sparkle Drop Earrings', 'Accessorize', 'drop', 20_00, 'women', 54, 0.50),
-  er('e_w_hm_w_earring', 'H&M Gold Coloured Hoop Earrings', 'H&M', 'hoop', 14_00, 'women', 44, 0.58),
+  er('e_w_hm_w_earring', 'H&M Gold Colored Hoop Earrings', 'H&M', 'hoop', 14_00, 'women', 44, 0.58),
   er('e_w_zara_w_earring', 'Zara Textured Metal Earrings', 'Zara', 'drop', 22_00, 'women', 48, 0.56),
   er('e_w_mango_earring', 'Mango Metal Hoop Earrings', 'Mango', 'hoop', 20_00, 'women', 48, 0.56),
 ];
@@ -344,7 +344,7 @@ export const MENS_NECKLACES: readonly RealGood[] = [
   nk('n_m_seb_brown_necklace', 'Seb Brown Beaded Necklace', 'Seb Brown', 'chain', 420_00, 'men', 84, 38, 0.18),
   nk('n_m_bleue_burnham_necklace', 'Bleue Burnham The Rose Pendant', 'Bleue Burnham', 'pendant', 620_00, 'men', 86, 40, 0.16),
   nk('n_m_alighieri_necklace_m', 'Alighieri The Rocky Road Necklace', 'Alighieri', 'pendant', 320_00, 'men', 83, 40, 0.20),
-  nk('n_m_duffy_chain', 'Duffy Jewellery Silver Curb Chain', 'Duffy Jewellery', 'chain', 240_00, 'men', 81, 40, 0.22),
+  nk('n_m_duffy_chain', 'Duffy Jewelry Silver Curb Chain', 'Duffy Jewelry', 'chain', 240_00, 'men', 81, 40, 0.22),
   nk('n_m_stolen_girlfriend_chain', 'Stolen Girlfriends Club Halo Chain', 'Stolen Girlfriends Club', 'chain', 220_00, 'men', 78, 36, 0.24),
   nk('n_m_completedworks_chain', 'Completedworks Silver Chain Necklace', 'Completedworks', 'chain', 340_00, 'men', 84, 40, 0.20),
   nk('n_m_sophie_buhai_chain_m', 'Sophie Buhai Classic Silver Chain', 'Sophie Buhai', 'chain', 450_00, 'men', 86, 44, 0.16),
@@ -442,7 +442,7 @@ export const WOMENS_NECKLACES: readonly RealGood[] = [
   nk('n_w_buccellati_necklace_w', 'Buccellati Macri Classica Necklace', 'Buccellati', 'necklace', 12_800_00, 'women', 95, 66, 0.02),
   nk('n_w_messika_move_necklace_w', 'Messika Move Uno Diamond Necklace', 'Messika', 'pendant', 2_400_00, 'women', 90, 60, 0.08),
   nk('n_w_messika_lucky_move_w', 'Messika Lucky Move Diamond Necklace', 'Messika', 'pendant', 2_800_00, 'women', 90, 60, 0.08),
-  // --- High jewellery, diamonds and pearls ------------------------------------------------------------------
+  // --- High jewelry, diamonds and pearls ------------------------------------------------------------------
   nk('n_w_graff_riviere', 'Graff Diamond Rivière Necklace', 'Graff', 'necklace', 285_000_00, 'women', 98, 76, 0.0),
   nk('n_w_graff_butterfly_pendant', 'Graff Butterfly Silhouette Pendant', 'Graff', 'pendant', 14_500_00, 'women', 96, 66, 0.0),
   nk('n_w_harry_winston_riviere_w', 'Harry Winston Diamond Rivière Necklace', 'Harry Winston', 'necklace', 340_000_00, 'women', 98, 78, 0.0),
@@ -506,7 +506,7 @@ export const WOMENS_NECKLACES: readonly RealGood[] = [
   nk('n_w_ania_haie_necklace', 'Ania Haie Chunky Chain Necklace', 'Ania Haie', 'chain', 80_00, 'women', 70, 42, 0.36),
   nk('n_w_orelia_necklace', 'Orelia Molten Pendant Necklace', 'Orelia', 'pendant', 40_00, 'women', 62, 40, 0.46),
   nk('n_w_accessorize_necklace', 'Accessorize Layered Chain Necklace', 'Accessorize', 'chain', 22_00, 'women', 54, 38, 0.50),
-  nk('n_w_hm_necklace_w', 'H&M Gold Coloured Pendant Necklace', 'H&M', 'pendant', 15_00, 'women', 44, 36, 0.58),
+  nk('n_w_hm_necklace_w', 'H&M Gold Colored Pendant Necklace', 'H&M', 'pendant', 15_00, 'women', 44, 36, 0.58),
   nk('n_w_zara_necklace_w', 'Zara Textured Pendant Necklace', 'Zara', 'pendant', 24_00, 'women', 48, 38, 0.56),
   nk('n_w_mango_necklace', 'Mango Chain Pendant Necklace', 'Mango', 'pendant', 22_00, 'women', 48, 38, 0.56),
 ];

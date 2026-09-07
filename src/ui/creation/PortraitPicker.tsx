@@ -25,7 +25,7 @@ const JPEG_QUALITY = 0.86;
  * The picture-with-an-arrow every upload control has.
  *
  * Drawn rather than fetched, so it costs nothing, scales to any screen and
- * takes the frame's colour — including the accent it turns while a photo is
+ * takes the frame's color — including the accent it turns while a photo is
  * being dragged over it.
  */
 function UploadGlyph() {

@@ -1,5 +1,5 @@
 /**
- * Pulls the catalogue of every studio label in resolved.json from Wikidata.
+ * Pulls the catalog of every studio label in resolved.json from Wikidata.
  *
  * Two stages, both resumable:
  *   1. list   — every film and series each label produced or distributed
@@ -59,8 +59,8 @@ const lists = existsSync(listsPath) ? JSON.parse(readFileSync(listsPath, 'utf8')
 
 /**
  * Streaming services are recorded as the distributor of everything they
- * license, which is not their catalogue. For them only what they produced or
- * premiered counts; for a studio, what it released is its catalogue too.
+ * license, which is not their catalog. For them only what they produced or
+ * premiered counts; for a studio, what it released is its catalog too.
  */
 const STREAMING_SERVICES = new Set(['Q907311', 'Q116452644', 'Q116908492', 'Q62446736', 'Q4740868', 'Q28137015']);
 

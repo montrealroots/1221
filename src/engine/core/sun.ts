@@ -21,7 +21,7 @@ export interface SunTimes {
 }
 
 const RAD = Math.PI / 180;
-/** The sun's centre 0.833° below the horizon: the conventional sunrise. */
+/** The sun's center 0.833° below the horizon: the conventional sunrise. */
 const ZENITH = 90.833;
 
 const DAYS_BEFORE_MONTH = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];

@@ -10,7 +10,7 @@
  * Played, it is packing (a bag in the hold or not, and the documents the
  * route needs), the run to the airport by taxi, transit or your own car
  * with its time and cost, the desk and a seat, the gate where a flight
- * can be on time, late or cancelled and rebooked by the airline, the
+ * can be on time, late or canceled and rebooked by the airline, the
  * hours in the air spent one way or another, the carousel where a bag
  * can fail to arrive and come back two days later, and the way into town
  * or to the hotel, which may or may not have your room ready.
@@ -413,7 +413,7 @@ function rebook(sim: Simulation, booking: FlightBooking, reason: 'cancelled' | '
   }
   sim.resolveDecision('flight', booking.id);
   sim.notify({
-    category: 'travel', title: reason === 'cancelled' ? `${booking.airlineName} Cancelled ${booking.flightNumber}` : `Rebooked On ${option.airlineName} ${option.flightNumber}`,
+    category: 'travel', title: reason === 'cancelled' ? `${booking.airlineName} Canceled ${booking.flightNumber}` : `Rebooked On ${option.airlineName} ${option.flightNumber}`,
     body: `${reason === 'cancelled' ? 'The airline has moved you, at no cost, to' : 'You are now on'} ${option.airlineName} ${option.flightNumber}, ${formatDate(option.departAt, sim.homeZone)} at ${formatTime(option.departAt, sim.homeZone)}.${fee > 0 ? ` ${formatMoney(fee)} paid.` : ''}`,
     importance: 60, route: '/workspace/travel', refType: 'flight', refId: replacement.id,
   });
@@ -526,7 +526,7 @@ export function registerJourney(sim: Simulation): void {
       if (booking.cabin === 'private') {
         // Straight through the private terminal to the aircraft. If you are
         // past the booked time the aircraft has waited, and the arrival moves
-        // with you; nothing about it is cancelled or delayed by anyone else.
+        // with you; nothing about it is canceled or delayed by anyone else.
         booking.checkedInAt = s.now;
         booking.status = 'checked_in';
         if (s.now > booking.departAt) {

@@ -33,7 +33,7 @@ const LINES: DialogueLine[] = [
   N('bar', 'order', 'slow.2', 'You get served out of turn and the man who was there first says nothing, and means several things.', { speaker: 'narrator' }),
   N('bar', 'order', 'craft.1', '"It is stirred, not shaken, and if you want it shaken I will do it and think less of both of us."', { speaker: 'npc', role: 'bartender', when: { flags: ['cocktails'] } }),
   N('bar', 'order', 'craft.2', 'Ice cut from a block with something that looks like a chisel, and a garnish that took longer than the drink.', { speaker: 'narrator', when: { flags: ['cocktails'] } }),
-  N('bar', 'order', 'craft.3', '"Tell me a flavour and a mood and I will build you something."', { speaker: 'npc', role: 'bartender', when: { flags: ['cocktails'] } }),
+  N('bar', 'order', 'craft.3', '"Tell me a flavor and a mood and I will build you something."', { speaker: 'npc', role: 'bartender', when: { flags: ['cocktails'] } }),
   N('bar', 'order', 'pub.1', 'A pint pulled properly, a beer mat, and no further conversation required by anybody.', { speaker: 'narrator', when: { flags: ['pub'] } }),
   N('bar', 'order', 'pub.2', '"Sit anywhere that is not that table, he has been there since four."', { speaker: 'npc', role: 'bartender', when: { flags: ['pub'] } }),
   N('bar', 'order', 'none.1', '"Just the soda water. No, honestly, just the soda water."', { when: { flags: ['sober'] }, speaker: 'npc' }),

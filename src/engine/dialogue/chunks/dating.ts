@@ -89,7 +89,7 @@ const LINES: DialogueLine[] = [
 
   // --- Talk about the work -----------------------------------------------------
   reply('work', 'good', 1, 'Turns out they have opinions about the business, and good ones.'),
-  reply('work', 'good', 2, 'They ask the sharp question, and you realise you like being asked it.'),
+  reply('work', 'good', 2, 'They ask the sharp question, and you realize you like being asked it.'),
   reply('work', 'good', 3, 'Shop talk, but the kind that turns into something else.'),
   reply('work', 'flat', 1, 'They ask a polite question about it. You answer. That is that.'),
   reply('work', 'flat', 2, 'They know the names. They do not care about the names.'),
@@ -110,7 +110,7 @@ const LINES: DialogueLine[] = [
   reply('phone', 'bad', 1, 'They see you look, and see you look again, and stop talking until you look up.'),
   reply('phone', 'bad', 2, '"Anything important?" It was not.'),
 
-  // --- Colour: a second sentence in their voice ---------------------------------
+  // --- Color: a second sentence in their voice ---------------------------------
   R('colour', 'table', 'warm.good.1', 'They are easy to be with.', { when: { tone: ['warm'], result: ['good'] }, speaker: 'narrator' }),
   R('colour', 'table', 'warm.good.2', 'They make it easy.', { when: { tone: ['warm'], result: ['good'] }, speaker: 'narrator' }),
   R('colour', 'table', 'warm.flat.1', 'They are kind about it.', { when: { tone: ['warm'], result: ['flat'] }, speaker: 'narrator' }),
@@ -152,7 +152,7 @@ const LINES: DialogueLine[] = [
   R('close', 'door', 'again.2', '"Yes. You pick the place."', { when: { move: ['again'] } }),
   R('close', 'door', 'again.3', '"Somewhere with better lighting."', { when: { move: ['again'], tone: ['dry'] } }),
   R('close', 'door', 'night.1', 'You thank them. They thank you. A cab each.', { when: { move: ['night'] }, speaker: 'narrator' }),
-  R('close', 'door', 'night.2', '{first} says goodnight at the kerb.', { when: { move: ['night'] }, speaker: 'narrator' }),
+  R('close', 'door', 'night.2', '{first} says goodnight at the curb.', { when: { move: ['night'] }, speaker: 'narrator' }),
 
 ];
 

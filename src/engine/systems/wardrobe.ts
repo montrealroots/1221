@@ -66,10 +66,10 @@ export function ensureWardrobe(sim: Simulation): void {
     if (w.material === undefined) {
       w.material = guessMaterial(asset.name, w.slot, item?.subcategory ?? '');
     }
-    // Before colour meant anything, every garment was written out as the
+    // Before color meant anything, every garment was written out as the
     // literal 'Black'. That is a placeholder, not a choice somebody made, so
-    // it is replaced once with a colour the thing would actually come in.
-    // Anything already carrying a real colour id is left exactly as it is.
+    // it is replaced once with a color the thing would actually come in.
+    // Anything already carrying a real color id is left exactly as it is.
     if (w.colour === undefined || COLOUR_BY_ID[w.colour] === undefined) {
       w.colour = defaultColour(asset.catalogId ?? asset.id, asset.name, w.slot);
     }
@@ -84,7 +84,7 @@ export function ensureWardrobe(sim: Simulation): void {
  * Set deliberately if they have set it; otherwise the actor or actress title
  * decides, because that is the only thing the game already knows. Neither is
  * a lock: `shows` below lets everything through on 'both', and the shop has
- * a toggle for the rest of the catalogue whatever this says.
+ * a toggle for the rest of the catalog whatever this says.
  */
 export function preferenceOf(sim: Simulation, personId: Id): 'men' | 'women' | 'both' {
   const person = sim.universe.people[personId];
@@ -192,7 +192,7 @@ export function warmthOf(worn: OwnedAsset[]): number {
   return Math.round(clamp(base + (outer ? materialOf(outer.wardrobe!.material).warmth * 0.5 : 0), 0, 100));
 }
 
-/** The colour notes: the ones people actually remark on. */
+/** The color notes: the ones people actually remark on. */
 function colourNotes(worn: OwnedAsset[]): Note[] {
   const notes: Note[] = [];
   const at = (slot: string) => worn.find((a) => a.wardrobe!.slot === slot);
@@ -241,7 +241,7 @@ function colourNotes(worn: OwnedAsset[]): Note[] {
 
   // All safe, all the time, is its own comment.
   if (bodyColours.length >= 2 && bodyColours.every((c) => c.family === 'neutral')) {
-    notes.push({ kind: 'good', weight: 3, text: 'Entirely neutral. Nothing to criticise and nothing to remember.' });
+    notes.push({ kind: 'good', weight: 3, text: 'Entirely neutral. Nothing to criticize and nothing to remember.' });
   }
   return notes;
 }

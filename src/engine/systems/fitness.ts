@@ -62,7 +62,7 @@ export function membershipsOf(sim: Simulation, personId: Id): Membership[] {
     .sort((a, b) => b.startsAt - a.startsAt);
 }
 
-/** The pass that covers this gym right now, if any. Cancelled ones still count until they end. */
+/** The pass that covers this gym right now, if any. Canceled ones still count until they end. */
 export function membershipFor(sim: Simulation, personId: Id, placeId: string, at: number = sim.now): Membership | undefined {
   return Object.values(sim.universe.memberships).find((m) =>
     m.personId === personId && m.placeId === placeId
@@ -294,7 +294,7 @@ export function registerFitness(sim: Simulation): void {
         s.timeline.cancelFor('bill', membership.billId, s.now);
       }
       s.remember({
-        category: 'life', title: `Cancelled ${membership.gymName}`,
+        category: 'life', title: `Canceled ${membership.gymName}`,
         detail: `Usable until ${formatDate(membership.endsAt, s.homeZone)}, then nothing more is charged.`,
         refs: [{ type: 'membership', id: membership.id }], significance: 8, public: false,
       });

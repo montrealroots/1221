@@ -330,7 +330,7 @@ export function BankWorkspace() {
             </div>
           </Panel>
 
-          <Panel title="What You Would Be Offered" subtitle="Rates move with your score, which moves with your behaviour.">
+          <Panel title="What You Would Be Offered" subtitle="Rates move with your score, which moves with your behavior.">
             <div className="table-scroll">
               <table>
                 <thead><tr><th>Product</th><th className="num">APR</th><th className="num">Payment On 100K</th></tr></thead>

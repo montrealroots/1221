@@ -64,7 +64,7 @@ export function formatPlural(format: string): string {
  * game's own spelling, in Title Case like every other label.
  */
 const CATEGORY_LABELS: Readonly<Record<string, string>> = {
-  jewelry: 'Jewellery',
+  jewelry: 'Jewelry',
   groceries: 'Groceries',
   prepared_food: 'Prepared Food',
   clothing: 'Clothing',

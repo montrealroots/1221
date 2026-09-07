@@ -196,7 +196,7 @@ describe('the day, played', () => {
     choose(sim, 'board');
     scene = activeScene(sim)!;
     if (scene.node === 'done') {
-      // The airline cancelled and moved you; that is a real outcome and the test accepts it.
+      // The airline canceled and moved you; that is a real outcome and the test accepts it.
       expect(booking.status).toBe('changed');
       expect(booking.replacedBy).toBeDefined();
       return;

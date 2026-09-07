@@ -2,8 +2,8 @@
  * Real mastheads for the press, from Wikidata's logo property via Wikimedia
  * Commons, normalised to the same frame the studio and network logos use.
  *
- * Every file's licence and author go into the same logos.json manifest beside
- * the images. A logo whose licence Commons does not state is left out, and an
+ * Every file's license and author go into the same logos.json manifest beside
+ * the images. A logo whose license Commons does not state is left out, and an
  * outlet with no logo on record shows a monogram instead — nothing is drawn by
  * hand to stand in for a real mark.
  *
@@ -112,7 +112,7 @@ for (let i = 0; i < wanted.length; i += 100) {
 }
 console.log(`outlets with a logo on record: ${logoOf.size} of ${wanted.length}`);
 
-// 2. Licence and author from Commons, once per file.
+// 2. License and author from Commons, once per file.
 const infoCache = new Map();
 async function fileInfo(file) {
   if (infoCache.has(file)) return infoCache.get(file);
@@ -158,7 +158,7 @@ for (const item of wanted) {
     await sleep(PAUSE);
     if (!info || !info.licence) {
       delete manifest[item.id];
-      console.log(`${item.id.padEnd(20)} ${file}: no licence stated, skipped`);
+      console.log(`${item.id.padEnd(20)} ${file}: no license stated, skipped`);
       continue;
     }
     const res = await fetchWithBackoff(info.url, { 'User-Agent': UA });

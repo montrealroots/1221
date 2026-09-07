@@ -1,7 +1,7 @@
 /**
  * SLATE — Geography and jurisdictions.
  *
- * Countries, states, metros, cities, neighbourhoods and airports. The
+ * Countries, states, metros, cities, neighborhoods and airports. The
  * geographic facts (a city's country, its IANA time zone, an airport's code
  * and the city it serves) are public reference data. The economic figures
  * attached to each place — cost-of-living index, median rent, median home
@@ -467,7 +467,7 @@ function hood(id: string, name: string, cityId: string, priceMultiplier: number,
     id, name, type: 'neighbourhood', parentId: cityId,
     priceMultiplier, prestige, safety, walkability, character,
     source: 'calibrated_estimate', confidence: 'medium', version: V,
-    note: 'Neighbourhood exists; the ratings are SLATE calibrations.',
+    note: 'Neighborhood exists; the ratings are SLATE calibrations.',
   };
 }
 
@@ -500,7 +500,7 @@ export const NEIGHBOURHOODS = new Registry<Neighbourhood>('neighbourhoods', [
   hood('van-kitsilano', 'Kitsilano', 'ca-bc-vancouver', 1.7, 78, 88, 76, 'Beach, mountains and a very healthy population.'),
 ]);
 
-/** Great-circle distance in kilometres. Used for travel time and cost. */
+/** Great-circle distance in kilometers. Used for travel time and cost. */
 export function distanceKm(a: { latitude: number; longitude: number }, b: { latitude: number; longitude: number }): number {
   const R = 6371;
   const dLat = ((b.latitude - a.latitude) * Math.PI) / 180;

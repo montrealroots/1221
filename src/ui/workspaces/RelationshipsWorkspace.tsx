@@ -270,7 +270,7 @@ function AskOutDialog({ relationshipId, name, onClose }: { relationshipId: strin
 }
 
 const DATE_STATUS_LABEL: Readonly<Record<DateStatus, string>> = {
-  planned: 'Planned', underway: 'Under Way', attended: 'Attended', skipped: 'Skipped', stood_up: 'You Did Not Go', they_cancelled: 'They Did Not Come', cancelled: 'Cancelled',
+  planned: 'Planned', underway: 'Under Way', attended: 'Attended', skipped: 'Skipped', stood_up: 'You Did Not Go', they_cancelled: 'They Did Not Come', cancelled: 'Canceled',
 };
 
 function DatesPanel({ personId }: { personId: string }) {

@@ -1,6 +1,6 @@
 /**
  * Re-labels every item in the cache with Wikidata's "mul" (all languages)
- * labels honoured. Wikidata moved many names that read the same everywhere,
+ * labels honored. Wikidata moved many names that read the same everywhere,
  * "Christopher Nolan" among them, from the English label to "mul"; a lookup
  * that asks for English alone then falls through to whatever language comes
  * next. This pass asks for English or mul first, and only then the rest.

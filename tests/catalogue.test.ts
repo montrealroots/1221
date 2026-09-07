@@ -1,5 +1,5 @@
 /**
- * The real catalogue.
+ * The real catalog.
  *
  * Every chain and every product on a shop floor is a real one, named as public
  * record, and every price, quality score and wear curve beside it is SLATE's
@@ -37,7 +37,7 @@ const SHOPPING_CATEGORIES = [
   'furniture', 'home', 'household', 'appliance', 'electronics', 'equipment', 'art', 'books',
 ];
 
-describe('the real catalogue', () => {
+describe('the real catalog', () => {
   it('carries at least a hundred real products in every aisle', () => {
     const counts = new Map<string, number>();
     for (const item of shoppableItems()) counts.set(item.category, (counts.get(item.category) ?? 0) + 1);

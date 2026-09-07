@@ -313,7 +313,7 @@ describe('standing orders', () => {
     expect(stopped.endedReason).toMatch(/three times|account it used/);
   });
 
-  it('can be cancelled, and blocks closing the account it uses until it is', () => {
+  it('can be canceled, and blocks closing the account it uses until it is', () => {
     const sim = aLife('bank-standing-close');
     const savings = must<{ accountId: string }>(sim, 'bank.open', { productId: 'nb_savings', deposit: 0 });
     const { orderId } = must<{ orderId: string }>(sim, 'bank.create_standing_order', {
@@ -350,7 +350,7 @@ describe('statements', () => {
     expect(statements(sim, id)[0]!.openingBalance).toBe(0);
     const opening = statements(sim, id)[0]!.closingBalance;
     sim.expense(id, 2_000_00, 'Rent', 'housing');
-    sim.income(id, 500_00, 'A cheque', 'other');
+    sim.income(id, 500_00, 'A check', 'other');
     endOfMonth(sim);
     const statement = statements(sim, id)[0]!;
     expect(statement.period).toMatch(/^\d{4}-\d{2}$/);

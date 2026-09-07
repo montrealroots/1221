@@ -1,8 +1,8 @@
 /**
  * The street — the city between the places you were going.
  *
- * Weather, traffic, the walk, the cab, the queue, and being recognised or
- * not being recognised. Every real landmark named in the game is public
+ * Weather, traffic, the walk, the cab, the queue, and being recognized or
+ * not being recognized. Every real landmark named in the game is public
  * record; the streets around it are SLATE's own, and the places file says so.
  */
 
@@ -83,11 +83,11 @@ const LINES: DialogueLine[] = [
   T('city', 'about', 'la.2', 'Palm trees, a billboard for something that has not come out yet, and traffic in both directions at eleven in the morning.', { when: { flags: ['la'] } }),
   T('city', 'about', 'ny.1', 'Steam from somewhere under the road, and four separate conversations happening at you as you cross.', { when: { flags: ['ny'] } }),
   T('city', 'about', 'ny.2', 'You walk twenty blocks because the numbers make it sound like nothing, and it is not nothing.', { when: { flags: ['ny'] } }),
-  T('city', 'about', 'london.1', 'Grey light, a bus, and a pub older than several countries.', { when: { flags: ['london'] } }),
+  T('city', 'about', 'london.1', 'Gray light, a bus, and a pub older than several countries.', { when: { flags: ['london'] } }),
   T('city', 'about', 'london.2', 'Three routes to the same place, all of them fifteen minutes, all of them wrong.', { when: { flags: ['london'] } }),
   T('city', 'about', 'paris.1', 'A street that has decided the pavement is for tables and pedestrians can manage.', { when: { flags: ['paris'] } }),
   T('city', 'about', 'tokyo.1', 'A crossing where four hundred people move through each other and not one of them touches.', { when: { flags: ['tokyo'] } }),
-  T('city', 'about', 'small.1', 'A town where the same three cars keep going past and you have started recognising them.', { when: { flags: ['small'] } }),
+  T('city', 'about', 'small.1', 'A town where the same three cars keep going past and you have started recognizing them.', { when: { flags: ['small'] } }),
   T('city', 'about', 'small.2', 'The high street has a butcher, a charity shop and an optimist who opened a coffee place.', { when: { flags: ['small'] } }),
   T('city', 'about', 'new.1', 'You do not know which way anything is yet, and there is a specific pleasure in that lasting another day.', { when: { flags: ['new'] } }),
   T('city', 'about', 'home.1', 'You know this street well enough to walk it thinking about something else entirely.', { when: { flags: ['home'] } }),

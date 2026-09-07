@@ -2,7 +2,7 @@
  * Training: a door, a price, a set of squats, and tomorrow's legs.
  *
  * A pass is sold once however many times the button is pressed. A monthly
- * membership is a bill, and the bill is what renews it; cancelling stops the
+ * membership is a bill, and the bill is what renews it; canceling stops the
  * bill and the membership runs out on its own. Nothing happens on the gym
  * floor unless you are on it, it is open, and you are holding a pass. A block
  * of work takes the time it takes, spends what it spends and moves a record
@@ -102,7 +102,7 @@ describe('passes and memberships', () => {
     expect(sim.ledger.audit()).toEqual([]);
   });
 
-  it('a monthly membership is a bill, the bill renews it, and cancelling stops the bill', () => {
+  it('a monthly membership is a bill, the bill renews it, and canceling stops the bill', () => {
     const sim = aLife();
     const { membershipId } = must<{ membershipId: string }>(sim, 'gym.buy_pass', { placeId: GOLDS, product: 'monthly' });
     const membership = sim.universe.memberships[membershipId]!;

@@ -55,7 +55,7 @@ export interface Finding {
 }
 
 const USED_FINDINGS: readonly Finding[] = [
-  { text: 'The tyres are down to the wear bars.', leverage: 0.02, repair: 'Fit New Tyres' },
+  { text: 'The tires are down to the wear bars.', leverage: 0.02, repair: 'Fit New Tires' },
   { text: 'A scrape along the rear bumper.', leverage: 0.015, repair: 'Repair The Rear Bumper' },
   { text: 'There are gaps in the service history.', leverage: 0.02 },
   { text: 'The brake pads are near the end.', leverage: 0.015, repair: 'Fit New Brake Pads' },
@@ -74,7 +74,7 @@ const NEW_FINDINGS: readonly Finding[] = [
 
 const MOTO_USED_FINDINGS: readonly Finding[] = [
   { text: 'The chain and sprockets are hooked and due.', leverage: 0.02, repair: 'Fit A New Chain And Sprockets' },
-  { text: 'The rear tyre is squared off from motorway miles.', leverage: 0.015, repair: 'Fit A New Rear Tyre' },
+  { text: 'The rear tire is squared off from motorway miles.', leverage: 0.015, repair: 'Fit A New Rear Tire' },
   { text: 'A fork seal is weeping.', leverage: 0.02, repair: 'Replace The Fork Seals' },
   { text: 'Scuffed bar ends and a scraped peg. It has been down, gently.', leverage: 0.03 },
   { text: 'The brake pads are thin.', leverage: 0.01, repair: 'Fit New Brake Pads' },
@@ -105,7 +105,7 @@ const BOAT_NEW_FINDINGS: readonly Finding[] = [
 ];
 
 const JET_USED_FINDINGS: readonly Finding[] = [
-  { text: 'The engines are not on a maintenance programme.', leverage: 0.03 },
+  { text: 'The engines are not on a maintenance program.', leverage: 0.03 },
   { text: 'A major inspection is due within the year.', leverage: 0.025 },
   { text: 'The paint is chipped along the leading edges.', leverage: 0.01, repair: 'Touch Up The Leading Edges' },
   { text: 'The avionics database is out of date.', leverage: 0.005, repair: 'Update The Databases' },
@@ -116,7 +116,7 @@ const JET_USED_FINDINGS: readonly Finding[] = [
 
 const JET_NEW_FINDINGS: readonly Finding[] = [
   { text: 'Ferry hours only.', leverage: 0 },
-  { text: 'A mark on the cabin veneer from the completion centre.', leverage: 0.005, repair: 'Refinish The Veneer' },
+  { text: 'A mark on the cabin veneer from the completion center.', leverage: 0.005, repair: 'Refinish The Veneer' },
   { text: 'Every option on the specification is installed.', leverage: 0 },
 ];
 

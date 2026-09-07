@@ -188,7 +188,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'generous', name: 'Generous', group: 'Money',
-    description: 'You pick up the cheque, you lend it and you do not chase it.',
+    description: 'You pick up the check, you lend it and you do not chase it.',
     cost: 'People remember it fondly and you are poorer for it.',
     systemMods: { spendImpulse: 1.18, relationshipDecay: 0.82 },
     conflictsWith: ['keeps_accounts'],

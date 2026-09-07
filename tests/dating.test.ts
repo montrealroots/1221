@@ -106,7 +106,7 @@ describe('arranging', () => {
     expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'skydiving', at: sim.now + MS_DAY }).error).toMatch(/not a way/);
   });
 
-  it('can be moved, and cancelling on the day costs more than cancelling with notice', () => {
+  it('can be moved, and canceling on the day costs more than canceling with notice', () => {
     const sim = aLife();
     const other = someone(sim);
     const a = arrange(sim, other, 'coffee', 30).date;

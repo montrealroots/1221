@@ -2,7 +2,7 @@
 /**
  * SLATE — which countries have real shops of their own, and which do not.
  *
- * The catalogue names real chains in the markets they really trade in, so
+ * The catalog names real chains in the markets they really trade in, so
  * coverage is uneven by construction. The honest thing is to print the
  * unevenness rather than let a worldwide chain reaching everywhere imply that
  * a country's own high street has been written. The number that matters is

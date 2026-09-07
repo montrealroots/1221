@@ -1,16 +1,16 @@
 /**
- * Turns the pulled catalogue into what the game ships:
+ * Turns the pulled catalog into what the game ships:
  *
  *   public/industry/<studio>.tsv             one row per title: the index
  *   public/industry/<studio>-credits-<decade>.tsv   crew, cast and awards
  *   public/industry/imdb.tsv                 IMDb ratings by title id (separate
- *                                            on purpose: IMDb's dataset licence
+ *                                            on purpose: IMDb's dataset license
  *                                            is personal and non-commercial)
  *   public/industry/titles.txt               every real title, normalised, so
  *                                            nothing generated can collide
  *   src/engine/content/studio-labels.ts      the labels under each studio
  *   src/engine/content/studio-stats.ts       what each studio actually makes,
- *                                            measured from its own catalogue
+ *                                            measured from its own catalog
  *
  * Everything but the IMDb file comes from Wikidata (CC0).
  */
@@ -268,7 +268,7 @@ for (const [studio, labels] of Object.entries(resolved)) {
 
 // --- IMDb shard -------------------------------------------------------------
 if (imdb.size > 0) {
-  const lines = ['# IMDb ratings from datasets.imdbws.com. Licence: personal and non-commercial use only. Delete this file to drop IMDb scores from the game.', 'imdbId\trating\tvotes'];
+  const lines = ['# IMDb ratings from datasets.imdbws.com. License: personal and non-commercial use only. Delete this file to drop IMDb scores from the game.', 'imdbId\trating\tvotes'];
   const seen = new Set();
   for (const row of details.values()) {
     if (row.imdb && !seen.has(row.imdb) && imdb.has(row.imdb)) { seen.add(row.imdb); const [r, v] = imdb.get(row.imdb); lines.push(`${row.imdb}\t${r}\t${v}`); }
@@ -511,7 +511,7 @@ writeFileSync(new URL('src/engine/content/records.ts', ROOT), gen(`/**
  * All-time records, from the record itself.
  *
  * Everything here is a figure Wikidata carries for a title in one of the
- * studios' catalogues: worldwide gross in United States dollars, production
+ * studios' catalogs: worldwide gross in United States dollars, production
  * budget, runtime, IMDb and Rotten Tomatoes scores, award counts, seasons and
  * episodes. Opening weekends and streaming viewership are not on the record
  * in a comparable form and are not claimed here; those records are kept for

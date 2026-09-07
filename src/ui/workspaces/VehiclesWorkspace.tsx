@@ -464,7 +464,7 @@ function ServiceTab({ vehicleId }: { vehicleId: string }) {
                   {kind === 'scheduled' && 'Routine maintenance. Skipping it costs more later.'}
                   {kind === 'repair' && 'Fixing what is wrong. Price rises as mechanical health falls.'}
                   {kind === 'inspection' && 'Required in some jurisdictions before registration renews.'}
-                  {kind === 'tires' && (vehicleKind(vehicle) === 'boat' ? 'Propellers and running gear. Affects speed and how it handles.' : vehicleKind(vehicle) === 'jet' ? 'Tyres and brakes. Aircraft go through them.' : 'New rubber. Affects grip and how it drives.')}
+                  {kind === 'tires' && (vehicleKind(vehicle) === 'boat' ? 'Propellers and running gear. Affects speed and how it handles.' : vehicleKind(vehicle) === 'jet' ? 'Tires and brakes. Aircraft go through them.' : 'New rubber. Affects grip and how it drives.')}
                   {kind === 'detail' && 'Cosmetic. Lifts condition and resale.'}
                   {kind === 'bodywork' && 'Paint and panel. Expensive and worth it before selling.'}
                 </div>

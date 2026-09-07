@@ -60,7 +60,7 @@ describe('a hundred real things in each of the four missing aisles', () => {
   it('names a real brand on every one, and puts the brand in the product name', () => {
     for (const item of [...REAL_INTIMATES, ...REAL_ADORNMENT]) {
       expect(item.brand.length, item.id).toBeGreaterThan(1);
-      // The name leads with the maker, the way the rest of the catalogue does,
+      // The name leads with the maker, the way the rest of the catalog does,
       // so a shelf reads as a shelf rather than a list of nouns.
       const brandHead = item.brand.split(/[\s&]/)[0]!.toLowerCase();
       expect(item.name.toLowerCase(), `${item.id} does not name its brand`).toContain(brandHead);
@@ -80,7 +80,7 @@ describe('a hundred real things in each of the four missing aisles', () => {
     }
   });
 
-  it('reaches the catalogue, so it can actually be bought', () => {
+  it('reaches the catalog, so it can actually be bought', () => {
     for (const id of ['u_m_saxx_vibe', 'u_w_cuup_balconette', 's_m_falke_airport', 's_w_wolford_neon40',
       'e_m_tom_wood_ear', 'e_w_vca_alhambra_earring', 'n_m_le_gramme_chain', 'n_w_tiffany_open_heart']) {
       expect(CATALOG.get(id), id).toBeDefined();
@@ -88,7 +88,7 @@ describe('a hundred real things in each of the four missing aisles', () => {
   });
 });
 
-describe('jewellery is four pegs, not one', () => {
+describe('jewelry is four pegs, not one', () => {
   it('has a peg each for earrings, a necklace, a ring and a bracelet', () => {
     for (const slot of ['earrings', 'necklace', 'ring', 'bracelet']) expect(SLOTS).toContain(slot);
     expect(JEWELLERY_SLOTS).toContain('jewellery');
@@ -109,7 +109,7 @@ describe('jewellery is four pegs, not one', () => {
     expect(jewellerySlotFor('bracelet', 'Cartier Panthère Chain Bracelet')).toBe('bracelet');
     expect(jewellerySlotFor('necklace', 'Tiffany Diamonds By The Yard Necklace')).toBe('necklace');
     expect(jewellerySlotFor('engagement', 'Tiffany Setting Engagement Ring, One Carat')).toBe('ring');
-    // And when the catalogue says nothing useful, the name is the fallback.
+    // And when the catalog says nothing useful, the name is the fallback.
     expect(jewellerySlotFor('', 'Missoma Lucy Williams Chain')).toBe('necklace');
   });
 
@@ -188,11 +188,11 @@ describe('which rack a shop leads with', () => {
   });
 });
 
-describe('the audience list against the catalogue it describes', () => {
+describe('the audience list against the catalog it describes', () => {
   it('names only ids that still exist', () => {
     const known = new Set(shoppableItems().map((i) => i.id));
     const gone = [...MENS, ...WOMENS].filter((id) => !known.has(id));
-    expect(gone, 'these ids are on an audience list and not in the catalogue').toEqual([]);
+    expect(gone, 'these ids are on an audience list and not in the catalog').toEqual([]);
   });
 
   it('never puts the same id on both lists', () => {
@@ -214,7 +214,7 @@ describe('the audience list against the catalogue it describes', () => {
     expect(audienceOf('f_samba')).toBe('unisex');
   });
 
-  it('stamps every wardrobe row in the catalogue with an answer', () => {
+  it('stamps every wardrobe row in the catalog with an answer', () => {
     const wear = shoppableItems().filter((i) => WEAR_CATEGORIES.includes(i.category));
     const missing = wear.filter((i) => i.audience === undefined);
     expect(missing.map((i) => i.id), 'these wardrobe rows say nothing about cut').toEqual([]);

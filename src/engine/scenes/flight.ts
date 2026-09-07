@@ -183,7 +183,7 @@ export const FLIGHT_SCENE = defineScene({
       }
       case 'done': {
         return {
-          title: str(session, 'result') === 'cancelled' ? 'Cancelled, And Moved' : `${toCity}`,
+          title: str(session, 'result') === 'cancelled' ? 'Canceled, And Moved' : `${toCity}`,
           eyebrow,
           text: str(session, 'lastNote'),
           choices: [{ id: 'finish', label: 'Back To The Day', aliases: ['done', 'ok', 'finish'], tone: 'primary' }],

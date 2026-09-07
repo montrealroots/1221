@@ -298,7 +298,7 @@ export function GameProvider({
     return () => window.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Honour the reduced-motion preference at the document level.
+  // Honor the reduced-motion preference at the document level.
   useEffect(() => {
     document.body.dataset['reducedMotion'] = String(reducedMotion);
   }, [reducedMotion]);
@@ -361,6 +361,6 @@ function writeFavourites(entries: NavEntry[]): void {
   try {
     localStorage.setItem('slate.favourites', JSON.stringify(entries));
   } catch {
-    /* storage unavailable; favourites are a convenience, not state */
+    /* storage unavailable; favorites are a convenience, not state */
   }
 }

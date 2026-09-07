@@ -467,7 +467,7 @@ export function registerVehicles(sim: Simulation): void {
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`That work comes to ${formatMoney(cost)} with labour and you cannot cover it.`);
+        throw new CommandError(`That work comes to ${formatMoney(cost)} with labor and you cannot cover it.`);
       }
 
       const at = p.scheduledAt ?? addDays(s.now, 4, s.homeZone);
@@ -1098,33 +1098,33 @@ function depreciateAll(sim: Simulation): void {
 
 /** Where the work gets done, by what it is. SLATE's own shops. */
 function shopFor(kind: VehicleKind): string {
-  return kind === 'boat' ? 'Harbour Yard' : kind === 'jet' ? 'Meridian Aero Services' : 'Meridian Auto Works';
+  return kind === 'boat' ? 'Harbor Yard' : kind === 'jet' ? 'Meridian Aero Services' : 'Meridian Auto Works';
 }
 
 /** How many of each kind a city's lots carry per fortnight. */
 const STOCK_RANGE: Readonly<Record<VehicleKind, [number, number]>> = { car: [12, 20], motorcycle: [4, 7], boat: [3, 5], jet: [1, 3] };
 
-/** The colours, wheels and interiors a lot describes its stock with, by kind. */
+/** The colors, wheels and interiors a lot describes its stock with, by kind. */
 const STOCK_LOOKS: Readonly<Record<VehicleKind, { paint: string[]; wheels: string[]; interior: string[] }>> = {
   car: {
-    paint: ['Obsidian Black', 'Glacier White', 'Nardo Grey', 'Racing Blue', 'Signal Red', 'Forest Green', 'Champagne'],
+    paint: ['Obsidian Black', 'Glacier White', 'Nardo Gray', 'Racing Blue', 'Signal Red', 'Forest Green', 'Champagne'],
     wheels: ['18" Alloy', '19" Alloy', '20" Forged', '21" Split-Spoke', '22" Polished'],
-    interior: ['Black Leather', 'Tan Leather', 'Grey Cloth', 'Cream Nappa', 'Red Nappa', 'Alcantara'],
+    interior: ['Black Leather', 'Tan Leather', 'Gray Cloth', 'Cream Nappa', 'Red Nappa', 'Alcantara'],
   },
   motorcycle: {
-    paint: ['Gloss Black', 'Ducati Red', 'Racing Blue', 'Matte Grey', 'British Racing Green', 'Vivid Orange', 'Pearl White'],
+    paint: ['Gloss Black', 'Ducati Red', 'Racing Blue', 'Matte Gray', 'British Racing Green', 'Vivid Orange', 'Pearl White'],
     wheels: ['Cast Alloy', 'Spoked', 'Forged Alloy', 'Carbon'],
     interior: ['Stock Saddle', 'Comfort Saddle', 'Brown Leather Saddle', 'Alcantara Saddle'],
   },
   boat: {
-    paint: ['White Hull', 'Navy Hull', 'Black Hull', 'Seafoam Hull', 'Whaler Blue Hull', 'Mahogany Hull', 'Grey Hull'],
+    paint: ['White Hull', 'Navy Hull', 'Black Hull', 'Seafoam Hull', 'Whaler Blue Hull', 'Mahogany Hull', 'Gray Hull'],
     wheels: ['Single Outboard', 'Twin Outboards', 'Triple Outboards', 'Sterndrive', 'Twin Inboards', 'Twin Shaft Diesels', 'Sails And Diesel'],
-    interior: ['White Vinyl', 'Grey Vinyl', 'Teak And Cream', 'Navy And Teak', 'Ivory Leather', 'Walnut And Ivory'],
+    interior: ['White Vinyl', 'Gray Vinyl', 'Teak And Cream', 'Navy And Teak', 'Ivory Leather', 'Walnut And Ivory'],
   },
   jet: {
-    paint: ['White With Blue Stripe', 'White With Silver Stripe', 'Matte Grey', 'Pearl White', 'Charcoal With Gold Line', 'White With Red Cheatline'],
+    paint: ['White With Blue Stripe', 'White With Silver Stripe', 'Matte Gray', 'Pearl White', 'Charcoal With Gold Line', 'White With Red Cheatline'],
     wheels: ['Standard Gear', 'Standard Gear', 'Standard Gear'],
-    interior: ['Cream Leather', 'Tan Leather And Walnut', 'Grey Leather And Carbon', 'Ivory And Gloss Ebony', 'Cognac Leather'],
+    interior: ['Cream Leather', 'Tan Leather And Walnut', 'Gray Leather And Carbon', 'Ivory And Gloss Ebony', 'Cognac Leather'],
   },
 };
 

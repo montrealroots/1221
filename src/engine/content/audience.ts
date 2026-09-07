@@ -16,11 +16,11 @@
  *    nothing whatever about who should wear one.
  * 3. **Unisex means offered to everybody.** Most of what people wear — a
  *    t-shirt, jeans, a trench coat, a pair of Sambas, a dive watch — is not
- *    split by cut in any way worth modelling, and is marked accordingly
+ *    split by cut in any way worth modeling, and is marked accordingly
  *    rather than shoehorned into one side or the other.
  *
  * The two lists below are the deliberate decisions. Anything not in them is
- * offered to everybody. A test holds the lists against the catalogue, so an
+ * offered to everybody. A test holds the lists against the catalog, so an
  * id that stops existing is caught rather than sitting here forever.
  */
 
@@ -59,7 +59,7 @@ export const MENS: readonly string[] = [
   'a_filson_briefcase', 'a_troubadour_briefcase', 'a_mismo_holdall',
   // Fragrance houses sell as men's.
   'a_creed_aventus', 'a_bleu_de_chanel', 'a_dior_sauvage',
-  // Cufflinks, and jewellery sold on the men's side of the counter.
+  // Cufflinks, and jewelry sold on the men's side of the counter.
   'j_cartier_santos_cufflinks', 'j_stephen_webster', 'j_deakin_francis',
   'j_paul_smith_cufflinks', 'j_montblanc_cufflinks', 'j_tateossian',
   'j_le_gramme_bracelet', 'j_briony_raymond', 'j_david_yurman_cable', 'j_david_yurman_ring',
@@ -69,7 +69,7 @@ export const MENS: readonly string[] = [
  * Cut for women.
  *
  * Dresses, skirts, blouses on a women's block, heels and flats on women's
- * lasts, handbags, and the fine jewellery and fragrance houses sell as
+ * lasts, handbags, and the fine jewelry and fragrance houses sell as
  * women's.
  */
 export const WOMENS: readonly string[] = [
@@ -103,7 +103,7 @@ export const WOMENS: readonly string[] = [
   'a_celine_triomphe_sun', 'a_chanel_no5', 'a_frederic_malle_portrait',
   // Watches: the two lines that are women's, out of a case that is otherwise unisex.
   'w_cartier_panthere', 'w_cartier_francaise',
-  // Fine jewellery sold as women's: engagement, pearls, drops, high jewellery.
+  // Fine jewelry sold as women's: engagement, pearls, drops, high jewelry.
   'j_tiffany_setting', 'j_tiffany_setting_2', 'j_tiffany_soleste', 'j_tiffany_victoria',
   'j_graff_solitaire', 'j_graff_studs', 'j_debeers_forevermark', 'j_debeers_aura',
   'j_neil_lane', 'j_harry_winston_cluster', 'j_harry_winston_riviere',
@@ -133,7 +133,7 @@ export function audienceOf(id: string): Audience {
   return 'unisex';
 }
 
-/** Stamps a run of catalogue rows with who each is cut for. */
+/** Stamps a run of catalog rows with who each is cut for. */
 export function withAudience<T extends { id: string; audience?: Audience }>(items: T[]): T[] {
   return items.map((item) => (item.audience ? item : { ...item, audience: audienceOf(item.id) }));
 }

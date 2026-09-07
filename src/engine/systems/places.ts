@@ -10,7 +10,7 @@
  * spent at the beach is an afternoon not spent in the cutting room.
  *
  * Distances inside a city are SLATE's model, not surveyed ones: a deterministic
- * spread across the city's neighbourhoods, wider in a bigger city. Fuel prices,
+ * spread across the city's neighborhoods, wider in a bigger city. Fuel prices,
  * cab fares and menu prices are the game's calibration against the local cost
  * of living, and say so.
  */
@@ -41,7 +41,7 @@ export const MODE_LABEL: Readonly<Record<Mode, string>> = {
 /** How fast each way of getting about moves, in km/h, before traffic. */
 const SPEED: Readonly<Record<Mode, number>> = { walk: 4.8, drive: 38, taxi: 34, transit: 22, cycle: 15 };
 
-/** A tank, in litres. Enough for the game to talk about range honestly. */
+/** A tank, in liters. Enough for the game to talk about range honestly. */
 const TANK_LITRES = 60;
 
 // ---------------------------------------------------------------------------
@@ -49,7 +49,7 @@ const TANK_LITRES = 60;
 // ---------------------------------------------------------------------------
 
 /**
- * How far apart two neighbourhoods are, in kilometres.
+ * How far apart two neighborhoods are, in kilometers.
  *
  * SLATE's model: a deterministic spread seeded on the pair, scaled by how big
  * the city is. The same two places are always the same distance apart.
@@ -78,7 +78,7 @@ export function currentProperty(sim: Simulation, person: Person = sim.player): P
   return sim.universe.properties[person.currentPlaceId];
 }
 
-/** The neighbourhood the player is standing in. */
+/** The neighborhood the player is standing in. */
 function hoodOf(sim: Simulation, person: Person): string | undefined {
   const place = currentPlace(sim, person);
   if (place) return place.neighbourhoodId;
@@ -350,7 +350,7 @@ export function registerPlaces(sim: Simulation): void {
       const cost = Math.round(litres * Math.max(60, perLitre));
       const accountId = p.accountId ?? person.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay with.');
-      if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`${litres} litres comes to ${formatMoney(cost)} and you cannot cover it.`);
+      if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`${litres} liters comes to ${formatMoney(cost)} and you cannot cover it.`);
       s.expense(accountId, cost, `Fuel — ${place.name}`, 'travel');
 
       s.advanceTo(s.now + 9 * MS_MINUTE);
@@ -583,12 +583,12 @@ export function recognitionChance(sim: Simulation, place: Place, person: Person 
 const FANS = [
   'Two people at the next table worked out who you were and were kind about it.',
   'Somebody asked for a photograph on the way in. You said yes.',
-  'A group by the door recognised you and pretended not to, badly.',
+  'A group by the door recognized you and pretended not to, badly.',
   'The person behind the counter said they had seen the film. They meant it.',
   'A teenager asked you to sign a receipt because it was all they had.',
   'Somebody said your name like a question, and you nodded.',
   'A family asked, politely, and you took the picture yourself because the angle was better.',
-  'Somebody told you what your work meant to them and then apologised for saying it.',
+  'Somebody told you what your work meant to them and then apologized for saying it.',
 ];
 
 const PHOTOGRAPHED = [
@@ -605,7 +605,7 @@ const RAN_INTO = [
   'was at the bar and bought you one.',
   'was on the way out and stopped anyway.',
   'saw you first, which is its own kind of information.',
-  'was in the corner with somebody you did not recognise.',
+  'was in the corner with somebody you did not recognize.',
   'has been meaning to call you, apparently.',
 ];
 
@@ -649,7 +649,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
 
   if (!rng.chance(chance)) return;
 
-  // Photographed, or simply recognised.
+  // Photographed, or simply recognized.
   const photographed = rng.chance(clamp(person.reputation.publicFame / 140, 0, 0.55));
   if (!photographed) {
     person.reputation.publicFame = clamp(person.reputation.publicFame + 0.15, 0, 100);
@@ -657,7 +657,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
     person.wellbeing.energy = clamp(person.wellbeing.energy - 1.5, 0, 100);
     sim.notify({
       category: 'life',
-      title: `Recognised At ${place.name}`,
+      title: `Recognized At ${place.name}`,
       body: rng.pick(FANS),
       importance: 28, route: '/workspace/city',
     });

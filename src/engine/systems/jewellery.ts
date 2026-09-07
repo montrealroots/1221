@@ -1,5 +1,5 @@
 /**
- * SLATE — the jeweller's, and having a piece made.
+ * SLATE — the jeweler's, and having a piece made.
  *
  * Two rooms in one file. The first is the shop: a case rather than a rail,
  * pieces taken out one at a time and put on a cloth, a loupe if you ask for
@@ -8,7 +8,7 @@
  * purchase engine in this game and there is not going to be a second.
  *
  * The second is the bench, and it is the reason this file exists. You say what
- * you want; the jeweller asks the five questions a real one asks — what piece,
+ * you want; the jeweler asks the five questions a real one asks — what piece,
  * what metal, what stone, how it is cut and graded, how it is held — and then
  * quotes. The quote is fixed at that moment. You leave a deposit, weeks pass,
  * and you come back for something that did not exist before and that nobody
@@ -19,7 +19,7 @@
  * - A deposit is taken once. Approving an already-ordered commission is a
  *   no-op that returns the same numbers, so a retried click cannot pay twice.
  * - Collection charges the balance once and creates exactly one asset.
- * - Cancelling before the bench starts refunds the deposit in full; cancelling
+ * - Canceling before the bench starts refunds the deposit in full; canceling
  *   after it does not, because the metal has been bought and the wax is cut.
  */
 
@@ -79,7 +79,7 @@ const COMMISSION_STEP = 34;
 // The shop
 // ---------------------------------------------------------------------------
 
-/** Whether this place has a jeweller's counter: a maison, a chain, or a bench. */
+/** Whether this place has a jeweler's counter: a maison, a chain, or a bench. */
 export function isJeweller(place: Place | undefined): boolean {
   if (!place) return false;
   if (place.kind === 'jeweller') return true;
@@ -105,7 +105,7 @@ export function tierOf(place: Place): number {
 
 /** The person behind the counter, or at the bench. The same one every time. */
 export function jewellerAt(sim: Simulation, place: Place): Person {
-  const archetype = `jeweller:${place.id}`;
+  const archetype = `jeweler:${place.id}`;
   const existing = peopleOf(sim, archetype)[0];
   if (existing) return existing;
   const rng = sim.rng('jeweller', place.id);
@@ -179,7 +179,7 @@ export interface Quote {
 /**
  * What the bench says when you finish describing it.
  *
- * Metal by weight, stone by carat against its grade, labour by the hour and
+ * Metal by weight, stone by carat against its grade, labor by the hour and
  * the difficulty of the setting, and the whole thing scaled by how dear this
  * room is and how dear this city is. Every figure is SLATE's own.
  */
@@ -222,7 +222,7 @@ export function quoteFor(place: Place, spec: Spec): Quote {
 }
 
 /**
- * What a real jeweller would say out loud before taking your money.
+ * What a real jeweler would say out loud before taking your money.
  *
  * None of these refuse the order. They are the things somebody who does this
  * for a living would think it dishonest not to mention.
@@ -336,7 +336,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.look',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const jeweller = jewellerAt(s, place);
       s.advanceTo(s.now + LOUPE_MINUTES * MS_MINUTE);
       tallyFact(s, jeweller.id, { kind: 'topic', sourceKind: 'jeweller', aboutId: s.player.id, text: CAME_IN, step: VISIT_STEP });
@@ -355,7 +355,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.commission',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const piece = pieceOf(p.piece);
       const carats = piece.takesStone ? clamp(Number(p.carats) || 0, 0, 30) : 0;
       const engraving = (p.engraving ?? '').trim().slice(0, 60) || undefined;
@@ -489,7 +489,7 @@ export function registerJewellery(sim: Simulation): void {
    *
    * Before the bench has cut anything the deposit comes back. After that it
    * does not, because the metal is bought and the wax is carved, and the
-   * jeweller says so rather than the game hiding it.
+   * jeweler says so rather than the game hiding it.
    */
   sim.onCommand<{ commissionId: Id; accountId?: Id }, { refunded: Money; kept: Money }>(
     'jewel.cancel',
@@ -511,14 +511,14 @@ export function registerJewellery(sim: Simulation): void {
       }
       commission.status = 'cancelled';
       commission.cancelledReason = refunded > 0
-        ? 'Cancelled before the bench had started. The deposit came back.'
-        : 'Cancelled once the metal had been bought. The deposit did not come back.';
+        ? 'Canceled before the bench had started. The deposit came back.'
+        : 'Canceled once the metal had been bought. The deposit did not come back.';
       return { refunded, kept: commission.deposit - refunded };
     },
   );
 
   // -------------------------------------------------------------------------
-  // What a jeweller does besides selling
+  // What a jeweler does besides selling
   // -------------------------------------------------------------------------
 
   /** Sizing a ring. Some metals and some settings will not take it. */
@@ -526,7 +526,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.resize',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const asset = s.universe.assets[p.assetId];
       if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
       if (asset.wardrobe?.slot !== 'ring') throw new CommandError('Only a ring gets sized.');
@@ -539,7 +539,7 @@ export function registerJewellery(sim: Simulation): void {
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (accountId) s.expense(accountId, cost, `Ring sizing — ${asset.name}`, 'shopping');
       const readyAt = addDays(s.now, 7, s.homeZone);
-      awayUntil(asset, readyAt, 'At The Jeweller');
+      awayUntil(asset, readyAt, 'At The Jeweler');
       return { cost, readyAt };
     },
   );
@@ -549,7 +549,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.repair',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const asset = s.universe.assets[p.assetId];
       if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
 
@@ -597,11 +597,11 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.clean',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const asset = s.universe.assets[p.assetId];
       if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
 
-      // A jeweller who ultrasonics an emerald or a pearl is not one you go back
+      // A jeweler who ultrasonics an emerald or a pearl is not one you go back
       // to. They say no to the machine and clean it by hand instead.
       const stone = stoneOf(asset.bespoke?.stone);
       const delicate = stone.id === 'emerald' || stone.id === 'pearl' || stone.id === 'opal' || stone.id === 'turquoise';
@@ -623,7 +623,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.appraise',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const asset = s.universe.assets[p.assetId];
       if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
 
@@ -653,7 +653,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.engrave',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweller.');
+      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
       const asset = s.universe.assets[p.assetId];
       if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
       const text = p.text.trim().slice(0, 60);
@@ -692,7 +692,7 @@ function awayUntil(asset: OwnedAsset, at: number, reason: string): void {
 /**
  * The finished piece.
  *
- * Not from the catalogue, because it is not in the catalogue: it is a one off
+ * Not from the catalog, because it is not in the catalog: it is a one off
  * with its whole specification recorded on it. It is worth less the moment you
  * walk out with it, which is true of bespoke and which the game does not
  * pretend otherwise about.

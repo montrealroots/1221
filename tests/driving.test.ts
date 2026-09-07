@@ -62,7 +62,7 @@ describe('the road', () => {
     expect(driveMinutes(5)).toBeLessThan(driveMinutes(50));
   });
 
-  // The real neighbourhood, as the Travel screen has it: every town in the country.
+  // The real neighborhood, as the Travel screen has it: every town in the country.
   beforeAll(() => { addCountryCities('us', readFileSync('public/geo/us.tsv', 'utf8')); });
 
   it('offers fifty real places across the day\'s drive, nearest first', () => {
