@@ -8,6 +8,10 @@ import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
 import { retailerAt, standingAt } from '@/engine/systems/retail';
 import { commissionsOf, describeSpec } from '@/engine/systems/jewellery';
+import {
+  costumesOf, describeSpec as describeGarment, readinessFor, selfHours, selfQuality,
+} from '@/engine/systems/costume';
+import { CLOTHS, FINISHES, GARMENT_KINDS, SELF_MADE_NOTE } from '@/engine/content/costume';
 import { activeScene } from '@/engine/systems/scenes';
 import { NEEDS_WASHING, appraise, preferenceOf, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
 import { AUDIENCE_LABEL, COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
@@ -19,6 +23,7 @@ type Tab = 'shop' | 'owned' | 'wardrobe' | 'orders';
 const CATEGORIES = [
   'groceries', 'clothing', 'footwear', 'accessory', 'watch', 'jewelry',
   'furniture', 'home', 'household', 'appliance', 'electronics', 'equipment', 'art', 'books',
+  'kit', 'makeup', 'haberdashery',
 ];
 
 export function ShoppingWorkspace() {
@@ -27,11 +32,21 @@ export function ShoppingWorkspace() {
   const [category, setCategory] = useState('groceries');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [everything, setEverything] = useState(false);
+  const [makeKind, setMakeKind] = useState('shirt');
+  const [makeCloth, setMakeCloth] = useState('cotton_shirting');
+  const [makeFinish, setMakeFinish] = useState('machine');
 
   const catalogue = useWorld((s) => shoppingCatalogue(s, category, everything));
   const rack = useWorld((s) => preferenceOf(s, s.player.id));
   const owned = useWorld((s) => Object.values(s.universe.assets).filter((a) => a.ownerId === s.player.id && !a.soldAt));
   const wardrobe = useWorld((s) => wardrobeView(s, s.player.id));
+  const makeSpec = { kind: makeKind, cloth: makeCloth, finish: makeFinish };
+  const costumes = useWorld((s) => costumesOf(s, s.player.id));
+  const bench = useWorld((s) => ({
+    ready: readinessFor(s, s.player.id, makeSpec),
+    hours: selfHours(s, s.player.id, makeSpec),
+    quality: selfQuality(s, s.player.id, makeSpec),
+  }));
   const onNow = useWorld((s) => wearing(s, s.player.id));
   const mirror = useWorld((s) => appraise(s, wearing(s, s.player.id)));
   const looks = useWorld((s) => Object.values(s.universe.outfits).filter((o) => o.personId === s.player.id));
@@ -297,6 +312,97 @@ export function ShoppingWorkspace() {
                     )}
                     {(c.status === 'quoted' || c.status === 'ordered') && (
                       <button className="btn btn-sm" onClick={() => run('jewel.cancel', { commissionId: c.id })}>Cancel</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Panel>
+          )}
+
+
+          <Panel
+            title="At Your Own Table"
+            subtitle="A machine, enough cloth, and the hours. How it comes out is down to your hands."
+            flush
+          >
+            <div className="row wrap gap-2" style={{ padding: 'var(--s3)' }}>
+              <label className="xs dim">
+                Garment
+                <select className="input" value={makeKind} onChange={(e) => setMakeKind(e.target.value)} aria-label="Garment To Make">
+                  {GARMENT_KINDS.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
+                </select>
+              </label>
+              <label className="xs dim">
+                Cloth
+                <select className="input" value={makeCloth} onChange={(e) => setMakeCloth(e.target.value)} aria-label="Cloth To Cut It From">
+                  {CLOTHS.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+              </label>
+              <label className="xs dim">
+                Finish
+                <select className="input" value={makeFinish} onChange={(e) => setMakeFinish(e.target.value)} aria-label="How It Is Finished">
+                  {FINISHES.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
+                </select>
+              </label>
+            </div>
+            <div className="list">
+              <div className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{titleCaseLabel(describeGarment(makeSpec))}</div>
+                  <div className="xs dim">
+                    {plural(bench.ready.yardsNeeded, 'Yard')} · About {plural(bench.hours, 'Hour')} At The Table
+                    {' · '}Would Come Out {bench.quality} Of 100
+                  </div>
+                </div>
+                <button
+                  className="btn btn-sm btn-primary"
+                  disabled={!bench.ready.ready}
+                  onClick={() => run('costume.make', makeSpec)}
+                >
+                  Make It
+                </button>
+              </div>
+            </div>
+            {!bench.ready.ready && (
+              <div className="callout" style={{ margin: 'var(--s3)' }}>
+                <strong className="xs">You Are Short Of</strong>
+                {bench.ready.missing.map((m, i) => (
+                  <p key={i} className="xs" style={{ margin: i === 0 ? '6px 0 0' : '4px 0 0' }}>{m}</p>
+                ))}
+              </div>
+            )}
+            <p className="xs dim" style={{ margin: 'var(--s3)' }}>{SELF_MADE_NOTE}</p>
+          </Panel>
+
+          {costumes.length > 0 && (
+            <Panel title="Being Cut For You" subtitle="A workroom cannot be hurried, and fittings are not optional if you want it to fit." flush>
+              <div className="list">
+                {costumes.map((c) => (
+                  <div key={c.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">{titleCaseLabel(describeGarment(c))}</div>
+                      <div className="xs dim">
+                        {c.maker === 'self' ? `Made by you · fits ${c.quality ?? 0} of 100`
+                          : c.status === 'ordered' || c.status === 'fitting'
+                            ? `On the table · ready ${c.readyAt ? formatDate(c.readyAt, sim.homeZone) : 'soon'}`
+                              + ` · ${c.fittingsDone} of ${plural(c.fittingsWanted, 'fitting')} done`
+                            : c.status === 'ready' ? 'Finished, and waiting for you'
+                              : c.status === 'collected' ? `Collected ${formatDate(c.collectedAt ?? c.quotedAt, sim.homeZone)}`
+                                : `Quoted ${formatDate(c.quotedAt, sim.homeZone)}, not ordered`}
+                        {c.label ? ` · “${c.label}”` : ''}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <MoneyText amount={c.quotedPrice} />
+                      {c.status === 'ordered' || c.status === 'fitting' || c.status === 'ready' ? (
+                        <div className="xs dim">{formatMoney(c.quotedPrice - c.deposit, { cents: false })} still to pay</div>
+                      ) : null}
+                    </div>
+                    {c.status === 'ready' && (
+                      <button className="btn btn-sm btn-primary" onClick={() => run('costume.collect', { costumeId: c.id })}>Collect</button>
+                    )}
+                    {(c.status === 'quoted' || c.status === 'ordered' || c.status === 'fitting') && (
+                      <button className="btn btn-sm" onClick={() => run('costume.cancel', { costumeId: c.id })}>Cancel</button>
                     )}
                   </div>
                 ))}

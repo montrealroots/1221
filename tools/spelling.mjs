@@ -99,6 +99,8 @@ const REAL_NAMES = [
   'Under Armour', 'Run Favourite', 'Nail Colour',
   // Under Armour spells its own product lines the same way it spells itself.
   'HeatGear Armour', 'ColdGear Armour', 'Armour Fleece', 'Gameday Armour',
+  // MAC, Creamsource and Sony print these product names this way worldwide.
+  'Micro Colour', 'Face Colour', 'Cream Colour Base', 'Duo Fibre', 'Fibre Gel', 'Bravia Theatre',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

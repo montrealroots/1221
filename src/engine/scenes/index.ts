@@ -13,6 +13,7 @@ import './counter';
 import './date';
 import './dress';
 import './jeweller';
+import './costumier';
 import './dealer';
 import './flight';
 import './gym';

@@ -900,35 +900,22 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_lumix_gh7', 'Panasonic Lumix GH7', 'Panasonic', 'camera', 2_197_00, 90, 0.24, ['filming']),
 
   // --- Cinema cameras and glass --------------------------------------------------------------------------
-  el('e_arri_alexa35', 'ARRI Alexa 35', 'ARRI', 'cinema', 84_000_00, 100, 0.14, ['production']),
-  el('e_arri_mini_lf', 'ARRI Alexa Mini LF', 'ARRI', 'cinema', 79_000_00, 99, 0.14, ['production']),
-  el('e_arri_amira', 'ARRI Amira', 'ARRI', 'cinema', 48_000_00, 96, 0.16, ['documentary']),
-  el('e_red_vraptor', 'RED V-Raptor 8K VV', 'RED Digital Cinema', 'cinema', 24_500_00, 96, 0.18, ['production']),
-  el('e_red_komodo', 'RED Komodo-X 6K', 'RED Digital Cinema', 'cinema', 9_995_00, 92, 0.20, ['production']),
   el('e_sony_venice2', 'Sony Venice 2', 'Sony', 'cinema', 58_000_00, 98, 0.16, ['production']),
-  el('e_sony_fx6', 'Sony FX6', 'Sony', 'cinema', 5_998_00, 92, 0.22, ['documentary']),
-  el('e_sony_fx3', 'Sony FX3', 'Sony', 'cinema', 3_898_00, 90, 0.22, ['content', 'filming']),
-  el('e_canon_c400', 'Canon EOS C400', 'Canon', 'cinema', 7_999_00, 93, 0.22, ['documentary']),
-  el('e_canon_c70', 'Canon EOS C70', 'Canon', 'cinema', 5_499_00, 90, 0.22, ['documentary']),
-  el('e_bmpcc6k', 'Blackmagic Pocket Cinema Camera 6K Pro', 'Blackmagic Design', 'cinema', 2_535_00, 86, 0.24, ['content']),
   el('e_ursa_cine', 'Blackmagic URSA Cine 12K', 'Blackmagic Design', 'cinema', 14_995_00, 94, 0.20, ['production']),
   el('e_atem_mini', 'Blackmagic ATEM Mini Extreme', 'Blackmagic Design', 'production', 1_095_00, 88, 0.22, ['streaming']),
   el('e_cooke_s7', 'Cooke S7 Full Frame Prime', 'Cooke Optics', 'lens', 21_500_00, 99, 0.08, ['production']),
   el('e_zeiss_supreme', 'Zeiss Supreme Prime', 'Zeiss', 'lens', 19_800_00, 98, 0.08, ['production']),
   el('e_canon_rf_2470', 'Canon RF 24-70mm F2.8 L', 'Canon', 'lens', 2_399_00, 92, 0.14),
-  el('e_sony_gm_2470', 'Sony FE 24-70mm F2.8 GM II', 'Sony', 'lens', 2_298_00, 93, 0.14),
   el('e_sigma_art_35', 'Sigma 35mm F1.2 DG DN Art', 'Sigma', 'lens', 1_499_00, 90, 0.16),
   el('e_leica_summilux', 'Leica Summilux-M 50mm F1.4 ASPH', 'Leica', 'lens', 4_995_00, 98, 0.04, ['collector']),
 
   // --- Support, drones, action -----------------------------------------------------------------------------
   el('e_dji_ronin4d', 'DJI Ronin 4D-8K', 'DJI', 'support', 19_499_00, 94, 0.24, ['production']),
-  el('e_dji_rs4', 'DJI RS 4 Pro Gimbal', 'DJI', 'support', 869_00, 88, 0.26, ['content']),
   el('e_dji_mavic3', 'DJI Mavic 3 Pro', 'DJI', 'drone', 2_199_00, 92, 0.28, ['aerial']),
   el('e_dji_mini4', 'DJI Mini 4 Pro', 'DJI', 'drone', 759_00, 86, 0.30, ['aerial']),
   el('e_dji_inspire3', 'DJI Inspire 3', 'DJI', 'drone', 16_499_00, 96, 0.24, ['production']),
   el('e_osmo_pocket', 'DJI Osmo Pocket 3', 'DJI', 'camera', 519_00, 84, 0.30, ['content']),
   el('e_gopro13', 'GoPro Hero 13 Black', 'GoPro', 'camera', 399_00, 84, 0.32, ['content']),
-  el('e_sachtler_tripod', 'Sachtler Flowtech 75 Tripod', 'Sachtler', 'support', 2_195_00, 92, 0.12, ['production']),
   el('e_manfrotto_tripod', 'Manfrotto 055 Aluminum Tripod', 'Manfrotto', 'support', 269_00, 78, 0.16),
 
   // --- Sound -------------------------------------------------------------------------------------------------
@@ -940,9 +927,7 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_sennheiser_mkh416', 'Sennheiser MKH 416 Shotgun', 'Sennheiser', 'audio', 999_00, 96, 0.06, ['production', 'sound']),
   el('e_sennheiser_hd660', 'Sennheiser HD 660S2', 'Sennheiser', 'audio', 599_00, 92, 0.16),
   el('e_rode_ntg5', 'Rode NTG5 Shotgun', 'Rode', 'audio', 499_00, 90, 0.10, ['production']),
-  el('e_rode_wireless', 'Rode Wireless PRO', 'Rode', 'audio', 399_00, 88, 0.16, ['content']),
   el('e_rode_nt1', 'Rode NT1 Fifth Generation', 'Rode', 'audio', 259_00, 86, 0.14, ['podcast']),
-  el('e_sound_devices', 'Sound Devices MixPre-6 II', 'Sound Devices', 'audio', 1_199_00, 94, 0.12, ['production']),
   el('e_zoom_h6', 'Zoom H6essential', 'Zoom', 'audio', 299_00, 80, 0.18),
   el('e_ua_apollo', 'Universal Audio Apollo Twin X', 'Universal Audio', 'audio', 1_099_00, 92, 0.14, ['studio']),
   el('e_focusrite_2i2', 'Focusrite Scarlett 2i2', 'Focusrite', 'audio', 199_00, 80, 0.20, ['podcast']),
@@ -975,10 +960,7 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_steam_deck', 'Valve Steam Deck OLED', 'Valve', 'console', 549_00, 86, 0.28),
 
   // --- Lighting and the rest of the kit ---------------------------------------------------------------------------
-  el('e_aputure_600', 'Aputure LS 600d Pro', 'Aputure', 'lighting', 1_890_00, 92, 0.18, ['production']),
   el('e_aputure_120', 'Aputure Amaran 200x', 'Aputure', 'lighting', 449_00, 84, 0.22, ['content']),
-  el('e_arri_skypanel', 'ARRI SkyPanel S60-C', 'ARRI', 'lighting', 6_800_00, 96, 0.14, ['production']),
-  el('e_astera_titan', 'Astera Titan Tube', 'Astera', 'lighting', 4_650_00, 94, 0.16, ['production']),
   el('e_elgato_key', 'Elgato Key Light', 'Elgato', 'lighting', 199_00, 78, 0.24, ['self tape']),
   el('e_elgato_streamdeck', 'Elgato Stream Deck MK.2', 'Elgato', 'production', 149_00, 80, 0.24, ['streaming']),
   el('e_anker_powerbank', 'Anker Prime Power Bank', 'Anker', 'accessory', 129_00, 80, 0.34),

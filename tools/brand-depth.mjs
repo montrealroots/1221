@@ -24,6 +24,7 @@ const HEADLINE = [
   'Under Armour', 'Puma', 'Reebok', 'Asics', 'Converse', 'Vans',
   'Louis Vuitton', 'Gucci', 'Prada', 'Dior', 'Chanel', 'Hermès',
   'Balenciaga', 'Saint Laurent', 'Bottega Veneta',
+  'ARRI', 'RED', 'Sony', 'Canon', 'Blackmagic Design', 'Aputure', 'MAC Cosmetics',
 ];
 
 const counts = new Map();

@@ -22,6 +22,7 @@ import {
 } from '@/engine/systems/places';
 import { activeScene } from '@/engine/systems/scenes';
 import { isJeweller } from '@/engine/systems/jewellery';
+import { isCostumier } from '@/engine/systems/costume';
 import { lotSells } from '@/engine/systems/dealership';
 
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
@@ -115,6 +116,11 @@ export function CityWorkspace() {
           {isJeweller(here.place) && (
             <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.jeweller', input: { placeId: here.place!.id } })}>
               Go To The Counter
+            </button>
+          )}
+          {isCostumier(here.place) && (
+            <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.costumier', input: { placeId: here.place!.id } })}>
+              Go To The Table
             </button>
           )}
           {here.place?.actions.includes('watch') && (
@@ -211,6 +217,11 @@ export function CityWorkspace() {
                   {isJeweller(place) && (
                     <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.jeweller', input: { placeId: place.id } })}>
                       Go To The Counter
+                    </button>
+                  )}
+                  {isCostumier(place) && (
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.costumier', input: { placeId: place.id } })}>
+                      Go To The Table
                     </button>
                   )}
                   <button

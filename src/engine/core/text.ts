@@ -75,6 +75,9 @@ const CATEGORY_LABELS: Readonly<Record<string, string>> = {
   electronics: 'Electronics',
   art: 'Art',
   accessory: 'Accessories',
+  kit: 'Production Kit',
+  makeup: 'Makeup',
+  haberdashery: 'Fabric And Notions',
 };
 export function categoryLabel(category: string): string {
   return CATEGORY_LABELS[category] ?? titleCaseLabel(category.replace(/_/g, ' '));

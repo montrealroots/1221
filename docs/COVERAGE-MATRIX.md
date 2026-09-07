@@ -67,6 +67,7 @@ Anywhere (`/`) searches all of it.
 | `life.shop` | Shopping, The City | `go.to`, `retail.enter`, `retail.handle`, `retail.try_on`, `retail.basket`, `retail.walk_out`, `retail.pay`, `shop.purchase` | Yes (it looks and leaves; it never spends for you) | tests/dining.test.ts |
 | `life.dress` | Shopping (Wardrobe), Home | `wear.put_on`, `wear.take_off`, `wear.outfit`, `wear.leave_in_it`, `wear.clean`, `wear.save_look` | Yes | tests/wardrobe.test.ts, tests/scene-definitions.test.ts |
 | `life.jeweller` | The City, a jeweller's door | `jewel.look`, `jewel.commission`, `jewel.approve`, `jewel.collect`, `jewel.cancel` | Yes (it collects what is paid for; it never orders for you) | tests/jewellery.test.ts |
+| `life.costumier` | The City, a costume house's door | `costume.look`, `costume.commission`, `costume.approve`, `costume.fitting`, `costume.collect`, `costume.cancel`, `costume.alter` | Yes (it stands for a fitting already due and collects what is paid for; it never orders for you) | tests/costume.test.ts |
 | `life.run` | Wellbeing | `go.to`, `life.do_activity` | Yes | tests/scene-definitions.test.ts |
 | `vehicles.dealer` | Vehicles market, The City | `go.to`, `deal.open`, `deal.inspect`, `deal.test_drive`, `deal.set_terms`, `deal.offer`, `deal.walk_away`, `deal.sign`, `veh.purchase`, `ins.quote`, `ins.purchase` | Yes | tests/dealership.test.ts |
 | `rel.date` | Home decision, Calendar, Relationships | `life.shower`, `shop.purchase`, `go.to`, `date.check_in`, `date.beat`, `date.close`, `date.finish` | Yes | tests/dating.test.ts |
@@ -271,6 +272,11 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | --- | --- | --- | --- | --- | --- |
 | A jeweller you can walk into, in every city | Implemented | 51 real jewellery houses and chains in `content/brands.ts`, plus one independent bench per city (`PlaceKind` `jeweller`), `isJeweller`, `jewellerAt`, `standingAt` | The City, the jeweller scene | tests/jewellery.test.ts | The named houses and chains are real and trade where they really trade. The independent bench is SLATE's own, the way its restaurants are: there is no national chain of bench jewellers to name |
 | Having something made: piece, metal, stone, grade, setting | Implemented | `life.jeweller` scene, `jewel.commission`, `Spec`, `PIECE_KINDS`, `METALS`, `STONES`, `CUTS`, `SETTINGS` | The jeweller scene | tests/jewellery.test.ts | Seventeen pieces, twelve metals, eighteen stones, twelve cuts, eleven settings. No sketching, no wax approval stage, and no choosing an individual stone from a parcel |
+| Having a costume cut: garment, cloth, finish, label | Implemented | `life.costumier` scene, `costume.commission`, `Spec`, `GARMENT_KINDS`, `CLOTHS`, `FINISHES`, `content/costume.ts` | The costume house | tests/costume.test.ts | Twenty-four garment kinds, twenty-two cloths, nine finishes. No sketching stage, no separate toile approval, and no choosing an individual bolt off the shelf |
+| Fittings, and what skipping them costs | Implemented | `costume.fitting`, `houseQuality`, `MISSED_FITTING_PENALTY`, scheduled `costume.fitting_due` | The costume house | tests/costume.test.ts | Up to three fittings per garment; every one missed takes nine points off the finished fit, and the record says so |
+| Making a costume yourself | Implemented | `costume.make`, `readinessFor`, `selfQuality`, `selfHours`, `consumeCloth` | Shopping, at your own table | tests/costume.test.ts | Needs a machine you own and cloth you own, by the yard. Quality comes off your `costume_design` skill against the garment's difficulty. No pattern drafting, no grading, and no sizes other than your own |
+| A tailor altering something you own | Implemented | `costume.alter`, `ALTERATIONS`, `wardrobe.fit` | The costume house | tests/costume.test.ts | Eight alterations a real tailor would do. Letting out is bounded by the allowance the maker left, and the garment carries a provenance line for every one |
+| Real production kit: cameras, glass, stock, lighting, grip, sound, monitoring | Implemented | `content/kit.ts` (945 rows), categories `kit`, `makeup`, `haberdashery` | Shopping, the Production Kit, Makeup and Fabric And Notions racks | tests/costume.test.ts, tools/brand-depth.mjs | ARRI 115, RED 104, Sony 107, Canon 101, Blackmagic Design 111, Aputure 101, MAC Cosmetics 106. Panavision is rental only and carries a day rate rather than a purchase price, because the house does not sell. No rental house yet: kit is bought, not hired |
 | The four Cs, as the GIA publishes them | Implemented | `COLOUR_GRADES` (D to Z), `CLARITIES` (FL to I1), `CUTS`, carat weight in `quoteFor` | The Colour and Clarity steps | tests/jewellery.test.ts | The scales and the named cuts are published standards, used as published. Every price is SLATE's calibration and says so; there is no live diamond market feed |
 | A quote that adds up, and is fixed when it is given | Implemented | `quoteFor` (metal by weight, stone by carat and grade, labour by the hour and the setting), `Commission.quotedPrice` | What It Would Cost | tests/jewellery.test.ts | The bench cannot revise a quote it has given. There is no haggling |
 | The awkward things said before you pay, never after | Implemented | `cautionsFor` | The quote step | tests/jewellery.test.ts | Ten checks: unsizable metals, eternity bands, tension settings, soft stones in rings, oiled emeralds, pearls in rings, exposed settings, big SI stones, silver under a large stone, over-long engraving. None of them refuses the order |
@@ -426,7 +432,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 184 commands, 67 scheduled kinds, 167 events emitted, 25 event listeners, 17 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 192 commands, 69 scheduled kinds, 167 events emitted, 25 event listeners, 18 scenes, 19 routes.
 
 ### Commands
 
@@ -435,6 +441,7 @@ Generated by `node tools/inventory.mjs --markdown`. 184 commands, 67 scheduled k
 | bank | `bank.cancel_standing_order` `bank.close` `bank.create_standing_order` `bank.open` `bank.pay_card` `bank.set_overdraft` | `src/engine/systems/banking.ts` |
 | build | `build.decide_change_order` `build.start` | `src/engine/systems/property.ts` |
 | co | `co.change_shape` `co.found` `co.read_brief` `co.set_draw` `co.set_rate` | `src/engine/systems/shingle.ts` |
+| costume | `costume.alter` `costume.approve` `costume.cancel` `costume.collect` `costume.commission` `costume.fitting` `costume.look` `costume.make` | `src/engine/systems/costume.ts` |
 | date | `date.attend` `date.beat` `date.cancel` `date.check_in` `date.close` `date.finish` `date.reschedule` `date.skip` | `src/engine/systems/dating.ts` |
 | deal | `deal.inspect` `deal.offer` `deal.open` `deal.set_terms` `deal.sign` `deal.test_drive` `deal.walk_away` | `src/engine/systems/dealership.ts` |
 | dine | `dine.arrive` `dine.leave` `dine.order` `dine.settle` `dine.wait` | `src/engine/systems/dining.ts` |
@@ -471,6 +478,7 @@ Generated by `node tools/inventory.mjs --markdown`. 184 commands, 67 scheduled k
 | bank | `bank.day` `bank.month` | `src/engine/systems/banking.ts` |
 | build | `build.phase_tick` | `src/engine/systems/property.ts` |
 | co | `co.draw` `co.overhead` | `src/engine/systems/shingle.ts` |
+| costume | `costume.fitting_due` `costume.ready` | `src/engine/systems/costume.ts` |
 | date | `date.follow_up` `date.lapse` | `src/engine/systems/dating.ts` |
 | deal | `deal.callback` `deal.delivery` `deal.expire` | `src/engine/systems/dealership.ts` |
 | edu | `edu.session` | `src/engine/systems/services.ts` |
@@ -551,6 +559,7 @@ Generated by `node tools/inventory.mjs --markdown`. 184 commands, 67 scheduled k
 | --- | --- |
 | `fitness.gym` | `src/engine/scenes/gym.ts` |
 | `health.visit` | `src/engine/scenes/visit.ts` |
+| `life.costumier` | `src/engine/scenes/costumier.ts` |
 | `life.dress` | `src/engine/scenes/dress.ts` |
 | `life.jeweller` | `src/engine/scenes/jeweller.ts` |
 | `life.meal` | `src/engine/scenes/meal.ts` |

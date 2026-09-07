@@ -31,10 +31,10 @@ export type PlaceKind =
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
-  | 'marina' | 'storage' | 'jeweller';
+  | 'marina' | 'storage' | 'jeweller' | 'costumier';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
-  jeweller: 'Jeweler',
+  jeweller: 'Jeweler', costumier: 'Costume House',
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
   cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
@@ -320,6 +320,11 @@ const CLUB_NAMES = ['Basement 9', 'The Meridian Room', 'Nightshift', 'Vault'];
  * unlike the shops these are SLATE's own the way its restaurants are: a
  * workshop above a shop, one or two people, a torch and a bench peg.
  */
+const COSTUMIER_NAMES = [
+  'The Cutting Room', 'Thread & Bone', 'Pilcher & Vane', 'The Wardrobe Department',
+  'Mallory Costume Works', 'The Toile Room', 'Sabine & Ash',
+];
+
 const JEWELLER_NAMES = ['The Bench', 'Ansell & Pike', 'Halliwell Goldsmiths', 'The Setting Room', 'Verrall & Daughter', 'Ironmonger Row Goldsmiths'];
 
 // ---------------------------------------------------------------------------
@@ -352,6 +357,7 @@ const SPECS: readonly Spec[] = [
   { kind: 'marina', count: (_i, _p, waterfront) => (waterfront ? 1 : 0) },
   // A bench jeweler, added after everything else so no existing place id moved.
   { kind: 'jeweller', count: () => 1 },
+  { kind: 'costumier', count: () => 1 },
 ];
 
 /** City tags that put it on water a boat can be kept in. */
@@ -398,7 +404,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   gym: ['train', 'shower'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
   stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
-  marina: ['visit'], storage: ['visit'], jeweller: ['browse'],
+  marina: ['visit'], storage: ['visit'], jeweller: ['browse'], costumier: ['browse'],
 };
 
 function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
@@ -425,6 +431,7 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
     case 'salon': return rng.pick(SALON_NAMES);
     case 'club': return rng.pick(CLUB_NAMES);
     case 'jeweller': return rng.pick(JEWELLER_NAMES);
+    case 'costumier': return rng.pick(COSTUMIER_NAMES);
     default: return 'A Place';
   }
 }
@@ -433,7 +440,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   restaurant: 95, cafe: 35, bar: 75, fast_food: 25, market: 30, gas_station: 10, garage: 120,
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
   viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
-  marina: 60, storage: 20, jeweller: 45,
+  marina: 60, storage: 20, jeweller: 45, costumier: 70,
 };
 
 /**
@@ -607,6 +614,13 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
       'Two benches, a rolling mill, and a kettle that is always on.',
       'They will make you what you draw, and tell you why it will not work.',
       'A safe, a loupe, and forty years of somebody else’s wedding rings.',
+    ])}`;
+    case 'costumier': return `A workroom in ${where}. ${rng.pick([
+      'Toiles on the wall, a cutting table, and three fittings before anything is finished.',
+      'Bolts to the ceiling, one industrial machine, and a kettle nobody turns off.',
+      'They cut for stage and screen, and they will cut for you.',
+      'Dress forms in every size, a steamer going, and pins everywhere.',
+      'A pattern library going back forty years, and somebody who knows where everything is.',
     ])}`;
     default: return `In ${where}.`;
   }

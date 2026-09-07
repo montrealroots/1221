@@ -83,6 +83,8 @@ const REAL_DOUBLES = new Set([
   'tam', 'joseph', 'dan', 'winston', 'hubba', 'rules', 'cayenne', 'know',
   // Under Armour's Armour Fleece line. The stutter is the real name, not a slip.
   'armour',
+  // MAC Pro Acrylic Paint in Black Black. Also the real name.
+  'black',
 ]);
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

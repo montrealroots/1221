@@ -49,6 +49,7 @@ import { jewellerySlotFor } from './content/wardrobe';
 import { CATALOG } from './content/catalog';
 import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
 import { registerJewellery } from './systems/jewellery';
+import { registerCostume } from './systems/costume';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -100,6 +101,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerRetail(sim);
   registerWardrobe(sim);
   registerJewellery(sim);
+  registerCostume(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -961,6 +963,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // changes; the collection simply starts empty.
     universe.commissions ??= {};
     steps.push('Commissions ready: a bench will now make you a piece.');
+  }
+
+  if (from < 46) {
+    // Schema 46: a costume house will cut you something, and so will you.
+    // Nothing already owned changes; the collection simply starts empty.
+    universe.costumes ??= {};
+    steps.push('Workroom ready: a costume can now be cut for you, or by you.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

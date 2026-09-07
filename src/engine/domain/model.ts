@@ -1137,6 +1137,11 @@ export interface OwnedAsset {
    * specification, so the thing can be described, valued and insured for what
    * it actually is years after the bench closed.
    */
+  /**
+   * How many of it you own, when it is the kind of thing you own by the
+   * length or the box. Absent means one, which is what nearly everything is.
+   */
+  quantity?: number;
   bespoke?: {
     commissionId: Id;
     placeName: string;
@@ -1167,6 +1172,13 @@ export interface OwnedAsset {
     /** Somewhere other than your wardrobe: at the cleaner, at the tailor. */
     awayUntil?: Instant;
     awayReason?: string;
+    /**
+     * 0-100, how well it actually fits this body.
+     *
+     * Off the rack it is whatever the rack gave you. Cut for you it is how
+     * well the workroom did, and a tailor can move it either way.
+     */
+    fit?: number;
   };
   soldAt?: Instant;
   tags: string[];
@@ -1231,6 +1243,54 @@ export interface Commission {
   readyAt?: Instant;
   collectedAt?: Instant;
   /** The finished piece, once it exists. */
+  assetId?: Id;
+  /** Why it was canceled, when it was. */
+  cancelledReason?: string;
+}
+
+/**
+ * A garment that does not exist yet.
+ *
+ * A costume house cutting one for you, a tailor altering one you own, or you
+ * at your own machine. The same record covers all three because the questions
+ * are the same: what is it, what is it cut from, who is making it, how many
+ * fittings, what did it cost, and is it finished.
+ */
+export interface Costume {
+  id: Id;
+  saveId: Id;
+  /** The workroom. Absent when you are making it at home. */
+  placeId?: Id;
+  /** The cutter, so the same person is there at every fitting. */
+  makerId?: Id;
+  /** For whom. A costume can be made for somebody else. */
+  forPersonId: Id;
+  /** 'house', 'tailor' or 'self'. */
+  maker: string;
+  kind: string;
+  cloth: string;
+  finish: string;
+  /** What is embroidered or printed inside it, in the player's own words. */
+  label?: string;
+  /** Yards the pattern needs, so a self-made one can check the stash. */
+  yards: number;
+  quotedPrice: Money;
+  deposit: Money;
+  depositPaidAt?: Instant;
+  balancePaidAt?: Instant;
+  status: 'quoted' | 'ordered' | 'fitting' | 'ready' | 'collected' | 'cancelled';
+  /** Fittings the workroom wants, and how many have happened. */
+  fittingsWanted: number;
+  fittingsDone: number;
+  /** Every fitting leaves a note. Skipping them costs the fit. */
+  fittingNotes: string[];
+  quotedAt: Instant;
+  orderedAt?: Instant;
+  readyAt?: Instant;
+  collectedAt?: Instant;
+  /** How well it came out, 0-100, once it is finished. */
+  quality?: number;
+  /** The finished garment, once it exists. */
   assetId?: Id;
   /** Why it was canceled, when it was. */
   cancelledReason?: string;
@@ -2088,7 +2148,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 45;
+export const SAVE_SCHEMA_VERSION = 46;
 
 export interface SaveMeta {
   id: Id;
@@ -2168,6 +2228,8 @@ export interface SaveUniverse {
   wornRecords?: Record<Id, WornRecord>;
   /** Pieces being made for you at a bench. Absent before jewelers had one. */
   commissions?: Record<Id, Commission>;
+  /** Garments being cut for you, and the ones you cut yourself. */
+  costumes?: Record<Id, Costume>;
   /** Visits to a shop floor. Absent on a save from before shops had a floor. */
   retailVisits?: Record<Id, RetailVisit>;
   dates: Record<Id, DateRecord>;
