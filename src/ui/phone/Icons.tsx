@@ -46,9 +46,14 @@ export function BellGlyph({ size }: GlyphProps) {
 }
 
 export function HomeGlyph({ size, filled }: GlyphProps) {
+  // A house: a peak, straight eaves, and walls taller than the roof, with the
+  // rounding kept to the bottom corners so it does not read as a badge.
   return (
     <Svg size={size}>
-      <path d="M4 11.2 12 4.5l8 6.7V20a.8.8 0 0 1-.8.8H4.8A.8.8 0 0 1 4 20Z" fill={filled ? 'currentColor' : 'none'} />
+      <path
+        d="M11.35 3.15a1 1 0 0 1 1.3 0l7.5 6.6a1 1 0 0 1 .35.75V19.5a1.4 1.4 0 0 1-1.4 1.4H4.9a1.4 1.4 0 0 1-1.4-1.4v-9a1 1 0 0 1 .35-.75z"
+        fill={filled ? 'currentColor' : 'none'}
+      />
     </Svg>
   );
 }
@@ -403,11 +408,17 @@ export function GridGlyph({ size, filled }: GlyphProps) {
 
 /** The reel, which is a frame with the diagonal of a film strip across it. */
 export function ReelsGlyph({ size, filled }: GlyphProps) {
+  // A screen with the two diagonals of a strip running off the top edge and a
+  // play triangle in the middle, which is what the reels tab reads as.
   return (
     <Svg size={size}>
-      <rect x="3.5" y="3.5" width="17" height="17" rx="4" fill={filled ? 'currentColor' : 'none'} />
-      <path d="M3.8 9h16.4M8.6 3.6L11.4 9M14.4 3.6L17.2 9" stroke={filled ? 'var(--ph-bg)' : 'currentColor'} />
-      <path d="M10.4 12.4l4.4 2.6-4.4 2.6v-5.2z" fill={filled ? 'var(--ph-bg)' : 'none'} stroke={filled ? 'var(--ph-bg)' : 'currentColor'} />
+      <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="4.6" fill={filled ? 'currentColor' : 'none'} />
+      <path d="M8.9 3.5l3.1 5.1M14.7 3.5l3.1 5.1" stroke={filled ? 'var(--ph-bg)' : 'currentColor'} />
+      <path
+        d="M10.3 11.4l4.6 2.6-4.6 2.6v-5.2z"
+        fill={filled ? 'var(--ph-bg)' : 'currentColor'}
+        stroke="none"
+      />
     </Svg>
   );
 }
