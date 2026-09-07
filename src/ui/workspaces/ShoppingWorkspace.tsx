@@ -13,7 +13,8 @@ import {
 } from '@/engine/systems/costume';
 import { CLOTHS, FINISHES, GARMENT_KINDS, SELF_MADE_NOTE } from '@/engine/content/costume';
 import { activeScene } from '@/engine/systems/scenes';
-import { NEEDS_WASHING, appraise, preferenceOf, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
+import { CLEANER_PER_PIECE, NEEDS_WASHING, appraise, garmentsOf, preferenceOf, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
+import { AIR_DRY_HOURS, LAUNDERETTE_LOAD, TUMBLE_DRY_HOURS, hasWorkingDryer, hasWorkingWasher } from '@/engine/systems/household';
 import { AUDIENCE_LABEL, COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -410,6 +411,8 @@ export function ShoppingWorkspace() {
             </Panel>
           )}
 
+          <WashingPanel />
+
           {wardrobe.length === 0 ? (
             <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be put on and assembled into looks." />
           ) : (
@@ -481,5 +484,81 @@ export function ShoppingWorkspace() {
         </Panel>
       )}
     </>
+  );
+}
+
+/**
+ * The washing.
+ *
+ * With a machine at home it is three quarters of an hour and nothing. Without
+ * one, or with a broken one, it is the launderette: a load at a time, money,
+ * and most of an afternoon. A cashmere sweater goes in neither. It goes to the
+ * cleaner, costs by the piece, and is gone for two days, so the two are asked
+ * for separately rather than one button quietly doing the expensive thing.
+ */
+function WashingPanel() {
+  const { run } = useGame();
+  const dirty = useWorld((s) => garmentsOf(s, s.player.id)
+    .filter((a) => (a.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING));
+  const machine = useWorld((s) => hasWorkingWasher(s, s.player.id));
+  const dryer = useWorld((s) => hasWorkingDryer(s, s.player.id));
+  const specialist = dirty.filter((a) => materialOf(a.wardrobe!.material).dryCleanOnly);
+  const washable = dirty.filter((a) => !materialOf(a.wardrobe!.material).dryCleanOnly);
+  const loads = Math.max(1, Math.ceil(washable.length / 6));
+
+  if (dirty.length === 0) {
+    return (
+      <Panel title="The Washing" subtitle="Nothing needs washing.">
+        <p className="small dim" style={{ margin: 0 }}>
+          {machine
+            ? dryer
+              ? 'The washer and the dryer here both work.'
+              : 'The washer here works. There is no dryer, so a wash hangs overnight before you can wear any of it.'
+            : 'There is no washing machine here. When something needs washing it goes to the launderette.'}
+        </p>
+      </Panel>
+    );
+  }
+
+  return (
+    <Panel
+      title="The Washing"
+      subtitle={`${plural(dirty.length, 'Thing')} To Wash`}
+    >
+      {washable.length > 0 && (
+        <p className="small dim" style={{ marginTop: 0 }}>
+          {machine
+            ? dryer
+              ? `${plural(washable.length, 'Thing')} can go in the machine here: ${plural(loads, 'Load')}, three quarters of an hour, and about ${plural(TUMBLE_DRY_HOURS, 'Hour')} in the dryer after.`
+              : `${plural(washable.length, 'Thing')} can go in the machine here, and then on the airer: ${plural(loads, 'Load')}, nothing to pay, and about ${plural(AIR_DRY_HOURS, 'Hour')} before any of it is wearable.`
+            : `${plural(washable.length, 'Thing')} and no machine here, so it is the launderette: ${plural(loads, 'Load')} at ${formatMoney(LAUNDERETTE_LOAD)} each, most of an afternoon, and dry when you carry it home.`}
+        </p>
+      )}
+      {specialist.length > 0 && (
+        <p className="small dim" style={{ marginTop: 0 }}>
+          {plural(specialist.length, 'Thing')} cannot go in a machine at all.
+          The cleaner charges {formatMoney(CLEANER_PER_PIECE)} a piece and keeps them two days.
+        </p>
+      )}
+      <div className="row">
+        {washable.length > 0 && (
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => run('wear.clean', { assetIds: washable.map((a) => a.id) })}
+          >
+            {machine ? 'Put A Wash On' : 'Take It To The Launderette'}
+          </button>
+        )}
+        <button
+          className="btn btn-sm"
+          onClick={() => run('wear.clean', {
+            assetIds: (specialist.length > 0 ? specialist : dirty).map((a) => a.id),
+            professional: true,
+          })}
+        >
+          {specialist.length > 0 ? 'Send Those To The Cleaner' : 'Send It All To The Cleaner'}
+        </button>
+      </div>
+    </Panel>
   );
 }

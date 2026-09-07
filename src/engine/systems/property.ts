@@ -22,6 +22,7 @@ import { costOfLiving, propertyTaxRate } from '../content/tax';
 import { CATALOG, retailPrice } from '../content/catalog';
 import { generateAddress, generatePersonName } from '../content/names';
 import { buildFactors } from '../core/audit';
+import { createAsset } from './commerce';
 import { createBill } from './finance';
 import { amortisedPayment, offeredApr } from './finance';
 
@@ -647,6 +648,14 @@ export function buyFurnishing(sim: Simulation, p: BuyFurnishingSpec): { furnishi
       qualityContribution: catalogItem.qualityContribution ?? Math.round(catalogItem.quality / 8),
     };
     sim.universe.furnishings[furnishing.id] = furnishing;
+    // A sofa is a thing you own, not only a number on the room. This is the
+    // object itself: it has a room, a condition, and something to do with it.
+    const asset = createAsset(sim, {
+      ownerId: sim.player.id, catalogItem, purchasePrice: unit, acquiredVia: 'purchase',
+    });
+    asset.roomId = p.roomId;
+    asset.locationPropertyId = property.id;
+    furnishing.assetId = asset.id;
     ids.push(furnishing.id);
     if (p.zoneId) sim.universe.zones[p.zoneId]?.furnishingIds.push(furnishing.id);
   }
@@ -1144,6 +1153,36 @@ export function moveIn(sim: Simulation, personId: Id, propertyId: Id): void {
 
   sim.universe.currentZone = CITIES.require(property.locationId).timeZone;
   sim.emit('prop.moved_in', { personId, propertyId, locationId: property.locationId });
+}
+
+/**
+ * Furniture bought before furnishings were owned things becomes owned.
+ *
+ * A save from before this had a sofa in the living room that the house system
+ * could not see: it never wore, never broke, and there was nothing to do with
+ * it. This gives each of those the object it should always have had, keeping
+ * what it cost and the state it is in. Idempotent, and it adds rather than
+ * replaces, so nothing already in the save is lost.
+ */
+export function ensureFurnishingAssets(sim: Simulation): void {
+  for (const furnishing of Object.values(sim.universe.furnishings)) {
+    if (furnishing.assetId && sim.universe.assets[furnishing.assetId]) continue;
+    const property = sim.universe.properties[furnishing.propertyId];
+    if (!property) continue;
+    if (property.ownerId !== sim.player.id && property.id !== sim.player.residenceId) continue;
+    const catalogItem = CATALOG.get(furnishing.catalogId);
+    if (!catalogItem) continue;
+    const asset = createAsset(sim, {
+      ownerId: sim.player.id, catalogItem,
+      purchasePrice: furnishing.purchasePrice, acquiredVia: 'purchase',
+    });
+    asset.acquiredAt = furnishing.purchasedAt;
+    asset.condition = furnishing.condition;
+    asset.currentValue = furnishing.currentValue;
+    asset.roomId = furnishing.roomId;
+    asset.locationPropertyId = property.id;
+    furnishing.assetId = asset.id;
+  }
 }
 
 export function recomputeRoomQuality(sim: Simulation, roomId: Id): number {

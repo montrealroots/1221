@@ -14,6 +14,7 @@ import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_MINUTE, 
 import { formatMoney, type Money } from '../core/money';
 import { CATALOG, RECIPES, retailPrice } from '../content/catalog';
 import { EQUIPMENT_LABEL, FITTED_KITCHEN, equipmentFrom, type EquipmentKind } from '../content/kitchen';
+import { works } from './household';
 import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
@@ -186,6 +187,8 @@ export function kitchenOf(sim: Simulation, personId: Id): Map<EquipmentKind, num
   for (const kind of FITTED_KITCHEN) kit.set(kind, 50);
   for (const asset of Object.values(sim.universe.assets)) {
     if (asset.ownerId !== personId || asset.soldAt) continue;
+    // A broken machine is not a slow machine. It does nothing at all.
+    if (!works(asset)) continue;
     const item = asset.catalogId ? CATALOG.get(asset.catalogId) : undefined;
     if (!item) continue;
     for (const kind of equipmentFrom(item.name, item.category)) {

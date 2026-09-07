@@ -206,7 +206,7 @@ answer says what would make it yes.
    the other one on request, and the four aisles nobody had built — underwear,
    socks, earrings, necklaces and chains — carry over a hundred real branded
    products each for men and each for women, 859 in all.
-4. **Half done.** The kitchen: every recipe in the game named ingredients no
+4. **Done.** The kitchen: every recipe in the game named ingredients no
    shop had sold since the catalog went real, so nothing could be cooked at
    all. There is now a larder of 110 real ingredients, a book of 73 real
    dishes against products a shop actually stocks, and a gate checker that
@@ -215,9 +215,27 @@ answer says what would make it yes.
    and a blender or a stand mixer or a grill is something you went out and
    bought. The better machine cooks a better plate in less time. What you
    cook feeds whoever else is in the house, and they remember it.
-   **Still to come:** appliances that break, a repair that costs money and
-   days, and every owned object having a place in a room and something you
-   can do with it.
+   And the house around it. Everything a home holds wears by the month, at a
+   rate set by what kind of thing it is and how well it was made, so a rough
+   appliance is tired long before a good one. Below a point a machine stops
+   rather than gets slow: a broken oven is not in the kitchen you cook with,
+   and a broken washer sends the washing out. A repair is booked, paid for,
+   takes days by trade, and brings the thing back working. Every owned thing
+   that lives in a house is put in a room of it the moment it is yours, in the
+   room it was made for or the room people really put it in, so the washing
+   machine ends up in the kitchen of a flat with no laundry. 43 different
+   things you can do with what you own, over 651 of 914 things a home can
+   hold, most with a second one that is also true: you sit on a sofa and you
+   nap on it, you watch a television and you doze off in front of it. A sheet
+   set says plainly it is only owned rather than inventing a verb. Furniture
+   bought for a room used to be a number on that room and nothing else; it is
+   now the object you own, wears like one, and the room notices. The washing
+   needs the second machine: without a dryer a wash hangs overnight and
+   nothing is wearable until morning, with one it is back in two hours, and
+   with no machine at all it is the launderette by the load.
+   **Still to come:** clothes only soil when you commit a look, so a life
+   lived through the Advance button never needs washing at all; and film kit
+   is not yet a thing that lives in the house, which waits on section 6.
 5. The phone: YouTube in full, then the other three.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.

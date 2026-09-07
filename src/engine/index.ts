@@ -22,7 +22,7 @@ import { costOfLiving } from './content/tax';
 import { registerFinance, recomputeCreditScore, netWorth, createLivingBills } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
-import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
+import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, ensureFurnishingAssets, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
 import { kindOf } from './content/vehicles';
 import { registerCommerce } from './systems/commerce';
@@ -51,6 +51,7 @@ import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
 import { registerJewellery } from './systems/jewellery';
 import { registerCostume } from './systems/costume';
 import { registerDocuments } from './systems/documents';
+import { ensureHomeUpkeep, registerHousehold } from './systems/household';
 import { insurersFor } from './content/insurers';
 import { countryOfCity } from './content/geography';
 import './scenes';
@@ -106,6 +107,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerJewellery(sim);
   registerCostume(sim);
   registerDocuments(sim);
+  registerHousehold(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -140,6 +142,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'home.wear', label: 'Wear And Tear', category: 'system', priority: 92 });
   sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship Drift', category: 'system', priority: 90 });
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
 }
@@ -415,11 +418,15 @@ export function loadSave(universe: SaveUniverse): Simulation {
   registerAllSystems(sim);
   // The rooms you already live in become rooms (idempotent; see purchase.ts).
   ensureInteriors(sim);
+  // Furniture bought before it was an owned thing becomes one (idempotent).
+  ensureFurnishingAssets(sim);
   // Everything you own is kept somewhere (idempotent; see storage.ts).
   ensureKeepings(sim);
   // Every account sits on a product (idempotent; see banking.ts).
   ensureProducts(sim);
   ensureWardrobe(sim);
+  // The wear clock runs and everything owned has a room (idempotent; household.ts).
+  ensureHomeUpkeep(sim);
   ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
@@ -974,6 +981,18 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 48) {
+    // Schema 48: things wear out, break, get repaired, and live in a room.
+    //
+    // Nothing already owned is broken by the upgrade: a save that has been
+    // running for years should not wake up to a dead oven it never used.
+    // Rooms and the wear clock are handled on load rather than here, by
+    // ensureHomeUpkeep, so a save opened twice is not moved around twice.
+    for (const asset of Object.values(universe.assets)) {
+      if (asset.broken === undefined) asset.broken = false;
+    }
   }
 
   if (from < 47) {

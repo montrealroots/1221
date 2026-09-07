@@ -14,10 +14,11 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import { clamp } from '../core/rng';
-import { MS_DAY, MS_MINUTE, daysBetween, seasonOf } from '../core/time';
+import { MS_DAY, MS_HOUR, MS_MINUTE, daysBetween, seasonOf } from '../core/time';
 import { formatMoney } from '../core/money';
 import { impliedPerformerTitle } from '../core/performer';
 import { plural } from '../core/text';
+import { AIR_DRY_HOURS, LAUNDERETTE_LOAD, TUMBLE_DRY_HOURS, hasWorkingDryer, hasWorkingWasher } from './household';
 import type { Id, OwnedAsset, Outfit, Person, WornRecord } from '../domain/model';
 import { CATALOG } from '../content/catalog';
 import {
@@ -44,6 +45,9 @@ export const REPEAT_WINDOW_DAYS = 21;
 
 /** Minutes it takes to get dressed properly. */
 export const DRESSING_MINUTES = 12;
+
+/** What the cleaner charges a piece, for the things no machine may touch. */
+export const CLEANER_PER_PIECE = 14_00;
 
 export function wornRecords(sim: Simulation): Record<Id, WornRecord> {
   return (sim.universe.wornRecords ??= {});
@@ -508,27 +512,49 @@ export function registerWardrobe(sim: Simulation): void {
         throw new CommandError(`${needsSpecialist[0]!.name} cannot go in a machine. It needs the cleaner.`);
       }
 
-      const cost = professional ? chosen.length * 14_00 : 0;
+      // Washing at home needs a machine that works. Without one the washing
+      // goes out: a load at the launderette, an afternoon, and money.
+      const washerAtHome = hasWorkingWasher(s, person.id);
+      const launderette = !professional && !washerAtHome;
+      const loads = Math.max(1, Math.ceil(chosen.length / 6));
+      const cost = professional
+        ? chosen.length * CLEANER_PER_PIECE
+        : launderette ? loads * LAUNDERETTE_LOAD : 0;
       if (cost > 0) {
         const accountId = p.accountId ?? person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay with.');
         if (s.ledger.availableFunds(accountId) < cost) {
-          throw new CommandError(`The cleaner wants ${formatMoney(cost)} and you cannot cover it.`);
+          throw new CommandError(
+            launderette
+              ? `The launderette wants ${formatMoney(cost)} and you cannot cover it.`
+              : `The cleaner wants ${formatMoney(cost)} and you cannot cover it.`,
+          );
         }
-        s.expense(accountId, cost, 'Dry Cleaning', 'household');
+        s.expense(accountId, cost, launderette ? 'Launderette' : 'Dry Cleaning', 'household');
       }
 
-      const readyAt = s.now + (professional ? 2 * MS_DAY : 3 * 60 * MS_MINUTE);
+      // Getting it clean is half of it. A launderette dries what it washes;
+      // a machine at home leaves it wet, and without a dryer it hangs
+      // overnight and you have nothing to put on until the morning.
+      const dryer = !professional && washerAtHome && hasWorkingDryer(s, person.id);
+      const dryingHours = professional || launderette ? 0 : dryer ? TUMBLE_DRY_HOURS : AIR_DRY_HOURS;
+      const readyAt = professional ? s.now + 2 * MS_DAY : s.now + dryingHours * MS_HOUR;
       for (const asset of chosen) {
         asset.wardrobe!.cleanliness = 100;
         if (professional) {
           asset.wardrobe!.awayUntil = readyAt;
           asset.wardrobe!.awayReason = 'at the cleaner';
           person.wearing = (person.wearing ?? []).filter((id) => id !== asset.id);
+        } else if (dryingHours > 0) {
+          asset.wardrobe!.awayUntil = readyAt;
+          asset.wardrobe!.awayReason = dryer ? 'in the dryer' : 'drying';
+          person.wearing = (person.wearing ?? []).filter((id) => id !== asset.id);
         }
       }
-      if (!professional) s.advanceTo(s.now + 45 * MS_MINUTE);
-      s.emit('wear.cleaned', { count: chosen.length, professional, cost });
+      // Sitting in a launderette is most of an afternoon; a machine at home
+      // is three quarters of an hour you can spend doing something else.
+      if (!professional) s.advanceTo(s.now + (launderette ? 110 : 45) * MS_MINUTE);
+      s.emit('wear.cleaned', { count: chosen.length, professional, cost, launderette, dryer });
       return { cleaned: chosen.length, cost, readyAt };
     },
   );

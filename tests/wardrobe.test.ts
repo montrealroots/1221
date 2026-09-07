@@ -13,11 +13,11 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import type { Id, OwnedAsset } from '@/engine/domain/model';
-import { CATALOG } from '@/engine/content/catalog';
+import { CATALOG, shoppableItems } from '@/engine/content/catalog';
 import { COLOUR_BY_ID, DRESS_CODE_BY_ID, codeFor, colourOf, defaultColour, guessMaterial, materialOf } from '@/engine/content/wardrobe';
 import { createAsset } from '@/engine/systems/commerce';
 import {
-  LOOKS_TIRED, NEEDS_WASHING, appraise, ensureWardrobe, formalityOf, garmentsOf, inSlot,
+  LOOKS_TIRED, NEEDS_WASHING, appraise, available, ensureWardrobe, formalityOf, garmentsOf, inSlot,
   recentRepeat, verdictLabel, warmthOf, wardrobeView, wearing,
 } from '@/engine/systems/wardrobe';
 
@@ -307,8 +307,14 @@ describe('keeping it wearable', () => {
     expect(notes.some((n) => n.kind === 'condition' && /washing/.test(n.text))).toBe(true);
   });
 
-  it('washes what can go in a machine, at home, for nothing', () => {
+  it('washes what can go in a machine at home, for nothing, when you own one', () => {
     const sim = aLife('wash');
+    // A wash at home needs a machine at home. Buy the machine first.
+    const washer = shoppableItems().find((i) => /washing machine/i.test(i.name))!;
+    createAsset(sim, {
+      ownerId: sim.player.id, catalogItem: washer,
+      purchasePrice: washer.basePrice, acquiredVia: 'purchase',
+    });
     const shirt = own(sim, 'c_uniqlo_supima', 'grey');
     shirt.wardrobe!.cleanliness = 20;
     const before = sim.ledger.availableFunds(sim.player.primaryAccountId!);
@@ -317,6 +323,52 @@ describe('keeping it wearable', () => {
     expect(res.value!.cost).toBe(0);
     expect(shirt.wardrobe!.cleanliness).toBe(100);
     expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBe(before);
+  });
+
+  it('leaves the wash hanging overnight when there is a washer and no dryer', () => {
+    const sim = aLife('airer');
+    const washer = shoppableItems().find((i) => /washing machine/i.test(i.name))!;
+    createAsset(sim, {
+      ownerId: sim.player.id, catalogItem: washer,
+      purchasePrice: washer.basePrice, acquiredVia: 'purchase',
+    });
+    const shirt = own(sim, 'c_uniqlo_supima', 'grey');
+    shirt.wardrobe!.cleanliness = 20;
+    const res = sim.execute<{ readyAt: number }>({ kind: 'wear.clean', payload: { assetIds: [shirt.id] } });
+    expect(res.ok, res.error).toBe(true);
+    expect(available(sim, shirt), 'a wet shirt was ready to wear').toBe(false);
+    expect(shirt.wardrobe!.awayReason).toBe('drying');
+    expect(res.value!.readyAt - sim.now, 'it dried in under six hours on an airer')
+      .toBeGreaterThan(6 * 60 * 60 * 1000);
+  });
+
+  it('gets the wash back the same afternoon when there is a dryer too', () => {
+    const sim = aLife('dryer');
+    for (const match of [/washing machine/i, /heat pump dryer/i]) {
+      const machine = shoppableItems().find((i) => i.category === 'appliance' && match.test(i.name))!;
+      createAsset(sim, {
+        ownerId: sim.player.id, catalogItem: machine,
+        purchasePrice: machine.basePrice, acquiredVia: 'purchase',
+      });
+    }
+    const shirt = own(sim, 'c_uniqlo_supima', 'grey');
+    shirt.wardrobe!.cleanliness = 20;
+    const res = sim.execute<{ readyAt: number }>({ kind: 'wear.clean', payload: { assetIds: [shirt.id] } });
+    expect(res.ok, res.error).toBe(true);
+    expect(res.value!.readyAt - sim.now, 'the dryer took all night')
+      .toBeLessThan(6 * 60 * 60 * 1000);
+  });
+
+  it('sends the washing out when there is no machine, and charges for it', () => {
+    const sim = aLife('launderette');
+    const shirt = own(sim, 'c_uniqlo_supima', 'grey');
+    shirt.wardrobe!.cleanliness = 20;
+    const before = sim.ledger.availableFunds(sim.player.primaryAccountId!);
+    const res = sim.execute<{ cleaned: number; cost: number }>({ kind: 'wear.clean', payload: { assetIds: [shirt.id] } });
+    expect(res.ok, res.error).toBe(true);
+    expect(res.value!.cost, 'the launderette was free').toBeGreaterThan(0);
+    expect(shirt.wardrobe!.cleanliness).toBe(100);
+    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBeLessThan(before);
   });
 
   it('sends the cloth that cannot go in a machine to the cleaner, and it is away for two days', () => {

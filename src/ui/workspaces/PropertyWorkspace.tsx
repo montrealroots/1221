@@ -11,9 +11,10 @@ import type { ConstructionPhase, ConstructionProject } from '@/engine/domain/mod
 import { MS_HOUR, formatDate, tomorrowAt } from '@/engine/core/time';
 import { activeScene } from '@/engine/systems/scenes';
 import { POSTPONE_DAYS, canPostpone, closingNumbers, furnishable, roomsFor } from '@/engine/systems/purchase';
+import { USE_ELSEWHERE, householdAssets, preferredRooms, usesFor, works } from '@/engine/systems/household';
 import type { PropertyOffer } from '@/engine/domain/model';
 
-type Tab = 'owned' | 'market' | 'offers' | 'build' | 'interiors';
+type Tab = 'owned' | 'market' | 'offers' | 'build' | 'interiors' | 'things';
 
 export function PropertyWorkspace() {
   const { sim, run } = useGame();
@@ -32,6 +33,8 @@ export function PropertyWorkspace() {
     .sort((a, b) => b.submittedAt - a.submittedAt));
   const builds = useWorld((s) => Object.values(s.universe.constructionProjects)
     .filter((b) => b.ownerId === s.player.id));
+
+  const things = useWorld((s) => householdAssets(s, s.player.id));
 
   const [offerFor, setOfferFor] = useState<string | null>(null);
 
@@ -55,6 +58,7 @@ export function PropertyWorkspace() {
           { id: 'offers', label: 'Offers', badge: offers.filter((o) => ['submitted', 'countered', 'accepted'].includes(o.status)).length },
           { id: 'build', label: 'Build', badge: builds.length },
           { id: 'interiors', label: 'Interiors' },
+          { id: 'things', label: 'Your Things', badge: things.length },
         ]}
       />
 
@@ -250,6 +254,8 @@ export function PropertyWorkspace() {
       {tab === 'build' && <BuildTab builds={builds} />}
 
       {tab === 'interiors' && <InteriorsTab />}
+
+      {tab === 'things' && <ThingsTab />}
 
       {offerFor && <OfferDialog listingId={offerFor} onClose={() => setOfferFor(null)} />}
     </>
@@ -458,6 +464,8 @@ function InteriorsTab() {
 
   const furnishings = CATALOG.all().filter((item) => item.qualityContribution !== undefined);
 
+
+
   return (
     <>
       <Panel title="Rooms" subtitle="Property, structure, floor, room, zone. Every furnishing you buy becomes a real owned asset." flush>
@@ -515,14 +523,112 @@ function InteriorsTab() {
                 }}
               >
                 <option value="">Buy And Place In…</option>
-                {rooms
-                  .filter(({ room }) => !item.roomKinds || item.roomKinds.length === 0 || item.roomKinds.includes(room.kind))
-                  .map(({ room }) => <option key={room.id} value={room.id}>{room.name}</option>)}
+                {preferredRooms(rooms.map(({ room }) => room), item.roomKinds ?? []).map((room) => (
+                  <option key={room.id} value={room.id}>{room.name}</option>
+                ))}
               </select>
             </div>
           ))}
         </div>
       </Panel>
+    </>
+  );
+}
+
+/**
+ * Your things.
+ *
+ * Everything you own that lives in the house, in the room it lives in, with
+ * the state it is actually in. A thing you can do something with has the doing
+ * of it on the row. A thing that has stopped says so, and says what the repair
+ * will cost before you agree to it. A thing you only own says that too, which
+ * is the honest answer for a sheet set.
+ */
+function ThingsTab() {
+  const { sim, run } = useGame();
+  const things = useWorld((s) => householdAssets(s, s.player.id));
+  const rooms = useWorld((s) => Object.fromEntries(Object.values(s.universe.rooms).map((r) => [r.id, r])));
+
+  if (things.length === 0) {
+    return <Empty title="Nothing Yet" body="Appliances, furniture, books and the rest appear here once you buy them." />;
+  }
+
+  const broken = things.filter((t) => !works(t));
+  const groups = new Map<string, typeof things>();
+  for (const thing of things) {
+    const key = thing.roomId ? rooms[thing.roomId]?.name ?? 'Elsewhere' : 'Not Put Anywhere Yet';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(thing);
+  }
+
+  return (
+    <>
+      {broken.length > 0 && (
+        <Panel title="Stopped Working" subtitle={`${broken.length} thing${broken.length === 1 ? '' : 's'} in the house needs a repair`} flush>
+          <div className="list">
+            {broken.map((thing) => (
+              <div key={thing.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{thing.name}</div>
+                  <div className="xs dim">
+                    {thing.roomId ? `${rooms[thing.roomId]?.name} · ` : ''}
+                    Condition {Math.round(thing.condition)}
+                    {thing.repairDueAt ? ` · booked in, back ${formatDate(thing.repairDueAt, sim.homeZone)}` : ''}
+                  </div>
+                </div>
+                {thing.repairDueAt === undefined && (
+                  <button className="btn btn-sm btn-primary" onClick={() => run('home.repair', { assetId: thing.id })}>
+                    Book The Repair
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
+      {[...groups.entries()].map(([room, kept]) => (
+        <Panel key={room} title={room} subtitle={`${kept.length} thing${kept.length === 1 ? '' : 's'}`} flush>
+          <div className="list">
+            {kept.map((thing) => {
+              const item = thing.catalogId ? CATALOG.get(thing.catalogId) : undefined;
+              const uses = item ? usesFor(item.name, item.category) : [];
+              const elsewhere = uses.find((u) => u.via);
+              return (
+                <div key={thing.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{thing.name}</div>
+                    <div className="xs dim">
+                      {item ? `${titleCaseLabel(item.category)} · ` : ''}
+                      {works(thing) ? `Condition ${Math.round(thing.condition)}` : 'Stopped'}
+                      {thing.lastUsedAt ? ` · last used ${formatDate(thing.lastUsedAt, sim.homeZone)}` : ''}
+                    </div>
+                  </div>
+                  <div style={{ width: 110 }}>
+                    <Meter label="Condition" value={thing.condition} />
+                  </div>
+                  {uses.length === 0 && <span className="xs dim">Owned</span>}
+                  {elsewhere && <span className="xs dim">{USE_ELSEWHERE[elsewhere.via!]}</span>}
+                  {!elsewhere && works(thing) && uses.map((use) => (
+                    <button
+                      key={use.id}
+                      className="btn btn-sm"
+                      onClick={() => run('home.use', { assetId: thing.id, useId: use.id })}
+                    >
+                      {use.label}
+                    </button>
+                  ))}
+                  {!works(thing) && thing.repairDueAt === undefined && (
+                    <button className="btn btn-sm btn-primary" onClick={() => run('home.repair', { assetId: thing.id })}>
+                      Repair
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Panel>
+      ))}
     </>
   );
 }

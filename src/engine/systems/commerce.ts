@@ -13,6 +13,7 @@ import { clamp } from '../core/rng';
 import { addDays, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { CATALOG, RETAILERS, retailPrice, stockistsFor, stocks, shoppableItemsIn, type CatalogItem } from '../content/catalog';
+import { placeInRoom } from './household';
 import { costOfLiving, salesTaxRate } from '../content/tax';
 import { defaultColour, guessMaterial } from '../content/wardrobe';
 import { preferenceOf, shows } from './wardrobe';
@@ -327,6 +328,10 @@ export function createAsset(
     tags: item.tags,
   };
   sim.universe.assets[asset.id] = asset;
+
+  // A thing that lives in the house is put in a room of it the moment it is
+  // yours, however it arrived: bought, delivered, furnished or given.
+  placeInRoom(sim, asset);
 
   // Valuable items should be insured, and the game should say so.
   if (asset.currentValue >= 15_000_00) {

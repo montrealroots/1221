@@ -610,6 +610,12 @@ export interface Furnishing {
   purchasedAt: Instant;
   /** Contribution to the room's quality score. */
   qualityContribution: number;
+  /**
+   * The owned thing this furnishing is. A sofa is both: a record that lifts
+   * the quality of the room it stands in, and an object you own, sit on, wear
+   * out and one day replace. This links the two so they cannot disagree.
+   */
+  assetId?: Id;
 }
 
 export type ListingStatus = 'active' | 'pending' | 'sold' | 'withdrawn' | 'expired';
@@ -1190,6 +1196,23 @@ export interface OwnedAsset {
   giftedById?: Id;
   /** Where it physically is. */
   locationPropertyId?: Id;
+  /**
+   * Which room of the home it lives in. A kettle is in the kitchen, a sofa is
+   * in the living room, and a thing with a place in a room is a thing you can
+   * walk up to and use.
+   */
+  roomId?: Id;
+  /**
+   * Broken, and since when. A broken machine does nothing until it is
+   * repaired: the oven will not cook, the washing machine sends you to the
+   * launderette.
+   */
+  broken?: boolean;
+  brokenAt?: Instant;
+  /** When the repair is due back, while one is booked. */
+  repairDueAt?: Instant;
+  /** The last time it was used for what it is for. */
+  lastUsedAt?: Instant;
   insurancePolicyId?: Id;
   /** Provenance chain for luxury goods. */
   provenance: { at: Instant; note: string }[];
@@ -2228,7 +2251,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 47;
+export const SAVE_SCHEMA_VERSION = 48;
 
 export interface SaveMeta {
   id: Id;
