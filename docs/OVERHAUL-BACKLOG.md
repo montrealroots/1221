@@ -236,6 +236,12 @@ before any delivery claim.
 
     **Church’s nearly became two companies**, exactly as Levi’s did two stages ago: the shopfront and the two older rows used a straight apostrophe and the new rows a curly one. Normalized to one, with a test that fails if a second Church’s appears. Six further names collided with rows already in the catalog; the older ids won and real replacements were written. One more name the checker flagged is the maker's own and is allowlisted with the reason: Loro Piana's **Traveller Jacket**.
 
+33. Stage 31 — Harry Winston, and the brand build paused here. `content/jewelers.ts`, 102 new real pieces: **Harry Winston 109**, on the gate's headline list. Seventy seven brands now stand at a hundred or more, out of 1,451.
+
+    The house is built the way a jeweler is organised: the Winston Cluster and the Lily Cluster that are its signature, Sunflower, Forget Me Not, Water, Sparkling Cluster, Traffic, Belle and Loop; the solitaires by cut, the eternity bands by stone, the coloured stones by stone, and the watches the house really makes — Midnight, Premier, Ocean Sport, Avenue, and the Histoire de Tourbillon and Opus at the top of it. **No figure here is a quotation.** A stone is priced on the day, so every price is labeled as SLATE's own calibration on the row, and the note on each piece says so.
+
+    **The brand-depth build is paused here at the user's instruction**, to come back to. The seven houses that were to follow in this stage are written down so nothing is lost: **Graff, Boucheron, Chaumet, Piaget, Chopard, Mikimoto and Buccellati.** After them, the queue is the custom benches (Johnny Dang & Co. 16, Jacob & Co. 15, Eliantte & Co. 11, Avianne & Co. 10, IF & Co. 10, Popular Jewelry 9, GLD 7, Rafaello & Co. 7, Greg Yuna 6, Frost NYC 5, TraxNYC 5, Pristine Jewelers 5), the accessible jewelers (Pandora 7, Swarovski 7, Monica Vinader 7, Mejuri 6, Astrid & Miyu 4, Thomas Sabo 5, Astley Clarke 3, Dinh Van 5, Repossi 4, TASAKI 3, Ole Lynggaard 5, Georg Jensen 6, David Yurman 6, Messika 7, Pomellato 8, Mikimoto 11, Chopard 11), and the everyday names still thin (Lululemon 11, Aritzia 1, Next 1, Everlane 2, Arket 4, Havaianas 1, John Lobb 1). Forty two shopfronts are still thinner than a hundred and the gate prints that number every run.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
