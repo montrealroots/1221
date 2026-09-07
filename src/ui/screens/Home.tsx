@@ -9,7 +9,7 @@ import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE } from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
-import { forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
+import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
@@ -53,7 +53,11 @@ export function Home() {
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
           {zoneAbbreviation(sim.now, sim.zone)} · {seasonOf(sim.now, sim.zone, city?.latitude ?? 34)}
           {weather && (
-            <> · {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
+            <>
+              {' · '}
+              <span aria-hidden="true">{WEATHER_EMOJI[weather.condition]}</span>
+              {' '}{weather.temperature}{unit} {titleCaseLabel(weather.condition)}
+            </>
           )}
         </p>
       </div>
@@ -307,7 +311,10 @@ export function Home() {
             <Panel title="Weather" tight actions={<span className="chip">{weather.climateName}</span>}>
               <div className="weather-now">
                 <div className="grow">
-                  <div className="weather-temp mono">{weather.temperature}{unit}</div>
+                  <div className="weather-temp mono">
+                    <span aria-hidden="true" style={{ marginRight: 8 }}>{WEATHER_EMOJI[weather.condition]}</span>
+                    {weather.temperature}{unit}
+                  </div>
                   <div className="small muted">
                     {titleCaseLabel(weather.condition)} · High {weather.high}{unit} · Low {weather.low}{unit}
                   </div>
@@ -323,6 +330,7 @@ export function Home() {
                   return (
                     <div key={day.dateKey} className="weather-day" title={`${titleCaseLabel(day.condition)}, ${day.low}${unit} to ${day.high}${unit}`}>
                       <div className="xs dim">{weekday.slice(0, 3)}</div>
+                      <div aria-hidden="true">{WEATHER_EMOJI[day.condition]}</div>
                       <div className="xs weather-cond">{weatherShort(day.condition)}</div>
                       <div className="xs mono">{day.high}° / {day.low}°</div>
                     </div>

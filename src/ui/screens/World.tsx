@@ -5,7 +5,7 @@
  * join without the navigation collapsing.
  */
 
-import { weatherAt } from '@/engine/systems/weather';
+import { WEATHER_EMOJI, weatherAt } from '@/engine/systems/weather';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
@@ -101,6 +101,7 @@ export function World() {
           const unit = weather.fahrenheit ? '°F' : '°C';
           return (
             <p className="small dim" style={{ marginTop: 'var(--s1)' }}>
+              <span aria-hidden="true">{WEATHER_EMOJI[weather.condition]}</span>{' '}
               {weather.temperature}{unit} and {weather.condition.toLowerCase()} in {city.name} right now,
               {' '}high {weather.high}{unit}, low {weather.low}{unit}. {weather.climateName} climate.
             </p>

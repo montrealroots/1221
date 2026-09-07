@@ -17,7 +17,7 @@
  * The mark is drawn in CSS. SLATE ships no third party artwork.
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { MS_DAY } from '@/engine/core/time';
 import { TOPICS, TOPIC_LABEL, type Topic } from '@/engine/content/channels';
@@ -29,13 +29,14 @@ import {
 } from '@/engine/systems/video';
 import { PLATFORM_BY_ID, accountSummary, sponsorshipRate } from '@/engine/systems/media';
 import { formatMoney } from '@/engine/core/money';
+import { plural } from '@/engine/core/text';
 import { VIDEO_PLATFORM } from '@/engine/systems/video';
 import type { BrandDeal, VideoChannel, VideoItem } from '@/engine/domain/model';
 import type { PhoneTheme } from './Phone';
 import {
   BackGlyph, BellGlyph, CastGlyph, CommentGlyph, DislikeGlyph, DownGlyph,
-  HomeGlyph, LikeGlyph, MoreGlyph, PlusGlyph, SearchGlyph, ShareGlyph,
-  ShortsGlyph, SubsGlyph, YouGlyph,
+  HomeGlyph, LikeGlyph, MoreGlyph, SearchGlyph, ShareGlyph,
+  ShortsGlyph, SubsGlyph, TickGlyph, GearGlyph, CreateGlyph,
 } from './Icons';
 import {
   ChannelPage, LibraryPage, PremiumPanel, QuickSave, SaveSheet, StudioPage, TipSheet,
@@ -46,6 +47,7 @@ import {
   preferences, unseenNotices,
 } from '@/engine/systems/videoapp';
 import { ImagePicker } from './ImagePicker';
+import { EmojiRow } from './EmojiRow';
 
 type Tab = 'home' | 'shorts' | 'subs' | 'you';
 
@@ -114,7 +116,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
   const [tab, setTab] = useState<Tab>('home');
   const [openId, setOpenId] = useState<string | null>(null);
   const [channelId, setChannelId] = useState<string | null>(null);
-  const [screen, setScreen] = useState<'app' | 'library' | 'studio' | 'notices' | 'settings'>('app');
+  const [screen, setScreen] = useState<'app' | 'library' | 'studio' | 'notices' | 'settings' | 'appsettings'>('app');
   const [searching, setSearching] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [query, setQuery] = useState('');
@@ -125,6 +127,8 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
   const open = useWorld((s) => (openId ? videoById(s, openId) : undefined));
   const channel = useWorld((s) => (channelId ? s.universe.videoChannels[channelId] : undefined));
   const unseen = useWorld((s) => unseenNotices(s, s.player.id));
+  const premium = useWorld(hasPremium);
+  const mine = useWorld(myChannel);
 
   const say = (text: string) => {
     setToast(text);
@@ -156,6 +160,13 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
         <NoticesPage now={now} onBack={() => setScreen('app')} onOpen={setOpenId} onChannel={setChannelId} />
       ) : screen === 'settings' ? (
         <PlaybackSettings onBack={() => setScreen('app')} />
+      ) : screen === 'appsettings' ? (
+        <AppSettings
+          onBack={() => setScreen('app')}
+          onPlayback={() => setScreen('settings')}
+          onLibrary={() => setScreen('library')}
+          say={say}
+        />
       ) : open ? (
         <WatchPage
           video={open}
@@ -180,12 +191,26 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
       ) : (
         <>
           <div className="ph-yt-top">
-            <span className="ph-yt-word">
-              <span className="ph-play" aria-hidden="true" />
-              <b>YouTube</b>
-            </span>
+            {tab === 'you' ? (
+              <button type="button" className="ph-yt-accounts" onClick={() => say(`Signed in as ${sim.player.displayName}. SLATE keeps one life, so there is nothing to switch to.`)}>
+                Accounts <DownGlyph size={13} />
+              </button>
+            ) : (
+              <span className="ph-yt-word">
+                <span className="ph-play" aria-hidden="true" />
+                <b>{premium ? 'Premium' : 'YouTube'}</b>
+              </span>
+            )}
             <span className="ph-yt-actions">
               <button type="button" className="ph-iconbtn" aria-label="Cast"><CastGlyph size={21} /></button>
+              <button
+                type="button"
+                className="ph-iconbtn"
+                aria-label="Comments On Your Videos"
+                onClick={() => setScreen('notices')}
+              >
+                <CommentGlyph size={21} />
+              </button>
               <button
                 type="button"
                 className="ph-iconbtn"
@@ -211,7 +236,11 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
               <button type="button" className="ph-iconbtn" aria-label="Search" onClick={() => setSearching(true)}>
                 <SearchGlyph size={21} />
               </button>
-              <Avatar name={sim.player.displayName} size={28} />
+              {tab === 'you' && (
+                <button type="button" className="ph-iconbtn" aria-label="Settings" onClick={() => setScreen('appsettings')}>
+                  <GearGlyph size={20} />
+                </button>
+              )}
             </span>
           </div>
 
@@ -222,7 +251,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
             </>
           )}
           {tab === 'shorts' && <ShortsTab now={now} onWatch={watch} onOpen={setOpenId} />}
-          {tab === 'subs' && <SubscriptionsTab now={now} onOpen={setOpenId} />}
+          {tab === 'subs' && <SubscriptionsTab now={now} onOpen={setOpenId} onChannel={setChannelId} />}
           {tab === 'you' && (
             <YouTab
               now={now}
@@ -242,14 +271,14 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
             <NavButton on={tab === 'shorts'} label="Shorts" onClick={() => setTab('shorts')}>
               <ShortsGlyph size={20} filled={tab === 'shorts'} />
             </NavButton>
-            <button type="button" onClick={() => setUploading(true)} aria-label="Upload">
-              <span className="ph-plus"><PlusGlyph size={17} /></span>
+            <button type="button" onClick={() => setUploading(true)} aria-label="Create">
+              <span className="ph-glyph"><CreateGlyph size={26} /></span>
             </button>
             <NavButton on={tab === 'subs'} label="Subscriptions" onClick={() => setTab('subs')}>
               <SubsGlyph size={20} filled={tab === 'subs'} />
             </NavButton>
             <NavButton on={tab === 'you'} label="You" onClick={() => setTab('you')}>
-              <YouGlyph size={20} filled={tab === 'you'} />
+              <Avatar name={sim.player.displayName} size={20} image={mine?.avatarImage} />
             </NavButton>
           </nav>
         </>
@@ -334,7 +363,9 @@ function FeedCard({ video, now, onOpen }: { video: VideoItem; now: number; onOpe
         <span className="ph-card-text">
           <span className="ph-card-title">{video.title}</span>
           <span className="ph-card-meta">
-            {channel?.name}{channel?.verified ? ' ✓' : ''} · {views(video.views)} views · {ago(now, video.publishedAt)}
+            {channel?.name}
+            {channel?.verified && <span className="ph-yt-tick" aria-label="Verified"><TickGlyph size={9} /></span>}
+            {' · '}<span aria-hidden="true">▷</span>{views(video.views)} · {ago(now, video.publishedAt)}
           </span>
         </span>
         <span className="ph-card-more"><MoreGlyph size={17} /></span>
@@ -380,7 +411,44 @@ function HomeTab({ chip, now, onOpen }: { chip: 'all' | Topic; now: number; onOp
   }
   return (
     <div className="ph-body">
-      {shown.map((video) => <FeedCard key={video.id} video={video} now={now} onOpen={onOpen} />)}
+      {shown.map((video, index) => (
+        <Fragment key={video.id}>
+          {index === 2 && <ShortsShelf now={now} onOpen={onOpen} />}
+          <FeedCard video={video} now={now} onOpen={onOpen} />
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * The shelf of shorts that sits a couple of cards down the feed. Two up, the
+ * cover filling the tile, the title over the bottom of it, and a menu in the
+ * corner — which is exactly where the app puts it.
+ */
+function ShortsShelf({ now, onOpen }: { now: number; onOpen: (id: string) => void }) {
+  const shorts = useWorld((s) => homeFeed(s, s.player.id, 40).filter((v) => v.lengthMinutes <= SHORT_MINUTES).slice(0, 2));
+  const channels = useWorld((s) => s.universe.videoChannels);
+  if (shorts.length < 2) return null;
+  return (
+    <div className="ph-yt-shelf">
+      {shorts.map((video, index) => {
+        const channel = channels[video.channelId];
+        return (
+          <button
+            key={video.id}
+            type="button"
+            className="ph-yt-shelf-tile"
+            onClick={() => onOpen(video.id)}
+            style={{ background: `linear-gradient(150deg, ${tint(channel?.name ?? '?')}, ${tint(video.title)})` }}
+          >
+            {video.thumbnailImage && <img src={video.thumbnailImage} alt="" />}
+            {index === 1 && now > 0 && <span className="ph-yt-new">New</span>}
+            <span className="ph-card-more" aria-hidden="true"><MoreGlyph size={16} /></span>
+            <span className="ph-yt-shelf-title">{video.title}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -438,11 +506,29 @@ function ShortsTab({
 // Subscriptions
 // ---------------------------------------------------------------------------
 
-function SubscriptionsTab({ now, onOpen }: { now: number; onOpen: (id: string) => void }) {
+const SUB_LANES = ['all', 'today', 'videos', 'shorts', 'watched', 'unwatched'] as const;
+const SUB_LABEL: Readonly<Record<string, string>> = {
+  all: 'All', today: 'Today', videos: 'Videos', shorts: 'Shorts',
+  watched: 'Continue Watching', unwatched: 'Unwatched',
+};
+
+function SubscriptionsTab({
+  now, onOpen, onChannel,
+}: { now: number; onOpen: (id: string) => void; onChannel: (id: string) => void }) {
   const subs = useWorld((s) => subscriptionsOf(s, s.player.id)
     .map((sub) => s.universe.videoChannels[sub.channelId])
     .filter((c): c is VideoChannel => c !== undefined));
   const feed = useWorld((s) => subscriptionFeed(s, s.player.id, 40));
+  const seen = useWorld((s) => watchedIds(s, s.player.id));
+  const [lane, setLane] = useState<(typeof SUB_LANES)[number]>('all');
+  const shown = feed.filter((video) => {
+    if (lane === 'today') return video.publishedAt >= now - MS_DAY;
+    if (lane === 'videos') return video.lengthMinutes > SHORT_MINUTES;
+    if (lane === 'shorts') return video.lengthMinutes <= SHORT_MINUTES;
+    if (lane === 'watched') return seen.has(video.id);
+    if (lane === 'unwatched') return !seen.has(video.id);
+    return true;
+  });
 
   if (subs.length === 0) {
     return (
@@ -459,14 +545,35 @@ function SubscriptionsTab({ now, onOpen }: { now: number; onOpen: (id: string) =
     <div className="ph-body">
       <div className="ph-chips" style={{ paddingTop: 10 }}>
         {subs.map((channel) => (
-          <span key={channel.id} style={{ textAlign: 'center', flex: 'none', width: 62 }}>
-            <Avatar name={channel.name} size={46} />
-            <span style={{ display: 'block', fontSize: 10, marginTop: 4 }}>{channel.name.split(' ')[0]}</span>
-          </span>
+          <button
+            key={channel.id}
+            type="button"
+            className="ph-yt-sub"
+            onClick={() => onChannel(channel.id)}
+            aria-label={channel.name}
+          >
+            <span className="ph-yt-sub-ring">
+              <Avatar name={channel.name} size={46} image={channel.avatarImage} />
+            </span>
+            <span>{channel.name.split(' ')[0]}</span>
+          </button>
+        ))}
+      </div>
+      <div className="ph-chips" style={{ paddingTop: 4 }}>
+        {SUB_LANES.map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={`ph-chip${lane === option ? ' ph-on' : ''}`}
+            onClick={() => setLane(option)}
+          >
+            {SUB_LABEL[option]}
+          </button>
         ))}
       </div>
       <div className="ph-sep" />
-      {feed.map((video) => <RowCard key={video.id} video={video} now={now} onOpen={onOpen} />)}
+      {shown.length === 0 && <p className="ph-empty">Nothing under that yet.</p>}
+      {shown.map((video) => <RowCard key={video.id} video={video} now={now} onOpen={onOpen} />)}
     </div>
   );
 }
@@ -498,25 +605,67 @@ function YouTab({
     .filter((d) => d.personId === s.player.id && ['offered', 'active'].includes(d.status))
     .sort((a, b) => b.offeredAt - a.offeredAt));
   const platform = PLATFORM_BY_ID[VIDEO_PLATFORM];
+  const paying = useWorld(hasPremium);
 
   return (
     <div className="ph-body">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 16 }}>
-        <Avatar name={sim.player.displayName} size={54} image={channel?.avatarImage} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px 4px' }}>
+        <Avatar name={sim.player.displayName} size={64} image={channel?.avatarImage} />
         <div>
-          <div style={{ fontSize: 17, fontWeight: 600 }}>{sim.player.displayName}</div>
+          <div style={{ fontSize: 22, fontWeight: 700 }}>{sim.player.displayName}</div>
           <div className="ph-card-meta">
-            {channel ? `@${channel.handle} · ${views(channel.subscribers)} subscribers` : 'No channel yet'}
+            {channel ? `@${channel.handle}` : 'No channel yet'}
+            {paying ? '  Premium member' : ''}
           </div>
         </div>
       </div>
 
+      <div className="ph-x-buttons" style={{ padding: '10px 14px 6px' }}>
+        <button type="button" onClick={() => (channel ? onChannel(channel.id) : say('Make a channel first.'))}>
+          View Channel
+        </button>
+        <button type="button" onClick={onLibrary}>{paying ? 'Premium Benefits' : 'Library'}</button>
+      </div>
+
       {channel && <ChannelPictures channel={channel} say={say} />}
 
-      <div className="ph-chips" style={{ padding: '0 12px 8px' }}>
-        <button type="button" className="ph-chip" onClick={onLibrary}>Library</button>
-        {channel && <button type="button" className="ph-chip" onClick={onStudio}>Studio</button>}
-        {channel && <button type="button" className="ph-chip" onClick={() => onChannel(channel.id)}>Your Channel</button>}
+      <button type="button" className="ph-section-head ph-yt-more" onClick={onLibrary}>
+        History <span aria-hidden="true">›</span>
+      </button>
+      <div className="ph-follow-cards" style={{ padding: '0 12px 8px' }}>
+        {history.slice(0, 8).map(({ record, video }) => (
+          video ? (
+            <button key={record.id} type="button" className="ph-yt-hist" onClick={() => onOpen(video.id)}>
+              <span className="ph-yt-hist-thumb" style={{ background: `linear-gradient(140deg, ${tint(video.title)}, ${tint(video.id)})` }}>
+                {video.thumbnailImage && <img src={video.thumbnailImage} alt="" />}
+                <span className="ph-dur">{duration(video.lengthMinutes)}</span>
+              </span>
+              <b>{video.title}</b>
+            </button>
+          ) : null
+        ))}
+        {history.length === 0 && <p className="ph-card-meta">Nothing watched yet.</p>}
+      </div>
+
+      <div className="ph-section-head">Library</div>
+      <div className="ph-set-group">
+        <button type="button" className="ph-set-row" onClick={onLibrary}>
+          Liked Videos<span className="ph-set-value">Private</span>
+        </button>
+        <button type="button" className="ph-set-row" onClick={onLibrary}>
+          Watch Later<span className="ph-set-value">Private</span>
+        </button>
+        <button type="button" className="ph-set-row" onClick={() => say(paying ? 'Downloads need a device to keep them on. This handset streams.' : 'Downloads come with Premium.')}>
+          Downloads<span className="ph-set-value">{paying ? 'Available' : 'With Premium'}</span>
+        </button>
+        <button type="button" className="ph-set-row" onClick={() => say(`${stats ? views(stats.totalViews) : 0} views across everything you have put up.`)}>
+          Badges<span className="ph-set-value">{channel ? `${mine.length} uploaded` : 'No channel'}</span>
+        </button>
+        {channel && (
+          <button type="button" className="ph-set-row" onClick={onStudio}>
+            Your Studio<span className="ph-set-value">Analytics And Money</span>
+          </button>
+        )}
       </div>
 
       <PremiumPanel say={say} />
@@ -611,7 +760,7 @@ function YouTab({
             </>
           )}
 
-          {mine.map((video) => <MyVideoRow key={video.id} video={video} now={now} onOpen={onOpen} />)}
+          {mine.map((video) => <MyVideoRow key={video.id} video={video} now={now} onOpen={onOpen} say={say} />)}
           <div className="ph-sep" />
         </>
       )}
@@ -968,6 +1117,7 @@ function WatchPage({
 
         <div style={{ padding: '0 12px 14px' }}>
           <label className="ph-label" htmlFor="ph-reply">Add A Comment</label>
+          <EmojiRow app="video" onPick={(emoji) => setReply((text) => text + emoji)} />
           <input
             id="ph-reply"
             className="ph-input"
@@ -1012,6 +1162,7 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
   const [later, setLater] = useState(false);
   const [days, setDays] = useState(2);
   const [photo, setPhoto] = useState<string | undefined>();
+  const [mode, setMode] = useState<'video' | 'short' | 'live' | 'post'>('video');
   const now = useWorld((s) => s.now);
   const catalog = useWorld((s) => (channel ? catalogOf(s, channel) : []));
 
@@ -1033,10 +1184,88 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
   return (
     <>
       <div className="ph-yt-top">
-        <button type="button" className="ph-iconbtn" aria-label="Back" onClick={onClose}><BackGlyph size={21} /></button>
-        <b style={{ fontSize: 17 }}>Upload</b>
+        <button type="button" className="ph-iconbtn" aria-label="Close" onClick={onClose}><BackGlyph size={21} /></button>
+        <b style={{ fontSize: 17 }}>Create</b>
         <span />
       </div>
+
+      {/* Video, Short, Live, Post — the four things the plus actually makes. */}
+      <div className="ph-yt-modes">
+        {(['video', 'short', 'live', 'post'] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={mode === option ? 'ph-on' : ''}
+            onClick={() => {
+              setMode(option);
+              if (option === 'short') setLength(Math.min(lengthMinutes, SHORT_MINUTES));
+              if (option === 'video' && lengthMinutes <= SHORT_MINUTES) setLength(12);
+            }}
+          >
+            {option === 'video' ? 'Video' : option === 'short' ? 'Short' : option === 'live' ? 'Live' : 'Post'}
+          </button>
+        ))}
+      </div>
+
+      {mode === 'live' && (
+        <div className="ph-body" style={{ padding: '0 12px 16px' }}>
+          <label className="ph-label" htmlFor="ph-live">What You Are Calling It</label>
+          <input id="ph-live" className="ph-input" value={title} maxLength={100} onChange={(e) => setTitle(e.target.value)} />
+          <label className="ph-label" htmlFor="ph-live-mins">How Long, In Minutes</label>
+          <input
+            id="ph-live-mins"
+            className="ph-input"
+            type="number"
+            min={10}
+            max={480}
+            value={effortMinutes}
+            onChange={(e) => setEffort(Number(e.target.value))}
+          />
+          <p className="ph-card-meta">
+            Going live takes the hours out of the day, brings in a slice of the people who
+            happen to be about, and collects whatever they paid to be read out.
+          </p>
+          <button
+            type="button"
+            className="ph-pill ph-on"
+            style={{ marginTop: 10 }}
+            onClick={() => {
+              const result = run<{ peak: number; tips: number }>('video.go_live', { title, minutes: effortMinutes }, { silent: true });
+              if (result.ok) { say(`${views(result.value!.peak)} watching at the peak. ${formatMoney(result.value!.tips)} in.`); onClose(); }
+              else say(result.error ?? 'That did not work.');
+            }}
+          >
+            Go Live
+          </button>
+        </div>
+      )}
+
+      {mode === 'post' && (
+        <div className="ph-body" style={{ padding: '0 12px 16px' }}>
+          <label className="ph-label" htmlFor="ph-post">Say Something To Your Channel</label>
+          <textarea id="ph-post" className="ph-input" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
+          <label className="ph-label" htmlFor="ph-poll">Or Ask Them, With Answers Separated By Commas</label>
+          <input id="ph-poll" className="ph-input" value={tags} onChange={(e) => setTags(e.target.value)} />
+          <button
+            type="button"
+            className="ph-pill ph-on"
+            style={{ marginTop: 10 }}
+            onClick={() => {
+              const options = tags.split(',').map((option) => option.trim()).filter(Boolean);
+              const result = run('video.community_post', {
+                text: description,
+                options: options.length >= 2 ? options : undefined,
+              }, { silent: true });
+              if (result.ok) { say(options.length >= 2 ? 'Posted, with the poll open.' : 'Posted.'); onClose(); }
+              else say(result.error ?? 'That did not work.');
+            }}
+          >
+            Post
+          </button>
+        </div>
+      )}
+
+      {(mode === 'video' || mode === 'short') && (
       <div className="ph-body" style={{ padding: '0 12px 16px' }}>
         <label className="ph-label" htmlFor="ph-title">Title</label>
         <input id="ph-title" className="ph-input" value={title} maxLength={100} onChange={(e) => setTitle(e.target.value)} />
@@ -1137,29 +1366,104 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
 
         {catalog.length > 0 && (
           <p className="ph-card-meta" style={{ marginTop: 12 }}>
-            {catalog.length} video{catalog.length === 1 ? '' : 's'} on the channel already.
+            {plural(catalog.length, 'video')} on the channel already.
           </p>
         )}
       </div>
+      )}
     </>
   );
 }
 
 /** One of your own videos, with what it actually earned on it. */
-function MyVideoRow({ video, now, onOpen }: { video: VideoItem; now: number; onOpen: (id: string) => void }) {
+/**
+ * One of your own videos, with the two things you can actually do to it: put
+ * the title, the description, the tags and the thumbnail right, or take it
+ * down. Both are the app's own, so both are here rather than in a menu that
+ * only exists on a desk somewhere.
+ */
+function MyVideoRow({
+  video, now, onOpen, say,
+}: { video: VideoItem; now: number; onOpen: (id: string) => void; say: (text: string) => void }) {
+  const { run } = useGame();
   const revenue = useWorld((s) => (video.postId ? s.universe.socialPosts[video.postId]?.revenue ?? 0 : 0));
+  const [editing, setEditing] = useState(false);
+  const [title, setTitle] = useState(video.title);
+  const [description, setDescription] = useState(video.description);
+  const [tags, setTags] = useState(video.tags.join(', '));
+  const [photo, setPhoto] = useState<string | undefined>(video.thumbnailImage);
+
   return (
-    <button type="button" className="ph-row" onClick={() => onOpen(video.id)}>
-      <span className="ph-row-thumb"><Thumb video={video} /></span>
-      <span className="ph-row-text">
-        <span className="ph-card-title">{video.title}</span>
-        <span className="ph-card-meta">{views(video.views)} views · {ago(now, video.publishedAt)}</span>
-        <span className="ph-card-meta">
-          {revenue > 0 ? `${formatMoney(revenue)} earned` : 'Nothing yet'}
-          {video.status === 'scheduled' ? ' · scheduled' : ''}
+    <>
+      <div className="ph-row" style={{ alignItems: 'flex-start' }}>
+        <button type="button" className="ph-row-thumb" style={{ border: 0, background: 'none', padding: 0, cursor: 'pointer' }} onClick={() => onOpen(video.id)} aria-label={video.title}>
+          <Thumb video={video} />
+        </button>
+        <span className="ph-row-text">
+          <span className="ph-card-title">{video.title}</span>
+          <span className="ph-card-meta">{views(video.views)} views · {ago(now, video.publishedAt)}</span>
+          <span className="ph-card-meta">
+            {revenue > 0 ? `${formatMoney(revenue)} earned` : 'Nothing yet'}
+            {video.status === 'scheduled' ? ' · scheduled' : ''}
+          </span>
+          <span className="ph-actions" style={{ padding: '6px 0 0' }}>
+            <button type="button" className="ph-pill" onClick={() => setEditing((v) => !v)}>
+              {editing ? 'Close' : 'Edit'}
+            </button>
+            <button
+              type="button"
+              className="ph-pill"
+              onClick={() => {
+                const result = run('video.take_down', { videoId: video.id }, { silent: true });
+                say(result.ok ? 'Taken down. It is gone from the world.' : result.error ?? 'That did not work.');
+              }}
+            >
+              Take It Down
+            </button>
+          </span>
         </span>
-      </span>
-    </button>
+      </div>
+
+      {editing && (
+        <div className="ph-panel">
+          <label className="ph-label" htmlFor={`t-${video.id}`}>Title</label>
+          <input id={`t-${video.id}`} className="ph-input" value={title} maxLength={100} onChange={(e) => setTitle(e.target.value)} />
+          <label className="ph-label" htmlFor={`d-${video.id}`}>Description</label>
+          <textarea id={`d-${video.id}`} className="ph-input" rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
+          <label className="ph-label" htmlFor={`g-${video.id}`}>Tags, Separated By Commas</label>
+          <input id={`g-${video.id}`} className="ph-input" value={tags} onChange={(e) => setTags(e.target.value)} />
+          <label className="ph-label">Thumbnail</label>
+          <ImagePicker
+            frame={video.lengthMinutes <= SHORT_MINUTES ? 'short' : 'thumbnail'}
+            image={photo}
+            label="Thumbnail for this video"
+            onChange={setPhoto}
+          />
+          <div className="ph-actions">
+            <button
+              type="button"
+              className="ph-pill ph-on"
+              onClick={() => {
+                const result = run('video.edit', {
+                  videoId: video.id,
+                  title,
+                  description,
+                  tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean),
+                }, { silent: true });
+                if (!result.ok) { say(result.error ?? 'That did not work.'); return; }
+                if (photo !== video.thumbnailImage) {
+                  run('video.set_thumbnail_image', { videoId: video.id, image: photo }, { silent: true });
+                }
+                say('Saved.');
+                setEditing(false);
+              }}
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -1372,5 +1676,93 @@ function ChannelPictures({ channel, say }: { channel: VideoChannel; say: (text: 
       />
       <button type="button" className="ph-pill" style={{ marginTop: 8 }} onClick={() => setOpen(false)}>Done</button>
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Settings
+// ---------------------------------------------------------------------------
+
+/**
+ * The app's own settings, in the app's own sections and the app's own order.
+ *
+ * Every row either changes something or says plainly what it cannot change.
+ * Quality and playback speed are the ones that change a watch — the day it
+ * costs and how much of it you take in — so they are the ones that open onto
+ * the picker rather than a toggle.
+ */
+function AppSettings({
+  onBack, onPlayback, onLibrary, say,
+}: { onBack: () => void; onPlayback: () => void; onLibrary: () => void; say: (text: string) => void }) {
+  const { sim, run } = useGame();
+  const prefs = useWorld(preferences);
+  const paying = useWorld(hasPremium);
+  const channel = useWorld(myChannel);
+  const watched = useWorld((s) => minutesWatchedSince(s, s.player.id, s.now - MS_DAY));
+  const history = useWorld((s) => Object.values(s.universe.watchHistory).filter((r) => r.personId === s.player.id).length);
+  const notices = useWorld((s) => noticesOf(s, s.player.id).length);
+  const [query, setQuery] = useState('');
+
+  const set = (patch: Record<string, unknown>) => {
+    const result = run('video.set_preferences', patch, { silent: true });
+    if (!result.ok) say(result.error ?? 'That did not work.');
+  };
+
+  const rows: { key: string; head: string; label: string; value?: string; onClick?: () => void }[] = [
+    { key: 'general', head: 'Account', label: 'General', value: 'Set By The Phone', onClick: () => say('The look of the phone is in the phone’s own Settings app, which is where it belongs.') },
+    { key: 'switch', head: 'Account', label: 'Switch Or Manage Account', value: sim.player.displayName, onClick: () => say('SLATE keeps one life, so there is one account and nothing to switch to.') },
+    { key: 'family', head: 'Account', label: 'Family Center', onClick: () => say('Nobody else is signed in on this handset.') },
+    { key: 'time', head: 'Account', label: 'Time Management', value: `${watched} Min Today`, onClick: () => say(`${watched} minutes of watching in the last day. Three hours is where the app starts saying something about it.`) },
+    { key: 'notifications', head: 'Account', label: 'Notifications', value: `${notices} In The Bell`, onClick: () => say('The bell fills when a channel you follow uploads, when your channel passes a round number, and when a month is paid.') },
+    { key: 'premium', head: 'Account', label: 'Your Premium Benefits', value: paying ? 'Active' : 'Not Subscribed', onClick: onLibrary },
+    { key: 'purchases', head: 'Account', label: 'Purchases And Memberships', onClick: onLibrary },
+    { key: 'languages', head: 'Account', label: 'Languages', value: 'English', onClick: () => say('The app is in English. SLATE does not translate itself yet.') },
+    { key: 'history', head: 'Account', label: 'Manage All History', value: `${history} Watched`, onClick: () => say('Your watch history is what the feed is built from. Nothing here deletes it, because the feed would then be built from nothing.') },
+    { key: 'privacy', head: 'Account', label: 'Privacy', onClick: () => say('Nothing you do on this phone leaves the game. There is nothing to send and nowhere to send it.') },
+    { key: 'connected', head: 'Account', label: 'Connected Apps', value: channel?.accountId ? 'Your Account' : 'None', onClick: () => say('The channel is tied to the account that carries the money, and nothing else is connected.') },
+    { key: 'quality', head: 'Video And Audio Preferences', label: 'Quality', value: prefs.quality, onClick: onPlayback },
+    { key: 'playback', head: 'Video And Audio Preferences', label: 'Playback', value: `${prefs.speed}×`, onClick: onPlayback },
+    { key: 'captions', head: 'Video And Audio Preferences', label: 'Captions', value: prefs.captions ? 'On' : 'Off', onClick: () => set({ captions: !prefs.captions }) },
+    { key: 'autoplay', head: 'Video And Audio Preferences', label: 'Autoplay', value: prefs.autoplay ? 'On' : 'Off', onClick: () => set({ autoplay: !prefs.autoplay }) },
+    { key: 'downloads', head: 'Video And Audio Preferences', label: 'Background And Downloads', value: paying ? 'With Premium' : 'Not Available', onClick: () => say(paying ? 'Downloads need somewhere to keep them. This handset streams.' : 'Downloads come with Premium.') },
+    { key: 'uploads', head: 'Video And Audio Preferences', label: 'Uploads', value: channel ? 'Your Channel' : 'No Channel', onClick: onLibrary },
+    { key: 'livechat', head: 'Video And Audio Preferences', label: 'Live Chat', value: 'On', onClick: () => say('Chat is on while you are live. What it collects is on the statement.') },
+    { key: 'tv', head: 'Video And Audio Preferences', label: 'Watch On TV', onClick: () => say('There is no second screen in the house yet.') },
+    { key: 'help', head: 'Help And Policies', label: 'Help', onClick: () => say('Everything on this phone is SLATE’s own. The channels are invented and nobody real is named.') },
+    { key: 'feedback', head: 'Help And Policies', label: 'Send Feedback', onClick: () => say('Nothing is sent anywhere. This is a game on your machine.') },
+    { key: 'about', head: 'Help And Policies', label: 'About', value: 'SLATE', onClick: () => say('SLATE’s own video app. No third party artwork, no real creator, no real subscriber count.') },
+  ].filter((row) => {
+    const needle = query.trim().toLowerCase();
+    return needle.length < 2 || row.label.toLowerCase().includes(needle);
+  });
+
+  const heads = [...new Set(rows.map((row) => row.head))];
+
+  return (
+    <>
+      <div className="ph-yt-top">
+        <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Close"><BackGlyph /></button>
+        <b style={{ fontSize: 20, marginRight: 'auto', marginLeft: 10 }}>Settings</b>
+      </div>
+      <div className="ph-body">
+        <div style={{ padding: 10 }}>
+          <input className="ph-input" value={query} placeholder="Search settings" onChange={(e) => setQuery(e.target.value)} />
+        </div>
+        {rows.length === 0 && <p className="ph-empty">Nothing matching that.</p>}
+        {heads.map((head) => (
+          <Fragment key={head}>
+            <div className="ph-set-head">{head}</div>
+            <div className="ph-set-group">
+              {rows.filter((row) => row.head === head).map((row) => (
+                <button key={row.key} type="button" className="ph-set-row" onClick={row.onClick} disabled={!row.onClick}>
+                  {row.label}
+                  <span className="ph-set-value">{row.value}</span>
+                </button>
+              ))}
+            </div>
+          </Fragment>
+        ))}
+      </div>
+    </>
   );
 }

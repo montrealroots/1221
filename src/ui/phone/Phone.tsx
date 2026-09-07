@@ -18,6 +18,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { formatDate, formatTime } from '@/engine/core/time';
 import { CATALOG } from '@/engine/content/catalog';
 import { YouTubeApp } from './YouTubeApp';
+import { InstagramApp } from './InstagramApp';
+import { XApp } from './XApp';
 import {
   CallGlyph, CameraGlyph, ClockGlyph, GearGlyph, MapsGlyph, MessagesGlyph,
   NotesGlyph, PhotosGlyph, WeatherGlyph,
@@ -25,7 +27,7 @@ import {
 import './phone.css';
 
 export type PhoneTheme = 'light' | 'dark';
-type AppId = 'home' | 'youtube' | 'settings';
+type AppId = 'home' | 'youtube' | 'instagram' | 'x' | 'settings';
 
 const THEME_KEY = 'slate.phone.theme';
 
@@ -95,6 +97,8 @@ export function Phone() {
             />
           )}
           {app === 'youtube' && <YouTubeApp theme={theme} />}
+          {app === 'instagram' && <InstagramApp theme={theme} />}
+          {app === 'x' && <XApp theme={theme} />}
           {app === 'settings' && (
             <SettingsApp handset={handset} theme={theme} onTheme={chooseTheme} />
           )}
@@ -138,6 +142,12 @@ function HomeScreen({ now, zone, onOpen }: { now: number; zone: string; onOpen: 
         <AppIcon label="YouTube" onClick={() => onOpen('youtube')}>
           <span className="ph-icon ph-mark-yt"><span className="ph-play" /></span>
         </AppIcon>
+        <AppIcon label="Instagram" onClick={() => onOpen('instagram')}>
+          <span className="ph-icon ph-mark-ig"><span className="ph-ig-lens" /></span>
+        </AppIcon>
+        <AppIcon label="X" onClick={() => onOpen('x')}>
+          <span className="ph-icon ph-mark-x"><span className="ph-x-glyph">X</span></span>
+        </AppIcon>
         <AppIcon label="Settings" onClick={() => onOpen('settings')}>
           <span className="ph-icon ph-mark-settings"><GearGlyph /></span>
         </AppIcon>
@@ -159,20 +169,26 @@ function HomeScreen({ now, zone, onOpen }: { now: number; zone: string; onOpen: 
         <AppIcon label="Weather" disabled>
           <span className="ph-icon ph-mark-soon"><WeatherGlyph /></span>
         </AppIcon>
+        <AppIcon label="Phone" disabled>
+          <span className="ph-icon ph-mark-soon"><CallGlyph /></span>
+        </AppIcon>
+        <AppIcon label="Camera" disabled>
+          <span className="ph-icon ph-mark-soon"><CameraGlyph /></span>
+        </AppIcon>
       </div>
 
       <div className="ph-dock">
         <AppIcon label="YouTube" onClick={() => onOpen('youtube')}>
           <span className="ph-icon ph-mark-yt"><span className="ph-play" /></span>
         </AppIcon>
+        <AppIcon label="Instagram" onClick={() => onOpen('instagram')}>
+          <span className="ph-icon ph-mark-ig"><span className="ph-ig-lens" /></span>
+        </AppIcon>
+        <AppIcon label="X" onClick={() => onOpen('x')}>
+          <span className="ph-icon ph-mark-x"><span className="ph-x-glyph">X</span></span>
+        </AppIcon>
         <AppIcon label="Settings" onClick={() => onOpen('settings')}>
           <span className="ph-icon ph-mark-settings"><GearGlyph /></span>
-        </AppIcon>
-        <AppIcon label="Phone" disabled>
-          <span className="ph-icon ph-mark-soon"><CallGlyph /></span>
-        </AppIcon>
-        <AppIcon label="Camera" disabled>
-          <span className="ph-icon ph-mark-soon"><CameraGlyph /></span>
         </AppIcon>
       </div>
     </div>

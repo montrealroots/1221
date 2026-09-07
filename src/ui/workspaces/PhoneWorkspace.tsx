@@ -8,6 +8,7 @@
 
 import { Phone } from '@/ui/phone/Phone';
 import { CHANNEL_NOTE } from '@/engine/content/channels';
+import { PROFILE_NOTE } from '@/engine/content/socialworld';
 
 export function PhoneWorkspace() {
   return (
@@ -17,9 +18,10 @@ export function PhoneWorkspace() {
         <h1>Your Phone</h1>
         <p className="muted">
           The clock on it is the world clock, and an hour spent in an app is an hour gone
-          out of the day. Open YouTube the way you would open it.
+          out of the day. Open YouTube, Instagram or X the way you would open them.
         </p>
         <p className="xs dim">{CHANNEL_NOTE}</p>
+        <p className="xs dim">{PROFILE_NOTE}</p>
       </div>
       <Phone />
     </>

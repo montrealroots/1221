@@ -4,8 +4,9 @@
  * The same machinery as the headshot picker in character creation, pointed at
  * a different shape. A player brings whatever photo they have and it comes out
  * as one picture of one size, re-encoded small enough to live in a save: a
- * sixteen by nine thumbnail, a nine by sixteen cover for a short, a square for
- * a channel's circle, or a wide one for the top of a channel page.
+ * sixteen by nine thumbnail, a square for a photograph on the grid, a nine by
+ * sixteen cover for a short or a reel, a small square for an account's circle,
+ * or a wide one for the top of a page.
  *
  * The photo is never stored as it arrived. It is drawn into the frame and
  * re-encoded, which fits it, strips whatever the camera wrote into it, and
@@ -22,6 +23,7 @@ import {
 /** The shapes the phone needs, and how big each is stored. */
 export const FRAMES = {
   thumbnail: { width: 480, height: 270, label: 'Thumbnail' },
+  square: { width: 480, height: 480, label: 'Photo' },
   short: { width: 270, height: 480, label: 'Cover' },
   avatar: { width: 240, height: 240, label: 'Picture' },
   banner: { width: 720, height: 180, label: 'Banner' },

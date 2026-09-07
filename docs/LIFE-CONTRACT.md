@@ -236,7 +236,7 @@ answer says what would make it yes.
    **Still to come:** clothes only soil when you commit a look, so a life
    lived through the Advance button never needs washing at all; and film kit
    is not yet a thing that lives in the house, which waits on section 6.
-5. **YouTube done; the other three to come.** There is a phone now. It is the
+5. **YouTube, Instagram and X done; TikTok to come.** There is a phone now. It is the
    newest iPhone SLATE knows of, or the one you bought, and the clock on it is
    the world clock, so an hour inside an app is an hour gone out of the day.
    YouTube on it is the app rather than a panel of numbers: the top bar, the
@@ -294,7 +294,76 @@ answer says what would make it yes.
    square for the channel circle and a wide one for the top of the channel page,
    each drawn into its frame and re-encoded small enough to live in a save.
 
-   **Still to come:** Instagram and X as their own apps.
+   And Instagram and X are their own apps beside it, written apart from each
+   other all the way down, because a photograph with a caption and a three
+   hundred character argument are not one object with two skins. Two hundred
+   and sixty accounts across sixteen subjects, a hundred and forty one on the
+   photo app and a hundred and nineteen on the text app, were posting for years
+   before you arrived and keep posting while you are away. Their back catalogs
+   are worked out rather than saved, the same way the video world is, so the
+   whole internet costs a save nothing. Between them the two generators can say
+   one and a half million things and never sound like each other: a caption
+   trails off, gets a tag on the end or says nothing at all, and a post on the
+   text app is an argument with a sentence stuck to the front or the back of it.
+
+   Instagram is the app: the plus top left, the wordmark in the middle with the
+   chevron that switches For You and Following, the heart top right, the tray of
+   stories with yours first and the plus on the ring, and a feed of square
+   pictures whose header stacks the handle over the place, with the count pill
+   on a carousel and the dots under it. Heart, bubble, plane and bookmark below,
+   then the likes, the caption, how many comments and when. Along the bottom the
+   floating bar: Home, Reels, Messages, Search and your own picture. Reels is
+   full bleed with the rail of counts down the right and the account, the Follow
+   button and the caption along the bottom. Search is the chips and the grid
+   with a view count on every tile. Messages is the inbox, your note above it,
+   requests kept apart from the rest, and a thread you can actually write in.
+   Your own page is the stats row, Edit and Share, the four tabs, and the cards
+   that say what is still missing from it. Settings And Activity is the app's
+   own sections in the app's own order, and every row does something: a muted
+   account is gone from the feed, a blocked one is gone from search as well and
+   the follow goes with it, a hidden word takes a comment out of the room before
+   you read it, a private account grows more slowly because fewer people see it,
+   and Time Management is the real clock rather than an estimate.
+
+   X is the app: your picture top left onto the drawer, the mark in the middle,
+   For You and Following under it, and five icons with no labels along the
+   bottom with the blue button floating above them. A post carries reply,
+   repost, like, views, bookmark and share, and the counts go away if you turn
+   them off. The drawer is Profile, Premium, Bookmarks, Communities, Lists,
+   Spaces and Creator Studio, then the assistant, settings and help.
+   Notifications has All and Mentions. Search is the rail of Explore, Trending,
+   News, Sports and Entertainment. Your page is the banner, the join date, the
+   two counts, Share and Edit, the four tabs and who to follow. The assistant
+   answers out of this save and nothing else, and says so rather than pretending
+   to be a language model.
+
+   And the money is each app's own. X pays a share of the advertising sold
+   against the impressions a Premium account earns, and Premium is a real
+   subscription taken every month that lapses when the money is not there.
+   Instagram pays nothing for reach at all: it pays through subscriptions,
+   through gifts on reels, and through the brands, which is how the app actually
+   pays. Meta Verified is the other paid badge and behaves the same way. A
+   message costs the couple of minutes it costs, and whether somebody writes
+   back depends on how big they are and whether you follow them.
+
+   And the three of them are laid out against the real apps rather than near
+   them. YouTube says Premium where the account is on Premium, carries the
+   shelf of shorts two cards down the feed, counts with the play triangle, puts
+   your own picture on the You tab, leads Subscriptions with the channels you
+   chose and the chips that really filter, and makes four things from the plus:
+   Video, Short, Live and Post. Its Settings is the app's own three sections and
+   every row does something. Everything of yours is editable from inside the app
+   that holds it: a video's title, description, tags and thumbnail or take it
+   down; a caption and its place or delete it; a post inside the hour the app
+   allows or delete it; your name, bio, picture and note.
+
+   And the emoji are the apps' own. SLATE's interface is words and a test still
+   holds that line, but the apps inside the phone are other people's, so the
+   guard is lifted for them alone: a quick row over every comment, reply,
+   caption and message box, and a drawer of seventy two behind it. The weather
+   has its picture back too, beside the word and never instead of it.
+
+   **Still to come:** TikTok as its own app.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.

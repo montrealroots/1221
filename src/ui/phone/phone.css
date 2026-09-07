@@ -530,3 +530,93 @@
 /* The short's own frame, which is the other way up. */
 .ph-short-cover { position: absolute; inset: 0; }
 .ph-short-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+/* The shelf of shorts a couple of cards down the feed. */
+.ph-yt-shelf { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 12px; }
+.ph-yt-shelf-tile {
+  position: relative; aspect-ratio: 9 / 15; border: 0; padding: 0; cursor: pointer;
+  overflow: hidden; display: block; text-align: left;
+}
+.ph-yt-shelf-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-yt-shelf-tile .ph-card-more { position: absolute; top: 6px; right: 6px; color: #fff; }
+.ph-yt-shelf-title {
+  position: absolute; left: 8px; right: 8px; bottom: 8px;
+  color: #fff; font-size: 13px; font-weight: 700; line-height: 1.25;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ph-yt-new {
+  position: absolute; top: 8px; left: 8px;
+  background: #fff; color: #0f0f0f; border-radius: 4px;
+  padding: 1px 6px; font-size: 11px; font-weight: 700;
+}
+.ph-yt-tick {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ph-muted); color: var(--ph-bg); margin: 0 2px; vertical-align: -2px;
+}
+
+/* The You tab's own top bar and history strip. */
+.ph-yt-accounts {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: 1px solid var(--ph-line); border-radius: 999px; padding: 5px 12px;
+  background: none; color: var(--ph-text); font: inherit; font-size: 13.5px;
+  font-weight: 600; cursor: pointer;
+}
+.ph-yt-more {
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  border: 0; background: none; cursor: pointer; color: var(--ph-text);
+  font: inherit; font-size: 18px; font-weight: 700; text-align: left;
+}
+.ph-yt-hist {
+  flex: none; width: 148px; border: 0; background: none; padding: 0; cursor: pointer;
+  color: var(--ph-text); font: inherit; text-align: left;
+}
+.ph-yt-hist-thumb {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9;
+  border-radius: 8px; overflow: hidden;
+}
+.ph-yt-hist-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-yt-hist b {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 12.5px; font-weight: 600; margin-top: 6px;
+}
+
+/* Video, Short, Live, Post — the four things the plus makes. */
+.ph-yt-modes {
+  flex: none; display: flex; gap: 6px; justify-content: center;
+  padding: 8px 12px 10px; border-bottom: 1px solid var(--ph-line);
+}
+.ph-yt-modes button {
+  border: 0; border-radius: 999px; padding: 6px 16px; cursor: pointer;
+  background: none; color: var(--ph-muted); font: inherit; font-size: 14px; font-weight: 700;
+}
+.ph-yt-modes button.ph-on { background: var(--ph-raised); color: var(--ph-text); }
+
+/* The row of channels along the top of Subscriptions. */
+.ph-yt-sub {
+  flex: none; width: 64px; border: 0; background: none; padding: 0; cursor: pointer;
+  color: var(--ph-text); font: inherit; text-align: center;
+}
+.ph-yt-sub-ring { display: block; }
+.ph-yt-sub span:last-child {
+  display: block; font-size: 10px; margin-top: 4px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* The emoji over a comment box. Inside the phone only. */
+.ph-emoji { padding: 0 12px; }
+.ph-emoji-row { display: flex; align-items: center; gap: 4px; padding: 4px 0; }
+.ph-emoji-row button,
+.ph-emoji-drawer button {
+  border: 0; background: none; cursor: pointer; padding: 4px;
+  font-size: 19px; line-height: 1; border-radius: 8px;
+}
+.ph-emoji-row button:hover,
+.ph-emoji-drawer button:hover { background: var(--ph-chip); }
+.ph-emoji-more { margin-left: auto; color: var(--ph-muted); font-size: 17px; }
+.ph-emoji-drawer {
+  display: grid; grid-template-columns: repeat(9, 1fr);
+  max-height: 148px; overflow-y: auto;
+  background: var(--ph-surface); border-radius: 10px; padding: 6px; margin-bottom: 6px;
+}

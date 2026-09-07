@@ -13,14 +13,15 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate": "npm run typecheck && npm run lint && npm run test",
-    "gate": "npm run validate && node tools/label-sweep.mjs && node tools/dialogue-check.mjs && node tools/plural-check.mjs && node tools/spelling.mjs && node tools/typos.mjs && npx vite-node tools/brand-depth.mjs && npx vite-node tools/airline-coverage.mjs && npx vite-node tools/hotel-coverage.mjs && npx vite-node tools/insurer-coverage.mjs && npx vite-node tools/document-coverage.mjs && npx vite-node tools/stockist-check.mjs && npx vite-node tools/kitchen-check.mjs && npx vite-node tools/home-check.mjs && npx vite-node tools/video-check.mjs && node tools/inventory.mjs --check",
+    "gate": "npm run validate && node tools/label-sweep.mjs && node tools/dialogue-check.mjs && node tools/plural-check.mjs && node tools/spelling.mjs && node tools/typos.mjs && npx vite-node tools/brand-depth.mjs && npx vite-node tools/airline-coverage.mjs && npx vite-node tools/hotel-coverage.mjs && npx vite-node tools/insurer-coverage.mjs && npx vite-node tools/document-coverage.mjs && npx vite-node tools/stockist-check.mjs && npx vite-node tools/kitchen-check.mjs && npx vite-node tools/home-check.mjs && npx vite-node tools/video-check.mjs && npx vite-node tools/social-check.mjs && node tools/inventory.mjs --check",
     "base44:contract": "vitest run tests/base44-contract.test.ts",
     "coverage:retail": "vite-node tools/retail-coverage.mjs",
     "brand-depth": "vite-node tools/brand-depth.mjs",
     "base44:smoke": "node tools/base44-smoke.mjs",
     "base44:deploy": "npm run build && npx --yes @base44/cli deploy --config base44/config.jsonc",
     "home-check": "vite-node tools/home-check.mjs",
-    "video-check": "vite-node tools/video-check.mjs"
+    "video-check": "vite-node tools/video-check.mjs",
+    "social-check": "vite-node tools/social-check.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

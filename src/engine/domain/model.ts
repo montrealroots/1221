@@ -2049,6 +2049,122 @@ export interface CreatorPayout {
   paidAt?: Instant;
 }
 
+/**
+ * The other two apps.
+ *
+ * A photo app and a text app are not one app with two skins, so they do not
+ * share a shape here either. What they do share is that both are made of
+ * accounts and the things those accounts put out, and that both are populated
+ * by SLATE's own people rather than by anybody real.
+ *
+ * A profile is somebody's presence on one platform. The player has one on each
+ * they join; everybody else's is derived from the roster, the same way a video
+ * channel is, so the world costs a save nothing.
+ */
+export interface SocialProfile {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  /** The roster entry it was made from, so a save keeps the same people. */
+  sourceId?: string;
+  handle: string;
+  name: string;
+  bio: string;
+  topic: string;
+  followers: number;
+  following: number;
+  verified: boolean;
+  createdAt: Instant;
+  /** How often they post, in days. */
+  cadenceDays: number;
+  /** 0-100 how good they are at it. */
+  craft: number;
+  /** Whose profile it is, where somebody in the world holds it. */
+  ownerId?: Id;
+  /** The player's own, tied to the account that carries the money. */
+  accountId?: Id;
+  avatarImage?: string;
+  /** The line somebody has put above their picture, which is up for a day. */
+  note?: string;
+  noteAt?: Instant;
+  /** How many they have put out, which their feed is counted back from. */
+  posts: number;
+  lastPostAt?: Instant;
+}
+
+/**
+ * One thing on one of those two apps.
+ *
+ * A photograph with a caption, a carousel, a reel, a story that is gone in a
+ * day, a text post, a reply to one, a repost, or a quote of one. The kind
+ * decides what it is; the platform decides where it can exist.
+ */
+export interface SocialItem {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  profileId: Id;
+  kind: 'photo' | 'carousel' | 'reel' | 'story' | 'text' | 'reply' | 'repost' | 'quote' | 'message';
+  text: string;
+  at: Instant;
+  likes: number;
+  comments: number;
+  reposts: number;
+  /** Pictures the player brought, framed and re-encoded like every other. */
+  images?: string[];
+  /** What this is a reply to, a repost of, or a quote of. */
+  parentId?: Id;
+  /** The other end of a message thread, which is who it is with. */
+  withProfileId?: Id;
+  /** A story is gone after this. */
+  expiresAt?: Instant;
+  /** Where the photograph was taken, where anybody said. */
+  place?: string;
+  topic: string;
+  /** True where the player made it, so it can be edited and deleted. */
+  byPlayer?: boolean;
+  /** Whether the player has liked, saved or reposted it. */
+  liked?: boolean;
+  saved?: boolean;
+  reposted?: boolean;
+  /** Read once, so a story ring goes gray. */
+  seen?: boolean;
+}
+
+/**
+ * How the player has the two apps set up.
+ *
+ * One record per save, because these are the player's and not any one app's,
+ * and because every one of them changes what the app actually does: a muted
+ * account is gone from the feed, a blocked one is gone from search as well, a
+ * hidden word takes a comment out of the room, and a private account grows
+ * more slowly because fewer people can see it to follow it.
+ */
+export interface SocialSettings {
+  /** A private account is seen by fewer people, so it grows more slowly. */
+  privateAccount: boolean;
+  /** Hiding the numbers hides them on everybody's posts, including yours. */
+  hideCounts: boolean;
+  notificationsOn: boolean;
+  mutedProfileIds: Id[];
+  blockedProfileIds: Id[];
+  /** Comments carrying any of these never reach you. */
+  hiddenWords: string[];
+  /** Meta Verified on the photo app, which is a paid subscription. */
+  photoVerified?: boolean;
+  photoVerifiedAt?: Instant;
+}
+
+export interface SocialFollow {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  profileId: Id;
+  since: Instant;
+  /** Close friends, which is the list a story can be limited to. */
+  close?: boolean;
+}
+
 export interface BrandDeal {
   id: Id;
   saveId: Id;
@@ -2520,7 +2636,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 51;
+export const SAVE_SCHEMA_VERSION = 52;
 
 export interface SaveMeta {
   id: Id;
@@ -2640,6 +2756,13 @@ export interface SaveUniverse {
   videoComments: Record<Id, VideoComment>;
   videoSubscriptions: Record<Id, VideoSubscription>;
   watchHistory: Record<Id, WatchRecord>;
+  /** The photo app and the text app: who is on them, and what they put out. */
+  socialProfiles: Record<Id, SocialProfile>;
+  socialItems: Record<Id, SocialItem>;
+  socialFollows: Record<Id, SocialFollow>;
+  socialSettings?: SocialSettings;
+  /** Minutes spent in each app on each day, which is what Time Management is. */
+  socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */
   videoNotices: Record<Id, VideoNotice>;
   videoPreferences?: VideoPreferences;

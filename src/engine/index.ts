@@ -55,6 +55,7 @@ import { ensureHomeUpkeep, registerHousehold } from './systems/household';
 import { ensureVideoWorld, registerVideo } from './systems/video';
 import { ensureCreator, registerCreator } from './systems/creator';
 import { ensureVideoApp, registerVideoApp } from './systems/videoapp';
+import { ensureSocialApps, registerSocialApps } from './systems/socialapps';
 import { insurersFor } from './content/insurers';
 import { countryOfCity } from './content/geography';
 import './scenes';
@@ -114,6 +115,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerVideo(sim);
   registerCreator(sim);
   registerVideoApp(sim);
+  registerSocialApps(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -420,6 +422,7 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   ensureVideoWorld(sim);
   ensureCreator(sim);
   ensureVideoApp(sim);
+  ensureSocialApps(sim);
   return sim;
 }
 
@@ -443,6 +446,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // The lists, the memberships and the monthly statement (idempotent; creator.ts).
   ensureCreator(sim);
   ensureVideoApp(sim);
+  ensureSocialApps(sim);
   ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
@@ -997,6 +1001,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 52) {
+    // Schema 52: the photo app and the text app. Empty collections, filled on
+    // load; nothing already saved is touched.
+    universe.socialProfiles ??= {};
+    universe.socialItems ??= {};
+    universe.socialFollows ??= {};
+    universe.socialScreenTime ??= {};
+    steps.push('Instagram and X, as their own apps.');
   }
 
   if (from < 51) {
