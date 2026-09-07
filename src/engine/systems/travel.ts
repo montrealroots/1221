@@ -34,61 +34,11 @@ export interface FlightOption {
   refundableSurcharge: number;
 }
 
-/**
- * Real airlines. Name, IATA code and home country are public record; the
- * quality figure is SLATE's own calibration of cabin and reliability, and
- * every route, schedule and fare the game shows is SLATE's own, not the
- * airline's. A route is flown by the home carriers of either end and, on
- * long haul, by the carriers that connect the world through their hubs.
- */
-export interface Airline { code: string; name: string; countryId: string; quality: number; longHaul: boolean }
-
-export const AIRLINES: readonly Airline[] = [
-  { code: 'DL', name: 'Delta Air Lines', countryId: 'us', quality: 76, longHaul: true },
-  { code: 'UA', name: 'United Airlines', countryId: 'us', quality: 72, longHaul: true },
-  { code: 'AA', name: 'American Airlines', countryId: 'us', quality: 70, longHaul: true },
-  { code: 'B6', name: 'JetBlue', countryId: 'us', quality: 71, longHaul: false },
-  { code: 'WN', name: 'Southwest Airlines', countryId: 'us', quality: 66, longHaul: false },
-  { code: 'AS', name: 'Alaska Airlines', countryId: 'us', quality: 74, longHaul: false },
-  { code: 'AC', name: 'Air Canada', countryId: 'ca', quality: 72, longHaul: true },
-  { code: 'BA', name: 'British Airways', countryId: 'gb', quality: 74, longHaul: true },
-  { code: 'VS', name: 'Virgin Atlantic', countryId: 'gb', quality: 77, longHaul: true },
-  { code: 'U2', name: 'easyJet', countryId: 'gb', quality: 60, longHaul: false },
-  { code: 'FR', name: 'Ryanair', countryId: 'ie', quality: 52, longHaul: false },
-  { code: 'AF', name: 'Air France', countryId: 'fr', quality: 75, longHaul: true },
-  { code: 'KL', name: 'KLM', countryId: 'nl', quality: 76, longHaul: true },
-  { code: 'LH', name: 'Lufthansa', countryId: 'de', quality: 77, longHaul: true },
-  { code: 'IB', name: 'Iberia', countryId: 'es', quality: 70, longHaul: true },
-  { code: 'AZ', name: 'ITA Airways', countryId: 'it', quality: 68, longHaul: true },
-  { code: 'TK', name: 'Turkish Airlines', countryId: 'tr', quality: 78, longHaul: true },
-  { code: 'EK', name: 'Emirates', countryId: 'ae', quality: 86, longHaul: true },
-  { code: 'QR', name: 'Qatar Airways', countryId: 'qa', quality: 88, longHaul: true },
-  { code: 'SQ', name: 'Singapore Airlines', countryId: 'sg', quality: 90, longHaul: true },
-  { code: 'CX', name: 'Cathay Pacific', countryId: 'hk', quality: 84, longHaul: true },
-  { code: 'JL', name: 'Japan Airlines', countryId: 'jp', quality: 85, longHaul: true },
-  { code: 'NH', name: 'ANA', countryId: 'jp', quality: 86, longHaul: true },
-  { code: 'KE', name: 'Korean Air', countryId: 'kr', quality: 80, longHaul: true },
-  { code: 'QF', name: 'Qantas', countryId: 'au', quality: 80, longHaul: true },
-  { code: 'NZ', name: 'Air New Zealand', countryId: 'nz', quality: 82, longHaul: true },
-  { code: 'LA', name: 'LATAM Airlines', countryId: 'cl', quality: 70, longHaul: true },
-  { code: 'AM', name: 'Aeroméxico', countryId: 'mx', quality: 68, longHaul: true },
-  { code: 'ET', name: 'Ethiopian Airlines', countryId: 'et', quality: 71, longHaul: true },
-  { code: 'SA', name: 'South African Airways', countryId: 'za', quality: 66, longHaul: true },
-  { code: 'AI', name: 'Air India', countryId: 'in', quality: 62, longHaul: true },
-  { code: '6E', name: 'IndiGo', countryId: 'in', quality: 66, longHaul: false },
-];
-
-/** The carriers that would plausibly fly a route: home carriers of either end first, then the world's connectors on long haul. */
-export function airlinesFor(fromCountryId: string | undefined, toCountryId: string | undefined, km: number): Airline[] {
-  const home = AIRLINES.filter((a) => a.countryId === fromCountryId || a.countryId === toCountryId);
-  const domestic = fromCountryId === toCountryId;
-  const pool = domestic ? home : [...home, ...AIRLINES.filter((a) => a.longHaul && !home.includes(a))];
-  const usable = km > 3500 ? pool.filter((a) => a.longHaul) : pool;
-  return usable.length > 0 ? usable : AIRLINES.filter((a) => a.longHaul);
-}
-
-/** What the Travel screen says beside a real name. */
-export const REAL_CARRIER_NOTE = 'A real airline. The route, the schedule and the fare are SLATE\'s own.';
+// Real airlines and who flies where live in content/airlines. They are
+// re-exported here so nothing that imported them from the travel system
+// has to move.
+import { airlinesFor } from '../content/airlines';
+export { AIRLINES, REAL_CARRIER_NOTE, airlinesFor, coverageOf, type Airline } from '../content/airlines';
 export const REAL_HOTEL_NOTE = 'A real hotel brand. The property, the rate and the room are SLATE\'s own.';
 export const REAL_JET_NOTE = 'A real aircraft type; seats, range and runway are manufacturer figures, rounded. The hourly rate is SLATE\'s own.';
 

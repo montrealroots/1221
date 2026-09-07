@@ -76,8 +76,8 @@ describe('real names, honest labels', () => {
     expect(AIRLINES.every((a) => a.name.length > 2 && a.code.length === 2)).toBe(true);
     const domestic = airlinesFor('us', 'us', 4000);
     expect(domestic.every((a) => a.countryId === 'us')).toBe(true);
-    const longHaul = airlinesFor('us', 'gb', 5500);
-    expect(longHaul.some((a) => a.countryId === 'gb')).toBe(true);
+    const longHaul = airlinesFor('us', 'uk', 5500);
+    expect(longHaul.some((a) => a.countryId === 'uk')).toBe(true);
     expect(longHaul.every((a) => a.longHaul)).toBe(true);
     const options = searchFlights(sim, 'us-ca-losangeles', 'uk-eng-london', sim.now + 5 * MS_DAY);
     expect(options.length).toBeGreaterThan(0);

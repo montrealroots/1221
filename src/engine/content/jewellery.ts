@@ -246,6 +246,11 @@ export const PIECE_KINDS: readonly PieceKind[] = [
   { id: 'cuff_bracelet', name: 'Cuff', slot: 'bracelet', grams: 26, weeks: 5, takesStone: false, about: 'An open band with real weight to it. A lot of metal and a lot of hammering.' },
   { id: 'cufflinks', name: 'Cufflinks', slot: 'jewellery', grams: 12, weeks: 4, takesStone: true, about: 'A pair, with a swivel back that has to work ten thousand times.' },
   { id: 'brooch', name: 'Brooch', slot: 'jewellery', grams: 11, weeks: 7, takesStone: true, about: 'The piece nobody commissions any more, which is exactly why one is worth having.' },
+  // The iced-out bench.
+  { id: 'miami_cuban', name: 'Miami Cuban Link', slot: 'necklace', grams: 120, weeks: 5, takesStone: true, about: 'Solid links by the gauge, and most of the price is the gold. Set with stones, it is a different price again.' },
+  { id: 'tennis_chain', name: 'Tennis Chain', slot: 'necklace', grams: 30, weeks: 8, takesStone: true, about: 'A line of matched stones the whole way round the neck. Hundreds of them, each one set by hand.' },
+  { id: 'nameplate', name: 'Nameplate', slot: 'necklace', grams: 9, weeks: 4, takesStone: true, about: 'Your name, or somebody else’s, cut in script and hung on a chain. Canal Street since forever.' },
+  { id: 'grillz', name: 'Grillz', slot: 'jewellery', grams: 14, weeks: 3, takesStone: true, about: 'Cast from a mold of your teeth, so they come in first for the impression. Six on the bottom or eight on top.' },
 ];
 
 export const PIECE_BY_ID: Readonly<Record<string, PieceKind>> = Object.fromEntries(PIECE_KINDS.map((p) => [p.id, p]));

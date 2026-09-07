@@ -25,6 +25,7 @@ const HEADLINE = [
   'Louis Vuitton', 'Gucci', 'Prada', 'Dior', 'Chanel', 'Hermès',
   'Balenciaga', 'Saint Laurent', 'Bottega Veneta',
   'ARRI', 'RED', 'Sony', 'Canon', 'Blackmagic Design', 'Aputure', 'MAC Cosmetics',
+  'Icebox', 'King Ice',
 ];
 
 const counts = new Map();
