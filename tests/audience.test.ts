@@ -188,6 +188,60 @@ describe('which rack a shop leads with', () => {
   });
 });
 
+describe('the headline brands go a hundred deep', () => {
+  const HEADLINE = ['Nike', 'Jordan', 'Adidas', 'New Balance', 'Louis Vuitton', 'Gucci'];
+
+  function countsByBrand(): Map<string, number> {
+    const counts = new Map<string, number>();
+    for (const item of shoppableItems()) counts.set(item.brand, (counts.get(item.brand) ?? 0) + 1);
+    return counts;
+  }
+
+  it('carries at least a hundred real products for each of the big names', () => {
+    const counts = countsByBrand();
+    const short = HEADLINE.filter((brand) => (counts.get(brand) ?? 0) < 100)
+      .map((brand) => `${brand} (${counts.get(brand) ?? 0})`);
+    expect(short, 'these headline brands are short of a hundred').toEqual([]);
+  });
+
+  it('never lists the same product twice inside a brand', () => {
+    const seen = new Map<string, Set<string>>();
+    const dupes: string[] = [];
+    for (const item of shoppableItems()) {
+      const names = seen.get(item.brand) ?? new Set<string>();
+      if (names.has(item.name)) dupes.push(item.name);
+      names.add(item.name);
+      seen.set(item.brand, names);
+    }
+    expect(dupes).toEqual([]);
+  });
+
+  it('leads every product name with the maker, so a wall reads as a wall', () => {
+    const wrong: string[] = [];
+    for (const item of shoppableItems()) {
+      if (!HEADLINE.includes(item.brand)) continue;
+      const head = item.brand.split(/[\s&]/)[0]!.toLowerCase();
+      if (!item.name.toLowerCase().includes(head)) wrong.push(item.id);
+    }
+    expect(wrong).toEqual([]);
+  });
+
+  it('says the price is SLATE’s own arithmetic on every one of them', () => {
+    for (const item of shoppableItems()) {
+      if (!HEADLINE.includes(item.brand)) continue;
+      expect(item.source, item.id).toBe('calibrated_estimate');
+      expect(item.note, item.id).toMatch(/public record/i);
+    }
+  });
+
+  it('hangs every wearable one on a peg that exists', () => {
+    for (const item of shoppableItems()) {
+      if (!HEADLINE.includes(item.brand) || !item.slot) continue;
+      expect(SLOTS, item.id).toContain(item.slot);
+    }
+  });
+});
+
 describe('the audience list against the catalog it describes', () => {
   it('names only ids that still exist', () => {
     const known = new Set(shoppableItems().map((i) => i.id));

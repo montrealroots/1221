@@ -529,9 +529,15 @@ export const REAL_FOOTWEAR: readonly RealGood[] = [
   fw('f_crocs_classic', 'Crocs Classic Clog', 'Crocs', 'casual', 50_00, 2, 58, 0.40),
 ];
 
+/**
+ * An accessory. `slot` is the wardrobe peg it hangs on, and it is optional
+ * on purpose: a fragrance, a pen and an umbrella are things you own and not
+ * things you wear, so they get no peg at all rather than a made up one. A
+ * peg that is not in SLOTS would put them in a wardrobe nothing can show.
+ */
 const ac = (
   id: string, name: string, brand: string, sub: string, price: number,
-  formality: number, quality: number, depreciation: number, slot = 'accessory',
+  formality: number, quality: number, depreciation: number, slot?: string,
 ): RealGood => good({
   id, name, category: 'accessory', subcategory: sub, basePrice: price, brand,
   tags: ['wear', sub], quality, depreciation, slot, formality, seasons: ALL_YEAR,
@@ -568,24 +574,24 @@ export const REAL_ACCESSORIES: readonly RealGood[] = [
   ac('a_polene_numero', 'Polène Numéro Un Nano', 'Polène', 'bag', 420_00, 52, 82, 0.20, 'bag'),
   ac('a_mansur_bucket', 'Mansur Gavriel Bucket Bag', 'Mansur Gavriel', 'bag', 495_00, 42, 82, 0.22, 'bag'),
   ac('a_telfar_shopping', 'Telfar Shopping Bag Medium', 'Telfar', 'bag', 257_00, 26, 76, 0.24, 'bag'),
-  ac('a_rimowa_original', 'Rimowa Original Cabin', 'Rimowa', 'luggage', 1_450_00, 44, 94, 0.10, 'luggage'),
-  ac('a_rimowa_essential', 'Rimowa Essential Check-In L', 'Rimowa', 'luggage', 1_100_00, 40, 90, 0.12, 'luggage'),
-  ac('a_tumi_alpha', 'Tumi Alpha 3 International Carry-On', 'Tumi', 'luggage', 895_00, 48, 88, 0.16, 'luggage'),
-  ac('a_away_carryon', 'Away The Carry-On', 'Away', 'luggage', 295_00, 32, 76, 0.22, 'luggage'),
-  ac('a_globe_trotter', 'Globe-Trotter Centenary Trolley Case', 'Globe-Trotter', 'luggage', 2_290_00, 62, 94, 0.08, 'luggage'),
+  ac('a_rimowa_original', 'Rimowa Original Cabin', 'Rimowa', 'luggage', 1_450_00, 44, 94, 0.10),
+  ac('a_rimowa_essential', 'Rimowa Essential Check-In L', 'Rimowa', 'luggage', 1_100_00, 40, 90, 0.12),
+  ac('a_tumi_alpha', 'Tumi Alpha 3 International Carry-On', 'Tumi', 'luggage', 895_00, 48, 88, 0.16),
+  ac('a_away_carryon', 'Away The Carry-On', 'Away', 'luggage', 295_00, 32, 76, 0.22),
+  ac('a_globe_trotter', 'Globe-Trotter Centenary Trolley Case', 'Globe-Trotter', 'luggage', 2_290_00, 62, 94, 0.08),
   ac('a_peak_design_backpack', 'Peak Design Everyday Backpack 30L', 'Peak Design', 'bag', 290_00, 18, 88, 0.20, 'bag'),
   ac('a_filson_briefcase', 'Filson Original Briefcase', 'Filson', 'bag', 375_00, 48, 88, 0.12, 'bag'),
   ac('a_bellroy_sling', 'Bellroy Venture Sling', 'Bellroy', 'bag', 135_00, 16, 78, 0.26, 'bag'),
 
   // --- Small leather goods and belts -----------------------------------------------------------------
-  ac('a_smythson_wallet', 'Smythson Panama Coat Wallet', 'Smythson', 'wallet', 495_00, 74, 90, 0.18, 'wallet'),
-  ac('a_montblanc_wallet', 'Montblanc Meisterstück Wallet', 'Montblanc', 'wallet', 340_00, 72, 86, 0.20, 'wallet'),
-  ac('a_bellroy_wallet', 'Bellroy Hide & Seek Wallet', 'Bellroy', 'wallet', 99_00, 30, 76, 0.28, 'wallet'),
+  ac('a_smythson_wallet', 'Smythson Panama Coat Wallet', 'Smythson', 'wallet', 495_00, 74, 90, 0.18),
+  ac('a_montblanc_wallet', 'Montblanc Meisterstück Wallet', 'Montblanc', 'wallet', 340_00, 72, 86, 0.20),
+  ac('a_bellroy_wallet', 'Bellroy Hide & Seek Wallet', 'Bellroy', 'wallet', 99_00, 30, 76, 0.28),
   ac('a_hermes_belt', 'Hermès Constance Reversible Belt', 'Hermès', 'belt', 1_200_00, 68, 96, 0.06, 'belt'),
   ac('a_gucci_marmont_belt', 'Gucci GG Marmont Belt', 'Gucci', 'belt', 520_00, 44, 86, 0.16, 'belt'),
   ac('a_anderson_belt', "Anderson's Woven Belt", "Anderson's", 'belt', 155_00, 44, 82, 0.18, 'belt'),
-  ac('a_montblanc_pen', 'Montblanc Meisterstück 149 Fountain Pen', 'Montblanc', 'pen', 1_050_00, 80, 94, 0.06, 'accessory'),
-  ac('a_lamy_2000', 'Lamy 2000 Fountain Pen', 'Lamy', 'pen', 235_00, 60, 88, 0.14, 'accessory'),
+  ac('a_montblanc_pen', 'Montblanc Meisterstück 149 Fountain Pen', 'Montblanc', 'pen', 1_050_00, 80, 94, 0.06),
+  ac('a_lamy_2000', 'Lamy 2000 Fountain Pen', 'Lamy', 'pen', 235_00, 60, 88, 0.14),
 
   // --- Eyewear --------------------------------------------------------------------------------------
   ac('a_rayban_wayfarer', 'Ray-Ban Original Wayfarer', 'Ray-Ban', 'eyewear', 175_00, 24, 74, 0.28, 'eyewear'),
@@ -619,17 +625,17 @@ export const REAL_ACCESSORIES: readonly RealGood[] = [
   ac('a_barbour_beanie', 'Barbour Lambswool Beanie', 'Barbour', 'hat', 45_00, 12, 74, 0.28, 'hat'),
 
   // --- Fragrance --------------------------------------------------------------------------------------
-  ac('a_creed_aventus', 'Creed Aventus', 'Creed', 'fragrance', 495_00, 60, 94, 0.60, 'fragrance'),
-  ac('a_tom_ford_oud', 'Tom Ford Oud Wood', 'Tom Ford', 'fragrance', 385_00, 60, 92, 0.60, 'fragrance'),
-  ac('a_le_labo_santal', 'Le Labo Santal 33', 'Le Labo', 'fragrance', 320_00, 52, 92, 0.60, 'fragrance'),
-  ac('a_byredo_gypsy', 'Byredo Gypsy Water', 'Byredo', 'fragrance', 220_00, 46, 88, 0.60, 'fragrance'),
-  ac('a_mfk_baccarat', 'Maison Francis Kurkdjian Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'fragrance', 465_00, 62, 96, 0.60, 'fragrance'),
-  ac('a_chanel_no5', 'Chanel N°5 Eau De Parfum', 'Chanel', 'fragrance', 175_00, 72, 94, 0.60, 'fragrance'),
-  ac('a_bleu_de_chanel', 'Bleu De Chanel Parfum', 'Chanel', 'fragrance', 165_00, 58, 90, 0.60, 'fragrance'),
-  ac('a_dior_sauvage', 'Dior Sauvage Eau De Parfum', 'Dior', 'fragrance', 145_00, 46, 84, 0.60, 'fragrance'),
-  ac('a_frederic_malle_portrait', 'Frédéric Malle Portrait Of A Lady', 'Frédéric Malle', 'fragrance', 420_00, 70, 96, 0.60, 'fragrance'),
-  ac('a_diptyque_philosykos', 'Diptyque Philosykos', 'Diptyque', 'fragrance', 195_00, 44, 88, 0.60, 'fragrance'),
-  ac('a_santa_maria_novella', 'Santa Maria Novella Acqua Di Colonia', 'Santa Maria Novella', 'fragrance', 165_00, 54, 90, 0.60, 'fragrance'),
+  ac('a_creed_aventus', 'Creed Aventus', 'Creed', 'fragrance', 495_00, 60, 94, 0.60),
+  ac('a_tom_ford_oud', 'Tom Ford Oud Wood', 'Tom Ford', 'fragrance', 385_00, 60, 92, 0.60),
+  ac('a_le_labo_santal', 'Le Labo Santal 33', 'Le Labo', 'fragrance', 320_00, 52, 92, 0.60),
+  ac('a_byredo_gypsy', 'Byredo Gypsy Water', 'Byredo', 'fragrance', 220_00, 46, 88, 0.60),
+  ac('a_mfk_baccarat', 'Maison Francis Kurkdjian Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'fragrance', 465_00, 62, 96, 0.60),
+  ac('a_chanel_no5', 'Chanel N°5 Eau De Parfum', 'Chanel', 'fragrance', 175_00, 72, 94, 0.60),
+  ac('a_bleu_de_chanel', 'Bleu De Chanel Parfum', 'Chanel', 'fragrance', 165_00, 58, 90, 0.60),
+  ac('a_dior_sauvage', 'Dior Sauvage Eau De Parfum', 'Dior', 'fragrance', 145_00, 46, 84, 0.60),
+  ac('a_frederic_malle_portrait', 'Frédéric Malle Portrait Of A Lady', 'Frédéric Malle', 'fragrance', 420_00, 70, 96, 0.60),
+  ac('a_diptyque_philosykos', 'Diptyque Philosykos', 'Diptyque', 'fragrance', 195_00, 44, 88, 0.60),
+  ac('a_santa_maria_novella', 'Santa Maria Novella Acqua Di Colonia', 'Santa Maria Novella', 'fragrance', 165_00, 54, 90, 0.60),
 ];
 
 const wa = (
@@ -1798,12 +1804,12 @@ export const REAL_TOP_UP: readonly RealGood[] = [
   ac('a_metier_bag', 'Métier Perriand Bag', 'Métier', 'bag', 2_450_00, 60, 84, 0.12, 'bag'),
   ac('a_mismo_holdall', 'Mismo M/S Explorer Holdall', 'Mismo', 'bag', 895_00, 34, 84, 0.14, 'bag'),
   ac('a_troubadour_briefcase', 'Troubadour Apex Briefcase', 'Troubadour', 'bag', 495_00, 62, 84, 0.18, 'bag'),
-  ac('a_briggs_riley', 'Briggs & Riley Baseline Carry-On', 'Briggs & Riley', 'luggage', 699_00, 46, 84, 0.12, 'luggage'),
-  ac('a_monos_carryon', 'Monos Carry-On Pro', 'Monos', 'luggage', 375_00, 34, 84, 0.20, 'luggage'),
-  ac('a_july_checked', 'July Checked Plus Suitcase', 'July', 'luggage', 345_00, 32, 84, 0.22, 'luggage'),
+  ac('a_briggs_riley', 'Briggs & Riley Baseline Carry-On', 'Briggs & Riley', 'luggage', 699_00, 46, 84, 0.12),
+  ac('a_monos_carryon', 'Monos Carry-On Pro', 'Monos', 'luggage', 375_00, 34, 84, 0.20),
+  ac('a_july_checked', 'July Checked Plus Suitcase', 'July', 'luggage', 345_00, 32, 84, 0.22),
   ac('a_paravel_weekender', 'Paravel Fold-Up Bag', 'Paravel', 'bag', 195_00, 26, 84, 0.24, 'bag'),
-  ac('a_swaine_umbrella', 'Swaine Adeney Brigg Umbrella', 'Swaine Adeney Brigg', 'umbrella', 495_00, 66, 84, 0.12, 'accessory'),
-  ac('a_fox_umbrella', 'Fox Umbrellas Whanghee Crook', 'Fox Umbrellas', 'umbrella', 235_00, 62, 84, 0.14, 'accessory'),
+  ac('a_swaine_umbrella', 'Swaine Adeney Brigg Umbrella', 'Swaine Adeney Brigg', 'umbrella', 495_00, 66, 84, 0.12),
+  ac('a_fox_umbrella', 'Fox Umbrellas Whanghee Crook', 'Fox Umbrellas', 'umbrella', 235_00, 62, 84, 0.14),
   ac('a_tom_ford_belt', 'Tom Ford T Buckle Belt', 'Tom Ford', 'belt', 690_00, 66, 84, 0.16, 'belt'),
   ac('a_bottega_belt', 'Bottega Veneta Intrecciato Belt', 'Bottega Veneta', 'belt', 690_00, 52, 84, 0.16, 'belt'),
   ac('a_drakes_tie', "Drake's Grenadine Silk Tie", "Drake's", 'tie', 195_00, 84, 84, 0.14, 'tie'),
@@ -1813,10 +1819,10 @@ export const REAL_TOP_UP: readonly RealGood[] = [
   ac('a_johnstons_stole', 'Johnstons Of Elgin Cashmere Stole', 'Johnstons Of Elgin', 'scarf', 425_00, 58, 84, 0.12, 'scarf'),
   ac('a_stetson_hat', 'Stetson Open Road Hat', 'Stetson', 'hat', 320_00, 46, 84, 0.16, 'hat'),
   ac('a_lock_and_co', 'Lock & Co. Hatters Trilby', 'Lock & Co. Hatters', 'hat', 385_00, 60, 84, 0.14, 'hat'),
-  ac('a_aesop_hand', 'Aesop Resurrection Hand Balm', 'Aesop', 'grooming', 45_00, 20, 84, 0.85, 'accessory'),
-  ac('a_kiehls_moisturiser', "Kiehl's Ultra Facial Cream", "Kiehl's", 'grooming', 42_00, 16, 84, 0.85, 'accessory'),
-  ac('a_la_mer', 'La Mer Crème De La Mer', 'La Mer', 'grooming', 380_00, 30, 84, 0.85, 'accessory'),
-  ac('a_augustinus_bader', 'Augustinus Bader The Rich Cream', 'Augustinus Bader', 'grooming', 290_00, 28, 84, 0.85, 'accessory'),
+  ac('a_aesop_hand', 'Aesop Resurrection Hand Balm', 'Aesop', 'grooming', 45_00, 20, 84, 0.85),
+  ac('a_kiehls_moisturiser', "Kiehl's Ultra Facial Cream", "Kiehl's", 'grooming', 42_00, 16, 84, 0.85),
+  ac('a_la_mer', 'La Mer Crème De La Mer', 'La Mer', 'grooming', 380_00, 30, 84, 0.85),
+  ac('a_augustinus_bader', 'Augustinus Bader The Rich Cream', 'Augustinus Bader', 'grooming', 290_00, 28, 84, 0.85),
 
   // --- Home, continued ---------------------------------------------------------------------------------
   hm('h_hermes_avalon', 'Hermès Avalon Throw', 'Hermès', 'textile', 1_850_00, 96, 0.16, LIVING, 10),

@@ -309,7 +309,7 @@ describe('the day, played', () => {
       expect(gate.replacement).toBeDefined();
       expect(balance(sim)).toBe(before);
       expect(sim.universe.flightBookings[gate.replacement!]!.status).toBe('booked');
-      expect(sim.universe.notifications.some((n) => /Cancelled/.test(n.title))).toBe(true);
+      expect(sim.universe.notifications.some((n) => /Canceled/.test(n.title))).toBe(true);
       return;
     }
     throw new Error('No seed had the airline cancel in eighty tries; the chance is not what the constant says.');
