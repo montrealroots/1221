@@ -15,7 +15,7 @@ import { clamp } from '../core/rng';
 import { MS_MINUTE } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
 import type { Id, Person, RetailVisit } from '../domain/model';
-import { RETAILERS, retailPrice, shoppableItemsIn, type CatalogItem, type Retailer } from '../content/catalog';
+import { RETAILERS, retailPrice, shoppableItemsIn, stocks, type CatalogItem, type Retailer } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
 import { placeById, type Place } from '../content/places';
 import { COLOURS, SAFE_COLOURS } from '../content/wardrobe';
@@ -211,7 +211,7 @@ export function assortmentAt(sim: Simulation, place: Place, category?: string, r
   // every branch promises, are counted without it.
   const eligible = shoppableItemsIn(place.cityId).filter((item) =>
     item.category !== 'dining'
-    && (retailer.categories.includes(item.category) || retailer.categories.includes(item.subcategory))
+    && stocks(retailer, item)
     && (category === undefined || item.category === category)
     && (rack === undefined || shows(item.audience, rack)));
   // The front table is what has been pushed to the front this fortnight; the

@@ -10,7 +10,7 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  CATALOG, RETAILERS, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableItemsIn, shoppableRetailers,
+  CATALOG, RETAILERS, houseBrandOf, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableItemsIn, shoppableRetailers,
 } from '@/engine/content/catalog';
 import { ALL_RETAILERS, REGIONAL_RETAILERS, coverageFor, coverageReport, marketOf, tradesIn } from '@/engine/content/brands';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
@@ -174,16 +174,44 @@ describe('a national brand stays in its nation', () => {
 
 
 describe('every shop floor is a real shop floor', () => {
-  it('carries at least a hundred real things in every branch, everywhere it trades', () => {
+  it('carries at least a hundred real things in every branch that sells more than one label', () => {
+    // A shop that carries many labels has no excuse for a thin floor. A
+    // brand's own boutique is a different promise: it carries what that brand
+    // makes, and the catalog depth for that brand is what decides the number.
     const sim = quickSave({}, 'assortment');
     const thin: string[] = [];
     for (const cityId of WORLD_CITIES) {
       for (const place of placesIn(cityId).filter((p) => p.retailerId)) {
+        const retailer = RETAILERS.get(place.retailerId!);
+        if (retailer && houseBrandOf(retailer) !== undefined) continue;
         const count = assortmentAt(sim, place).length;
         if (count < MINIMUM_ASSORTMENT) thin.push(`${place.name} in ${cityId}: ${count}`);
       }
     }
     expect(thin, `these branches are thinner than a hundred things: ${thin.join('; ')}`).toEqual([]);
+  });
+
+  it('puts a brand’s own label in its own boutique, all of it and nothing else', () => {
+    const sim = quickSave({}, 'boutique');
+    let boutiques = 0;
+    let deep = 0;
+    for (const place of placesIn(LA).filter((p) => p.retailerId)) {
+      const retailer = RETAILERS.get(place.retailerId!);
+      const house = retailer && houseBrandOf(retailer);
+      if (!house) continue;
+      boutiques += 1;
+      const stock = assortmentAt(sim, place);
+      expect(stock.length, `${house} sells nothing in its own shop`).toBeGreaterThan(0);
+      for (const line of stock) {
+        // Nike's shops carry Jordan, which is Nike's. Nothing else wanders in.
+        expect([house, ...(house === 'Nike' ? ['Jordan'] : [])], `${house} is selling ${line.item.brand}`).toContain(line.item.brand);
+      }
+      if (stock.length >= MINIMUM_ASSORTMENT) deep += 1;
+    }
+    expect(boutiques, 'no brand has its own shop in Los Angeles').toBeGreaterThan(20);
+    // The rest are thin because SLATE has not written that brand out yet, not
+    // because the shop is fake. The brand-depth checker is where that is counted.
+    expect(deep, 'no boutique is a hundred deep').toBeGreaterThan(15);
   });
 
   it('walks the aisles rather than a twelve item rail', () => {

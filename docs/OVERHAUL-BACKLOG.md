@@ -200,6 +200,14 @@ before any delivery claim.
 
     **Found on the tour and not yet fixed:** any shop that sells clothing can sell any garment, so Primark lists a Moncler T-shirt and Gucci's boutique would sell a pack of Hanes briefs. The stocking rule is the next stage, not this one.
 
+29. Stage 27 — who actually stocks what. The tour of the last stage turned up a shop floor that was not a shop floor: any shop trading in a category sold everything in it, so Primark listed a Moncler T-shirt at a discount, Harrods would have sold a pack of Hanes briefs, and a Zara store carried somebody else's phone charger. Two rules decide it now, both in `content/catalog.ts` and both measured by `tools/stockist-check.mjs` in the gate.
+
+    **A brand's own shopfront sells that brand.** Ninety-four shops have a brand over the door — Gucci, Uniqlo, Levi's, Rolex's authorised names, the custom jewelers — and each now sells that label across everything it makes, whatever aisles the shop record happened to list. Nike's shops carry Jordan, because Jordan is Nike's; nothing else wanders in. The other two hundred and eighty shops carry many labels and are held to standing instead: where a brand sits is read off its own median price, from 1 for the value names to 5 for the houses, and a shop carries its own tier and the one below it. Neither end of the market reaches into the other. Resale and the saleroom — The RealReal, Vestiaire, StockX, Chrono24, Christie's, Sotheby's — carry what they really consign, which is the good stuff at any price.
+
+    **The till applies the same rule as the shop floor.** `shop.purchase` refuses a basket the shop would never have sold, names the shop and the piece in the refusal, and takes no money; the screen is not the authority. Groceries, furniture and appliances are untouched, because standing is a wardrobe idea and does not decide who sells milk. An original kept only so an old save resolves its orders is never refused: a rule written now must not reach back and unmake a purchase somebody already made.
+
+    **What it cost, honestly.** A promise that every branch carries a hundred things was only ever true because every shop sold everybody's stock. It now holds for the shops that carry many labels, and a brand's own boutique is held to a different promise: everything that brand makes, and nothing else. Thirty-three shopfronts are a hundred deep; sixty-one are thinner, and that is the brand-depth build's queue rather than a broken shop. In Los Angeles a piece is offered by about twelve shops instead of twenty; in Nairobi some pieces are not sold in town at all, which is what a thinner market really means. `tests/stocking.test.ts` holds eleven promises and `tests/catalogue.test.ts` two more. Walked in play: Nike's floor in Culver City carries 233 things, every one of them Nike or Jordan.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -210,7 +218,6 @@ before any delivery claim.
     - A rating feed would be needed for a real insurance premium; an issuer's real invitation rule is published by nobody.
     - The dialogue library stands at 1,296 of the 100,001 target; that is writing, not building.
     - Base44 live persistence is unverified against a deployment, and is reported unavailable rather than passing.
-    - Any shop carrying a category can sell anything in it, so a discount chain lists a luxury coat and a house's own boutique sells another brand's socks. Next up rather than parked.
 
 17. Next — a boat trip and a private flight as played days; the salon, the garage counter and the cinema as rooms with somebody in them; and the dialogue programme, which is writing rather than building.
 

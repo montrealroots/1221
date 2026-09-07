@@ -12,7 +12,7 @@ import type { AssetCategory, Id, Order, OwnedAsset, PantryItem } from '../domain
 import { clamp } from '../core/rng';
 import { addDays, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
-import { CATALOG, RETAILERS, retailPrice, retailersFor, shoppableItemsIn, type CatalogItem } from '../content/catalog';
+import { CATALOG, RETAILERS, retailPrice, stockistsFor, stocks, shoppableItemsIn, type CatalogItem } from '../content/catalog';
 import { costOfLiving, salesTaxRate } from '../content/tax';
 import { defaultColour, guessMaterial } from '../content/wardrobe';
 import { preferenceOf, shows } from './wardrobe';
@@ -58,7 +58,10 @@ export function registerCommerce(sim: Simulation): void {
       for (const line of p.lines) {
         const catalogItem = CATALOG.get(line.catalogId);
         if (!catalogItem) throw new CommandError(`Unknown item: ${line.catalogId}`);
-        if (!retailer.categories.includes(catalogItem.category) && !retailer.categories.includes(catalogItem.subcategory)) {
+        // The shop floor already hides what a shop would not carry; this is the
+        // same rule where it counts, so a basket built anywhere else cannot buy
+        // a house's coat from a discount chain.
+        if (!stocks(retailer, catalogItem)) {
           throw new CommandError(`${retailer.name} does not stock ${catalogItem.name}.`);
         }
         const quantity = clamp(Math.round(line.quantity), 1, 999);
@@ -392,7 +395,7 @@ export function shoppingCatalogue(sim: Simulation, category?: string, everything
     if (item.category === 'dining') continue;
     // The rack you are shown, unless you asked for the whole floor.
     if (!everything && !shows(item.audience, preference)) continue;
-    const stores = retailersFor(item.category, cityId).filter((r) => r.categories.includes(item.category));
+    const stores = stockistsFor(item, cityId);
     if (stores.length === 0) continue;
     results.push({
       item,

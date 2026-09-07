@@ -315,6 +315,147 @@ export function retailPrice(itemId: string, retailerId: string, costOfLivingMult
  * The market is the chain's own trading territory, which is public record; the
  * size threshold and the branch itself are SLATE's calibration.
  */
+/**
+ * Who would really have this on the shelf.
+ *
+ * Before this, a shop that sold clothing sold every garment in the world, so
+ * a discount chain listed a luxury down jacket and a house's own boutique
+ * offered another company's socks. Two things decide it instead.
+ *
+ * The first is the shopfront. A boutique or a jeweler named for a brand is
+ * that brand's own shop and sells that brand, the way a Gucci store sells
+ * Gucci. A department store, a supermarket or a marketplace named for a brand
+ * — Marks & Spencer, John Lewis, Amazon — is not a single-brand shop and is
+ * left alone.
+ *
+ * The second is standing. Where a brand sits is read off its own prices, and
+ * a multi-brand shop carries its own standing and the one below it: the
+ * supermarket carries the everyday names, the luxury floor carries the houses,
+ * and neither reaches into the other's half of the market. Resale and auction
+ * carry what they really consign, which is the good stuff at any price.
+ *
+ * All of it is SLATE's calibration, not a published stock list. It applies to
+ * the things a brand's standing actually decides — what you wear and what you
+ * wear it with. Groceries, furniture, appliances and the rest are untouched.
+ */
+const BRANDED_MARKET = new Set(['clothing', 'footwear', 'accessory', 'watch', 'jewelry']);
+
+/** Shop kinds where a brand's name over the door means a single-brand shop. */
+const HOUSE_KINDS = new Set(['boutique', 'jeweller']);
+
+/** Where a company sells more than its own label under one name. */
+const FAMILY: Record<string, string[]> = {
+  Nike: ['Jordan'],
+};
+
+/** Second hand and the saleroom: any house, at any price, if it is worth consigning. */
+const CONSIGNMENT = new Set([
+  'the_realreal', 'vestiaire', 'stockx', 'chrono24', 'christies', 'sothebys', 'grailed',
+]);
+
+/** Whether this shop sells other people's pieces on rather than its own stock. */
+export function isConsignment(retailer: Retailer): boolean {
+  return CONSIGNMENT.has(retailer.id);
+}
+
+/** What a shop of each tier will put a price tag on, low and high. */
+const BAND: Record<number, [Money, Money]> = {
+  1: [0, 250_00],
+  2: [0, 900_00],
+  3: [8_00, 4_000_00],
+  4: [25_00, 30_000_00],
+  5: [60_00, Number.MAX_SAFE_INTEGER],
+};
+
+let standings: Map<string, 1 | 2 | 3 | 4 | 5> | undefined;
+
+/** Where a price sits, from 1 for the value end to 5 for the houses. */
+function bandOf(price: Money): 1 | 2 | 3 | 4 | 5 {
+  return price < 60_00 ? 1 : price < 200_00 ? 2 : price < 600_00 ? 3 : price < 2_000_00 ? 4 : 5;
+}
+
+function standingTable(): Map<string, 1 | 2 | 3 | 4 | 5> {
+  if (standings) return standings;
+  const prices = new Map<string, Money[]>();
+  for (const item of REAL_ITEMS) {
+    if (!BRANDED_MARKET.has(item.category)) continue;
+    const list = prices.get(item.brand);
+    if (list) list.push(item.basePrice);
+    else prices.set(item.brand, [item.basePrice]);
+  }
+  standings = new Map();
+  for (const [name, list] of prices) {
+    list.sort((a, b) => a - b);
+    standings.set(name, bandOf(list[Math.floor(list.length / 2)] ?? 0));
+  }
+  return standings;
+}
+
+/**
+ * What a brand's own prices say about the shops that carry it, from 1 for the
+ * value names to 5 for the houses. The median is used rather than the average
+ * so one flagship coat does not move a whole label.
+ */
+export function brandStanding(brand: string): 1 | 2 | 3 | 4 | 5 {
+  return standingTable().get(brand) ?? 3;
+}
+
+/**
+ * The standing a single piece is judged by. A brand SLATE knows is judged by
+ * everything it makes; anything else — an original kept for an old save, a
+ * one-off — is judged by its own price rather than guessed at.
+ */
+export function standingOf(item: CatalogItem): 1 | 2 | 3 | 4 | 5 {
+  return standingTable().get(item.brand) ?? bandOf(item.basePrice);
+}
+
+let houses: Map<string, string> | undefined;
+
+/** The brand a shopfront is the shopfront for, if it is one. */
+export function houseBrandOf(retailer: Retailer): string | undefined {
+  if (!houses) {
+    const brands = new Set(REAL_ITEMS.map((i) => i.brand));
+    houses = new Map();
+    for (const r of RETAILERS.all()) {
+      if (!HOUSE_KINDS.has(r.type)) continue;
+      if (brands.has(r.name)) houses.set(r.id, r.name);
+    }
+  }
+  return houses.get(retailer.id);
+}
+
+/** Whether this shop would really have this piece on its shelves. */
+export function stocks(retailer: Retailer, item: CatalogItem): boolean {
+  // A shop with a brand over the door sells that brand and only that brand,
+  // across everything the brand makes. A Zara store does not sell somebody
+  // else's charger, and the aisles it keeps are Zara's own to decide.
+  const house = houseBrandOf(retailer);
+  if (house !== undefined) {
+    return item.brand === house || (FAMILY[house]?.includes(item.brand) ?? false);
+  }
+
+  if (!retailer.categories.includes(item.category) && !retailer.categories.includes(item.subcategory)) return false;
+  if (!BRANDED_MARKET.has(item.category)) return true;
+  // Originals kept only so an old save still resolves its orders are never
+  // refused: a rule written now must not reach back and unmake a purchase
+  // somebody already made.
+  if (isLegacyItem(item)) return true;
+
+  const standing = standingOf(item);
+  if (CONSIGNMENT.has(retailer.id)) return standing >= 3;
+
+  // A shop carries its own standing and the one below it. Nobody sells above
+  // their own floor, and a luxury floor does not put out a value label.
+  if (standing > retailer.tier || standing < retailer.tier - 1) return false;
+  const [low, high] = BAND[retailer.tier] ?? [0, Number.MAX_SAFE_INTEGER];
+  return item.basePrice >= low && item.basePrice <= high;
+}
+
+/** The shops in this city that would really sell this piece. */
+export function stockistsFor(item: CatalogItem, cityId: string): Retailer[] {
+  return retailersFor(item.category, cityId).filter((r) => stocks(r, item));
+}
+
 export function retailersFor(category: string, cityId: string): Retailer[] {
   const population = CITIES.get(cityId)?.population ?? 0;
   return shoppableRetailers().filter((r) => {
