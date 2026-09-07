@@ -8,9 +8,9 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { FlightBooking, HotelBooking, Id, Trip, TripLeg } from '../domain/model';
+import type { FlightBooking, HotelBooking, Id, Trip, TripLeg, Person } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, MS_HOUR, MS_MINUTE, zoneOffsetMs } from '../core/time';
+import { addDays, MS_DAY, MS_HOUR, MS_MINUTE, zoneOffsetMs } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
 import { AIRPORTS, CITIES, cityDistanceKm, nearestAirport } from '../content/geography';
 import { costOfLiving } from '../content/tax';
@@ -38,8 +38,16 @@ export interface FlightOption {
 // re-exported here so nothing that imported them from the travel system
 // has to move.
 import { airlinesFor } from '../content/airlines';
+import {
+  AIRBNB_UNAVAILABLE, NOWHERE_TO_STAY, airbnbAvailable, chainsIn, hotelBrandById, hotelBrandsFor,
+  type HotelBrand, type RoomClass,
+} from '../content/hotels';
+import { placesIn } from '../content/places';
+import { makeBackgroundPerson, peopleOf } from './people';
+import { plural } from '../core/text';
+import { rememberFact } from './memory';
 export { AIRLINES, REAL_CARRIER_NOTE, airlinesFor, coverageOf, type Airline } from '../content/airlines';
-export const REAL_HOTEL_NOTE = 'A real hotel brand. The property, the rate and the room are SLATE\'s own.';
+export { AIRBNB_NOTE, REAL_HOTEL_NOTE, airbnbAvailable, stayCoverageOf } from '../content/hotels';
 export const REAL_JET_NOTE = 'A real aircraft type; seats, range and runway are manufacturer figures, rounded. The hourly rate is SLATE\'s own.';
 
 const CABIN_MULTIPLIER: Record<FlightBooking['cabin'], number> = {
@@ -259,18 +267,24 @@ export function registerTravel(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ cityId: string; checkInAt: number; nights: number; roomClass: HotelBooking['roomClass']; guestIds?: Id[]; tripId?: Id; accountId?: Id }, { bookingId: Id; total: Money }>(
+  sim.onCommand<{ cityId: string; checkInAt: number; nights: number; roomClass: HotelBooking['roomClass']; guestIds?: Id[]; tripId?: Id; accountId?: Id; brandId?: string }, { bookingId: Id; total: Money }>(
     'travel.book_hotel',
     (p, { sim: s }) => {
       const city = CITIES.require(p.cityId);
       const player = s.player;
       const nights = clamp(Math.round(p.nights), 1, 365);
 
-      const rng = s.rng('hotel', p.cityId, p.checkInAt);
-      const classMultiplier: Record<HotelBooking['roomClass'], number> = { standard: 1, deluxe: 1.6, suite: 3.2, penthouse: 8.5 };
-      const nightlyRate = Math.round(210_00 * costOfLiving(p.cityId) * classMultiplier[p.roomClass] * rng.float(0.85, 1.25));
+      // Priced from the same list the screen showed, so what you saw is what
+      // you pay: the brand you named, or the first real one at that class, or
+      // one of SLATE's own where no chain sells it.
+      if (NOWHERE_TO_STAY[city.countryId]) throw new CommandError(NOWHERE_TO_STAY[city.countryId]!);
+      const shown = stayOptions(s, p.cityId, p.checkInAt, nights).filter((o) => o.kind !== 'airbnb' && o.roomClass === p.roomClass);
+      const option = p.brandId ? shown.find((o) => o.brandId === p.brandId) : shown[0];
+      if (p.brandId && !option) throw new CommandError('That brand has no hotel there.');
+      if (!option) throw new CommandError(`Nowhere in ${city.name} sells that class of room (${p.roomClass}).`);
+      const nightlyRate = option.nightlyRate;
       const total = nightlyRate * nights;
-      const taxes = applyRate(total, 0.145);
+      const taxes = option.taxesFees;
 
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
@@ -279,15 +293,18 @@ export function registerTravel(sim: Simulation): void {
       }
       s.expense(accountId, total + taxes, `Hotel — ${city.name}`, 'travel');
 
-      // Real hotel brands, chosen by the room you asked for; the property and the rate are SLATE's own.
-      const hotelNames = HOTEL_BRANDS[p.roomClass];
+      // A real brand that has a hotel in this country, or one of SLATE's own
+      // hotels named as such: whichever the option the screen showed was.
+      const brand: HotelBrand | undefined = option.brandId ? hotelBrandById(option.brandId) : undefined;
       const booking: HotelBooking = {
         id: s.nextId('stay'),
         saveId: s.universe.meta.id,
         tripId: p.tripId,
         guestIds: p.guestIds ?? [player.id],
-        hotelRefId: `hotel_${p.cityId}`,
-        hotelName: `${rng.pick(hotelNames)} ${city.name}`,
+        hotelRefId: brand ? `hotel_${p.cityId}_${brand.id}` : `hotel_${p.cityId}`,
+        hotelName: brand ? option.name : `${option.name} (One Of SLATE’s Own)`,
+        kind: 'hotel',
+        brandId: brand?.id,
         locationId: p.cityId,
         roomClass: p.roomClass,
         checkInAt: p.checkInAt,
@@ -324,6 +341,152 @@ export function registerTravel(sim: Simulation): void {
     },
   );
 
+  /**
+   * A room in somebody's home, through Airbnb.
+   *
+   * Airbnb is a real platform and it is honestly absent from a few places, so
+   * the refusal says why. The listing, the host and the rate are SLATE's own.
+   * Nightly, cleaning once, the platform's fee on top and tax on the nights,
+   * the way the platform actually itemizes it. One charge, one booking.
+   */
+  sim.onCommand<{ cityId: string; checkInAt: number; nights: number; listingKind: 'entire_home' | 'private_room'; guestIds?: Id[]; tripId?: Id; accountId?: Id }, { bookingId: Id; total: Money; hostId: Id }>(
+    'travel.book_stay',
+    (p, { sim: s }) => {
+      const city = CITIES.require(p.cityId);
+      const player = s.player;
+      const blocked = NOWHERE_TO_STAY[city.countryId] ?? AIRBNB_UNAVAILABLE[city.countryId];
+      if (blocked) throw new CommandError(blocked);
+      const nights = clamp(Math.round(p.nights), 1, 365);
+      const option = stayOptions(s, p.cityId, p.checkInAt, nights).find((o) => o.kind === 'airbnb' && o.listing?.kind === p.listingKind);
+      if (!option || !option.hostId || !option.listing) throw new CommandError('Nothing of that kind is listed there for those dates.');
+
+      const accountId = p.accountId ?? player.primaryAccountId;
+      if (!accountId) throw new CommandError('No account to pay from.');
+      if (s.ledger.availableFunds(accountId) < option.total) {
+        throw new CommandError(`${plural(nights, 'night')} at ${formatMoney(option.nightlyRate)}, plus ${formatMoney(option.cleaningFee)} cleaning and ${formatMoney(option.serviceFee)} service, comes to ${formatMoney(option.total)}.`);
+      }
+      s.expense(accountId, option.total, `Airbnb — ${option.name}, ${city.name}`, 'travel');
+
+      const booking: HotelBooking = {
+        id: s.nextId('stay'),
+        saveId: s.universe.meta.id,
+        tripId: p.tripId,
+        guestIds: p.guestIds ?? [player.id],
+        hotelRefId: `airbnb_${p.cityId}_${p.listingKind}`,
+        hotelName: option.name,
+        locationId: p.cityId,
+        roomClass: option.roomClass,
+        checkInAt: p.checkInAt,
+        checkOutAt: addDays(p.checkInAt, nights, s.homeZone),
+        nights,
+        nightlyRate: option.nightlyRate,
+        taxesFees: option.taxesFees,
+        total: option.total,
+        status: 'booked',
+        incidentals: 0,
+        bookedAt: s.now,
+        kind: 'airbnb',
+        hostId: option.hostId,
+        listing: option.listing,
+        cleaningFee: option.cleaningFee,
+        serviceFee: option.serviceFee,
+      };
+      s.universe.hotelBookings[booking.id] = booking;
+      s.schedule({ at: booking.checkInAt, kind: 'travel.check_in', label: `Check In — ${booking.hotelName}`, category: 'travel', payload: { bookingId: booking.id }, priority: 30, refType: 'stay', refId: booking.id, locationId: p.cityId });
+      s.schedule({ at: booking.checkOutAt, kind: 'travel.check_out', label: `Check Out — ${booking.hotelName}`, category: 'travel', payload: { bookingId: booking.id }, priority: 30, refType: 'stay', refId: booking.id, locationId: p.cityId });
+      if (p.tripId) { const trip = s.universe.trips[p.tripId]; if (trip) { trip.bookingIds.push(booking.id); trip.spent += option.total; } }
+      rememberHost(s, booking);
+      s.emit('travel.hotel_booked', { bookingId: booking.id, cityId: p.cityId, nights, total: option.total });
+      return { bookingId: booking.id, total: option.total, hostId: option.hostId };
+    },
+  );
+
+  /**
+   * The journey and the place to stay, booked as one thing.
+   *
+   * Flight there, the stay at the other end, and the flight back if asked,
+   * under one funds check and one idempotency key. If any leg fails after
+   * another has charged, the charged legs are refunded and the whole thing
+   * fails, so a retry can never leave you with a flight and no bed, or pay
+   * for either twice.
+   */
+  sim.onCommand<{
+    toCityId: string; departAt: number; returnAt?: number; nights: number; cabin: FlightBooking['cabin']; airlineCode?: string;
+    stay: { kind: 'hotel'; roomClass: RoomClass; brandId?: string } | { kind: 'airbnb'; listingKind: 'entire_home' | 'private_room' } | { kind: 'none' };
+    name?: string; purpose?: Trip['purpose']; passengerIds?: Id[]; accountId?: Id;
+  }, { tripId: Id; flightId: Id; stayId?: Id; returnId?: Id; total: Money }>(
+    'travel.book_trip',
+    (p, { sim: s }) => {
+      const player = s.player;
+      const city = CITIES.require(p.toCityId);
+      const accountId = p.accountId ?? player.primaryAccountId;
+      if (!accountId) throw new CommandError('No account to pay from.');
+      const nights = clamp(Math.round(p.nights), 1, 365);
+
+      // Price every leg before charging any.
+      const out = searchFlights(s, player.currentLocationId, p.toCityId, p.departAt);
+      const flight = p.airlineCode ? out.find((o) => o.airlineCode === p.airlineCode) ?? out[0] : out[0];
+      if (!flight) throw new CommandError('No flights available on that route.');
+      const passengers = p.passengerIds ?? [player.id];
+      const flightTotal = (() => { const fare = flight.fares[p.cabin] * passengers.length; return fare + applyRate(fare, 0.11); })();
+      let stayTotal = 0;
+      const arriveAt = flight.arriveAt;
+      if (p.stay.kind !== 'none') {
+        const options = stayOptions(s, p.toCityId, arriveAt, nights);
+        const stay = p.stay;
+        const pick = stay.kind === 'hotel'
+          ? options.find((o) => (o.kind === 'hotel' || o.kind === 'own') && o.roomClass === stay.roomClass && (!stay.brandId || o.brandId === stay.brandId))
+          : options.find((o) => o.kind === 'airbnb' && o.listing?.kind === stay.listingKind);
+        if (!pick) {
+          const why = NOWHERE_TO_STAY[city.countryId] ?? (p.stay.kind === 'airbnb' ? AIRBNB_UNAVAILABLE[city.countryId] : undefined);
+          throw new CommandError(why ?? `Nothing of that kind to stay in at ${city.name} for those dates.`);
+        }
+        stayTotal = pick.total;
+      }
+      let returnTotal = 0;
+      if (p.returnAt) {
+        const back = searchFlights(s, p.toCityId, player.currentLocationId, p.returnAt)[0];
+        if (!back) throw new CommandError('No flights back on that date.');
+        const fare = back.fares[p.cabin] * passengers.length;
+        returnTotal = fare + applyRate(fare, 0.11);
+      }
+      const total = flightTotal + stayTotal + returnTotal;
+      if (s.ledger.availableFunds(accountId) < total) {
+        throw new CommandError(`The whole trip comes to ${formatMoney(total)} — flights ${formatMoney(flightTotal + returnTotal)}, stay ${formatMoney(stayTotal)} — and you cannot cover it.`);
+      }
+
+      const { tripId } = s.must<{ tripId: Id }>({ kind: 'travel.plan_trip', payload: {
+        name: p.name ?? `${city.name} Trip`, purpose: p.purpose ?? 'leisure', destinations: [p.toCityId], departAt: p.departAt, returnAt: p.returnAt, travellerIds: passengers,
+      } });
+      const charged: { amount: Money; leg: string }[] = [];
+      try {
+        const f = s.must<{ bookingId: Id; fare: Money; arriveAt: number }>({ kind: 'travel.book_flight', payload: { toCityId: p.toCityId, departAt: p.departAt, cabin: p.cabin, airlineCode: flight.airlineCode, passengerIds: passengers, tripId, accountId } });
+        charged.push({ amount: f.fare, leg: 'flight' });
+        let stayId: Id | undefined;
+        if (p.stay.kind === 'hotel') {
+          const h = s.must<{ bookingId: Id; total: Money }>({ kind: 'travel.book_hotel', payload: { cityId: p.toCityId, checkInAt: f.arriveAt, nights, roomClass: p.stay.roomClass, brandId: p.stay.brandId, guestIds: passengers, tripId, accountId } });
+          charged.push({ amount: h.total, leg: 'hotel' }); stayId = h.bookingId;
+        } else if (p.stay.kind === 'airbnb') {
+          const a = s.must<{ bookingId: Id; total: Money }>({ kind: 'travel.book_stay', payload: { cityId: p.toCityId, checkInAt: f.arriveAt, nights, listingKind: p.stay.listingKind, guestIds: passengers, tripId, accountId } });
+          charged.push({ amount: a.total, leg: 'stay' }); stayId = a.bookingId;
+        }
+        let returnId: Id | undefined;
+        if (p.returnAt) {
+          const r = s.must<{ bookingId: Id; fare: Money }>({ kind: 'travel.book_flight', payload: { fromCityId: p.toCityId, toCityId: player.currentLocationId, departAt: p.returnAt, cabin: p.cabin, passengerIds: passengers, tripId, accountId } });
+          charged.push({ amount: r.fare, leg: 'return' }); returnId = r.bookingId;
+        }
+        const trip = s.universe.trips[tripId]; if (trip) trip.status = 'booked';
+        s.emit('travel.trip_booked', { tripId, flightId: f.bookingId, stayId, returnId, total });
+        return { tripId, flightId: f.bookingId, stayId, returnId, total };
+      } catch (error) {
+        // Give back whatever was charged, then fail the whole thing.
+        for (const c of charged) s.income(accountId, c.amount, `Refund — trip ${c.leg} not completed`, 'other');
+        const trip = s.universe.trips[tripId]; if (trip) trip.status = 'cancelled';
+        throw error;
+      }
+    },
+  );
+
   sim.onCommand<{ bookingId: Id }, { refund: Money }>(
     'travel.cancel_flight',
     (p, { sim: s }) => {
@@ -347,16 +510,134 @@ export function registerTravel(sim: Simulation): void {
 }
 
 /** Real hotel brands by the kind of room. Names are public record; every property, rate and room is SLATE's own. */
+/**
+ * The brand names sold at each room class anywhere in the world, kept under
+ * the name older code and tests know. Which of them a city can actually
+ * offer is `stayOptions`, which reads the country.
+ */
 export const HOTEL_BRANDS: Readonly<Record<HotelBooking['roomClass'], readonly string[]>> = {
-  standard: ['Holiday Inn Express', 'Hampton by Hilton', 'ibis', 'Premier Inn', 'Courtyard by Marriott'],
-  deluxe: ['Hilton', 'Marriott', 'Hyatt Regency', 'Novotel', 'Sheraton'],
-  suite: ['InterContinental', 'Sofitel', 'JW Marriott', 'Conrad', 'Park Hyatt'],
-  penthouse: ['Four Seasons', 'The Ritz-Carlton', 'Mandarin Oriental', 'The Peninsula', 'Waldorf Astoria'],
+  standard: brandNamesAtTier([1, 2]),
+  deluxe: brandNamesAtTier([2, 3]),
+  suite: brandNamesAtTier([3, 4]),
+  penthouse: brandNamesAtTier([4]),
 };
+
+function brandNamesAtTier(tiers: readonly number[]): string[] {
+  const names: string[] = [];
+  for (const brand of chainsIn('us').concat(chainsIn('uk'), chainsIn('ae'), chainsIn('sg'))) {
+    if (tiers.includes(brand.tier) && !names.includes(brand.name)) names.push(brand.name);
+  }
+  return names;
+}
+
+/** Airbnb's fees, the way the platform shows them. SLATE's own calibration of the platform's public structure. */
+export const AIRBNB_SERVICE_RATE = 0.14;
+export const AIRBNB_CLEANING_NIGHTS = 0.9;
+
+export interface StayOption {
+  kind: 'hotel' | 'airbnb' | 'own';
+  roomClass: RoomClass;
+  /** The real brand, or for an Airbnb the listing's headline, or SLATE's own hotel's name. */
+  name: string;
+  brandId?: string;
+  /** For an Airbnb. */
+  listing?: HotelBooking['listing'];
+  hostId?: Id;
+  nightlyRate: Money;
+  cleaningFee: Money;
+  serviceFee: Money;
+  taxesFees: Money;
+  /** Per stay, for the nights asked. */
+  total: Money;
+  nights: number;
+  /** Why this one is SLATE's own rather than a brand, when it is. */
+  note?: string;
+}
+
+/**
+ * Everywhere you could stay in a city for these nights: the real brands that
+ * operate in that country at each class, the Airbnb listings, and where no
+ * brand sells a class, one of SLATE's own hotels named as such.
+ */
+export function stayOptions(sim: Simulation, cityId: string, checkInAt: number, nights: number): StayOption[] {
+  const city = CITIES.require(cityId);
+  // Keyed by the check-in day, not the instant, so the list the planner
+  // showed for a morning is the list the booking prices for that afternoon.
+  const rng = sim.rng('stay', cityId, Math.floor(checkInAt / MS_DAY));
+  const col = costOfLiving(cityId);
+  const n = clamp(Math.round(nights), 1, 365);
+  const out: StayOption[] = [];
+  if (NOWHERE_TO_STAY[city.countryId]) return out;
+
+  const classMultiplier: Record<RoomClass, number> = { standard: 1, deluxe: 1.6, suite: 3.2, penthouse: 8.5 };
+  for (const roomClass of ['standard', 'deluxe', 'suite', 'penthouse'] as const) {
+    const brands = hotelBrandsFor(city.countryId, roomClass);
+    const nightly = Math.round(210_00 * col * classMultiplier[roomClass] * rng.float(0.85, 1.25));
+    const taxes = applyRate(nightly * n, 0.145);
+    if (brands.length > 0) {
+      // Two real choices per class is a floor, not a menu.
+      for (const brand of brands.slice(0, 2)) {
+        const rate = Math.round(nightly * (0.9 + brand.tier * 0.05));
+        out.push({ kind: 'hotel', roomClass, name: `${brand.name} ${city.name}`, brandId: brand.id, nightlyRate: rate, cleaningFee: 0, serviceFee: 0, taxesFees: applyRate(rate * n, 0.145), total: rate * n + applyRate(rate * n, 0.145), nights: n });
+      }
+    } else {
+      const own = placesIn(cityId).filter((p) => p.kind === 'hotel');
+      const place = own[0];
+      if (place) {
+        out.push({ kind: 'own', roomClass, name: place.name, nightlyRate: nightly, cleaningFee: 0, serviceFee: 0, taxesFees: taxes, total: nightly * n + taxes, nights: n,
+          note: `No international chain in ${city.name} sells that class of room (${roomClass}). ${place.name} is one of SLATE’s own hotels.` });
+      }
+    }
+  }
+
+  if (airbnbAvailable(city.countryId)) {
+    const kinds: HotelBooking['listing'][] = [
+      { kind: 'entire_home', bedrooms: rng.int(1, 3), superhost: rng.float(0, 1) < 0.45, rating: Math.round(rng.float(4.55, 4.98) * 100) / 100, selfCheckIn: rng.float(0, 1) < 0.7 },
+      { kind: 'private_room', bedrooms: 1, superhost: rng.float(0, 1) < 0.35, rating: Math.round(rng.float(4.4, 4.95) * 100) / 100, selfCheckIn: rng.float(0, 1) < 0.5 },
+    ];
+    for (const listing of kinds) {
+      const nightly = Math.round(210_00 * col * (listing!.kind === 'entire_home' ? 0.75 + listing!.bedrooms * 0.3 : 0.42) * rng.float(0.85, 1.2));
+      const cleaning = Math.round(nightly * AIRBNB_CLEANING_NIGHTS);
+      const service = applyRate(nightly * n + cleaning, AIRBNB_SERVICE_RATE);
+      const taxes = applyRate(nightly * n, 0.10);
+      const host = hostFor(sim, cityId, listing!.kind);
+      out.push({
+        kind: 'airbnb', roomClass: listing!.kind === 'entire_home' ? 'deluxe' : 'standard',
+        name: listing!.kind === 'entire_home' ? `${host.displayName.split(' ')[0]}’s ${listing!.bedrooms} Bedroom Place` : `Room At ${host.displayName.split(' ')[0]}’s`,
+        listing, hostId: host.id, nightlyRate: nightly, cleaningFee: cleaning, serviceFee: service, taxesFees: taxes,
+        total: nightly * n + cleaning + service + taxes, nights: n,
+      });
+    }
+  }
+  return out;
+}
+
+/** The person whose home it is. The same one each time for that listing. */
+function hostFor(sim: Simulation, cityId: string, kind: string): Person {
+  const archetype = `host:${cityId}:${kind}`;
+  const existing = peopleOf(sim, archetype)[0];
+  if (existing) return existing;
+  const rng = sim.rng('host', cityId, kind);
+  return makeBackgroundPerson(sim, {
+    rng, archetype, industryRole: 'civilian', cityId,
+    background: kind === 'entire_home' ? `Lets a place in ${CITIES.require(cityId).name} when away.` : `Lets the spare room in ${CITIES.require(cityId).name}.`,
+    interests: [rng.pick(['cooking', 'cycling', 'gardening', 'music', 'travel', 'photography']), 'hosting'],
+    skills: { hospitality: rng.int(40, 90) },
+    age: [26, 68],
+    personality: { conscientiousness: rng.int(50, 95), extraversion: rng.int(30, 90), agreeableness: rng.int(45, 95) },
+    lifestyle: 'modest',
+  });
+}
 
 // ---------------------------------------------------------------------------
 // Mechanics
 // ---------------------------------------------------------------------------
+
+/** The host has a guest; the guest has a host. Both remember it. */
+function rememberHost(sim: Simulation, booking: HotelBooking): void {
+  if (!booking.hostId) return;
+  rememberFact(sim, booking.hostId, { kind: 'topic', sourceKind: 'travel', aboutId: booking.guestIds[0]!, text: `Hosted for ${plural(booking.nights, 'night')} in ${CITIES.get(booking.locationId)?.name ?? 'town'}.`, weight: 40 });
+}
 
 export function estimateFlightMinutes(fromCityId: string, toCityId: string): number {
   const km = cityDistanceKm(fromCityId, toCityId);

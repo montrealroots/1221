@@ -85,6 +85,8 @@ const REAL_DOUBLES = new Set([
   'armour',
   // MAC Pro Acrylic Paint in Black Black. Also the real name.
   'black',
+  // Pago Pago, the capital of American Samoa. A place, not a slip.
+  'pago',
 ]);
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

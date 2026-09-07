@@ -1587,6 +1587,25 @@ export interface HotelBooking {
   status: 'booked' | 'checked_in' | 'checked_out' | 'cancelled' | 'no_show';
   incidentals: Money;
   bookedAt: Instant;
+  /** A hotel, or a room in somebody's home through Airbnb. Absent means hotel. */
+  kind?: 'hotel' | 'airbnb';
+  /** The real brand it wears, when it wears one. Absent means one of SLATE's own hotels. */
+  brandId?: string;
+  /** The person whose home it is, for an Airbnb. A real person in the save. */
+  hostId?: Id;
+  /** What was listed, for an Airbnb. */
+  listing?: {
+    kind: 'entire_home' | 'private_room' | 'shared_room';
+    bedrooms: number;
+    superhost: boolean;
+    /** 0-5, the listing's rating as shown. SLATE's own. */
+    rating: number;
+    selfCheckIn: boolean;
+  };
+  /** Charged once per stay, not per night, the way the platform does it. */
+  cleaningFee?: Money;
+  /** The platform's cut, shown to the guest as a line of its own. */
+  serviceFee?: Money;
 }
 
 // ---------------------------------------------------------------------------

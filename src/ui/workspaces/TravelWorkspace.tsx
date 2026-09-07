@@ -1,4 +1,4 @@
-import { titleCaseLabel } from '@/engine/core/text';
+import { plural, titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal } from '@/ui/components/primitives';
@@ -7,7 +7,8 @@ import { formatPeople, homeCityOf, placeKindLabel } from '@/engine/world/place';
 import { missedBy } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import { weatherAt } from '@/engine/systems/weather';
-import { searchFlights, privateAircraftOptions, ownedAircraftOptions, estimateFlightMinutes, REAL_CARRIER_NOTE, REAL_HOTEL_NOTE, REAL_JET_NOTE } from '@/engine/systems/travel';
+import { searchFlights, privateAircraftOptions, ownedAircraftOptions, estimateFlightMinutes, stayOptions, stayCoverageOf, REAL_CARRIER_NOTE, REAL_HOTEL_NOTE, REAL_JET_NOTE, AIRBNB_NOTE, type StayOption } from '@/engine/systems/travel';
+import { AIRBNB_UNAVAILABLE } from '@/engine/content/hotels';
 import { roadworthy } from '@/engine/systems/vehicles';
 import { flyable } from '@/engine/systems/journey';
 import { activeScene } from '@/engine/systems/scenes';
@@ -23,6 +24,10 @@ export function TravelWorkspace() {
   const [destination, setDestination] = useState('us-ny-newyork');
   const [daysOut, setDaysOut] = useState(14);
   const [cabin, setCabin] = useState<'economy' | 'premium_economy' | 'business' | 'first'>('economy');
+  const [nights, setNights] = useState(3);
+  const [flightPick, setFlightPick] = useState<string | null>(null);
+  const [stayPick, setStayPick] = useState<string | null>(null);
+  const [returning, setReturning] = useState(true);
 
   const player = useWorld((s) => s.player);
   const scene = useWorld(activeScene);
@@ -35,6 +40,12 @@ export function TravelWorkspace() {
 
   const here = CITIES.get(player.currentLocationId);
   const there = CITIES.get(destination);
+  const chosenFlight = flights.find((f) => f.flightNumber === (flightPick ?? flights[0]?.flightNumber));
+  // Stays are priced from the night you actually arrive, which is the flight's arrival.
+  const checkInAt = chosenFlight?.arriveAt ?? departAt;
+  const stayChoices = useMemo(() => (there ? stayOptions(sim, destination, checkInAt, nights) : []), [sim, there, destination, checkInAt, nights]);
+  const stayCover = there ? stayCoverageOf(there.countryId) : { kind: 'unaccounted' as const };
+  const chosenStay = stayChoices.find((st) => stayKey(st) === stayPick);
 
   // --- Driving --------------------------------------------------------------
   const cars = useWorld((s) => Object.values(s.universe.vehicles).filter((v) => v.ownerId === s.player.id && v.ownerKind === 'person' && !v.soldAt && roadworthy(v)));
@@ -224,35 +235,113 @@ export function TravelWorkspace() {
       ]} />
 
       {tab === 'flights' && (
-        <Panel title="Flights" subtitle={`Fares rise sharply as departure approaches. ${REAL_CARRIER_NOTE}`} flush>
-          {flights.length === 0 ? (
-            <Empty title="No Route" body="Pick a different destination." />
-          ) : (
-            <div className="list">
-              {flights.map((flight) => (
-                <div key={flight.flightNumber} className="list-item list-static">
-                  <div className="grow">
-                    <div className="small strong">{flight.airlineName} {flight.flightNumber}</div>
-                    <div className="xs dim">
-                      {flight.fromAirport} → {flight.toAirport} ·{' '}
-                      {formatTime(flight.departAt, sim.zone)} · {formatDuration(flight.durationMinutes * MS_MINUTE)}
-                      {flight.stops > 0 ? ` · ${flight.stops} stop` : ' · nonstop'}
+        <>
+          <Panel title="The Flight There" subtitle={`Fares rise sharply as departure approaches. ${REAL_CARRIER_NOTE}`} flush>
+            {flights.length === 0 ? (
+              <Empty title="No Route" body="Pick a different destination." />
+            ) : (
+              <div className="list">
+                {flights.map((flight) => {
+                  const picked = (flightPick ?? flights[0]!.flightNumber) === flight.flightNumber;
+                  return (
+                    <div key={flight.flightNumber} className="list-item list-static">
+                      <div className="grow">
+                        <div className="small strong">{flight.airlineName} {flight.flightNumber}</div>
+                        <div className="xs dim">
+                          {flight.fromAirport} → {flight.toAirport} ·{' '}
+                          {formatTime(flight.departAt, sim.zone)} · {formatDuration(flight.durationMinutes * MS_MINUTE)}
+                          {flight.stops > 0 ? ` · ${flight.stops} stop` : ' · nonstop'}
+                        </div>
+                      </div>
+                      <span className="mono small">{formatMoney(flight.fares[cabin], { cents: false })}</span>
+                      <button className={`btn btn-sm${picked ? ' btn-primary' : ''}`} aria-pressed={picked} onClick={() => setFlightPick(flight.flightNumber)}>
+                        {picked ? 'Chosen' : 'Choose'}
+                      </button>
                     </div>
+                  );
+                })}
+              </div>
+            )}
+          </Panel>
+
+          <Panel
+            title="Where You Are Staying"
+            subtitle={stayCover.kind === 'nowhere' ? stayCover.reason : `${plural(nights, 'night')} in ${there?.name ?? 'town'}. ${REAL_HOTEL_NOTE} ${AIRBNB_NOTE}`}
+            actions={
+              <label className="xs dim" style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
+                Nights
+                <input type="number" min={1} max={60} value={nights} aria-label="Nights" style={{ width: 64 }} onChange={(e) => setNights(Math.max(1, Number(e.target.value) || 1))} />
+              </label>
+            }
+            flush
+          >
+            {stayChoices.length === 0 ? (
+              <Empty title="Nowhere To Stay" body={stayCover.kind === 'nowhere' ? stayCover.reason : 'Nothing is listed there for those dates.'} />
+            ) : (
+              <div className="list">
+                {stayChoices.map((stay) => {
+                  const key = stayKey(stay);
+                  const picked = stayPick === key;
+                  return (
+                    <div key={key} className="list-item list-static">
+                      <div className="grow">
+                        <div className="small strong">{stay.name}</div>
+                        <div className="xs dim">{describeStay(stay)}</div>
+                        {stay.note && <div className="xs dim">{stay.note}</div>}
+                      </div>
+                      <span className="mono small">{formatMoney(stay.total, { cents: false })}</span>
+                      <button className={`btn btn-sm${picked ? ' btn-primary' : ''}`} aria-pressed={picked} onClick={() => setStayPick(picked ? null : key)}>
+                        {picked ? 'Chosen' : 'Choose'}
+                      </button>
+                    </div>
+                  );
+                })}
+                {stayCover.kind !== 'nowhere' && there && AIRBNB_UNAVAILABLE[there.countryId] && (
+                  <div className="list-item list-static"><div className="xs dim">{AIRBNB_UNAVAILABLE[there.countryId]}</div></div>
+                )}
+                {stayCover.kind === 'independent' && (
+                  <div className="list-item list-static"><div className="xs dim">{stayCover.reason}</div></div>
+                )}
+              </div>
+            )}
+          </Panel>
+
+          <Panel title="Book The Trip" subtitle="The flight there, the place to stay, and the flight back, as one booking. If any part fails nothing is charged." flush>
+            <div className="list">
+              <div className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">
+                    {chosenFlight ? `${chosenFlight.airlineName} ${chosenFlight.flightNumber}` : 'No Flight'}
+                    {chosenStay ? ` · ${chosenStay.name}` : ' · No Stay'}
+                    {returning ? ' · And Back' : ' · One Way'}
                   </div>
-                  <span className="mono small">{formatMoney(flight.fares[cabin], { cents: false })}</span>
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => run('travel.book_flight', {
-                      toCityId: destination, departAt: flight.departAt, cabin, airlineCode: flight.airlineCode,
-                    })}
-                  >
-                    Book
-                  </button>
+                  <div className="xs dim">
+                    Flights {formatMoney(chosenFlight ? chosenFlight.fares[cabin] * (returning ? 2 : 1) : 0, { cents: false })} before tax
+                    {chosenStay ? ` · stay ${formatMoney(chosenStay.total, { cents: false })}` : ''}
+                  </div>
                 </div>
-              ))}
+                <label className="xs dim" style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
+                  <input type="checkbox" checked={returning} onChange={(e) => setReturning(e.target.checked)} /> Book The Flight Back
+                </label>
+                <button
+                  className="btn btn-sm btn-primary"
+                  disabled={!chosenFlight}
+                  onClick={() => chosenFlight && run('travel.book_trip', {
+                    toCityId: destination, departAt: chosenFlight.departAt, cabin, airlineCode: chosenFlight.airlineCode, nights,
+                    returnAt: returning ? addDays(chosenFlight.arriveAt, nights, sim.zone) : undefined,
+                    stay: chosenStay
+                      ? chosenStay.kind === 'airbnb'
+                        ? { kind: 'airbnb', listingKind: chosenStay.listing?.kind ?? 'entire_home' }
+                        : { kind: 'hotel', roomClass: chosenStay.roomClass, brandId: chosenStay.brandId }
+                      : { kind: 'none' },
+                  }, { idempotencyKey: `travel.book_trip:${destination}:${daysOut}:${chosenFlight.flightNumber}:${nights}:${stayPick ?? 'none'}:${returning}` })}
+                >
+                  Book The Trip
+                </button>
+              </div>
             </div>
-          )}
-        </Panel>
+          </Panel>
+        </>
       )}
 
       {tab === 'private' && ownAircraft.length > 0 && (
@@ -314,31 +403,33 @@ export function TravelWorkspace() {
       )}
 
       {tab === 'hotels' && (
-        <Panel title="Hotels" subtitle={`In ${there?.name}. ${REAL_HOTEL_NOTE}`} flush>
-          <div className="list">
-            {(['standard', 'deluxe', 'suite', 'penthouse'] as const).map((roomClass) => (
-              <div key={roomClass} className="list-item list-static">
-                <div className="grow">
-                  <div className="small strong" style={{ textTransform: 'capitalize' }}>{roomClass}</div>
-                  <div className="xs dim">
-                    {roomClass === 'standard' && 'Somewhere to sleep.'}
-                    {roomClass === 'deluxe' && 'Better room, better sleep.'}
-                    {roomClass === 'suite' && 'Space to work and to have people over.'}
-                    {roomClass === 'penthouse' && 'The kind of room people mention afterwards.'}
+        <Panel title="Places To Stay" subtitle={`In ${there?.name}. ${REAL_HOTEL_NOTE} ${AIRBNB_NOTE}`} flush>
+          {stayChoices.length === 0 ? (
+            <Empty title="Nowhere To Stay" body={stayCover.kind === 'nowhere' ? stayCover.reason : 'Nothing is listed there for those dates.'} />
+          ) : (
+            <div className="list">
+              {stayChoices.map((stay) => (
+                <div key={stayKey(stay)} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{stay.name}</div>
+                    <div className="xs dim">{describeStay(stay)}</div>
+                    {stay.note && <div className="xs dim">{stay.note}</div>}
                   </div>
-                </div>
-                {[3, 7].map((nights) => (
+                  <span className="mono small">{formatMoney(stay.total, { cents: false })}</span>
                   <button
-                    key={nights}
                     className="btn btn-sm"
-                    onClick={() => run('travel.book_hotel', { cityId: destination, checkInAt: departAt, nights, roomClass })}
+                    onClick={() => run(stay.kind === 'airbnb' ? 'travel.book_stay' : 'travel.book_hotel', stay.kind === 'airbnb'
+                      ? { cityId: destination, checkInAt, nights, listingKind: stay.listing?.kind ?? 'entire_home' }
+                      : { cityId: destination, checkInAt, nights, roomClass: stay.roomClass, brandId: stay.brandId })}
                   >
-                    {nights} Nights
+                    Book {plural(nights, 'Night')}
                   </button>
-                ))}
-              </div>
-            ))}
-          </div>
+                </div>
+              ))}
+              {stayCover.kind === 'independent' && <div className="list-item list-static"><div className="xs dim">{stayCover.reason}</div></div>}
+              {there && AIRBNB_UNAVAILABLE[there.countryId] && <div className="list-item list-static"><div className="xs dim">{AIRBNB_UNAVAILABLE[there.countryId]}</div></div>}
+            </div>
+          )}
         </Panel>
       )}
 
@@ -399,4 +490,19 @@ export function TravelWorkspace() {
       )}
     </>
   );
+}
+
+function stayKey(stay: StayOption): string {
+  return `${stay.kind}:${stay.roomClass}:${stay.brandId ?? stay.listing?.kind ?? 'own'}`;
+}
+
+/** One line under a stay, in the words the platform or the brand would use. */
+function describeStay(stay: StayOption): string {
+  if (stay.kind === 'airbnb' && stay.listing) {
+    const l = stay.listing;
+    return `${l.kind === 'entire_home' ? `Entire place · ${plural(l.bedrooms, 'bedroom')}` : 'Private room'}${l.superhost ? ' · Superhost' : ''} · ${l.rating.toFixed(2)} ★ · `
+      + `${formatMoney(stay.nightlyRate, { cents: false })} a night, ${formatMoney(stay.cleaningFee, { cents: false })} cleaning, ${formatMoney(stay.serviceFee, { cents: false })} service, ${formatMoney(stay.taxesFees, { cents: false })} tax`
+      + `${l.selfCheckIn ? ' · self check-in' : ''}`;
+  }
+  return `${titleCaseLabel(stay.roomClass)} · ${formatMoney(stay.nightlyRate, { cents: false })} a night · ${formatMoney(stay.taxesFees, { cents: false })} tax`;
 }
