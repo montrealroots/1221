@@ -52,6 +52,7 @@ import { registerJewellery } from './systems/jewellery';
 import { registerCostume } from './systems/costume';
 import { registerDocuments } from './systems/documents';
 import { ensureHomeUpkeep, registerHousehold } from './systems/household';
+import { ensureVideoWorld, registerVideo } from './systems/video';
 import { insurersFor } from './content/insurers';
 import { countryOfCity } from './content/geography';
 import './scenes';
@@ -108,6 +109,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCostume(sim);
   registerDocuments(sim);
   registerHousehold(sim);
+  registerVideo(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -409,6 +411,9 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // save has the same fees, cover and rates a loaded one does.
   ensureProducts(sim);
   ensureWardrobe(sim);
+  // The video app has a world behind it that predates the player: channels
+  // that have been running for years, with the catalogs to show for it.
+  ensureVideoWorld(sim);
   return sim;
 }
 
@@ -427,6 +432,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureWardrobe(sim);
   // The wear clock runs and everything owned has a room (idempotent; household.ts).
   ensureHomeUpkeep(sim);
+  // The channels of the video app exist and keep uploading (idempotent; video.ts).
+  ensureVideoWorld(sim);
   ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
@@ -981,6 +988,21 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 49) {
+    // Schema 49: the video app, which is an app rather than a panel.
+    //
+    // The collections start empty and are filled on load by ensureVideoWorld,
+    // which builds the channels and their back catalogs once. A save that has
+    // been running for years arrives to an internet that has been running for
+    // the same length of time, rather than to an empty one.
+    universe.videoChannels ??= {};
+    universe.videos ??= {};
+    universe.videoComments ??= {};
+    universe.videoSubscriptions ??= {};
+    universe.watchHistory ??= {};
+    steps.push('The video app is here: channels, uploads, comments and a feed.');
   }
 
   if (from < 48) {

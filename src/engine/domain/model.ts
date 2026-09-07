@@ -1780,6 +1780,127 @@ export interface SocialPost {
   reactions?: { at: Instant; band: 'hit' | 'fine' | 'flop'; comments: string[]; summary: string };
 }
 
+/**
+ * The video app.
+ *
+ * The contract asked for the real app rather than a panel of numbers: a feed
+ * built from channels you actually subscribe to, channels with names and
+ * subscriber counts and a history of uploads, your own channel with titles and
+ * thumbnails and a schedule, analytics that behave like analytics, comments you
+ * can read and reply to, and watching as a thing that costs you an evening.
+ *
+ * A channel in the world is not a `SocialAccount`. An account is yours and
+ * carries the money; a channel is anybody's, including yours, and carries the
+ * videos. The player's own channel points at their account so the two agree.
+ */
+export interface VideoChannel {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  /** The roster entry it was made from, so a save keeps the same channels. */
+  sourceId?: string;
+  name: string;
+  handle: string;
+  topic: string;
+  about: string;
+  subscribers: number;
+  verified: boolean;
+  createdAt: Instant;
+  /** Days between uploads, on average. */
+  cadenceDays: number;
+  /** 0-100 how good this channel is at what it does. */
+  craft: number;
+  /** The voice it speaks in, which shows in its titles and its comments. */
+  tone: string;
+  /** Whose channel it is, when somebody in the world runs it. */
+  ownerId?: Id;
+  /** The player's own channel, tied to the account that carries the money. */
+  accountId?: Id;
+  lastUploadAt?: Instant;
+  totalViews: number;
+  /**
+   * How many videos this channel has put out. The world's back catalog is
+   * derived from this and the channel's seed rather than stored, because two
+   * hundred and forty channels with four years of uploads behind them is
+   * fourteen thousand rows nobody would ever read, in every save file. A
+   * derived catalog is the same catalog every time it is asked for, costs
+   * nothing to keep, and cannot drift.
+   */
+  uploads: number;
+}
+
+export interface VideoItem {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  title: string;
+  description: string;
+  tags: string[];
+  publishedAt: Instant;
+  lengthMinutes: number;
+  topic: string;
+  views: number;
+  likes: number;
+  dislikes: number;
+  commentCount: number;
+  /** Which thumbnail was chosen, which changes how many people click. */
+  thumbnail: string;
+  /** 0-100 how well made it is. */
+  quality: number;
+  /** Share of it an average viewer sits through, 0-1. */
+  retention: number;
+  /** The player's own uploads carry the post that earns the money. */
+  postId?: Id;
+  /** Scheduled uploads are not on the feed until their hour comes. */
+  scheduledFor?: Instant;
+  status: 'published' | 'scheduled' | 'removed';
+  live?: boolean;
+}
+
+export interface VideoComment {
+  id: Id;
+  saveId: Id;
+  videoId: Id;
+  /** Somebody in the world, where the commenter is a person the game knows. */
+  authorId?: Id;
+  authorName: string;
+  text: string;
+  at: Instant;
+  likes: number;
+  /** -100 to 100. */
+  sentiment: number;
+  byPlayer?: boolean;
+  replyToId?: Id;
+  /**
+   * The ones you should not read. Hidden behind a choice rather than served
+   * to you, because that is the actual experience of having a channel.
+   */
+  harsh?: boolean;
+  /** True once the player has looked at it, so a reply is not a surprise. */
+  seen?: boolean;
+}
+
+export interface VideoSubscription {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  channelId: Id;
+  since: Instant;
+  /** The bell. Off by default, because it is off by default. */
+  notify: boolean;
+}
+
+export interface WatchRecord {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  videoId: Id;
+  at: Instant;
+  minutes: number;
+  finished: boolean;
+  liked?: boolean;
+}
+
 export interface BrandDeal {
   id: Id;
   saveId: Id;
@@ -2251,7 +2372,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 48;
+export const SAVE_SCHEMA_VERSION = 49;
 
 export interface SaveMeta {
   id: Id;
@@ -2364,6 +2485,13 @@ export interface SaveUniverse {
   socialAccounts: Record<Id, SocialAccount>;
   socialPosts: Record<Id, SocialPost>;
   brandDeals: Record<Id, BrandDeal>;
+
+  /** The video app: the channels of the world, what they put out, and what you watched. */
+  videoChannels: Record<Id, VideoChannel>;
+  videos: Record<Id, VideoItem>;
+  videoComments: Record<Id, VideoComment>;
+  videoSubscriptions: Record<Id, VideoSubscription>;
+  watchHistory: Record<Id, WatchRecord>;
 
   /**
    * Companies survive the removal of the film half because finance and

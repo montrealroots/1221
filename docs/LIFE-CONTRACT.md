@@ -236,7 +236,32 @@ answer says what would make it yes.
    **Still to come:** clothes only soil when you commit a look, so a life
    lived through the Advance button never needs washing at all; and film kit
    is not yet a thing that lives in the house, which waits on section 6.
-5. The phone: YouTube in full, then the other three.
+5. **YouTube done; the other three to come.** There is a phone now. It is the
+   newest iPhone SLATE knows of, or the one you bought, and the clock on it is
+   the world clock, so an hour inside an app is an hour gone out of the day.
+   YouTube on it is the app rather than a panel of numbers: the top bar, the
+   chips, a feed of thumbnail cards, Shorts, search, and Home, Shorts, upload,
+   Subscriptions and You along the bottom. A video opens on a watch page with
+   the player, the view count, the action pills, the channel row and its
+   subscribe button, the description, the comments and what is up next. The
+   feed is built from the channels you actually subscribed to, the subjects you
+   keep choosing and what is new, and no channel is allowed to become the whole
+   page. Two hundred and forty channels across twenty subjects were running for
+   years before you opened it and keep uploading on their own rhythm while you
+   are away; a specialist channel keeps to what it is about, and a daily brief
+   is twelve minutes where a monthly essay is forty. Watching costs the minutes
+   and an hour of comedy does not leave you where an hour of news does. The
+   comment sections are warm, pedantic, off topic and occasionally cruel, and
+   the cruel ones under your own videos are offered rather than served. Your
+   own channel opens the account that carries the money, takes uploads with a
+   title, description, tags, one of seven thumbnails and a publish time, and
+   shows the curve, the median, the video that did nothing beside the one that
+   took off, how far you are from monetization, what a thousand views is worth
+   once you are past it, and the brand deals that arrive, to take or turn down.
+   The four platforms now carry their real names. **Still to come:** the rest
+   of what YouTube has (playlists, watch later, liked, a channel page, live,
+   community posts, memberships and the ad revenue breakdown), then Instagram
+   and X as their own apps.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.

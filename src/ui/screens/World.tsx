@@ -63,6 +63,7 @@ const DOMAINS: Domain[] = [
     label: 'Social',
     blurb: 'Four platforms, one audience engine, no guarantees.',
     entries: [
+      { route: '/workspace/phone', label: 'The Phone', detail: 'A handset on the desk, running on the world clock, with YouTube built as the app.' },
       { route: '/workspace/social', label: 'Platforms', detail: 'Long video, short video, photo and text, each behaving differently.' },
       { route: '/workspace/social', label: 'Audience', detail: 'Segments, affinity, churn and momentum.' },
       { route: '/workspace/social', label: 'Brand Deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },

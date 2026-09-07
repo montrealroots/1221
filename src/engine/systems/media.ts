@@ -45,30 +45,43 @@ export interface PlatformDef {
   bestFor: string;
 }
 
+/**
+ * The four apps.
+ *
+ * The ids are the ones saves have always used and are not renamed: an id is a
+ * persistence key, and changing one to tidy a label would break every save that
+ * has an account on it. The names beside them are the real ones, because the
+ * rest of the game names real shops, real airlines and real insurers, and a
+ * player's phone should not be the one place that invents a brand.
+ *
+ * What is real here is the shape of each platform: what it rewards, how fast a
+ * post dies, how much a thousand impressions is worth. The numbers are SLATE's
+ * calibration, not any company's published figures.
+ */
 export const PLATFORMS: readonly PlatformDef[] = [
   {
-    id: 'streamtube', name: 'StreamTube', tagline: 'Long-form video, watch time and a real revenue share.',
+    id: 'streamtube', name: 'YouTube', tagline: 'Long-form video, watch time and a real revenue share.',
     formats: ['long_video', 'short_video', 'livestream'],
     discoveryBias: 0.35, consistencyWeight: 0.9, viralPotential: 1.0,
     baseCpm: 480, monetisationThreshold: 1000, halfLifeDays: 21,
     bestFor: 'Depth. Watch time compounds and the back catalog keeps earning for years.',
   },
   {
-    id: 'pulse', name: 'Pulse', tagline: 'Short video, ruthless algorithm, no memory.',
+    id: 'pulse', name: 'TikTok', tagline: 'Short video, ruthless algorithm, no memory.',
     formats: ['short_video', 'livestream'],
     discoveryBias: 0.88, consistencyWeight: 0.55, viralPotential: 2.4,
     baseCpm: 65, monetisationThreshold: 10000, halfLifeDays: 3,
     bestFor: 'Reach from nothing. A first post can find a million people and the next one can find nobody.',
   },
   {
-    id: 'lumen', name: 'Lumen', tagline: 'Photo, story and the place brands actually spend.',
+    id: 'lumen', name: 'Instagram', tagline: 'Photo, story and the place brands actually spend.',
     formats: ['photo', 'carousel', 'reel', 'story', 'livestream'],
     discoveryBias: 0.45, consistencyWeight: 0.75, viralPotential: 1.3,
     baseCpm: 210, monetisationThreshold: 5000, halfLifeDays: 7,
     bestFor: 'Brand partnerships and a public image you control.',
   },
   {
-    id: 'chatter', name: 'Chatter', tagline: 'Text, opinion and the industry conversation.',
+    id: 'chatter', name: 'X', tagline: 'Text, opinion and the industry conversation.',
     formats: ['text', 'thread', 'photo', 'short_video', 'repost'],
     discoveryBias: 0.55, consistencyWeight: 0.6, viralPotential: 1.8,
     baseCpm: 45, monetisationThreshold: 20000, halfLifeDays: 2,

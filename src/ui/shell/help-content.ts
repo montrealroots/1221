@@ -135,6 +135,15 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     advanced: ['Virality is quality to the power 2.4, scaled by platform potential, trait modifiers and posting time. It is never guaranteed.'],
   },
   {
+    id: 'phone', route: '/workspace/phone', title: 'Phone',
+    what: 'A handset on the desk, with apps on it. The clock on it is the world clock, so an hour inside an app is an hour gone out of the day. YouTube is built as the app rather than as a panel of numbers: a feed from the channels you subscribe to, two hundred and forty channels with back catalogs, a watch page with comments, shorts, search, your own channel with uploads and thumbnails and scheduling, and analytics that show the median beside the total. The channels are SLATE\u2019s own; nobody real is named and no subscriber count belongs to anybody.',
+    affects: ['What you have watched, which is what the feed learns from', 'Who you subscribe to, which is the whole subscriptions tab', 'The subject, because an hour of comedy and an hour of news do not leave you in the same state', 'The thumbnail you choose, which is most of whether anybody clicks', 'The hours you put into a video, which come out of your day'],
+    actions: ['Open an app', 'Watch, skim or like a video', 'Subscribe to a channel', 'Comment on a video', 'Create your own channel', 'Upload, with a title, description, tags, thumbnail and a time', 'Read the comments you were warned about'],
+    connects: ['Social, because a video you upload is also a post that earns', 'Wellbeing, because watching costs time and moves morale, energy and stress', 'Shopping, because the handset is the one you bought'],
+    keywords: ['phone', 'iphone', 'youtube', 'video', 'app', 'feed', 'subscribe', 'channel', 'upload', 'thumbnail', 'comments', 'shorts', 'watch', 'analytics'],
+    advanced: ['The world\u2019s back catalog is derived from each channel\u2019s seed rather than stored, so a save carries the player\u2019s own videos and history and not fourteen thousand rows of somebody else\u2019s.'],
+  },
+  {
     id: 'travel', route: '/workspace/travel', title: 'Travel',
     what: 'Anywhere else in the world: flights, hotels, private charter and driving between cities, with time zones and jet lag that follow you. Airlines, hotel brands and aircraft types are real names; every route, fare, property and rate is SLATE\'s own and says so. A booked flight is a day: three hours before it leaves it asks on Home, and you play it out (packing, the run to the airport, the desk and a seat, the gate with its delays and cancellations, the air, the carousel where a bag can go missing, the hotel desk) or just go. The gate closes forty-five minutes before departure on a player who never went, and a missed flight is what the fare says it is. Move a flight for the fare\'s fee, or cancel it. Whether a country wants a visa is real-world data SLATE does not carry.',
     affects: ['Distance and airport connectivity', 'How far ahead you book', 'Cabin, which changes both price and how wrecked you arrive', 'Aircraft range and runway length for private charter'],

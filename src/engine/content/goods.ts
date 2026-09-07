@@ -874,6 +874,13 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_iphone_pro', 'Apple iPhone 16 Pro', 'Apple', 'phone', 999_00, 92, 0.40, ['social', 'filming']),
   el('e_iphone_pro_max', 'Apple iPhone 16 Pro Max', 'Apple', 'phone', 1_199_00, 94, 0.40, ['social', 'filming']),
   el('e_iphone', 'Apple iPhone 16', 'Apple', 'phone', 799_00, 86, 0.42, ['social']),
+  // The current generation. SLATE names the newest handsets it knows of; if a
+  // newer one has shipped since, the game does not know about it and says so
+  // rather than inventing a model number.
+  el('e_iphone_17_pro_max', 'Apple iPhone 17 Pro Max', 'Apple', 'phone', 1_199_00, 97, 0.38, ['social', 'filming']),
+  el('e_iphone_17_pro', 'Apple iPhone 17 Pro', 'Apple', 'phone', 1_099_00, 96, 0.38, ['social', 'filming']),
+  el('e_iphone_17', 'Apple iPhone 17', 'Apple', 'phone', 799_00, 90, 0.40, ['social', 'filming']),
+  el('e_iphone_air', 'Apple iPhone Air', 'Apple', 'phone', 999_00, 91, 0.40, ['social']),
   el('e_galaxy_ultra', 'Samsung Galaxy S24 Ultra', 'Samsung', 'phone', 1_299_00, 92, 0.44, ['social', 'filming']),
   el('e_galaxy_fold', 'Samsung Galaxy Z Fold', 'Samsung', 'phone', 1_899_00, 88, 0.48, ['social']),
   el('e_pixel_pro', 'Google Pixel 9 Pro', 'Google', 'phone', 999_00, 88, 0.44, ['social']),
