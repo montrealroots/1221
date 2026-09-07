@@ -25,15 +25,19 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type {
-  CreatorPayout, Id, PlatformId, SocialFollow, SocialItem, SocialProfile, SocialSettings,
+  CreatorPayout, Id, PlatformId, SocialFollow, SocialItem, SocialProfile, SocialRoom, SocialSettings,
 } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { Rng } from '../core/rng';
 import type { Instant } from '../core/time';
 import { MS_DAY, MS_HOUR, MS_MINUTE, addDays, zonedParts, instantFromZoned } from '../core/time';
 import {
-  PHOTO_PROFILES, REAL_PROFILES, SOCIAL_TOPIC_LABEL, TEXT_PROFILES, type ProfileSeed, type SocialTopic,
+  PHOTO_PROFILES, REAL_PROFILES, SOCIAL_TOPICS, SOCIAL_TOPIC_LABEL, TEXT_PROFILES,
+  type ProfileSeed, type SocialTopic,
 } from '../content/socialworld';
+import {
+  CLIP_COMMENTS, CLIP_FRAME, CLIP_KITS, CLIP_PROFILES, CLIP_TAGS, pickSound,
+} from '../content/clipworld';
 import {
   CAPTION_FRAME, CAPTION_KITS, PHOTO_COMMENTS, PLACES, POST_FRAME, POST_KITS, REPLY_LINES,
   TOPIC_COMMENTS, TOPIC_TAGS, makeSocialText,
@@ -46,6 +50,15 @@ import { formatMoney } from '../core/money';
 export const PHOTO_PLATFORM: PlatformId = 'lumen';
 /** X. */
 export const TEXT_PLATFORM: PlatformId = 'chatter';
+/** TikTok. */
+export const CLIP_PLATFORM: PlatformId = 'pulse';
+
+/** Which of the three an account is on, which decides everything about it. */
+export function appOf(platform: PlatformId): 'photo' | 'text' | 'clip' {
+  if (platform === TEXT_PLATFORM) return 'text';
+  if (platform === CLIP_PLATFORM) return 'clip';
+  return 'photo';
+}
 
 /** How far back a profile's feed goes before it is only a follower count. */
 const CATALOG_WINDOW = 30;
@@ -76,6 +89,16 @@ export const PHOTO_SUB_SHARE = 0.7;
 export const GIFT_STEPS: readonly Money[] = [99, 2_99, 9_99, 24_99, 99_99];
 /** The creator's share of a gift. */
 export const GIFT_SHARE = 0.55;
+/**
+ * What a thousand qualified views is worth on the short video app. Only views
+ * that stayed past a minute count, which is why the number is small and the
+ * qualified share is smaller.
+ */
+export const CLIP_RPM: Money = 60;
+/** The share of views that stay long enough to be paid on at all. */
+export const CLIP_QUALIFIED = 0.18;
+/** Followers you need before the app will pay anything. */
+export const CLIP_FLOOR = 10_000;
 
 /**
  * What an hour on each kind of feed does to a person. The photo app is a
@@ -193,6 +216,64 @@ export function isFollowing(sim: Simulation, personId: Id, profileId: Id): boole
   return followsOf(sim, personId).some((f) => f.profileId === profileId);
 }
 
+/**
+ * Who follows you.
+ *
+ * A follower count that only goes up is a number. These are the accounts that
+ * actually chose you, kept as rows so the app can show a list, so a new one
+ * can arrive as a notice, and so unfollowing is something that happens to you
+ * rather than something you only read about.
+ */
+export function followersOf(sim: Simulation, profileId: Id): SocialFollow[] {
+  return Object.values(sim.universe.socialFollows)
+    .filter((f) => f.profileId === profileId && f.byProfileId)
+    .sort((a, b) => b.since - a.since);
+}
+
+/**
+ * Somebody found you. Which accounts is decided by what you post about, so a
+ * cooking post brings cooking accounts, and nobody the same twice.
+ */
+function gainFollowers(sim: Simulation, profile: SocialProfile, count: number): number {
+  if (count < 1) return 0;
+  const already = new Set(followersOf(sim, profile.id).map((f) => f.byProfileId));
+  const pool = profilesOf(sim, profile.platform)
+    .filter((p) => !p.ownerId && !already.has(p.id))
+    .sort((a, b) => a.followers - b.followers);
+  if (pool.length === 0) return 0;
+  const rng = sim.rng('social.gained', profile.id, sim.counter('social.gained'));
+  // Only the first handful are people you can look at; the rest of a big
+  // number is the crowd, and the count carries that on its own.
+  const named = Math.min(count, 6, pool.length);
+  for (let n = 0; n < named; n += 1) {
+    const near = pool.filter((p) => p.topic === profile.topic);
+    const from = (near.length > 0 && rng.float(0, 1) < 0.7 ? near : pool)[
+      rng.int(0, Math.max(0, (near.length > 0 && rng.float(0, 1) < 0.7 ? near : pool).length - 1))
+    ];
+    if (!from || already.has(from.id)) continue;
+    already.add(from.id);
+    const follow: SocialFollow = {
+      id: sim.nextId('follow'),
+      saveId: sim.universe.meta.id,
+      byProfileId: from.id,
+      profileId: profile.id,
+      since: sim.now,
+    };
+    sim.universe.socialFollows[follow.id] = follow;
+  }
+  profile.followers += count;
+  if (named > 0 && sim.universe.socialSettings?.notificationsOn !== false) {
+    const first = profilesOf(sim, profile.platform).find((p) => p.id === [...already][already.size - 1]);
+    sim.notify({
+      category: 'social',
+      title: count === 1 ? 'A New Follower' : `${count.toLocaleString('en-US')} New Followers`,
+      body: first ? `${first.name} and ${Math.max(0, count - 1)} others.` : 'Somebody found you.',
+      importance: 28, route: '/workspace/phone',
+    });
+  }
+  return count;
+}
+
 export function followedIds(sim: Simulation, personId: Id, platform?: PlatformId): Set<Id> {
   const out = new Set<Id>();
   for (const follow of followsOf(sim, personId)) {
@@ -228,9 +309,12 @@ function dayIndex(sim: Simulation, at: Instant): number {
  * character limit. A framed post that runs over the limit is not truncated,
  * because a truncated sentence is a bug you can read: the plain one is used.
  */
-export function sayIt(photo: boolean, topic: SocialTopic, rng: Rng): string {
-  if (photo) {
+export function sayIt(app: 'photo' | 'text' | 'clip', topic: SocialTopic, rng: Rng): string {
+  if (app === 'photo') {
     return makeSocialText(CAPTION_KITS[topic], rng, CAPTION_FRAME, { extra: { tags: TOPIC_TAGS[topic] } });
+  }
+  if (app === 'clip') {
+    return makeSocialText(CLIP_KITS[topic], rng, CLIP_FRAME, { extra: { tags: CLIP_TAGS[topic] } });
   }
   const framed = makeSocialText(POST_KITS[topic], rng, POST_FRAME, { capitalize: true });
   if (framed.length <= TEXT_LIMIT) return framed;
@@ -252,24 +336,31 @@ function reachFor(followers: number, craft: number, viral: number, rng: Rng): nu
 function deriveItem(
   sim: Simulation, profile: SocialProfile, index: number, at: Instant, salt = 0,
 ): SocialItem {
-  const photo = profile.platform === PHOTO_PLATFORM;
+  const app = appOf(profile.platform);
+  const photo = app === 'photo';
   const topic = profile.topic as SocialTopic;
   const rng = sim.rng('social.derive', profile.sourceId ?? profile.id, index, salt);
-  const kind: SocialItem['kind'] = photo
+  const kind: SocialItem['kind'] = app === 'photo'
     ? rng.weighted(
       ['photo', 'carousel', 'reel'] as const,
       (k) => (k === 'photo' ? 0.54 : k === 'carousel' ? 0.19 : 0.27),
     )
-    : rng.weighted(['text', 'quote'] as const, (k) => (k === 'text' ? 0.87 : 0.13));
+    : app === 'clip'
+      ? 'clip'
+      : rng.weighted(['text', 'quote'] as const, (k) => (k === 'text' ? 0.87 : 0.13));
 
   // Most posts do about what the account's posts do. A few do far more, and
-  // that is the whole shape of a feed: it is not a normal distribution.
-  const viral = rng.float(0, 1) < 0.07 ? rng.float(2.4, 14) : rng.float(0.45, 1.35);
+  // that is the whole shape of a feed: it is not a normal distribution. On the
+  // short video app the tail is far longer, because that is the app.
+  const lucky = app === 'clip' ? 0.16 : 0.07;
+  const viral = rng.float(0, 1) < lucky
+    ? rng.float(app === 'clip' ? 4 : 2.4, app === 'clip' ? 60 : 14)
+    : rng.float(app === 'clip' ? 0.15 : 0.45, 1.35);
   const reach = reachFor(profile.followers, profile.craft, viral, rng);
-  const likeRate = photo ? rng.float(0.03, 0.11) : rng.float(0.012, 0.05);
+  const likeRate = photo ? rng.float(0.03, 0.11) : app === 'clip' ? rng.float(0.05, 0.16) : rng.float(0.012, 0.05);
   const likes = Math.max(1, Math.round(reach * likeRate * (0.7 + profile.craft / 200)));
 
-  const text = sayIt(photo, topic, rng);
+  const text = sayIt(app, topic, rng);
 
   const item: SocialItem = {
     id: derivedItemId(profile, index),
@@ -281,9 +372,12 @@ function deriveItem(
     at,
     likes,
     comments: Math.max(0, Math.round(likes * rng.float(0.015, 0.09))),
-    reposts: photo ? 0 : Math.max(0, Math.round(likes * rng.float(0.04, 0.28))),
+    reposts: app === 'text' ? Math.max(0, Math.round(likes * rng.float(0.04, 0.28)))
+      : app === 'clip' ? Math.max(0, Math.round(likes * rng.float(0.02, 0.12)))
+        : 0,
     topic,
   };
+  if (app === 'clip') item.sound = pickSound(rng);
   if (photo && PLACED.has(topic) && rng.float(0, 1) < 0.42) item.place = rng.pick([...PLACES]);
   if (kind === 'quote') {
     // A quote points at somebody else's newest post, which is what a quote is.
@@ -368,6 +462,9 @@ export function storyOf(sim: Simulation, profile: SocialProfile): SocialItem | u
     comments: 0,
     reposts: 0,
     expiresAt: at + STORY_HOURS * MS_HOUR,
+    // Some of what people put up is for the few rather than for everybody, and
+    // it only reaches you where the two of you are close.
+    closeOnly: rng.float(0, 1) < 0.2,
     topic: profile.topic,
     seen: sim.universe.socialItems[id]?.seen,
   };
@@ -452,6 +549,7 @@ export function ensureProfiles(sim: Simulation): void {
     const photo = PHOTO_PROFILES.some((p) => p.id === seed.id);
     makeWorldProfile(sim, seed, photo ? PHOTO_PLATFORM : TEXT_PLATFORM);
   }
+  for (const seed of CLIP_PROFILES) makeWorldProfile(sim, seed, CLIP_PLATFORM);
 }
 
 function makeWorldProfile(sim: Simulation, seed: ProfileSeed, platform: PlatformId): SocialProfile {
@@ -605,6 +703,13 @@ export function storiesFor(sim: Simulation, personId: Id): SocialItem[] {
     const story = storyOf(sim, profile);
     if (story) out.push(story);
   }
+  // A close friends story is only ever on the tray of a close friend.
+  for (let i = out.length - 1; i >= 0; i -= 1) {
+    const story = out[i]!;
+    if (!story.closeOnly || story.byPlayer) continue;
+    const follow = followsOf(sim, personId).find((f) => f.profileId === story.profileId);
+    if (!follow?.close) out.splice(i, 1);
+  }
   // Unseen first, because that is the order a story tray is in.
   return out.sort((a, b) => Number(a.seen ?? false) - Number(b.seen ?? false) || b.at - a.at);
 }
@@ -646,11 +751,14 @@ export function repliesTo(sim: Simulation, itemId: Id): SocialItem[] {
 }
 
 function deriveReplies(sim: Simulation, item: SocialItem): SocialItem[] {
-  const photo = item.platform === PHOTO_PLATFORM;
+  const app = appOf(item.platform);
+  const photo = app === 'photo';
   const topic = item.topic as SocialTopic;
-  // Under a photograph people talk about the thing photographed, so the lines
-  // are the app's general warmth plus whatever that subject draws.
-  const lines = photo ? [...PHOTO_COMMENTS, ...(TOPIC_COMMENTS[topic] ?? [])] : REPLY_LINES;
+  // Under a photograph people talk about the thing photographed; under a clip
+  // they talk faster and louder; under a post they argue.
+  const lines = photo
+    ? [...PHOTO_COMMENTS, ...(TOPIC_COMMENTS[topic] ?? [])]
+    : app === 'clip' ? CLIP_COMMENTS : REPLY_LINES;
   const count = Math.min(REPLIES_PER_ITEM, Math.max(0, Math.round(Math.log10(Math.max(10, item.comments)) * 2.4)));
   const out: SocialItem[] = [];
   const said = new Set<string>();
@@ -748,6 +856,66 @@ export function noteOf(sim: Simulation, profile: SocialProfile): string | undefi
   return profile.noteAt + MS_DAY > sim.now ? profile.note : undefined;
 }
 
+/** The folders the player has filed saved posts into. */
+export function collectionsOf(sim: Simulation): { name: string; items: SocialItem[] }[] {
+  const byName = new Map<string, SocialItem[]>();
+  for (const mark of Object.values(sim.universe.socialItems)) {
+    if (!mark.saved) continue;
+    const item = itemById(sim, mark.id);
+    if (!item) continue;
+    const name = mark.collection ?? 'All Posts';
+    const list = byName.get(name) ?? [];
+    list.push(item);
+    byName.set(name, list);
+  }
+  return [...byName.entries()]
+    .map(([name, items]) => ({ name, items: items.sort((a, b) => b.at - a.at) }))
+    .sort((a, b) => (a.name === 'All Posts' ? -1 : b.name === 'All Posts' ? 1 : a.name.localeCompare(b.name)));
+}
+
+// ---------------------------------------------------------------------------
+// The rooms on the text app
+// ---------------------------------------------------------------------------
+
+/**
+ * Communities, Lists and Spaces.
+ *
+ * The communities are the world's, one per subject, and they exist whether or
+ * not you join. The lists are yours and start empty. A space is a room that
+ * runs for an hour and is then over, which is the only honest way to model a
+ * thing that is live.
+ */
+export function roomsOf(sim: Simulation, kind: SocialRoom['kind']): SocialRoom[] {
+  return Object.values(sim.universe.socialRooms)
+    .filter((room) => room.kind === kind)
+    .sort((a, b) => b.members - a.members);
+}
+
+export function roomById(sim: Simulation, roomId: Id): SocialRoom | undefined {
+  return sim.universe.socialRooms[roomId];
+}
+
+export function ensureRooms(sim: Simulation): void {
+  if (roomsOf(sim, 'community').length > 0) return;
+  for (const topic of SOCIAL_TOPICS) {
+    const people = profilesOf(sim, TEXT_PLATFORM).filter((p) => !p.ownerId && p.topic === topic);
+    if (people.length === 0) continue;
+    const rng = sim.rng('social.room', topic);
+    const room: SocialRoom = {
+      id: sim.nextId('sroom'),
+      saveId: sim.universe.meta.id,
+      platform: TEXT_PLATFORM,
+      kind: 'community',
+      name: `${SOCIAL_TOPIC_LABEL[topic]} Community`,
+      topic,
+      profileIds: people.map((p) => p.id),
+      members: people.reduce((sum, p) => sum + Math.round(p.followers * 0.01), 0) + rng.int(400, 9_000),
+      createdAt: sim.now - rng.int(300, 2_000) * MS_DAY,
+    };
+    sim.universe.socialRooms[room.id] = room;
+  }
+}
+
 /** Search, which on both apps looks at accounts and at what they said. */
 export function searchSocial(
   sim: Simulation, platform: PlatformId, query: string,
@@ -826,6 +994,7 @@ export function hasXPremium(sim: Simulation): boolean {
 function isMonetized(sim: Simulation, profile: SocialProfile | undefined): boolean {
   if (!profile || profile.ownerId !== sim.player.id) return false;
   if (profile.platform === TEXT_PLATFORM) return profile.verified && profile.followers >= X_PAYOUT_FLOOR;
+  if (profile.platform === CLIP_PLATFORM) return profile.followers >= CLIP_FLOOR;
   return profile.followers >= 1_000;
 }
 
@@ -870,7 +1039,11 @@ export function buildSocialPayout(sim: Simulation, platform: PlatformId, month: 
   const paying = isMonetized(sim, profile);
   const ads = paying && platform === TEXT_PLATFORM
     ? Math.round((impressions / 1000) * TEXT_CPM * TEXT_SHARE)
-    : 0;
+    : paying && platform === CLIP_PLATFORM
+      // The short video app pays on qualified views only, which is the slice
+      // that stayed past a minute rather than the slice that scrolled by.
+      ? Math.round(((impressions * CLIP_QUALIFIED) / 1000) * CLIP_RPM)
+      : 0;
 
   const subscribers = paying && platform === PHOTO_PLATFORM ? photoSubscribers(sim) : 0;
   const memberships = Math.round(subscribers * PHOTO_SUB_MONTHLY * PHOTO_SUB_SHARE);
@@ -916,6 +1089,7 @@ export function buildSocialPayout(sim: Simulation, platform: PlatformId, month: 
 const KINDS_BY_PLATFORM: Readonly<Record<string, readonly SocialItem['kind'][]>> = {
   [PHOTO_PLATFORM]: ['photo', 'carousel', 'reel'],
   [TEXT_PLATFORM]: ['text'],
+  [CLIP_PLATFORM]: ['clip'],
 };
 
 /**
@@ -944,6 +1118,7 @@ const DM_REPLIES: readonly string[] = [
 /** How long a thing takes to make before it is worth putting up. */
 const EFFORT_MINUTES: Readonly<Record<string, number>> = {
   photo: 25, carousel: 45, reel: 90, story: 6, text: 4, reply: 2, repost: 1, quote: 3,
+  clip: 70, message: 2, live: 45,
 };
 
 /** What the player's own post is worth, from craft and the time put in. */
@@ -979,6 +1154,16 @@ export function registerSocialApps(sim: Simulation): void {
         }
       }
     }
+    // Somebody finds you between posts, too, in proportion to what is already
+    // up rather than out of nowhere.
+    for (const platform of [PHOTO_PLATFORM, TEXT_PLATFORM, CLIP_PLATFORM]) {
+      const mine = myProfile(sim, platform);
+      if (!mine || mine.posts < 1) continue;
+      const rng = sim.rng('social.drift', mine.id, Math.floor(sim.now / MS_DAY));
+      const drift = Math.round(mine.followers * rng.float(0, 0.004));
+      if (drift > 0) gainFollowers(sim, mine, drift);
+    }
+
     // A story is only up for a day, and the ones that are over are cleared.
     for (const item of Object.values(sim.universe.socialItems)) {
       if (item.kind === 'story' && (item.expiresAt ?? 0) <= sim.now) delete sim.universe.socialItems[item.id];
@@ -1002,7 +1187,7 @@ export function registerSocialApps(sim: Simulation): void {
   });
 
   sim.onSchedule('feed.payout_month', () => {
-    for (const platform of [PHOTO_PLATFORM, TEXT_PLATFORM]) {
+    for (const platform of [PHOTO_PLATFORM, TEXT_PLATFORM, CLIP_PLATFORM]) {
       const profile = myProfile(sim, platform);
       const accountId = accountFor(sim, platform);
       if (!profile || !accountId) continue;
@@ -1017,12 +1202,16 @@ export function registerSocialApps(sim: Simulation): void {
       const owed = payout.ads + payout.memberships + payout.tips;
       const bank = sim.player.primaryAccountId;
       if (bank && owed > 0) {
-        sim.income(bank, owed, platform === TEXT_PLATFORM ? 'X — Ads Share' : 'Instagram — Subscriptions', 'creator');
+        const from = platform === TEXT_PLATFORM ? 'X — Ads Share'
+          : platform === CLIP_PLATFORM ? 'TikTok — Creator Rewards'
+            : 'Instagram — Subscriptions';
+        sim.income(bank, owed, from, 'creator');
         payout.paidAt = sim.now;
         sim.notify({
           category: 'social',
           title: 'The App Paid Out',
-          body: `${formatMoney(owed)} from ${platform === TEXT_PLATFORM ? 'the advertising share' : 'subscriptions and gifts'}.`,
+          body: `${formatMoney(owed)} from ${platform === TEXT_PLATFORM ? 'the advertising share'
+            : platform === CLIP_PLATFORM ? 'qualified views' : 'subscriptions and gifts'}.`,
           importance: 52, route: '/workspace/phone',
         });
       }
@@ -1058,8 +1247,8 @@ export function registerSocialApps(sim: Simulation): void {
   sim.onCommand<{ platform: PlatformId; handle?: string; name?: string; bio?: string }, { profileId: Id }>(
     'feed.create_profile',
     (p, { sim: s }) => {
-      if (p.platform !== PHOTO_PLATFORM && p.platform !== TEXT_PLATFORM) {
-        throw new CommandError('That is not one of the two apps.');
+      if (![PHOTO_PLATFORM, TEXT_PLATFORM, CLIP_PLATFORM].includes(p.platform)) {
+        throw new CommandError('That is not one of the apps.');
       }
       if (myProfile(s, p.platform)) throw new CommandError('You already have an account there.');
       const name = (p.name ?? s.player.displayName).trim();
@@ -1186,14 +1375,22 @@ export function registerSocialApps(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ itemId: Id }, { saved: boolean }>(
+  sim.onCommand<{ itemId: Id; collection?: string }, { saved: boolean; collection?: string }>(
     'feed.bookmark',
     (p, { sim: s }) => {
       const item = itemById(s, p.itemId);
       if (!item) throw new CommandError('That post is not there.');
       const record = markRecord(s, item);
-      record.saved = !record.saved;
-      return { saved: record.saved === true };
+      // Naming a folder files it there rather than toggling it off.
+      const folder = p.collection?.trim();
+      if (folder) {
+        record.saved = true;
+        record.collection = folder.slice(0, 40);
+      } else {
+        record.saved = !record.saved;
+        if (!record.saved) record.collection = undefined;
+      }
+      return { saved: record.saved === true, collection: record.collection };
     },
   );
 
@@ -1295,7 +1492,7 @@ export function registerSocialApps(sim: Simulation): void {
       if (!allowed.includes(kind)) throw new CommandError('That app does not post that.');
       const text = p.text.trim();
       const limit = p.platform === TEXT_PLATFORM ? TEXT_LIMIT : CAPTION_LIMIT;
-      if (p.platform === TEXT_PLATFORM && text.length < 1) throw new CommandError('Write something first.');
+      if (p.platform !== PHOTO_PLATFORM && text.length < 1) throw new CommandError('Write something first.');
       if (text.length > limit) throw new CommandError(`That is over the ${limit} character limit.`);
       const images = (p.images ?? []).slice(0, kind === 'carousel' ? 10 : 1);
       if (p.platform === PHOTO_PLATFORM && images.length < 1) throw new CommandError('A post there needs a picture.');
@@ -1328,6 +1525,7 @@ export function registerSocialApps(sim: Simulation): void {
         reposts: 0,
         images: images.length > 0 ? images : undefined,
         expiresAt: s.now + STORY_HOURS * MS_HOUR,
+        closeOnly: p.close === true,
         topic: profile.topic,
         byPlayer: true,
         seen: true,
@@ -1377,8 +1575,8 @@ export function registerSocialApps(sim: Simulation): void {
   sim.onCommand<{ platform: PlatformId; minutes?: number }, { minutes: number; note: string; saw: number }>(
     'feed.scroll',
     (p, { sim: s }) => {
-      if (p.platform !== PHOTO_PLATFORM && p.platform !== TEXT_PLATFORM) {
-        throw new CommandError('That is not one of the two apps.');
+      if (![PHOTO_PLATFORM, TEXT_PLATFORM, CLIP_PLATFORM].includes(p.platform)) {
+        throw new CommandError('That is not one of the apps.');
       }
       const minutes = clamp(Math.round(p.minutes ?? 15), 1, 240);
       const feed = homeFeed(s, p.platform, 40);
@@ -1443,6 +1641,194 @@ export function registerSocialApps(sim: Simulation): void {
       profile.verified = false;
       s.emit('feed.premium_left', {});
       return { verified: false };
+    },
+  );
+
+  // --- Rooms: communities, lists and spaces ---------------------------------
+
+  sim.onCommand<{ roomId: Id }, { joined: boolean }>(
+    'feed.join_room',
+    (p, { sim: s }) => {
+      const room = roomById(s, p.roomId);
+      if (!room) throw new CommandError('No such room.');
+      if (room.kind === 'space') throw new CommandError('A space is joined by opening it, not by joining it.');
+      room.joined = !room.joined;
+      room.members += room.joined ? 1 : -1;
+      s.emit('feed.room_joined', { roomId: room.id, joined: room.joined });
+      return { joined: room.joined };
+    },
+  );
+
+  sim.onCommand<{ name: string; profileIds?: Id[] }, { roomId: Id }>(
+    'feed.create_list',
+    (p, { sim: s }) => {
+      const name = p.name.trim();
+      if (name.length < 2) throw new CommandError('A list needs a name.');
+      if (roomsOf(s, 'list').some((room) => room.name.toLowerCase() === name.toLowerCase())) {
+        throw new CommandError('You already have a list called that.');
+      }
+      const room: SocialRoom = {
+        id: s.nextId('sroom'),
+        saveId: s.universe.meta.id,
+        platform: TEXT_PLATFORM,
+        kind: 'list',
+        name,
+        topic: 'news',
+        profileIds: (p.profileIds ?? []).filter((id) => profileById(s, id)),
+        joined: true,
+        mine: true,
+        members: 0,
+        createdAt: s.now,
+      };
+      s.universe.socialRooms[room.id] = room;
+      s.emit('feed.list_created', { roomId: room.id, name });
+      return { roomId: room.id };
+    },
+  );
+
+  sim.onCommand<{ roomId: Id; profileId: Id; remove?: boolean }, { members: number }>(
+    'feed.edit_list',
+    (p, { sim: s }) => {
+      const room = roomById(s, p.roomId);
+      if (!room || room.kind !== 'list' || !room.mine) throw new CommandError('That is not one of your lists.');
+      if (!profileById(s, p.profileId)) throw new CommandError('No such account.');
+      room.profileIds = p.remove
+        ? room.profileIds.filter((id) => id !== p.profileId)
+        : [...room.profileIds.filter((id) => id !== p.profileId), p.profileId];
+      return { members: room.profileIds.length };
+    },
+  );
+
+  sim.onCommand<{ roomId: Id }, { roomId: Id }>(
+    'feed.delete_list',
+    (p, { sim: s }) => {
+      const room = roomById(s, p.roomId);
+      if (!room || room.kind !== 'list' || !room.mine) throw new CommandError('That is not one of your lists.');
+      delete s.universe.socialRooms[p.roomId];
+      return { roomId: p.roomId };
+    },
+  );
+
+  /**
+   * A space runs for the hours you give it and is then over. What it draws is
+   * whatever slice of your followers happens to be about, and the hours come
+   * out of the day like any other hours.
+   */
+  sim.onCommand<{ name: string; minutes?: number }, { roomId: Id; peak: number }>(
+    'feed.start_space',
+    (p, { sim: s }) => {
+      const mine = myProfile(s, TEXT_PLATFORM);
+      if (!mine) throw new CommandError('You have no account there yet.');
+      const name = p.name.trim();
+      if (name.length < 3) throw new CommandError('Give the space a name.');
+      const minutes = clamp(Math.round(p.minutes ?? 60), 10, 300);
+      const rng = s.rng('social.space', mine.id, s.counter('social.space'));
+      const peak = Math.max(1, Math.round(mine.followers * rng.float(0.001, 0.02)) + rng.int(0, 40));
+
+      s.advanceTo(s.now + minutes * MS_MINUTE);
+      spend(s, TEXT_PLATFORM, minutes);
+
+      const room: SocialRoom = {
+        id: s.nextId('sroom'),
+        saveId: s.universe.meta.id,
+        platform: TEXT_PLATFORM,
+        kind: 'space',
+        name,
+        topic: mine.topic,
+        profileIds: [mine.id],
+        joined: true,
+        mine: true,
+        members: peak,
+        createdAt: s.now - minutes * MS_MINUTE,
+        startedAt: s.now - minutes * MS_MINUTE,
+        endedAt: s.now,
+        peak,
+      };
+      s.universe.socialRooms[room.id] = room;
+      gainFollowers(s, mine, Math.round(peak * rng.float(0.01, 0.08)));
+      s.emit('feed.space_held', { roomId: room.id, peak });
+      return { roomId: room.id, peak };
+    },
+  );
+
+  // --- Going live, on the two apps that do it -------------------------------
+
+  /**
+   * Live is the hours, the people who happen to be about, and what they chose
+   * to send while you were on. It is not a post: it leaves a record of having
+   * happened and nothing on the grid.
+   */
+  sim.onCommand<
+    { platform: PlatformId; title?: string; minutes?: number },
+    { itemId: Id; peak: number; gifts: Money }
+  >(
+    'feed.go_live',
+    (p, { sim: s }) => {
+      if (p.platform !== PHOTO_PLATFORM && p.platform !== CLIP_PLATFORM) {
+        throw new CommandError('That app does not do live.');
+      }
+      const profile = myProfile(s, p.platform);
+      if (!profile) throw new CommandError('You have no account there yet.');
+      const minutes = clamp(Math.round(p.minutes ?? 45), 10, 300);
+      const rng = s.rng('social.live', profile.id, s.counter('social.live'));
+      const peak = Math.max(1, Math.round(profile.followers * rng.float(0.002, 0.03)) + rng.int(0, 25));
+      const senders = Math.round(peak * rng.float(0, 0.03));
+      const gifts = Math.round(senders * GIFT_STEPS[rng.int(0, GIFT_STEPS.length - 1)]! * GIFT_SHARE);
+
+      s.advanceTo(s.now + minutes * MS_MINUTE);
+      spend(s, p.platform, minutes);
+
+      const item: SocialItem = {
+        id: s.nextId('sitem'),
+        saveId: s.universe.meta.id,
+        platform: p.platform,
+        profileId: profile.id,
+        kind: 'live',
+        text: (p.title ?? 'Live').trim().slice(0, 120),
+        at: s.now - minutes * MS_MINUTE,
+        likes: Math.round(peak * rng.float(0.2, 0.9)),
+        comments: Math.round(peak * minutes * rng.float(0.01, 0.09)),
+        reposts: 0,
+        topic: profile.topic,
+        byPlayer: true,
+      };
+      s.universe.socialItems[item.id] = item;
+
+      const accountId = s.player.primaryAccountId;
+      if (accountId && gifts > 0) {
+        s.income(accountId, gifts, p.platform === CLIP_PLATFORM ? 'TikTok — Gifts' : 'Instagram — Gifts', 'creator');
+      }
+      gainFollowers(s, profile, Math.round(peak * rng.float(0.01, 0.1)));
+      s.emit('feed.went_live', { platform: p.platform, peak, gifts });
+      return { itemId: item.id, peak, gifts };
+    },
+  );
+
+  // --- A thread, which is one post and then the rest of the thought ---------
+
+  sim.onCommand<{ parts: string[] }, { itemIds: Id[] }>(
+    'feed.thread',
+    (p, { sim: s }) => {
+      const profile = myProfile(s, TEXT_PLATFORM);
+      if (!profile) throw new CommandError('You have no account there yet.');
+      const parts = p.parts.map((part) => part.trim()).filter(Boolean);
+      if (parts.length < 2) throw new CommandError('A thread is two posts or more.');
+      if (parts.length > 25) throw new CommandError('That is longer than a thread goes.');
+      const over = parts.find((part) => part.length > TEXT_LIMIT);
+      if (over) throw new CommandError(`One of those is over the ${TEXT_LIMIT} character limit.`);
+
+      const ids: Id[] = [];
+      let parentId: Id | undefined;
+      for (const part of parts) {
+        const item = putUp(s, profile, 'text', part, {
+          parentId,
+          effortMinutes: EFFORT_MINUTES.text,
+        });
+        ids.push(item.id);
+        parentId = item.id;
+      }
+      s.emit('feed.threaded', { count: ids.length });
+      return { itemIds: ids };
     },
   );
 
@@ -1714,9 +2100,10 @@ function putUp(
     profile.lastPostAt = at;
     // Every follower gained is one somebody chose to give, so growth comes off
     // what the post actually did rather than off a curve. A private account is
-    // seen by fewer people, so fewer of them arrive.
+    // seen by fewer people, so fewer of them arrive. They arrive as accounts on
+    // a list rather than as a number going up.
     const seen = sim.universe.socialSettings?.privateAccount ? 0.004 : 0.02;
-    profile.followers += Math.max(0, Math.round(likes * seen));
+    gainFollowers(sim, profile, Math.max(0, Math.round(likes * seen)));
     sim.emit('feed.published', { itemId: item.id, platform: item.platform });
   }
   return item;
@@ -1728,6 +2115,7 @@ function putUp(
  */
 export function ensureSocialApps(sim: Simulation): void {
   ensureProfiles(sim);
+  ensureRooms(sim);
   const pending = sim.timeline.pending();
   if (!pending.some((i) => i.kind === 'feed.world_tick')) {
     sim.schedule({

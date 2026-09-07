@@ -17,11 +17,12 @@
  * The mark is drawn in CSS. SLATE ships no third party artwork.
  */
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { MS_DAY } from '@/engine/core/time';
 import { TOPICS, TOPIC_LABEL, type Topic } from '@/engine/content/channels';
 import { THUMBNAILS, THUMBNAIL_BY_ID } from '@/engine/content/videos';
+import { SOUNDS } from '@/engine/content/clipworld';
 import {
   BINGE_MINUTES, catalogOf, channelAnalytics, commentsOn, homeFeed, isSubscribed,
   minutesWatchedSince, myChannel, searchVideos, subscriptionFeed, subscriptionsOf,
@@ -36,7 +37,8 @@ import type { PhoneTheme } from './Phone';
 import {
   BackGlyph, BellGlyph, CastGlyph, CommentGlyph, DislikeGlyph, DownGlyph,
   HomeGlyph, LikeGlyph, MoreGlyph, SearchGlyph, ShareGlyph,
-  ShortsGlyph, SubsGlyph, TickGlyph, GearGlyph, CreateGlyph,
+  ShortsGlyph, SubsGlyph, TickGlyph, GearGlyph, CreateGlyph, NoteGlyph, RemixGlyph,
+  FlipGlyph, SpeedGlyph, TimerGlyph, SparkleGlyph, PhotosGlyph,
 } from './Icons';
 import {
   ChannelPage, LibraryPage, PremiumPanel, QuickSave, SaveSheet, StudioPage, TipSheet,
@@ -119,6 +121,8 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
   const [screen, setScreen] = useState<'app' | 'library' | 'studio' | 'notices' | 'settings' | 'appsettings'>('app');
   const [searching, setSearching] = useState(false);
   const [uploading, setUploading] = useState(false);
+  // A remix opens Create on the camera with the sound already loaded.
+  const [remixSound, setRemixSound] = useState<string | undefined>();
   const [query, setQuery] = useState('');
   const [chip, setChip] = useState<'all' | Topic>('all');
   const [toast, setToast] = useState<string | null>(null);
@@ -187,7 +191,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
           onOpen={(id) => { setSearching(false); setOpenId(id); }}
         />
       ) : uploading ? (
-        <UploadPage onClose={() => setUploading(false)} say={say} />
+        <UploadPage onClose={() => { setUploading(false); setRemixSound(undefined); }} say={say} remixSound={remixSound} />
       ) : (
         <>
           <div className="ph-yt-top">
@@ -250,7 +254,16 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
               <HomeTab chip={chip} now={now} onOpen={setOpenId} />
             </>
           )}
-          {tab === 'shorts' && <ShortsTab now={now} onWatch={watch} onOpen={setOpenId} />}
+          {tab === 'shorts' && (
+            <ShortsTab
+              now={now}
+              onWatch={watch}
+              onOpen={setOpenId}
+              onChannel={setChannelId}
+              say={say}
+              onRemix={(sound) => { setRemixSound(sound); setUploading(true); }}
+            />
+          )}
           {tab === 'subs' && <SubscriptionsTab now={now} onOpen={setOpenId} onChannel={setChannelId} />}
           {tab === 'you' && (
             <YouTab
@@ -457,13 +470,29 @@ function ShortsShelf({ now, onOpen }: { now: number; onOpen: (id: string) => voi
 // Shorts
 // ---------------------------------------------------------------------------
 
+/**
+ * The Shorts player, laid out the way the app lays it out: the clip fills the
+ * screen, the rail down the right is Like, Dislike, Comments, Share, Remix and
+ * the sound, and along the bottom is the channel with Subscribe beside it, the
+ * title, and what the sound is. Tapping the clip moves on to the next one and
+ * the minutes come out of the day.
+ */
 function ShortsTab({
-  now, onWatch, onOpen,
-}: { now: number; onWatch: (video: VideoItem, minutes?: number, like?: boolean) => void; onOpen: (id: string) => void }) {
+  now, onWatch, onOpen, onChannel, say, onRemix,
+}: {
+  now: number;
+  onWatch: (video: VideoItem, minutes?: number, like?: boolean) => void;
+  onOpen: (id: string) => void;
+  onChannel: (id: string) => void;
+  say: (text: string) => void;
+  onRemix: (sound: string) => void;
+}) {
+  const { run } = useGame();
   const shorts = useWorld((s) => homeFeed(s, s.player.id, 120).filter((v) => v.lengthMinutes <= SHORT_MINUTES));
   const [index, setIndex] = useState(0);
   const video = shorts[Math.min(index, Math.max(0, shorts.length - 1))];
   const channel = useWorld((s) => (video ? s.universe.videoChannels[video.channelId] : undefined));
+  const subscribed = useWorld((s) => (channel ? isSubscribed(s, s.player.id, channel.id) : false));
 
   if (!video) {
     return (
@@ -473,29 +502,79 @@ function ShortsTab({
     );
   }
 
+  const next = () => setIndex((i) => (shorts.length > 0 ? (i + 1) % shorts.length : 0));
+
   return (
     <div className="ph-shorts">
       <div className="ph-short">
         {video.thumbnailImage && (
           <span className="ph-short-cover" aria-hidden="true"><img src={video.thumbnailImage} alt="" /></span>
         )}
-        <div className="ph-short-title" style={{ position: 'relative' }}>{video.title}</div>
-        <div className="ph-short-meta" style={{ position: 'relative' }}>
-          {channel?.name} · {views(video.views)} views · {ago(now, video.publishedAt)}
+        <button type="button" className="ph-short-stage" onClick={next} aria-label="Next Short" />
+
+        <div className="ph-short-top">
+          <b>Shorts</b>
+          <span className="ph-right">
+            <SearchGlyph size={20} />
+            <MoreGlyph size={20} />
+          </span>
         </div>
+
         <div className="ph-short-rail">
-          <button type="button" onClick={() => onWatch(video)}>
-            <span className="ph-glyph"><LikeGlyph size={22} /></span>{views(video.likes)}
+          <button type="button" onClick={() => onWatch(video, video.lengthMinutes, true)} aria-label="Like">
+            <span className="ph-glyph"><LikeGlyph size={26} /></span>{views(video.likes)}
           </button>
-          <button type="button" onClick={() => onOpen(video.id)}>
-            <span className="ph-glyph"><CommentGlyph size={22} /></span>{views(video.commentCount)}
+          <button
+            type="button"
+            onClick={() => say('Noted. It changes nothing about the short and everything about your feed.')}
+            aria-label="Dislike"
+          >
+            <span className="ph-glyph"><DislikeGlyph size={26} /></span>Dislike
           </button>
-          <button type="button" onClick={() => onOpen(video.id)}>
-            <span className="ph-glyph"><ShareGlyph size={22} /></span>Share
+          <button type="button" onClick={() => onOpen(video.id)} aria-label="Comments">
+            <span className="ph-glyph"><CommentGlyph size={25} /></span>{views(video.commentCount)}
           </button>
-          <button type="button" onClick={() => setIndex((i) => (i + 1) % shorts.length)}>
-            <span className="ph-glyph"><DownGlyph size={22} /></span>Next
+          <button
+            type="button"
+            onClick={() => say('Nothing leaves the game. SLATE never sends anything anywhere.')}
+            aria-label="Share"
+          >
+            <span className="ph-glyph"><ShareGlyph size={25} /></span>Share
           </button>
+          <button
+            type="button"
+            onClick={() => onRemix(video.sound ?? `${channel?.name ?? 'this channel'} original audio`)}
+            aria-label="Remix"
+          >
+            <span className="ph-glyph"><RemixGlyph size={25} /></span>Remix
+          </button>
+          <span className="ph-short-disc" aria-hidden="true"><NoteGlyph size={15} /></span>
+        </div>
+
+        <div className="ph-short-foot">
+          <span className="ph-short-who">
+            <button type="button" onClick={() => onChannel(video.channelId)} aria-label={channel?.name ?? 'Channel'}>
+              <Avatar name={channel?.name ?? 'Channel'} size={30} image={channel?.avatarImage} />
+              <b>@{channel?.handle ?? 'channel'}</b>
+            </button>
+            <button
+              type="button"
+              className={`ph-short-sub${subscribed ? ' ph-on' : ''}`}
+              onClick={() => {
+                if (!channel) return;
+                const result = run(subscribed ? 'video.unsubscribe' : 'video.subscribe', { channelId: channel.id }, { silent: true });
+                if (result.ok) say(subscribed ? `Unsubscribed from ${channel.name}.` : `Subscribed to ${channel.name}.`);
+                else say(result.error ?? 'That did not work.');
+              }}
+            >
+              {subscribed ? 'Subscribed' : 'Subscribe'}
+            </button>
+          </span>
+          <p className="ph-short-title">{video.title}</p>
+          <span className="ph-short-sound">
+            <NoteGlyph size={13} />
+            {video.sound ?? `${channel?.name} · original audio`} · {views(video.views)} views · {ago(now, video.publishedAt)}
+          </span>
         </div>
       </div>
     </div>
@@ -1150,7 +1229,183 @@ function WatchPage({
 // Upload
 // ---------------------------------------------------------------------------
 
-function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string) => void }) {
+/**
+ * The camera screen, which is what Create actually opens on for a short.
+ *
+ * The rail down the right is the app's: flip the camera, set the speed, set
+ * the countdown, pick an effect, pick a look. Along the bottom are the three
+ * lengths and the record button. Every control here does the thing it says:
+ * the countdown counts down, the speed decides how much of your time the take
+ * costs, the effect picks the look the cover is drawn in, and the sound is
+ * carried onto the short and shown under it.
+ */
+interface Take {
+  seconds: number;
+  speed: number;
+  facing: 'Back' | 'Front';
+  sound: string;
+  thumbnail: string;
+  photo?: string;
+}
+
+const TAKE_LENGTHS = [15, 60, 180] as const;
+const TAKE_SPEEDS = [0.3, 0.5, 1, 2, 3] as const;
+
+function CameraScreen({
+  onShot, startSound,
+}: { onShot: (take: Take) => void; startSound?: string }) {
+  const [facing, setFacing] = useState<'Back' | 'Front'>('Back');
+  const [speed, setSpeed] = useState(1);
+  const [timer, setTimer] = useState(0);
+  const [seconds, setSeconds] = useState(60);
+  const [thumbnail, setThumbnail] = useState('frame');
+  const [sound, setSound] = useState(startSound ?? 'original sound');
+  const [photo, setPhoto] = useState<string | undefined>();
+  const [panel, setPanel] = useState<'none' | 'speed' | 'timer' | 'effects' | 'sound' | 'gallery'>('none');
+  const [count, setCount] = useState(0);
+  const [rolling, setRolling] = useState(false);
+
+  const take = { seconds, speed, facing, sound, thumbnail, photo };
+  const shotRef = useRef(onShot);
+  const takeRef = useRef(take);
+  useEffect(() => { shotRef.current = onShot; takeRef.current = take; });
+
+  // The countdown is the countdown. When it runs out the take is in the can.
+  useEffect(() => {
+    if (!rolling) return undefined;
+    if (count > 0) {
+      const id = window.setTimeout(() => setCount((n) => n - 1), 1000);
+      return () => window.clearTimeout(id);
+    }
+    setRolling(false);
+    shotRef.current(takeRef.current);
+    return undefined;
+  }, [rolling, count]);
+
+  const record = () => {
+    setCount(timer);
+    setRolling(true);
+  };
+
+  const label = seconds === 15 ? '15s' : seconds === 60 ? '60s' : '3m';
+
+  return (
+    <div className="ph-cam">
+      <div className="ph-cam-stage" style={{ background: photo ? '#000' : undefined }}>
+        {photo && <img src={photo} alt="" />}
+        <button type="button" className="ph-cam-sound" onClick={() => setPanel(panel === 'sound' ? 'none' : 'sound')}>
+          <NoteGlyph size={14} />
+          {sound === 'original sound' ? 'Add Sound' : sound}
+        </button>
+        <span className="ph-cam-facing">{facing} Camera · {speed}x · {label}</span>
+        {rolling && <span className="ph-cam-count">{count > 0 ? count : 'Rolling'}</span>}
+
+        <div className="ph-cam-rail">
+          <button type="button" onClick={() => setFacing((was) => (was === 'Back' ? 'Front' : 'Back'))}>
+            <span className="ph-glyph"><FlipGlyph size={22} /></span>Flip
+          </button>
+          <button type="button" onClick={() => setPanel(panel === 'speed' ? 'none' : 'speed')}>
+            <span className="ph-glyph"><SpeedGlyph size={22} /></span>Speed
+          </button>
+          <button type="button" onClick={() => setPanel(panel === 'timer' ? 'none' : 'timer')}>
+            <span className="ph-glyph"><TimerGlyph size={22} /></span>Timer
+          </button>
+          <button type="button" onClick={() => setPanel(panel === 'effects' ? 'none' : 'effects')}>
+            <span className="ph-glyph"><SparkleGlyph size={22} /></span>Effects
+          </button>
+          <button type="button" onClick={() => setPanel(panel === 'gallery' ? 'none' : 'gallery')}>
+            <span className="ph-glyph"><PhotosGlyph size={22} /></span>Cover
+          </button>
+        </div>
+      </div>
+
+      {panel !== 'none' && (
+        <div className="ph-cam-panel">
+          {panel === 'speed' && (
+            <>
+              <div className="ph-label">Speed</div>
+              <div className="ph-chips">
+                {TAKE_SPEEDS.map((option) => (
+                  <button key={option} type="button" className={`ph-chip${speed === option ? ' ph-on' : ''}`} onClick={() => setSpeed(option)}>
+                    {option}x
+                  </button>
+                ))}
+              </div>
+              <p className="ph-card-meta">
+                A {seconds} second take at {speed}x is {Math.round(seconds / speed)} seconds of standing there.
+              </p>
+            </>
+          )}
+          {panel === 'timer' && (
+            <>
+              <div className="ph-label">Countdown</div>
+              <div className="ph-chips">
+                {[0, 3, 10].map((option) => (
+                  <button key={option} type="button" className={`ph-chip${timer === option ? ' ph-on' : ''}`} onClick={() => setTimer(option)}>
+                    {option === 0 ? 'Off' : `${option} Seconds`}
+                  </button>
+                ))}
+              </div>
+              <p className="ph-card-meta">It counts down on the screen before the take starts.</p>
+            </>
+          )}
+          {panel === 'effects' && (
+            <>
+              <div className="ph-label">The Look It Is Cut In</div>
+              <div className="ph-chips">
+                {THUMBNAILS.map((option) => (
+                  <button key={option.id} type="button" className={`ph-chip${thumbnail === option.id ? ' ph-on' : ''}`} onClick={() => setThumbnail(option.id)}>
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+              <p className="ph-card-meta">{THUMBNAIL_BY_ID[thumbnail]?.note}</p>
+            </>
+          )}
+          {panel === 'sound' && (
+            <>
+              <div className="ph-label">Sound</div>
+              <div className="ph-chips">
+                {[...(startSound && !SOUNDS.includes(startSound) ? [startSound] : []), ...SOUNDS.slice(0, 10)].map((option) => (
+                  <button key={option} type="button" className={`ph-chip${sound === option ? ' ph-on' : ''}`} onClick={() => setSound(option)}>
+                    {option}
+                  </button>
+                ))}
+              </div>
+              <p className="ph-card-meta">Whatever you pick is shown under the short, the way it is on the app.</p>
+            </>
+          )}
+          {panel === 'gallery' && (
+            <>
+              <div className="ph-label">Cover, Which Is The Whole Screen On A Short</div>
+              <ImagePicker frame="short" image={photo} label="Cover for this short" onChange={setPhoto} />
+            </>
+          )}
+        </div>
+      )}
+
+      <div className="ph-cam-foot">
+        <div className="ph-cam-lengths">
+          {TAKE_LENGTHS.map((option) => (
+            <button key={option} type="button" className={seconds === option ? 'ph-on' : ''} onClick={() => setSeconds(option)}>
+              {option === 15 ? '15 Seconds' : option === 60 ? '60 Seconds' : '3 Minutes'}
+            </button>
+          ))}
+        </div>
+        <button type="button" className="ph-cam-record" onClick={record} disabled={rolling} aria-label="Record">
+          <span />
+        </button>
+        <p className="ph-card-meta" style={{ textAlign: 'center' }}>
+          The app keeps a runtime to whole minutes, so a fifteen second take is filed as one.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function UploadPage({
+  onClose, say, remixSound,
+}: { onClose: () => void; say: (text: string) => void; remixSound?: string }) {
   const { run } = useGame();
   const channel = useWorld(myChannel);
   const [title, setTitle] = useState('');
@@ -1162,7 +1417,9 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
   const [later, setLater] = useState(false);
   const [days, setDays] = useState(2);
   const [photo, setPhoto] = useState<string | undefined>();
-  const [mode, setMode] = useState<'video' | 'short' | 'live' | 'post'>('video');
+  const [mode, setMode] = useState<'video' | 'short' | 'live' | 'post'>(remixSound ? 'short' : 'video');
+  const [take, setTake] = useState<Take | undefined>();
+  const [sound, setSound] = useState<string | undefined>(remixSound);
   const now = useWorld((s) => s.now);
   const catalog = useWorld((s) => (channel ? catalogOf(s, channel) : []));
 
@@ -1200,6 +1457,7 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
               setMode(option);
               if (option === 'short') setLength(Math.min(lengthMinutes, SHORT_MINUTES));
               if (option === 'video' && lengthMinutes <= SHORT_MINUTES) setLength(12);
+              if (option !== 'short') { setTake(undefined); setSound(undefined); }
             }}
           >
             {option === 'video' ? 'Video' : option === 'short' ? 'Short' : option === 'live' ? 'Live' : 'Post'}
@@ -1265,8 +1523,34 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
         </div>
       )}
 
-      {(mode === 'video' || mode === 'short') && (
+      {mode === 'short' && !take && (
+        <CameraScreen
+          startSound={remixSound}
+          onShot={(shot) => {
+            setTake(shot);
+            setSound(shot.sound === 'original sound' ? undefined : shot.sound);
+            setThumbnail(shot.thumbnail);
+            setPhoto(shot.photo);
+            setLength(Math.max(1, Math.round(shot.seconds / 60)));
+            setEffort((minutes) => minutes + Math.max(1, Math.round(shot.seconds / shot.speed / 60)));
+            say(`${shot.seconds} seconds on the ${shot.facing.toLowerCase()} camera at ${shot.speed}x. Now name it.`);
+          }}
+        />
+      )}
+
+      {(mode === 'video' || (mode === 'short' && take)) && (
       <div className="ph-body" style={{ padding: '0 12px 16px' }}>
+        {take && (
+          <div className="ph-panel">
+            <div className="ph-label">The Take</div>
+            <p style={{ margin: 0, fontSize: 13 }}>
+              {take.seconds} seconds, {take.facing.toLowerCase()} camera, at {take.speed}x, to {take.sound}.
+            </p>
+            <div className="ph-chips" style={{ padding: '8px 0 0' }}>
+              <button type="button" className="ph-chip" onClick={() => setTake(undefined)}>Shoot It Again</button>
+            </div>
+          </div>
+        )}
         <label className="ph-label" htmlFor="ph-title">Title</label>
         <input id="ph-title" className="ph-input" value={title} maxLength={100} onChange={(e) => setTitle(e.target.value)} />
 
@@ -1348,6 +1632,7 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
               thumbnail,
               lengthMinutes,
               effortMinutes,
+              sound,
               publishAt: later ? now + days * MS_DAY : undefined,
             });
             if (result.ok) {

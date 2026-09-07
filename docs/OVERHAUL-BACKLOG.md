@@ -344,6 +344,20 @@ before any delivery claim.
 
     **Said plainly:** the marks are still drawn from scratch as paths and CSS. They are made to read as the app's, not copied from it, and SLATE ships no third party artwork of any kind.
 
+39. Life contract item 5, finished — TikTok as its own app, and the other three made to work all the way through. **"I want all full functioning so get it all done including tiktok so we can move on."**
+
+    **TikTok is the fourth app.** `src/engine/content/clipworld.ts` is a roster of its own: ninety one accounts across the sixteen subjects, written in the app's own voice — lowercase, unfinished, a promise rather than a sentence — sixteen sounds, sixteen hook kits and a frame, which is 98,917 different hooks. `src/ui/phone/TikTokApp.tsx` is the app: the clip full bleed with Following and For You over it, the rail down the right of the account, the heart, the comments, the save, the share and the spinning disc, the handle and the Follow button and the hook and the sound along the bottom, Discover with its tags and its grid of covers, an Inbox of who followed you and what your clips did, your own page and grid, a create sheet with the cover, the length, the hook, the hours and when it goes up, Live, Saved, your followers and Settings. It pays the way the app pays: on the views that stayed rather than the views that went past, and only once ten thousand people follow you.
+
+    **The rooms in X's drawer are rooms.** A community is the app's, one to a subject, built from the accounts that are actually about it; you join it and its members count moves, and inside it is a timeline and the list of people. A list is yours: name it, search the app for who goes on it, take one off, read only those, delete it. A space is an hour you host out loud — it takes the hours out of the day, draws a slice of your followers, records how many were there at the top of it, and leaves you with people who follow you afterwards. And a post can be a thread, up to twenty five, each with its own counter.
+
+    **Instagram's missing halves.** A carousel is really up to ten photographs, built one at a time in the composer, and the dots and the count pill read off the real number. A story can be for the close friends only, the world puts up close friends stories too, and one of those reaches you only where you have marked that follow close — the tray rings those in green. Activity is the app's own page. Live takes the hours and collects what was sent. Saved posts go into folders you name.
+
+    **Both players, as the apps have them.** YouTube's Shorts player is the rail of Like, Dislike, Comments, Share, Remix and the sound stacked down the right, with the channel and its Subscribe button along the bottom and the next short a tap away. Create opens on the camera screen: flip, speed, countdown, effects and cover down the rail, the three lengths and the record button along the bottom. Every control does its thing — the countdown counts down, the speed decides how much of your time the take costs, the effect picks the look the cover is drawn in, and the sound is carried onto the short and shown under it, which is one new optional field on a video and no migration.
+
+    **Two way follows.** `followersOf` is a roster of the accounts that chose you, written when a room or a live goes well, with up to six of them named and the rest carried in the number. It is on TikTok as the Inbox and is the thing that was missing when this file said nobody followed you back.
+
+    **Held by the gate.** `tools/social-check.mjs` now counts the third roster too: its accounts, its handles and names against the other two, its per-subject hook space against a floor, its tags, its comments and its sounds, and the claim in its own doc comment. Two collisions it found on the first run — a handle and a name shared with the photo app — were renamed on the new roster rather than the old, because an id in an old save is a persistence key. `tests/socialapps.test.ts` is 63 tests: the clip roster and its sounds, posting a clip and the hour it costs, the payout on qualified views and the floor under it, a community joined and left, a list made, added to, edited, deleted and refused a duplicate name, a community that refuses to be edited as though it were your list, a space that takes its hours and leaves a record, followers you can actually look at, a thread that chains in order and refuses a single post or one over the limit, a close friends story that stays off the tray until the follow is close, and saved folders that keep apart.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -357,8 +371,7 @@ before any delivery claim.
     - Clothes only soil when you commit a look, so a life lived through the Advance button never needs washing. Time alone should soil what you are wearing.
     - Film kit is not a thing that lives in the house: it does not wear, does not break, has no room, and is not in Your Things. It waits on section 6, the independent film.
     - The wording sweep ran across the things you do with what you own, which is where it was asked for. The same pass over every other option in the game — the shop floor, the dealership, the clinic, the trip — has not been made.
-    - TikTok is still a platform record in `systems/media.ts` rather than an app on the phone.
-    - Nobody on either app follows the player back: their follower count moves off what a post does, and there is no roster of people who chose you.
+    - The brand marks on the four apps are SLATE's own drawings rather than the real logotypes, which stay out until they are licensed.
 
 17. Next — a boat trip and a private flight as played days; the salon, the garage counter and the cinema as rooms with somebody in them; and the dialogue programme, which is writing rather than building.
 

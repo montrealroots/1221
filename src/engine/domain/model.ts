@@ -1873,6 +1873,8 @@ export interface VideoItem {
   chapters?: { at: number; title: string }[];
   /** Whether there are captions on it at all. Not every video has them. */
   captions?: boolean;
+  /** What a short was shot to, which the player picks on the camera screen. */
+  sound?: string;
 }
 
 export interface VideoComment {
@@ -2104,7 +2106,9 @@ export interface SocialItem {
   saveId: Id;
   platform: PlatformId;
   profileId: Id;
-  kind: 'photo' | 'carousel' | 'reel' | 'story' | 'text' | 'reply' | 'repost' | 'quote' | 'message';
+  kind:
+    | 'photo' | 'carousel' | 'reel' | 'story' | 'text' | 'reply' | 'repost' | 'quote'
+    | 'message' | 'clip' | 'live';
   text: string;
   at: Instant;
   likes: number;
@@ -2118,6 +2122,12 @@ export interface SocialItem {
   withProfileId?: Id;
   /** A story is gone after this. */
   expiresAt?: Instant;
+  /** A story only the close friends list sees. */
+  closeOnly?: boolean;
+  /** Which of the player's saved collections this is filed under. */
+  collection?: string;
+  /** The sound a short is cut to, where the app has one. */
+  sound?: string;
   /** Where the photograph was taken, where anybody said. */
   place?: string;
   topic: string;
@@ -2155,14 +2165,55 @@ export interface SocialSettings {
   photoVerifiedAt?: Instant;
 }
 
+/**
+ * A follow, which runs in both directions.
+ *
+ * With `personId` set it is the player following an account. With
+ * `byProfileId` set instead it is an account that chose to follow the player,
+ * which is what makes a follower a person on a list rather than a number that
+ * went up.
+ */
 export interface SocialFollow {
   id: Id;
   saveId: Id;
-  personId: Id;
+  /** The player, where this is one of theirs. */
+  personId?: Id;
+  /** The world account, where this is somebody following the player. */
+  byProfileId?: Id;
   profileId: Id;
   since: Instant;
   /** Close friends, which is the list a story can be limited to. */
   close?: boolean;
+}
+
+/**
+ * A room on the text app.
+ *
+ * Communities, Lists and Spaces are the same shape underneath — a name and a
+ * set of accounts — and differ in what they do: a community is one you join, a
+ * list is one you keep, and a space is one that runs for an hour and then is
+ * over. Keeping them one record means a list you made and a community you
+ * joined cannot drift apart in how they behave.
+ */
+export interface SocialRoom {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  kind: 'community' | 'list' | 'space';
+  name: string;
+  topic: string;
+  /** Accounts in it. */
+  profileIds: Id[];
+  /** True where the player made it or joined it. */
+  joined?: boolean;
+  /** True where the player is the one who made it. */
+  mine?: boolean;
+  members: number;
+  createdAt: Instant;
+  /** A space runs and then stops. */
+  startedAt?: Instant;
+  endedAt?: Instant;
+  peak?: number;
 }
 
 export interface BrandDeal {
@@ -2636,7 +2687,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 52;
+export const SAVE_SCHEMA_VERSION = 53;
 
 export interface SaveMeta {
   id: Id;
@@ -2761,6 +2812,7 @@ export interface SaveUniverse {
   socialItems: Record<Id, SocialItem>;
   socialFollows: Record<Id, SocialFollow>;
   socialSettings?: SocialSettings;
+  socialRooms: Record<Id, SocialRoom>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

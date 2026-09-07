@@ -893,7 +893,7 @@ export function registerVideo(sim: Simulation): void {
   sim.onCommand<
     {
       title: string; description?: string; tags?: string[]; thumbnail?: string;
-      lengthMinutes?: number; effortMinutes?: number; publishAt?: number;
+      lengthMinutes?: number; effortMinutes?: number; publishAt?: number; sound?: string;
     },
     { videoId: Id; status: VideoItem['status']; quality: number; postId?: Id }
   >(
@@ -936,6 +936,7 @@ export function registerVideo(sim: Simulation): void {
         retention: clamp(0.24 + quality / 260, 0.1, 0.95),
         status: scheduled ? 'scheduled' : 'published',
         scheduledFor: scheduled ? p.publishAt : undefined,
+        sound: p.sound?.trim() || undefined,
       };
       s.universe.videos[video.id] = video;
 

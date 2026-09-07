@@ -285,6 +285,73 @@ export function RocketGlyph({ size }: GlyphProps) {
   );
 }
 
+/** A musical note, which is what a sound is labeled with. */
+export function NoteGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><path d="M9 18V5.5l10-2v12" /><ellipse cx="6.6" cy="18" rx="2.6" ry="2.2" /><ellipse cx="16.6" cy="15.5" rx="2.6" ry="2.2" /></Svg>;
+}
+
+/** A camera turning round, which is the flip control on a camera screen. */
+export function FlipGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4 8.5A8 8 0 0 1 18.5 6.5" />
+      <path d="M20 15.5A8 8 0 0 1 5.5 17.5" />
+      <path d="M18.5 3.2v3.4h-3.4" />
+      <path d="M5.5 20.8v-3.4h3.4" />
+      <circle cx="12" cy="12" r="2.6" />
+    </Svg>
+  );
+}
+
+/** A dial with a needle, which is how fast the take runs. */
+export function SpeedGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4 17a8 8 0 1 1 16 0" />
+      <path d="M12 16l4-5" />
+      <circle cx="12" cy="16.6" r="1.1" />
+    </Svg>
+  );
+}
+
+/** A clock with a cap on it, which is the countdown before a take. */
+export function TimerGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="13.5" r="7.5" />
+      <path d="M12 9.6v4.2l2.6 1.7" />
+      <path d="M9.4 3h5.2" />
+    </Svg>
+  );
+}
+
+/** A spark, which is what an effect is called on every camera screen. */
+export function SparkleGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M11 3.5l1.8 4.7L17.5 10l-4.7 1.8L11 16.5 9.2 11.8 4.5 10l4.7-1.8z" />
+      <path d="M17.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+    </Svg>
+  );
+}
+
+/** Two arrows chasing each other, which is what remixing a short is. */
+export function RemixGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4.5 9.5A7.5 7.5 0 0 1 18 6.4" />
+      <path d="M19.5 14.5A7.5 7.5 0 0 1 6 17.6" />
+      <path d="M18 3v3.6h-3.4" />
+      <path d="M6 21v-3.6h3.4" />
+    </Svg>
+  );
+}
+
+/** An arrow curling right, which is share on the short video app. */
+export function ArrowShareGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><path d="M4 18.5c0-6 4.4-8.6 10-8.8V5.5L20.5 12 14 18.5V14c-4.6.1-7.6 1.4-10 4.5z" /></Svg>;
+}
+
 /** A circle with a line through it, which is what blocked looks like. */
 export function BlockGlyph({ size }: GlyphProps) {
   return <Svg size={size}><circle cx="12" cy="12" r="8.5" /><path d="M6 6l12 12" /></Svg>;

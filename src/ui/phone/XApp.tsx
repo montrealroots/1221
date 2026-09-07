@@ -32,8 +32,8 @@ import type { SocialItem, SocialProfile } from '@/engine/domain/model';
 import {
   TEXT_LIMIT, TEXT_PLATFORM, X_PREMIUM_MONTHLY, catalogOf, followingFeed, homeFeed,
   isBlocked, isFollowing, isMuted, itemById, messagesWith, myProfile, profileById, profilesOf,
-  recentItems, repliesTo, screenTime, searchSocial, settingsOf, socialAnalytics, threadsOf,
-  trends,
+  recentItems, repliesTo, roomsOf, screenTime, searchSocial, settingsOf, socialAnalytics,
+  threadsOf, trends,
 } from '@/engine/systems/socialapps';
 import { SOCIAL_TOPIC_LABEL, type SocialTopic } from '@/engine/content/socialworld';
 import {
@@ -42,7 +42,7 @@ import {
   RocketGlyph, SearchGlyph, SendGlyph, ShieldGlyph, SpacesGlyph, TickGlyph, TimelineGlyph,
   ViewsGlyph, YouGlyph,
 } from './Icons';
-import { Avatar, ago, tint, views } from './YouTubeExtras';
+import { Avatar, ago, tally, tint, views } from './YouTubeExtras';
 import { EmojiRow } from './EmojiRow';
 import { ImagePicker } from './ImagePicker';
 import type { PhoneTheme } from './Phone';
@@ -113,7 +113,7 @@ export function XApp({ theme }: { theme: PhoneTheme }) {
       ) : screen === 'bookmarks' ? (
         <BookmarksPage onBack={() => setScreen('app')} {...rowProps} />
       ) : screen === 'communities' || screen === 'lists' || screen === 'spaces' ? (
-        <RoomsPage kind={screen} onBack={() => setScreen('app')} onWho={setWhoId} />
+        <RoomsPage kind={screen} onBack={() => setScreen('app')} {...rowProps} />
       ) : screen === 'profile' ? (
         <>
           <div className="ph-so-top">
@@ -589,7 +589,7 @@ function NoticesPage({
           <button key={item.id} type="button" className="ph-note-row" onClick={() => onOpen(item.id)}>
             <span style={{ color: 'var(--ph-red)' }}><HeartGlyph size={20} filled /></span>
             <span className="ph-note-body">
-              <b>{views(item.likes)} likes and {views(item.reposts)} reposts · {ago(now, item.at)}</b>
+              <b>{tally(item.likes, 'like')} and {tally(item.reposts, 'repost')} · {ago(now, item.at)}</b>
               <p>{item.text}</p>
             </span>
           </button>
@@ -899,62 +899,355 @@ function BookmarksPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
 }
 
 /**
- * Communities, Lists and Spaces are all the same shape: a room made of the
- * accounts on one subject. Rather than three empty pages, each is built out of
- * the world that is actually there.
+ * Communities, Lists and Spaces, which are three different things and so are
+ * built as three different things.
+ *
+ * A community belongs to the app, one to a subject, and you are either in it
+ * or you are not. A list is yours: you name it, you put accounts in it, and it
+ * gives you a timeline of only those. A space is an hour you host out loud,
+ * and when the hour is up it is over with a record of how many came, which is
+ * the only honest way to hold a live room inside a save.
  */
 function RoomsPage({
-  kind, onBack, onWho,
-}: { kind: 'communities' | 'lists' | 'spaces'; onBack: () => void; onWho: (id: string) => void }) {
-  const grouped = useWorld((s) => {
-    const byTopic = new Map<string, SocialProfile[]>();
-    for (const profile of profilesOf(s, TEXT_PLATFORM)) {
-      if (profile.ownerId) continue;
-      const list = byTopic.get(profile.topic) ?? [];
-      list.push(profile);
-      byTopic.set(profile.topic, list);
-    }
-    return [...byTopic.entries()]
-      .map(([topic, people]) => ({ topic, people: people.sort((a, b) => b.followers - a.followers) }))
-      .sort((a, b) => b.people.length - a.people.length);
+  kind, onBack, ...rest
+}: RowProps & { kind: 'communities' | 'lists' | 'spaces'; onBack: () => void }) {
+  if (kind === 'communities') return <CommunitiesPage onBack={onBack} {...rest} />;
+  if (kind === 'lists') return <ListsPage onBack={onBack} {...rest} />;
+  return <SpacesPage onBack={onBack} {...rest} />;
+}
+
+/** The accounts of a room, and on your own lists the way to take one out. */
+function RoomPeople({
+  profileIds, onWho, onRemove,
+}: { profileIds: string[]; onWho: (id: string) => void; onRemove?: (id: string) => void }) {
+  const people = useWorld((s) => profileIds
+    .map((id) => profileById(s, id))
+    .filter((profile): profile is SocialProfile => Boolean(profile)));
+
+  if (people.length === 0) {
+    return <p className="ph-empty"><b>Nobody In Here Yet</b>Add accounts and their posts arrive under Timeline.</p>;
+  }
+  return (
+    <>
+      {people.map((profile) => (
+        <div key={profile.id} className="ph-dm-row">
+          <button type="button" className="ph-iconbtn" onClick={() => onWho(profile.id)} aria-label={profile.name}>
+            <Avatar name={profile.name} size={40} image={profile.avatarImage} />
+          </button>
+          <span className="ph-dm-text">
+            <b>{profile.name}</b>
+            <small>@{profile.handle} · {views(profile.followers)} followers</small>
+          </span>
+          {onRemove && (
+            <button type="button" className="ph-btn-outline" onClick={() => onRemove(profile.id)}>Remove</button>
+          )}
+        </div>
+      ))}
+    </>
+  );
+}
+
+/** What a room's accounts have been saying, newest first. */
+function RoomTimeline({ profileIds, ...rest }: RowProps & { profileIds: string[] }) {
+  const items = useWorld((s) => {
+    const wanted = new Set(profileIds);
+    return recentItems(s, TEXT_PLATFORM, 4)
+      .filter((item) => wanted.has(item.profileId))
+      .sort((a, b) => b.at - a.at)
+      .slice(0, 40);
   });
-  const title = kind === 'communities' ? 'Communities' : kind === 'lists' ? 'Lists' : 'Spaces';
-  const [openTopic, setOpenTopic] = useState<string | null>(null);
-  const open = grouped.find((g) => g.topic === openTopic);
+  if (items.length === 0) {
+    return <p className="ph-empty"><b>Nothing Said Yet</b>Nobody in here has posted lately.</p>;
+  }
+  return <>{items.map((item) => <Tweet key={item.id} item={item} {...rest} />)}</>;
+}
+
+function CommunitiesPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
+  const { run } = useGame();
+  const rooms = useWorld((s) => roomsOf(s, 'community'));
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [pane, setPane] = useState<'timeline' | 'people'>('timeline');
+  const open = rooms.find((room) => room.id === openId);
+
+  const join = (roomId: string, name: string, joined: boolean) => {
+    const result = run('feed.join_room', { roomId }, { silent: true });
+    if (result.ok) rest.say(joined ? `Left ${name}.` : `Joined ${name}.`);
+    else rest.say(result.error ?? 'That did not work.');
+  };
 
   return (
     <>
       <div className="ph-so-top">
-        <button type="button" className="ph-iconbtn" onClick={() => (open ? setOpenTopic(null) : onBack())} aria-label="Back"><BackGlyph /></button>
-        <b style={{ fontSize: 15 }}>{open ? SOCIAL_TOPIC_LABEL[open.topic as SocialTopic] : title}</b>
+        <button type="button" className="ph-iconbtn" onClick={() => (open ? setOpenId(null) : onBack())} aria-label="Back"><BackGlyph /></button>
+        <b style={{ fontSize: 15 }}>{open ? open.name : 'Communities'}</b>
         <span style={{ width: 22 }} />
       </div>
       <div className="ph-body">
         {open ? (
-          open.people.map((profile) => (
-            <button key={profile.id} type="button" className="ph-dm-row" onClick={() => onWho(profile.id)}>
-              <Avatar name={profile.name} size={40} image={profile.avatarImage} />
-              <span className="ph-dm-text">
-                <b>{profile.name}</b>
-                <small>@{profile.handle} · {views(profile.followers)} followers</small>
-              </span>
-            </button>
-          ))
+          <>
+            <div className="ph-panel">
+              <p style={{ margin: 0, fontSize: 13 }}>
+                {views(open.members)} members, {open.profileIds.length} of them accounts you can read.
+              </p>
+              <div className="ph-actions" style={{ padding: '10px 0 0' }}>
+                <button
+                  type="button"
+                  className={open.joined ? 'ph-btn-outline' : 'ph-btn-solid'}
+                  onClick={() => join(open.id, open.name, Boolean(open.joined))}
+                >
+                  {open.joined ? 'Leave' : 'Join'}
+                </button>
+              </div>
+            </div>
+            <div className="ph-x-tabs">
+              <button type="button" className={pane === 'timeline' ? 'ph-on' : ''} onClick={() => setPane('timeline')}>Timeline</button>
+              <button type="button" className={pane === 'people' ? 'ph-on' : ''} onClick={() => setPane('people')}>People</button>
+            </div>
+            {pane === 'timeline'
+              ? <RoomTimeline profileIds={open.profileIds} {...rest} />
+              : <RoomPeople profileIds={open.profileIds} onWho={rest.onWho} />}
+          </>
         ) : (
           <>
             <p className="ph-card-meta" style={{ padding: '10px 14px 0' }}>
-              {kind === 'spaces'
-                ? 'Rooms that talk about one thing. Nobody is live right now, so these are the people who would be.'
-                : 'Made out of who is actually on the app, by what they are about.'}
+              One to a subject, made out of who is actually on the app. Joining one puts its
+              timeline a tap away.
             </p>
-            {grouped.map((group) => (
-              <button key={group.topic} type="button" className="ph-trend" onClick={() => setOpenTopic(group.topic)}>
-                <b>{SOCIAL_TOPIC_LABEL[group.topic as SocialTopic]}</b>
-                <small>{group.people.length} accounts</small>
-              </button>
+            {rooms.map((room) => (
+              <div key={room.id} className="ph-dm-row">
+                <button type="button" className="ph-dm-text" style={{ border: 0, background: 'none', color: 'inherit', font: 'inherit', textAlign: 'left', padding: 0 }} onClick={() => { setOpenId(room.id); setPane('timeline'); }}>
+                  <b>{room.name}</b>
+                  <small>{views(room.members)} members · {room.profileIds.length} accounts</small>
+                </button>
+                <button
+                  type="button"
+                  className={room.joined ? 'ph-btn-outline' : 'ph-btn-solid'}
+                  onClick={() => join(room.id, room.name, Boolean(room.joined))}
+                >
+                  {room.joined ? 'Joined' : 'Join'}
+                </button>
+              </div>
             ))}
           </>
         )}
+      </div>
+    </>
+  );
+}
+
+function ListsPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
+  const { run } = useGame();
+  const lists = useWorld((s) => roomsOf(s, 'list').filter((room) => room.mine));
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [pane, setPane] = useState<'timeline' | 'people' | 'add'>('timeline');
+  const [naming, setNaming] = useState(false);
+  const [name, setName] = useState('');
+  const [query, setQuery] = useState('');
+  const found = useWorld((s) => (query.trim().length >= 2 ? searchSocial(s, TEXT_PLATFORM, query).profiles : []));
+  const open = lists.find((room) => room.id === openId);
+
+  const make = () => {
+    const result = run<{ roomId: string }>('feed.create_list', { name }, { silent: true });
+    if (!result.ok) { rest.say(result.error ?? 'That did not work.'); return; }
+    rest.say(`${name.trim()} made. Add accounts to it.`);
+    setOpenId(result.value?.roomId ?? null);
+    setPane('add');
+    setName('');
+    setNaming(false);
+  };
+
+  const edit = (roomId: string, profileId: string, remove?: boolean) => {
+    const result = run('feed.edit_list', { roomId, profileId, remove }, { silent: true });
+    if (!result.ok) rest.say(result.error ?? 'That did not work.');
+    else rest.say(remove ? 'Taken off the list.' : 'Added to the list.');
+  };
+
+  const drop = (room: { id: string; name: string }) => {
+    const result = run('feed.delete_list', { roomId: room.id }, { silent: true });
+    if (!result.ok) { rest.say(result.error ?? 'That did not work.'); return; }
+    rest.say(`${room.name} deleted.`);
+    setOpenId(null);
+  };
+
+  return (
+    <>
+      <div className="ph-so-top">
+        <button type="button" className="ph-iconbtn" onClick={() => (open ? setOpenId(null) : onBack())} aria-label="Back"><BackGlyph /></button>
+        <b style={{ fontSize: 15 }}>{open ? open.name : 'Lists'}</b>
+        {open
+          ? <span style={{ width: 22 }} />
+          : (
+            <button type="button" className="ph-iconbtn" onClick={() => setNaming((was) => !was)} aria-label="New List">
+              <PlusGlyph size={20} />
+            </button>
+          )}
+      </div>
+      <div className="ph-body">
+        {open ? (
+          <>
+            <div className="ph-x-tabs ph-three">
+              <button type="button" className={pane === 'timeline' ? 'ph-on' : ''} onClick={() => setPane('timeline')}>Timeline</button>
+              <button type="button" className={pane === 'people' ? 'ph-on' : ''} onClick={() => setPane('people')}>On The List</button>
+              <button type="button" className={pane === 'add' ? 'ph-on' : ''} onClick={() => setPane('add')}>Add</button>
+            </div>
+            {pane === 'timeline' && <RoomTimeline profileIds={open.profileIds} {...rest} />}
+            {pane === 'people' && (
+              <>
+                <RoomPeople
+                  profileIds={open.profileIds}
+                  onWho={rest.onWho}
+                  onRemove={(profileId) => edit(open.id, profileId, true)}
+                />
+                <div className="ph-actions" style={{ padding: '12px' }}>
+                  <button type="button" className="ph-btn-outline" onClick={() => drop(open)}>Delete This List</button>
+                </div>
+              </>
+            )}
+            {pane === 'add' && (
+              <>
+                <div style={{ padding: '10px 12px 0' }}>
+                  <label className="ph-label" htmlFor="ph-list-find">Find An Account</label>
+                  <input
+                    id="ph-list-find"
+                    className="ph-input"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Name or handle"
+                  />
+                </div>
+                {found.length === 0
+                  ? <p className="ph-empty"><b>Search The App</b>Type a name and add whoever you want on the list.</p>
+                  : found.map((profile) => {
+                    const on = open.profileIds.includes(profile.id);
+                    return (
+                      <div key={profile.id} className="ph-dm-row">
+                        <button type="button" className="ph-iconbtn" onClick={() => rest.onWho(profile.id)} aria-label={profile.name}>
+                          <Avatar name={profile.name} size={40} image={profile.avatarImage} />
+                        </button>
+                        <span className="ph-dm-text">
+                          <b>{profile.name}</b>
+                          <small>@{profile.handle} · {views(profile.followers)} followers</small>
+                        </span>
+                        <button
+                          type="button"
+                          className={on ? 'ph-btn-outline' : 'ph-btn-solid'}
+                          onClick={() => edit(open.id, profile.id, on)}
+                        >
+                          {on ? 'Remove' : 'Add'}
+                        </button>
+                      </div>
+                    );
+                  })}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {naming && (
+              <div className="ph-panel">
+                <label className="ph-label" htmlFor="ph-list-name">List Name</label>
+                <input
+                  id="ph-list-name"
+                  className="ph-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Who you want to read"
+                />
+                <div className="ph-actions" style={{ padding: '10px 0 0' }}>
+                  <button type="button" className="ph-btn-solid" disabled={name.trim().length < 2} onClick={make}>Make The List</button>
+                  <button type="button" className="ph-btn-outline" onClick={() => { setNaming(false); setName(''); }}>Cancel</button>
+                </div>
+              </div>
+            )}
+            {lists.length === 0 && !naming
+              ? <p className="ph-empty"><b>No Lists Yet</b>A list is a timeline of only the accounts you put on it.</p>
+              : lists.map((room) => (
+                <button key={room.id} type="button" className="ph-dm-row" onClick={() => { setOpenId(room.id); setPane('timeline'); }}>
+                  <span className="ph-dm-text">
+                    <b>{room.name}</b>
+                    <small>{tally(room.profileIds.length, 'account')} on it</small>
+                  </span>
+                </button>
+              ))}
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+function SpacesPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
+  const { run } = useGame();
+  const mine = useWorld((s) => myProfile(s, TEXT_PLATFORM));
+  const held = useWorld((s) => roomsOf(s, 'space').sort((a, b) => (b.startedAt ?? b.createdAt) - (a.startedAt ?? a.createdAt)));
+  const [name, setName] = useState('');
+  const [minutes, setMinutes] = useState(60);
+
+  const start = () => {
+    const result = run<{ peak: number }>('feed.start_space', { name, minutes }, { silent: true });
+    if (!result.ok) { rest.say(result.error ?? 'That did not work.'); return; }
+    rest.say(`Space over. ${tally(result.value?.peak ?? 0, 'person', 'people')} at the top of it.`);
+    setName('');
+  };
+
+  return (
+    <>
+      <div className="ph-so-top">
+        <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Back"><BackGlyph /></button>
+        <b style={{ fontSize: 15 }}>Spaces</b>
+        <span style={{ width: 22 }} />
+      </div>
+      <div className="ph-body">
+        {!mine ? (
+          <p className="ph-empty"><b>No Account Here</b>Make one before you host a room.</p>
+        ) : (
+          <div className="ph-panel">
+            <div className="ph-label">Host A Space</div>
+            <label className="ph-label" htmlFor="ph-space-name">What It Is About</label>
+            <input
+              id="ph-space-name"
+              className="ph-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Late night questions"
+            />
+            <div className="ph-label">How Long</div>
+            <div className="ph-chips">
+              {[30, 60, 90, 120].map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className={`ph-chip${minutes === option ? ' ph-on' : ''}`}
+                  onClick={() => setMinutes(option)}
+                >
+                  {option} Minutes
+                </button>
+              ))}
+            </div>
+            <p className="ph-card-meta">
+              You are on air for the whole of it, and those are hours out of the day like
+              any others.
+            </p>
+            <div className="ph-actions" style={{ padding: '4px 0 0' }}>
+              <button type="button" className="ph-btn-solid" disabled={name.trim().length < 3} onClick={start}>Start The Space</button>
+            </div>
+          </div>
+        )}
+        <div className="ph-label" style={{ padding: '0 14px' }}>Spaces You Have Held</div>
+        {held.length === 0
+          ? <p className="ph-empty"><b>None Yet</b>A space you host is kept here once it is over.</p>
+          : held.map((room) => (
+            <div key={room.id} className="ph-panel">
+              <p style={{ margin: 0, fontSize: 13.5, fontWeight: 600 }}>{room.name}</p>
+              <p className="ph-card-meta">
+                {tally(room.peak ?? room.members, 'listener')} at the top of it
+                {room.startedAt && room.endedAt
+                  ? `, over ${Math.round((room.endedAt - room.startedAt) / 60_000)} minutes`
+                  : ''}
+                , {ago(rest.now, room.startedAt ?? room.createdAt)}.
+              </p>
+            </div>
+          ))}
       </div>
     </>
   );
@@ -1109,15 +1402,20 @@ function Composer({
 }: { quoteId?: string; onClose: () => void; say: (text: string) => void; hasProfile: boolean }) {
   const { run } = useGame();
   const [text, setText] = useState('');
+  const [rest, setRest] = useState<string[]>([]);
   const quoted = useWorld((s) => (quoteId ? itemById(s, quoteId) : undefined));
   const quotedWho = useWorld((s) => (quoted ? profileById(s, quoted.profileId) : undefined));
-  const over = text.length > TEXT_LIMIT;
+  const parts = [text, ...rest];
+  const over = parts.some((part) => part.length > TEXT_LIMIT);
 
   const post = () => {
     const result = quoteId
       ? run('feed.quote', { itemId: quoteId, text }, { silent: true })
-      : run('feed.post', { platform: TEXT_PLATFORM, kind: 'text', text }, { silent: true });
-    if (result.ok) { say('Posted.'); onClose(); } else say(result.error ?? 'That did not work.');
+      : rest.length > 0
+        ? run('feed.thread', { parts }, { silent: true })
+        : run('feed.post', { platform: TEXT_PLATFORM, kind: 'text', text }, { silent: true });
+    if (result.ok) { say(rest.length > 0 ? `Thread posted, ${parts.length} of them.` : 'Posted.'); onClose(); }
+    else say(result.error ?? 'That did not work.');
   };
 
   if (!hasProfile) {
@@ -1136,7 +1434,7 @@ function Composer({
     <div className="ph-sheet">
       <div className="ph-sheet-top">
         <button type="button" className="ph-iconbtn" onClick={onClose} aria-label="Close"><BackGlyph /></button>
-        <b>{quoteId ? 'Quote' : 'New Post'}</b>
+        <b>{quoteId ? 'Quote' : rest.length > 0 ? `Thread Of ${parts.length}` : 'New Post'}</b>
         <button type="button" className="ph-btn-solid ph-right" disabled={over || text.trim().length === 0} onClick={post}>
           Post
         </button>
@@ -1148,6 +1446,33 @@ function Composer({
           placeholder={quoteId ? 'Add a comment' : 'What is happening?'}
           aria-label="What You Are Posting"
         />
+        {rest.map((part, index) => (
+          <div key={index} style={{ padding: '0 14px 8px' }}>
+            <div className="ph-label">Post {index + 2}</div>
+            <textarea
+              className="ph-input"
+              rows={3}
+              value={part}
+              aria-label={`Post ${index + 2} Of The Thread`}
+              onChange={(e) => setRest((all) => all.map((one, at) => (at === index ? e.target.value : one)))}
+            />
+            <div className="ph-actions">
+              <span className={`ph-count${part.length > TEXT_LIMIT ? ' ph-over' : ''}`}>{TEXT_LIMIT - part.length}</span>
+              <button type="button" className="ph-btn-outline" onClick={() => setRest((all) => all.filter((_, at) => at !== index))}>
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
+
+        {!quoteId && rest.length < 24 && (
+          <div className="ph-actions" style={{ padding: '0 14px 8px' }}>
+            <button type="button" className="ph-btn-outline" onClick={() => setRest((all) => [...all, ''])}>
+              {rest.length === 0 ? 'Make It A Thread' : 'Add Another Post'}
+            </button>
+          </div>
+        )}
+
         {quoted && quotedWho && (
           <div className="ph-tweet-quote" style={{ margin: '0 14px 10px' }}>
             <div className="ph-tweet-head"><b>{quotedWho.name}</b><span>@{quotedWho.handle}</span></div>

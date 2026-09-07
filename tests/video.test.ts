@@ -280,6 +280,21 @@ describe('a channel of your own', () => {
     expect(videosOf(sim, myChannel(sim)!.id).some((v) => v.id === video.id)).toBe(true);
   });
 
+  it('carries the sound a short was shot to, and leaves a video without one alone', () => {
+    const sim = withChannel('video-sound');
+    const shot = sim.execute<{ videoId: Id }>({
+      kind: 'video.upload',
+      payload: { title: 'One Take Only', lengthMinutes: 1, effortMinutes: 40, sound: 'that piano loop' },
+    });
+    expect(shot.ok, String(shot.error)).toBe(true);
+    expect(videoById(sim, shot.value!.videoId)!.sound).toBe('that piano loop');
+
+    const plain = sim.execute<{ videoId: Id }>({
+      kind: 'video.upload', payload: { title: 'The Long Way Round', effortMinutes: 120 },
+    });
+    expect(videoById(sim, plain.value!.videoId)!.sound).toBeUndefined();
+  });
+
   it('refuses a title nobody could read and a thumbnail that does not exist', () => {
     const sim = withChannel('video-refuse');
     expect(sim.execute({ kind: 'video.upload', payload: { title: 'A' } }).ok).toBe(false);

@@ -36,8 +36,8 @@ import type { SocialItem, SocialProfile } from '@/engine/domain/model';
 import {
   GIFT_STEPS, PHOTO_PLATFORM, PHOTO_SUB_MONTHLY, PHOTO_VERIFIED_MONTHLY, catalogOf, exploreFeed,
   followingFeed, homeFeed, isBlocked, isFollowing, isMuted, itemById, messagesWith, myProfile,
-  noteOf, photoSubscribers, profileById, repliesTo, screenTime, screenTimeWeek, searchSocial,
-  settingsOf, socialAnalytics, storiesFor, threadsOf,
+  collectionsOf, followersOf, noteOf, photoSubscribers, profileById, repliesTo, screenTime, screenTimeWeek,
+  searchSocial, settingsOf, socialAnalytics, storiesFor, threadsOf,
 } from '@/engine/systems/socialapps';
 import { SOCIAL_TOPICS, SOCIAL_TOPIC_LABEL, type SocialTopic } from '@/engine/content/socialworld';
 import {
@@ -45,14 +45,14 @@ import {
   DownGlyph, EyeGlyph, GearGlyph, GridGlyph, HeartGlyph, HomeGlyph, LockGlyph, MenuGlyph,
   PlusGlyph, ReelsGlyph, RepostGlyph, SearchGlyph, SendGlyph, SlidersGlyph, TaggedGlyph, TickGlyph,
 } from './Icons';
-import { Avatar, ago, views } from './YouTubeExtras';
+import { Avatar, ago, tally, views } from './YouTubeExtras';
 import { ImagePicker } from './ImagePicker';
 import { EmojiRow } from './EmojiRow';
 import type { PhoneTheme } from './Phone';
 import './social.css';
 
 type Tab = 'home' | 'reels' | 'messages' | 'search' | 'profile';
-type Screen = 'app' | 'create' | 'dashboard' | 'thread' | 'settings' | 'switcher';
+type Screen = 'app' | 'create' | 'dashboard' | 'thread' | 'settings' | 'switcher' | 'activity' | 'live';
 
 const KIND_LABEL: Readonly<Record<string, string>> = {
   photo: 'Photo', carousel: 'Carousel', reel: 'Reel', story: 'Story',
@@ -76,7 +76,10 @@ function look(id: string): string {
 /** How many pictures are in a carousel, which the pill and the dots both need. */
 function frames(item: SocialItem): number {
   if (item.kind !== 'carousel') return 1;
-  return Math.max(2, Math.min(10, item.images?.length ?? 2 + (item.id.length % 4)));
+  // Yours has the pictures you brought. The world's is derived like the rest
+  // of it, from its own id, so the same post always has the same count.
+  if (item.byPlayer) return Math.max(1, item.images?.length ?? 1);
+  return 2 + (item.id.length % 4);
 }
 
 export function InstagramApp({ theme }: { theme: PhoneTheme }) {
@@ -144,6 +147,10 @@ export function InstagramApp({ theme }: { theme: PhoneTheme }) {
         />
       ) : screen === 'switcher' ? (
         <AccountSwitcher onClose={() => setScreen('app')} say={say} />
+      ) : screen === 'activity' ? (
+        <ActivityPage now={now} mine={mine} onBack={() => setScreen('app')} onOpen={setOpenId} onWho={setWhoId} />
+      ) : screen === 'live' ? (
+        <LiveSheet onClose={() => setScreen('app')} say={say} />
       ) : (
         <>
           {tab === 'home' && (
@@ -165,7 +172,7 @@ export function InstagramApp({ theme }: { theme: PhoneTheme }) {
                 </span>
                 <span className="ph-right">
                   <span className="ph-so-badge-wrap">
-                    <button type="button" className="ph-iconbtn" aria-label="Likes" onClick={() => say('Nobody new has liked anything since you last looked.')}>
+                    <button type="button" className="ph-iconbtn" aria-label="Activity" onClick={() => setScreen('activity')}>
                       <HeartGlyph size={23} />
                     </button>
                     <span className="ph-dot" aria-hidden="true" />
@@ -203,6 +210,7 @@ export function InstagramApp({ theme }: { theme: PhoneTheme }) {
                   onDashboard={() => setScreen('dashboard')}
                   onMessage={message}
                   onCreate={() => setScreen('create')}
+                  onLive={() => setScreen('live')}
                   say={say}
                 />
               )
@@ -290,6 +298,12 @@ function PostCard({
   const save = () => {
     const result = run<{ saved: boolean }>('feed.bookmark', { itemId: item.id }, { silent: true });
     if (result.ok) say(result.value!.saved ? 'Saved.' : 'Taken out of your saved posts.');
+  };
+  const file = () => {
+    const name = window.prompt('File this in which collection?')?.trim();
+    if (!name) return;
+    const result = run('feed.bookmark', { itemId: item.id, collection: name }, { silent: true });
+    say(result.ok ? `Filed under ${name}.` : result.error ?? 'That did not work.');
   };
 
   const long = item.text.length > 110;
@@ -381,12 +395,19 @@ function PostCard({
         <button type="button" className="ph-iconbtn" onClick={() => onWho(profile.id)} aria-label="Send">
           <SendGlyph size={21} />
         </button>
-        <button type="button" className={`ph-iconbtn ph-right${item.saved ? ' ph-liked' : ''}`} onClick={save} aria-label={item.saved ? 'Remove From Saved' : 'Save'}>
+        <button
+          type="button"
+          className={`ph-iconbtn ph-right${item.saved ? ' ph-liked' : ''}`}
+          onClick={save}
+          onDoubleClick={file}
+          aria-label={item.saved ? 'Remove From Saved' : 'Save'}
+          title="Double tap to file it in a collection"
+        >
           <BookmarkGlyph size={21} filled={item.saved} />
         </button>
       </div>
 
-      <div className="ph-post-likes">{views(item.likes)} likes</div>
+      <div className="ph-post-likes">{tally(item.likes, 'like')}</div>
       <div className="ph-post-caption">
         <b>{profile.handle}</b>
         {caption}
@@ -396,7 +417,7 @@ function PostCard({
       )}
       {item.comments > 0 && (
         <button type="button" className="ph-post-more" onClick={() => onOpen(item.id)}>
-          View all {views(item.comments)} comments
+          View all {tally(item.comments, 'comment')}
         </button>
       )}
       <div className="ph-post-when">{ago(now, item.at)}</div>
@@ -437,13 +458,15 @@ function StoryTray({
 }) {
   const profiles = useWorld((s) => s.universe.socialProfiles);
   const note = useWorld((s) => (mine ? noteOf(s, mine) : undefined));
-  // Your own story is the first ring rather than a second one further along.
-  const yours = mine ? stories.some((s) => s.profileId === mine.id) : false;
+  // Your own story is the first ring rather than a second one further along,
+  // and a close friends one is ringed the way the app rings it.
+  const own = mine ? stories.find((s) => s.profileId === mine.id) : undefined;
+  const yours = Boolean(own);
   return (
     <div className="ph-stories">
       <button type="button" className="ph-story" onClick={onAdd} aria-label="Your Story">
         {note && <span className="ph-note">{note}</span>}
-        <span className={`ph-story-ring${yours ? '' : ' ph-seen'}`}>
+        <span className={`ph-story-ring${yours ? '' : ' ph-seen'}${own?.closeOnly ? ' ph-close' : ''}`}>
           <span><Avatar name={mine?.name ?? 'You'} size={52} image={mine?.avatarImage} /></span>
         </span>
         <span className="ph-story-add" aria-hidden="true"><PlusGlyph size={13} /></span>
@@ -454,7 +477,7 @@ function StoryTray({
         const profile = profiles[story.profileId];
         return (
           <button key={story.id} type="button" className="ph-story" onClick={() => onOpen(index)}>
-            <span className={`ph-story-ring${story.seen ? ' ph-seen' : ''}`}>
+            <span className={`ph-story-ring${story.seen ? ' ph-seen' : ''}${story.closeOnly ? ' ph-close' : ''}`}>
               <span><Avatar name={profile?.name ?? '?'} size={52} image={profile?.avatarImage} /></span>
             </span>
             <span className="ph-story-name">{profile?.handle ?? ''}</span>
@@ -693,11 +716,12 @@ function ReelsPage({
 // ---------------------------------------------------------------------------
 
 function ProfilePage({
-  profile, now, onBack, onOpen, onDashboard, onSettings, onMessage, onCreate, say,
+  profile, now, onBack, onOpen, onDashboard, onSettings, onMessage, onCreate, onLive, say,
 }: {
   profile: SocialProfile; now: number; onBack?: () => void;
   onOpen: (id: string) => void; onDashboard?: () => void; onSettings?: () => void;
-  onMessage: (id: string) => void; onCreate?: () => void; say: (text: string) => void;
+  onMessage: (id: string) => void; onCreate?: () => void; onLive?: () => void;
+  say: (text: string) => void;
 }) {
   const { run } = useGame();
   const items = useWorld((s) => catalogOf(s, profile));
@@ -775,7 +799,7 @@ function ProfilePage({
           {own ? (
             <>
               <button type="button" onClick={() => setEditing((v) => !v)}>Edit Profile</button>
-              <button type="button" onClick={() => say(`Your profile is at @${profile.handle}.`)}>Share Profile</button>
+              <button type="button" onClick={() => onLive?.()}>Go Live</button>
               {onDashboard && <button type="button" onClick={onDashboard} aria-label="Professional Dashboard">Dashboard</button>}
             </>
           ) : (
@@ -965,14 +989,18 @@ function CreateSheet({
   const [kind, setKind] = useState<'photo' | 'carousel' | 'reel' | 'story'>('photo');
   const [text, setText] = useState('');
   const [place, setPlace] = useState('');
-  const [image, setImage] = useState<string | undefined>();
+  const [images, setImages] = useState<(string | undefined)[]>([undefined]);
+  const [closeOnly, setCloseOnly] = useState(false);
   const [later, setLater] = useState(false);
   const [days, setDays] = useState(1);
+  const picked = images.filter((image): image is string => Boolean(image));
 
   const post = () => {
     if (kind === 'story') {
-      const result = run('feed.story', { text, images: image ? [image] : [] }, { silent: true });
-      say(result.ok ? 'Story up. It is gone in a day.' : result.error ?? 'That did not work.');
+      const result = run('feed.story', { text, images: picked, close: closeOnly }, { silent: true });
+      say(result.ok
+        ? closeOnly ? 'Story up, close friends only. It is gone in a day.' : 'Story up. It is gone in a day.'
+        : result.error ?? 'That did not work.');
       if (result.ok) onClose();
       return;
     }
@@ -981,7 +1009,7 @@ function CreateSheet({
       kind,
       text,
       place: place || undefined,
-      images: image ? [image] : [],
+      images: picked,
       publishAt: later ? now + days * MS_DAY : undefined,
     }, { silent: true });
     if (result.ok) {
@@ -1023,12 +1051,41 @@ function CreateSheet({
           ))}
         </div>
         <div className="ph-panel">
-          <ImagePicker
-            frame={kind === 'reel' || kind === 'story' ? 'short' : 'square'}
-            image={image}
-            label="Your Picture"
-            onChange={setImage}
-          />
+          {images.map((image, index) => (
+            <div key={index}>
+              {kind === 'carousel' && (
+                <div className="ph-label">Picture {index + 1} Of {images.length}</div>
+              )}
+              <ImagePicker
+                frame={kind === 'reel' || kind === 'story' ? 'short' : 'square'}
+                image={image}
+                label={kind === 'carousel' ? `Picture ${index + 1}` : 'Your Picture'}
+                onChange={(next) => setImages((all) => all.map((one, at) => (at === index ? next : one)))}
+              />
+              {kind === 'carousel' && images.length > 1 && (
+                <button
+                  type="button"
+                  className="ph-btn-outline"
+                  onClick={() => setImages((all) => all.filter((_, at) => at !== index))}
+                >
+                  Remove Picture {index + 1}
+                </button>
+              )}
+            </div>
+          ))}
+          {kind === 'carousel' && images.length < 10 && (
+            <div className="ph-actions">
+              <button type="button" className="ph-btn-outline" onClick={() => setImages((all) => [...all, undefined])}>
+                Add Another Picture
+              </button>
+            </div>
+          )}
+          {kind === 'story' && (
+            <label className="ph-card-meta" style={{ display: 'flex', gap: 8, alignItems: 'center', paddingTop: 8 }}>
+              <input type="checkbox" checked={closeOnly} onChange={(e) => setCloseOnly(e.target.checked)} />
+              Close friends only
+            </label>
+          )}
           <div className="ph-label">{kind === 'story' ? 'Something Over It' : 'Caption'}</div>
           <EmojiRow app="photo" onPick={(emoji) => setText((current) => current + emoji)} />
           <input className="ph-input" value={text} onChange={(e) => setText(e.target.value)} maxLength={2200} />
@@ -1058,6 +1115,7 @@ function CreateSheet({
           <p className="ph-card-meta">
             Making it takes the time it takes: a photograph is under half an hour, a carousel is
             most of one, a reel is an evening.
+            {kind === 'carousel' && ` ${picked.length} of the ten a carousel holds.`}
           </p>
         </div>
       </div>
@@ -1394,6 +1452,9 @@ function SettingsPage({
   const liked = useWorld((s) => Object.values(s.universe.socialItems).filter((i) => i.liked).length);
   const commented = useWorld((s) => Object.values(s.universe.socialItems)
     .filter((i) => i.byPlayer && i.kind === 'reply').length);
+  const folders = useWorld((s) => collectionsOf(s)
+    .map((folder) => ({ name: folder.name, items: folder.items.filter((i) => i.platform === PHOTO_PLATFORM) }))
+    .filter((folder) => folder.items.length > 0));
   const week = useWorld((s) => screenTimeWeek(s, PHOTO_PLATFORM));
   const today = useWorld((s) => screenTime(s, PHOTO_PLATFORM));
   const [words, setWords] = useState(settings.hiddenWords.join(', '));
@@ -1418,9 +1479,14 @@ function SettingsPage({
       <>
         {head('Saved')}
         <div className="ph-body">
-          {saved.length === 0
+          {folders.length === 0
             ? <p className="ph-empty"><b>Nothing Saved</b>The bookmark under a post keeps it here.</p>
-            : <Tiles items={saved} onOpen={onOpen} />}
+            : folders.map((folder) => (
+              <div key={folder.name}>
+                <div className="ph-section-head">{folder.name}</div>
+                <Tiles items={folder.items} onOpen={onOpen} />
+              </div>
+            ))}
         </div>
       </>
     );
@@ -1666,6 +1732,7 @@ function SettingsPage({
         <div className="ph-set-head">How You Use Instagram</div>
         <div className="ph-set-group">
           <Row icon={<BookmarkGlyph size={17} />} label="Saved" value={saved.length || undefined} onClick={() => setLeaf('saved')} />
+          <Row icon={<BookmarkGlyph size={17} />} label="Collections" value={folders.length} onClick={() => setLeaf('saved')} />
           <Row icon={<ClockGlyph size={17} />} label="Archive" value={archive.length || undefined} onClick={() => setLeaf('archive')} />
           <Row icon={<EyeGlyph size={17} />} label="Your Activity" onClick={() => setLeaf('activity')} />
           <Row icon={<BellGlyph size={17} />} label="Notifications" value={settings.notificationsOn ? 'On' : 'Paused'} onClick={() => setLeaf('notifications')} />
@@ -1757,6 +1824,132 @@ function AccountSwitcher({ onClose, say }: { onClose: () => void; say: (text: st
           <button type="button" className="ph-btn-outline" onClick={() => say('You stay signed in. This is your phone.')}>
             Log Out
           </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Activity, and going live
+// ---------------------------------------------------------------------------
+
+/**
+ * The heart at the top of the app.
+ *
+ * What came back: who followed you, what your posts did, and what was said
+ * under them. All of it out of the save rather than a placeholder line saying
+ * nothing has happened.
+ */
+function ActivityPage({
+  now, mine, onBack, onOpen, onWho,
+}: {
+  now: number; mine: SocialProfile | undefined; onBack: () => void;
+  onOpen: (id: string) => void; onWho: (id: string) => void;
+}) {
+  const items = useWorld((s) => (mine ? catalogOf(s, mine) : []));
+  const followers = useWorld((s) => (mine ? followersOf(s, mine.id) : []));
+  const replies = useWorld((s) => Object.values(s.universe.socialItems)
+    .filter((i) => i.kind === 'reply' && i.platform === PHOTO_PLATFORM && !i.byPlayer)
+    .sort((a, b) => b.at - a.at)
+    .slice(0, 20));
+  const profiles = useWorld((s) => s.universe.socialProfiles);
+
+  return (
+    <>
+      <div className="ph-so-top">
+        <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Back"><BackGlyph /></button>
+        <b style={{ fontSize: 15 }}>Activity</b>
+        <span style={{ width: 22 }} />
+      </div>
+      <div className="ph-body">
+        {!mine && <p className="ph-empty"><b>Nothing Yet</b>Make an account and this fills up.</p>}
+
+        {followers.length > 0 && <div className="ph-section-head">New Followers</div>}
+        {followers.slice(0, 12).map((follow) => {
+          const who = follow.byProfileId ? profiles[follow.byProfileId] : undefined;
+          return (
+            <button key={follow.id} type="button" className="ph-dm-row" onClick={() => who && onWho(who.id)}>
+              <Avatar name={who?.name ?? '?'} size={40} image={who?.avatarImage} />
+              <span className="ph-dm-text">
+                <b>{who?.handle ?? 'someone'}</b>
+                <small>started following you · {ago(now, follow.since)}</small>
+              </span>
+            </button>
+          );
+        })}
+
+        {items.length > 0 && <div className="ph-section-head">Your Posts</div>}
+        {items.map((item) => (
+          <button key={item.id} type="button" className="ph-dm-row" onClick={() => onOpen(item.id)}>
+            <span className="ph-iconbtn" style={{ color: 'var(--ph-red)' }}><HeartGlyph size={20} filled /></span>
+            <span className="ph-dm-text">
+              <b>{tally(item.likes, 'like')}, {tally(item.comments, 'comment')}</b>
+              <small>{item.text.slice(0, 50)} · {ago(now, item.at)}</small>
+            </span>
+          </button>
+        ))}
+
+        {replies.length > 0 && <div className="ph-section-head">Comments</div>}
+        {replies.map((reply) => {
+          const who = profiles[reply.profileId];
+          return (
+            <button key={reply.id} type="button" className="ph-dm-row" onClick={() => reply.parentId && onOpen(reply.parentId)}>
+              <Avatar name={who?.name ?? '?'} size={40} image={who?.avatarImage} />
+              <span className="ph-dm-text">
+                <b>{who?.handle ?? 'someone'}</b>
+                <small>{reply.text} · {ago(now, reply.at)}</small>
+              </span>
+            </button>
+          );
+        })}
+
+        {mine && items.length === 0 && followers.length === 0 && (
+          <p className="ph-empty"><b>Quiet</b>Post something and see what comes back.</p>
+        )}
+      </div>
+    </>
+  );
+}
+
+function LiveSheet({ onClose, say }: { onClose: () => void; say: (text: string) => void }) {
+  const { run } = useGame();
+  const [title, setTitle] = useState('');
+  const [minutes, setMinutes] = useState(45);
+  return (
+    <div className="ph-sheet">
+      <div className="ph-sheet-top">
+        <button type="button" className="ph-iconbtn" onClick={onClose} aria-label="Close"><BackGlyph /></button>
+        <b>Go Live</b>
+      </div>
+      <div className="ph-body">
+        <div className="ph-panel">
+          <div className="ph-label">What You Are Calling It</div>
+          <input className="ph-input" value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)} />
+          <div className="ph-label">How Long, In Minutes</div>
+          <input className="ph-input" type="number" min={10} max={300} value={minutes} onChange={(e) => setMinutes(Number(e.target.value))} />
+          <p className="ph-card-meta">
+            Live takes the hours out of the day, brings in whatever slice of the people who follow
+            you is about, and collects whatever they chose to send while you were on. It leaves a
+            record of having happened and nothing on the grid.
+          </p>
+          <div className="ph-actions">
+            <button
+              type="button"
+              className="ph-btn-solid"
+              onClick={() => {
+                const result = run<{ peak: number; gifts: number }>('feed.go_live', {
+                  platform: PHOTO_PLATFORM, title, minutes,
+                }, { silent: true });
+                if (result.ok) {
+                  say(`${views(result.value!.peak)} watching at the peak. ${formatMoney(result.value!.gifts)} in.`);
+                  onClose();
+                } else say(result.error ?? 'That did not work.');
+              }}
+            >
+              Go Live
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -236,7 +236,7 @@ answer says what would make it yes.
    **Still to come:** clothes only soil when you commit a look, so a life
    lived through the Advance button never needs washing at all; and film kit
    is not yet a thing that lives in the house, which waits on section 6.
-5. **YouTube, Instagram and X done; TikTok to come.** There is a phone now. It is the
+5. **YouTube, Instagram, X and TikTok, all four built as their own apps.** There is a phone now. It is the
    newest iPhone SLATE knows of, or the one you bought, and the clock on it is
    the world clock, so an hour inside an app is an hour gone out of the day.
    YouTube on it is the app rather than a panel of numbers: the top bar, the
@@ -294,17 +294,20 @@ answer says what would make it yes.
    square for the channel circle and a wide one for the top of the channel page,
    each drawn into its frame and re-encoded small enough to live in a save.
 
-   And Instagram and X are their own apps beside it, written apart from each
-   other all the way down, because a photograph with a caption and a three
-   hundred character argument are not one object with two skins. Two hundred
-   and sixty accounts across sixteen subjects, a hundred and forty one on the
-   photo app and a hundred and nineteen on the text app, were posting for years
-   before you arrived and keep posting while you are away. Their back catalogs
-   are worked out rather than saved, the same way the video world is, so the
-   whole internet costs a save nothing. Between them the two generators can say
-   one and a half million things and never sound like each other: a caption
-   trails off, gets a tag on the end or says nothing at all, and a post on the
-   text app is an argument with a sentence stuck to the front or the back of it.
+   And Instagram, X and TikTok are their own apps beside it, written apart from
+   each other all the way down, because a photograph with a caption, a three
+   hundred character argument and the line over a fifteen second clip are not
+   one object with three skins. Three hundred and fifty one accounts across
+   sixteen subjects — a hundred and forty one on the photo app, a hundred and
+   nineteen on the text app and ninety one on the clip app — were posting for
+   years before you arrived and keep posting while you are away. Their back
+   catalogs are worked out rather than saved, the same way the video world is,
+   so the whole internet costs a save nothing. Between them the three
+   generators can say two and a half million things and never sound like each
+   other: a caption trails off, gets a tag on the end or says nothing at all, a
+   post on the text app is an argument with a sentence stuck to the front or
+   the back of it, and a hook is lowercase, starts in the middle and carries
+   its tags because that is how a clip is found at all.
 
    Instagram is the app: the plus top left, the wordmark in the middle with the
    chevron that switches For You and Following, the heart top right, the tray of
@@ -325,6 +328,16 @@ answer says what would make it yes.
    you read it, a private account grows more slowly because fewer people see it,
    and Time Management is the real clock rather than an estimate.
 
+   And the parts of Instagram that were only pictures of parts are parts now. A
+   post can be up to ten photographs with the dots under it and the count pill
+   on the corner, built in the composer one picture at a time. A story can be
+   for the close friends only, and one of those reaches you only where the two
+   of you are close, which the tray rings in green. Activity is the app's own
+   page: what was liked, who followed, and what was said under yours. Live
+   takes the hours, brings in whoever is about and collects what they sent.
+   Saved posts go into folders you name, and the folders are on Settings And
+   Activity where the app keeps them.
+
    X is the app: your picture top left onto the drawer, the mark in the middle,
    For You and Following under it, and five icons with no labels along the
    bottom with the blue button floating above them. A post carries reply,
@@ -335,7 +348,42 @@ answer says what would make it yes.
    News, Sports and Entertainment. Your page is the banner, the join date, the
    two counts, Share and Edit, the four tabs and who to follow. The assistant
    answers out of this save and nothing else, and says so rather than pretending
-   to be a language model.
+   to be a language model. A post can be a thread: up to twenty five of them,
+   each with its own counter, chained in the order you wrote them.
+
+   And the three rooms in that drawer are rooms rather than lists of names. A
+   community is the app's, one to a subject, made of the accounts that are
+   actually about it, and you join it or you do not; joining puts its timeline
+   a tap away. A list is yours: you name it, search the app for who goes on it,
+   take one off again, read the timeline of only those, and delete the whole
+   thing. A space is an hour you host out loud: it takes the hours out of the
+   day, draws the slice of your followers who happen to be about, leaves a
+   record of how many came at the top of it, and leaves you with people who
+   follow you afterwards. Nobody pretends a room is live when the save is not
+   running.
+
+   TikTok is the app: the clip full bleed with Following and For You across the
+   top, the rail down the right of the account, the heart, the comments, the
+   save, the share and the spinning disc, and along the bottom the handle, the
+   Follow button, the hook and what it was shot to. Discover is the search
+   field, the tags and a grid of covers with a play count on each. Inbox is who
+   followed you and what your own clips did. Your page is the counts, Edit
+   Profile, and the grid of what you have put up. Creating one is the cover,
+   the length, the hook, the hours it took and whether it goes up now or later.
+   Live is the hours, the people and the gifts. The money is the app's own: it
+   pays on the views that stayed rather than on the views that scrolled by, and
+   only once there are ten thousand of you.
+
+   And the two players that were flat are the players the apps have. A short on
+   YouTube fills the screen with the rail of Like, Dislike, Comments, Share,
+   Remix and the sound stacked down the right, the channel with Subscribe
+   beside it along the bottom, and the next one a tap away. Create opens on the
+   camera it opens on: flip, speed, countdown, effects and cover down the right
+   rail, the three lengths and the record button along the bottom, and every
+   one of them does the thing it says — the countdown counts down, the speed
+   decides how much of your time the take costs, the effect picks the look the
+   cover is drawn in, and the sound you shoot to is carried onto the short and
+   shown under it.
 
    And the money is each app's own. X pays a share of the advertising sold
    against the impressions a Premium account earns, and Premium is a real
@@ -363,7 +411,8 @@ answer says what would make it yes.
    caption and message box, and a drawer of seventy two behind it. The weather
    has its picture back too, beside the word and never instead of it.
 
-   **Still to come:** TikTok as its own app.
+   **Still to come:** the brand marks are SLATE's own drawings rather than the
+   real logotypes, which stay out until they are licensed.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.

@@ -203,13 +203,13 @@
 .ph-app-name { font-size: 11px; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
 .ph-dock {
   margin: 14px -8px 8px;
-  padding: 12px 10px;
+  padding: 12px 8px;
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(12px);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
   flex: none;
 }
 .ph-dock .ph-app-name { display: none; }
@@ -425,18 +425,98 @@
   padding: 16px 70px 20px 16px;
   background: linear-gradient(200deg, #2b3444 0%, #141a24 55%, #0a0d12 100%);
 }
-.ph-short-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.ph-short-stage { position: absolute; inset: 0; border: 0; background: none; padding: 0; cursor: pointer; }
+.ph-short-top {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; font-size: 15px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent);
+}
+.ph-short-top .ph-right { display: flex; align-items: center; gap: 14px; }
+.ph-short-title { font-size: 14px; font-weight: 600; margin: 8px 0 0; }
 .ph-short-meta { font-size: 12px; opacity: 0.75; }
 .ph-short-rail {
-  position: absolute; right: 10px; bottom: 22px;
-  display: flex; flex-direction: column; gap: 18px; align-items: center;
+  position: absolute; right: 8px; bottom: 18px; z-index: 2;
+  display: flex; flex-direction: column; gap: 16px; align-items: center;
 }
 .ph-short-rail button {
   background: none; border: 0; color: #fff; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  font-size: 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-size: 11px;
 }
-.ph-short-rail .ph-glyph { font-size: 21px; }
+.ph-short-rail .ph-glyph {
+  display: grid; place-items: center; width: 40px; height: 40px;
+  border-radius: 50%; background: rgba(255, 255, 255, 0.14);
+}
+.ph-short-disc {
+  display: grid; place-items: center; width: 34px; height: 34px; margin-top: 2px;
+  border-radius: 50%; background: #2b2b2b; border: 2px solid rgba(255, 255, 255, 0.55);
+}
+.ph-short-foot { position: relative; z-index: 2; }
+.ph-short-who { display: flex; align-items: center; gap: 8px; }
+.ph-short-who button:first-child {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: 0; padding: 0; color: #fff; cursor: pointer;
+  font: inherit;
+}
+.ph-short-who b { font-size: 13px; font-weight: 600; }
+.ph-short-sub {
+  padding: 5px 12px; border-radius: 999px; border: 0; cursor: pointer;
+  background: #fff; color: #0f0f0f; font-size: 12px; font-weight: 600;
+}
+.ph-short-sub.ph-on { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.ph-short-sound { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; opacity: 0.85; }
+
+/* The camera screen a short is shot on. */
+.ph-cam { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; }
+.ph-cam-stage {
+  position: relative; min-height: 300px; flex: 1;
+  background: linear-gradient(200deg, #232a36 0%, #14181f 60%, #0a0c10 100%);
+  color: #fff;
+}
+.ph-cam-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-cam-sound {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 2;
+  display: flex; align-items: center; gap: 6px; max-width: 62%;
+  padding: 6px 12px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(0, 0, 0, 0.55); color: #fff; font-size: 12px; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ph-cam-facing {
+  position: absolute; bottom: 10px; left: 12px; z-index: 2;
+  font-size: 11px; opacity: 0.8;
+}
+.ph-cam-count {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; place-items: center; font-size: 54px; font-weight: 700;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+.ph-cam-rail {
+  position: absolute; top: 54px; right: 8px; z-index: 2;
+  display: flex; flex-direction: column; gap: 14px; align-items: center;
+}
+.ph-cam-rail button {
+  background: none; border: 0; color: #fff; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px;
+}
+.ph-cam-rail .ph-glyph {
+  display: grid; place-items: center; width: 36px; height: 36px;
+  border-radius: 50%; background: rgba(255, 255, 255, 0.16);
+}
+.ph-cam-panel { padding: 10px 12px 4px; background: var(--ph-surface); }
+.ph-cam-foot { padding: 10px 12px 16px; }
+.ph-cam-lengths { display: flex; justify-content: center; gap: 14px; margin-bottom: 12px; }
+.ph-cam-lengths button {
+  background: none; border: 0; cursor: pointer; padding: 4px 8px;
+  color: var(--ph-muted); font-size: 12px; font-weight: 600;
+}
+.ph-cam-lengths button.ph-on { color: var(--ph-text); border-bottom: 2px solid #f00; }
+.ph-cam-record {
+  display: block; margin: 0 auto; width: 68px; height: 68px; padding: 0;
+  border-radius: 50%; border: 4px solid rgba(255, 0, 0, 0.35); background: none; cursor: pointer;
+}
+.ph-cam-record span { display: block; width: 100%; height: 100%; border-radius: 50%; background: #f00; }
+.ph-cam-record:disabled { opacity: 0.6; cursor: default; }
 
 /* -------------------------------------------------------------------------- */
 /* Bottom navigation                                                          */

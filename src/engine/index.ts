@@ -1003,6 +1003,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
   }
 
+  if (from < 53) {
+    // Schema 53: the short video app, the rooms on the text app, and follows
+    // that run in both directions so a follower is a person and not a number.
+    universe.socialRooms ??= {};
+    steps.push('TikTok, the rooms, and the people who follow you back.');
+  }
+
   if (from < 52) {
     // Schema 52: the photo app and the text app. Empty collections, filled on
     // load; nothing already saved is touched.

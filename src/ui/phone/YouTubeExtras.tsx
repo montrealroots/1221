@@ -43,6 +43,14 @@ export function ago(now: number, then: number): string {
   return `${y} year${y === 1 ? '' : 's'} ago`;
 }
 
+/**
+ * A count with its noun, agreeing with itself. `views` alone gives 1 likes,
+ * which every one of these apps gets right and a game should too.
+ */
+export function tally(count: number, one: string, many = `${one}s`): string {
+  return `${views(count)} ${count === 1 ? one : many}`;
+}
+
 export function tint(name: string): string {
   let hash = 0;
   for (let i = 0; i < name.length; i += 1) hash = (hash * 31 + name.charCodeAt(i)) % 360;

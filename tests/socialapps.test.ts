@@ -15,12 +15,15 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { PHOTO_PROFILES, REAL_PROFILES, SOCIAL_TOPICS, TEXT_PROFILES } from '@/engine/content/socialworld';
 import { CAPTION_FRAME, CAPTION_KITS, POST_FRAME, POST_KITS, textSpace } from '@/engine/content/socialposts';
+import { CLIP_PROFILES } from '@/engine/content/clipworld';
 import {
-  GIFT_STEPS, PHOTO_PLATFORM, PHOTO_VERIFIED_MONTHLY, STORY_HOURS, TEXT_LIMIT, TEXT_PLATFORM,
-  X_PREMIUM_MONTHLY, buildSocialPayout, catalogOf, exploreFeed, followedIds, followingFeed,
-  homeFeed, impressionsOf, isBlocked, isFollowing, isHidden, isMuted, itemById, messagesWith,
-  myProfile, newestOf, noteOf, profileByHandle, profilesOf, recentItems, repliesTo, screenTime,
-  searchSocial, settingsOf, socialAnalytics, storiesFor, storyOf, threadsOf, trends,
+  CLIP_FLOOR, CLIP_PLATFORM, CLIP_QUALIFIED, CLIP_RPM, GIFT_STEPS, PHOTO_PLATFORM,
+  PHOTO_VERIFIED_MONTHLY, STORY_HOURS, TEXT_LIMIT, TEXT_PLATFORM, X_PREMIUM_MONTHLY,
+  buildSocialPayout, catalogOf, collectionsOf, exploreFeed, followedIds, followersOf,
+  followingFeed, homeFeed, impressionsOf, isBlocked, isFollowing, isHidden, isMuted, itemById,
+  messagesWith, myProfile, newestOf, noteOf, profileByHandle, profileById, profilesOf,
+  recentItems, repliesTo, roomById, roomsOf, screenTime, searchSocial, settingsOf,
+  socialAnalytics, storiesFor, storyOf, threadsOf, trends,
 } from '@/engine/systems/socialapps';
 import type { Simulation } from '@/engine/core/simulation';
 import type { PlatformId, SocialProfile } from '@/engine/domain/model';
@@ -45,8 +48,8 @@ describe('a world that was already posting', () => {
   it('has every account on the roster, with a feed behind each one', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'social-world');
     const all = profilesOf(sim);
-    expect(all.length).toBe(REAL_PROFILES.length);
-    expect(all.length).toBeGreaterThanOrEqual(240);
+    expect(all.length).toBe(REAL_PROFILES.length + CLIP_PROFILES.length);
+    expect(all.length).toBeGreaterThanOrEqual(340);
     expect(profilesOf(sim, PHOTO_PLATFORM).length).toBe(PHOTO_PROFILES.length);
     expect(profilesOf(sim, TEXT_PLATFORM).length).toBe(TEXT_PROFILES.length);
 
@@ -61,7 +64,7 @@ describe('a world that was already posting', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'social-size');
     // The accounts are stored. What they said is derived, so a fresh save
     // holds no posts at all.
-    expect(Object.keys(sim.universe.socialProfiles).length).toBe(REAL_PROFILES.length);
+    expect(Object.keys(sim.universe.socialProfiles).length).toBe(REAL_PROFILES.length + CLIP_PROFILES.length);
     expect(Object.keys(sim.universe.socialItems).length).toBe(0);
   });
 
@@ -603,5 +606,226 @@ describe('messages', () => {
     expect(noteOf(sim, mine)).toBe('Out on the water.');
     sim.advanceTo(sim.now + 2 * DAY);
     expect(noteOf(sim, mine)).toBeUndefined();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The clip app, the rooms, threads, close friends and saved folders
+// ---------------------------------------------------------------------------
+
+describe('the clip app', () => {
+  it('has the clip roster, each account with something behind it', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'clip-world');
+    const all = profilesOf(sim, CLIP_PLATFORM);
+    expect(all.length).toBe(CLIP_PROFILES.length);
+    for (const profile of all) {
+      expect(profile.posts).toBeGreaterThan(0);
+      const catalog = catalogOf(sim, profile);
+      expect(catalog.length).toBeGreaterThan(0);
+      expect(catalog.every((item) => item.kind === 'clip')).toBe(true);
+      expect(catalog.every((item) => (item.sound ?? '').length > 0)).toBe(true);
+    }
+  });
+
+  it('posts a clip and takes the hour it takes', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'clip-post');
+    makeMine(sim, CLIP_PLATFORM, 'yourclips');
+    const before = sim.now;
+    const result = sim.execute<{ itemId: string }>({
+      kind: 'feed.post',
+      payload: { platform: CLIP_PLATFORM, kind: 'clip', text: 'Three ways to hold a camera still.', images: ['data:x'] },
+    });
+    expect(result.ok).toBe(true);
+    expect(sim.now - before).toBe(70 * 60_000);
+    const item = itemById(sim, result.value!.itemId);
+    expect(item?.kind).toBe('clip');
+    expect(item?.byPlayer).toBe(true);
+  });
+
+  it('will not put a text post on the clip app', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'clip-kind');
+    makeMine(sim, CLIP_PLATFORM, 'yourclips');
+    const result = sim.execute({
+      kind: 'feed.post',
+      payload: { platform: CLIP_PLATFORM, kind: 'text', text: 'Not a clip.' },
+    });
+    expect(result.ok).toBe(false);
+  });
+
+  it('pays the clip app on the views that stayed, and nothing under the floor', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'clip-money');
+    const made = makeMine(sim, CLIP_PLATFORM, 'yourclips');
+    const profile = profilesOf(sim, CLIP_PLATFORM).find((p) => p.id === made.value!.profileId)!;
+    const month = sim.now;
+    sim.execute({
+      kind: 'feed.post',
+      payload: { platform: CLIP_PLATFORM, kind: 'clip', text: 'A clip that went a long way.', images: ['data:x'] },
+    });
+
+    profile.followers = CLIP_FLOOR - 1;
+    expect(buildSocialPayout(sim, CLIP_PLATFORM, month).ads).toBe(0);
+
+    profile.followers = CLIP_FLOOR + 5_000;
+    const paid = buildSocialPayout(sim, CLIP_PLATFORM, month);
+    const impressions = catalogOf(sim, profile)
+      .filter((item) => item.at >= month)
+      .reduce((sum, item) => sum + impressionsOf(item), 0);
+    expect(paid.ads).toBe(Math.round(((impressions * CLIP_QUALIFIED) / 1000) * CLIP_RPM));
+  });
+});
+
+describe('communities, lists and spaces', () => {
+  it('has a community for every subject, with the accounts of that subject in it', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'rooms-world');
+    const communities = roomsOf(sim, 'community');
+    expect(communities.length).toBe(SOCIAL_TOPICS.filter(
+      (topic) => profilesOf(sim, TEXT_PLATFORM).some((p) => !p.ownerId && p.topic === topic),
+    ).length);
+    for (const room of communities) {
+      expect(room.profileIds.length).toBeGreaterThan(0);
+      expect(room.members).toBeGreaterThan(0);
+      expect(room.joined).not.toBe(true);
+    }
+  });
+
+  it('joins a community and leaves it again', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'rooms-join');
+    const room = roomsOf(sim, 'community')[0]!;
+    const members = room.members;
+
+    expect(sim.execute<{ joined: boolean }>({ kind: 'feed.join_room', payload: { roomId: room.id } }).value?.joined).toBe(true);
+    expect(roomById(sim, room.id)!.members).toBe(members + 1);
+    expect(sim.execute<{ joined: boolean }>({ kind: 'feed.join_room', payload: { roomId: room.id } }).value?.joined).toBe(false);
+    expect(roomById(sim, room.id)!.members).toBe(members);
+  });
+
+  it('makes a list, puts people on it, takes one off, and will not take the same name twice', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'rooms-list');
+    const made = sim.execute<{ roomId: string }>({ kind: 'feed.create_list', payload: { name: 'Morning Reading' } });
+    expect(made.ok).toBe(true);
+    const roomId = made.value!.roomId;
+    expect(roomById(sim, roomId)!.mine).toBe(true);
+
+    expect(sim.execute({ kind: 'feed.create_list', payload: { name: 'morning reading' } }).ok).toBe(false);
+
+    const [first, second] = profilesOf(sim, TEXT_PLATFORM).filter((p) => !p.ownerId).slice(0, 2);
+    sim.execute({ kind: 'feed.edit_list', payload: { roomId, profileId: first!.id } });
+    sim.execute({ kind: 'feed.edit_list', payload: { roomId, profileId: second!.id } });
+    // The same account twice is still one account on the list.
+    sim.execute({ kind: 'feed.edit_list', payload: { roomId, profileId: first!.id } });
+    expect(roomById(sim, roomId)!.profileIds.length).toBe(2);
+
+    sim.execute({ kind: 'feed.edit_list', payload: { roomId, profileId: first!.id, remove: true } });
+    expect(roomById(sim, roomId)!.profileIds).toEqual([second!.id]);
+
+    expect(sim.execute({ kind: 'feed.delete_list', payload: { roomId } }).ok).toBe(true);
+    expect(roomById(sim, roomId)).toBeUndefined();
+  });
+
+  it('will not edit a community as though it were your list', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'rooms-guard');
+    const room = roomsOf(sim, 'community')[0]!;
+    const profile = profilesOf(sim, TEXT_PLATFORM).find((p) => !p.ownerId)!;
+    expect(sim.execute({ kind: 'feed.edit_list', payload: { roomId: room.id, profileId: profile.id } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'feed.delete_list', payload: { roomId: room.id } }).ok).toBe(false);
+  });
+
+  it('holds a space, which takes the hour and leaves a record of who came', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'rooms-space');
+    expect(sim.execute({ kind: 'feed.start_space', payload: { name: 'Nobody Here Yet' } }).ok).toBe(false);
+
+    const made = makeMine(sim, TEXT_PLATFORM, 'yourname');
+    const profile = profilesOf(sim, TEXT_PLATFORM).find((p) => p.id === made.value!.profileId)!;
+    profile.followers = 40_000;
+    const before = sim.now;
+
+    const held = sim.execute<{ roomId: string; peak: number }>({
+      kind: 'feed.start_space', payload: { name: 'Late Night Questions', minutes: 90 },
+    });
+    expect(held.ok).toBe(true);
+    expect(sim.now - before).toBe(90 * 60_000);
+
+    const space = roomById(sim, held.value!.roomId)!;
+    expect(space.kind).toBe('space');
+    expect(space.mine).toBe(true);
+    expect(space.endedAt).toBe(sim.now);
+    expect(space.peak).toBe(held.value!.peak);
+    expect(space.peak).toBeGreaterThan(0);
+    expect(screenTime(sim, TEXT_PLATFORM)).toBeGreaterThanOrEqual(90);
+    // A room that went well leaves you with people who follow you.
+    expect(profile.followers).toBeGreaterThanOrEqual(40_000);
+  });
+
+  it('gives you followers you can actually look at', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'rooms-followers');
+    const made = makeMine(sim, CLIP_PLATFORM, 'yourclips');
+    const profile = profilesOf(sim, CLIP_PLATFORM).find((p) => p.id === made.value!.profileId)!;
+    profile.followers = 90_000;
+    sim.execute({ kind: 'feed.go_live', payload: { platform: CLIP_PLATFORM, title: 'Answering things', minutes: 60 } });
+
+    const followers = followersOf(sim, profile.id);
+    expect(followers.length).toBeGreaterThan(0);
+    expect(followers.length).toBeLessThanOrEqual(6);
+    for (const follow of followers) {
+      expect(profileById(sim, follow.byProfileId!)).toBeDefined();
+    }
+  });
+});
+
+describe('a thread', () => {
+  it('chains the posts, oldest first', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'thread');
+    makeMine(sim, TEXT_PLATFORM, 'yourname');
+    const result = sim.execute<{ itemIds: string[] }>({
+      kind: 'feed.thread',
+      payload: { parts: ['One thing.', 'And the rest of it.', 'And what it means.'] },
+    });
+    expect(result.ok).toBe(true);
+    const ids = result.value!.itemIds;
+    expect(ids.length).toBe(3);
+    expect(itemById(sim, ids[0]!)!.parentId).toBeUndefined();
+    expect(itemById(sim, ids[1]!)!.parentId).toBe(ids[0]);
+    expect(itemById(sim, ids[2]!)!.parentId).toBe(ids[1]);
+  });
+
+  it('refuses one post, and one that runs over the limit', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'thread-guard');
+    makeMine(sim, TEXT_PLATFORM, 'yourname');
+    expect(sim.execute({ kind: 'feed.thread', payload: { parts: ['Only this.'] } }).ok).toBe(false);
+    expect(sim.execute({
+      kind: 'feed.thread', payload: { parts: ['Fine.', 'x'.repeat(TEXT_LIMIT + 1)] },
+    }).ok).toBe(false);
+  });
+});
+
+describe('close friends and saved folders', () => {
+  it('keeps a close friends story off the tray of somebody who is not one', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'close-friends');
+    // Stories go up through the day, so look at the tray in the evening.
+    sim.advanceTo(sim.now + 15 * HOUR);
+    // Some of what the world puts up is for the few. Find one of those.
+    const them = profilesOf(sim, PHOTO_PLATFORM)
+      .filter((p) => !p.ownerId)
+      .find((p) => storyOf(sim, p)?.closeOnly);
+    expect(them).toBeDefined();
+    sim.execute({ kind: 'feed.follow', payload: { profileId: them!.id } });
+
+    const storyId = storyOf(sim, them!)!.id;
+    expect(storiesFor(sim, sim.player.id).some((story) => story.id === storyId)).toBe(false);
+
+    sim.execute({ kind: 'feed.close_friend', payload: { profileId: them!.id, close: true } });
+    expect(storiesFor(sim, sim.player.id).some((story) => story.id === storyId)).toBe(true);
+  });
+
+  it('files a saved post into a folder and keeps the folders apart', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'collections');
+    const [first, second] = recentItems(sim, PHOTO_PLATFORM, 2).slice(0, 2);
+    sim.execute({ kind: 'feed.bookmark', payload: { itemId: first!.id, collection: 'Kitchens' } });
+    sim.execute({ kind: 'feed.bookmark', payload: { itemId: second!.id } });
+
+    const folders = collectionsOf(sim);
+    expect(folders.map((f) => f.name)).toEqual(['All Posts', 'Kitchens']);
+    expect(folders.find((f) => f.name === 'Kitchens')!.items.map((i) => i.id)).toEqual([first!.id]);
+    expect(folders.find((f) => f.name === 'All Posts')!.items.map((i) => i.id)).toEqual([second!.id]);
   });
 });
