@@ -192,6 +192,14 @@ before any delivery claim.
 
     **The money is honest about itself.** A steel sports reference has a list price nobody can buy it at and a market price that moves weekly, so the references that hold or gain value carry a negative depreciation and read as appreciating on the row, and the ones that trade above list carry a `grail` or `waitlist` tag. Every number is a calibration of what it costs to own the watch, labeled as one. `tests/maisons.test.ts` grew four more promises: the hundred, a real spread of references per watchmaker and all four jewelry pegs per jeweler, the appreciation marked rather than assumed, and the calibration stamp on every row. Three real names the checkers flagged are allowlisted with the reason written down: **Bulgari Aluminium** and **Bulgari Bulgari**, which is what the house calls the collection, and Omega's **Grey Side Of The Moon** and **Calibre 321**.
 
+28. Stage 26 — the outfitters, what people actually wear. `content/outfitters.ts`, 814 new real products: **Moncler 105, Stone Island 104, The North Face 104, Canada Goose 102, Levi’s 109, Carhartt 103, Patagonia 109, Uniqlo 107**, all eight added to the gate's headline list. Fifty-two brands now stand at a hundred or more, out of 1,450, and the checker prints both numbers every run.
+
+    These are not houses and are not built like houses. Nobody buys a fragrance from Carhartt, so none is invented for it. Each name is filled out as the thing it is actually for: Moncler and Canada Goose as down, by collection and by parka; Stone Island by fabric and dye, which is what the company sells; The North Face across Nuptse, Denali, Summit Series, Steep Tech and the VECTIV soles; Levi’s by fit and finish, 501 through 568, trucker jackets and westerns; Carhartt across the duck workwear and the WIP line beside it; Patagonia through fleece, insulation, shells, the Baggies and the Black Hole bags; Uniqlo across HEATTECH, AIRism, Ultra Light Down, the +J and U and JW Anderson collaborations, and the everyday basics that are most of what the shop is.
+
+    **Two of the eight sell no shoes.** Patagonia and Uniqlo do not run a shoe line SLATE can point at, so neither has one here, and a test holds that absence in place the same way Fendi's missing fragrance is held. **Levi’s nearly became two companies:** three older rows used a straight apostrophe and the new ones a curly one, which split the brand in the catalog and sold the same 501s twice. The older rows and the shopfront were normalised, the duplicate rows deleted, and a test now fails if a second Levi’s ever appears. Twelve more products collided with rows that already existed elsewhere in the catalog; the older ids won, the new duplicates were deleted, and real products were written to replace them. `tests/maisons.test.ts` grew eight promises for the outfitters: the hundred, a whole person dressable from each name, a coat maker with real coats cut for winter, shoes only where the company makes them, one Levi’s with denim in every fit, a real wardrobe peg on every wearable, the calibration stamp on every row, and a real shop for each. One allowlist entry was added with its reason: **Pom Pom**, which is what is on the Moncler beanie.
+
+    **Found on the tour and not yet fixed:** any shop that sells clothing can sell any garment, so Primark lists a Moncler T-shirt and Gucci's boutique would sell a pack of Hanes briefs. The stocking rule is the next stage, not this one.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -202,6 +210,7 @@ before any delivery claim.
     - A rating feed would be needed for a real insurance premium; an issuer's real invitation rule is published by nobody.
     - The dialogue library stands at 1,296 of the 100,001 target; that is writing, not building.
     - Base44 live persistence is unverified against a deployment, and is reported unavailable rather than passing.
+    - Any shop carrying a category can sell anything in it, so a discount chain lists a luxury coat and a house's own boutique sells another brand's socks. Next up rather than parked.
 
 17. Next — a boat trip and a private flight as played days; the salon, the garage counter and the cinema as rooms with somebody in them; and the dialogue programme, which is writing rather than building.
 

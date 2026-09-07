@@ -317,8 +317,8 @@ export const REAL_CLOTHING: readonly RealGood[] = [
   cl('c_ganni_top', 'Ganni Printed Mesh Top', 'Ganni', 'top', 185_00, 'top', 34, 72, 0.36),
 
   // --- Bottoms -------------------------------------------------------------------------------------
-  cl('c_levis_501', "Levi's 501 Original Fit Jeans", "Levi's", 'bottom', 98_00, 'bottom', 18, 72, 0.24),
-  cl('c_levis_511', "Levi's 511 Slim Fit Jeans", "Levi's", 'bottom', 79_50, 'bottom', 18, 68, 0.26),
+  cl('c_levis_501', 'Levi’s 501 Original Fit Jeans', 'Levi’s', 'bottom', 98_00, 'bottom', 18, 72, 0.24),
+  cl('c_levis_511', 'Levi’s 511 Slim Fit Jeans', 'Levi’s', 'bottom', 79_50, 'bottom', 18, 68, 0.26),
   cl('c_apc_petit', 'A.P.C. Petit New Standard Jeans', 'A.P.C.', 'bottom', 245_00, 'bottom', 22, 86, 0.18),
   cl('c_orslow_107', 'Orslow 107 Ivy Fit Jeans', 'Orslow', 'bottom', 320_00, 'bottom', 22, 90, 0.16),
   cl('c_nudie_grim', 'Nudie Jeans Grim Tim', 'Nudie Jeans', 'bottom', 175_00, 'bottom', 20, 78, 0.20),
@@ -356,7 +356,7 @@ export const REAL_CLOTHING: readonly RealGood[] = [
   cl('c_uniqlo_ultra_light', 'Uniqlo Ultra Light Down Jacket', 'Uniqlo', 'outerwear', 69_90, 'outerwear', 16, 62, 0.30, ['Autumn', 'Winter']),
   cl('c_stone_island_crinkle', 'Stone Island Garment Dyed Crinkle Reps Jacket', 'Stone Island', 'outerwear', 895_00, 'outerwear', 22, 88, 0.16, SPRING_AUTUMN_WINTER),
   cl('c_carhartt_detroit', 'Carhartt WIP Detroit Jacket', 'Carhartt WIP', 'outerwear', 265_00, 'outerwear', 18, 80, 0.16, SPRING_AUTUMN_WINTER),
-  cl('c_levis_trucker', "Levi's Type III Trucker Jacket", "Levi's", 'outerwear', 98_00, 'outerwear', 16, 70, 0.22, ['Spring', 'Autumn']),
+  cl('c_levis_trucker', 'Levi’s Type III Trucker Jacket', 'Levi’s', 'outerwear', 98_00, 'outerwear', 16, 70, 0.22, ['Spring', 'Autumn']),
   cl('c_loro_storm', 'Loro Piana Storm System Roadster Coat', 'Loro Piana', 'outerwear', 5_450_00, 'outerwear', 70, 98, 0.10, ['Autumn', 'Winter']),
   cl('c_herno_coat', 'Herno Laminar Wool Coat', 'Herno', 'outerwear', 1_190_00, 'outerwear', 62, 88, 0.14, ['Autumn', 'Winter']),
 

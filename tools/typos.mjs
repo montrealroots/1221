@@ -89,6 +89,8 @@ const REAL_DOUBLES = new Set([
   'black',
   // Pago Pago, the capital of American Samoa. A place, not a slip.
   'pago',
+  // A pom pom on a Moncler beanie. Two words, both of them wanted.
+  'pom',
 ]);
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

@@ -26,6 +26,7 @@ import { REAL_KIT } from './kit';
 import { REAL_ICE } from './ice';
 import { REAL_MAISONS } from './maisons';
 import { REAL_HOROLOGY } from './horology';
+import { REAL_OUTFITTERS } from './outfitters';
 import { REAL_ADORNMENT } from './adornment';
 import { withAudience } from './audience';
 
@@ -272,7 +273,7 @@ const REAL_ITEMS: readonly CatalogItem[] = withAudience(([] as RealGood[]).conca
   REAL_EQUIPMENT as RealGood[], REAL_ART as RealGood[], REAL_BOOKS as RealGood[], REAL_TOP_UP as RealGood[],
   REAL_INTIMATES as RealGood[], REAL_ADORNMENT as RealGood[],
   REAL_SNEAKERS as RealGood[], REAL_LABELS as RealGood[], REAL_SPORTSWEAR as RealGood[],
-  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[],
+  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[], REAL_OUTFITTERS as RealGood[],
 )) as unknown as CatalogItem[];
 
 export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...LEGACY_ITEMS]);

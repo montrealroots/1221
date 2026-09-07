@@ -15,6 +15,7 @@
 import { describe, expect, it } from 'vitest';
 import { REAL_MAISONS } from '@/engine/content/maisons';
 import { REAL_HOROLOGY } from '@/engine/content/horology';
+import { REAL_OUTFITTERS } from '@/engine/content/outfitters';
 import { RETAILERS, shoppableItems } from '@/engine/content/catalog';
 import { SLOTS } from '@/engine/content/wardrobe';
 
@@ -162,6 +163,94 @@ describe('the watchmakers and the jewelers at catalog depth', () => {
       expect(piece.source, piece.id).toBe('calibrated_estimate');
       expect(piece.note, piece.id).toMatch(/calibration/);
       expect(piece.basePrice, piece.id).toBeGreaterThan(0);
+    }
+  });
+});
+
+/**
+ * The outfitters are held to the same hundred, but not to the shape of a
+ * house. Nobody buys a fragrance from Carhartt. What they are held to is the
+ * thing they are actually for: a coat maker sells coats and sells them for
+ * the cold, a denim maker sells denim in every fit, each of them can dress a
+ * whole person, and none of them sells a shoe line the company does not
+ * really have.
+ */
+const OUTFITTERS = ['Moncler', 'Stone Island', 'The North Face', 'Canada Goose', 'Levi’s', 'Carhartt', 'Patagonia', 'Uniqlo'] as const;
+/** The five whose reason for existing is keeping a person warm. */
+const COLD = ['Moncler', 'Stone Island', 'The North Face', 'Canada Goose', 'Patagonia'] as const;
+/** Two of the eight make no shoes, so SLATE sells none under their name. */
+const NO_SHOES = ['Patagonia', 'Uniqlo'] as const;
+
+describe('the outfitters at the depth people actually own them', () => {
+  it('carries a hundred real pieces or more under every one of them', () => {
+    for (const label of OUTFITTERS) {
+      expect(piecesOf(label).length, `${label} is short of ${TARGET}`).toBeGreaterThanOrEqual(TARGET);
+    }
+    expect(REAL_OUTFITTERS.length).toBeGreaterThanOrEqual(780);
+  });
+
+  it('can dress a whole person rather than fill one rail', () => {
+    for (const label of OUTFITTERS) {
+      const mine = piecesOf(label);
+      const pegs = new Set(mine.map((i) => i.slot).filter(Boolean));
+      expect(pegs.size, `${label} only fills ${pegs.size} pegs`).toBeGreaterThanOrEqual(8);
+      for (const peg of ['top', 'bottom', 'outerwear']) {
+        expect(pegs, `${label} has nothing for the ${peg} peg`).toContain(peg);
+      }
+      expect(mine.some((i) => i.category === 'accessory'), `${label} sells no accessories`).toBe(true);
+    }
+  });
+
+  it('gives a coat maker real coats, cut for the season it is cold in', () => {
+    for (const maker of COLD) {
+      const coats = piecesOf(maker).filter((i) => i.subcategory === 'outerwear');
+      expect(coats.length, `${maker} sells only ${coats.length} coats`).toBeGreaterThanOrEqual(20);
+      const forWinter = coats.filter((i) => (i.seasons ?? []).includes('Winter'));
+      expect(forWinter.length, `${maker} has no winter coat`).toBeGreaterThanOrEqual(20);
+    }
+  });
+
+  it('sells shoes only under the names that really make them', () => {
+    for (const label of OUTFITTERS) {
+      const shoes = piecesOf(label).filter((i) => i.category === 'footwear');
+      if ((NO_SHOES as readonly string[]).includes(label)) {
+        expect(shoes.length, `${label} does not make shoes and should sell none`).toBe(0);
+        continue;
+      }
+      expect(shoes.length, `${label} makes shoes and sells none`).toBeGreaterThan(0);
+    }
+  });
+
+  it('keeps Levi’s one company, with denim in every fit', () => {
+    // The apostrophe matters: a straight one splits the company in two and
+    // sells the same pair of jeans twice.
+    expect(shoppableItems().filter((i) => i.brand === "Levi's").length, 'a second Levi’s has appeared').toBe(0);
+    const denim = piecesOf('Levi’s').filter((i) => i.subcategory === 'denim' || i.subcategory === 'bottom');
+    expect(denim.length, 'Levi’s is short of denim').toBeGreaterThanOrEqual(40);
+  });
+
+  it('hangs every wearable piece on a peg the wardrobe actually has', () => {
+    for (const piece of REAL_OUTFITTERS) {
+      if (piece.slot === undefined) continue;
+      expect(SLOTS as readonly string[], `${piece.id} hangs on ${piece.slot}`).toContain(piece.slot);
+    }
+  });
+
+  it('says on every row that the price is SLATE’s own calibration', () => {
+    for (const piece of REAL_OUTFITTERS) {
+      expect(piece.source, piece.id).toBe('calibrated_estimate');
+      expect(piece.note, piece.id).toBeTruthy();
+      expect(piece.basePrice, piece.id).toBeGreaterThan(0);
+      expect(piece.quality, piece.id).toBeGreaterThan(0);
+    }
+  });
+
+  it('gives every outfitter a real shop to be bought in', () => {
+    const shops = new Map(RETAILERS.all().map((r) => [r.name, r]));
+    for (const label of OUTFITTERS) {
+      const shop = shops.get(label);
+      expect(shop, `${label} has no retailer`).toBeDefined();
+      expect(shop!.categories).toContain('clothing');
     }
   });
 });
