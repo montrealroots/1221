@@ -66,6 +66,7 @@ Anywhere (`/`) searches all of it.
 | `life.meal` | The City, World | `go.to`, `dine.arrive`, `dine.wait`, `dine.leave`, `dine.order`, `dine.settle` | Yes | tests/scene-definitions.test.ts, tests/dining.test.ts |
 | `life.shop` | Shopping, The City | `go.to`, `retail.enter`, `retail.handle`, `retail.try_on`, `retail.basket`, `retail.walk_out`, `retail.pay`, `shop.purchase` | Yes (it looks and leaves; it never spends for you) | tests/dining.test.ts |
 | `life.dress` | Shopping (Wardrobe), Home | `wear.put_on`, `wear.take_off`, `wear.outfit`, `wear.leave_in_it`, `wear.clean`, `wear.save_look` | Yes | tests/wardrobe.test.ts, tests/scene-definitions.test.ts |
+| `life.jeweller` | The City, a jeweller's door | `jewel.look`, `jewel.commission`, `jewel.approve`, `jewel.collect`, `jewel.cancel` | Yes (it collects what is paid for; it never orders for you) | tests/jewellery.test.ts |
 | `life.run` | Wellbeing | `go.to`, `life.do_activity` | Yes | tests/scene-definitions.test.ts |
 | `vehicles.dealer` | Vehicles market, The City | `go.to`, `deal.open`, `deal.inspect`, `deal.test_drive`, `deal.set_terms`, `deal.offer`, `deal.walk_away`, `deal.sign`, `veh.purchase`, `ins.quote`, `ins.purchase` | Yes | tests/dealership.test.ts |
 | `rel.date` | Home decision, Calendar, Relationships | `life.shower`, `shop.purchase`, `go.to`, `date.check_in`, `date.beat`, `date.close`, `date.finish` | Yes | tests/dating.test.ts |
@@ -263,6 +264,21 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Earrings, a chain, a ring and a bracelet worn at the same time | Implemented | `SLOTS` split into `earrings`, `necklace`, `ring`, `bracelet`, `jewellerySlotFor`, schema 44 migration | The dressing scene, Wardrobe | tests/audience.test.ts, tests/wardrobe.test.ts | One piece per peg. Stacked rings and a second bracelet on the same wrist are not modelled. Pieces that are none of the four, like cufflinks, keep the general jewellery peg |
 | Colourways on the shop floor, so what you buy has a colour | Implemented | `colourwaysFor`, `COLOURWAYS`, `retail.basket` colour, `shop.purchase` colours | The Floor, The Counter | tests/wardrobe.test.ts, tests/dining.test.ts | Four colourways a fortnight per garment, seeded from the chain and the item. Which colours a real product actually shipped in is not public data at this scale and is not claimed |
 
+### Jewellers, and having a piece made
+
+| Subfeature | State | Code | On screen | Tests | Gap |
+| --- | --- | --- | --- | --- | --- |
+| A jeweller you can walk into, in every city | Implemented | 51 real jewellery houses and chains in `content/brands.ts`, plus one independent bench per city (`PlaceKind` `jeweller`), `isJeweller`, `jewellerAt`, `standingAt` | The City, the jeweller scene | tests/jewellery.test.ts | The named houses and chains are real and trade where they really trade. The independent bench is SLATE's own, the way its restaurants are: there is no national chain of bench jewellers to name |
+| Having something made: piece, metal, stone, grade, setting | Implemented | `life.jeweller` scene, `jewel.commission`, `Spec`, `PIECE_KINDS`, `METALS`, `STONES`, `CUTS`, `SETTINGS` | The jeweller scene | tests/jewellery.test.ts | Seventeen pieces, twelve metals, eighteen stones, twelve cuts, eleven settings. No sketching, no wax approval stage, and no choosing an individual stone from a parcel |
+| The four Cs, as the GIA publishes them | Implemented | `COLOUR_GRADES` (D to Z), `CLARITIES` (FL to I1), `CUTS`, carat weight in `quoteFor` | The Colour and Clarity steps | tests/jewellery.test.ts | The scales and the named cuts are published standards, used as published. Every price is SLATE's calibration and says so; there is no live diamond market feed |
+| A quote that adds up, and is fixed when it is given | Implemented | `quoteFor` (metal by weight, stone by carat and grade, labour by the hour and the setting), `Commission.quotedPrice` | What It Would Cost | tests/jewellery.test.ts | The bench cannot revise a quote it has given. There is no haggling |
+| The awkward things said before you pay, never after | Implemented | `cautionsFor` | The quote step | tests/jewellery.test.ts | Ten checks: unsizable metals, eternity bands, tension settings, soft stones in rings, oiled emeralds, pearls in rings, exposed settings, big SI stones, silver under a large stone, over-long engraving. None of them refuses the order |
+| A deposit that is taken once, and a piece that is made once | Implemented | `jewel.approve` (no-op when already ordered), `jewel.collect` (returns the existing asset), `jewel.cancel` (idempotent) | The jeweller scene | tests/jewellery.test.ts | Held by tests that retry every one of them |
+| Weeks of waiting, then it is ready and you are told | Implemented | `jewel.ready` scheduled kind, `Commission.readyAt`, notification | Notifications, the counter | tests/jewellery.test.ts | The wait is weeks scaled by the piece, the setting and how dear the room is. Nothing can hurry it |
+| A one-off you own, that knows what it is | Implemented | `OwnedAsset.bespoke` carrying the whole specification, provenance, `BESPOKE_RESALE` | What You Own, the wardrobe | tests/jewellery.test.ts | It is worth less than you paid the day you collect it, which is what bespoke does |
+| Engraving in your own words | Implemented | `Commission.engraving`, `jewel.engrave` for something already owned | The Anything Inside step | tests/jewellery.test.ts | Sixty characters, and permanent |
+| Sizing, repairs, cleaning and a valuation for your insurer | Implemented | `jewel.resize`, `jewel.repair` + `jewel.repaired`, `jewel.clean`, `jewel.appraise` | The counter, Shopping | tests/jewellery.test.ts | A resize is refused on a metal the jeweller already told you could not take one. An emerald or a pearl gets hand cleaning and a plain explanation rather than an ultrasonic. A valuation is a replacement figure and says it is not a resale price |
+
 ### Banking
 
 | Subfeature | State | Code | On screen | Tests | Gap |
@@ -409,7 +425,7 @@ side effect of play.
 ## Appendix: the inventory, from the code
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 174 commands, 65 scheduled kinds, 167 events emitted, 25 event listeners, 16 scenes, 19 routes.
+Generated by `node tools/inventory.mjs --markdown`. 184 commands, 67 scheduled kinds, 167 events emitted, 25 event listeners, 17 scenes, 19 routes.
 
 ### Commands
 
@@ -427,6 +443,7 @@ Generated by `node tools/inventory.mjs --markdown`. 174 commands, 65 scheduled k
 | gym | `gym.buy_pass` `gym.cancel_membership` `gym.check_in` `gym.finish_workout` `gym.hire_trainer` `gym.take_class` `gym.train_block` | `src/engine/systems/fitness.ts` |
 | health | `health.attend` `health.book` `health.cancel` `health.check_in` `health.consult` `health.fill_prescription` `health.pay` `health.reschedule` `health.skip` | `src/engine/systems/care.ts`, `src/engine/systems/services.ts` |
 | ins | `ins.file_claim` `ins.purchase` `ins.quote` | `src/engine/systems/services.ts` |
+| jewel | `jewel.appraise` `jewel.approve` `jewel.cancel` `jewel.clean` `jewel.collect` `jewel.commission` `jewel.engrave` `jewel.look` `jewel.repair` `jewel.resize` | `src/engine/systems/jewellery.ts` |
 | life | `life.cook` `life.do_activity` `life.eat` `life.shower` `life.sleep` | `src/engine/systems/life.ts`, `src/engine/systems/places.ts` |
 | place | `place.book_room` `place.order` `place.refuel` `place.visit` | `src/engine/systems/places.ts` |
 | plan | `plan.attend` `plan.cancel` `plan.create` `plan.reschedule` `plan.skip` | `src/engine/systems/plans.ts` |
@@ -461,6 +478,7 @@ Generated by `node tools/inventory.mjs --markdown`. 174 commands, 65 scheduled k
 | gym | `gym.membership_end` | `src/engine/systems/fitness.ts` |
 | health | `health.appointment` `health.dose` `health.lapse` `health.results` `health.rx_lapse` | `src/engine/systems/care.ts`, `src/engine/systems/services.ts` |
 | ins | `ins.renewal` | `src/engine/systems/services.ts` |
+| jewel | `jewel.ready` `jewel.repaired` | `src/engine/systems/jewellery.ts` |
 | life | `life.day_rollover` | `src/engine/systems/life.ts` |
 | place | `place.hygiene_tick` | `src/engine/systems/places.ts` |
 | plan | `plan.lapse` `plan.personal` `plan.reminder` | `src/engine/systems/plans.ts` |
@@ -533,6 +551,7 @@ Generated by `node tools/inventory.mjs --markdown`. 174 commands, 65 scheduled k
 | `fitness.gym` | `src/engine/scenes/gym.ts` |
 | `health.visit` | `src/engine/scenes/visit.ts` |
 | `life.dress` | `src/engine/scenes/dress.ts` |
+| `life.jeweller` | `src/engine/scenes/jeweller.ts` |
 | `life.meal` | `src/engine/scenes/meal.ts` |
 | `life.run` | `src/engine/scenes/run.ts` |
 | `life.shop` | `src/engine/scenes/shop.ts` |

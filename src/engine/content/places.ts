@@ -31,9 +31,10 @@ export type PlaceKind =
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
-  | 'marina' | 'storage';
+  | 'marina' | 'storage' | 'jeweller';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
+  jeweller: 'Jeweller',
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
   cinema: 'Cinema', theatre: 'Theatre', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
@@ -314,6 +315,12 @@ const CINEMA_NAMES = ['The Rialto', 'Odeon Row Cinema', 'The Palace Picture Hous
 const HOTEL_NAMES = ['The Wren Hotel', 'Hotel Meridian', 'The Standing Stone', 'The Kestrel', 'Harbourside Hotel', 'The Sennet'];
 const SALON_NAMES = ['Chair Six', 'The Grooming Room', 'Marlow & Co.', 'The Cutting Room'];
 const CLUB_NAMES = ['Basement 9', 'The Meridian Room', 'Nightshift', 'Vault'];
+/**
+ * Independent benches. There is no national chain of bench jewellers, so
+ * unlike the shops these are SLATE's own the way its restaurants are: a
+ * workshop above a shop, one or two people, a torch and a bench peg.
+ */
+const JEWELLER_NAMES = ['The Bench', 'Ansell & Pike', 'Halliwell Goldsmiths', 'The Setting Room', 'Verrall & Daughter', 'Ironmonger Row Goldsmiths'];
 
 // ---------------------------------------------------------------------------
 // Generating a city's places
@@ -343,6 +350,8 @@ const SPECS: readonly Spec[] = [
   // the lots, so nothing before them moved.
   { kind: 'storage', count: () => 1 },
   { kind: 'marina', count: (_i, _p, waterfront) => (waterfront ? 1 : 0) },
+  // A bench jeweller, added after everything else so no existing place id moved.
+  { kind: 'jeweller', count: () => 1 },
 ];
 
 /** City tags that put it on water a boat can be kept in. */
@@ -389,7 +398,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   gym: ['train', 'shower'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
   stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
-  marina: ['visit'], storage: ['visit'],
+  marina: ['visit'], storage: ['visit'], jeweller: ['browse'],
 };
 
 function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
@@ -415,6 +424,7 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
     case 'hotel': return rng.pick(HOTEL_NAMES);
     case 'salon': return rng.pick(SALON_NAMES);
     case 'club': return rng.pick(CLUB_NAMES);
+    case 'jeweller': return rng.pick(JEWELLER_NAMES);
     default: return 'A Place';
   }
 }
@@ -423,7 +433,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   restaurant: 95, cafe: 35, bar: 75, fast_food: 25, market: 30, gas_station: 10, garage: 120,
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
   viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
-  marina: 60, storage: 20,
+  marina: 60, storage: 20, jeweller: 45,
 };
 
 /**
@@ -591,6 +601,13 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     case 'hotel': return `Rooms in ${where}. ${rng.pick(['A lobby people meet in.', 'Quiet, and the bar stays open.', 'Clean, central and no surprises.'])}`;
     case 'salon': return `Cutting and colour in ${where}.`;
     case 'club': return `Late in ${where}. ${rng.pick(['A queue after eleven.', 'Low ceilings and a good sound system.'])}`;
+    case 'jeweller': return `A working bench in ${where}. ${rng.pick([
+      'One goldsmith, a torch, and a wait for everything.',
+      'Repairs in the window, commissions in the back.',
+      'Two benches, a rolling mill, and a kettle that is always on.',
+      'They will make you what you draw, and tell you why it will not work.',
+      'A safe, a loupe, and forty years of somebody else’s wedding rings.',
+    ])}`;
     default: return `In ${where}.`;
   }
 }

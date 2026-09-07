@@ -7,6 +7,7 @@ import { placesIn } from '@/engine/content/places';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
 import { retailerAt, standingAt } from '@/engine/systems/retail';
+import { commissionsOf, describeSpec } from '@/engine/systems/jewellery';
 import { activeScene } from '@/engine/systems/scenes';
 import { NEEDS_WASHING, appraise, preferenceOf, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
 import { AUDIENCE_LABEL, COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
@@ -35,6 +36,7 @@ export function ShoppingWorkspace() {
   const mirror = useWorld((s) => appraise(s, wearing(s, s.player.id)));
   const looks = useWorld((s) => Object.values(s.universe.outfits).filter((o) => o.personId === s.player.id));
   const now = useWorld((s) => s.now);
+  const commissions = useWorld((s) => commissionsOf(s, s.player.id).filter((c) => c.status !== 'cancelled'));
   const orders = useWorld((s) => Object.values(s.universe.orders).filter((o) => o.buyerId === s.player.id).sort((a, b) => b.placedAt - a.placedAt));
   const scene = useWorld(activeScene);
   const storefronts = useWorld((s) => placesIn(s.player.currentLocationId)
@@ -267,6 +269,40 @@ export function ShoppingWorkspace() {
           )}
 
           <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>{COLOUR_NOTE}</p>
+
+          {commissions.length > 0 && (
+            <Panel title="Being Made For You" subtitle="A bench cannot be hurried, and nobody there will pretend otherwise." flush>
+              <div className="list">
+                {commissions.map((c) => (
+                  <div key={c.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">{titleCaseLabel(describeSpec(c))}</div>
+                      <div className="xs dim">
+                        {c.status === 'ordered' && c.readyAt
+                          ? `On the bench · ready ${formatDate(c.readyAt, sim.homeZone)}`
+                          : c.status === 'ready' ? 'Finished, and waiting for you'
+                            : c.status === 'collected' ? `Collected ${formatDate(c.collectedAt ?? c.quotedAt, sim.homeZone)}`
+                              : `Quoted ${formatDate(c.quotedAt, sim.homeZone)}, not ordered`}
+                        {c.engraving ? ` · “${c.engraving}”` : ''}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <MoneyText amount={c.quotedPrice} />
+                      {c.status === 'ordered' || c.status === 'ready' ? (
+                        <div className="xs dim">{formatMoney(c.quotedPrice - c.deposit, { cents: false })} still to pay</div>
+                      ) : null}
+                    </div>
+                    {c.status === 'ready' && (
+                      <button className="btn btn-sm btn-primary" onClick={() => run('jewel.collect', { commissionId: c.id })}>Collect</button>
+                    )}
+                    {(c.status === 'quoted' || c.status === 'ordered') && (
+                      <button className="btn btn-sm" onClick={() => run('jewel.cancel', { commissionId: c.id })}>Cancel</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Panel>
+          )}
 
           {wardrobe.length === 0 ? (
             <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be put on and assembled into looks." />

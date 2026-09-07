@@ -22,8 +22,11 @@
  *    the same step returns the same result rather than charging twice.
  *  - A scene started somewhere is played there. Moving city, or leaving the
  *    place, interrupts it; coming back resumes it.
- *  - Typed text resolves to a choice on screen, or is refused as such. There
- *    is no path from prose to an engine command.
+ *  - Typed text resolves to a choice on screen, or is refused as such. A step
+ *    can declare `freeText` and take words as data — what to cut inside a
+ *    ring, what to call a boat — and even then the words reach the scene, not
+ *    the engine: the scene decides what they mean and commits a command it
+ *    wrote itself. There is still no path from prose to an arbitrary command.
  */
 
 import { CommandError, type Command, type Simulation } from '../core/simulation';
@@ -55,6 +58,18 @@ export interface SceneView {
   choices: SceneChoice[];
   /** Things worth seeing beside the text: the quote, the time, your energy. */
   facts?: SceneFact[];
+  /**
+   * This step takes typed words as the answer rather than a choice.
+   *
+   * When it is set, anything the player types that is not one of the choices
+   * and is not a runtime word is handed to `choose` verbatim instead of being
+   * turned away. That is how a step asks for something the game cannot offer
+   * a button for: what to cut inside a ring, what to call a boat.
+   *
+   * `label` names the box. `prefix` is put in front of what was typed before
+   * it reaches `choose`, so a scene can tell typed text apart from a choice id.
+   */
+  freeText?: { label: string; placeholder?: string; prefix?: string };
   /** Whether "skip to the end" is offered here. */
   canSkip?: boolean;
   /** Whether leaving is offered here; default true. */
@@ -108,6 +123,17 @@ export interface SceneDefinition {
   summarise?(sim: Simulation, session: SceneSession, ctx: SceneRuntime): void;
   /** Extra checks on resuming after an interruption. */
   resume?(sim: Simulation, session: SceneSession): SceneCheck;
+}
+
+/** Bookkeeping after a step: bump the revision, and say what the scene says now. */
+function settle(sim: Simulation, def: SceneDefinition, session: SceneSession): { status: SceneStatus } {
+  if (session.status === 'active') {
+    session.revision += 1;
+    say(sim, session, 'world', def.view(sim, session).text);
+  } else if (session.status === 'completed' || session.status === 'abandoned') {
+    session.revision += 1;
+  }
+  return { status: session.status };
 }
 
 /** What a definition throws when a saved session sits at a step it does not know. */
@@ -378,6 +404,13 @@ export function registerScenes(sim: Simulation): void {
           return { status: session.status };
         } else if (intent.kind === 'ambiguous') {
           return { status: 'active', ambiguous: intent.candidates, message: 'That could mean more than one thing. Which?' };
+        } else if (view.freeText && text.trim().length > 0) {
+          // The step asked for words rather than a choice. Say them back the
+          // way they were typed, and let the scene decide what they mean.
+          const typed = text.trim();
+          say(s, session, 'you', typed);
+          def.choose(s, session, `${view.freeText.prefix ?? ''}${typed}`, runtimeFor(s, session));
+          return settle(s, def, session);
         } else {
           return {
             status: 'active', unsupported: true,
@@ -390,13 +423,7 @@ export function registerScenes(sim: Simulation): void {
 
       say(s, session, 'you', choice.label);
       def.choose(s, session, choice.id, runtimeFor(s, session));
-      if (session.status === 'active') {
-        session.revision += 1;
-        say(s, session, 'world', def.view(s, session).text);
-      } else if (session.status === 'completed' || session.status === 'abandoned') {
-        session.revision += 1;
-      }
-      return { status: session.status };
+      return settle(s, def, session);
     },
   );
 

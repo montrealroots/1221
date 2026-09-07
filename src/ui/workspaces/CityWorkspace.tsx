@@ -21,6 +21,7 @@ import {
   MODE_LABEL, hotelRoom, placesNear, planJourney, whatIsHere, type Mode,
 } from '@/engine/systems/places';
 import { activeScene } from '@/engine/systems/scenes';
+import { isJeweller } from '@/engine/systems/jewellery';
 import { lotSells } from '@/engine/systems/dealership';
 
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
@@ -106,9 +107,14 @@ export function CityWorkspace() {
               Eat Here
             </button>
           )}
-          {here.place?.retailerId && (
+          {here.place?.retailerId && !isJeweller(here.place) && (
             <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.shop', input: { placeId: here.place!.id } })}>
               Have A Look Round
+            </button>
+          )}
+          {isJeweller(here.place) && (
+            <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.jeweller', input: { placeId: here.place!.id } })}>
+              Go To The Counter
             </button>
           )}
           {here.place?.actions.includes('watch') && (
@@ -197,9 +203,14 @@ export function CityWorkspace() {
                       Eat Here
                     </button>
                   )}
-                  {place.retailerId && (
+                  {place.retailerId && !isJeweller(place) && (
                     <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.shop', input: { placeId: place.id } })}>
                       Shop Here
+                    </button>
+                  )}
+                  {isJeweller(place) && (
+                    <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.jeweller', input: { placeId: place.id } })}>
+                      Go To The Counter
                     </button>
                   )}
                   <button

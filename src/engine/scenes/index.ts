@@ -12,6 +12,7 @@ import './compose';
 import './counter';
 import './date';
 import './dress';
+import './jeweller';
 import './dealer';
 import './flight';
 import './gym';

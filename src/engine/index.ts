@@ -48,6 +48,7 @@ import { registerRetail } from './systems/retail';
 import { jewellerySlotFor } from './content/wardrobe';
 import { CATALOG } from './content/catalog';
 import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
+import { registerJewellery } from './systems/jewellery';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -98,6 +99,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDining(sim);
   registerRetail(sim);
   registerWardrobe(sim);
+  registerJewellery(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -952,6 +954,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Anything on you that has moved slot is still on you: `wearing` is a list
     // of ids, so the peg changing underneath it does not take it off.
     steps.push(`Jewellery split into earrings, necklace, ring and bracelet (${moved} moved).`);
+  }
+
+  if (from < 45) {
+    // Schema 45: a jeweller will make you something. Nothing already owned
+    // changes; the collection simply starts empty.
+    universe.commissions ??= {};
+    steps.push('Commissions ready: a bench will now make you a piece.');
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;

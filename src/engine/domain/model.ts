@@ -1132,6 +1132,25 @@ export interface OwnedAsset {
   insurancePolicyId?: Id;
   /** Provenance chain for luxury goods. */
   provenance: { at: Instant; note: string }[];
+  /**
+   * Set on a piece that was made rather than bought. Carries the whole
+   * specification, so the thing can be described, valued and insured for what
+   * it actually is years after the bench closed.
+   */
+  bespoke?: {
+    commissionId: Id;
+    placeName: string;
+    piece: string;
+    metal: string;
+    stone: string;
+    carats: number;
+    cut: string;
+    colourGrade?: string;
+    clarity?: string;
+    setting: string;
+    engraving?: string;
+    madeAt: Instant;
+  };
   /** Wardrobe-specific. */
   wardrobe?: {
     slot: string;
@@ -1170,6 +1189,53 @@ export interface Outfit {
 }
 
 /** A day you were dressed, kept so the world can notice a repeat. */
+/**
+ * A piece being made for you, from the first conversation to the collection.
+ *
+ * The specification is kept whole rather than baked into a price, because it
+ * is the thing the player designed: it goes into the finished asset's
+ * provenance, onto an insurance valuation, and into what a resale is worth.
+ *
+ * `quotedPrice` is fixed the moment the bench quotes it. A bench that changed
+ * its number between the deposit and the collection would be a different kind
+ * of game.
+ */
+export interface Commission {
+  id: Id;
+  saveId: Id;
+  /** The bench, or the maison's special order desk. */
+  placeId: Id;
+  /** Who is making it, so the same person is there when you collect. */
+  jewellerId?: Id;
+  /** For whom. A commission can be a gift. */
+  forPersonId: Id;
+  piece: string;
+  metal: string;
+  stone: string;
+  /** Carats of the centre stone. Zero when there is no stone. */
+  carats: number;
+  cut: string;
+  colourGrade?: string;
+  clarity?: string;
+  setting: string;
+  /** What is cut inside it, in the player's own words. */
+  engraving?: string;
+  quotedPrice: Money;
+  /** Paid up front. The balance falls due on collection. */
+  deposit: Money;
+  depositPaidAt?: Instant;
+  balancePaidAt?: Instant;
+  status: 'quoted' | 'ordered' | 'ready' | 'collected' | 'cancelled';
+  quotedAt: Instant;
+  orderedAt?: Instant;
+  readyAt?: Instant;
+  collectedAt?: Instant;
+  /** The finished piece, once it exists. */
+  assetId?: Id;
+  /** Why it was cancelled, when it was. */
+  cancelledReason?: string;
+}
+
 export interface WornRecord {
   id: Id;
   saveId: Id;
@@ -2022,7 +2088,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 44;
+export const SAVE_SCHEMA_VERSION = 45;
 
 export interface SaveMeta {
   id: Id;
@@ -2100,6 +2166,8 @@ export interface SaveUniverse {
   diningVisits?: Record<Id, DiningVisit>;
   /** What was worn on which day. Absent on a save from before getting dressed. */
   wornRecords?: Record<Id, WornRecord>;
+  /** Pieces being made for you at a bench. Absent before jewellers had one. */
+  commissions?: Record<Id, Commission>;
   /** Visits to a shop floor. Absent on a save from before shops had a floor. */
   retailVisits?: Record<Id, RetailVisit>;
   dates: Record<Id, DateRecord>;
