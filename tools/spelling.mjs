@@ -105,6 +105,8 @@ const REAL_NAMES = [
   'National Driver Licence Service', 'Driving Licence Testing Centre', 'Defence Health',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.
   'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
+  // Christian Louboutin Beaute prints the British spelling on the tube everywhere.
+  'Lip Colour', 'Nail Colour', 'Eye Colour',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

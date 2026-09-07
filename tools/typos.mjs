@@ -91,6 +91,8 @@ const REAL_DOUBLES = new Set([
   'pago',
   // A pom pom on a Moncler beanie. Two words, both of them wanted.
   'pom',
+  // The Jimmy Choo Bon Bon bag, which is what the house calls it.
+  'bon',
 ]);
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

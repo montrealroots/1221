@@ -218,6 +218,16 @@ before any delivery claim.
 
     **The stocking rule needed two corrections, both found here.** A discount chain was carrying a two hundred and fifty dollar suit jacket because the band for the value tier was set too wide; the tier one ceiling came down to a hundred and twenty, which is what that rail really tops out at. And a brand with three rows in the catalog — BOSS, being one suit, one pair of socks and a trunk — had a median that filed its suit as a sock, so nobody in the world would sell it. A brand is now judged by its own median only when it has ten rows or more; under that, the piece in hand is judged by its own price. Both are held by tests, and the gate's stockist checker now judges by the same function the shop floor does.
 
+31. Stage 29 — the shoemakers. `content/shoemakers.ts`, 823 new real products: **Christian Louboutin 108, Jimmy Choo 103, Manolo Blahnik 101, Dr. Martens 104, Birkenstock 103, Clarks 102, Timberland 105, UGG 107**, all eight on the gate's headline list. Sixty eight brands now stand at a hundred or more, out of 1,451, and forty eight of the ninety eight brand shopfronts are a hundred deep.
+
+    Three of the eight had no shop at all — Clarks, Timberland and UGG — so three shopfronts were added in the countries and city sizes they really trade in. The other five had a shop with one or two pairs in it.
+
+    These houses name their shoes, so the name is the product rather than a description: So Kate and Pigalle and Hangisi and BB and Romy and Anouk; the 1460, the 1461, the 2976 and the Jadon; the Arizona, the Boston, the Gizeh and the Papillio platforms; the Wallabee, the Desert Boot and the Desert Trek; the Six Inch Premium and the Euro Hiker; the Classic Ultra Mini, the Tasman and the Neumel. Each is held to at least twenty eight pairs across at least three kinds of shoe, and every pair hangs on the shoe peg.
+
+    **Beside the shoes, each sells what the company really sells.** Louboutin has Loubiworld and the Rouge Louboutin counter, Jimmy Choo has eleven fragrances, Timberland has the clothes it has made since the boot, UGG has blankets and sheepskin for the house, and Dr. Martens, Birkenstock, Clarks, Timberland and UGG all keep the polish, the laces and the protector spray by the till, because they do. A test holds each of those, so nobody quietly invents a fragrance for Clarks.
+
+    **Two names the checkers flagged are the maker's own.** Louboutin Beaute prints **Lip Colour**, **Nail Colour** and **Eye Colour** on its tubes in every market, and Jimmy Choo's **Bon Bon** is a doubled word on purpose; both are allowlisted with the reason written down rather than Americanized or renamed. One collision was found and resolved the standing way: the Clarks Originals Desert Boot already existed in the catalog, so the older row won and a real Wallabee Loafer took the new row's place.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.

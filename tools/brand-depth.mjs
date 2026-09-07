@@ -30,6 +30,7 @@ const HEADLINE = [
   'Rolex', 'Patek Philippe', 'Audemars Piguet', 'Omega', 'Cartier', 'Tiffany & Co.', 'Bulgari', 'Van Cleef & Arpels',
   'Moncler', 'Stone Island', 'The North Face', 'Canada Goose', 'Levi’s', 'Carhartt', 'Patagonia', 'Uniqlo',
   'Zara', 'H&M', 'COS', 'Mango', 'Gap', 'Massimo Dutti', 'Muji', 'Marks & Spencer',
+  'Christian Louboutin', 'Jimmy Choo', 'Manolo Blahnik', 'Dr. Martens', 'Birkenstock', 'Clarks', 'Timberland', 'UGG',
 ];
 
 const counts = new Map();

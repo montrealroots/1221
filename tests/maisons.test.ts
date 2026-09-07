@@ -17,6 +17,7 @@ import { REAL_MAISONS } from '@/engine/content/maisons';
 import { REAL_HOROLOGY } from '@/engine/content/horology';
 import { REAL_OUTFITTERS } from '@/engine/content/outfitters';
 import { REAL_HIGHSTREET } from '@/engine/content/highstreet';
+import { REAL_SHOEMAKERS } from '@/engine/content/shoemakers';
 import { RETAILERS, shoppableItems } from '@/engine/content/catalog';
 import { SLOTS } from '@/engine/content/wardrobe';
 
@@ -323,6 +324,74 @@ describe('the high street, deep enough to be a shop', () => {
     const shops = new Map(RETAILERS.all().map((r) => [r.name, r]));
     for (const name of HIGHSTREET) {
       expect(shops.get(name), `${name} has no retailer`).toBeDefined();
+    }
+  });
+});
+
+/**
+ * A shoemaker is measured by the shoes. Each of the eight is held to a real
+ * spread of its own lasts rather than one pair in four colors, and to the
+ * things the company really sells beside them: Louboutin's beauty counter,
+ * Timberland's clothes, UGG's blankets, and the polish and the laces every
+ * one of them keeps by the till.
+ */
+const SHOEMAKERS = ['Christian Louboutin', 'Jimmy Choo', 'Manolo Blahnik', 'Dr. Martens', 'Birkenstock', 'Clarks', 'Timberland', 'UGG'] as const;
+
+describe('the shoemakers, measured by the shoes', () => {
+  it('carries a hundred real pieces or more under every one of them', () => {
+    for (const maker of SHOEMAKERS) {
+      expect(piecesOf(maker).length, `${maker} is short of ${TARGET}`).toBeGreaterThanOrEqual(TARGET);
+    }
+    expect(REAL_SHOEMAKERS.length).toBeGreaterThanOrEqual(800);
+  });
+
+  it('is mostly shoes, in a real spread of lasts', () => {
+    for (const maker of SHOEMAKERS) {
+      const mine = piecesOf(maker);
+      const shoes = mine.filter((i) => i.category === 'footwear');
+      expect(shoes.length, `${maker} sells only ${shoes.length} pairs`).toBeGreaterThanOrEqual(28);
+      const kinds = new Set(shoes.map((i) => i.subcategory));
+      expect(kinds.size, `${maker} makes only ${kinds.size} kinds of shoe`).toBeGreaterThanOrEqual(3);
+      // Everything it sells hangs on the shoe peg or on a peg of its own.
+      for (const pair of shoes) expect(pair.slot, `${pair.id} is a shoe off the shoe peg`).toBe('shoes');
+    }
+  });
+
+  it('sells what the company really sells beside the shoes', () => {
+    // A shoemaker with a counter has a counter; one without does not get one.
+    expect(piecesOf('Christian Louboutin').filter((i) => i.subcategory === 'beauty').length, 'Louboutin has no beauty counter').toBeGreaterThanOrEqual(5);
+    expect(piecesOf('Jimmy Choo').filter((i) => i.subcategory === 'fragrance').length, 'Jimmy Choo has no fragrance').toBeGreaterThanOrEqual(8);
+    expect(piecesOf('Timberland').filter((i) => i.category === 'clothing').length, 'Timberland sells no clothes').toBeGreaterThanOrEqual(15);
+    expect(piecesOf('UGG').filter((i) => i.category === 'home').length, 'UGG sells nothing for the house').toBeGreaterThanOrEqual(5);
+    // And every one of them keeps the polish and the laces by the till.
+    for (const maker of ['Dr. Martens', 'Birkenstock', 'Clarks', 'Timberland', 'UGG']) {
+      const care = piecesOf(maker).filter((i) => i.subcategory === 'accessory');
+      expect(care.length, `${maker} sells nothing to look after them with`).toBeGreaterThan(0);
+    }
+  });
+
+  it('hangs every wearable piece on a peg the wardrobe actually has', () => {
+    for (const piece of REAL_SHOEMAKERS) {
+      if (piece.slot === undefined) continue;
+      expect(SLOTS as readonly string[], `${piece.id} hangs on ${piece.slot}`).toContain(piece.slot);
+    }
+  });
+
+  it('says on every row that the price is SLATE’s own calibration', () => {
+    for (const piece of REAL_SHOEMAKERS) {
+      expect(piece.source, piece.id).toBe('calibrated_estimate');
+      expect(piece.note, piece.id).toBeTruthy();
+      expect(piece.basePrice, piece.id).toBeGreaterThan(0);
+      expect(piece.quality, piece.id).toBeGreaterThan(0);
+    }
+  });
+
+  it('gives every shoemaker a shopfront of its own', () => {
+    const shops = new Map(RETAILERS.all().map((r) => [r.name, r]));
+    for (const maker of SHOEMAKERS) {
+      const shop = shops.get(maker);
+      expect(shop, `${maker} has no retailer`).toBeDefined();
+      expect(shop!.categories).toContain('footwear');
     }
   });
 });
