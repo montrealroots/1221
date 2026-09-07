@@ -29,6 +29,7 @@ const HEADLINE = [
   'Versace', 'Fendi', 'Celine', 'Loewe', 'Burberry', 'Ralph Lauren', 'Givenchy', 'Valentino',
   'Rolex', 'Patek Philippe', 'Audemars Piguet', 'Omega', 'Cartier', 'Tiffany & Co.', 'Bulgari', 'Van Cleef & Arpels',
   'Moncler', 'Stone Island', 'The North Face', 'Canada Goose', 'Levi’s', 'Carhartt', 'Patagonia', 'Uniqlo',
+  'Zara', 'H&M', 'COS', 'Mango', 'Gap', 'Massimo Dutti', 'Muji', 'Marks & Spencer',
 ];
 
 const counts = new Map();

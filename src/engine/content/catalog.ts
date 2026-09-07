@@ -27,6 +27,7 @@ import { REAL_ICE } from './ice';
 import { REAL_MAISONS } from './maisons';
 import { REAL_HOROLOGY } from './horology';
 import { REAL_OUTFITTERS } from './outfitters';
+import { REAL_HIGHSTREET } from './highstreet';
 import { REAL_ADORNMENT } from './adornment';
 import { withAudience } from './audience';
 
@@ -273,7 +274,7 @@ const REAL_ITEMS: readonly CatalogItem[] = withAudience(([] as RealGood[]).conca
   REAL_EQUIPMENT as RealGood[], REAL_ART as RealGood[], REAL_BOOKS as RealGood[], REAL_TOP_UP as RealGood[],
   REAL_INTIMATES as RealGood[], REAL_ADORNMENT as RealGood[],
   REAL_SNEAKERS as RealGood[], REAL_LABELS as RealGood[], REAL_SPORTSWEAR as RealGood[],
-  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[], REAL_OUTFITTERS as RealGood[],
+  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[], REAL_OUTFITTERS as RealGood[], REAL_HIGHSTREET as RealGood[],
 )) as unknown as CatalogItem[];
 
 export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...LEGACY_ITEMS]);
@@ -360,21 +361,27 @@ export function isConsignment(retailer: Retailer): boolean {
 
 /** What a shop of each tier will put a price tag on, low and high. */
 const BAND: Record<number, [Money, Money]> = {
-  1: [0, 250_00],
-  2: [0, 900_00],
-  3: [8_00, 4_000_00],
+  1: [0, 120_00],
+  2: [0, 600_00],
+  3: [8_00, 3_000_00],
   4: [25_00, 30_000_00],
   5: [60_00, Number.MAX_SAFE_INTEGER],
 };
 
-let standings: Map<string, 1 | 2 | 3 | 4 | 5> | undefined;
+let standings: Map<string, { band: 1 | 2 | 3 | 4 | 5; rows: number }> | undefined;
+
+/**
+ * How many pieces a brand needs before its median says anything. Under this,
+ * one suit and two pairs of socks would make a tailoring house a sock label.
+ */
+const ENOUGH_TO_JUDGE = 10;
 
 /** Where a price sits, from 1 for the value end to 5 for the houses. */
 function bandOf(price: Money): 1 | 2 | 3 | 4 | 5 {
   return price < 60_00 ? 1 : price < 200_00 ? 2 : price < 600_00 ? 3 : price < 2_000_00 ? 4 : 5;
 }
 
-function standingTable(): Map<string, 1 | 2 | 3 | 4 | 5> {
+function standingTable(): Map<string, { band: 1 | 2 | 3 | 4 | 5; rows: number }> {
   if (standings) return standings;
   const prices = new Map<string, Money[]>();
   for (const item of REAL_ITEMS) {
@@ -386,7 +393,7 @@ function standingTable(): Map<string, 1 | 2 | 3 | 4 | 5> {
   standings = new Map();
   for (const [name, list] of prices) {
     list.sort((a, b) => a - b);
-    standings.set(name, bandOf(list[Math.floor(list.length / 2)] ?? 0));
+    standings.set(name, { band: bandOf(list[Math.floor(list.length / 2)] ?? 0), rows: list.length });
   }
   return standings;
 }
@@ -397,16 +404,22 @@ function standingTable(): Map<string, 1 | 2 | 3 | 4 | 5> {
  * so one flagship coat does not move a whole label.
  */
 export function brandStanding(brand: string): 1 | 2 | 3 | 4 | 5 {
-  return standingTable().get(brand) ?? 3;
+  return standingTable().get(brand)?.band ?? 3;
 }
 
 /**
- * The standing a single piece is judged by. A brand SLATE knows is judged by
- * everything it makes; anything else — an original kept for an old save, a
- * one-off — is judged by its own price rather than guessed at.
+ * The standing a single piece is judged by.
+ *
+ * A brand SLATE has written out is judged by everything it makes. A brand
+ * with only a handful of rows is judged by the piece in hand instead: BOSS
+ * here is one suit, one pair of socks and a trunk, and a median across those
+ * three would file a nine hundred dollar suit as a sock and leave nobody
+ * willing to sell it.
  */
 export function standingOf(item: CatalogItem): 1 | 2 | 3 | 4 | 5 {
-  return standingTable().get(item.brand) ?? bandOf(item.basePrice);
+  const known = standingTable().get(item.brand);
+  if (!known || known.rows < ENOUGH_TO_JUDGE) return bandOf(item.basePrice);
+  return known.band;
 }
 
 let houses: Map<string, string> | undefined;

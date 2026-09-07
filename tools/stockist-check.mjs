@@ -18,7 +18,7 @@
  *
  * Run: node tools/stockist-check.mjs
  */
-import { RETAILERS, brandStanding, houseBrandOf, isConsignment, shoppableItems, stockistsFor, stocks } from '../src/engine/content/catalog.ts';
+import { RETAILERS, brandStanding, houseBrandOf, isConsignment, shoppableItems, standingOf, stockistsFor, stocks } from '../src/engine/content/catalog.ts';
 
 const WEARABLE = new Set(['clothing', 'footwear', 'accessory', 'watch', 'jewelry']);
 /** Cities to measure the spread in, from the deepest retail market down. */
@@ -53,9 +53,9 @@ for (const shop of shops) {
   if (isConsignment(shop)) continue;
   for (const item of wearables) {
     if (!stocks(shop, item)) continue;
-    const standing = brandStanding(item.brand);
+    const standing = standingOf(item);
     if (standing > shop.tier || standing < shop.tier - 1) {
-      failures.push(`${shop.name} (tier ${shop.tier}) is selling ${item.brand} (standing ${standing})`);
+      failures.push(`${shop.name} (tier ${shop.tier}) is selling ${item.name} (standing ${standing})`);
       break;
     }
   }

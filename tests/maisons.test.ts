@@ -16,6 +16,7 @@ import { describe, expect, it } from 'vitest';
 import { REAL_MAISONS } from '@/engine/content/maisons';
 import { REAL_HOROLOGY } from '@/engine/content/horology';
 import { REAL_OUTFITTERS } from '@/engine/content/outfitters';
+import { REAL_HIGHSTREET } from '@/engine/content/highstreet';
 import { RETAILERS, shoppableItems } from '@/engine/content/catalog';
 import { SLOTS } from '@/engine/content/wardrobe';
 
@@ -251,6 +252,77 @@ describe('the outfitters at the depth people actually own them', () => {
       const shop = shops.get(label);
       expect(shop, `${label} has no retailer`).toBeDefined();
       expect(shop!.categories).toContain('clothing');
+    }
+  });
+});
+
+/**
+ * The high street is measured differently again. These companies do not name
+ * their clothes, so what is held here is what a high street shop actually
+ * is: a floor deep enough to dress anybody, both racks, the underwear and
+ * socks nobody photographs, and the parts of the shop that are not clothes
+ * at all — Muji's storage boxes, the Marks & Spencer food hall.
+ */
+const HIGHSTREET = ['Zara', 'H&M', 'COS', 'Mango', 'Gap', 'Massimo Dutti', 'Muji', 'Marks & Spencer'] as const;
+
+describe('the high street, deep enough to be a shop', () => {
+  it('carries a hundred real pieces or more under every one of them', () => {
+    for (const name of HIGHSTREET) {
+      expect(piecesOf(name).length, `${name} is short of ${TARGET}`).toBeGreaterThanOrEqual(TARGET);
+    }
+    expect(REAL_HIGHSTREET.length).toBeGreaterThanOrEqual(800);
+  });
+
+  it('dresses both racks, down to the underwear drawer', () => {
+    for (const name of HIGHSTREET) {
+      const mine = piecesOf(name);
+      const has = (test: (item: (typeof mine)[number]) => boolean) => mine.some(test);
+      expect(has((i) => i.category === 'clothing' && i.audience === 'women'), `${name} has no women’s rack`).toBe(true);
+      expect(has((i) => i.category === 'clothing' && i.audience === 'men' || i.audience === 'unisex'), `${name} has no men’s rack`).toBe(true);
+      expect(has((i) => i.subcategory === 'base'), `${name} sells no underwear`).toBe(true);
+      expect(has((i) => i.subcategory === 'sock'), `${name} sells no socks`).toBe(true);
+      const pegs = new Set(mine.map((i) => i.slot).filter(Boolean));
+      expect(pegs.size, `${name} only fills ${pegs.size} pegs`).toBeGreaterThanOrEqual(7);
+    }
+  });
+
+  it('sells the parts of the shop that are not clothes, where the shop really has them', () => {
+    // Muji is a homeware company that also sells clothes; Marks & Spencer is
+    // half a food hall. Neither is a rail, and neither is pretended to be.
+    const muji = piecesOf('Muji');
+    expect(muji.filter((i) => i.category === 'home').length, 'Muji sells no homeware').toBeGreaterThanOrEqual(30);
+    const marks = piecesOf('Marks & Spencer');
+    expect(marks.filter((i) => i.category === 'groceries').length, 'Marks & Spencer has no food hall').toBeGreaterThanOrEqual(10);
+  });
+
+  it('never gives a man’s piece and a woman’s piece the same name', () => {
+    // The two racks really do sell the same linen shirt. The catalog cannot,
+    // so each says which rack it hangs on.
+    const names = new Map<string, number>();
+    for (const piece of REAL_HIGHSTREET) names.set(piece.name.toLowerCase(), (names.get(piece.name.toLowerCase()) ?? 0) + 1);
+    expect([...names.entries()].filter(([, n]) => n > 1).map(([name]) => name)).toEqual([]);
+  });
+
+  it('hangs every wearable piece on a peg the wardrobe actually has', () => {
+    for (const piece of REAL_HIGHSTREET) {
+      if (piece.slot === undefined) continue;
+      expect(SLOTS as readonly string[], `${piece.id} hangs on ${piece.slot}`).toContain(piece.slot);
+    }
+  });
+
+  it('says on every row that the price is SLATE’s own calibration', () => {
+    for (const piece of REAL_HIGHSTREET) {
+      expect(piece.source, piece.id).toBe('calibrated_estimate');
+      expect(piece.note, piece.id).toBeTruthy();
+      expect(piece.basePrice, piece.id).toBeGreaterThan(0);
+      expect(piece.quality, piece.id).toBeGreaterThan(0);
+    }
+  });
+
+  it('gives every one of them a real shop to be bought in', () => {
+    const shops = new Map(RETAILERS.all().map((r) => [r.name, r]));
+    for (const name of HIGHSTREET) {
+      expect(shops.get(name), `${name} has no retailer`).toBeDefined();
     }
   });
 });

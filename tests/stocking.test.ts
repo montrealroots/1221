@@ -86,6 +86,18 @@ describe('a shop sells what it would really sell', () => {
     expect(standingOf({ ...dear, brand: 'Nobody Has Heard Of This' })).toBe(5);
   });
 
+  it('judges a brand with three rows by the piece in hand, not by its median', () => {
+    // BOSS here is one suit, one pair of socks and a trunk. A median across
+    // those three files the suit as a sock, and then nobody will sell it.
+    const suit = shoppableItems().find((i) => i.brand === 'BOSS' && i.basePrice > 500_00);
+    expect(suit, 'no BOSS suit in the catalog').toBeDefined();
+    expect(standingOf(suit!), 'the suit is judged as a value piece').toBeGreaterThanOrEqual(4);
+    const shops = RETAILERS.all().filter((r) => stocks(r, suit!));
+    expect(shops.length, 'nobody would sell the suit').toBeGreaterThan(0);
+    const sock = shoppableItems().find((i) => i.brand === 'BOSS' && i.basePrice < 50_00);
+    expect(standingOf(sock!), 'the socks are judged as a suit').toBeLessThanOrEqual(2);
+  });
+
   it('lets resale and the saleroom carry what they really consign', () => {
     const coat = piece('Moncler Logo Cotton T-Shirt');
     for (const name of ['The RealReal', 'Vestiaire Collective']) {
