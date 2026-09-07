@@ -107,6 +107,8 @@ const REAL_NAMES = [
   'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
   // Christian Louboutin Beaute prints the British spelling on the tube everywhere.
   'Lip Colour', 'Nail Colour', 'Eye Colour',
+  // The Loro Piana jacket carries this name on its own label.
+  'Traveller Jacket',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

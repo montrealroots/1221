@@ -476,8 +476,8 @@ export const REAL_FOOTWEAR: readonly RealGood[] = [
   fw('f_axel_arigato', 'Axel Arigato Clean 90', 'Axel Arigato', 'trainer', 245_00, 20, 76, 0.30),
 
   // --- Dress shoes and loafers ---------------------------------------------------------------------
-  fw('f_church_consul', "Church's Consul Oxford", "Church's", 'formal', 780_00, 94, 92, 0.10, SPRING_AUTUMN_WINTER),
-  fw('f_church_shannon', "Church's Shannon Brogue", "Church's", 'formal', 820_00, 82, 92, 0.10, SPRING_AUTUMN_WINTER),
+  fw('f_church_consul', 'Church’s Consul Oxford', 'Church’s', 'formal', 780_00, 94, 92, 0.10, SPRING_AUTUMN_WINTER),
+  fw('f_church_shannon', 'Church’s Shannon Brogue', 'Church’s', 'formal', 820_00, 82, 92, 0.10, SPRING_AUTUMN_WINTER),
   fw('f_cj_audley', 'Crockett & Jones Audley Oxford', 'Crockett & Jones', 'formal', 725_00, 94, 92, 0.10, SPRING_AUTUMN_WINTER),
   fw('f_cj_pembroke', 'Crockett & Jones Pembroke Derby', 'Crockett & Jones', 'formal', 690_00, 78, 90, 0.10, SPRING_AUTUMN_WINTER),
   fw('f_john_lobb_william', 'John Lobb William Double Monk', 'John Lobb', 'formal', 1_890_00, 86, 98, 0.08, SPRING_AUTUMN_WINTER),

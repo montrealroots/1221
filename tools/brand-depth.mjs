@@ -31,6 +31,7 @@ const HEADLINE = [
   'Moncler', 'Stone Island', 'The North Face', 'Canada Goose', 'Levi’s', 'Carhartt', 'Patagonia', 'Uniqlo',
   'Zara', 'H&M', 'COS', 'Mango', 'Gap', 'Massimo Dutti', 'Muji', 'Marks & Spencer',
   'Christian Louboutin', 'Jimmy Choo', 'Manolo Blahnik', 'Dr. Martens', 'Birkenstock', 'Clarks', 'Timberland', 'UGG',
+  'Tom Ford', 'Zegna', 'Loro Piana', 'Brunello Cucinelli', 'The Row', 'Acne Studios', 'Church’s', 'Crockett & Jones',
 ];
 
 const counts = new Map();

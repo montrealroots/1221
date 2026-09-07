@@ -228,6 +228,14 @@ before any delivery claim.
 
     **Two names the checkers flagged are the maker's own.** Louboutin Beaute prints **Lip Colour**, **Nail Colour** and **Eye Colour** on its tubes in every market, and Jimmy Choo's **Bon Bon** is a doubled word on purpose; both are allowlisted with the reason written down rather than Americanized or renamed. One collision was found and resolved the standing way: the Clarks Originals Desert Boot already existed in the catalog, so the older row won and a real Wallabee Loafer took the new row's place.
 
+32. Stage 30 — the quiet floor. `content/quiet.ts`, 800 new real products: **Tom Ford 103, Zegna 100, Loro Piana 102, Brunello Cucinelli 102, The Row 101, Acne Studios 102, Church’s 105, Crockett & Jones 108**, all eight on the gate's headline list. Seventy six brands now stand at a hundred or more, out of 1,451, and fifty six of the ninety eight brand shopfronts are a hundred deep.
+
+    This is the half of luxury that puts no logo on anything, so it is sold on the two things it actually sells: the cloth and the last. Baby cashmere and vicuña at Loro Piana, Oasi and Su Misura and 15milmil15 at Zegna, Solomeo's monili at Cucinelli, the O'Connor and the Windsor at Tom Ford, and the Northampton lasts by name at the two benches — Consul, Diplomat, Burwood, Ketsby; Audley, Pembroke, Islay, Chelsea 5, Galway.
+
+    **A shoemaker stays a shoemaker.** Church’s and Crockett & Jones sell shoes, leather goods and the polish to keep them, and a test fails if either grows a clothing rail or a fragrance, because neither has one. Tom Ford's fragrance wardrobe and Rouge counter are here because they are most of that company, and Acne Studios' Face line is here because it is most of that one.
+
+    **Church’s nearly became two companies**, exactly as Levi’s did two stages ago: the shopfront and the two older rows used a straight apostrophe and the new rows a curly one. Normalized to one, with a test that fails if a second Church’s appears. Six further names collided with rows already in the catalog; the older ids won and real replacements were written. One more name the checker flagged is the maker's own and is allowlisted with the reason: Loro Piana's **Traveller Jacket**.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.

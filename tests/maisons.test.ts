@@ -18,6 +18,7 @@ import { REAL_HOROLOGY } from '@/engine/content/horology';
 import { REAL_OUTFITTERS } from '@/engine/content/outfitters';
 import { REAL_HIGHSTREET } from '@/engine/content/highstreet';
 import { REAL_SHOEMAKERS } from '@/engine/content/shoemakers';
+import { REAL_QUIET } from '@/engine/content/quiet';
 import { RETAILERS, shoppableItems } from '@/engine/content/catalog';
 import { SLOTS } from '@/engine/content/wardrobe';
 
@@ -393,5 +394,67 @@ describe('the shoemakers, measured by the shoes', () => {
       expect(shop, `${maker} has no retailer`).toBeDefined();
       expect(shop!.categories).toContain('footwear');
     }
+  });
+});
+
+/**
+ * The quiet floor sells cloth and last rather than a logo, so it is measured
+ * on those: real cashmere and wool through the knitwear, tailoring on both
+ * racks where the house cuts for both, and, for the two Northampton benches,
+ * a shoe floor and nothing pretending to be a fragrance.
+ */
+const QUIET = ['Tom Ford', 'Zegna', 'Loro Piana', 'Brunello Cucinelli', 'The Row', 'Acne Studios', 'Church’s', 'Crockett & Jones'] as const;
+const BENCHES = ['Church’s', 'Crockett & Jones'] as const;
+
+describe('the quiet floor, sold on cloth and last', () => {
+  it('carries a hundred real pieces or more under every one of them', () => {
+    for (const house of QUIET) {
+      expect(piecesOf(house).length, `${house} is short of ${TARGET}`).toBeGreaterThanOrEqual(TARGET);
+    }
+    expect(REAL_QUIET.length).toBeGreaterThanOrEqual(800);
+  });
+
+  it('sells the cloth the house is known for', () => {
+    for (const house of ['Loro Piana', 'Brunello Cucinelli', 'Zegna', 'The Row']) {
+      const cashmere = piecesOf(house).filter((i) => /cashmere/i.test(i.name));
+      expect(cashmere.length, `${house} sells no cashmere`).toBeGreaterThanOrEqual(5);
+    }
+  });
+
+  it('keeps a shoemaker a shoemaker', () => {
+    for (const bench of BENCHES) {
+      const mine = piecesOf(bench);
+      const shoes = mine.filter((i) => i.category === 'footwear');
+      expect(shoes.length, `${bench} sells only ${shoes.length} pairs`).toBeGreaterThanOrEqual(50);
+      // No invented ready to wear, and above all no invented fragrance.
+      expect(mine.some((i) => i.category === 'clothing'), `${bench} has grown a clothing rail`).toBe(false);
+      expect(mine.some((i) => i.subcategory === 'fragrance'), `${bench} has grown a fragrance`).toBe(false);
+    }
+  });
+
+  it('keeps Church’s one company, with one apostrophe', () => {
+    // The straight quote split the company in two the same way it did Levi’s.
+    expect(shoppableItems().filter((i) => i.brand === "Church's").length, 'a second Church’s has appeared').toBe(0);
+  });
+
+  it('hangs every wearable piece on a peg the wardrobe actually has', () => {
+    for (const piece of REAL_QUIET) {
+      if (piece.slot === undefined) continue;
+      expect(SLOTS as readonly string[], `${piece.id} hangs on ${piece.slot}`).toContain(piece.slot);
+    }
+  });
+
+  it('says on every row that the price is SLATE’s own calibration', () => {
+    for (const piece of REAL_QUIET) {
+      expect(piece.source, piece.id).toBe('calibrated_estimate');
+      expect(piece.note, piece.id).toBeTruthy();
+      expect(piece.basePrice, piece.id).toBeGreaterThan(0);
+      expect(piece.quality, piece.id).toBeGreaterThan(0);
+    }
+  });
+
+  it('gives every one of them a shopfront of its own', () => {
+    const shops = new Map(RETAILERS.all().map((r) => [r.name, r]));
+    for (const house of QUIET) expect(shops.get(house), `${house} has no retailer`).toBeDefined();
   });
 });
