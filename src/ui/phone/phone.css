@@ -493,3 +493,40 @@
 .ph-bar i { display: block; height: 100%; background: var(--ph-blue); }
 .ph-spark { display: flex; align-items: flex-end; gap: 2px; height: 46px; }
 .ph-spark i { flex: 1; background: var(--ph-blue); border-radius: 1px 1px 0 0; min-height: 1px; }
+
+/* -------------------------------------------------------------------------- */
+/* Photos the player brings                                                   */
+/* -------------------------------------------------------------------------- */
+
+.ph-picker { margin: 6px 0 4px; }
+.ph-picker-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--ph-chip);
+  border: 1px dashed var(--ph-line);
+  display: flex; align-items: center; justify-content: center;
+  touch-action: none;
+}
+.ph-picker-frame canvas,
+.ph-picker-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph-picker-empty {
+  border: 0; background: none; cursor: pointer;
+  color: var(--ph-muted); font: inherit; font-size: 13px; font-weight: 500;
+  padding: 24px 12px;
+}
+.ph-picker-empty:hover { color: var(--ph-text); }
+
+/* A card's picture, where the player brought one. */
+.ph-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.ph-banner {
+  width: 100%; aspect-ratio: 4 / 1; overflow: hidden;
+  background: linear-gradient(120deg, var(--ph-thumb-a), var(--ph-thumb-b));
+}
+.ph-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* The short's own frame, which is the other way up. */
+.ph-short-cover { position: absolute; inset: 0; }
+.ph-short-cover img { width: 100%; height: 100%; object-fit: cover; }

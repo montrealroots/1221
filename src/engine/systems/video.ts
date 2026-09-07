@@ -36,6 +36,7 @@ import {
   type CommentBand,
 } from '../content/videos';
 import { SKIP_AFTER_SECONDS, adBefore, ensureLists, specialList } from './creator';
+import { addNotice, comprehension, hasCaptions, minutesAtSpeed, preferences } from './videoapp';
 
 /** The app is one platform's. The others have their own shapes and come later. */
 export const VIDEO_PLATFORM: PlatformId = 'streamtube';
@@ -541,9 +542,13 @@ export function channelAnalytics(sim: Simulation, channelId: Id): ChannelAnalyti
  * one and applies the single thing it owns — the thumbnail, which is most of
  * whether anybody clicked in the first place.
  */
+/** The round numbers a channel notices passing. */
+const MILESTONES: readonly number[] = [100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000];
+
 export function syncMyVideos(sim: Simulation): void {
   const channel = myChannel(sim);
   if (!channel) return;
+  const before = channel.subscribers;
   let total = 0;
   for (const video of Object.values(sim.universe.videos)) {
     if (video.channelId !== channel.id) continue;
@@ -559,6 +564,15 @@ export function syncMyVideos(sim: Simulation): void {
   channel.totalViews = total;
   const account = channel.accountId ? sim.universe.socialAccounts[channel.accountId] : undefined;
   if (account) channel.subscribers = account.followers;
+  for (const mark of MILESTONES) {
+    if (before < mark && channel.subscribers >= mark) {
+      addNotice(sim, {
+        kind: 'milestone',
+        text: `${channel.name} passed ${mark.toLocaleString('en-US')} subscribers.`,
+        channelId: channel.id,
+      });
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -587,12 +601,22 @@ export function registerVideo(sim: Simulation): void {
         // Personalized means the app decides, and it decides on the good ones.
         const tell = level === 'all' || (level === 'personalized' && video.quality >= 70);
         if (tell) {
-          sim.notify({
-            title: `${channel.name} Uploaded`,
-            body: video.title,
-            category: 'personal',
-            refType: 'video', refId: video.id,
+          // The bell is an inbox first. A notice on the phone, and only the
+          // ones set to All also interrupt whatever the player is doing.
+          addNotice(sim, {
+            kind: 'upload',
+            text: `${channel.name} uploaded ${video.title}`,
+            channelId: channel.id,
+            videoId: video.id,
           });
+          if (level === 'all') {
+            sim.notify({
+              title: `${channel.name} Uploaded`,
+              body: video.title,
+              category: 'personal',
+              refType: 'video', refId: video.id,
+            });
+          }
         }
       }
     }
@@ -685,8 +709,11 @@ export function registerVideo(sim: Simulation): void {
       if (!video || video.status !== 'published') throw new CommandError('That video is not up.');
       if (video.publishedAt > s.now) throw new CommandError('That is not out yet.');
 
-      const minutes = clamp(Math.round(p.minutes ?? video.lengthMinutes), 1, video.lengthMinutes);
-      const finished = minutes >= video.lengthMinutes;
+      // How long it takes is how long it is, divided by how fast you play it.
+      const prefs = preferences(s);
+      const full = minutesAtSpeed(video.lengthMinutes, prefs);
+      const minutes = clamp(Math.round(p.minutes ?? full), 1, Math.max(1, full));
+      const finished = minutes >= full;
       const person = s.player;
 
       // The ad before it. A paying viewer never sees one; everybody else sits
@@ -703,9 +730,11 @@ export function registerVideo(sim: Simulation): void {
 
       s.advanceTo(s.now + minutes * MS_MINUTE);
 
-      // An hour of one thing is not an hour of another.
+      // An hour of one thing is not an hour of another, and an hour watched at
+      // double speed on a hundred and forty four pixels is not an hour either.
       const effect = TOPIC_EFFECT[video.topic as Topic] ?? { morale: 3, energy: -2, stress: -1, note: 'Time went.' };
-      const share = minutes / 60;
+      const took = comprehension(prefs);
+      const share = (minutes / 60) * took;
       person.wellbeing.morale = clamp(person.wellbeing.morale + effect.morale * share, 0, 100);
       person.wellbeing.energy = clamp(person.wellbeing.energy + effect.energy * share, 0, 100);
       person.wellbeing.stress = clamp(person.wellbeing.stress + effect.stress * share, 0, 100);
@@ -733,6 +762,8 @@ export function registerVideo(sim: Simulation): void {
 
       const watchedToday = minutesWatchedSince(s, person.id, s.now - MS_DAY);
       let note = effect.note;
+      if (prefs.speed !== 1) note = `${note} At ${prefs.speed}× you took less of it in.`;
+      if (prefs.captions && hasCaptions(s, video)) note = `${note} The captions helped.`;
       if (watchedToday >= BINGE_MINUTES) {
         note = `${effect.note} That is ${Math.round(watchedToday / 60)} hours of this today.`;
         person.wellbeing.morale = clamp(person.wellbeing.morale - 3, 0, 100);

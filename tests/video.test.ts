@@ -24,6 +24,9 @@ import {
   buildPayout, channelPage, communityOf, hasPremium, membershipsOf, playlistsOf,
   specialList, streamsOf, videosIn,
 } from '@/engine/systems/creator';
+import {
+  applyFilters, chaptersOf, comprehension, minutesAtSpeed, noticesOf, preferences, unseenNotices,
+} from '@/engine/systems/videoapp';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Id, VideoChannel } from '@/engine/domain/model';
 
@@ -566,5 +569,146 @@ describe('the rest of the app', () => {
       expect(sim.execute({ kind: 'video.set_bell', payload: { channelId: channel.id, bell } }).ok).toBe(true);
     }
     expect(sim.execute({ kind: 'video.set_bell', payload: { channelId: channel.id, bell: 'shout' } }).ok).toBe(false);
+  });
+});
+
+describe('the settings, the threads and the bell', () => {
+  it('takes half the time at double speed, and leaves you with less of it', () => {
+    const fast = quickSave({ wealth: 'comfortable' }, 'video-speed');
+    const video = homeFeed(fast, fast.player.id, 3)[0]!;
+    expect(fast.execute({ kind: 'video.set_preferences', payload: { speed: 2 } }).ok).toBe(true);
+    const before = fast.now;
+    const result = fast.execute<{ minutes: number }>({ kind: 'video.watch', payload: { videoId: video.id } });
+    expect(result.ok, String(result.error)).toBe(true);
+    expect(result.value!.minutes, 'double speed took the full length').toBeLessThan(video.lengthMinutes);
+    expect(fast.now - before).toBeLessThan(video.lengthMinutes * 60_000 + 30_000);
+    expect(comprehension(preferences(fast)), 'watching at 2x was as good as watching').toBeLessThan(1);
+    expect(minutesAtSpeed(60, preferences(fast))).toBe(30);
+  });
+
+  it('refuses a speed and a quality that are not on the control', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-badspeed');
+    expect(sim.execute({ kind: 'video.set_preferences', payload: { speed: 7 } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'video.set_preferences', payload: { quality: '8k' } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'video.set_preferences', payload: { quality: '144p' } }).ok).toBe(true);
+    expect(comprehension(preferences(sim)), '144p was as good as 1080p').toBeLessThan(1);
+  });
+
+  it('breaks a long video into chapters and leaves a short one alone', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-chapters');
+    const long = allVideos(sim, 40).find((v) => v.lengthMinutes >= 30)!;
+    const chapters = chaptersOf(sim, long);
+    expect(chapters.length, 'a half hour video with no chapters').toBeGreaterThan(1);
+    expect(new Set(chapters.map((c) => c.title)).size, 'two chapters with one name').toBe(chapters.length);
+    expect(chapters[0]!.at).toBe(0);
+    const short = allVideos(sim, 40).find((v) => v.lengthMinutes < 8);
+    if (short) expect(chaptersOf(sim, short)).toEqual([]);
+  });
+
+  it('replies to a comment, and keeps the thread', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-reply');
+    const video = homeFeed(sim, sim.player.id, 3)[0]!;
+    const parent = commentsOn(sim, video.id)[0]!;
+    const result = sim.execute<{ commentId: Id }>({
+      kind: 'video.reply_comment', payload: { commentId: parent.id, text: 'Same here.' },
+    });
+    expect(result.ok, String(result.error)).toBe(true);
+    const reply = sim.universe.videoComments[result.value!.commentId]!;
+    expect(reply.replyToId).toBe(parent.id);
+    expect(reply.byPlayer).toBe(true);
+    expect(commentsOn(sim, video.id).some((c) => c.id === reply.id)).toBe(true);
+  });
+
+  it('pins and hearts only on your own video, and only one pin at a time', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-pin');
+    const other = homeFeed(sim, sim.player.id, 3)[0]!;
+    const theirs = commentsOn(sim, other.id)[0]!;
+    expect(sim.execute({ kind: 'video.pin_comment', payload: { commentId: theirs.id } }).ok).toBe(false);
+
+    sim.execute({ kind: 'video.create_channel', payload: { name: 'Second Take', handle: 'pinner' } });
+    const upload = sim.execute<{ videoId: Id }>({
+      kind: 'video.upload', payload: { title: 'Pin This One', effortMinutes: 120 },
+    });
+    const mine = sim.universe.videos[upload.value!.videoId]!;
+    const section = ensureComments(sim, mine);
+    expect(section.length).toBeGreaterThan(1);
+    const [first, second] = section;
+    expect(sim.execute({ kind: 'video.pin_comment', payload: { commentId: first!.id } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.pin_comment', payload: { commentId: second!.id } }).ok).toBe(true);
+    expect(sim.universe.videoComments[first!.id]!.pinned, 'two comments pinned at once').toBeFalsy();
+    expect(sim.execute({ kind: 'video.heart_comment', payload: { commentId: first!.id } }).ok).toBe(true);
+    expect(sim.universe.videoComments[first!.id]!.hearted).toBe(true);
+  });
+
+  it('fills the bell when a channel you follow uploads, and empties it when you read it', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-inbox');
+    const channel = channelsOf(sim).find((c) => c.cadenceDays <= 3)!;
+    sim.execute({ kind: 'video.subscribe', payload: { channelId: channel.id, notify: true } });
+    sim.advanceTo(sim.now + 12 * DAY);
+    expect(unseenNotices(sim, sim.player.id), 'the bell never filled').toBeGreaterThan(0);
+    const read = sim.execute<{ read: number }>({ kind: 'video.read_notices', payload: {} });
+    expect(read.ok).toBe(true);
+    expect(unseenNotices(sim, sim.player.id)).toBe(0);
+    expect(noticesOf(sim, sim.player.id).length, 'reading them threw them away').toBeGreaterThan(0);
+  });
+
+  it('filters and sorts the search the way the panel does', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-filters');
+    const all = searchVideos(sim, 'the', 200);
+    expect(all.length).toBeGreaterThan(10);
+    const shortOnes = applyFilters(sim, all, { duration: 'short' });
+    for (const video of shortOnes) expect(video.lengthMinutes).toBeLessThanOrEqual(4);
+    const longOnes = applyFilters(sim, all, { duration: 'long' });
+    for (const video of longOnes) expect(video.lengthMinutes).toBeGreaterThan(20);
+    const recent = applyFilters(sim, all, { uploaded: 'week' });
+    for (const video of recent) expect(sim.now - video.publishedAt).toBeLessThanOrEqual(7 * DAY);
+    const byViews = applyFilters(sim, all, { sort: 'views' });
+    for (let i = 1; i < byViews.length; i += 1) {
+      expect(byViews[i - 1]!.views).toBeGreaterThanOrEqual(byViews[i]!.views);
+    }
+  });
+
+  it('plays the next one on its own, and stops asking whether you are still there', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-autoplay');
+    const first = homeFeed(sim, sim.player.id, 3)[0]!;
+    const result = sim.execute<{ watched: number; minutes: number; stoppedBecause: string }>({
+      kind: 'video.autoplay', payload: { videoId: first.id },
+    });
+    expect(result.ok, String(result.error)).toBe(true);
+    expect(result.value!.watched, 'autoplay watched one video and stopped').toBeGreaterThan(1);
+    expect(result.value!.minutes).toBeGreaterThan(0);
+    expect(result.value!.stoppedBecause.length).toBeGreaterThan(4);
+
+    sim.execute({ kind: 'video.set_preferences', payload: { autoplay: false } });
+    expect(sim.execute({ kind: 'video.autoplay', payload: { videoId: first.id } }).ok).toBe(false);
+  });
+
+  it('takes a photo for a thumbnail, and only for your own video', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-photo');
+    const jpeg = 'data:image/jpeg;base64,/9j/4AAQSkZJRg==';
+    const theirs = homeFeed(sim, sim.player.id, 3)[0]!;
+    expect(sim.execute({ kind: 'video.set_thumbnail_image', payload: { videoId: theirs.id, image: jpeg } }).ok).toBe(false);
+
+    sim.execute({ kind: 'video.create_channel', payload: { name: 'Second Take', handle: 'photog' } });
+    const upload = sim.execute<{ videoId: Id }>({ kind: 'video.upload', payload: { title: 'With A Picture', effortMinutes: 90 } });
+    const id = upload.value!.videoId;
+    expect(sim.execute({ kind: 'video.set_thumbnail_image', payload: { videoId: id, image: jpeg } }).ok).toBe(true);
+    expect(sim.universe.videos[id]!.thumbnailImage).toBe(jpeg);
+    expect(sim.execute({ kind: 'video.set_thumbnail_image', payload: { videoId: id, image: 'not-an-image' } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'video.set_thumbnail_image', payload: { videoId: id } }).ok, 'could not take it off again').toBe(true);
+    expect(sim.universe.videos[id]!.thumbnailImage).toBeUndefined();
+  });
+
+  it('takes a picture and a banner for your channel', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-channelpic');
+    const png = 'data:image/png;base64,iVBORw0KGgo=';
+    expect(sim.execute({ kind: 'video.set_channel_image', payload: { which: 'avatar', image: png } }).ok, 'set a picture with no channel').toBe(false);
+    sim.execute({ kind: 'video.create_channel', payload: { name: 'Second Take', handle: 'banners' } });
+    expect(sim.execute({ kind: 'video.set_channel_image', payload: { which: 'avatar', image: png } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.set_channel_image', payload: { which: 'banner', image: png } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.set_channel_image', payload: { which: 'wallpaper', image: png } }).ok).toBe(false);
+    const channel = myChannel(sim)!;
+    expect(channel.avatarImage).toBe(png);
+    expect(channel.bannerImage).toBe(png);
   });
 });

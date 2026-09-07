@@ -13,7 +13,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  CENTRED, MAX_ZOOM, PORTRAIT_HEIGHT, PORTRAIT_WIDTH,
+  CANNOT_DECODE, CANNOT_ENCODE, CENTRED, MAX_ZOOM, PORTRAIT_HEIGHT, PORTRAIT_WIDTH,
   clampPlacement, dataUrlBytes, describeRejection, drawRect,
   type Placement,
 } from './portrait';
@@ -77,7 +77,7 @@ export function PortraitPicker({
     try {
       onChange(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
     } catch {
-      setProblem('That photo could not be saved. Try a different one.');
+      setProblem(CANNOT_ENCODE);
     }
   }, [onChange, source]);
 
@@ -102,7 +102,7 @@ export function PortraitPicker({
     };
     image.onerror = () => {
       URL.revokeObjectURL(url);
-      setProblem('That photo could not be opened. It may be damaged.');
+      setProblem(CANNOT_DECODE);
       setBusy(false);
     };
     image.src = url;

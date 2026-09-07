@@ -54,14 +54,14 @@ export function initials(name: string): string {
   return ((words[0]?.[0] ?? '') + (words[1]?.[0] ?? '')).toUpperCase() || '?';
 }
 
-export function Avatar({ name, size = 36 }: { name: string; size?: number }) {
+export function Avatar({ name, size = 36, image }: { name: string; size?: number; image?: string }) {
   return (
     <span
       className="ph-avatar"
       style={{ background: tint(name), width: size, height: size, fontSize: size * 0.4 }}
       aria-hidden="true"
     >
-      {initials(name)}
+      {image ? <img src={image} alt="" /> : initials(name)}
     </span>
   );
 }
@@ -101,8 +101,13 @@ export function ChannelPage({
     <>
       <Header title={channel.name} onBack={onBack} />
       <div className="ph-body">
+        <div className="ph-banner">
+          {channel.bannerImage
+            ? <img src={channel.bannerImage} alt="" />
+            : <span style={{ display: 'block', width: '100%', height: '100%', background: `linear-gradient(120deg, ${tint(channel.name)}, ${tint(channel.handle)})` }} />}
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px 6px' }}>
-          <Avatar name={channel.name} size={62} />
+          <Avatar name={channel.name} size={62} image={channel.avatarImage} />
           <div>
             <div style={{ fontSize: 17, fontWeight: 700 }}>{channel.name}{channel.verified ? ' ✓' : ''}</div>
             <div className="ph-card-meta">

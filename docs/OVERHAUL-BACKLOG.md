@@ -296,6 +296,22 @@ before any delivery claim.
 
     **Found and fixed on the way:** the player's own Premium subscription was attached to their own channel, so a brand new channel with no videos and no members reported $9.79 of membership revenue on its first day.
 
+38. Life contract item 5, third part — the settings, the threads, the bell, and photographs the player brings. The previous entry named what was missing rather than implying it was there. This is that list, built.
+
+    **Playback is not a label.** At two times a video takes half the day and leaves you with less of it; past one and a half you are skimming, and the note after watching says so. A hundred and forty four pixels is worse than a thousand and eighty, and captions pull some of it back where the video has them, which most do. Autoplay chains up to four videos and then asks whether you are still watching, and reports how many went and why it stopped.
+
+    **Chapters** are derived the way a title is: the same video always breaks in the same places, a two minute short has none because nobody chapters a two minute short, and jumping to one costs the minutes that are left rather than the whole runtime.
+
+    **Comment sections are threads.** Any comment can be replied to. On your own videos you can pin one at a time, the way the real one works, and heart the ones you liked, which only the channel can do.
+
+    **The bell is an inbox** rather than a shower of toasts: it fills when a channel you follow uploads, when your own channel passes a round number and when the month is paid, it shows a count, and it empties when you open it. Only the channels set to All also interrupt what you are doing.
+
+    **Search has its panel:** upload date, length, and relevance, newest or most viewed.
+
+    **And the photographs.** The headshot picker's framing arithmetic was already tested and already proven to take any photo a phone can produce; it now points at four more shapes. A sixteen by nine thumbnail, a nine by sixteen cover for a short, a square for the channel circle and a wide one for the top of the channel page. Each is drawn into its frame, dragged and zoomed to fit, re-encoded at a size that keeps a hundred of them under a megabyte, and shown wherever that picture appears. Nothing is stored as it arrived.
+
+    **Found and fixed on the way:** the two things that go wrong after a photo is accepted were worded twice, once in each picker, and the cohesion checker caught it.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.

@@ -1823,6 +1823,10 @@ export interface VideoChannel {
   /** How many people are paying for that. */
   members?: number;
   liveStreamId?: Id;
+  /** A photo the player uploaded, square, for the circle. */
+  avatarImage?: string;
+  /** And the wide one across the top of the channel page. */
+  bannerImage?: string;
   /**
    * How many videos this channel has put out. The world's back catalog is
    * derived from this and the channel's seed rather than stored, because two
@@ -1860,6 +1864,15 @@ export interface VideoItem {
   scheduledFor?: Instant;
   status: 'published' | 'scheduled' | 'removed';
   live?: boolean;
+  /**
+   * A photo the player uploaded for the front of it, framed and re-encoded to
+   * sixteen by nine, held as a data URL the way a headshot is.
+   */
+  thumbnailImage?: string;
+  /** Where the video breaks into parts, in minutes from the start. */
+  chapters?: { at: number; title: string }[];
+  /** Whether there are captions on it at all. Not every video has them. */
+  captions?: boolean;
 }
 
 export interface VideoComment {
@@ -1883,6 +1896,46 @@ export interface VideoComment {
   harsh?: boolean;
   /** True once the player has looked at it, so a reply is not a surprise. */
   seen?: boolean;
+  /** Held at the top of the section by the channel, as one can be. */
+  pinned?: boolean;
+  /** The little heart a creator can put on a comment, and only they can. */
+  hearted?: boolean;
+}
+
+/**
+ * The bell, as an inbox rather than a shower of toasts.
+ *
+ * A notice is what the app would put behind the bell: a channel you follow put
+ * something out, somebody replied to you, your own channel passed a number
+ * that matters. It is read when you open it, and not before.
+ */
+export interface VideoNotice {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  kind: 'upload' | 'live' | 'reply' | 'milestone' | 'payout';
+  text: string;
+  at: Instant;
+  seen: boolean;
+  channelId?: Id;
+  videoId?: Id;
+}
+
+/**
+ * How the player has the app set up. One set of preferences per save, because
+ * they are the player's and not any one video's.
+ */
+export interface VideoPreferences {
+  /** 0.25 to 2. Watching faster costs less of the day and takes less in. */
+  speed: number;
+  /** What it is set to play at. The low ones are not worth watching. */
+  quality: 'auto' | '1080p' | '720p' | '480p' | '144p';
+  /** Whether the next one starts on its own when this one ends. */
+  autoplay: boolean;
+  /** Captions on, where the video has them. */
+  captions: boolean;
+  /** Sorting and filtering the search results, remembered between searches. */
+  searchSort: 'relevance' | 'date' | 'views';
 }
 
 export interface VideoSubscription {
@@ -2467,7 +2520,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 50;
+export const SAVE_SCHEMA_VERSION = 51;
 
 export interface SaveMeta {
   id: Id;
@@ -2587,6 +2640,9 @@ export interface SaveUniverse {
   videoComments: Record<Id, VideoComment>;
   videoSubscriptions: Record<Id, VideoSubscription>;
   watchHistory: Record<Id, WatchRecord>;
+  /** The bell, and how the player has the app set up. */
+  videoNotices: Record<Id, VideoNotice>;
+  videoPreferences?: VideoPreferences;
   /** The rest of the app: what it keeps for you, and what it pays. */
   videoPlaylists: Record<Id, VideoPlaylist>;
   liveStreams: Record<Id, LiveStream>;

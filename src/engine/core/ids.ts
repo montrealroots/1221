@@ -27,7 +27,7 @@ export type IdNamespace =
   | 'scene' | 'fact' | 'membership' | 'workout' | 'plan' | 'deal' | 'date' | 'berth'
   | 'statement' | 'standing' | 'dining' | 'retail' | 'worn' | 'commission' | 'costume'
   | 'chan' | 'vid' | 'vcom' | 'vsub' | 'watch'
-  | 'vlist' | 'stream' | 'cpost' | 'member' | 'payout';
+  | 'vlist' | 'stream' | 'cpost' | 'member' | 'payout' | 'vnotice';
 
 const COUNTER_KEY = '__idCounter';
 

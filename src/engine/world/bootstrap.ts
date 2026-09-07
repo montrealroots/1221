@@ -195,6 +195,7 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     socialAccounts: {}, socialPosts: {}, brandDeals: {},
     videoChannels: {}, videos: {}, videoComments: {}, videoSubscriptions: {}, watchHistory: {},
     videoPlaylists: {}, liveStreams: {}, communityPosts: {}, channelMemberships: {}, creatorPayouts: {},
+    videoNotices: {},
     companies: {},
     scenes: { version: 2, sessions: {} },
     memberships: {}, workouts: {}, plans: {}, vehicleDeals: {}, dates: {}, dialogue: { version: 1, seen: {} },

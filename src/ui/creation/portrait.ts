@@ -47,6 +47,13 @@ export interface DrawRect {
   x: number; y: number; width: number; height: number;
 }
 
+/**
+ * The two things that go wrong after a file has been accepted, said the same
+ * way wherever a photo is framed: the headshot picker and the phone's.
+ */
+export const CANNOT_ENCODE = 'That photo could not be saved. Try a different one.';
+export const CANNOT_DECODE = 'That photo could not be opened. It may be damaged.';
+
 /** Why a file was refused, in words a player can act on. */
 export function describeRejection(file: { type: string; size: number; name: string }): string | null {
   if (!file.type.startsWith('image/')) {

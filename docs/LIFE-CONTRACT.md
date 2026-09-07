@@ -277,10 +277,24 @@ answer says what would make it yes.
    statement with five lines: advertising, premium watch time, memberships,
    tips and sponsorship, against the monetized views it was earned on.
 
-   **Still to come:** Instagram and X as their own apps, and the parts of
-   YouTube nobody has built here yet, named rather than implied — chapters,
-   playback speed and quality, autoplay, captions, comment replies and pinning,
-   search filters, and a notifications inbox.
+   And the parts that were named as missing are in. Playback speed is real: at
+   two times a video takes half the day and leaves you with less of it, and past
+   one and a half you are skimming. A hundred and forty four pixels is worse
+   than a thousand and eighty. Captions pull some of that back where the video
+   has them, and most do. Autoplay chains up to four and then asks whether you
+   are still watching, which is how three hours go. A long video breaks into
+   chapters and a short one does not. You can reply to any comment, and on your
+   own videos pin one at a time and heart the ones you liked. The bell is an
+   inbox that fills when a channel you follow uploads, when your channel passes
+   a round number and when the month is paid, and it empties when you read it.
+   Search filters by date and length and sorts by relevance, date or views.
+
+   And you bring your own photographs, on the same framing machinery as the
+   headshot: a sixteen by nine thumbnail, a nine by sixteen cover for a short, a
+   square for the channel circle and a wide one for the top of the channel page,
+   each drawn into its frame and re-encoded small enough to live in a save.
+
+   **Still to come:** Instagram and X as their own apps.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.

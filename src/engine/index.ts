@@ -54,6 +54,7 @@ import { registerDocuments } from './systems/documents';
 import { ensureHomeUpkeep, registerHousehold } from './systems/household';
 import { ensureVideoWorld, registerVideo } from './systems/video';
 import { ensureCreator, registerCreator } from './systems/creator';
+import { ensureVideoApp, registerVideoApp } from './systems/videoapp';
 import { insurersFor } from './content/insurers';
 import { countryOfCity } from './content/geography';
 import './scenes';
@@ -112,6 +113,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerHousehold(sim);
   registerVideo(sim);
   registerCreator(sim);
+  registerVideoApp(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -417,6 +419,7 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // that have been running for years, with the catalogs to show for it.
   ensureVideoWorld(sim);
   ensureCreator(sim);
+  ensureVideoApp(sim);
   return sim;
 }
 
@@ -439,6 +442,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureVideoWorld(sim);
   // The lists, the memberships and the monthly statement (idempotent; creator.ts).
   ensureCreator(sim);
+  ensureVideoApp(sim);
   ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
@@ -993,6 +997,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 51) {
+    // Schema 51: the bell as an inbox, and the settings the player chose.
+    // Both start empty; nothing already in the save is touched, and the
+    // defaults are applied on load rather than written in here.
+    universe.videoNotices ??= {};
+    steps.push('The notifications inbox, chapters, captions and playback settings.');
   }
 
   if (from < 50) {

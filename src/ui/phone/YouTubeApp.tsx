@@ -17,7 +17,7 @@
  * The mark is drawn in CSS. SLATE ships no third party artwork.
  */
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { MS_DAY } from '@/engine/core/time';
 import { TOPICS, TOPIC_LABEL, type Topic } from '@/engine/content/channels';
@@ -41,6 +41,11 @@ import {
   ChannelPage, LibraryPage, PremiumPanel, QuickSave, SaveSheet, StudioPage, TipSheet,
 } from './YouTubeExtras';
 import { hasPremium } from '@/engine/systems/creator';
+import {
+  QUALITIES, SPEEDS, applyFilters, chaptersOf, hasCaptions, minutesAtSpeed, noticesOf,
+  preferences, unseenNotices,
+} from '@/engine/systems/videoapp';
+import { ImagePicker } from './ImagePicker';
 
 type Tab = 'home' | 'shorts' | 'subs' | 'you';
 
@@ -87,14 +92,14 @@ function initials(name: string): string {
   return ((words[0]?.[0] ?? '') + (words[1]?.[0] ?? '')).toUpperCase() || '?';
 }
 
-function Avatar({ name, size = 36 }: { name: string; size?: number }) {
+function Avatar({ name, size = 36, image }: { name: string; size?: number; image?: string }) {
   return (
     <span
       className="ph-avatar"
       style={{ background: tint(name), width: size, height: size, fontSize: size * 0.4 }}
       aria-hidden="true"
     >
-      {initials(name)}
+      {image ? <img src={image} alt="" /> : initials(name)}
     </span>
   );
 }
@@ -109,7 +114,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
   const [tab, setTab] = useState<Tab>('home');
   const [openId, setOpenId] = useState<string | null>(null);
   const [channelId, setChannelId] = useState<string | null>(null);
-  const [screen, setScreen] = useState<'app' | 'library' | 'studio'>('app');
+  const [screen, setScreen] = useState<'app' | 'library' | 'studio' | 'notices' | 'settings'>('app');
   const [searching, setSearching] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [query, setQuery] = useState('');
@@ -119,6 +124,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
   const now = useWorld((s) => s.now);
   const open = useWorld((s) => (openId ? videoById(s, openId) : undefined));
   const channel = useWorld((s) => (channelId ? s.universe.videoChannels[channelId] : undefined));
+  const unseen = useWorld((s) => unseenNotices(s, s.player.id));
 
   const say = (text: string) => {
     setToast(text);
@@ -146,6 +152,10 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
         <LibraryPage onBack={() => setScreen('app')} say={say} renderRow={row} />
       ) : screen === 'studio' ? (
         <StudioPage onBack={() => setScreen('app')} say={say} />
+      ) : screen === 'notices' ? (
+        <NoticesPage now={now} onBack={() => setScreen('app')} onOpen={setOpenId} onChannel={setChannelId} />
+      ) : screen === 'settings' ? (
+        <PlaybackSettings onBack={() => setScreen('app')} />
       ) : open ? (
         <WatchPage
           video={open}
@@ -153,6 +163,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
           onBack={() => setOpenId(null)}
           onOpen={setOpenId}
           onChannel={(id) => { setOpenId(null); setChannelId(id); }}
+          onSettings={() => setScreen('settings')}
           onWatch={watch}
           say={say}
         />
@@ -175,7 +186,28 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
             </span>
             <span className="ph-yt-actions">
               <button type="button" className="ph-iconbtn" aria-label="Cast"><CastGlyph size={21} /></button>
-              <button type="button" className="ph-iconbtn" aria-label="Notifications"><BellGlyph size={21} /></button>
+              <button
+                type="button"
+                className="ph-iconbtn"
+                aria-label={unseen > 0 ? `Notifications, ${unseen} new` : 'Notifications'}
+                onClick={() => setScreen('notices')}
+                style={{ position: 'relative' }}
+              >
+                <BellGlyph size={21} />
+                {unseen > 0 && (
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      position: 'absolute', top: -3, right: -5, minWidth: 15, height: 15,
+                      borderRadius: 8, background: 'var(--ph-red)', color: '#fff',
+                      fontSize: 9, fontWeight: 700, display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', padding: '0 3px',
+                    }}
+                  >
+                    {unseen > 9 ? '9+' : unseen}
+                  </span>
+                )}
+              </button>
               <button type="button" className="ph-iconbtn" aria-label="Search" onClick={() => setSearching(true)}>
                 <SearchGlyph size={21} />
               </button>
@@ -279,8 +311,14 @@ function Thumb({ video }: { video: VideoItem }) {
       className="ph-thumb"
       style={{ background: `linear-gradient(140deg, ${base}, ${tint(video.title)})` }}
     >
-      <span className="ph-thumb-mark" aria-hidden="true">{initials(name)}</span>
-      <span className="ph-thumb-style">{thumbnail?.label ?? 'A Frame From It'}</span>
+      {video.thumbnailImage ? (
+        <img src={video.thumbnailImage} alt="" />
+      ) : (
+        <>
+          <span className="ph-thumb-mark" aria-hidden="true">{initials(name)}</span>
+          <span className="ph-thumb-style">{thumbnail?.label ?? 'A Frame From It'}</span>
+        </>
+      )}
       <span className="ph-dur">{duration(video.lengthMinutes)}</span>
     </div>
   );
@@ -292,7 +330,7 @@ function FeedCard({ video, now, onOpen }: { video: VideoItem; now: number; onOpe
     <button type="button" className="ph-card" onClick={() => onOpen(video.id)}>
       <Thumb video={video} />
       <div className="ph-card-row">
-        <Avatar name={channel?.name ?? '?'} />
+        <Avatar name={channel?.name ?? '?'} image={channel?.avatarImage} />
         <span className="ph-card-text">
           <span className="ph-card-title">{video.title}</span>
           <span className="ph-card-meta">
@@ -370,8 +408,11 @@ function ShortsTab({
   return (
     <div className="ph-shorts">
       <div className="ph-short">
-        <div className="ph-short-title">{video.title}</div>
-        <div className="ph-short-meta">
+        {video.thumbnailImage && (
+          <span className="ph-short-cover" aria-hidden="true"><img src={video.thumbnailImage} alt="" /></span>
+        )}
+        <div className="ph-short-title" style={{ position: 'relative' }}>{video.title}</div>
+        <div className="ph-short-meta" style={{ position: 'relative' }}>
           {channel?.name} · {views(video.views)} views · {ago(now, video.publishedAt)}
         </div>
         <div className="ph-short-rail">
@@ -461,7 +502,7 @@ function YouTab({
   return (
     <div className="ph-body">
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 16 }}>
-        <Avatar name={sim.player.displayName} size={54} />
+        <Avatar name={sim.player.displayName} size={54} image={channel?.avatarImage} />
         <div>
           <div style={{ fontSize: 17, fontWeight: 600 }}>{sim.player.displayName}</div>
           <div className="ph-card-meta">
@@ -469,6 +510,8 @@ function YouTab({
           </div>
         </div>
       </div>
+
+      {channel && <ChannelPictures channel={channel} say={say} />}
 
       <div className="ph-chips" style={{ padding: '0 12px 8px' }}>
         <button type="button" className="ph-chip" onClick={onLibrary}>Library</button>
@@ -601,7 +644,13 @@ function SearchPage({
   query: string; setQuery: (q: string) => void; now: number;
   onClose: () => void; onOpen: (id: string) => void;
 }) {
-  const results = useWorld((s) => searchVideos(s, query, 30));
+  const { run } = useGame();
+  const [uploaded, setUploaded] = useState<'any' | 'today' | 'week' | 'month' | 'year'>('any');
+  const [length, setLength] = useState<'any' | 'short' | 'medium' | 'long'>('any');
+  const prefs = useWorld(preferences);
+  const results = useWorld((s) => applyFilters(s, searchVideos(s, query, 120), {
+    uploaded, duration: length, sort: prefs.searchSort,
+  }).slice(0, 40));
   return (
     <>
       <div className="ph-yt-top">
@@ -615,6 +664,40 @@ function SearchPage({
           autoFocus
           onChange={(e) => setQuery(e.target.value)}
         />
+      </div>
+      <div className="ph-chips">
+        {(['any', 'today', 'week', 'month', 'year'] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={`ph-chip${uploaded === option ? ' ph-on' : ''}`}
+            onClick={() => setUploaded(option)}
+          >
+            {option === 'any' ? 'Any Time' : option === 'today' ? 'Today' : `This ${option[0]!.toUpperCase()}${option.slice(1)}`}
+          </button>
+        ))}
+      </div>
+      <div className="ph-chips" style={{ paddingTop: 0 }}>
+        {(['any', 'short', 'medium', 'long'] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={`ph-chip${length === option ? ' ph-on' : ''}`}
+            onClick={() => setLength(option)}
+          >
+            {option === 'any' ? 'Any Length' : option === 'short' ? 'Under 4 Minutes' : option === 'medium' ? '4 To 20' : 'Over 20'}
+          </button>
+        ))}
+        {(['relevance', 'date', 'views'] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={`ph-chip${prefs.searchSort === option ? ' ph-on' : ''}`}
+            onClick={() => run('video.set_preferences', { searchSort: option })}
+          >
+            {option === 'relevance' ? 'Relevance' : option === 'date' ? 'Newest' : 'Most Viewed'}
+          </button>
+        ))}
       </div>
       <div className="ph-body">
         {query.trim().length < 2 ? (
@@ -634,16 +717,23 @@ function SearchPage({
 // ---------------------------------------------------------------------------
 
 function WatchPage({
-  video, now, onBack, onOpen, onChannel, onWatch, say,
+  video, now, onBack, onOpen, onChannel, onSettings, onWatch, say,
 }: {
   video: VideoItem; now: number;
   onBack: () => void; onOpen: (id: string) => void; onChannel: (id: string) => void;
+  onSettings: () => void;
   onWatch: (video: VideoItem, minutes?: number, like?: boolean) => void;
   say: (text: string) => void;
 }) {
   const { run } = useGame();
   const [sheet, setSheet] = useState<'none' | 'save' | 'tip'>('none');
+  const [replyTo, setReplyTo] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState('');
   const paying = useWorld(hasPremium);
+  const prefs = useWorld(preferences);
+  const chapters = useWorld((s) => chaptersOf(s, video));
+  const captioned = useWorld((s) => hasCaptions(s, video));
+  const runtime = minutesAtSpeed(video.lengthMinutes, prefs);
   const channel = useWorld((s) => s.universe.videoChannels[video.channelId]);
   const subscribed = useWorld((s) => (channel ? isSubscribed(s, s.player.id, channel.id) : false));
   const seen = useWorld((s) => watchedIds(s, s.player.id).has(video.id));
@@ -661,8 +751,9 @@ function WatchPage({
       <div className="ph-player">
         <button type="button" className="ph-play-big" aria-label="Play" onClick={() => onWatch(video)} />
         <span className="ph-play-note">
-          {seen ? 'Watched. Play it again if you like.' : `${duration(video.lengthMinutes)} of your day`}
+          {seen ? 'Watched. Play it again if you like.' : `${duration(runtime)} of your day at ${prefs.speed}×`}
           {paying ? ' · no ads' : ' · an ad may run first'}
+          {captioned ? (prefs.captions ? ' · captions on' : ' · captions available') : ' · no captions'}
         </span>
         <span className="ph-scrub"><i style={{ width: seen ? '100%' : '0%' }} /></span>
       </div>
@@ -674,6 +765,31 @@ function WatchPage({
         </div>
 
         <div className="ph-actions">
+          <button type="button" className="ph-pill" onClick={onSettings}>{prefs.speed}× · {prefs.quality}</button>
+          <button
+            type="button"
+            className={`ph-pill${prefs.captions ? ' ph-on' : ''}`}
+            disabled={!captioned}
+            onClick={() => run('video.set_preferences', { captions: !prefs.captions })}
+          >
+            CC
+          </button>
+          {prefs.autoplay && (
+            <button
+              type="button"
+              className="ph-pill"
+              onClick={() => {
+                const result = run<{ watched: number; minutes: number; stoppedBecause: string }>(
+                  'video.autoplay', { videoId: video.id },
+                );
+                if (result.ok) {
+                  say(`${result.value!.watched} videos, ${result.value!.minutes} minutes. ${result.value!.stoppedBecause}`);
+                }
+              }}
+            >
+              Autoplay
+            </button>
+          )}
           <button type="button" className="ph-pill" onClick={() => onWatch(video, video.lengthMinutes, true)}>
             <LikeGlyph size={16} /> {views(video.likes)}
           </button>
@@ -732,6 +848,23 @@ function WatchPage({
           )}
         </div>
 
+        {chapters.length > 0 && (
+          <div className="ph-panel">
+            <h4>Chapters</h4>
+            {chapters.map((chapter) => (
+              <button
+                key={chapter.title}
+                type="button"
+                className="ph-pill"
+                style={{ margin: '4px 6px 0 0' }}
+                onClick={() => onWatch(video, Math.max(1, runtime - Math.round(chapter.at / prefs.speed)))}
+              >
+                {duration(chapter.at)} {chapter.title}
+              </button>
+            ))}
+          </div>
+        )}
+
         {video.description && (
           <div className="ph-panel">
             <h4>{views(video.views)} views · {ago(now, video.publishedAt)}</h4>
@@ -766,9 +899,64 @@ function WatchPage({
           <div key={comment.id} className="ph-comment">
             <Avatar name={comment.authorName} size={30} />
             <span className="ph-c-text">
-              <span className="ph-c-who">{comment.authorName} · {ago(now, comment.at)}</span>
+              <span className="ph-c-who">
+                {comment.pinned ? 'Pinned · ' : ''}{comment.authorName} · {ago(now, comment.at)}
+                {comment.replyToId ? ' · reply' : ''}
+              </span>
               <span className="ph-c-body">{comment.text}</span>
-              <span className="ph-c-likes"><LikeGlyph size={13} /> {views(comment.likes)}</span>
+              <span className="ph-c-likes">
+                <LikeGlyph size={13} /> {views(comment.likes)}
+                {comment.hearted && ' · hearted by the channel'}
+              </span>
+              <span className="ph-actions" style={{ padding: '6px 0 0' }}>
+                <button
+                  type="button"
+                  className="ph-pill"
+                  onClick={() => { setReplyTo(replyTo === comment.id ? null : comment.id); setReplyText(''); }}
+                >
+                  Reply
+                </button>
+                {mine && (
+                  <>
+                    <button
+                      type="button"
+                      className={`ph-pill${comment.pinned ? ' ph-on' : ''}`}
+                      onClick={() => run('video.pin_comment', { commentId: comment.id })}
+                    >
+                      Pin
+                    </button>
+                    <button
+                      type="button"
+                      className={`ph-pill${comment.hearted ? ' ph-on' : ''}`}
+                      onClick={() => run('video.heart_comment', { commentId: comment.id })}
+                    >
+                      Heart
+                    </button>
+                  </>
+                )}
+              </span>
+              {replyTo === comment.id && (
+                <span style={{ display: 'block', marginTop: 8 }}>
+                  <input
+                    className="ph-input"
+                    value={replyText}
+                    placeholder={`Reply to ${comment.authorName}`}
+                    aria-label={`Reply to ${comment.authorName}`}
+                    onChange={(e) => setReplyText(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="ph-pill ph-on"
+                    style={{ marginTop: 6 }}
+                    onClick={() => {
+                      const result = run('video.reply_comment', { commentId: comment.id, text: replyText });
+                      if (result.ok) { setReplyTo(null); setReplyText(''); say('Replied.'); }
+                    }}
+                  >
+                    Reply
+                  </button>
+                </span>
+              )}
             </span>
           </div>
         ))}
@@ -823,6 +1011,7 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
   const [effortMinutes, setEffort] = useState(240);
   const [later, setLater] = useState(false);
   const [days, setDays] = useState(2);
+  const [photo, setPhoto] = useState<string | undefined>();
   const now = useWorld((s) => s.now);
   const catalog = useWorld((s) => (channel ? catalogOf(s, channel) : []));
 
@@ -858,7 +1047,20 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
         <label className="ph-label" htmlFor="ph-tags">Tags, Separated By Commas</label>
         <input id="ph-tags" className="ph-input" value={tags} onChange={(e) => setTags(e.target.value)} />
 
-        <label className="ph-label">Thumbnail</label>
+        <label className="ph-label">
+          {lengthMinutes <= SHORT_MINUTES ? 'Cover, Which Is The Whole Screen On A Short' : 'Your Own Thumbnail'}
+        </label>
+        <ImagePicker
+          frame={lengthMinutes <= SHORT_MINUTES ? 'short' : 'thumbnail'}
+          image={photo}
+          label={lengthMinutes <= SHORT_MINUTES ? 'Cover for this short' : 'Thumbnail for this video'}
+          onChange={setPhoto}
+        />
+        <p className="ph-card-meta">
+          Bring your own picture, or pick one of the seven below and the app draws it.
+        </p>
+
+        <label className="ph-label">Or A Drawn One</label>
         <div className="ph-chips" style={{ padding: '0 0 8px' }}>
           {THUMBNAILS.map((option) => (
             <button
@@ -910,7 +1112,7 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
           className="ph-pill ph-on"
           style={{ marginTop: 14 }}
           onClick={() => {
-            const result = run<{ quality: number; status: string }>('video.upload', {
+            const result = run<{ quality: number; status: string; videoId: string }>('video.upload', {
               title,
               description,
               tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
@@ -920,6 +1122,9 @@ function UploadPage({ onClose, say }: { onClose: () => void; say: (text: string)
               publishAt: later ? now + days * MS_DAY : undefined,
             });
             if (result.ok) {
+              if (photo) {
+                run('video.set_thumbnail_image', { videoId: result.value!.videoId, image: photo });
+              }
               say(result.value!.status === 'scheduled'
                 ? 'Scheduled. It goes up on its own.'
                 : 'It is up. Now you wait.');
@@ -1007,6 +1212,165 @@ function DealRow({ deal, say }: { deal: BrandDeal; say: (text: string) => void }
           {' '}{deal.deliverables.reduce((sum, d) => sum + d.count, 0)} delivered.
         </p>
       )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// The bell, as an inbox
+// ---------------------------------------------------------------------------
+
+function NoticesPage({
+  now, onBack, onOpen, onChannel,
+}: {
+  now: number; onBack: () => void;
+  onOpen: (id: string) => void; onChannel: (id: string) => void;
+}) {
+  const { run } = useGame();
+  const notices = useWorld((s) => noticesOf(s, s.player.id).slice(0, 40));
+  useEffect(() => { run('video.read_notices', {}, { silent: true }); }, [run]);
+
+  return (
+    <>
+      <div className="ph-yt-top">
+        <button type="button" className="ph-iconbtn" aria-label="Back" onClick={onBack}><BackGlyph size={21} /></button>
+        <b style={{ fontSize: 17, flex: 1, marginLeft: 10 }}>Notifications</b>
+      </div>
+      <div className="ph-body">
+        {notices.length === 0 ? (
+          <div className="ph-empty">
+            <b>Nothing Here</b>
+            Turn the bell on for a channel and its uploads land here.
+          </div>
+        ) : notices.map((notice) => (
+          <button
+            key={notice.id}
+            type="button"
+            className="ph-row"
+            onClick={() => {
+              if (notice.videoId) onOpen(notice.videoId);
+              else if (notice.channelId) onChannel(notice.channelId);
+            }}
+          >
+            <span className="ph-row-text" style={{ paddingLeft: 2 }}>
+              <span className="ph-card-title">{notice.text}</span>
+              <span className="ph-card-meta">{ago(now, notice.at)}{notice.seen ? '' : ' · new'}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Playback settings
+// ---------------------------------------------------------------------------
+
+function PlaybackSettings({ onBack }: { onBack: () => void }) {
+  const { run } = useGame();
+  const prefs = useWorld(preferences);
+  return (
+    <>
+      <div className="ph-yt-top">
+        <button type="button" className="ph-iconbtn" aria-label="Back" onClick={onBack}><BackGlyph size={21} /></button>
+        <b style={{ fontSize: 17, flex: 1, marginLeft: 10 }}>Playback</b>
+      </div>
+      <div className="ph-body">
+        <div className="ph-section-head">Speed</div>
+        <div className="ph-chips">
+          {SPEEDS.map((speed) => (
+            <button
+              key={speed}
+              type="button"
+              className={`ph-chip${prefs.speed === speed ? ' ph-on' : ''}`}
+              onClick={() => run('video.set_preferences', { speed })}
+            >
+              {speed}×
+            </button>
+          ))}
+        </div>
+        <p className="ph-card-meta" style={{ padding: '0 12px 8px' }}>
+          Faster takes less of your day and leaves you with less of the video. Past one and a half
+          you are skimming.
+        </p>
+
+        <div className="ph-section-head">Quality</div>
+        <div className="ph-chips">
+          {QUALITIES.map((quality) => (
+            <button
+              key={quality}
+              type="button"
+              className={`ph-chip${prefs.quality === quality ? ' ph-on' : ''}`}
+              onClick={() => run('video.set_preferences', { quality })}
+            >
+              {quality === 'auto' ? 'Auto' : quality}
+            </button>
+          ))}
+        </div>
+
+        <div className="ph-section-head">And The Rest</div>
+        <div className="ph-set-group">
+          <button
+            type="button"
+            className="ph-set-row"
+            onClick={() => run('video.set_preferences', { autoplay: !prefs.autoplay })}
+          >
+            Autoplay
+            <span className="ph-set-value">{prefs.autoplay ? 'On' : 'Off'}</span>
+          </button>
+          <button
+            type="button"
+            className="ph-set-row"
+            onClick={() => run('video.set_preferences', { captions: !prefs.captions })}
+          >
+            Captions
+            <span className="ph-set-value">{prefs.captions ? 'On' : 'Off'}</span>
+          </button>
+        </div>
+        <p className="ph-card-meta" style={{ padding: '10px 12px' }}>
+          Captions only work where the video has them, and most do. With them on you take more in.
+        </p>
+      </div>
+    </>
+  );
+}
+
+/** The two pictures a channel has, both of them the player's own photos. */
+function ChannelPictures({ channel, say }: { channel: VideoChannel; say: (text: string) => void }) {
+  const { run } = useGame();
+  const [open, setOpen] = useState(false);
+  if (!open) {
+    return (
+      <div className="ph-chips" style={{ padding: '0 12px 8px' }}>
+        <button type="button" className="ph-chip" onClick={() => setOpen(true)}>Channel Pictures</button>
+      </div>
+    );
+  }
+  return (
+    <div className="ph-panel">
+      <h4>Channel Pictures</h4>
+      <label className="ph-label">Banner</label>
+      <ImagePicker
+        frame="banner"
+        image={channel.bannerImage}
+        label="Channel banner"
+        onChange={(image) => {
+          const result = run('video.set_channel_image', { which: 'banner', image });
+          if (result.ok) say(image ? 'Banner set.' : 'Banner removed.');
+        }}
+      />
+      <label className="ph-label">Picture</label>
+      <ImagePicker
+        frame="avatar"
+        image={channel.avatarImage}
+        label="Channel picture"
+        onChange={(image) => {
+          const result = run('video.set_channel_image', { which: 'avatar', image });
+          if (result.ok) say(image ? 'Picture set.' : 'Picture removed.');
+        }}
+      />
+      <button type="button" className="ph-pill" style={{ marginTop: 8 }} onClick={() => setOpen(false)}>Done</button>
     </div>
   );
 }
