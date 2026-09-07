@@ -5,6 +5,8 @@ import { Panel, Meter, Empty } from '@/ui/components/primitives';
 import { ACTIVITIES, readiness, wellbeingSummary } from '@/engine/systems/life';
 import { activeScene } from '@/engine/systems/scenes';
 import { RECIPES, CATALOG } from '@/engine/content/catalog';
+import { EQUIPMENT_LABEL, FITTED_KITCHEN, type EquipmentKind } from '@/engine/content/kitchen';
+import { kitchenOf, othersAtHome } from '@/engine/systems/life';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
@@ -24,7 +26,10 @@ export function WellbeingWorkspace() {
   const w = player.wellbeing;
   const ready = readiness(player);
 
-  const canCook = (recipeId: string) => {
+  const kitchen = useWorld((s) => kitchenOf(s, s.player.id));
+  const atHome = useWorld((s) => othersAtHome(s, s.player.id));
+
+  const haveFood = (recipeId: string) => {
     const recipe = RECIPES.get(recipeId);
     if (!recipe) return false;
     return recipe.ingredients.every((ing) => {
@@ -32,6 +37,15 @@ export function WellbeingWorkspace() {
         .reduce((s, p) => s + p.quantity, 0);
       return have >= ing.quantity;
     });
+  };
+
+  /** The kit a dish needs that is not in this kitchen, in words. */
+  const missingKit = (recipeId: string) => {
+    const recipe = RECIPES.get(recipeId);
+    if (!recipe) return [] as string[];
+    return recipe.equipment
+      .filter((kind) => !kitchen.has(kind as EquipmentKind))
+      .map((kind) => EQUIPMENT_LABEL[kind as EquipmentKind] ?? kind);
   };
 
   return (
@@ -69,30 +83,45 @@ export function WellbeingWorkspace() {
           </div>
         </Panel>
 
-        <Panel title="Cook Something" subtitle="Uses what is actually in your kitchen." flush>
+        <Panel
+          title="Cook Something"
+          subtitle={atHome.length > 0
+            ? `Uses what is in your kitchen. ${atHome.length} other ${atHome.length === 1 ? 'person is' : 'people are'} home to feed.`
+            : 'Uses what is actually in your kitchen.'}
+          flush
+        >
           {pantry.length === 0 ? (
             <Empty title="Empty Kitchen" body="Buy groceries before you can cook. Shopping has a grocery section." />
           ) : (
             <div className="list">
               {RECIPES.all().map((recipe) => {
-                const possible = canCook(recipe.id);
+                const food = haveFood(recipe.id);
+                const kit = missingKit(recipe.id);
+                const possible = food && kit.length === 0;
+                const needed = recipe.equipment.filter((k) => !(FITTED_KITCHEN as readonly string[]).includes(k));
                 return (
                   <div key={recipe.id} className="list-item list-static">
                     <div className="grow">
                       <div className="small strong">{recipe.name}</div>
                       <div className="xs dim">
                         {recipe.meal} · {recipe.prepMinutes} min · serves {recipe.servings}
+                        {needed.length > 0
+                          ? ` · needs ${needed.map((k) => EQUIPMENT_LABEL[k as EquipmentKind] ?? k).join(', ')}`
+                          : ''}
                       </div>
                       <div className="xs dim">
                         {recipe.ingredients.map((i) => CATALOG.get(i.catalogId)?.name ?? i.catalogId).join(', ')}
                       </div>
+                      {kit.length > 0 ? (
+                        <div className="xs dim">You do not own {kit.join(', ')}. Appliances are in Shopping.</div>
+                      ) : null}
                     </div>
                     <button
                       className="btn btn-sm"
                       disabled={!possible}
                       onClick={() => run('life.cook', { recipeId: recipe.id })}
                     >
-                      {possible ? 'Cook' : 'Missing Items'}
+                      {possible ? 'Cook' : kit.length > 0 ? 'No Equipment' : 'Missing Items'}
                     </button>
                   </div>
                 );

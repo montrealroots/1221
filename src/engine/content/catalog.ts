@@ -31,6 +31,8 @@ import { REAL_HIGHSTREET } from './highstreet';
 import { REAL_SHOEMAKERS } from './shoemakers';
 import { REAL_QUIET } from './quiet';
 import { REAL_JEWELERS } from './jewelers';
+import { REAL_LARDER } from './larder';
+import { REAL_RECIPES } from './kitchen';
 import { REAL_ADORNMENT } from './adornment';
 import { withAudience } from './audience';
 
@@ -277,7 +279,7 @@ const REAL_ITEMS: readonly CatalogItem[] = withAudience(([] as RealGood[]).conca
   REAL_EQUIPMENT as RealGood[], REAL_ART as RealGood[], REAL_BOOKS as RealGood[], REAL_TOP_UP as RealGood[],
   REAL_INTIMATES as RealGood[], REAL_ADORNMENT as RealGood[],
   REAL_SNEAKERS as RealGood[], REAL_LABELS as RealGood[], REAL_SPORTSWEAR as RealGood[],
-  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[], REAL_OUTFITTERS as RealGood[], REAL_HIGHSTREET as RealGood[], REAL_SHOEMAKERS as RealGood[], REAL_QUIET as RealGood[], REAL_JEWELERS as RealGood[],
+  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[], REAL_OUTFITTERS as RealGood[], REAL_HIGHSTREET as RealGood[], REAL_SHOEMAKERS as RealGood[], REAL_QUIET as RealGood[], REAL_JEWELERS as RealGood[], REAL_LARDER as RealGood[],
 )) as unknown as CatalogItem[];
 
 export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...LEGACY_ITEMS]);
@@ -487,6 +489,11 @@ export function retailersFor(category: string, cityId: string): Retailer[] {
 export interface Recipe extends ReferenceRecord {
   type: 'recipe';
   ingredients: { catalogId: string; quantity: number }[];
+  /**
+   * The kit the dish needs. A home comes fitted with a hob, an oven, a fridge
+   * and the pans; anything past that is something you went out and bought.
+   */
+  equipment: string[];
   prepMinutes: number;
   difficulty: number;
   servings: number;
@@ -495,22 +502,4 @@ export interface Recipe extends ReferenceRecord {
   meal: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'drink';
 }
 
-function recipe(id: string, name: string, meal: Recipe['meal'], ingredients: [string, number][], prepMinutes: number, difficulty: number, servings: number, nourishment: number, quality: number): Recipe {
-  return {
-    id, name, type: 'recipe', meal,
-    ingredients: ingredients.map(([catalogId, quantity]) => ({ catalogId, quantity })),
-    prepMinutes, difficulty, servings, nourishment, quality, ...SIM,
-  };
-}
-
-export const RECIPES = new Registry<Recipe>('recipes', [
-  recipe('scrambled_eggs', 'Scrambled Eggs on Toast', 'breakfast', [['eggs', 0.25], ['butter', 0.05], ['bread', 0.2]], 12, 10, 1, 26, 55),
-  recipe('cereal_bowl', 'Cereal and Milk', 'breakfast', [['cereal', 0.15], ['milk', 0.2]], 3, 2, 1, 18, 30),
-  recipe('coffee_home', 'Coffee at Home', 'drink', [['coffee', 0.05]], 6, 8, 1, 3, 62),
-  recipe('sandwich', 'Sandwich', 'lunch', [['bread', 0.25], ['cheese', 0.15], ['tomatoes', 0.2]], 8, 8, 1, 28, 48),
-  recipe('pasta_simple', 'Pasta with Tomato and Garlic', 'dinner', [['pasta', 0.4], ['tomatoes', 0.5], ['garlic', 0.4], ['olive_oil', 0.05]], 25, 22, 2, 34, 62),
-  recipe('roast_chicken', 'Roast Chicken and Potatoes', 'dinner', [['chicken_breast', 1], ['potatoes', 0.4], ['onions', 0.3], ['olive_oil', 0.08]], 75, 46, 4, 42, 78),
-  recipe('salmon_dinner', 'Pan-Seared Salmon and Spinach', 'dinner', [['salmon', 0.6], ['spinach', 0.5], ['olive_oil', 0.06], ['garlic', 0.2]], 30, 52, 2, 40, 86),
-  recipe('beef_ragu', 'Slow Beef Ragu', 'dinner', [['ground_beef', 1], ['tomatoes', 1], ['onions', 0.5], ['garlic', 0.5], ['pasta', 0.5], ['wine_mid', 0.25]], 180, 64, 6, 44, 90),
-  recipe('fruit_snack', 'Fruit', 'snack', [['apples', 0.15]], 2, 1, 1, 8, 60),
-]);
+export const RECIPES = new Registry<Recipe>('recipes', [...REAL_RECIPES]);

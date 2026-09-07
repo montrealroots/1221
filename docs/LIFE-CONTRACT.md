@@ -206,7 +206,18 @@ answer says what would make it yes.
    the other one on request, and the four aisles nobody had built — underwear,
    socks, earrings, necklaces and chains — carry over a hundred real branded
    products each for men and each for women, 859 in all.
-4. The house: pantry, recipes, appliances, objects in rooms.
+4. **Half done.** The kitchen: every recipe in the game named ingredients no
+   shop had sold since the catalog went real, so nothing could be cooked at
+   all. There is now a larder of 110 real ingredients, a book of 73 real
+   dishes against products a shop actually stocks, and a gate checker that
+   fails the build if a recipe stops being cookable. A dish names the kit it
+   needs; a home is fitted with a hob, an oven, a fridge, pans and a knife,
+   and a blender or a stand mixer or a grill is something you went out and
+   bought. The better machine cooks a better plate in less time. What you
+   cook feeds whoever else is in the house, and they remember it.
+   **Still to come:** appliances that break, a repair that costs money and
+   days, and every owned object having a place in a room and something you
+   can do with it.
 5. The phone: YouTube in full, then the other three.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.

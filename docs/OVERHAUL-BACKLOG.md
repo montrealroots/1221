@@ -242,6 +242,18 @@ before any delivery claim.
 
     **The brand-depth build is paused here at the user's instruction**, to come back to. The seven houses that were to follow in this stage are written down so nothing is lost: **Graff, Boucheron, Chaumet, Piaget, Chopard, Mikimoto and Buccellati.** After them, the queue is the custom benches (Johnny Dang & Co. 16, Jacob & Co. 15, Eliantte & Co. 11, Avianne & Co. 10, IF & Co. 10, Popular Jewelry 9, GLD 7, Rafaello & Co. 7, Greg Yuna 6, Frost NYC 5, TraxNYC 5, Pristine Jewelers 5), the accessible jewelers (Pandora 7, Swarovski 7, Monica Vinader 7, Mejuri 6, Astrid & Miyu 4, Thomas Sabo 5, Astley Clarke 3, Dinh Van 5, Repossi 4, TASAKI 3, Ole Lynggaard 5, Georg Jensen 6, David Yurman 6, Messika 7, Pomellato 8, Mikimoto 11, Chopard 11), and the everyday names still thin (Lululemon 11, Aritzia 1, Next 1, Everlane 2, Arket 4, Havaianas 1, John Lobb 1). Forty two shopfronts are still thinner than a hundred and the gate prints that number every run.
 
+34. Life contract item 4, first half — the kitchen is a kitchen. **Every recipe in the game was uncookable.** All nine of them named the invented grocery ids the catalog started with, long since replaced by real branded products, so `life.cook` could never find an ingredient and nothing said so. The Wellbeing panel offered nine dishes and refused all nine.
+
+    `content/larder.ts` adds **110 real ingredients** — the onions, garlic, lemons, herbs, mushrooms, cream, stock, tins, flour, spices and frozen things a recipe actually needs, none of which the shop carried. `content/kitchen.ts` adds **73 real dishes** built from products a shop really sells, from scrambled eggs to a Sunday roast, and the nine old ids are kept and re-pointed so an old save still resolves what it remembers.
+
+    **A dish now names its kit.** A home is fitted with a hob, an oven, a fridge, pans and a knife; a blender, a stand mixer, a food processor, a grill, an air fryer, a coffee machine or a toaster is a thing you went out and bought, read off the name the maker put on it — a range gives you a hob and an oven because a range is both. `life.cook` refuses a dish you have nothing to cook it with and says which machine is missing and where to buy one. The better machine is worth owning: it lifts the plate and cuts the time, up to a point, and it never makes a slow braise fast.
+
+    **What you cooked feeds the room.** Servings past your own go to whoever else lives there, they each remember that you cooked for them, and the relationship warms a little.
+
+    **Found and fixed on the way:** the autopilot meal picked the best value per dollar in the whole shop, so the moment the larder arrived a careful person was living on plain flour and tinned coconut milk at $7.79 a day. Ingredients are now excluded from what somebody eats without cooking, and the everyday net widened from sixteen items to forty, which puts a year of feeding one person back in the $9 to $17 a day the calibration test holds it to.
+
+    `tools/kitchen-check.mjs` joins the gate: it fails on a recipe naming an ingredient the catalog does not have, an ingredient no shop sells, equipment that is neither fitted nor buyable, or no ingredients at all. `tests/kitchen.test.ts` holds twelve promises. Walked in play: five real groceries bought off the rail, and the Cook panel then reads 51 dishes short of food, 21 short of a machine it names, and one — spaghetti al pomodoro — ready to cook.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.

@@ -13,9 +13,12 @@ import { clamp, remap } from '../core/rng';
 import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_MINUTE, MS_DAY } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
 import { CATALOG, RECIPES, retailPrice } from '../content/catalog';
+import { EQUIPMENT_LABEL, FITTED_KITCHEN, equipmentFrom, type EquipmentKind } from '../content/kitchen';
 import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
+import { rememberFact } from './memory';
+import { addMemory, applyDelta, findRelationship } from './relationships';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -163,6 +166,56 @@ export const ACTIVITY_BY_ID: Readonly<Record<string, ActivityDef>> =
 // Registration
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// The kitchen
+// ---------------------------------------------------------------------------
+
+/**
+ * What you can actually cook with, and how good it is.
+ *
+ * A home is fitted: a hob, an oven, a fridge, pans, a knife. Everything past
+ * that is a thing you went out and bought, and the machine you bought is
+ * better than the one that came with the flat, which is the entire reason
+ * anybody buys one. The number against each kind is the quality of the best
+ * one you own of it.
+ */
+export function kitchenOf(sim: Simulation, personId: Id): Map<EquipmentKind, number> {
+  const kit = new Map<EquipmentKind, number>();
+  const person = sim.universe.people[personId];
+  if (!person?.residenceId) return kit;
+  for (const kind of FITTED_KITCHEN) kit.set(kind, 50);
+  for (const asset of Object.values(sim.universe.assets)) {
+    if (asset.ownerId !== personId || asset.soldAt) continue;
+    const item = asset.catalogId ? CATALOG.get(asset.catalogId) : undefined;
+    if (!item) continue;
+    for (const kind of equipmentFrom(item.name, item.category)) {
+      // A thing in poor condition is a worse thing to cook with.
+      const worth = Math.round(item.quality * clamp(asset.condition / 100, 0.4, 1));
+      kit.set(kind, Math.max(kit.get(kind) ?? 0, worth));
+    }
+  }
+  return kit;
+}
+
+/** The kit a dish needs that you do not have, in words. */
+export function missingEquipment(sim: Simulation, personId: Id, recipeId: string): string[] {
+  const recipe = RECIPES.get(recipeId);
+  if (!recipe) return [];
+  const kit = kitchenOf(sim, personId);
+  return recipe.equipment
+    .filter((kind) => !kit.has(kind as EquipmentKind))
+    .map((kind) => EQUIPMENT_LABEL[kind as EquipmentKind] ?? kind);
+}
+
+/** Who else is at home to be fed right now. */
+export function othersAtHome(sim: Simulation, personId: Id): Id[] {
+  const person = sim.universe.people[personId];
+  if (!person?.residenceId) return [];
+  return Object.values(sim.universe.people)
+    .filter((other) => other.id !== personId && (other.aliveUntil === undefined || other.aliveUntil > sim.now) && other.residenceId === person.residenceId)
+    .map((other) => other.id);
+}
+
 export function registerLife(sim: Simulation): void {
   sim.onSchedule('life.day_rollover', () => {
     dailyRollover(sim);
@@ -277,13 +330,25 @@ export function registerLife(sim: Simulation): void {
 
   // --- Cooking -------------------------------------------------------------
 
-  sim.onCommand<{ recipeId: string }, { servings: number; nourishment: number }>(
+  sim.onCommand<
+    { recipeId: string; forPeopleIds?: Id[] },
+    { servings: number; nourishment: number; fed: Id[]; usedEquipment: string[] }
+  >(
     'life.cook',
     (p, { sim: s }) => {
       const recipe = RECIPES.get(p.recipeId);
       if (!recipe) throw new CommandError('No such recipe.');
       const person = s.player;
       if (!person.residenceId) throw new CommandError('You need a kitchen. You do not have a home yet.');
+
+      // The kit before the food: there is no point checking the pantry for a
+      // dish you have nothing to cook it in.
+      const kit = kitchenOf(s, person.id);
+      const short = recipe.equipment.filter((kind) => !kit.has(kind as EquipmentKind));
+      if (short.length > 0) {
+        const words = short.map((kind) => EQUIPMENT_LABEL[kind as EquipmentKind] ?? kind);
+        throw new CommandError(`You do not have what you need to cook that: ${words.join(', ')}. Appliances are in Shopping.`);
+      }
 
       // Check the pantry actually has the ingredients.
       const missing: string[] = [];
@@ -311,19 +376,58 @@ export function registerLife(sim: Simulation): void {
         if (stock.quantity <= 0.0001) delete s.universe.pantry[c.itemId];
       }
 
+      // What you cooked it with. A machine better than the fitted one does
+      // something the fitted one does not: a cleaner plate, a shorter job.
+      const used = recipe.equipment.map((kind) => kit.get(kind as EquipmentKind) ?? 50);
+      const kitQuality = used.length > 0 ? used.reduce((a, b) => a + b, 0) / used.length : 50;
+      const kitEdge = clamp((kitQuality - 50) / 100, -0.1, 0.45);
+
       const skill = person.skills['cooking'] ?? 5;
       const difficultyGap = skill - recipe.difficulty;
-      const qualityMultiplier = clamp(0.62 + difficultyGap / 90, 0.45, 1.25);
+      const qualityMultiplier = clamp(0.62 + difficultyGap / 90 + kitEdge * 0.5, 0.45, 1.45);
       const nourishment = Math.round(recipe.nourishment * qualityMultiplier);
+      // Good kit is quicker. It never makes a slow braise a fast one.
+      const minutes = Math.max(2, Math.round(recipe.prepMinutes * (1 - kitEdge * 0.4)));
 
-      s.advanceTo(s.now + recipe.prepMinutes * MS_MINUTE);
+      s.advanceTo(s.now + minutes * MS_MINUTE);
       person.wellbeing.nourishment = clamp(person.wellbeing.nourishment + nourishment, 0, 100);
       person.wellbeing.morale = clamp(person.wellbeing.morale + recipe.quality * qualityMultiplier * 0.04, 0, 100);
-      person.wellbeing.energy = clamp(person.wellbeing.energy - recipe.prepMinutes * 0.05, 0, 100);
+      person.wellbeing.energy = clamp(person.wellbeing.energy - minutes * 0.05, 0, 100);
       person.skills['cooking'] = clamp(skill + 0.6, 0, 100);
 
-      s.emit('life.cooked', { personId: person.id, recipeId: recipe.id, servings: recipe.servings, nourishment });
-      return { servings: recipe.servings, nourishment };
+      // The rest of what you made goes to whoever is there to eat it. You get
+      // one serving; the others get one each until the dish runs out.
+      const offered = p.forPeopleIds ?? othersAtHome(s, person.id);
+      const fed: Id[] = [];
+      for (const otherId of offered) {
+        if (fed.length >= recipe.servings - 1) break;
+        const other = s.universe.people[otherId];
+        if (!other || other.id === person.id) continue;
+        other.wellbeing.nourishment = clamp(other.wellbeing.nourishment + nourishment, 0, 100);
+        other.wellbeing.morale = clamp(other.wellbeing.morale + recipe.quality * qualityMultiplier * 0.05, 0, 100);
+        rememberFact(s, other.id, {
+          kind: 'event', aboutId: person.id, weight: 34, sourceKind: 'cooking',
+          text: `${person.displayName} cooked ${recipe.name} for them.`,
+        });
+        const rel = findRelationship(s, person.id, other.id);
+        if (rel) {
+          applyDelta(rel.dimensions, { affection: 1.4, trust: 0.6, familiarity: 0.8 });
+          addMemory(s, rel, {
+            kind: 'cooked_for', summary: `You cooked ${recipe.name} for them.`,
+            impact: 2, decayDays: 120,
+          });
+        }
+        fed.push(other.id);
+      }
+
+      s.emit('life.cooked', {
+        personId: person.id, recipeId: recipe.id, servings: recipe.servings,
+        nourishment, fed, minutes,
+      });
+      return {
+        servings: recipe.servings, nourishment, fed,
+        usedEquipment: recipe.equipment.slice(),
+      };
     },
   );
 
@@ -594,6 +698,7 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
   // forever.
   const candidates = CATALOG.all()
     .filter((i) => (i.category === 'groceries' || i.category === 'dining') && (i.nourishment ?? 0) > 0)
+    .filter((i) => !isIngredientOnly(i.name))
     .map((i) => {
       const retailer = i.category === 'groceries' ? 'valuemart' : 'cornerstore';
       const cost = Math.max(1, retailPrice(i.id, retailer, col));
@@ -613,13 +718,31 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
 }
 
 /**
+ * Things nobody eats as they are.
+ *
+ * The unplanned meal picks the best value in the shop, and once the larder
+ * carried what a recipe actually needs that meant a careful person was living
+ * on plain flour and tinned coconut milk, which costs almost nothing and is
+ * not eating. Flour is an ingredient. So is stock, so is oil, so is a jar of
+ * cumin. They are bought to cook with, and the cook command is where they
+ * belong.
+ */
+const INGREDIENT_ONLY = /flour|yeast|baking powder|stock|pur[\u00e9e]+e?|pastry|vinegar|\boil\b|extract|paste|polenta|sugar|peppercorns|salt|paprika|cumin|cinnamon|oregano|bay leaves|chilli flakes|coconut milk|breadcrumbs|gochujang|harissa|miso/i;
+
+function isIngredientOnly(name: string): boolean {
+  return INGREDIENT_ONLY.test(name);
+}
+
+/**
  * How wide the net is when somebody eats without having shopped.
  *
- * Sixteen is the good-value end of the catalog — staples, a few proteins,
- * and the occasional bought lunch. Wider than this and a careful person is
- * eating tasting menus; narrower and they are back to one thing forever.
+ * Forty is the value end of the catalog — the staples, the everyday
+ * proteins, the bread, and the occasional bought lunch. Wider than this and a
+ * careful person is eating tasting menus; narrower and they live on dried
+ * pasta and tinned beans, which was what happened when the larder arrived and
+ * filled the cheap end with forty more things to be careful with.
  */
-const UNPLANNED_MEAL_CHOICES = 16;
+const UNPLANNED_MEAL_CHOICES = 40;
 
 /** Why it was that, this time. Read straight off the bank statement. */
 const UNPLANNED_MEAL_NOTES: readonly string[] = [
