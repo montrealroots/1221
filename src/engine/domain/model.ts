@@ -1818,6 +1818,11 @@ export interface VideoChannel {
   accountId?: Id;
   lastUploadAt?: Instant;
   totalViews: number;
+  /** What it costs a month to join, where the channel sells memberships. */
+  membershipMonthly?: Money;
+  /** How many people are paying for that. */
+  members?: number;
+  liveStreamId?: Id;
   /**
    * How many videos this channel has put out. The world's back catalog is
    * derived from this and the channel's seed rather than stored, because two
@@ -1888,6 +1893,8 @@ export interface VideoSubscription {
   since: Instant;
   /** The bell. Off by default, because it is off by default. */
   notify: boolean;
+  /** All, the ones it thinks you want, or none: the three the bell offers. */
+  bell?: 'all' | 'personalized' | 'none';
 }
 
 export interface WatchRecord {
@@ -1899,6 +1906,94 @@ export interface WatchRecord {
   minutes: number;
   finished: boolean;
   liked?: boolean;
+}
+
+/**
+ * The rest of what a video platform is.
+ *
+ * A feed and a watch page are the half of it people see. The other half is
+ * everything the app keeps for you and everything it pays you: playlists and
+ * the two the app makes itself, a subscription that removes the ads and pays
+ * the creators you watch, memberships somebody buys to support a channel, the
+ * one-off tips under a video, a stream with a chat in it, and the posts a
+ * channel writes when it has not got a video ready.
+ */
+export interface VideoPlaylist {
+  id: Id;
+  saveId: Id;
+  ownerId: Id;
+  title: string;
+  description: string;
+  videoIds: Id[];
+  visibility: 'public' | 'private' | 'unlisted';
+  /** The app makes two of these itself and they cannot be deleted. */
+  kind: 'playlist' | 'watch_later' | 'liked';
+  createdAt: Instant;
+  updatedAt: Instant;
+}
+
+export interface LiveStream {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  title: string;
+  startedAt: Instant;
+  endedAt?: Instant;
+  minutes: number;
+  peakViewers: number;
+  averageViewers: number;
+  chatMessages: number;
+  /** What people paid to have a message read out, in total. */
+  superChatTotal: Money;
+  status: 'live' | 'ended';
+}
+
+export interface CommunityPost {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  kind: 'text' | 'poll';
+  text: string;
+  at: Instant;
+  likes: number;
+  commentCount: number;
+  /** A poll's options and where the votes went. */
+  options?: { label: string; votes: number }[];
+  /** Which option the player chose, where they voted. */
+  votedFor?: number;
+}
+
+export interface ChannelMembership {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  /** The member. Somebody in the world, or the player. */
+  personId: Id;
+  tier: string;
+  monthly: Money;
+  since: Instant;
+  endedAt?: Instant;
+}
+
+/**
+ * What a month on the channel actually paid, and where it came from. The app
+ * shows a total; a creator lives on the breakdown.
+ */
+export interface CreatorPayout {
+  id: Id;
+  saveId: Id;
+  accountId: Id;
+  /** The month it covers, as the first instant of it. */
+  month: Instant;
+  ads: Money;
+  premium: Money;
+  memberships: Money;
+  tips: Money;
+  sponsorship: Money;
+  total: Money;
+  /** Monetized views the ad money was earned on. */
+  monetizedViews: number;
+  paidAt?: Instant;
 }
 
 export interface BrandDeal {
@@ -2372,7 +2467,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 49;
+export const SAVE_SCHEMA_VERSION = 50;
 
 export interface SaveMeta {
   id: Id;
@@ -2492,6 +2587,12 @@ export interface SaveUniverse {
   videoComments: Record<Id, VideoComment>;
   videoSubscriptions: Record<Id, VideoSubscription>;
   watchHistory: Record<Id, WatchRecord>;
+  /** The rest of the app: what it keeps for you, and what it pays. */
+  videoPlaylists: Record<Id, VideoPlaylist>;
+  liveStreams: Record<Id, LiveStream>;
+  communityPosts: Record<Id, CommunityPost>;
+  channelMemberships: Record<Id, ChannelMembership>;
+  creatorPayouts: Record<Id, CreatorPayout>;
 
   /**
    * Companies survive the removal of the film half because finance and

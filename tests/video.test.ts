@@ -20,6 +20,10 @@ import {
   videoById, videosOf,
 } from '@/engine/systems/video';
 import { PLATFORM_BY_ID } from '@/engine/systems/media';
+import {
+  buildPayout, channelPage, communityOf, hasPremium, membershipsOf, playlistsOf,
+  specialList, streamsOf, videosIn,
+} from '@/engine/systems/creator';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Id, VideoChannel } from '@/engine/domain/model';
 
@@ -144,8 +148,29 @@ describe('watching is a thing you spend an evening on', () => {
       kind: 'video.watch', payload: { videoId: video.id },
     });
     expect(result.ok, String(result.error)).toBe(true);
-    expect(sim.now - before).toBe(video.lengthMinutes * 60_000);
+    // The video, plus whatever advertising ran in front of it.
+    const spent = sim.now - before;
+    expect(spent).toBeGreaterThanOrEqual(video.lengthMinutes * 60_000);
+    expect(spent).toBeLessThanOrEqual(video.lengthMinutes * 60_000 + 30_000);
     expect(result.value!.finished).toBe(true);
+  });
+
+  it('runs an ad in front of it, and never for somebody who is paying', () => {
+    const free = quickSave({ wealth: 'comfortable' }, 'video-ads');
+    let sawAnAd = false;
+    for (const video of homeFeed(free, free.player.id, 14)) {
+      const result = free.execute<{ ad?: string }>({ kind: 'video.watch', payload: { videoId: video.id, minutes: 2 } });
+      if (result.ok && result.value!.ad) { sawAnAd = true; break; }
+    }
+    expect(sawAnAd, 'fourteen videos and not one advertisement').toBe(true);
+
+    const paid = quickSave({ wealth: 'wealthy' }, 'video-premium');
+    expect(paid.execute({ kind: 'video.join_premium', payload: {} }).ok).toBe(true);
+    expect(hasPremium(paid)).toBe(true);
+    for (const video of homeFeed(paid, paid.player.id, 14)) {
+      const result = paid.execute<{ ad?: string }>({ kind: 'video.watch', payload: { videoId: video.id, minutes: 2 } });
+      if (result.ok) expect(result.value!.ad, 'a paying viewer was shown an advertisement').toBeUndefined();
+    }
   });
 
   it('leaves you differently after an hour of comedy and an hour of news', () => {
@@ -382,5 +407,164 @@ describe('the world keeps going while you are not looking', () => {
     const before = sim.universe.notifications.length;
     sim.advanceTo(sim.now + 10 * DAY);
     expect(sim.universe.notifications.length, 'the bell never rang').toBeGreaterThan(before);
+  });
+});
+
+describe('the rest of the app', () => {
+  function creator(seed: string): Simulation {
+    const sim = quickSave({ wealth: 'wealthy' }, seed);
+    sim.execute({ kind: 'video.create_channel', payload: { name: 'Second Take', handle: `st${seed.length}` } });
+    return sim;
+  }
+
+  it('keeps Watch Later and Liked without being asked, and will not let you delete them', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-lists');
+    const lists = playlistsOf(sim, sim.player.id);
+    expect(lists.map((l) => l.kind).sort()).toEqual(['liked', 'watch_later']);
+    const later = specialList(sim, sim.player.id, 'watch_later')!;
+    expect(sim.execute({ kind: 'video.delete_playlist', payload: { playlistId: later.id } }).ok).toBe(false);
+  });
+
+  it('saves a video to a list, and refuses the same one twice', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-save');
+    const video = homeFeed(sim, sim.player.id, 3)[0]!;
+    expect(sim.execute({ kind: 'video.save_to_playlist', payload: { kind: 'watch_later', videoId: video.id } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.save_to_playlist', payload: { kind: 'watch_later', videoId: video.id } }).ok).toBe(false);
+    const later = specialList(sim, sim.player.id, 'watch_later')!;
+    expect(videosIn(sim, later).map((v) => v.id)).toContain(video.id);
+  });
+
+  it('puts a video you liked in Liked Videos', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-liked');
+    const video = homeFeed(sim, sim.player.id, 3)[0]!;
+    sim.execute({ kind: 'video.watch', payload: { videoId: video.id, minutes: 3, like: true } });
+    const liked = specialList(sim, sim.player.id, 'liked')!;
+    expect(liked.videoIds).toContain(video.id);
+  });
+
+  it('makes a playlist, fills it, empties it and deletes it', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-playlist');
+    const made = sim.execute<{ playlistId: Id }>({ kind: 'video.create_playlist', payload: { title: 'Sunday Watching' } });
+    expect(made.ok, String(made.error)).toBe(true);
+    expect(sim.execute({ kind: 'video.create_playlist', payload: { title: 'sunday watching' } }).ok, 'two lists with one name').toBe(false);
+    const video = homeFeed(sim, sim.player.id, 3)[0]!;
+    const id = made.value!.playlistId;
+    expect(sim.execute({ kind: 'video.save_to_playlist', payload: { playlistId: id, videoId: video.id } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.remove_from_playlist', payload: { playlistId: id, videoId: video.id } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.delete_playlist', payload: { playlistId: id } }).ok).toBe(true);
+  });
+
+  it('charges for Premium every month, and stops when you cancel', () => {
+    const sim = quickSave({ wealth: 'wealthy' }, 'video-prem-bill');
+    const charges = () => sim.universe.transactions.filter((t) => /Premium/.test(t.memo ?? '')).length;
+    expect(sim.execute({ kind: 'video.join_premium', payload: {} }).ok).toBe(true);
+    expect(charges(), 'the first month was free').toBe(1);
+    sim.advanceTo(sim.now + 31 * DAY);
+    expect(charges(), 'it never renewed').toBeGreaterThan(1);
+    const paid = charges();
+    expect(sim.execute({ kind: 'video.leave_premium', payload: {} }).ok).toBe(true);
+    expect(hasPremium(sim)).toBe(false);
+    sim.advanceTo(sim.now + 62 * DAY);
+    expect(charges(), 'it kept charging after it was canceled').toBe(paid);
+  });
+
+  it('lets you join a channel that sells memberships and refuses one that does not', () => {
+    const sim = quickSave({ wealth: 'wealthy' }, 'video-member');
+    const selling = channelsOf(sim).find((c) => c.membershipMonthly !== undefined);
+    expect(selling, 'nobody in this world sells memberships').toBeDefined();
+    const account = sim.player.primaryAccountId!;
+    const before = sim.ledger.availableFunds(account);
+    expect(sim.execute({ kind: 'video.join_channel', payload: { channelId: selling!.id } }).ok).toBe(true);
+    expect(sim.ledger.availableFunds(account)).toBeLessThan(before);
+    expect(sim.execute({ kind: 'video.join_channel', payload: { channelId: selling!.id } }).ok, 'joined twice').toBe(false);
+    expect(membershipsOf(sim, sim.player.id).length).toBe(1);
+
+    const free = channelsOf(sim).find((c) => c.membershipMonthly === undefined)!;
+    expect(sim.execute({ kind: 'video.join_channel', payload: { channelId: free.id } }).ok).toBe(false);
+  });
+
+  it('tips at the amounts people actually give, and refuses anything else', () => {
+    const sim = quickSave({ wealth: 'wealthy' }, 'video-tip');
+    const video = homeFeed(sim, sim.player.id, 3)[0]!;
+    const account = sim.player.primaryAccountId!;
+    const before = sim.ledger.availableFunds(account);
+    expect(sim.execute({ kind: 'video.tip', payload: { videoId: video.id, amount: 500 } }).ok).toBe(true);
+    expect(sim.ledger.availableFunds(account)).toBe(before - 500);
+    expect(sim.execute({ kind: 'video.tip', payload: { videoId: video.id, amount: 333 } }).ok).toBe(false);
+  });
+
+  it('streams, which takes the hours and brings people in', () => {
+    const sim = creator('video-live');
+    const channel = myChannel(sim)!;
+    channel.subscribers = 40_000;
+    const before = { at: sim.now, subs: channel.subscribers };
+    const result = sim.execute<{ peak: number; tips: number }>({
+      kind: 'video.go_live', payload: { title: 'Q And A, Thursday', minutes: 120 },
+    });
+    expect(result.ok, String(result.error)).toBe(true);
+    expect(sim.now - before.at, 'a two hour stream took no time').toBe(120 * 60_000);
+    expect(result.value!.peak).toBeGreaterThan(0);
+    expect(channel.subscribers, 'nobody subscribed off a stream').toBeGreaterThan(before.subs);
+    expect(streamsOf(sim, channel.id).length).toBe(1);
+  });
+
+  it('posts to the community tab, and runs a poll you can vote in once', () => {
+    const sim = creator('video-community');
+    const plain = sim.execute({ kind: 'video.community_post', payload: { text: 'Filming all week.' } });
+    expect(plain.ok, String(plain.error)).toBe(true);
+    const poll = sim.execute<{ postId: Id }>({
+      kind: 'video.community_post', payload: { text: 'What next?', options: ['A long one', 'A short one'] },
+    });
+    expect(poll.ok, String(poll.error)).toBe(true);
+    const post = sim.universe.communityPosts[poll.value!.postId]!;
+    expect(post.kind).toBe('poll');
+    expect(sim.execute({ kind: 'video.vote_poll', payload: { postId: post.id, option: 0 } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'video.vote_poll', payload: { postId: post.id, option: 1 } }).ok, 'voted twice').toBe(false);
+    expect(communityOf(sim, myChannel(sim)!.id).length).toBe(2);
+  });
+
+  it('breaks the month down rather than giving one number', () => {
+    const sim = creator('video-payout');
+    const channel = myChannel(sim)!;
+    const account = sim.universe.socialAccounts[channel.accountId!]!;
+    account.followers = 50_000;
+    account.monetisationEnabled = true;
+    for (const title of ['One', 'Two', 'Three']) {
+      sim.execute({ kind: 'video.upload', payload: { title: `Episode ${title}`, effortMinutes: 300, lengthMinutes: 20 } });
+      sim.advanceTo(sim.now + 4 * DAY);
+    }
+    const payout = buildPayout(sim, account.id, sim.now - 20 * DAY);
+    expect(payout.total, 'a monetized channel earned nothing at all').toBeGreaterThan(0);
+    expect(payout.ads, 'no advertising revenue').toBeGreaterThan(0);
+    expect(payout.monetizedViews, 'no monetized views').toBeGreaterThan(0);
+    expect(payout.ads + payout.premium + payout.memberships + payout.tips + payout.sponsorship).toBe(payout.total);
+  });
+
+  it('does not count your own Premium as revenue on your own channel', () => {
+    const sim = creator('video-not-mine');
+    const channel = myChannel(sim)!;
+    expect(sim.execute({ kind: 'video.join_premium', payload: {} }).ok).toBe(true);
+    const payout = buildPayout(sim, channel.accountId!, sim.now - 20 * DAY);
+    expect(payout.memberships, 'the player was paying themselves').toBe(0);
+  });
+
+  it('gives a channel page every tab it should have', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-page');
+    const channel = channelsOf(sim).find((c) => c.subscribers > 500_000)!;
+    const page = channelPage(sim, channel);
+    expect(page.videos.length + page.shorts.length, 'a channel page with nothing on it').toBeGreaterThan(0);
+    expect(Array.isArray(page.community)).toBe(true);
+    expect(Array.isArray(page.streams)).toBe(true);
+  });
+
+  it('has three settings on the bell, not two', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'video-bell3');
+    const channel = channelsOf(sim)[3]!;
+    expect(sim.execute({ kind: 'video.set_bell', payload: { channelId: channel.id, bell: 'all' } }).ok, 'set before subscribing').toBe(false);
+    sim.execute({ kind: 'video.subscribe', payload: { channelId: channel.id } });
+    for (const bell of ['all', 'personalized', 'none'] as const) {
+      expect(sim.execute({ kind: 'video.set_bell', payload: { channelId: channel.id, bell } }).ok).toBe(true);
+    }
+    expect(sim.execute({ kind: 'video.set_bell', payload: { channelId: channel.id, bell: 'shout' } }).ok).toBe(false);
   });
 });

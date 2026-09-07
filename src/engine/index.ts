@@ -53,6 +53,7 @@ import { registerCostume } from './systems/costume';
 import { registerDocuments } from './systems/documents';
 import { ensureHomeUpkeep, registerHousehold } from './systems/household';
 import { ensureVideoWorld, registerVideo } from './systems/video';
+import { ensureCreator, registerCreator } from './systems/creator';
 import { insurersFor } from './content/insurers';
 import { countryOfCity } from './content/geography';
 import './scenes';
@@ -110,6 +111,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDocuments(sim);
   registerHousehold(sim);
   registerVideo(sim);
+  registerCreator(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -414,6 +416,7 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // The video app has a world behind it that predates the player: channels
   // that have been running for years, with the catalogs to show for it.
   ensureVideoWorld(sim);
+  ensureCreator(sim);
   return sim;
 }
 
@@ -434,6 +437,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureHomeUpkeep(sim);
   // The channels of the video app exist and keep uploading (idempotent; video.ts).
   ensureVideoWorld(sim);
+  // The lists, the memberships and the monthly statement (idempotent; creator.ts).
+  ensureCreator(sim);
   ensureBankClocks(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
@@ -988,6 +993,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 50) {
+    // Schema 50: the rest of the app — what it keeps for you, and what it pays.
+    // Empty collections, filled on load: nothing already saved is touched, and
+    // a save that has been running for years keeps every video and every hour
+    // of history it had.
+    universe.videoPlaylists ??= {};
+    universe.liveStreams ??= {};
+    universe.communityPosts ??= {};
+    universe.channelMemberships ??= {};
+    universe.creatorPayouts ??= {};
+    steps.push('Playlists, live, community posts, memberships and the payout breakdown.');
   }
 
   if (from < 49) {

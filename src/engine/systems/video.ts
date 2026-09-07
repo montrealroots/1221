@@ -35,6 +35,7 @@ import {
   COMMENT_LINES, THUMBNAILS, THUMBNAIL_BY_ID, makeDescription, makeHandle, makeTitle,
   type CommentBand,
 } from '../content/videos';
+import { SKIP_AFTER_SECONDS, adBefore, ensureLists, specialList } from './creator';
 
 /** The app is one platform's. The others have their own shapes and come later. */
 export const VIDEO_PLATFORM: PlatformId = 'streamtube';
@@ -582,7 +583,10 @@ export function registerVideo(sim: Simulation): void {
       channel.subscribers = Math.max(120, Math.round(channel.subscribers * (1 + swing * 0.004)));
       if (isSubscribed(sim, sim.player.id, channel.id)) {
         const subscription = subscriptionsOf(sim, sim.player.id).find((s) => s.channelId === channel.id);
-        if (subscription?.notify) {
+        const level = subscription?.bell ?? (subscription?.notify ? 'all' : 'none');
+        // Personalized means the app decides, and it decides on the good ones.
+        const tell = level === 'all' || (level === 'personalized' && video.quality >= 70);
+        if (tell) {
           sim.notify({
             title: `${channel.name} Uploaded`,
             body: video.title,
@@ -643,6 +647,19 @@ export function registerVideo(sim: Simulation): void {
     },
   );
 
+  /** The bell, which has three settings and not two. */
+  sim.onCommand<{ channelId: Id; bell: 'all' | 'personalized' | 'none' }, { bell: string }>(
+    'video.set_bell',
+    (p, { sim: s }) => {
+      const subscription = subscriptionsOf(s, s.player.id).find((sub) => sub.channelId === p.channelId);
+      if (!subscription) throw new CommandError('You are not subscribed to that.');
+      if (!['all', 'personalized', 'none'].includes(p.bell)) throw new CommandError('That is not one of the settings.');
+      subscription.bell = p.bell;
+      subscription.notify = p.bell !== 'none';
+      return { bell: p.bell };
+    },
+  );
+
   sim.onCommand<{ channelId: Id }, { subscribed: boolean }>(
     'video.unsubscribe',
     (p, { sim: s }) => {
@@ -659,8 +676,8 @@ export function registerVideo(sim: Simulation): void {
   // --- Watching, which costs you the time ------------------------------------
 
   sim.onCommand<
-    { videoId: Id; minutes?: number; like?: boolean },
-    { minutes: number; finished: boolean; note: string; watchedToday: number }
+    { videoId: Id; minutes?: number; like?: boolean; skipAd?: boolean },
+    { minutes: number; finished: boolean; note: string; watchedToday: number; ad?: string }
   >(
     'video.watch',
     (p, { sim: s }) => {
@@ -671,6 +688,19 @@ export function registerVideo(sim: Simulation): void {
       const minutes = clamp(Math.round(p.minutes ?? video.lengthMinutes), 1, video.lengthMinutes);
       const finished = minutes >= video.lengthMinutes;
       const person = s.player;
+
+      // The ad before it. A paying viewer never sees one; everybody else sits
+      // through at least the first few seconds of it.
+      const ad = adBefore(s, video);
+      let adNote: string | undefined;
+      if (ad) {
+        const watched = ad.skippable && p.skipAd !== false ? SKIP_AFTER_SECONDS : ad.seconds;
+        s.advanceTo(s.now + watched * 1_000);
+        adNote = ad.skippable
+          ? `Skipped the ad after ${SKIP_AFTER_SECONDS} seconds.`
+          : `${ad.seconds} seconds of advertising you could not skip.`;
+      }
+
       s.advanceTo(s.now + minutes * MS_MINUTE);
 
       // An hour of one thing is not an hour of another.
@@ -707,8 +737,18 @@ export function registerVideo(sim: Simulation): void {
         note = `${effect.note} That is ${Math.round(watchedToday / 60)} hours of this today.`;
         person.wellbeing.morale = clamp(person.wellbeing.morale - 3, 0, 100);
       }
-      s.emit('video.watched', { videoId: video.id, minutes, finished });
-      return { minutes, finished, note, watchedToday };
+      // A video you liked goes in the list the app keeps for that.
+      if (p.like) {
+        ensureLists(s, person.id);
+        const liked = specialList(s, person.id, 'liked');
+        if (liked && !liked.videoIds.includes(video.id)) {
+          liked.videoIds.push(video.id);
+          liked.updatedAt = s.now;
+        }
+      }
+
+      s.emit('video.watched', { videoId: video.id, minutes, finished, ad: Boolean(ad) });
+      return { minutes, finished, note, watchedToday, ad: adNote };
     },
   );
 

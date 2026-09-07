@@ -33,10 +33,14 @@ import { VIDEO_PLATFORM } from '@/engine/systems/video';
 import type { BrandDeal, VideoChannel, VideoItem } from '@/engine/domain/model';
 import type { PhoneTheme } from './Phone';
 import {
-  BackGlyph, BellGlyph, CastGlyph, CommentGlyph, DislikeGlyph, DownGlyph, DownloadGlyph,
-  HomeGlyph, LikeGlyph, MoreGlyph, PlusGlyph, SaveGlyph, SearchGlyph, ShareGlyph,
+  BackGlyph, BellGlyph, CastGlyph, CommentGlyph, DislikeGlyph, DownGlyph,
+  HomeGlyph, LikeGlyph, MoreGlyph, PlusGlyph, SearchGlyph, ShareGlyph,
   ShortsGlyph, SubsGlyph, YouGlyph,
 } from './Icons';
+import {
+  ChannelPage, LibraryPage, PremiumPanel, QuickSave, SaveSheet, StudioPage, TipSheet,
+} from './YouTubeExtras';
+import { hasPremium } from '@/engine/systems/creator';
 
 type Tab = 'home' | 'shorts' | 'subs' | 'you';
 
@@ -104,6 +108,8 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
   const { sim, run } = useGame();
   const [tab, setTab] = useState<Tab>('home');
   const [openId, setOpenId] = useState<string | null>(null);
+  const [channelId, setChannelId] = useState<string | null>(null);
+  const [screen, setScreen] = useState<'app' | 'library' | 'studio'>('app');
   const [searching, setSearching] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [query, setQuery] = useState('');
@@ -112,6 +118,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
 
   const now = useWorld((s) => s.now);
   const open = useWorld((s) => (openId ? videoById(s, openId) : undefined));
+  const channel = useWorld((s) => (channelId ? s.universe.videoChannels[channelId] : undefined));
 
   const say = (text: string) => {
     setToast(text);
@@ -123,14 +130,29 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
     if (result.ok) say(`${result.value!.minutes} minutes. ${result.value!.note}`);
   };
 
+  const row = (video: VideoItem) => <RowCard video={video} now={now} onOpen={setOpenId} />;
+
   return (
     <div className="ph-app-screen">
-      {open ? (
+      {channel ? (
+        <ChannelPage
+          channel={channel}
+          now={now}
+          onBack={() => setChannelId(null)}
+          say={say}
+          renderRow={row}
+        />
+      ) : screen === 'library' ? (
+        <LibraryPage onBack={() => setScreen('app')} say={say} renderRow={row} />
+      ) : screen === 'studio' ? (
+        <StudioPage onBack={() => setScreen('app')} say={say} />
+      ) : open ? (
         <WatchPage
           video={open}
           now={now}
           onBack={() => setOpenId(null)}
           onOpen={setOpenId}
+          onChannel={(id) => { setOpenId(null); setChannelId(id); }}
           onWatch={watch}
           say={say}
         />
@@ -169,7 +191,17 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
           )}
           {tab === 'shorts' && <ShortsTab now={now} onWatch={watch} onOpen={setOpenId} />}
           {tab === 'subs' && <SubscriptionsTab now={now} onOpen={setOpenId} />}
-          {tab === 'you' && <YouTab now={now} onOpen={setOpenId} onUpload={() => setUploading(true)} say={say} />}
+          {tab === 'you' && (
+            <YouTab
+              now={now}
+              onOpen={setOpenId}
+              onUpload={() => setUploading(true)}
+              onLibrary={() => setScreen('library')}
+              onStudio={() => setScreen('studio')}
+              onChannel={setChannelId}
+              say={say}
+            />
+          )}
 
           <nav className="ph-nav">
             <NavButton on={tab === 'home'} label="Home" onClick={() => setTab('home')}>
@@ -403,8 +435,12 @@ function SubscriptionsTab({ now, onOpen }: { now: number; onOpen: (id: string) =
 // ---------------------------------------------------------------------------
 
 function YouTab({
-  now, onOpen, onUpload, say,
-}: { now: number; onOpen: (id: string) => void; onUpload: () => void; say: (text: string) => void }) {
+  now, onOpen, onUpload, onLibrary, onStudio, onChannel, say,
+}: {
+  now: number; onOpen: (id: string) => void; onUpload: () => void;
+  onLibrary: () => void; onStudio: () => void; onChannel: (id: string) => void;
+  say: (text: string) => void;
+}) {
   const { sim, run } = useGame();
   const channel = useWorld(myChannel);
   const history = useWorld((s) => Object.values(s.universe.watchHistory)
@@ -433,6 +469,14 @@ function YouTab({
           </div>
         </div>
       </div>
+
+      <div className="ph-chips" style={{ padding: '0 12px 8px' }}>
+        <button type="button" className="ph-chip" onClick={onLibrary}>Library</button>
+        {channel && <button type="button" className="ph-chip" onClick={onStudio}>Studio</button>}
+        {channel && <button type="button" className="ph-chip" onClick={() => onChannel(channel.id)}>Your Channel</button>}
+      </div>
+
+      <PremiumPanel say={say} />
 
       {!channel && (
         <div className="ph-panel">
@@ -590,14 +634,16 @@ function SearchPage({
 // ---------------------------------------------------------------------------
 
 function WatchPage({
-  video, now, onBack, onOpen, onWatch, say,
+  video, now, onBack, onOpen, onChannel, onWatch, say,
 }: {
   video: VideoItem; now: number;
-  onBack: () => void; onOpen: (id: string) => void;
+  onBack: () => void; onOpen: (id: string) => void; onChannel: (id: string) => void;
   onWatch: (video: VideoItem, minutes?: number, like?: boolean) => void;
   say: (text: string) => void;
 }) {
   const { run } = useGame();
+  const [sheet, setSheet] = useState<'none' | 'save' | 'tip'>('none');
+  const paying = useWorld(hasPremium);
   const channel = useWorld((s) => s.universe.videoChannels[video.channelId]);
   const subscribed = useWorld((s) => (channel ? isSubscribed(s, s.player.id, channel.id) : false));
   const seen = useWorld((s) => watchedIds(s, s.player.id).has(video.id));
@@ -616,6 +662,7 @@ function WatchPage({
         <button type="button" className="ph-play-big" aria-label="Play" onClick={() => onWatch(video)} />
         <span className="ph-play-note">
           {seen ? 'Watched. Play it again if you like.' : `${duration(video.lengthMinutes)} of your day`}
+          {paying ? ' · no ads' : ' · an ad may run first'}
         </span>
         <span className="ph-scrub"><i style={{ width: seen ? '100%' : '0%' }} /></span>
       </div>
@@ -636,12 +683,15 @@ function WatchPage({
           <button type="button" className="ph-pill" onClick={() => say('Nothing leaves the game. SLATE never sends anything anywhere.')}>
             <ShareGlyph size={16} /> Share
           </button>
-          <button type="button" className="ph-pill" onClick={() => say('Saved for later. It is in your history when you want it.')}>
-            <DownloadGlyph size={16} /> Download
+          <QuickSave video={video} say={say} />
+          <button type="button" className="ph-pill" onClick={() => setSheet(sheet === 'save' ? 'none' : 'save')}>
+            Save To
           </button>
-          <button type="button" className="ph-pill" onClick={() => say('Added to Watch Later.')}>
-            <SaveGlyph size={16} /> Save
-          </button>
+          {!mine && (
+            <button type="button" className="ph-pill" onClick={() => setSheet(sheet === 'tip' ? 'none' : 'tip')}>
+              Thanks
+            </button>
+          )}
           <button type="button" className="ph-pill" onClick={() => onWatch(video, Math.max(1, Math.round(video.lengthMinutes / 3)))}>
             Skim It
           </button>
@@ -650,8 +700,18 @@ function WatchPage({
           </button>
         </div>
 
+        {sheet === 'save' && <SaveSheet video={video} onClose={() => setSheet('none')} say={say} />}
+        {sheet === 'tip' && <TipSheet video={video} onClose={() => setSheet('none')} say={say} />}
+
         <div className="ph-channel-row">
-          <Avatar name={channel?.name ?? '?'} size={38} />
+          <button
+            type="button"
+            style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}
+            aria-label={`Open ${channel?.name ?? 'the channel'}`}
+            onClick={() => channel && onChannel(channel.id)}
+          >
+            <Avatar name={channel?.name ?? '?'} size={38} />
+          </button>
           <span>
             <span className="ph-name" style={{ display: 'block' }}>
               {channel?.name}{channel?.verified ? ' ✓' : ''}

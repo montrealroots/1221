@@ -258,10 +258,29 @@ answer says what would make it yes.
    shows the curve, the median, the video that did nothing beside the one that
    took off, how far you are from monetization, what a thousand views is worth
    once you are past it, and the brand deals that arrive, to take or turn down.
-   The four platforms now carry their real names. **Still to come:** the rest
-   of what YouTube has (playlists, watch later, liked, a channel page, live,
-   community posts, memberships and the ad revenue breakdown), then Instagram
-   and X as their own apps.
+   The four platforms now carry their real names.
+
+   And the rest of what the app is. Advertising runs the way it runs: an
+   advertiser's rate per thousand, the platform's share taken out of it, and
+   only the share of views that carried an ad at all, with a skip after five
+   seconds on the ones that allow it. The paid tier costs money every month,
+   renews, lapses when the money is not there, takes the advertising away, and
+   sends a share of what you pay to the channels you actually watch, which is a
+   second line on a creator's statement and not a rounding of the first. A
+   channel page has Videos, Shorts, Community, Live and About, a subscribe
+   button and a bell with three settings rather than two. Watch Later and Liked
+   Videos are kept by the app and cannot be deleted; other playlists are yours
+   to make and empty. A membership is a monthly charge to support a channel. A
+   tip is one of five amounts and the channel keeps most of it. Going live
+   takes the hours, brings people in and collects what they paid to be read
+   out. A community post can be a poll you vote in once. The month arrives as a
+   statement with five lines: advertising, premium watch time, memberships,
+   tips and sponsorship, against the monetized views it was earned on.
+
+   **Still to come:** Instagram and X as their own apps, and the parts of
+   YouTube nobody has built here yet, named rather than implied — chapters,
+   playback speed and quality, autoplay, captions, comment replies and pinning,
+   search filters, and a notifications inbox.
 6. The independent film: kit shops, rental, shoot days.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.

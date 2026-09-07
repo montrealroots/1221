@@ -280,6 +280,22 @@ before any delivery claim.
 
     **Found and fixed on the way:** the launderette of this stage was the comment section, which read from the store and so was empty under every video in the world; comments are now derived like the catalogs and stored only under your own videos, where being read and being replied to matter. The hours of making a video were charged twice, once by the upload and once by the post. A title generator that drew independently gave one channel the same title twice, so a channel now re-rolls rather than shipping a repeat, and the thinnest subjects were widened from 164 ways of naming a video to 372. A feed that ranked purely on score turned into three cards from the same channel in a row.
 
+37. Life contract item 5, second part — the rest of the app, and the money in it. The first cut had a feed, a watch page and a channel; a person asked whether they could post, schedule, get monetized and take brand deals, and the honest answer at that point was only partly.
+
+    **Advertising is modeled rather than assumed.** An advertiser pays a rate per thousand impressions, the platform keeps its share, and what is left is the creator's — earned only on the share of views that carried an ad at all, because some inventory goes unsold. A pre-roll can be skipped after five seconds or not at all, and the seconds come out of the day either way. Somebody on the paid tier never sees one.
+
+    **The paid tier is a real subscription.** It costs money every month, it renews on a schedule, it lapses when the money is not there, and a share of what a subscriber pays reaches the channels they watched — which is why a creator's statement carries premium watch time as its own line and not as part of the advertising.
+
+    **A channel is a place now.** Videos, Shorts, Community, Live and About, with a subscribe button, a bell with the three settings the real one has, and a Join button where the channel sells memberships. Personalized on the bell means the app decides, and it decides on the good ones.
+
+    **What the app keeps for you.** Watch Later and Liked Videos are made without being asked and cannot be deleted; anything you like goes into Liked by itself. Other playlists are yours to make, fill, empty and delete.
+
+    **What a creator does.** Going live takes the hours, brings subscribers in and collects what people paid to have a message read out. A community post can be a poll, and it can be voted in once. A tip is one of five amounts, and the channel keeps seventy percent of it.
+
+    **The month is a statement, not a number.** Advertising, premium watch time, memberships, tips and sponsorship, against the monetized views the ad money was earned on, paid into the bank on a monthly clock with a notice that says where it came from.
+
+    **Found and fixed on the way:** the player's own Premium subscription was attached to their own channel, so a brand new channel with no videos and no members reported $9.79 of membership revenue on its first day.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
