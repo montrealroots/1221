@@ -103,6 +103,8 @@ const REAL_NAMES = [
   'Micro Colour', 'Face Colour', 'Cream Colour Base', 'Duo Fibre', 'Fibre Gel', 'Bravia Theatre',
   // Offices and insurers that spell themselves that way.
   'National Driver Licence Service', 'Driving Licence Testing Centre', 'Defence Health',
+  // Watch and jewelry names the maker itself spells this way, on its own American pages.
+  'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

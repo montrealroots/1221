@@ -1,5 +1,6 @@
 /**
- * The second rank of houses, at the depth a house actually has.
+ * The second rank of houses, and the watchmakers and jewelers beside them,
+ * at the depth each of them actually has.
  *
  * Three promises. Every one of the eight carries a hundred real pieces or
  * more, and the gate's own checker fails if any of them slips under. Each is
@@ -13,6 +14,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { REAL_MAISONS } from '@/engine/content/maisons';
+import { REAL_HOROLOGY } from '@/engine/content/horology';
 import { RETAILERS, shoppableItems } from '@/engine/content/catalog';
 import { SLOTS } from '@/engine/content/wardrobe';
 
@@ -98,6 +100,68 @@ describe('eight houses at the depth of a house', () => {
       expect(shop!.categories).toContain('clothing');
       expect(shop!.categories).toContain('footwear');
       expect(shop!.categories).toContain('accessory');
+    }
+  });
+});
+
+/**
+ * The watchmakers and the jewelers run references rather than seasons, so
+ * they are held to the same hundred and to their own shape: a maker of
+ * watches sells watches, a jeweler sells across the four pegs, and the
+ * references that appreciate are marked as appreciating rather than
+ * depreciating like a coat.
+ */
+const HOROLOGY = ['Rolex', 'Patek Philippe', 'Audemars Piguet', 'Omega', 'Cartier', 'Tiffany & Co.', 'Bulgari', 'Van Cleef & Arpels'] as const;
+const WATCHMAKERS = ['Rolex', 'Patek Philippe', 'Audemars Piguet', 'Omega'] as const;
+const JEWELERS = ['Cartier', 'Tiffany & Co.', 'Bulgari', 'Van Cleef & Arpels'] as const;
+
+describe('the watchmakers and the jewelers at catalog depth', () => {
+  it('carries a hundred real references or more under every one of them', () => {
+    for (const house of HOROLOGY) {
+      expect(piecesOf(house).length, `${house} is short of ${TARGET}`).toBeGreaterThanOrEqual(TARGET);
+    }
+    expect(REAL_HOROLOGY.length).toBeGreaterThanOrEqual(700);
+  });
+
+  it('gives a watchmaker a real spread of references and a jeweler a real spread of pegs', () => {
+    for (const maker of WATCHMAKERS) {
+      const mine = piecesOf(maker);
+      expect(mine.every((i) => i.category === 'watch'), `${maker} sells something that is not a watch`).toBe(true);
+      const families = new Set(mine.map((i) => i.subcategory));
+      expect(families.size, `${maker} has only ${families.size} kinds of watch`).toBeGreaterThanOrEqual(4);
+    }
+    for (const jeweler of JEWELERS) {
+      const mine = piecesOf(jeweler);
+      const pegs = new Set(mine.filter((i) => i.category === 'jewelry').map((i) => i.slot));
+      for (const peg of ['earrings', 'necklace', 'ring', 'bracelet']) {
+        expect(pegs, `${jeweler} sells nothing for the ${peg} peg`).toContain(peg);
+      }
+      expect(mine.some((i) => i.category === 'watch'), `${jeweler} makes watches and sells none`).toBe(true);
+    }
+  });
+
+  it('marks the references that hold their value as holding it, not shedding it like a coat', () => {
+    const appreciating = REAL_HOROLOGY.filter((i) => i.depreciation < 0);
+    expect(appreciating.length, 'nothing appreciates').toBeGreaterThan(60);
+    for (const piece of REAL_HOROLOGY) {
+      // A watch or a jewel is not a T-shirt: neither sheds value like one. The
+      // leather goods and the scent a jeweler also sells are allowed to.
+      if (piece.category === 'watch' || piece.category === 'jewelry') {
+        expect(piece.depreciation, piece.id).toBeLessThan(0.25);
+      }
+      expect(['watch', 'jewelry', 'accessory'], piece.id).toContain(piece.category);
+    }
+    // The steel sports references that trade above list say so with a tag.
+    const grails = REAL_HOROLOGY.filter((i) => i.tags.includes('grail'));
+    expect(grails.length).toBeGreaterThan(40);
+    for (const grail of grails) expect(grail.depreciation, grail.id).toBeLessThanOrEqual(0.02);
+  });
+
+  it('says on every reference that the price is SLATE’s own calibration', () => {
+    for (const piece of REAL_HOROLOGY) {
+      expect(piece.source, piece.id).toBe('calibrated_estimate');
+      expect(piece.note, piece.id).toMatch(/calibration/);
+      expect(piece.basePrice, piece.id).toBeGreaterThan(0);
     }
   });
 });

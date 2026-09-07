@@ -79,6 +79,8 @@ const MISSPELLINGS = {
  * - "the people you know know people", which is a sentence rather than a slip.
  */
 const REAL_DOUBLES = new Set([
+  // Bulgari's own collection is called Bulgari Bulgari, on the case and the box.
+  'bulgari',
   'had', 'that', 'is', 'sang', 'no', 'so', 'long', 'well',
   'tam', 'joseph', 'dan', 'winston', 'hubba', 'rules', 'cayenne', 'know',
   // Under Armour's Armour Fleece line. The stutter is the real name, not a slip.
