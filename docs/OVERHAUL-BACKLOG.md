@@ -240,7 +240,9 @@ before any delivery claim.
 
     The house is built the way a jeweler is organised: the Winston Cluster and the Lily Cluster that are its signature, Sunflower, Forget Me Not, Water, Sparkling Cluster, Traffic, Belle and Loop; the solitaires by cut, the eternity bands by stone, the coloured stones by stone, and the watches the house really makes — Midnight, Premier, Ocean Sport, Avenue, and the Histoire de Tourbillon and Opus at the top of it. **No figure here is a quotation.** A stone is priced on the day, so every price is labeled as SLATE's own calibration on the row, and the note on each piece says so.
 
-    **The brand-depth build is paused here at the user's instruction**, to come back to. The seven houses that were to follow in this stage are written down so nothing is lost: **Graff, Boucheron, Chaumet, Piaget, Chopard, Mikimoto and Buccellati.** After them, the queue is the custom benches (Johnny Dang & Co. 16, Jacob & Co. 15, Eliantte & Co. 11, Avianne & Co. 10, IF & Co. 10, Popular Jewelry 9, GLD 7, Rafaello & Co. 7, Greg Yuna 6, Frost NYC 5, TraxNYC 5, Pristine Jewelers 5), the accessible jewelers (Pandora 7, Swarovski 7, Monica Vinader 7, Mejuri 6, Astrid & Miyu 4, Thomas Sabo 5, Astley Clarke 3, Dinh Van 5, Repossi 4, TASAKI 3, Ole Lynggaard 5, Georg Jensen 6, David Yurman 6, Messika 7, Pomellato 8, Mikimoto 11, Chopard 11), and the everyday names still thin (Lululemon 11, Aritzia 1, Next 1, Everlane 2, Arket 4, Havaianas 1, John Lobb 1). Forty two shopfronts are still thinner than a hundred and the gate prints that number every run.
+    **The brand-depth build was paused here at the user's instruction and has
+    now been finished.** Stage 32 below closes it: all 41 remaining shopfronts
+    are a hundred deep and the gate holds every one of them there.
 
 34. Life contract item 4, first half — the kitchen is a kitchen. **Every recipe in the game was uncookable.** All nine of them named the invented grocery ids the catalog started with, long since replaced by real branded products, so `life.cook` could never find an ingredient and nothing said so. The Wellbeing panel offered nine dishes and refused all nine.
 
@@ -612,3 +614,50 @@ before any delivery claim.
 
 Everything Blocked stays Blocked until its dependency is supplied; it is not
 re-labelled to look finished.
+
+34. Stage 32 — the boutiques that were a display case. The audit that started
+    this stage was a number: **98 brand shopfronts, 57 of them a hundred deep,
+    41 of them holding between one and eleven products.** A shop selling many
+    labels draws its hundred from all of them and always cleared the floor
+    minimum, which is why the gate had stayed green while Pandora had seven
+    things in it. A single-brand boutique can only sell its own label, so a
+    thin brand is a thin room.
+
+    **4,326 new real products across 41 shopfronts**, in three groups. The
+    seven jewelry houses the queue had written down — **Graff 119, Boucheron
+    117, Chaumet 110, Piaget 117, Chopard 129, Mikimoto 113, Buccellati 108**
+    — built from their own collection names: Butterfly and Tilda's Bow, Quatre
+    and Serpent Bohème, Bee My Love and Joséphine, Possession and Limelight
+    Gala, Happy Diamonds and Alpine Eagle, the Akoya strand by length and the
+    South Sea by color, Macri and Opera Tulle. The twelve custom benches —
+    **Johnny Dang 118, Jacob & Co. 100, Eliantte 109, Avianne 102, IF & Co.
+    102, Popular Jewelry 101, GLD 101, Rafaello 114, Greg Yuna 100, Frost NYC
+    108, TraxNYC 103, Pristine 107** — each carrying what that bench is
+    actually known for rather than the same list under twelve signs. And the
+    fifteen accessible jewelers and seven everyday names, from **Pandora 100**
+    and **Swarovski 104** through **Messika 104** and **Pomellato 100** to
+    **Lululemon 129, John Lobb 112, Aritzia 101, Next 101, Havaianas 101,
+    Everlane 103 and Arket 100**.
+
+    **The first draft was thrown away.** It generated 162 identical rows for
+    each of eleven benches — the same chains, the same pendants, the same
+    grillz under eleven different signs. That is a template, not a street, so
+    it was rewritten to give each bench its own window: Johnny Dang leads with
+    grillz because that is what Johnny Dang is, Popular Jewelry sells the
+    nameplate and the bamboo hoop off Canal Street, GLD is plated and steel and
+    says so on every row, Rafaello and Pristine put the iced watch in front,
+    and Jacob & Co. is not a bench at all but a watch house, so it is built
+    from the complications it really makes.
+
+    **Held by the gate, by a rule rather than a list.** `tools/brand-depth.mjs`
+    now reads every retailer that is its own brand's boutique and fails the
+    build if any of them holds fewer than a hundred products, whether or not
+    anybody remembered to add it to the headline list. It prints both numbers
+    every run: **98 boutiques, 98 of them a hundred deep.**
+
+    **Found on the way:** two collection names were caught being invented
+    rather than real; two product names were spelled the British way on houses
+    that spell them the American way; and seven houses that name a collection
+    after themselves had the generator print the brand twice, so the Pandora ME
+    ring and the Piaget Rose watch each led with their own house name written
+    out a second time. The typo and spelling checkers caught every one.

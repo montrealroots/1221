@@ -13,7 +13,7 @@
  * Run: node tools/brand-depth.mjs        (report and fail on a shortfall)
  *      node tools/brand-depth.mjs --all  (every brand, deepest first)
  */
-import { shoppableItems } from '../src/engine/content/catalog.ts';
+import { shoppableItems, houseBrandOf, RETAILERS } from '../src/engine/content/catalog.ts';
 
 /** What "deep" means. */
 export const TARGET = 100;
@@ -32,7 +32,13 @@ const HEADLINE = [
   'Zara', 'H&M', 'COS', 'Mango', 'Gap', 'Massimo Dutti', 'Muji', 'Marks & Spencer',
   'Christian Louboutin', 'Jimmy Choo', 'Manolo Blahnik', 'Dr. Martens', 'Birkenstock', 'Clarks', 'Timberland', 'UGG',
   'Tom Ford', 'Zegna', 'Loro Piana', 'Brunello Cucinelli', 'The Row', 'Acne Studios', 'Church’s', 'Crockett & Jones',
-  'Harry Winston',
+  'Harry Winston', 'Graff', 'Boucheron', 'Chaumet', 'Piaget', 'Chopard', 'Mikimoto', 'Buccellati',
+  'Johnny Dang & Co.', 'Jacob & Co.', 'Eliantte & Co.', 'Avianne & Co.', 'IF & Co.',
+  'Popular Jewelry', 'GLD', 'Rafaello & Co.', 'Greg Yuna', 'Frost NYC', 'TraxNYC', 'Pristine Jewelers',
+  'Pandora', 'Swarovski', 'Monica Vinader', 'Mejuri', 'Astrid & Miyu', 'Thomas Sabo', 'Astley Clarke',
+  'Dinh Van', 'Repossi', 'TASAKI', 'Ole Lynggaard Copenhagen', 'Georg Jensen', 'David Yurman',
+  'Messika', 'Pomellato',
+  'Lululemon', 'Arket', 'Everlane', 'Aritzia', 'Next', 'Havaianas', 'John Lobb',
 ];
 
 const counts = new Map();
@@ -53,9 +59,34 @@ for (const brand of HEADLINE) {
   console.log(`${n >= TARGET ? '  ok' : 'SHORT'}  ${String(n).padStart(4)}  ${brand}`);
 }
 
+/**
+ * The rule that matters more than the list above.
+ *
+ * A shop selling many labels draws its hundred from all of them and always
+ * clears the floor minimum. A single-brand boutique can only sell its own
+ * label, so a thin brand is a thin *shop*: walking into Pandora and finding
+ * seven things is not a shop, it is a display case. So every brand that has
+ * a boutique of its own is held to the hundred, whether or not anybody
+ * remembered to add it to HEADLINE.
+ */
+const fronts = new Map();
+for (const retailer of RETAILERS.all()) {
+  const house = houseBrandOf(retailer);
+  if (house) fronts.set(house, counts.get(house) ?? 0);
+}
+const thin = [...fronts.entries()].filter(([, n]) => n < TARGET).sort((a, b) => a[1] - b[1]);
+
 const deep = rows.filter(([, n]) => n >= TARGET).length;
 console.log('');
 console.log(`${counts.size} brands, ${shoppableItems().length} products, ${deep} at ${TARGET} or more.`);
+console.log(`${fronts.size} of them have a boutique of their own, and ${fronts.size - thin.length} of those are ${TARGET} deep.`);
+
+if (thin.length > 0) {
+  console.error('');
+  console.error(`${thin.length} single-brand boutique(s) hold fewer than ${TARGET} products, which is a display case rather than a shop:`);
+  for (const [brand, n] of thin) console.error(`  ${String(n).padStart(4)}  ${brand}`);
+  process.exit(1);
+}
 
 if (short.length > 0) {
   console.log(`Short of ${TARGET}: ${short.join(', ')}`);

@@ -94,6 +94,15 @@ goes into the range it could carry — is SLATE's own, because no company
 publishes its buy, and however small a branch is it still carries the hundred
 products every branch promises.
 
+And the boutiques, which were the hole in that promise. A shop selling many
+labels draws its hundred from all of them and always cleared the floor
+minimum. A single-brand boutique can only sell its own label, so it is exactly
+as deep as the catalog makes it — and 41 of the 98 of them held between one and
+eleven products. Pandora had seven things in it. 4,326 real products later, all
+98 are a hundred deep, and the gate now fails the build if any boutique ever
+drops below it again, by reading the shopfronts themselves rather than a list
+somebody has to remember to update.
+
 ---
 
 ## 4. Getting dressed
@@ -284,11 +293,12 @@ spaceship", "become president" — it says that plainly instead of guessing.
 
 1. **Done.** Company tab canned; Casting locked; founder premise out of
    creation; a hundred real items in every branch; aisles.
-2. **Done.** 300 real chains across 79 markets, each in the countries it really
+2. **Done.** 365 real chains across 86 markets, each in the countries it really
    trades in, with `npm run coverage:retail` printing the honest per-country
-   picture: nine markets deep, twelve workable, fifty-eight thin, and every
+   picture: thirteen markets deep, ten workable, sixty-three thin, and every
    other country in the world falling back to plainly simulated shops that say
-   so on screen. Also in: the kit shops for section 6 — Adorama, Samy's, Wex,
+   so on screen. Those figures are read off the data on every run, so they are
+   what is actually there rather than what was true when this was written. Also in: the kit shops for section 6 — Adorama, Samy's, Wex,
    Thomann, Panavision and ARRI Rental for hire, Angels Costumes, Western
    Costume and Tirelli for wardrobe, M·A·C, Ben Nye and Charles Fox for makeup.
 3. **Done.** Getting dressed, properly: sixteen pegs became twenty when
