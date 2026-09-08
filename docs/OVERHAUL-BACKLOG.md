@@ -566,6 +566,12 @@ before any delivery claim.
     - Thirty seven moments is a childhood in outline rather than in full. What is here happens to everybody; what is not is anything particular to a place, a faith, a family or a class.
     - A shift is a command rather than a scene: there is a rota, a manager and a payslip, but no shop floor and nobody on it to talk to.
     - An examination is a command rather than a scene: there is an entry, a revision session, a day and an envelope, but no hall, no invigilator and nobody sitting next to you.
+    - A martial arts session is a command rather than a scene: there is a mat, a grade and a panel, but nobody on the mat and nothing said in the room.
+    - Twelve arts is the well known end of a very long list. Wing chun, muay boran, sambo, silat, escrima, savate, hapkido and a hundred others are not in here.
+    - A grading ladder is carried down to about a third dan. The grades above that are real and take decades, and modelling them would be modelling a career rather than a life.
+    - Belt colors differ between federations and between schools in the same art, and capoeira cords differ by group. SLATE carries one common version and the room says so.
+    - What an hour on a mat or in a class is worth to a skill is SLATE's calibration. There is no published figure for that and none is claimed.
+    - The forty seven life skills are a full set rather than every set: they are the ones a life actually turns on, not an exhaustive taxonomy of human competence.
     - Examinations are carried on their published scales as of when they were carried. Scales get reformed — England moved GCSEs to numbers in 2017, Singapore moved the PSLE to achievement levels in 2021 — and there is no feed that would tell the game about the next one.
     - Each examination is offered once a year in a month it really runs in. Several really run on several dates a year, and a real examination calendar changes every year.
     - Forty four American states carry the name of their own assessment. The rest get one plainly labelled as a state assessment rather than an invented acronym, which is the honest version of not knowing.

@@ -42,6 +42,22 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'dm',                 // German drugstore chain; lowercase in its own logo.
   'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
   'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
+  // Public examinations, written the way the country that sets them writes
+  // them. A Chinese, Korean, Japanese, Hebrew or Arabic name has no capital
+  // letters to check, and the Spanish, Portuguese and Indian ones carry
+  // joining words that are part of the real name.
+  '普通高等学校招生全国统一考试',                              // The Gaokao.
+  '初中学业水平考试',                                          // The Zhongkao.
+  '대학수학능력시험',                                          // The Suneung.
+  '大学入学共通テスト',                                        // The Japanese Common Test.
+  'الثانوية العامة',                                          // Thanaweya Amma.
+  'בגרות',                                                    // The Bagrut.
+  'Единый Государственный Экзамен',                            // The EGE.
+  'Основной Государственный Экзамен',                          // The OGE.
+  'La Evaluación de Bachillerato para el Acceso a la Universidad',
+  'O Exame Nacional do Ensino Médio',
+  'El Examen Nacional de Ingreso a la Educación Superior',
+  'The National Eligibility cum Entrance Test',
 ]);
 
 /**

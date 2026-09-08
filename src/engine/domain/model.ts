@@ -1987,6 +1987,31 @@ export interface SchoolPart {
 }
 
 /** Somebody's place in the education system where they live. */
+/** Training in a real art, with a real grading ladder behind it. */
+export interface Training {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** Which art, by its id in the week content. */
+  artId: string;
+  /** The gym, which is SLATE's own invention. */
+  gymName: string;
+  /** The grade held now. Empty for an art that grades nobody. */
+  gradeId: string;
+  /** When that grade was awarded, for the federations that publish a minimum time. */
+  gradedAt: Instant;
+  sessions: number;
+  /** Hours on the mat, which is what a grading panel is really weighing. */
+  hours: number;
+  /** Every grading sat, passed or not. */
+  gradings: { gradeId: string; at: Instant; passed: boolean }[];
+  /** Which week the session counter belongs to, so a week's limit is a week's. */
+  weekOf?: number;
+  thisWeek?: number;
+  startedAt: Instant;
+  endedAt?: Instant;
+}
+
 /** One public examination, from putting a name down to the envelope arriving. */
 export interface ExamSitting {
   id: Id;
@@ -3449,7 +3474,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 68;
+export const SAVE_SCHEMA_VERSION = 69;
 
 export interface SaveMeta {
   id: Id;
@@ -3564,6 +3589,8 @@ export interface SaveUniverse {
   running?: Record<Id, Running>;
   growing?: Record<Id, GrowingUp>;
   firstJobs?: Record<Id, FirstJobHeld>;
+  /** Training in a martial art. Absent on a save from before it existed. */
+  training?: Record<Id, Training>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

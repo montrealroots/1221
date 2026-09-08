@@ -946,6 +946,40 @@ answer says what would make it yes.
    well as attainment, attendance is on it, and a progress report comes
    halfway through the term where that country sends one.
 
+   And the rest of a week, which is where most of who somebody turns into
+   actually happens. Twelve real martial arts with their real grading systems:
+   Brazilian jiu jitsu white through blue, purple, brown and black with the
+   IBJJF's own minimum times and a black belt that cannot be awarded before
+   nineteen; judo and karate counting kyu grades up to a first dan; taekwondo
+   counting geup grades and giving a child a poom rather than a dan; Krav Maga
+   on numbered practitioner levels; kendo, which uses no colored belt at all;
+   capoeira on cords. And boxing, Muay Thai, wrestling and mixed martial arts
+   carried as grading nobody, because they grade nobody and inventing a belt
+   for a boxer would be inventing a fact. A grading wants the federation's
+   published time at the grade below and the hours SLATE thinks it really
+   takes, and it can be failed.
+
+   Twenty classes that exist in every town — acting, dance, singing, an
+   instrument, swimming, first aid, cookery, a language, photography, life
+   drawing, sewing, home repair, car maintenance, personal finance, public
+   speaking, meditation, chess, wine, bartending, etiquette — and twenty two
+   other ways to spend part of a week: who you sit with at lunch, whether you
+   join in at gym class or sit it out, hanging around town after school,
+   somebody's house, helping at home, reading, practicing, cooking for
+   everybody, an early night, a whole day out, staying over, the park,
+   volunteering, getting the week straight, fixing something, the garden.
+
+   All of it feeds one sheet: forty seven life skills, from swimming and first
+   aid and self defense through typing, home repair, car maintenance,
+   gardening, sewing, housekeeping, time management, study skills, mental
+   arithmetic, memory, reading, research, correspondence, listening, empathy,
+   conflict resolution, etiquette, small talk, networking, dancing, an
+   instrument, drawing, photography, nutrition, sleep hygiene, mindfulness,
+   resilience, navigation, bargaining, childcare, pet care, cycling, chess,
+   cards, wine, bartending and handwriting. An hour is worth less at the top of
+   a skill than at the bottom, and a child cannot reach an adult's ceiling
+   however hard they work, because they are a child.
+
    And a job you stop turning up for is a job you stop having. Three shifts
    missed in a row, or a manager out of patience altogether, and somebody else
    is on the rota — with the hours already worked still paid on the pay date,

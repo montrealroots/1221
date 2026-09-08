@@ -55,6 +55,7 @@ import { registerUniversity } from './systems/university';
 import { registerAthletics } from './systems/athletics';
 import { registerGrowing, startGrowingUp } from './systems/growing';
 import { registerExamSchedules, registerExams, startExams } from './systems/exams';
+import { registerTheWeek } from './systems/theweek';
 import { registerWork } from './systems/work';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
@@ -132,6 +133,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerGrowing(sim);
   registerExams(sim);
   registerExamSchedules(sim);
+  registerTheWeek(sim);
   registerWork(sim);
   registerBanking(sim);
   registerDining(sim);
@@ -1187,6 +1189,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.growing ??= {};
     universe.firstJobs ??= {};
     steps.push('Growing up, the moments that come round in it, and the Saturday job.');
+  }
+
+  if (from < 69) {
+    // Schema 69: training in a martial art, which a save from before it
+    // existed simply has none of. The map is created empty rather than left
+    // missing so nothing has to guard for it.
+    universe.training ??= {};
+    steps.push('The dojo, the lunch hall and the rest of a week.');
   }
 
   if (from < 68) {
