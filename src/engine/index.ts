@@ -42,6 +42,7 @@ import { ensureInteriors, registerPurchase } from './systems/purchase';
 import { registerCare } from './systems/care';
 import { registerJourney } from './systems/journey';
 import { ensureKeepings, registerStorage } from './systems/storage';
+import { registerRentalSystem } from './systems/rental';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -104,6 +105,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCare(sim);
   registerJourney(sim);
   registerStorage(sim);
+  registerRentalSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1001,6 +1003,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 54) {
+    // Schema 54: the rental house. Nobody buys an Alexa, so there is a counter
+    // to hire one from and a ticket that remembers what you took.
+    universe.kitHires ??= {};
+    steps.push('The rental house, and the kit you have out on a ticket.');
   }
 
   if (from < 53) {

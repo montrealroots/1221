@@ -413,7 +413,37 @@ answer says what would make it yes.
 
    **Still to come:** the brand marks are SLATE's own drawings rather than the
    real logotypes, which stay out until they are licensed.
-6. The independent film: kit shops, rental, shoot days.
+6. **The independent film, first part: the rental house.** The kit shops were
+   already in the catalog and would sell you a camera. Almost nobody buys one,
+   so the other half is here: a counter with a rate card. Thirty five real
+   houses across nine cities that really work in them — Panavision, ARRI
+   Rental, Keslow, Otto Nemenz, AbelCine, Sim, Cinelease, MBS, Trew Audio,
+   Movietech, Panalux, William F. White, TSF — and one or two of SLATE's own
+   in every other town that shoots anything, so there is nowhere you can stand
+   with no way to hire a camera. Each house keeps only the lines it really
+   keeps: a camera house will not hire you a generator. What is on its shelf is
+   derived from its own id rather than stored, the way the channels and the
+   accounts are, so nine counters across a city cost a save nothing, and a
+   thirty dollar clamp is not on any shelf because nobody writes a ticket for
+   a clamp.
+
+   The ticket is the ticket. You take a body, some glass, a couple of lamps
+   and a recorder for the days you need them; the week bills as three days,
+   which is why a Friday to Monday costs what a Friday does. The house holds a
+   deposit against what the kit is worth, and either sells you its damage
+   waiver or writes your own equipment cover on the ticket instead, which
+   drops the deposit to a quarter of what it was. Collecting takes the morning
+   it takes, unless you pay to have it delivered. Days can be added and are
+   billed the same way. Taking it back is the counter checking every case:
+   what is late costs the day rate and a quarter for every day, what comes
+   back marked is paid for by the waiver, by your own cover less its excess,
+   or by you, and what is left of the deposit comes back. Three weeks past due
+   the house stops waiting, writes the kit off and charges you for it.
+
+   **Still to come in this section:** shoot days you plan, crew you ask
+   favours of, locations you get permission for, weather that ruins one of
+   them; and cutting it, screening it and submitting it to a festival, which
+   is a form and a fee and a wait.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.
 9. Childhood through later life, end to end.

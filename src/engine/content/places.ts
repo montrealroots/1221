@@ -23,6 +23,7 @@ import type { Money } from '../core/money';
 import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
 import { REAL_GYMS } from './fitness';
+import { HOUSES_NOT_SHOPS, RENTAL_HOUSES, ownHousesIn } from './rental';
 import { shoppableRetailers } from './catalog';
 import { ALL_RETAILERS, tradesIn } from './brands';
 
@@ -31,7 +32,7 @@ export type PlaceKind =
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
-  | 'marina' | 'storage' | 'jeweller' | 'costumier';
+  | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   jeweller: 'Jeweler', costumier: 'Costume House',
@@ -40,6 +41,7 @@ export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
+  rental_house: 'Rental House',
 };
 
 /** What you can do somewhere. */
@@ -405,6 +407,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
   stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
   marina: ['visit'], storage: ['visit'], jeweller: ['browse'], costumier: ['browse'],
+  rental_house: ['browse'],
 };
 
 function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
@@ -440,7 +443,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   restaurant: 95, cafe: 35, bar: 75, fast_food: 25, market: 30, gas_station: 10, garage: 120,
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
   viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
-  marina: 60, storage: 20, jeweller: 45, costumier: 70,
+  marina: 60, storage: 20, jeweller: 45, costumier: 70, rental_house: 55,
 };
 
 /**
@@ -472,6 +475,30 @@ export function placesIn(cityId: string): Place[] {
       minutes: MINUTES_BY_KIND.gym,
       actions: gym.actions ?? ACTIONS_BY_KIND.gym,
     });
+  }
+
+  // The rental houses: the real ones where the house really works, and one or
+  // two of SLATE's own everywhere else that shoots anything at all.
+  for (const house of RENTAL_HOUSES) {
+    if (house.cityId !== cityId) continue;
+    out.push({
+      ...house,
+      real: true,
+      quality: house.quality ?? 88,
+      minutes: MINUTES_BY_KIND.rental_house,
+      actions: house.actions ?? ACTIONS_BY_KIND.rental_house,
+    });
+  }
+  if (!RENTAL_HOUSES.some((h) => h.cityId === cityId)) {
+    for (const house of ownHousesIn(cityId, city.name, city.industryPresence, city.population)) {
+      out.push({
+        ...house,
+        real: false,
+        quality: house.quality ?? 60,
+        minutes: MINUTES_BY_KIND.rental_house,
+        actions: ACTIONS_BY_KIND.rental_house,
+      });
+    }
   }
 
   const rng = makeRng(`places:${cityId}`);
@@ -523,6 +550,9 @@ export function placesIn(cityId: string): Place[] {
   for (const retailer of shoppableRetailers()) {
     const real = ALL_RETAILERS.find((r) => r.id === retailer.id);
     if (!real || real.kind === 'online') continue;
+    // A house that hires and does not sell has a counter rather than a shop,
+    // and it is already on the street as one.
+    if (HOUSES_NOT_SHOPS.has(retailer.id)) continue;
     if (!tradesIn(real, cityId, city.population)) continue;
     const hood = hoods.length > 0 ? hoods[Math.abs(hashOf(`${cityId}:${retailer.id}`)) % hoods.length] : undefined;
     out.push({

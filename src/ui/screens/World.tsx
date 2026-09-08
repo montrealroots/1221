@@ -60,10 +60,19 @@ const DOMAINS: Domain[] = [
     ],
   },
   {
+    label: 'Film',
+    blurb: 'A picture of your own, made with kit somebody else owns.',
+    entries: [
+      { route: '/workspace/film', label: 'Rental Houses', detail: 'The houses that hire cameras, lamps and sound by the day, and what a week actually bills at.' },
+      { route: '/workspace/film', label: 'On Hire', detail: 'What you have out on a ticket, when it is due back, and what it costs when it is late.' },
+      { route: '/workspace/film', label: 'Your Own Kit', detail: 'What you bought outright, beside what you hired.' },
+    ],
+  },
+  {
     label: 'Social',
     blurb: 'Four platforms, one audience engine, no guarantees.',
     entries: [
-      { route: '/workspace/phone', label: 'The Phone', detail: 'A handset on the desk, running on the world clock, with YouTube built as the app.' },
+      { route: '/workspace/phone', label: 'The Phone', detail: 'A handset on the desk, running on the world clock, with YouTube, Instagram, X and TikTok built as the apps.' },
       { route: '/workspace/social', label: 'Platforms', detail: 'Long video, short video, photo and text, each behaving differently.' },
       { route: '/workspace/social', label: 'Audience', detail: 'Segments, affinity, churn and momentum.' },
       { route: '/workspace/social', label: 'Brand Deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },

@@ -340,6 +340,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/history': 'History',
   '/workspace/character': 'Character',
   '/workspace/settings': 'Settings',
+  '/workspace/film': 'Film',
 };
 
 export function labelForRoute(route: string): string {

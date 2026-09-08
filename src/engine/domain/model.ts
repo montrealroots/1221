@@ -1268,6 +1268,71 @@ export interface OwnedAsset {
   tags: string[];
 }
 
+/**
+ * A line on a rental ticket: what it is, what it costs a day, and what the
+ * house would charge you if it came back in pieces.
+ */
+export interface HireLine {
+  catalogId: string;
+  name: string;
+  brand?: string;
+  subcategory?: string;
+  /** SLATE's calibration, not a quote from the house. */
+  dayRate: Money;
+  /** Replacement value, which is what the deposit and the damage run off. */
+  value: Money;
+  quantity: number;
+}
+
+/**
+ * Kit out on hire.
+ *
+ * A body worth seventy thousand is hired for the days it is needed, collected,
+ * used, and taken back. The ticket carries what was taken, what it costs, the
+ * deposit the house is holding, whether the damage is on their waiver or your
+ * own cover, and what happened when it came back.
+ */
+export interface KitHire {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The place id of the house, which is where you go to collect it. */
+  houseId: string;
+  houseName: string;
+  cityId: string;
+  lines: HireLine[];
+  /** Days you asked for, and the days the house actually bills for. */
+  days: number;
+  billedDays: number;
+  outAt: Instant;
+  dueAt: Instant;
+  /** All lines together, for one billed day. */
+  rate: Money;
+  hire: Money;
+  waiver: Money;
+  deposit: Money;
+  delivery: Money;
+  /** What has actually left the account so far. */
+  paid: Money;
+  refunded?: Money;
+  status: 'booked' | 'out' | 'returned' | 'lost';
+  collectedAt?: Instant;
+  returnedAt?: Instant;
+  lateDays?: number;
+  lateFee?: Money;
+  /** Set where something came back marked. */
+  damage?: {
+    note: string;
+    cost: Money;
+    paidBy: 'waiver' | 'policy' | 'you';
+    excess?: Money;
+  };
+  /** Your own equipment cover, where you had some when you signed. */
+  policyId?: Id;
+  /** The shoot days this kit was on, which is what wears it. */
+  shootDayIds?: Id[];
+}
+
 export interface Outfit {
   id: Id;
   saveId: Id;
@@ -2687,7 +2752,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 53;
+export const SAVE_SCHEMA_VERSION = 54;
 
 export interface SaveMeta {
   id: Id;
@@ -2813,6 +2878,8 @@ export interface SaveUniverse {
   socialFollows: Record<Id, SocialFollow>;
   socialSettings?: SocialSettings;
   socialRooms: Record<Id, SocialRoom>;
+  /** Kit out on hire from a rental house. */
+  kitHires: Record<Id, KitHire>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

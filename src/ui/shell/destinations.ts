@@ -55,6 +55,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     items: [
       { route: '/workspace/casting', label: 'Casting', detail: 'Locked until the industry milestone', locked: true },
       { route: '/workspace/phone', label: 'Phone', detail: 'Your handset, and the apps on it' },
+      { route: '/workspace/film', label: 'Film', detail: 'Hiring the kit for a picture of your own' },
       { route: '/workspace/social', label: 'Social', detail: 'What you post and who follows' },
     ],
   },
