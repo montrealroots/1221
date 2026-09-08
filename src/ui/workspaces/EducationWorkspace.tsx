@@ -12,6 +12,16 @@ import {
 import { CLUBS, SCHOOLING_NOTE, SUBJECT_BY_ID, TEAM_FROM_AGE, markLabel } from '@/engine/content/schooling';
 import { ageOf } from '@/engine/systems/lifespan';
 import { plural } from '@/engine/core/text';
+import { useState } from 'react';
+import {
+  APPLY_FROM_AGE, MAX_OPEN_APPLICATIONS, applicationsOf, chanceAt, describeStudies, feesFor,
+  marksOn, studiesOf, universitiesInCountry, whereItIs,
+} from '@/engine/systems/university';
+import {
+  ATHLETIC_NOTE, MAJOR_BY_ID, REGIME_LABEL, UNIVERSITY_BY_ID, UNIVERSITY_NOTE, feesIn, majorsAt,
+} from '@/engine/content/universities';
+import { UNIVERSITY_LOOKS_AT } from '@/engine/content/schooling';
+import { countryOfCity } from '@/engine/content/geography';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -28,6 +38,7 @@ export function EducationWorkspace() {
   return (
     <>
       <SchoolPanels />
+      <UniversityPanels />
 
       <div className="page-head">
         <div className="eyebrow">Education</div>
@@ -331,6 +342,189 @@ function SchoolPanels(): JSX.Element | null {
                         {open ? 'Try Out' : 'Out Of Season'}
                       </button>
                     ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          </Panel>
+        )}
+      </div>
+    </>
+  );
+}
+
+
+/**
+ * University, which is the end of the school ladder.
+ *
+ * The universities here are real, and so are their towns and the way each
+ * country charges for a degree. Whether one would take you, and what a term
+ * does to you, is SLATE's own — and the page says so.
+ */
+function UniversityPanels(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const [pickedUni, setPickedUni] = useState('');
+  const [pickedMajor, setPickedMajor] = useState('');
+
+  const age = ageOf(sim);
+  const studies = studiesOf(sim);
+  const applications = applicationsOf(sim);
+  if (!studies && age < APPLY_FROM_AGE) return null;
+
+  const here = universitiesInCountry(
+    countryOfCity(sim.player.currentLocationId) ?? sim.player.citizenshipId,
+  );
+  const chosen = pickedUni ? UNIVERSITY_BY_ID[pickedUni] : undefined;
+  const courses = chosen ? majorsAt(chosen) : [];
+  const chance = chosen && pickedMajor ? chanceAt(sim, chosen, pickedMajor) : undefined;
+  const marks = marksOn(sim);
+
+  if (studies) {
+    const university = UNIVERSITY_BY_ID[studies.universityId]!;
+    const away = sim.player.currentLocationId !== university.cityId;
+    return (
+      <>
+        <div className="page-head">
+          <div className="eyebrow">University</div>
+          <h1>{studies.universityName}</h1>
+          <p className="muted">{describeStudies(studies)} {whereItIs(university)}.</p>
+        </div>
+        <div className="grid grid-sheet">
+          <Panel title="The Term" subtitle={away ? `You are not in ${university.town}.` : `Year ${studies.year} of ${studies.years}.`}>
+            <div className="col gap-3">
+              <div className="row gap-2 wrap">
+                {(['normal', 'hard', 'coast'] as const).map((effort) => (
+                  <button
+                    key={effort}
+                    className={`btn btn-sm${effort === 'normal' ? ' btn-primary' : ''}`}
+                    disabled={away}
+                    onClick={() => {
+                      const res = run<{ note: string }>('uni.term', { effort });
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    {effort === 'hard' ? 'Work Through It' : effort === 'coast' ? 'Coast Through It' : 'Sit The Term'}
+                  </button>
+                ))}
+                <button
+                  className="btn btn-sm"
+                  onClick={() => {
+                    const res = run<{ note: string }>('uni.leave', {});
+                    if (res.ok) toast(res.value!.note, 'negative');
+                  }}
+                >
+                  Leave
+                </button>
+              </div>
+              <Meter label="On Current Form" value={studies.average} max={100} />
+              <p className="xs dim" style={{ margin: 0 }}>
+                {plural(studies.termsDone, 'term')} done. Paid {formatMoney(studies.paid)} so far
+                {studies.scholarship ? `, after the ${studies.scholarship} award.` : '.'}
+              </p>
+              <p className="xs dim" style={{ margin: 0 }}>{UNIVERSITY_NOTE}</p>
+            </div>
+          </Panel>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="page-head">
+        <div className="eyebrow">University</div>
+        <h1>Where you might go.</h1>
+        <p className="muted">
+          You are carrying {marks.toFixed(0)}. {marks >= UNIVERSITY_LOOKS_AT
+            ? 'That is enough for a university to look at you.'
+            : `Universities do not look below ${UNIVERSITY_LOOKS_AT}.`}
+        </p>
+      </div>
+
+      <div className="grid grid-sheet">
+        <Panel title="Apply" subtitle={`${MAX_OPEN_APPLICATIONS} open at once, and taking one closes the rest.`}>
+          <div className="col gap-3">
+            <label className="label" htmlFor="uni-pick">Where</label>
+            <select
+              id="uni-pick"
+              className="input"
+              value={pickedUni}
+              onChange={(e) => { setPickedUni(e.target.value); setPickedMajor(''); }}
+            >
+              <option value="">Pick a university</option>
+              {here.map((one) => (
+                <option key={one.id} value={one.id}>{one.name} — {one.town}</option>
+              ))}
+            </select>
+
+            <label className="label" htmlFor="course-pick">What</label>
+            <select
+              id="course-pick"
+              className="input"
+              value={pickedMajor}
+              disabled={!chosen}
+              onChange={(e) => setPickedMajor(e.target.value)}
+            >
+              <option value="">Pick a course</option>
+              {courses.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+            </select>
+
+            {chosen && (
+              <p className="xs dim" style={{ margin: 0 }}>
+                Founded {chosen.founded}. {chosen.about} {REGIME_LABEL[feesIn(chosen.countryId).regime]}
+                {feesFor(chosen) > 0 ? ` — about ${formatMoney(feesFor(chosen))} a year.` : '.'}
+              </p>
+            )}
+            {chance && <p className="small" style={{ margin: 0 }}>{chance.reason}</p>}
+
+            <button
+              className="btn btn-sm btn-primary"
+              disabled={!chosen || !pickedMajor}
+              onClick={() => {
+                const res = run<{ note: string }>('uni.apply', { universityId: pickedUni, majorId: pickedMajor });
+                if (res.ok) { toast(res.value!.note, 'positive'); setPickedUni(''); setPickedMajor(''); }
+              }}
+            >
+              Put Your Name In
+            </button>
+            <p className="xs dim" style={{ margin: 0 }}>{UNIVERSITY_NOTE}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{ATHLETIC_NOTE}</p>
+          </div>
+        </Panel>
+
+        {applications.length > 0 && (
+          <Panel title="What You Have Heard" flush>
+            <div className="list">
+              {applications.map((one) => {
+                const university = UNIVERSITY_BY_ID[one.universityId];
+                return (
+                  <div key={one.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">
+                        {university?.name} — {MAJOR_BY_ID[one.majorId]?.label}
+                      </div>
+                      <div className="xs dim">{one.reason}</div>
+                    </div>
+                    {one.status === 'offer' ? (
+                      <div className="row gap-2">
+                        <button
+                          className="btn btn-sm btn-primary"
+                          onClick={() => {
+                            const res = run<{ note: string }>('uni.accept', { applicationId: one.id });
+                            if (res.ok) toast(res.value!.note, 'positive');
+                          }}
+                        >
+                          Take It
+                        </button>
+                        <button className="btn btn-sm" onClick={() => run('uni.decline', { applicationId: one.id })}>
+                          Turn It Down
+                        </button>
+                      </div>
+                    ) : (
+                      <span className="badge badge-quiet">{titleCaseLabel(one.status)}</span>
+                    )}
                   </div>
                 );
               })}

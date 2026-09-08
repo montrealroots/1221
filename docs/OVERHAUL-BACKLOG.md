@@ -518,6 +518,28 @@ before any delivery claim.
 
     **Held by the gate.** `tools/school-check.mjs` measures every system for stage order, gaps, year naming and the compulsory years, every subject and club against a real attribute or skill, every sport against the countries that field it, a generated week in four countries for the timetable constraints, a school in ten cities named for where it stands, and the acting ladder for monotonicity; `tests/school.test.ts` is 26 tests. Schema 62 adds `universe.schooling`. A browser tour started a fourteen year old in Los Angeles, read the timetable and the marks off the page, worked a full day, joined the drama club and took a named part in The Crucible.
 
+49. Life contract item 9, third part — university. **"Even go to college and get a major if my grades are good enough or if im on a sports or academic scholarship... real universities geographically."**
+
+    Item 9 is complete with this. Unlike the schools, these are real: there are a few thousand universities in the world rather than a few million schools, and which town each one stands in is not in dispute.
+
+    **197 real universities across 56 countries**, founded between 1088 and 2014, each with its real town and its real founding year — Oxford, Yale, the Sorbonne, Todai, Tsinghua, Bocconi, USP, Wits, UNAM — including the film and drama schools this game is actually about: RADA, LAMDA, Juilliard, the NFTS, La Fémis, VGIK, the Beijing Film Academy, NIDA, FAMU, the Łódź film school, the Korean Academy of Film Arts. 44 teach film and 21 teach drama.
+
+    **The gazetteer problem, solved honestly.** SLATE carries 1,379 cities rather than every town, so Oxford, New Haven, Heidelberg and Beaconsfield are not in it. Rather than move a university to a city it is not in, each row carries its real town and is reached from the nearest carried city, and the page says exactly that: "Oxford, reached from London". A checker rule and a test both fail the build if a row ever says a university is in a city it is only reached from.
+
+    **How a country pays for a degree is real, and it differs completely.** 57 regimes carried, 17 of them charging nothing at all: Norway nothing, Germany an administrative fee, England a capped home fee, Australia nothing now and a share of your earnings later, America whatever the university decides. The regime is public record; what lands on the invoice is SLATE's calibration in the local cost of living, and the note says which is which.
+
+    **Admissions as a curve rather than a wall.** The first pass had a slope of two and a half points of chance per mark, which made everything below the very top effectively closed — somebody carrying seventy had a three per cent chance at University College London. Softened to a curve where matching what a place expects is a good chance rather than a certainty, so seventy-three now reads Oxford 19, RADA 31, UCL 33, Manchester 52. Below the bar is still a refusal, and it names the bar.
+
+    **And a drama school auditions rather than reading marks**, which is the honest difference between applying to read law and standing up in a room, so a conservatoire will look at somebody the academic bar would refuse.
+
+    **A place won on sport is not a universal arrangement.** It is American and Canadian (and, differently, Japanese and Korean); most of Europe has no such thing because sport there sits in clubs rather than universities. SLATE carries where it really happens, and both the checker and a test fail if an English university ever offers one.
+
+    **The problem this part exposed in the last one.** School marks were being scaled by the youth curve built for part one, so the best possible sixteen year old could only reach sixty-four against a bar of sixty-eight — university was effectively unreachable for anybody who had gone through school. That curve is about what a young body and a young judgement can deliver in a room full of adults, and school is not that: a fifteen year old can and does top the year. School marks come off it now; the audition and the sports trial stay on it, which is where it belongs.
+
+    **Two things the checker caught.** Juilliard was teaching economics, because the conservatoire rule keyed on having a single strength and Juilliard has two, music and drama — it keys on whether every strength is an arts field now. And University College London had no law faculty in the data, which is wrong about one of the better law schools in Britain.
+
+    **Held by the gate.** `tools/university-check.mjs` measures every university against the geography and its own country, every founding year, every fee regime against the countries that have universities, the admissions curve for being a curve, the conservatoire rule, the majors against real attributes and skills, and the sport-place rule against western Europe; `tests/university.test.ts` is 23 tests. Schema 63 adds `universe.applications` and `universe.studies`. A browser tour started a seventeen year old in Los Angeles, read a list of real American universities with their real towns off the page, picked UCLA and film production, and got an honest answer: about 28 in a hundred.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -534,8 +556,9 @@ before any delivery claim.
     - Clothes only soil when you commit a look, so a life lived through the Advance button never needs washing. Time alone should soil what you are wearing. This now costs something visible: the launderette's service wash is unreachable for a character who never commits a look, and the room says so rather than inventing dirty clothes.
     - Film kit is not a thing that lives in the house: it does not wear, does not break, has no room, and is not in Your Things.
     - A finished picture of your own does not reach the industry half: it has no distributor, no box office and no trade coverage, and a festival that says yes is fame and standing rather than a career.
-    - The life cycle is two parts of three: university — real universities placed geographically, majors, admission on grades, and academic and athletic scholarships — is not built.
-    - A school day is a command rather than a scene, so there is no room in it: no teacher, no classmates and no conversation, only the day and what it did to the marks.
+    - A school day and a university term are both commands rather than scenes, so there is no room in either: no teacher, no classmates, no seminar and no conversation, only the day and what it did to the marks.
+    - A university's selectivity is SLATE's reading of a public reputation, not a ranking or an admissions statistic, and there is no feed that would make it one.
+    - The gazetteer carries 1,379 cities, so a university in a smaller town is reached from the nearest one rather than standing in its own; the row always names the real town.
     - Subject names are the shape of a week rather than each country's own curriculum vocabulary, which SLATE does not carry.
     - Every school is SLATE's own for want of a feed, unlike the universities that come next, which are public record.
     - The life cycle is one part of three. School and university — real education systems, a class schedule, school sports, grades, acting classes, starting as a child, real universities placed geographically, majors and scholarships — are not built, and until they are there is nothing for a character under sixteen to do with a day.

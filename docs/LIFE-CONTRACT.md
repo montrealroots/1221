@@ -742,9 +742,38 @@ answer says what would make it yes.
    own with a plausible name — the district it stands in, or a saint only in
    the countries that name schools after saints.
 
-   **Still to come:** part three, university — real universities placed
-   geographically, majors, admission on grades, and academic and athletic
-   scholarships.
+   **Part three is done: university, and item 9 is complete.** 197 real
+   universities across 56 countries, founded between 1088 and 2014 — Oxford,
+   Yale, the Sorbonne, Todai, Tsinghua, USP, Wits, RADA, La Fémis, the Beijing
+   Film Academy, VGIK. The name, the town and the founding year are public
+   record. Where a university stands in a town smaller than the gazetteer
+   carries, its real town is on its own row and it is reached from the nearest
+   carried city: the page says "Oxford, reached from London" and never claims
+   Oxford is in London.
+
+   How a country charges for a degree is real too, and it differs completely:
+   57 regimes carried, 17 of which charge nothing at all. Norway charges
+   nothing, Germany an administrative fee, England a capped home fee,
+   Australia nothing now and a share of your earnings later, America whatever
+   the university decides. What SLATE puts on the invoice is its own
+   calibration and says so.
+
+   You apply with the marks you actually left school with, five places at
+   once, and the answer is a curve rather than a wall: somebody carrying
+   ninety is likelier at Manchester than at Oxford and both are possible. A
+   drama school auditions instead of reading marks, so a conservatoire will
+   look at somebody the academic bar would refuse. Taking a place closes the
+   others, charges the year and moves you to the town it is in.
+
+   A scholarship comes off the invoice: an academic one on marks, and a place
+   won on sport — which is an American and Canadian arrangement more than a
+   universal one, because sport in most of Europe sits in clubs rather than in
+   universities, and SLATE carries where it really happens rather than
+   assuming everywhere works like America.
+
+   Then three years of terms, and what you leave with is a class of degree
+   that depends on what you did while you were there. You can also run out of
+   money for the next year, or walk away, and both are written down.
 
 10. Free-text intent across all of it.
 

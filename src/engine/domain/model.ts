@@ -2026,6 +2026,54 @@ export interface Schooling {
 }
 
 // ---------------------------------------------------------------------------
+// University
+// ---------------------------------------------------------------------------
+
+/** An application to a university, and what came back. */
+export interface UniversityApplication {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  universityId: string;
+  majorId: string;
+  /** The average the applicant was carrying when they applied. */
+  onMarks: number;
+  status: 'pending' | 'offer' | 'rejected' | 'accepted' | 'declined' | 'withdrawn';
+  /** 'academic' | 'athletic' | 'none', set when an offer carries one. */
+  scholarship?: string;
+  /** Why it went the way it did, in words the applicant would be given. */
+  reason: string;
+  appliedAt: Instant;
+  decidedAt?: Instant;
+}
+
+/** A degree in progress, or one that was finished. */
+export interface Studies {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  universityId: string;
+  universityName: string;
+  majorId: string;
+  /** Which year of the course, from one. */
+  year: number;
+  years: number;
+  /** Out of a hundred, across the course so far. */
+  average: number;
+  /** Terms sat and terms missed. */
+  termsDone: number;
+  termsMissed: number;
+  scholarship?: string;
+  /** What has been paid in fees so far. */
+  paid: Money;
+  startedAt: Instant;
+  endedAt?: Instant;
+  /** Set when the degree was awarded. */
+  awardedClass?: string;
+  endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
 // Travel
 // ---------------------------------------------------------------------------
 
@@ -3128,7 +3176,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 62;
+export const SAVE_SCHEMA_VERSION = 63;
 
 export interface SaveMeta {
   id: Id;
@@ -3235,6 +3283,9 @@ export interface SaveUniverse {
   enrollments: Record<Id, Enrollment>;
   /** School, for a life that is still in it. Absent on a save from before. */
   schooling?: Record<Id, Schooling>;
+  /** University: applications and a degree. Absent on a save from before. */
+  applications?: Record<Id, UniversityApplication>;
+  studies?: Record<Id, Studies>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

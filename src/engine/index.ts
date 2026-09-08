@@ -51,6 +51,7 @@ import { registerGoingSystem } from './systems/going';
 import { registerErrandSystem } from './systems/errands';
 import { ensureFamily, registerLifespan, scheduleBirthday } from './systems/lifespan';
 import { ensureSchooling, registerSchool } from './systems/school';
+import { registerUniversity } from './systems/university';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -122,6 +123,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerErrandSystem(sim);
   registerLifespan(sim);
   registerSchool(sim);
+  registerUniversity(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1094,6 +1096,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // because it needs a running simulation.
     universe.schooling ??= {};
     steps.push('School, and the play at the end of the year.');
+  }
+
+  if (from < 63) {
+    // Schema 63: university. Real institutions, real towns, and what it takes
+    // to get into one.
+    universe.applications ??= {};
+    universe.studies ??= {};
+    steps.push('Universities, and what they will take you on.');
   }
 
   if (from < 55) {

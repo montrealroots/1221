@@ -199,12 +199,16 @@ function aptitudeFor(sim: Simulation, person: Person, subjectId: string): number
   const rng = sim.rng('school.aptitude', person.id, subjectId);
   const base = rng.int(38, 76);
   if (!subject?.feeds) return base;
-  const factor = youthFactor(sim, person);
+  // Not through the youth curve. That curve is about what a young body and a
+  // young judgement can deliver in a room full of adults, and school is not
+  // that: a fifteen year old can and does top the year. Holding school marks
+  // under it would have made university unreachable for anybody who went
+  // through school, which is the wrong end of the stick entirely.
   if (subject.feeds.kind === 'attribute') {
-    const held = (attributesOf(person)[subject.feeds.key] ?? 0) * factor;
+    const held = attributesOf(person)[subject.feeds.key] ?? 0;
     return clamp(Math.round(base * 0.6 + held * 0.4), 5, 98);
   }
-  const held = (person.skills?.[subject.feeds.key] ?? 0) * factor;
+  const held = person.skills?.[subject.feeds.key] ?? 0;
   return clamp(Math.round(base * 0.6 + held * 0.4), 5, 98);
 }
 

@@ -87,6 +87,8 @@ const REAL_NAMES = [
   'Silverbend Jewellers', 'Halliwell Goldsmiths',
   // Venues and institutions.
   'Theatre Royal', 'Old Vic', 'National Theatre', 'Barbican Centre', 'Centre Pompidou',
+  // Point Grey is the headland the University of British Columbia stands on.
+  'Point Grey',
   'Southbank Centre', 'Sydney Theatre', 'Abbey Theatre', 'Lyric Theatre', 'Apollo Theatre',
   'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre',
   // Cinema chains and classification bodies that spell themselves that way.
