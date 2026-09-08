@@ -149,6 +149,40 @@ export const LOCAL_MINIMUMS: ReadonlySet<string> = new Set([
 /** The floor everywhere SLATE does not carry a country of its own. */
 export const WORLD_FLOOR: Money = 2_00;
 
+export const STATE_NOTE =
+  'The United States is the country where the floor is least national, so SLATE carries it state by '
+  + 'state as published rather than working it out from what a city costs. Five states set no '
+  + 'minimum of their own at all and two set one below the federal figure; in all seven the federal '
+  + '$7.25 is what a covered worker gets. Many cities set a higher figure than their state does and '
+  + 'a good number of states raise theirs with inflation every January, so read a figure as the '
+  + 'state floor at the time it was set and not as the last word on any one address.';
+
+/**
+ * The state minimum wage, where the state sets one.
+ *
+ * Published figures, by state, as they stood for 2025. Keyed by region id so a
+ * city looks its own state up. A state that is absent from this table has no
+ * minimum of its own above the federal one, and the federal one is what
+ * applies there.
+ */
+export const STATE_FLOORS: Readonly<Record<string, Money>> = {
+  'us-ak': 11_91, 'us-az': 14_70, 'us-ar': 11_00, 'us-ca': 16_50, 'us-co': 14_81,
+  'us-ct': 16_35, 'us-de': 15_00, 'us-dc': 17_50, 'us-fl': 14_00, 'us-hi': 14_00,
+  'us-il': 15_00, 'us-me': 14_65, 'us-md': 15_00, 'us-ma': 15_00, 'us-mi': 12_48,
+  'us-mn': 11_13, 'us-mo': 13_75, 'us-mt': 10_55, 'us-ne': 13_50, 'us-nv': 12_00,
+  'us-nj': 15_49, 'us-nm': 12_00, 'us-ny': 15_50, 'us-oh': 10_70, 'us-or': 15_05,
+  'us-ri': 15_00, 'us-sd': 11_50, 'us-vt': 14_01, 'us-va': 12_41, 'us-wa': 16_66,
+  'us-wv': 8_75,
+};
+
+/** The states that set no minimum wage of their own, where federal law is the floor. */
+export const NO_STATE_MINIMUM: ReadonlySet<string> = new Set([
+  'us-al', 'us-la', 'us-ms', 'us-sc', 'us-tn',
+]);
+
+/** The states whose own figure sits below the federal one, which therefore does not bind. */
+export const BELOW_FEDERAL_STATES: ReadonlySet<string> = new Set(['us-ga', 'us-wy']);
+
 /** What an hour is worth, where you are standing. */
 export function floorIn(countryId: string): WageFloor {
   return FLOOR_BY_COUNTRY[countryId] ?? {
@@ -201,14 +235,17 @@ export interface FirstJob {
   feeds: readonly { key: string; kind: 'skill' | 'attribute' }[];
   /** The kind of place it happens in, where the city has one. */
   placeKind?: string;
+  /** The sector, so a real company that hires for it can be the employer. */
+  sector?: 'grocery' | 'coffee' | 'fast_food' | 'retail' | 'warehouse' | 'hardware' | 'pharmacy';
   about: string;
 }
 
 function j(
   id: string, label: string, fromAge: number, premium: number, hours: number, demand: number,
   feeds: readonly { key: string; kind: 'skill' | 'attribute' }[], about: string, placeKind?: string,
+  sector?: FirstJob['sector'],
 ): FirstJob {
-  return { id, label, fromAge, premium, hours, demand, feeds, about, placeKind };
+  return { id, label, fromAge, premium, hours, demand, feeds, about, placeKind, sector };
 }
 
 export const FIRST_JOBS: readonly FirstJob[] = [
@@ -223,19 +260,19 @@ export const FIRST_JOBS: readonly FirstJob[] = [
   ], 'Three at a time, in the rain, and one of them will not walk.'),
   j('shelf_stacking', 'Stacking Shelves', 15, 1.0, 6, 24, [
     { key: 'operations', kind: 'skill' }, { key: 'long_day_endurance', kind: 'attribute' },
-  ], 'Facing up an aisle at seven in the morning before the doors open.', 'market'),
+  ], 'Facing up an aisle at seven in the morning before the doors open.', 'market', 'grocery'),
   j('checkout', 'The Checkout', 16, 1.05, 6, 22, [
     { key: 'public_speaking', kind: 'skill' }, { key: 'set_etiquette', kind: 'attribute' },
-  ], 'Four hundred people an hour and every one of them wants something.', 'market'),
+  ], 'Four hundred people an hour and every one of them wants something.', 'market', 'grocery'),
   j('cafe', 'A Café', 16, 1.05, 6, 26, [
     { key: 'operations', kind: 'skill' }, { key: 'social_instinct', kind: 'attribute' },
-  ], 'Milk, steam, a queue and somebody who wants it made a different way.', 'cafe'),
+  ], 'Milk, steam, a queue and somebody who wants it made a different way.', 'cafe', 'coffee'),
   j('fast_food', 'The Counter', 16, 1.0, 6, 30, [
     { key: 'operations', kind: 'skill' }, { key: 'pressure_tolerance', kind: 'attribute' },
-  ], 'A headset, a screen full of orders, and a lunch rush that does not end.', 'fast_food'),
+  ], 'A headset, a screen full of orders, and a lunch rush that does not end.', 'fast_food', 'fast_food'),
   j('retail', 'A Saturday On The Shop Floor', 16, 1.05, 7, 22, [
     { key: 'public_speaking', kind: 'skill' }, { key: 'charisma', kind: 'attribute' },
-  ], 'Folding the same jumper eleven times and asking if anybody needs a hand.', 'shop'),
+  ], 'Folding the same jumper eleven times and asking if anybody needs a hand.', 'shop', 'retail'),
   j('cinema', 'An Usher', 16, 1.0, 6, 20, [
     { key: 'visual_language', kind: 'skill' }, { key: 'set_etiquette', kind: 'attribute' },
   ], 'Tearing tickets, sweeping between screenings, and watching the ends of everything.', 'cinema'),
@@ -250,7 +287,7 @@ export const FIRST_JOBS: readonly FirstJob[] = [
   ], 'Four hours of watching a pool where nothing happens, and everything depends on you if it does.'),
   j('warehouse', 'A Night In A Warehouse', 18, 1.2, 10, 42, [
     { key: 'operations', kind: 'skill' }, { key: 'long_day_endurance', kind: 'attribute' },
-  ], 'Ten hours, a scanner, a target on a screen, and the radio on somebody else’s station.'),
+  ], 'Ten hours, a scanner, a target on a screen, and the radio on somebody else’s station.', undefined, 'warehouse'),
   j('bar', 'Behind A Bar', 18, 1.15, 8, 32, [
     { key: 'public_speaking', kind: 'skill' }, { key: 'improvisation', kind: 'attribute' },
   ], 'Three deep, everybody catching your eye, and the last hour is the whole shift.', 'bar'),

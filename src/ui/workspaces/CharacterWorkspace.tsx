@@ -28,10 +28,16 @@ import {
 } from '@/engine/systems/growing';
 import { ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE, PET_NOTE } from '@/engine/content/growingup';
 import {
-  describeJob, floorHere, jobOf, jobsHeld, openingsFor, shiftIsDue, wageFor,
+  describeJob, floorHere, jobOf, jobsHeld, openingsFor, promotionFor, shiftIsDue, shiftsToCome,
+  stateFloorFor, stateFloorNameFor,
+  wageFor,
 } from '@/engine/systems/work';
 import {
-  JOB_NOTE, LOCAL_NOTE, NO_MINIMUM_NOTE, WAGE_NOTE, YOUNG_NOTE,
+  BRANCH_NOTE, COVER_NOTE, EMPLOYER_NOTE, LADDER_NOTE, LETTING_GO_NOTE, PAYDAY_NOTE, ROLE_BY_ID,
+  SHIFT_BY_ID, SICK_NOTE,
+} from '@/engine/content/employers';
+import {
+  JOB_NOTE, LOCAL_NOTE, NO_MINIMUM_NOTE, STATE_NOTE, WAGE_NOTE, YOUNG_NOTE,
 } from '@/engine/content/work';
 import {
   AGE_GATE_NOTE, LIFESPAN_NOTE, PENSION_NOTE, describeHeight, describeWeight,
@@ -800,20 +806,86 @@ function JobPanel(): JSX.Element | null {
   const past = jobsHeld(sim).filter((one) => one.endedAt).slice(0, 3);
   const openings = openingsFor(sim);
   const floor = floorHere(sim);
+  const state = stateFloorNameFor(sim);
+  const stateFloor = stateFloorFor(sim.player.currentLocationId);
   const allowed = mayI(sim, 'work');
   if (!held && openings.length === 0 && past.length === 0 && !allowed.ok && ageOf(sim) > 25) return null;
 
   return (
     <Panel
       title={held ? 'The Job' : 'A Job'}
-      subtitle={floor.statutory
-        ? `The floor here is ${formatMoney(floor.perHour)} an hour, set in ${floor.year}.`
-        : `No statutory minimum here. The bargained floor is about ${formatMoney(floor.perHour)} an hour.`}
+      subtitle={state && stateFloor !== undefined
+        ? `The floor in ${state} is ${formatMoney(stateFloor)} an hour.`
+        : floor.statutory
+          ? `The floor here is ${formatMoney(floor.perHour)} an hour, set in ${floor.year}.`
+          : `No statutory minimum here. The bargained floor is about ${formatMoney(floor.perHour)} an hour.`}
     >
       <div className="col gap-3">
         {held ? (
           <>
             <p className="small" style={{ margin: 0 }}>{describeJob(sim, held)}</p>
+            <div className="row gap-3 wrap">
+              <Stat
+                label="Where You Are"
+                value={ROLE_BY_ID[held.roleId]?.label ?? 'Crew'}
+                note={ROLE_BY_ID[held.roleId]?.about}
+              />
+              <Stat
+                label="What They Think"
+                value={String(Math.round(held.standing))}
+                note={promotionFor(held).why}
+                tone={held.standing >= 70 ? 'positive' : held.standing <= 30 ? 'negative' : undefined}
+              />
+            </div>
+
+            {held.cover && (
+              <p className="small" style={{ margin: 0 }}>
+                <strong>They are ringing.</strong> {held.cover.reason} They want you in on{' '}
+                {formatDate(held.cover.at, sim.homeZone)}. It is on your Home screen to answer.
+              </p>
+            )}
+
+            <div className="row gap-3 wrap">
+              <Stat
+                label="On The Timesheet"
+                value={formatMoney(held.owed)}
+                note={held.nextPayAt
+                  ? `${plural(held.owedHours, 'hour')}. Paid ${formatDate(held.nextPayAt, sim.homeZone)}.`
+                  : `${plural(held.owedHours, 'hour')} not yet paid.`}
+              />
+              {held.payslips.length > 0 && (
+                <Stat
+                  label="Last Payslip"
+                  value={formatMoney(held.payslips[held.payslips.length - 1]!.net)}
+                  note={`${formatMoney(held.payslips[held.payslips.length - 1]!.gross)} gross, `
+                    + `${formatMoney(held.payslips[held.payslips.length - 1]!.tax
+                      + held.payslips[held.payslips.length - 1]!.social)} withheld.`}
+                />
+              )}
+            </div>
+
+            {shiftsToCome(held).length > 0 && (
+              <div className="list">
+                {shiftsToCome(held).slice(0, 6).map((shift, i) => (
+                  <div key={`${shift.at}-${i}`} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">
+                        {SHIFT_BY_ID[shift.kindId]?.label ?? 'A Shift'}
+                        {shift.cover ? ' · Cover' : ''}
+                      </div>
+                      <div className="xs dim">
+                        {formatDate(shift.at, sim.homeZone)} · {plural(shift.hours, 'hour')}
+                        {' · '}{SHIFT_BY_ID[shift.kindId]?.about}
+                      </div>
+                    </div>
+                    <span className="badge badge-quiet">
+                      {sim.now >= shift.at - 2 * 60 * 60_000 ? 'On Now' : 'To Come'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="row gap-2 wrap">
               <button
                 className="btn btn-sm btn-primary"
@@ -825,6 +897,27 @@ function JobPanel(): JSX.Element | null {
               >
                 {shiftIsDue(sim, held) ? 'Work The Shift' : 'Not On Until Later'}
               </button>
+              <button
+                className="btn btn-sm"
+                disabled={!shiftIsDue(sim, held)}
+                onClick={() => {
+                  const res = run<{ note: string; genuine: boolean }>('job.call_in_sick', {});
+                  if (res.ok) toast(res.value!.note, res.value!.genuine ? 'neutral' : 'negative');
+                }}
+              >
+                Ring In Sick
+              </button>
+              {promotionFor(held).ready && (
+                <button
+                  className="btn btn-sm btn-primary"
+                  onClick={() => {
+                    const res = run<{ note: string }>('job.take_promotion', {});
+                    if (res.ok) toast(res.value!.note, 'positive');
+                  }}
+                >
+                  Take {promotionFor(held).role!.label}
+                </button>
+              )}
               <button
                 className="btn btn-sm"
                 onClick={() => {
@@ -883,8 +976,16 @@ function JobPanel(): JSX.Element | null {
         <p className="xs dim" style={{ margin: 0 }}>{WAGE_NOTE}</p>
         {!floor.statutory && <p className="xs dim" style={{ margin: 0 }}>{NO_MINIMUM_NOTE}</p>}
         <p className="xs dim" style={{ margin: 0 }}>{LOCAL_NOTE}</p>
+        {state && <p className="xs dim" style={{ margin: 0 }}>{STATE_NOTE}</p>}
         <p className="xs dim" style={{ margin: 0 }}>{YOUNG_NOTE}</p>
         <p className="xs dim" style={{ margin: 0 }}>{JOB_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{EMPLOYER_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{BRANCH_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{LADDER_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{COVER_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{PAYDAY_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{SICK_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{LETTING_GO_NOTE}</p>
       </div>
     </Panel>
   );

@@ -1180,6 +1180,20 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push('Growing up, the moments that come round in it, and the Saturday job.');
   }
 
+  if (from < 67) {
+    // Schema 67: the job has a rota, a ladder and a manager who rings. A job
+    // held on the old shape has none of those, so it is given them rather
+    // than left half built.
+    for (const held of Object.values(universe.firstJobs ?? {})) {
+      const job = held as { roleId?: string; standing?: number; rota?: unknown[]; nextShiftAt?: number };
+      job.roleId ??= 'crew';
+      job.standing ??= 50;
+      job.rota ??= [];
+      if (job.nextShiftAt !== undefined) delete job.nextShiftAt;
+    }
+    steps.push('A rota, a ladder and a manager who rings on your day off.');
+  }
+
   if (from < 55) {
     // Schema 55: the shoot day. A location, whoever said yes, the kit that is
     // in the van and what the weather left you with.

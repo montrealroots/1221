@@ -2016,6 +2016,18 @@ export interface Schooling {
 // The job you had before any of this
 // ---------------------------------------------------------------------------
 
+/** One shift on a rota: when it is, what kind, and whether it happened. */
+export interface RotaShift {
+  at: Instant;
+  /** 'open', 'mid', 'close', 'weekend' or 'night'. */
+  kindId: string;
+  hours: number;
+  worked?: boolean;
+  missed?: boolean;
+  /** Set where it was picked up at short notice rather than rostered. */
+  cover?: boolean;
+}
+
 /** A Saturday job: the first money anybody earns that is theirs. */
 export interface FirstJobHeld {
   id: Id;
@@ -2023,18 +2035,41 @@ export interface FirstJobHeld {
   personId: Id;
   /** Which kind of job it is. */
   kindId: string;
-  /** Who you work for. SLATE's own. */
+  /** Who you work for. A real company where the country has one. */
   employerName: string;
+  /** Set where the employer is one SLATE carries as real. */
+  employerId?: string;
+  /** Where on the ladder: 'crew', 'supervisor', 'assistant' or 'manager'. */
+  roleId: string;
+  /** What the manager thinks of you, out of a hundred. */
+  standing: number;
   /** Where, so it is a place in a city rather than an abstraction. */
   cityId: string;
   placeId?: string;
-  /** What the hour pays, at the time it was taken. */
+  /** What the hour pays, at the time it was taken or last promoted. */
   perHour: Money;
   /** Shifts worked, and what they came to. */
   shifts: number;
   earned: Money;
-  /** When the next shift is on the rota. */
-  nextShiftAt?: Instant;
+  /** Hours worked since the last pay date, and what they are worth gross. */
+  owedHours: number;
+  owed: Money;
+  /** When the money arrives, and what arrived last time. */
+  nextPayAt?: Instant;
+  payslips: {
+    at: Instant;
+    hours: number;
+    gross: Money;
+    tax: Money;
+    social: Money;
+    net: Money;
+  }[];
+  /** Days rung in sick, and whether anybody worked out that one was not. */
+  sickDays: number;
+  /** The shifts you are down for, this week and last. */
+  rota: RotaShift[];
+  /** A shift somebody is asking you to pick up, on a day you were not on. */
+  cover?: { at: Instant; kindId: string; hours: number; reason: string; askedAt: Instant };
   startedAt: Instant;
   endedAt?: Instant;
   endReason?: string;
@@ -3358,7 +3393,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 66;
+export const SAVE_SCHEMA_VERSION = 67;
 
 export interface SaveMeta {
   id: Id;

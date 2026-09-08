@@ -558,12 +558,18 @@ before any delivery claim.
     - A finished picture of your own does not reach the industry half: it has no distributor, no box office and no trade coverage, and a festival that says yes is fame and standing rather than a career.
     - A school day and a university term are both commands rather than scenes, so there is no room in either: no teacher, no classmates, no seminar and no conversation, only the day and what it did to the marks.
     - A university's selectivity is SLATE's reading of a public reputation, not a ranking or an admissions statistic, and there is no feed that would make it one.
-    - The gazetteer carries 1,379 cities, so a university in a smaller town is reached from the nearest one rather than standing in its own; the row always names the real town.
+    - The gazetteer carries 1,379 cities, so a university in a smaller town is reached from the nearest one rather than standing in its own; the row always names the real town. Widening it needs a licensed gazetteer feed, and inventing towns to fill the gap would be inventing places.
     - Subject names are the shape of a week rather than each country's own curriculum vocabulary, which SLATE does not carry.
     - Every school is SLATE's own for want of a feed, unlike the universities that come next, which are public record.
     - The life cycle, school, university, room and board, the track from a school team to a world final, and the years of growing up are all built.
     - A moment in growing up is a decision with two or three answers rather than a scene: there is nobody in the room, and no conversation, only the choice and what it did.
-    - Twenty moments is a childhood in outline rather than in full. What is here happens to everybody; what is not is anything particular to a place, a faith, a family or a class.
+    - Thirty seven moments is a childhood in outline rather than in full. What is here happens to everybody; what is not is anything particular to a place, a faith, a family or a class.
+    - A shift is a command rather than a scene: there is a rota, a manager and a payslip, but no shop floor and nobody on it to talk to.
+    - Fifty companies is the well known end of retail and food service in twenty six countries, not every employer anywhere. A city with none of them carried gets SLATE's own employer, named as SLATE's own.
+    - How a company pays against the floor is SLATE's reading of a durable public reputation, not a payroll disclosure. The branch, the manager, the rota, the ladder, the promotion thresholds and the cover calls are all SLATE's own.
+    - Minimum wages are carried as of the year each was set and a good number of countries and American states raise theirs every January. There is no wage feed, so a figure is right for its year rather than for today.
+    - American state minimum wages are carried; city ordinances above them, which more than sixty cities have, are not. The page says so rather than implying the state figure is the last word on any address.
+    - Statutory sick pay is carried as a fact about whether a country has it, not as its rate, its waiting days or its qualifying conditions, which differ everywhere and would need real employment law rather than a table.
     - Every meet in a season is a command rather than a scene: there is no warm up area, no call room, no coach and nobody to talk to, only the race and what it did to the times.
     - The world records and the entry standards are as SLATE carries them, with the year each was set. A record set after that is not in here, and no feed would tell the game.
     - Every rival in every lane is invented, because a made-up time against a real athlete would be a claim about somebody real. There is no results feed and none is claimed.

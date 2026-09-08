@@ -884,8 +884,42 @@ answer says what would make it yes.
    Fourteen kinds of it, from a paper round at thirteen to a night in a
    warehouse at eighteen, at a real shop of the right kind where the city has
    one and at SLATE's own where it does not. Two shifts a week. A shift costs
-   the hours it takes and the energy it takes, pays into the account, and
-   teaches something — which is the whole point of a job that pays that badly.
+   the hours it takes and the energy it takes and teaches something — which
+   is the whole point of a job that pays that badly.
+
+   The United States is the country where the floor is least national, so it
+   is carried state by state as published rather than worked out from what a
+   city costs: thirty one states set a figure above the federal one, five set
+   none of their own at all, and two set one below it, in which seven the
+   federal $7.25 is what a covered worker gets. Many cities set higher figures
+   than their state does and the page says so, because it is true.
+
+   You work for a real company. Fifty of them across twenty six countries —
+   Costco, Tesco, Aldi, Loblaws, Woolworths, EDEKA, Carrefour, Lawson and the
+   rest — each with the durable public fact about how it pays against the
+   floor, at a branch, under a manager, both of which are SLATE's own. There
+   is a ladder above you: crew, shift supervisor, assistant manager, store
+   manager, each wanting a number of shifts behind you and a manager who
+   thinks well enough of you, and each paying more.
+
+   The rota comes out once a week with real kinds of shift on it — the open,
+   the middle, the close, a weekend, a night, the last two paying more for the
+   reason they really pay more. A shift you do not turn up for is closed off
+   as missed and it is noticed. Somebody rings on your day off and asks you to
+   come in, and both answers are answers: the cover pays a premium and buys
+   you standing, and saying no costs a little of it.
+
+   Nobody is handed cash at the door. Hours go on a timesheet and the money
+   arrives on the country's own pay cycle — thirty of them carried, weekly in
+   America, monthly in Britain, fortnightly in Australia — as a payslip with
+   the gross, the tax, the social contributions and the net on it, worked out
+   through the same published rates the rest of the game's tax uses. You can
+   ring in sick, and whether that is true is a thing the game knows.
+
+   And a job you stop turning up for is a job you stop having. Three shifts
+   missed in a row, or a manager out of patience altogether, and somebody else
+   is on the rota — with the hours already worked still paid on the pay date,
+   because that is the law and it is also just true.
 
 10. Free-text intent across all of it.
 
