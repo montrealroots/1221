@@ -66,6 +66,8 @@ const DOMAINS: Domain[] = [
       { route: '/workspace/film', label: 'Rental Houses', detail: 'The houses that hire cameras, lamps and sound by the day, and what a week actually bills at.' },
       { route: '/workspace/film', label: 'On Hire', detail: 'What you have out on a ticket, when it is due back, and what it costs when it is late.' },
       { route: '/workspace/film', label: 'Your Own Kit', detail: 'What you bought outright, beside what you hired.' },
+      { route: '/workspace/goingout', label: 'Tonight In Town', detail: 'The matches, concerts, plays and exhibitions on at this city’s venues this week.' },
+      { route: '/workspace/goingout', label: 'Your Seats', detail: 'The seats you have bought for something in town, and what you made of the night.' },
       { route: '/workspace/goingout', label: 'What Is On', detail: 'The cinemas in this city, what is showing this week and what a seat costs at each time.' },
       { route: '/workspace/goingout', label: 'Your Tickets', detail: 'The seats you have bought, when the doors open, and what you thought of what you saw.' },
       { route: '/workspace/goingout', label: 'Fashion Weeks', detail: 'The season’s schedule, who is showing when, and what a house would make of you.' },

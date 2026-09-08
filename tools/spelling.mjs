@@ -92,6 +92,8 @@ const REAL_NAMES = [
   // Cinema chains and classification bodies that spell themselves that way.
   'AMC Theatres', 'Marcus Theatres', 'Landmark Theatres', 'Alamo Drafthouse',
   'Harkins Theatres', 'Shaw Theatres',
+  // Venues that spell themselves that way, and the square one of them is on.
+  'Bell Centre', 'National Centre For The Performing Arts', 'Bolshoi Theatre', 'Theatre Square',
   'Centre National du Cinéma',
   'Rockefeller Center', 'Lincoln Center', 'Kennedy Center',
   // Organisations, parties and titles.

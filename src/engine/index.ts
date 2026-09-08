@@ -47,6 +47,7 @@ import { registerShootSystem } from './systems/shoot';
 import { registerPictureSystem } from './systems/picture';
 import { registerCinemaSystem } from './systems/cinema';
 import { registerFashionSystem } from './systems/fashion';
+import { registerGoingSystem } from './systems/going';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -114,6 +115,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPictureSystem(sim);
   registerCinemaSystem(sim);
   registerFashionSystem(sim);
+  registerGoingSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1032,6 +1034,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // what you turn up in is looked at.
     universe.fashionInvites ??= {};
     steps.push('The fashion weeks, and whether a house gives you a seat.');
+  }
+
+  if (from < 59) {
+    // Schema 59: what is on in town. Real venues, real seasons, SLATE's own
+    // fixtures, acts and productions.
+    universe.goingTickets ??= {};
+    steps.push('Concerts, matches, plays and exhibitions, at real venues.');
   }
 
   if (from < 55) {

@@ -434,6 +434,22 @@ before any delivery claim.
 
     **Held by the gate.** `tools/fashion-check.mjs` measures the weeks against the geography, every house against the catalog, the rows against each other, and a whole year of schedules; `tests/fashion.test.ts` is 19 tests. A browser tour ran the whole of it: the season's calendar, the Paris schedule with Chanel closing it, a letter to Acne Studios, a second row, a Dior tuxedo and a Chanel bag, and a photograph that was not entirely good news.
 
+45. Life contract item 7, third part — concerts, matches, galleries and venues. **"After that start on the rest of what's on the life contract."**
+
+    The buildings existed as scenery. A stadium was a place you could look at and a museum was a place you could visit; nothing was ever on at either. Now a town has a week.
+
+    **Two new kinds of room and fifty real buildings.** `arena` and `concert_hall` join the theaters, museums, stadiums and clubs, and the landmark roster gains Wembley, the Stade de France, the Azteca, the Maracanã, the Olimpico, the Olympiastadion, FNB, the MCG, Stadium Australia, the Tokyo Dome, Wankhede, Eden Gardens, Luzhniki; Madison Square Garden, the O2, Bercy, Crypto.com, the United Center, TD Garden, Chase Center, Scotiabank, the Bell Centre, Rod Laver, the Budokan, the KSPO Dome, the Hong Kong Coliseum, the Ziggo Dome, 3Arena, the Hydro, the AO Arena, Luna Park; the Royal Albert Hall, Carnegie Hall, the Met Opera, the Musikverein, the Staatsoper, the Berliner Philharmonie, the Concertgebouw, the Palais Garnier, La Scala, the Elbphilharmonie, Disney Hall, the Hollywood Bowl, the Ryman, Teatro Colón, Bellas Artes, Suntory Hall, the Esplanade, the Bolshoi, Massey Hall, Symphony Hall and more. Every city of any size also generates its own theater and museum, with a stadium from a quarter of a million people, an arena from half a million and a concert hall from four hundred thousand — appended after every existing spec so not one place id moved.
+
+    **The seasons are the part that is public record.** Nine sports, each in the months its season really runs and the kind of building it is really played in: football through the European winter, baseball April to September, American football September to January, basketball and ice hockey indoors from October, Australian rules March to September, rugby through either hemisphere's winter. Cricket is two entries rather than one, because squashing the English summer and the subcontinental one together put test matches at Wembley in March. A fixture is checked against the month it actually falls in, not the month its week began in, which is what a week straddling the end of May would otherwise have got wrong.
+
+    **What is on is SLATE's own and says so.** There is no listings feed and no honest way to know what is really on anywhere this week, so the card is composed: made-up acts, made-up plays, made-up exhibitions, and fixtures that name no club at all — because a made-up score attached to a real club would be a claim about somebody real. The gate fails the build if a fixture card contains anything club-shaped. The real composers and the operas genuinely in rep everywhere are used as themselves, since those are public record and out of copyright.
+
+    **A city's week is dealt at once.** Generating each venue on its own had three New York museums hanging the same exhibition and one act playing two London rooms in a week; now the whole city is drawn together with a set of what is already taken. A room does one thing a night, and a production or an exhibition runs the week rather than changing its title between Tuesday and Friday.
+
+    **And a bug the tour found that had nothing to do with any of this.** The City workspace asked for the nearest hundred and twenty places and *then* filtered them by kind, so in a city with a lot of restaurants the theaters, arenas and concert halls were cut before the filter ever saw them and simply did not appear. `placesNear` takes the kinds now and filters before it limits.
+
+    **Held by the gate.** `tools/going-check.mjs` measures every venue against the geography, every sport against its own season and country, and a week in twenty cities for double bookings, repeated acts and prices somebody could pay; `tests/going.test.ts` is 21 tests. A browser tour ran the whole of it: a week in London with football at Wembley, an opera and a Chopin recital at the Royal Albert Hall, three museums each hanging their own show, a seat in the middle of the house at The Playhouse for $119.00, a cab across town because there was no car in London, and then "You checked your phone once, near the end."
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -443,7 +459,8 @@ before any delivery claim.
     - A rating feed would be needed for a real insurance premium; an issuer's real invitation rule is published by nobody.
     - The cinema program is SLATE's own: the chains, the buildings and the certificates are real, and what is on the screen is not, because there is no listings feed.
     - Only the seven weeks whose houses the catalog sells have a schedule to ask for a seat at; the other twenty three are on the calendar and say why they have nothing listed.
-    - Concerts, matches, galleries and venues on the real calendar are the rest of section 7 and are not built.
+    - What is on at a venue is SLATE's own for the same reason the cinema program is: there is no listings feed, so no fixture, act, production or exhibition is a real one.
+    - A sport's season is carried to the month rather than to the fixture list, so there is no table, no cup run and no result that means anything beyond the night you were at.
     - The dialogue library stands at 1,296 of the 100,001 target; that is writing, not building.
     - Base44 live persistence is unverified against a deployment, and is reported unavailable rather than passing.
     - Clothes only soil when you commit a look, so a life lived through the Advance button never needs washing. Time alone should soil what you are wearing.

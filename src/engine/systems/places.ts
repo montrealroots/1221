@@ -816,12 +816,20 @@ export function whatIsHere(sim: Simulation): {
 }
 
 /** Places in the city you are in, nearest first, with what each costs to reach. */
-export function placesNear(sim: Simulation, options: { kind?: Place['kind']; mode?: Mode; limit?: number } = {}) {
+export function placesNear(
+  sim: Simulation,
+  options: { kind?: Place['kind']; kinds?: readonly Place['kind'][]; mode?: Mode; limit?: number } = {},
+) {
   const person = sim.player;
   const cityId = person.currentLocationId;
   const mode = options.mode ?? 'drive';
+  // The kinds are filtered before the limit rather than after it. A caller
+  // that asked for theaters and then took the nearest hundred and twenty of
+  // everything got a list with no theaters in it at all.
+  const wanted = options.kinds;
   return placesIn(cityId)
-    .filter((place) => !options.kind || place.kind === options.kind)
+    .filter((place) => (!options.kind || place.kind === options.kind)
+      && (!wanted || wanted.includes(place.kind)))
     .map((place) => ({ place, journey: planJourney(sim, place, mode, person) }))
     .sort((a, b) => a.journey.minutes - b.journey.minutes)
     .slice(0, options.limit ?? 60);

@@ -1526,6 +1526,42 @@ export interface FashionInvite {
   };
 }
 
+/**
+ * A ticket to something on in town — a match, a concert, a play, a show.
+ *
+ * The event it is for is derived from the venue and the week rather than
+ * stored, so a save carries only the tickets you bought. Everything the stub
+ * needs to stand on its own once the week has moved on — what it was, where,
+ * the card, the band you sat in — is copied onto it.
+ */
+export interface GoingTicket {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  placeName: string;
+  cityId: string;
+  eventId: string;
+  kind: string;
+  /** The made-up card: the act, the program, the fixture. */
+  card: string;
+  band: string;
+  at: Instant;
+  seats: number;
+  paid: Money;
+  bookedAt: Instant;
+  status: 'booked' | 'went' | 'missed' | 'refunded';
+  /** Written once, when you have actually been. */
+  went?: {
+    at: Instant;
+    /** What the night was like, 0-100, from the room and your own taste. */
+    verdict: number;
+    note: string;
+    /** How full the room was, which is half of a night out. */
+    house: string;
+  };
+}
+
 export interface Outfit {
   id: Id;
   saveId: Id;
@@ -2945,7 +2981,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 58;
+export const SAVE_SCHEMA_VERSION = 59;
 
 export interface SaveMeta {
   id: Id;
@@ -3079,6 +3115,7 @@ export interface SaveUniverse {
   indieFilms: Record<Id, IndieFilm>;
   cinemaTickets: Record<Id, CinemaTicket>;
   fashionInvites: Record<Id, FashionInvite>;
+  goingTickets: Record<Id, GoingTicket>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

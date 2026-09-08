@@ -32,13 +32,15 @@ export type PlaceKind =
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
-  | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house';
+  | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house'
+  | 'arena' | 'concert_hall';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   jeweller: 'Jeweler', costumier: 'Costume House',
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
   cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
+  arena: 'Arena', concert_hall: 'Concert Hall',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
   rental_house: 'Rental House',
@@ -164,6 +166,80 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'mia-south-beach', name: 'South Beach', kind: 'beach', cityId: 'us-fl-miami', about: 'The barrier-island end of Miami Beach, with the Art Deco district behind it.', actions: ['visit'], minutes: 120 },
   { id: 'nm-santa-fe-plaza', name: 'The Santa Fe Plaza', kind: 'landmark', cityId: 'us-nm-santafe', about: 'The Spanish colonial plaza at the end of the Camino Real, laid out when the city was founded.', opened: 1610, actions: ['visit'], minutes: 75 },
   { id: 'nm-georgia-okeeffe', name: 'Georgia O’Keeffe Museum', kind: 'museum', cityId: 'us-nm-santafe', about: 'A museum on Johnson Street holding the largest collection of O’Keeffe’s work anywhere.', opened: 1997, actions: ['visit'], minutes: 120, admissionCalibration: 2_000 },
+
+  // --- The big rooms. The building, its city and what it is are public record;
+  // --- what is on inside it on any given night is SLATE's own and says so. ---
+  // Stadiums with more than one master, so a night at them belongs to nobody in particular.
+  { id: 'ldn-wembley', name: 'Wembley Stadium', kind: 'stadium', cityId: 'uk-eng-london', about: 'The national stadium at the end of Olympic Way, rebuilt with the arch in place of the twin towers. Cup finals, internationals and the biggest tours.', opened: 2007, actions: ['watch', 'visit'], minutes: 240, quality: 92, price: 3 },
+  { id: 'par-stade-de-france', name: 'Stade de France', kind: 'stadium', cityId: 'fr-idf-paris', about: 'The national stadium at Saint-Denis, built for the 1998 World Cup. Football, rugby and stadium tours.', opened: 1998, actions: ['watch', 'visit'], minutes: 240, quality: 88, price: 3 },
+  { id: 'mex-azteca', name: 'Estadio Azteca', kind: 'stadium', cityId: 'mx-cmx-mexicocity', about: 'The great bowl of Santa Úrsula, which has held two World Cup finals and more people than any other ground in the Americas.', opened: 1966, actions: ['watch', 'visit'], minutes: 240, quality: 86, price: 2 },
+  { id: 'rio-maracana', name: 'The Maracanã', kind: 'stadium', cityId: 'br-21-riodejaneiro', about: 'Built for the 1950 World Cup and still the ground the country measures every other ground against.', opened: 1950, actions: ['watch', 'visit'], minutes: 240, quality: 88, price: 2 },
+  { id: 'rom-olimpico', name: 'Stadio Olimpico', kind: 'stadium', cityId: 'it-laz-rome', about: 'The Olympic stadium in the Foro Italico, owned by the national Olympic committee and shared by everybody.', opened: 1953, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 2 },
+  { id: 'ber-olympiastadion', name: 'Olympiastadion', kind: 'stadium', cityId: 'de-be-berlin', about: 'The 1936 Olympic stadium, re-roofed for the 2006 World Cup, and the home of the cup final every year.', opened: 1936, actions: ['watch', 'visit'], minutes: 240, quality: 86, price: 2 },
+  { id: 'jnb-fnb', name: 'FNB Stadium', kind: 'stadium', cityId: 'za-06-johannesburg', about: 'The calabash beside Soweto, rebuilt for the 2010 World Cup final, and the largest stadium in Africa.', opened: 1989, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 2 },
+  { id: 'mel-mcg', name: 'Melbourne Cricket Ground', kind: 'stadium', cityId: 'au-vic-melbourne', about: 'The MCG in Yarra Park, holding a hundred thousand people for the football in winter and the cricket in summer.', opened: 1853, actions: ['watch', 'visit'], minutes: 260, quality: 90, price: 2 },
+  { id: 'syd-stadium-australia', name: 'Stadium Australia', kind: 'stadium', cityId: 'au-nsw-sydney', about: 'The Olympic stadium at Homebush, built for the 2000 Games and shared by every code since.', opened: 1999, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 2 },
+  { id: 'tyo-tokyo-dome', name: 'Tokyo Dome', kind: 'stadium', cityId: 'jp-13-tokyo', about: 'The covered ballpark at Suidobashi, which the city calls the Big Egg, with baseball most nights and the biggest tours between them.', opened: 1988, actions: ['watch', 'visit'], minutes: 240, quality: 86, price: 3 },
+  { id: 'sgp-national-stadium', name: 'National Stadium', kind: 'stadium', cityId: 'sg-singapore', about: 'The stadium at Kallang with the retractable roof, part of the Sports Hub on the old National Stadium ground.', opened: 2014, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 3 },
+  { id: 'bom-wankhede', name: 'Wankhede Stadium', kind: 'stadium', cityId: 'in-16-mumbai', about: 'The cricket ground at Churchgate where the 2011 World Cup final was won, a short walk from Marine Drive.', opened: 1974, actions: ['watch', 'visit'], minutes: 280, quality: 86, price: 2 },
+  { id: 'kol-eden-gardens', name: 'Eden Gardens', kind: 'stadium', cityId: 'in-28-kolkata', about: 'The oldest and loudest cricket ground in India, beside the Hooghly.', opened: 1864, actions: ['watch', 'visit'], minutes: 280, quality: 86, price: 1 },
+  { id: 'mos-luzhniki', name: 'Luzhniki Stadium', kind: 'stadium', cityId: 'ru-48-moscow', about: 'The great Soviet bowl in the bend of the Moskva, rebuilt for the 2018 World Cup final.', opened: 1956, actions: ['watch', 'visit'], minutes: 240, quality: 82, price: 2 },
+  { id: 'cai-cairo-stadium', name: 'Cairo International Stadium', kind: 'stadium', cityId: 'eg-11-cairo', about: 'The national stadium at Nasr City, the biggest ground in Egypt since the fifties.', opened: 1960, actions: ['watch', 'visit'], minutes: 240, quality: 76, price: 1 },
+
+  // Arenas.
+  { id: 'ny-msg', name: 'Madison Square Garden', kind: 'arena', cityId: 'us-ny-newyork', about: 'The Garden, above Penn Station, in its fourth building and still calling itself the world’s most famous arena with a straight face.', opened: 1968, actions: ['watch', 'visit'], minutes: 200, quality: 92, price: 4 },
+  { id: 'ldn-o2', name: 'The O2', kind: 'arena', cityId: 'uk-eng-london', about: 'The arena inside the old Millennium Dome on the Greenwich peninsula, and the busiest music venue in the world most years.', opened: 2007, actions: ['watch', 'visit'], minutes: 200, quality: 88, price: 3 },
+  { id: 'par-bercy', name: 'Accor Arena', kind: 'arena', cityId: 'fr-idf-paris', about: 'The pyramid at Bercy with grass growing up its sloped walls, which Paris has called Bercy through every change of sponsor.', opened: 1984, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'la-crypto', name: 'Crypto.com Arena', kind: 'arena', cityId: 'us-ca-losangeles', about: 'The downtown arena beside the convention center, with four home teams and most of the award shows.', opened: 1999, actions: ['watch', 'visit'], minutes: 200, quality: 88, price: 4 },
+  { id: 'chi-united-center', name: 'United Center', kind: 'arena', cityId: 'us-il-chicago', about: 'The big shed on the Near West Side with the Jordan statue outside it.', opened: 1994, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'bos-td-garden', name: 'TD Garden', kind: 'arena', cityId: 'us-ma-boston', about: 'The Garden above North Station, with more championship banners in the roof than seats in some buildings.', opened: 1995, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'sf-chase-center', name: 'Chase Center', kind: 'arena', cityId: 'us-ca-sanfrancisco', about: 'The arena in Mission Bay, built privately and paid for the same way.', opened: 2019, actions: ['watch', 'visit'], minutes: 200, quality: 86, price: 4 },
+  { id: 'nsh-bridgestone', name: 'Bridgestone Arena', kind: 'arena', cityId: 'us-tn-nashville', about: 'The arena on Broadway, a hockey rink in a town of guitars.', opened: 1996, actions: ['watch', 'visit'], minutes: 200, quality: 80, price: 2 },
+  { id: 'tor-scotiabank', name: 'Scotiabank Arena', kind: 'arena', cityId: 'ca-on-toronto', about: 'The arena at the foot of Bay Street, with the trains running underneath it.', opened: 1999, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'mtl-bell-centre', name: 'Bell Centre', kind: 'arena', cityId: 'ca-qc-montreal', about: 'The loudest hockey building in the league, downtown on the site of the old Windsor Station yards.', opened: 1996, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'mel-rod-laver', name: 'Rod Laver Arena', kind: 'arena', cityId: 'au-vic-melbourne', about: 'The center court at Melbourne Park, with a roof that closes when the January sun becomes a safety matter.', opened: 1988, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'tyo-budokan', name: 'Nippon Budokan', kind: 'arena', cityId: 'jp-13-tokyo', about: 'The martial arts hall at Kitanomaru Park, which has been a rite of passage for touring bands since the Beatles played it.', opened: 1964, actions: ['watch', 'visit'], minutes: 180, quality: 86, price: 3 },
+  { id: 'sel-kspo-dome', name: 'KSPO Dome', kind: 'arena', cityId: 'kr-11-seoul', about: 'The gymnastics arena in Olympic Park, and the room every touring act plays in Seoul.', opened: 1988, actions: ['watch', 'visit'], minutes: 200, quality: 80, price: 3 },
+  { id: 'hkg-coliseum', name: 'Hong Kong Coliseum', kind: 'arena', cityId: 'hk-hongkong', about: 'The inverted pyramid at Hung Hom, where a run of shows is measured in dozens of nights.', opened: 1983, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 3 },
+  { id: 'dxb-coca-cola-arena', name: 'Coca-Cola Arena', kind: 'arena', cityId: 'ae-du-dubai', about: 'The arena in City Walk, the first full-scale indoor venue in the Gulf.', opened: 2019, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 3 },
+  { id: 'ams-ziggo-dome', name: 'Ziggo Dome', kind: 'arena', cityId: 'nl-07-amsterdam', about: 'The black box beside the Johan Cruijff ArenA, built for music first.', opened: 2012, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'dub-3arena', name: '3Arena', kind: 'arena', cityId: 'ie-lei-dublin', about: 'The arena in the old Point Depot on the North Wall, still called the Point by everybody over forty.', opened: 2008, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 3 },
+  { id: 'gla-hydro', name: 'The OVO Hydro', kind: 'arena', cityId: 'uk-sct-glasgow', about: 'The silver drum on the Clyde beside the Armadillo, and one of the busiest arenas anywhere.', opened: 2013, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 2 },
+  { id: 'man-ao-arena', name: 'AO Arena', kind: 'arena', cityId: 'uk-eng-manchester', about: 'The arena above Victoria station, one of the largest in Europe since it opened.', opened: 1995, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 2 },
+  { id: 'bue-luna-park', name: 'Luna Park', kind: 'arena', cityId: 'ar-07-buenosaires', about: 'The old boxing palace at the bottom of Corrientes, which has held everything the city has wanted to see indoors since the thirties.', opened: 1932, actions: ['watch', 'visit'], minutes: 180, quality: 78, price: 2 },
+
+  // Concert halls and opera houses.
+  { id: 'ldn-royal-albert-hall', name: 'Royal Albert Hall', kind: 'concert_hall', cityId: 'uk-eng-london', about: 'The great oval hall in Kensington, open since 1871, with the Proms every summer and everything else the rest of the year.', opened: 1871, actions: ['watch', 'visit'], minutes: 180, quality: 92, price: 3 },
+  { id: 'ny-carnegie-hall', name: 'Carnegie Hall', kind: 'concert_hall', cityId: 'us-ny-newyork', about: 'The hall on 57th Street that the joke tells you how to get to. Three auditoriums, and the main one still the measure of a room.', opened: 1891, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 4 },
+  { id: 'ny-met-opera', name: 'The Metropolitan Opera House', kind: 'concert_hall', cityId: 'us-ny-newyork', about: 'The opera house at Lincoln Center with the Chagalls in the windows and the chandeliers that rise before the curtain.', opened: 1966, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 4 },
+  { id: 'vie-musikverein', name: 'The Musikverein', kind: 'concert_hall', cityId: 'at-09-vienna', about: 'The Golden Hall on the Ringstrasse, from which the New Year’s concert goes out to the world.', opened: 1870, actions: ['watch', 'visit'], minutes: 170, quality: 96, price: 3 },
+  { id: 'vie-staatsoper', name: 'Wiener Staatsoper', kind: 'concert_hall', cityId: 'at-09-vienna', about: 'The state opera on the Ring, with standing room sold cheap on the night the way it always has been.', opened: 1869, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 3 },
+  { id: 'ber-philharmonie', name: 'Berliner Philharmonie', kind: 'concert_hall', cityId: 'de-be-berlin', about: 'Scharoun’s golden tent at the Kulturforum, the first great hall to put the orchestra in the middle of the room.', opened: 1963, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 3 },
+  { id: 'ams-concertgebouw', name: 'The Concertgebouw', kind: 'concert_hall', cityId: 'nl-07-amsterdam', about: 'The concert building on Museum Square, with an acoustic nobody has ever quite explained.', opened: 1888, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 3 },
+  { id: 'par-garnier', name: 'Palais Garnier', kind: 'concert_hall', cityId: 'fr-idf-paris', about: 'The opera house of the Second Empire, with the grand staircase, the Chagall ceiling and a lake in the basement.', opened: 1875, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 4 },
+  { id: 'par-philharmonie', name: 'Philharmonie de Paris', kind: 'concert_hall', cityId: 'fr-idf-paris', about: 'Jean Nouvel’s hall at La Villette, out on the ring road where the tickets stay affordable.', opened: 2015, actions: ['watch', 'visit'], minutes: 170, quality: 90, price: 2 },
+  { id: 'mil-la-scala', name: 'Teatro alla Scala', kind: 'concert_hall', cityId: 'it-09-milan', about: 'La Scala, since 1778, where the season opens on Saint Ambrose’s day and the gallery makes its opinion known.', opened: 1778, actions: ['watch', 'visit'], minutes: 220, quality: 96, price: 4 },
+  { id: 'ham-elbphilharmonie', name: 'Elbphilharmonie', kind: 'concert_hall', cityId: 'de-04-hamburg', about: 'The glass wave on top of an old cocoa warehouse in the harbor, late and over budget and worth it.', opened: 2017, actions: ['watch', 'visit'], minutes: 170, quality: 92, price: 3 },
+  { id: 'la-disney-hall', name: 'Walt Disney Concert Hall', kind: 'concert_hall', cityId: 'us-ca-losangeles', about: 'Gehry’s steel sails on Grand Avenue, and the room inside them better than the outside promises.', opened: 2003, actions: ['watch', 'visit'], minutes: 170, quality: 92, price: 3 },
+  { id: 'la-hollywood-bowl', name: 'Hollywood Bowl', kind: 'concert_hall', cityId: 'us-ca-losangeles', about: 'The amphitheater in the Cahuenga Pass, with the shell, the hills behind it and picnics in the boxes since 1922.', opened: 1922, actions: ['watch', 'visit'], minutes: 210, quality: 90, price: 2 },
+  { id: 'nsh-ryman', name: 'Ryman Auditorium', kind: 'concert_hall', cityId: 'us-tn-nashville', about: 'The Mother Church of country music, pews and all, half a block off Broadway.', opened: 1892, actions: ['watch', 'visit'], minutes: 160, quality: 90, price: 2 },
+  { id: 'bue-teatro-colon', name: 'Teatro Colón', kind: 'concert_hall', cityId: 'ar-07-buenosaires', about: 'The opera house on 9 de Julio, which singers rank with any room in Europe.', opened: 1908, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 2 },
+  { id: 'mex-bellas-artes', name: 'Palacio de Bellas Artes', kind: 'concert_hall', cityId: 'mx-cmx-mexicocity', about: 'The marble palace at the end of the Alameda, with the Tiffany glass curtain and the Rivera murals upstairs.', opened: 1934, actions: ['watch', 'visit'], minutes: 200, quality: 92, price: 2 },
+  { id: 'mex-auditorio', name: 'Auditorio Nacional', kind: 'concert_hall', cityId: 'mx-cmx-mexicocity', about: 'The national auditorium on Reforma, ten thousand seats and the city’s default big room.', opened: 1952, actions: ['watch', 'visit'], minutes: 190, quality: 84, price: 2 },
+  { id: 'tyo-suntory-hall', name: 'Suntory Hall', kind: 'concert_hall', cityId: 'jp-13-tokyo', about: 'The vineyard hall at Ark Hills that Karajan called a jewel box of sound.', opened: 1986, actions: ['watch', 'visit'], minutes: 170, quality: 92, price: 3 },
+  { id: 'sel-arts-center', name: 'Seoul Arts Center', kind: 'concert_hall', cityId: 'kr-11-seoul', about: 'The arts complex under Umyeon Mountain, with the concert hall, the opera house and the calligraphy museum on one campus.', opened: 1988, actions: ['watch', 'visit'], minutes: 180, quality: 86, price: 2 },
+  { id: 'sgp-esplanade', name: 'Esplanade', kind: 'concert_hall', cityId: 'sg-singapore', about: 'The two spiked domes on Marina Bay that the city calls the durians, with a concert hall and a theater inside.', opened: 2002, actions: ['watch', 'visit'], minutes: 180, quality: 88, price: 3 },
+  { id: 'spo-theatro-municipal', name: 'Theatro Municipal', kind: 'concert_hall', cityId: 'br-27-saopaulo', about: 'The belle époque opera house downtown, where Brazilian modernism announced itself in 1922.', opened: 1911, actions: ['watch', 'visit'], minutes: 200, quality: 88, price: 2 },
+  { id: 'mos-bolshoi', name: 'The Bolshoi Theatre', kind: 'concert_hall', cityId: 'ru-48-moscow', about: 'The Bolshoi, behind the quadriga on Theatre Square, with the ballet company the word usually means.', opened: 1825, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 3 },
+  { id: 'bjs-ncpa', name: 'National Centre For The Performing Arts', kind: 'concert_hall', cityId: 'cn-22-beijing', about: 'The titanium egg beside the Great Hall of the People, entered under the water of its own moat.', opened: 2007, actions: ['watch', 'visit'], minutes: 200, quality: 90, price: 2 },
+  { id: 'tor-massey-hall', name: 'Massey Hall', kind: 'concert_hall', cityId: 'ca-on-toronto', about: 'The old red-brick hall on Shuter Street, restored rather than replaced.', opened: 1894, actions: ['watch', 'visit'], minutes: 170, quality: 86, price: 2 },
+  { id: 'chi-symphony-center', name: 'Symphony Center', kind: 'concert_hall', cityId: 'us-il-chicago', about: 'Orchestra Hall on Michigan Avenue, home of the Chicago Symphony since 1904.', opened: 1904, actions: ['watch', 'visit'], minutes: 170, quality: 90, price: 3 },
+  { id: 'bos-symphony-hall', name: 'Symphony Hall', kind: 'concert_hall', cityId: 'us-ma-boston', about: 'The first hall built on acoustic science, and still among the handful everybody agrees got it right.', opened: 1900, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 3 },
+  { id: 'cai-opera-house', name: 'Cairo Opera House', kind: 'concert_hall', cityId: 'eg-11-cairo', about: 'The opera house on Gezira Island, built after the old one burned, with the Nile on both sides.', opened: 1988, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 1 },
+  { id: 'dxb-dubai-opera', name: 'Dubai Opera', kind: 'concert_hall', cityId: 'ae-du-dubai', about: 'The dhow-shaped hall downtown, in the shadow of the tallest building in the world.', opened: 2016, actions: ['watch', 'visit'], minutes: 200, quality: 86, price: 3 },
+  { id: 'syd-city-recital', name: 'City Recital Hall', kind: 'concert_hall', cityId: 'au-nsw-sydney', about: 'The chamber music room at Angel Place, down a lane off Pitt Street.', opened: 1999, actions: ['watch', 'visit'], minutes: 160, quality: 84, price: 2 },
+  { id: 'jnb-linder', name: 'Linder Auditorium', kind: 'concert_hall', cityId: 'za-06-johannesburg', about: 'The concert hall on the Parktown education campus, home of the Johannesburg Philharmonic.', opened: 1932, actions: ['watch', 'visit'], minutes: 160, quality: 80, price: 1 },
+  { id: 'hel-musiikkitalo', name: 'Musiikkitalo', kind: 'concert_hall', cityId: 'fi-01-helsinki', about: 'The music center between the parliament and the bay, shared by two orchestras and the academy.', opened: 2011, actions: ['watch', 'visit'], minutes: 170, quality: 88, price: 2 },
 ];
 
 // ---------------------------------------------------------------------------
@@ -327,6 +403,11 @@ const COSTUMIER_NAMES = [
   'Mallory Costume Works', 'The Toile Room', 'Sabine & Ash',
 ];
 
+const THEATRE_NAMES = ['The Playhouse', 'The Corner Theater', 'The Lyceum', 'The Rep', 'The Little Theater'];
+const MUSEUM_NAMES = ['The City Museum', 'The Museum Of The Town', 'The Old Customs House Museum', 'The Founders Museum'];
+const ARENA_NAMES = ['The Exhibition Arena', 'The Fieldhouse', 'The Trade Hall Arena', 'The Pavilion'];
+const CONCERT_HALL_NAMES = ['The Philharmonic Hall', 'The Concert House', 'The Recital Hall', 'The Assembly Rooms'];
+const STADIUM_NAMES = ['The Municipal Stadium', 'The Athletic Park', 'The District Ground', 'The Showgrounds'];
 const JEWELLER_NAMES = ['The Bench', 'Ansell & Pike', 'Halliwell Goldsmiths', 'The Setting Room', 'Verrall & Daughter', 'Ironmonger Row Goldsmiths'];
 
 // ---------------------------------------------------------------------------
@@ -360,7 +441,19 @@ const SPECS: readonly Spec[] = [
   // A bench jeweler, added after everything else so no existing place id moved.
   { kind: 'jeweller', count: () => 1 },
   { kind: 'costumier', count: () => 1 },
+  // The rooms a town goes out in, appended after everything above so no
+  // existing id moved. Every city of any size has a theater and a museum; a
+  // stadium from a quarter of a million people, an arena from half a million,
+  // and a concert hall where there are enough people to fill one.
+  { kind: 'theatre', count: () => 1 },
+  { kind: 'museum', count: () => 1 },
+  { kind: 'stadium', count: (_i, p) => (p >= 250_000 ? 1 : 0) },
+  { kind: 'arena', count: (_i, p) => (p >= 500_000 ? 1 : 0) },
+  { kind: 'concert_hall', count: (_i, p) => (p >= 400_000 ? 1 : 0) },
 ];
+
+/** Kinds a smaller city simply does not have, rather than getting one anyway. */
+const CAN_BE_ABSENT: ReadonlySet<PlaceKind> = new Set(['marina', 'stadium', 'arena', 'concert_hall']);
 
 /** City tags that put it on water a boat can be kept in. */
 const WATERFRONT_TAGS = ['beach', 'coastal', 'harbour', 'island', 'riviera'];
@@ -408,6 +501,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
   marina: ['visit'], storage: ['visit'], jeweller: ['browse'], costumier: ['browse'],
   rental_house: ['browse'],
+  arena: ['watch'], concert_hall: ['watch'],
 };
 
 function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
@@ -435,6 +529,11 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
     case 'club': return rng.pick(CLUB_NAMES);
     case 'jeweller': return rng.pick(JEWELLER_NAMES);
     case 'costumier': return rng.pick(COSTUMIER_NAMES);
+    case 'theatre': return rng.pick(THEATRE_NAMES);
+    case 'museum': return rng.pick(MUSEUM_NAMES);
+    case 'arena': return rng.pick(ARENA_NAMES);
+    case 'concert_hall': return rng.pick(CONCERT_HALL_NAMES);
+    case 'stadium': return rng.pick(STADIUM_NAMES);
     default: return 'A Place';
   }
 }
@@ -444,6 +543,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
   viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
   marina: 60, storage: 20, jeweller: 45, costumier: 70, rental_house: 55,
+  arena: 180, concert_hall: 150,
 };
 
 /**
@@ -509,9 +609,13 @@ export function placesIn(cityId: string): Place[] {
   const waterfront = isWaterfront(city);
   const realMarinas = out.filter((p) => p.kind === 'marina').length;
   for (const spec of SPECS) {
-    // A city with a real marina on the record does not get an invented one as well.
-    const wanted = spec.kind === 'marina' && realMarinas > 0 ? 0 : spec.count(industry, city.population, waterfront);
-    const count = spec.kind === 'marina' ? wanted : Math.max(1, wanted);
+    // A city with a real marina on the record does not get an invented one as
+    // well, and a real stadium, arena or hall likewise stands in for its own.
+    const already = out.filter((one) => one.kind === spec.kind).length;
+    const suppressed = (spec.kind === 'marina' && realMarinas > 0)
+      || (CAN_BE_ABSENT.has(spec.kind) && spec.kind !== 'marina' && already > 0);
+    const wanted = suppressed ? 0 : spec.count(industry, city.population, waterfront);
+    const count = CAN_BE_ABSENT.has(spec.kind) ? wanted : Math.max(1, wanted);
     for (let i = 0; i < count; i++) {
       const cuisine = spec.kind === 'restaurant' ? rng.pick(CUISINES) : undefined;
       let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine);
@@ -651,6 +755,31 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
       'They cut for stage and screen, and they will cut for you.',
       'Dress forms in every size, a steamer going, and pins everywhere.',
       'A pattern library going back forty years, and somebody who knows where everything is.',
+    ])}`;
+    case 'theatre': return `A theater in ${where}. ${rng.pick([
+      'A proscenium, four hundred seats, and a bar the size of a cupboard.',
+      'A rep company, a raked stage, and a curtain that has seen things.',
+      'Two spaces: the main house and a studio for the difficult work.',
+    ])}`;
+    case 'museum': return `A museum in ${where}. ${rng.pick([
+      'The town’s own collection, one good room, and a bench in front of the best thing in it.',
+      'Free on the first Sunday, quiet every other day.',
+      'A permanent collection nobody local has seen and every visitor has.',
+    ])}`;
+    case 'arena': return `An arena in ${where}. ${rng.pick([
+      'Basketball lines under the concert rig, and parking that empties badly.',
+      'Ten thousand seats and a sound system that has been argued about.',
+      'Home games, touring acts, and an ice floor that comes and goes.',
+    ])}`;
+    case 'concert_hall': return `A concert hall in ${where}. ${rng.pick([
+      'A shoebox room with a warm decay and seats that punish slouching.',
+      'An organ nobody plays enough, and acoustics somebody got right.',
+      'Subscription nights, a choir on Sundays, and a quiet green room.',
+    ])}`;
+    case 'stadium': return `A stadium in ${where}. ${rng.pick([
+      'A running track around the pitch and a stand that catches the wind.',
+      'Twenty thousand on a good day, four thousand on a wet one.',
+      'Floodlights you can see from the ring road.',
     ])}`;
     default: return `In ${where}.`;
   }

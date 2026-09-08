@@ -164,7 +164,9 @@ item at home."
 - **Fashion weeks** — real cities, real months, real houses showing. Getting in
   is a matter of who you are. What you wear is looked at. Done.
 - **Concerts, matches, galleries, museums, festivals** — real venues, real
-  seasons, tickets that sell out.
+  seasons, tickets that sell out. Done, except that there is no listings feed:
+  the buildings and the seasons are real, and what is on inside them is
+  SLATE's own.
 - **Restaurants** — done. Bars and clubs — done.
 
 ---
@@ -570,8 +572,41 @@ answer says what would make it yes.
    you at all is where you were sat and how many people already know your face,
    and being photographed badly moves the controversy rather than the fame.
 
-   **Still to come in this section:** concerts, matches, galleries and venues
-   on the real calendar.
+   **And the third part: what is on in town.** Two new kinds of room — the
+   arena and the concert hall — beside the theaters, museums, stadiums and
+   clubs, and fifty real buildings put into them: Wembley, the Stade de France,
+   the Azteca, the Maracanã, the MCG, Eden Gardens, the Tokyo Dome; Madison
+   Square Garden, the O2, the Budokan, the Bell Centre, the Hydro; Carnegie
+   Hall, the Musikverein, the Philharmonie, the Concertgebouw, La Scala, the
+   Bolshoi, Teatro Colón, the Ryman, the Hollywood Bowl. Every city of any size
+   also gets its own theater and museum, a stadium once there are a quarter of
+   a million people, an arena at half a million and a concert hall at four
+   hundred thousand, so there is somewhere to be on a Friday in any town the
+   game has.
+
+   The seasons are real. Football runs the European winter, baseball the
+   American summer, the AFL the Australian one, basketball and hockey indoors
+   from October, and cricket is the two hemispheres it actually is — May to
+   September in England, October to March on the subcontinent and in the south
+   — which is what stops a test match turning up at Wembley in March. A fixture
+   is checked against the month it really falls in rather than the month its
+   week began in.
+
+   What is on is SLATE's own, and the note says so plainly: there is no
+   listings feed, so no fixture is a real fixture, no act a real act, no
+   production a real production. A match names no club and a score attaches to
+   nobody. A city's whole week is dealt at once, so no act plays two rooms in
+   it, no room takes two bookings on one night, and a production or an
+   exhibition runs the week rather than changing its title between Tuesday and
+   Friday.
+
+   A seat is a band in the house — the best seats, the middle, the cheap ones —
+   at a price that is the city's, the room's and the band's, and a busy night
+   sells its good seats first. You have to be in that city; the doors open an
+   hour and a quarter before and shut half an hour after it starts; and a seat
+   nobody sat in stays empty with the money gone. What you made of the night is
+   the thing itself against what you like, plus the room around you — a full
+   house or nine people, and somebody behind you narrating the whole match.
 8. The ordinary rooms: salon, garage, chemist, post office.
 9. Childhood through later life, end to end.
 10. Free-text intent across all of it.

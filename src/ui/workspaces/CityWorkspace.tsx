@@ -25,10 +25,14 @@ import { isJeweller } from '@/engine/systems/jewellery';
 import { isCostumier } from '@/engine/systems/costume';
 import { lotSells } from '@/engine/systems/dealership';
 import { DOORS_OPEN_MINUTES, DOORS_SHUT_MINUTES, upcomingTickets } from '@/engine/systems/cinema';
+import { upcomingTickets as upcomingSeats } from '@/engine/systems/going';
+
+/** The rooms a town goes out in, which have their own listings page. */
+const VENUE_KINDS: PlaceKind[] = ['stadium', 'arena', 'concert_hall', 'theatre', 'museum', 'club'];
 
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
-  { id: 'see', label: 'See Something', kinds: ['landmark', 'museum', 'park', 'beach', 'viewpoint', 'cinema', 'theatre', 'stadium'] },
+  { id: 'see', label: 'See Something', kinds: ['landmark', 'museum', 'park', 'beach', 'viewpoint', 'cinema', 'theatre', 'stadium', 'arena', 'concert_hall'] },
   { id: 'shop', label: 'Shops', kinds: ['shop', 'market'] },
   { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'salon', 'dealership', 'marina', 'storage'] },
   { id: 'stay', label: 'Stay Out', kinds: ['hotel', 'club'] },
@@ -42,13 +46,19 @@ export function CityWorkspace() {
   const [ordering, setOrdering] = useState<Place | null>(null);
 
   const kinds = GROUPS.find((g) => g.id === group)?.kinds ?? [];
-  const near = useWorld((s) => placesNear(s, { mode, limit: 120 }).filter((entry) => kinds.includes(entry.place.kind)));
+  const near = useWorld((s) => placesNear(s, { mode, kinds, limit: 120 }));
   const room = useWorld((s) => hotelRoom(s, s.player));
   // A seat here, tonight, that the doors are open for. Read off the world
   // clock rather than a tick, because the doors close half an hour in.
   const seatWaiting = useWorld((s) => upcomingTickets(s)).find(
     (ticket) => ticket.placeId === sim.player.currentPlaceId
       && sim.now >= ticket.at - DOORS_OPEN_MINUTES * 60_000 && sim.now <= ticket.at + DOORS_SHUT_MINUTES * 60_000,
+  );
+  // A seat here tonight that the doors are open for, at a venue rather than a
+  // cinema. Read off the world clock, because the doors shut.
+  const seatTonight = useWorld((s) => upcomingSeats(s)).find(
+    (ticket) => ticket.placeId === sim.player.currentPlaceId
+      && sim.now >= ticket.at - 75 * 60_000 && sim.now <= ticket.at + 30 * 60_000,
   );
   const scene = useWorld(activeScene);
   const city = CITIES.get(sim.player.currentLocationId);
@@ -140,7 +150,17 @@ export function CityWorkspace() {
               Take Your Seat For {seatWaiting.title}
             </button>
           )}
-          {here.place?.actions.includes('watch') && here.place.kind !== 'cinema' && (
+          {seatTonight && (
+            <button className="btn btn-sm btn-primary" onClick={() => run('going.attend', { ticketId: seatTonight.id })}>
+              Go In For {seatTonight.card}
+            </button>
+          )}
+          {VENUE_KINDS.includes(here.place?.kind ?? 'shop') && (
+            <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/goingout', 'Going Out')}>
+              See What Is On Here
+            </button>
+          )}
+          {here.place?.actions.includes('watch') && here.place.kind !== 'cinema' && !VENUE_KINDS.includes(here.place.kind) && (
             <button className="btn btn-sm" onClick={() => run('life.do_activity', { activityId: 'watch' })}>Watch Something</button>
           )}
           {here.place?.kind === 'hotel' && !room && (

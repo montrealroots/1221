@@ -30,9 +30,17 @@ import {
 import {
   FASHION_NOTE, SEASON_LABEL, SEAT_LABEL, WEEK_TIER_LABEL, housesAt,
 } from '@/engine/content/fashionweeks';
-import type { CinemaTicket, FashionInvite } from '@/engine/domain/model';
+import {
+  describeTicket as describeSeat, priceOf as seatPrice, seatsLeft as seatsFree,
+  tasteFor as goingTaste, ticketsOf as seatsOf, venuesIn as townVenues, whatIsOn,
+} from '@/engine/systems/going';
+import {
+  BAND_LABEL, GOING_LABEL, GOING_NOTE, type Band, type GoingKind, RUNS_MINUTES,
+} from '@/engine/content/going';
+import { PLACE_KIND_LABEL } from '@/engine/content/places';
+import type { CinemaTicket, FashionInvite, GoingTicket } from '@/engine/domain/model';
 
-type Tab = 'whats_on' | 'tickets' | 'fashion' | 'invites';
+type Tab = 'whats_on' | 'tickets' | 'tonight' | 'seats' | 'fashion' | 'invites';
 type Snack = keyof typeof SNACK_PRICES;
 
 export function GoingOutWorkspace() {
@@ -44,16 +52,26 @@ export function GoingOutWorkspace() {
   const waiting = tickets.filter((one) => one.status === 'booked');
   const invites = useWorld((s) => invitesOf(s));
   const openInvites = invites.filter((one) => one.status === 'asked' || one.status === 'accepted');
+  const seats = useWorld((s) => seatsOf(s));
+  const heldSeats = seats.filter((one) => one.status === 'booked');
   const system = useWorld((s) => ratingSystemFor(CITIES.get(s.player.currentLocationId)?.countryId ?? ''));
   const season = useWorld((s) => seasonFor(new Date(s.now).getUTCMonth() + 1));
   const fashion = tab === 'fashion' || tab === 'invites';
+  const town = tab === 'tonight' || tab === 'seats';
 
   return (
     <>
       <div className="page-head">
         <div className="eyebrow">Going Out</div>
         <h1>Going Out</h1>
-        {fashion
+        {town
+          ? (
+            <p className="muted">
+              What is on at the venues in this city this week, and a seat in whichever part of the
+              house you want to sit in.
+            </p>
+          )
+          : fashion
           ? (
             <p className="muted">
               A show is not ticketed and a seat cannot be bought. You write to the house, they decide,
@@ -66,15 +84,17 @@ export function GoingOutWorkspace() {
               evening. {season.about}
             </p>
           )}
-        <p className="xs dim">{fashion ? FASHION_NOTE : CINEMA_NOTE}</p>
+        <p className="xs dim">{town ? GOING_NOTE : fashion ? FASHION_NOTE : CINEMA_NOTE}</p>
       </div>
 
       <Tabs
         active={tab}
         onChange={setTab}
         tabs={[
-          { id: 'whats_on', label: 'What Is On', badge: cinemas.length },
-          { id: 'tickets', label: 'Your Tickets', badge: waiting.length },
+          { id: 'tonight', label: 'Tonight In Town' },
+          { id: 'seats', label: 'Your Seats', badge: heldSeats.length },
+          { id: 'whats_on', label: 'At The Cinema', badge: cinemas.length },
+          { id: 'tickets', label: 'Cinema Tickets', badge: waiting.length },
           { id: 'fashion', label: 'Fashion Weeks' },
           { id: 'invites', label: 'Your Invitations', badge: openInvites.length },
         ]}
@@ -88,9 +108,169 @@ export function GoingOutWorkspace() {
 
       {tab === 'tickets' && <YourTickets tickets={tickets} />}
 
+      {tab === 'tonight' && <TonightInTown />}
+
+      {tab === 'seats' && <YourSeats seats={seats} />}
+
       {tab === 'fashion' && <FashionWeeks />}
 
       {tab === 'invites' && <YourInvitations invites={invites} />}
+    </>
+  );
+}
+
+/**
+ * What is on in town this week.
+ *
+ * Every venue in the city, and every fixture, act, production and exhibition
+ * SLATE has put on at them. The card is SLATE's own every time and the note
+ * at the top of the page says so.
+ */
+function TonightInTown() {
+  const { sim, run } = useGame();
+  const [band, setBand] = useState<Band>('middle');
+  const [seats, setSeats] = useState(1);
+
+  // The listing and every seat on it move with the clock, so both are read
+  // straight off the simulation rather than memoised on a tick.
+  const cityName = CITIES.get(sim.player.currentLocationId)?.name ?? 'town';
+  const venues = townVenues(sim);
+  const on = whatIsOn(sim).filter((one) => one.event.at > sim.now - 60 * 60_000);
+
+  return (
+    <>
+      <Panel title="The Rooms" subtitle={`In ${cityName}. ${plural(venues.length, 'venue')}, ${plural(on.length, 'thing')} on this week.`}>
+        <div className="row gap-2 wrap">
+          {venues.map((venue) => (
+            <span key={venue.id} className="chip">
+              {venue.name}
+              {venue.real ? ' · Real' : ''}
+            </span>
+          ))}
+        </div>
+        <div className="row gap-2 wrap" style={{ marginTop: 12 }}>
+          {(['best', 'middle', 'cheap'] as const).map((one) => (
+            <button key={one} type="button" className={`btn btn-sm${band === one ? ' btn-primary' : ''}`} onClick={() => setBand(one)}>
+              {BAND_LABEL[one]}
+            </button>
+          ))}
+        </div>
+        <div className="row gap-2 wrap" style={{ marginTop: 8 }}>
+          {[1, 2, 3, 4].map((n) => (
+            <button key={n} type="button" className={`btn btn-sm${seats === n ? ' btn-primary' : ''}`} onClick={() => setSeats(n)}>
+              {plural(n, 'Seat')}
+            </button>
+          ))}
+        </div>
+      </Panel>
+
+      {on.length === 0
+        ? <Empty title="Nothing On" body="The week is between one thing and the next. Try another city, or another week." />
+        : (
+          <Panel title="On This Week" subtitle="Nearest first. What is on the card is SLATE’s own." flush>
+            <div className="list">
+              {on.slice(0, 40).map(({ place, event }) => {
+                const zone = CITIES.get(place.cityId)?.timeZone ?? sim.zone;
+                const left = seatsFree(sim, place, event, band);
+                const price = seatPrice(place, event.kind, band) * seats;
+                const taste = goingTaste(sim, event.kind);
+                const gone = left < seats;
+                return (
+                  <div key={event.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">{event.card}</div>
+                      <div className="xs dim">
+                        {GOING_LABEL[event.kind]} · {place.name} · {PLACE_KIND_LABEL[place.kind]}
+                        {place.real ? ' · Real' : ''}
+                      </div>
+                      <div className="xs muted" style={{ marginTop: 2 }}>
+                        {plural(RUNS_MINUTES[event.kind], 'minute')} · {taste >= 65 ? 'Your sort of thing' : taste >= 45 ? 'Might be your sort of thing' : 'Not really your sort of thing'}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right', minWidth: 150 }}>
+                      <div className="mono small">{formatDate(event.at, zone)}</div>
+                      <div className="xs dim">{formatTime(event.at, zone)}</div>
+                      <div className="xs dim">{gone ? 'Sold out' : `${plural(left, 'seat')} left`}</div>
+                    </div>
+                    <button
+                      type="button"
+                      className={`btn btn-sm${gone ? '' : ' btn-primary'}`}
+                      disabled={gone}
+                      onClick={() => run('going.book', { placeId: place.id, eventId: event.id, band, seats })}
+                    >
+                      {gone ? 'Sold Out' : formatMoney(price)}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </Panel>
+        )}
+    </>
+  );
+}
+
+/** The stubs for what you are going to, and what you went to. */
+function YourSeats({ seats }: { seats: GoingTicket[] }) {
+  const { sim, run } = useGame();
+
+  if (seats.length === 0) {
+    return <Empty title="No Seats" body="Buy a seat for something on in town and the stub lives here until you have used it." />;
+  }
+
+  return (
+    <>
+      {seats.map((ticket) => {
+        const zone = CITIES.get(ticket.cityId)?.timeZone ?? sim.zone;
+        const here = sim.player.currentLocationId === ticket.cityId;
+        const open = sim.now >= ticket.at - 75 * 60_000 && sim.now <= ticket.at + 30 * 60_000;
+        return (
+          <Panel key={ticket.id} title={ticket.card} subtitle={describeSeat(sim, ticket)}>
+            <div className="grid grid-4">
+              <Stat label="What" value={GOING_LABEL[ticket.kind as GoingKind] ?? ticket.kind} note={ticket.placeName} />
+              <Stat label="When" value={formatTime(ticket.at, zone)} note={formatDate(ticket.at, zone)} />
+              <Stat label="What You Paid" value={formatMoney(ticket.paid)} note={plural(ticket.seats, 'seat')} />
+              <Stat
+                label={ticket.went ? 'What You Made Of It' : 'Where You Are Sat'}
+                value={ticket.went ? ticket.went.verdict : (BAND_LABEL[ticket.band as Band] ?? ticket.band)}
+                note={ticket.went ? 'Out of a hundred' : CITIES.get(ticket.cityId)?.name ?? ticket.cityId}
+              />
+            </div>
+
+            {ticket.went && (
+              <>
+                <p className="small" style={{ marginTop: 10 }}>{ticket.went.note}</p>
+                <p className="xs dim" style={{ margin: '4px 0 0' }}>{ticket.went.house}</p>
+              </>
+            )}
+
+            {ticket.status === 'booked' && (
+              <>
+                <div className="row gap-2 wrap" style={{ marginTop: 12 }}>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-primary"
+                    disabled={!open || !here}
+                    onClick={() => run('going.attend', { ticketId: ticket.id })}
+                  >
+                    Go In
+                  </button>
+                  <button type="button" className="btn btn-sm" onClick={() => run('going.cancel', { ticketId: ticket.id })}>
+                    Give It Back
+                  </button>
+                </div>
+                <p className="xs dim" style={{ marginTop: 8 }}>
+                  {!here
+                    ? `It is in ${CITIES.get(ticket.cityId)?.name}. You have to be there.`
+                    : open
+                      ? 'They are letting people in.'
+                      : 'They open the doors an hour and a quarter before, and shut them half an hour after it starts.'}
+                </p>
+              </>
+            )}
+          </Panel>
+        );
+      })}
     </>
   );
 }
