@@ -1442,6 +1442,47 @@ export interface IndieFilm {
   status: 'shooting' | 'cutting' | 'finished' | 'abandoned';
 }
 
+/**
+ * A ticket for a seat at a cinema.
+ *
+ * The showing it is for is derived from the week and the branch rather than
+ * stored, so a save carries the tickets you actually bought and nothing else.
+ * Everything the ticket needs to stand on its own after the week has passed —
+ * the title, the certificate, the runtime — is copied onto it, because the
+ * program moves on and a stub in your pocket does not.
+ */
+export interface CinemaTicket {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  placeName: string;
+  cityId: string;
+  /** The chain that runs it, when it is part of one. */
+  chainId?: string;
+  showingId: string;
+  title: string;
+  genre: string;
+  certificate: string;
+  runtimeMinutes: number;
+  screen: string;
+  at: Instant;
+  seats: number;
+  paid: Money;
+  bookedAt: Instant;
+  status: 'booked' | 'seen' | 'missed' | 'refunded';
+  /** Written once, when you have actually watched it. */
+  seen?: {
+    at: Instant;
+    /** What the room was like, which is half of going to the cinema. */
+    room: string;
+    /** What you thought, 0-100, out of the picture and your own taste. */
+    verdict: number;
+    note: string;
+    snacks: Money;
+  };
+}
+
 export interface Outfit {
   id: Id;
   saveId: Id;
@@ -2861,7 +2902,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 56;
+export const SAVE_SCHEMA_VERSION = 57;
 
 export interface SaveMeta {
   id: Id;
@@ -2993,6 +3034,7 @@ export interface SaveUniverse {
   shootDays: Record<Id, ShootDay>;
   /** Pictures of your own, from the first day to the last festival. */
   indieFilms: Record<Id, IndieFilm>;
+  cinemaTickets: Record<Id, CinemaTicket>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

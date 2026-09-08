@@ -24,6 +24,7 @@ import { activeScene } from '@/engine/systems/scenes';
 import { isJeweller } from '@/engine/systems/jewellery';
 import { isCostumier } from '@/engine/systems/costume';
 import { lotSells } from '@/engine/systems/dealership';
+import { DOORS_OPEN_MINUTES, DOORS_SHUT_MINUTES, upcomingTickets } from '@/engine/systems/cinema';
 
 const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
@@ -34,7 +35,7 @@ const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
 ];
 
 export function CityWorkspace() {
-  const { sim, run } = useGame();
+  const { sim, run, navigate } = useGame();
   const here = useWorld((s) => whatIsHere(s));
   const [group, setGroup] = useState('eat');
   const [mode, setMode] = useState<Mode>('drive');
@@ -43,6 +44,12 @@ export function CityWorkspace() {
   const kinds = GROUPS.find((g) => g.id === group)?.kinds ?? [];
   const near = useWorld((s) => placesNear(s, { mode, limit: 120 }).filter((entry) => kinds.includes(entry.place.kind)));
   const room = useWorld((s) => hotelRoom(s, s.player));
+  // A seat here, tonight, that the doors are open for. Read off the world
+  // clock rather than a tick, because the doors close half an hour in.
+  const seatWaiting = useWorld((s) => upcomingTickets(s)).find(
+    (ticket) => ticket.placeId === sim.player.currentPlaceId
+      && sim.now >= ticket.at - DOORS_OPEN_MINUTES * 60_000 && sim.now <= ticket.at + DOORS_SHUT_MINUTES * 60_000,
+  );
   const scene = useWorld(activeScene);
   const city = CITIES.get(sim.player.currentLocationId);
   const homeJourney = useMemo(() => {
@@ -123,7 +130,17 @@ export function CityWorkspace() {
               Go To The Table
             </button>
           )}
-          {here.place?.actions.includes('watch') && (
+          {here.place?.kind === 'cinema' && (
+            <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/goingout', 'Going Out')}>
+              See What Is On
+            </button>
+          )}
+          {seatWaiting && (
+            <button className="btn btn-sm btn-primary" onClick={() => run('cine.attend', { ticketId: seatWaiting.id })}>
+              Take Your Seat For {seatWaiting.title}
+            </button>
+          )}
+          {here.place?.actions.includes('watch') && here.place.kind !== 'cinema' && (
             <button className="btn btn-sm" onClick={() => run('life.do_activity', { activityId: 'watch' })}>Watch Something</button>
           )}
           {here.place?.kind === 'hotel' && !room && (

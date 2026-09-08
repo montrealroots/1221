@@ -42,6 +42,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/insurance', label: 'Insurance', keywords: ['policy', 'claim', 'cover', 'premium'], detail: 'Policies and claims' },
   { route: '/workspace/education', label: 'Education', keywords: ['class', 'course', 'coach', 'training', 'acting class', 'learn'], detail: 'Classes and coaching' },
   { route: '/workspace/film', label: 'Film', keywords: ['film', 'kit', 'camera', 'rental', 'hire', 'lens', 'lighting', 'grip', 'sound', 'shoot', 'rig'], detail: 'Hiring the kit for a picture of your own' },
+  { route: '/workspace/goingout', label: 'Going Out', keywords: ['cinema', 'film', 'movie', 'ticket', 'seat', 'showing', 'screening', 'popcorn', 'matinee'], detail: 'What is on at the cinema, and a seat at a named time' },
   { route: '/workspace/phone', label: 'Phone', keywords: ['phone', 'iphone', 'youtube', 'app', 'video', 'feed', 'watch', 'subscribe', 'upload', 'channel', 'shorts'], detail: 'Your handset, and the apps on it' },
   { route: '/workspace/social', label: 'Social', keywords: ['post', 'followers', 'audience', 'brand deal', 'sponsorship', 'creator'], detail: 'Platforms and audience' },
   { route: '/workspace/history', label: 'History', keywords: ['timeline', 'past', 'memories', 'milestones', 'what happened'], detail: 'Everything that has happened' },

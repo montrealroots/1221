@@ -65,6 +65,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/health', label: 'Health', detail: 'Care, providers and recovery' },
       { route: '/workspace/education', label: 'Education', detail: 'Getting better at things' },
       { route: '/workspace/city', label: 'The City', detail: 'Where you are and what is here' },
+      { route: '/workspace/goingout', label: 'Going Out', detail: 'The cinema, and a seat at a named time' },
       { route: '/workspace/travel', label: 'Travel', detail: 'Anywhere else in the world' },
       { route: '/workspace/character', label: 'Character', detail: 'Attributes, skills and traits' },
       { route: '/workspace/settings', label: 'Settings', detail: 'Preferences and your save' },

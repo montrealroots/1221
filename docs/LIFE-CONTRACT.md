@@ -158,7 +158,9 @@ item at home."
 ## 8. Going out for a real reason
 
 - **Cinemas** — real chains, showing what is actually on in the world's calendar,
-  with a ticket, a seat, a time and somebody kicking your chair.
+  with a ticket, a seat, a time and somebody kicking your chair. Done, except
+  that there is no listings feed: the chains, the buildings and the country's
+  own certificate are real, and the program is SLATE's own.
 - **Fashion weeks** — real cities, real months, real houses showing. Getting in
   is a matter of who you are. What you wear is looked at.
 - **Concerts, matches, galleries, museums, festivals** — real venues, real
@@ -493,7 +495,38 @@ answer says what would make it yes.
 
    **Still to come:** the kit does not live in the house yet, so a camera you
    own is an asset rather than a thing on a shelf in a room.
-7. Cinemas, fashion weeks, venues and events on the real calendar.
+7. **Item 7, first part: the cinema.** Sixty one real chains across sixty two
+   countries, each listed only where it really trades, so a Cineworld does not
+   turn up in a country Cineworld is not in and a landmark cinema is nobody's
+   branch. Who is allowed in is the country's own board and its own
+   certificates — the MPA, the BBFC, the IFCO, the CNC, the FSK, Eirin, the
+   KMRB, the CBFC, the NFVCB, the ACB, forty systems and a hundred and ninety
+   six certificates across forty five countries — and China, which classifies
+   no film by age at all, is carried as the fact it is. Where SLATE does not
+   have a country's system it uses its own advisory and says on the page that
+   it is its own.
+
+   What is on the screen is SLATE's own, and the note says so in as many words:
+   there is no listings feed here and there is no honest way to know what is
+   playing anywhere this weekend. So the program is derived from the city and
+   the week — cached, never saved — on the release rhythm the business really
+   runs to: openings on a Friday, tentpoles in the summer, horror at the end of
+   October, the serious ones in December. A picture runs for a few weeks and
+   leaves when nobody is going any more, its certificate follows what kind of
+   picture it is, and its runtime is a runtime.
+
+   A seat is a named time in a named room at a price that is the city's, the
+   format's and the hour's, and a matinee is cheaper everywhere. A busy Friday
+   evening in the big room sells out and says so. A certificate you are too
+   young for is refused by name. You cannot watch it from the car park, they
+   open the doors forty five minutes before and shut them half an hour after it
+   starts, and a seat nobody sat in is a seat nobody sat in with the money gone
+   with it. What you thought of it is what it was against what you like, and
+   the room is who else came — packed out or nine people, and sometimes
+   somebody behind you spends the second half kicking your chair.
+
+   **Still to come in this section:** fashion weeks, and concerts, matches,
+   galleries and venues on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.
 9. Childhood through later life, end to end.
 10. Free-text intent across all of it.
@@ -506,7 +539,7 @@ answer says what would make it yes.
 | --- | --- | --- |
 | Live retail stock and prices | A licensed retail data feed | Real names, SLATE's calibrated prices, labelled |
 | This season's real listings and show schedules | A licensed events feed | Real venues and real seasons; the specific card is SLATE's |
-| 100,001 dialogue entries | A writing programme; 1,107 written | The tool prints the true number every run |
+| 100,001 dialogue entries | A writing program; 1,107 written | The tool prints the true number every run |
 | Base44 live persistence | A Base44 project and credentials | Steps 2 and 3 are built; see below |
 | Retail depth outside the rich world | More authoring, not a feed | 58 markets are thin and `npm run coverage:retail` names every one |
 

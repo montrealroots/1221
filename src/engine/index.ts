@@ -45,6 +45,7 @@ import { ensureKeepings, registerStorage } from './systems/storage';
 import { registerRentalSystem } from './systems/rental';
 import { registerShootSystem } from './systems/shoot';
 import { registerPictureSystem } from './systems/picture';
+import { registerCinemaSystem } from './systems/cinema';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -110,6 +111,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerRentalSystem(sim);
   registerShootSystem(sim);
   registerPictureSystem(sim);
+  registerCinemaSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1014,6 +1016,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // and the festivals answer it.
     universe.indieFilms ??= {};
     steps.push('Pictures of your own, and the festivals you send them to.');
+  }
+
+  if (from < 57) {
+    // Schema 57: the cinema. Real chains, the country's real certificate, a
+    // seat at a time, and a room with other people in it.
+    universe.cinemaTickets ??= {};
+    steps.push('Cinemas, and a ticket for a seat at one.');
   }
 
   if (from < 55) {
