@@ -1384,6 +1384,64 @@ export interface ShootDay {
   shotAt?: Instant;
 }
 
+/** A screening you put on yourself, and who actually came. */
+export interface Screening {
+  id: Id;
+  at: Instant;
+  placeId?: string;
+  placeName: string;
+  /** What the room cost you. */
+  cost: Money;
+  invited: number;
+  came: number;
+  note: string;
+}
+
+/** A festival you sent it to, and what came back. */
+export interface Submission {
+  id: Id;
+  festivalId: string;
+  festivalName: string;
+  cityId: string;
+  sentAt: Instant;
+  fee: Money;
+  answerAt: Instant;
+  status: 'sent' | 'accepted' | 'rejected' | 'withdrawn';
+  note?: string;
+}
+
+/**
+ * A picture of your own.
+ *
+ * Days of shooting go into it, hours of cutting shape it, and what comes out
+ * is a runtime and a quality that neither of those can exceed: you cannot cut
+ * a good film out of material you never got.
+ */
+export interface IndieFilm {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  title: string;
+  logline: string;
+  format: 'short' | 'feature' | 'documentary' | 'animation';
+  startedAt: Instant;
+  /** The days that went into it. */
+  dayIds: Id[];
+  /** Hours at the bench. */
+  cutHours: number;
+  /** Set when it is finished, and never changed after. */
+  cut?: {
+    at: Instant;
+    runtimeMinutes: number;
+    /** 0-100, and capped by what was actually shot. */
+    quality: number;
+    note: string;
+  };
+  screenings: Screening[];
+  submissions: Submission[];
+  status: 'shooting' | 'cutting' | 'finished' | 'abandoned';
+}
+
 export interface Outfit {
   id: Id;
   saveId: Id;
@@ -2803,7 +2861,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 55;
+export const SAVE_SCHEMA_VERSION = 56;
 
 export interface SaveMeta {
   id: Id;
@@ -2933,6 +2991,8 @@ export interface SaveUniverse {
   kitHires: Record<Id, KitHire>;
   /** Days you shoot something of your own. */
   shootDays: Record<Id, ShootDay>;
+  /** Pictures of your own, from the first day to the last festival. */
+  indieFilms: Record<Id, IndieFilm>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

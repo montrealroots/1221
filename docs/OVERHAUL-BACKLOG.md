@@ -384,18 +384,34 @@ before any delivery claim.
 
     **Held by the gate.** `tests/shoot.test.ts` is 13 tests over the diary, the flat, the hours, the fee and its return, the stranger you cannot ask, the favor that is remembered, capability with and without crew, and the four refusals. `tests/rental.test.ts` is 20.
 
+42. Life contract item 6, third part — cutting it, screening it, putting it somewhere. **"After that start on the rest of what's on the life contract."**
+
+    The days were in the can and there was nothing to do with them. Now there is a picture. It starts as a title, a line and a shape: a short, a feature, a documentary or an animation, each of which wants a different number of setups and runs to a different length. Days go into it one at a time, and a day goes into one picture only — three days shot once cannot be cut into two finished films, and the panel does not even offer a day that is already somewhere else.
+
+    **The material sets a ceiling.** Before you touch it, `ceilingOf` works out what the picture can be: coverage against what the form wants, plus something for every day that had people on it. The bench cannot beat that number and the panel says so out loud — "The Material Allows 80" sits next to what you have. Hours at the bench are real hours out of the day and out of you, and once the cut has had what it wants the command says plainly that more will not make it better rather than letting you sit there improving nothing.
+
+    **A quality is written once.** `film.finish` puts down a runtime out of what was shot and a quality out of the ceiling, the hours and a little craft, with one of four lines that says which it was, down to "It does not work, and you knew that at the bench." It refuses a picture out of days that were never got — a feature wants forty five setups and will say so — and it refuses one nobody sat down with. Nothing rewrites it afterwards.
+
+    **Then you put it in front of people.** A room in the city you are in, priced by how good it is and where it is, or your own place for nothing. Everybody you know is asked and who comes is how well they actually know you, plus whoever wandered in off a good night; every one of them ends up with a memory of it. Or a festival: `content/festivals.ts` carries twenty eight real ones that take open submissions, in cities this world has, each taking only the formats it really takes — Hot Docs will not look at a short, Cannes will not look at animation. Park City and the Lido are not on the list because those towns are not in the geography, and moving a festival to a city it is not in would be a claim about the world that is not true. The month, the fee, the deadline and how hard it is to get in are SLATE's own calibration and the panel says so.
+
+    **The wait is the point.** An answer takes six weeks to four months and is what you made against how much of what they are sent they have room for. At Cannes that is almost nothing and a good picture is still a form letter: "Not this year. Nobody says why, and nobody ever does." A yes moves fame and standing by what the festival is worth. Nothing invents a result and narrates backwards.
+
+    **Three bugs, found by reading the panel rather than by a test.** The festival picker showed the list's base fee while the command charged that fee where the festival lives, so the price on screen was not the price out of the account; there is now one `entryFee` both sides read. A screening would have taken any place id in the city, so you could have shown a short in a filling station; it takes a room now. And the day list offered material that was already in another picture, which the command would have accepted.
+
+    **Held by the gate.** `tests/picture.test.ts` is 19 tests over the list of festivals and the cities they are in, what each format may be sent to, the empty cut, the bench that stops helping, the tired refusal, the thin picture, the unsat cut, a quality written once and never twice, one day into one picture, the room and the money that left the account, the fee that matches what was shown, the answer that is one of the two, and the drawer. A browser tour ran the whole of it: four days shot, eight setups in the can, twelve hours at the bench, finished at sixty four and twenty eight minutes, nine people at The Palace Picture House for $912.00, and ten weeks later Cannes said no.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
     - The offshore reporting is a notice and a memory, not a line on the tax return.
     - Travel cover, a hire car at the far end and packing outfits are still not inside the trip.
     - Visa rules are not carried, so the six-month passport rule warns for every border and refuses for none.
-    - A shoot day produces setups in the can rather than footage: there is nothing yet to cut, screen or submit, which is the rest of section 6.
     - A rating feed would be needed for a real insurance premium; an issuer's real invitation rule is published by nobody.
     - The dialogue library stands at 1,296 of the 100,001 target; that is writing, not building.
     - Base44 live persistence is unverified against a deployment, and is reported unavailable rather than passing.
     - Clothes only soil when you commit a look, so a life lived through the Advance button never needs washing. Time alone should soil what you are wearing.
-    - Film kit is not a thing that lives in the house: it does not wear, does not break, has no room, and is not in Your Things. It waits on section 6, the independent film.
+    - Film kit is not a thing that lives in the house: it does not wear, does not break, has no room, and is not in Your Things.
+    - A finished picture of your own does not reach the industry half: it has no distributor, no box office and no trade coverage, and a festival that says yes is fame and standing rather than a career.
     - The wording sweep ran across the things you do with what you own, which is where it was asked for. The same pass over every other option in the game — the shop floor, the dealership, the clinic, the trip — has not been made.
     - The brand marks on the four apps are SLATE's own drawings rather than the real logotypes, which stay out until they are licensed.
 

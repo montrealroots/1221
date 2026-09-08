@@ -24,12 +24,17 @@ import {
   CREW_ROLES, CREW_ROLE_LABEL, HOME_SETUPS, MAX_HOURS, MAX_SETUPS, MIN_HOURS, STANDARD_HOURS,
   askable, capabilityOf, describeDay, locationsIn, permissionFee, shootDaysOf,
 } from '@/engine/systems/shoot';
-import type { CrewRole, ShootDay } from '@/engine/domain/model';
+import type { CrewRole, IndieFilm, ShootDay } from '@/engine/domain/model';
+import {
+  RUNTIME_CAP, SETUPS_NEEDED, ceilingOf, cutHoursWanted, describeFilm, entryFee, filmsOf, roomCost,
+  roomsIn, setupsIn,
+} from '@/engine/systems/picture';
+import { FESTIVAL_NOTE, FORMAT_LABEL, festivalsFor, type FilmFormat } from '@/engine/content/festivals';
 import { RENTAL_LINE_LABEL, RENTAL_NOTE, WEEK_BILLS_DAYS } from '@/engine/content/rental';
 import type { Place } from '@/engine/content/places';
 import { CITIES } from '@/engine/content/geography';
 
-type Tab = 'houses' | 'hires' | 'days' | 'owned';
+type Tab = 'houses' | 'hires' | 'days' | 'pictures' | 'owned';
 
 export function FilmWorkspace() {
   const { sim, run } = useGame();
@@ -53,6 +58,7 @@ export function FilmWorkspace() {
   const open = houses.find((house) => house.id === openId);
   const out = hires.filter((hire) => hire.status === 'booked' || hire.status === 'out');
   const shootDays = useWorld((s) => shootDaysOf(s));
+  const pictures = useWorld((s) => filmsOf(s));
 
   return (
     <>
@@ -73,6 +79,7 @@ export function FilmWorkspace() {
           { id: 'houses', label: 'Rental Houses', badge: houses.length },
           { id: 'hires', label: 'On Hire', badge: out.length },
           { id: 'days', label: 'Shoot Days', badge: shootDays.filter((day) => day.status === 'planned').length },
+          { id: 'pictures', label: 'Pictures', badge: pictures.filter((film) => film.status !== 'abandoned').length },
           { id: 'owned', label: 'Your Own Kit', badge: owned.length },
         ]}
       />
@@ -189,6 +196,8 @@ export function FilmWorkspace() {
       )}
 
       {tab === 'days' && <ShootDays days={shootDays} />}
+
+      {tab === 'pictures' && <Pictures films={pictures} days={shootDays} />}
 
       {tab === 'owned' && (
         <Panel title="Kit You Own" subtitle="Bought outright, from the shops that sell it.">
@@ -552,6 +561,223 @@ function ShootDays({ days }: { days: ShootDay[] }) {
                         </button>
                       </div>
                     )}
+                </div>
+              )}
+            </Panel>
+          );
+        })}
+    </>
+  );
+}
+
+/**
+ * The picture: the days that went into it, the hours at the bench, and then
+ * putting it in front of people. A festival is a form, a fee and a wait, and
+ * the answer is what you made against how selective they are.
+ */
+function Pictures({ films, days }: { films: IndieFilm[]; days: ShootDay[] }) {
+  const { sim, run } = useGame();
+  const [title, setTitle] = useState('');
+  const [logline, setLogline] = useState('');
+  const [format, setFormat] = useState<FilmFormat>('short');
+  const [roomFor, setRoomFor] = useState<string | null>(null);
+  const [roomId, setRoomId] = useState('');
+  const [sendFor, setSendFor] = useState<string | null>(null);
+  const [festivalId, setFestivalId] = useState('');
+
+  const rooms = useWorld((s) => roomsIn(s));
+  const shot = days.filter((day) => day.status === 'shot');
+  const taken = new Set(films.flatMap((film) => film.dayIds));
+
+  return (
+    <>
+      <Panel title="Start Something" subtitle="A title, a line about what it is, and the shape it wants to be.">
+        <div className="grid grid-2">
+          <div>
+            <label className="label" htmlFor="film-title">Title</label>
+            <input id="film-title" className="input" value={title} maxLength={80} onChange={(event) => setTitle(event.target.value)} />
+          </div>
+          <div>
+            <label className="label" htmlFor="film-format">What It Is</label>
+            <select id="film-format" className="input" value={format} onChange={(event) => setFormat(event.target.value as FilmFormat)}>
+              {(['short', 'feature', 'documentary', 'animation'] as const).map((one) => (
+                <option key={one} value={one}>
+                  {FORMAT_LABEL[one]} · about {plural(SETUPS_NEEDED[one], 'setup')}, up to {RUNTIME_CAP[one]} minutes
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <label className="label" htmlFor="film-logline">The Line</label>
+        <input
+          id="film-logline"
+          className="input"
+          value={logline}
+          maxLength={240}
+          placeholder="Two people, one flat, one long night."
+          onChange={(event) => setLogline(event.target.value)}
+        />
+        <div className="row gap-2" style={{ marginTop: 12 }}>
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={title.trim().length < 2}
+            onClick={() => {
+              const result = run('film.start', { title, logline, format });
+              if (result.ok) { setTitle(''); setLogline(''); }
+            }}
+          >
+            Start It
+          </button>
+        </div>
+        <p className="xs dim" style={{ marginTop: 8 }}>{FESTIVAL_NOTE}</p>
+      </Panel>
+
+      {films.length === 0
+        ? <Empty title="Nothing In Hand" body="A picture is days of shooting, hours at a bench, and then somewhere to put it." />
+        : films.map((film) => {
+          const got = setupsIn(sim, film);
+          const wanted = cutHoursWanted(sim, film);
+          const ceiling = ceilingOf(sim, film);
+          // Days that are not in anything yet. Material goes into one picture,
+          // so a day already in another one is not offered here.
+          const unattached = shot.filter((day) => !taken.has(day.id));
+          const room = rooms.find((one) => one.id === roomId);
+          const open = festivalsFor(film.format);
+          return (
+            <Panel key={film.id} title={film.title} subtitle={describeFilm(sim, film)}>
+              {film.logline && <p className="small" style={{ marginTop: 0 }}>{film.logline}</p>}
+              <div className="grid grid-4">
+                <Stat label="Kind" value={FORMAT_LABEL[film.format]} note={`Wants about ${plural(SETUPS_NEEDED[film.format], 'setup')}`} />
+                <Stat label="In The Can" value={`${got} of ${SETUPS_NEEDED[film.format]}`} note={`${plural(film.dayIds.length, 'day')} shot`} />
+                <Stat label="At The Bench" value={`${Math.round(film.cutHours)} of ${wanted}`} note="Hours" />
+                <Stat
+                  label={film.cut ? 'How It Came Out' : 'The Material Allows'}
+                  value={film.cut ? film.cut.quality : ceiling}
+                  note={film.cut ? `${film.cut.runtimeMinutes} minutes` : 'Out of a hundred'}
+                />
+              </div>
+              {film.cut && <p className="small" style={{ marginTop: 8 }}>{film.cut.note}</p>}
+
+              {film.status !== 'abandoned' && (
+                <div className="row gap-2 wrap" style={{ marginTop: 12 }}>
+                  {!film.cut && (
+                    <>
+                      <button type="button" className="btn btn-sm" onClick={() => run('film.cut', { filmId: film.id, hours: 6 })}>
+                        Six Hours At The Bench
+                      </button>
+                      <button type="button" className="btn btn-sm btn-primary" onClick={() => run('film.finish', { filmId: film.id })}>
+                        Call It Finished
+                      </button>
+                    </>
+                  )}
+                  {film.cut && (
+                    <>
+                      <button type="button" className="btn btn-sm" onClick={() => { setRoomFor(roomFor === film.id ? null : film.id); setSendFor(null); }}>
+                        Put On A Screening
+                      </button>
+                      <button type="button" className="btn btn-sm btn-primary" onClick={() => { setSendFor(sendFor === film.id ? null : film.id); setRoomFor(null); }}>
+                        Send It Somewhere
+                      </button>
+                    </>
+                  )}
+                  <button type="button" className="btn btn-sm" onClick={() => run('film.abandon', { filmId: film.id })}>
+                    Leave It In The Drawer
+                  </button>
+                </div>
+              )}
+
+              {!film.cut && unattached.length > 0 && (
+                <div className="card card-tight" style={{ marginTop: 10 }}>
+                  <div className="label">Days Not In It Yet</div>
+                  {unattached.map((day) => (
+                    <div key={day.id} className="row-between">
+                      <span className="small">{day.title} · {day.got ?? 0} of {plural(day.setups, 'setup')}</span>
+                      <button type="button" className="btn btn-sm" onClick={() => run('film.attach_day', { filmId: film.id, dayId: day.id })}>
+                        Put It In
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {roomFor === film.id && (
+                <div className="card card-tight" style={{ marginTop: 10 }}>
+                  <label className="label" htmlFor={`room-${film.id}`}>The Room</label>
+                  <select id={`room-${film.id}`} className="input" value={roomId} onChange={(event) => setRoomId(event.target.value)}>
+                    <option value="">Your own place, for nothing</option>
+                    {rooms.slice(0, 40).map((one) => (
+                      <option key={one.id} value={one.id}>{one.name}</option>
+                    ))}
+                  </select>
+                  <p className="xs dim" style={{ margin: '4px 0 0' }}>
+                    {room
+                      ? `${room.name} is about ${formatMoney(roomCost(sim.player.currentLocationId, room.price))} for the evening.`
+                      : 'Your own place costs nothing and holds whoever fits.'}
+                  </p>
+                  <div className="row gap-2" style={{ marginTop: 8 }}>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary"
+                      onClick={() => {
+                        const result = run('film.screen', { filmId: film.id, placeId: roomId || undefined });
+                        if (result.ok) setRoomFor(null);
+                      }}
+                    >
+                      Show It
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {sendFor === film.id && (
+                <div className="card card-tight" style={{ marginTop: 10 }}>
+                  <label className="label" htmlFor={`fest-${film.id}`}>Where To Send It</label>
+                  <select id={`fest-${film.id}`} className="input" value={festivalId} onChange={(event) => setFestivalId(event.target.value)}>
+                    <option value="">Pick a festival</option>
+                    {open.map((festival) => (
+                      <option key={festival.id} value={festival.id}>
+                        {festival.name} · {formatMoney(entryFee(festival))} · {festival.selectivity >= 90 ? 'Almost nobody gets in' : festival.selectivity >= 80 ? 'Hard' : 'Worth a try'}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="row gap-2" style={{ marginTop: 8 }}>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary"
+                      disabled={!festivalId}
+                      onClick={() => {
+                        const result = run('film.submit', { filmId: film.id, festivalId });
+                        if (result.ok) { setSendFor(null); setFestivalId(''); }
+                      }}
+                    >
+                      Send It
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {film.screenings.length > 0 && (
+                <div style={{ marginTop: 10 }}>
+                  <div className="label">Screenings</div>
+                  {film.screenings.map((screening) => (
+                    <p key={screening.id} className="xs dim" style={{ margin: '2px 0 0' }}>
+                      {formatDate(screening.at, sim.homeZone)}, {screening.placeName}
+                      {screening.cost > 0 ? ` (${formatMoney(screening.cost)})` : ''}: {screening.note}
+                    </p>
+                  ))}
+                </div>
+              )}
+              {film.submissions.length > 0 && (
+                <div style={{ marginTop: 10 }}>
+                  <div className="label">Sent To</div>
+                  {film.submissions.map((submission) => (
+                    <p key={submission.id} className="xs dim" style={{ margin: '2px 0 0' }}>
+                      {submission.festivalName} ({formatMoney(submission.fee)}): {submission.status === 'sent'
+                        ? `waiting, an answer by ${formatDate(submission.answerAt, sim.homeZone)}`
+                        : `${submission.status === 'accepted' ? 'in' : 'passed'} — ${submission.note ?? ''}`}
+                    </p>
+                  ))}
                 </div>
               )}
             </Panel>

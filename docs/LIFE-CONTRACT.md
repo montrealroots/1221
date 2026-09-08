@@ -136,7 +136,7 @@ activity, not a career system. It stays in this milestone.
 - **Shoot days** you plan, crew you ask favours of, locations you get permission
   for, and weather that ruins one of them.
 - **Cut it, screen it, put it somewhere.** A festival submission is a form and a
-  fee and a wait.
+  fee and a wait. Done.
 
 ---
 
@@ -460,8 +460,39 @@ answer says what would make it yes.
    a lot; a stage does not care. The hours go out of the day and out of you,
    and the kit that was on it remembers it was there, which is what wears it.
 
-   **Still to come in this section:** cutting it, screening it and submitting
-   it to a festival, which is a form and a fee and a wait.
+   **And the last third: cutting it, screening it, putting it somewhere.** A
+   picture starts as a title, a line and a shape — a short, a feature, a
+   documentary, an animation — each of which wants a different number of setups
+   and runs to a different length. The days you shot go into it, one day into
+   one picture, because three days shot once cannot be cut into two films. What
+   the material will carry is worked out before you touch it: coverage against
+   what the form wants, plus something for every day that had people on it.
+   That number is a ceiling and nothing beats it.
+
+   The bench is hours out of your life, six or eight at a time, and it tells
+   you how many are left in the material and then tells you plainly when more
+   would not make it better. Calling it finished writes a runtime and a quality
+   once and never again: the runtime out of what was shot, the quality out of
+   the ceiling, the hours and a little craft, with a line that says which of
+   the four it was, down to "It does not work, and you knew that at the bench."
+   It will not finish a picture out of days that were never got, and it will
+   not finish one nobody sat down with.
+
+   Then you put it in front of people. A room in the city you are in — a
+   cinema, a theatre, a bar, a club, priced by how good it is and where it is —
+   or your own place for nothing. Everybody you know is asked and who actually
+   comes is how well they know you, plus whoever wandered in off a good night,
+   and every one of them remembers it afterwards. Or a festival: twenty eight
+   real ones that take open submissions, in cities this world has, each taking
+   only the kinds of picture it really takes. The fee is charged where the
+   festival lives and the panel shows the same number the account pays. The
+   answer takes six weeks to four months and is what you made against how much
+   of what they are sent they can room for — at Cannes that is almost nobody,
+   and a good picture is still usually a form letter. Nothing invents a result
+   and narrates backwards.
+
+   **Still to come:** the kit does not live in the house yet, so a camera you
+   own is an asset rather than a thing on a shelf in a room.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.
 9. Childhood through later life, end to end.

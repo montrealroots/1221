@@ -44,6 +44,7 @@ import { registerJourney } from './systems/journey';
 import { ensureKeepings, registerStorage } from './systems/storage';
 import { registerRentalSystem } from './systems/rental';
 import { registerShootSystem } from './systems/shoot';
+import { registerPictureSystem } from './systems/picture';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -108,6 +109,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerStorage(sim);
   registerRentalSystem(sim);
   registerShootSystem(sim);
+  registerPictureSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1005,6 +1007,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 56) {
+    // Schema 56: the picture itself. The days go into it, the bench shapes it,
+    // and the festivals answer it.
+    universe.indieFilms ??= {};
+    steps.push('Pictures of your own, and the festivals you send them to.');
   }
 
   if (from < 55) {
