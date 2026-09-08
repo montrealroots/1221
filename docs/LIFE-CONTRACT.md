@@ -255,6 +255,29 @@ you meant, asks when it cannot tell, does it, and tells you what happened. It
 never pretends to have done something it cannot do. Where the answer is no, the
 answer says what would make it yes.
 
+**Done.** The scene box already took a sentence. This is the same thing
+everywhere else: Go Anywhere now reads a sentence as well as a search. "I want
+to go to bed", "get petrol", "work my shift", "go to the dentist" — 48 things a
+person would actually ask for, in 339 different sets of words, every one of
+them pointing at a command the engine really registers or a screen that really
+exists.
+
+What keeps it honest is that it resolves to a **plan**, never to a result. The
+plan is a real command with a real payload, run through the same path the
+button uses, so every guard, every refusal and every refusal's wording belongs
+to the command rather than to the box. A twelve year old who types "work my
+shift" gets the job system's own answer, which is that they do not have a job.
+Nothing in here can say yes on behalf of a command that would have said no, and
+the checker proves it: resolving all 339 phrasings leaves the save byte for
+byte unchanged.
+
+Standing somewhere matters. Ask for petrol from your front room and the plan is
+to drive to a filling station; ask for it standing on the forecourt and the
+plan is to fill the tank. Where the city has three dentists it asks which one
+rather than picking. Where the city has none it says so, and says a bigger one
+will have one. And where it is not something SLATE does at all — "buy a
+spaceship", "become president" — it says that plainly instead of guessing.
+
 ---
 
 ## 11. Build order
@@ -1063,7 +1086,14 @@ answer says what would make it yes.
    is on the rota — with the hours already worked still paid on the pay date,
    because that is the law and it is also just true.
 
-10. Free-text intent across all of it.
+10. **Done.** Free-text intent across all of it. A written phrasebook of 48
+    things somebody would type and 339 ways of typing them, matched by the same
+    resolver the scene box uses — no model, no network, which is exactly why it
+    can say it did not understand instead of guessing. It answers with a plan,
+    not a result: the command runs through the ordinary path and owns its own
+    refusal. `tools/ask-check.mjs` fails the build if an entry ever points at a
+    command the engine does not register, a screen that does not exist, or a
+    kind of place the world does not build.
 
 ---
 

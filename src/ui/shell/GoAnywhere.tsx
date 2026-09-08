@@ -4,6 +4,12 @@
  * Searches the actual universe, not a list of menu names: people you know,
  * properties you own, projects you are on, vehicles, companies, cities,
  * catalog items, and every workspace. Keyboard first.
+ *
+ * It also takes a sentence. "I want to go to bed", "work my shift", "go to
+ * the dentist" resolve to a real command with a real payload, which is then
+ * run through the same path a button uses, so every guard and every refusal
+ * belongs to the command rather than to the search box. Where the answer is
+ * no, the box says so and says what would make it yes.
  */
 
 import { titleCaseLabel } from '@/engine/core/text';
@@ -16,6 +22,7 @@ import { VEHICLE_MODELS } from '@/engine/content/vehicles';
 import { normalise, scoreMatch } from '@/engine/content/reference';
 import { formatMoneyCompact } from '@/engine/core/money';
 import { labelForRoute } from '@/app/game-context';
+import { planFor, resolveAsk, type AskResult } from '@/engine/systems/ask';
 
 interface Hit {
   id: string;
@@ -52,26 +59,57 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
 ];
 
 export function GoAnywhere() {
-  const { sim, navigate, setSearchOpen, recent, favourites, toggleFavourite } = useGame();
+  const { sim, run, navigate, setSearchOpen, recent, favourites, toggleFavourite } = useGame();
   const [query, setQuery] = useState('');
   const [cursor, setCursor] = useState(0);
+  // Which option was picked out of a question the box asked back. Picking one
+  // does not do anything either; it only narrows the same plan.
+  const [chosen, setChosen] = useState<{ askableId: string; optionId?: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { inputRef.current?.focus(); }, []);
-  useEffect(() => { setCursor(0); }, [query]);
+  useEffect(() => { setCursor(0); setChosen(null); }, [query]);
 
   const hits = useMemo(() => search(sim, query), [sim, query]);
+
+  const ask = useMemo<AskResult | null>(() => {
+    if (query.trim() === '') return null;
+    if (chosen) return planFor(sim, chosen.askableId, chosen.optionId);
+    return resolveAsk(sim, query);
+  }, [sim, query, chosen]);
+
+  // Only a settled plan takes a place in the keyboard order. A question or a
+  // refusal is read, not pressed by accident.
+  const plan = ask && (ask.kind === 'do' || ask.kind === 'go') ? ask : null;
+  const offset = plan ? 1 : 0;
+
+  const take = (result: AskResult) => {
+    if (result.kind === 'go') {
+      navigate(result.route, result.askable.label);
+      setSearchOpen(false);
+      return;
+    }
+    if (result.kind !== 'do') return;
+    // The command's own guards decide. A refusal surfaces as its own words
+    // through the toast the runner already raises, and the box stays open so
+    // the reason can be read next to what was typed.
+    const outcome = run(result.command, result.payload);
+    if (!outcome.ok) return;
+    navigate(result.askable.route, result.askable.label);
+    setSearchOpen(false);
+  };
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      setCursor((c) => Math.min(hits.length - 1, c + 1));
+      setCursor((c) => Math.min(hits.length + offset - 1, c + 1));
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
       setCursor((c) => Math.max(0, c - 1));
     } else if (event.key === 'Enter') {
       event.preventDefault();
-      const hit = hits[cursor];
+      if (plan && cursor === 0) { take(plan); return; }
+      const hit = hits[cursor - offset];
       if (hit) navigate(hit.route, hit.title);
     }
   };
@@ -86,7 +124,7 @@ export function GoAnywhere() {
     return [...map.entries()];
   }, [hits]);
 
-  let flatIndex = -1;
+  let flatIndex = offset - 1;
 
   return (
     <div className="overlay" onClick={() => setSearchOpen(false)}>
@@ -101,7 +139,7 @@ export function GoAnywhere() {
           ref={inputRef}
           className="search-input"
           type="search"
-          placeholder="Go anywhere. Try a doctor, a car, a person, build house, box office…"
+          placeholder="Go anywhere, or say what you want. Try go to bed, work my shift, a car, a person…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
@@ -110,6 +148,80 @@ export function GoAnywhere() {
         />
 
         <div className="search-results" id="go-anywhere-results" role="listbox">
+          {ask && (
+            <div>
+              <div className="search-group-label">
+                {ask.kind === 'do' || ask.kind === 'go' ? 'Do This' : 'What You Asked For'}
+              </div>
+
+              {plan && (
+                <button
+                  className="search-result"
+                  role="option"
+                  aria-selected={cursor === 0}
+                  onMouseEnter={() => setCursor(0)}
+                  onClick={() => take(plan)}
+                >
+                  <span className="grow">
+                    <span className="small strong">{plan.askable.label}</span>
+                    <span className="xs dim" style={{ display: 'block' }}>
+                      {plan.kind === 'do' ? plan.preview : plan.why}
+                    </span>
+                  </span>
+                  <span className="xs dim">{plan.kind === 'do' ? 'Run It' : 'Open'}</span>
+                </button>
+              )}
+
+              {(ask.kind === 'which' || ask.kind === 'ambiguous') && (
+                <>
+                  <div className="xs dim" style={{ padding: '0 12px 6px' }}>{ask.question}</div>
+                  {ask.options.map((option) => (
+                    <button
+                      key={option.id}
+                      className="search-result"
+                      onClick={() => setChosen(ask.kind === 'which'
+                        ? { askableId: ask.askable.id, optionId: option.id }
+                        : { askableId: option.id })}
+                    >
+                      <span className="grow">
+                        <span className="small strong">{option.label}</span>
+                        <span className="xs dim" style={{ display: 'block' }}>{option.detail}</span>
+                      </span>
+                    </button>
+                  ))}
+                </>
+              )}
+
+              {ask.kind === 'cannot' && (
+                <button
+                  className="search-result"
+                  onClick={() => { navigate(ask.route, ask.askable.label); setSearchOpen(false); }}
+                >
+                  <span className="grow">
+                    <span className="small strong">{ask.askable.label}</span>
+                    <span className="xs dim" style={{ display: 'block' }}>{ask.why}</span>
+                  </span>
+                  <span className="xs dim">Open</span>
+                </button>
+              )}
+
+              {ask.kind === 'unsupported' && (
+                <>
+                  <div className="xs dim" style={{ padding: '0 12px 6px' }}>{ask.why}</div>
+                  {ask.nearest.map((near) => (
+                    <button
+                      key={near.id}
+                      className="search-result"
+                      onClick={() => setChosen({ askableId: near.id })}
+                    >
+                      <span className="grow"><span className="small strong">{near.label}</span></span>
+                    </button>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
+
           {query.trim() === '' && (
             <>
               {favourites.length > 0 && (
@@ -161,7 +273,7 @@ export function GoAnywhere() {
             </>
           )}
 
-          {query.trim() !== '' && hits.length === 0 && (
+          {query.trim() !== '' && hits.length === 0 && ask?.kind === 'unsupported' && ask.nearest.length === 0 && (
             <div className="empty">
               <h3>Nothing matched “{query}”</h3>
               <p className="small">

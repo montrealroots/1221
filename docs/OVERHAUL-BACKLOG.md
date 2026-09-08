@@ -39,7 +39,7 @@ before any delivery claim.
 | B6 | Step revision tokens and per-operation idempotency keys; two tabs | Done / Partial | Revisions and keys are in; two tabs are refused at the server by clock and playtime (`base44/shared/guard.js`), not by an in-memory revision, and that is not exercised in a browser. |
 | B7 | Structured NPC memory distinct from transcripts | Done | `src/engine/systems/memory.ts`; trainers, car salespeople and the people you date read and write it: goals, preferences, meetings, what you drove, what you walked away from, what you bought, what you talked about, what you promised and whether you kept it, the time you did not come. |
 | B8 | NPCs with independent goals and availability | Partial | Existing world tiers and schedules; no per-NPC goal loop. |
-| B9 | Free text → validated structured intent; ambiguity asks; unsupported says so; never silent success | Done (offline) | `src/engine/systems/intent.ts`; no language model, no network. |
+| B9 | Free text → validated structured intent; ambiguity asks; unsupported says so; never silent success | Done (offline) | `src/engine/systems/intent.ts` inside a scene; `src/engine/systems/ask.ts` and `src/engine/content/phrasebook.ts` everywhere else, wired into Go Anywhere. 48 askable things, 339 phrasings, resolved to a plan the ordinary command path runs, so refusals stay the command's. No language model, no network. |
 | B10 | AI provider adapter with server-side secrets, timeouts, budgets, offline fallback | Not started | No provider is wired; every scene is deterministic. |
 
 ## C. Connected journeys the directive names

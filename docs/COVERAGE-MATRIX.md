@@ -422,6 +422,7 @@ and this is what each part of it covers today:
 | Dialogue | The library: eligibility by what is true, seeded choice, exposure | Dating, property, vehicles, health, travel, social | Gym, meal, run, wellbeing, and every workspace's prose |
 | Memory | Structured facts on people | Trainers, salespeople, dates, agents, inspectors, closers, doctors | Everyone else |
 | Interpreter | Free text resolved to a choice, leave, skip, help, or refused | Every scene | Sentences that are not one of the choices |
+| Phrasebook | Free text outside a scene: 48 askable things, 339 phrasings, resolved to a plan the ordinary command path then runs | Go Anywhere, on every screen | Anything not in the phrasebook is refused by name, with the nearest entries offered |
 | Simulation | Commands, schedules, events, audit | Everything above | — |
 | Provider adapter (validation, revision checks, timeouts, budgets, caching) | Not started | — | Backlog row G4 |
 
