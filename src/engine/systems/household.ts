@@ -33,6 +33,10 @@ export const BREAKS_BELOW = 22;
 const MONTHLY_WEAR: Readonly<Record<string, number>> = {
   appliance: 1.6,
   electronics: 1.3,
+  // Camera kit wears harder than a television and softer than a washing
+  // machine: it is carried about, it is used in the rain, and the moving parts
+  // are the expensive ones.
+  kit: 1.4,
   equipment: 1.2,
   household: 1.1,
   furniture: 0.9,
@@ -45,7 +49,9 @@ const MONTHLY_WEAR: Readonly<Record<string, number>> = {
  * Kinds of thing that stop rather than just get shabby. A dishwasher breaks.
  * A rug wears out, and you keep walking on it.
  */
-const BREAKS: ReadonlySet<string> = new Set(['appliance', 'electronics', 'equipment', 'household']);
+// Camera kit is in here because camera kit stops. A shutter dies, a lens
+// jams, a battery will not hold a charge, and none of that is shabbiness.
+const BREAKS: ReadonlySet<string> = new Set(['appliance', 'electronics', 'equipment', 'household', 'kit']);
 
 /** What a repair costs, as a share of what the thing is worth now. */
 const REPAIR_SHARE = 0.18;
@@ -158,6 +164,23 @@ export function preferredRooms<T extends { kind: string }>(rooms: readonly T[], 
 }
 
 /**
+ * Where a kind of thing goes when the catalog does not say.
+ *
+ * Furniture carries the room its maker had in mind. Camera kit does not,
+ * because no manufacturer thinks about which room of your house a lens lives
+ * in — and yet it lives in one. It goes where people really keep it: the room
+ * they work in, and failing that the bedroom, in a cupboard, in its case.
+ */
+const ROOMS_BY_CATEGORY: readonly { category: string; rooms: readonly string[] }[] = [
+  { category: 'kit', rooms: ['office', 'den', 'bedroom'] },
+  { category: 'equipment', rooms: ['office', 'den', 'garage'] },
+];
+
+function roomsWanted(category: string): readonly string[] {
+  return ROOMS_BY_CATEGORY.find((one) => one.category === category)?.rooms ?? [];
+}
+
+/**
  * Puts a thing where it belongs. A kitchen appliance goes in the kitchen; if
  * the home has no room of the kind the maker had in mind, it goes where such a
  * thing really goes instead.
@@ -167,9 +190,12 @@ export function placeInRoom(sim: Simulation, asset: OwnedAsset): Id | undefined 
   // Only things that live in a house go in a room of it. A coat lives in the
   // wardrobe and a car lives in the garage, and both are somebody else's job.
   if (!item || MONTHLY_WEAR[item.category] === undefined) return undefined;
+  // Nothing hired ever becomes a thing on a shelf: it goes back on Monday.
+  if (item.tags.includes('rental only')) return undefined;
   const rooms = roomsOfHome(sim, asset.ownerId);
   if (rooms.length === 0) return undefined;
-  asset.roomId = preferredRooms(rooms, item.roomKinds ?? [])[0]?.id;
+  const wanted = item.roomKinds ?? roomsWanted(item.category);
+  asset.roomId = preferredRooms(rooms, wanted)[0]?.id;
   return asset.roomId;
 }
 
@@ -196,6 +222,11 @@ export interface ThingUse {
   energy: number;
   /** Done through another part of the game, not from the shelf. */
   via?: 'kitchen' | 'laundry';
+  /**
+   * How much condition it puts back. Looking after a thing is the one use that
+   * changes what the thing is, rather than what you are.
+   */
+  restores?: number;
 }
 
 const COOK_WITH_IT: ThingUse = { id: 'cook', label: 'Cook With It', minutes: 0, morale: 0, energy: 0, via: 'kitchen' };
@@ -205,6 +236,17 @@ const READ_IT: ThingUse = { id: 'read', label: 'Read It', minutes: 90, morale: 7
 const LOOK_AT_IT: ThingUse = { id: 'look', label: 'Look At It', minutes: 10, morale: 4, energy: 0 };
 const SIT_DOWN: ThingUse = { id: 'sit', label: 'Sit Down', minutes: 45, morale: 4, energy: 5 };
 const TAKE_A_NAP: ThingUse = { id: 'nap', label: 'Take A Nap', minutes: 50, morale: 5, energy: 16 };
+
+/**
+ * What anybody who owns camera kit actually does with it between jobs.
+ *
+ * Not shooting: shooting is a day, and the shoot system owns it. This is the
+ * hour at the kitchen table with a blower and a cloth that decides whether the
+ * kit works on the day, and it is most of what owning kit is.
+ */
+const CHECK_IT_OVER: ThingUse = { id: 'service', label: 'Check It Over', minutes: 45, morale: 3, energy: -4, restores: 9 };
+const CLEAN_THE_GLASS: ThingUse = { id: 'clean_glass', label: 'Clean The Glass', minutes: 25, morale: 2, energy: -2, restores: 5 };
+const CHARGE_THE_BATTERIES: ThingUse = { id: 'charge', label: 'Put The Batteries On', minutes: 10, morale: 1, energy: 0, restores: 3 };
 
 /** Things you wear or eat, which other systems already own. */
 const NOT_A_THING_YOU_USE: ReadonlySet<string> = new Set([
@@ -309,6 +351,13 @@ export function usesFor(name: string, category: string): readonly ThingUse[] {
   if (NOT_A_THING_YOU_USE.has(category)) return NOTHING;
   if (category === 'books') return [READ_IT];
   if (category === 'art') return [LOOK_AT_IT];
+  // Kit is looked after rather than used from a shelf. A lens is cleaned, a
+  // body is checked over, and the batteries go on the night before.
+  if (category === 'kit') {
+    if (/lens|prime|zoom|glass|filter/i.test(name)) return [CLEAN_THE_GLASS, CHECK_IT_OVER];
+    if (/battery|batteries|charger|\bv.?mount\b/i.test(name)) return [CHARGE_THE_BATTERIES];
+    return [CHECK_IT_OVER, CLEAN_THE_GLASS];
+  }
   for (const rule of USE_RULES) {
     if (rule.only && !rule.only.includes(category)) continue;
     if (rule.on.test(name)) return rule.uses;
@@ -451,8 +500,11 @@ export function registerHousehold(sim: Simulation): void {
       const share = minutes / use.minutes;
       person.wellbeing.morale = clamp(person.wellbeing.morale + use.morale * share, 0, 100);
       person.wellbeing.energy = clamp(person.wellbeing.energy + use.energy * share, 0, 100);
-      // Using a thing is what wears it out, a little at a time.
-      asset.condition = clamp(asset.condition - 0.12 * share, 0, 100);
+      // Using a thing is what wears it out, a little at a time — unless the
+      // use was looking after it, which is the one that puts condition back.
+      asset.condition = use.restores === undefined
+        ? clamp(asset.condition - 0.12 * share, 0, 100)
+        : clamp(asset.condition + use.restores * Math.min(1, share), 0, 100);
       asset.lastUsedAt = s.now;
       s.emit('home.used', { assetId: asset.id, label: use.label, minutes });
       return { label: use.label, minutes };

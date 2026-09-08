@@ -306,8 +306,9 @@ answer says what would make it yes.
    nothing is wearable until morning, with one it is back in two hours, and
    with no machine at all it is the launderette by the load.
    **Still to come:** clothes only soil when you commit a look, so a life
-   lived through the Advance button never needs washing at all; and film kit
-   is not yet a thing that lives in the house, which waits on section 6.
+   lived through the Advance button never needs washing at all. Film kit is a
+   thing that lives in the house now, in a room, wearing and breaking and being
+   looked after like everything else in it.
 5. **YouTube, Instagram, X and TikTok, all four built as their own apps.** There is a phone now. It is the
    newest iPhone SLATE knows of, or the one you bought, and the clock on it is
    the world clock, so an hour inside an app is an hour gone out of the day.
@@ -563,8 +564,22 @@ answer says what would make it yes.
    and a good picture is still usually a form letter. Nothing invents a result
    and narrates backwards.
 
-   **Still to come:** the kit does not live in the house yet, so a camera you
-   own is an asset rather than a thing on a shelf in a room.
+   And the kit lives in the house. A camera you buy lands in a room of it the
+   moment it is yours — the room you work in, and failing that the bedroom, in
+   a cupboard, in its case, which is where people really keep it. It wears
+   harder than a television and softer than a washing machine, because it is
+   carried about and used in the rain. It breaks, because camera kit breaks:
+   a shutter dies, a lens jams, a battery stops holding a charge.
+
+   What you do with it at home is look after it, which is most of what owning
+   kit actually is. A body is checked over, a lens is cleaned, the batteries go
+   on the night before, and each of those is the one kind of use that puts
+   condition back into a thing rather than taking it out. Leave it two years
+   and it goes the other way.
+
+   And the day knows. A broken camera does not stand in for a working one and
+   the refusal names it. A camera you have kept is worth something on the day
+   and one you have not is worth less, and the call sheet says which.
 7. **Item 7, first part: the cinema.** Sixty one real chains across sixty two
    countries, each listed only where it really trades, so a Cineworld does not
    turn up in a country Cineworld is not in and a landmark cinema is nobody's

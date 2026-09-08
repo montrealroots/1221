@@ -370,13 +370,18 @@ export function registerShootSystem(sim: Simulation): void {
       if (s.player.wellbeing.energy < 15) throw new CommandError('You have nothing left. Sleep first.');
 
       // Something to shoot on. Hired kit in your hands counts, and so does a
-      // camera of your own; nothing counts if it is still on the shelf.
+      // camera of your own — provided it works. A camera nobody has looked at
+      // for two years is a camera that does not come on, which is why looking
+      // after it is a thing you can do at home.
       const hires = outNow(s);
-      const ownCamera = Object.values(s.universe.assets).some(
+      const own = Object.values(s.universe.assets).filter(
         (asset) => asset.ownerId === s.player.id && !asset.soldAt && asset.tags.includes('camera'),
       );
+      const ownCamera = own.find((asset) => !asset.broken);
       if (hires.length === 0 && !ownCamera) {
-        throw new CommandError('You have nothing to shoot on. Hire a camera, or buy one.');
+        throw new CommandError(own.length > 0
+          ? `${own[0]!.name} is broken. Get it repaired, or hire a camera.`
+          : 'You have nothing to shoot on. Hire a camera, or buy one.');
       }
 
       const onStage = day.where === 'home';
@@ -398,6 +403,14 @@ export function registerShootSystem(sim: Simulation): void {
       } else {
         carry -= 0.1;
         reasons.push('Shooting on what you own rather than what you would have hired.');
+        // And the state of your own kit is the state of your own kit.
+        if (ownCamera && ownCamera.condition < 45) {
+          carry -= 0.06;
+          reasons.push(`${ownCamera.name} has not been looked after, and the day showed it.`);
+        } else if (ownCamera && ownCamera.condition >= 85) {
+          carry += 0.03;
+          reasons.push(`${ownCamera.name} is in the condition you keep it in.`);
+        }
       }
 
       // The street is the street: somebody comes and asks what you are doing.
