@@ -66,9 +66,10 @@ const ALL_YEAR = ['Spring', 'Summer', 'Autumn', 'Winter'];
 const gr = (
   id: string, name: string, brand: string, sub: string,
   price: number, shelf: number, unit: string, nourishment: number, quality = 55,
+  extra: readonly string[] = [],
 ): RealGood => good({
   id, name, category: 'groceries', subcategory: sub, basePrice: price, brand,
-  tags: ['grocery', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment,
+  tags: ['grocery', sub, ...extra], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment,
 });
 
 /** A drink off the shelf. Same shape, kept apart so the aisles read right. */
@@ -119,15 +120,15 @@ export const REAL_GROCERIES: readonly RealGood[] = national([
 
   // --- Protein ------------------------------------------------------------------------------
   gr('g_bell_evans', 'Bell & Evans Chicken Breast', 'Bell & Evans', 'protein', 13_99, 4, 'Pound', 23, 76),
-  gr('g_creekstone', 'Creekstone Farms Ribeye', 'Creekstone Farms', 'protein', 32_99, 5, 'Pound', 30, 88),
-  gr('g_snake_river', 'Snake River Farms Wagyu Striploin', 'Snake River Farms', 'protein', 89_00, 6, 'Pound', 32, 96),
-  gr('g_donald_russell', 'Donald Russell Sirloin', 'Donald Russell', 'protein', 34_00, 5, 'Pound', 30, 90),
+  gr('g_creekstone', 'Creekstone Farms Ribeye', 'Creekstone Farms', 'protein', 32_99, 5, 'Pound', 30, 88, ['beef']),
+  gr('g_snake_river', 'Snake River Farms Wagyu Striploin', 'Snake River Farms', 'protein', 89_00, 6, 'Pound', 32, 96, ['beef']),
+  gr('g_donald_russell', 'Donald Russell Sirloin', 'Donald Russell', 'protein', 34_00, 5, 'Pound', 30, 90, ['beef']),
   gr('g_verlasso', 'Verlasso Salmon Fillet', 'Verlasso', 'protein', 21_99, 2, 'Pound', 27, 82),
   gr('g_loch_duart', 'Loch Duart Salmon', 'Loch Duart', 'protein', 26_49, 2, 'Pound', 27, 88),
   gr('g_ortiz_tuna', 'Ortiz Bonito Del Norte', 'Ortiz', 'protein', 12_99, 900, 'Jar', 16, 88),
-  gr('g_jamon_iberico', 'Jamón Ibérico De Bellota', 'Cinco Jotas', 'protein', 79_00, 120, 'Pack', 14, 96),
-  gr('g_parma_ham', 'Prosciutto Di Parma', 'Consorzio Del Prosciutto Di Parma', 'protein', 18_99, 45, 'Pack', 12, 88),
-  gr('g_applegate', 'Applegate Organic Bacon', 'Applegate', 'protein', 8_99, 14, 'Pack', 18, 62),
+  gr('g_jamon_iberico', 'Jamón Ibérico De Bellota', 'Cinco Jotas', 'protein', 79_00, 120, 'Pack', 14, 96, ['pork']),
+  gr('g_parma_ham', 'Prosciutto Di Parma', 'Consorzio Del Prosciutto Di Parma', 'protein', 18_99, 45, 'Pack', 12, 88, ['pork']),
+  gr('g_applegate', 'Applegate Organic Bacon', 'Applegate', 'protein', 8_99, 14, 'Pack', 18, 62, ['pork']),
   gr('g_tofurky', 'Tofurky Deli Slices', 'Tofurky', 'protein', 5_99, 30, 'Pack', 12, 50),
   gr('g_beyond_burger', 'Beyond Burger', 'Beyond Meat', 'protein', 8_49, 14, 'Two Pack', 19, 58),
   gr('g_impossible', 'Impossible Burger Patties', 'Impossible Foods', 'protein', 9_29, 14, 'Two Pack', 20, 62),

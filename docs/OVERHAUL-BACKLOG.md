@@ -593,6 +593,10 @@ before any delivery claim.
     - Every legal age carried is the general national minimum. States, provinces, parental consent and staged licences are not modelled, and the note in the room says so rather than the game implying a statute.
     - One growth curve rather than two, for want of a real growth reference and an honest field to key it on.
     - All eight ordinary rooms are built. Each is a command rather than a scene, so there is a chair, a counter and a queue, but nobody in the room to talk to.
+    - A branch's buy differs by country on three real grounds and one calibration. The calibration — how much of the eligible range one branch carries — is SLATE's own and always will be: no retailer publishes a buy.
+    - The legal and customary rules cover alcohol, pork and beef, which are the ones that are unambiguous and public. Halal and kosher certification, sugar taxes, deposit return schemes and packaging law are all real and are not modelled.
+    - Climate rules out swimwear and heavy coats and reads the seasons a garment carries. It does not model a size curve, which really does differ by market, because the catalogue carries no sizes.
+    - Pork and beef are tagged on the products that are pork and beef, and the checker catches a new grocery that forgets to say so. A product whose name gives no clue would still slip through.
     - A dental arrangement is the headline share rather than a country's whole fee schedule, which runs to hundreds of line items and is renegotiated every year.
     - Twelve veterinary groups is the well known end of a consolidating industry. Most practices in most countries are independent, which is how SLATE names the rest of them.
     - Microchipping law is carried for twelve countries. Many more require it and SLATE offers the chip as sensible rather than as law where it does not carry the statute.

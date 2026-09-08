@@ -17,6 +17,12 @@ import { formatMoney, type Money } from '../core/money';
 import type { Id, Person, RetailVisit } from '../domain/model';
 import { RETAILERS, retailPrice, shoppableItemsIn, stocks, type CatalogItem, type Retailer } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
+import { CITIES, countryOfCity } from '../content/geography';
+import { climateTypeFor } from '../content/climate';
+import {
+  CLIMATE_BUY_NOTE, LAW_NOTE, LOCAL_BUY_NOTE, NEVER_BELOW, availabilityOf, depthFor,
+  onTheShelfIn, suitsClimate,
+} from '../content/localbuy';
 import { placeById, type Place } from '../content/places';
 import { COLOURS, SAFE_COLOURS } from '../content/wardrobe';
 import type { DialogueTone } from '../dialogue/schema';
@@ -196,6 +202,65 @@ export function colourwaysFor(sim: Simulation, place: Place, item: CatalogItem, 
 }
 
 /**
+ * What this shop does not carry, and which arrangement left it off.
+ *
+ * The interesting half of stocking a shop by country is the gap: a shelf that
+ * is missing something should say why rather than quietly not having it. Only
+ * the legal and customary rules produce a reason; a buyer's decision not to
+ * carry something is not a reason anybody is owed.
+ */
+export function notCarriedAt(place: Place): { why: string; count: number }[] {
+  const retailer = retailerAt(place);
+  if (!retailer) return [];
+  const countryId = countryOfCity(place.cityId) ?? place.cityId.split('-')[0] ?? '';
+  const reasons = new Map<string, number>();
+  for (const item of shoppableItemsIn(place.cityId)) {
+    if (item.category === 'dining' || !stocks(retailer, item)) continue;
+    const found = availabilityOf(item, countryId);
+    if (found.availability === 'on_the_shelf' || !found.why) continue;
+    reasons.set(found.why, (reasons.get(found.why) ?? 0) + 1);
+  }
+  return [...reasons].map(([why, count]) => ({ why, count })).sort((a, b) => b.count - a.count);
+}
+
+/**
+ * The slice of the range this branch buys, which is the same slice every time.
+ *
+ * Seeded on the branch alone rather than on the clock: a shop that carried
+ * something last week carries it this week, because a buy is a season's
+ * decision and not a daily one. A branch never drops below a shop's worth
+ * however small it is.
+ */
+export function branchBuy(place: Place, allowed: CatalogItem[]): CatalogItem[] {
+  const { share } = depthFor(place.quality ?? 60);
+  const keep = Math.max(NEVER_BELOW, Math.round(allowed.length * share));
+  if (allowed.length <= keep) return allowed;
+  // A stable hash of the branch and the product, so the same branch keeps the
+  // same things without holding a list anywhere.
+  const scored = allowed
+    .map((item) => ({ item, at: hashOf(`${place.id}:${item.id}`) }))
+    .sort((a, b) => a.at - b.at)
+    .slice(0, keep)
+    .map((one) => one.item);
+  return scored;
+}
+
+/** A small stable hash, so a branch's buy survives a reload and a save. */
+function hashOf(text: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) / 4294967296;
+}
+
+/** How this branch reads: a flagship, a branch, or a small one. */
+export function branchSize(place: Place): string {
+  return depthFor(place.quality ?? 60).label;
+}
+
+/**
  * What is out on the floor today. The chain's whole catalog is not: a shop
  * puts a rail out, and the rail changes with the fortnight, seeded so the same
  * fortnight in the same shop is the same rail.
@@ -209,10 +274,21 @@ export function assortmentAt(sim: Simulation, place: Place, category?: string, r
   // A real branch carries both racks. `rack` narrows what is shown to
   // somebody standing in it; the branch's own stock, and the hundred things
   // every branch promises, are counted without it.
-  const eligible = shoppableItemsIn(place.cityId).filter((item) =>
+  // Two branches of the same chain in two countries are not the same shop.
+  // What may lawfully be sold there and what the weather asks for are real and
+  // decide most of it; how deep this particular branch goes into what is left
+  // is SLATE's own, and is deterministic from the branch so a shop is the same
+  // shop every time you walk into it.
+  const countryId = countryOfCity(place.cityId) ?? place.cityId.split('-')[0] ?? '';
+  const city = CITIES.get(place.cityId);
+  const climate = city ? climateTypeFor(city) : 'oceanic';
+  const allowed = shoppableItemsIn(place.cityId).filter((item) =>
     item.category !== 'dining'
     && stocks(retailer, item)
-    && (category === undefined || item.category === category)
+    && onTheShelfIn(item, countryId)
+    && suitsClimate(item, climate));
+  const eligible = branchBuy(place, allowed).filter((item) =>
+    (category === undefined || item.category === category)
     && (rack === undefined || shows(item.audience, rack)));
   // The front table is what has been pushed to the front this fortnight; the
   // rest of the shop is still the rest of the shop.
@@ -480,3 +556,8 @@ export function registerRetail(sim: Simulation): void {
     },
   );
 }
+
+export {
+  CLIMATE_BUY_NOTE, LAW_NOTE, LOCAL_BUY_NOTE, NEVER_BELOW, availabilityOf, depthFor, onTheShelfIn,
+  suitsClimate,
+};

@@ -19,7 +19,8 @@ import { REAL_GOODS_NOTE } from '../content/goods';
 import { preview, speak } from '../dialogue/library';
 import { MODE_LABEL, driveableVehicle, placesNear, planJourney, type Mode } from '../systems/places';
 import {
-  FITTING_MINUTES, VERDICT_LABEL, aislesAt, assistantAt, frontTableAt, retailerAt, stockAt, standingAt, standingFlags, toneOf, verdictNote, visitOf, type Verdict,
+  FITTING_MINUTES, VERDICT_LABEL, aislesAt, assistantAt, branchSize, frontTableAt, notCarriedAt,
+  retailerAt, stockAt, standingAt, standingFlags, toneOf, verdictNote, visitOf, type Verdict,
 } from '../systems/retail';
 import { categoryLabel } from '../core/text';
 import { defineScene, unknownStep, type SceneChoice } from '../systems/scenes';
@@ -174,8 +175,12 @@ export const SHOP_SCENE = defineScene({
           text: String(session.context['line'] ?? '') || say(sim, 'browse', 'floor', { tone: assistant ? toneOf(assistant) : 'dry' }, `${visit.id}:floor`, false),
           facts: [
             { label: 'On The Floor', value: `${shelf.length} Things` },
+            { label: 'This Branch', value: branchSize(place) },
             { label: 'In Your Hands', value: visit.basket.length === 0 ? 'Nothing' : `${visit.basket.length}, ${formatMoney(running)}` },
             { label: 'Tried On', value: visit.tried.length === 0 ? 'Nothing' : String(visit.tried.length) },
+            // A shelf that is missing something says which arrangement left it
+            // off, rather than quietly not having it.
+            ...notCarriedAt(place).map((one) => ({ label: 'Not On The Shelf', value: one.why })),
           ],
           choices,
           canSkip: true,

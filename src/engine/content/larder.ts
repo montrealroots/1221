@@ -25,9 +25,10 @@ const ALL_YEAR = ['Spring', 'Summer', 'Autumn', 'Winter'];
 const gr = (
   id: string, name: string, brand: string, sub: string,
   price: number, shelf: number, unit: string, nourishment: number, quality = 60,
+  extra: readonly string[] = [],
 ): RealGood => ({
   id, name, type: 'product', category: 'groceries', subcategory: sub, basePrice: price, brand,
-  tags: ['grocery', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment,
+  tags: ['grocery', sub, ...extra], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment,
   seasons: ALL_YEAR, audience: 'unisex', ...REAL,
 });
 
@@ -86,17 +87,17 @@ export const REAL_LARDER: readonly RealGood[] = [
   // --- The butcher and the fishmonger --------------------------------------
   gr('g_chicken_thighs', 'Free Range Chicken Thighs', 'Bell & Evans', 'protein', 8_99, 4, 'Pack', 34, 72),
   gr('g_whole_chicken', 'Free Range Whole Chicken', 'Bell & Evans', 'protein', 14_99, 5, 'Bird', 60, 76),
-  gr('g_beef_mince', 'Grass Fed Beef Mince', 'Creekstone Farms', 'protein', 9_49, 3, 'Pack', 34, 74),
-  gr('g_pork_belly', 'Pork Belly', 'Duroc', 'protein', 11_49, 4, 'Piece', 38, 74),
+  gr('g_beef_mince', 'Grass Fed Beef Mince', 'Creekstone Farms', 'protein', 9_49, 3, 'Pack', 34, 74, ['beef']),
+  gr('g_pork_belly', 'Pork Belly', 'Duroc', 'protein', 11_49, 4, 'Piece', 38, 74, ['pork']),
   gr('g_lamb_shoulder', 'Lamb Shoulder', 'Donald Russell', 'protein', 22_99, 5, 'Joint', 52, 80),
-  gr('g_sausages', 'Cumberland Sausages', 'Debbie & Andrew’s', 'protein', 5_49, 6, 'Pack', 26, 68),
+  gr('g_sausages', 'Cumberland Sausages', 'Debbie & Andrew’s', 'protein', 5_49, 6, 'Pack', 26, 68, ['pork']),
   gr('g_prawns', 'Raw King Prawns', 'Fish Counter', 'protein', 12_99, 3, 'Pack', 22, 76),
   gr('g_cod', 'Cod Fillet', 'Fish Counter', 'protein', 13_49, 3, 'Fillet', 26, 78),
   gr('g_sea_bass', 'Sea Bass Fillet', 'Fish Counter', 'protein', 14_99, 3, 'Fillet', 24, 80),
   gr('g_mussels', 'Rope Grown Mussels', 'Fish Counter', 'protein', 6_99, 2, 'Bag', 18, 74),
   gr('g_anchovies', 'Anchovy Fillets In Olive Oil', 'Ortiz', 'pantry', 6_99, 540, 'Jar', 4, 82),
-  gr('g_chorizo', 'Cooking Chorizo', 'Brindisa', 'protein', 6_49, 30, 'Pack', 24, 78),
-  gr('g_pancetta', 'Pancetta', 'Levoni', 'protein', 5_99, 21, 'Pack', 22, 78),
+  gr('g_chorizo', 'Cooking Chorizo', 'Brindisa', 'protein', 6_49, 30, 'Pack', 24, 78, ['pork']),
+  gr('g_pancetta', 'Pancetta', 'Levoni', 'protein', 5_99, 21, 'Pack', 22, 78, ['pork']),
   // --- The tins, the jars and the dry goods --------------------------------
   gr('g_chopped_tomatoes', 'Chopped Tomatoes', 'Mutti', 'pantry', 1_99, 720, 'Tin', 7, 76),
   gr('g_tomato_puree', 'Tomato Purée', 'Mutti', 'pantry', 2_29, 540, 'Tube', 3, 76),
@@ -107,7 +108,7 @@ export const REAL_LARDER: readonly RealGood[] = [
   gr('g_coconut_milk', 'Coconut Milk', 'Chaokoh', 'pantry', 2_49, 720, 'Tin', 12, 70),
   gr('g_stock_chicken', 'Chicken Stock', 'Kallo', 'pantry', 2_99, 360, 'Pack', 3, 66),
   gr('g_stock_veg', 'Vegetable Stock', 'Marigold', 'pantry', 4_49, 360, 'Tub', 3, 72),
-  gr('g_stock_beef', 'Beef Stock', 'Knorr', 'pantry', 2_79, 360, 'Pack', 3, 64),
+  gr('g_stock_beef', 'Beef Stock', 'Knorr', 'pantry', 2_79, 360, 'Pack', 3, 64, ['beef']),
   gr('g_capers', 'Capers In Brine', 'Belazu', 'pantry', 3_99, 720, 'Jar', 2, 78),
   gr('g_olives', 'Nocellara Olives', 'Belazu', 'pantry', 4_49, 180, 'Tub', 6, 80),
   gr('g_sun_dried_tomatoes', 'Sun Dried Tomatoes', 'Belazu', 'pantry', 4_99, 360, 'Jar', 6, 78),

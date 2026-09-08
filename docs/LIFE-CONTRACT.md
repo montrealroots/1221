@@ -72,8 +72,27 @@ assortment, every branch in every tested market clears a hundred real products,
 and the shop floor is walked as aisles with a rotating front table rather than
 a twelve-item rail. `MINIMUM_ASSORTMENT` is enforced by test.
 
-Still to come: the assortment should differ between two branches of the same
-chain in different countries, because it really does.
+And it does differ between two branches of the same chain in different
+countries, because it really does. Three things decide it and all three are
+real. What may lawfully or customarily be sold there: alcohol is not on an
+ordinary shelf in twelve countries and is behind a state monopoly counter in
+Sweden, Norway, Finland and Iceland; pork is not sold in twelve and is in a
+separate licensed room in seven; beef is restricted across India. What the
+weather asks for: nobody in Singapore is sent a heavy coat and nobody in
+Reykjavik is sent much swimwear, so a Zara in one is not a Zara in the other.
+And which brands trade in that market, which the catalogue already carried.
+
+Where a shelf is missing something the shop says which arrangement left it off,
+by name, rather than quietly not having it. Fifty one chains were compared
+across two countries and not one of them carried the same shop twice.
+
+A product is classified off its own tags and never off its name, because
+Virgin olive oil contains "gin", a Hamilton watch contains "ham" and a Champion
+sweatshirt contains it twice; the checker fails the build if a grocery is pork
+or beef and does not say so on itself. The fourth thing — how deep one branch
+goes into the range it could carry — is SLATE's own, because no company
+publishes its buy, and however small a branch is it still carries the hundred
+products every branch promises.
 
 ---
 
