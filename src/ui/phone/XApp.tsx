@@ -37,10 +37,11 @@ import {
 } from '@/engine/systems/socialapps';
 import { SOCIAL_TOPIC_LABEL, type SocialTopic } from '@/engine/content/socialworld';
 import {
-  AskGlyph, BackGlyph, BellGlyph, BookmarkGlyph, BubbleGlyph, ComposeGlyph, GearGlyph,
-  HeartGlyph, HelpGlyph, HomeGlyph, ListGlyph, PeopleGlyph, PlusGlyph, ReelsGlyph, RepostGlyph,
-  RocketGlyph, SearchGlyph, SendGlyph, ShieldGlyph, SpacesGlyph, TickGlyph, TimelineGlyph,
-  ViewsGlyph, YouGlyph,
+  AccessGlyph, AccountGlyph, AddPersonGlyph, AskGlyph, BackGlyph, BellGlyph, BookmarkGlyph,
+  BubbleGlyph, ChevronRightGlyph, CloseGlyph, ComposeGlyph, DeviceGlyph, GearGlyph, HeartGlyph,
+  HelpGlyph, HistoryGlyph, HomeGlyph, ListGlyph, LockGlyph, MoreRingGlyph, PasscodeGlyph,
+  PeopleGlyph, PlusGlyph, RepostGlyph, RocketGlyph, SearchGlyph, SendGlyph, ShieldGlyph,
+  SpacesGlyph, TickGlyph, TimelineGlyph, ViewsGlyph, YouGlyph,
 } from './Icons';
 import { Avatar, ago, tally, tint, views } from './YouTubeExtras';
 import { EmojiRow } from './EmojiRow';
@@ -138,14 +139,19 @@ export function XApp({ theme }: { theme: PhoneTheme }) {
                 </button>
                 <span className="ph-mid"><span className="ph-so-word ph-x">X</span></span>
                 <span className="ph-right">
-                  <button type="button" className="ph-iconbtn" aria-label="Settings" onClick={() => setScreen('settings')}>
-                    <GearGlyph size={20} />
+                  <button type="button" className="ph-iconbtn" aria-label="Find People" onClick={() => setTab('explore')}>
+                    <AddPersonGlyph size={22} />
                   </button>
                 </span>
               </div>
-              <div className="ph-x-tabs">
-                <button type="button" className={lane === 'foryou' ? 'ph-on' : ''} onClick={() => setLane('foryou')}>For You</button>
+              <div className="ph-x-tabs ph-x-lanes">
+                <button type="button" className={lane === 'foryou' ? 'ph-on' : ''} onClick={() => setLane('foryou')}>
+                  For You<i className="ph-caret" aria-hidden="true" />
+                </button>
                 <button type="button" className={lane === 'following' ? 'ph-on' : ''} onClick={() => setLane('following')}>Following</button>
+                <button type="button" className="ph-x-lane-add" aria-label="Your Lists" onClick={() => setScreen('lists')}>
+                  <PlusGlyph size={18} />
+                </button>
               </div>
               <div className="ph-body">
                 <HomeLane lane={lane} {...rowProps} />
@@ -156,12 +162,27 @@ export function XApp({ theme }: { theme: PhoneTheme }) {
             </>
           )}
 
-          {tab === 'explore' && <ExplorePage mine={mine} onDrawer={() => setDrawer(true)} onSettings={() => setScreen('settings')} {...rowProps} />}
+          {tab === 'explore' && (
+            <ExplorePage
+              mine={mine}
+              onDrawer={() => setDrawer(true)}
+              onSettings={() => setScreen('settings')}
+              onCompose={() => setScreen('compose')}
+              {...rowProps}
+            />
+          )}
 
           {tab === 'ask' && <AskPage mine={mine} onDrawer={() => setDrawer(true)} say={say} />}
 
           {tab === 'notices' && (
-            <NoticesPage mine={mine} now={now} onDrawer={() => setDrawer(true)} onOpen={setOpenId} onSettings={() => setScreen('settings')} />
+            <NoticesPage
+              mine={mine}
+              now={now}
+              onDrawer={() => setDrawer(true)}
+              onOpen={setOpenId}
+              onSettings={() => setScreen('settings')}
+              onCompose={() => setScreen('compose')}
+            />
           )}
 
           {tab === 'chat' && (
@@ -208,7 +229,14 @@ function Drawer({
     <div className="ph-drawer">
       <div className="ph-drawer-panel">
         <div className="ph-drawer-head">
-          <Avatar name={mine?.name ?? 'You'} size={46} image={mine?.avatarImage} />
+          <div className="ph-drawer-row">
+            <Avatar name={mine?.name ?? 'You'} size={46} image={mine?.avatarImage} />
+            <span className="ph-drawer-chips">
+              <button type="button" aria-label="Your Account" onClick={onProfile}><AccountGlyph size={19} /></button>
+              <button type="button" aria-label="Premium" onClick={() => onGo('premium')}><TickGlyph size={13} /></button>
+              <button type="button" aria-label="More" onClick={() => onGo('settings')}><MoreRingGlyph size={19} /></button>
+            </span>
+          </div>
           <b>{mine?.name ?? 'No Account Yet'}</b>
           <small>@{mine?.handle ?? 'yourname'}</small>
           <div className="ph-drawer-counts">
@@ -216,22 +244,22 @@ function Drawer({
             <b>{views(mine?.followers ?? 0)}</b> Followers
           </div>
         </div>
-        <button type="button" className="ph-drawer-link" onClick={onProfile}><YouGlyph size={22} />Profile</button>
-        <button type="button" className="ph-drawer-link" onClick={() => onGo('premium')}><TickGlyph size={18} />Premium</button>
-        <button type="button" className="ph-drawer-link" onClick={() => onGo('bookmarks')}><BookmarkGlyph size={22} />Bookmarks</button>
-        <button type="button" className="ph-drawer-link" onClick={() => onGo('communities')}><PeopleGlyph size={22} />Communities</button>
-        <button type="button" className="ph-drawer-link" onClick={() => onGo('lists')}><ListGlyph size={22} />Lists</button>
-        <button type="button" className="ph-drawer-link" onClick={() => onGo('spaces')}><SpacesGlyph size={22} />Spaces</button>
-        <button type="button" className="ph-drawer-link" onClick={() => onGo('studio')}><RocketGlyph size={22} />Creator Studio</button>
+        <button type="button" className="ph-drawer-link" onClick={onProfile}><YouGlyph size={24} />Profile</button>
+        <button type="button" className="ph-drawer-link" onClick={() => onGo('premium')}><TickGlyph size={19} />Premium</button>
+        <button type="button" className="ph-drawer-link" onClick={() => onGo('bookmarks')}><BookmarkGlyph size={24} />History</button>
+        <button type="button" className="ph-drawer-link" onClick={() => onGo('communities')}><PeopleGlyph size={24} />Communities</button>
+        <button type="button" className="ph-drawer-link" onClick={() => onGo('lists')}><ListGlyph size={24} />Lists</button>
+        <button type="button" className="ph-drawer-link" onClick={() => onGo('spaces')}><SpacesGlyph size={24} />Spaces</button>
+        <button type="button" className="ph-drawer-link" onClick={() => onGo('studio')}><RocketGlyph size={24} />Creator Studio</button>
         <hr />
-        <button type="button" className="ph-drawer-link" style={{ fontSize: 15 }} onClick={() => { onClose(); say('The assistant is the third icon along the bottom.'); }}>
-          <AskGlyph size={20} />Open The Assistant
+        <button type="button" className="ph-drawer-link ph-small" onClick={() => { onClose(); say('The assistant is the third icon along the bottom.'); }}>
+          <AskGlyph size={21} />Open The Assistant
         </button>
-        <button type="button" className="ph-drawer-link" style={{ fontSize: 15 }} onClick={() => onGo('settings')}>
-          <GearGlyph size={20} />Settings And Privacy
+        <button type="button" className="ph-drawer-link ph-small" onClick={() => onGo('settings')}>
+          <GearGlyph size={21} />Settings And Privacy
         </button>
-        <button type="button" className="ph-drawer-link" style={{ fontSize: 15 }} onClick={() => { onClose(); say('Everything on this phone is SLATE’s own. Nothing leaves the game.'); }}>
-          <HelpGlyph size={20} />Help Center
+        <button type="button" className="ph-drawer-link ph-small" onClick={() => { onClose(); say('Everything on this phone is SLATE’s own. Nothing leaves the game.'); }}>
+          <HelpGlyph size={21} />Help Center
         </button>
       </div>
       <button type="button" className="ph-drawer-shade" onClick={onClose} aria-label="Close The Menu" />
@@ -452,8 +480,11 @@ const LANE_LABEL: Readonly<Record<string, string>> = {
 };
 
 function ExplorePage({
-  mine, onDrawer, onSettings, now, onOpen, onWho, onQuote, say,
-}: RowProps & { mine: SocialProfile | undefined; onDrawer: () => void; onSettings: () => void }) {
+  mine, onDrawer, onSettings, onCompose, now, onOpen, onWho, onQuote, say,
+}: RowProps & {
+  mine: SocialProfile | undefined; onDrawer: () => void;
+  onSettings: () => void; onCompose: () => void;
+}) {
   const [query, setQuery] = useState('');
   const [lane, setLane] = useState<(typeof EXPLORE_LANES)[number]>('explore');
   const list = useWorld((s) => trends(s, 12));
@@ -470,13 +501,15 @@ function ExplorePage({
         <button type="button" className="ph-iconbtn" aria-label="Your Menu" onClick={onDrawer}>
           <Avatar name={mine?.name ?? 'You'} size={30} image={mine?.avatarImage} />
         </button>
-        <input
-          className="ph-input"
-          style={{ margin: '0 10px', borderRadius: 999 }}
-          value={query}
-          placeholder="Search"
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        <span className="ph-x-find">
+          <SearchGlyph size={17} />
+          <input
+            value={query}
+            placeholder="Search"
+            aria-label="Search"
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </span>
         <span className="ph-right">
           <button type="button" className="ph-iconbtn" aria-label="Settings" onClick={onSettings}><GearGlyph size={20} /></button>
         </span>
@@ -536,6 +569,9 @@ function ExplorePage({
           </>
         )}
       </div>
+      <button type="button" className="ph-fab" aria-label="New Post" onClick={onCompose}>
+        <PlusGlyph size={22} />
+      </button>
     </>
   );
 }
@@ -545,12 +581,15 @@ function ExplorePage({
 // ---------------------------------------------------------------------------
 
 function NoticesPage({
-  mine, now, onDrawer, onOpen, onSettings,
+  mine, now, onDrawer, onOpen, onSettings, onCompose,
 }: {
   mine: SocialProfile | undefined; now: number;
   onDrawer: () => void; onOpen: (id: string) => void; onSettings: () => void;
+  onCompose: () => void;
 }) {
+  const { run } = useGame();
   const [lane, setLane] = useState<'all' | 'mentions'>('all');
+  const [hideBanner, setHideBanner] = useState(false);
   const items = useWorld((s) => (mine ? catalogOf(s, mine) : []));
   const replies = useWorld((s) => Object.values(s.universe.socialItems)
     .filter((i) => i.kind === 'reply' && i.byPlayer && i.platform === TEXT_PLATFORM)
@@ -569,16 +608,31 @@ function NoticesPage({
         </span>
       </div>
       <div className="ph-x-tabs">
-        <button type="button" className={lane === 'all' ? 'ph-on' : ''} onClick={() => setLane('all')}>All</button>
+        <button type="button" className={lane === 'all' ? 'ph-on' : ''} onClick={() => setLane('all')}>
+          <BellGlyph size={16} />All
+        </button>
         <button type="button" className={lane === 'mentions' ? 'ph-on' : ''} onClick={() => setLane('mentions')}>Mentions</button>
       </div>
       <div className="ph-body">
-        {!settings.notificationsOn && (
-          <div className="ph-panel">
-            <b style={{ fontSize: 14 }}>Notifications Paused</b>
-            <p className="ph-card-meta">
-              Nothing from either app interrupts your day while this is off. It still happens here.
-            </p>
+        {!settings.notificationsOn && !hideBanner && (
+          <div className="ph-x-notice">
+            <div className="ph-x-notice-text">
+              <b>Notifications Paused</b>
+              <p>Nothing from either app interrupts your day while this is off. It all still happens, and it is all still here.</p>
+            </div>
+            <button
+              type="button"
+              className="ph-switch"
+              role="switch"
+              aria-checked={settings.notificationsOn}
+              aria-label="Notifications"
+              onClick={() => run('feed.settings', { notificationsOn: true }, { silent: true })}
+            >
+              <span />
+            </button>
+            <button type="button" className="ph-x-notice-x" aria-label="Dismiss" onClick={() => setHideBanner(true)}>
+              <CloseGlyph size={17} />
+            </button>
           </div>
         )}
         {!mine && <p className="ph-empty"><b>Nothing Yet</b>Make an account and this fills up.</p>}
@@ -587,8 +641,9 @@ function NoticesPage({
         )}
         {mine && lane === 'all' && items.map((item) => (
           <button key={item.id} type="button" className="ph-note-row" onClick={() => onOpen(item.id)}>
-            <span style={{ color: 'var(--ph-red)' }}><HeartGlyph size={20} filled /></span>
+            <span style={{ color: 'var(--ph-red)' }}><HeartGlyph size={22} filled /></span>
             <span className="ph-note-body">
+              <i>Your Post</i>
               <b>{tally(item.likes, 'like')} and {tally(item.reposts, 'repost')} · {ago(now, item.at)}</b>
               <p>{item.text}</p>
             </span>
@@ -599,14 +654,18 @@ function NoticesPage({
         )}
         {mine && lane === 'mentions' && replies.map((reply) => (
           <button key={reply.id} type="button" className="ph-note-row" onClick={() => onOpen(reply.parentId ?? reply.id)}>
-            <span style={{ color: 'var(--ph-blue)' }}><BubbleGlyph size={20} /></span>
+            <span style={{ color: 'var(--ph-blue)' }}><BubbleGlyph size={22} /></span>
             <span className="ph-note-body">
-              <b>You replied · {ago(now, reply.at)}</b>
+              <i>Replies</i>
+              <b>You Replied · {ago(now, reply.at)}</b>
               <p>{reply.text}</p>
             </span>
           </button>
         ))}
       </div>
+      <button type="button" className="ph-fab" aria-label="New Post" onClick={onCompose}>
+        <PlusGlyph size={22} />
+      </button>
     </>
   );
 }
@@ -623,6 +682,10 @@ function ChatPage({
 }) {
   const threads = useWorld((s) => threadsOf(s).filter((t) => t.profile.platform === TEXT_PLATFORM));
   const [query, setQuery] = useState('');
+  const [about, setAbout] = useState(false);
+  /** The welcome shows once, on an empty inbox, until it is read and dismissed. */
+  const [readIt, setReadIt] = useState(false);
+  const welcome = about || (threads.length === 0 && !readIt && query.trim().length < 2);
   const found = useWorld((s) => searchSocial(s, TEXT_PLATFORM, query));
 
   return (
@@ -632,12 +695,48 @@ function ChatPage({
           <Avatar name={mine?.name ?? 'You'} size={30} image={mine?.avatarImage} />
         </button>
         <span className="ph-mid"><b style={{ fontSize: 17 }}>Chat</b></span>
-        <span className="ph-right"><ComposeGlyph size={20} /></span>
+        <span className="ph-right">
+          <button type="button" className="ph-iconbtn" aria-label="What This Is" onClick={() => setAbout(true)}>
+            <HelpGlyph size={21} />
+          </button>
+        </span>
       </div>
       <div className="ph-body">
+        {welcome && (
+          <div className="ph-x-welcome">
+            <h2>Welcome To Chat</h2>
+            <div className="ph-x-welcome-row">
+              <LockGlyph size={26} />
+              <span>
+                <b>Nothing Leaves The Game</b>
+                <p>What you write here is written into your save and nowhere else. There is no server on the other end of it.</p>
+              </span>
+            </div>
+            <div className="ph-x-welcome-row">
+              <ShieldGlyph size={26} />
+              <span>
+                <b>One Save, One Set Of Messages</b>
+                <p>Every save carries its own conversations. Nothing crosses between them, and nothing crosses between characters.</p>
+              </span>
+            </div>
+            <div className="ph-x-welcome-row">
+              <PasscodeGlyph size={26} />
+              <span>
+                <b>No Passcode To Set</b>
+                <p>The app asks for one. SLATE does not, because there is nothing here another person could reach.</p>
+              </span>
+            </div>
+            <button type="button" className="ph-x-welcome-go" onClick={() => { setAbout(false); setReadIt(true); }}>
+              {threads.length === 0 ? 'Find Somebody To Write To' : 'Back To Your Messages'}
+            </button>
+            <small className="ph-x-welcome-foot">Whether anybody answers is up to them.</small>
+          </div>
+        )}
+        {!welcome && (
         <div style={{ padding: 10 }}>
           <input className="ph-input" value={query} placeholder="Search for somebody" onChange={(e) => setQuery(e.target.value)} />
         </div>
+        )}
         {query.trim().length >= 2 ? (
           found.profiles.length === 0
             ? <p className="ph-empty">Nothing for that.</p>
@@ -650,12 +749,7 @@ function ChatPage({
                 </span>
               </button>
             ))
-        ) : threads.length === 0 ? (
-          <p className="ph-empty">
-            <b>Nothing In Here</b>
-            Search for somebody above and write to them. Whether they answer is up to them.
-          </p>
-        ) : threads.map((thread) => (
+        ) : welcome ? null : threads.map((thread) => (
           <button key={thread.profile.id} type="button" className="ph-dm-row" onClick={() => onOpen(thread.profile.id)}>
             <Avatar name={thread.profile.name} size={44} image={thread.profile.avatarImage} />
             <span className="ph-dm-text">
@@ -1315,6 +1409,7 @@ function AskPage({
   mine, onDrawer, say,
 }: { mine: SocialProfile | undefined; onDrawer: () => void; say: (text: string) => void }) {
   const [question, setQuestion] = useState('');
+  const [hideCard, setHideCard] = useState(false);
   const [log, setLog] = useState<{ mine: boolean; text: string }[]>([]);
   const list = useWorld((s) => trends(s, 5));
   const stats = useWorld((s) => (mine ? socialAnalytics(s, mine.id) : undefined));
@@ -1357,12 +1452,22 @@ function AskPage({
         </button>
         <span className="ph-mid" />
         <span className="ph-right">
-          <button type="button" className="ph-iconbtn" aria-label="Clear" onClick={() => { setLog([]); say('Cleared.'); }}>
-            <TimelineGlyph size={20} />
+          <button type="button" className="ph-iconbtn" aria-label="Clear The Conversation" onClick={() => { setLog([]); say('Cleared.'); }}>
+            <HistoryGlyph size={21} />
           </button>
         </span>
       </div>
       <div className="ph-grok">
+        {!hideCard && (
+          <div className="ph-grok-card">
+            <span className="ph-grok-card-mark" aria-hidden="true"><AskGlyph size={30} /></span>
+            <span className="ph-grok-card-text">
+              <b>The Assistant Reads This Save</b>
+              <small>It has no other source and will say so rather than guess.</small>
+            </span>
+            <button type="button" aria-label="Dismiss" onClick={() => setHideCard(true)}><CloseGlyph size={17} /></button>
+          </div>
+        )}
         <div className="ph-grok-log">
           {log.length === 0 ? (
             <span className="ph-grok-mark" aria-hidden="true"><AskGlyph size={72} /></span>
@@ -1373,10 +1478,18 @@ function AskPage({
           )}
         </div>
         <div className="ph-grok-tiles">
-          <button type="button" onClick={() => ask('What is trending?')}>What Is Trending</button>
-          <button type="button" onClick={() => ask('How did my posts do?')}>How My Posts Did</button>
-          <button type="button" onClick={() => ask('How long have I been on here?')}>My Time Here</button>
-          <button type="button" onClick={() => ask('How does the money work?')}>How The Money Works</button>
+          <button type="button" onClick={() => ask('What is trending?')}>
+            <TimelineGlyph size={20} />What Is Trending
+          </button>
+          <button type="button" onClick={() => ask('How did my posts do?')}>
+            <ViewsGlyph size={20} />How My Posts Did
+          </button>
+          <button type="button" onClick={() => ask('How long have I been on here?')}>
+            <HistoryGlyph size={20} />My Time Here
+          </button>
+          <button type="button" onClick={() => ask('How does the money work?')}>
+            <TickGlyph size={16} />How The Money Works
+          </button>
         </div>
         <div className="ph-grok-ask">
           <input
@@ -1386,7 +1499,12 @@ function AskPage({
             onChange={(e) => setQuestion(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') ask(question); }}
           />
-          <button type="button" className="ph-btn-solid" onClick={() => ask(question)}>Ask</button>
+          <div className="ph-grok-ask-foot">
+            <small>Nothing typed here leaves the game.</small>
+            <button type="button" className="ph-grok-send" onClick={() => ask(question)}>
+              <SendGlyph size={16} />Ask
+            </button>
+          </div>
         </div>
       </div>
     </>
@@ -1659,11 +1777,12 @@ function SetRow({
 }: { icon: React.ReactNode; title: string; body: string; value?: string; onClick?: () => void }) {
   return (
     <button type="button" className="ph-x-set" onClick={onClick} disabled={!onClick}>
-      <span style={{ color: 'var(--ph-muted)', paddingTop: 2 }}>{icon}</span>
+      <span className="ph-x-set-icon">{icon}</span>
       <span className="ph-x-set-body">
         <b>{title}{value ? ` · ${value}` : ''}</b>
         <p>{body}</p>
       </span>
+      <span className="ph-x-set-go" aria-hidden="true"><ChevronRightGlyph size={16} /></span>
     </button>
   );
 }
@@ -1686,17 +1805,17 @@ function SettingsPage({
   const rows = [
     {
       key: 'account',
-      icon: <YouGlyph size={20} />,
+      icon: <AccountGlyph size={22} />,
       title: 'Your Account',
       body: `The account this phone is signed in to${mine ? `, which is @${mine.handle}` : '. You have not made one yet'}.`,
       onClick: () => say(mine ? `Joined ${new Date(mine.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })}.` : 'Make one from the Profile tab.'),
     },
     {
       key: 'privacy',
-      icon: <ShieldGlyph size={20} />,
+      icon: <ShieldGlyph size={22} />,
       title: 'Privacy And Safety',
       body: 'Who can see what you post, and who cannot reach you at all.',
-      value: `${settings.blockedProfileIds.length} blocked`,
+      value: `${settings.blockedProfileIds.length} Blocked`,
       onClick: () => say(`${settings.blockedProfileIds.length} blocked, ${settings.mutedProfileIds.length} muted. Block and mute are on each account's page.`),
     },
     {
@@ -1709,7 +1828,7 @@ function SettingsPage({
     },
     {
       key: 'timeline',
-      icon: <TimelineGlyph size={20} />,
+      icon: <TimelineGlyph size={22} />,
       title: 'Timeline',
       body: 'Whether the counts under a post are shown to you at all.',
       value: settings.hideCounts ? 'Counts Hidden' : 'Counts Shown',
@@ -1717,7 +1836,7 @@ function SettingsPage({
     },
     {
       key: 'notifications',
-      icon: <BellGlyph size={20} />,
+      icon: <BellGlyph size={22} />,
       title: 'Notifications',
       body: 'Whether anything from either app is allowed to interrupt your day.',
       value: settings.notificationsOn ? 'On' : 'Paused',
@@ -1725,22 +1844,22 @@ function SettingsPage({
     },
     {
       key: 'storage',
-      icon: <ReelsGlyph size={20} />,
+      icon: <DeviceGlyph size={22} />,
       title: 'Storage',
       body: 'What this app is keeping inside your save.',
-      value: `${items} kept`,
+      value: `${items} Kept`,
       onClick: () => say(`${items} posts, replies and marks of your own are stored. Everybody else's is worked out when you look at it, which is why the save stays small.`),
     },
     {
       key: 'time',
-      icon: <ViewsGlyph size={20} />,
+      icon: <AccessGlyph size={22} />,
       title: 'Your Time Here',
       body: 'The minutes this app has actually taken out of today.',
       value: `${minutes} Min`,
     },
     {
       key: 'about',
-      icon: <HelpGlyph size={20} />,
+      icon: <MoreRingGlyph size={22} />,
       title: 'Additional Resources',
       body: 'The accounts here are SLATE’s own. Nobody real is named, and nothing you write leaves the game.',
     },
@@ -1751,17 +1870,18 @@ function SettingsPage({
 
   return (
     <>
-      <div className="ph-so-top">
+      <div className="ph-x-settop">
         <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Back"><BackGlyph /></button>
-        <span style={{ textAlign: 'center' }}>
-          <b style={{ fontSize: 15, display: 'block' }}>Settings</b>
-          <small style={{ color: 'var(--ph-muted)', fontSize: 11.5 }}>@{mine?.handle ?? 'yourname'}</small>
+        <span className="ph-x-settop-title">
+          <b>Settings</b>
+          <small>@{mine?.handle ?? 'yourname'}</small>
         </span>
         <span style={{ width: 22 }} />
       </div>
       <div className="ph-body">
-        <div style={{ padding: 10 }}>
-          <input className="ph-input" style={{ borderRadius: 999 }} value={query} placeholder="Search settings" onChange={(e) => setQuery(e.target.value)} />
+        <div className="ph-x-setfind">
+          <SearchGlyph size={17} />
+          <input value={query} placeholder="Search settings" aria-label="Search Settings" onChange={(e) => setQuery(e.target.value)} />
         </div>
         {rows.length === 0 && <p className="ph-empty">Nothing matching that.</p>}
         {rows.map((row) => (

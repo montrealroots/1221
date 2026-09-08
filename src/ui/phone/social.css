@@ -42,14 +42,6 @@
 /* The photo app's wordmark leans, the way a handwritten one does. */
 .ph-so-word.ph-ig { font-family: "Snell Roundhand", "Apple Chancery", "Segoe Script", cursive; font-size: 25px; }
 .ph-so-word.ph-x { font-weight: 700; font-size: 23px; letter-spacing: -1.5px; }
-.ph-so-actions { display: flex; align-items: center; gap: 18px; }
-
-.ph-so-count {
-  position: absolute; top: -5px; right: -7px;
-  min-width: 15px; height: 15px; padding: 0 4px;
-  border-radius: 8px; background: var(--ph-red); color: #fff;
-  font-size: 9.5px; font-weight: 700; line-height: 15px; text-align: center;
-}
 .ph-so-badge-wrap { position: relative; display: inline-flex; }
 
 /* -------------------------------------------------------------------------- */
@@ -117,9 +109,6 @@
 }
 .ph-post-frame.ph-tall { aspect-ratio: 9 / 16; }
 .ph-post-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.ph-post-frame .ph-post-blank {
-  position: relative; padding: 14px; font-size: 12px; color: rgba(15, 15, 15, 0.55);
-}
 .ph-post-kind {
   position: absolute; top: 8px; right: 10px; font-size: 10.5px; font-weight: 700;
   color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
@@ -194,13 +183,25 @@
 .ph-x-tabs button.ph-on { color: var(--ph-text); font-weight: 700; }
 .ph-x-tabs button.ph-on::after {
   content: ''; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
-  width: 56px; height: 3.5px; border-radius: 2px; background: var(--ph-blue);
+  width: 56px; height: 3.5px; border-radius: 2px; background: var(--ph-text);
 }
+/* The bell sits inside the tab word on the notifications page. */
+.ph-x-tabs button { display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-.ph-tweet { display: flex; gap: 10px; padding: 11px 14px; border-bottom: 1px solid var(--ph-line); }
+/* Home carries a third cell: the button that adds a lane of your own. */
+.ph-x-lanes { grid-template-columns: 1fr 1fr 46px; }
+.ph-x-lanes .ph-caret {
+  width: 0; height: 0; margin-left: 2px; align-self: center;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-top: 4.5px solid currentColor;
+}
+.ph-x-lane-add { color: var(--ph-text); }
+.ph-x-lane-add.ph-on::after { display: none; }
+
+.ph-tweet { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border-bottom: 1px solid var(--ph-line); }
 .ph-tweet-body { flex: 1; min-width: 0; }
 .ph-tweet-head {
-  display: flex; align-items: baseline; gap: 4px; font-size: 13px;
+  display: flex; align-items: baseline; gap: 4px; font-size: 14.5px;
   white-space: nowrap; min-width: 0;
 }
 .ph-tweet-head b { font-weight: 700; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
@@ -211,7 +212,7 @@
   flex: none; display: inline-flex; align-items: center; justify-content: center;
   align-self: center;
 }
-.ph-tweet-text { font-size: 14px; margin: 2px 0 0; white-space: pre-wrap; word-wrap: break-word; }
+.ph-tweet-text { font-size: 15px; line-height: 1.35; margin: 3px 0 0; white-space: pre-wrap; word-wrap: break-word; }
 .ph-tweet-quote {
   margin-top: 8px; border: 1px solid var(--ph-line); border-radius: 12px; padding: 9px 11px;
   font-size: 12.5px;
@@ -219,11 +220,11 @@
 .ph-tweet-quote .ph-tweet-head { font-size: 12px; }
 .ph-tweet-actions {
   display: flex; align-items: center; justify-content: space-between;
-  margin-top: 9px; padding-right: 18px; color: var(--ph-muted);
+  margin-top: 11px; color: var(--ph-muted);
 }
 .ph-tweet-actions button {
   background: none; border: 0; padding: 0; cursor: pointer; color: inherit;
-  display: flex; align-items: center; gap: 5px; font: inherit; font-size: 11.5px;
+  display: flex; align-items: center; gap: 5px; font: inherit; font-size: 12.5px; font-weight: 600;
 }
 .ph-tweet-actions button:hover { color: var(--ph-text); }
 .ph-tweet-actions .ph-reposted { color: #00ba7c; }
@@ -481,29 +482,51 @@
 .ph-x-rail button.ph-on { color: var(--ph-text); font-weight: 700; }
 .ph-x-rail button.ph-on::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0;
-  height: 3.5px; border-radius: 2px; background: var(--ph-blue);
+  height: 3.5px; border-radius: 2px; background: var(--ph-text);
 }
+
+/* The search field the app puts in its own bar, and in Settings. */
+.ph-x-find, .ph-x-setfind {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--ph-chip); color: var(--ph-muted);
+}
+.ph-x-find { margin: 0 10px; justify-content: center; }
+.ph-x-setfind { margin: 4px 14px 10px; justify-content: center; }
+.ph-x-find input, .ph-x-setfind input {
+  border: 0; background: none; color: var(--ph-text); font: inherit; font-size: 15px; outline: none;
+}
+.ph-x-find input { width: 190px; }
+.ph-x-setfind input { width: 150px; text-align: left; }
 
 /* The drawer behind your own picture. */
 .ph-drawer {
   position: absolute; inset: 0; z-index: 14; display: flex;
 }
 .ph-drawer-panel {
-  width: 82%; background: var(--ph-bg); padding: 14px 0 0;
+  width: 76%; background: var(--ph-bg); padding: 12px 0 0;
   display: flex; flex-direction: column; overflow-y: auto;
 }
-.ph-drawer-shade { flex: 1; background: rgba(0, 0, 0, 0.55); border: 0; cursor: pointer; }
-.ph-drawer-head { padding: 0 16px 12px; }
-.ph-drawer-head b { display: block; font-size: 16px; margin-top: 8px; }
-.ph-drawer-head small { display: block; color: var(--ph-muted); font-size: 13px; }
-.ph-drawer-counts { margin-top: 8px; font-size: 13px; color: var(--ph-muted); }
-.ph-drawer-counts b { display: inline; color: var(--ph-text); font-size: 13px; }
-.ph-drawer-link {
-  display: flex; align-items: center; gap: 18px; width: 100%;
-  padding: 13px 16px; border: 0; background: none; cursor: pointer;
-  color: var(--ph-text); font: inherit; font-size: 17px; font-weight: 700; text-align: left;
+.ph-drawer-shade { flex: 1; background: rgba(0, 0, 0, 0.6); border: 0; cursor: pointer; }
+.ph-drawer-head { padding: 0 16px 14px; }
+.ph-drawer-row { display: flex; align-items: center; justify-content: space-between; }
+.ph-drawer-chips { display: flex; gap: 10px; }
+.ph-drawer-chips button {
+  width: 32px; height: 32px; border-radius: 50%; flex: none; cursor: pointer;
+  border: 1px solid var(--ph-line); background: var(--ph-chip); color: var(--ph-text);
+  display: flex; align-items: center; justify-content: center; padding: 0;
 }
-.ph-drawer hr { border: 0; border-top: 1px solid var(--ph-line); margin: 10px 16px; }
+.ph-drawer-head b { display: block; font-size: 18px; margin-top: 12px; }
+.ph-drawer-head small { display: block; color: var(--ph-muted); font-size: 15px; margin-top: 1px; }
+.ph-drawer-counts { margin-top: 10px; font-size: 15px; color: var(--ph-muted); }
+.ph-drawer-counts b { display: inline; color: var(--ph-text); font-size: 15px; }
+.ph-drawer-link {
+  display: flex; align-items: center; gap: 22px; width: 100%;
+  padding: 15px 16px; border: 0; background: none; cursor: pointer;
+  color: var(--ph-text); font: inherit; font-size: 19px; font-weight: 700; text-align: left;
+}
+.ph-drawer-link.ph-small { font-size: 16px; padding: 11px 16px; }
+.ph-drawer hr { border: 0; border-top: 1px solid var(--ph-line); margin: 12px 16px; }
 
 /* Notifications. */
 .ph-note-row {
@@ -511,8 +534,30 @@
   border: 0; border-bottom: 1px solid var(--ph-line); background: none;
   cursor: pointer; color: var(--ph-text); font: inherit; text-align: left;
 }
-.ph-note-row .ph-note-body b { display: block; font-size: 14px; font-weight: 700; }
-.ph-note-row .ph-note-body p { margin: 4px 0 0; color: var(--ph-muted); font-size: 13px; }
+.ph-note-row .ph-note-body i {
+  display: block; font-style: normal; color: var(--ph-muted); font-size: 13px; margin-bottom: 2px;
+}
+.ph-note-row .ph-note-body b { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.ph-note-row .ph-note-body p { margin: 4px 0 0; color: var(--ph-muted); font-size: 14px; line-height: 1.35; }
+
+/* The strip the app puts at the top of Notifications when they are off. */
+.ph-x-notice {
+  display: flex; align-items: center; gap: 12px; padding: 14px 14px 16px;
+  background: var(--ph-chip); position: relative;
+}
+.ph-x-notice-text { flex: 1; min-width: 0; padding-right: 14px; }
+.ph-x-notice-text b { display: block; font-size: 15px; font-weight: 700; }
+.ph-x-notice-text p { margin: 6px 0 0; color: var(--ph-muted); font-size: 13.5px; line-height: 1.35; }
+.ph-x-notice-x {
+  position: absolute; top: 10px; right: 10px; border: 0; background: none;
+  color: var(--ph-muted); cursor: pointer; padding: 2px; line-height: 0;
+}
+.ph-switch {
+  flex: none; width: 46px; height: 27px; border-radius: 999px; border: 0; padding: 2px;
+  background: #46484d; cursor: pointer; display: flex; align-items: center;
+}
+.ph-switch span { width: 23px; height: 23px; border-radius: 50%; background: #fff; display: block; }
+.ph-switch[aria-checked="true"] { background: var(--ph-blue); justify-content: flex-end; }
 
 /* Your own page. */
 .ph-x-banner { width: 100%; aspect-ratio: 3 / 1; background: linear-gradient(120deg, #1d5f9e, #4aa3e8); }
@@ -540,13 +585,42 @@
 .ph-follow-card p { margin: 6px 0 0; font-size: 12px; }
 
 /* Settings, which on this app is a title and a sentence under it. */
+.ph-x-settop {
+  flex: none; display: grid; grid-template-columns: 40px 1fr 40px; align-items: center;
+  padding: 8px 12px 10px;
+}
+.ph-x-settop-title { text-align: center; }
+.ph-x-settop-title b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -0.2px; }
+.ph-x-settop-title small { display: block; color: var(--ph-muted); font-size: 13.5px; margin-top: 1px; }
 .ph-x-set {
-  display: flex; gap: 14px; width: 100%; padding: 14px;
+  display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px 16px 18px;
   border: 0; background: none; cursor: pointer; text-align: left;
   color: var(--ph-text); font: inherit;
 }
-.ph-x-set .ph-x-set-body b { display: block; font-size: 15px; font-weight: 700; }
-.ph-x-set .ph-x-set-body p { margin: 3px 0 0; color: var(--ph-muted); font-size: 13px; }
+.ph-x-set:disabled { cursor: default; }
+.ph-x-set-icon { flex: none; width: 22px; color: var(--ph-muted); display: flex; }
+.ph-x-set .ph-x-set-body { flex: 1; min-width: 0; }
+.ph-x-set .ph-x-set-body b { display: block; font-size: 17px; font-weight: 700; }
+.ph-x-set .ph-x-set-body p { margin: 4px 0 0; color: var(--ph-muted); font-size: 14.5px; line-height: 1.35; }
+.ph-x-set-go { flex: none; color: var(--ph-muted); display: flex; }
+.ph-x-set:disabled .ph-x-set-go { visibility: hidden; }
+
+/* The welcome the chat page opens on, before there is anybody in it. */
+.ph-x-welcome { padding: 10px 20px 26px; }
+.ph-x-welcome h2 { font-size: 33px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.1; margin: 8px 0 34px; }
+.ph-x-welcome-row { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 26px; }
+.ph-x-welcome-row > :first-child { flex: none; margin-top: 2px; }
+.ph-x-welcome-row b { display: block; font-size: 16px; font-weight: 700; }
+.ph-x-welcome-row p { margin: 3px 0 0; color: var(--ph-muted); font-size: 15px; line-height: 1.35; }
+.ph-x-welcome-go {
+  width: 100%; margin-top: 18px; padding: 15px 12px; border: 0; border-radius: 999px;
+  background: var(--ph-text); color: var(--ph-bg); cursor: pointer;
+  font: inherit; font-size: 16px; font-weight: 700;
+}
+.ph-x-welcome-foot {
+  display: block; text-align: center; margin-top: 18px;
+  color: var(--ph-muted); font-size: 14px; font-weight: 600;
+}
 
 /* The assistant tab. */
 .ph-grok { flex: 1; display: flex; flex-direction: column; min-height: 0; }
@@ -557,18 +631,42 @@
 .ph-grok-tiles { display: flex; gap: 10px; overflow-x: auto; padding: 8px 12px; }
 .ph-grok-tiles::-webkit-scrollbar { display: none; }
 .ph-grok-tiles button {
-  flex: none; border: 0; border-radius: 12px; padding: 14px 16px; cursor: pointer;
+  flex: none; width: 132px; border: 1px solid var(--ph-line); border-radius: 14px;
+  padding: 14px 14px 16px; cursor: pointer;
   background: var(--ph-chip); color: var(--ph-text); font: inherit;
-  font-size: 14px; font-weight: 700; text-align: left;
+  font-size: 15px; font-weight: 700; text-align: left;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
 }
 .ph-grok-ask {
-  display: flex; gap: 8px; align-items: center;
-  margin: 6px 12px 10px; padding: 8px 10px;
-  border-radius: 20px; background: var(--ph-chip);
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 6px 12px 10px; padding: 14px 14px 10px;
+  border-radius: 22px; background: var(--ph-chip);
 }
 .ph-grok-ask input {
-  flex: 1; border: 0; background: none; color: var(--ph-text);
-  font: inherit; font-size: 14px; outline: none;
+  border: 0; background: none; color: var(--ph-text);
+  font: inherit; font-size: 16px; outline: none;
+}
+.ph-grok-ask-foot { display: flex; align-items: center; gap: 10px; }
+.ph-grok-ask-foot small { flex: 1; min-width: 0; color: var(--ph-muted); font-size: 12px; }
+.ph-grok-send {
+  flex: none; display: flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 0; border-radius: 999px; padding: 9px 18px;
+  background: var(--ph-text); color: var(--ph-bg); font: inherit; font-size: 14px; font-weight: 700;
+}
+
+/* The card the assistant opens with, saying where its answers come from. */
+.ph-grok-card {
+  display: flex; align-items: center; gap: 14px; position: relative;
+  margin: 6px 12px 2px; padding: 16px 40px 16px 16px;
+  border-radius: 16px; background: var(--ph-chip);
+}
+.ph-grok-card-mark { flex: none; display: flex; color: var(--ph-text); }
+.ph-grok-card-text { flex: 1; min-width: 0; }
+.ph-grok-card-text b { display: block; font-size: 16px; font-weight: 700; }
+.ph-grok-card-text small { display: block; color: var(--ph-muted); font-size: 14px; margin-top: 2px; }
+.ph-grok-card > button:last-child {
+  position: absolute; top: 12px; right: 12px; border: 0; background: none;
+  color: var(--ph-muted); cursor: pointer; padding: 2px; line-height: 0;
 }
 
 /* -------------------------------------------------------------------------- */

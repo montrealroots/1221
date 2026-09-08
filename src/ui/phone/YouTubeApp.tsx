@@ -2109,8 +2109,8 @@ interface SettingRow {
 /** The glyph column: an outline shape, or the Premium tile where the app puts one. */
 function SettingIcon({ row }: { row: SettingRow }) {
   const Glyph = row.icon;
-  if (row.tile) return <span className="ph-set-tile" aria-hidden="true">P</span>;
-  return <span className="ph-set-icon"><Glyph size={24} /></span>;
+  if (row.tile) return <span className="ph-yset-tile" aria-hidden="true">P</span>;
+  return <span className="ph-yset-icon"><Glyph size={24} /></span>;
 }
 
 function AppSettings({
@@ -2165,34 +2165,34 @@ function AppSettings({
 
   return (
     <>
-      <div className="ph-set-top">
+      <div className="ph-yset-top">
         <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Close"><CloseGlyph size={24} /></button>
       </div>
       <div className="ph-body">
-        <h2 className="ph-set-title">Settings</h2>
-        <div className="ph-set-find">
+        <h2 className="ph-yset-title">Settings</h2>
+        <div className="ph-yset-find">
           <SearchGlyph size={18} />
           <input value={query} placeholder="Search Settings" aria-label="Search Settings" onChange={(e) => setQuery(e.target.value)} />
         </div>
         {rows.length === 0 && <p className="ph-empty">Nothing matching that.</p>}
         {heads.map((head) => (
           <Fragment key={head}>
-            <div className="ph-set-head">{head}</div>
-            <div className="ph-set-group">
+            <div className="ph-yset-head">{head}</div>
+            <div className="ph-yset-group">
               {rows.filter((row) => row.head === head).map((row) => (
-                <button key={row.key} type="button" className="ph-set-row" onClick={row.onClick} disabled={!row.onClick}>
+                <button key={row.key} type="button" className="ph-yset-row" onClick={row.onClick} disabled={!row.onClick}>
                   <SettingIcon row={row} />
-                  <span className="ph-set-label">
+                  <span className="ph-yset-label">
                     {row.label}
                     {row.value !== undefined && <i>{row.value}</i>}
                   </span>
-                  <span className="ph-set-go" aria-hidden="true"><ChevronRightGlyph size={16} /></span>
+                  <span className="ph-yset-go" aria-hidden="true"><ChevronRightGlyph size={16} /></span>
                 </button>
               ))}
             </div>
           </Fragment>
         ))}
-        <p className="ph-set-foot">SLATE’s own video app. Everything in it is invented for the game.</p>
+        <p className="ph-yset-foot">SLATE’s own video app. Everything in it is invented for the game.</p>
       </div>
     </>
   );

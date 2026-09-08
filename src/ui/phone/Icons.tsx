@@ -187,10 +187,12 @@ export function DownGlyph({ size }: GlyphProps) {
 // --- Home screen marks ------------------------------------------------------
 
 export function GearGlyph({ size = 28 }: GlyphProps) {
+  // A cog rather than a starburst: a ring of teeth around a hub, so it still
+  // reads as a gear at the eighteen pixels a settings button gives it.
   return (
     <Svg size={size}>
-      <circle cx="12" cy="12" r="3.2" />
-      <path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7" />
+      <circle cx="12" cy="12" r="3.1" />
+      <path d="M19.2 14.4a1.6 1.6 0 0 0 .32 1.76l.06.06a1.94 1.94 0 1 1-2.74 2.74l-.06-.06a1.6 1.6 0 0 0-1.76-.32 1.6 1.6 0 0 0-.97 1.46v.16a1.94 1.94 0 0 1-3.88 0v-.08a1.6 1.6 0 0 0-1.05-1.46 1.6 1.6 0 0 0-1.76.32l-.06.06a1.94 1.94 0 1 1-2.74-2.74l.06-.06a1.6 1.6 0 0 0 .32-1.76 1.6 1.6 0 0 0-1.46-.97h-.16a1.94 1.94 0 0 1 0-3.88h.08A1.6 1.6 0 0 0 4.8 8.68a1.6 1.6 0 0 0-.32-1.76l-.06-.06a1.94 1.94 0 1 1 2.74-2.74l.06.06a1.6 1.6 0 0 0 1.76.32h.08A1.6 1.6 0 0 0 10.03 3.1v-.16a1.94 1.94 0 0 1 3.88 0v.08a1.6 1.6 0 0 0 .97 1.46 1.6 1.6 0 0 0 1.76-.32l.06-.06a1.94 1.94 0 1 1 2.74 2.74l-.06.06a1.6 1.6 0 0 0-.32 1.76v.08a1.6 1.6 0 0 0 1.46.97h.16a1.94 1.94 0 0 1 0 3.88h-.08a1.6 1.6 0 0 0-1.46.97z" />
     </Svg>
   );
 }
@@ -375,6 +377,73 @@ export function ShieldGlyph({ size }: GlyphProps) {
 /** A card with a line across it, which is what a timeline setting shows. */
 export function TimelineGlyph({ size }: GlyphProps) {
   return <Svg size={size}><rect x="3.5" y="5.5" width="17" height="13" rx="2.5" /><path d="M3.5 10h17M8 14h8" /></Svg>;
+}
+
+/** A person with a plus: the add somebody control in the text app's bar. */
+export function AddPersonGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="10" cy="8.4" r="3.6" />
+      <path d="M3.8 19.2a6.4 6.4 0 0 1 12.4 0" />
+      <path d="M18.6 6.4v5.2M16 9h5.2" />
+    </Svg>
+  );
+}
+
+/** A clock wound backwards: what an app calls history. */
+export function HistoryGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M3.6 9.4A8.6 8.6 0 1 1 3.4 13" />
+      <path d="M3.2 4.6v4.8h4.8" />
+      <path d="M12 7.6V12l3 1.8" />
+    </Svg>
+  );
+}
+
+/** A handset on its own: the storage a phone keeps. */
+export function DeviceGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="6.6" y="2.8" width="10.8" height="18.4" rx="2.4" />
+      <path d="M10.8 18.6h2.4" />
+    </Svg>
+  );
+}
+
+/** A figure in a ring: the accessibility mark an app uses. */
+export function AccessGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="8.6" />
+      <circle cx="12" cy="7.9" r="1.1" fill="currentColor" />
+      <path d="M8.2 10.4h7.6M12 10.8v4M12 14.8l-2 3.2M12 14.8l2 3.2" />
+    </Svg>
+  );
+}
+
+/** Three dots in a ring: whatever else an app lists at the bottom. */
+export function MoreRingGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="8.6" />
+      <circle cx="8.4" cy="12" r="1" fill="currentColor" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" />
+      <circle cx="15.6" cy="12" r="1" fill="currentColor" />
+    </Svg>
+  );
+}
+
+/** A keypad: the passcode a private chat asks for. */
+export function PasscodeGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="3.2" y="6.4" width="17.6" height="11.2" rx="2.6" />
+      <circle cx="8.4" cy="12" r="1.1" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.1" fill="currentColor" />
+      <path d="M15.4 12h1.8" />
+    </Svg>
+  );
 }
 
 /** The three bars an app puts its own menu behind. */

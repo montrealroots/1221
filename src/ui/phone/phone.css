@@ -436,7 +436,6 @@
 .ph-short-top .ph-iconbtn { color: #fff; }
 .ph-short-title { font-size: 15px; font-weight: 500; margin: 10px 0 0; line-height: 1.3; }
 .ph-short-title b { font-weight: 700; }
-.ph-short-meta { font-size: 12px; opacity: 0.75; }
 .ph-short-rail {
   position: absolute; right: 10px; bottom: 26px; z-index: 2;
   display: flex; flex-direction: column; gap: 18px; align-items: center;
@@ -588,48 +587,55 @@
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--ph-red);
 }
-.ph-nav .ph-plus {
-  width: 30px; height: 30px; border-radius: 50%;
-  border: 1.5px solid var(--ph-text); color: var(--ph-text);
-  display: flex; align-items: center; justify-content: center; font-size: 19px; line-height: 1;
-}
 
 /* -------------------------------------------------------------------------- */
 /* Settings app                                                               */
 /* -------------------------------------------------------------------------- */
 
-/* The app's own Settings: a close button, one big heading, then plain sections
-   of tall rows. No cards and no rounded groups — the rows run the full width
-   and the only division between sections is the heading and a hairline. */
-.ph-set-top { display: flex; align-items: center; height: 48px; padding: 0 6px; flex: none; }
-.ph-set-title { margin: 2px 16px 14px; font-size: 26px; font-weight: 700; letter-spacing: -0.4px; }
-.ph-set-find {
+/* The shared settings list: a caption, a rounded group, rows with a value on
+   the right. The phone's own Settings, the photo app and the short video app
+   all use this shape. */
+.ph-set-group { margin: 12px; border-radius: 12px; overflow: hidden; background: var(--ph-surface); }
+.ph-set-row {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 12px 14px; border: 0; border-bottom: 1px solid var(--ph-line);
+  background: none; color: var(--ph-text); font: inherit; font-size: 14px; cursor: pointer;
+}
+.ph-set-row:last-child { border-bottom: 0; }
+.ph-set-row .ph-set-value { margin-left: auto; color: var(--ph-muted); font-size: 13px; }
+.ph-set-head { padding: 14px 14px 4px; font-size: 12px; font-weight: 600; color: var(--ph-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+/* The video app's own Settings, which is a different shape entirely: a close
+   button, one big heading, then plain full width sections of tall rows. */
+.ph-yset-top { display: flex; align-items: center; height: 48px; padding: 0 6px; flex: none; }
+.ph-yset-title { margin: 2px 16px 14px; font-size: 26px; font-weight: 700; letter-spacing: -0.4px; }
+.ph-yset-find {
   display: flex; align-items: center; gap: 8px; margin: 0 16px 6px;
   padding: 8px 12px; border-radius: 999px; background: var(--ph-surface); color: var(--ph-muted);
 }
-.ph-set-find input {
+.ph-yset-find input {
   flex: 1; min-width: 0; border: 0; background: none; color: var(--ph-text);
   font: inherit; font-size: 14px; outline: none;
 }
-.ph-set-group { border-top: 1px solid var(--ph-line); }
-.ph-set-row {
+.ph-yset-group { border-top: 1px solid var(--ph-line); }
+.ph-yset-row {
   display: flex; align-items: center; gap: 18px; width: 100%; text-align: left;
   padding: 13px 16px; border: 0; background: none; color: var(--ph-text);
   font: inherit; font-size: 15px; cursor: pointer;
 }
-.ph-set-row:disabled { cursor: default; }
-.ph-set-icon { display: flex; width: 24px; flex: none; color: var(--ph-text); }
-.ph-set-tile {
+.ph-yset-row:disabled { cursor: default; }
+.ph-yset-icon { display: flex; width: 24px; flex: none; color: var(--ph-text); }
+.ph-yset-tile {
   display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;
   flex: none; border-radius: 6px; background: var(--ph-red); color: #fff;
   font-size: 15px; font-weight: 700; line-height: 1;
 }
-.ph-set-label { flex: 1; min-width: 0; line-height: 1.3; }
-.ph-set-label i { display: block; font-style: normal; font-size: 13px; color: var(--ph-muted); margin-top: 2px; }
-.ph-set-go { display: flex; flex: none; color: var(--ph-muted); }
-.ph-set-row:disabled .ph-set-go { visibility: hidden; }
-.ph-set-head { padding: 20px 16px 8px; font-size: 14px; font-weight: 600; color: var(--ph-muted); }
-.ph-set-foot { padding: 22px 16px 30px; font-size: 12px; color: var(--ph-muted); border-top: 1px solid var(--ph-line); margin-top: 8px; }
+.ph-yset-label { flex: 1; min-width: 0; line-height: 1.3; }
+.ph-yset-label i { display: block; font-style: normal; font-size: 13px; color: var(--ph-muted); margin-top: 2px; }
+.ph-yset-go { display: flex; flex: none; color: var(--ph-muted); }
+.ph-yset-row:disabled .ph-yset-go { visibility: hidden; }
+.ph-yset-head { padding: 20px 16px 8px; font-size: 14px; font-weight: 600; color: var(--ph-muted); }
+.ph-yset-foot { padding: 22px 16px 30px; font-size: 12px; color: var(--ph-muted); border-top: 1px solid var(--ph-line); margin-top: 8px; }
 
 .ph-empty { padding: 40px 24px; text-align: center; color: var(--ph-muted); font-size: 13px; }
 .ph-empty b { display: block; color: var(--ph-text); font-size: 15px; margin-bottom: 6px; }
