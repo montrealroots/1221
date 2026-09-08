@@ -565,6 +565,12 @@ before any delivery claim.
     - A moment in growing up is a decision with two or three answers rather than a scene: there is nobody in the room, and no conversation, only the choice and what it did.
     - Thirty seven moments is a childhood in outline rather than in full. What is here happens to everybody; what is not is anything particular to a place, a faith, a family or a class.
     - A shift is a command rather than a scene: there is a rota, a manager and a payslip, but no shop floor and nobody on it to talk to.
+    - An examination is a command rather than a scene: there is an entry, a revision session, a day and an envelope, but no hall, no invigilator and nobody sitting next to you.
+    - Examinations are carried on their published scales as of when they were carried. Scales get reformed — England moved GCSEs to numbers in 2017, Singapore moved the PSLE to achievement levels in 2021 — and there is no feed that would tell the game about the next one.
+    - Each examination is offered once a year in a month it really runs in. Several really run on several dates a year, and a real examination calendar changes every year.
+    - Forty four American states carry the name of their own assessment. The rest get one plainly labelled as a state assessment rather than an invented acronym, which is the honest version of not knowing.
+    - A grade boundary is SLATE's calibration and not anybody's grade boundary: real ones move every year and differ by subject and by board.
+    - A report card grades every subject on the timetable in the country's own scale, but the subjects are still SLATE's shape of a week rather than that country's curriculum vocabulary.
     - Fifty companies is the well known end of retail and food service in twenty six countries, not every employer anywhere. A city with none of them carried gets SLATE's own employer, named as SLATE's own.
     - How a company pays against the floor is SLATE's reading of a durable public reputation, not a payroll disclosure. The branch, the manager, the rota, the ladder, the promotion thresholds and the cover calls are all SLATE's own.
     - Minimum wages are carried as of the year each was set and a good number of countries and American states raise theirs every January. There is no wage feed, so a figure is right for its year rather than for today.

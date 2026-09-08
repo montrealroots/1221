@@ -1987,6 +1987,56 @@ export interface SchoolPart {
 }
 
 /** Somebody's place in the education system where they live. */
+/** One public examination, from putting a name down to the envelope arriving. */
+export interface ExamSitting {
+  id: Id;
+  /** Which test, by its id in the exam content. */
+  testId: string;
+  /** The state or province, for a test a region sets rather than a country. */
+  regionId?: string;
+  registeredAt: Instant;
+  sitsAt: Instant;
+  /** How many past papers have been worked through. */
+  prep: number;
+  /** Set on the day it is actually sat. */
+  satAt?: Instant;
+  /** On the test's own scale, and not shown until the results are released. */
+  score?: number;
+  sections?: { id: string; label: string; score: number }[];
+  resultsAt?: Instant;
+  released?: boolean;
+  /** How many times it had already been sat when this one was entered. */
+  attempt: number;
+}
+
+/** One subject's line on a report. */
+export interface ReportLine {
+  subjectId: string;
+  /** SLATE's own mark out of a hundred, behind the grade. */
+  mark: number;
+  /** What the country actually prints. */
+  grade: string;
+  effort: string;
+  comment: string;
+  /** Percent of that subject's lessons attended. */
+  attendance: number;
+}
+
+/** What comes home at the end of a term, or halfway through one. */
+export interface ReportCard {
+  id: Id;
+  at: Instant;
+  kind: 'report' | 'progress';
+  termLabel: string;
+  lines: ReportLine[];
+  average: number;
+  /** The average the country reports alongside it, where it reports one. */
+  averageLabel?: string;
+  averageValue?: number;
+  attendance: number;
+  headline: string;
+}
+
 export interface Schooling {
   id: Id;
   saveId: Id;
@@ -2006,6 +2056,12 @@ export interface Schooling {
   parts: SchoolPart[];
   /** Qualifications already earned, oldest first. */
   results: { name: string; stageId: string; average: number; at: Instant }[];
+  /** Public examinations entered for or already sat. */
+  sittings: ExamSitting[];
+  /** Report cards and progress reports, oldest first. */
+  reports: ReportCard[];
+  /** When the next one comes home. */
+  nextReportAt?: Instant;
   startedAt: Instant;
   /** Set when they left, finished or moved on. */
   endedAt?: Instant;
@@ -3393,7 +3449,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 67;
+export const SAVE_SCHEMA_VERSION = 68;
 
 export interface SaveMeta {
   id: Id;

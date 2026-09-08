@@ -268,6 +268,8 @@ export function ensureSchooling(sim: Simulation, person: Person = sim.player): S
       missed: 0,
     })),
     clubs: [],
+    sittings: [],
+    reports: [],
     parts: [],
     results: current?.results ? [...current.results] : [],
     startedAt: sim.now,
@@ -361,6 +363,8 @@ export function ensureSchoolLeaver(sim: Simulation, person: Person = sim.player)
     timetable: [],
     marks,
     clubs: [],
+    sittings: [],
+    reports: [],
     parts: [],
     results: last.exam
       ? [{ name: last.exam.name, stageId: last.id, average, at: ended }]

@@ -54,6 +54,7 @@ import { ensureSchoolLeaver, ensureSchooling, registerSchool } from './systems/s
 import { registerUniversity } from './systems/university';
 import { registerAthletics } from './systems/athletics';
 import { registerGrowing, startGrowingUp } from './systems/growing';
+import { registerExamSchedules, registerExams, startExams } from './systems/exams';
 import { registerWork } from './systems/work';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
@@ -129,6 +130,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerUniversity(sim);
   registerAthletics(sim);
   registerGrowing(sim);
+  registerExams(sim);
+  registerExamSchedules(sim);
   registerWork(sim);
   registerBanking(sim);
   registerDining(sim);
@@ -214,6 +217,9 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // And the years themselves: the moments that come round, and the pocket
   // money while somebody is still young enough to be given any.
   startGrowingUp(sim, player);
+  // The school year itself: the report that comes home at the end of a term
+  // and the national assessments that happen to you rather than being chosen.
+  startExams(sim);
 
   // --- Accounts -----------------------------------------------------------
   // A character old enough to sign opens the company this morning, so the
@@ -538,6 +544,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureSchoolLeaver(sim);
   // Growing up, for a save from before it existed (idempotent; growing.ts).
   startGrowingUp(sim);
+  // The reports and the national assessments, for a save from before either
+  // existed or one whose report calendar has run out (idempotent; exams.ts).
+  startExams(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -1178,6 +1187,18 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.growing ??= {};
     universe.firstJobs ??= {};
     steps.push('Growing up, the moments that come round in it, and the Saturday job.');
+  }
+
+  if (from < 68) {
+    // Schema 68: school carries the examinations somebody sat and the reports
+    // that came home. A save from before them has neither, and is given the
+    // empty lists rather than a missing field the code has to guard.
+    for (const schooling of Object.values(universe.schooling ?? {})) {
+      const record = schooling as { sittings?: unknown[]; reports?: unknown[] };
+      record.sittings ??= [];
+      record.reports ??= [];
+    }
+    steps.push('The big tests, and the report card that comes home.');
   }
 
   if (from < 67) {

@@ -916,6 +916,36 @@ answer says what would make it yes.
    through the same published rates the rest of the game's tax uses. You can
    ring in sick, and whether that is true is a thing the game knows.
 
+   And the school year itself, which is more than a marks number. Forty four
+   real examinations across twenty eight countries on the scales they really
+   use: the SAT out of 1600 and the ACT out of 36, the PSAT and the PSAT 8/9,
+   Advanced Placement out of five, the Gaokao out of 750, the Suneung, the
+   Japanese Common Test, ENEM out of a thousand on each of five areas, the
+   EGE and the OGE, the Matura, the Brevet, EvAU, the Maturità, YKS and LGS,
+   Högskoleprovet, the Doorstroomtoets, the CBSE boards, JEE and NEET, WASSCE
+   and JAMB, the Matric, Thanaweya Amma, the Bagrut, NAPLAN and the ATAR,
+   NCEA, the PSLE and the DSE, the OSSLT, the Key Stage 2 tests, the Eleven
+   Plus, the GCSE mocks, the UCAT, the IB Diploma and IELTS. Each is entered
+   for, revised for with past papers that are worth something up to a ceiling,
+   sat on the day, and answered weeks later by an envelope — because nobody
+   walks out of a hall knowing what they got, and the game does not tell you
+   what your character could not know.
+
+   Every American state is on the calendar too: forty four of them by the name
+   they really use, from STAAR and CAASPP to the Regents and Georgia
+   Milestones, and the rest with a state assessment that is plainly labelled
+   as one rather than given an invented acronym.
+
+   The report comes home. A term ends on the country's own shape of a year —
+   three terms in Britain, two semesters in America and Germany, three
+   trimestres in France, a year that opens in April in Japan and in February
+   south of the equator — and every subject on the timetable is graded in the
+   country's own scale: letters and a grade point average out of four, nine
+   down to one, one to six with one at the good end, out of twenty, one to
+   ten, five to one. A teacher writes a line about the work, effort is said as
+   well as attainment, attendance is on it, and a progress report comes
+   halfway through the term where that country sends one.
+
    And a job you stop turning up for is a job you stop having. Three shifts
    missed in a row, or a manager out of patience altogether, and somebody else
    is on the rota — with the hours already worked still paid on the pay date,

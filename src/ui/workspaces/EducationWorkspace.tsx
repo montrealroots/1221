@@ -22,6 +22,15 @@ import {
 import { UNIVERSITY_LOOKS_AT } from '@/engine/content/schooling';
 import { HOUSING, HOUSING_BY_ID, ROOM_AND_BOARD_NOTE } from '@/engine/content/universities';
 import { countryOfCity } from '@/engine/content/geography';
+import {
+  effortOf, examCountryFor, predictFor, prepWorth, reportsOf, resultsOf, sittingsToCome,
+  termNow, testById, testsOpenTo,
+} from '@/engine/systems/exams';
+import {
+  EXAM_NOTE, GRADE_NOTE, PREP_CEILING, PREP_NOTE, REPORT_NOTE, SITTING_NOTE, STATE_TEST_NOTE,
+  TERM_NOTE, TEST_KIND_LABEL, averageFor, effortLabel, scaleIn, termsIn,
+} from '@/engine/content/exams';
+import { Stat } from '@/ui/components/primitives';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -38,6 +47,7 @@ export function EducationWorkspace() {
   return (
     <>
       <SchoolPanels />
+      <ExamPanels />
       <UniversityPanels />
 
       <div className="page-head">
@@ -187,7 +197,7 @@ function SchoolPanels(): JSX.Element | null {
         <div className="eyebrow">School</div>
         <h1>{schooling.placeName}</h1>
         <p className="muted">
-          {stage?.label}, {schooling.yearLabel}. The {system.label.toLowerCase()} system.
+          {stage?.label}, {schooling.yearLabel}. The {system.label} system.
           {' '}{schoolIsCompulsory(sim) ? 'You have to be here.' : 'You do not have to be here any more.'}
         </p>
       </div>
@@ -305,6 +315,217 @@ function SchoolPanels(): JSX.Element | null {
   );
 }
 
+
+
+/**
+ * The big tests, and the report that comes home.
+ *
+ * The examinations are real and so are their scales; the score is SLATE's own
+ * arithmetic on the year somebody has actually had. A score is not shown until
+ * the results are out, because a character walking out of a hall does not know
+ * what they got.
+ */
+function ExamPanels(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const schooling = schoolingOf(sim);
+  if (!schooling) return null;
+
+  const countryId = examCountryFor(sim);
+  const scale = scaleIn(countryId);
+  const pattern = termsIn(countryId);
+  const term = termNow(sim, countryId);
+  const open = testsOpenTo(sim);
+  const coming = sittingsToCome(sim);
+  const behind = resultsOf(sim);
+  const reports = reportsOf(sim);
+  const card = reports[0];
+  const effort = effortOf(schooling);
+  const reported = averageFor(averageMark(schooling), countryId);
+
+  return (
+    <div className="grid grid-sheet">
+      <Panel
+        title="The Term"
+        subtitle={`${term.label}. ${pattern.label} where you are.`}
+      >
+        <div className="col gap-3">
+          <div className="row gap-3 wrap">
+            <Stat
+              label="Where You Are"
+              value={markLabel(averageMark(schooling))}
+              note={`${Math.round(averageMark(schooling))} across everything on the timetable.`}
+            />
+            {reported && (
+              <Stat
+                label={reported.label}
+                value={`${reported.value}`}
+                note={`Out of ${reported.max}, on the ${scale.label.toLowerCase()} scale.`}
+              />
+            )}
+            <Stat
+              label="Effort"
+              value={effortLabel(effort)}
+              note="Turning up is most of it, and the marks say what happened while you were there."
+            />
+          </div>
+          {schooling.nextReportAt !== undefined && (
+            <p className="xs dim" style={{ margin: 0 }}>
+              Next report {formatDate(schooling.nextReportAt, sim.homeZone)}.
+            </p>
+          )}
+          <p className="xs dim" style={{ margin: 0 }}>{TERM_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{GRADE_NOTE}</p>
+        </div>
+      </Panel>
+
+      <Panel
+        title="The Big Tests"
+        subtitle={coming.length > 0
+          ? `${plural(coming.length, 'test')} coming up.`
+          : 'Nothing down at the moment.'}
+        flush
+      >
+        <div className="list">
+          {coming.map((sitting) => {
+            const test = testById(sim, sitting.testId);
+            if (!test) return null;
+            const guess = predictFor(sim, sitting);
+            const due = Math.abs(sitting.sitsAt - sim.now) < 24 * 60 * 60 * 1000;
+            return (
+              <div key={sitting.id} className="list-item">
+                <div className="grow">
+                  <div className="row-title">{test.name}</div>
+                  <div className="xs dim">
+                    {TEST_KIND_LABEL[test.kind]} · {formatDate(sitting.sitsAt, sim.homeZone)} ·
+                    {' '}{test.min} to {test.max}
+                    {guess ? ` · Looking Like ${guess.low} To ${guess.high}` : ''}
+                  </div>
+                  <div className="xs dim">
+                    {plural(sitting.prep, 'past paper')} done, worth about
+                    {' '}{Math.round(prepWorth(sitting))} points on the day.
+                  </div>
+                </div>
+                <div className="row gap-2">
+                  <button
+                    className="btn btn-sm"
+                    disabled={prepWorth(sitting) >= PREP_CEILING}
+                    onClick={() => {
+                      const res = run<{ note: string }>('exam.study', { sittingId: sitting.id });
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    {prepWorth(sitting) >= PREP_CEILING ? 'Papers Done' : 'Work A Past Paper'}
+                  </button>
+                  <button
+                    className="btn btn-sm btn-primary"
+                    disabled={!due}
+                    onClick={() => {
+                      const res = run<{ note: string }>('exam.sit', { sittingId: sitting.id });
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    {due ? 'Sit It' : 'Not Yet'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+          {open
+            .filter((test) => !coming.some((one) => one.testId === test.id))
+            .map((test) => (
+              <div key={test.id} className="list-item">
+                <div className="grow">
+                  <div className="row-title">{test.name}</div>
+                  <div className="xs dim">
+                    {TEST_KIND_LABEL[test.kind]} · {test.min} to {test.max}
+                    {test.fee > 0 ? ` · ${formatMoney(test.fee)} To Enter` : ' · Free'}
+                  </div>
+                  <div className="xs dim">{test.about}</div>
+                </div>
+                <button
+                  className="btn btn-sm"
+                  onClick={() => {
+                    const res = run<{ note: string }>('exam.register', { testId: test.id });
+                    if (res.ok) toast(res.value!.note, 'positive');
+                  }}
+                >
+                  Put Your Name Down
+                </button>
+              </div>
+            ))}
+          {open.length === 0 && coming.length === 0 && (
+            <div className="list-item list-static">
+              <div className="xs dim">There is nothing anybody your age sits where you are.</div>
+            </div>
+          )}
+        </div>
+      </Panel>
+
+      {behind.length > 0 && (
+        <Panel title="Results" subtitle="What came back, and what is still in the post." flush>
+          <div className="list">
+            {behind.slice(0, 6).map((sitting) => {
+              const test = testById(sim, sitting.testId);
+              if (!test) return null;
+              return (
+                <div key={sitting.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="row-title">{test.name}</div>
+                    <div className="xs dim">
+                      {sitting.released && sitting.score !== undefined
+                        ? `${sitting.score} out of ${test.max}${
+                          (sitting.sections?.length ?? 0) > 1
+                            ? ` · ${sitting.sections!.map((one) => `${one.label} ${one.score}`).join(' · ')}`
+                            : ''}`
+                        : `Sat ${formatDate(sitting.satAt ?? sim.now, sim.homeZone)}. Results ${
+                          sitting.resultsAt ? formatDate(sitting.resultsAt, sim.homeZone) : 'to come'}.`}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Panel>
+      )}
+
+      {card && (
+        <Panel
+          title={card.kind === 'report' ? 'The Report Card' : 'The Progress Report'}
+          subtitle={card.headline}
+          flush
+        >
+          <div className="list">
+            {card.lines.map((line) => (
+              <div key={line.subjectId} className="list-item list-static">
+                <div className="grow">
+                  <div className="row-title">
+                    {SUBJECT_BY_ID[line.subjectId]?.label ?? line.subjectId} — {line.grade}
+                  </div>
+                  <div className="xs dim">{line.comment}</div>
+                  <div className="xs dim">
+                    Effort {line.effort} · {line.attendance}% Attendance
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
+      <Panel title="How This Works" subtitle="What is real here, and what is not.">
+        <div className="col gap-2">
+          <p className="xs dim" style={{ margin: 0 }}>{EXAM_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{SITTING_NOTE}</p>
+          {countryId === 'us' && <p className="xs dim" style={{ margin: 0 }}>{STATE_TEST_NOTE}</p>}
+          <p className="xs dim" style={{ margin: 0 }}>{PREP_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{REPORT_NOTE}</p>
+        </div>
+      </Panel>
+    </div>
+  );
+}
 
 /**
  * University, which is the end of the school ladder.
