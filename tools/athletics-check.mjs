@@ -14,12 +14,14 @@
  */
 
 import {
-  ATHLETICS_NOTE, CATEGORY_NOTE, ENDS, ENTRY_STANDARDS, EVENTS, EVENT_BY_ID, GENERAL_SCHOOL_WORDS,
-  LEVELS, MEETS_NOTE, NAMED_MEETS, OPPONENT_FIRST, RECORDS_NOTE, RIVAL_FIRST, RIVAL_LAST,
-  SCHOOL_TRACK_COUNTRIES, SCHOOL_WORDS, SEASON_LADDERS, STANDARDS_NOTE, TIER_LABEL, TIER_WEIGHT,
-  TRACK_FROM_AGE, WIND_LIMIT, WIND_NOTE, WORLD_RECORDS, endsFor, eventsFor, ladderFor,
-  ladderIsCountrys, levelOf, qualityOf, ratioAt, recordFor, roundsAt, schoolWords, schoolsRunTrack,
-  standardFor, timeAt, timeForLevel, windLegal,
+  ATHLETICS_NOTE, CATEGORY_NOTE, CONTRACT_BANDS, CONTRACT_NOTE, ENDS, ENTRY_STANDARDS, EVENTS,
+  EVENT_BY_ID, GENERAL_SCHOOL_WORDS, LEVELS, MEETS_NOTE, NAMED_MEETS, OPPONENT_FIRST, PRIME_NOTE,
+  PRIME_TO, PRIZE_NOTE, PRO_NOTE, PURSES, RECORDS_NOTE, RIVAL_FIRST, RIVAL_LAST,
+  SCHOOL_TRACK_COUNTRIES, SCHOOL_WORDS, SEASON_LADDERS, SELECTION_NOTE, SHOE_BRANDS,
+  STANDARDS_NOTE, TIER_LABEL, TIER_WEIGHT, TRACK_FROM_AGE, WIND_LIMIT, WIND_NOTE, WORLD_RECORDS,
+  bandFor, endsFor, eventsFor, heldIn, ladderFor, ladderIsCountrys, levelOf, primeAt, prizeFor,
+  qualityOf, ratioAt, recordFor, roundsAt, schoolWords, schoolsRunTrack, standardFor, timeAt,
+  timeForLevel, windLegal,
 } from '../src/engine/content/athletics.ts';
 import { CITIES, COUNTRIES } from '../src/engine/content/geography.ts';
 import { SKILLS } from '../src/engine/domain/skills.ts';
@@ -313,6 +315,72 @@ if (schoolsRunTrack('mc')) problems.push('Monaco runs school track');
   if (best.length === 0) problems.push('nobody is best at anything');
 }
 
+// --- Turning professional -----------------------------------------------------
+
+// A championship that is not annual falls in the years it really falls in.
+{
+  const worlds = NAMED_MEETS.find((one) => one.id === 'world_champs');
+  const games = NAMED_MEETS.find((one) => one.id === 'olympics');
+  if (worlds && (!heldIn(worlds, 2025) || heldIn(worlds, 2026))) problems.push('the world championships are in the wrong years');
+  if (games && (!heldIn(games, 2028) || heldIn(games, 2027))) problems.push('the Games are in the wrong years');
+  for (const meet of NAMED_MEETS) {
+    if (meet.everyYears && meet.firstYear === undefined) problems.push(`${meet.name} has a cycle and no year to count from`);
+    if (!meet.everyYears && meet.firstYear !== undefined) problems.push(`${meet.name} has a year to count from and no cycle`);
+    if (meet.eventIds) {
+      for (const id of meet.eventIds) {
+        if (!EVENT_BY_ID[id]) problems.push(`${meet.name} contests "${id}", which is not an event`);
+      }
+    }
+  }
+}
+
+// A sprinter is quickest in their prime and slower after it.
+if (primeAt(24) !== 1) problems.push('a twenty four year old is not at their best');
+if (primeAt(PRIME_TO) !== 1) problems.push('the prime does not run to the end of itself');
+if (primeAt(34) >= primeAt(29)) problems.push('a thirty four year old is as quick as a twenty nine year old');
+if (primeAt(45) < 0.5) problems.push('a forty five year old has nothing left at all');
+if (!/calibration/.test(PRIME_NOTE)) problems.push('the note about the prime has gone');
+
+// The money.
+const seenPurse = new Set();
+for (const purse of PURSES) {
+  if (seenPurse.has(purse.tier)) problems.push(`${purse.tier} has two purses`);
+  seenPurse.add(purse.tier);
+  if (!TIER_LABEL[purse.tier]) problems.push(`${purse.tier} pays out and is not a tier`);
+  if (purse.places.length !== 8) problems.push(`${purse.tier} pays ${purse.places.length} places`);
+  let last = Infinity;
+  for (const amount of purse.places) {
+    if (amount > last) problems.push(`${purse.tier} pays more for finishing lower`);
+    last = amount;
+    if (amount < 0) problems.push(`${purse.tier} charges you to finish`);
+  }
+  if (purse.about.length < 20) problems.push(`${purse.tier} has nothing said about its money`);
+}
+// A world championship pays more than a circuit meet, and school pays nothing.
+if (prizeFor('global', 1, true) <= prizeFor('circuit', 1, true)) problems.push('a world title pays less than a circuit meet');
+if (prizeFor('global', 1, false) !== 0) problems.push('an amateur is paid prize money');
+if (prizeFor('national_schools', 1, true) !== 0) problems.push('a schools meet pays prize money');
+if (!/published/.test(PRIZE_NOTE)) problems.push('the note about the prize money has gone');
+
+// The contracts, which are SLATE's own against real companies.
+if (SHOE_BRANDS.length < 6) problems.push('there are not enough companies');
+let lastLow = Infinity;
+for (const band of CONTRACT_BANDS) {
+  if (!LEVELS.some((one) => one.id === band.levelId)) problems.push(`${band.levelId} has a contract band and is not a level`);
+  if (band.low >= band.high) problems.push(`${band.levelId} has a band that is not a band`);
+  if (band.low >= lastLow) problems.push('the contract bands are out of order');
+  lastLow = band.low;
+  if (band.years < 1 || band.years > 6) problems.push(`${band.levelId} signs for ${band.years} years`);
+  if (band.medalBonus <= 0) problems.push(`${band.levelId} has no medal bonus`);
+  if (band.about.length < 20) problems.push(`${band.levelId} has nothing said about it`);
+}
+// Nobody signs anybody off a school team time.
+if (bandFor('team') || bandFor('county') || bandFor('first_day')) problems.push('a company signs a school team runner');
+if (!bandFor('world')) problems.push('a world class runner is offered nothing');
+if (!/SLATE/.test(CONTRACT_NOTE) || !/private/.test(CONTRACT_NOTE)) problems.push('the note about the contracts has gone');
+if (!/amateur/.test(PRO_NOTE)) problems.push('the note about turning professional has gone');
+if (!/standard/.test(SELECTION_NOTE)) problems.push('the note about selection has gone');
+
 // --- Say what was measured ----------------------------------------------------
 
 const towns = new Set(NAMED_MEETS.map((one) => one.town));
@@ -320,6 +388,7 @@ console.log(`${EVENTS.length} events, ${WORLD_RECORDS.length} world records from
 console.log(`${NAMED_MEETS.length} real meets in ${towns.size} towns across ${new Set(NAMED_MEETS.map((o) => o.countryId)).size} countries.`);
 console.log(`${SEASON_LADDERS.length} season ladders, ${SKILLS.filter((o) => o.domain === 'athletics').length} running skills, and teams from ${TRACK_FROM_AGE}.`);
 console.log(`A world class hundred is ${formatSeconds(timeForLevel('world', '100m', 'mens'))} and a school team one is ${formatSeconds(timeForLevel('team', '100m', 'mens'))}.`);
+console.log(`${PURSES.length} purses and ${CONTRACT_BANDS.length} contract bands against ${SHOE_BRANDS.length} real companies, every deal SLATE’s own.`);
 console.log('Every rival in every lane is SLATE’s own, and so is every time run in the game.');
 
 if (problems.length > 0) {

@@ -2,19 +2,20 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Meter, Stat } from '@/ui/components/primitives';
 import { formatDate } from '@/engine/core/time';
+import { formatMoney } from '@/engine/core/money';
 import { plural } from '@/engine/core/text';
 import { ageOf } from '@/engine/systems/lifespan';
 import { schoolingOf } from '@/engine/systems/school';
 import { studiesOf } from '@/engine/systems/university';
 import {
-  SESSIONS, abilityFor, bestFor, chasing, describeMark, describeRunner, describeSeason,
-  eventsOpenTo, formNow, formatSeconds, formatWind, isInjured, nextMeet, ordinal, predict,
-  qualifiedFor, runningOf, seasonOf, seasonsOf, schoolHasTrack,
+  SESSIONS, abilityFor, bestFor, chasing, classOf, describeMark, describeRunner, describeSeason,
+  eventsOpenTo, formNow, formatSeconds, formatWind, isInjured, mayTurnPro, nextMeet, offerFor,
+  ordinal, predict, qualifiedFor, runningOf, seasonOf, seasonsOf, schoolHasTrack,
 } from '@/engine/systems/athletics';
 import {
-  ATHLETICS_NOTE, CATEGORY_LABEL, EVENT_BY_ID, LEVELS, MEETS_NOTE, RECORDS_NOTE, ROUND_LABEL,
-  STANDARDS_NOTE, TIER_LABEL, TRACK_FROM_AGE, WIND_NOTE, ladderFor, levelOf, standardFor,
-  timeForLevel,
+  ATHLETICS_NOTE, CATEGORY_LABEL, CONTRACT_NOTE, EVENT_BY_ID, LEVELS, LEVEL_BY_ID, MEETS_NOTE,
+  PRIME_NOTE, PRIZE_NOTE, PRO_NOTE, RECORDS_NOTE, ROUND_LABEL, SELECTION_NOTE, STANDARDS_NOTE,
+  TIER_LABEL, TRACK_FROM_AGE, WIND_NOTE, ladderFor, levelOf, standardFor, timeForLevel,
 } from '@/engine/content/athletics';
 import { countryOfCity } from '@/engine/content/geography';
 
@@ -206,6 +207,8 @@ export function TrackWorkspace() {
           </Panel>
         )}
 
+        {running && <ProPanel />}
+
         {season && <SeasonPanel />}
 
         {running && running.bests.length > 0 && (
@@ -254,10 +257,111 @@ export function TrackWorkspace() {
             <p className="xs dim" style={{ margin: 0 }}>{MEETS_NOTE}</p>
             <p className="xs dim" style={{ margin: 0 }}>{STANDARDS_NOTE}</p>
             <p className="xs dim" style={{ margin: 0 }}>{WIND_NOTE}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{PRIME_NOTE}</p>
           </div>
         </Panel>
       </div>
     </>
+  );
+}
+
+/**
+ * Turning professional, and what it is worth.
+ *
+ * The companies are real and they really sponsor runners. Every contract in
+ * here is SLATE's own: no figure is anybody's real deal.
+ */
+function ProPanel(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const running = runningOf(sim);
+  if (!running) return null;
+  const may = mayTurnPro(sim, running);
+  const offer = offerFor(sim, running);
+  const level = LEVEL_BY_ID[classOf(running)];
+  const contract = running.contract;
+
+  return (
+    <Panel
+      title={running.professional ? 'Professional' : 'Turning Professional'}
+      subtitle={running.professional
+        ? `${running.teamName ?? 'A Group'}. ${level?.label ?? ''}`
+        : 'A decision with a cost, and it is yours.'}
+    >
+      <div className="col gap-3">
+        {running.stage === 'retired' ? (
+          <p className="small" style={{ margin: 0 }}>You are retired. The times stand.</p>
+        ) : !running.professional ? (
+          <>
+            <p className="small" style={{ margin: 0 }}>
+              {may.yes
+                ? `You are ${level?.label.toLowerCase() ?? 'unranked'}. ${offer
+                  ? `${offer.brand} would put ${formatMoney(offer.aYear)} a year on the table.`
+                  : 'Nobody is offering a contract on those times yet.'}`
+                : may.why}
+            </p>
+            <div>
+              <button
+                className="btn btn-primary"
+                disabled={!may.yes}
+                onClick={() => {
+                  const res = run<{ note: string }>('track.turn_pro', {});
+                  if (res.ok) toast(res.value!.note, 'positive');
+                }}
+              >
+                Turn Professional
+              </button>
+            </div>
+            <p className="xs dim" style={{ margin: 0 }}>{PRO_NOTE}</p>
+          </>
+        ) : (
+          <>
+            {contract ? (
+              <div className="row gap-3 wrap">
+                <Stat label="Contract" value={contract.brand} note={`Until ${formatDate(contract.to, sim.homeZone)}`} />
+                <Stat label="A Year" value={formatMoney(contract.aYear)} note="Paid on the anniversary." />
+                <Stat label="A Global Medal" value={formatMoney(contract.medalBonus)} note="On top, if it happens." />
+              </div>
+            ) : (
+              <>
+                <p className="small" style={{ margin: 0 }}>
+                  {offer
+                    ? `${offer.brand} would put ${formatMoney(offer.aYear)} a year on the table for ${plural(offer.years, 'year')}.`
+                    : 'Nobody is offering anything on those times.'}
+                </p>
+                <div>
+                  <button
+                    className="btn btn-primary"
+                    disabled={!offer}
+                    onClick={() => {
+                      const res = run<{ note: string }>('track.sign', {});
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    Sign It
+                  </button>
+                </div>
+              </>
+            )}
+            <div>
+              <button
+                className="btn btn-sm"
+                onClick={() => {
+                  const res = run<{ note: string }>('track.retire', {});
+                  if (res.ok) toast(res.value!.note, 'negative');
+                }}
+              >
+                Hang Them Up
+              </button>
+            </div>
+            <p className="xs dim" style={{ margin: 0 }}>{CONTRACT_NOTE}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{PRIZE_NOTE}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{SELECTION_NOTE}</p>
+          </>
+        )}
+      </div>
+    </Panel>
   );
 }
 

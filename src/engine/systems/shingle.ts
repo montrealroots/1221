@@ -100,6 +100,34 @@ export function capacityOf(sim: Simulation, company: Company): number {
 
 export function registerShingle(sim: Simulation): void {
   /**
+   * The company a character was too young to open.
+   *
+   * A life that starts at eleven cannot sign anything, so the founding waits
+   * for the birthday that makes them able to. This is that birthday.
+   */
+  sim.onSchedule('co.found_when_old_enough', (item, s) => {
+    if (Object.keys(s.universe.companies ?? {}).length > 0) return;
+    // The stake was never in their account while they were a child; it is
+    // there for the few lines it takes to open the company and then it is
+    // gone into the business, exactly as it is for anybody who starts grown.
+    const payload = item.payload as { capital?: number; name?: string };
+    const accountId = s.player.primaryAccountId;
+    if (accountId && payload.capital) {
+      s.income(accountId, payload.capital, 'Founding Stake', 'other', { refType: 'person', refId: s.player.id });
+    }
+    const result = s.execute({ kind: 'co.found', payload: item.payload as Record<string, unknown> });
+    if (!result.ok) return;
+    s.notify({
+      title: 'The Doors Are Open',
+      body: `${(item.payload as { name?: string }).name ?? 'The company'} is trading. `
+        + 'You are old enough to sign for it now.',
+      category: 'career',
+      importance: 66,
+      route: '/workspace/bank',
+    });
+  });
+
+  /**
    * Opening the doors.
    *
    * Done once, at the start, and it is the only company the player will run.

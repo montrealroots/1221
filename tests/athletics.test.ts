@@ -11,14 +11,16 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import {
-  ATHLETICS_NOTE, CATEGORY_NOTE, ENTRY_STANDARDS, EVENTS, EVENT_BY_ID, LEVELS, MEETS_NOTE,
-  NAMED_MEETS, RECORDS_NOTE, RIVAL_FIRST, RIVAL_LAST, SEASON_LADDERS, TIER_WEIGHT, TRACK_FROM_AGE,
-  WIND_LIMIT, WORLD_RECORDS, endsFor, eventsFor, ladderFor, ladderIsCountrys, levelOf, qualityOf,
+  ATHLETICS_NOTE, CATEGORY_NOTE, CONTRACT_BANDS, CONTRACT_NOTE, ENTRY_STANDARDS, EVENTS,
+  EVENT_BY_ID, LEVELS, MEETS_NOTE, NAMED_MEETS, PRIME_TO, RECORDS_NOTE, RIVAL_FIRST, RIVAL_LAST,
+  SEASON_LADDERS, SHOE_BRANDS, TIER_WEIGHT, TRACK_FROM_AGE, WIND_LIMIT, WORLD_RECORDS, bandFor,
+  endsFor, eventsFor, heldIn, ladderFor, ladderIsCountrys, levelOf, primeAt, prizeFor, qualityOf,
   recordFor, roundsAt, schoolWords, schoolsRunTrack, standardFor, timeAt, timeForLevel, windLegal,
 } from '@/engine/content/athletics';
 import {
-  abilityFor, bestEventsFor, describeSeason, ensureRunning, formNow, formatSeconds, formatWind,
-  isInjured, nextMeet, ordinal, predict, qualifiedFor, runningOf, seasonOf, seasonsOf,
+  abilityFor, bestEventsFor, classOf, describeSeason, ensureRunning, formNow, formatSeconds,
+  formatWind, isInjured, mayTurnPro, nextMeet, offerFor, ordinal, predict, qualifiedFor, runningOf,
+  seasonOf, seasonsOf,
 } from '@/engine/systems/athletics';
 import { SKILLS } from '@/engine/domain/skills';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
@@ -407,5 +409,168 @@ describe('what is SLATE’s own, and says so', () => {
     expect(ordinal(3)).toBe('3rd');
     expect(ordinal(11)).toBe('11th');
     expect(ordinal(22)).toBe('22nd');
+  });
+});
+
+describe('going professional', () => {
+  /** Somebody with a time on the list, however they came by it. */
+  function withATime(sim: Simulation, seconds: number): void {
+    const running = ensureRunning(sim);
+    running.eventIds = ['100m'];
+    running.bests = [{
+      eventId: '100m', surface: 'outdoor', seconds, legal: true, at: sim.now, where: 'A Meet',
+    }];
+  }
+
+  it('will not sign anybody off a school team time', () => {
+    const sim = aRunner('pro-slow', 2002);
+    withATime(sim, 12.2);
+    expect(classOf(runningOf(sim)!)).toBe('team');
+    expect(mayTurnPro(sim, runningOf(sim)!).yes).toBe(false);
+    expect(sim.execute({ kind: 'track.turn_pro', payload: {} }).ok).toBe(false);
+    expect(offerFor(sim, runningOf(sim)!)).toBeUndefined();
+  });
+
+  it('turns somebody quick professional, and puts a real company on the table', () => {
+    const sim = aRunner('pro-quick', 2002);
+    withATime(sim, 10.05);
+    expect(mayTurnPro(sim, runningOf(sim)!).yes).toBe(true);
+    const res = sim.execute<{ professional: boolean; note: string }>({ kind: 'track.turn_pro', payload: {} });
+    expect(res.ok, res.error).toBe(true);
+    const running = runningOf(sim)!;
+    expect(running.professional).toBe(true);
+    expect(running.stage).toBe('professional');
+    expect(running.teamName!.length).toBeGreaterThan(3);
+    const offer = offerFor(sim, running)!;
+    expect(SHOE_BRANDS).toContain(offer.brand);
+    expect(offer.aYear).toBeGreaterThan(0);
+  });
+
+  it('pays the first year on signing and will not sign twice', () => {
+    const sim = aRunner('pro-sign', 2002);
+    withATime(sim, 10.05);
+    sim.execute({ kind: 'track.turn_pro', payload: {} });
+    const before = sim.ledger.availableFunds(sim.player.primaryAccountId!);
+    const res = sim.execute<{ aYear: number }>({ kind: 'track.sign', payload: {} });
+    expect(res.ok, res.error).toBe(true);
+    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBe(before + res.value!.aYear);
+    expect(runningOf(sim)!.contract!.brand.length).toBeGreaterThan(1);
+    // And it does not pay twice for the same contract.
+    expect(sim.execute({ kind: 'track.sign', payload: {} }).ok).toBe(false);
+  });
+
+  it('refuses to sign while the place at university is one won on the track', () => {
+    const sim = aRunner('pro-amateur', 2002);
+    withATime(sim, 10.05);
+    sim.universe.studies ??= {};
+    sim.universe.studies.degree_test = {
+      id: 'degree_test', saveId: sim.universe.meta.id, personId: sim.player.id,
+      universityId: 'usc', universityName: 'University of Southern California',
+      majorId: 'film_production', year: 1, years: 4, average: 70, termsDone: 0, termsMissed: 0,
+      scholarship: 'athletic', housing: 'hall', mealPlan: true, paid: 0, paidLiving: 0,
+      startedAt: sim.now,
+    } as never;
+    const res = sim.execute({ kind: 'track.turn_pro', payload: {} });
+    expect(res.ok).toBe(false);
+    expect(res.error).toMatch(/amateur/);
+  });
+
+  it('runs a professional season off the real circuit, and pays for it', () => {
+    const sim = aRunner('pro-season', 2002);
+    withATime(sim, 10.05);
+    sim.execute({ kind: 'track.turn_pro', payload: {} });
+    const entered = sim.execute({ kind: 'track.join', payload: {} });
+    expect(entered.ok, entered.error).toBe(true);
+    const season = seasonOf(sim)!;
+    expect(season.stage).toBe('professional');
+    expect(season.meets.some((one) => one.meetId)).toBe(true);
+    const before = sim.ledger.availableFunds(sim.player.primaryAccountId!);
+    const meet = nextMeet(season)!;
+    sim.advanceTo(meet.at);
+    const raced = sim.execute({ kind: 'track.race', payload: {} });
+    expect(raced.ok, raced.error).toBe(true);
+    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBeGreaterThan(before);
+  });
+
+  it('picks a championship team on the trials and on the standard, both', () => {
+    const sim = aRunner('pro-standard', 2002);
+    withATime(sim, 10.35);
+    sim.execute({ kind: 'track.turn_pro', payload: {} });
+    sim.execute({ kind: 'track.join', payload: {} });
+    const season = seasonOf(sim)!;
+    const global = season.meets.find((one) => one.tier === 'global');
+    if (!global) return;
+    const said = qualifiedFor(season, global, runningOf(sim)!);
+    expect(said.yes).toBe(false);
+    expect(said.why).toMatch(/standard/);
+  });
+
+  it('lets somebody hang them up, and the times stand', () => {
+    const sim = aRunner('pro-retire', 2002);
+    withATime(sim, 10.05);
+    sim.execute({ kind: 'track.turn_pro', payload: {} });
+    const res = sim.execute({ kind: 'track.retire', payload: {} });
+    expect(res.ok, res.error).toBe(true);
+    const running = runningOf(sim)!;
+    expect(running.stage).toBe('retired');
+    expect(running.professional).toBe(false);
+    expect(running.bests).toHaveLength(1);
+    expect(sim.execute({ kind: 'track.join', payload: {} }).ok).toBe(false);
+  });
+
+  it('takes an adult with no school behind them into a club', () => {
+    const sim = aRunner('club', 1998);
+    const res = sim.execute<{ onTheTeam: boolean; stage: string; note: string }>(
+      { kind: 'track.join', payload: {} },
+    );
+    expect(res.ok, res.error).toBe(true);
+    expect(res.value!.stage).toBe('club');
+    expect(res.value!.onTheTeam).toBe(true);
+    expect(runningOf(sim)!.teamName).toMatch(/Los Angeles/);
+    expect(seasonOf(sim)!.stage).toBe('club');
+  });
+
+  it('slows a sprinter down after their prime, and never speeds one up', () => {
+    expect(primeAt(24)).toBe(1);
+    expect(primeAt(PRIME_TO)).toBe(1);
+    expect(primeAt(33)).toBeLessThan(1);
+    expect(primeAt(38)).toBeLessThan(primeAt(33));
+    expect(primeAt(60)).toBeGreaterThan(0.5);
+    const young = aRunner('prime-young', 2001);
+    const old = aRunner('prime-old', 1988);
+    expect(abilityFor(old, old.player, '100m')).toBeLessThan(abilityFor(young, young.player, '100m'));
+  });
+
+  it('pays a professional and nobody else, and pays a world title most', () => {
+    expect(prizeFor('global', 1, true)).toBeGreaterThan(prizeFor('circuit', 1, true));
+    expect(prizeFor('circuit', 1, true)).toBeGreaterThan(prizeFor('circuit', 8, true));
+    expect(prizeFor('global', 1, false)).toBe(0);
+    expect(prizeFor('national_schools', 1, true)).toBe(0);
+    expect(prizeFor('dual', 1, true)).toBe(0);
+  });
+
+  it('holds the championships in the years they are really in', () => {
+    const worlds = NAMED_MEETS.find((one) => one.id === 'world_champs')!;
+    expect(heldIn(worlds, 2025)).toBe(true);
+    expect(heldIn(worlds, 2026)).toBe(false);
+    expect(heldIn(worlds, 2027)).toBe(true);
+    const games = NAMED_MEETS.find((one) => one.id === 'olympics')!;
+    expect(heldIn(games, 2028)).toBe(true);
+    expect(heldIn(games, 2029)).toBe(false);
+    // A meet with no cycle on it is on every year.
+    expect(heldIn(NAMED_MEETS.find((one) => one.id === 'prefontaine')!, 2026)).toBe(true);
+  });
+
+  it('bands the contracts so that a better runner is worth more', () => {
+    let last = Infinity;
+    for (const band of CONTRACT_BANDS) {
+      expect(band.low).toBeLessThan(band.high);
+      expect(band.low).toBeLessThan(last);
+      last = band.low;
+      expect(LEVELS.some((one) => one.id === band.levelId)).toBe(true);
+    }
+    expect(bandFor('world')!.low).toBeGreaterThan(bandFor('national')!.low);
+    expect(bandFor('team')).toBeUndefined();
+    expect(CONTRACT_NOTE).toMatch(/SLATE/);
   });
 });

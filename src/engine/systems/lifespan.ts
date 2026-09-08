@@ -365,7 +365,13 @@ export function pronounsFor(gender: Gender): string {
   return gender === 'female' ? 'she/her' : gender === 'male' ? 'he/him' : 'they/them';
 }
 
-function relative(
+/**
+ * Somebody else in the world, aged and named and put where you are.
+ *
+ * Used for the family a life starts with, and for the people a life picks up
+ * along the way. Everybody made here is SLATE's own.
+ */
+export function relative(
   sim: Simulation, of: Person, ageYears: number, lastName: string, cityId: string, seed: string,
   heritage: Heritage, gender: Gender,
 ): Person {

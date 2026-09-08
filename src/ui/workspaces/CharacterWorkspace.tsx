@@ -24,11 +24,15 @@ import { SIX_MONTH_NOTE, exchangeOffer, regionOfCity, residenceCityOf, statusOf 
 import type { IdentityDocument } from '@/engine/domain/model';
 import { countryOfCity } from '@/engine/content/geography';
 import {
+  growingOf, lessonCost, livedThrough, pendingMoment, readyToDrive, testCost,
+} from '@/engine/systems/growing';
+import { ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE } from '@/engine/content/growingup';
+import {
   AGE_GATE_NOTE, LIFESPAN_NOTE, PENSION_NOTE, describeHeight, describeWeight,
 } from '@/engine/content/lifespan';
 import {
   adultHeightOf, adultWeightOf, ageOf, agingOf, ceilingOf, describePassing, describeYears, familyOf,
-  fullyGrown, gatesFor, heightOf, isAlive, pensionAgeFor, relationLabel, stageOf, weightOf,
+  fullyGrown, gatesFor, heightOf, isAlive, mayI, pensionAgeFor, relationLabel, stageOf, weightOf,
   yearsToPension,
 } from '@/engine/systems/lifespan';
 import { plural } from '@/engine/core/text';
@@ -641,6 +645,8 @@ function LifeTab(): JSX.Element {
         )}
       </Panel>
 
+      <GrowingPanel />
+
       <Panel title="What You Are Old Enough For" subtitle={COUNTRIES.get(gates[0]?.answer.countryId ?? '')?.name ?? ''} flush>
         <div className="list">
           {gates.map((one) => (
@@ -662,5 +668,100 @@ function LifeTab(): JSX.Element {
         <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{AGE_GATE_NOTE}</p>
       </Panel>
     </div>
+  );
+}
+
+/**
+ * Growing up, and learning to drive.
+ *
+ * The moments arrive in the Decision Center like anything else that needs
+ * deciding; this is where they are read back afterwards, and where the
+ * instructor is booked.
+ */
+function GrowingPanel(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const record = growingOf(sim);
+  if (!record) return null;
+  const lived = livedThrough(record);
+  const waiting = pendingMoment(record);
+  const ready = readyToDrive(sim, record);
+  const canDrive = mayI(sim, 'drive');
+
+  return (
+    <>
+      <Panel
+        title="The Years So Far"
+        subtitle={waiting ? `${waiting.title} is waiting on an answer.` : `${plural(lived.length, 'moment')} behind you.`}
+        flush
+      >
+        {lived.length === 0 ? (
+          <p className="xs dim" style={{ padding: 'var(--s3)' }}>
+            Nothing yet. Things happen, and when they do they go where everything that needs deciding goes.
+          </p>
+        ) : (
+          <div className="list">
+            {[...lived].reverse().map((one) => (
+              <div key={one.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{one.title}</div>
+                  <div className="xs dim">{one.detail}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{GROWING_NOTE}</p>
+      </Panel>
+
+      <Panel
+        title="Learning To Drive"
+        subtitle={record.passedTestAt
+          ? `Passed on ${formatDate(record.passedTestAt, sim.homeZone)}.`
+          : `${plural(record.lessons, 'hour')} in. ${plural(record.testsSat, 'test')} sat.`}
+      >
+        <div className="col gap-3">
+          {record.passedTestAt ? (
+            <p className="small" style={{ margin: 0 }}>
+              You passed. The licence itself is a separate errand, at the counter.
+            </p>
+          ) : (
+            <>
+              <Meter label="Ready For It" value={ready} hint="Hours with an instructor, and what you can already do." />
+              <p className="small" style={{ margin: 0 }}>
+                {canDrive.ok
+                  ? `An hour is ${formatMoney(lessonCost(sim))}. The test is ${formatMoney(testCost(sim))} and it can be failed.`
+                  : canDrive.reason}
+              </p>
+              <div className="row gap-2 wrap">
+                <button
+                  className="btn btn-sm"
+                  disabled={!canDrive.ok}
+                  onClick={() => {
+                    const res = run<{ note: string }>('growing.lesson', {});
+                    if (res.ok) toast(res.value!.note, 'positive');
+                  }}
+                >
+                  Book An Hour
+                </button>
+                <button
+                  className="btn btn-sm btn-primary"
+                  disabled={!canDrive.ok || record.lessons < 3}
+                  onClick={() => {
+                    const res = run<{ note: string; passed: boolean }>('growing.test', {});
+                    if (res.ok) toast(res.value!.note, res.value!.passed ? 'positive' : 'negative');
+                  }}
+                >
+                  Sit The Test
+                </button>
+              </div>
+            </>
+          )}
+          <p className="xs dim" style={{ margin: 0 }}>{DRIVING_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{ALLOWANCE_NOTE}</p>
+        </div>
+      </Panel>
+    </>
   );
 }

@@ -823,6 +823,50 @@ answer says what would make it yes.
    and nowhere else, and it wants a time on the list and a season of meets
    behind it.
 
+   **Part five is done: going professional, and the years themselves.**
+
+   The track runs all the way. Turning professional is a decision with a cost:
+   it is money and a plane ticket, and it is the end of a place at a university
+   won on the track, because that place is for an amateur. The companies that
+   would sign you are real and they really sponsor runners; every contract in
+   this game is SLATE's own, because a real deal is private and inventing one
+   against a real name would be a claim about somebody real.
+
+   Then the circuit, which is the real one: Xiamen, Doha, Rabat, Prefontaine,
+   Bislett, Stockholm, Paris, Rome, Monaco, London, Silesia, Lausanne,
+   Weltklasse, Van Damme. The national championships, which is the hardest
+   team in the sport to make. The World Championships in the odd years and the
+   Games every four, in the years they are really in, and nothing invented for
+   a year when there is none. A team is picked on the trials and on the
+   standard, both — three from each event and a time inside the entry mark —
+   so finishing fourth at a national final with a world class time is an
+   ordinary way to miss a championship, and it happens here.
+
+   The published Diamond League and World Athletics prize money is what a
+   professional is paid, and a schoolchild and a student are paid nothing at
+   all. A sprinter is quickest between the early and the late twenties and
+   slower after it however hard the work is, so a career on the track ends
+   while an acting one is still going, which is the point of running both.
+
+   And the years themselves. Twenty moments across a life, from the first day
+   at a school gate to a call at two in the morning: the tooth, the bike, the
+   party, the school trip, being picked last, the talent show, the big school,
+   the first phone, the best friend, the falling out, the first one, the party
+   you were not at, the first real heartbreak, the first job, the first wage,
+   learning to drive, what happens next, moving out. Each comes round on a day
+   and goes where everything that needs deciding goes, and what you pick moves
+   something real: an attribute, a skill, money in or out, how it sits with the
+   people who raised you, or somebody who is in your life now and was not
+   before. Nothing narrates a consequence the game does not carry, and the
+   checker fails the build if a line claims one. A moment nobody answers
+   passes, rather than stopping every other thing in a life.
+
+   Pocket money goes up with age and stops at eighteen, priced against what
+   things cost where you are living. Learning to drive is hours with an
+   instructor that cost money by the hour and a test that can be failed and
+   paid for again — and the age you may sit it is the country's own, carried
+   with the other legal ages rather than assumed.
+
 10. Free-text intent across all of it.
 
 ---

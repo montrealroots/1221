@@ -127,3 +127,15 @@ its sessions. The Base44 guard is at 30.
   worth, from a school team to a world final — is SLATE's own calibration
   and says so, and it is one ladder across every event rather than each
   event's own, which is close enough to be honest about and not exact.
+- **The professional track career**: the meets, the prize money published by
+  the Diamond League and World Athletics, and the years the championships
+  fall in are real. Every contract is SLATE's own against a real company's
+  name, because a real deal is private; no figure in the game is anybody's.
+  Appearance money is SLATE's own for the same reason. Where a sprinter's
+  prime sits and how fast it falls away is SLATE's calibration; that it
+  happens at all is not.
+- **Growing up**: every moment in it is the ordinary kind rather than
+  anybody's in particular, and everybody it puts in a life is SLATE's own.
+  What pocket money is worth, what a driving lesson costs and how hard the
+  test is are SLATE's calibration and say so; the age the test may be sat is
+  the country's own.

@@ -2013,6 +2013,31 @@ export interface Schooling {
 }
 
 // ---------------------------------------------------------------------------
+// Growing up
+// ---------------------------------------------------------------------------
+
+/** The years between five and twenty five, and what happened in them. */
+export interface GrowingUp {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The moments already lived through, by id. */
+  done: string[];
+  /** The one waiting on an answer, if there is one. */
+  openId?: string;
+  /** When the next one is due to come round. */
+  nextAt?: Instant;
+  /** The last week pocket money was paid for. */
+  allowancePaidAt?: Instant;
+  /** Hours with an instructor. */
+  lessons: number;
+  /** Driving tests sat, and whether one was passed. */
+  testsSat: number;
+  passedTestAt?: Instant;
+  startedAt: Instant;
+}
+
+// ---------------------------------------------------------------------------
 // Track
 // ---------------------------------------------------------------------------
 
@@ -3295,7 +3320,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 65;
+export const SAVE_SCHEMA_VERSION = 66;
 
 export interface SaveMeta {
   id: Id;
@@ -3408,6 +3433,7 @@ export interface SaveUniverse {
   /** Seasons of sport, at school and at university. Absent on an older save. */
   seasons?: Record<Id, TrackSeason>;
   running?: Record<Id, Running>;
+  growing?: Record<Id, GrowingUp>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

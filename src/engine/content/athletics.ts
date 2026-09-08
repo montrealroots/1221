@@ -374,8 +374,13 @@ export function timeForLevel(levelId: string, eventId: string, category: RunnerC
 // The meets, which are real
 // ---------------------------------------------------------------------------
 
-/** Who is running at a meet: a schoolchild, a student, or a professional. */
-export type Stage = 'school' | 'university' | 'professional';
+/**
+ * Who is running at a meet.
+ *
+ * A schoolchild, a student, somebody who runs for a club — which is what most
+ * adults who run are — or a professional.
+ */
+export type Stage = 'school' | 'university' | 'club' | 'professional';
 
 export type Tier =
   | 'dual' | 'invitational' | 'league' | 'regional' | 'national_schools' | 'age_group'
@@ -427,13 +432,20 @@ export interface NamedMeet {
   rotates?: boolean;
   /** Where it is not held every year. */
   everyYears?: number;
+  /** A year it was really held, so the game can work out which years it is on. */
+  firstYear?: number;
+  /** Where the meet only contests some events, as a relay carnival does. */
+  eventIds?: readonly string[];
   about: string;
 }
 
 function m(
   id: string, name: string, town: string, countryId: string, tier: Tier, surface: Surface,
   month: number, stages: readonly Stage[], about: string,
-  extra: { cityId?: string; rotates?: boolean; everyYears?: number } = {},
+  extra: {
+    cityId?: string; rotates?: boolean; everyYears?: number; firstYear?: number;
+    eventIds?: readonly string[];
+  } = {},
 ): NamedMeet {
   return { id, name, town, countryId, tier, surface, month, stages, about, ...extra };
 }
@@ -468,11 +480,11 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
     'The biggest schools meet in Europe, and the one every English athlete remembers.', { rotates: true }),
   m('bucs_outdoor', 'The BUCS Outdoor Championships', 'Bedford', 'uk', 'collegiate_national', 'outdoor', 5, ['university'],
     'The British university championships, over a long weekend in May.'),
-  m('loughborough', 'The Loughborough International', 'Loughborough', 'uk', 'invitational', 'outdoor', 5, ['university', 'professional'],
+  m('loughborough', 'The Loughborough International', 'Loughborough', 'uk', 'invitational', 'outdoor', 5, ['university', 'club', 'professional'],
     'Students against internationals on the same afternoon, which is the point of it.'),
-  m('uk_champs', 'The UK Athletics Championships', 'Manchester', 'uk', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('uk_champs', 'The UK Athletics Championships', 'Manchester', 'uk', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The British championships, and the trial that picks the team.', { cityId: 'uk-eng-manchester' }),
-  m('uk_indoor', 'The UK Indoor Championships', 'Birmingham', 'uk', 'national_championships', 'indoor', 2, ['university', 'professional'],
+  m('uk_indoor', 'The UK Indoor Championships', 'Birmingham', 'uk', 'national_championships', 'indoor', 2, ['university', 'club', 'professional'],
     'Two days at the arena in February, and the indoor team comes out of it.', { cityId: 'uk-eng-birmingham' }),
 
   // --- Jamaica, where the schools meet is the national event ---------------
@@ -482,27 +494,27 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
     'The relay meet in February that opens the Jamaican season.', { cityId: 'jm-17-kingston' }),
   m('carifta', 'The Carifta Games', 'A Different Island Each Year', 'bs', 'age_group', 'outdoor', 4, ['school'],
     'The Caribbean age group championships at Easter, and where the region first sees somebody.', { rotates: true }),
-  m('jamaica_champs', 'The Jamaica Athletics Championships', 'Kingston', 'jm', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('jamaica_champs', 'The Jamaica Athletics Championships', 'Kingston', 'jm', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The hardest team to make in the sport, and the final is faster than most world finals.', { cityId: 'jm-17-kingston' }),
 
   // --- Other national championships ----------------------------------------
-  m('usa_champs', 'The USA Track and Field Championships', 'A Different City Each Year', 'us', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('usa_champs', 'The USA Track and Field Championships', 'A Different City Each Year', 'us', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'Three from each event and nothing else, which is why it is harder than the world final.', { rotates: true }),
-  m('kenya_champs', 'The Kenyan Athletics Championships', 'Nairobi', 'ke', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('kenya_champs', 'The Kenyan Athletics Championships', 'Nairobi', 'ke', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The national trials, at altitude, in front of everybody.', { cityId: 'ke-05-nairobi' }),
-  m('japan_champs', 'The Japan National Championships', 'A Different City Each Year', 'jp', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('japan_champs', 'The Japan National Championships', 'A Different City Each Year', 'jp', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The national championships, and the university runners are half the field.', { rotates: true }),
   m('australia_champs', 'The Australian Athletics Championships', 'A Different City Each Year', 'au', 'national_championships', 'outdoor', 4, ['university', 'professional'],
     'In April, because the season down there runs the other way round.', { rotates: true }),
-  m('nigeria_champs', 'The Nigerian Athletics Championships', 'A Different City Each Year', 'ng', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('nigeria_champs', 'The Nigerian Athletics Championships', 'A Different City Each Year', 'ng', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The national trials, and a sprint field deep enough to be frightening.', { rotates: true }),
   m('sa_champs', 'The South African Athletics Championships', 'A Different City Each Year', 'za', 'national_championships', 'outdoor', 4, ['university', 'professional'],
     'April, and the country that produced a four hundred meter world record.', { rotates: true }),
-  m('canada_champs', 'The Canadian Track and Field Championships', 'A Different City Each Year', 'ca', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('canada_champs', 'The Canadian Track and Field Championships', 'A Different City Each Year', 'ca', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The national championships and the trial, in one meet.', { rotates: true }),
-  m('france_champs', 'The French Athletics Championships', 'A Different City Each Year', 'fr', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('france_champs', 'The French Athletics Championships', 'A Different City Each Year', 'fr', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'Les Championnats de France, and the team comes out of it.', { rotates: true }),
-  m('german_champs', 'The German Athletics Championships', 'A Different City Each Year', 'de', 'national_championships', 'outdoor', 6, ['university', 'professional'],
+  m('german_champs', 'The German Athletics Championships', 'A Different City Each Year', 'de', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'Deutsche Meisterschaften, and it decides the team.', { rotates: true }),
 
   // --- The circuit ----------------------------------------------------------
@@ -557,28 +569,41 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
 
   // --- The championships ----------------------------------------------------
   m('world_indoor', 'The World Athletics Indoor Championships', 'A Different City Each Year', 'us', 'global', 'indoor', 3, ['professional'],
-    'Three days indoors, every other year, and the sixty meters is the whole thing.', { rotates: true, everyYears: 2 }),
+    'Three days indoors, every other year, and the sixty meters is the whole thing.', { rotates: true, everyYears: 2, firstYear: 2024 }),
   m('world_relays', 'The World Athletics Relays', 'A Different City Each Year', 'us', 'global', 'outdoor', 5, ['professional'],
-    'A weekend of nothing but relays, and the qualifying places for the championships come out of it.', { rotates: true, everyYears: 2 }),
+    'A weekend of nothing but relays, and the qualifying places for the championships come out of it.', { rotates: true, everyYears: 2, firstYear: 2024, eventIds: ['4x100m', '4x400m'] }),
   m('world_u20', 'The World Athletics U20 Championships', 'A Different City Each Year', 'us', 'age_group', 'outdoor', 8, ['school', 'university'],
-    'Under twenty, every other year, and it is where most careers are first seen.', { rotates: true, everyYears: 2 }),
+    'Under twenty, every other year, and it is where most careers are first seen.', { rotates: true, everyYears: 2, firstYear: 2024 }),
   m('world_champs', 'The World Athletics Championships', 'A Different City Each Year', 'us', 'global', 'outdoor', 8, ['professional'],
-    'Nine days, every other year, and three rounds to get through before a final.', { rotates: true, everyYears: 2 }),
+    'Nine days, every other year, and three rounds to get through before a final.', { rotates: true, everyYears: 2, firstYear: 2025 }),
   m('europeans', 'The European Athletics Championships', 'A Different City Each Year', 'de', 'continental', 'outdoor', 8, ['professional'],
-    'The European championships, every other year.', { rotates: true, everyYears: 2 }),
+    'The European championships, every other year.', { rotates: true, everyYears: 2, firstYear: 2024 }),
   m('africans', 'The African Athletics Championships', 'A Different City Each Year', 'ng', 'continental', 'outdoor', 6, ['professional'],
-    'The African championships, every other year.', { rotates: true, everyYears: 2 }),
+    'The African championships, every other year.', { rotates: true, everyYears: 2, firstYear: 2024 }),
   m('asians', 'The Asian Athletics Championships', 'A Different City Each Year', 'jp', 'continental', 'outdoor', 7, ['professional'],
-    'The Asian championships, every other year.', { rotates: true, everyYears: 2 }),
+    'The Asian championships, every other year.', { rotates: true, everyYears: 2, firstYear: 2025 }),
   m('commonwealth', 'The Commonwealth Games', 'A Different City Each Year', 'uk', 'continental', 'outdoor', 7, ['professional'],
-    'Every four years, and for a lot of the sport it is the second biggest thing there is.', { rotates: true, everyYears: 4 }),
+    'Every four years, and for a lot of the sport it is the second biggest thing there is.', { rotates: true, everyYears: 4, firstYear: 2026 }),
   m('olympics', 'The Olympic Games', 'A Different City Each Year', 'us', 'olympics', 'outdoor', 7, ['professional'],
-    'Every four years. Everything else in the sport is arranged around it.', { rotates: true, everyYears: 4 }),
+    'Every four years. Everything else in the sport is arranged around it.', { rotates: true, everyYears: 4, firstYear: 2028 }),
 ];
 
 export const MEET_BY_ID: Readonly<Record<string, NamedMeet>> = Object.fromEntries(
   NAMED_MEETS.map((one) => [one.id, one]),
 );
+
+/**
+ * Whether a championship is on in this year.
+ *
+ * The world championships, the continental ones and the Games are not annual,
+ * and which years they fall in is public record. A meet with no cycle on it
+ * is held every year.
+ */
+export function heldIn(meet: NamedMeet, year: number): boolean {
+  if (!meet.everyYears) return true;
+  const from = meet.firstYear ?? year;
+  return ((year - from) % meet.everyYears + meet.everyYears) % meet.everyYears === 0;
+}
 
 /** The real meets a person at this stage, in this country, could be at. */
 export function meetsFor(stage: Stage, countryId: string, surface?: Surface): NamedMeet[] {
@@ -605,10 +630,16 @@ export interface Rung {
   /** How many meets at this tier the season holds. */
   count: number;
   /**
-   * What it takes to be there, as a place in the meet before it. Nothing
-   * means everybody goes; a number means you have to finish that high.
+   * What it takes to be there, as a place in the meet you qualify out of.
+   * Nothing means everybody goes; a number means you have to finish that high.
    */
   qualifyBy?: number;
+  /**
+   * Which rung that place has to be taken at, where it is not simply the one
+   * before this. A circuit final is qualified out of the circuit rather than
+   * out of a national championship that happens to fall between them.
+   */
+  qualifyFrom?: Tier;
   /** Days between this rung and the one before it. */
   daysAfter: number;
 }
@@ -696,17 +727,28 @@ export const SEASON_LADDERS: readonly SeasonLadder[] = [
     { tier: 'national_championships', count: 1, qualifyBy: 3, daysAfter: 21 },
   ], 'A university season and a national championship at the end of it, which is SLATE’s general shape.'),
 
+  // --- A club, which is what most adults who run actually do ---------------
+  l('club', 'outdoor', [], [4, 5, 6, 7, 8], [
+    { tier: 'invitational', count: 4, daysAfter: 14 },
+    { tier: 'regional', count: 1, daysAfter: 14 },
+    { tier: 'national_championships', count: 1, qualifyBy: 3, daysAfter: 21 },
+  ], 'Open meets through the summer, the county or state championships, and the national meet if the time is there.'),
+  l('club', 'indoor', [], [1, 2, 3], [
+    { tier: 'invitational', count: 3, daysAfter: 14 },
+    { tier: 'national_championships', count: 1, qualifyBy: 3, daysAfter: 21 },
+  ], 'A short indoor season of open meets and the national indoor championships at the end of it.'),
+
   // --- Professional ---------------------------------------------------------
   l('professional', 'indoor', [], [1, 2, 3], [
     { tier: 'circuit', count: 4, daysAfter: 10 },
     { tier: 'national_championships', count: 1, daysAfter: 14 },
-    { tier: 'global', count: 1, qualifyBy: 3, daysAfter: 14 },
+    { tier: 'global', count: 1, qualifyBy: 3, qualifyFrom: 'national_championships', daysAfter: 14 },
   ], 'A short indoor circuit, the national indoor championships, and the world indoors every other year.'),
   l('professional', 'outdoor', [], [4, 5, 6, 7, 8, 9], [
     { tier: 'circuit', count: 5, daysAfter: 14 },
     { tier: 'national_championships', count: 1, daysAfter: 14 },
-    { tier: 'global', count: 1, qualifyBy: 3, daysAfter: 21 },
-    { tier: 'circuit_final', count: 1, qualifyBy: 8, daysAfter: 14 },
+    { tier: 'global', count: 1, qualifyBy: 3, qualifyFrom: 'national_championships', daysAfter: 21 },
+    { tier: 'circuit_final', count: 1, qualifyBy: 8, qualifyFrom: 'circuit', daysAfter: 14 },
   ], 'The circuit from April, the national trial in June, the championship in August and the final in September.'),
 ];
 
@@ -759,6 +801,9 @@ export const ROUND_LABEL: Readonly<Record<Round, string>> = {
 export function roundsAt(tier: Tier, eventId: string): Round[] {
   const event = EVENT_BY_ID[eventId];
   if (!event || event.kind === 'relay') return ['final'];
+  // A circuit meet is one race. Everybody in it was invited, and there is
+  // nothing to qualify out of.
+  if (tier === 'circuit' || tier === 'circuit_final' || tier === 'dual') return ['final'];
   const big = TIER_WEIGHT[tier] >= 70;
   const middling = TIER_WEIGHT[tier] >= 25;
   // The four hundred is two rounds even at a world championship in some years,
@@ -811,6 +856,180 @@ export const TRACK_FROM_AGE = 11;
 
 /** The age below which nobody is racing a full lap flat out. */
 export const LONG_SPRINT_FROM_AGE = 13;
+
+// ---------------------------------------------------------------------------
+// Turning professional
+// ---------------------------------------------------------------------------
+
+export const PRO_NOTE =
+  'Turning professional is a decision with a cost. A shoe contract is money and a plane ticket, and '
+  + 'it is also the end of running for a university, because a place won on the track is for an '
+  + 'amateur. SLATE carries that as a rule you have to choose, rather than something that happens '
+  + 'to you.';
+
+export const PRIZE_NOTE =
+  'The prize money at a Diamond League meet and at the World Championships is published and is what '
+  + 'SLATE carries; the appearance money and everything at the smaller meets is SLATE’s own '
+  + 'calibration, because those numbers are private and nobody publishes them.';
+
+export const CONTRACT_NOTE =
+  'The companies are real and they really do sponsor runners. Every contract in this game is '
+  + 'SLATE’s own: no figure here is anybody’s real deal, because those are private and inventing one '
+  + 'against a real name would be a claim about somebody real.';
+
+export const PRIME_NOTE =
+  'A sprinter is quickest somewhere between the early twenties and the late twenties, and after that '
+  + 'the times go the wrong way however hard the work is. Where the peak sits and how fast it falls '
+  + 'away is SLATE’s own calibration; that it happens at all is not.';
+
+export const SELECTION_NOTE =
+  'A team is picked at the trials and on the standard: three from each event and no more, and a '
+  + 'time inside the entry mark. Finishing fourth at a national championship with a world class time '
+  + 'is a real and ordinary way to miss a championship, and SLATE carries it.';
+
+/** The age a runner is at their quickest, and the age it starts going. */
+export const PRIME_FROM = 23;
+export const PRIME_TO = 28;
+export const DONE_BY = 40;
+
+/**
+ * What age does to a sprinter, as a multiple of what they had.
+ *
+ * Flat through the prime and then falling, because that is what happens. The
+ * rate is SLATE's own calibration.
+ */
+export function primeAt(age: number): number {
+  if (age <= PRIME_TO) return 1;
+  const past = age - PRIME_TO;
+  return Math.max(0.55, 1 - past * 0.018);
+}
+
+/** The money at a meet, by where you finished. Places one to eight. */
+export interface Purse {
+  tier: Tier;
+  /** In cents, first place to eighth. */
+  places: readonly number[];
+  /** Whether the figures are published or SLATE's own. */
+  real: boolean;
+  about: string;
+}
+
+export const PURSES: readonly Purse[] = [
+  {
+    tier: 'circuit', real: true,
+    places: [10_000_00, 6_000_00, 3_500_00, 2_000_00, 1_500_00, 1_000_00, 500_00, 500_00],
+    about: 'The published Diamond League prize money for a discipline, first to eighth.',
+  },
+  {
+    tier: 'circuit_final', real: true,
+    places: [30_000_00, 12_000_00, 7_000_00, 4_000_00, 2_500_00, 2_000_00, 1_500_00, 1_000_00],
+    about: 'The final pays a great deal more than a leg of it, which is the point of the final.',
+  },
+  {
+    tier: 'global', real: true,
+    places: [70_000_00, 35_000_00, 22_000_00, 16_000_00, 11_000_00, 7_000_00, 6_000_00, 5_000_00],
+    about: 'The published World Athletics championship prize money, gold down to eighth.',
+  },
+  {
+    tier: 'olympics', real: true,
+    places: [50_000_00, 0, 0, 0, 0, 0, 0, 0],
+    about: 'World Athletics began paying for an Olympic gold in athletics and pays nothing below it.',
+  },
+  {
+    tier: 'continental', real: false,
+    places: [12_000_00, 7_000_00, 4_000_00, 2_000_00, 1_000_00, 800_00, 600_00, 400_00],
+    about: 'A continental championship pays something, and what it pays is SLATE’s own calibration.',
+  },
+  {
+    tier: 'national_championships', real: false,
+    places: [3_000_00, 1_800_00, 1_200_00, 800_00, 500_00, 300_00, 200_00, 100_00],
+    about: 'A national championship pays a little, and the figure here is SLATE’s own.',
+  },
+];
+
+export const PURSE_BY_TIER: Readonly<Record<string, Purse>> = Object.fromEntries(
+  PURSES.map((one) => [one.tier, one]),
+);
+
+/** What finishing there is worth, where there is anything at all. */
+export function prizeFor(tier: Tier, place: number, professional: boolean): number {
+  if (!professional) return 0;
+  const purse = PURSE_BY_TIER[tier];
+  if (!purse || place < 1 || place > purse.places.length) return 0;
+  return purse.places[place - 1] ?? 0;
+}
+
+/** What a meet pays a professional to turn up at all. SLATE's own. */
+export function appearanceFor(tier: Tier, levelId: string): number {
+  if (levelId !== 'world' && levelId !== 'national') return 0;
+  const weight = TIER_WEIGHT[tier];
+  if (weight < 55) return 0;
+  const base = levelId === 'world' ? 18_000_00 : 4_000_00;
+  return Math.round(base * (weight / 100));
+}
+
+/**
+ * The companies that really sponsor runners.
+ *
+ * Real names. Every contract in the game is SLATE's own: no figure in here is
+ * anybody's real deal, and none is offered against a real athlete's name.
+ */
+export const SHOE_BRANDS: readonly string[] = [
+  'Nike', 'Adidas', 'Puma', 'New Balance', 'Asics', 'Under Armour', 'On', 'Hoka', 'Brooks',
+  'Saucony',
+];
+
+/** What a company would put on the table, by the class of runner. SLATE's own. */
+export interface ContractBand {
+  levelId: string;
+  low: number;
+  high: number;
+  /** What a global medal is worth on top of it. */
+  medalBonus: number;
+  years: number;
+  about: string;
+}
+
+export const CONTRACT_BANDS: readonly ContractBand[] = [
+  {
+    levelId: 'world', low: 180_000_00, high: 600_000_00, medalBonus: 150_000_00, years: 4,
+    about: 'A world final runner is worth a real contract, and it comes with a bonus for a medal.',
+  },
+  {
+    levelId: 'national', low: 30_000_00, high: 90_000_00, medalBonus: 40_000_00, years: 3,
+    about: 'A national finalist gets kit, a flight budget and enough to train on.',
+  },
+  {
+    levelId: 'collegiate', low: 8_000_00, high: 20_000_00, medalBonus: 10_000_00, years: 2,
+    about: 'A development deal: shoes, a small retainer, and a look at what happens next.',
+  },
+];
+
+/** The contract a runner of this class would be offered, if any. */
+export function bandFor(levelId: string): ContractBand | undefined {
+  return CONTRACT_BANDS.find((one) => one.levelId === levelId);
+}
+
+/**
+ * The clubs an adult runs for.
+ *
+ * SLATE's own, all of them, named for the place they are in the way a real
+ * club is. There is no register of athletics clubs to draw from and inventing
+ * a real one's results would be a claim about somebody real.
+ */
+export const CLUB_SECOND: readonly string[] = [
+  'Athletic Club', 'Harriers', 'Track Club', 'Athletics', 'Striders', 'Athletic Association',
+];
+
+/** The training groups a professional runs out of. SLATE's own, all of them. */
+export const GROUP_FIRST: readonly string[] = [
+  'Altitude', 'Coastal', 'Meridian', 'Northlight', 'Sundial', 'Ironwood', 'Tidewater', 'Vantage',
+  'Cornerstone', 'Watershed',
+];
+
+export const GROUP_SECOND: readonly string[] = [
+  'Track Club', 'Athletics', 'Performance', 'Sprint Group', 'Racing', 'Endurance Project',
+];
 
 // ---------------------------------------------------------------------------
 // The rest of the field, which is SLATE's own
@@ -892,4 +1111,9 @@ export const MEET_FIRST: readonly string[] = [
 
 export const MEET_SECOND: readonly string[] = [
   'Invitational', 'Classic', 'Relays', 'Open', 'Meet', 'Games', 'Trials Meet', 'Carnival',
+];
+
+/** What an invented meet on the professional circuit is called instead. */
+export const CIRCUIT_SECOND: readonly string[] = [
+  'Grand Prix', 'International', 'Meeting', 'Classic', 'Invitational',
 ];

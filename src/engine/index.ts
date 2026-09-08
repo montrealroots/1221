@@ -9,7 +9,7 @@
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Id, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
-import { addDays, addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
+import { addDays, addMonths, addYears, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { titleCaseLabel } from './core/text';
@@ -49,10 +49,11 @@ import { registerCinemaSystem } from './systems/cinema';
 import { registerFashionSystem } from './systems/fashion';
 import { registerGoingSystem } from './systems/going';
 import { registerErrandSystem } from './systems/errands';
-import { ensureFamily, registerLifespan, scheduleBirthday } from './systems/lifespan';
+import { ageOf, ensureFamily, mayI, registerLifespan, scheduleBirthday } from './systems/lifespan';
 import { ensureSchoolLeaver, ensureSchooling, registerSchool } from './systems/school';
 import { registerUniversity } from './systems/university';
 import { registerAthletics } from './systems/athletics';
+import { registerGrowing, startGrowingUp } from './systems/growing';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -126,6 +127,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerSchool(sim);
   registerUniversity(sim);
   registerAthletics(sim);
+  registerGrowing(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -207,8 +209,16 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // already left if they are not. Nobody arrives having never been.
   ensureSchooling(sim, player);
   ensureSchoolLeaver(sim, player);
+  // And the years themselves: the moments that come round, and the pocket
+  // money while somebody is still young enough to be given any.
+  startGrowingUp(sim, player);
 
   // --- Accounts -----------------------------------------------------------
+  // A character old enough to sign opens the company this morning, so the
+  // founding stake passes through their account today. One who is not keeps
+  // exactly the wealth level's own money, and the stake arrives on the day
+  // the doors actually open.
+  const opensNow = mayI(sim, 'majority', player).ok;
   const checking = sim.openAccount({
     id: sim.nextId('account'),
     kind: 'checking',
@@ -221,7 +231,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     // lines it takes to open the company and then it is gone into the
     // business; what is left afterwards is exactly the wealth level's own
     // money, so a founder can still be broke while running a company.
-    balance: wealth.checking + FOUNDING_STAKE,
+    balance: wealth.checking + (opensNow ? FOUNDING_STAKE : 0),
   });
   player.primaryAccountId = checking.id;
 
@@ -250,7 +260,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     derogatory: [],
   };
 
-  if (wealth.cardLimit > 0) {
+  // A credit card, but only where the character is old enough to be given one.
+  // A fifteen year old cannot borrow anywhere, and a save that opened one for
+  // them was raising late payment decisions against a schoolchild.
+  const mayBorrow = mayI(sim, 'borrow', player).ok;
+  if (wealth.cardLimit > 0 && mayBorrow) {
     const card = sim.openAccount({
       id: sim.nextId('account'),
       kind: 'credit_card',
@@ -288,20 +302,49 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // The whole premise: the strike ended every other production company, and
   // the player opens the only one trading. Founded through the same command a
   // player would use, so nothing here can reach a state the game cannot.
+  //
+  // But a character who starts life at eleven cannot sign anything, and a
+  // save that handed a schoolchild a production company was the game saying
+  // something it does not mean. Where they are too young, the founding waits
+  // for the day they can sign for themselves, and the years in between are
+  // the ones item nine is about.
   {
-    // An independent, opened this morning, wholly owned by the character. No
-    // choice of shape and no fallback to a smaller one: the stake is sized to
-    // this shingle, so it always opens. `must` rather than `execute` because a
-    // save without the company is not a save this game can play.
-    sim.must({
+    const companyName = config.companyName.trim() || `${player.lastName} Pictures`;
+    const founding = {
       kind: 'co.found',
       payload: {
-        name: config.companyName.trim() || `${player.lastName} Pictures`,
+        name: companyName,
         shingle: FOUNDING_SHINGLE,
         remit: FOUNDING_REMIT,
         capital: FOUNDING_CAPITAL,
       },
-    });
+    };
+    if (opensNow) {
+      // An independent, opened this morning, wholly owned by the character. No
+      // choice of shape and no fallback to a smaller one: the stake is sized to
+      // this shingle, so it always opens. `must` rather than `execute` because a
+      // save without the company is not a save this game can play.
+      sim.must(founding);
+    } else {
+      const gate = mayI(sim, 'majority', player);
+      const waitYears = Math.max(1, (gate.age ?? 18) - ageOf(sim, player));
+      sim.schedule({
+        at: addYears(player.birthInstant, gate.age ?? 18, sim.homeZone),
+        kind: 'co.found_when_old_enough',
+        label: 'Open The Company',
+        category: 'career',
+        payload: founding.payload,
+        priority: 55,
+      });
+      sim.notify({
+        title: 'Not Yet Old Enough To Sign',
+        body: `${companyName} cannot be opened until you are ${gate.age ?? 18}, which is `
+          + `${waitYears === 1 ? 'a year' : `${waitYears} years`} away. Everything else in a life is open now.`,
+        category: 'career',
+        importance: 40,
+        route: '/workspace/character',
+      });
+    }
   }
 
   // --- The world that already exists -------------------------------------
@@ -491,6 +534,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // of the school an adult already left, for a save made before that existed.
   ensureSchooling(sim);
   ensureSchoolLeaver(sim);
+  // Growing up, for a save from before it existed (idempotent; growing.ts).
+  startGrowingUp(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -1123,6 +1168,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       if (record.teams) delete record.teams;
     }
     steps.push('A track season, with meets, rounds and a personal best.');
+  }
+
+  if (from < 66) {
+    // Schema 66: growing up. The years between five and twenty five as things
+    // that happen on a day and have to be answered.
+    universe.growing ??= {};
+    steps.push('Growing up, and the moments that come round in it.');
   }
 
   if (from < 55) {

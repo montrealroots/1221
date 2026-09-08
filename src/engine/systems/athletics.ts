@@ -18,15 +18,17 @@ import type { Id, Mark, MeetEntry, Person, RaceResult, Running, TrackSeason } fr
 import { clamp } from '../core/rng';
 import { MS_DAY, MS_MINUTE, addDays, formatDate, zonedParts } from '../core/time';
 import { plural } from '../core/text';
-import { countryOfCity } from '../content/geography';
+import type { Money } from '../core/money';
+import { formatMoney } from '../core/money';
+import { CITIES, countryOfCity } from '../content/geography';
 import {
-  ATHLETICS_NOTE, CATEGORY_LABEL, EVENT_BY_ID, EVENTS, LEVELS, MEET_BY_ID, MEET_FIRST,
-  MEET_SECOND, NAMED_MEETS, OPPONENT_FIRST, RIVAL_FIRST, RIVAL_LAST, ROUND_LABEL, TIER_LABEL,
-  TIER_WEIGHT,
-  TRACK_FROM_AGE, WIND_LIMIT, type Round, type RunnerCategory, type Stage, type Surface,
-  type Tier, type TrackEvent, endsFor, eventsFor, individualEvents, ladderFor, levelOf,
-  qualityOf, recordFor, roundsAt, schoolWords, schoolsRunTrack, standardFor, timeAt,
-  timeForLevel, windLegal,
+  ATHLETICS_NOTE, CATEGORY_LABEL, EVENTS, EVENT_BY_ID, GROUP_FIRST, GROUP_SECOND, LEVELS,
+  LEVEL_BY_ID, MEET_BY_ID, MEET_FIRST, MEET_SECOND, NAMED_MEETS, OPPONENT_FIRST, RIVAL_FIRST,
+  RIVAL_LAST, ROUND_LABEL, SHOE_BRANDS, TIER_LABEL, TIER_WEIGHT, TRACK_FROM_AGE, WIND_LIMIT,
+  type Round, type RunnerCategory, type Stage, type Surface, type Tier, type TrackEvent,
+  CIRCUIT_SECOND, CLUB_SECOND, appearanceFor, bandFor, endsFor, eventsFor, heldIn,
+  individualEvents, ladderFor, levelOf, primeAt, prizeFor, qualityOf, recordFor, roundsAt,
+  schoolWords, schoolsRunTrack, standardFor, timeAt, timeForLevel, windLegal,
 } from '../content/athletics';
 import { ageOf, youthFactor } from './lifespan';
 import { schoolingOf } from './school';
@@ -144,7 +146,11 @@ export function abilityFor(
   for (const [skillId, weight] of Object.entries(event.weights)) {
     total += (person.skills?.[skillId] ?? 0) * weight;
   }
-  return clamp(Math.round(total * youthFactor(sim, person)), 0, 100);
+  // The youth curve on the way up and the prime on the way down. A sprinter
+  // is not the same runner at thirty five that they were at twenty five, and
+  // no amount of work makes them one.
+  const age = ageOf(sim, person);
+  return clamp(Math.round(total * youthFactor(sim, person) * primeAt(age)), 0, 100);
 }
 
 /**
@@ -253,26 +259,39 @@ function levelIdFor(tier: Tier): string {
  */
 function buildSchedule(
   sim: Simulation, seed: string, stage: Stage, surface: Surface, countryId: string,
+  eventIds: readonly string[] = [],
 ): MeetEntry[] {
   const ladder = ladderFor(stage, surface, countryId);
   if (!ladder) return [];
   const rng = sim.rng('track.schedule', seed);
   const now = zonedParts(sim.now, sim.homeZone);
 
-  // The season opens on the next of its own months.
-  const opensIn = ladder.months.find((month) => month >= now.month) ?? ladder.months[0]!;
-  const monthsAway = opensIn >= now.month ? opensIn - now.month : 12 - now.month + opensIn;
-  let at = sim.now + Math.max(5, monthsAway * 30) * MS_DAY;
+  // A season opens at the top of its own months rather than wherever the
+  // clock happens to be, so an indoor season does not run into May.
+  let at = sim.now + Math.max(5, monthsUntil(now.month, ladder.months[0]!) * 30) * MS_DAY;
+  const year = zonedParts(at, sim.homeZone).year;
 
+  const entered = (eventIds.length > 0 ? eventIds : ['100m']);
   const real = NAMED_MEETS.filter(
     (one) => one.stages.includes(stage) && one.surface === surface
-      && (one.countryId === countryId || one.tier === 'global'),
+      // The circuit is international: a professional flies to it wherever it
+      // is. Everything below that is run in the country you are in.
+      && (one.countryId === countryId || one.tier === 'global'
+        || one.tier === 'circuit' || one.tier === 'circuit_final')
+      // A championship that is not on this year is not on the schedule.
+      && heldIn(one, year)
+      // And a relay carnival is not where you go to run a hundred meters.
+      && (!one.eventIds || one.eventIds.some((id) => entered.includes(id))),
   );
   const usedReal = new Set<string>();
   const usedNames = new Set<string>();
   const out: MeetEntry[] = [];
 
   for (const rung of ladder.rungs) {
+    // A world championship year is a world championship year. In a year when
+    // there is none, the rung is not there rather than invented.
+    const mustBeReal = rung.tier === 'global' || rung.tier === 'olympics' || rung.tier === 'continental';
+    if (mustBeReal && !real.some((one) => one.tier === rung.tier)) continue;
     at = addDays(at, rung.daysAfter, sim.homeZone);
     for (let i = 0; i < rung.count; i++) {
       // The real meet for this rung is the one held nearest the time of year
@@ -305,7 +324,15 @@ function buildSchedule(
           run: false,
           results: [],
         });
-      } else if (rung.tier !== 'invitational' && rung.tier !== 'circuit') {
+      } else if (rung.tier === 'circuit') {
+        let name = '';
+        let guard = 0;
+        do {
+          name = `The ${rng.pick(MEET_FIRST).replace(/^The /, '')} ${rng.pick(CIRCUIT_SECOND)}`;
+        } while (usedNames.has(name) && guard++ < 20);
+        usedNames.add(name);
+        out.push({ at, name, town: '', tier: rung.tier, eventIds: [], run: false, results: [] });
+      } else if (rung.tier !== 'invitational') {
         // A championship rung is one meet and it is called what it is, not
         // something invented that happens to fall on that weekend.
         out.push({
@@ -344,10 +371,12 @@ export function startSeason(
 
   const countryId = countryOfCity(person.currentLocationId) ?? person.citizenshipId;
   const year = zonedParts(sim.now, sim.homeZone).year;
-  const meets = buildSchedule(sim, `${person.id}:${stage}:${surface}:${year}`, stage, surface, countryId);
+  const entered = eventIds.length > 0 ? [...eventIds] : running.eventIds;
+  const meets = buildSchedule(
+    sim, `${person.id}:${stage}:${surface}:${year}`, stage, surface, countryId, entered,
+  );
   if (meets.length === 0) return undefined;
 
-  const entered = eventIds.length > 0 ? [...eventIds] : running.eventIds;
   for (const meet of meets) {
     meet.eventIds = entered.filter((id) => EVENT_BY_ID[id]?.surfaces.includes(surface));
   }
@@ -366,6 +395,19 @@ export function startSeason(
     startedAt: sim.now,
   };
   sim.universe.seasons[season.id] = season;
+  if (person.isPlayer) {
+    for (const meet of meets) {
+      sim.schedule({
+        at: meet.at,
+        kind: 'track.meet',
+        label: meet.name,
+        category: 'personal',
+        payload: { seasonId: season.id, at: meet.at },
+        priority: 55,
+        requiresPlayer: true,
+      });
+    }
+  }
   // A new season is a new set of season bests.
   running.seasonBests = [];
   running.stage = stage;
@@ -582,7 +624,7 @@ function checkInjury(sim: Simulation, running: Running, person: Person, seed: st
   const tired = 100 - (person.wellbeing.energy ?? 100);
   const age = ageOf(sim, person);
   const old = age > 30 ? (age - 30) * 0.4 : 0;
-  const risk = clamp(strain + tired * 0.06 + old - care * 0.05, 0.2, 22);
+  const risk = clamp(strain + tired * 0.04 + old - care * 0.05, 0.2, 15);
   if (rng.float(0, 100) > risk) return undefined;
   const what = rng.pick([
     'A hamstring, and you felt it go.',
@@ -607,25 +649,59 @@ function checkInjury(sim: Simulation, running: Running, person: Person, seed: st
 function rungBefore(season: TrackSeason, meet: MeetEntry): { tier: Tier; qualifyBy?: number } | undefined {
   const ladder = ladderFor(season.stage as Stage, season.surface as Surface, season.countryId);
   if (!ladder) return undefined;
-  const index = ladder.rungs.findIndex((one) => one.tier === meet.tier);
-  if (index <= 0) return undefined;
-  const here = ladder.rungs[index]!;
-  return { tier: ladder.rungs[index - 1]!.tier, qualifyBy: here.qualifyBy };
+  const here = ladder.rungs.find((one) => one.tier === meet.tier);
+  if (!here || here.qualifyBy === undefined) return undefined;
+  // Where the rung says which meet the place has to be taken at, that is the
+  // one. Otherwise it is whatever was actually run before this on the
+  // schedule, which is not always the rung above it in the ladder: a year
+  // with no world championships in it has no world championship rung.
+  if (here.qualifyFrom) return { tier: here.qualifyFrom, qualifyBy: here.qualifyBy };
+  const index = season.meets.indexOf(meet);
+  for (let i = index - 1; i >= 0; i--) {
+    const earlier = season.meets[i]!;
+    if (earlier.tier !== meet.tier) return { tier: earlier.tier as Tier, qualifyBy: here.qualifyBy };
+  }
+  return undefined;
 }
 
 /** Whether they have earned the right to be at this one. */
-export function qualifiedFor(season: TrackSeason, meet: MeetEntry): { yes: boolean; why: string } {
+export function qualifiedFor(
+  season: TrackSeason, meet: MeetEntry, running?: Running,
+): { yes: boolean; why: string } {
   const before = rungBefore(season, meet);
-  if (!before || before.qualifyBy === undefined) return { yes: true, why: '' };
-  const place = bestPlaceAt(season, before.tier);
-  if (place === undefined) {
-    return { yes: false, why: `You did not run ${TIER_LABEL[before.tier].toLowerCase()}, so there is no way in.` };
+  if (before && before.qualifyBy !== undefined) {
+    const place = bestPlaceAt(season, before.tier);
+    if (place === undefined) {
+      return { yes: false, why: `You did not run ${TIER_LABEL[before.tier].toLowerCase()}, so there is no way in.` };
+    }
+    if (place > before.qualifyBy) {
+      return {
+        yes: false,
+        why: `The top ${before.qualifyBy} at ${TIER_LABEL[before.tier].toLowerCase()} go through, and you were ${place}.`,
+      };
+    }
   }
-  if (place > before.qualifyBy) {
-    return {
-      yes: false,
-      why: `The top ${before.qualifyBy} at ${TIER_LABEL[before.tier].toLowerCase()} go through, and you were ${place}.`,
-    };
+  // A championship team is picked on the trials and on the standard, both.
+  // Fourth at a national final with a world class time is an ordinary way to
+  // miss a championship, and this is where that happens.
+  if (running && (meet.tier === 'global' || meet.tier === 'olympics')) {
+    const category = running.category as RunnerCategory;
+    const short = meet.eventIds.find((id) => {
+      const standard = standardFor(id, category);
+      if (standard === undefined) return false;
+      const best = seasonBestFor(running, id, season.surface)
+        ?? bestFor(running, id, season.surface);
+      return !best || best.seconds > standard;
+    });
+    if (short) {
+      const standard = standardFor(short, category)!;
+      const best = seasonBestFor(running, short, season.surface) ?? bestFor(running, short, season.surface);
+      return {
+        yes: false,
+        why: `The entry standard for the ${EVENT_BY_ID[short]?.label ?? short} is ${formatSeconds(standard)}`
+          + `${best ? ` and you have run ${formatSeconds(best.seconds)}` : ' and you have not run one'}.`,
+      };
+    }
   }
   return { yes: true, why: '' };
 }
@@ -674,6 +750,26 @@ export function runMeet(
 
   meet.run = true;
   meet.place = bestPlace;
+
+  // What the day paid, where it pays anything. A schoolchild and a student
+  // are paid nothing at all, which is the rule rather than an oversight.
+  let earned = 0;
+  if (running.professional && person.isPlayer) {
+    const accountId = sim.player.primaryAccountId;
+    const best = running.bests[0];
+    const levelId = best
+      ? levelOf(best.seconds, best.eventId, running.category as RunnerCategory).id
+      : 'team';
+    const appearance = appearanceFor(tier, levelId);
+    for (const result of meet.results.filter((one) => one.round === 'final')) {
+      earned += prizeFor(tier, result.place, true);
+    }
+    earned += appearance;
+    if (accountId && earned > 0) {
+      sim.income(accountId, earned, `${meet.name}`, 'other', { refType: 'person', refId: person.id });
+    }
+  }
+  if (earned > 0) lines.push(`${formatMoney(earned)} in prize and appearance money.`);
 
   // What a day of it costs, and what it does for you.
   sim.advanceTo(Math.max(sim.now, meet.at) + 6 * 60 * MS_MINUTE);
@@ -809,6 +905,11 @@ export function schoolHasTrack(sim: Simulation, placeId: string, countryId: stri
   return rng.float(0, 1) < common;
 }
 
+/** How many months from one to the other, going forward. */
+function monthsUntil(from: number, to: number): number {
+  return to >= from ? to - from : 12 - from + to;
+}
+
 /** The surface whose season comes round next, at this stage, here. */
 export function nextSurfaceFor(sim: Simulation, stage: Stage, countryId: string): Surface | undefined {
   const month = zonedParts(sim.now, sim.homeZone).month;
@@ -816,8 +917,7 @@ export function nextSurfaceFor(sim: Simulation, stage: Stage, countryId: string)
   for (const surface of ['indoor', 'outdoor'] as const) {
     const ladder = ladderFor(stage, surface, countryId);
     if (!ladder) continue;
-    const opensIn = ladder.months.find((one) => one >= month) ?? ladder.months[0]!;
-    const away = opensIn >= month ? opensIn - month : 12 - month + opensIn;
+    const away = monthsUntil(month, ladder.months[0]!);
     if (!soonest || away < soonest.away) soonest = { surface, away };
   }
   return soonest?.surface;
@@ -859,6 +959,59 @@ export function chasing(eventId: string, category: RunnerCategory, surface: Surf
   return `The world record is ${formatSeconds(record.seconds)}, ${record.holder}, ${record.place} ${record.year}.`;
 }
 
+
+// ---------------------------------------------------------------------------
+// Going professional
+// ---------------------------------------------------------------------------
+
+/** The best class of runner somebody is, read off their marks. */
+export function classOf(running: Running): string {
+  const category = running.category as RunnerCategory;
+  let best = 'first_day';
+  let rank = -1;
+  for (const mark of running.bests) {
+    const level = levelOf(mark.seconds, mark.eventId, category);
+    const index = LEVELS.findIndex((one) => one.id === level.id);
+    if (index > rank) { rank = index; best = level.id; }
+  }
+  return best;
+}
+
+/** The contract a company would put in front of somebody today. */
+export function offerFor(sim: Simulation, running: Running): {
+  brand: string; aYear: number; years: number; medalBonus: number; note: string;
+} | undefined {
+  const band = bandFor(classOf(running));
+  if (!band) return undefined;
+  const rng = sim.rng('track.offer', running.id, running.bests.length);
+  const aYear = Math.round(rng.int(band.low, band.high) / 100_00) * 100_00;
+  return {
+    brand: rng.pick(SHOE_BRANDS),
+    aYear,
+    years: band.years,
+    medalBonus: band.medalBonus,
+    note: band.about,
+  };
+}
+
+/** Whether somebody may still turn professional, and why not. */
+export function mayTurnPro(sim: Simulation, running: Running): { yes: boolean; why: string } {
+  if (running.professional) return { yes: false, why: 'You already are.' };
+  const age = ageOf(sim);
+  const level = classOf(running);
+  const rank = LEVELS.findIndex((one) => one.id === level);
+  const wanted = LEVELS.findIndex((one) => one.id === 'schools');
+  if (rank < wanted) {
+    return {
+      yes: false,
+      why: `${LEVEL_BY_ID[level]?.label ?? 'A First Day'} is not a time anybody signs. `
+        + `${LEVEL_BY_ID.schools!.label} is where a company starts looking.`,
+    };
+  }
+  if (age < 16) return { yes: false, why: `You are ${age}.` };
+  return { yes: true, why: '' };
+}
+
 // ---------------------------------------------------------------------------
 // The commands
 // ---------------------------------------------------------------------------
@@ -880,19 +1033,26 @@ export function registerAthletics(sim: Simulation): void {
       if (isInjured(s, running)) throw new CommandError('You are hurt. There is no trial to go to.');
       if (seasonOf(s)) throw new CommandError('You are in a season already.');
 
+      if (running.stage === 'retired') throw new CommandError('You are retired. There is no season to join.');
       const countryId = countryOfCity(person.currentLocationId) ?? person.citizenshipId;
-      const studies = studiesOf(s);
-      const schooling = studies ? undefined : schoolingOf(s);
-      const stage: Stage = studies ? 'university' : schooling ? 'school' : 'professional';
-      if (stage === 'professional' && !running.professional) {
-        throw new CommandError('You are not at a school or a university. A club is the way in from here.');
-      }
+      const studies = running.professional ? undefined : studiesOf(s);
+      const schooling = studies || running.professional ? undefined : schoolingOf(s);
+      // A school, a university, a club or a professional group. A club is what
+      // most adults who run actually run for, and it is the way in for anybody
+      // who is past school and has not turned professional.
+      const stage: Stage = running.professional ? 'professional'
+        : studies ? 'university' : schooling ? 'school' : 'club';
 
       const surface = nextSurfaceFor(s, stage, countryId);
       if (!surface) throw new CommandError('There is no season to join here.');
 
       let teamName = running.teamName ?? 'A Club';
-      if (stage === 'school' && schooling) {
+      if (stage === 'club') {
+        const where = CITIES.get(person.currentLocationId)?.name ?? 'City';
+        teamName = running.teamName && running.stage === 'club'
+          ? running.teamName
+          : `${where} ${s.rng('track.club', running.id).pick(CLUB_SECOND)}`;
+      } else if (stage === 'school' && schooling) {
         if (!schoolHasTrack(s, schooling.placeId, countryId)) {
           throw new CommandError(
             `${schooling.placeName} does not run a track team. Not every school does, and this is one that does not.`,
@@ -907,10 +1067,13 @@ export function registerAthletics(sim: Simulation): void {
       const ability = Math.max(...eventIds.map((id) => abilityFor(s, person, id)), 0);
       const rng = s.rng('track.trial', running.id, `${stage}:${surface}`);
       // A university side is a different thing from a school one, and a place
-      // won on the track is already a place on the team.
+      // won on the track is already a place on the team. A professional does
+      // not try out for anything: they enter, and the entry list is the trial.
       const onScholarship = stage === 'university' && studies?.scholarship === 'athletic';
+      // A club takes anybody who turns up, which is the point of a club.
       const bar = stage === 'university' ? 62 : 40;
-      const onTheTeam = onScholarship || ability + rng.int(-10, 10) >= bar;
+      const onTheTeam = stage === 'professional' || stage === 'club' || onScholarship
+        || ability + rng.int(-10, 10) >= bar;
 
       s.advanceTo(s.now + 100 * MS_MINUTE);
       person.wellbeing.energy = clamp((person.wellbeing.energy ?? 100) - 15, 0, 100);
@@ -933,9 +1096,13 @@ export function registerAthletics(sim: Simulation): void {
       s.emit('track.trial', { onTheTeam: true, stage, seasonId: season?.id });
       return {
         onTheTeam: true, stage,
-        note: onScholarship
-          ? `You are on the ${teamName} squad. That is what the place was for. ${named}.`
-          : `You made the ${teamName} squad. ${named}.`,
+        note: stage === 'professional'
+          ? `Entered for ${teamName}. ${named}.`
+          : stage === 'club'
+            ? `You joined ${teamName}. ${named}.`
+          : onScholarship
+            ? `You are on the ${teamName} squad. That is what the place was for. ${named}.`
+            : `You made the ${teamName} squad. ${named}.`,
       };
     },
   );
@@ -1034,7 +1201,7 @@ export function registerAthletics(sim: Simulation): void {
       if (s.now < meet.at - 6 * 60 * 60_000) {
         throw new CommandError(`${meet.name} is on ${formatDate(meet.at, s.homeZone)}. Not yet.`);
       }
-      const qualified = qualifiedFor(season, meet);
+      const qualified = qualifiedFor(season, meet, running);
       if (!qualified.yes) {
         meet.run = true;
         meet.locked = true;
@@ -1066,6 +1233,180 @@ export function registerAthletics(sim: Simulation): void {
       return { note: `You did not run at ${meet.name}.` };
     },
   );
+
+  /**
+   * Turning professional.
+   *
+   * A decision with a cost: it is money and a plane ticket, and it is also
+   * the end of running for a university, because a place won on the track is
+   * for an amateur.
+   */
+  sim.onCommand<
+    Record<string, never>,
+    { professional: boolean; group: string; offer?: { brand: string; aYear: number }; note: string }
+  >(
+    'track.turn_pro',
+    (_p, { sim: s }) => {
+      const running = runningOf(s);
+      if (!running) throw new CommandError('You do not run.');
+      const may = mayTurnPro(s, running);
+      if (!may.yes) throw new CommandError(may.why);
+
+      const studies = studiesOf(s);
+      if (studies?.scholarship === 'athletic') {
+        throw new CommandError(
+          `Your place at ${studies.universityName} is one won on the track, and it is for an amateur. `
+          + 'Leaving the course is the only way to sign anything.',
+        );
+      }
+
+      const season = seasonOf(s);
+      if (season) endSeason(s, season, 'with you turning professional');
+
+      const rng = s.rng('track.pro', running.id);
+      const group = `${rng.pick(GROUP_FIRST)} ${rng.pick(GROUP_SECOND)}`;
+      running.professional = true;
+      running.stage = 'professional';
+      running.teamName = group;
+
+      const offer = offerFor(s, running);
+      s.remember({
+        category: 'life',
+        title: 'Turned Professional',
+        detail: `${group}. ${describeRunner(running)}`,
+        refs: [{ type: 'person', id: s.player.id }],
+        significance: 7,
+        public: true,
+      });
+      s.emit('track.turned_pro', { runningId: running.id, group });
+      return {
+        professional: true,
+        group,
+        offer: offer ? { brand: offer.brand, aYear: offer.aYear } : undefined,
+        note: offer
+          ? `${group}. ${offer.brand} would put ${formatMoney(offer.aYear)} a year on the table for ${plural(offer.years, 'year')}.`
+          : `${group}. Nobody is offering a contract on those times yet.`,
+      };
+    },
+  );
+
+  /** Signing what is on the table. */
+  sim.onCommand<Record<string, never>, { brand: string; aYear: Money; note: string }>(
+    'track.sign',
+    (_p, { sim: s }) => {
+      const running = runningOf(s);
+      if (!running) throw new CommandError('You do not run.');
+      if (!running.professional) throw new CommandError('An amateur cannot sign anything.');
+      if (running.contract && s.now < running.contract.to) {
+        throw new CommandError(`You are already with ${running.contract.brand} until ${formatDate(running.contract.to, s.homeZone)}.`);
+      }
+      const offer = offerFor(s, running);
+      if (!offer) throw new CommandError('Nobody is offering anything on those times.');
+
+      const from = s.now;
+      const to = addDays(s.now, offer.years * 365, s.homeZone);
+      running.contract = {
+        brand: offer.brand, aYear: offer.aYear, from, to, medalBonus: offer.medalBonus,
+      };
+      const accountId = s.player.primaryAccountId;
+      if (accountId) {
+        s.income(accountId, offer.aYear, `${offer.brand} — First Year`, 'other', { refType: 'person', refId: s.player.id });
+      }
+      // And every year after that, until it runs out.
+      s.schedule({
+        at: addDays(from, 365, s.homeZone),
+        kind: 'track.contract_year',
+        label: `${offer.brand} Contract`,
+        category: 'personal',
+        payload: { runningId: running.id },
+        priority: 30,
+      });
+      s.remember({
+        category: 'life',
+        title: `Signed With ${offer.brand}`,
+        detail: `${formatMoney(offer.aYear)} a year for ${plural(offer.years, 'year')}. ${offer.note}`,
+        refs: [{ type: 'person', id: s.player.id }],
+        significance: 7,
+        public: true,
+      });
+      s.emit('track.signed', { brand: offer.brand, aYear: offer.aYear });
+      return {
+        brand: offer.brand,
+        aYear: offer.aYear,
+        note: `${offer.brand}, ${formatMoney(offer.aYear)} a year for ${plural(offer.years, 'year')}, `
+          + `and ${formatMoney(offer.medalBonus)} for a global medal.`,
+      };
+    },
+  );
+
+  /** Hanging them up. */
+  sim.onCommand<Record<string, never>, { note: string }>(
+    'track.retire',
+    (_p, { sim: s }) => {
+      const running = runningOf(s);
+      if (!running) throw new CommandError('You do not run.');
+      const season = seasonOf(s);
+      if (season) endSeason(s, season, 'with you retiring');
+      const best = running.bests[0];
+      running.professional = false;
+      running.stage = 'retired';
+      running.eventIds = [];
+      s.remember({
+        category: 'life',
+        title: 'Retired From The Track',
+        detail: best
+          ? `${formatSeconds(best.seconds)} for the ${EVENT_BY_ID[best.eventId]?.label ?? best.eventId}, and that is where it stops.`
+          : 'And that is where it stops.',
+        refs: [{ type: 'person', id: s.player.id }],
+        significance: 7,
+        public: true,
+      });
+      s.emit('track.retired', { runningId: running.id });
+      return { note: 'You are done on the track. The times stand.' };
+    },
+  );
+
+  /**
+   * A meet on the calendar.
+   *
+   * Nothing happens here on its own: a race is something you go and run. This
+   * exists so the meet is a commitment like any other, and so the calendar
+   * flags it against a shoot day or an audition on the same afternoon.
+   */
+  sim.onSchedule('track.meet', (item, s) => {
+    const payload = item.payload as { seasonId: Id };
+    const season = s.universe.seasons?.[payload.seasonId];
+    if (!season || season.endedAt) return;
+    const meet = season.meets.find((one) => one.at === item.at);
+    if (!meet || meet.run) return;
+    s.notify({
+      title: meet.name,
+      body: `${TIER_LABEL[meet.tier as Tier]}${meet.town ? `, ${meet.town}` : ''}. It is today.`,
+      category: 'personal',
+      importance: 62,
+      route: '/workspace/track',
+    });
+  });
+
+  /** The contract pays every year until it runs out. */
+  sim.onSchedule('track.contract_year', (item, s) => {
+    const running = Object.values(s.universe.running ?? {})
+      .find((one) => one.id === (item.payload as { runningId: Id }).runningId);
+    const contract = running?.contract;
+    if (!running || !contract || s.now >= contract.to) return;
+    const accountId = s.player.primaryAccountId;
+    if (accountId && running.personId === s.player.id) {
+      s.income(accountId, contract.aYear, `${contract.brand} — Contract Year`, 'other', { refType: 'person', refId: running.personId });
+    }
+    s.schedule({
+      at: addDays(s.now, 365, s.homeZone),
+      kind: 'track.contract_year',
+      label: `${contract.brand} Contract`,
+      category: 'personal',
+      payload: { runningId: running.id },
+      priority: 30,
+    });
+  });
 
   /** Walking away from a season. */
   sim.onCommand<Record<string, never>, { note: string }>(

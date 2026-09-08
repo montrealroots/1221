@@ -27,7 +27,7 @@ export type IdNamespace =
   | 'scene' | 'fact' | 'membership' | 'workout' | 'plan' | 'deal' | 'date' | 'berth'
   | 'statement' | 'standing' | 'dining' | 'retail' | 'worn' | 'commission' | 'costume'
   | 'chan' | 'vid' | 'vcom' | 'vsub' | 'watch'
-  | 'vlist' | 'stream' | 'cpost' | 'member' | 'payout' | 'vnotice' | 'profile' | 'sitem' | 'follow' | 'sroom' | 'hire' | 'shoot' | 'film' | 'screening' | 'submission' | 'ticket' | 'invite' | 'seat' | 'parcel' | 'school' | 'part' | 'uniapp' | 'degree' | 'season' | 'running' | 'meet';
+  | 'vlist' | 'stream' | 'cpost' | 'member' | 'payout' | 'vnotice' | 'profile' | 'sitem' | 'follow' | 'sroom' | 'hire' | 'shoot' | 'film' | 'screening' | 'submission' | 'ticket' | 'invite' | 'seat' | 'parcel' | 'school' | 'part' | 'uniapp' | 'degree' | 'season' | 'running' | 'meet' | 'growing';
 
 const COUNTER_KEY = '__idCounter';
 
