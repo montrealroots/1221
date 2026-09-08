@@ -43,6 +43,7 @@ import { registerCare } from './systems/care';
 import { registerJourney } from './systems/journey';
 import { ensureKeepings, registerStorage } from './systems/storage';
 import { registerRentalSystem } from './systems/rental';
+import { registerShootSystem } from './systems/shoot';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -106,6 +107,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerJourney(sim);
   registerStorage(sim);
   registerRentalSystem(sim);
+  registerShootSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1003,6 +1005,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Nothing already owned changes; the collection simply starts empty.
     universe.costumes ??= {};
     steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 55) {
+    // Schema 55: the shoot day. A location, whoever said yes, the kit that is
+    // in the van and what the weather left you with.
+    universe.shootDays ??= {};
+    steps.push('Shoot days, and the crew who turn up for them.');
   }
 
   if (from < 54) {

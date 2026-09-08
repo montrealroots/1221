@@ -241,6 +241,53 @@ describe('the ticket', () => {
   });
 });
 
+describe('a ticket nobody collected', () => {
+  it('can be called off before it goes out, and the money comes back', () => {
+    const sim = inLosAngeles('hire-cancel');
+    const accountId = sim.player.primaryAccountId!;
+    const before = sim.ledger.availableFunds(accountId);
+    const { hire } = hireOne(sim, 3);
+    expect(sim.ledger.availableFunds(accountId)).toBeLessThan(before);
+
+    const off = sim.execute<{ refund: number; kept: number }>({ kind: 'kit.cancel', payload: { hireId: hire.id } });
+    expect(off.ok, String(off.error)).toBe(true);
+    const closed = sim.universe.kitHires[hire.id]!;
+    expect(closed.status).toBe('cancelled');
+    // The day it was wanted for has started, so the house keeps a day for
+    // having built it and everything else comes back.
+    expect(off.value!.kept).toBe(closed.rate);
+    expect(sim.ledger.availableFunds(accountId)).toBe(before - closed.rate);
+    expect(describeHire(sim, closed)).toContain('called off');
+  });
+
+  it('will not be called off once it is in your hands, and not twice', () => {
+    const sim = inLosAngeles('hire-cancel-guards');
+    const { hire } = hireOne(sim, 2);
+    sim.execute({ kind: 'kit.collect', payload: { hireId: hire.id } });
+    expect(sim.execute({ kind: 'kit.cancel', payload: { hireId: hire.id } }).ok).toBe(false);
+
+    const other = hireOne(sim, 2).hire;
+    expect(sim.execute({ kind: 'kit.cancel', payload: { hireId: other.id } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'kit.cancel', payload: { hireId: other.id } }).ok).toBe(false);
+  });
+
+  it('closes itself at the due date rather than sitting on your deposit forever', () => {
+    const sim = inLosAngeles('hire-never-collected');
+    const { hire } = hireOne(sim, 2);
+
+    // Never collected. The house puts it back on the shelf on the day it was
+    // due and returns everything but a day. The account itself moves for the
+    // ordinary reasons a life moves it over two days, so the ticket is what
+    // is checked here rather than the balance.
+    sim.advanceTo(hire.dueAt + 60_000);
+    const closed = sim.universe.kitHires[hire.id]!;
+    expect(closed.status).toBe('cancelled');
+    expect(closed.lateFee).toBe(0);
+    expect(closed.refunded).toBe(closed.deposit + (closed.hire - closed.rate) + closed.waiver + closed.delivery);
+    expect(closed.paid).toBe(closed.rate);
+  });
+});
+
 describe('late, and later', () => {
   it('charges the day rate and a quarter for every day it is late', () => {
     const sim = inLosAngeles('hire-late');

@@ -440,10 +440,28 @@ answer says what would make it yes.
    or by you, and what is left of the deposit comes back. Three weeks past due
    the house stops waiting, writes the kit off and charges you for it.
 
-   **Still to come in this section:** shoot days you plan, crew you ask
-   favours of, locations you get permission for, weather that ruins one of
-   them; and cutting it, screening it and submitting it to a festival, which
-   is a form and a fee and a wait.
+   **And the day itself.** A day goes in the diary with a name, a date, the
+   hours it will run and how many setups you mean to get. Where it is decides
+   what it costs you: your own place is free and carries seven setups at the
+   outside, because it is a flat and not a stage; the street is free and
+   nobody has to say yes, but somebody may still come and move you on halfway
+   through the afternoon; and somewhere somebody owns is a form, a fee up
+   front and an answer that takes a few days, where a quiet place says yes
+   more often than a famous one and a name the city knows gets further than
+   one it does not. A refusal gives the fee back.
+
+   Crew are a favour, not a payroll. You can only ask people who actually know
+   you, they answer out of how warm it is and how recently you last asked, and
+   a yes is remembered on both sides: it costs some of the goodwill it was
+   made of and leaves a memory of the day. What you get is what the day could
+   carry — alone with a camera it is under half of what you planned, and every
+   pair of hands in a role that matters buys some of the rest back — times
+   what the weather left of it. A storm halves an exterior; snow and rain cost
+   a lot; a stage does not care. The hours go out of the day and out of you,
+   and the kit that was on it remembers it was there, which is what wears it.
+
+   **Still to come in this section:** cutting it, screening it and submitting
+   it to a festival, which is a form and a fee and a wait.
 7. Cinemas, fashion weeks, venues and events on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.
 9. Childhood through later life, end to end.

@@ -370,13 +370,27 @@ before any delivery claim.
 
     **Held by the gate.** `tools/rental-check.mjs` measures the roster, the cities, the lines, the shelf depth, the arithmetic and the note, and holds the line that all twenty sampled cities can hire a camera. `tests/rental.test.ts` is 16 tests over the houses, the derived shelves, the three day week, cover of your own, the whole hire and return, the guards, the late fee and the write-off.
 
+41. Life contract item 6, second part — the shoot day. **"After that start on the rest of what's on the life contract."**
+
+    **The day goes in the diary.** `src/engine/systems/shoot.ts` and schema 55's `ShootDay`. A name, a date, the hours it runs and the setups you mean to get. Where it is decides what it costs: your own place is free and carries seven setups at the outside because it is a flat and not a stage; the street is free and needs nobody's permission, but there is a chance somebody comes and moves you on halfway through the afternoon; somewhere somebody owns is a form, a fee up front and an answer that takes one to four days, where a quiet place says yes more often than a famous one and a name the city knows gets further than one it does not. A refusal returns the fee, because nobody keeps money for a day you cannot have.
+
+    **Crew are favors.** You can only ask people who actually know you — familiarity twenty five and up — and they answer out of how strong the relationship is, how much respect is in it, how much conflict, and how many days you have already asked them for this month. A yes leaves a memory on their side and takes a little of the goodwill it was made of; the day itself leaves another. Nobody is on a payroll and nothing is bought.
+
+    **What you get is what the day could carry.** Alone with a camera it is under half of what you planned. Camera, sound, lighting, grip and producing each buy some of the rest back, once each; being good at this buys a little more; a long day carries more than a short one until it does not. Then the weather has its say through `shootDayWeather`, which was written for this and had never been called: a storm halves an exterior, snow and rain cost a lot, drizzle and fog a little, and heat past thirty eight or a freeze past minus fifteen slows a crew whatever the sky is doing. A stage does not care. The hours go out of the day and out of you, and every ticket that was on the day records it, which is what raises the odds it comes back marked.
+
+    **Refusals that are real.** A day will not run early, will not run twice, will not run at a place nobody has said yes to, and will not run at all with no camera in your hands — hired and collected, or bought outright. Nothing is narrated that was not true.
+
+    **And a sixth bug on the rental house, found by reading it rather than by a test.** A ticket you booked and never collected had no way out: the deposit sat with the house forever and the ticket sat in your list forever. There is now `kit.cancel` — the deposit comes back whole, and the hire comes back too unless the day it was wanted for has started, in which case the house keeps one day for having built it — and a ticket nobody collects closes itself the same way on its due date rather than sitting on your money.
+
+    **Held by the gate.** `tests/shoot.test.ts` is 13 tests over the diary, the flat, the hours, the fee and its return, the stranger you cannot ask, the favor that is remembered, capability with and without crew, and the four refusals. `tests/rental.test.ts` is 20.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
     - The offshore reporting is a notice and a memory, not a line on the tax return.
     - Travel cover, a hire car at the far end and packing outfits are still not inside the trip.
     - Visa rules are not carried, so the six-month passport rule warns for every border and refuses for none.
-    - The shoot day (call sheet, crew and a location together) does not exist. The kit hire it would hang off is built.
+    - A shoot day produces setups in the can rather than footage: there is nothing yet to cut, screen or submit, which is the rest of section 6.
     - A rating feed would be needed for a real insurance premium; an issuer's real invitation rule is published by nobody.
     - The dialogue library stands at 1,296 of the 100,001 target; that is writing, not building.
     - Base44 live persistence is unverified against a deployment, and is reported unavailable rather than passing.

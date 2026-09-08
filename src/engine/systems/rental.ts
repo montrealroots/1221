@@ -257,7 +257,35 @@ export function describeHire(sim: Simulation, hire: KitHire): string {
       : `${what}, out until ${formatDate(hire.dueAt, sim.homeZone)}.`;
   }
   if (hire.status === 'lost') return `${what}, written off and charged to you.`;
+  if (hire.status === 'cancelled') return `${what}, called off before it went out.`;
   return `${what}, back on ${formatDate(hire.returnedAt ?? hire.dueAt, sim.homeZone)}.`;
+}
+
+/**
+ * Calling off a ticket nobody collected.
+ *
+ * The deposit comes back whole, because the house never had the risk. The hire
+ * comes back too if the kit had not been pulled yet; once the day it was
+ * wanted for has started, the house has built it, labeled it and kept it off
+ * the shelf, so it keeps a day for the trouble.
+ */
+function closeUncollected(sim: Simulation, hire: KitHire, reason: string): { refund: Money; kept: Money } {
+  const accountId = sim.player.primaryAccountId;
+  const started = sim.now >= hire.outAt;
+  const kept = started ? Math.min(hire.hire, hire.rate) : 0;
+  const back = hire.deposit + (hire.hire - kept) + hire.waiver + hire.delivery;
+
+  if (accountId && back > 0) {
+    sim.income(accountId, back, `Kit hire called off — ${hire.houseName}`, 'production');
+  }
+  hire.status = 'cancelled';
+  hire.returnedAt = sim.now;
+  hire.refunded = back;
+  hire.paid -= back;
+  hire.lateDays = 0;
+  hire.lateFee = 0;
+  sim.emit('kit.cancelled', { hireId: hire.id, refund: back, kept, reason });
+  return { refund: back, kept };
 }
 
 // ---------------------------------------------------------------------------
@@ -361,6 +389,21 @@ export function registerRentalSystem(sim: Simulation): void {
       hire.collectedAt = s.now;
       s.emit('kit.collected', { hireId: hire.id, delivered: hire.delivery > 0 });
       return { collectedAt: s.now, minutes };
+    },
+  );
+
+  /**
+   * Calling it off before it goes out, which the counter allows and which is
+   * the only way a ticket nobody collected ever closes.
+   */
+  sim.onCommand<{ hireId: Id }, { refund: Money; kept: Money }>(
+    'kit.cancel',
+    (p, { sim: s }) => {
+      const hire = s.universe.kitHires[p.hireId];
+      if (!hire) throw new CommandError('No such hire.');
+      if (hire.status === 'out') throw new CommandError('You have that kit. Take it back rather than calling it off.');
+      if (hire.status !== 'booked') throw new CommandError('That ticket is already closed.');
+      return closeUncollected(s, hire, 'called off');
     },
   );
 
@@ -500,6 +543,24 @@ export function registerRentalSystem(sim: Simulation): void {
     // A ticket that was extended has a later due date than this reminder, and
     // the reminder for that date is already in the diary.
     if (s.now < hire.dueAt) return;
+
+    // Nobody ever came for it. The house puts it back on the shelf, keeps a
+    // day for having built it, and returns the rest rather than sitting on a
+    // deposit for a ticket that never went out.
+    if (hire.status === 'booked') {
+      const { refund: back } = closeUncollected(s, hire, 'never collected');
+      s.notify({
+        title: 'Kit Never Collected',
+        body: `${hire.houseName} put the kit back on the shelf. ${formatMoney(back)} is back with you; they kept a day for building it.`,
+        category: 'personal',
+        importance: 52,
+        route: '/workspace/film',
+        refType: 'hire',
+        refId: hire.id,
+      });
+      return;
+    }
+
     s.notify({
       title: 'Kit Due Back',
       body: `${hire.houseName} wants ${plural(hire.lines.reduce((sum, l) => sum + l.quantity, 0), 'piece')} back today. After that it is ${formatMoney(dailyLate(hire))} a day.`,

@@ -1315,7 +1315,7 @@ export interface KitHire {
   /** What has actually left the account so far. */
   paid: Money;
   refunded?: Money;
-  status: 'booked' | 'out' | 'returned' | 'lost';
+  status: 'booked' | 'out' | 'returned' | 'lost' | 'cancelled';
   collectedAt?: Instant;
   returnedAt?: Instant;
   lateDays?: number;
@@ -1331,6 +1331,57 @@ export interface KitHire {
   policyId?: Id;
   /** The shoot days this kit was on, which is what wears it. */
   shootDayIds?: Id[];
+}
+
+/** What somebody does on a day, which is the only reason to ask them. */
+export type CrewRole = 'camera' | 'sound' | 'lighting' | 'grip' | 'production';
+
+/** Somebody you asked, and what they said. */
+export interface ShootCrew {
+  personId: Id;
+  name: string;
+  role: CrewRole;
+  answer: 'asked' | 'yes' | 'no';
+  note?: string;
+}
+
+/**
+ * A day you shoot something.
+ *
+ * The whole of it: where it is, whether anybody said you could be there, who
+ * turned up, what kit was in the van, how many setups you meant to get and how
+ * many you actually got when the weather and the hours had their say.
+ */
+export interface ShootDay {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  title: string;
+  cityId: string;
+  /** The call. */
+  at: Instant;
+  hours: number;
+  where: 'home' | 'place' | 'street';
+  placeId?: string;
+  placeName: string;
+  permission: {
+    needed: boolean;
+    status: 'none' | 'asked' | 'granted' | 'refused';
+    fee: Money;
+    askedAt?: Instant;
+    decidedAt?: Instant;
+    note?: string;
+  };
+  crew: ShootCrew[];
+  /** Tickets whose kit is meant to be on this day. */
+  hireIds: Id[];
+  /** What you meant to get, and what you got. */
+  setups: number;
+  got?: number;
+  status: 'planned' | 'shot' | 'abandoned';
+  weatherNote?: string;
+  note?: string;
+  shotAt?: Instant;
 }
 
 export interface Outfit {
@@ -2752,7 +2803,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 54;
+export const SAVE_SCHEMA_VERSION = 55;
 
 export interface SaveMeta {
   id: Id;
@@ -2880,6 +2931,8 @@ export interface SaveUniverse {
   socialRooms: Record<Id, SocialRoom>;
   /** Kit out on hire from a rental house. */
   kitHires: Record<Id, KitHire>;
+  /** Days you shoot something of your own. */
+  shootDays: Record<Id, ShootDay>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */
