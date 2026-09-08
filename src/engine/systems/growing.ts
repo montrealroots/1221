@@ -74,9 +74,11 @@ export function conditionMet(sim: Simulation, moment: Moment): boolean {
     case 'runs': return Boolean(runningOf(sim));
     case 'may_work': return mayI(sim, 'work').ok;
     case 'may_drive': return mayI(sim, 'drive').ok && !growingOf(sim)?.passedTestAt;
-    // The first wage is the thing that follows the first job, and the first
-    // job is a moment in here rather than a record anywhere else.
-    case 'works': return growingOf(sim)?.done.includes('first_job') ?? false;
+    // The first wage follows a job that actually exists: one held now, one
+    // held and left, or at least the decision to go and find one.
+    case 'works': return Object.values(sim.universe.firstJobs ?? {})
+      .some((one) => one.personId === sim.player.id)
+      || (growingOf(sim)?.done.includes('first_job') ?? false);
     case 'lives_at_home': return ageOf(sim) >= 18 && !Object.values(sim.universe.properties ?? {})
       .some((one) => one.ownerId === sim.player.id && !one.soldAt);
     default: return true;

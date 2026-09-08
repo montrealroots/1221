@@ -28,6 +28,12 @@ import {
 } from '@/engine/systems/growing';
 import { ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE } from '@/engine/content/growingup';
 import {
+  describeJob, floorHere, jobOf, jobsHeld, openingsFor, shiftIsDue, wageFor,
+} from '@/engine/systems/work';
+import {
+  JOB_NOTE, LOCAL_NOTE, NO_MINIMUM_NOTE, WAGE_NOTE, YOUNG_NOTE,
+} from '@/engine/content/work';
+import {
   AGE_GATE_NOTE, LIFESPAN_NOTE, PENSION_NOTE, describeHeight, describeWeight,
 } from '@/engine/content/lifespan';
 import {
@@ -647,6 +653,8 @@ function LifeTab(): JSX.Element {
 
       <GrowingPanel />
 
+      <JobPanel />
+
       <Panel title="What You Are Old Enough For" subtitle={COUNTRIES.get(gates[0]?.answer.countryId ?? '')?.name ?? ''} flush>
         <div className="list">
           {gates.map((one) => (
@@ -763,5 +771,109 @@ function GrowingPanel(): JSX.Element | null {
         </div>
       </Panel>
     </>
+  );
+}
+
+/**
+ * The Saturday job.
+ *
+ * The floor is real and published; the rota and every shift are SLATE's own.
+ * Where the city has a real shop of the right kind, that is where it is.
+ */
+function JobPanel(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const held = jobOf(sim);
+  const past = jobsHeld(sim).filter((one) => one.endedAt).slice(0, 3);
+  const openings = openingsFor(sim);
+  const floor = floorHere(sim);
+  const allowed = mayI(sim, 'work');
+  if (!held && openings.length === 0 && past.length === 0 && !allowed.ok && ageOf(sim) > 25) return null;
+
+  return (
+    <Panel
+      title={held ? 'The Job' : 'A Job'}
+      subtitle={floor.statutory
+        ? `The floor here is ${formatMoney(floor.perHour)} an hour, set in ${floor.year}.`
+        : `No statutory minimum here. The bargained floor is about ${formatMoney(floor.perHour)} an hour.`}
+    >
+      <div className="col gap-3">
+        {held ? (
+          <>
+            <p className="small" style={{ margin: 0 }}>{describeJob(sim, held)}</p>
+            <div className="row gap-2 wrap">
+              <button
+                className="btn btn-sm btn-primary"
+                disabled={!shiftIsDue(sim, held)}
+                onClick={() => {
+                  const res = run<{ note: string }>('job.shift', {});
+                  if (res.ok) toast(res.value!.note, 'positive');
+                }}
+              >
+                {shiftIsDue(sim, held) ? 'Work The Shift' : 'Not On Until Later'}
+              </button>
+              <button
+                className="btn btn-sm"
+                onClick={() => {
+                  const res = run<{ note: string }>('job.quit', {});
+                  if (res.ok) toast(res.value!.note, 'negative');
+                }}
+              >
+                Hand Your Notice In
+              </button>
+            </div>
+          </>
+        ) : !allowed.ok ? (
+          <p className="small" style={{ margin: 0 }}>{allowed.reason}</p>
+        ) : (
+          <>
+            <p className="small" style={{ margin: 0 }}>
+              {plural(openings.length, 'thing')} going, and none of them are a career.
+            </p>
+            <div className="list">
+              {openings.map((one) => (
+                <div key={one.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{one.label}</div>
+                    <div className="xs dim">{one.about}</div>
+                    <div className="xs dim">
+                      {formatMoney(wageFor(sim, one))} an hour · {plural(one.hours, 'hour')} a shift
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => {
+                      const res = run<{ note: string }>('job.take', { kindId: one.id });
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    Take It
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {past.length > 0 && (
+          <div className="list">
+            {past.map((one) => (
+              <div key={one.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="xs dim">{describeJob(sim, one)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <p className="xs dim" style={{ margin: 0 }}>{WAGE_NOTE}</p>
+        {!floor.statutory && <p className="xs dim" style={{ margin: 0 }}>{NO_MINIMUM_NOTE}</p>}
+        <p className="xs dim" style={{ margin: 0 }}>{LOCAL_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{YOUNG_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{JOB_NOTE}</p>
+      </div>
+    </Panel>
   );
 }

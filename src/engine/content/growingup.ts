@@ -351,10 +351,10 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('take_it', 'Take It', {
         skill: { operations: 2, public_speaking: 1.5 }, attribute: { punctuality: 2, reliability: 1.5 },
-        money: 320_00, energy: -10,
-        memory: 'Took the first job, which paid badly and taught more than it paid.',
+        energy: -10,
+        memory: 'Decided to get a job, and went and got one.',
         significance: 5,
-        note: 'Minimum wage, a manager who counts the float twice, and a summer of it.',
+        note: 'You said yes to the idea of it. What is going, and what it pays, is on your own page.',
       }),
       c('not_yet', 'Not Yet', {
         stress: -4,
@@ -370,7 +370,7 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('spend', 'Spend It', {
         morale: 8, skill: { personal_finance: -0.5 }, money: -180_00,
-        memory: 'Spent the first wage in a weekend, on nothing anybody remembers.',
+        memory: 'Spent a first wage in a weekend, on nothing anybody remembers.',
         significance: 3,
         note: 'Gone by Sunday. Nobody can tell you what on and that is fine.',
       }),
@@ -463,6 +463,328 @@ export const MOMENTS: readonly Moment[] = [
         memory: 'Waited until morning after a call in the middle of the night.',
         significance: 5,
         note: 'You went first thing. It was the sensible call and it is not the one they remember.',
+      }),
+    ],
+  },
+
+  // --- The rest of a childhood ---------------------------------------------
+  {
+    id: 'the_pet', title: 'The Animal', fromAge: 6, toAge: 14, urgency: 30,
+    detail: 'Somebody at the door with a box, and everybody in the house already knows how this ends.',
+    choices: [
+      c('keep_it', 'Keep It', {
+        attribute: { reliability: 1.5, vulnerability: 1 }, money: -140_00, parents: 2, morale: 8,
+        memory: 'Got an animal at eight, and it was the first thing that was ever yours to look after.',
+        significance: 5,
+        note: 'It is yours to feed, walk and worry about, and you will be doing all three for years.',
+      }),
+      c('no', 'Somebody Else', {
+        parents: 1, morale: -4,
+        memory: 'Did not get the animal, and thought about it for a long time.',
+        significance: 2,
+        note: 'It went to somebody else’s house. You saw it once, in a garden, from a car.',
+      }),
+    ],
+  },
+  {
+    id: 'moving_house', title: 'The Move', fromAge: 6, toAge: 15, urgency: 45,
+    detail: 'A van outside, your room in boxes, and a new town on the other end of it.',
+    choices: [
+      c('start_again', 'Start Again Properly', {
+        attribute: { adaptability: 2.5, social_instinct: 1.5 }, friend: 'make', stress: 8,
+        memory: 'Moved towns as a child and set about making it work from the first week.',
+        significance: 6,
+        note: 'New town, new school, and you went at it from the first week rather than waiting.',
+      }),
+      c('hold_on', 'Hold On To The Old One', {
+        attribute: { memorization: 1, grief: 1.5 }, friend: 'lose', stress: 10, morale: -6,
+        memory: 'Moved towns and spent a year on the phone to the old one.',
+        significance: 5,
+        note: 'You kept ringing. It held for a while and then it did not, the way it does.',
+      }),
+    ],
+  },
+  {
+    id: 'the_bully', title: 'The One Who Waits For You', fromAge: 8, toAge: 15, requires: 'at_school', urgency: 50,
+    detail: 'It is the same corridor at the same time and everybody knows and nobody says.',
+    choices: [
+      c('tell', 'Tell Somebody', {
+        attribute: { emotional_truth: 1.5, vulnerability: 1.5 }, parents: 5, stress: -8,
+        memory: 'Told somebody about the one who waited, which took more than not telling did.',
+        significance: 6,
+        note: 'You told somebody. It was harder than saying nothing and it worked better.',
+      }),
+      c('stand', 'Stand There', {
+        attribute: { resilience: 2.5, menace: 1 }, stress: 12,
+        memory: 'Stood there instead of walking round, once, and it stopped.',
+        significance: 6,
+        note: 'You stood there. It stopped, and it cost you something to find out it would.',
+      }),
+      c('avoid', 'Take The Long Way', {
+        attribute: { discretion: 1.5 }, stress: 5, morale: -5,
+        memory: 'Took the long way round for a whole year.',
+        significance: 4,
+        note: 'You took the long way for a year, and it was fine, and you still know the route.',
+      }),
+    ],
+  },
+  {
+    id: 'school_report', title: 'The Report', fromAge: 7, toAge: 17, requires: 'at_school', urgency: 35,
+    detail: 'An envelope on the table and somebody waiting for you to open it in front of them.',
+    choices: [
+      c('own_it', 'Read It Out', {
+        attribute: { note_integration: 2, resilience: 1 }, parents: 4,
+        memory: 'Read a school report out loud at the table, including the bad line.',
+        significance: 3,
+        note: 'You read it out, including the line about effort. That went down better than hiding it.',
+      }),
+      c('bury', 'Leave It In The Bag', {
+        attribute: { discretion: 1 }, parents: -4, stress: 6,
+        memory: 'Left a school report in a bag for three weeks.',
+        significance: 3,
+        note: 'It stayed in the bag until somebody found it, which is worse and everybody knew it would be.',
+      }),
+    ],
+  },
+  {
+    id: 'the_hospital', title: 'A Night In Hospital', fromAge: 5, toAge: 18, urgency: 55,
+    detail: 'An arm at the wrong angle, a plastic chair, and four hours before anybody looks at it.',
+    choices: [
+      c('brave', 'Do Not Make A Fuss', {
+        attribute: { injury_resilience: 2, restraint: 1.5 }, money: -220_00, stress: 6,
+        memory: 'Broke something as a child and did not make a fuss about it, which everybody mentioned.',
+        significance: 5,
+        note: 'Nobody in that waiting room knew how much it hurt, which was the point.',
+      }),
+      c('honest', 'Say How Bad It Is', {
+        attribute: { emotional_truth: 2 }, money: -220_00, parents: 3, stress: 10,
+        memory: 'Broke something as a child and said exactly how bad it was.',
+        significance: 5,
+        note: 'You said exactly how bad it was, and they moved you up the list.',
+      }),
+    ],
+  },
+  {
+    id: 'grandparent', title: 'The Kitchen With The Radio On', fromAge: 5, toAge: 20, urgency: 30,
+    detail: 'Somebody older than everybody, a kitchen that smells the same every time, and no hurry at all.',
+    choices: [
+      c('listen', 'Sit And Listen', {
+        attribute: { active_listening: 2.5, backstory_invention: 2 }, morale: 6,
+        memory: 'Spent whole afternoons in a kitchen listening to somebody old tell it wrong on purpose.',
+        significance: 6,
+        note: 'Hours of it. Half of what you know about people, you got in that kitchen.',
+      }),
+      c('outside', 'Go And Play', {
+        attribute: { stamina: 1 }, morale: 4,
+        memory: 'Was outside for most of it, and wishes now that they had sat down.',
+        significance: 3,
+        note: 'You were outside for most of it. Everybody is, and everybody says the same thing later.',
+      }),
+    ],
+  },
+  {
+    id: 'summer', title: 'The Long Summer', fromAge: 7, toAge: 16, urgency: 25,
+    detail: 'Six weeks, nothing in them, and it will never be this long again.',
+    choices: [
+      c('outside', 'Be Out All Day', {
+        attribute: { stamina: 1.5, physical_presence: 1 }, skill: { fitness: 2 }, morale: 8,
+        memory: 'Spent a whole summer outside and came back in September a different shape.',
+        significance: 4,
+        note: 'Out at nine, back when it got dark, every day of it.',
+      }),
+      c('inside', 'Read Everything In The House', {
+        attribute: { script_analysis: 2, backstory_invention: 1.5 }, morale: 4,
+        memory: 'Spent a summer reading everything in the house, including the things meant for adults.',
+        significance: 4,
+        note: 'You read everything, including things nobody meant you to. It shows, later.',
+      }),
+      c('screen', 'Watch Everything', {
+        attribute: { camera_awareness: 2, comedy_timing: 1.5 }, skill: { visual_language: 1.5 },
+        morale: 5,
+        memory: 'Watched everything, twice, in one summer, and started noticing how it was made.',
+        significance: 5,
+        note: 'Everything, twice, and by August you were noticing the cuts. That is where it starts.',
+      }),
+    ],
+  },
+  {
+    id: 'first_gig', title: 'The First Gig', fromAge: 13, toAge: 19, urgency: 35,
+    detail: 'A room too small for the number of people in it, and somebody’s parent waiting outside.',
+    choices: [
+      c('front', 'Get To The Front', {
+        attribute: { magnetism: 2, physical_presence: 1.5 }, money: -35_00, morale: 10, friend: 'make',
+        memory: 'Got to the front at the first gig and could not hear properly for two days.',
+        significance: 5,
+        note: 'Down the front, deaf until Tuesday, and worth every minute of it.',
+      }),
+      c('back', 'Stay At The Back', {
+        attribute: { stillness: 1.5, active_listening: 1.5 }, money: -35_00, morale: 5,
+        memory: 'Watched the first gig from the back, and saw the whole room rather than the band.',
+        significance: 4,
+        note: 'From the back you could see the whole room, which turns out to be the more useful view.',
+      }),
+    ],
+  },
+  {
+    id: 'the_haircut', title: 'The Haircut', fromAge: 12, toAge: 19, urgency: 20,
+    detail: 'You have seen a photograph and you are certain, and the person holding the scissors is not.',
+    choices: [
+      c('do_it', 'Do It', {
+        attribute: { photogenic_quality: 1, resilience: 1.5 }, money: -30_00, morale: -4, stress: 5,
+        memory: 'Had the haircut. There are photographs and they have not been destroyed.',
+        significance: 3,
+        note: 'It grew back. There are photographs, and somebody in your family has kept all of them.',
+      }),
+      c('sensible', 'Something Sensible', {
+        attribute: { restraint: 1 }, money: -30_00,
+        memory: 'Did not have the haircut, and quietly regrets it.',
+        significance: 2,
+        note: 'Sensible. You will wonder about it for years and never do it.',
+      }),
+    ],
+  },
+  {
+    id: 'exam_results', title: 'Results Day', fromAge: 15, toAge: 19, requires: 'at_school', urgency: 60,
+    detail: 'A hall, a table, an envelope with your name on it, and everybody watching everybody else open theirs.',
+    choices: [
+      c('open_there', 'Open It There', {
+        attribute: { pressure_tolerance: 2, resilience: 1.5 }, stress: 10,
+        memory: 'Opened the envelope in the hall in front of everybody.',
+        significance: 6,
+        note: 'You opened it there, in front of everybody, which is the braver of the two.',
+      }),
+      c('outside', 'Take It Outside', {
+        attribute: { discretion: 2, restraint: 1 }, stress: 5,
+        memory: 'Took the envelope outside and opened it round the corner, alone.',
+        significance: 5,
+        note: 'Round the corner, alone, and then you knew and nobody else did yet.',
+      }),
+    ],
+  },
+  {
+    id: 'friend_moves', title: 'The One Who Left', fromAge: 10, toAge: 20, urgency: 40,
+    detail: 'Their family is moving, it was decided months ago, and you found out on a Tuesday.',
+    choices: [
+      c('keep_up', 'Keep It Going', {
+        attribute: { collaboration: 1.5, reliability: 2 }, stress: 4, morale: -3,
+        memory: 'Kept a friendship going across a distance, for years, mostly by being the one who rang.',
+        significance: 5,
+        note: 'You were the one who rang, every time, for years. That is a thing you now know about yourself.',
+      }),
+      c('let_go', 'Let It Go', {
+        attribute: { restraint: 1.5, grief: 1 }, friend: 'lose', morale: -6,
+        memory: 'Let a friendship go when they moved, and it was the honest thing.',
+        significance: 4,
+        note: 'You let it go. It was honest, and it still went quiet faster than you expected.',
+      }),
+    ],
+  },
+  {
+    id: 'first_drink', title: 'The First One', fromAge: 15, toAge: 21, urgency: 35,
+    detail: 'A kitchen at a party, something warm in a plastic cup, and everybody pretending they have done this before.',
+    choices: [
+      c('in', 'Go With It', {
+        attribute: { social_instinct: 1.5, adaptability: 1 }, stress: -4, morale: 5, energy: -12,
+        memory: 'Had the first one at a kitchen party and did not enjoy any of it.',
+        significance: 4,
+        note: 'It was warm, it was horrible, and you said it was fine. Everybody did.',
+      }),
+      c('pass', 'Pass', {
+        attribute: { restraint: 2, discretion: 1 }, morale: -2,
+        memory: 'Passed on the first one, in a kitchen, in front of everybody.',
+        significance: 4,
+        note: 'You said no in a kitchen full of people, which takes more than saying yes did.',
+      }),
+    ],
+  },
+  {
+    id: 'the_crash', title: 'In The Passenger Seat', fromAge: 14, toAge: 24, urgency: 60,
+    detail: 'Somebody your age driving, somebody your age in the back, and a wall that was not there a second ago.',
+    choices: [
+      c('say_it', 'Say Something Next Time', {
+        attribute: { safety_awareness: 2.5, emotional_truth: 1 }, stress: 14, friend: 'lose',
+        memory: 'Was in a car that hit something, and never got in it with them again.',
+        significance: 7,
+        note: 'Nobody was hurt. You never got in a car with them again and you told them why.',
+      }),
+      c('nothing', 'Say Nothing', {
+        attribute: { restraint: 1, discretion: 1.5 }, stress: 10,
+        memory: 'Was in a car that hit something, and said nothing about it to anybody.',
+        significance: 6,
+        note: 'Nobody was hurt and nobody said anything. You still think about it in traffic.',
+      }),
+    ],
+  },
+  {
+    id: 'the_flatshare', title: 'The Flatshare', fromAge: 18, toAge: 30, urgency: 40,
+    detail: 'Three strangers, one bathroom, a rota nobody follows, and somebody’s milk with a name on it.',
+    choices: [
+      c('get_on', 'Make It Work', {
+        attribute: { collaboration: 2, adaptability: 1.5 }, friend: 'make', stress: 4,
+        memory: 'Lived with strangers and came out of it with one of them as a friend.',
+        significance: 5,
+        note: 'One of them turns out to be somebody you would go anywhere for. The other two you have lost.',
+      }),
+      c('keep_to_room', 'Keep To Your Room', {
+        attribute: { discretion: 1.5, stillness: 1 }, stress: -3, morale: -4,
+        memory: 'Lived with strangers for a year and barely knew any of them.',
+        significance: 3,
+        note: 'A year of it and you could not tell anybody their surnames.',
+      }),
+    ],
+  },
+  {
+    id: 'the_landlord', title: 'The Damp Patch', fromAge: 18, toAge: 35, urgency: 45,
+    detail: 'It has been there since October, it is now March, and the emails have stopped being answered.',
+    choices: [
+      c('push', 'Push It', {
+        skill: { negotiation: 2.5, personal_finance: 1 }, attribute: { pressure_tolerance: 1.5 },
+        stress: 8,
+        memory: 'Got a landlord to fix something by being the tenant who would not go away.',
+        significance: 5,
+        note: 'It took eleven emails and a phone call to somebody’s office. It got fixed.',
+      }),
+      c('live_with_it', 'Live With It', {
+        attribute: { resilience: 1 }, stress: 5, morale: -5,
+        memory: 'Lived with a damp patch for a year rather than have the argument.',
+        significance: 3,
+        note: 'You put a wardrobe in front of it. It is still there, behind the wardrobe.',
+      }),
+    ],
+  },
+  {
+    id: 'the_reunion', title: 'The Ten Years', fromAge: 26, toAge: 45, urgency: 30,
+    detail: 'A message from somebody you have not thought about since, about a room full of people you were at school with.',
+    choices: [
+      c('go', 'Go', {
+        attribute: { networking: 1.5, social_instinct: 1.5 }, money: -60_00, morale: 4, friend: 'make',
+        memory: 'Went to the reunion, and half of them were unrecognizable and half had not changed at all.',
+        significance: 4,
+        note: 'Half of them you would have walked past. The other half had not moved an inch.',
+      }),
+      c('skip', 'Do Not Go', {
+        attribute: { discretion: 1 }, stress: -3,
+        memory: 'Did not go to the reunion, and heard about it for a month.',
+        significance: 2,
+        note: 'You did not go, and three people sent you photographs anyway.',
+      }),
+    ],
+  },
+  {
+    id: 'a_parent_needs_you', title: 'The Other Way Round Now', fromAge: 28, toAge: 60, urgency: 65,
+    detail: 'The person who looked after you needs looking after, and nobody has said it out loud yet.',
+    choices: [
+      c('step_up', 'Say It Out Loud', {
+        attribute: { emotional_truth: 2.5, reliability: 2 }, parents: 10, stress: 16, energy: -15,
+        memory: 'Was the one who said out loud that a parent needed help.',
+        significance: 8,
+        note: 'You said it. It was the hardest conversation of the year and somebody had to have it.',
+      }),
+      c('wait', 'Wait For Somebody Else To', {
+        attribute: { restraint: 1 }, parents: -3, siblings: -3, stress: 10,
+        memory: 'Waited for somebody else to say that a parent needed help.',
+        significance: 6,
+        note: 'Somebody else said it in the end. That sits in the family for a long time.',
       }),
     ],
   },

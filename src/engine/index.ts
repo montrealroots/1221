@@ -54,6 +54,7 @@ import { ensureSchoolLeaver, ensureSchooling, registerSchool } from './systems/s
 import { registerUniversity } from './systems/university';
 import { registerAthletics } from './systems/athletics';
 import { registerGrowing, startGrowingUp } from './systems/growing';
+import { registerWork } from './systems/work';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -128,6 +129,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerUniversity(sim);
   registerAthletics(sim);
   registerGrowing(sim);
+  registerWork(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1174,7 +1176,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Schema 66: growing up. The years between five and twenty five as things
     // that happen on a day and have to be answered.
     universe.growing ??= {};
-    steps.push('Growing up, and the moments that come round in it.');
+    universe.firstJobs ??= {};
+    steps.push('Growing up, the moments that come round in it, and the Saturday job.');
   }
 
   if (from < 55) {

@@ -2013,6 +2013,34 @@ export interface Schooling {
 }
 
 // ---------------------------------------------------------------------------
+// The job you had before any of this
+// ---------------------------------------------------------------------------
+
+/** A Saturday job: the first money anybody earns that is theirs. */
+export interface FirstJobHeld {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** Which kind of job it is. */
+  kindId: string;
+  /** Who you work for. SLATE's own. */
+  employerName: string;
+  /** Where, so it is a place in a city rather than an abstraction. */
+  cityId: string;
+  placeId?: string;
+  /** What the hour pays, at the time it was taken. */
+  perHour: Money;
+  /** Shifts worked, and what they came to. */
+  shifts: number;
+  earned: Money;
+  /** When the next shift is on the rota. */
+  nextShiftAt?: Instant;
+  startedAt: Instant;
+  endedAt?: Instant;
+  endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
 // Growing up
 // ---------------------------------------------------------------------------
 
@@ -3434,6 +3462,7 @@ export interface SaveUniverse {
   seasons?: Record<Id, TrackSeason>;
   running?: Record<Id, Running>;
   growing?: Record<Id, GrowingUp>;
+  firstJobs?: Record<Id, FirstJobHeld>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

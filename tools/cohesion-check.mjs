@@ -19,6 +19,7 @@ import { growingOf, openMoments, conditionMet } from '../src/engine/systems/grow
 import { TRACK_FROM_AGE } from '../src/engine/content/athletics.ts';
 import { ALLOWANCE_STOPS_AT, allowanceAt } from '../src/engine/content/growingup.ts';
 import { marksOn } from '../src/engine/systems/university.ts';
+import { jobOf, openingsFor } from '../src/engine/systems/work.ts';
 import { CITIES } from '../src/engine/content/geography.ts';
 import { readFileSync } from 'node:fs';
 
@@ -103,6 +104,16 @@ for (const { birthYear } of LIVES) {
         problems.push(`${where} can book a driving lesson when the law says otherwise`);
       }
     }
+
+    // --- The job ---------------------------------------------------------------
+    const canWork = mayI(sim, 'work').ok;
+    if (!canWork && openingsFor(sim).length > 0) problems.push(`${where} is offered work the law does not allow`);
+    if (jobOf(sim)) problems.push(`${where} starts life already holding a Saturday job`);
+    const tookOne = sim.execute({ kind: 'job.take', payload: { kindId: 'checkout' } });
+    if (tookOne.ok !== (canWork && age >= 16)) {
+      problems.push(`${where} ${tookOne.ok ? 'was given' : 'was refused'} a checkout job against the law`);
+    }
+    if (tookOne.ok) sim.execute({ kind: 'job.quit', payload: {} });
 
     // --- The track -----------------------------------------------------------
     const joined = sim.execute({ kind: 'track.join', payload: {} });

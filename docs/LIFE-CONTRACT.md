@@ -867,6 +867,22 @@ answer says what would make it yes.
    paid for again — and the age you may sit it is the country's own, carried
    with the other legal ages rather than assumed.
 
+   And the Saturday job, which is where the money before any money comes
+   from. The national minimum wage is published and 51 of them are carried,
+   with the year each was set — including the eight rich countries that have
+   no statutory minimum at all and set the floor by collective bargaining
+   instead, which is the most surprising true thing in that file. A national
+   floor stays national: the same figure in the capital as anywhere else,
+   and it only moves with the city in the eleven countries that really let a
+   state, a province or a city set their own. A young worker is paid less
+   where the law allows it, which it does in most of them.
+
+   Fourteen kinds of it, from a paper round at thirteen to a night in a
+   warehouse at eighteen, at a real shop of the right kind where the city has
+   one and at SLATE's own where it does not. Two shifts a week. A shift costs
+   the hours it takes and the energy it takes, pays into the account, and
+   teaches something — which is the whole point of a job that pays that badly.
+
 10. Free-text intent across all of it.
 
 ---
