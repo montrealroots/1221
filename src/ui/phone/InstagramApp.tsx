@@ -27,7 +27,7 @@
  * The mark is drawn in CSS. SLATE ships no third party artwork.
  */
 
-import { useState } from 'react';
+import { Children, isValidElement, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
@@ -40,10 +40,16 @@ import {
   searchSocial, settingsOf, socialAnalytics, storiesFor, threadsOf,
 } from '@/engine/systems/socialapps';
 import { SOCIAL_TOPICS, SOCIAL_TOPIC_LABEL, type SocialTopic } from '@/engine/content/socialworld';
+import { ageOf } from '@/engine/systems/lifespan';
 import {
-  AccountGlyph, BackGlyph, BellGlyph, BlockGlyph, BookmarkGlyph, BubbleGlyph, CameraGlyph, ClockGlyph, ComposeGlyph,
-  DownGlyph, EyeGlyph, GearGlyph, GridGlyph, HeartGlyph, HomeGlyph, LockGlyph, MenuGlyph,
-  PlusGlyph, ReelsGlyph, RepostGlyph, SearchGlyph, SendGlyph, SlidersGlyph, TaggedGlyph, TickGlyph,
+  AccessGlyph, AccountGlyph, AddPersonGlyph, BackGlyph, BarsGlyph, BellGlyph, BellOffGlyph,
+  BlockGlyph, BlockRingGlyph, BookmarkGlyph, BubbleGlyph, CameraGlyph, CartGlyph, ChevronRightGlyph,
+  ClockGlyph, ComposeGlyph, ContentGlyph, CrosspostGlyph, DeviceGlyph, DownGlyph, DownloadGlyph,
+  EyeGlyph, FaceGlyph, GearGlyph, GemGlyph, GridGlyph, HeartGlyph, HeartOffGlyph, HideStoryGlyph,
+  HistoryGlyph, HomeGlyph, InsightGlyph, LanguageGlyph, LettersGlyph, LimitGlyph, LockGlyph,
+  MenuGlyph, NotesPageGlyph, PeopleGlyph, PlusGlyph, PrivacyGlyph, ReelsGlyph, RepostGlyph,
+  RingHelpGlyph, ScreensGlyph, SearchGlyph, SendGlyph, SlidersGlyph, StarRingGlyph,
+  SupervisionGlyph, TaggedGlyph, TickGlyph, TimelineGlyph,
 } from './Icons';
 import { Avatar, ago, tally, views } from './YouTubeExtras';
 import { ImagePicker } from './ImagePicker';
@@ -183,7 +189,7 @@ export function InstagramApp({ theme }: { theme: PhoneTheme }) {
                 <p className="ph-card-meta" style={{ padding: '4px 14px 0' }}>Following, in the order they posted.</p>
               )}
               <StoryTray stories={stories} mine={mine} onOpen={setStoryAt} onAdd={() => setScreen('create')} />
-              <div className="ph-body">
+              <div className="ph-body ph-ig-pad">
                 <HomeLane lane={lane} now={now} onOpen={setOpenId} onWho={setWhoId} say={say} />
               </div>
             </>
@@ -312,8 +318,8 @@ function PostCard({
   return (
     <article className="ph-post">
       <div className="ph-post-head">
-        <button type="button" className="ph-iconbtn" onClick={() => onWho(profile.id)} aria-label={profile.name}>
-          <Avatar name={profile.name} size={34} image={profile.avatarImage} />
+        <button type="button" className="ph-iconbtn ph-post-face" onClick={() => onWho(profile.id)} aria-label={profile.name}>
+          <span className="ph-story-ring"><span><Avatar name={profile.name} size={34} image={profile.avatarImage} /></span></span>
         </button>
         <span className="ph-post-who">
           <b>
@@ -622,6 +628,14 @@ function ReelsPage({
   const reel = reels[Math.min(at, Math.max(0, reels.length - 1))];
   const profile = useWorld((s) => (reel ? profileById(s, reel.profileId) : undefined));
   const followed = useWorld((s) => (profile ? isFollowing(s, s.player.id, profile.id) : false));
+  /** Accounts you already follow who follow this one too, which is what the app says here. */
+  const alsoFollow = useWorld((s) => (profile
+    ? Object.values(s.universe.socialProfiles)
+      .filter((one) => one.platform === PHOTO_PLATFORM
+        && one.id !== profile.id
+        && isFollowing(s, s.player.id, one.id))
+      .slice(0, 3)
+    : []));
 
   const next = () => {
     const result = run<{ note: string }>('feed.scroll', { platform: PHOTO_PLATFORM, minutes: 12 }, { silent: true });
@@ -644,6 +658,16 @@ function ReelsPage({
         </button>
         <button type="button" className={lane === 'reels' ? 'ph-on' : ''} onClick={() => setLane('reels')}>Reels</button>
         <button type="button" className={lane === 'friends' ? 'ph-on' : ''} onClick={() => setLane('friends')}>Friends</button>
+        <button
+          type="button"
+          className="ph-iconbtn ph-reel-filters"
+          aria-label="What You Are Being Shown"
+          onClick={() => say(lane === 'friends'
+            ? 'Friends is only the accounts you follow, newest first.'
+            : 'Reels is what you have watched and who you follow, and nothing else.')}
+        >
+          <SlidersGlyph size={22} />
+        </button>
       </div>
 
       {!reel || !profile ? (
@@ -681,8 +705,22 @@ function ReelsPage({
               {views(Math.round(reel.likes * 0.5))}
             </button>
             <button type="button" onClick={() => act('feed.bookmark', reel.saved ? 'Bookmark removed.' : 'Saved.')} aria-label={reel.saved ? 'Remove From Saved' : 'Save'}>
-              <BookmarkGlyph size={23} filled={reel.saved} />
+              <BookmarkGlyph size={26} filled={reel.saved} />
             </button>
+            <button
+              type="button"
+              aria-label="More"
+              onClick={() => say(`${SOCIAL_TOPIC_LABEL[reel.topic as SocialTopic]}. Nothing more to do with somebody else’s reel here.`)}
+            >
+              <MenuGlyph size={22} />
+            </button>
+            <span
+              className="ph-reel-thumb"
+              aria-hidden="true"
+              style={reel.images?.[0] ? undefined : { background: look(`${reel.id}:thumb`) }}
+            >
+              {reel.images?.[0] && <img src={reel.images[0]} alt="" />}
+            </span>
           </div>
 
           <div className="ph-reel-foot">
@@ -703,7 +741,18 @@ function ReelsPage({
               )}
             </span>
             <p>{reel.text.split('\n')[0]}</p>
-            <p style={{ opacity: 0.75, fontSize: 11 }}>{ago(now, reel.at)} · Reel {Math.min(at, reels.length - 1) + 1} of {reels.length}</p>
+            {alsoFollow.length > 0 && (
+              <span className="ph-reel-mutual">
+                <span className="ph-reel-faces" aria-hidden="true">
+                  {alsoFollow.slice(0, 2).map((one) => (
+                    <Avatar key={one.id} name={one.name} size={18} image={one.avatarImage} />
+                  ))}
+                </span>
+                Followed by <b>{alsoFollow[0]!.handle}</b>
+                {alsoFollow.length > 1 && <> and <b>{tally(alsoFollow.length - 1, 'other')}</b></>}
+              </span>
+            )}
+            <p className="ph-reel-when">{ago(now, reel.at)} · Reel {Math.min(at, reels.length - 1) + 1} of {reels.length}</p>
           </div>
         </>
       )}
@@ -774,7 +823,7 @@ function ProfilePage({
         </span>
       </div>
 
-      <div className="ph-body">
+      <div className="ph-body ph-ig-pad">
         <div className="ph-prof-head">
           <span style={{ position: 'relative' }}>
             {note && <span className="ph-note" style={{ top: -18 }}>{note}</span>}
@@ -799,8 +848,20 @@ function ProfilePage({
           {own ? (
             <>
               <button type="button" onClick={() => setEditing((v) => !v)}>Edit Profile</button>
-              <button type="button" onClick={() => onLive?.()}>Go Live</button>
-              {onDashboard && <button type="button" onClick={onDashboard} aria-label="Professional Dashboard">Dashboard</button>}
+              <button
+                type="button"
+                onClick={() => say(`Your page is @${profile.handle}. Anybody in this world can find it; nothing about it leaves the game.`)}
+              >
+                Share Profile
+              </button>
+              <button
+                type="button"
+                className="ph-prof-square"
+                aria-label="Find People"
+                onClick={() => say('The accounts here are the people in your life and the ones this world made. Search finds them.')}
+              >
+                <AddPersonGlyph size={19} />
+              </button>
             </>
           ) : (
             <>
@@ -852,6 +913,20 @@ function ProfilePage({
           )}
         </div>
 
+        {own && !profile.bio && (
+          <div className="ph-prof-chiprow">
+            <button type="button" className="ph-prof-chip" onClick={() => setEditing(true)}>+ Add Bio</button>
+          </div>
+        )}
+        {own && onLive && (
+          <div className="ph-prof-chiprow">
+            <button type="button" className="ph-prof-chip" onClick={() => onLive()}>Go Live</button>
+            {onDashboard && (
+              <button type="button" className="ph-prof-chip" onClick={onDashboard}>Professional Dashboard</button>
+            )}
+          </div>
+        )}
+
         {editing && own && <EditProfile profile={profile} onDone={() => setEditing(false)} say={say} />}
 
         <div className="ph-prof-tabs">
@@ -872,12 +947,13 @@ function ProfilePage({
         {own && missing.length > 0 && shelf === 'grid' && (
           <div className="ph-todo">
             <h4>Complete Your Profile</h4>
-            <small>{2 - missing.length} of 2 complete</small>
+            <small><b>{2 - missing.length} of 2</b> complete</small>
             <div className="ph-todo-cards">
               {missing.map((task) => (
                 <div key={task.key} className="ph-todo-card">
+                  <span className="ph-todo-mark" aria-hidden="true"><AccountGlyph size={34} /></span>
                   <b>{task.title}</b>
-                  <span>{task.body}</span>
+                  <span className="ph-todo-body">{task.body}</span>
                   <button type="button" onClick={() => setEditing(true)}>{task.action}</button>
                 </div>
               ))}
@@ -1135,6 +1211,7 @@ function MessagesPage({
 }) {
   const threads = useWorld((s) => threadsOf(s));
   const note = useWorld((s) => (mine ? noteOf(s, mine) : undefined));
+  const settings = useWorld((st) => settingsOf(st));
   const [showing, setShowing] = useState<'messages' | 'requests'>('messages');
   const [query, setQuery] = useState('');
   const found = useWorld((s) => searchSocial(s, PHOTO_PLATFORM, query));
@@ -1145,16 +1222,19 @@ function MessagesPage({
     <>
       <div className="ph-ig-top">
         <span />
-        <span className="ph-mid"><b style={{ fontSize: 15 }}>{mine?.handle ?? 'Messages'}</b><DownGlyph size={13} /></span>
+        <span className="ph-mid ph-ig-handle">
+          <b>{mine?.handle ?? 'Messages'}</b><DownGlyph size={15} />
+        </span>
         <span className="ph-right">
           <button type="button" className="ph-iconbtn" aria-label="New Message" onClick={() => say('Search for somebody below and open their account to write to them.')}>
-            <ComposeGlyph size={21} />
+            <ComposeGlyph size={23} />
           </button>
         </span>
       </div>
-      <div className="ph-body">
-        <div style={{ padding: 10 }}>
-          <input className="ph-input" value={query} placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
+      <div className="ph-body ph-ig-pad">
+        <div className="ph-ig-find">
+          <SearchGlyph size={17} />
+          <input value={query} placeholder="Search" aria-label="Search" onChange={(e) => setQuery(e.target.value)} />
         </div>
 
         {query.trim().length >= 2 ? (
@@ -1171,18 +1251,21 @@ function MessagesPage({
             ))
         ) : (
           <>
-            <div style={{ padding: '4px 14px 8px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-              <span style={{ position: 'relative', display: 'inline-flex' }}>
-                {note && <span className="ph-note" style={{ top: -20 }}>{note}</span>}
-                <Avatar name={mine?.name ?? 'You'} size={48} image={mine?.avatarImage} />
-              </span>
-              <span className="ph-card-meta" style={{ alignSelf: 'center' }}>
-                {note ? 'Your note, up for a day.' : 'Your note. Set one from Edit Profile.'}
+            <div className="ph-ig-notes">
+              <span className="ph-ig-note-one">
+                <span className="ph-ig-note-mark">
+                  <span className="ph-note">{note ?? 'Note…'}</span>
+                  <Avatar name={mine?.name ?? 'You'} size={64} image={mine?.avatarImage} />
+                </span>
+                <i>Your Note</i>
               </span>
             </div>
 
             <div className="ph-dm-head">
               <b>{showing === 'requests' ? 'Requests' : 'Messages'}</b>
+              {showing === 'messages' && !settings.notificationsOn && (
+                <span className="ph-dm-quiet" aria-label="Notifications Off"><BellOffGlyph size={17} /></span>
+              )}
               <span
                 role="button"
                 tabIndex={0}
@@ -1285,19 +1368,16 @@ function SearchPage({ onOpen, onWho }: { onOpen: (id: string) => void; onWho: (i
 
   return (
     <>
-      <div className="ph-so-top">
-        <input
-          className="ph-input"
-          style={{ flex: 1 }}
-          value={query}
-          placeholder="Search"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button type="button" className="ph-iconbtn" style={{ marginLeft: 10 }} aria-label="Filters" onClick={() => setChip('all')}>
-          <SlidersGlyph size={20} />
+      <div className="ph-ig-searchtop">
+        <span className="ph-ig-find">
+          <SearchGlyph size={17} />
+          <input value={query} placeholder="Search" aria-label="Search" onChange={(e) => setQuery(e.target.value)} />
+        </span>
+        <button type="button" className="ph-iconbtn" aria-label="Clear Filters" onClick={() => setChip('all')}>
+          <SlidersGlyph size={22} />
         </button>
       </div>
-      <div className="ph-body">
+      <div className="ph-body ph-ig-pad">
         {query.trim().length < 2 ? (
           <>
             <div className="ph-chips">
@@ -1385,9 +1465,9 @@ function DashboardPage({ onBack }: { onBack: () => void }) {
             <div className="ph-section-head">Paid Out</div>
             {payouts.length === 0 && <p className="ph-empty">No month has been paid yet.</p>}
             {payouts.map((payout) => (
-              <div key={payout.id} className="ph-set-row" style={{ cursor: 'default' }}>
+              <div key={payout.id} className="ph-ig-row" style={{ cursor: 'default' }}>
                 {new Date(payout.month).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })}
-                <span className="ph-set-value">{formatMoney(payout.total)}</span>
+                <span className="ph-ig-val">{formatMoney(payout.total)}</span>
               </div>
             ))}
           </>
@@ -1418,11 +1498,35 @@ function Row({
   icon, label, value, onClick,
 }: { icon: React.ReactNode; label: string; value?: React.ReactNode; onClick?: () => void }) {
   return (
-    <button type="button" className="ph-set-row" onClick={onClick} disabled={!onClick}>
-      <span style={{ display: 'inline-flex', width: 22, justifyContent: 'center' }}>{icon}</span>
-      {label}
-      <span className="ph-set-value">{value}</span>
+    <button type="button" className="ph-ig-row" onClick={onClick} disabled={!onClick}>
+      <span className="ph-ig-row-icon">{icon}</span>
+      <span className="ph-ig-row-label">{label}</span>
+      <span className="ph-ig-val">{value}</span>
+      <span className="ph-ig-row-go" aria-hidden="true"><ChevronRightGlyph size={15} /></span>
     </button>
+  );
+}
+
+/**
+ * One captioned section of the settings list.
+ *
+ * The search field filters by what a row says rather than by a key, so typing
+ * "block" finds Blocked whichever section it happens to live in, and a section
+ * with nothing left in it takes its caption away with it.
+ */
+function Group({ cap, find, children }: { cap: string; find: string; children: React.ReactNode }) {
+  const needle = find.trim().toLowerCase();
+  const rows = Children.toArray(children).filter((child) => {
+    if (needle.length < 2) return true;
+    if (!isValidElement<{ label?: string }>(child)) return false;
+    return `${cap} ${child.props.label ?? ''}`.toLowerCase().includes(needle);
+  });
+  if (rows.length === 0) return null;
+  return (
+    <>
+      <div className="ph-ig-cap">{cap}</div>
+      <div className="ph-ig-group">{rows}</div>
+    </>
   );
 }
 
@@ -1440,7 +1544,6 @@ function SettingsPage({
   const [leaf, setLeaf] = useState<Leaf>('root');
   const settings = useWorld((s) => settingsOf(s));
   const mine = useWorld((s) => myProfile(s, PHOTO_PLATFORM));
-  const now = useWorld((s) => s.now);
   const profiles = useWorld((s) => s.universe.socialProfiles);
   const closeFriends = useWorld((s) => Object.values(s.universe.socialFollows)
     .filter((f) => f.personId === s.player.id && f.close));
@@ -1458,6 +1561,8 @@ function SettingsPage({
   const week = useWorld((s) => screenTimeWeek(s, PHOTO_PLATFORM));
   const today = useWorld((s) => screenTime(s, PHOTO_PLATFORM));
   const [words, setWords] = useState(settings.hiddenWords.join(', '));
+  const [find, setFind] = useState('');
+  const supervised = useWorld((st) => ageOf(st, st.player) < 18);
 
   const set = (patch: Record<string, unknown>) => {
     const result = run('feed.settings', patch, { silent: true });
@@ -1465,12 +1570,12 @@ function SettingsPage({
   };
 
   const head = (title: string) => (
-    <div className="ph-so-top">
-      <button type="button" className="ph-iconbtn" onClick={() => (leaf === 'root' ? onBack() : setLeaf('root'))} aria-label="Back">
-        <BackGlyph />
+    <div className="ph-ig-settop">
+      <button type="button" className="ph-ig-back" onClick={() => (leaf === 'root' ? onBack() : setLeaf('root'))} aria-label="Back">
+        <BackGlyph size={20} />
       </button>
-      <b style={{ fontSize: 15 }}>{title}</b>
-      <span style={{ width: 22 }} />
+      <b>{title}</b>
+      <span style={{ width: 34 }} />
     </div>
   );
 
@@ -1556,7 +1661,7 @@ function SettingsPage({
       <>
         {head('Account Privacy')}
         <div className="ph-body">
-          <div className="ph-set-group">
+          <div className="ph-ig-group">
             <Row
               icon={<LockGlyph size={17} />}
               label="Private Account"
@@ -1638,7 +1743,7 @@ function SettingsPage({
       <>
         {head('Like And Share Counts')}
         <div className="ph-body">
-          <div className="ph-set-group">
+          <div className="ph-ig-group">
             <Row
               icon={<HeartGlyph size={17} />}
               label="Hide Counts"
@@ -1660,7 +1765,7 @@ function SettingsPage({
       <>
         {head('Notifications')}
         <div className="ph-body">
-          <div className="ph-set-group">
+          <div className="ph-ig-group">
             <Row
               icon={<BellGlyph size={17} />}
               label="Pause All"
@@ -1682,7 +1787,7 @@ function SettingsPage({
       <>
         {head('Subscriptions')}
         <div className="ph-body">
-          <div className="ph-set-group">
+          <div className="ph-ig-group">
             <Row
               icon={<TickGlyph size={15} />}
               label="Meta Verified"
@@ -1723,64 +1828,96 @@ function SettingsPage({
   return (
     <>
       {head('Settings And Activity')}
-      <div className="ph-body">
-        <div className="ph-set-head">Your Account</div>
-        <div className="ph-set-group">
-          <Row icon={<AccountGlyph size={17} />} label="Accounts Center" value={mine?.handle ?? 'No Account'} onClick={onSwitcher} />
+      <div className="ph-body ph-ig-pad">
+        <div className="ph-ig-find">
+          <SearchGlyph size={17} />
+          <input value={find} placeholder="Search" aria-label="Search Settings" onChange={(e) => setFind(e.target.value)} />
         </div>
 
-        <div className="ph-set-head">How You Use Instagram</div>
-        <div className="ph-set-group">
-          <Row icon={<BookmarkGlyph size={17} />} label="Saved" value={saved.length || undefined} onClick={() => setLeaf('saved')} />
-          <Row icon={<BookmarkGlyph size={17} />} label="Collections" value={folders.length} onClick={() => setLeaf('saved')} />
-          <Row icon={<ClockGlyph size={17} />} label="Archive" value={archive.length || undefined} onClick={() => setLeaf('archive')} />
-          <Row icon={<EyeGlyph size={17} />} label="Your Activity" onClick={() => setLeaf('activity')} />
-          <Row icon={<BellGlyph size={17} />} label="Notifications" value={settings.notificationsOn ? 'On' : 'Paused'} onClick={() => setLeaf('notifications')} />
-          <Row icon={<ClockGlyph size={17} />} label="Time Management" value={`${today} Min Today`} onClick={() => setLeaf('time')} />
-        </div>
+        <Group cap="Your Account" find={find}>
+          <Row icon={<AccountGlyph size={24} />} label="Accounts Center" value={mine?.handle ?? 'No Account'} onClick={onSwitcher} />
+        </Group>
 
-        <div className="ph-set-head">Who Can See Your Content</div>
-        <div className="ph-set-group">
-          <Row icon={<LockGlyph size={17} />} label="Account Privacy" value={settings.privateAccount ? 'Private' : 'Public'} onClick={() => setLeaf('privacy')} />
-          <Row icon={<HeartGlyph size={17} />} label="Close Friends" value={closeFriends.length} onClick={() => setLeaf('close')} />
-          <Row icon={<BlockGlyph size={17} />} label="Blocked" value={settings.blockedProfileIds.length} onClick={() => setLeaf('blocked')} />
-        </div>
+        <Group cap="How You Use Instagram" find={find}>
+          <Row icon={<BookmarkGlyph size={24} />} label="Saved" value={saved.length || undefined} onClick={() => setLeaf('saved')} />
+          <Row icon={<BookmarkGlyph size={24} />} label="Collections" value={folders.length} onClick={() => setLeaf('saved')} />
+          <Row icon={<HistoryGlyph size={24} />} label="Archive" value={archive.length || undefined} onClick={() => setLeaf('archive')} />
+          <Row icon={<TimelineGlyph size={24} />} label="Your Activity" onClick={() => setLeaf('activity')} />
+          <Row icon={<BellGlyph size={24} />} label="Notifications" value={settings.notificationsOn ? 'On' : 'Paused'} onClick={() => setLeaf('notifications')} />
+          <Row icon={<ClockGlyph size={24} />} label="Time Management" value={`${today} Min Today`} onClick={() => setLeaf('time')} />
+        </Group>
 
-        <div className="ph-set-head">How Others Can Interact With You</div>
-        <div className="ph-set-group">
-          <Row icon={<SendGlyph size={17} />} label="Messages And Story Replies" value="Everyone" />
-          <Row icon={<BubbleGlyph size={17} />} label="Comments" value="Everyone" />
-          <Row icon={<MenuGlyph size={17} />} label="Muted Accounts" value={settings.mutedProfileIds.length} onClick={() => setLeaf('muted')} />
-          <Row icon={<SlidersGlyph size={17} />} label="Hidden Words" value={settings.hiddenWords.length} onClick={() => setLeaf('hidden')} />
-        </div>
+        <Group cap="Who Can See Your Content" find={find}>
+          <Row icon={<LockGlyph size={24} />} label="Account Privacy" value={settings.privateAccount ? 'Private' : 'Public'} onClick={() => setLeaf('privacy')} />
+          <Row icon={<StarRingGlyph size={24} />} label="Close Friends" value={closeFriends.length} onClick={() => setLeaf('close')} />
+          <Row icon={<CrosspostGlyph size={24} />} label="Crossposting" value="Off" onClick={() => say('The other apps on this phone each keep their own posts. Nothing you write here is copied into them.')} />
+          <Row icon={<BlockRingGlyph size={24} />} label="Blocked" value={settings.blockedProfileIds.length} onClick={() => setLeaf('blocked')} />
+          <Row icon={<HideStoryGlyph size={24} />} label="Hide Story And Live" value={settings.privateAccount ? 'Followers Only' : 'Everyone'} onClick={() => setLeaf('privacy')} />
+          <Row icon={<PeopleGlyph size={24} />} label="Activity In Friends Feed" value={settings.hideCounts ? 'Hidden' : 'Shown'} onClick={() => setLeaf('counts')} />
+        </Group>
 
-        <div className="ph-set-head">What You See</div>
-        <div className="ph-set-group">
-          <Row icon={<HeartGlyph size={17} />} label="Like And Share Counts" value={settings.hideCounts ? 'Hidden' : 'Shown'} onClick={() => setLeaf('counts')} />
-        </div>
+        <Group cap="How Others Can Interact With You" find={find}>
+          <Row icon={<SendGlyph size={24} />} label="Messages And Story Replies" value="Everyone" onClick={() => say('Anybody can write to you. What they get back is up to you, and whether they write again is up to them.')} />
+          <Row icon={<TaggedGlyph size={24} />} label="Tags And Mentions" value="Everyone" onClick={() => say('Anybody can name you in a post. It shows in Tagged on your page.')} />
+          <Row icon={<BubbleGlyph size={24} />} label="Comments" value="Everyone" onClick={() => say('Comments are open. Hidden Words is what keeps particular ones out.')} />
+          <Row icon={<RepostGlyph size={24} />} label="Sharing" value="Allowed" onClick={() => say('Your posts can be shared on. Nothing leaves the game when they are.')} />
+          <Row icon={<BlockGlyph size={24} />} label="Restricted" value={settings.mutedProfileIds.length} onClick={() => setLeaf('muted')} />
+          <Row icon={<LimitGlyph size={24} />} label="Limit Interactions" value="Off" onClick={() => say('Nothing is being held back from you right now.')} />
+          <Row icon={<LettersGlyph size={24} />} label="Hidden Words" value={settings.hiddenWords.length} onClick={() => setLeaf('hidden')} />
+          <Row icon={<AddPersonGlyph size={24} />} label="Follow And Invite Friends" onClick={() => say('The people here are the ones in your life and the ones this world made. There is nobody outside it to invite.')} />
+        </Group>
 
-        <div className="ph-set-head">Your Insights And Tools</div>
-        <div className="ph-set-group">
-          <Row icon={<EyeGlyph size={17} />} label="Account Type And Tools" value="Creator" onClick={onDashboard} />
-        </div>
+        <Group cap="What You See" find={find}>
+          <Row icon={<StarRingGlyph size={24} />} label="Favorites" value={closeFriends.length} onClick={() => setLeaf('close')} />
+          <Row icon={<BellOffGlyph size={24} />} label="Muted Accounts" value={settings.mutedProfileIds.length} onClick={() => setLeaf('muted')} />
+          <Row icon={<ContentGlyph size={24} />} label="Content Preferences" onClick={() => say('The feed is built from what you have watched and who you follow. Nothing else feeds it.')} />
+          <Row icon={<HeartOffGlyph size={24} />} label="Like And Share Counts" value={settings.hideCounts ? 'Hidden' : 'Shown'} onClick={() => setLeaf('counts')} />
+        </Group>
 
-        <div className="ph-set-head">Subscriptions</div>
-        <div className="ph-set-group">
-          <Row icon={<TickGlyph size={15} />} label="Meta Verified" value={mine?.verified ? 'Subscribed' : 'Not Subscribed'} onClick={() => setLeaf('subscriptions')} />
-        </div>
+        <Group cap="Your App And Media" find={find}>
+          <Row icon={<DeviceGlyph size={24} />} label="Device Permissions" value="Camera And Photos" onClick={() => say('The camera and the picture roll on this handset. Both are the game’s own, and neither touches your machine.')} />
+          <Row icon={<DownloadGlyph size={24} />} label="Archiving And Downloading" value={`${archive.length} Kept`} onClick={() => setLeaf('archive')} />
+          <Row icon={<AccessGlyph size={24} />} label="Accessibility" onClick={() => say('Every control here has a name a screen reader can read, and nothing is carried by color alone.')} />
+          <Row icon={<LanguageGlyph size={24} />} label="Language And Translations" value="English" onClick={() => say('The app is in English. SLATE does not translate itself yet.')} />
+          <Row icon={<BarsGlyph size={24} />} label="Media Quality" value="Best Available" onClick={() => say('Pictures are drawn rather than fetched, so there is no quality to trade against a connection.')} />
+          <Row icon={<ScreensGlyph size={24} />} label="App Website Permissions" value="None" onClick={() => say('Nothing on this phone opens a browser. There is nowhere for it to go.')} />
+          <Row icon={<FaceGlyph size={24} />} label="Face And Hand Movements" value="Off" onClick={() => say('Nothing is read from a camera. The handset’s camera is a screen in the game.')} />
+        </Group>
 
-        <div className="ph-set-head">More Info And Support</div>
-        <div className="ph-set-group">
-          <Row icon={<GearGlyph size={17} />} label="About" onClick={() => setLeaf('about')} />
-        </div>
+        <Group cap="Family Center" find={find}>
+          <Row icon={<SupervisionGlyph size={24} />} label="Supervision For Teen Accounts" value={supervised ? 'On' : 'Off'} onClick={() => say(supervised ? 'You are under eighteen, so this account is supervised at home. What that changes is in the Family room, not here.' : 'Nobody is being supervised on this handset.')} />
+        </Group>
 
-        <div className="ph-set-head">Login</div>
-        <div className="ph-set-group">
-          <Row icon={<PlusGlyph size={17} />} label="Switch Account" onClick={onSwitcher} />
-        </div>
-        <p className="ph-card-meta" style={{ padding: 12 }}>
+        <Group cap="Your Insights And Tools" find={find}>
+          <Row icon={<InsightGlyph size={24} />} label="Account Type And Tools" value="Creator" onClick={onDashboard} />
+        </Group>
+
+        <Group cap="Subscriptions" find={find}>
+          <Row icon={<GemGlyph size={24} />} label="Verified" value={mine?.verified ? 'Subscribed' : 'Not Subscribed'} onClick={() => setLeaf('subscriptions')} />
+          <Row icon={<RepostGlyph size={24} />} label="All Subscriptions" value={mine?.verified ? '1 Active' : 'None'} onClick={() => setLeaf('subscriptions')} />
+        </Group>
+
+        <Group cap="Your Orders And Fundraisers" find={find}>
+          <Row icon={<HeartGlyph size={24} />} label="Fundraisers" value="None" onClick={() => say('Nothing is being raised through this account.')} />
+          <Row icon={<TimelineGlyph size={24} />} label="Orders And Payments" onClick={() => say('What the app takes from you is the subscription, and it is on your bank statement like anything else.')} />
+          <Row icon={<CartGlyph size={24} />} label="Cart" value="Empty" onClick={() => say('Shopping in SLATE happens in shops, not in here.')} />
+        </Group>
+
+        <Group cap="More Info And Support" find={find}>
+          <Row icon={<RingHelpGlyph size={24} />} label="Help" onClick={() => say('Everything on this phone is SLATE’s own. The accounts are invented and nobody real is named.')} />
+          <Row icon={<PrivacyGlyph size={24} />} label="Privacy Center" onClick={() => say('Your save stays on your machine. Nothing about you is collected, sent or sold, because there is nobody on the other end.')} />
+          <Row icon={<AccountGlyph size={24} />} label="Account Status" value="In Good Standing" onClick={() => say('Nothing you have posted has been taken down, and nothing is being held against the account.')} />
+          <Row icon={<NotesPageGlyph size={24} />} label="Community Notes" value="None" onClick={() => say('Nothing you have posted has had a note added to it.')} />
+          <Row icon={<GearGlyph size={24} />} label="About" onClick={() => setLeaf('about')} />
+        </Group>
+
+        <Group cap="Login" find={find}>
+          <Row icon={<PlusGlyph size={24} />} label="Switch Account" onClick={onSwitcher} />
+        </Group>
+
+        <p className="ph-ig-foot">
           Joined {mine ? new Date(mine.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }) : 'not yet'}.
-          {' '}Last opened {ago(now, now)}.
+          {' '}This is SLATE’s own photo app. It talks to nothing outside the game.
         </p>
       </div>
     </>
@@ -1801,7 +1938,7 @@ function AccountSwitcher({ onClose, say }: { onClose: () => void; say: (text: st
         <b>Accounts Center</b>
       </div>
       <div className="ph-body">
-        <div className="ph-set-group">
+        <div className="ph-ig-group">
           {mine ? (
             <div className="ph-dm-row" style={{ cursor: 'default' }}>
               <Avatar name={mine.name} size={40} image={mine.avatarImage} />

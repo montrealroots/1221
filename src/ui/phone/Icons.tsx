@@ -446,6 +446,211 @@ export function PasscodeGlyph({ size }: GlyphProps) {
   );
 }
 
+/** A bell with a line through it: the notifications this list will not raise. */
+export function BellOffGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M17.4 15.6H5.2l1.5-2.2V10a5.3 5.3 0 0 1 3.5-5" />
+      <path d="M13.9 5.4A5.3 5.3 0 0 1 17.3 10v3.4" />
+      <path d="M10.4 18.4a1.9 1.9 0 0 0 3.2 0" />
+      <path d="M4 3.6l16 16.8" />
+    </Svg>
+  );
+}
+
+/** A star in a ring: the short list an account keeps of who matters most. */
+export function StarRingGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="8.6" />
+      <path d="M12 7.6l1.3 2.8 3 .3-2.2 2 .6 3-2.7-1.5-2.7 1.5.6-3-2.2-2 3-.3z" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+/** A ring with a line through it: an account that has been shut out. */
+export function BlockRingGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><circle cx="12" cy="12" r="8.6" /><path d="M5.9 5.9l12.2 12.2" /></Svg>;
+}
+
+/** An exclamation in a ring: the limit an account can put on strangers. */
+export function LimitGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="8.6" />
+      <path d="M12 7.6v5" /><path d="M12 16h.01" />
+    </Svg>
+  );
+}
+
+/** Two letters, big and small: the words an account will not be shown. */
+export function LettersGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M3.2 18.4L7.4 6.2l4.2 12.2" /><path d="M4.6 14.6h5.6" />
+      <path d="M14.6 18.4l3-8.6 3 8.6" /><path d="M15.6 15.6h4" />
+    </Svg>
+  );
+}
+
+/** A bar chart in a rounded square: what an account is told about itself. */
+export function InsightGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="4" />
+      <path d="M8.4 15.4v-3M12 15.4V8.8M15.6 15.4v-4.6" />
+    </Svg>
+  );
+}
+
+/** A gem: the subscription an app sells against its own name. */
+export function GemGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M12 3.4l8 5.2v6.8l-8 5.2-8-5.2V8.6z" />
+      <path d="M12 8.6l1.1 2.3 2.5.2-1.9 1.7.6 2.5-2.3-1.3-2.3 1.3.6-2.5-1.9-1.7 2.5-.2z" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+/** A basket on wheels: the cart a shopping surface keeps. */
+export function CartGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M2.8 4.6h2.6l2.4 9.6h8.8l2-6.8H6.4" />
+      <circle cx="9.4" cy="18.4" r="1.4" /><circle cx="16.4" cy="18.4" r="1.4" />
+    </Svg>
+  );
+}
+
+/** A life ring: where an app puts its help. */
+export function RingHelpGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="8.6" /><circle cx="12" cy="12" r="3.4" />
+      <path d="M6 6l3.6 3.6M18 6l-3.6 3.6M6 18l3.6-3.6M18 18l-3.6-3.6" />
+    </Svg>
+  );
+}
+
+/** A shield with a star: the page an app keeps its privacy promises on. */
+export function PrivacyGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M12 3.4l7 2.6v5.4c0 4.2-2.9 7.4-7 9-4.1-1.6-7-4.8-7-9V6z" />
+      <path d="M12 8.6l1 2.2 2.4.2-1.8 1.6.6 2.4-2.2-1.3-2.2 1.3.6-2.4-1.8-1.6 2.4-.2z" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+/** A speech mark on a page: the notes readers add to a post. */
+export function NotesPageGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="3.6" y="3.6" width="16.8" height="16.8" rx="3.4" />
+      <path d="M7.4 15.4h6M7.4 12h9" />
+      <path d="M9 7.2c0 1.2-.7 1.9-1.6 2.1M13 7.2c0 1.2-.7 1.9-1.6 2.1" />
+    </Svg>
+  );
+}
+
+/** A hand and a face: the movements a camera is allowed to read. */
+export function FaceGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="11" cy="12" r="7.6" />
+      <circle cx="8.8" cy="10.6" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="13.2" cy="10.6" r="0.9" fill="currentColor" stroke="none" />
+      <path d="M8.8 14.6a3.4 3.4 0 0 0 4.4 0" />
+      <path d="M18.6 4.6l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+/** A screen beside a handset: what an app is allowed to open in a browser. */
+export function ScreensGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="2.6" y="6.4" width="12.4" height="9.2" rx="2" />
+      <path d="M5.6 18.6h6.4" />
+      <rect x="17" y="8.4" width="4.4" height="9.2" rx="1.6" />
+    </Svg>
+  );
+}
+
+/** Bars rising: the quality an app sends its pictures at. */
+export function BarsGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4 18.4v-1.8M8 18.4v-5M12 18.4v-8M16 18.4v-11M20 18.4v-13.4" />
+    </Svg>
+  );
+}
+
+/** A speech bubble with a character in it: the language a page is shown in. */
+export function LanguageGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4 5.4h13.4a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.6L5.2 19v-3.6H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z" />
+      <path d="M8 9.4h6M11 9.4v4" />
+    </Svg>
+  );
+}
+
+/** Two squares and a plus: posting the same thing in two places at once. */
+export function CrosspostGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="3.4" y="3.4" width="6.6" height="6.6" rx="1.6" />
+      <rect x="3.4" y="13.6" width="6.6" height="6.6" rx="1.6" />
+      <rect x="13.6" y="13.6" width="6.6" height="6.6" rx="1.6" />
+      <path d="M16.9 3.4v6.6M13.6 6.7h6.6" />
+    </Svg>
+  );
+}
+
+/** A ring with a slash across a story: whose story you are kept out of. */
+export function HideStoryGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4.6 7.4a8.6 8.6 0 1 0 4-3.4" strokeDasharray="3 2.4" />
+      <path d="M5.4 5.4l13.2 13.2" />
+    </Svg>
+  );
+}
+
+/** A picture with a play button on it: what an app chooses to show you. */
+export function ContentGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="2.8" y="4.4" width="12.4" height="12.4" rx="2.6" />
+      <path d="M18.4 8.6h1.4a1.6 1.6 0 0 1 1.6 1.6v7.6a1.6 1.6 0 0 1-1.6 1.6h-9" />
+      <path d="M7.4 8.4l3.8 2.2-3.8 2.2z" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+/** A heart with a line through it: the counts an account can switch off. */
+export function HeartOffGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M12 19.4S4.4 15 4.4 9.7a3.9 3.9 0 0 1 7.6-1.4 3.9 3.9 0 0 1 7.6 1.4c0 1.5-.6 2.9-1.5 4.1" />
+      <path d="M4 4l16 16" />
+    </Svg>
+  );
+}
+
+/** Two figures under a roof: the watch a parent can keep on an account. */
+export function SupervisionGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M3.6 10.4L12 4l8.4 6.4v8.2a1.4 1.4 0 0 1-1.4 1.4H5a1.4 1.4 0 0 1-1.4-1.4z" />
+      <circle cx="9.6" cy="12.6" r="1.5" /><circle cx="14.4" cy="12.6" r="1.5" />
+      <path d="M7.4 17.6a2.4 2.4 0 0 1 4.4 0M12.2 17.6a2.4 2.4 0 0 1 4.4 0" />
+    </Svg>
+  );
+}
+
 /** The three bars an app puts its own menu behind. */
 export function MenuGlyph({ size }: GlyphProps) {
   return <Svg size={size}><path d="M4 7h16M4 12h16M4 17h16" /></Svg>;
