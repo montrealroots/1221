@@ -648,7 +648,71 @@ answer says what would make it yes.
    what is dirty, and your clothes are theirs until tomorrow — off your back
    and out of the wardrobe meanwhile.
 
-9. Childhood through later life, end to end.
+9. Childhood through later life, end to end. **Part one is done: the span,
+   and what age lets you do.**
+
+   A life that started before the save did. Two people who raised you, sharing
+   your name, aged so that nobody in the family could not exist — no parent who
+   was a child at the birth and none past having them — and however many
+   brothers and sisters, spaced the way brothers and sisters are, some of whom
+   have moved away. They are people in the world, not a field: you can call
+   them, fall out with them, and lose them.
+
+   A birthday that happens. The number turns over once a year, counted by the
+   calendar rather than by dividing milliseconds — which is a day short every
+   fourth year and reports the wrong age on your own birthday. What a year
+   costs is a ceiling rather than a cliff: your best possible day comes down
+   slowly and continuously, and a night puts back less at sixty than it did at
+   twenty. Nothing changes overnight because you had a birthday.
+
+   Where the family name comes from is the other thing you choose. 54
+   heritages across 18 regions, each carrying the given names and family names
+   that are common in it — 820 given names and 736 surnames — so a Yoruba
+   family is called Adeyemi and a Korean one is called Park. You pick your own
+   and one for each of the two people who raised you, so a family of two
+   traditions names its children out of both, and a button suggests a name from
+   whichever you chose. A heritage is a naming tradition and nothing else: it
+   carries no attribute, no skill and no advantage anywhere in the game, and
+   the checker fails the build if one ever grows a number.
+
+   The family reads as a family. Everybody in it has a gender the game knows,
+   so the page says Mother, Father, Sister and Brother rather than listing
+   people called Parent.
+
+   The size you end up is the one physical fact the player chooses. Set an
+   adult height and weight at creation, and a character who starts young is
+   smaller than that and grows to exactly it. One growth curve, and the note
+   says so: children finish growing at different ages and SLATE carries the
+   middle of that rather than inferring anything from a pronoun.
+
+   What is real: life expectancy at birth for 160 countries and the state
+   pension age for 115, both published figures carried in whole years, and the
+   general national minimum age for driving, drinking, working, marrying,
+   voting, signing, leasing and borrowing. The correction that matters is
+   stated rather than fudged: life expectancy at birth is an average over
+   everybody born and sits well below the age adults reach, which is why
+   several countries honestly set a pension age above their own figure, so a
+   grown character is measured against an adult figure instead.
+
+   Context decides what is open to you, and the rule is the one where you are
+   standing rather than the one on your passport. A nineteen year old is served
+   in Berlin and refused in Los Angeles and Tokyo, and the refusal names the
+   country, the age it sets and how far off you are. Somewhere alcohol is not
+   sold at all, the room says that instead of quoting an age that does not
+   exist. Buying a car, taking a lease, opening an account, sitting a driving
+   test, borrowing, proposing and walking into a bar all ask.
+
+   And nothing anywhere tells you when you are going to die. The generation
+   above you has an end, drawn from a band rather than a table, written onto
+   the schedule and onto nothing a screen can reach. The calendar item is
+   called A Quiet Day. The player's own character carries no such date at all.
+
+   **Still to come:** part two, school — real education systems by country, a
+   class schedule, school sports, grades, acting classes and the ability to
+   start as a child; part three, university — real universities placed
+   geographically, majors, admission on grades, and academic and athletic
+   scholarships.
+
 10. Free-text intent across all of it.
 
 ---

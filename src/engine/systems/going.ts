@@ -356,9 +356,7 @@ export function describeTicket(sim: Simulation, ticket: GoingTicket): string {
 }
 
 /** How old somebody is right now, in years. */
-export function ageOf(sim: Simulation, person: Person = sim.player): number {
-  return Math.floor((sim.now - person.birthInstant) / (365.25 * MS_DAY));
-}
+export { ageOf } from './lifespan';
 
 // ---------------------------------------------------------------------------
 // The commands

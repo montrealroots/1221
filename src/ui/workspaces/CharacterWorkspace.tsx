@@ -23,8 +23,17 @@ import { DOCUMENT_NOTE, licenseAuthorityFor, passportAuthorityFor } from '@/engi
 import { SIX_MONTH_NOTE, exchangeOffer, regionOfCity, residenceCityOf, statusOf } from '@/engine/systems/documents';
 import type { IdentityDocument } from '@/engine/domain/model';
 import { countryOfCity } from '@/engine/content/geography';
+import {
+  AGE_GATE_NOTE, LIFESPAN_NOTE, PENSION_NOTE, describeHeight, describeWeight,
+} from '@/engine/content/lifespan';
+import {
+  adultHeightOf, adultWeightOf, ageOf, agingOf, ceilingOf, describePassing, describeYears, familyOf,
+  fullyGrown, gatesFor, heightOf, isAlive, pensionAgeFor, relationLabel, stageOf, weightOf,
+  yearsToPension,
+} from '@/engine/systems/lifespan';
+import { plural } from '@/engine/core/text';
 
-type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing' | 'papers';
+type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing' | 'papers' | 'life';
 
 const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((k) => [k.id, k.name]));
 
@@ -91,10 +100,13 @@ export function CharacterWorkspace() {
           { id: 'traits', label: 'Traits', badge: player.traits.length },
           { id: 'standing', label: 'Standing' },
           { id: 'papers', label: 'Papers' },
+          { id: 'life', label: 'Your Life' },
         ]}
       />
 
       {tab === 'papers' && <PapersTab />}
+
+      {tab === 'life' && <LifeTab />}
 
       {tab === 'positions' && (
         <div className="col gap-4">
@@ -553,6 +565,102 @@ function PapersTab() {
       </Panel>
 
       <p className="xs dim">{DOCUMENT_NOTE}</p>
+    </div>
+  );
+}
+
+/**
+ * The whole span, on one page.
+ *
+ * How old you are, what part of a life that is, the size you are and the size
+ * you end up, the people you were born to, and what the country you are
+ * standing in will and will not let somebody your age do.
+ *
+ * There is deliberately nothing here about how long you have left. A
+ * character does not know that, so the game does not say it.
+ */
+function LifeTab(): JSX.Element {
+  const { sim } = useGame();
+  // Everything below is read straight off the simulation, so the tab needs a
+  // reason to re-render when the world clock moves.
+  const now = useWorld((s) => s.now);
+  const player = sim.player;
+  void now;
+  const stage = stageOf(sim);
+  const family = familyOf(sim);
+  const gates = gatesFor(sim);
+  const pension = yearsToPension(sim);
+
+  return (
+    <div className="grid grid-sheet">
+      <Panel title="Your Years" subtitle={stage.label}>
+        <div className="col gap-4">
+          <Stat label="Age" value={String(ageOf(sim))} note={stage.about} />
+          <Stat label="Size" value={describeHeight(heightOf(sim))} note={describeWeight(weightOf(sim))} />
+          {!fullyGrown(sim) && (
+            <Stat
+              label="Still Growing"
+              value={describeHeight(adultHeightOf(player))}
+              note={`The size you end up. ${describeWeight(adultWeightOf(player))}.`}
+            />
+          )}
+          <Stat
+            label="What A Year Costs Now"
+            value={agingOf(sim).about}
+            note={`Your best day is ${ceilingOf(sim).fitness.toFixed(0)} of 100 for fitness and `
+              + `${ceilingOf(sim).condition.toFixed(0)} for condition.`}
+          />
+          <Stat
+            label={pension > 0 ? 'Pension Age' : 'Past Pension Age'}
+            value={String(pensionAgeFor(player))}
+            note={pension > 0 ? `${plural(pension, 'year')} away. ${PENSION_NOTE}` : PENSION_NOTE}
+          />
+          <p className="xs dim" style={{ margin: 0 }}>{describeYears(sim)}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{LIFESPAN_NOTE}</p>
+        </div>
+      </Panel>
+
+      <Panel title="Who You Were Born To" flush>
+        {family.parents.length === 0 && family.siblings.length === 0 ? (
+          <p className="xs dim" style={{ padding: 'var(--s3)' }}>Nobody on record.</p>
+        ) : (
+          <div className="list">
+            {[...family.parents, ...family.siblings, ...family.children].map((one) => (
+              <div key={one.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{one.displayName}</div>
+                  <div className="xs dim">
+                    {relationLabel(sim, one.id)} · {isAlive(one, sim.now)
+                      ? `${plural(ageOf(sim, one), 'year')} old · ${CITIES.get(one.homeRegionId)?.name ?? 'Elsewhere'}`
+                      : describePassing(sim, one)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Panel>
+
+      <Panel title="What You Are Old Enough For" subtitle={COUNTRIES.get(gates[0]?.answer.countryId ?? '')?.name ?? ''} flush>
+        <div className="list">
+          {gates.map((one) => (
+            <div key={one.gate} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{one.label}</div>
+                <div className="xs dim">
+                  {one.answer.ok
+                    ? (one.answer.age === undefined ? 'Open to you.' : `Open to you. Set at ${one.answer.age} here.`)
+                    : one.answer.reason}
+                </div>
+              </div>
+              <span className={`badge ${one.answer.ok ? 'badge-positive' : 'badge-quiet'}`}>
+                {one.answer.ok ? 'Yes' : 'Not Yet'}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{AGE_GATE_NOTE}</p>
+      </Panel>
     </div>
   );
 }

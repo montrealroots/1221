@@ -22,6 +22,7 @@ import { placesIn, type Place } from '../content/places';
 import { costOfLiving, vehicleFees } from '../content/tax';
 import { weatherAt } from './weather';
 import { createBill, amortisedPayment, loanRefusal, offeredApr } from './finance';
+import { requireAge } from './lifespan';
 
 const DOC_FEE: Money = 85_00;
 /** How long you can be out on a boat in one go, in hours. */
@@ -217,6 +218,8 @@ export function registerVehicles(sim: Simulation): void {
   sim.onCommand<{ listingId: Id; acquisition: Vehicle['acquisition']; downPayment?: Money; termMonths?: number; accountId?: Id; negotiate?: boolean; dealId?: Id }, { vehicleId: Id; paid: Money; monthlyPayment?: Money; deliveryDueAt?: number }>(
     'veh.purchase',
     (p, { sim: s }) => {
+      // Nobody puts a car in a child’s name.
+      requireAge(s, 'majority');
       const listing = s.universe.vehicleListings[p.listingId];
       if (!listing || listing.status !== 'active') throw new CommandError('That vehicle is no longer available.');
       const model = VEHICLE_MODELS.require(listing.catalogId.split(':')[0] as string);
@@ -553,6 +556,8 @@ export function registerVehicles(sim: Simulation): void {
   sim.onCommand<{ vehicleId: Id; miles: number }, { mileage: number; serviceDue: boolean }>(
     'veh.drive',
     (p, { sim: s }) => {
+      // The rule is the one where you are standing.
+      requireAge(s, 'drive');
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
       requireInHand(vehicle);
@@ -568,6 +573,8 @@ export function registerVehicles(sim: Simulation): void {
   sim.onCommand<{ vehicleId: Id; hours: number; accountId?: Id }, { hours: number; cost: Money; serviceDue: boolean }>(
     'veh.cruise',
     (p, { sim: s }) => {
+      // The rule is the one where you are standing.
+      requireAge(s, 'drive');
       const vehicle = s.universe.vehicles[p.vehicleId];
       if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
       requireInHand(vehicle);

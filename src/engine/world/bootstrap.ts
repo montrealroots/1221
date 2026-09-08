@@ -27,6 +27,10 @@ import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
+import {
+  DEFAULT_HEIGHT_CM, DEFAULT_WEIGHT_KG, HEIGHT_RANGE, WEIGHT_RANGE,
+} from '../content/lifespan';
+import { DEFAULT_HERITAGE, HERITAGE_BY_ID } from '../content/heritage';
 
 export const APP_VERSION = '1.1.0';
 
@@ -56,6 +60,16 @@ export interface NewSaveConfig {
   birthYear: number;
   birthMonth: number;
   birthDay: number;
+  /** The height and weight this character ends up at as an adult. */
+  adultHeightCm: number;
+  adultWeightKg: number;
+  /**
+   * Where the family name comes from. One for the character, and one for each
+   * of the two people who raised them, so a family of two heritages names its
+   * children out of both.
+   */
+  heritageId: string;
+  parentHeritageIds: readonly [string, string];
   homeRegionId: string;
   citizenshipId: string;
   /** Headshot as a data URL, already fitted to the portrait frame. */
@@ -111,6 +125,8 @@ export function defaultConfig(): NewSaveConfig {
   return {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
+    adultHeightCm: DEFAULT_HEIGHT_CM, adultWeightKg: DEFAULT_WEIGHT_KG,
+    heritageId: DEFAULT_HERITAGE, parentHeritageIds: [DEFAULT_HERITAGE, DEFAULT_HERITAGE],
     homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
     personality: defaultPersonality(),
     personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
@@ -353,6 +369,16 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // The chair. A life starts freshly cut and grows out from the first day
     // rather than staying that way until somebody happens to sit down.
     groomedAt: now,
+    // The one physical fact the player chooses. A character who starts young
+    // is smaller than this and grows to exactly it.
+    adultHeightCm: clamp(Math.round(config.adultHeightCm ?? DEFAULT_HEIGHT_CM), HEIGHT_RANGE[0], HEIGHT_RANGE[1]),
+    adultWeightKg: clamp(Math.round(config.adultWeightKg ?? DEFAULT_WEIGHT_KG), WEIGHT_RANGE[0], WEIGHT_RANGE[1]),
+    // Where the name comes from. A naming tradition and nothing else.
+    heritageId: HERITAGE_BY_ID[config.heritageId ?? ''] ? config.heritageId : DEFAULT_HERITAGE,
+    parentHeritageIds: [
+      HERITAGE_BY_ID[config.parentHeritageIds?.[0] ?? ''] ? config.parentHeritageIds[0] : DEFAULT_HERITAGE,
+      HERITAGE_BY_ID[config.parentHeritageIds?.[1] ?? ''] ? config.parentHeritageIds[1] : DEFAULT_HERITAGE,
+    ],
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
     ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),

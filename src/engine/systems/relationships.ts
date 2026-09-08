@@ -22,6 +22,7 @@ import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
 import { CATALOG } from '../content/catalog';
+import { requireAge } from './lifespan';
 
 const ROMANTIC: readonly RelationshipType[] = ['dating', 'engaged', 'spouse'];
 const FAMILY: readonly RelationshipType[] = ['parent', 'child', 'sibling', 'relative', 'guardian', 'ward'];
@@ -317,6 +318,8 @@ export function registerRelationships(sim: Simulation): void {
   sim.onCommand<{ relationshipId: Id; ringAssetId?: Id; accountId?: Id }, { accepted: boolean }>(
     'rel.propose',
     (p, { sim: s }) => {
+      // The rule is the one where you are standing.
+      requireAge(s, 'marry');
       const rel = s.universe.relationships[p.relationshipId];
       if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
       if (rel.type !== 'dating') throw new CommandError('You have to be together before you can propose.');

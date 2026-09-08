@@ -31,6 +31,7 @@ import { FBAR_NOTE, FBAR_THRESHOLD, PRIVATE_BANKS, REAL_CARDS, REPORTING_NOTE, p
 import { COUNTRIES } from '../content/geography';
 import { passportCheck, residenceCountryOf } from './documents';
 import type { PrivateApplication } from '../domain/model';
+import { requireAge } from './lifespan';
 
 /** Days from the statement closing to the payment being due. */
 export const CARD_GRACE_DAYS = 21;
@@ -616,6 +617,8 @@ export function registerBanking(sim: Simulation): void {
   sim.onCommand<{ productId: string; deposit?: Money; fromAccountId?: Id; name?: string }, { accountId: Id; limit?: Money; maturesAt?: number }>(
     'bank.open',
     (p, { sim: s }) => {
+      // An account in your own name needs you to be able to sign for it.
+      requireAge(s, 'majority');
       const product = productById(p.productId);
       if (!product) throw new CommandError(NO_SUCH_PRODUCT);
       const deposit = Math.max(0, p.deposit ?? product.minimumOpening);
@@ -710,6 +713,8 @@ export function registerBanking(sim: Simulation): void {
   sim.onCommand<{ accountId: Id; on: boolean }, { on: boolean; limit: Money }>(
     'bank.set_overdraft',
     (p, { sim: s }) => {
+      // Borrowing is a contract like any other.
+      requireAge(s, 'borrow');
       const account = s.ledger.account(p.accountId);
       if (account.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
       const product = productOf(account);

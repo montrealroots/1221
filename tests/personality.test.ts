@@ -170,8 +170,13 @@ describe('what they actually do', () => {
     };
     const loyal = build('pers-loyal', 'loyal');
     const detached = build('pers-detached', 'detached');
+    // The friend this test made, not whichever relationship happens to be
+    // first: a life now starts with the family it was born into, and those
+    // are relationships too.
     const strength = (sim: typeof loyal) => {
-      const rel = Object.values(sim.universe.relationships)[0]!;
+      const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+      const rel = Object.values(sim.universe.relationships)
+        .find((r) => r.type === 'friend' && (r.aId === other.id || r.bId === other.id))!;
       return Object.values(rel.dimensions).reduce((a, b) => a + b, 0);
     };
     const before = strength(loyal);

@@ -21,6 +21,7 @@ import { menuOf, placeById, priceOf, type Place } from '../content/places';
 import type { DialogueTone } from '../dialogue/schema';
 import { factsOf, rememberFact, tallyFact, tallyOf } from './memory';
 import { makeBackgroundPerson, peopleOf } from './people';
+import { requireAge } from './lifespan';
 
 /** What the house adds to the bill at a table. A counter adds nothing. */
 export const SERVICE_SHARE = 0.18;
@@ -262,6 +263,9 @@ export function registerDining(sim: Simulation): void {
       if (!place) throw new CommandError('That is not somewhere in this city.');
       if (me.currentPlaceId !== place.id) throw new CommandError(`You are not at ${place.name}. Go there first.`);
       if (!place.actions.includes('eat') && !place.actions.includes('drink')) throw new CommandError(`${place.name} does not serve food.`);
+      // A bar sells one thing, so a bar is a door with an age on it. A
+      // restaurant that also has a bar is not, and neither is a cafe.
+      if (place.kind === 'bar' || place.kind === 'club') requireAge(s, 'drink');
       if (menuOf(place).length === 0) throw new CommandError(`${place.name} has nothing to order.`);
 
       const already = openVisit(s, place.id);

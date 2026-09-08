@@ -19,6 +19,7 @@ import { housesIn, stockOf, outNow } from '@/engine/systems/rental';
 import { createRelationship } from '@/engine/systems/relationships';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Id, Person, ShootDay } from '@/engine/domain/model';
+import { familyOf } from '@/engine/systems/lifespan';
 
 const DAY = 86_400_000;
 const HOUR = 3_600_000;
@@ -157,8 +158,13 @@ describe('asking people to come', () => {
   it('will not let you ask a stranger for a day of their life', () => {
     const sim = inLosAngeles('shoot-crew-stranger');
     const day = planDay(sim);
-    const stranger = Object.values(sim.universe.people).find((person) => !person.isPlayer)!;
-    expect(askable(sim).length).toBe(0);
+    // Somebody you actually do not know. A life starts with the family it was
+    // born into, and you would ask your brother for a day — so the people who
+    // are askable at the start are exactly them, and nobody else.
+    const known = new Set(askable(sim).map((person) => person.id));
+    const stranger = Object.values(sim.universe.people)
+      .find((person) => !person.isPlayer && !known.has(person.id))!;
+    expect(known.size).toBe(familyOf(sim).all.length);
     expect(sim.execute({
       kind: 'shoot.ask_crew', payload: { dayId: day.id, personId: stranger.id, role: 'camera' },
     }).ok).toBe(false);

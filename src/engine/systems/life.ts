@@ -20,6 +20,8 @@ import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
 import { rememberFact } from './memory';
 import { addMemory, applyDelta, findRelationship } from './relationships';
+import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
+import { yearsBetween } from './lifespan';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -253,7 +255,7 @@ export function registerLife(sim: Simulation): void {
       s.emit('life.sleep_started', { personId: person.id, hours, quality });
       s.advanceTo(wakeAt);
 
-      applySleep(person, hours, quality);
+      applySleep(person, hours, quality, s.now);
       person.lastSleptAt = s.now;
       const recovered = person.wellbeing.energy - before.energy;
 
@@ -502,11 +504,16 @@ export function sleepQuality(sim: Simulation, person: Person): number {
   return clamp(quality, 0.28, 1);
 }
 
-export function applySleep(person: Person, hours: number, quality: number): void {
+export function applySleep(person: Person, hours: number, quality: number, at?: number): void {
   const w = person.wellbeing;
+  // A night puts back less at sixty than it did at twenty. This is the first
+  // thing about ageing anybody notices, so it is the first thing the game
+  // does with it.
+  const years = at === undefined ? 0 : yearsBetween(person.birthInstant, at, 'UTC');
+  const banked = at === undefined ? 1 : recoveryFactorAt(years);
   const effective = hours * quality;
 
-  w.energy = clamp(w.energy + effective * 13.5 * personalityOf(person, 'energyRecovery'), 0, 100);
+  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery'), 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours. The old formula only ever paid down the excess, which
   // was harmless while nothing accrued debt in the first place — once the
@@ -520,8 +527,11 @@ export function applySleep(person: Person, hours: number, quality: number): void
   // character lost morale every single night and sat at zero forever. Five
   // hours of real rest is break-even; more than that helps, less costs.
   const restful = effective - 5;
-  w.condition = clamp(w.condition + restful * 0.9, 0, 100);
-  w.morale = clamp(w.morale + restful * 1.6, 0, 100);
+  // And a good night still cannot take a body above what a body that age can
+  // reach. The daily clamp is not enough on its own: sleep runs after it.
+  const ceiling = at === undefined ? 100 : ceilingAt(years).condition;
+  w.condition = clamp(Math.min(w.condition + restful * 0.9 * (restful > 0 ? banked : 1), ceiling), 0, 100);
+  w.morale = clamp(w.morale + restful * 1.6 * (restful > 0 ? banked : 1), 0, 100);
   w.travelFatigue = clamp(w.travelFatigue - effective * 6, 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
@@ -587,13 +597,17 @@ export function dailyRollover(sim: Simulation): void {
     asset.currentValue = Math.max(0, Math.round(asset.currentValue * (1 - rate / 365)));
   }
 
-  // Fitness decays without use; condition slowly recovers toward fitness.
+  // Fitness decays without use; condition slowly recovers toward fitness. And
+  // both are held under what a body of that age can reach, so a seventy year
+  // old with perfect habits is a very fit seventy year old rather than
+  // indistinguishable from a very fit twenty five year old.
   for (const person of Object.values(sim.universe.people)) {
     if (person.tier === 'dormant' || person.tier === 'background') continue;
     const w = person.wellbeing;
-    w.fitness = clamp(w.fitness - 0.18, 0, 100);
-    const target = 60 + w.fitness * 0.4;
-    w.condition = clamp(w.condition + (target - w.condition) * 0.02, 0, 100);
+    const ceiling = ceilingAt(yearsBetween(person.birthInstant, sim.now, sim.homeZone));
+    w.fitness = clamp(Math.min(w.fitness - 0.18, ceiling.fitness), 0, 100);
+    const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
+    w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
   }
 
   liveTheUnattendedDay(sim);
@@ -623,7 +637,7 @@ function liveTheUnattendedDay(sim: Simulation): void {
       const quality = sleepQuality(sim, person) * 0.95;
       const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
       sleptHours = hours;
-      applySleep(person, hours, quality);
+      applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;
 
       // Coasting keeps you going; it does not get you to your best. Choosing

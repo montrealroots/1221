@@ -25,6 +25,7 @@ import { buildFactors } from '../core/audit';
 import { createAsset } from './commerce';
 import { createBill } from './finance';
 import { amortisedPayment, offeredApr } from './finance';
+import { requireAge } from './lifespan';
 
 // ---------------------------------------------------------------------------
 // Property shapes
@@ -186,6 +187,8 @@ export function registerProperty(sim: Simulation): void {
   sim.onCommand<{ listingId: Id; amount: Money; financingKind: PropertyOffer['financingKind']; downPayment?: Money; contingencies?: PropertyOffer['contingencies']; agentId?: Id }, { offerId: Id }>(
     'prop.make_offer',
     (p, { sim: s }) => {
+      // Buying a house is signing for yourself.
+      requireAge(s, 'majority');
       const listing = s.universe.propertyListings[p.listingId];
       if (!listing || listing.status !== 'active') throw new CommandError('That listing is no longer available.');
       const property = s.universe.properties[listing.propertyId];
@@ -324,6 +327,8 @@ export function registerProperty(sim: Simulation): void {
   sim.onCommand<{ propertyId: Id; months: number; accountId?: Id }, { propertyId: Id; monthlyRent: Money }>(
     'prop.rent',
     (p, { sim: s }) => {
+      // A lease is a contract, and a contract needs somebody who can sign one.
+      requireAge(s, 'lease');
       const property = s.universe.properties[p.propertyId];
       if (!property) throw new CommandError('No such property.');
       if (!property.monthlyRent) throw new CommandError('That property is not available to rent.');

@@ -49,6 +49,7 @@ import { registerCinemaSystem } from './systems/cinema';
 import { registerFashionSystem } from './systems/fashion';
 import { registerGoingSystem } from './systems/going';
 import { registerErrandSystem } from './systems/errands';
+import { ensureFamily, registerLifespan, scheduleBirthday } from './systems/lifespan';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -118,6 +119,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerFashionSystem(sim);
   registerGoingSystem(sim);
   registerErrandSystem(sim);
+  registerLifespan(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -188,6 +190,13 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   // --- Household ----------------------------------------------------------
   ensureHousehold(sim, player);
+
+  // --- The life that started before this one did --------------------------
+  // Two people who raised them, however many brothers and sisters, and the
+  // first birthday on the calendar. None of it is a decision the player made
+  // at creation, because none of it is a decision anybody makes.
+  ensureFamily(sim, player);
+  scheduleBirthday(sim, player);
 
   // --- Accounts -----------------------------------------------------------
   const checking = sim.openAccount({
@@ -462,6 +471,11 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureVideoApp(sim);
   ensureSocialApps(sim);
   ensureBankClocks(sim);
+  // The life that started before the save did: a save from before the family
+  // existed gets the one it always had, and the birthday goes back on the
+  // calendar if it has fallen off (idempotent; lifespan.ts).
+  ensureFamily(sim);
+  scheduleBirthday(sim, sim.player);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -1055,6 +1069,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       (person as { groomedAt?: number }).groomedAt ??= universe.now;
     }
     steps.push('The salon, the chemist, the post office and the launderette.');
+  }
+
+  if (from < 61) {
+    // Schema 61: the whole span. The family a life started in, the birthday
+    // that turns the number over, and the end that comes for the generation
+    // above. A save that predates this gets the family it always had rather
+    // than none, and nothing it already carries is touched.
+    // The family itself is built on load rather than here, because it needs a
+    // running simulation to draw names and write relationships. See loadSave.
+    steps.push('The family you were born into, and the years since.');
   }
 
   if (from < 55) {
