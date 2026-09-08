@@ -12,26 +12,26 @@
  * good enough it is what gets them noticed by people outside the school.
  *
  * What is real here is the structure: the stages, what a year is called where
- * you are, the exam at the end of it, the ages the law compels, and which
- * sports a country's schools really field teams in. The school itself, the
- * timetable, every mark and every fixture are SLATE's own, and the room says
- * so.
+ * you are, the exam at the end of it, and the ages the law compels. The
+ * school itself, the timetable and every mark are SLATE's own, and the room
+ * says so. Sport is not here at all: there is one sport in this game, it is
+ * the track, and it lives in the athletics module.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
-import type { Id, Lesson, Person, SchoolPart, Schooling, SubjectMark, TeamPlace } from '../domain/model';
+import type { Id, Lesson, Person, SchoolPart, Schooling, SubjectMark } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { Instant } from '../core/time';
-import { MS_MINUTE, addDays, formatDate, zonedParts } from '../core/time';
+import { MS_MINUTE, addDays, addYears, formatDate, zonedParts } from '../core/time';
 import { plural } from '../core/text';
 import { countryOfCity } from '../content/geography';
 import { placesIn, type Place } from '../content/places';
 import {
   ACADEMIC_SCHOLARSHIP, CLUB_BY_ID, LEAD_TAKES, NOTICED_AT, PART_LABEL, PERIODS_A_DAY,
   PERIOD_MINUTES, SCHOOL_DAYS, SCHOOL_PLAYS, SCHOOL_STARTS_HOUR, SUBJECTS, SUBJECT_BY_ID,
-  TEAM_FROM_AGE, UNIVERSITY_LOOKS_AT, type EducationSystem, type Stage,
-  markLabel, mustAttend, sportsIn, stageForAge, systemIn, yearLabel,
+  UNIVERSITY_LOOKS_AT, type EducationSystem, type Stage,
+  markLabel, mustAttend, stageForAge, systemIn, yearLabel,
 } from '../content/schooling';
 import { ageOf, youthFactor } from './lifespan';
 import { attributesOf } from '../domain/attributes';
@@ -268,7 +268,6 @@ export function ensureSchooling(sim: Simulation, person: Person = sim.player): S
       missed: 0,
     })),
     clubs: [],
-    teams: [],
     parts: [],
     results: current?.results ? [...current.results] : [],
     startedAt: sim.now,
@@ -309,45 +308,77 @@ function finishStage(sim: Simulation, schooling: Schooling, reason: string): voi
   schooling.endReason = reason;
 }
 
+/**
+ * The school an adult already went to.
+ *
+ * Somebody who starts life at twenty two was never enrolled by SLATE and would
+ * otherwise be carrying nothing at all, which a university reads as never
+ * having been to school rather than as having left it. This writes the record
+ * they would have: the last stage of their country's system, the marks their
+ * own aptitude and application would have got them, the qualification that
+ * stage awards, and the year they finished. Idempotent, and it never touches
+ * anybody who has a record already or who is still of school age.
+ */
+export function ensureSchoolLeaver(sim: Simulation, person: Person = sim.player): Schooling | undefined {
+  sim.universe.schooling ??= {};
+  if (schoolHistoryOf(sim, person.id).length > 0) return undefined;
+  const system = systemFor(sim, person);
+  const age = ageOf(sim, person);
+  const last = system.stages[system.stages.length - 1];
+  // Still of school age, so it is the enrolment that belongs to them, not this.
+  if (!last || age <= last.to) return undefined;
+
+  const place = schoolsIn(sim, true, person.currentLocationId)[0]
+    ?? schoolsIn(sim, false, person.currentLocationId)[0];
+  if (!place) return undefined;
+
+  // How the years went. Some people worked at it and some did not, and by the
+  // time somebody is an adult that is already decided.
+  const rng = sim.rng('school.leaver', person.id);
+  const applied = rng.int(-6, 14);
+  const zone = sim.homeZone;
+  const started = addYears(person.birthInstant, last.from, zone);
+  const ended = addYears(person.birthInstant, last.to + 1, zone);
+  const marks = subjectsAt(last.to).map((one) => ({
+    subjectId: one.id,
+    mark: clamp(aptitudeFor(sim, person, one.id) + applied, 5, 99),
+    attended: 0,
+    missed: 0,
+  }));
+  const average = marks.length === 0
+    ? 55
+    : Math.round((marks.reduce((sum, one) => sum + one.mark, 0) / marks.length) * 10) / 10;
+
+  const schooling: Schooling = {
+    id: sim.nextId('school'),
+    saveId: sim.universe.meta.id,
+    personId: person.id,
+    systemId: system.id,
+    placeId: place.id,
+    placeName: place.name,
+    stageId: last.id,
+    yearLabel: yearLabel(last, last.to),
+    timetable: [],
+    marks,
+    clubs: [],
+    parts: [],
+    results: last.exam
+      ? [{ name: last.exam.name, stageId: last.id, average, at: ended }]
+      : [],
+    startedAt: started,
+    endedAt: ended,
+    endReason: 'left school',
+  };
+  sim.universe.schooling[schooling.id] = schooling;
+  return schooling;
+}
+
 /** Every qualification somebody holds, oldest first. */
 export function qualificationsOf(sim: Simulation, personId: Id = sim.player.id): { name: string; average: number; at: Instant }[] {
   return schoolHistoryOf(sim, personId)
     .flatMap((one) => one.results)
     .sort((a, b) => a.at - b.at)
     .map(({ name, average, at }) => ({ name, average, at }));
-}
-
-// ---------------------------------------------------------------------------
-// The team
-// ---------------------------------------------------------------------------
-
-/** What this school fields a team in, this month. */
-export function sportsAt(sim: Simulation, person?: Person): ReturnType<typeof sportsIn> {
-  const who = person ?? sim.player;
-  const countryId = countryOfCity(who.currentLocationId) ?? who.citizenshipId;
-  return sportsIn(countryId);
-}
-
-/** Whether a sport's school season is on where this person is. */
-export function inSeasonHere(sim: Simulation, sportId: string, person: Person = sim.player): boolean {
-  const sport = sportsAt(sim, person).find((one) => one.id === sportId);
-  if (!sport) return false;
-  const month = zonedParts(sim.now, sim.homeZone).month;
-  return sport.months.includes(month);
-}
-
-/** How good somebody would be at a sport, before they have played any of it. */
-export function sportingAptitude(sim: Simulation, person: Person, sportId: string): number {
-  const rng = sim.rng('school.sport', person.id, sportId);
-  const body = attributesOf(person);
-  const physical = (((body.coordination ?? 40) + (body.stamina ?? 40) + (body.physical_presence ?? 40)) / 3)
-    * youthFactor(sim, person);
-  return clamp(Math.round(rng.int(25, 60) * 0.5 + physical * 0.5), 5, 98);
-}
-
-/** Their place on a team, if they have one. */
-export function teamPlace(schooling: Schooling, sportId: string): TeamPlace | undefined {
-  return schooling.teams.find((one) => one.sportId === sportId);
 }
 
 // ---------------------------------------------------------------------------
@@ -527,80 +558,6 @@ export function registerSchool(sim: Simulation): void {
       });
       s.emit('school.joined_club', { schoolingId: schooling.id, clubId: club.id });
       return { clubId: club.id, note: club.about };
-    },
-  );
-
-  /** Trying out for a team. Some people do not make it. */
-  sim.onCommand<{ sportId: string }, { onTheTeam: boolean; ability: number; note: string }>(
-    'school.try_out',
-    (p, { sim: s }) => {
-      const schooling = ensureSchooling(s);
-      if (!schooling) throw new CommandError('You are not at school.');
-      const age = ageOf(s);
-      if (age < TEAM_FROM_AGE) {
-        throw new CommandError(`Teams start at ${TEAM_FROM_AGE} here. You are ${age}.`);
-      }
-      const sport = sportsAt(s).find((one) => one.id === p.sportId);
-      if (!sport) throw new CommandError('This school does not field a team in that.');
-      if (teamPlace(schooling, sport.id)) throw new CommandError(`You have already tried out for ${sport.label}.`);
-      if (!inSeasonHere(s, sport.id)) {
-        throw new CommandError(`${sport.label} is out of season. Trials are in ${plural(sport.months.length, 'month')} of the year, and this is not one of them.`);
-      }
-
-      const ability = sportingAptitude(s, s.player, sport.id);
-      const rng = s.rng('school.trial', schooling.id, sport.id);
-      // Making the team is the ability plus the day you had.
-      const onTheTeam = ability + rng.int(-12, 12) >= 52;
-      schooling.teams.push({
-        sportId: sport.id, onTheTeam, played: 0, won: 0, ability, joinedAt: s.now,
-      });
-      s.advanceTo(s.now + 90 * MS_MINUTE);
-      s.player.wellbeing.energy = clamp(s.player.wellbeing.energy - 14, 0, 100);
-      s.player.wellbeing.fitness = clamp(s.player.wellbeing.fitness + 1.5, 0, 100);
-
-      const note = onTheTeam
-        ? `You are on the ${sport.label.toLowerCase()} team. ${sport.about}`
-        : `You did not make the ${sport.label.toLowerCase()} team this year. ${sport.about}`;
-      s.remember({
-        category: 'life',
-        title: onTheTeam ? `Made the ${sport.label} team` : `Tried out for ${sport.label}`,
-        detail: note,
-        refs: [{ type: 'person', id: s.player.id }],
-        significance: onTheTeam ? 4 : 2,
-        public: false,
-      });
-      s.emit('school.tried_out', { schoolingId: schooling.id, sportId: sport.id, onTheTeam });
-      return { onTheTeam, ability, note };
-    },
-  );
-
-  /** Training with the team, or playing a fixture. */
-  sim.onCommand<{ sportId: string }, { won: boolean; ability: number; note: string }>(
-    'school.play_fixture',
-    (p, { sim: s }) => {
-      const schooling = ensureSchooling(s);
-      if (!schooling) throw new CommandError('You are not at school.');
-      const place = teamPlace(schooling, p.sportId);
-      if (!place?.onTheTeam) throw new CommandError('You are not on that team.');
-      const sport = sportsAt(s).find((one) => one.id === p.sportId)!;
-      if (!inSeasonHere(s, sport.id)) throw new CommandError(`${sport.label} is out of season.`);
-
-      const rng = s.rng('school.fixture', schooling.id, sport.id, s.now);
-      const won = rng.int(0, 100) < clamp(place.ability, 15, 85);
-      place.played += 1;
-      if (won) place.won += 1;
-      // Playing makes you better at it, and fitter.
-      place.ability = clamp(Math.round(place.ability + rng.float(0.4, 1.6)), 0, 100);
-      s.advanceTo(s.now + 150 * MS_MINUTE);
-      s.player.wellbeing.energy = clamp(s.player.wellbeing.energy - sport.demand * 2.5, 0, 100);
-      s.player.wellbeing.fitness = clamp(s.player.wellbeing.fitness + sport.demand * 0.5, 0, 100);
-      s.player.wellbeing.morale = clamp(s.player.wellbeing.morale + (won ? 6 : -2), 0, 100);
-
-      const note = won
-        ? `You won. ${place.won} of ${place.played} this season.`
-        : `You lost. ${place.won} of ${place.played} this season.`;
-      s.emit('school.played', { schoolingId: schooling.id, sportId: sport.id, won });
-      return { won, ability: place.ability, note };
     },
   );
 

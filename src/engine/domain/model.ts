@@ -1970,18 +1970,6 @@ export interface SubjectMark {
 }
 
 /** A place on a school team. */
-export interface TeamPlace {
-  sportId: string;
-  /** Whether they made the team or only the trial. */
-  onTheTeam: boolean;
-  /** Games played and games won, this season. */
-  played: number;
-  won: number;
-  /** How good they are at it, out of a hundred. */
-  ability: number;
-  joinedAt: Instant;
-}
-
 /** A part in a school play. */
 export interface SchoolPart {
   id: Id;
@@ -2015,7 +2003,6 @@ export interface Schooling {
   timetable: Lesson[];
   marks: SubjectMark[];
   clubs: string[];
-  teams: TeamPlace[];
   parts: SchoolPart[];
   /** Qualifications already earned, oldest first. */
   results: { name: string; stageId: string; average: number; at: Instant }[];
@@ -2023,6 +2010,133 @@ export interface Schooling {
   /** Set when they left, finished or moved on. */
   endedAt?: Instant;
   endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Track
+// ---------------------------------------------------------------------------
+
+/** A time somebody has actually run, and where they ran it. */
+export interface Mark {
+  eventId: string;
+  /** 'indoor' or 'outdoor'. */
+  surface: string;
+  seconds: number;
+  /** Meters a second, where the event reads it. Above the limit and it does not stand. */
+  wind?: number;
+  /** Whether the mark stands for a record or a ranking. */
+  legal: boolean;
+  at: Instant;
+  /** The meet it was run at. SLATE's own unless it is a real named meet. */
+  where: string;
+}
+
+/** One race inside a meet: a heat, a semi final or a final. */
+export interface RaceResult {
+  /** 'heat', 'semi' or 'final'. */
+  round: string;
+  eventId: string;
+  lane: number;
+  seconds: number;
+  wind?: number;
+  legal: boolean;
+  place: number;
+  /** How many were in the race. */
+  of: number;
+  /** Whether that was enough to go through to the next round. */
+  through: boolean;
+  personalBest: boolean;
+  seasonBest: boolean;
+}
+
+/** A meet on a season's schedule, and what happened at it. */
+export interface MeetEntry {
+  at: Instant;
+  /** What it is called. A real named meet, or SLATE's own. */
+  name: string;
+  town: string;
+  cityId?: string;
+  /** Set where the meet is one SLATE carries as real. */
+  meetId?: string;
+  tier: string;
+  /** What is being run there, from the events this runner has entered. */
+  eventIds: string[];
+  run: boolean;
+  /** Where the runner did not qualify to be there at all. */
+  locked?: boolean;
+  results: RaceResult[];
+  /** Where they finished in the final, if they made one. */
+  place?: number;
+}
+
+/** A track season, from the first meet of it to however far it went. */
+export interface TrackSeason {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** 'school', 'university' or 'professional'. */
+  stage: string;
+  /** 'indoor' or 'outdoor'. */
+  surface: string;
+  /** The school, university or club being run for. */
+  teamName: string;
+  countryId: string;
+  /** The calendar year the season started in. */
+  year: number;
+  /** The events entered this season. */
+  eventIds: string[];
+  meets: MeetEntry[];
+  startedAt: Instant;
+  endedAt?: Instant;
+  /** How far it went, in words. */
+  reached?: string;
+}
+
+/** Everything about somebody as a runner, which outlasts any one season. */
+export interface Running {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The category they compete in: 'mens' or 'womens'. Their own choice. */
+  category: string;
+  /** The events they run. */
+  eventIds: string[];
+  /** Where they run: a school team, a university team, a club, or professionally. */
+  stage: string;
+  /** Who they run for. */
+  teamName?: string;
+  /**
+   * Condition, out of a hundred, built by training and lost by not.
+   *
+   * Read through the system rather than straight off the record: form falls
+   * away from the day it was last worked on, so the stored number is only the
+   * number it was then.
+   */
+  form: number;
+  /** The day the form was last put in. */
+  formAt: Instant;
+  /** Sessions put in, ever. */
+  sessions: number;
+  /** Every personal best, one per event and surface. */
+  bests: Mark[];
+  /** The best of this season, cleared when a new season starts. */
+  seasonBests: Mark[];
+  /** Set while hurt, and nothing can be run until it passes. */
+  injuredUntil?: Instant;
+  /** What the injury was, so it can be said out loud. */
+  injury?: string;
+  /** Whether they have turned professional. */
+  professional?: boolean;
+  /** A shoe contract, where there is one. */
+  contract?: {
+    brand: string;
+    aYear: Money;
+    from: Instant;
+    to: Instant;
+    /** What a global medal is worth on top. */
+    medalBonus: Money;
+  };
+  startedAt: Instant;
 }
 
 // ---------------------------------------------------------------------------
@@ -2064,8 +2178,13 @@ export interface Studies {
   termsDone: number;
   termsMissed: number;
   scholarship?: string;
+  /** Where they live while they are there, and whether they eat on a plan. */
+  housing: string;
+  mealPlan: boolean;
   /** What has been paid in fees so far. */
   paid: Money;
+  /** And what has been paid for somewhere to sleep and something to eat. */
+  paidLiving: Money;
   startedAt: Instant;
   endedAt?: Instant;
   /** Set when the degree was awarded. */
@@ -3176,7 +3295,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 63;
+export const SAVE_SCHEMA_VERSION = 65;
 
 export interface SaveMeta {
   id: Id;
@@ -3286,6 +3405,9 @@ export interface SaveUniverse {
   /** University: applications and a degree. Absent on a save from before. */
   applications?: Record<Id, UniversityApplication>;
   studies?: Record<Id, Studies>;
+  /** Seasons of sport, at school and at university. Absent on an older save. */
+  seasons?: Record<Id, TrackSeason>;
+  running?: Record<Id, Running>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

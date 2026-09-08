@@ -28,6 +28,7 @@ const DOMAINS: Domain[] = [
       { route: '/workspace/wellbeing', label: 'Wellbeing', detail: 'Sleep, energy, stress, food and recovery.' },
       { route: '/workspace/health', label: 'Healthcare', detail: 'Doctors, dentists, therapy and specialists.' },
       { route: '/workspace/education', label: 'Education', detail: 'Classes, coaching and training that actually changes you.' },
+      { route: '/workspace/track', label: 'Track', detail: 'The one sport in here: a season, every round of every meet, and the times.' },
       { route: '/workspace/history', label: 'History', detail: 'Everything that has happened to you, kept permanently.' },
     ],
   },

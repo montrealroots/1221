@@ -8,7 +8,7 @@
 
 export type SkillDomain =
   | 'writing' | 'directing' | 'producing' | 'executive' | 'crew'
-  | 'business' | 'creator' | 'general';
+  | 'business' | 'creator' | 'general' | 'athletics';
 
 export interface SkillDef {
   id: string;
@@ -95,6 +95,26 @@ export const SKILLS: readonly SkillDef[] = [
   s('content_strategy', 'Content Strategy', 'creator', 'Knowing what to make next and why.', 1.2),
   s('on_camera_hosting', 'On-Camera Hosting', 'creator', 'Being watchable talking directly to a lens.', 1.1),
   s('audience_growth', 'Audience Growth', 'creator', 'Turning views into a following that stays.', 1.1),
+
+  // Track. A sprinter is not one thing: getting out of the blocks, reaching
+  // top speed and holding it to the line are three different problems, and a
+  // runner can be brilliant at one and lose the race in another.
+  s('block_start', 'Block Start', 'athletics', 'Set, and the first movement out of the blocks.', 1.1),
+  s('reaction_time', 'Reaction Time', 'athletics', 'Gun to first movement, and it is measured in thousandths.', 0.8),
+  s('drive_phase', 'Drive Phase', 'athletics', 'The first thirty meters, still low, still building.', 1.1),
+  s('acceleration', 'Acceleration', 'athletics', 'How fast you get to your own top speed.', 1.0),
+  s('top_speed', 'Top Speed', 'athletics', 'The fastest you can travel, which decides most of a hundred.', 0.7),
+  s('speed_endurance', 'Speed Endurance', 'athletics', 'Holding it through the last forty, where the race is lost.', 1.2),
+  s('running_relaxation', 'Running Relaxation', 'athletics', 'Staying loose at full speed, because tension is slow.', 1.1),
+  s('sprint_mechanics', 'Sprint Mechanics', 'athletics', 'Where the foot lands, what the arms do, and how little is wasted.', 1.2),
+  s('curve_running', 'Curve Running', 'athletics', 'The bend, which is most of a two hundred and all of a lane draw.', 1.1),
+  s('hurdle_technique', 'Hurdle Technique', 'athletics', 'Three strides, a lead leg, and not losing speed over the barrier.', 1.2),
+  s('baton_exchange', 'Baton Exchange', 'athletics', 'The twenty meter zone where relays are won and thrown away.', 1.3),
+  s('race_tactics', 'Race Tactics', 'athletics', 'The plan, the lane, the rounds, and reading the race you are in.', 1.2),
+  s('finishing', 'Finishing', 'athletics', 'The last ten meters and the dip, which is worth hundredths.', 1.1),
+  s('training_discipline', 'Training Discipline', 'athletics', 'The winter work nobody sees, which is where a season is made.', 1.3),
+  s('athletic_recovery', 'Recovery', 'athletics', 'Getting back on the track sound, and staying that way.', 1.2),
+  s('competitive_nerve', 'Competitive Nerve', 'athletics', 'Running your race in a full stadium, in a final, on the day.', 1.0),
 ] as const;
 
 export const SKILL_BY_ID: Readonly<Record<string, SkillDef>> =

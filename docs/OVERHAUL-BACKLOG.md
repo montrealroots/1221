@@ -561,7 +561,12 @@ before any delivery claim.
     - The gazetteer carries 1,379 cities, so a university in a smaller town is reached from the nearest one rather than standing in its own; the row always names the real town.
     - Subject names are the shape of a week rather than each country's own curriculum vocabulary, which SLATE does not carry.
     - Every school is SLATE's own for want of a feed, unlike the universities that come next, which are public record.
-    - The life cycle is one part of three. School and university — real education systems, a class schedule, school sports, grades, acting classes, starting as a child, real universities placed geographically, majors and scholarships — are not built, and until they are there is nothing for a character under sixteen to do with a day.
+    - The life cycle, school, university, room and board and the track are all built. What is not: the professional half of the track — the trials, the circuit, the world championships and the Games — which the ladder is shaped for but does not yet reach.
+    - Every meet in a season is a command rather than a scene: there is no warm up area, no call room, no coach and nobody to talk to, only the race and what it did to the times.
+    - The world records and the entry standards are as SLATE carries them, with the year each was set. A record set after that is not in here, and no feed would tell the game.
+    - Every rival in every lane is invented, because a made-up time against a real athlete would be a claim about somebody real. There is no results feed and none is claimed.
+    - Which meets a season is built from is SLATE's own: a real calendar changes every year and the game has no wire to it. The meets themselves, the towns and the months are real.
+    - Twenty three school sports were removed rather than deepened. This is a game about acting, and the one sport in it is the track.
     - Every legal age carried is the general national minimum. States, provinces, parental consent and staged licences are not modelled, and the note in the room says so rather than the game implying a statute.
     - One growth curve rather than two, for want of a real growth reference and an honest field to key it on.
     - The dentist, the vet, the DMV and the phone shop are still scenery: life contract item 9 names them and four of the rooms are built, not all of them.

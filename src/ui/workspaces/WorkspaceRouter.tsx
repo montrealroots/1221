@@ -13,6 +13,7 @@ import { TravelWorkspace } from './TravelWorkspace';
 import { HealthWorkspace } from './HealthWorkspace';
 import { InsuranceWorkspace } from './InsuranceWorkspace';
 import { EducationWorkspace } from './EducationWorkspace';
+import { TrackWorkspace } from './TrackWorkspace';
 import { SocialWorkspace } from './SocialWorkspace';
 import { CityWorkspace } from './CityWorkspace';
 import { PhoneWorkspace } from './PhoneWorkspace';
@@ -35,6 +36,7 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/health': HealthWorkspace,
   '/workspace/insurance': InsuranceWorkspace,
   '/workspace/education': EducationWorkspace,
+  '/workspace/track': TrackWorkspace,
   '/workspace/social': SocialWorkspace,
   '/workspace/phone': PhoneWorkspace,
   '/workspace/film': FilmWorkspace,

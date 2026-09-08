@@ -722,11 +722,8 @@ answer says what would make it yes.
    counted, and below four fifths the school rings home. What the marks come
    to decides whether a university would look at you, and whether it would pay.
 
-   Eight clubs, three of which is as many as anybody keeps up, and 24 school
-   sports each only in the countries whose schools really field them: an
-   American high school has a football team and an English one does not, an
-   Australian school plays Australian rules and a Kenyan one runs. A trial is
-   a trial and it can turn you down.
+   Eight clubs, three of which is as many as anybody keeps up. Sport at school
+   is the track and nothing else, and it has a section of its own below.
 
    And the play, which is the point. Twelve plays a school can actually put
    on, all of them out of copyright and all of them really staged by school
@@ -742,7 +739,7 @@ answer says what would make it yes.
    own with a plausible name — the district it stands in, or a saint only in
    the countries that name schools after saints.
 
-   **Part three is done: university, and item 9 is complete.** 197 real
+   **Part three is done: university.** 197 real
    universities across 56 countries, founded between 1088 and 2014 — Oxford,
    Yale, the Sorbonne, Todai, Tsinghua, USP, Wits, RADA, La Fémis, the Beijing
    Film Academy, VGIK. The name, the town and the founding year are public
@@ -774,6 +771,57 @@ answer says what would make it yes.
    Then three years of terms, and what you leave with is a class of degree
    that depends on what you did while you were there. You can also run out of
    money for the next year, or walk away, and both are written down.
+
+   **Part four is done: room and board, and the track.**
+
+   Tuition is the number everybody quotes and it is often not the biggest one.
+   Somewhere to sleep and something to eat are charged separately nearly
+   everywhere, are frequently more than the fees, and in the countries that
+   charge no tuition they are the whole bill. Four ways to live — at home, a
+   room in hall, a shared house, a place of your own — priced against the
+   local cost of living, so a year in Manhattan is not a year in Manchester.
+   A hall is catered, so a meal plan on top of one is not a thing you can buy
+   twice. A full ride covers both halves; an academic award covers the fees
+   and leaves the rent. Both halves are charged at the offer and again at
+   every year turn, and the bill says which is which.
+
+   And the sport, which is one sport. SLATE used to carry twenty four things
+   a school anywhere fields a team in. It does not any more: this is a game
+   about acting, and the only sport in it is the track — because the track is
+   the one that can run beside an acting career and end in a world final.
+
+   What is real: ten events at their real distances, eighteen world records
+   with the person who set each one and the year, the published entry standard
+   for a global championship, the two metre a second wind limit, sixty real
+   meets in thirty seven towns — the Penn Relays, Champs in Kingston, Arcadia,
+   the NCAA championships, the English Schools, Prefontaine, Weltklasse,
+   the World Championships, the Games — and the shape of a season at every
+   level. Every rival in every lane is SLATE's own, and so is every time run
+   in this game: there is no results feed, and a made-up time against a real
+   athlete would be a claim about somebody real.
+
+   Sixteen running skills, because a sprinter is not one thing: the block
+   start and the reaction, the drive phase, acceleration, top speed, speed
+   endurance, relaxation, mechanics, the bend, the barriers, the changeover,
+   race tactics, the finish, the winter work, recovery and nerve. Each event
+   is decided by its own weighting of them, so somebody brilliant out of the
+   blocks and poor over the last forty is a sixty metre runner.
+
+   A time has to be earned. It comes from the sheet, from form built one
+   session at a time and lost by weeks away, from the body, and from the day —
+   and it is held under the same youth curve as everything else, so a gifted
+   twelve year old is a gifted twelve year old. A season is a ladder: dual
+   meets against the school across town, then the invitationals, then league,
+   regional and the national schools meet, with heats and semi finals at the
+   meets that really run them, and a place in the round above that has to be
+   won in the round below. Wind is read where it is really read, and a mark
+   with too much behind it is still a race and not a record. Hamstrings go.
+
+   Whether there is a team at all is honest: forty one countries whose schools
+   really run track, and inside them not every school has one. A place at
+   university won on the track is offered where such a place is really offered
+   and nowhere else, and it wants a time on the list and a season of meets
+   behind it.
 
 10. Free-text intent across all of it.
 

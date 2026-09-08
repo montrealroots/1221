@@ -14,9 +14,11 @@
  */
 
 import {
-  ATHLETIC_NOTE, ATHLETIC_SCHOLARSHIP_COUNTRIES, DEGREE_CLASSES, FEES_BY_COUNTRY, FEES_NOTE,
-  FIELD_LABEL, MAJORS, MAJOR_BY_ID, REGIME_LABEL, SCHOLARSHIP_SHARE, UNIVERSITIES,
+  ATHLETIC_NOTE, ATHLETIC_SCHOLARSHIP_COUNTRIES, COVERS_ROOM_AND_BOARD, DEGREE_CLASSES,
+  FEES_BY_COUNTRY, FEES_NOTE, FIELD_LABEL, HOUSING, HOUSING_BY_ID, MAJORS, MAJOR_BY_ID,
+  MEAL_PLAN_A_YEAR, REGIME_LABEL, ROOM_AND_BOARD_NOTE, SCHOLARSHIP_SHARE, UNIVERSITIES,
   UNIVERSITY_BY_ID, UNIVERSITY_NOTE, degreeClass, feesAreCountrys, feesIn, majorsAt,
+  roomAndBoardIn,
 } from '../src/engine/content/universities.ts';
 import { UNIVERSITY_LOOKS_AT, ACADEMIC_SCHOLARSHIP } from '../src/engine/content/schooling.ts';
 import { CITIES, COUNTRIES } from '../src/engine/content/geography.ts';
@@ -24,7 +26,8 @@ import { SKILLS } from '../src/engine/domain/skills.ts';
 import { ATTRIBUTES } from '../src/engine/domain/attributes.ts';
 import { quickSave } from '../src/engine/index.ts';
 import {
-  APPLY_FROM_AGE, chanceAt, feesFor, marksOn, universitiesIn, universitiesInCountry, whereItIs,
+  APPLY_FROM_AGE, chanceAt, feesFor, livingFor, marksOn, universitiesIn, universitiesInCountry,
+  whereItIs, yearCosts,
 } from '../src/engine/systems/university.ts';
 
 const problems = [];
@@ -175,6 +178,66 @@ for (const [id, expectFree] of [['oslo', true], ['usc', false], ['oxford', false
   }
 }
 
+// --- Somewhere to sleep and something to eat --------------------------------
+
+{
+  const seenHousing = new Set();
+  for (const one of HOUSING) {
+    if (seenHousing.has(one.id)) problems.push(`${one.id} is listed twice`);
+    seenHousing.add(one.id);
+    if (one.perYear < 0) problems.push(`${one.label} costs ${one.perYear} a year`);
+    if (one.belonging < 0 || one.belonging > 100) problems.push(`${one.label} is ${one.belonging} for belonging`);
+    if (one.about.length < 15) problems.push(`${one.label} has nothing said about it`);
+  }
+  // Living at home is the free one and the lonely one; that is the trade.
+  const home = HOUSING_BY_ID.at_home;
+  if (!home || home.perYear !== 0) problems.push('living at home is not free');
+  if (home && HOUSING.some((one) => one.id !== 'at_home' && one.belonging <= home.belonging)) {
+    problems.push('somewhere to live away is no better for belonging than staying at home');
+  }
+  // Hall is catered, so a meal plan on top of it is not a thing you can buy twice.
+  const hall = HOUSING_BY_ID.hall;
+  if (hall && roomAndBoardIn('hall', true) !== hall.perYear) problems.push('a room in hall is charged for meals twice');
+  const shared = HOUSING_BY_ID.shared;
+  if (shared && roomAndBoardIn('shared', true) - roomAndBoardIn('shared', false) !== MEAL_PLAN_A_YEAR) {
+    problems.push('a meal plan costs nothing on top of a shared house');
+  }
+  if (MEAL_PLAN_A_YEAR <= 0) problems.push('a year of eating costs nothing');
+  if (!/full ride/.test(ROOM_AND_BOARD_NOTE) || !/calibration/.test(ROOM_AND_BOARD_NOTE)) {
+    problems.push('the note about room and board has gone');
+  }
+
+  // A full ride covers the living as well; an academic award does not.
+  if (!COVERS_ROOM_AND_BOARD.athletic) problems.push('a full ride does not cover room and board');
+  if (COVERS_ROOM_AND_BOARD.academic) problems.push('an academic award covers room and board');
+
+  // And a place with no tuition still costs money to live in, which is the point.
+  for (const id of ['oslo', 'msu', 'usc', 'oxford']) {
+    const one = UNIVERSITY_BY_ID[id];
+    if (!one) { problems.push(`${id} is not in the list`); continue; }
+    const own = yearCosts(one, 'hall', true);
+    if (own.living <= 0) problems.push(`${one.name} costs nothing to live at`);
+    if (own.total <= 0) problems.push(`${one.name} costs nothing at all`);
+    if (own.fullRide) problems.push(`${one.name} is a full ride to somebody paying their own way`);
+    // Living at home is cheaper than hall everywhere.
+    if (yearCosts(one, 'at_home', false).living >= own.living) {
+      problems.push(`${one.name} costs no less to commute to than to live at`);
+    }
+    // A sport place pays for all of it; an academic one leaves the rent.
+    const ride = yearCosts(one, 'hall', true, 'athletic');
+    if (ride.total !== 0 || !ride.fullRide) problems.push(`a full ride at ${one.name} still costs ${ride.total}`);
+    const award = yearCosts(one, 'hall', true, 'academic');
+    if (award.living !== own.living) problems.push(`an academic award at ${one.name} pays the rent`);
+    if (award.fullRide) problems.push(`an academic award at ${one.name} is called a full ride`);
+    if (award.total >= own.total && own.fees > 0) problems.push(`an academic award at ${one.name} saves nothing`);
+  }
+
+  // The cost of living moves it: a year in Manhattan is not a year in Manchester.
+  const expensive = livingFor(UNIVERSITY_BY_ID.columbia, 'hall', true);
+  const cheaper = livingFor(UNIVERSITY_BY_ID.manchester, 'hall', true);
+  if (!(expensive > cheaper)) problems.push('a year in Manhattan costs no more than a year in Manchester');
+}
+
 // --- Say what was measured ------------------------------------------------
 
 const countries = new Set(UNIVERSITIES.map((one) => one.countryId));
@@ -183,6 +246,7 @@ console.log(`${UNIVERSITIES.length} real universities across ${countries.size} c
 console.log(`${UNIVERSITIES.filter((o) => o.strengths.includes('film')).length} teach film and ${UNIVERSITIES.filter((o) => o.strengths.includes('drama')).length} teach drama.`);
 console.log(`${Object.keys(FEES_BY_COUNTRY).length} fee regimes carried, ${free} of them charging nothing at all.`);
 console.log(`${MAJORS.length} courses, ${ATHLETIC_SCHOLARSHIP_COUNTRIES.size} countries where a place can be won on sport, and ${ACADEMIC_SCHOLARSHIP} marks wins one on results.`);
+console.log(`${HOUSING.length} ways to live while you are there, and a full ride covers the rent where an academic award does not.`);
 console.log('The towns are real, and a university is never claimed to be in a city it is only reached from.');
 
 if (problems.length > 0) {

@@ -179,6 +179,15 @@ export const HELP_ARTICLES: readonly HelpArticle[] = [
     advanced: ['Gains have diminishing returns. The last ten points of an attribute are far harder than the first ten.'],
   },
   {
+    id: 'track', route: '/workspace/track', title: 'Track',
+    what: 'The one sport in the game. A season of real meets, every round of every one of them, and the times that come out of it.',
+    affects: ['The sixteen running skills, weighted differently for every event', 'Form, which is built by sessions and lost by weeks off', 'Age, through the same youth curve everything else uses', 'The wind, in the events where a wind reading is taken'],
+    actions: ['Go to the trial', 'Enter your events', 'Do a session', 'Race the next meet', 'Sit one out', 'Leave the squad'],
+    connects: ['Education, because a school or a university is what you run for', 'University, because a place can be won on the track where a place is really won that way', 'Health, because a hamstring is a hamstring', 'Character, because the running skills sit on the same sheet as everything else'],
+    keywords: ['track', 'running', 'sprint', 'race', 'meet', 'athletics', 'season', 'hundred meters', 'relay', 'hurdles'],
+    advanced: ['The events, the meets, the records and the entry standards are real. Everybody else in the lane is SLATE’s own, and so is every time run in the game.'],
+  },
+  {
     id: 'shopping', route: '/workspace/shopping', title: 'Shopping',
     what: 'One commerce engine for everything you buy, from groceries to a grand complication. Purchases become real objects you own.',
     affects: ['Retailer tier and local cost of living', 'Sales tax in your jurisdiction', 'Delivery time by channel'],

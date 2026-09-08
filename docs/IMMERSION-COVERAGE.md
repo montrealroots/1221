@@ -116,3 +116,14 @@ its sessions. The Base44 guard is at 30.
   exercised in a browser here.
 - **Real gym hours and prices**: SLATE's calibration, labelled as such
   everywhere they appear. Not verified against any chain.
+- **The track**: the events, the distances, the world records with their
+  holders and years, the published entry standards, the wind limit and the
+  named meets with their towns and months are real and carried as such. A
+  record or a standard set after the day SLATE was written is not in here,
+  and there is no feed that would tell it. Every rival in every lane and
+  every time run in the game is SLATE's own, because a made-up time against
+  a real athlete would be a claim about somebody real; this is stated in the
+  room rather than left to be discovered. The level ladder — what a time is
+  worth, from a school team to a world final — is SLATE's own calibration
+  and says so, and it is one ladder across every event rather than each
+  event's own, which is close enough to be honest about and not exact.

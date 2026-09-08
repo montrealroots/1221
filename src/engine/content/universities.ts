@@ -397,6 +397,54 @@ export function feesAreCountrys(countryId: string): boolean {
 }
 
 // ---------------------------------------------------------------------------
+// Where you live while you are there
+// ---------------------------------------------------------------------------
+
+/**
+ * Room and board, which is the other half of what a degree costs.
+ *
+ * Tuition is the number everybody quotes and it is often not the biggest one.
+ * Somewhere to sleep and something to eat are charged separately nearly
+ * everywhere, they are frequently more than the fees, and in the countries
+ * that charge no tuition at all they are the whole bill.
+ *
+ * The amounts are SLATE's own calibration in the local cost of living. That
+ * room and board is charged apart from tuition, and that a full ride covers
+ * both while a fees-only award does not, is how it really works.
+ */
+export const ROOM_AND_BOARD_NOTE =
+  'Tuition is the number everybody quotes and it is often not the biggest one. Somewhere to sleep and '
+  + 'something to eat are charged separately nearly everywhere, are frequently more than the fees, and '
+  + 'in the countries that charge no tuition are the whole bill. A full ride covers them; an award '
+  + 'against the fees does not. The amounts are SLATE’s own calibration.';
+
+export type Housing = 'at_home' | 'hall' | 'shared' | 'own_place';
+
+export interface HousingOption {
+  id: Housing;
+  label: string;
+  /** A year of it, before the local cost of living. */
+  perYear: number;
+  /** What it does to how the year goes, out of a hundred. */
+  belonging: number;
+  about: string;
+}
+
+export const HOUSING: readonly HousingOption[] = [
+  { id: 'at_home', label: 'Living At Home', perYear: 0, belonging: 25, about: 'Free, and you commute, and you miss most of it.' },
+  { id: 'hall', label: 'A Room In Hall', perYear: 11_000_00, belonging: 90, about: 'On campus, catered, and it is where the whole first year happens.' },
+  { id: 'shared', label: 'A Shared House', perYear: 7_500_00, belonging: 70, about: 'Off campus with four other people, and you cook for yourself.' },
+  { id: 'own_place', label: 'A Place Of Your Own', perYear: 14_000_00, belonging: 45, about: 'Quiet, expensive, and you will know fewer people.' },
+];
+
+export const HOUSING_BY_ID: Readonly<Record<string, HousingOption>> = Object.fromEntries(
+  HOUSING.map((one) => [one.id, one]),
+);
+
+/** A year of eating, where the hall does not already do it. */
+export const MEAL_PLAN_A_YEAR = 5_200_00;
+
+// ---------------------------------------------------------------------------
 // Scholarships
 // ---------------------------------------------------------------------------
 
@@ -417,8 +465,28 @@ export const ATHLETIC_NOTE =
   + 'Europe has no such thing, because sport there sits in clubs rather than in universities. SLATE '
   + 'carries where it really happens rather than assuming every country works the same way.';
 
-/** How much of the fees a scholarship covers. SLATE's own calibration. */
-export const SCHOLARSHIP_SHARE = { academic: 0.6, athletic: 0.85, none: 0 } as const;
+/**
+ * What a scholarship actually covers.
+ *
+ * An academic award is against the fees and nothing else, which is what most
+ * of them are. A place won on sport in America is very often a full ride —
+ * tuition, the room and the food — and that difference is the whole reason
+ * people take one.
+ */
+export const SCHOLARSHIP_SHARE = { academic: 0.6, athletic: 1, none: 0 } as const;
+
+/** Whether an award pays for somewhere to live as well as for the teaching. */
+export const COVERS_ROOM_AND_BOARD: Readonly<Record<string, boolean>> = {
+  academic: false, athletic: true,
+};
+
+/** A year of somewhere to live and something to eat, here. */
+export function roomAndBoardIn(housingId: Housing, mealPlan: boolean): number {
+  const housing = HOUSING_BY_ID[housingId] ?? HOUSING_BY_ID.hall!;
+  // A room in hall is catered, so a meal plan on top of it is not a thing.
+  const food = housingId === 'hall' || !mealPlan ? 0 : MEAL_PLAN_A_YEAR;
+  return housing.perYear + food;
+}
 
 // ---------------------------------------------------------------------------
 // What you read

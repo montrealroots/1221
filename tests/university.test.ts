@@ -14,7 +14,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import {
   APPLY_FROM_AGE, MAX_OPEN_APPLICATIONS, applicationsOf, chanceAt, degreesOf, describeStudies,
-  feesFor, marksOn, sportingRecord, studiesHistoryOf, studiesOf, universitiesIn,
+  feesFor, marksOn, studiesHistoryOf, studiesOf, trackRecord, universitiesIn,
   universitiesInCountry, whereItIs,
 } from '@/engine/systems/university';
 import {
@@ -25,6 +25,7 @@ import { UNIVERSITY_LOOKS_AT } from '@/engine/content/schooling';
 import { schoolingOf } from '@/engine/systems/school';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { MS_DAY } from '@/engine/core/time';
+import { ensureRunning } from '@/engine/systems/athletics';
 import type { Simulation } from '@/engine/core/simulation';
 
 /** Somebody at the end of school, carrying the marks you set. */
@@ -36,6 +37,30 @@ function aLeaver(seed: string, marks: number, cityId = 'uk-eng-london'): Simulat
   const schooling = schoolingOf(sim);
   if (schooling) for (const mark of schooling.marks) mark.mark = marks;
   return sim;
+}
+
+/** Somebody with a time on the list, and a season of meets behind it. */
+function giveThemATime(sim: Simulation, seconds: number, meets: number): void {
+  const running = ensureRunning(sim);
+  running.bests = [{
+    eventId: '100m', surface: 'outdoor', seconds, legal: true, at: sim.now, where: 'A Meet',
+  }];
+  sim.universe.seasons ??= {};
+  const season = {
+    id: 'season_test', saveId: sim.universe.meta.id, personId: sim.player.id,
+    stage: 'school', surface: 'outdoor', teamName: 'A School', countryId: 'us',
+    year: 2026, eventIds: ['100m'],
+    meets: Array.from({ length: meets }, (_, i) => ({
+      at: sim.now - (meets - i) * MS_DAY, name: 'A Meet', town: 'A Town', tier: 'invitational',
+      eventIds: ['100m'], run: true, place: 2,
+      results: [{
+        round: 'final', eventId: '100m', lane: 4, seconds, legal: true, place: 2, of: 8,
+        through: false, personalBest: true, seasonBest: true,
+      }],
+    })),
+    startedAt: sim.now - meets * MS_DAY,
+  };
+  sim.universe.seasons[season.id] = season;
 }
 
 // ---------------------------------------------------------------------------
@@ -141,23 +166,30 @@ describe('whether they would take you', () => {
     expect(easier.odds).toBeLessThan(97);
   });
 
-  it('offers a place on marks, and one on sport only where that is real', () => {
+  it('offers a place on marks, and one on the track only where that is real', () => {
     const strong = aLeaver('academic', 92);
     expect(chanceAt(strong, UNIVERSITY_BY_ID.manchester!, 'english').scholarship).toBe('academic');
-    // Somebody who played but did not top the year: England offers nothing on sport.
-    const sporty = aLeaver('sport-uk', 72);
-    const schooling = schoolingOf(sporty)!;
-    schooling.teams.push({ sportId: 'rugby', onTheTeam: true, played: 9, won: 5, ability: 88, joinedAt: sporty.now });
-    expect(sportingRecord(sporty).ability).toBe(88);
-    expect(chanceAt(sporty, UNIVERSITY_BY_ID.manchester!, 'english').scholarship).toBeUndefined();
+
+    // Somebody quick, with a season of meets behind them. England offers
+    // nothing on sport, because a British university does not work that way.
+    const runner = aLeaver('track-uk', 72);
+    giveThemATime(runner, 10.35, 5);
+    expect(trackRecord(runner).level).toBe('schools');
+    expect(trackRecord(runner).meets).toBe(5);
+    expect(chanceAt(runner, UNIVERSITY_BY_ID.manchester!, 'english').scholarship).toBeUndefined();
     expect(ATHLETIC_SCHOLARSHIP_COUNTRIES.has('uk')).toBe(false);
 
     // And America does, which is the whole point of carrying it.
-    const american = aLeaver('sport-us', 72, 'us-ca-losangeles');
-    const theirs = schoolingOf(american)!;
-    theirs.teams.push({ sportId: 'american_football', onTheTeam: true, played: 9, won: 5, ability: 88, joinedAt: american.now });
+    const american = aLeaver('track-us', 72, 'us-ca-losangeles');
+    giveThemATime(american, 10.35, 5);
     expect(chanceAt(american, UNIVERSITY_BY_ID.asu!, 'business').scholarship).toBe('athletic');
     expect(ATHLETIC_SCHOLARSHIP_COUNTRIES.has('us')).toBe(true);
+
+    // A time with no season behind it is not a scholarship: a coach wants to
+    // have seen you run more than once.
+    const untested = aLeaver('track-untested', 72, 'us-ca-losangeles');
+    giveThemATime(untested, 10.35, 1);
+    expect(chanceAt(untested, UNIVERSITY_BY_ID.asu!, 'business').scholarship).toBeUndefined();
   });
 
   it('auditions rather than reads marks for a drama school', () => {
@@ -259,12 +291,15 @@ describe('reading a degree', () => {
     const offer = applicationsOf(sim).find((one) => one.status === 'offer');
     if (!offer) return;
     const before = sim.ledger.availableFunds(sim.player.primaryAccountId!);
-    const took = sim.execute<{ feesAYear: number }>({ kind: 'uni.accept', payload: { applicationId: offer.id } });
+    const took = sim.execute<{ feesAYear: number; livingAYear: number }>(
+      { kind: 'uni.accept', payload: { applicationId: offer.id } },
+    );
     expect(took.ok, took.error).toBe(true);
 
     const university = UNIVERSITY_BY_ID[offer.universityId]!;
     expect(sim.player.currentLocationId).toBe(university.cityId);
-    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBe(before - took.value!.feesAYear);
+    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!))
+      .toBe(before - took.value!.feesAYear - took.value!.livingAYear);
     // Taking one closes the rest.
     for (const other of applicationsOf(sim)) {
       if (other.id === offer.id) continue;

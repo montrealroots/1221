@@ -41,6 +41,7 @@ const DESTINATIONS: { route: string; label: string; keywords: string[]; detail: 
   { route: '/workspace/health', label: 'Health', keywords: ['doctor', 'dentist', 'chiropractor', 'appointment', 'therapy', 'optometrist'], detail: 'Providers and appointments' },
   { route: '/workspace/insurance', label: 'Insurance', keywords: ['policy', 'claim', 'cover', 'premium'], detail: 'Policies and claims' },
   { route: '/workspace/education', label: 'Education', keywords: ['class', 'course', 'coach', 'training', 'acting class', 'learn'], detail: 'Classes and coaching' },
+  { route: '/workspace/track', label: 'Track', keywords: ['track', 'run', 'running', 'sprint', 'race', 'meet', 'athletics', 'season'], detail: 'The track, the season and your times' },
   { route: '/workspace/film', label: 'Film', keywords: ['film', 'kit', 'camera', 'rental', 'hire', 'lens', 'lighting', 'grip', 'sound', 'shoot', 'rig'], detail: 'Hiring the kit for a picture of your own' },
   { route: '/workspace/goingout', label: 'Going Out', keywords: ['cinema', 'film', 'movie', 'ticket', 'seat', 'showing', 'screening', 'popcorn', 'matinee', 'fashion', 'runway', 'show', 'front row', 'catwalk', 'couture', 'concert', 'match', 'game', 'gig', 'opera', 'play', 'theater', 'exhibition', 'museum', 'stadium', 'arena'], detail: 'The cinema, what is on in town, and the fashion weeks' },
   { route: '/workspace/phone', label: 'Phone', keywords: ['phone', 'iphone', 'youtube', 'app', 'video', 'feed', 'watch', 'subscribe', 'upload', 'channel', 'shorts'], detail: 'Your handset, and the apps on it' },

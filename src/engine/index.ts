@@ -50,8 +50,9 @@ import { registerFashionSystem } from './systems/fashion';
 import { registerGoingSystem } from './systems/going';
 import { registerErrandSystem } from './systems/errands';
 import { ensureFamily, registerLifespan, scheduleBirthday } from './systems/lifespan';
-import { ensureSchooling, registerSchool } from './systems/school';
+import { ensureSchoolLeaver, ensureSchooling, registerSchool } from './systems/school';
 import { registerUniversity } from './systems/university';
+import { registerAthletics } from './systems/athletics';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -124,6 +125,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLifespan(sim);
   registerSchool(sim);
   registerUniversity(sim);
+  registerAthletics(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -201,8 +203,10 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // at creation, because none of it is a decision anybody makes.
   ensureFamily(sim, player);
   scheduleBirthday(sim, player);
-  // And school, for a life that starts young enough to still be in it.
+  // And school: the one they are in if they are young enough, or the one they
+  // already left if they are not. Nobody arrives having never been.
   ensureSchooling(sim, player);
+  ensureSchoolLeaver(sim, player);
 
   // --- Accounts -----------------------------------------------------------
   const checking = sim.openAccount({
@@ -483,8 +487,10 @@ export function loadSave(universe: SaveUniverse): Simulation {
   ensureFamily(sim);
   scheduleBirthday(sim, sim.player);
   // School, for a save from before it existed or a character who has moved up
-  // a stage since it was last opened (idempotent; school.ts).
+  // a stage since it was last opened (idempotent; school.ts). And the record
+  // of the school an adult already left, for a save made before that existed.
   ensureSchooling(sim);
+  ensureSchoolLeaver(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -1104,6 +1110,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.applications ??= {};
     universe.studies ??= {};
     steps.push('Universities, and what they will take you on.');
+  }
+
+  if (from < 65) {
+    // Schema 65: there is one sport in this game and it is the track. A save
+    // from before that carries no seasons, and the school team places that a
+    // save from schema 64 might carry are not a track record, so they go.
+    universe.seasons = {};
+    universe.running ??= {};
+    for (const schooling of Object.values(universe.schooling ?? {})) {
+      const record = schooling as { teams?: unknown[] };
+      if (record.teams) delete record.teams;
+    }
+    steps.push('A track season, with meets, rounds and a personal best.');
   }
 
   if (from < 55) {

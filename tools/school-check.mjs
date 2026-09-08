@@ -9,14 +9,15 @@
  *
  * It also measures the week: a timetable that is a timetable rather than a
  * coincidence, a school in every city, a school whose name suits the country
- * it stands in, sports only where a country's schools really field them, and
- * an acting ladder a child can actually climb.
+ * it stands in, and an acting ladder a child can actually climb. Sport is not
+ * measured here: there is one sport in this game, it is the track, and the
+ * athletics checker holds it.
  */
 
 import {
   ACADEMIC_SCHOLARSHIP, CLUBS, EDUCATION_SYSTEMS, LEAD_TAKES, NOTICED_AT, PERIODS_A_DAY,
-  SCHOOL_DAYS, SCHOOL_PLAYS, SCHOOL_SPORTS, SCHOOLING_NOTE, SUBJECTS, SUBJECT_BY_ID,
-  TEAM_FROM_AGE, UNIVERSITY_LOOKS_AT, markLabel, stageForAge, systemIn, systemIsCountrys, yearLabel,
+  SCHOOL_DAYS, SCHOOL_PLAYS, SCHOOLING_NOTE, SUBJECTS, SUBJECT_BY_ID,
+  UNIVERSITY_LOOKS_AT, markLabel, stageForAge, systemIn, systemIsCountrys, yearLabel,
 } from '../src/engine/content/schooling.ts';
 import { CITIES, COUNTRIES } from '../src/engine/content/geography.ts';
 import { placesIn } from '../src/engine/content/places.ts';
@@ -24,9 +25,10 @@ import { SKILLS } from '../src/engine/domain/skills.ts';
 import { ATTRIBUTES } from '../src/engine/domain/attributes.ts';
 import { quickSave } from '../src/engine/index.ts';
 import {
-  auditionStrength, averageMark, rawTalent, schoolingOf, sportsAt, stageFor, systemFor,
-  todaysLessons, yearFor,
+  auditionStrength, averageMark, qualificationsOf, rawTalent, schoolingOf, stageFor,
+  systemFor, todaysLessons, yearFor,
 } from '../src/engine/systems/school.ts';
+import { marksOn } from '../src/engine/systems/university.ts';
 import { ageOf, youthFactor } from '../src/engine/systems/lifespan.ts';
 
 const problems = [];
@@ -91,30 +93,6 @@ for (const one of [...SUBJECTS, ...CLUBS]) {
 if (SUBJECTS.filter((one) => one.fromAge <= 6).length < 4) problems.push('a six year old has almost nothing on their timetable');
 if (!SUBJECTS.some((one) => one.id === 'drama')) problems.push('there is no drama on any timetable');
 if (!CLUBS.some((one) => one.id === 'drama')) problems.push('there is no drama club');
-
-// --- Sport ----------------------------------------------------------------
-
-for (const sport of SCHOOL_SPORTS) {
-  for (const countryId of sport.countryIds) {
-    if (!known.has(countryId)) problems.push(`${sport.label} is played in ${countryId}, which is not a country`);
-  }
-  if (sport.months.length === 0) problems.push(`${sport.label} has no season`);
-  for (const month of sport.months) if (month < 1 || month > 12) problems.push(`${sport.label} runs in month ${month}`);
-  if (sport.demand < 1 || sport.demand > 10) problems.push(`${sport.label} asks ${sport.demand} of a body`);
-  if (sport.about.length < 15) problems.push(`${sport.label} has nothing said about it`);
-}
-for (const countryId of ['us', 'uk', 'au', 'in', 'jp', 'br', 'ke', 'de', 'ca']) {
-  if (SCHOOL_SPORTS.filter((one) => one.countryIds.includes(countryId)).length < 3) {
-    problems.push(`${countryId} schools field fewer than three sports`);
-  }
-}
-// The ones a country would never field.
-if (SCHOOL_SPORTS.find((one) => one.id === 'american_football')?.countryIds.some((c) => c !== 'us')) {
-  problems.push('somewhere outside America fields an American football team');
-}
-if (SCHOOL_SPORTS.find((one) => one.id === 'aussie_rules')?.countryIds.some((c) => c !== 'au')) {
-  problems.push('somewhere outside Australia fields an Australian rules team');
-}
 
 // --- The play -------------------------------------------------------------
 
@@ -184,10 +162,6 @@ for (const [year, cityId] of [[2016, 'fr-idf-paris'], [2012, 'uk-eng-london'], [
   if (systemFor(sim).id !== systemIn(city.countryId).id) problems.push(`${city.name} is in the wrong education system`);
   const marks = averageMark(schooling);
   if (marks < 20 || marks > 95) problems.push(`a ${age} year old in ${city.name} starts on ${marks}`);
-  // Sport at school is the sport of that country.
-  for (const sport of sportsAt(sim)) {
-    if (!sport.countryIds.includes(city.countryId)) problems.push(`${city.name} fields ${sport.label}`);
-  }
 }
 
 // --- The ladder a child climbs --------------------------------------------
@@ -212,9 +186,8 @@ for (const year of [2016, 2014, 2012, 2010, 2008, 2006, 2004]) {
 const covered = COUNTRIES.all().filter((one) => systemIsCountrys(one.id)).length;
 console.log(`${EDUCATION_SYSTEMS.length} education systems covering ${covered} countries by name; the rest fall to the general one.`);
 console.log(`${EDUCATION_SYSTEMS.reduce((n, o) => n + o.stages.length, 0)} stages and ${EDUCATION_SYSTEMS.reduce((n, o) => n + o.stages.filter((x) => x.exam).length, 0)} named qualifications, from ages 3 to 19.`);
-console.log(`${SUBJECTS.length} subjects, ${CLUBS.length} clubs, ${SCHOOL_SPORTS.length} school sports across ${new Set(SCHOOL_SPORTS.flatMap((o) => o.countryIds)).size} countries, ${SCHOOL_PLAYS.length} plays a school can put on.`);
-console.log(`A week is ${SCHOOL_DAYS.length * PERIODS_A_DAY} lessons. Teams from ${TEAM_FROM_AGE}. ${markLabel(UNIVERSITY_LOOKS_AT)} gets a university to look.`);
-console.log('Every school in it is SLATE’s own, and the room says so.');
+console.log(`${SUBJECTS.length} subjects, ${CLUBS.length} clubs, and ${SCHOOL_PLAYS.length} plays a school can put on.`);
+console.log(`A week is ${SCHOOL_DAYS.length * PERIODS_A_DAY} lessons. ${markLabel(UNIVERSITY_LOOKS_AT)} gets a university to look.`);
 
 if (problems.length > 0) {
   console.error(`\n${problems.length} problem(s):`);

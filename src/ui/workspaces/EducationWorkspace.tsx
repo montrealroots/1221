@@ -5,22 +5,22 @@ import { ensureCourses } from '@/engine/systems/services';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import {
-  attendance, averageMark, describePart, inSeasonHere, isASchoolDay, partThisYear, productionFor,
-  schoolIsCompulsory, schoolingOf, sportsAt, stageFor, standingOn, systemFor, teamPlace,
-  todaysLessons,
+  attendance, averageMark, describePart, isASchoolDay, partThisYear, productionFor,
+  schoolIsCompulsory, schoolingOf, stageFor, standingOn, systemFor, todaysLessons,
 } from '@/engine/systems/school';
-import { CLUBS, SCHOOLING_NOTE, SUBJECT_BY_ID, TEAM_FROM_AGE, markLabel } from '@/engine/content/schooling';
+import { CLUBS, SCHOOLING_NOTE, SUBJECT_BY_ID, markLabel } from '@/engine/content/schooling';
 import { ageOf } from '@/engine/systems/lifespan';
 import { plural } from '@/engine/core/text';
 import { useState } from 'react';
 import {
   APPLY_FROM_AGE, MAX_OPEN_APPLICATIONS, applicationsOf, chanceAt, describeStudies, feesFor,
-  marksOn, studiesOf, universitiesInCountry, whereItIs,
+  livingFor, marksOn, studiesOf, universitiesInCountry, whereItIs,
 } from '@/engine/systems/university';
 import {
   ATHLETIC_NOTE, MAJOR_BY_ID, REGIME_LABEL, UNIVERSITY_BY_ID, UNIVERSITY_NOTE, feesIn, majorsAt,
 } from '@/engine/content/universities';
 import { UNIVERSITY_LOOKS_AT } from '@/engine/content/schooling';
+import { HOUSING, HOUSING_BY_ID, ROOM_AND_BOARD_NOTE } from '@/engine/content/universities';
 import { countryOfCity } from '@/engine/content/geography';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -177,7 +177,6 @@ function SchoolPanels(): JSX.Element | null {
   const stage = stageFor(sim);
   const today = todaysLessons(sim, schooling);
   const standing = standingOn(schooling);
-  const sports = sportsAt(sim);
   const part = partThisYear(sim, schooling);
   const play = productionFor(sim, schooling);
   const inDrama = schooling.clubs.includes('drama');
@@ -301,53 +300,6 @@ function SchoolPanels(): JSX.Element | null {
           </div>
         </Panel>
 
-        {sports.length > 0 && (
-          <Panel title="Teams" subtitle={`What this school fields, and when.`} flush>
-            <div className="list">
-              {sports.map((one) => {
-                const place = teamPlace(schooling, one.id);
-                const open = inSeasonHere(sim, one.id);
-                return (
-                  <div key={one.id} className="list-item list-static">
-                    <div className="grow">
-                      <div className="small strong">{one.label}</div>
-                      <div className="xs dim">
-                        {place
-                          ? (place.onTheTeam
-                            ? `On the team. ${place.won} of ${place.played} this season.`
-                            : 'You tried out and did not make it.')
-                          : one.about}
-                      </div>
-                    </div>
-                    {place?.onTheTeam ? (
-                      <button
-                        className="btn btn-sm"
-                        disabled={!open}
-                        onClick={() => {
-                          const res = run<{ note: string }>('school.play_fixture', { sportId: one.id });
-                          if (res.ok) toast(res.value!.note, 'positive');
-                        }}
-                      >
-                        {open ? 'Play' : 'Out Of Season'}
-                      </button>
-                    ) : !place ? (
-                      <button
-                        className="btn btn-sm"
-                        disabled={!open || ageOf(sim) < TEAM_FROM_AGE}
-                        onClick={() => {
-                          const res = run<{ note: string }>('school.try_out', { sportId: one.id });
-                          if (res.ok) toast(res.value!.note, res.value!.note.includes('did not') ? 'negative' : 'positive');
-                        }}
-                      >
-                        {open ? 'Try Out' : 'Out Of Season'}
-                      </button>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          </Panel>
-        )}
       </div>
     </>
   );
@@ -367,6 +319,7 @@ function UniversityPanels(): JSX.Element | null {
   void now;
   const [pickedUni, setPickedUni] = useState('');
   const [pickedMajor, setPickedMajor] = useState('');
+  const [housing, setHousing] = useState('hall');
 
   const age = ageOf(sim);
   const studies = studiesOf(sim);
@@ -420,8 +373,11 @@ function UniversityPanels(): JSX.Element | null {
               </div>
               <Meter label="On Current Form" value={studies.average} max={100} />
               <p className="xs dim" style={{ margin: 0 }}>
-                {plural(studies.termsDone, 'term')} done. Paid {formatMoney(studies.paid)} so far
-                {studies.scholarship ? `, after the ${studies.scholarship} award.` : '.'}
+                {plural(studies.termsDone, 'term')} done. {HOUSING_BY_ID[studies.housing]?.label ?? 'Living somewhere'}.
+                {' '}Paid {formatMoney(studies.paid)} in fees and {formatMoney(studies.paidLiving)} to live on
+                {studies.scholarship === 'athletic'
+                  ? ', on a full ride.'
+                  : studies.scholarship ? `, after the ${studies.scholarship} award.` : '.'}
               </p>
               <p className="xs dim" style={{ margin: 0 }}>{UNIVERSITY_NOTE}</p>
             </div>
@@ -472,10 +428,17 @@ function UniversityPanels(): JSX.Element | null {
             </select>
 
             {chosen && (
-              <p className="xs dim" style={{ margin: 0 }}>
-                Founded {chosen.founded}. {chosen.about} {REGIME_LABEL[feesIn(chosen.countryId).regime]}
-                {feesFor(chosen) > 0 ? ` — about ${formatMoney(feesFor(chosen))} a year.` : '.'}
-              </p>
+              <>
+                <p className="xs dim" style={{ margin: 0 }}>
+                  Founded {chosen.founded}. {chosen.about} {REGIME_LABEL[feesIn(chosen.countryId).regime]}
+                  {feesFor(chosen) > 0 ? ` — about ${formatMoney(feesFor(chosen))} a year in fees.` : '.'}
+                </p>
+                <p className="xs dim" style={{ margin: 0 }}>
+                  {HOUSING_BY_ID[housing]!.label}: about{' '}
+                  {formatMoney(livingFor(chosen, housing as never, housing !== 'at_home'))} a year to live on.
+                  {' '}{ROOM_AND_BOARD_NOTE}
+                </p>
+              </>
             )}
             {chance && <p className="small" style={{ margin: 0 }}>{chance.reason}</p>}
 
@@ -509,10 +472,20 @@ function UniversityPanels(): JSX.Element | null {
                     </div>
                     {one.status === 'offer' ? (
                       <div className="row gap-2">
+                        <select
+                          className="input"
+                          aria-label="Where You Will Live"
+                          value={housing}
+                          onChange={(e) => setHousing(e.target.value)}
+                        >
+                          {HOUSING.map((where) => (
+                            <option key={where.id} value={where.id}>{where.label}</option>
+                          ))}
+                        </select>
                         <button
                           className="btn btn-sm btn-primary"
                           onClick={() => {
-                            const res = run<{ note: string }>('uni.accept', { applicationId: one.id });
+                            const res = run<{ note: string }>('uni.accept', { applicationId: one.id, housing });
                             if (res.ok) toast(res.value!.note, 'positive');
                           }}
                         >

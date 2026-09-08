@@ -64,6 +64,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     items: [
       { route: '/workspace/health', label: 'Health', detail: 'Care, providers and recovery' },
       { route: '/workspace/education', label: 'Education', detail: 'Getting better at things' },
+      { route: '/workspace/track', label: 'Track', detail: 'The season, the work and every time you have run' },
       { route: '/workspace/city', label: 'The City', detail: 'Where you are and what is here' },
       { route: '/workspace/goingout', label: 'Going Out', detail: 'The cinema, what is on in town, and the fashion weeks' },
       { route: '/workspace/travel', label: 'Travel', detail: 'Anywhere else in the world' },

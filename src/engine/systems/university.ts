@@ -25,12 +25,13 @@ import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import {
   ATHLETIC_SCHOLARSHIP_COUNTRIES, MAJOR_BY_ID, SCHOLARSHIP_SHARE, TERM_WEEKS,
-  UNIVERSITIES, UNIVERSITY_BY_ID, type University,
-  degreeClass, feesIn, majorsAt,
+  COVERS_ROOM_AND_BOARD, HOUSING_BY_ID, UNIVERSITIES, UNIVERSITY_BY_ID, type Housing,
+  type University, degreeClass, feesIn, majorsAt, roomAndBoardIn,
 } from '../content/universities';
 import { UNIVERSITY_LOOKS_AT, ACADEMIC_SCHOLARSHIP } from '../content/schooling';
 import { ageOf, youthFactor } from './lifespan';
 import { averageMark, schoolHistoryOf, schoolingOf } from './school';
+import { levelOf, qualityOf } from '../content/athletics';
 import { attributesOf } from '../domain/attributes';
 
 /** The earliest anybody is looked at by a university. */
@@ -80,17 +81,46 @@ export function marksOn(sim: Simulation, person: Person = sim.player): number {
   return history[0] ? averageMark(history[0]) : 0;
 }
 
-/** The best a person was at a school sport, out of a hundred. */
-export function sportingRecord(sim: Simulation, person: Person = sim.player): { sportId?: string; ability: number; played: number } {
-  let best = { sportId: undefined as string | undefined, ability: 0, played: 0 };
-  for (const schooling of schoolHistoryOf(sim, person.id)) {
-    for (const team of schooling.teams) {
-      if (!team.onTheTeam) continue;
-      if (team.ability > best.ability) best = { sportId: team.sportId, ability: team.ability, played: team.played };
+/**
+ * What a coach has to go on, out of a hundred.
+ *
+ * A time, and how many meets it took to run it. Read straight off the running
+ * record rather than through the athletics system, so that the admissions
+ * office does not have to know anything about how a race works.
+ */
+export function trackRecord(
+  sim: Simulation, person: Person = sim.player,
+): { eventId?: string; ability: number; level?: string; meets: number } {
+  const running = Object.values(sim.universe.running ?? {}).find((one) => one.personId === person.id);
+  if (!running) return { ability: 0, meets: 0 };
+  const category = running.category as 'mens' | 'womens';
+  let best = { eventId: undefined as string | undefined, ability: 0, level: undefined as string | undefined };
+  for (const mark of running.bests) {
+    const worth = Math.round(qualityOf(mark.seconds, mark.eventId, category) * 100);
+    if (worth > best.ability) {
+      best = {
+        eventId: mark.eventId,
+        ability: worth,
+        level: levelOf(mark.seconds, mark.eventId, category).id,
+      };
     }
   }
-  return best;
+  const meets = Object.values(sim.universe.seasons ?? {})
+    .filter((one) => one.personId === person.id)
+    .reduce((sum, one) => sum + one.meets.filter((m) => m.run && m.results.length > 0).length, 0);
+  return { ...best, meets };
 }
+
+/**
+ * The class of time a university will pay for, where it pays for one.
+ *
+ * National schools class rather than collegiate class, because the athletes
+ * a coach is recruiting are the ones who were at the national schools meet
+ * last year, not the ones already running college times.
+ */
+export const SCHOLARSHIP_LEVELS: ReadonlySet<string> = new Set([
+  'schools', 'collegiate', 'national', 'world',
+]);
 
 /** Applications this person has made, newest first. */
 export function applicationsOf(sim: Simulation, personId: Id = sim.player.id): UniversityApplication[] {
@@ -169,11 +199,13 @@ export function chanceAt(sim: Simulation, university: University, majorId: strin
   const gap = strength - university.selectivity;
   const odds = clamp(Math.round(60 + gap * 1.7), 3, 96);
 
-  // A scholarship, where one is possible and earned.
-  const sport = sportingRecord(sim, person);
+  // A scholarship, where one is possible and earned. A place won on the track
+  // wants a time on a list, and a season of meets behind it.
+  const track = trackRecord(sim, person);
   const athleticHere = ATHLETIC_SCHOLARSHIP_COUNTRIES.has(university.countryId);
+  const quickEnough = Boolean(track.level && SCHOLARSHIP_LEVELS.has(track.level));
   const scholarship = marks >= ACADEMIC_SCHOLARSHIP ? 'academic' as const
-    : (athleticHere && sport.ability >= 72 && sport.played >= 3) ? 'athletic' as const
+    : (athleticHere && quickEnough && track.meets >= 4) ? 'athletic' as const
       : undefined;
 
   const reason = audition
@@ -198,6 +230,29 @@ export function feesFor(university: University, scholarship?: string): Money {
   const share = scholarship === 'academic' ? SCHOLARSHIP_SHARE.academic
     : scholarship === 'athletic' ? SCHOLARSHIP_SHARE.athletic : 0;
   return Math.max(0, Math.round(gross * (1 - share)));
+}
+
+/**
+ * What a year of living there costs.
+ *
+ * Somewhere to sleep and something to eat, charged apart from the teaching.
+ * A place won on sport is a full ride and covers it; an award against the
+ * fees does not, which is the difference between the two.
+ */
+export function livingFor(
+  university: University, housing: Housing, mealPlan: boolean, scholarship?: string,
+): Money {
+  const gross = Math.round(roomAndBoardIn(housing, mealPlan) * costOfLiving(university.cityId));
+  return COVERS_ROOM_AND_BOARD[scholarship ?? ''] ? 0 : gross;
+}
+
+/** Everything a year there costs, both halves of it. */
+export function yearCosts(
+  university: University, housing: Housing, mealPlan: boolean, scholarship?: string,
+): { fees: Money; living: Money; total: Money; fullRide: boolean } {
+  const fees = feesFor(university, scholarship);
+  const living = livingFor(university, housing, mealPlan, scholarship);
+  return { fees, living, total: fees + living, fullRide: fees === 0 && living === 0 && Boolean(scholarship) };
 }
 
 /** How a degree in progress is doing, in a sentence. */
@@ -280,7 +335,10 @@ export function registerUniversity(sim: Simulation): void {
   );
 
   /** Taking a place. It closes the others. */
-  sim.onCommand<{ applicationId: Id }, { studiesId: Id; feesAYear: Money; note: string }>(
+  sim.onCommand<
+    { applicationId: Id; housing?: string; mealPlan?: boolean },
+    { studiesId: Id; feesAYear: Money; livingAYear: Money; note: string }
+  >(
     'uni.accept',
     (p, { sim: s }) => {
       const application = s.universe.applications?.[p.applicationId];
@@ -288,15 +346,25 @@ export function registerUniversity(sim: Simulation): void {
       if (application.status !== 'offer') throw new CommandError('That is not an offer you can accept.');
       const university = UNIVERSITY_BY_ID[application.universityId]!;
       const major = MAJOR_BY_ID[application.majorId]!;
+      const housing = HOUSING_BY_ID[p.housing ?? ''] ? p.housing! : 'hall';
+      const mealPlan = p.mealPlan ?? housing !== 'at_home';
       const feesAYear = feesFor(university, application.scholarship);
+      const livingAYear = livingFor(university, housing as Housing, mealPlan, application.scholarship);
+      const owed = feesAYear + livingAYear;
 
       const accountId = s.player.primaryAccountId;
-      if (!accountId) throw new CommandError('You have no account to pay the fees from.');
-      if (feesAYear > 0 && s.ledger.availableFunds(accountId) < feesAYear) {
-        throw new CommandError(`The first year is ${formatMoney(feesAYear)} and you do not have it.`);
+      if (!accountId) throw new CommandError('You have no account to pay for it from.');
+      if (owed > 0 && s.ledger.availableFunds(accountId) < owed) {
+        throw new CommandError(
+          `The first year is ${formatMoney(owed)} — ${formatMoney(feesAYear)} in fees and `
+          + `${formatMoney(livingAYear)} to live on — and you do not have it.`,
+        );
       }
       if (feesAYear > 0) {
         s.expense(accountId, feesAYear, `Tuition — ${university.name}`, 'personal', { refType: 'person', refId: s.player.id });
+      }
+      if (livingAYear > 0) {
+        s.expense(accountId, livingAYear, `Room And Board — ${university.name}`, 'household', { refType: 'person', refId: s.player.id });
       }
 
       s.universe.studies ??= {};
@@ -313,7 +381,10 @@ export function registerUniversity(sim: Simulation): void {
         termsDone: 0,
         termsMissed: 0,
         scholarship: application.scholarship,
+        housing,
+        mealPlan,
         paid: feesAYear,
+        paidLiving: livingAYear,
         startedAt: s.now,
       };
       s.universe.studies[studies.id] = studies;
@@ -343,10 +414,17 @@ export function registerUniversity(sim: Simulation): void {
         public: true,
       });
       s.emit('uni.accepted', { studiesId: studies.id, universityId: university.id, majorId: major.id });
-      const paid = feesAYear === 0
-        ? 'There are no fees here.'
-        : `${formatMoney(feesAYear)} for the first year${application.scholarship ? `, after the ${application.scholarship} award.` : '.'}`;
-      return { studiesId: studies.id, feesAYear, note: `${major.label} at ${university.name}. ${paid}` };
+      const fullRide = application.scholarship === 'athletic';
+      const paid = fullRide
+        ? 'A full ride: the fees, the room and the food.'
+        : feesAYear === 0 && livingAYear === 0
+          ? 'Nothing to pay.'
+          : `${formatMoney(feesAYear + livingAYear)} for the first year — ${formatMoney(feesAYear)} in fees and `
+            + `${formatMoney(livingAYear)} to live on.`;
+      return {
+        studiesId: studies.id, feesAYear, livingAYear,
+        note: `${major.label} at ${university.name}. ${HOUSING_BY_ID[housing]!.label}. ${paid}`,
+      };
     },
   );
 
@@ -416,7 +494,9 @@ export function registerUniversity(sim: Simulation): void {
           award(s, studies);
         } else {
           studies.year += 1;
-          const owed = feesFor(university, studies.scholarship);
+          const owedFees = feesFor(university, studies.scholarship);
+          const owedLiving = livingFor(university, studies.housing as Housing, studies.mealPlan, studies.scholarship);
+          const owed = owedFees + owedLiving;
           const accountId = s.player.primaryAccountId;
           if (owed > 0 && accountId) {
             if (s.ledger.availableFunds(accountId) < owed) {
@@ -432,8 +512,14 @@ export function registerUniversity(sim: Simulation): void {
               s.emit('uni.left', { studiesId: studies.id, reason: 'fees' });
               return { average: studies.average, year: studies.year, finished: false, note: 'You could not pay for the next year.' };
             }
-            s.expense(accountId, owed, `Tuition — ${university.name}`, 'personal', { refType: 'person', refId: s.player.id });
-            studies.paid += owed;
+            if (owedFees > 0) {
+              s.expense(accountId, owedFees, `Tuition — ${university.name}`, 'personal', { refType: 'person', refId: s.player.id });
+              studies.paid += owedFees;
+            }
+            if (owedLiving > 0) {
+              s.expense(accountId, owedLiving, `Room And Board — ${university.name}`, 'household', { refType: 'person', refId: s.player.id });
+              studies.paidLiving += owedLiving;
+            }
           }
         }
       }

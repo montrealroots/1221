@@ -598,65 +598,16 @@ export const ACADEMIC_SCHOLARSHIP = 88;
 // Sport, at school
 // ---------------------------------------------------------------------------
 
-export interface SchoolSport {
-  id: string;
-  label: string;
-  /** Countries whose schools really play it as a school sport. */
-  countryIds: readonly string[];
-  /** Months the school season runs, in the northern hemisphere sense. */
-  months: readonly number[];
-  /** How hard it is on a body, out of ten. */
-  demand: number;
-  about: string;
-}
-
-const sp = (
-  id: string, label: string, countryIds: readonly string[], months: readonly number[],
-  demand: number, about: string,
-): SchoolSport => ({ id, label, countryIds, months, demand, about });
-
 /**
- * What a school actually fields a team in.
+ * There is one sport in this game and it is not here.
  *
- * Which sports a country's schools play is public record and it is not the
- * same list anywhere: an American high school fields a football team and an
- * English one does not, an Australian school plays Australian rules and a
- * Kenyan one runs. The season and the fixture are SLATE's own.
+ * SLATE used to carry a list of everything a school anywhere fields a team
+ * in. It does not any more, because this is a game about acting and the only
+ * sport in it is the track: a season, a set of events and a ladder that runs
+ * all the way to a world final. All of that lives in the athletics module.
+ * A school's track team, and whether the school has one at all, is asked
+ * there rather than here.
  */
-export const SCHOOL_SPORTS: readonly SchoolSport[] = [
-  sp('american_football', 'American Football', ['us'], [8, 9, 10, 11], 9, 'Friday nights, and the whole town comes.'),
-  sp('basketball', 'Basketball', ['us', 'ca', 'ph', 'cn', 'es', 'lt', 'gr', 'au'], [11, 12, 1, 2], 7, 'A hall, a squeaking floor and a bus to the away game.'),
-  sp('baseball', 'Baseball', ['us', 'jp', 'kr', 'do', 'cu', 've'], [3, 4, 5], 6, 'Long afternoons, and in Japan the whole country watches the schools play it.'),
-  sp('football', 'Football', ['uk', 'fr', 'de', 'es', 'it', 'br', 'ar', 'ng', 'gh', 'nl', 'pt', 'be', 'jp', 'kr', 'mx', 'za', 'ke', 'us'], [9, 10, 11, 12, 1, 2, 3], 7, 'The one everywhere plays, on a field with the lines half worn off.'),
-  sp('rugby', 'Rugby', ['nz', 'za', 'uk', 'au', 'fr', 'ie', 'ar', 'fj', 'ws', 'to'], [9, 10, 11, 12, 1], 9, 'Mud, and somebody’s father on the touchline.'),
-  sp('cricket', 'Cricket', ['uk', 'in', 'au', 'za', 'nz', 'pk', 'lk', 'bd', 'zw'], [4, 5, 6, 7], 5, 'A long summer afternoon and a tea interval.'),
-  sp('netball', 'Netball', ['uk', 'au', 'nz', 'za', 'jm'], [9, 10, 11, 12, 1, 2], 6, 'Outdoor courts, in January, in the cold.'),
-  sp('aussie_rules', 'Australian Rules Football', ['au'], [3, 4, 5, 6, 7, 8], 9, 'The whole school turns out for the grand final.'),
-  sp('athletics', 'Track And Field', ['us', 'uk', 'ke', 'et', 'jm', 'au', 'de', 'ng', 'za', 'in', 'ca'], [3, 4, 5, 6], 7, 'Sports day, and the one race that decides the year.'),
-  sp('cross_country', 'Cross Country', ['us', 'uk', 'ke', 'et', 'ca', 'nz'], [9, 10, 11], 8, 'Six in the morning, in the rain, for no clear reason.'),
-  sp('swimming', 'Swimming', ['us', 'au', 'uk', 'nl', 'jp', 'ca', 'za'], [11, 12, 1, 2], 7, 'Early mornings and chlorine in everything you own.'),
-  sp('volleyball', 'Volleyball', ['us', 'br', 'jp', 'kr', 'it', 'pl', 'cn', 'ph'], [8, 9, 10, 11], 6, 'The one the hall is set up for most of the year.'),
-  sp('field_hockey', 'Field Hockey', ['uk', 'in', 'pk', 'nl', 'au', 'za', 'de'], [9, 10, 11, 12], 7, 'Shin pads, and a ball that hurts.'),
-  sp('ice_hockey', 'Ice Hockey', ['ca', 'us', 'fi', 'se', 'ru', 'cz'], [10, 11, 12, 1, 2], 9, 'A rink booked at half past five in the morning.'),
-  sp('tennis', 'Tennis', ['us', 'uk', 'fr', 'es', 'au', 'de', 'jp'], [4, 5, 6], 5, 'Two courts and a queue for them.'),
-  sp('wrestling', 'Wrestling', ['us', 'ir', 'tr', 'ru', 'in', 'jp'], [11, 12, 1, 2], 9, 'Weight classes, and a season spent hungry.'),
-  sp('judo', 'Judo', ['jp', 'fr', 'kr', 'br', 'ru'], [9, 10, 11, 12, 1, 2], 8, 'A mat, and being thrown onto it until you stop minding.'),
-  sp('table_tennis', 'Table Tennis', ['cn', 'jp', 'kr', 'de', 'se', 'sg'], [9, 10, 11, 12, 1, 2, 3], 4, 'The table in the corner of the hall, and a queue at it.'),
-  sp('badminton', 'Badminton', ['in', 'id', 'my', 'cn', 'dk', 'uk', 'th'], [10, 11, 12, 1, 2], 5, 'Fast, and much harder than it looks from the side.'),
-  sp('handball', 'Handball', ['de', 'dk', 'fr', 'no', 'se', 'es', 'hu', 'pl'], [9, 10, 11, 12, 1, 2], 8, 'The European hall sport, and it is brutal.'),
-  sp('futsal', 'Futsal', ['br', 'pt', 'es', 'ar', 'ru'], [3, 4, 5, 6, 7, 8], 7, 'Football indoors and much faster, which is where the touch comes from.'),
-  sp('kabaddi', 'Kabaddi', ['in', 'bd', 'pk', 'np'], [10, 11, 12, 1], 8, 'One breath, one raid, and the whole ground shouting.'),
-  sp('taekwondo', 'Taekwondo', ['kr'], [9, 10, 11, 12, 1, 2, 3], 8, 'A belt to work toward, and the whole school does some of it.'),
-  sp('rowing', 'Rowing', ['uk', 'us', 'au', 'nz', 'de', 'nl'], [3, 4, 5, 6], 9, 'Dark mornings on the water, and the boat is never balanced.'),
-];
-
-/** What the schools of a country actually field a team in. */
-export function sportsIn(countryId: string): SchoolSport[] {
-  return SCHOOL_SPORTS.filter((one) => one.countryIds.includes(countryId));
-}
-
-/** The age a school starts fielding teams a player can try out for. */
-export const TEAM_FROM_AGE = 11;
 
 // ---------------------------------------------------------------------------
 // The clubs, and the one that matters

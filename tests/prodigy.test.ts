@@ -62,7 +62,7 @@ describe('maxed at everything, from the first minute', () => {
     }
   });
 
-  it('is the best living writer, director, producer, showrunner and actor at once', () => {
+  it('is the best living writer, director, producer, showrunner, actor and runner at once', () => {
     const sim = aGame('prodigy-five');
     for (const discipline of DISCIPLINES) {
       const traits = goatTraitsIn(discipline);
@@ -73,9 +73,9 @@ describe('maxed at everything, from the first minute', () => {
     }
   });
 
-  it('holds all fourteen G.O.A.T. traits', () => {
+  it('holds all sixteen G.O.A.T. traits', () => {
     const sim = aGame('prodigy-goat');
-    expect(GOAT_TRAITS).toHaveLength(14);
+    expect(GOAT_TRAITS).toHaveLength(16);
     for (const trait of GOAT_TRAITS) {
       expect(sim.player.founderTraits).toContain(trait.id);
     }
@@ -104,7 +104,7 @@ describe('the G.O.A.T. traits themselves', () => {
     }
   });
 
-  it('cover every one of the five disciplines', () => {
+  it('cover every one of the six disciplines', () => {
     for (const discipline of DISCIPLINES) {
       expect(goatTraitsIn(discipline).length, discipline).toBeGreaterThanOrEqual(2);
     }

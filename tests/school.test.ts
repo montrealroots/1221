@@ -13,17 +13,18 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import {
-  attendance, auditionStrength, averageMark, buildTimetable, describePart, ensureSchooling,
-  inSeasonHere, isASchoolDay, markFor, partThisYear, productionFor, qualificationsOf, rawTalent,
-  schoolIsCompulsory, schoolingOf, sportsAt, stageFor, standingOn, subjectsAt, systemFor,
-  teamPlace, todaysLessons, yearFor,
+  attendance, auditionStrength, averageMark, buildTimetable, describePart, ensureSchoolLeaver,
+  ensureSchooling, isASchoolDay, markFor, partThisYear, productionFor, qualificationsOf,
+  rawTalent, schoolHistoryOf, schoolIsCompulsory, schoolingOf, stageFor, standingOn, subjectsAt,
+  systemFor, todaysLessons, yearFor,
 } from '@/engine/systems/school';
 import {
   ACADEMIC_SCHOLARSHIP, CLUBS, EDUCATION_SYSTEMS, LEAD_TAKES, NOTICED_AT, PERIODS_A_DAY,
-  SCHOOLING_NOTE, SCHOOL_DAYS, SCHOOL_PLAYS, SCHOOL_SPORTS, SUBJECTS, SUBJECT_BY_ID,
-  TEAM_FROM_AGE, UNIVERSITY_LOOKS_AT, stageForAge, systemIn, yearLabel,
+  SCHOOLING_NOTE, SCHOOL_DAYS, SCHOOL_PLAYS, SUBJECTS, SUBJECT_BY_ID, UNIVERSITY_LOOKS_AT,
+  stageForAge, systemIn, yearLabel,
 } from '@/engine/content/schooling';
 import { ageOf, youthFactor } from '@/engine/systems/lifespan';
+import { marksOn } from '@/engine/systems/university';
 import { COUNTRIES } from '@/engine/content/geography';
 import { placesIn } from '@/engine/content/places';
 import { MS_DAY } from '@/engine/core/time';
@@ -203,57 +204,6 @@ describe('the marks', () => {
   });
 });
 
-describe('the team', () => {
-  it('only fields what a country’s schools really field', () => {
-    for (const [cityId, expected, notExpected] of [
-      ['us-ca-losangeles', 'american_football', 'aussie_rules'],
-      ['au-nsw-sydney', 'aussie_rules', 'american_football'],
-      ['in-07-delhi', 'cricket', 'american_football'],
-    ] as const) {
-      const sim = atSchool(`sport-${cityId}`, 2010, cityId);
-      const ids = sportsAt(sim).map((one) => one.id);
-      expect(ids, cityId).toContain(expected);
-      expect(ids, cityId).not.toContain(notExpected);
-    }
-    // Two sports nobody else plays at school.
-    expect(SCHOOL_SPORTS.find((one) => one.id === 'american_football')!.countryIds).toEqual(['us']);
-    expect(SCHOOL_SPORTS.find((one) => one.id === 'aussie_rules')!.countryIds).toEqual(['au']);
-  });
-
-  it('will not let a nine year old try out, and refuses out of season', () => {
-    const child = atSchool('too-young', 2017);
-    expect(ageOf(child)).toBeLessThan(TEAM_FROM_AGE);
-    const res = child.execute({ kind: 'school.try_out', payload: { sportId: 'football' } });
-    expect(res.ok).toBe(false);
-    expect(res.error).toMatch(/Teams start at/);
-
-    const teen = atSchool('season', 2010);
-    const out = sportsAt(teen).find((one) => !inSeasonHere(teen, one.id));
-    if (out) {
-      const said = teen.execute({ kind: 'school.try_out', payload: { sportId: out.id } });
-      expect(said.ok).toBe(false);
-      expect(said.error).toMatch(/out of season/i);
-    }
-  });
-
-  it('lets somebody try out, and does not always take them', () => {
-    let made = 0;
-    let turnedAway = 0;
-    for (let seed = 0; seed < 14; seed++) {
-      const sim = atSchool(`trial-${seed}`, 2010);
-      const sport = sportsAt(sim).find((one) => inSeasonHere(sim, one.id));
-      if (!sport) continue;
-      const res = sim.execute<{ onTheTeam: boolean }>({ kind: 'school.try_out', payload: { sportId: sport.id } });
-      expect(res.ok, res.error).toBe(true);
-      if (res.value!.onTheTeam) made += 1; else turnedAway += 1;
-      // And you cannot try out twice for the same thing.
-      expect(sim.execute({ kind: 'school.try_out', payload: { sportId: sport.id } }).ok).toBe(false);
-      expect(teamPlace(schoolingOf(sim)!, sport.id)).toBeDefined();
-    }
-    expect(made + turnedAway).toBeGreaterThan(0);
-  });
-});
-
 describe('the play', () => {
   it('is cast out of the drama club and not out of the air', () => {
     const sim = atSchool('nodrama', 2010);
@@ -370,5 +320,60 @@ describe('growing into it', () => {
     expect(stageFor(sim)!.label).toBe('Middle School');
     expect(schoolingOf(sim)!.placeName).not.toMatch(/high school/i);
     expect(systemFor(sim).id).toBe('us');
+  });
+});
+
+describe('the school an adult already left', () => {
+  it('gives somebody who starts life grown up the record they would have', () => {
+    const sim = quickSave(
+      { birthYear: 1996, startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' },
+      'leaver-uk',
+    );
+    expect(ageOf(sim)).toBeGreaterThan(20);
+    // Not still at school, but not carrying nothing either.
+    expect(schoolingOf(sim)).toBeUndefined();
+    const history = schoolHistoryOf(sim);
+    expect(history).toHaveLength(1);
+    expect(history[0]!.endedAt).toBeDefined();
+    expect(history[0]!.endReason).toBe('left school');
+    expect(history[0]!.placeName.length).toBeGreaterThan(3);
+    // With the qualification the last stage of their country awards.
+    const quals = qualificationsOf(sim);
+    expect(quals).toHaveLength(1);
+    expect(quals[0]!.name).toBe('A Level');
+    expect(quals[0]!.average).toBeGreaterThan(0);
+    // Dated to when they would have finished, not to today.
+    expect(quals[0]!.at).toBeLessThan(sim.now);
+  });
+
+  it('carries marks a university can read, so an adult is not refused for having none', () => {
+    for (const [year, cityId] of [[2004, 'us-ca-losangeles'], [1990, 'jp-13-tokyo']] as const) {
+      const sim = quickSave({ birthYear: year, startLocationId: cityId, homeRegionId: cityId }, `leaver-${year}`);
+      expect(marksOn(sim), cityId).toBeGreaterThan(20);
+    }
+  });
+
+  it('leaves somebody still at school alone', () => {
+    const sim = quickSave(
+      { birthYear: 2010, startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles' },
+      'leaver-child',
+    );
+    expect(schoolingOf(sim)).toBeDefined();
+    expect(schoolHistoryOf(sim)).toHaveLength(1);
+    // Asking again writes nothing: the record they have is the record they have.
+    expect(ensureSchoolLeaver(sim)).toBeUndefined();
+    expect(schoolHistoryOf(sim)).toHaveLength(1);
+  });
+
+  it('does not write a second one when it is asked twice', () => {
+    const sim = quickSave(
+      { birthYear: 1996, startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' },
+      'leaver-twice',
+    );
+    const before = schoolHistoryOf(sim)[0]!.id;
+    expect(ensureSchoolLeaver(sim)).toBeUndefined();
+    expect(ensureSchoolLeaver(sim)).toBeUndefined();
+    expect(schoolHistoryOf(sim)).toHaveLength(1);
+    expect(schoolHistoryOf(sim)[0]!.id).toBe(before);
   });
 });

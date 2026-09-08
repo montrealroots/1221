@@ -35,10 +35,10 @@ export const CEILING = 100;
  * group them and so a system can ask "is this person the best living writer"
  * and get a real answer.
  */
-export type Discipline = 'writing' | 'directing' | 'producing' | 'showrunning' | 'acting';
+export type Discipline = 'writing' | 'directing' | 'producing' | 'showrunning' | 'acting' | 'running';
 
 export const DISCIPLINES: readonly Discipline[] = [
-  'writing', 'directing', 'producing', 'showrunning', 'acting',
+  'writing', 'directing', 'producing', 'showrunning', 'acting', 'running',
 ];
 
 export const DISCIPLINE_LABEL: Readonly<Record<Discipline, string>> = {
@@ -47,6 +47,7 @@ export const DISCIPLINE_LABEL: Readonly<Record<Discipline, string>> = {
   producing: 'Producing',
   showrunning: 'Showrunning',
   acting: 'Acting',
+  running: 'Running',
 };
 
 export interface GoatTrait {
@@ -123,6 +124,15 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
     id: 'goat_camera', name: 'The Camera Wants You', discipline: 'acting',
     description: 'Something happens between you and a lens that nobody has satisfactorily explained.',
   },
+  // --- Running ------------------------------------------------------------
+  {
+    id: 'goat_gun', name: 'The Gun', discipline: 'running',
+    description: 'Nobody has ever left the blocks with you. By ten meters the race is a formality, and everybody in the stadium already knows how it ends.',
+  },
+  {
+    id: 'goat_last_ten', name: 'The Last Ten', discipline: 'running',
+    description: 'Everybody else is slowing down at ninety meters. You are not, and that is the whole difference between a fast time and a record.',
+  },
 ];
 
 export const GOAT_TRAIT_BY_ID: Readonly<Record<string, GoatTrait>> =
@@ -190,6 +200,12 @@ export const POSITIONS: readonly Position[] = [
     skillDomains: ['creator', 'general'],
     attributeGroups: ['Craft', 'Voice', 'Physical', 'Screen', 'Range', 'Professionalism', 'Industry'],
     producerSheet: false, traitProfession: 'creator', performerTraits: true, producerTraits: false,
+  },
+  {
+    id: 'running', name: 'Running',
+    skillDomains: ['athletics'],
+    attributeGroups: [],
+    producerSheet: false, traitProfession: 'creator', performerTraits: false, producerTraits: false,
   },
 ];
 
