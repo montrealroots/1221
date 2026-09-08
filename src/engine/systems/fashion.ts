@@ -24,7 +24,8 @@ import { plural } from '../core/text';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import {
-  ANSWER_DAYS, FASHION_WEEKS, type FashionWeek, SEASON_LABEL, SEAT_LABEL, SEAT_THRESHOLD,
+  AHEAD_OF_THE_YEAR, ANSWER_DAYS, FASHION_WEEKS, type FashionWeek, SEASON_LABEL, SEAT_LABEL,
+  SEAT_THRESHOLD,
   SEAT_BAR_SHARE, SEAT_WEIGHT, SHOW_DAYS, SHOW_HOURS, SHOW_MINUTES, type Season, type Seat,
   type ShowingHouse,
   TURNING_UP_COST, WEEK_BY_ID, housesAt, weeksFor,
@@ -50,12 +51,18 @@ export interface Edition {
 /**
  * A season's name runs a year ahead of the calendar.
  *
- * The industry names a February show for the autumn that follows it and a
- * September show for the spring after that, which is why the label on a
- * collection is never the month you saw it in.
+ * The trade names a collection for the season it arrives in rather than the
+ * month it was shown in, so a September spring/summer show is next year's
+ * spring and a November show of the southern winter is next year's winter.
+ * A festive collection shown in October is for the festive season two months
+ * later, so it keeps the year it was shown in.
  */
 export function seasonYear(season: Season, month: number, year: number): number {
-  return season === 'spring_summer' && month >= 6 ? year + 1 : year;
+  if (AHEAD_OF_THE_YEAR[season] && month >= 6) return year + 1;
+  // South of the equator the winter collection shown late in the year is for
+  // the winter that arrives halfway through the next one.
+  if (season === 'autumn_winter' && month >= 10) return year + 1;
+  return year;
 }
 
 const EDITION_CACHE = new Map<string, Edition[]>();
@@ -68,11 +75,13 @@ export function editionsIn(sim: Simulation, year: number): Edition[] {
   const out: Edition[] = [];
   for (const week of FASHION_WEEKS) {
     const zone = CITIES.get(week.cityId)?.timeZone ?? sim.zone;
-    week.months.forEach((month, index) => {
-      const season = week.seasons[index] ?? week.seasons[0]!;
-      // The day it opens is SLATE's own, but it is stable for a given year and
-      // week, so a save's calendar does not move underneath the player.
-      const day = sim.rng('fw.edition', week.id, year, month).int(3, 20);
+    for (const edition of week.editions) {
+      const { month, season } = edition;
+      // The exact day inside the window is SLATE's own, but it is stable for a
+      // given year and week, so a save's calendar does not move underneath the
+      // player between one look and the next.
+      const day = sim.rng('fw.edition', week.id, year, month)
+        .int(edition.days[0], edition.days[1]);
       const startsAt = Date.UTC(year, month - 1, day, 9) - zoneOffset(zone, year, month, day);
       out.push({
         id: `${week.id}-${year}-${month}`,
@@ -83,7 +92,7 @@ export function editionsIn(sim: Simulation, year: number): Edition[] {
         startsAt,
         endsAt: startsAt + SHOW_DAYS * MS_DAY,
       });
-    });
+    }
   }
   const list = out.sort((a, b) => a.startsAt - b.startsAt);
   EDITION_CACHE.set(key, list);

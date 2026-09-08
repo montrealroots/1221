@@ -526,13 +526,30 @@ answer says what would make it yes.
    somebody behind you spends the second half kicking your chair.
 
    **And the second part: the fashion weeks.** Thirty real weeks in twenty
-   seven cities, running in the months they really run in — the four, and the
-   Paris and Milan menswear weeks, and Paris couture in January and July, and
-   Copenhagen and Tokyo and Seoul and Lagos and São Paulo and the rest of them.
-   A collection is named a season ahead of the calendar the way the trade names
-   it, so a February show is that autumn and a September show is the following
-   spring. Seven of those weeks have a schedule you can act on, because SLATE
-   only carries the houses its own shops sell, and the page says so rather than
+   seven cities, each with the window it really opens in rather than a month it
+   was filed under: New York in the first week of February, London the week
+   after, Milan the week after that, and Paris opening in the last days of
+   February and running into March, which is how the four actually run. Then
+   the Paris and Milan menswear weeks in January and June, Paris couture in
+   late January and early July, and Copenhagen, Berlin, Madrid, Tokyo, Seoul,
+   Shanghai, Mexico City, Mumbai, Delhi, Sydney, Melbourne, Johannesburg, Cape
+   Town, Lagos, São Paulo and the rest.
+
+   The seasons are the ones each of those places actually shows. North of the
+   equator a February show is that autumn and a September show is the following
+   spring. **South of it the calendar is the other way round**, so São Paulo
+   shows the coming summer in April and the coming winter in November, South
+   African Fashion Week does the same, and Melbourne in March is showing the
+   autumn arriving there as it runs. **India names its own year**: Lakmé is
+   Summer Resort in March and Winter Festive in October, and India Couture Week
+   in July is a bridal week. Lagos shows one collection a year rather than a
+   northern season, and Sydney and Miami show resort. Twenty four of the thirty
+   run to a window that is public record; the other six really exist and really
+   run but move, stop and restart, so SLATE places them and the row says
+   "SLATE's own placement" rather than pretending otherwise.
+
+   Seven of those weeks have a schedule you can act on, because SLATE only
+   carries the houses its own shops sell, and the page says so rather than
    inventing a designer nobody can buy from.
 
    A show is not ticketed and a seat cannot be bought. You write to the house

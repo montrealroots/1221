@@ -15,10 +15,11 @@
 import type { Money } from '../core/money';
 
 export const FASHION_NOTE =
-  'The weeks are real and run in the cities and months they really run in, and the houses are real '
-  + 'houses that show at them. The exact days, the venues, the running order, the invitation and where '
-  + 'you are sat are SLATE’s own. A season schedule is published a few weeks out and moves every year, '
-  + 'so nothing here is a date to act on outside the game and no house here is announced as showing.';
+  'The weeks are real and the houses are real houses that show at them. Most of these run to a window '
+  + 'that is public record and sits where it is marked; the ones SLATE has placed itself say so on the '
+  + 'row. The exact days inside the window, the venues, the running order, the invitation and where you '
+  + 'are sat are SLATE’s own. A season schedule is published a few weeks out and moves every year, so '
+  + 'nothing here is a date to act on outside the game and no house here is announced as showing.';
 
 // ---------------------------------------------------------------------------
 // The weeks
@@ -31,14 +32,42 @@ export const FASHION_NOTE =
  * February show is the autumn and winter of that year, and a September show is
  * the spring and summer of the next one.
  */
-export type Season = 'autumn_winter' | 'spring_summer' | 'couture_spring' | 'couture_autumn' | 'resort';
+export type Season =
+  | 'autumn_winter' | 'spring_summer'
+  | 'couture_spring' | 'couture_autumn' | 'bridal'
+  | 'resort' | 'summer_resort' | 'winter_festive' | 'annual';
 
 export const SEASON_LABEL: Readonly<Record<Season, string>> = {
   autumn_winter: 'Autumn Winter',
   spring_summer: 'Spring Summer',
   couture_spring: 'Spring Couture',
   couture_autumn: 'Autumn Couture',
+  bridal: 'Bridal Couture',
   resort: 'Resort',
+  summer_resort: 'Summer Resort',
+  winter_festive: 'Winter Festive',
+  annual: 'The Year’s Collections',
+};
+
+/**
+ * Which of these are named for a season that has not arrived yet.
+ *
+ * A collection shown in the back half of the year for a season that lands in
+ * the next one is named for that next year — a September spring/summer show
+ * is next year's spring, and a November show of the southern winter is next
+ * year's winter. A festive collection shown in October is for the festive
+ * season two months later, so it keeps the year it was shown in.
+ */
+export const AHEAD_OF_THE_YEAR: Readonly<Record<Season, boolean>> = {
+  autumn_winter: false,
+  spring_summer: true,
+  couture_spring: false,
+  couture_autumn: false,
+  bridal: false,
+  resort: true,
+  summer_resort: false,
+  winter_festive: false,
+  annual: false,
 };
 
 /** What a week is: the four, a national week, or something smaller. */
@@ -50,14 +79,41 @@ export const WEEK_TIER_LABEL: Readonly<Record<WeekTier, string>> = {
   emerging: 'Emerging',
 };
 
+/**
+ * When a week runs, and what it is showing when it does.
+ *
+ * The month and the days are the window the week really falls in, which is
+ * why Paris starts in the last days of February rather than in March: the
+ * four run back to back and Paris is the one that spills over into the next
+ * month rather than the one that begins in it.
+ */
+export interface Edition {
+  /** The month the week opens in, 1-12. */
+  month: number;
+  /** The days of that month it opens between, inclusive. */
+  days: readonly [number, number];
+  season: Season;
+}
+
+/**
+ * How much of a week's dates is public record.
+ *
+ * `record` means the months and the rough window are documented and stable
+ * year to year. `slate` means the week is real and really runs, and SLATE has
+ * placed it in a month rather than knowing which one it will pick this year —
+ * a lot of the smaller weeks move, skip a season or change organiser, and
+ * saying otherwise would be inventing a fact.
+ */
+export type Placement = 'record' | 'slate';
+
 export interface FashionWeek {
   id: string;
   name: string;
   cityId: string;
-  /** The months it really runs in, 1-12, one entry per edition in a year. */
-  months: readonly number[];
-  /** Which collection each of those months shows, in the same order. */
-  seasons: readonly Season[];
+  /** Every edition it runs in a calendar year, in the order it runs them. */
+  editions: readonly Edition[];
+  /** Whether those dates are public record or SLATE's own placement. */
+  placement: Placement;
   tier: WeekTier;
   /** How hard it is to get a seat at all, 0-100. SLATE's calibration. */
   selectivity: number;
@@ -65,11 +121,12 @@ export interface FashionWeek {
 }
 
 const fw = (
-  id: string, name: string, cityId: string, months: readonly number[], seasons: readonly Season[],
+  id: string, name: string, cityId: string, editions: readonly Edition[], placement: Placement,
   tier: WeekTier, selectivity: number, about: string,
-): FashionWeek => ({ id, name, cityId, months, seasons, tier, selectivity, about });
+): FashionWeek => ({ id, name, cityId, editions, placement, tier, selectivity, about });
 
-const AW_SS: readonly Season[] = ['autumn_winter', 'spring_summer'];
+const on = (month: number, from: number, to: number, season: Season): Edition =>
+  ({ month, days: [from, to], season });
 
 /**
  * The weeks.
@@ -79,73 +136,115 @@ const AW_SS: readonly Season[] = ['autumn_winter', 'spring_summer'];
  * everything that happens once you are through the door.
  */
 export const FASHION_WEEKS: readonly FashionWeek[] = [
-  // The four.
-  fw('fw-nyfw', 'New York Fashion Week', 'us-ny-newyork', [2, 9], AW_SS, 'big_four', 84,
+  // --- The four -------------------------------------------------------------
+  // They run back to back in the same order every season, which is why New
+  // York opens in the first week of February and Paris is still going in
+  // March.
+  fw('fw-nyfw', 'New York Fashion Week', 'us-ny-newyork',
+    [on(2, 6, 11, 'autumn_winter'), on(9, 5, 10, 'spring_summer')], 'record', 'big_four', 84,
     'The week that opens the month, in February and September. American houses, and a lot of people who came to be photographed outside.'),
-  fw('fw-lfw', 'London Fashion Week', 'uk-eng-london', [2, 9], AW_SS, 'big_four', 82,
+  fw('fw-lfw', 'London Fashion Week', 'uk-eng-london',
+    [on(2, 14, 18, 'autumn_winter'), on(9, 12, 16, 'spring_summer')], 'record', 'big_four', 82,
     'The second of the four, and the one where the newest names show. British Fashion Council.'),
-  fw('fw-mfw', 'Milan Fashion Week', 'it-09-milan', [2, 9], AW_SS, 'big_four', 88,
+  fw('fw-mfw', 'Milan Fashion Week', 'it-09-milan',
+    [on(2, 19, 24, 'autumn_winter'), on(9, 17, 22, 'spring_summer')], 'record', 'big_four', 88,
     'The Italian houses, in February and September. Camera Nazionale della Moda Italiana.'),
-  fw('fw-pfw', 'Paris Fashion Week', 'fr-idf-paris', [3, 10], AW_SS, 'big_four', 94,
-    'The last and the largest of the four. The Fédération de la Haute Couture et de la Mode runs it, and everybody wants to be there.'),
-
-  // Paris and Milan also do menswear and couture, and those are their own weeks.
-  fw('fw-pfw-men', 'Paris Men’s Fashion Week', 'fr-idf-paris', [1, 6], AW_SS, 'big_four', 88,
-    'The menswear shows, in January and June, a fortnight before the couture.'),
-  fw('fw-pfw-couture', 'Paris Haute Couture Week', 'fr-idf-paris', [1, 7], ['couture_spring', 'couture_autumn'], 'big_four', 97,
-    'Couture, in January and July. A handful of houses, a few hundred seats, and almost nobody gets one.'),
-  fw('fw-mfw-men', 'Milan Men’s Fashion Week', 'it-09-milan', [1, 6], AW_SS, 'big_four', 82,
+  fw('fw-pfw', 'Paris Fashion Week', 'fr-idf-paris',
+    [on(2, 24, 28, 'autumn_winter'), on(9, 22, 29, 'spring_summer')], 'record', 'big_four', 94,
+    'The last and the largest of the four, opening in the final days of February and running into March. The Fédération de la Haute Couture et de la Mode runs it.'),
+  fw('fw-pfw-men', 'Paris Men’s Fashion Week', 'fr-idf-paris',
+    [on(1, 14, 19, 'autumn_winter'), on(6, 17, 22, 'spring_summer')], 'record', 'big_four', 88,
+    'The menswear shows, in January and June, a few days before the couture.'),
+  fw('fw-pfw-couture', 'Paris Haute Couture Week', 'fr-idf-paris',
+    [on(1, 20, 25, 'couture_spring'), on(7, 1, 6, 'couture_autumn')], 'record', 'big_four', 97,
+    'Couture, in late January and early July. A handful of houses, a few hundred seats, and almost nobody gets one.'),
+  fw('fw-mfw-men', 'Milan Men’s Fashion Week', 'it-09-milan',
+    [on(1, 10, 15, 'autumn_winter'), on(6, 13, 18, 'spring_summer')], 'record', 'big_four', 82,
     'The Italian menswear shows, in January and June.'),
 
-  // Established weeks with their own following.
-  fw('fw-cph', 'Copenhagen Fashion Week', 'dk-17-copenhagen', [1, 8], AW_SS, 'established', 70,
-    'The Scandinavian week, in January and August, and the one with sustainability requirements to show at all.'),
-  fw('fw-berlin', 'Berlin Fashion Week', 'de-be-berlin', [2, 7], AW_SS, 'established', 62,
+  // --- Europe, north of the four -------------------------------------------
+  fw('fw-cph', 'Copenhagen Fashion Week', 'dk-17-copenhagen',
+    [on(1, 27, 31, 'autumn_winter'), on(8, 4, 9, 'spring_summer')], 'record', 'established', 70,
+    'The Scandinavian week, at the end of January and the start of August, and the one with sustainability requirements to show at all.'),
+  fw('fw-berlin', 'Berlin Fashion Week', 'de-be-berlin',
+    [on(2, 2, 6, 'autumn_winter'), on(7, 1, 5, 'spring_summer')], 'record', 'established', 62,
     'The German week, in February and July.'),
-  fw('fw-stockholm', 'Stockholm Fashion Week', 'se-26-stockholm', [1, 8], AW_SS, 'established', 58,
-    'The Swedish week, run alongside the Copenhagen one.'),
-  fw('fw-madrid', 'Madrid Fashion Week', 'es-md-madrid', [2, 9], AW_SS, 'established', 60,
+  fw('fw-stockholm', 'Stockholm Fashion Week', 'se-26-stockholm',
+    [on(1, 26, 30, 'autumn_winter'), on(8, 25, 29, 'spring_summer')], 'slate', 'established', 58,
+    'The Swedish week, which has stopped and restarted more than once and does not keep to a fixed slot.'),
+  fw('fw-madrid', 'Madrid Fashion Week', 'es-md-madrid',
+    [on(2, 12, 17, 'autumn_winter'), on(9, 11, 15, 'spring_summer')], 'record', 'established', 60,
     'The Spanish week, in February and September.'),
-  fw('fw-tokyo', 'Rakuten Fashion Week Tokyo', 'jp-13-tokyo', [3, 9], AW_SS, 'established', 72,
-    'The Japanese week, in March and September, a fortnight after Paris.'),
-  fw('fw-seoul', 'Seoul Fashion Week', 'kr-11-seoul', [3, 10], AW_SS, 'established', 70,
-    'The Korean week, in March and October, and one of the most photographed streets in the world during it.'),
-  fw('fw-shanghai', 'Shanghai Fashion Week', 'cn-23-shanghai', [3, 10], AW_SS, 'established', 74,
-    'The Chinese week, in March and October, and the largest in Asia by number of shows.'),
-  fw('fw-spfw', 'São Paulo Fashion Week', 'br-27-saopaulo', [4, 11], AW_SS, 'established', 66,
-    'The largest week in Latin America, in April and November.'),
-  fw('fw-mbfwmx', 'Mercedes-Benz Fashion Week México', 'mx-cmx-mexicocity', [4, 10], AW_SS, 'established', 58,
-    'The Mexican week, in April and October.'),
-  fw('fw-afw', 'Australian Fashion Week', 'au-nsw-sydney', [5], ['resort'], 'established', 62,
-    'The Sydney week, in May, showing resort while the northern hemisphere shows nothing.'),
-  fw('fw-lagos', 'Lagos Fashion Week', 'ng-05-lagos', [10], ['spring_summer'], 'established', 64,
-    'The West African week, in October, and the one that took African design to the rest of the schedule.'),
-  fw('fw-lakme', 'Lakmé Fashion Week', 'in-16-mumbai', [3, 10], AW_SS, 'established', 62,
-    'The Indian week, in Mumbai, in March and October.'),
-  fw('fw-icw', 'India Couture Week', 'in-07-delhi', [7], ['couture_autumn'], 'established', 70,
-    'The Delhi couture week, in July.'),
-
-  // Smaller weeks, where a new name can still get a seat.
-  fw('fw-toronto', 'Toronto Fashion Week', 'ca-on-toronto', [3, 9], AW_SS, 'emerging', 46,
-    'The Canadian week, in March and September.'),
-  fw('fw-vancouver', 'Vancouver Fashion Week', 'ca-bc-vancouver', [3, 9], AW_SS, 'emerging', 40,
-    'A week that has always taken designers nobody has heard of, in March and September.'),
-  fw('fw-amsterdam', 'Amsterdam Fashion Week', 'nl-07-amsterdam', [3, 9], AW_SS, 'emerging', 48,
-    'The Dutch week, in March and September.'),
-  fw('fw-tbilisi', 'Tbilisi Fashion Week', 'ge-51-tbilisi', [5, 11], AW_SS, 'emerging', 52,
-    'The Georgian week, which the rest of the schedule started watching a decade ago.'),
-  fw('fw-melbourne', 'Melbourne Fashion Festival', 'au-vic-melbourne', [3], ['autumn_winter'], 'emerging', 44,
-    'The Melbourne festival, in March, which sells tickets to the public as well as seats to the trade.'),
-  fw('fw-safw', 'South African Fashion Week', 'za-06-johannesburg', [4, 10], AW_SS, 'emerging', 48,
-    'The Johannesburg week, in April and October.'),
-  fw('fw-capetown', 'Cape Town Fashion Week', 'za-11-capetown', [8], ['spring_summer'], 'emerging', 42,
-    'The Cape Town week, in August.'),
-  fw('fw-miami', 'Miami Swim Week', 'us-fl-miami', [6], ['resort'], 'emerging', 50,
-    'The swimwear week, in June, which is its own trade and its own crowd.'),
-  fw('fw-lisbon', 'ModaLisboa', 'pt-14-lisbon', [3, 10], AW_SS, 'emerging', 44,
+  fw('fw-amsterdam', 'Amsterdam Fashion Week', 'nl-07-amsterdam',
+    [on(3, 8, 13, 'autumn_winter'), on(9, 8, 13, 'spring_summer')], 'slate', 'emerging', 48,
+    'The Dutch week, which has changed shape and organiser several times and does not keep to a fixed slot.'),
+  fw('fw-lisbon', 'ModaLisboa', 'pt-14-lisbon',
+    [on(3, 6, 9, 'autumn_winter'), on(10, 9, 12, 'spring_summer')], 'record', 'emerging', 44,
     'The Lisbon week, in March and October.'),
-  fw('fw-istanbul', 'Istanbul Fashion Week', 'tr-34-istanbul', [3, 10], AW_SS, 'emerging', 46,
-    'The Turkish week, in March and October.'),
+  fw('fw-istanbul', 'Istanbul Fashion Week', 'tr-34-istanbul',
+    [on(3, 10, 14, 'autumn_winter'), on(10, 8, 12, 'spring_summer')], 'slate', 'emerging', 46,
+    'The Turkish week, which has run under more than one name and does not keep to a fixed slot.'),
+  fw('fw-tbilisi', 'Tbilisi Fashion Week', 'ge-51-tbilisi',
+    [on(5, 3, 7, 'spring_summer'), on(11, 1, 5, 'autumn_winter')], 'slate', 'emerging', 52,
+    'The Georgian week, which the rest of the schedule started watching a decade ago. Its dates move from year to year.'),
+
+  // --- The Americas ---------------------------------------------------------
+  fw('fw-toronto', 'Toronto Fashion Week', 'ca-on-toronto',
+    [on(3, 3, 7, 'autumn_winter'), on(9, 3, 7, 'spring_summer')], 'slate', 'emerging', 46,
+    'The Canadian week, which has been suspended and revived and does not keep to a fixed slot.'),
+  fw('fw-vancouver', 'Vancouver Fashion Week', 'ca-bc-vancouver',
+    [on(3, 24, 29, 'autumn_winter'), on(9, 15, 20, 'spring_summer')], 'record', 'emerging', 40,
+    'A week that has always taken designers nobody has heard of, in March and September.'),
+  fw('fw-miami', 'Miami Swim Week', 'us-fl-miami',
+    [on(6, 1, 6, 'resort')], 'record', 'emerging', 50,
+    'The swimwear week, at the start of June, showing the following year. Its own trade and its own crowd.'),
+  fw('fw-mbfwmx', 'Mercedes-Benz Fashion Week México', 'mx-cmx-mexicocity',
+    [on(4, 8, 12, 'autumn_winter'), on(10, 7, 11, 'spring_summer')], 'record', 'established', 58,
+    'The Mexican week, in April and October.'),
+  // Brazil is south of the equator, so its calendar is the other way round: the
+  // April edition shows the summer that arrives in December and the November
+  // one shows the winter that arrives in June.
+  fw('fw-spfw', 'São Paulo Fashion Week', 'br-27-saopaulo',
+    [on(4, 20, 25, 'spring_summer'), on(11, 3, 8, 'autumn_winter')], 'record', 'established', 66,
+    'The largest week in Latin America. South of the equator, so April shows the coming summer and November the coming winter.'),
+
+  // --- Asia -----------------------------------------------------------------
+  fw('fw-tokyo', 'Rakuten Fashion Week Tokyo', 'jp-13-tokyo',
+    [on(3, 15, 20, 'autumn_winter'), on(9, 1, 6, 'spring_summer')], 'record', 'established', 72,
+    'The Japanese week, in March and at the very start of September.'),
+  fw('fw-seoul', 'Seoul Fashion Week', 'kr-11-seoul',
+    [on(3, 16, 21, 'autumn_winter'), on(9, 1, 6, 'spring_summer')], 'record', 'established', 70,
+    'The Korean week, and one of the most photographed streets in the world while it is on.'),
+  fw('fw-shanghai', 'Shanghai Fashion Week', 'cn-23-shanghai',
+    [on(3, 25, 30, 'autumn_winter'), on(10, 9, 14, 'spring_summer')], 'record', 'established', 74,
+    'The Chinese week, in late March and October, and the largest in Asia by number of shows.'),
+  // India names its collections for what people actually buy them for rather
+  // than for the northern autumn and spring.
+  fw('fw-lakme', 'Lakmé Fashion Week', 'in-16-mumbai',
+    [on(3, 11, 15, 'summer_resort'), on(10, 8, 12, 'winter_festive')], 'record', 'established', 62,
+    'The Indian week, in Mumbai. Its two editions are Summer Resort in March and Winter Festive in October, which is what the year is actually divided into there.'),
+  fw('fw-icw', 'India Couture Week', 'in-07-delhi',
+    [on(7, 23, 28, 'bridal')], 'record', 'established', 70,
+    'The Delhi couture week, in July, and a bridal week as much as a couture one.'),
+
+  // --- The southern hemisphere and Africa -----------------------------------
+  fw('fw-afw', 'Australian Fashion Week', 'au-nsw-sydney',
+    [on(5, 12, 17, 'resort')], 'record', 'established', 62,
+    'The Sydney week, in May, showing resort while the northern hemisphere shows nothing.'),
+  fw('fw-melbourne', 'Melbourne Fashion Festival', 'au-vic-melbourne',
+    [on(3, 3, 8, 'autumn_winter')], 'record', 'emerging', 44,
+    'The Melbourne festival, in March, showing the autumn and winter that are arriving there as it runs. It sells tickets to the public as well as seats to the trade.'),
+  // South of the equator again: April shows the coming summer, October the
+  // coming winter.
+  fw('fw-safw', 'South African Fashion Week', 'za-06-johannesburg',
+    [on(4, 24, 28, 'spring_summer'), on(10, 22, 26, 'autumn_winter')], 'record', 'emerging', 48,
+    'The Johannesburg week. South of the equator, so April shows the coming summer and October the coming winter.'),
+  fw('fw-capetown', 'Cape Town Fashion Week', 'za-11-capetown',
+    [on(8, 12, 16, 'spring_summer')], 'slate', 'emerging', 42,
+    'The Cape Town week, at the end of the southern winter, showing the summer that follows it. Its dates move from year to year.'),
+  fw('fw-lagos', 'Lagos Fashion Week', 'ng-05-lagos',
+    [on(10, 22, 26, 'annual')], 'record', 'established', 64,
+    'The West African week, in October, and the one that took African design to the rest of the schedule. It shows one collection a year rather than a northern season.'),
 ];
 
 export const WEEK_BY_ID: Readonly<Record<string, FashionWeek>> = Object.fromEntries(

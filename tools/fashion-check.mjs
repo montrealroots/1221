@@ -40,15 +40,38 @@ for (const week of FASHION_WEEKS) {
   names.add(week.name);
   const city = CITIES.get(week.cityId);
   if (!city) problems.push(`${week.name} is in ${week.cityId}, which is not a city here`);
-  if (week.months.length === 0) problems.push(`${week.name} runs in no month`);
-  if (week.months.length !== week.seasons.length) {
-    problems.push(`${week.name} runs ${week.months.length} times and shows ${week.seasons.length} collections`);
+  if (week.editions.length === 0) problems.push(`${week.name} runs in no month`);
+  for (const edition of week.editions) {
+    if (edition.month < 1 || edition.month > 12) problems.push(`${week.name} runs in month ${edition.month}`);
+    if (!SEASON_LABEL[edition.season]) problems.push(`${week.name} shows a ${edition.season}, which is not a collection`);
+    const lastDay = new Date(Date.UTC(2025, edition.month, 0)).getUTCDate();
+    if (edition.days[0] < 1 || edition.days[1] > lastDay || edition.days[1] < edition.days[0]) {
+      problems.push(`${week.name} opens between day ${edition.days[0]} and ${edition.days[1]} of month ${edition.month}`);
+    }
   }
-  for (const month of week.months) {
-    if (month < 1 || month > 12) problems.push(`${week.name} runs in month ${month}`);
+  if (!['record', 'slate'].includes(week.placement)) problems.push(`${week.name} has no placement`);
+  // A week SLATE has placed itself has to admit it in its own description,
+  // because the calendar is otherwise read as public record.
+  if (week.placement === 'slate' && !/move|fixed slot|suspended|stopped/i.test(week.about)) {
+    problems.push(`${week.name} is SLATE's own placement but does not say so`);
   }
-  for (const season of week.seasons) {
-    if (!SEASON_LABEL[season]) problems.push(`${week.name} shows a ${season}, which is not a collection`);
+  // South of the equator the calendar runs the other way round: summer arrives
+  // in December and winter in June, and a collection is shown some months
+  // before the season it is for rather than during or after it.
+  const southern = ['br-27-saopaulo', 'za-06-johannesburg', 'za-11-capetown', 'au-nsw-sydney', 'au-vic-melbourne'];
+  if (southern.includes(week.cityId)) {
+    for (const edition of week.editions) {
+      // A summer collection is shown between April and October, ahead of the
+      // December that it is for.
+      if (edition.season === 'spring_summer' && (edition.month < 4 || edition.month > 10)) {
+        problems.push(`${week.name} shows the summer in month ${edition.month}, which is after the summer it is for arrives`);
+      }
+      // A winter collection is shown between October and March, ahead of the
+      // June that it is for.
+      if (edition.season === 'autumn_winter' && edition.month >= 4 && edition.month <= 9) {
+        problems.push(`${week.name} shows the winter in month ${edition.month}, which is during or after the winter it is for`);
+      }
+    }
   }
   if (!WEEK_TIER_LABEL[week.tier]) problems.push(`${week.name} is a ${week.tier}, which is not a kind of week`);
   if (week.selectivity < 0 || week.selectivity > 100) problems.push(`${week.name} is ${week.selectivity} selective`);
@@ -100,6 +123,9 @@ if (SHOW_HOURS.length < 4) problems.push('a show day has almost no hours in it')
 if (!/SLATE/.test(FASHION_NOTE) || !/moves every year/.test(FASHION_NOTE)) {
   problems.push('the note saying the schedule moves every year has gone');
 }
+if (!/public record/.test(FASHION_NOTE)) {
+  problems.push('the note no longer separates the documented weeks from the ones SLATE placed');
+}
 
 // --- A season -------------------------------------------------------------
 
@@ -114,6 +140,22 @@ if (editions.length < FASHION_WEEKS.length) {
 // spring after that. That is the industry's own naming and it holds.
 if (seasonYear('autumn_winter', 2, 2026) !== 2026) problems.push('a February show is not named for that year');
 if (seasonYear('spring_summer', 9, 2026) !== 2027) problems.push('a September show is not named for the next year');
+if (seasonYear('autumn_winter', 11, 2026) !== 2027) problems.push('a southern winter shown in November is not named for the next year');
+if (seasonYear('winter_festive', 10, 2026) !== 2026) problems.push('a festive collection shown in October is not named for that year');
+
+// The four run back to back, in the same order, both seasons.
+const FOUR = ['fw-nyfw', 'fw-lfw', 'fw-mfw', 'fw-pfw'];
+for (const month of [2, 9]) {
+  const dates = FOUR.map((id) => editions.find(
+    (one) => one.weekId === id && new Date(one.startsAt).getUTCMonth() + 1 === month,
+  ));
+  if (dates.some((one) => !one)) { problems.push(`one of the four has no edition in month ${month}`); continue; }
+  for (let i = 1; i < dates.length; i += 1) {
+    if (dates[i].startsAt <= dates[i - 1].startsAt) {
+      problems.push(`${dates[i].week.name} does not follow ${dates[i - 1].week.name} in month ${month}`);
+    }
+  }
+}
 
 let shows = 0;
 let bigNamesLate = 0;
@@ -164,7 +206,9 @@ const all = upcomingEditions(sim, 400 * 86_400_000);
 
 // --- What it found ----------------------------------------------------------
 
+const placed = FASHION_WEEKS.filter((w) => w.placement === 'slate').length;
 console.log(`\n${FASHION_WEEKS.length} real weeks in ${new Set(FASHION_WEEKS.map((w) => w.cityId)).size} cities, ${editions.length} editions a year.`);
+console.log(`${FASHION_WEEKS.length - placed} run to dates that are public record; ${placed} are placed by SLATE and say so.`);
 console.log(`${SHOWING_HOUSES.length} house slots across ${withSchedule.length} weeks, every one a brand the catalog sells.`);
 console.log(`${new Set(SHOWING_HOUSES.map((h) => h.brand)).size} houses show, ${shows} shows a year.`);
 console.log(`${carried.length} of ${all.length} editions ahead have a schedule SLATE carries.`);

@@ -46,12 +46,12 @@ function famous(sim: Simulation): void {
 }
 
 /** The next Paris week, and a show at it that would have you. */
-function aSeat(sim: Simulation): { showId: string; at: number; brand: string } {
+function aSeat(sim: Simulation): { showId: string; at: number; brand: string; cityId: string } {
   for (const edition of editionsWithShows(sim, 400 * DAY)) {
     for (const show of showsIn(sim, edition)) {
       if (show.at < sim.now + 5 * DAY) continue;
       if (!seatFor(sim, show.house)) continue;
-      return { showId: show.id, at: show.at, brand: show.house.brand };
+      return { showId: show.id, at: show.at, brand: show.house.brand, cityId: edition.week.cityId };
     }
   }
   throw new Error('nobody in the world would sit this person down, which cannot be right');
@@ -110,11 +110,19 @@ describe('the calendar', () => {
     expect(FASHION_WEEKS.length).toBeGreaterThanOrEqual(24);
     for (const week of FASHION_WEEKS) {
       expect(CITIES.get(week.cityId), week.name).toBeTruthy();
-      expect(week.months.length).toBe(week.seasons.length);
-      for (const month of week.months) {
-        expect(month).toBeGreaterThanOrEqual(1);
-        expect(month).toBeLessThanOrEqual(12);
+      expect(week.editions.length).toBeGreaterThan(0);
+      for (const edition of week.editions) {
+        expect(edition.month).toBeGreaterThanOrEqual(1);
+        expect(edition.month).toBeLessThanOrEqual(12);
+        // The window has to be a window, and a real day of that month.
+        expect(edition.days[0]).toBeGreaterThanOrEqual(1);
+        expect(edition.days[1]).toBeGreaterThanOrEqual(edition.days[0]);
+        // The last day of the window has to be a day that month really has,
+        // in a year that is not a leap year.
+        const lastDay = new Date(Date.UTC(2025, edition.month, 0)).getUTCDate();
+        expect(edition.days[1], `${week.name} month ${edition.month}`).toBeLessThanOrEqual(lastDay);
       }
+      expect(['record', 'slate']).toContain(week.placement);
     }
     // The four, in the four cities, in February and September or thereabouts.
     const four = FASHION_WEEKS.filter((week) => week.tier === 'big_four');
@@ -124,12 +132,70 @@ describe('the calendar', () => {
     expect(four.map((week) => week.cityId)).toContain('fr-idf-paris');
     expect(FASHION_NOTE).toContain('SLATE');
     expect(FASHION_NOTE).toContain('moves every year');
+    expect(FASHION_NOTE).toContain('public record');
   });
 
-  it('names a collection a season ahead of the calendar, the way the trade does', () => {
+  it('names a collection for the season it arrives in, the way the trade does', () => {
     expect(seasonYear('autumn_winter', 2, 2026)).toBe(2026);
     expect(seasonYear('spring_summer', 9, 2026)).toBe(2027);
     expect(seasonYear('spring_summer', 2, 2026)).toBe(2026);
+    // South of the equator a November winter collection is next year's winter.
+    expect(seasonYear('autumn_winter', 11, 2026)).toBe(2027);
+    // A festive collection shown in October is for that same December.
+    expect(seasonYear('winter_festive', 10, 2026)).toBe(2026);
+    expect(seasonYear('summer_resort', 3, 2026)).toBe(2026);
+  });
+
+  it('runs the four back to back in the order they really run', () => {
+    const sim = inParis('fw-four');
+    const year = new Date(sim.now).getUTCFullYear();
+    const order = ['fw-nyfw', 'fw-lfw', 'fw-mfw', 'fw-pfw'];
+    for (const season of [2, 9]) {
+      const dates = order.map((id) => editionsIn(sim, year)
+        .find((one) => one.weekId === id && new Date(one.startsAt).getUTCMonth() + 1 === (season === 2 ? 2 : 9))!);
+      for (const edition of dates) expect(edition, `${season} edition missing`).toBeTruthy();
+      for (let i = 1; i < dates.length; i += 1) {
+        expect(dates[i]!.startsAt, `${order[i]} does not follow ${order[i - 1]}`)
+          .toBeGreaterThan(dates[i - 1]!.startsAt);
+      }
+    }
+  });
+
+  it('turns the calendar round south of the equator', () => {
+    // São Paulo and Johannesburg show the summer that is coming to them in
+    // April, and the winter that is coming to them in the back half of the year.
+    for (const id of ['fw-spfw', 'fw-safw']) {
+      const week = FASHION_WEEKS.find((one) => one.id === id)!;
+      const spring = week.editions.find((one) => one.season === 'spring_summer')!;
+      const autumn = week.editions.find((one) => one.season === 'autumn_winter')!;
+      expect(spring.month).toBeLessThan(7);
+      expect(autumn.month).toBeGreaterThan(9);
+    }
+    // And Melbourne in March is showing the autumn that is arriving there.
+    const melbourne = FASHION_WEEKS.find((one) => one.id === 'fw-melbourne')!;
+    expect(melbourne.editions[0]!.season).toBe('autumn_winter');
+    expect(melbourne.editions[0]!.month).toBe(3);
+  });
+
+  it('names the Indian editions the way India names them', () => {
+    const lakme = FASHION_WEEKS.find((one) => one.id === 'fw-lakme')!;
+    expect(lakme.editions.map((one) => one.season)).toEqual(['summer_resort', 'winter_festive']);
+    const couture = FASHION_WEEKS.find((one) => one.id === 'fw-icw')!;
+    expect(couture.editions[0]!.season).toBe('bridal');
+  });
+
+  it('says which dates are public record and which are its own placement', () => {
+    const record = FASHION_WEEKS.filter((one) => one.placement === 'record');
+    const placed = FASHION_WEEKS.filter((one) => one.placement === 'slate');
+    // The four are documented; some of the smaller ones move every year.
+    for (const week of FASHION_WEEKS.filter((one) => one.tier === 'big_four')) {
+      expect(week.placement, week.name).toBe('record');
+    }
+    expect(record.length).toBeGreaterThan(placed.length);
+    // A week SLATE placed itself says so in its own description.
+    for (const week of placed) {
+      expect(week.about.toLowerCase(), week.name).toMatch(/move|fixed slot|suspended|stopped/);
+    }
   });
 
   it('lays a year out the same way twice, and only lists a week once per edition', () => {
@@ -284,8 +350,11 @@ describe('writing to a house', () => {
     const sim = inParis('fw-refused');
     // Known enough that a small house might, and nowhere near enough for Paris.
     sim.player.reputation.publicFame = 18;
-    const edition = editionsWithShows(sim, 400 * DAY).find((one) => one.weekId === 'fw-pfw')!;
-    const show = showsIn(sim, edition).find((one) => one.house.brand === 'Chanel')!;
+    const show = editionsWithShows(sim, 400 * DAY)
+      .filter((one) => one.weekId === 'fw-pfw')
+      .flatMap((one) => showsIn(sim, one))
+      .find((one) => one.house.brand === 'Chanel' && one.at > sim.now + 5 * DAY)!;
+    expect(show, 'no Chanel show ahead').toBeTruthy();
     const asked = sim.execute<{ answerAt: number }>({ kind: 'fw.request', payload: { showId: show.id } });
     expect(asked.ok, String(asked.error)).toBe(true);
     sim.advanceTo(asked.value!.answerAt + 60 * MINUTE);
@@ -311,6 +380,8 @@ describe('turning up', () => {
     sim.advanceTo(asked.value!.answerAt + 60 * MINUTE);
     const invite = invitesOf(sim).find((one) => one.status === 'accepted');
     if (!invite) throw new Error('the house said no, which this test cannot use');
+    // The show is wherever the show is, so be in that city for it.
+    sim.player.currentLocationId = invite.cityId;
     return { sim, inviteId: invite.id, at: invite.at, cityId: invite.cityId };
   }
 
@@ -321,12 +392,13 @@ describe('turning up', () => {
     expect(early.error).toContain('Nobody is inside yet');
 
     sim.advanceTo(at - 20 * MINUTE);
-    sim.player.currentLocationId = 'us-ca-losangeles';
+    const there = sim.player.currentLocationId;
+    sim.player.currentLocationId = 'us-tx-austin';
     const away = sim.execute({ kind: 'fw.attend', payload: { inviteId } });
     expect(away.ok).toBe(false);
     expect(away.error).toContain('you are not');
 
-    sim.player.currentLocationId = 'fr-idf-paris';
+    sim.player.currentLocationId = there;
     const undressed = sim.execute({ kind: 'fw.attend', payload: { inviteId } });
     expect(undressed.ok).toBe(false);
     expect(undressed.error).toContain('not dressed');
@@ -358,7 +430,7 @@ describe('turning up', () => {
     expect(went.value!.verdict).toBeGreaterThanOrEqual(0);
     expect(went.value!.verdict).toBeLessThanOrEqual(100);
     expect(went.value!.note.length).toBeGreaterThan(10);
-    expect(went.value!.cost).toBe(turningUpCost('fr-idf-paris'));
+    expect(went.value!.cost).toBe(turningUpCost(sim.player.currentLocationId));
     expect(sim.ledger.history(accountId, 30).some((entry) => (entry.memo ?? '').includes('show'))).toBe(true);
 
     const invite = sim.universe.fashionInvites[inviteId]!;
@@ -375,8 +447,10 @@ describe('turning up', () => {
   it('reads the house’s own clothes as the compliment they are', () => {
     const sim = inParis('fw-house-clothes');
     famous(sim);
-    const edition = editionsWithShows(sim, 400 * DAY).find((one) => one.weekId === 'fw-pfw')!;
+    const edition = editionsWithShows(sim, 400 * DAY)
+      .find((one) => one.weekId === 'fw-pfw' && one.startsAt > sim.now + 5 * DAY)!;
     const show = showsIn(sim, edition).find((one) => seatFor(sim, one.house) && one.at > sim.now + 5 * DAY)!;
+    expect(show, 'nothing ahead in Paris to go to').toBeTruthy();
     buyFrom(sim, show.house.brand, 4);
 
     const asked = sim.execute<{ answerAt: number }>({ kind: 'fw.request', payload: { showId: show.id } });

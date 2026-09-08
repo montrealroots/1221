@@ -129,8 +129,11 @@ function FashionWeeks() {
                   </div>
                   <div className="xs muted" style={{ marginTop: 2 }}>{edition.week.about}</div>
                 </div>
-                <div style={{ textAlign: 'right', minWidth: 130 }}>
+                <div style={{ textAlign: 'right', minWidth: 150 }}>
                   <div className="mono small">{formatDate(edition.startsAt, sim.zone)}</div>
+                  <div className="xs dim">
+                    {edition.week.placement === 'record' ? 'The week it really runs' : 'SLATE’s own placement'}
+                  </div>
                   <div className="xs dim">{houses > 0 ? plural(houses, 'show') : 'No schedule here'}</div>
                 </div>
                 <button
