@@ -280,10 +280,13 @@ describe('the rest of the world has its own shops', () => {
     const gh = coverageFor('gh');
     expect(us.local).toBeGreaterThan(gh.local);
     expect(us.band).toBe('deep');
-    expect(gh.band).toBe('thin');
-    // A worldwide chain reaching everywhere must not be counted as local depth.
+    // Ghana was thin when this was written and is workable now, so the test
+    // holds the property rather than the number: a market somebody authored
+    // less of is reported as shallower, and a worldwide chain reaching
+    // everywhere is never counted as local depth in either of them.
     expect(us.worldwide).toBe(gh.worldwide);
     expect(us.worldwide).toBeGreaterThan(0);
+    expect(gh.local).toBeGreaterThan(0);
   });
 
   it('reports every market it covers, worst served first, and says nothing it cannot', () => {

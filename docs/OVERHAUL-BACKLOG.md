@@ -661,3 +661,60 @@ re-labelled to look finished.
     after themselves had the generator print the brand twice, so the Pandora ME
     ring and the Piaget Rose watch each led with their own house name written
     out a second time. The typo and spelling checkers caught every one.
+
+35. Stage 33 — the high streets that were leaning on somebody else's chains.
+    The coverage tool has always printed the unevenness rather than hiding it,
+    and what it printed was the gap: **63 markets with fewer than ten chains of
+    their own, and 36 that could not supply food, clothes and a television
+    without a worldwide chain doing the work.** Shops in Hanoi, Lagos and
+    Santiago were real and felt borrowed, because all of them were Zara and
+    H&M.
+
+    **488 real local chains added, taking the catalog from 365 across 86
+    markets to 853 across 93.** Twenty eight markets are now deep, sixty five
+    are workable, **none are thin**, and every market the game claims to cover can
+    put food, clothes and a television on its own high street.
+
+    `src/engine/content/localchains.ts` holds them, grouped by region: Latin
+    America (Falabella, Éxito, Coto, Soriana, InkaFarma, Sodimac), Africa
+    (Naivas, Melcom, Marjane, Kazyon, Mr Price, Clicks, PEP), the Gulf and the
+    Levant (LuLu, Panda, Jarir, Shufersal, Rami Levy, Bou Khalil), central and
+    eastern Europe (Konzum, Mercator, Silpo, ATB, Magnit, Euroopt, Rimi,
+    Maxima, Linella), Turkey (Migros, A101, LC Waikiki, DeFacto, Teknosa), east
+    and south east Asia (Co.opmart, Indomaret, Puregold, Tops, Mydin, PX Mart,
+    E-Mart, Freshippo), the Nordics (KIWI, Netto, Gigantti, Elkjøp), and the
+    last handful — Bosnia, North Macedonia, Mongolia, Lithuania, Macau, Laos,
+    Cambodia, Monaco, Greece, Pakistan and Cyprus.
+
+    **What is deliberately absent, and why.** A shop you cannot walk into is
+    not coverage, so chains that have closed or pulled out are left out on
+    purpose: Nakumatt and Tuskys in Kenya, Justo & Bueno in Colombia, Irma in
+    Denmark, and the many Western chains that left Russia in 2022. Russia and
+    Belarus are covered by their own domestic chains only.
+
+    **Held by the gate.** `npx vite-node tools/retail-coverage.mjs --check`
+    joins the gate and fails the build if any market the game claims to cover
+    cannot supply food, clothes and a television locally.
+
+    **Found on the way:** 24 of the chains already existed under the same id,
+    which the registry caught on first load; the duplicates were dropped rather
+    than renamed and LC Waikiki was widened to the four markets it really
+    trades in that it had been missing. A mobile network had been written in as
+    a clothing chain and was removed. Twelve more chains existed under a
+    different id and were re-listing markets those rows already covered, which
+    would have put the same shop on the same street twice; each now carries
+    only what is new, and two that added nothing at all were deleted. That
+    sweep also turned up a fault older than this stage: `ANGLO.concat(EU)`
+    names Ireland in both halves, so ASOS had been listed twice in Ireland
+    since the day it was written. Markets are now deduplicated in the
+    constructor, which fixes it for every row at once. And a catalogue test asserted Ghana was
+    thin, which was a fact about the data rather than a property of the code;
+    it now holds the property — a less authored market reads as shallower, and
+    a worldwide chain is never counted as local depth.
+
+    **One number that is not a fault.** A boutique in Lagos or Jakarta carries
+    fewer than a hundred products, because the climate and local stock rules
+    from stage 32 take the down jackets and the alcohol off the shelf. That is
+    the shelf being right, not thin: no multi label floor in any city tested
+    falls under the hundred.
+

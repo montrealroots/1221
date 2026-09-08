@@ -293,12 +293,24 @@ spaceship", "become president" — it says that plainly instead of guessing.
 
 1. **Done.** Company tab canned; Casting locked; founder premise out of
    creation; a hundred real items in every branch; aisles.
-2. **Done.** 365 real chains across 86 markets, each in the countries it really
+2. **Done.** 853 real chains across 93 markets, each in the countries it really
    trades in, with `npm run coverage:retail` printing the honest per-country
-   picture: thirteen markets deep, ten workable, sixty-three thin, and every
+   picture: twenty-eight markets deep, sixty-five workable, **none thin**, and every
    other country in the world falling back to plainly simulated shops that say
    so on screen. Those figures are read off the data on every run, so they are
-   what is actually there rather than what was true when this was written. Also in: the kit shops for section 6 — Adorama, Samy's, Wex,
+   what is actually there rather than what was true when this was written.
+
+   The thin markets were closed last, and they were the largest remaining hole
+   in the promise: 63 countries with fewer than ten chains of their own and 36
+   that could not put food, clothes and a television on a local high street at
+   all. A player living in Hanoi or Lagos or Santiago found shops that were
+   technically real and felt borrowed, because every one of them was a
+   worldwide chain. There are now Co.opmart and Thế Giới Di Động in Vietnam,
+   Ebeano and SLOT in Nigeria, Falabella and Cruz Verde in Chile, Migros and
+   LC Waikiki in Turkey, Silpo and Foxtrot in Ukraine, Naivas and Chandarana in
+   Kenya, Vero and Anhoch in North Macedonia, Nomin and Gobi in Mongolia.
+   `npm run gate` now fails the build if any market it claims to cover cannot
+   supply those three things locally. Also in: the kit shops for section 6 — Adorama, Samy's, Wex,
    Thomann, Panavision and ARRI Rental for hire, Angels Costumes, Western
    Costume and Tirelli for wardrobe, M·A·C, Ben Nye and Charles Fox for makeup.
 3. **Done.** Getting dressed, properly: sixteen pegs became twenty when

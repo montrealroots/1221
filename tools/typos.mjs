@@ -138,6 +138,19 @@ function isClassNameOrHyphenated(line, match, index) {
   return line.slice(index + match.length, index + match.length + 1) === '-';
 }
 
+/**
+ * Names that really are the same word twice.
+ *
+ * Sa Sa is a Hong Kong cosmetics chain and that is how it is written on the
+ * shopfront. Correcting somebody's name is not tidying, it is being wrong, so
+ * the handful that are genuinely doubled are listed rather than flagged.
+ */
+const REAL_DOUBLED = new Set(['Sa Sa', 'Kai Kai', 'Duran Duran', 'Boutros Boutros']);
+
+function isRealDoubledName(line, index) {
+  return [...REAL_DOUBLED].some((name) => line.slice(index, index + name.length) === name);
+}
+
 const findings = [];
 for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk('docs')]) {
   if (SKIP_FILES.has(file)) continue;
@@ -150,6 +163,7 @@ for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk(
     for (const m of line.matchAll(DOUBLED)) {
       if (REAL_DOUBLES.has(m[1].toLowerCase())) continue;
       if (isClassNameOrHyphenated(line, m[0], m.index)) continue;
+      if (isRealDoubledName(line, m.index)) continue;
       findings.push({ at: `${file}:${i + 1}`, what: `doubled word: ${m[1]}`, line: line.trim().slice(0, 110) });
     }
   });

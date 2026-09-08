@@ -14,6 +14,7 @@
  */
 
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
+import { LOCAL_CHAINS } from './localchains';
 
 const V = REFERENCE_VERSION;
 
@@ -51,7 +52,10 @@ export interface RealRetailer extends ReferenceRecord {
 }
 
 function shop(spec: Omit<RealRetailer, 'type' | 'source' | 'confidence' | 'version' | 'note'>): RealRetailer {
-  return { ...spec, type: 'retailer', ...REAL };
+  // A market listed twice would put the same shop on the same street twice.
+  // ANGLO.concat(EU) names Ireland in both halves, so this is normalised here
+  // rather than left to every caller to remember.
+  return { ...spec, markets: [...new Set(spec.markets)], type: 'retailer', ...REAL };
 }
 
 const ANY = [] as string[];
@@ -393,7 +397,7 @@ export const REGIONAL_RETAILERS: readonly RealRetailer[] = [
   shop({ id: 'panda_sa', name: 'Panda', kind: 'grocery', tier: 2, priceMultiplier: 0.94, categories: ['groceries', 'household'], markets: ['sa'], minimumCity: 80_000, online: true, deliveryDays: 2, description: 'Saudi supermarket chain.' }),
   shop({ id: 'boyner', name: 'Boyner', kind: 'department', tier: 3, priceMultiplier: 1.14, categories: ['clothing', 'footwear', 'accessory', 'home'], markets: ['tr'], minimumCity: 150_000, online: true, deliveryDays: 3, description: 'Turkish department store chain.' }),
   shop({ id: 'beymen', name: 'Beymen', kind: 'department', tier: 5, priceMultiplier: 1.70, categories: ['clothing', 'footwear', 'accessory', 'jewelry'], markets: ['tr'], minimumCity: 400_000, online: true, deliveryDays: 3, description: 'Turkish luxury department store.' }),
-  shop({ id: 'lc_waikiki', name: 'LC Waikiki', kind: 'highstreet', tier: 1, priceMultiplier: 0.72, categories: ['clothing', 'footwear'], markets: ['tr', 'ro', 'pl', 'eg', 'ma', 'kz', 'rs', 'bg'], minimumCity: 60_000, online: true, deliveryDays: 4, description: 'Turkish clothing retailer trading across Europe, the Middle East and Central Asia.' }),
+  shop({ id: 'lc_waikiki', name: 'LC Waikiki', kind: 'highstreet', tier: 1, priceMultiplier: 0.72, categories: ['clothing', 'footwear'], markets: ['tr', 'ro', 'pl', 'eg', 'ma', 'kz', 'rs', 'bg', 'al', 'hr', 'ke', 'ua'], minimumCity: 60_000, online: true, deliveryDays: 4, description: 'Turkish clothing retailer trading across Europe, the Middle East and Central Asia.' }),
   shop({ id: 'migros_tr', name: 'Migros Türkiye', kind: 'grocery', tier: 2, priceMultiplier: 0.98, categories: ['groceries', 'household'], markets: ['tr'], minimumCity: 60_000, online: true, deliveryDays: 1, description: 'Turkish supermarket chain, independent of the Swiss cooperative of the same origin.' }),
   shop({ id: 'bim', name: 'BİM', kind: 'grocery', tier: 1, priceMultiplier: 0.74, categories: ['groceries', 'household'], markets: ['tr', 'ma', 'eg'], minimumCity: 20_000, online: false, deliveryDays: 0, description: 'Turkish hard-discount grocery chain.' }),
 
@@ -487,8 +491,8 @@ export const REGIONAL_RETAILERS: readonly RealRetailer[] = [
   shop({ id: 'charles_fox', name: 'Charles Fox', kind: 'pharmacy', tier: 4, priceMultiplier: 1.00, categories: ['accessory'], markets: ['uk'], flagshipCities: ['uk-eng-london'], minimumCity: 0, online: true, deliveryDays: 3, description: 'London theatrical makeup and costume supplier, trading since 1878.' }),
 ];
 
-/** Everything, the first list and the regional one. */
-export const ALL_RETAILERS: readonly RealRetailer[] = [...REAL_RETAILERS, ...REGIONAL_RETAILERS];
+/** Everything: the first list, the regional one, and the local high streets. */
+export const ALL_RETAILERS: readonly RealRetailer[] = [...REAL_RETAILERS, ...REGIONAL_RETAILERS, ...LOCAL_CHAINS];
 
 export const RETAILER_REGISTRY = new Registry<RealRetailer>('retailers_real', ALL_RETAILERS);
 
