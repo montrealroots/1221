@@ -27,6 +27,8 @@ import { HOUSES_NOT_SHOPS, RENTAL_HOUSES, ownHousesIn } from './rental';
 import {
   INDEPENDENT_PHARMACY_WORD, PHARMACIES_ARE_INDEPENDENT, pharmacyChainsIn, postalOperatorIn,
 } from './errands';
+import { networksIn, vetGroupsIn } from './rooms';
+import { licenseAuthorityFor } from './documents';
 import { shoppableRetailers } from './catalog';
 import { ALL_RETAILERS, tradesIn } from './brands';
 
@@ -38,7 +40,8 @@ export type PlaceKind =
   | 'primary_school' | 'secondary_school'
   | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house'
   | 'arena' | 'concert_hall'
-  | 'pharmacy' | 'post_office' | 'launderette';
+  | 'pharmacy' | 'post_office' | 'launderette'
+  | 'dentist' | 'vet' | 'license_office' | 'phone_shop';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   jeweller: 'Jeweler', costumier: 'Costume House',
@@ -47,6 +50,8 @@ export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
   arena: 'Arena', concert_hall: 'Concert Hall',
   pharmacy: 'Pharmacy', post_office: 'Post Office', launderette: 'Launderette',
+  dentist: 'Dental Practice', vet: 'Veterinary Practice', license_office: 'Licensing Office',
+  phone_shop: 'Phone Shop',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
   rental_house: 'Rental House',
@@ -411,6 +416,31 @@ const COSTUMIER_NAMES = [
 ];
 
 const LAUNDERETTE_NAMES = ['The Washing Line', 'Spin Cycle', 'The Laundry Rooms', 'Soap & Suds', 'The Wash House'];
+
+/**
+ * A dental practice is named after whoever owns it, which is what practices
+ * really are: small partnerships with the partners' names over the door. None
+ * of these is a real dentist and the room says so.
+ */
+const DENTAL_PARTNERS: readonly string[] = [
+  'Aldridge', 'Barrow', 'Calvert', 'Denholm', 'Ellery', 'Fenwick', 'Garrick', 'Hollis',
+  'Ingram', 'Kessler', 'Lambourne', 'Merrick', 'Norwood', 'Ormerod', 'Prescott', 'Quinlan',
+  'Rowntree', 'Selby', 'Thackeray', 'Vaughan', 'Wexford', 'Yardley',
+];
+const DENTAL_WORDS: readonly string[] = [
+  'Dental Practice', 'Dental Surgery', 'Dental Care', 'Family Dentistry', 'Dental Studio',
+];
+const VET_WORDS: readonly string[] = [
+  'Veterinary Surgery', 'Animal Hospital', 'Veterinary Clinic', 'Vets', 'Veterinary Practice',
+];
+const VET_STEMS: readonly string[] = [
+  'Ashgrove', 'Bridgefoot', 'Cedar Lane', 'Dovecote', 'Elmfield', 'Foxhollow', 'Greenway',
+  'Hazelbank', 'Ironbridge', 'Larkspur', 'Meadowgate', 'Oakhill', 'Pinefold', 'Riverbank',
+  'Stonecross', 'Thornbury', 'Westgate', 'Willowbrook',
+];
+const PHONE_SHOP_WORDS: readonly string[] = [
+  'Mobile', 'Phone Repairs', 'Phones', 'Mobile Center', 'Communications',
+];
 const THEATRE_NAMES = ['The Playhouse', 'The Corner Theater', 'The Lyceum', 'The Rep', 'The Little Theater'];
 const MUSEUM_NAMES = ['The City Museum', 'The Museum Of The Town', 'The Old Customs House Museum', 'The Founders Museum'];
 const ARENA_NAMES = ['The Exhibition Arena', 'The Fieldhouse', 'The Trade Hall Arena', 'The Pavilion'];
@@ -468,10 +498,19 @@ const SPECS: readonly Spec[] = [
   // place with any children in it manages.
   { kind: 'primary_school', count: () => 2 },
   { kind: 'secondary_school', count: () => 2 },
+  // The last four ordinary rooms, appended after everything above so no
+  // existing place id moved. A dental practice and a vet everywhere, because
+  // everywhere has both; a licensing office in a town big enough to be given
+  // one rather than sending people to the county seat; and a phone shop
+  // wherever there is a high street to put one on.
+  { kind: 'dentist', count: () => 2 },
+  { kind: 'vet', count: () => 1 },
+  { kind: 'license_office', count: (_i, p) => (p >= 40_000 ? 1 : 0) },
+  { kind: 'phone_shop', count: (_i, p) => (p >= 25_000 ? 2 : 1) },
 ];
 
 /** Kinds a smaller city simply does not have, rather than getting one anyway. */
-const CAN_BE_ABSENT: ReadonlySet<PlaceKind> = new Set(['marina', 'stadium', 'arena', 'concert_hall', 'launderette']);
+const CAN_BE_ABSENT: ReadonlySet<PlaceKind> = new Set(['marina', 'stadium', 'arena', 'concert_hall', 'launderette', 'license_office']);
 
 /** City tags that put it on water a boat can be kept in. */
 const WATERFRONT_TAGS = ['beach', 'coastal', 'harbour', 'island', 'riviera'];
@@ -521,6 +560,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   rental_house: ['browse'],
   arena: ['watch'], concert_hall: ['watch'],
   pharmacy: ['shop'], post_office: ['visit'], launderette: ['visit'],
+  dentist: ['visit'], vet: ['visit'], license_office: ['visit'], phone_shop: ['shop'],
   primary_school: ['visit'], secondary_school: ['visit'],
 };
 
@@ -569,7 +609,7 @@ const PHARMACY_CORNERS = ['On The Square', 'By The Station', 'On The Corner', 'C
 
 function nameFor(
   kind: PlaceKind, rng: Rng, cuisine?: Cuisine, countryId?: string, highStreet?: ReadonlySet<string>,
-  local?: readonly string[],
+  local?: readonly string[], regionId?: string,
 ): string {
   switch (kind) {
     case 'restaurant': {
@@ -645,6 +685,36 @@ function nameFor(
       const operator = countryId ? postalOperatorIn(countryId) : undefined;
       return operator ? operator.name : 'The Post Office';
     }
+    case 'dentist': {
+      // A practice is named after its partners almost everywhere, so that is
+      // how SLATE names it. Nobody in here is a real dentist.
+      const one = rng.pick(DENTAL_PARTNERS);
+      const two = rng.pick(DENTAL_PARTNERS.filter((n) => n !== one));
+      const word = rng.pick(DENTAL_WORDS);
+      return rng.float(0, 1) < 0.45 ? `${one} And ${two} ${word}` : `${one} ${word}`;
+    }
+    case 'vet': {
+      // Where a real group has practices, one of them is a branch of it. Where
+      // none does, it is an independent practice, which is what most are.
+      const groups = countryId ? vetGroupsIn(countryId) : [];
+      const spare = groups.filter((one) => !highStreet?.has(one.name.toLowerCase()));
+      if (spare.length > 0 && rng.float(0, 1) < 0.55) return rng.pick(spare).name;
+      return `${local && local.length > 0 && rng.float(0, 1) < 0.6 ? rng.pick(local) : rng.pick(VET_STEMS)} ${rng.pick(VET_WORDS)}`;
+    }
+    case 'license_office': {
+      // The office is the real authority for where you are standing, which is
+      // fifty one different names in America alone.
+      const office = countryId ? licenseAuthorityFor(countryId, regionId)?.office : undefined;
+      return office ?? 'The Licensing Office';
+    }
+    case 'phone_shop': {
+      // A network's own shop where the network is real, and an independent
+      // repair shop where it is not.
+      const carriers = countryId ? networksIn(countryId).filter((one) => one.kind === 'own_network') : [];
+      const spare = carriers.filter((one) => !highStreet?.has(one.name.toLowerCase()));
+      if (spare.length > 0 && rng.float(0, 1) < 0.65) return `${rng.pick(spare).name}`;
+      return `${local && local.length > 0 && rng.float(0, 1) < 0.5 ? rng.pick(local) : rng.pick(VET_STEMS)} ${rng.pick(PHONE_SHOP_WORDS)}`;
+    }
     default: return 'A Place';
   }
 }
@@ -656,6 +726,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   marina: 60, storage: 20, jeweller: 45, costumier: 70, rental_house: 55,
   arena: 180, concert_hall: 150,
   pharmacy: 20, post_office: 25, launderette: 95,
+  dentist: 40, vet: 35, license_office: 70, phone_shop: 30,
   primary_school: 390, secondary_school: 390,
 };
 
@@ -753,10 +824,10 @@ export function placesIn(cityId: string): Place[] {
       const districts = IS_A_SCHOOL.has(spec.kind)
         ? (hoods.length > 0 ? hoods.map((one) => one.name) : [city.name])
         : undefined;
-      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine, city.countryId, street, districts);
+      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine, city.countryId, street, districts, city.parentId);
       if (spec.kind === 'marina' && rng.chance(0.5)) name = `${city.name} ${rng.pick(['Yacht Harbor', 'Marina', 'Yacht Basin'])}`;
       let guard = 0;
-      while ((used.has(name.toLowerCase()) || street?.has(name.toLowerCase())) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine, city.countryId, street, districts)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
+      while ((used.has(name.toLowerCase()) || street?.has(name.toLowerCase())) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine, city.countryId, street, districts, city.parentId)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
       used.add(name.toLowerCase());
       const hood = hoods.length > 0 ? rng.pick(hoods) : undefined;
       const prestige = hood?.prestige ?? 50;
@@ -920,6 +991,30 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
       'Two windows open out of five, and a queue that knows it.',
       'Parcels, stamps, and a form for everything.',
       'A counter at the back of a shop, which is how most of them are now.',
+    ])}`;
+    case 'dentist': return `A dental practice in ${where}. ${rng.pick([
+      'Two surgeries, a hygienist on Tuesdays, and a fish tank nobody has ever seen cleaned.',
+      'Above a shop, up a narrow stair, and the chair is newer than the building.',
+      'A practice that takes both the public list and private patients, and will ask which you are.',
+      'The waiting room has the same four magazines it had last year.',
+    ])}`;
+    case 'vet': return `A veterinary practice in ${where}. ${rng.pick([
+      'A consulting room, an operating theater out the back, and a cat carrier on every chair.',
+      'Dogs one side of the waiting room, cats the other, and nobody obeying the signs.',
+      'Open six days, with an out of hours number that sends you across town.',
+      'A scale by the door that every animal is weighed on before anything else happens.',
+    ])}`;
+    case 'license_office': return `A licensing office in ${where}. ${rng.pick([
+      'Take a ticket, watch the number board, and bring more paperwork than you think you need.',
+      'Appointments at the far counters and walk-ins on the long bench.',
+      'A photograph booth, a signature pad, and a queue with nothing to do but watch both.',
+      'Open till four, and the last ticket goes out at half past three.',
+    ])}`;
+    case 'phone_shop': return `A phone shop in ${where}. ${rng.pick([
+      'Handsets under glass, tariffs on the wall, and a repair bench behind the counter.',
+      'Somebody will offer you a plan you did not come in for, and it might be better.',
+      'A screen replaced while you wait, if you are prepared to wait.',
+      'Contracts one side, prepaid the other, and an accessory wall between them.',
     ])}`;
     case 'pharmacy': return `A pharmacy in ${where}. ${rng.pick([
       'A dispensary at the back and everything else in front of it.',

@@ -1987,6 +1987,46 @@ export interface SchoolPart {
 }
 
 /** Somebody's place in the education system where they live. */
+/** The state of somebody's teeth, and what has been done to them. */
+export interface Teeth {
+  personId: Id;
+  /** Out of a hundred, as it stood when anybody last looked. */
+  condition: number;
+  /** When that was. Everything decays from here rather than ticking. */
+  checkedAt: Instant;
+  /** How many months the practice asked to wait before the next look. */
+  recallMonths: number;
+  treatments: { id: string; at: Instant; paid: Money }[];
+}
+
+/** The state of the animal, which is the same idea with fur on it. */
+export interface PetHealth {
+  personId: Id;
+  condition: number;
+  checkedAt: Instant;
+  /** Whether it carries a microchip, which is the law in some countries. */
+  chipped: boolean;
+  /** When the boosters were last done, because they lapse after a year. */
+  boostedAt?: Instant;
+  neuteredAt?: Instant;
+  treatments: { id: string; at: Instant; paid: Money }[];
+}
+
+/** A mobile plan, on a real network. */
+export interface PhonePlan {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  networkId: string;
+  tariffId: string;
+  /** What it costs a month, here, on this network. */
+  monthly: Money;
+  startedAt: Instant;
+  /** Set when the old number is being moved across, which takes a day. */
+  numberMovesAt?: Instant;
+  endedAt?: Instant;
+}
+
 /** Training in a real art, with a real grading ladder behind it. */
 export interface Training {
   id: Id;
@@ -3474,7 +3514,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 69;
+export const SAVE_SCHEMA_VERSION = 70;
 
 export interface SaveMeta {
   id: Id;
@@ -3591,6 +3631,10 @@ export interface SaveUniverse {
   firstJobs?: Record<Id, FirstJobHeld>;
   /** Training in a martial art. Absent on a save from before it existed. */
   training?: Record<Id, Training>;
+  /** The last four ordinary rooms. Absent on a save from before they existed. */
+  teeth?: Record<Id, Teeth>;
+  petHealth?: Record<Id, PetHealth>;
+  phonePlans?: Record<Id, PhonePlan>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

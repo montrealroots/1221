@@ -592,7 +592,13 @@ before any delivery claim.
     - The cohesion checker measures eight ages across three countries. It is a floor rather than a proof: it catches what a player would notice inside a minute, not everything that could be wrong.
     - Every legal age carried is the general national minimum. States, provinces, parental consent and staged licences are not modelled, and the note in the room says so rather than the game implying a statute.
     - One growth curve rather than two, for want of a real growth reference and an honest field to key it on.
-    - The dentist, the vet, the DMV and the phone shop are still scenery: life contract item 9 names them and four of the rooms are built, not all of them.
+    - All eight ordinary rooms are built. Each is a command rather than a scene, so there is a chair, a counter and a queue, but nobody in the room to talk to.
+    - A dental arrangement is the headline share rather than a country's whole fee schedule, which runs to hundreds of line items and is renegotiated every year.
+    - Twelve veterinary groups is the well known end of a consolidating industry. Most practices in most countries are independent, which is how SLATE names the rest of them.
+    - Microchipping law is carried for twelve countries. Many more require it and SLATE offers the chip as sensible rather than as law where it does not carry the statute.
+    - The licensing office carries the authority's name and the counter's business. It does not carry each state's own fee schedule, which differs by state and by year.
+    - Seventy networks is the well known end of the world's mobile market, and every tariff on them is SLATE's own: a real tariff changes several times a year and there is no feed.
+    - Handsets are the ones already in the catalog. A trade in is priced as a share of what a handset cost new rather than against any real residual value guide.
     - The wording sweep ran across the things you do with what you own, which is where it was asked for. The same pass over every other option in the game — the shop floor, the dealership, the clinic, the trip — has not been made.
     - The brand marks on the four apps are SLATE's own drawings rather than the real logotypes, which stay out until they are licensed.
 

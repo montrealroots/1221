@@ -9,6 +9,14 @@
 
 import { useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { ageOf } from '@/engine/systems/lifespan';
+import {
+  countryHere, describePlan, officeHere, planOf, planPrice,
+} from '@/engine/systems/rooms';
+import {
+  ARRIVAL_LABEL, type Arrival, HANDSET_NOTE, NETWORK_KIND_LABEL, NETWORK_NOTE, OFFICE_NOTE,
+  PORTING_NOTE, QUEUE_NOTE, TARIFFS, TARIFF_BY_ID, counterJobsAt, networksIn,
+} from '@/engine/content/rooms';
 import { Panel, Stat, Empty, Tabs, Modal, Meter } from '@/ui/components/primitives';
 import { plural, titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
@@ -38,7 +46,7 @@ const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
   { id: 'see', label: 'See Something', kinds: ['landmark', 'museum', 'park', 'beach', 'viewpoint', 'cinema', 'theatre', 'stadium', 'arena', 'concert_hall'] },
   { id: 'shop', label: 'Shops', kinds: ['shop', 'market'] },
-  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'salon', 'pharmacy', 'post_office', 'launderette', 'dealership', 'marina', 'storage'] },
+  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'salon', 'pharmacy', 'post_office', 'launderette', 'dentist', 'vet', 'license_office', 'phone_shop', 'dealership', 'marina', 'storage'] },
   { id: 'stay', label: 'Stay Out', kinds: ['hotel', 'club'] },
 ];
 
@@ -48,7 +56,7 @@ export function CityWorkspace() {
   const [group, setGroup] = useState('eat');
   const [mode, setMode] = useState<Mode>('drive');
   const [ordering, setOrdering] = useState<Place | null>(null);
-  const [errand, setErrand] = useState<'salon' | 'chemist' | 'post' | null>(null);
+  const [errand, setErrand] = useState<'salon' | 'chemist' | 'post' | 'counter' | 'phone' | null>(null);
 
   const kinds = GROUPS.find((g) => g.id === group)?.kinds ?? [];
   const near = useWorld((s) => placesNear(s, { mode, kinds, limit: 120 }));
@@ -168,6 +176,16 @@ export function CityWorkspace() {
           {here.place?.kind === 'pharmacy' && (
             <button className="btn btn-sm btn-primary" onClick={() => setErrand(errand === 'chemist' ? null : 'chemist')}>
               Go To The Counter
+            </button>
+          )}
+          {here.place?.kind === 'license_office' && (
+            <button className="btn btn-sm btn-primary" onClick={() => setErrand(errand === 'counter' ? null : 'counter')}>
+              Take A Ticket
+            </button>
+          )}
+          {here.place?.kind === 'phone_shop' && (
+            <button className="btn btn-sm btn-primary" onClick={() => setErrand(errand === 'phone' ? null : 'phone')}>
+              Talk To Somebody
             </button>
           )}
           {here.place?.kind === 'post_office' && (
@@ -414,13 +432,141 @@ function lookLabel(place: Place): string {
  */
 function ErrandCounter({
   place, kind, onDone,
-}: { place: Place; kind: 'salon' | 'chemist' | 'post'; onDone: () => void }) {
+}: { place: Place; kind: 'salon' | 'chemist' | 'post' | 'counter' | 'phone'; onDone: () => void }) {
   const { sim, run, toast } = useGame();
   const [basket, setBasket] = useState<Record<string, number>>({});
   const [service, setService] = useState('tracked');
   const [grams, setGrams] = useState(1000);
   const [toCityId, setToCityId] = useState('');
   const [contents, setContents] = useState('');
+  const [arrival, setArrival] = useState<Arrival>('walk_in');
+  const [tariffId, setTariffId] = useState('sim_only');
+
+  if (kind === 'counter') {
+    const age = ageOf(sim);
+    return (
+      <div className="card card-tight" style={{ marginTop: 'var(--s3)' }}>
+        <div className="label">{officeHere(sim)}</div>
+        <p className="xs dim" style={{ margin: '4px 0 0' }}>{QUEUE_NOTE}</p>
+        <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+          {(Object.keys(ARRIVAL_LABEL) as Arrival[]).map((one) => (
+            <button
+              key={one}
+              className={`btn btn-sm${arrival === one ? ' btn-primary' : ''}`}
+              onClick={() => setArrival(one)}
+            >
+              {ARRIVAL_LABEL[one]}
+            </button>
+          ))}
+        </div>
+        <div className="list" style={{ marginTop: 'var(--s2)' }}>
+          {counterJobsAt(age).map((job) => (
+            <div key={job.id} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{job.label}</div>
+                <div className="xs dim">{job.about}</div>
+              </div>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  const result = run<{ note: string; done: boolean }>(
+                    'room.counter', { placeId: place.id, jobId: job.id, arrival },
+                  );
+                  if (result.ok) {
+                    toast(result.value!.note, result.value!.done ? 'positive' : 'neutral');
+                    if (result.value!.done) onDone();
+                  }
+                }}
+              >
+                {job.fee > 0 ? formatMoney(job.fee) : 'Free'}
+              </button>
+            </div>
+          ))}
+        </div>
+        <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{OFFICE_NOTE}</p>
+      </div>
+    );
+  }
+
+  if (kind === 'phone') {
+    const countryId = countryHere(sim);
+    const held = planOf(sim);
+    const shopNetworks = networksIn(countryId);
+    return (
+      <div className="card card-tight" style={{ marginTop: 'var(--s3)' }}>
+        <div className="label">The Counter</div>
+        {held ? (
+          <>
+            <p className="xs dim" style={{ margin: '4px 0 0' }}>{describePlan(sim, held)}</p>
+            <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+              <button
+                className="btn btn-sm"
+                onClick={() => {
+                  const result = run<{ note: string }>('room.end_plan', {});
+                  if (result.ok) { toast(result.value!.note, 'neutral'); onDone(); }
+                }}
+              >
+                End The Plan
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+              {TARIFFS.map((one) => (
+                <button
+                  key={one.id}
+                  className={`btn btn-sm${tariffId === one.id ? ' btn-primary' : ''}`}
+                  onClick={() => setTariffId(one.id)}
+                >
+                  {one.label}
+                </button>
+              ))}
+            </div>
+            <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{TARIFF_BY_ID[tariffId]?.about}</p>
+            <div className="list" style={{ marginTop: 'var(--s2)' }}>
+              {shopNetworks.map((network) => (
+                <div key={network.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{network.name}</div>
+                    <div className="xs dim">{NETWORK_KIND_LABEL[network.kind]} · {network.about}</div>
+                  </div>
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => {
+                      const result = run<{ note: string }>(
+                        'room.take_plan',
+                        { placeId: place.id, networkId: network.id, tariffId, keepNumber: true },
+                      );
+                      if (result.ok) { toast(result.value!.note, 'positive'); onDone(); }
+                    }}
+                  >
+                    {formatMoney(planPrice(sim, network, tariffId))} A Month
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+        <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+          <button
+            className="btn btn-sm"
+            onClick={() => {
+              const result = run<{ note: string; wentWell: boolean }>('room.repair_phone', { placeId: place.id });
+              if (result.ok) toast(result.value!.note, result.value!.wentWell ? 'positive' : 'neutral');
+            }}
+          >
+            Mend The Screen
+          </button>
+        </div>
+        <div className="col gap-2" style={{ marginTop: 'var(--s2)' }}>
+          <p className="xs dim" style={{ margin: 0 }}>{NETWORK_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{PORTING_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{HANDSET_NOTE}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (kind === 'salon') {
     return (

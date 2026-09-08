@@ -178,10 +178,54 @@ the pharmacy, the vet, the DMV, the bank branch, the phone shop. Each one a room
 with somebody in it. Most of these are two minutes of play and they are what
 makes the rest feel real.
 
-**Four of them are in.** The salon and the barber are one chair; the chemist,
-the post office and the launderette are the other three. The bank branch is the
-Bank workspace and the garage is in the vehicle journey. Still to come: the
-dentist, the vet, the DMV and the phone shop.
+**All of them are in.** The salon and the barber are one chair; the chemist,
+the post office and the launderette are three more; the bank branch is the Bank
+workspace and the garage is in the vehicle journey. The last four — the
+dentist, the vet, the licensing office and the phone shop — are built.
+
+The dentist carries the part that is genuinely public record and genuinely
+differs, which is who pays: England charges in three bands and exempts under
+eighteens, students under nineteen and new mothers; Germany pays more toward a
+crown if the bonus booklet was kept stamped; a Japanese patient pays thirty
+percent; adult dentistry is not in the Dutch basic package at all; Sweden is
+free until the year you turn twenty four; and in Canada, Australia and the
+United States it sits outside the health system entirely. Twelve arrangements
+across forty two countries. Twelve treatments, priced by band where a country
+charges in bands and by share where it charges a share, and nobody anywhere
+pays toward whitening because it is cosmetic. The recall interval is set by the
+state of the teeth rather than by the calendar, which is what NICE has actually
+recommended since 2004, and a set of teeth nobody looks at gets worse.
+
+The vet is twelve real veterinary groups — Vets4Pets, Medivet, CVS, VetPartners,
+IVC Evidensia, AniCura, Banfield, VCA, BluePearl, Thrive, Greencross, VetCor —
+in the countries they really trade in, and an independent practice everywhere
+else, which is what most practices are. The core vaccines are the ones the
+profession calls core, the boosters lapse after a year, and microchipping is
+carried as the law it is with the year it came in: dogs in Britain from 2016,
+cats in England from June 2024. An emergency at two in the morning costs what an
+emergency at two in the morning costs. It works on the animal a childhood
+actually produced.
+
+The licensing office is the real one for where you are standing, and every one
+of the fifty one American states and the District calls it something different:
+the California DMV, the Massachusetts RMV, the Michigan Secretary of State,
+PennDOT, Texas DPS, Oklahoma's Service Oklahoma. Ten things a counter really
+does, from a learner permit to a personal plate. An appointment is quicker than
+turning up and turning up first thing is quicker than turning up at two. And
+the paperwork can simply be wrong, in which case you queue, you are told which
+form or which date is not good enough, you pay nothing and you come back another
+day — settled per day, so coming back tomorrow is the fix and trying again in a
+minute is not.
+
+The phone shop sells seventy real networks across the world's markets, each only
+where it operates, and carries the one durable public fact about them that
+decides what your signal is like: whether the network runs its own masts or
+rents somebody else's. Three ways to buy — pay as you go, SIM only, pay monthly
+with a handset — with a tie in, an exit fee that falls to nothing when the term
+ends, and the legal right to keep your number. Nobody under eighteen signs a
+contract; pay as you go needs no signature, which is exactly why it exists. And
+the other half of a phone shop, which is mending the screen of the one you
+have, and sometimes not perfectly.
 
 ---
 

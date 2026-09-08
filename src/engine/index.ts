@@ -56,6 +56,7 @@ import { registerAthletics } from './systems/athletics';
 import { registerGrowing, startGrowingUp } from './systems/growing';
 import { registerExamSchedules, registerExams, startExams } from './systems/exams';
 import { registerTheWeek } from './systems/theweek';
+import { registerRooms } from './systems/rooms';
 import { registerWork } from './systems/work';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
@@ -134,6 +135,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerExams(sim);
   registerExamSchedules(sim);
   registerTheWeek(sim);
+  registerRooms(sim);
   registerWork(sim);
   registerBanking(sim);
   registerDining(sim);
@@ -1189,6 +1191,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.growing ??= {};
     universe.firstJobs ??= {};
     steps.push('Growing up, the moments that come round in it, and the Saturday job.');
+  }
+
+  if (from < 70) {
+    // Schema 70: the dentist, the vet and the phone shop keep records a save
+    // from before them simply has none of. Created empty rather than left
+    // missing, so nothing has to guard for the map itself.
+    universe.teeth ??= {};
+    universe.petHealth ??= {};
+    universe.phonePlans ??= {};
+    steps.push('The dentist, the vet, the licensing office and the phone shop.');
   }
 
   if (from < 69) {
