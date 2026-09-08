@@ -68,6 +68,8 @@ const DOMAINS: Domain[] = [
       { route: '/workspace/film', label: 'Your Own Kit', detail: 'What you bought outright, beside what you hired.' },
       { route: '/workspace/goingout', label: 'What Is On', detail: 'The cinemas in this city, what is showing this week and what a seat costs at each time.' },
       { route: '/workspace/goingout', label: 'Your Tickets', detail: 'The seats you have bought, when the doors open, and what you thought of what you saw.' },
+      { route: '/workspace/goingout', label: 'Fashion Weeks', detail: 'The season’s schedule, who is showing when, and what a house would make of you.' },
+      { route: '/workspace/goingout', label: 'Your Invitations', detail: 'The houses you have written to, where they sat you, and what the room made of what you wore.' },
     ],
   },
   {

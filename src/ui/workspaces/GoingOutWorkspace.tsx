@@ -23,9 +23,16 @@ import {
 } from '@/engine/content/cinemas';
 import { CITIES } from '@/engine/content/geography';
 import type { Place } from '@/engine/content/places';
-import type { CinemaTicket } from '@/engine/domain/model';
+import {
+  describeInvite, editionsWithShows, invitesOf, piecesBy, seatFor, showsIn, standingWith,
+  turningUpCost, upcomingEditions, type Edition,
+} from '@/engine/systems/fashion';
+import {
+  FASHION_NOTE, SEASON_LABEL, SEAT_LABEL, WEEK_TIER_LABEL, housesAt,
+} from '@/engine/content/fashionweeks';
+import type { CinemaTicket, FashionInvite } from '@/engine/domain/model';
 
-type Tab = 'whats_on' | 'tickets';
+type Tab = 'whats_on' | 'tickets' | 'fashion' | 'invites';
 type Snack = keyof typeof SNACK_PRICES;
 
 export function GoingOutWorkspace() {
@@ -35,19 +42,31 @@ export function GoingOutWorkspace() {
   const cinemas = useWorld((s) => cinemasIn(s));
   const tickets = useWorld((s) => ticketsOf(s));
   const waiting = tickets.filter((one) => one.status === 'booked');
+  const invites = useWorld((s) => invitesOf(s));
+  const openInvites = invites.filter((one) => one.status === 'asked' || one.status === 'accepted');
   const system = useWorld((s) => ratingSystemFor(CITIES.get(s.player.currentLocationId)?.countryId ?? ''));
   const season = useWorld((s) => seasonFor(new Date(s.now).getUTCMonth() + 1));
+  const fashion = tab === 'fashion' || tab === 'invites';
 
   return (
     <>
       <div className="page-head">
         <div className="eyebrow">Going Out</div>
         <h1>Going Out</h1>
-        <p className="muted">
-          A seat at a named time in a named room, and whoever else decided to come out that
-          evening. {season.about}
-        </p>
-        <p className="xs dim">{CINEMA_NOTE}</p>
+        {fashion
+          ? (
+            <p className="muted">
+              A show is not ticketed and a seat cannot be bought. You write to the house, they decide,
+              and then the room looks at what you turned up in.
+            </p>
+          )
+          : (
+            <p className="muted">
+              A seat at a named time in a named room, and whoever else decided to come out that
+              evening. {season.about}
+            </p>
+          )}
+        <p className="xs dim">{fashion ? FASHION_NOTE : CINEMA_NOTE}</p>
       </div>
 
       <Tabs
@@ -56,6 +75,8 @@ export function GoingOutWorkspace() {
         tabs={[
           { id: 'whats_on', label: 'What Is On', badge: cinemas.length },
           { id: 'tickets', label: 'Your Tickets', badge: waiting.length },
+          { id: 'fashion', label: 'Fashion Weeks' },
+          { id: 'invites', label: 'Your Invitations', badge: openInvites.length },
         ]}
       />
 
@@ -66,6 +87,199 @@ export function GoingOutWorkspace() {
       )}
 
       {tab === 'tickets' && <YourTickets tickets={tickets} />}
+
+      {tab === 'fashion' && <FashionWeeks />}
+
+      {tab === 'invites' && <YourInvitations invites={invites} />}
+    </>
+  );
+}
+
+/**
+ * The season's schedule.
+ *
+ * Every week that is really running, in the order it runs. Only the weeks
+ * whose houses the catalog carries have a schedule you can ask for a seat at,
+ * and the page says why the others do not.
+ */
+function FashionWeeks() {
+  const { sim, run } = useGame();
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  // The calendar and every seat on it move with the clock and with what is in
+  // the wardrobe, so both are read straight off the simulation.
+  const all = upcomingEditions(sim, 300 * MS_DAY);
+  const withShows = editionsWithShows(sim, 300 * MS_DAY);
+  const open = withShows.find((edition) => edition.id === openId);
+
+  return (
+    <>
+      <Panel title="The Season" subtitle="Every week that is running, in the order it runs.">
+        <div className="list">
+          {all.slice(0, 24).map((edition) => {
+            const houses = housesAt(edition.weekId).length;
+            return (
+              <div key={edition.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{edition.week.name}</div>
+                  <div className="xs dim">
+                    {SEASON_LABEL[edition.season]} {edition.year}
+                    {' · '}{CITIES.get(edition.week.cityId)?.name ?? edition.week.cityId}
+                    {' · '}{WEEK_TIER_LABEL[edition.week.tier]}
+                  </div>
+                  <div className="xs muted" style={{ marginTop: 2 }}>{edition.week.about}</div>
+                </div>
+                <div style={{ textAlign: 'right', minWidth: 130 }}>
+                  <div className="mono small">{formatDate(edition.startsAt, sim.zone)}</div>
+                  <div className="xs dim">{houses > 0 ? plural(houses, 'show') : 'No schedule here'}</div>
+                </div>
+                <button
+                  type="button"
+                  className={`btn btn-sm${houses > 0 ? ' btn-primary' : ''}`}
+                  disabled={houses === 0}
+                  onClick={() => setOpenId(openId === edition.id ? null : edition.id)}
+                >
+                  {houses === 0 ? 'Nothing Listed' : openId === edition.id ? 'Close' : 'The Schedule'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+        <p className="xs dim" style={{ marginTop: 10 }}>
+          A week with nothing listed is still a real week that really runs. SLATE only carries the
+          houses its own shops sell, which are the Paris, Milan, London and New York ones, so those
+          are the only schedules there is a seat to ask for.
+        </p>
+      </Panel>
+
+      {open && <TheSchedule edition={open} onAsk={(showId) => run('fw.request', { showId })} />}
+    </>
+  );
+}
+
+function TheSchedule({ edition, onAsk }: { edition: Edition; onAsk: (showId: string) => void }) {
+  const { sim } = useGame();
+  const shows = showsIn(sim, edition);
+  const asked = new Set(invitesOf(sim)
+    .filter((one) => one.status !== 'refused' && one.status !== 'declined')
+    .map((one) => one.showId));
+  const zone = CITIES.get(edition.week.cityId)?.timeZone ?? sim.zone;
+
+  return (
+    <Panel
+      title={`${edition.week.name} — ${SEASON_LABEL[edition.season]} ${edition.year}`}
+      subtitle={`${plural(shows.length, 'show')} over ${plural(6, 'day')} in ${CITIES.get(edition.week.cityId)?.name}. Getting there and being ready for it is about ${formatMoney(turningUpCost(edition.week.cityId))}.`}
+    >
+      <div className="list">
+        {shows.map((show) => {
+          const seat = seatFor(sim, show.house);
+          const owned = piecesBy(sim, show.house.brand).length;
+          const already = asked.has(show.id);
+          const gone = show.at < sim.now + 3 * MS_DAY;
+          return (
+            <div key={show.id} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{show.house.brand}</div>
+                <div className="xs dim">
+                  {formatDate(show.at, zone)} at {formatTime(show.at, zone)} · {show.venue}
+                </div>
+                <div className="xs muted" style={{ marginTop: 2 }}>{show.house.about}</div>
+              </div>
+              <div style={{ textAlign: 'right', minWidth: 150 }}>
+                <div className="mono small">{standingWith(sim, show.house)} of 100</div>
+                <div className="xs dim">
+                  {seat ? `They would sit you ${SEAT_LABEL[seat].toLowerCase()}` : 'They would not have you'}
+                </div>
+                <div className="xs dim">{owned > 0 ? `${plural(owned, 'piece')} of theirs` : 'Not a customer'}</div>
+              </div>
+              <button
+                type="button"
+                className={`btn btn-sm${already || gone ? '' : ' btn-primary'}`}
+                disabled={already || gone}
+                onClick={() => onAsk(show.id)}
+              >
+                {already ? 'Written' : gone ? 'Closed' : 'Ask For A Seat'}
+              </button>
+            </div>
+          );
+        })}
+      </div>
+      <p className="xs dim" style={{ marginTop: 10 }}>
+        A seat is not sold and cannot be bought. What decides it is how many people know your name,
+        what the industry thinks of you, and whether you have ever bought anything the house makes.
+        The list closes about a fortnight out.
+      </p>
+    </Panel>
+  );
+}
+
+/** The letters you wrote, and what came back. */
+function YourInvitations({ invites }: { invites: FashionInvite[] }) {
+  const { sim, run } = useGame();
+
+  if (invites.length === 0) {
+    return <Empty title="Nothing Asked For" body="Write to a house from the schedule and the letter lives here until it is answered." />;
+  }
+
+  return (
+    <>
+      {invites.map((invite) => {
+        const zone = CITIES.get(invite.cityId)?.timeZone ?? sim.zone;
+        const here = sim.player.currentLocationId === invite.cityId;
+        const open = sim.now >= invite.at - 60 * 60_000 && sim.now <= invite.at + 15 * 60_000;
+        return (
+          <Panel key={invite.id} title={`${invite.brand} — ${invite.season}`} subtitle={describeInvite(sim, invite)}>
+            <div className="grid grid-4">
+              <Stat label="Where" value={invite.weekName} note={CITIES.get(invite.cityId)?.name ?? invite.cityId} />
+              <Stat label="When" value={formatTime(invite.at, zone)} note={formatDate(invite.at, zone)} />
+              <Stat
+                label="Where They Sat You"
+                value={invite.seat ? SEAT_LABEL[invite.seat as keyof typeof SEAT_LABEL] : '—'}
+                note={invite.venue}
+              />
+              {invite.attended && (
+                <Stat
+                  label="What The Room Made Of It"
+                  value={invite.attended.verdict}
+                  note={invite.attended.photographed ? 'Photographed' : 'Nobody took a picture'}
+                />
+              )}
+            </div>
+
+            {invite.attended && (
+              <>
+                <p className="small" style={{ marginTop: 10 }}>{invite.attended.note}</p>
+                <p className="xs dim" style={{ margin: '4px 0 0' }}>You wore: {invite.attended.look}</p>
+              </>
+            )}
+
+            {invite.status === 'accepted' && (
+              <>
+                <div className="row gap-2 wrap" style={{ marginTop: 12 }}>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-primary"
+                    disabled={!open || !here}
+                    onClick={() => run('fw.attend', { inviteId: invite.id })}
+                  >
+                    Go In
+                  </button>
+                  <button type="button" className="btn btn-sm" onClick={() => run('fw.decline', { inviteId: invite.id })}>
+                    Turn It Down
+                  </button>
+                </div>
+                <p className="xs dim" style={{ marginTop: 8 }}>
+                  {!here
+                    ? `The show is in ${CITIES.get(invite.cityId)?.name}. You have to be there, dressed, before it starts.`
+                    : open
+                      ? 'They are letting people in. What you have on is what the room sees.'
+                      : 'They open the doors an hour before, and a show does not wait once it has started.'}
+                </p>
+              </>
+            )}
+          </Panel>
+        );
+      })}
     </>
   );
 }

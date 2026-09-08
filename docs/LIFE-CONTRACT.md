@@ -162,7 +162,7 @@ item at home."
   that there is no listings feed: the chains, the buildings and the country's
   own certificate are real, and the program is SLATE's own.
 - **Fashion weeks** — real cities, real months, real houses showing. Getting in
-  is a matter of who you are. What you wear is looked at.
+  is a matter of who you are. What you wear is looked at. Done.
 - **Concerts, matches, galleries, museums, festivals** — real venues, real
   seasons, tickets that sell out.
 - **Restaurants** — done. Bars and clubs — done.
@@ -525,8 +525,36 @@ answer says what would make it yes.
    the room is who else came — packed out or nine people, and sometimes
    somebody behind you spends the second half kicking your chair.
 
-   **Still to come in this section:** fashion weeks, and concerts, matches,
-   galleries and venues on the real calendar.
+   **And the second part: the fashion weeks.** Thirty real weeks in twenty
+   seven cities, running in the months they really run in — the four, and the
+   Paris and Milan menswear weeks, and Paris couture in January and July, and
+   Copenhagen and Tokyo and Seoul and Lagos and São Paulo and the rest of them.
+   A collection is named a season ahead of the calendar the way the trade names
+   it, so a February show is that autumn and a September show is the following
+   spring. Seven of those weeks have a schedule you can act on, because SLATE
+   only carries the houses its own shops sell, and the page says so rather than
+   inventing a designer nobody can buy from.
+
+   A show is not ticketed and a seat cannot be bought. You write to the house
+   and you wait, and what comes back is who you are: how many people know your
+   name, what the industry thinks of you, whether you have ever bought anything
+   the house makes, and what controversy you happen to be carrying. A house
+   guards its front row absolutely and its standing room barely at all, which
+   is how a good client nobody has heard of still gets through the door and a
+   famous stranger still does not get a Chanel front row. The list closes about
+   a fortnight out.
+
+   Then you turn up, and the room looks at what you have on. You have to be in
+   that city, and you have to be dressed — the door uses the mirror's own rule
+   about what an outfit is missing, so one shirt and nothing else is refused by
+   name. What the room makes of it is the mirror's verdict, plus the house's
+   own clothes, which is the only compliment that room reads, minus having been
+   photographed in the same thing a fortnight ago. Whether a camera points at
+   you at all is where you were sat and how many people already know your face,
+   and being photographed badly moves the controversy rather than the fame.
+
+   **Still to come in this section:** concerts, matches, galleries and venues
+   on the real calendar.
 8. The ordinary rooms: salon, garage, chemist, post office.
 9. Childhood through later life, end to end.
 10. Free-text intent across all of it.

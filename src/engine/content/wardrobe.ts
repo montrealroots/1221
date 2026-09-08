@@ -337,7 +337,7 @@ export const DRESS_CODE_BY_ID: Readonly<Record<string, DressCode>> = Object.from
 export const OCCASION_CODE: Readonly<Record<string, string>> = {
   premiere: 'red_carpet', awards: 'red_carpet', gala: 'black_tie', charity_gala: 'black_tie',
   wedding: 'formal', funeral: 'mourning', memorial: 'mourning',
-  party: 'cocktail', club: 'cocktail', opening: 'cocktail',
+  party: 'cocktail', club: 'cocktail', opening: 'cocktail', fashion_show: 'cocktail',
   meeting: 'business', pitch: 'business', interview: 'business', bank: 'business',
   office: 'business_casual', lunch: 'business_casual',
   date: 'smart_casual', dinner: 'smart_casual', drinks: 'smart_casual', theatre: 'smart_casual',

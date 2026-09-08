@@ -416,6 +416,20 @@ before any delivery claim.
 
     **Held by the gate.** `tools/cinema-check.mjs` measures the chains against the geography, the certificates against each other, the program across twenty cities on four continents, and every showtime's price and seat count; `tests/cinema.test.ts` is 20 tests. A browser tour ran the whole of it: a seat at the TCL Chinese for eleven ten in the morning at $16.50, a panel that refused to let it be used from across town, a drive there, three hours of waiting, and then "Good. Twenty minutes too long, and still good. A decent house. Nothing happened that was not on the screen."
 
+44. Life contract item 7, second part — the fashion weeks. **"After that start on the rest of what's on the life contract."**
+
+    `content/fashionweeks.ts` carries thirty real weeks in twenty seven cities, each running in the months it really runs in: New York, London, Milan and Paris in February and September, the Paris and Milan menswear weeks in January and June, Paris couture in January and July, and then Copenhagen, Berlin, Stockholm, Madrid, Tokyo, Seoul, Shanghai, São Paulo, Mexico City, Sydney, Lagos, Mumbai, Delhi, Toronto, Vancouver, Amsterdam, Tbilisi, Melbourne, Johannesburg, Cape Town, Miami, Lisbon and Istanbul. A collection is named a season ahead of the calendar the way the trade names it: a February show is that autumn, a September show is the following spring, and a test holds that line.
+
+    **The houses are houses you can buy from.** Forty one house slots across seven schedules, and the gate fails the build if any one of them is a brand the catalog does not sell — because a wardrobe and a front row have to be talking about the same thing, and a house nobody can buy from is a seat nobody can earn. The schedule lays itself out the way a real one does: the biggest names close the week rather than open it, the slots spread across the day the shows really run over, and no two houses ever show in the same room at the same minute. The rest of the weeks are still on the calendar, still real, and say plainly that SLATE does not carry the designers who show there.
+
+    **A seat is not sold.** You write to the house and you wait four to eighteen days. What comes back is who you are: fame, prestige and professional standing, plus what you have bought from that house and how much of it you have actually worn, minus whatever controversy you are carrying. A house guards its front row absolutely and its standing room barely at all, which is how a good client nobody has heard of still gets through the door while a famous stranger does not get a Chanel front row. The list closes about a fortnight out and says so.
+
+    **And then the room looks at you.** You have to be in that city and you have to be dressed — the door applies the wardrobe's own rule about what an outfit is missing, so one T-shirt and nothing else is refused by name. What the room makes of it is the mirror's verdict against a cocktail code, plus the house's own clothes, which is the only compliment that room reads, or five for somebody else on the same week's schedule, minus twelve for having been photographed in the same thing a fortnight ago. Whether a camera points at you at all is where you were sat and how many people already know your face, and a bad photograph moves your controversy rather than your fame. A show does not wait: fifteen minutes after it starts the seat is marked missed, in front of everybody.
+
+    **Two things found by running it.** Turning up was appraised against an occasion the wardrobe does not have, so a front row was being judged as casual wear; `fashion_show` is a cocktail code now. And the door let somebody into Paris Fashion Week wearing a single Uniqlo T-shirt, which a browser tour did and a screenshot recorded before it was fixed.
+
+    **Held by the gate.** `tools/fashion-check.mjs` measures the weeks against the geography, every house against the catalog, the rows against each other, and a whole year of schedules; `tests/fashion.test.ts` is 19 tests. A browser tour ran the whole of it: the season's calendar, the Paris schedule with Chanel closing it, a letter to Acne Studios, a second row, a Dior tuxedo and a Chanel bag, and a photograph that was not entirely good news.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -424,7 +438,8 @@ before any delivery claim.
     - Visa rules are not carried, so the six-month passport rule warns for every border and refuses for none.
     - A rating feed would be needed for a real insurance premium; an issuer's real invitation rule is published by nobody.
     - The cinema program is SLATE's own: the chains, the buildings and the certificates are real, and what is on the screen is not, because there is no listings feed.
-    - Fashion weeks, concerts, matches, galleries and venues on the real calendar are the rest of section 7 and are not built.
+    - Only the seven weeks whose houses the catalog sells have a schedule to ask for a seat at; the other twenty three are on the calendar and say why they have nothing listed.
+    - Concerts, matches, galleries and venues on the real calendar are the rest of section 7 and are not built.
     - The dialogue library stands at 1,296 of the 100,001 target; that is writing, not building.
     - Base44 live persistence is unverified against a deployment, and is reported unavailable rather than passing.
     - Clothes only soil when you commit a look, so a life lived through the Advance button never needs washing. Time alone should soil what you are wearing.

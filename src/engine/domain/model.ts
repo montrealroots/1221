@@ -1483,6 +1483,49 @@ export interface CinemaTicket {
   };
 }
 
+/**
+ * A seat at a show, asked for and either given or not.
+ *
+ * The week, the edition and the show are all derived from the calendar rather
+ * than stored, so a save carries the letters you wrote and nothing else.
+ * Everything the invitation needs to stand on its own once the season has
+ * moved on — the house, the week, the season it was showing, the venue — is
+ * copied onto it.
+ */
+export interface FashionInvite {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  weekId: string;
+  weekName: string;
+  editionId: string;
+  showId: string;
+  /** The house, spelled as the catalog spells it. */
+  brand: string;
+  cityId: string;
+  /** The collection it was showing, named the way the industry names it. */
+  season: string;
+  venue: string;
+  at: Instant;
+  askedAt: Instant;
+  status: 'asked' | 'accepted' | 'refused' | 'declined' | 'attended' | 'missed';
+  /** Where they sat you, once they have answered yes. */
+  seat?: string;
+  /** What the letter said, either way. */
+  note?: string;
+  /** Written once, when you have actually been. */
+  attended?: {
+    at: Instant;
+    /** What the room made of what you had on, 0-100. */
+    verdict: number;
+    photographed: boolean;
+    note: string;
+    /** What you were wearing, so the record stands after the wardrobe changes. */
+    look: string;
+    cost: Money;
+  };
+}
+
 export interface Outfit {
   id: Id;
   saveId: Id;
@@ -2902,7 +2945,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 57;
+export const SAVE_SCHEMA_VERSION = 58;
 
 export interface SaveMeta {
   id: Id;
@@ -3035,6 +3078,7 @@ export interface SaveUniverse {
   /** Pictures of your own, from the first day to the last festival. */
   indieFilms: Record<Id, IndieFilm>;
   cinemaTickets: Record<Id, CinemaTicket>;
+  fashionInvites: Record<Id, FashionInvite>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

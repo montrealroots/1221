@@ -46,6 +46,7 @@ import { registerRentalSystem } from './systems/rental';
 import { registerShootSystem } from './systems/shoot';
 import { registerPictureSystem } from './systems/picture';
 import { registerCinemaSystem } from './systems/cinema';
+import { registerFashionSystem } from './systems/fashion';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -112,6 +113,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerShootSystem(sim);
   registerPictureSystem(sim);
   registerCinemaSystem(sim);
+  registerFashionSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1023,6 +1025,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // seat at a time, and a room with other people in it.
     universe.cinemaTickets ??= {};
     steps.push('Cinemas, and a ticket for a seat at one.');
+  }
+
+  if (from < 58) {
+    // Schema 58: the fashion weeks. You write to a house, they decide, and
+    // what you turn up in is looked at.
+    universe.fashionInvites ??= {};
+    steps.push('The fashion weeks, and whether a house gives you a seat.');
   }
 
   if (from < 55) {
