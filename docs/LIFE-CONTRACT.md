@@ -707,9 +707,42 @@ answer says what would make it yes.
    the schedule and onto nothing a screen can reach. The calendar item is
    called A Quiet Day. The player's own character carries no such date at all.
 
-   **Still to come:** part two, school — real education systems by country, a
-   class schedule, school sports, grades, acting classes and the ability to
-   start as a child; part three, university — real universities placed
+   **Part two is done: school.** A life can start at five now, and there is
+   something for it to do. 31 education systems covering 89 countries by name
+   and everywhere else honestly on a general one: a fifteen year old is in
+   Grade 10 in Los Angeles, Year 11 in London, Class 10 in Delhi and Seconde
+   in Paris, and what they sit at the end of it is a diploma, a GCSE, a board
+   examination or the Baccalauréat. 94 stages, 46 named qualifications, and
+   the ages each country's law actually compels.
+
+   A week is thirty lessons across thirteen subjects, built as a timetable
+   rather than drawn at random — no subject twice running and none more than
+   twice in a day, which is the constraint a real timetable is built under.
+   Marks move on whether you turned up and whether you worked, attendance is
+   counted, and below four fifths the school rings home. What the marks come
+   to decides whether a university would look at you, and whether it would pay.
+
+   Eight clubs, three of which is as many as anybody keeps up, and 24 school
+   sports each only in the countries whose schools really field them: an
+   American high school has a football team and an English one does not, an
+   Australian school plays Australian rules and a Kenyan one runs. A trial is
+   a trial and it can turn you down.
+
+   And the play, which is the point. Twelve plays a school can actually put
+   on, all of them out of copyright and all of them really staged by school
+   drama departments. You are cast out of the drama club on what you can
+   actually do, and what a young character can do is held under what is in
+   them — a gifted twelve year old is a gifted twelve year old, not a
+   professional who happens to be short. On the night, somebody outside the
+   school is reading the potential rather than the finished thing, which is
+   exactly how a child gets found, and it is a narrow doorway.
+
+   The school itself is the honest limit and the room says so: there are
+   millions of schools and no feed to name them from, so every one is SLATE's
+   own with a plausible name — the district it stands in, or a saint only in
+   the countries that name schools after saints.
+
+   **Still to come:** part three, university — real universities placed
    geographically, majors, admission on grades, and academic and athletic
    scholarships.
 

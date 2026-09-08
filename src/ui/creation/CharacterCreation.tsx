@@ -394,7 +394,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div className="field">
           <label htmlFor="birth-year">Year Of Birth</label>
           <input
-            id="birth-year" type="number" min={1940} max={config.startYear - 16}
+            id="birth-year" type="number" min={1940} max={config.startYear - 5}
             value={config.birthYear}
             onChange={(e) => set('birthYear', Number(e.target.value))}
           />
@@ -983,7 +983,9 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
     const age = ageAtStart(config);
-    if (age < 16) issues.push('Your character has to be at least 16 when the save begins.');
+    // Five, because school starts around then and there is now a school to
+    // go to. Below that a life is somebody else's decisions all the way down.
+    if (age < 5) issues.push('Your character has to be at least 5 when the save begins.');
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That is not a valid day of the month.');
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');

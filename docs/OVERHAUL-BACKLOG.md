@@ -496,6 +496,28 @@ before any delivery claim.
 
     **Held by the gate.** `tools/lifespan-check.mjs` measures every published figure against the geography and against a range a country has actually recorded, the ageing curve for monotonicity and for cliffs, the growth curves, the gates against every country that sets one, a generated family for impossible ages, and the whole system for anything a character could not know; `tests/lifespan.test.ts` is 36 tests. Schema 61 adds `Person.adultHeightCm`, `Person.adultWeightKg`, `Person.heritageId`, `Person.gender`, `Person.parentHeritageIds`, and a load-time build of the family so a save from before this gets the one it always had. A browser tour picked a Yoruba mother and an Irish father, took a suggested name from each of three heritages, set an adult height of 191 cm at creation, found all of it on the character, and read the Your Life tab back: age, stage, size, what a year costs, the pension age, the four people born alongside, and eight gates each answered with the American rule.
 
+48. Life contract item 9, second part — school. **"A full educational system catered to wherever im at in the world... play sports at school, get physical, have a full class schedule."**
+
+    A save could not start younger than sixteen and there would have been nothing for it to do if it had. Now it can start at five.
+
+    **The shape of an education, which is public record.** 31 systems covering 89 countries by name, and a general one everywhere else that says it is the general one. A fifteen year old is in Grade 10 in Los Angeles, Year 11 in London, Class 10 in Delhi, Seconde in Paris and the first year of high school in Tokyo, and what they sit at the end of it is a diploma, a GCSE, a Class 10 board examination, the Baccalauréat or the Gaokao. 94 stages and 46 named qualifications, plus the ages each country's law actually compels — **and the checker found two places that were wrong about that:** Sweden compels from six and grundskola started at seven, and Brazil compels from four and had nothing before six. Both have the missing year in them now.
+
+    **A week that is a timetable.** Thirty lessons across thirteen subjects, built by quota and then dealt out under the constraint a real timetable is built under: nothing twice running and nothing more than twice in a day. Drawing each period at random had given a seven year old three periods of games in one day, which is not a timetable, it is a coincidence.
+
+    **Marks that are earned.** Every subject starts where the child's aptitude for it is, and moves toward what they are capable of at the speed they are working — a term is a lot of days and nothing jumps. Skipping costs the mark and the attendance, and below four fifths the school rings home. What the average comes to says plainly whether a university would look, and whether it would pay.
+
+    **Sport that is that country's sport.** 24 school sports, each listed only in the countries whose schools really field them: American football only in America, Australian rules only in Australia, cricket across the Commonwealth, kabaddi in South Asia, ice hockey in Canada and the Nordics. A trial is a trial and about half of them say no. Out of season is refused by name.
+
+    **And the play, which is why any of this is in a game about film.** Twelve plays, all out of copyright and all genuinely staged by school drama departments — Macbeth, The Crucible, An Inspector Calls, A Doll's House. You are cast out of the drama club on what you can actually do on the day.
+
+    **The design problem that had to be solved first.** The player's character is the sandbox one with every attribute at the ceiling, so a twelve year old walked into the audition with a hundred in everything and took the lead in Macbeth on day one. That is not a childhood. There is a youth curve now: what a character can bring is scaled by the years they have actually had, reaching everything they are in the early twenties. It caps nothing permanently and takes nothing off an adult — it is a ceiling on what has been delivered so far. The ladder it produces is the right one: ensemble at nine, a named part at thirteen, the lead at sixteen.
+
+    **And the rule that makes being found as a child possible.** Being noticed is read against *raw* talent rather than what a young body can currently deliver, because somebody sitting at the back of a school hall is reading potential — which is exactly how a child actor is found. It still needs a real part, a good night, and a roll, and it comes off at about one school play in six for somebody genuinely gifted.
+
+    **The honest limit, stated in the room.** There are millions of schools on earth and no feed to name them from, so every school in SLATE is SLATE's own — named for the district it stands in, or a saint only in the countries that really name schools after saints, because a St Martin High School in Tokyo is not a school anybody would believe. The first pass named a Beaconsfield Primary School in Riyadh and a St Martin's in Tokyo, and both are fixed.
+
+    **Held by the gate.** `tools/school-check.mjs` measures every system for stage order, gaps, year naming and the compulsory years, every subject and club against a real attribute or skill, every sport against the countries that field it, a generated week in four countries for the timetable constraints, a school in ten cities named for where it stands, and the acting ladder for monotonicity; `tests/school.test.ts` is 26 tests. Schema 62 adds `universe.schooling`. A browser tour started a fourteen year old in Los Angeles, read the timetable and the marks off the page, worked a full day, joined the drama club and took a named part in The Crucible.
+
 25. **Parked, and not pretended otherwise.** Carried forward so nothing here is quietly dropped:
 
     - Private and offshore accounts are held in the home currency; nothing converts, and there is no FX.
@@ -512,6 +534,10 @@ before any delivery claim.
     - Clothes only soil when you commit a look, so a life lived through the Advance button never needs washing. Time alone should soil what you are wearing. This now costs something visible: the launderette's service wash is unreachable for a character who never commits a look, and the room says so rather than inventing dirty clothes.
     - Film kit is not a thing that lives in the house: it does not wear, does not break, has no room, and is not in Your Things.
     - A finished picture of your own does not reach the industry half: it has no distributor, no box office and no trade coverage, and a festival that says yes is fame and standing rather than a career.
+    - The life cycle is two parts of three: university — real universities placed geographically, majors, admission on grades, and academic and athletic scholarships — is not built.
+    - A school day is a command rather than a scene, so there is no room in it: no teacher, no classmates and no conversation, only the day and what it did to the marks.
+    - Subject names are the shape of a week rather than each country's own curriculum vocabulary, which SLATE does not carry.
+    - Every school is SLATE's own for want of a feed, unlike the universities that come next, which are public record.
     - The life cycle is one part of three. School and university — real education systems, a class schedule, school sports, grades, acting classes, starting as a child, real universities placed geographically, majors and scholarships — are not built, and until they are there is nothing for a character under sixteen to do with a day.
     - Every legal age carried is the general national minimum. States, provinces, parental consent and staged licences are not modelled, and the note in the room says so rather than the game implying a statute.
     - One growth curve rather than two, for want of a real growth reference and an honest field to key it on.

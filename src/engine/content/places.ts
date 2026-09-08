@@ -35,6 +35,7 @@ export type PlaceKind =
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
+  | 'primary_school' | 'secondary_school'
   | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house'
   | 'arena' | 'concert_hall'
   | 'pharmacy' | 'post_office' | 'launderette';
@@ -49,6 +50,7 @@ export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
   rental_house: 'Rental House',
+  primary_school: 'Primary School', secondary_school: 'Secondary School',
 };
 
 /** What you can do somewhere. */
@@ -462,6 +464,10 @@ const SPECS: readonly Spec[] = [
   { kind: 'pharmacy', count: () => 2 },
   { kind: 'post_office', count: () => 1 },
   { kind: 'launderette', count: (_i, p) => (p >= 60_000 ? 1 : 0) },
+  // Every town has schools. Two primaries and a secondary is the smallest a
+  // place with any children in it manages.
+  { kind: 'primary_school', count: () => 2 },
+  { kind: 'secondary_school', count: () => 2 },
 ];
 
 /** Kinds a smaller city simply does not have, rather than getting one anyway. */
@@ -515,6 +521,7 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   rental_house: ['browse'],
   arena: ['watch'], concert_hall: ['watch'],
   pharmacy: ['shop'], post_office: ['visit'], launderette: ['visit'],
+  primary_school: ['visit'], secondary_school: ['visit'],
 };
 
 /**
@@ -526,10 +533,43 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
  */
 // Said in English, because the whole game is: a branch is distinguished by
 // where it stands, not by a phrase from a language nothing else here uses.
+/**
+ * What a school is called.
+ *
+ * SLATE's own, all of it. Schools are named after the place they stand in,
+ * somebody local, a saint or a feature of the landscape, which is what these
+ * are — but not one of them is a real school, and the room says so.
+ */
+const SCHOOL_STEMS: readonly string[] = [
+  'Ashfield', 'Bramwell', 'Cedar Grove', 'Downing', 'Eastbrook', 'Fairmount', 'Greenhill',
+  'Hollowvale', 'Ironbridge', 'Kingsmead', 'Larkfield', 'Marchmont', 'Northgate', 'Oakhurst',
+  'Pinewood', 'Queensbury', 'Riverton', 'Stonebridge', 'Thornbury', 'Underhill', 'Vale View',
+  'Westbourne', 'Whitcombe', 'Yarrow', 'Beaconsfield', 'Coldharbor', 'Elmwood', 'Foxglove',
+  'Harrowfield', 'Lindenwood', 'Meadowbank', 'Redbourne', 'Silverdale', 'Wren Park',
+];
+
+/**
+ * Where a school is really named after a saint.
+ *
+ * Catholic and Anglican school systems, broadly, and nowhere else: it is a
+ * naming convention rather than a fact about a country's religion, and it is
+ * carried so a school in Tokyo or Riyadh is not called St Martin's.
+ */
+const NAMES_SCHOOLS_FOR_SAINTS = new Set([
+  'ie', 'uk', 'us', 'ca', 'au', 'nz', 'it', 'es', 'pt', 'fr', 'be', 'pl', 'mt', 'hr', 'at',
+  'mx', 'br', 'ar', 'cl', 'co', 'pe', 'ph', 'ug', 'ke', 'ng', 'gh', 'za', 'tz', 'rw', 'zm',
+]);
+
+const SCHOOL_SAINTS: readonly string[] = [
+  'Aidan', 'Bede', 'Catherine', 'Dominic', 'Edmund', 'Francis', 'Gregory', 'Hilda',
+  'Joseph', 'Kevin', 'Luke', 'Martin', 'Nicholas', 'Oswald', 'Patrick', 'Teresa', 'Thomas',
+];
+
 const PHARMACY_CORNERS = ['On The Square', 'By The Station', 'On The Corner', 'Central', 'Old Town', 'By The Market'];
 
 function nameFor(
   kind: PlaceKind, rng: Rng, cuisine?: Cuisine, countryId?: string, highStreet?: ReadonlySet<string>,
+  local?: readonly string[],
 ): string {
   switch (kind) {
     case 'restaurant': {
@@ -576,6 +616,31 @@ function nameFor(
       const word = (countryId && INDEPENDENT_PHARMACY_WORD[countryId]) || 'Pharmacy';
       return `${word} ${rng.pick(PHARMACY_CORNERS)}`;
     }
+    case 'primary_school':
+    case 'secondary_school': {
+      // SLATE's own school, with a plausible name. There is no feed that
+      // names the world's schools, so none of these is a real one and the
+      // room says so.
+      const word = kind === 'primary_school'
+        ? rng.pick(['Primary School', 'Elementary School', 'Primary Academy'])
+        : rng.pick(['High School', 'Secondary School', 'Academy', 'Grammar School', 'College']);
+      // A school is usually named after the district it stands in, which is
+      // how it reads right in every country rather than only in English ones.
+      // Where the geography has no districts, one of SLATE's own stems.
+      const roll = rng.float(0, 1);
+      if (local && local.length > 0 && roll < 0.82) return `${rng.pick(local)} ${word}`;
+      // A saint on the sign only where schools are really named that way. A
+      // St Martin High School in Tokyo is not a school anybody would believe.
+      // A saint or an English-sounding stem only where schools are really
+      // named that way. Anywhere else the district or the city again, because
+      // a Beaconsfield Primary School in Riyadh is not a school.
+      if (countryId && NAMES_SCHOOLS_FOR_SAINTS.has(countryId)) {
+        return roll < 0.93
+          ? `St ${rng.pick(SCHOOL_SAINTS)} ${word}`
+          : `${rng.pick(SCHOOL_STEMS)} ${word}`;
+      }
+      return local && local.length > 0 ? `${rng.pick(local)} ${word}` : `${rng.pick(SCHOOL_STEMS)} ${word}`;
+    }
     case 'post_office': {
       const operator = countryId ? postalOperatorIn(countryId) : undefined;
       return operator ? operator.name : 'The Post Office';
@@ -591,6 +656,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   marina: 60, storage: 20, jeweller: 45, costumier: 70, rental_house: 55,
   arena: 180, concert_hall: 150,
   pharmacy: 20, post_office: 25, launderette: 95,
+  primary_school: 390, secondary_school: 390,
 };
 
 /**
@@ -666,6 +732,7 @@ export function placesIn(cityId: string): Place[] {
       .map((retailer) => retailer.name.toLowerCase()),
   );
   const OFF_THE_HIGH_STREET = new Set<PlaceKind>(['pharmacy', 'post_office', 'launderette']);
+  const IS_A_SCHOOL = new Set<PlaceKind>(['primary_school', 'secondary_school']);
 
   const waterfront = isWaterfront(city);
   const realMarinas = out.filter((p) => p.kind === 'marina').length;
@@ -680,10 +747,16 @@ export function placesIn(cityId: string): Place[] {
     for (let i = 0; i < count; i++) {
       const cuisine = spec.kind === 'restaurant' ? rng.pick(CUISINES) : undefined;
       const street = OFF_THE_HIGH_STREET.has(spec.kind) ? highStreet : undefined;
-      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine, city.countryId, street);
+      // Schools take the name of the district they stand in.
+      // The districts of the city, or the city itself where the geography
+      // carries no districts for it.
+      const districts = IS_A_SCHOOL.has(spec.kind)
+        ? (hoods.length > 0 ? hoods.map((one) => one.name) : [city.name])
+        : undefined;
+      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine, city.countryId, street, districts);
       if (spec.kind === 'marina' && rng.chance(0.5)) name = `${city.name} ${rng.pick(['Yacht Harbor', 'Marina', 'Yacht Basin'])}`;
       let guard = 0;
-      while ((used.has(name.toLowerCase()) || street?.has(name.toLowerCase())) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine, city.countryId, street)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
+      while ((used.has(name.toLowerCase()) || street?.has(name.toLowerCase())) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine, city.countryId, street, districts)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
       used.add(name.toLowerCase());
       const hood = hoods.length > 0 ? rng.pick(hoods) : undefined;
       const prestige = hood?.prestige ?? 50;

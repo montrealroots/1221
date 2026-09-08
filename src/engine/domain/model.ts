@@ -1947,6 +1947,85 @@ export interface Enrollment {
 }
 
 // ---------------------------------------------------------------------------
+// School
+// ---------------------------------------------------------------------------
+
+/** One lesson on the timetable. */
+export interface Lesson {
+  /** 1 for Monday through 5 for Friday. */
+  day: number;
+  /** Which period of the day, from 1. */
+  period: number;
+  subjectId: string;
+}
+
+/** What a subject is worth so far this year. */
+export interface SubjectMark {
+  subjectId: string;
+  /** Out of a hundred. */
+  mark: number;
+  /** Lessons sat and lessons missed, for this year. */
+  attended: number;
+  missed: number;
+}
+
+/** A place on a school team. */
+export interface TeamPlace {
+  sportId: string;
+  /** Whether they made the team or only the trial. */
+  onTheTeam: boolean;
+  /** Games played and games won, this season. */
+  played: number;
+  won: number;
+  /** How good they are at it, out of a hundred. */
+  ability: number;
+  joinedAt: Instant;
+}
+
+/** A part in a school play. */
+export interface SchoolPart {
+  id: Id;
+  productionId: string;
+  title: string;
+  /** 'lead' | 'supporting' | 'ensemble' | 'crew'. */
+  part: string;
+  /** How it went, out of a hundred, once it has been performed. */
+  verdict?: number;
+  /** Set when somebody outside the school noticed. */
+  noticed?: boolean;
+  auditionedAt: Instant;
+  performsAt: Instant;
+  note?: string;
+}
+
+/** Somebody's place in the education system where they live. */
+export interface Schooling {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The education system this is inside. */
+  systemId: string;
+  /** The school itself: a place id, and SLATE's own invention. */
+  placeId: string;
+  placeName: string;
+  /** The stage and the year within it, as of the last roll-up. */
+  stageId: string;
+  yearLabel: string;
+  /** The week, generated once per school year. */
+  timetable: Lesson[];
+  marks: SubjectMark[];
+  clubs: string[];
+  teams: TeamPlace[];
+  parts: SchoolPart[];
+  /** Qualifications already earned, oldest first. */
+  results: { name: string; stageId: string; average: number; at: Instant }[];
+  startedAt: Instant;
+  /** Set when they left, finished or moved on. */
+  endedAt?: Instant;
+  endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
 // Travel
 // ---------------------------------------------------------------------------
 
@@ -3049,7 +3128,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 61;
+export const SAVE_SCHEMA_VERSION = 62;
 
 export interface SaveMeta {
   id: Id;
@@ -3154,6 +3233,8 @@ export interface SaveUniverse {
   insuranceClaims: Record<Id, InsuranceClaim>;
   courses: Record<Id, Course>;
   enrollments: Record<Id, Enrollment>;
+  /** School, for a life that is still in it. Absent on a save from before. */
+  schooling?: Record<Id, Schooling>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;

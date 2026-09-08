@@ -570,6 +570,34 @@ export function weightAtAge(adultKg: number, age: number): number {
   return Math.round(adultKg * alongCurve(WEIGHT_CURVE, Math.max(0, age)) * 10) / 10;
 }
 
+/**
+ * How much of what somebody will be, they already are.
+ *
+ * A twelve year old who will one day be a great actor is a good twelve year
+ * old actor, not a great one: the instrument is not built yet, and neither is
+ * the judgement. This scales what a young character can actually bring to
+ * anything, and it reaches one in the early twenties and stays there.
+ *
+ * It is a ceiling on what the years have delivered so far, not a penalty and
+ * not a loss: nothing is taken off an adult, and nothing a character has is
+ * ever written down. SLATE's own calibration.
+ */
+export const YOUTH_CURVE: readonly { age: number; share: number }[] = [
+  { age: 0, share: 0.05 }, { age: 5, share: 0.22 }, { age: 8, share: 0.32 },
+  { age: 11, share: 0.44 }, { age: 13, share: 0.55 }, { age: 15, share: 0.66 },
+  { age: 16, share: 0.72 }, { age: 18, share: 0.85 }, { age: 20, share: 0.93 },
+  { age: 22, share: 1 },
+];
+
+/** The age from which somebody is bringing everything they have. */
+export const FULLY_FORMED = 22;
+
+/** How much of themselves somebody of this age can actually bring, 0 to 1. */
+export function youthFactorAt(age: number): number {
+  if (age >= FULLY_FORMED) return 1;
+  return Math.round(alongCurve(YOUTH_CURVE, Math.max(0, age)) * 1000) / 1000;
+}
+
 /** A height in the two ways people say it. */
 export function describeHeight(cm: number): string {
   const inches = Math.round(cm / 2.54);

@@ -427,7 +427,7 @@ describe('the years going past', () => {
     const gone = [...family.parents, ...family.siblings].filter((one) => !isAlive(one, sim.now));
     expect(gone.length).toBeGreaterThan(0);
 
-    const deaths = Object.values(sim.universe.history ?? {}).filter((one) => / died$/.test(one.title ?? ''));
+    const deaths = Object.values(sim.universe.history ?? {}).filter((one) => / Died$/.test(one.title ?? ''));
     for (const death of deaths) {
       expect(death.detail).toMatch(/Your (mother|father|sister|brother)/);
     }
@@ -477,7 +477,7 @@ describe('what a character could not know', () => {
     const gone = [...family.parents, ...family.siblings].find((one) => !isAlive(one, sim.now));
     if (!gone) return;
     expect(ageAt(sim, gone, gone.aliveUntil!)).toBeGreaterThan(40);
-    const death = Object.values(sim.universe.history ?? {}).find((one) => one.title === `${gone.displayName} died`);
+    const death = Object.values(sim.universe.history ?? {}).find((one) => one.title === `${gone.displayName} Died`);
     if (death) expect(death.detail).not.toMatch(/cancer|heart attack|accident|crash|murder/i);
   });
 });

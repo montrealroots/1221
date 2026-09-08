@@ -43,8 +43,8 @@ import {
   MOVED_AWAY, PARENTS_STILL_TOGETHER, PARENT_AGE_GAP, PARTNER_AGE_GAP, PASSING_LINES,
   SIBLING_AGE_GAP, SIBLING_WEIGHTS, type AgingBand, type GateId, type LifeStage,
   GATES, GATE_BY_ID, NO_DRINKING, agingAt, ceilingAt, expectancyIn, gateAgeIn, gateIsCountrys,
-  DEFAULT_HEIGHT_CM, DEFAULT_WEIGHT_KG, FULLY_GROWN, adultExpectancyIn, describeHeight,
-  describeWeight, heightAtAge, pensionAgeIn, stageAt, weightAtAge,
+  DEFAULT_HEIGHT_CM, DEFAULT_WEIGHT_KG, FULLY_FORMED, FULLY_GROWN, adultExpectancyIn, describeHeight,
+  describeWeight, heightAtAge, pensionAgeIn, stageAt, weightAtAge, youthFactorAt,
 } from '../content/lifespan';
 import { addMemory, createRelationship, relationshipsOf, otherParty } from './relationships';
 
@@ -232,6 +232,23 @@ export function heightOf(sim: Simulation, person: Person = sim.player): number {
 /** What somebody weighs right now. */
 export function weightOf(sim: Simulation, person: Person = sim.player): number {
   return weightAtAge(adultWeightOf(person), ageOf(sim, person));
+}
+
+/**
+ * How much of themselves somebody can bring right now.
+ *
+ * One for a grown adult, and less the younger they are. Anything that asks
+ * what a character can actually do — an audition, a trial, a lesson — reads
+ * their attributes through this, so a gifted twelve year old is a gifted
+ * twelve year old rather than a professional who happens to be short.
+ */
+export function youthFactor(sim: Simulation, person: Person = sim.player): number {
+  return youthFactorAt(ageOf(sim, person));
+}
+
+/** Whether somebody has grown into everything they have. */
+export function fullyFormed(sim: Simulation, person: Person = sim.player): boolean {
+  return ageOf(sim, person) >= FULLY_FORMED;
 }
 
 /** Whether this body has finished growing. */
@@ -698,7 +715,7 @@ export function registerLifespan(sim: Simulation): void {
     });
     s.remember({
       category: 'family',
-      title: `${person.displayName} died`,
+      title: `${person.displayName} Died`,
       detail: `Your ${what}, ${age}. ${how}`,
       refs: [{ type: 'person', id: person.id }],
       significance: 9,

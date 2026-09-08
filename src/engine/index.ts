@@ -50,6 +50,7 @@ import { registerFashionSystem } from './systems/fashion';
 import { registerGoingSystem } from './systems/going';
 import { registerErrandSystem } from './systems/errands';
 import { ensureFamily, registerLifespan, scheduleBirthday } from './systems/lifespan';
+import { ensureSchooling, registerSchool } from './systems/school';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -120,6 +121,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerGoingSystem(sim);
   registerErrandSystem(sim);
   registerLifespan(sim);
+  registerSchool(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -197,6 +199,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // at creation, because none of it is a decision anybody makes.
   ensureFamily(sim, player);
   scheduleBirthday(sim, player);
+  // And school, for a life that starts young enough to still be in it.
+  ensureSchooling(sim, player);
 
   // --- Accounts -----------------------------------------------------------
   const checking = sim.openAccount({
@@ -476,6 +480,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // calendar if it has fallen off (idempotent; lifespan.ts).
   ensureFamily(sim);
   scheduleBirthday(sim, sim.player);
+  // School, for a save from before it existed or a character who has moved up
+  // a stage since it was last opened (idempotent; school.ts).
+  ensureSchooling(sim);
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -1079,6 +1086,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // The family itself is built on load rather than here, because it needs a
     // running simulation to draw names and write relationships. See loadSave.
     steps.push('The family you were born into, and the years since.');
+  }
+
+  if (from < 62) {
+    // Schema 62: school. The system where you are, a school to go to, a
+    // timetable, marks, a team and the play. Built on load rather than here,
+    // because it needs a running simulation.
+    universe.schooling ??= {};
+    steps.push('School, and the play at the end of the year.');
   }
 
   if (from < 55) {
