@@ -512,3 +512,197 @@ export function CallGlyph({ size = 28 }: GlyphProps) {
     </Svg>
   );
 }
+
+// ---------------------------------------------------------------------------
+// The settings list, and the rest of the video app's chrome.
+//
+// Ordinary interface shapes again — a card, a chart, a flask, a screen — drawn
+// from scratch to sit at the same weight as the ones above. Nothing here is
+// traced from an icon set.
+// ---------------------------------------------------------------------------
+
+/** Switch or manage account: a portrait inside a card. */
+export function CardGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
+      <circle cx="12" cy="11" r="2.4" />
+      <path d="M8 16.6c.9-1.5 2.3-2.2 4-2.2s3.1.7 4 2.2" />
+    </Svg>
+  );
+}
+
+/** Family: a taller figure beside a shorter one. */
+export function FamilyGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="8.5" cy="7" r="2.6" />
+      <path d="M4 19.5c0-2.7 2-4.4 4.5-4.4s4.5 1.7 4.5 4.4" />
+      <circle cx="16.8" cy="9.6" r="2" />
+      <path d="M13.6 19.5c0-2 1.4-3.3 3.2-3.3s3.2 1.3 3.2 3.3" />
+    </Svg>
+  );
+}
+
+/** Time management: bars in a frame. */
+export function ChartGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="3.5" y="4" width="17" height="16" rx="2.4" />
+      <path d="M8 15.5v-3.2M12 15.5V8.8M16 15.5v-4.8" />
+    </Svg>
+  );
+}
+
+/** Purchases: a luggage tag with its eyelet. */
+export function TagGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M11.3 3.6H19a1.4 1.4 0 0 1 1.4 1.4v7.7a1.4 1.4 0 0 1-.4 1l-7.6 7.6a1.4 1.4 0 0 1-2 0l-7.1-7.1a1.4 1.4 0 0 1 0-2l7.6-7.6a1.4 1.4 0 0 1 1-.4z" />
+      <circle cx="16.4" cy="7.6" r="1.5" />
+    </Svg>
+  );
+}
+
+/** Languages: a glyph and a letter, which is how a translate control reads. */
+export function TranslateGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M3 5.6h8.4M7.2 3.6v2M9.6 5.6c0 3.4-2.4 6.6-6.1 8.2M5.2 9.2c1.2 2 2.9 3.5 5 4.4" />
+      <path d="M13.4 20.4l3.7-9 3.7 9M14.8 17.4h4.6" />
+    </Svg>
+  );
+}
+
+/** Badges: a star with a burst around it. */
+export function BadgeGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M12 4.2l1.5 3.4 3.7.4-2.8 2.5.8 3.6L12 12.3l-3.2 1.8.8-3.6L6.8 8l3.7-.4z" />
+      <path d="M5.2 16.6l-.9 2.2M12 17v2.6M18.8 16.6l.9 2.2M4 13.2l-1.6.6M20 13.2l1.6.6" />
+    </Svg>
+  );
+}
+
+/** Captions: the subtitle box with two lines of text in it. */
+export function CaptionsGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="2.6" y="5" width="18.8" height="14" rx="3" />
+      <path d="M9.4 10.4a2.6 2.6 0 100 3.2M17 10.4a2.6 2.6 0 100 3.2" />
+    </Svg>
+  );
+}
+
+/** Connected apps: two rings that overlap. */
+export function LinkedGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="9.2" cy="12" r="5.8" />
+      <circle cx="15.4" cy="12" r="5.8" />
+    </Svg>
+  );
+}
+
+/** Experimental features: a conical flask. */
+export function FlaskGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M9.6 3.4v5.4L4.4 18.2a1.4 1.4 0 0 0 1.2 2.1h12.8a1.4 1.4 0 0 0 1.2-2.1L14.4 8.8V3.4" />
+      <path d="M8.6 3.4h6.8" />
+    </Svg>
+  );
+}
+
+/** Quality: the letters in a box, the way a resolution badge is drawn. */
+export function HdGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="2.6" y="5.4" width="18.8" height="13.2" rx="2.4" />
+      <path d="M7 9.4v5.2M7 12h2.6M9.6 9.4v5.2" strokeWidth={1.5} />
+      <path d="M13.4 9.4v5.2h1.6a2.6 2.6 0 0 0 2.6-2.6 2.6 2.6 0 0 0-2.6-2.6z" strokeWidth={1.5} />
+    </Svg>
+  );
+}
+
+/** Playback: an outline triangle. */
+export function PlayTriangleGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><path d="M6.8 4.6l12.4 7.4-12.4 7.4z" /></Svg>;
+}
+
+/** Uploads: an arrow out of a line. */
+export function UploadGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><path d="M12 19.4V4.6M6.4 10.2L12 4.6l5.6 5.6M4.4 20.4h15.2" /></Svg>;
+}
+
+/** Live chat: a dot with two arcs, the way a broadcast mark is drawn. */
+export function LiveGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+      <path d="M7.8 8.2a5.4 5.4 0 0 0 0 7.6M16.2 8.2a5.4 5.4 0 0 1 0 7.6" />
+      <path d="M4.8 5.4a9.4 9.4 0 0 0 0 13.2M19.2 5.4a9.4 9.4 0 0 1 0 13.2" />
+    </Svg>
+  );
+}
+
+/** Watch on a television: a screen on a stand. */
+export function TvGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <rect x="2.6" y="5" width="18.8" height="12.6" rx="2.2" />
+      <path d="M9 20.4h6" />
+    </Svg>
+  );
+}
+
+/** Send feedback: a speech box with a tail. */
+export function FeedbackGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M4 5.4h16a1.4 1.4 0 0 1 1.4 1.4v8.4a1.4 1.4 0 0 1-1.4 1.4H9.6L5.4 20v-3.4H4a1.4 1.4 0 0 1-1.4-1.4V6.8A1.4 1.4 0 0 1 4 5.4z" />
+    </Svg>
+  );
+}
+
+/** Terms of service: a page with its corner turned. */
+export function DocGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M13.4 3.2H7a1.8 1.8 0 0 0-1.8 1.8v14a1.8 1.8 0 0 0 1.8 1.8h10a1.8 1.8 0 0 0 1.8-1.8V8.6z" />
+      <path d="M13.4 3.2v5.4h5.4" />
+    </Svg>
+  );
+}
+
+/** About: the letter in a ring. */
+export function InfoGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5.4" />
+      <circle cx="12" cy="7.9" r="0.9" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+/** Close: the cross at the head of a full screen page. */
+export function CloseGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><path d="M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" /></Svg>;
+}
+
+/** The arrow at the end of a heading that opens the whole list. */
+export function ChevronRightGlyph({ size }: GlyphProps) {
+  return <Svg size={size}><path d="M9.4 5.6l6.4 6.4-6.4 6.4" /></Svg>;
+}
+
+/** A note, for the sound a short is cut to. */
+export function MusicGlyph({ size }: GlyphProps) {
+  return (
+    <Svg size={size}>
+      <path d="M9.4 18V6.2l9.2-2v11.4" />
+      <circle cx="7" cy="18" r="2.4" />
+      <circle cx="16.2" cy="15.6" r="2.4" />
+    </Svg>
+  );
+}
