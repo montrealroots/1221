@@ -20,6 +20,10 @@ import { formatMoney } from '@/engine/core/money';
 import { formatDate, MS_DAY } from '@/engine/core/time';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { DOCUMENT_NOTE, licenseAuthorityFor, passportAuthorityFor } from '@/engine/content/documents';
+import { RECALL_NOTE } from '@/engine/content/recallbook';
+import { describe, notSeenLately, openThreads, recall, recallStats, worthNow } from '@/engine/systems/recall';
+import { BEATS_A_DAY, DIRECTOR_LIMITS_NOTE, DIRECTOR_NOTE, keyOf, liveBeats } from '@/engine/systems/director';
+import { FRESHNESS_NOTE } from '@/engine/systems/freshness';
 import { SIX_MONTH_NOTE, exchangeOffer, regionOfCity, residenceCityOf, statusOf } from '@/engine/systems/documents';
 import type { IdentityDocument } from '@/engine/domain/model';
 import { countryOfCity } from '@/engine/content/geography';
@@ -49,7 +53,7 @@ import {
 } from '@/engine/systems/lifespan';
 import { plural } from '@/engine/core/text';
 
-type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing' | 'papers' | 'life';
+type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing' | 'papers' | 'life' | 'memory';
 
 const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((k) => [k.id, k.name]));
 
@@ -117,12 +121,15 @@ export function CharacterWorkspace() {
           { id: 'standing', label: 'Standing' },
           { id: 'papers', label: 'Papers' },
           { id: 'life', label: 'Your Life' },
+          { id: 'memory', label: 'What You Remember' },
         ]}
       />
 
       {tab === 'papers' && <PapersTab />}
 
       {tab === 'life' && <LifeTab />}
+
+      {tab === 'memory' && <MemoryTab />}
 
       {tab === 'positions' && (
         <div className="col gap-4">
@@ -680,6 +687,120 @@ function LifeTab(): JSX.Element {
           ))}
         </div>
         <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{AGE_GATE_NOTE}</p>
+      </Panel>
+    </div>
+  );
+}
+
+/**
+ * What the save remembers, and what it is still thinking about.
+ *
+ * Everything here is read out of the record. The rank is what a memory is
+ * worth right now: how much it mattered, faded by how long ago it was, with a
+ * floor under the things nobody forgets. Nothing on this page is generated.
+ * If it is on the screen it happened, and the line under it says what it was.
+ */
+function MemoryTab(): JSX.Element {
+  const { sim } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const stats = recallStats(sim);
+  const top = recall(sim, { limit: 12 });
+  const beats = liveBeats(sim).slice(0, 5);
+  const away = notSeenLately(sim, 45).slice(0, 5);
+  const loose = openThreads(sim).filter((one) => one.days >= 14).slice(0, 5);
+
+  return (
+    <div className="grid grid-sheet">
+      <Panel title="Top Of Mind" subtitle="What you would still be thinking about, and how much." flush>
+        {top.length === 0 ? (
+          <div className="empty"><p className="small">Nothing has happened yet. It will.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {top.map((one) => (
+                <tr key={one.id}>
+                  <td className="mono xs dim" style={{ width: 44 }}>{Math.round(worthNow(one, sim.now))}</td>
+                  <td>
+                    <span className="small">{describe(sim, one)}</span>
+                    <span className="xs dim" style={{ display: 'block' }}>
+                      {one.tags.join(' · ')} · {formatDate(one.at, sim.homeZone)}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="What The World Might Bring Up" subtitle={`At most ${plural(BEATS_A_DAY, 'thing')} a day.`} flush>
+        {beats.length === 0 ? (
+          <div className="empty"><p className="small">Nothing is live. That is not a fault; some weeks are quiet.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {beats.map((beat) => (
+                <tr key={keyOf(beat)}>
+                  <td>
+                    <span className="small strong">{beat.title}</span>
+                    <span className="xs dim" style={{ display: 'block' }}>{beat.detail}</span>
+                  </td>
+                  <td className="mono xs dim" style={{ width: 44, textAlign: 'right' }}>{beat.worth}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="People You Have Not Seen" flush>
+        {away.length === 0 ? (
+          <div className="empty"><p className="small">Nobody has been left that long.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {away.map((one) => (
+                <tr key={one.personId}>
+                  <td className="small">{sim.universe.people[one.personId]?.displayName ?? 'Somebody'}</td>
+                  <td className="xs dim" style={{ textAlign: 'right' }}>{plural(one.days, 'day')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="Started And Not Finished" flush>
+        {loose.length === 0 ? (
+          <div className="empty"><p className="small">Nothing is hanging.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {loose.map((one) => (
+                <tr key={one.opened.id}>
+                  <td className="small">{describe(sim, one.opened)}</td>
+                  <td className="xs dim" style={{ textAlign: 'right' }}>{plural(one.days, 'day')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="How The Memory Works">
+        <div className="col gap-4">
+          <Stat
+            label="What Is Held"
+            value={String(stats.entries)}
+            note={`${plural(stats.kept, 'memory', 'memories')} that will never fade, out of `
+              + `${plural(stats.covered, 'kind')} of thing the game knows how to remember.`}
+          />
+          <p className="xs dim" style={{ margin: 0 }}>{RECALL_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{DIRECTOR_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{DIRECTOR_LIMITS_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{FRESHNESS_NOTE}</p>
+        </div>
       </Panel>
     </div>
   );

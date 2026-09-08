@@ -1095,6 +1095,56 @@ spaceship", "become president" — it says that plainly instead of guessing.
     command the engine does not register, a screen that does not exist, or a
     kind of place the world does not build.
 
+11. **Done.** The memory, and the world that brings things back up.
+
+    Measured before it was built, because the number was the argument: a whole
+    simulated year of life left **four lines** in the record. History is the
+    milestone book and a life is not made of milestones, so almost nothing a
+    character actually did was written down anywhere, and the world could not
+    have remembered it if it had wanted to.
+
+    It writes it down now. The simulation already narrates itself — 316
+    different world events fire as a life is lived — and **198 of them** now
+    carry a rule saying what they mean as a memory: what kind of remembering
+    it is, what it was worth at the time, how fast the ordinary part fades,
+    and what to file it under. Nothing is invented: a memory exists because an
+    event fired, it names which one, and it carries ids rather than names, so
+    a shop that changed hands is remembered correctly rather than as it was
+    spelled on the day.
+
+    The ranking is what makes it a memory rather than a log. What you would
+    still be thinking about is neither the most recent nor the biggest, it is
+    both traded off: weight halved by age, at a rate set by the kind of thing
+    it was. An ordinary Tuesday is gone in a week. And **nothing weighted 75
+    or over ever falls below half of what it was**, however long ago it was
+    and however much has happened since — a grading, a funeral, a first pay
+    packet. The everyday folds into one memory a week with a count on it, so
+    two hundred showers are twenty-nine weeks of showering rather than two
+    hundred lines. Bounded at six thousand, and the prune takes the least
+    worth remembering first, so a wedding is never evicted for a Tuesday. The
+    test proves that one by filling the memory past its bound and looking.
+
+    Then the loop. Once a day the world looks back and raises at most two
+    things: a year to the day, something started and never finished, somebody
+    not seen in six weeks, something kept at twelve times in a month,
+    something really done and then dropped for three months. Every beat
+    **cites the record it came from**, and the checker fails the build if a
+    cited record does not resolve in that save — so the game can always say
+    why it said that, and can never invent a memory to fill a gap. A register
+    of every beat already played stops anything coming round twice inside
+    three weeks, and never hands back the same one twice running while an
+    alternative exists.
+
+    Two rules the checker holds it to that are worth stating plainly. A person
+    only remembers what they were actually there for, which is the "do not
+    show me what my character could not know" rule applied the other way
+    round. And a save where nothing happens stays quiet: a world that invents
+    something to say every morning is exactly the fakery this exists to avoid.
+
+    Read on Character → What You Remember. History is untouched — still
+    lossless, still the milestone record, still what the History workspace
+    reads.
+
 ---
 
 ## 12. Known blockers, stated plainly

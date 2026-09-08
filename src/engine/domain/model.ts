@@ -3367,6 +3367,84 @@ export interface DialogueState {
   seen: Record<string, { n: number; at: Instant }>;
 }
 
+/**
+ * What kind of thing was remembered.
+ *
+ * Not a category of the game — a category of memory. A person does not file
+ * their life under "commerce"; they remember doing a thing, being somewhere,
+ * being with somebody, something arriving, something going, something said,
+ * and something landing on them.
+ */
+export type RecallKind = 'did' | 'went' | 'met' | 'got' | 'lost' | 'said' | 'felt';
+
+/**
+ * One thing the save remembers.
+ *
+ * History keeps the milestones and keeps them forever. This keeps the rest —
+ * the shift, the class, the meal, the argument, the drive — which is what a
+ * life is mostly made of and what makes the milestones mean anything.
+ *
+ * It is written from a world event that really happened, so nothing in here
+ * is invented, and it carries the ids rather than the names so it can never
+ * go stale about what something is called.
+ */
+export interface Recollection {
+  id: Id;
+  at: Instant;
+  kind: RecallKind;
+  /** The event that caused it, so it can always be traced back. */
+  cause: string;
+  /** What it was, in the words it would be recalled in. */
+  what: string;
+  /** How much it mattered when it happened, 0-100. */
+  weight: number;
+  /** How fast the everyday part of it fades. 0 means it does not. */
+  halfLifeDays: number;
+  /** How it can be found: 'work', 'school', 'training', 'money', 'people'. */
+  tags: string[];
+  /** Who else was there. Only these people can be said to remember it too. */
+  withIds?: Id[];
+  /** Where it happened. */
+  placeId?: Id;
+  locationId?: Id;
+  /** What it was about, resolved to a name when it is read rather than stored. */
+  subjectType?: string;
+  subjectId?: Id;
+  /** The milestone this is the everyday side of, where there is one. */
+  historyId?: Id;
+  /** Money involved, in cents. */
+  amount?: number;
+  /**
+   * How many times the everyday thing happened inside one collapsed memory.
+   *
+   * Nobody remembers each of two hundred showers. They remember showering,
+   * and roughly how the week went. Anything below the threshold is folded
+   * into one memory for the week it happened in, and this is the count.
+   */
+  times?: number;
+  /**
+   * The most recent of a folded memory, where `at` is the first of them.
+   *
+   * The anchor has to stay put or the week never ends and one memory eats
+   * every shower forever. So `at` is where the week started and this is the
+   * last time it happened.
+   */
+  lastAt?: Instant;
+}
+
+/**
+ * The memory of a save, and the register of what it has already played.
+ *
+ * `entries` is the recall. `played` is what stops the world repeating itself:
+ * a fingerprint of every beat it has brought up, with how often and how
+ * recently, so the same callback does not arrive twice running.
+ */
+export interface RecallState {
+  version: 1;
+  entries: Recollection[];
+  played: Record<string, { n: number; at: Instant }>;
+}
+
 export interface SceneState {
   version: 2;
   /** The one scene in the foreground, if any. */
@@ -3514,7 +3592,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 70;
+export const SAVE_SCHEMA_VERSION = 71;
 
 export interface SaveMeta {
   id: Id;
@@ -3603,6 +3681,8 @@ export interface SaveUniverse {
   dates: Record<Id, DateRecord>;
   /** Absent on a save that has not heard a line yet. */
   dialogue?: DialogueState;
+  /** What the save remembers, beside the milestones history keeps forever. */
+  recall?: RecallState;
   vehicleListings: Record<Id, VehicleListing>;
   vehicleModifications: Record<Id, VehicleModification>;
   serviceRecords: Record<Id, ServiceRecord>;

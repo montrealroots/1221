@@ -57,6 +57,8 @@ import { registerGrowing, startGrowingUp } from './systems/growing';
 import { registerExamSchedules, registerExams, startExams } from './systems/exams';
 import { registerTheWeek } from './systems/theweek';
 import { registerRooms } from './systems/rooms';
+import { registerRecall } from './systems/recall';
+import { registerDirector, scheduleTomorrow } from './systems/director';
 import { registerWork } from './systems/work';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
@@ -136,6 +138,10 @@ export function registerAllSystems(sim: Simulation): void {
   registerExamSchedules(sim);
   registerTheWeek(sim);
   registerRooms(sim);
+  // The recall listens to everything, so it goes on before the systems that
+  // emit, and at a priority that runs after whatever the event was for.
+  registerRecall(sim);
+  registerDirector(sim);
   registerWork(sim);
   registerBanking(sim);
   registerDining(sim);
@@ -224,6 +230,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // The school year itself: the report that comes home at the end of a term
   // and the national assessments that happen to you rather than being chosen.
   startExams(sim);
+  // And the daily look back over what the save remembers.
+  scheduleTomorrow(sim);
 
   // --- Accounts -----------------------------------------------------------
   // A character old enough to sign opens the company this morning, so the
@@ -551,6 +559,10 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // The reports and the national assessments, for a save from before either
   // existed or one whose report calendar has run out (idempotent; exams.ts).
   startExams(sim);
+  // A save from before the recall existed has nothing scheduled to read it.
+  if (!sim.universe.scheduled.some((one) => one.kind === 'director.day' && one.status === 'pending')) {
+    scheduleTomorrow(sim);
+  }
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -1191,6 +1203,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     universe.growing ??= {};
     universe.firstJobs ??= {};
     steps.push('Growing up, the moments that come round in it, and the Saturday job.');
+  }
+
+  if (from < 71) {
+    // Schema 71: the recall. A save from before it remembers only its
+    // milestones, which are in history and are untouched. The recall starts
+    // empty and fills from here; nothing that was already remembered is lost,
+    // because nothing that was already remembered lived in here.
+    universe.recall ??= { version: 1, entries: [], played: {} };
+    steps.push('The recall, and the register of what the world has already played.');
   }
 
   if (from < 70) {

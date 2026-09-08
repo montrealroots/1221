@@ -107,7 +107,7 @@ before any delivery claim.
 | --- | --- | --- | --- |
 | G1 | Inventory of routes, workspaces, panels, commands, scheduled events, notifications | Done | Read from the code by `node tools/inventory.mjs` and written into `docs/COVERAGE-MATRIX.md`; `--check` fails when the document is behind the code or a command, scene or route has no line in the matrix. 119 commands, 51 scheduled kinds, 117 events, 12 listeners, 8 scenes, 19 routes at the time of writing. |
 | G2 | Coverage matrix mapping each interaction to system, commands, events, persistence, UI entry, tests | Done (as a record) | `docs/COVERAGE-MATRIX.md`: every feature area and the subfeatures the directive names, each with its state, the commands and scenes that carry it, where it is on screen, the tests that hold it, and the gap or the dependency by name. Data-blocked items are listed separately from unbuilt ones. |
-| G3 | Shared interaction service: director, dialogue, memory, interpreter, simulation | Partial | Scenes + intent + memory are the deterministic half. No director loop, no model. |
+| G3 | Shared interaction service: director, dialogue, memory, interpreter, simulation | Done (offline) | All five are built and deterministic. Scenes, `intent.ts` and `ask.ts` for the interpreter, the dialogue library, `recall.ts` for the memory over 198 of 316 world events, `freshness.ts` for the register that stops repeats, and `director.ts` for the daily loop that brings things back up. No model and no network: the loop chooses among things that really happened rather than writing anything. |
 | G4 | Backend provider adapter with validation, revision checks, timeouts, budgets, caching | Not started | B10. |
 
 ## H. Data honesty
