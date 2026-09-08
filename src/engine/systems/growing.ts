@@ -16,14 +16,16 @@ import { CommandError } from '../core/simulation';
 import type { GrowingUp, Id, Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { Instant } from '../core/time';
-import { MS_MINUTE, addDays } from '../core/time';
+import { MS_DAY, MS_MINUTE, addDays, formatDate } from '../core/time';
 import { formatMoney } from '../core/money';
+import { plural } from '../core/text';
 import { countryOfCity } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { HERITAGE_BY_ID, heritagesIn } from '../content/heritage';
 import {
   ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE, LESSONS_TO_READY, LESSON_COST, MOMENTS,
-  MOMENT_BY_ID, TEST_COST, TEST_PASSES_AT, type Choice, type Moment, allowanceAt, momentsAt,
+  MOMENT_BY_ID, PETS, PET_BY_ID, PET_NAMES, PET_NOTE, TEST_COST, TEST_PASSES_AT, type Choice,
+  type Moment, allowanceAt, momentsAt,
 } from '../content/growingup';
 import { ageOf, familyOf, mayI, relative } from './lifespan';
 import { schoolingOf } from './school';
@@ -127,6 +129,34 @@ export function scheduleNext(sim: Simulation, record: GrowingUp): void {
   });
 }
 
+/** The animal costs money every week, for as long as it is alive. */
+export function schedulePetCosts(sim: Simulation, record: GrowingUp): void {
+  if (!record.pet || record.pet.untilAt) return;
+  sim.schedule({
+    at: addDays(sim.now, 7, sim.homeZone),
+    kind: 'growing.pet_costs',
+    label: `${record.pet.name}`,
+    category: 'personal',
+    payload: { growingId: record.id },
+    priority: 12,
+  });
+}
+
+/** What the animal is, in a sentence. */
+export function describePet(sim: Simulation, record: GrowingUp): string | undefined {
+  const pet = record.pet;
+  if (!pet) return undefined;
+  const kind = PET_BY_ID[pet.kindId];
+  const years = Math.max(0, Math.floor((sim.now - pet.since) / (365 * MS_DAY)));
+  if (pet.untilAt) {
+    return `${pet.name}, ${kind?.label.replace(/^A /, '').toLowerCase() ?? pet.kindId}, `
+      + `${plural(years, 'year')}. ${formatDate(pet.untilAt, sim.homeZone)}.`;
+  }
+  return `${pet.name}, ${kind?.label.replace(/^A /, '').toLowerCase() ?? pet.kindId}, `
+    + `${years === 0 ? 'here since this year' : plural(years, 'year')}. `
+    + `${formatMoney(pet.aWeek)} a week. ${kind?.about ?? ''}`;
+}
+
 /** Somebody new in your life, who is SLATE's own. */
 function makeAFriend(sim: Simulation, record: GrowingUp): Person | undefined {
   const player = sim.player;
@@ -216,6 +246,21 @@ export function applyChoice(
   }
 
   let extra = '';
+  // The animal is a real thing in the save rather than a line in a story.
+  if (moment.id === 'the_pet' && choice.id === 'keep_it' && !record.pet) {
+    const rng = sim.rng('growing.pet', record.id);
+    const kind = rng.pick(PETS);
+    const name = rng.pick(PET_NAMES);
+    record.pet = {
+      kindId: kind.id,
+      name,
+      since: sim.now,
+      aWeek: Math.round(kind.aWeek * costOfLiving(player.currentLocationId)),
+    };
+    schedulePetCosts(sim, record);
+    extra = ` ${name} lives here now. ${kind.label.replace(/^A /, '')}, `
+      + `${formatMoney(record.pet.aWeek)} a week for as long as ${name} is here.`;
+  }
   if (effect.friend === 'make') {
     const friend = makeAFriend(sim, record);
     if (friend) extra = ` ${friend.displayName} is in your life now.`;
@@ -406,6 +451,49 @@ export function registerGrowing(sim: Simulation): void {
     s.emit('growing.arrived', { momentId: moment.id });
   });
 
+  /**
+   * The animal, every week, until it is not here any more.
+   *
+   * It costs money for as long as it is alive and then it stops, and the
+   * stopping is written down rather than the record simply going quiet.
+   */
+  sim.onSchedule('growing.pet_costs', (item, s) => {
+    const record = Object.values(s.universe.growing ?? {})
+      .find((one) => one.id === (item.payload as { growingId: Id }).growingId);
+    const pet = record?.pet;
+    if (!record || !pet || pet.untilAt) return;
+    const kind = PET_BY_ID[pet.kindId];
+    const age = (s.now - pet.since) / (365 * MS_DAY);
+    // They do not live forever, and the game says when rather than leaving it.
+    if (kind && age > kind.years) {
+      pet.untilAt = s.now;
+      if (record.personId === s.player.id) {
+        s.remember({
+          category: 'family',
+          title: `${pet.name}`,
+          detail: `${plural(Math.round(age), 'year')}, and then not any more.`,
+          refs: [{ type: 'person', id: record.personId }],
+          significance: 6,
+          public: false,
+        });
+        s.notify({
+          title: pet.name,
+          body: `${plural(Math.round(age), 'year')}. That is how long they get.`,
+          category: 'personal',
+          importance: 58,
+          route: '/workspace/character',
+        });
+      }
+      s.emit('growing.pet_ended', { name: pet.name, years: Math.round(age) });
+      return;
+    }
+    const accountId = s.player.primaryAccountId;
+    if (accountId && record.personId === s.player.id) {
+      s.expense(accountId, pet.aWeek, `${pet.name}`, 'household', { refType: 'person', refId: record.personId });
+    }
+    schedulePetCosts(s, record);
+  });
+
   /** Nothing decided is a decision too, and life goes on either way. */
   sim.onSchedule('growing.lapse', (item, s) => {
     const payload = item.payload as { growingId: Id; momentId: string };
@@ -461,5 +549,8 @@ export function startGrowingUp(sim: Simulation, person: Person = sim.player): Gr
   return record;
 }
 
-export { GROWING_NOTE, ALLOWANCE_NOTE, DRIVING_NOTE, MOMENTS, LESSONS_TO_READY, TEST_PASSES_AT };
+export {
+  GROWING_NOTE, ALLOWANCE_NOTE, DRIVING_NOTE, PET_NOTE, MOMENTS, PETS, LESSONS_TO_READY,
+  TEST_PASSES_AT,
+};
 export type { Instant };

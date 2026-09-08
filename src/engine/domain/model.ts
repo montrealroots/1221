@@ -2062,6 +2062,16 @@ export interface GrowingUp {
   /** Driving tests sat, and whether one was passed. */
   testsSat: number;
   passedTestAt?: Instant;
+  /** The animal, where a childhood produced one. It costs money every week. */
+  pet?: {
+    kindId: string;
+    name: string;
+    since: Instant;
+    /** What it costs a week, where you are living. */
+    aWeek: Money;
+    /** Set when it dies, which is a thing that happens. */
+    untilAt?: Instant;
+  };
   startedAt: Instant;
 }
 

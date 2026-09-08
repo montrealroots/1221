@@ -474,9 +474,9 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('keep_it', 'Keep It', {
         attribute: { reliability: 1.5, vulnerability: 1 }, money: -140_00, parents: 2, morale: 8,
-        memory: 'Got an animal at eight, and it was the first thing that was ever yours to look after.',
+        memory: 'Got an animal as a child, and it was the first thing that was ever theirs to look after.',
         significance: 5,
-        note: 'It is yours to feed, walk and worry about, and you will be doing all three for years.',
+        note: 'It is yours now, and it costs money every week for as long as it is here.',
       }),
       c('no', 'Somebody Else', {
         parents: 1, morale: -4,
@@ -798,6 +798,45 @@ export const MOMENT_BY_ID: Readonly<Record<string, Moment>> = Object.fromEntries
 export function momentsAt(age: number): Moment[] {
   return MOMENTS.filter((one) => age >= one.fromAge && age <= one.toAge);
 }
+
+// ---------------------------------------------------------------------------
+// The animal
+// ---------------------------------------------------------------------------
+
+export const PET_NOTE =
+  'An animal is a real thing in the save rather than a line in a story: it has a name, it costs '
+  + 'money every week for as long as it is alive, and it is there in the house. What it costs is '
+  + 'SLATE’s own calibration, priced against what things cost where you are living.';
+
+export interface PetKind {
+  id: string;
+  label: string;
+  /** What it costs a week, before the local cost of living. */
+  aWeek: Money;
+  /** Roughly how long they live, in years. */
+  years: number;
+  about: string;
+}
+
+export const PETS: readonly PetKind[] = [
+  { id: 'dog', label: 'A Dog', aWeek: 18_00, years: 12, about: 'Walked twice a day whatever the weather, and it will outlast your childhood.' },
+  { id: 'cat', label: 'A Cat', aWeek: 12_00, years: 15, about: 'It lives here, it is not yours, and everybody has agreed to that.' },
+  { id: 'rabbit', label: 'A Rabbit', aWeek: 8_00, years: 8, about: 'A hutch in the garden, and it is far more work than anybody said.' },
+  { id: 'hamster', label: 'A Hamster', aWeek: 4_00, years: 2, about: 'A wheel at three in the morning, and two years is the whole of it.' },
+  { id: 'guinea_pig', label: 'A Guinea Pig', aWeek: 5_00, years: 6, about: 'It shrieks when the fridge opens and it is never not hungry.' },
+  { id: 'budgie', label: 'A Budgie', aWeek: 4_00, years: 8, about: 'It says one word, badly, and only when nobody else is listening.' },
+];
+
+export const PET_BY_ID: Readonly<Record<string, PetKind>> = Object.fromEntries(
+  PETS.map((one) => [one.id, one]),
+);
+
+/** What an animal gets called. SLATE's own, and deliberately ordinary. */
+export const PET_NAMES: readonly string[] = [
+  'Biscuit', 'Pepper', 'Bramble', 'Nutmeg', 'Domino', 'Ziggy', 'Marbles', 'Sooty', 'Rusty',
+  'Waffle', 'Pickle', 'Bandit', 'Willow', 'Otto', 'Peanut', 'Bo', 'Juniper', 'Moss', 'Clover',
+  'Dusty',
+];
 
 // ---------------------------------------------------------------------------
 // Pocket money

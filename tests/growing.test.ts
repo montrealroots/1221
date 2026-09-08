@@ -12,11 +12,11 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import {
   ALLOWANCE_BY_AGE, ALLOWANCE_STOPS_AT, DRIVING_NOTE, GROWING_NOTE, LESSONS_TO_READY, MOMENTS,
-  MOMENT_BY_ID, TEST_PASSES_AT, allowanceAt, momentsAt,
+  MOMENT_BY_ID, PET_BY_ID, PET_NAMES, TEST_PASSES_AT, allowanceAt, momentsAt,
 } from '@/engine/content/growingup';
 import {
-  LAPSES_AFTER_DAYS, conditionMet, ensureGrowing, growingOf, lessonCost, livedThrough,
-  openMoments, pendingMoment, readyToDrive, testCost,
+  LAPSES_AFTER_DAYS, conditionMet, describePet, ensureGrowing, growingOf, lessonCost,
+  livedThrough, openMoments, pendingMoment, readyToDrive, testCost,
 } from '@/engine/systems/growing';
 import { ATTRIBUTES } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
@@ -213,5 +213,57 @@ describe('learning to drive', () => {
       expect(sim.execute({ kind: 'growing.test', payload: {} }).ok).toBe(false);
     }
     expect(record.testsSat).toBeGreaterThan(0);
+  });
+});
+
+describe('the animal', () => {
+  it('is a real thing in the save rather than a line in a story', () => {
+    const sim = aLife('pet', 2016);
+    const res = sim.execute<{ note: string }>(
+      { kind: 'growing.choose', payload: { momentId: 'the_pet', choiceId: 'keep_it' } },
+    );
+    expect(res.ok, res.error).toBe(true);
+    const pet = growingOf(sim)!.pet!;
+    expect(pet).toBeDefined();
+    expect(PET_BY_ID[pet.kindId]).toBeDefined();
+    expect(PET_NAMES).toContain(pet.name);
+    expect(pet.aWeek).toBeGreaterThan(0);
+    expect(res.value!.note).toMatch(pet.name);
+    expect(describePet(sim, growingOf(sim)!)).toMatch(pet.name);
+  });
+
+  it('costs money every week for as long as it is here', () => {
+    const sim = aLife('pet-costs', 2016);
+    sim.execute({ kind: 'growing.choose', payload: { momentId: 'the_pet', choiceId: 'keep_it' } });
+    const before = sim.ledger.availableFunds(sim.player.primaryAccountId!);
+    sim.advanceTo(sim.now + 30 * MS_DAY);
+    expect(sim.ledger.availableFunds(sim.player.primaryAccountId!)).toBeLessThan(before);
+  });
+
+  it('does not live forever, and the game says when rather than going quiet', () => {
+    const sim = aLife('pet-end', 2016);
+    sim.execute({ kind: 'growing.choose', payload: { momentId: 'the_pet', choiceId: 'keep_it' } });
+    const pet = growingOf(sim)!.pet!;
+    const kind = PET_BY_ID[pet.kindId]!;
+    // Aged by moving the day it arrived rather than by simulating thirteen
+    // years, which is the same arithmetic and a great deal faster.
+    pet.since = sim.now - (kind.years + 1) * 365 * MS_DAY;
+    sim.advanceTo(sim.now + 9 * MS_DAY);
+    expect(growingOf(sim)!.pet!.untilAt).toBeDefined();
+    expect(describePet(sim, growingOf(sim)!)).toMatch(pet.name);
+    // And it stops costing money once it is not here: no charge in its name
+    // lands after the day it ended.
+    const ended = growingOf(sim)!.pet!.untilAt!;
+    sim.advanceTo(sim.now + 40 * MS_DAY);
+    const after = sim.ledger.history(sim.player.primaryAccountId!)
+      .filter((one) => one.memo === pet.name && one.at > ended);
+    expect(after).toHaveLength(0);
+  });
+
+  it('says nothing about an animal for somebody who did not keep one', () => {
+    const sim = aLife('pet-none', 2016);
+    sim.execute({ kind: 'growing.choose', payload: { momentId: 'the_pet', choiceId: 'no' } });
+    expect(growingOf(sim)!.pet).toBeUndefined();
+    expect(describePet(sim, growingOf(sim)!)).toBeUndefined();
   });
 });

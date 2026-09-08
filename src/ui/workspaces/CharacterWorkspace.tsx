@@ -24,9 +24,9 @@ import { SIX_MONTH_NOTE, exchangeOffer, regionOfCity, residenceCityOf, statusOf 
 import type { IdentityDocument } from '@/engine/domain/model';
 import { countryOfCity } from '@/engine/content/geography';
 import {
-  growingOf, lessonCost, livedThrough, pendingMoment, readyToDrive, testCost,
+  describePet, growingOf, lessonCost, livedThrough, pendingMoment, readyToDrive, testCost,
 } from '@/engine/systems/growing';
-import { ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE } from '@/engine/content/growingup';
+import { ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE, PET_NOTE } from '@/engine/content/growingup';
 import {
   describeJob, floorHere, jobOf, jobsHeld, openingsFor, shiftIsDue, wageFor,
 } from '@/engine/systems/work';
@@ -722,6 +722,18 @@ function GrowingPanel(): JSX.Element | null {
         )}
         <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{GROWING_NOTE}</p>
       </Panel>
+
+      {record.pet && (
+        <Panel
+          title={record.pet.untilAt ? 'The One You Had' : record.pet.name}
+          subtitle={record.pet.untilAt ? 'Not here any more.' : `${formatMoney(record.pet.aWeek)} a week.`}
+        >
+          <div className="col gap-2">
+            <p className="small" style={{ margin: 0 }}>{describePet(sim, record)}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{PET_NOTE}</p>
+          </div>
+        </Panel>
+      )}
 
       <Panel
         title="Learning To Drive"

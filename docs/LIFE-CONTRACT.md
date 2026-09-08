@@ -861,6 +861,10 @@ answer says what would make it yes.
    checker fails the build if a line claims one. A moment nobody answers
    passes, rather than stopping every other thing in a life.
 
+   The animal a childhood produces is a real thing rather than a line in a
+   story: it has a name, it costs money every week for as long as it is alive,
+   and when it is not alive any more the game says so rather than going quiet.
+
    Pocket money goes up with age and stops at eighteen, priced against what
    things cost where you are living. Learning to drive is hours with an
    instructor that cost money by the hour and a test that can be failed and

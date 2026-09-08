@@ -14,15 +14,16 @@
 
 import {
   ALLOWANCE_BY_AGE, ALLOWANCE_NOTE, ALLOWANCE_STOPS_AT, DRIVING_NOTE, GROWING_NOTE,
-  LESSONS_TO_READY, LESSON_COST, MOMENTS, MOMENT_BY_ID, TEST_COST, TEST_PASSES_AT, allowanceAt,
-  momentsAt,
+  LESSONS_TO_READY, LESSON_COST, MOMENTS, PETS, PET_BY_ID, PET_NAMES, PET_NOTE,
+  TEST_COST, TEST_PASSES_AT, allowanceAt, momentsAt,
 } from '../src/engine/content/growingup.ts';
 import { ATTRIBUTES } from '../src/engine/domain/attributes.ts';
 import { SKILLS } from '../src/engine/domain/skills.ts';
 import { quickSave } from '../src/engine/index.ts';
 import {
-  conditionMet, growingOf, livedThrough, openMoments, readyToDrive,
+  conditionMet, describePet, growingOf, livedThrough, openMoments, readyToDrive,
 } from '../src/engine/systems/growing.ts';
+import { MS_DAY } from '../src/engine/core/time.ts';
 import { ageOf } from '../src/engine/systems/lifespan.ts';
 
 const problems = [];
@@ -68,8 +69,11 @@ for (const moment of MOMENTS) {
       + (effect.money ? 1 : 0) + (effect.parents ? 1 : 0) + (effect.siblings ? 1 : 0)
       + (effect.friend ? 1 : 0) + (effect.energy ? 1 : 0) + (effect.stress ? 1 : 0) + (effect.morale ? 1 : 0);
     if (moves === 0) problems.push(`${moment.title}/${choice.id} changes nothing`);
-    // And nothing claims a consequence the game does not carry.
-    if (/grounded|arrested|expelled|suspended/i.test(effect.note)) {
+    // And nothing claims a consequence the game does not carry. This list is
+    // the things a line could say that would be a lie: the game has no
+    // grounding, no arrest, no exclusion, no job it did not create and no
+    // marriage it did not perform.
+    if (/grounded|arrested|expelled|suspended|sacked|fired from|pregnan|got married|divorced/i.test(effect.note)) {
       problems.push(`${moment.title}/${choice.id} claims something the game does not do`);
     }
   }
@@ -80,6 +84,40 @@ for (let age = 6; age <= 20; age++) {
   if (momentsAt(age).length === 0) problems.push(`nothing ever happens at ${age}`);
 }
 if (!/SLATE/.test(GROWING_NOTE) || !/own/.test(GROWING_NOTE)) problems.push('the note about growing up has gone');
+
+// --- The animal, which is a real thing rather than a line ---------------------
+
+{
+  const sim = quickSave(
+    { birthYear: 2016, startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' }, 'pet-check',
+  );
+  const kept = sim.execute({ kind: 'growing.choose', payload: { momentId: 'the_pet', choiceId: 'keep_it' } });
+  if (!kept.ok) problems.push(`keeping the animal was refused: ${kept.error}`);
+  else {
+    const record = growingOf(sim);
+    const pet = record?.pet;
+    if (!pet) problems.push('the animal was kept and no animal exists');
+    else {
+      if (!PET_BY_ID[pet.kindId]) problems.push(`the animal is a "${pet.kindId}", which is not a kind`);
+      if (!pet.name || pet.name.length < 2) problems.push('the animal has no name');
+      if (pet.aWeek <= 0) problems.push('the animal costs nothing to keep');
+      if (!describePet(sim, record)?.includes(pet.name)) problems.push('the page does not name the animal');
+      // It costs money every week, and the account agrees.
+      const before = sim.ledger.availableFunds(sim.player.primaryAccountId);
+      sim.advanceTo(sim.now + 30 * MS_DAY);
+      if (sim.ledger.availableFunds(sim.player.primaryAccountId) >= before) {
+        problems.push('a month of the animal cost nothing at all');
+      }
+    }
+  }
+  for (const kind of PETS) {
+    if (kind.aWeek <= 0) problems.push(`${kind.label} costs nothing a week`);
+    if (kind.years < 1 || kind.years > 25) problems.push(`${kind.label} lives ${kind.years} years`);
+    if (kind.about.length < 25) problems.push(`${kind.label} has nothing said about it`);
+  }
+  if (PET_NAMES.length < 12) problems.push('there are not enough names for an animal');
+  if (!/costs money every week/.test(PET_NOTE)) problems.push('the note about the animal has gone');
+}
 
 // --- Pocket money -----------------------------------------------------------
 
@@ -159,6 +197,7 @@ if (!/can be failed/.test(DRIVING_NOTE)) problems.push('the note about the drivi
 const choices = MOMENTS.reduce((sum, one) => sum + one.choices.length, 0);
 console.log(`${MOMENTS.length} moments and ${choices} answers, from ${Math.min(...MOMENTS.map((o) => o.fromAge))} to ${Math.max(...MOMENTS.map((o) => o.toAge))}.`);
 console.log(`Pocket money from ${ALLOWANCE_BY_AGE[0].fromAge} until ${ALLOWANCE_STOPS_AT}, and ${LESSONS_TO_READY} hours before most people are ready for the test.`);
+console.log(`${PETS.length} kinds of animal, each of which costs money every week and does not live forever.`);
 console.log('Everybody it puts in your life is SLATE’s own, and every moment is the ordinary kind.');
 
 if (problems.length > 0) {
