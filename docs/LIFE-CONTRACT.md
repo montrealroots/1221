@@ -178,6 +178,11 @@ the pharmacy, the vet, the DMV, the bank branch, the phone shop. Each one a room
 with somebody in it. Most of these are two minutes of play and they are what
 makes the rest feel real.
 
+**Four of them are in.** The salon and the barber are one chair; the chemist,
+the post office and the launderette are the other three. The bank branch is the
+Bank workspace and the garage is in the vehicle journey. Still to come: the
+dentist, the vet, the DMV and the phone shop.
+
 ---
 
 ## 10. Free text that actually does things
@@ -607,7 +612,42 @@ answer says what would make it yes.
    nobody sat in stays empty with the money gone. What you made of the night is
    the thing itself against what you like, plus the room around you — a full
    house or nine people, and somebody behind you narrating the whole match.
-8. The ordinary rooms: salon, garage, chemist, post office.
+8. **Done.** The ordinary rooms: a chair, a counter, a queue and a wash.
+
+   Four rooms in every town, in the City list beside everything else there, and
+   you have to be standing in one to use it. A chemist carries the sign of a
+   chain that really trades in that country — 42 of them across 42 countries —
+   except in the nine where the law requires a pharmacy to be owned by the
+   pharmacist running it, where it is an independent Apotheke, Pharmacie,
+   Farmacia, Farmakeio, Eczane or Apotek in that country's own word, and the
+   room says so rather than leaving a gap. A post office belongs to that country's real
+   national operator, 93 of them, one to a country. What anything costs, how
+   long the queue is, what is on the shelf and how often a parcel goes astray
+   are SLATE's own calibration, and the note in each room says which half is
+   which. The note in the chemist is about the chemist; the note at the post
+   office is about the post.
+
+   A haircut is a clock, not a flag: full on the way out of the chair and
+   nothing six weeks later, running from the first day of the life rather than
+   from the first time you happen to sit down, and a trim puts back a share
+   where a cut resets it. A room that reads it can weigh it. A shelf is 86% of
+   the ordinary things, the same 86% every time you walk into that branch, and
+   a branch that is out of something says so instead of selling it. Nothing on
+   the shelf carries a dose, a claim or an instruction.
+
+   A parcel is a weight, a distance, a service and a wait. Heavier costs more,
+   further costs more, abroad costs more again, and the counter will not take
+   more than thirty kilos or send anything to the city it is standing in. Then
+   it is out of your hands: it arrives, or it is held up somewhere and arrives
+   later, or about one in eighty never turns up at all — and an untracked
+   parcel tells you nothing in the meantime, because nobody could tell you. It
+   can only ever arrive once, however far the world is run on past it.
+
+   A service wash is the other thing a launderette sells: somebody else does
+   it, for nearly twice the price, using the same line the mirror draws about
+   what is dirty, and your clothes are theirs until tomorrow — off your back
+   and out of the wardrobe meanwhile.
+
 9. Childhood through later life, end to end.
 10. Free-text intent across all of it.
 

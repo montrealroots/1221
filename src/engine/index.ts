@@ -48,6 +48,7 @@ import { registerPictureSystem } from './systems/picture';
 import { registerCinemaSystem } from './systems/cinema';
 import { registerFashionSystem } from './systems/fashion';
 import { registerGoingSystem } from './systems/going';
+import { registerErrandSystem } from './systems/errands';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
@@ -116,6 +117,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCinemaSystem(sim);
   registerFashionSystem(sim);
   registerGoingSystem(sim);
+  registerErrandSystem(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
@@ -1041,6 +1043,18 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // fixtures, acts and productions.
     universe.goingTickets ??= {};
     steps.push('Concerts, matches, plays and exhibitions, at real venues.');
+  }
+
+  if (from < 60) {
+    // Schema 60: the ordinary rooms. A chair, a counter, a queue and a wash.
+    universe.parcels ??= {};
+    // A haircut grows out on a clock, and the clock has to start somewhere. A
+    // save that predates the salon starts it now: freshly cut on the day the
+    // room appeared, rather than a character who never needs one again.
+    for (const person of Object.values(universe.people)) {
+      (person as { groomedAt?: number }).groomedAt ??= universe.now;
+    }
+    steps.push('The salon, the chemist, the post office and the launderette.');
   }
 
   if (from < 55) {

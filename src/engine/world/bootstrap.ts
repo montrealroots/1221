@@ -201,6 +201,7 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     cinemaTickets: {},
     fashionInvites: {},
     goingTickets: {},
+    parcels: {},
     companies: {},
     scenes: { version: 2, sessions: {} },
     memberships: {}, workouts: {}, plans: {}, vehicleDeals: {}, dates: {}, dialogue: { version: 1, seen: {} },
@@ -349,6 +350,9 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     pronouns: config.pronouns,
     performerTitle: config.performerTitle,
     birthInstant,
+    // The chair. A life starts freshly cut and grows out from the first day
+    // rather than staying that way until somebody happens to sit down.
+    groomedAt: now,
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
     ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),

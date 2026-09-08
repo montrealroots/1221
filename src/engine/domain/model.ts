@@ -223,6 +223,15 @@ export interface Person {
   residenceId?: Id;
   householdId?: Id;
 
+  /**
+   * When they last sat in a chair and had it cut.
+   *
+   * A cut lasts about six weeks before it stops looking like one, and the
+   * mirror and the room both notice. Absent on somebody who has never been to
+   * a salon, which reads as freshly cut rather than as a gap.
+   */
+  groomedAt?: Instant;
+
   personality: Personality;
   interests: string[];
   goals: string[];
@@ -1560,6 +1569,36 @@ export interface GoingTicket {
     /** How full the room was, which is half of a night out. */
     house: string;
   };
+}
+
+/**
+ * Something you handed over a counter and sent somewhere.
+ *
+ * The operator and the service are copied onto it, because a parcel outlives
+ * the visit that posted it and the counter it was posted at.
+ */
+export interface Parcel {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  placeName: string;
+  /** The national operator that carries it. */
+  operator: string;
+  fromCityId: string;
+  toCityId: string;
+  service: string;
+  /** What went in it, in the player's own words. */
+  contents: string;
+  grams: number;
+  paid: Money;
+  sentAt: Instant;
+  dueAt: Instant;
+  tracked: boolean;
+  status: 'in_transit' | 'delivered' | 'delayed' | 'lost';
+  /** What happened to it, once something has. */
+  note?: string;
+  arrivedAt?: Instant;
 }
 
 export interface Outfit {
@@ -2981,7 +3020,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 59;
+export const SAVE_SCHEMA_VERSION = 60;
 
 export interface SaveMeta {
   id: Id;
@@ -3116,6 +3155,7 @@ export interface SaveUniverse {
   cinemaTickets: Record<Id, CinemaTicket>;
   fashionInvites: Record<Id, FashionInvite>;
   goingTickets: Record<Id, GoingTicket>;
+  parcels: Record<Id, Parcel>;
   /** Minutes spent in each app on each day, which is what Time Management is. */
   socialScreenTime: Record<string, number>;
   /** The bell, and how the player has the app set up. */

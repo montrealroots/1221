@@ -10,9 +10,9 @@
 import { useMemo, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Empty, Tabs, Modal, Meter } from '@/ui/components/primitives';
-import { titleCaseLabel } from '@/engine/core/text';
-import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
-import { formatDuration } from '@/engine/core/time';
+import { plural, titleCaseLabel } from '@/engine/core/text';
+import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
+import { formatDate, formatDuration } from '@/engine/core/time';
 import { CITIES, NEIGHBOURHOODS } from '@/engine/content/geography';
 import {
   INVENTED_NOTE, PLACE_KIND_LABEL, REAL_NOTE, cuisineOf, menuOf, priceOf, type Place, type PlaceKind,
@@ -26,6 +26,10 @@ import { isCostumier } from '@/engine/systems/costume';
 import { lotSells } from '@/engine/systems/dealership';
 import { DOORS_OPEN_MINUTES, DOORS_SHUT_MINUTES, upcomingTickets } from '@/engine/systems/cinema';
 import { upcomingTickets as upcomingSeats } from '@/engine/systems/going';
+import {
+  counterPrice, describePharmacy, groomingNote, operatorAt, postagePrice, salonPrice, shelfAt,
+} from '@/engine/systems/errands';
+import { PHARMACY_NOTE, POST_NOTE, POST_SERVICES, SALON_SERVICES } from '@/engine/content/errands';
 
 /** The rooms a town goes out in, which have their own listings page. */
 const VENUE_KINDS: PlaceKind[] = ['stadium', 'arena', 'concert_hall', 'theatre', 'museum', 'club'];
@@ -34,16 +38,17 @@ const GROUPS: { id: string; label: string; kinds: PlaceKind[] }[] = [
   { id: 'eat', label: 'Eat And Drink', kinds: ['restaurant', 'cafe', 'bar', 'fast_food'] },
   { id: 'see', label: 'See Something', kinds: ['landmark', 'museum', 'park', 'beach', 'viewpoint', 'cinema', 'theatre', 'stadium', 'arena', 'concert_hall'] },
   { id: 'shop', label: 'Shops', kinds: ['shop', 'market'] },
-  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'salon', 'dealership', 'marina', 'storage'] },
+  { id: 'do', label: 'Errands', kinds: ['gas_station', 'garage', 'gym', 'salon', 'pharmacy', 'post_office', 'launderette', 'dealership', 'marina', 'storage'] },
   { id: 'stay', label: 'Stay Out', kinds: ['hotel', 'club'] },
 ];
 
 export function CityWorkspace() {
-  const { sim, run, navigate } = useGame();
+  const { sim, run, navigate, toast } = useGame();
   const here = useWorld((s) => whatIsHere(s));
   const [group, setGroup] = useState('eat');
   const [mode, setMode] = useState<Mode>('drive');
   const [ordering, setOrdering] = useState<Place | null>(null);
+  const [errand, setErrand] = useState<'salon' | 'chemist' | 'post' | null>(null);
 
   const kinds = GROUPS.find((g) => g.id === group)?.kinds ?? [];
   const near = useWorld((s) => placesNear(s, { mode, kinds, limit: 120 }));
@@ -155,6 +160,41 @@ export function CityWorkspace() {
               Go In For {seatTonight.card}
             </button>
           )}
+          {here.place?.kind === 'salon' && (
+            <button className="btn btn-sm btn-primary" onClick={() => setErrand(errand === 'salon' ? null : 'salon')}>
+              Sit In The Chair
+            </button>
+          )}
+          {here.place?.kind === 'pharmacy' && (
+            <button className="btn btn-sm btn-primary" onClick={() => setErrand(errand === 'chemist' ? null : 'chemist')}>
+              Go To The Counter
+            </button>
+          )}
+          {here.place?.kind === 'post_office' && (
+            <button className="btn btn-sm btn-primary" onClick={() => setErrand(errand === 'post' ? null : 'post')}>
+              Join The Queue
+            </button>
+          )}
+          {here.place?.kind === 'launderette' && (
+            <button
+              className="btn btn-sm btn-primary"
+              onClick={() => {
+                const result = run<{ paid: Money; pieces: number; readyAt: number }>(
+                  'errand.service_wash', { placeId: here.place!.id },
+                );
+                if (result.ok) {
+                  const { pieces, paid, readyAt } = result.value!;
+                  toast(
+                    `${plural(pieces, 'piece')} for ${formatMoney(paid)}, `
+                    + `back ${formatDate(readyAt, sim.homeZone)}.`,
+                    'positive',
+                  );
+                }
+              }}
+            >
+              Leave It With Them
+            </button>
+          )}
           {VENUE_KINDS.includes(here.place?.kind ?? 'shop') && (
             <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/goingout', 'Going Out')}>
               See What Is On Here
@@ -181,6 +221,9 @@ export function CityWorkspace() {
             </button>
           )}
         </div>
+        {errand && here.place && (
+          <ErrandCounter place={here.place} kind={errand} onDone={() => setErrand(null)} />
+        )}
         {room && (
           <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
             You have a room at {room.hotelName} until {new Date(room.checkOutAt).toDateString()}. That is a bed and a bathroom.
@@ -360,4 +403,154 @@ function OrderDialog({ place, onClose }: { place: Place; onClose: () => void }) 
 function lookLabel(place: Place): string {
   const sells = lotSells(place);
   return sells === 'motorcycle' ? 'Look At The Bikes' : sells === 'boat' ? 'Look At The Boats' : sells === 'jet' ? 'Look At The Aircraft' : 'Look At The Cars';
+}
+
+/**
+ * The counter you are standing at.
+ *
+ * A chair, a chemist's shelf or a post office queue, in the room you are
+ * already in. Every price is read straight off the simulation, because the
+ * city clock moves while you are standing there.
+ */
+function ErrandCounter({
+  place, kind, onDone,
+}: { place: Place; kind: 'salon' | 'chemist' | 'post'; onDone: () => void }) {
+  const { sim, run, toast } = useGame();
+  const [basket, setBasket] = useState<Record<string, number>>({});
+  const [service, setService] = useState('tracked');
+  const [grams, setGrams] = useState(1000);
+  const [toCityId, setToCityId] = useState('');
+  const [contents, setContents] = useState('');
+
+  if (kind === 'salon') {
+    return (
+      <div className="card card-tight" style={{ marginTop: 'var(--s3)' }}>
+        <div className="label">The Chair</div>
+        <p className="xs dim" style={{ margin: '4px 0 0' }}>{groomingNote(sim)}</p>
+        <div className="list" style={{ marginTop: 'var(--s2)' }}>
+          {SALON_SERVICES.map((one) => (
+            <div key={one.id} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{one.label}</div>
+                <div className="xs dim">{one.about}</div>
+              </div>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  const result = run<{ paid: Money; note: string }>(
+                    'errand.haircut', { placeId: place.id, service: one.id },
+                  );
+                  if (result.ok) { toast(result.value!.note, 'positive'); onDone(); }
+                }}
+              >
+                {formatMoney(salonPrice(place, one.id))}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (kind === 'chemist') {
+    const shelf = shelfAt(sim, place);
+    const total = Object.entries(basket).reduce((sum, [id, n]) => sum + counterPrice(place, id) * n, 0);
+    return (
+      <div className="card card-tight" style={{ marginTop: 'var(--s3)' }}>
+        <div className="label">The Counter</div>
+        <p className="xs dim" style={{ margin: '4px 0 0' }}>{describePharmacy(place)}</p>
+        <p className="xs dim" style={{ margin: '4px 0 0' }}>{PHARMACY_NOTE}</p>
+        <div className="list" style={{ marginTop: 'var(--s2)' }}>
+          {shelf.map((good) => (
+            <div key={good.id} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{good.name}</div>
+                <div className="xs dim">{good.about}</div>
+              </div>
+              <span className="mono small">{formatMoney(counterPrice(place, good.id))}</span>
+              <button
+                className="btn btn-sm"
+                onClick={() => setBasket({ ...basket, [good.id]: (basket[good.id] ?? 0) + 1 })}
+              >
+                Add{basket[good.id] ? ` (${basket[good.id]})` : ''}
+              </button>
+            </div>
+          ))}
+        </div>
+        <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
+          <button
+            className="btn btn-sm btn-primary"
+            disabled={total === 0}
+            onClick={() => {
+              const items = Object.entries(basket).map(([id, quantity]) => ({ id, quantity }));
+              const result = run<{ paid: Money; note: string }>('errand.buy', { placeId: place.id, items });
+              if (result.ok) {
+                toast(`${formatMoney(result.value!.paid)}. ${result.value!.note}`, 'positive');
+                setBasket({});
+                onDone();
+              }
+            }}
+          >
+            Pay{total > 0 ? ` — ${formatMoney(total)}` : ''}
+          </button>
+          <button className="btn btn-sm" onClick={() => setBasket({})}>Put It Back</button>
+        </div>
+      </div>
+    );
+  }
+
+  const cities = CITIES.all().filter((one) => one.id !== place.cityId).slice(0, 60);
+  const price = toCityId ? postagePrice(place, service, grams, toCityId) : 0;
+  return (
+    <div className="card card-tight" style={{ marginTop: 'var(--s3)' }}>
+      <div className="label">The Queue</div>
+      <p className="xs dim" style={{ margin: '4px 0 0' }}>{operatorAt(place)}. {POST_NOTE}</p>
+      <label className="label" htmlFor="post-contents" style={{ marginTop: 'var(--s2)' }}>What Is In It</label>
+      <input
+        id="post-contents"
+        className="input"
+        value={contents}
+        maxLength={120}
+        placeholder="A script, bound"
+        onChange={(event) => setContents(event.target.value)}
+      />
+      <label className="label" htmlFor="post-to" style={{ marginTop: 'var(--s2)' }}>Where To</label>
+      <select id="post-to" className="input" value={toCityId} onChange={(event) => setToCityId(event.target.value)}>
+        <option value="">Pick somewhere</option>
+        {cities.map((one) => <option key={one.id} value={one.id}>{one.name}</option>)}
+      </select>
+      <label className="label" htmlFor="post-grams" style={{ marginTop: 'var(--s2)' }}>
+        {(grams / 1000).toFixed(1)} kg
+      </label>
+      <input id="post-grams" type="range" min={100} max={20000} step={100} value={grams} onChange={(event) => setGrams(Number(event.target.value))} />
+      <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
+        {POST_SERVICES.map((one) => (
+          <button key={one.id} className={`btn btn-sm${service === one.id ? ' btn-primary' : ''}`} onClick={() => setService(one.id)}>
+            {one.label}
+          </button>
+        ))}
+      </div>
+      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+        {POST_SERVICES.find((one) => one.id === service)?.about}
+      </p>
+      <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
+        <button
+          className="btn btn-sm btn-primary"
+          disabled={!toCityId || contents.trim().length < 2}
+          onClick={() => {
+            const result = run<{ paid: Money; dueAt: number; operator: string }>(
+              'errand.post', { placeId: place.id, service, grams, toCityId, contents },
+            );
+            if (result.ok) {
+              const { operator, dueAt } = result.value!;
+              toast(`${operator} has it. Due ${formatDate(dueAt, sim.homeZone)}.`, 'positive');
+              onDone();
+            }
+          }}
+        >
+          Send It{price > 0 ? ` — ${formatMoney(price)}` : ''}
+        </button>
+      </div>
+    </div>
+  );
 }

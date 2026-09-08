@@ -24,6 +24,9 @@ import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
 import { REAL_GYMS } from './fitness';
 import { HOUSES_NOT_SHOPS, RENTAL_HOUSES, ownHousesIn } from './rental';
+import {
+  INDEPENDENT_PHARMACY_WORD, PHARMACIES_ARE_INDEPENDENT, pharmacyChainsIn, postalOperatorIn,
+} from './errands';
 import { shoppableRetailers } from './catalog';
 import { ALL_RETAILERS, tradesIn } from './brands';
 
@@ -33,7 +36,8 @@ export type PlaceKind =
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
   | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house'
-  | 'arena' | 'concert_hall';
+  | 'arena' | 'concert_hall'
+  | 'pharmacy' | 'post_office' | 'launderette';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   jeweller: 'Jeweler', costumier: 'Costume House',
@@ -41,6 +45,7 @@ export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
   cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
   arena: 'Arena', concert_hall: 'Concert Hall',
+  pharmacy: 'Pharmacy', post_office: 'Post Office', launderette: 'Launderette',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
   rental_house: 'Rental House',
@@ -403,6 +408,7 @@ const COSTUMIER_NAMES = [
   'Mallory Costume Works', 'The Toile Room', 'Sabine & Ash',
 ];
 
+const LAUNDERETTE_NAMES = ['The Washing Line', 'Spin Cycle', 'The Laundry Rooms', 'Soap & Suds', 'The Wash House'];
 const THEATRE_NAMES = ['The Playhouse', 'The Corner Theater', 'The Lyceum', 'The Rep', 'The Little Theater'];
 const MUSEUM_NAMES = ['The City Museum', 'The Museum Of The Town', 'The Old Customs House Museum', 'The Founders Museum'];
 const ARENA_NAMES = ['The Exhibition Arena', 'The Fieldhouse', 'The Trade Hall Arena', 'The Pavilion'];
@@ -450,10 +456,16 @@ const SPECS: readonly Spec[] = [
   { kind: 'stadium', count: (_i, p) => (p >= 250_000 ? 1 : 0) },
   { kind: 'arena', count: (_i, p) => (p >= 500_000 ? 1 : 0) },
   { kind: 'concert_hall', count: (_i, p) => (p >= 400_000 ? 1 : 0) },
+  // The ordinary rooms, appended after everything above so no existing place
+  // id moved. A chemist and a post office everywhere, because everywhere has
+  // both; a launderette in a town big enough to have people without machines.
+  { kind: 'pharmacy', count: () => 2 },
+  { kind: 'post_office', count: () => 1 },
+  { kind: 'launderette', count: (_i, p) => (p >= 60_000 ? 1 : 0) },
 ];
 
 /** Kinds a smaller city simply does not have, rather than getting one anyway. */
-const CAN_BE_ABSENT: ReadonlySet<PlaceKind> = new Set(['marina', 'stadium', 'arena', 'concert_hall']);
+const CAN_BE_ABSENT: ReadonlySet<PlaceKind> = new Set(['marina', 'stadium', 'arena', 'concert_hall', 'launderette']);
 
 /** City tags that put it on water a boat can be kept in. */
 const WATERFRONT_TAGS = ['beach', 'coastal', 'harbour', 'island', 'riviera'];
@@ -502,9 +514,23 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   marina: ['visit'], storage: ['visit'], jeweller: ['browse'], costumier: ['browse'],
   rental_house: ['browse'],
   arena: ['watch'], concert_hall: ['watch'],
+  pharmacy: ['shop'], post_office: ['visit'], launderette: ['visit'],
 };
 
-function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
+/**
+ * An independent pharmacy's name, where the law requires one.
+ *
+ * Germany, France, Italy, Spain, Austria, Greece, Turkey and Denmark all
+ * require a pharmacy to be owned by the pharmacist running it, so there is no
+ * chain to name it after and it gets the local word and a corner instead.
+ */
+// Said in English, because the whole game is: a branch is distinguished by
+// where it stands, not by a phrase from a language nothing else here uses.
+const PHARMACY_CORNERS = ['On The Square', 'By The Station', 'On The Corner', 'Central', 'Old Town', 'By The Market'];
+
+function nameFor(
+  kind: PlaceKind, rng: Rng, cuisine?: Cuisine, countryId?: string, highStreet?: ReadonlySet<string>,
+): string {
   switch (kind) {
     case 'restaurant': {
       const first = rng.pick(RESTAURANT_FIRST);
@@ -534,6 +560,26 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
     case 'arena': return rng.pick(ARENA_NAMES);
     case 'concert_hall': return rng.pick(CONCERT_HALL_NAMES);
     case 'stadium': return rng.pick(STADIUM_NAMES);
+    case 'launderette': return rng.pick(LAUNDERETTE_NAMES);
+    case 'pharmacy': {
+      // Where chains are allowed, the sign is a chain that really trades here.
+      const chains = countryId ? pharmacyChainsIn(countryId) : [];
+      if (chains.length > 0 && !(countryId && PHARMACIES_ARE_INDEPENDENT.has(countryId))) {
+        // A chain already on this city's high street is that shop, not this
+        // one, so prefer a chain the street has not got. When the street has
+        // all of them this is a second branch, and a second branch is named
+        // the way people name it: by the corner it stands on.
+        const spare = chains.filter((one) => !highStreet?.has(one.name.toLowerCase()));
+        if (spare.length > 0) return rng.pick(spare).name;
+        return `${rng.pick(chains).name} ${rng.pick(PHARMACY_CORNERS)}`;
+      }
+      const word = (countryId && INDEPENDENT_PHARMACY_WORD[countryId]) || 'Pharmacy';
+      return `${word} ${rng.pick(PHARMACY_CORNERS)}`;
+    }
+    case 'post_office': {
+      const operator = countryId ? postalOperatorIn(countryId) : undefined;
+      return operator ? operator.name : 'The Post Office';
+    }
     default: return 'A Place';
   }
 }
@@ -544,6 +590,7 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
   marina: 60, storage: 20, jeweller: 45, costumier: 70, rental_house: 55,
   arena: 180, concert_hall: 150,
+  pharmacy: 20, post_office: 25, launderette: 95,
 };
 
 /**
@@ -605,6 +652,20 @@ export function placesIn(cityId: string): Place[] {
   const hoods = NEIGHBOURHOODS.childrenOf(cityId);
   const industry = city.industryPresence;
   const used = new Set(out.map((p) => p.name.toLowerCase()));
+  // What the chains put on this city's high street. The shops themselves are
+  // appended after this loop, so the rooms generated here would otherwise not
+  // know about them. Only the three rooms added at schema 60 consult it, so
+  // no name that a save already carries moves.
+  const highStreet = new Set(
+    shoppableRetailers()
+      .filter((retailer) => {
+        const real = ALL_RETAILERS.find((r) => r.id === retailer.id);
+        return Boolean(real) && real!.kind !== 'online' && !HOUSES_NOT_SHOPS.has(retailer.id)
+          && tradesIn(real!, cityId, city.population);
+      })
+      .map((retailer) => retailer.name.toLowerCase()),
+  );
+  const OFF_THE_HIGH_STREET = new Set<PlaceKind>(['pharmacy', 'post_office', 'launderette']);
 
   const waterfront = isWaterfront(city);
   const realMarinas = out.filter((p) => p.kind === 'marina').length;
@@ -618,10 +679,11 @@ export function placesIn(cityId: string): Place[] {
     const count = CAN_BE_ABSENT.has(spec.kind) ? wanted : Math.max(1, wanted);
     for (let i = 0; i < count; i++) {
       const cuisine = spec.kind === 'restaurant' ? rng.pick(CUISINES) : undefined;
-      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine);
+      const street = OFF_THE_HIGH_STREET.has(spec.kind) ? highStreet : undefined;
+      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine, city.countryId, street);
       if (spec.kind === 'marina' && rng.chance(0.5)) name = `${city.name} ${rng.pick(['Yacht Harbor', 'Marina', 'Yacht Basin'])}`;
       let guard = 0;
-      while (used.has(name.toLowerCase()) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
+      while ((used.has(name.toLowerCase()) || street?.has(name.toLowerCase())) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine, city.countryId, street)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
       used.add(name.toLowerCase());
       const hood = hoods.length > 0 ? rng.pick(hoods) : undefined;
       const prestige = hood?.prestige ?? 50;
@@ -775,6 +837,21 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
       'A shoebox room with a warm decay and seats that punish slouching.',
       'An organ nobody plays enough, and acoustics somebody got right.',
       'Subscription nights, a choir on Sundays, and a quiet green room.',
+    ])}`;
+    case 'launderette': return `A launderette in ${where}. ${rng.pick([
+      'Six machines, four dryers, and a chair somebody left.',
+      'Open till ten, and a service wash if you cannot face waiting.',
+      'The dryer on the end has always been the good one.',
+    ])}`;
+    case 'post_office': return `A post office in ${where}. ${rng.pick([
+      'Two windows open out of five, and a queue that knows it.',
+      'Parcels, stamps, and a form for everything.',
+      'A counter at the back of a shop, which is how most of them are now.',
+    ])}`;
+    case 'pharmacy': return `A pharmacy in ${where}. ${rng.pick([
+      'A dispensary at the back and everything else in front of it.',
+      'Open late, and the only thing open at all on a Sunday.',
+      'A pharmacist who will tell you to go to a doctor, and mean it.',
     ])}`;
     case 'stadium': return `A stadium in ${where}. ${rng.pick([
       'A running track around the pitch and a stand that catches the wind.',
