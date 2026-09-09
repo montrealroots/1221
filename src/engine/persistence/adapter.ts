@@ -46,7 +46,16 @@ export function serialise(universe: SaveUniverse): string {
 }
 
 export function deserialise(raw: string): SaveUniverse {
-  const parsed = JSON.parse(raw) as SaveUniverse;
+  // JSON.parse's own message is a parser's message — "Unexpected token 'h', ...
+  // is not valid JSON" — and it used to reach the player through the slot
+  // card. What they can do about a corrupt save does not depend on which byte
+  // broke it, so they are told the thing that is true and actionable instead.
+  let parsed: SaveUniverse;
+  try {
+    parsed = JSON.parse(raw) as SaveUniverse;
+  } catch {
+    throw new PersistenceError('That save file is damaged and can’t be read.', false);
+  }
   if (!parsed || typeof parsed !== 'object' || !parsed.meta) {
     throw new PersistenceError('That save file isn’t a SLATE universe.', false);
   }

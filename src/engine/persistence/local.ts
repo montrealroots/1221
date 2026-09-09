@@ -92,7 +92,7 @@ export class LocalSaveAdapter implements SaveAdapter {
       } catch (error) {
         slots.push({
           slot, occupied: true, hasBackup, bytes: raw.length,
-          error: `This save couldn’t be read: ${(error as Error).message}`,
+          error: (error as Error).message,
         });
       }
     }
@@ -129,9 +129,23 @@ export class LocalSaveAdapter implements SaveAdapter {
   async remove(slot: Slot): Promise<void> {
     const store = storage();
     const existing = store.getItem(KEY(slot));
-    // Deleting keeps a backup, so an accidental delete is recoverable.
-    if (existing) store.setItem(BACKUP_KEY(slot), existing);
+    // Deleting keeps a backup, so an accidental delete is recoverable. A save
+    // that cannot be read is not worth keeping and must never be written over
+    // a backup that can: deleting a corrupt slot is exactly when the older
+    // copy is the only thing left.
+    if (existing && await this.readable(existing)) {
+      store.setItem(BACKUP_KEY(slot), existing);
+    }
     store.removeItem(KEY(slot));
+  }
+
+  private async readable(raw: string): Promise<boolean> {
+    try {
+      deserialise(await unpack(raw));
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async backup(slot: Slot): Promise<boolean> {

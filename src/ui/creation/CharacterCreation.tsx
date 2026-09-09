@@ -128,7 +128,7 @@ export function CharacterCreation({
             <span role="img" aria-label="SLATE" style={{ fontSize: 22 }}>🎬</span>
             <div>
               <div className="eyebrow">Slot {slot}</div>
-              <h1 style={{ fontSize: 'var(--size-lg)' }}>Who are you going to be?</h1>
+              <h1 style={{ fontSize: 'var(--size-lg)' }}>Who Are You Going To Be?</h1>
               <p className="muted small" style={{ marginTop: 2 }}>
                 SLATE is an actor and actress life simulator. This is the{' '}
                 {PERFORMER_NOUN[titleOf(config)].toLowerCase()} you play.

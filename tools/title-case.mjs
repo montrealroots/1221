@@ -13,13 +13,18 @@
  *  - Words that already carry internal capitals — LA, VFX, P&L, McKinsey — and
  *    anything inside a ${...} interpolation, which is code.
  *
- * Run with: node tools/title-case.mjs [--write]
+ * Run with: node tools/title-case.mjs [--write | --check]
+ *
+ * `--check` reports and exits non-zero, which is how the gate runs it. It was
+ * not in the gate for a long time, and "Delete slot 1" sat in a button.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const WRITE = process.argv.includes('--write');
+/** In --check the tool reports and fails rather than rewriting, for the gate. */
+const CHECK = process.argv.includes('--check');
 
 /**
  * Capitalises one word.
@@ -49,9 +54,16 @@ export function titleCase(text) {
   ));
 }
 
-/** Whether a string is prose rather than a label. */
+/**
+ * Whether a string is prose rather than a label.
+ *
+ * A full stop or an exclamation mark ends a sentence. A question mark does
+ * not settle it either way: the style guide's own example of the rule is
+ * "Why Did This Happen?", and "Delete Slot 1?" is a heading, not prose. Length
+ * is what separates the two, and the word count below does that.
+ */
 function isProse(value) {
-  if (/[.?!]\s*$/.test(value.trim())) return true;         // ends like a sentence
+  if (/[.!]\s*$/.test(value.trim())) return true;          // ends like a sentence
   if (value.trim().split(/\s+/).length > 9) return true;    // too long to be a label
   return false;
 }
@@ -99,11 +111,15 @@ for (const file of files) {
   // An opening tag carries handlers — onClick={() => run(...)} — and an arrow
   // function has a '>' in it, so anything that tries to read the open tag with
   // a regex stops in the middle of it and misses the label entirely. That is
-  // most of the buttons in the game, because the formatter wraps them. The
-  // text itself cannot contain a brace or an angle bracket, which is what
-  // keeps this from matching across markup.
+  // most of the buttons in the game, because the formatter wraps them.
+  //
+  // An interpolation is allowed inside the text. "Delete Slot {slot}" is a
+  // label with a number in it, and refusing anything containing a brace is
+  // how "Delete slot {confirmDelete}" sat in a button for as long as it did.
+  // `titleCase` leaves the interpolation itself alone. Angle brackets are
+  // still refused, which is what keeps this from matching across markup.
   after = after.replace(
-    />(\s*)([A-Za-z][^<>{}]*?)(\s*)<\/(h1|h2|h3|h4|h5|h6|label|button|summary|th|legend|dt)>/g,
+    />(\s*)([A-Za-z][^<>]*?)(\s*)<\/(h1|h2|h3|h4|h5|h6|label|button|summary|th|legend|dt)>/g,
     (whole, lead, text, trail, tag) => {
       if (/\n/.test(text) || isProse(text)) return whole;
       const next = titleCase(text);
@@ -121,5 +137,11 @@ for (const file of files) {
 }
 
 console.log(`${changedStrings} strings in ${changedFiles} files${WRITE ? ' rewritten' : ' would change'}`);
-console.log('\nsample:');
-for (const s of samples) console.log('  ' + s);
+if (samples.length > 0) {
+  console.log('\nsample:');
+  for (const s of samples) console.log('  ' + s);
+}
+if (CHECK && changedStrings > 0) {
+  console.error('\nEvery label, heading and button is Title Case. Run: node tools/title-case.mjs --write');
+  process.exit(1);
+}

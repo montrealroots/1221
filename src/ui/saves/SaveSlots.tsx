@@ -101,9 +101,9 @@ export function SaveSlots({
     <div className="main">
       <div className="main-inner">
         <div className="center" style={{ marginBottom: 'var(--s7)', paddingTop: 'var(--s6)' }}>
-          <div style={{ fontSize: 44, marginBottom: 'var(--s3)' }} role="img" aria-label="SLATE">🎬</div>
+          <div style={{ fontSize: 44, marginBottom: 'var(--s3)' }} aria-hidden="true">🎬</div>
           <div className="wordmark" style={{ fontSize: 32 }}>SLATE</div>
-          <p className="muted">Three slots. Three separate worlds. Nothing crosses between them.</p>
+          <p className="muted">Three slots. Three separate lives. Nothing crosses between them.</p>
         </div>
 
         {error && (
@@ -122,11 +122,20 @@ export function SaveSlots({
                 <div key={slot} className="slot slot-empty">
                   <div className="slot-number">Slot {slot}</div>
                   <p className="small dim center" style={{ maxWidth: 220 }}>
-                    An empty universe, waiting for someone to live in it.
+                    {info.hasBackup
+                      ? 'Empty, but the save that was here is still kept as a backup.'
+                      : 'An empty universe, waiting for an actor or an actress to live in it.'}
                   </p>
-                  <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
-                    New Save
-                  </button>
+                  <div className="col gap-2" style={{ alignItems: 'center' }}>
+                    <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
+                      New Save
+                    </button>
+                    {info.hasBackup && (
+                      <button className="btn btn-sm" onClick={() => void load(slot, true)} disabled={working}>
+                        {working ? 'Opening…' : 'Restore Backup'}
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             }
@@ -141,12 +150,12 @@ export function SaveSlots({
 
                 {info.error ? (
                   <>
-                    <div className="slot-name" style={{ fontSize: 'var(--size-md)' }}>Unreadable save</div>
+                    <div className="slot-name" style={{ fontSize: 'var(--size-md)' }}>Unreadable Save</div>
                     <p className="small negative">{info.error}</p>
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       {info.hasBackup && (
                         <button className="btn" onClick={() => void load(slot, true)} disabled={working}>
-                          Restore From Backup
+                          Restore Backup
                         </button>
                       )}
                       <button className="btn btn-danger btn-sm" onClick={() => setConfirmDelete(slot)} disabled={working}>
@@ -180,7 +189,7 @@ export function SaveSlots({
                         <span className="small">{meta?.locationLabel || '—'}</span>
                       </div>
                       <div className="stat">
-                        <span className="stat-label">Net worth</span>
+                        <span className="stat-label">Net Worth</span>
                         <span className="small mono">{meta?.netWorthLabel || '—'}</span>
                       </div>
                       <div className="stat">
@@ -191,7 +200,7 @@ export function SaveSlots({
 
                     <div className="xs dim">
                       Version {meta?.appVersion ?? '—'} · Schema {meta?.schemaVersion ?? '—'}
-                      {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · will be updated on load'}
+                      {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · Updates On Load'}
                       {info.bytes !== undefined && ` · ${formatBytes(info.bytes)}`}
                     </div>
 
@@ -227,20 +236,23 @@ export function SaveSlots({
         <div className="overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Confirm Deletion">
             <div className="modal-head">
-              <h2>Delete slot {confirmDelete}?</h2>
+              <h2>Delete Slot {confirmDelete}?</h2>
             </div>
             <div className="modal-body">
               <p>
-                This ends that universe. Everything in it — the people, the history, the work — stops existing.
+                This ends that universe. The character, everywhere they have been and everything
+                that happened to them stops existing.
               </p>
               <p className="muted small">
-                A backup is kept, so this can be undone from this screen if you change your mind.
+                {restorableAfterDelete(slots.find((s) => s.slot === confirmDelete))
+                  ? 'A backup is kept, so this can be undone from this screen if you change your mind.'
+                  : 'There’s no backup of this slot, so nothing will be left to restore.'}
               </p>
             </div>
             <div className="modal-foot">
               <button className="btn" onClick={() => setConfirmDelete(null)}>Keep It</button>
               <button className="btn btn-danger" onClick={() => void remove(confirmDelete)}>
-                Delete slot {confirmDelete}
+                Delete Slot {confirmDelete}
               </button>
             </div>
           </div>
@@ -248,6 +260,16 @@ export function SaveSlots({
       )}
     </div>
   );
+}
+
+/**
+ * Whether deleting this slot leaves something the player can bring back.
+ * A readable save becomes its own backup on the way out; an unreadable one
+ * does not, so it can only fall back to a backup that is already there.
+ */
+function restorableAfterDelete(info: SaveSlotInfo | undefined): boolean {
+  if (!info) return false;
+  return info.error ? info.hasBackup : info.occupied;
 }
 
 function formatPlaytime(seconds: number): string {
