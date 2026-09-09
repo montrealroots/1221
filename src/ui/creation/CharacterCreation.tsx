@@ -32,6 +32,9 @@ import {
   conflictingPersonalityTraits, personalityTraitsIn,
 } from '@/engine/content/personality-traits';
 import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
+import {
+  ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
+} from '@/engine/content/ethnicity';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -390,6 +393,45 @@ function IdentityStep({ config, set, setConfig }: {
         </div>
       </div>
         </div>
+      </div>
+
+      <hr className="divider" />
+
+      <div className="field">
+        <span className="label">Race Or Ethnicity (Optional)</span>
+        <div className="trait-grid" role="group" aria-label="Race Or Ethnicity">
+          {ETHNICITIES.map((one) => {
+            const on = config.raceEthnicity.includes(one.id);
+            return (
+              <button
+                key={one.id}
+                type="button"
+                className="trait"
+                aria-pressed={on}
+                onClick={() => set(
+                  'raceEthnicity',
+                  on
+                    ? config.raceEthnicity.filter((id) => id !== one.id)
+                    : [...config.raceEthnicity, one.id],
+                )}
+              >
+                <div className="trait-name">{one.label}</div>
+              </button>
+            );
+          })}
+        </div>
+        {config.raceEthnicity.includes(ETHNICITY_OTHER) && (
+          <div className="field" style={{ marginTop: 'var(--s3)' }}>
+            <label htmlFor="ethnicity-own">In Your Own Words</label>
+            <input
+              id="ethnicity-own" type="text"
+              placeholder="However you would say it"
+              value={config.raceEthnicityOwn ?? ''}
+              onChange={(e) => set('raceEthnicityOwn', e.target.value)}
+            />
+          </div>
+        )}
+        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>{ETHNICITY_NOTE}</p>
       </div>
 
       <hr className="divider" />
@@ -907,6 +949,10 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
           <Line label="Billed As" value={billedAs(config)} />
+          <Line
+            label="Race Or Ethnicity"
+            value={describeEthnicity(config.raceEthnicity, config.raceEthnicityOwn)}
+          />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label={config.secondCitizenshipId ? 'Citizenships' : 'Citizenship'} value={citizenshipLabel(config)} />

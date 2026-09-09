@@ -8,12 +8,13 @@
  * stated in two files that drift apart the first time one is edited.
  */
 
-import { readdirSync, readFileSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
 import { ATTRIBUTES, TRAITS, ALL_TRAITS } from '@/engine/domain/attributes';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
+import { createSave, defaultConfig, quickSave } from '@/engine';
+import { describeEthnicity } from '@/engine/content/ethnicity';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
@@ -116,5 +117,70 @@ describe('the year a character can be born in', () => {
     expect(source).toContain('config.birthYear > latestBirthYear(config.startYear)');
     // No age floor anywhere: it would contradict the year the picker allows.
     expect(source.match(/\bage < \d+\b/g) ?? []).toEqual([]);
+  });
+});
+
+describe('race and ethnicity on the character sheet', () => {
+  it('lets somebody be more than one of them', () => {
+    const sim = createSave(1, 'ethnicity-many', {
+      ...defaultConfig(), raceEthnicity: ['black', 'hispanic'],
+    });
+    expect(sim.universe.people[sim.universe.playerId]!.raceEthnicity).toEqual(['black', 'hispanic']);
+    expect(describeEthnicity(['black', 'hispanic'], undefined)).toBe('Black Or African, Hispanic Or Latino');
+  });
+
+  it('takes it in their own words when the list does not have it', () => {
+    const sim = createSave(1, 'ethnicity-own', {
+      ...defaultConfig(), raceEthnicity: ['other'], raceEthnicityOwn: '  Cape Verdean  ',
+    });
+    const player = sim.universe.people[sim.universe.playerId]!;
+    expect(player.raceEthnicityOwn).toBe('Cape Verdean');
+    expect(describeEthnicity(['other'], 'Cape Verdean')).toBe('Cape Verdean');
+  });
+
+  it('leaves it empty when nobody said, rather than picking one', () => {
+    const sim = createSave(1, 'ethnicity-none', { ...defaultConfig() });
+    expect(sim.universe.people[sim.universe.playerId]!.raceEthnicity).toEqual([]);
+    expect(describeEthnicity([], undefined)).toBe('—');
+  });
+
+  it('is put on the player and on nobody else', () => {
+    const sim = createSave(1, 'ethnicity-player-only', {
+      ...defaultConfig(), raceEthnicity: ['asian'],
+    });
+    // This build makes one person, but the rule is about who may carry it, so
+    // it is stated as the rule: anybody who is not the player has none.
+    for (const person of Object.values(sim.universe.people)) {
+      if (person.id === sim.universe.playerId) expect(person.raceEthnicity).toEqual(['asian']);
+      else expect(person.raceEthnicity).toBeUndefined();
+    }
+    // And it is only ever written in the one place that builds the player.
+    const writers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
+      .filter((f) => f.endsWith('.ts'))
+      .map((f) => `src/engine/${f}`)
+      .filter((f) => statSync(f).isFile())
+      .filter((f) => /raceEthnicity:\s/.test(readFileSync(f, 'utf8')));
+    expect(writers).toEqual(['src/engine/world/bootstrap.ts']);
+  });
+
+  it('drops an id that is not one of them rather than storing it', () => {
+    const sim = createSave(1, 'ethnicity-junk', {
+      ...defaultConfig(), raceEthnicity: ['asian', 'not-a-real-id', 'asian'],
+    });
+    expect(sim.universe.people[sim.universe.playerId]!.raceEthnicity).toEqual(['asian']);
+  });
+
+  it('is read by nothing in the simulation', () => {
+    // The moment something branches on it, it stops being who somebody is and
+    // starts being a stat. Nothing outside creation and the review may read it.
+    const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
+      .filter((f) => f.endsWith('.ts') && !f.endsWith('content/ethnicity.ts'))
+      .map((f) => `src/engine/${f}`)
+      .filter((f) => statSync(f).isFile());
+    const readers = engine.filter((f) => {
+      const text = readFileSync(f, 'utf8');
+      return /\braceEthnicity\b/.test(text) && !/world\/bootstrap\.ts|domain\/model\.ts/.test(f);
+    });
+    expect(readers, 'these read race or ethnicity out of a save').toEqual([]);
   });
 });

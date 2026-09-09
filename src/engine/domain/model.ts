@@ -187,6 +187,19 @@ export interface Person {
    */
   gender?: 'female' | 'male' | 'nonbinary';
 
+  /**
+   * Who this person is, in their own terms. Set at creation and only for the
+   * player: SLATE never asks it of anybody else and never guesses it from a
+   * name, a country or a city.
+   *
+   * It carries no attribute, no skill, no advantage and no penalty. Nothing in
+   * the simulation reads it, and nothing should: it is on the character sheet
+   * because a person has one, not because the game does anything with it.
+   */
+  raceEthnicity?: readonly string[];
+  /** Said in their own words, where the list did not have it. */
+  raceEthnicityOwn?: string;
+
   createdAt: Instant;
 }
 
@@ -797,7 +810,7 @@ export interface Preferences {
   largePurchaseThreshold: Money;
 }
 
-export const SAVE_SCHEMA_VERSION = 73;
+export const SAVE_SCHEMA_VERSION = 74;
 
 export interface SaveMeta {
   id: Id;

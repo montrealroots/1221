@@ -23,6 +23,7 @@ import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
+import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
 
@@ -54,6 +55,13 @@ export interface NewSaveConfig {
   birthYear: number;
   birthMonth: number;
   birthDay: number;
+  /**
+   * Who the character is. More than one can be true, so it is a set, and it
+   * carries nothing mechanical — see `content/ethnicity.ts`.
+   */
+  raceEthnicity: readonly string[];
+  /** Said in their own words, when the list does not have it. */
+  raceEthnicityOwn?: string;
   homeRegionId: string;
   citizenshipId: string;
   /** Headshot as a data URL, already fitted to the portrait frame. */
@@ -108,6 +116,7 @@ export function defaultConfig(): NewSaveConfig {
   return {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
+    raceEthnicity: [],
     homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
     personality: defaultPersonality(),
     personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
@@ -319,6 +328,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     pronouns: config.pronouns,
     performerTitle,
     birthInstant,
+    // Who they are, kept exactly as they said it. Only the player is asked,
+    // and nothing reads it to decide anything.
+    raceEthnicity: [...new Set((config.raceEthnicity ?? []).filter((id) => ETHNICITY_BY_ID[id]))],
+    ...(config.raceEthnicityOwn?.trim() ? { raceEthnicityOwn: config.raceEthnicityOwn.trim() } : {}),
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
     ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),
