@@ -178,32 +178,14 @@ export interface Person {
   lastSleptAt?: Instant;
 
   /**
-   * The height and weight this body ends up at, in centimetres and kilograms.
+   * Whether this person is somebody's mother or somebody's father.
    *
-   * Set once, at creation, and only for the player: it is the one physical
-   * fact the player chooses. A character who starts young is smaller than
-   * this and grows to exactly it. Absent on everybody else, and absent on a
-   * save from before there was a way to say.
+   * Carried so a family reads as a family — a mother, a father, a brother, a
+   * sister — rather than as a list of people with a relationship type, and
+   * read off the public records SLATE imports to tell an actor from an
+   * actress where the record states it.
    */
-  adultHeightCm?: number;
-  adultWeightKg?: number;
-
-  /**
-   * Where this person's name comes from, and whether they are somebody's
-   * mother or somebody's father.
-   *
-   * The heritage is a naming tradition and nothing else: it carries no
-   * attribute, no skill and no advantage anywhere in the game. The gender is
-   * carried so a family reads as a family — a mother, a father, a brother, a
-   * sister — rather than as a list of people with a relationship type.
-   */
-  heritageId?: string;
   gender?: 'female' | 'male' | 'nonbinary';
-  /**
-   * The heritage of each of the two people who raised this character, so a
-   * family of two traditions names its children out of both. Player only.
-   */
-  parentHeritageIds?: readonly [string, string];
 
   createdAt: Instant;
 }
@@ -815,7 +797,7 @@ export interface Preferences {
   largePurchaseThreshold: Money;
 }
 
-export const SAVE_SCHEMA_VERSION = 72;
+export const SAVE_SCHEMA_VERSION = 73;
 
 export interface SaveMeta {
   id: Id;

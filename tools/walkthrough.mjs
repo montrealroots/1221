@@ -138,7 +138,7 @@ await sections('save-slots-empty', 'three slots, nothing in any of them');
 
 await click(/^New Save$/);
 await page.waitForTimeout(1100);
-await sections('creation-1-identity', 'step 1 of 5: name, portrait, heritage, where you are from');
+await sections('creation-1-identity', 'step 1 of 5: name, portrait, where you are from');
 
 const dataUrl = await page.evaluate(() => {
   const canvas = document.createElement('canvas');

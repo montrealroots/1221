@@ -293,6 +293,29 @@ describe('migrations and validation', () => {
   });
 
 
+  it('drops the heritage and the height and weight a save no longer reads', () => {
+    const sim = quickSave();
+    sim.universe.meta.schemaVersion = 72;
+    const player = sim.universe.people[sim.universe.playerId]!;
+    const row = player as unknown as Record<string, unknown>;
+    row.heritageId = 'english';
+    row.parentHeritageIds = ['english', 'irish'];
+    row.adultHeightCm = 175;
+    row.adultWeightKg = 72;
+
+    const result = migrate(sim.universe);
+
+    expect(result.migrated).toBe(true);
+    expect(row.heritageId).toBeUndefined();
+    expect(row.parentHeritageIds).toBeUndefined();
+    expect(row.adultHeightCm).toBeUndefined();
+    expect(row.adultWeightKg).toBeUndefined();
+    expect('heritageId' in row).toBe(false);
+    // The rest of the person is untouched.
+    expect(player.displayName).toBe(sim.universe.people[sim.universe.playerId]!.displayName);
+    expect(validateUniverse(sim.universe).ok).toBe(true);
+  });
+
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();
     sim.universe.meta.schemaVersion = 1;

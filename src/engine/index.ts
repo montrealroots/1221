@@ -324,6 +324,26 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
   }
 
+  // Schema 73 took heritage, the parents' heritages, and the adult height and
+  // weight off the character. Nothing ever read them after creation, so they
+  // are dropped rather than carried: a save that keeps fields nothing reads
+  // teaches the next reader that something does.
+  {
+    let dropped = 0;
+    for (const person of Object.values(universe.people)) {
+      const row = person as unknown as Record<string, unknown>;
+      for (const field of ['heritageId', 'parentHeritageIds', 'adultHeightCm', 'adultWeightKg']) {
+        if (field in row) {
+          delete row[field];
+          dropped++;
+        }
+      }
+    }
+    if (dropped > 0) {
+      steps.push(`Dropped ${dropped} field${dropped === 1 ? '' : 's'} nothing reads any more.`);
+    }
+  }
+
   // Every record must belong to this save and nothing else. Cross-save
   // contamination is the one corruption that is invisible until it matters.
   {

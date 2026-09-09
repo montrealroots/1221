@@ -32,12 +32,6 @@ import {
   conflictingPersonalityTraits, personalityTraitsIn,
 } from '@/engine/content/personality-traits';
 import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
-import {
-  DEFAULT_HERITAGE, HERITAGES, HERITAGE_BY_ID, HERITAGE_NOTE, heritageRegions,
-} from '@/engine/content/heritage';
-import {
-  GROWTH_NOTE, HEIGHT_RANGE, WEIGHT_RANGE, describeHeight, describeWeight,
-} from '@/engine/content/lifespan';
 
 const STEPS = ['Identity', 'Personal', 'Your Craft', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -321,80 +315,6 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       </div>
 
       <hr className="divider" />
-
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="heritage">Heritage</label>
-          <select id="heritage" value={config.heritageId} onChange={(e) => set('heritageId', e.target.value)}>
-            {heritageRegions().map((region) => (
-              <optgroup key={region} label={region}>
-                {HERITAGES.filter((one) => one.region === region)
-                  .map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
-              </optgroup>
-            ))}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="heritage-mother">Your Mother’s Heritage</label>
-          <select
-            id="heritage-mother"
-            value={config.parentHeritageIds[0]}
-            onChange={(e) => set('parentHeritageIds', [e.target.value, config.parentHeritageIds[1]])}
-          >
-            {HERITAGES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="heritage-father">Your Father’s Heritage</label>
-          <select
-            id="heritage-father"
-            value={config.parentHeritageIds[1]}
-            onChange={(e) => set('parentHeritageIds', [config.parentHeritageIds[0], e.target.value])}
-          >
-            {HERITAGES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="suggest-name">A Name From It</label>
-          <button
-            id="suggest-name"
-            type="button"
-            className="btn btn-sm"
-            onClick={() => {
-              const one = HERITAGE_BY_ID[config.heritageId] ?? HERITAGE_BY_ID[DEFAULT_HERITAGE]!;
-              const pool = [...one.feminine, ...one.masculine];
-              const pick = <T,>(list: readonly T[]): T => list[Math.floor(Math.random() * list.length)]!;
-              set('firstName', pick(pool));
-              set('lastName', pick(one.family));
-            }}
-          >
-            Suggest One
-          </button>
-        </div>
-      </div>
-      <p className="xs dim" style={{ margin: '4px 0 var(--s2)' }}>{HERITAGE_NOTE}</p>
-
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="adult-height">Adult Height</label>
-          <input
-            id="adult-height" type="number" min={HEIGHT_RANGE[0]} max={HEIGHT_RANGE[1]}
-            value={config.adultHeightCm}
-            onChange={(e) => set('adultHeightCm', Number(e.target.value))}
-          />
-          <p className="xs dim" style={{ margin: '4px 0 0' }}>{describeHeight(config.adultHeightCm)}</p>
-        </div>
-        <div className="field">
-          <label htmlFor="adult-weight">Adult Weight</label>
-          <input
-            id="adult-weight" type="number" min={WEIGHT_RANGE[0]} max={WEIGHT_RANGE[1]}
-            value={config.adultWeightKg}
-            onChange={(e) => set('adultWeightKg', Number(e.target.value))}
-          />
-          <p className="xs dim" style={{ margin: '4px 0 0' }}>{describeWeight(config.adultWeightKg)}</p>
-        </div>
-      </div>
-      <p className="xs dim" style={{ margin: '4px 0 var(--s2)' }}>{GROWTH_NOTE}</p>
 
       <div className="field-row">
         <div className="field">
