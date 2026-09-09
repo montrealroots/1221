@@ -70,7 +70,7 @@ describe('the payload a client sends', () => {
   });
 
   it('refuses something that is not a save', () => {
-    expect(() => inspectPayload('not json at all', 1)).toThrow(/not readable/);
+    expect(() => inspectPayload('not json at all', 1)).toThrow(/n[o’]t readable/);
     expect(() => inspectPayload('{"hello":"world"}', 1)).toThrow(/no meta\.id/);
   });
 
@@ -97,7 +97,7 @@ describe('the payload a client sends', () => {
     expect(txn, 'no transaction to tamper with').toBeDefined();
     // The exact move a tamperer would make: quietly add money to one side.
     txn!.postings[0]!.amount += 1_000_00;
-    expect(() => inspectPayload(serialise(sim.universe), 1)).toThrow(/does not balance/);
+    expect(() => inspectPayload(serialise(sim.universe), 1)).toThrow(/does(n’t| not) balance/);
   });
 
   it('refuses a fractional posting', () => {

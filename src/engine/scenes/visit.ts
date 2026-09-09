@@ -67,7 +67,7 @@ export const VISIT_SCENE = defineScene({
 
   available(sim, input) {
     const appointment = sim.universe.appointments[String(input['appointmentId'])];
-    if (!appointment) return { ok: false, reason: 'There is no appointment like that.' };
+    if (!appointment) return { ok: false, reason: 'There’s no appointment like that.' };
     if (appointment.checkedInAt && appointment.status === 'scheduled') return { ok: true };
     const can = attendable(sim, appointment);
     return can.ok ? { ok: true } : { ok: false, reason: can.reason };
@@ -191,7 +191,7 @@ export const VISIT_SCENE = defineScene({
       case 'room': {
         if (!choiceId.startsWith('say:')) throw unknownStep();
         const complaint = COMPLAINT_BY_ID[choiceId.slice(4)];
-        if (!complaint) throw new CommandError('That is not something to bring here.');
+        if (!complaint) throw new CommandError('That isn’t something to bring here.');
         const doctor = doctorOf(sim, provider);
         ctx.say(askLine(sim, appointment, true), doctor.id);
         const result = ctx.commit<{ verdict: Verdict; gain: number; tests: boolean; prescriptionId?: string; followUpDays: number }>('consult', { kind: 'health.consult', payload: { appointmentId: appointment.id, complaint: complaint.id } });

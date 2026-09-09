@@ -1,5 +1,5 @@
 /**
- * The real catalogue.
+ * The real catalog.
  *
  * Every chain and every product on a shop floor is a real one, named as public
  * record, and every price, quality score and wear curve beside it is SLATE's
@@ -10,15 +10,26 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  CATALOG, RETAILERS, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableItemsIn, shoppableRetailers,
+  CATALOG, RETAILERS, houseBrandOf, isLegacyItem, retailPrice, retailersFor, shoppableItems, shoppableItemsIn, shoppableRetailers,
 } from '@/engine/content/catalog';
-import { REAL_RETAILERS, marketOf, tradesIn } from '@/engine/content/brands';
+import { ALL_RETAILERS, REGIONAL_RETAILERS, coverageFor, coverageReport, marketOf, tradesIn } from '@/engine/content/brands';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { CITIES } from '@/engine/content/geography';
 import { placesIn } from '@/engine/content/places';
+import { quickSave } from '@/engine';
+import { MINIMUM_ASSORTMENT, aislesAt, assortmentAt, frontTableAt } from '@/engine/systems/retail';
 
 const LA = 'us-ca-losangeles';
 const LONDON = 'uk-eng-london';
+
+/** A city in each market with authored local retail, biggest first. */
+const WORLD_CITIES = [
+  LA, LONDON, 'fr-idf-paris', 'jp-13-tokyo', 'au-nsw-sydney',
+  'br-27-saopaulo', 'in-16-mumbai', 'tr-34-istanbul', 'za-06-johannesburg',
+  'kr-11-seoul', 'mx-cmx-mexicocity', 'pl-78-warsaw', 'se-26-stockholm',
+  'id-04-jakarta', 'th-40-bangkok', 'ar-07-buenosaires', 'cl-12-santiago',
+  'ae-du-dubai', 'ke-05-nairobi', 'ng-05-lagos',
+];
 
 /** The aisles the interface shows, and the floor a shop puts out. */
 const SHOPPING_CATEGORIES = [
@@ -26,7 +37,7 @@ const SHOPPING_CATEGORIES = [
   'furniture', 'home', 'household', 'appliance', 'electronics', 'equipment', 'art', 'books',
 ];
 
-describe('the real catalogue', () => {
+describe('the real catalog', () => {
   it('carries at least a hundred real products in every aisle', () => {
     const counts = new Map<string, number>();
     for (const item of shoppableItems()) counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
@@ -71,27 +82,27 @@ describe('the real catalogue', () => {
   it('puts a chain only in the market it really trades in', () => {
     const laPop = CITIES.get(LA)!.population;
     const londonPop = CITIES.get(LONDON)!.population;
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'tesco')!, LONDON, londonPop)).toBe(true);
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'tesco')!, LA, laPop)).toBe(false);
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'trader_joes')!, LA, laPop)).toBe(true);
-    expect(tradesIn(REAL_RETAILERS.find((r) => r.id === 'trader_joes')!, LONDON, londonPop)).toBe(false);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'tesco')!, LONDON, londonPop)).toBe(true);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'tesco')!, LA, laPop)).toBe(false);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'trader_joes')!, LA, laPop)).toBe(true);
+    expect(tradesIn(ALL_RETAILERS.find((r) => r.id === 'trader_joes')!, LONDON, londonPop)).toBe(false);
     expect(marketOf(LA)).toBe('us');
     expect(marketOf(LONDON)).toBe('uk');
   });
 
   it('keeps a flagship only house where its flagship actually is', () => {
-    const harrods = REAL_RETAILERS.find((r) => r.id === 'harrods')!;
+    const harrods = ALL_RETAILERS.find((r) => r.id === 'harrods')!;
     expect(harrods.flagshipCities).toContain(LONDON);
     expect(tradesIn(harrods, LONDON, 8_900_000)).toBe(true);
     expect(tradesIn(harrods, LA, 3_900_000)).toBe(false);
   });
 
   it('does not put a maison in a town that could not hold one', () => {
-    const hermes = REAL_RETAILERS.find((r) => r.id === 'hermes')!;
+    const hermes = ALL_RETAILERS.find((r) => r.id === 'hermes')!;
     expect(tradesIn(hermes, 'us-ca-losangeles', 3_900_000)).toBe(true);
     expect(tradesIn(hermes, 'us-ia-ames', 66_000)).toBe(false);
     // A discounter, on the other hand, is everywhere there are people.
-    const aldi = REAL_RETAILERS.find((r) => r.id === 'aldi')!;
+    const aldi = ALL_RETAILERS.find((r) => r.id === 'aldi')!;
     expect(tradesIn(aldi, 'de-be-berlin', 3_600_000)).toBe(true);
   });
 
@@ -158,5 +169,134 @@ describe('a national brand stays in its nation', () => {
     for (const item of shoppableItemsIn(LA)) counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
     const short = SHOPPING_CATEGORIES.filter((c) => (counts.get(c) ?? 0) < 100);
     expect(short, `short in Los Angeles: ${short.join(', ')}`).toEqual([]);
+  });
+});
+
+
+describe('every shop floor is a real shop floor', () => {
+  it('carries at least a hundred real things in every branch that sells more than one label', () => {
+    // A shop that carries many labels has no excuse for a thin floor. A
+    // brand's own boutique is a different promise: it carries what that brand
+    // makes, and the catalog depth for that brand is what decides the number.
+    const sim = quickSave({}, 'assortment');
+    const thin: string[] = [];
+    for (const cityId of WORLD_CITIES) {
+      for (const place of placesIn(cityId).filter((p) => p.retailerId)) {
+        const retailer = RETAILERS.get(place.retailerId!);
+        if (retailer && houseBrandOf(retailer) !== undefined) continue;
+        const count = assortmentAt(sim, place).length;
+        if (count < MINIMUM_ASSORTMENT) thin.push(`${place.name} in ${cityId}: ${count}`);
+      }
+    }
+    expect(thin, `these branches are thinner than a hundred things: ${thin.join('; ')}`).toEqual([]);
+  });
+
+  it('puts a brand’s own label in its own boutique, all of it and nothing else', () => {
+    const sim = quickSave({}, 'boutique');
+    let boutiques = 0;
+    let deep = 0;
+    for (const place of placesIn(LA).filter((p) => p.retailerId)) {
+      const retailer = RETAILERS.get(place.retailerId!);
+      const house = retailer && houseBrandOf(retailer);
+      if (!house) continue;
+      boutiques += 1;
+      const stock = assortmentAt(sim, place);
+      expect(stock.length, `${house} sells nothing in its own shop`).toBeGreaterThan(0);
+      for (const line of stock) {
+        // Nike's shops carry Jordan, which is Nike's. Nothing else wanders in.
+        expect([house, ...(house === 'Nike' ? ['Jordan'] : [])], `${house} is selling ${line.item.brand}`).toContain(line.item.brand);
+      }
+      if (stock.length >= MINIMUM_ASSORTMENT) deep += 1;
+    }
+    expect(boutiques, 'no brand has its own shop in Los Angeles').toBeGreaterThan(20);
+    // The rest are thin because SLATE has not written that brand out yet, not
+    // because the shop is fake. The brand-depth checker is where that is counted.
+    expect(deep, 'no boutique is a hundred deep').toBeGreaterThan(15);
+  });
+
+  it('walks the aisles rather than a twelve item rail', () => {
+    const sim = quickSave({}, 'aisles');
+    const shop = placesIn(LA).find((p) => p.retailerId === 'nordstrom')!;
+    const aisles = aislesAt(sim, shop);
+    expect(aisles.length).toBeGreaterThan(2);
+    const total = aisles.reduce((sum, a) => sum + a.count, 0);
+    expect(total).toBe(assortmentAt(sim, shop).length);
+    for (const aisle of aisles) {
+      expect(assortmentAt(sim, shop, aisle.category).length, aisle.category).toBe(aisle.count);
+    }
+  });
+
+  it('leads with a front table that changes with the fortnight and is not the whole shop', () => {
+    const sim = quickSave({}, 'front');
+    const shop = placesIn(LA).find((p) => p.retailerId === 'ikea')!;
+    const front = frontTableAt(sim, shop);
+    expect(front.length).toBeGreaterThan(0);
+    expect(front.length).toBeLessThan(assortmentAt(sim, shop).length);
+    for (const stocked of front) expect(stocked.featured).toBe(true);
+  });
+});
+
+
+describe('the rest of the world has its own shops', () => {
+  it('puts a country’s own chains in that country and nowhere else', () => {
+    const cases: [string, string, string][] = [
+      ['biedronka', 'pl-78-warsaw', LA],
+      ['shoprite', 'za-06-johannesburg', LONDON],
+      ['dmart', 'in-16-mumbai', LA],
+      ['bim', 'tr-34-istanbul', 'fr-idf-paris'],
+      ['pao_de_acucar', 'br-27-saopaulo', LA],
+      ['emart', 'kr-11-seoul', 'jp-13-tokyo'],
+      ['oxxo', 'mx-cmx-mexicocity', LONDON],
+      ['albert_heijn', 'nl-nh-amsterdam', LA],
+      ['asda', LONDON, LA],
+    ];
+    for (const [id, home, away] of cases) {
+      const chain = ALL_RETAILERS.find((r) => r.id === id);
+      expect(chain, `${id} is not in the registry`).toBeDefined();
+      expect(tradesIn(chain!, home, 3_000_000), `${id} is missing from ${home}`).toBe(true);
+      expect(tradesIn(chain!, away, 3_000_000), `${id} turned up in ${away}`).toBe(false);
+    }
+  });
+
+  it('gives a shop floor to a city outside Europe and North America', () => {
+    for (const cityId of ['br-27-saopaulo', 'in-16-mumbai', 'tr-34-istanbul', 'ng-05-lagos', 'kr-11-seoul']) {
+      const shops = placesIn(cityId).filter((p) => p.retailerId);
+      expect(shops.length, `nothing to shop at in ${cityId}`).toBeGreaterThan(10);
+      // And at least one of them is a chain from that country rather than an import.
+      const market = cityId.split('-')[0]!;
+      const local = shops.filter((p) => ALL_RETAILERS.find((r) => r.id === p.retailerId)?.markets.includes(market));
+      expect(local.length, `every shop in ${cityId} is an import`).toBeGreaterThan(0);
+    }
+  });
+
+  it('never lists the same chain twice', () => {
+    const ids = ALL_RETAILERS.map((r) => r.id);
+    expect(new Set(ids).size, 'a retailer id is used twice').toBe(ids.length);
+    expect(REGIONAL_RETAILERS.length).toBeGreaterThan(80);
+  });
+
+  it('reports coverage as what is authored locally, not what reaches everywhere', () => {
+    const us = coverageFor('us');
+    const gh = coverageFor('gh');
+    expect(us.local).toBeGreaterThan(gh.local);
+    expect(us.band).toBe('deep');
+    // Ghana was thin when this was written and is workable now, so the test
+    // holds the property rather than the number: a market somebody authored
+    // less of is reported as shallower, and a worldwide chain reaching
+    // everywhere is never counted as local depth in either of them.
+    expect(us.worldwide).toBe(gh.worldwide);
+    expect(us.worldwide).toBeGreaterThan(0);
+    expect(gh.local).toBeGreaterThan(0);
+  });
+
+  it('reports every market it covers, worst served first, and says nothing it cannot', () => {
+    const report = coverageReport();
+    expect(report.length).toBeGreaterThan(60);
+    for (let i = 1; i < report.length; i++) {
+      expect(report[i]!.local).toBeGreaterThanOrEqual(report[i - 1]!.local);
+    }
+    // The report is only ever about markets somebody authored. It never
+    // implies the other hundred and seventy countries are covered.
+    expect(report.every((r) => r.local > 0)).toBe(true);
   });
 });

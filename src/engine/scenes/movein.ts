@@ -179,7 +179,7 @@ export const MOVEIN_SCENE = defineScene({
       case 'theme': {
         if (!choiceId.startsWith('theme:')) throw unknownStep();
         const theme = DESIGN_THEMES.find((t) => t.id === choiceId.slice(6));
-        if (!theme) throw new CommandError('That is not a theme SLATE knows.');
+        if (!theme) throw new CommandError('That isn’t a theme SLATE knows.');
         session.context['themeId'] = theme.id;
         session.context['lastNote'] = `${theme.name}. ${theme.description}`;
         ctx.go('rooms');
@@ -189,7 +189,7 @@ export const MOVEIN_SCENE = defineScene({
         if (choiceId === 'enough') { ctx.go('done'); return; }
         if (!choiceId.startsWith('room:')) throw unknownStep();
         const room = roomsFor(sim, property.id).find((r) => r.id === choiceId.slice(5));
-        if (!room) throw new CommandError('There is no room like that.');
+        if (!room) throw new CommandError('There’s no room like that.');
         session.context['roomId'] = room.id;
         ctx.go('room');
         return;

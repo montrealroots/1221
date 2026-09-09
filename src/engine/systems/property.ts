@@ -22,8 +22,10 @@ import { costOfLiving, propertyTaxRate } from '../content/tax';
 import { CATALOG, retailPrice } from '../content/catalog';
 import { generateAddress, generatePersonName } from '../content/names';
 import { buildFactors } from '../core/audit';
+import { createAsset } from './commerce';
 import { createBill } from './finance';
 import { amortisedPayment, offeredApr } from './finance';
+import { requireAge } from './lifespan';
 
 // ---------------------------------------------------------------------------
 // Property shapes
@@ -84,7 +86,7 @@ export const DESIGN_THEMES: readonly DesignTheme[] = [
   { id: 'industrial', name: 'Industrial', description: 'Concrete, steel and honest structure left visible.', coherenceBonus: 1.10, palette: ['Concrete', 'Black', 'Rust', 'Ash'], materials: ['Polished Concrete', 'Blackened Steel', 'Reclaimed Timber'] },
   { id: 'classic', name: 'Classic', description: 'Mouldings, symmetry and furniture that outlives you.', coherenceBonus: 1.22, palette: ['Ivory', 'Navy', 'Oxblood', 'Gilt'], materials: ['Mahogany', 'Marble', 'Silk', 'Brass'] },
   { id: 'coastal', name: 'Coastal', description: 'Light, air, and finishes that survive salt.', coherenceBonus: 1.12, palette: ['White', 'Sea Glass', 'Sand', 'Driftwood'], materials: ['Bleached Oak', 'Rattan', 'Cotton', 'Limestone'] },
-  { id: 'maximalist', name: 'Maximalist', description: 'Pattern, colour and nothing left plain.', coherenceBonus: 1.08, palette: ['Emerald', 'Fuchsia', 'Gold', 'Cobalt'], materials: ['Velvet', 'Lacquer', 'Malachite', 'Brass'] },
+  { id: 'maximalist', name: 'Maximalist', description: 'Pattern, color and nothing left plain.', coherenceBonus: 1.08, palette: ['Emerald', 'Fuchsia', 'Gold', 'Cobalt'], materials: ['Velvet', 'Lacquer', 'Malachite', 'Brass'] },
 ];
 
 // ---------------------------------------------------------------------------
@@ -104,7 +106,7 @@ interface PhaseSpec {
 }
 
 export const CONSTRUCTION_PHASES: readonly PhaseSpec[] = [
-  { phase: 'concept', name: 'Concept And Programme', dependsOn: [], budgetShare: 0.005, days: 14, riskRate: 0.05 },
+  { phase: 'concept', name: 'Concept And Program', dependsOn: [], budgetShare: 0.005, days: 14, riskRate: 0.05 },
   { phase: 'architect', name: 'Appoint Architect', dependsOn: ['concept'], budgetShare: 0.02, days: 21, riskRate: 0.08 },
   { phase: 'design', name: 'Schematic Design', dependsOn: ['architect'], budgetShare: 0.045, days: 45, riskRate: 0.18 },
   { phase: 'plans', name: 'Construction Documents', dependsOn: ['design'], budgetShare: 0.035, days: 40, riskRate: 0.14 },
@@ -185,6 +187,8 @@ export function registerProperty(sim: Simulation): void {
   sim.onCommand<{ listingId: Id; amount: Money; financingKind: PropertyOffer['financingKind']; downPayment?: Money; contingencies?: PropertyOffer['contingencies']; agentId?: Id }, { offerId: Id }>(
     'prop.make_offer',
     (p, { sim: s }) => {
+      // Buying a house is signing for yourself.
+      requireAge(s, 'majority');
       const listing = s.universe.propertyListings[p.listingId];
       if (!listing || listing.status !== 'active') throw new CommandError('That listing is no longer available.');
       const property = s.universe.properties[listing.propertyId];
@@ -238,7 +242,7 @@ export function registerProperty(sim: Simulation): void {
     'prop.respond_to_counter',
     (p, { sim: s }) => {
       const offer = s.universe.propertyOffers[p.offerId];
-      if (!offer || offer.status !== 'countered') throw new CommandError('There is no counteroffer to respond to.');
+      if (!offer || offer.status !== 'countered') throw new CommandError('There’s no counteroffer to respond to.');
       if (!p.accept) {
         if (p.counterAmount === undefined) {
           offer.status = 'withdrawn';
@@ -281,7 +285,7 @@ export function registerProperty(sim: Simulation): void {
     (p, { sim: s }) => {
       const offer = s.universe.propertyOffers[p.offerId];
       if (!offer) throw new CommandError('No such offer.');
-      if (!offer.inspectionFindings) throw new CommandError('The inspection has not happened yet.');
+      if (!offer.inspectionFindings) throw new CommandError('The inspection hasn’t happened yet.');
       if (offer.status !== 'accepted') throw new CommandError('That purchase is no longer open.');
       if (offer.inspectionDecidedAt) throw new CommandError('The inspection contingency has already been answered.');
       offer.inspectionDecidedAt = s.now;
@@ -323,9 +327,11 @@ export function registerProperty(sim: Simulation): void {
   sim.onCommand<{ propertyId: Id; months: number; accountId?: Id }, { propertyId: Id; monthlyRent: Money }>(
     'prop.rent',
     (p, { sim: s }) => {
+      // A lease is a contract, and a contract needs somebody who can sign one.
+      requireAge(s, 'lease');
       const property = s.universe.properties[p.propertyId];
       if (!property) throw new CommandError('No such property.');
-      if (!property.monthlyRent) throw new CommandError('That property is not available to rent.');
+      if (!property.monthlyRent) throw new CommandError('That property isn’t available to rent.');
       const player = s.player;
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
@@ -455,7 +461,7 @@ export function registerProperty(sim: Simulation): void {
     'build.decide_change_order',
     (p, { sim: s }) => {
       const order = s.universe.changeOrders[p.changeOrderId];
-      if (!order || order.status !== 'proposed') throw new CommandError('That change order is not open.');
+      if (!order || order.status !== 'proposed') throw new CommandError('That change order isn’t open.');
       const project = s.universe.constructionProjects[order.projectId];
       if (!project) throw new CommandError('No such build.');
 
@@ -473,7 +479,7 @@ export function registerProperty(sim: Simulation): void {
         const phase = Object.values(s.universe.constructionPhases).find((ph) => ph.projectId === project.id && ph.phase === order.phase);
         if (phase) {
           phase.status = 'failed_inspection';
-          phase.notes.push({ at: s.now, note: 'Required remediation refused. This phase cannot pass inspection until it is done.' });
+          phase.notes.push({ at: s.now, note: 'Required remediation refused. This phase can’t pass inspection until it’s done.' });
         }
       }
       s.emit('build.change_order_decided', { changeOrderId: order.id, approved: p.approve });
@@ -539,7 +545,7 @@ export function registerProperty(sim: Simulation): void {
     'prop.list_for_sale',
     (p, { sim: s }) => {
       const property = s.universe.properties[p.propertyId];
-      if (!property || property.ownerId !== s.player.id) throw new CommandError('You do not own that property.');
+      if (!property || property.ownerId !== s.player.id) throw new CommandError('You don’t own that property.');
       const listing: PropertyListing = {
         id: s.nextId('listing'),
         saveId: s.universe.meta.id,
@@ -583,7 +589,7 @@ export function finishRoom(sim: Simulation, p: FinishRoomSpec): { cost: Money; q
   if (!room) throw new CommandError('No such room.');
   const structure = sim.universe.structures[room.structureId];
   const property = structure ? sim.universe.properties[structure.propertyId] : undefined;
-  if (!property) throw new CommandError('That room is not attached to a property.');
+  if (!property) throw new CommandError('That room isn’t attached to a property.');
 
   const accountId = p.accountId ?? sim.player.primaryAccountId;
   if (!accountId) throw new CommandError('No account to pay from.');
@@ -605,7 +611,7 @@ export function finishRoom(sim: Simulation, p: FinishRoomSpec): { cost: Money; q
   return { cost, quality: room.quality };
 }
 
-/** The price of one catalogue item delivered to a property, before anything is paid. */
+/** The price of one catalog item delivered to a property, before anything is paid. */
 export function furnishingPrice(sim: Simulation, catalogId: string, propertyId: Id, retailerId = 'formhouse'): Money {
   const property = sim.universe.properties[propertyId];
   if (!property || !CATALOG.get(catalogId)) return 0;
@@ -647,6 +653,14 @@ export function buyFurnishing(sim: Simulation, p: BuyFurnishingSpec): { furnishi
       qualityContribution: catalogItem.qualityContribution ?? Math.round(catalogItem.quality / 8),
     };
     sim.universe.furnishings[furnishing.id] = furnishing;
+    // A sofa is a thing you own, not only a number on the room. This is the
+    // object itself: it has a room, a condition, and something to do with it.
+    const asset = createAsset(sim, {
+      ownerId: sim.player.id, catalogItem, purchasePrice: unit, acquiredVia: 'purchase',
+    });
+    asset.roomId = p.roomId;
+    asset.locationPropertyId = property.id;
+    furnishing.assetId = asset.id;
     ids.push(furnishing.id);
     if (p.zoneId) sim.universe.zones[p.zoneId]?.furnishingIds.push(furnishing.id);
   }
@@ -680,7 +694,7 @@ export function estimateMonthlyIncome(sim: Simulation, personId: Id): Money {
 export function offerRefusal(sim: Simulation, amount: Money, financingKind: PropertyOffer['financingKind'], downPayment?: Money): string | undefined {
   const player = sim.player;
   const down = downPayment ?? (financingKind === 'cash' ? amount : Math.round(amount * 0.2));
-  if (down > amount) return 'The deposit cannot exceed the offer.';
+  if (down > amount) return 'The deposit can’t exceed the offer.';
   // You must be able to actually complete. Lenders check; so do we.
   const liquid = player.primaryAccountId
     ? sim.ledger.accountsOf(player.id).filter((a) => a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash').reduce((sum, a) => sum + a.balance, 0)
@@ -695,7 +709,7 @@ export function offerRefusal(sim: Simulation, amount: Money, financingKind: Prop
     const payment = amortisedPayment(borrow, apr, 360);
     const monthlyIncome = estimateMonthlyIncome(sim, player.id);
     if (monthlyIncome > 0 && payment > monthlyIncome * 0.45) {
-      return `A lender will not approve this. The payment would be ${formatMoney(payment)} a month against income of about ${formatMoney(monthlyIncome)}.`;
+      return `A lender won’t approve this. The payment would be ${formatMoney(payment)} a month against income of about ${formatMoney(monthlyIncome)}.`;
     }
   }
   return undefined;
@@ -869,8 +883,8 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
     { label: 'How Motivated The Seller Is', detail: `The listing has been up for ${listing.daysOnMarket} days.`, weight: 0.20, value: listing.sellerMotivation / 100 },
     { label: 'Cash Versus Financing', detail: offer.financingKind === 'cash' ? 'A cash offer removes financing risk entirely.' : 'A financed offer can fall through at the lender.', weight: 0.12, value: cashBonus > 0 ? 1 : 0.4 },
     { label: 'Contingencies', detail: `${offer.contingencies.length} contingenc${offer.contingencies.length === 1 ? 'y' : 'ies'} attached.`, weight: -0.14, value: clamp(contingencyPenalty * 8, 0, 1) },
-    { label: 'Your Agent', detail: agent ? `${agent.brokerage} negotiating on your behalf.` : 'You are representing yourself.', weight: 0.10, value: agent ? agent.negotiation / 100 : 0.35 },
-    { label: 'Competing Offers', detail: 'What else the seller is looking at, which you do not see.', weight: -0.18, value: rng.float(0, 1), knowable: false },
+    { label: 'Your Agent', detail: agent ? `${agent.brokerage} negotiating on your behalf.` : 'You’re representing yourself.', weight: 0.10, value: agent ? agent.negotiation / 100 : 0.35 },
+    { label: 'Competing Offers', detail: 'What else the seller is looking at, which you don’t see.', weight: -0.18, value: rng.float(0, 1), knowable: false },
   ]);
 
   const roll = rng.next();
@@ -915,7 +929,7 @@ function respondToOffer(sim: Simulation, offerId: Id): void {
   sim.audit({
     kind: 'prop.offer_decided', subjectType: 'offer', subjectId: offer.id,
     question: 'Why was my offer refused?',
-    summary: `Rejected. At ${Math.round(ratio * 100)}% of asking it was not close enough.`,
+    summary: `Rejected. At ${Math.round(ratio * 100)}% of asking it wasn’t close enough.`,
     factors, seed: `offer_response|${offer.id}|${offer.amount}`, roll, probability: acceptProbability, score,
     outcome: 'rejected',
   });
@@ -1023,7 +1037,7 @@ export function closingCash(offer: PropertyOffer): { closingCosts: Money; cashNe
  */
 export function closeTransaction(sim: Simulation, offerId: Id): ClosingOutcome {
   const offer = sim.universe.propertyOffers[offerId];
-  if (!offer || offer.status !== 'accepted') return { closed: false, reason: 'not_open', detail: 'That purchase is not open to close.' };
+  if (!offer || offer.status !== 'accepted') return { closed: false, reason: 'not_open', detail: 'That purchase isn’t open to close.' };
   const property = sim.universe.properties[offer.propertyId];
   const buyer = sim.universe.people[offer.buyerId];
   if (!property || !buyer) return { closed: false, reason: 'not_open', detail: 'That house is gone.' };
@@ -1146,6 +1160,36 @@ export function moveIn(sim: Simulation, personId: Id, propertyId: Id): void {
   sim.emit('prop.moved_in', { personId, propertyId, locationId: property.locationId });
 }
 
+/**
+ * Furniture bought before furnishings were owned things becomes owned.
+ *
+ * A save from before this had a sofa in the living room that the house system
+ * could not see: it never wore, never broke, and there was nothing to do with
+ * it. This gives each of those the object it should always have had, keeping
+ * what it cost and the state it is in. Idempotent, and it adds rather than
+ * replaces, so nothing already in the save is lost.
+ */
+export function ensureFurnishingAssets(sim: Simulation): void {
+  for (const furnishing of Object.values(sim.universe.furnishings)) {
+    if (furnishing.assetId && sim.universe.assets[furnishing.assetId]) continue;
+    const property = sim.universe.properties[furnishing.propertyId];
+    if (!property) continue;
+    if (property.ownerId !== sim.player.id && property.id !== sim.player.residenceId) continue;
+    const catalogItem = CATALOG.get(furnishing.catalogId);
+    if (!catalogItem) continue;
+    const asset = createAsset(sim, {
+      ownerId: sim.player.id, catalogItem,
+      purchasePrice: furnishing.purchasePrice, acquiredVia: 'purchase',
+    });
+    asset.acquiredAt = furnishing.purchasedAt;
+    asset.condition = furnishing.condition;
+    asset.currentValue = furnishing.currentValue;
+    asset.roomId = furnishing.roomId;
+    asset.locationPropertyId = property.id;
+    furnishing.assetId = asset.id;
+  }
+}
+
 export function recomputeRoomQuality(sim: Simulation, roomId: Id): number {
   const room = sim.universe.rooms[roomId];
   if (!room) return 0;
@@ -1242,12 +1286,12 @@ function advanceConstruction(sim: Simulation, projectId: Id): void {
         phase.spent += due;
         project.spent += due;
       } else {
-        phase.notes.push({ at: sim.now, note: 'Work paused: the draw could not be funded.' });
+        phase.notes.push({ at: sim.now, note: 'Work paused: the draw couldn’t be funded.' });
         project.status = 'stalled';
         sim.requireDecision({
           urgency: 90, category: 'property',
-          title: `${project.name} Cannot Be Funded`,
-          detail: `The next draw of ${formatMoney(due)} could not be paid. Crews stop until it is.`,
+          title: `${project.name} Can’t Be Funded`,
+          detail: `The next draw of ${formatMoney(due)} couldn’t be paid. Crews stop until it is.`,
           route: '/workspace/property',
           refType: 'build', refId: project.id,
         });

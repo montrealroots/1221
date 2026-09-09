@@ -5,7 +5,7 @@
  * join without the navigation collapsing.
  */
 
-import { weatherAt } from '@/engine/systems/weather';
+import { WEATHER_EMOJI, weatherAt } from '@/engine/systems/weather';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { TutorialCard } from '@/ui/shell/Tutorial';
@@ -28,6 +28,7 @@ const DOMAINS: Domain[] = [
       { route: '/workspace/wellbeing', label: 'Wellbeing', detail: 'Sleep, energy, stress, food and recovery.' },
       { route: '/workspace/health', label: 'Healthcare', detail: 'Doctors, dentists, therapy and specialists.' },
       { route: '/workspace/education', label: 'Education', detail: 'Classes, coaching and training that actually changes you.' },
+      { route: '/workspace/track', label: 'Track', detail: 'The one sport in here: a season, every round of every meet, and the times.' },
       { route: '/workspace/history', label: 'History', detail: 'Everything that has happened to you, kept permanently.' },
     ],
   },
@@ -45,7 +46,7 @@ const DOMAINS: Domain[] = [
     blurb: 'Everything you can own, and everything owning it costs.',
     entries: [
       { route: '/workspace/property', label: 'Property', detail: 'Rent, buy, build from raw land, and design the inside.' },
-      { route: '/workspace/vehicles', label: 'Vehicles', detail: 'Buy, finance, service and modify, with fitment that is checked.' },
+      { route: '/workspace/vehicles', label: 'Vehicles', detail: 'Buy, finance, service and modify, with fitment that’s checked.' },
       { route: '/workspace/shopping', label: 'Shopping', detail: 'Groceries to grand complications, all of it becoming real property.' },
       { route: '/workspace/insurance', label: 'Insurance', detail: 'Quote, premium, claim, decision, renewal.' },
     ],
@@ -60,9 +61,25 @@ const DOMAINS: Domain[] = [
     ],
   },
   {
+    label: 'Film',
+    blurb: 'A picture of your own, made with kit somebody else owns.',
+    entries: [
+      { route: '/workspace/film', label: 'Rental Houses', detail: 'The houses that hire cameras, lamps and sound by the day, and what a week actually bills at.' },
+      { route: '/workspace/film', label: 'On Hire', detail: 'What you have out on a ticket, when it’s due back, and what it costs when it’s late.' },
+      { route: '/workspace/film', label: 'Your Own Kit', detail: 'What you bought outright, beside what you hired.' },
+      { route: '/workspace/goingout', label: 'Tonight In Town', detail: 'The matches, concerts, plays and exhibitions on at this city’s venues this week.' },
+      { route: '/workspace/goingout', label: 'Your Seats', detail: 'The seats you have bought for something in town, and what you made of the night.' },
+      { route: '/workspace/goingout', label: 'What Is On', detail: 'The cinemas in this city, what is showing this week and what a seat costs at each time.' },
+      { route: '/workspace/goingout', label: 'Your Tickets', detail: 'The seats you have bought, when the doors open, and what you thought of what you saw.' },
+      { route: '/workspace/goingout', label: 'Fashion Weeks', detail: 'The season’s schedule, who is showing when, and what a house would make of you.' },
+      { route: '/workspace/goingout', label: 'Your Invitations', detail: 'The houses you have written to, where they sat you, and what the room made of what you wore.' },
+    ],
+  },
+  {
     label: 'Social',
     blurb: 'Four platforms, one audience engine, no guarantees.',
     entries: [
+      { route: '/workspace/phone', label: 'The Phone', detail: 'A handset on the desk, running on the world clock, with YouTube, Instagram, X and TikTok built as the apps.' },
       { route: '/workspace/social', label: 'Platforms', detail: 'Long video, short video, photo and text, each behaving differently.' },
       { route: '/workspace/social', label: 'Audience', detail: 'Segments, affinity, churn and momentum.' },
       { route: '/workspace/social', label: 'Brand Deals', detail: 'Real deliverables, real deadlines, real consequences for missing them.' },
@@ -100,6 +117,7 @@ export function World() {
           const unit = weather.fahrenheit ? '°F' : '°C';
           return (
             <p className="small dim" style={{ marginTop: 'var(--s1)' }}>
+              <span aria-hidden="true">{WEATHER_EMOJI[weather.condition]}</span>{' '}
               {weather.temperature}{unit} and {weather.condition.toLowerCase()} in {city.name} right now,
               {' '}high {weather.high}{unit}, low {weather.low}{unit}. {weather.climateName} climate.
             </p>

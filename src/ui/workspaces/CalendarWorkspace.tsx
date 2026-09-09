@@ -60,7 +60,7 @@ export function CalendarWorkspace() {
         <h1>Every commitment you have.</h1>
         <p className="muted">
           Work, auditions, shoot days, appointments, flights, bills, classes and birthdays.
-          If two things want you at once, they are flagged here first.
+          If two things want you at once, they’re flagged here first.
         </p>
       </div>
 
@@ -241,11 +241,11 @@ function fromLocalInput(value: string, zone: string): number | undefined {
 /**
  * One entry, opened. What it is, what state it is in, and the things its
  * owning system lets you do to it — a plan can be played, done, moved,
- * skipped or dropped; an appointment moved or cancelled; a bill paid; a
+ * skipped or dropped; an appointment moved or canceled; a bill paid; a
  * flight opened where it lives; an observance only looked at.
  */
 const DATE_STATUS_WORD: Readonly<Record<DateStatus, string>> = {
-  planned: 'planned', underway: 'under way', attended: 'attended', skipped: 'skipped', stood_up: 'missed, because you did not go', they_cancelled: 'called off by them', cancelled: 'cancelled',
+  planned: 'planned', underway: 'under way', attended: 'attended', skipped: 'skipped', stood_up: 'missed, because you didn’t go', they_cancelled: 'called off by them', cancelled: 'cancelled',
 };
 
 function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
@@ -268,7 +268,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const city = entry.locationId ? CITIES.get(entry.locationId)?.name : undefined;
   const after = (result: { ok: boolean }) => { if (result.ok) onClose(); };
   const moveTo = () => fromLocalInput(when, sim.homeZone);
-  const busy = scene ? 'Finish or leave the scene you are in first.' : undefined;
+  const busy = scene ? 'Finish or leave the scene you’re in first.' : undefined;
   const can = plan ? attendable(sim, plan) : { ok: false };
   const summarisable = plan?.sceneDefinitionId ? Boolean(sceneDefinition(plan.sceneDefinitionId)?.summarise) : true;
 
@@ -325,7 +325,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <>
           <p className="small muted">
             {sim.universe.healthProviders[appointment.providerId]?.name ?? 'Your provider'}. {formatMoney(appointment.outOfPocket)} out of pocket.
-            {appointment.status === 'scheduled' ? ' Cancelling inside a day of it costs a fee.' : ` This appointment was ${appointment.status}.`}
+            {appointment.status === 'scheduled' ? ' Canceling inside a day of it costs a fee.' : ` This appointment was ${appointment.status}.`}
           </p>
           {appointment.status === 'scheduled' && visitAttendable(sim, appointment).ok && (
             <div className="row wrap gap-2" style={{ marginBottom: 'var(--s2)' }}>
@@ -352,7 +352,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <>
           <p className="small muted">
             {activityOf(date).label} with {sim.universe.people[date.personId]?.displayName ?? 'somebody'}{placeOfDate(date) ? ` at ${placeOfDate(date)!.name}` : ''}.
-            {date.status === 'planned' ? (dateCan.ok ? ' It is time.' : dateCan.reason ? ` ${dateCan.reason}` : '') : date.status === 'underway' ? ' Under way.' : ` This date was ${DATE_STATUS_WORD[date.status]}.`}
+            {date.status === 'planned' ? (dateCan.ok ? ' It’s time.' : dateCan.reason ? ` ${dateCan.reason}` : '') : date.status === 'underway' ? ' Under way.' : ` This date was ${DATE_STATUS_WORD[date.status]}.`}
           </p>
           {(date.status === 'planned' || date.status === 'underway') && (
             <>
@@ -381,7 +381,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <>
           <p className="small muted">
             A showing at {sim.universe.properties[showing.propertyId]?.addressLine ?? 'the house'}, {formatMoney(showing.askingPrice)} asking.
-            {showing.viewedByPlayer ? ' You have seen it.' : showingCan.ok ? ' Go over any time you are in the city; when it comes round it will ask.' : showingCan.reason ? ` ${showingCan.reason}` : ''}
+            {showing.viewedByPlayer ? ' You have seen it.' : showingCan.ok ? ' Go over any time you’re in the city; when it comes round it will ask.' : showingCan.reason ? ` ${showingCan.reason}` : ''}
           </p>
           <div className="row wrap gap-2">
             <button className="btn btn-sm btn-primary" disabled={!showingCan.ok || Boolean(busy)} title={busy} onClick={() => after(run('scene.start', { definitionId: 'property.viewing', input: { listingId: showing.id }, refType: 'listing', refId: showing.id }))}>Play It Out</button>
@@ -396,7 +396,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <>
           <p className="small muted">
             {offerKind === 'prop.inspection' && `The inspector goes through ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'} on the day. The report comes to you afterwards and asks: walk it with them, read it, decide.`}
-            {offerKind === 'prop.appraisal' && `The lender's appraiser values ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}. A short appraisal means more cash at the table, or the end of the purchase if you cannot carry it.`}
+            {offerKind === 'prop.appraisal' && `The lender's appraiser values ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}. A short appraisal means more cash at the table, or the end of the purchase if you can’t carry it.`}
             {offerKind === 'prop.closing' && `Closing on ${sim.universe.properties[offer.propertyId]?.addressLine ?? 'the house'}: ${formatMoney(closingNumbers(sim, offer).cashToClose)} to close. ${sim.now >= (offer.closingAt ?? 0) - 12 * MS_HOUR ? 'The table is set.' : 'When it comes round it will ask.'}`}
             {!['prop.inspection', 'prop.appraisal', 'prop.closing'].includes(offerKind ?? '') && 'Part of a purchase in progress.'}
           </p>
@@ -448,7 +448,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
 
       {bill && (
         <div className="row wrap gap-2">
-          <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it is due, if the money is there.' : 'No longer active.'}</span>
+          <span className="small muted grow">{formatMoney(bill.amount)} {bill.frequency}. {bill.active ? 'Paid automatically when it’s due, if the money is there.' : 'No longer active.'}</span>
           {bill.active && <button className="btn btn-sm btn-primary" onClick={() => after(run('finance.pay_bill', { billId: bill.id }, { idempotencyKey: `pay:${bill.id}:${bill.nextDueAt}` }))}>Pay Now</button>}
           <button className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Bank')}>Open Bank</button>
         </div>
@@ -458,7 +458,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <div className="row wrap gap-2">
           <span className="small muted grow">
             {entry.status === 'observance'
-              ? 'An observance. It is on the calendar so you know; nothing about it is yours to change.'
+              ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
               : 'This belongs to the system that made it. Open it there to change anything.'}
           </span>
           {entry.status !== 'observance' && (

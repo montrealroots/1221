@@ -318,12 +318,12 @@ describe('migrations and validation', () => {
       property.ownerId = 'person_does_not_exist';
       const report = validateUniverse(sim.universe);
       expect(report.ok).toBe(false);
-      expect(report.errors.some((e) => e.includes('does not exist'))).toBe(true);
+      expect(report.errors.some((e) => /does(n’t| not) exist/.test(e))).toBe(true);
     }
   });
 });
 
-describe('the decision centre', () => {
+describe('the decision center', () => {
   it('sorts overdue items above everything else', () => {
     const sim = quickSave();
     sim.advanceTo(sim.now + 120 * MS_DAY);

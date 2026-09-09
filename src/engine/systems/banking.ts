@@ -27,6 +27,11 @@ import {
   type BankProduct, type ProductFamily,
 } from '../content/banking';
 import { offeredApr, recomputeCreditScore } from './finance';
+import { FBAR_NOTE, FBAR_THRESHOLD, PRIVATE_BANKS, REAL_CARDS, REPORTING_NOTE, privateBankById, type PrivateBank } from '../content/wealth';
+import { COUNTRIES } from '../content/geography';
+import { passportCheck, residenceCountryOf } from './documents';
+import type { PrivateApplication } from '../domain/model';
+import { requireAge } from './lifespan';
 
 /** Days from the statement closing to the payment being due. */
 export const CARD_GRACE_DAYS = 21;
@@ -36,7 +41,30 @@ export const STATEMENTS_KEPT = 24;
 export const STANDING_ORDER_STRIKES = 3;
 
 export const NO_SUCH_PRODUCT = 'No such product.';
-export const NOT_YOURS = 'That is not your account.';
+export const NOT_YOURS = 'That isn’t your account.';
+export const INVITATION_ONLY = 'Invitation only. Nobody applies for it; the issuer decides who is asked.';
+export const NOT_ISSUED_HERE = 'Not issued where you live.';
+
+/** The product id an account at a private bank carries. */
+export function privateProductId(bankId: string): string {
+  return `private:${bankId}`;
+}
+
+/** The private bank behind an account, when it is one. */
+export function privateBankOf(account: Account): PrivateBank | undefined {
+  return account.productId?.startsWith('private:') ? privateBankById(account.productId.slice('private:'.length)) : undefined;
+}
+
+/** Offshore is relative: the account is offshore when its bank is not where you live. */
+export function isOffshore(sim: Simulation, bank: PrivateBank): boolean {
+  return bank.countryId !== residenceCountryOf(sim, sim.player);
+}
+
+export function privateApplications(sim: Simulation, applicantId?: Id): PrivateApplication[] {
+  return Object.values(sim.universe.privateApplications ?? {})
+    .filter((a) => !applicantId || a.applicantId === applicantId)
+    .sort((a, b) => b.appliedAt - a.appliedAt);
+}
 
 // ---------------------------------------------------------------------------
 // Reading
@@ -69,9 +97,17 @@ export function monthlyFeeFor(account: Account): Money {
 /** Why a product cannot be opened right now, or nothing. */
 export function openingRefusal(sim: Simulation, product: BankProduct, deposit: Money, fromAccountId?: Id): string | undefined {
   if (product.family === 'card') {
+    if (product.countryIds && !product.countryIds.includes(residenceCountryOf(sim, sim.player))) return NOT_ISSUED_HERE;
+    if (product.invitation && !sim.player.invitations?.[product.id]) return INVITATION_ONLY;
+    if (product.real && sim.ledger.accountsOf(sim.player.id).some((a) => a.productId === product.id && !a.closedAt)) return `You hold ${productLabel(product)} already.`;
     const score = sim.universe.creditProfiles[sim.player.id]?.score ?? 600;
-    if (score < (product.minimumScore ?? 560)) {
+    // An invitation is the issuer having looked already; nobody is scored twice.
+    if (!product.invitation && score < (product.minimumScore ?? 560)) {
       return `${productLabel(product)} wants a score of ${product.minimumScore}. Yours is ${score}.`;
+    }
+    if (product.initiationFee) {
+      const payFrom = fromAccountId ?? sim.player.primaryAccountId;
+      if (!payFrom || sim.ledger.availableFunds(payFrom) < product.initiationFee) return `${productLabel(product)} takes ${formatMoney(product.initiationFee)} to join, and you can’t cover it.`;
     }
     return undefined;
   }
@@ -80,7 +116,7 @@ export function openingRefusal(sim: Simulation, product: BankProduct, deposit: M
   }
   if (product.minimumOpening > 0 && !fromAccountId) return 'Choose an account to fund it from.';
   if (fromAccountId && deposit > 0 && sim.ledger.availableFunds(fromAccountId) < deposit) {
-    return `There is not ${formatMoney(deposit)} in ${sim.ledger.account(fromAccountId).name}.`;
+    return `There isn’t ${formatMoney(deposit)} in ${sim.ledger.account(fromAccountId).name}.`;
   }
   return undefined;
 }
@@ -224,7 +260,61 @@ export function countWithdrawal(sim: Simulation, accountId: Id): Money {
  * A month on every account: the maintenance fee, the interest paid or
  * charged, the statement, and on a card the cycle that decides all of it.
  */
+/** Twelve months of spend on the cards of this product, from the statements. */
+export function trailingSpend(sim: Simulation, productId: string): Money {
+  const since = addMonths(sim.now, -12, sim.homeZone);
+  let spend = 0;
+  for (const account of sim.ledger.accountsOf(sim.player.id)) {
+    if (account.productId !== productId) continue;
+    for (const statement of statements(sim, account.id)) if (statement.closedAt >= since) spend += statement.debits;
+  }
+  return spend;
+}
+
+/**
+ * Whether an invitation-only card would be offered today, and why. The rule
+ * is SLATE's reading of what is widely reported, never the issuer's, which
+ * nobody outside the issuer has.
+ */
+export function invitationStanding(sim: Simulation, product: BankProduct): { ready: boolean; detail: string } {
+  const rule = product.invitation;
+  if (!rule) return { ready: true, detail: 'Applied for, not offered.' };
+  if (product.countryIds && !product.countryIds.includes(residenceCountryOf(sim, sim.player))) return { ready: false, detail: NOT_ISSUED_HERE };
+  if (rule.viaBank) {
+    const held = sim.ledger.accountsOf(sim.player.id).some((a) => a.productId === privateProductId(rule.viaBank!) && !a.closedAt);
+    return { ready: held, detail: held ? `You bank at ${privateBankById(rule.viaBank)?.name ?? 'the private bank'}, which is the door.` : `Offered to clients of ${privateBankById(rule.viaBank)?.name ?? 'the private bank'}. Open an account there first.` };
+  }
+  const via = rule.viaCardId ? productById(rule.viaCardId) : undefined;
+  const held = via ? sim.ledger.accountsOf(sim.player.id).find((a) => a.productId === via.id && !a.closedAt) : undefined;
+  if (!via || !held) return { ready: false, detail: `As reported: hold ${via ? productLabel(via) : 'the issuer’s top card'} for ${rule.reportedMonths} months and spend ${formatMoney(rule.reportedSpend, { cents: false })} a year on it.` };
+  const months = Math.floor((sim.now - held.openedAt) / (30.4 * MS_DAY));
+  const spend = trailingSpend(sim, via.id);
+  const ready = months >= rule.reportedMonths && spend >= rule.reportedSpend;
+  return { ready, detail: ready ? 'You meet the reported rule. The invitation comes with a statement.' : `${months} of ${rule.reportedMonths} months on ${productLabel(via)}, ${formatMoney(spend, { cents: false })} of ${formatMoney(rule.reportedSpend, { cents: false })} spent in the last year.` };
+}
+
+/** The invitations that arrive with this month's statements. */
+function considerInvitations(sim: Simulation): void {
+  const me = sim.player;
+  for (const card of REAL_CARDS) {
+    if (!card.invitation || me.invitations?.[card.id]) continue;
+    const product = productById(card.id);
+    if (!product) continue;
+    if (!invitationStanding(sim, product).ready) continue;
+    me.invitations = { ...(me.invitations ?? {}), [card.id]: sim.now };
+    sim.notify({ category: 'finance', title: `An Invitation From ${card.issuer}`, body: `${card.name}. ${card.invitation.note}`, importance: 70, route: '/workspace/bank' });
+    sim.requireDecision({
+      urgency: 50, category: 'bank', refType: 'card', refId: card.id,
+      title: `${card.issuer} Has Invited You`, detail: `${card.name}: ${card.initiationFee ? `${formatMoney(card.initiationFee, { cents: false })} to join and ` : ''}${card.annualFee > 0 ? `${formatMoney(card.annualFee, { cents: false })} a year` : 'no published fee'}. Nobody has to say yes.`,
+      route: '/workspace/bank', actions: [{ label: 'Accept The Card', commandKind: 'bank.open', payload: { productId: card.id } }],
+    });
+    sim.remember({ category: 'finance', title: `Invited To The ${card.name}`, detail: `${card.issuer} asked. ${card.invitation.note}`, refs: [{ type: 'person', id: me.id }], significance: 30, public: false });
+    sim.emit('bank.invited', { productId: card.id });
+  }
+}
+
 export function closeMonth(sim: Simulation): void {
+  considerInvitations(sim);
   const now = sim.now;
   for (const account of Object.values(sim.universe.accounts)) {
     if (account.nominal || account.closedAt) continue;
@@ -255,6 +345,11 @@ export function closeMonth(sim: Simulation): void {
       // An account from before products, left on the old rate rather than
       // silently repriced.
       credit(sim, account, applyRate(account.balance, 0.021 / 12), `Interest — ${account.name}`);
+    } else if (!product && privateBankOf(account)) {
+      // A private bank pays its rate on cash and takes its relationship fee.
+      const bank = privateBankOf(account)!;
+      if (bank.apy > 0 && account.balance > 0) credit(sim, account, applyRate(account.balance, bank.apy / 12), `Interest — ${account.name}`);
+      if (bank.annualFee > 0) charge(sim, account, Math.round(bank.annualFee / 12), `Relationship fee — ${bank.name}`);
     }
 
     // Interest owed on a loan is the loan's own, not a product's.
@@ -295,7 +390,7 @@ function closeCardCycle(sim: Simulation, account: Account, from: number, now: nu
       if (profile) profile.latePayments += 1;
       sim.notify({
         category: 'finance', title: `${account.name} Was Not Paid`,
-        body: `${formatMoney(minimum)} was the least they would take and ${formatMoney(paid)} arrived.${late > 0 ? ` ${formatMoney(late)} late fee.` : ''} It goes on your record.`,
+        body: `${formatMoney(minimum)} was the least they’d take and ${formatMoney(paid)} arrived.${late > 0 ? ` ${formatMoney(late)} late fee.` : ''} It goes on your record.`,
         importance: 72, route: '/workspace/bank', refType: 'account', refId: account.id,
       });
       sim.emit('bank.card_late', { accountId: account.id, minimum, paid });
@@ -330,7 +425,7 @@ function closeCardCycle(sim: Simulation, account: Account, from: number, now: nu
     sim.requireDecision({
       urgency: 52, category: 'finance',
       title: `${account.name} Statement`,
-      detail: `${formatMoney(balance)} on the statement. The least they will take is ${formatMoney(statement.minimumDue ?? 0)}, by ${formatDate(account.paymentDueAt ?? now, sim.homeZone)}. Pay it all and there is no interest.`,
+      detail: `${formatMoney(balance)} on the statement. The least they’ll take is ${formatMoney(statement.minimumDue ?? 0)}, by ${formatDate(account.paymentDueAt ?? now, sim.homeZone)}. Pay it all and there’s no interest.`,
       route: '/workspace/bank',
       actions: [
         { label: 'Pay It In Full', commandKind: 'bank.pay_card', payload: { accountId: account.id, how: 'full' } },
@@ -376,10 +471,10 @@ function runStandingOrders(sim: Simulation): void {
       order.missed += 1;
       sim.notify({
         category: 'finance', title: `${order.name} Did Not Go Out`,
-        body: `${formatMoney(order.amount)} was not there in ${from.name}. ${order.missed >= STANDING_ORDER_STRIKES ? 'The bank has stopped trying.' : `Missed ${order.missed} of ${STANDING_ORDER_STRIKES}.`}`,
+        body: `${formatMoney(order.amount)} wasn’t there in ${from.name}. ${order.missed >= STANDING_ORDER_STRIKES ? 'The bank has stopped trying.' : `Missed ${order.missed} of ${STANDING_ORDER_STRIKES}.`}`,
         importance: 50, route: '/workspace/bank', refType: 'account', refId: from.id,
       });
-      if (order.missed >= STANDING_ORDER_STRIKES) stopOrder(sim, order, 'It could not be paid three times.');
+      if (order.missed >= STANDING_ORDER_STRIKES) stopOrder(sim, order, 'It couldn’t be paid three times.');
       continue;
     }
     sim.transfer(order.fromAccountId, order.toAccountId, order.amount, order.name, 'transfer');
@@ -447,10 +542,83 @@ export function registerBanking(sim: Simulation): void {
 
   // The clocks, so a save made rather than loaded still has a month and a day.
   ensureBankClocks(sim);
+  sim.universe.privateApplications ??= {};
+
+  // --- Private and offshore banking ---------------------------------------
+
+  sim.onSchedule('bank.private_open', (item) => {
+    const application = sim.universe.privateApplications?.[item.payload.applicationId as Id];
+    if (!application || application.status !== 'pending') return;
+    const bank = privateBankById(application.bankId);
+    if (!bank) { application.status = 'declined'; application.reason = 'The bank no longer exists.'; return; }
+    const me = sim.player;
+    const from = sim.ledger.account(application.fromAccountId);
+    const funds = from.closedAt ? 0 : sim.ledger.availableFunds(from.id);
+    if (funds < application.deposit) {
+      application.status = 'declined';
+      application.reason = `The opening deposit of ${formatMoney(application.deposit, { cents: false })} wasn’t there when the bank came to take it.`;
+      sim.notify({ category: 'finance', title: `${bank.name} Declined`, body: application.reason, importance: 60, route: '/workspace/bank' });
+      sim.emit('bank.private_declined', { applicationId: application.id, bankId: bank.id });
+      return;
+    }
+    const offshore = isOffshore(sim, bank);
+    const account = sim.openAccount({
+      id: sim.nextId('account'), kind: 'checking', name: `${bank.name} Account`, ownerId: me.id, institution: bank.name,
+      openedAt: sim.now, productId: privateProductId(bank.id), overdraftOptIn: false,
+      last4: String(1000 + (sim.counter('account_last4') * 7919) % 9000),
+    });
+    sim.transfer(from.id, account.id, application.deposit, `Opening ${account.name}`, 'transfer', { refType: 'account', refId: account.id });
+    countWithdrawal(sim, from.id);
+    application.status = 'opened';
+    application.accountId = account.id;
+    const reporting = offshore ? ` ${REPORTING_NOTE}${me.citizenshipId === 'us' && application.deposit > FBAR_THRESHOLD ? ` ${FBAR_NOTE}` : ''}` : '';
+    sim.notify({ category: 'finance', title: `${bank.name} Has Opened Your Account`, body: `${formatMoney(application.deposit, { cents: false })} is in it, in ${bank.city}.${reporting}`, importance: 60, route: '/workspace/bank' });
+    sim.remember({
+      category: 'finance', title: offshore ? `Opened An Account Abroad` : `Opened A Private Account`,
+      detail: `${bank.name}, ${bank.city}. ${formatMoney(application.deposit, { cents: false })} to open.${offshore ? ' Reported to the tax authority at home under the Common Reporting Standard.' : ''}`,
+      refs: [{ type: 'person', id: me.id }], significance: 28, public: false, amount: application.deposit,
+    });
+    sim.emit('bank.private_opened', { applicationId: application.id, bankId: bank.id, accountId: account.id, offshore });
+    considerInvitations(sim);
+  });
+
+  sim.onCommand<{ bankId: string; deposit: Money; fromAccountId: Id }, { applicationId: Id; readyAt: number; offshore: boolean; note: string }>(
+    'bank.apply_private',
+    (p, { sim: s }) => {
+      const bank = privateBankById(p.bankId);
+      if (!bank) throw new CommandError('No such bank.');
+      const me = s.player;
+      if (privateApplications(s, me.id).some((a) => a.bankId === bank.id && a.status === 'pending')) throw new CommandError(`${bank.name} is already looking at your application.`);
+      if (s.ledger.accountsOf(me.id).some((a) => a.productId === privateProductId(bank.id) && !a.closedAt)) throw new CommandError(`You bank at ${bank.name} already.`);
+      if (!Number.isFinite(p.deposit) || p.deposit < bank.minimumRelationship) throw new CommandError(`${bank.name} wants ${formatMoney(bank.minimumRelationship, { cents: false })} to open a relationship (${bank.minimumIs}).`);
+      const from = s.ledger.account(p.fromAccountId);
+      if (from.ownerId !== me.id) throw new CommandError(NOT_YOURS);
+      if (s.ledger.availableFunds(from.id) < p.deposit) throw new CommandError(`There isn’t ${formatMoney(p.deposit, { cents: false })} in ${from.name}.`);
+      // Know your customer: a valid passport, and the address the game
+      // already has for where you live. Nothing else is asked and nothing
+      // is invented about the source of the money.
+      const papers = passportCheck(s, me);
+      if (!papers.ok) throw new CommandError(`${bank.name} wants a valid passport before anything else. ${papers.reason ?? ''}`.trim());
+      const offshore = isOffshore(s, bank);
+      const readyAt = addDays(s.now, bank.kycWeeks * 7, s.homeZone);
+      const application: PrivateApplication = {
+        id: s.nextId('application'), saveId: s.universe.meta.id, bankId: bank.id, applicantId: me.id,
+        deposit: p.deposit, fromAccountId: from.id, appliedAt: s.now, readyAt, status: 'pending',
+      };
+      s.universe.privateApplications![application.id] = application;
+      s.schedule({ at: readyAt, kind: 'bank.private_open', label: `${bank.name} Decides`, category: 'finance', payload: { applicationId: application.id }, priority: 45, refType: 'application', refId: application.id });
+      const note = `${bank.name} in ${bank.city} takes ${bank.kycWeeks} weeks over its checks. The deposit moves when the account opens, not before.${offshore ? ` ${REPORTING_NOTE}` : ''}`;
+      s.remember({ category: 'finance', title: `Applied To ${bank.name}`, detail: `${formatMoney(p.deposit, { cents: false })} to open, in ${COUNTRIES.get(bank.countryId)?.name ?? bank.countryId}.`, refs: [{ type: 'person', id: me.id }], significance: 12, public: false });
+      s.emit('bank.private_applied', { applicationId: application.id, bankId: bank.id, offshore });
+      return { applicationId: application.id, readyAt, offshore, note };
+    },
+  );
 
   sim.onCommand<{ productId: string; deposit?: Money; fromAccountId?: Id; name?: string }, { accountId: Id; limit?: Money; maturesAt?: number }>(
     'bank.open',
     (p, { sim: s }) => {
+      // An account in your own name needs you to be able to sign for it.
+      requireAge(s, 'majority');
       const product = productById(p.productId);
       if (!product) throw new CommandError(NO_SUCH_PRODUCT);
       const deposit = Math.max(0, p.deposit ?? product.minimumOpening);
@@ -479,6 +647,11 @@ export function registerBanking(sim: Simulation): void {
       if (isCard) {
         const profile = s.universe.creditProfiles[s.player.id];
         profile?.hardInquiries.push({ at: s.now, reason: `${productLabel(product)} application` });
+        if (product.initiationFee) {
+          const payFrom = p.fromAccountId ?? s.player.primaryAccountId!;
+          s.expense(payFrom, product.initiationFee, `Initiation fee — ${productLabel(product)}`, 'fees', { refType: 'account', refId: account.id });
+        }
+        if (product.invitation) s.resolveDecision('card', product.id, 'bank');
       } else if (deposit > 0 && p.fromAccountId) {
         s.transfer(p.fromAccountId, account.id, deposit, `Opening ${account.name}`, 'transfer');
         countWithdrawal(s, p.fromAccountId);
@@ -500,12 +673,12 @@ export function registerBanking(sim: Simulation): void {
       const account = s.ledger.account(p.accountId);
       if (account.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
       if (account.closedAt) throw new CommandError('That account is already closed.');
-      if (account.nominal) throw new CommandError('That is not an account you hold.');
+      if (account.nominal) throw new CommandError('That isn’t an account you hold.');
       if (isLiability(account.kind) && account.balance < 0) {
         throw new CommandError(`Clear the ${formatMoney(-account.balance)} on ${account.name} before closing it.`);
       }
       if (s.player.primaryAccountId === account.id && myAccounts(s).filter((a) => a.kind === 'checking' || a.kind === 'cash').length <= 1) {
-        throw new CommandError('That is the only account your money comes into. Open another first.');
+        throw new CommandError('That’s the only account your money comes into. Open another first.');
       }
       const pointed = Object.values(s.universe.bills).filter((b) => b.active && b.autopayAccountId === account.id);
       if (pointed.length > 0) throw new CommandError(`${pointed.length} bill${pointed.length === 1 ? ' is' : 's are'} paid from ${account.name}. Point ${pointed.length === 1 ? 'it' : 'them'} somewhere else first.`);
@@ -516,7 +689,7 @@ export function registerBanking(sim: Simulation): void {
       let moved = 0;
       if (account.balance > 0) {
         const to = p.toAccountId ?? myAccounts(s).find((a) => a.id !== account.id && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash'))?.id;
-        if (!to) throw new CommandError('There is nowhere to move the money to.');
+        if (!to) throw new CommandError('There’s nowhere to move the money to.');
         if (account.maturesAt && s.now < account.maturesAt) {
           const broken = breakingCost(account);
           penalty = broken.penalty;
@@ -540,10 +713,12 @@ export function registerBanking(sim: Simulation): void {
   sim.onCommand<{ accountId: Id; on: boolean }, { on: boolean; limit: Money }>(
     'bank.set_overdraft',
     (p, { sim: s }) => {
+      // Borrowing is a contract like any other.
+      requireAge(s, 'borrow');
       const account = s.ledger.account(p.accountId);
       if (account.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
       const product = productOf(account);
-      if (!product?.overdraftLimit) throw new CommandError(`${account.name} does not come with cover.`);
+      if (!product?.overdraftLimit) throw new CommandError(`${account.name} doesn’t come with cover.`);
       if (!p.on && account.balance < 0) throw new CommandError(`${account.name} is ${formatMoney(-account.balance)} into its cover. Put it right before switching it off.`);
       account.overdraftOptIn = p.on;
       account.overdraftLimit = product.overdraftLimit;
@@ -559,9 +734,9 @@ export function registerBanking(sim: Simulation): void {
     (p, { sim: s }) => {
       const card = s.ledger.account(p.accountId);
       if (card.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
-      if (card.kind !== 'credit_card' && card.kind !== 'company_credit') throw new CommandError('That is not a card.');
+      if (card.kind !== 'credit_card' && card.kind !== 'company_credit') throw new CommandError('That isn’t a card.');
       const owed = Math.max(0, -card.balance);
-      if (owed <= 0) throw new CommandError(`There is nothing owing on ${card.name}.`);
+      if (owed <= 0) throw new CommandError(`There’s nothing owing on ${card.name}.`);
       const statement = card.statementBalance ?? 0;
       const minimum = Math.min(owed, minimumFor(productOf(card), statement || owed));
       const how = p.how ?? 'amount';
@@ -613,8 +788,8 @@ export function registerBanking(sim: Simulation): void {
     'bank.cancel_standing_order',
     (p, { sim: s }) => {
       const order = s.universe.standingOrders?.[p.orderId];
-      if (!order || !order.active) throw new CommandError('There is no standing order like that.');
-      stopOrder(s, order, 'You cancelled it.');
+      if (!order || !order.active) throw new CommandError('There’s no standing order like that.');
+      stopOrder(s, order, 'You canceled it.');
       return { stopped: true };
     },
   );
@@ -642,4 +817,4 @@ function firstOfNextMonth(sim: Simulation): number {
   return instantFromZoned({ year, month, day: 1, hour: 9 }, sim.homeZone);
 }
 
-export { BANK_PRODUCTS, INSTITUTIONS, productById, productLabel, productsOf, type BankProduct, type ProductFamily };
+export { BANK_PRODUCTS, INSTITUTIONS, PRIVATE_BANKS, productById, productLabel, productsOf, type BankProduct, type ProductFamily };

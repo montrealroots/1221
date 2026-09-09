@@ -23,6 +23,7 @@ import type { Id, Vehicle } from '../domain/model';
 import { CITIES, distanceKm, type City } from '../content/geography';
 import { VEHICLE_MODELS } from '../content/vehicles';
 import { WAITING_ON_DELIVERY, addMileage } from './vehicles';
+import { licenseCheck } from './documents';
 
 /** A long day at the wheel. Further than this is a flight, or two days. */
 export const MAX_DRIVE_KM = 650;
@@ -34,7 +35,7 @@ export const DRIVE_OPTIONS = 50;
  * Roads are not straight lines — but the longer the trip, the straighter the
  * road. A drive across town winds through a grid; a drive between cities is
  * mostly highway. About thirty percent over the crow's flight for a short
- * hop, tapering to eight percent past three hundred kilometres.
+ * hop, tapering to eight percent past three hundred kilometers.
  */
 function roadFactor(greatCircleKm: number): number {
   return 1.3 - 0.22 * Math.min(1, greatCircleKm / 300);
@@ -47,7 +48,7 @@ export function usesMiles(countryId: string): boolean {
   return MILES.has(countryId);
 }
 
-/** Cents per litre of fuel, by country. SLATE's estimates. */
+/** Cents per liter of fuel, by country. SLATE's estimates. */
 const FUEL_CENTS_PER_LITRE: Record<string, number> = {
   us: 95, ca: 115, mx: 115, uk: 190, ie: 185, fr: 195, de: 195, es: 175, it: 200, nl: 210, be: 190,
   dk: 215, se: 200, no: 215, fi: 205, pl: 160, cz: 165, at: 175, ch: 210, pt: 190, gr: 200, tr: 130,
@@ -62,7 +63,7 @@ const CHARGE_CENTS_PER_KWH: Record<string, number> = { us: 17, uk: 40, de: 45, f
 const DEFAULT_CHARGE_CENTS = 25;
 const EV_KWH_PER_100KM = 18;
 
-/** Litres per hundred kilometres by segment, before the powertrain. */
+/** Liters per hundred kilometers by segment, before the powertrain. */
 const LITRES_PER_100KM: Record<string, number> = {
   compact: 6.5, midsize: 8, fullsize: 10.5, luxury: 10, utility: 11.5, sports: 12, super: 17, commercial: 13,
 };
@@ -135,7 +136,7 @@ const DRIVE_RINGS_KM = [40, 120, 300];
  * its own right; you are already in the city it is part of. Only places SLATE
  * has loaded are offered: the bundled cities plus whatever countries have
  * been pulled in. The Travel screen loads the country you are standing in
- * before it asks, so the list is the real neighbourhood. With a `query`, every
+ * before it asks, so the list is the real neighborhood. With a `query`, every
  * place in range whose name matches is returned instead of the spread.
  */
 export function drivingOptions(
@@ -199,31 +200,33 @@ export function registerDriving(sim: Simulation): void {
     (p, { sim: s }) => {
       const player = s.player;
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle) throw new CommandError('That car does not exist.');
-      if (vehicle.ownerId !== player.id || vehicle.ownerKind !== 'person') throw new CommandError('That is not your car.');
+      if (!vehicle) throw new CommandError('That car doesn’t exist.');
+      if (vehicle.ownerId !== player.id || vehicle.ownerKind !== 'person') throw new CommandError('That isn’t your car.');
       if (vehicle.deliveryDueAt) throw new CommandError(WAITING_ON_DELIVERY);
+      const license = licenseCheck(s, player);
+      if (!license.ok) throw new CommandError(license.reason ?? 'No license.');
 
       const from = CITIES.get(player.currentLocationId);
       const to = CITIES.get(p.toCityId);
-      if (!from) throw new CommandError('You are nowhere SLATE can drive from.');
-      if (!to) throw new CommandError('That is not a place SLATE knows.');
-      if (to.id === from.id) throw new CommandError(`You are already in ${to.name}.`);
+      if (!from) throw new CommandError('You’re nowhere SLATE can drive from.');
+      if (!to) throw new CommandError('That isn’t a place SLATE knows.');
+      if (to.id === from.id) throw new CommandError(`You’re already in ${to.name}.`);
 
       const carAt = vehicleLocation(s, vehicle);
       if (carAt !== from.id) {
         throw new CommandError(`Your ${vehicle.year} ${vehicle.make} ${vehicle.model} is in ${CITIES.get(carAt ?? '')?.name ?? 'another city'}, not here.`);
       }
-      if (vehicle.mechanicalHealth < 8) throw new CommandError('That car will not make the trip. Get it serviced first.');
+      if (vehicle.mechanicalHealth < 8) throw new CommandError('That car won’t make the trip. Get it serviced first.');
 
       const estimate = estimateDrive(s, from, to, vehicle);
       if (estimate.km > MAX_DRIVE_KM) {
-        throw new CommandError(`${to.name} is ${formatDistance(estimate, from.countryId)} away. That is a flight, or two days.`);
+        throw new CommandError(`${to.name} is ${formatDistance(estimate, from.countryId)} away. That’s a flight, or two days.`);
       }
 
       const accountId = player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay for fuel from.');
       if (estimate.fuelCents > 0 && s.ledger.availableFunds(accountId) < estimate.fuelCents) {
-        throw new CommandError(`Fuel for the drive is about ${(estimate.fuelCents / 100).toFixed(2)} and you cannot cover it.`);
+        throw new CommandError(`Fuel for the drive is about ${(estimate.fuelCents / 100).toFixed(2)} and you can’t cover it.`);
       }
       if (estimate.fuelCents > 0) {
         s.expense(accountId, estimate.fuelCents, `Fuel — ${from.name} to ${to.name}`, 'transport', { refType: 'vehicle', refId: vehicle.id });

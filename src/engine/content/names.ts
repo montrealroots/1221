@@ -39,7 +39,7 @@ export const FAMILY_NAMES: readonly string[] = [
 export const STREET_NAMES: readonly string[] = [
   'Alder', 'Ashgrove', 'Bayview', 'Beechwood', 'Bramblewood', 'Bridgeport', 'Cedar Hollow', 'Chapel',
   'Clearwater', 'Cliffside', 'Coldwater', 'Crescent', 'Dunmore', 'Eastvale', 'Elmhurst', 'Fairhaven',
-  'Foxglove', 'Glenmere', 'Granite', 'Harbour', 'Hawthorne', 'Highfield', 'Hollyoak', 'Ivywood',
+  'Foxglove', 'Glenmere', 'Granite', 'Harbor', 'Hawthorne', 'Highfield', 'Hollyoak', 'Ivywood',
   'Kingsbridge', 'Larkspur', 'Laurel Canyon', 'Linden', 'Marlowe', 'Meadowbrook', 'Millbank', 'Northcliff',
   'Oakmont', 'Orchard', 'Pemberley', 'Pinehurst', 'Quarry', 'Ravenswood', 'Redbourne', 'Rosemont',
   'Silverbirch', 'Stonegate', 'Sunfield', 'Thornbury', 'Vista Ridge', 'Wainscott', 'Westbourne', 'Willowmere',
@@ -54,7 +54,7 @@ export const COMPANY_FIRST: readonly string[] = [
   'Amber', 'Anvil', 'Arcadia', 'Ardent', 'Ashgrove', 'Beacon', 'Bellhouse', 'Blackwater', 'Bright',
   'Cardinal', 'Cascade', 'Cobalt', 'Coldharbour', 'Compass', 'Copperline', 'Crown', 'Deepwater',
   'Ember', 'Fathom', 'Ferrous', 'Firebreak', 'Foundry', 'Glasshouse', 'Granite', 'Greenwood',
-  'Halyard', 'Harbour', 'Hollow', 'Ironbark', 'Kestrel', 'Keystone', 'Lantern', 'Longshore',
+  'Halyard', 'Harbor', 'Hollow', 'Ironbark', 'Kestrel', 'Keystone', 'Lantern', 'Longshore',
   'Lowtide', 'Marrow', 'Meridian', 'Midnight', 'Millstone', 'Nightjar', 'Northstar', 'Oakhill',
   'Overcast', 'Paperbird', 'Pinewood Row', 'Quarry', 'Redwood', 'Rookery', 'Sable', 'Saltbox',
   'Sixpence', 'Slate', 'Stonecrop', 'Tallgrass', 'Thistle', 'Threadneedle', 'Undertow', 'Vantage',

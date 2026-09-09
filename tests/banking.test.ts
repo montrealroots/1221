@@ -53,7 +53,9 @@ describe('the products', () => {
   it('are all coherent, and every one says who sells it', () => {
     expect(BANK_PRODUCTS.length).toBeGreaterThanOrEqual(11);
     for (const product of BANK_PRODUCTS) {
-      expect(productLabel(product)).toMatch(/^(Northbank|Meridian Private) /);
+      // SLATE's own two banks, or a real issuer named as itself.
+      if (!product.real) expect(productLabel(product)).toMatch(/^(Northbank|Meridian Private) /);
+      else expect(product.annualFee).toBeDefined();
       expect(product.about.length).toBeGreaterThan(20);
       expect(product.perks.length).toBeGreaterThan(0);
       if (product.family === 'card') {
@@ -77,7 +79,7 @@ describe('the products', () => {
     expect(openingRefusal(sim, reserve, 5_000_00, checking(sim).id)).toMatch(/takes \$250,000/);
     expect(attempt(sim, 'bank.open', { productId: 'mp_reserve', deposit: 5_000_00, fromAccountId: checking(sim).id }).error).toMatch(/takes \$250,000/);
     // The money has to actually be there.
-    expect(attempt(sim, 'bank.open', { productId: 'nb_high_yield', deposit: 10_000_00, fromAccountId: checking(sim).id }).error).toMatch(/There is not \$10,000/);
+    expect(attempt(sim, 'bank.open', { productId: 'nb_high_yield', deposit: 10_000_00, fromAccountId: checking(sim).id }).error).toMatch(/There is(n’t| not) \$10,000/);
     // And a card wants a score.
     sim.universe.creditProfiles[sim.player.id]!.score = 600;
     expect(attempt(sim, 'bank.open', { productId: 'mp_card_reserve' }).error).toMatch(/wants a score of 760. Yours is 600/);
@@ -313,7 +315,7 @@ describe('standing orders', () => {
     expect(stopped.endedReason).toMatch(/three times|account it used/);
   });
 
-  it('can be cancelled, and blocks closing the account it uses until it is', () => {
+  it('can be canceled, and blocks closing the account it uses until it is', () => {
     const sim = aLife('bank-standing-close');
     const savings = must<{ accountId: string }>(sim, 'bank.open', { productId: 'nb_savings', deposit: 0 });
     const { orderId } = must<{ orderId: string }>(sim, 'bank.create_standing_order', {
@@ -350,7 +352,7 @@ describe('statements', () => {
     expect(statements(sim, id)[0]!.openingBalance).toBe(0);
     const opening = statements(sim, id)[0]!.closingBalance;
     sim.expense(id, 2_000_00, 'Rent', 'housing');
-    sim.income(id, 500_00, 'A cheque', 'other');
+    sim.income(id, 500_00, 'A check', 'other');
     endOfMonth(sim);
     const statement = statements(sim, id)[0]!;
     expect(statement.period).toMatch(/^\d{4}-\d{2}$/);

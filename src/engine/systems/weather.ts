@@ -55,6 +55,27 @@ export interface WeatherNow extends DayWeather {
   short: string;
 }
 
+/**
+ * The picture the weather gets.
+ *
+ * The rest of SLATE's interface is words, on purpose. The weather is the one
+ * place where a picture reads faster than a word does and where every phone,
+ * every forecast and every newspaper uses one, so it keeps one. It is always
+ * beside the word rather than instead of it, and always hidden from a screen
+ * reader, which has the word.
+ */
+export const WEATHER_EMOJI: Record<WeatherCondition, string> = {
+  Clear: '☀️',
+  'Partly Cloudy': '⛅',
+  Overcast: '☁️',
+  Drizzle: '🌦️',
+  Rain: '🌧️',
+  Thunderstorm: '⛈️',
+  Snow: '🌨️',
+  Fog: '🌫️',
+  Windy: '💨',
+};
+
 const SHORT: Record<WeatherCondition, string> = {
   Clear: 'Clear', 'Partly Cloudy': 'Cloudy', Overcast: 'Overcast', Drizzle: 'Drizzle', Rain: 'Rain',
   Thunderstorm: 'Storm', Snow: 'Snow', Fog: 'Fog', Windy: 'Windy',

@@ -76,8 +76,8 @@ describe('real names, honest labels', () => {
     expect(AIRLINES.every((a) => a.name.length > 2 && a.code.length === 2)).toBe(true);
     const domestic = airlinesFor('us', 'us', 4000);
     expect(domestic.every((a) => a.countryId === 'us')).toBe(true);
-    const longHaul = airlinesFor('us', 'gb', 5500);
-    expect(longHaul.some((a) => a.countryId === 'gb')).toBe(true);
+    const longHaul = airlinesFor('us', 'uk', 5500);
+    expect(longHaul.some((a) => a.countryId === 'uk')).toBe(true);
     expect(longHaul.every((a) => a.longHaul)).toBe(true);
     const options = searchFlights(sim, 'us-ca-losangeles', 'uk-eng-london', sim.now + 5 * MS_DAY);
     expect(options.length).toBeGreaterThan(0);
@@ -196,7 +196,7 @@ describe('the day, played', () => {
     choose(sim, 'board');
     scene = activeScene(sim)!;
     if (scene.node === 'done') {
-      // The airline cancelled and moved you; that is a real outcome and the test accepts it.
+      // The airline canceled and moved you; that is a real outcome and the test accepts it.
       expect(booking.status).toBe('changed');
       expect(booking.replacedBy).toBeDefined();
       return;
@@ -309,7 +309,7 @@ describe('the day, played', () => {
       expect(gate.replacement).toBeDefined();
       expect(balance(sim)).toBe(before);
       expect(sim.universe.flightBookings[gate.replacement!]!.status).toBe('booked');
-      expect(sim.universe.notifications.some((n) => /Cancelled/.test(n.title))).toBe(true);
+      expect(sim.universe.notifications.some((n) => /Canceled/.test(n.title))).toBe(true);
       return;
     }
     throw new Error('No seed had the airline cancel in eighty tries; the chance is not what the constant says.');

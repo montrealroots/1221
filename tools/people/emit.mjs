@@ -56,7 +56,7 @@ const ratings = new Map();
   }
 }
 
-// --- The studio catalogue, for anything it already knows ------------------
+// --- The studio catalog, for anything it already knows ------------------
 
 const catalogue = new Map();
 for (const file of readdirSync(OUT)) {
@@ -79,7 +79,7 @@ for (const file of readdirSync(OUT)) {
     });
   }
 }
-console.log(`${catalogue.size} titles already in the studio catalogue`);
+console.log(`${catalogue.size} titles already in the studio catalog`);
 
 // --- Roles ---------------------------------------------------------------
 
@@ -106,7 +106,7 @@ function creditRoles(role, kind) {
 // --- Awards --------------------------------------------------------------
 
 /**
- * Honours that are not for anything on a screen. They are real and they are
+ * Honors that are not for anything on a screen. They are real and they are
  * theirs, but they say nothing about how good somebody is at making films, so
  * they are not counted into what the attributes are read off.
  */
@@ -201,7 +201,7 @@ function evidenceFor(qid, role) {
     const roles = awardRoles(award.award);
     if (roles.length > 0 && !roles.includes(role)) continue;
     // An award whose name says nothing about the job — a founders award, a
-    // career honour — belongs to whatever they mostly do, not to every job
+    // career honor — belongs to whatever they mostly do, not to every job
     // they have ever been credited in.
     if (roles.length === 0 && role !== busiestRole(qid)) continue;
     const weight = awardWeight(award.award);

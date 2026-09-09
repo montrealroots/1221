@@ -13,7 +13,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  CENTRED, MAX_ZOOM, PORTRAIT_HEIGHT, PORTRAIT_WIDTH,
+  CANNOT_DECODE, CANNOT_ENCODE, CENTRED, MAX_ZOOM, PORTRAIT_HEIGHT, PORTRAIT_WIDTH,
   clampPlacement, dataUrlBytes, describeRejection, drawRect,
   type Placement,
 } from './portrait';
@@ -25,7 +25,7 @@ const JPEG_QUALITY = 0.86;
  * The picture-with-an-arrow every upload control has.
  *
  * Drawn rather than fetched, so it costs nothing, scales to any screen and
- * takes the frame's colour — including the accent it turns while a photo is
+ * takes the frame's color — including the accent it turns while a photo is
  * being dragged over it.
  */
 function UploadGlyph() {
@@ -77,7 +77,7 @@ export function PortraitPicker({
     try {
       onChange(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
     } catch {
-      setProblem('That photo could not be saved. Try a different one.');
+      setProblem(CANNOT_ENCODE);
     }
   }, [onChange, source]);
 
@@ -102,7 +102,7 @@ export function PortraitPicker({
     };
     image.onerror = () => {
       URL.revokeObjectURL(url);
-      setProblem('That photo could not be opened. It may be damaged.');
+      setProblem(CANNOT_DECODE);
       setBusy(false);
     };
     image.src = url;
@@ -220,10 +220,10 @@ export function PortraitPicker({
           {problem
             ? problem
             : source
-              ? 'Drag the photo to reposition it. Any shape works — it is fitted to a headshot frame.'
+              ? 'Drag the photo to reposition it. Any shape works — it’s fitted to a headshot frame.'
               : storedBytes > 0
                 ? `Saved at ${PORTRAIT_WIDTH}×${PORTRAIT_HEIGHT}, ${Math.round(storedBytes / 1024)}KB.`
-                : 'Any size or shape. It is cropped to a headshot and shrunk to fit in your save.'}
+                : 'Any size or shape. It’s cropped to a headshot and shrunk to fit in your save.'}
         </p>
       </div>
     </div>

@@ -83,10 +83,10 @@ describe('labels built at runtime', () => {
     }
   });
 
-  it('spells jewellery the way the rest of the game spells it', () => {
-    // The stored key is American because the catalogue was written that way.
+  it('spells jewelry the way the rest of the game spells it', () => {
+    // The stored key is American because the catalog was written that way.
     // What reaches the screen must match the prose around it.
-    expect(categoryLabel('jewelry')).toBe('Jewellery');
+    expect(categoryLabel('jewelry')).toBe('Jewelry');
   });
 
   it('falls back to Title Case for a category it has never seen', () => {

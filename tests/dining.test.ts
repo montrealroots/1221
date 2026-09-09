@@ -18,7 +18,8 @@ import { MS_MINUTE } from '@/engine/core/time';
 import type { DiningVisit, RetailVisit } from '@/engine/domain/model';
 import { menuOf, placesIn, type Place } from '@/engine/content/places';
 import { shoppableRetailers } from '@/engine/content/catalog';
-import { REAL_RETAILERS, tradesIn } from '@/engine/content/brands';
+import { ALL_RETAILERS, tradesIn } from '@/engine/content/brands';
+import { HOUSES_NOT_SHOPS } from '@/engine/content/rental';
 import { CITIES } from '@/engine/content/geography';
 import {
   GOOD_TIP, MAX_WAIT_MINUTES, SERVICE_SHARE, billFor, cookMinutes, openVisit, serviceOf, staffOf, standingAt, waitFor,
@@ -215,7 +216,7 @@ describe('the room', () => {
     const elsewhere = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'restaurant' && p.id !== place.id)!;
     const notThere = sim.execute({ kind: 'dine.arrive', payload: { placeId: elsewhere.id } });
     expect(notThere.ok).toBe(false);
-    expect(notThere.error).toMatch(/not at/i);
+    expect(notThere.error).toMatch(/n[o’]t at/i);
   });
 
   it('moves the clock for the wait and for the kitchen, and never backwards', () => {
@@ -257,8 +258,16 @@ describe('the shop floor', () => {
   it('gives every chain that trades here, and only in the market it really trades in', () => {
     const population = CITIES.get(LA)!.population;
     const here = placesIn(LA).filter((p) => p.retailerId);
-    const expected = REAL_RETAILERS.filter((r) => r.kind !== 'online' && tradesIn(r, LA, population));
+    // A house that hires and does not sell has a counter rather than a shop
+    // door, and stands on the street as a rental house instead.
+    const expected = ALL_RETAILERS
+      .filter((r) => r.kind !== 'online' && tradesIn(r, LA, population))
+      .filter((r) => !HOUSES_NOT_SHOPS.has(r.id));
     expect(here.length).toBe(expected.length);
+    for (const id of HOUSES_NOT_SHOPS) {
+      expect(here.some((p) => p.retailerId === id), `${id} has a shop door`).toBe(false);
+      expect(placesIn(LA).some((p) => p.kind === 'rental_house' && p.name.length > 0)).toBe(true);
+    }
     expect(here.length).toBeGreaterThan(30);
     expect(new Set(here.map((p) => p.id)).size).toBe(here.length);
     for (const place of here) expect(retailerAt(place)).toBeDefined();

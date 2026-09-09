@@ -9,7 +9,7 @@
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Id, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
-import { addDays, addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
+import { addDays, addMonths, addYears, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { titleCaseLabel } from './core/text';
@@ -22,7 +22,7 @@ import { costOfLiving } from './content/tax';
 import { registerFinance, recomputeCreditScore, netWorth, createLivingBills } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { registerRelationships, ensureHousehold } from './systems/relationships';
-import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, generateProperty, moveIn } from './systems/property';
+import { registerProperty, registerPropertyReactors, refreshListings, ensureAgents, ensureFurnishingAssets, generateProperty, moveIn } from './systems/property';
 import { registerVehicles, refreshInventory } from './systems/vehicles';
 import { kindOf } from './content/vehicles';
 import { registerCommerce } from './systems/commerce';
@@ -42,9 +42,40 @@ import { ensureInteriors, registerPurchase } from './systems/purchase';
 import { registerCare } from './systems/care';
 import { registerJourney } from './systems/journey';
 import { ensureKeepings, registerStorage } from './systems/storage';
+import { registerRentalSystem } from './systems/rental';
+import { registerShootSystem } from './systems/shoot';
+import { registerPictureSystem } from './systems/picture';
+import { registerCinemaSystem } from './systems/cinema';
+import { registerFashionSystem } from './systems/fashion';
+import { registerGoingSystem } from './systems/going';
+import { registerErrandSystem } from './systems/errands';
+import { ageOf, ensureFamily, mayI, registerLifespan, scheduleBirthday } from './systems/lifespan';
+import { ensureSchoolLeaver, ensureSchooling, registerSchool } from './systems/school';
+import { registerUniversity } from './systems/university';
+import { registerAthletics } from './systems/athletics';
+import { registerGrowing, startGrowingUp } from './systems/growing';
+import { registerExamSchedules, registerExams, startExams } from './systems/exams';
+import { registerTheWeek } from './systems/theweek';
+import { registerRooms } from './systems/rooms';
+import { registerRecall } from './systems/recall';
+import { registerDirector, scheduleTomorrow } from './systems/director';
+import { registerWork } from './systems/work';
 import { ensureBankClocks, ensureProducts, registerBanking } from './systems/banking';
 import { registerDining } from './systems/dining';
 import { registerRetail } from './systems/retail';
+import { jewellerySlotFor } from './content/wardrobe';
+import { CATALOG } from './content/catalog';
+import { ensureWardrobe, registerWardrobe } from './systems/wardrobe';
+import { registerJewellery } from './systems/jewellery';
+import { registerCostume } from './systems/costume';
+import { registerDocuments } from './systems/documents';
+import { ensureHomeUpkeep, registerHousehold } from './systems/household';
+import { ensureVideoWorld, registerVideo } from './systems/video';
+import { ensureCreator, registerCreator } from './systems/creator';
+import { ensureVideoApp, registerVideoApp } from './systems/videoapp';
+import { ensureSocialApps, registerSocialApps } from './systems/socialapps';
+import { insurersFor } from './content/insurers';
+import { countryOfCity } from './content/geography';
 import './scenes';
 import { registerWorld } from './world/world';
 import { registerShingle } from './systems/shingle';
@@ -91,9 +122,39 @@ export function registerAllSystems(sim: Simulation): void {
   registerCare(sim);
   registerJourney(sim);
   registerStorage(sim);
+  registerRentalSystem(sim);
+  registerShootSystem(sim);
+  registerPictureSystem(sim);
+  registerCinemaSystem(sim);
+  registerFashionSystem(sim);
+  registerGoingSystem(sim);
+  registerErrandSystem(sim);
+  registerLifespan(sim);
+  registerSchool(sim);
+  registerUniversity(sim);
+  registerAthletics(sim);
+  registerGrowing(sim);
+  registerExams(sim);
+  registerExamSchedules(sim);
+  registerTheWeek(sim);
+  registerRooms(sim);
+  // The recall listens to everything, so it goes on before the systems that
+  // emit, and at a priority that runs after whatever the event was for.
+  registerRecall(sim);
+  registerDirector(sim);
+  registerWork(sim);
   registerBanking(sim);
   registerDining(sim);
   registerRetail(sim);
+  registerWardrobe(sim);
+  registerJewellery(sim);
+  registerCostume(sim);
+  registerDocuments(sim);
+  registerHousehold(sim);
+  registerVideo(sim);
+  registerCreator(sim);
+  registerVideoApp(sim);
+  registerSocialApps(sim);
   registerPlans(sim);
   registerScenes(sim);
   registerWorld(sim);
@@ -128,6 +189,7 @@ function armWorldClock(sim: Simulation): void {
   sim.schedule({ at: addDays(sim.now, 30, z), kind: 'veh.depreciate', label: 'Vehicle Values', category: 'system', priority: 93 });
   sim.schedule({ at: addDays(sim.now, 1, z), kind: 'social.decay_tick', label: 'Audience Update', category: 'system', priority: 88 });
   sim.schedule({ at: addDays(sim.now, 3, z), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
+  sim.schedule({ at: addDays(sim.now, 30, z), kind: 'home.wear', label: 'Wear And Tear', category: 'system', priority: 92 });
   sim.schedule({ at: addDays(sim.now, 7, z), kind: 'rel.drift', label: 'Relationship Drift', category: 'system', priority: 90 });
   sim.schedule({ at: addDays(sim.now, 2, z), kind: 'world.tick', label: 'World Simulation', category: 'system', priority: 96 });
 }
@@ -152,7 +214,31 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // --- Household ----------------------------------------------------------
   ensureHousehold(sim, player);
 
+  // --- The life that started before this one did --------------------------
+  // Two people who raised them, however many brothers and sisters, and the
+  // first birthday on the calendar. None of it is a decision the player made
+  // at creation, because none of it is a decision anybody makes.
+  ensureFamily(sim, player);
+  scheduleBirthday(sim, player);
+  // And school: the one they are in if they are young enough, or the one they
+  // already left if they are not. Nobody arrives having never been.
+  ensureSchooling(sim, player);
+  ensureSchoolLeaver(sim, player);
+  // And the years themselves: the moments that come round, and the pocket
+  // money while somebody is still young enough to be given any.
+  startGrowingUp(sim, player);
+  // The school year itself: the report that comes home at the end of a term
+  // and the national assessments that happen to you rather than being chosen.
+  startExams(sim);
+  // And the daily look back over what the save remembers.
+  scheduleTomorrow(sim);
+
   // --- Accounts -----------------------------------------------------------
+  // A character old enough to sign opens the company this morning, so the
+  // founding stake passes through their account today. One who is not keeps
+  // exactly the wealth level's own money, and the stake arrives on the day
+  // the doors actually open.
+  const opensNow = mayI(sim, 'majority', player).ok;
   const checking = sim.openAccount({
     id: sim.nextId('account'),
     kind: 'checking',
@@ -165,7 +251,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     // lines it takes to open the company and then it is gone into the
     // business; what is left afterwards is exactly the wealth level's own
     // money, so a founder can still be broke while running a company.
-    balance: wealth.checking + FOUNDING_STAKE,
+    balance: wealth.checking + (opensNow ? FOUNDING_STAKE : 0),
   });
   player.primaryAccountId = checking.id;
 
@@ -194,7 +280,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     derogatory: [],
   };
 
-  if (wealth.cardLimit > 0) {
+  // A credit card, but only where the character is old enough to be given one.
+  // A fifteen year old cannot borrow anywhere, and a save that opened one for
+  // them was raising late payment decisions against a schoolchild.
+  const mayBorrow = mayI(sim, 'borrow', player).ok;
+  if (wealth.cardLimit > 0 && mayBorrow) {
     const card = sim.openAccount({
       id: sim.nextId('account'),
       kind: 'credit_card',
@@ -232,20 +322,49 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // The whole premise: the strike ended every other production company, and
   // the player opens the only one trading. Founded through the same command a
   // player would use, so nothing here can reach a state the game cannot.
+  //
+  // But a character who starts life at eleven cannot sign anything, and a
+  // save that handed a schoolchild a production company was the game saying
+  // something it does not mean. Where they are too young, the founding waits
+  // for the day they can sign for themselves, and the years in between are
+  // the ones item nine is about.
   {
-    // An independent, opened this morning, wholly owned by the character. No
-    // choice of shape and no fallback to a smaller one: the stake is sized to
-    // this shingle, so it always opens. `must` rather than `execute` because a
-    // save without the company is not a save this game can play.
-    sim.must({
+    const companyName = config.companyName.trim() || `${player.lastName} Pictures`;
+    const founding = {
       kind: 'co.found',
       payload: {
-        name: config.companyName.trim() || `${player.lastName} Pictures`,
+        name: companyName,
         shingle: FOUNDING_SHINGLE,
         remit: FOUNDING_REMIT,
         capital: FOUNDING_CAPITAL,
       },
-    });
+    };
+    if (opensNow) {
+      // An independent, opened this morning, wholly owned by the character. No
+      // choice of shape and no fallback to a smaller one: the stake is sized to
+      // this shingle, so it always opens. `must` rather than `execute` because a
+      // save without the company is not a save this game can play.
+      sim.must(founding);
+    } else {
+      const gate = mayI(sim, 'majority', player);
+      const waitYears = Math.max(1, (gate.age ?? 18) - ageOf(sim, player));
+      sim.schedule({
+        at: addYears(player.birthInstant, gate.age ?? 18, sim.homeZone),
+        kind: 'co.found_when_old_enough',
+        label: 'Open The Company',
+        category: 'career',
+        payload: founding.payload,
+        priority: 55,
+      });
+      sim.notify({
+        title: 'Not Yet Old Enough To Sign',
+        body: `${companyName} can’t be opened until you are ${gate.age ?? 18}, which is `
+          + `${waitYears === 1 ? 'a year' : `${waitYears} years`} away. Everything else in a life is open now.`,
+        category: 'career',
+        importance: 40,
+        route: '/workspace/character',
+      });
+    }
   }
 
   // --- The world that already exists -------------------------------------
@@ -338,7 +457,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
         // loud rather than left as a box that was ticked and did nothing.
         sim.notify({
           category: 'vehicles', title: 'No Car Yet',
-          body: 'You could not afford one at the start. Public transport and rideshares for now.',
+          body: 'You couldn’t afford one at the start. Public transport and rideshares for now.',
           importance: 25, route: '/workspace/vehicles',
         });
       }
@@ -393,6 +512,13 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // The accounts a life starts with sit on products like any other, so a new
   // save has the same fees, cover and rates a loaded one does.
   ensureProducts(sim);
+  ensureWardrobe(sim);
+  // The video app has a world behind it that predates the player: channels
+  // that have been running for years, with the catalogs to show for it.
+  ensureVideoWorld(sim);
+  ensureCreator(sim);
+  ensureVideoApp(sim);
+  ensureSocialApps(sim);
   return sim;
 }
 
@@ -402,11 +528,41 @@ export function loadSave(universe: SaveUniverse): Simulation {
   registerAllSystems(sim);
   // The rooms you already live in become rooms (idempotent; see purchase.ts).
   ensureInteriors(sim);
+  // Furniture bought before it was an owned thing becomes one (idempotent).
+  ensureFurnishingAssets(sim);
   // Everything you own is kept somewhere (idempotent; see storage.ts).
   ensureKeepings(sim);
   // Every account sits on a product (idempotent; see banking.ts).
   ensureProducts(sim);
+  ensureWardrobe(sim);
+  // The wear clock runs and everything owned has a room (idempotent; household.ts).
+  ensureHomeUpkeep(sim);
+  // The channels of the video app exist and keep uploading (idempotent; video.ts).
+  ensureVideoWorld(sim);
+  // The lists, the memberships and the monthly statement (idempotent; creator.ts).
+  ensureCreator(sim);
+  ensureVideoApp(sim);
+  ensureSocialApps(sim);
   ensureBankClocks(sim);
+  // The life that started before the save did: a save from before the family
+  // existed gets the one it always had, and the birthday goes back on the
+  // calendar if it has fallen off (idempotent; lifespan.ts).
+  ensureFamily(sim);
+  scheduleBirthday(sim, sim.player);
+  // School, for a save from before it existed or a character who has moved up
+  // a stage since it was last opened (idempotent; school.ts). And the record
+  // of the school an adult already left, for a save made before that existed.
+  ensureSchooling(sim);
+  ensureSchoolLeaver(sim);
+  // Growing up, for a save from before it existed (idempotent; growing.ts).
+  startGrowingUp(sim);
+  // The reports and the national assessments, for a save from before either
+  // existed or one whose report calendar has run out (idempotent; exams.ts).
+  startExams(sim);
+  // A save from before the recall existed has nothing scheduled to read it.
+  if (!sim.universe.scheduled.some((one) => one.kind === 'director.day' && one.status === 'pending')) {
+    scheduleTomorrow(sim);
+  }
   // A save from before the real bodies, or one that skipped a January, needs
   // this year's editions to exist. Creating them is idempotent.
   // A save from before the studios lived inside it needs their clocks running.
@@ -670,7 +826,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
     steps.push(
       dropped.length > 0
-        ? `The film and television half of the game was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'}, closed ${closed} decision${closed === 1 ? '' : 's'} and cleared the credits on ${uncredited} ${uncredited === 1 ? 'person' : 'people'}. None of it can be recovered from this save.`
+        ? `The film and television half of the game was removed. Dropped ${dropped.join(', ')}, canceled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'}, closed ${closed} decision${closed === 1 ? '' : 's'} and cleared the credits on ${uncredited} ${uncredited === 1 ? 'person' : 'people'}. None of it can be recovered from this save.`
         : 'The film and television half of the game was removed. This save had nothing in it.',
     );
   }
@@ -717,7 +873,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       person.founderTraits = person.founderTraits!.filter((id) => !goatIds.has(id));
       if (person.founderTraits.length !== before) stripped++;
     }
-    if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There is one.`);
+    if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There’s one.`);
   }
 
   if (from < 29) {
@@ -776,7 +932,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
     steps.push(
       dropped.length > 0
-        ? `Employment was removed. Dropped ${dropped.join(', ')}, cancelled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
+        ? `Employment was removed. Dropped ${dropped.join(', ')}, canceled ${cancelled} scheduled item${cancelled === 1 ? '' : 's'} and closed ${closed} decision${closed === 1 ? '' : 's'}. Wages already paid stay in the ledger; nothing further is earned that way.`
         : 'Employment was removed. This save had none.',
     );
   }
@@ -871,7 +1027,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   if (from < 38) {
     // Schema 38: vehicles and listings carry what kind of thing they are.
-    // Everything from before is a car, and is stamped so from the catalogue
+    // Everything from before is a car, and is stamped so from the catalog
     // rather than guessed; nothing else about it is touched.
     for (const vehicle of Object.values(universe.vehicles)) {
       if (!vehicle.kind) vehicle.kind = kindOf(vehicle.catalogId);
@@ -912,10 +1068,305 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Schema 42: a room has a host and a server, a shop floor has somebody on
     // it, and both remember you. Nothing before this had a sitting or a visit
     // recorded, so both collections start empty; the storefronts themselves are
-    // read from the catalogue rather than stored, so no save is rewritten.
+    // read from the catalog rather than stored, so no save is rewritten.
     universe.diningVisits ??= {};
     universe.retailVisits ??= {};
     steps.push('Rooms and shop floors ready to be walked into.');
+  }
+
+  if (from < 43) {
+    // Schema 43: clothes have a color, a cloth, a state of cleanliness and a
+    // history of being worn, and a person has what they currently have on.
+    // Everything already owned keeps its price, its condition and its slot; the
+    // new fields are filled in on load from what the thing is, so no wardrobe
+    // is emptied and nothing is re-bought.
+    universe.wornRecords ??= {};
+    steps.push('Wardrobe given color, cloth and a memory of being worn.');
+  }
+
+  if (from < 44) {
+    // Schema 44: jewelry stopped being one peg. Earrings, a necklace, a ring
+    // and a bracelet are worn at the same time, so each has its own slot, and
+    // everything already owned is moved to the right one from what it is.
+    // Nothing is lost: a piece that is none of the four keeps the old slot.
+    let moved = 0;
+    for (const asset of Object.values(universe.assets)) {
+      const w = asset.wardrobe as { slot?: string } | undefined;
+      if (!w || w.slot !== 'jewellery') continue;
+      const item = asset.catalogId ? CATALOG.get(asset.catalogId) : undefined;
+      const slot = jewellerySlotFor(item?.subcategory ?? '', asset.name);
+      if (slot === 'jewellery') continue;
+      w.slot = slot;
+      moved++;
+    }
+    // Anything on you that has moved slot is still on you: `wearing` is a list
+    // of ids, so the peg changing underneath it does not take it off.
+    steps.push(`Jewelry split into earrings, necklace, ring and bracelet (${moved} moved).`);
+  }
+
+  if (from < 45) {
+    // Schema 45: a jeweler will make you something. Nothing already owned
+    // changes; the collection simply starts empty.
+    universe.commissions ??= {};
+    steps.push('Commissions ready: a bench will now make you a piece.');
+  }
+
+  if (from < 46) {
+    // Schema 46: a costume house will cut you something, and so will you.
+    // Nothing already owned changes; the collection simply starts empty.
+    universe.costumes ??= {};
+    steps.push('Workroom ready: a costume can now be cut for you, or by you.');
+  }
+
+  if (from < 56) {
+    // Schema 56: the picture itself. The days go into it, the bench shapes it,
+    // and the festivals answer it.
+    universe.indieFilms ??= {};
+    steps.push('Pictures of your own, and the festivals you send them to.');
+  }
+
+  if (from < 57) {
+    // Schema 57: the cinema. Real chains, the country's real certificate, a
+    // seat at a time, and a room with other people in it.
+    universe.cinemaTickets ??= {};
+    steps.push('Cinemas, and a ticket for a seat at one.');
+  }
+
+  if (from < 58) {
+    // Schema 58: the fashion weeks. You write to a house, they decide, and
+    // what you turn up in is looked at.
+    universe.fashionInvites ??= {};
+    steps.push('The fashion weeks, and whether a house gives you a seat.');
+  }
+
+  if (from < 59) {
+    // Schema 59: what is on in town. Real venues, real seasons, SLATE's own
+    // fixtures, acts and productions.
+    universe.goingTickets ??= {};
+    steps.push('Concerts, matches, plays and exhibitions, at real venues.');
+  }
+
+  if (from < 60) {
+    // Schema 60: the ordinary rooms. A chair, a counter, a queue and a wash.
+    universe.parcels ??= {};
+    // A haircut grows out on a clock, and the clock has to start somewhere. A
+    // save that predates the salon starts it now: freshly cut on the day the
+    // room appeared, rather than a character who never needs one again.
+    for (const person of Object.values(universe.people)) {
+      (person as { groomedAt?: number }).groomedAt ??= universe.now;
+    }
+    steps.push('The salon, the chemist, the post office and the launderette.');
+  }
+
+  if (from < 61) {
+    // Schema 61: the whole span. The family a life started in, the birthday
+    // that turns the number over, and the end that comes for the generation
+    // above. A save that predates this gets the family it always had rather
+    // than none, and nothing it already carries is touched.
+    // The family itself is built on load rather than here, because it needs a
+    // running simulation to draw names and write relationships. See loadSave.
+    steps.push('The family you were born into, and the years since.');
+  }
+
+  if (from < 62) {
+    // Schema 62: school. The system where you are, a school to go to, a
+    // timetable, marks, a team and the play. Built on load rather than here,
+    // because it needs a running simulation.
+    universe.schooling ??= {};
+    steps.push('School, and the play at the end of the year.');
+  }
+
+  if (from < 63) {
+    // Schema 63: university. Real institutions, real towns, and what it takes
+    // to get into one.
+    universe.applications ??= {};
+    universe.studies ??= {};
+    steps.push('Universities, and what they’ll take you on.');
+  }
+
+  if (from < 65) {
+    // Schema 65: there is one sport in this game and it is the track. A save
+    // from before that carries no seasons, and the school team places that a
+    // save from schema 64 might carry are not a track record, so they go.
+    universe.seasons = {};
+    universe.running ??= {};
+    for (const schooling of Object.values(universe.schooling ?? {})) {
+      const record = schooling as { teams?: unknown[] };
+      if (record.teams) delete record.teams;
+    }
+    steps.push('A track season, with meets, rounds and a personal best.');
+  }
+
+  if (from < 66) {
+    // Schema 66: growing up. The years between five and twenty five as things
+    // that happen on a day and have to be answered.
+    universe.growing ??= {};
+    universe.firstJobs ??= {};
+    steps.push('Growing up, the moments that come round in it, and the Saturday job.');
+  }
+
+  if (from < 71) {
+    // Schema 71: the recall. A save from before it remembers only its
+    // milestones, which are in history and are untouched. The recall starts
+    // empty and fills from here; nothing that was already remembered is lost,
+    // because nothing that was already remembered lived in here.
+    universe.recall ??= { version: 1, entries: [], played: {} };
+    steps.push('The recall, and the register of what the world has already played.');
+  }
+
+  if (from < 70) {
+    // Schema 70: the dentist, the vet and the phone shop keep records a save
+    // from before them simply has none of. Created empty rather than left
+    // missing, so nothing has to guard for the map itself.
+    universe.teeth ??= {};
+    universe.petHealth ??= {};
+    universe.phonePlans ??= {};
+    steps.push('The dentist, the vet, the licensing office and the phone shop.');
+  }
+
+  if (from < 69) {
+    // Schema 69: training in a martial art, which a save from before it
+    // existed simply has none of. The map is created empty rather than left
+    // missing so nothing has to guard for it.
+    universe.training ??= {};
+    steps.push('The dojo, the lunch hall and the rest of a week.');
+  }
+
+  if (from < 68) {
+    // Schema 68: school carries the examinations somebody sat and the reports
+    // that came home. A save from before them has neither, and is given the
+    // empty lists rather than a missing field the code has to guard.
+    for (const schooling of Object.values(universe.schooling ?? {})) {
+      const record = schooling as { sittings?: unknown[]; reports?: unknown[] };
+      record.sittings ??= [];
+      record.reports ??= [];
+    }
+    steps.push('The big tests, and the report card that comes home.');
+  }
+
+  if (from < 67) {
+    // Schema 67: the job has a rota, a ladder and a manager who rings. A job
+    // held on the old shape has none of those, so it is given them rather
+    // than left half built.
+    for (const held of Object.values(universe.firstJobs ?? {})) {
+      const job = held as { roleId?: string; standing?: number; rota?: unknown[]; nextShiftAt?: number };
+      job.roleId ??= 'crew';
+      job.standing ??= 50;
+      job.rota ??= [];
+      if (job.nextShiftAt !== undefined) delete job.nextShiftAt;
+    }
+    steps.push('A rota, a ladder and a manager who rings on your day off.');
+  }
+
+  if (from < 55) {
+    // Schema 55: the shoot day. A location, whoever said yes, the kit that is
+    // in the van and what the weather left you with.
+    universe.shootDays ??= {};
+    steps.push('Shoot days, and the crew who turn up for them.');
+  }
+
+  if (from < 54) {
+    // Schema 54: the rental house. Nobody buys an Alexa, so there is a counter
+    // to hire one from and a ticket that remembers what you took.
+    universe.kitHires ??= {};
+    steps.push('The rental house, and the kit you have out on a ticket.');
+  }
+
+  if (from < 53) {
+    // Schema 53: the short video app, the rooms on the text app, and follows
+    // that run in both directions so a follower is a person and not a number.
+    universe.socialRooms ??= {};
+    steps.push('TikTok, the rooms, and the people who follow you back.');
+  }
+
+  if (from < 52) {
+    // Schema 52: the photo app and the text app. Empty collections, filled on
+    // load; nothing already saved is touched.
+    universe.socialProfiles ??= {};
+    universe.socialItems ??= {};
+    universe.socialFollows ??= {};
+    universe.socialScreenTime ??= {};
+    steps.push('Instagram and X, as their own apps.');
+  }
+
+  if (from < 51) {
+    // Schema 51: the bell as an inbox, and the settings the player chose.
+    // Both start empty; nothing already in the save is touched, and the
+    // defaults are applied on load rather than written in here.
+    universe.videoNotices ??= {};
+    steps.push('The notifications inbox, chapters, captions and playback settings.');
+  }
+
+  if (from < 50) {
+    // Schema 50: the rest of the app — what it keeps for you, and what it pays.
+    // Empty collections, filled on load: nothing already saved is touched, and
+    // a save that has been running for years keeps every video and every hour
+    // of history it had.
+    universe.videoPlaylists ??= {};
+    universe.liveStreams ??= {};
+    universe.communityPosts ??= {};
+    universe.channelMemberships ??= {};
+    universe.creatorPayouts ??= {};
+    steps.push('Playlists, live, community posts, memberships and the payout breakdown.');
+  }
+
+  if (from < 49) {
+    // Schema 49: the video app, which is an app rather than a panel.
+    //
+    // The collections start empty and are filled on load by ensureVideoWorld,
+    // which builds the channels and their back catalogs once. A save that has
+    // been running for years arrives to an internet that has been running for
+    // the same length of time, rather than to an empty one.
+    universe.videoChannels ??= {};
+    universe.videos ??= {};
+    universe.videoComments ??= {};
+    universe.videoSubscriptions ??= {};
+    universe.watchHistory ??= {};
+    steps.push('The video app is here: channels, uploads, comments and a feed.');
+  }
+
+  if (from < 48) {
+    // Schema 48: things wear out, break, get repaired, and live in a room.
+    //
+    // Nothing already owned is broken by the upgrade: a save that has been
+    // running for years should not wake up to a dead oven it never used.
+    // Rooms and the wear clock are handled on load rather than here, by
+    // ensureHomeUpkeep, so a save opened twice is not moved around twice.
+    for (const asset of Object.values(universe.assets)) {
+      if (asset.broken === undefined) asset.broken = false;
+    }
+  }
+
+  if (from < 47) {
+    // Schema 47: papers in the wallet, real insurers, private banks.
+    //
+    // The player's passport and license are issued the first time the
+    // systems register, from the real authority for where they are from, so
+    // nothing is written here for them. Policies written by SLATE's own
+    // insurers, which no longer exist, are moved to a real company that
+    // writes that line where the holder lives; the policy keeps its number,
+    // its premium and its claims. A practice that took the old carriers now
+    // takes the real ones in its city.
+    universe.privateApplications ??= {};
+    const OLD_CARRIERS = new Set(['Northbank Health', 'Northbank Insurance', 'Northbank Marine', 'Gable Underwriting', 'Gable Aviation', 'Meridian Health', 'Vantage Care']);
+    let moved = 0;
+    for (const policy of Object.values(universe.insurancePolicies ?? {})) {
+      if (!OLD_CARRIERS.has(policy.carrier)) continue;
+      const holder = universe.people[policy.holderId];
+      const homeCity = holder ? (holder.residenceId ? universe.properties[holder.residenceId]?.locationId : undefined) ?? holder.homeRegionId : undefined;
+      const countryId = countryOfCity(homeCity) ?? holder?.citizenshipId ?? 'us';
+      const real = insurersFor(countryId, policy.line)[0];
+      if (real) { policy.carrier = real.name; moved += 1; }
+    }
+    let practices = 0;
+    for (const provider of Object.values(universe.healthProviders ?? {})) {
+      if (!provider.acceptsInsurance.some((name) => OLD_CARRIERS.has(name))) continue;
+      const countryId = countryOfCity(provider.locationId) ?? 'us';
+      const names = [...insurersFor(countryId, 'health'), ...insurersFor(countryId, 'dental'), ...insurersFor(countryId, 'vision')].filter((o) => o.how !== 'broker').map((o) => o.name);
+      provider.acceptsInsurance = names.length > 0 ? [...new Set(names)] : provider.acceptsInsurance;
+      practices += 1;
+    }
+    steps.push(`Real insurers: ${moved} policies moved from SLATE’s own carriers to a company that writes that line where you live, ${practices} practices now take them. Passports, licenses and private banks ready.`);
   }
 
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
@@ -954,10 +1405,10 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   const player = universe.people[universe.playerId];
   if (!player) errors.push('The save has no player.');
   else {
-    if (!player.isPlayer) errors.push('The player record is not flagged as the player.');
+    if (!player.isPlayer) errors.push('The player record isn’t flagged as the player.');
     if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
     if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
-      errors.push('Player primary account points at an account that does not exist.');
+      errors.push('Player primary account points at an account that doesn’t exist.');
     }
   }
 
@@ -983,13 +1434,13 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     checked++;
     if (!property.ownerId) continue;
     if (!universe.people[property.ownerId] && !universe.companies[property.ownerId]) {
-      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who does not exist.`);
+      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who doesn’t exist.`);
     }
   }
   for (const vehicle of Object.values(universe.vehicles)) {
     checked++;
     if (!universe.people[vehicle.ownerId] && !universe.companies[vehicle.ownerId]) {
-      errors.push(`Vehicle ${vehicle.id} is owned by '${vehicle.ownerId}', who does not exist.`);
+      errors.push(`Vehicle ${vehicle.id} is owned by '${vehicle.ownerId}', who doesn’t exist.`);
     }
   }
 
@@ -997,7 +1448,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   for (const rel of Object.values(universe.relationships)) {
     checked++;
     if (!universe.people[rel.aId] || !universe.people[rel.bId]) {
-      errors.push(`Relationship ${rel.id} references a person who does not exist.`);
+      errors.push(`Relationship ${rel.id} references a person who doesn’t exist.`);
     }
   }
 
@@ -1006,7 +1457,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     const prev = universe.scheduled[i - 1];
     const cur = universe.scheduled[i];
     if (prev && cur && prev.at > cur.at) {
-      errors.push('The timeline is not sorted by time. Advancement would process events out of order.');
+      errors.push('The timeline isn’t sorted by time. Advancement would process events out of order.');
       break;
     }
   }

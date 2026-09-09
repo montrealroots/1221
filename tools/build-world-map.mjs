@@ -137,7 +137,7 @@ function ring(points) {
     return { path: subpath(unwrapped), extent: extentOf(low, high, unwrapped) };
   }
 
-  // Centre the ring on the canvas before deciding whether it overhangs.
+  // Center the ring on the canvas before deciding whether it overhangs.
   const middle = (low + high) / 2;
   const turns = middle > 180 ? -1 : middle < -180 ? 1 : 0;
   const shift = (by) => unwrapped.map(([lon, lat]) => [lon + by * 360, lat]);

@@ -1,0 +1,1358 @@
+/* ==========================================================================
+   SLATE — the photo app and the text app, inside the phone.
+   Scoped to .ph- like everything else on the handset. Both apps sit on the
+   same two themes phone.css defines, so a light phone is a light app.
+   Every mark here is drawn in CSS. SLATE ships no third party artwork.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* The two marks on the home screen                                           */
+/* -------------------------------------------------------------------------- */
+
+.ph-mark-ig {
+  background: linear-gradient(45deg, #f9ce34 4%, #ee2a7b 46%, #6228d7 96%);
+}
+.ph-mark-ig .ph-ig-lens {
+  width: 34px; height: 34px; border-radius: 11px;
+  border: 2.6px solid #fff; position: relative;
+}
+.ph-mark-ig .ph-ig-lens::before {
+  content: ''; position: absolute; inset: 6.5px;
+  border-radius: 50%; border: 2.6px solid #fff;
+}
+.ph-mark-ig .ph-ig-lens::after {
+  content: ''; position: absolute; top: 3px; right: 3px;
+  width: 3.4px; height: 3.4px; border-radius: 50%; background: #fff;
+}
+.ph-mark-x { background: #000; color: #fff; }
+.ph-mark-x .ph-x-glyph { font-size: 30px; font-weight: 700; line-height: 1; letter-spacing: -1px; }
+
+/* -------------------------------------------------------------------------- */
+/* Shared shell                                                               */
+/* -------------------------------------------------------------------------- */
+
+.ph-so-top {
+  flex: none; height: 46px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px 0 14px;
+  background: var(--ph-bg);
+  border-bottom: 1px solid transparent;
+}
+.ph-so-word { font-size: 21px; font-weight: 600; letter-spacing: -0.5px; }
+/* The photo app's wordmark leans, the way a handwritten one does. */
+.ph-so-word.ph-ig { font-family: "Snell Roundhand", "Apple Chancery", "Segoe Script", cursive; font-size: 25px; }
+.ph-so-word.ph-x { font-weight: 700; font-size: 23px; letter-spacing: -1.5px; }
+.ph-so-badge-wrap { position: relative; display: inline-flex; }
+
+/* -------------------------------------------------------------------------- */
+/* Stories                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.ph-stories {
+  flex: none; display: flex; gap: 14px; overflow-x: auto;
+  padding: 10px 12px; border-bottom: 1px solid var(--ph-line);
+}
+.ph-stories::-webkit-scrollbar { display: none; }
+.ph-story {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  width: 66px; flex: none; color: var(--ph-text);
+}
+.ph-story-ring {
+  width: 62px; height: 62px; border-radius: 50%; padding: 2.5px;
+  background: linear-gradient(45deg, #f9ce34, #ee2a7b 50%, #6228d7);
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-story-ring.ph-seen { background: var(--ph-line); }
+/* A story that was only for the few, which the app rings in green. */
+.ph-story-ring.ph-close { background: #4ac26b; }
+.ph-story-ring > span {
+  width: 100%; height: 100%; border-radius: 50%;
+  border: 2.5px solid var(--ph-bg); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-story-name {
+  font-size: 11px; max-width: 64px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; color: var(--ph-muted);
+}
+
+.ph-story-view {
+  position: absolute; inset: 0; background: #000; color: #fff;
+  display: flex; flex-direction: column; z-index: 12;
+}
+.ph-story-progress { display: flex; gap: 3px; padding: 12px 10px 6px; }
+.ph-story-progress i { flex: 1; height: 2.5px; border-radius: 2px; background: rgba(255, 255, 255, 0.35); }
+.ph-story-progress i.ph-on { background: #fff; }
+.ph-story-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 24px; text-align: center; font-size: 17px; line-height: 1.5;
+  background: linear-gradient(150deg, var(--ph-thumb-a), var(--ph-thumb-b));
+  color: #0f0f0f;
+}
+.ph-story-body img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* -------------------------------------------------------------------------- */
+/* The photo card                                                             */
+/* -------------------------------------------------------------------------- */
+
+.ph-post { border-bottom: 1px solid var(--ph-line); padding-bottom: 6px; }
+.ph-post-head {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+}
+.ph-post-who { flex: 1; min-width: 0; }
+.ph-post-who b { display: block; font-size: 13px; font-weight: 600; }
+.ph-post-who span { display: block; font-size: 11.5px; color: var(--ph-muted); }
+.ph-post-frame {
+  position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden;
+  background: linear-gradient(150deg, var(--ph-thumb-a), var(--ph-thumb-b));
+  display: flex; align-items: flex-end;
+}
+.ph-post-frame.ph-tall { aspect-ratio: 9 / 16; }
+.ph-post-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-post-kind {
+  position: absolute; top: 8px; right: 10px; font-size: 10.5px; font-weight: 700;
+  color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.ph-post-actions {
+  display: flex; align-items: center; gap: 16px; padding: 9px 12px 4px;
+}
+.ph-post-actions .ph-right { margin-left: auto; }
+.ph-post-likes { padding: 0 12px; font-size: 13px; font-weight: 600; }
+.ph-post-caption { padding: 3px 12px 0; font-size: 13px; white-space: pre-wrap; }
+.ph-post-caption b { font-weight: 600; margin-right: 5px; }
+.ph-post-more {
+  background: none; border: 0; padding: 4px 12px 0; cursor: pointer;
+  color: var(--ph-muted); font: inherit; font-size: 12.5px; display: block; text-align: left;
+}
+.ph-post-when { padding: 4px 12px 0; font-size: 10.5px; color: var(--ph-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+.ph-iconbtn.ph-liked,
+.ph-tweet-actions button.ph-liked,
+.ph-liked { color: var(--ph-red); }
+
+/* The grid on a profile and on Explore. */
+.ph-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.ph-tile {
+  position: relative; aspect-ratio: 1 / 1; border: 0; padding: 0; cursor: pointer;
+  background: linear-gradient(150deg, var(--ph-thumb-a), var(--ph-thumb-b));
+  overflow: hidden; display: flex; align-items: flex-end; text-align: left;
+}
+.ph-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-tile span {
+  position: relative; padding: 6px; font-size: 10px; line-height: 1.25;
+  color: rgba(15, 15, 15, 0.62); max-height: 100%; overflow: hidden;
+}
+.ph-tile i {
+  position: absolute; top: 5px; right: 6px; font-size: 9px; font-style: normal;
+  font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Profiles                                                                   */
+/* -------------------------------------------------------------------------- */
+
+.ph-prof-head { padding: 12px; display: flex; align-items: center; gap: 18px; }
+.ph-prof-stats { flex: 1; display: flex; justify-content: space-around; text-align: center; }
+.ph-prof-stats b { display: block; font-size: 15px; }
+.ph-prof-stats span { font-size: 11.5px; color: var(--ph-muted); }
+.ph-prof-bio { padding: 0 12px 10px; font-size: 13px; }
+.ph-prof-bio b { display: block; font-weight: 600; }
+.ph-prof-bio p { margin: 2px 0 0; color: var(--ph-text); }
+.ph-prof-buttons { display: flex; gap: 6px; padding: 0 12px 12px; }
+.ph-prof-buttons button {
+  flex: 1; padding: 7px 8px; border-radius: 8px; border: 0; cursor: pointer;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit; font-size: 13px; font-weight: 600;
+}
+.ph-prof-buttons button.ph-primary { background: var(--ph-blue); color: #fff; }
+
+/* -------------------------------------------------------------------------- */
+/* The text app                                                               */
+/* -------------------------------------------------------------------------- */
+
+.ph-x-tabs {
+  flex: none; display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--ph-line);
+}
+/* Three of them, which is what a list has: narrower, and still one line. */
+.ph-x-tabs.ph-three { grid-template-columns: repeat(3, 1fr); }
+.ph-x-tabs.ph-three button { font-size: 13px; white-space: nowrap; }
+.ph-x-tabs.ph-three button.ph-on::after { width: 44px; }
+.ph-x-tabs button {
+  background: none; border: 0; cursor: pointer; padding: 12px 0 10px;
+  color: var(--ph-muted); font: inherit; font-size: 14px; position: relative;
+}
+.ph-x-tabs button.ph-on { color: var(--ph-text); font-weight: 700; }
+.ph-x-tabs button.ph-on::after {
+  content: ''; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 56px; height: 3.5px; border-radius: 2px; background: var(--ph-text);
+}
+/* The bell sits inside the tab word on the notifications page. */
+.ph-x-tabs button { display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+/* Home carries a third cell: the button that adds a lane of your own. */
+.ph-x-lanes { grid-template-columns: 1fr 1fr 46px; }
+.ph-x-lanes .ph-caret {
+  width: 0; height: 0; margin-left: 2px; align-self: center;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-top: 4.5px solid currentColor;
+}
+.ph-x-lane-add { color: var(--ph-text); }
+.ph-x-lane-add.ph-on::after { display: none; }
+
+.ph-tweet { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border-bottom: 1px solid var(--ph-line); }
+.ph-tweet-body { flex: 1; min-width: 0; }
+.ph-tweet-head {
+  display: flex; align-items: baseline; gap: 4px; font-size: 14.5px;
+  white-space: nowrap; min-width: 0;
+}
+.ph-tweet-head b { font-weight: 700; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
+.ph-tweet-head span { color: var(--ph-muted); overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
+.ph-tweet-head span:last-child { flex: none; }
+.ph-tick {
+  width: 15px; height: 15px; border-radius: 50%; background: var(--ph-blue); color: #fff;
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  align-self: center;
+}
+.ph-tweet-text { font-size: 15px; line-height: 1.35; margin: 3px 0 0; white-space: pre-wrap; word-wrap: break-word; }
+.ph-tweet-quote {
+  margin-top: 8px; border: 1px solid var(--ph-line); border-radius: 12px; padding: 9px 11px;
+  font-size: 12.5px;
+}
+.ph-tweet-quote .ph-tweet-head { font-size: 12px; }
+.ph-tweet-actions {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 11px; color: var(--ph-muted);
+}
+.ph-tweet-actions button {
+  background: none; border: 0; padding: 0; cursor: pointer; color: inherit;
+  display: flex; align-items: center; gap: 5px; font: inherit; font-size: 12.5px; font-weight: 600;
+}
+.ph-tweet-actions button:hover { color: var(--ph-text); }
+.ph-tweet-actions .ph-reposted { color: #00ba7c; }
+
+.ph-trend { padding: 10px 14px; border-bottom: 1px solid var(--ph-line); cursor: pointer; background: none; border-left: 0; border-right: 0; border-top: 0; width: 100%; text-align: left; color: var(--ph-text); font: inherit; }
+.ph-trend small { display: block; color: var(--ph-muted); font-size: 11.5px; }
+.ph-trend b { font-size: 14px; }
+
+.ph-compose { display: flex; flex-direction: column; height: 100%; }
+.ph-compose textarea {
+  flex: 1; border: 0; resize: none; padding: 12px 14px; background: none;
+  color: var(--ph-text); font: inherit; font-size: 16px; outline: none;
+}
+.ph-compose-foot {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border-top: 1px solid var(--ph-line);
+}
+.ph-count { margin-left: auto; font-size: 12px; color: var(--ph-muted); }
+.ph-count.ph-over { color: var(--ph-red); font-weight: 700; }
+
+.ph-btn-solid {
+  border: 0; border-radius: 999px; padding: 7px 16px; cursor: pointer;
+  background: var(--ph-blue); color: #fff; font: inherit; font-size: 13px; font-weight: 700;
+}
+.ph-btn-solid:disabled { opacity: 0.45; cursor: default; }
+.ph-btn-outline {
+  border: 1px solid var(--ph-line); border-radius: 999px; padding: 6px 14px; cursor: pointer;
+  background: none; color: var(--ph-text); font: inherit; font-size: 13px; font-weight: 600;
+}
+
+.ph-fab {
+  position: absolute; right: 16px; bottom: 74px; z-index: 6;
+  width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--ph-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.ph-sheet {
+  position: absolute; inset: 0; z-index: 11; background: var(--ph-bg);
+  display: flex; flex-direction: column;
+}
+.ph-sheet-top {
+  flex: none; display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-bottom: 1px solid var(--ph-line);
+}
+.ph-sheet-top b { font-size: 15px; }
+.ph-sheet-top .ph-right { margin-left: auto; }
+
+/* -------------------------------------------------------------------------- */
+/* The photo app, laid out the way the app is laid out                        */
+/* -------------------------------------------------------------------------- */
+
+/* Top bar: a plus on the left, the wordmark in the middle, the heart right. */
+.ph-ig-top {
+  flex: none; height: 48px;
+  display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 0 10px; background: var(--ph-bg);
+}
+.ph-ig-top .ph-mid { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.ph-ig-top .ph-right { justify-self: end; display: flex; align-items: center; gap: 14px; }
+.ph-ig-title {
+  display: flex; align-items: center; gap: 3px; background: none; border: 0;
+  cursor: pointer; color: var(--ph-text); font: inherit; padding: 0;
+}
+.ph-ig-title b { font-size: 15px; font-weight: 700; }
+.ph-dot {
+  position: absolute; top: -2px; right: -3px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--ph-red);
+}
+
+/* A floating bar that sits over the page rather than under it, the way the
+   app's does: a translucent pill, the tab you are on in a lighter capsule. */
+.ph-ig-bar {
+  /* Floats above the handset's home bar, the way the real one sits above
+     the home indicator, so the way out of the app is never under it. */
+  position: absolute; left: 12px; right: 12px; bottom: 30px; z-index: 8;
+  padding: 5px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+}
+.ph-dark .ph-ig-bar { background: rgba(38, 38, 38, 0.82); }
+.ph-ig-bar button {
+  background: none; border: 0; cursor: pointer; color: var(--ph-text);
+  border-radius: 999px; padding: 9px 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-ig-bar button.ph-on { background: rgba(0, 0, 0, 0.09); }
+.ph-dark .ph-ig-bar button.ph-on { background: rgba(255, 255, 255, 0.16); }
+/* The page needs to end above the bar, not behind it. */
+.ph-ig-pad { padding-bottom: 62px; }
+.ph-ig-bar .ph-badge {
+  position: absolute; bottom: 6px; right: -2px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--ph-red);
+}
+.ph-ig-bar .ph-wrap { position: relative; display: inline-flex; }
+
+/* The photo app's own settings list: a round back chip under a centered
+   title, then full width sections with a gray caption, a thick rule between
+   them, and tall rows carrying a glyph, a value and a chevron. */
+.ph-ig-settop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 6px 10px 10px;
+}
+.ph-ig-back {
+  width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--ph-chip); color: var(--ph-text);
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-ig-settop b { text-align: center; font-size: 17px; font-weight: 700; }
+.ph-ig-find {
+  display: flex; align-items: center; gap: 8px; margin: 2px 12px 12px;
+  padding: 10px 14px; border-radius: 12px; background: var(--ph-chip); color: var(--ph-muted);
+}
+.ph-ig-find input {
+  flex: 1; min-width: 0; border: 0; background: none; color: var(--ph-text);
+  font: inherit; font-size: 16px; outline: none;
+}
+.ph-ig-cap { padding: 16px 16px 6px; font-size: 15px; font-weight: 700; color: var(--ph-muted); }
+.ph-ig-group { border-bottom: 6px solid var(--ph-surface); }
+.ph-ig-group:last-of-type { border-bottom: 0; }
+.ph-ig-row {
+  display: flex; align-items: center; gap: 16px; width: 100%; text-align: left;
+  padding: 11px 16px; border: 0; background: none; color: var(--ph-text);
+  font: inherit; font-size: 16px; cursor: pointer;
+}
+.ph-ig-row:disabled { cursor: default; }
+.ph-ig-row-icon { flex: none; width: 24px; display: flex; justify-content: center; }
+.ph-ig-row-label { flex: 1; min-width: 0; }
+.ph-ig-val { color: var(--ph-muted); font-size: 15px; }
+.ph-ig-row-go { flex: none; display: flex; color: var(--ph-muted); }
+.ph-ig-row:disabled .ph-ig-row-go { visibility: hidden; }
+.ph-ig-foot { padding: 20px 16px 26px; font-size: 13px; color: var(--ph-muted); line-height: 1.4; }
+
+/* The handle at the top of the message list, and the note beside it. */
+.ph-ig-handle { display: flex; align-items: center; justify-content: center; gap: 5px; }
+.ph-ig-handle b { font-size: 18px; font-weight: 700; }
+.ph-ig-notes { display: flex; gap: 16px; padding: 12px 16px 6px; overflow-x: auto; }
+.ph-ig-notes::-webkit-scrollbar { display: none; }
+.ph-ig-note-one { flex: none; width: 72px; text-align: center; }
+.ph-ig-note-mark { position: relative; display: inline-flex; padding-top: 22px; }
+.ph-ig-note-one i {
+  display: block; font-style: normal; font-size: 13px; margin-top: 6px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-dm-quiet { display: inline-flex; margin-left: 6px; color: var(--ph-muted); }
+
+/* The story ring's little plus. */
+.ph-story-add {
+  position: absolute; right: 0; bottom: 12px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--ph-blue); color: #fff;
+  border: 2px solid var(--ph-bg);
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-story { position: relative; }
+
+/* The note somebody has put above their picture. */
+.ph-note {
+  position: absolute; top: -4px; left: 2px; z-index: 2;
+  max-width: 78px; padding: 5px 9px; border-radius: 13px;
+  background: var(--ph-raised); color: var(--ph-muted);
+  font-size: 11px; line-height: 1.2; text-align: left;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* The post header stacks the handle over the place or the time. */
+.ph-post-head b { display: flex; align-items: center; gap: 4px; }
+.ph-post-frame .ph-count-pill {
+  position: absolute; top: 8px; right: 10px;
+  background: rgba(0, 0, 0, 0.62); color: #fff;
+  border-radius: 999px; padding: 2px 8px; font-size: 10.5px; font-weight: 600;
+}
+.ph-dots { display: flex; justify-content: center; gap: 4px; padding: 8px 0 2px; }
+.ph-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--ph-line); }
+.ph-dots i.ph-on { background: var(--ph-blue); }
+
+/* Explore counts the way the app counts them. */
+.ph-tile .ph-views {
+  position: absolute; left: 6px; bottom: 5px; z-index: 2;
+  display: flex; align-items: center; gap: 3px;
+  color: #fff; font-size: 10px; font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Reels: the rail of actions down the right of the picture. */
+.ph-reel-stage { position: relative; flex: 1; min-height: 0; overflow: hidden; display: flex; }
+.ph-reel-stage .ph-post-frame { position: absolute; inset: 0; aspect-ratio: auto; }
+.ph-reel-rail {
+  position: absolute; right: 10px; bottom: 104px; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  color: #fff; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.ph-reel-rail button {
+  background: none; border: 0; padding: 0; cursor: pointer; color: #fff;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  font: inherit; font-size: 13px; font-weight: 600;
+}
+/* The little square the app puts under the rail for the sound behind a reel. */
+.ph-reel-thumb {
+  width: 30px; height: 30px; border-radius: 7px; overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.85); display: block;
+}
+.ph-reel-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph-reel-foot {
+  position: absolute; left: 14px; right: 74px; bottom: 74px; z-index: 3;
+  color: #fff; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.ph-reel-who { display: flex; align-items: center; gap: 9px; }
+.ph-reel-who b { font-size: 14.5px; font-weight: 600; }
+.ph-reel-foot p { margin: 8px 0 0; font-size: 14px; }
+.ph-reel-foot .ph-reel-when { margin-top: 6px; opacity: 0.75; font-size: 11.5px; }
+.ph-reel-mutual {
+  display: flex; align-items: center; gap: 7px; margin-top: 10px;
+  font-size: 12.5px; color: rgba(255, 255, 255, 0.86);
+}
+.ph-reel-mutual b { color: #fff; font-weight: 700; }
+.ph-reel-faces { display: flex; }
+.ph-reel-faces > * + * { margin-left: -7px; }
+.ph-reel-follow {
+  border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 9px;
+  background: none; color: #fff; font: inherit; font-size: 13px; font-weight: 600;
+  padding: 4px 14px; cursor: pointer;
+}
+.ph-reel-tabs {
+  position: absolute; top: 10px; left: 0; right: 0; z-index: 4;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  color: #fff; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.ph-reel-tabs button {
+  background: none; border: 0; cursor: pointer; color: rgba(255, 255, 255, 0.6);
+  font: inherit; font-size: 19px; font-weight: 700;
+}
+.ph-reel-tabs button.ph-on { color: #fff; }
+.ph-reel-filters { position: absolute; right: 12px; color: #fff; }
+
+/* Explore's own bar: the field fills it, the filters sit outside. */
+.ph-ig-searchtop {
+  flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 12px 10px;
+}
+.ph-ig-searchtop .ph-ig-find { flex: 1; min-width: 0; margin: 0; border-radius: 999px; padding: 9px 14px; }
+
+/* The picture at the head of a post wears the ring its story does. */
+.ph-post-face { padding: 0; }
+
+/* The profile's own tab row. */
+.ph-prof-tabs {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--ph-line);
+}
+.ph-prof-tabs button {
+  background: none; border: 0; cursor: pointer; color: var(--ph-muted);
+  padding: 9px 0; display: flex; justify-content: center; position: relative;
+}
+.ph-prof-tabs button.ph-on { color: var(--ph-text); }
+.ph-prof-tabs button.ph-on::after {
+  content: ''; position: absolute; left: 22%; right: 22%; bottom: -1px;
+  height: 2px; background: var(--ph-text);
+}
+
+/* Getting an empty account finished. */
+.ph-todo { padding: 14px 12px 4px; }
+.ph-todo h4 { margin: 0; font-size: 20px; font-weight: 700; }
+.ph-todo small { color: var(--ph-muted); font-size: 15px; }
+.ph-todo small b { color: var(--ph-text); font-weight: 700; }
+.ph-todo-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 12px; }
+.ph-todo-card {
+  border: 1px solid var(--ph-line); padding: 20px 14px 16px;
+  text-align: center; font-size: 13px;
+}
+.ph-todo-card + .ph-todo-card { border-left: 0; }
+.ph-todo-mark { display: flex; justify-content: center; color: var(--ph-text); }
+.ph-todo-card b { display: block; font-size: 15px; font-weight: 700; margin: 12px 0 6px; }
+.ph-todo-card .ph-todo-body { color: var(--ph-muted); display: block; line-height: 1.35; }
+.ph-todo-card button {
+  margin-top: 14px; width: 100%; border: 0; border-radius: 9px; cursor: pointer;
+  background: #4f5bd5; color: #fff; font: inherit; font-size: 14px;
+  font-weight: 700; padding: 9px 6px;
+}
+
+/* The small square beside Edit Profile, and the chips under it. */
+.ph-prof-square { flex: 0 0 auto !important; width: 40px; padding: 0 !important; }
+.ph-prof-chiprow { display: flex; gap: 8px; padding: 0 14px 10px; flex-wrap: wrap; }
+.ph-prof-chip {
+  border: 0; border-radius: 8px; cursor: pointer; padding: 7px 12px;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit;
+  font-size: 13.5px; font-weight: 600;
+}
+
+/* Messages. */
+.ph-dm-head { display: flex; align-items: center; padding: 12px 16px 6px; }
+.ph-dm-head b { font-size: 18px; font-weight: 700; }
+.ph-dm-head > span:last-child {
+  margin-left: auto; font-size: 15px; color: var(--ph-muted); font-weight: 600; cursor: pointer;
+}
+.ph-dm-row {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 9px 14px; border: 0; background: none; cursor: pointer;
+  color: var(--ph-text); font: inherit; text-align: left;
+}
+.ph-dm-row .ph-dm-text { flex: 1; min-width: 0; }
+.ph-dm-row b { display: block; font-size: 13.5px; font-weight: 600; }
+.ph-dm-row small { display: block; color: var(--ph-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ph-dm-row .ph-unread { width: 8px; height: 8px; border-radius: 50%; background: var(--ph-blue); flex: none; }
+.ph-bubble {
+  max-width: 78%; padding: 8px 12px; border-radius: 18px; margin: 4px 12px;
+  font-size: 13.5px; background: var(--ph-chip); align-self: flex-start;
+}
+.ph-bubble.ph-mine { background: var(--ph-blue); color: #fff; align-self: flex-end; }
+.ph-thread { display: flex; flex-direction: column; padding: 8px 0 12px; }
+
+/* -------------------------------------------------------------------------- */
+/* The text app, laid out the way the app is laid out                         */
+/* -------------------------------------------------------------------------- */
+
+.ph-x-top {
+  flex: none; height: 48px;
+  display: grid; grid-template-columns: 40px 1fr 40px; align-items: center;
+  padding: 0 12px; background: var(--ph-bg);
+}
+.ph-x-top .ph-mid { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.ph-x-top .ph-right { justify-self: end; }
+.ph-x-top .ph-so-word.ph-x { font-size: 22px; }
+
+/* Five icons, no labels, evenly spread. */
+.ph-x-bar {
+  flex: none; display: grid; grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--ph-line); background: var(--ph-bg);
+  padding: 9px 0 6px;
+}
+.ph-x-bar button {
+  background: none; border: 0; cursor: pointer; color: var(--ph-text);
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.ph-x-bar button.ph-off { color: var(--ph-muted); }
+.ph-x-bar .ph-blue-dot {
+  position: absolute; top: -2px; right: 50%; margin-right: -14px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--ph-blue);
+}
+
+/* A rail of tabs that runs off the edge, the way the app's does. */
+.ph-x-rail {
+  flex: none; display: flex; gap: 20px; overflow-x: auto;
+  padding: 0 14px; border-bottom: 1px solid var(--ph-line);
+}
+.ph-x-rail::-webkit-scrollbar { display: none; }
+.ph-x-rail button {
+  background: none; border: 0; cursor: pointer; white-space: nowrap;
+  color: var(--ph-muted); font: inherit; font-size: 15px; font-weight: 600;
+  padding: 12px 0 10px; position: relative;
+}
+.ph-x-rail button.ph-on { color: var(--ph-text); font-weight: 700; }
+.ph-x-rail button.ph-on::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 3.5px; border-radius: 2px; background: var(--ph-text);
+}
+
+/* The search field the app puts in its own bar, and in Settings. */
+.ph-x-find, .ph-x-setfind {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--ph-chip); color: var(--ph-muted);
+}
+.ph-x-find { margin: 0 10px; justify-content: center; }
+.ph-x-setfind { margin: 4px 14px 10px; justify-content: center; }
+.ph-x-find input, .ph-x-setfind input {
+  border: 0; background: none; color: var(--ph-text); font: inherit; font-size: 15px; outline: none;
+}
+.ph-x-find input { width: 190px; }
+.ph-x-setfind input { width: 150px; text-align: left; }
+
+/* The drawer behind your own picture. */
+.ph-drawer {
+  position: absolute; inset: 0; z-index: 14; display: flex;
+}
+.ph-drawer-panel {
+  width: 76%; background: var(--ph-bg); padding: 12px 0 0;
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.ph-drawer-shade { flex: 1; background: rgba(0, 0, 0, 0.6); border: 0; cursor: pointer; }
+.ph-drawer-head { padding: 0 16px 14px; }
+.ph-drawer-row { display: flex; align-items: center; justify-content: space-between; }
+.ph-drawer-chips { display: flex; gap: 10px; }
+.ph-drawer-chips button {
+  width: 32px; height: 32px; border-radius: 50%; flex: none; cursor: pointer;
+  border: 1px solid var(--ph-line); background: var(--ph-chip); color: var(--ph-text);
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.ph-drawer-head b { display: block; font-size: 18px; margin-top: 12px; }
+.ph-drawer-head small { display: block; color: var(--ph-muted); font-size: 15px; margin-top: 1px; }
+.ph-drawer-counts { margin-top: 10px; font-size: 15px; color: var(--ph-muted); }
+.ph-drawer-counts b { display: inline; color: var(--ph-text); font-size: 15px; }
+.ph-drawer-link {
+  display: flex; align-items: center; gap: 22px; width: 100%;
+  padding: 15px 16px; border: 0; background: none; cursor: pointer;
+  color: var(--ph-text); font: inherit; font-size: 19px; font-weight: 700; text-align: left;
+}
+.ph-drawer-link.ph-small { font-size: 16px; padding: 11px 16px; }
+.ph-drawer hr { border: 0; border-top: 1px solid var(--ph-line); margin: 12px 16px; }
+
+/* Notifications. */
+.ph-note-row {
+  display: flex; gap: 12px; width: 100%; padding: 12px 14px;
+  border: 0; border-bottom: 1px solid var(--ph-line); background: none;
+  cursor: pointer; color: var(--ph-text); font: inherit; text-align: left;
+}
+.ph-note-row .ph-note-body i {
+  display: block; font-style: normal; color: var(--ph-muted); font-size: 13px; margin-bottom: 2px;
+}
+.ph-note-row .ph-note-body b { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.ph-note-row .ph-note-body p { margin: 4px 0 0; color: var(--ph-muted); font-size: 14px; line-height: 1.35; }
+
+/* The strip the app puts at the top of Notifications when they are off. */
+.ph-x-notice {
+  display: flex; align-items: center; gap: 12px; padding: 14px 14px 16px;
+  background: var(--ph-chip); position: relative;
+}
+.ph-x-notice-text { flex: 1; min-width: 0; padding-right: 14px; }
+.ph-x-notice-text b { display: block; font-size: 15px; font-weight: 700; }
+.ph-x-notice-text p { margin: 6px 0 0; color: var(--ph-muted); font-size: 13.5px; line-height: 1.35; }
+.ph-x-notice-x {
+  position: absolute; top: 10px; right: 10px; border: 0; background: none;
+  color: var(--ph-muted); cursor: pointer; padding: 2px; line-height: 0;
+}
+.ph-switch {
+  flex: none; width: 46px; height: 27px; border-radius: 999px; border: 0; padding: 2px;
+  background: #46484d; cursor: pointer; display: flex; align-items: center;
+}
+.ph-switch span { width: 23px; height: 23px; border-radius: 50%; background: #fff; display: block; }
+.ph-switch[aria-checked="true"] { background: var(--ph-blue); justify-content: flex-end; }
+
+/* Your own page. */
+.ph-x-banner { width: 100%; aspect-ratio: 3 / 1; background: linear-gradient(120deg, #1d5f9e, #4aa3e8); }
+.ph-x-ident { padding: 0 14px 10px; margin-top: -34px; }
+.ph-x-ident .ph-line { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.ph-x-ident b { font-size: 18px; }
+.ph-x-ident small { color: var(--ph-muted); font-size: 13.5px; display: block; }
+.ph-x-buttons { display: flex; gap: 8px; padding: 8px 14px 10px; }
+.ph-x-buttons button {
+  flex: 1; border: 1px solid var(--ph-line); border-radius: 999px; padding: 7px 8px;
+  background: none; color: var(--ph-text); font: inherit; font-size: 13.5px; font-weight: 700;
+  cursor: pointer;
+}
+.ph-follow-cards { display: flex; gap: 10px; overflow-x: auto; padding: 10px 14px; }
+.ph-follow-cards::-webkit-scrollbar { display: none; }
+.ph-follow-card {
+  flex: none; width: 190px; border: 1px solid var(--ph-line); border-radius: 14px;
+  overflow: hidden; background: none; text-align: left; cursor: pointer;
+  color: var(--ph-text); font: inherit; padding: 0;
+}
+.ph-follow-card .ph-strip { height: 54px; }
+.ph-follow-card .ph-inner { padding: 0 10px 10px; margin-top: -18px; }
+.ph-follow-card b { display: block; font-size: 13.5px; margin-top: 6px; }
+.ph-follow-card small { display: block; color: var(--ph-muted); font-size: 12px; }
+.ph-follow-card p { margin: 6px 0 0; font-size: 12px; }
+
+/* Settings, which on this app is a title and a sentence under it. */
+.ph-x-settop {
+  flex: none; display: grid; grid-template-columns: 40px 1fr 40px; align-items: center;
+  padding: 8px 12px 10px;
+}
+.ph-x-settop-title { text-align: center; }
+.ph-x-settop-title b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -0.2px; }
+.ph-x-settop-title small { display: block; color: var(--ph-muted); font-size: 13.5px; margin-top: 1px; }
+.ph-x-set {
+  display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px 16px 18px;
+  border: 0; background: none; cursor: pointer; text-align: left;
+  color: var(--ph-text); font: inherit;
+}
+.ph-x-set:disabled { cursor: default; }
+.ph-x-set-icon { flex: none; width: 22px; color: var(--ph-muted); display: flex; }
+.ph-x-set .ph-x-set-body { flex: 1; min-width: 0; }
+.ph-x-set .ph-x-set-body b { display: block; font-size: 17px; font-weight: 700; }
+.ph-x-set .ph-x-set-body p { margin: 4px 0 0; color: var(--ph-muted); font-size: 14.5px; line-height: 1.35; }
+.ph-x-set-go { flex: none; color: var(--ph-muted); display: flex; }
+.ph-x-set:disabled .ph-x-set-go { visibility: hidden; }
+
+/* The welcome the chat page opens on, before there is anybody in it. */
+.ph-x-welcome { padding: 10px 20px 26px; }
+.ph-x-welcome h2 { font-size: 33px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.1; margin: 8px 0 34px; }
+.ph-x-welcome-row { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 26px; }
+.ph-x-welcome-row > :first-child { flex: none; margin-top: 2px; }
+.ph-x-welcome-row b { display: block; font-size: 16px; font-weight: 700; }
+.ph-x-welcome-row p { margin: 3px 0 0; color: var(--ph-muted); font-size: 15px; line-height: 1.35; }
+.ph-x-welcome-go {
+  width: 100%; margin-top: 18px; padding: 15px 12px; border: 0; border-radius: 999px;
+  background: var(--ph-text); color: var(--ph-bg); cursor: pointer;
+  font: inherit; font-size: 16px; font-weight: 700;
+}
+.ph-x-welcome-foot {
+  display: block; text-align: center; margin-top: 18px;
+  color: var(--ph-muted); font-size: 14px; font-weight: 600;
+}
+
+/* The assistant tab. */
+.ph-grok { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.ph-grok-log { flex: 1; overflow-y: auto; padding: 10px 0; display: flex; flex-direction: column; }
+.ph-grok-mark {
+  margin: auto; opacity: 0.18; font-size: 74px; font-weight: 300; line-height: 1;
+}
+.ph-grok-tiles { display: flex; gap: 10px; overflow-x: auto; padding: 8px 12px; }
+.ph-grok-tiles::-webkit-scrollbar { display: none; }
+.ph-grok-tiles button {
+  flex: none; width: 132px; border: 1px solid var(--ph-line); border-radius: 14px;
+  padding: 14px 14px 16px; cursor: pointer;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit;
+  font-size: 15px; font-weight: 700; text-align: left;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+}
+.ph-grok-ask {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 6px 12px 10px; padding: 14px 14px 10px;
+  border-radius: 22px; background: var(--ph-chip);
+}
+.ph-grok-ask input {
+  border: 0; background: none; color: var(--ph-text);
+  font: inherit; font-size: 16px; outline: none;
+}
+.ph-grok-ask-foot { display: flex; align-items: center; gap: 10px; }
+.ph-grok-ask-foot small { flex: 1; min-width: 0; color: var(--ph-muted); font-size: 12px; }
+.ph-grok-send {
+  flex: none; display: flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 0; border-radius: 999px; padding: 9px 18px;
+  background: var(--ph-text); color: var(--ph-bg); font: inherit; font-size: 14px; font-weight: 700;
+}
+
+/* The card the assistant opens with, saying where its answers come from. */
+.ph-grok-card {
+  display: flex; align-items: center; gap: 14px; position: relative;
+  margin: 6px 12px 2px; padding: 16px 40px 16px 16px;
+  border-radius: 16px; background: var(--ph-chip);
+}
+.ph-grok-card-mark { flex: none; display: flex; color: var(--ph-text); }
+.ph-grok-card-text { flex: 1; min-width: 0; }
+.ph-grok-card-text b { display: block; font-size: 16px; font-weight: 700; }
+.ph-grok-card-text small { display: block; color: var(--ph-muted); font-size: 14px; margin-top: 2px; }
+.ph-grok-card > button:last-child {
+  position: absolute; top: 12px; right: 12px; border: 0; background: none;
+  color: var(--ph-muted); cursor: pointer; padding: 2px; line-height: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* The short video app                                                        */
+/* -------------------------------------------------------------------------- */
+
+.ph-mark-tt { background: #000; position: relative; }
+.ph-mark-tt .ph-tt-note {
+  font-size: 30px; font-weight: 700; line-height: 1; color: #fff;
+  text-shadow: 2px -2px 0 #25f4ee, -2px 2px 0 #fe2c55;
+}
+
+/* The whole app is the video. Everything else sits on top of it. */
+.ph-tt { position: relative; flex: 1; min-height: 0; display: flex; background: #000; }
+.ph-tt-stage { position: absolute; inset: 0; border: 0; padding: 0; cursor: pointer; }
+.ph-tt-stage img { width: 100%; height: 100%; object-fit: cover; }
+.ph-tt-top {
+  position: absolute; top: 8px; left: 0; right: 0; z-index: 4;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  color: rgba(255, 255, 255, 0.62); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.ph-tt-top button {
+  background: none; border: 0; cursor: pointer; color: inherit;
+  font: inherit; font-size: 15px; font-weight: 600; padding: 2px 0; position: relative;
+}
+.ph-tt-top button.ph-on { color: #fff; font-weight: 700; }
+.ph-tt-top button.ph-on::after {
+  content: ''; position: absolute; left: 20%; right: 20%; bottom: -5px;
+  height: 2.5px; border-radius: 2px; background: #fff;
+}
+.ph-tt-top .ph-side { position: absolute; color: #fff; }
+.ph-tt-top .ph-side.ph-left { left: 12px; }
+.ph-tt-top .ph-side.ph-right { right: 12px; }
+
+.ph-tt-rail {
+  position: absolute; right: 8px; bottom: 92px; z-index: 4;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  color: #fff; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.ph-tt-rail button {
+  background: none; border: 0; padding: 0; cursor: pointer; color: #fff;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font: inherit; font-size: 11px; font-weight: 600;
+}
+.ph-tt-rail .ph-tt-avatar { position: relative; margin-bottom: 4px; }
+.ph-tt-rail .ph-tt-plus {
+  position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%);
+  width: 18px; height: 18px; border-radius: 50%; background: #fe2c55; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-disc {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(140deg, #333, #111);
+  border: 3px solid #222;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 4px;
+}
+
+.ph-tt-foot {
+  position: absolute; left: 12px; right: 74px; bottom: 14px; z-index: 4;
+  color: #fff; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.ph-tt-foot b { font-size: 14px; font-weight: 700; }
+.ph-tt-foot p { margin: 6px 0 0; font-size: 13px; white-space: pre-wrap; }
+.ph-tt-sound { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; }
+.ph-tt-follow {
+  border: 1px solid #fe2c55; background: #fe2c55; color: #fff;
+  border-radius: 6px; padding: 3px 12px; cursor: pointer;
+  font: inherit; font-size: 12px; font-weight: 700; margin-left: 8px;
+}
+.ph-tt-follow.ph-on { background: none; border-color: rgba(255, 255, 255, 0.6); }
+
+/* Its own bar: black, five, with the create button as a wide plate. */
+.ph-tt-bar {
+  flex: none; display: grid; grid-template-columns: repeat(5, 1fr);
+  align-items: center; background: #000; padding: 8px 4px 6px;
+  border-top: 1px solid #1a1a1a;
+}
+.ph-tt-bar button {
+  background: none; border: 0; cursor: pointer; color: rgba(255, 255, 255, 0.62);
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font: inherit; font-size: 10px; font-weight: 600;
+}
+.ph-tt-bar button.ph-on { color: #fff; }
+.ph-tt-plate {
+  width: 44px; height: 28px; border-radius: 8px; background: #fff; color: #000;
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.ph-tt-plate::before,
+.ph-tt-plate::after {
+  content: ''; position: absolute; top: 0; width: 44px; height: 28px; border-radius: 8px;
+}
+.ph-tt-plate::before { background: #25f4ee; left: -4px; }
+.ph-tt-plate::after { background: #fe2c55; left: 4px; }
+.ph-tt-plate span {
+  position: relative; z-index: 2; width: 40px; height: 28px; border-radius: 8px;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+}
+
+/* Discover, the inbox and the profile all sit on the app's own dark ground. */
+.ph-tt-page { flex: 1; min-height: 0; overflow-y: auto; background: var(--ph-bg); }
+.ph-tt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.ph-tt-cell {
+  position: relative; aspect-ratio: 9 / 15; border: 0; padding: 0; cursor: pointer;
+  overflow: hidden; text-align: left; display: block;
+}
+.ph-tt-cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph-tt-cell span {
+  position: absolute; left: 6px; right: 6px; bottom: 6px;
+  color: #fff; font-size: 10px; line-height: 1.25;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ph-tt-cell i {
+  position: absolute; left: 6px; top: 6px; font-style: normal;
+  color: #fff; font-size: 10px; font-weight: 700; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* -------------------------------------------------------------------------- */
+/* The short video app, screen by screen                                      */
+/* -------------------------------------------------------------------------- */
+
+/* The lane rail across the top of the feed, LIVE first and the search right. */
+.ph-tt-top { gap: 14px; }
+.ph-tt-live {
+  border: 1.6px solid #fff; border-radius: 5px; background: none; color: #fff;
+  padding: 1px 4px; cursor: pointer; display: flex; align-items: center; flex: none;
+}
+.ph-tt-top .ph-side.ph-right {
+  background: none; border: 0; cursor: pointer; color: #fff; margin-left: auto; padding: 0;
+}
+
+/* The video fits inside the frame until you ask for the whole of it. */
+.ph-tt-stage.ph-fit img { object-fit: contain; }
+.ph-tt-fill {
+  position: absolute; left: 50%; top: 56%; transform: translateX(-50%); z-index: 3;
+  display: flex; align-items: center; gap: 7px; cursor: pointer;
+  border: 0; border-radius: 999px; padding: 9px 18px;
+  background: rgba(40, 40, 40, 0.85); color: #fff; font: inherit; font-size: 14px; font-weight: 600;
+}
+
+/* The strip the app puts above its own bar, carrying what is being looked for. */
+.ph-tt-searchbar {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
+  display: flex; align-items: center; gap: 9px; padding: 11px 14px;
+  border: 0; background: rgba(30, 30, 30, 0.92); color: #fff;
+  font: inherit; font-size: 14px; cursor: pointer; text-align: left;
+}
+.ph-tt-searchbar span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ph-tt-bar .ph-wrap { position: relative; display: inline-flex; }
+.ph-tt-dot {
+  position: absolute; top: -1px; right: -4px;
+  width: 7px; height: 7px; border-radius: 50%; background: #fe2c55;
+}
+
+/* Friends. */
+.ph-tt-friends { flex: 1; min-height: 0; display: flex; flex-direction: column; background: #000; color: #fff; }
+.ph-tt-friends-top {
+  flex: none; display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+}
+.ph-tt-friends-add {
+  width: 18px; height: 18px; border-radius: 50%; flex: none; background: #20d5ec; color: #000;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-friends-pill {
+  flex: 1; min-width: 0; text-align: center; border-radius: 999px;
+  background: #262626; padding: 11px 14px; font-size: 14.5px; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-friends-body { background: #000; color: #fff; }
+.ph-tt-friends-body h2 { margin: 8px 16px 20px; font-size: 25px; font-weight: 700; line-height: 1.2; }
+.ph-tt-friend { display: flex; align-items: center; gap: 12px; padding: 10px 14px 16px; }
+.ph-tt-contacts {
+  width: 54px; height: 54px; border-radius: 50%; flex: none; background: #16c65a; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+/* The name and the count each keep to one line; the buttons give up the room. */
+.ph-tt-friend-text { flex: 1 1 auto; min-width: 0; }
+.ph-tt-friend-text b {
+  display: block; font-size: 16px; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-friend-text small {
+  display: block; color: #8a8a8a; font-size: 14px; margin-top: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-friend-buttons { display: flex; gap: 8px; flex: none; }
+.ph-tt-find, .ph-tt-follow-btn, .ph-tt-remove {
+  border: 0; border-radius: 8px; cursor: pointer; padding: 9px 14px;
+  font: inherit; font-size: 15px; font-weight: 600; white-space: nowrap;
+}
+.ph-tt-find { flex: 1; background: #fe2c55; color: #fff; padding: 9px 22px; }
+.ph-tt-follow-btn { background: #fe2c55; color: #fff; }
+.ph-tt-remove { background: #2f2f2f; color: #fff; }
+
+/* Search. */
+.ph-tt-searchtop {
+  flex: none; display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px;
+  background: var(--ph-bg);
+}
+.ph-tt-field {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px;
+  border-radius: 999px; background: var(--ph-chip); padding: 9px 14px; color: var(--ph-muted);
+}
+.ph-tt-field input {
+  flex: 1; min-width: 0; border: 0; background: none; color: var(--ph-text);
+  font: inherit; font-size: 15.5px; outline: none;
+}
+.ph-tt-search-go {
+  flex: none; border: 0; background: none; cursor: pointer; color: #fe2c55;
+  font: inherit; font-size: 16px; font-weight: 600;
+}
+.ph-tt-recent { display: flex; align-items: center; gap: 12px; padding: 9px 16px; }
+.ph-tt-recent-mark { flex: none; display: flex; color: var(--ph-muted); }
+.ph-tt-recent-go {
+  flex: 1; min-width: 0; text-align: left; border: 0; background: none; cursor: pointer;
+  color: var(--ph-text); font: inherit; font-size: 16px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-recent-x { flex: none; border: 0; background: none; cursor: pointer; color: var(--ph-muted); padding: 2px; line-height: 0; }
+.ph-tt-nothing { padding: 16px; color: var(--ph-muted); font-size: 14px; }
+.ph-tt-more {
+  display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%;
+  border: 0; background: none; cursor: pointer; color: var(--ph-muted);
+  font: inherit; font-size: 15px; padding: 8px 0 14px;
+}
+.ph-tt-sechead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 16px 8px; border-top: 1px solid var(--ph-line); margin-top: 6px;
+}
+.ph-tt-sechead b { font-size: 18px; font-weight: 700; }
+.ph-tt-sechead button {
+  display: flex; align-items: center; gap: 5px; border: 0; background: none; cursor: pointer;
+  color: var(--ph-muted); font: inherit; font-size: 14.5px;
+}
+.ph-tt-guess, .ph-tt-trend {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  border: 0; background: none; cursor: pointer; color: var(--ph-text);
+  font: inherit; font-size: 16px; padding: 10px 16px;
+}
+.ph-tt-guess i, .ph-tt-trend i {
+  width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--ph-muted);
+}
+.ph-tt-guess.ph-hot { color: #fe2c55; }
+.ph-tt-guess.ph-hot i, .ph-tt-trend i { background: #fe2c55; }
+.ph-tt-trend.ph-lit { background: rgba(254, 44, 85, 0.08); }
+.ph-tt-trend small { margin-left: auto; color: var(--ph-muted); font-size: 13px; }
+
+/* The camera. */
+.ph-tt-cam {
+  position: absolute; inset: 0; z-index: 12; display: flex; flex-direction: column;
+  background: linear-gradient(170deg, #2c2c2c, #4a463f 55%, #6b6259);
+}
+.ph-tt-cam-top { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; }
+.ph-tt-cam-x {
+  width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(0, 0, 0, 0.4); color: #fff; display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-addsound {
+  display: flex; align-items: center; gap: 7px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(0, 0, 0, 0.4); color: #fff; padding: 9px 18px;
+  font: inherit; font-size: 15px; font-weight: 600; max-width: 60%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-cam-rail {
+  position: absolute; right: 12px; top: 84px; z-index: 3;
+  display: flex; flex-direction: column; gap: 24px; align-items: center;
+}
+.ph-tt-cam-rail button {
+  border: 0; background: none; cursor: pointer; color: #fff; padding: 0; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-cam-rail button.ph-ticked i {
+  position: absolute; right: -4px; bottom: -3px;
+  width: 15px; height: 15px; border-radius: 50%; background: #fe2c55; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-cam-foot { margin-top: auto; flex: none; padding-bottom: 6px; }
+.ph-tt-modes {
+  display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 0 14px;
+}
+.ph-tt-modes button {
+  border: 0; border-radius: 999px; cursor: pointer; padding: 7px 15px;
+  background: none; color: rgba(255, 255, 255, 0.75);
+  font: inherit; font-size: 15px; font-weight: 600;
+}
+.ph-tt-modes button.ph-on { background: #fff; color: #111; }
+.ph-tt-shutterrow {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 26px;
+}
+.ph-tt-shutter {
+  width: 78px; height: 78px; border-radius: 50%; cursor: pointer;
+  border: 5px solid #fff; background: rgba(255, 255, 255, 0.92);
+}
+.ph-tt-roll { width: 44px; height: 44px; border-radius: 5px; display: block; }
+.ph-tt-roll.ph-two { justify-self: end; }
+.ph-tt-camtabs { display: flex; align-items: center; justify-content: center; gap: 26px; padding: 16px 0 4px; }
+.ph-tt-camtabs button {
+  border: 0; background: none; cursor: pointer; color: rgba(255, 255, 255, 0.6);
+  font: inherit; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+}
+.ph-tt-camtabs button.ph-on { color: #fff; }
+
+/* Inbox. */
+.ph-tt-inboxtop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 8px 12px; background: var(--ph-bg);
+}
+.ph-tt-inbox-title { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.ph-tt-inbox-title b { font-size: 18px; font-weight: 700; }
+.ph-tt-inbox-title i {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--ph-muted); display: block;
+}
+.ph-tt-inbox-title i.ph-on { background: #16c65a; }
+.ph-tt-stories { display: flex; gap: 16px; overflow-x: auto; padding: 10px 14px 14px; }
+.ph-tt-stories::-webkit-scrollbar { display: none; }
+.ph-tt-story {
+  flex: none; width: 74px; text-align: center; border: 0; background: none; cursor: pointer;
+  color: var(--ph-text); font: inherit; padding: 0;
+}
+.ph-tt-story-ring {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 66px; height: 66px; margin: 0 auto; border-radius: 50%;
+  border: 2px solid var(--ph-line); overflow: visible;
+}
+.ph-tt-story-ring.ph-locked { background: var(--ph-chip); color: var(--ph-muted); }
+.ph-tt-story-ring.ph-make { border-color: transparent; }
+.ph-tt-story-plus {
+  position: absolute; right: -1px; bottom: -1px;
+  width: 20px; height: 20px; border-radius: 50%; background: #20d5ec; color: #000;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--ph-bg);
+}
+.ph-tt-story small {
+  display: block; margin-top: 6px; font-size: 13px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-inbox { background: var(--ph-bg); }
+.ph-tt-bucket {
+  display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+  border: 0; background: none; cursor: pointer; color: var(--ph-text);
+  font: inherit; padding: 11px 16px;
+}
+.ph-tt-tile {
+  width: 48px; height: 48px; border-radius: 50%; flex: none; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-blue-tile { background: #22a7f0; }
+.ph-pink-tile { background: #fe2c55; }
+.ph-orange-tile { background: #f78733; }
+.ph-navy-tile { background: #1d2749; }
+.ph-tt-bucket-text { flex: 1; min-width: 0; }
+.ph-tt-bucket-text b { display: block; font-size: 16px; font-weight: 600; }
+.ph-tt-bucket-text small {
+  display: block; color: var(--ph-muted); font-size: 14px; margin-top: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-badge {
+  flex: none; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+  background: #fe2c55; color: #fff; font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-reddot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: #fe2c55; }
+.ph-tt-thumb { flex: none; width: 44px; height: 56px; border-radius: 5px; display: block; }
+
+/* A profile. */
+.ph-tt-proftop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr auto; align-items: center;
+  padding: 8px 12px; background: var(--ph-bg);
+}
+.ph-tt-proftile {
+  width: 30px; height: 30px; border-radius: 8px; background: #7a5cf0; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-profname { display: flex; align-items: center; justify-content: center; gap: 5px; position: relative; }
+.ph-tt-profname b { font-size: 18px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ph-tt-namedot { width: 7px; height: 7px; border-radius: 50%; background: #fe2c55; display: block; }
+.ph-tt-profright { display: flex; align-items: center; gap: 4px; justify-self: end; }
+.ph-tt-private {
+  flex: none; display: flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 10px; background: var(--ph-surface); color: var(--ph-text);
+  font-size: 15px; font-weight: 500;
+}
+.ph-tt-profile { background: var(--ph-bg); text-align: center; }
+/* The bubble sits above the picture and off to its left, as the app has it. */
+.ph-tt-face { padding: 18px 0 0; display: flex; flex-direction: column; align-items: center; }
+.ph-tt-face-mark { position: relative; display: inline-flex; }
+.ph-tt-face-plus {
+  position: absolute; right: -2px; bottom: -2px;
+  width: 28px; height: 28px; border-radius: 50%; background: #20d5ec; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  border: 2.5px solid var(--ph-bg);
+}
+.ph-tt-thought {
+  align-self: center; position: relative; left: -46px; z-index: 2;
+  margin-bottom: -10px; padding: 9px 15px; border-radius: 16px;
+  background: var(--ph-chip); color: var(--ph-muted); font-size: 14px;
+  max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-handle { font-size: 17px; font-weight: 600; margin-top: 12px; }
+.ph-tt-counts { display: flex; align-items: center; justify-content: center; margin: 16px 0 14px; }
+.ph-tt-counts > * {
+  flex: 0 0 33%; border: 0; background: none; cursor: pointer; color: inherit; font: inherit; padding: 0;
+}
+.ph-tt-counts > * + * { border-left: 1px solid var(--ph-line); }
+.ph-tt-counts b { display: block; font-size: 17px; font-weight: 700; }
+.ph-tt-counts small { display: block; color: var(--ph-muted); font-size: 13.5px; margin-top: 2px; }
+.ph-tt-profbuttons { display: flex; gap: 8px; padding: 0 14px; }
+.ph-tt-profbuttons button {
+  flex: 1; border: 0; border-radius: 6px; cursor: pointer; padding: 10px 8px;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit; font-size: 15px; font-weight: 600;
+}
+.ph-tt-profbuttons button.ph-primary { background: #fe2c55; color: #fff; }
+.ph-tt-profbuttons button.ph-square { flex: 0 0 46px; }
+.ph-tt-profchips {
+  display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 12px 14px 4px;
+}
+.ph-tt-chip {
+  border: 0; border-radius: 6px; cursor: pointer; padding: 7px 13px;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit; font-size: 14px; font-weight: 600;
+}
+.ph-tt-orders {
+  display: flex; align-items: center; gap: 7px; border: 0; background: none; cursor: pointer;
+  color: #fe2c55; font: inherit; font-size: 15px; font-weight: 600;
+}
+.ph-tt-bio { padding: 10px 20px 0; font-size: 14.5px; }
+.ph-tt-floor { padding: 12px 20px 0; color: var(--ph-muted); font-size: 13px; }
+.ph-tt-shelves {
+  display: flex; margin-top: 16px; border-bottom: 1px solid var(--ph-line);
+}
+.ph-tt-shelves button {
+  flex: 1; border: 0; background: none; cursor: pointer; color: var(--ph-muted);
+  padding: 12px 0 10px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-shelves button.ph-on { color: var(--ph-text); }
+.ph-tt-shelves button.ph-on::after {
+  content: ''; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 46px; height: 2.5px; background: var(--ph-text);
+}
+.ph-tt-draft {
+  display: flex; align-items: flex-start; justify-content: flex-start; padding: 8px;
+  color: #fff; font-size: 13px; font-weight: 700;
+}
+
+/* Settings and privacy. */
+.ph-tt-settop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 8px 12px; background: var(--ph-bg);
+}
+.ph-tt-settop b { text-align: center; font-size: 17px; font-weight: 700; }
+.ph-tt-settings { background: var(--ph-surface); }
+.ph-tt-settings h2 { margin: 6px 16px 18px; font-size: 30px; font-weight: 800; letter-spacing: -0.6px; }
+.ph-tt-cap { padding: 16px 20px 8px; font-size: 14px; color: var(--ph-muted); }
+.ph-tt-set-group { margin: 0 12px; border-radius: 12px; overflow: hidden; background: var(--ph-bg); }
+.ph-tt-set-row {
+  display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+  padding: 13px 15px; border: 0; background: none; color: var(--ph-text);
+  font: inherit; font-size: 16px; cursor: pointer;
+}
+.ph-tt-set-row:disabled { cursor: default; }
+.ph-tt-set-icon { flex: none; width: 22px; display: flex; color: var(--ph-muted); }
+.ph-tt-set-label { flex: 1; min-width: 0; }
+.ph-tt-set-value { color: var(--ph-muted); font-size: 15px; }
+.ph-tt-set-go { flex: none; display: flex; color: var(--ph-muted); }
+.ph-tt-set-row:disabled .ph-tt-set-go { visibility: hidden; }
+.ph-tt-version { padding: 26px 16px 30px; text-align: center; color: var(--ph-muted); font-size: 12.5px; line-height: 1.5; }
+
+/* The studio. */
+.ph-tt-studiotop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 8px 12px; background: var(--ph-surface);
+}
+.ph-tt-studiotop b { text-align: center; font-size: 17px; font-weight: 700; }
+.ph-tt-studio { background: var(--ph-surface); padding-bottom: 24px; }
+.ph-tt-card { margin: 12px; border-radius: 14px; background: var(--ph-bg); padding: 16px 14px; }
+.ph-tt-card-head { display: flex; align-items: center; justify-content: space-between; }
+.ph-tt-card-head b { font-size: 18px; font-weight: 700; }
+.ph-tt-figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.ph-tt-figures i { display: block; font-style: normal; font-size: 13.5px; color: var(--ph-muted); }
+.ph-tt-figures b { display: block; font-size: 24px; font-weight: 700; margin: 4px 0 4px; }
+.ph-tt-figures small { color: var(--ph-muted); font-size: 12.5px; }
+.ph-tt-chips { display: flex; gap: 8px; overflow-x: auto; margin-top: 14px; padding-bottom: 2px; }
+.ph-tt-chips::-webkit-scrollbar { display: none; }
+.ph-tt-chips button {
+  flex: none; border: 0; border-radius: 999px; cursor: pointer; padding: 9px 17px;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit; font-size: 15px; font-weight: 600;
+}
+.ph-tt-chips button.ph-on { background: var(--ph-chip-on); color: var(--ph-chip-on-text); }
+.ph-tt-ranks { list-style: none; margin: 12px 0 0; padding: 0; }
+.ph-tt-ranks li { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+.ph-tt-rank {
+  flex: none; width: 20px; height: 20px; border-radius: 5px; background: var(--ph-chip);
+  color: var(--ph-muted); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.ph-tt-rank.ph-m1 { background: #f5c542; color: #4a3500; }
+.ph-tt-rank.ph-m2 { background: #c9ced6; color: #3a3f47; }
+.ph-tt-rank.ph-m3 { background: #d9a066; color: #4a2f00; }
+.ph-tt-rank-name { flex: 1; min-width: 0; font-size: 15.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ph-tt-rank-heat { flex: none; display: flex; align-items: center; gap: 4px; color: var(--ph-muted); font-size: 13.5px; }
+.ph-tt-wide {
+  width: 100%; margin-top: 14px; border: 0; border-radius: 10px; cursor: pointer; padding: 13px 10px;
+  background: var(--ph-chip); color: var(--ph-text); font: inherit; font-size: 16px; font-weight: 600;
+}
+.ph-tt-promos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.ph-tt-promo { border-radius: 12px; padding: 14px 12px 12px; color: #241a06; }
+.ph-tt-promo.ph-sand { background: #e6d0ac; }
+.ph-tt-promo.ph-rose { background: #ff8098; color: #3a0512; }
+.ph-tt-promo b { display: block; font-size: 16px; font-weight: 700; margin: 8px 0 5px; }
+.ph-tt-promo p { margin: 0; font-size: 13.5px; line-height: 1.35; }
+.ph-tt-promo button {
+  width: 100%; margin-top: 14px; border: 0; border-radius: 999px; cursor: pointer; padding: 9px 8px;
+  background: #fff; color: #111; font: inherit; font-size: 14.5px; font-weight: 700;
+}
+.ph-tt-tools { display: flex; gap: 10px; overflow-x: auto; margin-top: 14px; }
+.ph-tt-tools::-webkit-scrollbar { display: none; }
+.ph-tt-tools button {
+  flex: none; width: 92px; border: 0; background: none; cursor: pointer;
+  color: var(--ph-text); font: inherit; font-size: 12.5px; text-align: center;
+}
+.ph-tt-tool-ring {
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;
+  width: 100%; height: 52px; border-radius: 10px; background: var(--ph-chip);
+}
+.ph-tt-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.ph-tt-grid2 button {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  border: 1px solid var(--ph-line); border-radius: 10px; padding: 14px 12px;
+  background: none; color: var(--ph-text); font: inherit; font-size: 14.5px; font-weight: 600;
+  text-align: left;
+}
+.ph-tt-activity {
+  display: flex; align-items: flex-end; width: 100%; margin-top: 14px; cursor: pointer;
+  border: 0; border-radius: 12px; padding: 18px 16px; min-height: 118px;
+  color: #fff; font: inherit; text-align: left;
+}
+.ph-tt-activity b { font-size: 18px; font-weight: 700; line-height: 1.25; }
+.ph-tt-activity.ph-a0 { background: linear-gradient(120deg, #2f8fe0, #35b7a8); }
+.ph-tt-activity.ph-a1 { background: linear-gradient(120deg, #7a5cf0, #c65ce0); }
+.ph-tt-activity.ph-a2 { background: linear-gradient(120deg, #e0662f, #e0a52f); }
+.ph-tt-dots { display: flex; justify-content: center; gap: 5px; margin-top: 10px; }
+.ph-tt-dots i { width: 6px; height: 6px; border-radius: 3px; background: var(--ph-line); display: block; }
+.ph-tt-dots i.ph-on { width: 16px; background: var(--ph-muted); }
+.ph-tt-activity-note { margin: 12px 0 0; color: var(--ph-muted); font-size: 13.5px; line-height: 1.4; }
+
+/* The conversations under the inbox's coloured rows, and one of them open. */
+.ph-tt-convo {
+  display: flex; align-items: center; gap: 13px; width: 100%; text-align: left;
+  border: 0; background: none; cursor: pointer; color: var(--ph-text);
+  font: inherit; padding: 9px 16px;
+}
+.ph-tt-convo-face { flex: none; display: flex; border-radius: 50%; }
+.ph-tt-convo-face.ph-lit { box-shadow: 0 0 0 2px #20d5ec; }
+.ph-tt-convo-text { flex: 1; min-width: 0; }
+.ph-tt-convo-text b {
+  display: flex; align-items: center; gap: 5px; font-size: 16px; font-weight: 600;
+  overflow: hidden; white-space: nowrap;
+}
+.ph-tt-convo-text small {
+  display: block; color: var(--ph-muted); font-size: 14px; margin-top: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-convo-cam { flex: none; color: var(--ph-muted); display: flex; }
+.ph-tt-noconvo { padding: 22px 16px; color: var(--ph-muted); font-size: 14px; }
+
+.ph-tt-threadtop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 8px 12px; background: var(--ph-bg); border-bottom: 1px solid var(--ph-line);
+}
+.ph-tt-threadwho { display: flex; align-items: center; justify-content: center; gap: 9px; }
+.ph-tt-threadwho b { font-size: 16px; font-weight: 600; }
+.ph-tt-send {
+  flex: none; display: flex; gap: 8px; padding: 10px 12px;
+  border-top: 1px solid var(--ph-line); background: var(--ph-bg);
+}
+.ph-tt-sendgo {
+  flex: none; border: 0; border-radius: 8px; cursor: pointer; padding: 9px 18px;
+  background: #fe2c55; color: #fff; font: inherit; font-size: 15px; font-weight: 600;
+}
+.ph-tt-sendgo:disabled { opacity: 0.45; cursor: default; }
+
+/* Sending somebody a gift, which comes out of your account and lands in theirs. */
+.ph-tt-gifts { margin: 12px 14px 0; padding: 14px; border-radius: 12px; background: var(--ph-chip); }
+.ph-tt-gifts-head { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.ph-tt-gifts-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.ph-tt-gifts-row button {
+  flex: 1 0 auto; border: 0; border-radius: 8px; cursor: pointer; padding: 10px 12px;
+  background: #fe2c55; color: #fff; font: inherit; font-size: 15px; font-weight: 700;
+}
+.ph-tt-gifts small { display: block; margin-top: 12px; color: var(--ph-muted); font-size: 13px; }

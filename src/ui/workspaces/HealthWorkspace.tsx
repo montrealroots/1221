@@ -6,6 +6,141 @@ import { attendable, fillable, prescriptionsOf, visitCost } from '@/engine/syste
 import { activeScene } from '@/engine/systems/scenes';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatTime } from '@/engine/core/time';
+import { plural } from '@/engine/core/text';
+import { ageOf } from '@/engine/systems/lifespan';
+import {
+  chipIsTheLaw, countryHere, dentistsIn, describePet, describeTeeth, treatmentsOffered,
+  vetServicesOffered, vetsIn,
+} from '@/engine/systems/rooms';
+import {
+  CHIP_NOTE, DENTAL_SYSTEM_LABEL, DENTIST_NOTE, OUT_OF_HOURS_NOTE, RECALL_NOTE, TOOTH_NOTE,
+  VET_NOTE, dentalIn, toothPrice,
+} from '@/engine/content/rooms';
+
+
+/**
+ * The dentist and the vet.
+ *
+ * Who pays for dentistry is the real part and differs completely between
+ * countries; the practice, the price and the chair are SLATE's own. The
+ * veterinary groups are real companies and the microchipping law is the law.
+ */
+function TheOtherPractices(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const countryId = countryHere(sim);
+  const regime = dentalIn(countryId);
+  const practices = dentistsIn(sim);
+  const surgeries = vetsIn(sim);
+  const offered = treatmentsOffered(sim);
+  const age = ageOf(sim);
+  const pet = describePet(sim);
+  const petServices = vetServicesOffered(sim);
+  const law = chipIsTheLaw(sim);
+  const at = sim.player.currentPlaceId;
+
+  return (
+    <>
+      <Panel
+        title="Your Teeth"
+        subtitle={`${DENTAL_SYSTEM_LABEL[regime.system]} where you are. ${describeTeeth(sim)}`}
+        flush
+      >
+        <div className="list">
+          {practices.map((place) => (
+            <div key={place.id} className="list-item list-static">
+              <div className="grow">
+                <div className="row-title">{place.name}</div>
+                <div className="xs dim">{place.about}</div>
+                {at !== place.id && <div className="xs dim">You aren’t there.</div>}
+              </div>
+            </div>
+          ))}
+          {offered.map((treatment) => {
+            const place = practices.find((one) => one.id === at) ?? practices[0];
+            const price = toothPrice(treatment, countryId, age);
+            return (
+              <div key={treatment.id} className="list-item">
+                <div className="grow">
+                  <div className="row-title">{treatment.label}</div>
+                  <div className="xs dim">
+                    {price === 0 ? 'Nothing To Pay' : formatMoney(price)}
+                    {treatment.band > 0 && regime.system === 'banded' ? ` · Band ${treatment.band}` : ''}
+                    {' · '}{plural(treatment.minutes, 'minute')}
+                  </div>
+                  <div className="xs dim">{treatment.about}</div>
+                </div>
+                <button
+                  className="btn btn-sm"
+                  disabled={!place || at !== place.id}
+                  onClick={() => {
+                    const res = run<{ note: string }>('room.dentist', { placeId: place!.id, treatmentId: treatment.id });
+                    if (res.ok) toast(res.value!.note, 'positive');
+                  }}
+                >
+                  {place && at === place.id ? 'Have It Done' : 'Go There First'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+        <div className="col gap-2" style={{ padding: '0.75rem' }}>
+          <p className="xs dim" style={{ margin: 0 }}>{regime.about}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{DENTIST_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{RECALL_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{TOOTH_NOTE}</p>
+        </div>
+      </Panel>
+
+      {pet && (
+        <Panel title="The Vet" subtitle={pet} flush>
+          <div className="list">
+            {surgeries.map((place) => (
+              <div key={place.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="row-title">{place.name}</div>
+                  <div className="xs dim">{place.about}</div>
+                  {at !== place.id && <div className="xs dim">You aren’t there.</div>}
+                </div>
+              </div>
+            ))}
+            {petServices.map((service) => {
+              const place = surgeries.find((one) => one.id === at) ?? surgeries[0];
+              return (
+                <div key={service.id} className="list-item">
+                  <div className="grow">
+                    <div className="row-title">{service.label}</div>
+                    <div className="xs dim">
+                      {formatMoney(service.price)} · {plural(service.minutes, 'minute')}
+                      {service.id === 'chip' && law !== undefined ? ` · Required By Law Since ${law}` : ''}
+                    </div>
+                    <div className="xs dim">{service.about}</div>
+                  </div>
+                  <button
+                    className="btn btn-sm"
+                    disabled={!place || at !== place.id}
+                    onClick={() => {
+                      const res = run<{ note: string }>('room.vet', { placeId: place!.id, serviceId: service.id });
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    {place && at === place.id ? 'Take Them In' : 'Go There First'}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+          <div className="col gap-2" style={{ padding: '0.75rem' }}>
+            <p className="xs dim" style={{ margin: 0 }}>{VET_NOTE}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{CHIP_NOTE}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{OUT_OF_HOURS_NOTE}</p>
+          </div>
+        </Panel>
+      )}
+    </>
+  );
+}
 
 export function HealthWorkspace() {
   const { sim, run } = useGame();
@@ -149,6 +284,7 @@ export function HealthWorkspace() {
           </div>
         )}
       </Panel>
+      <TheOtherPractices />
     </>
   );
 }

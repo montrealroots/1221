@@ -17,9 +17,43 @@ import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '@/engine/content/founder';
 import { founderScore } from '@/engine/systems/shingle';
 import { ageOn } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
-import { CITIES } from '@/engine/content/geography';
+import { formatDate, MS_DAY } from '@/engine/core/time';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
+import { DOCUMENT_NOTE, licenseAuthorityFor, passportAuthorityFor } from '@/engine/content/documents';
+import { RECALL_NOTE } from '@/engine/content/recallbook';
+import { describe, notSeenLately, openThreads, recall, recallStats, worthNow } from '@/engine/systems/recall';
+import { BEATS_A_DAY, DIRECTOR_LIMITS_NOTE, DIRECTOR_NOTE, keyOf, liveBeats } from '@/engine/systems/director';
+import { FRESHNESS_NOTE } from '@/engine/systems/freshness';
+import { SIX_MONTH_NOTE, exchangeOffer, regionOfCity, residenceCityOf, statusOf } from '@/engine/systems/documents';
+import type { IdentityDocument } from '@/engine/domain/model';
+import { countryOfCity } from '@/engine/content/geography';
+import {
+  describePet, growingOf, lessonCost, livedThrough, pendingMoment, readyToDrive, testCost,
+} from '@/engine/systems/growing';
+import { ALLOWANCE_NOTE, DRIVING_NOTE, GROWING_NOTE, PET_NOTE } from '@/engine/content/growingup';
+import {
+  describeJob, floorHere, jobOf, jobsHeld, openingsFor, promotionFor, shiftIsDue, shiftsToCome,
+  stateFloorFor, stateFloorNameFor,
+  wageFor,
+} from '@/engine/systems/work';
+import {
+  BRANCH_NOTE, COVER_NOTE, EMPLOYER_NOTE, LADDER_NOTE, LETTING_GO_NOTE, PAYDAY_NOTE, ROLE_BY_ID,
+  SHIFT_BY_ID, SICK_NOTE,
+} from '@/engine/content/employers';
+import {
+  JOB_NOTE, LOCAL_NOTE, NO_MINIMUM_NOTE, STATE_NOTE, WAGE_NOTE, YOUNG_NOTE,
+} from '@/engine/content/work';
+import {
+  AGE_GATE_NOTE, LIFESPAN_NOTE, PENSION_NOTE, describeHeight, describeWeight,
+} from '@/engine/content/lifespan';
+import {
+  adultHeightOf, adultWeightOf, ageOf, agingOf, ceilingOf, describePassing, describeYears, familyOf,
+  fullyGrown, gatesFor, heightOf, isAlive, mayI, pensionAgeFor, relationLabel, stageOf, weightOf,
+  yearsToPension,
+} from '@/engine/systems/lifespan';
+import { plural } from '@/engine/core/text';
 
-type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing';
+type Tab = 'positions' | 'attributes' | 'professions' | 'skills' | 'traits' | 'standing' | 'papers' | 'life' | 'memory';
 
 const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((k) => [k.id, k.name]));
 
@@ -85,8 +119,17 @@ export function CharacterWorkspace() {
           { id: 'skills', label: 'Skills' },
           { id: 'traits', label: 'Traits', badge: player.traits.length },
           { id: 'standing', label: 'Standing' },
+          { id: 'papers', label: 'Papers' },
+          { id: 'life', label: 'Your Life' },
+          { id: 'memory', label: 'What You Remember' },
         ]}
       />
+
+      {tab === 'papers' && <PapersTab />}
+
+      {tab === 'life' && <LifeTab />}
+
+      {tab === 'memory' && <MemoryTab />}
 
       {tab === 'positions' && (
         <div className="col gap-4">
@@ -402,7 +445,7 @@ export function CharacterWorkspace() {
               <Meter label="Public Fame" value={player.reputation.publicFame} hint="How many people know who you are." />
               <Meter label="Audience Appeal" value={player.reputation.audienceAppeal} hint="Whether the people who know you like you." />
               <Meter label="Professional Reputation" value={player.reputation.professionalReputation} hint="What the industry thinks of the work." />
-              <Meter label="Reliability" value={player.reputation.reliability} hint="Whether producers believe you will finish the job." />
+              <Meter label="Reliability" value={player.reputation.reliability} hint="Whether producers believe you’ll finish the job." />
               <Meter label="Prestige" value={player.reputation.prestige} hint="Awards and critical standing." />
               <Meter label="Industry Demand" value={player.reputation.industryDemand} hint="How many people want to hire you right now." />
               <Meter label="Controversy" value={player.reputation.controversy} invert hint="Active negative attention. Decays slowly." />
@@ -419,7 +462,7 @@ export function CharacterWorkspace() {
               </div>
             ) : (
               <p className="muted small">
-                You are unrepresented. An agent multiplies how many opportunities reach you at all.
+                You’re unrepresented. An agent multiplies how many opportunities reach you at all.
               </p>
             )}
 
@@ -440,5 +483,631 @@ export function CharacterWorkspace() {
         </div>
       )}
     </>
+  );
+}
+
+/** A document on screen: who issued it, its number, its dates and what it is right now. */
+function DocumentLine({ doc, none }: { doc: IdentityDocument | undefined; none: string }) {
+  const { sim } = useGame();
+  if (!doc) return <div className="xs dim">{none}</div>;
+  const state = statusOf(sim, doc);
+  const chip = state === 'valid' ? 'chip-positive' : state === 'applied' ? '' : 'chip-negative';
+  const stateLabel = state === 'valid' ? (doc.emergency ? 'Emergency Document' : 'Valid') : state === 'applied' ? (doc.roadTestAt ? 'Learner' : 'At The Office') : state === 'expired' ? 'Expired' : 'Lost';
+  const days = Math.floor((doc.expiresAt - sim.now) / MS_DAY);
+  return (
+    <div className="list-item list-static">
+      <div className="grow">
+        <div className="small strong">{doc.authority}{doc.regionId ? ` · ${COUNTRIES.get(doc.issuerId)?.name ?? doc.issuerId}` : ` · ${COUNTRIES.get(doc.issuerId)?.name ?? doc.issuerId}`}</div>
+        <div className="xs dim">
+          {state === 'applied'
+            ? doc.roadTestAt ? `Road test ${formatDate(doc.roadTestAt, sim.homeZone)}` : `Due ${formatDate(doc.readyAt ?? sim.now, sim.homeZone)}`
+            : `${doc.number} · issued ${formatDate(doc.issuedAt, sim.homeZone)} · ${state === 'valid' ? `runs out ${formatDate(doc.expiresAt, sim.homeZone)} (${days} days)` : `ran out ${formatDate(doc.expiresAt, sim.homeZone)}`}`}
+        </div>
+      </div>
+      <span className={`chip ${chip}`}>{stateLabel}</span>
+    </div>
+  );
+}
+
+function PapersTab() {
+  const { sim, run } = useGame();
+  const player = useWorld((s) => s.player);
+  const papers = player.documents ?? {};
+  const passportAuthority = passportAuthorityFor(player.citizenshipId);
+  const secondAuthority = player.secondCitizenshipId ? passportAuthorityFor(player.secondCitizenshipId) : undefined;
+  const homeCity = residenceCityOf(sim, player);
+  const licenseAuthority = licenseAuthorityFor(countryOfCity(homeCity) ?? player.citizenshipId, regionOfCity(homeCity));
+  const exchange = exchangeOffer(sim, player);
+  const passportState = statusOf(sim, papers.passport);
+  const licenseState = statusOf(sim, papers.license);
+  const renewable = (doc: IdentityDocument | undefined) => doc ? doc.status !== 'applied' && (statusOf(sim, doc) !== 'valid' || doc.expiresAt - sim.now < 365 * MS_DAY || Boolean(doc.emergency)) : true;
+  return (
+    <div className="col gap-4">
+      <Panel
+        title="Passport"
+        subtitle={passportAuthority ? `${passportAuthority.authority.authority} issues a ${COUNTRIES.get(passportAuthority.issuerId)?.name ?? ''} passport for ${passportAuthority.authority.validityYears} years, ${formatMoney(passportAuthority.authority.fee)}, about ${passportAuthority.authority.weeks} weeks${passportAuthority.authority.expedite ? `, or ${passportAuthority.authority.expedite.weeks} for ${formatMoney(passportAuthority.authority.expedite.fee)} more` : ''}.` : 'Nobody issues you one.'}
+        flush
+        actions={
+          <>
+            {renewable(papers.passport) && passportAuthority && (
+              <button className="btn btn-sm btn-primary" onClick={() => run('doc.apply_passport', { which: 'passport' })}>
+                {passportState === 'none' || passportState === 'lost' || passportState === 'expired' ? 'Apply For A Passport' : 'Renew It'}
+              </button>
+            )}
+            {renewable(papers.passport) && passportAuthority?.authority.expedite && (
+              <button className="btn btn-sm" onClick={() => run('doc.apply_passport', { which: 'passport', expedite: true })}>Expedite</button>
+            )}
+            {papers.passport && passportState !== 'lost' && passportState !== 'applied' && (
+              <button className="btn btn-sm" onClick={() => run('doc.report_lost', { kind: 'passport' })}>Report It Lost</button>
+            )}
+          </>
+        }
+      >
+        <div className="list">
+          <DocumentLine doc={papers.passport} none="You hold no passport." />
+          {player.secondCitizenshipId && (
+            <>
+              <DocumentLine doc={papers.secondPassport} none={`No ${COUNTRIES.get(player.secondCitizenshipId)?.name ?? ''} passport yet.`} />
+              {renewable(papers.secondPassport) && secondAuthority && (
+                <div className="list-item list-static">
+                  <div className="grow xs dim">{secondAuthority.authority.authority}: {formatMoney(secondAuthority.authority.fee)}, {secondAuthority.authority.weeks} weeks.</div>
+                  <button className="btn btn-sm" onClick={() => run('doc.apply_passport', { which: 'secondPassport' })}>Apply For The Second Passport</button>
+                </div>
+              )}
+            </>
+          )}
+          <div className="list-item list-static"><div className="xs dim">{SIX_MONTH_NOTE}</div></div>
+        </div>
+      </Panel>
+
+      <Panel
+        title="Driver’s License"
+        subtitle={licenseAuthority ? `${licenseAuthority.office} licenses drivers from ${licenseAuthority.authority.minAge}: ${licenseAuthority.authority.tests.map((t) => t === 'knowledge' ? 'a knowledge test' : t === 'road' ? 'a road test' : t === 'hazard' ? 'a hazard test' : 'an eye test').join(', ')}, ${formatMoney(licenseAuthority.authority.fee)}, good for ${licenseAuthority.authority.validityYears} years.` : 'Nobody where you live issues one SLATE knows of.'}
+        flush
+        actions={
+          <>
+            {(licenseState === 'none' || (licenseState === 'expired' && !papers.license)) && licenseAuthority && (
+              <button className="btn btn-sm btn-primary" onClick={() => run('doc.apply_license', {})}>Apply For A License</button>
+            )}
+            {papers.license && licenseState !== 'applied' && renewable(papers.license) && (
+              <button className="btn btn-sm btn-primary" onClick={() => run('doc.renew_license', {})}>{licenseState === 'valid' ? 'Renew It' : 'Replace It'}</button>
+            )}
+            {papers.license && licenseState !== 'lost' && licenseState !== 'applied' && (
+              <button className="btn btn-sm" onClick={() => run('doc.report_lost', { kind: 'license' })}>Report It Lost</button>
+            )}
+            {exchange?.exchangeable && (
+              <button className="btn btn-sm" onClick={() => run('doc.exchange_license', {})}>Exchange It Here</button>
+            )}
+          </>
+        }
+      >
+        <div className="list">
+          <DocumentLine doc={papers.license} none="You hold no driver’s license. Nothing with a wheel moves for you until you do; the scenes call a cab." />
+          {exchange && <div className="list-item list-static"><div className="xs dim">{exchange.note}</div></div>}
+        </div>
+      </Panel>
+
+      <p className="xs dim">{DOCUMENT_NOTE}</p>
+    </div>
+  );
+}
+
+/**
+ * The whole span, on one page.
+ *
+ * How old you are, what part of a life that is, the size you are and the size
+ * you end up, the people you were born to, and what the country you are
+ * standing in will and will not let somebody your age do.
+ *
+ * There is deliberately nothing here about how long you have left. A
+ * character does not know that, so the game does not say it.
+ */
+function LifeTab(): JSX.Element {
+  const { sim } = useGame();
+  // Everything below is read straight off the simulation, so the tab needs a
+  // reason to re-render when the world clock moves.
+  const now = useWorld((s) => s.now);
+  const player = sim.player;
+  void now;
+  const stage = stageOf(sim);
+  const family = familyOf(sim);
+  const gates = gatesFor(sim);
+  const pension = yearsToPension(sim);
+
+  return (
+    <div className="grid grid-sheet">
+      <Panel title="Your Years" subtitle={stage.label}>
+        <div className="col gap-4">
+          <Stat label="Age" value={String(ageOf(sim))} note={stage.about} />
+          <Stat label="Size" value={describeHeight(heightOf(sim))} note={describeWeight(weightOf(sim))} />
+          {!fullyGrown(sim) && (
+            <Stat
+              label="Still Growing"
+              value={describeHeight(adultHeightOf(player))}
+              note={`The size you end up. ${describeWeight(adultWeightOf(player))}.`}
+            />
+          )}
+          <Stat
+            label="What A Year Costs Now"
+            value={agingOf(sim).about}
+            note={`Your best day is ${ceilingOf(sim).fitness.toFixed(0)} of 100 for fitness and `
+              + `${ceilingOf(sim).condition.toFixed(0)} for condition.`}
+          />
+          <Stat
+            label={pension > 0 ? 'Pension Age' : 'Past Pension Age'}
+            value={String(pensionAgeFor(player))}
+            note={pension > 0 ? `${plural(pension, 'year')} away. ${PENSION_NOTE}` : PENSION_NOTE}
+          />
+          <p className="xs dim" style={{ margin: 0 }}>{describeYears(sim)}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{LIFESPAN_NOTE}</p>
+        </div>
+      </Panel>
+
+      <Panel title="Who You Were Born To" flush>
+        {family.parents.length === 0 && family.siblings.length === 0 ? (
+          <p className="xs dim" style={{ padding: 'var(--s3)' }}>Nobody on record.</p>
+        ) : (
+          <div className="list">
+            {[...family.parents, ...family.siblings, ...family.children].map((one) => (
+              <div key={one.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{one.displayName}</div>
+                  <div className="xs dim">
+                    {relationLabel(sim, one.id)} · {isAlive(one, sim.now)
+                      ? `${plural(ageOf(sim, one), 'year')} old · ${CITIES.get(one.homeRegionId)?.name ?? 'Elsewhere'}`
+                      : describePassing(sim, one)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Panel>
+
+      <GrowingPanel />
+
+      <JobPanel />
+
+      <Panel title="What You Are Old Enough For" subtitle={COUNTRIES.get(gates[0]?.answer.countryId ?? '')?.name ?? ''} flush>
+        <div className="list">
+          {gates.map((one) => (
+            <div key={one.gate} className="list-item list-static">
+              <div className="grow">
+                <div className="small strong">{one.label}</div>
+                <div className="xs dim">
+                  {one.answer.ok
+                    ? (one.answer.age === undefined ? 'Open to you.' : `Open to you. Set at ${one.answer.age} here.`)
+                    : one.answer.reason}
+                </div>
+              </div>
+              <span className={`badge ${one.answer.ok ? 'badge-positive' : 'badge-quiet'}`}>
+                {one.answer.ok ? 'Yes' : 'Not Yet'}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{AGE_GATE_NOTE}</p>
+      </Panel>
+    </div>
+  );
+}
+
+/**
+ * What the save remembers, and what it is still thinking about.
+ *
+ * Everything here is read out of the record. The rank is what a memory is
+ * worth right now: how much it mattered, faded by how long ago it was, with a
+ * floor under the things nobody forgets. Nothing on this page is generated.
+ * If it is on the screen it happened, and the line under it says what it was.
+ */
+function MemoryTab(): JSX.Element {
+  const { sim } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const stats = recallStats(sim);
+  const top = recall(sim, { limit: 12 });
+  const beats = liveBeats(sim).slice(0, 5);
+  const away = notSeenLately(sim, 45).slice(0, 5);
+  const loose = openThreads(sim).filter((one) => one.days >= 14).slice(0, 5);
+
+  return (
+    <div className="grid grid-sheet">
+      <Panel title="Top Of Mind" subtitle="What you’d still be thinking about, and how much." flush>
+        {top.length === 0 ? (
+          <div className="empty"><p className="small">Nothing has happened yet. It will.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {top.map((one) => (
+                <tr key={one.id}>
+                  <td className="mono xs dim" style={{ width: 44 }}>{Math.round(worthNow(one, sim.now))}</td>
+                  <td>
+                    <span className="small">{describe(sim, one)}</span>
+                    <span className="xs dim" style={{ display: 'block' }}>
+                      {one.tags.join(' · ')} · {formatDate(one.at, sim.homeZone)}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="What The World Might Bring Up" subtitle={`At most ${plural(BEATS_A_DAY, 'thing')} a day.`} flush>
+        {beats.length === 0 ? (
+          <div className="empty"><p className="small">Nothing is live. That isn’t a fault; some weeks are quiet.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {beats.map((beat) => (
+                <tr key={keyOf(beat)}>
+                  <td>
+                    <span className="small strong">{beat.title}</span>
+                    <span className="xs dim" style={{ display: 'block' }}>{beat.detail}</span>
+                  </td>
+                  <td className="mono xs dim" style={{ width: 44, textAlign: 'right' }}>{beat.worth}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="People You Have Not Seen" flush>
+        {away.length === 0 ? (
+          <div className="empty"><p className="small">Nobody has been left that long.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {away.map((one) => (
+                <tr key={one.personId}>
+                  <td className="small">{sim.universe.people[one.personId]?.displayName ?? 'Somebody'}</td>
+                  <td className="xs dim" style={{ textAlign: 'right' }}>{plural(one.days, 'day')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="Started And Not Finished" flush>
+        {loose.length === 0 ? (
+          <div className="empty"><p className="small">Nothing is hanging.</p></div>
+        ) : (
+          <table className="table">
+            <tbody>
+              {loose.map((one) => (
+                <tr key={one.opened.id}>
+                  <td className="small">{describe(sim, one.opened)}</td>
+                  <td className="xs dim" style={{ textAlign: 'right' }}>{plural(one.days, 'day')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Panel>
+
+      <Panel title="How The Memory Works">
+        <div className="col gap-4">
+          <Stat
+            label="What Is Held"
+            value={String(stats.entries)}
+            note={`${plural(stats.kept, 'memory', 'memories')} that will never fade, out of `
+              + `${plural(stats.covered, 'kind')} of thing the game knows how to remember.`}
+          />
+          <p className="xs dim" style={{ margin: 0 }}>{RECALL_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{DIRECTOR_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{DIRECTOR_LIMITS_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{FRESHNESS_NOTE}</p>
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
+/**
+ * Growing up, and learning to drive.
+ *
+ * The moments arrive in the Decision Center like anything else that needs
+ * deciding; this is where they are read back afterwards, and where the
+ * instructor is booked.
+ */
+function GrowingPanel(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const record = growingOf(sim);
+  if (!record) return null;
+  const lived = livedThrough(record);
+  const waiting = pendingMoment(record);
+  const ready = readyToDrive(sim, record);
+  const canDrive = mayI(sim, 'drive');
+
+  return (
+    <>
+      <Panel
+        title="The Years So Far"
+        subtitle={waiting ? `${waiting.title} is waiting on an answer.` : `${plural(lived.length, 'moment')} behind you.`}
+        flush
+      >
+        {lived.length === 0 ? (
+          <p className="xs dim" style={{ padding: 'var(--s3)' }}>
+            Nothing yet. Things happen, and when they do they go where everything that needs deciding goes.
+          </p>
+        ) : (
+          <div className="list">
+            {[...lived].reverse().map((one) => (
+              <div key={one.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{one.title}</div>
+                  <div className="xs dim">{one.detail}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <p className="xs dim" style={{ padding: 'var(--s3)', margin: 0 }}>{GROWING_NOTE}</p>
+      </Panel>
+
+      {record.pet && (
+        <Panel
+          title={record.pet.untilAt ? 'The One You Had' : record.pet.name}
+          subtitle={record.pet.untilAt ? 'Not here any more.' : `${formatMoney(record.pet.aWeek)} a week.`}
+        >
+          <div className="col gap-2">
+            <p className="small" style={{ margin: 0 }}>{describePet(sim, record)}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{PET_NOTE}</p>
+          </div>
+        </Panel>
+      )}
+
+      <Panel
+        title="Learning To Drive"
+        subtitle={record.passedTestAt
+          ? `Passed on ${formatDate(record.passedTestAt, sim.homeZone)}.`
+          : `${plural(record.lessons, 'hour')} in. ${plural(record.testsSat, 'test')} sat.`}
+      >
+        <div className="col gap-3">
+          {record.passedTestAt ? (
+            <p className="small" style={{ margin: 0 }}>
+              You passed. The licence itself is a separate errand, at the counter.
+            </p>
+          ) : (
+            <>
+              <Meter label="Ready For It" value={ready} hint="Hours with an instructor, and what you can already do." />
+              <p className="small" style={{ margin: 0 }}>
+                {canDrive.ok
+                  ? `An hour is ${formatMoney(lessonCost(sim))}. The test is ${formatMoney(testCost(sim))} and it can be failed.`
+                  : canDrive.reason}
+              </p>
+              <div className="row gap-2 wrap">
+                <button
+                  className="btn btn-sm"
+                  disabled={!canDrive.ok}
+                  onClick={() => {
+                    const res = run<{ note: string }>('growing.lesson', {});
+                    if (res.ok) toast(res.value!.note, 'positive');
+                  }}
+                >
+                  Book An Hour
+                </button>
+                <button
+                  className="btn btn-sm btn-primary"
+                  disabled={!canDrive.ok || record.lessons < 3}
+                  onClick={() => {
+                    const res = run<{ note: string; passed: boolean }>('growing.test', {});
+                    if (res.ok) toast(res.value!.note, res.value!.passed ? 'positive' : 'negative');
+                  }}
+                >
+                  Sit The Test
+                </button>
+              </div>
+            </>
+          )}
+          <p className="xs dim" style={{ margin: 0 }}>{DRIVING_NOTE}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{ALLOWANCE_NOTE}</p>
+        </div>
+      </Panel>
+    </>
+  );
+}
+
+/**
+ * The Saturday job.
+ *
+ * The floor is real and published; the rota and every shift are SLATE's own.
+ * Where the city has a real shop of the right kind, that is where it is.
+ */
+function JobPanel(): JSX.Element | null {
+  const { sim, run, toast } = useGame();
+  const now = useWorld((s) => s.now);
+  void now;
+  const held = jobOf(sim);
+  const past = jobsHeld(sim).filter((one) => one.endedAt).slice(0, 3);
+  const openings = openingsFor(sim);
+  const floor = floorHere(sim);
+  const state = stateFloorNameFor(sim);
+  const stateFloor = stateFloorFor(sim.player.currentLocationId);
+  const allowed = mayI(sim, 'work');
+  if (!held && openings.length === 0 && past.length === 0 && !allowed.ok && ageOf(sim) > 25) return null;
+
+  return (
+    <Panel
+      title={held ? 'The Job' : 'A Job'}
+      subtitle={state && stateFloor !== undefined
+        ? `The floor in ${state} is ${formatMoney(stateFloor)} an hour.`
+        : floor.statutory
+          ? `The floor here is ${formatMoney(floor.perHour)} an hour, set in ${floor.year}.`
+          : `No statutory minimum here. The bargained floor is about ${formatMoney(floor.perHour)} an hour.`}
+    >
+      <div className="col gap-3">
+        {held ? (
+          <>
+            <p className="small" style={{ margin: 0 }}>{describeJob(sim, held)}</p>
+            <div className="row gap-3 wrap">
+              <Stat
+                label="Where You Are"
+                value={ROLE_BY_ID[held.roleId]?.label ?? 'Crew'}
+                note={ROLE_BY_ID[held.roleId]?.about}
+              />
+              <Stat
+                label="What They Think"
+                value={String(Math.round(held.standing))}
+                note={promotionFor(held).why}
+                tone={held.standing >= 70 ? 'positive' : held.standing <= 30 ? 'negative' : undefined}
+              />
+            </div>
+
+            {held.cover && (
+              <p className="small" style={{ margin: 0 }}>
+                <strong>They’re ringing.</strong> {held.cover.reason} They want you in on{' '}
+                {formatDate(held.cover.at, sim.homeZone)}. It is on your Home screen to answer.
+              </p>
+            )}
+
+            <div className="row gap-3 wrap">
+              <Stat
+                label="On The Timesheet"
+                value={formatMoney(held.owed)}
+                note={held.nextPayAt
+                  ? `${plural(held.owedHours, 'hour')}. Paid ${formatDate(held.nextPayAt, sim.homeZone)}.`
+                  : `${plural(held.owedHours, 'hour')} not yet paid.`}
+              />
+              {held.payslips.length > 0 && (
+                <Stat
+                  label="Last Payslip"
+                  value={formatMoney(held.payslips[held.payslips.length - 1]!.net)}
+                  note={`${formatMoney(held.payslips[held.payslips.length - 1]!.gross)} gross, `
+                    + `${formatMoney(held.payslips[held.payslips.length - 1]!.tax
+                      + held.payslips[held.payslips.length - 1]!.social)} withheld.`}
+                />
+              )}
+            </div>
+
+            {shiftsToCome(held).length > 0 && (
+              <div className="list">
+                {shiftsToCome(held).slice(0, 6).map((shift, i) => (
+                  <div key={`${shift.at}-${i}`} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">
+                        {SHIFT_BY_ID[shift.kindId]?.label ?? 'A Shift'}
+                        {shift.cover ? ' · Cover' : ''}
+                      </div>
+                      <div className="xs dim">
+                        {formatDate(shift.at, sim.homeZone)} · {plural(shift.hours, 'hour')}
+                        {' · '}{SHIFT_BY_ID[shift.kindId]?.about}
+                      </div>
+                    </div>
+                    <span className="badge badge-quiet">
+                      {sim.now >= shift.at - 2 * 60 * 60_000 ? 'On Now' : 'To Come'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="row gap-2 wrap">
+              <button
+                className="btn btn-sm btn-primary"
+                disabled={!shiftIsDue(sim, held)}
+                onClick={() => {
+                  const res = run<{ note: string }>('job.shift', {});
+                  if (res.ok) toast(res.value!.note, 'positive');
+                }}
+              >
+                {shiftIsDue(sim, held) ? 'Work The Shift' : 'Not On Until Later'}
+              </button>
+              <button
+                className="btn btn-sm"
+                disabled={!shiftIsDue(sim, held)}
+                onClick={() => {
+                  const res = run<{ note: string; genuine: boolean }>('job.call_in_sick', {});
+                  if (res.ok) toast(res.value!.note, res.value!.genuine ? 'neutral' : 'negative');
+                }}
+              >
+                Ring In Sick
+              </button>
+              {promotionFor(held).ready && (
+                <button
+                  className="btn btn-sm btn-primary"
+                  onClick={() => {
+                    const res = run<{ note: string }>('job.take_promotion', {});
+                    if (res.ok) toast(res.value!.note, 'positive');
+                  }}
+                >
+                  Take {promotionFor(held).role!.label}
+                </button>
+              )}
+              <button
+                className="btn btn-sm"
+                onClick={() => {
+                  const res = run<{ note: string }>('job.quit', {});
+                  if (res.ok) toast(res.value!.note, 'negative');
+                }}
+              >
+                Hand Your Notice In
+              </button>
+            </div>
+          </>
+        ) : !allowed.ok ? (
+          <p className="small" style={{ margin: 0 }}>{allowed.reason}</p>
+        ) : (
+          <>
+            <p className="small" style={{ margin: 0 }}>
+              {plural(openings.length, 'thing')} going, and none of them are a career.
+            </p>
+            <div className="list">
+              {openings.map((one) => (
+                <div key={one.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{one.label}</div>
+                    <div className="xs dim">{one.about}</div>
+                    <div className="xs dim">
+                      {formatMoney(wageFor(sim, one))} an hour · {plural(one.hours, 'hour')} a shift
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => {
+                      const res = run<{ note: string }>('job.take', { kindId: one.id });
+                      if (res.ok) toast(res.value!.note, 'positive');
+                    }}
+                  >
+                    Take It
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {past.length > 0 && (
+          <div className="list">
+            {past.map((one) => (
+              <div key={one.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="xs dim">{describeJob(sim, one)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <p className="xs dim" style={{ margin: 0 }}>{WAGE_NOTE}</p>
+        {!floor.statutory && <p className="xs dim" style={{ margin: 0 }}>{NO_MINIMUM_NOTE}</p>}
+        <p className="xs dim" style={{ margin: 0 }}>{LOCAL_NOTE}</p>
+        {state && <p className="xs dim" style={{ margin: 0 }}>{STATE_NOTE}</p>}
+        <p className="xs dim" style={{ margin: 0 }}>{YOUNG_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{JOB_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{EMPLOYER_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{BRANCH_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{LADDER_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{COVER_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{PAYDAY_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{SICK_NOTE}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{LETTING_GO_NOTE}</p>
+      </div>
+    </Panel>
   );
 }

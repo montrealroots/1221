@@ -15,16 +15,31 @@ import { clamp } from '../core/rng';
 import { MS_MINUTE } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
 import type { Id, Person, RetailVisit } from '../domain/model';
-import { RETAILERS, retailPrice, shoppableItemsIn, type CatalogItem, type Retailer } from '../content/catalog';
+import { RETAILERS, retailPrice, shoppableItemsIn, stocks, type CatalogItem, type Retailer } from '../content/catalog';
 import { costOfLiving } from '../content/tax';
+import { CITIES, countryOfCity } from '../content/geography';
+import { climateTypeFor } from '../content/climate';
+import {
+  CLIMATE_BUY_NOTE, LAW_NOTE, LOCAL_BUY_NOTE, NEVER_BELOW, availabilityOf, depthFor,
+  onTheShelfIn, suitsClimate,
+} from '../content/localbuy';
 import { placeById, type Place } from '../content/places';
+import { COLOURS, SAFE_COLOURS } from '../content/wardrobe';
 import type { DialogueTone } from '../dialogue/schema';
 import { factsOf, rememberFact, tallyFact, tallyOf } from './memory';
 import { makeBackgroundPerson, peopleOf } from './people';
+import { shows } from './wardrobe';
 import { wardrobeOf } from './commerce';
 
-/** How many things the floor puts in front of you at once. */
+/**
+ * How many things are on the front table — the small rotating selection the
+ * shop leads with. It is not the assortment: the assortment is everything the
+ * chain carries in this market, and it is hundreds of things deep.
+ */
 export const SHELF = 12;
+
+/** The fewest real products a shop floor is allowed to carry. */
+export const MINIMUM_ASSORTMENT = 100;
 
 /** Minutes it takes to look at one thing properly. */
 export const HANDLE_MINUTES = 4;
@@ -162,33 +177,158 @@ export interface Stocked {
   fittable: boolean;
   /** Whether the floor is pushing it this fortnight. */
   featured: boolean;
+  /** The colors this branch has it in, if it is a thing that comes in colors. */
+  colourways: string[];
+}
+
+/** How many colors a shop carries one thing in. */
+const COLOURWAYS = 4;
+
+/**
+ * The colors this branch has a thing in. Seeded on the branch, the item and
+ * the fortnight, so it is the same rail all fortnight and a different rail in
+ * the next town. The safe colors come first because that is how shops buy.
+ */
+export function colourwaysFor(sim: Simulation, place: Place, item: CatalogItem, fortnight: number): string[] {
+  if (!item.slot) return [];
+  const rng = sim.rng('retail_colour', place.id, item.id, String(fortnight));
+  const pool = COLOURS.filter((c) => (item.slot === 'watch' || item.slot === 'jewellery'
+    ? c.family === 'metal'
+    : c.family !== 'metal'));
+  const safe = pool.filter((c) => SAFE_COLOURS.includes(c.id));
+  const rest = rng.shuffle(pool.filter((c) => !SAFE_COLOURS.includes(c.id)));
+  const picked = [...rng.shuffle(safe).slice(0, 2), ...rest].slice(0, COLOURWAYS);
+  return picked.map((c) => c.id);
 }
 
 /**
- * What is out on the floor today. The chain's whole catalogue is not: a shop
+ * What this shop does not carry, and which arrangement left it off.
+ *
+ * The interesting half of stocking a shop by country is the gap: a shelf that
+ * is missing something should say why rather than quietly not having it. Only
+ * the legal and customary rules produce a reason; a buyer's decision not to
+ * carry something is not a reason anybody is owed.
+ */
+export function notCarriedAt(place: Place): { why: string; count: number }[] {
+  const retailer = retailerAt(place);
+  if (!retailer) return [];
+  const countryId = countryOfCity(place.cityId) ?? place.cityId.split('-')[0] ?? '';
+  const reasons = new Map<string, number>();
+  for (const item of shoppableItemsIn(place.cityId)) {
+    if (item.category === 'dining' || !stocks(retailer, item)) continue;
+    const found = availabilityOf(item, countryId);
+    if (found.availability === 'on_the_shelf' || !found.why) continue;
+    reasons.set(found.why, (reasons.get(found.why) ?? 0) + 1);
+  }
+  return [...reasons].map(([why, count]) => ({ why, count })).sort((a, b) => b.count - a.count);
+}
+
+/**
+ * The slice of the range this branch buys, which is the same slice every time.
+ *
+ * Seeded on the branch alone rather than on the clock: a shop that carried
+ * something last week carries it this week, because a buy is a season's
+ * decision and not a daily one. A branch never drops below a shop's worth
+ * however small it is.
+ */
+export function branchBuy(place: Place, allowed: CatalogItem[]): CatalogItem[] {
+  const { share } = depthFor(place.quality ?? 60);
+  const keep = Math.max(NEVER_BELOW, Math.round(allowed.length * share));
+  if (allowed.length <= keep) return allowed;
+  // A stable hash of the branch and the product, so the same branch keeps the
+  // same things without holding a list anywhere.
+  const scored = allowed
+    .map((item) => ({ item, at: hashOf(`${place.id}:${item.id}`) }))
+    .sort((a, b) => a.at - b.at)
+    .slice(0, keep)
+    .map((one) => one.item);
+  return scored;
+}
+
+/** A small stable hash, so a branch's buy survives a reload and a save. */
+function hashOf(text: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) / 4294967296;
+}
+
+/** How this branch reads: a flagship, a branch, or a small one. */
+export function branchSize(place: Place): string {
+  return depthFor(place.quality ?? 60).label;
+}
+
+/**
+ * What is out on the floor today. The chain's whole catalog is not: a shop
  * puts a rail out, and the rail changes with the fortnight, seeded so the same
  * fortnight in the same shop is the same rail.
  */
-export function stockAt(sim: Simulation, place: Place, category?: string): Stocked[] {
+export function assortmentAt(sim: Simulation, place: Place, category?: string, rack?: 'men' | 'women' | 'both'): Stocked[] {
   const retailer = retailerAt(place);
   if (!retailer) return [];
   const col = costOfLiving(place.cityId);
   const fortnight = Math.floor(sim.now / (14 * 24 * 60 * 60 * 1000));
   const rng = sim.rng('retail_stock', place.id, String(fortnight));
-  const eligible = shoppableItemsIn(place.cityId).filter((item) =>
+  // A real branch carries both racks. `rack` narrows what is shown to
+  // somebody standing in it; the branch's own stock, and the hundred things
+  // every branch promises, are counted without it.
+  // Two branches of the same chain in two countries are not the same shop.
+  // What may lawfully be sold there and what the weather asks for are real and
+  // decide most of it; how deep this particular branch goes into what is left
+  // is SLATE's own, and is deterministic from the branch so a shop is the same
+  // shop every time you walk into it.
+  const countryId = countryOfCity(place.cityId) ?? place.cityId.split('-')[0] ?? '';
+  const city = CITIES.get(place.cityId);
+  const climate = city ? climateTypeFor(city) : 'oceanic';
+  const allowed = shoppableItemsIn(place.cityId).filter((item) =>
     item.category !== 'dining'
-    && (retailer.categories.includes(item.category) || retailer.categories.includes(item.subcategory))
-    && (category === undefined || item.category === category));
-  const shelf = rng.shuffle([...eligible]).slice(0, SHELF);
-  const featured = new Set(shelf.slice(0, 2).map((i) => i.id));
-  return shelf
+    && stocks(retailer, item)
+    && onTheShelfIn(item, countryId)
+    && suitsClimate(item, climate));
+  const eligible = branchBuy(place, allowed).filter((item) =>
+    (category === undefined || item.category === category)
+    && (rack === undefined || shows(item.audience, rack)));
+  // The front table is what has been pushed to the front this fortnight; the
+  // rest of the shop is still the rest of the shop.
+  const front = new Set(rng.shuffle([...eligible]).slice(0, SHELF).map((i) => i.id));
+  return eligible
     .map((item) => ({
       item,
       price: retailPrice(item.id, retailer.id, col),
       fittable: FITTABLE.includes(item.category),
-      featured: featured.has(item.id),
+      featured: front.has(item.id),
+      colourways: colourwaysFor(sim, place, item, fortnight),
     }))
-    .sort((a, b) => a.item.category.localeCompare(b.item.category) || a.price - b.price);
+    .sort((a, b) => Number(b.featured) - Number(a.featured)
+      || a.item.category.localeCompare(b.item.category)
+      || a.item.subcategory.localeCompare(b.item.subcategory)
+      || a.price - b.price);
+}
+
+/**
+ * What a shop carries. Kept as the old name because everything already asks
+ * for it that way; it is the whole assortment now, not a twelve-item rail.
+ */
+export function stockAt(sim: Simulation, place: Place, category?: string): Stocked[] {
+  return assortmentAt(sim, place, category);
+}
+
+/** The aisles this shop has, in the order they are walked, with their depth. */
+export function aislesAt(sim: Simulation, place: Place): { category: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const stocked of assortmentAt(sim, place)) {
+    counts.set(stocked.item.category, (counts.get(stocked.item.category) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([category, count]) => ({ category, count }))
+    .sort((a, b) => b.count - a.count || a.category.localeCompare(b.category));
+}
+
+/** The front table: what the shop is leading with this fortnight. */
+export function frontTableAt(sim: Simulation, place: Place): Stocked[] {
+  return assortmentAt(sim, place).filter((s) => s.featured);
 }
 
 /** Whether the shop keeps anything at all. A market with no rail is not a shop. */
@@ -225,9 +365,9 @@ export function fitOf(sim: Simulation, place: Place, item: CatalogItem): Verdict
 export function verdictNote(verdict: Verdict): string {
   switch (verdict) {
     case 'yours': return 'It fits, and it looks like it was meant for you.';
-    case 'close': return 'It fits. Whether it is right is another question.';
+    case 'close': return 'It fits. Whether it’s right is another question.';
     case 'wrong_size': return 'Not in your size, not in this shop, not today.';
-    case 'not_you': return 'It fits, technically. The mirror is not convinced.';
+    case 'not_you': return 'It fits, technically. The mirror isn’t convinced.';
   }
 }
 
@@ -244,10 +384,10 @@ export function registerRetail(sim: Simulation): void {
     (p, { sim: s }) => {
       const me = s.player;
       const place = placeById(me.currentLocationId, p.placeId);
-      if (!place) throw new CommandError('That is not somewhere in this city.');
-      if (me.currentPlaceId !== place.id) throw new CommandError(`You are not at ${place.name}. Go there first.`);
-      if (!retailerAt(place)) throw new CommandError(`${place.name} is not a shop you can walk around.`);
-      if (openVisit(s, place.id)) throw new CommandError('You are already in there.');
+      if (!place) throw new CommandError('That isn’t somewhere in this city.');
+      if (me.currentPlaceId !== place.id) throw new CommandError(`You aren’t at ${place.name}. Go there first.`);
+      if (!retailerAt(place)) throw new CommandError(`${place.name} isn’t a shop you can walk around.`);
+      if (openVisit(s, place.id)) throw new CommandError('You’re already in there.');
 
       const assistant = assistantAt(s, place);
       const standing = standingAt(s, place);
@@ -274,10 +414,10 @@ export function registerRetail(sim: Simulation): void {
     'retail.handle',
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
-      if (visit.status !== 'browsing') throw new CommandError('You are not on the floor.');
+      if (visit.status !== 'browsing') throw new CommandError('You aren’t on the floor.');
       const place = placeOfVisit(s, visit);
       const stocked = stockAt(s, place).find((x) => x.item.id === p.catalogId);
-      if (!stocked) throw new CommandError('That is not out on the floor today.');
+      if (!stocked) throw new CommandError('That isn’t out on the floor today.');
       if (!visit.handled.includes(p.catalogId)) visit.handled.push(p.catalogId);
       s.advanceTo(s.now + HANDLE_MINUTES * MS_MINUTE);
       return { name: stocked.item.name, price: stocked.price, minutes: HANDLE_MINUTES, fittable: stocked.fittable };
@@ -292,8 +432,8 @@ export function registerRetail(sim: Simulation): void {
       if (visit.status === 'bought' || visit.status === 'left') throw new CommandError('You have left that shop.');
       const place = placeOfVisit(s, visit);
       const stocked = stockAt(s, place).find((x) => x.item.id === p.catalogId);
-      if (!stocked) throw new CommandError('That is not out on the floor today.');
-      if (!stocked.fittable) throw new CommandError(`You do not try ${stocked.item.name} on.`);
+      if (!stocked) throw new CommandError('That isn’t out on the floor today.');
+      if (!stocked.fittable) throw new CommandError(`You don’t try ${stocked.item.name} on.`);
       if (visit.tried.some((t) => t.catalogId === p.catalogId)) throw new CommandError('You have had that on already.');
 
       const verdict = fitOf(s, place, stocked.item);
@@ -311,23 +451,31 @@ export function registerRetail(sim: Simulation): void {
   );
 
   /** Into the basket, or back on the rail. Nothing is charged either way. */
-  sim.onCommand<{ visitId: Id; catalogId: string; take?: boolean }, { basket: string[]; running: Money }>(
+  sim.onCommand<{ visitId: Id; catalogId: string; take?: boolean; colour?: string }, { basket: string[]; running: Money; colour?: string }>(
     'retail.basket',
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
-      if (visit.status !== 'browsing') throw new CommandError('You are not on the floor.');
+      if (visit.status !== 'browsing') throw new CommandError('You aren’t on the floor.');
       const place = placeOfVisit(s, visit);
       const stocked = stockAt(s, place).find((x) => x.item.id === p.catalogId);
-      if (!stocked) throw new CommandError('That is not out on the floor today.');
+      if (!stocked) throw new CommandError('That isn’t out on the floor today.');
       const wrongSize = visit.tried.find((t) => t.catalogId === p.catalogId)?.verdict === 'wrong_size';
-      if (wrongSize && p.take !== false) throw new CommandError(`They do not have the ${stocked.item.name} in your size.`);
+      if (wrongSize && p.take !== false) throw new CommandError(`They don’t have the ${stocked.item.name} in your size.`);
 
-      if (p.take === false) visit.basket = visit.basket.filter((id) => id !== p.catalogId);
-      else if (!visit.basket.includes(p.catalogId)) visit.basket.push(p.catalogId);
+      if (p.take === false) {
+        visit.basket = visit.basket.filter((id) => id !== p.catalogId);
+        delete (visit.colours ??= {})[p.catalogId];
+      } else {
+        if (!visit.basket.includes(p.catalogId)) visit.basket.push(p.catalogId);
+        if (stocked.colourways.length > 0) {
+          const wanted = p.colour && stocked.colourways.includes(p.colour) ? p.colour : stocked.colourways[0]!;
+          (visit.colours ??= {})[p.catalogId] = wanted;
+        }
+      }
 
       const shelf = stockAt(s, place);
       const running = visit.basket.reduce((sum, id) => sum + (shelf.find((x) => x.item.id === id)?.price ?? 0), 0);
-      return { basket: [...visit.basket], running };
+      return { basket: [...visit.basket], running, colour: visit.colours?.[p.catalogId] };
     },
   );
 
@@ -374,7 +522,7 @@ export function registerRetail(sim: Simulation): void {
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
       if (visit.status === 'bought' || visit.status === 'left') throw new CommandError('You have left that shop.');
-      if (visit.basket.length === 0) throw new CommandError('You are holding nothing.');
+      if (visit.basket.length === 0) throw new CommandError('You’re holding nothing.');
       const place = placeOfVisit(s, visit);
 
       const counted = new Map<string, number>();
@@ -383,7 +531,7 @@ export function registerRetail(sim: Simulation): void {
 
       const result = s.must<{ orderId: Id; total: Money }>({
         kind: 'shop.purchase',
-        payload: { retailerId: visit.retailerId, lines, channel: 'in_store', accountId: p.accountId },
+        payload: { retailerId: visit.retailerId, lines, channel: 'in_store', accountId: p.accountId, colours: visit.colours },
         idempotencyKey: `retail.pay:${visit.id}`,
       });
 
@@ -408,3 +556,8 @@ export function registerRetail(sim: Simulation): void {
     },
   );
 }
+
+export {
+  CLIMATE_BUY_NOTE, LAW_NOTE, LOCAL_BUY_NOTE, NEVER_BELOW, availabilityOf, depthFor, onTheShelfIn,
+  suitsClimate,
+};

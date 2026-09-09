@@ -35,10 +35,10 @@ export const CEILING = 100;
  * group them and so a system can ask "is this person the best living writer"
  * and get a real answer.
  */
-export type Discipline = 'writing' | 'directing' | 'producing' | 'showrunning' | 'acting';
+export type Discipline = 'writing' | 'directing' | 'producing' | 'showrunning' | 'acting' | 'running';
 
 export const DISCIPLINES: readonly Discipline[] = [
-  'writing', 'directing', 'producing', 'showrunning', 'acting',
+  'writing', 'directing', 'producing', 'showrunning', 'acting', 'running',
 ];
 
 export const DISCIPLINE_LABEL: Readonly<Record<Discipline, string>> = {
@@ -47,6 +47,7 @@ export const DISCIPLINE_LABEL: Readonly<Record<Discipline, string>> = {
   producing: 'Producing',
   showrunning: 'Showrunning',
   acting: 'Acting',
+  running: 'Running',
 };
 
 export interface GoatTrait {
@@ -61,7 +62,7 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
   // --- Writing ------------------------------------------------------------
   {
     id: 'goat_page', name: 'The Page', discipline: 'writing',
-    description: 'Every draft is the draft. There is no version of it that is better than what you handed in.',
+    description: 'Every draft is the draft. There’s no version of it that’s better than what you handed in.',
   },
   {
     id: 'goat_ear', name: 'The Ear', discipline: 'writing',
@@ -69,13 +70,13 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
   },
   {
     id: 'goat_structure', name: 'Architecture', discipline: 'writing',
-    description: 'You see the whole shape before a word is down, and it does not sag anywhere.',
+    description: 'You see the whole shape before a word is down, and it doesn’t sag anywhere.',
   },
 
   // --- Directing ----------------------------------------------------------
   {
     id: 'goat_eye', name: 'The Eye', discipline: 'directing',
-    description: 'You know where the camera goes before you have walked the room, and you are never wrong twice.',
+    description: 'You know where the camera goes before you have walked the room, and you’re never wrong twice.',
   },
   {
     id: 'goat_performance', name: 'Gets The Performance', discipline: 'directing',
@@ -89,7 +90,7 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
   // --- Producing ----------------------------------------------------------
   {
     id: 'goat_material', name: 'Knows What It Is', discipline: 'producing',
-    description: 'You can read a first draft and say what it will be worth in three years, and you are right.',
+    description: 'You can read a first draft and say what it will be worth in three years, and you’re right.',
   },
   {
     id: 'goat_room', name: 'Never Blinks', discipline: 'producing',
@@ -113,15 +114,24 @@ export const GOAT_TRAITS: readonly GoatTrait[] = [
   // --- Acting -------------------------------------------------------------
   {
     id: 'goat_truth', name: 'Nothing Between You And It', discipline: 'acting',
-    description: 'There is no performance. There is only somebody in a room to whom something is happening.',
+    description: 'There’s no performance. There’s only somebody in a room to whom something is happening.',
   },
   {
     id: 'goat_range', name: 'No Ceiling On Range', discipline: 'acting',
-    description: 'There is no part you cannot do, in any register, in any accent, at any age you could plausibly play.',
+    description: 'There’s no part you can’t do, in any register, in any accent, at any age you could plausibly play.',
   },
   {
     id: 'goat_camera', name: 'The Camera Wants You', discipline: 'acting',
     description: 'Something happens between you and a lens that nobody has satisfactorily explained.',
+  },
+  // --- Running ------------------------------------------------------------
+  {
+    id: 'goat_gun', name: 'The Gun', discipline: 'running',
+    description: 'Nobody has ever left the blocks with you. By ten meters the race is a formality, and everybody in the stadium already knows how it ends.',
+  },
+  {
+    id: 'goat_last_ten', name: 'The Last Ten', discipline: 'running',
+    description: 'Everybody else is slowing down at ninety meters. You aren’t, and that’s the whole difference between a fast time and a record.',
   },
 ];
 
@@ -190,6 +200,12 @@ export const POSITIONS: readonly Position[] = [
     skillDomains: ['creator', 'general'],
     attributeGroups: ['Craft', 'Voice', 'Physical', 'Screen', 'Range', 'Professionalism', 'Industry'],
     producerSheet: false, traitProfession: 'creator', performerTraits: true, producerTraits: false,
+  },
+  {
+    id: 'running', name: 'Running',
+    skillDomains: ['athletics'],
+    attributeGroups: [],
+    producerSheet: false, traitProfession: 'creator', performerTraits: false, producerTraits: false,
   },
 ];
 

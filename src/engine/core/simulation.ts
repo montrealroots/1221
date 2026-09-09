@@ -216,7 +216,7 @@ export class Simulation {
   }): ScheduledItem {
     if (!this.scheduleHandlers.has(spec.kind)) {
       throw new Error(
-        `Cannot schedule '${spec.kind}': no handler is registered. ` +
+        `Can’t schedule '${spec.kind}': no handler is registered. ` +
         'Every scheduled kind must have a handler, or time advancement would silently drop it.',
       );
     }

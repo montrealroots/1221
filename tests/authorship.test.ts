@@ -338,7 +338,7 @@ describe('the planning command', () => {
     const sim = quickSave({}, 'authorship-ghost');
     const result = sim.execute({ kind: 'work.project', payload: { crew: { writer: 'person_nobody' } } });
     expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/not in this save/i);
+    expect(result.error).toMatch(/n[o’]t in this save/i);
   });
 });
 

@@ -128,7 +128,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           <span className="small">{formatTime(sim.now, sim.zone)}</span>
         </div>
         <div className="stat">
-          <span className="stat-label">You would wake at</span>
+          <span className="stat-label">You’d wake at</span>
           <span className="small">{formatTime(wakeAt, sim.zone)}, {formatDate(wakeAt, sim.zone)}</span>
         </div>
       </div>

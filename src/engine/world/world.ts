@@ -59,7 +59,7 @@ export function registerWorld(sim: Simulation): void {
       const decision = s.universe.decisions[p.decisionId];
       if (!decision) throw new CommandError('No such decision.');
       const action = decision.actions[p.actionIndex];
-      if (!action) throw new CommandError('That action is not available on this item.');
+      if (!action) throw new CommandError('That action isn’t available on this item.');
 
       const result = s.execute({ kind: action.commandKind, payload: action.payload });
       if (!result.ok) return { ok: false, error: result.error };

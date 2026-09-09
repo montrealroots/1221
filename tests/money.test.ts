@@ -61,7 +61,7 @@ describe('the ledger', () => {
       id: 't1', saveId: 's', at: 0, memo: 'invented money', category: 'test',
       postings: [{ accountId: 'a', amount: 100 }, { accountId: 'b', amount: -50 }],
     };
-    expect(() => ledger.post(bad)).toThrow(/does not balance/);
+    expect(() => ledger.post(bad)).toThrow(/does(n’t| not) balance/);
     expect(h.transactions).toHaveLength(0);
   });
 

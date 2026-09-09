@@ -57,7 +57,7 @@ export function handFor(sim: Simulation, person: Person, job: Job, upstreamId?: 
 
 function requirePerson(sim: Simulation, id: Id): Person {
   const person = sim.universe.people[id];
-  if (!person) throw new CommandError('That person is not in this save.');
+  if (!person) throw new CommandError('That person isn’t in this save.');
   return person;
 }
 
@@ -102,7 +102,7 @@ export function readCrew(
   if (missing.length > 0) {
     const names = missing.map((job) => JOB_BY_ID[job].name.toLowerCase());
     throw new CommandError(
-      `Nobody is holding ${names.join(' or ')} on this. There is no picture to read until somebody is.`,
+      `Nobody is holding ${names.join(' or ')} on this. There’s no picture to read until somebody is.`,
     );
   }
 

@@ -84,21 +84,33 @@ describe('the routes the engine points at', () => {
   });
 });
 
-describe('the locked company tab', () => {
+describe('the locked casting tab', () => {
   it('is listed, is locked, and has no screen behind it', () => {
     const locked = lockedRoutes();
-    expect(locked.has('/workspace/company'), 'the company tab is not marked locked').toBe(true);
-    expect(registeredRoutes().has('/workspace/company'), 'something is registered against a locked route').toBe(false);
+    expect(locked.has('/workspace/casting'), 'the casting tab is not marked locked').toBe(true);
+    expect(registeredRoutes().has('/workspace/casting'), 'something is registered against a locked route').toBe(false);
+    // The founder premise is gone: no company tab, anywhere.
+    expect(locked.has('/workspace/company')).toBe(false);
+    expect(registeredRoutes().has('/workspace/company')).toBe(false);
   });
 
   it('is not offered by Go Anywhere, which only lists doors that open', () => {
     const search = read('ui/shell/GoAnywhere.tsx');
+    expect(search).not.toMatch(/\/workspace\/casting/);
     expect(search).not.toMatch(/\/workspace\/company/);
   });
 
   it('has no workspace file left behind', () => {
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
     expect(files).not.toContain('CompanyWorkspace.tsx');
+    expect(files).not.toContain('CastingWorkspace.tsx');
+  });
+
+  it('keeps the founder premise out of character creation', () => {
+    const creation = read('ui/creation/CharacterCreation.tsx');
+    expect(creation, 'the strike is still in creation').not.toMatch(/STRIKE_IS_FICTION|OPENING_BRIEF/);
+    expect(creation, 'the company step is still in creation').not.toMatch(/The Company|Your Company|company-name/);
+    expect(creation, 'creation still calls the player a founder').not.toMatch(/And Founder/);
   });
 
   it('tells the player it is under construction rather than navigating', () => {

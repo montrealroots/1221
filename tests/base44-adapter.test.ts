@@ -149,7 +149,7 @@ describe('talking to the backend functions', () => {
   it('says something useful when the connection simply fails', async () => {
     const { client } = fakeClient(() => { throw new Error('Network Error'); });
     const adapter = new Base44SaveAdapter(client);
-    await expect(adapter.load(1)).rejects.toThrow(/could not reach the server/);
+    await expect(adapter.load(1)).rejects.toThrow(/could(n’t| not) reach the server/);
   });
 
   it('does not mistake an empty reply for an empty slot', async () => {

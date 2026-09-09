@@ -13,9 +13,15 @@ import { clamp, remap } from '../core/rng';
 import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_MINUTE, MS_DAY } from '../core/time';
 import { formatMoney, type Money } from '../core/money';
 import { CATALOG, RECIPES, retailPrice } from '../content/catalog';
+import { EQUIPMENT_LABEL, FITTED_KITCHEN, equipmentFrom, type EquipmentKind } from '../content/kitchen';
+import { works } from './household';
 import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
+import { rememberFact } from './memory';
+import { addMemory, applyDelta, findRelationship } from './relationships';
+import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
+import { yearsBetween } from './lifespan';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -101,9 +107,9 @@ export function wellbeingSummary(person: Person): string {
   if (w.energy < 15) return 'Running on empty. You need sleep before anything else.';
   if (w.sleepDebt > 20) return 'Badly short on sleep. Everything is harder than it should be.';
   if (w.stress > 78) return 'Stretched very thin. Something is going to give.';
-  if (w.nourishment < 25) return 'Hungry, and it is starting to show.';
+  if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
-  if (w.morale < 30) return 'Flat. The work is fine, the feeling is not.';
+  if (w.morale < 30) return 'Flat. The work is fine, the feeling isn’t.';
   return 'Holding up.';
 }
 
@@ -153,7 +159,7 @@ export const ACTIVITIES: readonly ActivityDef[] = [
   { id: 'housework', name: 'Housework', category: 'chores', description: 'Keeps the place in condition, which is worth more than it sounds.', minutes: 60, perHour: { energy: -8, stress: -2 }, requiresHome: true, tags: ['chores', 'home'] },
   { id: 'socialise', name: 'See Friends', category: 'social', description: 'The thing that keeps you a person rather than a career.', minutes: 150, variableDuration: { min: 60, max: 360 }, perHour: { energy: -4, stress: -14, morale: 9 }, cost: 45_00, requiresCompanion: false, tags: ['social', 'relationships'] },
   { id: 'network', name: 'Industry Event', category: 'social', description: 'A room full of people who could change your year.', minutes: 180, perHour: { energy: -9, stress: 6, morale: 2 }, cost: 30_00, practises: [{ key: 'networking', kind: 'attribute', gain: 1.4 }], tags: ['career', 'social'] },
-  { id: 'commute', name: 'Commute', category: 'transport', description: 'Time you do not get back.', minutes: 45, perHour: { energy: -5, stress: 7 }, tags: ['transport'] },
+  { id: 'commute', name: 'Commute', category: 'transport', description: 'Time you don’t get back.', minutes: 45, perHour: { energy: -5, stress: 7 }, tags: ['transport'] },
 ];
 
 export const ACTIVITY_BY_ID: Readonly<Record<string, ActivityDef>> =
@@ -162,6 +168,58 @@ export const ACTIVITY_BY_ID: Readonly<Record<string, ActivityDef>> =
 // ---------------------------------------------------------------------------
 // Registration
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// The kitchen
+// ---------------------------------------------------------------------------
+
+/**
+ * What you can actually cook with, and how good it is.
+ *
+ * A home is fitted: a hob, an oven, a fridge, pans, a knife. Everything past
+ * that is a thing you went out and bought, and the machine you bought is
+ * better than the one that came with the flat, which is the entire reason
+ * anybody buys one. The number against each kind is the quality of the best
+ * one you own of it.
+ */
+export function kitchenOf(sim: Simulation, personId: Id): Map<EquipmentKind, number> {
+  const kit = new Map<EquipmentKind, number>();
+  const person = sim.universe.people[personId];
+  if (!person?.residenceId) return kit;
+  for (const kind of FITTED_KITCHEN) kit.set(kind, 50);
+  for (const asset of Object.values(sim.universe.assets)) {
+    if (asset.ownerId !== personId || asset.soldAt) continue;
+    // A broken machine is not a slow machine. It does nothing at all.
+    if (!works(asset)) continue;
+    const item = asset.catalogId ? CATALOG.get(asset.catalogId) : undefined;
+    if (!item) continue;
+    for (const kind of equipmentFrom(item.name, item.category)) {
+      // A thing in poor condition is a worse thing to cook with.
+      const worth = Math.round(item.quality * clamp(asset.condition / 100, 0.4, 1));
+      kit.set(kind, Math.max(kit.get(kind) ?? 0, worth));
+    }
+  }
+  return kit;
+}
+
+/** The kit a dish needs that you do not have, in words. */
+export function missingEquipment(sim: Simulation, personId: Id, recipeId: string): string[] {
+  const recipe = RECIPES.get(recipeId);
+  if (!recipe) return [];
+  const kit = kitchenOf(sim, personId);
+  return recipe.equipment
+    .filter((kind) => !kit.has(kind as EquipmentKind))
+    .map((kind) => EQUIPMENT_LABEL[kind as EquipmentKind] ?? kind);
+}
+
+/** Who else is at home to be fed right now. */
+export function othersAtHome(sim: Simulation, personId: Id): Id[] {
+  const person = sim.universe.people[personId];
+  if (!person?.residenceId) return [];
+  return Object.values(sim.universe.people)
+    .filter((other) => other.id !== personId && (other.aliveUntil === undefined || other.aliveUntil > sim.now) && other.residenceId === person.residenceId)
+    .map((other) => other.id);
+}
 
 export function registerLife(sim: Simulation): void {
   sim.onSchedule('life.day_rollover', () => {
@@ -183,7 +241,7 @@ export function registerLife(sim: Simulation): void {
       const person = s.player;
       const hours = clamp(p.hours, 0.5, 16);
       const start = p.startAt ?? s.now;
-      if (start < s.now) throw new CommandError('You cannot go to sleep in the past.');
+      if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not
@@ -197,7 +255,7 @@ export function registerLife(sim: Simulation): void {
       s.emit('life.sleep_started', { personId: person.id, hours, quality });
       s.advanceTo(wakeAt);
 
-      applySleep(person, hours, quality);
+      applySleep(person, hours, quality, s.now);
       person.lastSleptAt = s.now;
       const recovered = person.wellbeing.energy - before.energy;
 
@@ -241,10 +299,10 @@ export function registerLife(sim: Simulation): void {
       );
 
       if (def.requiresHome && !person.residenceId) {
-        throw new CommandError(`${def.name} needs somewhere to live. You do not have a home yet.`);
+        throw new CommandError(`${def.name} needs somewhere to live. You don’t have a home yet.`);
       }
       if (person.wellbeing.energy < 8 && (def.perHour.energy ?? 0) < 0) {
-        throw new CommandError('You are too exhausted for that. Sleep first.');
+        throw new CommandError('You’re too exhausted for that. Sleep first.');
       }
 
       const conflicts = s.timeline.conflicts(s.now, minutes);
@@ -261,7 +319,7 @@ export function registerLife(sim: Simulation): void {
         const accountId = p.accountId ?? person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay from.');
         if (s.ledger.availableFunds(accountId) < cost) {
-          throw new CommandError(`${def.name} costs about ${formatMoney(cost)} and you cannot cover it right now.`);
+          throw new CommandError(`${def.name} costs about ${formatMoney(cost)} and you can’t cover it right now.`);
         }
         s.expense(accountId, cost, def.name, def.category === 'food' ? 'dining' : 'lifestyle');
       }
@@ -277,13 +335,25 @@ export function registerLife(sim: Simulation): void {
 
   // --- Cooking -------------------------------------------------------------
 
-  sim.onCommand<{ recipeId: string }, { servings: number; nourishment: number }>(
+  sim.onCommand<
+    { recipeId: string; forPeopleIds?: Id[] },
+    { servings: number; nourishment: number; fed: Id[]; usedEquipment: string[] }
+  >(
     'life.cook',
     (p, { sim: s }) => {
       const recipe = RECIPES.get(p.recipeId);
       if (!recipe) throw new CommandError('No such recipe.');
       const person = s.player;
-      if (!person.residenceId) throw new CommandError('You need a kitchen. You do not have a home yet.');
+      if (!person.residenceId) throw new CommandError('You need a kitchen. You don’t have a home yet.');
+
+      // The kit before the food: there is no point checking the pantry for a
+      // dish you have nothing to cook it in.
+      const kit = kitchenOf(s, person.id);
+      const short = recipe.equipment.filter((kind) => !kit.has(kind as EquipmentKind));
+      if (short.length > 0) {
+        const words = short.map((kind) => EQUIPMENT_LABEL[kind as EquipmentKind] ?? kind);
+        throw new CommandError(`You don’t have what you need to cook that: ${words.join(', ')}. Appliances are in Shopping.`);
+      }
 
       // Check the pantry actually has the ingredients.
       const missing: string[] = [];
@@ -301,7 +371,7 @@ export function registerLife(sim: Simulation): void {
         if (needed > 0.0001) missing.push(CATALOG.get(ing.catalogId)?.name ?? ing.catalogId);
       }
       if (missing.length > 0) {
-        throw new CommandError(`You are missing ${missing.join(', ')}. Buy groceries first.`);
+        throw new CommandError(`You’re missing ${missing.join(', ')}. Buy groceries first.`);
       }
 
       for (const c of consume) {
@@ -311,19 +381,58 @@ export function registerLife(sim: Simulation): void {
         if (stock.quantity <= 0.0001) delete s.universe.pantry[c.itemId];
       }
 
+      // What you cooked it with. A machine better than the fitted one does
+      // something the fitted one does not: a cleaner plate, a shorter job.
+      const used = recipe.equipment.map((kind) => kit.get(kind as EquipmentKind) ?? 50);
+      const kitQuality = used.length > 0 ? used.reduce((a, b) => a + b, 0) / used.length : 50;
+      const kitEdge = clamp((kitQuality - 50) / 100, -0.1, 0.45);
+
       const skill = person.skills['cooking'] ?? 5;
       const difficultyGap = skill - recipe.difficulty;
-      const qualityMultiplier = clamp(0.62 + difficultyGap / 90, 0.45, 1.25);
+      const qualityMultiplier = clamp(0.62 + difficultyGap / 90 + kitEdge * 0.5, 0.45, 1.45);
       const nourishment = Math.round(recipe.nourishment * qualityMultiplier);
+      // Good kit is quicker. It never makes a slow braise a fast one.
+      const minutes = Math.max(2, Math.round(recipe.prepMinutes * (1 - kitEdge * 0.4)));
 
-      s.advanceTo(s.now + recipe.prepMinutes * MS_MINUTE);
+      s.advanceTo(s.now + minutes * MS_MINUTE);
       person.wellbeing.nourishment = clamp(person.wellbeing.nourishment + nourishment, 0, 100);
       person.wellbeing.morale = clamp(person.wellbeing.morale + recipe.quality * qualityMultiplier * 0.04, 0, 100);
-      person.wellbeing.energy = clamp(person.wellbeing.energy - recipe.prepMinutes * 0.05, 0, 100);
+      person.wellbeing.energy = clamp(person.wellbeing.energy - minutes * 0.05, 0, 100);
       person.skills['cooking'] = clamp(skill + 0.6, 0, 100);
 
-      s.emit('life.cooked', { personId: person.id, recipeId: recipe.id, servings: recipe.servings, nourishment });
-      return { servings: recipe.servings, nourishment };
+      // The rest of what you made goes to whoever is there to eat it. You get
+      // one serving; the others get one each until the dish runs out.
+      const offered = p.forPeopleIds ?? othersAtHome(s, person.id);
+      const fed: Id[] = [];
+      for (const otherId of offered) {
+        if (fed.length >= recipe.servings - 1) break;
+        const other = s.universe.people[otherId];
+        if (!other || other.id === person.id) continue;
+        other.wellbeing.nourishment = clamp(other.wellbeing.nourishment + nourishment, 0, 100);
+        other.wellbeing.morale = clamp(other.wellbeing.morale + recipe.quality * qualityMultiplier * 0.05, 0, 100);
+        rememberFact(s, other.id, {
+          kind: 'event', aboutId: person.id, weight: 34, sourceKind: 'cooking',
+          text: `${person.displayName} cooked ${recipe.name} for them.`,
+        });
+        const rel = findRelationship(s, person.id, other.id);
+        if (rel) {
+          applyDelta(rel.dimensions, { affection: 1.4, trust: 0.6, familiarity: 0.8 });
+          addMemory(s, rel, {
+            kind: 'cooked_for', summary: `You cooked ${recipe.name} for them.`,
+            impact: 2, decayDays: 120,
+          });
+        }
+        fed.push(other.id);
+      }
+
+      s.emit('life.cooked', {
+        personId: person.id, recipeId: recipe.id, servings: recipe.servings,
+        nourishment, fed, minutes,
+      });
+      return {
+        servings: recipe.servings, nourishment, fed,
+        usedEquipment: recipe.equipment.slice(),
+      };
     },
   );
 
@@ -344,10 +453,10 @@ export function registerLife(sim: Simulation): void {
         cost = retailPrice(item.id, 'greenrow', costOfLiving(person.currentLocationId));
         const accountId = p.accountId ?? person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay from.');
-        if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`That costs ${formatMoney(cost)} and you cannot cover it.`);
+        if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`That costs ${formatMoney(cost)} and you can’t cover it.`);
         s.expense(accountId, cost, item.name, 'dining');
       } else {
-        throw new CommandError(`You do not have any ${item.name}. Buy some first.`);
+        throw new CommandError(`You don’t have any ${item.name}. Buy some first.`);
       }
 
       const nourishment = item.nourishment ?? 15;
@@ -395,11 +504,16 @@ export function sleepQuality(sim: Simulation, person: Person): number {
   return clamp(quality, 0.28, 1);
 }
 
-export function applySleep(person: Person, hours: number, quality: number): void {
+export function applySleep(person: Person, hours: number, quality: number, at?: number): void {
   const w = person.wellbeing;
+  // A night puts back less at sixty than it did at twenty. This is the first
+  // thing about ageing anybody notices, so it is the first thing the game
+  // does with it.
+  const years = at === undefined ? 0 : yearsBetween(person.birthInstant, at, 'UTC');
+  const banked = at === undefined ? 1 : recoveryFactorAt(years);
   const effective = hours * quality;
 
-  w.energy = clamp(w.energy + effective * 13.5 * personalityOf(person, 'energyRecovery'), 0, 100);
+  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery'), 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours. The old formula only ever paid down the excess, which
   // was harmless while nothing accrued debt in the first place — once the
@@ -413,8 +527,11 @@ export function applySleep(person: Person, hours: number, quality: number): void
   // character lost morale every single night and sat at zero forever. Five
   // hours of real rest is break-even; more than that helps, less costs.
   const restful = effective - 5;
-  w.condition = clamp(w.condition + restful * 0.9, 0, 100);
-  w.morale = clamp(w.morale + restful * 1.6, 0, 100);
+  // And a good night still cannot take a body above what a body that age can
+  // reach. The daily clamp is not enough on its own: sleep runs after it.
+  const ceiling = at === undefined ? 100 : ceilingAt(years).condition;
+  w.condition = clamp(Math.min(w.condition + restful * 0.9 * (restful > 0 ? banked : 1), ceiling), 0, 100);
+  w.morale = clamp(w.morale + restful * 1.6 * (restful > 0 ? banked : 1), 0, 100);
   w.travelFatigue = clamp(w.travelFatigue - effective * 6, 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
@@ -480,13 +597,17 @@ export function dailyRollover(sim: Simulation): void {
     asset.currentValue = Math.max(0, Math.round(asset.currentValue * (1 - rate / 365)));
   }
 
-  // Fitness decays without use; condition slowly recovers toward fitness.
+  // Fitness decays without use; condition slowly recovers toward fitness. And
+  // both are held under what a body of that age can reach, so a seventy year
+  // old with perfect habits is a very fit seventy year old rather than
+  // indistinguishable from a very fit twenty five year old.
   for (const person of Object.values(sim.universe.people)) {
     if (person.tier === 'dormant' || person.tier === 'background') continue;
     const w = person.wellbeing;
-    w.fitness = clamp(w.fitness - 0.18, 0, 100);
-    const target = 60 + w.fitness * 0.4;
-    w.condition = clamp(w.condition + (target - w.condition) * 0.02, 0, 100);
+    const ceiling = ceilingAt(yearsBetween(person.birthInstant, sim.now, sim.homeZone));
+    w.fitness = clamp(Math.min(w.fitness - 0.18, ceiling.fitness), 0, 100);
+    const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
+    w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
   }
 
   liveTheUnattendedDay(sim);
@@ -516,7 +637,7 @@ function liveTheUnattendedDay(sim: Simulation): void {
       const quality = sleepQuality(sim, person) * 0.95;
       const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
       sleptHours = hours;
-      applySleep(person, hours, quality);
+      applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;
 
       // Coasting keeps you going; it does not get you to your best. Choosing
@@ -575,7 +696,7 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
   }
 
   if (!person.isPlayer) {
-    // NPCs feed themselves off-screen; their money is not modelled.
+    // NPCs feed themselves off-screen; their money is not modeled.
     w.nourishment = clamp(w.nourishment + 30, 0, 100);
     person.lastAteAt = sim.now;
     return true;
@@ -587,13 +708,14 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
 
   // Somebody feeding themselves without a plan shops, they do not eat out
   // three times a day. They also do not eat one thing for the rest of their
-  // life: taking the single best value in the catalogue every time meant the
+  // life: taking the single best value in the catalog every time meant the
   // same line of pasta five hundred and twenty-seven times in a year, and food
   // costing under four dollars a day. Pick from the good-value end, weighted,
   // so it is still somebody being careful with money and not the same meal
   // forever.
   const candidates = CATALOG.all()
     .filter((i) => (i.category === 'groceries' || i.category === 'dining') && (i.nourishment ?? 0) > 0)
+    .filter((i) => !isIngredientOnly(i.name))
     .map((i) => {
       const retailer = i.category === 'groceries' ? 'valuemart' : 'cornerstore';
       const cost = Math.max(1, retailPrice(i.id, retailer, col));
@@ -613,13 +735,31 @@ function eatWhateverIsAround(sim: Simulation, person: Person): boolean {
 }
 
 /**
+ * Things nobody eats as they are.
+ *
+ * The unplanned meal picks the best value in the shop, and once the larder
+ * carried what a recipe actually needs that meant a careful person was living
+ * on plain flour and tinned coconut milk, which costs almost nothing and is
+ * not eating. Flour is an ingredient. So is stock, so is oil, so is a jar of
+ * cumin. They are bought to cook with, and the cook command is where they
+ * belong.
+ */
+const INGREDIENT_ONLY = /flour|yeast|baking powder|stock|pur[\u00e9e]+e?|pastry|vinegar|\boil\b|extract|paste|polenta|sugar|peppercorns|salt|paprika|cumin|cinnamon|oregano|bay leaves|chilli flakes|coconut milk|breadcrumbs|gochujang|harissa|miso/i;
+
+function isIngredientOnly(name: string): boolean {
+  return INGREDIENT_ONLY.test(name);
+}
+
+/**
  * How wide the net is when somebody eats without having shopped.
  *
- * Sixteen is the good-value end of the catalogue — staples, a few proteins,
- * and the occasional bought lunch. Wider than this and a careful person is
- * eating tasting menus; narrower and they are back to one thing forever.
+ * Forty is the value end of the catalog — the staples, the everyday
+ * proteins, the bread, and the occasional bought lunch. Wider than this and a
+ * careful person is eating tasting menus; narrower and they live on dried
+ * pasta and tinned beans, which was what happened when the larder arrived and
+ * filled the cheap end with forty more things to be careful with.
  */
-const UNPLANNED_MEAL_CHOICES = 16;
+const UNPLANNED_MEAL_CHOICES = 40;
 
 /** Why it was that, this time. Read straight off the bank statement. */
 const UNPLANNED_MEAL_NOTES: readonly string[] = [
@@ -653,10 +793,10 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   if (available < ideal) {
     return {
       hours: Math.max(3, Math.round(available * 2) / 2),
-      reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night is not available.`,
+      reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night isn’t available.`,
     };
   }
-  return { hours: Math.round(ideal * 2) / 2, reason: debt > 8 ? 'You are carrying real sleep debt.' : 'A normal night.' };
+  return { hours: Math.round(ideal * 2) / 2, reason: debt > 8 ? 'You’re carrying real sleep debt.' : 'A normal night.' };
 }
 
 export const DAY_MS = MS_DAY;

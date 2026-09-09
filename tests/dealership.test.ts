@@ -112,8 +112,8 @@ describe('the lot', () => {
     const { listing, placeId } = aCar(sim);
     const other = lots.find((l) => l.id !== placeId)!;
     arrive(sim, other.id);
-    expect(attempt(sim, 'deal.open', { placeId: other.id, listingId: listing.id }).error).toMatch(/not on the lot/);
-    expect(attempt(sim, 'deal.open', { placeId: 'us-ny-newyork:dealership:0', listingId: listing.id }).error).toMatch(/not in the city/);
+    expect(attempt(sim, 'deal.open', { placeId: other.id, listingId: listing.id }).error).toMatch(/n[o’]t on the lot/);
+    expect(attempt(sim, 'deal.open', { placeId: 'us-ny-newyork:dealership:0', listingId: listing.id }).error).toMatch(/n[o’]t in the city/);
   });
 });
 
@@ -320,8 +320,8 @@ describe('signing', () => {
     const vehicle = sim.universe.vehicles[signed.vehicleId]!;
     expect(signed.deliveryDueAt).toBeGreaterThan(sim.now);
     expect(vehicle.deliveryDueAt).toBe(signed.deliveryDueAt);
-    expect(attempt(sim, 'veh.drive', { vehicleId: vehicle.id, miles: 10 }).error).toMatch(/not been delivered/);
-    expect(attempt(sim, 'veh.sell', { vehicleId: vehicle.id }).error).toMatch(/not been delivered/);
+    expect(attempt(sim, 'veh.drive', { vehicleId: vehicle.id, miles: 10 }).error).toMatch(/n[o’]t been delivered/);
+    expect(attempt(sim, 'veh.sell', { vehicleId: vehicle.id }).error).toMatch(/n[o’]t been delivered/);
     expect(vehicle.serviceRecordIds).toHaveLength(0);
     sim.advanceTo(signed.deliveryDueAt! + 60_000);
     expect(vehicle.deliveryDueAt).toBeUndefined();

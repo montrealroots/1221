@@ -47,7 +47,7 @@ describe('the random number generator', () => {
     expect(third).not.toEqual(first);
   });
 
-  it('produces a normal distribution centred where it says', () => {
+  it('produces a normal distribution centered where it says', () => {
     const rng = rngFor('calibration', 'normal');
     let sum = 0;
     const n = 50_000;

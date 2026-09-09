@@ -5,10 +5,10 @@
  * A plan is different: it is yours. You put it on the calendar, you can move
  * it or drop it, and when the time comes it asks whether you want to play it
  * out, get it done, or let it go. What happened is recorded as exactly one of
- * planned, attended, skipped, missed or cancelled.
+ * planned, attended, skipped, missed or canceled.
  *
  * A plan can carry a scene. Attending opens that scene; getting it done runs
- * the same scene summarised, by the same rules; the scene finishing is what
+ * the same scene summarized, by the same rules; the scene finishing is what
  * marks the plan attended — not the click that opened it.
  */
 
@@ -87,10 +87,10 @@ function settle(sim: Simulation, plan: PersonalPlan, status: PersonalPlan['statu
 export function attendable(sim: Simulation, plan: PersonalPlan): { ok: boolean; reason?: string } {
   if (plan.status !== 'planned') return { ok: false, reason: `That plan is ${plan.status}.` };
   if (sim.now < plan.at - EARLY_MINUTES * MS_MINUTE) {
-    return { ok: false, reason: `That is planned for ${formatTime(plan.at, sim.zone)}. Move it if you want it now.` };
+    return { ok: false, reason: `That’s planned for ${formatTime(plan.at, sim.zone)}. Move it if you want it now.` };
   }
   if (plan.locationId !== sim.player.currentLocationId) {
-    return { ok: false, reason: `That is in ${CITIES.get(plan.locationId)?.name ?? 'another city'}, and you are not there.` };
+    return { ok: false, reason: `That’s in ${CITIES.get(plan.locationId)?.name ?? 'another city'}, and you aren’t there.` };
   }
   return { ok: true };
 }
@@ -116,7 +116,7 @@ export function registerPlans(sim: Simulation): void {
     sim.requireDecision({
       urgency: 60, category: 'personal',
       title: `Time For ${plan.title}`,
-      detail: `${formatDuration(plan.durationMinutes * MS_MINUTE)}${where ? ` at ${where}` : ''}. It is on your calendar for now.`,
+      detail: `${formatDuration(plan.durationMinutes * MS_MINUTE)}${where ? ` at ${where}` : ''}. It’s on your calendar for now.`,
       route: '/workspace/calendar',
       actions,
       dueAt: plan.at + plan.durationMinutes * MS_MINUTE,
@@ -197,7 +197,7 @@ export function registerPlans(sim: Simulation): void {
       }
       if (p.sceneDefinitionId) {
         const def = sceneDefinition(p.sceneDefinitionId);
-        if (!def) throw new CommandError('That kind of plan is not available.');
+        if (!def) throw new CommandError('That kind of plan isn’t available.');
       }
       const clash = s.timeline.conflicts(p.at, minutes)[0];
       if (clash) throw new CommandError(`That runs into "${clash.label}" at ${formatTime(clash.at, s.zone)}. Pick another time.`);
@@ -229,10 +229,10 @@ export function registerPlans(sim: Simulation): void {
     'plan.reschedule',
     (p, { sim: s }) => {
       const plan = requirePlan(s, p.planId);
-      if (plan.status !== 'planned') throw new CommandError(`That plan is ${plan.status}; it cannot be moved.`);
+      if (plan.status !== 'planned') throw new CommandError(`That plan is ${plan.status}; it can’t be moved.`);
       if (!Number.isFinite(p.at) || p.at < s.now) throw new CommandError('Move it somewhere in the future.');
       const minutes = p.durationMinutes ?? plan.durationMinutes;
-      if (!Number.isInteger(minutes) || minutes < MIN_PLAN_MINUTES || minutes > MAX_PLAN_MINUTES) throw new CommandError('That is not a sensible length.');
+      if (!Number.isInteger(minutes) || minutes < MIN_PLAN_MINUTES || minutes > MAX_PLAN_MINUTES) throw new CommandError('That isn’t a sensible length.');
       const clash = s.timeline.conflicts(p.at, minutes, plan.scheduledItemId)[0];
       if (clash) throw new CommandError(`That runs into "${clash.label}" at ${formatTime(clash.at, s.zone)}.`);
       const item = s.timeline.get(plan.scheduledItemId);

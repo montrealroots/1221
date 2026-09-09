@@ -5,7 +5,7 @@
  * saves have in common; nothing here is ever mutated by gameplay.
  *
  * Honesty rule: every record declares where it came from. Geography is real
- * public reference data. Market figures, company behaviour, prices and specs
+ * public reference data. Market figures, company behavior, prices and specs
  * are SIMULATED and say so, because presenting an invented 2027 box-office
  * result or an invented lease rate as verified fact would be a lie the player
  * cannot detect.

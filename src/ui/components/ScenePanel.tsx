@@ -124,14 +124,14 @@ export function ScenePanel() {
           </div>
 
           <form className="scene-type" onSubmit={typed}>
-            <label htmlFor="scene-typed" className="xs dim">Or Type It</label>
+            <label htmlFor="scene-typed" className="xs dim">{view.freeText?.label ?? 'Or Type It'}</label>
             <div className="row gap-2">
               <input
                 id="scene-typed"
                 className="grow"
                 value={text}
                 maxLength={200}
-                placeholder="A choice above, or leave, skip, help"
+                placeholder={view.freeText?.placeholder ?? 'A choice above, or leave, skip, help'}
                 onChange={(event) => setText(event.target.value)}
                 autoComplete="off"
               />

@@ -1,13 +1,21 @@
-import { categoryLabel, titleCaseLabel } from '@/engine/core/text';
+import { categoryLabel, plural, titleCaseLabel } from '@/engine/core/text';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Tabs, MoneyText } from '@/ui/components/primitives';
-import { shoppingCatalogue, wardrobeOf } from '@/engine/systems/commerce';
+import { shoppingCatalogue } from '@/engine/systems/commerce';
 import { placesIn } from '@/engine/content/places';
 import { REAL_GOODS_NOTE } from '@/engine/content/goods';
 import { REAL_RETAILER_NOTE } from '@/engine/content/brands';
 import { retailerAt, standingAt } from '@/engine/systems/retail';
+import { commissionsOf, describeSpec } from '@/engine/systems/jewellery';
+import {
+  costumesOf, describeSpec as describeGarment, readinessFor, selfHours, selfQuality,
+} from '@/engine/systems/costume';
+import { CLOTHS, FINISHES, GARMENT_KINDS, SELF_MADE_NOTE } from '@/engine/content/costume';
 import { activeScene } from '@/engine/systems/scenes';
+import { CLEANER_PER_PIECE, NEEDS_WASHING, appraise, garmentsOf, preferenceOf, verdictLabel, wardrobeView, wearing } from '@/engine/systems/wardrobe';
+import { AIR_DRY_HOURS, LAUNDERETTE_LOAD, TUMBLE_DRY_HOURS, hasWorkingDryer, hasWorkingWasher } from '@/engine/systems/household';
+import { AUDIENCE_LABEL, COLOUR_NOTE, SLOT_LABEL, colourOf, materialOf, type Slot } from '@/engine/content/wardrobe';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 
@@ -16,6 +24,7 @@ type Tab = 'shop' | 'owned' | 'wardrobe' | 'orders';
 const CATEGORIES = [
   'groceries', 'clothing', 'footwear', 'accessory', 'watch', 'jewelry',
   'furniture', 'home', 'household', 'appliance', 'electronics', 'equipment', 'art', 'books',
+  'kit', 'makeup', 'haberdashery',
 ];
 
 export function ShoppingWorkspace() {
@@ -23,10 +32,27 @@ export function ShoppingWorkspace() {
   const [tab, setTab] = useState<Tab>('shop');
   const [category, setCategory] = useState('groceries');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [everything, setEverything] = useState(false);
+  const [makeKind, setMakeKind] = useState('shirt');
+  const [makeCloth, setMakeCloth] = useState('cotton_shirting');
+  const [makeFinish, setMakeFinish] = useState('machine');
 
-  const catalogue = useWorld((s) => shoppingCatalogue(s, category));
+  const catalogue = useWorld((s) => shoppingCatalogue(s, category, everything));
+  const rack = useWorld((s) => preferenceOf(s, s.player.id));
   const owned = useWorld((s) => Object.values(s.universe.assets).filter((a) => a.ownerId === s.player.id && !a.soldAt));
-  const wardrobe = useWorld((s) => wardrobeOf(s, s.player.id));
+  const wardrobe = useWorld((s) => wardrobeView(s, s.player.id));
+  const makeSpec = { kind: makeKind, cloth: makeCloth, finish: makeFinish };
+  const costumes = useWorld((s) => costumesOf(s, s.player.id));
+  const bench = useWorld((s) => ({
+    ready: readinessFor(s, s.player.id, makeSpec),
+    hours: selfHours(s, s.player.id, makeSpec),
+    quality: selfQuality(s, s.player.id, makeSpec),
+  }));
+  const onNow = useWorld((s) => wearing(s, s.player.id));
+  const mirror = useWorld((s) => appraise(s, wearing(s, s.player.id)));
+  const looks = useWorld((s) => Object.values(s.universe.outfits).filter((o) => o.personId === s.player.id));
+  const now = useWorld((s) => s.now);
+  const commissions = useWorld((s) => commissionsOf(s, s.player.id).filter((c) => c.status !== 'cancelled'));
   const orders = useWorld((s) => Object.values(s.universe.orders).filter((o) => o.buyerId === s.player.id).sort((a, b) => b.placedAt - a.placedAt));
   const scene = useWorld(activeScene);
   const storefronts = useWorld((s) => placesIn(s.player.currentLocationId)
@@ -46,6 +72,23 @@ export function ShoppingWorkspace() {
         <p className="xs dim">{REAL_GOODS_NOTE} {REAL_RETAILER_NOTE}</p>
       </div>
 
+      <div className="row" style={{ gap: 'var(--s2)', alignItems: 'center', marginBottom: 'var(--s3)', flexWrap: 'wrap' }}>
+        <span className="xs dim">Showing</span>
+        {(['men', 'women', 'both'] as const).map((option) => (
+          <button
+            key={option}
+            className={`btn btn-sm${rack === option ? ' btn-primary' : ''}`}
+            onClick={() => run('wear.set_preference', { preference: option })}
+          >
+            {option === 'both' ? 'Everything' : AUDIENCE_LABEL[option]}
+          </button>
+        ))}
+        <label className="xs dim" style={{ display: 'inline-flex', gap: 6, alignItems: 'center', marginLeft: 'var(--s2)' }}>
+          <input type="checkbox" checked={everything} onChange={(e) => setEverything(e.target.checked)} />
+          Show The Whole Floor Anyway
+        </label>
+      </div>
+
       <Tabs active={tab} onChange={setTab} tabs={[
         { id: 'shop', label: 'Shop' },
         { id: 'owned', label: 'What You Own', badge: owned.length },
@@ -61,7 +104,7 @@ export function ShoppingWorkspace() {
             flush
           >
             {storefronts.length === 0 ? (
-              <Empty title="No Shop Floor Here" body="Nothing in this city has a door SLATE knows the inside of. The catalogue below still delivers." />
+              <Empty title="No Shop Floor Here" body="Nothing in this city has a door SLATE knows the inside of. The catalog below still delivers." />
             ) : (
               <div className="list">
                 {storefronts.slice(0, 8).map(({ place, retailer, standing, here }) => (
@@ -111,7 +154,7 @@ export function ShoppingWorkspace() {
                       <div className="xs dim">
                         {item.brand} · quality {item.quality}
                         {item.depreciation < 0 && <span className="positive"> · appreciates</span>}
-                        {item.shelfLifeDays && ` · keeps ${item.shelfLifeDays} days`}
+                        {item.shelfLifeDays ? ` · keeps ${plural(item.shelfLifeDays, 'day')}` : null}
                       </div>
                     </div>
                     <input
@@ -151,7 +194,7 @@ export function ShoppingWorkspace() {
       {tab === 'owned' && (
         <Panel title="Your Things" flush>
           {owned.length === 0 ? (
-            <Empty title="Nothing Yet" body="Anything you buy that is not consumed shows up here." />
+            <Empty title="Nothing Yet" body="Anything you buy that isn’t consumed shows up here." />
           ) : (
             <div className="list">
               {owned.sort((a, b) => b.currentValue - a.currentValue).map((asset) => (
@@ -177,28 +220,236 @@ export function ShoppingWorkspace() {
       )}
 
       {tab === 'wardrobe' && (
-        <div className="grid grid-2">
-          {Object.entries(wardrobe).map(([slot, items]) => (
-            <Panel key={slot} title={slot} flush>
+        <>
+          <Panel
+            title="What You Have On"
+            subtitle={onNow.length === 0 ? 'Nothing you chose.' : `${verdictLabel(mirror.verdict)} — ${mirror.verdict} of 100 for ${mirror.code.name.toLowerCase()}.`}
+            actions={
+              <button className="btn btn-sm btn-primary" disabled={Boolean(scene)} onClick={() => run('scene.start', { definitionId: 'life.dress' })}>
+                Get Dressed
+              </button>
+            }
+            flush
+          >
+            {onNow.length === 0 ? (
+              <Empty title="Not Dressed" body="Open the wardrobe and put something on, slot by slot." />
+            ) : (
+              <>
+                <div className="list">
+                  {onNow.map((asset) => (
+                    <div key={asset.id} className="list-item list-static">
+                      <div className="grow">
+                        <div className="small strong">{asset.name}</div>
+                        <div className="xs dim">
+                          {SLOT_LABEL[asset.wardrobe!.slot as Slot] ?? asset.wardrobe!.slot}
+                          {' · '}{colourOf(asset.wardrobe!.colour).name}
+                          {' · '}{materialOf(asset.wardrobe!.material).name}
+                          {(asset.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING ? ' · Needs Washing' : ''}
+                        </div>
+                      </div>
+                      <button className="btn btn-sm" onClick={() => run('wear.take_off', { assetId: asset.id })}>Take Off</button>
+                    </div>
+                  ))}
+                </div>
+                {mirror.notes.length > 0 && (
+                  <div className="callout" style={{ marginTop: 'var(--s3)' }}>
+                    <strong className="xs">The Mirror</strong>
+                    {mirror.notes.map((note, i) => (
+                      <p key={i} className="xs" style={{ margin: i === 0 ? '6px 0 0' : '4px 0 0' }}>
+                        {note.weight < 0 ? '— ' : '+ '}{note.text}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </Panel>
+
+          {looks.length > 0 && (
+            <Panel title="Saved Looks" subtitle="Put the whole thing back on in one go." flush>
               <div className="list">
-                {items.map((asset) => (
-                  <div key={asset.id} className="list-item list-static">
+                {looks.map((look) => (
+                  <div key={look.id} className="list-item list-static">
                     <div className="grow">
-                      <div className="small">{asset.name}</div>
+                      <div className="small strong">{look.name}</div>
                       <div className="xs dim">
-                        formality {asset.wardrobe?.formality} · condition {Math.round(asset.condition)}
+                        {plural(look.assetIds.length, 'Piece')} · Formality {look.formality}
+                        {look.timesWorn ? ` · Worn ${plural(look.timesWorn, 'Time')}` : ' · Never Worn'}
                       </div>
                     </div>
-                    <span className="mono xs">{formatMoney(asset.currentValue, { cents: false })}</span>
+                    <button className="btn btn-sm" onClick={() => run('wear.outfit', { outfitId: look.id })}>Wear It</button>
                   </div>
                 ))}
               </div>
             </Panel>
-          ))}
-          {Object.keys(wardrobe).length === 0 && (
-            <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be assembled into outfits." />
           )}
-        </div>
+
+          <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>{COLOUR_NOTE}</p>
+
+          {commissions.length > 0 && (
+            <Panel title="Being Made For You" subtitle="A bench can’t be hurried, and nobody there will pretend otherwise." flush>
+              <div className="list">
+                {commissions.map((c) => (
+                  <div key={c.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">{titleCaseLabel(describeSpec(c))}</div>
+                      <div className="xs dim">
+                        {c.status === 'ordered' && c.readyAt
+                          ? `On the bench · ready ${formatDate(c.readyAt, sim.homeZone)}`
+                          : c.status === 'ready' ? 'Finished, and waiting for you'
+                            : c.status === 'collected' ? `Collected ${formatDate(c.collectedAt ?? c.quotedAt, sim.homeZone)}`
+                              : `Quoted ${formatDate(c.quotedAt, sim.homeZone)}, not ordered`}
+                        {c.engraving ? ` · “${c.engraving}”` : ''}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <MoneyText amount={c.quotedPrice} />
+                      {c.status === 'ordered' || c.status === 'ready' ? (
+                        <div className="xs dim">{formatMoney(c.quotedPrice - c.deposit, { cents: false })} still to pay</div>
+                      ) : null}
+                    </div>
+                    {c.status === 'ready' && (
+                      <button className="btn btn-sm btn-primary" onClick={() => run('jewel.collect', { commissionId: c.id })}>Collect</button>
+                    )}
+                    {(c.status === 'quoted' || c.status === 'ordered') && (
+                      <button className="btn btn-sm" onClick={() => run('jewel.cancel', { commissionId: c.id })}>Cancel</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Panel>
+          )}
+
+
+          <Panel
+            title="At Your Own Table"
+            subtitle="A machine, enough cloth, and the hours. How it comes out is down to your hands."
+            flush
+          >
+            <div className="row wrap gap-2" style={{ padding: 'var(--s3)' }}>
+              <label className="xs dim">
+                Garment
+                <select className="input" value={makeKind} onChange={(e) => setMakeKind(e.target.value)} aria-label="Garment To Make">
+                  {GARMENT_KINDS.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
+                </select>
+              </label>
+              <label className="xs dim">
+                Cloth
+                <select className="input" value={makeCloth} onChange={(e) => setMakeCloth(e.target.value)} aria-label="Cloth To Cut It From">
+                  {CLOTHS.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+              </label>
+              <label className="xs dim">
+                Finish
+                <select className="input" value={makeFinish} onChange={(e) => setMakeFinish(e.target.value)} aria-label="How It Is Finished">
+                  {FINISHES.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
+                </select>
+              </label>
+            </div>
+            <div className="list">
+              <div className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{titleCaseLabel(describeGarment(makeSpec))}</div>
+                  <div className="xs dim">
+                    {plural(bench.ready.yardsNeeded, 'Yard')} · About {plural(bench.hours, 'Hour')} At The Table
+                    {' · '}Would Come Out {bench.quality} Of 100
+                  </div>
+                </div>
+                <button
+                  className="btn btn-sm btn-primary"
+                  disabled={!bench.ready.ready}
+                  onClick={() => run('costume.make', makeSpec)}
+                >
+                  Make It
+                </button>
+              </div>
+            </div>
+            {!bench.ready.ready && (
+              <div className="callout" style={{ margin: 'var(--s3)' }}>
+                <strong className="xs">You Are Short Of</strong>
+                {bench.ready.missing.map((m, i) => (
+                  <p key={i} className="xs" style={{ margin: i === 0 ? '6px 0 0' : '4px 0 0' }}>{m}</p>
+                ))}
+              </div>
+            )}
+            <p className="xs dim" style={{ margin: 'var(--s3)' }}>{SELF_MADE_NOTE}</p>
+          </Panel>
+
+          {costumes.length > 0 && (
+            <Panel title="Being Cut For You" subtitle="A workroom can’t be hurried, and fittings aren’t optional if you want it to fit." flush>
+              <div className="list">
+                {costumes.map((c) => (
+                  <div key={c.id} className="list-item list-static">
+                    <div className="grow">
+                      <div className="small strong">{titleCaseLabel(describeGarment(c))}</div>
+                      <div className="xs dim">
+                        {c.maker === 'self' ? `Made by you · fits ${c.quality ?? 0} of 100`
+                          : c.status === 'ordered' || c.status === 'fitting'
+                            ? `On the table · ready ${c.readyAt ? formatDate(c.readyAt, sim.homeZone) : 'soon'}`
+                              + ` · ${c.fittingsDone} of ${plural(c.fittingsWanted, 'fitting')} done`
+                            : c.status === 'ready' ? 'Finished, and waiting for you'
+                              : c.status === 'collected' ? `Collected ${formatDate(c.collectedAt ?? c.quotedAt, sim.homeZone)}`
+                                : `Quoted ${formatDate(c.quotedAt, sim.homeZone)}, not ordered`}
+                        {c.label ? ` · “${c.label}”` : ''}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <MoneyText amount={c.quotedPrice} />
+                      {c.status === 'ordered' || c.status === 'fitting' || c.status === 'ready' ? (
+                        <div className="xs dim">{formatMoney(c.quotedPrice - c.deposit, { cents: false })} still to pay</div>
+                      ) : null}
+                    </div>
+                    {c.status === 'ready' && (
+                      <button className="btn btn-sm btn-primary" onClick={() => run('costume.collect', { costumeId: c.id })}>Collect</button>
+                    )}
+                    {(c.status === 'quoted' || c.status === 'ordered' || c.status === 'fitting') && (
+                      <button className="btn btn-sm" onClick={() => run('costume.cancel', { costumeId: c.id })}>Cancel</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Panel>
+          )}
+
+          <WashingPanel />
+
+          {wardrobe.length === 0 ? (
+            <Empty title="Nothing To Wear" body="Buy clothing and it appears here, ready to be put on and assembled into looks." />
+          ) : (
+            <div className="grid grid-2">
+              {wardrobe.map(({ slot, label, on, options }) => (
+                <Panel key={slot} title={label} subtitle={on ? `On: ${on.name}` : undefined} flush>
+                  <div className="list">
+                    {options.map((asset) => {
+                      const away = Boolean(asset.wardrobe!.awayUntil && asset.wardrobe!.awayUntil > now);
+                      const isOn = on?.id === asset.id;
+                      return (
+                        <div key={asset.id} className="list-item list-static">
+                          <div className="grow">
+                            <div className="small">{asset.name}</div>
+                            <div className="xs dim">
+                              {colourOf(asset.wardrobe!.colour).name}
+                              {' · '}{materialOf(asset.wardrobe!.material).name}
+                              {' · Condition '}{Math.round(asset.condition)}
+                              {asset.wardrobe!.timesWorn ? ` · Worn ${plural(asset.wardrobe!.timesWorn, 'Time')}` : ''}
+                              {(asset.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING ? ' · Needs Washing' : ''}
+                              {away ? ` · ${titleCaseLabel(asset.wardrobe!.awayReason ?? 'away')}` : ''}
+                            </div>
+                          </div>
+                          {isOn ? (
+                            <button className="btn btn-sm" onClick={() => run('wear.take_off', { assetId: asset.id })}>Take Off</button>
+                          ) : (
+                            <button className="btn btn-sm" disabled={away} onClick={() => run('wear.put_on', { assetId: asset.id })}>Put On</button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Panel>
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       {tab === 'orders' && (
@@ -233,5 +484,81 @@ export function ShoppingWorkspace() {
         </Panel>
       )}
     </>
+  );
+}
+
+/**
+ * The washing.
+ *
+ * With a machine at home it is three quarters of an hour and nothing. Without
+ * one, or with a broken one, it is the launderette: a load at a time, money,
+ * and most of an afternoon. A cashmere sweater goes in neither. It goes to the
+ * cleaner, costs by the piece, and is gone for two days, so the two are asked
+ * for separately rather than one button quietly doing the expensive thing.
+ */
+function WashingPanel() {
+  const { run } = useGame();
+  const dirty = useWorld((s) => garmentsOf(s, s.player.id)
+    .filter((a) => (a.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING));
+  const machine = useWorld((s) => hasWorkingWasher(s, s.player.id));
+  const dryer = useWorld((s) => hasWorkingDryer(s, s.player.id));
+  const specialist = dirty.filter((a) => materialOf(a.wardrobe!.material).dryCleanOnly);
+  const washable = dirty.filter((a) => !materialOf(a.wardrobe!.material).dryCleanOnly);
+  const loads = Math.max(1, Math.ceil(washable.length / 6));
+
+  if (dirty.length === 0) {
+    return (
+      <Panel title="The Washing" subtitle="Nothing needs washing.">
+        <p className="small dim" style={{ margin: 0 }}>
+          {machine
+            ? dryer
+              ? 'The washer and the dryer here both work.'
+              : 'The washer here works. There’s no dryer, so a wash hangs overnight before you can wear any of it.'
+            : 'There’s no washing machine here. When something needs washing it goes to the launderette.'}
+        </p>
+      </Panel>
+    );
+  }
+
+  return (
+    <Panel
+      title="The Washing"
+      subtitle={`${plural(dirty.length, 'Thing')} To Wash`}
+    >
+      {washable.length > 0 && (
+        <p className="small dim" style={{ marginTop: 0 }}>
+          {machine
+            ? dryer
+              ? `${plural(washable.length, 'Thing')} can go in the machine here: ${plural(loads, 'Load')}, three quarters of an hour, and about ${plural(TUMBLE_DRY_HOURS, 'Hour')} in the dryer after.`
+              : `${plural(washable.length, 'Thing')} can go in the machine here, and then on the airer: ${plural(loads, 'Load')}, nothing to pay, and about ${plural(AIR_DRY_HOURS, 'Hour')} before any of it is wearable.`
+            : `${plural(washable.length, 'Thing')} and no machine here, so it’s the launderette: ${plural(loads, 'Load')} at ${formatMoney(LAUNDERETTE_LOAD)} each, most of an afternoon, and dry when you carry it home.`}
+        </p>
+      )}
+      {specialist.length > 0 && (
+        <p className="small dim" style={{ marginTop: 0 }}>
+          {plural(specialist.length, 'Thing')} cannot go in a machine at all.
+          The cleaner charges {formatMoney(CLEANER_PER_PIECE)} a piece and keeps them two days.
+        </p>
+      )}
+      <div className="row">
+        {washable.length > 0 && (
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => run('wear.clean', { assetIds: washable.map((a) => a.id) })}
+          >
+            {machine ? 'Put A Wash On' : 'Take It To The Launderette'}
+          </button>
+        )}
+        <button
+          className="btn btn-sm"
+          onClick={() => run('wear.clean', {
+            assetIds: (specialist.length > 0 ? specialist : dirty).map((a) => a.id),
+            professional: true,
+          })}
+        >
+          {specialist.length > 0 ? 'Send Those To The Cleaner' : 'Send It All To The Cleaner'}
+        </button>
+      </div>
+    </Panel>
   );
 }

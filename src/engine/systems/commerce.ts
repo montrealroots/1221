@@ -12,8 +12,14 @@ import type { AssetCategory, Id, Order, OwnedAsset, PantryItem } from '../domain
 import { clamp } from '../core/rng';
 import { addDays, MS_DAY } from '../core/time';
 import { applyRate, formatMoney, type Money } from '../core/money';
-import { CATALOG, RETAILERS, retailPrice, retailersFor, shoppableItemsIn, type CatalogItem } from '../content/catalog';
+import { CATALOG, RETAILERS, retailPrice, stockistsFor, stocks, shoppableItemsIn, type CatalogItem } from '../content/catalog';
+import { placeInRoom } from './household';
 import { costOfLiving, salesTaxRate } from '../content/tax';
+import { defaultColour, guessMaterial } from '../content/wardrobe';
+import { preferenceOf, shows } from './wardrobe';
+
+/** Kit worth this much in one order is worth covering. */
+export const EQUIPMENT_FLOOR: Money = 2_500_00;
 
 export interface CartLine {
   catalogId: string;
@@ -27,7 +33,10 @@ export function registerCommerce(sim: Simulation): void {
     sim.schedule({ at: addDays(sim.now, 3, sim.homeZone), kind: 'shop.pantry_expiry', label: 'Pantry Check', category: 'system', priority: 95 });
   });
 
-  sim.onCommand<{ retailerId: string; lines: CartLine[]; channel?: Order['channel']; accountId?: Id; giftFor?: Id }, { orderId: Id; total: Money; deliverAt?: number }>(
+  sim.onCommand<
+    { retailerId: string; lines: CartLine[]; channel?: Order['channel']; accountId?: Id; giftFor?: Id; colours?: Record<string, string> },
+    { orderId: Id; total: Money; deliverAt?: number }
+  >(
     'shop.purchase',
     (p, { sim: s }) => {
       const retailer = RETAILERS.get(p.retailerId);
@@ -37,10 +46,10 @@ export function registerCommerce(sim: Simulation): void {
       const player = s.player;
       const cityId = player.currentLocationId;
       if (retailer.locations.length > 0 && !retailer.locations.includes(cityId)) {
-        throw new CommandError(`${retailer.name} does not have a location where you are.`);
+        throw new CommandError(`${retailer.name} doesn’t have a location where you are.`);
       }
       const channel = p.channel ?? (retailer.online ? 'online' : 'in_store');
-      if (channel === 'online' && !retailer.online) throw new CommandError(`${retailer.name} does not sell online.`);
+      if (channel === 'online' && !retailer.online) throw new CommandError(`${retailer.name} doesn’t sell online.`);
 
       const col = costOfLiving(cityId);
       const items: Order['items'] = [];
@@ -50,8 +59,11 @@ export function registerCommerce(sim: Simulation): void {
       for (const line of p.lines) {
         const catalogItem = CATALOG.get(line.catalogId);
         if (!catalogItem) throw new CommandError(`Unknown item: ${line.catalogId}`);
-        if (!retailer.categories.includes(catalogItem.category) && !retailer.categories.includes(catalogItem.subcategory)) {
-          throw new CommandError(`${retailer.name} does not stock ${catalogItem.name}.`);
+        // The shop floor already hides what a shop would not carry; this is the
+        // same rule where it counts, so a basket built anywhere else cannot buy
+        // a house's coat from a discount chain.
+        if (!stocks(retailer, catalogItem)) {
+          throw new CommandError(`${retailer.name} doesn’t stock ${catalogItem.name}.`);
         }
         const quantity = clamp(Math.round(line.quantity), 1, 999);
         const unitPrice = retailPrice(catalogItem.id, retailer.id, col);
@@ -90,6 +102,7 @@ export function registerCommerce(sim: Simulation): void {
         paidFromAccountId: accountId,
         createdAssetIds: [],
         giftFor: p.giftFor,
+        colours: p.colours,
       };
       s.universe.orders[order.id] = order;
 
@@ -113,6 +126,18 @@ export function registerCommerce(sim: Simulation): void {
       }
 
       s.emit('shop.order_placed', { orderId: order.id, retailerId: retailer.id, total, itemCount: items.length });
+      // Kit and its cover go together: a package worth insuring is offered
+      // equipment cover the day it is bought, from a company that writes it.
+      const kitValue = items.filter((i) => i.category === 'kit').reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
+      if (kitValue >= EQUIPMENT_FLOOR) {
+        s.requireDecision({
+          urgency: 42, category: 'insurance', refType: 'order', refId: order.id,
+          title: 'Cover The Kit',
+          detail: `${formatMoney(kitValue)} of production kit in one order. Equipment cover against damage and theft is what a rental house would insist on, and a specialist writes it.`,
+          route: '/workspace/insurance',
+          actions: [{ label: 'Get A Quote', commandKind: 'ins.quote', payload: { line: 'equipment', coveredRefs: [] } }],
+        });
+      }
       return { orderId: order.id, total, deliverAt: order.deliverAt };
     },
   );
@@ -122,13 +147,13 @@ export function registerCommerce(sim: Simulation): void {
     (p, { sim: s }) => {
       const order = s.universe.orders[p.orderId];
       if (!order) throw new CommandError('No such order.');
-      if (order.status !== 'delivered') throw new CommandError('That order has not been delivered yet.');
+      if (order.status !== 'delivered') throw new CommandError('That order hasn’t been delivered yet.');
       if (order.returnWindowEndsAt && s.now > order.returnWindowEndsAt) {
         throw new CommandError('The return window on that order has closed.');
       }
 
       const lines = p.catalogId ? order.items.filter((i) => i.catalogId === p.catalogId) : order.items;
-      if (lines.length === 0) throw new CommandError('That item is not on this order.');
+      if (lines.length === 0) throw new CommandError('That item isn’t on this order.');
 
       let refund = 0;
       for (const line of lines) {
@@ -165,7 +190,7 @@ export function registerCommerce(sim: Simulation): void {
       const assets = p.assetIds.map((id) => s.universe.assets[id]).filter(Boolean) as OwnedAsset[];
       if (assets.length === 0) throw new CommandError('An outfit needs at least one item.');
       for (const asset of assets) {
-        if (asset.ownerId !== personId) throw new CommandError(`${asset.name} is not yours.`);
+        if (asset.ownerId !== personId) throw new CommandError(`${asset.name} isn’t yours.`);
       }
 
       const formality = Math.round(assets.reduce((s_, a) => s_ + (a.wardrobe?.formality ?? 30), 0) / assets.length);
@@ -194,7 +219,7 @@ export function registerCommerce(sim: Simulation): void {
     'shop.sell_asset',
     (p, { sim: s }) => {
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.soldAt || asset.ownerId !== s.player.id) throw new CommandError('You do not own that.');
+      if (!asset || asset.soldAt || asset.ownerId !== s.player.id) throw new CommandError('You don’t own that.');
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to receive the proceeds.');
 
@@ -252,6 +277,7 @@ function deliverOrder(sim: Simulation, orderId: Id): void {
         purchasePrice: line.unitPrice,
         acquiredVia: order.giftFor ? 'gift' : 'purchase',
         giftedById: order.giftFor ? player.id : undefined,
+        colour: order.colours?.[line.catalogId],
       });
       order.createdAssetIds.push(asset.id);
     }
@@ -265,6 +291,8 @@ export function createAsset(
   spec: {
     ownerId: Id; catalogItem: CatalogItem; purchasePrice: Money;
     acquiredVia: OwnedAsset['acquiredVia']; giftedById?: Id; ownerKind?: 'person' | 'company';
+    /** The colorway chosen at the counter, where the thing comes in colors. */
+    colour?: string;
   },
 ): OwnedAsset {
   const owner = sim.universe.people[spec.ownerId];
@@ -287,11 +315,23 @@ export function createAsset(
     locationPropertyId: owner?.residenceId,
     provenance: [{ at: sim.now, note: spec.acquiredVia === 'gift' ? 'Received as a gift.' : `Purchased for ${formatMoney(spec.purchasePrice)}.` }],
     wardrobe: item.slot
-      ? { slot: item.slot, formality: item.formality ?? 30, season: item.seasons ?? ['Spring', 'Summer', 'Autumn', 'Winter'], colour: 'Black' }
+      ? {
+        slot: item.slot,
+        formality: item.formality ?? 30,
+        season: item.seasons ?? ['Spring', 'Summer', 'Autumn', 'Winter'],
+        colour: spec.colour ?? defaultColour(item.id, item.name, item.slot),
+        material: guessMaterial(item.name, item.slot, item.subcategory),
+        cleanliness: 100,
+        timesWorn: 0,
+      }
       : undefined,
     tags: item.tags,
   };
   sim.universe.assets[asset.id] = asset;
+
+  // A thing that lives in the house is put in a room of it the moment it is
+  // yours, however it arrived: bought, delivered, furnished or given.
+  placeInRoom(sim, asset);
 
   // Valuable items should be insured, and the game should say so.
   if (asset.currentValue >= 15_000_00) {
@@ -349,15 +389,18 @@ function expirePantry(sim: Simulation): void {
 }
 
 /** What the player can buy right now, in one place, for the shopping UI. */
-export function shoppingCatalogue(sim: Simulation, category?: string) {
+export function shoppingCatalogue(sim: Simulation, category?: string, everything = false) {
   const cityId = sim.player.currentLocationId;
   const col = costOfLiving(cityId);
+  const preference = preferenceOf(sim, sim.player.id);
   const results: { item: CatalogItem; retailers: { id: string; name: string; price: Money; deliveryDays: number }[] }[] = [];
 
   for (const item of shoppableItemsIn(cityId)) {
     if (category && item.category !== category) continue;
     if (item.category === 'dining') continue;
-    const stores = retailersFor(item.category, cityId).filter((r) => r.categories.includes(item.category));
+    // The rack you are shown, unless you asked for the whole floor.
+    if (!everything && !shows(item.audience, preference)) continue;
+    const stores = stockistsFor(item, cityId);
     if (stores.length === 0) continue;
     results.push({
       item,

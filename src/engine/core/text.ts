@@ -64,7 +64,7 @@ export function formatPlural(format: string): string {
  * game's own spelling, in Title Case like every other label.
  */
 const CATEGORY_LABELS: Readonly<Record<string, string>> = {
-  jewelry: 'Jewellery',
+  jewelry: 'Jewelry',
   groceries: 'Groceries',
   prepared_food: 'Prepared Food',
   clothing: 'Clothing',
@@ -75,7 +75,20 @@ const CATEGORY_LABELS: Readonly<Record<string, string>> = {
   electronics: 'Electronics',
   art: 'Art',
   accessory: 'Accessories',
+  kit: 'Production Kit',
+  makeup: 'Makeup',
+  haberdashery: 'Fabric And Notions',
 };
 export function categoryLabel(category: string): string {
   return CATEGORY_LABELS[category] ?? titleCaseLabel(category.replace(/_/g, ' '));
+}
+
+/**
+ * A count with its noun, agreeing with itself.
+ *
+ * Nothing in the game should ever print "1 things". Pass the plural only when
+ * it is not the singular with an s on the end.
+ */
+export function plural(count: number, one: string, many = `${one}s`): string {
+  return `${count} ${count === 1 ? one : many}`;
 }

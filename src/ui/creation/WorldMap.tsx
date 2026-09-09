@@ -40,7 +40,7 @@ export function WorldMap({
       .then((loaded) => { if (!cancelled) setData(loaded); })
       .catch((error: unknown) => {
         if (!cancelled) {
-          setProblem(error instanceof Error ? error.message : 'The world map could not be loaded.');
+          setProblem(error instanceof Error ? error.message : 'The world map couldn’t be loaded.');
         }
       });
     return () => { cancelled = true; };

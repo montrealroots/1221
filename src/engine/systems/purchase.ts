@@ -54,7 +54,7 @@ export const INSPECTION_MINUTES = 90;
 export const CLOSING_MINUTES = 60;
 export const ROOM_MINUTES = 20;
 
-export const NOT_HERE = 'You are not in the city the house is in.';
+export const NOT_HERE = 'You aren’t in the city the house is in.';
 
 // ---------------------------------------------------------------------------
 // Readers
@@ -62,7 +62,7 @@ export const NOT_HERE = 'You are not in the city the house is in.';
 
 export function offerOf(sim: Simulation, offerId: Id): PropertyOffer {
   const offer = sim.universe.propertyOffers[offerId];
-  if (!offer) throw new CommandError('There is no offer like that.');
+  if (!offer) throw new CommandError('There’s no offer like that.');
   return offer;
 }
 
@@ -189,7 +189,7 @@ function refusalFor(sim: Simulation, amount: Money, offer: PropertyOffer, down: 
   if (offer.financingKind !== 'cash') {
     const payment = amortisedPayment(amount - down, offeredApr(player.creditScore, 'mortgage'), 360);
     const income = estimateMonthlyIncome(sim, player.id);
-    if (income > 0 && payment > income * 0.45) return `A lender will not approve this. The payment would be ${formatMoney(payment)} a month against income of about ${formatMoney(income)}.`;
+    if (income > 0 && payment > income * 0.45) return `A lender won’t approve this. The payment would be ${formatMoney(payment)} a month against income of about ${formatMoney(income)}.`;
   }
   return undefined;
 }
@@ -257,7 +257,7 @@ export function canPostpone(offer: PropertyOffer): boolean {
 
 /** Whether closing can be sat at now: the day has come, the purchase is open, you are there. */
 export function atTheTable(sim: Simulation, offer: PropertyOffer): { ok: boolean; reason?: string } {
-  if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase is not open to close.' };
+  if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase isn’t open to close.' };
   if (!offer.closingAt || sim.now < offer.closingAt - 12 * MS_HOUR) return { ok: false, reason: `Closing is set for ${formatDate(offer.closingAt ?? sim.now, sim.homeZone)}.` };
   if (!inCity(sim, offer)) return { ok: false, reason: NOT_HERE };
   return { ok: true };
@@ -265,9 +265,9 @@ export function atTheTable(sim: Simulation, offer: PropertyOffer): { ok: boolean
 
 /** Whether the inspection can be walked now: it has happened, it is open, you are there. */
 export function inspectionWalkable(sim: Simulation, offer: PropertyOffer): { ok: boolean; reason?: string } {
-  if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase is not open.' };
-  if (!offer.inspectionFindings) return { ok: false, reason: 'The inspection has not happened yet.' };
-  if (offer.inspectionDecidedAt) return { ok: false, reason: 'The report has been answered; there is nothing left to walk.' };
+  if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase isn’t open.' };
+  if (!offer.inspectionFindings) return { ok: false, reason: 'The inspection hasn’t happened yet.' };
+  if (offer.inspectionDecidedAt) return { ok: false, reason: 'The report has been answered; there’s nothing left to walk.' };
   if (!inCity(sim, offer)) return { ok: false, reason: NOT_HERE };
   return { ok: true };
 }
@@ -370,7 +370,7 @@ export type FurnishLevel = 'bare' | 'comfortable' | 'proper';
 export const FURNISH_LEVELS: readonly { id: FurnishLevel; label: string; detail: string }[] = [
   { id: 'bare', label: 'Leave It Bare', detail: 'Nothing today. The room waits.' },
   { id: 'comfortable', label: 'Make It Comfortable', detail: 'The pieces you need to live in it.' },
-  { id: 'proper', label: 'Do It Properly', detail: 'The good pieces, the rug, the lamp. The room you would show someone.' },
+  { id: 'proper', label: 'Do It Properly', detail: 'The good pieces, the rug, the lamp. The room you’d show someone.' },
 ];
 
 const SETS: Readonly<Record<string, { comfortable: string[]; proper: string[] }>> = {
@@ -400,7 +400,7 @@ export interface FurnishPlan {
 export function furnishPlan(sim: Simulation, room: Room, level: FurnishLevel, themeId?: string): FurnishPlan {
   const structure = sim.universe.structures[room.structureId];
   const property = structure ? sim.universe.properties[structure.propertyId] : undefined;
-  if (!property) throw new CommandError('That room is not attached to a property.');
+  if (!property) throw new CommandError('That room isn’t attached to a property.');
   const set = SETS[room.kind] ?? SETS['den']!;
   const already = new Set(Object.values(sim.universe.furnishings).filter((f) => f.roomId === room.id).map((f) => f.catalogId));
   const ids = level === 'bare' ? [] : set[level].filter((id) => !already.has(id) && CATALOG.get(id));
@@ -430,9 +430,9 @@ export function furnishPlan(sim: Simulation, room: Room, level: FurnishLevel, th
 /** Whether a property's rooms can be furnished by the player now. */
 export function furnishable(sim: Simulation, propertyId: Id): { ok: boolean; reason?: string } {
   const property = sim.universe.properties[propertyId];
-  if (!property) return { ok: false, reason: 'There is no home like that.' };
+  if (!property) return { ok: false, reason: 'There’s no home like that.' };
   const yours = property.ownerId === sim.player.id || sim.player.residenceId === property.id;
-  if (!yours) return { ok: false, reason: 'That is not your home to furnish.' };
+  if (!yours) return { ok: false, reason: 'That isn’t your home to furnish.' };
   if (sim.player.currentLocationId !== property.locationId) return { ok: false, reason: NOT_HERE };
   if (roomsFor(sim, property.id).length === 0) return { ok: false, reason: 'There are no rooms to furnish.' };
   return { ok: true };
@@ -465,7 +465,7 @@ export function registerPurchase(sim: Simulation): void {
     s.requireDecision({
       urgency: 78, category: 'property',
       title: `Counteroffer On ${property.addressLine}`,
-      detail: `${who ? `${who.person.firstName} called. ` : ''}They came back at ${formatMoney(counterAmount)}; you offered ${formatMoney(offer.amount)}. They will wait ${COUNTER_DAYS} days.`,
+      detail: `${who ? `${who.person.firstName} called. ` : ''}They came back at ${formatMoney(counterAmount)}; you offered ${formatMoney(offer.amount)}. They’ll wait ${COUNTER_DAYS} days.`,
       route: '/workspace/property',
       actions: [
         { label: 'Take The Call', commandKind: 'scene.start', payload: { definitionId: 'property.counter', input: { offerId: offer.id }, refType: 'offer', refId: offer.id } },
@@ -539,7 +539,7 @@ export function registerPurchase(sim: Simulation): void {
     const canCover = accountId ? sim.ledger.availableFunds(accountId) >= offer.downPayment + gap : false;
     if (!canCover) {
       offer.status = 'withdrawn';
-      offer.history.push({ at: sim.now, note: `Appraisal came in at ${formatMoney(appraisal)}, ${formatMoney(gap)} under the price, and you could not cover the gap.` });
+      offer.history.push({ at: sim.now, note: `Appraisal came in at ${formatMoney(appraisal)}, ${formatMoney(gap)} under the price, and you couldn’t cover the gap.` });
       refundEarnest(sim, offer);
       const listing = listingOfOffer(sim, offer);
       if (listing) listing.status = 'active';
@@ -547,7 +547,7 @@ export function registerPurchase(sim: Simulation): void {
       sim.resolveDecision('offer', offer.id);
       sim.notify({
         category: 'property', title: 'Purchase Fell Through',
-        body: `The appraisal on ${property.addressLine} came in ${formatMoney(gap)} low and you could not cover the gap. Your deposit has been returned.`,
+        body: `The appraisal on ${property.addressLine} came in ${formatMoney(gap)} low and you couldn’t cover the gap. Your deposit has been returned.`,
         importance: 85, route: '/workspace/property', refType: 'offer', refId: offer.id,
       });
       sim.emit('prop.closing_failed', { offerId: offer.id, reason: 'appraisal_gap', gap });
@@ -557,7 +557,7 @@ export function registerPurchase(sim: Simulation): void {
     offer.history.push({ at: sim.now, note: `Appraisal came in at ${formatMoney(appraisal)}, ${formatMoney(gap)} under the price. The lender will only finance to the appraised value; you bring the gap to the table.` });
     sim.notify({
       category: 'property', title: `Appraisal Short On ${property.addressLine}`,
-      body: `${formatMoney(appraisal)} against a price of ${formatMoney(offer.amount)}. You will need ${formatMoney(gap)} more at closing.`,
+      body: `${formatMoney(appraisal)} against a price of ${formatMoney(offer.amount)}. You’ll need ${formatMoney(gap)} more at closing.`,
       importance: 60, route: '/workspace/property', refType: 'offer', refId: offer.id,
     });
     sim.emit('prop.appraised', { offerId: offer.id, appraisal, gap });
@@ -604,7 +604,7 @@ export function registerPurchase(sim: Simulation): void {
     }
     const property = propertyOfOffer(sim, offer);
     offer.inspectionDecidedAt = sim.now;
-    offer.history.push({ at: sim.now, note: 'The inspection contingency passed without a word. You are proceeding at the agreed price.' });
+    offer.history.push({ at: sim.now, note: 'The inspection contingency passed without a word. You’re proceeding at the agreed price.' });
     sim.resolveDecision('offer', offer.id);
     sim.notify({
       category: 'property', title: `Inspection Contingency Waived On ${property.addressLine}`,
@@ -624,7 +624,7 @@ export function registerPurchase(sim: Simulation): void {
     'prop.inspection_walk',
     (p, { sim: s }) => {
       const offer = offerOf(s, p.offerId);
-      if (offer.status !== 'accepted' || !offer.inspectionFindings) throw new CommandError('There is no inspection to walk.');
+      if (offer.status !== 'accepted' || !offer.inspectionFindings) throw new CommandError('There’s no inspection to walk.');
       const property = propertyOfOffer(s, offer);
       const inspector = inspectorFor(s, offer);
       const here = p.here && s.player.currentLocationId === property.locationId;
@@ -649,7 +649,7 @@ export function registerPurchase(sim: Simulation): void {
     s.requireDecision({
       urgency: 90, category: 'property',
       title: `Closing On ${property.addressLine}`,
-      detail: `${formatMoney(numbers.cashToClose)} to close${numbers.shortfall > 0 ? `; you are ${formatMoney(numbers.shortfall)} short` : ''}. ${here ? 'The table is set.' : 'You are out of town; you can sign remotely.'} The seller waits ${CLOSING_LAPSE_DAYS} days, and the deposit is theirs if you do not close.`,
+      detail: `${formatMoney(numbers.cashToClose)} to close${numbers.shortfall > 0 ? `; you are ${formatMoney(numbers.shortfall)} short` : ''}. ${here ? 'The table is set.' : 'You are out of town; you can sign remotely.'} The seller waits ${CLOSING_LAPSE_DAYS} days, and the deposit is theirs if you don’t close.`,
       route: '/workspace/property',
       actions: [
         ...(here ? [{ label: 'Sit At The Table', commandKind: 'scene.start', payload: { definitionId: 'property.closing', input: { offerId: offer.id }, refType: 'offer', refId: offer.id } }] : []),
@@ -679,8 +679,8 @@ export function registerPurchase(sim: Simulation): void {
     'prop.close',
     (p, { sim: s }) => {
       const offer = offerOf(s, p.offerId);
-      if (offer.status !== 'accepted') throw new CommandError('That purchase is not open to close.');
-      if (!offer.closingAt || s.now < offer.closingAt - 12 * MS_HOUR) throw new CommandError(`Closing is set for ${formatDate(offer.closingAt ?? s.now, s.homeZone)}. The table is not ready before then.`);
+      if (offer.status !== 'accepted') throw new CommandError('That purchase isn’t open to close.');
+      if (!offer.closingAt || s.now < offer.closingAt - 12 * MS_HOUR) throw new CommandError(`Closing is set for ${formatDate(offer.closingAt ?? s.now, s.homeZone)}. The table isn’t ready before then.`);
       const property = propertyOfOffer(s, offer);
       const here = s.player.currentLocationId === property.locationId;
       s.advanceTo(s.now + (here ? CLOSING_MINUTES : 20) * MS_MINUTE);
@@ -692,6 +692,17 @@ export function registerPurchase(sim: Simulation): void {
         if (here) rememberFact(s, closer.id, { kind: 'meeting', aboutId: s.player.id, text: `Closed ${property.addressLine} for ${s.player.firstName}.`, weight: 30, sourceKind: 'closing', refType: 'offer', refId: offer.id, expiresAt: addDays(s.now, 365, s.homeZone) });
         const who = agentOfOffer(s, offer);
         if (who) rememberFact(s, who.person.id, { kind: 'event', aboutId: s.player.id, text: `Sold ${s.player.firstName} ${property.addressLine} for ${formatMoney(offer.amount)}.`, weight: 45, sourceKind: 'closing', refType: 'property', refId: property.id, expiresAt: addDays(s.now, 730, s.homeZone) });
+        // The house and its cover go together: a lender requires it and an
+        // owner regrets its absence, so the question is asked the same day.
+        if (property.ownerId === s.player.id && !property.insurancePolicyId) {
+          s.requireDecision({
+            urgency: 58, category: 'insurance', refType: 'property', refId: property.id,
+            title: `Insure ${property.addressLine}`,
+            detail: `It’s yours as of today and nothing covers it. A real insurer where you live writes homeowners cover; the quote is a click away.`,
+            route: '/workspace/insurance',
+            actions: [{ label: 'Get A Quote', commandKind: 'ins.quote', payload: { line: 'homeowners', coveredRefs: [{ type: 'property', id: property.id }] } }],
+          });
+        }
         if (s.player.residenceId !== property.id) {
           s.schedule({
             at: addDays(s.now, MOVING_DAY_DAYS, s.homeZone), kind: 'prop.moving_day', label: `Moving Day — ${property.addressLine}`, category: 'property',
@@ -707,7 +718,7 @@ export function registerPurchase(sim: Simulation): void {
     'prop.postpone_closing',
     (p, { sim: s }) => {
       const offer = offerOf(s, p.offerId);
-      if (!canPostpone(offer)) throw new CommandError(offer.status === 'accepted' ? 'The seller has already waited once.' : 'That purchase is not open.');
+      if (!canPostpone(offer)) throw new CommandError(offer.status === 'accepted' ? 'The seller has already waited once.' : 'That purchase isn’t open.');
       const property = propertyOfOffer(s, offer);
       offer.postponedOnce = true;
       const closingAt = addDays(s.now, POSTPONE_DAYS, s.homeZone);
@@ -729,7 +740,7 @@ export function registerPurchase(sim: Simulation): void {
     'prop.walk_from_closing',
     (p, { sim: s }) => {
       const offer = offerOf(s, p.offerId);
-      if (offer.status !== 'accepted') throw new CommandError('That purchase is not open.');
+      if (offer.status !== 'accepted') throw new CommandError('That purchase isn’t open.');
       forfeit(s, offer, 'You walked away at the table.');
       return { forfeited: offer.earnestMoney };
     },
@@ -758,7 +769,7 @@ export function registerPurchase(sim: Simulation): void {
     sim.requireDecision({
       urgency: 60, category: 'property',
       title: `Moving Day At ${property.addressLine}`,
-      detail: here ? 'The keys are in your pocket and the rooms are empty. Go and make it yours, or just move the boxes.' : 'The keys are in your pocket. You are out of town; the rooms will wait.',
+      detail: here ? 'The keys are in your pocket and the rooms are empty. Go and make it yours, or just move the boxes.' : 'The keys are in your pocket. You’re out of town; the rooms will wait.',
       route: '/workspace/property',
       actions: [
         ...(here ? [{ label: 'Play It Out', commandKind: 'scene.start', payload: { definitionId: 'property.movein', input: { propertyId: property.id }, refType: 'property', refId: property.id } }] : []),
@@ -773,8 +784,8 @@ export function registerPurchase(sim: Simulation): void {
     'prop.move_in',
     (p, { sim: s }) => {
       const property = s.universe.properties[p.propertyId];
-      if (!property) throw new CommandError('There is no home like that.');
-      if (property.ownerId !== s.player.id && property.tenure !== 'rented') throw new CommandError('That is not yours to move into.');
+      if (!property) throw new CommandError('There’s no home like that.');
+      if (property.ownerId !== s.player.id && property.tenure !== 'rented') throw new CommandError('That isn’t yours to move into.');
       if (s.player.residenceId === property.id) throw new CommandError('You already live there.');
       const previous = s.player.residenceId ? s.universe.properties[s.player.residenceId] : undefined;
       let endedLease = false;
@@ -805,14 +816,14 @@ export function registerPurchase(sim: Simulation): void {
     'prop.furnish_room',
     (p, { sim: s }) => {
       const room = s.universe.rooms[p.roomId];
-      if (!room) throw new CommandError('There is no room like that.');
+      if (!room) throw new CommandError('There’s no room like that.');
       const structure = s.universe.structures[room.structureId];
       const property = structure ? s.universe.properties[structure.propertyId] : undefined;
-      if (!property) throw new CommandError('That room is not attached to a property.');
+      if (!property) throw new CommandError('That room isn’t attached to a property.');
       const can = furnishable(s, property.id);
       if (!can.ok) throw new CommandError(can.reason ?? NOT_HERE);
-      if (!FURNISH_LEVELS.some((l) => l.id === p.level)) throw new CommandError('That is not a way to furnish a room.');
-      if (p.themeId && !DESIGN_THEMES.some((t) => t.id === p.themeId)) throw new CommandError('That is not a theme SLATE knows.');
+      if (!FURNISH_LEVELS.some((l) => l.id === p.level)) throw new CommandError('That isn’t a way to furnish a room.');
+      if (p.themeId && !DESIGN_THEMES.some((t) => t.id === p.themeId)) throw new CommandError('That isn’t a theme SLATE knows.');
       const plan = furnishPlan(s, room, p.level, p.themeId);
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');

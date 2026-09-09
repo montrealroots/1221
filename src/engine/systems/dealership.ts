@@ -38,9 +38,9 @@ export const DEALER_CLOSE = 19;
 export const DEALS_KEPT = 40;
 export const COOLING_OFF_HOURS = 20;
 
-export const NOT_HERE = 'That dealership is not in the city you are in.';
+export const NOT_HERE = 'That dealership isn’t in the city you’re in.';
 export const FINAL_PRICE = 'They have given you their final price. Take it or leave it.';
-export const NO_SUCH_DEAL = 'There is no deal like that on the table.';
+export const NO_SUCH_DEAL = 'There’s no deal like that on the table.';
 
 // ---------------------------------------------------------------------------
 // What you find when you look
@@ -55,12 +55,12 @@ export interface Finding {
 }
 
 const USED_FINDINGS: readonly Finding[] = [
-  { text: 'The tyres are down to the wear bars.', leverage: 0.02, repair: 'Fit New Tyres' },
+  { text: 'The tires are down to the wear bars.', leverage: 0.02, repair: 'Fit New Tires' },
   { text: 'A scrape along the rear bumper.', leverage: 0.015, repair: 'Repair The Rear Bumper' },
   { text: 'There are gaps in the service history.', leverage: 0.02 },
   { text: 'The brake pads are near the end.', leverage: 0.015, repair: 'Fit New Brake Pads' },
   { text: 'A warning light comes on at idle.', leverage: 0.03, repair: 'Sort The Warning Light' },
-  { text: 'One key, and it is the spare.', leverage: 0.01, repair: 'Cut A Second Key' },
+  { text: 'One key, and it’s the spare.', leverage: 0.01, repair: 'Cut A Second Key' },
   { text: 'The interior has been well looked after.', leverage: 0 },
   { text: 'The paint is original and straight.', leverage: 0 },
 ];
@@ -74,7 +74,7 @@ const NEW_FINDINGS: readonly Finding[] = [
 
 const MOTO_USED_FINDINGS: readonly Finding[] = [
   { text: 'The chain and sprockets are hooked and due.', leverage: 0.02, repair: 'Fit A New Chain And Sprockets' },
-  { text: 'The rear tyre is squared off from motorway miles.', leverage: 0.015, repair: 'Fit A New Rear Tyre' },
+  { text: 'The rear tire is squared off from motorway miles.', leverage: 0.015, repair: 'Fit A New Rear Tire' },
   { text: 'A fork seal is weeping.', leverage: 0.02, repair: 'Replace The Fork Seals' },
   { text: 'Scuffed bar ends and a scraped peg. It has been down, gently.', leverage: 0.03 },
   { text: 'The brake pads are thin.', leverage: 0.01, repair: 'Fit New Brake Pads' },
@@ -89,7 +89,7 @@ const MOTO_NEW_FINDINGS: readonly Finding[] = [
 ];
 
 const BOAT_USED_FINDINGS: readonly Finding[] = [
-  { text: 'The antifoul is due; there is growth at the waterline.', leverage: 0.015, repair: 'Antifoul The Hull' },
+  { text: 'The antifoul is due; there’s growth at the waterline.', leverage: 0.015, repair: 'Antifoul The Hull' },
   { text: 'Gelcoat crazing on the transom.', leverage: 0.02, repair: 'Repair The Transom Gelcoat' },
   { text: 'The bilge pump cycles more than it should.', leverage: 0.025, repair: 'Find The Leak' },
   { text: 'High engine hours for the year.', leverage: 0.02 },
@@ -105,7 +105,7 @@ const BOAT_NEW_FINDINGS: readonly Finding[] = [
 ];
 
 const JET_USED_FINDINGS: readonly Finding[] = [
-  { text: 'The engines are not on a maintenance programme.', leverage: 0.03 },
+  { text: 'The engines aren’t on a maintenance program.', leverage: 0.03 },
   { text: 'A major inspection is due within the year.', leverage: 0.025 },
   { text: 'The paint is chipped along the leading edges.', leverage: 0.01, repair: 'Touch Up The Leading Edges' },
   { text: 'The avionics database is out of date.', leverage: 0.005, repair: 'Update The Databases' },
@@ -116,7 +116,7 @@ const JET_USED_FINDINGS: readonly Finding[] = [
 
 const JET_NEW_FINDINGS: readonly Finding[] = [
   { text: 'Ferry hours only.', leverage: 0 },
-  { text: 'A mark on the cabin veneer from the completion centre.', leverage: 0.005, repair: 'Refinish The Veneer' },
+  { text: 'A mark on the cabin veneer from the completion center.', leverage: 0.005, repair: 'Refinish The Veneer' },
   { text: 'Every option on the specification is installed.', leverage: 0 },
 ];
 
@@ -390,7 +390,7 @@ export function registerDealership(sim: Simulation): void {
     sim.requireDecision({
       urgency: 45, category: 'vehicles',
       title: `${seller.firstName} Called About The ${carName(listing)}`,
-      detail: `They will do ${formatMoney(price)}. The offer holds for ${CALLBACK_HOLD_DAYS} days.`,
+      detail: `They’ll do ${formatMoney(price)}. The offer holds for ${CALLBACK_HOLD_DAYS} days.`,
       route: '/workspace/vehicles',
       actions: [
         { label: 'Go And Sign', commandKind: 'scene.start', payload: { definitionId: 'vehicles.dealer', input: { placeId: deal.dealerPlaceId, dealId: deal.id } } },
@@ -434,7 +434,7 @@ export function registerDealership(sim: Simulation): void {
       const place = dealershipAt(s, p.placeId);
       const listing = s.universe.vehicleListings[p.listingId];
       if (!listing || listing.status !== 'active') throw new CommandError('That car is no longer for sale.');
-      if (lotOf(listing) !== place.id) throw new CommandError(`That car is not on the lot at ${place.name}.`);
+      if (lotOf(listing) !== place.id) throw new CommandError(`That car isn’t on the lot at ${place.name}.`);
 
       const existing = dealFor(s, listing.id);
       if (existing) return { dealId: existing.id, salespersonId: existing.salespersonId, resumed: true };
@@ -503,7 +503,7 @@ export function registerDealership(sim: Simulation): void {
       const deal = requireOpen(s, p.dealId, ['open', 'agreed']);
       const listing = listingOf(s, deal);
       if (deal.testDriven) return { impression: impressionOf(s, listing) };
-      if (s.player.wellbeing.energy < 10) throw new CommandError('You are too tired to take anything out today.');
+      if (s.player.wellbeing.energy < 10) throw new CommandError('You’re too tired to take anything out today.');
       const kind = listingKind(listing);
       s.advanceTo(s.now + (kind === 'boat' || kind === 'jet' ? 60 : 30) * MS_MINUTE);
       s.player.wellbeing.energy = clamp(s.player.wellbeing.energy - 3, 0, 100);
@@ -531,7 +531,7 @@ export function registerDealership(sim: Simulation): void {
           deal.terms.tradeInValue = undefined;
         } else {
           const vehicle = tradeInCandidates(s, listingKind(listingOf(s, deal))).find((v) => v.id === p.tradeInVehicleId);
-          if (!vehicle) throw new CommandError('That is not something you can trade in here.');
+          if (!vehicle) throw new CommandError('That isn’t something you can trade in here.');
           deal.terms.tradeInVehicleId = vehicle.id;
           deal.terms.tradeInValue = tradeInAllowance(s, deal, vehicle);
           say(deal, sellerSays(s, deal, 'terms', 'numbers', { move: 'tradein', vars: { trade: vehicleName(vehicle), value: formatMoney(deal.terms.tradeInValue) } }));
@@ -644,7 +644,7 @@ export function registerDealership(sim: Simulation): void {
         kind: 'veh.purchase',
         payload: { listingId: listing.id, acquisition: p.acquisition, downPayment: p.downPayment, termMonths: p.termMonths, accountId: p.accountId, dealId: deal.id },
       });
-      if (!result.ok || !result.value) throw new CommandError(result.error ?? 'The paperwork did not go through.');
+      if (!result.ok || !result.value) throw new CommandError(result.error ?? 'The paperwork didn’t go through.');
       deal.status = 'signed';
       deal.closedAt = s.now;
       deal.vehicleId = result.value.vehicleId;
@@ -689,7 +689,7 @@ function impressionOf(sim: Simulation, listing: VehicleListing): string {
     const worn = listing.condition !== 'new' && listing.mileage > 20_000;
     return [
       quick ? 'It leaves before you have finished the thought. Second gear is a decision.' : hp > 90 ? 'Enough to be interesting everywhere and frightening nowhere.' : 'Light, easy, and it will go all day on a tank.',
-      worn ? rng.pick(['A notch in the steering at straight ahead.', 'The clutch takes up late. It has done miles.', 'Something ticks at idle that should not.']) : rng.pick(['It turns in the moment you look where you want to go.', 'Smooth off the throttle, smooth back on.', 'It feels tight. Somebody has looked after it.']),
+      worn ? rng.pick(['A notch in the steering at straight ahead.', 'The clutch takes up late. It has done miles.', 'Something ticks at idle that shouldn’t.']) : rng.pick(['It turns in the moment you look where you want to go.', 'Smooth off the throttle, smooth back on.', 'It feels tight. Somebody has looked after it.']),
       (model?.bodyStyle === 'tourer' || model?.bodyStyle === 'cruiser') ? 'The seat is the best part.' : model?.bodyStyle === 'sportbike' ? 'Your wrists will have an opinion after an hour.' : '',
     ].filter(Boolean).join(' ');
   }
@@ -698,7 +698,7 @@ function impressionOf(sim: Simulation, listing: VehicleListing): string {
     const worn = listing.condition !== 'new' && listing.mileage > 500;
     return [
       model?.bodyStyle === 'sailing_yacht' ? 'The breeze fills in and the whole boat leans into it and goes quiet.' : knots > 40 ? 'It comes onto the plane in a few seconds and the wake flattens out behind you.' : 'It gets up and goes, and the ride is soft through the chop.',
-      worn ? rng.pick(['There is a vibration at cruise that was not there at idle.', 'The gauges do not all agree with each other.', 'Water in the bilge by the time you are back at the dock.']) : rng.pick(['Dry, quiet, and it tracks straight.', 'Everything at the helm works the first time.', 'It turns tighter than it looks like it should.']),
+      worn ? rng.pick(['There’s a vibration at cruise that wasn’t there at idle.', 'The gauges don’t all agree with each other.', 'Water in the bilge by the time you’re back at the dock.']) : rng.pick(['Dry, quiet, and it tracks straight.', 'Everything at the helm works the first time.', 'It turns tighter than it looks like it should.']),
       (trim?.craft?.berths ?? 0) > 0 ? 'Below decks is the best part.' : '',
     ].filter(Boolean).join(' ');
   }
@@ -713,7 +713,7 @@ function impressionOf(sim: Simulation, listing: VehicleListing): string {
   const worn = listing.condition !== 'new' && listing.mileage > 60_000;
   const parts = [
     quick ? 'It gets up and goes before you have finished asking.' : hp > 300 ? 'Plenty under your foot when you want it.' : 'Enough to get out of its own way, no more.',
-    worn ? rng.pick(['There is a rattle somewhere behind you over bumps.', 'The steering has a little play in it.', 'It has done miles and it drives like it.']) : rng.pick(['It tracks straight and stops square.', 'Quiet inside. Everything falls to hand.', 'It feels like nobody has been unkind to it.']),
+    worn ? rng.pick(['There’s a rattle somewhere behind you over bumps.', 'The steering has a little play in it.', 'It has done miles and it drives like it.']) : rng.pick(['It tracks straight and stops square.', 'Quiet inside. Everything falls to hand.', 'It feels like nobody has been unkind to it.']),
     listing.configuration.interior.includes('Leather') || listing.configuration.interior.includes('Nappa') ? 'The seats are the best part.' : '',
   ].filter(Boolean);
   return parts.join(' ');

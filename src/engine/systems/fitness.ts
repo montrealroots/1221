@@ -52,7 +52,7 @@ export function gymHere(sim: Simulation, placeId: string): Place | undefined {
 
 export function gymAt(sim: Simulation, placeId: string): { place: Place; profile: GymProfile } {
   const place = gymHere(sim, placeId);
-  if (!place) throw new CommandError('There is no such gym in this city.');
+  if (!place) throw new CommandError('There’s no such gym in this city.');
   return { place, profile: gymProfile(place) };
 }
 
@@ -62,7 +62,7 @@ export function membershipsOf(sim: Simulation, personId: Id): Membership[] {
     .sort((a, b) => b.startsAt - a.startsAt);
 }
 
-/** The pass that covers this gym right now, if any. Cancelled ones still count until they end. */
+/** The pass that covers this gym right now, if any. Canceled ones still count until they end. */
 export function membershipFor(sim: Simulation, personId: Id, placeId: string, at: number = sim.now): Membership | undefined {
   return Object.values(sim.universe.memberships).find((m) =>
     m.personId === personId && m.placeId === placeId
@@ -134,7 +134,7 @@ export function trainersAt(sim: Simulation, placeId: string): Person[] {
 
 export function trainerAt(sim: Simulation, placeId: string, trainerId: Id): Person {
   const trainer = sim.universe.people[trainerId];
-  if (!trainer || trainer.archetype !== `trainer:${placeId}`) throw new CommandError('They do not work here.');
+  if (!trainer || trainer.archetype !== `trainer:${placeId}`) throw new CommandError('They don’t work here.');
   return trainer;
 }
 
@@ -153,7 +153,7 @@ function nextMorning(sim: Simulation): number {
 
 function requirePresent(sim: Simulation, placeId: string): { place: Place; profile: GymProfile } {
   const found = gymAt(sim, placeId);
-  if (sim.player.currentPlaceId !== placeId) throw new CommandError(`You are not at ${found.place.name}. Walk in first.`);
+  if (sim.player.currentPlaceId !== placeId) throw new CommandError(`You aren’t at ${found.place.name}. Walk in first.`);
   if (!isGymOpen(sim, found.profile)) throw new CommandError(`${found.place.name} is closed. ${hoursLabel(found.profile.hours)}.`);
   return found;
 }
@@ -162,7 +162,7 @@ function pay(sim: Simulation, amount: Money, memo: string, refs: { refType: stri
   const account = accountId ?? sim.player.primaryAccountId;
   if (!account) throw new CommandError('No account to pay from.');
   if (sim.ledger.availableFunds(account) < amount) {
-    throw new CommandError(`That is ${formatMoney(amount)} and you cannot cover it right now.`);
+    throw new CommandError(`That is ${formatMoney(amount)} and you can’t cover it right now.`);
   }
   if (amount > 0) sim.expense(account, amount, memo, 'lifestyle', refs);
   return account;
@@ -186,7 +186,7 @@ export function registerFitness(sim: Simulation): void {
     } else {
       training.sorenessUntil = undefined;
       if (before >= 40) {
-        sim.notify({ category: 'health', title: 'Recovered', body: 'The soreness has gone. You are ready to train again.', importance: 15, route: '/workspace/wellbeing' });
+        sim.notify({ category: 'health', title: 'Recovered', body: 'The soreness has gone. You’re ready to train again.', importance: 15, route: '/workspace/wellbeing' });
       }
     }
   });
@@ -200,7 +200,7 @@ export function registerFitness(sim: Simulation): void {
       membership.status = 'lapsed';
       const bill = sim.universe.bills[membership.billId];
       if (bill) bill.active = false;
-      sim.notify({ category: 'finance', title: 'Membership Lapsed', body: `${membership.gymName} did not get paid, and your membership has lapsed.`, importance: 45, route: '/workspace/wellbeing' });
+      sim.notify({ category: 'finance', title: 'Membership Lapsed', body: `${membership.gymName} didn’t get paid, and your membership has lapsed.`, importance: 45, route: '/workspace/wellbeing' });
     } else if (membership.status === 'active' || membership.status === 'cancelled') {
       membership.status = 'expired';
       if (membership.product !== 'day_pass') {
@@ -284,8 +284,8 @@ export function registerFitness(sim: Simulation): void {
     (p, { sim: s }) => {
       const membership = s.universe.memberships[p.membershipId];
       if (!membership || membership.personId !== s.player.id) throw new CommandError('No such membership.');
-      if (membership.status !== 'active') throw new CommandError('That membership is not running.');
-      if (membership.product === 'day_pass') throw new CommandError('A day pass is not something you cancel; it runs out.');
+      if (membership.status !== 'active') throw new CommandError('That membership isn’t running.');
+      if (membership.product === 'day_pass') throw new CommandError('A day pass isn’t something you cancel; it runs out.');
       membership.status = 'cancelled';
       membership.cancelledAt = s.now;
       if (membership.billId) {
@@ -294,7 +294,7 @@ export function registerFitness(sim: Simulation): void {
         s.timeline.cancelFor('bill', membership.billId, s.now);
       }
       s.remember({
-        category: 'life', title: `Cancelled ${membership.gymName}`,
+        category: 'life', title: `Canceled ${membership.gymName}`,
         detail: `Usable until ${formatDate(membership.endsAt, s.homeZone)}, then nothing more is charged.`,
         refs: [{ type: 'membership', id: membership.id }], significance: 8, public: false,
       });
@@ -367,7 +367,7 @@ export function registerFitness(sim: Simulation): void {
       if (!Number.isInteger(sets) || sets < 1 || sets > MAX_SETS) throw new CommandError(`Between one and ${MAX_SETS} sets.`);
       const training = trainingOf(person);
       if (!training.current || training.current.placeId !== place.id) throw new CommandError('Check in first.');
-      if (training.current.blocks.length >= MAX_BLOCKS) throw new CommandError('That is enough for one day. Finish up.');
+      if (training.current.blocks.length >= MAX_BLOCKS) throw new CommandError('That’s enough for one day. Finish up.');
       if (person.wellbeing.energy < 10) throw new CommandError('Nothing left. Stop here.');
 
       const minutes = Math.round(sets * exercise.minutesPerSet * (p.intensity === 'hard' ? 1.15 : 1) + Math.max(0, sets - 1));
@@ -458,7 +458,7 @@ export function registerFitness(sim: Simulation): void {
       const person = s.player;
       const { place, profile } = requirePresent(s, p.placeId);
       const def = CLASS_BY_ID[p.classId];
-      if (!def || !profile.classes.some((c) => c.id === def.id)) throw new CommandError(`${place.name} does not run that class.`);
+      if (!def || !profile.classes.some((c) => c.id === def.id)) throw new CommandError(`${place.name} doesn’t run that class.`);
       const slot = classesSoon(s, profile).find((c) => c.def.id === def.id);
       if (!slot) throw new CommandError(`No ${def.name} today. The timetable is on the wall.`);
       if (!slot.soon) throw new CommandError(`${def.name} starts at ${formatTime(slot.startsAt, s.zone)}. Come back nearer the time.`);
@@ -503,7 +503,7 @@ export function registerFitness(sim: Simulation): void {
       const person = s.player;
       const training = trainingOf(person);
       const current = training.current;
-      if (!current || current.placeId !== p.placeId) throw new CommandError('There is no workout under way here.');
+      if (!current || current.placeId !== p.placeId) throw new CommandError('There’s no workout under way here.');
       const { place } = gymAt(s, p.placeId);
       const minutes = Math.round((s.now - current.startedAt) / MS_MINUTE);
       const trainer = bookedTrainer(s, person, place.id);

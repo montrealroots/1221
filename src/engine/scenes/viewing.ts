@@ -44,7 +44,7 @@ export const VIEWING_SCENE = defineScene({
 
   available(sim, input) {
     const listing = sim.universe.propertyListings[String(input['listingId'])];
-    if (!listing) return { ok: false, reason: 'There is no listing like that.' };
+    if (!listing) return { ok: false, reason: 'There’s no listing like that.' };
     const can = viewable(sim, listing);
     return can.ok ? { ok: true } : { ok: false, reason: can.reason };
   },
@@ -233,7 +233,7 @@ export const VIEWING_SCENE = defineScene({
       ctx.say(note);
     }
     session.context['seen'] = seen.join(',');
-    ctx.say(`You saw it all. ${formatMoney(listing.askingPrice)} asking, ${conditionBand(property)} condition. It is still there if you want it.`);
+    ctx.say(`You saw it all. ${formatMoney(listing.askingPrice)} asking, ${conditionBand(property)} condition. It’s still there if you want it.`);
     ctx.finish();
   },
 });

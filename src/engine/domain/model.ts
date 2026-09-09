@@ -126,6 +126,36 @@ export interface Representation {
   signedAt?: Instant;
 }
 
+export type DocumentKind = 'passport' | 'license';
+
+/** A passport or a driver's license, as the authority issued it. */
+export interface IdentityDocument {
+  kind: DocumentKind;
+  /** The country whose authority issued it. */
+  issuerId: string;
+  /** The office, as it names itself: HM Passport Office, California DMV. */
+  authority: string;
+  number: string;
+  issuedAt: Instant;
+  expiresAt: Instant;
+  /** `applied` is a renewal or a first application still at the office; a learner between the tests is `applied` too. */
+  status: 'valid' | 'expired' | 'lost' | 'applied';
+  /** A license: the state or province whose office issued it. */
+  regionId?: string;
+  /** An emergency travel document from a consulate: good for the journey home and nothing else. */
+  emergency?: boolean;
+  appliedAt?: Instant;
+  readyAt?: Instant;
+  /** A learner who passed the knowledge test: when the road test is booked. */
+  roadTestAt?: Instant;
+}
+
+export interface IdentityPapers {
+  passport?: IdentityDocument;
+  secondPassport?: IdentityDocument;
+  license?: IdentityDocument;
+}
+
 export interface Person {
   id: Id;
   saveId: Id;
@@ -165,6 +195,18 @@ export interface Person {
    * people, and never the same as the first.
    */
   secondCitizenshipId?: string;
+  /**
+   * The papers in their wallet: a passport for each citizenship, and a
+   * driver's license. Issued by the real authority for where they are from
+   * (content/documents). Absent on a person nothing has asked about yet;
+   * `ensurePapers` issues them the first time it matters.
+   */
+  documents?: IdentityPapers;
+  /**
+   * Cards that cannot be applied for, offered. Product id to the instant of
+   * the invitation. The Centurion is the reason this exists.
+   */
+  invitations?: Record<string, Instant>;
   /** Reference city id where they currently are. */
   currentLocationId: string;
   /**
@@ -180,6 +222,15 @@ export interface Person {
   /** Property id of their home, when they have one. */
   residenceId?: Id;
   householdId?: Id;
+
+  /**
+   * When they last sat in a chair and had it cut.
+   *
+   * A cut lasts about six weeks before it stops looking like one, and the
+   * mirror and the room both notice. Absent on somebody who has never been to
+   * a salon, which reads as freshly cut rather than as a gap.
+   */
+  groomedAt?: Instant;
 
   personality: Personality;
   interests: string[];
@@ -229,6 +280,16 @@ export interface Person {
   reputation: Reputation;
 
   careerTrack: CareerTrack;
+  /** Asset ids currently on. Absent means nothing has been put on deliberately. */
+  wearing?: Id[];
+  /**
+   * Which rack a shop leads with, and which side the dressing room offers
+   * first. Nothing is refused either way: 'both' shows everything, and even
+   * on 'men' or 'women' the whole catalog is one toggle away and anything
+   * bought can be worn. Absent means it has never been set, and the actor or
+   * actress title decides until it is.
+   */
+  wardrobePreference?: 'men' | 'women' | 'both';
   /**
    * Industry experience: earned from auditions, shoot days, credits, shifts
    * and the rest, spent to unlock professions. Absent on people from before
@@ -259,7 +320,7 @@ export interface Person {
 
   /** Where an NPC sits in the simulation budget. */
   tier: SimulationTier;
-  /** Archetype key used to generate consistent NPC behaviour. */
+  /** Archetype key used to generate consistent NPC behavior. */
   archetype?: string;
   /** Professional role for industry NPCs, e.g. 'casting_director'. */
   industryRole?: string;
@@ -284,6 +345,35 @@ export interface Person {
   lastAteAt?: Instant;
 
   aliveUntil?: Instant;
+
+  /**
+   * The height and weight this body ends up at, in centimetres and kilograms.
+   *
+   * Set once, at creation, and only for the player: it is the one physical
+   * fact the player chooses. A character who starts young is smaller than
+   * this and grows to exactly it. Absent on everybody else, and absent on a
+   * save from before there was a way to say.
+   */
+  adultHeightCm?: number;
+  adultWeightKg?: number;
+
+  /**
+   * Where this person's name comes from, and whether they are somebody's
+   * mother or somebody's father.
+   *
+   * The heritage is a naming tradition and nothing else: it carries no
+   * attribute, no skill and no advantage anywhere in the game. The gender is
+   * carried so a family reads as a family — a mother, a father, a brother, a
+   * sister — rather than as a list of people with a relationship type.
+   */
+  heritageId?: string;
+  gender?: 'female' | 'male' | 'nonbinary';
+  /**
+   * The heritage of each of the two people who raised this character, so a
+   * family of two traditions names its children out of both. Player only.
+   */
+  parentHeritageIds?: readonly [string, string];
+
   createdAt: Instant;
 }
 
@@ -558,6 +648,12 @@ export interface Furnishing {
   purchasedAt: Instant;
   /** Contribution to the room's quality score. */
   qualityContribution: number;
+  /**
+   * The owned thing this furnishing is. A sofa is both: a record that lifts
+   * the quality of the room it stands in, and an object you own, sit on, wear
+   * out and one day replace. This links the two so they cannot disagree.
+   */
+  assetId?: Id;
 }
 
 export type ListingStatus = 'active' | 'pending' | 'sold' | 'withdrawn' | 'expired';
@@ -691,7 +787,7 @@ export interface ConstructionProject {
   actualCompletionAt?: Instant;
   phaseIds: Id[];
   changeOrderIds: Id[];
-  /** Planned structures, realised as the build progresses. */
+  /** Planned structures, realized as the build progresses. */
   plannedStructures: { kind: Structure['kind']; sqft: number; floors: number }[];
 }
 
@@ -760,6 +856,25 @@ export interface BerthWaitlist {
  * in and out, what they charged, and what it closed at. Written when the
  * statement cycles, and never edited after.
  */
+/**
+ * An application to a private bank. The account does not exist until the
+ * bank's checks are done, weeks later; the deposit moves then, once, or the
+ * application is declined with a reason.
+ */
+export interface PrivateApplication {
+  id: Id;
+  saveId: Id;
+  bankId: string;
+  applicantId: Id;
+  deposit: Money;
+  fromAccountId: Id;
+  appliedAt: Instant;
+  readyAt: Instant;
+  status: 'pending' | 'opened' | 'declined';
+  accountId?: Id;
+  reason?: string;
+}
+
 export interface AccountStatement {
   id: Id;
   saveId: Id;
@@ -854,12 +969,14 @@ export interface RetailVisit {
   cityId: string;
   assistantId: Id;
   arrivedAt: Instant;
-  /** Catalogue ids you have picked up. */
+  /** Catalog ids you have picked up. */
   handled: string[];
-  /** Catalogue ids you have tried on, and what the mirror said. */
+  /** Catalog ids you have tried on, and what the mirror said. */
   tried: { catalogId: string; verdict: string }[];
-  /** Catalogue ids in your hands at the counter. */
+  /** Catalog ids in your hands at the counter. */
   basket: string[];
+  /** The color chosen for each thing in the basket, where it comes in colors. */
+  colours?: Record<string, string>;
   orderId?: Id;
   spent: Money;
   status: RetailStatus;
@@ -927,7 +1044,7 @@ export interface Vehicle {
   nextServiceDueMileage: number;
   storedAtPropertyId?: Id;
   soldAt?: Instant;
-  /** Litres per 100km equivalent or kWh/100mi, kept abstract. */
+  /** Liters per 100km equivalent or kWh/100mi, kept abstract. */
   efficiency: number;
   /**
    * What is in the tank, 0-100. A car from before fuel was tracked is read as
@@ -1117,13 +1234,400 @@ export interface OwnedAsset {
   giftedById?: Id;
   /** Where it physically is. */
   locationPropertyId?: Id;
+  /**
+   * Which room of the home it lives in. A kettle is in the kitchen, a sofa is
+   * in the living room, and a thing with a place in a room is a thing you can
+   * walk up to and use.
+   */
+  roomId?: Id;
+  /**
+   * Broken, and since when. A broken machine does nothing until it is
+   * repaired: the oven will not cook, the washing machine sends you to the
+   * launderette.
+   */
+  broken?: boolean;
+  brokenAt?: Instant;
+  /** When the repair is due back, while one is booked. */
+  repairDueAt?: Instant;
+  /** The last time it was used for what it is for. */
+  lastUsedAt?: Instant;
   insurancePolicyId?: Id;
   /** Provenance chain for luxury goods. */
   provenance: { at: Instant; note: string }[];
+  /**
+   * Set on a piece that was made rather than bought. Carries the whole
+   * specification, so the thing can be described, valued and insured for what
+   * it actually is years after the bench closed.
+   */
+  /**
+   * How many of it you own, when it is the kind of thing you own by the
+   * length or the box. Absent means one, which is what nearly everything is.
+   */
+  quantity?: number;
+  bespoke?: {
+    commissionId: Id;
+    placeName: string;
+    piece: string;
+    metal: string;
+    stone: string;
+    carats: number;
+    cut: string;
+    colourGrade?: string;
+    clarity?: string;
+    setting: string;
+    engraving?: string;
+    madeAt: Instant;
+  };
   /** Wardrobe-specific. */
-  wardrobe?: { slot: string; formality: number; season: string[]; colour: string };
+  wardrobe?: {
+    slot: string;
+    formality: number;
+    season: string[];
+    colour: string;
+    /** What it is made of, which decides warmth, wear and how it is cleaned. */
+    material?: string;
+    /** 0-100. Falls as it is worn; a wash or the cleaner puts it back. */
+    cleanliness?: number;
+    /** Times it has been out of the wardrobe. */
+    timesWorn?: number;
+    lastWornAt?: Instant;
+    /** Somewhere other than your wardrobe: at the cleaner, at the tailor. */
+    awayUntil?: Instant;
+    awayReason?: string;
+    /**
+     * 0-100, how well it actually fits this body.
+     *
+     * Off the rack it is whatever the rack gave you. Cut for you it is how
+     * well the workroom did, and a tailor can move it either way.
+     */
+    fit?: number;
+  };
   soldAt?: Instant;
   tags: string[];
+}
+
+/**
+ * A line on a rental ticket: what it is, what it costs a day, and what the
+ * house would charge you if it came back in pieces.
+ */
+export interface HireLine {
+  catalogId: string;
+  name: string;
+  brand?: string;
+  subcategory?: string;
+  /** SLATE's calibration, not a quote from the house. */
+  dayRate: Money;
+  /** Replacement value, which is what the deposit and the damage run off. */
+  value: Money;
+  quantity: number;
+}
+
+/**
+ * Kit out on hire.
+ *
+ * A body worth seventy thousand is hired for the days it is needed, collected,
+ * used, and taken back. The ticket carries what was taken, what it costs, the
+ * deposit the house is holding, whether the damage is on their waiver or your
+ * own cover, and what happened when it came back.
+ */
+export interface KitHire {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The place id of the house, which is where you go to collect it. */
+  houseId: string;
+  houseName: string;
+  cityId: string;
+  lines: HireLine[];
+  /** Days you asked for, and the days the house actually bills for. */
+  days: number;
+  billedDays: number;
+  outAt: Instant;
+  dueAt: Instant;
+  /** All lines together, for one billed day. */
+  rate: Money;
+  hire: Money;
+  waiver: Money;
+  deposit: Money;
+  delivery: Money;
+  /** What has actually left the account so far. */
+  paid: Money;
+  refunded?: Money;
+  status: 'booked' | 'out' | 'returned' | 'lost' | 'cancelled';
+  collectedAt?: Instant;
+  returnedAt?: Instant;
+  lateDays?: number;
+  lateFee?: Money;
+  /** Set where something came back marked. */
+  damage?: {
+    note: string;
+    cost: Money;
+    paidBy: 'waiver' | 'policy' | 'you';
+    excess?: Money;
+  };
+  /** Your own equipment cover, where you had some when you signed. */
+  policyId?: Id;
+  /** The shoot days this kit was on, which is what wears it. */
+  shootDayIds?: Id[];
+}
+
+/** What somebody does on a day, which is the only reason to ask them. */
+export type CrewRole = 'camera' | 'sound' | 'lighting' | 'grip' | 'production';
+
+/** Somebody you asked, and what they said. */
+export interface ShootCrew {
+  personId: Id;
+  name: string;
+  role: CrewRole;
+  answer: 'asked' | 'yes' | 'no';
+  note?: string;
+}
+
+/**
+ * A day you shoot something.
+ *
+ * The whole of it: where it is, whether anybody said you could be there, who
+ * turned up, what kit was in the van, how many setups you meant to get and how
+ * many you actually got when the weather and the hours had their say.
+ */
+export interface ShootDay {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  title: string;
+  cityId: string;
+  /** The call. */
+  at: Instant;
+  hours: number;
+  where: 'home' | 'place' | 'street';
+  placeId?: string;
+  placeName: string;
+  permission: {
+    needed: boolean;
+    status: 'none' | 'asked' | 'granted' | 'refused';
+    fee: Money;
+    askedAt?: Instant;
+    decidedAt?: Instant;
+    note?: string;
+  };
+  crew: ShootCrew[];
+  /** Tickets whose kit is meant to be on this day. */
+  hireIds: Id[];
+  /** What you meant to get, and what you got. */
+  setups: number;
+  got?: number;
+  status: 'planned' | 'shot' | 'abandoned';
+  weatherNote?: string;
+  note?: string;
+  shotAt?: Instant;
+}
+
+/** A screening you put on yourself, and who actually came. */
+export interface Screening {
+  id: Id;
+  at: Instant;
+  placeId?: string;
+  placeName: string;
+  /** What the room cost you. */
+  cost: Money;
+  invited: number;
+  came: number;
+  note: string;
+}
+
+/** A festival you sent it to, and what came back. */
+export interface Submission {
+  id: Id;
+  festivalId: string;
+  festivalName: string;
+  cityId: string;
+  sentAt: Instant;
+  fee: Money;
+  answerAt: Instant;
+  status: 'sent' | 'accepted' | 'rejected' | 'withdrawn';
+  note?: string;
+}
+
+/**
+ * A picture of your own.
+ *
+ * Days of shooting go into it, hours of cutting shape it, and what comes out
+ * is a runtime and a quality that neither of those can exceed: you cannot cut
+ * a good film out of material you never got.
+ */
+export interface IndieFilm {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  title: string;
+  logline: string;
+  format: 'short' | 'feature' | 'documentary' | 'animation';
+  startedAt: Instant;
+  /** The days that went into it. */
+  dayIds: Id[];
+  /** Hours at the bench. */
+  cutHours: number;
+  /** Set when it is finished, and never changed after. */
+  cut?: {
+    at: Instant;
+    runtimeMinutes: number;
+    /** 0-100, and capped by what was actually shot. */
+    quality: number;
+    note: string;
+  };
+  screenings: Screening[];
+  submissions: Submission[];
+  status: 'shooting' | 'cutting' | 'finished' | 'abandoned';
+}
+
+/**
+ * A ticket for a seat at a cinema.
+ *
+ * The showing it is for is derived from the week and the branch rather than
+ * stored, so a save carries the tickets you actually bought and nothing else.
+ * Everything the ticket needs to stand on its own after the week has passed —
+ * the title, the certificate, the runtime — is copied onto it, because the
+ * program moves on and a stub in your pocket does not.
+ */
+export interface CinemaTicket {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  placeName: string;
+  cityId: string;
+  /** The chain that runs it, when it is part of one. */
+  chainId?: string;
+  showingId: string;
+  title: string;
+  genre: string;
+  certificate: string;
+  runtimeMinutes: number;
+  screen: string;
+  at: Instant;
+  seats: number;
+  paid: Money;
+  bookedAt: Instant;
+  status: 'booked' | 'seen' | 'missed' | 'refunded';
+  /** Written once, when you have actually watched it. */
+  seen?: {
+    at: Instant;
+    /** What the room was like, which is half of going to the cinema. */
+    room: string;
+    /** What you thought, 0-100, out of the picture and your own taste. */
+    verdict: number;
+    note: string;
+    snacks: Money;
+  };
+}
+
+/**
+ * A seat at a show, asked for and either given or not.
+ *
+ * The week, the edition and the show are all derived from the calendar rather
+ * than stored, so a save carries the letters you wrote and nothing else.
+ * Everything the invitation needs to stand on its own once the season has
+ * moved on — the house, the week, the season it was showing, the venue — is
+ * copied onto it.
+ */
+export interface FashionInvite {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  weekId: string;
+  weekName: string;
+  editionId: string;
+  showId: string;
+  /** The house, spelled as the catalog spells it. */
+  brand: string;
+  cityId: string;
+  /** The collection it was showing, named the way the industry names it. */
+  season: string;
+  venue: string;
+  at: Instant;
+  askedAt: Instant;
+  status: 'asked' | 'accepted' | 'refused' | 'declined' | 'attended' | 'missed';
+  /** Where they sat you, once they have answered yes. */
+  seat?: string;
+  /** What the letter said, either way. */
+  note?: string;
+  /** Written once, when you have actually been. */
+  attended?: {
+    at: Instant;
+    /** What the room made of what you had on, 0-100. */
+    verdict: number;
+    photographed: boolean;
+    note: string;
+    /** What you were wearing, so the record stands after the wardrobe changes. */
+    look: string;
+    cost: Money;
+  };
+}
+
+/**
+ * A ticket to something on in town — a match, a concert, a play, a show.
+ *
+ * The event it is for is derived from the venue and the week rather than
+ * stored, so a save carries only the tickets you bought. Everything the stub
+ * needs to stand on its own once the week has moved on — what it was, where,
+ * the card, the band you sat in — is copied onto it.
+ */
+export interface GoingTicket {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  placeName: string;
+  cityId: string;
+  eventId: string;
+  kind: string;
+  /** The made-up card: the act, the program, the fixture. */
+  card: string;
+  band: string;
+  at: Instant;
+  seats: number;
+  paid: Money;
+  bookedAt: Instant;
+  status: 'booked' | 'went' | 'missed' | 'refunded';
+  /** Written once, when you have actually been. */
+  went?: {
+    at: Instant;
+    /** What the night was like, 0-100, from the room and your own taste. */
+    verdict: number;
+    note: string;
+    /** How full the room was, which is half of a night out. */
+    house: string;
+  };
+}
+
+/**
+ * Something you handed over a counter and sent somewhere.
+ *
+ * The operator and the service are copied onto it, because a parcel outlives
+ * the visit that posted it and the counter it was posted at.
+ */
+export interface Parcel {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  placeId: string;
+  placeName: string;
+  /** The national operator that carries it. */
+  operator: string;
+  fromCityId: string;
+  toCityId: string;
+  service: string;
+  /** What went in it, in the player's own words. */
+  contents: string;
+  grams: number;
+  paid: Money;
+  sentAt: Instant;
+  dueAt: Instant;
+  tracked: boolean;
+  status: 'in_transit' | 'delivered' | 'delayed' | 'lost';
+  /** What happened to it, once something has. */
+  note?: string;
+  arrivedAt?: Instant;
 }
 
 export interface Outfit {
@@ -1137,6 +1641,120 @@ export interface Outfit {
   /** Score derived from constituent items. */
   styleScore: number;
   createdAt: Instant;
+  /** Times this exact set has been worn, and when it last was. */
+  timesWorn?: number;
+  lastWornAt?: Instant;
+}
+
+/** A day you were dressed, kept so the world can notice a repeat. */
+/**
+ * A piece being made for you, from the first conversation to the collection.
+ *
+ * The specification is kept whole rather than baked into a price, because it
+ * is the thing the player designed: it goes into the finished asset's
+ * provenance, onto an insurance valuation, and into what a resale is worth.
+ *
+ * `quotedPrice` is fixed the moment the bench quotes it. A bench that changed
+ * its number between the deposit and the collection would be a different kind
+ * of game.
+ */
+export interface Commission {
+  id: Id;
+  saveId: Id;
+  /** The bench, or the maison's special order desk. */
+  placeId: Id;
+  /** Who is making it, so the same person is there when you collect. */
+  jewellerId?: Id;
+  /** For whom. A commission can be a gift. */
+  forPersonId: Id;
+  piece: string;
+  metal: string;
+  stone: string;
+  /** Carats of the center stone. Zero when there is no stone. */
+  carats: number;
+  cut: string;
+  colourGrade?: string;
+  clarity?: string;
+  setting: string;
+  /** What is cut inside it, in the player's own words. */
+  engraving?: string;
+  quotedPrice: Money;
+  /** Paid up front. The balance falls due on collection. */
+  deposit: Money;
+  depositPaidAt?: Instant;
+  balancePaidAt?: Instant;
+  status: 'quoted' | 'ordered' | 'ready' | 'collected' | 'cancelled';
+  quotedAt: Instant;
+  orderedAt?: Instant;
+  readyAt?: Instant;
+  collectedAt?: Instant;
+  /** The finished piece, once it exists. */
+  assetId?: Id;
+  /** Why it was canceled, when it was. */
+  cancelledReason?: string;
+}
+
+/**
+ * A garment that does not exist yet.
+ *
+ * A costume house cutting one for you, a tailor altering one you own, or you
+ * at your own machine. The same record covers all three because the questions
+ * are the same: what is it, what is it cut from, who is making it, how many
+ * fittings, what did it cost, and is it finished.
+ */
+export interface Costume {
+  id: Id;
+  saveId: Id;
+  /** The workroom. Absent when you are making it at home. */
+  placeId?: Id;
+  /** The cutter, so the same person is there at every fitting. */
+  makerId?: Id;
+  /** For whom. A costume can be made for somebody else. */
+  forPersonId: Id;
+  /** 'house', 'tailor' or 'self'. */
+  maker: string;
+  kind: string;
+  cloth: string;
+  finish: string;
+  /** What is embroidered or printed inside it, in the player's own words. */
+  label?: string;
+  /** Yards the pattern needs, so a self-made one can check the stash. */
+  yards: number;
+  quotedPrice: Money;
+  deposit: Money;
+  depositPaidAt?: Instant;
+  balancePaidAt?: Instant;
+  status: 'quoted' | 'ordered' | 'fitting' | 'ready' | 'collected' | 'cancelled';
+  /** Fittings the workroom wants, and how many have happened. */
+  fittingsWanted: number;
+  fittingsDone: number;
+  /** Every fitting leaves a note. Skipping them costs the fit. */
+  fittingNotes: string[];
+  quotedAt: Instant;
+  orderedAt?: Instant;
+  readyAt?: Instant;
+  collectedAt?: Instant;
+  /** How well it came out, 0-100, once it is finished. */
+  quality?: number;
+  /** The finished garment, once it exists. */
+  assetId?: Id;
+  /** Why it was canceled, when it was. */
+  cancelledReason?: string;
+}
+
+export interface WornRecord {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  at: Instant;
+  assetIds: Id[];
+  /** The saved outfit it matched, if it matched one. */
+  outfitId?: Id;
+  occasion: string;
+  /** 0-100 what the mirror gave it. */
+  verdict: number;
+  /** Whether anybody with a camera was there. */
+  photographed: boolean;
 }
 
 export interface Order {
@@ -1161,6 +1779,8 @@ export interface Order {
   returnWindowEndsAt?: Instant;
   refundedAmount?: Money;
   giftFor?: Id;
+  /** The colorway chosen at the counter for each line that comes in colors. */
+  colours?: Record<string, string>;
 }
 
 export interface PantryItem {
@@ -1327,6 +1947,471 @@ export interface Enrollment {
 }
 
 // ---------------------------------------------------------------------------
+// School
+// ---------------------------------------------------------------------------
+
+/** One lesson on the timetable. */
+export interface Lesson {
+  /** 1 for Monday through 5 for Friday. */
+  day: number;
+  /** Which period of the day, from 1. */
+  period: number;
+  subjectId: string;
+}
+
+/** What a subject is worth so far this year. */
+export interface SubjectMark {
+  subjectId: string;
+  /** Out of a hundred. */
+  mark: number;
+  /** Lessons sat and lessons missed, for this year. */
+  attended: number;
+  missed: number;
+}
+
+/** A place on a school team. */
+/** A part in a school play. */
+export interface SchoolPart {
+  id: Id;
+  productionId: string;
+  title: string;
+  /** 'lead' | 'supporting' | 'ensemble' | 'crew'. */
+  part: string;
+  /** How it went, out of a hundred, once it has been performed. */
+  verdict?: number;
+  /** Set when somebody outside the school noticed. */
+  noticed?: boolean;
+  auditionedAt: Instant;
+  performsAt: Instant;
+  note?: string;
+}
+
+/** Somebody's place in the education system where they live. */
+/** The state of somebody's teeth, and what has been done to them. */
+export interface Teeth {
+  personId: Id;
+  /** Out of a hundred, as it stood when anybody last looked. */
+  condition: number;
+  /** When that was. Everything decays from here rather than ticking. */
+  checkedAt: Instant;
+  /** How many months the practice asked to wait before the next look. */
+  recallMonths: number;
+  treatments: { id: string; at: Instant; paid: Money }[];
+}
+
+/** The state of the animal, which is the same idea with fur on it. */
+export interface PetHealth {
+  personId: Id;
+  condition: number;
+  checkedAt: Instant;
+  /** Whether it carries a microchip, which is the law in some countries. */
+  chipped: boolean;
+  /** When the boosters were last done, because they lapse after a year. */
+  boostedAt?: Instant;
+  neuteredAt?: Instant;
+  treatments: { id: string; at: Instant; paid: Money }[];
+}
+
+/** A mobile plan, on a real network. */
+export interface PhonePlan {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  networkId: string;
+  tariffId: string;
+  /** What it costs a month, here, on this network. */
+  monthly: Money;
+  startedAt: Instant;
+  /** Set when the old number is being moved across, which takes a day. */
+  numberMovesAt?: Instant;
+  endedAt?: Instant;
+}
+
+/** Training in a real art, with a real grading ladder behind it. */
+export interface Training {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** Which art, by its id in the week content. */
+  artId: string;
+  /** The gym, which is SLATE's own invention. */
+  gymName: string;
+  /** The grade held now. Empty for an art that grades nobody. */
+  gradeId: string;
+  /** When that grade was awarded, for the federations that publish a minimum time. */
+  gradedAt: Instant;
+  sessions: number;
+  /** Hours on the mat, which is what a grading panel is really weighing. */
+  hours: number;
+  /** Every grading sat, passed or not. */
+  gradings: { gradeId: string; at: Instant; passed: boolean }[];
+  /** Which week the session counter belongs to, so a week's limit is a week's. */
+  weekOf?: number;
+  thisWeek?: number;
+  startedAt: Instant;
+  endedAt?: Instant;
+}
+
+/** One public examination, from putting a name down to the envelope arriving. */
+export interface ExamSitting {
+  id: Id;
+  /** Which test, by its id in the exam content. */
+  testId: string;
+  /** The state or province, for a test a region sets rather than a country. */
+  regionId?: string;
+  registeredAt: Instant;
+  sitsAt: Instant;
+  /** How many past papers have been worked through. */
+  prep: number;
+  /** Set on the day it is actually sat. */
+  satAt?: Instant;
+  /** On the test's own scale, and not shown until the results are released. */
+  score?: number;
+  sections?: { id: string; label: string; score: number }[];
+  resultsAt?: Instant;
+  released?: boolean;
+  /** How many times it had already been sat when this one was entered. */
+  attempt: number;
+}
+
+/** One subject's line on a report. */
+export interface ReportLine {
+  subjectId: string;
+  /** SLATE's own mark out of a hundred, behind the grade. */
+  mark: number;
+  /** What the country actually prints. */
+  grade: string;
+  effort: string;
+  comment: string;
+  /** Percent of that subject's lessons attended. */
+  attendance: number;
+}
+
+/** What comes home at the end of a term, or halfway through one. */
+export interface ReportCard {
+  id: Id;
+  at: Instant;
+  kind: 'report' | 'progress';
+  termLabel: string;
+  lines: ReportLine[];
+  average: number;
+  /** The average the country reports alongside it, where it reports one. */
+  averageLabel?: string;
+  averageValue?: number;
+  attendance: number;
+  headline: string;
+}
+
+export interface Schooling {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The education system this is inside. */
+  systemId: string;
+  /** The school itself: a place id, and SLATE's own invention. */
+  placeId: string;
+  placeName: string;
+  /** The stage and the year within it, as of the last roll-up. */
+  stageId: string;
+  yearLabel: string;
+  /** The week, generated once per school year. */
+  timetable: Lesson[];
+  marks: SubjectMark[];
+  clubs: string[];
+  parts: SchoolPart[];
+  /** Qualifications already earned, oldest first. */
+  results: { name: string; stageId: string; average: number; at: Instant }[];
+  /** Public examinations entered for or already sat. */
+  sittings: ExamSitting[];
+  /** Report cards and progress reports, oldest first. */
+  reports: ReportCard[];
+  /** When the next one comes home. */
+  nextReportAt?: Instant;
+  startedAt: Instant;
+  /** Set when they left, finished or moved on. */
+  endedAt?: Instant;
+  endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
+// The job you had before any of this
+// ---------------------------------------------------------------------------
+
+/** One shift on a rota: when it is, what kind, and whether it happened. */
+export interface RotaShift {
+  at: Instant;
+  /** 'open', 'mid', 'close', 'weekend' or 'night'. */
+  kindId: string;
+  hours: number;
+  worked?: boolean;
+  missed?: boolean;
+  /** Set where it was picked up at short notice rather than rostered. */
+  cover?: boolean;
+}
+
+/** A Saturday job: the first money anybody earns that is theirs. */
+export interface FirstJobHeld {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** Which kind of job it is. */
+  kindId: string;
+  /** Who you work for. A real company where the country has one. */
+  employerName: string;
+  /** Set where the employer is one SLATE carries as real. */
+  employerId?: string;
+  /** Where on the ladder: 'crew', 'supervisor', 'assistant' or 'manager'. */
+  roleId: string;
+  /** What the manager thinks of you, out of a hundred. */
+  standing: number;
+  /** Where, so it is a place in a city rather than an abstraction. */
+  cityId: string;
+  placeId?: string;
+  /** What the hour pays, at the time it was taken or last promoted. */
+  perHour: Money;
+  /** Shifts worked, and what they came to. */
+  shifts: number;
+  earned: Money;
+  /** Hours worked since the last pay date, and what they are worth gross. */
+  owedHours: number;
+  owed: Money;
+  /** When the money arrives, and what arrived last time. */
+  nextPayAt?: Instant;
+  payslips: {
+    at: Instant;
+    hours: number;
+    gross: Money;
+    tax: Money;
+    social: Money;
+    net: Money;
+  }[];
+  /** Days rung in sick, and whether anybody worked out that one was not. */
+  sickDays: number;
+  /** The shifts you are down for, this week and last. */
+  rota: RotaShift[];
+  /** A shift somebody is asking you to pick up, on a day you were not on. */
+  cover?: { at: Instant; kindId: string; hours: number; reason: string; askedAt: Instant };
+  startedAt: Instant;
+  endedAt?: Instant;
+  endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Growing up
+// ---------------------------------------------------------------------------
+
+/** The years between five and twenty five, and what happened in them. */
+export interface GrowingUp {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The moments already lived through, by id. */
+  done: string[];
+  /** The one waiting on an answer, if there is one. */
+  openId?: string;
+  /** When the next one is due to come round. */
+  nextAt?: Instant;
+  /** The last week pocket money was paid for. */
+  allowancePaidAt?: Instant;
+  /** Hours with an instructor. */
+  lessons: number;
+  /** Driving tests sat, and whether one was passed. */
+  testsSat: number;
+  passedTestAt?: Instant;
+  /** The animal, where a childhood produced one. It costs money every week. */
+  pet?: {
+    kindId: string;
+    name: string;
+    since: Instant;
+    /** What it costs a week, where you are living. */
+    aWeek: Money;
+    /** Set when it dies, which is a thing that happens. */
+    untilAt?: Instant;
+  };
+  startedAt: Instant;
+}
+
+// ---------------------------------------------------------------------------
+// Track
+// ---------------------------------------------------------------------------
+
+/** A time somebody has actually run, and where they ran it. */
+export interface Mark {
+  eventId: string;
+  /** 'indoor' or 'outdoor'. */
+  surface: string;
+  seconds: number;
+  /** Meters a second, where the event reads it. Above the limit and it does not stand. */
+  wind?: number;
+  /** Whether the mark stands for a record or a ranking. */
+  legal: boolean;
+  at: Instant;
+  /** The meet it was run at. SLATE's own unless it is a real named meet. */
+  where: string;
+}
+
+/** One race inside a meet: a heat, a semi final or a final. */
+export interface RaceResult {
+  /** 'heat', 'semi' or 'final'. */
+  round: string;
+  eventId: string;
+  lane: number;
+  seconds: number;
+  wind?: number;
+  legal: boolean;
+  place: number;
+  /** How many were in the race. */
+  of: number;
+  /** Whether that was enough to go through to the next round. */
+  through: boolean;
+  personalBest: boolean;
+  seasonBest: boolean;
+}
+
+/** A meet on a season's schedule, and what happened at it. */
+export interface MeetEntry {
+  at: Instant;
+  /** What it is called. A real named meet, or SLATE's own. */
+  name: string;
+  town: string;
+  cityId?: string;
+  /** Set where the meet is one SLATE carries as real. */
+  meetId?: string;
+  tier: string;
+  /** What is being run there, from the events this runner has entered. */
+  eventIds: string[];
+  run: boolean;
+  /** Where the runner did not qualify to be there at all. */
+  locked?: boolean;
+  results: RaceResult[];
+  /** Where they finished in the final, if they made one. */
+  place?: number;
+}
+
+/** A track season, from the first meet of it to however far it went. */
+export interface TrackSeason {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** 'school', 'university' or 'professional'. */
+  stage: string;
+  /** 'indoor' or 'outdoor'. */
+  surface: string;
+  /** The school, university or club being run for. */
+  teamName: string;
+  countryId: string;
+  /** The calendar year the season started in. */
+  year: number;
+  /** The events entered this season. */
+  eventIds: string[];
+  meets: MeetEntry[];
+  startedAt: Instant;
+  endedAt?: Instant;
+  /** How far it went, in words. */
+  reached?: string;
+}
+
+/** Everything about somebody as a runner, which outlasts any one season. */
+export interface Running {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  /** The category they compete in: 'mens' or 'womens'. Their own choice. */
+  category: string;
+  /** The events they run. */
+  eventIds: string[];
+  /** Where they run: a school team, a university team, a club, or professionally. */
+  stage: string;
+  /** Who they run for. */
+  teamName?: string;
+  /**
+   * Condition, out of a hundred, built by training and lost by not.
+   *
+   * Read through the system rather than straight off the record: form falls
+   * away from the day it was last worked on, so the stored number is only the
+   * number it was then.
+   */
+  form: number;
+  /** The day the form was last put in. */
+  formAt: Instant;
+  /** Sessions put in, ever. */
+  sessions: number;
+  /** Every personal best, one per event and surface. */
+  bests: Mark[];
+  /** The best of this season, cleared when a new season starts. */
+  seasonBests: Mark[];
+  /** Set while hurt, and nothing can be run until it passes. */
+  injuredUntil?: Instant;
+  /** What the injury was, so it can be said out loud. */
+  injury?: string;
+  /** Whether they have turned professional. */
+  professional?: boolean;
+  /** A shoe contract, where there is one. */
+  contract?: {
+    brand: string;
+    aYear: Money;
+    from: Instant;
+    to: Instant;
+    /** What a global medal is worth on top. */
+    medalBonus: Money;
+  };
+  startedAt: Instant;
+}
+
+// ---------------------------------------------------------------------------
+// University
+// ---------------------------------------------------------------------------
+
+/** An application to a university, and what came back. */
+export interface UniversityApplication {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  universityId: string;
+  majorId: string;
+  /** The average the applicant was carrying when they applied. */
+  onMarks: number;
+  status: 'pending' | 'offer' | 'rejected' | 'accepted' | 'declined' | 'withdrawn';
+  /** 'academic' | 'athletic' | 'none', set when an offer carries one. */
+  scholarship?: string;
+  /** Why it went the way it did, in words the applicant would be given. */
+  reason: string;
+  appliedAt: Instant;
+  decidedAt?: Instant;
+}
+
+/** A degree in progress, or one that was finished. */
+export interface Studies {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  universityId: string;
+  universityName: string;
+  majorId: string;
+  /** Which year of the course, from one. */
+  year: number;
+  years: number;
+  /** Out of a hundred, across the course so far. */
+  average: number;
+  /** Terms sat and terms missed. */
+  termsDone: number;
+  termsMissed: number;
+  scholarship?: string;
+  /** Where they live while they are there, and whether they eat on a plan. */
+  housing: string;
+  mealPlan: boolean;
+  /** What has been paid in fees so far. */
+  paid: Money;
+  /** And what has been paid for somewhere to sleep and something to eat. */
+  paidLiving: Money;
+  startedAt: Instant;
+  endedAt?: Instant;
+  /** Set when the degree was awarded. */
+  awardedClass?: string;
+  endReason?: string;
+}
+
+// ---------------------------------------------------------------------------
 // Travel
 // ---------------------------------------------------------------------------
 
@@ -1413,6 +2498,25 @@ export interface HotelBooking {
   status: 'booked' | 'checked_in' | 'checked_out' | 'cancelled' | 'no_show';
   incidentals: Money;
   bookedAt: Instant;
+  /** A hotel, or a room in somebody's home through Airbnb. Absent means hotel. */
+  kind?: 'hotel' | 'airbnb';
+  /** The real brand it wears, when it wears one. Absent means one of SLATE's own hotels. */
+  brandId?: string;
+  /** The person whose home it is, for an Airbnb. A real person in the save. */
+  hostId?: Id;
+  /** What was listed, for an Airbnb. */
+  listing?: {
+    kind: 'entire_home' | 'private_room' | 'shared_room';
+    bedrooms: number;
+    superhost: boolean;
+    /** 0-5, the listing's rating as shown. SLATE's own. */
+    rating: number;
+    selfCheckIn: boolean;
+  };
+  /** Charged once per stay, not per night, the way the platform does it. */
+  cleaningFee?: Money;
+  /** The platform's cut, shown to the guest as a line of its own. */
+  serviceFee?: Money;
 }
 
 // ---------------------------------------------------------------------------
@@ -1501,6 +2605,442 @@ export interface SocialPost {
   decayDaysRemaining: number;
   /** What the audience said a day on, as the library put it. Absent until then. */
   reactions?: { at: Instant; band: 'hit' | 'fine' | 'flop'; comments: string[]; summary: string };
+}
+
+/**
+ * The video app.
+ *
+ * The contract asked for the real app rather than a panel of numbers: a feed
+ * built from channels you actually subscribe to, channels with names and
+ * subscriber counts and a history of uploads, your own channel with titles and
+ * thumbnails and a schedule, analytics that behave like analytics, comments you
+ * can read and reply to, and watching as a thing that costs you an evening.
+ *
+ * A channel in the world is not a `SocialAccount`. An account is yours and
+ * carries the money; a channel is anybody's, including yours, and carries the
+ * videos. The player's own channel points at their account so the two agree.
+ */
+export interface VideoChannel {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  /** The roster entry it was made from, so a save keeps the same channels. */
+  sourceId?: string;
+  name: string;
+  handle: string;
+  topic: string;
+  about: string;
+  subscribers: number;
+  verified: boolean;
+  createdAt: Instant;
+  /** Days between uploads, on average. */
+  cadenceDays: number;
+  /** 0-100 how good this channel is at what it does. */
+  craft: number;
+  /** The voice it speaks in, which shows in its titles and its comments. */
+  tone: string;
+  /** Whose channel it is, when somebody in the world runs it. */
+  ownerId?: Id;
+  /** The player's own channel, tied to the account that carries the money. */
+  accountId?: Id;
+  lastUploadAt?: Instant;
+  totalViews: number;
+  /** What it costs a month to join, where the channel sells memberships. */
+  membershipMonthly?: Money;
+  /** How many people are paying for that. */
+  members?: number;
+  liveStreamId?: Id;
+  /** A photo the player uploaded, square, for the circle. */
+  avatarImage?: string;
+  /** And the wide one across the top of the channel page. */
+  bannerImage?: string;
+  /**
+   * How many videos this channel has put out. The world's back catalog is
+   * derived from this and the channel's seed rather than stored, because two
+   * hundred and forty channels with four years of uploads behind them is
+   * fourteen thousand rows nobody would ever read, in every save file. A
+   * derived catalog is the same catalog every time it is asked for, costs
+   * nothing to keep, and cannot drift.
+   */
+  uploads: number;
+}
+
+export interface VideoItem {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  title: string;
+  description: string;
+  tags: string[];
+  publishedAt: Instant;
+  lengthMinutes: number;
+  topic: string;
+  views: number;
+  likes: number;
+  dislikes: number;
+  commentCount: number;
+  /** Which thumbnail was chosen, which changes how many people click. */
+  thumbnail: string;
+  /** 0-100 how well made it is. */
+  quality: number;
+  /** Share of it an average viewer sits through, 0-1. */
+  retention: number;
+  /** The player's own uploads carry the post that earns the money. */
+  postId?: Id;
+  /** Scheduled uploads are not on the feed until their hour comes. */
+  scheduledFor?: Instant;
+  status: 'published' | 'scheduled' | 'removed';
+  live?: boolean;
+  /**
+   * A photo the player uploaded for the front of it, framed and re-encoded to
+   * sixteen by nine, held as a data URL the way a headshot is.
+   */
+  thumbnailImage?: string;
+  /** Where the video breaks into parts, in minutes from the start. */
+  chapters?: { at: number; title: string }[];
+  /** Whether there are captions on it at all. Not every video has them. */
+  captions?: boolean;
+  /** What a short was shot to, which the player picks on the camera screen. */
+  sound?: string;
+}
+
+export interface VideoComment {
+  id: Id;
+  saveId: Id;
+  videoId: Id;
+  /** Somebody in the world, where the commenter is a person the game knows. */
+  authorId?: Id;
+  authorName: string;
+  text: string;
+  at: Instant;
+  likes: number;
+  /** -100 to 100. */
+  sentiment: number;
+  byPlayer?: boolean;
+  replyToId?: Id;
+  /**
+   * The ones you should not read. Hidden behind a choice rather than served
+   * to you, because that is the actual experience of having a channel.
+   */
+  harsh?: boolean;
+  /** True once the player has looked at it, so a reply is not a surprise. */
+  seen?: boolean;
+  /** Held at the top of the section by the channel, as one can be. */
+  pinned?: boolean;
+  /** The little heart a creator can put on a comment, and only they can. */
+  hearted?: boolean;
+}
+
+/**
+ * The bell, as an inbox rather than a shower of toasts.
+ *
+ * A notice is what the app would put behind the bell: a channel you follow put
+ * something out, somebody replied to you, your own channel passed a number
+ * that matters. It is read when you open it, and not before.
+ */
+export interface VideoNotice {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  kind: 'upload' | 'live' | 'reply' | 'milestone' | 'payout';
+  text: string;
+  at: Instant;
+  seen: boolean;
+  channelId?: Id;
+  videoId?: Id;
+}
+
+/**
+ * How the player has the app set up. One set of preferences per save, because
+ * they are the player's and not any one video's.
+ */
+export interface VideoPreferences {
+  /** 0.25 to 2. Watching faster costs less of the day and takes less in. */
+  speed: number;
+  /** What it is set to play at. The low ones are not worth watching. */
+  quality: 'auto' | '1080p' | '720p' | '480p' | '144p';
+  /** Whether the next one starts on its own when this one ends. */
+  autoplay: boolean;
+  /** Captions on, where the video has them. */
+  captions: boolean;
+  /** Sorting and filtering the search results, remembered between searches. */
+  searchSort: 'relevance' | 'date' | 'views';
+}
+
+export interface VideoSubscription {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  channelId: Id;
+  since: Instant;
+  /** The bell. Off by default, because it is off by default. */
+  notify: boolean;
+  /** All, the ones it thinks you want, or none: the three the bell offers. */
+  bell?: 'all' | 'personalized' | 'none';
+}
+
+export interface WatchRecord {
+  id: Id;
+  saveId: Id;
+  personId: Id;
+  videoId: Id;
+  at: Instant;
+  minutes: number;
+  finished: boolean;
+  liked?: boolean;
+}
+
+/**
+ * The rest of what a video platform is.
+ *
+ * A feed and a watch page are the half of it people see. The other half is
+ * everything the app keeps for you and everything it pays you: playlists and
+ * the two the app makes itself, a subscription that removes the ads and pays
+ * the creators you watch, memberships somebody buys to support a channel, the
+ * one-off tips under a video, a stream with a chat in it, and the posts a
+ * channel writes when it has not got a video ready.
+ */
+export interface VideoPlaylist {
+  id: Id;
+  saveId: Id;
+  ownerId: Id;
+  title: string;
+  description: string;
+  videoIds: Id[];
+  visibility: 'public' | 'private' | 'unlisted';
+  /** The app makes two of these itself and they cannot be deleted. */
+  kind: 'playlist' | 'watch_later' | 'liked';
+  createdAt: Instant;
+  updatedAt: Instant;
+}
+
+export interface LiveStream {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  title: string;
+  startedAt: Instant;
+  endedAt?: Instant;
+  minutes: number;
+  peakViewers: number;
+  averageViewers: number;
+  chatMessages: number;
+  /** What people paid to have a message read out, in total. */
+  superChatTotal: Money;
+  status: 'live' | 'ended';
+}
+
+export interface CommunityPost {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  kind: 'text' | 'poll';
+  text: string;
+  at: Instant;
+  likes: number;
+  commentCount: number;
+  /** A poll's options and where the votes went. */
+  options?: { label: string; votes: number }[];
+  /** Which option the player chose, where they voted. */
+  votedFor?: number;
+}
+
+export interface ChannelMembership {
+  id: Id;
+  saveId: Id;
+  channelId: Id;
+  /** The member. Somebody in the world, or the player. */
+  personId: Id;
+  tier: string;
+  monthly: Money;
+  since: Instant;
+  endedAt?: Instant;
+}
+
+/**
+ * What a month on the channel actually paid, and where it came from. The app
+ * shows a total; a creator lives on the breakdown.
+ */
+export interface CreatorPayout {
+  id: Id;
+  saveId: Id;
+  accountId: Id;
+  /** The month it covers, as the first instant of it. */
+  month: Instant;
+  ads: Money;
+  premium: Money;
+  memberships: Money;
+  tips: Money;
+  sponsorship: Money;
+  total: Money;
+  /** Monetized views the ad money was earned on. */
+  monetizedViews: number;
+  paidAt?: Instant;
+}
+
+/**
+ * The other two apps.
+ *
+ * A photo app and a text app are not one app with two skins, so they do not
+ * share a shape here either. What they do share is that both are made of
+ * accounts and the things those accounts put out, and that both are populated
+ * by SLATE's own people rather than by anybody real.
+ *
+ * A profile is somebody's presence on one platform. The player has one on each
+ * they join; everybody else's is derived from the roster, the same way a video
+ * channel is, so the world costs a save nothing.
+ */
+export interface SocialProfile {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  /** The roster entry it was made from, so a save keeps the same people. */
+  sourceId?: string;
+  handle: string;
+  name: string;
+  bio: string;
+  topic: string;
+  followers: number;
+  following: number;
+  verified: boolean;
+  createdAt: Instant;
+  /** How often they post, in days. */
+  cadenceDays: number;
+  /** 0-100 how good they are at it. */
+  craft: number;
+  /** Whose profile it is, where somebody in the world holds it. */
+  ownerId?: Id;
+  /** The player's own, tied to the account that carries the money. */
+  accountId?: Id;
+  avatarImage?: string;
+  /** The line somebody has put above their picture, which is up for a day. */
+  note?: string;
+  noteAt?: Instant;
+  /** How many they have put out, which their feed is counted back from. */
+  posts: number;
+  lastPostAt?: Instant;
+}
+
+/**
+ * One thing on one of those two apps.
+ *
+ * A photograph with a caption, a carousel, a reel, a story that is gone in a
+ * day, a text post, a reply to one, a repost, or a quote of one. The kind
+ * decides what it is; the platform decides where it can exist.
+ */
+export interface SocialItem {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  profileId: Id;
+  kind:
+    | 'photo' | 'carousel' | 'reel' | 'story' | 'text' | 'reply' | 'repost' | 'quote'
+    | 'message' | 'clip' | 'live';
+  text: string;
+  at: Instant;
+  likes: number;
+  comments: number;
+  reposts: number;
+  /** Pictures the player brought, framed and re-encoded like every other. */
+  images?: string[];
+  /** What this is a reply to, a repost of, or a quote of. */
+  parentId?: Id;
+  /** The other end of a message thread, which is who it is with. */
+  withProfileId?: Id;
+  /** A story is gone after this. */
+  expiresAt?: Instant;
+  /** A story only the close friends list sees. */
+  closeOnly?: boolean;
+  /** Which of the player's saved collections this is filed under. */
+  collection?: string;
+  /** The sound a short is cut to, where the app has one. */
+  sound?: string;
+  /** Where the photograph was taken, where anybody said. */
+  place?: string;
+  topic: string;
+  /** True where the player made it, so it can be edited and deleted. */
+  byPlayer?: boolean;
+  /** Whether the player has liked, saved or reposted it. */
+  liked?: boolean;
+  saved?: boolean;
+  reposted?: boolean;
+  /** Read once, so a story ring goes gray. */
+  seen?: boolean;
+}
+
+/**
+ * How the player has the two apps set up.
+ *
+ * One record per save, because these are the player's and not any one app's,
+ * and because every one of them changes what the app actually does: a muted
+ * account is gone from the feed, a blocked one is gone from search as well, a
+ * hidden word takes a comment out of the room, and a private account grows
+ * more slowly because fewer people can see it to follow it.
+ */
+export interface SocialSettings {
+  /** A private account is seen by fewer people, so it grows more slowly. */
+  privateAccount: boolean;
+  /** Hiding the numbers hides them on everybody's posts, including yours. */
+  hideCounts: boolean;
+  notificationsOn: boolean;
+  mutedProfileIds: Id[];
+  blockedProfileIds: Id[];
+  /** Comments carrying any of these never reach you. */
+  hiddenWords: string[];
+  /** Meta Verified on the photo app, which is a paid subscription. */
+  photoVerified?: boolean;
+  photoVerifiedAt?: Instant;
+}
+
+/**
+ * A follow, which runs in both directions.
+ *
+ * With `personId` set it is the player following an account. With
+ * `byProfileId` set instead it is an account that chose to follow the player,
+ * which is what makes a follower a person on a list rather than a number that
+ * went up.
+ */
+export interface SocialFollow {
+  id: Id;
+  saveId: Id;
+  /** The player, where this is one of theirs. */
+  personId?: Id;
+  /** The world account, where this is somebody following the player. */
+  byProfileId?: Id;
+  profileId: Id;
+  since: Instant;
+  /** Close friends, which is the list a story can be limited to. */
+  close?: boolean;
+}
+
+/**
+ * A room on the text app.
+ *
+ * Communities, Lists and Spaces are the same shape underneath — a name and a
+ * set of accounts — and differ in what they do: a community is one you join, a
+ * list is one you keep, and a space is one that runs for an hour and then is
+ * over. Keeping them one record means a list you made and a community you
+ * joined cannot drift apart in how they behave.
+ */
+export interface SocialRoom {
+  id: Id;
+  saveId: Id;
+  platform: PlatformId;
+  kind: 'community' | 'list' | 'space';
+  name: string;
+  topic: string;
+  /** Accounts in it. */
+  profileIds: Id[];
+  /** True where the player made it or joined it. */
+  joined?: boolean;
+  /** True where the player is the one who made it. */
+  mine?: boolean;
+  members: number;
+  createdAt: Instant;
+  /** A space runs and then stops. */
+  startedAt?: Instant;
+  endedAt?: Instant;
+  peak?: number;
 }
 
 export interface BrandDeal {
@@ -1827,6 +3367,84 @@ export interface DialogueState {
   seen: Record<string, { n: number; at: Instant }>;
 }
 
+/**
+ * What kind of thing was remembered.
+ *
+ * Not a category of the game — a category of memory. A person does not file
+ * their life under "commerce"; they remember doing a thing, being somewhere,
+ * being with somebody, something arriving, something going, something said,
+ * and something landing on them.
+ */
+export type RecallKind = 'did' | 'went' | 'met' | 'got' | 'lost' | 'said' | 'felt';
+
+/**
+ * One thing the save remembers.
+ *
+ * History keeps the milestones and keeps them forever. This keeps the rest —
+ * the shift, the class, the meal, the argument, the drive — which is what a
+ * life is mostly made of and what makes the milestones mean anything.
+ *
+ * It is written from a world event that really happened, so nothing in here
+ * is invented, and it carries the ids rather than the names so it can never
+ * go stale about what something is called.
+ */
+export interface Recollection {
+  id: Id;
+  at: Instant;
+  kind: RecallKind;
+  /** The event that caused it, so it can always be traced back. */
+  cause: string;
+  /** What it was, in the words it would be recalled in. */
+  what: string;
+  /** How much it mattered when it happened, 0-100. */
+  weight: number;
+  /** How fast the everyday part of it fades. 0 means it does not. */
+  halfLifeDays: number;
+  /** How it can be found: 'work', 'school', 'training', 'money', 'people'. */
+  tags: string[];
+  /** Who else was there. Only these people can be said to remember it too. */
+  withIds?: Id[];
+  /** Where it happened. */
+  placeId?: Id;
+  locationId?: Id;
+  /** What it was about, resolved to a name when it is read rather than stored. */
+  subjectType?: string;
+  subjectId?: Id;
+  /** The milestone this is the everyday side of, where there is one. */
+  historyId?: Id;
+  /** Money involved, in cents. */
+  amount?: number;
+  /**
+   * How many times the everyday thing happened inside one collapsed memory.
+   *
+   * Nobody remembers each of two hundred showers. They remember showering,
+   * and roughly how the week went. Anything below the threshold is folded
+   * into one memory for the week it happened in, and this is the count.
+   */
+  times?: number;
+  /**
+   * The most recent of a folded memory, where `at` is the first of them.
+   *
+   * The anchor has to stay put or the week never ends and one memory eats
+   * every shower forever. So `at` is where the week started and this is the
+   * last time it happened.
+   */
+  lastAt?: Instant;
+}
+
+/**
+ * The memory of a save, and the register of what it has already played.
+ *
+ * `entries` is the recall. `played` is what stops the world repeating itself:
+ * a fingerprint of every beat it has brought up, with how often and how
+ * recently, so the same callback does not arrive twice running.
+ */
+export interface RecallState {
+  version: 1;
+  entries: Recollection[];
+  played: Record<string, { n: number; at: Instant }>;
+}
+
 export interface SceneState {
   version: 2;
   /** The one scene in the foreground, if any. */
@@ -1853,7 +3471,7 @@ export interface PersonFact {
   /** Who it is about, when not the person holding it. */
   aboutId?: Id;
   text: string;
-  /** How much it shapes behaviour, 0-100. */
+  /** How much it shapes behavior, 0-100. */
   weight: number;
   /** When it stops mattering. Absent means it does not fade. */
   expiresAt?: Instant;
@@ -1949,7 +3567,7 @@ export type PlanStatus = 'planned' | 'attended' | 'skipped' | 'missed' | 'cancel
 /**
  * Something you decided to do at a time. Unlike a bill or a flight, it is
  * yours to move or drop. When it comes due it opens a scene, or runs the same
- * scene summarised, and what happened is recorded as one of the five states.
+ * scene summarized, and what happened is recorded as one of the five states.
  */
 export interface PersonalPlan {
   id: Id;
@@ -1974,7 +3592,7 @@ export interface PersonalPlan {
   sceneId?: Id;
 }
 
-export const SAVE_SCHEMA_VERSION = 42;
+export const SAVE_SCHEMA_VERSION = 71;
 
 export interface SaveMeta {
   id: Id;
@@ -2046,15 +3664,25 @@ export interface SaveUniverse {
   berthWaitlists?: Record<Id, BerthWaitlist>;
   /** Monthly statements, oldest pruned. Absent on a save from before statements. */
   accountStatements?: Record<Id, AccountStatement>;
+  /** Applications to private banks, pending and decided. */
+  privateApplications?: Record<Id, PrivateApplication>;
   /** Transfers the bank makes for you. Absent on a save from before standing orders. */
   standingOrders?: Record<Id, StandingOrder>;
   /** Sittings at a table or a counter. Absent on a save from before rooms had staff. */
   diningVisits?: Record<Id, DiningVisit>;
+  /** What was worn on which day. Absent on a save from before getting dressed. */
+  wornRecords?: Record<Id, WornRecord>;
+  /** Pieces being made for you at a bench. Absent before jewelers had one. */
+  commissions?: Record<Id, Commission>;
+  /** Garments being cut for you, and the ones you cut yourself. */
+  costumes?: Record<Id, Costume>;
   /** Visits to a shop floor. Absent on a save from before shops had a floor. */
   retailVisits?: Record<Id, RetailVisit>;
   dates: Record<Id, DateRecord>;
   /** Absent on a save that has not heard a line yet. */
   dialogue?: DialogueState;
+  /** What the save remembers, beside the milestones history keeps forever. */
+  recall?: RecallState;
   vehicleListings: Record<Id, VehicleListing>;
   vehicleModifications: Record<Id, VehicleModification>;
   serviceRecords: Record<Id, ServiceRecord>;
@@ -2071,6 +3699,22 @@ export interface SaveUniverse {
   insuranceClaims: Record<Id, InsuranceClaim>;
   courses: Record<Id, Course>;
   enrollments: Record<Id, Enrollment>;
+  /** School, for a life that is still in it. Absent on a save from before. */
+  schooling?: Record<Id, Schooling>;
+  /** University: applications and a degree. Absent on a save from before. */
+  applications?: Record<Id, UniversityApplication>;
+  studies?: Record<Id, Studies>;
+  /** Seasons of sport, at school and at university. Absent on an older save. */
+  seasons?: Record<Id, TrackSeason>;
+  running?: Record<Id, Running>;
+  growing?: Record<Id, GrowingUp>;
+  firstJobs?: Record<Id, FirstJobHeld>;
+  /** Training in a martial art. Absent on a save from before it existed. */
+  training?: Record<Id, Training>;
+  /** The last four ordinary rooms. Absent on a save from before they existed. */
+  teeth?: Record<Id, Teeth>;
+  petHealth?: Record<Id, PetHealth>;
+  phonePlans?: Record<Id, PhonePlan>;
 
   trips: Record<Id, Trip>;
   flightBookings: Record<Id, FlightBooking>;
@@ -2079,6 +3723,40 @@ export interface SaveUniverse {
   socialAccounts: Record<Id, SocialAccount>;
   socialPosts: Record<Id, SocialPost>;
   brandDeals: Record<Id, BrandDeal>;
+
+  /** The video app: the channels of the world, what they put out, and what you watched. */
+  videoChannels: Record<Id, VideoChannel>;
+  videos: Record<Id, VideoItem>;
+  videoComments: Record<Id, VideoComment>;
+  videoSubscriptions: Record<Id, VideoSubscription>;
+  watchHistory: Record<Id, WatchRecord>;
+  /** The photo app and the text app: who is on them, and what they put out. */
+  socialProfiles: Record<Id, SocialProfile>;
+  socialItems: Record<Id, SocialItem>;
+  socialFollows: Record<Id, SocialFollow>;
+  socialSettings?: SocialSettings;
+  socialRooms: Record<Id, SocialRoom>;
+  /** Kit out on hire from a rental house. */
+  kitHires: Record<Id, KitHire>;
+  /** Days you shoot something of your own. */
+  shootDays: Record<Id, ShootDay>;
+  /** Pictures of your own, from the first day to the last festival. */
+  indieFilms: Record<Id, IndieFilm>;
+  cinemaTickets: Record<Id, CinemaTicket>;
+  fashionInvites: Record<Id, FashionInvite>;
+  goingTickets: Record<Id, GoingTicket>;
+  parcels: Record<Id, Parcel>;
+  /** Minutes spent in each app on each day, which is what Time Management is. */
+  socialScreenTime: Record<string, number>;
+  /** The bell, and how the player has the app set up. */
+  videoNotices: Record<Id, VideoNotice>;
+  videoPreferences?: VideoPreferences;
+  /** The rest of the app: what it keeps for you, and what it pays. */
+  videoPlaylists: Record<Id, VideoPlaylist>;
+  liveStreams: Record<Id, LiveStream>;
+  communityPosts: Record<Id, CommunityPost>;
+  channelMemberships: Record<Id, ChannelMembership>;
+  creatorPayouts: Record<Id, CreatorPayout>;
 
   /**
    * Companies survive the removal of the film half because finance and

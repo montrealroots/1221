@@ -74,6 +74,17 @@ Characters keep their own voices. Editorial cleanup fixes spelling and
 grammar in narration and interface text; it does not flatten how a person
 talks. A trainer who says "Right. Squats." keeps saying it.
 
+Prose contracts the way speech does. "You don’t have a job", "that isn’t
+yours", "there’s nothing on today": the uncontracted forms read like a
+form letter, and a sentence that never contracts is the single biggest
+reason text sounds like a machine wrote it. The apostrophe is the
+typographic one (’), which the rest of the prose already uses. The forms
+English leaves alone stay alone: possessive "you have" ("you have $50"),
+"it is" at the end of a clause ("that is what it is"), "you are" after
+"who", "where", "as" or "than". Labels are not prose and are not
+contracted. `node tools/voice-check.mjs` counts what is left, `--fix`
+rewrites the safe cases, and `--check` holds the line in the gate.
+
 ## Identifiers
 
 Displayed labels are free to change; command kinds, entity ids, save keys,
@@ -98,3 +109,17 @@ the id and the screen.
   tab label in plain Title Case words.
 - `tests/text-caps.test.ts`, `tests/cohesion.test.ts` — duplicates, repeats,
   wiring and casing across the tree.
+- `tools/voice-check.mjs` — every string the game shows, counted for the
+  places a person would have contracted and did not; `--fix` rewrites the
+  safe ones, `--check` fails the gate over budget.
+- `tools/cohesion-walk.mjs` — the game as a person meets it, in a browser:
+  startup, the slots, creation, Home, every rail destination and every tab
+  behind it, the phone and its apps, a sentence typed into Go Anywhere and
+  the scene it opens, the calendar's plan form, help, then Save & Exit and
+  back in. Page errors, leaked `undefined`s, a rail that marks the wrong
+  screen, a covered control or a save that does not come back all fail it.
+- `tools/monte-carlo.mjs` — random lives, played by the game's own commands
+  with real ids from the save, a year at a time: every throw, missed event,
+  unbalanced ledger, bad number, backwards clock and failed round trip is a
+  bug with a seed to reproduce it. `tests/monte-carlo.test.ts` runs a short
+  one in the gate.

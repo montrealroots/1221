@@ -53,7 +53,9 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
   {
     label: 'The Work',
     items: [
-      { route: '/workspace/company', label: 'Company', detail: 'Under construction', locked: true },
+      { route: '/workspace/casting', label: 'Casting', detail: 'Locked until the industry milestone', locked: true },
+      { route: '/workspace/phone', label: 'Phone', detail: 'Your handset, and the apps on it' },
+      { route: '/workspace/film', label: 'Film', detail: 'Kit, shoot days and pictures of your own' },
       { route: '/workspace/social', label: 'Social', detail: 'What you post and who follows' },
     ],
   },
@@ -62,7 +64,9 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     items: [
       { route: '/workspace/health', label: 'Health', detail: 'Care, providers and recovery' },
       { route: '/workspace/education', label: 'Education', detail: 'Getting better at things' },
+      { route: '/workspace/track', label: 'Track', detail: 'The season, the work and every time you have run' },
       { route: '/workspace/city', label: 'The City', detail: 'Where you are and what is here' },
+      { route: '/workspace/goingout', label: 'Going Out', detail: 'The cinema, what is on in town, and the fashion weeks' },
       { route: '/workspace/travel', label: 'Travel', detail: 'Anywhere else in the world' },
       { route: '/workspace/character', label: 'Character', detail: 'Attributes, skills and traits' },
       { route: '/workspace/settings', label: 'Settings', detail: 'Preferences and your save' },

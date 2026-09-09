@@ -44,9 +44,9 @@ export const COUNTER_SCENE = defineScene({
 
   available(sim, input) {
     const offer = sim.universe.propertyOffers[String(input['offerId'])];
-    if (!offer) return { ok: false, reason: 'There is no offer like that.' };
-    if (offer.buyerId !== sim.player.id) return { ok: false, reason: 'That is not your offer.' };
-    if (offer.status !== 'countered') return { ok: false, reason: 'There is no counter to answer.' };
+    if (!offer) return { ok: false, reason: 'There’s no offer like that.' };
+    if (offer.buyerId !== sim.player.id) return { ok: false, reason: 'That isn’t your offer.' };
+    if (offer.status !== 'countered') return { ok: false, reason: 'There’s no counter to answer.' };
     return { ok: true };
   },
 
@@ -149,7 +149,7 @@ export const COUNTER_SCENE = defineScene({
         if (choiceId === 'back') { ctx.go('call'); return; }
         if (!choiceId.startsWith('counter:')) throw unknownStep();
         const choice = counterChoices(sim, offer).find((c) => c.id === choiceId.slice(8));
-        if (!choice) throw new CommandError('That number is not on the table.');
+        if (!choice) throw new CommandError('That number isn’t on the table.');
         ctx.commit('answer', { kind: 'prop.respond_to_counter', payload: { offerId: offer.id, accept: false, counterAmount: choice.amount } });
         session.context['result'] = 'countered';
         session.context['amount'] = choice.amount;

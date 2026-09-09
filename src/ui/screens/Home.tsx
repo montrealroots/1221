@@ -9,7 +9,7 @@ import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE } from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
-import { forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
+import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
@@ -53,15 +53,19 @@ export function Home() {
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
           {zoneAbbreviation(sim.now, sim.zone)} · {seasonOf(sim.now, sim.zone, city?.latitude ?? 34)}
           {weather && (
-            <> · {weather.temperature}{unit} {titleCaseLabel(weather.condition)}</>
+            <>
+              {' · '}
+              <span aria-hidden="true">{WEATHER_EMOJI[weather.condition]}</span>
+              {' '}{weather.temperature}{unit} {titleCaseLabel(weather.condition)}
+            </>
           )}
         </p>
       </div>
 
       {/*
         Everywhere you can go. This was a rail down the left of every screen;
-        it is here because Home is the hub and a hub that is missing half the
-        building is not one.
+        it’s here because Home is the hub and a hub that’s missing half the
+        building isn’t one.
       */}
       <div className="card" style={{ marginBottom: 'var(--s5)' }}>
         <div className="panel-head">
@@ -237,7 +241,7 @@ export function Home() {
             <div className="col gap-3">
               <Meter label="Energy" value={player.wellbeing.energy} />
               <Meter label="Stress" value={player.wellbeing.stress} invert />
-              <Meter label="Readiness" value={ready} hint="How well you will perform at anything right now." />
+              <Meter label="Readiness" value={ready} hint="How well you’ll perform at anything right now." />
             </div>
             <button className="btn btn-sm" style={{ marginTop: 'var(--s3)' }} onClick={() => navigate('/workspace/wellbeing', 'Wellbeing')}>
               Wellbeing
@@ -307,7 +311,10 @@ export function Home() {
             <Panel title="Weather" tight actions={<span className="chip">{weather.climateName}</span>}>
               <div className="weather-now">
                 <div className="grow">
-                  <div className="weather-temp mono">{weather.temperature}{unit}</div>
+                  <div className="weather-temp mono">
+                    <span aria-hidden="true" style={{ marginRight: 8 }}>{WEATHER_EMOJI[weather.condition]}</span>
+                    {weather.temperature}{unit}
+                  </div>
                   <div className="small muted">
                     {titleCaseLabel(weather.condition)} · High {weather.high}{unit} · Low {weather.low}{unit}
                   </div>
@@ -323,6 +330,7 @@ export function Home() {
                   return (
                     <div key={day.dateKey} className="weather-day" title={`${titleCaseLabel(day.condition)}, ${day.low}${unit} to ${day.high}${unit}`}>
                       <div className="xs dim">{weekday.slice(0, 3)}</div>
+                      <div aria-hidden="true">{WEATHER_EMOJI[day.condition]}</div>
                       <div className="xs weather-cond">{weatherShort(day.condition)}</div>
                       <div className="xs mono">{day.high}° / {day.low}°</div>
                     </div>
@@ -376,7 +384,7 @@ export function Home() {
             </div>
           ) : (
             <div className="col gap-2">
-              <p className="small muted">You do not have a place of your own.</p>
+              <p className="small muted">You don’t have a place of your own.</p>
               <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find Somewhere</button>
             </div>
           )}

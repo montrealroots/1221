@@ -62,7 +62,7 @@ export function VehiclesWorkspace() {
       />
 
       {tab === 'garage' && deals.length > 0 && (
-        <Panel title="On The Table" subtitle="Conversations you have not finished. A deal holds for a week; an agreed price for as long as it says." flush>
+        <Panel title="On The Table" subtitle="Conversations you haven’t finished. A deal holds for a week; an agreed price for as long as it says." flush>
           <div className="list">
             {deals.map((deal) => {
               const listing = sim.universe.vehicleListings[deal.listingId];
@@ -167,7 +167,7 @@ export function VehiclesWorkspace() {
                 </div>
                 <div className="col gap-3">
                   <Meter label="Condition" value={vehicle.condition} />
-                  <Meter label="Mechanical Health" value={vehicle.mechanicalHealth} hint="Falls without service. Repairs get expensive when it is low." />
+                  <Meter label="Mechanical Health" value={vehicle.mechanicalHealth} hint="Falls without service. Repairs get expensive when it’s low." />
                 </div>
 
                 <hr className="divider" />
@@ -464,7 +464,7 @@ function ServiceTab({ vehicleId }: { vehicleId: string }) {
                   {kind === 'scheduled' && 'Routine maintenance. Skipping it costs more later.'}
                   {kind === 'repair' && 'Fixing what is wrong. Price rises as mechanical health falls.'}
                   {kind === 'inspection' && 'Required in some jurisdictions before registration renews.'}
-                  {kind === 'tires' && (vehicleKind(vehicle) === 'boat' ? 'Propellers and running gear. Affects speed and how it handles.' : vehicleKind(vehicle) === 'jet' ? 'Tyres and brakes. Aircraft go through them.' : 'New rubber. Affects grip and how it drives.')}
+                  {kind === 'tires' && (vehicleKind(vehicle) === 'boat' ? 'Propellers and running gear. Affects speed and how it handles.' : vehicleKind(vehicle) === 'jet' ? 'Tires and brakes. Aircraft go through them.' : 'New rubber. Affects grip and how it drives.')}
                   {kind === 'detail' && 'Cosmetic. Lifts condition and resale.'}
                   {kind === 'bodywork' && 'Paint and panel. Expensive and worth it before selling.'}
                 </div>

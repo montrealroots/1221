@@ -29,7 +29,7 @@ export interface PlatformDef {
   name: string;
   tagline: string;
   formats: PostFormat[];
-  /** How much the algorithm favours new creators over existing reach, 0-1. */
+  /** How much the algorithm favors new creators over existing reach, 0-1. */
   discoveryBias: number;
   /** How heavily the algorithm rewards consistency. */
   consistencyWeight: number;
@@ -45,30 +45,43 @@ export interface PlatformDef {
   bestFor: string;
 }
 
+/**
+ * The four apps.
+ *
+ * The ids are the ones saves have always used and are not renamed: an id is a
+ * persistence key, and changing one to tidy a label would break every save that
+ * has an account on it. The names beside them are the real ones, because the
+ * rest of the game names real shops, real airlines and real insurers, and a
+ * player's phone should not be the one place that invents a brand.
+ *
+ * What is real here is the shape of each platform: what it rewards, how fast a
+ * post dies, how much a thousand impressions is worth. The numbers are SLATE's
+ * calibration, not any company's published figures.
+ */
 export const PLATFORMS: readonly PlatformDef[] = [
   {
-    id: 'streamtube', name: 'StreamTube', tagline: 'Long-form video, watch time and a real revenue share.',
+    id: 'streamtube', name: 'YouTube', tagline: 'Long-form video, watch time and a real revenue share.',
     formats: ['long_video', 'short_video', 'livestream'],
     discoveryBias: 0.35, consistencyWeight: 0.9, viralPotential: 1.0,
     baseCpm: 480, monetisationThreshold: 1000, halfLifeDays: 21,
-    bestFor: 'Depth. Watch time compounds and the back catalogue keeps earning for years.',
+    bestFor: 'Depth. Watch time compounds and the back catalog keeps earning for years.',
   },
   {
-    id: 'pulse', name: 'Pulse', tagline: 'Short video, ruthless algorithm, no memory.',
+    id: 'pulse', name: 'TikTok', tagline: 'Short video, ruthless algorithm, no memory.',
     formats: ['short_video', 'livestream'],
     discoveryBias: 0.88, consistencyWeight: 0.55, viralPotential: 2.4,
     baseCpm: 65, monetisationThreshold: 10000, halfLifeDays: 3,
     bestFor: 'Reach from nothing. A first post can find a million people and the next one can find nobody.',
   },
   {
-    id: 'lumen', name: 'Lumen', tagline: 'Photo, story and the place brands actually spend.',
+    id: 'lumen', name: 'Instagram', tagline: 'Photo, story and the place brands actually spend.',
     formats: ['photo', 'carousel', 'reel', 'story', 'livestream'],
     discoveryBias: 0.45, consistencyWeight: 0.75, viralPotential: 1.3,
     baseCpm: 210, monetisationThreshold: 5000, halfLifeDays: 7,
     bestFor: 'Brand partnerships and a public image you control.',
   },
   {
-    id: 'chatter', name: 'Chatter', tagline: 'Text, opinion and the industry conversation.',
+    id: 'chatter', name: 'X', tagline: 'Text, opinion and the industry conversation.',
     formats: ['text', 'thread', 'photo', 'short_video', 'repost'],
     discoveryBias: 0.55, consistencyWeight: 0.6, viralPotential: 1.8,
     baseCpm: 45, monetisationThreshold: 20000, halfLifeDays: 2,
@@ -174,7 +187,7 @@ export function registerMedia(sim: Simulation): void {
       if (!account) throw new CommandError('No such account.');
       const platform = PLATFORM_BY_ID[account.platform];
       if (!platform.formats.includes(p.format)) {
-        throw new CommandError(`${platform.name} does not support ${p.format.replace(/_/g, ' ')}.`);
+        throw new CommandError(`${platform.name} doesn’t support ${p.format.replace(/_/g, ' ')}.`);
       }
 
       const profile = FORMAT_PROFILE[p.format];
@@ -326,14 +339,14 @@ export interface PostCraft {
 
 export const CRAFT_ANGLES: readonly { id: string; label: string; aliases: string[]; detail: string; bonus: number; topic: string }[] = [
   { id: 'behind', label: 'Behind The Scenes', aliases: ['behind', 'bts', 'process'], detail: 'What it is like to make the thing.', bonus: 3, topic: 'work' },
-  { id: 'take', label: 'A Take On The Business', aliases: ['take', 'opinion', 'business'], detail: 'Something you think that others do not say.', bonus: 4, topic: 'industry' },
+  { id: 'take', label: 'A Take On The Business', aliases: ['take', 'opinion', 'business'], detail: 'Something you think that others don’t say.', bonus: 4, topic: 'industry' },
   { id: 'personal', label: 'Something Personal', aliases: ['personal', 'me', 'life'], detail: 'A day, a place, a person. Risky and warm.', bonus: 2, topic: 'life' },
-  { id: 'reply', label: 'A Reply To The Noise', aliases: ['reply', 'response', 'discourse'], detail: 'Joining a conversation that is already loud.', bonus: 1, topic: 'discourse' },
+  { id: 'reply', label: 'A Reply To The Noise', aliases: ['reply', 'response', 'discourse'], detail: 'Joining a conversation that’s already loud.', bonus: 1, topic: 'discourse' },
 ];
 
 export const CRAFT_HOOKS: readonly { id: string; label: string; aliases: string[]; detail: string; bonus: number }[] = [
   { id: 'plain', label: 'Say It Plainly', aliases: ['plain', 'straight', 'simple'], detail: 'No tricks. Lands with people who already like you.', bonus: 1 },
-  { id: 'question', label: 'Open With A Question', aliases: ['question', 'ask'], detail: 'People answer questions. That is the whole trick.', bonus: 3 },
+  { id: 'question', label: 'Open With A Question', aliases: ['question', 'ask'], detail: 'People answer questions. That’s the whole trick.', bonus: 3 },
   { id: 'cold', label: 'Start In The Middle', aliases: ['cold', 'middle', 'in medias res'], detail: 'No preamble. The first second is the hook.', bonus: 4 },
   { id: 'tease', label: 'Tease It', aliases: ['tease', 'wait for it'], detail: 'Works once, then they know.', bonus: 2 },
 ];
@@ -342,7 +355,7 @@ export function craftBonus(craft: PostCraft | undefined): number {
   if (!craft) return 0;
   const angle = CRAFT_ANGLES.find((a) => a.id === craft.angle);
   const hook = CRAFT_HOOKS.find((h) => h.id === craft.hook);
-  if (!angle || !hook) throw new CommandError('That is not a way to make a post SLATE knows.');
+  if (!angle || !hook) throw new CommandError('That isn’t a way to make a post SLATE knows.');
   return angle.bonus + hook.bonus;
 }
 

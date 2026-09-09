@@ -1,7 +1,7 @@
 /**
- * SLATE — Commerce catalogue.
+ * SLATE — Commerce catalog.
  *
- * Retailers, groceries, prepared food, clothing, watches, jewellery, furniture,
+ * Retailers, groceries, prepared food, clothing, watches, jewelry, furniture,
  * electronics and services. Brands are original to SLATE; prices are
  * calibrated to plausible ranges and then adjusted by the local cost-of-living
  * index at the point of sale.
@@ -10,13 +10,32 @@
 import { Registry, REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from '../core/money';
 import { CITIES } from './geography';
-import { REAL_RETAILERS, tradesIn, type RealRetailer } from './brands';
+import { ALL_RETAILERS, tradesIn, type RealRetailer } from './brands';
 import {
   REAL_ACCESSORIES, REAL_APPLIANCES, REAL_APPLIANCES_MORE, REAL_ART, REAL_BOOKS, REAL_CLOTHING,
   REAL_ELECTRONICS, REAL_EQUIPMENT, REAL_FOOTWEAR, REAL_FOOTWEAR_MORE, REAL_FURNITURE, REAL_FURNITURE_MORE,
   REAL_GROCERIES, REAL_HOME, REAL_HOUSEHOLD, REAL_JEWELLERY, REAL_JEWELLERY_MORE, REAL_TOP_UP, REAL_WATCHES,
   type RealGood,
 } from './goods';
+import { REAL_INTIMATES } from './intimates';
+import { REAL_SNEAKERS } from './sneakers';
+import { REAL_LABELS } from './labels';
+import { REAL_SPORTSWEAR } from './sportswear';
+import { REAL_HOUSES } from './houses';
+import { REAL_KIT } from './kit';
+import { REAL_ICE } from './ice';
+import { REAL_MAISONS } from './maisons';
+import { REAL_HOROLOGY } from './horology';
+import { REAL_OUTFITTERS } from './outfitters';
+import { REAL_HIGHSTREET } from './highstreet';
+import { REAL_SHOEMAKERS } from './shoemakers';
+import { REAL_QUIET } from './quiet';
+import { REAL_JEWELERS } from './jewelers';
+import { REAL_BOUTIQUES } from './boutiques';
+import { REAL_LARDER } from './larder';
+import { REAL_RECIPES } from './kitchen';
+import { REAL_ADORNMENT } from './adornment';
+import { withAudience } from './audience';
 
 const V = REFERENCE_VERSION;
 const SIM = { source: 'simulated', confidence: 'high', version: V, note: 'Original to SLATE.' } as const;
@@ -25,7 +44,7 @@ export interface Retailer extends ReferenceRecord {
   type: 'grocery' | 'department' | 'boutique' | 'electronics' | 'furniture' | 'jeweller' | 'restaurant' | 'service' | 'dealer' | 'online';
   /** 1 = discount, 5 = luxury. */
   tier: 1 | 2 | 3 | 4 | 5;
-  /** Multiplier on catalogue base price. */
+  /** Multiplier on catalog base price. */
   priceMultiplier: number;
   categories: string[];
   /** Cities where it operates. Empty means everywhere. */
@@ -84,7 +103,7 @@ const KIND_TO_TYPE: Readonly<Record<RealRetailer['kind'], Retailer['type']>> = {
 };
 
 export const RETAILERS = new Registry<Retailer>('retailers', [
-  ...REAL_RETAILERS.map(fromReal),
+  ...ALL_RETAILERS.map(fromReal),
   ...LEGACY_RETAILERS,
 ]);
 
@@ -115,6 +134,11 @@ export interface CatalogItem extends ReferenceRecord {
   slot?: string;
   formality?: number;
   seasons?: string[];
+  /**
+   * Who the thing is cut for. A shop leads with what fits you and will still
+   * sell you anything: nothing in SLATE is refused on this.
+   */
+  audience?: 'men' | 'women' | 'unisex';
   /** Furniture only. */
   roomKinds?: string[];
   qualityContribution?: number;
@@ -130,7 +154,7 @@ const g = (id: string, name: string, sub: string, price: number, shelf: number, 
   item({ id, name, category: 'groceries', subcategory: sub, basePrice: price, brand: 'Market', tags: ['grocery', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment });
 
 /**
- * The items SLATE invented before the real catalogue arrived, kept so an old
+ * The items SLATE invented before the real catalog arrived, kept so an old
  * save's owned assets still resolve. They are not offered on any shop floor.
  */
 const LEGACY_ITEMS: readonly CatalogItem[] = [
@@ -185,7 +209,7 @@ const LEGACY_ITEMS: readonly CatalogItem[] = [
   item({ id: 'oxfords', name: 'Oxford Shoes', category: 'footwear', subcategory: 'formal', basePrice: 620_00, brand: "Halliday's", tags: ['formal', 'resoleable'], quality: 84, depreciation: 0.10, slot: 'shoes', formality: 90, seasons: ['Spring', 'Autumn', 'Winter'] }),
   item({ id: 'heels_designer', name: 'Designer Heels', category: 'footwear', subcategory: 'formal', basePrice: 985_00, brand: 'Northfield & Co.', tags: ['formal', 'red carpet'], quality: 88, depreciation: 0.22, slot: 'shoes', formality: 92, seasons: ['Spring', 'Summer', 'Autumn', 'Winter'] }),
 
-  // --- Watches and jewellery ---
+  // --- Watches and jewelry ---
   item({ id: 'watch_field', name: 'Field Watch', category: 'watch', subcategory: 'tool', basePrice: 425_00, brand: 'Kestrel Instruments', tags: ['everyday'], quality: 58, depreciation: 0.20 }),
   item({ id: 'watch_diver', name: 'Dive Watch', category: 'watch', subcategory: 'sport', basePrice: 3_900_00, brand: 'Meridian', tags: ['everyday', 'holds value'], quality: 82, depreciation: 0.02 }),
   item({ id: 'watch_dress', name: 'Dress Watch', category: 'watch', subcategory: 'dress', basePrice: 8_600_00, brand: 'Meridian', tags: ['formal', 'holds value'], quality: 88, depreciation: 0.01 }),
@@ -241,14 +265,23 @@ const LEGACY_ITEMS: readonly CatalogItem[] = [
   item({ id: 'light_kit', name: 'LED Lighting Kit', category: 'electronics', subcategory: 'lighting', basePrice: 1_400_00, brand: 'Circuitline', tags: ['content', 'self tape'], quality: 76, depreciation: 0.20 }),
 ].map((i) => ({ ...i, tags: [...i.tags, 'legacy'] }));
 
-/** Everything real, in the shape the commerce engine already speaks. */
-const REAL_ITEMS: readonly CatalogItem[] = ([] as RealGood[]).concat(
+/**
+ * Everything real, in the shape the commerce engine already speaks.
+ *
+ * `withAudience` stamps each wardrobe row with who it is cut for. The
+ * intimates and adornment files say so on every row themselves and pass
+ * through unchanged; everything else is decided in content/audience.ts.
+ */
+const REAL_ITEMS: readonly CatalogItem[] = withAudience(([] as RealGood[]).concat(
   REAL_GROCERIES as RealGood[], REAL_CLOTHING as RealGood[], REAL_FOOTWEAR as RealGood[], REAL_FOOTWEAR_MORE as RealGood[],
   REAL_ACCESSORIES as RealGood[], REAL_WATCHES as RealGood[], REAL_JEWELLERY as RealGood[], REAL_JEWELLERY_MORE as RealGood[],
   REAL_ELECTRONICS as RealGood[], REAL_FURNITURE as RealGood[], REAL_FURNITURE_MORE as RealGood[], REAL_HOME as RealGood[],
   REAL_APPLIANCES as RealGood[], REAL_APPLIANCES_MORE as RealGood[], REAL_HOUSEHOLD as RealGood[],
   REAL_EQUIPMENT as RealGood[], REAL_ART as RealGood[], REAL_BOOKS as RealGood[], REAL_TOP_UP as RealGood[],
-) as unknown as CatalogItem[];
+  REAL_INTIMATES as RealGood[], REAL_ADORNMENT as RealGood[],
+  REAL_SNEAKERS as RealGood[], REAL_LABELS as RealGood[], REAL_SPORTSWEAR as RealGood[],
+  REAL_HOUSES as RealGood[], REAL_KIT as RealGood[], REAL_ICE as RealGood[], REAL_MAISONS as RealGood[], REAL_HOROLOGY as RealGood[], REAL_OUTFITTERS as RealGood[], REAL_HIGHSTREET as RealGood[], REAL_SHOEMAKERS as RealGood[], REAL_QUIET as RealGood[], REAL_JEWELERS as RealGood[], REAL_BOUTIQUES as RealGood[], REAL_LARDER as RealGood[],
+)) as unknown as CatalogItem[];
 
 export const CATALOG = new Registry<CatalogItem>('catalog', [...REAL_ITEMS, ...LEGACY_ITEMS]);
 
@@ -289,11 +322,164 @@ export function retailPrice(itemId: string, retailerId: string, costOfLivingMult
  * The market is the chain's own trading territory, which is public record; the
  * size threshold and the branch itself are SLATE's calibration.
  */
+/**
+ * Who would really have this on the shelf.
+ *
+ * Before this, a shop that sold clothing sold every garment in the world, so
+ * a discount chain listed a luxury down jacket and a house's own boutique
+ * offered another company's socks. Two things decide it instead.
+ *
+ * The first is the shopfront. A boutique or a jeweler named for a brand is
+ * that brand's own shop and sells that brand, the way a Gucci store sells
+ * Gucci. A department store, a supermarket or a marketplace named for a brand
+ * — Marks & Spencer, John Lewis, Amazon — is not a single-brand shop and is
+ * left alone.
+ *
+ * The second is standing. Where a brand sits is read off its own prices, and
+ * a multi-brand shop carries its own standing and the one below it: the
+ * supermarket carries the everyday names, the luxury floor carries the houses,
+ * and neither reaches into the other's half of the market. Resale and auction
+ * carry what they really consign, which is the good stuff at any price.
+ *
+ * All of it is SLATE's calibration, not a published stock list. It applies to
+ * the things a brand's standing actually decides — what you wear and what you
+ * wear it with. Groceries, furniture, appliances and the rest are untouched.
+ */
+const BRANDED_MARKET = new Set(['clothing', 'footwear', 'accessory', 'watch', 'jewelry']);
+
+/** Shop kinds where a brand's name over the door means a single-brand shop. */
+const HOUSE_KINDS = new Set(['boutique', 'jeweller']);
+
+/** Where a company sells more than its own label under one name. */
+const FAMILY: Record<string, string[]> = {
+  Nike: ['Jordan'],
+};
+
+/** Second hand and the saleroom: any house, at any price, if it is worth consigning. */
+const CONSIGNMENT = new Set([
+  'the_realreal', 'vestiaire', 'stockx', 'chrono24', 'christies', 'sothebys', 'grailed',
+]);
+
+/** Whether this shop sells other people's pieces on rather than its own stock. */
+export function isConsignment(retailer: Retailer): boolean {
+  return CONSIGNMENT.has(retailer.id);
+}
+
+/** What a shop of each tier will put a price tag on, low and high. */
+const BAND: Record<number, [Money, Money]> = {
+  1: [0, 120_00],
+  2: [0, 600_00],
+  3: [8_00, 3_000_00],
+  4: [25_00, 30_000_00],
+  5: [60_00, Number.MAX_SAFE_INTEGER],
+};
+
+let standings: Map<string, { band: 1 | 2 | 3 | 4 | 5; rows: number }> | undefined;
+
+/**
+ * How many pieces a brand needs before its median says anything. Under this,
+ * one suit and two pairs of socks would make a tailoring house a sock label.
+ */
+const ENOUGH_TO_JUDGE = 10;
+
+/** Where a price sits, from 1 for the value end to 5 for the houses. */
+function bandOf(price: Money): 1 | 2 | 3 | 4 | 5 {
+  return price < 60_00 ? 1 : price < 200_00 ? 2 : price < 600_00 ? 3 : price < 2_000_00 ? 4 : 5;
+}
+
+function standingTable(): Map<string, { band: 1 | 2 | 3 | 4 | 5; rows: number }> {
+  if (standings) return standings;
+  const prices = new Map<string, Money[]>();
+  for (const item of REAL_ITEMS) {
+    if (!BRANDED_MARKET.has(item.category)) continue;
+    const list = prices.get(item.brand);
+    if (list) list.push(item.basePrice);
+    else prices.set(item.brand, [item.basePrice]);
+  }
+  standings = new Map();
+  for (const [name, list] of prices) {
+    list.sort((a, b) => a - b);
+    standings.set(name, { band: bandOf(list[Math.floor(list.length / 2)] ?? 0), rows: list.length });
+  }
+  return standings;
+}
+
+/**
+ * What a brand's own prices say about the shops that carry it, from 1 for the
+ * value names to 5 for the houses. The median is used rather than the average
+ * so one flagship coat does not move a whole label.
+ */
+export function brandStanding(brand: string): 1 | 2 | 3 | 4 | 5 {
+  return standingTable().get(brand)?.band ?? 3;
+}
+
+/**
+ * The standing a single piece is judged by.
+ *
+ * A brand SLATE has written out is judged by everything it makes. A brand
+ * with only a handful of rows is judged by the piece in hand instead: BOSS
+ * here is one suit, one pair of socks and a trunk, and a median across those
+ * three would file a nine hundred dollar suit as a sock and leave nobody
+ * willing to sell it.
+ */
+export function standingOf(item: CatalogItem): 1 | 2 | 3 | 4 | 5 {
+  const known = standingTable().get(item.brand);
+  if (!known || known.rows < ENOUGH_TO_JUDGE) return bandOf(item.basePrice);
+  return known.band;
+}
+
+let houses: Map<string, string> | undefined;
+
+/** The brand a shopfront is the shopfront for, if it is one. */
+export function houseBrandOf(retailer: Retailer): string | undefined {
+  if (!houses) {
+    const brands = new Set(REAL_ITEMS.map((i) => i.brand));
+    houses = new Map();
+    for (const r of RETAILERS.all()) {
+      if (!HOUSE_KINDS.has(r.type)) continue;
+      if (brands.has(r.name)) houses.set(r.id, r.name);
+    }
+  }
+  return houses.get(retailer.id);
+}
+
+/** Whether this shop would really have this piece on its shelves. */
+export function stocks(retailer: Retailer, item: CatalogItem): boolean {
+  // A shop with a brand over the door sells that brand and only that brand,
+  // across everything the brand makes. A Zara store does not sell somebody
+  // else's charger, and the aisles it keeps are Zara's own to decide.
+  const house = houseBrandOf(retailer);
+  if (house !== undefined) {
+    return item.brand === house || (FAMILY[house]?.includes(item.brand) ?? false);
+  }
+
+  if (!retailer.categories.includes(item.category) && !retailer.categories.includes(item.subcategory)) return false;
+  if (!BRANDED_MARKET.has(item.category)) return true;
+  // Originals kept only so an old save still resolves its orders are never
+  // refused: a rule written now must not reach back and unmake a purchase
+  // somebody already made.
+  if (isLegacyItem(item)) return true;
+
+  const standing = standingOf(item);
+  if (CONSIGNMENT.has(retailer.id)) return standing >= 3;
+
+  // A shop carries its own standing and the one below it. Nobody sells above
+  // their own floor, and a luxury floor does not put out a value label.
+  if (standing > retailer.tier || standing < retailer.tier - 1) return false;
+  const [low, high] = BAND[retailer.tier] ?? [0, Number.MAX_SAFE_INTEGER];
+  return item.basePrice >= low && item.basePrice <= high;
+}
+
+/** The shops in this city that would really sell this piece. */
+export function stockistsFor(item: CatalogItem, cityId: string): Retailer[] {
+  return retailersFor(item.category, cityId).filter((r) => stocks(r, item));
+}
+
 export function retailersFor(category: string, cityId: string): Retailer[] {
   const population = CITIES.get(cityId)?.population ?? 0;
   return shoppableRetailers().filter((r) => {
     if (!r.categories.includes(category)) return false;
-    const real = REAL_RETAILERS.find((x) => x.id === r.id);
+    const real = ALL_RETAILERS.find((x) => x.id === r.id);
     if (!real) return r.locations.length === 0 || r.locations.includes(cityId);
     // Online only chains reach everywhere; a floor needs a city that supports one.
     if (real.kind === 'online') return real.markets.length === 0 || real.markets.includes(cityId.split('-')[0] ?? '');
@@ -304,6 +490,11 @@ export function retailersFor(category: string, cityId: string): Retailer[] {
 export interface Recipe extends ReferenceRecord {
   type: 'recipe';
   ingredients: { catalogId: string; quantity: number }[];
+  /**
+   * The kit the dish needs. A home comes fitted with a hob, an oven, a fridge
+   * and the pans; anything past that is something you went out and bought.
+   */
+  equipment: string[];
   prepMinutes: number;
   difficulty: number;
   servings: number;
@@ -312,22 +503,4 @@ export interface Recipe extends ReferenceRecord {
   meal: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'drink';
 }
 
-function recipe(id: string, name: string, meal: Recipe['meal'], ingredients: [string, number][], prepMinutes: number, difficulty: number, servings: number, nourishment: number, quality: number): Recipe {
-  return {
-    id, name, type: 'recipe', meal,
-    ingredients: ingredients.map(([catalogId, quantity]) => ({ catalogId, quantity })),
-    prepMinutes, difficulty, servings, nourishment, quality, ...SIM,
-  };
-}
-
-export const RECIPES = new Registry<Recipe>('recipes', [
-  recipe('scrambled_eggs', 'Scrambled Eggs on Toast', 'breakfast', [['eggs', 0.25], ['butter', 0.05], ['bread', 0.2]], 12, 10, 1, 26, 55),
-  recipe('cereal_bowl', 'Cereal and Milk', 'breakfast', [['cereal', 0.15], ['milk', 0.2]], 3, 2, 1, 18, 30),
-  recipe('coffee_home', 'Coffee at Home', 'drink', [['coffee', 0.05]], 6, 8, 1, 3, 62),
-  recipe('sandwich', 'Sandwich', 'lunch', [['bread', 0.25], ['cheese', 0.15], ['tomatoes', 0.2]], 8, 8, 1, 28, 48),
-  recipe('pasta_simple', 'Pasta with Tomato and Garlic', 'dinner', [['pasta', 0.4], ['tomatoes', 0.5], ['garlic', 0.4], ['olive_oil', 0.05]], 25, 22, 2, 34, 62),
-  recipe('roast_chicken', 'Roast Chicken and Potatoes', 'dinner', [['chicken_breast', 1], ['potatoes', 0.4], ['onions', 0.3], ['olive_oil', 0.08]], 75, 46, 4, 42, 78),
-  recipe('salmon_dinner', 'Pan-Seared Salmon and Spinach', 'dinner', [['salmon', 0.6], ['spinach', 0.5], ['olive_oil', 0.06], ['garlic', 0.2]], 30, 52, 2, 40, 86),
-  recipe('beef_ragu', 'Slow Beef Ragu', 'dinner', [['ground_beef', 1], ['tomatoes', 1], ['onions', 0.5], ['garlic', 0.5], ['pasta', 0.5], ['wine_mid', 0.25]], 180, 64, 6, 44, 90),
-  recipe('fruit_snack', 'Fruit', 'snack', [['apples', 0.15]], 2, 1, 1, 8, 60),
-]);
+export const RECIPES = new Registry<Recipe>('recipes', [...REAL_RECIPES]);

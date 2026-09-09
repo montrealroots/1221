@@ -30,7 +30,10 @@ const STOP = new Set([
   'i', 'me', 'my', 'a', 'an', 'the', 'to', 'and', 'of', 'it', 'in', 'on', 'for', 'with',
   'want', 'would', 'like', 'please', 'lets', 'let', 'us', 'go', 'do', 'can', 'could',
   'just', 'some', 'that', 'this', 'then', 'now', 'ok', 'okay', 'yes', 'yeah', 'sure',
-  'will', 'shall', 'im', 'ill', 'am', 'is', 'be', 'get', 'have', 'take',
+  'will', 'shall', 'im', 'ill', 'am', 'is', 'be', 'get', 'have', 'take', 'at',
+  // When, and how much: "sleep for eight hours" is "sleep".
+  'today', 'tonight', 'tomorrow', 'later', 'soon', 'morning', 'afternoon', 'evening', 'night', 'after', 'before',
+  'hour', 'hours', 'minute', 'minutes', 'eight', 'nine', 'ten', 'twelve', 'few', 'couple',
 ]);
 
 /** Things the runtime does regardless of the scene. Exact phrases only. */
@@ -68,8 +71,22 @@ function phrasesOf(choice: IntentChoice): string[] {
   return [choice.id.replace(/[_.]/g, ' '), choice.label, ...(choice.aliases ?? [])].map(normalise);
 }
 
+/** The words of the choice's phrases that sit whole inside what was typed. */
+function containedWords(clean: string, choice: IntentChoice): Set<string> {
+  const padded = ` ${clean} `;
+  const found = new Set<string>();
+  for (const phrase of phrasesOf(choice)) {
+    const words = tokens(phrase);
+    // One word is a word, and the plain matching already counts it. Two or
+    // more said together ("work out", "go to the gym") are what somebody
+    // meant, however much else they said around them.
+    if (words.length > 0 && phrase.split(' ').length >= 2 && padded.includes(` ${phrase} `)) for (const word of words) found.add(word);
+  }
+  return found;
+}
+
 /** How well the typed words cover a choice's words, 0-1. */
-function overlap(typed: string[], choice: IntentChoice): number {
+function overlap(clean: string, typed: string[], choice: IntentChoice): number {
   const own = new Set(phrasesOf(choice).flatMap(tokens));
   if (own.size === 0 || typed.length === 0) return 0;
   const hits = typed.filter((t) => own.has(t)).length;
@@ -80,14 +97,36 @@ function overlap(typed: string[], choice: IntentChoice): number {
   // "keep it" against "Keep It Short" and "Keep It At An Hour": every typed
   // word is in the choice, so it is a candidate even though it covers little
   // of the label. Two such candidates are then offered back, not refused.
-  return precision === 1 && hits > 0 ? Math.max(score, 0.6) : score;
+  const base = precision === 1 && hits > 0 ? Math.max(score, 0.6) : score;
+  // "work out at the gym", "sleep for eight hours": a phrase the game knows,
+  // said in a longer sentence. The extra words are how people talk, not a
+  // reason to refuse. A whole phrase inside the sentence counts, and the
+  // choice whose phrases account for more of the sentence wins: "work out"
+  // beats "work" on its own. A phrase that accounts for less than half of
+  // the sentence is a word in passing: "travel back in time" is not a trip.
+  if (hits > 0) {
+    const within = containedWords(clean, choice);
+    const accounted = typed.filter((t) => within.has(t)).length / typed.length;
+    if (within.size > 0 && accounted >= 0.5) return Math.max(base, 0.6 + 0.4 * accounted);
+  }
+  return base;
+}
+
+/** Every open choice scored against the text, best first. For tests and the console. */
+export function rankIntent(text: string, choices: readonly IntentChoice[]): { id: string; score: number }[] {
+  const clean = normalise(text);
+  const typed = tokens(clean);
+  return choices
+    .filter((c) => !c.disabled)
+    .map((choice) => ({ id: choice.id, score: Number(overlap(clean, typed, choice).toFixed(3)) }))
+    .sort((a, b) => b.score - a.score);
 }
 
 /**
  * Resolves typed text against the choices on screen.
  *
  * Exact match on a label, id or alias wins. A bare number or ordinal picks by
- * position. A runtime phrase — leave, skip, help — is honoured when typed on
+ * position. A runtime phrase — leave, skip, help — is honored when typed on
  * its own. Otherwise the words are compared: a clear best is taken, two close
  * ones are offered back, and anything below the bar is unsupported.
  */
@@ -114,7 +153,7 @@ export function resolveIntent(text: string, choices: readonly IntentChoice[]): I
   const typed = tokens(clean);
   if (typed.length === 0) return { kind: 'unsupported' };
   const scored = open
-    .map((choice) => ({ choice, score: overlap(typed, choice) }))
+    .map((choice) => ({ choice, score: overlap(clean, typed, choice) }))
     .sort((a, b) => b.score - a.score);
   const best = scored[0];
   const second = scored[1];

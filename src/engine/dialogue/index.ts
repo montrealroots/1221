@@ -25,6 +25,9 @@ const LOADERS: Readonly<Record<string, () => Promise<{ default?: DialogueChunk }
   travel: () => import('./chunks/travel'),
   wellbeing: () => import('./chunks/wellbeing'),
   vehicles: () => import('./chunks/vehicles'),
+  wardrobe: () => import('./chunks/wardrobe'),
+  jewellery: () => import('./chunks/jewellery'),
+  costume: () => import('./chunks/costume'),
   work: () => import('./chunks/work'),
 };
 

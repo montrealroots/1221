@@ -43,9 +43,9 @@ export const FOLLOW_UP_DAYS = 3;
 export const SHORT_NOTICE_HOURS = 24;
 export const DATES_KEPT = 60;
 
-export const NOT_TIME_YET = 'It is not time yet.';
-export const NOT_THERE = 'You are not where the date is.';
-export const NO_SUCH_DATE = 'There is no date like that.';
+export const NOT_TIME_YET = 'It isn’t time yet.';
+export const NOT_THERE = 'You aren’t where the date is.';
+export const NO_SUCH_DATE = 'There’s no date like that.';
 
 type ScheduledItem = NonNullable<ReturnType<Simulation['timeline']['get']>>;
 
@@ -77,7 +77,7 @@ export function dateForItem(sim: Simulation, itemId: Id): DateRecord | undefined
 
 export function partnerOf(sim: Simulation, date: DateRecord): Person {
   const person = sim.universe.people[date.personId];
-  if (!person) throw new CommandError('They are no longer in the world.');
+  if (!person) throw new CommandError('They’re no longer in the world.');
   return person;
 }
 
@@ -100,7 +100,7 @@ export function dateAttendable(sim: Simulation, date: DateRecord): { ok: boolean
   if (date.status === 'underway') return { ok: true };
   if (date.status !== 'planned') return { ok: false, reason: `This date was ${date.status.replace('_', ' ')}.` };
   if (sim.player.currentLocationId !== date.locationId) return { ok: false, reason: NOT_THERE };
-  if (sim.now < date.at - EARLY_MINUTES * MS_MINUTE) return { ok: false, reason: `It is planned for ${formatTime(date.at, sim.zone)}.` };
+  if (sim.now < date.at - EARLY_MINUTES * MS_MINUTE) return { ok: false, reason: `It’s planned for ${formatTime(date.at, sim.zone)}.` };
   if (sim.now > date.at + (date.durationMinutes + LAPSE_GRACE_MINUTES) * MS_MINUTE) return { ok: false, reason: 'That time has gone.' };
   return { ok: true };
 }
@@ -175,7 +175,7 @@ export function registerDating(sim: Simulation): void {
     sim.requireDecision({
       urgency: 62, category: 'personal',
       title: `Time For Your Date With ${other.displayName}`,
-      detail: `${activityOf(date).label}${place ? ` at ${place.name}` : ''}, ${formatTime(date.at, sim.zone)}. Leave it and they will be waiting.`,
+      detail: `${activityOf(date).label}${place ? ` at ${place.name}` : ''}, ${formatTime(date.at, sim.zone)}. Leave it and they’ll be waiting.`,
       route: '/workspace/relationships',
       actions: [
         { label: 'Play It Out', commandKind: 'date.attend', payload: { dateId: date.id, mode: 'play' } },
@@ -222,15 +222,15 @@ export function registerDating(sim: Simulation): void {
       : upcomingDates(sim).some((d) => d.personId === date.personId && d.id !== date.id);
     if (kept) {
       applyDelta(rel.dimensions, { trust: 3, affection: 2 });
-      rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: promise === 'call' ? 'Said they would call, and did.' : 'Said they would arrange another evening, and did.', weight: 45, sourceKind: 'date', refType: 'date', refId: date.id });
+      rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: promise === 'call' ? 'Said they’d call, and did.' : 'Said they’d arrange another evening, and did.', weight: 45, sourceKind: 'date', refType: 'date', refId: date.id });
       return;
     }
     applyDelta(rel.dimensions, { trust: -4, affection: -3, conflict: 3 });
-    rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: promise === 'call' ? 'Said they would call. Did not.' : 'Said they would arrange another evening. Did not.', weight: 55, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 180 * MS_DAY });
-    addMemory(sim, rel, { kind: 'promise_broken', summary: promise === 'call' ? 'You said you would call, and did not.' : 'You said you would arrange another evening, and did not.', impact: -4, decayDays: 180, refType: 'date', refId: date.id });
+    rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: promise === 'call' ? 'Said they’d call. Didn’t.' : 'Said they’d arrange another evening. Didn’t.', weight: 55, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 180 * MS_DAY });
+    addMemory(sim, rel, { kind: 'promise_broken', summary: promise === 'call' ? 'You said you’d call, and didn’t.' : 'You said you’d arrange another evening, and didn’t.', impact: -4, decayDays: 180, refType: 'date', refId: date.id });
     sim.notify({
       category: 'relationships', title: `${other.firstName} Noticed`,
-      body: promise === 'call' ? `You said you would call after ${activityOf(date).label.toLowerCase()}. It has been ${FOLLOW_UP_DAYS} days.` : `You said you would arrange another evening. Nothing is on the calendar.`,
+      body: promise === 'call' ? `You said you’d call after ${activityOf(date).label.toLowerCase()}. It has been ${FOLLOW_UP_DAYS} days.` : `You said you’d arrange another evening. Nothing is on the calendar.`,
       importance: 40, route: '/workspace/relationships', refType: 'date', refId: date.id,
     });
   });
@@ -248,7 +248,7 @@ export function registerDating(sim: Simulation): void {
         kind: p.mode === 'play' ? 'scene.start' : 'scene.quick',
         payload: { definitionId: 'rel.date', input: { dateId: date.id }, refType: 'date', refId: date.id },
       });
-      if (!result.ok) throw new CommandError(result.error ?? 'The evening could not start.');
+      if (!result.ok) throw new CommandError(result.error ?? 'The evening couldn’t start.');
       return { sceneId: result.value?.sceneId };
     },
   );
@@ -287,7 +287,7 @@ export function registerDating(sim: Simulation): void {
     (p, { sim: s }) => {
       const date = dateOf(s, p.dateId);
       if (date.status !== 'planned') throw new CommandError(`This date was ${date.status.replace('_', ' ')}.`);
-      if (!(p.at > s.now)) throw new CommandError('Pick a time that has not gone.');
+      if (!(p.at > s.now)) throw new CommandError('Pick a time that hasn’t gone.');
       const clash = s.timeline.conflicts(p.at, date.durationMinutes, date.scheduledItemId)[0];
       if (clash) throw new CommandError(`That clashes with ${clash.label} at ${formatTime(clash.at, s.zone)}.`);
       const rel = relationshipOf(s, date);
@@ -309,7 +309,7 @@ export function registerDating(sim: Simulation): void {
     'date.check_in',
     (p, { sim: s }) => {
       const date = dateOf(s, p.dateId);
-      if (date.status === 'underway') return { showed: date.showed ?? 'there', line: 'You are already here.', cost: 0 };
+      if (date.status === 'underway') return { showed: date.showed ?? 'there', line: 'You’re already here.', cost: 0 };
       const can = dateAttendable(s, date);
       if (!can.ok) throw new CommandError(can.reason ?? NOT_TIME_YET);
       if (date.placeId && s.player.currentPlaceId !== date.placeId) throw new CommandError(NOT_THERE);
@@ -327,7 +327,7 @@ export function registerDating(sim: Simulation): void {
         date.closedAt = s.now;
         s.timeline.cancelFor('date', date.id, s.now);
         applyDelta(rel.dimensions, { conflict: 3, trust: -2 });
-        addMemory(s, rel, { kind: 'stood_up_by_them', summary: `${other.firstName} did not come.`, impact: -3, decayDays: 120, refType: 'date', refId: date.id });
+        addMemory(s, rel, { kind: 'stood_up_by_them', summary: `${other.firstName} didn’t come.`, impact: -3, decayDays: 120, refType: 'date', refId: date.id });
         rememberFact(s, other.id, { kind: 'promise', aboutId: s.player.id, text: `Owes ${s.player.firstName} an evening, after not turning up.`, weight: 50, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: s.now + 60 * MS_DAY });
         s.advanceTo(s.now + 30 * MS_MINUTE);
         const message = speak(s, { section: 'dating', purpose: 'checkin', beat: 'message' }, { result: 'no_show', tone: toneOf(other) }, date.id);
@@ -367,10 +367,10 @@ export function registerDating(sim: Simulation): void {
     'date.beat',
     (p, { sim: s }) => {
       const date = dateOf(s, p.dateId);
-      if (date.status !== 'underway') throw new CommandError('The evening is not under way.');
+      if (date.status !== 'underway') throw new CommandError('The evening isn’t under way.');
       if (date.beats >= MAX_BEATS) throw new CommandError('The evening is drawing to its end. Decide how it ends.');
       const choice = moveChoices(s, date).find((c) => c.move.id === p.move);
-      if (!choice) throw new CommandError('That is not a move you can make.');
+      if (!choice) throw new CommandError('That isn’t a move you can make.');
       if (choice.disabled) throw new CommandError(choice.disabled);
       const move = choice.move;
       const other = partnerOf(s, date);
@@ -412,9 +412,9 @@ export function registerDating(sim: Simulation): void {
     'date.close',
     (p, { sim: s }) => {
       const date = dateOf(s, p.dateId);
-      if (date.status !== 'underway') throw new CommandError('The evening is not under way.');
+      if (date.status !== 'underway') throw new CommandError('The evening isn’t under way.');
       const choice = closeChoices(date).find((c) => c.close.id === p.move);
-      if (!choice) throw new CommandError('That is not a way to end the evening.');
+      if (!choice) throw new CommandError('That isn’t a way to end the evening.');
       if (choice.disabled) throw new CommandError(choice.disabled);
       const close = choice.close;
       const other = partnerOf(s, date);
@@ -439,7 +439,7 @@ export function registerDating(sim: Simulation): void {
         case 'night':
           break;
         default:
-          throw new CommandError('That is not a way to end the evening.');
+          throw new CommandError('That isn’t a way to end the evening.');
       }
       const reply = speak(s, { section: 'dating', purpose: 'close', beat: 'door' }, {
         move: close.id, result: accepted ? 'accepted' : 'declined', tone: toneOf(other), chemistry: date.chemistry, vars: { first: other.firstName },
@@ -453,7 +453,7 @@ export function registerDating(sim: Simulation): void {
     'date.finish',
     (p, { sim: s }) => {
       const date = dateOf(s, p.dateId);
-      if (date.status !== 'underway') throw new CommandError('The evening is not under way.');
+      if (date.status !== 'underway') throw new CommandError('The evening isn’t under way.');
       return finishDate(s, date, p.cutShort ?? false);
     },
   );
@@ -522,8 +522,8 @@ function cancel(sim: Simulation, date: DateRecord, shortNotice: boolean): void {
   sim.timeline.cancel(date.scheduledItemId, sim.now);
   sim.timeline.cancelFor('date', date.id, sim.now);
   applyDelta(rel.dimensions, shortNotice ? { affection: -4, conflict: 3, trust: -1 } : { affection: -1 });
-  addMemory(sim, rel, { kind: 'date_cancelled', summary: shortNotice ? 'You cancelled on the day.' : 'You cancelled, with notice.', impact: shortNotice ? -4 : -1, decayDays: shortNotice ? 120 : 30, refType: 'date', refId: date.id });
-  rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: shortNotice ? `Cancelled ${activityOf(date).label.toLowerCase()} on the day.` : `Cancelled ${activityOf(date).label.toLowerCase()}, with notice.`, weight: shortNotice ? 40 : 15, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 90 * MS_DAY });
+  addMemory(sim, rel, { kind: 'date_cancelled', summary: shortNotice ? 'You canceled on the day.' : 'You canceled, with notice.', impact: shortNotice ? -4 : -1, decayDays: shortNotice ? 120 : 30, refType: 'date', refId: date.id });
+  rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: shortNotice ? `Canceled ${activityOf(date).label.toLowerCase()} on the day.` : `Canceled ${activityOf(date).label.toLowerCase()}, with notice.`, weight: shortNotice ? 40 : 15, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 90 * MS_DAY });
   sim.emit('date.cancelled', { dateId: date.id, personId: other.id, shortNotice });
 }
 
@@ -536,11 +536,11 @@ function standUp(sim: Simulation, date: DateRecord, why: string): void {
   sim.resolveDecision('date', date.id);
   applyDelta(rel.dimensions, { affection: -9, trust: -5, conflict: 9 });
   rel.lastInteractionAt = sim.now;
-  addMemory(sim, rel, { kind: 'stood_up', summary: `You did not turn up. ${why}`, impact: -9, decayDays: 365, refType: 'date', refId: date.id });
+  addMemory(sim, rel, { kind: 'stood_up', summary: `You didn’t turn up. ${why}`, impact: -9, decayDays: 365, refType: 'date', refId: date.id });
   rememberFact(sim, other.id, { kind: 'event', aboutId: sim.player.id, text: `Waited at ${placeOfDate(date)?.name ?? 'the place'} and ${sim.player.firstName} never came.`, weight: 70, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 365 * MS_DAY });
   sim.notify({
     category: 'relationships', title: `You Stood ${other.firstName} Up`,
-    body: `${why} They waited. They will remember.`,
+    body: `${why} They waited. They’ll remember.`,
     importance: 55, route: '/workspace/relationships', refType: 'date', refId: date.id,
   });
   sim.remember({
@@ -575,7 +575,7 @@ function finishDate(sim: Simulation, date: DateRecord, cutShort: boolean): { out
     ? `A good evening${place ? ` at ${place.name}` : ''}.${date.spent > 0 ? ` You spent ${formatMoney(date.spent)}.` : ''}${cutShort ? ' You left before the end.' : ''}`
     : outcome === 'mixed'
       ? `An evening that was fine${place ? ` at ${place.name}` : ''}, and no more than fine.${cutShort ? ' You left early.' : ''}`
-      : `The evening did not land.${cutShort ? ' You left early, which did not help.' : ''}`;
+      : `The evening didn’t land.${cutShort ? ' You left early, which did not help.' : ''}`;
   addMemory(sim, rel, { kind: 'date', summary, impact: outcome === 'good' ? 11 : outcome === 'mixed' ? 3 : -3, decayDays: outcome === 'good' ? 400 : 200, refType: 'date', refId: date.id });
 
   // What they now know, and what they will hold you to.
@@ -584,12 +584,12 @@ function finishDate(sim: Simulation, date: DateRecord, cutShort: boolean): { out
   }
   rememberFact(sim, other.id, {
     kind: 'event', aboutId: player.id,
-    text: outcome === 'good' ? `A good evening with ${player.firstName}${place ? ` at ${place.name}` : ''}.` : outcome === 'mixed' ? `An evening with ${player.firstName} that was fine.` : `An evening with ${player.firstName} that did not go well.`,
+    text: outcome === 'good' ? `A good evening with ${player.firstName}${place ? ` at ${place.name}` : ''}.` : outcome === 'mixed' ? `An evening with ${player.firstName} that was fine.` : `An evening with ${player.firstName} that didn’t go well.`,
     weight: outcome === 'good' ? 50 : 35, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 365 * MS_DAY,
   });
   if (place && outcome === 'good') rememberFact(sim, other.id, { kind: 'preference', aboutId: player.id, text: `Likes ${place.name}.`, weight: 25, sourceKind: 'date' });
   for (const promise of date.promises) {
-    rememberFact(sim, other.id, { kind: 'promise', aboutId: player.id, text: promise === 'call' ? `${player.firstName} said they would call.` : `${player.firstName} said they would arrange another evening.`, weight: 45, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 30 * MS_DAY });
+    rememberFact(sim, other.id, { kind: 'promise', aboutId: player.id, text: promise === 'call' ? `${player.firstName} said they’d call.` : `${player.firstName} said they’d arrange another evening.`, weight: 45, sourceKind: 'date', refType: 'date', refId: date.id, expiresAt: sim.now + 30 * MS_DAY });
     sim.schedule({
       at: addDays(sim.now, FOLLOW_UP_DAYS, sim.homeZone), kind: 'date.follow_up',
       label: promise === 'call' ? `Did You Call ${other.firstName}?` : `Did You Arrange Another Evening With ${other.firstName}?`, category: 'system',

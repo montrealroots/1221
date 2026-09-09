@@ -28,7 +28,7 @@ const MAX_ITEMS = 3;
 
 function placeOf(session: SceneSession): Place {
   const place = placesIn(session.locationId).find((p) => p.id === String(session.context['placeId']));
-  if (!place) throw new CommandError('That place is not here any more.');
+  if (!place) throw new CommandError('That place isn’t here any more.');
   return place;
 }
 
@@ -43,7 +43,7 @@ function tag(place: Place): string {
 
 function visitFor(sim: Simulation, session: SceneSession): DiningVisit {
   const id = String(session.context['visitId'] ?? '');
-  if (!id) throw new CommandError('You are not in there yet.');
+  if (!id) throw new CommandError('You aren’t in there yet.');
   return visitOf(sim, id);
 }
 
@@ -82,7 +82,7 @@ export const MEAL_SCENE = defineScene({
     const wanted = input['placeId'] === undefined ? undefined : String(input['placeId']);
     const here = placesIn(sim.player.currentLocationId).filter((p) => EATING.includes(p.kind) && p.actions.includes('eat'));
     if (here.length === 0) return { ok: false, reason: 'Nowhere to eat in this city that SLATE knows about.' };
-    if (wanted && !here.some((p) => p.id === wanted)) return { ok: false, reason: 'That is not somewhere you can eat here.' };
+    if (wanted && !here.some((p) => p.id === wanted)) return { ok: false, reason: 'That isn’t somewhere you can eat here.' };
     return { ok: true };
   },
 
@@ -172,7 +172,7 @@ export const MEAL_SCENE = defineScene({
           facts: [{ label: 'Quoted', value: formatDuration(visit.quotedWait * MS_MINUTE) }],
           choices: [
             { id: 'stay', label: 'Wait For It', aliases: ['wait', 'stay', 'yes'], tone: 'primary', detail: `About ${formatDuration(visit.quotedWait * MS_MINUTE)}` },
-            { id: 'go', label: 'Do Not Wait', aliases: ['leave', 'go', 'no'], detail: 'They will remember it' },
+            { id: 'go', label: 'Do Not Wait', aliases: ['leave', 'go', 'no'], detail: 'They’ll remember it' },
           ],
           canSkip: true,
         };
@@ -190,7 +190,7 @@ export const MEAL_SCENE = defineScene({
         if (chosen.length === 0) {
           choices.push({ id: 'ask', label: 'What Is Good Tonight', aliases: ['ask', 'recommend', 'what is good'] });
         }
-        if (chosen.length > 0) choices.push({ id: 'order', label: 'That Is Everything', aliases: ['order', 'done', 'that is all', 'finished'], tone: 'primary' });
+        if (chosen.length > 0) choices.push({ id: 'order', label: 'That Is Everything', aliases: ['order', 'done', 'that’s all', 'finished'], tone: 'primary' });
         const running = chosen.reduce((sum, name) => {
           const dish = menu.find((d) => d.name === name);
           return sum + (dish ? priceOf(place, dish) : 0);
@@ -321,7 +321,7 @@ export const MEAL_SCENE = defineScene({
       if (choiceId === 'go') {
         ctx.commit('leave', { kind: 'dine.leave', payload: { visitId: visit.id } });
         ctx.say(say(sim, 'farewell', 'door', { result: 'walked' }, `${visit.id}:walked`, true));
-        session.context['note'] = `You did not wait at ${place.name}.`;
+        session.context['note'] = `You didn’t wait at ${place.name}.`;
         session.context['total'] = 0;
         ctx.go('reflect');
         return;
@@ -349,9 +349,9 @@ export const MEAL_SCENE = defineScene({
       }
       if (choiceId.startsWith('dish:')) {
         const dish = menuOf(place)[Number(choiceId.slice(5))];
-        if (!dish) throw new CommandError('That is not on the menu.');
+        if (!dish) throw new CommandError('That isn’t on the menu.');
         const chosen = items(session);
-        if (chosen.length >= MAX_ITEMS) throw new CommandError('That is enough for one sitting.');
+        if (chosen.length >= MAX_ITEMS) throw new CommandError('That’s enough for one sitting.');
         chosen.push(dish.name);
         session.context['items'] = JSON.stringify(chosen);
         return;
@@ -407,7 +407,7 @@ export const MEAL_SCENE = defineScene({
     }
 
     if (session.node === 'reflect' && choiceId === 'finish') { ctx.finish(); return; }
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {

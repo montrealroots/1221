@@ -13,8 +13,12 @@ import { TravelWorkspace } from './TravelWorkspace';
 import { HealthWorkspace } from './HealthWorkspace';
 import { InsuranceWorkspace } from './InsuranceWorkspace';
 import { EducationWorkspace } from './EducationWorkspace';
+import { TrackWorkspace } from './TrackWorkspace';
 import { SocialWorkspace } from './SocialWorkspace';
 import { CityWorkspace } from './CityWorkspace';
+import { PhoneWorkspace } from './PhoneWorkspace';
+import { FilmWorkspace } from './FilmWorkspace';
+import { GoingOutWorkspace } from './GoingOutWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
@@ -32,7 +36,11 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/health': HealthWorkspace,
   '/workspace/insurance': InsuranceWorkspace,
   '/workspace/education': EducationWorkspace,
+  '/workspace/track': TrackWorkspace,
   '/workspace/social': SocialWorkspace,
+  '/workspace/phone': PhoneWorkspace,
+  '/workspace/film': FilmWorkspace,
+  '/workspace/goingout': GoingOutWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {
@@ -41,7 +49,7 @@ export function WorkspaceRouter({ route }: { route: string }) {
     return (
       <div className="empty">
         <h3>Nothing Here Yet</h3>
-        <p className="small">That workspace does not exist. Use Go Anywhere to find what you were after.</p>
+        <p className="small">That workspace doesn’t exist. Use Go Anywhere to find what you were after.</p>
       </div>
     );
   }

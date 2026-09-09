@@ -127,7 +127,7 @@ export class Base44SaveAdapter implements SaveAdapter {
         throw new PersistenceError(body.error, isRetryable(body.status ?? thrown.response?.status));
       }
       throw new PersistenceError(
-        `${what} could not reach the server: ${thrown.message ?? 'the connection failed'}.`,
+        `${what} couldn’t reach the server: ${thrown.message ?? 'the connection failed'}.`,
         true,
       );
     }
@@ -172,7 +172,7 @@ export class Base44SaveAdapter implements SaveAdapter {
     } catch (error) {
       // A network failure must not look like an empty save file.
       throw new PersistenceError(
-        `Your saves could not be reached: ${(error as Error).message}. They are not lost; try again in a moment.`,
+        `Your saves couldn’t be reached: ${(error as Error).message}. They aren’t lost; try again in a moment.`,
         true,
       );
     }
@@ -190,7 +190,7 @@ export class Base44SaveAdapter implements SaveAdapter {
       } catch (error) {
         return {
           slot, occupied: true, hasBackup: Boolean(record.backup_payload),
-          error: `Stored save could not be read: ${(error as Error).message}`,
+          error: `Stored save couldn’t be read: ${(error as Error).message}`,
         };
       }
     });
@@ -262,7 +262,7 @@ export class Base44SaveAdapter implements SaveAdapter {
       // Local mirror is the recovery path, so say so honestly.
       await this.fallback.save(universe).catch(() => undefined);
       throw new PersistenceError(
-        `The save could not be written to Base44: ${(error as Error).message}. A copy has been kept on this device and will sync when the connection returns.`,
+        `The save couldn’t be written to Base44: ${(error as Error).message}. A copy has been kept on this device and will sync when the connection returns.`,
         true,
       );
     }

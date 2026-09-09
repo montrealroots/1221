@@ -55,7 +55,7 @@ export const FLIGHT_SCENE = defineScene({
 
   available(sim, input) {
     const booking = sim.universe.flightBookings[String(input['bookingId'])];
-    if (!booking) return { ok: false, reason: 'There is no flight like that.' };
+    if (!booking) return { ok: false, reason: 'There’s no flight like that.' };
     if (booking.boardedAt || booking.status === 'flown') return booking.bagsClaimedAt && booking.status === 'flown' ? { ok: false, reason: 'That day is done.' } : { ok: true };
     const can = flyable(sim, booking);
     return can.ok ? { ok: true } : { ok: false, reason: can.reason };
@@ -183,7 +183,7 @@ export const FLIGHT_SCENE = defineScene({
       }
       case 'done': {
         return {
-          title: str(session, 'result') === 'cancelled' ? 'Cancelled, And Moved' : `${toCity}`,
+          title: str(session, 'result') === 'cancelled' ? 'Canceled, And Moved' : `${toCity}`,
           eyebrow,
           text: str(session, 'lastNote'),
           choices: [{ id: 'finish', label: 'Back To The Day', aliases: ['done', 'ok', 'finish'], tone: 'primary' }],

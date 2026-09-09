@@ -3,7 +3,7 @@
  *
  * LAW: a balance is never a number someone typed. It is the sum of postings.
  * Every transaction balances to exactly zero across its postings, with income
- * and expense modelled as nominal counter-accounts, so the universe can prove
+ * and expense modeled as nominal counter-accounts, so the universe can prove
  * at any moment that no money was invented or destroyed.
  */
 
@@ -57,7 +57,7 @@ export interface Account {
   /** Grouping for statements: 'housing', 'transport', 'career', ... */
   category?: string;
   last4?: string;
-  /** The product it was opened on, from the banking catalogue. Absent on an account from before products existed. */
+  /** The product it was opened on, from the banking catalog. Absent on an account from before products existed. */
   productId?: string;
   /** What the bank will let the balance go below zero by, before it declines. */
   overdraftLimit?: Money;
@@ -156,7 +156,7 @@ export class Ledger {
     }
     if (sum !== 0) {
       throw new LedgerError(
-        `Transaction ${txn.id} ('${txn.memo}') does not balance: postings sum to ${sum} cents, expected 0.`,
+        `Transaction ${txn.id} ('${txn.memo}') doesn’t balance: postings sum to ${sum} cents, expected 0.`,
       );
     }
     for (const p of txn.postings) {

@@ -138,7 +138,7 @@ export function GameProvider({
     options: { idempotencyKey?: string; silent?: boolean } = {},
   ): CommandResult<R> => {
     const result = sim.execute<R>({ kind, payload, idempotencyKey: options.idempotencyKey });
-    if (!result.ok && !options.silent) toast(result.error ?? 'That could not be done.', 'negative');
+    if (!result.ok && !options.silent) toast(result.error ?? 'That couldn’t be done.', 'negative');
     if (result.ok) dirty.current = true;
     refresh();
     return result;
@@ -298,7 +298,7 @@ export function GameProvider({
     return () => window.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Honour the reduced-motion preference at the document level.
+  // Honor the reduced-motion preference at the document level.
   useEffect(() => {
     document.body.dataset['reducedMotion'] = String(reducedMotion);
   }, [reducedMotion]);
@@ -336,10 +336,12 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/health': 'Health',
   '/workspace/insurance': 'Insurance',
   '/workspace/education': 'Education',
+  '/workspace/track': 'Track',
   '/workspace/social': 'Social',
   '/workspace/history': 'History',
   '/workspace/character': 'Character',
   '/workspace/settings': 'Settings',
+  '/workspace/film': 'Film',
 };
 
 export function labelForRoute(route: string): string {
@@ -361,6 +363,6 @@ function writeFavourites(entries: NavEntry[]): void {
   try {
     localStorage.setItem('slate.favourites', JSON.stringify(entries));
   } catch {
-    /* storage unavailable; favourites are a convenience, not state */
+    /* storage unavailable; favorites are a convenience, not state */
   }
 }

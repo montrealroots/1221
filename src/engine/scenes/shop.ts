@@ -19,8 +19,10 @@ import { REAL_GOODS_NOTE } from '../content/goods';
 import { preview, speak } from '../dialogue/library';
 import { MODE_LABEL, driveableVehicle, placesNear, planJourney, type Mode } from '../systems/places';
 import {
-  FITTING_MINUTES, VERDICT_LABEL, assistantAt, retailerAt, stockAt, standingAt, standingFlags, toneOf, verdictNote, visitOf, type Verdict,
+  FITTING_MINUTES, VERDICT_LABEL, aislesAt, assistantAt, branchSize, frontTableAt, notCarriedAt,
+  retailerAt, stockAt, standingAt, standingFlags, toneOf, verdictNote, visitOf, type Verdict,
 } from '../systems/retail';
+import { categoryLabel } from '../core/text';
 import { defineScene, unknownStep, type SceneChoice } from '../systems/scenes';
 
 /** How dear a thing has to be before the floor treats it as an occasion. */
@@ -31,13 +33,13 @@ const BIG_BASKET = 150_000;
 
 function placeOf(session: SceneSession): Place {
   const place = placesIn(session.locationId).find((p) => p.id === String(session.context['placeId']));
-  if (!place) throw new CommandError('That shop is not here any more.');
+  if (!place) throw new CommandError('That shop isn’t here any more.');
   return place;
 }
 
 function visitFor(sim: Simulation, session: SceneSession) {
   const id = String(session.context['visitId'] ?? '');
-  if (!id) throw new CommandError('You are not in there yet.');
+  if (!id) throw new CommandError('You aren’t in there yet.');
   return visitOf(sim, id);
 }
 
@@ -69,7 +71,7 @@ export const SHOP_SCENE = defineScene({
     const wanted = input['placeId'] === undefined ? undefined : String(input['placeId']);
     const here = shopsHere(sim);
     if (here.length === 0) return { ok: false, reason: 'No shop here that SLATE knows the inside of.' };
-    if (wanted && !here.some((p) => p.id === wanted)) return { ok: false, reason: 'That is not a shop you can walk around.' };
+    if (wanted && !here.some((p) => p.id === wanted)) return { ok: false, reason: 'That isn’t a shop you can walk around.' };
     return { ok: true };
   },
 
@@ -79,7 +81,7 @@ export const SHOP_SCENE = defineScene({
     return {
       node: placeId === null ? 'choose' : here ? 'door' : 'arrive',
       placeId: here ? placeId : undefined,
-      context: { placeId, visitId: '', spent: 0, note: '', line: '', mirror: '' },
+      context: { placeId, visitId: '', spent: 0, note: '', line: '', mirror: '', aisle: '', page: 0, from: '' },
     };
   },
 
@@ -143,16 +145,26 @@ export const SHOP_SCENE = defineScene({
         const visit = visitFor(sim, session);
         const shelf = stockAt(sim, place);
         const assistant = sim.universe.people[visit.assistantId];
-        const choices: SceneChoice[] = shelf.slice(0, 8).map((stocked) => {
+        const aisles = aislesAt(sim, place);
+        const front = frontTableAt(sim, place);
+        const choices: SceneChoice[] = front.slice(0, 6).map((stocked) => {
           const tried = visit.tried.find((t) => t.catalogId === stocked.item.id);
           const held = visit.basket.includes(stocked.item.id);
           return {
             id: `item:${stocked.item.id}`,
             label: stocked.item.name,
             aliases: [stocked.item.name],
-            detail: `${formatMoney(stocked.price)}${stocked.featured ? ' · On The Front Table' : ''}${tried ? ` · ${VERDICT_LABEL[tried.verdict as Verdict]}` : ''}${held ? ' · In Your Hands' : ''}`,
+            detail: `${formatMoney(stocked.price)} · On The Front Table${tried ? ` · ${VERDICT_LABEL[tried.verdict as Verdict]}` : ''}${held ? ' · In Your Hands' : ''}`,
           };
         });
+        for (const aisle of aisles) {
+          choices.push({
+            id: `aisle:${aisle.category}`,
+            label: categoryLabel(aisle.category),
+            aliases: [aisle.category, categoryLabel(aisle.category)],
+            detail: `${aisle.count} Things`,
+          });
+        }
         choices.push({ id: 'ask', label: 'Ask What Is Worth Having', aliases: ['ask', 'advice', 'help'] });
         if (visit.basket.length > 0) choices.push({ id: 'counter', label: 'Go To The Counter', aliases: ['counter', 'pay', 'buy'], tone: 'primary' });
         choices.push({ id: 'out', label: 'Leave With Nothing', aliases: ['leave', 'out', 'nothing'] });
@@ -162,9 +174,46 @@ export const SHOP_SCENE = defineScene({
           eyebrow: place.name,
           text: String(session.context['line'] ?? '') || say(sim, 'browse', 'floor', { tone: assistant ? toneOf(assistant) : 'dry' }, `${visit.id}:floor`, false),
           facts: [
+            { label: 'On The Floor', value: `${shelf.length} Things` },
+            { label: 'This Branch', value: branchSize(place) },
             { label: 'In Your Hands', value: visit.basket.length === 0 ? 'Nothing' : `${visit.basket.length}, ${formatMoney(running)}` },
             { label: 'Tried On', value: visit.tried.length === 0 ? 'Nothing' : String(visit.tried.length) },
+            // A shelf that is missing something says which arrangement left it
+            // off, rather than quietly not having it.
+            ...notCarriedAt(place).map((one) => ({ label: 'Not On The Shelf', value: one.why })),
           ],
+          choices,
+          canSkip: true,
+        };
+      }
+      case 'aisle': {
+        const place = placeOf(session);
+        const visit = visitFor(sim, session);
+        const category = String(session.context['aisle'] ?? '');
+        const shelf = stockAt(sim, place, category);
+        const page = Number(session.context['page'] ?? 0);
+        const PER_PAGE = 10;
+        const slice = shelf.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+        const choices: SceneChoice[] = slice.map((stocked) => {
+          const tried = visit.tried.find((t) => t.catalogId === stocked.item.id);
+          const held = visit.basket.includes(stocked.item.id);
+          return {
+            id: `item:${stocked.item.id}`,
+            label: stocked.item.name,
+            aliases: [stocked.item.name],
+            detail: `${stocked.item.brand} · ${formatMoney(stocked.price)}${tried ? ` · ${VERDICT_LABEL[tried.verdict as Verdict]}` : ''}${held ? ' · In Your Hands' : ''}`,
+          };
+        });
+        if ((page + 1) * PER_PAGE < shelf.length) {
+          choices.push({ id: 'more', label: 'Further Along The Aisle', aliases: ['more', 'next', 'further'] });
+        }
+        if (page > 0) choices.push({ id: 'back', label: 'Back Up The Aisle', aliases: ['back up', 'previous'] });
+        choices.push({ id: 'floor', label: 'Back To The Floor', aliases: ['floor', 'out', 'back'] });
+        return {
+          title: categoryLabel(category),
+          eyebrow: place.name,
+          text: `${shelf.length} things on this aisle. Showing ${page * PER_PAGE + 1} to ${Math.min(shelf.length, (page + 1) * PER_PAGE)}.`,
+          facts: [{ label: 'On This Aisle', value: `${shelf.length} Things` }],
           choices,
           canSkip: true,
         };
@@ -285,6 +334,12 @@ export const SHOP_SCENE = defineScene({
         return;
       }
       if (choiceId === 'counter') { ctx.go('counter'); return; }
+      if (choiceId.startsWith('aisle:')) {
+        session.context['aisle'] = choiceId.slice(6);
+        session.context['page'] = 0;
+        ctx.go('aisle');
+        return;
+      }
       if (choiceId.startsWith('item:')) {
         const id = choiceId.slice(5);
         const handled = ctx.commit<{ name: string; price: number; fittable: boolean }>(`handle:${id}`, {
@@ -300,12 +355,36 @@ export const SHOP_SCENE = defineScene({
       }
     }
 
+    if (session.node === 'aisle') {
+      const place = placeOf(session);
+      const visit = visitFor(sim, session);
+      const assistant = sim.universe.people[visit.assistantId];
+      if (choiceId === 'floor') { session.context['line'] = ''; ctx.go('floor'); return; }
+      if (choiceId === 'more') { session.context['page'] = Number(session.context['page'] ?? 0) + 1; return; }
+      if (choiceId === 'back') { session.context['page'] = Math.max(0, Number(session.context['page'] ?? 0) - 1); return; }
+      if (choiceId.startsWith('item:')) {
+        const id = choiceId.slice(5);
+        const handled = ctx.commit<{ name: string; price: number; fittable: boolean }>(`handle:${id}`, {
+          kind: 'retail.handle', payload: { visitId: visit.id, catalogId: id },
+        });
+        const stocked = stockAt(sim, place).find((x) => x.item.id === id);
+        const flags = [...(stocked?.featured ? ['featured'] : []), ...(handled.price >= DEAR ? ['dear'] : [])];
+        session.context['itemId'] = id;
+        session.context['mirror'] = '';
+        session.context['from'] = 'aisle';
+        session.context['line'] = say(sim, 'browse', 'floor', { flags, tone: assistant ? toneOf(assistant) : 'dry' }, `${visit.id}:${id}`, true);
+        ctx.go('item');
+        return;
+      }
+    }
+
     if (session.node === 'item') {
       const place = placeOf(session);
       const visit = visitFor(sim, session);
       const assistant = sim.universe.people[visit.assistantId];
       const id = String(session.context['itemId'] ?? '');
-      if (choiceId === 'floor') { session.context['line'] = ''; ctx.go('floor'); return; }
+      const backTo = String(session.context['from'] ?? '') === 'aisle' ? 'aisle' : 'floor';
+      if (choiceId === 'floor') { session.context['line'] = ''; ctx.go(backTo); return; }
       if (choiceId === 'try') {
         ctx.say(say(sim, 'fitting', 'room', { tone: assistant ? toneOf(assistant) : 'dry' }, `${visit.id}:${id}:in`, true), assistant?.displayName);
         const tried = ctx.commit<{ verdict: Verdict; note: string }>(`try:${id}`, {
@@ -319,14 +398,14 @@ export const SHOP_SCENE = defineScene({
       if (choiceId === 'take') {
         ctx.commit(`take:${id}`, { kind: 'retail.basket', payload: { visitId: visit.id, catalogId: id, take: true } });
         session.context['line'] = '';
-        ctx.go('floor');
+        ctx.go(backTo);
         return;
       }
       if (choiceId === 'drop') {
         ctx.commit(`drop:${id}`, { kind: 'retail.basket', payload: { visitId: visit.id, catalogId: id, take: false } });
         session.context['line'] = '';
         session.context['mirror'] = '';
-        ctx.go('floor');
+        ctx.go(backTo);
         return;
       }
       void place;
@@ -354,7 +433,7 @@ export const SHOP_SCENE = defineScene({
     }
 
     if (session.node === 'reflect' && choiceId === 'finish') { ctx.finish(); return; }
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {
@@ -376,7 +455,7 @@ export const SHOP_SCENE = defineScene({
       session.context['visitId'] = entered.visitId;
       session.node = 'floor';
     }
-    if (session.node === 'item') session.node = 'floor';
+    if (session.node === 'item' || session.node === 'aisle') session.node = 'floor';
     if (session.node === 'floor') {
       // The short version looks, does not try anything on, and walks out. It
       // never spends your money on your behalf.

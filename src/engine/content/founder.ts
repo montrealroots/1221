@@ -56,18 +56,18 @@ export const FOUNDER_ATTRIBUTES: readonly FounderAttribute[] = [
   },
   {
     id: 'market_read', name: 'Reading The Market', group: 'Judgement',
-    description: 'What an audience will want by the time a thing is finished, which is not what they want now.',
+    description: 'What an audience will want by the time a thing is finished, which isn’t what they want now.',
     readBy: 'Greenlight decisions, release timing and what a buyer will pay.',
   },
   {
     id: 'taste', name: 'Taste', group: 'Judgement',
-    description: 'The thing nobody can teach you and everybody can tell you do not have.',
+    description: 'The thing nobody can teach you and everybody can tell you don’t have.',
     readBy: 'Notes you give, final cut decisions, and how the work is reviewed.',
   },
   {
     id: 'risk_appetite', name: 'Appetite For Risk', group: 'Judgement',
-    description: 'How much you are willing to be wrong about, and how publicly.',
-    readBy: 'What you will greenlight without a buyer attached.',
+    description: 'How much you’re willing to be wrong about, and how publicly.',
+    readBy: 'What you’ll greenlight without a buyer attached.',
   },
 
   // --- The Room -----------------------------------------------------------
@@ -93,7 +93,7 @@ export const FOUNDER_ATTRIBUTES: readonly FounderAttribute[] = [
   },
   {
     id: 'reading_people', name: 'Reading The Room', group: 'The Room',
-    description: 'Knowing who in the meeting actually decides, and what they have not said.',
+    description: 'Knowing who in the meeting actually decides, and what they haven’t said.',
     readBy: 'Buyer meetings, agency calls and what an offer really means.',
   },
 
@@ -110,7 +110,7 @@ export const FOUNDER_ATTRIBUTES: readonly FounderAttribute[] = [
   },
   {
     id: 'financing', name: 'Raising Money', group: 'The Money',
-    description: 'Finding people who will put money into something that does not exist yet.',
+    description: 'Finding people who will put money into something that doesn’t exist yet.',
     readBy: 'Equity, gap, presales, tax credits and what they cost you.',
   },
   {
@@ -133,7 +133,7 @@ export const FOUNDER_ATTRIBUTES: readonly FounderAttribute[] = [
   {
     id: 'operations', name: 'Running The Place', group: 'The Company',
     description: 'Payroll, premises, insurance, the things nobody thanks you for.',
-    readBy: 'Overhead, and whether the company keeps working while you are on set.',
+    readBy: 'Overhead, and whether the company keeps working while you’re on set.',
   },
   {
     id: 'stamina', name: 'Stamina', group: 'The Company',
@@ -149,12 +149,12 @@ export const FOUNDER_ATTRIBUTES: readonly FounderAttribute[] = [
   },
   {
     id: 'reputation_money', name: 'Standing With Money', group: 'Standing',
-    description: 'Whether people who have capital believe you will give it back.',
-    readBy: 'What terms you are offered, and whether a second picture gets funded.',
+    description: 'Whether people who have capital believe you’ll give it back.',
+    readBy: 'What terms you’re offered, and whether a second picture gets funded.',
   },
   {
     id: 'discretion', name: 'Discretion', group: 'Standing',
-    description: 'What you do not repeat. In a town this size it is a currency.',
+    description: 'What you don’t repeat. In a town this size it’s a currency.',
     readBy: 'What you get told early, and by whom.',
   },
 ];
@@ -198,7 +198,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   // --- Instinct -----------------------------------------------------------
   {
     id: 'reader', name: 'A Reader', category: 'Instinct',
-    description: 'You actually read them. All of them, to the end, including the bad ones — which is why you are always three weeks behind on saying no.',
+    description: 'You actually read them. All of them, to the end, including the bad ones — which is why you’re always three weeks behind on saying no.',
     attributeMods: { script_judgement: 12, taste: 5, delegation: -8 },
     systemMods: { coverageDays: 0.8, decisionDays: 1.3 },
   },
@@ -211,21 +211,21 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   },
   {
     id: 'name_only', name: 'Names Only', category: 'Instinct',
-    description: 'You do not gamble on unknowns. It costs more and it closes faster.',
+    description: 'You don’t gamble on unknowns. It costs more and it closes faster.',
     attributeMods: { market_read: 8, talent_eye: -10 },
     systemMods: { castCost: 1.2, buyerConfidence: 1.15 },
     conflictsWith: ['star_maker'],
   },
   {
     id: 'contrarian', name: 'Contrarian', category: 'Instinct',
-    description: 'When everybody wants one thing you are already making the other. Sometimes early, sometimes just wrong.',
+    description: 'When everybody wants one thing you’re already making the other. Sometimes early, sometimes just wrong.',
     attributeMods: { risk_appetite: 12, market_read: -6 },
     systemMods: { zeitgeistBonus: 0.7, breakoutOdds: 1.4 },
     conflictsWith: ['weathervane'],
   },
   {
     id: 'weathervane', name: 'Weathervane', category: 'Instinct',
-    description: 'You make what is selling. It is not brave and it is frequently correct.',
+    description: 'You make what is selling. It isn’t brave and it’s frequently correct.',
     attributeMods: { market_read: 12, taste: -6 },
     systemMods: { zeitgeistBonus: 1.35, breakoutOdds: 0.75 },
     conflictsWith: ['contrarian'],
@@ -234,7 +234,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   // --- Method -------------------------------------------------------------
   {
     id: 'hands_on', name: 'Hands On', category: 'Method',
-    description: 'You are on set. Every day, on everything, which is a problem at four projects.',
+    description: 'You’re on set. Every day, on everything, which is a problem at four projects.',
     attributeMods: { note_giving: 10, delegation: -12 },
     systemMods: { qualityPerProject: 1.12, projectCapacity: 0.7 },
     conflictsWith: ['delegator'],
@@ -248,7 +248,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   },
   {
     id: 'development_hell', name: 'Never Quite Ready', category: 'Method',
-    description: 'One more pass. It is always better after one more pass, and it is never finished.',
+    description: 'One more pass. It’s always better after one more pass, and it’s never finished.',
     attributeMods: { script_judgement: 8, taste: 6 },
     systemMods: { draftQuality: 1.15, developmentTime: 1.5 },
     conflictsWith: ['shooter'],
@@ -270,7 +270,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   // --- Temperament --------------------------------------------------------
   {
     id: 'unflappable', name: 'Unflappable', category: 'Temperament',
-    description: 'The stage burned down and you asked what was still standing. You are also the last person in the building to call something an emergency.',
+    description: 'The stage burned down and you asked what was still standing. You’re also the last person in the building to call something an emergency.',
     attributeMods: { nerve: 14, stamina: 6 },
     systemMods: { crisisPenalty: 0.7, overrunOdds: 1.15 },
   },
@@ -290,7 +290,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   },
   {
     id: 'workhorse', name: 'Workhorse', category: 'Temperament',
-    description: 'Fourteen hours, six days, for as long as it takes. It is costing you something.',
+    description: 'Fourteen hours, six days, for as long as it takes. It’s costing you something.',
     attributeMods: { stamina: 16, operations: 6 },
     systemMods: { weeklyCapacity: 1.3, healthDrain: 1.35 },
   },
@@ -318,7 +318,7 @@ export const FOUNDER_TRAITS: readonly FounderTrait[] = [
   },
   {
     id: 'outsider', name: 'From Outside', category: 'Reputation',
-    description: 'You are not from here and it shows. Nobody owes you a favour and nobody has a file on you either.',
+    description: 'You aren’t from here and it shows. Nobody owes you a favor and nobody has a file on you either.',
     attributeMods: { reputation_craft: -8, reputation_money: -8, risk_appetite: 8 },
     systemMods: { inboundOpportunities: 0.7, freshEyes: 1.2 },
     conflictsWith: ['connected'],
@@ -434,7 +434,7 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
   {
     id: 'financier', name: 'Financier',
     what: 'You put money into pictures for other people and watched most of it come back.',
-    gives: 'You can raise it, structure it, and you are not frightened of a bad quarter.',
+    gives: 'You can raise it, structure it, and you aren’t frightened of a bad quarter.',
     costs: 'The creative side is a language you can order dinner in and not much else.',
     capital: 900_000_00,
     standing: 0.34,
@@ -453,7 +453,7 @@ export const FOUNDER_BACKGROUNDS: readonly FounderBackground[] = [
     id: 'assistant', name: 'Somebody\'s Assistant',
     what: 'Three years on a desk outside a door, reading everything that went through it.',
     gives: 'You saw exactly how it is done, from close enough to see the mistakes.',
-    costs: 'Everything else. You are starting with nothing, which is the hardest and best version.',
+    costs: 'Everything else. You’re starting with nothing, which is the hardest and best version.',
     capital: 12_000_00,
     standing: 0.05,
   },

@@ -48,7 +48,7 @@ async function pack(json: string): Promise<string> {
 
 async function unpack(raw: string): Promise<string> {
   if (!raw.startsWith(PACKED)) return raw;
-  if (!canPack()) throw new PersistenceError('This save is packed and this browser cannot unpack it. Open it in a current browser.', false);
+  if (!canPack()) throw new PersistenceError('This save is packed and this browser can’t unpack it. Open it in a current browser.', false);
   const bytes = fromBase64(raw.slice(PACKED.length));
   const stream = new Blob([bytes as unknown as BlobPart]).stream().pipeThrough(new DecompressionStream('gzip'));
   return new Response(stream).text();
@@ -61,7 +61,7 @@ export function storedBytes(raw: string): number {
 
 function storage(): Storage {
   if (typeof localStorage === 'undefined') {
-    throw new PersistenceError('This browser has no local storage available, so saves cannot be kept here.', false);
+    throw new PersistenceError('This browser has no local storage available, so saves can’t be kept here.', false);
   }
   return localStorage;
 }
@@ -92,7 +92,7 @@ export class LocalSaveAdapter implements SaveAdapter {
       } catch (error) {
         slots.push({
           slot, occupied: true, hasBackup, bytes: raw.length,
-          error: `This save could not be read: ${(error as Error).message}`,
+          error: `This save couldn’t be read: ${(error as Error).message}`,
         });
       }
     }
@@ -120,8 +120,8 @@ export class LocalSaveAdapter implements SaveAdapter {
       store.setItem(KEY(slot), next);
     } catch (error) {
       const message = (error as Error).name === 'QuotaExceededError'
-        ? 'There is not enough storage space left on this device to save. Free some space, or delete a save you no longer want.'
-        : `The save could not be written: ${(error as Error).message}`;
+        ? 'There isn’t enough storage space left on this device to save. Free some space, or delete a save you no longer want.'
+        : `The save couldn’t be written: ${(error as Error).message}`;
       throw new PersistenceError(message, true);
     }
   }

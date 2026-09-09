@@ -30,7 +30,7 @@ export interface CalendarLegendEntry {
   description: string;
 }
 
-/** One legend, used by every calendar surface so colours never disagree. */
+/** One legend, used by every calendar surface so colors never disagree. */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'work', label: 'Work', colour: '#6b8cae', description: 'Shifts and ordinary employment.' },
   { category: 'career', label: 'Career', colour: '#c9a227', description: 'Auditions, interviews, meetings and breakdowns.' },
@@ -41,7 +41,7 @@ export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'finance', label: 'Finance', colour: '#4f7d5e', description: 'Bills, paydays, taxes and loan payments.' },
   { category: 'business', label: 'Business', colour: '#5c7a6b', description: 'Company deadlines, payroll and contracts.' },
   { category: 'health', label: 'Health', colour: '#7a9a8e', description: 'Appointments and recovery.' },
-  { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Dates, friends and time that is yours.' },
+  { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Dates, friends and time that’s yours.' },
   { category: 'family', label: 'Family', colour: '#b5859a', description: 'Birthdays, anniversaries and family commitments.' },
   { category: 'education', label: 'Education', colour: '#7b6ba8', description: 'Classes, coaching and training.' },
   { category: 'property', label: 'Property', colour: '#8a7a5c', description: 'Showings, inspections, closings and construction.' },
@@ -229,7 +229,7 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
       );
       travelNote = hasFlight
         ? undefined
-        : `You are in ${CITIES.get(player?.currentLocationId ?? '')?.name ?? 'another city'} and this is in ${CITIES.get(item.locationId)?.name ?? 'another city'}. Nothing is booked.`;
+        : `You’re in ${CITIES.get(player?.currentLocationId ?? '')?.name ?? 'another city'} and this is in ${CITIES.get(item.locationId)?.name ?? 'another city'}. Nothing is booked.`;
     }
 
     return {

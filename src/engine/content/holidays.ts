@@ -92,7 +92,7 @@ export async function loadCountryHolidays(countryId: string): Promise<number> {
   }
   const response = await fetch(`${import.meta.env.BASE_URL}holidays/${countryId}.tsv`);
   if (!response.ok) {
-    throw new Error(`The holidays for ${COUNTRIES.get(countryId)?.name ?? countryId} could not be loaded.`);
+    throw new Error(`The holidays for ${COUNTRIES.get(countryId)?.name ?? countryId} couldn’t be loaded.`);
   }
   return addCountryHolidays(countryId, await response.text());
 }

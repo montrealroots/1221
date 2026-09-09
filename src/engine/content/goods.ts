@@ -16,6 +16,8 @@
 import { REFERENCE_VERSION, type ReferenceRecord } from './reference';
 import type { Money } from './catalog-types';
 
+import { jewellerySlotFor } from './wardrobe';
+
 const V = REFERENCE_VERSION;
 const REAL = {
   source: 'calibrated_estimate', confidence: 'high', version: V,
@@ -39,6 +41,11 @@ export interface RealGood extends ReferenceRecord {
   slot?: string;
   formality?: number;
   seasons?: string[];
+  /**
+   * Who the thing is cut for. A shop leads with what fits you and will still
+   * sell you anything: nothing in SLATE is refused on this.
+   */
+  audience?: 'men' | 'women' | 'unisex';
   roomKinds?: string[];
   qualityContribution?: number;
   /**
@@ -59,9 +66,10 @@ const ALL_YEAR = ['Spring', 'Summer', 'Autumn', 'Winter'];
 const gr = (
   id: string, name: string, brand: string, sub: string,
   price: number, shelf: number, unit: string, nourishment: number, quality = 55,
+  extra: readonly string[] = [],
 ): RealGood => good({
   id, name, category: 'groceries', subcategory: sub, basePrice: price, brand,
-  tags: ['grocery', sub], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment,
+  tags: ['grocery', sub, ...extra], quality, depreciation: 0, shelfLifeDays: shelf, unit, nourishment,
 });
 
 /** A drink off the shelf. Same shape, kept apart so the aisles read right. */
@@ -112,15 +120,15 @@ export const REAL_GROCERIES: readonly RealGood[] = national([
 
   // --- Protein ------------------------------------------------------------------------------
   gr('g_bell_evans', 'Bell & Evans Chicken Breast', 'Bell & Evans', 'protein', 13_99, 4, 'Pound', 23, 76),
-  gr('g_creekstone', 'Creekstone Farms Ribeye', 'Creekstone Farms', 'protein', 32_99, 5, 'Pound', 30, 88),
-  gr('g_snake_river', 'Snake River Farms Wagyu Striploin', 'Snake River Farms', 'protein', 89_00, 6, 'Pound', 32, 96),
-  gr('g_donald_russell', 'Donald Russell Sirloin', 'Donald Russell', 'protein', 34_00, 5, 'Pound', 30, 90),
+  gr('g_creekstone', 'Creekstone Farms Ribeye', 'Creekstone Farms', 'protein', 32_99, 5, 'Pound', 30, 88, ['beef']),
+  gr('g_snake_river', 'Snake River Farms Wagyu Striploin', 'Snake River Farms', 'protein', 89_00, 6, 'Pound', 32, 96, ['beef']),
+  gr('g_donald_russell', 'Donald Russell Sirloin', 'Donald Russell', 'protein', 34_00, 5, 'Pound', 30, 90, ['beef']),
   gr('g_verlasso', 'Verlasso Salmon Fillet', 'Verlasso', 'protein', 21_99, 2, 'Pound', 27, 82),
   gr('g_loch_duart', 'Loch Duart Salmon', 'Loch Duart', 'protein', 26_49, 2, 'Pound', 27, 88),
   gr('g_ortiz_tuna', 'Ortiz Bonito Del Norte', 'Ortiz', 'protein', 12_99, 900, 'Jar', 16, 88),
-  gr('g_jamon_iberico', 'Jamón Ibérico De Bellota', 'Cinco Jotas', 'protein', 79_00, 120, 'Pack', 14, 96),
-  gr('g_parma_ham', 'Prosciutto Di Parma', 'Consorzio Del Prosciutto Di Parma', 'protein', 18_99, 45, 'Pack', 12, 88),
-  gr('g_applegate', 'Applegate Organic Bacon', 'Applegate', 'protein', 8_99, 14, 'Pack', 18, 62),
+  gr('g_jamon_iberico', 'Jamón Ibérico De Bellota', 'Cinco Jotas', 'protein', 79_00, 120, 'Pack', 14, 96, ['pork']),
+  gr('g_parma_ham', 'Prosciutto Di Parma', 'Consorzio Del Prosciutto Di Parma', 'protein', 18_99, 45, 'Pack', 12, 88, ['pork']),
+  gr('g_applegate', 'Applegate Organic Bacon', 'Applegate', 'protein', 8_99, 14, 'Pack', 18, 62, ['pork']),
   gr('g_tofurky', 'Tofurky Deli Slices', 'Tofurky', 'protein', 5_99, 30, 'Pack', 12, 50),
   gr('g_beyond_burger', 'Beyond Burger', 'Beyond Meat', 'protein', 8_49, 14, 'Two Pack', 19, 58),
   gr('g_impossible', 'Impossible Burger Patties', 'Impossible Foods', 'protein', 9_29, 14, 'Two Pack', 20, 62),
@@ -213,7 +221,7 @@ export const REAL_GROCERIES: readonly RealGood[] = national([
   dr('d_liquid_iv', 'Liquid I.V. Hydration Multiplier', 'Liquid I.V.', 'beverage', 24_99, 540, 'Box', 62),
 
   // --- Beer ----------------------------------------------------------------------------------
-  dr('d_guinness', 'Guinness Draught', 'Guinness', 'alcohol', 12_99, 300, 'Four Pack', 82),
+  dr('d_guinness', 'Guinness Draft', 'Guinness', 'alcohol', 12_99, 300, 'Four Pack', 82),
   dr('d_heineken', 'Heineken', 'Heineken', 'alcohol', 11_49, 240, 'Six Pack', 62),
   dr('d_stella', 'Stella Artois', 'Stella Artois', 'alcohol', 11_99, 240, 'Six Pack', 62),
   dr('d_peroni', 'Peroni Nastro Azzurro', 'Peroni', 'alcohol', 12_49, 240, 'Six Pack', 66),
@@ -310,8 +318,8 @@ export const REAL_CLOTHING: readonly RealGood[] = [
   cl('c_ganni_top', 'Ganni Printed Mesh Top', 'Ganni', 'top', 185_00, 'top', 34, 72, 0.36),
 
   // --- Bottoms -------------------------------------------------------------------------------------
-  cl('c_levis_501', "Levi's 501 Original Fit Jeans", "Levi's", 'bottom', 98_00, 'bottom', 18, 72, 0.24),
-  cl('c_levis_511', "Levi's 511 Slim Fit Jeans", "Levi's", 'bottom', 79_50, 'bottom', 18, 68, 0.26),
+  cl('c_levis_501', 'Levi’s 501 Original Fit Jeans', 'Levi’s', 'bottom', 98_00, 'bottom', 18, 72, 0.24),
+  cl('c_levis_511', 'Levi’s 511 Slim Fit Jeans', 'Levi’s', 'bottom', 79_50, 'bottom', 18, 68, 0.26),
   cl('c_apc_petit', 'A.P.C. Petit New Standard Jeans', 'A.P.C.', 'bottom', 245_00, 'bottom', 22, 86, 0.18),
   cl('c_orslow_107', 'Orslow 107 Ivy Fit Jeans', 'Orslow', 'bottom', 320_00, 'bottom', 22, 90, 0.16),
   cl('c_nudie_grim', 'Nudie Jeans Grim Tim', 'Nudie Jeans', 'bottom', 175_00, 'bottom', 20, 78, 0.20),
@@ -349,7 +357,7 @@ export const REAL_CLOTHING: readonly RealGood[] = [
   cl('c_uniqlo_ultra_light', 'Uniqlo Ultra Light Down Jacket', 'Uniqlo', 'outerwear', 69_90, 'outerwear', 16, 62, 0.30, ['Autumn', 'Winter']),
   cl('c_stone_island_crinkle', 'Stone Island Garment Dyed Crinkle Reps Jacket', 'Stone Island', 'outerwear', 895_00, 'outerwear', 22, 88, 0.16, SPRING_AUTUMN_WINTER),
   cl('c_carhartt_detroit', 'Carhartt WIP Detroit Jacket', 'Carhartt WIP', 'outerwear', 265_00, 'outerwear', 18, 80, 0.16, SPRING_AUTUMN_WINTER),
-  cl('c_levis_trucker', "Levi's Type III Trucker Jacket", "Levi's", 'outerwear', 98_00, 'outerwear', 16, 70, 0.22, ['Spring', 'Autumn']),
+  cl('c_levis_trucker', 'Levi’s Type III Trucker Jacket', 'Levi’s', 'outerwear', 98_00, 'outerwear', 16, 70, 0.22, ['Spring', 'Autumn']),
   cl('c_loro_storm', 'Loro Piana Storm System Roadster Coat', 'Loro Piana', 'outerwear', 5_450_00, 'outerwear', 70, 98, 0.10, ['Autumn', 'Winter']),
   cl('c_herno_coat', 'Herno Laminar Wool Coat', 'Herno', 'outerwear', 1_190_00, 'outerwear', 62, 88, 0.14, ['Autumn', 'Winter']),
 
@@ -357,7 +365,7 @@ export const REAL_CLOTHING: readonly RealGood[] = [
   cl('c_suitsupply_havana', 'Suitsupply Havana Suit', 'Suitsupply', 'suit', 599_00, 'outfit', 84, 74, 0.24, SPRING_AUTUMN_WINTER),
   cl('c_hugo_boss_suit', 'BOSS Slim Fit Wool Suit', 'BOSS', 'suit', 895_00, 'outfit', 84, 76, 0.24, SPRING_AUTUMN_WINTER),
   cl('c_paul_smith_suit', 'Paul Smith Soho Fit Suit', 'Paul Smith', 'suit', 1_450_00, 'outfit', 86, 84, 0.20, SPRING_AUTUMN_WINTER),
-  cl('c_thom_browne_suit', 'Thom Browne Classic Grey Suit', 'Thom Browne', 'suit', 3_290_00, 'outfit', 88, 92, 0.18, SPRING_AUTUMN_WINTER),
+  cl('c_thom_browne_suit', 'Thom Browne Classic Gray Suit', 'Thom Browne', 'suit', 3_290_00, 'outfit', 88, 92, 0.18, SPRING_AUTUMN_WINTER),
   cl('c_tom_ford_oconnor', "Tom Ford O'Connor Suit", 'Tom Ford', 'suit', 5_390_00, 'outfit', 92, 96, 0.16, ALL_YEAR),
   cl('c_brioni_suit', 'Brioni Wool Suit', 'Brioni', 'suit', 7_450_00, 'outfit', 94, 98, 0.14, ALL_YEAR),
   cl('c_kiton_suit', 'Kiton Cashmere Suit', 'Kiton', 'suit', 9_800_00, 'outfit', 95, 99, 0.14, ALL_YEAR),
@@ -469,8 +477,8 @@ export const REAL_FOOTWEAR: readonly RealGood[] = [
   fw('f_axel_arigato', 'Axel Arigato Clean 90', 'Axel Arigato', 'trainer', 245_00, 20, 76, 0.30),
 
   // --- Dress shoes and loafers ---------------------------------------------------------------------
-  fw('f_church_consul', "Church's Consul Oxford", "Church's", 'formal', 780_00, 94, 92, 0.10, SPRING_AUTUMN_WINTER),
-  fw('f_church_shannon', "Church's Shannon Brogue", "Church's", 'formal', 820_00, 82, 92, 0.10, SPRING_AUTUMN_WINTER),
+  fw('f_church_consul', 'Church’s Consul Oxford', 'Church’s', 'formal', 780_00, 94, 92, 0.10, SPRING_AUTUMN_WINTER),
+  fw('f_church_shannon', 'Church’s Shannon Brogue', 'Church’s', 'formal', 820_00, 82, 92, 0.10, SPRING_AUTUMN_WINTER),
   fw('f_cj_audley', 'Crockett & Jones Audley Oxford', 'Crockett & Jones', 'formal', 725_00, 94, 92, 0.10, SPRING_AUTUMN_WINTER),
   fw('f_cj_pembroke', 'Crockett & Jones Pembroke Derby', 'Crockett & Jones', 'formal', 690_00, 78, 90, 0.10, SPRING_AUTUMN_WINTER),
   fw('f_john_lobb_william', 'John Lobb William Double Monk', 'John Lobb', 'formal', 1_890_00, 86, 98, 0.08, SPRING_AUTUMN_WINTER),
@@ -522,9 +530,15 @@ export const REAL_FOOTWEAR: readonly RealGood[] = [
   fw('f_crocs_classic', 'Crocs Classic Clog', 'Crocs', 'casual', 50_00, 2, 58, 0.40),
 ];
 
+/**
+ * An accessory. `slot` is the wardrobe peg it hangs on, and it is optional
+ * on purpose: a fragrance, a pen and an umbrella are things you own and not
+ * things you wear, so they get no peg at all rather than a made up one. A
+ * peg that is not in SLOTS would put them in a wardrobe nothing can show.
+ */
 const ac = (
   id: string, name: string, brand: string, sub: string, price: number,
-  formality: number, quality: number, depreciation: number, slot = 'accessory',
+  formality: number, quality: number, depreciation: number, slot?: string,
 ): RealGood => good({
   id, name, category: 'accessory', subcategory: sub, basePrice: price, brand,
   tags: ['wear', sub], quality, depreciation, slot, formality, seasons: ALL_YEAR,
@@ -561,24 +575,24 @@ export const REAL_ACCESSORIES: readonly RealGood[] = [
   ac('a_polene_numero', 'Polène Numéro Un Nano', 'Polène', 'bag', 420_00, 52, 82, 0.20, 'bag'),
   ac('a_mansur_bucket', 'Mansur Gavriel Bucket Bag', 'Mansur Gavriel', 'bag', 495_00, 42, 82, 0.22, 'bag'),
   ac('a_telfar_shopping', 'Telfar Shopping Bag Medium', 'Telfar', 'bag', 257_00, 26, 76, 0.24, 'bag'),
-  ac('a_rimowa_original', 'Rimowa Original Cabin', 'Rimowa', 'luggage', 1_450_00, 44, 94, 0.10, 'luggage'),
-  ac('a_rimowa_essential', 'Rimowa Essential Check-In L', 'Rimowa', 'luggage', 1_100_00, 40, 90, 0.12, 'luggage'),
-  ac('a_tumi_alpha', 'Tumi Alpha 3 International Carry-On', 'Tumi', 'luggage', 895_00, 48, 88, 0.16, 'luggage'),
-  ac('a_away_carryon', 'Away The Carry-On', 'Away', 'luggage', 295_00, 32, 76, 0.22, 'luggage'),
-  ac('a_globe_trotter', 'Globe-Trotter Centenary Trolley Case', 'Globe-Trotter', 'luggage', 2_290_00, 62, 94, 0.08, 'luggage'),
+  ac('a_rimowa_original', 'Rimowa Original Cabin', 'Rimowa', 'luggage', 1_450_00, 44, 94, 0.10),
+  ac('a_rimowa_essential', 'Rimowa Essential Check-In L', 'Rimowa', 'luggage', 1_100_00, 40, 90, 0.12),
+  ac('a_tumi_alpha', 'Tumi Alpha 3 International Carry-On', 'Tumi', 'luggage', 895_00, 48, 88, 0.16),
+  ac('a_away_carryon', 'Away The Carry-On', 'Away', 'luggage', 295_00, 32, 76, 0.22),
+  ac('a_globe_trotter', 'Globe-Trotter Centenary Trolley Case', 'Globe-Trotter', 'luggage', 2_290_00, 62, 94, 0.08),
   ac('a_peak_design_backpack', 'Peak Design Everyday Backpack 30L', 'Peak Design', 'bag', 290_00, 18, 88, 0.20, 'bag'),
   ac('a_filson_briefcase', 'Filson Original Briefcase', 'Filson', 'bag', 375_00, 48, 88, 0.12, 'bag'),
   ac('a_bellroy_sling', 'Bellroy Venture Sling', 'Bellroy', 'bag', 135_00, 16, 78, 0.26, 'bag'),
 
   // --- Small leather goods and belts -----------------------------------------------------------------
-  ac('a_smythson_wallet', 'Smythson Panama Coat Wallet', 'Smythson', 'wallet', 495_00, 74, 90, 0.18, 'wallet'),
-  ac('a_montblanc_wallet', 'Montblanc Meisterstück Wallet', 'Montblanc', 'wallet', 340_00, 72, 86, 0.20, 'wallet'),
-  ac('a_bellroy_wallet', 'Bellroy Hide & Seek Wallet', 'Bellroy', 'wallet', 99_00, 30, 76, 0.28, 'wallet'),
+  ac('a_smythson_wallet', 'Smythson Panama Coat Wallet', 'Smythson', 'wallet', 495_00, 74, 90, 0.18),
+  ac('a_montblanc_wallet', 'Montblanc Meisterstück Wallet', 'Montblanc', 'wallet', 340_00, 72, 86, 0.20),
+  ac('a_bellroy_wallet', 'Bellroy Hide & Seek Wallet', 'Bellroy', 'wallet', 99_00, 30, 76, 0.28),
   ac('a_hermes_belt', 'Hermès Constance Reversible Belt', 'Hermès', 'belt', 1_200_00, 68, 96, 0.06, 'belt'),
   ac('a_gucci_marmont_belt', 'Gucci GG Marmont Belt', 'Gucci', 'belt', 520_00, 44, 86, 0.16, 'belt'),
   ac('a_anderson_belt', "Anderson's Woven Belt", "Anderson's", 'belt', 155_00, 44, 82, 0.18, 'belt'),
-  ac('a_montblanc_pen', 'Montblanc Meisterstück 149 Fountain Pen', 'Montblanc', 'pen', 1_050_00, 80, 94, 0.06, 'accessory'),
-  ac('a_lamy_2000', 'Lamy 2000 Fountain Pen', 'Lamy', 'pen', 235_00, 60, 88, 0.14, 'accessory'),
+  ac('a_montblanc_pen', 'Montblanc Meisterstück 149 Fountain Pen', 'Montblanc', 'pen', 1_050_00, 80, 94, 0.06),
+  ac('a_lamy_2000', 'Lamy 2000 Fountain Pen', 'Lamy', 'pen', 235_00, 60, 88, 0.14),
 
   // --- Eyewear --------------------------------------------------------------------------------------
   ac('a_rayban_wayfarer', 'Ray-Ban Original Wayfarer', 'Ray-Ban', 'eyewear', 175_00, 24, 74, 0.28, 'eyewear'),
@@ -612,17 +626,17 @@ export const REAL_ACCESSORIES: readonly RealGood[] = [
   ac('a_barbour_beanie', 'Barbour Lambswool Beanie', 'Barbour', 'hat', 45_00, 12, 74, 0.28, 'hat'),
 
   // --- Fragrance --------------------------------------------------------------------------------------
-  ac('a_creed_aventus', 'Creed Aventus', 'Creed', 'fragrance', 495_00, 60, 94, 0.60, 'fragrance'),
-  ac('a_tom_ford_oud', 'Tom Ford Oud Wood', 'Tom Ford', 'fragrance', 385_00, 60, 92, 0.60, 'fragrance'),
-  ac('a_le_labo_santal', 'Le Labo Santal 33', 'Le Labo', 'fragrance', 320_00, 52, 92, 0.60, 'fragrance'),
-  ac('a_byredo_gypsy', 'Byredo Gypsy Water', 'Byredo', 'fragrance', 220_00, 46, 88, 0.60, 'fragrance'),
-  ac('a_mfk_baccarat', 'Maison Francis Kurkdjian Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'fragrance', 465_00, 62, 96, 0.60, 'fragrance'),
-  ac('a_chanel_no5', 'Chanel N°5 Eau De Parfum', 'Chanel', 'fragrance', 175_00, 72, 94, 0.60, 'fragrance'),
-  ac('a_bleu_de_chanel', 'Bleu De Chanel Parfum', 'Chanel', 'fragrance', 165_00, 58, 90, 0.60, 'fragrance'),
-  ac('a_dior_sauvage', 'Dior Sauvage Eau De Parfum', 'Dior', 'fragrance', 145_00, 46, 84, 0.60, 'fragrance'),
-  ac('a_frederic_malle_portrait', 'Frédéric Malle Portrait Of A Lady', 'Frédéric Malle', 'fragrance', 420_00, 70, 96, 0.60, 'fragrance'),
-  ac('a_diptyque_philosykos', 'Diptyque Philosykos', 'Diptyque', 'fragrance', 195_00, 44, 88, 0.60, 'fragrance'),
-  ac('a_santa_maria_novella', 'Santa Maria Novella Acqua Di Colonia', 'Santa Maria Novella', 'fragrance', 165_00, 54, 90, 0.60, 'fragrance'),
+  ac('a_creed_aventus', 'Creed Aventus', 'Creed', 'fragrance', 495_00, 60, 94, 0.60),
+  ac('a_tom_ford_oud', 'Tom Ford Oud Wood', 'Tom Ford', 'fragrance', 385_00, 60, 92, 0.60),
+  ac('a_le_labo_santal', 'Le Labo Santal 33', 'Le Labo', 'fragrance', 320_00, 52, 92, 0.60),
+  ac('a_byredo_gypsy', 'Byredo Gypsy Water', 'Byredo', 'fragrance', 220_00, 46, 88, 0.60),
+  ac('a_mfk_baccarat', 'Maison Francis Kurkdjian Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'fragrance', 465_00, 62, 96, 0.60),
+  ac('a_chanel_no5', 'Chanel N°5 Eau De Parfum', 'Chanel', 'fragrance', 175_00, 72, 94, 0.60),
+  ac('a_bleu_de_chanel', 'Bleu De Chanel Parfum', 'Chanel', 'fragrance', 165_00, 58, 90, 0.60),
+  ac('a_dior_sauvage', 'Dior Sauvage Eau De Parfum', 'Dior', 'fragrance', 145_00, 46, 84, 0.60),
+  ac('a_frederic_malle_portrait', 'Frédéric Malle Portrait Of A Lady', 'Frédéric Malle', 'fragrance', 420_00, 70, 96, 0.60),
+  ac('a_diptyque_philosykos', 'Diptyque Philosykos', 'Diptyque', 'fragrance', 195_00, 44, 88, 0.60),
+  ac('a_santa_maria_novella', 'Santa Maria Novella Acqua Di Colonia', 'Santa Maria Novella', 'fragrance', 165_00, 54, 90, 0.60),
 ];
 
 const wa = (
@@ -758,7 +772,7 @@ export const REAL_WATCHES: readonly RealGood[] = [
   // --- Independents and the very top -------------------------------------------------------------------
   wa('w_fpjourne_bleu', 'F.P. Journe Chronomètre Bleu', 'F.P. Journe', 'dress', 42_000_00, 99, -0.10, ['grail', 'collector']),
   wa('w_fpjourne_octa', 'F.P. Journe Octa Automatique Lune', 'F.P. Journe', 'complication', 89_000_00, 100, -0.06, ['collector']),
-  wa('w_moser_streamliner', 'H. Moser & Cie Streamliner Centre Seconds', 'H. Moser & Cie', 'sport', 24_900_00, 96, -0.02, ['collector']),
+  wa('w_moser_streamliner', 'H. Moser & Cie Streamliner Center Seconds', 'H. Moser & Cie', 'sport', 24_900_00, 96, -0.02, ['collector']),
   wa('w_bulgari_octo', 'Bulgari Octo Finissimo Automatic', 'Bulgari', 'dress', 15_400_00, 94, 0.02),
   wa('w_piaget_altiplano', 'Piaget Altiplano Ultimate', 'Piaget', 'dress', 27_400_00, 95, 0.01),
   wa('w_piaget_polo', 'Piaget Polo Date', 'Piaget', 'sport', 13_100_00, 92, 0.03),
@@ -779,7 +793,11 @@ const jw = (
   quality: number, depreciation: number, tags: string[] = [],
 ): RealGood => good({
   id, name, category: 'jewelry', subcategory: sub, basePrice: price, brand,
-  tags: ['jewellery', sub, ...tags], quality, depreciation, slot: 'jewellery', formality: 60, seasons: ALL_YEAR,
+  tags: ['jewellery', sub, ...tags], quality, depreciation,
+  // Earrings, a necklace, a ring and a bracelet each have their own peg, so a
+  // piece goes on the one it belongs to rather than competing for a single
+  // jewelry slot. Anything that is none of the four keeps that slot.
+  slot: jewellerySlotFor(sub, name), formality: 60, seasons: ALL_YEAR,
 });
 
 export const REAL_JEWELLERY: readonly RealGood[] = [
@@ -857,13 +875,20 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_iphone_pro', 'Apple iPhone 16 Pro', 'Apple', 'phone', 999_00, 92, 0.40, ['social', 'filming']),
   el('e_iphone_pro_max', 'Apple iPhone 16 Pro Max', 'Apple', 'phone', 1_199_00, 94, 0.40, ['social', 'filming']),
   el('e_iphone', 'Apple iPhone 16', 'Apple', 'phone', 799_00, 86, 0.42, ['social']),
+  // The current generation. SLATE names the newest handsets it knows of; if a
+  // newer one has shipped since, the game does not know about it and says so
+  // rather than inventing a model number.
+  el('e_iphone_17_pro_max', 'Apple iPhone 17 Pro Max', 'Apple', 'phone', 1_199_00, 97, 0.38, ['social', 'filming']),
+  el('e_iphone_17_pro', 'Apple iPhone 17 Pro', 'Apple', 'phone', 1_099_00, 96, 0.38, ['social', 'filming']),
+  el('e_iphone_17', 'Apple iPhone 17', 'Apple', 'phone', 799_00, 90, 0.40, ['social', 'filming']),
+  el('e_iphone_air', 'Apple iPhone Air', 'Apple', 'phone', 999_00, 91, 0.40, ['social']),
   el('e_galaxy_ultra', 'Samsung Galaxy S24 Ultra', 'Samsung', 'phone', 1_299_00, 92, 0.44, ['social', 'filming']),
   el('e_galaxy_fold', 'Samsung Galaxy Z Fold', 'Samsung', 'phone', 1_899_00, 88, 0.48, ['social']),
   el('e_pixel_pro', 'Google Pixel 9 Pro', 'Google', 'phone', 999_00, 88, 0.44, ['social']),
   el('e_ipad_pro', 'Apple iPad Pro 13 Inch', 'Apple', 'tablet', 1_299_00, 92, 0.36, ['work', 'sides']),
   el('e_ipad_air', 'Apple iPad Air', 'Apple', 'tablet', 599_00, 84, 0.38, ['sides']),
   el('e_kindle_paperwhite', 'Amazon Kindle Paperwhite', 'Amazon', 'tablet', 159_00, 78, 0.34, ['reading']),
-  el('e_kobo_libra', 'Kobo Libra Colour', 'Kobo', 'tablet', 219_00, 80, 0.32, ['reading']),
+  el('e_kobo_libra', 'Kobo Libra Color', 'Kobo', 'tablet', 219_00, 80, 0.32, ['reading']),
   el('e_vision_pro', 'Apple Vision Pro', 'Apple', 'headset', 3_499_00, 90, 0.50),
 
   // --- Stills cameras ---------------------------------------------------------------------------------
@@ -883,36 +908,23 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_lumix_gh7', 'Panasonic Lumix GH7', 'Panasonic', 'camera', 2_197_00, 90, 0.24, ['filming']),
 
   // --- Cinema cameras and glass --------------------------------------------------------------------------
-  el('e_arri_alexa35', 'ARRI Alexa 35', 'ARRI', 'cinema', 84_000_00, 100, 0.14, ['production']),
-  el('e_arri_mini_lf', 'ARRI Alexa Mini LF', 'ARRI', 'cinema', 79_000_00, 99, 0.14, ['production']),
-  el('e_arri_amira', 'ARRI Amira', 'ARRI', 'cinema', 48_000_00, 96, 0.16, ['documentary']),
-  el('e_red_vraptor', 'RED V-Raptor 8K VV', 'RED Digital Cinema', 'cinema', 24_500_00, 96, 0.18, ['production']),
-  el('e_red_komodo', 'RED Komodo-X 6K', 'RED Digital Cinema', 'cinema', 9_995_00, 92, 0.20, ['production']),
   el('e_sony_venice2', 'Sony Venice 2', 'Sony', 'cinema', 58_000_00, 98, 0.16, ['production']),
-  el('e_sony_fx6', 'Sony FX6', 'Sony', 'cinema', 5_998_00, 92, 0.22, ['documentary']),
-  el('e_sony_fx3', 'Sony FX3', 'Sony', 'cinema', 3_898_00, 90, 0.22, ['content', 'filming']),
-  el('e_canon_c400', 'Canon EOS C400', 'Canon', 'cinema', 7_999_00, 93, 0.22, ['documentary']),
-  el('e_canon_c70', 'Canon EOS C70', 'Canon', 'cinema', 5_499_00, 90, 0.22, ['documentary']),
-  el('e_bmpcc6k', 'Blackmagic Pocket Cinema Camera 6K Pro', 'Blackmagic Design', 'cinema', 2_535_00, 86, 0.24, ['content']),
   el('e_ursa_cine', 'Blackmagic URSA Cine 12K', 'Blackmagic Design', 'cinema', 14_995_00, 94, 0.20, ['production']),
   el('e_atem_mini', 'Blackmagic ATEM Mini Extreme', 'Blackmagic Design', 'production', 1_095_00, 88, 0.22, ['streaming']),
   el('e_cooke_s7', 'Cooke S7 Full Frame Prime', 'Cooke Optics', 'lens', 21_500_00, 99, 0.08, ['production']),
   el('e_zeiss_supreme', 'Zeiss Supreme Prime', 'Zeiss', 'lens', 19_800_00, 98, 0.08, ['production']),
   el('e_canon_rf_2470', 'Canon RF 24-70mm F2.8 L', 'Canon', 'lens', 2_399_00, 92, 0.14),
-  el('e_sony_gm_2470', 'Sony FE 24-70mm F2.8 GM II', 'Sony', 'lens', 2_298_00, 93, 0.14),
   el('e_sigma_art_35', 'Sigma 35mm F1.2 DG DN Art', 'Sigma', 'lens', 1_499_00, 90, 0.16),
   el('e_leica_summilux', 'Leica Summilux-M 50mm F1.4 ASPH', 'Leica', 'lens', 4_995_00, 98, 0.04, ['collector']),
 
   // --- Support, drones, action -----------------------------------------------------------------------------
   el('e_dji_ronin4d', 'DJI Ronin 4D-8K', 'DJI', 'support', 19_499_00, 94, 0.24, ['production']),
-  el('e_dji_rs4', 'DJI RS 4 Pro Gimbal', 'DJI', 'support', 869_00, 88, 0.26, ['content']),
   el('e_dji_mavic3', 'DJI Mavic 3 Pro', 'DJI', 'drone', 2_199_00, 92, 0.28, ['aerial']),
   el('e_dji_mini4', 'DJI Mini 4 Pro', 'DJI', 'drone', 759_00, 86, 0.30, ['aerial']),
   el('e_dji_inspire3', 'DJI Inspire 3', 'DJI', 'drone', 16_499_00, 96, 0.24, ['production']),
   el('e_osmo_pocket', 'DJI Osmo Pocket 3', 'DJI', 'camera', 519_00, 84, 0.30, ['content']),
   el('e_gopro13', 'GoPro Hero 13 Black', 'GoPro', 'camera', 399_00, 84, 0.32, ['content']),
-  el('e_sachtler_tripod', 'Sachtler Flowtech 75 Tripod', 'Sachtler', 'support', 2_195_00, 92, 0.12, ['production']),
-  el('e_manfrotto_tripod', 'Manfrotto 055 Aluminium Tripod', 'Manfrotto', 'support', 269_00, 78, 0.16),
+  el('e_manfrotto_tripod', 'Manfrotto 055 Aluminum Tripod', 'Manfrotto', 'support', 269_00, 78, 0.16),
 
   // --- Sound -------------------------------------------------------------------------------------------------
   el('e_shure_sm7b', 'Shure SM7B', 'Shure', 'audio', 399_00, 92, 0.08, ['podcast', 'voice']),
@@ -923,9 +935,7 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_sennheiser_mkh416', 'Sennheiser MKH 416 Shotgun', 'Sennheiser', 'audio', 999_00, 96, 0.06, ['production', 'sound']),
   el('e_sennheiser_hd660', 'Sennheiser HD 660S2', 'Sennheiser', 'audio', 599_00, 92, 0.16),
   el('e_rode_ntg5', 'Rode NTG5 Shotgun', 'Rode', 'audio', 499_00, 90, 0.10, ['production']),
-  el('e_rode_wireless', 'Rode Wireless PRO', 'Rode', 'audio', 399_00, 88, 0.16, ['content']),
   el('e_rode_nt1', 'Rode NT1 Fifth Generation', 'Rode', 'audio', 259_00, 86, 0.14, ['podcast']),
-  el('e_sound_devices', 'Sound Devices MixPre-6 II', 'Sound Devices', 'audio', 1_199_00, 94, 0.12, ['production']),
   el('e_zoom_h6', 'Zoom H6essential', 'Zoom', 'audio', 299_00, 80, 0.18),
   el('e_ua_apollo', 'Universal Audio Apollo Twin X', 'Universal Audio', 'audio', 1_099_00, 92, 0.14, ['studio']),
   el('e_focusrite_2i2', 'Focusrite Scarlett 2i2', 'Focusrite', 'audio', 199_00, 80, 0.20, ['podcast']),
@@ -958,10 +968,7 @@ export const REAL_ELECTRONICS: readonly RealGood[] = [
   el('e_steam_deck', 'Valve Steam Deck OLED', 'Valve', 'console', 549_00, 86, 0.28),
 
   // --- Lighting and the rest of the kit ---------------------------------------------------------------------------
-  el('e_aputure_600', 'Aputure LS 600d Pro', 'Aputure', 'lighting', 1_890_00, 92, 0.18, ['production']),
   el('e_aputure_120', 'Aputure Amaran 200x', 'Aputure', 'lighting', 449_00, 84, 0.22, ['content']),
-  el('e_arri_skypanel', 'ARRI SkyPanel S60-C', 'ARRI', 'lighting', 6_800_00, 96, 0.14, ['production']),
-  el('e_astera_titan', 'Astera Titan Tube', 'Astera', 'lighting', 4_650_00, 94, 0.16, ['production']),
   el('e_elgato_key', 'Elgato Key Light', 'Elgato', 'lighting', 199_00, 78, 0.24, ['self tape']),
   el('e_elgato_streamdeck', 'Elgato Stream Deck MK.2', 'Elgato', 'production', 149_00, 80, 0.24, ['streaming']),
   el('e_anker_powerbank', 'Anker Prime Power Bank', 'Anker', 'accessory', 129_00, 80, 0.34),
@@ -1370,7 +1377,7 @@ export const REAL_EQUIPMENT: readonly RealGood[] = [
   eq('q_vessel_bag', 'Vessel Player IV Golf Bag', 'Vessel', 'golf', 495_00, 92, 0.14, ['golf']),
 ];
 
-/** The rest of the jewellery box: the houses above, plus the ones people actually wear. */
+/** The rest of the jewelry box: the houses above, plus the ones people actually wear. */
 export const REAL_JEWELLERY_MORE: readonly RealGood[] = [
   jw('j_cartier_love_ring', 'Cartier Love Ring', 'Cartier', 'ring', 2_060_00, 92, 0.00),
   jw('j_cartier_clou_ring', 'Cartier Juste Un Clou Ring', 'Cartier', 'ring', 2_450_00, 92, 0.00),
@@ -1518,11 +1525,11 @@ export const REAL_APPLIANCES_MORE: readonly RealGood[] = [
  * Art. The artists are real and named as public record, and so is the kind of
  * work each of them makes. What is offered here is a work of that kind, priced
  * on SLATE's own calibration of that artist's market: it is not a specific
- * catalogued piece, it is not a claim that any particular work is for sale,
+ * cataloged piece, it is not a claim that any particular work is for sale,
  * and it is not an appraisal. Editions and prints are where most of this
  * market actually is, and that is where most of this list sits.
  */
-export const ART_NOTE = 'A real artist, and a work of the kind they make. The piece, its availability and its price are SLATE\'s own; no specific catalogued work is being offered.';
+export const ART_NOTE = 'A real artist, and a work of the kind they make. The piece, its availability and its price are SLATE\'s own; no specific cataloged work is being offered.';
 
 const ar = (
   id: string, name: string, artist: string, sub: string, price: number,
@@ -1615,7 +1622,7 @@ export const REAL_ART: readonly RealGood[] = [
   ar('r_tuymans_painting', 'Luc Tuymans Oil On Canvas', 'Luc Tuymans', 'painting', 1_300_000_00, 95, -0.02, ['investment']),
   ar('r_owens_painting', 'Laura Owens Mixed Media On Canvas', 'Laura Owens', 'painting', 640_000_00, 93, -0.02),
   ar('r_katz_painting', 'Alex Katz Oil On Linen', 'Alex Katz', 'painting', 780_000_00, 94, -0.02, ['investment']),
-  ar('r_scully_painting', 'Sean Scully Oil On Aluminium', 'Sean Scully', 'painting', 690_000_00, 93, -0.01),
+  ar('r_scully_painting', 'Sean Scully Oil On Aluminum', 'Sean Scully', 'painting', 690_000_00, 93, -0.01),
   ar('r_riley_painting', 'Bridget Riley Acrylic On Canvas', 'Bridget Riley', 'painting', 2_400_000_00, 98, -0.03, ['investment', 'insured']),
   ar('r_kusama_infinity', 'Yayoi Kusama Infinity Nets Painting', 'Yayoi Kusama', 'painting', 3_900_000_00, 99, -0.04, ['investment', 'insured']),
   ar('r_nara_painting', 'Yoshitomo Nara Acrylic On Canvas', 'Yoshitomo Nara', 'painting', 4_600_000_00, 98, -0.05, ['investment', 'insured']),
@@ -1686,7 +1693,7 @@ export const REAL_BOOKS: readonly RealGood[] = [
   bk('b_actors_art_craft', "The Actor's Art And Craft", 'William Esper', 'acting', 20_00, 90),
   bk('b_year_of_the_king', 'Year Of The King', 'Antony Sher', 'acting', 22_00, 90),
   bk('b_empty_space', 'The Empty Space', 'Peter Brook', 'acting', 17_00, 96),
-  bk('b_towards_poor_theatre', 'Towards A Poor Theatre', 'Jerzy Grotowski', 'acting', 30_00, 90),
+  bk('b_towards_poor_theatre', 'Towards A Poor Theater', 'Jerzy Grotowski', 'acting', 30_00, 90),
   bk('b_letters_to_a_young_actor', 'Letters To A Young Actor', 'Robert Brustein', 'acting', 18_00, 84),
 
   // --- The business, and how it really went ----------------------------------------------------------------
@@ -1787,12 +1794,12 @@ export const REAL_TOP_UP: readonly RealGood[] = [
   ac('a_metier_bag', 'Métier Perriand Bag', 'Métier', 'bag', 2_450_00, 60, 84, 0.12, 'bag'),
   ac('a_mismo_holdall', 'Mismo M/S Explorer Holdall', 'Mismo', 'bag', 895_00, 34, 84, 0.14, 'bag'),
   ac('a_troubadour_briefcase', 'Troubadour Apex Briefcase', 'Troubadour', 'bag', 495_00, 62, 84, 0.18, 'bag'),
-  ac('a_briggs_riley', 'Briggs & Riley Baseline Carry-On', 'Briggs & Riley', 'luggage', 699_00, 46, 84, 0.12, 'luggage'),
-  ac('a_monos_carryon', 'Monos Carry-On Pro', 'Monos', 'luggage', 375_00, 34, 84, 0.20, 'luggage'),
-  ac('a_july_checked', 'July Checked Plus Suitcase', 'July', 'luggage', 345_00, 32, 84, 0.22, 'luggage'),
+  ac('a_briggs_riley', 'Briggs & Riley Baseline Carry-On', 'Briggs & Riley', 'luggage', 699_00, 46, 84, 0.12),
+  ac('a_monos_carryon', 'Monos Carry-On Pro', 'Monos', 'luggage', 375_00, 34, 84, 0.20),
+  ac('a_july_checked', 'July Checked Plus Suitcase', 'July', 'luggage', 345_00, 32, 84, 0.22),
   ac('a_paravel_weekender', 'Paravel Fold-Up Bag', 'Paravel', 'bag', 195_00, 26, 84, 0.24, 'bag'),
-  ac('a_swaine_umbrella', 'Swaine Adeney Brigg Umbrella', 'Swaine Adeney Brigg', 'umbrella', 495_00, 66, 84, 0.12, 'accessory'),
-  ac('a_fox_umbrella', 'Fox Umbrellas Whanghee Crook', 'Fox Umbrellas', 'umbrella', 235_00, 62, 84, 0.14, 'accessory'),
+  ac('a_swaine_umbrella', 'Swaine Adeney Brigg Umbrella', 'Swaine Adeney Brigg', 'umbrella', 495_00, 66, 84, 0.12),
+  ac('a_fox_umbrella', 'Fox Umbrellas Whanghee Crook', 'Fox Umbrellas', 'umbrella', 235_00, 62, 84, 0.14),
   ac('a_tom_ford_belt', 'Tom Ford T Buckle Belt', 'Tom Ford', 'belt', 690_00, 66, 84, 0.16, 'belt'),
   ac('a_bottega_belt', 'Bottega Veneta Intrecciato Belt', 'Bottega Veneta', 'belt', 690_00, 52, 84, 0.16, 'belt'),
   ac('a_drakes_tie', "Drake's Grenadine Silk Tie", "Drake's", 'tie', 195_00, 84, 84, 0.14, 'tie'),
@@ -1802,10 +1809,10 @@ export const REAL_TOP_UP: readonly RealGood[] = [
   ac('a_johnstons_stole', 'Johnstons Of Elgin Cashmere Stole', 'Johnstons Of Elgin', 'scarf', 425_00, 58, 84, 0.12, 'scarf'),
   ac('a_stetson_hat', 'Stetson Open Road Hat', 'Stetson', 'hat', 320_00, 46, 84, 0.16, 'hat'),
   ac('a_lock_and_co', 'Lock & Co. Hatters Trilby', 'Lock & Co. Hatters', 'hat', 385_00, 60, 84, 0.14, 'hat'),
-  ac('a_aesop_hand', 'Aesop Resurrection Hand Balm', 'Aesop', 'grooming', 45_00, 20, 84, 0.85, 'accessory'),
-  ac('a_kiehls_moisturiser', "Kiehl's Ultra Facial Cream", "Kiehl's", 'grooming', 42_00, 16, 84, 0.85, 'accessory'),
-  ac('a_la_mer', 'La Mer Crème De La Mer', 'La Mer', 'grooming', 380_00, 30, 84, 0.85, 'accessory'),
-  ac('a_augustinus_bader', 'Augustinus Bader The Rich Cream', 'Augustinus Bader', 'grooming', 290_00, 28, 84, 0.85, 'accessory'),
+  ac('a_aesop_hand', 'Aesop Resurrection Hand Balm', 'Aesop', 'grooming', 45_00, 20, 84, 0.85),
+  ac('a_kiehls_moisturiser', "Kiehl's Ultra Facial Cream", "Kiehl's", 'grooming', 42_00, 16, 84, 0.85),
+  ac('a_la_mer', 'La Mer Crème De La Mer', 'La Mer', 'grooming', 380_00, 30, 84, 0.85),
+  ac('a_augustinus_bader', 'Augustinus Bader The Rich Cream', 'Augustinus Bader', 'grooming', 290_00, 28, 84, 0.85),
 
   // --- Home, continued ---------------------------------------------------------------------------------
   hm('h_hermes_avalon', 'Hermès Avalon Throw', 'Hermès', 'textile', 1_850_00, 96, 0.16, LIVING, 10),

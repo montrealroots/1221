@@ -144,9 +144,9 @@ describe('what it refuses, and why', () => {
 
   it('explains a refusal instead of just failing', () => {
     expect(describeRejection({ type: 'application/pdf', size: 100, name: 'resume.pdf' }))
-      .toMatch(/not an image/);
+      .toMatch(/n[o’]t an image/);
     expect(describeRejection({ type: 'image/tiff', size: 100, name: 'scan.tiff' }))
-      .toMatch(/not supported/);
+      .toMatch(/n[o’]t supported/);
     expect(describeRejection({ type: 'image/jpeg', size: MAX_UPLOAD_BYTES + 1, name: 'huge.jpg' }))
       .toMatch(/limit is/);
     expect(describeRejection({ type: 'image/png', size: 0, name: 'empty.png' }))

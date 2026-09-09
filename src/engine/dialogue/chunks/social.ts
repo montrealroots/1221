@@ -24,7 +24,7 @@ const LINES: DialogueLine[] = [
   C('hit', 'any', 4, 'the way I stopped what I was doing'),
   C('hit', 'video', 1, 'watched it twice and I never do that'),
   C('hit', 'video', 2, 'the cut at the end is unreal'),
-  C('hit', 'video', 3, 'please do a part two, I am begging'),
+  C('hit', 'video', 3, 'please do a part two, I’m begging'),
   C('hit', 'photo', 1, 'the light in this is doing something to me'),
   C('hit', 'photo', 2, 'framing is insane. who shot this'),
   C('hit', 'text', 1, 'this thread is better than most articles'),
@@ -52,15 +52,15 @@ const LINES: DialogueLine[] = [
   C('flop', 'photo', 1, 'blurry'),
   C('flop', 'photo', 2, 'filter is doing a lot of work here'),
   C('flop', 'text', 1, 'delete this'),
-  C('flop', 'text', 2, 'this did not need to be a thread'),
+  C('flop', 'text', 2, 'this didn’t need to be a thread'),
 
   // --- The day after, in one line -----------------------------------------------------------
-  settled('hit', 1, 'A day on, it is still moving. The comments are the good kind.'),
-  settled('hit', 2, 'It found people who were not looking for you. That is the whole game.'),
+  settled('hit', 1, 'A day on, it’s still moving. The comments are the good kind.'),
+  settled('hit', 2, 'It found people who weren’t looking for you. That’s the whole game.'),
   settled('fine', 1, 'It did what your posts do. The people who follow you saw it.'),
   settled('fine', 2, 'A day on, it has settled. Nobody is talking about it, nobody is unhappy.'),
-  settled('flop', 1, 'A day on, it has sunk. The comments that came were not kind.'),
-  settled('flop', 2, 'It did not land. The numbers say so, and so do the four people who replied.'),
+  settled('flop', 1, 'A day on, it has sunk. The comments that came weren’t kind.'),
+  settled('flop', 2, 'It didn’t land. The numbers say so, and so do the four people who replied.'),
 ];
 
 export const SOCIAL_CHUNK: DialogueChunk = {

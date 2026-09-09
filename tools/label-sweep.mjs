@@ -18,14 +18,46 @@ import { execSync } from 'node:child_process';
  * Words that stay lowercase inside a real name.
  *
  * SLATE's own labels are Title Case to the letter — "D23 Day At Angel
- * Stadium". A real organisation's name is spelled the way that organisation
+ * Stadium". A real organization's name is spelled the way that organization
  * spells it: "The Producers Guild of America Awards", "The Globe and Mail",
  * "Sight and Sound". Capitalising those would not be tidier, it would be
  * wrong, so the joining words inside a name are allowed — never at the front.
  */
 const JOINING_WORDS = new Set([
-  'a', 'an', 'and', 'at', 'by', 'de', 'del', 'della', 'di', 'da', 'du', 'for', 'from', 'in',
+  'a', 'an', 'and', 'at', 'by', 'de', 'del', 'della', 'alla', 'di', 'da', 'du', 'for', 'from', 'in',
   'la', 'le', 'of', 'on', 'or', 'the', 'to', 'van', 'von', 'with', 'bin', 'al',
+  'à',  // Banque Internationale à Luxembourg, as the bank writes it.
+]);
+
+/**
+ * Real names that are not Title Case, and must not be "corrected".
+ *
+ * The house rule is Title Case for every label SLATE writes. It does not
+ * apply to a real company's own name: dm is lowercase on the shopfront and
+ * Pick n Pay has a lowercase n on the sign, and rewriting either of them
+ * would make the game wrong rather than tidy. Anything added here has to be
+ * a name somebody else chose, verifiable on their own signage.
+ */
+const REAL_NAMES_AS_WRITTEN = new Set([
+  'dm',                 // German drugstore chain; lowercase in its own logo.
+  'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
+  'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
+  // Public examinations, written the way the country that sets them writes
+  // them. A Chinese, Korean, Japanese, Hebrew or Arabic name has no capital
+  // letters to check, and the Spanish, Portuguese and Indian ones carry
+  // joining words that are part of the real name.
+  '普通高等学校招生全国统一考试',                              // The Gaokao.
+  '初中学业水平考试',                                          // The Zhongkao.
+  '대학수학능력시험',                                          // The Suneung.
+  '大学入学共通テスト',                                        // The Japanese Common Test.
+  'الثانوية العامة',                                          // Thanaweya Amma.
+  'בגרות',                                                    // The Bagrut.
+  'Единый Государственный Экзамен',                            // The EGE.
+  'Основной Государственный Экзамен',                          // The OGE.
+  'La Evaluación de Bachillerato para el Acceso a la Universidad',
+  'O Exame Nacional do Ensino Médio',
+  'El Examen Nacional de Ingreso a la Educación Superior',
+  'The National Eligibility cum Entrance Test',
 ]);
 
 /**
@@ -89,7 +121,7 @@ for (const file of files) {
       for (const entry of body.matchAll(/'((?:[^'\\]|\\.){2,70})'/g)) {
         const value = entry[1];
         const bad = lowercaseWordsIn(value);
-        if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
+        if (bad.length > 0 && !REAL_NAMES_AS_WRITTEN.has(value)) problems.push({ file, line: index + 1, key, value, bad });
       }
     }
   });
@@ -103,7 +135,7 @@ for (const file of files) {
       // Prose in a label field is caught by the other tool; here we only want
       // words that begin lowercase.
       const bad = lowercaseWordsIn(value);
-      if (bad.length > 0) problems.push({ file, line: index + 1, key, value, bad });
+      if (bad.length > 0 && !REAL_NAMES_AS_WRITTEN.has(value)) problems.push({ file, line: index + 1, key, value, bad });
     }
     // A title built from a template — `${bill.name} Is Unpaid` — reaches the
     // screen the same way. The slots are set aside and the words around them

@@ -6,6 +6,7 @@
  * it. Private relationships stay private until something makes them public.
  */
 
+import { plural } from '../core/text';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type {
@@ -21,6 +22,7 @@ import { costOfLiving } from '../content/tax';
 import { modifierFor } from '../domain/attributes';
 import { personalityModifier } from '../content/personality-traits';
 import { CATALOG } from '../content/catalog';
+import { requireAge } from './lifespan';
 
 const ROMANTIC: readonly RelationshipType[] = ['dating', 'engaged', 'spouse'];
 const FAMILY: readonly RelationshipType[] = ['parent', 'child', 'sibling', 'relative', 'guardian', 'ward'];
@@ -157,16 +159,16 @@ export function registerRelationships(sim: Simulation): void {
     'rel.interact',
     (p, { sim: s }) => {
       const rel = s.universe.relationships[p.relationshipId];
-      if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
+      if (!rel || rel.endedAt) throw new CommandError('That relationship isn’t active.');
       const def = INTERACTIONS[p.interaction];
       if (!def) throw new CommandError('Unknown interaction.');
 
       const player = s.player;
       const other = s.universe.people[otherParty(rel, player.id)];
-      if (!other) throw new CommandError('That person is not in this world any more.');
+      if (!other) throw new CommandError('That person isn’t in this world any more.');
 
       if (rel.dimensions.familiarity < def.minFamiliarity) {
-        throw new CommandError(`You do not know ${other.displayName} well enough for that yet.`);
+        throw new CommandError(`You don’t know ${other.displayName} well enough for that yet.`);
       }
 
       const minutes = p.minutes ?? def.minutes;
@@ -216,13 +218,13 @@ export function registerRelationships(sim: Simulation): void {
       const player = s.player;
       const other = s.universe.people[p.personId];
       if (!other) throw new CommandError('No such person.');
-      if (!(p.at > s.now)) throw new CommandError('Pick a time that has not gone.');
+      if (!(p.at > s.now)) throw new CommandError('Pick a time that hasn’t gone.');
       const activity = DATE_ACTIVITY_BY_ID[p.activityId];
-      if (!activity) throw new CommandError('That is not a way to spend an evening SLATE knows.');
+      if (!activity) throw new CommandError('That isn’t a way to spend an evening SLATE knows.');
       if (p.placeId) {
         const place = placesIn(p.locationId ?? player.currentLocationId).find((pl) => pl.id === p.placeId);
-        if (!place) throw new CommandError('That place is not in that city.');
-        if (!activity.placeKinds.includes(place.kind)) throw new CommandError(`${place.name} is not somewhere for ${activity.label.toLowerCase()}.`);
+        if (!place) throw new CommandError('That place isn’t in that city.');
+        if (!activity.placeKinds.includes(place.kind)) throw new CommandError(`${place.name} isn’t somewhere for ${activity.label.toLowerCase()}.`);
       }
       let rel = findRelationship(s, player.id, other.id);
       if (!rel) rel = createRelationship(s, player.id, other.id, 'acquaintance');
@@ -291,9 +293,9 @@ export function registerRelationships(sim: Simulation): void {
     'rel.define',
     (p, { sim: s }) => {
       const rel = s.universe.relationships[p.relationshipId];
-      if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
+      if (!rel || rel.endedAt) throw new CommandError('That relationship isn’t active.');
       const strength = relationshipStrength(rel, s.now);
-      if (strength < 48) throw new CommandError('It is too early for that conversation. Spend more time together.');
+      if (strength < 48) throw new CommandError('It’s too early for that conversation. Spend more time together.');
       rel.type = 'dating';
       rel.exclusive = p.exclusive ?? true;
       rel.since = s.now;
@@ -316,20 +318,24 @@ export function registerRelationships(sim: Simulation): void {
   sim.onCommand<{ relationshipId: Id; ringAssetId?: Id; accountId?: Id }, { accepted: boolean }>(
     'rel.propose',
     (p, { sim: s }) => {
+      // The rule is the one where you are standing.
+      requireAge(s, 'marry');
       const rel = s.universe.relationships[p.relationshipId];
-      if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
+      if (!rel || rel.endedAt) throw new CommandError('That relationship isn’t active.');
       if (rel.type !== 'dating') throw new CommandError('You have to be together before you can propose.');
 
       const player = s.player;
       const other = s.universe.people[otherParty(rel, player.id)];
-      if (!other) throw new CommandError('That person is not here.');
+      if (!other) throw new CommandError('That person isn’t here.');
 
       const ring = p.ringAssetId ? s.universe.assets[p.ringAssetId] : undefined;
-      if (p.ringAssetId && !ring) throw new CommandError('You do not own that ring.');
+      if (p.ringAssetId && !ring) throw new CommandError('You don’t own that ring.');
       const ringQuality = ring ? clamp(remap(ring.currentValue, 0, 80_000_00, 0, 1), 0, 1) : 0;
 
       const monthsTogether = (s.now - rel.since) / (30.44 * MS_DAY);
-      const rng = s.rng('propose', rel.id);
+      // A new roll each time you ask: the same person, asked again a year on,
+      // is not bound to the answer they gave the first time.
+      const rng = s.rng('propose', rel.id, s.counter(`propose:${rel.id}`));
       const { factors, score } = buildFactors([
         { label: 'How Strong The Relationship Is', detail: `Overall strength is ${Math.round(relationshipStrength(rel, s.now))} out of 100.`, weight: 0.38, value: relationshipStrength(rel, s.now) / 100 },
         { label: 'How Long You Have Been Together', detail: `${monthsTogether.toFixed(1)} months.`, weight: 0.24, value: clamp(monthsTogether / 24, 0, 1) },
@@ -385,7 +391,7 @@ export function registerRelationships(sim: Simulation): void {
     'rel.plan_wedding',
     (p, { sim: s }) => {
       const rel = s.universe.relationships[p.relationshipId];
-      if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
+      if (!rel || rel.endedAt) throw new CommandError('That relationship isn’t active.');
       if (rel.type !== 'engaged') throw new CommandError('You have to be engaged first.');
       if (p.date <= s.now) throw new CommandError('Pick a date in the future.');
 
@@ -476,9 +482,9 @@ export function registerRelationships(sim: Simulation): void {
     'rel.give_gift',
     (p, { sim: s }) => {
       const rel = s.universe.relationships[p.relationshipId];
-      if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
+      if (!rel || rel.endedAt) throw new CommandError('That relationship isn’t active.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('You do not own that.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('You don’t own that.');
 
       const recipientId = otherParty(rel, s.player.id);
       const recipient = s.universe.people[recipientId];
@@ -505,15 +511,15 @@ export function registerRelationships(sim: Simulation): void {
     'rel.have_child',
     (p, { sim: s }) => {
       const rel = s.universe.relationships[p.partnerRelationshipId];
-      if (!rel || rel.endedAt) throw new CommandError('That relationship is not active.');
+      if (!rel || rel.endedAt) throw new CommandError('That relationship isn’t active.');
       if (!['dating', 'engaged', 'spouse'].includes(rel.type)) {
         throw new CommandError('You need to be in a committed relationship for that.');
       }
       const player = s.player;
       const partner = s.universe.people[otherParty(rel, player.id)];
-      if (!partner) throw new CommandError('Your partner is not here.');
+      if (!partner) throw new CommandError('Your partner isn’t here.');
       if (relationshipStrength(rel, s.now) < 55) {
-        throw new CommandError('The relationship is not in a place for that decision right now.');
+        throw new CommandError('The relationship isn’t in a place for that decision right now.');
       }
 
       const child = createChild(s, player, partner, p.name, p.method);
@@ -546,12 +552,12 @@ export const INTERACTIONS: Readonly<Record<InteractionKind, InteractionDef>> = {
   chat: { name: 'Chat', minutes: 20, minFamiliarity: 0, effects: { familiarity: 4, affection: 2 }, memoryImpact: 1, memoryDecayDays: 30, goodOutcome: 'Easy conversation. Nothing heavy.', badOutcome: 'A bit flat. Neither of you had much to say.', description: 'Light, low stakes, builds familiarity.' },
   catch_up: { name: 'Catch Up Properly', minutes: 90, minFamiliarity: 15, effects: { familiarity: 6, affection: 5, trust: 3 }, memoryImpact: 3, memoryDecayDays: 120, goodOutcome: 'A proper catch-up. You both left it feeling better.', badOutcome: 'You talked past each other for an hour.', description: 'Time and attention, which is what most relationships actually need.' },
   deep_talk: { name: 'Have A Real Conversation', minutes: 120, minFamiliarity: 35, effects: { familiarity: 5, affection: 7, trust: 9, commitment: 4 }, memoryImpact: 7, memoryDecayDays: 500, goodOutcome: 'You said something true and they heard it.', badOutcome: 'It got heavy and neither of you handled it well.', description: 'The conversation that changes a relationship, in either direction.' },
-  favour: { name: 'Ask A Favour', minutes: 30, minFamiliarity: 30, effects: { trust: -2, affection: -1, conflictRisk: 4 }, memoryImpact: -2, memoryDecayDays: 180, goodOutcome: 'They helped without making it a thing.', badOutcome: 'They said yes and you could tell it cost them.', description: 'Spends relationship capital. Sometimes it is worth it.' },
-  apologise: { name: 'Apologise', minutes: 45, minFamiliarity: 10, effects: { trust: 6, affection: 4, conflictRelief: 22 }, memoryImpact: 5, memoryDecayDays: 300, goodOutcome: 'They accepted it. The air cleared.', badOutcome: 'They were not ready to hear it.', description: 'The only thing that actually clears conflict.' },
-  confront: { name: 'Confront Them', minutes: 60, minFamiliarity: 20, effects: { respect: 3, conflictRisk: 18, trust: -4 }, memoryImpact: -6, memoryDecayDays: 420, goodOutcome: 'Hard, honest, and probably necessary.', badOutcome: 'It went badly and now it is worse.', description: 'High risk. Occasionally the only honest option.' },
-  work_together: { name: 'Work Together', minutes: 240, minFamiliarity: 5, effects: { familiarity: 8, respect: 7, trust: 4 }, memoryImpact: 4, memoryDecayDays: 400, goodOutcome: 'You work well together and you both noticed.', badOutcome: 'The working styles did not mesh.', description: 'Builds professional respect faster than anything else.' },
-  celebrate: { name: 'Celebrate Something', minutes: 180, minFamiliarity: 20, effects: { familiarity: 3, affection: 8, commitment: 3 }, memoryImpact: 6, memoryDecayDays: 700, goodOutcome: 'A genuinely good night.', badOutcome: 'The occasion did not quite land.', description: 'Shared good news becomes a shared memory.' },
-  support: { name: 'Be There For Them', minutes: 150, minFamiliarity: 25, effects: { trust: 12, affection: 8, commitment: 6 }, memoryImpact: 10, memoryDecayDays: 0, goodOutcome: 'You showed up when it mattered. They will not forget it.', badOutcome: 'You tried, and it was not what they needed.', description: 'Showing up in a hard moment is remembered permanently.' },
+  favour: { name: 'Ask A Favor', minutes: 30, minFamiliarity: 30, effects: { trust: -2, affection: -1, conflictRisk: 4 }, memoryImpact: -2, memoryDecayDays: 180, goodOutcome: 'They helped without making it a thing.', badOutcome: 'They said yes and you could tell it cost them.', description: 'Spends relationship capital. Sometimes it’s worth it.' },
+  apologise: { name: 'Apologize', minutes: 45, minFamiliarity: 10, effects: { trust: 6, affection: 4, conflictRelief: 22 }, memoryImpact: 5, memoryDecayDays: 300, goodOutcome: 'They accepted it. The air cleared.', badOutcome: 'They weren’t ready to hear it.', description: 'The only thing that actually clears conflict.' },
+  confront: { name: 'Confront Them', minutes: 60, minFamiliarity: 20, effects: { respect: 3, conflictRisk: 18, trust: -4 }, memoryImpact: -6, memoryDecayDays: 420, goodOutcome: 'Hard, honest, and probably necessary.', badOutcome: 'It went badly and now it’s worse.', description: 'High risk. Occasionally the only honest option.' },
+  work_together: { name: 'Work Together', minutes: 240, minFamiliarity: 5, effects: { familiarity: 8, respect: 7, trust: 4 }, memoryImpact: 4, memoryDecayDays: 400, goodOutcome: 'You work well together and you both noticed.', badOutcome: 'The working styles didn’t mesh.', description: 'Builds professional respect faster than anything else.' },
+  celebrate: { name: 'Celebrate Something', minutes: 180, minFamiliarity: 20, effects: { familiarity: 3, affection: 8, commitment: 3 }, memoryImpact: 6, memoryDecayDays: 700, goodOutcome: 'A genuinely good night.', badOutcome: 'The occasion didn’t quite land.', description: 'Shared good news becomes a shared memory.' },
+  support: { name: 'Be There For Them', minutes: 150, minFamiliarity: 25, effects: { trust: 12, affection: 8, commitment: 6 }, memoryImpact: 10, memoryDecayDays: 0, goodOutcome: 'You showed up when it mattered. They won’t forget it.', badOutcome: 'You tried, and it wasn’t what they needed.', description: 'Showing up in a hard moment is remembered permanently.' },
 };
 
 // ---------------------------------------------------------------------------
@@ -649,7 +655,7 @@ export function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan)
   const { factors, score } = buildFactors([
     { label: 'How The Two Of You Get On', detail: `Compatibility is ${Math.round(rel.dimensions.compatibility)} out of 100.`, weight: 0.30, value: rel.dimensions.compatibility / 100 },
     { label: 'How Present You Were', detail: `You arrived tired at ${Math.round(player.wellbeing.energy)}% energy.`, weight: 0.26, value: readinessFactor },
-    { label: 'Effort And Planning', detail: spent > 0 ? `You spent ${formatMoney(spent)} on the evening.` : 'You did not spend anything on it.', weight: 0.20, value: effortFactor },
+    { label: 'Effort And Planning', detail: spent > 0 ? `You spent ${formatMoney(spent)} on the evening.` : 'You didn’t spend anything on it.', weight: 0.20, value: effortFactor },
     { label: 'Existing Warmth', detail: `Affection is ${Math.round(rel.dimensions.affection)} out of 100.`, weight: 0.24, value: rel.dimensions.affection / 100 },
   ]);
 
@@ -668,7 +674,7 @@ export function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan)
 
   addMemory(sim, rel, {
     kind: 'date',
-    summary: wentWell ? `A good evening together.${spent > 0 ? ` You spent ${formatMoney(spent)}.` : ''}` : 'The evening did not land.',
+    summary: wentWell ? `A good evening together.${spent > 0 ? ` You spent ${formatMoney(spent)}.` : ''}` : 'The evening didn’t land.',
     impact: wentWell ? 7 : -4,
     decayDays: wentWell ? 400 : 250,
   });
@@ -676,7 +682,7 @@ export function resolveDate(sim: Simulation, relationshipId: Id, plan: DatePlan)
   sim.audit({
     kind: 'rel.date_resolved', subjectType: 'relationship', subjectId: rel.id,
     question: 'How did that date go, and why?',
-    summary: wentWell ? 'It went well.' : 'It did not go well.',
+    summary: wentWell ? 'It went well.' : 'It didn’t go well.',
     factors, seed: `date|${rel.id}|${sim.now}`, roll, probability, score,
     outcome: wentWell ? 'good' : 'poor',
   });
@@ -712,7 +718,7 @@ function holdWedding(sim: Simulation, relationshipId: Id, budget: Money, guests:
   rel.exclusive = true;
   rel.since = sim.now;
   applyDelta(rel.dimensions, { commitment: 35, affection: 12, trust: 10 });
-  addMemory(sim, rel, { kind: 'wedding', summary: `You got married, with ${guests} people there.`, impact: 22, decayDays: 0 });
+  addMemory(sim, rel, { kind: 'wedding', summary: `You got married, with ${plural(guests, 'person', 'people')} there.`, impact: 22, decayDays: 0 });
 
   // Households merge.
   const household = player.householdId ? sim.universe.households[player.householdId] : undefined;
@@ -849,7 +855,7 @@ function celebrateBirthday(sim: Simulation, personId: Id): void {
       person.tier = 'active';
       sim.notify({
         category: 'family', title: `${person.displayName} Turned 18`,
-        body: 'They are an adult now, with their own life to build.',
+        body: 'They’re an adult now, with their own life to build.',
         // Relationships, not '/workspace/family' — that screen has never
         // existed, so this link has always landed on nothing.
         importance: 70, route: '/workspace/relationships',
@@ -932,7 +938,7 @@ function driftRelationships(sim: Simulation): void {
       sim.notify({
         category: 'relationships',
         title: `Things Ended With ${other?.displayName ?? 'Someone'}`,
-        body: 'You had not spoken properly in months.',
+        body: 'You hadn’t spoken properly in months.',
         importance: 65, route: '/workspace/relationships',
       });
       sim.emit('rel.ended', { relationshipId: rel.id, wasMarried: rel.type === 'spouse', personId: other?.id });

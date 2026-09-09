@@ -3,10 +3,22 @@
  *
  * HOME for immediate life, WORLD for discovery, workspaces for deep work, and
  * Go Anywhere over the top of all of it. Context is preserved: breadcrumbs,
- * recent destinations and favourites all survive moving around.
+ * recent destinations and favorites all survive moving around.
+ *
+ * The rail down the left is every destination, always in reach, with Home at
+ * the top wearing the count of what is waiting on you. It is words only: no
+ * icons, and a locked room says Locked rather than showing a padlock. Below a
+ * laptop it folds into a drawer behind the Menu button.
+ *
+ * The bar across the top keeps its two sides apart on purpose. Left is the
+ * world: the mark, the clock, and the controls that move it. Right is you:
+ * the tools you reach for, then the state of your save.
  */
 
-import { useGame } from '@/app/game-context';
+import { useState } from 'react';
+import { useGame, useWorld } from '@/app/game-context';
+import { DESTINATIONS } from './destinations';
+import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { GoAnywhere } from './GoAnywhere';
 import { HelpPanel } from './HelpPanel';
 import { TimeControls } from './TimeControls';
@@ -20,12 +32,30 @@ import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
 export function GameShell() {
   const game = useGame();
   const { sim, route, navigate, breadcrumbs, searchOpen, setSearchOpen, helpOpen, setHelpOpen, toasts } = game;
+  const [railOpen, setRailOpen] = useState(false);
+  const waiting = useWorld((s) => openDecisions(s).length);
+  const unread = useWorld((s) => unreadNotifications(s).length);
+
+  const go = (to: string, label: string, locked?: boolean) => {
+    if (locked) { game.toast(`${label} Is Under Construction.`, 'neutral'); return; }
+    navigate(to, label);
+    setRailOpen(false);
+  };
 
   return (
     <div className="shell">
       <a className="skip-link" href="#main">Skip To Content</a>
 
       <header className="topbar">
+        <button
+          className="btn btn-ghost btn-sm rail-toggle"
+          onClick={() => setRailOpen((open) => !open)}
+          aria-expanded={railOpen}
+          aria-controls="rail"
+          aria-label="Toggle Navigation"
+        >
+          Menu
+        </button>
 
         <button
           className="topbar-brand btn btn-ghost"
@@ -47,33 +77,94 @@ export function GameShell() {
 
         <div className="grow" />
 
-        <button
-          className="btn btn-sm"
-          onClick={() => setSearchOpen(true)}
-          aria-label="Go Anywhere. Search everything."
-        >
-          <span aria-hidden="true">⌕</span>
-          <span className="hide-sm">Go Anywhere</span>
-          <kbd className="hide-sm">/</kbd>
-        </button>
+        <div className="topbar-group" role="group" aria-label="Tools">
+          <button
+            className="btn btn-sm"
+            onClick={() => setSearchOpen(true)}
+            aria-label="Go Anywhere. Search everything."
+          >
+            <span aria-hidden="true">⌕</span>
+            <span className="hide-sm">Go Anywhere</span>
+            <kbd className="hide-sm">/</kbd>
+          </button>
 
-        <button
-          className="btn btn-ghost btn-sm"
-          onClick={() => setHelpOpen(!helpOpen)}
-          aria-label="Help For This Screen"
-          aria-pressed={helpOpen}
-        >
-          ?
-        </button>
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => setHelpOpen(!helpOpen)}
+            aria-label="Help For This Screen"
+            aria-pressed={helpOpen}
+          >
+            ?
+          </button>
+        </div>
 
-        <SaveIndicator />
+        <span className="topbar-divider" aria-hidden="true" />
 
-        <button className="btn btn-ghost btn-sm hide-sm" onClick={game.exitToMenu}>
-          Save &amp; Exit
-        </button>
+        <div className="topbar-group" role="group" aria-label="Your Save">
+          <SaveIndicator />
+
+          <button className="btn btn-ghost btn-sm hide-sm" onClick={game.exitToMenu}>
+            Save &amp; Exit
+          </button>
+        </div>
       </header>
 
       <div className="shell-body">
+        <nav className="rail" id="rail" data-open={railOpen} aria-label="Main Navigation">
+          <div className="rail-group">
+            <button
+              className="rail-item"
+              aria-current={route === '/home' ? 'page' : undefined}
+              onClick={() => go('/home', 'Home')}
+            >
+              <span className="grow truncate">Home</span>
+              {waiting + unread > 0 && (
+                <span className="rail-badge" aria-label={`${waiting + unread} Waiting On You`}>
+                  {waiting + unread > 99 ? '99+' : waiting + unread}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {DESTINATIONS.map((group) => (
+            <div key={group.label} className="rail-group">
+              <div className="rail-group-label">{group.label}</div>
+              {group.items.map((item) => (
+                <button
+                  key={item.route}
+                  className={`rail-item${item.locked ? ' is-locked' : ''}`}
+                  aria-current={!item.locked && route === item.route ? 'page' : undefined}
+                  aria-label={item.locked ? `${item.label}, Locked, Under Construction` : undefined}
+                  title={item.detail}
+                  onClick={() => go(item.route, item.label, item.locked)}
+                >
+                  <span className="grow truncate">{item.label}</span>
+                  {item.locked && <span className="rail-lock">Locked</span>}
+                </button>
+              ))}
+            </div>
+          ))}
+
+          <div className="rail-group rail-player">
+            <div className="rail-group-label">You</div>
+            <div className="rail-you">
+              <div className="small strong truncate">{sim.player.displayName}</div>
+              <div className="xs dim truncate">
+                {unread > 0 ? `${unread} Unread` : 'Nothing Unread'}
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        {railOpen && (
+          <button
+            type="button"
+            className="rail-shade"
+            aria-label="Close Navigation"
+            onClick={() => setRailOpen(false)}
+          />
+        )}
+
         <main className="main" id="main" tabIndex={-1}>
           <div className="main-inner">
             {breadcrumbs.length > 1 && (

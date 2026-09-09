@@ -59,7 +59,7 @@ export function workRefusalFor(person: Citizen, cityId: string): string | undefi
   const held = citizenshipsOf(person)
     .map((id) => COUNTRIES.get(id)?.name ?? id)
     .join(' or ');
-  return `You are not a citizen of ${name}, and you hold ${held}. Taking that work needs an arrangement nobody has made.`;
+  return `You aren’t a citizen of ${name}, and you hold ${held}. Taking that work needs an arrangement nobody has made.`;
 }
 
 /** How the two passports read on a screen. */

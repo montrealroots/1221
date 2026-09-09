@@ -27,6 +27,10 @@ import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
+import {
+  DEFAULT_HEIGHT_CM, DEFAULT_WEIGHT_KG, HEIGHT_RANGE, WEIGHT_RANGE,
+} from '../content/lifespan';
+import { DEFAULT_HERITAGE, HERITAGE_BY_ID } from '../content/heritage';
 
 export const APP_VERSION = '1.1.0';
 
@@ -56,6 +60,16 @@ export interface NewSaveConfig {
   birthYear: number;
   birthMonth: number;
   birthDay: number;
+  /** The height and weight this character ends up at as an adult. */
+  adultHeightCm: number;
+  adultWeightKg: number;
+  /**
+   * Where the family name comes from. One for the character, and one for each
+   * of the two people who raised them, so a family of two heritages names its
+   * children out of both.
+   */
+  heritageId: string;
+  parentHeritageIds: readonly [string, string];
   homeRegionId: string;
   citizenshipId: string;
   /** Headshot as a data URL, already fitted to the portrait frame. */
@@ -111,6 +125,8 @@ export function defaultConfig(): NewSaveConfig {
   return {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
+    adultHeightCm: DEFAULT_HEIGHT_CM, adultWeightKg: DEFAULT_WEIGHT_KG,
+    heritageId: DEFAULT_HERITAGE, parentHeritageIds: [DEFAULT_HERITAGE, DEFAULT_HERITAGE],
     homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
     personality: defaultPersonality(),
     personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
@@ -159,11 +175,11 @@ export const FOUNDING_REMIT = 'anything';
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
   nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Nothing behind you and rent due.' },
-  scraping: { checking: 1_240_00, savings: 300_00, cardLimit: 1_500_00, cardBalance: -840_00, creditScore: 610, note: 'Getting by, with a card you are carrying a balance on.' },
+  scraping: { checking: 1_240_00, savings: 300_00, cardLimit: 1_500_00, cardBalance: -840_00, creditScore: 610, note: 'Getting by, with a card you’re carrying a balance on.' },
   modest: { checking: 4_800_00, savings: 6_500_00, cardLimit: 6_000_00, cardBalance: -420_00, creditScore: 690, note: 'A small cushion and clean credit.' },
   comfortable: { checking: 18_000_00, savings: 42_000_00, cardLimit: 20_000_00, cardBalance: 0, creditScore: 748, note: 'Genuinely comfortable, with room to take a risk.' },
-  wealthy: { checking: 85_000_00, savings: 380_000_00, cardLimit: 60_000_00, cardBalance: 0, creditScore: 795, note: 'Money is not the constraint. Time and access are.' },
-  inherited: { checking: 240_000_00, savings: 2_400_000_00, cardLimit: 150_000_00, cardBalance: 0, creditScore: 812, note: 'You did not earn this, and everyone in the room knows it.' },
+  wealthy: { checking: 85_000_00, savings: 380_000_00, cardLimit: 60_000_00, cardBalance: 0, creditScore: 795, note: 'Money isn’t the constraint. Time and access are.' },
+  inherited: { checking: 240_000_00, savings: 2_400_000_00, cardLimit: 150_000_00, cardBalance: 0, creditScore: 812, note: 'You didn’t earn this, and everyone in the room knows it.' },
 };
 
 export function wealthNote(wealth: StartingWealth): string {
@@ -193,9 +209,19 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     courses: {}, enrollments: {},
     trips: {}, flightBookings: {}, hotelBookings: {},
     socialAccounts: {}, socialPosts: {}, brandDeals: {},
+    videoChannels: {}, videos: {}, videoComments: {}, videoSubscriptions: {}, watchHistory: {},
+    videoPlaylists: {}, liveStreams: {}, communityPosts: {}, channelMemberships: {}, creatorPayouts: {},
+    videoNotices: {},
+    socialProfiles: {}, socialItems: {}, socialFollows: {}, socialScreenTime: {}, socialRooms: {},
+    kitHires: {}, shootDays: {}, indieFilms: {},
+    cinemaTickets: {},
+    fashionInvites: {},
+    goingTickets: {},
+    parcels: {},
     companies: {},
     scenes: { version: 2, sessions: {} },
     memberships: {}, workouts: {}, plans: {}, vehicleDeals: {}, dates: {}, dialogue: { version: 1, seen: {} },
+    recall: { version: 1, entries: [], played: {} },
     industry: {
       briefed: false,
       // Fiction, fixed here so every save tells the same story about itself.
@@ -341,6 +367,19 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     pronouns: config.pronouns,
     performerTitle: config.performerTitle,
     birthInstant,
+    // The chair. A life starts freshly cut and grows out from the first day
+    // rather than staying that way until somebody happens to sit down.
+    groomedAt: now,
+    // The one physical fact the player chooses. A character who starts young
+    // is smaller than this and grows to exactly it.
+    adultHeightCm: clamp(Math.round(config.adultHeightCm ?? DEFAULT_HEIGHT_CM), HEIGHT_RANGE[0], HEIGHT_RANGE[1]),
+    adultWeightKg: clamp(Math.round(config.adultWeightKg ?? DEFAULT_WEIGHT_KG), WEIGHT_RANGE[0], WEIGHT_RANGE[1]),
+    // Where the name comes from. A naming tradition and nothing else.
+    heritageId: HERITAGE_BY_ID[config.heritageId ?? ''] ? config.heritageId : DEFAULT_HERITAGE,
+    parentHeritageIds: [
+      HERITAGE_BY_ID[config.parentHeritageIds?.[0] ?? ''] ? config.parentHeritageIds[0] : DEFAULT_HERITAGE,
+      HERITAGE_BY_ID[config.parentHeritageIds?.[1] ?? ''] ? config.parentHeritageIds[1] : DEFAULT_HERITAGE,
+    ],
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
     ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),

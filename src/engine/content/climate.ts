@@ -8,7 +8,7 @@
  * wider swings of an interior and the narrower ones of a coast — and on top
  * of that sits a table of Köppen-style classifications for the countries,
  * states and cities people will actually look at, so Phoenix is a desert,
- * London is grey and wet, Mumbai has a monsoon and Sydney's summer is in
+ * London is gray and wet, Mumbai has a monsoon and Sydney's summer is in
  * January.
  *
  * Honesty about what this is: a calibrated climate model, not a record of
@@ -116,7 +116,7 @@ export function climateTypeFor(city: Pick<City, 'id' | 'parentId' | 'countryId' 
 
 /**
  * The fallback when nothing is known but where a place is on the globe.
- * The two big continental interiors are recognised by longitude, because a
+ * The two big continental interiors are recognized by longitude, because a
  * winter in Novosibirsk and a winter in Cork are not the same thing.
  */
 export function climateByLatitude(latitude: number, longitude: number): ClimateType {

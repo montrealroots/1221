@@ -1,8 +1,8 @@
 /**
- * The companies whose whole catalogue the game carries, grouped under the
+ * The companies whose whole catalog the game carries, grouped under the
  * studio the player meets. Each label is resolved to its Wikidata item by
  * `resolve.mjs`, and the resolved ids are reviewed by hand before a single
- * title is pulled: a wrong item here would attribute a catalogue to the
+ * title is pulled: a wrong item here would attribute a catalog to the
  * wrong company.
  *
  * `labels` are the production and distribution labels whose titles count as

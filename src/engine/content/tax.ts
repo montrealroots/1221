@@ -141,7 +141,7 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   { jurisdictionCode: 'US-NV', label: 'Nevada (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'Nevada levies no personal income tax.' },
   { jurisdictionCode: 'US-WA', label: 'Washington (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'Washington levies no personal income tax on wages.' },
   { jurisdictionCode: 'US-TN', label: 'Tennessee (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(2021), note: 'Tennessee levies no personal income tax.' },
-  // Other countries, structurally modelled.
+  // Other countries, structurally modeled.
   { jurisdictionCode: 'CA', label: 'Canada Federal Income Tax', kind: 'progressive', brackets: brackets([[0, 0.15], [55_867, 0.205], [111_733, 0.26], [173_205, 0.29], [246_752, 0.33]]), standardDeduction: 15_705_00, effectiveFrom: YEAR(2024), note: APPROX },
   { jurisdictionCode: 'CA-BC', label: 'British Columbia Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0506], [47_937, 0.077], [95_875, 0.105], [110_076, 0.1229], [133_664, 0.147], [181_232, 0.168], [252_752, 0.205]]), standardDeduction: 12_580_00, effectiveFrom: YEAR(2024), note: APPROX },
   { jurisdictionCode: 'CA-ON', label: 'Ontario Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0505], [51_446, 0.0915], [102_894, 0.1116], [150_000, 0.1216], [220_000, 0.1316]]), standardDeduction: 12_399_00, effectiveFrom: YEAR(2024), note: APPROX },
@@ -154,9 +154,9 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   { jurisdictionCode: 'IT', label: 'Italy Income Tax', kind: 'progressive', brackets: brackets([[0, 0.23], [28_000, 0.35], [50_000, 0.43]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
   { jurisdictionCode: 'AU', label: 'Australia Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [18_200, 0.16], [45_000, 0.30], [135_000, 0.37], [190_000, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
   { jurisdictionCode: 'NZ', label: 'New Zealand Income Tax', kind: 'progressive', brackets: brackets([[0, 0.105], [15_600, 0.175], [53_500, 0.30], [78_100, 0.33], [180_000, 0.39]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'JP', label: 'Japan Income Tax', kind: 'progressive', brackets: brackets([[0, 0.05], [1_950, 0.10], [3_300, 0.20], [6_950, 0.23], [9_000, 0.33], [18_000, 0.40], [40_000, 0.45]]), standardDeduction: 480_00, effectiveFrom: YEAR(2020), note: `${APPROX} Amounts modelled in USD-equivalent for simulation purposes.` },
-  { jurisdictionCode: 'KR', label: 'South Korea Income Tax', kind: 'progressive', brackets: brackets([[0, 0.06], [12_000, 0.15], [46_000, 0.24], [88_000, 0.35], [150_000, 0.38], [300_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modelled in USD-equivalent.` },
-  { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modelled in USD-equivalent.` },
+  { jurisdictionCode: 'JP', label: 'Japan Income Tax', kind: 'progressive', brackets: brackets([[0, 0.05], [1_950, 0.10], [3_300, 0.20], [6_950, 0.23], [9_000, 0.33], [18_000, 0.40], [40_000, 0.45]]), standardDeduction: 480_00, effectiveFrom: YEAR(2020), note: `${APPROX} Amounts modeled in USD-equivalent for simulation purposes.` },
+  { jurisdictionCode: 'KR', label: 'South Korea Income Tax', kind: 'progressive', brackets: brackets([[0, 0.06], [12_000, 0.15], [46_000, 0.24], [88_000, 0.35], [150_000, 0.38], [300_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
+  { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
   { jurisdictionCode: 'AE', label: 'United Arab Emirates (No Personal Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'The UAE levies no personal income tax on employment income.' },
 ];
 
@@ -270,7 +270,7 @@ export const VEHICLE_FEE_RULES: readonly VehicleFeeRule[] = [
 ];
 
 export const FILM_INCENTIVE_RULES: readonly FilmIncentiveRule[] = [
-  { jurisdictionCode: 'US-GA', label: 'Georgia Production Tax Credit', rate: 0.20, minimumSpend: 500_000_00, perProjectCap: 0, localHireUplift: 0.10, transferable: true, effectiveFrom: YEAR(2008), note: `${APPROX} Structure modelled: base credit plus an uplift, transferable.` },
+  { jurisdictionCode: 'US-GA', label: 'Georgia Production Tax Credit', rate: 0.20, minimumSpend: 500_000_00, perProjectCap: 0, localHireUplift: 0.10, transferable: true, effectiveFrom: YEAR(2008), note: `${APPROX} Structure modeled: base credit plus an uplift, transferable.` },
   { jurisdictionCode: 'US-NM', label: 'New Mexico Film Production Credit', rate: 0.25, minimumSpend: 100_000_00, perProjectCap: 0, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2019), note: APPROX },
   { jurisdictionCode: 'US-LA', label: 'Louisiana Motion Picture Incentive', rate: 0.25, minimumSpend: 300_000_00, perProjectCap: 20_000_000_00, localHireUplift: 0.05, transferable: true, effectiveFrom: YEAR(2015), note: APPROX },
   { jurisdictionCode: 'US-NY', label: 'New York State Film Production Credit', rate: 0.30, minimumSpend: 1_000_000_00, perProjectCap: 0, localHireUplift: 0.0, transferable: false, effectiveFrom: YEAR(2020), note: APPROX },

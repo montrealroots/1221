@@ -4,12 +4,12 @@
  * ── What this is and is not ─────────────────────────────────────────────────
  *
  * The writers' strike in this game is INVENTED. It is not an account of any
- * real labour action, and nothing in this file reports what any real guild,
+ * real labor action, and nothing in this file reports what any real guild,
  * studio, union, executive or writer did, said, wanted or agreed to. Real
  * strikes in this industry have happened and are a matter of public record;
  * this is not one of them, and the game never claims otherwise.
  *
- * What is modelled is the shape of an aftermath: a long stoppage ends, and the
+ * What is modeled is the shape of an aftermath: a long stoppage ends, and the
  * companies that were carrying debt and overhead through it are gone. That is
  * an ordinary consequence of a long stoppage in any industry. The specifics
  * below — how long, how many folded, what is left in the drawer — are the
@@ -22,8 +22,8 @@
  */
 
 export const STRIKE_IS_FICTION =
-  'The strike in this game is invented for it. It is not an account of any real '
-  + 'labour action, and no real guild, company or person said or did any of what '
+  'The strike in this game is invented for it. It isn’t an account of any real '
+  + 'labor action, and no real guild, company or person said or did any of what '
   + 'follows.';
 
 /** How the world explains itself on the first morning. */
@@ -49,32 +49,32 @@ export const AFTERMATH: readonly StrikeFact[] = [
   {
     id: 'companies_gone',
     headline: 'Every Other Production Company Is Gone',
-    detail: 'Overhead does not stop for a strike. The independents went first, then the ones with debt, then the ones everybody assumed were too big. What is left are buyers with nothing to buy.',
+    detail: 'Overhead doesn’t stop for a strike. The independents went first, then the ones with debt, then the ones everybody assumed were too big. What is left are buyers with nothing to buy.',
   },
   {
     id: 'empty_drawer',
     headline: 'Nothing In The Drawer',
-    detail: 'Nobody wrote anything for nineteen months, and everything written before it has been read by everybody. The material does not exist yet. Somebody has to commission it.',
+    detail: 'Nobody wrote anything for nineteen months, and everything written before it has been read by everybody. The material doesn’t exist yet. Somebody has to commission it.',
   },
   {
     id: 'idle_talent',
     headline: 'Everybody Is Free',
-    detail: 'Writers, actors/actresses, directors, crew, every department. People who have not taken a meeting in two years will take yours on opening day, because there is nobody else taking meetings.',
+    detail: 'Writers, actors/actresses, directors, crew, every department. People who haven’t taken a meeting in two years will take yours on opening day, because there’s nobody else taking meetings.',
   },
   {
     id: 'hungry_buyers',
     headline: 'The Buyers Have Empty Schedules',
-    detail: 'Networks and streamers have nineteen months of holes and shareholders asking about them. They will pay. They will also remember what you charged.',
+    detail: 'Networks and streamers have nineteen months of holes and shareholders asking about them. They’ll pay. They’ll also remember what you charged.',
   },
   {
     id: 'crews_scattered',
     headline: 'The Crews Have Scattered',
-    detail: 'A grip does not wait nineteen months. They went into construction, into events, out of the state. Getting a unit together is a real problem again.',
+    detail: 'A grip doesn’t wait nineteen months. They went into construction, into events, out of the state. Getting a unit together is a real problem again.',
   },
   {
     id: 'goodwill',
     headline: 'And Everyone Is Watching You',
-    detail: 'You are the first one to open a door since it ended. What you pay the first writer you hire will be known by every writer in the business inside a week, and it will be the number they all quote back at you.',
+    detail: 'You’re the first one to open a door since it ended. What you pay the first writer you hire will be known by every writer in the business inside a week, and it will be the number they all quote back at you.',
   },
 ];
 
@@ -117,18 +117,18 @@ export const OPENING_BRIEF: readonly string[] = [
   'Nineteen months. Long enough that the finished pictures ran out, then the ones still '
   + 'shooting, then the ones sitting in the drawer, then the drawer.',
 
-  'Overhead does not stop for a strike. The independents went first, then the ones carrying '
+  'Overhead doesn’t stop for a strike. The independents went first, then the ones carrying '
   + 'debt, then the ones everybody swore were too big to fall. When it ended there was no '
   + 'other side of the table left — only buyers, holding nineteen months of empty schedule '
   + 'and nobody still trading to fill it.',
 
   'And not one page was written in all that time. Everything from before has been read by '
-  + 'everyone twice over. There is no pile to option and no shelf to raid, so whatever gets '
+  + 'everyone twice over. There’s no pile to option and no shelf to raid, so whatever gets '
   + 'made next has to be brought into the world by somebody who decides to.',
 
   'Which leaves every writer, every actor/actress, every director and every crew in the '
-  + 'business free on opening day, because there is nobody else for them to be busy for. '
-  + 'You are the first one to open a door.',
+  + 'business free on opening day, because there’s nobody else for them to be busy for. '
+  + 'You’re the first one to open a door.',
 ];
 
 /** The same, as one line, for anywhere that has room for a sentence and no more. */

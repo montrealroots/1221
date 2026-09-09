@@ -9,9 +9,12 @@ import { formatDate, MS_DAY } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { estimateAnnualIncome } from '@/engine/systems/finance';
 import { BANK_NOTE, BANK_PRODUCTS, productLabel, type ProductFamily } from '@/engine/content/banking';
-import { breakingCost, cardLimitFor, monthlyFeeFor, openingRefusal, productOf, standingOrders, statements } from '@/engine/systems/banking';
+import { breakingCost, cardLimitFor, invitationStanding, isOffshore, monthlyFeeFor, openingRefusal, privateApplications, privateProductId, productOf, standingOrders, statements } from '@/engine/systems/banking';
+import { BLACK_CARD_NOTE, FBAR_NOTE, PRIVATE_BANKS, PRIVATE_BANK_NOTE, REAL_CARDS, REPORTING_NOTE } from '@/engine/content/wealth';
+import { COUNTRIES } from '@/engine/content/geography';
+import { passportStatus } from '@/engine/systems/documents';
 
-type Tab = 'accounts' | 'bills' | 'statements' | 'transactions' | 'credit' | 'tax';
+type Tab = 'accounts' | 'bills' | 'statements' | 'transactions' | 'credit' | 'tax' | 'private';
 
 const FAMILY_LABEL: Readonly<Record<ProductFamily, string>> = {
   checking: 'Current Accounts', savings: 'Savings', certificate: 'Certificates', card: 'Cards',
@@ -77,8 +80,11 @@ export function BankWorkspace() {
           { id: 'transactions', label: 'Transactions' },
           { id: 'credit', label: 'Credit' },
           { id: 'tax', label: 'Tax' },
+          { id: 'private', label: 'Private Banking' },
         ]}
       />
+
+      {tab === 'private' && <PrivateBankingTab />}
 
       {tab === 'accounts' && (
         <Panel
@@ -186,7 +192,7 @@ export function BankWorkspace() {
       {tab === 'accounts' && (
         <Panel
           title="Standing Orders"
-          subtitle="The bank moves it between your own accounts on a day of the month, until you say otherwise or it cannot be paid three times."
+          subtitle="The bank moves it between your own accounts on a day of the month, until you say otherwise or it can’t be paid three times."
           flush
           actions={<button className="btn btn-sm" onClick={() => setOrderOpen(true)}>Set One Up</button>}
         >
@@ -255,7 +261,7 @@ export function BankWorkspace() {
       )}
 
       {tab === 'bills' && (
-        <Panel title="Bills" subtitle="Autopay runs against your primary account. If it cannot cover one, you hear about it." flush>
+        <Panel title="Bills" subtitle="Autopay runs against your primary account. If it can’t cover one, you hear about it." flush>
           {bills.length === 0 ? (
             <Empty title="No Bills" body="Nothing recurring is set up against you yet." />
           ) : (
@@ -330,7 +336,7 @@ export function BankWorkspace() {
             </div>
           </Panel>
 
-          <Panel title="What You Would Be Offered" subtitle="Rates move with your score, which moves with your behaviour.">
+          <Panel title="What You Would Be Offered" subtitle="Rates move with your score, which moves with your behavior.">
             <div className="table-scroll">
               <table>
                 <thead><tr><th>Product</th><th className="num">APR</th><th className="num">Payment On 100K</th></tr></thead>
@@ -401,7 +407,7 @@ function TaxPanel() {
           ))}
         </div>
         <p className="xs dim" style={{ marginTop: 'var(--s4)' }}>
-          These rates are calibrated approximations of how real tax systems are structured. They are not filing advice.
+          These rates are calibrated approximations of how real tax systems are structured. They aren’t filing advice.
         </p>
       </Panel>
 
@@ -565,7 +571,7 @@ function OpenAccountDialog({ onClose }: { onClose: () => void }) {
         </button>
       </>}
     >
-      <p className="small muted">{BANK_NOTE}</p>
+      <p className="small muted">{BANK_NOTE} {BLACK_CARD_NOTE}</p>
       {families.map((family) => (
         <div key={family} style={{ marginBottom: 'var(--s3)' }}>
           <div className="eyebrow">{FAMILY_LABEL[family]}</div>
@@ -581,9 +587,11 @@ function OpenAccountDialog({ onClose }: { onClose: () => void }) {
                   onClick={() => pick(p.id)}
                 >
                   <div className="grow" style={{ textAlign: 'left' }}>
-                    <div className="small strong">{productLabel(p)}</div>
+                    <div className="small strong">{productLabel(p)}{p.network ? ` · ${p.network}` : ''}</div>
                     <div className="xs dim">{p.about}</div>
                     <div className="xs muted">{p.perks.join(' · ')}</div>
+                    {p.real && (p.annualFee ?? 0) > 0 && <div className="xs muted">{formatMoney(p.annualFee ?? 0, { cents: false })} a year, billed monthly in SLATE{p.initiationFee ? `, and ${formatMoney(p.initiationFee, { cents: false })} to join` : ''}</div>}
+                    {p.invitation && <div className="xs muted">{invitationStanding(sim, p).detail}</div>}
                     {why && p.id === productId && <div className="xs negative">{why}</div>}
                   </div>
                   <div style={{ textAlign: 'right' }}>
@@ -667,7 +675,125 @@ function StandingOrderDialog({ onClose }: { onClose: () => void }) {
           {Array.from({ length: 28 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{d}</option>)}
         </select>
       </div>
-      <p className="small muted">It runs on that day every month. Three it cannot pay and the bank gives up on it.</p>
+      <p className="small muted">It runs on that day every month. Three it can’t pay and the bank gives up on it.</p>
     </Modal>
+  );
+}
+
+function PrivateBankingTab() {
+  const { sim, run } = useGame();
+  const player = useWorld((s) => s.player);
+  const accounts = useWorld((s) => s.ledger.accountsOf(s.player.id).filter((a) => !a.nominal && !a.closedAt && !isLiability(a.kind) && !a.maturesAt));
+  const applications = useWorld((s) => privateApplications(s, s.player.id));
+  const invitations = REAL_CARDS.filter((c) => c.invitation);
+  const [bankId, setBankId] = useState(PRIVATE_BANKS[0]!.id);
+  const [fromId, setFromId] = useState(accounts[0]?.id ?? '');
+  const bank = PRIVATE_BANKS.find((b) => b.id === bankId)!;
+  const [deposit, setDeposit] = useState(String(Math.round(bank.minimumRelationship / 100)));
+  const cents = Math.max(0, Math.round(Number(deposit) * 100) || 0);
+  const held = accounts.find((a) => a.productId === privateProductId(bank.id));
+  const pending = applications.find((a) => a.bankId === bank.id && a.status === 'pending');
+  const passport = passportStatus(sim, player);
+  const offshore = isOffshore(sim, bank);
+  const pick = (id: string) => {
+    setBankId(id);
+    const next = PRIVATE_BANKS.find((b) => b.id === id)!;
+    setDeposit(String(Math.round(next.minimumRelationship / 100)));
+  };
+  const why = held ? `You bank at ${bank.name} already.`
+    : pending ? `${bank.name} is looking at your application, due ${formatDate(pending.readyAt, sim.homeZone)}.`
+      : !passport.ok ? `A valid passport first. ${passport.reason ?? ''}`
+        : cents < bank.minimumRelationship ? `${bank.name} wants ${formatMoney(bank.minimumRelationship, { cents: false })} (${bank.minimumIs}).`
+          : !fromId ? 'Choose an account to fund it from.'
+            : sim.ledger.availableFunds(fromId) < cents ? `There isn’t ${formatMoney(cents, { cents: false })} in that account.` : undefined;
+
+  return (
+    <div className="col gap-4">
+      <Panel title="Private And Offshore Banks" subtitle={`${PRIVATE_BANK_NOTE} ${REPORTING_NOTE}`} flush>
+        <div className="list" style={{ maxHeight: 420, overflowY: 'auto' }}>
+          {PRIVATE_BANKS.map((b) => {
+            const mine = accounts.find((a) => a.productId === privateProductId(b.id));
+            const waiting = applications.find((a) => a.bankId === b.id && a.status === 'pending');
+            return (
+              <button key={b.id} className="list-item" aria-pressed={b.id === bankId} style={b.id === bankId ? { background: 'var(--accent-dim)' } : undefined} onClick={() => pick(b.id)}>
+                <div className="grow" style={{ textAlign: 'left' }}>
+                  <div className="small strong">{b.name} · {b.city}, {COUNTRIES.get(b.countryId)?.name ?? b.countryId}</div>
+                  <div className="xs dim">{b.about}</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div className="mono small">{formatMoney(b.minimumRelationship, { cents: false })}</div>
+                  <div className="xs dim">{b.minimumIs} · {(b.apy * 100).toFixed(1)}% on cash · {b.kycWeeks} weeks</div>
+                  {mine && <span className="chip chip-positive">Yours</span>}
+                  {waiting && <span className="chip">Applied</span>}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </Panel>
+
+      <Panel title={`Apply To ${bank.name}`} subtitle={offshore ? `Offshore for you: ${bank.city} isn’t where you live. ${player.citizenshipId === 'us' ? FBAR_NOTE : 'Reported under the Common Reporting Standard to the tax authority at home.'}` : `Onshore for you: ${bank.city} is in the country you live in.`}>
+        <div className="grid grid-2">
+          <div className="field">
+            <label htmlFor="private-deposit">Opening Deposit</label>
+            <input id="private-deposit" type="number" min={0} value={deposit} onChange={(e) => setDeposit(e.target.value)} />
+          </div>
+          <div className="field">
+            <label htmlFor="private-from">From</label>
+            <select id="private-from" value={fromId} onChange={(e) => setFromId(e.target.value)}>
+              {accounts.map((a) => <option key={a.id} value={a.id}>{a.name} · {formatMoneyCompact(a.balance)}</option>)}
+            </select>
+          </div>
+        </div>
+        {why && <div className="xs negative" style={{ marginBottom: 'var(--s3)' }}>{why}</div>}
+        <button
+          className="btn btn-primary"
+          disabled={Boolean(why)}
+          onClick={() => run('bank.apply_private', { bankId: bank.id, deposit: cents, fromAccountId: fromId }, { idempotencyKey: `bank.apply_private:${bank.id}:${cents}:${fromId}` })}
+        >
+          Apply
+        </button>
+      </Panel>
+
+      {applications.length > 0 && (
+        <Panel title="Applications" flush>
+          <div className="list">
+            {applications.map((a) => {
+              const b = PRIVATE_BANKS.find((x) => x.id === a.bankId);
+              return (
+                <div key={a.id} className="list-item list-static">
+                  <div className="grow">
+                    <div className="small strong">{b?.name ?? a.bankId}</div>
+                    <div className="xs dim">{formatMoney(a.deposit, { cents: false })} · applied {formatDate(a.appliedAt, sim.homeZone)} · {a.status === 'pending' ? `decides ${formatDate(a.readyAt, sim.homeZone)}` : a.status === 'opened' ? 'opened' : a.reason}</div>
+                  </div>
+                  <span className={`chip ${a.status === 'opened' ? 'chip-positive' : a.status === 'declined' ? 'chip-negative' : ''}`}>{titleCaseLabel(a.status)}</span>
+                </div>
+              );
+            })}
+          </div>
+        </Panel>
+      )}
+
+      <Panel title="Cards That Are Not Applied For" subtitle={BLACK_CARD_NOTE} flush>
+        <div className="list">
+          {invitations.map((card) => {
+            const product = BANK_PRODUCTS.find((p) => p.id === card.id)!;
+            const standing = invitationStanding(sim, product);
+            const invited = Boolean(player.invitations?.[card.id]);
+            const mine = sim.ledger.accountsOf(player.id).some((a) => a.productId === card.id && !a.closedAt);
+            return (
+              <div key={card.id} className="list-item list-static">
+                <div className="grow">
+                  <div className="small strong">{productLabel(product)}</div>
+                  <div className="xs dim">{card.issuer} · {card.network}. {card.invitation!.note}</div>
+                  <div className="xs muted">{mine ? 'In your wallet.' : invited ? 'Invited. Accept it under Open An Account.' : standing.detail}</div>
+                </div>
+                <span className={`chip ${mine || invited ? 'chip-positive' : ''}`}>{mine ? 'Held' : invited ? 'Invited' : standing.ready ? 'Due This Month' : 'Not Yet'}</span>
+              </div>
+            );
+          })}
+        </div>
+      </Panel>
+    </div>
   );
 }

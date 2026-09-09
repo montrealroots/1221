@@ -2,7 +2,7 @@
  * The city you move through.
  *
  * Going somewhere takes time in traffic, in a car with fuel in it or a cab you
- * pay for. Eating is a menu and a bill. Filling up is litres and money.
+ * pay for. Eating is a menu and a bill. Filling up is liters and money.
  * Sleeping and showering need somewhere you have a right to be. The landmarks
  * are real and say so; everything else is SLATE's and says that.
  */
@@ -40,7 +40,7 @@ function aLife(seed: string, options: { car?: boolean; cityId?: string } = {}): 
     void models;
     const listing = sim.execute<{ vehicleId: Id }>({ kind: 'veh.purchase', payload: { modelId: 'accord', trimId: 'ex', condition: 'new', acquisition: 'cash' } });
     if (!listing.ok) {
-      // Whatever the catalogue's first model is, buy that instead.
+      // Whatever the catalog's first model is, buy that instead.
       const any = sim.execute<{ vehicleId: Id }>({ kind: 'veh.refresh_inventory', payload: {} });
       void any;
     }
@@ -191,7 +191,7 @@ describe('getting about', () => {
     const elsewhere = placesIn('uk-eng-london')[0]!;
     const result = life.try('go.to', { placeId: elsewhere.id, mode: 'taxi' });
     expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/is in .* and you are in/i);
+    expect(result.error).toMatch(/is in .* and you(’| a)re in/i);
   });
 
   it('walks for free and takes it out of you', () => {
@@ -238,7 +238,7 @@ describe('eating', () => {
     life.run('go.to', { placeId: station.id, mode: 'taxi' });
     const result = life.try('place.order', { items: ['Anything'] });
     expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/does not serve|nothing to order/i);
+    expect(result.error).toMatch(/does(n’t| not) serve|doesn’t serve|nothing to order/i);
   });
 });
 
@@ -323,7 +323,7 @@ describe('what is here', () => {
 
 
 describe('being seen', () => {
-  it('nobody notices an unknown, and a famous face gets recognised', () => {
+  it('nobody notices an unknown, and a famous face gets recognized', () => {
     const unknown = aLife('seen-unknown');
     unknown.sim.player.reputation.publicFame = 2;
     const bar = placesIn(unknown.sim.player.currentLocationId).find((p) => p.kind === 'bar')!;
@@ -417,6 +417,42 @@ describe('a room for the night', () => {
     // And it is somewhere to wash and sleep.
     expect(whatIsHere(sim).canShower).toBe(true);
     expect(whatIsHere(sim).canSleep).toBe(true);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('getting there when nobody said how', () => {
+  it('picks a way somebody without a license can actually take, rather than assuming the car', () => {
+    // Fourteen: no license anywhere on earth, and the ask box never names a mode.
+    const sim = quickSave({ birthYear: 2012, wealth: 'modest' }, 'no-license-go');
+    const gym = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'gym')!;
+    const trip = sim.execute<{ mode: string }>({ kind: 'go.to', payload: { placeId: gym.id } });
+    expect(trip.ok, trip.error).toBe(true);
+    expect(trip.value!.mode).not.toBe('drive');
+    expect(sim.player.currentPlaceId).toBe(gym.id);
+  });
+});
+
+describe('somebody else’s couch', () => {
+  it('lets you go back to it and wash there, since it is where you sleep', () => {
+    const sim = quickSave({ housing: 'couch', wealth: 'scraping', birthYear: 1998 }, 'couch-1');
+    expect(sim.player.residenceId).toBeUndefined();
+    const cafe = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'cafe')!;
+    const out = sim.execute({ kind: 'go.to', payload: { placeId: cafe.id, mode: 'walk' } });
+    expect(out.ok, out.error).toBe(true);
+    expect(sim.execute({ kind: 'life.shower', payload: {} }).ok).toBe(false);
+
+    const home = sim.execute<{ name: string }>({ kind: 'go.to', payload: { home: true, mode: 'walk' } });
+    expect(home.ok, home.error).toBe(true);
+    expect(home.value!.name).toMatch(/couch/i);
+    expect(sim.player.currentPlaceId).toBeUndefined();
+    const shower = sim.execute<{ where: string }>({ kind: 'life.shower', payload: {} });
+    expect(shower.ok, shower.error).toBe(true);
+    expect(sim.player.wellbeing.hygiene).toBe(100);
+    // Asking again from the couch is a no-op, not a walk to nowhere.
+    const again = sim.execute<{ minutes: number }>({ kind: 'go.to', payload: { home: true } });
+    expect(again.ok).toBe(true);
+    expect(again.value!.minutes).toBe(0);
     expect(sim.ledger.audit()).toEqual([]);
   });
 });

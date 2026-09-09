@@ -23,22 +23,39 @@ import type { Money } from '../core/money';
 import { CITIES, NEIGHBOURHOODS, cityTimeZone } from './geography';
 import { costOfLiving } from './tax';
 import { REAL_GYMS } from './fitness';
+import { HOUSES_NOT_SHOPS, RENTAL_HOUSES, ownHousesIn } from './rental';
+import {
+  INDEPENDENT_PHARMACY_WORD, PHARMACIES_ARE_INDEPENDENT, pharmacyChainsIn, postalOperatorIn,
+} from './errands';
+import { networksIn, vetGroupsIn } from './rooms';
+import { licenseAuthorityFor } from './documents';
 import { shoppableRetailers } from './catalog';
-import { REAL_RETAILERS, tradesIn } from './brands';
+import { ALL_RETAILERS, tradesIn } from './brands';
 
 export type PlaceKind =
   | 'restaurant' | 'cafe' | 'bar' | 'fast_food' | 'market'
   | 'gas_station' | 'garage' | 'hotel' | 'gym' | 'salon'
   | 'cinema' | 'theatre' | 'club' | 'park' | 'beach' | 'viewpoint'
   | 'museum' | 'landmark' | 'stadium' | 'studio_gate' | 'airport' | 'shop' | 'dealership'
-  | 'marina' | 'storage';
+  | 'primary_school' | 'secondary_school'
+  | 'marina' | 'storage' | 'jeweller' | 'costumier' | 'rental_house'
+  | 'arena' | 'concert_hall'
+  | 'pharmacy' | 'post_office' | 'launderette'
+  | 'dentist' | 'vet' | 'license_office' | 'phone_shop';
 
 export const PLACE_KIND_LABEL: Readonly<Record<PlaceKind, string>> = {
+  jeweller: 'Jeweler', costumier: 'Costume House',
   restaurant: 'Restaurant', cafe: 'Café', bar: 'Bar', fast_food: 'Fast Food', market: 'Market',
   gas_station: 'Filling Station', garage: 'Garage', hotel: 'Hotel', gym: 'Gym', salon: 'Salon',
-  cinema: 'Cinema', theatre: 'Theatre', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
+  cinema: 'Cinema', theatre: 'Theater', club: 'Club', park: 'Park', beach: 'Beach', viewpoint: 'Viewpoint',
+  arena: 'Arena', concert_hall: 'Concert Hall',
+  pharmacy: 'Pharmacy', post_office: 'Post Office', launderette: 'Launderette',
+  dentist: 'Dental Practice', vet: 'Veterinary Practice', license_office: 'Licensing Office',
+  phone_shop: 'Phone Shop',
   museum: 'Museum', landmark: 'Landmark', stadium: 'Stadium', studio_gate: 'Studio Gate', airport: 'Airport', shop: 'Shop',
   dealership: 'Dealership', marina: 'Marina', storage: 'Vehicle Storage',
+  rental_house: 'Rental House',
+  primary_school: 'Primary School', secondary_school: 'Secondary School',
 };
 
 /** What you can do somewhere. */
@@ -86,22 +103,22 @@ interface RealPlace extends Omit<Place, 'quality' | 'price' | 'minutes' | 'real'
 }
 
 const LANDMARKS: readonly RealPlace[] = [
-  // --- Marinas. The harbour and its name are public record; slip counts, sizes and rates are SLATE's. ---
-  { id: 'la-marina-del-rey', name: 'Marina del Rey', kind: 'marina', cityId: 'us-ca-losangeles', about: 'A man-made small-craft harbour on the Westside, dug out of the Ballona wetlands and opened in 1965; one of the largest of its kind in the world.', opened: 1965, actions: ['visit'], minutes: 60, quality: 84, price: 3, maxSlipFeet: 150 },
-  { id: 'sf-marina-yacht-harbor', name: 'San Francisco Marina Yacht Harbor', kind: 'marina', cityId: 'us-ca-sanfrancisco', about: 'The city’s own small-boat harbour on the Marina waterfront, with the Golden Gate in view from the breakwater.', actions: ['visit'], minutes: 60, quality: 80, price: 3, maxSlipFeet: 65 },
+  // --- Marinas. The harbor and its name are public record; slip counts, sizes and rates are SLATE's. ---
+  { id: 'la-marina-del-rey', name: 'Marina del Rey', kind: 'marina', cityId: 'us-ca-losangeles', about: 'A man-made small-craft harbor on the Westside, dug out of the Ballona wetlands and opened in 1965; one of the largest of its kind in the world.', opened: 1965, actions: ['visit'], minutes: 60, quality: 84, price: 3, maxSlipFeet: 150 },
+  { id: 'sf-marina-yacht-harbor', name: 'San Francisco Marina Yacht Harbor', kind: 'marina', cityId: 'us-ca-sanfrancisco', about: 'The city’s own small-boat harbor on the Marina waterfront, with the Golden Gate in view from the breakwater.', actions: ['visit'], minutes: 60, quality: 80, price: 3, maxSlipFeet: 65 },
   { id: 'ny-north-cove', name: 'North Cove Marina', kind: 'marina', cityId: 'us-ny-newyork', about: 'A marina at Battery Park City on the Hudson, tucked behind Brookfield Place, that takes yachts up to superyacht size.', actions: ['visit'], minutes: 60, quality: 88, price: 4, maxSlipFeet: 180 },
-  { id: 'chi-burnham-harbor', name: 'Burnham Harbor', kind: 'marina', cityId: 'us-il-chicago', about: 'A Chicago Park District harbour between Museum Campus and Northerly Island, open for the lake season.', actions: ['visit'], minutes: 60, quality: 76, price: 2, maxSlipFeet: 65 },
-  { id: 'yvr-coal-harbour', name: 'Coal Harbour Marina', kind: 'marina', cityId: 'ca-bc-vancouver', about: 'A marina on the downtown waterfront beside Stanley Park, with float planes coming and going off the end of it.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 120 },
+  { id: 'chi-burnham-harbor', name: 'Burnham Harbor', kind: 'marina', cityId: 'us-il-chicago', about: 'A Chicago Park District harbor between Museum Campus and Northerly Island, open for the lake season.', actions: ['visit'], minutes: 60, quality: 76, price: 2, maxSlipFeet: 65 },
+  { id: 'yvr-coal-harbour', name: 'Coal Harbor Marina', kind: 'marina', cityId: 'ca-bc-vancouver', about: 'A marina on the downtown waterfront beside Stanley Park, with float planes coming and going off the end of it.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 120 },
   { id: 'ldn-st-katharine', name: 'St Katharine Docks Marina', kind: 'marina', cityId: 'uk-eng-london', about: 'A marina in the old dock basins beside Tower Bridge, entered through a lock off the Thames.', opened: 1828, actions: ['visit'], minutes: 60, quality: 84, price: 4, maxSlipFeet: 130 },
   { id: 'mia-miami-beach-marina', name: 'Miami Beach Marina', kind: 'marina', cityId: 'us-fl-miami', about: 'A marina at the south end of Miami Beach on Government Cut, with the cruise ships passing the end of the docks.', actions: ['visit'], minutes: 60, quality: 86, price: 4, maxSlipFeet: 250 },
   { id: 'sea-elliott-bay', name: 'Elliott Bay Marina', kind: 'marina', cityId: 'us-wa-seattle', about: 'A private marina at the foot of Magnolia bluff on Elliott Bay, with the downtown skyline across the water.', actions: ['visit'], minutes: 60, quality: 82, price: 3, maxSlipFeet: 100 },
 
   // --- Los Angeles ---------------------------------------------------------
   { id: 'la-griffith', name: 'Griffith Observatory', kind: 'viewpoint', cityId: 'us-ca-losangeles', about: 'A public observatory on the south slope of Mount Hollywood, given to the city by Griffith J. Griffith and open free to the public since it was built.', opened: 1935, actions: ['visit'], minutes: 120, admissionCalibration: 0 },
-  { id: 'la-hollywood-sign', name: 'The Hollywood Sign', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'Erected as "Hollywoodland" to advertise a housing development, shortened in 1949 and rebuilt in 1978. You can walk up to look at it; you cannot walk to it.', opened: 1923, actions: ['visit'], minutes: 150 },
+  { id: 'la-hollywood-sign', name: 'The Hollywood Sign', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'Erected as "Hollywoodland" to advertise a housing development, shortened in 1949 and rebuilt in 1978. You can walk up to look at it; you can’t walk to it.', opened: 1923, actions: ['visit'], minutes: 150 },
   { id: 'la-santa-monica-pier', name: 'Santa Monica Pier', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'A municipal pier at the end of Colorado Avenue, with a small amusement park on it since the 1990s.', opened: 1909, actions: ['visit', 'eat'], minutes: 120 },
   { id: 'la-venice-beach', name: 'Venice Beach Boardwalk', kind: 'beach', cityId: 'us-ca-losangeles', about: 'The oceanfront walk through Venice, laid out by Abbot Kinney as a canal resort.', opened: 1905, actions: ['visit'], minutes: 120 },
-  { id: 'la-getty', name: 'The Getty Center', kind: 'museum', cityId: 'us-ca-losangeles', about: 'Richard Meier’s campus above the 405, holding the J. Paul Getty Museum’s European collection. Admission is free; the parking is not.', opened: 1997, actions: ['visit'], minutes: 180 },
+  { id: 'la-getty', name: 'The Getty Center', kind: 'museum', cityId: 'us-ca-losangeles', about: 'Richard Meier’s campus above the 405, holding the J. Paul Getty Museum’s European collection. Admission is free; the parking isn’t.', opened: 1997, actions: ['visit'], minutes: 180 },
   { id: 'la-lacma', name: 'LACMA', kind: 'museum', cityId: 'us-ca-losangeles', about: 'The Los Angeles County Museum of Art on Wilshire, the largest art museum in the western United States.', opened: 1965, actions: ['visit'], minutes: 150, admissionCalibration: 2_500 },
   { id: 'la-grand-central-market', name: 'Grand Central Market', kind: 'market', cityId: 'us-ca-losangeles', about: 'A public market hall on Broadway downtown, trading continuously for over a century.', opened: 1917, actions: ['eat', 'visit'], minutes: 75 },
   { id: 'la-runyon', name: 'Runyon Canyon Park', kind: 'park', cityId: 'us-ca-losangeles', about: 'A hillside park at the top of Fuller Avenue, and the most-walked dog hike in the city.', opened: 1984, actions: ['visit', 'train'], minutes: 90 },
@@ -132,7 +149,7 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'sf-golden-gate', name: 'Golden Gate Bridge', kind: 'landmark', cityId: 'us-ca-sanfrancisco', about: 'Joseph Strauss and Irving Morrow’s suspension bridge across the strait, painted International Orange.', opened: 1937, actions: ['visit'], minutes: 90 },
   { id: 'sf-golden-gate-park', name: 'Golden Gate Park', kind: 'park', cityId: 'us-ca-sanfrancisco', about: 'A thousand acres of park running to the ocean, with the de Young and the Academy of Sciences in it.', opened: 1870, actions: ['visit'], minutes: 120 },
   { id: 'atl-piedmont', name: 'Piedmont Park', kind: 'park', cityId: 'us-ga-atlanta', about: 'Midtown’s park, with the skyline over the lake.', opened: 1904, actions: ['visit', 'train'], minutes: 90 },
-  { id: 'atl-fox', name: 'Fox Theatre', kind: 'theatre', cityId: 'us-ga-atlanta', about: 'A Moorish-revival picture palace on Peachtree Street, saved from demolition in the 1970s.', opened: 1929, actions: ['watch', 'visit'], minutes: 180 },
+  { id: 'atl-fox', name: 'Fox Theater', kind: 'theatre', cityId: 'us-ga-atlanta', about: 'A Moorish-revival picture palace on Peachtree Street, saved from demolition in the 1970s.', opened: 1929, actions: ['watch', 'visit'], minutes: 180 },
   { id: 'chi-art-institute', name: 'The Art Institute Of Chicago', kind: 'museum', cityId: 'us-il-chicago', about: 'A museum and school on Michigan Avenue, with the lions outside.', opened: 1879, actions: ['visit'], minutes: 180, admissionCalibration: 3_200 },
   { id: 'chi-millennium', name: 'Millennium Park', kind: 'park', cityId: 'us-il-chicago', about: 'A park over a rail yard in the Loop, with Kapoor’s Cloud Gate in it.', opened: 2004, actions: ['visit'], minutes: 75 },
   { id: 'yvr-stanley', name: 'Stanley Park', kind: 'park', cityId: 'ca-bc-vancouver', about: 'A thousand acres of rainforest and seawall on the peninsula north of downtown.', opened: 1888, actions: ['visit', 'train'], minutes: 120 },
@@ -147,7 +164,7 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'prg-charles-bridge', name: 'Charles Bridge', kind: 'landmark', cityId: 'cz-52-prague', about: 'A stone bridge over the Vltava begun under Charles IV, lined with baroque statues.', opened: 1402, actions: ['visit'], minutes: 60 },
   { id: 'bud-parliament', name: 'The Hungarian Parliament Building', kind: 'landmark', cityId: 'hu-05-budapest', about: 'Steindl’s neo-Gothic parliament on the Pest bank of the Danube.', opened: 1902, actions: ['visit'], minutes: 90, admissionCalibration: 3_000 },
   { id: 'syd-opera-house', name: 'Sydney Opera House', kind: 'theatre', cityId: 'au-nsw-sydney', about: 'Jørn Utzon’s shells on Bennelong Point, finished long after he left the project.', opened: 1973, actions: ['watch', 'visit'], minutes: 150, admissionCalibration: 4_500 },
-  { id: 'syd-bondi', name: 'Bondi Beach', kind: 'beach', cityId: 'au-nsw-sydney', about: 'A kilometre of sand in the eastern suburbs, with the coastal walk south to Coogee.', actions: ['visit', 'train'], minutes: 120 },
+  { id: 'syd-bondi', name: 'Bondi Beach', kind: 'beach', cityId: 'au-nsw-sydney', about: 'A kilometer of sand in the eastern suburbs, with the coastal walk south to Coogee.', actions: ['visit', 'train'], minutes: 120 },
   { id: 'mel-ngv', name: 'National Gallery Of Victoria', kind: 'museum', cityId: 'au-vic-melbourne', about: 'Australia’s oldest public art museum, on St Kilda Road.', opened: 1861, actions: ['visit'], minutes: 150 },
   { id: 'wlg-te-papa', name: 'Te Papa Tongarewa', kind: 'museum', cityId: 'nz-wgn-wellington', about: 'New Zealand’s national museum on the Wellington waterfront. Free to enter.', opened: 1998, actions: ['visit'], minutes: 180 },
   { id: 'dub-trinity', name: 'Trinity College Library', kind: 'museum', cityId: 'ie-lei-dublin', about: 'The Long Room, and the Book of Kells beneath it.', opened: 1732, actions: ['visit'], minutes: 90, admissionCalibration: 2_000 },
@@ -156,11 +173,85 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'tok-shibuya', name: 'Shibuya Crossing', kind: 'landmark', cityId: 'jp-13-tokyo', about: 'The scramble outside Shibuya Station, where every direction crosses at once.', actions: ['visit'], minutes: 45 },
   { id: 'tok-senso-ji', name: 'Sensō-ji', kind: 'landmark', cityId: 'jp-13-tokyo', about: 'A Buddhist temple in Asakusa, the oldest in Tokyo, approached through the Kaminarimon.', opened: 645, actions: ['visit'], minutes: 90 },
   { id: 'seo-gyeongbokgung', name: 'Gyeongbokgung', kind: 'landmark', cityId: 'kr-11-seoul', about: 'The main palace of the Joseon dynasty, rebuilt after the Japanese occupation.', opened: 1395, actions: ['visit'], minutes: 120, admissionCalibration: 300 },
-  { id: 'vegas-strip', name: 'The Las Vegas Strip', kind: 'landmark', cityId: 'us-nv-lasvegas', about: 'Four miles of Las Vegas Boulevard south of the city line, which is why the big resorts are not in Las Vegas at all.', actions: ['visit', 'drink'], minutes: 120 },
-  { id: 'nola-french-quarter', name: 'The French Quarter', kind: 'landmark', cityId: 'us-la-neworleans', about: 'The Vieux Carré, the oldest neighbourhood in the city, laid out in 1718.', opened: 1718, actions: ['visit', 'drink', 'eat'], minutes: 120 },
+  { id: 'vegas-strip', name: 'The Las Vegas Strip', kind: 'landmark', cityId: 'us-nv-lasvegas', about: 'Four miles of Las Vegas Boulevard south of the city line, which is why the big resorts aren’t in Las Vegas at all.', actions: ['visit', 'drink'], minutes: 120 },
+  { id: 'nola-french-quarter', name: 'The French Quarter', kind: 'landmark', cityId: 'us-la-neworleans', about: 'The Vieux Carré, the oldest neighborhood in the city, laid out in 1718.', opened: 1718, actions: ['visit', 'drink', 'eat'], minutes: 120 },
   { id: 'mia-south-beach', name: 'South Beach', kind: 'beach', cityId: 'us-fl-miami', about: 'The barrier-island end of Miami Beach, with the Art Deco district behind it.', actions: ['visit'], minutes: 120 },
   { id: 'nm-santa-fe-plaza', name: 'The Santa Fe Plaza', kind: 'landmark', cityId: 'us-nm-santafe', about: 'The Spanish colonial plaza at the end of the Camino Real, laid out when the city was founded.', opened: 1610, actions: ['visit'], minutes: 75 },
   { id: 'nm-georgia-okeeffe', name: 'Georgia O’Keeffe Museum', kind: 'museum', cityId: 'us-nm-santafe', about: 'A museum on Johnson Street holding the largest collection of O’Keeffe’s work anywhere.', opened: 1997, actions: ['visit'], minutes: 120, admissionCalibration: 2_000 },
+
+  // --- The big rooms. The building, its city and what it is are public record;
+  // --- what is on inside it on any given night is SLATE's own and says so. ---
+  // Stadiums with more than one master, so a night at them belongs to nobody in particular.
+  { id: 'ldn-wembley', name: 'Wembley Stadium', kind: 'stadium', cityId: 'uk-eng-london', about: 'The national stadium at the end of Olympic Way, rebuilt with the arch in place of the twin towers. Cup finals, internationals and the biggest tours.', opened: 2007, actions: ['watch', 'visit'], minutes: 240, quality: 92, price: 3 },
+  { id: 'par-stade-de-france', name: 'Stade de France', kind: 'stadium', cityId: 'fr-idf-paris', about: 'The national stadium at Saint-Denis, built for the 1998 World Cup. Football, rugby and stadium tours.', opened: 1998, actions: ['watch', 'visit'], minutes: 240, quality: 88, price: 3 },
+  { id: 'mex-azteca', name: 'Estadio Azteca', kind: 'stadium', cityId: 'mx-cmx-mexicocity', about: 'The great bowl of Santa Úrsula, which has held two World Cup finals and more people than any other ground in the Americas.', opened: 1966, actions: ['watch', 'visit'], minutes: 240, quality: 86, price: 2 },
+  { id: 'rio-maracana', name: 'The Maracanã', kind: 'stadium', cityId: 'br-21-riodejaneiro', about: 'Built for the 1950 World Cup and still the ground the country measures every other ground against.', opened: 1950, actions: ['watch', 'visit'], minutes: 240, quality: 88, price: 2 },
+  { id: 'rom-olimpico', name: 'Stadio Olimpico', kind: 'stadium', cityId: 'it-laz-rome', about: 'The Olympic stadium in the Foro Italico, owned by the national Olympic committee and shared by everybody.', opened: 1953, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 2 },
+  { id: 'ber-olympiastadion', name: 'Olympiastadion', kind: 'stadium', cityId: 'de-be-berlin', about: 'The 1936 Olympic stadium, re-roofed for the 2006 World Cup, and the home of the cup final every year.', opened: 1936, actions: ['watch', 'visit'], minutes: 240, quality: 86, price: 2 },
+  { id: 'jnb-fnb', name: 'FNB Stadium', kind: 'stadium', cityId: 'za-06-johannesburg', about: 'The calabash beside Soweto, rebuilt for the 2010 World Cup final, and the largest stadium in Africa.', opened: 1989, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 2 },
+  { id: 'mel-mcg', name: 'Melbourne Cricket Ground', kind: 'stadium', cityId: 'au-vic-melbourne', about: 'The MCG in Yarra Park, holding a hundred thousand people for the football in winter and the cricket in summer.', opened: 1853, actions: ['watch', 'visit'], minutes: 260, quality: 90, price: 2 },
+  { id: 'syd-stadium-australia', name: 'Stadium Australia', kind: 'stadium', cityId: 'au-nsw-sydney', about: 'The Olympic stadium at Homebush, built for the 2000 Games and shared by every code since.', opened: 1999, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 2 },
+  { id: 'tyo-tokyo-dome', name: 'Tokyo Dome', kind: 'stadium', cityId: 'jp-13-tokyo', about: 'The covered ballpark at Suidobashi, which the city calls the Big Egg, with baseball most nights and the biggest tours between them.', opened: 1988, actions: ['watch', 'visit'], minutes: 240, quality: 86, price: 3 },
+  { id: 'sgp-national-stadium', name: 'National Stadium', kind: 'stadium', cityId: 'sg-singapore', about: 'The stadium at Kallang with the retractable roof, part of the Sports Hub on the old National Stadium ground.', opened: 2014, actions: ['watch', 'visit'], minutes: 240, quality: 84, price: 3 },
+  { id: 'bom-wankhede', name: 'Wankhede Stadium', kind: 'stadium', cityId: 'in-16-mumbai', about: 'The cricket ground at Churchgate where the 2011 World Cup final was won, a short walk from Marine Drive.', opened: 1974, actions: ['watch', 'visit'], minutes: 280, quality: 86, price: 2 },
+  { id: 'kol-eden-gardens', name: 'Eden Gardens', kind: 'stadium', cityId: 'in-28-kolkata', about: 'The oldest and loudest cricket ground in India, beside the Hooghly.', opened: 1864, actions: ['watch', 'visit'], minutes: 280, quality: 86, price: 1 },
+  { id: 'mos-luzhniki', name: 'Luzhniki Stadium', kind: 'stadium', cityId: 'ru-48-moscow', about: 'The great Soviet bowl in the bend of the Moskva, rebuilt for the 2018 World Cup final.', opened: 1956, actions: ['watch', 'visit'], minutes: 240, quality: 82, price: 2 },
+  { id: 'cai-cairo-stadium', name: 'Cairo International Stadium', kind: 'stadium', cityId: 'eg-11-cairo', about: 'The national stadium at Nasr City, the biggest ground in Egypt since the fifties.', opened: 1960, actions: ['watch', 'visit'], minutes: 240, quality: 76, price: 1 },
+
+  // Arenas.
+  { id: 'ny-msg', name: 'Madison Square Garden', kind: 'arena', cityId: 'us-ny-newyork', about: 'The Garden, above Penn Station, in its fourth building and still calling itself the world’s most famous arena with a straight face.', opened: 1968, actions: ['watch', 'visit'], minutes: 200, quality: 92, price: 4 },
+  { id: 'ldn-o2', name: 'The O2', kind: 'arena', cityId: 'uk-eng-london', about: 'The arena inside the old Millennium Dome on the Greenwich peninsula, and the busiest music venue in the world most years.', opened: 2007, actions: ['watch', 'visit'], minutes: 200, quality: 88, price: 3 },
+  { id: 'par-bercy', name: 'Accor Arena', kind: 'arena', cityId: 'fr-idf-paris', about: 'The pyramid at Bercy with grass growing up its sloped walls, which Paris has called Bercy through every change of sponsor.', opened: 1984, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'la-crypto', name: 'Crypto.com Arena', kind: 'arena', cityId: 'us-ca-losangeles', about: 'The downtown arena beside the convention center, with four home teams and most of the award shows.', opened: 1999, actions: ['watch', 'visit'], minutes: 200, quality: 88, price: 4 },
+  { id: 'chi-united-center', name: 'United Center', kind: 'arena', cityId: 'us-il-chicago', about: 'The big shed on the Near West Side with the Jordan statue outside it.', opened: 1994, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'bos-td-garden', name: 'TD Garden', kind: 'arena', cityId: 'us-ma-boston', about: 'The Garden above North Station, with more championship banners in the roof than seats in some buildings.', opened: 1995, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'sf-chase-center', name: 'Chase Center', kind: 'arena', cityId: 'us-ca-sanfrancisco', about: 'The arena in Mission Bay, built privately and paid for the same way.', opened: 2019, actions: ['watch', 'visit'], minutes: 200, quality: 86, price: 4 },
+  { id: 'nsh-bridgestone', name: 'Bridgestone Arena', kind: 'arena', cityId: 'us-tn-nashville', about: 'The arena on Broadway, a hockey rink in a town of guitars.', opened: 1996, actions: ['watch', 'visit'], minutes: 200, quality: 80, price: 2 },
+  { id: 'tor-scotiabank', name: 'Scotiabank Arena', kind: 'arena', cityId: 'ca-on-toronto', about: 'The arena at the foot of Bay Street, with the trains running underneath it.', opened: 1999, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'mtl-bell-centre', name: 'Bell Centre', kind: 'arena', cityId: 'ca-qc-montreal', about: 'The loudest hockey building in the league, downtown on the site of the old Windsor Station yards.', opened: 1996, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'mel-rod-laver', name: 'Rod Laver Arena', kind: 'arena', cityId: 'au-vic-melbourne', about: 'The center court at Melbourne Park, with a roof that closes when the January sun becomes a safety matter.', opened: 1988, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'tyo-budokan', name: 'Nippon Budokan', kind: 'arena', cityId: 'jp-13-tokyo', about: 'The martial arts hall at Kitanomaru Park, which has been a rite of passage for touring bands since the Beatles played it.', opened: 1964, actions: ['watch', 'visit'], minutes: 180, quality: 86, price: 3 },
+  { id: 'sel-kspo-dome', name: 'KSPO Dome', kind: 'arena', cityId: 'kr-11-seoul', about: 'The gymnastics arena in Olympic Park, and the room every touring act plays in Seoul.', opened: 1988, actions: ['watch', 'visit'], minutes: 200, quality: 80, price: 3 },
+  { id: 'hkg-coliseum', name: 'Hong Kong Coliseum', kind: 'arena', cityId: 'hk-hongkong', about: 'The inverted pyramid at Hung Hom, where a run of shows is measured in dozens of nights.', opened: 1983, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 3 },
+  { id: 'dxb-coca-cola-arena', name: 'Coca-Cola Arena', kind: 'arena', cityId: 'ae-du-dubai', about: 'The arena in City Walk, the first full-scale indoor venue in the Gulf.', opened: 2019, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 3 },
+  { id: 'ams-ziggo-dome', name: 'Ziggo Dome', kind: 'arena', cityId: 'nl-07-amsterdam', about: 'The black box beside the Johan Cruijff ArenA, built for music first.', opened: 2012, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 3 },
+  { id: 'dub-3arena', name: '3Arena', kind: 'arena', cityId: 'ie-lei-dublin', about: 'The arena in the old Point Depot on the North Wall, still called the Point by everybody over forty.', opened: 2008, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 3 },
+  { id: 'gla-hydro', name: 'The OVO Hydro', kind: 'arena', cityId: 'uk-sct-glasgow', about: 'The silver drum on the Clyde beside the Armadillo, and one of the busiest arenas anywhere.', opened: 2013, actions: ['watch', 'visit'], minutes: 200, quality: 84, price: 2 },
+  { id: 'man-ao-arena', name: 'AO Arena', kind: 'arena', cityId: 'uk-eng-manchester', about: 'The arena above Victoria station, one of the largest in Europe since it opened.', opened: 1995, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 2 },
+  { id: 'bue-luna-park', name: 'Luna Park', kind: 'arena', cityId: 'ar-07-buenosaires', about: 'The old boxing palace at the bottom of Corrientes, which has held everything the city has wanted to see indoors since the thirties.', opened: 1932, actions: ['watch', 'visit'], minutes: 180, quality: 78, price: 2 },
+
+  // Concert halls and opera houses.
+  { id: 'ldn-royal-albert-hall', name: 'Royal Albert Hall', kind: 'concert_hall', cityId: 'uk-eng-london', about: 'The great oval hall in Kensington, open since 1871, with the Proms every summer and everything else the rest of the year.', opened: 1871, actions: ['watch', 'visit'], minutes: 180, quality: 92, price: 3 },
+  { id: 'ny-carnegie-hall', name: 'Carnegie Hall', kind: 'concert_hall', cityId: 'us-ny-newyork', about: 'The hall on 57th Street that the joke tells you how to get to. Three auditoriums, and the main one still the measure of a room.', opened: 1891, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 4 },
+  { id: 'ny-met-opera', name: 'The Metropolitan Opera House', kind: 'concert_hall', cityId: 'us-ny-newyork', about: 'The opera house at Lincoln Center with the Chagalls in the windows and the chandeliers that rise before the curtain.', opened: 1966, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 4 },
+  { id: 'vie-musikverein', name: 'The Musikverein', kind: 'concert_hall', cityId: 'at-09-vienna', about: 'The Golden Hall on the Ringstrasse, from which the New Year’s concert goes out to the world.', opened: 1870, actions: ['watch', 'visit'], minutes: 170, quality: 96, price: 3 },
+  { id: 'vie-staatsoper', name: 'Wiener Staatsoper', kind: 'concert_hall', cityId: 'at-09-vienna', about: 'The state opera on the Ring, with standing room sold cheap on the night the way it always has been.', opened: 1869, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 3 },
+  { id: 'ber-philharmonie', name: 'Berliner Philharmonie', kind: 'concert_hall', cityId: 'de-be-berlin', about: 'Scharoun’s golden tent at the Kulturforum, the first great hall to put the orchestra in the middle of the room.', opened: 1963, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 3 },
+  { id: 'ams-concertgebouw', name: 'The Concertgebouw', kind: 'concert_hall', cityId: 'nl-07-amsterdam', about: 'The concert building on Museum Square, with an acoustic nobody has ever quite explained.', opened: 1888, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 3 },
+  { id: 'par-garnier', name: 'Palais Garnier', kind: 'concert_hall', cityId: 'fr-idf-paris', about: 'The opera house of the Second Empire, with the grand staircase, the Chagall ceiling and a lake in the basement.', opened: 1875, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 4 },
+  { id: 'par-philharmonie', name: 'Philharmonie de Paris', kind: 'concert_hall', cityId: 'fr-idf-paris', about: 'Jean Nouvel’s hall at La Villette, out on the ring road where the tickets stay affordable.', opened: 2015, actions: ['watch', 'visit'], minutes: 170, quality: 90, price: 2 },
+  { id: 'mil-la-scala', name: 'Teatro alla Scala', kind: 'concert_hall', cityId: 'it-09-milan', about: 'La Scala, since 1778, where the season opens on Saint Ambrose’s day and the gallery makes its opinion known.', opened: 1778, actions: ['watch', 'visit'], minutes: 220, quality: 96, price: 4 },
+  { id: 'ham-elbphilharmonie', name: 'Elbphilharmonie', kind: 'concert_hall', cityId: 'de-04-hamburg', about: 'The glass wave on top of an old cocoa warehouse in the harbor, late and over budget and worth it.', opened: 2017, actions: ['watch', 'visit'], minutes: 170, quality: 92, price: 3 },
+  { id: 'la-disney-hall', name: 'Walt Disney Concert Hall', kind: 'concert_hall', cityId: 'us-ca-losangeles', about: 'Gehry’s steel sails on Grand Avenue, and the room inside them better than the outside promises.', opened: 2003, actions: ['watch', 'visit'], minutes: 170, quality: 92, price: 3 },
+  { id: 'la-hollywood-bowl', name: 'Hollywood Bowl', kind: 'concert_hall', cityId: 'us-ca-losangeles', about: 'The amphitheater in the Cahuenga Pass, with the shell, the hills behind it and picnics in the boxes since 1922.', opened: 1922, actions: ['watch', 'visit'], minutes: 210, quality: 90, price: 2 },
+  { id: 'nsh-ryman', name: 'Ryman Auditorium', kind: 'concert_hall', cityId: 'us-tn-nashville', about: 'The Mother Church of country music, pews and all, half a block off Broadway.', opened: 1892, actions: ['watch', 'visit'], minutes: 160, quality: 90, price: 2 },
+  { id: 'bue-teatro-colon', name: 'Teatro Colón', kind: 'concert_hall', cityId: 'ar-07-buenosaires', about: 'The opera house on 9 de Julio, which singers rank with any room in Europe.', opened: 1908, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 2 },
+  { id: 'mex-bellas-artes', name: 'Palacio de Bellas Artes', kind: 'concert_hall', cityId: 'mx-cmx-mexicocity', about: 'The marble palace at the end of the Alameda, with the Tiffany glass curtain and the Rivera murals upstairs.', opened: 1934, actions: ['watch', 'visit'], minutes: 200, quality: 92, price: 2 },
+  { id: 'mex-auditorio', name: 'Auditorio Nacional', kind: 'concert_hall', cityId: 'mx-cmx-mexicocity', about: 'The national auditorium on Reforma, ten thousand seats and the city’s default big room.', opened: 1952, actions: ['watch', 'visit'], minutes: 190, quality: 84, price: 2 },
+  { id: 'tyo-suntory-hall', name: 'Suntory Hall', kind: 'concert_hall', cityId: 'jp-13-tokyo', about: 'The vineyard hall at Ark Hills that Karajan called a jewel box of sound.', opened: 1986, actions: ['watch', 'visit'], minutes: 170, quality: 92, price: 3 },
+  { id: 'sel-arts-center', name: 'Seoul Arts Center', kind: 'concert_hall', cityId: 'kr-11-seoul', about: 'The arts complex under Umyeon Mountain, with the concert hall, the opera house and the calligraphy museum on one campus.', opened: 1988, actions: ['watch', 'visit'], minutes: 180, quality: 86, price: 2 },
+  { id: 'sgp-esplanade', name: 'Esplanade', kind: 'concert_hall', cityId: 'sg-singapore', about: 'The two spiked domes on Marina Bay that the city calls the durians, with a concert hall and a theater inside.', opened: 2002, actions: ['watch', 'visit'], minutes: 180, quality: 88, price: 3 },
+  { id: 'spo-theatro-municipal', name: 'Theatro Municipal', kind: 'concert_hall', cityId: 'br-27-saopaulo', about: 'The belle époque opera house downtown, where Brazilian modernism announced itself in 1922.', opened: 1911, actions: ['watch', 'visit'], minutes: 200, quality: 88, price: 2 },
+  { id: 'mos-bolshoi', name: 'The Bolshoi Theatre', kind: 'concert_hall', cityId: 'ru-48-moscow', about: 'The Bolshoi, behind the quadriga on Theatre Square, with the ballet company the word usually means.', opened: 1825, actions: ['watch', 'visit'], minutes: 220, quality: 94, price: 3 },
+  { id: 'bjs-ncpa', name: 'National Centre For The Performing Arts', kind: 'concert_hall', cityId: 'cn-22-beijing', about: 'The titanium egg beside the Great Hall of the People, entered under the water of its own moat.', opened: 2007, actions: ['watch', 'visit'], minutes: 200, quality: 90, price: 2 },
+  { id: 'tor-massey-hall', name: 'Massey Hall', kind: 'concert_hall', cityId: 'ca-on-toronto', about: 'The old red-brick hall on Shuter Street, restored rather than replaced.', opened: 1894, actions: ['watch', 'visit'], minutes: 170, quality: 86, price: 2 },
+  { id: 'chi-symphony-center', name: 'Symphony Center', kind: 'concert_hall', cityId: 'us-il-chicago', about: 'Orchestra Hall on Michigan Avenue, home of the Chicago Symphony since 1904.', opened: 1904, actions: ['watch', 'visit'], minutes: 170, quality: 90, price: 3 },
+  { id: 'bos-symphony-hall', name: 'Symphony Hall', kind: 'concert_hall', cityId: 'us-ma-boston', about: 'The first hall built on acoustic science, and still among the handful everybody agrees got it right.', opened: 1900, actions: ['watch', 'visit'], minutes: 170, quality: 94, price: 3 },
+  { id: 'cai-opera-house', name: 'Cairo Opera House', kind: 'concert_hall', cityId: 'eg-11-cairo', about: 'The opera house on Gezira Island, built after the old one burned, with the Nile on both sides.', opened: 1988, actions: ['watch', 'visit'], minutes: 200, quality: 82, price: 1 },
+  { id: 'dxb-dubai-opera', name: 'Dubai Opera', kind: 'concert_hall', cityId: 'ae-du-dubai', about: 'The dhow-shaped hall downtown, in the shadow of the tallest building in the world.', opened: 2016, actions: ['watch', 'visit'], minutes: 200, quality: 86, price: 3 },
+  { id: 'syd-city-recital', name: 'City Recital Hall', kind: 'concert_hall', cityId: 'au-nsw-sydney', about: 'The chamber music room at Angel Place, down a lane off Pitt Street.', opened: 1999, actions: ['watch', 'visit'], minutes: 160, quality: 84, price: 2 },
+  { id: 'jnb-linder', name: 'Linder Auditorium', kind: 'concert_hall', cityId: 'za-06-johannesburg', about: 'The concert hall on the Parktown education campus, home of the Johannesburg Philharmonic.', opened: 1932, actions: ['watch', 'visit'], minutes: 160, quality: 80, price: 1 },
+  { id: 'hel-musiikkitalo', name: 'Musiikkitalo', kind: 'concert_hall', cityId: 'fi-01-helsinki', about: 'The music center between the parliament and the bay, shared by two orchestras and the academy.', opened: 2011, actions: ['watch', 'visit'], minutes: 170, quality: 88, price: 2 },
 ];
 
 // ---------------------------------------------------------------------------
@@ -314,6 +405,48 @@ const CINEMA_NAMES = ['The Rialto', 'Odeon Row Cinema', 'The Palace Picture Hous
 const HOTEL_NAMES = ['The Wren Hotel', 'Hotel Meridian', 'The Standing Stone', 'The Kestrel', 'Harbourside Hotel', 'The Sennet'];
 const SALON_NAMES = ['Chair Six', 'The Grooming Room', 'Marlow & Co.', 'The Cutting Room'];
 const CLUB_NAMES = ['Basement 9', 'The Meridian Room', 'Nightshift', 'Vault'];
+/**
+ * Independent benches. There is no national chain of bench jewelers, so
+ * unlike the shops these are SLATE's own the way its restaurants are: a
+ * workshop above a shop, one or two people, a torch and a bench peg.
+ */
+const COSTUMIER_NAMES = [
+  'The Cutting Room', 'Thread & Bone', 'Pilcher & Vane', 'The Wardrobe Department',
+  'Mallory Costume Works', 'The Toile Room', 'Sabine & Ash',
+];
+
+const LAUNDERETTE_NAMES = ['The Washing Line', 'Spin Cycle', 'The Laundry Rooms', 'Soap & Suds', 'The Wash House'];
+
+/**
+ * A dental practice is named after whoever owns it, which is what practices
+ * really are: small partnerships with the partners' names over the door. None
+ * of these is a real dentist and the room says so.
+ */
+const DENTAL_PARTNERS: readonly string[] = [
+  'Aldridge', 'Barrow', 'Calvert', 'Denholm', 'Ellery', 'Fenwick', 'Garrick', 'Hollis',
+  'Ingram', 'Kessler', 'Lambourne', 'Merrick', 'Norwood', 'Ormerod', 'Prescott', 'Quinlan',
+  'Rowntree', 'Selby', 'Thackeray', 'Vaughan', 'Wexford', 'Yardley',
+];
+const DENTAL_WORDS: readonly string[] = [
+  'Dental Practice', 'Dental Surgery', 'Dental Care', 'Family Dentistry', 'Dental Studio',
+];
+const VET_WORDS: readonly string[] = [
+  'Veterinary Surgery', 'Animal Hospital', 'Veterinary Clinic', 'Vets', 'Veterinary Practice',
+];
+const VET_STEMS: readonly string[] = [
+  'Ashgrove', 'Bridgefoot', 'Cedar Lane', 'Dovecote', 'Elmfield', 'Foxhollow', 'Greenway',
+  'Hazelbank', 'Ironbridge', 'Larkspur', 'Meadowgate', 'Oakhill', 'Pinefold', 'Riverbank',
+  'Stonecross', 'Thornbury', 'Westgate', 'Willowbrook',
+];
+const PHONE_SHOP_WORDS: readonly string[] = [
+  'Mobile', 'Phone Repairs', 'Phones', 'Mobile Center', 'Communications',
+];
+const THEATRE_NAMES = ['The Playhouse', 'The Corner Theater', 'The Lyceum', 'The Rep', 'The Little Theater'];
+const MUSEUM_NAMES = ['The City Museum', 'The Museum Of The Town', 'The Old Customs House Museum', 'The Founders Museum'];
+const ARENA_NAMES = ['The Exhibition Arena', 'The Fieldhouse', 'The Trade Hall Arena', 'The Pavilion'];
+const CONCERT_HALL_NAMES = ['The Philharmonic Hall', 'The Concert House', 'The Recital Hall', 'The Assembly Rooms'];
+const STADIUM_NAMES = ['The Municipal Stadium', 'The Athletic Park', 'The District Ground', 'The Showgrounds'];
+const JEWELLER_NAMES = ['The Bench', 'Ansell & Pike', 'Halliwell Goldsmiths', 'The Setting Room', 'Verrall & Daughter', 'Ironmonger Row Goldsmiths'];
 
 // ---------------------------------------------------------------------------
 // Generating a city's places
@@ -343,7 +476,41 @@ const SPECS: readonly Spec[] = [
   // the lots, so nothing before them moved.
   { kind: 'storage', count: () => 1 },
   { kind: 'marina', count: (_i, _p, waterfront) => (waterfront ? 1 : 0) },
+  // A bench jeweler, added after everything else so no existing place id moved.
+  { kind: 'jeweller', count: () => 1 },
+  { kind: 'costumier', count: () => 1 },
+  // The rooms a town goes out in, appended after everything above so no
+  // existing id moved. Every city of any size has a theater and a museum; a
+  // stadium from a quarter of a million people, an arena from half a million,
+  // and a concert hall where there are enough people to fill one.
+  { kind: 'theatre', count: () => 1 },
+  { kind: 'museum', count: () => 1 },
+  { kind: 'stadium', count: (_i, p) => (p >= 250_000 ? 1 : 0) },
+  { kind: 'arena', count: (_i, p) => (p >= 500_000 ? 1 : 0) },
+  { kind: 'concert_hall', count: (_i, p) => (p >= 400_000 ? 1 : 0) },
+  // The ordinary rooms, appended after everything above so no existing place
+  // id moved. A chemist and a post office everywhere, because everywhere has
+  // both; a launderette in a town big enough to have people without machines.
+  { kind: 'pharmacy', count: () => 2 },
+  { kind: 'post_office', count: () => 1 },
+  { kind: 'launderette', count: (_i, p) => (p >= 60_000 ? 1 : 0) },
+  // Every town has schools. Two primaries and a secondary is the smallest a
+  // place with any children in it manages.
+  { kind: 'primary_school', count: () => 2 },
+  { kind: 'secondary_school', count: () => 2 },
+  // The last four ordinary rooms, appended after everything above so no
+  // existing place id moved. A dental practice and a vet everywhere, because
+  // everywhere has both; a licensing office in a town big enough to be given
+  // one rather than sending people to the county seat; and a phone shop
+  // wherever there is a high street to put one on.
+  { kind: 'dentist', count: () => 2 },
+  { kind: 'vet', count: () => 1 },
+  { kind: 'license_office', count: (_i, p) => (p >= 40_000 ? 1 : 0) },
+  { kind: 'phone_shop', count: (_i, p) => (p >= 25_000 ? 2 : 1) },
 ];
+
+/** Kinds a smaller city simply does not have, rather than getting one anyway. */
+const CAN_BE_ABSENT: ReadonlySet<PlaceKind> = new Set(['marina', 'stadium', 'arena', 'concert_hall', 'launderette', 'license_office']);
 
 /** City tags that put it on water a boat can be kept in. */
 const WATERFRONT_TAGS = ['beach', 'coastal', 'harbour', 'island', 'riviera'];
@@ -352,7 +519,7 @@ export function isWaterfront(city: { tags: string[] }): boolean {
   return city.tags.some((t) => WATERFRONT_TAGS.includes(t));
 }
 
-const MARINA_NAMES = ['Harbour Point Marina', 'Westbank Yacht Harbor', 'The Basin Marina', 'Breakwater Marina', 'Kingfisher Yacht Basin'];
+const MARINA_NAMES = ['Harbor Point Marina', 'Westbank Yacht Harbor', 'The Basin Marina', 'Breakwater Marina', 'Kingfisher Yacht Basin'];
 const STORAGE_NAMES = ['Lockbox Vehicle Storage', 'Northline Secure Storage', 'The Vault Garage', 'Keystone Car Storage'];
 
 /** What a lot sells. */
@@ -377,7 +544,7 @@ const DEALERSHIP_SELLS: readonly LotSells[] = ['car', 'car', 'car', 'motorcycle'
 const DEALERSHIP_ABOUT: readonly ((where: string) => string)[] = [
   (where) => `New and certified cars in ${where}, every make under one roof. Somebody will find you within a minute of parking.`,
   (where) => `A used lot in ${where}. Prices on the windscreen, and every one of them is a starting point.`,
-  (where) => `Classics and collector cars in ${where}. They know what they have, and they will wait for the right buyer.`,
+  (where) => `Classics and collector cars in ${where}. They know what they have, and they’ll wait for the right buyer.`,
   (where) => `Motorcycles in ${where}, new and used, from the makes you have heard of. Helmets on the wall and a workshop out the back.`,
   (where) => `Boats and yachts in ${where}, on trailers, on hard standing and in the water. Ask for a sea trial.`,
   (where) => `Aircraft sales at the executive terminal near ${where}. Pre-owned jets on the ramp, factory orders by appointment, and a demonstration flight for anyone serious.`,
@@ -389,10 +556,61 @@ const ACTIONS_BY_KIND: Readonly<Record<PlaceKind, PlaceAction[]>> = {
   gym: ['train', 'shower'], salon: ['shower'], cinema: ['watch'], theatre: ['watch'], club: ['drink', 'meet'],
   park: ['visit', 'train'], beach: ['visit'], viewpoint: ['visit'], museum: ['visit'], landmark: ['visit'],
   stadium: ['visit'], studio_gate: ['meet'], airport: ['meet'], shop: ['shop'], dealership: ['browse'],
-  marina: ['visit'], storage: ['visit'],
+  marina: ['visit'], storage: ['visit'], jeweller: ['browse'], costumier: ['browse'],
+  rental_house: ['browse'],
+  arena: ['watch'], concert_hall: ['watch'],
+  pharmacy: ['shop'], post_office: ['visit'], launderette: ['visit'],
+  dentist: ['visit'], vet: ['visit'], license_office: ['visit'], phone_shop: ['shop'],
+  primary_school: ['visit'], secondary_school: ['visit'],
 };
 
-function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
+/**
+ * An independent pharmacy's name, where the law requires one.
+ *
+ * Germany, France, Italy, Spain, Austria, Greece, Turkey and Denmark all
+ * require a pharmacy to be owned by the pharmacist running it, so there is no
+ * chain to name it after and it gets the local word and a corner instead.
+ */
+// Said in English, because the whole game is: a branch is distinguished by
+// where it stands, not by a phrase from a language nothing else here uses.
+/**
+ * What a school is called.
+ *
+ * SLATE's own, all of it. Schools are named after the place they stand in,
+ * somebody local, a saint or a feature of the landscape, which is what these
+ * are — but not one of them is a real school, and the room says so.
+ */
+const SCHOOL_STEMS: readonly string[] = [
+  'Ashfield', 'Bramwell', 'Cedar Grove', 'Downing', 'Eastbrook', 'Fairmount', 'Greenhill',
+  'Hollowvale', 'Ironbridge', 'Kingsmead', 'Larkfield', 'Marchmont', 'Northgate', 'Oakhurst',
+  'Pinewood', 'Queensbury', 'Riverton', 'Stonebridge', 'Thornbury', 'Underhill', 'Vale View',
+  'Westbourne', 'Whitcombe', 'Yarrow', 'Beaconsfield', 'Coldharbor', 'Elmwood', 'Foxglove',
+  'Harrowfield', 'Lindenwood', 'Meadowbank', 'Redbourne', 'Silverdale', 'Wren Park',
+];
+
+/**
+ * Where a school is really named after a saint.
+ *
+ * Catholic and Anglican school systems, broadly, and nowhere else: it is a
+ * naming convention rather than a fact about a country's religion, and it is
+ * carried so a school in Tokyo or Riyadh is not called St Martin's.
+ */
+const NAMES_SCHOOLS_FOR_SAINTS = new Set([
+  'ie', 'uk', 'us', 'ca', 'au', 'nz', 'it', 'es', 'pt', 'fr', 'be', 'pl', 'mt', 'hr', 'at',
+  'mx', 'br', 'ar', 'cl', 'co', 'pe', 'ph', 'ug', 'ke', 'ng', 'gh', 'za', 'tz', 'rw', 'zm',
+]);
+
+const SCHOOL_SAINTS: readonly string[] = [
+  'Aidan', 'Bede', 'Catherine', 'Dominic', 'Edmund', 'Francis', 'Gregory', 'Hilda',
+  'Joseph', 'Kevin', 'Luke', 'Martin', 'Nicholas', 'Oswald', 'Patrick', 'Teresa', 'Thomas',
+];
+
+const PHARMACY_CORNERS = ['On The Square', 'By The Station', 'On The Corner', 'Central', 'Old Town', 'By The Market'];
+
+function nameFor(
+  kind: PlaceKind, rng: Rng, cuisine?: Cuisine, countryId?: string, highStreet?: ReadonlySet<string>,
+  local?: readonly string[], regionId?: string,
+): string {
   switch (kind) {
     case 'restaurant': {
       const first = rng.pick(RESTAURANT_FIRST);
@@ -415,6 +633,88 @@ function nameFor(kind: PlaceKind, rng: Rng, cuisine?: Cuisine): string {
     case 'hotel': return rng.pick(HOTEL_NAMES);
     case 'salon': return rng.pick(SALON_NAMES);
     case 'club': return rng.pick(CLUB_NAMES);
+    case 'jeweller': return rng.pick(JEWELLER_NAMES);
+    case 'costumier': return rng.pick(COSTUMIER_NAMES);
+    case 'theatre': return rng.pick(THEATRE_NAMES);
+    case 'museum': return rng.pick(MUSEUM_NAMES);
+    case 'arena': return rng.pick(ARENA_NAMES);
+    case 'concert_hall': return rng.pick(CONCERT_HALL_NAMES);
+    case 'stadium': return rng.pick(STADIUM_NAMES);
+    case 'launderette': return rng.pick(LAUNDERETTE_NAMES);
+    case 'pharmacy': {
+      // Where chains are allowed, the sign is a chain that really trades here.
+      const chains = countryId ? pharmacyChainsIn(countryId) : [];
+      if (chains.length > 0 && !(countryId && PHARMACIES_ARE_INDEPENDENT.has(countryId))) {
+        // A chain already on this city's high street is that shop, not this
+        // one, so prefer a chain the street has not got. When the street has
+        // all of them this is a second branch, and a second branch is named
+        // the way people name it: by the corner it stands on.
+        const spare = chains.filter((one) => !highStreet?.has(one.name.toLowerCase()));
+        if (spare.length > 0) return rng.pick(spare).name;
+        return `${rng.pick(chains).name} ${rng.pick(PHARMACY_CORNERS)}`;
+      }
+      const word = (countryId && INDEPENDENT_PHARMACY_WORD[countryId]) || 'Pharmacy';
+      return `${word} ${rng.pick(PHARMACY_CORNERS)}`;
+    }
+    case 'primary_school':
+    case 'secondary_school': {
+      // SLATE's own school, with a plausible name. There is no feed that
+      // names the world's schools, so none of these is a real one and the
+      // room says so.
+      const word = kind === 'primary_school'
+        ? rng.pick(['Primary School', 'Elementary School', 'Primary Academy'])
+        : rng.pick(['High School', 'Secondary School', 'Academy', 'Grammar School', 'College']);
+      // A school is usually named after the district it stands in, which is
+      // how it reads right in every country rather than only in English ones.
+      // Where the geography has no districts, one of SLATE's own stems.
+      const roll = rng.float(0, 1);
+      if (local && local.length > 0 && roll < 0.82) return `${rng.pick(local)} ${word}`;
+      // A saint on the sign only where schools are really named that way. A
+      // St Martin High School in Tokyo is not a school anybody would believe.
+      // A saint or an English-sounding stem only where schools are really
+      // named that way. Anywhere else the district or the city again, because
+      // a Beaconsfield Primary School in Riyadh is not a school.
+      if (countryId && NAMES_SCHOOLS_FOR_SAINTS.has(countryId)) {
+        return roll < 0.93
+          ? `St ${rng.pick(SCHOOL_SAINTS)} ${word}`
+          : `${rng.pick(SCHOOL_STEMS)} ${word}`;
+      }
+      return local && local.length > 0 ? `${rng.pick(local)} ${word}` : `${rng.pick(SCHOOL_STEMS)} ${word}`;
+    }
+    case 'post_office': {
+      const operator = countryId ? postalOperatorIn(countryId) : undefined;
+      return operator ? operator.name : 'The Post Office';
+    }
+    case 'dentist': {
+      // A practice is named after its partners almost everywhere, so that is
+      // how SLATE names it. Nobody in here is a real dentist.
+      const one = rng.pick(DENTAL_PARTNERS);
+      const two = rng.pick(DENTAL_PARTNERS.filter((n) => n !== one));
+      const word = rng.pick(DENTAL_WORDS);
+      return rng.float(0, 1) < 0.45 ? `${one} And ${two} ${word}` : `${one} ${word}`;
+    }
+    case 'vet': {
+      // Where a real group has practices, one of them is a branch of it. Where
+      // none does, it is an independent practice, which is what most are.
+      const groups = countryId ? vetGroupsIn(countryId) : [];
+      const spare = groups.filter((one) => !highStreet?.has(one.name.toLowerCase()));
+      if (spare.length > 0 && rng.float(0, 1) < 0.55) return rng.pick(spare).name;
+      return `${local && local.length > 0 && rng.float(0, 1) < 0.6 ? rng.pick(local) : rng.pick(VET_STEMS)} ${rng.pick(VET_WORDS)}`;
+    }
+    case 'license_office': {
+      // The office is the real authority for where you are standing, which is
+      // fifty one different names in America alone.
+      const office = countryId ? licenseAuthorityFor(countryId, regionId)?.office : undefined;
+      return office ?? 'The Licensing Office';
+    }
+    case 'phone_shop': {
+      // A network's own shop where the network is real, and an independent
+      // repair shop where it is not.
+      const carriers = countryId ? networksIn(countryId).filter((one) => one.kind === 'own_network') : [];
+      const spare = carriers.filter((one) => !highStreet?.has(one.name.toLowerCase()));
+      if (spare.length > 0 && rng.float(0, 1) < 0.65) return `${rng.pick(spare).name}`;
+      return `${local && local.length > 0 && rng.float(0, 1) < 0.5 ? rng.pick(local) : rng.pick(VET_STEMS)} ${rng.pick(PHONE_SHOP_WORDS)}`;
+    }
     default: return 'A Place';
   }
 }
@@ -423,7 +723,11 @@ const MINUTES_BY_KIND: Readonly<Record<PlaceKind, number>> = {
   restaurant: 95, cafe: 35, bar: 75, fast_food: 25, market: 30, gas_station: 10, garage: 120,
   hotel: 30, gym: 75, salon: 60, cinema: 140, theatre: 160, club: 150, park: 60, beach: 90,
   viewpoint: 60, museum: 150, landmark: 60, stadium: 180, studio_gate: 20, airport: 45, shop: 35, dealership: 90,
-  marina: 60, storage: 20,
+  marina: 60, storage: 20, jeweller: 45, costumier: 70, rental_house: 55,
+  arena: 180, concert_hall: 150,
+  pharmacy: 20, post_office: 25, launderette: 95,
+  dentist: 40, vet: 35, license_office: 70, phone_shop: 30,
+  primary_school: 390, secondary_school: 390,
 };
 
 /**
@@ -457,23 +761,73 @@ export function placesIn(cityId: string): Place[] {
     });
   }
 
+  // The rental houses: the real ones where the house really works, and one or
+  // two of SLATE's own everywhere else that shoots anything at all.
+  for (const house of RENTAL_HOUSES) {
+    if (house.cityId !== cityId) continue;
+    out.push({
+      ...house,
+      real: true,
+      quality: house.quality ?? 88,
+      minutes: MINUTES_BY_KIND.rental_house,
+      actions: house.actions ?? ACTIONS_BY_KIND.rental_house,
+    });
+  }
+  if (!RENTAL_HOUSES.some((h) => h.cityId === cityId)) {
+    for (const house of ownHousesIn(cityId, city.name, city.industryPresence, city.population)) {
+      out.push({
+        ...house,
+        real: false,
+        quality: house.quality ?? 60,
+        minutes: MINUTES_BY_KIND.rental_house,
+        actions: ACTIONS_BY_KIND.rental_house,
+      });
+    }
+  }
+
   const rng = makeRng(`places:${cityId}`);
   const hoods = NEIGHBOURHOODS.childrenOf(cityId);
   const industry = city.industryPresence;
   const used = new Set(out.map((p) => p.name.toLowerCase()));
+  // What the chains put on this city's high street. The shops themselves are
+  // appended after this loop, so the rooms generated here would otherwise not
+  // know about them. Only the three rooms added at schema 60 consult it, so
+  // no name that a save already carries moves.
+  const highStreet = new Set(
+    shoppableRetailers()
+      .filter((retailer) => {
+        const real = ALL_RETAILERS.find((r) => r.id === retailer.id);
+        return Boolean(real) && real!.kind !== 'online' && !HOUSES_NOT_SHOPS.has(retailer.id)
+          && tradesIn(real!, cityId, city.population);
+      })
+      .map((retailer) => retailer.name.toLowerCase()),
+  );
+  const OFF_THE_HIGH_STREET = new Set<PlaceKind>(['pharmacy', 'post_office', 'launderette']);
+  const IS_A_SCHOOL = new Set<PlaceKind>(['primary_school', 'secondary_school']);
 
   const waterfront = isWaterfront(city);
   const realMarinas = out.filter((p) => p.kind === 'marina').length;
   for (const spec of SPECS) {
-    // A city with a real marina on the record does not get an invented one as well.
-    const wanted = spec.kind === 'marina' && realMarinas > 0 ? 0 : spec.count(industry, city.population, waterfront);
-    const count = spec.kind === 'marina' ? wanted : Math.max(1, wanted);
+    // A city with a real marina on the record does not get an invented one as
+    // well, and a real stadium, arena or hall likewise stands in for its own.
+    const already = out.filter((one) => one.kind === spec.kind).length;
+    const suppressed = (spec.kind === 'marina' && realMarinas > 0)
+      || (CAN_BE_ABSENT.has(spec.kind) && spec.kind !== 'marina' && already > 0);
+    const wanted = suppressed ? 0 : spec.count(industry, city.population, waterfront);
+    const count = CAN_BE_ABSENT.has(spec.kind) ? wanted : Math.max(1, wanted);
     for (let i = 0; i < count; i++) {
       const cuisine = spec.kind === 'restaurant' ? rng.pick(CUISINES) : undefined;
-      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine);
+      const street = OFF_THE_HIGH_STREET.has(spec.kind) ? highStreet : undefined;
+      // Schools take the name of the district they stand in.
+      // The districts of the city, or the city itself where the geography
+      // carries no districts for it.
+      const districts = IS_A_SCHOOL.has(spec.kind)
+        ? (hoods.length > 0 ? hoods.map((one) => one.name) : [city.name])
+        : undefined;
+      let name = spec.kind === 'dealership' ? (DEALERSHIP_NAMES[i % DEALERSHIP_NAMES.length] ?? DEALERSHIP_NAMES[0]!)(city.name) : nameFor(spec.kind, rng, cuisine, city.countryId, street, districts, city.parentId);
       if (spec.kind === 'marina' && rng.chance(0.5)) name = `${city.name} ${rng.pick(['Yacht Harbor', 'Marina', 'Yacht Basin'])}`;
       let guard = 0;
-      while (used.has(name.toLowerCase()) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
+      while ((used.has(name.toLowerCase()) || street?.has(name.toLowerCase())) && guard++ < 12) name = `${nameFor(spec.kind, rng, cuisine, city.countryId, street, districts, city.parentId)}${guard > 6 ? ` ${['On Fifth', 'Uptown', 'By The Water', 'On The Hill'][guard % 4]}` : ''}`;
       used.add(name.toLowerCase());
       const hood = hoods.length > 0 ? rng.pick(hoods) : undefined;
       const prestige = hood?.prestige ?? 50;
@@ -501,11 +855,14 @@ export function placesIn(cityId: string): Place[] {
   }
 
   // Storefronts. Every chain that is not online only has a door here, so the
-  // catalogue and the street agree with each other. The id carries the chain
+  // catalog and the street agree with each other. The id carries the chain
   // rather than a number, so adding a chain never moves an existing shop.
   for (const retailer of shoppableRetailers()) {
-    const real = REAL_RETAILERS.find((r) => r.id === retailer.id);
+    const real = ALL_RETAILERS.find((r) => r.id === retailer.id);
     if (!real || real.kind === 'online') continue;
+    // A house that hires and does not sell has a counter rather than a shop,
+    // and it is already on the street as one.
+    if (HOUSES_NOT_SHOPS.has(retailer.id)) continue;
     if (!tradesIn(real, cityId, city.population)) continue;
     const hood = hoods.length > 0 ? hoods[Math.abs(hashOf(`${cityId}:${retailer.id}`)) % hoods.length] : undefined;
     out.push({
@@ -531,11 +888,11 @@ const SHOP_STREET: readonly string[] = [
   'A retail park unit with its own car park.',
   'On the high street, between a bank and a phone shop.',
   'A corner site with two windows onto the street.',
-  'A dressed window on the good street, and a doorman who is not called one.',
+  'A dressed window on the good street, and a doorman who isn’t called one.',
   'By appointment as much as by the door, on the street where the rents are announced.',
 ];
 
-/** A small, stable hash so a shop lands in the same neighbourhood every time. */
+/** A small, stable hash so a shop lands in the same neighborhood every time. */
 function hashOf(text: string): number {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (Math.imul(h, 31) + text.charCodeAt(i)) | 0;
@@ -567,7 +924,7 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
       'A counter, four stools and the good machine.',
       'The pastries go by ten.',
       'A queue out the door and it moves fast.',
-      'Somewhere to take a meeting that is not a meeting.',
+      'Somewhere to take a meeting that isn’t a meeting.',
       'Wi-fi, a plug at every table, and a two-hour limit nobody enforces.',
     ])}`;
     case 'bar': return `A bar in ${where}. ${rng.pick([
@@ -589,8 +946,86 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     case 'gym': return `Weights and space in ${where}. ${rng.pick(['Chalk allowed.', 'Open at five.', 'No mirrors, no music.'])}`;
     case 'cinema': return `A cinema in ${where}. ${rng.pick(['Two screens and a projectionist who cares.', 'Reclining seats and an eight-dollar soda.', 'Repertory on Sundays.'])}`;
     case 'hotel': return `Rooms in ${where}. ${rng.pick(['A lobby people meet in.', 'Quiet, and the bar stays open.', 'Clean, central and no surprises.'])}`;
-    case 'salon': return `Cutting and colour in ${where}.`;
+    case 'salon': return `Cutting and color in ${where}.`;
     case 'club': return `Late in ${where}. ${rng.pick(['A queue after eleven.', 'Low ceilings and a good sound system.'])}`;
+    case 'jeweller': return `A working bench in ${where}. ${rng.pick([
+      'One goldsmith, a torch, and a wait for everything.',
+      'Repairs in the window, commissions in the back.',
+      'Two benches, a rolling mill, and a kettle that’s always on.',
+      'They’ll make you what you draw, and tell you why it won’t work.',
+      'A safe, a loupe, and forty years of somebody else’s wedding rings.',
+    ])}`;
+    case 'costumier': return `A workroom in ${where}. ${rng.pick([
+      'Toiles on the wall, a cutting table, and three fittings before anything is finished.',
+      'Bolts to the ceiling, one industrial machine, and a kettle nobody turns off.',
+      'They cut for stage and screen, and they’ll cut for you.',
+      'Dress forms in every size, a steamer going, and pins everywhere.',
+      'A pattern library going back forty years, and somebody who knows where everything is.',
+    ])}`;
+    case 'theatre': return `A theater in ${where}. ${rng.pick([
+      'A proscenium, four hundred seats, and a bar the size of a cupboard.',
+      'A rep company, a raked stage, and a curtain that has seen things.',
+      'Two spaces: the main house and a studio for the difficult work.',
+    ])}`;
+    case 'museum': return `A museum in ${where}. ${rng.pick([
+      'The town’s own collection, one good room, and a bench in front of the best thing in it.',
+      'Free on the first Sunday, quiet every other day.',
+      'A permanent collection nobody local has seen and every visitor has.',
+    ])}`;
+    case 'arena': return `An arena in ${where}. ${rng.pick([
+      'Basketball lines under the concert rig, and parking that empties badly.',
+      'Ten thousand seats and a sound system that has been argued about.',
+      'Home games, touring acts, and an ice floor that comes and goes.',
+    ])}`;
+    case 'concert_hall': return `A concert hall in ${where}. ${rng.pick([
+      'A shoebox room with a warm decay and seats that punish slouching.',
+      'An organ nobody plays enough, and acoustics somebody got right.',
+      'Subscription nights, a choir on Sundays, and a quiet green room.',
+    ])}`;
+    case 'launderette': return `A launderette in ${where}. ${rng.pick([
+      'Six machines, four dryers, and a chair somebody left.',
+      'Open till ten, and a service wash if you can’t face waiting.',
+      'The dryer on the end has always been the good one.',
+    ])}`;
+    case 'post_office': return `A post office in ${where}. ${rng.pick([
+      'Two windows open out of five, and a queue that knows it.',
+      'Parcels, stamps, and a form for everything.',
+      'A counter at the back of a shop, which is how most of them are now.',
+    ])}`;
+    case 'dentist': return `A dental practice in ${where}. ${rng.pick([
+      'Two surgeries, a hygienist on Tuesdays, and a fish tank nobody has ever seen cleaned.',
+      'Above a shop, up a narrow stair, and the chair is newer than the building.',
+      'A practice that takes both the public list and private patients, and will ask which you are.',
+      'The waiting room has the same four magazines it had last year.',
+    ])}`;
+    case 'vet': return `A veterinary practice in ${where}. ${rng.pick([
+      'A consulting room, an operating theater out the back, and a cat carrier on every chair.',
+      'Dogs one side of the waiting room, cats the other, and nobody obeying the signs.',
+      'Open six days, with an out of hours number that sends you across town.',
+      'A scale by the door that every animal is weighed on before anything else happens.',
+    ])}`;
+    case 'license_office': return `A licensing office in ${where}. ${rng.pick([
+      'Take a ticket, watch the number board, and bring more paperwork than you think you need.',
+      'Appointments at the far counters and walk-ins on the long bench.',
+      'A photograph booth, a signature pad, and a queue with nothing to do but watch both.',
+      'Open till four, and the last ticket goes out at half past three.',
+    ])}`;
+    case 'phone_shop': return `A phone shop in ${where}. ${rng.pick([
+      'Handsets under glass, tariffs on the wall, and a repair bench behind the counter.',
+      'Somebody will offer you a plan you didn’t come in for, and it might be better.',
+      'A screen replaced while you wait, if you are prepared to wait.',
+      'Contracts one side, prepaid the other, and an accessory wall between them.',
+    ])}`;
+    case 'pharmacy': return `A pharmacy in ${where}. ${rng.pick([
+      'A dispensary at the back and everything else in front of it.',
+      'Open late, and the only thing open at all on a Sunday.',
+      'A pharmacist who will tell you to go to a doctor, and mean it.',
+    ])}`;
+    case 'stadium': return `A stadium in ${where}. ${rng.pick([
+      'A running track around the pitch and a stand that catches the wind.',
+      'Twenty thousand on a good day, four thousand on a wet one.',
+      'Floodlights you can see from the ring road.',
+    ])}`;
     default: return `In ${where}.`;
   }
 }

@@ -37,7 +37,7 @@ export function playerCompany(sim: Simulation): Company | undefined {
 /** The company, or a refusal. Used by every command that needs one. */
 export function requireCompany(sim: Simulation): Company {
   const company = playerCompany(sim);
-  if (!company) throw new CommandError('You have not opened a company yet.');
+  if (!company) throw new CommandError('You haven’t opened a company yet.');
   if (company.dissolvedAt) throw new CommandError(`${company.name} is closed.`);
   return company;
 }
@@ -100,6 +100,34 @@ export function capacityOf(sim: Simulation, company: Company): number {
 
 export function registerShingle(sim: Simulation): void {
   /**
+   * The company a character was too young to open.
+   *
+   * A life that starts at eleven cannot sign anything, so the founding waits
+   * for the birthday that makes them able to. This is that birthday.
+   */
+  sim.onSchedule('co.found_when_old_enough', (item, s) => {
+    if (Object.keys(s.universe.companies ?? {}).length > 0) return;
+    // The stake was never in their account while they were a child; it is
+    // there for the few lines it takes to open the company and then it is
+    // gone into the business, exactly as it is for anybody who starts grown.
+    const payload = item.payload as { capital?: number; name?: string };
+    const accountId = s.player.primaryAccountId;
+    if (accountId && payload.capital) {
+      s.income(accountId, payload.capital, 'Founding Stake', 'other', { refType: 'person', refId: s.player.id });
+    }
+    const result = s.execute({ kind: 'co.found', payload: item.payload as Record<string, unknown> });
+    if (!result.ok) return;
+    s.notify({
+      title: 'The Doors Are Open',
+      body: `${(item.payload as { name?: string }).name ?? 'The company'} is trading. `
+        + 'You’re old enough to sign for it now.',
+      category: 'career',
+      importance: 66,
+      route: '/workspace/bank',
+    });
+  });
+
+  /**
    * Opening the doors.
    *
    * Done once, at the start, and it is the only company the player will run.
@@ -115,9 +143,9 @@ export function registerShingle(sim: Simulation): void {
     (p, { sim: s }) => {
       if (s.universe.playerCompanyId) throw new CommandError('You already have a company.');
       const shape = SHINGLE_BY_ID[p.shingle];
-      if (!shape) throw new CommandError('There is no such kind of company.');
+      if (!shape) throw new CommandError('There’s no such kind of company.');
       const remit = REMIT_BY_ID[p.remit];
-      if (!remit) throw new CommandError('There is no such remit.');
+      if (!remit) throw new CommandError('There’s no such remit.');
       const name = p.name.trim();
       if (name.length < 2) throw new CommandError('The company needs a name.');
 
@@ -219,7 +247,7 @@ export function registerShingle(sim: Simulation): void {
         summary: `${formatMoney(shape.setup)} to open, ${formatMoney(shape.overhead)} a month to run, ${capacityOf(s, company)} projects at a time.`,
         factors: [
           { label: 'The Shape', detail: `${shape.name}. ${shape.what}`, weight: 0.5, contribution: 0.5, knowable: true },
-          { label: 'What It Cannot Do', detail: shape.cannot, weight: 0.3, contribution: 0, knowable: true },
+          { label: 'What It Can’t Do', detail: shape.cannot, weight: 0.3, contribution: 0, knowable: true },
           { label: 'The Remit', detail: `${remit.name}. ${remit.what}`, weight: 0.2, contribution: 0.2, knowable: true },
         ],
         outcome: 'open',
@@ -254,7 +282,7 @@ export function registerShingle(sim: Simulation): void {
     });
     sim.requireDecision({
       urgency: 96, category: 'career',
-      title: `${company.name} Cannot Make Payroll`,
+      title: `${company.name} Can’t Make Payroll`,
       detail: `${formatMoney(due)} of overhead is due and the account holds ${formatMoney(balance)}. A company that misses this twice is finished.`,
       refType: 'company', refId: company.id,
     });
@@ -304,14 +332,14 @@ export function registerShingle(sim: Simulation): void {
     'co.set_draw',
     (p, { sim: s }) => {
       const company = requireCompany(s);
-      if (!Number.isFinite(p.amount) || p.amount < 0) throw new CommandError('A draw cannot be negative.');
+      if (!Number.isFinite(p.amount) || p.amount < 0) throw new CommandError('A draw can’t be negative.');
       const amount = Math.round(p.amount);
       const cash = s.universe.accounts[company.cashAccountId]?.balance ?? 0;
       const monthly = company.overhead + amount;
       const months = monthly > 0 ? Math.floor(cash / monthly) : Infinity;
       if (months < 1 && amount > 0) {
         throw new CommandError(
-          `${company.name} cannot carry ${formatMoney(amount)} a month on top of ${formatMoney(company.overhead)} of overhead with ${formatMoney(cash)} in the account.`,
+          `${company.name} can’t carry ${formatMoney(amount)} a month on top of ${formatMoney(company.overhead)} of overhead with ${formatMoney(cash)} in the account.`,
         );
       }
       company.founderDraw = amount;
@@ -319,7 +347,7 @@ export function registerShingle(sim: Simulation): void {
         draw: amount,
         monthsOfRunway: Number.isFinite(months) ? months : 0,
         note: amount === 0
-          ? 'You are paying yourself nothing. Everything the company has stays in it, and you live on whatever else you have.'
+          ? 'You’re paying yourself nothing. Everything the company has stays in it, and you live on whatever else you have.'
           : `${formatMoney(amount)} a month. With overhead that is ${formatMoney(monthly)} going out, and ${months} months of it in the account.`,
       };
     },
@@ -336,9 +364,9 @@ export function registerShingle(sim: Simulation): void {
     (p, { sim: s }) => {
       const company = requireCompany(s);
       const next = SHINGLE_BY_ID[p.shingle];
-      if (!next) throw new CommandError('There is no such kind of company.');
+      if (!next) throw new CommandError('There’s no such kind of company.');
       const current = SHINGLE_BY_ID[company.shingle];
-      if (!current) throw new CommandError('This company is in a shape the game does not know.');
+      if (!current) throw new CommandError('This company is in a shape the game doesn’t know.');
       if (next.id === current.id) throw new CommandError(`${company.name} is already ${next.name.toLowerCase()}.`);
 
       const growing = next.setup > current.setup;
@@ -384,16 +412,16 @@ export function registerShingle(sim: Simulation): void {
     'co.set_rate',
     (p, { sim: s }) => {
       const company = requireCompany(s);
-      if (p.rate < 0) throw new CommandError('A rate cannot be negative.');
+      if (p.rate < 0) throw new CommandError('A rate can’t be negative.');
       const previous = s.universe.industry.ratesSet[p.craft];
       s.universe.industry.ratesSet[p.craft] = Math.round(p.rate);
 
       const craft = titleCaseLabel(p.craft.replace(/_/g, ' '));
       const note = previous === undefined
-        ? `${craft} is now worth ${formatMoney(p.rate)}, because you said so and there is nobody to argue.`
+        ? `${craft} is now worth ${formatMoney(p.rate)}, because you said so and there’s nobody to argue.`
         : p.rate < previous
           ? `You cut ${craft.toLowerCase()} from ${formatMoney(previous)} to ${formatMoney(p.rate)}. Every one of them knows by Friday.`
-          : `You raised ${craft.toLowerCase()} to ${formatMoney(p.rate)}. That is the number everybody will quote back at you.`;
+          : `You raised ${craft.toLowerCase()} to ${formatMoney(p.rate)}. That’s the number everybody will quote back at you.`;
 
       // Generosity buys standing with the people who work for you and costs
       // the company money it will feel later. Meanness does the reverse.

@@ -10,6 +10,7 @@
  */
 
 import { beforeAll, describe, expect, it } from 'vitest';
+import { insurerByName } from '@/engine/content/insurers';
 import { loadAllSections } from '@/engine/dialogue';
 import { loadSave, migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
@@ -93,7 +94,7 @@ function pick(sim: Simulation, label: RegExp) {
 
 beforeAll(async () => { await loadAllSections(); });
 
-describe('the catalogue', () => {
+describe('the catalog', () => {
   it('carries real makes for every kind, with every figure marked as a calibration', () => {
     const byKind = (kind: VehicleKind) => VEHICLE_MODELS.all().filter((m) => m.kind === kind);
     expect(byKind('motorcycle').length).toBeGreaterThanOrEqual(20);
@@ -136,7 +137,7 @@ describe('the catalogue', () => {
 
     const bigBrakes = PARTS.require('brakes_bigbrake');
     expect(checkFitment(bigBrakes, boat).fits).toBe(false);
-    expect(checkFitment(bigBrakes, boat).reasons[0]).toMatch(/made for cars, not a boat/);
+    expect(checkFitment(bigBrakes, boat).reasons[0]).toMatch(/made for cars, n[o’]t a boat/);
     expect(checkFitment(PARTS.require('boat_gyro'), bike).fits).toBe(false);
     expect(checkFitment(PARTS.require('boat_gyro'), boat).fits).toBe(true);
     expect(checkFitment(PARTS.require('jet_winglets'), car).fits).toBe(false);
@@ -261,7 +262,7 @@ describe('a motorcycle', () => {
     expect(sim.universe.vehicles[vehicleId]!.mileage).toBe(before + 150);
     expect(attempt(sim, 'veh.cruise', { vehicleId, hours: 2 }).error).toBe(NOT_A_BOAT);
 
-    expect(attempt(sim, 'ins.quote', { line: 'marine', coveredRefs: [{ type: 'vehicle', id: vehicleId }] }).error).toMatch(/covered by auto insurance, not marine/);
+    expect(attempt(sim, 'ins.quote', { line: 'marine', coveredRefs: [{ type: 'vehicle', id: vehicleId }] }).error).toMatch(/covered by auto insurance, n[o’]t marine/);
     const quote = must<{ premium: number; quoteId: string }>(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: vehicleId }] });
     expect(quote.premium).toBeGreaterThan(0);
   });
@@ -336,10 +337,10 @@ describe('a boat', () => {
   it('is insured on the marine line, and a claim with undisclosed work aboard is denied', () => {
     const sim = aLife();
     const { vehicle } = buy(sim, 'boat');
-    expect(attempt(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: vehicle.id }] }).error).toMatch(/marine insurance, not auto/);
+    expect(attempt(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: vehicle.id }] }).error).toMatch(/marine insurance, n[o’]t auto/);
     const quote = must<{ quoteId: string; premium: number }>(sim, 'ins.quote', { line: 'marine', coveredRefs: [{ type: 'vehicle', id: vehicle.id }] });
     const { policyId } = must<{ policyId: string }>(sim, 'ins.purchase', { quoteId: quote.quoteId });
-    expect(sim.universe.insurancePolicies[policyId]!.carrier).toBe('Northbank Marine');
+    expect(insurerByName(sim.universe.insurancePolicies[policyId]!.carrier)?.lines).toContain('marine');
 
     // A tracker the insurer was never told about.
     must(sim, 'veh.book_modification', { vehicleId: vehicle.id, partIds: ['boat_tracker'] });
@@ -365,7 +366,7 @@ describe('a boat', () => {
     pick(sim, /^Accept /);
     const agreed = sceneView(sim, activeScene(sim)!);
     const lease = agreed.choices.find((c) => c.label.startsWith('Lease'))!;
-    expect(lease.disabled).toMatch(/not leased/);
+    expect(lease.disabled).toMatch(/n[o’]t leased/);
     pick(sim, /^Pay Cash$/);
     pick(sim, /^Not Now$/);
     const keys = sceneView(sim, activeScene(sim)!);
@@ -381,7 +382,7 @@ describe('a private jet', () => {
     expect(jet.keeping?.kind).toBe('hangar');
     expect(sim.universe.bills[jet.keeping!.billId!]!.name).toMatch(/^Hangar — /);
     expect(sim.universe.bills[jet.crewBillId!]!.name).toMatch(/^Crew — /);
-    expect(attempt(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: jet.id }] }).error).toMatch(/aviation insurance, not auto/);
+    expect(attempt(sim, 'ins.quote', { line: 'auto', coveredRefs: [{ type: 'vehicle', id: jet.id }] }).error).toMatch(/aviation insurance, n[o’]t auto/);
     const quote = must<{ quoteId: string }>(sim, 'ins.quote', { line: 'aviation', coveredRefs: [{ type: 'vehicle', id: jet.id }] });
     must(sim, 'ins.purchase', { quoteId: quote.quoteId });
     expect(attempt(sim, 'veh.drive', { vehicleId: jet.id, miles: 10 }).error).toBe(NOT_FOR_THE_ROAD);
@@ -455,7 +456,7 @@ describe('a private jet', () => {
     must(sim, 'veh.book_modification', { vehicleId: jet.id, partIds: [partId] });
     sim.advanceTo(sim.now + 5 * MS_DAY);
     expect(craftOf(sim, sim.universe.vehicles[jet.id]!)!.rangeKm).toBe(before + PARTS.require(partId).effects.rangeKm!);
-    expect(attempt(sim, 'veh.book_modification', { vehicleId: jet.id, partIds: ['tune_stage1'] }).error).toMatch(/made for cars, not a jet/);
+    expect(attempt(sim, 'veh.book_modification', { vehicleId: jet.id, partIds: ['tune_stage1'] }).error).toMatch(/made for cars, n[o’]t a jet/);
     must(sim, 'veh.book_service', { vehicleId: jet.id, kind: 'scheduled' });
     sim.advanceTo(sim.now + 4 * MS_DAY);
     const record = Object.values(sim.universe.serviceRecords).find((r) => r.vehicleId === jet.id && r.kind === 'scheduled');
@@ -491,7 +492,7 @@ describe('saves from before', () => {
     expect(result.migrated).toBe(true);
     expect(result.steps.some((s) => s.includes('stamped with their kind'))).toBe(true);
     for (const v of Object.values(sim.universe.vehicles)) expect(v.kind).toBe('car');
-    // Stamped from the catalogue, never guessed: the car lots' stock is cars,
+    // Stamped from the catalog, never guessed: the car lots' stock is cars,
     // and anything the new lots carried is what it is.
     for (const l of Object.values(sim.universe.vehicleListings)) expect(l.kind).toBe(kindOf(l.catalogId.split(':')[0]!));
     expect(Object.values(sim.universe.vehicleListings).filter((l) => l.kind === 'car').length).toBeGreaterThan(5);
