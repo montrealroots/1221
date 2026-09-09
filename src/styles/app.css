@@ -387,7 +387,15 @@ input[type="text"], input[type="number"], input[type="date"], input[type="search
 }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
 textarea { resize: vertical; min-height: 72px; }
-label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
+label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
+
+/* A value the form worked out rather than asked for. It sits where the input
+   it replaces would, so a field that settles itself does not shift the row. */
+.settled-title {
+  display: block; padding: var(--s2) 0;
+  font-size: var(--size-sm); font-weight: 650;
+  color: var(--accent-strong);
+}
 
 /* Chromium gives a range input a default side margin, which pushes it a few
    pixels past the field it sits in. */

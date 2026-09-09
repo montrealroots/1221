@@ -26,6 +26,7 @@ import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, goatTraitsIn } fro
 import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
+import { settledTitle } from '@/ui/creation/CharacterCreation';
 import { GuardError, inspectPayload } from '../base44/shared/guard.js';
 
 describe('every save says what game it is', () => {
@@ -355,10 +356,11 @@ describe('the house rule holds in the source', () => {
 
   it('offers the two titles flat, with neither explained as the exception', () => {
     const creation = readFileSync(fileURLToPath(new URL('ui/creation/CharacterCreation.tsx', ROOT)), 'utf8');
-    expect(creation).toMatch(/<option value="actor">Actor<\/option>/);
-    expect(creation).toMatch(/<option value="actress">Actress<\/option>/);
-    // Neither option carries a note the other one does not.
-    expect(creation).not.toMatch(/<option value="actor(ess)?">[^<]*\(/);
+    // Both come off PERFORMER_TITLES, so the screen cannot drop one, reorder
+    // them, or give one a label the other does not have.
+    expect(creation).toContain('{PERFORMER_TITLES.map((option) => (');
+    expect(creation).toContain('<div className="trait-name">{PERFORMER_NOUN[option]}</div>');
+    expect(creation).not.toMatch(/['"`]Act(or|ress)['"`]\s*[,:)]/);
   });
 
   it('keeps no default title on the label that prints one', () => {
@@ -366,5 +368,60 @@ describe('the house rule holds in the source', () => {
     expect(bootstrap, 'careerLabel defaults one of the two titles').not.toMatch(
       /title:\s*PerformerTitle\s*=\s*'(actor|actress)'/,
     );
+  });
+});
+
+describe('the title a character is billed under', () => {
+  const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
+
+  it('is settled by he and by she, and left open by they', () => {
+    expect(settledTitle('he/him')).toBe('actor');
+    expect(settledTitle('she/her')).toBe('actress');
+    expect(settledTitle('they/them')).toBeUndefined();
+  });
+
+  it('opens that choice empty, because a preselected one of two equals is a default', () => {
+    // The whole premise is that neither word is the default. Handing they/them
+    // a pre-picked Actor would make actor exactly that, on the one screen where
+    // the choice is real.
+    expect(settledTitle('they/them')).toBeUndefined();
+    expect(source).toContain('Choose whether you are billed as an actor or an actress.');
+  });
+
+  it("offers both words from the same list, in the engine's own order", () => {
+    // Rendered from PERFORMER_TITLES rather than written out, so neither can be
+    // dropped, reordered or spelled differently on this screen alone.
+    expect(source).toContain('{PERFORMER_TITLES.map((option) => (');
+    expect(PERFORMER_TITLES).toEqual(['actor', 'actress']);
+  });
+
+  it('writes the settled title into the config, not just onto the screen', () => {
+    // createUniverse reads config.performerTitle. If the pronouns settled the
+    // title only for display, a pick made under they/them would survive behind
+    // he/him and reach the save.
+    expect(source).toContain('performerTitle: settledTitle(pronouns)');
+  });
+
+  it('makes a save whose title agrees with its pronouns', () => {
+    for (const [pronouns, expected] of [['he/him', 'actor'], ['she/her', 'actress']] as const) {
+      const sim = createSave(1, `title-${expected}`, {
+        ...defaultConfig(), pronouns, performerTitle: settledTitle(pronouns),
+      });
+      const player = sim.universe.people[sim.universe.playerId]!;
+      expect(player.performerTitle).toBe(expected);
+      expect(sim.universe.premise.playerTitle).toBe(expected);
+      expect(sim.universe.premise.playerTitleSource).toBe('stated');
+    }
+  });
+
+  it('lets somebody on they/them be billed either way, and says they said so', () => {
+    for (const title of PERFORMER_TITLES) {
+      const sim = createSave(1, `title-they-${title}`, {
+        ...defaultConfig(), pronouns: 'they/them', performerTitle: title,
+      });
+      expect(sim.universe.people[sim.universe.playerId]!.performerTitle).toBe(title);
+      expect(sim.universe.premise.playerTitle).toBe(title);
+      expect(sim.universe.premise.playerTitleSource).toBe('stated');
+    }
   });
 });

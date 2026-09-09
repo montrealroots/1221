@@ -12,7 +12,7 @@ import {
   defaultConfig, wealthNote,
   type NewSaveConfig, type StartingHousing, type StartingWealth,
 } from '@/engine/world/bootstrap';
-import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '@/engine/core/performer';
+import { PERFORMER_NOUN, PERFORMER_TITLES, type PerformerTitle } from '@/engine/core/performer';
 import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
@@ -141,7 +141,7 @@ export function CharacterCreation({
               <h1 style={{ fontSize: 'var(--size-lg)' }}>Who Are You Going To Be?</h1>
               <p className="muted small" style={{ marginTop: 2 }}>
                 SLATE is an actor and actress life simulator. This is the{' '}
-                {PERFORMER_NOUN[titleOf(config)].toLowerCase()} you play.
+                {billedAs(config).toLowerCase()} you play.
               </p>
             </div>
           </div>
@@ -170,7 +170,7 @@ export function CharacterCreation({
           ))}
         </div>
 
-        {step === 0 && <IdentityStep config={config} set={set} />}
+        {step === 0 && <IdentityStep config={config} set={set} setConfig={setConfig} />}
         {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === 2 && <CareerStep config={config} set={set} />}
         {step === 3 && <StartingPointStep config={config} set={set} />}
@@ -227,14 +227,44 @@ function ageAtStart(config: NewSaveConfig): number {
   );
 }
 
-/** The word this character is billed with, chosen or implied by their pronouns. */
-function titleOf(config: NewSaveConfig): PerformerTitle {
-  return config.performerTitle ?? impliedPerformerTitle(config.pronouns);
+/**
+ * The title a set of pronouns settles by itself, or undefined when it is the
+ * player's to make.
+ *
+ * He and she each name one of the two words and there is nothing left to
+ * choose. They/them names neither, so the choice opens up — and it opens up
+ * empty, because preselecting one of two equals is what a default is, and
+ * this game holds that neither of them is.
+ */
+export function settledTitle(pronouns: string): PerformerTitle | undefined {
+  if (/^\s*he\b/i.test(pronouns)) return 'actor';
+  if (/^\s*she\b/i.test(pronouns)) return 'actress';
+  return undefined;
+}
+
+/**
+ * The word this character is billed with: settled by their pronouns where
+ * their pronouns settle it, and otherwise the one they picked. Undefined only
+ * while somebody on they/them has not picked yet, which the Identity step
+ * will not let past.
+ */
+function titleOf(config: NewSaveConfig): PerformerTitle | undefined {
+  return settledTitle(config.pronouns) ?? config.performerTitle;
+}
+
+/** The same, for the places downstream of a step that has already checked it. */
+function billedAs(config: NewSaveConfig): string {
+  const title = titleOf(config);
+  return title ? PERFORMER_NOUN[title] : 'Actor Or Actress';
 }
 
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
-function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+function IdentityStep({ config, set, setConfig }: {
+  config: NewSaveConfig;
+  set: Setter;
+  setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
+}) {
   const home = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
   // Whether they hold a passport for the country they actually live in. When
@@ -247,6 +277,8 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   // the home town follows the birthplace until somebody says it should not.
   // Once they have said so it stays said, even if they later pick the same
   // town.
+  const settled = settledTitle(config.pronouns);
+
   const [stillLivesThere, setStillLivesThere] = useState(
     () => config.homeRegionId === config.startLocationId,
   );
@@ -306,26 +338,55 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
         <div className="field">
           <label htmlFor="pronouns">Pronouns</label>
-          <select id="pronouns" value={config.pronouns} onChange={(e) => set('pronouns', e.target.value)}>
+          <select
+            id="pronouns"
+            value={config.pronouns}
+            onChange={(e) => {
+              const pronouns = e.target.value;
+              // The title is written into the config, not worked out from it
+              // when the save is made, so it has to move with the pronouns:
+              // settled where they settle it, and cleared where they do not,
+              // so a pick made under they/them cannot survive behind he/him.
+              setConfig((c) => ({ ...c, pronouns, performerTitle: settledTitle(pronouns) }));
+            }}
+          >
             <option value="she/her">She/Her</option>
             <option value="he/him">He/Him</option>
             <option value="they/them">They/Them</option>
           </select>
         </div>
         <div className="field">
-          <label htmlFor="performer-title">Billed As</label>
-          <select
-            id="performer-title"
-            value={config.performerTitle ?? impliedPerformerTitle(config.pronouns)}
-            onChange={(e) => set('performerTitle', e.target.value as PerformerTitle)}
-          >
-            <option value="actor">Actor</option>
-            <option value="actress">Actress</option>
-          </select>
-          <p className="xs dim" style={{ marginTop: 4 }}>
-              Actor and actress are two words for the same craft. Yours is the one the business
-              lists you under, and the one the game calls you by.
-            </p>
+          <span className="label">Billed As</span>
+          {settled ? (
+            <>
+              <output className="settled-title" htmlFor="pronouns">{PERFORMER_NOUN[settled]}</output>
+              <p className="xs dim" style={{ marginTop: 4 }}>
+                Your pronouns say which of the two words is yours, so there is nothing to pick.
+                Change them and this changes with them.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="row gap-2" role="group" aria-label="Billed As">
+                {PERFORMER_TITLES.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    className="trait grow"
+                    aria-pressed={config.performerTitle === option}
+                    onClick={() => set('performerTitle', option)}
+                  >
+                    <div className="trait-name">{PERFORMER_NOUN[option]}</div>
+                  </button>
+                ))}
+              </div>
+              <p className="xs dim" style={{ marginTop: 4 }}>
+                They/them settles neither word, so this one is yours. Actor and actress are two
+                names for the same craft and this game holds them equal: pick the one the
+                business would list you under, and the game will call you by it.
+              </p>
+            </>
+          )}
         </div>
       </div>
         </div>
@@ -600,7 +661,7 @@ function PersonalStep({
             <h2>Your Craft</h2>
             <p className="muted small">
               Not a choice, and not on this page. You’re the best{' '}
-              {PERFORMER_NOUN[titleOf(config)].toLowerCase()} alive: all {ATTRIBUTES.length}{' '}
+              {billedAs(config).toLowerCase()} alive: all {ATTRIBUTES.length}{' '}
               attributes at {CEILING}, all {ALL_TRAITS.length} acting traits, and the{' '}
               {GOAT_TRAITS.length} that only ever belong to one person. They’re listed on the
               Your Craft step.
@@ -664,7 +725,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <div>
             <h2>Your Craft</h2>
             <p className="muted small">
-              You are an {PERFORMER_NOUN[titleOf(config)].toLowerCase()}, and you are the best there
+              You are an {billedAs(config).toLowerCase()}, and you are the best there
               has ever been at it. There is nothing to choose here, because nothing is missing.
             </p>
           </div>
@@ -832,7 +893,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {PERFORMER_NOUN[titleOf(config)]} · {city?.name}
+            {age} · {billedAs(config)} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>
@@ -845,7 +906,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
-          <Line label="Billed As" value={PERFORMER_NOUN[titleOf(config)]} />
+          <Line label="Billed As" value={billedAs(config)} />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label={config.secondCitizenshipId ? 'Citizenships' : 'Citizenship'} value={citizenshipLabel(config)} />
@@ -936,6 +997,9 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     const age = ageAtStart(config);
     // The year, not the age. A birth year at the cap can still leave somebody
     // seventeen when the save opens, and that is a life this game will run.
+    if (!titleOf(config)) {
+      issues.push('Choose whether you are billed as an actor or an actress.');
+    }
     if (config.birthYear > latestBirthYear(config.startYear)) {
       issues.push(`Your character can’t be born after ${latestBirthYear(config.startYear)}.`);
     }
