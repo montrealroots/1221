@@ -104,11 +104,25 @@ async function sections(name, note) {
   await page.waitForTimeout(200);
 }
 
+/**
+ * Clicks a button and says whether it really landed.
+ *
+ * The old version swallowed the failure and returned true anyway. A click onto
+ * something covered by a drawer therefore read as a navigation, and the walk
+ * went on photographing the screen it never left under the caption of the one
+ * it never reached. Nothing in the output said so.
+ */
 const click = async (pattern) => {
   const target = page.getByRole('button', { name: pattern }).first();
   if (!(await target.count())) { console.log('   (nothing matched', String(pattern), ')'); return false; }
-  await target.click().catch(() => {});
-  return true;
+  try {
+    await target.click({ timeout: 4000 });
+    return true;
+  } catch {
+    console.log('   (could not click', String(pattern), '- something is in the way)');
+    problems.push(`could not click ${String(pattern)}`);
+    return false;
+  }
 };
 
 // ---------------------------------------------------------------------------
@@ -282,7 +296,10 @@ if (await click(/^Sleep$/)) {
 // 6. The calendar
 // ---------------------------------------------------------------------------
 
-if (await click(/^Calendar$/)) {
+// The calendar is not on the rail any more. Home is where it is offered, and
+// Home is where the walk is standing, so it goes in through the same button a
+// player would use.
+if (await click(/^Open Calendar$/)) {
   await page.waitForTimeout(1700);
   await sections('calendar', 'the month, its legend, and the next thirty days');
 
@@ -396,7 +413,7 @@ if (await click(/^Continue$/)) {
     await page.keyboard.press('Escape');
     await page.waitForTimeout(400);
   }
-  if (await click(/^Calendar$/)) {
+  if (await click(/^Open Calendar$/)) {
     await page.waitForTimeout(1600);
     await sections('narrow-calendar', 'the calendar at phone width');
   }

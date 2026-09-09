@@ -14,6 +14,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { ALL_DESTINATIONS, RAIL_DESTINATIONS } from '@/ui/shell/destinations';
 import { readFileSync, readdirSync } from 'node:fs';
 
 const ROOT = new URL('../src/', import.meta.url);
@@ -123,6 +124,20 @@ describe('what was taken out', () => {
     // The click handler returns before navigate when the destination is shut.
     expect(home).toMatch(/if \(dest\.locked\) \{[^}]*toast\([^)]*Under Construction/);
     expect(home).toMatch(/return; \}/);
+  });
+
+  it('keeps the calendar on Home and off the rail, and loses nothing by it', () => {
+    // The calendar describes the day you are standing in. It reads as part of
+    // Home, not as another place to go, so the rail does not carry it — but it
+    // is still one list, and Home still offers everything.
+    const railRoutes = RAIL_DESTINATIONS.flatMap((g) => g.items).map((i) => i.route);
+    const homeRoutes = ALL_DESTINATIONS.map((d) => d.route);
+    expect(homeRoutes).toContain('/workspace/calendar');
+    expect(railRoutes).not.toContain('/workspace/calendar');
+    // Everything the rail does carry, Home carries too.
+    for (const route of railRoutes) expect(homeRoutes).toContain(route);
+    // And no group is left on the rail with nothing under it.
+    for (const group of RAIL_DESTINATIONS) expect(group.items.length).toBeGreaterThan(0);
   });
 
   it('offers every destination it lists, and lists every screen there is', () => {

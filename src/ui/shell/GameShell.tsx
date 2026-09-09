@@ -14,9 +14,9 @@
  * the tools you reach for, then the state of your save.
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { DESTINATIONS } from './destinations';
+import { RAIL_DESTINATIONS } from './destinations';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
 import { Home } from '@/ui/screens/Home';
@@ -31,6 +31,16 @@ export function GameShell() {
   const [railOpen, setRailOpen] = useState(false);
   const waiting = useWorld((s) => openDecisions(s).length);
   const unread = useWorld((s) => unreadNotifications(s).length);
+
+  // Escape closes the drawer, the way it closes the dialogs. Without it the
+  // only ways out were the Menu button and a shade the drawer covers most of,
+  // and a keyboard had neither.
+  useEffect(() => {
+    if (!railOpen) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setRailOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [railOpen]);
 
   const go = (to: string, label: string, locked?: boolean) => {
     if (locked) { game.toast(`${label} Is Under Construction.`, 'neutral'); return; }
@@ -101,7 +111,7 @@ export function GameShell() {
             </button>
           </div>
 
-          {DESTINATIONS.map((group) => (
+          {RAIL_DESTINATIONS.map((group) => (
             <div key={group.label} className="rail-group">
               <div className="rail-group-label">{group.label}</div>
               {group.items.map((item) => (

@@ -20,6 +20,12 @@ export interface Destination {
    * so clicking says so and leaves you where you were.
    */
   locked?: boolean;
+  /**
+   * Offered on Home and kept off the rail. The calendar describes the day you
+   * are standing in, so it belongs beside the day rather than in a list of
+   * other places to be.
+   */
+  homeOnly?: boolean;
 }
 
 export interface DestinationGroup {
@@ -31,7 +37,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
   {
     label: 'Your Day',
     items: [
-      { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have' },
+      { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', homeOnly: true },
     ],
   },
   {
@@ -45,6 +51,17 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     ],
   },
 ];
+
+/**
+ * What the rail offers: everything except the ones Home keeps, and no group
+ * left standing with nothing under it.
+ *
+ * One list still, so nothing can disagree about what exists — only about where
+ * it is offered.
+ */
+export const RAIL_DESTINATIONS: readonly DestinationGroup[] = DESTINATIONS
+  .map((group) => ({ ...group, items: group.items.filter((item) => !item.homeOnly) }))
+  .filter((group) => group.items.length > 0);
 
 /** Every destination, flat. */
 export const ALL_DESTINATIONS: readonly Destination[] = DESTINATIONS.flatMap((g) => g.items);
