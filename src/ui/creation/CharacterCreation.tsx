@@ -1,7 +1,7 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Personal, Your Craft, Starting Point, Review, then Start.
+ * Identity, Personal, My Skills, Starting Point, Review, then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -52,7 +52,7 @@ export function latestBirthYear(startYear: number): number {
   return startYear - BIRTH_YEARS_BEFORE_START;
 }
 
-const STEPS = ['Identity', 'Personal', 'Your Craft', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Personal', 'My Skills', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
@@ -700,13 +700,13 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Your Craft</h2>
+            <h2>My Skills</h2>
             <p className="muted small">
               Not a choice, and not on this page. You’re the best{' '}
               {billedAs(config).toLowerCase()} alive: all {ATTRIBUTES.length}{' '}
               attributes at {CEILING}, all {ALL_TRAITS.length} acting traits, and the{' '}
               {GOAT_TRAITS.length} that only ever belong to one person. They’re listed on the
-              Your Craft step.
+              My Skills step.
             </p>
           </div>
         </div>
@@ -765,7 +765,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Your Craft</h2>
+            <h2>My Skills</h2>
             <p className="muted small">
               You are an {billedAs(config).toLowerCase()}, and you are the best there
               has ever been at it. There is nothing to choose here, because nothing is missing.
