@@ -123,7 +123,13 @@ describe('sleep', () => {
   it('lands on the right wall-clock time when sleeping across a DST change', () => {
     // 7 March 2026 at 11:30 PM in Los Angeles, sleeping eight hours across the
     // spring-forward transition, wakes at 8:30 AM rather than 7:30 AM.
-    const sim = quickSave({ startYear: 2026, startMonth: 3, startDay: 7 });
+    //
+    // Los Angeles by name, not by default: home base is Reykjavík now and
+    // Iceland keeps no daylight saving at all, so inheriting the home zone
+    // left this testing a clock change that never happens.
+    const sim = quickSave({
+      startYear: 2026, startMonth: 3, startDay: 7, startLocationId: 'us-ca-losangeles',
+    });
     const zone = sim.homeZone;
     const bedtime = sim.now;
     const parts = zonedParts(bedtime, zone);

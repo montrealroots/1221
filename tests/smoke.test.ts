@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
+import { estateCity } from '@/engine/content/estate';
 import { formatDateTime, MS_DAY } from '@/engine/core/time';
 import { openDecisions, simulationLoad } from '@/engine/world/world';
 import { netWorth } from '@/engine/systems/finance';
@@ -22,7 +23,7 @@ describe('a new universe boots and runs', () => {
   it('has a player who exists somewhere in time and space', () => {
     const sim = quickSave();
     expect(formatDateTime(sim.now, sim.homeZone)).toContain('2026');
-    expect(sim.universe.homeZone).toBe('America/Los_Angeles');
+    expect(sim.universe.homeZone).toBe(estateCity().timeZone);
     expect(sim.ledger.audit()).toEqual([]);
   });
 

@@ -845,6 +845,13 @@ kbd {
 .creation-step[data-state="active"] { border-bottom-color: var(--accent); color: var(--accent-strong); }
 .creation-step[data-state="done"] { border-bottom-color: var(--text-dim); color: var(--text-muted); }
 
+/* One thing on the land: what it is, then what it is. Boxed so three of them
+   read as three, not as a paragraph with bold in it. */
+.holding {
+  padding: var(--s3); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--surface-2);
+}
+
 .trait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--s2); }
 
 /* Two traits written against each other, kept on one row so the trade-off

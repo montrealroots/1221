@@ -57,10 +57,12 @@ describe('navigation', () => {
     const labels: { file: string; label: string }[] = [];
     for (const file of SOURCES) {
       const text = readFileSync(file, 'utf8');
-      for (const match of text.matchAll(/\{ id: '[a-z_-]+', label: '([^']+)'/g)) labels.push({ file, label: match[1]! });
+      for (const match of text.matchAll(/id: '[a-z_-]+', label: '([^']+)'/g)) labels.push({ file, label: match[1]! });
     }
     // A floor so the scan cannot silently match nothing and pass. It used to
-    // be twenty; there are three tabs left in the build.
+    // be twenty. The housing options were the last thing matching the old
+    // pattern and they went with the page, taking the scan to zero; it now
+    // matches the startup stages, which are written the same way.
     expect(labels.length).toBeGreaterThan(0);
     for (const { file, label } of labels) {
       expect(label, `${file}: ${label}`).not.toMatch(EMOJI);

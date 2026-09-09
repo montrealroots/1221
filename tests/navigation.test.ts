@@ -115,7 +115,10 @@ describe('what was taken out', () => {
   it('keeps the founder premise out of character creation', () => {
     const creation = read('ui/creation/CharacterCreation.tsx');
     expect(creation, 'the strike is still in creation').not.toMatch(/STRIKE_IS_FICTION|OPENING_BRIEF/);
-    expect(creation, 'the company step is still in creation').not.toMatch(/The Company|Your Company|company-name/);
+    // Not the word "company": the family's company is the premise now, and
+    // Starting Point names it. What must not come back is a step that asks the
+    // player to found one — its input, its own step, its name field.
+    expect(creation, 'the company step is still in creation').not.toMatch(/Your Company|company-name|companyName/);
     expect(creation, 'creation still calls the player a founder').not.toMatch(/And Founder/);
   });
 

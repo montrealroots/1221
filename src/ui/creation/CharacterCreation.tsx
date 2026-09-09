@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   defaultConfig, wealthNote,
-  type NewSaveConfig, type StartingHousing, type StartingWealth,
+  type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { PERFORMER_NOUN, PERFORMER_TITLES, type PerformerTitle } from '@/engine/core/performer';
 import { LocationPicker } from './LocationPicker';
@@ -23,7 +23,8 @@ import {
   APP_VERSION, WEALTH_PROFILES,
 } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
-import { titleCaseLabel } from '@/engine/core/text';
+import { formatPeople } from '@/engine/world/place';
+import { zoneAbbreviation } from '@/engine/core/time';
 import { ageOnDate } from '@/engine/core/time';
 import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
@@ -33,6 +34,9 @@ import {
 } from '@/engine/content/personality-traits';
 import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
 import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
+import {
+  ESTATE_ACRES, ESTATE_NOTE, HOLDINGS, estateCity, estatePlaceLine, studioName,
+} from '@/engine/content/estate';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -61,13 +65,6 @@ type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
-
-const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
-  { id: 'couch', label: "A Friend's Couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
-  { id: 'roommates', label: 'Room In A Share', blurb: 'Cheap, crowded, and how most people start.' },
-  { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that’s yours.' },
-  { id: 'owned', label: 'You Own A Home', blurb: 'A house and the mortgage that came with it.' },
-];
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
 
@@ -175,7 +172,7 @@ export function CharacterCreation({
         {step === 0 && <IdentityStep config={config} set={set} setConfig={setConfig} />}
         {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === 2 && <CareerStep config={config} set={set} />}
-        {step === 3 && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
+        {step === 3 && <StartingPointStep config={config} set={set} />}
         {step === 4 && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
@@ -851,77 +848,90 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   );
 }
 
-function StartingPointStep({ config, set, setConfig }: {
-  config: NewSaveConfig;
-  set: Setter;
-  setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
-}) {
-  const city = CITIES.get(config.startLocationId);
+/**
+ * Starting Point — where you are standing on day one.
+ *
+ * Not a set of choices any more. Where you live, what you live in and what is
+ * next door are all one fact: the family holds two thousand acres outside
+ * Reykjavík and has just put a studio lot and a production company on it. The
+ * page reports that rather than asking about it.
+ */
+function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+  const city = estateCity();
   const wealth = WEALTH_PROFILES[config.wealth];
-
-  const birthplace = CITIES.get(config.homeRegionId);
+  const company = studioName(config.lastName);
 
   return (
     <div className="col gap-5">
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where You Live</h2>
-            <p className="muted small">
-              Where you are decides your rent and what is within reach of you. Picking a country
-              here sets your citizenship to match — change that on Identity if you live somewhere
-              you aren’t a citizen of.
-            </p>
+            <h2>Home Base</h2>
+            <p className="muted small">Where the family land is. It is not a choice, it is where you are from.</p>
           </div>
         </div>
 
-        <label className="check" htmlFor="live-here">
-          <input
-            id="live-here"
-            type="checkbox"
-            checked={config.livesWhereBorn}
-            onChange={(e) => {
-              const on = e.target.checked;
-              setConfig((c) => {
-                if (!on) return { ...c, livesWhereBorn: false };
-                const previous = CITIES.get(c.startLocationId);
-                const born = CITIES.get(c.homeRegionId);
-                const follows = born && (!previous || c.citizenshipId === previous.countryId);
-                return {
-                  ...c,
-                  livesWhereBorn: true,
-                  startLocationId: c.homeRegionId,
-                  ...(follows ? { citizenshipId: born.countryId } : {}),
-                };
-              });
-            }}
-          />
-          <span>
-            I Still Live Where I Was Born
-            {birthplace && <span className="dim"> — {placeLine(birthplace)}</span>}
-          </span>
-        </label>
+        <div className="strong" style={{ fontSize: 'var(--size-lg)', marginBottom: 'var(--s3)' }}>
+          {estatePlaceLine()}
+        </div>
 
-        {!config.livesWhereBorn && (
-          <LocationPicker
-            idPrefix="live"
-            cityId={config.startLocationId}
-            onPick={(picked) => {
-              const previous = CITIES.get(config.startLocationId);
-              set('startLocationId', picked.id);
-              // Citizenship follows the country while the two agree. Once
-              // somebody has deliberately made them differ, moving no longer
-              // overwrites it.
-              if (!previous || config.citizenshipId === previous.countryId) {
-                set('citizenshipId', picked.countryId);
-              }
-            }}
-          />
-        )}
+        <div className="grid grid-3">
+          <div className="stat">
+            <span className="stat-label">Population</span>
+            <span className="stat-value">{formatPeople(city.population)}</span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Time Zone</span>
+            <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{zoneAbbreviation(Date.now(), city.timeZone)}</span>
+            <span className="stat-note">{city.timeZone}</span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Industry Here</span>
+            <span className="stat-value">None</span>
+            <span className="stat-note">No television, no film, until the family</span>
+          </div>
+        </div>
 
-        {!config.livesWhereBorn && city && birthplace && birthplace.countryId !== city.countryId && (
+        <p className="muted small" style={{ marginTop: 'var(--s4)', marginBottom: 0 }}>{ESTATE_NOTE}</p>
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>The Land</h2>
+            <p className="muted small">Held by the family. Three things stand on it.</p>
+          </div>
+          <span className="chip chip-accent">{ESTATE_ACRES.toLocaleString('en-US')} Acres</span>
+        </div>
+
+        <div className="col gap-2">
+          {HOLDINGS.map((holding) => (
+            <div key={holding.id} className="holding">
+              <div className="strong">{holding.label(config.lastName)}</div>
+              <div className="small muted">{holding.detail}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>{company}</h2>
+            <p className="muted small">
+              Television and film. It carries the family name, which is the surname you gave on
+              Identity — the company is named the moment you are.
+            </p>
+          </div>
+        </div>
+        {config.lastName.trim() ? (
           <div className="callout">
-            You moved country to get where you are, which is its own kind of start.
+            The name was on the gate before you were on the lot. Everybody who reads it on a call
+            sheet knows whose family it is — that is the advantage, and it is the whole problem.
+          </div>
+        ) : (
+          <div className="callout callout-accent">
+            Put a surname on Identity — it is the family name, and the company takes it.
           </div>
         )}
       </div>
@@ -929,61 +939,12 @@ function StartingPointStep({ config, set, setConfig }: {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>What It Costs</h2>
+            <h2>What Is Yours</h2>
             <p className="muted small">
-              {city
-                ? `What living in ${city.name} costs and offers.`
-                : 'Choose somewhere to live first.'}
+              The land and the company are the family’s. This is the money in your own name.
             </p>
           </div>
         </div>
-
-        {city && (
-          <div className="grid grid-4">
-            <div className="stat">
-              <span className="stat-label">Industry presence</span>
-              <span className="stat-value">{city.industryPresence}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-label">Job market</span>
-              <span className="stat-value">{city.jobMarketDepth}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-label">Median rent</span>
-              <span className="stat-value">{formatMoney(city.medianRentCents, { cents: false })}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-label">Cost of living</span>
-              <span className="stat-value">{city.costOfLivingIndex}</span>
-            </div>
-          </div>
-        )}
-        {city && (
-          <p className="muted small" style={{ marginTop: 'var(--s3)' }}>
-            {city.tags.map(titleCaseLabel).join(' · ')}
-          </p>
-        )}
-      </div>
-
-      <div className="card">
-        <div className="panel-head"><h2>Housing</h2></div>
-        <div className="grid grid-2">
-          {HOUSING.map((option) => (
-            <button
-              key={option.id}
-              className="trait"
-              aria-pressed={config.housing === option.id}
-              onClick={() => set('housing', option.id)}
-            >
-              <div className="trait-name">{option.label}</div>
-              <div className="trait-desc">{option.blurb}</div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="panel-head"><h2>Money</h2></div>
         <div className="field">
           <label htmlFor="wealth">What You Are Starting With</label>
           <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
@@ -1001,12 +962,11 @@ function StartingPointStep({ config, set, setConfig }: {
             <span className="stat-value mono">{formatMoney(wealth.savings, { cents: false })}</span>
           </div>
           <div className="stat">
-            <span className="stat-label">Credit score</span>
+            <span className="stat-label">Credit Score</span>
             <span className="stat-value mono">{wealth.creditScore}</span>
           </div>
         </div>
       </div>
-
     </div>
   );
 }
@@ -1059,8 +1019,9 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
-          <Line label="City" value={city?.name ?? '—'} />
-          <Line label="Housing" value={HOUSING.find((h) => h.id === config.housing)?.label ?? '—'} />
+          <Line label="Home Base" value={estatePlaceLine()} />
+          <Line label="The Land" value={`${ESTATE_ACRES.toLocaleString('en-US')} Acres, Family Held`} />
+          <Line label="The Company" value={studioName(config.lastName)} />
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
           <Line label="Credit Score" value={String(wealth.creditScore)} />
@@ -1197,7 +1158,8 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === 3) {
-    if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
+    // Where you live is not asked any more, so there is nothing here to get
+    // wrong but the day the save opens on.
     if (config.startDay < 1 || config.startDay > 28) issues.push('Pick a start day between 1 and 28.');
   }
   return issues;

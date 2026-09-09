@@ -32,6 +32,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 }
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
+import { ESTATE_CITY_ID } from '@/engine/content/estate';
 
 export const APP_VERSION = '1.1.0';
 
@@ -40,7 +41,13 @@ export const APP_VERSION = '1.1.0';
 // ---------------------------------------------------------------------------
 
 export type StartingWealth = 'nothing' | 'scraping' | 'modest' | 'comfortable' | 'wealthy' | 'inherited';
-export type StartingHousing = 'couch' | 'roommates' | 'rental' | 'owned';
+/**
+ * Where somebody lives at the start.
+ *
+ * `estate` is the family land, which is not a rung on the ladder the other
+ * four describe: no rent, no lease, no mortgage, and not yours — the family's.
+ */
+export type StartingHousing = 'couch' | 'roommates' | 'rental' | 'owned' | 'estate';
 
 export interface NewSaveConfig {
   /** Identity */
@@ -141,8 +148,9 @@ export function defaultConfig(): NewSaveConfig {
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
     companyName: '',
-    startLocationId: 'us-ca-losangeles',
-    housing: 'roommates', wealth: 'scraping',
+    // Home base is the family land, and it is not a choice on any screen.
+    startLocationId: ESTATE_CITY_ID,
+    housing: 'estate', wealth: 'scraping',
     startYear: 2026, startMonth: 3, startDay: 2,
   };
 }
