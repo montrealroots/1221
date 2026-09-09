@@ -11,6 +11,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { DESTINATIONS } from '@/ui/shell/destinations';
@@ -46,7 +47,7 @@ export function Home() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">{formatWeekdayDate(sim.now, sim.zone)}</div>
+        <div className="eyebrow">{formatWeekdayDate(sim.now, sim.zone)} · {PERFORMER_NOUN[player.performerTitle]}</div>
         <h1>Good {partOfDay(sim.now, sim.zone)}, {player.firstName}.</h1>
         <p className="muted">
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
@@ -115,7 +116,7 @@ export function Home() {
           {decisions.length === 0 && unread.length === 0 ? (
             <Empty
               title="Nothing Pressing"
-              body="No bills overdue, no offers expiring, no conflicts on the calendar. Go and do something you want to do."
+              body="Nothing is overdue and nothing clashes on the calendar. Go and do something you want to do."
             />
           ) : (
             <div className="list">

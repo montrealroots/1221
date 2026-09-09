@@ -122,14 +122,15 @@ finishes. It prints a pass or a fail per check:
 1. The deployment answers and the caller is signed in.
 2. An anonymous caller is refused.
 3. A slot that is not one, two or three is refused.
-4. A ledger that does not balance is refused.
-5. A real save writes.
-6. It reads back byte for byte.
-7. A retried write with the same key does not write twice.
-8. A stale tab cannot overwrite newer progress.
-9. The previous payload is kept as a backup.
-10. Clearing releases the slot, and a different universe can use it.
-11. Whatever was in the slot before is restored.
+4. A save that does not say it is an actor and actress simulator is refused.
+5. A ledger that does not balance is refused.
+6. A real save writes.
+7. It reads back byte for byte.
+8. A retried write with the same key does not write twice.
+9. A stale tab cannot overwrite newer progress.
+10. The previous payload is kept as a backup.
+11. Clearing releases the slot, and a different universe can use it.
+12. Whatever was in the slot before is restored.
 
 Exit 0 means every check passed and live persistence is verified against that
 deployment. Exit 78 means the two environment variables are missing and

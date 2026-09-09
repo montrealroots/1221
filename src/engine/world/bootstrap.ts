@@ -397,7 +397,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
  * never printed without knowing whose it is. Every other track reads the same
  * for everybody.
  */
-export function careerLabel(track: CareerTrack, title: PerformerTitle = 'actor'): string {
+export function careerLabel(track: CareerTrack, title: PerformerTitle): string {
   const labels: Record<CareerTrack, string> = {
     none: 'Undecided', actor: PERFORMER_NOUN[title], writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',

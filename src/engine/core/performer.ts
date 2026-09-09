@@ -1,7 +1,7 @@
 /**
  * SLATE — actor, or actress.
  *
- * They are two words for two jobs' worth of people, and the business has
+ * They are two names for one craft, and the business has
  * always kept them apart: separate awards, separate categories, separate
  * columns in a trade paper. So the game keeps them apart too. A person is one
  * or the other, and every label about that person uses their word. Every list
@@ -11,8 +11,11 @@
  * How a person's title is decided, in order: the title they carry, if they
  * carry one, because it is theirs to state; then the record's own statement of
  * their gender, for the real people the game reads in; then their pronouns,
- * she/her being an actress and everyone else an actor, which is the industry's
- * own default. Nobody's title is ever guessed from their name.
+ * she/her being an actress and he/him an actor, with anything the pronouns
+ * leave open falling back to actor. A fallback is not a default: the save
+ * records, for the player, whether the title was stated or implied, so the
+ * route is kept rather than either word standing in as the one the other
+ * varies from. Nobody's title is ever guessed from their name.
  *
  * It is a word, not a stat. Nothing about how well somebody acts, what they
  * are worth, or what they are offered branches on it — only what they are

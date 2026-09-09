@@ -11,8 +11,8 @@ creation, the geography map behind it, Home, the calendar and the weather.
 One save is one universe; there are three of them, and they never see each
 other.
 
-The life-and-industry simulator this was built out of — the shops, the studios,
-the schools, the phone, the people — has been removed on purpose. What is left
+Everything else that used to be here — the shops, the studios, the schools,
+the phone, the people — has been removed on purpose. What is left
 is those six features and the engine underneath them, kept whole:
 `docs/COVERAGE-MATRIX.md` lists what is in the build and what was taken out.
 
@@ -130,7 +130,7 @@ The browser never writes a save directly. It sends the universe to
 
 | Function | Enforces |
 | --- | --- |
-| `saveUniverse` | Signed in; slot is 1–3; payload parses, is within size, and is in a format this build reads; every transaction balances and the whole ledger sums to zero; no record belongs to another save; the world clock and playtime have not gone backwards; the previous payload is kept as a backup. Idempotent on a retry. |
+| `saveUniverse` | Signed in; slot is 1–3; payload parses, is within size, and is in a format this build reads; the save says it is an actor and actress simulator, holds the two titles equal, and gives its player one of them; every transaction balances and the whole ledger sums to zero; no record belongs to another save; the world clock and playtime have not gone backwards; the previous payload is kept as a backup. Idempotent on a retry. |
 | `loadUniverse` | Reads scoped to the caller by row-level security. With no slot, returns what is in all three. |
 | `recordOfficialResult` | Writes a finalised result once. A second write returns what is already stored rather than changing it. |
 | `clearSlot` | Moves the payload aside as a backup and marks the slot cleared. Nothing is destroyed outright. |

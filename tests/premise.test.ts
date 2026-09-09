@@ -14,6 +14,8 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createSave, defaultConfig, loadSave, migrate, quickSave, validateUniverse } from '@/engine';
 import { PREMISE_STATEMENT, SAVE_SCHEMA_VERSION, type SaveUniverse } from '@/engine/domain/model';
 import {
@@ -247,5 +249,67 @@ describe('the server will not store a save that is not this game', () => {
   it('refuses one whose player is neither', () => {
     expect(() => inspectPayload(payloadOf((u) => { u.premise.playerTitle = 'extra' as 'actor'; }), 1))
       .toThrow(/neither actor nor actress/i);
+  });
+});
+
+describe('the house rule holds in the source', () => {
+  const ROOT = new URL('../src/', import.meta.url);
+
+  function walk(dir: URL, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const path = new URL(name, dir);
+      if (statSync(path).isDirectory()) walk(new URL(`${name}/`, dir), out);
+      else if (/\.(ts|tsx)$/.test(name)) out.push(fileURLToPath(path));
+    }
+    return out;
+  }
+
+  const SOURCES = walk(ROOT).filter((f) => !f.endsWith('core/performer.ts'));
+
+  it('never writes "a actor" or "a actress"', () => {
+    // Both words open on a vowel sound, so the article is always "an". The bug
+    // hides from a search because the article and the noun are never in the
+    // same string: one is typed, the other is interpolated.
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      const text = readFileSync(file, 'utf8');
+      if (/\ba actor\b|\ba actress\b/i.test(text)) offenders.push(file);
+      // The interpolated form: "You are a {PERFORMER_NOUN[...]" and friends.
+      if (/\ba \{[^}]*PERFORMER_NOUN|\ba \{[^}]*performerNoun/i.test(text)) offenders.push(file);
+    }
+    expect(offenders, 'these write "a" before a title that needs "an"').toEqual([]);
+  });
+
+  it('prints a person’s title through the module rather than typing it out', () => {
+    // The one place a bare word is right is the control that offers the choice,
+    // where both are listed flat and neither is explained as the exception.
+    const ALLOWED = 'src/ui/creation/CharacterCreation.tsx';
+    const offenders: { file: string; line: string }[] = [];
+    for (const file of SOURCES) {
+      if (file.endsWith(ALLOWED)) continue;
+      for (const line of readFileSync(file, 'utf8').split('\n')) {
+        // A title inside JSX text or a quoted string, not inside a comment.
+        if (/^\s*(\*|\/\/)/.test(line)) continue;
+        if (/>(\s*)(Actor|Actress)(\s*)</.test(line) || /['"`](Actor|Actress)['"`]/.test(line)) {
+          offenders.push({ file, line: line.trim() });
+        }
+      }
+    }
+    expect(offenders, 'these type a title into a string instead of reading it off the person').toEqual([]);
+  });
+
+  it('offers the two titles flat, with neither explained as the exception', () => {
+    const creation = readFileSync(fileURLToPath(new URL('ui/creation/CharacterCreation.tsx', ROOT)), 'utf8');
+    expect(creation).toMatch(/<option value="actor">Actor<\/option>/);
+    expect(creation).toMatch(/<option value="actress">Actress<\/option>/);
+    // Neither option carries a note the other one does not.
+    expect(creation).not.toMatch(/<option value="actor(ess)?">[^<]*\(/);
+  });
+
+  it('keeps no default title on the label that prints one', () => {
+    const bootstrap = readFileSync(fileURLToPath(new URL('engine/world/bootstrap.ts', ROOT)), 'utf8');
+    expect(bootstrap, 'careerLabel defaults one of the two titles').not.toMatch(
+      /title:\s*PerformerTitle\s*=\s*'(actor|actress)'/,
+    );
   });
 });

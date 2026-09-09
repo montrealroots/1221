@@ -4,6 +4,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { SaveAdapter, SaveSlotInfo, Slot } from '@/engine/persistence/adapter';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 import type { SaveUniverse } from '@/engine/domain/model';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { migrate, validateUniverse } from '@/engine';
@@ -165,7 +166,7 @@ export function SaveSlots({
                       )}
                       <div style={{ minWidth: 0 }}>
                         <div className="slot-name">{meta?.characterName}</div>
-                        <div className="muted small">{meta?.careerLabel}</div>
+                        <div className="muted small">{meta?.performerTitle ? PERFORMER_NOUN[meta.performerTitle] : (meta?.careerLabel || '—')}</div>
                       </div>
                     </div>
 

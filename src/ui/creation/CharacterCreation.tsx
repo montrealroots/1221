@@ -130,6 +130,10 @@ export function CharacterCreation({
             <div>
               <div className="eyebrow">Slot {slot}</div>
               <h1 style={{ fontSize: 'var(--size-lg)' }}>Who are you going to be?</h1>
+              <p className="muted small" style={{ marginTop: 2 }}>
+                SLATE is an actor and actress simulator. This is the{' '}
+                {PERFORMER_NOUN[titleOf(config)].toLowerCase()} you play.
+              </p>
             </div>
           </div>
           <button className="btn btn-ghost btn-sm" onClick={onCancel}>Cancel</button>
@@ -288,7 +292,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             value={config.stageName ?? ''}
             onChange={(e) => set('stageName', e.target.value)}
           />
-          <p className="xs dim" style={{ marginTop: 4 }}>How you are billed on screen.</p>
+          <p className="xs dim" style={{ marginTop: 4 }}>The name your work is credited under, if it isn’t your own.</p>
         </div>
         <div className="field">
           <label htmlFor="pronouns">Pronouns</label>
@@ -308,7 +312,10 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <option value="actor">Actor</option>
             <option value="actress">Actress</option>
           </select>
-          <p className="xs dim" style={{ marginTop: 4 }}>Which of the two the business lists you under, and which award categories are open to you.</p>
+          <p className="xs dim" style={{ marginTop: 4 }}>
+              Actor and actress are two words for the same craft. Yours is the one the business
+              lists you under, and the one the game calls you by.
+            </p>
         </div>
       </div>
         </div>
@@ -599,7 +606,7 @@ function PersonalStep({
             <p className="muted small">
               Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are already
               the best alive at all five of those. Every one of these costs something, some can’t be
-              held together, and the life half of the game reads all of them.
+              held together, and everything the game still simulates reads all of them.
             </p>
           </div>
           <span className="chip chip-accent">{config.personalityTraits.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -641,10 +648,10 @@ function PersonalStep({
           <div>
             <h2>Your Craft</h2>
             <p className="muted small">
-              Not a choice, and not on this page. You hold every acting, writing, directing,
-              producing and showrunning trait in the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of
-              them — because you’re the best living practitioner of all five. They’re listed on
-              the Your Craft step and on your Character screen.
+              Not a choice, and not on this page. You’re the best{' '}
+              {PERFORMER_NOUN[titleOf(config)].toLowerCase()} alive, and you hold every trait in
+              the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of them.
+              They’re listed on the Your Craft step.
             </p>
           </div>
         </div>
@@ -705,7 +712,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <div>
             <h2>Your Craft</h2>
             <p className="muted small">
-              You are a {PERFORMER_NOUN[titleOf(config)].toLowerCase()}, and you are the best there
+              You are an {PERFORMER_NOUN[titleOf(config)].toLowerCase()}, and you are the best there
               has ever been at all of it. Nothing here is chosen, because nothing here is missing.
             </p>
           </div>
@@ -740,12 +747,13 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <strong className="xs">Under Construction</strong>
           <p className="xs" style={{ margin: '6px 0 0' }}>
             Casting, auditions, productions and everything the career is made of are being rebuilt
-            for a later milestone. The Casting tab is in the game and locked until that work lands.
+            for a later milestone. None of it is in this build, and nothing in the game points at
+            it yet.
           </p>
           <p className="xs" style={{ margin: '8px 0 0' }}>
-            This build is the life around the work: where you live, who you know, what you own,
-            what you wear, what you eat, where you go and how you keep yourself standing. Start
-            there, and the career opens on top of a life that already exists.
+            This build is the ground the work will stand on: where you live, the map around it,
+            the calendar you keep, the weather over all of it, and how you keep yourself standing.
+            Start there, and the work arrives into a life that already exists.
           </p>
         </div>
       </div>
