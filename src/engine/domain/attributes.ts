@@ -175,7 +175,6 @@ export function overallRating(sheet: AttributeSheet): number {
 // Traits
 // ---------------------------------------------------------------------------
 
-import type { ProfessionId } from '../content/professions';
 import { performerTitleOf, type PerformerTitle } from '../core/performer';
 
 export type TraitCategory = 'Talent' | 'Method' | 'Temperament' | 'Public' | 'Social' | 'Life';
@@ -196,7 +195,6 @@ export interface TraitDef {
    * The profession this trait belongs to. Absent, it is an acting trait and
    * is picked at creation; present, it is picked as that profession levels.
    */
-  profession?: ProfessionId;
   /** Flat additions applied to attributes when the trait is held. */
   attributeMods?: Record<string, number>;
   /** Flat additions applied to skills when the trait is held. */
@@ -259,73 +257,7 @@ if (TRAITS.length !== 42) {
 }
 
 export const TRAIT_IDS: readonly string[] = TRAITS.map((t) => t.id);
-/**
- * Traits for the professions you grow into. Each is picked as that profession
- * levels, changes how its work goes rather than adding points, and some
- * cannot be held together — the same shape acting's traits have.
- */
-export const PROFESSION_TRAITS: readonly TraitDef[] = [
-  // --- Writer ---------------------------------------------------------------
-  { id: 'writer_structuralist', name: 'Structuralist', profession: 'writer', category: 'Talent', description: 'You see the shape of the thing before a word is down. Acts land where they should.', skillMods: { story_structure: 10, rewriting: 6 }, systemMods: { draftQuality: 1.06 } },
-  { id: 'writer_ear_for_dialogue', name: 'Ear For Dialogue', profession: 'writer', category: 'Talent', description: 'People in your pages sound like people. Actors and actresses ask for your scripts.', skillMods: { dialogue: 12, character_writing: 6 }, systemMods: { attachmentOdds: 1.1 } },
-  { id: 'writer_page_machine', name: 'Page Machine', profession: 'writer', category: 'Method', description: 'Drafts arrive fast and a little rough. Deadlines are never the problem.', skillMods: { page_speed: 14, rewriting: -4 }, systemMods: { draftDays: 0.75 }, conflictsWith: ['writer_polisher'] },
-  { id: 'writer_polisher', name: 'Polisher', profession: 'writer', category: 'Method', description: 'Nothing leaves your desk until it’s right. It takes longer, and it’s right.', skillMods: { rewriting: 12, page_speed: -6 }, systemMods: { draftQuality: 1.08, draftDays: 1.2 }, conflictsWith: ['writer_page_machine'] },
-  { id: 'writer_world_builder', name: 'World Builder', profession: 'writer', category: 'Talent', description: 'Your stories come with a place to live in. Franchises grow from that.', skillMods: { world_building: 12, adaptation: 4 }, systemMods: { franchisePotential: 1.15 } },
-  { id: 'writer_pitch_perfect', name: 'Pitch Perfect', profession: 'writer', category: 'Public', description: 'You can sell a room on a story in ninety seconds. Buyers lean in.', skillMods: { pitching: 12 }, systemMods: { pitchInterest: 1.2 } },
-  { id: 'writer_room_general', name: 'Room General', profession: 'writer', category: 'Social', description: 'A writers\' room runs better with you in it. Episodes break faster.', skillMods: { room_leadership: 10, episode_breaking: 8 }, conflictsWith: ['writer_lone_wolf'] },
-  { id: 'writer_lone_wolf', name: 'Lone Wolf', profession: 'writer', category: 'Temperament', description: 'You write alone and it shows, for better and worse. Rooms aren’t your place.', skillMods: { story_structure: 4, character_writing: 6, room_leadership: -10 }, systemMods: { draftQuality: 1.04 }, conflictsWith: ['writer_room_general'] },
-
-  // --- Director -------------------------------------------------------------
-  { id: 'director_visualist', name: 'Visualist', profession: 'director', category: 'Talent', description: 'Every frame is composed. Cinematographers love you; schedules less so.', skillMods: { visual_language: 12, coverage_planning: 4 }, systemMods: { footageQuality: 1.05 } },
-  { id: 'director_actors_director', name: 'Actors\' Director', profession: 'director', category: 'Talent', description: 'Performers do their best work for you and tell each other so.', skillMods: { actor_direction: 12, tone_control: 6 }, systemMods: { castMorale: 1.1, attachmentOdds: 1.1 } },
-  { id: 'director_one_take', name: 'One-Take Wonder', profession: 'director', category: 'Method', description: 'You know what you need and you get it. Days come in early.', skillMods: { shot_efficiency: 14, coverage_planning: -4 }, systemMods: { shootDays: 0.85 }, conflictsWith: ['director_perfectionist'] },
-  { id: 'director_perfectionist', name: 'Perfectionist', profession: 'director', category: 'Method', description: 'Take forty. The footage is extraordinary and the schedule is a rumor.', skillMods: { coverage_planning: 8, post_vision: 8, shot_efficiency: -8 }, systemMods: { footageQuality: 1.08, shootOverrun: 1.2 }, conflictsWith: ['director_one_take'] },
-  { id: 'director_set_general', name: 'Set General', profession: 'director', category: 'Temperament', description: 'Two hundred people know who is in charge. Friction doesn’t last.', skillMods: { set_authority: 14 }, systemMods: { crewFriction: 0.85 } },
-  { id: 'director_editor_brain', name: 'Editor\'s Brain', profession: 'director', category: 'Talent', description: 'You shoot the cut. Post is short because you already saw the film.', skillMods: { post_vision: 12, coverage_planning: 6 }, systemMods: { postDays: 0.88 } },
-  { id: 'director_tonal_control', name: 'Tonal Control', profession: 'director', category: 'Method', description: 'Comedy stays funny, dread stays dreadful. Nothing wobbles.', skillMods: { tone_control: 12 }, systemMods: { criticalSwing: 1.06 } },
-
-  // --- Producer -------------------------------------------------------------
-  { id: 'producer_nose_for_material', name: 'Nose For Material', profession: 'producer', category: 'Talent', description: 'You know a good script when you read one, before anyone else does.', skillMods: { development_instinct: 12 }, systemMods: { coverageAccuracy: 1.15 } },
-  { id: 'producer_money_finder', name: 'Money Finder', profession: 'producer', category: 'Talent', description: 'There’s always someone who will fund it. You know who.', skillMods: { financing: 12, packaging: 4 }, systemMods: { financingReach: 1.15 } },
-  { id: 'producer_penny_counter', name: 'Penny Counter', profession: 'producer', category: 'Method', description: 'Every line item is questioned. Films come in under and look it.', skillMods: { budgeting: 12, vendor_management: 6, packaging: -4 }, systemMods: { productionCost: 0.94 }, conflictsWith: ['producer_big_spender'] },
-  { id: 'producer_big_spender', name: 'Big Spender', profession: 'producer', category: 'Method', description: 'Put it on the screen. The package is bigger and so is the bill.', skillMods: { packaging: 10, financing: 4, budgeting: -8 }, systemMods: { packageValue: 1.12, productionCost: 1.08 }, conflictsWith: ['producer_penny_counter'] },
-  { id: 'producer_fire_fighter', name: 'Fire Fighter', profession: 'producer', category: 'Temperament', description: 'When the day falls apart you’re already on the phone. Lost days come back.', skillMods: { crisis_management: 14 }, systemMods: { dayLostRecovery: 1.2 } },
-  { id: 'producer_scheduler', name: 'Scheduler', profession: 'producer', category: 'Method', description: 'The board is a thing of beauty. Post doesn’t slip.', skillMods: { scheduling: 12, post_supervision: 4 }, systemMods: { postDays: 0.92 } },
-  { id: 'producer_closer', name: 'Closer', profession: 'producer', category: 'Social', description: 'People say yes to you. Attachments land that wouldn’t for anyone else.', skillMods: { packaging: 8, financing: 6 }, systemMods: { attachmentOdds: 1.15 } },
-
-  // --- Showrunner -----------------------------------------------------------
-  { id: 'showrunner_room_runner', name: 'Room Runner', profession: 'showrunner', category: 'Social', description: 'Your room is the one writers want to be in. It breaks story on time.', skillMods: { room_leadership: 12, episode_breaking: 4 }, systemMods: { draftDays: 0.9 } },
-  { id: 'showrunner_season_architect', name: 'Season Architect', profession: 'showrunner', category: 'Talent', description: 'Ten hours that feel like one story. Finales pay off what pilots planted.', skillMods: { episode_breaking: 12, story_structure: 6 }, systemMods: { draftQuality: 1.06 } },
-  { id: 'showrunner_network_whisperer', name: 'Network Whisperer', profession: 'showrunner', category: 'Public', description: 'Notes arrive and somehow become your idea. The network feels heard.', skillMods: { talent_relations: 8, pitching: 6 }, systemMods: { notesTolerance: 1.15 } },
-  { id: 'showrunner_iron_deadline', name: 'Iron Deadline', profession: 'showrunner', category: 'Method', description: 'The episode airs when it airs. Whatever it takes, it’s there.', skillMods: { scheduling: 12, page_speed: 4 }, systemMods: { draftDays: 0.85 }, conflictsWith: ['showrunner_auteur'] },
-  { id: 'showrunner_auteur', name: 'Auteur', profession: 'showrunner', category: 'Method', description: 'It’s your show. It’s late, and it’s unmistakably yours.', skillMods: { tone_control: 12, story_structure: 4, scheduling: -6 }, systemMods: { draftQuality: 1.08, draftDays: 1.15 }, conflictsWith: ['showrunner_iron_deadline'] },
-  { id: 'showrunner_post_hawk', name: 'Post Hawk', profession: 'showrunner', category: 'Method', description: 'You’re in the edit for every episode. Nothing airs that you haven’t cut.', skillMods: { post_supervision: 12 }, systemMods: { postDays: 0.9 } },
-  { id: 'showrunner_cast_keeper', name: 'Cast Keeper', profession: 'showrunner', category: 'Social', description: 'Your leads stay for season five. Nobody quits a show they love.', skillMods: { talent_relations: 12 }, systemMods: { castRetention: 1.2 } },
-
-  // --- Executive ------------------------------------------------------------
-  { id: 'executive_market_reader', name: 'Market Reader', profession: 'executive', category: 'Talent', description: 'You know what audiences want eighteen months before they do.', skillMods: { market_reading: 12, slate_strategy: 4 }, systemMods: { greenlightAccuracy: 1.12 } },
-  { id: 'executive_deal_maker', name: 'Deal Maker', profession: 'executive', category: 'Talent', description: 'Terms bend toward you. Everybody leaves the table thinking they won.', skillMods: { negotiation: 10, deal_structuring: 8 }, systemMods: { dealTerms: 1.1 } },
-  { id: 'executive_slate_builder', name: 'Slate Builder', profession: 'executive', category: 'Method', description: 'One film is a bet. A slate is a business. You build slates.', skillMods: { slate_strategy: 12, corporate_finance: 4 }, systemMods: { slateBalance: 1.1 } },
-  { id: 'executive_distribution_mind', name: 'Distribution Mind', profession: 'executive', category: 'Talent', description: 'Right film, right screens, right week. Openings aren’t luck.', skillMods: { distribution_strategy: 12, marketing_strategy: 4 }, systemMods: { openingWeekend: 1.06 } },
-  { id: 'executive_rights_hoarder', name: 'Rights Hoarder', profession: 'executive', category: 'Method', description: 'If it can be optioned you own it. The library is the asset.', skillMods: { rights_management: 12 }, systemMods: { optionCost: 0.9 } },
-  { id: 'executive_talent_friendly', name: 'Talent Friendly', profession: 'executive', category: 'Social', description: 'Stars take your calls. Agents send you first looks.', skillMods: { talent_relations: 12, negotiation: -4 }, systemMods: { attachmentOdds: 1.15 }, conflictsWith: ['executive_hard_bargainer'] },
-  { id: 'executive_hard_bargainer', name: 'Hard Bargainer', profession: 'executive', category: 'Temperament', description: 'Every dollar is fought for. Talent respects it and doesn’t love it.', skillMods: { negotiation: 12, talent_relations: -6 }, systemMods: { dealTerms: 1.12, attachmentOdds: 0.92 }, conflictsWith: ['executive_talent_friendly'] },
-
-  // --- Creator --------------------------------------------------------------
-  { id: 'creator_natural_host', name: 'Natural Host', profession: 'creator', category: 'Talent', description: 'The camera is a friend. You talk to one person and a million feel it.', skillMods: { on_camera_hosting: 14 }, systemMods: { postReach: 1.08 } },
-  { id: 'creator_algorithm_whisperer', name: 'Algorithm Whisperer', profession: 'creator', category: 'Method', description: 'You understand the feed better than the people who built it.', skillMods: { content_strategy: 12, audience_growth: 4 }, systemMods: { postReach: 1.15 } },
-  { id: 'creator_cutter', name: 'Cutter', profession: 'creator', category: 'Talent', description: 'Your edits are tight enough to cut yourself on. Watch time climbs.', skillMods: { editing_software: 14 }, systemMods: { postQuality: 1.1 } },
-  { id: 'creator_community_builder', name: 'Community Builder', profession: 'creator', category: 'Social', description: 'Followers become a community, and a community stays.', skillMods: { audience_growth: 12 }, systemMods: { followerRetention: 1.15 } },
-  { id: 'creator_brand_safe', name: 'Brand Safe', profession: 'creator', category: 'Public', description: 'Sponsors sleep well. Deals arrive without being chased.', skillMods: { content_strategy: 4, on_camera_hosting: 4 }, systemMods: { dealOdds: 1.2 }, conflictsWith: ['creator_edgelord'] },
-  { id: 'creator_edgelord', name: 'Edgelord', profession: 'creator', category: 'Public', description: 'You say the thing. Reach goes up, brand deals go elsewhere.', skillMods: { audience_growth: 8, content_strategy: 4 }, systemMods: { postReach: 1.1, dealOdds: 0.8 }, conflictsWith: ['creator_brand_safe'] },
-  { id: 'creator_consistent', name: 'Consistent Poster', profession: 'creator', category: 'Temperament', description: 'Same day, same time, every week. Audiences reward the habit.', skillMods: { content_strategy: 6, audience_growth: 6 }, systemMods: { consistency: 1.2 } },
-];
-
-/** The forty-two acting traits, picked at creation. */
-export const ACTING_TRAITS: readonly TraitDef[] = TRAITS;
-
-/** Every trait in the game, acting and profession alike, for lookups. */
-export const ALL_TRAITS: readonly TraitDef[] = [...TRAITS, ...PROFESSION_TRAITS];
+export const ALL_TRAITS: readonly TraitDef[] = TRAITS;
 
 export const TRAIT_BY_ID: Readonly<Record<string, TraitDef>> =
   Object.fromEntries(ALL_TRAITS.map((t) => [t.id, t]));
@@ -462,10 +394,6 @@ export function skillsOf(person: TraitHolder & { skills: Record<string, number> 
   return effectiveSkills(person.skills, [...person.traits, ...extra], { floor: person.prodigy ? 100 : 0 });
 }
 
-/** Traits belonging to one profession. */
-export function traitsForProfession(profession: ProfessionId): TraitDef[] {
-  return PROFESSION_TRAITS.filter((t) => t.profession === profession);
-}
 
 /**
  * A trait's name as it reads on one person's sheet.

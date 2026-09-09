@@ -1,7 +1,7 @@
 /**
  * SLATE — personality: who they are, not what they do.
  *
- * The craft traits are automatic. The founder is the best living writer,
+ * The craft traits are automatic. The player is the best living actor or
  * director, producer, showrunner and actor, so they hold every trait in every
  * one of those disciplines and there was never a choice to make about it.
  *

@@ -16,7 +16,6 @@ import {
   attributesOf, type AttributeSheet,
 } from '../domain/attributes';
 import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
-import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '../content/founder';
 import { CEILING, GOAT_TRAITS } from '../content/prodigy';
 import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
 import { CITIES } from '../content/geography';
@@ -215,15 +214,15 @@ export function emptyUniverse(
 
 /** Starting capability from the chosen track and stage. */
 /**
- * The founder's instrument.
+ * The instrument.
  *
- * There is nothing to seed. They are the best living writer, director,
- * producer, showrunner and actor at once, so every one of the 88 acting
- * attributes and every skill in every domain starts at the ceiling. Nothing on
- * the creation screen moves any of it, because there is nowhere for it to go.
+ * There is nothing to seed. They are the best living actor or actress, so
+ * every one of the 88 acting attributes starts at the ceiling, along with the
+ * ordinary life skills anybody has. Nothing on the creation screen moves any
+ * of it, because there is nowhere for it to go.
  *
  * What creation still decides is everything the instrument does not cover:
- * how much money, who takes your call, and what kind of company you open.
+ * who they are, where they live, and what they are starting with.
  */
 /**
  * Every trait in the game, held at once.
@@ -356,9 +355,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     lifestyle: config.lifestyle,
     background: config.background,
     attributes,
-    // Every craft trait in the game. Nothing was picked and nothing could
-    // have been: the best living writer, director, producer, showrunner and
-    // actor holds all of them.
+    // Every acting trait in the game. Nothing was picked and nothing could
+    // have been: the best living actor or actress holds all of them.
     traits: everyTrait(),
     // Personality is the opposite: the only thing on this character that was
     // genuinely chosen, and the only trait set that still costs them.
@@ -367,15 +365,11 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
       .slice(0, MAX_PERSONALITY_TRAITS),
     skills,
 
-    // The producer's instrument, at the ceiling like everything else. Separate
-    // from the acting set above because they measure different jobs, and both
-    // of them are full.
-    founder: Object.fromEntries(FOUNDER_ATTRIBUTES.map((a) => [a.id, CEILING])),
-    // All fourteen G.O.A.T. traits and all nineteen ordinary producing ones.
-    // The ordinary set is built out of trade-offs — a contrarian reads the
-    // market worse — and the prodigy flag below is what stops the trade-off
-    // half applying to the one person it was never going to apply to.
-    founderTraits: [...GOAT_TRAITS.map((t) => t.id), ...FOUNDER_TRAITS.map((t) => t.id)],
+    // The three that say what kind of actor or actress. There is nothing
+    // else to be the best at any more: the writing, the directing, the
+    // producing and the showrunning went with the half of the game that
+    // used them.
+    goatTraits: GOAT_TRAITS.map((t) => t.id),
     prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),

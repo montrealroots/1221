@@ -22,6 +22,9 @@ import {
   PERFORMER_NOUN, PERFORMER_PLURAL, PERFORMER_TITLES,
   categoryAdmits, forTitle, impliedPerformerTitle, performerNoun, performerTitleOf, splitByTitle,
 } from '@/engine/core/performer';
+import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
+import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
+import { SKILLS } from '@/engine/domain/skills';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { GuardError, inspectPayload } from '../base44/shared/guard.js';
 
@@ -249,6 +252,41 @@ describe('the server will not store a save that is not this game', () => {
   it('refuses one whose player is neither', () => {
     expect(() => inspectPayload(payloadOf((u) => { u.premise.playerTitle = 'extra' as 'actor'; }), 1))
       .toThrow(/neither actor nor actress/i);
+  });
+});
+
+describe('the craft is acting, and only acting', () => {
+  it('keeps one discipline, and it is the one the game is named for', () => {
+    expect([...DISCIPLINES]).toEqual(['acting']);
+    expect(DISCIPLINE_LABEL.acting).toBe('Acting');
+  });
+
+  it('gives every G.O.A.T. trait to acting', () => {
+    expect(GOAT_TRAITS.length).toBeGreaterThan(0);
+    for (const trait of GOAT_TRAITS) expect(trait.discipline).toBe('acting');
+    expect(goatTraitsIn('acting')).toHaveLength(GOAT_TRAITS.length);
+  });
+
+  it('hands the player the acting instrument and nothing from another job', () => {
+    const sim = quickSave({}, 'craft-acting');
+    const player = sim.player;
+
+    // Every acting attribute at the ceiling.
+    expect(Object.keys(player.attributes).length).toBe(ATTRIBUTES.length);
+    for (const attribute of ATTRIBUTES) expect(player.attributes[attribute.id]).toBe(CEILING);
+
+    // Every acting trait, and the three that belong to one person.
+    expect(player.traits.sort()).toEqual(ALL_TRAITS.map((t) => t.id).sort());
+    expect(player.goatTraits?.sort()).toEqual(GOAT_TRAITS.map((t) => t.id).sort());
+
+    // Nothing from a job this game no longer simulates.
+    expect('founder' in player, 'the producer sheet is back on the player').toBe(false);
+    expect('founderTraits' in player).toBe(false);
+    expect('professions' in player).toBe(false);
+  });
+
+  it('leaves the skill sheet as ordinary life, not five crafts', () => {
+    for (const skill of SKILLS) expect(skill.domain).toBe('general');
   });
 });
 

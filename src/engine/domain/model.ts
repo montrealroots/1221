@@ -136,9 +136,8 @@ export interface Person {
   /**
    * Who they are, as against what they are good at.
    *
-   * The craft sheet above is automatic for the founder — the best living
-   * writer, director, producer, showrunner and actor holds every trait in
-   * every one of those disciplines. None of that says whether they sleep,
+   * The craft sheet above is automatic — the best living actor or actress
+   * holds every acting trait there is. None of that says whether they sleep,
    * hold a grudge or can be alone in a house. These are chosen, there are
    * four of them, and unlike the craft traits they cost what they cost.
    */
@@ -146,17 +145,14 @@ export interface Person {
   skills: SkillSheet;
 
   /**
-   * The producer's instrument, and the traits that go with it.
+   * The three that say what kind of actor or actress this is.
    *
-   * A second, separate set from the acting one above. The player has it; so do
-   * the executives they hire. Anybody who is only ever in front of a camera
-   * does not, and reading it on them would be reading a number that was never
-   * set. Absent means not a producer.
+   * They are not a second sheet. The eighty-eight attributes are the
+   * instrument; these sit on top of it and are the once-in-a-lifetime part.
+   * Unlike an ordinary trait, a G.O.A.T. trait is never paid for with a
+   * weakness somewhere else.
    */
-  founder?: Record<string, number>;
-  founderTraits?: string[];
-  /** Where they came from before they were doing this. */
-  founderBackground?: string;
+  goatTraits?: string[];
 
   /**
    * The once-in-a-lifetime one, and there is exactly one of them in a save.

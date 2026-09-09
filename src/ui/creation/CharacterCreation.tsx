@@ -31,8 +31,7 @@ import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
   conflictingPersonalityTraits, personalityTraitsIn,
 } from '@/engine/content/personality-traits';
-import { FOUNDER_TRAITS } from '@/engine/content/founder';
-import { ALL_TRAITS } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
 import {
   DEFAULT_HERITAGE, HERITAGES, HERITAGE_BY_ID, HERITAGE_NOTE, heritageRegions,
 } from '@/engine/content/heritage';
@@ -649,9 +648,10 @@ function PersonalStep({
             <h2>Your Craft</h2>
             <p className="muted small">
               Not a choice, and not on this page. You’re the best{' '}
-              {PERFORMER_NOUN[titleOf(config)].toLowerCase()} alive, and you hold every trait in
-              the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of them.
-              They’re listed on the Your Craft step.
+              {PERFORMER_NOUN[titleOf(config)].toLowerCase()} alive: all {ATTRIBUTES.length}{' '}
+              attributes at {CEILING}, all {ALL_TRAITS.length} acting traits, and the{' '}
+              {GOAT_TRAITS.length} that only ever belong to one person. They’re listed on the
+              Your Craft step.
             </p>
           </div>
         </div>
@@ -713,29 +713,34 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <h2>Your Craft</h2>
             <p className="muted small">
               You are an {PERFORMER_NOUN[titleOf(config)].toLowerCase()}, and you are the best there
-              has ever been at all of it. Nothing here is chosen, because nothing here is missing.
+              has ever been at it. There is nothing to choose here, because nothing is missing.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-2">
-          {DISCIPLINES.map((discipline) => (
-            <div key={discipline} className="trait is-fixed">
-              <div className="row-between">
-                <div className="trait-name">{DISCIPLINE_LABEL[discipline]}</div>
-                <span className="chip chip-accent">{GOAT_LABEL}</span>
-              </div>
-              <div className="xs dim" style={{ marginTop: 4 }}>
-                Everything At {CEILING} · Every Trait
-              </div>
-              <div className="row wrap gap-1" style={{ marginTop: 6 }}>
-                {goatTraitsIn(discipline).map((trait) => (
-                  <span key={trait.id} className="chip chip-accent">{trait.name}</span>
-                ))}
-              </div>
+        {DISCIPLINES.map((discipline) => (
+          <div key={discipline} className="trait is-fixed">
+            <div className="row-between">
+              <div className="trait-name">{DISCIPLINE_LABEL[discipline]}</div>
+              <span className="chip chip-accent">{GOAT_LABEL}</span>
             </div>
-          ))}
-        </div>
+            <div className="xs dim" style={{ marginTop: 4 }}>
+              All {ATTRIBUTES.length} Attributes At {CEILING} · All {ALL_TRAITS.length} Traits
+            </div>
+            <div className="row wrap gap-1" style={{ marginTop: 8 }}>
+              {goatTraitsIn(discipline).map((trait) => (
+                <span key={trait.id} className="chip chip-accent">{trait.name}</span>
+              ))}
+            </div>
+            <div className="col gap-1" style={{ marginTop: 8 }}>
+              {goatTraitsIn(discipline).map((trait) => (
+                <div key={trait.id} className="xs dim">
+                  <span className="strong">{trait.name}.</span> {trait.description}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* --- What is not here yet ------------------------------------------ */}
@@ -937,9 +942,9 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           committing and it was false.
         */}
         <p className="small">
-          <strong>All {ALL_TRAITS.length + GOAT_TRAITS.length + FOUNDER_TRAITS.length} Of Them.</strong>
-          {' '}Every acting and profession trait in the game, every producing trait, and all
-          {' '}{GOAT_TRAITS.length} G.O.A.T. traits, held at once.
+          <strong>The Best There Has Ever Been.</strong>
+          {' '}All {ATTRIBUTES.length} acting attributes at {CEILING}, all {ALL_TRAITS.length}{' '}
+          acting traits, and the {GOAT_TRAITS.length} G.O.A.T. traits, held at once.
         </p>
         <p className="xs dim" style={{ margin: '6px 0 0' }}>
           For anybody else that list contradicts itself and most of it is paid for with a weakness
