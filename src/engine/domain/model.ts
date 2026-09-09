@@ -881,7 +881,7 @@ export interface Premise {
 
 /** The premise, in the words every save carries. */
 export const PREMISE_STATEMENT =
-  'SLATE is an actor and actress life simulator. Actor and actress are two names '
+  'SLATE is an actor and actress life simulator. Actor and Actress are two names for '
   + 'one craft, and this game treats them as equals: neither is the default, and '
   + 'every label about a person uses their own word.';
 

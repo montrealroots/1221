@@ -324,6 +324,25 @@ describe('the house rule holds in the source', () => {
 
   const SOURCES = walk(ROOT).filter((f) => !f.endsWith('core/performer.ts'));
 
+  it('never capitalises one of the pair and not the other', () => {
+    // The sentence that names them together is the sentence claiming they are
+    // equals, so "Actor and actress" reads as the opposite of what it says.
+    // Either both carry a capital or neither does; one of each is the bug.
+    // No exemption for the start of a sentence. That is precisely where it
+    // happened: "…the choice is yours. Actor and actress are two words for the
+    // same craft" — the capital on the first is correct grammar and the
+    // lowercase on the second still reads as a ranking. Both, or neither.
+    const MIXED = /\b(Actor|Actress) (and|or) (actor|actress)\b|\b(actor|actress) (and|or) (Actor|Actress)\b/;
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      for (const [i, line] of readFileSync(file, 'utf8').split('\n').entries()) {
+        const match = MIXED.exec(line);
+        if (match) offenders.push(`${file}:${i + 1} — ${match[0]}`);
+      }
+    }
+    expect(offenders, 'these capitalise one of the two titles and not the other').toEqual([]);
+  });
+
   it('never writes "a actor" or "a actress"', () => {
     // Both words open on a vowel sound, so the article is always "an". The bug
     // hides from a search because the article and the noun are never in the

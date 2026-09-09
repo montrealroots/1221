@@ -369,7 +369,7 @@ function IdentityStep({ config, set, setConfig }: {
               </div>
               <p className="xs dim" style={{ marginTop: 4 }}>
                 He/him settles this by itself, and so does she/her. They/them doesn’t, so the
-                choice is yours. Actor and actress are two words for the same craft and the game
+                choice is yours. Actor and Actress are two words for the same craft and the game
                 treats them as equals — pick the one the business would list you under, and it
                 will call you by it.
               </p>
