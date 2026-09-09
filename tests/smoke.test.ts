@@ -12,10 +12,11 @@ describe('a new universe boots and runs', () => {
     expect(report.errors).toEqual([]);
     expect(sim.player.displayName).toBeTruthy();
     expect(sim.player.primaryAccountId).toBeTruthy();
-    // A new save is the player, their household and the handful of people the
-    // life systems need — agents, providers. The industry that used to fill a
-    // world with hundreds of names is gone.
-    expect(Object.keys(sim.universe.people).length).toBeGreaterThan(2);
+    // A new save is one person in one household. The systems that used to
+    // populate a world around them — agents, providers, the industry — are
+    // gone, and nothing else generates a name any more.
+    expect(Object.keys(sim.universe.people)).toEqual([sim.universe.playerId]);
+    expect(Object.keys(sim.universe.households)).toHaveLength(1);
   });
 
   it('has a player who exists somewhere in time and space', () => {
@@ -53,17 +54,25 @@ describe('a new universe boots and runs', () => {
     expect(load.pendingEvents).toBeLessThan(20000);
   });
 
-  it('runs three years without going quiet in the ledger', () => {
-    // What the world does on its own, now that it does it: bills post, the
-    // clock turns, history accrues. Whether any of it needs an answer from the
-    // player is a separate claim, and it is not true yet — see the todo below.
+  it('runs three years without breaking anything', () => {
+    // Nothing bills the player any more, so the honest claim is not that the
+    // ledger keeps moving — it is that three years of the clock leave the
+    // save consistent, the money reconciled and the character still alive in
+    // a plausible state.
     const sim = quickSave();
+    const opening = sim.universe.transactions.length;
     for (let month = 0; month < 36; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
-    expect(sim.universe.transactions.length, 'nothing moved in three years').toBeGreaterThan(20);
-    expect(sim.universe.history.length).toBeGreaterThan(0);
+
+    expect(sim.universe.transactions.length, 'money appeared from nowhere').toBe(opening);
     expect(sim.ledger.audit()).toEqual([]);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(openDecisions(sim).length).toBeGreaterThanOrEqual(0);
+
+    // The clock kept turning the day over for all three years.
+    const w = sim.player.wellbeing;
+    expect(w.energy).toBeGreaterThan(0);
+    expect(w.condition).toBeGreaterThan(0);
+    expect(sim.player.lastSleptAt, 'nobody slept in three years').toBeDefined();
   });
 
   /**

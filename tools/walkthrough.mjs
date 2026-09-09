@@ -1,8 +1,7 @@
 /**
  * Photographs every screen in the game, in the order a player meets them.
  *
- * Startup, the save slots, all five creation steps, then every workspace in
- * the navigation, plus Go Anywhere and the help panel.
+ * Startup, the save slots, every creation step, Home, and the calendar.
  */
 
 import { chromium } from 'playwright';
@@ -55,21 +54,8 @@ for (const name of ['creation-personal', 'creation-career', 'creation-starting-p
 const begin = page.getByRole('button', { name: /it.s time to be great|begin|start save/i }).first();
 if (await begin.count()) { await begin.click().catch(() => {}); await page.waitForTimeout(3600); }
 
-// Clear the coach mark so it does not sit over every screen.
-const gotIt = page.getByRole('button', { name: /got it/i }).first();
-if (await gotIt.count()) { await gotIt.click().catch(() => {}); await page.waitForTimeout(500); }
-const guidedOff = page.getByRole('button', { name: /turn guided mode off/i }).first();
-if (await guidedOff.count()) { await guidedOff.click().catch(() => {}); await page.waitForTimeout(500); }
-
 const SCREENS = [
-  ['home', /^Home$/], ['world', /^World$/], ['calendar', /^Calendar$/],
-  ['wellbeing', /^Wellbeing$/], ['relationships', /^Relationships$/], ['history', /^History$/],
-  ['bank', /^Bank$/], ['property', /^Property$/], ['vehicles', /^Vehicles$/],
-  ['shopping', /^Shopping$/], ['insurance', /^Insurance$/],
-  ['work', /^Work$/], ['casting', /^Casting$/], ['projects', /^Projects$/],
-  ['company', /^Company$/], ['awards', /^Awards$/], ['social', /^Social$/],
-  ['health', /^Health$/], ['education', /^Education$/], ['travel', /^Travel$/],
-  ['character', /^Character$/], ['settings', /^Settings$/],
+  ['home', /^Home$/], ['calendar', /^Calendar$/],
 ];
 
 for (const [name, pattern] of SCREENS) {
@@ -77,29 +63,7 @@ for (const [name, pattern] of SCREENS) {
   if (!(await link.count())) { console.log('   (no nav entry for', name, ')'); continue; }
   await link.click().catch(() => {});
   await page.waitForTimeout(1200);
-  const dismiss = page.getByRole('button', { name: /got it/i }).first();
-  if (await dismiss.count()) { await dismiss.click().catch(() => {}); await page.waitForTimeout(300); }
   await shoot(name);
-}
-
-// Go Anywhere, with a query typed in so the results show.
-const search = page.getByRole('button', { name: /go anywhere/i }).first();
-if (await search.count()) {
-  await search.click().catch(() => {});
-  await page.waitForTimeout(700);
-  await page.keyboard.type('doctor');
-  await page.waitForTimeout(800);
-  await shoot('go-anywhere');
-  await page.keyboard.press('Escape');
-  await page.waitForTimeout(400);
-}
-
-// The help panel.
-const help = page.getByRole('button', { name: /help/i }).first();
-if (await help.count()) {
-  await help.click().catch(() => {});
-  await page.waitForTimeout(900);
-  await shoot('help');
 }
 
 await browser.close();

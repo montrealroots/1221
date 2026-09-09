@@ -17,11 +17,7 @@ import {
 } from '../core/time';
 import { CITIES } from '../content/geography';
 
-export type CalendarCategory =
-  | 'work' | 'career' | 'finance' | 'health' | 'personal' | 'family' | 'education'
-  | 'property' | 'vehicles' | 'travel' | 'production' | 'release' | 'marketing'
-  | 'awards' | 'social' | 'business' | 'holiday' | 'birthday' | 'system'
-;
+export type CalendarCategory = 'personal' | 'family' | 'holiday' | 'birthday' | 'system';
 
 export interface CalendarLegendEntry {
   category: CalendarCategory;
@@ -30,24 +26,16 @@ export interface CalendarLegendEntry {
   description: string;
 }
 
-/** One legend, used by every calendar surface so colors never disagree. */
+/**
+ * One legend, used by every calendar surface so colors never disagree.
+ *
+ * It used to run to nineteen categories, one for every system that could book
+ * the player. Those systems are gone, and a legend that names colors nothing
+ * can ever be drawn in is a legend that lies about the game.
+ */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
-  { category: 'work', label: 'Work', colour: '#6b8cae', description: 'Shifts and ordinary employment.' },
-  { category: 'career', label: 'Career', colour: '#c9a227', description: 'Auditions, interviews, meetings and breakdowns.' },
-  { category: 'production', label: 'Production', colour: '#c2543d', description: 'Shoot days, post milestones and wrap.' },
-  { category: 'release', label: 'Release', colour: '#a4553f', description: 'Openings, box office and streaming windows.' },
-  { category: 'marketing', label: 'Marketing', colour: '#b07b4f', description: 'Trailers, press tours and premieres.' },
-  { category: 'awards', label: 'Awards', colour: '#d4af37', description: 'Nominations, ceremonies and festivals.' },
-  { category: 'finance', label: 'Finance', colour: '#4f7d5e', description: 'Bills, paydays, taxes and loan payments.' },
-  { category: 'business', label: 'Business', colour: '#5c7a6b', description: 'Company deadlines, payroll and contracts.' },
-  { category: 'health', label: 'Health', colour: '#7a9a8e', description: 'Appointments and recovery.' },
-  { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Dates, friends and time that’s yours.' },
-  { category: 'family', label: 'Family', colour: '#b5859a', description: 'Birthdays, anniversaries and family commitments.' },
-  { category: 'education', label: 'Education', colour: '#7b6ba8', description: 'Classes, coaching and training.' },
-  { category: 'property', label: 'Property', colour: '#8a7a5c', description: 'Showings, inspections, closings and construction.' },
-  { category: 'vehicles', label: 'Vehicles', colour: '#6f7d8c', description: 'Service, registration and shop appointments.' },
-  { category: 'travel', label: 'Travel', colour: '#5d8a9e', description: 'Flights, hotels and trips.' },
-  { category: 'social', label: 'Social', colour: '#9c6f9e', description: 'Scheduled posts and campaign beats.' },
+  { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
+  { category: 'family', label: 'Family', colour: '#b5859a', description: 'Anniversaries and family commitments.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'birthday', label: 'Birthday', colour: '#c98b8b', description: 'Birthdays of people you know.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
@@ -223,13 +211,7 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
     );
     let travelNote: string | undefined;
     if (needsTravel && item.locationId) {
-      const hasFlight = Object.values(sim.universe.flightBookings).some(
-        (b) => b.status === 'booked' && b.arriveAt <= item.at && b.arriveAt > sim.now
-          && CITIES.get(item.locationId as string)?.airportId === undefined,
-      );
-      travelNote = hasFlight
-        ? undefined
-        : `You’re in ${CITIES.get(player?.currentLocationId ?? '')?.name ?? 'another city'} and this is in ${CITIES.get(item.locationId)?.name ?? 'another city'}. Nothing is booked.`;
+      travelNote = `You’re in ${CITIES.get(player?.currentLocationId ?? '')?.name ?? 'another city'} and this is in ${CITIES.get(item.locationId)?.name ?? 'another city'}.`;
     }
 
     return {

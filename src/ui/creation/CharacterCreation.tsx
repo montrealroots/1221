@@ -840,19 +840,6 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
         </div>
       </div>
 
-      <div className="card">
-        <div className="panel-head"><h2>Starting Situation</h2></div>
-        <div className="col gap-3">
-          <label className="row gap-2" style={{ marginBottom: 0 }}>
-            <input
-              type="checkbox" checked={config.startWithVehicle} style={{ width: 'auto' }}
-              onChange={(e) => set('startWithVehicle', e.target.checked)}
-            />
-            <span className="small" style={{ color: 'var(--text)' }}>Start With A Car</span>
-          </label>
-        </div>
-
-      </div>
     </div>
   );
 }
@@ -906,7 +893,6 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
           <Line label="Credit Score" value={String(wealth.creditScore)} />
-          <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
         </div>
       </div>
 

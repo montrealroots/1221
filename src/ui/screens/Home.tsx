@@ -13,7 +13,6 @@ import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/sy
 import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
-import { TutorialCard } from '@/ui/shell/Tutorial';
 import { DESTINATIONS } from '@/ui/shell/destinations';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { nextCommitment, upcoming } from '@/engine/world/calendar';
@@ -71,9 +70,7 @@ export function Home() {
         <div className="panel-head">
           <div>
             <h2>Where To</h2>
-            <p className="muted small">
-              Everything in the game. Press <kbd>/</kbd> from anywhere to search it instead.
-            </p>
+            <p className="muted small">Everything in the game.</p>
           </div>
         </div>
         {DESTINATIONS.map((group) => (
@@ -208,7 +205,7 @@ export function Home() {
                     Open Calendar
                   </button>
                   <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                    Plan Something
+                    See The Month
                   </button>
                 </div>
               </>
@@ -216,7 +213,7 @@ export function Home() {
               <>
                 <p className="muted small">Nothing scheduled. The day is yours.</p>
                 <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                  Plan Something
+                  Open Calendar
                 </button>
               </>
             )}
@@ -243,17 +240,10 @@ export function Home() {
               <Meter label="Stress" value={player.wellbeing.stress} invert />
               <Meter label="Readiness" value={ready} hint="How well you’ll perform at anything right now." />
             </div>
-            <button className="btn btn-sm" style={{ marginTop: 'var(--s3)' }} onClick={() => navigate('/workspace/wellbeing', 'Wellbeing')}>
-              Wellbeing
-            </button>
           </Panel>
 
           {place && (
-            <Panel
-              title="Where You Are"
-              tight
-              actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>Travel</button>}
-            >
+            <Panel title="Where You Are" tight>
               <div className="strong">
                 {place.city.name}{place.regionName ? `, ${place.regionName}` : ''} · {place.countryName}
               </div>
@@ -346,7 +336,7 @@ export function Home() {
       </div>
 
       <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
-        <Panel title="Money" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/bank', 'Bank')}>Bank</button>}>
+        <Panel title="Money" tight>
           <div className="col gap-3">
             <Stat
               label={primary?.name ?? 'No account'}
@@ -360,7 +350,7 @@ export function Home() {
         </Panel>
 
 
-        <Panel title="Standing" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/character', 'Character')}>Character</button>}>
+        <Panel title="Standing" tight>
           <div className="col gap-3">
             <Meter label="Public Fame" value={player.reputation.publicFame} />
             <Meter label="Professional Reputation" value={player.reputation.professionalReputation} />
@@ -371,7 +361,7 @@ export function Home() {
 
       <div className="grid grid-2">
 
-        <Panel title="Home And Household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
+        <Panel title="Home And Household" tight>
           {snapshot.home ? (
             <div className="col gap-3">
               <Stat
@@ -383,15 +373,10 @@ export function Home() {
               <Stat label="Household" value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`} />
             </div>
           ) : (
-            <div className="col gap-2">
-              <p className="small muted">You don’t have a place of your own.</p>
-              <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find Somewhere</button>
-            </div>
+            <p className="small muted">You don’t have a place of your own.</p>
           )}
         </Panel>
       </div>
-
-      <TutorialCard />
     </>
   );
 }

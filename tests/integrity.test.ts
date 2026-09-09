@@ -22,47 +22,26 @@ import type { Id } from '@/engine/domain/model';
 const MS_DAY = 86_400_000;
 
 describe('retries and replays', () => {
-  it('charges once when the same payment is submitted twice', () => {
+  it('applies a command once when the same key is submitted twice', () => {
     const sim = quickSave({ wealth: 'comfortable' });
     const account = sim.player.primaryAccountId as Id;
     const before = sim.ledger.availableFunds(account);
+    const transactions = sim.universe.transactions.length;
 
     const key = 'checkout-9f2a';
-    const items = [{ catalogId: 'tshirt_basic', quantity: 1 }];
-    const first = sim.execute({ kind: 'shop.purchase', payload: { retailerId: 'basewear', lines: items }, idempotencyKey: key });
-    const second = sim.execute({ kind: 'shop.purchase', payload: { retailerId: 'basewear', lines: items }, idempotencyKey: key });
+    const first = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
+    const wokeAt = sim.now;
+    const second = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
 
     expect(first.ok).toBe(true);
     expect(second.ok).toBe(true);
-    expect(second.replayed, 'the second submission was treated as a new purchase').toBe(true);
+    expect(second.replayed, 'the second submission was treated as a new command').toBe(true);
     expect(second.value, 'the replay returned a different result').toEqual(first.value);
 
-    const charged = before - sim.ledger.availableFunds(account);
-    expect(charged, 'nothing was charged at all').toBeGreaterThan(0);
-
-    // Exactly one order, and the money left the account exactly once.
-    const orders = Object.values(sim.universe.orders);
-    expect(orders.length).toBe(1);
-    const postings = sim.universe.transactions.filter((t) => t.postings.some((p) => p.accountId === account) && t.category === 'shopping');
-    expect(postings.length, 'the purchase posted more than once').toBeLessThanOrEqual(1);
-  });
-
-  it('does not hand over two of the same thing on a retried purchase', () => {
-    const sim = quickSave({ wealth: 'wealthy' });
-    const listing = Object.values(sim.universe.vehicleListings).find((l) => l.status === 'active');
-    expect(listing, 'no vehicle to buy').toBeDefined();
-
-    const ownedBefore = Object.values(sim.universe.vehicles).filter((v) => !v.soldAt).length;
-    const payload = { listingId: listing!.id, acquisition: 'cash' as const };
-    const key = 'buy-the-car';
-    const first = sim.execute<{ vehicleId: Id }>({ kind: 'veh.purchase', payload, idempotencyKey: key });
-    const second = sim.execute<{ vehicleId: Id }>({ kind: 'veh.purchase', payload, idempotencyKey: key });
-
-    expect(first.ok).toBe(true);
-    expect(second.replayed).toBe(true);
-    expect(second.value?.vehicleId).toBe(first.value?.vehicleId);
-    const ownedAfter = Object.values(sim.universe.vehicles).filter((v) => !v.soldAt).length;
-    expect(ownedAfter - ownedBefore, 'the retry produced a second car').toBe(1);
+    // A receipt, not a second night: the clock stayed put and nothing posted.
+    expect(sim.now).toBe(wokeAt);
+    expect(sim.universe.transactions.length).toBe(transactions);
+    expect(sim.ledger.availableFunds(account)).toBe(before);
   });
 
 
@@ -93,11 +72,13 @@ describe('one save is one universe', () => {
     const a = quickSave({}, 'donor', 1);
     const b = quickSave({}, 'host', 2);
 
-    const donorPerson = Object.values(a.universe.people).find((p) => !p.isPlayer);
-    expect(donorPerson).toBeDefined();
+    // The only person in a save is its player, so the record smuggled across
+    // is the home they live in.
+    const donorHome = Object.values(a.universe.properties)[0];
+    expect(donorHome).toBeDefined();
 
     // Simulate a payload that arrived carrying someone else's saveId.
-    b.universe.people[donorPerson!.id] = { ...donorPerson!, id: donorPerson!.id };
+    b.universe.properties[donorHome!.id] = { ...donorHome!, ownerId: undefined };
     expect(validateUniverse(b.universe).errors.join(' ')).toMatch(/Cross-save contamination|belongs to save/);
   });
 

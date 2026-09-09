@@ -185,7 +185,6 @@ pre, code, .mono-block {
 /* Numbers line up and never wrap mid-figure. */
 .tabular, .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-
 html, body, #root { height: 100%; }
 
 body {
@@ -344,14 +343,6 @@ button.link:hover { color: var(--accent-strong); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
-/*
- * A sheet of named rows — attributes, skills — needs a wider column than a
- * card does. At `grid-2`'s 260px minimum a laptop fits four columns, and a
- * row of name, value and meter then leaves about seventy pixels for the name,
- * which breaks "Negotiation" in half. This is the same auto-fit, with a
- * minimum set by what the longest name actually needs.
- */
-.grid-sheet { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);
@@ -437,11 +428,8 @@ input[type="range"] {
 table { width: 100%; border-collapse: collapse; font-size: var(--size-sm); }
 th, td { padding: var(--s2) var(--s3); text-align: left; border-bottom: 1px solid var(--line); }
 th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; white-space: nowrap; }
-
-/* A list beside the thing it opens. On a phone the list goes above it. */
-.master-detail { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: var(--s5); align-items: start; }
 .master-detail > *, .side-by-side > * { min-width: 0; }
-@media (max-width: 900px) { .master-detail { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { }
 /* Two panels in a dialog: the search and the terms. One above the other on a phone. */
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
@@ -721,38 +709,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
   display: flex; justify-content: center; align-items: flex-start;
   padding: 10vh var(--s4) var(--s4); z-index: 200;
 }
-.search-panel {
-  width: min(680px, 100%); background: var(--surface);
-  border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg); overflow: hidden;
-  display: flex; flex-direction: column; max-height: 72vh;
-}
-.search-input {
-  border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
-  padding: var(--s5); font-size: var(--size-lg); background: transparent;
-}
-.search-input:focus { border-color: var(--line); outline: none; }
-.search-results { overflow-y: auto; flex: 1; }
-.search-group-label {
-  padding: var(--s2) var(--s5); font-size: var(--size-xs);
-  text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim);
-  font-weight: 650; background: var(--surface-2);
-  position: sticky; top: 0;
-}
-.search-result {
-  display: flex; align-items: center; gap: var(--s3); width: 100%;
-  padding: var(--s3) var(--s5); background: none; border: 0;
-  color: inherit; font: inherit; text-align: left; cursor: pointer;
-}
-.search-row { display: flex; align-items: center; gap: var(--s1); }
-.search-row > .search-result { flex: 1 1 auto; min-width: 0; }
-.search-result:hover, .search-result[aria-selected="true"] { background: var(--surface-2); }
-.search-result[aria-selected="true"] { box-shadow: inset 2px 0 0 var(--accent); }
-.search-hint {
-  padding: var(--s2) var(--s5); border-top: 1px solid var(--line);
-  font-size: var(--size-xs); color: var(--text-dim);
-  display: flex; gap: var(--s4); flex-wrap: wrap;
-}
 kbd {
   font-family: var(--font-mono); font-size: 11px;
   background: var(--surface-3); border: 1px solid var(--line-strong);
@@ -791,27 +747,8 @@ kbd {
 .decision[data-urgency="high"] .decision-urgency { background: var(--warning); }
 .decision[data-urgency="normal"] .decision-urgency { background: var(--info); }
 
-/* ---------- Help ---------- */
-
-.help-panel {
-  position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%);
-  background: var(--surface); border-left: 1px solid var(--line-strong);
-  box-shadow: var(--shadow-lg); z-index: 150;
-  display: flex; flex-direction: column;
-}
-.help-body { overflow-y: auto; padding: var(--s5); flex: 1; }
-.help-section { margin-bottom: var(--s5); }
-.help-section h4 { color: var(--accent-strong); margin-bottom: var(--s2); }
-
 .tooltip-term {
   border-bottom: 1px dotted var(--text-dim); cursor: help;
-}
-
-.tutorial-card {
-  position: fixed; bottom: var(--s5); right: var(--s5); width: min(360px, calc(100vw - 32px));
-  background: var(--surface); border: 1px solid var(--accent-line);
-  border-radius: var(--radius); box-shadow: var(--shadow-lg);
-  padding: var(--s4); z-index: 140;
 }
 
 /* ---------- Toast ---------- */
@@ -867,30 +804,12 @@ kbd {
 .trait-name { font-weight: 650; font-size: var(--size-sm); margin-bottom: 2px; }
 .trait-desc { font-size: var(--size-xs); color: var(--text-muted); line-height: 1.4; }
 
-/* ---------- Attribute sheet ---------- */
-
-.attr-row { display: grid; grid-template-columns: minmax(0, 1fr) 46px minmax(48px, 90px); align-items: center; gap: var(--s3); padding: 3px 0; }
-.attr-name { font-size: var(--size-sm); min-width: 0; }
-.attr-value { font-size: var(--size-sm); font-weight: 650; text-align: right; font-variant-numeric: tabular-nums; }
-
 /* ---------- God mode ----------
    Sandbox is a declared cheat, so it is meant to look like one. Everything it
    has touched is in the clapper gold: the number, the bar, the name and the
    trait. */
 
 .god { color: var(--accent-strong); }
-.god-value { color: var(--accent-strong); text-shadow: 0 0 12px var(--accent-dim); }
-.attr-row.god-row .attr-name { color: var(--accent); }
-.god-meter > span { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-strong) 100%); }
-.chip-god {
-  background: var(--accent-dim); color: var(--accent-strong);
-  border-color: var(--accent-line); font-weight: 650;
-}
-.god-banner {
-  border: 1px solid var(--accent-line); background: var(--accent-dim);
-  color: var(--accent-strong); border-radius: var(--radius-sm);
-  padding: var(--s2) var(--s3); font-size: var(--size-xs);
-}
 
 /* ---------- The scene in front of you ----------
    Above every screen while a scene is in progress. It is a card with the
@@ -905,34 +824,11 @@ kbd {
 .scene.scene-interrupted { border-left-color: var(--warning); }
 .scene.scene-min { padding: var(--s3) var(--s4); }
 .scene .panel-head { padding: 0; margin-bottom: var(--s3); }
-.scene-text { font-size: var(--size-base); line-height: 1.55; margin: 0 0 var(--s4); max-width: 68ch; }
-.scene-facts { margin-bottom: var(--s4); }
-
-.scene-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: var(--s2); margin-bottom: var(--s4); }
-.scene-choice {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0;
-  padding: var(--s3) var(--s4); text-align: left;
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm);
-  color: var(--text); font: inherit; cursor: pointer;
-}
-.scene-choice:hover { border-color: var(--line-strong); background: var(--surface-3); }
 .scene-choice.is-primary { border-color: var(--accent-line); background: var(--accent-dim); }
 .scene-choice.is-primary .scene-choice-label { color: var(--accent-strong); }
 .scene-choice.is-danger { border-color: var(--negative); }
 .scene-choice.is-hinted { box-shadow: 0 0 0 2px var(--accent-line); }
 .scene-choice.is-disabled { opacity: .55; cursor: not-allowed; }
-.scene-choice-label { font-weight: 650; font-size: var(--size-sm); overflow-wrap: anywhere; }
-.scene-choice-detail { font-size: var(--size-xs); color: var(--text-dim); overflow-wrap: anywhere; }
-
-.scene-type { margin-bottom: var(--s3); }
-.scene-type label { display: block; margin-bottom: var(--s1); }
-.scene-type input { min-width: 0; }
-.scene-foot { align-items: center; }
-
-.scene-transcript { margin-top: var(--s3); border-top: 1px solid var(--line); padding-top: var(--s2); }
-.scene-transcript summary { cursor: pointer; }
-.scene-transcript ol { list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; max-height: 240px; overflow-y: auto; }
-.scene-transcript li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--s2); font-size: var(--size-sm); color: var(--text-muted); }
 .scene-transcript li.is-you { color: var(--text); }
 
 /* ---------- Responsive ---------- */
@@ -1141,15 +1037,7 @@ kbd {
   border-radius: var(--radius); object-fit: cover; display: block;
   border: 1px solid var(--line); background: var(--surface-2); flex: none;
 }
-.headshot-sm { width: 44px; height: 55px; }
-.headshot-md { width: 96px; height: 120px; }
-.headshot-lg { width: 160px; height: 200px; }
-/* The review card's portrait: the one place the photo is the point. */
-.headshot-xl { width: 200px; height: 250px; box-shadow: var(--shadow); }
-.page-head-portrait { display: flex; gap: var(--s4); align-items: flex-start; }
 @media (max-width: 640px) {
-  .page-head-portrait { flex-direction: column; }
-  .headshot-lg { width: 120px; height: 150px; }
 }
 
 /* --------------------------------------------------------------------------

@@ -1,9 +1,8 @@
 /**
  * SLATE — the shell.
  *
- * HOME for immediate life, WORLD for discovery, workspaces for deep work, and
- * Go Anywhere over the top of all of it. Context is preserved: breadcrumbs,
- * recent destinations and favorites all survive moving around.
+ * HOME for immediate life, and the calendar for what is coming. Context is
+ * preserved: the breadcrumbs survive moving around.
  *
  * The rail down the left is every destination, always in reach, with Home at
  * the top wearing the count of what is waiting on you. It is words only: no
@@ -19,19 +18,15 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { DESTINATIONS } from './destinations';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
-import { GoAnywhere } from './GoAnywhere';
-import { HelpPanel } from './HelpPanel';
 import { TimeControls } from './TimeControls';
 import { Home } from '@/ui/screens/Home';
-import { World } from '@/ui/screens/World';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
-import { ScenePanel } from '@/ui/components/ScenePanel';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
 
 
 export function GameShell() {
   const game = useGame();
-  const { sim, route, navigate, breadcrumbs, searchOpen, setSearchOpen, helpOpen, setHelpOpen, toasts } = game;
+  const { sim, route, navigate, breadcrumbs, toasts } = game;
   const [railOpen, setRailOpen] = useState(false);
   const waiting = useWorld((s) => openDecisions(s).length);
   const unread = useWorld((s) => unreadNotifications(s).length);
@@ -76,27 +71,6 @@ export function GameShell() {
         <TimeControls />
 
         <div className="grow" />
-
-        <div className="topbar-group" role="group" aria-label="Tools">
-          <button
-            className="btn btn-sm"
-            onClick={() => setSearchOpen(true)}
-            aria-label="Go Anywhere. Search everything."
-          >
-            <span aria-hidden="true">⌕</span>
-            <span className="hide-sm">Go Anywhere</span>
-            <kbd className="hide-sm">/</kbd>
-          </button>
-
-          <button
-            className="btn btn-ghost btn-sm"
-            onClick={() => setHelpOpen(!helpOpen)}
-            aria-label="Help For This Screen"
-            aria-pressed={helpOpen}
-          >
-            ?
-          </button>
-        </div>
 
         <span className="topbar-divider" aria-hidden="true" />
 
@@ -182,14 +156,10 @@ export function GameShell() {
               </nav>
             )}
 
-            <ScenePanel />
             <Screen route={route} />
           </div>
         </main>
       </div>
-
-      {searchOpen && <GoAnywhere />}
-      {helpOpen && <HelpPanel />}
 
       <div className="toasts" aria-live="polite" aria-atomic="false">
         {toasts.map((toast) => (
@@ -202,7 +172,6 @@ export function GameShell() {
 
 function Screen({ route }: { route: string }) {
   if (route === '/home') return <Home />;
-  if (route === '/world') return <World />;
   if (route.startsWith('/workspace/')) return <WorkspaceRouter route={route} />;
   return <Home />;
 }

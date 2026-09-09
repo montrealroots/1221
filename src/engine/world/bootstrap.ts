@@ -12,14 +12,13 @@ import type {
 } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import {
-  ALL_TRAITS, ATTRIBUTES, PROFESSION_TRAITS, emptyAttributeSheet,
+  ALL_TRAITS, ATTRIBUTES, emptyAttributeSheet,
   attributesOf, type AttributeSheet,
 } from '../domain/attributes';
 import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
 import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '../content/founder';
 import { CEILING, GOAT_TRAITS } from '../content/prodigy';
 import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
-import { LEVEL_XP, PROFESSIONS } from '../content/professions';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
@@ -106,7 +105,6 @@ export interface NewSaveConfig {
   startLocationId: string;
   housing: StartingHousing;
   wealth: StartingWealth;
-  startWithVehicle: boolean;
   /** World start date, local to the starting city. */
   startYear: number;
   startMonth: number;
@@ -135,7 +133,6 @@ export function defaultConfig(): NewSaveConfig {
     companyName: '',
     startLocationId: 'us-ca-losangeles',
     housing: 'roommates', wealth: 'scraping',
-    startWithVehicle: true,
     startYear: 2026, startMonth: 3, startDay: 2,
   };
 }
@@ -198,45 +195,10 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
     homeZone: zone,
     currentZone: zone,
     playerId,
-    people: {}, relationships: {}, households: {},
-    accounts: {}, transactions: [], bills: {}, creditProfiles: {}, taxYears: {},
-    properties: {}, structures: {}, rooms: {}, zones: {}, furnishings: {},
-    propertyListings: {}, propertyOffers: {}, realEstateAgents: {},
-    constructionProjects: {}, constructionPhases: {}, changeOrders: {},
-    vehicles: {}, vehicleListings: {}, vehicleModifications: {}, serviceRecords: {},
-    assets: {}, outfits: {}, orders: {}, pantry: {},
-    healthProviders: {}, appointments: {}, insurancePolicies: {}, insuranceClaims: {},
-    courses: {}, enrollments: {},
-    trips: {}, flightBookings: {}, hotelBookings: {},
-    socialAccounts: {}, socialPosts: {}, brandDeals: {},
-    videoChannels: {}, videos: {}, videoComments: {}, videoSubscriptions: {}, watchHistory: {},
-    videoPlaylists: {}, liveStreams: {}, communityPosts: {}, channelMemberships: {}, creatorPayouts: {},
-    videoNotices: {},
-    socialProfiles: {}, socialItems: {}, socialFollows: {}, socialScreenTime: {}, socialRooms: {},
-    kitHires: {}, shootDays: {}, indieFilms: {},
-    cinemaTickets: {},
-    fashionInvites: {},
-    goingTickets: {},
-    parcels: {},
-    companies: {},
-    scenes: { version: 2, sessions: {} },
-    memberships: {}, workouts: {}, plans: {}, vehicleDeals: {}, dates: {}, dialogue: { version: 1, seen: {} },
-    recall: { version: 1, entries: [], played: {} },
-    industry: {
-      briefed: false,
-      // Fiction, fixed here so every save tells the same story about itself.
-      strikeMonths: 19,
-      // The premise: there is nobody else.
-      rivals: 0,
-      // Nobody wrote for nineteen months.
-      material: 0,
-      buyerHunger: 92,
-      // The grips went into construction and have not all come back.
-      crewDepth: 34,
-      ratesSet: {},
-    },
+    people: {}, households: {},
+    accounts: {}, transactions: [],
+    properties: {},
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
-    tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
@@ -272,21 +234,6 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
 function everyTrait(): string[] {
   return ALL_TRAITS.map((trait) => trait.id);
 }
-
-/** Every profession, open on day one, at the top of its ladder, all traits taken. */
-function maxedProfessions(at: number): Person['professions'] {
-  const out: NonNullable<Person['professions']> = {};
-  const topXp = LEVEL_XP[LEVEL_XP.length - 1] ?? 0;
-  for (const def of PROFESSIONS) {
-    out[def.id] = {
-      unlockedAt: at,
-      xp: topXp,
-      traitIds: PROFESSION_TRAITS.filter((t) => t.profession === def.id).map((t) => t.id),
-    };
-  }
-  return out;
-}
-
 
 function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
   const attributes = emptyAttributeSheet(CEILING);
@@ -367,9 +314,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     pronouns: config.pronouns,
     performerTitle: config.performerTitle,
     birthInstant,
-    // The chair. A life starts freshly cut and grows out from the first day
-    // rather than staying that way until somebody happens to sit down.
-    groomedAt: now,
     // The one physical fact the player chooses. A character who starts young
     // is smaller than this and grows to exactly it.
     adultHeightCm: clamp(Math.round(config.adultHeightCm ?? DEFAULT_HEIGHT_CM), HEIGHT_RANGE[0], HEIGHT_RANGE[1]),
@@ -414,17 +358,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
-    // Nothing is left to earn. Every profession is already open and already at
-    // the top level, with every trait slot it opens filled.
-    industryXp: 0,
-    professions: maxedProfessions(now),
-    representation: {},
-    quote: config.careerStage > 40 ? Math.round(config.careerStage * 4_000_00) : 0,
-    creditIds: [],
-    nominationIds: [],
     creditScore: WEALTH_PROFILE[config.wealth].creditScore,
-    tier: 'full',
-    greenlightAuthority: 0,
     createdAt: now,
   };
   universe.people[playerId] = player;

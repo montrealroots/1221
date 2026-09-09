@@ -1,7 +1,14 @@
 # 🎬 SLATE
 
-A life and film-industry simulator. One save is one universe; there are three
-of them, and they never see each other.
+A life simulator, cut back to six things: the startup screen, character
+creation, the geography map behind it, Home, the calendar and the weather.
+One save is one universe; there are three of them, and they never see each
+other.
+
+The life-and-industry simulator this was built out of — the shops, the studios,
+the schools, the phone, the people — has been removed on purpose. What is left
+is those six features and the engine underneath them, kept whole:
+`docs/COVERAGE-MATRIX.md` lists what is in the build and what was taken out.
 
 SLATE runs as a single-page app. The whole simulation is in the browser, and
 the server is the authority on what may be stored. It plays without a backend
@@ -51,13 +58,10 @@ exactly as it was. The restore writes the old values back into the objects that
 are already there rather than swapping in copies, so a reference taken before a
 command is still the right object afterwards.
 
-**The world runs at tiers.** People close to the player are simulated in full;
-the rest get progressively cheaper treatment, and the long tail is not touched
-until something makes it relevant. Records that grow every tick — casting
-rooms, answered decisions, finished films nobody was involved in — have
-retention rules behind them, so a ten-year save does not become an unloadable
-one. Credits are denormalised onto projects so a film keeps its billing block
-after the world stops individually simulating the day players in it.
+**A long save stays loadable.** Records that grow every tick — answered
+decisions, the timeline, the audit trail — have retention rules behind them, so
+ten years of the clock does not become an unloadable save. The endurance suite
+runs a decade and checks it.
 
 ---
 
@@ -94,7 +98,7 @@ can never reach another's rows even by naming them.
 | --- | --- | --- |
 | `SlateSave` | One row per slot: the serialised universe, its metadata, the previous payload as a backup, and what the server checked when it accepted the write. | create, read, update, delete — all owner-scoped |
 | `SlateCommandReceipt` | Receipts for critical commands, keyed by save and idempotency key, so a retry is handed the original result instead of being applied twice. | create and read only; update and delete denied |
-| `SlateOfficialResult` | Finalised outcomes — award editions, release settlements, contract conclusions — with the inputs, weights, rules version and seed that produced them. | create and read only; update and delete denied |
+| `SlateOfficialResult` | Finalised outcomes, with the inputs, weights, rules version and seed that produced them. Nothing in this build writes one; the entity and its function stand for the ones that will. | create and read only; update and delete denied |
 
 The two append-only entities deny `update` and `delete` outright rather than
 scoping them to the owner. That is the difference between history that is not
@@ -175,16 +179,18 @@ npm test
 
 | Suite | What it covers |
 | --- | --- |
-| `smoke` | A universe boots, runs a year, and stays consistent. |
+| `smoke` | A universe boots, runs three years, and stays consistent. |
 | `time` | Instants, zones, DST gaps and overlaps, leap years, formatting. |
 | `money` | Integer cents, rounding, splitting, the ledger, conservation over a simulated year. |
 | `simulation` | Advancement order, recurrences, sleep, skip-to-event, the calendar, command idempotency and rollback, migrations, validation. |
-| `systems` | Vehicle fitment, post-production dependencies, construction, greenlight authority and rights, tax by jurisdiction, the 88 attributes and 42 traits, relationship bounds. |
-| `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, runaway prices, unbounded collections, and cost per simulated year. |
-| `full-film` | One project from idea to library, proving it stays one project the whole way down. |
-| `full-life` | An ordinary life — job, home, car, marriage, child, study, travel — without ever touching the industry. |
-| `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, permission boundaries, what the player is allowed to know. |
+| `calendar`, `holidays` | The month grid, entries between two instants, collisions, and the observances of a country. |
+| `weather` | The climate model: normals by latitude and season, the week ahead, the units a country reads it in. |
+| `geography`, `world-map` | The gazetteer and the projection drawn from it. |
+| `portrait`, `citizenship` | The creation suite's own pieces: the headshot frame, and who holds which passport. |
+| `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |
+| `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, what the player is allowed to know. |
 | `calibration` | Monte Carlo runs over the probabilistic models: uniformity, monotonicity, spread, reproducibility. |
+| `interface`, `navigation`, `cohesion` | The interface is text, every door opens onto something, and the screens agree with the engine. |
 | `server-guards` | The server-side checks that stand between a browser and storage. |
 | `base44-adapter` | The client speaks the platform's documented protocol: invoke by name, JSON on `.data`, non-2xx thrown, local mirroring, graceful fallback. |
 
@@ -213,18 +219,24 @@ Reported as unavailable rather than counted as passing:
 src/engine/core        the clock, ledger, scheduler, event bus, commands, audit, rng
 src/engine/domain      the model: every stateful thing in a universe
 src/engine/content     reference data, each record carrying its provenance
-src/engine/systems     life, work, property, vehicles, film, casting, awards, companies
-src/engine/world       bootstrap, the world tick, tiering, the Decision Center
+src/engine/systems     wellbeing and sleep, the weather, what a life is worth
+src/engine/world       bootstrap, the calendar, the world tick, the Decision Center
 src/engine/persistence local, Base44, and the adapter contract between them
-src/ui                 startup, saves, character creation, the shell, workspaces
+src/ui                 startup, saves, character creation, the shell, Home, the calendar
 base44/                the platform side: config, entity schemas, functions, shared guards
 tests/                 the suites above
 ```
 
 ### On the reference data
 
-Real-world geography is what it is. Everything else — the studios, the awards
-bodies, the vehicle catalogue, the economics — is a calibrated simulation, and
-every reference record says which it is, in a `source` field reading
-`public_reference`, `calibrated_estimate` or `simulated`, alongside a confidence
-and a version. Nothing invented is presented as verified fact.
+Real-world geography is what it is: 252 countries, 3,865 regions and 170,911
+cities, with their time zones, and a projected world map drawn from the same
+data. Everything else — the climates, the costs of living, the tax tables — is
+a calibrated simulation, and every reference record says which it is, in a
+`source` field reading `public_reference`, `calibrated_estimate` or
+`simulated`, alongside a confidence and a version. Nothing invented is
+presented as verified fact.
+
+The weather in particular says so on screen: it is SLATE's climate model for
+that city — the season, the latitude and the kind of place it is — and not a
+forecast service.

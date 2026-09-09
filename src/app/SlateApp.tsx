@@ -5,8 +5,7 @@
  * a world. Only one universe is ever live at a time.
  */
 
-import { useCallback, useEffect, useState } from 'react';
-import { loadAllSections } from '@/engine/dialogue';
+import { useCallback, useState } from 'react';
 import { StartupSequence, type StartupResult } from '@/ui/startup/StartupSequence';
 import { SaveSlots } from '@/ui/saves/SaveSlots';
 import { CharacterCreation } from '@/ui/creation/CharacterCreation';
@@ -49,10 +48,6 @@ function citiesToLoad(universe: SaveUniverse): string[] {
 }
 
 export function SlateApp() {
-  // The dialogue library is its own set of files, loaded as the app starts
-  // so the first bundle carries none of it. A scene that speaks before its
-  // section arrives gets the line that contradicts nothing.
-  useEffect(() => { void loadAllSections(); }, []);
   const [phase, setPhase] = useState<Phase>({ kind: 'startup' });
   const [error, setError] = useState<string | null>(null);
 

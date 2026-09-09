@@ -15,7 +15,6 @@
 
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
-import { quickSave } from '@/engine';
 
 const ROOT = new URL('../src/', import.meta.url);
 
@@ -28,9 +27,8 @@ function registeredRoutes(): Set<string> {
   const router = read('ui/workspaces/WorkspaceRouter.tsx');
   const routes = new Set<string>();
   for (const match of router.matchAll(/'(\/workspace\/[a-z-]+)'\s*:/g)) routes.add(match[1]!);
-  // The two the shell serves itself, outside the workspace router.
+  // The one the shell serves itself, outside the workspace router.
   routes.add('/home');
-  routes.add('/world');
   return routes;
 }
 
@@ -65,8 +63,8 @@ function enginesRoutes(): { file: string; route: string }[] {
 describe('the routes the engine points at', () => {
   it('finds the screens the interface registers', () => {
     const routes = registeredRoutes();
-    expect(routes.size, 'no workspaces were found at all').toBeGreaterThan(10);
-    expect(routes.has('/workspace/bank')).toBe(true);
+    expect(routes.size, 'no screens were found at all').toBeGreaterThan(1);
+    expect(routes.has('/workspace/calendar')).toBe(true);
     expect(routes.has('/home')).toBe(true);
   });
 
@@ -77,33 +75,18 @@ describe('the routes the engine points at', () => {
   });
 
   it('never point at a tab the shell has locked', () => {
+    // There is nothing locked in this build. The check stays because the
+    // moment something is shut again, a link into it must fail here.
     const locked = lockedRoutes();
-    expect(locked.size, 'no locked tab was found — has the company tab been unlocked?').toBeGreaterThan(0);
     const offenders = enginesRoutes().filter(({ route }) => locked.has(route));
     expect(offenders.map((d) => `${d.file} -> ${d.route}`), 'these link to a locked tab').toEqual([]);
   });
 });
 
-describe('the locked casting tab', () => {
-  it('is listed, is locked, and has no screen behind it', () => {
-    const locked = lockedRoutes();
-    expect(locked.has('/workspace/casting'), 'the casting tab is not marked locked').toBe(true);
-    expect(registeredRoutes().has('/workspace/casting'), 'something is registered against a locked route').toBe(false);
-    // The founder premise is gone: no company tab, anywhere.
-    expect(locked.has('/workspace/company')).toBe(false);
-    expect(registeredRoutes().has('/workspace/company')).toBe(false);
-  });
-
-  it('is not offered by Go Anywhere, which only lists doors that open', () => {
-    const search = read('ui/shell/GoAnywhere.tsx');
-    expect(search).not.toMatch(/\/workspace\/casting/);
-    expect(search).not.toMatch(/\/workspace\/company/);
-  });
-
-  it('has no workspace file left behind', () => {
+describe('what was taken out', () => {
+  it('leaves no workspace file behind', () => {
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
-    expect(files).not.toContain('CompanyWorkspace.tsx');
-    expect(files).not.toContain('CastingWorkspace.tsx');
+    expect(files).toEqual(['CalendarWorkspace.tsx', 'WorkspaceRouter.tsx']);
   });
 
   it('keeps the founder premise out of character creation', () => {
@@ -121,7 +104,7 @@ describe('the locked casting tab', () => {
   });
 
   it('offers every destination it lists, and lists every screen there is', () => {
-    // The rail is gone; Home renders this list. If the two drift apart a
+    // The rail and Home both render this list. If the two drift apart a
     // workspace becomes unreachable without anybody noticing.
     const registered = registeredRoutes();
     const listed = new Set<string>();
@@ -134,15 +117,5 @@ describe('the locked casting tab', () => {
     const lockedSet = lockedRoutes();
     const broken = [...listed].filter((r) => !registered.has(r) && !lockedSet.has(r));
     expect(broken, 'Home offers these and nothing is behind them').toEqual([]);
-  });
-
-  it('still runs a company underneath, with nowhere to look at it', () => {
-    // The engine half is real even though the screen is not: this is what the
-    // tab will show when it is built, and it must not have quietly broken.
-    const sim = quickSave({}, 'nav-company');
-    const company = sim.universe.companies[sim.universe.playerCompanyId!];
-    expect(company).toBeDefined();
-    expect(company!.overhead).toBeGreaterThan(0);
-    expect(sim.universe.accounts[company!.cashAccountId]?.balance).toBeGreaterThan(0);
   });
 });

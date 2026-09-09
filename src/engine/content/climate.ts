@@ -106,6 +106,13 @@ export function usesFahrenheit(countryId: string): boolean {
   return FAHRENHEIT_COUNTRIES.has(countryId);
 }
 
+/** Countries that read a distance in miles. */
+const MILE_COUNTRIES = new Set(['us', 'uk', 'lr', 'mm']);
+
+export function usesMiles(countryId: string): boolean {
+  return MILE_COUNTRIES.has(countryId);
+}
+
 /** The classification for a city: its own id, then its region, then its country, then latitude. */
 export function climateTypeFor(city: Pick<City, 'id' | 'parentId' | 'countryId' | 'latitude' | 'longitude'>): ClimateType {
   return CLIMATE_OVERRIDES[city.id]

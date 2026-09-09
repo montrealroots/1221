@@ -1,46 +1,7 @@
-import { TutorialCard } from '@/ui/shell/Tutorial';
 import { CalendarWorkspace } from './CalendarWorkspace';
-import { BankWorkspace } from './BankWorkspace';
-import { WellbeingWorkspace } from './WellbeingWorkspace';
-import { CharacterWorkspace } from './CharacterWorkspace';
-import { SettingsWorkspace } from './SettingsWorkspace';
-import { HistoryWorkspace } from './HistoryWorkspace';
-import { RelationshipsWorkspace } from './RelationshipsWorkspace';
-import { PropertyWorkspace } from './PropertyWorkspace';
-import { VehiclesWorkspace } from './VehiclesWorkspace';
-import { ShoppingWorkspace } from './ShoppingWorkspace';
-import { TravelWorkspace } from './TravelWorkspace';
-import { HealthWorkspace } from './HealthWorkspace';
-import { InsuranceWorkspace } from './InsuranceWorkspace';
-import { EducationWorkspace } from './EducationWorkspace';
-import { TrackWorkspace } from './TrackWorkspace';
-import { SocialWorkspace } from './SocialWorkspace';
-import { CityWorkspace } from './CityWorkspace';
-import { PhoneWorkspace } from './PhoneWorkspace';
-import { FilmWorkspace } from './FilmWorkspace';
-import { GoingOutWorkspace } from './GoingOutWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
-  '/workspace/bank': BankWorkspace,
-  '/workspace/wellbeing': WellbeingWorkspace,
-  '/workspace/character': CharacterWorkspace,
-  '/workspace/settings': SettingsWorkspace,
-  '/workspace/history': HistoryWorkspace,
-  '/workspace/relationships': RelationshipsWorkspace,
-  '/workspace/property': PropertyWorkspace,
-  '/workspace/vehicles': VehiclesWorkspace,
-  '/workspace/shopping': ShoppingWorkspace,
-  '/workspace/travel': TravelWorkspace,
-  '/workspace/city': CityWorkspace,
-  '/workspace/health': HealthWorkspace,
-  '/workspace/insurance': InsuranceWorkspace,
-  '/workspace/education': EducationWorkspace,
-  '/workspace/track': TrackWorkspace,
-  '/workspace/social': SocialWorkspace,
-  '/workspace/phone': PhoneWorkspace,
-  '/workspace/film': FilmWorkspace,
-  '/workspace/goingout': GoingOutWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {
@@ -49,14 +10,9 @@ export function WorkspaceRouter({ route }: { route: string }) {
     return (
       <div className="empty">
         <h3>Nothing Here Yet</h3>
-        <p className="small">That workspace doesn’t exist. Use Go Anywhere to find what you were after.</p>
+        <p className="small">That workspace doesn’t exist.</p>
       </div>
     );
   }
-  return (
-    <>
-      <Workspace />
-      <TutorialCard />
-    </>
-  );
+  return <Workspace />;
 }
