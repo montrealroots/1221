@@ -12,7 +12,8 @@
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig } from '@/engine';
 import {
-  ageOf, floorHere, openingFor, openingsFor, shiftPay, stateFloorFor, stateFloorNameFor, wageFor,
+  ageOf, floorHere, openingFor, openingsFor, shiftPay, stateFloorFor,
+  stateFloorNameFor, wageFor,
 } from '@/engine/systems/work';
 import { FIRST_JOBS, JOB_BY_ID, STATE_FLOORS, floorIn } from '@/engine/content/work';
 import { EMPLOYERS, EMPLOYER_BY_ID, PAY_STANCE, employersIn } from '@/engine/content/employers';
@@ -69,13 +70,32 @@ describe('what a job pays', () => {
     expect(wellAbove).toBeGreaterThan(atIt);
   });
 
-  it('never pays below the floor for the country', () => {
-    for (const cityId of ['us-ca-losangeles', 'us-tx-austin', 'uk-eng-london', 'jp-13-tokyo', 'au-nsw-sydney']) {
+  it('never pays an adult below the floor that applies where they stand', () => {
+    for (const cityId of [
+      'us-ca-losangeles', 'us-tx-austin', 'uk-eng-london', 'jp-13-tokyo', 'au-nsw-sydney', 'ng-05-lagos',
+    ]) {
       const { sim, person } = standing(cityId, 'floor-' + cityId);
+      const applies = stateFloorFor(cityId) ?? floorHere(sim, person).perHour;
       for (const opening of openingsFor(sim, person)) {
-        expect(opening.perHour, `${cityId} ${opening.job.label}`).toBeGreaterThanOrEqual(50);
+        // Against the floor times what the job is worth, not the floor flat: a
+        // paper round is deliberately under it, the way a paper round is.
+        const least = Math.round(applies * opening.job.premium);
+        expect(opening.perHour, `${cityId} ${opening.job.label}`).toBeGreaterThanOrEqual(least);
       }
     }
+  });
+
+  it('keeps a job worth more than another worth more, even where the floor is low', () => {
+    // A fifty cent clamp used to flatten this: in Lagos every job paid the
+    // same, and the premium the content gives a night in a warehouse vanished.
+    const { sim, person } = standing('ng-05-lagos', 'floor-lagos-spread');
+    const open = openingsFor(sim, person);
+    const rates = new Set(open.map((o) => o.perHour));
+    expect(rates.size, 'every job in Lagos pays the same').toBeGreaterThan(1);
+    const warehouse = open.find((o) => o.job.id === 'warehouse')!;
+    const checkout = open.find((o) => o.job.id === 'checkout')!;
+    expect(warehouse.job.premium).toBeGreaterThan(checkout.job.premium);
+    expect(warehouse.perHour).toBeGreaterThan(checkout.perHour);
   });
 
   it('multiplies out to the shift', () => {

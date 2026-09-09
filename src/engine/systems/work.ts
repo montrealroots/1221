@@ -26,11 +26,11 @@ import { ageOnDate } from '../core/time';
 import { CITIES, REGIONS, countryOfCity } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import {
-  FIRST_JOBS, JOB_BY_ID, LOCAL_MINIMUMS, STATE_FLOORS,
-  type FirstJob, floorIn, youngShareAt,
+  DERIVED_ANCHOR, DERIVED_AT_COST, FIRST_JOBS, JOB_BY_ID, LOCAL_MINIMUMS, STATE_FLOORS,
+  WORLD_FLOOR, FLOOR_BY_COUNTRY, type FirstJob, type WageFloor, floorIn, youngShareAt,
 } from '../content/work';
 import {
-  EMPLOYER_BY_ID, PAY_STANCE, ROLE_BY_ID, employersIn, type Employer,
+  EMPLOYER_BY_ID, PAY_STANCE, ROLE_BY_ID, SECTOR_LABEL, employersIn, type Employer,
 } from '../content/employers';
 
 /** Somebody's age, in whole years, on the day the world is on. */
@@ -62,9 +62,46 @@ export function stateFloorNameFor(sim: Simulation, person: Person = sim.player):
   return REGIONS.get(city.parentId)?.name;
 }
 
-/** The floor where somebody is standing, and whether the country sets one. */
-export function floorHere(sim: Simulation, person: Person = sim.player) {
-  return floorIn(countryOfCity(person.currentLocationId) ?? person.citizenshipId);
+/**
+ * The floor where somebody is standing.
+ *
+ * A published figure where SLATE carries one. Where it does not — two hundred
+ * of the two hundred and fifty two countries in the gazetteer, and just under
+ * a quarter of the people alive — the floor is derived from what that city
+ * costs rather than being one flat number for all of them, and it says that
+ * is what it is.
+ */
+export function floorHere(sim: Simulation, person: Person = sim.player): WageFloor {
+  const countryId = countryOfCity(person.currentLocationId) ?? person.citizenshipId;
+  return floorFor(countryId, person.currentLocationId);
+}
+
+/** Whether the figure for this country is published or worked out from the city. */
+export function floorIsCarried(countryId: string): boolean {
+  return FLOOR_BY_COUNTRY[countryId] !== undefined;
+}
+
+/**
+ * The floor for a country, derived from the city where nothing is published.
+ *
+ * The derivation is stated in `DERIVED_NOTE` and never goes below the world
+ * floor. A city SLATE cannot resolve falls back to the flat figure, because
+ * there is then nothing to derive from.
+ */
+export function floorFor(countryId: string, cityId?: string): WageFloor {
+  const carried = FLOOR_BY_COUNTRY[countryId];
+  if (carried) return carried;
+  const city = CITIES.get(cityId ?? '');
+  if (!city) return floorIn(countryId);
+  const derived = Math.round(DERIVED_ANCHOR * (costOfLiving(city.id) / DERIVED_AT_COST));
+  return {
+    countryId,
+    perHour: Math.max(WORLD_FLOOR, derived),
+    statutory: false,
+    year: 2024,
+    about: 'SLATE carries no published figure for this country, so this is worked out from what '
+      + 'this city costs against the countries it does carry. It is an estimate.',
+  };
 }
 
 /**
@@ -79,7 +116,7 @@ export function wageFor(
   employerId?: string, roleId = 'crew',
 ): Money {
   const countryId = countryOfCity(person.currentLocationId) ?? person.citizenshipId;
-  const floor = floorIn(countryId);
+  const floor = floorFor(countryId, person.currentLocationId);
   // A national minimum is the same number in the capital as it is anywhere
   // else. It is only where a country really lets a state, a province or a city
   // set its own that an expensive city pays more. In the United States the
@@ -94,8 +131,13 @@ export function wageFor(
   const stance = employerId ? EMPLOYER_BY_ID[employerId]?.pay : undefined;
   const company = stance ? PAY_STANCE[stance].multiple : 1;
   const role = ROLE_BY_ID[roleId]?.multiple ?? 1;
+  // No clamp above the arithmetic. Nigeria publishes a floor of thirty cents an
+  // hour and a night in a warehouse there is worth a fifth more than a
+  // checkout; a fifty cent minimum erased both facts and paid every job in
+  // Lagos exactly the same. The published floor is the number, low or not,
+  // and the only guard is against zero.
   return Math.max(
-    50,
+    1,
     Math.round(local * job.premium * company * role * youngShareAt(ageOf(sim, person))),
   );
 }
@@ -108,10 +150,18 @@ export function shiftPay(
   return wageFor(sim, job, person, employerId, roleId) * job.hours;
 }
 
-/** One job somebody could actually take, at one company, where they stand. */
+/** One job somebody could actually take, where they stand. */
 export interface Opening {
   job: FirstJob;
+  /** The real company, where SLATE carries one that trades here. */
   employer?: Employer;
+  /**
+   * Where the work happens, for the page to print: a company by name, or the
+   * kind of place it is where no named company is carried.
+   */
+  placeLabel: string;
+  /** True when this is a kind of place rather than a named business. */
+  unbranded: boolean;
   perHour: Money;
   perShift: Money;
 }
@@ -136,18 +186,29 @@ export function openingsFor(sim: Simulation, person: Person = sim.player): Openi
   for (const job of FIRST_JOBS) {
     if (age < job.fromAge) continue;
     const hiring = job.sector ? local.filter((one) => one.sector === job.sector) : [];
+
     if (hiring.length === 0) {
+      // Either the job has no sector — nobody employs you to walk dogs — or it
+      // has one and SLATE carries no company that trades here. A supermarket
+      // exists in Lagos whether or not this game knows a name to put on it, so
+      // the work is offered as the kind of place it is. Naming a company that
+      // might not trade there would be the dishonest way to fill this in.
       out.push({
         job,
+        placeLabel: job.sector ? SECTOR_LABEL[job.sector] : job.label,
+        unbranded: job.sector !== undefined,
         perHour: wageFor(sim, job, person),
         perShift: shiftPay(sim, job, person),
       });
       continue;
     }
+
     for (const employer of hiring) {
       out.push({
         job,
         employer,
+        placeLabel: employer.name,
+        unbranded: false,
         perHour: wageFor(sim, job, person, employer.id),
         perShift: shiftPay(sim, job, person, employer.id),
       });
@@ -167,6 +228,8 @@ export function openingFor(
   return {
     job,
     employer,
+    placeLabel: employer?.name ?? (job.sector ? SECTOR_LABEL[job.sector] : job.label),
+    unbranded: !employer && job.sector !== undefined,
     perHour: wageFor(sim, job, person, employerId),
     perShift: shiftPay(sim, job, person, employerId),
   };

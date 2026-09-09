@@ -149,6 +149,24 @@ export const LOCAL_MINIMUMS: ReadonlySet<string> = new Set([
 /** The floor everywhere SLATE does not carry a country of its own. */
 export const WORLD_FLOOR: Money = 2_00;
 
+/**
+ * The anchor for a country SLATE carries no figure for.
+ *
+ * The median of the floors it does carry, and the median cost of living where
+ * those floors apply. A country with nothing published gets that median moved
+ * by what its cities actually cost, which is a stated derivation rather than
+ * one number for two hundred countries — Ethiopia and Norway should not come
+ * out the same, and under a flat world floor they did.
+ */
+export const DERIVED_ANCHOR: Money = 5_30;
+export const DERIVED_AT_COST = 1.05;
+
+export const DERIVED_NOTE =
+  'For a country SLATE carries no published figure for, the floor is derived rather than quoted: '
+  + 'the median of the floors it does carry, moved by what that city costs against the median of '
+  + 'the places those floors apply in. It is an estimate and the game says so wherever it shows '
+  + 'one. Nothing is ever paid below the general world floor.';
+
 export const STATE_NOTE =
   'The United States is the country where the floor is least national, so SLATE carries it state by '
   + 'state as published rather than working it out from what a city costs. Five states set no '
