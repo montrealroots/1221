@@ -15,6 +15,9 @@ import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { describeEthnicity } from '@/engine/content/ethnicity';
+import {
+  PERSONALITY_GROUPS, personalityTraitPairs, personalityTraitsIn,
+} from '@/engine/content/personality-traits';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
@@ -182,5 +185,42 @@ describe('race and ethnicity on the character sheet', () => {
       return /\braceEthnicity\b/.test(text) && !/world\/bootstrap\.ts|domain\/model\.ts/.test(f);
     });
     expect(readers, 'these read race or ethnicity out of a save').toEqual([]);
+  });
+});
+
+describe('the order the personality traits are offered in', () => {
+  it('puts every trait beside the one it rules out', () => {
+    for (const group of PERSONALITY_GROUPS) {
+      for (const row of personalityTraitPairs(group)) {
+        if (row.length !== 2) continue;
+        const [left, right] = row;
+        expect(left!.conflictsWith ?? [], `${left!.name} beside ${right!.name}`).toContain(right!.id);
+        expect(right!.conflictsWith ?? [], `${right!.name} beside ${left!.name}`).toContain(left!.id);
+      }
+    }
+  });
+
+  it('offers every trait exactly once', () => {
+    for (const group of PERSONALITY_GROUPS) {
+      const ordered = personalityTraitPairs(group).flat().map((t) => t.id);
+      const expected = personalityTraitsIn(group).map((t) => t.id);
+      expect([...ordered].sort()).toEqual([...expected].sort());
+      expect(ordered.length).toBe(new Set(ordered).size);
+    }
+  });
+
+  it('stands a trait alone only when its opposite is already spoken for', () => {
+    for (const group of PERSONALITY_GROUPS) {
+      const rows = personalityTraitPairs(group);
+      const paired = new Set(rows.filter((r) => r.length === 2).flat().map((t) => t.id));
+      for (const row of rows) {
+        if (row.length !== 1) continue;
+        const alone = row[0]!;
+        const inGroup = new Set(personalityTraitsIn(group).map((t) => t.id));
+        const partners = (alone.conflictsWith ?? []).filter((id) => inGroup.has(id));
+        // Every one of its in-group opposites is in a pair with somebody else.
+        for (const id of partners) expect(paired.has(id)).toBe(true);
+      }
+    }
   });
 });

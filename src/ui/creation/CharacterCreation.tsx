@@ -29,7 +29,7 @@ import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
 import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
-  conflictingPersonalityTraits, personalityTraitsIn,
+  conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
 import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
 import {
@@ -658,9 +658,10 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are already
-              the best alive at all five of those. Every one of these costs something, some can’t be
-              held together, and everything the game still simulates reads all of them.
+              Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are
+              already the best alive at the one thing there is to be good at. Each pair here is one
+              trait written against another: every one costs something, the two sides of a pair
+              can’t both be held, and everything the game still simulates reads all of them.
             </p>
           </div>
           <span className="chip chip-accent">{config.personalityTraits.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -669,47 +670,37 @@ function PersonalStep({
         {PERSONALITY_GROUPS.map((group) => (
           <div key={group} style={{ marginBottom: 'var(--s4)' }}>
             <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group}</div>
-            <div className="trait-grid">
-              {personalityTraitsIn(group).map((trait) => {
-                const selected = config.personalityTraits.includes(trait.id);
-                const conflicts = conflictingPersonalityTraits(config.personalityTraits, trait.id);
-                const blocked = !selected
-                  && (conflicts.length > 0 || config.personalityTraits.length >= MAX_PERSONALITY_TRAITS);
-                return (
-                  <button
-                    key={trait.id}
-                    className="trait"
-                    aria-pressed={selected}
-                    disabled={blocked}
-                    onClick={() => togglePersonality(trait.id)}
-                    title={conflicts.length > 0
-                      ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
-                      : undefined}
-                  >
-                    <div className="trait-name">{trait.name}</div>
-                    <div className="trait-desc">{trait.description}</div>
-                    <div className="xs dim" style={{ marginTop: 4 }}>{trait.cost}</div>
-                  </button>
-                );
-              })}
-            </div>
+            {/* A row per opposing pair. One flowing grid would wrap a pair
+                across two rows at some widths and the opposition would stop
+                being visible, which is the only reason the order exists. */}
+            {personalityTraitPairs(group).map((pair) => (
+              <div className="trait-pair" key={pair[0]!.id}>
+                {pair.map((trait) => {
+                  const selected = config.personalityTraits.includes(trait.id);
+                  const conflicts = conflictingPersonalityTraits(config.personalityTraits, trait.id);
+                  const blocked = !selected
+                    && (conflicts.length > 0 || config.personalityTraits.length >= MAX_PERSONALITY_TRAITS);
+                  return (
+                    <button
+                      key={trait.id}
+                      className="trait"
+                      aria-pressed={selected}
+                      disabled={blocked}
+                      onClick={() => togglePersonality(trait.id)}
+                      title={conflicts.length > 0
+                        ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
+                        : undefined}
+                    >
+                      <div className="trait-name">{trait.name}</div>
+                      <div className="trait-desc">{trait.description}</div>
+                      <div className="xs dim" style={{ marginTop: 4 }}>{trait.cost}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         ))}
-      </div>
-
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h2>My Skills</h2>
-            <p className="muted small">
-              Not a choice, and not on this page. You’re the best{' '}
-              {billedAs(config).toLowerCase()} alive: all {ATTRIBUTES.length}{' '}
-              attributes at {CEILING}, all {ALL_TRAITS.length} acting traits, and the{' '}
-              {GOAT_TRAITS.length} that only ever belong to one person. They’re listed on the
-              My Skills step.
-            </p>
-          </div>
-        </div>
       </div>
 
       <div className="card">

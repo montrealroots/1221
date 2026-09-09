@@ -802,6 +802,15 @@ kbd {
 .creation-step[data-state="done"] { border-bottom-color: var(--text-dim); color: var(--text-muted); }
 
 .trait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--s2); }
+
+/* Two traits written against each other, kept on one row so the trade-off
+   between them is visible. Narrow enough and they stack, which still reads as
+   a pair because nothing else comes between them. */
+.trait-pair {
+  display: grid; gap: var(--s2);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-bottom: var(--s2);
+}
 .trait {
   padding: var(--s3); border: 1px solid var(--line); border-radius: var(--radius-sm);
   background: var(--surface-2); text-align: left; cursor: pointer; color: inherit; font: inherit;

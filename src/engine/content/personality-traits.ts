@@ -304,6 +304,39 @@ export function personalityTraitsIn(group: PersonalityGroup): readonly Personali
   return PERSONALITY_TRAITS.filter((t) => t.group === group);
 }
 
+/**
+ * The traits of one group, ordered so each sits beside the one it rules out.
+ *
+ * Every one of these is written against another — Early Riser against Night
+ * Owl, Frugal against Spender, Resilient against Burns Out — and the choice
+ * only reads as a choice when the two are next to each other. Sorting the
+ * names would scatter them: Detached would end up six places from Sentimental
+ * and the trade-off between them would stop being visible at all.
+ *
+ * So the order is the opposition. Each trait comes out followed by the first
+ * trait in its own group that it cannot be held with, and one whose opposite
+ * has already been placed comes out alone rather than being paired twice —
+ * which is what the few chains here need: Guarded answers Needs People, and
+ * An Open Book, which only rules out Guarded, stands by itself.
+ */
+export function personalityTraitPairs(
+  group: PersonalityGroup,
+): readonly (readonly PersonalityTrait[])[] {
+  const traits = personalityTraitsIn(group);
+  const placed = new Set<string>();
+  const rows: PersonalityTrait[][] = [];
+  for (const trait of traits) {
+    if (placed.has(trait.id)) continue;
+    placed.add(trait.id);
+    const opposite = traits.find(
+      (other) => !placed.has(other.id) && (trait.conflictsWith ?? []).includes(other.id),
+    );
+    if (opposite) placed.add(opposite.id);
+    rows.push(opposite ? [trait, opposite] : [trait]);
+  }
+  return rows;
+}
+
 /** How many a person may hold. Four, so the choice costs something. */
 export const MAX_PERSONALITY_TRAITS = 4;
 
