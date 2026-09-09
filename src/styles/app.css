@@ -552,11 +552,58 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 
 /* The production companies, one card each. */
 .studio-grid {
-  display: grid; gap: var(--s4);
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  display: grid; gap: var(--s3);
+  /* min() so a narrow column never demands more width than it has and pushes
+     the page sideways. */
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
 }
-.studio { display: flex; flex-direction: column; gap: var(--s3); }
-.studio-name { font-size: var(--size-md); font-weight: 650; margin: 2px 0 0; }
+
+/* The card is the button. Clicking anywhere on it opens the company, so the
+   whole thing has to be the target, not a link buried at the bottom of it. */
+.studio {
+  display: flex; flex-direction: column; gap: var(--s2);
+  padding: var(--s4); text-align: left; width: 100%;
+  color: inherit; font: inherit; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.studio:hover { background: var(--surface-2); border-color: var(--accent-line); }
+.studio:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Two lines of room whether or not the name needs them, so that "Netflix,
+   Inc." and "Warner Bros. Discovery, Inc." put their ownership row at the same
+   height and the row of cards reads across as well as down. */
+.studio-name {
+  font-size: var(--size-md); font-weight: 650; margin: 0;
+  line-height: 1.25; min-height: 2.5em; overflow-wrap: break-word;
+}
+/* The word on one line and the fact behind it on the next, on every card,
+   whether or not there is a fact: a ticker fits beside the chip and a parent
+   company's name does not, and the two wrapping differently is what threw the
+   line under them out of true from card to card. */
+.studio-owner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); }
+.studio-owner > .xs { min-height: 1.25em; overflow-wrap: break-word; }
+.studio-about { margin: 0; }
+/* Pinned to the floor of the card, so a row ends level however much any one
+   card has to say above it. */
+.studio-foot {
+  display: flex; flex-wrap: wrap; gap: var(--s3);
+  margin-top: auto; padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+}
+
+/* A name and what they do, in two columns. Run together on one line, eleven
+   of them in a row is a paragraph with dashes in it; in columns the names
+   line up and it can be read down. */
+.figure-rows { display: flex; flex-direction: column; }
+.figure-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--s3); align-items: baseline;
+  padding: var(--s2) 0; border-bottom: 1px solid var(--line);
+}
+.figure-row:last-child { border-bottom: 0; }
+@media (max-width: 560px) {
+  .figure-row { grid-template-columns: 1fr; gap: 2px; }
+}
 
 /* ---------- App shell ---------- */
 

@@ -18,7 +18,7 @@ import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { describeEthnicity } from '@/engine/content/ethnicity';
-import { STUDIOS, everyFigure, studiosInTier } from '@/engine/content/studios';
+import { STUDIOS, STUDIO_BY_ID, everyFigure, ownershipDetail, peopleAt, studiosInTier } from '@/engine/content/studios';
 import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
 } from '@/engine/content/interests';
@@ -377,18 +377,25 @@ describe('the acting sheet', () => {
 });
 
 describe('the production companies', () => {
-  it('carries eighteen, ranked once each', () => {
+  it('carries eighteen, each one only once', () => {
     expect(STUDIOS).toHaveLength(18);
-    const ranks = STUDIOS.map((one) => one.rank);
-    expect(ranks).toEqual([...ranks].sort((a, b) => a - b));
-    expect(new Set(ranks).size).toBe(ranks.length);
-    expect(ranks[0]).toBe(1);
-    expect(ranks.at(-1)).toBe(18);
-  });
-
-  it('gives every company an id, a name and somebody running it', () => {
     const ids = STUDIOS.map((one) => one.id);
     expect(new Set(ids).size).toBe(ids.length);
+    const names = STUDIOS.map((one) => one.name);
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it('attaches no number to a company, so the order cannot read as a score', () => {
+    // The list is in order. That is the whole of it: nothing carries a rank,
+    // and the page prints no position beside a name.
+    for (const studio of STUDIOS) {
+      expect(Object.keys(studio)).not.toContain('rank');
+    }
+    const source = readFileSync('src/ui/workspaces/ProductionCompaniesWorkspace.tsx', 'utf8');
+    expect(source).not.toMatch(/\brank\b/);
+  });
+
+  it('gives every company a name and somebody running it', () => {
     for (const studio of STUDIOS) {
       expect(studio.name, studio.id).not.toBe('');
       expect(studio.figures.length, `${studio.name} has nobody running it`).toBeGreaterThan(0);
@@ -398,24 +405,47 @@ describe('the production companies', () => {
     }
   });
 
-  it('says owned or independent, and never both', () => {
+  it('says how a company is owned as a fact, and never calls one independent', () => {
+    // "Independent" was the wrong word and it was wrong in a way that showed:
+    // Disney came up independent, when its shares trade on the New York Stock
+    // Exchange and every reading of the word says otherwise. Ownership is now
+    // three exclusive states, and each carries the thing that proves it.
     for (const studio of STUDIOS) {
-      if (studio.independent) {
-        expect(studio.parent, `${studio.name} is independent with a parent`).toBeUndefined();
+      if (studio.ownership === 'subsidiary') {
+        expect(studio.parent, `${studio.name} is a subsidiary of nobody`).toBeTruthy();
+        expect(studio.ticker, `${studio.name} is a subsidiary with its own listing`).toBeUndefined();
       } else {
-        expect(studio.parent, `${studio.name} is owned by nobody`).toBeTruthy();
+        expect(studio.parent, `${studio.name} answers to nobody yet names a parent`).toBeUndefined();
+      }
+      if (studio.ownership === 'public') {
+        expect(studio.ticker, `${studio.name} is public and trades nowhere`).toBeTruthy();
+      } else {
+        expect(studio.ticker, `${studio.name} is not public and has a ticker`).toBeUndefined();
       }
     }
-    // Eight of the eighteen answer to somebody else; ten answer to nobody.
-    expect(STUDIOS.filter((one) => !one.independent)).toHaveLength(8);
-    expect(STUDIOS.filter((one) => one.independent)).toHaveLength(10);
+    const by = (kind: string) => STUDIOS.filter((one) => one.ownership === kind);
+    expect(by('public')).toHaveLength(5);
+    expect(by('private')).toHaveLength(5);
+    expect(by('subsidiary')).toHaveLength(8);
+  });
+
+  it('shows the ticker on the traded ones and the owner on the owned ones', () => {
+    for (const studio of STUDIOS) {
+      const detail = ownershipDetail(studio);
+      if (studio.ownership === 'private') expect(detail).toBeUndefined();
+      else expect(detail, `${studio.name} shows nothing beside its ownership`).toBeTruthy();
+    }
+    expect(ownershipDetail(STUDIO_BY_ID.disney!)).toBe('NYSE: DIS');
+    expect(ownershipDetail(STUDIO_BY_ID.nbcu!)).toBe('Comcast Corporation');
   });
 
   it('splits into the eight that make at scale and the ten beside them', () => {
     expect(studiosInTier('major')).toHaveLength(8);
     expect(studiosInTier('label')).toHaveLength(10);
     // The majors are the top of the list, not scattered through it.
-    for (const major of studiosInTier('major')) expect(major.rank).toBeLessThanOrEqual(8);
+    const tiers = STUDIOS.map((one) => one.tier);
+    expect(tiers.slice(0, 8).every((t) => t === 'major')).toBe(true);
+    expect(tiers.slice(8).every((t) => t === 'label')).toBe(true);
   });
 
   it('points a label at a parent that is really on the list, where it is', () => {
@@ -429,6 +459,17 @@ describe('the production companies', () => {
         expect(onTheList, `${studio.name} names a parent that is not on the list`).toBe(true);
       }
     }
+  });
+
+  it('keeps every named person off the face of a card and inside the company', () => {
+    // The people were the reason the cards never lined up: five names on one
+    // and one on the next. peopleAt is the door the detail view opens.
+    for (const studio of STUDIOS) {
+      expect(peopleAt(studio)).toHaveLength(studio.figures.length + (studio.casting?.length ?? 0));
+    }
+    const source = readFileSync('src/ui/workspaces/ProductionCompaniesWorkspace.tsx', 'utf8');
+    const face = source.slice(source.indexOf('function StudioCard'), source.indexOf('function StudioDetail'));
+    expect(face).not.toMatch(/figures|casting/);
   });
 
   it('reaches every named person through one door', () => {
