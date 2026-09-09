@@ -8,9 +8,9 @@
  */
 
 import type {
-  CareerTrack, Person, Personality, SaveMeta, SaveUniverse,
+  CareerTrack, Person, Personality, Premise, SaveMeta, SaveUniverse,
 } from '../domain/model';
-import { SAVE_SCHEMA_VERSION } from '../domain/model';
+import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from '../domain/model';
 import {
   ALL_TRAITS, ATTRIBUTES, emptyAttributeSheet,
   attributesOf, type AttributeSheet,
@@ -25,7 +25,7 @@ import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { freshWellbeing } from '../systems/life';
-import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
+import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
 import {
   DEFAULT_HEIGHT_CM, DEFAULT_WEIGHT_KG, HEIGHT_RANGE, WEIGHT_RANGE,
 } from '../content/lifespan';
@@ -187,9 +187,12 @@ export function wealthNote(wealth: StartingWealth): string {
 // Universe construction
 // ---------------------------------------------------------------------------
 
-export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerId: string): SaveUniverse {
+export function emptyUniverse(
+  meta: SaveMeta, now: number, zone: string, playerId: string, premise: Premise,
+): SaveUniverse {
   return {
     meta,
+    premise,
     __idCounter: 0,
     now,
     homeZone: zone,
@@ -274,6 +277,24 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   );
 
   const playerId = 'person_000001';
+
+  // Actor, or actress. The one fact the whole game is about, so it is settled
+  // here, once, and written into the save rather than worked out again at
+  // every place that needs to print it. Stated is stated; where the player
+  // said nothing, their pronouns decided and the save records that it was the
+  // pronouns rather than them.
+  const stated = config.performerTitle;
+  const performerTitle: PerformerTitle = stated ?? impliedPerformerTitle(config.pronouns);
+  const premise: Premise = {
+    kind: 'actor-actress-simulator',
+    statement: PREMISE_STATEMENT,
+    titles: PERFORMER_TITLES,
+    equalStanding: true,
+    playerTitle: performerTitle,
+    playerTitleSource: stated ? 'stated' : 'implied',
+    recordedAt: now,
+  };
+
   const meta: SaveMeta = {
     id: `save_${slot}_${seed.slice(0, 8)}`,
     slot,
@@ -284,7 +305,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    careerLabel: careerLabel('actor', config.performerTitle ?? impliedPerformerTitle(config.pronouns)),
+    performerTitle,
+    careerLabel: careerLabel('actor', performerTitle),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -292,7 +314,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     appVersion: APP_VERSION,
   };
 
-  const universe = emptyUniverse(meta, now, zone, playerId);
+  const universe = emptyUniverse(meta, now, zone, playerId, premise);
 
   const { attributes, skills } = seedCapability();
 
@@ -312,7 +334,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     stageName: config.stageName?.trim() || undefined,
     portrait: config.portrait,
     pronouns: config.pronouns,
-    performerTitle: config.performerTitle,
+    performerTitle,
     birthInstant,
     // The one physical fact the player chooses. A character who starts young
     // is smaller than this and grows to exactly it.

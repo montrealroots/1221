@@ -59,6 +59,17 @@ export default async function (req) {
       world_now: incoming.worldNow,
       playtime_seconds: incoming.playtimeSeconds,
       character_name: incoming.meta.characterName ?? '',
+      // The premise, lifted out of the payload and onto the row. The game is an
+      // actor and actress simulator; the database says so about every save it
+      // holds rather than making a reader parse a universe to find out.
+      performer_title: incoming.premise.playerTitle,
+      premise: {
+        kind: incoming.premise.kind,
+        statement: incoming.premise.statement ?? '',
+        equal_standing: incoming.premise.equalStanding === true,
+        player_title: incoming.premise.playerTitle,
+        player_title_source: incoming.premise.playerTitleSource ?? 'implied',
+      },
       career_label: incoming.meta.careerLabel ?? '',
       location_label: incoming.meta.locationLabel ?? '',
       world_date_label: incoming.meta.worldDateLabel ?? '',

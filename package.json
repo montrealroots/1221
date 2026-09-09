@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "SLATE - Life + Film/Television Universe Simulator",
+  "description": "SLATE - an actor and actress simulator",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b --noEmit && vite build",

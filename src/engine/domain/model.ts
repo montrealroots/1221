@@ -88,11 +88,15 @@ export interface Person {
   stageName?: string;
   pronouns: string;
   /**
-   * Actor or actress, for the award categories that are named for one.
-   * Nothing in the game writes this yet; absent, pronouns decide. Optional
-   * so every save loads and is routed by the same rule.
+   * Actor, or actress. The subject of the whole game, so it is stored rather
+   * than worked out wherever it is needed. Set once, from what the player
+   * stated; where they stated nothing, their pronouns decided it and the
+   * premise records which of the two happened.
+   *
+   * It is a word, not a stat. Nothing about how well somebody acts, what they
+   * are worth or what they are offered branches on it.
    */
-  performerTitle?: PerformerTitle;
+  performerTitle: PerformerTitle;
   /**
    * Their headshot, as a data URL.
    *
@@ -815,7 +819,7 @@ export interface Preferences {
   largePurchaseThreshold: Money;
 }
 
-export const SAVE_SCHEMA_VERSION = 71;
+export const SAVE_SCHEMA_VERSION = 72;
 
 export interface SaveMeta {
   id: Id;
@@ -831,6 +835,13 @@ export interface SaveMeta {
   /** The player's headshot, mirrored here so a slot can show it without
    *  deserialising the whole universe behind it. */
   portrait?: string;
+  /**
+   * Actor, or actress. The player's own word, mirrored here beside their name
+   * so that a slot card, the server, or anything else reading a save can have
+   * it without deserialising the person behind it. This is the game's subject,
+   * so it is not derived at the point of use: it is stored.
+   */
+  performerTitle: PerformerTitle;
   careerLabel: string;
   locationLabel: string;
   worldDateLabel: string;
@@ -842,12 +853,51 @@ export interface SaveMeta {
 }
 
 /**
+ * What SLATE is, written into every universe it makes.
+ *
+ * SLATE is an actor and actress simulator. That is the premise, and it is the
+ * most important fact about the game, so it is not left to a heading on a
+ * screen somebody might later rewrite: every save states it, carries the two
+ * titles it is about, and records that they stand equal. A save that does not
+ * say this is not a SLATE save, and validation says so.
+ *
+ * The two words are one craft under two names. The business has always kept
+ * them apart — separate awards, separate categories, separate columns in a
+ * trade paper — and SLATE keeps them apart for the same reason, without ever
+ * making one of them the default and the other the exception.
+ */
+export interface Premise {
+  /** What this game is. One value, and it does not vary by save. */
+  kind: 'actor-actress-simulator';
+  /** Said in full, so a reader of the raw save needs nothing else. */
+  statement: string;
+  /** The two titles the game is about, in no order of precedence. */
+  titles: readonly PerformerTitle[];
+  /** Neither title outranks, precedes or defaults over the other. */
+  equalStanding: true;
+  /** The title this save's player carries. */
+  playerTitle: PerformerTitle;
+  /** Whether the player stated it themselves, or their pronouns implied it. */
+  playerTitleSource: 'stated' | 'implied';
+  /** When the premise was written into this save. */
+  recordedAt: Instant;
+}
+
+/** The premise, in the words every save carries. */
+export const PREMISE_STATEMENT =
+  'SLATE is an actor and actress simulator. Actor and actress are two names for '
+  + 'one craft, and this game treats them as equals: neither is the default, and '
+  + 'every label about a person uses their own word.';
+
+/**
  * One save is one universe. Every collection here is scoped to this save and
  * to nothing else. There is no shared mutable state between saves anywhere in
  * SLATE; the only thing saves have in common is immutable reference data.
  */
 export interface SaveUniverse {
   meta: SaveMeta;
+  /** What this game is, stated in the save itself. See `Premise`. */
+  premise: Premise;
   /** Monotonic id counter. Keeps ids deterministic across a replay. */
   __idCounter: number;
 

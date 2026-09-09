@@ -1,6 +1,12 @@
 /**
  * SLATE — the opening.
  *
+ * The first thing the screen says is what the game is: an actor and actress
+ * simulator. It is under the mark rather than buried in an about box because
+ * it is the premise, and because both words belong there — this is a game
+ * about the one craft under its two names, and it does not hold either of them
+ * as the default.
+ *
  * The progression is real. Each stage does actual work — resolving persistence,
  * reading the slots, validating what is stored, checking schema versions — and
  * the bar reflects it. A failure stops with a specific reason and a way forward
@@ -154,7 +160,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
       <div className="startup-inner">
         <span className="clapper" role="img" aria-label="SLATE">🎬</span>
         <div className="wordmark">SLATE</div>
-        <div className="wordmark-sub">A life in pictures</div>
+        <div className="wordmark-sub">An actor and actress simulator</div>
 
         <div
           className="startup-bar"

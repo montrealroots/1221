@@ -8,6 +8,10 @@ because its landing page works:
 - **Partial** — built to a stated depth; the gap is named in the row.
 - **Not built** — nothing in the tree.
 
+SLATE is an actor and actress simulator, and it holds the two titles as equals.
+That premise is carried by every save rather than only stated on a screen: see
+the row for it below.
+
 This build is a deliberate cut-down. The life-and-industry simulator that used
 to sit behind these screens — the shops, the studios, the schools, the phone,
 the people — was removed on purpose. What is left is six things and the engine
@@ -17,6 +21,7 @@ they need. Nothing below claims otherwise.
 
 | Feature | State | Where it lives | Held by |
 | --- | --- | --- | --- |
+| The premise | Implemented — every save states that SLATE is an actor and actress simulator, carries both titles as equals, records which one the player holds and whether they stated it, and is validated on load and refused by the server without it | `src/engine/domain/model.ts`, `src/engine/core/performer.ts`, `base44/shared/guard.js` | `premise` |
 | Startup sequence | Implemented — the mark, the storage it picks, the schema it reads, and the slots it hands on | `src/ui/startup/StartupSequence.tsx` | `persistence`, `base44-adapter` |
 | Save slots | Implemented — three slots, each its own universe, with migration and validation on the way in | `src/ui/saves/SaveSlots.tsx` | `integrity`, `persistence` |
 | Character creation | Implemented — identity, heritage, citizenship, personality and its traits, the founder's instrument, height and weight, where and when the save starts | `src/ui/creation/CharacterCreation.tsx` | `citizenship`, `portrait`, `cohesion` |

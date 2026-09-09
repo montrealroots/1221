@@ -12,9 +12,23 @@ export declare class GuardError extends Error {
   constructor(message: string, status?: number);
 }
 
+/**
+ * What the save says it is. SLATE is an actor and actress simulator, every
+ * payload carries the premise, and the server refuses one that does not.
+ */
+export interface InspectedPremise {
+  kind: 'actor-actress-simulator';
+  statement?: string;
+  titles?: readonly ('actor' | 'actress')[];
+  equalStanding: true;
+  playerTitle: 'actor' | 'actress';
+  playerTitleSource?: 'stated' | 'implied';
+}
+
 export interface InspectedPayload {
   universe: Record<string, unknown>;
   meta: Record<string, unknown> & { slot?: number; schemaVersion?: number };
+  premise: InspectedPremise;
   saveId: string;
   worldNow: number;
   playtimeSeconds: number;

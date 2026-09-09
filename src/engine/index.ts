@@ -11,12 +11,12 @@
  */
 
 import { Simulation, type Command, type CommandResult } from './core/simulation';
-import type { Household, Property, SaveUniverse } from './domain/model';
-import { SAVE_SCHEMA_VERSION } from './domain/model';
+import type { Household, Premise, Property, SaveUniverse } from './domain/model';
+import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from './domain/model';
 import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
-import { performerTitleOf } from './core/performer';
+import { PERFORMER_TITLES, impliedPerformerTitle, performerTitleOf } from './core/performer';
 import { titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
@@ -181,6 +181,7 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
+  sim.universe.meta.performerTitle = player.performerTitle;
   sim.universe.meta.careerLabel = careerLabel(player.careerTrack, performerTitleOf(player));
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
@@ -349,6 +350,49 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
   }
 
+  // Schema 72 made the premise part of the save. SLATE is an actor and actress
+  // simulator; a save that does not say so is brought forward rather than
+  // refused, and the title it should have been carrying all along is settled
+  // from what the player stated, or from their pronouns where they stated
+  // nothing. Both routes are recorded, because which one happened is itself
+  // worth keeping.
+  {
+    const player = universe.people?.[universe.playerId];
+    for (const person of Object.values(universe.people ?? {})) {
+      if (!person.performerTitle) {
+        person.performerTitle = impliedPerformerTitle(person.pronouns);
+        steps.push(`Settled ${person.displayName}'s title from their pronouns.`);
+      }
+    }
+    if (player && universe.meta.performerTitle !== player.performerTitle) {
+      universe.meta.performerTitle = player.performerTitle;
+      steps.push('Mirrored the player’s title onto the save.');
+    }
+    if (!universe.premise || universe.premise.kind !== 'actor-actress-simulator') {
+      const premise: Premise = {
+        kind: 'actor-actress-simulator',
+        statement: PREMISE_STATEMENT,
+        titles: PERFORMER_TITLES,
+        equalStanding: true,
+        playerTitle: player?.performerTitle ?? 'actor',
+        playerTitleSource: 'implied',
+        recordedAt: universe.meta.createdAt ?? universe.now,
+      };
+      universe.premise = premise;
+      steps.push('Wrote the premise into the save: an actor and actress simulator.');
+    } else {
+      // It is there, but it must still agree with the person it is about.
+      if (player && universe.premise.playerTitle !== player.performerTitle) {
+        universe.premise.playerTitle = player.performerTitle;
+        steps.push('Brought the premise’s title back into step with the player.');
+      }
+      if (universe.premise.statement !== PREMISE_STATEMENT) {
+        universe.premise.statement = PREMISE_STATEMENT;
+        steps.push('Restated the premise in this build’s words.');
+      }
+    }
+  }
+
   if (!universe.preferences) {
     universe.preferences = {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
@@ -391,11 +435,45 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   for (const problem of sim.ledger.audit()) errors.push(problem);
   checked += universe.transactions.length;
 
+  // The premise must be in the save, and it must be about the person it names.
+  // SLATE is an actor and actress simulator; a universe that has lost that is
+  // not one this build will vouch for.
+  checked++;
+  const premise = universe.premise;
+  if (!premise) errors.push('The save doesn’t say what game it is: the premise is missing.');
+  else {
+    if (premise.kind !== 'actor-actress-simulator') {
+      errors.push(`The save claims to be a '${premise.kind}', which SLATE is not.`);
+    }
+    if (premise.equalStanding !== true) {
+      errors.push('The premise no longer holds actor and actress as equals.');
+    }
+    if (![...PERFORMER_TITLES].every((title) => premise.titles.includes(title))) {
+      errors.push('The premise has lost one of the two titles the game is about.');
+    }
+    if (!PERFORMER_TITLES.includes(premise.playerTitle)) {
+      errors.push(`The premise gives the player the title '${premise.playerTitle}', which is neither actor nor actress.`);
+    }
+  }
+
   // The player must exist and be coherent.
   const player = universe.people[universe.playerId];
   if (!player) errors.push('The save has no player.');
   else {
     if (!player.isPlayer) errors.push('The player record isn’t flagged as the player.');
+    if (!PERFORMER_TITLES.includes(player.performerTitle)) {
+      errors.push(`The player’s title is '${player.performerTitle}', which is neither actor nor actress.`);
+    }
+    if (premise && premise.playerTitle !== player.performerTitle) {
+      errors.push(
+        `The premise says the player is an ${premise.playerTitle} and the player record says ${player.performerTitle}.`,
+      );
+    }
+    if (universe.meta.performerTitle !== player.performerTitle) {
+      errors.push(
+        `The save summary says ${universe.meta.performerTitle} and the player record says ${player.performerTitle}.`,
+      );
+    }
     if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
     if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
       errors.push('Player primary account points at an account that doesn’t exist.');
@@ -444,6 +522,16 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     const cur = universe.scheduled[i];
     if (prev && cur && prev.at > cur.at) {
       errors.push('The timeline isn’t sorted by time. Advancement would process events out of order.');
+      break;
+    }
+  }
+
+  // Everybody in a save carries one of the two titles. Nobody is untitled and
+  // nobody is something else.
+  for (const person of Object.values(universe.people)) {
+    checked++;
+    if (!PERFORMER_TITLES.includes(person.performerTitle)) {
+      errors.push(`${person.displayName} has the title '${person.performerTitle}', which is neither actor nor actress.`);
       break;
     }
   }

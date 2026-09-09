@@ -1037,8 +1037,8 @@ kbd {
   border-radius: var(--radius); object-fit: cover; display: block;
   border: 1px solid var(--line); background: var(--surface-2); flex: none;
 }
-@media (max-width: 640px) {
-}
+.headshot-sm { width: 44px; height: 55px; }
+.headshot-xl { width: 200px; height: 250px; box-shadow: var(--shadow); }
 
 /* --------------------------------------------------------------------------
    Advance menu

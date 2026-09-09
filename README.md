@@ -1,6 +1,12 @@
 # 🎬 SLATE
 
-A life simulator, cut back to six things: the startup screen, character
+**An actor and actress simulator.** Actor and actress are two names for one
+craft, and SLATE treats them as equals: neither is the default, neither is the
+special case, and every label about a person uses their own word. The premise
+is not a line on a title screen — every save carries it, the client validates
+it on load, and the server refuses to store a save that says otherwise.
+
+The build is currently cut back to six things: the startup screen, character
 creation, the geography map behind it, Home, the calendar and the weather.
 One save is one universe; there are three of them, and they never see each
 other.
@@ -57,6 +63,18 @@ learns that something was hidden, never what it was.
 exactly as it was. The restore writes the old values back into the objects that
 are already there rather than swapping in copies, so a reference taken before a
 command is still the right object afterwards.
+
+**The premise is stored, not asserted.** `SaveUniverse.premise` says what game
+this is, which two titles it is about, that they stand equal, which one the
+player carries, and whether they stated it or their pronouns implied it. The
+player's title is mirrored onto `meta.performerTitle` so a slot card or the
+database can read it without deserialising a universe, and onto the
+`performer_title` and `premise` columns of the `SlateSave` row. `validateUniverse`
+fails a save that has lost any of it, `migrate` writes it into an older save,
+and `base44/shared/guard.js` refuses a write without it. `tests/premise.test.ts`
+holds all of that, including the test that matters most: two saves built
+identically apart from the title come out the same in every number, and differ
+only in the words.
 
 **A long save stays loadable.** Records that grow every tick — answered
 decisions, the timeline, the audit trail — have retention rules behind them, so
