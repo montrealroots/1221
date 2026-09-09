@@ -54,6 +54,28 @@ export function studioName(lastName: string): string {
   return surname ? `${surname} Pictures` : 'The Family Company';
 }
 
+/**
+ * The house on the land.
+ *
+ * Not bought and not rented — it was already there. There is no tenure, no
+ * mortgage, no landlord and no monthly figure, because none of those is true
+ * of it, and the housing ladder the game used to model was a ladder for
+ * somebody climbing one.
+ *
+ * The shape of it is a placeholder: the simulation needs a condition to work
+ * out how well a night in it goes, and the save's property record wants rooms
+ * and a floor area. They are here, named, in one place, and they are somebody
+ * else's to set.
+ */
+export const HOUSE = {
+  name: 'The House',
+  bedrooms: 6,
+  interiorSqft: 5_400,
+  yearBuilt: 1974,
+  /** Kept up, because the family keeps it up. Feeds sleep quality. */
+  condition: 88,
+} as const;
+
 export interface Holding {
   id: string;
   label: (lastName: string) => string;

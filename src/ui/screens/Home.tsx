@@ -23,6 +23,7 @@ import {
   formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
+import { ESTATE_ACRES, HOUSE } from '@/engine/content/estate';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -237,7 +238,7 @@ export function Home() {
                 />
                 <Stat label="Income Tax" value={`${Math.round(place.effectiveIncomeTax * 100)}%`} note="Effective on $60,000" />
                 <Stat label="Sales Tax" value={`${(place.salesTax * 100).toFixed(1)}%`} note={`Property ${(place.propertyTax * 100).toFixed(2)}%`} />
-                <Stat label="Industry" value={`${place.industryPresence}/100`} note={`Jobs ${place.jobMarketDepth}/100`} />
+                <Stat label="Industry" value={`${place.industryPresence}/100`} note="Film and Television work here" />
                 <Stat
                   label="Languages"
                   value={place.languages[0] ?? '—'}
@@ -321,20 +322,26 @@ export function Home() {
 
       <div className="grid grid-2">
 
-        <Panel title="Home And Household" tight>
-          {snapshot.home ? (
-            <div className="col gap-3">
-              <Stat
-                label={snapshot.home.tenure === 'owned' ? 'You own' : 'You rent'}
-                value={<span style={{ fontSize: 'var(--size-md)' }}>{snapshot.home.addressLine}</span>}
-                note={`${snapshot.home.bedrooms} bed · ${snapshot.home.interiorSqft.toLocaleString('en-US')} sq ft`}
-              />
-              <Meter label="Condition" value={snapshot.home.condition} />
-              <Stat label="Household" value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`} />
-            </div>
-          ) : (
-            <p className="small muted">You don’t have a place of your own.</p>
-          )}
+        {/*
+          The land, not a lease. This panel used to report a tenure, an address
+          the game had made up and a monthly rent, which is what the old
+          housing model had to say about somebody climbing a ladder. Nobody
+          here is on one.
+        */}
+        <Panel title="The Land" tight>
+          <div className="col gap-3">
+            <Stat
+              label="Home"
+              value={<span style={{ fontSize: 'var(--size-md)' }}>{HOUSE.name}</span>}
+              note={`${ESTATE_ACRES.toLocaleString('en-US')} acres, held by the family`}
+            />
+            <Meter label="Condition" value={snapshot.home?.condition ?? HOUSE.condition} />
+            <Stat
+              label="Household"
+              value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`}
+              note="No rent, no lease, no landlord"
+            />
+          </div>
         </Panel>
       </div>
     </>

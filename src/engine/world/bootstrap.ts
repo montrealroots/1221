@@ -41,14 +41,6 @@ export const APP_VERSION = '1.1.0';
 // ---------------------------------------------------------------------------
 
 export type StartingWealth = 'nothing' | 'scraping' | 'modest' | 'comfortable' | 'wealthy' | 'inherited';
-/**
- * Where somebody lives at the start.
- *
- * `estate` is the family land, which is not a rung on the ladder the other
- * four describe: no rent, no lease, no mortgage, and not yours — the family's.
- */
-export type StartingHousing = 'couch' | 'roommates' | 'rental' | 'owned' | 'estate';
-
 export interface NewSaveConfig {
   /** Identity */
   firstName: string;
@@ -121,7 +113,6 @@ export interface NewSaveConfig {
 
   /** Starting point */
   startLocationId: string;
-  housing: StartingHousing;
   wealth: StartingWealth;
   /** World start date, local to the starting city. */
   startYear: number;
@@ -170,7 +161,7 @@ export function defaultConfig(): NewSaveConfig {
     companyName: '',
     // Home base is the family land, and it is not a choice on any screen.
     startLocationId: ESTATE_CITY_ID,
-    housing: 'estate', wealth: 'scraping',
+    wealth: 'scraping',
     startYear: 2026, startMonth: 3, startDay: 2,
   };
 }

@@ -21,11 +21,11 @@ import { unknownTaste } from './core/taste';
 import { titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
-import { costOfLiving } from './content/tax';
 
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { registerWorld } from './world/world';
+import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
 import {
   createUniverse, defaultConfig, WEALTH_PROFILES, careerLabel, type NewSaveConfig,
 } from './world/bootstrap';
@@ -132,45 +132,37 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   // --- Housing ------------------------------------------------------------
-  // Somewhere to sleep, which is all the housing model is now: the market, the
-  // agents, the listings and the rooms inside it went with the property
-  // workspace. A place still has a condition, and sleeping in it is better
-  // than sleeping on a couch that belongs to somebody else.
-  if (config.housing !== 'couch') {
-    const city = CITIES.require(cityId);
-    const col = costOfLiving(cityId);
-    const owned = config.housing === 'owned';
-    const rent = city.medianRentCents > 0 ? city.medianRentCents : Math.round(1_800_00 * col);
-    const property: Property = {
-      id: sim.nextId('prop'),
-      saveId: sim.universe.meta.id,
-      ownerId: owned ? player.id : undefined,
-      ownerKind: owned ? 'person' : 'none',
-      kind: owned ? 'house' : config.housing === 'rental' ? 'condo' : 'apartment',
-      name: config.housing === 'roommates' ? 'Shared apartment' : owned ? 'Your house' : 'Your apartment',
-      addressLine: `${140 + Math.round(col * 100)} ${city.name} Avenue`,
-      locationId: cityId,
-      tenure: owned ? 'owned' : 'rented',
-      bedrooms: owned ? 3 : config.housing === 'roommates' ? 2 : 1,
-      bathrooms: owned ? 2 : 1,
-      interiorSqft: owned ? 1_680 : config.housing === 'roommates' ? 900 : 620,
-      lotSqft: owned ? 5_200 : 0,
-      yearBuilt: 1974,
-      features: [],
-      marketValue: Math.round(rent * 210),
-      purchasePrice: owned ? Math.round(rent * 210) : undefined,
-      purchasedAt: owned ? sim.now : undefined,
-      monthlyRent: owned ? undefined : rent,
-      condition: owned ? 82 : 68,
-      annualPropertyTaxRate: 0.0115,
-      structureIds: [],
-      isPrimaryResidence: true,
-      createdAt: sim.now,
-    };
-    sim.universe.properties[property.id] = property;
-    player.residenceId = property.id;
-    household.residenceId = property.id;
-  }
+  // The house on the family land. Not bought, not rented, not a rung on any
+  // ladder: the tenure, the monthly rent, the market value and the bedroom
+  // count that stood for how well you were doing all described somebody
+  // working their way up, and that is not who this is. What survives is the
+  // one thing the simulation needs — a roof with a condition, so a night in it
+  // goes better than a night without one.
+  const property: Property = {
+    id: sim.nextId('prop'),
+    saveId: sim.universe.meta.id,
+    ownerKind: 'none',
+    kind: 'house',
+    name: HOUSE.name,
+    addressLine: `${ESTATE_ACRES.toLocaleString('en-US')} acres, ${estateCity().name}`,
+    locationId: cityId,
+    tenure: 'owned',
+    bedrooms: HOUSE.bedrooms,
+    bathrooms: 4,
+    interiorSqft: HOUSE.interiorSqft,
+    lotSqft: ESTATE_ACRES * 43_560,
+    yearBuilt: HOUSE.yearBuilt,
+    features: [],
+    marketValue: 0,
+    condition: HOUSE.condition,
+    annualPropertyTaxRate: 0,
+    structureIds: [],
+    isPrimaryResidence: true,
+    createdAt: sim.now,
+  };
+  sim.universe.properties[property.id] = property;
+  player.residenceId = property.id;
+  household.residenceId = property.id;
 
   armWorldClock(sim);
 }

@@ -200,8 +200,24 @@ describe('what the personality axes actually do', () => {
   it('makes emotional stability decide how stress arrives and clears', () => {
     const volatile = after({ emotionalStability: 5 }, 'axis-volatile');
     const steady = after({ emotionalStability: 95 }, 'axis-steady');
+    // Stress is where the axis shows: about three and a half times as much of
+    // it after a month on the volatile end.
     expect(volatile.stress).toBeGreaterThan(steady.stress);
-    expect(volatile.morale).toBeLessThan(steady.morale);
+    expect(volatile.stress / Math.max(steady.stress, 0.01)).toBeGreaterThan(2);
+  });
+
+  it('tops out morale for everybody, because a month on the estate has no teeth', () => {
+    // This used to read morale to prove the axis worked, and it stopped
+    // working when the family house replaced the rented flat: a better place
+    // to sleep in pushes both ends to a hundred and the difference disappears
+    // under the ceiling.
+    //
+    // Recording it rather than deleting it. The axis is fine — the stress
+    // check above shows it. What this says is that nothing in a month of this
+    // life is hard enough to move morale off its maximum, whoever you are,
+    // which stops being true the moment there is work to be bad at.
+    expect(after({ emotionalStability: 5 }, 'axis-volatile').morale).toBe(100);
+    expect(after({ emotionalStability: 95 }, 'axis-steady').morale).toBe(100);
   });
 
   it('makes conscientiousness decide how the nights go', () => {
