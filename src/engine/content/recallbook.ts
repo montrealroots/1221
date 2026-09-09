@@ -321,11 +321,11 @@ export const PLACE_KEYS = ['placeId', 'venueId', 'gymId', 'cinemaId', 'restauran
 export const MONEY_KEYS = ['amount', 'price', 'cost', 'net', 'total', 'fee', 'paid', 'premium'] as const;
 
 export const RECALL_NOTE = 'A memory is written from something that really happened in the '
-  + 'simulation, and it carries ids rather than names, so it is never wrong about what a '
+  + 'simulation, and it carries ids rather than names, so it’s never wrong about what a '
   + 'thing is called. What an event was worth remembering is SLATE’s own judgement; that it '
-  + 'happened is not.';
+  + 'happened isn’t.';
 
-export const RECALL_LIMITS_NOTE = 'There is no model here and no network. The game remembers '
+export const RECALL_LIMITS_NOTE = 'There’s no model here and no network. The game remembers '
   + 'what it did, ranked by what it would still be thinking about, and it can only bring up '
-  + 'something that is in the record. It cannot remember what it was never told, and it will '
+  + 'something that’s in the record. It can’t remember what it was never told, and it will '
   + 'not invent a memory to fill a gap.';

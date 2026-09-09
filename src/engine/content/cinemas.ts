@@ -18,8 +18,8 @@ import type { Money } from '../core/money';
 import type { Rng } from '../core/rng';
 
 export const CINEMA_NOTE =
-  'The chains are real and trade in the countries they are listed in, and the certificate is the real '
-  + 'one for the country you are standing in. What is showing is SLATE’s own: there is no listings feed '
+  'The chains are real and trade in the countries they’re listed in, and the certificate is the real '
+  + 'one for the country you’re standing in. What is showing is SLATE’s own: there’s no listings feed '
   + 'here, so the program, every title, every runtime and every ticket price is SLATE’s own calibration '
   + 'and not what is on at that cinema this weekend.';
 
@@ -613,7 +613,7 @@ export const RATING_BY_COUNTRY: ReadonlyMap<string, RatingSystem> = new Map(
  */
 export const SLATE_ADVISORY: RatingSystem = {
   id: 'slate-advisory',
-  body: 'SLATE’s own advisory, because the local certificate is not carried here',
+  body: 'SLATE’s own advisory, because the local certificate isn’t carried here',
   countryIds: [],
   certificates: [
     cert('All Ages', 0, false, 'Nothing in it that anybody need worry about.'),
@@ -674,7 +674,7 @@ export interface Season {
 export const SEASONS: readonly Season[] = [
   { id: 'summer', label: 'Summer', months: [5, 6, 7, 8], favours: ['action', 'science_fiction', 'animation', 'comedy'], weight: 1.35, about: 'Tentpole season. The big ones open on the first Friday they can.' },
   { id: 'halloween', label: 'Halloween', months: [10], favours: ['horror', 'thriller'], weight: 1.15, about: 'The end of October, when the horror pictures go out.' },
-  { id: 'awards', label: 'Awards Season', months: [11, 12], favours: ['drama', 'documentary', 'musical'], weight: 1.2, about: 'The serious ones, dated late so they are fresh when the votes go out.' },
+  { id: 'awards', label: 'Awards Season', months: [11, 12], favours: ['drama', 'documentary', 'musical'], weight: 1.2, about: 'The serious ones, dated late so they’re fresh when the votes go out.' },
   { id: 'newyear', label: 'The New Year', months: [1, 2], favours: ['drama', 'romance', 'thriller'], weight: 0.8, about: 'The quiet months, when what is on has usually been on a while.' },
   { id: 'spring', label: 'Spring', months: [3, 4], favours: ['comedy', 'animation', 'action'], weight: 0.95, about: 'The school holidays, and the run up to summer.' },
   { id: 'autumn', label: 'Autumn', months: [9], favours: ['drama', 'thriller', 'horror'], weight: 0.85, about: 'After the summer and before the awards run.' },

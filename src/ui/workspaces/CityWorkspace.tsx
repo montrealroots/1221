@@ -92,7 +92,7 @@ export function CityWorkspace() {
             ? `${PLACE_KIND_LABEL[here.place.kind]}. ${here.place.about} ${here.place.real ? REAL_NOTE : INVENTED_NOTE}`
             : here.property
               ? 'Your own front door. Eat, shower, sleep, or go out.'
-              : 'You are in the city, between places. Everything below is somewhere you could be instead.'}
+              : 'You’re in the city, between places. Everything below is somewhere you could be instead.'}
         </p>
       </div>
 
@@ -256,7 +256,7 @@ export function CityWorkspace() {
 
       <Panel
         title="Where You Could Go"
-        subtitle={`In ${here.city}. Nearest first, in whatever traffic there is right now.`}
+        subtitle={`In ${here.city}. Nearest first, in whatever traffic there’s right now.`}
         actions={
           <div className="row gap-1">
             {(['walk', 'drive', 'taxi', 'transit'] as Mode[]).map((m) => (
@@ -411,7 +411,7 @@ function OrderDialog({ place, onClose }: { place: Place; onClose: () => void }) 
         </div>
       )}
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {formatDuration(place.minutes * 60_000)} at the table. {sim.player.wellbeing.nourishment < 40 ? 'You are hungry' : 'You are not especially hungry'}.
+        {formatDuration(place.minutes * 60_000)} at the table. {sim.player.wellbeing.nourishment < 40 ? 'You’re hungry' : 'You aren’t especially hungry'}.
       </p>
     </Modal>
   );

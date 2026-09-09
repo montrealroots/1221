@@ -43,7 +43,7 @@ const ALLOWED = {
   'src/engine/index.ts': ['${people} people'],
   'src/engine/systems/media.ts': ['impressions.toLocaleString'],
   // "A cocktail thing", "a summer thing" — a noun, not a count of things.
-  'src/engine/systems/wardrobe.ts': ['at a ${code.name.toLowerCase()} thing', 'is not a ${season.toLowerCase()} thing'],
+  'src/engine/systems/wardrobe.ts': ['at a ${code.name.toLowerCase()} thing', 'isn’t a ${season.toLowerCase()} thing'],
 };
 
 /** Whether this exact line has already been decided about. */

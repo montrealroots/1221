@@ -25,7 +25,7 @@ gate, so a command cannot be added without a place in the matrix.
 Counts in this file are the code's own on the day it was written
 (stage 12): 155 commands, 65 scheduled kinds, 157 events, 25 event
 listeners, 14 scenes, 19 routes, 49 test files, 729 tests passing, 2
-recorded as todo, schema 41, 465 dialogue entries.
+recorded as todo, schema 41, 1,296 dialogue entries.
 
 ## Surfaces
 
@@ -399,6 +399,9 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Title Case for every label, every word | Implemented | `node tools/label-sweep.mjs`, tests/text.test.ts, tests/text-caps.test.ts |
 | No text bleeding at 390px or 1280px | Implemented, swept per stage | `node tools/text-caps.mjs` against a fresh build served on a strict port |
 | Style convention documented | Implemented | `docs/STYLE.md` |
+| Every screen, tab, app and handoff reachable in order without an error, a leak or a dead end | Implemented, walked per stage | `npx vite-node tools/cohesion-walk.mjs` against a fresh build (89 screens; the Instagram bar over the home bar, a modal with no Escape and a sentence the ask box refused were found by it) |
+| Prose contracts the way speech does; labels stay Title Case | Implemented, swept | `node tools/voice-check.mjs --check` in the gate; the sweep that applied it touched 195 files |
+| Random lives cannot throw, miss a scheduled event, unbalance the ledger, produce a bad number, move the clock backwards or lose anything in a save round trip | Implemented | `npx vite-node tools/monte-carlo.mjs` (48 lives × 365 days clean on seed `mc-big`); tests/monte-carlo.test.ts in the gate |
 | Scene text describes committed facts; views never mutate | Implemented | `preview()` for views, `speak()` only in commands; tests/dialogue.test.ts |
 
 ## Dialogue library
@@ -408,7 +411,7 @@ funded; a company that cannot make payroll; a birthday; a brand deal
 | Versioned library with stable ids, eligibility, tone, cooldown, follow-ups | Implemented | `src/engine/dialogue/schema.ts`, `library.ts` |
 | Seeded selection; per-save exposure; chunked loading | Implemented | `speak()`, `dialogue.seen` bounded to 2,000 ids, `loadAllSections()` |
 | Validation: unique ids, reachability by declared expectation (including facts), normalised duplicates, near-twins | Implemented | tests/dialogue.test.ts, `node tools/dialogue-check.mjs` |
-| 100,001 distinct entries | Blocked (content production) | 465 today: property 122, dating 112, vehicles 87, travel 55, health 52, social 37. The gym, meal, run and wellbeing scenes still carry lines in code. See `docs/DIALOGUE.md`. |
+| 100,001 distinct entries | Blocked (content production) | 1,296 today across eighteen sections: property 122, dating 112, fitness 92, vehicles 87, wellbeing 84, jewellery 80, work 79, dining 78, street 73, people 69, costume 61, nightlife 59, retail 59, travel 55, health 52, money 49, wardrobe 48, social 37. See `docs/DIALOGUE.md`. |
 
 ## Game-wide AI integration
 

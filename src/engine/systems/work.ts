@@ -297,7 +297,7 @@ function letGo(sim: Simulation, held: FirstJobHeld, why: 'missed' | 'standing'):
 /** The step above this one, and whether it is within reach yet. */
 export function promotionFor(held: FirstJobHeld): { role: ReturnType<typeof nextRole>; ready: boolean; why: string } {
   const role = nextRole(held.roleId);
-  if (!role) return { role: undefined, ready: false, why: 'There is nothing above this one.' };
+  if (!role) return { role: undefined, ready: false, why: 'There’s nothing above this one.' };
   if (held.shifts < role.shifts) {
     return {
       role, ready: false,
@@ -348,7 +348,7 @@ export function registerWork(sim: Simulation): void {
       if (!allowed.ok) throw new CommandError(allowed.reason);
       if (jobOf(s)) throw new CommandError('You already have one. Two Saturday jobs is one too many.');
       const job = JOB_BY_ID[p.kindId];
-      if (!job) throw new CommandError('That is not a job anybody is offering.');
+      if (!job) throw new CommandError('That isn’t a job anybody is offering.');
       const age = ageOf(s);
       if (age < job.fromAge) {
         throw new CommandError(`Nobody is put on that before ${job.fromAge}. You are ${age}.`);
@@ -417,20 +417,20 @@ export function registerWork(sim: Simulation): void {
     'job.shift',
     (_p, { sim: s }) => {
       const held = jobOf(s);
-      if (!held) throw new CommandError('You do not have a job.');
+      if (!held) throw new CommandError('You don’t have a job.');
       const job = JOB_BY_ID[held.kindId];
       if (!job) throw new CommandError('That job no longer exists.');
       closeOffMissed(s, held);
       const shift = nextOnTheRota(held);
-      if (!shift) throw new CommandError('You are not down for anything. The rota is up on Sunday.');
+      if (!shift) throw new CommandError('You aren’t down for anything. The rota is up on Sunday.');
       if (!shiftIsDue(s, held)) {
         throw new CommandError(
-          `You are on at ${formatTime(shift.at, s.homeZone)} on ${formatDate(shift.at, s.homeZone)}.`,
+          `You’re on at ${formatTime(shift.at, s.homeZone)} on ${formatDate(shift.at, s.homeZone)}.`,
         );
       }
       const person = s.player;
       if ((person.wellbeing.energy ?? 100) < 12) {
-        throw new CommandError('There is nothing left in you. Sleep first, and ring in.');
+        throw new CommandError('There’s nothing left in you. Sleep first, and ring in.');
       }
 
       const kind = SHIFT_BY_ID[shift.kindId];
@@ -468,7 +468,7 @@ export function registerWork(sim: Simulation): void {
         s.remember({
           category: 'career',
           title: 'The First Shift',
-          detail: `${job.label} at ${held.employerName}. ${formatMoney(paid)}, and it is yours.`,
+          detail: `${job.label} at ${held.employerName}. ${formatMoney(paid)}, and it’s yours.`,
           refs: [{ type: 'person', id: person.id }],
           significance: 5,
           public: false,
@@ -493,9 +493,9 @@ export function registerWork(sim: Simulation): void {
     'job.take_promotion',
     (_p, { sim: s }) => {
       const held = jobOf(s);
-      if (!held) throw new CommandError('You do not have a job.');
+      if (!held) throw new CommandError('You don’t have a job.');
       const ready = promotionFor(held);
-      if (!ready.role) throw new CommandError('There is nothing above this one.');
+      if (!ready.role) throw new CommandError('There’s nothing above this one.');
       if (!ready.ready) throw new CommandError(ready.why);
       const job = JOB_BY_ID[held.kindId]!;
       held.roleId = ready.role.id;
@@ -524,14 +524,14 @@ export function registerWork(sim: Simulation): void {
     'job.cover',
     (_p, { sim: s }) => {
       const held = jobOf(s);
-      if (!held) throw new CommandError('You do not have a job.');
+      if (!held) throw new CommandError('You don’t have a job.');
       if (!held.cover) throw new CommandError('Nobody has asked you to come in.');
       const cover = held.cover;
       // A shift you were asked about last month is a shift somebody else did.
       // The stale ask is cleared by `closeOffMissed`, which every read goes
       // through; clearing it here would be rolled back with the refusal.
       if (s.now > cover.at) {
-        throw new CommandError('That shift was days ago. They will have rung somebody else.');
+        throw new CommandError('That shift was days ago. They’ll have rung somebody else.');
       }
       held.rota.push({ at: cover.at, kindId: cover.kindId, hours: cover.hours, cover: true });
       held.rota.sort((a, b) => a.at - b.at);
@@ -540,7 +540,7 @@ export function registerWork(sim: Simulation): void {
       s.emit('job.covered', { jobId: held.id, at: cover.at });
       return {
         at: cover.at,
-        note: `You are on at ${formatTime(cover.at, s.homeZone)} on ${formatDate(cover.at, s.homeZone)}. `
+        note: `You’re on at ${formatTime(cover.at, s.homeZone)} on ${formatDate(cover.at, s.homeZone)}. `
           + 'Short notice pays a little more.',
       };
     },
@@ -551,15 +551,15 @@ export function registerWork(sim: Simulation): void {
     'job.decline_cover',
     (_p, { sim: s }) => {
       const held = jobOf(s);
-      if (!held) throw new CommandError('You do not have a job.');
+      if (!held) throw new CommandError('You don’t have a job.');
       if (!held.cover) throw new CommandError('Nobody has asked you to come in.');
       if (s.now > held.cover.at) {
-        throw new CommandError('That shift was days ago. They will have rung somebody else.');
+        throw new CommandError('That shift was days ago. They’ll have rung somebody else.');
       }
       held.standing = clamp(held.standing + COVER_STANDING.no, 0, 100);
       held.cover = undefined;
       s.emit('job.declined_cover', { jobId: held.id });
-      return { note: 'You said no. They will ring somebody else, and they will remember that you said no.' };
+      return { note: 'You said no. They’ll ring somebody else, and they’ll remember that you said no.' };
     },
   );
 
@@ -577,12 +577,12 @@ export function registerWork(sim: Simulation): void {
     'job.call_in_sick',
     (_p, { sim: s }) => {
       const held = jobOf(s);
-      if (!held) throw new CommandError('You do not have a job to ring.');
+      if (!held) throw new CommandError('You don’t have a job to ring.');
       closeOffMissed(s, held);
       const shift = nextOnTheRota(held);
-      if (!shift) throw new CommandError('You are not down for anything to ring in about.');
+      if (!shift) throw new CommandError('You aren’t down for anything to ring in about.');
       if (s.now < shift.at - 20 * 60 * MS_MINUTE) {
-        throw new CommandError(`You are not on until ${formatDate(shift.at, s.homeZone)}. Ring nearer the time.`);
+        throw new CommandError(`You aren’t on until ${formatDate(shift.at, s.homeZone)}. Ring nearer the time.`);
       }
       const person = s.player;
       const wellbeing = person.wellbeing;
@@ -617,10 +617,10 @@ export function registerWork(sim: Simulation): void {
         note: genuine
           ? `You rang in. ${paid
             ? `Statutory sick pay covers some of it: ${formatMoney(owed)} on the timesheet.`
-            : 'There is no sick pay here, so the day is simply not paid.'}`
+            : 'There’s no sick pay here, so the day is simply not paid.'}`
           : caught
             ? 'You rang in and somebody saw you out. That will be remembered.'
-            : 'You rang in. Nobody said anything, and the day is not paid.',
+            : 'You rang in. Nobody said anything, and the day isn’t paid.',
       };
     },
   );
@@ -630,7 +630,7 @@ export function registerWork(sim: Simulation): void {
     'job.quit',
     (p, { sim: s }) => {
       const held = jobOf(s);
-      if (!held) throw new CommandError('You do not have a job to leave.');
+      if (!held) throw new CommandError('You don’t have a job to leave.');
       held.endedAt = s.now;
       held.endReason = p.reason ?? 'You handed your notice in.';
       // The hours already worked are still owed, and they arrive on the next
@@ -647,7 +647,7 @@ export function registerWork(sim: Simulation): void {
       return {
         earned: held.earned,
         shifts: held.shifts,
-        note: `You are done at ${held.employerName}. ${formatMoney(held.earned)} across ${plural(held.shifts, 'shift')}.`,
+        note: `You’re done at ${held.employerName}. ${formatMoney(held.earned)} across ${plural(held.shifts, 'shift')}.`,
       };
     },
   );
@@ -809,7 +809,7 @@ export function askForCover(sim: Simulation, held: FirstJobHeld, reason: string)
     category: 'career',
     title: `${held.employerName} Are Ringing`,
     detail: `${reason} They want you in on ${formatDate(at, sim.homeZone)}, `
-      + `${kind.label.toLowerCase()}, ${plural(job?.hours ?? 6, 'hour')}. It is your day off.`,
+      + `${kind.label.toLowerCase()}, ${plural(job?.hours ?? 6, 'hour')}. It’s your day off.`,
     route: '/workspace/character',
     refType: 'person',
     refId: held.personId,

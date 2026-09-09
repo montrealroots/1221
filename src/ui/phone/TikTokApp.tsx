@@ -233,7 +233,7 @@ function Player({
   const act = (kind: string, message?: string) => {
     if (!clip) return;
     const result = run(kind, { itemId: clip.id }, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
     else if (message) say(message);
   };
   const count = (n: number) => (hidden ? '' : views(n));
@@ -372,7 +372,7 @@ function ClipPage({
 
   const send = () => {
     const result = run('feed.reply', { itemId: item.id, text }, { silent: true });
-    if (result.ok) { setText(''); say('Posted.'); } else say(result.error ?? 'That did not work.');
+    if (result.ok) { setText(''); say('Posted.'); } else say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -409,7 +409,7 @@ function ClipPage({
                 className="ph-btn-solid"
                 onClick={() => {
                   const result = run('feed.edit', { itemId: item.id, text: draft }, { silent: true });
-                  if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That did not work.');
+                  if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That didn’t work.');
                 }}
               >
                 Save
@@ -419,7 +419,7 @@ function ClipPage({
                 className="ph-btn-outline"
                 onClick={() => {
                   const result = run('feed.delete', { itemId: item.id }, { silent: true });
-                  if (result.ok) { say('Taken down.'); onBack(); } else say(result.error ?? 'That did not work.');
+                  if (result.ok) { say('Taken down.'); onBack(); } else say(result.error ?? 'That didn’t work.');
                 }}
               >
                 Take It Down
@@ -503,7 +503,7 @@ function StudioPage({
           type="button"
           className="ph-iconbtn"
           aria-label="Studio Settings"
-          onClick={() => say('What the studio shows is counted off your own posts in this save. There is nothing to configure.')}
+          onClick={() => say('What the studio shows is counted off your own posts in this save. There’s nothing to configure.')}
         >
           <GearGlyph size={20} />
         </button>
@@ -563,7 +563,7 @@ function StudioPage({
           <button
             type="button"
             className="ph-tt-wide"
-            onClick={() => say('This is what has actually been posted in your world over the last two days. It is not a real world headline and nothing was fetched.')}
+            onClick={() => say('This is what has actually been posted in your world over the last two days. It isn’t a real world headline and nothing was fetched.')}
           >
             Get More Inspiration
           </button>
@@ -578,13 +578,13 @@ function StudioPage({
             <div className="ph-tt-promo ph-sand">
               <SparkleGlyph size={22} />
               <b>Video Gifts</b>
-              <p>What people send while you are live is paid out on the month.</p>
+              <p>What people send while you’re live is paid out on the month.</p>
               <button type="button" onClick={onLive}>Go Live</button>
             </div>
             <div className="ph-tt-promo ph-rose">
               <MusicGlyph size={22} />
               <b>Work With Sounds</b>
-              <p>A clip cut to a sound that is moving reaches further than one that is not.</p>
+              <p>A clip cut to a sound that’s moving reaches further than one that isn’t.</p>
               <button type="button" onClick={() => say('Pick a sound in the camera. What is moving is on the Inspiration list above.')}>Learn More</button>
             </div>
           </div>
@@ -621,7 +621,7 @@ function StudioPage({
             <button type="button" onClick={() => say('The channel is tied to the account that carries the money, and nothing else is linked.')}>
               <ShieldGlyph size={19} />Linked Accounts
             </button>
-            <button type="button" onClick={() => say('SLATE does not sell reach. A clip goes as far as it goes.')}>
+            <button type="button" onClick={() => say('SLATE doesn’t sell reach. A clip goes as far as it goes.')}>
               <SparkleGlyph size={19} />Promote
             </button>
             <button type="button" onClick={() => say(`You have ${views(mine?.followers ?? 0)} following you. The floor for the fund is ${plural(CLIP_FLOOR, 'follower')}.`)}>
@@ -648,7 +648,7 @@ function StudioPage({
           </div>
           <p className="ph-tt-activity-note">
             {[
-              'A clip shot somewhere you have really been does better than one that was not.',
+              'A clip shot somewhere you have really been does better than one that wasn’t.',
               'The sounds on the Inspiration list are the ones carrying reach this week.',
               'Replying to the first hundred comments is worth more than the next clip.',
             ][card % 3]}
@@ -729,7 +729,7 @@ function FriendsPage({ onWho, say }: { onWho: (id: string) => void; say: (text: 
                 className="ph-tt-follow-btn"
                 onClick={() => {
                   const result = run('feed.follow', { profileId: one.id }, { silent: true });
-                  say(result.ok ? `Following @${one.handle}.` : result.error ?? 'That did not work.');
+                  say(result.ok ? `Following @${one.handle}.` : result.error ?? 'That didn’t work.');
                 }}
               >
                 Follow
@@ -831,7 +831,7 @@ function SearchPage({
                 </button>
               </div>
             ))}
-            {recent.length === 0 && <p className="ph-tt-nothing">You have not searched for anything yet.</p>}
+            {recent.length === 0 && <p className="ph-tt-nothing">You haven’t searched for anything yet.</p>}
             {recent.length > 5 && (
               <button type="button" className="ph-tt-more" onClick={() => setAll((v) => !v)}>
                 {all ? 'See Less' : 'See More'}<DownGlyph size={13} />
@@ -969,7 +969,7 @@ function InboxPage({
       label: 'System Notifications',
       body: settings.notificationsOn
         ? 'Nothing from the app is being held back from you.'
-        : 'Notifications are off. It all still happens, and it is all still here.',
+        : 'Notifications are off. It all still happens, and it’s all still here.',
       tint: 'ph-navy-tile',
       glyph: <InfoGlyph size={22} />,
       count: 0,
@@ -1059,7 +1059,7 @@ function InboxPage({
         {open === 'system' && (
           <p className="ph-empty">
             <b>Nothing From The App</b>
-            SLATE does not write to you. Everything in here came from somebody in this world.
+            SLATE doesn’t write to you. Everything in here came from somebody in this world.
           </p>
         )}
 
@@ -1116,7 +1116,7 @@ function ThreadPage({
 
   const send = () => {
     const result = run('feed.message', { profileId, text }, { silent: true });
-    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That did not work.');
+    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -1298,7 +1298,7 @@ function ProfilePage({
                   onClick={() => {
                     const result = run('feed.gift', { profileId: profile.id, amount }, { silent: true });
                     if (result.ok) { say(`Sent ${formatMoney(amount)} to @${profile.handle}.`); setGifting(false); }
-                    else say(result.error ?? 'That did not work.');
+                    else say(result.error ?? 'That didn’t work.');
                   }}
                 >
                   {formatMoney(amount)}
@@ -1317,7 +1317,7 @@ function ProfilePage({
               onClick={() => {
                 const result = run('feed.mute', { profileId: profile.id }, { silent: true });
                 if (result.ok) say(muted ? `@${profile.handle} is back on your feed.` : `@${profile.handle} is off your feed.`);
-                else say(result.error ?? 'That did not work.');
+                else say(result.error ?? 'That didn’t work.');
               }}
             >
               {muted ? 'Unmute' : 'Mute'}
@@ -1328,7 +1328,7 @@ function ProfilePage({
               onClick={() => {
                 const result = run('feed.block', { profileId: profile.id }, { silent: true });
                 if (result.ok) say(blocked ? `@${profile.handle} is unblocked.` : `@${profile.handle} is blocked, and you no longer follow them.`);
-                else say(result.error ?? 'That did not work.');
+                else say(result.error ?? 'That didn’t work.');
               }}
             >
               {blocked ? 'Unblock' : 'Block'}
@@ -1425,7 +1425,7 @@ function EditProfile({
           className="ph-btn-solid"
           onClick={() => {
             const result = run('feed.edit_profile', { profileId: profile.id, name, bio, image }, { silent: true });
-            if (!result.ok) { say(result.error ?? 'That did not work.'); return; }
+            if (!result.ok) { say(result.error ?? 'That didn’t work.'); return; }
             run('feed.set_note', { text: note, platform: CLIP_PLATFORM }, { silent: true });
             say('Profile saved.');
             onDone();
@@ -1464,7 +1464,7 @@ function MakeAccount({ say }: { say: (text: string) => void }) {
             className="ph-btn-solid"
             onClick={() => {
               const result = run('feed.create_profile', { platform: CLIP_PLATFORM, handle, name, bio }, { silent: true });
-              say(result.ok ? 'That is your account.' : result.error ?? 'That did not work.');
+              say(result.ok ? 'That’s your account.' : result.error ?? 'That didn’t work.');
             }}
           >
             Create Account
@@ -1542,10 +1542,10 @@ function CreateSheet({
         </div>
 
         <div className="ph-tt-cam-rail">
-          <button type="button" onClick={() => say('The handset has one camera in this game, so there is nothing to flip to.')} aria-label="Flip">
+          <button type="button" onClick={() => say('The handset has one camera in this game, so there’s nothing to flip to.')} aria-label="Flip">
             <RepostGlyph size={22} />
           </button>
-          <button type="button" onClick={() => say('There is no lamp on this handset.')} aria-label="Flash">
+          <button type="button" onClick={() => say('There’s no lamp on this handset.')} aria-label="Flash">
             <SparkleGlyph size={22} />
           </button>
           <button type="button" onClick={() => say('A clip takes the minutes it takes to cut, which you set in the editor.')} aria-label="Timer">
@@ -1554,7 +1554,7 @@ function CreateSheet({
           <button
             type="button"
             className={beauty ? 'ph-ticked' : ''}
-            onClick={() => { setBeauty((v) => !v); say(beauty ? 'Filters off.' : 'Filters on. It does not change what a clip does.'); }}
+            onClick={() => { setBeauty((v) => !v); say(beauty ? 'Filters off.' : 'Filters on. It doesn’t change what a clip does.'); }}
             aria-label="Effects"
           >
             <SparkleGlyph size={22} />
@@ -1622,7 +1622,7 @@ function CreateSheet({
             if (result.ok) {
               say(result.value!.scheduled ? 'Scheduled. It goes up on its own.' : 'Posted. Now you wait.');
               onClose();
-            } else say(result.error ?? 'That did not work.');
+            } else say(result.error ?? 'That didn’t work.');
           }}
         >
           Post
@@ -1718,7 +1718,7 @@ function LiveSheet({ onClose, say }: { onClose: () => void; say: (text: string) 
                 if (result.ok) {
                   say(`${views(result.value!.peak)} watching at the peak. ${formatMoney(result.value!.gifts)} in.`);
                   onClose();
-                } else say(result.error ?? 'That did not work.');
+                } else say(result.error ?? 'That didn’t work.');
               }}
             >
               Go Live
@@ -1832,7 +1832,7 @@ function SettingsPage({ onBack, say }: { onBack: () => void; say: (text: string)
 
   const set = (patch: Record<string, unknown>) => {
     const result = run('feed.settings', patch, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -1847,7 +1847,7 @@ function SettingsPage({ onBack, say }: { onBack: () => void; say: (text: string)
 
         <div className="ph-tt-cap">Account</div>
         <div className="ph-tt-set-group">
-          <TtRow icon={<AccountGlyph size={20} />} label="Account" value={mine ? `@${mine.handle}` : 'None'} onClick={() => say(mine ? `Signed in as @${mine.handle}. SLATE keeps one life, so there is one account.` : 'Make one from the Profile tab.')} />
+          <TtRow icon={<AccountGlyph size={20} />} label="Account" value={mine ? `@${mine.handle}` : 'None'} onClick={() => say(mine ? `Signed in as @${mine.handle}. SLATE keeps one life, so there’s one account.` : 'Make one from the Profile tab.')} />
           <TtRow icon={<LockGlyph size={20} />} label="Privacy" value={settings.privateAccount ? 'Private' : 'Public'} onClick={() => set({ privateAccount: !settings.privateAccount })} />
           <TtRow icon={<ShieldGlyph size={20} />} label="Security And Permissions" onClick={() => say('Nothing on this phone reaches your machine. The camera and the picture roll are the game’s own.')} />
           <TtRow icon={<CartGlyph size={20} />} label="Your Orders" value="None" onClick={() => say('Shopping in SLATE happens in shops, not in here.')} />
@@ -1864,7 +1864,7 @@ function SettingsPage({ onBack, say }: { onBack: () => void; say: (text: string)
           <TtRow icon={<PeopleGlyph size={20} />} label="Audience Controls" value={settings.privateAccount ? 'Followers Only' : 'Everyone'} onClick={() => set({ privateAccount: !settings.privateAccount })} />
           <TtRow icon={<ChartGlyph size={20} />} label="Ads" value="None" onClick={() => say('SLATE sells nothing and shows you nothing it was paid to show you.')} />
           <TtRow icon={<PlayTriangleGlyph size={20} />} label="Playback" value={settings.hideCounts ? 'Counts Hidden' : 'Counts Shown'} onClick={() => set({ hideCounts: !settings.hideCounts })} />
-          <TtRow icon={<LanguageGlyph size={20} />} label="Language" value="English" onClick={() => say('The app is in English. SLATE does not translate itself yet.')} />
+          <TtRow icon={<LanguageGlyph size={20} />} label="Language" value="English" onClick={() => say('The app is in English. SLATE doesn’t translate itself yet.')} />
           <TtRow icon={<TvGlyph size={20} />} label="Display" value="Set By The Phone" onClick={() => say('Light or dark is in the phone’s own Settings app, which is where it belongs.')} />
           <TtRow icon={<TimerGlyph size={20} />} label="Screen Time" value={`${minutes} Min Today`} onClick={() => say(`${minutes} minutes on this app today, which is ${Math.round((minutes / (24 * 60)) * 100)} percent of a day.`)} />
           <TtRow icon={<SupervisionGlyph size={20} />} label="Family Pairing" onClick={() => say('Nobody else is signed in on this handset.')} />
@@ -1874,7 +1874,7 @@ function SettingsPage({ onBack, say }: { onBack: () => void; say: (text: string)
         <div className="ph-tt-cap">Cache And Cellular</div>
         <div className="ph-tt-set-group">
           <TtRow icon={<DownloadGlyph size={20} />} label="Offline Videos" value={`${saved} Saved`} onClick={() => say('Clips are drawn rather than fetched, so nothing is downloaded. What you save is a bookmark.')} />
-          <TtRow icon={<BlockRingGlyph size={20} />} label="Free Up Space" value="Nothing Cached" onClick={() => say('There is no cache. The save holds what is yours and works out the rest when you look at it.')} />
+          <TtRow icon={<BlockRingGlyph size={20} />} label="Free Up Space" value="Nothing Cached" onClick={() => say('There’s no cache. The save holds what is yours and works out the rest when you look at it.')} />
           <TtRow icon={<BarsGlyph size={20} />} label="Data Saver" value="Not Needed" onClick={() => say('Nothing on this phone goes over a connection.')} />
         </div>
 
@@ -1882,12 +1882,12 @@ function SettingsPage({ onBack, say }: { onBack: () => void; say: (text: string)
         <div className="ph-tt-set-group">
           <TtRow icon={<FlaskGlyph size={20} />} label="Report A Problem" onClick={() => say('Nothing is sent anywhere. This is a game on your machine.')} />
           <TtRow icon={<RingHelpGlyph size={20} />} label="Support" onClick={() => say('Everything on this phone is SLATE’s own. The accounts are invented and nobody real is named.')} />
-          <TtRow icon={<InfoGlyph size={20} />} label="Terms And Policies" onClick={() => say('There is no service to agree to. This app runs inside SLATE and talks to nothing.')} />
+          <TtRow icon={<InfoGlyph size={20} />} label="Terms And Policies" onClick={() => say('There’s no service to agree to. This app runs inside SLATE and talks to nothing.')} />
         </div>
 
         <div className="ph-tt-cap">Login</div>
         <div className="ph-tt-set-group">
-          <TtRow icon={<RepostGlyph size={20} />} label="Switch Account" value={mine ? `@${mine.handle}` : 'None'} onClick={() => say('SLATE keeps one life, so there is one account and nothing to switch to.')} />
+          <TtRow icon={<RepostGlyph size={20} />} label="Switch Account" value={mine ? `@${mine.handle}` : 'None'} onClick={() => say('SLATE keeps one life, so there’s one account and nothing to switch to.')} />
           <TtRow icon={<MenuGlyph size={20} />} label="Log Out" onClick={() => say('The account is part of your save. Closing the app is the same as putting the phone down.')} />
         </div>
 

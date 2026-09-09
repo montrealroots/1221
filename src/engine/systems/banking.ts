@@ -41,7 +41,7 @@ export const STATEMENTS_KEPT = 24;
 export const STANDING_ORDER_STRIKES = 3;
 
 export const NO_SUCH_PRODUCT = 'No such product.';
-export const NOT_YOURS = 'That is not your account.';
+export const NOT_YOURS = 'That isn’t your account.';
 export const INVITATION_ONLY = 'Invitation only. Nobody applies for it; the issuer decides who is asked.';
 export const NOT_ISSUED_HERE = 'Not issued where you live.';
 
@@ -107,7 +107,7 @@ export function openingRefusal(sim: Simulation, product: BankProduct, deposit: M
     }
     if (product.initiationFee) {
       const payFrom = fromAccountId ?? sim.player.primaryAccountId;
-      if (!payFrom || sim.ledger.availableFunds(payFrom) < product.initiationFee) return `${productLabel(product)} takes ${formatMoney(product.initiationFee)} to join, and you cannot cover it.`;
+      if (!payFrom || sim.ledger.availableFunds(payFrom) < product.initiationFee) return `${productLabel(product)} takes ${formatMoney(product.initiationFee)} to join, and you can’t cover it.`;
     }
     return undefined;
   }
@@ -116,7 +116,7 @@ export function openingRefusal(sim: Simulation, product: BankProduct, deposit: M
   }
   if (product.minimumOpening > 0 && !fromAccountId) return 'Choose an account to fund it from.';
   if (fromAccountId && deposit > 0 && sim.ledger.availableFunds(fromAccountId) < deposit) {
-    return `There is not ${formatMoney(deposit)} in ${sim.ledger.account(fromAccountId).name}.`;
+    return `There isn’t ${formatMoney(deposit)} in ${sim.ledger.account(fromAccountId).name}.`;
   }
   return undefined;
 }
@@ -390,7 +390,7 @@ function closeCardCycle(sim: Simulation, account: Account, from: number, now: nu
       if (profile) profile.latePayments += 1;
       sim.notify({
         category: 'finance', title: `${account.name} Was Not Paid`,
-        body: `${formatMoney(minimum)} was the least they would take and ${formatMoney(paid)} arrived.${late > 0 ? ` ${formatMoney(late)} late fee.` : ''} It goes on your record.`,
+        body: `${formatMoney(minimum)} was the least they’d take and ${formatMoney(paid)} arrived.${late > 0 ? ` ${formatMoney(late)} late fee.` : ''} It goes on your record.`,
         importance: 72, route: '/workspace/bank', refType: 'account', refId: account.id,
       });
       sim.emit('bank.card_late', { accountId: account.id, minimum, paid });
@@ -425,7 +425,7 @@ function closeCardCycle(sim: Simulation, account: Account, from: number, now: nu
     sim.requireDecision({
       urgency: 52, category: 'finance',
       title: `${account.name} Statement`,
-      detail: `${formatMoney(balance)} on the statement. The least they will take is ${formatMoney(statement.minimumDue ?? 0)}, by ${formatDate(account.paymentDueAt ?? now, sim.homeZone)}. Pay it all and there is no interest.`,
+      detail: `${formatMoney(balance)} on the statement. The least they’ll take is ${formatMoney(statement.minimumDue ?? 0)}, by ${formatDate(account.paymentDueAt ?? now, sim.homeZone)}. Pay it all and there’s no interest.`,
       route: '/workspace/bank',
       actions: [
         { label: 'Pay It In Full', commandKind: 'bank.pay_card', payload: { accountId: account.id, how: 'full' } },
@@ -471,10 +471,10 @@ function runStandingOrders(sim: Simulation): void {
       order.missed += 1;
       sim.notify({
         category: 'finance', title: `${order.name} Did Not Go Out`,
-        body: `${formatMoney(order.amount)} was not there in ${from.name}. ${order.missed >= STANDING_ORDER_STRIKES ? 'The bank has stopped trying.' : `Missed ${order.missed} of ${STANDING_ORDER_STRIKES}.`}`,
+        body: `${formatMoney(order.amount)} wasn’t there in ${from.name}. ${order.missed >= STANDING_ORDER_STRIKES ? 'The bank has stopped trying.' : `Missed ${order.missed} of ${STANDING_ORDER_STRIKES}.`}`,
         importance: 50, route: '/workspace/bank', refType: 'account', refId: from.id,
       });
-      if (order.missed >= STANDING_ORDER_STRIKES) stopOrder(sim, order, 'It could not be paid three times.');
+      if (order.missed >= STANDING_ORDER_STRIKES) stopOrder(sim, order, 'It couldn’t be paid three times.');
       continue;
     }
     sim.transfer(order.fromAccountId, order.toAccountId, order.amount, order.name, 'transfer');
@@ -556,7 +556,7 @@ export function registerBanking(sim: Simulation): void {
     const funds = from.closedAt ? 0 : sim.ledger.availableFunds(from.id);
     if (funds < application.deposit) {
       application.status = 'declined';
-      application.reason = `The opening deposit of ${formatMoney(application.deposit, { cents: false })} was not there when the bank came to take it.`;
+      application.reason = `The opening deposit of ${formatMoney(application.deposit, { cents: false })} wasn’t there when the bank came to take it.`;
       sim.notify({ category: 'finance', title: `${bank.name} Declined`, body: application.reason, importance: 60, route: '/workspace/bank' });
       sim.emit('bank.private_declined', { applicationId: application.id, bankId: bank.id });
       return;
@@ -593,7 +593,7 @@ export function registerBanking(sim: Simulation): void {
       if (!Number.isFinite(p.deposit) || p.deposit < bank.minimumRelationship) throw new CommandError(`${bank.name} wants ${formatMoney(bank.minimumRelationship, { cents: false })} to open a relationship (${bank.minimumIs}).`);
       const from = s.ledger.account(p.fromAccountId);
       if (from.ownerId !== me.id) throw new CommandError(NOT_YOURS);
-      if (s.ledger.availableFunds(from.id) < p.deposit) throw new CommandError(`There is not ${formatMoney(p.deposit, { cents: false })} in ${from.name}.`);
+      if (s.ledger.availableFunds(from.id) < p.deposit) throw new CommandError(`There isn’t ${formatMoney(p.deposit, { cents: false })} in ${from.name}.`);
       // Know your customer: a valid passport, and the address the game
       // already has for where you live. Nothing else is asked and nothing
       // is invented about the source of the money.
@@ -673,12 +673,12 @@ export function registerBanking(sim: Simulation): void {
       const account = s.ledger.account(p.accountId);
       if (account.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
       if (account.closedAt) throw new CommandError('That account is already closed.');
-      if (account.nominal) throw new CommandError('That is not an account you hold.');
+      if (account.nominal) throw new CommandError('That isn’t an account you hold.');
       if (isLiability(account.kind) && account.balance < 0) {
         throw new CommandError(`Clear the ${formatMoney(-account.balance)} on ${account.name} before closing it.`);
       }
       if (s.player.primaryAccountId === account.id && myAccounts(s).filter((a) => a.kind === 'checking' || a.kind === 'cash').length <= 1) {
-        throw new CommandError('That is the only account your money comes into. Open another first.');
+        throw new CommandError('That’s the only account your money comes into. Open another first.');
       }
       const pointed = Object.values(s.universe.bills).filter((b) => b.active && b.autopayAccountId === account.id);
       if (pointed.length > 0) throw new CommandError(`${pointed.length} bill${pointed.length === 1 ? ' is' : 's are'} paid from ${account.name}. Point ${pointed.length === 1 ? 'it' : 'them'} somewhere else first.`);
@@ -689,7 +689,7 @@ export function registerBanking(sim: Simulation): void {
       let moved = 0;
       if (account.balance > 0) {
         const to = p.toAccountId ?? myAccounts(s).find((a) => a.id !== account.id && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash'))?.id;
-        if (!to) throw new CommandError('There is nowhere to move the money to.');
+        if (!to) throw new CommandError('There’s nowhere to move the money to.');
         if (account.maturesAt && s.now < account.maturesAt) {
           const broken = breakingCost(account);
           penalty = broken.penalty;
@@ -718,7 +718,7 @@ export function registerBanking(sim: Simulation): void {
       const account = s.ledger.account(p.accountId);
       if (account.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
       const product = productOf(account);
-      if (!product?.overdraftLimit) throw new CommandError(`${account.name} does not come with cover.`);
+      if (!product?.overdraftLimit) throw new CommandError(`${account.name} doesn’t come with cover.`);
       if (!p.on && account.balance < 0) throw new CommandError(`${account.name} is ${formatMoney(-account.balance)} into its cover. Put it right before switching it off.`);
       account.overdraftOptIn = p.on;
       account.overdraftLimit = product.overdraftLimit;
@@ -734,9 +734,9 @@ export function registerBanking(sim: Simulation): void {
     (p, { sim: s }) => {
       const card = s.ledger.account(p.accountId);
       if (card.ownerId !== s.player.id) throw new CommandError(NOT_YOURS);
-      if (card.kind !== 'credit_card' && card.kind !== 'company_credit') throw new CommandError('That is not a card.');
+      if (card.kind !== 'credit_card' && card.kind !== 'company_credit') throw new CommandError('That isn’t a card.');
       const owed = Math.max(0, -card.balance);
-      if (owed <= 0) throw new CommandError(`There is nothing owing on ${card.name}.`);
+      if (owed <= 0) throw new CommandError(`There’s nothing owing on ${card.name}.`);
       const statement = card.statementBalance ?? 0;
       const minimum = Math.min(owed, minimumFor(productOf(card), statement || owed));
       const how = p.how ?? 'amount';
@@ -788,7 +788,7 @@ export function registerBanking(sim: Simulation): void {
     'bank.cancel_standing_order',
     (p, { sim: s }) => {
       const order = s.universe.standingOrders?.[p.orderId];
-      if (!order || !order.active) throw new CommandError('There is no standing order like that.');
+      if (!order || !order.active) throw new CommandError('There’s no standing order like that.');
       stopOrder(s, order, 'You canceled it.');
       return { stopped: true };
     },

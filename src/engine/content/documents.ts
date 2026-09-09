@@ -278,4 +278,4 @@ export const LICENSE_EXCHANGE: Readonly<Record<string, readonly string[]>> = {
 
 /** What a passport line says beside a real authority. */
 export const DOCUMENT_NOTE = 'A real issuing authority, its validity and its tests are public record. The fee and the wait are SLATE’s calibration and move with the year and the office.';
-export const SIX_MONTH_NOTE = 'Many countries refuse entry on a passport with less than six months left. SLATE does not carry the table of which, so it warns for every border and refuses for none.';
+export const SIX_MONTH_NOTE = 'Many countries refuse entry on a passport with less than six months left. SLATE doesn’t carry the table of which, so it warns for every border and refuses for none.';

@@ -273,13 +273,13 @@ describe('going', () => {
     const { sim, ticketId, at } = withASeat('going-attend-guards');
     const early = sim.execute({ kind: 'going.attend', payload: { ticketId } });
     expect(early.ok).toBe(false);
-    expect(early.error).toContain('not open yet');
+    expect(early.error).toMatch(/n[o’]t open yet/);
 
     sim.advanceTo(at - 20 * MINUTE);
     sim.player.currentLocationId = 'us-ca-losangeles';
     const away = sim.execute({ kind: 'going.attend', payload: { ticketId } });
     expect(away.ok).toBe(false);
-    expect(away.error).toContain('you are not');
+    expect(away.error).toMatch(/you (are(n’t| not)|aren’t)/);
   });
 
   it('takes the evening, writes down the night, and only counts once', () => {

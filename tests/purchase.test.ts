@@ -274,7 +274,7 @@ describe('the inspection', () => {
     sim.player.currentLocationId = sim.player.currentLocationId === 'uk-eng-london' ? 'us-ny-newyork' : 'uk-eng-london';
     must(sim, 'scene.start', { definitionId: 'property.inspection', input: { offerId: offer.id }, refType: 'offer', refId: offer.id });
     const meet = sceneView(sim, activeScene(sim)!);
-    expect(meet.choices.find((c) => c.id === 'walk')!.disabled).toMatch(/not in the city/);
+    expect(meet.choices.find((c) => c.id === 'walk')!.disabled).toMatch(/n[o’]t in the city/);
     choose(sim, 'read');
     choose(sim, 'decide');
     choose(sim, 'walk');
@@ -587,16 +587,16 @@ describe('moving in and the rooms', () => {
     expect(rooms.filter((r) => r.themeId === 'warm_minimal').length).toBeGreaterThan(0);
     expect(quick.lines.at(-1)).toMatch(/rooms done/);
     sim.player.currentLocationId = sim.player.currentLocationId === 'uk-eng-london' ? 'us-ny-newyork' : 'uk-eng-london';
-    expect(attempt(sim, 'scene.start', { definitionId: 'property.movein', input: { propertyId: house.id } }).error).toMatch(/not in the city/);
-    expect(attempt(sim, 'prop.furnish_room', { roomId: rooms[0]!.id, level: 'comfortable' }).error).toMatch(/not in the city/);
+    expect(attempt(sim, 'scene.start', { definitionId: 'property.movein', input: { propertyId: house.id } }).error).toMatch(/n[o’]t in the city/);
+    expect(attempt(sim, 'prop.furnish_room', { roomId: rooms[0]!.id, level: 'comfortable' }).error).toMatch(/n[o’]t in the city/);
   });
 
   it('you cannot furnish somebody else\'s house', () => {
     const sim = aLife('furnish-other');
     const listing = listingsHere(sim)[0]!;
     const other = sim.universe.properties[listing.propertyId]!;
-    expect(attempt(sim, 'scene.start', { definitionId: 'property.movein', input: { propertyId: other.id } }).error).toMatch(/not your home/);
-    expect(attempt(sim, 'prop.move_in', { propertyId: other.id }).error).toMatch(/not yours/);
+    expect(attempt(sim, 'scene.start', { definitionId: 'property.movein', input: { propertyId: other.id } }).error).toMatch(/n[o’]t your home/);
+    expect(attempt(sim, 'prop.move_in', { propertyId: other.id }).error).toMatch(/n[o’]t yours/);
   });
 });
 

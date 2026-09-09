@@ -179,9 +179,13 @@ export function GoAnywhere() {
                     <button
                       key={option.id}
                       className="search-result"
-                      onClick={() => setChosen(ask.kind === 'which'
-                        ? { askableId: ask.askable.id, optionId: option.id }
-                        : { askableId: option.id })}
+                      onClick={() => {
+                        setChosen(ask.kind === 'which'
+                          ? { askableId: ask.askable.id, optionId: option.id }
+                          : { askableId: option.id });
+                        // The keyboard goes back to the box, so Enter opens the plan this narrowed to.
+                        inputRef.current?.focus();
+                      }}
                     >
                       <span className="grow">
                         <span className="small strong">{option.label}</span>
@@ -212,7 +216,7 @@ export function GoAnywhere() {
                     <button
                       key={near.id}
                       className="search-result"
-                      onClick={() => setChosen({ askableId: near.id })}
+                      onClick={() => { setChosen({ askableId: near.id }); inputRef.current?.focus(); }}
                     >
                       <span className="grow"><span className="small strong">{near.label}</span></span>
                     </button>

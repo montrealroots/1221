@@ -22,10 +22,10 @@
 import type { Money } from '../core/money';
 
 export const DENTIST_NOTE =
-  'Who pays for dentistry is the part that really differs, and it is carried as published: England '
+  'Who pays for dentistry is the part that really differs, and it’s carried as published: England '
   + 'charges three bands and exempts under eighteens, students under nineteen and new mothers; Germany '
   + 'pays more toward your crown if you kept the bonus booklet stamped; a Japanese patient pays thirty '
-  + 'percent; adult dentistry is not in the Dutch basic package at all; and in Canada, Australia and '
+  + 'percent; adult dentistry isn’t in the Dutch basic package at all; and in Canada, Australia and '
   + 'the United States it sits outside the health system entirely. The practice itself, the dentist, '
   + 'the waiting room and every price outside a published band are SLATE’s own.';
 
@@ -90,7 +90,7 @@ export const DENTAL_REGIMES: readonly DentalRegime[] = [
   },
   {
     countryIds: ['nl'], system: 'private', patientShare: 1, freeUnder: 18,
-    about: 'Adult dentistry is not in the Dutch basic package at all. Under eighteens are covered; everybody else pays, or buys the supplementary policy that is one of the most commonly bought things in the country.',
+    about: 'Adult dentistry isn’t in the Dutch basic package at all. Under eighteens are covered; everybody else pays, or buys the supplementary policy that’s one of the most commonly bought things in the country.',
   },
   {
     countryIds: ['se'], system: 'salaried', patientShare: 0.4, freeUnder: 24,
@@ -111,7 +111,7 @@ export const DENTAL_REGIMES: readonly DentalRegime[] = [
   },
   {
     countryIds: ['ca'], system: 'insured_share', patientShare: 0.6,
-    about: 'Dentistry sits outside medicare, so it is an employer plan or your own pocket. The national dental plan that began rolling out in 2024 is changing that for people without cover.',
+    about: 'Dentistry sits outside medicare, so it’s an employer plan or your own pocket. The national dental plan that began rolling out in 2024 is changing that for people without cover.',
   },
   {
     countryIds: ['au', 'nz'], system: 'private', patientShare: 0.85,
@@ -127,7 +127,7 @@ export const DENTAL_REGIMES: readonly DentalRegime[] = [
 /** A country SLATE does not carry a regime for pays privately, and the room says so. */
 export const GENERAL_DENTAL: DentalRegime = {
   countryIds: [], system: 'private', patientShare: 1,
-  about: 'SLATE does not carry this country’s own arrangement, so it is treated as paid for privately rather than guessed at.',
+  about: 'SLATE doesn’t carry this country’s own arrangement, so it’s treated as paid for privately rather than guessed at.',
 };
 
 export interface Treatment {
@@ -161,13 +161,13 @@ export const TREATMENTS: readonly Treatment[] = [
   t('exam', 'An Examination', 1, 65_00, 20, 4, false,
     'A look, a poke with the sharp thing, and a date for the next one.'),
   t('xray', 'Bitewing X Rays', 1, 45_00, 15, 2, false,
-    'Two small films to see between the teeth, where the mirror cannot.'),
+    'Two small films to see between the teeth, where the mirror can’t.'),
   t('hygienist', 'A Scale And Polish', 1, 85_00, 30, 12, false,
     'Half an hour with the hygienist, and your teeth feel like somebody else’s afterwards.'),
   t('fluoride', 'Fluoride Varnish', 1, 30_00, 10, 6, false,
     'Painted on, tastes of nothing much, and works.'),
   t('filling', 'A Filling', 2, 180_00, 45, 22, true,
-    'The injection is the worst part and it is over in a minute.'),
+    'The injection is the worst part and it’s over in a minute.'),
   t('extraction', 'An Extraction', 2, 220_00, 40, 18, true,
     'Out, with more pushing and less pulling than anybody expects.'),
   t('root_canal', 'Root Canal Treatment', 2, 750_00, 90, 34, true,
@@ -213,11 +213,11 @@ export const VET_NOTE =
 export const CHIP_NOTE =
   'Microchipping a dog has been compulsory in England, Scotland and Wales since 2016, and a cat in '
   + 'England since the tenth of June 2024. Where a country requires it the room says the law; where it '
-  + 'does not, it is offered as the sensible thing it is.';
+  + 'doesn’t, it’s offered as the sensible thing it is.';
 
 export const OUT_OF_HOURS_NOTE =
   'An emergency at two in the morning costs a great deal more than the same thing at two in the '
-  + 'afternoon, everywhere, and that is real. How much more is SLATE’s own calibration.';
+  + 'afternoon, everywhere, and that’s real. How much more is SLATE’s own calibration.';
 
 export interface VetGroup {
   id: string;
@@ -244,7 +244,7 @@ export const VET_GROUPS: readonly VetGroup[] = [
   vg('cvs', 'CVS Group', ['uk', 'ie', 'nl'],
     'One of the bigger British groups, with its own laboratories behind the practices.'),
   vg('vetpartners', 'VetPartners', ['uk', 'ie', 'fr', 'it', 'es', 'de', 'nl'],
-    'A group of practices that mostly kept their own names over the door, so you may not know you are in one.'),
+    'A group of practices that mostly kept their own names over the door, so you may not know you’re in one.'),
   vg('ivc', 'IVC Evidensia', ['uk', 'se', 'no', 'dk', 'fi', 'de', 'nl', 'be', 'fr', 'es', 'pt', 'it', 'ch', 'ie', 'ca'],
     'The largest veterinary group in Europe, formed out of a British and a Swedish one.'),
   vg('anicura', 'AniCura', ['se', 'no', 'dk', 'fi', 'de', 'nl', 'at', 'ch', 'fr', 'es', 'it', 'pt'],
@@ -322,7 +322,7 @@ const vs = (
  */
 export const VET_SERVICES: readonly VetService[] = [
   vs('checkup', 'An Annual Check Up', 60_00, 20, 8, false,
-    'Weight, teeth, ears, heart, and a conversation about how much they are being fed.', 12),
+    'Weight, teeth, ears, heart, and a conversation about how much they’re being fed.', 12),
   vs('vaccination', 'The Yearly Boosters', 75_00, 20, 10, false,
     'The core vaccines and a stamp in the book. A year, and then again.', 12),
   vs('chip', 'A Microchip', 25_00, 15, 2, false,
@@ -330,9 +330,9 @@ export const VET_SERVICES: readonly VetService[] = [
   vs('neuter', 'Neutering', 280_00, 90, 6, false,
     'A day at the practice, a cone for a fortnight, and a calmer animal after it.'),
   vs('flea', 'Flea And Worm Treatment', 35_00, 10, 6, false,
-    'A pipette on the back of the neck and a tablet they will spit out twice before swallowing.', 3),
+    'A pipette on the back of the neck and a tablet they’ll spit out twice before swallowing.', 3),
   vs('dental_vet', 'A Dental Under Anaesthetic', 420_00, 120, 16, true,
-    'The only way to clean an animal’s teeth properly, and it is a general anaesthetic to do it.'),
+    'The only way to clean an animal’s teeth properly, and it’s a general anaesthetic to do it.'),
   vs('bloods', 'Blood Work', 180_00, 30, 4, true,
     'Sent away, back in two days, and usually the thing that says what is actually wrong.'),
   vs('xray_vet', 'An X Ray', 220_00, 45, 5, true,
@@ -370,7 +370,7 @@ export const OFFICE_NOTE =
 
 export const QUEUE_NOTE =
   'An appointment is quicker than turning up, and turning up first thing is quicker than turning up '
-  + 'at two. That is true everywhere and how much quicker is SLATE’s own calibration.';
+  + 'at two. That’s true everywhere and how much quicker is SLATE’s own calibration.';
 
 /** What you can actually go in for. */
 export interface CounterJob {
@@ -402,23 +402,23 @@ export const COUNTER_JOBS: readonly CounterJob[] = [
   cj('provisional', 'Apply For A Learner Permit', 15, 34_00, 25, true,
     'The first document, and the one that lets an instructor put you behind a wheel.'),
   cj('theory', 'Book The Knowledge Test', 15, 23_00, 20, false,
-    'A date, a test center, and a booklet you will not read until the week before.'),
+    'A date, a test center, and a booklet you won’t read until the week before.'),
   cj('road_test', 'Book The Road Test', 16, 62_00, 20, false,
     'Booked out for weeks, and the date you get is the date you get.'),
   cj('renew', 'Renew The License', 17, 34_00, 25, true,
-    'A photograph you will dislike for the next ten years.'),
+    'A photograph you’ll dislike for the next ten years.'),
   cj('replace', 'Replace A Lost License', 17, 20_00, 30, true,
     'A form, a fee, and a fortnight of carrying nothing.'),
   cj('address', 'Change The Address On It', 17, 0, 20, true,
     'Free almost everywhere, compulsory almost everywhere, and forgotten by almost everybody.'),
   cj('register', 'Register A Vehicle', 17, 95_00, 40, true,
-    'Proof it is yours, proof it is insured, proof it is roadworthy, and then a plate.'),
+    'Proof it’s yours, proof it’s insured, proof it’s roadworthy, and then a plate.'),
   cj('transfer', 'Transfer A Vehicle Into Your Name', 17, 45_00, 35, true,
     'The half of a private sale that people forget until the first parking ticket arrives.'),
   cj('plate', 'Order A Personal Plate', 17, 400_00, 30, false,
-    'Vanity, taxed, and the queue does not care that it is vanity.'),
+    'Vanity, taxed, and the queue doesn’t care that it’s vanity.'),
   cj('id_card', 'Apply For An Identity Card', 14, 30_00, 25, true,
-    'For anybody who does not drive and still has to prove who they are.'),
+    'For anybody who doesn’t drive and still has to prove who they are.'),
 ];
 
 export const COUNTER_JOB_BY_ID: Readonly<Record<string, CounterJob>> = Object.fromEntries(
@@ -452,18 +452,18 @@ export const SENT_HOME: readonly string[] = [
   'The proof of address has to be dated within three months. That one is from March.',
   'This form wants the other kind of signature. Black ink, inside the box.',
   'You need the original, not a photocopy of the original.',
-  'That is the old version of the form. There is a stack of the new one by the door.',
-  'The name on this does not match the name on that. One of them has to change first.',
+  'That’s the old version of the form. There’s a stack of the new one by the door.',
+  'The name on this doesn’t match the name on that. One of them has to change first.',
   'You want counter four for this, and counter four closed at three.',
 ];
 
 /** And what they say when it is right, which is not effusive. */
 export const DONE_AT_THE_COUNTER: readonly string[] = [
-  'Right. That is done. Next.',
+  'Right. That’s done. Next.',
   'Fine. It will come in the post.',
   'Good. Sign there, and there. Thank you.',
-  'That is you sorted. Mind how you go.',
-  'All in order. You will get a letter.',
+  'That’s you sorted. Mind how you go.',
+  'All in order. You’ll get a letter.',
 ];
 
 // ---------------------------------------------------------------------------
@@ -524,7 +524,7 @@ export const NETWORKS: readonly Network[] = [
   nw('tmobile_us', 'T-Mobile', ['us'], 'own_network', 87, 1.05, 'Cheaper than the other two and no longer worse than them.'),
   nw('mint', 'Mint Mobile', ['us'], 'virtual', 80, 0.45, 'Bought a year at a time on somebody else’s network, and priced like it.'),
   nw('cricket', 'Cricket Wireless', ['us'], 'virtual', 82, 0.6, 'Prepaid, no contract, and it runs on the same masts as its parent.'),
-  nw('visible', 'Visible', ['us'], 'virtual', 85, 0.55, 'One price, everything included, and support that is a chat window.'),
+  nw('visible', 'Visible', ['us'], 'virtual', 85, 0.55, 'One price, everything included, and support that’s a chat window.'),
   nw('uscellular', 'UScellular', ['us'], 'own_network', 74, 1.0, 'Its own network across the middle of the country and a roaming deal everywhere else.'),
   // The United Kingdom and Ireland
   nw('ee', 'EE', ['uk'], 'own_network', 91, 1.3, 'The fastest of the four most places, and it knows it.'),
@@ -538,7 +538,7 @@ export const NETWORKS: readonly Network[] = [
   nw('eir', 'eir', ['ie'], 'own_network', 82, 1.0, 'The former state operator, and still the one with the most exchanges.'),
   nw('three_ie', 'Three Ireland', ['ie'], 'own_network', 80, 0.85, 'The largest Irish network by subscribers since it took over O2 there.'),
   // Continental Europe
-  nw('telekom_de', 'Deutsche Telekom', ['de'], 'own_network', 92, 1.4, 'The best network in Germany and the most expensive, which is not a coincidence.'),
+  nw('telekom_de', 'Deutsche Telekom', ['de'], 'own_network', 92, 1.4, 'The best network in Germany and the most expensive, which isn’t a coincidence.'),
   nw('vodafone_de', 'Vodafone', ['de'], 'own_network', 84, 1.1, 'The cable company as well, so it will try to sell you both.'),
   nw('o2_de', 'O2', ['de'], 'own_network', 78, 0.85, 'Cheaper, and the coverage map has more white on it.'),
   nw('congstar', 'congstar', ['de'], 'virtual', 90, 0.65, 'Telekom’s own budget brand on Telekom’s own masts, which is the trick.'),
@@ -575,7 +575,7 @@ export const NETWORKS: readonly Network[] = [
   nw('china_mobile', 'China Mobile', ['cn'], 'own_network', 91, 0.8, 'The largest mobile operator in the world by subscribers.'),
   nw('china_unicom', 'China Unicom', ['cn'], 'own_network', 85, 0.7, 'The second of the three state operators.'),
   nw('singtel', 'Singtel', ['sg'], 'own_network', 92, 1.25, 'Singapore’s incumbent, and an investor in half the networks in the region.'),
-  nw('telstra', 'Telstra', ['au'], 'own_network', 91, 1.4, 'The most coverage in a country that is mostly empty, and it charges for that.'),
+  nw('telstra', 'Telstra', ['au'], 'own_network', 91, 1.4, 'The most coverage in a country that’s mostly empty, and it charges for that.'),
   nw('optus', 'Optus', ['au'], 'own_network', 83, 1.05, 'The second network, good in the cities and thinner past them.'),
   nw('one_nz', 'One New Zealand', ['nz'], 'own_network', 86, 1.15, 'What Vodafone New Zealand became.'),
   nw('spark', 'Spark', ['nz'], 'own_network', 87, 1.15, 'The former Telecom New Zealand, and the largest there.'),
@@ -638,7 +638,7 @@ export const TARIFFS: readonly Tariff[] = [
   },
   {
     id: 'monthly_with_handset', label: 'Pay Monthly With A Handset', months: 24, monthly: 48_00, data: 60, exitShare: 1,
-    about: 'Two years, a phone in the box, and the phone is not free however the sign is worded.',
+    about: 'Two years, a phone in the box, and the phone isn’t free however the sign is worded.',
   },
 ];
 

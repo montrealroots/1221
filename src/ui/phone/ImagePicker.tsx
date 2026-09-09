@@ -190,7 +190,7 @@ export function ImagePicker({
       {bytes > 0 && !problem && (
         <p className="ph-card-meta">
           {Math.round(bytes / 1024)} KB, framed to {width} by {height}.
-          {placement.zoom > 1 && ` Zoomed ${placement.zoom.toFixed(1)}×, and it will not go past ${MAX_ZOOM}×.`}
+          {placement.zoom > 1 && ` Zoomed ${placement.zoom.toFixed(1)}×, and it won’t go past ${MAX_ZOOM}×.`}
         </p>
       )}
     </div>

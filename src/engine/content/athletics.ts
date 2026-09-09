@@ -22,14 +22,14 @@ import { clamp } from '../core/rng';
 // ---------------------------------------------------------------------------
 
 export const ATHLETICS_NOTE =
-  'The events, the meets, the towns they are held in and the shape of a season are public record '
-  + 'and that is what SLATE carries. Everybody else in the race is SLATE’s own, and so is every '
-  + 'time run in this game: there is no results feed, and a made-up time attached to a real '
+  'The events, the meets, the towns they’re held in and the shape of a season are public record '
+  + 'and that’s what SLATE carries. Everybody else in the race is SLATE’s own, and so is every '
+  + 'time run in this game: there’s no results feed, and a made-up time attached to a real '
   + 'athlete would be a claim about somebody real.';
 
 export const RECORDS_NOTE =
   'The world records below are real, with the person who set each one, where, and in what year, as '
-  + 'SLATE carries them. A record set after that is not in here. They are in the game as the marks '
+  + 'SLATE carries them. A record set after that isn’t in here. They’re in the game as the marks '
   + 'a runner is chasing, never as something anybody in this save has beaten by being told they did.';
 
 export const STANDARDS_NOTE =
@@ -38,13 +38,13 @@ export const STANDARDS_NOTE =
   + 'ranking, so treat these as the bar of the cycle rather than a permanent number.';
 
 export const MEETS_NOTE =
-  'Every named meet in here is a real meet in a real town, on the month of the year it is really '
+  'Every named meet in here is a real meet in a real town, on the month of the year it’s really '
   + 'held. Which meets a season is built from is SLATE’s own, because a calendar changes every '
   + 'year, and everybody in the field is SLATE’s own for the same reason.';
 
 export const CATEGORY_NOTE =
   'Track is contested in a men’s and a women’s category, with different events over the hurdles '
-  + 'and different records and standards in all of them. SLATE carries that because it is how the '
+  + 'and different records and standards in all of them. SLATE carries that because it’s how the '
   + 'sport is run. Which category a character competes in is their own choice at the track and is '
   + 'carried separately from anything else about them.';
 
@@ -97,11 +97,11 @@ export const EVENTS: readonly TrackEvent[] = [
   e('200m', '200 Meters', 200, 'sprint', ['indoor', 'outdoor'], true, {
     curve_running: 0.18, acceleration: 0.12, top_speed: 0.22, speed_endurance: 0.22,
     running_relaxation: 0.10, sprint_mechanics: 0.08, block_start: 0.04, finishing: 0.04,
-  }, 'A bend and a straight. Run the curve badly and the straight will not give it back.'),
+  }, 'A bend and a straight. Run the curve badly and the straight won’t give it back.'),
   e('400m', '400 Meters', 400, 'sprint', ['indoor', 'outdoor'], false, {
     speed_endurance: 0.34, top_speed: 0.12, race_tactics: 0.16, running_relaxation: 0.12,
     curve_running: 0.08, sprint_mechanics: 0.08, competitive_nerve: 0.05, finishing: 0.05,
-  }, 'The hardest race there is: a sprint you cannot sprint, and everybody is dying over the last hundred.'),
+  }, 'The hardest race there is: a sprint you can’t sprint, and everybody is dying over the last hundred.'),
   e('60mh', '60 Meters Hurdles', 60, 'hurdles', ['indoor'], false, {
     hurdle_technique: 0.34, block_start: 0.14, reaction_time: 0.10, drive_phase: 0.14,
     acceleration: 0.14, sprint_mechanics: 0.08, competitive_nerve: 0.06,
@@ -113,15 +113,15 @@ export const EVENTS: readonly TrackEvent[] = [
   e('100mh', '100 Meters Hurdles', 100, 'hurdles', ['outdoor'], true, {
     hurdle_technique: 0.36, acceleration: 0.14, top_speed: 0.14, sprint_mechanics: 0.12,
     speed_endurance: 0.10, block_start: 0.06, race_tactics: 0.04, competitive_nerve: 0.04,
-  }, 'Ten barriers at thirty three inches, three strides between each, and it is over in twelve seconds.', 'womens'),
+  }, 'Ten barriers at thirty three inches, three strides between each, and it’s over in twelve seconds.', 'womens'),
   e('400mh', '400 Meters Hurdles', 400, 'hurdles', ['outdoor'], false, {
     hurdle_technique: 0.22, speed_endurance: 0.30, race_tactics: 0.16, running_relaxation: 0.10,
     curve_running: 0.08, sprint_mechanics: 0.08, competitive_nerve: 0.06,
-  }, 'A lap, ten barriers, and a stride pattern that falls apart exactly when you are tired.'),
+  }, 'A lap, ten barriers, and a stride pattern that falls apart exactly when you’re tired.'),
   e('4x100m', '4 by 100 Meters Relay', 400, 'relay', ['outdoor'], false, {
     baton_exchange: 0.34, top_speed: 0.20, acceleration: 0.16, curve_running: 0.12,
     race_tactics: 0.08, sprint_mechanics: 0.06, competitive_nerve: 0.04,
-  }, 'Four legs and three exchanges, and the fastest four do not always win it.'),
+  }, 'Four legs and three exchanges, and the fastest four don’t always win it.'),
   e('4x400m', '4 by 400 Meters Relay', 1600, 'relay', ['indoor', 'outdoor'], false, {
     speed_endurance: 0.30, race_tactics: 0.20, baton_exchange: 0.16, top_speed: 0.12,
     running_relaxation: 0.12, competitive_nerve: 0.10,
@@ -453,7 +453,7 @@ function m(
 export const NAMED_MEETS: readonly NamedMeet[] = [
   // --- American schools ----------------------------------------------------
   m('arcadia', 'The Arcadia Invitational', 'Arcadia, California', 'us', 'invitational', 'outdoor', 4, ['school'],
-    'The best high school field of the American spring, and it is on a Saturday night.'),
+    'The best high school field of the American spring, and it’s on a Saturday night.'),
   m('texas_relays', 'The Texas Relays', 'Austin, Texas', 'us', 'invitational', 'outdoor', 3, ['school', 'university'],
     'High school and college in the same stadium, at the end of March.', { cityId: 'us-tx-austin' }),
   m('mt_sac', 'The Mt. SAC Relays', 'Walnut, California', 'us', 'invitational', 'outdoor', 4, ['school', 'university'],
@@ -499,7 +499,7 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
 
   // --- Other national championships ----------------------------------------
   m('usa_champs', 'The USA Track and Field Championships', 'A Different City Each Year', 'us', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
-    'Three from each event and nothing else, which is why it is harder than the world final.', { rotates: true }),
+    'Three from each event and nothing else, which is why it’s harder than the world final.', { rotates: true }),
   m('kenya_champs', 'The Kenyan Athletics Championships', 'Nairobi', 'ke', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
     'The national trials, at altitude, in front of everybody.', { cityId: 'ke-05-nairobi' }),
   m('japan_champs', 'The Japan National Championships', 'A Different City Each Year', 'jp', 'national_championships', 'outdoor', 6, ['university', 'club', 'professional'],
@@ -539,13 +539,13 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
   m('herculis', 'The Herculis', 'Monaco', 'mc', 'circuit', 'outdoor', 7, ['professional'],
     'Monaco in July, and the fastest track meet of the summer most years.', { cityId: 'mc-00-monaco' }),
   m('london_dl', 'The London Athletics Meet', 'London', 'uk', 'circuit', 'outdoor', 7, ['professional'],
-    'Sixty thousand people at the Olympic stadium, and they are loud.', { cityId: 'uk-eng-london' }),
+    'Sixty thousand people at the Olympic stadium, and they’re loud.', { cityId: 'uk-eng-london' }),
   m('silesia', 'The Kamila Skolimowska Memorial', 'Silesia', 'pl', 'circuit', 'outdoor', 8, ['professional'],
     'The Polish leg, at Chorzów, and the crowd fills it.'),
   m('athletissima', 'The Athletissima', 'Lausanne', 'ch', 'circuit', 'outdoor', 8, ['professional'],
     'Lausanne in August, and one of the oldest meets on the circuit.'),
   m('weltklasse', 'The Weltklasse Zürich', 'Zürich', 'ch', 'circuit_final', 'outdoor', 9, ['professional'],
-    'Zürich, and in the years it is the final it is the end of the whole season.', { cityId: 'ch-zh-zurich' }),
+    'Zürich, and in the years it’s the final it’s the end of the whole season.', { cityId: 'ch-zh-zurich' }),
   m('van_damme', 'The Memorial Van Damme', 'Brussels', 'be', 'circuit_final', 'outdoor', 9, ['professional'],
     'Brussels in September, and it closes the year.', { cityId: 'be-bru-brussels' }),
 
@@ -563,7 +563,7 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
   m('lievin', 'The Meeting Hauts-de-France', 'Liévin', 'fr', 'circuit', 'indoor', 2, ['professional'],
     'A banked track in a small northern town, and the indoor records happen here.'),
   m('birmingham_indoor', 'The Birmingham Indoor Grand Prix', 'Birmingham', 'uk', 'circuit', 'indoor', 2, ['professional'],
-    'The British indoor leg, and it is always full.', { cityId: 'uk-eng-birmingham' }),
+    'The British indoor leg, and it’s always full.', { cityId: 'uk-eng-birmingham' }),
   m('copernicus', 'The Copernicus Cup', 'Toruń', 'pl', 'circuit', 'indoor', 2, ['professional'],
     'Toruń in February, and one of the quickest indoor tracks anywhere.'),
 
@@ -573,7 +573,7 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
   m('world_relays', 'The World Athletics Relays', 'A Different City Each Year', 'us', 'global', 'outdoor', 5, ['professional'],
     'A weekend of nothing but relays, and the qualifying places for the championships come out of it.', { rotates: true, everyYears: 2, firstYear: 2024, eventIds: ['4x100m', '4x400m'] }),
   m('world_u20', 'The World Athletics U20 Championships', 'A Different City Each Year', 'us', 'age_group', 'outdoor', 8, ['school', 'university'],
-    'Under twenty, every other year, and it is where most careers are first seen.', { rotates: true, everyYears: 2, firstYear: 2024 }),
+    'Under twenty, every other year, and it’s where most careers are first seen.', { rotates: true, everyYears: 2, firstYear: 2024 }),
   m('world_champs', 'The World Athletics Championships', 'A Different City Each Year', 'us', 'global', 'outdoor', 8, ['professional'],
     'Nine days, every other year, and three rounds to get through before a final.', { rotates: true, everyYears: 2, firstYear: 2025 }),
   m('europeans', 'The European Athletics Championships', 'A Different City Each Year', 'de', 'continental', 'outdoor', 8, ['professional'],
@@ -583,7 +583,7 @@ export const NAMED_MEETS: readonly NamedMeet[] = [
   m('asians', 'The Asian Athletics Championships', 'A Different City Each Year', 'jp', 'continental', 'outdoor', 7, ['professional'],
     'The Asian championships, every other year.', { rotates: true, everyYears: 2, firstYear: 2025 }),
   m('commonwealth', 'The Commonwealth Games', 'A Different City Each Year', 'uk', 'continental', 'outdoor', 7, ['professional'],
-    'Every four years, and for a lot of the sport it is the second biggest thing there is.', { rotates: true, everyYears: 4, firstYear: 2026 }),
+    'Every four years, and for a lot of the sport it’s the second biggest thing there is.', { rotates: true, everyYears: 4, firstYear: 2026 }),
   m('olympics', 'The Olympic Games', 'A Different City Each Year', 'us', 'olympics', 'outdoor', 7, ['professional'],
     'Every four years. Everything else in the sport is arranged around it.', { rotates: true, everyYears: 4, firstYear: 2028 }),
 ];
@@ -669,7 +669,7 @@ export const SEASON_LADDERS: readonly SeasonLadder[] = [
     { tier: 'invitational', count: 3, daysAfter: 7 },
     { tier: 'league', count: 1, daysAfter: 10 },
     { tier: 'national_schools', count: 1, qualifyBy: 2, daysAfter: 14 },
-  ], 'December to March on a banked track, and it is the season that makes the outdoor one.'),
+  ], 'December to March on a banked track, and it’s the season that makes the outdoor one.'),
   l('school', 'outdoor', ['us'], [3, 4, 5, 6], [
     { tier: 'dual', count: 4, daysAfter: 7 },
     { tier: 'invitational', count: 3, daysAfter: 7 },
@@ -818,8 +818,8 @@ export const WIND_LIMIT = 2.0;
 
 export const WIND_NOTE =
   'A sprint or a hurdles race run outdoors with more than two meters a second behind it is still a '
-  + 'race and still a result, but the time does not stand for a record or a ranking. That limit is '
-  + 'real and it is why a fast time can come with an asterisk beside it.';
+  + 'race and still a result, but the time doesn’t stand for a record or a ranking. That limit is '
+  + 'real and it’s why a fast time can come with an asterisk beside it.';
 
 /** Whether a mark stands, given the wind behind it. */
 export function windLegal(eventId: string, wind: number): boolean {
@@ -863,7 +863,7 @@ export const LONG_SPRINT_FROM_AGE = 13;
 
 export const PRO_NOTE =
   'Turning professional is a decision with a cost. A shoe contract is money and a plane ticket, and '
-  + 'it is also the end of running for a university, because a place won on the track is for an '
+  + 'it’s also the end of running for a university, because a place won on the track is for an '
   + 'amateur. SLATE carries that as a rule you have to choose, rather than something that happens '
   + 'to you.';
 
@@ -880,7 +880,7 @@ export const CONTRACT_NOTE =
 export const PRIME_NOTE =
   'A sprinter is quickest somewhere between the early twenties and the late twenties, and after that '
   + 'the times go the wrong way however hard the work is. Where the peak sits and how fast it falls '
-  + 'away is SLATE’s own calibration; that it happens at all is not.';
+  + 'away is SLATE’s own calibration; that it happens at all isn’t.';
 
 export const SELECTION_NOTE =
   'A team is picked at the trials and on the standard: three from each event and no more, and a '

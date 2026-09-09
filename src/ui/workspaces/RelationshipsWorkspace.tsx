@@ -161,7 +161,7 @@ export function RelationshipsWorkspace() {
           onClose={() => setGiftOpen(false)}
         >
           {gifts.length === 0 ? (
-            <p className="muted">You do not own anything giftable. Watches, jewellery, clothing and art all work.</p>
+            <p className="muted">You don’t own anything giftable. Watches, jewellery, clothing and art all work.</p>
           ) : (
             <div className="list">
               {gifts.map((asset) => (

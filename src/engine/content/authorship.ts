@@ -72,7 +72,7 @@ export const STORY_DEPARTMENTS: readonly StoryDepartment[] = [
   },
   {
     id: 'character', name: 'Character', weight: 1.2,
-    what: 'People on the page who behave like people, including when it is inconvenient.',
+    what: 'People on the page who behave like people, including when it’s inconvenient.',
     from: ['character_writing'],
   },
   {

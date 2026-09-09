@@ -18,8 +18,8 @@ export const LOCAL_NOTE =
   'A minimum wage is national in most countries and set below the nation in some: the United States '
   + 'lets states and cities set their own and more than half of them do, and China, Japan, Mexico, '
   + 'India, Indonesia, Vietnam, the Philippines, Pakistan and Russia all set theirs by province or '
-  + 'prefecture. Where that is true SLATE lifts the floor with what the city costs; where it is not, '
-  + 'the floor is the same in the capital as it is anywhere else, because that is how it works.';
+  + 'prefecture. Where that is true SLATE lifts the floor with what the city costs; where it isn’t, '
+  + 'the floor is the same in the capital as it is anywhere else, because that’s how it works.';
 
 export const WAGE_NOTE =
   'The national minimum wage is a published figure and every country sets it differently: some by '
@@ -30,21 +30,21 @@ export const WAGE_NOTE =
 
 export const NO_MINIMUM_NOTE =
   'Denmark, Sweden, Norway, Finland, Iceland, Italy, Austria and Switzerland have no statutory '
-  + 'national minimum wage. That is not an oversight: pay floors there are set by collective '
-  + 'agreement between unions and employers, sector by sector, and they are generally high. SLATE '
-  + 'carries the typical bargained floor for those countries and says that is what it is.';
+  + 'national minimum wage. That isn’t an oversight: pay floors there are set by collective '
+  + 'agreement between unions and employers, sector by sector, and they’re generally high. SLATE '
+  + 'carries the typical bargained floor for those countries and says that’s what it is.';
 
 export const JOB_NOTE =
-  'Where the city has a real shop of the right kind, that is where the job is — which is the same '
+  'Where the city has a real shop of the right kind, that’s where the job is — which is the same '
   + 'fact as shopping there and says nothing about the company beyond that it employs people. '
   + 'Everywhere else the employer is SLATE’s own. The rota, every shift and everything anybody says '
-  + 'are SLATE’s own everywhere: there is no listings feed. What it pays is the floor where you are '
+  + 'are SLATE’s own everywhere: there’s no listings feed. What it pays is the floor where you are '
   + 'standing, plus whatever the job is worth above it and less the young rate where one applies.';
 
 export const YOUNG_NOTE =
   'A lot of countries let an employer pay a young worker less than the adult floor, by law: the '
   + 'United Kingdom has a rate for each age band, the United States has a training rate for the '
-  + 'first ninety days, Australia has junior rates. That is why a sixteen year old’s hourly figure '
+  + 'first ninety days, Australia has junior rates. That’s why a sixteen year old’s hourly figure '
   + 'can sit below the headline minimum. How much less is SLATE’s own calibration of a real thing.';
 
 // ---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ function w(
 export const WAGE_FLOORS: readonly WageFloor[] = [
   // --- Statutory, and by the hour -----------------------------------------
   w('us', 7_25, true, 2009, 'The federal floor, unchanged since 2009. More than half the states set a higher one.'),
-  w('uk', 14_50, true, 2024, 'The National Living Wage, for twenty one and over. Under that it is lower.'),
+  w('uk', 14_50, true, 2024, 'The National Living Wage, for twenty one and over. Under that it’s lower.'),
   w('ie', 13_70, true, 2024, 'One of the higher floors in Europe, and it moves every January.'),
   w('ca', 12_70, true, 2024, 'The federal floor. Every province sets its own and most are higher.'),
   w('au', 16_00, true, 2024, 'The highest statutory floor in the world, and a junior rate below it by age.'),
@@ -96,19 +96,19 @@ export const WAGE_FLOORS: readonly WageFloor[] = [
   w('kr', 7_40, true, 2024, 'Set every year by a commission of unions, employers and the public.'),
   w('jp', 6_70, true, 2024, 'A weighted national average: every prefecture sets its own.'),
   w('il', 8_60, true, 2024, 'A monthly figure, and it applies from eighteen.'),
-  w('tr', 5_30, true, 2024, 'A monthly figure, and it is raised more than once in a bad year.'),
-  w('br', 1_60, true, 2024, 'A monthly figure, and it is the reference for most of the benefit system.'),
+  w('tr', 5_30, true, 2024, 'A monthly figure, and it’s raised more than once in a bad year.'),
+  w('br', 1_60, true, 2024, 'A monthly figure, and it’s the reference for most of the benefit system.'),
   w('mx', 1_80, true, 2024, 'A daily figure, with a higher one along the northern border.'),
-  w('ar', 1_20, true, 2024, 'A monthly figure that is revised constantly because of inflation.'),
+  w('ar', 1_20, true, 2024, 'A monthly figure that’s revised constantly because of inflation.'),
   w('cl', 3_20, true, 2024, 'A monthly figure, set by law each year.'),
   w('co', 1_60, true, 2024, 'A monthly figure, and a transport allowance is paid on top of it.'),
   w('za', 1_50, true, 2024, 'Hourly, introduced in 2019, and it covers domestic and farm work too.'),
-  w('ng', 30, true, 2024, 'A monthly figure. It is low, it is disputed, and a great deal of work is outside it.'),
+  w('ng', 30, true, 2024, 'A monthly figure. It’s low, it’s disputed, and a great deal of work is outside it.'),
   w('ke', 60, true, 2024, 'Set by order, and it differs between the cities and the rest of the country.'),
   w('gh', 40, true, 2024, 'A daily figure, reviewed by a tripartite committee.'),
   w('in', 30, true, 2024, 'A national floor with no force behind it: the real figures are set by state and by trade.'),
   w('pk', 40, true, 2024, 'A monthly figure, set by province.'),
-  w('bd', 30, true, 2024, 'Set by sector rather than nationally, and the garment figure is the one that is argued over.'),
+  w('bd', 30, true, 2024, 'Set by sector rather than nationally, and the garment figure is the one that’s argued over.'),
   w('ph', 1_20, true, 2024, 'A daily figure, set by regional boards rather than nationally.'),
   w('id', 90, true, 2024, 'A monthly figure, set by province.'),
   w('vn', 80, true, 2024, 'A monthly figure, in four regional bands.'),
@@ -121,7 +121,7 @@ export const WAGE_FLOORS: readonly WageFloor[] = [
   w('tt', 3_00, true, 2024, 'Hourly, and one of the higher floors in the Caribbean.'),
 
   // --- No statutory minimum: the floor is bargained ------------------------
-  w('dk', 20_00, false, 2024, 'No statutory minimum at all. The floor is bargained sector by sector and it is high.'),
+  w('dk', 20_00, false, 2024, 'No statutory minimum at all. The floor is bargained sector by sector and it’s high.'),
   w('se', 17_00, false, 2024, 'No statutory minimum. Collective agreements cover almost the whole labor market.'),
   w('no', 19_00, false, 2024, 'No general statutory minimum; some sectors have one made binding by decree.'),
   w('fi', 15_00, false, 2024, 'No statutory minimum. Sector agreements set the floor and most are extended by law.'),
@@ -187,7 +187,7 @@ export const BELOW_FEDERAL_STATES: ReadonlySet<string> = new Set(['us-ga', 'us-w
 export function floorIn(countryId: string): WageFloor {
   return FLOOR_BY_COUNTRY[countryId] ?? {
     countryId, perHour: WORLD_FLOOR, statutory: false, year: 2024,
-    about: 'SLATE does not carry this country’s own figure, so this is its general floor.',
+    about: 'SLATE doesn’t carry this country’s own figure, so this is its general floor.',
   };
 }
 
@@ -257,7 +257,7 @@ export const FIRST_JOBS: readonly FirstJob[] = [
   ], 'Somebody else’s children, somebody else’s television, and a lift home at eleven.'),
   j('dog_walking', 'Walking Dogs', 14, 1.0, 3, 16, [
     { key: 'fitness', kind: 'skill' }, { key: 'reliability', kind: 'attribute' },
-  ], 'Three at a time, in the rain, and one of them will not walk.'),
+  ], 'Three at a time, in the rain, and one of them won’t walk.'),
   j('shelf_stacking', 'Stacking Shelves', 15, 1.0, 6, 24, [
     { key: 'operations', kind: 'skill' }, { key: 'long_day_endurance', kind: 'attribute' },
   ], 'Facing up an aisle at seven in the morning before the doors open.', 'market', 'grocery'),
@@ -269,7 +269,7 @@ export const FIRST_JOBS: readonly FirstJob[] = [
   ], 'Milk, steam, a queue and somebody who wants it made a different way.', 'cafe', 'coffee'),
   j('fast_food', 'The Counter', 16, 1.0, 6, 30, [
     { key: 'operations', kind: 'skill' }, { key: 'pressure_tolerance', kind: 'attribute' },
-  ], 'A headset, a screen full of orders, and a lunch rush that does not end.', 'fast_food', 'fast_food'),
+  ], 'A headset, a screen full of orders, and a lunch rush that doesn’t end.', 'fast_food', 'fast_food'),
   j('retail', 'A Saturday On The Shop Floor', 16, 1.05, 7, 22, [
     { key: 'public_speaking', kind: 'skill' }, { key: 'charisma', kind: 'attribute' },
   ], 'Folding the same jumper eleven times and asking if anybody needs a hand.', 'shop', 'retail'),
@@ -278,10 +278,10 @@ export const FIRST_JOBS: readonly FirstJob[] = [
   ], 'Tearing tickets, sweeping between screenings, and watching the ends of everything.', 'cinema'),
   j('car_wash', 'A Car Wash', 16, 1.0, 6, 34, [
     { key: 'fitness', kind: 'skill' }, { key: 'long_day_endurance', kind: 'attribute' },
-  ], 'Cold water, a squeegee, and hands that do not warm up until Tuesday.'),
+  ], 'Cold water, a squeegee, and hands that don’t warm up until Tuesday.'),
   j('kitchen_porter', 'The Back Of A Kitchen', 16, 1.05, 8, 36, [
     { key: 'cooking', kind: 'skill' }, { key: 'resilience', kind: 'attribute' },
-  ], 'Pot wash, on a double, next to somebody shouting. It is the hardest of these.', 'restaurant'),
+  ], 'Pot wash, on a double, next to somebody shouting. It’s the hardest of these.', 'restaurant'),
   j('lifeguard', 'Lifeguarding', 16, 1.1, 6, 20, [
     { key: 'fitness', kind: 'skill' }, { key: 'safety_awareness', kind: 'attribute' },
   ], 'Four hours of watching a pool where nothing happens, and everything depends on you if it does.'),

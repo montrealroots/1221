@@ -118,7 +118,7 @@ export function TravelWorkspace() {
         {cars.length === 0 && (
           <Empty
             title="No Car"
-            body="You cannot drive anywhere without one. Flights still go where flights go."
+            body="You can’t drive anywhere without one. Flights still go where flights go."
             action={<button className="btn btn-sm" onClick={() => navigate('/workspace/vehicles', 'Vehicles')}>Find A Car</button>}
           />
         )}

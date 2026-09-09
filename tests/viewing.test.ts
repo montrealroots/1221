@@ -91,7 +91,7 @@ describe('viewings', () => {
     expect(pendingDecision(sim, listing)).toBeUndefined();
     expect(listing.viewedByPlayer).toBe(false);
     expect(sim.universe.notifications.some((n) => /Missed The Showing/.test(n.title))).toBe(true);
-    expect(factsOf(sim, who.person.id, { kind: 'event' }).some((f) => /did not come/.test(f.text))).toBe(true);
+    expect(factsOf(sim, who.person.id, { kind: 'event' }).some((f) => /did(n’t| not) come/.test(f.text))).toBe(true);
     expect(agentKnows(sim, who.person.id)).toContain('missed');
   });
 
@@ -104,7 +104,7 @@ describe('viewings', () => {
     must(sim, 'viewing.skip', { listingId: listing.id });
     expect(pendingDecision(sim, listing)).toBeUndefined();
     expect(sim.timeline.pending().some((i) => i.kind === 'viewing.lapse' && i.refId === listing.id)).toBe(false);
-    expect(sim.universe.notifications.some((n) => /Missed The Showing/.test(n.title) && /decided not to go/.test(n.body))).toBe(true);
+    expect(sim.universe.notifications.some((n) => /Missed The Showing/.test(n.title) && /decided n[o’]t to go/.test(n.body))).toBe(true);
   });
 
   it('being in another city when it comes round is a missed showing, not a blocked one', () => {
@@ -278,7 +278,7 @@ describe('viewings', () => {
     sim.advanceTo(at + (LAPSE_MINUTES + 1) * MS_MINUTE);
     expect(agentKnows(sim, who.person.id)).toEqual(['missed']);
     const first = must<{ greeting: string }>(sim, 'viewing.arrive', { listingId: listing.id });
-    expect(first.greeting).toMatch(/polite|did not come|checks the time/);
+    expect(first.greeting).toMatch(/polite|did(n’t| not) come|checks the time/);
     expect(agentKnows(sim, who.person.id)).toEqual(['missed', 'met']);
     sim.advanceTo(sim.now + MS_DAY);
     const second = must<{ greeting: string }>(sim, 'viewing.arrive', { listingId: listing.id });

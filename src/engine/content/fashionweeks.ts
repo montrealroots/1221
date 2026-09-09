@@ -16,7 +16,7 @@ import type { Money } from '../core/money';
 
 export const FASHION_NOTE =
   'The weeks are real and the houses are real houses that show at them. Most of these run to a window '
-  + 'that is public record and sits where it is marked; the ones SLATE has placed itself say so on the '
+  + 'that’s public record and sits where it is marked; the ones SLATE has placed itself say so on the '
   + 'row. The exact days inside the window, the venues, the running order, the invitation and where you '
   + 'are sat are SLATE’s own. A season schedule is published a few weeks out and moves every year, so '
   + 'nothing here is a date to act on outside the game and no house here is announced as showing.';
@@ -171,19 +171,19 @@ export const FASHION_WEEKS: readonly FashionWeek[] = [
     'The German week, in February and July.'),
   fw('fw-stockholm', 'Stockholm Fashion Week', 'se-26-stockholm',
     [on(1, 26, 30, 'autumn_winter'), on(8, 25, 29, 'spring_summer')], 'slate', 'established', 58,
-    'The Swedish week, which has stopped and restarted more than once and does not keep to a fixed slot.'),
+    'The Swedish week, which has stopped and restarted more than once and doesn’t keep to a fixed slot.'),
   fw('fw-madrid', 'Madrid Fashion Week', 'es-md-madrid',
     [on(2, 12, 17, 'autumn_winter'), on(9, 11, 15, 'spring_summer')], 'record', 'established', 60,
     'The Spanish week, in February and September.'),
   fw('fw-amsterdam', 'Amsterdam Fashion Week', 'nl-07-amsterdam',
     [on(3, 8, 13, 'autumn_winter'), on(9, 8, 13, 'spring_summer')], 'slate', 'emerging', 48,
-    'The Dutch week, which has changed shape and organiser several times and does not keep to a fixed slot.'),
+    'The Dutch week, which has changed shape and organiser several times and doesn’t keep to a fixed slot.'),
   fw('fw-lisbon', 'ModaLisboa', 'pt-14-lisbon',
     [on(3, 6, 9, 'autumn_winter'), on(10, 9, 12, 'spring_summer')], 'record', 'emerging', 44,
     'The Lisbon week, in March and October.'),
   fw('fw-istanbul', 'Istanbul Fashion Week', 'tr-34-istanbul',
     [on(3, 10, 14, 'autumn_winter'), on(10, 8, 12, 'spring_summer')], 'slate', 'emerging', 46,
-    'The Turkish week, which has run under more than one name and does not keep to a fixed slot.'),
+    'The Turkish week, which has run under more than one name and doesn’t keep to a fixed slot.'),
   fw('fw-tbilisi', 'Tbilisi Fashion Week', 'ge-51-tbilisi',
     [on(5, 3, 7, 'spring_summer'), on(11, 1, 5, 'autumn_winter')], 'slate', 'emerging', 52,
     'The Georgian week, which the rest of the schedule started watching a decade ago. Its dates move from year to year.'),
@@ -191,7 +191,7 @@ export const FASHION_WEEKS: readonly FashionWeek[] = [
   // --- The Americas ---------------------------------------------------------
   fw('fw-toronto', 'Toronto Fashion Week', 'ca-on-toronto',
     [on(3, 3, 7, 'autumn_winter'), on(9, 3, 7, 'spring_summer')], 'slate', 'emerging', 46,
-    'The Canadian week, which has been suspended and revived and does not keep to a fixed slot.'),
+    'The Canadian week, which has been suspended and revived and doesn’t keep to a fixed slot.'),
   fw('fw-vancouver', 'Vancouver Fashion Week', 'ca-bc-vancouver',
     [on(3, 24, 29, 'autumn_winter'), on(9, 15, 20, 'spring_summer')], 'record', 'emerging', 40,
     'A week that has always taken designers nobody has heard of, in March and September.'),
@@ -214,7 +214,7 @@ export const FASHION_WEEKS: readonly FashionWeek[] = [
     'The Japanese week, in March and at the very start of September.'),
   fw('fw-seoul', 'Seoul Fashion Week', 'kr-11-seoul',
     [on(3, 16, 21, 'autumn_winter'), on(9, 1, 6, 'spring_summer')], 'record', 'established', 70,
-    'The Korean week, and one of the most photographed streets in the world while it is on.'),
+    'The Korean week, and one of the most photographed streets in the world while it’s on.'),
   fw('fw-shanghai', 'Shanghai Fashion Week', 'cn-23-shanghai',
     [on(3, 25, 30, 'autumn_winter'), on(10, 9, 14, 'spring_summer')], 'record', 'established', 74,
     'The Chinese week, in late March and October, and the largest in Asia by number of shows.'),

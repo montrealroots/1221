@@ -44,7 +44,7 @@ const GOALS: readonly { id: string; label: string }[] = [
 
 function placeOf(session: SceneSession): Place {
   const place = placesIn(session.locationId).find((p) => p.id === String(session.context['placeId']) && p.kind === 'gym');
-  if (!place) throw new CommandError('That gym is not here any more.');
+  if (!place) throw new CommandError('That gym isn’t here any more.');
   return place;
 }
 
@@ -95,7 +95,7 @@ export const GYM_SCENE = defineScene({
 
   available(sim, input) {
     const place = placesIn(sim.player.currentLocationId).find((p) => p.id === String(input['placeId']) && p.kind === 'gym');
-    if (!place) return { ok: false, reason: 'Pick a gym in the city you are in.' };
+    if (!place) return { ok: false, reason: 'Pick a gym in the city you’re in.' };
     if (sim.player.wellbeing.energy < 12) return { ok: false, reason: TOO_TIRED_TO_TRAIN };
     const current = sim.player.training?.current;
     if (current && current.placeId !== place.id) return { ok: false, reason: WORKOUT_ELSEWHERE };
@@ -214,7 +214,7 @@ export const GYM_SCENE = defineScene({
         return {
           title: 'What Are You Training For?',
           eyebrow: 'Your trainer asks',
-          text: 'They will build the next sessions around it, and they will remember.',
+          text: 'They’ll build the next sessions around it, and they’ll remember.',
           choices: GOALS.map((g) => ({ id: `goal:${g.id}`, label: g.label, aliases: [g.id] })),
           canSkip: false,
         };
@@ -242,7 +242,7 @@ export const GYM_SCENE = defineScene({
       }
       case 'effort': {
         const exercise = EXERCISES.find((e) => e.id === str(session, 'exerciseId'));
-        if (!exercise) throw new CommandError('That exercise is not here.');
+        if (!exercise) throw new CommandError('That exercise isn’t here.');
         const choices: SceneChoice[] = (['easy', 'steady', 'hard'] as const).map((level) => {
           const spec = INTENSITY[level];
           const sets = SETS_FOR[level];
@@ -263,7 +263,18 @@ export const GYM_SCENE = defineScene({
       }
       case 'class': {
         const slot = classesSoon(sim, profile).find((c) => c.def.id === str(session, 'classId'));
-        if (!slot) throw new CommandError('That class is not on.');
+        if (!slot) {
+          // The class was on when this was opened. Left overnight, it has
+          // started without you; a view that throws would take the panel
+          // down with it, so this says what happened and offers the floor.
+          return {
+            title: 'That Class Has Gone',
+            eyebrow: place.name,
+            text: 'It started without you, or it isn’t on today. The floor is still here.',
+            choices: [{ id: 'back', label: 'Pick Something Else', aliases: ['back', 'different', 'ok'], tone: 'primary' }],
+            canSkip: false,
+          };
+        }
         const membership = membershipFor(sim, player.id, place.id);
         const free = membership && membership.product !== 'day_pass';
         return {
@@ -412,7 +423,7 @@ export const GYM_SCENE = defineScene({
     }
     if (session.node === 'reflect' && choiceId === 'finish') { ctx.finish(); return; }
     void training;
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {

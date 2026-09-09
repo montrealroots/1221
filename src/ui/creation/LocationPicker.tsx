@@ -79,7 +79,7 @@ export function LocationPicker({
     loadCountryCities(countryId)
       .then(() => { if (!cancelled) setLoadedTick((n) => n + 1); })
       .catch((error: unknown) => {
-        if (!cancelled) setProblem(error instanceof Error ? error.message : 'That country could not be loaded.');
+        if (!cancelled) setProblem(error instanceof Error ? error.message : 'That country couldn’t be loaded.');
       })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
@@ -174,7 +174,7 @@ export function LocationPicker({
           <p className="hint">
             {regions.length > 0
               ? `${regions.length} to choose from.`
-              : 'This country is not subdivided.'}
+              : 'This country isn’t subdivided.'}
           </p>
         </div>
       </div>

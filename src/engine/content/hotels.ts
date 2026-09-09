@@ -401,9 +401,9 @@ export const INDEPENDENT_ONLY: Readonly<Record<string, string>> = {
 export const AIRBNB_UNAVAILABLE: Readonly<Record<string, string>> = {
   ru: 'Airbnb suspended all operations in Russia in March 2022.',
   by: 'Airbnb suspended all operations in Belarus in March 2022.',
-  ir: 'Airbnb does not list in Iran under United States sanctions.',
-  sy: 'Airbnb does not list in Syria under United States sanctions.',
-  kp: 'Airbnb does not list in North Korea under United States sanctions.',
+  ir: 'Airbnb doesn’t list in Iran under United States sanctions.',
+  sy: 'Airbnb doesn’t list in Syria under United States sanctions.',
+  kp: 'Airbnb doesn’t list in North Korea under United States sanctions.',
   aq: 'Nobody lists a room in Antarctica.',
   bv: 'Bouvet Island is uninhabited.',
   hm: 'Heard Island is uninhabited.',

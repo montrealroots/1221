@@ -43,8 +43,8 @@ export const RENTABLE: ReadonlySet<string> = new Set(
 );
 
 export const RENTAL_NOTE =
-  'The houses here are real and are in the business they are named for. Which branch, what is on '
-  + 'its shelves, every rate, deposit and waiver is SLATE’s own calibration and is not a quote from '
+  'The houses here are real and are in the business they’re named for. Which branch, what is on '
+  + 'its shelves, every rate, deposit and waiver is SLATE’s own calibration and isn’t a quote from '
   + 'anybody. Nothing here is a price list.';
 
 /**
@@ -109,7 +109,7 @@ export const RENTAL_HOUSES: readonly RentalHouse[] = [
 
   // --- New York ------------------------------------------------------------
   rh('rent-ny-panavision', 'Panavision', 'us-ny-newyork', CAMERA, 4,
-    'The New York counter of the house founded in California in 1954, which rents and does not sell. Stock and rates are SLATE’s calibration.', 1954, 95),
+    'The New York counter of the house founded in California in 1954, which rents and doesn’t sell. Stock and rates are SLATE’s calibration.', 1954, 95),
   rh('rent-ny-arri', 'ARRI Rental', 'us-ny-newyork', CAMERA, 4,
     'The New York counter of the rental arm of ARRI, the Munich camera maker founded in 1917. Stock and rates are SLATE’s calibration.', 1917, 94),
   rh('rent-ny-keslow', 'Keslow Camera', 'us-ny-newyork', CAMERA, 3,
@@ -133,7 +133,7 @@ export const RENTAL_HOUSES: readonly RentalHouse[] = [
 
   // --- London --------------------------------------------------------------
   rh('rent-ldn-panavision', 'Panavision', 'uk-eng-london', CAMERA, 4,
-    'The London counter of the house founded in California in 1954, which rents and does not sell. Stock and rates are SLATE’s calibration.', 1954, 95),
+    'The London counter of the house founded in California in 1954, which rents and doesn’t sell. Stock and rates are SLATE’s calibration.', 1954, 95),
   rh('rent-ldn-arri', 'ARRI Rental', 'uk-eng-london', CAMERA, 4,
     'The London counter of the rental arm of ARRI, the Munich camera maker founded in 1917. Stock and rates are SLATE’s calibration.', 1917, 94),
   rh('rent-ldn-movietech', 'Movietech Camera Rentals', 'uk-eng-london', CAMERA, 3,
@@ -145,7 +145,7 @@ export const RENTAL_HOUSES: readonly RentalHouse[] = [
   rh('rent-tor-white', 'William F. White International', 'ca-on-toronto', EVERYTHING, 3,
     'The Canadian rental house, in the business since 1963, which hires camera, lighting, grip and sound out of one door. Stock and rates are SLATE’s calibration.', 1963, 91),
   rh('rent-tor-panavision', 'Panavision', 'ca-on-toronto', CAMERA, 4,
-    'The Toronto counter of the house founded in California in 1954, which rents and does not sell. Stock and rates are SLATE’s calibration.', 1954, 93),
+    'The Toronto counter of the house founded in California in 1954, which rents and doesn’t sell. Stock and rates are SLATE’s calibration.', 1954, 93),
   rh('rent-tor-keslow', 'Keslow Camera', 'ca-on-toronto', CAMERA, 3,
     'A camera and lens house working Toronto as well as the American centers. Stock and rates are SLATE’s calibration.', undefined, 90),
   rh('rent-tor-trew', 'Trew Audio', 'ca-on-toronto', ['sound'], 2,
@@ -161,9 +161,9 @@ export const RENTAL_HOUSES: readonly RentalHouse[] = [
 
   // --- Sydney and Paris ----------------------------------------------------
   rh('rent-syd-panavision', 'Panavision', 'au-nsw-sydney', CAMERA_GRIP, 4,
-    'The Sydney counter of the house founded in California in 1954, which rents and does not sell. Stock and rates are SLATE’s calibration.', 1954, 92),
+    'The Sydney counter of the house founded in California in 1954, which rents and doesn’t sell. Stock and rates are SLATE’s calibration.', 1954, 92),
   rh('rent-par-panavision', 'Panavision Alga', 'fr-idf-paris', CAMERA, 4,
-    'The French arm of the house founded in California in 1954, which rents and does not sell. Stock and rates are SLATE’s calibration.', 1954, 92),
+    'The French arm of the house founded in California in 1954, which rents and doesn’t sell. Stock and rates are SLATE’s calibration.', 1954, 92),
   rh('rent-par-tsf', 'TSF', 'fr-idf-paris', EVERYTHING, 3,
     'A French rental group with camera, lighting and grip under one name. Stock and rates are SLATE’s calibration.', undefined, 90),
 
@@ -212,7 +212,7 @@ const OWN_ABOUT: readonly string[] = [
   'Camera, lighting, grip and sound out of one door, which is rarer than it sounds.',
   'A small shop that knows radio mics better than anybody, and says so.',
   'Cameras at the front, sticks and dollies at the back, and a prep table between them.',
-  'The house everybody in town uses, because there is one of them and it is fine.',
+  'The house everybody in town uses, because there’s one of them and it’s fine.',
 ];
 
 /**

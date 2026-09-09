@@ -53,10 +53,10 @@ export function registerProfessions(sim: Simulation): void {
     'profession.unlock',
     (p, { sim: s }) => {
       const def = PROFESSION_BY_ID[p.professionId];
-      if (!def) throw new CommandError('There is no such profession.');
+      if (!def) throw new CommandError('There’s no such profession.');
       const player = s.player;
       const professions = (player.professions ??= {});
-      if (professions[def.id]) throw new CommandError(`You are already a ${def.name.toLowerCase()}.`);
+      if (professions[def.id]) throw new CommandError(`You’re already a ${def.name.toLowerCase()}.`);
 
       const missing = def.requires.filter((id) => !professions[id]);
       if (missing.length > 0) {
@@ -95,13 +95,13 @@ export function registerProfessions(sim: Simulation): void {
     'profession.pick_trait',
     (p, { sim: s }) => {
       const def = PROFESSION_BY_ID[p.professionId];
-      if (!def) throw new CommandError('There is no such profession.');
+      if (!def) throw new CommandError('There’s no such profession.');
       const player = s.player;
       const progress = player.professions?.[def.id];
-      if (!progress) throw new CommandError(`You are not a ${def.name.toLowerCase()} yet.`);
+      if (!progress) throw new CommandError(`You aren’t a ${def.name.toLowerCase()} yet.`);
 
       const trait = TRAIT_BY_ID[p.traitId];
-      if (!trait || trait.profession !== def.id) throw new CommandError(`That is not a ${def.name.toLowerCase()}'s trait.`);
+      if (!trait || trait.profession !== def.id) throw new CommandError(`That isn’t a ${def.name.toLowerCase()}'s trait.`);
       if (progress.traitIds.includes(trait.id)) throw new CommandError(`You already hold ${trait.name}.`);
 
       const slots = traitSlotsAt(levelFor(progress.xp));
@@ -110,7 +110,7 @@ export function registerProfessions(sim: Simulation): void {
       }
       const conflicts = conflictingTraits(progress.traitIds, trait.id);
       if (conflicts.length > 0) {
-        throw new CommandError(`${trait.name} cannot be held with ${conflicts.map((id) => TRAIT_BY_ID[id]?.name ?? id).join(', ')}.`);
+        throw new CommandError(`${trait.name} can’t be held with ${conflicts.map((id) => TRAIT_BY_ID[id]?.name ?? id).join(', ')}.`);
       }
 
       progress.traitIds.push(trait.id);

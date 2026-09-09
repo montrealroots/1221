@@ -206,7 +206,7 @@ describe('the bench', () => {
     sim.player.wellbeing.energy = 100;
     const more = sim.execute<{ note: string }>({ kind: 'film.cut', payload: { filmId: film.id, hours: 4 } });
     expect(more.ok, String(more.error)).toBe(true);
-    expect(more.value!.note).toContain('will not make it better');
+    expect(more.value!.note).toMatch(/(will not|won’t) make it better/);
   });
 
   it('refuses a bench when there is nothing left of you', () => {
@@ -231,7 +231,7 @@ describe('calling it finished', () => {
     sim.execute({ kind: 'film.attach_day', payload: { filmId, dayId } });
     const refused = sim.execute({ kind: 'film.finish', payload: { filmId } });
     expect(refused.ok).toBe(false);
-    expect(refused.error).toContain('not enough there');
+    expect(refused.error).toMatch(/n[o’]t enough there/);
   });
 
   it('will not finish a picture nobody sat down with', () => {

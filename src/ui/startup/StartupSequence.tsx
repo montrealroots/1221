@@ -50,7 +50,7 @@ const STAGES: Stage[] = [
   {
     id: 'saves', label: 'Reading Save Slots', weight: 25,
     run: async (context) => {
-      if (!context.adapter) throw new Error('Storage was not resolved.');
+      if (!context.adapter) throw new Error('Storage wasn’t resolved.');
       context.slots = await context.adapter.listSlots();
     },
   },
@@ -73,7 +73,7 @@ const STAGES: Stage[] = [
         if (version === undefined) continue;
         if (version > SAVE_SCHEMA_VERSION) {
           context.warnings.push(
-            `Slot ${slot.slot} was written by a newer version of SLATE and will not be opened, to avoid damaging it.`,
+            `Slot ${slot.slot} was written by a newer version of SLATE and won’t be opened, to avoid damaging it.`,
           );
         } else if (version < SAVE_SCHEMA_VERSION) {
           context.warnings.push(
@@ -123,7 +123,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
 
     setWarnings(context.warnings);
     if (!context.adapter || !context.slots) {
-      setFailure({ stage: 'Startup', message: 'Storage did not report back.' });
+      setFailure({ stage: 'Startup', message: 'Storage didn’t report back.' });
       return;
     }
 

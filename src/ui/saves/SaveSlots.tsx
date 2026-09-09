@@ -38,13 +38,13 @@ export function SaveSlots({
     try {
       const universe = fromBackup ? await adapter.restoreBackup(slot) : await adapter.load(slot);
       if (!universe) {
-        setError(fromBackup ? 'There is no backup for that slot.' : 'That slot is empty.');
+        setError(fromBackup ? 'There’s no backup for that slot.' : 'That slot is empty.');
         return;
       }
 
       if ((universe.meta.schemaVersion ?? 1) > SAVE_SCHEMA_VERSION) {
         setError(
-          `Slot ${slot} was written by a newer version of SLATE (schema ${universe.meta.schemaVersion}). Opening it here could damage it, so it has not been loaded.`,
+          `Slot ${slot} was written by a newer version of SLATE (schema ${universe.meta.schemaVersion}). Opening it here could damage it, so it hasn’t been loaded.`,
         );
         return;
       }
@@ -69,7 +69,7 @@ export function SaveSlots({
       const validation = validateUniverse(universe);
       if (!validation.ok) {
         setError(
-          `That save did not pass validation: ${validation.errors[0]}${validation.errors.length > 1 ? ` (and ${validation.errors.length - 1} more)` : ''}.` +
+          `That save didn’t pass validation: ${validation.errors[0]}${validation.errors.length > 1 ? ` (and ${validation.errors.length - 1} more)` : ''}.` +
           `${slots.find((s) => s.slot === slot)?.hasBackup ? ' A backup is available to restore from.' : ''}`,
         );
         return;

@@ -139,7 +139,7 @@ if (billedDays(14) !== WEEK_BILLS_DAYS * 2) problems.push('two weeks do not bill
 if (DEPOSIT_SHARE <= 0 || DEPOSIT_SHARE > 0.5) problems.push(`the deposit is ${DEPOSIT_SHARE} of the value`);
 if (WAIVER_SHARE <= 0 || WAIVER_SHARE > 0.4) problems.push(`the waiver is ${WAIVER_SHARE} of the hire`);
 
-if (!/SLATE/.test(RENTAL_NOTE) || !/not a quote/.test(RENTAL_NOTE)) {
+if (!/SLATE/.test(RENTAL_NOTE) || !/n[o’]t a quote/.test(RENTAL_NOTE)) {
   problems.push('the note saying none of this is a quote has gone');
 }
 

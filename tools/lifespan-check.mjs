@@ -60,8 +60,8 @@ for (const [countryId, age] of Object.entries(PENSION_AGE)) {
 for (const [name, note, needs] of [
   ['LIFESPAN_NOTE', LIFESPAN_NOTE, [/published/, /SLATE/, /no table/i]],
   ['PENSION_NOTE', PENSION_NOTE, [/men and for women/]],
-  ['AGE_GATE_NOTE', AGE_GATE_NOTE, [/exceptions/, /not legal advice/]],
-  ['ADULT_EXPECTANCY_NOTE', ADULT_EXPECTANCY_NOTE, [/child mortality/, /not a life table/]],
+  ['AGE_GATE_NOTE', AGE_GATE_NOTE, [/exceptions/, /n[o’]t legal advice/]],
+  ['ADULT_EXPECTANCY_NOTE', ADULT_EXPECTANCY_NOTE, [/child mortality/, /n[o’]t a life table/]],
 ]) {
   for (const need of needs) if (!need.test(note)) problems.push(`${name} no longer says ${need}`);
 }

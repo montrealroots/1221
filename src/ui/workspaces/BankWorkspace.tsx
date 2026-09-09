@@ -192,7 +192,7 @@ export function BankWorkspace() {
       {tab === 'accounts' && (
         <Panel
           title="Standing Orders"
-          subtitle="The bank moves it between your own accounts on a day of the month, until you say otherwise or it cannot be paid three times."
+          subtitle="The bank moves it between your own accounts on a day of the month, until you say otherwise or it can’t be paid three times."
           flush
           actions={<button className="btn btn-sm" onClick={() => setOrderOpen(true)}>Set One Up</button>}
         >
@@ -261,7 +261,7 @@ export function BankWorkspace() {
       )}
 
       {tab === 'bills' && (
-        <Panel title="Bills" subtitle="Autopay runs against your primary account. If it cannot cover one, you hear about it." flush>
+        <Panel title="Bills" subtitle="Autopay runs against your primary account. If it can’t cover one, you hear about it." flush>
           {bills.length === 0 ? (
             <Empty title="No Bills" body="Nothing recurring is set up against you yet." />
           ) : (
@@ -407,7 +407,7 @@ function TaxPanel() {
           ))}
         </div>
         <p className="xs dim" style={{ marginTop: 'var(--s4)' }}>
-          These rates are calibrated approximations of how real tax systems are structured. They are not filing advice.
+          These rates are calibrated approximations of how real tax systems are structured. They aren’t filing advice.
         </p>
       </Panel>
 
@@ -675,7 +675,7 @@ function StandingOrderDialog({ onClose }: { onClose: () => void }) {
           {Array.from({ length: 28 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{d}</option>)}
         </select>
       </div>
-      <p className="small muted">It runs on that day every month. Three it cannot pay and the bank gives up on it.</p>
+      <p className="small muted">It runs on that day every month. Three it can’t pay and the bank gives up on it.</p>
     </Modal>
   );
 }
@@ -705,7 +705,7 @@ function PrivateBankingTab() {
       : !passport.ok ? `A valid passport first. ${passport.reason ?? ''}`
         : cents < bank.minimumRelationship ? `${bank.name} wants ${formatMoney(bank.minimumRelationship, { cents: false })} (${bank.minimumIs}).`
           : !fromId ? 'Choose an account to fund it from.'
-            : sim.ledger.availableFunds(fromId) < cents ? `There is not ${formatMoney(cents, { cents: false })} in that account.` : undefined;
+            : sim.ledger.availableFunds(fromId) < cents ? `There isn’t ${formatMoney(cents, { cents: false })} in that account.` : undefined;
 
   return (
     <div className="col gap-4">
@@ -732,7 +732,7 @@ function PrivateBankingTab() {
         </div>
       </Panel>
 
-      <Panel title={`Apply To ${bank.name}`} subtitle={offshore ? `Offshore for you: ${bank.city} is not where you live. ${player.citizenshipId === 'us' ? FBAR_NOTE : 'Reported under the Common Reporting Standard to the tax authority at home.'}` : `Onshore for you: ${bank.city} is in the country you live in.`}>
+      <Panel title={`Apply To ${bank.name}`} subtitle={offshore ? `Offshore for you: ${bank.city} isn’t where you live. ${player.citizenshipId === 'us' ? FBAR_NOTE : 'Reported under the Common Reporting Standard to the tax authority at home.'}` : `Onshore for you: ${bank.city} is in the country you live in.`}>
         <div className="grid grid-2">
           <div className="field">
             <label htmlFor="private-deposit">Opening Deposit</label>

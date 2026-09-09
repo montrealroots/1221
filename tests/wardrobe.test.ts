@@ -138,7 +138,7 @@ describe('putting things on', () => {
     const laptop = own(sim, 'e_mbp16', 'silver');
     const res = sim.execute({ kind: 'wear.put_on', payload: { assetId: laptop.id } });
     expect(res.ok).toBe(false);
-    expect(res.error).toMatch(/not something you wear/);
+    expect(res.error).toMatch(/n[o’]t something you wear/);
   });
 });
 
@@ -262,7 +262,7 @@ describe('leaving in it', () => {
     const sim = aLife();
     const res = sim.execute({ kind: 'wear.leave_in_it', payload: {} });
     expect(res.ok).toBe(false);
-    expect(res.error).toMatch(/not wearing anything/);
+    expect(res.error).toMatch(/n[o’]t wearing anything/);
   });
 
   it('notices the same set again inside three weeks, and minds more if there were cameras', () => {

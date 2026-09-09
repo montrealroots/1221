@@ -95,7 +95,7 @@ export function InsuranceWorkspace() {
 
       <Panel title="Your Policies" flush>
         {policies.length === 0 ? (
-          <Empty title="No Cover" body="Nothing you own is insured. That is a decision, and it has consequences." />
+          <Empty title="No Cover" body="Nothing you own is insured. That’s a decision, and it has consequences." />
         ) : (
           <div className="list">
             {policies.map((policy) => (

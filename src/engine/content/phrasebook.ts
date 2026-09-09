@@ -93,8 +93,8 @@ export const PHRASEBOOK: readonly Askable[] = [
   ], '/workspace/health', 'place', 'A dental practice in this city, and a look at your teeth.',
   'go.to', undefined, 'dentist'),
   a('vet', 'Take Them To The Vet', [
-    'vet', 'go to the vet', 'take the dog to the vet', 'take the cat to the vet', 'the animal is not well',
-    'boosters', 'get them chipped', 'the dog is ill', 'the cat is ill', 'my pet is not well',
+    'vet', 'go to the vet', 'take the dog to the vet', 'take the cat to the vet', 'the animal isn’t well',
+    'boosters', 'get them chipped', 'the dog is ill', 'the cat is ill', 'my pet isn’t well',
   ], '/workspace/health', 'place', 'A veterinary practice in this city.', 'go.to', undefined, 'vet'),
   a('licensing', 'Go To The Licensing Office', [
     'dmv', 'licensing office', 'renew my license', 'get a license', 'driving license',
@@ -116,21 +116,21 @@ export const PHRASEBOOK: readonly Askable[] = [
   ], '/workspace/city', 'place', 'A chair, and something done about your hair.', 'go.to', undefined, 'salon'),
   a('launderette', 'Do The Washing', [
     'launderette', 'laundromat', 'do the washing', 'wash my clothes', 'service wash',
-  ], '/workspace/city', 'place', 'A launderette, and somebody else doing it if you would rather.',
+  ], '/workspace/city', 'place', 'A launderette, and somebody else doing it if you’d rather.',
   'go.to', undefined, 'launderette'),
 
   // --- Work ----------------------------------------------------------------
   a('work_shift', 'Work The Shift', [
     'work', 'go to work', 'do my shift', 'work the shift', 'go in', 'clock in', 'do a shift',
     'earn some money', 'do my hours',
-  ], '/workspace/character', 'nothing', 'The shift you are down for, if you are down for one today.', 'job.shift'),
+  ], '/workspace/character', 'nothing', 'The shift you’re down for, if you are down for one today.', 'job.shift'),
   a('call_in_sick', 'Ring In Sick', [
     'call in sick', 'ring in sick', 'phone in sick', 'im ill', 'im not going in', 'pull a sickie',
   ], '/workspace/character', 'nothing', 'A phone call, and whether it was true is a thing they find out.',
   'job.call_in_sick'),
   a('quit_job', 'Hand Your Notice In', [
     'quit', 'quit my job', 'hand my notice in', 'resign', 'leave my job', 'jack it in',
-  ], '/workspace/character', 'nothing', 'You are done there. The hours already worked still get paid.',
+  ], '/workspace/character', 'nothing', 'You’re done there. The hours already worked still get paid.',
   'job.quit'),
   a('find_job', 'Find A Job', [
     'get a job', 'find a job', 'look for work', 'i need money', 'apply for a job', 'saturday job',
@@ -150,7 +150,7 @@ export const PHRASEBOOK: readonly Askable[] = [
   ], '/workspace/education', 'nothing', 'Not going. It costs the marks and somebody notices.', 'school.skip'),
   a('revise', 'Work A Past Paper', [
     'revise', 'study', 'do some revision', 'past paper', 'prepare for the exam', 'cram',
-  ], '/workspace/education', 'nothing', 'Two hours on a past paper for the next thing you are down for.',
+  ], '/workspace/education', 'nothing', 'Two hours on a past paper for the next thing you’re down for.',
   'exam.study'),
   a('exams', 'The Big Tests', [
     'exam', 'exams', 'sat', 'act', 'gcse', 'put my name down for the sat', 'sit an exam',
@@ -266,8 +266,8 @@ export const ASKABLE_BY_ID: Readonly<Record<string, Askable>> = Object.fromEntri
 
 export const ASK_NOTE =
   'Type what you want in your own words. SLATE works out which of the things it actually does you '
-  + 'meant, asks when it cannot tell, and does it. It will not pretend to have done something it '
-  + 'cannot: where the answer is no, the answer says what would make it yes.';
+  + 'meant, asks when it can’t tell, and does it. It won’t pretend to have done something it '
+  + 'can’t: where the answer is no, the answer says what would make it yes.';
 
 export const ASK_LIMITS_NOTE =
   'This is a matcher over the things the game really does, not a model and not a parser. It knows '

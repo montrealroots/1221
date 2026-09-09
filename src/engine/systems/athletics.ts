@@ -672,7 +672,7 @@ export function qualifiedFor(
   if (before && before.qualifyBy !== undefined) {
     const place = bestPlaceAt(season, before.tier);
     if (place === undefined) {
-      return { yes: false, why: `You did not run ${TIER_LABEL[before.tier].toLowerCase()}, so there is no way in.` };
+      return { yes: false, why: `You didn’t run ${TIER_LABEL[before.tier].toLowerCase()}, so there’s no way in.` };
     }
     if (place > before.qualifyBy) {
       return {
@@ -699,7 +699,7 @@ export function qualifiedFor(
       return {
         yes: false,
         why: `The entry standard for the ${EVENT_BY_ID[short]?.label ?? short} is ${formatSeconds(standard)}`
-          + `${best ? ` and you have run ${formatSeconds(best.seconds)}` : ' and you have not run one'}.`,
+          + `${best ? ` and you have run ${formatSeconds(best.seconds)}` : ' and you haven’t run one'}.`,
       };
     }
   }
@@ -853,7 +853,7 @@ export const SESSIONS: readonly SessionKind[] = [
   {
     id: 'endurance', label: 'Speed Endurance', feeds: ['speed_endurance', 'athletic_recovery'],
     form: 8, energy: 34, minutes: 110, strain: 4,
-    about: 'Three by three hundred, and you will not enjoy the third one.',
+    about: 'Three by three hundred, and you won’t enjoy the third one.',
   },
   {
     id: 'technique', label: 'Technical Work', feeds: ['sprint_mechanics', 'curve_running', 'finishing'],
@@ -878,7 +878,7 @@ export const SESSIONS: readonly SessionKind[] = [
   {
     id: 'recovery', label: 'Recovery', feeds: ['athletic_recovery'],
     form: 2, energy: -10, minutes: 50, strain: 0,
-    about: 'A jog, a stretch and the physio table. It is a session, and skipping it is why people get hurt.',
+    about: 'A jog, a stretch and the physio table. It’s a session, and skipping it’s why people get hurt.',
   },
 ];
 
@@ -1004,7 +1004,7 @@ export function mayTurnPro(sim: Simulation, running: Running): { yes: boolean; w
   if (rank < wanted) {
     return {
       yes: false,
-      why: `${LEVEL_BY_ID[level]?.label ?? 'A First Day'} is not a time anybody signs. `
+      why: `${LEVEL_BY_ID[level]?.label ?? 'A First Day'} isn’t a time anybody signs. `
         + `${LEVEL_BY_ID.schools!.label} is where a company starts looking.`,
     };
   }
@@ -1030,10 +1030,10 @@ export function registerAthletics(sim: Simulation): void {
         throw new CommandError(`Nobody is put in a lane before ${TRACK_FROM_AGE}. You are ${age}.`);
       }
       const running = ensureRunning(s, p.category as RunnerCategory | undefined);
-      if (isInjured(s, running)) throw new CommandError('You are hurt. There is no trial to go to.');
-      if (seasonOf(s)) throw new CommandError('You are in a season already.');
+      if (isInjured(s, running)) throw new CommandError('You’re hurt. There’s no trial to go to.');
+      if (seasonOf(s)) throw new CommandError('You’re in a season already.');
 
-      if (running.stage === 'retired') throw new CommandError('You are retired. There is no season to join.');
+      if (running.stage === 'retired') throw new CommandError('You’re retired. There’s no season to join.');
       const countryId = countryOfCity(person.currentLocationId) ?? person.citizenshipId;
       const studies = running.professional ? undefined : studiesOf(s);
       const schooling = studies || running.professional ? undefined : schoolingOf(s);
@@ -1044,7 +1044,7 @@ export function registerAthletics(sim: Simulation): void {
         : studies ? 'university' : schooling ? 'school' : 'club';
 
       const surface = nextSurfaceFor(s, stage, countryId);
-      if (!surface) throw new CommandError('There is no season to join here.');
+      if (!surface) throw new CommandError('There’s no season to join here.');
 
       let teamName = running.teamName ?? 'A Club';
       if (stage === 'club') {
@@ -1055,7 +1055,7 @@ export function registerAthletics(sim: Simulation): void {
       } else if (stage === 'school' && schooling) {
         if (!schoolHasTrack(s, schooling.placeId, countryId)) {
           throw new CommandError(
-            `${schooling.placeName} does not run a track team. Not every school does, and this is one that does not.`,
+            `${schooling.placeName} doesn’t run a track team. Not every school does, and this is one that doesn’t.`,
           );
         }
         teamName = schooling.placeName;
@@ -1084,7 +1084,7 @@ export function registerAthletics(sim: Simulation): void {
           onTheTeam: false, stage,
           note: `You ran the trial and did not make the team. ${stage === 'university'
             ? 'A university squad is a different thing from a school one.'
-            : 'There is next year, and there is the work between now and it.'}`,
+            : 'There’s next year, and there’s the work between now and it.'}`,
         };
       }
 
@@ -1101,7 +1101,7 @@ export function registerAthletics(sim: Simulation): void {
           : stage === 'club'
             ? `You joined ${teamName}. ${named}.`
           : onScholarship
-            ? `You are on the ${teamName} squad. That is what the place was for. ${named}.`
+            ? `You’re on the ${teamName} squad. That’s what the place was for. ${named}.`
             : `You made the ${teamName} squad. ${named}.`,
       };
     },
@@ -1112,7 +1112,7 @@ export function registerAthletics(sim: Simulation): void {
     'track.enter',
     (p, { sim: s }) => {
       const running = runningOf(s);
-      if (!running) throw new CommandError('You do not run.');
+      if (!running) throw new CommandError('You don’t run.');
       const surface = (seasonOf(s)?.surface ?? 'outdoor') as Surface;
       const open = new Set(eventsOpenTo(s, running, surface).map((one) => one.id));
       const chosen = p.eventIds.filter((id) => open.has(id));
@@ -1140,15 +1140,15 @@ export function registerAthletics(sim: Simulation): void {
     'track.train',
     (p, { sim: s }) => {
       const running = runningOf(s);
-      if (!running) throw new CommandError('You do not run. There is a trial first.');
+      if (!running) throw new CommandError('You don’t run. There’s a trial first.');
       if (isInjured(s, running)) {
         throw new CommandError(`${running.injury ?? 'You are hurt.'} Nothing until it settles.`);
       }
       const session = SESSION_BY_ID[p.kind ?? 'speed'];
-      if (!session) throw new CommandError('That is not a session.');
+      if (!session) throw new CommandError('That isn’t a session.');
       const person = s.player;
       if ((person.wellbeing.energy ?? 100) < 20 && session.id !== 'recovery') {
-        throw new CommandError('There is nothing in your legs. Recovery, or nothing.');
+        throw new CommandError('There’s nothing in your legs. Recovery, or nothing.');
       }
 
       const rng = s.rng('track.session', running.id, running.sessions);
@@ -1191,13 +1191,13 @@ export function registerAthletics(sim: Simulation): void {
     'track.race',
     (_p, { sim: s }) => {
       const season = seasonOf(s);
-      if (!season) throw new CommandError('You are not in a season.');
+      if (!season) throw new CommandError('You aren’t in a season.');
       const running = runningOf(s)!;
       if (isInjured(s, running)) {
-        throw new CommandError(`${running.injury ?? 'You are hurt.'} You are not racing.`);
+        throw new CommandError(`${running.injury ?? 'You are hurt.'} You aren’t racing.`);
       }
       const meet = nextMeet(season);
-      if (!meet) throw new CommandError('There is nothing left on the schedule.');
+      if (!meet) throw new CommandError('There’s nothing left on the schedule.');
       if (s.now < meet.at - 6 * 60 * 60_000) {
         throw new CommandError(`${meet.name} is on ${formatDate(meet.at, s.homeZone)}. Not yet.`);
       }
@@ -1224,13 +1224,13 @@ export function registerAthletics(sim: Simulation): void {
     'track.skip_meet',
     (_p, { sim: s }) => {
       const season = seasonOf(s);
-      if (!season) throw new CommandError('You are not in a season.');
+      if (!season) throw new CommandError('You aren’t in a season.');
       const meet = nextMeet(season);
-      if (!meet) throw new CommandError('There is nothing left on the schedule.');
+      if (!meet) throw new CommandError('There’s nothing left on the schedule.');
       meet.run = true;
       meet.locked = true;
       s.advanceTo(Math.max(s.now, meet.at) + 60 * MS_MINUTE);
-      return { note: `You did not run at ${meet.name}.` };
+      return { note: `You didn’t run at ${meet.name}.` };
     },
   );
 
@@ -1248,14 +1248,14 @@ export function registerAthletics(sim: Simulation): void {
     'track.turn_pro',
     (_p, { sim: s }) => {
       const running = runningOf(s);
-      if (!running) throw new CommandError('You do not run.');
+      if (!running) throw new CommandError('You don’t run.');
       const may = mayTurnPro(s, running);
       if (!may.yes) throw new CommandError(may.why);
 
       const studies = studiesOf(s);
       if (studies?.scholarship === 'athletic') {
         throw new CommandError(
-          `Your place at ${studies.universityName} is one won on the track, and it is for an amateur. `
+          `Your place at ${studies.universityName} is one won on the track, and it’s for an amateur. `
           + 'Leaving the course is the only way to sign anything.',
         );
       }
@@ -1295,10 +1295,10 @@ export function registerAthletics(sim: Simulation): void {
     'track.sign',
     (_p, { sim: s }) => {
       const running = runningOf(s);
-      if (!running) throw new CommandError('You do not run.');
-      if (!running.professional) throw new CommandError('An amateur cannot sign anything.');
+      if (!running) throw new CommandError('You don’t run.');
+      if (!running.professional) throw new CommandError('An amateur can’t sign anything.');
       if (running.contract && s.now < running.contract.to) {
-        throw new CommandError(`You are already with ${running.contract.brand} until ${formatDate(running.contract.to, s.homeZone)}.`);
+        throw new CommandError(`You’re already with ${running.contract.brand} until ${formatDate(running.contract.to, s.homeZone)}.`);
       }
       const offer = offerFor(s, running);
       if (!offer) throw new CommandError('Nobody is offering anything on those times.');
@@ -1344,7 +1344,7 @@ export function registerAthletics(sim: Simulation): void {
     'track.retire',
     (_p, { sim: s }) => {
       const running = runningOf(s);
-      if (!running) throw new CommandError('You do not run.');
+      if (!running) throw new CommandError('You don’t run.');
       const season = seasonOf(s);
       if (season) endSeason(s, season, 'with you retiring');
       const best = running.bests[0];
@@ -1355,14 +1355,14 @@ export function registerAthletics(sim: Simulation): void {
         category: 'life',
         title: 'Retired From The Track',
         detail: best
-          ? `${formatSeconds(best.seconds)} for the ${EVENT_BY_ID[best.eventId]?.label ?? best.eventId}, and that is where it stops.`
-          : 'And that is where it stops.',
+          ? `${formatSeconds(best.seconds)} for the ${EVENT_BY_ID[best.eventId]?.label ?? best.eventId}, and that’s where it stops.`
+          : 'And that’s where it stops.',
         refs: [{ type: 'person', id: s.player.id }],
         significance: 7,
         public: true,
       });
       s.emit('track.retired', { runningId: running.id });
-      return { note: 'You are done on the track. The times stand.' };
+      return { note: 'You’re done on the track. The times stand.' };
     },
   );
 
@@ -1381,7 +1381,7 @@ export function registerAthletics(sim: Simulation): void {
     if (!meet || meet.run) return;
     s.notify({
       title: meet.name,
-      body: `${TIER_LABEL[meet.tier as Tier]}${meet.town ? `, ${meet.town}` : ''}. It is today.`,
+      body: `${TIER_LABEL[meet.tier as Tier]}${meet.town ? `, ${meet.town}` : ''}. It’s today.`,
       category: 'personal',
       importance: 62,
       route: '/workspace/track',
@@ -1413,7 +1413,7 @@ export function registerAthletics(sim: Simulation): void {
     'track.leave',
     (_p, { sim: s }) => {
       const season = seasonOf(s);
-      if (!season) throw new CommandError('You are not in a season.');
+      if (!season) throw new CommandError('You aren’t in a season.');
       endSeason(s, season, 'with you walking away from it');
       return { note: `You left the ${season.teamName} squad.` };
     },

@@ -66,9 +66,9 @@ export function TrackWorkspace() {
                     ? `${studies.universityName} holds trials. A university squad is a great deal harder to make than a school one.`
                     : schooling
                       ? schoolHasTrack(sim, schooling.placeId, countryId)
-                        ? `${schooling.placeName} runs a track team, and there is a trial.`
-                        : `${schooling.placeName} does not run a track team. Not every school does.`
-                      : 'You are not at a school or a university. A club is the way in from here.'}
+                        ? `${schooling.placeName} runs a track team, and there’s a trial.`
+                        : `${schooling.placeName} doesn’t run a track team. Not every school does.`
+                      : 'You aren’t at a school or a university. A club is the way in from here.'}
               </p>
               <div>
                 <button
@@ -183,7 +183,7 @@ export function TrackWorkspace() {
         )}
 
         {running && !season && (
-          <Panel title="The Season" subtitle="There is no season running.">
+          <Panel title="The Season" subtitle="There’s no season running.">
             <div className="col gap-3">
               <p className="small" style={{ margin: 0 }}>
                 {ladderFor(
@@ -287,11 +287,11 @@ function ProPanel(): JSX.Element | null {
       title={running.professional ? 'Professional' : 'Turning Professional'}
       subtitle={running.professional
         ? `${running.teamName ?? 'A Group'}. ${level?.label ?? ''}`
-        : 'A decision with a cost, and it is yours.'}
+        : 'A decision with a cost, and it’s yours.'}
     >
       <div className="col gap-3">
         {running.stage === 'retired' ? (
-          <p className="small" style={{ margin: 0 }}>You are retired. The times stand.</p>
+          <p className="small" style={{ margin: 0 }}>You’re retired. The times stand.</p>
         ) : !running.professional ? (
           <>
             <p className="small" style={{ margin: 0 }}>

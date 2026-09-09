@@ -74,10 +74,10 @@ export interface Cloth {
 export const CLOTHS: readonly Cloth[] = [
   { id: 'cotton_shirting', name: 'Cotton Shirting', hand: 'crisp, holds a press', effort: 1.0, durability: 74 },
   { id: 'cotton_twill', name: 'Cotton Twill', hand: 'firm, hard wearing', effort: 1.0, durability: 82 },
-  { id: 'denim', name: 'Selvedge Denim', hand: 'heavy, stiff until it is not', effort: 1.3, durability: 92,
+  { id: 'denim', name: 'Selvedge Denim', hand: 'heavy, stiff until it isn’t', effort: 1.3, durability: 92,
     caution: 'Heavy denim is hard on a domestic machine. Expect broken needles.' },
   { id: 'linen', name: 'Linen', hand: 'dry, cool, creases on sight', effort: 1.1, durability: 68,
-    caution: 'Linen creases. That is the fabric, not the making, and pressing will not cure it.' },
+    caution: 'Linen creases. That’s the fabric, not the making, and pressing won’t cure it.' },
   { id: 'wool_suiting', name: 'Wool Suiting', hand: 'obedient, takes shape from an iron', effort: 1.2, durability: 86 },
   { id: 'wool_flannel', name: 'Wool Flannel', hand: 'soft, warm, a little sleepy', effort: 1.15, durability: 80 },
   { id: 'wool_melton', name: 'Wool Melton', hand: 'thick, dense, coat weight', effort: 1.4, durability: 90 },
@@ -90,14 +90,14 @@ export const CLOTHS: readonly Cloth[] = [
   { id: 'silk_chiffon', name: 'Silk Chiffon', hand: 'weightless, almost not there', effort: 2.0, durability: 46,
     caution: 'Chiffon has to be cut between paper and sewn slowly. Rushing it ruins it.' },
   { id: 'silk_velvet', name: 'Silk Velvet', hand: 'deep, shifting, one direction only', effort: 1.9, durability: 60,
-    caution: 'Velvet has a nap, so every piece must be cut the same way up, and it cannot be pressed flat.' },
+    caution: 'Velvet has a nap, so every piece must be cut the same way up, and it can’t be pressed flat.' },
   { id: 'satin', name: 'Duchesse Satin', hand: 'heavy, glossy, structural', effort: 1.4, durability: 70 },
   { id: 'taffeta', name: 'Silk Taffeta', hand: 'papery, rustles, holds a shape', effort: 1.3, durability: 68 },
   { id: 'jersey', name: 'Stretch Jersey', hand: 'soft, moves with you', effort: 1.2, durability: 66,
     caution: 'Knits want a stretch stitch. A straight seam on jersey will pop the first time you sit down.' },
   { id: 'ponte', name: 'Ponte Knit', hand: 'stable knit, behaves like a woven', effort: 1.0, durability: 78 },
   { id: 'lace', name: 'Chantilly Lace', hand: 'fragile, patterned, needs backing', effort: 1.9, durability: 44,
-    caution: 'Lace has to be placed, not just cut, so the pattern runs on across a seam. That is most of the work.' },
+    caution: 'Lace has to be placed, not just cut, so the pattern runs on across a seam. That’s most of the work.' },
   { id: 'sequin', name: 'Sequin Mesh', hand: 'heavy, sharp, blunts everything', effort: 2.2, durability: 52,
     caution: 'Sequins destroy needles and scissors, and every seam has to be picked clear by hand first.' },
   { id: 'leather', name: 'Lambskin Leather', hand: 'supple, permanent once pierced', effort: 1.7, durability: 88,
@@ -136,7 +136,7 @@ export const FINISHES: readonly Finish[] = [
   { id: 'beaded', name: 'Hand Beaded', hours: 60, quality: 18,
     detail: 'Beading applied by hand on a frame after the shell is made. Hours, not minutes.' },
   { id: 'distressed', name: 'Aged And Broken Down', hours: 8, quality: -4,
-    detail: 'Dyed back, sanded, and worn in on purpose so it does not read as new on camera.' },
+    detail: 'Dyed back, sanded, and worn in on purpose so it doesn’t read as new on camera.' },
 ];
 
 /** Who is making it, and what that says about the result. */
@@ -160,8 +160,8 @@ export function finishOf(id: string | undefined): Finish {
 
 /** What every quoted price on this rail is, and is not. */
 export const COSTUME_NOTE =
-  'A costume house does not publish a price list and there is no feed for one, so every figure here is '
-  + 'SLATE’s own calibration from cloth, hours and where you are standing. It is not a quote from a real workroom.';
+  'A costume house doesn’t publish a price list and there’s no feed for one, so every figure here is '
+  + 'SLATE’s own calibration from cloth, hours and where you are standing. It isn’t a quote from a real workroom.';
 
 /** What making it yourself needs on the table before you can start. */
 export const SELF_MADE_NOTE =

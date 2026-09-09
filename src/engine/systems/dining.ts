@@ -70,7 +70,7 @@ export function serviceOf(place: Place): DiningService {
 
 export function placeOfVisit(_sim: Simulation, visit: DiningVisit): Place {
   const place = placeById(visit.cityId, visit.placeId);
-  if (!place) throw new CommandError('That room is not there any more.');
+  if (!place) throw new CommandError('That room isn’t there any more.');
   return place;
 }
 
@@ -135,7 +135,7 @@ export interface Standing {
 const VISIT = 'Ate here';
 const TIP_GOOD = 'Tipped well';
 const TIP_NONE = 'Left nothing';
-const WALKED = 'Would not wait';
+const WALKED = 'Wouldn’t wait';
 
 /**
  * What one occurrence is worth in a tallied fact's weight. The same wording
@@ -260,16 +260,16 @@ export function registerDining(sim: Simulation): void {
     (p, { sim: s }) => {
       const me = s.player;
       const place = placeById(me.currentLocationId, p.placeId);
-      if (!place) throw new CommandError('That is not somewhere in this city.');
-      if (me.currentPlaceId !== place.id) throw new CommandError(`You are not at ${place.name}. Go there first.`);
-      if (!place.actions.includes('eat') && !place.actions.includes('drink')) throw new CommandError(`${place.name} does not serve food.`);
+      if (!place) throw new CommandError('That isn’t somewhere in this city.');
+      if (me.currentPlaceId !== place.id) throw new CommandError(`You aren’t at ${place.name}. Go there first.`);
+      if (!place.actions.includes('eat') && !place.actions.includes('drink')) throw new CommandError(`${place.name} doesn’t serve food.`);
       // A bar sells one thing, so a bar is a door with an age on it. A
       // restaurant that also has a bar is not, and neither is a cafe.
       if (place.kind === 'bar' || place.kind === 'club') requireAge(s, 'drink');
       if (menuOf(place).length === 0) throw new CommandError(`${place.name} has nothing to order.`);
 
       const already = openVisit(s, place.id);
-      if (already) throw new CommandError('You are already in there.');
+      if (already) throw new CommandError('You’re already in there.');
 
       const guestIds = (p.withPersonIds ?? []).filter((id) => s.universe.people[id]);
       const partySize = clamp(p.partySize ?? 1 + guestIds.length, 1, 8);
@@ -312,7 +312,7 @@ export function registerDining(sim: Simulation): void {
     'dine.wait',
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
-      if (visit.status !== 'waiting') throw new CommandError('You are not waiting for anything.');
+      if (visit.status !== 'waiting') throw new CommandError('You aren’t waiting for anything.');
       const place = placeOfVisit(s, visit);
       const rng = s.rng('dining_called', visit.id);
       // They said twenty minutes. Sometimes it is fifteen and sometimes it is
@@ -360,11 +360,11 @@ export function registerDining(sim: Simulation): void {
       const place = placeOfVisit(s, visit);
       const menu = menuOf(place);
       if (p.items.length === 0) throw new CommandError('Order something.');
-      if (p.items.length > MAX_ITEMS * Math.max(1, visit.partySize)) throw new CommandError('That is more than one table can eat.');
+      if (p.items.length > MAX_ITEMS * Math.max(1, visit.partySize)) throw new CommandError('That’s more than one table can eat.');
 
       const chosen = p.items.map((name) => {
         const item = menu.find((m) => m.name.toLowerCase() === name.toLowerCase());
-        if (!item) throw new CommandError(`${place.name} does not have that. The menu is: ${menu.map((m) => m.name).join(', ')}.`);
+        if (!item) throw new CommandError(`${place.name} doesn’t have that. The menu is: ${menu.map((m) => m.name).join(', ')}.`);
         return item;
       });
 
@@ -377,14 +377,14 @@ export function registerDining(sim: Simulation): void {
       let charged = 0;
       if (visit.service === 'counter') {
         if (s.ledger.availableFunds(accountId) < subtotal) {
-          throw new CommandError(`That comes to ${formatMoney(subtotal)} and you cannot cover it.`);
+          throw new CommandError(`That comes to ${formatMoney(subtotal)} and you can’t cover it.`);
         }
         s.expense(accountId, subtotal, place.name, 'dining', { refType: 'dining', refId: visit.id });
         charged = subtotal;
       } else if (s.ledger.availableFunds(accountId) < subtotal) {
         // A table will still serve you; the bill is the problem you are making.
         s.notify({
-          category: 'money', title: 'You Cannot Cover This', importance: 60,
+          category: 'money', title: 'You Can’t Cover This', importance: 60,
           body: `The order at ${place.name} comes to ${formatMoney(subtotal)} before service, and you have ${formatMoney(s.ledger.availableFunds(accountId))}.`,
         });
       }
@@ -423,7 +423,7 @@ export function registerDining(sim: Simulation): void {
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
       if (visit.status === 'settled') throw new CommandError('That bill is paid.');
-      if (visit.items.length === 0) throw new CommandError('There is no bill; you have not ordered.');
+      if (visit.items.length === 0) throw new CommandError('There’s no bill; you haven’t ordered.');
       if (p.accountId) visit.accountId = p.accountId;
       return settle(s, visit, clamp(p.tipShare ?? 0, 0, 1));
     },

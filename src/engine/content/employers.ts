@@ -17,12 +17,12 @@ export const EMPLOYER_NOTE =
   'The companies are real and they really do hire at this level in the countries listed. What SLATE '
   + 'carries about pay is where a company sits against the legal floor rather than an exact hourly '
   + 'rate: some have publicly committed to paying well above it, most pay a little above it, and '
-  + 'some pay it. That is durable and public. An exact figure changes every year and would be a '
-  + 'claim about one company’s current payroll, so it is not in here.';
+  + 'some pay it. That’s durable and public. An exact figure changes every year and would be a '
+  + 'claim about one company’s current payroll, so it isn’t in here.';
 
 export const BRANCH_NOTE =
   'Which branch you work at, who manages it, what is on the rota and everything anybody says on a '
-  + 'shift are SLATE’s own. There is no listings feed and no rota anywhere that this could be read '
+  + 'shift are SLATE’s own. There’s no listings feed and no rota anywhere that this could be read '
   + 'from.';
 
 export const LADDER_NOTE =
@@ -99,21 +99,21 @@ export const EMPLOYERS: readonly Employer[] = [
   e('costco', 'Costco', ['us', 'ca', 'uk', 'jp', 'mx', 'kr', 'au'], 'grocery', 'well_above',
     'The one everybody says to get into. Big boxes, big shifts, and people who have been there twenty years.'),
   e('target', 'Target', ['us'], 'retail', 'well_above',
-    'Red shirt, a section that is yours, and a truck to unload on the days there is a truck.'),
+    'Red shirt, a section that’s yours, and a truck to unload on the days there’s a truck.'),
   e('trader_joes', 'Trader Joe’s', ['us'], 'grocery', 'well_above',
-    'Everybody is relentlessly cheerful and it is somehow not fake. Hawaiian shirt, bell behind the till.'),
+    'Everybody is relentlessly cheerful and it’s somehow not fake. Hawaiian shirt, bell behind the till.'),
   e('walmart', 'Walmart', ['us', 'mx', 'ca'], 'grocery', 'above',
-    'The biggest employer there is. Whatever the department, there is more of it than you expect.'),
+    'The biggest employer there is. Whatever the department, there’s more of it than you expect.'),
   e('kroger', 'Kroger', ['us'], 'grocery', 'above',
     'Registers, carts and a produce section that has to look untouched at nine in the morning.'),
   e('publix', 'Publix', ['us'], 'grocery', 'above',
-    'Bagging is a job here and they will show you how to do it properly.'),
+    'Bagging is a job here and they’ll show you how to do it properly.'),
   e('whole_foods', 'Whole Foods Market', ['us', 'uk', 'ca'], 'grocery', 'above',
     'Everything faces forward, the signage is handwritten, and somebody checks both.'),
   e('starbucks', 'Starbucks', ['us', 'uk', 'ca', 'jp', 'de', 'fr', 'kr', 'cn', 'mx', 'au'], 'coffee', 'above',
-    'Steam, a headset, and a queue that does not stop between seven and nine.'),
+    'Steam, a headset, and a queue that doesn’t stop between seven and nine.'),
   e('mcdonalds', 'McDonald’s', ['us', 'uk', 'ca', 'de', 'fr', 'jp', 'au', 'br', 'in', 'mx', 'es', 'it', 'pl'], 'fast_food', 'at_it',
-    'The first job of more people than any other. It is a system and you learn the system.'),
+    'The first job of more people than any other. It’s a system and you learn the system.'),
   e('chipotle', 'Chipotle', ['us', 'ca', 'uk', 'de', 'fr'], 'fast_food', 'above',
     'A line, a rush, and a manager counting how long the line takes.'),
   e('dunkin', 'Dunkin’', ['us'], 'coffee', 'at_it',
@@ -121,17 +121,17 @@ export const EMPLOYERS: readonly Employer[] = [
   e('in_n_out', 'In-N-Out Burger', ['us'], 'fast_food', 'well_above',
     'Pays the best of anybody in fast food and everybody knows it, so nobody leaves.'),
   e('home_depot', 'The Home Depot', ['us', 'ca', 'mx'], 'hardware', 'above',
-    'An aisle, a forklift you are not allowed near yet, and somebody asking where the plumbing is.'),
+    'An aisle, a forklift you aren’t allowed near yet, and somebody asking where the plumbing is.'),
   e('best_buy', 'Best Buy', ['us', 'ca'], 'retail', 'above',
-    'Blue shirt, and you will be asked about a television you have never heard of.'),
+    'Blue shirt, and you’ll be asked about a television you have never heard of.'),
   e('cvs', 'CVS Pharmacy', ['us'], 'pharmacy', 'above',
     'A front of store, a photo counter, and a receipt longer than the purchase.'),
   e('panera', 'Panera Bread', ['us', 'ca'], 'coffee', 'above',
     'Bakery cases, soup in bread, and a lunch rush that comes all at once.'),
   e('amazon_fc', 'Amazon', ['us', 'uk', 'de', 'fr', 'ca', 'jp', 'es', 'it', 'pl', 'in', 'au'], 'warehouse', 'above',
-    'A fulfillment center. A scanner, a rate, and a number on a screen that is you.'),
+    'A fulfillment center. A scanner, a rate, and a number on a screen that’s you.'),
   e('ups', 'UPS', ['us', 'ca', 'uk', 'de'], 'warehouse', 'well_above',
-    'Loading a trailer at four in the morning. It is unionised, it pays, and it is genuinely hard.'),
+    'Loading a trailer at four in the morning. It’s unionised, it pays, and it’s genuinely hard.'),
 
   // --- The United Kingdom and Ireland --------------------------------------
   e('tesco', 'Tesco', ['uk', 'ie'], 'grocery', 'above',
@@ -139,17 +139,17 @@ export const EMPLOYERS: readonly Employer[] = [
   e('sainsburys', 'Sainsbury’s', ['uk'], 'grocery', 'above',
     'Nectar points, a colleague discount, and the bakery smell for the whole shift.'),
   e('asda', 'Asda', ['uk'], 'grocery', 'above',
-    'Big stores, big trolleys, and a night fill team that is its own world.'),
+    'Big stores, big trolleys, and a night fill team that’s its own world.'),
   e('morrisons', 'Morrisons', ['uk'], 'grocery', 'above',
     'It makes a lot of what it sells, so there are counters and people behind them.'),
   e('aldi_uk', 'Aldi', ['uk', 'ie', 'de', 'au', 'us', 'pl'], 'grocery', 'well_above',
-    'Pays the most on the high street and asks for it back: you will be on a till, then a pallet, then a till.'),
+    'Pays the most on the high street and asks for it back: you’ll be on a till, then a pallet, then a till.'),
   e('lidl', 'Lidl', ['uk', 'ie', 'de', 'fr', 'pl', 'es', 'us'], 'grocery', 'well_above',
     'The same bargain as Aldi. Fast, physical, and the bakery starts before you do.'),
   e('waitrose', 'Waitrose', ['uk'], 'grocery', 'above',
-    'A partnership, so everybody is a partner and there is a bonus everybody talks about.'),
+    'A partnership, so everybody is a partner and there’s a bonus everybody talks about.'),
   e('marks_spencer', 'Marks & Spencer', ['uk', 'ie'], 'retail', 'above',
-    'Food hall or clothing, and they are two completely different jobs in one building.'),
+    'Food hall or clothing, and they’re two completely different jobs in one building.'),
   e('john_lewis', 'John Lewis', ['uk'], 'retail', 'above',
     'A partnership too, and the training is genuinely better than it needs to be.'),
   e('greggs', 'Greggs', ['uk'], 'coffee', 'above',
@@ -157,15 +157,15 @@ export const EMPLOYERS: readonly Employer[] = [
   e('pret', 'Pret A Manger', ['uk', 'us', 'fr', 'ie'], 'coffee', 'above',
     'Everything made in the shop that morning, and a shift bonus if the mystery shopper likes you.'),
   e('costa', 'Costa Coffee', ['uk', 'ie', 'pl'], 'coffee', 'above',
-    'A barista qualification that is a real thing, and a machine you will come to know very well.'),
+    'A barista qualification that’s a real thing, and a machine you’ll come to know very well.'),
   e('boots', 'Boots', ['uk', 'ie'], 'pharmacy', 'above',
-    'Front of shop, meal deal, and a dispensary you are not allowed behind.'),
+    'Front of shop, meal deal, and a dispensary you aren’t allowed behind.'),
   e('wetherspoon', 'J D Wetherspoon', ['uk', 'ie'], 'fast_food', 'above',
     'A pub the size of a bank, because it used to be one. Breakfast until noon, and it never stops.'),
   e('nandos', 'Nando’s', ['uk', 'za', 'ie', 'au'], 'fast_food', 'above',
     'A table number, a peri-ometer, and a queue you seat rather than serve.'),
   e('b_and_q', 'B&Q', ['uk', 'ie'], 'hardware', 'above',
-    'Timber, paint mixing, and somebody who wants a shelf cut to a size they have not measured.'),
+    'Timber, paint mixing, and somebody who wants a shelf cut to a size they haven’t measured.'),
 
   // --- Canada, Australia and New Zealand -----------------------------------
   e('tim_hortons', 'Tim Hortons', ['ca'], 'coffee', 'at_it',
@@ -173,7 +173,7 @@ export const EMPLOYERS: readonly Employer[] = [
   e('loblaws', 'Loblaws', ['ca'], 'grocery', 'above',
     'The big Canadian grocer. Produce, deli, and a lot of flyers.'),
   e('canadian_tire', 'Canadian Tire', ['ca'], 'hardware', 'above',
-    'Not really tires. Everything, and money that is only money in the shop.'),
+    'Not really tires. Everything, and money that’s only money in the shop.'),
   e('woolworths', 'Woolworths', ['au', 'nz'], 'grocery', 'above',
     'The green one. Registers, online orders picked in the aisles, and trolleys.'),
   e('coles', 'Coles', ['au'], 'grocery', 'above',
@@ -187,7 +187,7 @@ export const EMPLOYERS: readonly Employer[] = [
   e('edeka', 'EDEKA', ['de'], 'grocery', 'above',
     'Often owned by the person managing it, which changes what the job is like.'),
   e('dm', 'dm-drogerie markt', ['de', 'at'], 'pharmacy', 'above',
-    'Shelves, refills and a company that is unusually serious about training.'),
+    'Shelves, refills and a company that’s unusually serious about training.'),
   e('carrefour', 'Carrefour', ['fr', 'es', 'it', 'be', 'pl', 'br', 'ar'], 'grocery', 'above',
     'A hypermarché, which means the job could be anything on any given day.'),
   e('monoprix', 'Monoprix', ['fr'], 'grocery', 'above',
@@ -245,7 +245,7 @@ export const ROLES: readonly Role[] = [
   },
   {
     id: 'supervisor', label: 'Shift Supervisor', multiple: 1.18, shifts: 40, standing: 62, hours: 7,
-    about: 'Keys, a float to count, and you are the one people ask now.',
+    about: 'Keys, a float to count, and you’re the one people ask now.',
   },
   {
     id: 'assistant', label: 'Assistant Manager', multiple: 1.42, shifts: 120, standing: 74, hours: 8,
@@ -286,7 +286,7 @@ export interface ShiftKind {
 export const SHIFT_KINDS: readonly ShiftKind[] = [
   { id: 'open', label: 'The Open', startsAt: 6, premium: 1, extra: 6, about: 'In before the doors, everything switched on, and the first hour is quiet.' },
   { id: 'mid', label: 'A Middle Shift', startsAt: 11, premium: 1, extra: 0, about: 'Straight into the lunch rush and out the other side of it.' },
-  { id: 'close', label: 'The Close', startsAt: 15, premium: 1, extra: 4, about: 'The last two hours are cleaning, and nobody leaves until it is done.' },
+  { id: 'close', label: 'The Close', startsAt: 15, premium: 1, extra: 4, about: 'The last two hours are cleaning, and nobody leaves until it’s done.' },
   { id: 'weekend', label: 'A Weekend', startsAt: 9, premium: 1.1, extra: 5, about: 'Twice the people, half the staff, and it pays a little more for a reason.' },
   { id: 'night', label: 'A Night', startsAt: 22, premium: 1.25, extra: 14, about: 'Nights pay more everywhere because nights cost more, and by four you know why.' },
 ];
@@ -302,12 +302,12 @@ export const ROTA_SHIFTS: Readonly<Record<string, number>> = {
 
 /** Why somebody is ringing you on a day off. */
 export const COVER_REASONS: readonly string[] = [
-  'Somebody has rung in sick and there is nobody else on the list.',
+  'Somebody has rung in sick and there’s nobody else on the list.',
   'The delivery has come in twice the size it should have.',
-  'Two people have gone down with the same thing and it is a Saturday.',
-  'The person who was on has not turned up and is not answering.',
-  'It is a bank holiday weekend and the rota was optimistic.',
-  'Head office is in tomorrow and the store is not ready.',
+  'Two people have gone down with the same thing and it’s a Saturday.',
+  'The person who was on hasn’t turned up and isn’t answering.',
+  'It’s a bank holiday weekend and the rota was optimistic.',
+  'Head office is in tomorrow and the store isn’t ready.',
   'Somebody has walked out mid shift.',
 ];
 
@@ -343,7 +343,7 @@ export const LETTING_GO_STANDING = 6;
 /** What a manager says on the way out, which depends on which of the two it was. */
 export const LETTING_GO_REASONS: Readonly<Record<'missed' | 'standing', string>> = {
   missed: 'You stopped turning up, so they stopped putting you on.',
-  standing: 'It was not working out, and they said so.',
+  standing: 'It wasn’t working out, and they said so.',
 };
 
 // ---------------------------------------------------------------------------
@@ -359,9 +359,9 @@ export const PAYDAY_NOTE =
 
 export const SICK_NOTE =
   'Ringing in is a real thing you can do and a real thing that costs something. Doing it when you '
-  + 'are actually ill costs almost nothing; doing it when you are not is a gamble on whether '
+  + 'are actually ill costs almost nothing; doing it when you aren’t is a gamble on whether '
   + 'anybody works it out. Whether the day is paid depends on where you are: statutory sick pay is '
-  + 'a real entitlement in some countries and does not exist in others.';
+  + 'a real entitlement in some countries and doesn’t exist in others.';
 
 export type PayCycle = 'weekly' | 'fortnightly' | 'monthly';
 

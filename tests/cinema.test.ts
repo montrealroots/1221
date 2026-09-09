@@ -292,7 +292,7 @@ describe('sitting through it', () => {
     // Too early.
     const early = sim.execute({ kind: 'cine.attend', payload: { ticketId } });
     expect(early.ok).toBe(false);
-    expect(early.error).toContain('not let you in yet');
+    expect(early.error).toMatch(/n[o’]t let you in yet/);
 
     // In time, but standing in the wrong place.
     sim.advanceTo(at - 20 * MINUTE);

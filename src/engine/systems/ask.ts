@@ -123,14 +123,14 @@ export function resolveAsk(sim: Simulation, text: string, person: Person = sim.p
     return {
       kind: 'unsupported',
       why: nearest.length > 0
-        ? 'That is not something SLATE does in those words. These are near it.'
-        : 'That is not something SLATE does. It will not pretend otherwise.',
+        ? 'That isn’t something SLATE does in those words. These are near it.'
+        : 'That isn’t something SLATE does. It won’t pretend otherwise.',
       nearest,
     };
   }
 
   const askable = ASKABLE_BY_ID[intent.choiceId];
-  if (!askable) return { kind: 'unsupported', why: 'That is not something SLATE does.', nearest: [] };
+  if (!askable) return { kind: 'unsupported', why: 'That isn’t something SLATE does.', nearest: [] };
 
   // A screen is a screen. Saying so is honest; running something instead
   // would be the game deciding for you.
@@ -144,7 +144,7 @@ export function resolveAsk(sim: Simulation, text: string, person: Person = sim.p
       return {
         kind: 'cannot',
         askable,
-        why: 'There is nothing of that kind in this city. Somewhere bigger will have one.',
+        why: 'There’s nothing of that kind in this city. Somewhere bigger will have one.',
         route: askable.route,
       };
     }
@@ -183,14 +183,14 @@ export function planFor(
   sim: Simulation, askableId: string, optionId?: string, person: Person = sim.player,
 ): AskResult {
   const askable = ASKABLE_BY_ID[askableId];
-  if (!askable) return { kind: 'unsupported', why: 'That is not something SLATE does.', nearest: [] };
+  if (!askable) return { kind: 'unsupported', why: 'That isn’t something SLATE does.', nearest: [] };
   if (askable.needs === 'screen' || !askable.command) {
     return { kind: 'go', askable, route: askable.route, why: askable.about };
   }
   if (askable.needs === 'place') {
     const found = candidatesFor(sim, askable, person).find((one) => one.id === optionId);
     if (!found) {
-      return { kind: 'cannot', askable, why: 'That is not somewhere in this city.', route: askable.route };
+      return { kind: 'cannot', askable, why: 'That isn’t somewhere in this city.', route: askable.route };
     }
     return planAt(askable, found, person.currentPlaceId === found.id);
   }

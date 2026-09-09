@@ -76,7 +76,7 @@ describe('the rooms a town has', () => {
 
   it('says plainly what is real about them and that nothing is medical advice', () => {
     expect(PHARMACY_NOTE).toMatch(/SLATE/);
-    expect(PHARMACY_NOTE).toMatch(/not medical advice/);
+    expect(PHARMACY_NOTE).toMatch(/n[o’]t medical advice/);
     expect(PHARMACY_NOTE).toMatch(/independently owned/);
     expect(POST_NOTE).toMatch(/SLATE/);
     // A post office counter has no business explaining pharmacy ownership law.
@@ -210,7 +210,7 @@ describe('the chair', () => {
       kind: 'errand.haircut', payload: { placeId: place.id, service: SALON_SERVICES[0]!.id },
     });
     expect(res.ok).toBe(false);
-    expect(res.error).toMatch(/not at/i);
+    expect(res.error).toMatch(/n[o’]t at/i);
   });
 });
 

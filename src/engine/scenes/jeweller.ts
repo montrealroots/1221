@@ -62,7 +62,7 @@ function specOf(session: SceneSession): Spec {
 
 function placeOf(sim: Simulation, session: SceneSession): Place {
   const place = placeById(sim.player.currentLocationId, String(session.context['placeId'] ?? ''));
-  if (!place) throw new CommandError('You are not standing in the shop any more.');
+  if (!place) throw new CommandError('You aren’t standing in the shop any more.');
   return place;
 }
 
@@ -74,13 +74,13 @@ export const JEWELLER_SCENE = defineScene({
 
   available(sim) {
     const place = placeById(sim.player.currentLocationId, sim.player.currentPlaceId ?? '');
-    if (!isJeweller(place)) return { ok: false, reason: 'You are not at a jeweler.' };
+    if (!isJeweller(place)) return { ok: false, reason: 'You aren’t at a jeweler.' };
     return { ok: true };
   },
 
   start(sim) {
     const place = placeById(sim.player.currentLocationId, sim.player.currentPlaceId ?? '');
-    if (!isJeweller(place)) throw new CommandError('You are not at a jeweler.');
+    if (!isJeweller(place)) throw new CommandError('You aren’t at a jeweler.');
     return {
       node: 'counter',
       context: {
@@ -111,7 +111,7 @@ export const JEWELLER_SCENE = defineScene({
         const open = openCommissions(sim, sim.player.id);
         const ready = open.filter((c) => c.status === 'ready' && c.placeId === place.id);
         const choices: SceneChoice[] = [
-          { id: 'design', label: 'Have Something Made', aliases: ['commission', 'bespoke', 'design', 'make'], tone: 'primary', detail: 'They will ask you five questions.' },
+          { id: 'design', label: 'Have Something Made', aliases: ['commission', 'bespoke', 'design', 'make'], tone: 'primary', detail: 'They’ll ask you five questions.' },
           { id: 'look', label: 'Look In The Case', aliases: ['case', 'browse', 'see'], detail: 'What is already made.' },
           { id: 'services', label: 'Ask About A Repair', aliases: ['repair', 'service', 'clean', 'size', 'valuation'] },
         ];
@@ -290,7 +290,7 @@ export const JEWELLER_SCENE = defineScene({
         return {
           title: 'Anything Inside',
           eyebrow: describeSpec(spec),
-          text: said || 'Type what you want cut into it, or leave it plain. Sixty characters, and it is permanent.',
+          text: said || 'Type what you want cut into it, or leave it plain. Sixty characters, and it’s permanent.',
           choices: [
             { id: 'engrave:none', label: 'Leave It Plain', tone: 'primary', aliases: ['none', 'plain', 'no'] },
             { id: 'back', label: 'Back', aliases: ['back'] },
@@ -339,7 +339,7 @@ export const JEWELLER_SCENE = defineScene({
         return {
           title: 'Done',
           eyebrow: place.name,
-          text: said || 'That is that.',
+          text: said || 'That’s that.',
           choices: [{ id: 'finish', label: 'Leave', tone: 'primary', aliases: ['out', 'go'] }],
           canSkip: false,
         };
@@ -379,7 +379,7 @@ export const JEWELLER_SCENE = defineScene({
         const result = ctx.commit<{ paid: number; description: string }>(`collect:${commissionId}`, {
           kind: 'jewel.collect', payload: { commissionId },
         });
-        session.context['line'] = `${result.description}. ${formatMoney(result.paid)} settled, and it is yours.`;
+        session.context['line'] = `${result.description}. ${formatMoney(result.paid)} settled, and it’s yours.`;
         ctx.go('done');
         return;
       }

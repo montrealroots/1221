@@ -91,7 +91,7 @@ for (const record of WORLD_RECORDS) {
 }
 if (WORLD_RECORDS.length < 16) problems.push(`only ${WORLD_RECORDS.length} world records`);
 if (recordFor('100m', 'mens', 'outdoor')?.holder !== 'Usain Bolt') problems.push('the hundred meter record has moved');
-if (!/real/.test(RECORDS_NOTE) || !/after that is not in here/.test(RECORDS_NOTE)) {
+if (!/real/.test(RECORDS_NOTE) || !/after that is(n’t| not) in here/.test(RECORDS_NOTE)) {
   problems.push('the note saying the records are as SLATE carries them has gone');
 }
 

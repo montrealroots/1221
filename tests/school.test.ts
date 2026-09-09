@@ -15,7 +15,7 @@ import { quickSave } from '@/engine';
 import {
   attendance, auditionStrength, averageMark, buildTimetable, describePart, ensureSchoolLeaver,
   ensureSchooling, isASchoolDay, markFor, partThisYear, productionFor, qualificationsOf,
-  rawTalent, schoolHistoryOf, schoolIsCompulsory, schoolingOf, stageFor, standingOn, subjectsAt,
+  rawTalent, schoolHistoryOf, schoolHours, schoolIsCompulsory, schoolingOf, stageFor, standingOn, subjectsAt,
   systemFor, todaysLessons, yearFor,
 } from '@/engine/systems/school';
 import {
@@ -375,5 +375,27 @@ describe('the school an adult already left', () => {
     expect(ensureSchoolLeaver(sim)).toBeUndefined();
     expect(schoolHistoryOf(sim)).toHaveLength(1);
     expect(schoolHistoryOf(sim)[0]!.id).toBe(before);
+  });
+});
+
+// ---------------------------------------------------------------------------
+
+describe('skipping school after the bell', () => {
+  it('refuses rather than winding the clock back to the afternoon', () => {
+    const sim = atSchool('skip-late', 2011);
+    const schooling = ensureSchooling(sim)!;
+    let found = false;
+    for (let tries = 0; tries < 9 && !found; tries++) {
+      if (isASchoolDay(sim) && todaysLessons(sim, schooling).length > 0) found = true;
+      else sim.advanceTo(sim.now + MS_DAY);
+    }
+    expect(found).toBe(true);
+    // The evening of a school day: the lessons are behind you either way.
+    sim.advanceTo(schoolHours(sim).to + 4 * 60 * 60_000);
+    const before = sim.now;
+    const skipped = sim.execute({ kind: 'school.skip', payload: {} });
+    expect(skipped.ok).toBe(false);
+    expect(skipped.error).toMatch(/over for today/);
+    expect(sim.now).toBe(before);
   });
 });

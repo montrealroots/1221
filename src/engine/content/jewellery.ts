@@ -49,11 +49,11 @@ export const METALS: readonly Metal[] = [
   { id: 'gold_18', name: '18 Karat Yellow Gold', fineness: 750, costFactor: 12, hardness: 52, colour: 'gold', resizable: true, about: '750 parts gold. What the maisons use. Warmer, softer, and it marks.' },
   { id: 'gold_22', name: '22 Karat Yellow Gold', fineness: 916, costFactor: 15, hardness: 38, colour: 'gold', resizable: true, about: '916 parts gold. The color of a wedding in South Asia, and soft enough to bend by hand.' },
   { id: 'white_gold_18', name: '18 Karat White Gold', fineness: 750, costFactor: 12.5, hardness: 56, colour: 'silver', resizable: true, about: 'Gold alloyed white and rhodium plated. The plating wears and wants redoing every few years.' },
-  { id: 'rose_gold_18', name: '18 Karat Rose Gold', fineness: 750, costFactor: 12, hardness: 58, colour: 'rose_gold', resizable: true, about: 'Gold with copper in it. Harder than yellow, and it does not fade the way people fear.' },
+  { id: 'rose_gold_18', name: '18 Karat Rose Gold', fineness: 750, costFactor: 12, hardness: 58, colour: 'rose_gold', resizable: true, about: 'Gold with copper in it. Harder than yellow, and it doesn’t fade the way people fear.' },
   { id: 'platinum', name: 'Platinum', fineness: 950, costFactor: 16, hardness: 66, colour: 'platinum', resizable: true, about: '950 parts platinum. Heavy, white all the way through, and it develops a patina rather than wearing away.' },
   { id: 'palladium', name: 'Palladium', fineness: 950, costFactor: 13, hardness: 64, colour: 'platinum', resizable: true, about: 'Lighter than platinum, white without plating, and a quieter thing to wear.' },
-  { id: 'titanium', name: 'Titanium', fineness: 0, costFactor: 2, hardness: 88, colour: 'steel', resizable: false, about: 'Very light, very hard, and it cannot be sized or soldered. What you order is what you have.' },
-  { id: 'tungsten', name: 'Tungsten Carbide', fineness: 0, costFactor: 1.6, hardness: 94, colour: 'charcoal', resizable: false, about: 'Nearly unscratchable and it cannot be cut off in the ordinary way, which matters more than people think.' },
+  { id: 'titanium', name: 'Titanium', fineness: 0, costFactor: 2, hardness: 88, colour: 'steel', resizable: false, about: 'Very light, very hard, and it can’t be sized or soldered. What you order is what you have.' },
+  { id: 'tungsten', name: 'Tungsten Carbide', fineness: 0, costFactor: 1.6, hardness: 94, colour: 'charcoal', resizable: false, about: 'Nearly unscratchable and it can’t be cut off in the ordinary way, which matters more than people think.' },
   { id: 'steel_jewel', name: 'Stainless Steel', fineness: 0, costFactor: 0.6, hardness: 82, colour: 'steel', resizable: false, about: 'What a hundred-pound chain is actually made of. Honest about itself.' },
 ];
 
@@ -92,13 +92,13 @@ export const STONES: readonly Stone[] = [
   { id: 'emerald', name: 'Emerald', mohs: 7.75, perCarat: 2_600_00, graded: false, colour: 'emerald', about: 'Beryl, softer than it looks, and almost always with inclusions the trade calls a garden.' },
   { id: 'aquamarine', name: 'Aquamarine', mohs: 7.75, perCarat: 240_00, graded: false, colour: 'pale_blue', about: 'The other beryl. Big clean stones are ordinary, which makes them affordable and underrated.' },
   { id: 'tanzanite', name: 'Tanzanite', mohs: 6.5, perCarat: 620_00, graded: false, colour: 'purple', about: 'Found in one place on earth and nowhere else. Soft, so not a ring you wear to do the washing up.' },
-  { id: 'opal', name: 'Opal', mohs: 5.75, perCarat: 320_00, graded: false, colour: 'off_white', about: 'Fire inside water. It can crack from a change in temperature and it is worth it anyway.' },
+  { id: 'opal', name: 'Opal', mohs: 5.75, perCarat: 320_00, graded: false, colour: 'off_white', about: 'Fire inside water. It can crack from a change in temperature and it’s worth it anyway.' },
   { id: 'pearl', name: 'Cultured Pearl', mohs: 2.75, perCarat: 90_00, graded: false, colour: 'off_white', about: 'Not a stone at all. Soft, dislikes perfume, and needs restringing every couple of years.' },
   { id: 'jade', name: 'Jadeite Jade', mohs: 6.75, perCarat: 1_900_00, graded: false, colour: 'forest', about: 'Tough rather than hard, and the finest imperial green is one of the dearest materials in jewelry.' },
   { id: 'amethyst', name: 'Amethyst', mohs: 7, perCarat: 28_00, graded: false, colour: 'purple', about: 'Quartz. Was worth a fortune until Brazil turned up with rather a lot of it.' },
   { id: 'garnet', name: 'Garnet', mohs: 7.25, perCarat: 45_00, graded: false, colour: 'oxblood', about: 'The stone in your grandmother’s brooch. Deep, warm, and cheap for what it is.' },
-  { id: 'topaz', name: 'Topaz', mohs: 8, perCarat: 55_00, graded: false, colour: 'pale_blue', about: 'Hard, clear, and mostly blue because somebody irradiated it. That is normal and disclosed.' },
-  { id: 'onyx', name: 'Black Onyx', mohs: 7, perCarat: 18_00, graded: false, colour: 'black', about: 'Flat black chalcedony. What a signet ring is set with when it is set with anything.' },
+  { id: 'topaz', name: 'Topaz', mohs: 8, perCarat: 55_00, graded: false, colour: 'pale_blue', about: 'Hard, clear, and mostly blue because somebody irradiated it. That’s normal and disclosed.' },
+  { id: 'onyx', name: 'Black Onyx', mohs: 7, perCarat: 18_00, graded: false, colour: 'black', about: 'Flat black chalcedony. What a signet ring is set with when it’s set with anything.' },
   { id: 'turquoise', name: 'Turquoise', mohs: 5.5, perCarat: 60_00, graded: false, colour: 'teal', about: 'Porous, soft, and it changes color from the oil on your skin. Some people count that as the point.' },
 ];
 
@@ -162,12 +162,12 @@ export interface ColourGrade {
 }
 
 export const COLOUR_GRADES: readonly ColourGrade[] = [
-  { id: 'd', name: 'D', band: 'Colorless', factor: 1.6, about: 'The top of the scale. Nothing above it, and most people cannot tell it from an F.' },
+  { id: 'd', name: 'D', band: 'Colorless', factor: 1.6, about: 'The top of the scale. Nothing above it, and most people can’t tell it from an F.' },
   { id: 'e', name: 'E', band: 'Colorless', factor: 1.45, about: 'Colorless. A gemologist finds a trace under laboratory light.' },
   { id: 'f', name: 'F', band: 'Colorless', factor: 1.32, about: 'Colorless, and the last grade where that word is used without qualification.' },
   { id: 'g', name: 'G', band: 'Near Colorless', factor: 1.15, about: 'Near colorless, and the grade the trade quietly recommends. Face up it looks white.' },
   { id: 'h', name: 'H', band: 'Near Colorless', factor: 1.0, about: 'Near colorless. White in a white metal, and the sensible middle of the scale.' },
-  { id: 'i', name: 'I', band: 'Near Colorless', factor: 0.88, about: 'A hint of warmth from the side. Invisible once it is set and on a hand.' },
+  { id: 'i', name: 'I', band: 'Near Colorless', factor: 0.88, about: 'A hint of warmth from the side. Invisible once it’s set and on a hand.' },
   { id: 'j', name: 'J', band: 'Near Colorless', factor: 0.78, about: 'Warm enough to notice against a D, and nothing at all in yellow gold.' },
   { id: 'k', name: 'K', band: 'Faint', factor: 0.66, about: 'Faint yellow. Set it in gold and it reads as intentional rather than as a compromise.' },
   { id: 'm', name: 'M', band: 'Faint', factor: 0.54, about: 'Visibly warm. Cheap for the weight, and honest about what it is.' },
@@ -231,10 +231,10 @@ export interface PieceKind {
 export const PIECE_KINDS: readonly PieceKind[] = [
   { id: 'solitaire_ring', name: 'Solitaire Ring', slot: 'ring', grams: 4, weeks: 5, takesStone: true, about: 'One stone, held up, nothing else asking for attention.' },
   { id: 'engagement_ring', name: 'Engagement Ring', slot: 'ring', grams: 5, weeks: 6, takesStone: true, about: 'A center stone and whatever you want around it. The one people keep the box for.' },
-  { id: 'eternity_band', name: 'Eternity Band', slot: 'ring', grams: 4, weeks: 5, takesStone: true, about: 'Stones the whole way round. Cannot be resized afterwards, so the fitting matters.' },
+  { id: 'eternity_band', name: 'Eternity Band', slot: 'ring', grams: 4, weeks: 5, takesStone: true, about: 'Stones the whole way round. Can’t be resized afterwards, so the fitting matters.' },
   { id: 'wedding_band', name: 'Wedding Band', slot: 'ring', grams: 5, weeks: 3, takesStone: false, about: 'Plain, or milled, or hammered. It has to survive forty years of not being taken off.' },
   { id: 'signet_ring', name: 'Signet Ring', slot: 'ring', grams: 9, weeks: 4, takesStone: true, about: 'A flat face to engrave, or a slab of onyx. Worn on the little finger, traditionally.' },
-  { id: 'cocktail_ring', name: 'Cocktail Ring', slot: 'ring', grams: 8, weeks: 6, takesStone: true, about: 'Large, and not apologizing for it. The whole idea is that it is seen from across a room.' },
+  { id: 'cocktail_ring', name: 'Cocktail Ring', slot: 'ring', grams: 8, weeks: 6, takesStone: true, about: 'Large, and not apologizing for it. The whole idea is that it’s seen from across a room.' },
   { id: 'pendant', name: 'Pendant', slot: 'necklace', grams: 3, weeks: 4, takesStone: true, about: 'One stone on a chain. The simplest thing a bench can make well.' },
   { id: 'chain', name: 'Chain', slot: 'necklace', grams: 22, weeks: 4, takesStone: false, about: 'Links, by the gram. Cuban, rope, box, figaro; the weight is the price.' },
   { id: 'riviere', name: 'Rivière Necklace', slot: 'necklace', grams: 14, weeks: 10, takesStone: true, about: 'A river of graduated stones with no metal showing. The bench will want a year of your patience.' },
@@ -247,7 +247,7 @@ export const PIECE_KINDS: readonly PieceKind[] = [
   { id: 'cufflinks', name: 'Cufflinks', slot: 'jewellery', grams: 12, weeks: 4, takesStone: true, about: 'A pair, with a swivel back that has to work ten thousand times.' },
   { id: 'brooch', name: 'Brooch', slot: 'jewellery', grams: 11, weeks: 7, takesStone: true, about: 'The piece nobody commissions any more, which is exactly why one is worth having.' },
   // The iced-out bench.
-  { id: 'miami_cuban', name: 'Miami Cuban Link', slot: 'necklace', grams: 120, weeks: 5, takesStone: true, about: 'Solid links by the gauge, and most of the price is the gold. Set with stones, it is a different price again.' },
+  { id: 'miami_cuban', name: 'Miami Cuban Link', slot: 'necklace', grams: 120, weeks: 5, takesStone: true, about: 'Solid links by the gauge, and most of the price is the gold. Set with stones, it’s a different price again.' },
   { id: 'tennis_chain', name: 'Tennis Chain', slot: 'necklace', grams: 30, weeks: 8, takesStone: true, about: 'A line of matched stones the whole way round the neck. Hundreds of them, each one set by hand.' },
   { id: 'nameplate', name: 'Nameplate', slot: 'necklace', grams: 9, weeks: 4, takesStone: true, about: 'Your name, or somebody else’s, cut in script and hung on a chain. Canal Street since forever.' },
   { id: 'grillz', name: 'Grillz', slot: 'jewellery', grams: 14, weeks: 3, takesStone: true, about: 'Cast from a mold of your teeth, so they come in first for the impression. Six on the bottom or eight on top.' },
@@ -279,7 +279,7 @@ export const SETTINGS: readonly Setting[] = [
   { id: 'pave', name: 'Pavé', weeks: 2, labour: 1.9, protection: 62, about: 'The metal disappears under stones. Beautiful, and a repair bill waiting when one drops.' },
   { id: 'channel', name: 'Channel', weeks: 1, labour: 1.5, protection: 86, about: 'Stones sunk in a groove between two walls. Nothing sticks up and nothing catches.' },
   { id: 'three_stone', name: 'Three Stone', weeks: 1, labour: 1.45, protection: 64, about: 'A center with a shoulder each side. Past, present, future, if you like that sort of thing.' },
-  { id: 'tension', name: 'Tension', weeks: 2, labour: 1.8, protection: 48, about: 'The stone held by the spring of the metal alone. Looks like a trick and cannot be resized.' },
+  { id: 'tension', name: 'Tension', weeks: 2, labour: 1.8, protection: 48, about: 'The stone held by the spring of the metal alone. Looks like a trick and can’t be resized.' },
   { id: 'cluster', name: 'Cluster', weeks: 1, labour: 1.55, protection: 70, about: 'Many stones reading as one larger one. Victorian, and back in fashion roughly always.' },
   { id: 'rubover', name: 'Rub Over', weeks: 1, labour: 1.3, protection: 88, about: 'The metal burnished over the girdle. A quieter cousin of the bezel, flush to the finger.' },
   { id: 'plain', name: 'No Setting', weeks: 0, labour: 1, protection: 100, about: 'Metal alone, and nothing that can ever fall out of it.' },

@@ -277,7 +277,7 @@ describe('what you pay becomes what the job pays', () => {
 describe('the strike the game invented', () => {
   it('says plainly that it is invented', () => {
     expect(STRIKE_IS_FICTION).toMatch(/invented/i);
-    expect(STRIKE_IS_FICTION).toMatch(/not an account of any real/i);
+    expect(STRIKE_IS_FICTION).toMatch(/n[o’]t an account of any real/i);
   });
 
   it('opens the world with nobody else making anything', () => {
@@ -431,7 +431,7 @@ describe('paying yourself', () => {
     const cash = sim.universe.accounts[company.cashAccountId]!.balance;
     const refused = sim.execute({ kind: 'co.set_draw', payload: { amount: cash * 2 } });
     expect(refused.ok).toBe(false);
-    expect(refused.error).toMatch(/cannot carry/i);
+    expect(refused.error).toMatch(/can(not|’t) carry/i);
     expect(playerCompany(sim)!.founderDraw).toBe(DEFAULT_FOUNDER_DRAW);
   });
 

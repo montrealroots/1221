@@ -1097,20 +1097,20 @@ const KINDS_BY_PLATFORM: Readonly<Record<string, readonly SocialItem['kind'][]>>
  * stranger on the internet is short.
  */
 const DM_REPLIES: readonly string[] = [
-  'Thank you, that is kind of you to say.',
+  'Thank you, that’s kind of you to say.',
   'Appreciate it.',
   'Ha, thank you.',
   'Sorry, only just seen this.',
   'Yes, go for it.',
-  'Send it over and I will have a look.',
+  'Send it over and I’ll have a look.',
   'That one took a while, so thank you.',
-  'Not sure I am the right person to ask but I will try.',
+  'Not sure I’m the right person to ask but I’ll try.',
   'Any time.',
   'Thanks for the kind words, genuinely.',
   'Working on more of those now.',
   'Message me nearer the time.',
   'Where did you see it?',
-  'That is a good question and I do not have an answer.',
+  'That’s a good question and I don’t have an answer.',
   'Will do, thanks for asking.',
   'Yes, that was the one.',
 ];
@@ -1236,7 +1236,7 @@ export function registerSocialApps(sim: Simulation): void {
       profile.verified = false;
       sim.notify({
         category: 'social', title: 'Premium Lapsed',
-        body: 'The subscription could not be taken, so the badge and the ads share are gone.',
+        body: 'The subscription couldn’t be taken, so the badge and the ads share are gone.',
         importance: 48, route: '/workspace/phone',
       });
     }
@@ -1248,13 +1248,13 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.create_profile',
     (p, { sim: s }) => {
       if (![PHOTO_PLATFORM, TEXT_PLATFORM, CLIP_PLATFORM].includes(p.platform)) {
-        throw new CommandError('That is not one of the apps.');
+        throw new CommandError('That isn’t one of the apps.');
       }
       if (myProfile(s, p.platform)) throw new CommandError('You already have an account there.');
       const name = (p.name ?? s.player.displayName).trim();
       if (name.length < 2) throw new CommandError('An account needs a name.');
       const handle = (p.handle ?? name).toLowerCase().replace(/[^a-z0-9._]/g, '');
-      if (handle.length < 2) throw new CommandError('That handle will not do.');
+      if (handle.length < 2) throw new CommandError('That handle won’t do.');
       if (profileByHandle(s, p.platform, handle)) throw new CommandError('That handle is taken.');
 
       // The money side of a post lives on the account, so making the profile
@@ -1295,7 +1295,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.edit_profile',
     (p, { sim: s }) => {
       const profile = p.profileId ? profileById(s, p.profileId) : undefined;
-      if (!profile || profile.ownerId !== s.player.id) throw new CommandError('That is not your account.');
+      if (!profile || profile.ownerId !== s.player.id) throw new CommandError('That isn’t your account.');
       if (p.name !== undefined) {
         const name = p.name.trim();
         if (name.length < 2) throw new CommandError('An account needs a name.');
@@ -1314,7 +1314,7 @@ export function registerSocialApps(sim: Simulation): void {
     (p, { sim: s }) => {
       const profile = profileById(s, p.profileId);
       if (!profile) throw new CommandError('No such account.');
-      if (profile.ownerId === s.player.id) throw new CommandError('You cannot follow yourself.');
+      if (profile.ownerId === s.player.id) throw new CommandError('You can’t follow yourself.');
       if (isFollowing(s, s.player.id, profile.id)) return { following: true };
       const follow: SocialFollow = {
         id: s.nextId('follow'),
@@ -1336,7 +1336,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.unfollow',
     (p, { sim: s }) => {
       const follow = followsOf(s, s.player.id).find((f) => f.profileId === p.profileId);
-      if (!follow) throw new CommandError('You do not follow that account.');
+      if (!follow) throw new CommandError('You don’t follow that account.');
       delete s.universe.socialFollows[follow.id];
       const profile = profileById(s, p.profileId);
       if (profile) profile.followers = Math.max(0, profile.followers - 1);
@@ -1352,7 +1352,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.close_friend',
     (p, { sim: s }) => {
       const follow = followsOf(s, s.player.id).find((f) => f.profileId === p.profileId);
-      if (!follow) throw new CommandError('You do not follow that account.');
+      if (!follow) throw new CommandError('You don’t follow that account.');
       follow.close = p.close;
       return { close: p.close };
     },
@@ -1364,7 +1364,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.like',
     (p, { sim: s }) => {
       const item = itemById(s, p.itemId);
-      if (!item) throw new CommandError('That post is not there.');
+      if (!item) throw new CommandError('That post isn’t there.');
       const record = markRecord(s, item);
       record.liked = !record.liked;
       const stored = s.universe.socialItems[p.itemId];
@@ -1379,7 +1379,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.bookmark',
     (p, { sim: s }) => {
       const item = itemById(s, p.itemId);
-      if (!item) throw new CommandError('That post is not there.');
+      if (!item) throw new CommandError('That post isn’t there.');
       const record = markRecord(s, item);
       // Naming a folder files it there rather than toggling it off.
       const folder = p.collection?.trim();
@@ -1398,8 +1398,8 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.repost',
     (p, { sim: s }) => {
       const item = itemById(s, p.itemId);
-      if (!item) throw new CommandError('That post is not there.');
-      if (item.platform !== TEXT_PLATFORM) throw new CommandError('That app does not do reposts.');
+      if (!item) throw new CommandError('That post isn’t there.');
+      if (item.platform !== TEXT_PLATFORM) throw new CommandError('That app doesn’t do reposts.');
       const record = markRecord(s, item);
       record.reposted = !record.reposted;
       s.emit('feed.reposted', { itemId: item.id, reposted: record.reposted });
@@ -1411,8 +1411,8 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.quote',
     (p, { sim: s }) => {
       const parent = itemById(s, p.itemId);
-      if (!parent) throw new CommandError('That post is not there.');
-      if (parent.platform !== TEXT_PLATFORM) throw new CommandError('That app does not do quotes.');
+      if (!parent) throw new CommandError('That post isn’t there.');
+      if (parent.platform !== TEXT_PLATFORM) throw new CommandError('That app doesn’t do quotes.');
       const profile = myProfile(s, TEXT_PLATFORM);
       if (!profile) throw new CommandError('You have no account there yet.');
       const text = p.text.trim();
@@ -1426,12 +1426,12 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.reply',
     (p, { sim: s }) => {
       const parent = itemById(s, p.itemId);
-      if (!parent) throw new CommandError('That post is not there.');
+      if (!parent) throw new CommandError('That post isn’t there.');
       const profile = myProfile(s, parent.platform);
       if (!profile) throw new CommandError('You have no account there yet.');
       const text = p.text.trim();
       if (text.length < 1) throw new CommandError('Write something first.');
-      if (text.length > 500) throw new CommandError('That is longer than the app allows.');
+      if (text.length > 500) throw new CommandError('That’s longer than the app allows.');
       const reply: SocialItem = {
         id: s.nextId('sitem'),
         saveId: s.universe.meta.id,
@@ -1489,11 +1489,11 @@ export function registerSocialApps(sim: Simulation): void {
       if (!profile) throw new CommandError('You have no account there yet.');
       const allowed = KINDS_BY_PLATFORM[p.platform] ?? [];
       const kind = p.kind ?? allowed[0]!;
-      if (!allowed.includes(kind)) throw new CommandError('That app does not post that.');
+      if (!allowed.includes(kind)) throw new CommandError('That app doesn’t post that.');
       const text = p.text.trim();
       const limit = p.platform === TEXT_PLATFORM ? TEXT_LIMIT : CAPTION_LIMIT;
       if (p.platform !== PHOTO_PLATFORM && text.length < 1) throw new CommandError('Write something first.');
-      if (text.length > limit) throw new CommandError(`That is over the ${limit} character limit.`);
+      if (text.length > limit) throw new CommandError(`That’s over the ${limit} character limit.`);
       const images = (p.images ?? []).slice(0, kind === 'carousel' ? 10 : 1);
       if (p.platform === PHOTO_PLATFORM && images.length < 1) throw new CommandError('A post there needs a picture.');
 
@@ -1541,13 +1541,13 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.edit',
     (p, { sim: s }) => {
       const item = s.universe.socialItems[p.itemId];
-      if (!item?.byPlayer) throw new CommandError('That is not yours to edit.');
+      if (!item?.byPlayer) throw new CommandError('That isn’t yours to edit.');
       if (item.platform === TEXT_PLATFORM && item.at < s.now - MS_HOUR) {
-        throw new CommandError('That is past the hour the app allows an edit in.');
+        throw new CommandError('That’s past the hour the app allows an edit in.');
       }
       if (p.text !== undefined) {
         const limit = item.platform === TEXT_PLATFORM ? TEXT_LIMIT : CAPTION_LIMIT;
-        if (p.text.trim().length > limit) throw new CommandError(`That is over the ${limit} character limit.`);
+        if (p.text.trim().length > limit) throw new CommandError(`That’s over the ${limit} character limit.`);
         item.text = p.text.trim();
       }
       if (p.place !== undefined) item.place = p.place || undefined;
@@ -1559,7 +1559,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.delete',
     (p, { sim: s }) => {
       const item = s.universe.socialItems[p.itemId];
-      if (!item?.byPlayer) throw new CommandError('That is not yours to delete.');
+      if (!item?.byPlayer) throw new CommandError('That isn’t yours to delete.');
       const profile = s.universe.socialProfiles[item.profileId];
       if (profile && item.kind !== 'reply' && item.kind !== 'story') {
         profile.posts = Math.max(0, profile.posts - 1);
@@ -1576,7 +1576,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.scroll',
     (p, { sim: s }) => {
       if (![PHOTO_PLATFORM, TEXT_PLATFORM, CLIP_PLATFORM].includes(p.platform)) {
-        throw new CommandError('That is not one of the apps.');
+        throw new CommandError('That isn’t one of the apps.');
       }
       const minutes = clamp(Math.round(p.minutes ?? 15), 1, 240);
       const feed = homeFeed(s, p.platform, 40);
@@ -1603,7 +1603,7 @@ export function registerSocialApps(sim: Simulation): void {
         ? 'A good half hour of it, for once.'
         : mood < -1
           ? 'You put the phone down worse than you picked it up.'
-          : 'The time went and you could not say where.';
+          : 'The time went and you couldn’t say where.';
       s.emit('feed.scrolled', { platform: p.platform, minutes });
       return { minutes, note, saw: feed.length };
     },
@@ -1619,7 +1619,7 @@ export function registerSocialApps(sim: Simulation): void {
       if (profile.verified) throw new CommandError('You already have Premium.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
-      if (s.ledger.availableFunds(accountId) < X_PREMIUM_MONTHLY) throw new CommandError('You cannot cover that.');
+      if (s.ledger.availableFunds(accountId) < X_PREMIUM_MONTHLY) throw new CommandError('You can’t cover that.');
       s.expense(accountId, X_PREMIUM_MONTHLY, 'X Premium', 'subscriptions');
       profile.verified = true;
       if (!s.timeline.pending().some((i) => i.kind === 'feed.premium_renew')) {
@@ -1637,7 +1637,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.leave_premium',
     (_p, { sim: s }) => {
       const profile = myProfile(s, TEXT_PLATFORM);
-      if (!profile?.verified) throw new CommandError('You are not on Premium.');
+      if (!profile?.verified) throw new CommandError('You aren’t on Premium.');
       profile.verified = false;
       s.emit('feed.premium_left', {});
       return { verified: false };
@@ -1690,7 +1690,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.edit_list',
     (p, { sim: s }) => {
       const room = roomById(s, p.roomId);
-      if (!room || room.kind !== 'list' || !room.mine) throw new CommandError('That is not one of your lists.');
+      if (!room || room.kind !== 'list' || !room.mine) throw new CommandError('That isn’t one of your lists.');
       if (!profileById(s, p.profileId)) throw new CommandError('No such account.');
       room.profileIds = p.remove
         ? room.profileIds.filter((id) => id !== p.profileId)
@@ -1703,7 +1703,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.delete_list',
     (p, { sim: s }) => {
       const room = roomById(s, p.roomId);
-      if (!room || room.kind !== 'list' || !room.mine) throw new CommandError('That is not one of your lists.');
+      if (!room || room.kind !== 'list' || !room.mine) throw new CommandError('That isn’t one of your lists.');
       delete s.universe.socialRooms[p.roomId];
       return { roomId: p.roomId };
     },
@@ -1765,7 +1765,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.go_live',
     (p, { sim: s }) => {
       if (p.platform !== PHOTO_PLATFORM && p.platform !== CLIP_PLATFORM) {
-        throw new CommandError('That app does not do live.');
+        throw new CommandError('That app doesn’t do live.');
       }
       const profile = myProfile(s, p.platform);
       if (!profile) throw new CommandError('You have no account there yet.');
@@ -1813,7 +1813,7 @@ export function registerSocialApps(sim: Simulation): void {
       if (!profile) throw new CommandError('You have no account there yet.');
       const parts = p.parts.map((part) => part.trim()).filter(Boolean);
       if (parts.length < 2) throw new CommandError('A thread is two posts or more.');
-      if (parts.length > 25) throw new CommandError('That is longer than a thread goes.');
+      if (parts.length > 25) throw new CommandError('That’s longer than a thread goes.');
       const over = parts.find((part) => part.length > TEXT_LIMIT);
       if (over) throw new CommandError(`One of those is over the ${TEXT_LIMIT} character limit.`);
 
@@ -1874,7 +1874,7 @@ export function registerSocialApps(sim: Simulation): void {
     (p, { sim: s }) => {
       const profile = profileById(s, p.profileId);
       if (!profile) throw new CommandError('No such account.');
-      if (profile.ownerId === s.player.id) throw new CommandError('You cannot block yourself.');
+      if (profile.ownerId === s.player.id) throw new CommandError('You can’t block yourself.');
       const settings = settingsOf(s);
       const already = settings.blockedProfileIds.includes(p.profileId);
       const next = p.blocked ?? !already;
@@ -1896,7 +1896,7 @@ export function registerSocialApps(sim: Simulation): void {
       if (profile.verified) throw new CommandError('You already have it.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
-      if (s.ledger.availableFunds(accountId) < PHOTO_VERIFIED_MONTHLY) throw new CommandError('You cannot cover that.');
+      if (s.ledger.availableFunds(accountId) < PHOTO_VERIFIED_MONTHLY) throw new CommandError('You can’t cover that.');
       s.expense(accountId, PHOTO_VERIFIED_MONTHLY, 'Meta Verified', 'subscriptions');
       profile.verified = true;
       const settings = settingsOf(s);
@@ -1916,7 +1916,7 @@ export function registerSocialApps(sim: Simulation): void {
     'feed.leave_verified',
     (_p, { sim: s }) => {
       const profile = myProfile(s, PHOTO_PLATFORM);
-      if (!profile?.verified) throw new CommandError('You are not subscribed.');
+      if (!profile?.verified) throw new CommandError('You aren’t subscribed.');
       profile.verified = false;
       settingsOf(s).photoVerified = false;
       return { verified: false };
@@ -1938,7 +1938,7 @@ export function registerSocialApps(sim: Simulation): void {
       settingsOf(sim).photoVerified = false;
       sim.notify({
         category: 'social', title: 'Verified Lapsed',
-        body: 'The subscription could not be taken, so the badge is gone.',
+        body: 'The subscription couldn’t be taken, so the badge is gone.',
         importance: 46, route: '/workspace/phone',
       });
     }
@@ -1951,12 +1951,12 @@ export function registerSocialApps(sim: Simulation): void {
     (p, { sim: s }) => {
       const them = profileById(s, p.profileId);
       if (!them) throw new CommandError('No such account.');
-      if (them.ownerId === s.player.id) throw new CommandError('You cannot message yourself.');
+      if (them.ownerId === s.player.id) throw new CommandError('You can’t message yourself.');
       const mine = myProfile(s, them.platform);
       if (!mine) throw new CommandError('You have no account there yet.');
       const text = p.text.trim();
       if (text.length < 1) throw new CommandError('Write something first.');
-      if (text.length > 1_000) throw new CommandError('That is longer than a message goes.');
+      if (text.length > 1_000) throw new CommandError('That’s longer than a message goes.');
 
       const item: SocialItem = {
         id: s.nextId('sitem'),
@@ -2050,12 +2050,12 @@ export function registerSocialApps(sim: Simulation): void {
     (p, { sim: s }) => {
       const profile = profileById(s, p.profileId);
       if (!profile) throw new CommandError('No such account.');
-      if (profile.ownerId === s.player.id) throw new CommandError('You cannot send yourself a gift.');
+      if (profile.ownerId === s.player.id) throw new CommandError('You can’t send yourself a gift.');
       const amount = Math.round(p.amount);
-      if (!GIFT_STEPS.includes(amount)) throw new CommandError('That is not one of the amounts.');
+      if (!GIFT_STEPS.includes(amount)) throw new CommandError('That isn’t one of the amounts.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
-      if (s.ledger.availableFunds(accountId) < amount) throw new CommandError('You cannot cover that.');
+      if (s.ledger.availableFunds(accountId) < amount) throw new CommandError('You can’t cover that.');
       s.expense(accountId, amount, `Gift — ${profile.name}`, 'personal');
       s.emit('feed.gifted', { profileId: profile.id, amount });
       return { amount };

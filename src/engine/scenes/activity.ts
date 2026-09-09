@@ -43,13 +43,13 @@ function quote(sim: Simulation, def: ActivityDef): number {
 
 const OPENERS: Record<ActivityDef['category'], string> = {
   rest: 'You find somewhere to stop. How long you give it decides how much of the day is left afterwards.',
-  care: 'A few minutes on yourself. It is never wasted.',
-  food: 'You are going to eat. Decide how long you want it to take.',
+  care: 'A few minutes on yourself. It’s never wasted.',
+  food: 'You’re going to eat. Decide how long you want it to take.',
   fitness: 'You make room for training. A shorter session leaves more in the tank for what comes next; a longer one does more, and costs more energy to do it.',
-  leisure: 'Time that is yours. Decide how much of it to spend.',
-  social: 'Company. Decide how long you are out.',
+  leisure: 'Time that’s yours. Decide how much of it to spend.',
+  social: 'Company. Decide how long you’re out.',
   chores: 'The unglamorous kind of afternoon. Decide how much of it to give.',
-  transport: 'Time you do not get back. Decide how much.',
+  transport: 'Time you don’t get back. Decide how much.',
   creative: 'Work, on your own terms. Decide how long you sit with it.',
 };
 
@@ -61,7 +61,7 @@ function describeEffects(effects: Record<string, number>): string {
   const parts = Object.entries(effects)
     .filter(([key, delta]) => names[key] && Math.abs(delta) >= 0.5)
     .map(([key, delta]) => `${names[key]} ${delta > 0 ? 'up' : 'down'} ${Math.abs(Math.round(delta))}`);
-  return parts.length > 0 ? parts.join(', ') + '.' : 'Nothing you would notice.';
+  return parts.length > 0 ? parts.join(', ') + '.' : 'Nothing you’d notice.';
 }
 
 function durationChoices(def: ActivityDef, session: SceneSession): SceneChoice[] {
@@ -89,8 +89,8 @@ export const ACTIVITY_SCENE = defineScene({
     if (!def) return { ok: false, reason: 'Choose an activity that exists.' };
     if (def.id === 'cook') return { ok: false, reason: 'Cooking starts from a recipe. Choose one in Cook Something.' };
     if (def.id === 'gym') return { ok: false, reason: 'Training happens at a gym. Pick one in The City and walk in.' };
-    if (def.requiresHome && !sim.player.residenceId) return { ok: false, reason: `${def.name} needs somewhere to live. You do not have a home yet.` };
-    if (sim.player.wellbeing.energy < 8 && (def.perHour.energy ?? 0) < 0) return { ok: false, reason: 'You are too exhausted for that. Sleep first.' };
+    if (def.requiresHome && !sim.player.residenceId) return { ok: false, reason: `${def.name} needs somewhere to live. You don’t have a home yet.` };
+    if (sim.player.wellbeing.energy < 8 && (def.perHour.energy ?? 0) < 0) return { ok: false, reason: 'You’re too exhausted for that. Sleep first.' };
     return { ok: true };
   },
 
@@ -191,7 +191,7 @@ export const ACTIVITY_SCENE = defineScene({
       }
       if (choiceId === 'finish') { ctx.finish(); return; }
     }
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {

@@ -74,7 +74,7 @@ describe('where that lets them work', () => {
   it('refuses somebody who does not, and says which passports they do hold', () => {
     expect(canWorkIn(single, abroad().id)).toBe(false);
     const refusal = workRefusalFor(single, abroad().id)!;
-    expect(refusal).toMatch(/not a citizen/i);
+    expect(refusal).toMatch(/n[o’]t a citizen/i);
     expect(refusal).toMatch(/United States/);
   });
 

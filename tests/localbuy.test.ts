@@ -161,7 +161,7 @@ describe('the same chain in two countries', () => {
 
   it('says which arrangement left something off, and says nothing where there is none', () => {
     for (const [cityId, expected] of [
-      ['sa-10-riyadh', /not sold/], ['se-26-stockholm', /Systembolaget/], ['ae-du-dubai', /licensed room/],
+      ['sa-10-riyadh', /n[o’]t sold/], ['se-26-stockholm', /Systembolaget/], ['ae-du-dubai', /licensed room/],
     ] as const) {
       const reasons = [...shopsIn(cityId).values()]
         .map((one) => notCarriedAt(one.place))

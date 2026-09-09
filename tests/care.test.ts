@@ -101,7 +101,7 @@ describe('the appointment comes round', () => {
     const a = due(skip);
     must(skip, 'health.skip', { appointmentId: a.id });
     expect(a.status).toBe('missed');
-    expect(skip.universe.notifications.some((n) => n.title === 'Missed Appointment' && /decided not to go/.test(n.body))).toBe(true);
+    expect(skip.universe.notifications.some((n) => n.title === 'Missed Appointment' && /decided n[o’]t to go/.test(n.body))).toBe(true);
 
     const away = aLife('care-away');
     const who = provider(away);
@@ -279,7 +279,7 @@ describe('the visit, played', () => {
     sim.advanceTo(at + MS_MINUTE);
     must(sim, 'health.check_in', { appointmentId });
     expect(attempt(sim, 'health.check_in', { appointmentId }).error).toMatch(/already checked in/);
-    expect(attempt(sim, 'health.consult', { appointmentId, complaint: 'teeth' }).error).toMatch(/not something to bring here/);
+    expect(attempt(sim, 'health.consult', { appointmentId, complaint: 'teeth' }).error).toMatch(/n[o’]t something to bring here/);
     must(sim, 'health.consult', { appointmentId, complaint: 'checkup' });
     expect(attempt(sim, 'health.consult', { appointmentId, complaint: 'checkup' }).error).toMatch(/already been seen/);
   });

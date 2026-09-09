@@ -193,7 +193,7 @@ export const NO_SERVICE: Readonly<Record<string, string>> = {
   aq: 'Antarctica has no scheduled airline. Research stations are reached by charter or by ship.',
   bv: 'Bouvet Island is uninhabited and has no airstrip.',
   hm: 'Heard Island and McDonald Islands are uninhabited and reached only by ship.',
-  gs: 'South Georgia is reached by ship from the Falklands. There is no runway.',
+  gs: 'South Georgia is reached by ship from the Falklands. There’s no runway.',
   tf: 'The French Southern Territories are reached by ship from Réunion.',
   io: 'The British Indian Ocean Territory has a military runway with no civilian service.',
   um: 'The United States Minor Outlying Islands have no civilian scheduled service.',

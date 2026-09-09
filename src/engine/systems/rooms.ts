@@ -66,9 +66,9 @@ export function countryHere(sim: Simulation, person: Person = sim.player): strin
 
 /** Standing in the room is the price of admission to all four of them. */
 function mustBeHere(sim: Simulation, place: Place | undefined, what: string): Place {
-  if (!place) throw new CommandError(`That is not ${what} in this city.`);
+  if (!place) throw new CommandError(`That isn’t ${what} in this city.`);
   if (sim.player.currentPlaceId !== place.id) {
-    throw new CommandError(`You are not at ${place.name}.`);
+    throw new CommandError(`You aren’t at ${place.name}.`);
   }
   return place;
 }
@@ -84,7 +84,7 @@ function pay(sim: Simulation, amount: Money, memo: string, category: string, pla
   const accountId = sim.player.primaryAccountId;
   if (!accountId) throw new CommandError('You have no account to pay for it from.');
   if (sim.ledger.availableFunds(accountId) < amount) {
-    throw new CommandError(`That is ${formatMoney(amount)}, and you do not have it.`);
+    throw new CommandError(`That is ${formatMoney(amount)}, and you don’t have it.`);
   }
   sim.expense(accountId, amount, memo, category, { refType: 'place', refId: place.id });
 }
@@ -318,11 +318,11 @@ export function registerRooms(sim: Simulation): void {
     (p, { sim: s }) => {
       const place = mustBeHere(s, dentistsIn(s).find((one) => one.id === p.placeId), 'a dental practice');
       const treatment = TREATMENT_BY_ID[p.treatmentId];
-      if (!treatment) throw new CommandError('They do not do that here.');
+      if (!treatment) throw new CommandError('They don’t do that here.');
       const teeth = teethOf(s);
       const condition = toothCondition(s);
       if (treatment.needsTrouble && condition >= TEETH_TROUBLE) {
-        throw new CommandError(`There is nothing in there that needs ${treatment.label.toLowerCase()}. They will not do it.`);
+        throw new CommandError(`There’s nothing in there that needs ${treatment.label.toLowerCase()}. They won’t do it.`);
       }
       const countryId = countryHere(s);
       const age = ageOf(s);
@@ -376,14 +376,14 @@ export function registerRooms(sim: Simulation): void {
       const pet = growing?.pet;
       if (!pet || pet.untilAt !== undefined) throw new CommandError('You have no animal to take anywhere.');
       const service = VET_SERVICE_BY_ID[p.serviceId];
-      if (!service) throw new CommandError('They do not do that here.');
+      if (!service) throw new CommandError('They don’t do that here.');
       const record = petHealthOf(s)!;
       const condition = petCondition(s) ?? PET_HEALTH_START;
       if (service.needsTrouble && condition >= PET_TROUBLE) {
-        throw new CommandError(`${pet.name} is well. There is nothing to treat.`);
+        throw new CommandError(`${pet.name} is well. There’s nothing to treat.`);
       }
       if (service.id === 'chip' && record.chipped) {
-        throw new CommandError(`${pet.name} is already chipped. The number does not need a second one.`);
+        throw new CommandError(`${pet.name} is already chipped. The number doesn’t need a second one.`);
       }
       if (service.id === 'neuter' && record.neuteredAt !== undefined) {
         throw new CommandError(`${pet.name} has already been done.`);
@@ -424,10 +424,10 @@ export function registerRooms(sim: Simulation): void {
     (p, { sim: s }) => {
       const place = mustBeHere(s, licenseOfficesIn(s).find((one) => one.id === p.placeId), 'a licensing office');
       const job = COUNTER_JOB_BY_ID[p.jobId];
-      if (!job) throw new CommandError('They do not do that at this counter.');
+      if (!job) throw new CommandError('They don’t do that at this counter.');
       const age = ageOf(s);
       if (age < job.fromAge) {
-        throw new CommandError(`${job.label} is not something somebody of ${age} does. ${job.fromAge} is the age for it.`);
+        throw new CommandError(`${job.label} isn’t something somebody of ${age} does. ${job.fromAge} is the age for it.`);
       }
       const arrival = p.arrival ?? 'walk_in';
       const waited = waitFor(s, arrival, place);
@@ -445,7 +445,7 @@ export function registerRooms(sim: Simulation): void {
           waited,
           done: false,
           note: `${plural(waited, 'minute')} in the queue at ${place.name}, and then: `
-            + `“${rng.pick(SENT_HOME)}” Nothing paid, and you will have to come back.`,
+            + `“${rng.pick(SENT_HOME)}” Nothing paid, and you’ll have to come back.`,
         };
       }
 
@@ -481,9 +481,9 @@ export function registerRooms(sim: Simulation): void {
       const place = mustBeHere(s, phoneShopsIn(s).find((one) => one.id === p.placeId), 'a phone shop');
       const countryId = countryHere(s);
       const network = networksIn(countryId).find((one) => one.id === p.networkId);
-      if (!network) throw new CommandError('That network does not operate here.');
+      if (!network) throw new CommandError('That network doesn’t operate here.');
       const tariff = TARIFF_BY_ID[p.tariffId];
-      if (!tariff) throw new CommandError('That is not one of the plans.');
+      if (!tariff) throw new CommandError('That isn’t one of the plans.');
       const age = ageOf(s);
       // A contract is a contract, so a child cannot sign one. Prepaid needs
       // nobody's signature, which is exactly why it exists.
@@ -492,7 +492,7 @@ export function registerRooms(sim: Simulation): void {
       }
       const existing = planOf(s);
       if (existing) {
-        throw new CommandError(`You are on ${NETWORK_BY_ID[existing.networkId]?.name ?? 'a plan'} already. End that one first.`);
+        throw new CommandError(`You’re on ${NETWORK_BY_ID[existing.networkId]?.name ?? 'a plan'} already. End that one first.`);
       }
       const monthly = planPrice(s, network, tariff.id);
       // The first month is taken in the shop, which is how it really works.
@@ -529,14 +529,14 @@ export function registerRooms(sim: Simulation): void {
     'room.end_plan',
     (_p, { sim: s }) => {
       const plan = planOf(s);
-      if (!plan) throw new CommandError('You are not on a plan.');
+      if (!plan) throw new CommandError('You aren’t on a plan.');
       const network = NETWORK_BY_ID[plan.networkId];
       const paid = exitFee(s, plan);
       if (paid > 0) {
         const accountId = s.player.primaryAccountId;
         if (!accountId) throw new CommandError('You have no account to pay the exit fee from.');
         if (s.ledger.availableFunds(accountId) < paid) {
-          throw new CommandError(`Leaving early is ${formatMoney(paid)}, and you do not have it.`);
+          throw new CommandError(`Leaving early is ${formatMoney(paid)}, and you don’t have it.`);
         }
         s.expense(accountId, paid, `${network?.name ?? 'A network'} — Early Exit`, 'personal', {
           refType: 'person', refId: s.player.id,
@@ -572,8 +572,8 @@ export function registerRooms(sim: Simulation): void {
         wentWell,
         note: wentWell
           ? `An hour and a half, ${formatMoney(paid)}, and it looks like it did out of the box.`
-          : `An hour and a half and ${formatMoney(paid)}, and the touch is not quite right at the top. `
-            + 'They will look at it again if you bring it back.',
+          : `An hour and a half and ${formatMoney(paid)}, and the touch isn’t quite right at the top. `
+            + 'They’ll look at it again if you bring it back.',
       };
     },
   );

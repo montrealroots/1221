@@ -179,7 +179,7 @@ export function mayI(sim: Simulation, gate: GateId, person: Person = sim.player)
       ok: false,
       countryId,
       countrys: true,
-      reason: 'Alcohol is not sold here, to anybody, at any age.',
+      reason: 'Alcohol isn’t sold here, to anybody, at any age.',
     };
   }
 
@@ -508,8 +508,8 @@ export function ensureFamily(sim: Simulation, person: Person = sim.player): Fami
   addMemory(sim, between, {
     kind: together ? 'married' : 'separated',
     summary: together
-      ? `They married before you were born, and they are still married.`
-      : `They married before you were born, and it did not last.`,
+      ? `They married before you were born, and they’re still married.`
+      : `They married before you were born, and it didn’t last.`,
     impact: together ? 6 : -6,
     decayDays: 0,
     at: between.since,

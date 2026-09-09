@@ -73,6 +73,19 @@ describe('resolving a sentence', () => {
     }
   });
 
+  it('hears a thing it knows inside a longer sentence, and still refuses a word in passing', () => {
+    const sim = quickSave();
+    // "work out" and "gym" account for the sentence; "at the" is how people talk.
+    const gym = resolveAsk(sim, 'work out at the gym');
+    expect(['do', 'which']).toContain(gym.kind);
+    if (gym.kind === 'which' || gym.kind === 'do') expect(gym.askable.id).toBe('gym');
+    const sleep = resolveAsk(sim, 'sleep for eight hours');
+    expect(sleep.kind).toBe('do');
+    if (sleep.kind === 'do') expect(sleep.command).toBe('life.sleep');
+    // "travel" on its own in a sentence about something else is not a trip.
+    expect(resolveAsk(sim, 'travel back in time').kind).toBe('unsupported');
+  });
+
   it('asks for something to be typed rather than guessing at an empty line', () => {
     const sim = quickSave();
     expect(resolveAsk(sim, '    ').kind).toBe('unsupported');

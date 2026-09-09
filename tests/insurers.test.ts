@@ -159,9 +159,9 @@ describe('a quote comes from a real company', () => {
 
   it('refuses a company that does not write the line where you live, with the reason', () => {
     const sim = aLife('ins-wrong');
-    expect(refusal(sim, 'ins.quote', { line: 'renters', coveredRefs: [], carrier: 'Leadway Assurance' })).toMatch(/does not write renters cover where you live/);
+    expect(refusal(sim, 'ins.quote', { line: 'renters', coveredRefs: [], carrier: 'Leadway Assurance' })).toMatch(/does(n’t| not) write renters cover where you live/);
     expect(refusal(sim, 'ins.quote', { line: 'renters', coveredRefs: [], carrier: 'GEICO' })).toBeUndefined();
-    expect(refusal(sim, 'ins.quote', { line: 'health', coveredRefs: [], carrier: 'GEICO' })).toMatch(/does not write health cover/);
+    expect(refusal(sim, 'ins.quote', { line: 'health', coveredRefs: [], carrier: 'GEICO' })).toMatch(/does(n’t| not) write health cover/);
   });
 
   it('where nobody writes the line, says so; where only a broker does, says that too', () => {

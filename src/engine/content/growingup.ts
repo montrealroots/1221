@@ -15,8 +15,8 @@
 import type { Money } from '../core/money';
 
 export const GROWING_NOTE =
-  'The years between five and twenty five are not a gap between the character creation screen and '
-  + 'a career. Everything in here happens on a day, in the place you are living, to the family you '
+  'The years between five and twenty five aren’t a gap between the character creation screen and '
+  + 'a career. Everything in here happens on a day, in the place you’re living, to the family you '
   + 'were born into, and what you decide is what you get. Nobody in it is real: the friends are '
   + 'SLATE’s own and the moments are the ordinary ones, not anybody’s in particular.';
 
@@ -26,7 +26,7 @@ export const ALLOWANCE_NOTE =
 
 export const DRIVING_NOTE =
   'The learning is real and the test can be failed. How many lessons it takes, what they cost and '
-  + 'how hard the test is are SLATE’s own calibration; the age you may sit it is the country’s own '
+  + 'how hard the test is are SLATE’s own calibration; the age you may sit it’s the country’s own '
   + 'and is carried with the other legal ages.';
 
 // ---------------------------------------------------------------------------
@@ -90,13 +90,13 @@ export const MOMENTS: readonly Moment[] = [
   // --- Small ---------------------------------------------------------------
   {
     id: 'first_day', title: 'The First Day', fromAge: 5, toAge: 6, requires: 'at_school', urgency: 40,
-    detail: 'New shoes, a bag that is too big, and somebody at the gate telling you it will be fine.',
+    detail: 'New shoes, a bag that’s too big, and somebody at the gate telling you it will be fine.',
     choices: [
       c('hold_on', 'Hold On To Them', {
         attribute: { vulnerability: 1.5 }, parents: 3, stress: 6,
         memory: 'Cried at the gate on the first day and was fine by lunchtime.',
         significance: 4,
-        note: 'You would not let go. Somebody had to be prised off, and by lunch you had forgotten about it.',
+        note: 'You wouldn’t let go. Somebody had to be prised off, and by lunch you had forgotten about it.',
       }),
       c('walk_in', 'Walk In', {
         attribute: { resilience: 1.5, magnetism: 0.5 }, morale: 4,
@@ -120,13 +120,13 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { backstory_invention: 0.8 },
         memory: 'Kept a tooth in a matchbox for years.',
         significance: 2,
-        note: 'It went in a matchbox in a drawer, and it is probably still there.',
+        note: 'It went in a matchbox in a drawer, and it’s probably still there.',
       }),
     ],
   },
   {
     id: 'bike', title: 'The Bike', fromAge: 6, toAge: 9, urgency: 30,
-    detail: 'Somebody is holding the back of the saddle and swearing they have not let go.',
+    detail: 'Somebody is holding the back of the saddle and swearing they haven’t let go.',
     choices: [
       c('again', 'Get Back On', {
         attribute: { coordination: 2, resilience: 1.5 }, skill: { fitness: 1 }, parents: 2,
@@ -172,7 +172,7 @@ export const MOMENTS: readonly Moment[] = [
       }),
       c('stay', 'Stay Home', {
         money: 0, stress: -4, morale: -4,
-        memory: 'Did not go on the school trip, and heard about it for a term.',
+        memory: 'Didn’t go on the school trip, and heard about it for a term.',
         significance: 2,
         note: 'You stayed. Everybody talked about it for a term and you smiled through all of it.',
       }),
@@ -184,25 +184,25 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('prove', 'Prove Them Wrong', {
         attribute: { resilience: 2, physical_presence: 1 }, skill: { fitness: 1.5 }, stress: 5,
-        memory: 'Was picked last, and spent a year making sure it did not happen again.',
+        memory: 'Was picked last, and spent a year making sure it didn’t happen again.',
         significance: 4,
-        note: 'It stayed with you. It is still there, and it is why you do some of what you do.',
+        note: 'It stayed with you. It’s still there, and it’s why you do some of what you do.',
       }),
       c('shrug', 'Let It Go', {
         attribute: { restraint: 1.5, discretion: 1 }, stress: -3,
-        memory: 'Was picked last and genuinely did not mind.',
+        memory: 'Was picked last and genuinely didn’t mind.',
         significance: 2,
-        note: 'You genuinely did not mind. Not everybody has that and it is worth something.',
+        note: 'You genuinely didn’t mind. Not everybody has that and it’s worth something.',
       }),
     ],
   },
   {
     id: 'talent', title: 'The Talent Show', fromAge: 8, toAge: 13, requires: 'at_school', urgency: 35,
-    detail: 'A hall, a microphone that does not work, and a sign-up sheet on the door.',
+    detail: 'A hall, a microphone that doesn’t work, and a sign-up sheet on the door.',
     choices: [
       c('sing', 'Put Your Name Down', {
         attribute: { projection: 2, singing: 1.5, magnetism: 1.5 }, stress: 8, morale: 6, public: true,
-        memory: 'Stood up in front of the whole school and did not die of it.',
+        memory: 'Stood up in front of the whole school and didn’t die of it.',
         significance: 5,
         note: 'Two hundred faces and a microphone that cut out halfway. You finished it anyway.',
       }),
@@ -218,7 +218,7 @@ export const MOMENTS: readonly Moment[] = [
   // --- Bigger --------------------------------------------------------------
   {
     id: 'big_school', title: 'The Big School', fromAge: 11, toAge: 13, requires: 'at_secondary', urgency: 45,
-    detail: 'A new building, a map you cannot read, and nobody from your old class in your form.',
+    detail: 'A new building, a map you can’t read, and nobody from your old class in your form.',
     choices: [
       c('find_people', 'Find Your People', {
         attribute: { social_instinct: 2, networking: 1 }, friend: 'make', morale: 5,
@@ -236,7 +236,7 @@ export const MOMENTS: readonly Moment[] = [
   },
   {
     id: 'phone', title: 'The First Phone', fromAge: 11, toAge: 14, urgency: 30,
-    detail: 'Everybody else has one. That is the whole argument and it is not a bad one.',
+    detail: 'Everybody else has one. That’s the whole argument and it isn’t a bad one.',
     choices: [
       c('earn', 'Earn Half Of It', {
         attribute: { preparation: 1 }, skill: { personal_finance: 2 }, money: -60_00, parents: 4,
@@ -260,19 +260,19 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { collaboration: 2, chemistry: 1.5 }, friend: 'make', morale: 8,
         memory: 'Made a best friend, the kind you call first.',
         significance: 6,
-        note: 'That is the one you call first now, and you will for a long time.',
+        note: 'That’s the one you call first now, and you’ll for a long time.',
       }),
       c('careful', 'Keep Something Back', {
         attribute: { discretion: 2, restraint: 1 }, friend: 'make',
         memory: 'Made a close friend and never quite let them all the way in.',
         significance: 4,
-        note: 'Close, but not all the way. You have your reasons and they are yours.',
+        note: 'Close, but not all the way. You have your reasons and they’re yours.',
       }),
     ],
   },
   {
     id: 'falling_out', title: 'The Falling Out', fromAge: 12, toAge: 17, urgency: 40,
-    detail: 'Something small said in front of other people, and now neither of you will go first.',
+    detail: 'Something small said in front of other people, and now neither of you’ll go first.',
     choices: [
       c('go_first', 'Go First', {
         attribute: { emotional_truth: 2, vulnerability: 1.5 }, stress: -6, friend: 'make',
@@ -290,13 +290,13 @@ export const MOMENTS: readonly Moment[] = [
   },
   {
     id: 'first_crush', title: 'The First One', fromAge: 12, toAge: 16, urgency: 30,
-    detail: 'You cannot concentrate in one particular room and everybody can tell.',
+    detail: 'You can’t concentrate in one particular room and everybody can tell.',
     choices: [
       c('say', 'Say Something', {
         attribute: { vulnerability: 2, romance: 1.5, resilience: 1 }, stress: 10, morale: 5,
         memory: 'Said something, at fourteen, and survived the answer.',
         significance: 5,
-        note: 'You said it. Whatever came back, you said it, and that is the part that lasts.',
+        note: 'You said it. Whatever came back, you said it, and that’s the part that lasts.',
       }),
       c('nothing', 'Say Nothing', {
         attribute: { subtext: 2, restraint: 1.5 }, morale: -3,
@@ -313,9 +313,9 @@ export const MOMENTS: readonly Moment[] = [
       c('go', 'Go Anyway', {
         attribute: { adaptability: 1.5, social_instinct: 1.5 }, parents: -5, stress: 8, morale: 6,
         friend: 'make',
-        memory: 'Went to a party under a story that did not hold, and got caught.',
+        memory: 'Went to a party under a story that didn’t hold, and got caught.',
         significance: 4,
-        note: 'The story did not hold and everybody knew by Monday. It was worth it.',
+        note: 'The story didn’t hold and everybody knew by Monday. It was worth it.',
       }),
       c('home', 'Stay In', {
         attribute: { reliability: 2 }, parents: 4, morale: -3,
@@ -327,7 +327,7 @@ export const MOMENTS: readonly Moment[] = [
   },
   {
     id: 'heartbreak', title: 'The First Real One', fromAge: 15, toAge: 19, urgency: 45,
-    detail: 'It ends, and it is the first thing that has ever actually hurt.',
+    detail: 'It ends, and it’s the first thing that has ever actually hurt.',
     choices: [
       c('feel_it', 'Feel All Of It', {
         attribute: { emotional_truth: 3, grief: 2, vulnerability: 2 }, stress: 14, morale: -10,
@@ -360,19 +360,19 @@ export const MOMENTS: readonly Moment[] = [
         stress: -4,
         memory: 'Turned down the first job offer and stayed a child a while longer.',
         significance: 3,
-        note: 'Not yet. There is time, and you only get to be this age once.',
+        note: 'Not yet. There’s time, and you only get to be this age once.',
       }),
     ],
   },
   {
     id: 'first_wage', title: 'The First Wage', fromAge: 14, toAge: 19, requires: 'works', urgency: 30,
-    detail: 'A number in an account with your name on it, and it is smaller than you expected.',
+    detail: 'A number in an account with your name on it, and it’s smaller than you expected.',
     choices: [
       c('spend', 'Spend It', {
         morale: 8, skill: { personal_finance: -0.5 }, money: -180_00,
         memory: 'Spent a first wage in a weekend, on nothing anybody remembers.',
         significance: 3,
-        note: 'Gone by Sunday. Nobody can tell you what on and that is fine.',
+        note: 'Gone by Sunday. Nobody can tell you what on and that’s fine.',
       }),
       c('save', 'Put It Away', {
         skill: { personal_finance: 3 }, attribute: { career_strategy: 1 }, morale: -2,
@@ -412,7 +412,7 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { script_analysis: 1.5, preparation: 1.5 }, parents: 4,
         memory: 'Decided to keep studying, which pleased a lot of people.',
         significance: 5,
-        note: 'That is the plan, and the people who asked are all delighted.',
+        note: 'That’s the plan, and the people who asked are all delighted.',
       }),
       c('work', 'Go And Work', {
         skill: { operations: 2 }, attribute: { resilience: 1.5 }, parents: -2,
@@ -424,45 +424,45 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { emotional_truth: 2, career_strategy: 2, resilience: 2 }, parents: -4, stress: 10,
         memory: 'Decided at eighteen to chase acting, and told everybody so.',
         significance: 7, public: true,
-        note: 'You said it out loud, to people who did not want to hear it. That is the whole thing.',
+        note: 'You said it out loud, to people who didn’t want to hear it. That’s the whole thing.',
       }),
     ],
   },
   {
     id: 'move_out', title: 'Moving Out', fromAge: 18, toAge: 26, requires: 'lives_at_home', urgency: 50,
-    detail: 'A box of things that fits in one car, and a door that is yours.',
+    detail: 'A box of things that fits in one car, and a door that’s yours.',
     choices: [
       c('go', 'Go', {
         attribute: { adaptability: 2, resilience: 1.5 }, skill: { cooking: 1, personal_finance: 1 },
         parents: -1, stress: 8, morale: 8,
         memory: 'Moved out, with everything owned in one car.',
         significance: 7,
-        note: 'One car, one trip. The first night is very quiet and then it is yours.',
+        note: 'One car, one trip. The first night is very quiet and then it’s yours.',
       }),
       c('stay', 'Stay A While', {
         parents: 3, stress: -5, morale: -2,
         memory: 'Stayed at home longer than most, and saved a great deal of money doing it.',
         significance: 4,
-        note: 'You stayed. It is cheaper, it is warmer, and everybody has an opinion.',
+        note: 'You stayed. It’s cheaper, it’s warmer, and everybody has an opinion.',
       }),
     ],
   },
   {
     id: 'the_call', title: 'The Call At Two In The Morning', fromAge: 19, toAge: 45, urgency: 60,
-    detail: 'Somebody in the family, and it is not good news, and you are the one they rang.',
+    detail: 'Somebody in the family, and it isn’t good news, and you’re the one they rang.',
     choices: [
       c('go_now', 'Go Now', {
         attribute: { reliability: 2.5, emotional_truth: 1.5 }, parents: 8, siblings: 6,
         energy: -25, stress: 12,
         memory: 'Got in the car at two in the morning because somebody in the family rang.',
         significance: 7,
-        note: 'You went. Whatever it cost the next day, you went, and they will not forget it.',
+        note: 'You went. Whatever it cost the next day, you went, and they won’t forget it.',
       }),
       c('morning', 'First Thing', {
         attribute: { restraint: 1 }, parents: -2, stress: 6,
         memory: 'Waited until morning after a call in the middle of the night.',
         significance: 5,
-        note: 'You went first thing. It was the sensible call and it is not the one they remember.',
+        note: 'You went first thing. It was the sensible call and it isn’t the one they remember.',
       }),
     ],
   },
@@ -476,11 +476,11 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { reliability: 1.5, vulnerability: 1 }, money: -140_00, parents: 2, morale: 8,
         memory: 'Got an animal as a child, and it was the first thing that was ever theirs to look after.',
         significance: 5,
-        note: 'It is yours now, and it costs money every week for as long as it is here.',
+        note: 'It’s yours now, and it costs money every week for as long as it is here.',
       }),
       c('no', 'Somebody Else', {
         parents: 1, morale: -4,
-        memory: 'Did not get the animal, and thought about it for a long time.',
+        memory: 'Didn’t get the animal, and thought about it for a long time.',
         significance: 2,
         note: 'It went to somebody else’s house. You saw it once, in a garden, from a car.',
       }),
@@ -500,13 +500,13 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { memorization: 1, grief: 1.5 }, friend: 'lose', stress: 10, morale: -6,
         memory: 'Moved towns and spent a year on the phone to the old one.',
         significance: 5,
-        note: 'You kept ringing. It held for a while and then it did not, the way it does.',
+        note: 'You kept ringing. It held for a while and then it didn’t, the way it does.',
       }),
     ],
   },
   {
     id: 'the_bully', title: 'The One Who Waits For You', fromAge: 8, toAge: 15, requires: 'at_school', urgency: 50,
-    detail: 'It is the same corridor at the same time and everybody knows and nobody says.',
+    detail: 'It’s the same corridor at the same time and everybody knows and nobody says.',
     choices: [
       c('tell', 'Tell Somebody', {
         attribute: { emotional_truth: 1.5, vulnerability: 1.5 }, parents: 5, stress: -8,
@@ -552,7 +552,7 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('brave', 'Do Not Make A Fuss', {
         attribute: { injury_resilience: 2, restraint: 1.5 }, money: -220_00, stress: 6,
-        memory: 'Broke something as a child and did not make a fuss about it, which everybody mentioned.',
+        memory: 'Broke something as a child and didn’t make a fuss about it, which everybody mentioned.',
         significance: 5,
         note: 'Nobody in that waiting room knew how much it hurt, which was the point.',
       }),
@@ -603,7 +603,7 @@ export const MOMENTS: readonly Moment[] = [
         morale: 5,
         memory: 'Watched everything, twice, in one summer, and started noticing how it was made.',
         significance: 5,
-        note: 'Everything, twice, and by August you were noticing the cuts. That is where it starts.',
+        note: 'Everything, twice, and by August you were noticing the cuts. That’s where it starts.',
       }),
     ],
   },
@@ -613,7 +613,7 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('front', 'Get To The Front', {
         attribute: { magnetism: 2, physical_presence: 1.5 }, money: -35_00, morale: 10, friend: 'make',
-        memory: 'Got to the front at the first gig and could not hear properly for two days.',
+        memory: 'Got to the front at the first gig and couldn’t hear properly for two days.',
         significance: 5,
         note: 'Down the front, deaf until Tuesday, and worth every minute of it.',
       }),
@@ -627,19 +627,19 @@ export const MOMENTS: readonly Moment[] = [
   },
   {
     id: 'the_haircut', title: 'The Haircut', fromAge: 12, toAge: 19, urgency: 20,
-    detail: 'You have seen a photograph and you are certain, and the person holding the scissors is not.',
+    detail: 'You have seen a photograph and you’re certain, and the person holding the scissors isn’t.',
     choices: [
       c('do_it', 'Do It', {
         attribute: { photogenic_quality: 1, resilience: 1.5 }, money: -30_00, morale: -4, stress: 5,
-        memory: 'Had the haircut. There are photographs and they have not been destroyed.',
+        memory: 'Had the haircut. There are photographs and they haven’t been destroyed.',
         significance: 3,
         note: 'It grew back. There are photographs, and somebody in your family has kept all of them.',
       }),
       c('sensible', 'Something Sensible', {
         attribute: { restraint: 1 }, money: -30_00,
-        memory: 'Did not have the haircut, and quietly regrets it.',
+        memory: 'Didn’t have the haircut, and quietly regrets it.',
         significance: 2,
-        note: 'Sensible. You will wonder about it for years and never do it.',
+        note: 'Sensible. You’ll wonder about it for years and never do it.',
       }),
     ],
   },
@@ -669,7 +669,7 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { collaboration: 1.5, reliability: 2 }, stress: 4, morale: -3,
         memory: 'Kept a friendship going across a distance, for years, mostly by being the one who rang.',
         significance: 5,
-        note: 'You were the one who rang, every time, for years. That is a thing you now know about yourself.',
+        note: 'You were the one who rang, every time, for years. That’s a thing you now know about yourself.',
       }),
       c('let_go', 'Let It Go', {
         attribute: { restraint: 1.5, grief: 1 }, friend: 'lose', morale: -6,
@@ -685,7 +685,7 @@ export const MOMENTS: readonly Moment[] = [
     choices: [
       c('in', 'Go With It', {
         attribute: { social_instinct: 1.5, adaptability: 1 }, stress: -4, morale: 5, energy: -12,
-        memory: 'Had the first one at a kitchen party and did not enjoy any of it.',
+        memory: 'Had the first one at a kitchen party and didn’t enjoy any of it.',
         significance: 4,
         note: 'It was warm, it was horrible, and you said it was fine. Everybody did.',
       }),
@@ -699,7 +699,7 @@ export const MOMENTS: readonly Moment[] = [
   },
   {
     id: 'the_crash', title: 'In The Passenger Seat', fromAge: 14, toAge: 24, urgency: 60,
-    detail: 'Somebody your age driving, somebody your age in the back, and a wall that was not there a second ago.',
+    detail: 'Somebody your age driving, somebody your age in the back, and a wall that wasn’t there a second ago.',
     choices: [
       c('say_it', 'Say Something Next Time', {
         attribute: { safety_awareness: 2.5, emotional_truth: 1 }, stress: 14, friend: 'lose',
@@ -723,24 +723,24 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { collaboration: 2, adaptability: 1.5 }, friend: 'make', stress: 4,
         memory: 'Lived with strangers and came out of it with one of them as a friend.',
         significance: 5,
-        note: 'One of them turns out to be somebody you would go anywhere for. The other two you have lost.',
+        note: 'One of them turns out to be somebody you’d go anywhere for. The other two you have lost.',
       }),
       c('keep_to_room', 'Keep To Your Room', {
         attribute: { discretion: 1.5, stillness: 1 }, stress: -3, morale: -4,
         memory: 'Lived with strangers for a year and barely knew any of them.',
         significance: 3,
-        note: 'A year of it and you could not tell anybody their surnames.',
+        note: 'A year of it and you couldn’t tell anybody their surnames.',
       }),
     ],
   },
   {
     id: 'the_landlord', title: 'The Damp Patch', fromAge: 18, toAge: 35, urgency: 45,
-    detail: 'It has been there since October, it is now March, and the emails have stopped being answered.',
+    detail: 'It has been there since October, it’s now March, and the emails have stopped being answered.',
     choices: [
       c('push', 'Push It', {
         skill: { negotiation: 2.5, personal_finance: 1 }, attribute: { pressure_tolerance: 1.5 },
         stress: 8,
-        memory: 'Got a landlord to fix something by being the tenant who would not go away.',
+        memory: 'Got a landlord to fix something by being the tenant who wouldn’t go away.',
         significance: 5,
         note: 'It took eleven emails and a phone call to somebody’s office. It got fixed.',
       }),
@@ -748,25 +748,25 @@ export const MOMENTS: readonly Moment[] = [
         attribute: { resilience: 1 }, stress: 5, morale: -5,
         memory: 'Lived with a damp patch for a year rather than have the argument.',
         significance: 3,
-        note: 'You put a wardrobe in front of it. It is still there, behind the wardrobe.',
+        note: 'You put a wardrobe in front of it. It’s still there, behind the wardrobe.',
       }),
     ],
   },
   {
     id: 'the_reunion', title: 'The Ten Years', fromAge: 26, toAge: 45, urgency: 30,
-    detail: 'A message from somebody you have not thought about since, about a room full of people you were at school with.',
+    detail: 'A message from somebody you haven’t thought about since, about a room full of people you were at school with.',
     choices: [
       c('go', 'Go', {
         attribute: { networking: 1.5, social_instinct: 1.5 }, money: -60_00, morale: 4, friend: 'make',
-        memory: 'Went to the reunion, and half of them were unrecognizable and half had not changed at all.',
+        memory: 'Went to the reunion, and half of them were unrecognizable and half hadn’t changed at all.',
         significance: 4,
-        note: 'Half of them you would have walked past. The other half had not moved an inch.',
+        note: 'Half of them you’d have walked past. The other half hadn’t moved an inch.',
       }),
       c('skip', 'Do Not Go', {
         attribute: { discretion: 1 }, stress: -3,
-        memory: 'Did not go to the reunion, and heard about it for a month.',
+        memory: 'Didn’t go to the reunion, and heard about it for a month.',
         significance: 2,
-        note: 'You did not go, and three people sent you photographs anyway.',
+        note: 'You didn’t go, and three people sent you photographs anyway.',
       }),
     ],
   },
@@ -805,7 +805,7 @@ export function momentsAt(age: number): Moment[] {
 
 export const PET_NOTE =
   'An animal is a real thing in the save rather than a line in a story: it has a name, it costs '
-  + 'money every week for as long as it is alive, and it is there in the house. What it costs is '
+  + 'money every week for as long as it is alive, and it’s there in the house. What it costs is '
   + 'SLATE’s own calibration, priced against what things cost where you are living.';
 
 export interface PetKind {
@@ -820,10 +820,10 @@ export interface PetKind {
 
 export const PETS: readonly PetKind[] = [
   { id: 'dog', label: 'A Dog', aWeek: 18_00, years: 12, about: 'Walked twice a day whatever the weather, and it will outlast your childhood.' },
-  { id: 'cat', label: 'A Cat', aWeek: 12_00, years: 15, about: 'It lives here, it is not yours, and everybody has agreed to that.' },
-  { id: 'rabbit', label: 'A Rabbit', aWeek: 8_00, years: 8, about: 'A hutch in the garden, and it is far more work than anybody said.' },
+  { id: 'cat', label: 'A Cat', aWeek: 12_00, years: 15, about: 'It lives here, it isn’t yours, and everybody has agreed to that.' },
+  { id: 'rabbit', label: 'A Rabbit', aWeek: 8_00, years: 8, about: 'A hutch in the garden, and it’s far more work than anybody said.' },
   { id: 'hamster', label: 'A Hamster', aWeek: 4_00, years: 2, about: 'A wheel at three in the morning, and two years is the whole of it.' },
-  { id: 'guinea_pig', label: 'A Guinea Pig', aWeek: 5_00, years: 6, about: 'It shrieks when the fridge opens and it is never not hungry.' },
+  { id: 'guinea_pig', label: 'A Guinea Pig', aWeek: 5_00, years: 6, about: 'It shrieks when the fridge opens and it’s never not hungry.' },
   { id: 'budgie', label: 'A Budgie', aWeek: 4_00, years: 8, about: 'It says one word, badly, and only when nobody else is listening.' },
 ];
 

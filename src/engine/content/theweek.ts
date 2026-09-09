@@ -34,19 +34,19 @@ export const GRADING_NOTE =
 
 export const CLASS_NOTE =
   'What a class costs, how often it runs and what an hour on the mat is worth to a skill are SLATE’s '
-  + 'own calibration. There is no fee schedule for the world’s gyms and none is claimed. The gym '
+  + 'own calibration. There’s no fee schedule for the world’s gyms and none is claimed. The gym '
   + 'itself, the instructor and everybody you train with are SLATE’s own inventions.';
 
 export const CHILD_NOTE =
   'A child trains where a child really can. Most arts take children from about five, gradings for '
   + 'children are separate from the adult ones almost everywhere, and a black belt in Brazilian jiu '
-  + 'jitsu cannot be awarded before nineteen. Contact rules are lighter for children in every one of '
+  + 'jitsu can’t be awarded before nineteen. Contact rules are lighter for children in every one of '
   + 'these arts, and SLATE holds a child below the grade an adult could reach at the same age.';
 
 export const WEEK_NOTE =
-  'A week is not only lessons. There is a lunch hour with somebody or without one, an hour in the gym '
+  'A week is not only lessons. There’s a lunch hour with somebody or without one, an hour in the gym '
   + 'hall, an afternoon after school and a Saturday, and what you do with them builds different things. '
-  + 'None of this is anybody’s published research on adolescence; it is SLATE’s reading of what a week '
+  + 'None of this is anybody’s published research on adolescence; it’s SLATE’s reading of what a week '
   + 'at that age is actually made of.';
 
 // ---------------------------------------------------------------------------
@@ -139,11 +139,11 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
       g('gokyu', 'Fifth Kyu', 3, 40, 6, 'Yellow in most federations, and the first few throws that actually land.'),
       g('yonkyu', 'Fourth Kyu', 4, 90, 7, 'Orange, and the first time randori is more than surviving.'),
       g('sankyu', 'Third Kyu', 6, 170, 9, 'Green, and by now the falls are automatic.'),
-      g('nikyu', 'Second Kyu', 6, 270, 11, 'Blue, and you are the one the beginners are thrown by.'),
+      g('nikyu', 'Second Kyu', 6, 270, 11, 'Blue, and you’re the one the beginners are thrown by.'),
       g('ikkyu', 'First Kyu', 9, 400, 13, 'Brown, and the last grade before the belt everybody outside the sport has heard of.'),
       g('shodan', 'First Dan', 12, 620, 15, 'Black. In judo it means competent rather than expert, and everybody in judo says so.'),
       g('nidan', 'Second Dan', 24, 950, 17, 'Two years at least, and the technical grading gets serious.'),
-      g('sandan', 'Third Dan', 36, 1400, 20, 'Three more years, and now you are teaching.'),
+      g('sandan', 'Third Dan', 36, 1400, 20, 'Three more years, and now you’re teaching.'),
     ],
     about: 'Throws, holds, chokes and armlocks, and a governing philosophy about maximum efficiency that Kano actually wrote down.',
   },
@@ -163,7 +163,7 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
       g('kyu4', 'Fourth Kyu', 6, 210, 8, 'Purple in a lot of schools, and the kata get long.'),
       g('kyu2', 'Second Kyu', 6, 330, 10, 'Brown, and the grading panel stops being kind.'),
       g('kyu1', 'First Kyu', 6, 460, 12, 'Brown with a stripe, and the black belt grading is now a date rather than an idea.'),
-      g('shodan', 'First Dan', 12, 700, 14, 'Shodan. It is written as beginning level, which is the joke and also the truth.'),
+      g('shodan', 'First Dan', 12, 700, 14, 'Shodan. It’s written as beginning level, which is the joke and also the truth.'),
       g('nidan', 'Second Dan', 24, 1100, 16, 'Two more years, and the syllabus goes back to the beginning at a higher standard.'),
     ],
     about: 'Kata, kihon and kumite. The stances are unreasonable on purpose and every one of them is teaching something.',
@@ -180,14 +180,14 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
     grades: [
       g('geup10', 'Tenth Geup', 0, 0, 4, 'White, and the first kicks that go higher than a knee.'),
       g('geup8', 'Eighth Geup', 3, 40, 4, 'Yellow, and the first poomsae.'),
-      g('geup6', 'Sixth Geup', 4, 95, 5, 'Green, and sparring in a hogu that is too big for you.'),
+      g('geup6', 'Sixth Geup', 4, 95, 5, 'Green, and sparring in a hogu that’s too big for you.'),
       g('geup4', 'Fourth Geup', 5, 180, 7, 'Blue, and the head kicks start landing.'),
-      g('geup2', 'Second Geup', 6, 290, 9, 'Red, and the whole school knows you are close.'),
+      g('geup2', 'Second Geup', 6, 290, 9, 'Red, and the whole school knows you’re close.'),
       g('geup1', 'First Geup', 6, 400, 11, 'Red with a black stripe, and the dan grading is booked.'),
-      g('poom', 'First Poom', 6, 560, 8, 'The junior black belt. Under fifteen it is a poom, and it becomes a dan when you are old enough.'),
+      g('poom', 'First Poom', 6, 560, 8, 'The junior black belt. Under fifteen it’s a poom, and it becomes a dan when you’re old enough.'),
       g('dan1', 'First Dan', 6, 620, 15, 'Black, and the Kukkiwon certificate that goes with it.'),
       g('dan2', 'Second Dan', 12, 950, 16, 'A year at least, and the poomsae get long.'),
-      g('dan3', 'Third Dan', 24, 1400, 18, 'Two more years, and you are running a class of your own.'),
+      g('dan3', 'Third Dan', 24, 1400, 18, 'Two more years, and you’re running a class of your own.'),
     ],
     about: 'The kicking art, and an Olympic sport since 2000. Everything is thrown from the hip and everything is thrown high.',
   },
@@ -211,7 +211,7 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
       { key: 'resilience', kind: 'skill', share: 0.25 },
     ],
     grades: [],
-    about: 'Two hands and footwork, and more conditioning than anything else in this list. There are no belts in a boxing gym; there is a card on the wall.',
+    about: 'Two hands and footwork, and more conditioning than anything else in this list. There are no belts in a boxing gym; there’s a card on the wall.',
   },
   {
     id: 'wrestling', name: 'Wrestling', origin: 'Everywhere, and older than the records',
@@ -235,7 +235,7 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
     grades: [
       g('p1', 'Practitioner One', 0, 0, 14, 'The first of the practitioner levels, and mostly about not being there when it lands.'),
       g('p2', 'Practitioner Two', 4, 60, 14, 'More of the same under more pressure, which is the whole method.'),
-      g('p3', 'Practitioner Three', 6, 150, 15, 'Weapons defenses start, and they are unnervingly practical.'),
+      g('p3', 'Practitioner Three', 6, 150, 15, 'Weapons defenses start, and they’re unnervingly practical.'),
       g('p4', 'Practitioner Four', 8, 280, 16, 'The pressure tests get long enough to be genuinely tiring.'),
       g('p5', 'Practitioner Five', 10, 430, 17, 'The last practitioner level before the graduate ones.'),
       g('g1', 'Graduate One', 12, 620, 18, 'Where it stops being a course and starts being how you move.'),
@@ -251,7 +251,7 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
       { key: 'resilience', kind: 'skill', share: 0.25 },
     ],
     grades: [],
-    about: 'Striking, wrestling and the ground in one session. It grades nobody, because it is three arts in a room rather than a tradition.',
+    about: 'Striking, wrestling and the ground in one session. It grades nobody, because it’s three arts in a room rather than a tradition.',
   },
   {
     id: 'aikido', name: 'Aikido', origin: 'Japan, founded by Ueshiba Morihei',
@@ -282,11 +282,11 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
     grades: [
       g('kyu3', 'Third Kyu', 0, 0, 7, 'The first grade anybody takes, and the armor is heavier than it looks.'),
       g('kyu1', 'First Kyu', 9, 160, 10, 'The last kyu grade, and the strikes finally sound right.'),
-      g('shodan', 'First Dan', 3, 320, 13, 'Black in name only: kendo does not use a colored belt at all.'),
+      g('shodan', 'First Dan', 3, 320, 13, 'Black in name only: kendo doesn’t use a colored belt at all.'),
       g('nidan', 'Second Dan', 12, 560, 15, 'A year at least, and the seniors stop going easy.'),
-      g('sandan', 'Third Dan', 24, 900, 17, 'Two more years, and the gradings have a failure rate that is talked about.'),
+      g('sandan', 'Third Dan', 24, 900, 17, 'Two more years, and the gradings have a failure rate that’s talked about.'),
     ],
-    about: 'Shinai, bogu and a shout. There is no colored belt anywhere in kendo, which surprises everybody who assumes there is.',
+    about: 'Shinai, bogu and a shout. There’s no colored belt anywhere in kendo, which surprises everybody who assumes there is.',
   },
   {
     id: 'capoeira', name: 'Capoeira', origin: 'Brazil, out of the Angolan diaspora',
@@ -298,10 +298,10 @@ export const MARTIAL_ARTS: readonly MartialArt[] = [
       { key: 'self_defense', kind: 'skill', share: 0.2 },
     ],
     grades: [
-      g('crua', 'Corda Crua', 0, 0, 5, 'The raw cord, and the first ginga that does not look like falling over.'),
-      g('amarela', 'Corda Amarela', 8, 90, 6, 'The colors differ by group; the ladder does not.'),
+      g('crua', 'Corda Crua', 0, 0, 5, 'The raw cord, and the first ginga that doesn’t look like falling over.'),
+      g('amarela', 'Corda Amarela', 8, 90, 6, 'The colors differ by group; the ladder doesn’t.'),
       g('azul', 'Corda Azul', 12, 260, 9, 'The acrobatics arrive, and so does playing the berimbau.'),
-      g('verde', 'Corda Verde', 18, 500, 12, 'By now you are leading songs in the roda.'),
+      g('verde', 'Corda Verde', 18, 500, 12, 'By now you’re leading songs in the roda.'),
       g('formado', 'Formado', 24, 900, 16, 'Graduated, and teaching the children’s class on Saturdays.'),
     ],
     about: 'A game, a fight and a dance at once, played in a circle to a berimbau. Every group grades on cords and every group uses different colors.',
@@ -380,7 +380,7 @@ export const DOINGS: readonly Doing[] = [
     'The library, the music corridor, the bench nobody uses. Not every lunch hour has to be spent performing.'),
   d('lunch_library', 'Get The Homework Done', 'lunch', 8, 18, 1, 6_00, 6, false,
     [{ key: 'study_skills', kind: 'skill', share: 0.6 }, { key: 'time_management', kind: 'skill', share: 0.4 }],
-    'An hour now is an hour you are not spending at eleven at night, which is the entire argument.'),
+    'An hour now is an hour you aren’t spending at eleven at night, which is the entire argument.'),
   d('lunch_practice', 'Practice Something', 'lunch', 8, 18, 1, 6_00, 10, false,
     [{ key: 'musical_instrument', kind: 'skill', share: 0.5 }, { key: 'memory', kind: 'skill', share: 0.5 }],
     'A practice room, a script, a set of scales. Lunch hours are where most quiet competence gets built.'),
@@ -388,10 +388,10 @@ export const DOINGS: readonly Doing[] = [
   // Gym class, which everybody has an opinion about.
   d('gym_join_in', 'Join In Properly', 'gym_class', 5, 18, 1, 0, 22, false,
     [{ key: 'fitness', kind: 'skill', share: 0.6 }, { key: 'resilience', kind: 'skill', share: 0.4 }],
-    'It is an hour of exercise a week that somebody else has organized, which is more than most adults manage.'),
+    'It’s an hour of exercise a week that somebody else has organized, which is more than most adults manage.'),
   d('gym_swimming', 'The Swimming Block', 'gym_class', 6, 16, 1, 0, 24, false,
     [{ key: 'swimming', kind: 'skill', share: 0.7 }, { key: 'fitness', kind: 'skill', share: 0.3 }],
-    'A few weeks of it a year, and it is the only place a lot of people ever learn.'),
+    'A few weeks of it a year, and it’s the only place a lot of people ever learn.'),
   d('gym_hide', 'Sit It Out', 'gym_class', 5, 18, 1, 0, 2, false,
     [{ key: 'small_talk', kind: 'skill', share: 1 }],
     'A note, a bench and a conversation. It costs the hour and it builds nothing much, which is the honest answer.'),
@@ -405,7 +405,7 @@ export const DOINGS: readonly Doing[] = [
     'The version of a friendship that happens where a parent can hear it, which is a different friendship.'),
   d('help_at_home', 'Help At Home', 'evening', 7, 25, 2, 0, 12, false,
     [{ key: 'housekeeping', kind: 'skill', share: 0.4 }, { key: 'cooking', kind: 'skill', share: 0.4 }, { key: 'home_repair', kind: 'skill', share: 0.2 }],
-    'Unglamorous, and the reason some people leave home able to run a house and some do not.'),
+    'Unglamorous, and the reason some people leave home able to run a house and some don’t.'),
   d('read_a_book', 'Read Something', 'evening', 6, 99, 2, 0, 4, false,
     [{ key: 'reading', kind: 'skill', share: 0.5 }, { key: 'memory', kind: 'skill', share: 0.25 }, { key: 'research', kind: 'skill', share: 0.25 }],
     'The cheapest thing on this list and, over ten years, one of the most compounding.'),
@@ -480,14 +480,14 @@ export interface LifeClass {
  * actually carries, which is the point of it being on the sheet.
  */
 export const LIFE_CLASSES: readonly LifeClass[] = [
-  { id: 'acting', label: 'An Acting Class', fromAge: 6, fee: 35_00, hours: 2, demand: 18, about: 'A room, an exercise and somebody watching. The one on this list that is also the job.', feeds: [{ key: 'emotional_truth', kind: 'attribute', share: 0.4 }, { key: 'listening', kind: 'skill', share: 0.3 }, { key: 'public_speaking', kind: 'skill', share: 0.3 }] },
-  { id: 'dance', label: 'A Dance Class', fromAge: 4, fee: 22_00, hours: 1.5, demand: 26, about: 'Ballet, tap, jazz, street. An actor who can move gets seen for things an actor who cannot does not.', feeds: [{ key: 'dancing', kind: 'skill', share: 0.6 }, { key: 'fitness', kind: 'skill', share: 0.4 }] },
+  { id: 'acting', label: 'An Acting Class', fromAge: 6, fee: 35_00, hours: 2, demand: 18, about: 'A room, an exercise and somebody watching. The one on this list that’s also the job.', feeds: [{ key: 'emotional_truth', kind: 'attribute', share: 0.4 }, { key: 'listening', kind: 'skill', share: 0.3 }, { key: 'public_speaking', kind: 'skill', share: 0.3 }] },
+  { id: 'dance', label: 'A Dance Class', fromAge: 4, fee: 22_00, hours: 1.5, demand: 26, about: 'Ballet, tap, jazz, street. An actor who can move gets seen for things an actor who can’t doesn’t.', feeds: [{ key: 'dancing', kind: 'skill', share: 0.6 }, { key: 'fitness', kind: 'skill', share: 0.4 }] },
   { id: 'singing', label: 'A Singing Lesson', fromAge: 7, fee: 40_00, hours: 1, demand: 14, about: 'Breath, support and a range that gets bigger rather than louder.', feeds: [{ key: 'singing', kind: 'attribute', share: 0.7 }, { key: 'public_speaking', kind: 'skill', share: 0.3 }] },
   { id: 'instrument', label: 'A Music Lesson', fromAge: 5, fee: 38_00, hours: 1, demand: 12, about: 'One instrument, half an hour a week with somebody who knows, and years of it.', feeds: [{ key: 'musical_instrument', kind: 'skill', share: 0.7 }, { key: 'memory', kind: 'skill', share: 0.3 }] },
-  { id: 'swimming_lesson', label: 'A Swimming Lesson', fromAge: 3, fee: 18_00, hours: 1, demand: 24, about: 'The one on this list that is a safety issue rather than a hobby.', feeds: [{ key: 'swimming', kind: 'skill', share: 0.8 }, { key: 'fitness', kind: 'skill', share: 0.2 }] },
+  { id: 'swimming_lesson', label: 'A Swimming Lesson', fromAge: 3, fee: 18_00, hours: 1, demand: 24, about: 'The one on this list that’s a safety issue rather than a hobby.', feeds: [{ key: 'swimming', kind: 'skill', share: 0.8 }, { key: 'fitness', kind: 'skill', share: 0.2 }] },
   { id: 'first_aid_course', label: 'A First Aid Course', fromAge: 12, fee: 60_00, hours: 6, demand: 16, about: 'A day, a certificate, and the four minutes before an ambulance arrives.', feeds: [{ key: 'first_aid', kind: 'skill', share: 1 }] },
   { id: 'cookery', label: 'A Cookery Class', fromAge: 9, fee: 45_00, hours: 3, demand: 18, about: 'Knife, heat, seasoning, and why the recipe said to wait.', feeds: [{ key: 'cooking', kind: 'skill', share: 0.7 }, { key: 'nutrition', kind: 'skill', share: 0.3 }] },
-  { id: 'language_class', label: 'A Language Class', fromAge: 7, fee: 30_00, hours: 2, demand: 16, about: 'Two years before anybody says a full sentence, and then it is yours.', feeds: [{ key: 'languages', kind: 'skill', share: 1 }] },
+  { id: 'language_class', label: 'A Language Class', fromAge: 7, fee: 30_00, hours: 2, demand: 16, about: 'Two years before anybody says a full sentence, and then it’s yours.', feeds: [{ key: 'languages', kind: 'skill', share: 1 }] },
   { id: 'photography_class', label: 'A Photography Class', fromAge: 10, fee: 42_00, hours: 3, demand: 12, about: 'Light, frame and the moment. Useful to anybody who will ever be in front of a camera.', feeds: [{ key: 'photography', kind: 'skill', share: 0.7 }, { key: 'drawing', kind: 'skill', share: 0.3 }] },
   { id: 'life_drawing', label: 'A Life Drawing Class', fromAge: 16, fee: 25_00, hours: 3, demand: 12, about: 'Two hours of looking properly, which is a harder skill than drawing.', feeds: [{ key: 'drawing', kind: 'skill', share: 0.7 }, { key: 'empathy', kind: 'skill', share: 0.3 }] },
   { id: 'sewing_class', label: 'A Sewing Class', fromAge: 9, fee: 28_00, hours: 3, demand: 12, about: 'A hem, a zip, and then a jacket that fits because you made it fit.', feeds: [{ key: 'sewing', kind: 'skill', share: 1 }] },
@@ -499,7 +499,7 @@ export const LIFE_CLASSES: readonly LifeClass[] = [
   { id: 'chess_club', label: 'A Chess Club', fromAge: 6, fee: 8_00, hours: 2, demand: 10, about: 'Losing a great many games to somebody older than you, which is how anybody learns it.', feeds: [{ key: 'chess', kind: 'skill', share: 0.7 }, { key: 'memory', kind: 'skill', share: 0.3 }] },
   { id: 'wine_course', label: 'A Wine Course', fromAge: 18, fee: 65_00, hours: 2, demand: 8, about: 'Six glasses, a spittoon, and the ability to order for a table without guessing.', feeds: [{ key: 'wine', kind: 'skill', share: 0.8 }, { key: 'etiquette', kind: 'skill', share: 0.2 }] },
   { id: 'bartending_course', label: 'A Bartending Course', fromAge: 18, fee: 70_00, hours: 4, demand: 20, about: 'Twenty drinks made properly, fast, while holding a conversation.', feeds: [{ key: 'bartending', kind: 'skill', share: 0.8 }, { key: 'small_talk', kind: 'skill', share: 0.2 }] },
-  { id: 'etiquette_class', label: 'An Etiquette Class', fromAge: 12, fee: 45_00, hours: 2, demand: 8, about: 'Which fork, which room, which sentence. It is snobbery until the night it is not.', feeds: [{ key: 'etiquette', kind: 'skill', share: 0.7 }, { key: 'small_talk', kind: 'skill', share: 0.3 }] },
+  { id: 'etiquette_class', label: 'An Etiquette Class', fromAge: 12, fee: 45_00, hours: 2, demand: 8, about: 'Which fork, which room, which sentence. It’s snobbery until the night it isn’t.', feeds: [{ key: 'etiquette', kind: 'skill', share: 0.7 }, { key: 'small_talk', kind: 'skill', share: 0.3 }] },
 ];
 
 export const CLASS_BY_ID: Readonly<Record<string, LifeClass>> = Object.fromEntries(

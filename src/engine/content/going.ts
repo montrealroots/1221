@@ -17,7 +17,7 @@ import type { Rng } from '../core/rng';
 
 export const GOING_NOTE =
   'The venues are real buildings in the cities they really stand in, and the seasons run to the real '
-  + 'calendar. What is on inside them is SLATE’s own: there is no listings feed, so no fixture, act, '
+  + 'calendar. What is on inside them is SLATE’s own: there’s no listings feed, so no fixture, act, '
   + 'production or exhibition here is a real one. A match names no club, a score attaches to nobody '
   + 'real, and every price is SLATE’s own calibration.';
 
@@ -108,7 +108,7 @@ export const SPORTS: readonly Sport[] = [
   sp('aussie_rules', 'Australian Rules Football', ['au'],
     [3, 4, 5, 6, 7, 8, 9], [4, 5, 6, 0], 'stadium',
     ['A home and away round', 'A Friday night blockbuster', 'A final, and the city stops'],
-    'March to September, and in Melbourne it is the only thing anybody talks about.'),
+    'March to September, and in Melbourne it’s the only thing anybody talks about.'),
   sp('rugby', 'Rugby', ['nz', 'au', 'za', 'fr', 'uk', 'ie', 'ar', 'fj', 'ws'],
     [9, 10, 11, 12, 1, 2, 3, 4, 5], [6, 0], 'stadium',
     ['A league round', 'A local derby, no quarter', 'A cup weekend'],

@@ -153,7 +153,7 @@ export function colourOf(id: string | undefined): Colour {
  * not a fact about the product. Which colors a real garment actually shipped
  * in, in which season, is not public data at this scale.
  */
-export const COLOUR_NOTE = 'The colorway is the one your copy came in, chosen by SLATE from what the piece would plausibly be made in. It is not a claim about the season the maker actually offered.';
+export const COLOUR_NOTE = 'The colorway is the one your copy came in, chosen by SLATE from what the piece would plausibly be made in. It isn’t a claim about the season the maker actually offered.';
 
 /**
  * The color a thing is when nobody chose one.
@@ -316,18 +316,18 @@ export interface DressCode {
 }
 
 export const DRESS_CODES: readonly DressCode[] = [
-  { id: 'white_tie', name: 'White Tie', floor: 96, ceiling: 100, wants: ['outfit', 'shoes', 'watch'], avoidMaterials: ['denim', 'fleece', 'nylon', 'gore_tex', 'rubber'], note: 'Tails, or the most formal thing you own. There is no upper limit and there is a hard floor.' },
+  { id: 'white_tie', name: 'White Tie', floor: 96, ceiling: 100, wants: ['outfit', 'shoes', 'watch'], avoidMaterials: ['denim', 'fleece', 'nylon', 'gore_tex', 'rubber'], note: 'Tails, or the most formal thing you own. There’s no upper limit and there’s a hard floor.' },
   { id: 'black_tie', name: 'Black Tie', floor: 90, ceiling: 100, wants: ['outfit', 'shoes'], avoidMaterials: ['denim', 'fleece', 'nylon', 'gore_tex', 'rubber', 'canvas'], note: 'A dinner suit or a long dress. Not a dark lounge suit, whatever anybody tells you.' },
-  { id: 'black_tie_optional', name: 'Black Tie Optional', floor: 80, ceiling: 100, wants: ['outfit', 'shoes'], avoidMaterials: ['denim', 'fleece', 'nylon', 'rubber'], note: 'Black tie if you have it, your darkest suit if you do not. Nobody minds which.' },
+  { id: 'black_tie_optional', name: 'Black Tie Optional', floor: 80, ceiling: 100, wants: ['outfit', 'shoes'], avoidMaterials: ['denim', 'fleece', 'nylon', 'rubber'], note: 'Black tie if you have it, your darkest suit if you don’t. Nobody minds which.' },
   { id: 'formal', name: 'Formal', floor: 74, ceiling: 96, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['denim', 'fleece', 'nylon', 'rubber'], note: 'A suit, or something with the same weight to it.' },
   { id: 'mourning', name: 'Mourning', floor: 70, ceiling: 96, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['denim', 'fleece', 'nylon', 'rubber'], note: 'Dark, plain, and not about you.' },
   { id: 'cocktail', name: 'Cocktail', floor: 66, ceiling: 92, wants: ['outfit', 'shoes'], avoidMaterials: ['denim', 'fleece', 'gore_tex', 'rubber'], note: 'Short and sharp. Dressed up, not dressed for a wedding.' },
   { id: 'business', name: 'Business', floor: 62, ceiling: 88, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['denim', 'fleece', 'rubber'], note: 'The room is deciding whether to give you money. Look like the answer is yes.' },
-  { id: 'business_casual', name: 'Business Casual', floor: 44, ceiling: 74, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['fleece', 'rubber'], note: 'A collar and something that is not jeans. That is the whole rule.' },
+  { id: 'business_casual', name: 'Business Casual', floor: 44, ceiling: 74, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['fleece', 'rubber'], note: 'A collar and something that isn’t jeans. That’s the whole rule.' },
   { id: 'smart_casual', name: 'Smart Casual', floor: 34, ceiling: 66, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['fleece'], note: 'Looks like you thought about it for four minutes rather than none.' },
   { id: 'casual', name: 'Casual', floor: 8, ceiling: 52, wants: ['top', 'bottom', 'shoes'], avoidMaterials: [], note: 'Wear what you like. Turning up in a dinner suit is its own statement.' },
   { id: 'athletic', name: 'Athletic', floor: 2, ceiling: 30, wants: ['top', 'bottom', 'shoes'], avoidMaterials: ['silk', 'satin', 'velvet', 'cashmere', 'worsted'], note: 'Something you can sweat in and wash afterwards.' },
-  { id: 'beach', name: 'Beach', floor: 0, ceiling: 30, wants: ['top', 'shoes'], avoidMaterials: ['wool', 'worsted', 'tweed', 'down', 'velvet'], note: 'Sand gets into everything. Bring nothing you would miss.' },
+  { id: 'beach', name: 'Beach', floor: 0, ceiling: 30, wants: ['top', 'shoes'], avoidMaterials: ['wool', 'worsted', 'tweed', 'down', 'velvet'], note: 'Sand gets into everything. Bring nothing you’d miss.' },
   { id: 'red_carpet', name: 'Red Carpet', floor: 92, ceiling: 100, wants: ['outfit', 'shoes', 'jewellery'], avoidMaterials: ['denim', 'fleece', 'nylon', 'gore_tex', 'rubber', 'canvas'], note: 'Photographed from four feet away by people who do this for a living. Everything shows.' },
 ];
 

@@ -83,9 +83,9 @@ export const KEEPING_LABEL: Readonly<Record<KeepingKind, string>> = {
   hangar: 'Private Hangar', shared_hangar: 'Shared Hangar', tie_down: 'Tie Down', transient: 'Transient Ramp',
 };
 
-export const NO_ROOM = 'There is no room there.';
-export const TOO_BIG = 'It does not fit there.';
-export const NOT_HERE = 'That is not in the city the vehicle is in.';
+export const NO_ROOM = 'There’s no room there.';
+export const TOO_BIG = 'It doesn’t fit there.';
+export const NOT_HERE = 'That isn’t in the city the vehicle is in.';
 export const NOT_A_BOAT_FOR_A_SLIP = 'Only a boat waits for a slip.';
 
 // ---------------------------------------------------------------------------
@@ -287,7 +287,7 @@ function offerSlip(sim: Simulation, entry: BerthWaitlist): void {
   sim.requireDecision({
     urgency: 44, category: 'vehicles',
     title: `A Slip Has Come Free At ${marina.name}`,
-    detail: `Up to ${entry.bandFeet} ft, ${formatMoney(monthly)} a month, for the ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}. They will hold it ${OFFER_DAYS} days. Let it go and you go to the back of the queue.`,
+    detail: `Up to ${entry.bandFeet} ft, ${formatMoney(monthly)} a month, for the ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}. They’ll hold it ${OFFER_DAYS} days. Let it go and you go to the back of the queue.`,
     route: '/workspace/vehicles',
     actions: [
       { label: 'Take The Slip', commandKind: 'stor.take_slip', payload: { waitlistId: entry.id } },
@@ -298,7 +298,7 @@ function offerSlip(sim: Simulation, entry: BerthWaitlist): void {
   });
   sim.notify({
     category: 'vehicles', title: `${marina.name} Called`,
-    body: `A slip up to ${entry.bandFeet} ft is free. They will hold it until ${formatDate(entry.offerExpiresAt, sim.zone)}.`,
+    body: `A slip up to ${entry.bandFeet} ft is free. They’ll hold it until ${formatDate(entry.offerExpiresAt, sim.zone)}.`,
     importance: 48, route: '/workspace/vehicles', refType: 'berth', refId: entry.id,
   });
 }
@@ -485,7 +485,7 @@ export function keepingOptions(sim: Simulation, vehicle: Vehicle): KeepingOption
     if (airport) {
       const large = band === 'large';
       out.push({ kind: 'hangar', label: KEEPING_LABEL.hangar, where: airport.name, detail: 'Your own hangar, your own door. The crew work out of it.', monthly: Math.round(HANGAR[band] * c), exposure: 'indoors', available: hangarFits(airport, band), reason: hangarFits(airport, band) ? undefined : airport.hasPrivateTerminal ? `${airport.name} has no hangar for an aircraft this size.` : `${airport.name} has no private terminal.`, airportId: airport.id });
-      out.push({ kind: 'shared_hangar', label: KEEPING_LABEL.shared_hangar, where: airport.name, detail: 'A space in the FBO hangar, towed in and out.', monthly: Math.round(SHARED_HANGAR[band] * c), exposure: 'indoors', available: airport.hasPrivateTerminal && !large, reason: !airport.hasPrivateTerminal ? `${airport.name} has no private terminal.` : large ? 'The shared hangar does not take an aircraft this size.' : undefined, airportId: airport.id });
+      out.push({ kind: 'shared_hangar', label: KEEPING_LABEL.shared_hangar, where: airport.name, detail: 'A space in the FBO hangar, towed in and out.', monthly: Math.round(SHARED_HANGAR[band] * c), exposure: 'indoors', available: airport.hasPrivateTerminal && !large, reason: !airport.hasPrivateTerminal ? `${airport.name} has no private terminal.` : large ? 'The shared hangar doesn’t take an aircraft this size.' : undefined, airportId: airport.id });
       out.push({ kind: 'tie_down', label: KEEPING_LABEL.tie_down, where: airport.name, detail: 'Outside on the ramp, chocked and tied. The cheapest way, and the weather gets at it.', monthly: Math.round(TIE_DOWN[band] * c), exposure: 'outdoors', available: true, airportId: airport.id });
     }
   }
@@ -566,10 +566,10 @@ export function placeVehicle(sim: Simulation, vehicle: Vehicle, accountId?: Id):
     sim.notify({
       category: 'vehicles', title: `Nowhere To Keep The ${vehicle.nickname ?? `${vehicle.make} ${vehicle.model}`}`,
       body: kind === 'boat'
-        ? 'Every marina here is full at that length, it is too long to trailer or rack, and there is no dock at home. Put your name down for a slip, or find water somewhere else.'
+        ? 'Every marina here is full at that length, it’s too long to trailer or rack, and there’s no dock at home. Put your name down for a slip, or find water somewhere else.'
         : kind === 'jet'
-          ? 'There is no hangar or tie-down for it at the airport here.'
-          : 'There is nowhere in this city to put it.',
+          ? 'There’s no hangar or tie-down for it at the airport here.'
+          : 'There’s nowhere in this city to put it.',
       importance: 55, route: '/workspace/vehicles', refType: 'vehicle', refId: vehicle.id,
     });
     return undefined;
@@ -578,7 +578,7 @@ export function placeVehicle(sim: Simulation, vehicle: Vehicle, accountId?: Id):
   if (option.kind === 'street' || option.kind === 'driveway' || option.kind === 'tie_down') {
     sim.notify({
       category: 'vehicles', title: `The ${vehicle.make} ${vehicle.model} Is ${option.kind === 'tie_down' ? 'On The Ramp' : option.kind === 'street' ? 'On The Street' : 'On The Driveway'}`,
-      body: option.kind === 'tie_down' ? `No hangar for it at ${option.where}, so it is tied down outside. The weather will get at it.` : `No room in the garage at ${option.where}. It is outside, and the weather and the neighborhood will get at it.`,
+      body: option.kind === 'tie_down' ? `No hangar for it at ${option.where}, so it’s tied down outside. The weather will get at it.` : `No room in the garage at ${option.where}. It’s outside, and the weather and the neighborhood will get at it.`,
       importance: 42, route: '/workspace/vehicles', refType: 'vehicle', refId: vehicle.id,
     });
   }
@@ -697,24 +697,24 @@ export function registerStorage(sim: Simulation): void {
     'stor.keep',
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You do not own that vehicle.');
-      if (vehicle.deliveryDueAt) throw new CommandError('It has not been delivered yet.');
-      if (vehicle.keeping?.kind === 'transient') throw new CommandError('It is on a ramp away from home. Fly it back first.');
+      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You don’t own that vehicle.');
+      if (vehicle.deliveryDueAt) throw new CommandError('It hasn’t been delivered yet.');
+      if (vehicle.keeping?.kind === 'transient') throw new CommandError('It’s on a ramp away from home. Fly it back first.');
       const cityId = vehicle.locationId ?? s.player.currentLocationId;
       if (s.player.currentLocationId !== cityId) throw new CommandError(NOT_HERE);
       const option = keepingOptions(s, vehicle).find((o) => o.kind === p.kind
         && (p.propertyId === undefined || o.propertyId === p.propertyId)
         && (p.placeId === undefined || o.placeId === p.placeId)
         && (p.airportId === undefined || o.airportId === p.airportId));
-      if (!option) throw new CommandError('That is not somewhere this can be kept.');
+      if (!option) throw new CommandError('That isn’t somewhere this can be kept.');
       if (!option.available) throw new CommandError(option.reason ?? NO_ROOM);
       const current = vehicle.keeping;
       if (current && current.kind === option.kind && current.propertyId === option.propertyId && (current.placeId === (option.kind === 'trailer' ? option.spot : option.placeId)) && current.airportId === option.airportId) {
-        throw new CommandError('It is already kept there.');
+        throw new CommandError('It’s already kept there.');
       }
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (option.monthly > 0 && (!accountId || s.ledger.availableFunds(accountId) < option.monthly)) {
-        throw new CommandError(`${option.where} wants ${formatMoney(option.monthly)} a month and you cannot show the first month.`);
+        throw new CommandError(`${option.where} wants ${formatMoney(option.monthly)} a month and you can’t show the first month.`);
       }
       applyKeeping(s, vehicle, option, accountId);
       // Taking a berth you were queueing for ends the queue and returns the deposit.
@@ -733,23 +733,23 @@ export function registerStorage(sim: Simulation): void {
     'stor.join_waitlist',
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You do not own that boat.');
+      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You don’t own that boat.');
       if (vehicleKind(vehicle) !== 'boat') throw new CommandError(NOT_A_BOAT_FOR_A_SLIP);
       const cityId = vehicle.locationId ?? s.player.currentLocationId;
       const marina = marinasIn(cityId).find((m) => m.id === p.placeId);
-      if (!marina) throw new CommandError('That marina is not in the city the boat is in.');
+      if (!marina) throw new CommandError('That marina isn’t in the city the boat is in.');
       if (waitlistFor(s, vehicle.id, marina.id)) throw new CommandError('Your name is already down there.');
       const feet = boatLength(s, vehicle);
       if (feet > (marina.maxSlipFeet ?? 65)) throw new CommandError(`${marina.name} takes boats up to ${marina.maxSlipFeet ?? 65} ft.`);
       const band = slipsAt(s, marina).find((b) => feet <= b.upTo);
       if (!band) throw new CommandError(`${marina.name} has nothing that size.`);
-      if (band.free > 0) throw new CommandError('There is a slip free at that length. Take it rather than queue for it.');
+      if (band.free > 0) throw new CommandError('There’s a slip free at that length. Take it rather than queue for it.');
 
       const deposit = Math.round(band.perFoot * feet * col(cityId) * WAITLIST_DEPOSIT_SHARE);
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < deposit) {
-        throw new CommandError(`${marina.name} holds a deposit of ${formatMoney(deposit)} while you wait, and you cannot cover it.`);
+        throw new CommandError(`${marina.name} holds a deposit of ${formatMoney(deposit)} while you wait, and you can’t cover it.`);
       }
       s.expense(accountId, deposit, `Waiting list deposit — ${marina.name}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
 
@@ -783,7 +783,7 @@ export function registerStorage(sim: Simulation): void {
     'stor.leave_waitlist',
     (p, { sim: s }) => {
       const entry = s.universe.berthWaitlists?.[p.waitlistId];
-      if (!entry || (entry.status !== 'waiting' && entry.status !== 'offered')) throw new CommandError('You are not in that queue.');
+      if (!entry || (entry.status !== 'waiting' && entry.status !== 'offered')) throw new CommandError('You aren’t in that queue.');
       const deposit = entry.deposit;
       endWaitlist(s, entry, 'left');
       s.emit('berth.left', { waitlistId: entry.id });
@@ -795,7 +795,7 @@ export function registerStorage(sim: Simulation): void {
     'stor.take_slip',
     (p, { sim: s }) => {
       const entry = s.universe.berthWaitlists?.[p.waitlistId];
-      if (!entry || entry.status !== 'offered') throw new CommandError('There is no slip on offer.');
+      if (!entry || entry.status !== 'offered') throw new CommandError('There’s no slip on offer.');
       if (s.now > (entry.offerExpiresAt ?? 0)) throw new CommandError('That offer has run out.');
       const vehicle = s.universe.vehicles[entry.vehicleId];
       const marina = placesIn(entry.cityId).find((m) => m.id === entry.marinaPlaceId);
@@ -822,7 +822,7 @@ export function registerStorage(sim: Simulation): void {
     'stor.pass_slip',
     (p, { sim: s }) => {
       const entry = s.universe.berthWaitlists?.[p.waitlistId];
-      if (!entry || entry.status !== 'offered') throw new CommandError('There is no slip on offer.');
+      if (!entry || entry.status !== 'offered') throw new CommandError('There’s no slip on offer.');
       passSlip(s, entry, 'You let it go.');
       return { ahead: entry.ahead };
     },

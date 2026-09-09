@@ -115,10 +115,10 @@ const LANDMARKS: readonly RealPlace[] = [
 
   // --- Los Angeles ---------------------------------------------------------
   { id: 'la-griffith', name: 'Griffith Observatory', kind: 'viewpoint', cityId: 'us-ca-losangeles', about: 'A public observatory on the south slope of Mount Hollywood, given to the city by Griffith J. Griffith and open free to the public since it was built.', opened: 1935, actions: ['visit'], minutes: 120, admissionCalibration: 0 },
-  { id: 'la-hollywood-sign', name: 'The Hollywood Sign', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'Erected as "Hollywoodland" to advertise a housing development, shortened in 1949 and rebuilt in 1978. You can walk up to look at it; you cannot walk to it.', opened: 1923, actions: ['visit'], minutes: 150 },
+  { id: 'la-hollywood-sign', name: 'The Hollywood Sign', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'Erected as "Hollywoodland" to advertise a housing development, shortened in 1949 and rebuilt in 1978. You can walk up to look at it; you can’t walk to it.', opened: 1923, actions: ['visit'], minutes: 150 },
   { id: 'la-santa-monica-pier', name: 'Santa Monica Pier', kind: 'landmark', cityId: 'us-ca-losangeles', about: 'A municipal pier at the end of Colorado Avenue, with a small amusement park on it since the 1990s.', opened: 1909, actions: ['visit', 'eat'], minutes: 120 },
   { id: 'la-venice-beach', name: 'Venice Beach Boardwalk', kind: 'beach', cityId: 'us-ca-losangeles', about: 'The oceanfront walk through Venice, laid out by Abbot Kinney as a canal resort.', opened: 1905, actions: ['visit'], minutes: 120 },
-  { id: 'la-getty', name: 'The Getty Center', kind: 'museum', cityId: 'us-ca-losangeles', about: 'Richard Meier’s campus above the 405, holding the J. Paul Getty Museum’s European collection. Admission is free; the parking is not.', opened: 1997, actions: ['visit'], minutes: 180 },
+  { id: 'la-getty', name: 'The Getty Center', kind: 'museum', cityId: 'us-ca-losangeles', about: 'Richard Meier’s campus above the 405, holding the J. Paul Getty Museum’s European collection. Admission is free; the parking isn’t.', opened: 1997, actions: ['visit'], minutes: 180 },
   { id: 'la-lacma', name: 'LACMA', kind: 'museum', cityId: 'us-ca-losangeles', about: 'The Los Angeles County Museum of Art on Wilshire, the largest art museum in the western United States.', opened: 1965, actions: ['visit'], minutes: 150, admissionCalibration: 2_500 },
   { id: 'la-grand-central-market', name: 'Grand Central Market', kind: 'market', cityId: 'us-ca-losangeles', about: 'A public market hall on Broadway downtown, trading continuously for over a century.', opened: 1917, actions: ['eat', 'visit'], minutes: 75 },
   { id: 'la-runyon', name: 'Runyon Canyon Park', kind: 'park', cityId: 'us-ca-losangeles', about: 'A hillside park at the top of Fuller Avenue, and the most-walked dog hike in the city.', opened: 1984, actions: ['visit', 'train'], minutes: 90 },
@@ -173,7 +173,7 @@ const LANDMARKS: readonly RealPlace[] = [
   { id: 'tok-shibuya', name: 'Shibuya Crossing', kind: 'landmark', cityId: 'jp-13-tokyo', about: 'The scramble outside Shibuya Station, where every direction crosses at once.', actions: ['visit'], minutes: 45 },
   { id: 'tok-senso-ji', name: 'Sensō-ji', kind: 'landmark', cityId: 'jp-13-tokyo', about: 'A Buddhist temple in Asakusa, the oldest in Tokyo, approached through the Kaminarimon.', opened: 645, actions: ['visit'], minutes: 90 },
   { id: 'seo-gyeongbokgung', name: 'Gyeongbokgung', kind: 'landmark', cityId: 'kr-11-seoul', about: 'The main palace of the Joseon dynasty, rebuilt after the Japanese occupation.', opened: 1395, actions: ['visit'], minutes: 120, admissionCalibration: 300 },
-  { id: 'vegas-strip', name: 'The Las Vegas Strip', kind: 'landmark', cityId: 'us-nv-lasvegas', about: 'Four miles of Las Vegas Boulevard south of the city line, which is why the big resorts are not in Las Vegas at all.', actions: ['visit', 'drink'], minutes: 120 },
+  { id: 'vegas-strip', name: 'The Las Vegas Strip', kind: 'landmark', cityId: 'us-nv-lasvegas', about: 'Four miles of Las Vegas Boulevard south of the city line, which is why the big resorts aren’t in Las Vegas at all.', actions: ['visit', 'drink'], minutes: 120 },
   { id: 'nola-french-quarter', name: 'The French Quarter', kind: 'landmark', cityId: 'us-la-neworleans', about: 'The Vieux Carré, the oldest neighborhood in the city, laid out in 1718.', opened: 1718, actions: ['visit', 'drink', 'eat'], minutes: 120 },
   { id: 'mia-south-beach', name: 'South Beach', kind: 'beach', cityId: 'us-fl-miami', about: 'The barrier-island end of Miami Beach, with the Art Deco district behind it.', actions: ['visit'], minutes: 120 },
   { id: 'nm-santa-fe-plaza', name: 'The Santa Fe Plaza', kind: 'landmark', cityId: 'us-nm-santafe', about: 'The Spanish colonial plaza at the end of the Camino Real, laid out when the city was founded.', opened: 1610, actions: ['visit'], minutes: 75 },
@@ -544,7 +544,7 @@ const DEALERSHIP_SELLS: readonly LotSells[] = ['car', 'car', 'car', 'motorcycle'
 const DEALERSHIP_ABOUT: readonly ((where: string) => string)[] = [
   (where) => `New and certified cars in ${where}, every make under one roof. Somebody will find you within a minute of parking.`,
   (where) => `A used lot in ${where}. Prices on the windscreen, and every one of them is a starting point.`,
-  (where) => `Classics and collector cars in ${where}. They know what they have, and they will wait for the right buyer.`,
+  (where) => `Classics and collector cars in ${where}. They know what they have, and they’ll wait for the right buyer.`,
   (where) => `Motorcycles in ${where}, new and used, from the makes you have heard of. Helmets on the wall and a workshop out the back.`,
   (where) => `Boats and yachts in ${where}, on trailers, on hard standing and in the water. Ask for a sea trial.`,
   (where) => `Aircraft sales at the executive terminal near ${where}. Pre-owned jets on the ramp, factory orders by appointment, and a demonstration flight for anyone serious.`,
@@ -888,7 +888,7 @@ const SHOP_STREET: readonly string[] = [
   'A retail park unit with its own car park.',
   'On the high street, between a bank and a phone shop.',
   'A corner site with two windows onto the street.',
-  'A dressed window on the good street, and a doorman who is not called one.',
+  'A dressed window on the good street, and a doorman who isn’t called one.',
   'By appointment as much as by the door, on the street where the rents are announced.',
 ];
 
@@ -924,7 +924,7 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
       'A counter, four stools and the good machine.',
       'The pastries go by ten.',
       'A queue out the door and it moves fast.',
-      'Somewhere to take a meeting that is not a meeting.',
+      'Somewhere to take a meeting that isn’t a meeting.',
       'Wi-fi, a plug at every table, and a two-hour limit nobody enforces.',
     ])}`;
     case 'bar': return `A bar in ${where}. ${rng.pick([
@@ -951,14 +951,14 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     case 'jeweller': return `A working bench in ${where}. ${rng.pick([
       'One goldsmith, a torch, and a wait for everything.',
       'Repairs in the window, commissions in the back.',
-      'Two benches, a rolling mill, and a kettle that is always on.',
-      'They will make you what you draw, and tell you why it will not work.',
+      'Two benches, a rolling mill, and a kettle that’s always on.',
+      'They’ll make you what you draw, and tell you why it won’t work.',
       'A safe, a loupe, and forty years of somebody else’s wedding rings.',
     ])}`;
     case 'costumier': return `A workroom in ${where}. ${rng.pick([
       'Toiles on the wall, a cutting table, and three fittings before anything is finished.',
       'Bolts to the ceiling, one industrial machine, and a kettle nobody turns off.',
-      'They cut for stage and screen, and they will cut for you.',
+      'They cut for stage and screen, and they’ll cut for you.',
       'Dress forms in every size, a steamer going, and pins everywhere.',
       'A pattern library going back forty years, and somebody who knows where everything is.',
     ])}`;
@@ -984,7 +984,7 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     ])}`;
     case 'launderette': return `A launderette in ${where}. ${rng.pick([
       'Six machines, four dryers, and a chair somebody left.',
-      'Open till ten, and a service wash if you cannot face waiting.',
+      'Open till ten, and a service wash if you can’t face waiting.',
       'The dryer on the end has always been the good one.',
     ])}`;
     case 'post_office': return `A post office in ${where}. ${rng.pick([
@@ -1012,7 +1012,7 @@ function aboutFor(kind: PlaceKind, cuisine: Cuisine | undefined, where: string, 
     ])}`;
     case 'phone_shop': return `A phone shop in ${where}. ${rng.pick([
       'Handsets under glass, tariffs on the wall, and a repair bench behind the counter.',
-      'Somebody will offer you a plan you did not come in for, and it might be better.',
+      'Somebody will offer you a plan you didn’t come in for, and it might be better.',
       'A screen replaced while you wait, if you are prepared to wait.',
       'Contracts one side, prepaid the other, and an accessory wall between them.',
     ])}`;

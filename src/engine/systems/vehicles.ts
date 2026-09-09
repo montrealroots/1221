@@ -31,11 +31,11 @@ export const MAX_CRUISE_HOURS = 10;
 export const RAMP_FEE: Money = 30_00;
 export const RAMP_MINUTES = 45;
 
-export const WAITING_ON_DELIVERY = 'That has not been delivered yet.';
+export const WAITING_ON_DELIVERY = 'That hasn’t been delivered yet.';
 /** A name on a tail or a transom. */
 export const NAME_MAX = 30;
-export const NOT_A_BOAT = 'That is not a boat.';
-export const NOT_FOR_THE_ROAD = 'That does not go on the road.';
+export const NOT_A_BOAT = 'That isn’t a boat.';
+export const NOT_FOR_THE_ROAD = 'That doesn’t go on the road.';
 export const ROUGH_WATER = 'A storm is on the water. Nobody sensible is going out in it.';
 
 /** What kind of thing a vehicle is. One from before there was anything but cars is a car. */
@@ -160,7 +160,7 @@ export function financeRefusal(sim: Simulation, quote: PurchaseQuote, borrowerId
   if ((quote.borrow ?? 0) <= 0) return 'The deposit covers the whole price. Buy it outright instead.';
   const monthlyIncome = monthlyIncomeEstimate(sim, borrowerId);
   if (monthlyIncome > 0 && (quote.monthlyPayment ?? 0) > monthlyIncome * 0.28) {
-    return `A lender will not approve that. ${formatMoney(quote.monthlyPayment ?? 0)} a month against income of about ${formatMoney(monthlyIncome)} is too much.`;
+    return `A lender won’t approve that. ${formatMoney(quote.monthlyPayment ?? 0)} a month against income of about ${formatMoney(monthlyIncome)} is too much.`;
   }
   return undefined;
 }
@@ -234,7 +234,7 @@ export function registerVehicles(sim: Simulation): void {
       // A deal made across the table fixes the price and carries its terms.
       // Without one, negotiation is one seeded haggle at the counter.
       const deal = p.dealId ? s.universe.vehicleDeals[p.dealId] : undefined;
-      if (p.dealId && (!deal || deal.listingId !== listing.id)) throw new CommandError('That deal is not for this car.');
+      if (p.dealId && (!deal || deal.listingId !== listing.id)) throw new CommandError('That deal isn’t for this car.');
       if (deal && deal.status !== 'agreed') throw new CommandError('Agree a price before you sign.');
       let price = listing.price;
       if (deal) {
@@ -252,15 +252,15 @@ export function registerVehicles(sim: Simulation): void {
       let tradeCredit: Money = 0;
       let tradePayoff: Money = 0;
       if (deal?.terms.tradeInVehicleId) {
-        if (!tradeIn || tradeIn.soldAt || tradeIn.ownerId !== player.id) throw new CommandError('The car you were trading in is not yours to trade.');
-        if (tradeIn.acquisition === 'leased') throw new CommandError('A leased car cannot be traded in.');
+        if (!tradeIn || tradeIn.soldAt || tradeIn.ownerId !== player.id) throw new CommandError('The car you were trading in isn’t yours to trade.');
+        if (tradeIn.acquisition === 'leased') throw new CommandError('A leased car can’t be traded in.');
         requireInHand(tradeIn);
         tradeCredit = deal.terms.tradeInValue ?? 0;
         if (tradeIn.loanAccountId) {
           const loan = s.ledger.tryAccount(tradeIn.loanAccountId);
           tradePayoff = loan ? Math.max(0, -loan.balance) : 0;
           if (tradePayoff > tradeCredit) {
-            throw new CommandError(`You owe ${formatMoney(tradePayoff)} on the ${tradeIn.year} ${tradeIn.make} ${tradeIn.model} and they will only allow ${formatMoney(tradeCredit)} for it.`);
+            throw new CommandError(`You owe ${formatMoney(tradePayoff)} on the ${tradeIn.year} ${tradeIn.make} ${tradeIn.model} and they’ll only allow ${formatMoney(tradeCredit)} for it.`);
           }
         }
       }
@@ -384,9 +384,9 @@ export function registerVehicles(sim: Simulation): void {
     'veh.sell',
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      if (!vehicle || vehicle.soldAt) throw new CommandError('You don’t own that vehicle.');
       requireInHand(vehicle);
-      if (vehicle.acquisition === 'leased') throw new CommandError('You cannot sell a leased vehicle. Return it at the end of the term.');
+      if (vehicle.acquisition === 'leased') throw new CommandError('You can’t sell a leased vehicle. Return it at the end of the term.');
 
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to receive the proceeds.');
@@ -414,7 +414,7 @@ export function registerVehicles(sim: Simulation): void {
           if (loan && Math.max(0, -loan.balance) === 0) loan.closedAt = s.now;
           if (owed > proceeds) {
             throw new CommandError(
-              `You owe ${formatMoney(owed)} on this car and it is only worth ${formatMoney(proceeds)}. You would have to bring ${formatMoney(owed - proceeds)} to close it out.`,
+              `You owe ${formatMoney(owed)} on this car and it’s only worth ${formatMoney(proceeds)}. You’d have to bring ${formatMoney(owed - proceeds)} to close it out.`,
             );
           }
         }
@@ -445,9 +445,9 @@ export function registerVehicles(sim: Simulation): void {
     'veh.book_modification',
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      if (!vehicle || vehicle.soldAt) throw new CommandError('You don’t own that vehicle.');
       requireInHand(vehicle);
-      if (vehicle.acquisition === 'leased') throw new CommandError('You cannot modify a leased vehicle.');
+      if (vehicle.acquisition === 'leased') throw new CommandError('You can’t modify a leased vehicle.');
       if (p.partIds.length === 0) throw new CommandError('Choose at least one part.');
 
       const subject = fitmentSubject(s, vehicle);
@@ -470,7 +470,7 @@ export function registerVehicles(sim: Simulation): void {
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`That work comes to ${formatMoney(cost)} with labor and you cannot cover it.`);
+        throw new CommandError(`That work comes to ${formatMoney(cost)} with labor and you can’t cover it.`);
       }
 
       const at = p.scheduledAt ?? addDays(s.now, 4, s.homeZone);
@@ -499,7 +499,7 @@ export function registerVehicles(sim: Simulation): void {
     (p, { sim: s }) => {
       const mod = s.universe.vehicleModifications[p.modificationId];
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!mod || !vehicle || mod.vehicleId !== vehicle.id || mod.removedAt) throw new CommandError('That modification is not fitted.');
+      if (!mod || !vehicle || mod.vehicleId !== vehicle.id || mod.removedAt) throw new CommandError('That modification isn’t fitted.');
 
       // Anything depending on it has to come off first.
       const remaining = vehicle.currentConfiguration.modificationIds
@@ -534,7 +534,7 @@ export function registerVehicles(sim: Simulation): void {
     'veh.book_service',
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      if (!vehicle || vehicle.soldAt) throw new CommandError('You don’t own that vehicle.');
       requireInHand(vehicle);
       const estimate = serviceEstimate(s, vehicle, p.kind);
       const at = p.at ?? addDays(s.now, 3, s.homeZone);
@@ -559,7 +559,7 @@ export function registerVehicles(sim: Simulation): void {
       // The rule is the one where you are standing.
       requireAge(s, 'drive');
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      if (!vehicle || vehicle.soldAt) throw new CommandError('You don’t own that vehicle.');
       requireInHand(vehicle);
       if (!roadworthy(vehicle)) throw new CommandError(NOT_FOR_THE_ROAD);
       addMileage(s, vehicle, p.miles);
@@ -576,13 +576,13 @@ export function registerVehicles(sim: Simulation): void {
       // The rule is the one where you are standing.
       requireAge(s, 'drive');
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt) throw new CommandError('You do not own that vehicle.');
+      if (!vehicle || vehicle.soldAt) throw new CommandError('You don’t own that vehicle.');
       requireInHand(vehicle);
       if (vehicleKind(vehicle) !== 'boat') throw new CommandError(NOT_A_BOAT);
       const player = s.player;
       if ((vehicle.locationId ?? player.currentLocationId) !== player.currentLocationId) throw new CommandError('The boat is in another city.');
       const hours = clamp(Math.round(p.hours), 1, MAX_CRUISE_HOURS);
-      if (player.wellbeing.energy < 12) throw new CommandError('You are too tired to take a boat out today.');
+      if (player.wellbeing.energy < 12) throw new CommandError('You’re too tired to take a boat out today.');
       const weather = weatherAt(s, player.currentLocationId);
       if (weather && (weather.precipitation === 'storm' || weather.windKph > 50)) throw new CommandError(ROUGH_WATER);
 
@@ -595,7 +595,7 @@ export function registerVehicles(sim: Simulation): void {
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (cost > 0 && s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`${hours} hour${hours === 1 ? '' : 's'} on the water is about ${formatMoney(cost)} in fuel${ramp > 0 ? ' and the ramp' : ''} and you cannot cover it.`);
+        throw new CommandError(`${hours} hour${hours === 1 ? '' : 's'} on the water is about ${formatMoney(cost)} in fuel${ramp > 0 ? ' and the ramp' : ''} and you can’t cover it.`);
       }
       if (ramp > 0) s.expense(accountId, ramp, `Launch ramp — ${vehicle.make} ${vehicle.model}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
       if (cost - ramp > 0) s.expense(accountId, cost - ramp, `Fuel — ${vehicle.make} ${vehicle.model}`, 'transport', { refType: 'vehicle', refId: vehicle.id });
@@ -625,7 +625,7 @@ export function registerVehicles(sim: Simulation): void {
     'veh.name',
     (p, { sim: s }) => {
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You do not own that vehicle.');
+      if (!vehicle || vehicle.soldAt || vehicle.ownerId !== s.player.id) throw new CommandError('You don’t own that vehicle.');
       if (p.name === null || p.name.trim() === '') {
         vehicle.nickname = undefined;
         return {};
@@ -841,7 +841,7 @@ function installParts(sim: Simulation, vehicleId: Id, partIds: string[]): void {
       sim.requireDecision({
         urgency: 55, category: 'vehicles',
         title: `${vehicle.make} ${vehicle.model} Is Not Road Legal`,
-        detail: `${part.name} is not street legal where the car is registered. It will fail inspection and can be cited.`,
+        detail: `${part.name} isn’t street legal where the car is registered. It will fail inspection and can be cited.`,
         route: '/workspace/vehicles',
         refType: 'vehicle', refId: vehicle.id,
       });
@@ -971,7 +971,7 @@ export function addMileage(sim: Simulation, vehicle: Vehicle, miles: number): vo
   if (vehicle.leaseMileageCap && vehicle.mileage - 0 > vehicle.leaseMileageCap) {
     sim.notify({
       category: 'vehicles', title: 'Over The Lease Mileage Cap',
-      body: `You are past the allowance on the ${vehicle.make} ${vehicle.model}. Overage is charged per mile at return.`,
+      body: `You’re past the allowance on the ${vehicle.make} ${vehicle.model}. Overage is charged per mile at return.`,
       importance: 55, route: '/workspace/vehicles',
     });
   }
@@ -1014,8 +1014,8 @@ function performService(sim: Simulation, vehicleId: Id, kind: ServiceRecord['kin
     if (!accountId || sim.ledger.availableFunds(accountId) < cost) {
       sim.requireDecision({
         urgency: 76, category: 'vehicles',
-        title: `Cannot Pay For ${serviceLabel(kind)}`,
-        detail: `The shop quoted ${formatMoney(cost)} on the ${vehicle.make} ${vehicle.model}. The work has not been done.`,
+        title: `Can’t Pay For ${serviceLabel(kind)}`,
+        detail: `The shop quoted ${formatMoney(cost)} on the ${vehicle.make} ${vehicle.model}. The work hasn’t been done.`,
         route: '/workspace/vehicles',
         refType: 'vehicle', refId: vehicle.id,
       });
@@ -1065,7 +1065,7 @@ function renewRegistration(sim: Simulation, vehicleId: Id): void {
     sim.requireDecision({
       urgency: 74, category: 'vehicles',
       title: `${vehicle.make} ${vehicle.model} Failed Inspection`,
-      detail: `${illegalMods.map((m) => m?.name).join(', ')} ${illegalMods.length === 1 ? 'is' : 'are'} not street legal here. Registration cannot be renewed until removed.`,
+      detail: `${illegalMods.map((m) => m?.name).join(', ')} ${illegalMods.length === 1 ? 'is' : 'are'} not street legal here. Registration can’t be renewed until removed.`,
       route: '/workspace/vehicles',
       refType: 'vehicle', refId: vehicle.id,
     });

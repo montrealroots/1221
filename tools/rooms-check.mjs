@@ -375,7 +375,7 @@ for (const [birthYear, cityId] of [[2005, 'uk-eng-london'], [1995, 'us-ca-losang
   sim.player.currentPlaceId = undefined;
   const res = sim.execute({ kind: 'room.dentist', payload: { placeId: practice.id, treatmentId: 'exam' } });
   if (res.ok) problems.push('somebody was examined without being at the practice');
-  if (!/not at/.test(res.error ?? '')) problems.push('being somewhere else is refused for the wrong reason');
+  if (!/n[o’]t at/.test(res.error ?? '')) problems.push('being somewhere else is refused for the wrong reason');
 }
 
 // --- Say what was measured -----------------------------------------------------------

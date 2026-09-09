@@ -103,7 +103,7 @@ describe('what the published figures say and do not say', () => {
     expect(LIFESPAN_NOTE).toMatch(/published/);
     expect(LIFESPAN_NOTE).toMatch(/SLATE/);
     expect(LIFESPAN_NOTE).toMatch(/no table/i);
-    expect(AGE_GATE_NOTE).toMatch(/not legal advice/);
+    expect(AGE_GATE_NOTE).toMatch(/n[o’]t legal advice/);
   });
 
   it('gives a person the figures of the country they are from', () => {
@@ -383,14 +383,14 @@ describe('what age lets you do', () => {
       expect(res.ok, kind).toBe(false);
       // Either the national gate or, for a license, the actual office's own
       // rule, which knows more than the national one does.
-      expect(res.error, kind).toMatch(/not old enough|no lender|nobody will|licenses drivers from/i);
+      expect(res.error, kind).toMatch(/n[o’]t old enough|no lender|nobody will|licenses drivers from/i);
     }
     // The same commands stop refusing on age once the age is there. They may
     // still refuse for their own reasons, which is a different sentence.
     const grown = standingIn(aLife('grown', 34), 'us-ca-losangeles');
     for (const kind of ['veh.purchase', 'prop.rent', 'doc.apply_license', 'bank.open']) {
       const res = grown.execute({ kind, payload: {} });
-      expect(res.error ?? '', kind).not.toMatch(/not old enough|licenses drivers from/i);
+      expect(res.error ?? '', kind).not.toMatch(/n[o’]t old enough|licenses drivers from/i);
     }
   });
 

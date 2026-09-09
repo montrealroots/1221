@@ -39,7 +39,7 @@ export const SPECIALTIES: { key: HealthProvider['specialty']; label: string; bas
   { key: 'physical_therapy', label: 'Physical Therapy', baseCost: 210_00, minutes: 55, leadDays: [3, 14], conditionGain: 9, description: 'Structured rehabilitation after injury.' },
   { key: 'specialist', label: 'Specialist', baseCost: 420_00, minutes: 45, leadDays: [14, 70], conditionGain: 12, description: 'Referral-only, expensive and worth it when you need it.' },
   { key: 'urgent_care', label: 'Urgent Care', baseCost: 340_00, minutes: 90, leadDays: [0, 0], conditionGain: 14, description: 'Walk-in, same day, no appointment.' },
-  { key: 'emergency', label: 'Emergency', baseCost: 2_800_00, minutes: 240, leadDays: [0, 0], conditionGain: 22, description: 'When it cannot wait, at a price that reflects that.' },
+  { key: 'emergency', label: 'Emergency', baseCost: 2_800_00, minutes: 240, leadDays: [0, 0], conditionGain: 22, description: 'When it can’t wait, at a price that reflects that.' },
   { key: 'counseling', label: 'Counselling', baseCost: 240_00, minutes: 55, leadDays: [5, 30], conditionGain: 3, description: 'Talking to someone about the pressure. Moves stress more than anything else does.' },
 ];
 
@@ -205,7 +205,7 @@ export function registerServices(sim: Simulation): void {
       if (!provider) throw new CommandError('No such provider.');
       const player = s.player;
       if (provider.locationId !== player.currentLocationId) {
-        throw new CommandError(`${provider.name} practises in ${CITIES.require(provider.locationId).name}. You are not there.`);
+        throw new CommandError(`${provider.name} practises in ${CITIES.require(provider.locationId).name}. You aren’t there.`);
       }
 
       const spec = SPECIALTIES.find((sp) => sp.key === provider.specialty);
@@ -258,7 +258,7 @@ export function registerServices(sim: Simulation): void {
     'health.cancel',
     (p, { sim: s }) => {
       const appointment = s.universe.appointments[p.appointmentId];
-      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment cannot be canceled.');
+      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment can’t be canceled.');
       const lateFee = appointment.at - s.now < 24 * MS_DAY / 24 ? Math.round(appointment.cost * 0.35) : 0;
       appointment.status = 'cancelled';
       if (appointment.scheduledItemId) s.timeline.cancel(appointment.scheduledItemId, s.now);
@@ -278,7 +278,7 @@ export function registerServices(sim: Simulation): void {
     'health.reschedule',
     (p, { sim: s }) => {
       const appointment = s.universe.appointments[p.appointmentId];
-      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment cannot be moved.');
+      if (!appointment || appointment.status !== 'scheduled') throw new CommandError('That appointment can’t be moved.');
       if (!Number.isFinite(p.at) || p.at <= s.now) throw new CommandError('Move it somewhere in the future.');
       const clash = s.timeline.conflicts(p.at, appointment.durationMinutes, appointment.scheduledItemId)[0];
       if (clash) throw new CommandError(`That slot collides with "${clash.label}". Pick another time.`);
@@ -393,7 +393,7 @@ export function registerServices(sim: Simulation): void {
     (p, { sim: s }) => {
       const policy = s.universe.insurancePolicies[p.policyId];
       if (!policy) throw new CommandError('No such policy.');
-      if (policy.status !== 'active') throw new CommandError('That policy is not active.');
+      if (policy.status !== 'active') throw new CommandError('That policy isn’t active.');
 
       const claim: InsuranceClaim = {
         id: s.nextId('claim'),
@@ -462,17 +462,17 @@ export function registerServices(sim: Simulation): void {
       if (!course) throw new CommandError('No such course.');
       const player = s.player;
       if (course.locationId !== player.currentLocationId) {
-        throw new CommandError(`${course.name} runs in ${CITIES.require(course.locationId).name}. You are not there.`);
+        throw new CommandError(`${course.name} runs in ${CITIES.require(course.locationId).name}. You aren’t there.`);
       }
       const already = Object.values(s.universe.enrollments).find((e) => e.personId === player.id && e.courseId === course.id && e.status === 'active');
-      if (already) throw new CommandError('You are already enrolled in that.');
+      if (already) throw new CommandError('You’re already enrolled in that.');
 
       // Some courses expect a baseline before they will take you.
       if (course.minimumLevel > 0) {
         const relevant = course.improves[0];
         const level = relevant ? (relevant.kind === 'attribute' ? player.attributes[relevant.key] : player.skills[relevant.key]) ?? 0 : 0;
         if (level < course.minimumLevel) {
-          throw new CommandError(`${course.name} expects a working level of at least ${course.minimumLevel}. You are at ${Math.round(level)}.`);
+          throw new CommandError(`${course.name} expects a working level of at least ${course.minimumLevel}. You’re at ${Math.round(level)}.`);
         }
       }
 
@@ -507,7 +507,7 @@ export function registerServices(sim: Simulation): void {
     'edu.drop',
     (p, { sim: s }) => {
       const enrollment = s.universe.enrollments[p.enrollmentId];
-      if (!enrollment || enrollment.status !== 'active') throw new CommandError('You are not enrolled in that.');
+      if (!enrollment || enrollment.status !== 'active') throw new CommandError('You aren’t enrolled in that.');
       enrollment.status = 'dropped';
       s.timeline.cancelFor('enrollment', enrollment.id, s.now);
       return { dropped: true };
@@ -578,7 +578,7 @@ export function buildQuote(
   const { countryId, offers } = carriersFor(sim, holderId, line);
   if (offers.length === 0) throw new CommandError(nobodyWrites(countryId, line));
   const chosen = carrier ? offers.find((o) => o.name === carrier) : offers[0]!;
-  if (!chosen) throw new CommandError(`${carrier} does not write ${line} cover where you live.`);
+  if (!chosen) throw new CommandError(`${carrier} doesn’t write ${line} cover where you live.`);
 
   const person = sim.universe.people[holderId];
   const cityId = person?.currentLocationId ?? 'us-ca-losangeles';
@@ -718,7 +718,7 @@ export function completeAppointment(sim: Simulation, appointmentId: Id): void {
   const person = sim.universe.people[appointment.personId];
   if (!provider || !person) return;
   if (person.currentLocationId !== appointment.locationId) {
-    missAppointment(sim, appointment, `You were not in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}.`);
+    missAppointment(sim, appointment, `You weren’t in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}.`);
     return;
   }
   const spec = SPECIALTIES.find((sp) => sp.key === provider.specialty);
@@ -834,7 +834,7 @@ function attendSession(sim: Simulation, enrollmentId: Id): void {
     enrollment.totalPaid += course.costPerSession;
   } else {
     enrollment.status = 'dropped';
-    sim.notify({ category: 'education', title: `Dropped From ${course.name}`, body: 'The session fee could not be paid.', importance: 50, route: '/workspace/education' });
+    sim.notify({ category: 'education', title: `Dropped From ${course.name}`, body: 'The session fee couldn’t be paid.', importance: 50, route: '/workspace/education' });
     return;
   }
 

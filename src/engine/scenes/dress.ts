@@ -91,7 +91,7 @@ export const DRESS_SCENE = defineScene({
         return {
           title: 'Where Are You Going',
           eyebrow: 'The Wardrobe',
-          text: 'What the room expects is most of the answer, so it is worth saying first.',
+          text: 'What the room expects is most of the answer, so it’s worth saying first.',
           choices: OCCASIONS.map((o) => ({
             id: `for:${o.id}`,
             label: o.label,
@@ -156,7 +156,7 @@ export const DRESS_SCENE = defineScene({
           title: SLOT_LABEL[slot],
           eyebrow: 'The Wardrobe',
           text: options.length === 0
-            ? 'Nothing here. That is a shopping problem rather than a dressing one.'
+            ? 'Nothing here. That’s a shopping problem rather than a dressing one.'
             : `${options.length} of them, best first.`,
           choices,
           canSkip: true,
@@ -254,7 +254,7 @@ export const DRESS_SCENE = defineScene({
     }
 
     if (session.node === 'done' && choiceId === 'finish') { ctx.finish(); return; }
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {
@@ -267,7 +267,7 @@ export const DRESS_SCENE = defineScene({
         if (best) ctx.commit(`put:${best.id}`, { kind: 'wear.put_on', payload: { assetId: best.id } });
       }
     }
-    if (wearing(sim, me.id).length === 0) throw new CommandError('There is nothing in the wardrobe to put on.');
+    if (wearing(sim, me.id).length === 0) throw new CommandError('There’s nothing in the wardrobe to put on.');
     leaveInIt(sim, session, ctx);
     ctx.say(String(session.context['note'] ?? 'Dressed.'));
   },

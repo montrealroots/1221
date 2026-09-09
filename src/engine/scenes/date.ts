@@ -60,7 +60,7 @@ function whatTheyRemember(sim: Simulation, personId: Id): string {
   const promise = facts.find((f) => f.kind === 'promise');
   const stood = facts.find((f) => f.kind === 'event' && /never came/.test(f.text));
   const good = facts.find((f) => f.kind === 'event' && /good evening/.test(f.text));
-  if (stood) return ` They have not forgotten the time you did not come.`;
+  if (stood) return ` They haven’t forgotten the time you didn’t come.`;
   if (promise && /Did not/.test(promise.text)) return ` They remember what you said last time, and what you did.`;
   if (good) return ` Last time was good, and they say so.`;
   return '';
@@ -74,7 +74,7 @@ export const DATE_SCENE = defineScene({
 
   available(sim, input) {
     const date = sim.universe.dates[String(input['dateId'])];
-    if (!date) return { ok: false, reason: 'There is no date like that.' };
+    if (!date) return { ok: false, reason: 'There’s no date like that.' };
     const can = dateAttendable(sim, date);
     return can.ok ? { ok: true } : { ok: false, reason: can.reason };
   },
@@ -104,7 +104,7 @@ export const DATE_SCENE = defineScene({
         const choices: SceneChoice[] = [];
         const shower = ACTIVITIES.find((a) => a.id === 'shower');
         if (shower && atHome(sim)) {
-          choices.push({ id: 'shower', label: 'Shower And Get Ready', aliases: ['shower', 'get ready', 'wash'], detail: `${shower.minutes} minutes.`, disabled: sim.player.wellbeing.hygiene >= 85 ? 'You are ready.' : undefined });
+          choices.push({ id: 'shower', label: 'Shower And Get Ready', aliases: ['shower', 'get ready', 'wash'], detail: `${shower.minutes} minutes.`, disabled: sim.player.wellbeing.hygiene >= 85 ? 'You’re ready.' : undefined });
         }
         if (giftableAssets(sim, sim.player.id).length > 0) {
           choices.push({ id: 'gift', label: str(session, 'giftAssetId') ? 'Take Something Else' : 'Take Them Something', aliases: ['gift', 'present', 'bring'] });
@@ -247,7 +247,7 @@ export const DATE_SCENE = defineScene({
         const giftId = str(session, 'giftAssetId');
         if (giftId) {
           const given = ctx.commit<{ given: boolean }>('gift', { kind: 'rel.give_gift', payload: { relationshipId: date.relationshipId, assetId: giftId } });
-          if (given.given) ctx.say('You give it to them before the menus come. They are surprised, and then they are not.');
+          if (given.given) ctx.say('You give it to them before the menus come. They’re surprised, and then they aren’t.');
         }
         ctx.go('beat');
         return;

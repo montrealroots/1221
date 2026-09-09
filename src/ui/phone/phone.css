@@ -152,6 +152,11 @@
   align-items: center;
   justify-content: center;
   background: transparent;
+  /* Drawn over everything an app puts up, sheets and the camera included,
+     the way the handset draws its own home indicator. The way out of an
+     app is never under the app. */
+  position: relative;
+  z-index: 40;
 }
 .ph-home-bar button {
   width: 138px; height: 5px; border-radius: 3px;

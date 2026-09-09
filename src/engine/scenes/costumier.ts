@@ -54,7 +54,7 @@ function specOf(session: SceneSession): Spec {
 
 function placeOf(sim: Simulation, session: SceneSession): Place {
   const place = placeById(sim.player.currentLocationId, String(session.context['placeId'] ?? ''));
-  if (!place) throw new CommandError('You are not standing in the workroom any more.');
+  if (!place) throw new CommandError('You aren’t standing in the workroom any more.');
   return place;
 }
 
@@ -66,13 +66,13 @@ export const COSTUMIER_SCENE = defineScene({
 
   available(sim) {
     const place = placeById(sim.player.currentLocationId, sim.player.currentPlaceId ?? '');
-    if (!isCostumier(place)) return { ok: false, reason: 'You are not at a costume house.' };
+    if (!isCostumier(place)) return { ok: false, reason: 'You aren’t at a costume house.' };
     return { ok: true };
   },
 
   start(sim) {
     const place = placeById(sim.player.currentLocationId, sim.player.currentPlaceId ?? '');
-    if (!isCostumier(place)) throw new CommandError('You are not at a costume house.');
+    if (!isCostumier(place)) throw new CommandError('You aren’t at a costume house.');
     return {
       node: 'counter',
       context: {
@@ -101,7 +101,7 @@ export const COSTUMIER_SCENE = defineScene({
           (c) => (c.status === 'ordered' || c.status === 'fitting') && c.fittingsDone < c.fittingsWanted,
         );
         const choices: SceneChoice[] = [
-          { id: 'design', label: 'Have Something Cut', aliases: ['commission', 'make', 'design', 'bespoke'], tone: 'primary', detail: 'They will ask you four questions.' },
+          { id: 'design', label: 'Have Something Cut', aliases: ['commission', 'make', 'design', 'bespoke'], tone: 'primary', detail: 'They’ll ask you four questions.' },
         ];
         for (const c of fitting) {
           choices.push({
@@ -245,7 +245,7 @@ export const COSTUMIER_SCENE = defineScene({
         return {
           title: 'What Needs Moving',
           eyebrow: place.name,
-          text: said || 'Bring it in and they will tell you what can be done to it. '
+          text: said || 'Bring it in and they’ll tell you what can be done to it. '
             + 'Taking in is always possible. Letting out depends on what the maker left inside the seam.',
           choices: [
             ...wearable.map((a) => ({
@@ -279,7 +279,7 @@ export const COSTUMIER_SCENE = defineScene({
         return {
           title: 'Done',
           eyebrow: place.name,
-          text: said || 'That is that.',
+          text: said || 'That’s that.',
           choices: [{ id: 'finish', label: 'Leave', tone: 'primary', aliases: ['out', 'go'] }],
           canSkip: false,
         };
@@ -375,7 +375,7 @@ export const COSTUMIER_SCENE = defineScene({
     if (session.node === 'quote') {
       if (choiceId === 'change') { session.context['line'] = ''; ctx.go('kind'); return; }
       if (choiceId === 'think') {
-        ctx.say('You fold the docket into your pocket. Cloth and hours do not get cheaper for being slept on, but they do not get dearer either.');
+        ctx.say('You fold the docket into your pocket. Cloth and hours don’t get cheaper for being slept on, but they don’t get dearer either.');
         ctx.finish();
         return;
       }

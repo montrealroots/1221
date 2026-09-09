@@ -200,33 +200,33 @@ export function registerDriving(sim: Simulation): void {
     (p, { sim: s }) => {
       const player = s.player;
       const vehicle = s.universe.vehicles[p.vehicleId];
-      if (!vehicle) throw new CommandError('That car does not exist.');
-      if (vehicle.ownerId !== player.id || vehicle.ownerKind !== 'person') throw new CommandError('That is not your car.');
+      if (!vehicle) throw new CommandError('That car doesn’t exist.');
+      if (vehicle.ownerId !== player.id || vehicle.ownerKind !== 'person') throw new CommandError('That isn’t your car.');
       if (vehicle.deliveryDueAt) throw new CommandError(WAITING_ON_DELIVERY);
       const license = licenseCheck(s, player);
       if (!license.ok) throw new CommandError(license.reason ?? 'No license.');
 
       const from = CITIES.get(player.currentLocationId);
       const to = CITIES.get(p.toCityId);
-      if (!from) throw new CommandError('You are nowhere SLATE can drive from.');
-      if (!to) throw new CommandError('That is not a place SLATE knows.');
-      if (to.id === from.id) throw new CommandError(`You are already in ${to.name}.`);
+      if (!from) throw new CommandError('You’re nowhere SLATE can drive from.');
+      if (!to) throw new CommandError('That isn’t a place SLATE knows.');
+      if (to.id === from.id) throw new CommandError(`You’re already in ${to.name}.`);
 
       const carAt = vehicleLocation(s, vehicle);
       if (carAt !== from.id) {
         throw new CommandError(`Your ${vehicle.year} ${vehicle.make} ${vehicle.model} is in ${CITIES.get(carAt ?? '')?.name ?? 'another city'}, not here.`);
       }
-      if (vehicle.mechanicalHealth < 8) throw new CommandError('That car will not make the trip. Get it serviced first.');
+      if (vehicle.mechanicalHealth < 8) throw new CommandError('That car won’t make the trip. Get it serviced first.');
 
       const estimate = estimateDrive(s, from, to, vehicle);
       if (estimate.km > MAX_DRIVE_KM) {
-        throw new CommandError(`${to.name} is ${formatDistance(estimate, from.countryId)} away. That is a flight, or two days.`);
+        throw new CommandError(`${to.name} is ${formatDistance(estimate, from.countryId)} away. That’s a flight, or two days.`);
       }
 
       const accountId = player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay for fuel from.');
       if (estimate.fuelCents > 0 && s.ledger.availableFunds(accountId) < estimate.fuelCents) {
-        throw new CommandError(`Fuel for the drive is about ${(estimate.fuelCents / 100).toFixed(2)} and you cannot cover it.`);
+        throw new CommandError(`Fuel for the drive is about ${(estimate.fuelCents / 100).toFixed(2)} and you can’t cover it.`);
       }
       if (estimate.fuelCents > 0) {
         s.expense(accountId, estimate.fuelCents, `Fuel — ${from.name} to ${to.name}`, 'transport', { refType: 'vehicle', refId: vehicle.id });

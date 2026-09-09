@@ -194,7 +194,7 @@ export function ShoppingWorkspace() {
       {tab === 'owned' && (
         <Panel title="Your Things" flush>
           {owned.length === 0 ? (
-            <Empty title="Nothing Yet" body="Anything you buy that is not consumed shows up here." />
+            <Empty title="Nothing Yet" body="Anything you buy that isn’t consumed shows up here." />
           ) : (
             <div className="list">
               {owned.sort((a, b) => b.currentValue - a.currentValue).map((asset) => (
@@ -287,7 +287,7 @@ export function ShoppingWorkspace() {
           <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>{COLOUR_NOTE}</p>
 
           {commissions.length > 0 && (
-            <Panel title="Being Made For You" subtitle="A bench cannot be hurried, and nobody there will pretend otherwise." flush>
+            <Panel title="Being Made For You" subtitle="A bench can’t be hurried, and nobody there will pretend otherwise." flush>
               <div className="list">
                 {commissions.map((c) => (
                   <div key={c.id} className="list-item list-static">
@@ -376,7 +376,7 @@ export function ShoppingWorkspace() {
           </Panel>
 
           {costumes.length > 0 && (
-            <Panel title="Being Cut For You" subtitle="A workroom cannot be hurried, and fittings are not optional if you want it to fit." flush>
+            <Panel title="Being Cut For You" subtitle="A workroom can’t be hurried, and fittings aren’t optional if you want it to fit." flush>
               <div className="list">
                 {costumes.map((c) => (
                   <div key={c.id} className="list-item list-static">
@@ -513,8 +513,8 @@ function WashingPanel() {
           {machine
             ? dryer
               ? 'The washer and the dryer here both work.'
-              : 'The washer here works. There is no dryer, so a wash hangs overnight before you can wear any of it.'
-            : 'There is no washing machine here. When something needs washing it goes to the launderette.'}
+              : 'The washer here works. There’s no dryer, so a wash hangs overnight before you can wear any of it.'
+            : 'There’s no washing machine here. When something needs washing it goes to the launderette.'}
         </p>
       </Panel>
     );
@@ -531,7 +531,7 @@ function WashingPanel() {
             ? dryer
               ? `${plural(washable.length, 'Thing')} can go in the machine here: ${plural(loads, 'Load')}, three quarters of an hour, and about ${plural(TUMBLE_DRY_HOURS, 'Hour')} in the dryer after.`
               : `${plural(washable.length, 'Thing')} can go in the machine here, and then on the airer: ${plural(loads, 'Load')}, nothing to pay, and about ${plural(AIR_DRY_HOURS, 'Hour')} before any of it is wearable.`
-            : `${plural(washable.length, 'Thing')} and no machine here, so it is the launderette: ${plural(loads, 'Load')} at ${formatMoney(LAUNDERETTE_LOAD)} each, most of an afternoon, and dry when you carry it home.`}
+            : `${plural(washable.length, 'Thing')} and no machine here, so it’s the launderette: ${plural(loads, 'Load')} at ${formatMoney(LAUNDERETTE_LOAD)} each, most of an afternoon, and dry when you carry it home.`}
         </p>
       )}
       {specialist.length > 0 && (

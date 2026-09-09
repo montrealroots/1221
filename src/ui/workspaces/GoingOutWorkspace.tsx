@@ -74,7 +74,7 @@ export function GoingOutWorkspace() {
           : fashion
           ? (
             <p className="muted">
-              A show is not ticketed and a seat cannot be bought. You write to the house, they decide,
+              A show isn’t ticketed and a seat can’t be bought. You write to the house, they decide,
               and then the room looks at what you turned up in.
             </p>
           )
@@ -261,9 +261,9 @@ function YourSeats({ seats }: { seats: GoingTicket[] }) {
                 </div>
                 <p className="xs dim" style={{ marginTop: 8 }}>
                   {!here
-                    ? `It is in ${CITIES.get(ticket.cityId)?.name}. You have to be there.`
+                    ? `It’s in ${CITIES.get(ticket.cityId)?.name}. You have to be there.`
                     : open
-                      ? 'They are letting people in.'
+                      ? 'They’re letting people in.'
                       : 'They open the doors an hour and a quarter before, and shut them half an hour after it starts.'}
                 </p>
               </>
@@ -294,7 +294,7 @@ function FashionWeeks() {
 
   return (
     <>
-      <Panel title="The Season" subtitle="Every week that is running, in the order it runs.">
+      <Panel title="The Season" subtitle="Every week that’s running, in the order it runs.">
         <div className="list">
           {all.slice(0, 24).map((edition) => {
             const houses = housesAt(edition.weekId).length;
@@ -331,7 +331,7 @@ function FashionWeeks() {
         <p className="xs dim" style={{ marginTop: 10 }}>
           A week with nothing listed is still a real week that really runs. SLATE only carries the
           houses its own shops sell, which are the Paris, Milan, London and New York ones, so those
-          are the only schedules there is a seat to ask for.
+          are the only schedules there’s a seat to ask for.
         </p>
       </Panel>
 
@@ -371,7 +371,7 @@ function TheSchedule({ edition, onAsk }: { edition: Edition; onAsk: (showId: str
               <div style={{ textAlign: 'right', minWidth: 150 }}>
                 <div className="mono small">{standingWith(sim, show.house)} of 100</div>
                 <div className="xs dim">
-                  {seat ? `They would sit you ${SEAT_LABEL[seat].toLowerCase()}` : 'They would not have you'}
+                  {seat ? `They’d sit you ${SEAT_LABEL[seat].toLowerCase()}` : 'They wouldn’t have you'}
                 </div>
                 <div className="xs dim">{owned > 0 ? `${plural(owned, 'piece')} of theirs` : 'Not a customer'}</div>
               </div>
@@ -388,7 +388,7 @@ function TheSchedule({ edition, onAsk }: { edition: Edition; onAsk: (showId: str
         })}
       </div>
       <p className="xs dim" style={{ marginTop: 10 }}>
-        A seat is not sold and cannot be bought. What decides it is how many people know your name,
+        A seat isn’t sold and can’t be bought. What decides it’s how many people know your name,
         what the industry thinks of you, and whether you have ever bought anything the house makes.
         The list closes about a fortnight out.
       </p>
@@ -401,7 +401,7 @@ function YourInvitations({ invites }: { invites: FashionInvite[] }) {
   const { sim, run } = useGame();
 
   if (invites.length === 0) {
-    return <Empty title="Nothing Asked For" body="Write to a house from the schedule and the letter lives here until it is answered." />;
+    return <Empty title="Nothing Asked For" body="Write to a house from the schedule and the letter lives here until it’s answered." />;
   }
 
   return (
@@ -455,8 +455,8 @@ function YourInvitations({ invites }: { invites: FashionInvite[] }) {
                   {!here
                     ? `The show is in ${CITIES.get(invite.cityId)?.name}. You have to be there, dressed, before it starts.`
                     : open
-                      ? 'They are letting people in. What you have on is what the room sees.'
-                      : 'They open the doors an hour before, and a show does not wait once it has started.'}
+                      ? 'They’re letting people in. What you have on is what the room sees.'
+                      : 'They open the doors an hour before, and a show doesn’t wait once it has started.'}
                 </p>
               </>
             )}
@@ -655,7 +655,7 @@ function YourTickets({ tickets }: { tickets: CinemaTicket[] }) {
                   {!here
                     ? `You have to be at ${ticket.placeName}. Go there from The City, and then take your seat.`
                     : open
-                      ? 'They are letting people in.'
+                      ? 'They’re letting people in.'
                       : `They open the doors forty five minutes before, and shut them half an hour after it starts.`}
                 </p>
               </>

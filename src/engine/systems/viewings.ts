@@ -30,7 +30,7 @@ export const TRAVEL_MINUTES = 25;
 export const LOOK_MINUTES = 8;
 export const LAPSE_MINUTES = 90;
 export const EARLY_MINUTES = 60;
-export const NOT_HERE = 'You are not in the city the house is in.';
+export const NOT_HERE = 'You aren’t in the city the house is in.';
 
 export interface ViewingRoom {
   id: string;
@@ -96,7 +96,7 @@ export function agentTone(person: Person): DialogueTone {
 export function agentKnows(sim: Simulation, agentPersonId: Id): string[] {
   const facts = factsOf(sim, agentPersonId, { aboutId: sim.player.id });
   const known: string[] = [];
-  if (facts.some((f) => f.kind === 'event' && /did not come/.test(f.text))) known.push('missed');
+  if (facts.some((f) => f.kind === 'event' && /did(n’t| not) come/.test(f.text))) known.push('missed');
   if (facts.some((f) => f.kind === 'meeting')) known.push('met');
   return known;
 }
@@ -219,7 +219,7 @@ export function registerViewings(sim: Simulation): void {
       if (!can.ok) throw new CommandError(can.reason ?? NOT_HERE);
       const property = propertyOf(s, listing);
       const room = roomsOf(property).find((r) => r.id === p.room);
-      if (!room) throw new CommandError('There is no such room here.');
+      if (!room) throw new CommandError('There’s no such room here.');
       const who = agentOf(s, listing);
       s.advanceTo(s.now + LOOK_MINUTES * MS_MINUTE);
       const note = speak(s, { section: 'property', purpose: 'room', beat: 'walk' }, {
@@ -238,7 +238,7 @@ export function registerViewings(sim: Simulation): void {
       if (!can.ok) throw new CommandError(can.reason ?? NOT_HERE);
       const property = propertyOf(s, listing);
       const question = QUESTIONS.find((q) => q.id === p.question);
-      if (!question) throw new CommandError('That is not something to ask here.');
+      if (!question) throw new CommandError('That isn’t something to ask here.');
       const who = agentOf(s, listing);
       const flags = question.id === 'why' ? [listing.sellerMotivation >= 70 ? 'keen' : 'steady'] : question.id === 'offers' ? ['quiet'] : [];
       const answer = speak(s, { section: 'property', purpose: 'answer', beat: 'ask' }, {
@@ -296,7 +296,7 @@ function missShowing(sim: Simulation, listing: PropertyListing, why: string): vo
   const who = agentOf(sim, listing);
   sim.resolveDecision('listing', listing.id);
   if (who) {
-    rememberFact(sim, who.person.id, { kind: 'event', aboutId: sim.player.id, text: `Booked a showing at ${property?.addressLine ?? 'a house'} and did not come.`, weight: 40, sourceKind: 'viewing', refType: 'listing', refId: listing.id, expiresAt: sim.now + 120 * MS_DAY });
+    rememberFact(sim, who.person.id, { kind: 'event', aboutId: sim.player.id, text: `Booked a showing at ${property?.addressLine ?? 'a house'} and didn’t come.`, weight: 40, sourceKind: 'viewing', refType: 'listing', refId: listing.id, expiresAt: sim.now + 120 * MS_DAY });
   }
   sim.notify({
     category: 'property', title: `You Missed The Showing`,

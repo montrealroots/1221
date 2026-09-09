@@ -242,12 +242,12 @@ export function scheduleTomorrow(sim: Simulation): void {
 /** What the loop is, and what it is not, for a screen that shows it. */
 export const DIRECTOR_NOTE = 'Once a day the world looks back over what it remembers and '
   + 'brings up at most two things: a year to the day, something started and never finished, '
-  + 'somebody you have not seen, something you have kept at, something you stopped. Every one '
+  + 'somebody you haven’t seen, something you have kept at, something you stopped. Every one '
   + 'of them names the record it came from, so the game can always say why it said that.';
 
-export const DIRECTOR_LIMITS_NOTE = 'It cannot bring up something that is not in the record, '
-  + 'and it will not raise the same thing twice inside three weeks. It is not a writer and '
-  + 'there is no model behind it: it chooses among things that really happened, and says them '
+export const DIRECTOR_LIMITS_NOTE = 'It can’t bring up something that isn’t in the record, '
+  + 'and it won’t raise the same thing twice inside three weeks. It isn’t a writer and '
+  + 'there’s no model behind it: it chooses among things that really happened, and says them '
   + 'in the words the memory was filed under.';
 
 export { markPlayed, worthNow };

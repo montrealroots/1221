@@ -72,10 +72,10 @@ export const INSPECTION_SCENE = defineScene({
 
   available(sim, input) {
     const offer = sim.universe.propertyOffers[String(input['offerId'])];
-    if (!offer) return { ok: false, reason: 'There is no offer like that.' };
-    if (offer.buyerId !== sim.player.id) return { ok: false, reason: 'That is not your purchase.' };
-    if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase is not open.' };
-    if (!offer.inspectionFindings) return { ok: false, reason: 'The inspection has not happened yet.' };
+    if (!offer) return { ok: false, reason: 'There’s no offer like that.' };
+    if (offer.buyerId !== sim.player.id) return { ok: false, reason: 'That isn’t your purchase.' };
+    if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase isn’t open.' };
+    if (!offer.inspectionFindings) return { ok: false, reason: 'The inspection hasn’t happened yet.' };
     if (offer.inspectionDecidedAt) return { ok: false, reason: 'That report has been answered already.' };
     return { ok: true };
   },
@@ -109,7 +109,7 @@ export const INSPECTION_SCENE = defineScene({
         return {
           title: 'The Inspection',
           eyebrow: `${property.addressLine} · ${inspector.displayName}`,
-          text: here ? meetLine(sim, offer, true, false) : `${inspector.firstName} has sent the report. You are not in ${property.addressLine.split(',')[0]}'s city to walk it, but you can read it anywhere.`,
+          text: here ? meetLine(sim, offer, true, false) : `${inspector.firstName} has sent the report. You aren’t in ${property.addressLine.split(',')[0]}'s city to walk it, but you can read it anywhere.`,
           choices: [
             { id: 'walk', label: 'Walk It With The Inspector', aliases: ['walk', 'inspector', 'with them'], tone: 'primary', detail: 'An hour and a half, room by room.', disabled: here ? undefined : NOT_HERE },
             { id: 'read', label: 'Read The Report Here', aliases: ['read', 'report', 'here'], detail: 'Fifteen minutes with the pages.' },
@@ -128,7 +128,7 @@ export const INSPECTION_SCENE = defineScene({
         return {
           title: 'The Report',
           eyebrow: `${looked.length} of ${findings.length} looked at · about ${formatMoney(total, { cents: false })} of work`,
-          text: str(session, 'lastNote') || (findings.length === 0 ? 'There is nothing on the list. That happens, and it is worth the fee when it does.' : 'The list, in the order it was written.'),
+          text: str(session, 'lastNote') || (findings.length === 0 ? 'There’s nothing on the list. That happens, and it’s worth the fee when it does.' : 'The list, in the order it was written.'),
           choices,
           facts,
           canSkip: true,
@@ -141,7 +141,7 @@ export const INSPECTION_SCENE = defineScene({
           text: verdictLine(sim, offer, findings.length === 0 ? 'clean' : 'work', false),
           choices: [
             { id: 'proceed', label: 'Proceed At The Price', aliases: ['proceed', 'go ahead', 'yes'], tone: findings.length === 0 || !inspectionSignificant(offer) ? 'primary' : undefined, detail: `${formatMoney(offer.amount)} as agreed.` },
-            { id: 'ask', label: 'Ask For Money Off', aliases: ['ask', 'money', 'reduce', 'renegotiate'], tone: inspectionSignificant(offer) ? 'primary' : undefined, disabled: findings.length === 0 ? 'There is nothing to ask for.' : undefined, detail: 'The seller answers in the room.' },
+            { id: 'ask', label: 'Ask For Money Off', aliases: ['ask', 'money', 'reduce', 'renegotiate'], tone: inspectionSignificant(offer) ? 'primary' : undefined, disabled: findings.length === 0 ? 'There’s nothing to ask for.' : undefined, detail: 'The seller answers in the room.' },
             { id: 'walk', label: 'Walk Away With The Deposit', aliases: ['walk', 'leave', 'withdraw'], detail: `${formatMoney(offer.earnestMoney)} comes back to you.` },
             { id: 'back', label: 'Look Again', aliases: ['back', 'again'] },
           ],
@@ -196,7 +196,7 @@ export const INSPECTION_SCENE = defineScene({
         if (choiceId === 'decide') { session.context['lastNote'] = ''; ctx.go('decide'); return; }
         if (!choiceId.startsWith('look:')) throw unknownStep();
         const index = Number(choiceId.slice(5));
-        if (!offer.inspectionFindings?.[index]) throw new CommandError('That is not on the list.');
+        if (!offer.inspectionFindings?.[index]) throw new CommandError('That isn’t on the list.');
         const line = findingLine(sim, offer, index);
         const looked = seen(session);
         if (!looked.includes(index)) looked.push(index);
@@ -232,7 +232,7 @@ export const INSPECTION_SCENE = defineScene({
         if (choiceId === 'back') { ctx.go('decide'); return; }
         if (!choiceId.startsWith('ask:')) throw unknownStep();
         const amount = Number(choiceId.slice(4));
-        if (!reductionChoices(offer).some((c) => c.amount === amount)) throw new CommandError('That number is not on the table.');
+        if (!reductionChoices(offer).some((c) => c.amount === amount)) throw new CommandError('That number isn’t on the table.');
         const { reduced } = ctx.commit<{ status: string; reduced?: boolean }>('decide', { kind: 'prop.inspection_decision', payload: { offerId: offer.id, proceed: true, renegotiate: amount } });
         session.context['result'] = reduced ? 'reduced' : 'refused';
         const line = verdictLine(sim, offer, reduced ? 'reduced' : 'refused', true);

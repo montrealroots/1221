@@ -82,7 +82,7 @@ export function describePharmacy(place: Place): string {
   const word = INDEPENDENT_PHARMACY_WORD[countryId];
   if (word) {
     return `An independent ${word}. The law here requires a pharmacy to be owned by the pharmacist `
-      + 'who runs it, which is why there is no chain on this corner.';
+      + 'who runs it, which is why there’s no chain on this corner.';
   }
   return place.about;
 }
@@ -118,7 +118,7 @@ export function groomingNote(sim: Simulation, person: Person = sim.player): stri
   if (level >= 80) return 'Recently cut, and it shows.';
   if (level >= LOOKS_UNKEMPT) return 'Growing out, but nobody would remark on it.';
   if (level >= 15) return 'Past the point where it looks deliberate.';
-  return 'It has been a while, and it is the first thing anybody notices.';
+  return 'It has been a while, and it’s the first thing anybody notices.';
 }
 
 /** What a room does about it: a number a scene can weigh. */
@@ -205,18 +205,18 @@ export function registerErrandSystem(sim: Simulation): void {
     'errand.haircut',
     (p, { sim: s }) => {
       const place = salonsIn(s).find((one) => one.id === p.placeId);
-      if (!place) throw new CommandError('That is not a salon in this city.');
+      if (!place) throw new CommandError('That isn’t a salon in this city.');
       if (s.player.currentPlaceId !== place.id) {
-        throw new CommandError(`You are not at ${place.name}. Nobody cuts hair over the telephone.`);
+        throw new CommandError(`You aren’t at ${place.name}. Nobody cuts hair over the telephone.`);
       }
       const service = SALON_BY_ID[p.service];
-      if (!service) throw new CommandError('They do not do that here.');
+      if (!service) throw new CommandError('They don’t do that here.');
 
       const paid = salonPrice(place, service.id);
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay for it from.');
       if (s.ledger.availableFunds(accountId) < paid) {
-        throw new CommandError(`${service.label} is ${formatMoney(paid)} here, and you do not have it.`);
+        throw new CommandError(`${service.label} is ${formatMoney(paid)} here, and you don’t have it.`);
       }
       s.expense(accountId, paid, `${service.label} — ${place.name}`, 'personal', { refType: 'place', refId: place.id });
 
@@ -226,14 +226,14 @@ export function registerErrandSystem(sim: Simulation): void {
       const wentWell = rng.float(0, 100) < 55 + (place.quality ?? 60) * 0.4;
       const note = wentWell
         ? rng.pick([
-          'Exactly what you asked for, which is not nothing.',
-          'Better than you asked for. You will come back here.',
+          'Exactly what you asked for, which isn’t nothing.',
+          'Better than you asked for. You’ll come back here.',
           'They took their time and it shows.',
         ])
         : rng.pick([
           'Shorter than you meant. It will be fine in a fortnight.',
           'Not quite what you described, and you said it was fine.',
-          'Fine, and you will find somewhere else next time.',
+          'Fine, and you’ll find somewhere else next time.',
         ]);
 
       s.advanceTo(s.now + service.minutes * MS_MINUTE);
@@ -266,27 +266,27 @@ export function registerErrandSystem(sim: Simulation): void {
     'errand.buy',
     (p, { sim: s }) => {
       const place = pharmaciesIn(s).find((one) => one.id === p.placeId);
-      if (!place) throw new CommandError('That is not a chemist in this city.');
+      if (!place) throw new CommandError('That isn’t a chemist in this city.');
       if (s.player.currentPlaceId !== place.id) {
-        throw new CommandError(`You are not at ${place.name}.`);
+        throw new CommandError(`You aren’t at ${place.name}.`);
       }
       const shelf = new Set(shelfAt(s, place).map((one) => one.id));
       let paid = 0;
       let bought = 0;
       for (const line of p.items ?? []) {
         const good = COUNTER_BY_ID[line.id];
-        if (!good) throw new CommandError('They do not sell that.');
+        if (!good) throw new CommandError('They don’t sell that.');
         if (!shelf.has(good.id)) throw new CommandError(`${place.name} is out of ${good.name.toLowerCase()}.`);
         const quantity = clamp(Math.round(line.quantity ?? 1), 1, 6);
         paid += counterPrice(place, good.id) * quantity;
         bought += quantity;
       }
-      if (bought === 0) throw new CommandError('You have not picked anything up.');
+      if (bought === 0) throw new CommandError('You haven’t picked anything up.');
 
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay with.');
       if (s.ledger.availableFunds(accountId) < paid) {
-        throw new CommandError(`That comes to ${formatMoney(paid)} and you do not have it.`);
+        throw new CommandError(`That comes to ${formatMoney(paid)} and you don’t have it.`);
       }
       s.expense(accountId, paid, `Chemist — ${place.name}`, 'household', { refType: 'place', refId: place.id });
 
@@ -307,28 +307,28 @@ export function registerErrandSystem(sim: Simulation): void {
     'errand.post',
     (p, { sim: s }) => {
       const place = postOfficesIn(s).find((one) => one.id === p.placeId);
-      if (!place) throw new CommandError('That is not a post office in this city.');
+      if (!place) throw new CommandError('That isn’t a post office in this city.');
       if (s.player.currentPlaceId !== place.id) {
-        throw new CommandError(`You are not at ${place.name}.`);
+        throw new CommandError(`You aren’t at ${place.name}.`);
       }
       const service = SERVICE_BY_ID[p.service];
-      if (!service) throw new CommandError('They do not offer that.');
+      if (!service) throw new CommandError('They don’t offer that.');
       const to = CITIES.get(p.toCityId);
-      if (!to) throw new CommandError('That is not somewhere you can send anything to.');
+      if (!to) throw new CommandError('That isn’t somewhere you can send anything to.');
       if (p.toCityId === place.cityId) {
-        throw new CommandError('That is this city. Walk it round yourself.');
+        throw new CommandError('That’s this city. Walk it round yourself.');
       }
       const grams = Math.round(p.grams ?? 0);
-      if (grams <= 0) throw new CommandError('There is nothing in it.');
+      if (grams <= 0) throw new CommandError('There’s nothing in it.');
       if (grams > MAX_PARCEL_GRAMS) {
-        throw new CommandError(`They will not take anything over ${MAX_PARCEL_GRAMS / 1000} kilos at the counter.`);
+        throw new CommandError(`They won’t take anything over ${MAX_PARCEL_GRAMS / 1000} kilos at the counter.`);
       }
 
       const paid = postagePrice(place, service.id, grams, p.toCityId);
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay the postage from.');
       if (s.ledger.availableFunds(accountId) < paid) {
-        throw new CommandError(`The postage is ${formatMoney(paid)} and you do not have it.`);
+        throw new CommandError(`The postage is ${formatMoney(paid)} and you don’t have it.`);
       }
       s.expense(accountId, paid, `Postage — ${operatorAt(place)}`, 'household', { refType: 'place', refId: place.id });
 
@@ -386,9 +386,9 @@ export function registerErrandSystem(sim: Simulation): void {
     'errand.service_wash',
     (p, { sim: s }) => {
       const place = launderettesIn(s).find((one) => one.id === p.placeId);
-      if (!place) throw new CommandError('That is not a launderette in this city.');
+      if (!place) throw new CommandError('That isn’t a launderette in this city.');
       if (s.player.currentPlaceId !== place.id) {
-        throw new CommandError(`You are not at ${place.name}.`);
+        throw new CommandError(`You aren’t at ${place.name}.`);
       }
       const dirty = garmentsOf(s, s.player.id).filter(
         // The same line the mirror draws, so the room and the mirror can
@@ -403,7 +403,7 @@ export function registerErrandSystem(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay with.');
       if (s.ledger.availableFunds(accountId) < paid) {
-        throw new CommandError(`A service wash is ${formatMoney(paid)} and you do not have it.`);
+        throw new CommandError(`A service wash is ${formatMoney(paid)} and you don’t have it.`);
       }
       s.expense(accountId, paid, `Service wash — ${place.name}`, 'household', { refType: 'place', refId: place.id });
 
@@ -433,8 +433,8 @@ export function registerErrandSystem(sim: Simulation): void {
     if (parcel.status === 'in_transit' && rng.float(0, 1) < LOST_CHANCE) {
       parcel.status = 'lost';
       parcel.note = parcel.tracked
-        ? 'The tracking stopped at a depot four days ago and has not moved since.'
-        : 'It never arrived, and there is nothing to look up.';
+        ? 'The tracking stopped at a depot four days ago and hasn’t moved since.'
+        : 'It never arrived, and there’s nothing to look up.';
       s.notify({
         title: `${parcel.contents} Never Arrived`,
         body: `${parcel.operator}. ${parcel.note}`,

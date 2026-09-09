@@ -141,7 +141,7 @@ export function registerFinance(sim: Simulation): void {
         const profile = s.universe.creditProfiles[p.ownerId];
         const score = profile?.score ?? 600;
         if (score < 560) {
-          throw new CommandError(`A credit score of ${score} is not enough to be approved for a card. Build history first.`);
+          throw new CommandError(`A credit score of ${score} isn’t enough to be approved for a card. Build history first.`);
         }
         profile?.hardInquiries.push({ at: s.now, reason: 'Credit card application' });
       }
@@ -279,7 +279,7 @@ export function registerFinance(sim: Simulation): void {
     'finance.pay_debt',
     (p, { sim: s }) => {
       const debt = s.ledger.account(p.accountId);
-      if (!isLiability(debt.kind)) throw new CommandError(`${debt.name} is not a debt account.`);
+      if (!isLiability(debt.kind)) throw new CommandError(`${debt.name} isn’t a debt account.`);
       const owed = Math.max(0, -debt.balance);
       const amount = Math.min(p.amount, owed);
       if (amount <= 0) throw new CommandError(`${debt.name} is already paid off.`);
@@ -379,7 +379,7 @@ export function attemptBillPayment(sim: Simulation, bill: Bill): void {
       urgency: Math.min(95, 55 + bill.missedCount * 15),
       category: 'finance',
       title: `${bill.name} Is Unpaid`,
-      detail: `${formatMoney(bill.amount)} was due and there were not enough available funds. ${bill.missedCount >= 3 ? 'This has now gone to collections.' : `Missed ${bill.missedCount} time${bill.missedCount === 1 ? '' : 's'}.`}`,
+      detail: `${formatMoney(bill.amount)} was due and there weren’t enough available funds. ${bill.missedCount >= 3 ? 'This has now gone to collections.' : `Missed ${bill.missedCount} time${bill.missedCount === 1 ? '' : 's'}.`}`,
       route: '/workspace/bank',
       actions: [{ label: 'Pay Now', commandKind: 'finance.pay_bill', payload: { billId: bill.id } }],
       refType: 'bill',
@@ -527,7 +527,7 @@ export function reconcileTaxYear(sim: Simulation, personId: Id, year: number): v
       sim.requireDecision({
         urgency: 88, category: 'finance',
         title: `${year} Taxes Owed`,
-        detail: `You owe ${formatMoney(owed)} that was not withheld and cannot cover it from your primary account.`,
+        detail: `You owe ${formatMoney(owed)} that wasn’t withheld and can’t cover it from your primary account.`,
         route: '/workspace/bank',
         refType: 'tax', refId: record.id,
       });

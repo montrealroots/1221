@@ -299,7 +299,7 @@ function PostCard({
   const count = frames(item);
   const like = () => {
     const result = run<{ liked: boolean }>('feed.like', { itemId: item.id }, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
   };
   const save = () => {
     const result = run<{ saved: boolean }>('feed.bookmark', { itemId: item.id }, { silent: true });
@@ -309,7 +309,7 @@ function PostCard({
     const name = window.prompt('File this in which collection?')?.trim();
     if (!name) return;
     const result = run('feed.bookmark', { itemId: item.id, collection: name }, { silent: true });
-    say(result.ok ? `Filed under ${name}.` : result.error ?? 'That did not work.');
+    say(result.ok ? `Filed under ${name}.` : result.error ?? 'That didn’t work.');
   };
 
   const long = item.text.length > 110;
@@ -353,7 +353,7 @@ function PostCard({
               className="ph-btn-solid"
               onClick={() => {
                 const result = run('feed.edit', { itemId: item.id, text: draft, place: where }, { silent: true });
-                if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That did not work.');
+                if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That didn’t work.');
               }}
             >
               Save
@@ -363,7 +363,7 @@ function PostCard({
               className="ph-btn-outline"
               onClick={() => {
                 const result = run('feed.delete', { itemId: item.id }, { silent: true });
-                say(result.ok ? 'Deleted.' : result.error ?? 'That did not work.');
+                say(result.ok ? 'Deleted.' : result.error ?? 'That didn’t work.');
               }}
             >
               Delete
@@ -569,7 +569,7 @@ function PostPage({
 
   const send = () => {
     const result = run('feed.reply', { itemId: item.id, text }, { silent: true });
-    if (result.ok) { setText(''); say('Posted.'); } else say(result.error ?? 'That did not work.');
+    if (result.ok) { setText(''); say('Posted.'); } else say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -646,7 +646,7 @@ function ReelsPage({
   const act = (kind: string, message?: string) => {
     if (!reel) return;
     const result = run(kind, { itemId: reel.id }, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
     else if (message) say(message);
   };
 
@@ -696,7 +696,7 @@ function ReelsPage({
               <BubbleGlyph size={25} />
               {reel.comments.toLocaleString('en-US')}
             </button>
-            <button type="button" onClick={() => say('Reels are not reposted on this app.')} aria-label="Share">
+            <button type="button" onClick={() => say('Reels aren’t reposted on this app.')} aria-label="Share">
               <RepostGlyph size={25} />
               {views(Math.round(reel.likes * 0.09))}
             </button>
@@ -733,7 +733,7 @@ function ReelsPage({
                   className="ph-reel-follow"
                   onClick={() => {
                     const result = run('feed.follow', { profileId: profile.id }, { silent: true });
-                    say(result.ok ? `Following ${profile.handle}.` : result.error ?? 'That did not work.');
+                    say(result.ok ? `Following ${profile.handle}.` : result.error ?? 'That didn’t work.');
                   }}
                 >
                   Follow
@@ -789,7 +789,7 @@ function ProfilePage({
   const follow = () => {
     const result = run(following ? 'feed.unfollow' : 'feed.follow', { profileId: profile.id }, { silent: true });
     if (result.ok) say(following ? `You no longer follow ${profile.handle}.` : `Following ${profile.handle}.`);
-    else say(result.error ?? 'That did not work.');
+    else say(result.error ?? 'That didn’t work.');
   };
 
   const shown = shelf === 'reels' ? items.filter((i) => i.kind === 'reel') : shelf === 'grid' ? items : [];
@@ -883,7 +883,7 @@ function ProfilePage({
               )}
               <button type="button" onClick={() => {
                 const result = run('feed.gift', { profileId: profile.id, amount: GIFT_STEPS[1] }, { silent: true });
-                say(result.ok ? `Sent ${formatMoney(GIFT_STEPS[1]!)}.` : result.error ?? 'That did not work.');
+                say(result.ok ? `Sent ${formatMoney(GIFT_STEPS[1]!)}.` : result.error ?? 'That didn’t work.');
               }}
               >
                 Send {formatMoney(GIFT_STEPS[1]!)}
@@ -904,7 +904,7 @@ function ProfilePage({
                 onClick={() => {
                   const result = run('feed.block', { profileId: profile.id }, { silent: true });
                   if (result.ok) say(blocked ? `${profile.handle} is unblocked.` : `${profile.handle} is blocked, and you no longer follow them.`);
-                  else say(result.error ?? 'That did not work.');
+                  else say(result.error ?? 'That didn’t work.');
                 }}
               >
                 {blocked ? 'Unblock' : 'Block'}
@@ -961,7 +961,7 @@ function ProfilePage({
           </div>
         )}
 
-        {shelf === 'reposts' && <p className="ph-empty">This app does not repost.</p>}
+        {shelf === 'reposts' && <p className="ph-empty">This app doesn’t repost.</p>}
         {shelf === 'tagged' && <p className="ph-empty">Nobody has tagged this account.</p>}
         {(shelf === 'grid' || shelf === 'reels') && (
           shown.length === 0
@@ -990,7 +990,7 @@ function EditProfile({
 
   const save = () => {
     const result = run('feed.edit_profile', { profileId: profile.id, name, bio, image }, { silent: true });
-    if (!result.ok) { say(result.error ?? 'That did not work.'); return; }
+    if (!result.ok) { say(result.error ?? 'That didn’t work.'); return; }
     run('feed.set_note', { text: note }, { silent: true });
     say('Profile saved.');
     onDone();
@@ -1041,8 +1041,8 @@ function MakeAccount({
             className="ph-btn-solid"
             onClick={() => {
               const result = run<{ profileId: string }>('feed.create_profile', { platform: PHOTO_PLATFORM, handle, name, bio }, { silent: true });
-              if (result.ok) { say('That is your account.'); onDone?.(result.value!.profileId); }
-              else say(result.error ?? 'That did not work.');
+              if (result.ok) { say('That’s your account.'); onDone?.(result.value!.profileId); }
+              else say(result.error ?? 'That didn’t work.');
             }}
           >
             Create Account
@@ -1075,8 +1075,8 @@ function CreateSheet({
     if (kind === 'story') {
       const result = run('feed.story', { text, images: picked, close: closeOnly }, { silent: true });
       say(result.ok
-        ? closeOnly ? 'Story up, close friends only. It is gone in a day.' : 'Story up. It is gone in a day.'
-        : result.error ?? 'That did not work.');
+        ? closeOnly ? 'Story up, close friends only. It’s gone in a day.' : 'Story up. It’s gone in a day.'
+        : result.error ?? 'That didn’t work.');
       if (result.ok) onClose();
       return;
     }
@@ -1091,7 +1091,7 @@ function CreateSheet({
     if (result.ok) {
       say(result.value!.scheduled ? 'Scheduled. It goes up on its own.' : 'Posted.');
       onClose();
-    } else say(result.error ?? 'That did not work.');
+    } else say(result.error ?? 'That didn’t work.');
   };
 
   if (!hasProfile) {
@@ -1317,7 +1317,7 @@ function ThreadPage({
 
   const send = () => {
     const result = run('feed.message', { profileId, text }, { silent: true });
-    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That did not work.');
+    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -1566,7 +1566,7 @@ function SettingsPage({
 
   const set = (patch: Record<string, unknown>) => {
     const result = run('feed.settings', patch, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
   };
 
   const head = (title: string) => (
@@ -1647,7 +1647,7 @@ function SettingsPage({
             </div>
             <p className="ph-card-meta">
               {week.reduce((sum, n) => sum + n, 0)} minutes over the week, {today} of them today.
-              This is the real clock, not an estimate: it is the time the app actually took out of
+              This is the real clock, not an estimate: it’s the time the app actually took out of
               your days.
             </p>
           </div>
@@ -1670,8 +1670,8 @@ function SettingsPage({
             />
           </div>
           <p className="ph-card-meta" style={{ padding: 12 }}>
-            A private account is seen by far fewer people, so it grows far more slowly. That is not
-            a warning, it is what the setting does here.
+            A private account is seen by far fewer people, so it grows far more slowly. That isn’t
+            a warning, it’s what the setting does here.
           </p>
         </div>
       </>
@@ -1722,14 +1722,14 @@ function SettingsPage({
                 className="ph-btn-solid"
                 onClick={() => {
                   set({ hiddenWords: words.split(',') });
-                  say('Saved. Comments carrying those will not reach you.');
+                  say('Saved. Comments carrying those won’t reach you.');
                 }}
               >
                 Save
               </button>
             </div>
             <p className="ph-card-meta">
-              A comment carrying any of these never reaches you, on either app. It is applied where
+              A comment carrying any of these never reaches you, on either app. It’s applied where
               the comment is read, so it works on the ones already there as well as the new ones.
             </p>
           </div>
@@ -1796,14 +1796,14 @@ function SettingsPage({
                 const result = run(mine?.verified ? 'feed.leave_verified' : 'feed.join_verified', {}, { silent: true });
                 say(result.ok
                   ? (mine?.verified ? 'Canceled. Nothing more will be taken.' : 'Verified. The badge is on your name.')
-                  : result.error ?? 'That did not work.');
+                  : result.error ?? 'That didn’t work.');
               }}
             />
             <Row icon={<EyeGlyph size={17} />} label="Professional Dashboard" onClick={onDashboard} />
           </div>
           <p className="ph-card-meta" style={{ padding: 12 }}>
             Meta Verified is {formatMoney(PHOTO_VERIFIED_MONTHLY)} a month, taken every month, and it
-            lapses on its own if the money is not there. It buys the badge, not the audience.
+            lapses on its own if the money isn’t there. It buys the badge, not the audience.
           </p>
         </div>
       </>
@@ -1864,7 +1864,7 @@ function SettingsPage({
           <Row icon={<BlockGlyph size={24} />} label="Restricted" value={settings.mutedProfileIds.length} onClick={() => setLeaf('muted')} />
           <Row icon={<LimitGlyph size={24} />} label="Limit Interactions" value="Off" onClick={() => say('Nothing is being held back from you right now.')} />
           <Row icon={<LettersGlyph size={24} />} label="Hidden Words" value={settings.hiddenWords.length} onClick={() => setLeaf('hidden')} />
-          <Row icon={<AddPersonGlyph size={24} />} label="Follow And Invite Friends" onClick={() => say('The people here are the ones in your life and the ones this world made. There is nobody outside it to invite.')} />
+          <Row icon={<AddPersonGlyph size={24} />} label="Follow And Invite Friends" onClick={() => say('The people here are the ones in your life and the ones this world made. There’s nobody outside it to invite.')} />
         </Group>
 
         <Group cap="What You See" find={find}>
@@ -1878,14 +1878,14 @@ function SettingsPage({
           <Row icon={<DeviceGlyph size={24} />} label="Device Permissions" value="Camera And Photos" onClick={() => say('The camera and the picture roll on this handset. Both are the game’s own, and neither touches your machine.')} />
           <Row icon={<DownloadGlyph size={24} />} label="Archiving And Downloading" value={`${archive.length} Kept`} onClick={() => setLeaf('archive')} />
           <Row icon={<AccessGlyph size={24} />} label="Accessibility" onClick={() => say('Every control here has a name a screen reader can read, and nothing is carried by color alone.')} />
-          <Row icon={<LanguageGlyph size={24} />} label="Language And Translations" value="English" onClick={() => say('The app is in English. SLATE does not translate itself yet.')} />
-          <Row icon={<BarsGlyph size={24} />} label="Media Quality" value="Best Available" onClick={() => say('Pictures are drawn rather than fetched, so there is no quality to trade against a connection.')} />
-          <Row icon={<ScreensGlyph size={24} />} label="App Website Permissions" value="None" onClick={() => say('Nothing on this phone opens a browser. There is nowhere for it to go.')} />
+          <Row icon={<LanguageGlyph size={24} />} label="Language And Translations" value="English" onClick={() => say('The app is in English. SLATE doesn’t translate itself yet.')} />
+          <Row icon={<BarsGlyph size={24} />} label="Media Quality" value="Best Available" onClick={() => say('Pictures are drawn rather than fetched, so there’s no quality to trade against a connection.')} />
+          <Row icon={<ScreensGlyph size={24} />} label="App Website Permissions" value="None" onClick={() => say('Nothing on this phone opens a browser. There’s nowhere for it to go.')} />
           <Row icon={<FaceGlyph size={24} />} label="Face And Hand Movements" value="Off" onClick={() => say('Nothing is read from a camera. The handset’s camera is a screen in the game.')} />
         </Group>
 
         <Group cap="Family Center" find={find}>
-          <Row icon={<SupervisionGlyph size={24} />} label="Supervision For Teen Accounts" value={supervised ? 'On' : 'Off'} onClick={() => say(supervised ? 'You are under eighteen, so this account is supervised at home. What that changes is in the Family room, not here.' : 'Nobody is being supervised on this handset.')} />
+          <Row icon={<SupervisionGlyph size={24} />} label="Supervision For Teen Accounts" value={supervised ? 'On' : 'Off'} onClick={() => say(supervised ? 'You’re under eighteen, so this account is supervised at home. What that changes is in the Family room, not here.' : 'Nobody is being supervised on this handset.')} />
         </Group>
 
         <Group cap="Your Insights And Tools" find={find}>
@@ -1899,13 +1899,13 @@ function SettingsPage({
 
         <Group cap="Your Orders And Fundraisers" find={find}>
           <Row icon={<HeartGlyph size={24} />} label="Fundraisers" value="None" onClick={() => say('Nothing is being raised through this account.')} />
-          <Row icon={<TimelineGlyph size={24} />} label="Orders And Payments" onClick={() => say('What the app takes from you is the subscription, and it is on your bank statement like anything else.')} />
+          <Row icon={<TimelineGlyph size={24} />} label="Orders And Payments" onClick={() => say('What the app takes from you is the subscription, and it’s on your bank statement like anything else.')} />
           <Row icon={<CartGlyph size={24} />} label="Cart" value="Empty" onClick={() => say('Shopping in SLATE happens in shops, not in here.')} />
         </Group>
 
         <Group cap="More Info And Support" find={find}>
           <Row icon={<RingHelpGlyph size={24} />} label="Help" onClick={() => say('Everything on this phone is SLATE’s own. The accounts are invented and nobody real is named.')} />
-          <Row icon={<PrivacyGlyph size={24} />} label="Privacy Center" onClick={() => say('Your save stays on your machine. Nothing about you is collected, sent or sold, because there is nobody on the other end.')} />
+          <Row icon={<PrivacyGlyph size={24} />} label="Privacy Center" onClick={() => say('Your save stays on your machine. Nothing about you is collected, sent or sold, because there’s nobody on the other end.')} />
           <Row icon={<AccountGlyph size={24} />} label="Account Status" value="In Good Standing" onClick={() => say('Nothing you have posted has been taken down, and nothing is being held against the account.')} />
           <Row icon={<NotesPageGlyph size={24} />} label="Community Notes" value="None" onClick={() => say('Nothing you have posted has had a note added to it.')} />
           <Row icon={<GearGlyph size={24} />} label="About" onClick={() => setLeaf('about')} />
@@ -1954,7 +1954,7 @@ function AccountSwitcher({ onClose, say }: { onClose: () => void; say: (text: st
           )}
         </div>
         <p className="ph-card-meta" style={{ padding: 12 }}>
-          One life, one set of accounts. SLATE does not keep a second identity for you, so there is
+          One life, one set of accounts. SLATE doesn’t keep a second identity for you, so there is
           nothing here to switch to.
         </p>
         <div className="ph-actions" style={{ padding: '0 12px' }}>
@@ -2081,7 +2081,7 @@ function LiveSheet({ onClose, say }: { onClose: () => void; say: (text: string) 
                 if (result.ok) {
                   say(`${views(result.value!.peak)} watching at the peak. ${formatMoney(result.value!.gifts)} in.`);
                   onClose();
-                } else say(result.error ?? 'That did not work.');
+                } else say(result.error ?? 'That didn’t work.');
               }}
             >
               Go Live

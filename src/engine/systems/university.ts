@@ -184,7 +184,7 @@ export function chanceAt(sim: Simulation, university: University, majorId: strin
     return {
       eligible: false,
       odds: 0,
-      reason: `${university.name} does not look below ${UNIVERSITY_LOOKS_AT}, and you are carrying ${marks.toFixed(0)}.`,
+      reason: `${university.name} doesn’t look below ${UNIVERSITY_LOOKS_AT}, and you’re carrying ${marks.toFixed(0)}.`,
     };
   }
 
@@ -279,13 +279,13 @@ export function registerUniversity(sim: Simulation): void {
       if (age < APPLY_FROM_AGE) {
         throw new CommandError(`Nobody applies before ${APPLY_FROM_AGE}. You are ${age}.`);
       }
-      if (studiesOf(s)) throw new CommandError('You are already reading a degree.');
+      if (studiesOf(s)) throw new CommandError('You’re already reading a degree.');
       const university = UNIVERSITY_BY_ID[p.universityId];
-      if (!university) throw new CommandError('There is no such university.');
+      if (!university) throw new CommandError('There’s no such university.');
       const major = MAJOR_BY_ID[p.majorId];
-      if (!major) throw new CommandError('There is no such course.');
+      if (!major) throw new CommandError('There’s no such course.');
       if (!majorsAt(university).some((one) => one.id === major.id)) {
-        throw new CommandError(`${university.name} does not teach ${major.label}.`);
+        throw new CommandError(`${university.name} doesn’t teach ${major.label}.`);
       }
 
       const open = applicationsOf(s).filter((one) => one.status === 'pending' || one.status === 'offer');
@@ -329,7 +329,7 @@ export function registerUniversity(sim: Simulation): void {
         applicationId: application.id,
         odds: chance.odds,
         hearBy,
-        note: `${chance.reason} You will hear by ${formatDate(hearBy, s.homeZone)}.`,
+        note: `${chance.reason} You’ll hear by ${formatDate(hearBy, s.homeZone)}.`,
       };
     },
   );
@@ -342,8 +342,8 @@ export function registerUniversity(sim: Simulation): void {
     'uni.accept',
     (p, { sim: s }) => {
       const application = s.universe.applications?.[p.applicationId];
-      if (!application) throw new CommandError('There is no such application.');
-      if (application.status !== 'offer') throw new CommandError('That is not an offer you can accept.');
+      if (!application) throw new CommandError('There’s no such application.');
+      if (application.status !== 'offer') throw new CommandError('That isn’t an offer you can accept.');
       const university = UNIVERSITY_BY_ID[application.universityId]!;
       const major = MAJOR_BY_ID[application.majorId]!;
       const housing = HOUSING_BY_ID[p.housing ?? ''] ? p.housing! : 'hall';
@@ -357,7 +357,7 @@ export function registerUniversity(sim: Simulation): void {
       if (owed > 0 && s.ledger.availableFunds(accountId) < owed) {
         throw new CommandError(
           `The first year is ${formatMoney(owed)} — ${formatMoney(feesAYear)} in fees and `
-          + `${formatMoney(livingAYear)} to live on — and you do not have it.`,
+          + `${formatMoney(livingAYear)} to live on — and you don’t have it.`,
         );
       }
       if (feesAYear > 0) {
@@ -433,8 +433,8 @@ export function registerUniversity(sim: Simulation): void {
     'uni.decline',
     (p, { sim: s }) => {
       const application = s.universe.applications?.[p.applicationId];
-      if (!application) throw new CommandError('There is no such application.');
-      if (application.status !== 'offer') throw new CommandError('That is not an offer you can decline.');
+      if (!application) throw new CommandError('There’s no such application.');
+      if (application.status !== 'offer') throw new CommandError('That isn’t an offer you can decline.');
       application.status = 'declined';
       application.decidedAt = s.now;
       application.reason = 'You turned it down.';
@@ -451,11 +451,11 @@ export function registerUniversity(sim: Simulation): void {
     'uni.term',
     (p, { sim: s }) => {
       const studies = studiesOf(s);
-      if (!studies) throw new CommandError('You are not reading a degree.');
+      if (!studies) throw new CommandError('You aren’t reading a degree.');
       const university = UNIVERSITY_BY_ID[studies.universityId]!;
       const major = MAJOR_BY_ID[studies.majorId]!;
       if (s.player.currentLocationId !== university.cityId) {
-        throw new CommandError(`You have to be where ${university.name} is. It is in ${whereItIs(university)}.`);
+        throw new CommandError(`You have to be where ${university.name} is. It’s in ${whereItIs(university)}.`);
       }
 
       const effort = p.effort ?? 'normal';
@@ -501,16 +501,16 @@ export function registerUniversity(sim: Simulation): void {
           if (owed > 0 && accountId) {
             if (s.ledger.availableFunds(accountId) < owed) {
               studies.endedAt = s.now;
-              studies.endReason = 'could not pay the fees';
+              studies.endReason = 'couldn’t pay the fees';
               s.notify({
                 title: `You Have Left ${university.name}`,
-                body: `Year ${studies.year} is ${formatMoney(owed)} and it is not there. The course is over.`,
+                body: `Year ${studies.year} is ${formatMoney(owed)} and it isn’t there. The course is over.`,
                 category: 'personal',
                 importance: 76,
                 route: '/workspace/education',
               });
               s.emit('uni.left', { studiesId: studies.id, reason: 'fees' });
-              return { average: studies.average, year: studies.year, finished: false, note: 'You could not pay for the next year.' };
+              return { average: studies.average, year: studies.year, finished: false, note: 'You couldn’t pay for the next year.' };
             }
             if (owedFees > 0) {
               s.expense(accountId, owedFees, `Tuition — ${university.name}`, 'personal', { refType: 'person', refId: s.player.id });
@@ -537,7 +537,7 @@ export function registerUniversity(sim: Simulation): void {
     'uni.leave',
     (p, { sim: s }) => {
       const studies = studiesOf(s);
-      if (!studies) throw new CommandError('You are not reading a degree.');
+      if (!studies) throw new CommandError('You aren’t reading a degree.');
       studies.endedAt = s.now;
       studies.endReason = p.why?.trim().slice(0, 120) || 'left';
       s.remember({
@@ -575,7 +575,7 @@ export function registerUniversity(sim: Simulation): void {
         : `A place. ${fees === 0 ? 'There are no fees here.' : `${formatMoney(fees)} a year.`}`;
     } else {
       application.reason = chance.eligible
-        ? `Not this year. ${university.name} had more applicants than places and yours was not one of them.`
+        ? `Not this year. ${university.name} had more applicants than places and yours wasn’t one of them.`
         : chance.reason;
     }
 

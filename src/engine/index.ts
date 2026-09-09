@@ -358,7 +358,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
       });
       sim.notify({
         title: 'Not Yet Old Enough To Sign',
-        body: `${companyName} cannot be opened until you are ${gate.age ?? 18}, which is `
+        body: `${companyName} can’t be opened until you are ${gate.age ?? 18}, which is `
           + `${waitYears === 1 ? 'a year' : `${waitYears} years`} away. Everything else in a life is open now.`,
         category: 'career',
         importance: 40,
@@ -457,7 +457,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
         // loud rather than left as a box that was ticked and did nothing.
         sim.notify({
           category: 'vehicles', title: 'No Car Yet',
-          body: 'You could not afford one at the start. Public transport and rideshares for now.',
+          body: 'You couldn’t afford one at the start. Public transport and rideshares for now.',
           importance: 25, route: '/workspace/vehicles',
         });
       }
@@ -873,7 +873,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       person.founderTraits = person.founderTraits!.filter((id) => !goatIds.has(id));
       if (person.founderTraits.length !== before) stripped++;
     }
-    if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There is one.`);
+    if (stripped > 0) steps.push(`Took the G.O.A.T. traits off ${stripped} other ${stripped === 1 ? 'person' : 'people'}. There’s one.`);
   }
 
   if (from < 29) {
@@ -1181,7 +1181,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // to get into one.
     universe.applications ??= {};
     universe.studies ??= {};
-    steps.push('Universities, and what they will take you on.');
+    steps.push('Universities, and what they’ll take you on.');
   }
 
   if (from < 65) {
@@ -1405,10 +1405,10 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   const player = universe.people[universe.playerId];
   if (!player) errors.push('The save has no player.');
   else {
-    if (!player.isPlayer) errors.push('The player record is not flagged as the player.');
+    if (!player.isPlayer) errors.push('The player record isn’t flagged as the player.');
     if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
     if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
-      errors.push('Player primary account points at an account that does not exist.');
+      errors.push('Player primary account points at an account that doesn’t exist.');
     }
   }
 
@@ -1434,13 +1434,13 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     checked++;
     if (!property.ownerId) continue;
     if (!universe.people[property.ownerId] && !universe.companies[property.ownerId]) {
-      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who does not exist.`);
+      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who doesn’t exist.`);
     }
   }
   for (const vehicle of Object.values(universe.vehicles)) {
     checked++;
     if (!universe.people[vehicle.ownerId] && !universe.companies[vehicle.ownerId]) {
-      errors.push(`Vehicle ${vehicle.id} is owned by '${vehicle.ownerId}', who does not exist.`);
+      errors.push(`Vehicle ${vehicle.id} is owned by '${vehicle.ownerId}', who doesn’t exist.`);
     }
   }
 
@@ -1448,7 +1448,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   for (const rel of Object.values(universe.relationships)) {
     checked++;
     if (!universe.people[rel.aId] || !universe.people[rel.bId]) {
-      errors.push(`Relationship ${rel.id} references a person who does not exist.`);
+      errors.push(`Relationship ${rel.id} references a person who doesn’t exist.`);
     }
   }
 
@@ -1457,7 +1457,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     const prev = universe.scheduled[i - 1];
     const cur = universe.scheduled[i];
     if (prev && cur && prev.at > cur.at) {
-      errors.push('The timeline is not sorted by time. Advancement would process events out of order.');
+      errors.push('The timeline isn’t sorted by time. Advancement would process events out of order.');
       break;
     }
   }

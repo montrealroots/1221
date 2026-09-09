@@ -49,7 +49,7 @@ const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
   { id: 'couch', label: "A Friend's Couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
   { id: 'roommates', label: 'Room In A Share', blurb: 'Cheap, crowded, and how most people start.' },
-  { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that is yours.' },
+  { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that’s yours.' },
   { id: 'owned', label: 'You Own A Home', blurb: 'A house and the mortgage that came with it.' },
 ];
 
@@ -438,7 +438,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           </select>
           <p className="xs dim" style={{ marginTop: 4 }}>
             {homeCountryId && !citizenOfHome
-              ? `You live in ${COUNTRIES.get(homeCountryId)?.name ?? 'somewhere'} and are not a citizen of it. Naturalised there? Say so here.`
+              ? `You live in ${COUNTRIES.get(homeCountryId)?.name ?? 'somewhere'} and aren’t a citizen of it. Naturalised there? Say so here.`
               : 'Born in one country, naturalised in another, and you carry both.'}
           </p>
         </div>
@@ -452,7 +452,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
           <p className="muted small">
             Where you are decides your taxes, your rent, your job market and how much industry work is
             within reach. Picking a country here sets your citizenship to match — change it above if you
-            live somewhere you are not a citizen of.
+            live somewhere you aren’t a citizen of.
           </p>
         </div>
       </div>
@@ -479,8 +479,8 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div>
           <h3>Place Of Birth</h3>
           <p className="muted small">
-            Where you are from, which is not always where you ended up. It is what you say when
-            somebody asks, it is the town your family is still in, and it is the accent you had
+            Where you are from, which isn’t always where you ended up. It’s what you say when
+            somebody asks, it’s the town your family is still in, and it’s the accent you had
             to lose or decided to keep.
           </p>
         </div>
@@ -598,7 +598,7 @@ function PersonalStep({
             <h2>Personality</h2>
             <p className="muted small">
               Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are already
-              the best alive at all five of those. Every one of these costs something, some cannot be
+              the best alive at all five of those. Every one of these costs something, some can’t be
               held together, and the life half of the game reads all of them.
             </p>
           </div>
@@ -622,7 +622,7 @@ function PersonalStep({
                     disabled={blocked}
                     onClick={() => togglePersonality(trait.id)}
                     title={conflicts.length > 0
-                      ? `Cannot be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
+                      ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
                       : undefined}
                   >
                     <div className="trait-name">{trait.name}</div>
@@ -643,7 +643,7 @@ function PersonalStep({
             <p className="muted small">
               Not a choice, and not on this page. You hold every acting, writing, directing,
               producing and showrunning trait in the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of
-              them — because you are the best living practitioner of all five. They are listed on
+              them — because you’re the best living practitioner of all five. They’re listed on
               the Your Craft step and on your Character screen.
             </p>
           </div>
@@ -914,7 +914,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
         {config.personalityTraits.length === 0 ? (
           <p className="muted small">
-            Nothing picked. You will be the best there has ever been at making things and no
+            Nothing picked. You’ll be the best there has ever been at making things and no
             particular kind of person, which is allowed.
           </p>
         ) : (
@@ -955,7 +955,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 
       <div className="callout callout-accent">
         Once this save begins, the world starts running. Time passes, bills arrive, and the people in it
-        get on with their own lives whether you are watching or not.
+        get on with their own lives whether you’re watching or not.
       </div>
     </div>
   );
@@ -987,7 +987,7 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     // go to. Below that a life is somebody else's decisions all the way down.
     if (age < 5) issues.push('Your character has to be at least 5 when the save begins.');
     if (age > 95) issues.push('That start date would make your character over 95.');
-    if (config.birthDay < 1 || config.birthDay > 31) issues.push('That is not a valid day of the month.');
+    if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }

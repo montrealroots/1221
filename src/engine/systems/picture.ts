@@ -153,7 +153,7 @@ export function registerPictureSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const title = (p.title ?? '').trim();
       if (title.length < 2) throw new CommandError('Give it a title, even a working one.');
-      if (!RUNTIME_CAP[p.format]) throw new CommandError('That is not a kind of picture.');
+      if (!RUNTIME_CAP[p.format]) throw new CommandError('That isn’t a kind of picture.');
 
       const film: IndieFilm = {
         id: s.nextId('film'),
@@ -212,8 +212,8 @@ export function registerPictureSystem(sim: Simulation): void {
       const film = s.universe.indieFilms[p.filmId];
       if (!film) throw new CommandError('No such picture.');
       if (film.cut) throw new CommandError('That picture is already cut.');
-      if (setupsIn(s, film) === 0) throw new CommandError('There is nothing in the can to cut.');
-      if (s.player.wellbeing.energy < 10) throw new CommandError('You are too tired to be any use at a bench.');
+      if (setupsIn(s, film) === 0) throw new CommandError('There’s nothing in the can to cut.');
+      if (s.player.wellbeing.energy < 10) throw new CommandError('You’re too tired to be any use at a bench.');
 
       const hours = clamp(Math.round(p.hours ?? 4), 1, 12);
       s.advanceTo(s.now + hours * 60 * MS_MINUTE);
@@ -223,7 +223,7 @@ export function registerPictureSystem(sim: Simulation): void {
 
       const wanted = cutHoursWanted(s, film);
       const note = film.cutHours >= wanted
-        ? 'It has had what it needs. More hours will not make it better.'
+        ? 'It has had what it needs. More hours won’t make it better.'
         : `${plural(Math.max(0, wanted - Math.round(film.cutHours)), 'hour')} of it left in the material.`;
       s.emit('film.cut_hours', { filmId: film.id, hours, total: film.cutHours });
       return { cutHours: film.cutHours, wanted, note };
@@ -248,10 +248,10 @@ export function registerPictureSystem(sim: Simulation): void {
       const need = SETUPS_NEEDED[film.format];
       if (got < Math.ceil(need * 0.4)) {
         throw new CommandError(
-          `There is not enough there. A ${film.format} wants about ${plural(need, 'setup')}, and you have ${got}.`,
+          `There isn’t enough there. A ${film.format} wants about ${plural(need, 'setup')}, and you have ${got}.`,
         );
       }
-      if (film.cutHours < 2) throw new CommandError('Nobody finishes a picture they have not sat down with.');
+      if (film.cutHours < 2) throw new CommandError('Nobody finishes a picture they haven’t sat down with.');
 
       const ceiling = ceilingOf(s, film);
       const wanted = cutHoursWanted(s, film);
@@ -274,8 +274,8 @@ export function registerPictureSystem(sim: Simulation): void {
         : quality >= 55
           ? 'It holds together. The seams show in two places and you know where they are.'
           : quality >= 35
-            ? 'It is what it is. There was not enough there and cutting could only do so much.'
-            : 'It does not work, and you knew that at the bench.';
+            ? 'It’s what it is. There wasn’t enough there and cutting could only do so much.'
+            : 'It doesn’t work, and you knew that at the bench.';
 
       film.cut = { at: s.now, runtimeMinutes, quality, note };
       film.status = 'finished';
@@ -306,18 +306,18 @@ export function registerPictureSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const film = s.universe.indieFilms[p.filmId];
       if (!film) throw new CommandError('No such picture.');
-      if (!film.cut) throw new CommandError('There is nothing finished to show anybody.');
+      if (!film.cut) throw new CommandError('There’s nothing finished to show anybody.');
 
       const cityId = s.player.currentLocationId;
       const place = p.placeId ? roomsIn(s, cityId).find((one) => one.id === p.placeId) : undefined;
-      if (p.placeId && !place) throw new CommandError('That is not a room in this city you could show anything in.');
+      if (p.placeId && !place) throw new CommandError('That isn’t a room in this city you could show anything in.');
       const cost = place ? roomCost(cityId, place.price) : 0;
 
       const accountId = s.player.primaryAccountId;
       if (cost > 0) {
         if (!accountId) throw new CommandError('You have no account to pay the room from.');
         if (s.ledger.availableFunds(accountId) < cost) {
-          throw new CommandError(`That room is ${formatMoney(cost)} for the evening, and you do not have it.`);
+          throw new CommandError(`That room is ${formatMoney(cost)} for the evening, and you don’t have it.`);
         }
       }
 
@@ -394,11 +394,11 @@ export function registerPictureSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const film = s.universe.indieFilms[p.filmId];
       if (!film) throw new CommandError('No such picture.');
-      if (!film.cut) throw new CommandError('There is nothing finished to send.');
+      if (!film.cut) throw new CommandError('There’s nothing finished to send.');
       const festival = FESTIVAL_BY_ID[p.festivalId];
-      if (!festival) throw new CommandError('That is not a festival on the list.');
+      if (!festival) throw new CommandError('That isn’t a festival on the list.');
       if (!festival.takes.includes(film.format)) {
-        throw new CommandError(`${festival.name} does not take that kind of picture.`);
+        throw new CommandError(`${festival.name} doesn’t take that kind of picture.`);
       }
       if (film.submissions.some((one) => one.festivalId === festival.id && one.status !== 'rejected')) {
         throw new CommandError(`${film.title} is already with ${festival.name}.`);
@@ -408,7 +408,7 @@ export function registerPictureSystem(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay the entry fee from.');
       if (s.ledger.availableFunds(accountId) < fee) {
-        throw new CommandError(`${festival.name} charges ${formatMoney(fee)} to enter, and you do not have it.`);
+        throw new CommandError(`${festival.name} charges ${formatMoney(fee)} to enter, and you don’t have it.`);
       }
       s.expense(accountId, fee, `Festival entry — ${festival.name}`, 'production', { refType: 'film', refId: film.id });
 
@@ -446,7 +446,7 @@ export function registerPictureSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const film = s.universe.indieFilms[p.filmId];
       if (!film) throw new CommandError('No such picture.');
-      if (film.status === 'abandoned') throw new CommandError('It is already in the drawer.');
+      if (film.status === 'abandoned') throw new CommandError('It’s already in the drawer.');
       film.status = 'abandoned';
       s.emit('film.abandoned', { filmId: film.id });
       return { filmId: film.id };

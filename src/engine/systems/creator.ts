@@ -263,7 +263,7 @@ export function registerCreator(sim: Simulation): void {
         : p.kind ? specialList(s, s.player.id, p.kind) : undefined;
       if (!list || list.ownerId !== s.player.id) throw new CommandError('No such playlist.');
       if (!videoById(s, p.videoId)) throw new CommandError('No such video.');
-      if (list.videoIds.includes(p.videoId)) throw new CommandError(`That is already in ${list.title}.`);
+      if (list.videoIds.includes(p.videoId)) throw new CommandError(`That’s already in ${list.title}.`);
       list.videoIds.push(p.videoId);
       list.updatedAt = s.now;
       s.emit('video.saved', { playlistId: list.id, videoId: p.videoId });
@@ -278,7 +278,7 @@ export function registerCreator(sim: Simulation): void {
       if (!list || list.ownerId !== s.player.id) throw new CommandError('No such playlist.');
       const before = list.videoIds.length;
       list.videoIds = list.videoIds.filter((id) => id !== p.videoId);
-      if (list.videoIds.length === before) throw new CommandError('That is not in this playlist.');
+      if (list.videoIds.length === before) throw new CommandError('That isn’t in this playlist.');
       list.updatedAt = s.now;
       return { count: list.videoIds.length };
     },
@@ -289,7 +289,7 @@ export function registerCreator(sim: Simulation): void {
     (p, { sim: s }) => {
       const list = s.universe.videoPlaylists[p.playlistId];
       if (!list || list.ownerId !== s.player.id) throw new CommandError('No such playlist.');
-      if (list.kind !== 'playlist') throw new CommandError(`${list.title} is one the app keeps. It cannot be deleted.`);
+      if (list.kind !== 'playlist') throw new CommandError(`${list.title} is one the app keeps. It can’t be deleted.`);
       delete s.universe.videoPlaylists[list.id];
       return { title: list.title };
     },
@@ -300,11 +300,11 @@ export function registerCreator(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { monthly: Money }>(
     'video.join_premium',
     (_p, { sim: s }) => {
-      if (hasPremium(s)) throw new CommandError('You are already on it.');
+      if (hasPremium(s)) throw new CommandError('You’re already on it.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < PREMIUM_MONTHLY) {
-        throw new CommandError(`It is ${formatMoney(PREMIUM_MONTHLY)} a month and you cannot cover it.`);
+        throw new CommandError(`It is ${formatMoney(PREMIUM_MONTHLY)} a month and you can’t cover it.`);
       }
       // Premium belongs to nobody's channel. Hanging it on the player's own
       // made their subscription show up as revenue on their own statement.
@@ -334,7 +334,7 @@ export function registerCreator(sim: Simulation): void {
     (_p, { sim: s }) => {
       const membership = Object.values(s.universe.channelMemberships)
         .find((m) => m.personId === s.player.id && m.tier === 'premium' && !m.endedAt);
-      if (!membership) throw new CommandError('You are not on it.');
+      if (!membership) throw new CommandError('You aren’t on it.');
       membership.endedAt = s.now;
       s.emit('video.premium_left', {});
       return { ended: true };
@@ -349,7 +349,7 @@ export function registerCreator(sim: Simulation): void {
       membership.endedAt = sim.now;
       sim.notify({
         category: 'personal', title: 'Premium Lapsed',
-        body: 'The renewal did not go through, so the ads are back.',
+        body: 'The renewal didn’t go through, so the ads are back.',
         importance: 40, route: '/workspace/phone',
       });
       return;
@@ -369,16 +369,16 @@ export function registerCreator(sim: Simulation): void {
     (p, { sim: s }) => {
       const channel = s.universe.videoChannels[p.channelId];
       if (!channel) throw new CommandError('No such channel.');
-      if (channel.ownerId === s.player.id) throw new CommandError('You cannot join your own channel.');
-      if (channel.membershipMonthly === undefined) throw new CommandError(`${channel.name} does not offer memberships.`);
+      if (channel.ownerId === s.player.id) throw new CommandError('You can’t join your own channel.');
+      if (channel.membershipMonthly === undefined) throw new CommandError(`${channel.name} doesn’t offer memberships.`);
       const already = membershipsOf(s, s.player.id).find((m) => m.channelId === channel.id);
-      if (already) throw new CommandError(`You are already a member of ${channel.name}.`);
+      if (already) throw new CommandError(`You’re already a member of ${channel.name}.`);
       const tier = MEMBER_TIERS.find((t) => t.id === (p.tier ?? 'supporter'));
-      if (!tier) throw new CommandError('That is not one of the tiers.');
+      if (!tier) throw new CommandError('That isn’t one of the tiers.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < tier.monthly) {
-        throw new CommandError(`${tier.label} is ${formatMoney(tier.monthly)} a month and you cannot cover it.`);
+        throw new CommandError(`${tier.label} is ${formatMoney(tier.monthly)} a month and you can’t cover it.`);
       }
       const membership: ChannelMembership = {
         id: s.nextId('member'),
@@ -401,7 +401,7 @@ export function registerCreator(sim: Simulation): void {
     'video.leave_channel',
     (p, { sim: s }) => {
       const membership = membershipsOf(s, s.player.id).find((m) => m.channelId === p.channelId);
-      if (!membership) throw new CommandError('You are not a member of that channel.');
+      if (!membership) throw new CommandError('You aren’t a member of that channel.');
       membership.endedAt = s.now;
       const channel = s.universe.videoChannels[p.channelId];
       if (channel) channel.members = Math.max(0, (channel.members ?? 1) - 1);
@@ -415,12 +415,12 @@ export function registerCreator(sim: Simulation): void {
       const video = videoById(s, p.videoId);
       if (!video) throw new CommandError('No such video.');
       const channel = s.universe.videoChannels[video.channelId];
-      if (channel?.ownerId === s.player.id) throw new CommandError('You cannot tip yourself.');
+      if (channel?.ownerId === s.player.id) throw new CommandError('You can’t tip yourself.');
       const amount = Math.round(p.amount);
-      if (!TIP_STEPS.includes(amount)) throw new CommandError('That is not one of the amounts.');
+      if (!TIP_STEPS.includes(amount)) throw new CommandError('That isn’t one of the amounts.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
-      if (s.ledger.availableFunds(accountId) < amount) throw new CommandError('You cannot cover that.');
+      if (s.ledger.availableFunds(accountId) < amount) throw new CommandError('You can’t cover that.');
       s.expense(accountId, amount, `Tip — ${channel?.name ?? 'A Channel'}`, 'personal');
       s.emit('video.tipped', { videoId: video.id, amount });
       return { amount };
@@ -434,7 +434,7 @@ export function registerCreator(sim: Simulation): void {
     (p, { sim: s }) => {
       const channel = myChannel(s);
       if (!channel) throw new CommandError('You have no channel yet.');
-      if (channel.liveStreamId) throw new CommandError('You are already live.');
+      if (channel.liveStreamId) throw new CommandError('You’re already live.');
       const title = p.title.trim();
       if (title.length < 3) throw new CommandError('Give the stream a title.');
       const minutes = clamp(Math.round(p.minutes ?? 90), 10, 480);
@@ -515,10 +515,10 @@ export function registerCreator(sim: Simulation): void {
     'video.vote_poll',
     (p, { sim: s }) => {
       const post = s.universe.communityPosts[p.postId];
-      if (!post || post.kind !== 'poll' || !post.options) throw new CommandError('That is not a poll.');
+      if (!post || post.kind !== 'poll' || !post.options) throw new CommandError('That isn’t a poll.');
       if (post.votedFor !== undefined) throw new CommandError('You have already voted.');
       const option = post.options[p.option];
-      if (!option) throw new CommandError('That is not one of the options.');
+      if (!option) throw new CommandError('That isn’t one of the options.');
       option.votes += 1;
       post.votedFor = p.option;
       return { votes: option.votes };

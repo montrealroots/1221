@@ -138,7 +138,7 @@ function settle(sim: Simulation, def: SceneDefinition, session: SceneSession): {
 
 /** What a definition throws when a saved session sits at a step it does not know. */
 export function unknownStep(): CommandError {
-  return new CommandError('This scene is at a step this build does not know.');
+  return new CommandError('This scene is at a step this build doesn’t know.');
 }
 
 // ---------------------------------------------------------------------------
@@ -190,7 +190,7 @@ export function sceneView(sim: Simulation, session: SceneSession): SceneView {
   if (!def || def.version !== session.version) {
     return {
       title: 'Scene Update Needed',
-      text: 'This saved scene runs on a definition this build does not have. You can leave it safely; everything it already did stays done.',
+      text: 'This saved scene runs on a definition this build doesn’t have. You can leave it safely; everything it already did stays done.',
       choices: [],
       canLeave: true,
     };
@@ -233,10 +233,10 @@ function displaced(sim: Simulation, def: SceneDefinition, session: SceneSession)
   if (session.locationId !== player.currentLocationId) {
     const here = CITIES.get(player.currentLocationId)?.name ?? 'another city';
     const there = CITIES.get(session.locationId)?.name ?? 'where it started';
-    return `You are in ${here} now. This started in ${there}, and it is played there.`;
+    return `You’re in ${here} now. This started in ${there}, and it’s played there.`;
   }
   if (def.placeBound && session.placeId && player.currentPlaceId !== session.placeId) {
-    return `You are no longer at ${placeName(session.locationId, session.placeId)}. Go back to pick this up, or leave it.`;
+    return `You’re no longer at ${placeName(session.locationId, session.placeId)}. Go back to pick this up, or leave it.`;
   }
   return undefined;
 }
@@ -290,16 +290,16 @@ function current(sim: Simulation, id: Id, revision: number): SceneSession {
 function definitionFor(session: SceneSession): SceneDefinition {
   const def = REGISTRY.get(session.definitionId);
   if (!def || def.version !== session.version) {
-    throw new CommandError('This scene runs on a definition this build does not have. Leave it; what it did stays done.');
+    throw new CommandError('This scene runs on a definition this build doesn’t have. Leave it; what it did stays done.');
   }
   return def;
 }
 
 function begin(sim: Simulation, def: SceneDefinition, input: SceneInput, refs: { refType?: string; refId?: Id }): SceneSession {
   const data = state(sim);
-  if (activeScene(sim)) throw new CommandError('Finish or leave the scene you are in first.');
+  if (activeScene(sim)) throw new CommandError('Finish or leave the scene you’re in first.');
   const check = def.available(sim, input);
-  if (!check.ok) throw new CommandError(check.reason ?? 'That is not available right now.');
+  if (!check.ok) throw new CommandError(check.reason ?? 'That isn’t available right now.');
   const initial = def.start(sim, input);
   const session: SceneSession = {
     id: sim.nextId('scene'),
@@ -329,7 +329,7 @@ function begin(sim: Simulation, def: SceneDefinition, input: SceneInput, refs: {
 }
 
 function summarise(sim: Simulation, def: SceneDefinition, session: SceneSession): void {
-  if (!def.summarise) throw new CommandError('This one has to be played through; there is no short version of it.');
+  if (!def.summarise) throw new CommandError('This one has to be played through; there’s no short version of it.');
   say(sim, session, 'you', 'You get on with it.');
   def.summarise(sim, session, runtimeFor(sim, session));
   if (session.status === 'active') close(sim, session, 'completed');
@@ -356,7 +356,7 @@ export function registerScenes(sim: Simulation): void {
     'scene.start',
     (p, { sim: s }) => {
       const def = REGISTRY.get(p.definitionId);
-      if (!def) throw new CommandError('That scene is not available.');
+      if (!def) throw new CommandError('That scene isn’t available.');
       const session = begin(s, def, p.input ?? {}, { refType: p.refType, refId: p.refId });
       return { sceneId: session.id, status: session.status };
     },
@@ -382,7 +382,7 @@ export function registerScenes(sim: Simulation): void {
       let choice: SceneChoice | undefined;
       if (p.choiceId !== undefined) {
         choice = view.choices.find((c) => c.id === p.choiceId);
-        if (!choice) throw new CommandError('That is not one of the choices here.');
+        if (!choice) throw new CommandError('That isn’t one of the choices here.');
       } else {
         const text = typeof p.text === 'string' ? p.text : '';
         const intent = resolveIntent(text, view.choices);
@@ -414,11 +414,11 @@ export function registerScenes(sim: Simulation): void {
         } else {
           return {
             status: 'active', unsupported: true,
-            message: 'That is not something you can do here yet. The choices on screen are what there is.',
+            message: 'That isn’t something you can do here yet. The choices on screen are what there is.',
           };
         }
       }
-      if (!choice) throw new CommandError('That is not one of the choices here.');
+      if (!choice) throw new CommandError('That isn’t one of the choices here.');
       if (choice.disabled) throw new CommandError(choice.disabled);
 
       say(s, session, 'you', choice.label);
@@ -432,7 +432,7 @@ export function registerScenes(sim: Simulation): void {
     (p, { sim: s }) => {
       const session = current(s, p.sceneId, p.revision);
       const def = definitionFor(session);
-      if (session.status !== 'active') throw new CommandError('That scene is not running.');
+      if (session.status !== 'active') throw new CommandError('That scene isn’t running.');
       const away = displaced(s, def, session);
       if (away) throw new CommandError(away);
       summarise(s, def, session);
@@ -444,8 +444,8 @@ export function registerScenes(sim: Simulation): void {
     'scene.quick',
     (p, { sim: s }) => {
       const def = REGISTRY.get(p.definitionId);
-      if (!def) throw new CommandError('That scene is not available.');
-      if (!def.summarise) throw new CommandError('This one has to be played through; there is no short version of it.');
+      if (!def) throw new CommandError('That scene isn’t available.');
+      if (!def.summarise) throw new CommandError('This one has to be played through; there’s no short version of it.');
       const session = begin(s, def, p.input ?? {}, { refType: p.refType, refId: p.refId });
       summarise(s, def, session);
       return { sceneId: session.id, status: session.status, lines: session.transcript.map((l) => l.text) };
@@ -472,16 +472,16 @@ export function registerScenes(sim: Simulation): void {
     (p, { sim: s }) => {
       const data = state(s);
       const session = data.sessions[p.sceneId];
-      if (!session || data.activeId !== session.id) throw new CommandError('That scene is not waiting for you.');
-      if (session.status !== 'interrupted') throw new CommandError('That scene was not interrupted.');
+      if (!session || data.activeId !== session.id) throw new CommandError('That scene isn’t waiting for you.');
+      if (session.status !== 'interrupted') throw new CommandError('That scene wasn’t interrupted.');
       if (session.interruption && !session.interruption.resumable) {
-        throw new CommandError('That scene cannot be picked up again. Leave it; what it did stays done.');
+        throw new CommandError('That scene can’t be picked up again. Leave it; what it did stays done.');
       }
       const def = definitionFor(session);
       const away = displaced(s, def, session);
       if (away) throw new CommandError(away);
       const extra = def.resume?.(s, session);
-      if (extra && !extra.ok) throw new CommandError(extra.reason ?? 'You cannot pick that up right now.');
+      if (extra && !extra.ok) throw new CommandError(extra.reason ?? 'You can’t pick that up right now.');
       session.status = 'active';
       session.interruption = undefined;
       session.revision += 1;

@@ -22,7 +22,7 @@
 export const LIFESPAN_NOTE =
   'Life expectancy at birth and the state pension age are published national figures, carried in '
   + 'whole years. Which source and which year a figure comes from moves it by a year or two, so '
-  + 'SLATE treats each one as a band rather than a number and does not claim it is this year’s. '
+  + 'SLATE treats each one as a band rather than a number and doesn’t claim it’s this year’s. '
   + 'Everything that happens to one person — when a life actually ends, what a year costs, who is '
   + 'born into a family — is SLATE’s own calibration. No table anywhere says when anybody dies.';
 
@@ -126,7 +126,7 @@ export const ADULT_EXPECTANCY_NOTE =
   'Life expectancy at birth is an average over everybody born, and where child mortality is high it '
   + 'sits well below the age adults actually reach. A character who is already grown up has survived '
   + 'the part that makes that figure low. SLATE puts most of that distance back with an adjustment '
-  + 'of its own rather than pretending the at-birth figure is the age people die at. It is a '
+  + 'of its own rather than pretending the at-birth figure is the age people die at. It’s a '
   + 'correction of roughly the right size, not a life table.';
 
 /** The figure a country would have if almost no child died. */
@@ -208,8 +208,8 @@ export const LIFE_STAGES: readonly LifeStage[] = [
   { id: 'young_adult', label: 'Young Adult', from: 18, about: 'Everything is a first, and nothing has settled.' },
   { id: 'adulthood', label: 'Adulthood', from: 30, about: 'The decade where the things you chose start to compound.' },
   { id: 'middle_age', label: 'Middle Age', from: 45, about: 'Still climbing, and beginning to feel the mornings.' },
-  { id: 'later_life', label: 'Later Life', from: 60, about: 'The work is what you want it to be, or it is over.' },
-  { id: 'old_age', label: 'Old Age', from: 75, about: 'Time is the thing you are short of, and you know it.' },
+  { id: 'later_life', label: 'Later Life', from: 60, about: 'The work is what you want it to be, or it’s over.' },
+  { id: 'old_age', label: 'Old Age', from: 75, about: 'Time is the thing you’re short of, and you know it.' },
 ];
 
 export const STAGE_BY_ID: Readonly<Record<string, LifeStage>> = Object.fromEntries(
@@ -254,7 +254,7 @@ export const AGING: readonly AgingBand[] = [
   { from: 30, fitness: 0.35, condition: 0.18, recovery: 0.003, about: 'Recovery takes a day longer than it used to.' },
   { from: 40, fitness: 0.62, condition: 0.34, recovery: 0.005, about: 'You feel a bad night the next morning now.' },
   { from: 50, fitness: 0.95, condition: 0.55, recovery: 0.008, about: 'Keeping the ceiling up is work rather than weather.' },
-  { from: 60, fitness: 1.35, condition: 0.85, recovery: 0.012, about: 'What you do not use, you lose faster than you gain it.' },
+  { from: 60, fitness: 1.35, condition: 0.85, recovery: 0.012, about: 'What you don’t use, you lose faster than you gain it.' },
   { from: 70, fitness: 1.80, condition: 1.25, recovery: 0.016, about: 'A week off costs a month back.' },
   { from: 80, fitness: 2.30, condition: 1.75, recovery: 0.021, about: 'Every year is a year now, and it shows.' },
 ];
@@ -392,7 +392,7 @@ export const AGE_GATE_NOTE =
   'These are the general national minimums, and every one of them has exceptions a real life runs '
   + 'into: a state or province that sets its own, a parent who can consent, a license that arrives '
   + 'in stages. SLATE carries the national rule, uses it to decide what is open to you, and names '
-  + 'the country whose rule it is applying. It is not legal advice and it is not a statute.';
+  + 'the country whose rule it’s applying. It isn’t legal advice and it isn’t a statute.';
 
 /** The things an age can be a gate on. */
 export type GateId =
@@ -406,12 +406,12 @@ export interface Gate {
 }
 
 export const GATES: readonly Gate[] = [
-  { id: 'majority', label: 'Signing For Yourself', refusal: 'You are not old enough to sign for yourself here.' },
-  { id: 'drive', label: 'Driving', refusal: 'You are not old enough to drive here.' },
-  { id: 'drink', label: 'Drinking', refusal: 'You are not old enough to be served here.' },
-  { id: 'work', label: 'Working', refusal: 'You are not old enough to be employed here.' },
-  { id: 'marry', label: 'Marrying', refusal: 'You are not old enough to marry here.' },
-  { id: 'vote', label: 'Voting', refusal: 'You are not old enough to vote here.' },
+  { id: 'majority', label: 'Signing For Yourself', refusal: 'You aren’t old enough to sign for yourself here.' },
+  { id: 'drive', label: 'Driving', refusal: 'You aren’t old enough to drive here.' },
+  { id: 'drink', label: 'Drinking', refusal: 'You aren’t old enough to be served here.' },
+  { id: 'work', label: 'Working', refusal: 'You aren’t old enough to be employed here.' },
+  { id: 'marry', label: 'Marrying', refusal: 'You aren’t old enough to marry here.' },
+  { id: 'vote', label: 'Voting', refusal: 'You aren’t old enough to vote here.' },
   { id: 'lease', label: 'Holding A Lease', refusal: 'Nobody will put a lease in the name of somebody your age.' },
   { id: 'borrow', label: 'Borrowing', refusal: 'No lender will write a contract with somebody your age.' },
 ];
@@ -514,9 +514,9 @@ export function gateIsCountrys(countryId: string, gate: GateId): boolean {
 export const GROWTH_NOTE =
   'You set the height and weight your character ends up at, and a character who starts young grows '
   + 'to exactly that. The shape of the growing is SLATE’s own smoothing of the general human curve, '
-  + 'and it is one curve: children finish growing at different ages and boys and girls finish at '
+  + 'and it’s one curve: children finish growing at different ages and boys and girls finish at '
   + 'different ages, and SLATE carries the middle of that rather than inferring anything from a '
-  + 'pronoun. It is a size, not a growth chart, and no part of it is medical.';
+  + 'pronoun. It’s a size, not a growth chart, and no part of it is medical.';
 
 /** Share of adult height reached, by age. */
 export const HEIGHT_CURVE: readonly { age: number; share: number }[] = [

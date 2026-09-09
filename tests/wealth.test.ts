@@ -194,7 +194,7 @@ describe('a private bank', () => {
     sim.advanceTo(applied.readyAt + MS_HOUR);
     const application = sim.universe.privateApplications![applied.applicationId]!;
     expect(application.status).toBe('declined');
-    expect(application.reason).toMatch(/was not there/);
+    expect(application.reason).toMatch(/was(n’t| not) there/);
     expect(held(sim, privateProductId('lloyds_international'))).toBeUndefined();
   });
 

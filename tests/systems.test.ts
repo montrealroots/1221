@@ -20,7 +20,7 @@ describe('vehicle fitment', () => {
     const brakes = PARTS.require('brakes_carbon'); // Porsche, Ferrari, Lamborghini, McLaren, Mercedes
     const verdict = checkFitment(brakes, subject());
     expect(verdict.fits).toBe(false);
-    expect(verdict.reasons[0]).toMatch(/does not fit/);
+    expect(verdict.reasons[0]).toMatch(/does(n’t| not) fit/);
   });
 
   it('refuses a combustion part on an electric car', () => {

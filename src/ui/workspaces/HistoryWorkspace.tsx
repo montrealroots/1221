@@ -88,7 +88,7 @@ export function HistoryWorkspace() {
       {tab === 'why' && (
         <Panel
           title="Explanations"
-          subtitle="Every consequential outcome records what went into it. Information your character could not have known is never shown."
+          subtitle="Every consequential outcome records what went into it. Information your character couldn’t have known is never shown."
           flush
         >
           {audits.length === 0 ? (

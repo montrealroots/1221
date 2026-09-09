@@ -734,7 +734,7 @@ export const PARTS = new Registry<Part>('parts', [
   part('tires_allseason', 'All-Season Touring Tires', 'tires', 'Vanguard Rubber', 1_100, 1.5, UNIVERSAL, { efficiency: 1 }, {}, 'Competent everywhere, exceptional nowhere. The correct choice for most people.'),
 
   // Brakes and suspension.
-  part('brakes_bigbrake', 'Six-Piston Big Brake Kit', 'brakes', 'Halton Racing', 8_900, 6, { makes: ['bmw', 'porsche', 'mercedes', 'audi', 'chevrolet', 'ford'], models: [] }, { zeroToSixty: -0.05, valueRecovery: 0.3 }, { voids: true, insurance: true, requires: ['wheels'] }, 'Will not clear a stock wheel. You need the wheels first, and the dealer will notice.'),
+  part('brakes_bigbrake', 'Six-Piston Big Brake Kit', 'brakes', 'Halton Racing', 8_900, 6, { makes: ['bmw', 'porsche', 'mercedes', 'audi', 'chevrolet', 'ford'], models: [] }, { zeroToSixty: -0.05, valueRecovery: 0.3 }, { voids: true, insurance: true, requires: ['wheels'] }, 'Won’t clear a stock wheel. You need the wheels first, and the dealer will notice.'),
   part('brakes_carbon', 'Carbon Ceramic Brake Package', 'brakes', 'Halton Racing', 24_000, 8, { makes: ['porsche', 'ferrari', 'lamborghini', 'mclaren', 'mercedes'], models: [] }, { zeroToSixty: -0.08, valueRecovery: 0.55 }, { insurance: true, requires: ['wheels'] }, 'Fade-free and astonishingly expensive to replace when they finally wear.'),
   part('susp_coilover', 'Adjustable Coilovers', 'suspension', 'Meridian Dynamics', 3_400, 6, { makes: [], models: [], bodyStyles: ['sedan', 'coupe', 'hatchback', 'wagon', 'roadster'] }, { zeroToSixty: -0.06, valueRecovery: 0.15, condition: -2 }, { voids: true, insurance: true }, 'Ride height and damping in your hands. Set it wrong and the car is worse everywhere.'),
   part('susp_airlift', 'Air Suspension Conversion', 'suspension', 'Meridian Dynamics', 6_200, 12, { makes: [], models: [], bodyStyles: ['sedan', 'coupe', 'suv', 'truck'] }, { valueRecovery: 0.1, condition: -3 }, { voids: true, insurance: true }, 'Adjustable on the move. More things to fail, and they do fail.'),
@@ -763,7 +763,7 @@ export const PARTS = new Registry<Part>('parts', [
   part('light_underglow', 'Underbody Lighting', 'lighting', 'Cover Culture', 900, 4, UNIVERSAL, { valueDelta: -40_000 }, { legal: false, insurance: true }, 'Restricted or prohibited on public roads almost everywhere.'),
   part('security_immobiliser', 'Aftermarket Immobiliser', 'security', 'ClearGuard', 1_400, 3, UNIVERSAL, { valueRecovery: 0.2 }, { insurance: true }, 'Insurers reduce the premium for one of these on a desirable car.'),
   part('tracking_gps', 'GPS Tracking and Recovery', 'tracking', 'ClearGuard', 850, 2, UNIVERSAL, { valueRecovery: 0.1 }, { insurance: true }, 'A monthly subscription and a meaningfully better chance of seeing the car again.'),
-  part('aero_splitter', 'Front Splitter and Rear Wing', 'aero', 'Apex Forged', 5_600, 8, { makes: [], models: [], bodyStyles: ['coupe', 'sedan', 'roadster'] }, { zeroToSixty: 0.04, valueRecovery: 0.15 }, { insurance: true }, 'Real downforce above 80 miles an hour. Below that it is only weight and drag.'),
+  part('aero_splitter', 'Front Splitter and Rear Wing', 'aero', 'Apex Forged', 5_600, 8, { makes: [], models: [], bodyStyles: ['coupe', 'sedan', 'roadster'] }, { zeroToSixty: 0.04, valueRecovery: 0.15 }, { insurance: true }, 'Real downforce above 80 miles an hour. Below that it’s only weight and drag.'),
 
   // --- Motorcycles. The brands here are SLATE's; the bikes they fit are real. ---
   part('moto_exhaust_slipon', 'Slip-On Silencer', 'exhaust', 'Resonance Works', 1_100, 1, MOTO, { horsepower: 4, topSpeed: 1, valueRecovery: 0.3 }, { insurance: true }, 'Keeps the catalyst and the noise inside the law. Most of the sound, a little of the power.'),
@@ -805,12 +805,12 @@ export const PARTS = new Registry<Part>('parts', [
   part('boat_sails_laminate', 'Laminate Sail Wardrobe', 'canvas', 'Harbor Yard', 28_000, 12, { ...BOAT, bodyStyles: ['sailing_yacht'] }, { topSpeed: 1, valueRecovery: 0.35, condition: 4 }, {}, 'Holds its shape in a breeze where Dacron bags. A knot upwind, honestly.'),
   part('boat_generator', 'Generator Install', 'power', 'Halton Marine', 19_000, 40, { ...BOAT, bodyStyles: ['express_cruiser', 'sailing_yacht', 'motor_yacht'] }, { valueRecovery: 0.4 }, { insurance: true }, 'Air conditioning at anchor and a kettle that works. Needs a survey afterwards.'),
   part('boat_watermaker', 'Watermaker', 'power', 'Halton Marine', 14_000, 20, { ...BOAT, bodyStyles: ['sailing_yacht', 'motor_yacht'] }, { valueRecovery: 0.35 }, { requires: ['power'] }, 'Fresh water from the sea. Needs the generator to run it.'),
-  part('boat_gyro', 'Gyro Stabiliser Retrofit', 'hull', 'Meridian Marine', 95_000, 120, { ...BOAT, bodyStyles: ['motor_yacht'] }, { valueRecovery: 0.55, condition: 2 }, { insurance: true }, 'Takes the roll out at anchor and under way. People who have one will not go back.'),
+  part('boat_gyro', 'Gyro Stabiliser Retrofit', 'hull', 'Meridian Marine', 95_000, 120, { ...BOAT, bodyStyles: ['motor_yacht'] }, { valueRecovery: 0.55, condition: 2 }, { insurance: true }, 'Takes the roll out at anchor and under way. People who have one won’t go back.'),
   part('boat_bow_thruster', 'Bow Thruster Retrofit', 'controls', 'Meridian Marine', 12_000, 40, { ...BOAT, bodyStyles: ['express_cruiser', 'sailing_yacht', 'motor_yacht'] }, { valueRecovery: 0.45 }, { insurance: true }, 'A hole through the bow and a marina you can get out of in a crosswind.'),
-  part('boat_tracker', 'GPS Tracker And Geofence', 'tracking', 'ClearGuard', 600, 2, BOAT, { valueRecovery: 0.2 }, { insurance: true }, 'Tells you if the boat moves when you are not on it.'),
+  part('boat_tracker', 'GPS Tracker And Geofence', 'tracking', 'ClearGuard', 600, 2, BOAT, { valueRecovery: 0.2 }, { insurance: true }, 'Tells you if the boat moves when you aren’t on it.'),
 
   // --- Aircraft. Every figure SLATE's own; a completion center would quote differently. ---
-  part('jet_wifi', 'Cabin Connectivity Retrofit', 'connectivity', 'Northline Aero', 320_000, 80, JET, { valueRecovery: 0.5 }, {}, 'Satellite broadband at altitude. On an older airframe it is the first thing a buyer asks about.'),
+  part('jet_wifi', 'Cabin Connectivity Retrofit', 'connectivity', 'Northline Aero', 320_000, 80, JET, { valueRecovery: 0.5 }, {}, 'Satellite broadband at altitude. On an older airframe it’s the first thing a buyer asks about.'),
   part('jet_avionics', 'Avionics Upgrade', 'avionics', 'Threshold Avionics', 450_000, 160, { ...JET, years: [2015, 2021] }, { valueRecovery: 0.55 }, { insurance: true }, 'A modern flight deck in an older jet. Weeks in the shop, and a different airplane to fly.'),
   part('jet_adsb', 'ADS-B Out Compliance', 'avionics', 'Threshold Avionics', 60_000, 24, { ...JET, years: [2015, 2019] }, { valueRecovery: 0.4 }, {}, 'Required in controlled airspace almost everywhere. An older airframe without it is grounded, not cheap.'),
   part('jet_evs', 'Enhanced Vision Retrofit', 'avionics', 'Threshold Avionics', 380_000, 120, JET, { valueRecovery: 0.45 }, {}, 'Infrared through the cloud on the head-up display. Lower minimums into airports that fog in.'),
@@ -867,22 +867,22 @@ export function checkFitment(part: Part, subject: FitmentSubject): FitmentVerdic
   }
   if (f.makes.length > 0 && !f.makes.includes(makeId)) {
     const names = f.makes.map((m) => MANUFACTURERS.get(m)?.name ?? m).join(', ');
-    reasons.push(`${part.name} is made for ${names}. It does not fit a ${subject.make}.`);
+    reasons.push(`${part.name} is made for ${names}. It doesn’t fit a ${subject.make}.`);
   }
   if (f.models.length > 0 && !f.models.includes(subject.modelId)) {
-    reasons.push(`${part.name} is model-specific and does not fit this model.`);
+    reasons.push(`${part.name} is model-specific and doesn’t fit this model.`);
   }
   if (f.years && (subject.year < f.years[0] || subject.year > f.years[1])) {
     reasons.push(`${part.name} fits ${f.years[0]} to ${f.years[1]} model years. This car is a ${subject.year}.`);
   }
   if (f.powertrains && !f.powertrains.includes(subject.powertrain)) {
-    reasons.push(`${part.name} is not compatible with a ${subject.powertrain === 'ev' ? 'fully electric' : subject.powertrain} powertrain.`);
+    reasons.push(`${part.name} isn’t compatible with a ${subject.powertrain === 'ev' ? 'fully electric' : subject.powertrain} powertrain.`);
   }
   if (f.trims && !f.trims.includes(subject.trimId)) {
-    reasons.push(`${part.name} only fits specific trims, and this is not one of them.`);
+    reasons.push(`${part.name} only fits specific trims, and this isn’t one of them.`);
   }
   if (f.bodyStyles && !f.bodyStyles.includes(subject.bodyStyle)) {
-    reasons.push(`${part.name} does not fit a ${subject.bodyStyle} body.`);
+    reasons.push(`${part.name} doesn’t fit a ${subject.bodyStyle} body.`);
   }
 
   for (const required of part.requires) {
@@ -897,7 +897,7 @@ export function checkFitment(part: Part, subject: FitmentSubject): FitmentVerdic
   }
 
   if (part.voidsWarranty) warnings.push('This voids the manufacturer warranty.');
-  if (!part.streetLegal) warnings.push('This is not street legal and will fail inspection.');
+  if (!part.streetLegal) warnings.push('This isn’t street legal and will fail inspection.');
   if (part.insuranceRelevant) warnings.push('Your insurer must be told about this, or a future claim can be denied.');
 
   return { fits: reasons.length === 0, reasons, warnings };

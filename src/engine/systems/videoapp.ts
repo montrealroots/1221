@@ -184,11 +184,11 @@ export function registerVideoApp(sim: Simulation): void {
     (p, { sim: s }) => {
       const prefs = preferences(s);
       if (p.speed !== undefined) {
-        if (!SPEEDS.includes(p.speed)) throw new CommandError('That is not one of the speeds.');
+        if (!SPEEDS.includes(p.speed)) throw new CommandError('That isn’t one of the speeds.');
         prefs.speed = p.speed;
       }
       if (p.quality !== undefined) {
-        if (!QUALITIES.includes(p.quality)) throw new CommandError('That is not one of the qualities.');
+        if (!QUALITIES.includes(p.quality)) throw new CommandError('That isn’t one of the qualities.');
         prefs.quality = p.quality;
       }
       if (p.autoplay !== undefined) prefs.autoplay = p.autoplay;
@@ -234,7 +234,7 @@ export function registerVideoApp(sim: Simulation): void {
     'video.pin_comment',
     (p, { sim: s }) => {
       const comment = s.universe.videoComments[p.commentId];
-      if (!comment) throw new CommandError('That comment cannot be pinned.');
+      if (!comment) throw new CommandError('That comment can’t be pinned.');
       const video = videoById(s, comment.videoId);
       const channel = video ? s.universe.videoChannels[video.channelId] : undefined;
       if (channel?.ownerId !== s.player.id) throw new CommandError('You can only pin on your own video.');
@@ -252,7 +252,7 @@ export function registerVideoApp(sim: Simulation): void {
     'video.heart_comment',
     (p, { sim: s }) => {
       const comment = s.universe.videoComments[p.commentId];
-      if (!comment) throw new CommandError('That comment cannot be hearted.');
+      if (!comment) throw new CommandError('That comment can’t be hearted.');
       const video = videoById(s, comment.videoId);
       const channel = video ? s.universe.videoChannels[video.channelId] : undefined;
       if (channel?.ownerId !== s.player.id) throw new CommandError('Only the channel can heart a comment.');
@@ -279,11 +279,11 @@ export function registerVideoApp(sim: Simulation): void {
     'video.set_thumbnail_image',
     (p, { sim: s }) => {
       const video = s.universe.videos[p.videoId];
-      if (!video) throw new CommandError('That is not your video.');
+      if (!video) throw new CommandError('That isn’t your video.');
       const channel = s.universe.videoChannels[video.channelId];
-      if (channel?.ownerId !== s.player.id) throw new CommandError('That is not your video.');
+      if (channel?.ownerId !== s.player.id) throw new CommandError('That isn’t your video.');
       if (p.image !== undefined && !p.image.startsWith('data:image/')) {
-        throw new CommandError('That is not an image.');
+        throw new CommandError('That isn’t an image.');
       }
       video.thumbnailImage = p.image;
       s.emit('video.thumbnail_set', { videoId: video.id, custom: Boolean(p.image) });
@@ -297,11 +297,11 @@ export function registerVideoApp(sim: Simulation): void {
       const channel = myChannel(s);
       if (!channel) throw new CommandError('You have no channel yet.');
       if (p.image !== undefined && !p.image.startsWith('data:image/')) {
-        throw new CommandError('That is not an image.');
+        throw new CommandError('That isn’t an image.');
       }
       if (p.which === 'avatar') channel.avatarImage = p.image;
       else if (p.which === 'banner') channel.bannerImage = p.image;
-      else throw new CommandError('There is no picture there to change.');
+      else throw new CommandError('There’s no picture there to change.');
       return { which: p.which };
     },
   );

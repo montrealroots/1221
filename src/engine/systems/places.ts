@@ -35,6 +35,12 @@ import { readiness } from './life';
 
 export type Mode = 'walk' | 'drive' | 'taxi' | 'transit' | 'cycle';
 
+/**
+ * Where "home" is for somebody with no address: the couch they are staying
+ * on. Never stored as a place; arriving there clears the place instead.
+ */
+export const THE_COUCH = 'couch';
+
 export const MODE_LABEL: Readonly<Record<Mode, string>> = {
   walk: 'Walk', drive: 'Drive', taxi: 'Taxi', transit: 'Transit', cycle: 'Cycle',
 };
@@ -123,10 +129,29 @@ export function planJourney(sim: Simulation, to: { neighbourhoodId?: string; cit
         : 0;
   const fuelUsed = mode === 'drive' ? fuelPercentFor(km, vehicle) : 0;
   const note = mode === 'drive' && traffic > 1.2 ? 'Traffic. It takes as long as it takes.'
-    : mode === 'walk' && km > 4 ? 'A long walk. You will feel it.'
+    : mode === 'walk' && km > 4 ? 'A long walk. You’ll feel it.'
       : mode === 'transit' ? 'A wait, then a ride.'
         : traffic < 0.85 ? 'The roads are empty at this hour.' : 'A normal run across town.';
   return { km, minutes, cost, mode, note, fuelUsed };
+}
+
+/**
+ * How somebody would actually get there when nobody said how: drive if they
+ * can, walk if it is close, the bus if they can cover the fare, and on foot
+ * otherwise. Every guard on the chosen mode still applies afterwards.
+ */
+export function sensibleMode(sim: Simulation, to: { neighbourhoodId?: string; cityId: string }, person: Person = sim.player): Mode {
+  const car = driveableVehicle(sim, person);
+  if (car) {
+    const drive = planJourney(sim, to, 'drive', person);
+    if (fuelOf(car) >= drive.fuelUsed) return 'drive';
+  }
+  const km = neighbourhoodKm(to.cityId, hoodOf(sim, person), to.neighbourhoodId);
+  if (km <= 2.5 && person.wellbeing.energy >= 8) return 'walk';
+  const accountId = person.primaryAccountId;
+  const fare = planJourney(sim, to, 'transit', person).cost;
+  if (accountId && sim.ledger.availableFunds(accountId) >= fare) return 'transit';
+  return 'walk';
 }
 
 /** The car you could drive right now: yours, in this city, with fuel in it. */
@@ -186,16 +211,20 @@ export function registerPlaces(sim: Simulation): void {
       const cityId = person.currentLocationId;
 
       let target: { id: string; name: string; neighbourhoodId?: string; cityId: string };
-      if (p.home || p.propertyId) {
+      if (p.home && !p.propertyId && !person.residenceId) {
+        // On somebody's couch: no address of your own, but a door that opens.
+        // Nothing is set as the place, which is what "at home" means here.
+        target = { id: THE_COUCH, name: 'The Couch You’re Staying On', cityId };
+      } else if (p.home || p.propertyId) {
         const propertyId = p.propertyId ?? person.residenceId;
-        if (!propertyId) throw new CommandError('You do not have anywhere to go home to yet.');
+        if (!propertyId) throw new CommandError('You don’t have anywhere to go home to yet.');
         const property = s.universe.properties[propertyId];
         if (!property) throw new CommandError('That place no longer exists.');
         if (property.locationId !== cityId) {
-          throw new CommandError(`${property.addressLine} is in ${CITIES.get(property.locationId)?.name ?? 'another city'} and you are in ${CITIES.get(cityId)?.name ?? 'this one'}. Fly or drive there first.`);
+          throw new CommandError(`${property.addressLine} is in ${CITIES.get(property.locationId)?.name ?? 'another city'} and you’re in ${CITIES.get(cityId)?.name ?? 'this one'}. Fly or drive there first.`);
         }
         if (property.ownerId !== person.id && property.id !== person.residenceId) {
-          throw new CommandError('That is not yours to walk into.');
+          throw new CommandError('That isn’t yours to walk into.');
         }
         target = { id: property.id, name: property.addressLine, neighbourhoodId: property.neighbourhoodId, cityId };
       } else if (p.placeId) {
@@ -207,19 +236,20 @@ export function registerPlaces(sim: Simulation): void {
           const realIn = generatedIn ? undefined : REAL_PLACES.find((q) => q.id === p.placeId);
           const elsewhere = generatedIn ?? (realIn ? CITIES.get(realIn.cityId) : undefined);
           throw new CommandError(elsewhere
-            ? `${realIn?.name ?? 'That place'} is in ${elsewhere.name} and you are in ${CITIES.get(cityId)?.name ?? 'another city'}. Get there first.`
-            : 'There is no such place here.');
+            ? `${realIn?.name ?? 'That place'} is in ${elsewhere.name} and you’re in ${CITIES.get(cityId)?.name ?? 'another city'}. Get there first.`
+            : 'There’s no such place here.');
         }
         target = { id: place.id, name: place.name, neighbourhoodId: place.neighbourhoodId, cityId };
       } else {
         throw new CommandError('Name somewhere to go.');
       }
 
-      if (person.currentPlaceId === target.id) {
-        return { placeId: target.id, name: target.name, minutes: 0, km: 0, cost: 0, mode: p.mode ?? 'walk', note: 'You are already here.', arrivedAt: s.now };
+      const alreadyHere = target.id === THE_COUCH ? !person.currentPlaceId : person.currentPlaceId === target.id;
+      if (alreadyHere) {
+        return { placeId: target.id, name: target.name, minutes: 0, km: 0, cost: 0, mode: p.mode ?? 'walk', note: 'You’re already here.', arrivedAt: s.now };
       }
 
-      const mode = p.mode ?? 'drive';
+      const mode = p.mode ?? sensibleMode(s, target, person);
       const journey = planJourney(s, target, mode, person);
       const vehicle = mode === 'drive' ? driveableVehicle(s, person) : undefined;
       if (mode === 'drive') {
@@ -227,15 +257,15 @@ export function registerPlaces(sim: Simulation): void {
         if (!license.ok) throw new CommandError(license.reason ?? 'No license.');
         if (!vehicle) throw new CommandError('You have no car here. Walk, take transit, or call a cab.');
         if (fuelOf(vehicle) < journey.fuelUsed) {
-          throw new CommandError(`${vehicle.year} ${vehicle.make} ${vehicle.model} has ${Math.round(fuelOf(vehicle))}% in the tank, which will not make ${journey.km} km. Fill up first.`);
+          throw new CommandError(`${vehicle.year} ${vehicle.make} ${vehicle.model} has ${Math.round(fuelOf(vehicle))}% in the tank, which won’t make ${journey.km} km. Fill up first.`);
         }
       }
-      if (mode === 'walk' && person.wellbeing.energy < 8) throw new CommandError('You are too tired to walk anywhere. Sit down first.');
+      if (mode === 'walk' && person.wellbeing.energy < 8) throw new CommandError('You’re too tired to walk anywhere. Sit down first.');
 
       if (journey.cost > 0 && mode !== 'drive') {
         const accountId = person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay the fare from.');
-        if (s.ledger.availableFunds(accountId) < journey.cost) throw new CommandError(`The fare is about ${formatMoney(journey.cost)} and you cannot cover it.`);
+        if (s.ledger.availableFunds(accountId) < journey.cost) throw new CommandError(`The fare is about ${formatMoney(journey.cost)} and you can’t cover it.`);
         s.expense(accountId, journey.cost, mode === 'taxi' ? 'Taxi' : 'Transit fare', 'travel');
       }
       if (mode === 'drive' && journey.cost > 0) {
@@ -247,7 +277,7 @@ export function registerPlaces(sim: Simulation): void {
       }
 
       s.advanceTo(s.now + journey.minutes * MS_MINUTE);
-      person.currentPlaceId = target.id;
+      person.currentPlaceId = target.id === THE_COUCH ? undefined : target.id;
       if (vehicle) {
         vehicle.fuelPercent = Number(Math.max(0, fuelOf(vehicle) - journey.fuelUsed).toFixed(2));
         vehicle.locationId = cityId;
@@ -277,18 +307,18 @@ export function registerPlaces(sim: Simulation): void {
     (p, { sim: s }) => {
       const person = s.player;
       const place = currentPlace(s, person);
-      if (!place) throw new CommandError('You are not anywhere that serves food. Go somewhere first.');
+      if (!place) throw new CommandError('You aren’t anywhere that serves food. Go somewhere first.');
       if (!place.actions.includes('eat') && !place.actions.includes('drink')) {
-        throw new CommandError(`${place.name} does not serve food.`);
+        throw new CommandError(`${place.name} doesn’t serve food.`);
       }
       const menu = menuOf(place);
       if (menu.length === 0) throw new CommandError(`${place.name} has nothing to order.`);
       if (p.items.length === 0) throw new CommandError('Order something.');
-      if (p.items.length > 8) throw new CommandError('That is more than one table can eat.');
+      if (p.items.length > 8) throw new CommandError('That’s more than one table can eat.');
 
       const chosen = p.items.map((name) => {
         const item = menu.find((m) => m.name.toLowerCase() === name.toLowerCase());
-        if (!item) throw new CommandError(`${place.name} does not have that. The menu is: ${menu.map((m) => m.name).join(', ')}.`);
+        if (!item) throw new CommandError(`${place.name} doesn’t have that. The menu is: ${menu.map((m) => m.name).join(', ')}.`);
         return item;
       });
       const guests = (p.withPersonIds ?? []).filter((id) => s.universe.people[id]);
@@ -297,7 +327,7 @@ export function registerPlaces(sim: Simulation): void {
       const accountId = p.accountId ?? person.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay with.');
       if (s.ledger.availableFunds(accountId) < total) {
-        throw new CommandError(`That comes to ${formatMoney(total)} with service and you cannot cover it.`);
+        throw new CommandError(`That comes to ${formatMoney(total)} with service and you can’t cover it.`);
       }
       s.expense(accountId, total, `${place.name}`, 'dining');
 
@@ -342,11 +372,11 @@ export function registerPlaces(sim: Simulation): void {
       const person = s.player;
       const place = currentPlace(s, person);
       if (!place || !place.actions.includes('refuel')) {
-        throw new CommandError('You are not at a filling station. Drive to one first.');
+        throw new CommandError('You aren’t at a filling station. Drive to one first.');
       }
       const vehicle = p.vehicleId ? s.universe.vehicles[p.vehicleId] : driveableVehicle(s, person);
       if (!vehicle || vehicle.soldAt) throw new CommandError('You have no car here to fill.');
-      if (vehicle.ownerId !== person.id) throw new CommandError('That is not your car.');
+      if (vehicle.ownerId !== person.id) throw new CommandError('That isn’t your car.');
       const to = clamp(p.toPercent ?? 100, 5, 100);
       const now = fuelOf(vehicle);
       if (to <= now) throw new CommandError(`The tank is already at ${Math.round(now)}%.`);
@@ -356,7 +386,7 @@ export function registerPlaces(sim: Simulation): void {
       const cost = Math.round(litres * Math.max(60, perLitre));
       const accountId = p.accountId ?? person.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay with.');
-      if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`${litres} liters comes to ${formatMoney(cost)} and you cannot cover it.`);
+      if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`${litres} liters comes to ${formatMoney(cost)} and you can’t cover it.`);
       s.expense(accountId, cost, `Fuel — ${place.name}`, 'travel');
 
       s.advanceTo(s.now + 9 * MS_MINUTE);
@@ -376,7 +406,7 @@ export function registerPlaces(sim: Simulation): void {
     (p, { sim: s }) => {
       const person = s.player;
       const place = currentPlace(s, person);
-      if (!place || place.kind !== 'hotel') throw new CommandError('You are not standing in a hotel. Walk into one first.');
+      if (!place || place.kind !== 'hotel') throw new CommandError('You aren’t standing in a hotel. Walk into one first.');
       const existing = hotelRoom(s, person);
       if (existing && existing.hotelName === place.name) {
         return { bookingId: existing.id, hotel: existing.hotelName, nights: existing.nights, nightlyRate: existing.nightlyRate, total: existing.total };
@@ -428,14 +458,14 @@ export function registerPlaces(sim: Simulation): void {
     (p, { sim: s }) => {
       const person = s.player;
       const place = currentPlace(s, person);
-      if (!place) throw new CommandError('You are not anywhere in particular.');
-      if (!place.actions.includes('visit')) throw new CommandError(`There is nothing to see at ${place.name}.`);
+      if (!place) throw new CommandError('You aren’t anywhere in particular.');
+      if (!place.actions.includes('visit')) throw new CommandError(`There’s nothing to see at ${place.name}.`);
       const minutes = clamp(Math.round(p.minutes ?? place.minutes), 15, 360);
       const cost = place.admissionCalibration ? Math.round(place.admissionCalibration * costOfLiving(place.cityId)) : 0;
       if (cost > 0) {
         const accountId = person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay admission from.');
-        if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`Admission is about ${formatMoney(cost)} and you cannot cover it.`);
+        if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`Admission is about ${formatMoney(cost)} and you can’t cover it.`);
         s.expense(accountId, cost, `${place.name} — admission`, 'lifestyle');
       }
       s.advanceTo(s.now + minutes * MS_MINUTE);
@@ -478,7 +508,7 @@ export function registerPlaces(sim: Simulation): void {
       const person = s.player;
       const where = bathroomFor(s, person);
       if (!where) {
-        throw new CommandError('There is nowhere here to shower. Go home, or to a hotel room you have booked.');
+        throw new CommandError('There’s nowhere here to shower. Go home, or to a hotel room you have booked.');
       }
       s.advanceTo(s.now + 25 * MS_MINUTE);
       person.wellbeing.hygiene = 100;
@@ -503,12 +533,12 @@ export function registerPlaces(sim: Simulation): void {
       const person = s.player;
       const other = s.universe.people[p.personId];
       if (!other) throw new CommandError('No such person.');
-      if (other.id === person.id) throw new CommandError('That is not what this is for.');
+      if (other.id === person.id) throw new CommandError('That isn’t what this is for.');
       const relationship = Object.values(s.universe.relationships).find((r) =>
         !r.endedAt && ((r.aId === person.id && r.bId === other.id) || (r.bId === person.id && r.aId === other.id)));
-      if (!relationship) throw new CommandError(`You and ${other.displayName} are not together.`);
+      if (!relationship) throw new CommandError(`You and ${other.displayName} aren’t together.`);
       if (!['dating', 'engaged', 'spouse'].includes(relationship.type)) {
-        throw new CommandError(`You and ${other.displayName} are ${relationship.type.replace(/_/g, ' ')}. That is not this.`);
+        throw new CommandError(`You and ${other.displayName} are ${relationship.type.replace(/_/g, ' ')}. That isn’t this.`);
       }
       const age = (id: Id) => {
         const q = s.universe.people[id];
@@ -519,7 +549,7 @@ export function registerPlaces(sim: Simulation): void {
         throw new CommandError(`${other.displayName} is in ${CITIES.get(other.currentLocationId)?.name ?? 'another city'}.`);
       }
       const privateHere = privacyOf(s, person);
-      if (!privateHere) throw new CommandError('You are not somewhere private. Go home, or to a room you have.');
+      if (!privateHere) throw new CommandError('You aren’t somewhere private. Go home, or to a room you have.');
 
       // Whether it happens at all is theirs to decide, and how the two of you
       // have been lately is most of the answer.
@@ -532,9 +562,9 @@ export function registerPlaces(sim: Simulation): void {
         relationship.lastInteractionAt = s.now;
         const reason = willing < 45
           ? relationship.dimensions.conflict > 40
-            ? `Things are not right between you and ${other.displayName}. Not tonight.`
-            : `${other.displayName} is not in that place with you right now. It has been distant.`
-          : 'Neither of you has anything left today. It is not the night for it.';
+            ? `Things aren’t right between you and ${other.displayName}. Not tonight.`
+            : `${other.displayName} isn’t in that place with you right now. It has been distant.`
+          : 'Neither of you has anything left today. It isn’t the night for it.';
         return { happened: false, reason, closeness: relationship.dimensions.affection };
       }
       if (rng.chance(0.06)) {
@@ -611,7 +641,7 @@ const RAN_INTO = [
   'was at the bar and bought you one.',
   'was on the way out and stopped anyway.',
   'saw you first, which is its own kind of information.',
-  'was in the corner with somebody you did not recognize.',
+  'was in the corner with somebody you didn’t recognize.',
   'has been meaning to call you, apparently.',
 ];
 
@@ -687,7 +717,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
     sim.remember({
       category: 'life',
       title: `Photographed with ${other?.displayName ?? 'somebody'}`,
-      detail: `Outside ${place.name} in ${CITIES.get(place.cityId)?.name}. Whatever it was, it is not private any more.`,
+      detail: `Outside ${place.name} in ${CITIES.get(place.cityId)?.name}. Whatever it was, it isn’t private any more.`,
       refs: [{ type: 'person', id: person.id }],
       significance: 55, public: true,
     });
@@ -712,7 +742,7 @@ function whoSawYou(sim: Simulation, placeId: string, cityId: string): void {
     sim.remember({
       category: 'life',
       title: `Pictures Of You Outside ${place.name}`,
-      detail: `${CITIES.get(place.cityId)?.name}. You did not see anybody take them.`,
+      detail: `${CITIES.get(place.cityId)?.name}. You didn’t see anybody take them.`,
       refs: [{ type: 'person', id: person.id }],
       significance: 20, public: true,
     });
@@ -740,6 +770,9 @@ export function bathroomFor(sim: Simulation, person: Person = sim.player): strin
     const home = sim.universe.properties[person.residenceId];
     if (home && home.locationId === person.currentLocationId) return home.addressLine;
   }
+  // On somebody's couch: no address of your own, no place set, and a bathroom
+  // down the hall that is not yours either. The same roof you sleep under.
+  if (!person.currentPlaceId && !person.residenceId) return 'the bathroom down the hall';
   const room = hotelRoom(sim, person);
   return room ? room.hotelName : undefined;
 }

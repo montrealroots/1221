@@ -110,7 +110,7 @@ for (const good of COUNTER_GOODS) {
 if (COUNTER_GOODS.length < 12) problems.push(`only ${COUNTER_GOODS.length} things on the shelf`);
 
 if (!/SLATE/.test(PHARMACY_NOTE) || !/independently owned/.test(PHARMACY_NOTE)
-  || !/not medical advice/.test(PHARMACY_NOTE) || !/SLATE/.test(POST_NOTE)
+  || !/n[o’]t medical advice/.test(PHARMACY_NOTE) || !/SLATE/.test(POST_NOTE)
   || !ERRAND_NOTE.includes(PHARMACY_NOTE) || !ERRAND_NOTE.includes(POST_NOTE)) {
   problems.push('the note saying what is real and that nothing is medical advice has gone');
 }

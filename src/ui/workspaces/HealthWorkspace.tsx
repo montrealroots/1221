@@ -53,7 +53,7 @@ function TheOtherPractices(): JSX.Element | null {
               <div className="grow">
                 <div className="row-title">{place.name}</div>
                 <div className="xs dim">{place.about}</div>
-                {at !== place.id && <div className="xs dim">You are not there.</div>}
+                {at !== place.id && <div className="xs dim">You aren’t there.</div>}
               </div>
             </div>
           ))}
@@ -101,7 +101,7 @@ function TheOtherPractices(): JSX.Element | null {
                 <div className="grow">
                   <div className="row-title">{place.name}</div>
                   <div className="xs dim">{place.about}</div>
-                  {at !== place.id && <div className="xs dim">You are not there.</div>}
+                  {at !== place.id && <div className="xs dim">You aren’t there.</div>}
                 </div>
               </div>
             ))}

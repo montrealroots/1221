@@ -101,9 +101,9 @@ describe('arranging', () => {
     const sim = aLife();
     const other = someone(sim);
     const gym = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'gym')!;
-    expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'dinner', at: sim.now + MS_DAY, placeId: gym.id }).error).toMatch(/not somewhere for dinner/);
-    expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'dinner', at: sim.now - 1 }).error).toMatch(/has not gone/);
-    expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'skydiving', at: sim.now + MS_DAY }).error).toMatch(/not a way/);
+    expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'dinner', at: sim.now + MS_DAY, placeId: gym.id }).error).toMatch(/n[o’]t somewhere for dinner/);
+    expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'dinner', at: sim.now - 1 }).error).toMatch(/has(n’t| not) gone/);
+    expect(attempt(sim, 'rel.ask_out', { personId: other.id, activityId: 'skydiving', at: sim.now + MS_DAY }).error).toMatch(/n[o’]t a way/);
   });
 
   it('can be moved, and canceling on the day costs more than canceling with notice', () => {
@@ -229,7 +229,7 @@ describe('the evening', () => {
     expect(choices.find((c) => c.move.id === 'flirt')!.disabled).toMatch(/Not yet/);
     expect(choices.find((c) => c.move.id === 'deep')!.disabled).toMatch(/Not yet/);
     expect(attempt(sim, 'date.beat', { dateId: date.id, move: 'flirt' }).error).toMatch(/Not yet/);
-    expect(attempt(sim, 'date.beat', { dateId: date.id, move: 'skydive' }).error).toMatch(/not a move/);
+    expect(attempt(sim, 'date.beat', { dateId: date.id, move: 'skydive' }).error).toMatch(/n[o’]t a move/);
     for (let i = date.beats; i < MAX_BEATS; i++) must(sim, 'date.beat', { dateId: date.id, move: 'listen' });
     expect(attempt(sim, 'date.beat', { dateId: date.id, move: 'listen' }).error).toMatch(/drawing to its end/);
     date.chemistry = 10;
@@ -257,7 +257,7 @@ describe('the evening', () => {
     expect(rel.dimensions.familiarity).toBeGreaterThan(familiarity);
     expect(rel.memories.some((m) => m.kind === 'date')).toBe(true);
     expect(factsOf(sim, other.id, { kind: 'topic', aboutId: sim.player.id }).length).toBeGreaterThanOrEqual(1);
-    expect(factsOf(sim, other.id, { kind: 'promise', aboutId: sim.player.id })[0]?.text).toMatch(/would call/);
+    expect(factsOf(sim, other.id, { kind: 'promise', aboutId: sim.player.id })[0]?.text).toMatch(/(would|’d) call/);
     expect(sim.universe.scheduled.some((i) => i.kind === 'date.follow_up' && i.status === 'pending' && i.refId === date.id)).toBe(true);
     expect(attempt(sim, 'date.finish', { dateId: date.id }).ok).toBe(false);
 
@@ -266,7 +266,7 @@ describe('the evening', () => {
     sim.advanceTo(sim.now + (FOLLOW_UP_DAYS + 1) * MS_DAY);
     expect(rel.dimensions.trust).toBe(trust - 4);
     expect(sim.universe.notifications.some((n) => /Noticed/.test(n.title))).toBe(true);
-    expect(factsOf(sim, other.id, { kind: 'event', aboutId: sim.player.id }).some((f) => /Did not/.test(f.text))).toBe(true);
+    expect(factsOf(sim, other.id, { kind: 'event', aboutId: sim.player.id }).some((f) => /Did(n’t| not)/.test(f.text))).toBe(true);
     expect(sim.ledger.audit()).toEqual([]);
   });
 

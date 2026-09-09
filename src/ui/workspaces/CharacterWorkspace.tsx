@@ -445,7 +445,7 @@ export function CharacterWorkspace() {
               <Meter label="Public Fame" value={player.reputation.publicFame} hint="How many people know who you are." />
               <Meter label="Audience Appeal" value={player.reputation.audienceAppeal} hint="Whether the people who know you like you." />
               <Meter label="Professional Reputation" value={player.reputation.professionalReputation} hint="What the industry thinks of the work." />
-              <Meter label="Reliability" value={player.reputation.reliability} hint="Whether producers believe you will finish the job." />
+              <Meter label="Reliability" value={player.reputation.reliability} hint="Whether producers believe you’ll finish the job." />
               <Meter label="Prestige" value={player.reputation.prestige} hint="Awards and critical standing." />
               <Meter label="Industry Demand" value={player.reputation.industryDemand} hint="How many people want to hire you right now." />
               <Meter label="Controversy" value={player.reputation.controversy} invert hint="Active negative attention. Decays slowly." />
@@ -462,7 +462,7 @@ export function CharacterWorkspace() {
               </div>
             ) : (
               <p className="muted small">
-                You are unrepresented. An agent multiplies how many opportunities reach you at all.
+                You’re unrepresented. An agent multiplies how many opportunities reach you at all.
               </p>
             )}
 
@@ -712,7 +712,7 @@ function MemoryTab(): JSX.Element {
 
   return (
     <div className="grid grid-sheet">
-      <Panel title="Top Of Mind" subtitle="What you would still be thinking about, and how much." flush>
+      <Panel title="Top Of Mind" subtitle="What you’d still be thinking about, and how much." flush>
         {top.length === 0 ? (
           <div className="empty"><p className="small">Nothing has happened yet. It will.</p></div>
         ) : (
@@ -736,7 +736,7 @@ function MemoryTab(): JSX.Element {
 
       <Panel title="What The World Might Bring Up" subtitle={`At most ${plural(BEATS_A_DAY, 'thing')} a day.`} flush>
         {beats.length === 0 ? (
-          <div className="empty"><p className="small">Nothing is live. That is not a fault; some weeks are quiet.</p></div>
+          <div className="empty"><p className="small">Nothing is live. That isn’t a fault; some weeks are quiet.</p></div>
         ) : (
           <table className="table">
             <tbody>
@@ -961,7 +961,7 @@ function JobPanel(): JSX.Element | null {
 
             {held.cover && (
               <p className="small" style={{ margin: 0 }}>
-                <strong>They are ringing.</strong> {held.cover.reason} They want you in on{' '}
+                <strong>They’re ringing.</strong> {held.cover.reason} They want you in on{' '}
                 {formatDate(held.cover.at, sim.homeZone)}. It is on your Home screen to answer.
               </p>
             )}

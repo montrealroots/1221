@@ -56,8 +56,8 @@ export const MOVES: readonly DateMove[] = [
   { id: 'ask', label: 'Ask About Them', aliases: ['ask', 'question', 'about them'], cue: 'People like being asked.', base: 8, variance: 5, topic: 'them' },
   { id: 'share', label: 'Tell Them Something About You', aliases: ['share', 'tell', 'about me', 'myself'], cue: 'Give them something to hold.', base: 6, variance: 6, topic: 'you' },
   { id: 'listen', label: 'Let Them Talk', aliases: ['listen', 'quiet', 'let them'], cue: 'Say less. Hear more.', base: 7, variance: 4, topic: 'their life' },
-  { id: 'joke', label: 'Make Them Laugh', aliases: ['joke', 'funny', 'laugh'], cue: 'It either lands or it does not.', base: 5, variance: 11 },
-  { id: 'flirt', label: 'Flirt A Little', aliases: ['flirt', 'charm'], cue: 'Only when it is going somewhere.', base: 9, variance: 8, needs: 45 },
+  { id: 'joke', label: 'Make Them Laugh', aliases: ['joke', 'funny', 'laugh'], cue: 'It either lands or it doesn’t.', base: 5, variance: 11 },
+  { id: 'flirt', label: 'Flirt A Little', aliases: ['flirt', 'charm'], cue: 'Only when it’s going somewhere.', base: 9, variance: 8, needs: 45 },
   { id: 'deep', label: 'Say Something True', aliases: ['true', 'honest', 'real', 'deep'], cue: 'The conversation that changes things, either way.', base: 12, variance: 10, needs: 55, topic: 'something true' },
   { id: 'work', label: 'Talk About The Work', aliases: ['work', 'the industry', 'business'], cue: 'Interesting to you. Possibly to them.', base: 3, variance: 6, topic: 'the work' },
   { id: 'order', label: 'Order Another Round', aliases: ['order', 'round', 'another', 'drinks'], cue: 'Time bought at the bar’s prices.', base: 4, variance: 3, spends: true },
@@ -105,8 +105,8 @@ export interface CloseMove {
 export const CLOSES: readonly CloseMove[] = [
   { id: 'walk', label: 'Walk Them Home', aliases: ['walk', 'walk them', 'home'], detail: 'Twenty minutes more, and no bill.' },
   { id: 'kiss', label: 'Kiss Them Goodnight', aliases: ['kiss', 'goodnight kiss'], detail: 'Only if the evening has earned it.', needs: 60 },
-  { id: 'call', label: 'Say You Will Call', aliases: ['call', 'promise to call', 'i will call'], detail: 'They will remember whether you did.', promise: 'call' },
-  { id: 'again', label: 'Suggest Doing This Again', aliases: ['again', 'second date', 'see you again'], detail: 'Then it is on you to arrange it.', needs: 50, promise: 'again' },
+  { id: 'call', label: 'Say You Will Call', aliases: ['call', 'promise to call', 'i will call'], detail: 'They’ll remember whether you did.', promise: 'call' },
+  { id: 'again', label: 'Suggest Doing This Again', aliases: ['again', 'second date', 'see you again'], detail: 'Then it’s on you to arrange it.', needs: 50, promise: 'again' },
   { id: 'night', label: 'Call It A Night', aliases: ['night', 'done', 'leave', 'go home'], detail: 'Thank them and go.' },
 ];
 

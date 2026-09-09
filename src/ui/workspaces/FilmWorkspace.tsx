@@ -414,15 +414,15 @@ function ShootDays({ days }: { days: ShootDay[] }) {
             />
           </div>
           <div>
-            <label className="label" htmlFor="shoot-when">In {plural(inDays, 'day')}</label>
+            <label className="label" htmlFor="shoot-when">In {plural(inDays, 'Day')}</label>
             <input id="shoot-when" type="range" min={0} max={30} value={inDays} onChange={(event) => setInDays(Number(event.target.value))} />
           </div>
           <div>
-            <label className="label" htmlFor="shoot-hours">{plural(hours, 'hour')} On The Day</label>
+            <label className="label" htmlFor="shoot-hours">{plural(hours, 'Hour')} On The Day</label>
             <input id="shoot-hours" type="range" min={MIN_HOURS} max={MAX_HOURS} value={hours} onChange={(event) => setHours(Number(event.target.value))} />
           </div>
           <div>
-            <label className="label" htmlFor="shoot-setups">{plural(Math.min(setups, cap), 'setup')} Planned</label>
+            <label className="label" htmlFor="shoot-setups">{plural(Math.min(setups, cap), 'Setup')} Planned</label>
             <input id="shoot-setups" type="range" min={1} max={cap} value={Math.min(setups, cap)} onChange={(event) => setSetups(Number(event.target.value))} />
           </div>
         </div>
@@ -458,7 +458,7 @@ function ShootDays({ days }: { days: ShootDay[] }) {
         )}
         <p className="xs dim" style={{ marginTop: 8 }}>
           {where === 'home'
-            ? `Your own place carries ${plural(HOME_SETUPS, 'setup')} at the outside. It is a flat, not a stage.`
+            ? `Your own place carries ${plural(HOME_SETUPS, 'setup')} at the outside. It’s a flat, not a stage.`
             : where === 'street'
               ? 'Nobody owns the street, so nobody has to say yes. Somebody may still come and ask what you are doing.'
               : 'Somebody owns that room, and they answer in their own time.'}
@@ -495,7 +495,7 @@ function ShootDays({ days }: { days: ShootDay[] }) {
 
               {day.permission.needed && (
                 <p className="small" style={{ marginTop: 8 }}>
-                  {day.permission.status === 'none' && `${day.placeName} has not been asked. The fee is ${formatMoney(day.permission.fee)}, up front.`}
+                  {day.permission.status === 'none' && `${day.placeName} hasn’t been asked. The fee is ${formatMoney(day.permission.fee)}, up front.`}
                   {day.permission.status === 'asked' && `Asked ${formatDate(day.permission.askedAt ?? day.at, sim.homeZone)}. Waiting.`}
                   {day.permission.status === 'granted' && day.permission.note}
                   {day.permission.status === 'refused' && `${day.permission.note} The fee came back.`}
@@ -534,7 +534,7 @@ function ShootDays({ days }: { days: ShootDay[] }) {
               {askOpen === day.id && (
                 <div className="card card-tight" style={{ marginTop: 10 }}>
                   {people.length === 0
-                    ? <p className="small" style={{ margin: 0 }}>You do not know anybody well enough yet. Meet people first; a day is a favour, and favours need somebody to owe them to.</p>
+                    ? <p className="small" style={{ margin: 0 }}>You don’t know anybody well enough yet. Meet people first; a day is a favour, and favours need somebody to owe them to.</p>
                     : (
                       <div className="row gap-2 wrap">
                         <select className="input" value={whoId} onChange={(event) => setWhoId(event.target.value)} aria-label="Who To Ask">
@@ -602,7 +602,7 @@ function Pictures({ films, days }: { films: IndieFilm[]; days: ShootDay[] }) {
             <select id="film-format" className="input" value={format} onChange={(event) => setFormat(event.target.value as FilmFormat)}>
               {(['short', 'feature', 'documentary', 'animation'] as const).map((one) => (
                 <option key={one} value={one}>
-                  {FORMAT_LABEL[one]} · about {plural(SETUPS_NEEDED[one], 'setup')}, up to {RUNTIME_CAP[one]} minutes
+                  {FORMAT_LABEL[one]} · About {plural(SETUPS_NEEDED[one], 'Setup')}, Up To {RUNTIME_CAP[one]} Minutes
                 </option>
               ))}
             </select>

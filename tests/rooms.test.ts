@@ -128,7 +128,7 @@ describe('the chair', () => {
     sim.player.currentPlaceId = undefined;
     const res = sim.execute({ kind: 'room.dentist', payload: { placeId: practice.id, treatmentId: 'exam' } });
     expect(res.ok).toBe(false);
-    expect(res.error).toMatch(/not at/);
+    expect(res.error).toMatch(/n[o’]t at/);
   });
 });
 
@@ -309,7 +309,7 @@ describe('the phone shop', () => {
     // A screen is a few hundred, which is exactly the sort of bill this
     // character does not have on them, so the refusal is checked first.
     const broke = sim.execute({ kind: 'room.repair_phone', payload: { placeId: shop.id } });
-    if (!broke.ok) expect(broke.error).toMatch(/do not have it/);
+    if (!broke.ok) expect(broke.error).toMatch(/do(n’t| not) have it/);
     sim.income(sim.player.primaryAccountId!, 2_000_00, 'Test funding', 'other');
     const res = sim.execute<{ paid: number; wentWell: boolean }>(
       { kind: 'room.repair_phone', payload: { placeId: shop.id } },

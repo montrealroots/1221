@@ -52,7 +52,7 @@ export const BAG_LOST_CHANCE = 0.03;
 export const BAG_RETURN_DAYS = 2;
 /** What moving or missing a non-refundable fare costs, as a share of the fare. */
 export const CHANGE_FEE_RATE = 0.2;
-export const NOT_HERE = 'You are not in the city the flight leaves from.';
+export const NOT_HERE = 'You aren’t in the city the flight leaves from.';
 
 export type BagChoice = 'carry_on' | 'checked';
 export type Activity = 'sleep' | 'work' | 'watch';
@@ -63,7 +63,7 @@ export type Activity = 'sleep' | 'work' | 'watch';
 
 export function bookingOf(sim: Simulation, id: Id): FlightBooking {
   const booking = sim.universe.flightBookings[id];
-  if (!booking) throw new CommandError('There is no flight like that.');
+  if (!booking) throw new CommandError('There’s no flight like that.');
   return booking;
 }
 
@@ -86,9 +86,9 @@ export function airportName(iata: string): string {
 
 /** Whether the day can start now: yours, still booked, you are in the right city, the window is open, the gate is not shut. */
 export function flyable(sim: Simulation, booking: FlightBooking): { ok: boolean; reason?: string } {
-  if (!booking.passengerIds.includes(sim.player.id)) return { ok: false, reason: 'You are not on that flight.' };
+  if (!booking.passengerIds.includes(sim.player.id)) return { ok: false, reason: 'You aren’t on that flight.' };
   if (booking.status !== 'booked' && booking.status !== 'checked_in') return { ok: false, reason: `That flight is ${booking.status.replace(/_/g, ' ')}.` };
-  if (booking.boardedAt) return { ok: false, reason: 'You are already on it.' };
+  if (booking.boardedAt) return { ok: false, reason: 'You’re already on it.' };
   if (sim.player.currentLocationId !== fromCityOf(booking)) return { ok: false, reason: NOT_HERE };
   if (sim.now < booking.departAt - WINDOW_HOURS * MS_HOUR) return { ok: false, reason: `It leaves at ${formatTime(booking.departAt, sim.zone)}; the day starts three hours before.` };
   if (sim.now > closesAt(booking) && !booking.checkedInAt) return { ok: false, reason: booking.cabin === 'private' ? 'The crew have gone home.' : 'The gate has closed.' };
@@ -117,7 +117,7 @@ export function documentsFor(sim: Simulation, booking: FlightBooking): Documents
   const home = check.passport?.issuerId === to;
   const base = home
     ? `A border, and your own. Your ${passport} passport takes you home.`
-    : `A border. Your ${passport} passport. Whether ${COUNTRIES.get(to ?? '')?.name ?? 'the country'} wants a visa with it is real-world data SLATE does not carry, so it does not pretend to check.`;
+    : `A border. Your ${passport} passport. Whether ${COUNTRIES.get(to ?? '')?.name ?? 'the country'} wants a visa with it is real-world data SLATE doesn’t carry, so it doesn’t pretend to check.`;
   return { international, passport, ok: true, note: check.warning ? `${base} ${check.warning}` : base };
 }
 
@@ -143,7 +143,7 @@ export function seatOptions(sim: Simulation, booking: FlightBooking): SeatOption
     { id: 'aisle', label: 'An Aisle', detail: 'Room for a leg, and you can get out.', cost: 0, seat: `${row}C` },
   ];
   if (booking.cabin === 'economy' || booking.cabin === 'premium_economy') {
-    options.push({ id: 'legroom', label: 'Buy More Legroom', detail: 'The exit row. It is not comfort; it is less discomfort.', cost: Math.round(45_00 * col), seat: '14C' });
+    options.push({ id: 'legroom', label: 'Buy More Legroom', detail: 'The exit row. It isn’t comfort; it’s less discomfort.', cost: Math.round(45_00 * col), seat: '14C' });
   }
   return options;
 }
@@ -245,9 +245,9 @@ function pack(sim: Simulation, booking: FlightBooking, bag: BagChoice): { fee: M
 
 function toAirport(sim: Simulation, booking: FlightBooking, mode: Mode): { minutes: number; cost: Money; late: boolean } {
   if (!booking.bag) throw new CommandError('Pack first.');
-  if (booking.checkedInAt) throw new CommandError('You are at the airport already.');
+  if (booking.checkedInAt) throw new CommandError('You’re at the airport already.');
   const run = airportRuns(sim, booking).find((r) => r.mode === mode);
-  if (!run) throw new CommandError('That is not a way to the airport.');
+  if (!run) throw new CommandError('That isn’t a way to the airport.');
   if (run.disabled) throw new CommandError(run.disabled);
   pay(sim, run.cost, mode === 'taxi' ? 'Taxi to the airport' : mode === 'transit' ? 'Train to the airport' : 'Fuel and parking', booking);
   sim.advanceTo(sim.now + run.minutes * MS_MINUTE);
@@ -263,9 +263,9 @@ function checkIn(sim: Simulation, booking: FlightBooking, seatId: string): { sea
   if (!booking.bag) throw new CommandError('Pack first.');
   if (!gateOpen(sim, booking)) { missFlight(sim, booking, 'The desk had closed.'); throw new CommandError('The desk has closed; the flight has gone without you.'); }
   const papers = documentsFor(sim, booking);
-  if (!papers.ok) throw new CommandError(`The desk will not check you in. ${papers.note}`);
+  if (!papers.ok) throw new CommandError(`The desk won’t check you in. ${papers.note}`);
   const option = seatOptions(sim, booking).find((o) => o.id === seatId);
-  if (!option) throw new CommandError('That is not a seat on offer.');
+  if (!option) throw new CommandError('That isn’t a seat on offer.');
   pay(sim, option.cost, 'Seat selection', booking);
   booking.seats[0] = option.seat;
   booking.seatChoice = option.id;
@@ -278,7 +278,7 @@ function checkIn(sim: Simulation, booking: FlightBooking, seatId: string): { sea
 
 function board(sim: Simulation, booking: FlightBooking): { delayMinutes: number; cancelled: boolean; replacement?: Id } {
   if (booking.status !== 'checked_in') throw new CommandError('Check in first.');
-  if (booking.boardedAt) throw new CommandError('You are on it.');
+  if (booking.boardedAt) throw new CommandError('You’re on it.');
   const rng = sim.rng('gate', booking.id);
   const roll = rng.next();
   if (roll < 0.05) {
@@ -314,7 +314,7 @@ function inflight(sim: Simulation, booking: FlightBooking, activity: Activity): 
 }
 
 function claimBags(sim: Simulation, booking: FlightBooking): { lost: boolean; minutes: number } {
-  if (booking.status !== 'flown') throw new CommandError('You have not landed.');
+  if (booking.status !== 'flown') throw new CommandError('You haven’t landed.');
   if (booking.bagsClaimedAt) throw new CommandError('You have your bags.');
   booking.bagsClaimedAt = sim.now;
   if (booking.bag !== 'checked') return { lost: false, minutes: 0 };
@@ -346,7 +346,7 @@ function claimBags(sim: Simulation, booking: FlightBooking): { lost: boolean; mi
 }
 
 function toHotel(sim: Simulation, booking: FlightBooking, mode: Mode): { hotel?: string; checkedIn: boolean; readyAt?: number; minutes: number; cost: Money } {
-  if (booking.status !== 'flown') throw new CommandError('You have not landed.');
+  if (booking.status !== 'flown') throw new CommandError('You haven’t landed.');
   const cityId = toCityOf(booking) ?? sim.player.currentLocationId;
   const hotel = hotelOnArrival(sim, booking);
   const j = planJourney(sim, { cityId }, mode === 'drive' ? 'taxi' : mode);
@@ -404,7 +404,7 @@ function rebook(sim: Simulation, booking: FlightBooking, reason: 'cancelled' | '
   if (fee > 0) {
     const accountId = sim.player.primaryAccountId;
     if (!accountId) throw new CommandError('No account to pay from.');
-    if (sim.ledger.availableFunds(accountId) < fee) throw new CommandError(`Rebooking is ${formatMoney(fee)} and you cannot cover it.`);
+    if (sim.ledger.availableFunds(accountId) < fee) throw new CommandError(`Rebooking is ${formatMoney(fee)} and you can’t cover it.`);
     sim.expense(accountId, fee, `${reason === 'missed' ? 'Rebooking' : 'Change'} — ${option.airlineName} ${option.flightNumber}`, 'travel', { refType: 'flight', refId: booking.id });
   }
   const replacement = createFlightBooking(sim, {
@@ -439,7 +439,7 @@ export function registerJourney(sim: Simulation): void {
     if (sceneOn(s, 'flight', booking.id)) return;
     const toCity = CITIES.get(toCityOf(booking) ?? '')?.name ?? booking.toAirport;
     if (s.player.currentLocationId !== fromCityOf(booking)) {
-      missFlight(s, booking, `You were not in ${CITIES.get(fromCityOf(booking) ?? '')?.name ?? 'the city'} for it.`);
+      missFlight(s, booking, `You weren’t in ${CITIES.get(fromCityOf(booking) ?? '')?.name ?? 'the city'} for it.`);
       return;
     }
     if (booking.cabin === 'private') {
@@ -562,7 +562,7 @@ export function registerJourney(sim: Simulation): void {
 
   sim.onCommand<{ bookingId: Id }, { refund: Money }>('travel.no_show', (p, { sim: s }) => {
     const booking = bookingOf(s, p.bookingId);
-    if (booking.status !== 'booked' && booking.status !== 'checked_in') throw new CommandError('That flight is not open.');
+    if (booking.status !== 'booked' && booking.status !== 'checked_in') throw new CommandError('That flight isn’t open.');
     cancelKind(s, 'travel.gate_closes', booking.id);
     missFlight(s, booking, 'You decided not to go.');
     return { refund: booking.refundable ? booking.fare + booking.taxesFees : 0 };
@@ -579,7 +579,7 @@ export function registerJourney(sim: Simulation): void {
 
   sim.onCommand<{ bookingId: Id; departAt: number }, { replacementId: Id; departAt: number; fee: Money }>('travel.change_flight', (p, { sim: s }) => {
     const booking = bookingOf(s, p.bookingId);
-    if (booking.status !== 'booked') throw new CommandError('That flight cannot be moved.');
+    if (booking.status !== 'booked') throw new CommandError('That flight can’t be moved.');
     if (!Number.isFinite(p.departAt) || p.departAt <= s.now + 2 * MS_HOUR) throw new CommandError('Move it to a later day.');
     const before = s.player.primaryAccountId ? s.ledger.availableFunds(s.player.primaryAccountId) : 0;
     const replacement = rebook(s, booking, 'moved', p.departAt);

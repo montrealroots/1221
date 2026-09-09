@@ -215,7 +215,7 @@ export function PropertyWorkspace() {
                         )}
                         {offer.status === 'accepted' && !offer.inspectionDecidedAt && (
                           <div className="row wrap gap-2" style={{ marginTop: 'var(--s2)' }}>
-                            <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !here(offer)} title={here(offer) ? undefined : 'You are not in the city the house is in.'} onClick={() => run('scene.start', { definitionId: 'property.inspection', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Walk It With The Inspector</button>
+                            <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !here(offer)} title={here(offer) ? undefined : 'You aren’t in the city the house is in.'} onClick={() => run('scene.start', { definitionId: 'property.inspection', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Walk It With The Inspector</button>
                             <button className="btn btn-sm" disabled={Boolean(scene)} onClick={() => run('scene.quick', { definitionId: 'property.inspection', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Read The Report</button>
                             <button className="btn btn-sm" onClick={() => run('prop.inspection_decision', { offerId: offer.id, proceed: true })}>Proceed Anyway</button>
                           </div>
@@ -230,7 +230,7 @@ export function PropertyWorkspace() {
                           : `Closing is set for ${formatDate(offer.closingAt, sim.homeZone)}.${offer.appraisalGap ? ` The appraisal came in short; you bring ${formatMoney(offer.appraisalGap)} more to the table.` : ''}`}
                         {sim.now >= offer.closingAt - 12 * MS_HOUR && (
                           <div className="row wrap gap-2" style={{ marginTop: 'var(--s2)' }}>
-                            <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !here(offer)} title={here(offer) ? undefined : 'You are not in the city the house is in.'} onClick={() => run('scene.start', { definitionId: 'property.closing', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Sit At The Table</button>
+                            <button className="btn btn-sm btn-primary" disabled={Boolean(scene) || !here(offer)} title={here(offer) ? undefined : 'You aren’t in the city the house is in.'} onClick={() => run('scene.start', { definitionId: 'property.closing', input: { offerId: offer.id }, refType: 'offer', refId: offer.id })}>Sit At The Table</button>
                             <button className="btn btn-sm" onClick={() => run('prop.close', { offerId: offer.id }, { idempotencyKey: `close:${offer.id}` })}>Sign Remotely</button>
                             {canPostpone(offer) && <button className="btn btn-sm" onClick={() => run('prop.postpone_closing', { offerId: offer.id })}>Ask For {POSTPONE_DAYS} More Days</button>}
                           </div>

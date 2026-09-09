@@ -243,7 +243,7 @@ if (compared < 4) problems.push(`only ${compared} chains found trading in two of
 }
 
 // And the gap is explained rather than silent.
-for (const [label, expect] of [['Riyadh', /not sold/], ['Stockholm', /Systembolaget/], ['Dubai', /licensed room/], ['Mumbai', /Beef/]]) {
+for (const [label, expect] of [['Riyadh', /n[o’]t sold/], ['Stockholm', /Systembolaget/], ['Dubai', /licensed room/], ['Mumbai', /Beef/]]) {
   const shops = walked.get(label);
   if (!shops) continue;
   const reasons = [...shops.values()].map((one) => notCarriedAt(one.place)).find((one) => one.length > 0);

@@ -650,7 +650,7 @@ export function registerVideo(sim: Simulation): void {
     (p, { sim: s }) => {
       const channel = s.universe.videoChannels[p.channelId];
       if (!channel) throw new CommandError('No such channel.');
-      if (channel.ownerId === s.player.id) throw new CommandError('You cannot subscribe to yourself.');
+      if (channel.ownerId === s.player.id) throw new CommandError('You can’t subscribe to yourself.');
       const already = subscriptionsOf(s, s.player.id).find((sub) => sub.channelId === channel.id);
       if (already) {
         already.notify = p.notify ?? already.notify;
@@ -676,8 +676,8 @@ export function registerVideo(sim: Simulation): void {
     'video.set_bell',
     (p, { sim: s }) => {
       const subscription = subscriptionsOf(s, s.player.id).find((sub) => sub.channelId === p.channelId);
-      if (!subscription) throw new CommandError('You are not subscribed to that.');
-      if (!['all', 'personalized', 'none'].includes(p.bell)) throw new CommandError('That is not one of the settings.');
+      if (!subscription) throw new CommandError('You aren’t subscribed to that.');
+      if (!['all', 'personalized', 'none'].includes(p.bell)) throw new CommandError('That isn’t one of the settings.');
       subscription.bell = p.bell;
       subscription.notify = p.bell !== 'none';
       return { bell: p.bell };
@@ -688,7 +688,7 @@ export function registerVideo(sim: Simulation): void {
     'video.unsubscribe',
     (p, { sim: s }) => {
       const subscription = subscriptionsOf(s, s.player.id).find((sub) => sub.channelId === p.channelId);
-      if (!subscription) throw new CommandError('You are not subscribed to that.');
+      if (!subscription) throw new CommandError('You aren’t subscribed to that.');
       delete s.universe.videoSubscriptions[subscription.id];
       const channel = s.universe.videoChannels[p.channelId];
       if (channel) channel.subscribers = Math.max(0, channel.subscribers - 1);
@@ -706,8 +706,8 @@ export function registerVideo(sim: Simulation): void {
     'video.watch',
     (p, { sim: s }) => {
       const video = videoById(s, p.videoId);
-      if (!video || video.status !== 'published') throw new CommandError('That video is not up.');
-      if (video.publishedAt > s.now) throw new CommandError('That is not out yet.');
+      if (!video || video.status !== 'published') throw new CommandError('That video isn’t up.');
+      if (video.publishedAt > s.now) throw new CommandError('That isn’t out yet.');
 
       // How long it takes is how long it is, divided by how fast you play it.
       const prefs = preferences(s);
@@ -725,7 +725,7 @@ export function registerVideo(sim: Simulation): void {
         s.advanceTo(s.now + watched * 1_000);
         adNote = ad.skippable
           ? `Skipped the ad after ${SKIP_AFTER_SECONDS} seconds.`
-          : `${ad.seconds} seconds of advertising you could not skip.`;
+          : `${ad.seconds} seconds of advertising you couldn’t skip.`;
       }
 
       s.advanceTo(s.now + minutes * MS_MINUTE);
@@ -792,7 +792,7 @@ export function registerVideo(sim: Simulation): void {
       if (!video) throw new CommandError('No such video.');
       const text = p.text.trim();
       if (text.length < 2) throw new CommandError('Write something first.');
-      if (text.length > 600) throw new CommandError('That is longer than anybody will read.');
+      if (text.length > 600) throw new CommandError('That’s longer than anybody will read.');
       const comment: VideoComment = {
         id: s.nextId('vcom'),
         saveId: s.universe.meta.id,
@@ -822,10 +822,10 @@ export function registerVideo(sim: Simulation): void {
       const video = videoById(s, p.videoId);
       if (!video) throw new CommandError('No such video.');
       const channel = s.universe.videoChannels[video.channelId];
-      if (channel?.ownerId !== s.player.id) throw new CommandError('Those are not about you.');
+      if (channel?.ownerId !== s.player.id) throw new CommandError('Those aren’t about you.');
       ensureComments(s, video);
       const harsh = commentsOn(s, video.id).filter((c) => c.harsh && !c.seen);
-      if (harsh.length === 0) throw new CommandError('There is nothing hidden on this one.');
+      if (harsh.length === 0) throw new CommandError('There’s nothing hidden on this one.');
       let worst = 0;
       for (const comment of harsh) {
         comment.seen = true;
@@ -850,7 +850,7 @@ export function registerVideo(sim: Simulation): void {
       const name = (p.name ?? s.player.displayName).trim();
       if (name.length < 2) throw new CommandError('A channel needs a name.');
       const handle = (p.handle ?? name).toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (handle.length < 2) throw new CommandError('That handle will not do.');
+      if (handle.length < 2) throw new CommandError('That handle won’t do.');
       if (channelsOf(s).some((c) => c.handle === handle)) throw new CommandError('That handle is taken.');
 
       // A channel without an account earns nothing, because the money side of
@@ -905,11 +905,11 @@ export function registerVideo(sim: Simulation): void {
       if (title.length < 3) throw new CommandError('Give it a title.');
       if (title.length > 100) throw new CommandError('That title is too long for the card.');
       const thumbnail = p.thumbnail ?? 'frame';
-      if (!THUMBNAIL_BY_ID[thumbnail]) throw new CommandError('That is not one of the thumbnails.');
+      if (!THUMBNAIL_BY_ID[thumbnail]) throw new CommandError('That isn’t one of the thumbnails.');
       const lengthMinutes = clamp(Math.round(p.lengthMinutes ?? 12), 1, 240);
       const effortMinutes = clamp(Math.round(p.effortMinutes ?? 180), 20, 2400);
       if (p.publishAt !== undefined && p.publishAt < s.now) {
-        throw new CommandError('You cannot schedule something for the past.');
+        throw new CommandError('You can’t schedule something for the past.');
       }
 
       const rng = s.rng('video.mine', channel.id, s.counter('video.upload'));
@@ -996,7 +996,7 @@ export function registerVideo(sim: Simulation): void {
       const video = s.universe.videos[p.videoId];
       if (!video) throw new CommandError('No such video.');
       const channel = s.universe.videoChannels[video.channelId];
-      if (channel?.ownerId !== s.player.id) throw new CommandError('That is not your video.');
+      if (channel?.ownerId !== s.player.id) throw new CommandError('That isn’t your video.');
       if (p.title !== undefined) {
         const title = p.title.trim();
         if (title.length < 3) throw new CommandError('Give it a title.');
@@ -1004,7 +1004,7 @@ export function registerVideo(sim: Simulation): void {
       }
       if (p.description !== undefined) video.description = p.description.trim();
       if (p.thumbnail !== undefined) {
-        if (!THUMBNAIL_BY_ID[p.thumbnail]) throw new CommandError('That is not one of the thumbnails.');
+        if (!THUMBNAIL_BY_ID[p.thumbnail]) throw new CommandError('That isn’t one of the thumbnails.');
         // A new thumbnail on a live video changes what happens next, not what
         // already happened, which is exactly how it works.
         video.thumbnail = p.thumbnail;
@@ -1022,8 +1022,8 @@ export function registerVideo(sim: Simulation): void {
       const video = s.universe.videos[p.videoId];
       if (!video) throw new CommandError('No such video.');
       const channel = s.universe.videoChannels[video.channelId];
-      if (channel?.ownerId !== s.player.id) throw new CommandError('That is not your video.');
-      if (video.status === 'removed') throw new CommandError('That is already down.');
+      if (channel?.ownerId !== s.player.id) throw new CommandError('That isn’t your video.');
+      if (video.status === 'removed') throw new CommandError('That’s already down.');
       video.status = 'removed';
       s.emit('video.taken_down', { videoId: video.id });
       return { videoId: video.id };

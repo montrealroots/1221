@@ -35,7 +35,7 @@ export const TUTORIALS: Readonly<Record<string, TutorialStep>> = {
   '/workspace/property': {
     id: 'property',
     title: 'Buying Is A Process',
-    body: 'Showings, an offer, a counter, an inspection that finds things, an appraisal that can come in low, and financing that has to be approved. It is not one button.',
+    body: 'Showings, an offer, a counter, an inspection that finds things, an appraisal that can come in low, and financing that has to be approved. It isn’t one button.',
   },
   '/workspace/vehicles': {
     id: 'vehicles',
@@ -50,7 +50,7 @@ export const TUTORIALS: Readonly<Record<string, TutorialStep>> = {
   '/workspace/relationships': {
     id: 'relationships',
     title: 'People Remember',
-    body: 'Seven dimensions, not one bar, and a memory of what you actually did. Showing up when it matters is remembered permanently; so is not showing up.',
+    body: 'Seven dimensions, not one bar, and a memory of what you actually did. Showing up when it matters is remembered permanently; so isn’t showing up.',
   },
 };
 

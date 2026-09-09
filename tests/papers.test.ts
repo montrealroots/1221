@@ -281,8 +281,8 @@ describe('the wheel wants a license', () => {
     sim.player.homeRegionId = cityIn('uk', 'London');
     const london = exchangeOffer(sim, sim.player)!;
     expect(london.exchangeable).toBe(false);
-    expect(london.note).toMatch(/does not swap/);
-    expect(refusal(sim, 'doc.exchange_license', {})).toMatch(/does not swap/);
+    expect(london.note).toMatch(/does(n’t| not) swap/);
+    expect(refusal(sim, 'doc.exchange_license', {})).toMatch(/does(n’t| not) swap/);
     // Your old license still drives while you sit the test.
     expect(licenseCheck(sim, sim.player).ok).toBe(true);
     // Living in Sydney: New South Wales does.

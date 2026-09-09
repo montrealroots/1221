@@ -238,16 +238,16 @@ export function cautionsFor(spec: Spec): string[] {
   const out: string[] = [];
 
   if (piece.slot === 'ring' && !metal.resizable) {
-    out.push(`${metal.name} cannot be sized. If your hand changes, the ring does not.`);
+    out.push(`${metal.name} can’t be sized. If your hand changes, the ring doesn’t.`);
   }
   if (piece.id === 'eternity_band') {
-    out.push('An eternity band has stones all the way round, so it cannot be sized later either.');
+    out.push('An eternity band has stones all the way round, so it can’t be sized later either.');
   }
   if (setting.id === 'tension') {
-    out.push('A tension setting cannot be resized and cannot be repaired the ordinary way.');
+    out.push('A tension setting can’t be resized and can’t be repaired the ordinary way.');
   }
   if (stone.mohs > 0 && stone.mohs < 7 && piece.slot === 'ring') {
-    out.push(`${stone.name} is soft at ${stone.mohs} on the Mohs scale. In a ring it will scuff, and that is not a fault.`);
+    out.push(`${stone.name} is soft at ${stone.mohs} on the Mohs scale. In a ring it will scuff, and that isn’t a fault.`);
   }
   if (stone.id === 'pearl' && piece.slot === 'ring') {
     out.push('A pearl in a ring is a decision. They dislike being knocked and they dislike perfume.');
@@ -256,7 +256,7 @@ export function cautionsFor(spec: Spec): string[] {
     out.push('Almost every emerald is oiled, which is normal and disclosed. It also means no ultrasonic cleaner, ever.');
   }
   if (setting.protection < 60 && stone.mohs > 0 && stone.mohs < 9) {
-    out.push(`A ${setting.name.toLowerCase()} leaves the stone exposed, and this one is not diamond hard.`);
+    out.push(`A ${setting.name.toLowerCase()} leaves the stone exposed, and this one isn’t diamond hard.`);
   }
   if (spec.carats >= 3 && stone.graded && clarityOf(spec.clarity).factor < 0.9) {
     out.push('At this size an SI inclusion is often findable without a loupe. Worth seeing the actual stone.');
@@ -265,7 +265,7 @@ export function cautionsFor(spec: Spec): string[] {
     out.push('Silver is soft for a stone this size. Most benches would want you in gold or platinum.');
   }
   if (spec.engraving && spec.engraving.length > 30) {
-    out.push('That is a lot of words for the inside of a band. It can be done small, or it can be done legibly.');
+    out.push('That’s a lot of words for the inside of a band. It can be done small, or it can be done legibly.');
   }
   return out;
 }
@@ -339,7 +339,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.look',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const jeweller = jewellerAt(s, place);
       s.advanceTo(s.now + LOUPE_MINUTES * MS_MINUTE);
       tallyFact(s, jeweller.id, { kind: 'topic', sourceKind: 'jeweller', aboutId: s.player.id, text: CAME_IN, step: VISIT_STEP });
@@ -358,7 +358,7 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.commission',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const piece = pieceOf(p.piece);
       const carats = piece.takesStone ? clamp(Number(p.carats) || 0, 0, 30) : 0;
       const engraving = (p.engraving ?? '').trim().slice(0, 60) || undefined;
@@ -461,7 +461,7 @@ export function registerJewellery(sim: Simulation): void {
       if (commission.status === 'collected' && commission.assetId) {
         return { assetId: commission.assetId, paid: 0, description: describeSpec(commission) };
       }
-      if (commission.status !== 'ready') throw new CommandError('It is not finished yet.');
+      if (commission.status !== 'ready') throw new CommandError('It isn’t finished yet.');
 
       const place = placeById(s.player.currentLocationId, commission.placeId);
       const balance = commission.quotedPrice - commission.deposit;
@@ -524,7 +524,7 @@ export function registerJewellery(sim: Simulation): void {
       commission.status = 'cancelled';
       commission.cancelledReason = refunded > 0
         ? 'Canceled before the bench had started. The deposit came back.'
-        : 'Canceled once the metal had been bought. The deposit did not come back.';
+        : 'Canceled once the metal had been bought. The deposit didn’t come back.';
       return { refunded, kept: commission.deposit - refunded };
     },
   );
@@ -538,14 +538,14 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.resize',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That isn’t yours.');
       if (asset.wardrobe?.slot !== 'ring') throw new CommandError('Only a ring gets sized.');
 
       const metal = metalOf(asset.bespoke?.metal);
       if (asset.bespoke && !metal.resizable) {
-        throw new CommandError(`${metal.name} cannot be sized. You were told that when you ordered it.`);
+        throw new CommandError(`${metal.name} can’t be sized. You were told that when you ordered it.`);
       }
       const cost = Math.round(BENCH_RATE * 1.2 * costOfLiving(place.cityId));
       const accountId = p.accountId ?? s.player.primaryAccountId;
@@ -561,9 +561,9 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.repair',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That isn’t yours.');
 
       const wear = 100 - asset.condition;
       const cost = Math.round((BENCH_RATE * 0.6 + wear * 320) * costOfLiving(place.cityId));
@@ -609,9 +609,9 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.clean',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That isn’t yours.');
 
       // A jeweler who ultrasonics an emerald or a pearl is not one you go back
       // to. They say no to the machine and clean it by hand instead.
@@ -635,9 +635,9 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.appraise',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That isn’t yours.');
 
       const cost = Math.round(85_00 * costOfLiving(place.cityId));
       const accountId = p.accountId ?? s.player.primaryAccountId;
@@ -655,7 +655,7 @@ export function registerJewellery(sim: Simulation): void {
       return {
         cost,
         valuation,
-        note: 'That is a replacement figure for your insurer, not what it would fetch if you sold it.',
+        note: 'That’s a replacement figure for your insurer, not what it would fetch if you sold it.',
       };
     },
   );
@@ -665,9 +665,9 @@ export function registerJewellery(sim: Simulation): void {
     'jewel.engrave',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isJeweller(place)) throw new CommandError('That is not a jeweler.');
+      if (!place || !isJeweller(place)) throw new CommandError('That isn’t a jeweler.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That is not yours.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('That isn’t yours.');
       const text = p.text.trim().slice(0, 60);
       if (text.length === 0) throw new CommandError('Nothing to cut.');
 

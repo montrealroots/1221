@@ -202,7 +202,7 @@ export function YouTubeApp({ theme }: { theme: PhoneTheme }) {
           {tab !== 'shorts' && (
           <div className="ph-yt-top">
             {tab === 'you' ? (
-              <button type="button" className="ph-yt-accounts" onClick={() => say(`Signed in as ${sim.player.displayName}. SLATE keeps one life, so there is nothing to switch to.`)}>
+              <button type="button" className="ph-yt-accounts" onClick={() => say(`Signed in as ${sim.player.displayName}. SLATE keeps one life, so there’s nothing to switch to.`)}>
                 Accounts <DownGlyph size={13} />
               </button>
             ) : (
@@ -559,7 +559,7 @@ function ShortsTab({
                 if (!channel) return;
                 const result = run(subscribed ? 'video.unsubscribe' : 'video.subscribe', { channelId: channel.id }, { silent: true });
                 if (result.ok) say(subscribed ? `Unsubscribed from ${channel.name}.` : `Subscribed to ${channel.name}.`);
-                else say(result.error ?? 'That did not work.');
+                else say(result.error ?? 'That didn’t work.');
               }}
             >
               {subscribed ? 'Subscribed' : 'Subscribe'}
@@ -880,7 +880,7 @@ function YouTab({
                 <>
                   <p>
                     {views(account.followers)} of {views(platform.monetisationThreshold)} subscribers.
-                    Nothing pays until you are past that.
+                    Nothing pays until you’re past that.
                   </p>
                   <div className="ph-bar" style={{ marginTop: 8 }}>
                     <i style={{ width: `${Math.min(100, (account.followers / platform.monetisationThreshold) * 100)}%` }} />
@@ -1173,7 +1173,7 @@ function WatchPage({
         {mine && hidden.length > 0 && (
           <div className="ph-panel">
             <h4>{hidden.length} Comments Are Hidden</h4>
-            <p>They are the sort you would rather not have read. Nobody is making you.</p>
+            <p>They’re the sort you’d rather not have read. Nobody is making you.</p>
             <button
               type="button"
               className="ph-pill"
@@ -1275,7 +1275,7 @@ function WatchPage({
             style={{ marginTop: 8 }}
             onClick={() => {
               const result = run('video.comment', { videoId: video.id, text: reply });
-              if (result.ok) { setReply(''); say('Posted. It is in the world now.'); }
+              if (result.ok) { setReply(''); say('Posted. It’s in the world now.'); }
             }}
           >
             Comment
@@ -1465,7 +1465,7 @@ function CameraScreen({
                   </button>
                 ))}
               </div>
-              <p className="ph-card-meta">Whatever you pick is shown under the short, the way it is on the app.</p>
+              <p className="ph-card-meta">Whatever you pick is shown under the short, the way it’s on the app.</p>
             </>
           )}
           {panel === 'gallery' && (
@@ -1605,7 +1605,7 @@ function UploadPage({
             onClick={() => {
               const result = run<{ peak: number; tips: number }>('video.go_live', { title, minutes: effortMinutes }, { silent: true });
               if (result.ok) { say(`${views(result.value!.peak)} watching at the peak. ${formatMoney(result.value!.tips)} in.`); onClose(); }
-              else say(result.error ?? 'That did not work.');
+              else say(result.error ?? 'That didn’t work.');
             }}
           >
             Go Live
@@ -1630,7 +1630,7 @@ function UploadPage({
                 options: options.length >= 2 ? options : undefined,
               }, { silent: true });
               if (result.ok) { say(options.length >= 2 ? 'Posted, with the poll open.' : 'Posted.'); onClose(); }
-              else say(result.error ?? 'That did not work.');
+              else say(result.error ?? 'That didn’t work.');
             }}
           >
             Post
@@ -1759,7 +1759,7 @@ function UploadPage({
               }
               say(result.value!.status === 'scheduled'
                 ? 'Scheduled. It goes up on its own.'
-                : 'It is up. Now you wait.');
+                : 'It’s up. Now you wait.');
               onClose();
             }
           }}
@@ -1818,7 +1818,7 @@ function MyVideoRow({
               className="ph-pill"
               onClick={() => {
                 const result = run('video.take_down', { videoId: video.id }, { silent: true });
-                say(result.ok ? 'Taken down. It is gone from the world.' : result.error ?? 'That did not work.');
+                say(result.ok ? 'Taken down. It’s gone from the world.' : result.error ?? 'That didn’t work.');
               }}
             >
               Take It Down
@@ -1853,7 +1853,7 @@ function MyVideoRow({
                   description,
                   tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean),
                 }, { silent: true });
-                if (!result.ok) { say(result.error ?? 'That did not work.'); return; }
+                if (!result.ok) { say(result.error ?? 'That didn’t work.'); return; }
                 if (photo !== video.thumbnailImage) {
                   run('video.set_thumbnail_image', { videoId: video.id, image: photo }, { silent: true });
                 }
@@ -1907,7 +1907,7 @@ function DealRow({ deal, say }: { deal: BrandDeal; say: (text: string) => void }
             className="ph-pill"
             onClick={() => {
               const result = run('social.respond_to_deal', { dealId: deal.id, accept: false });
-              if (result.ok) say('Turned down. They will remember either way.');
+              if (result.ok) say('Turned down. They’ll remember either way.');
             }}
           >
             Turn It Down
@@ -1999,7 +1999,7 @@ function PlaybackSettings({ onBack }: { onBack: () => void }) {
         </div>
         <p className="ph-card-meta" style={{ padding: '0 12px 8px' }}>
           Faster takes less of your day and leaves you with less of the video. Past one and a half
-          you are skimming.
+          you’re skimming.
         </p>
 
         <div className="ph-section-head">Quality</div>
@@ -2127,20 +2127,20 @@ function AppSettings({
 
   const set = (patch: Record<string, unknown>) => {
     const result = run('video.set_preferences', patch, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
   };
 
   const rows: SettingRow[] = [
     { key: 'general', head: 'Account', label: 'General', icon: GearGlyph, value: 'Set By The Phone', onClick: () => say('The look of the phone is in the phone’s own Settings app, which is where it belongs.') },
-    { key: 'switch', head: 'Account', label: 'Switch Or Manage Account', icon: AccountGlyph, value: sim.player.displayName, onClick: () => say('SLATE keeps one life, so there is one account and nothing to switch to.') },
+    { key: 'switch', head: 'Account', label: 'Switch Or Manage Account', icon: AccountGlyph, value: sim.player.displayName, onClick: () => say('SLATE keeps one life, so there’s one account and nothing to switch to.') },
     { key: 'family', head: 'Account', label: 'Family Center', icon: FamilyGlyph, onClick: () => say('Nobody else is signed in on this handset.') },
     { key: 'time', head: 'Account', label: 'Time Management', icon: ChartGlyph, value: `${watched} Min Today`, onClick: () => say(`${watched} minutes of watching in the last day. Three hours is where the app starts saying something about it.`) },
     { key: 'notifications', head: 'Account', label: 'Notifications', icon: BellGlyph, value: `${notices} In The Bell`, onClick: () => say('The bell fills when a channel you follow uploads, when your channel passes a round number, and when a month is paid.') },
     { key: 'premium', head: 'Account', label: 'Your Premium Benefits', icon: BadgeGlyph, tile: true, value: paying ? 'Active' : 'Not Subscribed', onClick: onLibrary },
     { key: 'purchases', head: 'Account', label: 'Purchases And Memberships', icon: TagGlyph, onClick: onLibrary },
-    { key: 'languages', head: 'Account', label: 'Languages', icon: TranslateGlyph, value: 'English', onClick: () => say('The app is in English. SLATE does not translate itself yet.') },
+    { key: 'languages', head: 'Account', label: 'Languages', icon: TranslateGlyph, value: 'English', onClick: () => say('The app is in English. SLATE doesn’t translate itself yet.') },
     { key: 'history', head: 'Account', label: 'Manage All History', icon: ClockGlyph, value: `${history} Watched`, onClick: () => say('Your watch history is what the feed is built from. Nothing here deletes it, because the feed would then be built from nothing.') },
-    { key: 'privacy', head: 'Account', label: 'Privacy', icon: ShieldGlyph, onClick: () => say('Nothing you do on this phone leaves the game. There is nothing to send and nowhere to send it.') },
+    { key: 'privacy', head: 'Account', label: 'Privacy', icon: ShieldGlyph, onClick: () => say('Nothing you do on this phone leaves the game. There’s nothing to send and nowhere to send it.') },
     { key: 'connected', head: 'Account', label: 'Connected Apps', icon: LinkedGlyph, value: channel?.accountId ? 'Your Account' : 'None', onClick: () => say('The channel is tied to the account that carries the money, and nothing else is connected.') },
     { key: 'quality', head: 'Video And Audio Preferences', label: 'Quality', icon: HdGlyph, value: prefs.quality === 'auto' ? 'Auto' : prefs.quality, onClick: onPlayback },
     { key: 'playback', head: 'Video And Audio Preferences', label: 'Playback', icon: SpeedGlyph, value: `${prefs.speed}×`, onClick: onPlayback },
@@ -2148,12 +2148,12 @@ function AppSettings({
     { key: 'autoplay', head: 'Video And Audio Preferences', label: 'Autoplay', icon: PlayTriangleGlyph, value: prefs.autoplay ? 'On' : 'Off', onClick: () => set({ autoplay: !prefs.autoplay }) },
     { key: 'downloads', head: 'Video And Audio Preferences', label: 'Background And Downloads', icon: DownloadGlyph, value: paying ? 'With Premium' : 'Not Available', onClick: () => say(paying ? 'Downloads need somewhere to keep them. This handset streams.' : 'Downloads come with Premium.') },
     { key: 'uploads', head: 'Video And Audio Preferences', label: 'Uploads', icon: UploadGlyph, value: channel ? 'Your Channel' : 'No Channel', onClick: onLibrary },
-    { key: 'livechat', head: 'Video And Audio Preferences', label: 'Live Chat', icon: LiveGlyph, value: 'On', onClick: () => say('Chat is on while you are live. What it collects is on the statement.') },
-    { key: 'tv', head: 'Video And Audio Preferences', label: 'Watch On TV', icon: TvGlyph, onClick: () => say('There is no second screen in the house yet.') },
+    { key: 'livechat', head: 'Video And Audio Preferences', label: 'Live Chat', icon: LiveGlyph, value: 'On', onClick: () => say('Chat is on while you’re live. What it collects is on the statement.') },
+    { key: 'tv', head: 'Video And Audio Preferences', label: 'Watch On TV', icon: TvGlyph, onClick: () => say('There’s no second screen in the house yet.') },
     { key: 'help', head: 'Help And Policies', label: 'Help', icon: HelpGlyph, onClick: () => say('Everything on this phone is SLATE’s own. The channels are invented and nobody real is named.') },
     { key: 'feedback', head: 'Help And Policies', label: 'Send Feedback', icon: FeedbackGlyph, onClick: () => say('Nothing is sent anywhere. This is a game on your machine.') },
-    { key: 'terms', head: 'Help And Policies', label: 'Terms Of Service', icon: DocGlyph, onClick: () => say('There is no service to agree to. This app runs inside SLATE and talks to nothing.') },
-    { key: 'policy', head: 'Help And Policies', label: 'Privacy Policy', icon: LockGlyph, onClick: () => say('Your save stays on your machine. Nothing about you is collected, sent or sold, because there is nobody on the other end.') },
+    { key: 'terms', head: 'Help And Policies', label: 'Terms Of Service', icon: DocGlyph, onClick: () => say('There’s no service to agree to. This app runs inside SLATE and talks to nothing.') },
+    { key: 'policy', head: 'Help And Policies', label: 'Privacy Policy', icon: LockGlyph, onClick: () => say('Your save stays on your machine. Nothing about you is collected, sent or sold, because there’s nobody on the other end.') },
     { key: 'experimental', head: 'Help And Policies', label: 'Try Experimental New Features', icon: FlaskGlyph, value: 'None Open', onClick: () => say('Nothing is behind a flag right now. When something is, it will be listed here rather than switched on quietly.') },
     { key: 'about', head: 'Help And Policies', label: 'About', icon: InfoGlyph, value: 'SLATE', onClick: () => say('SLATE’s own video app. No third party artwork, no real creator, no real subscriber count.') },
   ].filter((row) => {

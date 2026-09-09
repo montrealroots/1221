@@ -67,6 +67,7 @@
   --shadow-lg: 0 2px 6px rgba(0,0,0,.35), 0 24px 60px rgba(0,0,0,.45);
 
   --nav-h: 56px;
+  --rail-w: 232px;
 
   /* The map. Land has to read as land against water at a glance, which the
      surface tokens are deliberately too close together to do. */
@@ -572,13 +573,86 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
   .topbar-clock-sep, .topbar-clock-date, .topbar-clock-zone { display: none; }
   .topbar { gap: var(--s2); }
   .topbar .btn { padding-inline: var(--s2); }
+  /* The hairline between the tool group and the save group is decoration,
+     and at this width its own gaps are what pushed Save & Exit off the edge. */
+  .topbar-divider { display: none; }
 }
 /* On a phone the bar may take a second line rather than lose a control. */
 @media (max-width: 620px) {
   .topbar { flex-wrap: wrap; height: auto; min-height: var(--nav-h); padding-block: var(--s1); row-gap: 0; }
+  .topbar-divider { display: none; }
 }
 
-.shell-body { display: flex; flex: 1; min-height: 0; }
+/* Below a laptop the rail folds away and comes back as a drawer. */
+@media (max-width: 900px) {
+  /* Closed, the drawer is off the left edge and hidden outright, so nothing
+     in it can take focus or be read as spilling out of the page. */
+  .rail {
+    position: fixed; top: var(--nav-h); bottom: 0; left: 0; width: 260px;
+    z-index: 30; transform: translateX(-100%); visibility: hidden;
+    transition: transform .2s, visibility 0s linear .2s;
+    box-shadow: var(--shadow-lg);
+  }
+  .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
+  .rail-shade { display: block; }
+}
+@media (min-width: 901px) {
+  .rail-toggle { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail { transition: none; }
+}
+
+.shell-body { display: flex; flex: 1; min-height: 0; position: relative; }
+
+/*
+  The rail: every destination, always in reach, down the left of every screen.
+  Words only. A locked room says Locked in a chip rather than showing a padlock,
+  and there are no icons, because a glyph that is a picture on one platform and
+  a box on another is not a label.
+*/
+.rail {
+  width: var(--rail-w); flex-shrink: 0; overflow-y: auto;
+  background: var(--surface); border-right: 1px solid var(--line);
+  padding: var(--s3) var(--s2);
+  display: flex; flex-direction: column;
+}
+.rail-group { margin-bottom: var(--s4); }
+.rail-group-label {
+  font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-dim); font-weight: 650; padding: var(--s2) var(--s3);
+}
+.rail-item {
+  display: flex; align-items: center; gap: var(--s3); width: 100%;
+  padding: var(--s2) var(--s3); border-radius: var(--radius-sm);
+  background: transparent; border: 0; color: var(--text-muted);
+  font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
+}
+.rail-item:hover { background: var(--surface-2); color: var(--text); }
+.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
+.rail-item.is-locked { opacity: 0.6; }
+.rail-item.is-locked:hover { opacity: 0.8; background: transparent; color: var(--text-muted); }
+.rail-lock {
+  flex-shrink: 0; font-size: var(--size-xs); letter-spacing: .04em;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 0 var(--s1); color: var(--text-dim);
+}
+.rail-badge {
+  margin-left: auto; font-size: var(--size-xs); font-weight: 700;
+  background: var(--negative); color: #fff; border-radius: 100px;
+  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px;
+}
+.rail-player { margin-top: auto; margin-bottom: 0; }
+.rail-you { padding: var(--s2) var(--s3); }
+/* Below a laptop the rail is a drawer, and this is what you press to close it. */
+.rail-shade {
+  display: none; position: fixed; inset: var(--nav-h) 0 0 0; z-index: 29;
+  background: rgba(0, 0, 0, 0.35); border: 0; cursor: pointer;
+}
+
+/* The two sides of the bar. Left is the world; right is you. */
+.topbar-group { display: flex; align-items: center; gap: var(--s2); }
+.topbar-divider { width: 1px; height: 22px; background: var(--line); flex: none; }
 
 /*
   Where To — the destination grid on Home.
@@ -906,6 +980,7 @@ kbd {
 
 /* Print is not a target, but a history export should not be unreadable. */
 @media print {
+  .rail, .rail-shade { display: none !important; }
   .topbar, .toasts, .help-panel { display: none !important; }
   body { background: #fff; color: #000; }
 }

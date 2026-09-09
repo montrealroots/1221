@@ -229,13 +229,13 @@ export function cautionsFor(spec: Spec): string[] {
     out.push(`A ${kind.name.toLowerCase()} in ${cloth.name.toLowerCase()} is the hard version of a hard thing. It will take longer than the estimate says.`);
   }
   if (finish.id === 'full_canvas' && kind.slot !== 'top' && kind.slot !== 'outerwear') {
-    out.push('A floating canvas belongs in a coat front. On this garment it is money spent where nobody will feel it.');
+    out.push('A floating canvas belongs in a coat front. On this garment it’s money spent where nobody will feel it.');
   }
   if (finish.id === 'boned' && kind.id !== 'corset' && kind.id !== 'evening_gown' && kind.id !== 'period_gown') {
-    out.push('Boning holds a shape the body is not making. On this garment it will read as armor.');
+    out.push('Boning holds a shape the body isn’t making. On this garment it will read as armor.');
   }
   if (finish.id === 'beaded' && cloth.durability < 55) {
-    out.push(`Beading is heavy and ${cloth.name.toLowerCase()} is not. The weight will drag the seams over time.`);
+    out.push(`Beading is heavy and ${cloth.name.toLowerCase()} isn’t. The weight will drag the seams over time.`);
   }
   if (kind.id === 'jeans' && cloth.id !== 'denim' && cloth.id !== 'cotton_twill' && cloth.id !== 'canvas') {
     out.push('Jeans cut from anything but denim or a heavy twill are trousers with jean seams. That may be what you want.');
@@ -247,7 +247,7 @@ export function cautionsFor(spec: Spec): string[] {
     out.push(`This takes about ${plural(Math.ceil(kind.yards), 'yard')} of cloth. Most of the price is on the table before anybody sews.`);
   }
   if (spec.label && spec.label.length > 28) {
-    out.push('That is a long label for the inside of a neck. It can be woven small, or it can be legible.');
+    out.push('That’s a long label for the inside of a neck. It can be woven small, or it can be legible.');
   }
   return out;
 }
@@ -344,7 +344,7 @@ export function readinessFor(sim: Simulation, personId: Id, spec: Spec): Readine
   const yardsNeeded = Math.ceil(kind.yards * 1.15);
 
   const missing: string[] = [];
-  if (!machine) missing.push('A sewing machine. You do not own one yet.');
+  if (!machine) missing.push('A sewing machine. You don’t own one yet.');
   if (yardsOwned < yardsNeeded) {
     missing.push(`${plural(yardsNeeded, 'yard')} of ${cloth.name.toLowerCase()}. You have ${yardsOwned}.`);
   }
@@ -433,7 +433,7 @@ export function registerCostume(sim: Simulation): void {
     'costume.look',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isCostumier(place)) throw new CommandError('That is not a costume house.');
+      if (!place || !isCostumier(place)) throw new CommandError('That isn’t a costume house.');
       const cutter = cutterAt(s, place);
       s.advanceTo(s.now + CONSULT_MINUTES * MS_MINUTE);
       tallyFact(s, cutter.id, { kind: 'topic', sourceKind: 'costumier', aboutId: s.player.id, text: CAME_IN, step: VISIT_STEP });
@@ -452,7 +452,7 @@ export function registerCostume(sim: Simulation): void {
     'costume.commission',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isCostumier(place)) throw new CommandError('That is not a costume house.');
+      if (!place || !isCostumier(place)) throw new CommandError('That isn’t a costume house.');
       const kind = garmentKindOf(p.kind);
       const spec: Spec = {
         kind: kind.id,
@@ -564,7 +564,7 @@ export function registerCostume(sim: Simulation): void {
     (p, { sim: s }) => {
       const costume = requireCostume(s, p.costumeId);
       if (costume.status !== 'ordered' && costume.status !== 'fitting') {
-        throw new CommandError('There is nothing on the table to fit.');
+        throw new CommandError('There’s nothing on the table to fit.');
       }
       if (costume.fittingsDone >= costume.fittingsWanted) {
         return { done: costume.fittingsDone, wanted: costume.fittingsWanted, note: 'It has had every fitting it needs.' };
@@ -598,7 +598,7 @@ export function registerCostume(sim: Simulation): void {
           quality: costume.quality ?? 0, description: describeSpec(costume),
         };
       }
-      if (costume.status !== 'ready') throw new CommandError('It is not finished yet.');
+      if (costume.status !== 'ready') throw new CommandError('It isn’t finished yet.');
 
       const place = placeOf(s, costume.placeId);
       const balance = costume.quotedPrice - costume.deposit;
@@ -655,7 +655,7 @@ export function registerCostume(sim: Simulation): void {
       costume.status = 'cancelled';
       costume.cancelledReason = refunded > 0
         ? 'Canceled before the cloth was cut. The deposit came back.'
-        : 'Canceled once the cloth was cut. It was cut to your pattern, so the deposit did not come back.';
+        : 'Canceled once the cloth was cut. It was cut to your pattern, so the deposit didn’t come back.';
       return { refunded, kept: costume.deposit - refunded };
     },
   );
@@ -736,10 +736,10 @@ export function registerCostume(sim: Simulation): void {
     'costume.alter',
     (p, { sim: s }) => {
       const place = placeById(s.player.currentLocationId, p.placeId);
-      if (!place || !isCostumier(place)) throw new CommandError('That is not a costume house.');
+      if (!place || !isCostumier(place)) throw new CommandError('That isn’t a costume house.');
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id || asset.soldAt) throw new CommandError('You do not own that.');
-      if (!asset.wardrobe) throw new CommandError('That is not something you wear.');
+      if (!asset || asset.ownerId !== s.player.id || asset.soldAt) throw new CommandError('You don’t own that.');
+      if (!asset.wardrobe) throw new CommandError('That isn’t something you wear.');
 
       const change = ALTERATIONS.find((a) => a.id === p.change) ?? ALTERATIONS[0]!;
       const cost = Math.round(change.hours * ALTERATION_RATE * (0.7 + tierOf(place) * 0.13) * costOfLiving(place.cityId));
@@ -764,7 +764,7 @@ export function registerCostume(sim: Simulation): void {
 const FITTING_NOTES: readonly string[] = [
   'First fitting, in calico. Nothing is sewn yet and everything is chalk.',
   'Second fitting, in cloth. The shoulders move where they should now.',
-  'Third fitting. Hems pinned, and it is finished except for the finishing.',
+  'Third fitting. Hems pinned, and it’s finished except for the finishing.',
 ];
 
 interface Alteration { id: string; name: string; hours: number; fit: number; note: string; }

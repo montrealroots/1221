@@ -166,7 +166,7 @@ describe('composing a post', () => {
     // And the social command is the authority on formats, scene or no scene.
     const direct = attempt(sim, 'social.create_post', { accountId: account.id, format: 'photo', title: 'Forced', effortMinutes: 60 });
     expect(direct.ok).toBe(false);
-    expect(direct.error).toMatch(/does not support/);
+    expect(direct.error).toMatch(/does(n’t| not) support/);
     expect(postsOf(sim, account)).toHaveLength(0);
   });
 
@@ -189,7 +189,7 @@ describe('composing a post', () => {
     const { accountId } = must<{ accountId: string }>(sim, 'social.create_account', { platform: 'lumen', handle: 'not_yours', ownerId: other.id });
     const refused = attempt(sim, 'scene.start', { definitionId: 'social.compose', input: { accountId } });
     expect(refused.ok).toBe(false);
-    expect(refused.error).toMatch(/not yours/);
+    expect(refused.error).toMatch(/n[o’]t yours/);
     expect(attempt(sim, 'scene.start', { definitionId: 'social.compose', input: { accountId: 'acct_nope' } }).ok).toBe(false);
   });
 

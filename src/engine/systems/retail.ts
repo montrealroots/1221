@@ -365,9 +365,9 @@ export function fitOf(sim: Simulation, place: Place, item: CatalogItem): Verdict
 export function verdictNote(verdict: Verdict): string {
   switch (verdict) {
     case 'yours': return 'It fits, and it looks like it was meant for you.';
-    case 'close': return 'It fits. Whether it is right is another question.';
+    case 'close': return 'It fits. Whether it’s right is another question.';
     case 'wrong_size': return 'Not in your size, not in this shop, not today.';
-    case 'not_you': return 'It fits, technically. The mirror is not convinced.';
+    case 'not_you': return 'It fits, technically. The mirror isn’t convinced.';
   }
 }
 
@@ -384,10 +384,10 @@ export function registerRetail(sim: Simulation): void {
     (p, { sim: s }) => {
       const me = s.player;
       const place = placeById(me.currentLocationId, p.placeId);
-      if (!place) throw new CommandError('That is not somewhere in this city.');
-      if (me.currentPlaceId !== place.id) throw new CommandError(`You are not at ${place.name}. Go there first.`);
-      if (!retailerAt(place)) throw new CommandError(`${place.name} is not a shop you can walk around.`);
-      if (openVisit(s, place.id)) throw new CommandError('You are already in there.');
+      if (!place) throw new CommandError('That isn’t somewhere in this city.');
+      if (me.currentPlaceId !== place.id) throw new CommandError(`You aren’t at ${place.name}. Go there first.`);
+      if (!retailerAt(place)) throw new CommandError(`${place.name} isn’t a shop you can walk around.`);
+      if (openVisit(s, place.id)) throw new CommandError('You’re already in there.');
 
       const assistant = assistantAt(s, place);
       const standing = standingAt(s, place);
@@ -414,10 +414,10 @@ export function registerRetail(sim: Simulation): void {
     'retail.handle',
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
-      if (visit.status !== 'browsing') throw new CommandError('You are not on the floor.');
+      if (visit.status !== 'browsing') throw new CommandError('You aren’t on the floor.');
       const place = placeOfVisit(s, visit);
       const stocked = stockAt(s, place).find((x) => x.item.id === p.catalogId);
-      if (!stocked) throw new CommandError('That is not out on the floor today.');
+      if (!stocked) throw new CommandError('That isn’t out on the floor today.');
       if (!visit.handled.includes(p.catalogId)) visit.handled.push(p.catalogId);
       s.advanceTo(s.now + HANDLE_MINUTES * MS_MINUTE);
       return { name: stocked.item.name, price: stocked.price, minutes: HANDLE_MINUTES, fittable: stocked.fittable };
@@ -432,8 +432,8 @@ export function registerRetail(sim: Simulation): void {
       if (visit.status === 'bought' || visit.status === 'left') throw new CommandError('You have left that shop.');
       const place = placeOfVisit(s, visit);
       const stocked = stockAt(s, place).find((x) => x.item.id === p.catalogId);
-      if (!stocked) throw new CommandError('That is not out on the floor today.');
-      if (!stocked.fittable) throw new CommandError(`You do not try ${stocked.item.name} on.`);
+      if (!stocked) throw new CommandError('That isn’t out on the floor today.');
+      if (!stocked.fittable) throw new CommandError(`You don’t try ${stocked.item.name} on.`);
       if (visit.tried.some((t) => t.catalogId === p.catalogId)) throw new CommandError('You have had that on already.');
 
       const verdict = fitOf(s, place, stocked.item);
@@ -455,12 +455,12 @@ export function registerRetail(sim: Simulation): void {
     'retail.basket',
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
-      if (visit.status !== 'browsing') throw new CommandError('You are not on the floor.');
+      if (visit.status !== 'browsing') throw new CommandError('You aren’t on the floor.');
       const place = placeOfVisit(s, visit);
       const stocked = stockAt(s, place).find((x) => x.item.id === p.catalogId);
-      if (!stocked) throw new CommandError('That is not out on the floor today.');
+      if (!stocked) throw new CommandError('That isn’t out on the floor today.');
       const wrongSize = visit.tried.find((t) => t.catalogId === p.catalogId)?.verdict === 'wrong_size';
-      if (wrongSize && p.take !== false) throw new CommandError(`They do not have the ${stocked.item.name} in your size.`);
+      if (wrongSize && p.take !== false) throw new CommandError(`They don’t have the ${stocked.item.name} in your size.`);
 
       if (p.take === false) {
         visit.basket = visit.basket.filter((id) => id !== p.catalogId);
@@ -522,7 +522,7 @@ export function registerRetail(sim: Simulation): void {
     (p, { sim: s }) => {
       const visit = visitOf(s, p.visitId);
       if (visit.status === 'bought' || visit.status === 'left') throw new CommandError('You have left that shop.');
-      if (visit.basket.length === 0) throw new CommandError('You are holding nothing.');
+      if (visit.basket.length === 0) throw new CommandError('You’re holding nothing.');
       const place = placeOfVisit(s, visit);
 
       const counted = new Map<string, number>();

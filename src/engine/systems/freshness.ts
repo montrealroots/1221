@@ -130,6 +130,6 @@ export function freshnessOf(sim: Simulation, kind: string, keys: readonly string
 }
 
 export const FRESHNESS_NOTE = 'The world keeps a register of every beat it has already '
-  + 'played, so it does not bring the same one up twice running. The register is bounded and '
-  + 'is not part of what a save is: losing it would make the world repeat itself for a while, '
+  + 'played, so it doesn’t bring the same one up twice running. The register is bounded and '
+  + 'isn’t part of what a save is: losing it would make the world repeat itself for a while, '
   + 'and would lose nothing that happened.';

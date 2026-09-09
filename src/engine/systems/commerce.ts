@@ -46,10 +46,10 @@ export function registerCommerce(sim: Simulation): void {
       const player = s.player;
       const cityId = player.currentLocationId;
       if (retailer.locations.length > 0 && !retailer.locations.includes(cityId)) {
-        throw new CommandError(`${retailer.name} does not have a location where you are.`);
+        throw new CommandError(`${retailer.name} doesn’t have a location where you are.`);
       }
       const channel = p.channel ?? (retailer.online ? 'online' : 'in_store');
-      if (channel === 'online' && !retailer.online) throw new CommandError(`${retailer.name} does not sell online.`);
+      if (channel === 'online' && !retailer.online) throw new CommandError(`${retailer.name} doesn’t sell online.`);
 
       const col = costOfLiving(cityId);
       const items: Order['items'] = [];
@@ -63,7 +63,7 @@ export function registerCommerce(sim: Simulation): void {
         // same rule where it counts, so a basket built anywhere else cannot buy
         // a house's coat from a discount chain.
         if (!stocks(retailer, catalogItem)) {
-          throw new CommandError(`${retailer.name} does not stock ${catalogItem.name}.`);
+          throw new CommandError(`${retailer.name} doesn’t stock ${catalogItem.name}.`);
         }
         const quantity = clamp(Math.round(line.quantity), 1, 999);
         const unitPrice = retailPrice(catalogItem.id, retailer.id, col);
@@ -147,13 +147,13 @@ export function registerCommerce(sim: Simulation): void {
     (p, { sim: s }) => {
       const order = s.universe.orders[p.orderId];
       if (!order) throw new CommandError('No such order.');
-      if (order.status !== 'delivered') throw new CommandError('That order has not been delivered yet.');
+      if (order.status !== 'delivered') throw new CommandError('That order hasn’t been delivered yet.');
       if (order.returnWindowEndsAt && s.now > order.returnWindowEndsAt) {
         throw new CommandError('The return window on that order has closed.');
       }
 
       const lines = p.catalogId ? order.items.filter((i) => i.catalogId === p.catalogId) : order.items;
-      if (lines.length === 0) throw new CommandError('That item is not on this order.');
+      if (lines.length === 0) throw new CommandError('That item isn’t on this order.');
 
       let refund = 0;
       for (const line of lines) {
@@ -190,7 +190,7 @@ export function registerCommerce(sim: Simulation): void {
       const assets = p.assetIds.map((id) => s.universe.assets[id]).filter(Boolean) as OwnedAsset[];
       if (assets.length === 0) throw new CommandError('An outfit needs at least one item.');
       for (const asset of assets) {
-        if (asset.ownerId !== personId) throw new CommandError(`${asset.name} is not yours.`);
+        if (asset.ownerId !== personId) throw new CommandError(`${asset.name} isn’t yours.`);
       }
 
       const formality = Math.round(assets.reduce((s_, a) => s_ + (a.wardrobe?.formality ?? 30), 0) / assets.length);
@@ -219,7 +219,7 @@ export function registerCommerce(sim: Simulation): void {
     'shop.sell_asset',
     (p, { sim: s }) => {
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.soldAt || asset.ownerId !== s.player.id) throw new CommandError('You do not own that.');
+      if (!asset || asset.soldAt || asset.ownerId !== s.player.id) throw new CommandError('You don’t own that.');
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to receive the proceeds.');
 

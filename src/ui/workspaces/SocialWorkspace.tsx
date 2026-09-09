@@ -119,7 +119,7 @@ export function SocialWorkspace() {
 
               <Panel title="Posts" flush>
                 {summary.posts.length === 0 ? (
-                  <Empty title="Nothing Posted" body="An account with no content is not an audience." />
+                  <Empty title="Nothing Posted" body="An account with no content isn’t an audience." />
                 ) : (
                   <div className="list">
                     {summary.posts.slice(0, 25).map((post) => (

@@ -266,7 +266,7 @@ export function applyChoice(
     if (friend) extra = ` ${friend.displayName} is in your life now.`;
   } else if (effect.friend === 'lose') {
     const gone = loseAFriend(sim);
-    if (gone) extra = ` You and ${gone} do not speak after this.`;
+    if (gone) extra = ` You and ${gone} don’t speak after this.`;
   }
 
   record.done.push(moment.id);
@@ -318,10 +318,10 @@ export function registerGrowing(sim: Simulation): void {
     (p, { sim: s }) => {
       const record = ensureGrowing(s);
       const moment = MOMENT_BY_ID[p.momentId];
-      if (!moment) throw new CommandError('That is not something that happens.');
+      if (!moment) throw new CommandError('That isn’t something that happens.');
       if (record.done.includes(moment.id)) throw new CommandError('That has already happened.');
       const choice = moment.choices.find((one) => one.id === p.choiceId);
-      if (!choice) throw new CommandError('That is not one of the answers.');
+      if (!choice) throw new CommandError('That isn’t one of the answers.');
       s.advanceTo(s.now + 45 * MS_MINUTE);
       return applyChoice(s, record, moment, choice);
     },
@@ -332,13 +332,13 @@ export function registerGrowing(sim: Simulation): void {
     'growing.lesson',
     (_p, { sim: s }) => {
       const record = ensureGrowing(s);
-      if (record.passedTestAt) throw new CommandError('You have passed. There is nothing left to learn from an instructor.');
+      if (record.passedTestAt) throw new CommandError('You have passed. There’s nothing left to learn from an instructor.');
       const allowed = mayI(s, 'drive');
       if (!allowed.ok) throw new CommandError(allowed.reason);
       const accountId = s.player.primaryAccountId;
       const cost = lessonCost(s);
       if (!accountId || s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`An hour is ${formatMoney(cost)} and you do not have it.`);
+        throw new CommandError(`An hour is ${formatMoney(cost)} and you don’t have it.`);
       }
       s.expense(accountId, cost, 'Driving Lesson', 'personal', { refType: 'person', refId: s.player.id });
       record.lessons += 1;
@@ -374,7 +374,7 @@ export function registerGrowing(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       const cost = testCost(s);
       if (!accountId || s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`The test is ${formatMoney(cost)} and you do not have it.`);
+        throw new CommandError(`The test is ${formatMoney(cost)} and you don’t have it.`);
       }
       s.expense(accountId, cost, 'Driving Test', 'personal', { refType: 'person', refId: s.player.id });
       record.testsSat += 1;
@@ -478,7 +478,7 @@ export function registerGrowing(sim: Simulation): void {
         });
         s.notify({
           title: pet.name,
-          body: `${plural(Math.round(age), 'year')}. That is how long they get.`,
+          body: `${plural(Math.round(age), 'year')}. That’s how long they get.`,
           category: 'personal',
           importance: 58,
           route: '/workspace/character',

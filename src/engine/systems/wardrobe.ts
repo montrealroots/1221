@@ -210,7 +210,7 @@ function colourNotes(worn: OwnedAsset[]): Note[] {
   // Brown under black is the one everybody sees.
   const wearingBlack = bodyColours.some((c) => c.id === 'black');
   if (wearingBlack && shoes && shoes.family === 'earth') {
-    notes.push({ kind: 'clash', weight: -14, text: `${shoes.name} shoes under black. It is a look, and it is not this one.` });
+    notes.push({ kind: 'clash', weight: -14, text: `${shoes.name} shoes under black. It’s a look, and it isn’t this one.` });
   }
   if (wearingBlack && bodyColours.some((c) => c.id === 'navy')) {
     notes.push({ kind: 'clash', weight: -8, text: 'Navy against black. In this light it reads as an accident rather than a choice.' });
@@ -266,15 +266,15 @@ export function appraise(
 
   const missing = emptySlots(worn);
   for (const slot of missing) {
-    notes.push({ kind: 'gap', weight: -20, text: `Nothing on the ${SLOT_LABEL[slot].toLowerCase()}. That is not a look, that is an oversight.` });
+    notes.push({ kind: 'gap', weight: -20, text: `Nothing on the ${SLOT_LABEL[slot].toLowerCase()}. That isn’t a look, that’s an oversight.` });
   }
 
   const formality = formalityOf(worn);
   if (worn.length > 0) {
     if (formality < code.floor - 12) {
-      notes.push({ kind: 'formality', weight: -18, text: `This is ${code.name.toLowerCase()} and you are dressed well under it. You will be the one they remember for the wrong reason.` });
+      notes.push({ kind: 'formality', weight: -18, text: `This is ${code.name.toLowerCase()} and you’re dressed well under it. You’ll be the one they remember for the wrong reason.` });
     } else if (formality < code.floor) {
-      notes.push({ kind: 'formality', weight: -8, text: `A shade under what ${code.name.toLowerCase()} asks for. You would get away with it in a dark room.` });
+      notes.push({ kind: 'formality', weight: -8, text: `A shade under what ${code.name.toLowerCase()} asks for. You’d get away with it in a dark room.` });
     } else if (formality > code.ceiling + 10) {
       notes.push({ kind: 'formality', weight: -9, text: `Considerably dressier than the room. Which is a choice, and it will be read as one.` });
     } else {
@@ -298,21 +298,21 @@ export function appraise(
   const cold = season === 'Winter';
   const hot = season === 'Summer';
   if (cold && warmth < 40) {
-    notes.push({ kind: 'weather', weight: -11, text: 'It is winter and none of this is warm. You will feel it before the end of the street.' });
+    notes.push({ kind: 'weather', weight: -11, text: 'It’s winter and none of this is warm. You’ll feel it before the end of the street.' });
   }
   if (hot && warmth > 72) {
-    notes.push({ kind: 'weather', weight: -10, text: 'Far too much cloth for the heat. You will regret the coat within ten minutes.' });
+    notes.push({ kind: 'weather', weight: -10, text: 'Far too much cloth for the heat. You’ll regret the coat within ten minutes.' });
   }
   for (const asset of worn) {
     if (!asset.wardrobe!.season.includes(season)) {
-      notes.push({ kind: 'weather', weight: -4, text: `${asset.name} is not a ${season.toLowerCase()} thing, strictly speaking.` });
+      notes.push({ kind: 'weather', weight: -4, text: `${asset.name} isn’t a ${season.toLowerCase()} thing, strictly speaking.` });
     }
   }
 
   // Condition and cleanliness.
   for (const asset of worn) {
     if ((asset.wardrobe!.cleanliness ?? 100) < NEEDS_WASHING) {
-      notes.push({ kind: 'condition', weight: -13, text: `${asset.name} needs washing, and at this distance that is visible.` });
+      notes.push({ kind: 'condition', weight: -13, text: `${asset.name} needs washing, and at this distance that’s visible.` });
     }
     if (asset.condition < LOOKS_TIRED) {
       notes.push({ kind: 'condition', weight: -9, text: `${asset.name} has had a life. Fine at home; less fine out.` });
@@ -363,14 +363,14 @@ export function verdictLabel(verdict: number): string {
 
 function garment(sim: Simulation, assetId: Id): OwnedAsset {
   const asset = sim.universe.assets[assetId];
-  if (!asset || asset.soldAt || asset.ownerId !== sim.player.id) throw new CommandError('You do not own that.');
-  if (!asset.wardrobe) throw new CommandError(`${asset.name} is not something you wear.`);
+  if (!asset || asset.soldAt || asset.ownerId !== sim.player.id) throw new CommandError('You don’t own that.');
+  if (!asset.wardrobe) throw new CommandError(`${asset.name} isn’t something you wear.`);
   return asset;
 }
 
 function outfitOf(sim: Simulation, outfitId: Id): Outfit {
   const outfit = sim.universe.outfits[outfitId];
-  if (!outfit || outfit.personId !== sim.player.id) throw new CommandError('That is not one of your outfits.');
+  if (!outfit || outfit.personId !== sim.player.id) throw new CommandError('That isn’t one of your outfits.');
   return outfit;
 }
 
@@ -445,7 +445,7 @@ export function registerWardrobe(sim: Simulation): void {
     (p, { sim: s }) => {
       const person = s.player;
       const worn = wearing(s, person.id);
-      if (worn.length === 0) throw new CommandError('You are not wearing anything you chose. Put something on first.');
+      if (worn.length === 0) throw new CommandError('You aren’t wearing anything you chose. Put something on first.');
       const occasion = p.occasion ?? 'casual';
       const appraisal = appraise(s, worn, { occasion, personId: person.id });
 
@@ -509,7 +509,7 @@ export function registerWardrobe(sim: Simulation): void {
       const needsSpecialist = chosen.filter((a) => materialOf(a.wardrobe!.material).dryCleanOnly);
       const professional = p.professional ?? needsSpecialist.length > 0;
       if (!professional && needsSpecialist.length > 0) {
-        throw new CommandError(`${needsSpecialist[0]!.name} cannot go in a machine. It needs the cleaner.`);
+        throw new CommandError(`${needsSpecialist[0]!.name} can’t go in a machine. It needs the cleaner.`);
       }
 
       // Washing at home needs a machine that works. Without one the washing
@@ -526,8 +526,8 @@ export function registerWardrobe(sim: Simulation): void {
         if (s.ledger.availableFunds(accountId) < cost) {
           throw new CommandError(
             launderette
-              ? `The launderette wants ${formatMoney(cost)} and you cannot cover it.`
-              : `The cleaner wants ${formatMoney(cost)} and you cannot cover it.`,
+              ? `The launderette wants ${formatMoney(cost)} and you can’t cover it.`
+              : `The cleaner wants ${formatMoney(cost)} and you can’t cover it.`,
           );
         }
         s.expense(accountId, cost, launderette ? 'Launderette' : 'Dry Cleaning', 'household');
@@ -564,7 +564,7 @@ export function registerWardrobe(sim: Simulation): void {
     'wear.save_look',
     (p, { sim: s }) => {
       const worn = wearing(s, s.player.id);
-      if (worn.length === 0) throw new CommandError('You are not wearing anything to save.');
+      if (worn.length === 0) throw new CommandError('You aren’t wearing anything to save.');
       const name = p.name.trim();
       if (name.length < 2) throw new CommandError('Give it a name worth typing.');
       return s.must<{ outfitId: Id; styleScore: number; formality: number }>({
@@ -577,7 +577,7 @@ export function registerWardrobe(sim: Simulation): void {
   sim.onCommand<{ preference: 'men' | 'women' | 'both' }, { preference: string }>(
     'wear.set_preference',
     (p, { sim: s }) => {
-      if (!['men', 'women', 'both'].includes(p.preference)) throw new CommandError('That is not one of the racks.');
+      if (!['men', 'women', 'both'].includes(p.preference)) throw new CommandError('That isn’t one of the racks.');
       // A preference, not a lock: it decides what a shop leads with and
       // nothing else. Everything stays buyable and everything stays wearable.
       s.player.wardrobePreference = p.preference;

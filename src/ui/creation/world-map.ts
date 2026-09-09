@@ -157,18 +157,18 @@ export function loadWorldMap(): Promise<WorldMapData> {
   if (pending) return pending;
   pending = fetch(MAP_URL)
     .then((response) => {
-      if (!response.ok) throw new Error('The world map could not be loaded.');
+      if (!response.ok) throw new Error('The world map couldn’t be loaded.');
       return response.json() as Promise<WorldMapData>;
     })
     .then((data) => {
       if (!data?.countries || !data.width || !data.height) {
-        throw new Error('The world map file is not readable.');
+        throw new Error('The world map file isn’t readable.');
       }
       return data;
     })
     .catch((error: unknown) => {
       pending = null;
-      throw error instanceof Error ? error : new Error('The world map could not be loaded.');
+      throw error instanceof Error ? error : new Error('The world map couldn’t be loaded.');
     });
   return pending;
 }

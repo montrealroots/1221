@@ -79,7 +79,7 @@ describe('the products', () => {
     expect(openingRefusal(sim, reserve, 5_000_00, checking(sim).id)).toMatch(/takes \$250,000/);
     expect(attempt(sim, 'bank.open', { productId: 'mp_reserve', deposit: 5_000_00, fromAccountId: checking(sim).id }).error).toMatch(/takes \$250,000/);
     // The money has to actually be there.
-    expect(attempt(sim, 'bank.open', { productId: 'nb_high_yield', deposit: 10_000_00, fromAccountId: checking(sim).id }).error).toMatch(/There is not \$10,000/);
+    expect(attempt(sim, 'bank.open', { productId: 'nb_high_yield', deposit: 10_000_00, fromAccountId: checking(sim).id }).error).toMatch(/There is(n’t| not) \$10,000/);
     // And a card wants a score.
     sim.universe.creditProfiles[sim.player.id]!.score = 600;
     expect(attempt(sim, 'bank.open', { productId: 'mp_card_reserve' }).error).toMatch(/wants a score of 760. Yours is 600/);

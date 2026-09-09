@@ -56,7 +56,7 @@ const pv = (
 const PANAVISION_DAY_RATE: Readonly<Record<string, number>> = { camera: 3_200_00, lens: 1_800_00 };
 
 export const PANAVISION_NOTE =
-  'Panavision rents and does not sell. The figure shown is a day rate, SLATE’s own calibration, '
+  'Panavision rents and doesn’t sell. The figure shown is a day rate, SLATE’s own calibration, '
   + 'not a purchase price and not a quote from the house.';
 
 // ---------------------------------------------------------------------------

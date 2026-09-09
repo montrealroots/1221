@@ -155,7 +155,7 @@ export function ChannelPage({
                 className="ph-chip ph-on"
                 onClick={() => {
                   const result = run<{ monthly: number }>('video.join_channel', { channelId: channel.id, tier: 'supporter' });
-                  if (result.ok) say(`You are a member of ${channel.name}. ${formatMoney(result.value!.monthly)} a month.`);
+                  if (result.ok) say(`You’re a member of ${channel.name}. ${formatMoney(result.value!.monthly)} a month.`);
                 }}
               >
                 Join
@@ -201,7 +201,7 @@ export function ChannelPage({
           : page.shorts.map((video) => <span key={video.id}>{renderRow(video)}</span>))}
 
         {tab === 'community' && (page.community.length === 0
-          ? <div className="ph-empty">This channel has not posted anything.</div>
+          ? <div className="ph-empty">This channel hasn’t posted anything.</div>
           : page.community.map((post) => <CommunityCard key={post.id} post={post} now={now} />))}
 
         {tab === 'live' && (page.streams.length === 0

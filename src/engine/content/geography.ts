@@ -366,7 +366,7 @@ export async function loadCountryCities(countryId: string): Promise<number> {
 
   const response = await fetch(`${import.meta.env.BASE_URL}geo/${countryId}.tsv`);
   if (!response.ok) {
-    throw new Error(`The city list for ${COUNTRIES.get(countryId)?.name ?? countryId} could not be loaded.`);
+    throw new Error(`The city list for ${COUNTRIES.get(countryId)?.name ?? countryId} couldn’t be loaded.`);
   }
   return addCountryCities(countryId, await response.text());
 }
@@ -473,7 +473,7 @@ function hood(id: string, name: string, cityId: string, priceMultiplier: number,
 
 export const NEIGHBOURHOODS = new Registry<Neighbourhood>('neighbourhoods', [
   hood('la-beverlyhills', 'Beverly Hills', 'us-ca-losangeles', 3.6, 96, 88, 55, 'Old money, new money, and the people who bill them.'),
-  hood('la-bel-air', 'Bel Air', 'us-ca-losangeles', 4.8, 97, 92, 22, 'Gated estates behind hedges you cannot see over.'),
+  hood('la-bel-air', 'Bel Air', 'us-ca-losangeles', 4.8, 97, 92, 22, 'Gated estates behind hedges you can’t see over.'),
   hood('la-hollywoodhills', 'Hollywood Hills', 'us-ca-losangeles', 2.6, 88, 74, 30, 'Winding roads, glass walls and a view of the whole basin.'),
   hood('la-losfeliz', 'Los Feliz', 'us-ca-losangeles', 1.7, 76, 72, 68, 'Spanish revival houses and people who work in post.'),
   hood('la-silverlake', 'Silver Lake', 'us-ca-losangeles', 1.6, 72, 70, 74, 'Coffee, a reservoir, and everyone is writing something.'),
@@ -487,14 +487,14 @@ export const NEIGHBOURHOODS = new Registry<Neighbourhood>('neighbourhoods', [
   hood('nyc-tribeca', 'Tribeca', 'us-ny-newyork', 3.4, 94, 86, 92, 'Cast iron, a film festival, and lofts the size of sound stages.'),
   hood('nyc-uppereast', 'Upper East Side', 'us-ny-newyork', 2.6, 90, 88, 94, 'Doormen, museums and a very specific idea of correct.'),
   hood('nyc-westvillage', 'West Village', 'us-ny-newyork', 3.1, 92, 84, 97, 'Crooked streets, brownstones and the most photographed corners in America.'),
-  hood('nyc-brooklynheights', 'Brooklyn Heights', 'us-ny-newyork', 2.4, 86, 86, 90, 'A promenade, a skyline view and quiet that Manhattan cannot buy.'),
+  hood('nyc-brooklynheights', 'Brooklyn Heights', 'us-ny-newyork', 2.4, 86, 86, 90, 'A promenade, a skyline view and quiet that Manhattan can’t buy.'),
   hood('nyc-astoria', 'Astoria', 'us-ny-newyork', 1.1, 58, 76, 88, 'Where the working actors/actresses actually live, next to a studio lot.'),
   hood('nyc-harlem', 'Harlem', 'us-ny-newyork', 1.0, 62, 64, 90, 'History on every block and the best brownstone value left.'),
   hood('atl-buckhead', 'Buckhead', 'us-ga-atlanta', 2.0, 82, 82, 48, 'Big houses, big lawns, and everyone in the industry has an address here.'),
   hood('atl-virginiahighland', 'Virginia-Highland', 'us-ga-atlanta', 1.4, 68, 76, 78, 'Bungalows, porches and a walkable strip.'),
   hood('atl-eastatlanta', 'East Atlanta', 'us-ga-atlanta', 0.9, 50, 62, 70, 'Cheap, loud and full of people making things.'),
   hood('ldn-soho', 'Soho', 'uk-eng-london', 2.8, 88, 70, 98, 'Post houses, screening rooms and a pub for every one of them.'),
-  hood('ldn-notting', 'Notting Hill', 'uk-eng-london', 2.9, 90, 84, 88, 'Pastel terraces and a market that is now mostly for visitors.'),
+  hood('ldn-notting', 'Notting Hill', 'uk-eng-london', 2.9, 90, 84, 88, 'Pastel terraces and a market that’s now mostly for visitors.'),
   hood('ldn-hackney', 'Hackney', 'uk-eng-london', 1.3, 62, 62, 86, 'Warehouses turned studios and the cheapest edit suites in the city.'),
   hood('van-yaletown', 'Yaletown', 'ca-bc-vancouver', 1.9, 80, 84, 90, 'Glass towers, converted warehouses and constant location shooting.'),
   hood('van-kitsilano', 'Kitsilano', 'ca-bc-vancouver', 1.7, 78, 88, 76, 'Beach, mountains and a very healthy population.'),

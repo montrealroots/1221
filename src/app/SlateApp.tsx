@@ -79,7 +79,7 @@ export function SlateApp() {
       await startup.adapter.save(sim.universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });
     } catch (e) {
-      setError(`That save could not be created: ${(e as Error).message}`);
+      setError(`That save couldn’t be created: ${(e as Error).message}`);
     }
   }, []);
 
@@ -97,7 +97,7 @@ export function SlateApp() {
       const sim = loadSave(universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });
     } catch (e) {
-      setError(`That save could not be opened: ${(e as Error).message}`);
+      setError(`That save couldn’t be opened: ${(e as Error).message}`);
     }
   }, []);
 

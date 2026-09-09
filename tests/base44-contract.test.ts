@@ -64,7 +64,7 @@ describe('signing in', () => {
     for (const handler of [save, load, clear]) {
       const res = await handler(post({ slot: 1 }));
       expect(res.status).toBe(401);
-      expect((await body(res)).error).toMatch(/not signed in/i);
+      expect((await body(res)).error).toMatch(/n[o’]t signed in/i);
     }
   });
 
@@ -101,10 +101,10 @@ describe('the payload', () => {
     const cases: [unknown, RegExp][] = [
       ['', /missing or empty/],
       [undefined, /missing or empty/],
-      ['{not json', /not readable/],
+      ['{not json', /n[o’]t readable/],
       [JSON.stringify({ meta: { id: 'x', schemaVersion: 1, slot: 1 } }), /no world clock/],
       [JSON.stringify({ now: 1, meta: { schemaVersion: 1, slot: 1 } }), /no meta\.id/],
-      [JSON.stringify({ now: 1, meta: { id: 'x', slot: 1 } }), /does not say what format/],
+      [JSON.stringify({ now: 1, meta: { id: 'x', slot: 1 } }), /does(n’t| not) say what format/],
     ];
     for (const [payload, expected] of cases) {
       const res = await save(post({ slot: 1, payload }));
@@ -137,7 +137,7 @@ describe('the payload', () => {
     });
     const res = await save(post({ slot: 1, payload: unbalanced }));
     expect(res.status).toBe(400);
-    expect((await body(res)).error).toMatch(/does not balance/);
+    expect((await body(res)).error).toMatch(/does(n’t| not) balance/);
 
     const fractional = edited(payload, (u) => {
       const txns = u.transactions as { postings: { amount: number }[] }[];

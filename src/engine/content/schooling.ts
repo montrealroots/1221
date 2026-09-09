@@ -14,9 +14,9 @@
  */
 
 export const SCHOOLING_NOTE =
-  'The shape of an education is public record and it is what SLATE carries: the stages, what each '
+  'The shape of an education is public record and it’s what SLATE carries: the stages, what each '
   + 'year is called where you are, the exam at the end of it and the ages the law makes school '
-  + 'compulsory. The school itself is not. There are millions of schools and no feed to name them '
+  + 'compulsory. The school itself isn’t. There are millions of schools and no feed to name them '
   + 'from, so every one in SLATE is SLATE’s own invention with a plausible name, and so is every '
   + 'timetable, every mark and every fixture.';
 
@@ -476,7 +476,7 @@ export const EDUCATION_SYSTEMS: readonly EducationSystem[] = [
   },
   {
     id: 'world', label: 'General', countryIds: [], compulsory: [6, 15],
-    about: 'Primary and secondary school, where SLATE does not carry a country’s own structure.',
+    about: 'Primary and secondary school, where SLATE doesn’t carry a country’s own structure.',
     stages: [
       st('primary', 'Primary School', 6, 11, 'Grade', 1),
       st('secondary', 'Secondary School', 12, 17, 'Grade', 7, {
@@ -550,9 +550,9 @@ export const SUBJECTS: readonly Subject[] = [
   { id: 'mathematics', label: 'Mathematics', fromAge: 5, about: 'Numbers, and later letters standing in for them.' },
   { id: 'science', label: 'Science', fromAge: 7, about: 'One subject early on and three later.' },
   { id: 'history', label: 'History', fromAge: 8, about: 'What happened, and the argument about why.' },
-  { id: 'geography', label: 'Geography', fromAge: 8, about: 'Where things are and why they are there.' },
+  { id: 'geography', label: 'Geography', fromAge: 8, about: 'Where things are and why they’re there.' },
   { id: 'foreign', label: 'A Foreign Language', fromAge: 9, feeds: { key: 'languages', kind: 'skill' }, about: 'Two years of it before anybody says a full sentence.' },
-  { id: 'art', label: 'Art', fromAge: 5, feeds: { key: 'production_design', kind: 'skill' }, about: 'Paint, then drawing, then somebody says you are good at it.' },
+  { id: 'art', label: 'Art', fromAge: 5, feeds: { key: 'production_design', kind: 'skill' }, about: 'Paint, then drawing, then somebody says you’re good at it.' },
   { id: 'music', label: 'Music', fromAge: 5, feeds: { key: 'singing', kind: 'attribute' }, about: 'A recorder, and then a real instrument if it takes.' },
   { id: 'drama', label: 'Drama', fromAge: 9, feeds: { key: 'emotional_truth', kind: 'attribute' }, about: 'Standing up in front of people, which is the whole job.' },
   { id: 'pe', label: 'Physical Education', fromAge: 5, about: 'A field, a hall, and somebody with a whistle.' },
@@ -582,7 +582,7 @@ export const MARK_BANDS: readonly { from: number; label: string; about: string }
   { from: 58, label: 'Sound', about: 'Where most of the year sits.' },
   { from: 44, label: 'Passing', about: 'Through, but nothing to write home about.' },
   { from: 30, label: 'Struggling', about: 'Somebody has already had a word.' },
-  { from: 0, label: 'Failing', about: 'This one is not being passed without a change.' },
+  { from: 0, label: 'Failing', about: 'This one isn’t being passed without a change.' },
 ];
 
 export function markLabel(mark: number): string {
@@ -626,7 +626,7 @@ export const CLUBS: readonly Club[] = [
   { id: 'film', label: 'Film Club', fromAge: 12, feeds: { key: 'visual_language', kind: 'skill' }, about: 'A borrowed camera and somebody who has opinions about Kubrick.' },
   { id: 'choir', label: 'Choir', fromAge: 7, feeds: { key: 'singing', kind: 'attribute' }, about: 'Lunchtimes, and a concert nobody’s parents miss.' },
   { id: 'orchestra', label: 'Orchestra', fromAge: 9, feeds: { key: 'coordination', kind: 'attribute' }, about: 'Tuning takes longer than the rehearsal.' },
-  { id: 'debate', label: 'Debating Society', fromAge: 12, feeds: { key: 'public_speaking', kind: 'skill' }, about: 'Arguing a side you do not hold, which turns out to be a skill.' },
+  { id: 'debate', label: 'Debating Society', fromAge: 12, feeds: { key: 'public_speaking', kind: 'skill' }, about: 'Arguing a side you don’t hold, which turns out to be a skill.' },
   { id: 'newspaper', label: 'School Newspaper', fromAge: 12, feeds: { key: 'character_writing', kind: 'skill' }, about: 'Four pages a term and one story somebody tries to stop.' },
   { id: 'dance', label: 'Dance', fromAge: 7, feeds: { key: 'dance', kind: 'attribute' }, about: 'A hall with mirrors, and a showcase in the spring.' },
   { id: 'chess', label: 'Chess Club', fromAge: 8, about: 'Quiet, and far more competitive than it looks.' },
@@ -665,8 +665,8 @@ export const SCHOOL_PLAYS: readonly Production[] = [
   { id: 'twelfth', title: 'Twelfth Night', about: 'Comic, and the staging is cheap, which matters.', parts: 10 },
   { id: 'tempest', title: 'The Tempest', about: 'An excuse for the lighting department to do something.', parts: 9 },
   { id: 'importance', title: 'The Importance Of Being Earnest', about: 'Wilde, and it plays to parents better than Shakespeare does.', parts: 8 },
-  { id: 'inspector', title: 'An Inspector Calls', about: 'One room, seven people, and it is on the syllabus anyway.', parts: 7 },
-  { id: 'antigone', title: 'Antigone', about: 'Sophocles, and it is shorter than anybody expects.', parts: 8 },
+  { id: 'inspector', title: 'An Inspector Calls', about: 'One room, seven people, and it’s on the syllabus anyway.', parts: 7 },
+  { id: 'antigone', title: 'Antigone', about: 'Sophocles, and it’s shorter than anybody expects.', parts: 8 },
   { id: 'dolls_house', title: 'A Doll’s House', about: 'Ibsen, and the door slam at the end never fails.', parts: 6 },
   { id: 'crucible', title: 'The Crucible', about: 'A big cast and a good deal of shouting.', parts: 15 },
   { id: 'seagull', title: 'The Seagull', about: 'Chekhov, attempted by a sixth form with more ambition than sense.', parts: 9 },

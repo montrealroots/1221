@@ -47,7 +47,7 @@ export const CLIP_PROFILES: readonly ClipSeed[] = [
   cl('c_ninetysecondpasta', 'ninetysecondpasta', 'Ninety Second Pasta', 'food', 3_100_000, 1, 80, 'sauce first. always sauce first'),
   cl('c_thefridgeraid', 'thefridgeraid', 'Fridge Raid', 'food', 512_000, 1, 73, 'whatever is left, made edible'),
   cl('c_fitcheckdaily', 'fitcheckdaily', 'Fit Check Daily', 'fashion', 2_840_000, 1, 78, 'one outfit a day, no repeats this year'),
-  cl('c_thriftrunhaul', 'thriftrunhaul', 'Thrift Run', 'fashion', 1_620_000, 1, 74, 'under twenty or it does not go in the bag'),
+  cl('c_thriftrunhaul', 'thriftrunhaul', 'Thrift Run', 'fashion', 1_620_000, 1, 74, 'under twenty or it doesn’t go in the bag'),
   cl('c_tailorsbench', 'tailorsbench', 'Tailors Bench', 'fashion', 486_000, 2, 91, 'watch a jacket get fixed'),
   cl('c_capsulethirty', 'capsulethirty', 'Capsule Thirty', 'fashion', 742_000, 2, 82, 'thirty things, a whole year'),
   cl('c_sneakerbench', 'sneakerbench', 'Sneaker Bench', 'fashion', 1_940_000, 1, 80, 'cleaning, restoring, ruining'),
@@ -58,7 +58,7 @@ export const CLIP_PROFILES: readonly ClipSeed[] = [
   cl('c_mobilityminute', 'mobilityminute', 'Mobility Minute', 'fitness', 646_000, 1, 84, 'one joint, sixty seconds'),
   cl('c_therunclub', 'therunclub', 'The Run Club', 'fitness', 1_480_000, 1, 76, 'splits, shoes and shin splints'),
   cl('c_theclimbwall', 'theclimbwall', 'The Wall', 'fitness', 428_000, 2, 87, 'beta, falls and the send'),
-  cl('c_povyourein', 'povyourein', 'POV Youre In', 'comedy', 6_200_000, 1, 74, 'you are the third person in every conversation'),
+  cl('c_povyourein', 'povyourein', 'POV Youre In', 'comedy', 6_200_000, 1, 74, 'you’re the third person in every conversation'),
   cl('c_officebitroom', 'officebitroom', 'Office Bit', 'comedy', 2_920_000, 1, 76, 'the meeting could have been this'),
   cl('c_thefamilygroupchat', 'familygroupchat', 'Family Group Chat', 'comedy', 4_800_000, 1, 72, 'my mother, verbatim, with a wig'),
   cl('c_deadpanminute', 'deadpanminute', 'Deadpan', 'comedy', 1_140_000, 2, 84, 'no jokes. only truth. still funny'),
@@ -66,8 +66,8 @@ export const CLIP_PROFILES: readonly ClipSeed[] = [
   cl('c_impressionsdesk', 'impressionsdesk', 'Impressions Desk', 'comedy', 3_640_000, 1, 80, 'people you know, badly'),
   cl('c_thewrongorder', 'thewrongorder', 'Wrong Order', 'comedy', 968_000, 2, 75, 'service industry, unfiltered'),
   cl('c_readthisbook', 'readthisbook', 'Read This', 'books', 1_720_000, 1, 79, 'sixty seconds, one book, no spoilers'),
-  cl('c_theshelfsort', 'theshelfsort', 'Shelf Sort', 'books', 486_000, 2, 83, 'reorganising until it is beautiful'),
-  cl('c_firstpagetest', 'firstpagetest', 'First Page Test', 'books', 842_000, 2, 86, 'if page one does not land, out it goes'),
+  cl('c_theshelfsort', 'theshelfsort', 'Shelf Sort', 'books', 486_000, 2, 83, 'reorganising until it’s beautiful'),
+  cl('c_firstpagetest', 'firstpagetest', 'First Page Test', 'books', 842_000, 2, 86, 'if page one doesn’t land, out it goes'),
   cl('c_thedaymakeup', 'thedaymakeup', 'The Day Look', 'photo', 2_140_000, 1, 76, 'one light, one lens, one take'),
   cl('c_shutterpov', 'shutterpov', 'Shutter POV', 'photo', 1_260_000, 1, 84, 'behind the camera, the whole time'),
   cl('c_editinpublic', 'editinpublic', 'Edit In Public', 'photo', 684_000, 2, 88, 'raw to final, nothing hidden'),
@@ -100,7 +100,7 @@ export const CLIP_PROFILES: readonly ClipSeed[] = [
   cl('c_nonleaguerun', 'nonleaguerun', 'Non League', 'sport', 486_000, 2, 82, 'step seven, every Saturday'),
   cl('c_thestatsdesk', 'thestatsdeskclip', 'Stats Desk', 'sport', 924_000, 1, 80, 'the number nobody mentioned'),
   cl('c_buildinpublicpov', 'buildinpublicpov', 'Build In Public', 'tech', 1_460_000, 1, 81, 'shipping it whether it works or not'),
-  cl('c_thereparibench', 'thereparibench', 'Repair Bench', 'tech', 862_000, 1, 88, 'fixing what they said you cannot'),
+  cl('c_thereparibench', 'thereparibench', 'Repair Bench', 'tech', 862_000, 1, 88, 'fixing what they said you can’t'),
   cl('c_onecommand', 'onecommand', 'One Command', 'tech', 642_000, 1, 86, 'the terminal line that saves an hour'),
   cl('c_thesetupshelf', 'thesetupshelf', 'The Setup', 'tech', 1_940_000, 1, 74, 'cable management as a personality'),
   cl('c_phonesin60', 'phonesinsixty', 'Phones In Sixty', 'tech', 3_200_000, 1, 76, 'the whole review, in a minute'),
@@ -170,11 +170,11 @@ export const CLIP_TAGS: Readonly<Record<SocialTopic, readonly string[]>> = {
 export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
   food: {
     patterns: [
-      'day {n} of {quest}', 'this took {time} and I am never doing it again',
+      'day {n} of {quest}', 'this took {time} and I’m never doing it again',
       '{dish} but {twist}', 'stop {mistake}', 'the {dish} thing everybody gets wrong',
       'replying to a comment: yes, {answer}', '{dish} in {time}',
       'if you only learn one thing this week make it {dish}', 'nobody asked for {dish}. here is {dish}',
-      '{twist}. that is the whole recipe', 'testing whether {twist} actually works',
+      '{twist}. that’s the whole recipe', 'testing whether {twist} actually works',
       'watch what happens when you {mistake}',
     ],
     slots: {
@@ -193,7 +193,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       'stop {mistake}', 'thrifted the whole thing for {price}', 'how to make a {garment} fit',
       'day {n} of no new clothes', 'the {garment} nobody knows how to wear',
       'watch this {garment} get {fix}', 'one {garment}, {n} ways',
-      'replying to a comment: yes, {answer}', '{twist}. that is the whole trick',
+      'replying to a comment: yes, {answer}', '{twist}. that’s the whole trick',
     ],
     slots: {
       n: ['4', '9', '30', '60', '200'],
@@ -202,7 +202,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       twist: ['two sizes up', 'from the men’s section', 'hemmed by hand', 'worn backwards, sort of'],
       mistake: ['buying your size', 'ignoring the shoulders', 'dry cleaning everything'],
       fix: ['taken in', 'resoled', 'dyed', 'relined'],
-      answer: ['it is machine washable', 'the charity shop one is better made'],
+      answer: ['it’s machine washable', 'the charity shop one is better made'],
     },
   },
   fitness: {
@@ -235,12 +235,12 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
     ],
     slots: {
       n: ['5', '15', '30', '60'],
-      scene: ['the meeting overruns', 'somebody says per my last email', 'the wifi goes', 'you are asked to say a few words', 'the bill arrives'],
+      scene: ['the meeting overruns', 'somebody says per my last email', 'the wifi goes', 'you’re asked to say a few words', 'the bill arrives'],
       reaction: ['leaving', 'apologizing to a chair', 'agreeing to something in June'],
       person: ['mother', 'flatmate', 'manager', 'neighbour', 'uncle'],
       place: ['dentist', 'airport', 'garden center', 'family wedding', 'work do'],
-      trait: ['been the eldest', 'worked in hospitality', 'a group chat you cannot leave'],
-      quest: ['pretending I am fine', 'being normal at work', 'not replying'],
+      trait: ['been the eldest', 'worked in hospitality', 'a group chat you can’t leave'],
+      quest: ['pretending I’m fine', 'being normal at work', 'not replying'],
       answer: ['that was my actual mother', 'the wig helps'],
     },
   },
@@ -261,7 +261,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       material: ['one board', 'reclaimed pine', 'offcuts', 'plywood'],
       price: ['forty pounds', 'nothing', 'less than the shop one'],
       twist: ['no screws', 'hand tools only', 'in a hallway'],
-      answer: ['it is oak', 'you can do this in a flat'],
+      answer: ['it’s oak', 'you can do this in a flat'],
     },
   },
   travel: {
@@ -279,7 +279,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       price: ['twenty pounds', 'forty pounds', 'a hundred pounds'],
       quest: ['traveling without flying', 'one bag only', 'saying yes to everything'],
       mistake: ['booking the airport hotel', 'changing money at the airport', 'paying for the fast queue'],
-      answer: ['the night train is worth it', 'you do not need the visa'],
+      answer: ['the night train is worth it', 'you don’t need the visa'],
     },
   },
   music: {
@@ -298,7 +298,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       mistake: ['quantising everything', 'mixing on laptop speakers', 'adding another layer'],
       thing: ['the bass line', 'that turnaround', 'the bridge', 'the intro'],
       source: ['a market recording', 'a doorbell', 'my kettle', 'an old record'],
-      answer: ['it is one microphone', 'the room is the reverb'],
+      answer: ['it’s one microphone', 'the room is the reverb'],
     },
   },
   film: {
@@ -318,7 +318,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       quest: ['shooting a short with nothing', 'one setup a day', 'learning the camera properly'],
       time: ['four hours', 'two takes', 'the whole morning'],
       element: ['sound', 'the blocking', 'the edit', 'the production design'],
-      answer: ['it is a practical', 'the camera never moved'],
+      answer: ['it’s a practical', 'the camera never moved'],
     },
   },
   photo: {
@@ -338,7 +338,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       time: ['forty minutes', 'three visits', 'one second'],
       craft: ['seeing', 'framing', 'waiting', 'asking'],
       gear: ['a 35', 'the pocket camera', 'a borrowed lens', 'medium format'],
-      answer: ['it is straight out of camera', 'no filter, no need'],
+      answer: ['it’s straight out of camera', 'no filter, no need'],
     },
   },
   street: {
@@ -359,17 +359,17 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       time: ['half a second', 'one frame', 'the time it takes to blink'],
       hour: ['five', 'first light', 'closing time', 'half seven'],
       craft: ['slow down', 'stand still', 'ask first'],
-      answer: ['I asked them', 'it is a 28'],
+      answer: ['I asked them', 'it’s a 28'],
     },
   },
   tech: {
     patterns: [
       'the one command that saves an hour', 'stop {mistake}',
-      'day {n} of {quest}', 'fixing what they said you cannot',
+      'day {n} of {quest}', 'fixing what they said you can’t',
       'this took {time} and cost {price}', '{n} second review',
       'replying to a comment: yes, {answer}', 'why your {thing} is slow',
       'shipping this whether it works or not', 'inside a {thing}, carefully',
-      'nobody reads the license. I did', 'this setting is on by default and should not be',
+      'nobody reads the license. I did', 'this setting is on by default and shouldn’t be',
     ],
     slots: {
       n: ['30', '45', '60', '90'],
@@ -378,14 +378,14 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       time: ['twenty minutes', 'a whole weekend', 'four attempts'],
       price: ['nothing', 'six pounds', 'less than the repair quote'],
       thing: ['phone', 'laptop', 'router', 'build', 'database'],
-      answer: ['the part is four pounds', 'it is fixable at home'],
+      answer: ['the part is four pounds', 'it’s fixable at home'],
     },
   },
   news: {
     patterns: [
       'what actually happened, in {n} seconds', 'that clip you saw is {verdict}',
       'the story so far, from the beginning', 'stop {mistake}',
-      'reading the document so you do not have to', 'day {n} of asking',
+      'reading the document so you don’t have to', 'day {n} of asking',
       'replying to a comment: yes, {answer}', 'this number is from a press release',
       'nobody has answered the obvious question', 'the correction nobody posted',
       'one town, one story, {n} days', 'here is where that figure comes from',
@@ -402,9 +402,9 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       'the meeting, cut to the part that matters', 'page {page}. read it',
       'stop {mistake}', 'day {n} of asking for this document',
       'what people actually said on the doorstep', 'this passed at eleven at night',
-      'replying to a comment: yes, {answer}', 'the costing does not survive a calculator',
+      'replying to a comment: yes, {answer}', 'the costing doesn’t survive a calculator',
       'nobody voted for this and everybody is getting it', 'the amendment that matters',
-      'four pages. that is the whole impact assessment', 'here is who turned up and who did not',
+      'four pages. that’s the whole impact assessment', 'here is who turned up and who didn’t',
     ],
     slots: {
       n: ['9', '30', '90'],
@@ -416,7 +416,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
   books: {
     patterns: [
       'one book, {n} seconds, no spoilers', 'page one test: {verdict}',
-      'day {n} of {quest}', 'stop {mistake}', 'reorganising until it is right',
+      'day {n} of {quest}', 'stop {mistake}', 'reorganising until it’s right',
       'the book everybody lies about finishing', 'replying to a comment: yes, {answer}',
       '{n} minutes on, ten off. study with me', 'this opening sentence does everything',
       'if you liked that, read this', 'the translation changes the whole book',
@@ -427,7 +427,7 @@ export const CLIP_KITS: Readonly<Record<SocialTopic, PostKit>> = {
       verdict: ['it stays', 'straight back on the shelf', 'one more page'],
       quest: ['a book a week', 'only what I already own', 'reading before the phone'],
       mistake: ['finishing books you hate', 'buying faster than you read'],
-      answer: ['it is the newer translation', 'the audiobook is better'],
+      answer: ['it’s the newer translation', 'the audiobook is better'],
     },
   },
   sport: {
@@ -485,7 +485,7 @@ export const CLIP_FRAME: PostKit = {
   slots: {
     part: ['1', '2', '3', '4'],
     aside: [
-      'sound on', 'no because seriously', 'ignore my kitchen', 'do not come for me',
+      'sound on', 'no because seriously', 'ignore my kitchen', 'don’t come for me',
       'part two if this does numbers', 'yes I know', 'link in bio', 'stitch this',
       'duet if you disagree', 'comments are open', 'wait for it', 'the ending though',
     ],

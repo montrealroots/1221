@@ -161,6 +161,6 @@ describe('and the day it is for', () => {
     sim.player.wellbeing.energy = 90;
     const neglected = sim.execute<{ note: string }>({ kind: 'shoot.run', payload: { dayId: bad } });
     expect(neglected.ok, neglected.error).toBe(true);
-    expect(neglected.value!.note).toContain('has not been looked after');
+    expect(neglected.value!.note).toMatch(/has(n’t| not) been looked after/);
   });
 });

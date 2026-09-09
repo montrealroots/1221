@@ -149,7 +149,7 @@ describe('the quote', () => {
 describe('what the jeweler says before you pay', () => {
   it('warns that titanium cannot be sized', () => {
     const notes = cautionsFor({ ...A_RING, metal: 'titanium' });
-    expect(notes.some((n) => /cannot be sized/i.test(n))).toBe(true);
+    expect(notes.some((n) => /can(not|’t) be sized/i.test(n))).toBe(true);
   });
 
   it('warns that an eternity band cannot be sized either', () => {
@@ -208,7 +208,7 @@ describe('having it made', () => {
     must(sim, 'jewel.approve', { commissionId: made.commissionId });
     const early = sim.execute({ kind: 'jewel.collect', payload: { commissionId: made.commissionId } });
     expect(early.ok).toBe(false);
-    expect(early.error).toMatch(/not finished/i);
+    expect(early.error).toMatch(/n[o’]t finished/i);
   });
 
   it('finishes on the day it said, tells you, and hands over one piece for the balance', () => {
@@ -353,7 +353,7 @@ describe('changing your mind', () => {
     const out = must<{ refunded: number; kept: number }>(sim, 'jewel.cancel', { commissionId: made.commissionId });
     expect(out.refunded).toBe(0);
     expect(out.kept).toBeGreaterThan(0);
-    expect(sim.universe.commissions![made.commissionId]!.cancelledReason).toMatch(/did not come back/i);
+    expect(sim.universe.commissions![made.commissionId]!.cancelledReason).toMatch(/did(n’t| not) come back/i);
   });
 
   it('cancels once, and canceling again does nothing at all', () => {
@@ -391,7 +391,7 @@ describe('what else a jeweler does', () => {
     const assetId = aPiece(sim, { ...A_RING, metal: 'titanium' });
     const out = sim.execute({ kind: 'jewel.resize', payload: { placeId: benchIn(sim).id, assetId } });
     expect(out.ok).toBe(false);
-    expect(out.error).toMatch(/cannot be sized/i);
+    expect(out.error).toMatch(/can(not|’t) be sized/i);
   });
 
   it('repairs a worn piece, and it comes back better than it went', () => {
@@ -420,7 +420,7 @@ describe('what else a jeweler does', () => {
     const assetId = aPiece(sim);
     const out = must<{ valuation: number; note: string }>(sim, 'jewel.appraise', { placeId: benchIn(sim).id, assetId });
     expect(out.valuation).toBeGreaterThan(sim.universe.assets[assetId]!.currentValue);
-    expect(out.note).toMatch(/not what it would fetch/i);
+    expect(out.note).toMatch(/n[o’]t what it would fetch/i);
     expect(sim.universe.assets[assetId]!.provenance.some((p) => /Valued for insurance/.test(p.note))).toBe(true);
   });
 

@@ -26,9 +26,9 @@ import type { Money } from '../core/money';
  */
 export const PHARMACY_NOTE =
   'The chains are real companies trading where they really trade, and where a country requires its '
-  + 'pharmacies to be independently owned there is no chain — that is the law there, not an omission. '
-  + 'Every price and everything on a shelf is SLATE’s own calibration. What is on the counter is not '
-  + 'medical advice: it is the plain name of an ordinary thing, with no dose and no claim attached.';
+  + 'pharmacies to be independently owned there’s no chain — that’s the law there, not an omission. '
+  + 'Every price and everything on a shelf is SLATE’s own calibration. What is on the counter isn’t '
+  + 'medical advice: it’s the plain name of an ordinary thing, with no dose and no claim attached.';
 
 /** What a post office counter is and is not. */
 export const POST_NOTE =
@@ -152,10 +152,10 @@ export const COUNTER_GOODS: readonly CounterGood[] = [
   cg('painkillers', 'Painkillers', 6_00, 'ease', 'The small box everybody has in a drawer somewhere.'),
   cg('cold_remedy', 'Cold Remedy', 9_00, 'ease', 'The sachets that taste of lemon and not much else.'),
   cg('antihistamines', 'Antihistamines', 8_00, 'ease', 'For the season that does this to you every year.'),
-  cg('plasters', 'Plasters', 4_00, 'guard', 'A box of them, and you will still not have one when it happens.'),
+  cg('plasters', 'Plasters', 4_00, 'guard', 'A box of them, and you’ll still not have one when it happens.'),
   cg('antiseptic', 'Antiseptic', 5_00, 'guard', 'The bottle that lives at the back of the cupboard.'),
   cg('sunscreen', 'Sunscreen', 14_00, 'guard', 'The one thing worth buying before a shoot in the desert.'),
-  cg('vitamins', 'Vitamins', 12_00, 'none', 'A tub of them. You will remember for eleven days.'),
+  cg('vitamins', 'Vitamins', 12_00, 'none', 'A tub of them. You’ll remember for eleven days.'),
   cg('rehydration', 'Rehydration Salts', 7_00, 'ease', 'For the morning after the wrap party.'),
   cg('throat_lozenges', 'Throat Lozenges', 5_00, 'ease', 'For a voice that has been used all week.'),
   cg('toothpaste', 'Toothpaste', 5_00, 'clean', 'The ordinary tube.'),
@@ -163,7 +163,7 @@ export const COUNTER_GOODS: readonly CounterGood[] = [
   cg('shampoo', 'Shampoo', 8_00, 'clean', 'The bottle in the shower.'),
   cg('razors', 'Razors', 13_00, 'clean', 'A pack, sold at a price that has always been a joke.'),
   cg('deodorant', 'Deodorant', 6_00, 'clean', 'The thing you notice you have run out of at the worst time.'),
-  cg('contact_solution', 'Contact Lens Solution', 11_00, 'clean', 'The bottle you cannot fly with.'),
+  cg('contact_solution', 'Contact Lens Solution', 11_00, 'clean', 'The bottle you can’t fly with.'),
   cg('hand_cream', 'Hand Cream', 9_00, 'none', 'For hands that have been in and out of water all day.'),
 ];
 
@@ -347,10 +347,10 @@ export interface SalonService {
 
 export const SALON_SERVICES: readonly SalonService[] = [
   { id: 'trim', label: 'A Trim', price: 32_00, minutes: 30, restores: 60, about: 'Tidy the ends and take the weight out. Twenty minutes if the chair is free.' },
-  { id: 'cut', label: 'A Cut', price: 58_00, minutes: 55, restores: 100, about: 'The proper thing, washed and finished, and a conversation you did not plan on.' },
-  { id: 'cut_colour', label: 'A Cut And Color', price: 165_00, minutes: 150, restores: 100, about: 'Most of an afternoon, foils, and a magazine you would never buy.' },
+  { id: 'cut', label: 'A Cut', price: 58_00, minutes: 55, restores: 100, about: 'The proper thing, washed and finished, and a conversation you didn’t plan on.' },
+  { id: 'cut_colour', label: 'A Cut And Color', price: 165_00, minutes: 150, restores: 100, about: 'Most of an afternoon, foils, and a magazine you’d never buy.' },
   { id: 'beard', label: 'A Beard Trim', price: 26_00, minutes: 25, restores: 45, about: 'A hot towel and a straight razor, if the barber is any good.' },
-  { id: 'blow_dry', label: 'A Blow Dry', price: 44_00, minutes: 45, restores: 25, about: 'For tonight rather than for the month. It will not survive the rain.' },
+  { id: 'blow_dry', label: 'A Blow Dry', price: 44_00, minutes: 45, restores: 25, about: 'For tonight rather than for the month. It won’t survive the rain.' },
 ];
 
 export const SALON_BY_ID: Readonly<Record<string, SalonService>> = Object.fromEntries(

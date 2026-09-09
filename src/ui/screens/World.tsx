@@ -46,7 +46,7 @@ const DOMAINS: Domain[] = [
     blurb: 'Everything you can own, and everything owning it costs.',
     entries: [
       { route: '/workspace/property', label: 'Property', detail: 'Rent, buy, build from raw land, and design the inside.' },
-      { route: '/workspace/vehicles', label: 'Vehicles', detail: 'Buy, finance, service and modify, with fitment that is checked.' },
+      { route: '/workspace/vehicles', label: 'Vehicles', detail: 'Buy, finance, service and modify, with fitment that’s checked.' },
       { route: '/workspace/shopping', label: 'Shopping', detail: 'Groceries to grand complications, all of it becoming real property.' },
       { route: '/workspace/insurance', label: 'Insurance', detail: 'Quote, premium, claim, decision, renewal.' },
     ],
@@ -65,7 +65,7 @@ const DOMAINS: Domain[] = [
     blurb: 'A picture of your own, made with kit somebody else owns.',
     entries: [
       { route: '/workspace/film', label: 'Rental Houses', detail: 'The houses that hire cameras, lamps and sound by the day, and what a week actually bills at.' },
-      { route: '/workspace/film', label: 'On Hire', detail: 'What you have out on a ticket, when it is due back, and what it costs when it is late.' },
+      { route: '/workspace/film', label: 'On Hire', detail: 'What you have out on a ticket, when it’s due back, and what it costs when it’s late.' },
       { route: '/workspace/film', label: 'Your Own Kit', detail: 'What you bought outright, beside what you hired.' },
       { route: '/workspace/goingout', label: 'Tonight In Town', detail: 'The matches, concerts, plays and exhibitions on at this city’s venues this week.' },
       { route: '/workspace/goingout', label: 'Your Seats', detail: 'The seats you have bought for something in town, and what you made of the night.' },

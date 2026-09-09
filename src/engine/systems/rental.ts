@@ -317,9 +317,9 @@ export function registerRentalSystem(sim: Simulation): void {
     'kit.hire',
     (p, { sim: s }) => {
       const house = houseById(s, p.houseId);
-      if (!house || house.kind !== 'rental_house') throw new CommandError('That is not a rental house.');
+      if (!house || house.kind !== 'rental_house') throw new CommandError('That isn’t a rental house.');
       if (house.cityId !== s.player.currentLocationId) {
-        throw new CommandError(`${house.name} is not in the city you are in.`);
+        throw new CommandError(`${house.name} isn’t in the city you’re in.`);
       }
       const quote = quoteFor(s, house, p.items ?? [], p.days, { waiver: p.waiver, delivery: p.delivery });
       if (quote.lines.length === 0) throw new CommandError('Nothing on that list is on their shelf.');
@@ -380,8 +380,8 @@ export function registerRentalSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const hire = s.universe.kitHires[p.hireId];
       if (!hire) throw new CommandError('No such hire.');
-      if (hire.status !== 'booked') throw new CommandError('That kit is not waiting to be collected.');
-      if (s.now < hire.outAt) throw new CommandError(`That hire does not start until ${formatDate(hire.outAt, s.homeZone)}.`);
+      if (hire.status !== 'booked') throw new CommandError('That kit isn’t waiting to be collected.');
+      if (s.now < hire.outAt) throw new CommandError(`That hire doesn’t start until ${formatDate(hire.outAt, s.homeZone)}.`);
 
       const minutes = hire.delivery > 0 ? 20 : COLLECT_MINUTES;
       s.advanceTo(s.now + minutes * MS_MINUTE);
@@ -421,7 +421,7 @@ export function registerRentalSystem(sim: Simulation): void {
       const charged = hire.rate * (after - before);
       const accountId = accountOf(s);
       if (s.ledger.availableFunds(accountId) < charged) {
-        throw new CommandError(`Another ${plural(extra, 'day')} is ${formatMoney(charged)}, and you do not have it.`);
+        throw new CommandError(`Another ${plural(extra, 'day')} is ${formatMoney(charged)}, and you don’t have it.`);
       }
 
       hire.days += extra;
@@ -493,7 +493,7 @@ export function registerRentalSystem(sim: Simulation): void {
         ]);
         if (hire.waiver > 0) {
           paidBy = 'waiver';
-          note = `${what}. It is on the waiver you took, so it costs you nothing.`;
+          note = `${what}. It’s on the waiver you took, so it costs you nothing.`;
         } else {
           const policy = hire.policyId ? s.universe.insurancePolicies[hire.policyId] : undefined;
           if (policy && policy.status === 'active') {
@@ -608,7 +608,7 @@ export function registerRentalSystem(sim: Simulation): void {
       }
       s.notify({
         title: 'The House Has Written It Off',
-        body: `${hire.houseName} has stopped waiting for the kit and charged you ${formatMoney(owed)} for it, less the deposit. They will remember.`,
+        body: `${hire.houseName} has stopped waiting for the kit and charged you ${formatMoney(owed)} for it, less the deposit. They’ll remember.`,
         category: 'personal',
         importance: 80,
         route: '/workspace/film',

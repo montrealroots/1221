@@ -54,9 +54,9 @@ export const CLOSING_SCENE = defineScene({
 
   available(sim, input) {
     const offer = sim.universe.propertyOffers[String(input['offerId'])];
-    if (!offer) return { ok: false, reason: 'There is no offer like that.' };
-    if (offer.buyerId !== sim.player.id) return { ok: false, reason: 'That is not your purchase.' };
-    if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase is not open to close.' };
+    if (!offer) return { ok: false, reason: 'There’s no offer like that.' };
+    if (offer.buyerId !== sim.player.id) return { ok: false, reason: 'That isn’t your purchase.' };
+    if (offer.status !== 'accepted') return { ok: false, reason: 'That purchase isn’t open to close.' };
     return { ok: true };
   },
 
@@ -191,7 +191,7 @@ export const CLOSING_SCENE = defineScene({
         if (choiceId === 'movein') {
           ctx.commit('movein', { kind: 'prop.move_in', payload: { propertyId: property.id } });
           session.context['result'] = 'home';
-          const line = `You drive there with the keys on the seat beside you. ${roomsFor(sim, property.id).length} rooms, and the boxes to follow. Moving in properly is on the Property page when you are ready.`;
+          const line = `You drive there with the keys on the seat beside you. ${roomsFor(sim, property.id).length} rooms, and the boxes to follow. Moving in properly is on the Property page when you’re ready.`;
           session.context['lastNote'] = line;
           ctx.say(line);
           ctx.go('done');

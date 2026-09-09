@@ -138,7 +138,7 @@ export function GameProvider({
     options: { idempotencyKey?: string; silent?: boolean } = {},
   ): CommandResult<R> => {
     const result = sim.execute<R>({ kind, payload, idempotencyKey: options.idempotencyKey });
-    if (!result.ok && !options.silent) toast(result.error ?? 'That could not be done.', 'negative');
+    if (!result.ok && !options.silent) toast(result.error ?? 'That couldn’t be done.', 'negative');
     if (result.ok) dirty.current = true;
     refresh();
     return result;

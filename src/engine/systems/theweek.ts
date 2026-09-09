@@ -115,13 +115,13 @@ export function readyToGrade(
   const art = ART_BY_ID[training.artId];
   if (!art) return { ready: false, why: 'That art is no longer carried.' };
   if (art.grading === 'none') {
-    return { ready: false, why: `${art.name} grades nobody. There is no belt to be given.` };
+    return { ready: false, why: `${art.name} grades nobody. There’s no belt to be given.` };
   }
   const { next } = gradeOf(training);
-  if (!next) return { ready: false, why: 'There is nothing above this one in the game.' };
+  if (!next) return { ready: false, why: 'There’s nothing above this one in the game.' };
   const age = ageOf(sim, person);
   if (age < next.fromAge) {
-    return { next, ready: false, why: `${next.label} cannot be awarded before ${next.fromAge}. You are ${age}.` };
+    return { next, ready: false, why: `${next.label} can’t be awarded before ${next.fromAge}. You are ${age}.` };
   }
   const monthsHeld = (sim.now - training.gradedAt) / (MS_DAY * 30.4);
   if (monthsHeld < next.minMonths) {
@@ -134,7 +134,7 @@ export function readyToGrade(
       why: `${next.label} takes about ${plural(next.hours, 'hour')} on the mat and you have ${Math.round(training.hours)}.`,
     };
   }
-  return { next, ready: true, why: `You are being put up for ${next.label}.` };
+  return { next, ready: true, why: `You’re being put up for ${next.label}.` };
 }
 
 /** How this reads in a sentence. */
@@ -173,7 +173,7 @@ export function registerTheWeek(sim: Simulation): void {
     'week.start_training',
     (p, { sim: s }) => {
       const art = ART_BY_ID[p.artId];
-      if (!art) throw new CommandError('There is no such art.');
+      if (!art) throw new CommandError('There’s no such art.');
       const age = ageOf(s);
       if (age < art.fromAge) {
         throw new CommandError(`${art.name} takes children from ${art.fromAge}. You are ${age}.`);
@@ -225,10 +225,10 @@ export function registerTheWeek(sim: Simulation): void {
     'week.train',
     (p, { sim: s }) => {
       const record = p.artId ? trainingIn(s, p.artId) : trainingNow(s)[0];
-      if (!record) throw new CommandError('You do not train anything.');
+      if (!record) throw new CommandError('You don’t train anything.');
       const art = ART_BY_ID[record.artId]!;
       if ((s.player.wellbeing.energy ?? 100) < art.demand * 0.4) {
-        throw new CommandError('There is nothing left in you. You would get hurt.');
+        throw new CommandError('There’s nothing left in you. You’d get hurt.');
       }
       const week = Math.floor(s.now / (7 * MS_DAY));
       if (record.weekOf === week && (record.thisWeek ?? 0) >= SESSIONS_A_WEEK) {
@@ -237,7 +237,7 @@ export function registerTheWeek(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       if (art.fee > 0 && accountId) {
         if (s.ledger.availableFunds(accountId) < art.fee) {
-          throw new CommandError(`A session is ${formatMoney(art.fee)} and it is not there.`);
+          throw new CommandError(`A session is ${formatMoney(art.fee)} and it isn’t there.`);
         }
         s.expense(accountId, art.fee, `${record.gymName} — ${art.name}`, 'wellbeing', {
           refType: 'person', refId: s.player.id,
@@ -279,7 +279,7 @@ export function registerTheWeek(sim: Simulation): void {
     'week.grade',
     (p, { sim: s }) => {
       const record = p.artId ? trainingIn(s, p.artId) : trainingNow(s)[0];
-      if (!record) throw new CommandError('You do not train anything.');
+      if (!record) throw new CommandError('You don’t train anything.');
       const art = ART_BY_ID[record.artId]!;
       const ready = readyToGrade(s, record);
       if (!ready.next) throw new CommandError(ready.why);
@@ -300,7 +300,7 @@ export function registerTheWeek(sim: Simulation): void {
           art: art.name,
           grade: ready.next.label,
           passed: false,
-          note: `Not this time. The panel wants more mat time before ${ready.next.label}, and they are right.`,
+          note: `Not this time. The panel wants more mat time before ${ready.next.label}, and they’re right.`,
         };
       }
       record.gradeId = ready.next.id;
@@ -336,7 +336,7 @@ export function registerTheWeek(sim: Simulation): void {
     'week.stop_training',
     (p, { sim: s }) => {
       const record = trainingIn(s, p.artId);
-      if (!record) throw new CommandError('You do not train that.');
+      if (!record) throw new CommandError('You don’t train that.');
       const art = ART_BY_ID[record.artId]!;
       record.endedAt = s.now;
       s.emit('week.training_stopped', { trainingId: record.id, artId: art.id });
@@ -356,18 +356,18 @@ export function registerTheWeek(sim: Simulation): void {
     'week.take_class',
     (p, { sim: s }) => {
       const lesson = CLASS_BY_ID[p.classId];
-      if (!lesson) throw new CommandError('There is no such class.');
+      if (!lesson) throw new CommandError('There’s no such class.');
       const age = ageOf(s);
       if (age < lesson.fromAge) {
         throw new CommandError(`${lesson.label} takes people from ${lesson.fromAge}. You are ${age}.`);
       }
       if ((s.player.wellbeing.energy ?? 100) < 12) {
-        throw new CommandError('There is nothing left in you. Nothing would go in.');
+        throw new CommandError('There’s nothing left in you. Nothing would go in.');
       }
       const accountId = s.player.primaryAccountId;
       if (lesson.fee > 0 && accountId) {
         if (s.ledger.availableFunds(accountId) < lesson.fee) {
-          throw new CommandError(`${lesson.label} is ${formatMoney(lesson.fee)} and it is not there.`);
+          throw new CommandError(`${lesson.label} is ${formatMoney(lesson.fee)} and it isn’t there.`);
         }
         s.expense(accountId, lesson.fee, lesson.label, 'education', {
           refType: 'person', refId: s.player.id,
@@ -401,24 +401,24 @@ export function registerTheWeek(sim: Simulation): void {
     'week.spend',
     (p, { sim: s }) => {
       const doing = DOING_BY_ID[p.doingId];
-      if (!doing) throw new CommandError('There is no such thing to do.');
+      if (!doing) throw new CommandError('There’s no such thing to do.');
       const age = ageOf(s);
       if (age < doing.fromAge || age > doing.toAge) {
-        throw new CommandError(`${doing.label} is not something somebody your age does.`);
+        throw new CommandError(`${doing.label} isn’t something somebody your age does.`);
       }
       const parts = zonedParts(s.now, s.homeZone);
       const weekend = parts.weekday === 0 || parts.weekday === 6;
       if (doing.when === 'weekend' && !weekend) throw new CommandError(`${doing.label} is a weekend thing.`);
       if ((doing.when === 'lunch' || doing.when === 'gym_class' || doing.when === 'after_school') && weekend) {
-        throw new CommandError('There is no school today.');
+        throw new CommandError('There’s no school today.');
       }
       if (doing.needsAFriend && friendCount(s) === 0) {
-        throw new CommandError('There is nobody to do that with yet.');
+        throw new CommandError('There’s nobody to do that with yet.');
       }
       const accountId = s.player.primaryAccountId;
       if (doing.cost > 0 && accountId) {
         if (s.ledger.availableFunds(accountId) < doing.cost) {
-          throw new CommandError(`That takes about ${formatMoney(doing.cost)} and it is not there.`);
+          throw new CommandError(`That takes about ${formatMoney(doing.cost)} and it isn’t there.`);
         }
         s.expense(accountId, doing.cost, doing.label, 'lifestyle', {
           refType: 'person', refId: s.player.id,

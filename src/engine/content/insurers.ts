@@ -439,10 +439,10 @@ export const INSURERS_BY_COUNTRY: Readonly<Record<string, readonly string[]>> = 
 
 /** A country whose insurers exist but SLATE does not name: too thin, too closed or too new a market to be sure of. */
 export const LOCAL_ONLY: Readonly<Record<string, string>> = {
-  cu: 'Two state insurers, ESEN and ESICUBA, with nothing private beside them. SLATE does not sell you a policy from a state monopoly.',
+  cu: 'Two state insurers, ESEN and ESICUBA, with nothing private beside them. SLATE doesn’t sell you a policy from a state monopoly.',
   ht: 'A handful of local companies in a market too thin for SLATE to name one honestly.',
   ms: 'A few agencies for Caribbean insurers. Nobody underwrites on the island itself.',
-  ad: 'A small national market of Andorran companies and Spanish and French agencies SLATE cannot vouch for one by one.',
+  ad: 'A small national market of Andorran companies and Spanish and French agencies SLATE can’t vouch for one by one.',
   sy: 'A state insurer and a market shut by war and sanctions. Nobody international writes here.',
   iq: 'State insurers and a few private ones in a market that international companies have left.',
   ye: 'A few local insurers in a market broken by war.',
@@ -461,7 +461,7 @@ export const LOCAL_ONLY: Readonly<Record<string, string>> = {
   af: 'A state insurer and a market international companies left.',
   tj: 'State and local companies only.',
   tm: 'State insurers only.',
-  kp: 'One state insurer, the Korea National Insurance Corporation, under sanctions. SLATE does not sell you a policy from it.',
+  kp: 'One state insurer, the Korea National Insurance Corporation, under sanctions. SLATE doesn’t sell you a policy from it.',
   tl: 'A few local agencies for Indonesian and Portuguese insurers.',
   ki: 'One local agency for Australian and New Zealand insurers.',
   tv: 'No insurer on the islands; cover is bought through Fiji.',

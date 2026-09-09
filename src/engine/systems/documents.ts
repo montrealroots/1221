@@ -39,8 +39,8 @@ export const EMERGENCY_DOCUMENT_DAYS = 30;
 /** Sitting the knowledge test again after failing it. */
 export const RETAKE_FEE: Money = 25_00;
 
-export const NO_LICENSE = 'You do not hold a driver’s license.';
-export const NO_PASSPORT_HELD = 'You do not hold a passport.';
+export const NO_LICENSE = 'You don’t hold a driver’s license.';
+export const NO_PASSPORT_HELD = 'You don’t hold a passport.';
 
 // ---------------------------------------------------------------------------
 // Where somebody is from, for the authority that issues to them
@@ -208,8 +208,8 @@ export function licenseCheck(sim: Simulation, person: Person): LicenseCheck {
   const state = statusOf(sim, papers.license);
   if (state === 'valid') return { ok: true, license: papers.license };
   const who = person.isPlayer ? 'You' : person.displayName;
-  if (state === 'none') return { ok: false, reason: person.isPlayer ? `${NO_LICENSE} Apply at the office where you live: a knowledge test today, a road test in a few weeks.` : `${who} does not hold a driver’s license.` };
-  if (state === 'applied') return { ok: false, reason: papers.license!.roadTestAt ? `${who === 'You' ? 'Your' : `${who}’s`} road test is on ${formatDate(papers.license!.roadTestAt, sim.homeZone)}. Until then, a learner does not drive alone.` : `${who === 'You' ? 'Your' : `${who}’s`} license is at the office until ${formatDate(papers.license!.readyAt ?? sim.now, sim.homeZone)}.`, license: papers.license };
+  if (state === 'none') return { ok: false, reason: person.isPlayer ? `${NO_LICENSE} Apply at the office where you live: a knowledge test today, a road test in a few weeks.` : `${who} doesn’t hold a driver’s license.` };
+  if (state === 'applied') return { ok: false, reason: papers.license!.roadTestAt ? `${who === 'You' ? 'Your' : `${who}’s`} road test is on ${formatDate(papers.license!.roadTestAt, sim.homeZone)}. Until then, a learner doesn’t drive alone.` : `${who === 'You' ? 'Your' : `${who}’s`} license is at the office until ${formatDate(papers.license!.readyAt ?? sim.now, sim.homeZone)}.`, license: papers.license };
   if (state === 'lost') return { ok: false, reason: `${who === 'You' ? 'Your' : `${who}’s`} license is reported lost. Replace it before driving.`, license: papers.license };
   return { ok: false, reason: `${who === 'You' ? 'Your' : `${who}’s`} license ran out on ${formatDate(papers.license!.expiresAt, sim.homeZone)}. Renew it before driving.`, license: papers.license };
 }
@@ -231,7 +231,7 @@ export function exchangeOffer(sim: Simulation, person: Person): { office: string
     office: found.office, countryId: found.issuerId, exchangeable,
     note: exchangeable
       ? `${to} swaps a ${from} license for its own without a test. ${found.office} takes ${formatMoney(found.authority.fee)} and ${found.authority.weeks} weeks.`
-      : `${to} does not swap a ${from} license. You sit the test here like anybody else. Until then your ${from} license still drives.`,
+      : `${to} doesn’t swap a ${from} license. You sit the test here like anybody else. Until then your ${from} license still drives.`,
   };
 }
 
@@ -262,7 +262,7 @@ function raiseExpiryDecisions(sim: Simulation): void {
       sim.requireDecision({
         urgency: 70, category: 'papers', refType: 'document', refId: `${me.id}:${which}`,
         title: doc.kind === 'passport' ? 'Your Passport Has Expired' : 'Your License Has Expired',
-        detail: doc.kind === 'passport' ? 'No border takes it. Apply for a new one.' : 'You cannot lawfully drive on it. Renew it.',
+        detail: doc.kind === 'passport' ? 'No border takes it. Apply for a new one.' : 'You can’t lawfully drive on it. Renew it.',
         route: '/workspace/character',
         actions: [{ label: doc.kind === 'passport' ? 'Apply For A Passport' : 'Renew The License', commandKind: doc.kind === 'passport' ? 'doc.apply_passport' : 'doc.renew_license', payload: doc.kind === 'passport' ? { which } : {} }],
       });
@@ -282,7 +282,7 @@ function ensureMonthlyCheck(sim: Simulation): void {
 function pay(sim: Simulation, accountId: Id | undefined, amount: Money, memo: string): void {
   if (amount <= 0) return;
   if (!accountId) throw new CommandError('No account to pay the fee from.');
-  if (sim.ledger.availableFunds(accountId) < amount) throw new CommandError(`The fee is ${formatMoney(amount)} and you cannot cover it.`);
+  if (sim.ledger.availableFunds(accountId) < amount) throw new CommandError(`The fee is ${formatMoney(amount)} and you can’t cover it.`);
   sim.expense(accountId, amount, memo, 'fees');
 }
 
@@ -334,7 +334,7 @@ export function registerDocuments(sim: Simulation): void {
     } else {
       person.documents.license = undefined;
       if (person.isPlayer) {
-        sim.notify({ category: 'papers', title: 'You Failed The Road Test', body: 'The examiner was not persuaded. Book it again; the knowledge test still stands for a year in SLATE, so it is the road again, not the desk.', importance: 55, route: '/workspace/character' });
+        sim.notify({ category: 'papers', title: 'You Failed The Road Test', body: 'The examiner wasn’t persuaded. Book it again; the knowledge test still stands for a year in SLATE, so it’s the road again, not the desk.', importance: 55, route: '/workspace/character' });
         sim.requireDecision({
           urgency: 45, category: 'papers', refType: 'document', refId: `${person.id}:license`,
           title: 'Book The Road Test Again', detail: `A pass depends on how you actually drive. Your driving skill is ${Math.round(skill)}; practice, or book it and see.`,
@@ -374,9 +374,9 @@ export function registerDocuments(sim: Simulation): void {
       const countryId = which === 'passport' ? me.citizenshipId : me.secondCitizenshipId;
       if (!countryId) throw new CommandError('You hold only the one citizenship.');
       const found = passportAuthorityFor(countryId);
-      if (!found) throw new CommandError(NO_PASSPORT[countryId] ?? `${COUNTRIES.get(countryId)?.name ?? countryId} does not issue passports.`);
+      if (!found) throw new CommandError(NO_PASSPORT[countryId] ?? `${COUNTRIES.get(countryId)?.name ?? countryId} doesn’t issue passports.`);
       const current = papers[which];
-      if (current?.status === 'applied') throw new CommandError(`It is already at the office, due ${formatDate(current.readyAt ?? s.now, s.homeZone)}.`);
+      if (current?.status === 'applied') throw new CommandError(`It’s already at the office, due ${formatDate(current.readyAt ?? s.now, s.homeZone)}.`);
       if (current && statusOf(s, current) === 'valid' && !current.emergency && current.expiresAt - s.now > 365 * MS_DAY) {
         throw new CommandError(`Your ${COUNTRIES.get(countryId)?.name ?? ''} passport is good until ${formatDate(current.expiresAt, s.homeZone)}. ${found.authority.authority} renews inside the last year.`);
       }
@@ -408,8 +408,8 @@ export function registerDocuments(sim: Simulation): void {
       const me = s.player;
       const papers = ensurePapers(s, me);
       const doc = papers[p.kind];
-      if (!doc || doc.status === 'lost') throw new CommandError('There is nothing to report lost.');
-      if (doc.status === 'applied') throw new CommandError('It is at the office; there is nothing in your wallet to lose.');
+      if (!doc || doc.status === 'lost') throw new CommandError('There’s nothing to report lost.');
+      if (doc.status === 'applied') throw new CommandError('It’s at the office; there’s nothing in your wallet to lose.');
       doc.status = 'lost';
       s.resolveDecision('document', `${me.id}:${p.kind}`, 'papers');
       const abroad = (countryOfCity(me.currentLocationId) ?? me.citizenshipId) !== doc.issuerId;
@@ -426,7 +426,7 @@ export function registerDocuments(sim: Simulation): void {
         s.emit('doc.lost', { personId: me.id, kind: p.kind, emergency: true });
         return { emergency: true, fee: EMERGENCY_DOCUMENT_FEE, note };
       }
-      const note = doc.kind === 'passport' ? 'Reported. Apply for a replacement; the wait is the same as a new one.' : 'Reported. Renew it for a replacement, and do not drive until it comes.';
+      const note = doc.kind === 'passport' ? 'Reported. Apply for a replacement; the wait is the same as a new one.' : 'Reported. Renew it for a replacement, and don’t drive until it comes.';
       s.requireDecision({
         urgency: 60, category: 'papers', refType: 'document', refId: `${me.id}:${p.kind}`,
         title: doc.kind === 'passport' ? 'Replace Your Passport' : 'Replace Your License', detail: note, route: '/workspace/character',
@@ -446,7 +446,7 @@ export function registerDocuments(sim: Simulation): void {
       const me = s.player;
       const papers = ensurePapers(s, me);
       if (papers.license && statusOf(s, papers.license) === 'valid') throw new CommandError(`You hold a license from ${papers.license.authority} until ${formatDate(papers.license.expiresAt, s.homeZone)}.`);
-      if (papers.license?.status === 'applied') throw new CommandError(papers.license.roadTestAt ? `Your road test is booked for ${formatDate(papers.license.roadTestAt, s.homeZone)}.` : 'It is at the office already.');
+      if (papers.license?.status === 'applied') throw new CommandError(papers.license.roadTestAt ? `Your road test is booked for ${formatDate(papers.license.roadTestAt, s.homeZone)}.` : 'It’s at the office already.');
       const cityId = residenceCityOf(s, me);
       const countryId = countryOfCity(cityId) ?? me.citizenshipId;
       const found = licenseAuthorityFor(countryId, regionOfCity(cityId));
@@ -483,10 +483,10 @@ export function registerDocuments(sim: Simulation): void {
       const papers = ensurePapers(s, me);
       const current = papers.license;
       if (!current) throw new CommandError(`${NO_LICENSE} Apply for one; renewal is for a license you hold.`);
-      if (current.status === 'applied') throw new CommandError('It is at the office already.');
+      if (current.status === 'applied') throw new CommandError('It’s at the office already.');
       const found = licenseAuthorityFor(current.issuerId, current.regionId);
       if (!found) throw new CommandError('That office no longer issues.');
-      if (statusOf(s, current) === 'valid' && current.expiresAt - s.now > 365 * MS_DAY) throw new CommandError(`It is good until ${formatDate(current.expiresAt, s.homeZone)}. ${found.office} renews inside the last year.`);
+      if (statusOf(s, current) === 'valid' && current.expiresAt - s.now > 365 * MS_DAY) throw new CommandError(`It’s good until ${formatDate(current.expiresAt, s.homeZone)}. ${found.office} renews inside the last year.`);
       const fee = found.authority.fee;
       pay(s, p.accountId ?? me.primaryAccountId, fee, `${found.office} — license renewal`);
       const readyAt = addDays(s.now, Math.max(1, Math.round(found.authority.weeks / 2)) * 7, s.homeZone);
@@ -504,7 +504,7 @@ export function registerDocuments(sim: Simulation): void {
     (p, { sim: s }) => {
       const me = s.player;
       const offer = exchangeOffer(s, me);
-      if (!offer) throw new CommandError('There is nothing to exchange: your license is from where you live, or you hold none.');
+      if (!offer) throw new CommandError('There’s nothing to exchange: your license is from where you live, or you hold none.');
       if (!offer.exchangeable) throw new CommandError(offer.note);
       const papers = ensurePapers(s, me);
       const current = papers.license!;

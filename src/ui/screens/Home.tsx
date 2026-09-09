@@ -64,8 +64,8 @@ export function Home() {
 
       {/*
         Everywhere you can go. This was a rail down the left of every screen;
-        it is here because Home is the hub and a hub that is missing half the
-        building is not one.
+        it’s here because Home is the hub and a hub that’s missing half the
+        building isn’t one.
       */}
       <div className="card" style={{ marginBottom: 'var(--s5)' }}>
         <div className="panel-head">
@@ -241,7 +241,7 @@ export function Home() {
             <div className="col gap-3">
               <Meter label="Energy" value={player.wellbeing.energy} />
               <Meter label="Stress" value={player.wellbeing.stress} invert />
-              <Meter label="Readiness" value={ready} hint="How well you will perform at anything right now." />
+              <Meter label="Readiness" value={ready} hint="How well you’ll perform at anything right now." />
             </div>
             <button className="btn btn-sm" style={{ marginTop: 'var(--s3)' }} onClick={() => navigate('/workspace/wellbeing', 'Wellbeing')}>
               Wellbeing
@@ -384,7 +384,7 @@ export function Home() {
             </div>
           ) : (
             <div className="col gap-2">
-              <p className="small muted">You do not have a place of your own.</p>
+              <p className="small muted">You don’t have a place of your own.</p>
               <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find Somewhere</button>
             </div>
           )}

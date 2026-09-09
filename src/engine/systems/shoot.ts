@@ -173,15 +173,15 @@ export function registerShootSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const title = (p.title ?? '').trim();
       if (title.length < 3) throw new CommandError('Give the day a name, so the call sheet says something.');
-      if (p.at < s.now - MS_HOUR) throw new CommandError('You cannot plan a day that has already gone.');
-      if (p.at > s.now + 400 * MS_DAY) throw new CommandError('That is more than a year out.');
+      if (p.at < s.now - MS_HOUR) throw new CommandError('You can’t plan a day that has already gone.');
+      if (p.at > s.now + 400 * MS_DAY) throw new CommandError('That’s more than a year out.');
 
       const hours = clamp(Math.round(p.hours ?? STANDARD_HOURS), MIN_HOURS, MAX_HOURS);
       const cityId = s.player.currentLocationId;
       let place: Place | undefined;
       if (p.where === 'place') {
         place = placesIn(cityId).find((one) => one.id === p.placeId);
-        if (!place) throw new CommandError('That is not somewhere in this city.');
+        if (!place) throw new CommandError('That isn’t somewhere in this city.');
       }
       const home = Object.values(s.universe.properties)
         .find((one) => one.ownerId === s.player.id && one.isPrimaryResidence && !one.soldAt);
@@ -251,7 +251,7 @@ export function registerShootSystem(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay the fee from.');
       if (s.ledger.availableFunds(accountId) < day.permission.fee) {
-        throw new CommandError(`${day.placeName} wants ${formatMoney(day.permission.fee)} up front, and you do not have it.`);
+        throw new CommandError(`${day.placeName} wants ${formatMoney(day.permission.fee)} up front, and you don’t have it.`);
       }
 
       s.expense(accountId, day.permission.fee, `Location fee — ${day.placeName}`, 'production', { refType: 'shoot', refId: day.id });
@@ -293,10 +293,10 @@ export function registerShootSystem(sim: Simulation): void {
         throw new CommandError('You have already asked them.');
       }
       const person = s.universe.people[p.personId];
-      if (!person) throw new CommandError('You do not know anybody by that name.');
+      if (!person) throw new CommandError('You don’t know anybody by that name.');
       const rel = findRelationship(s, s.player.id, p.personId);
       if (!rel || rel.dimensions.familiarity < 25) {
-        throw new CommandError('You do not know them well enough to ask for a day of their time.');
+        throw new CommandError('You don’t know them well enough to ask for a day of their time.');
       }
 
       // How often you have asked lately. Favors are a bucket, not a tap.
@@ -315,12 +315,12 @@ export function registerShootSystem(sim: Simulation): void {
 
       const note = yes
         ? rng.pick([
-          `${person.displayName} is in. They will be there for the call.`,
+          `${person.displayName} is in. They’ll be there for the call.`,
           `${person.displayName} says yes, and asks what they should bring.`,
           `${person.displayName} will come, and can only do the morning if it overruns.`,
         ])
         : rng.pick([
-          `${person.displayName} cannot do that day.`,
+          `${person.displayName} can’t do that day.`,
           `${person.displayName} says no, warmly, and means it kindly.`,
           `${person.displayName} is working. Another time.`,
         ]);
@@ -361,7 +361,7 @@ export function registerShootSystem(sim: Simulation): void {
       if (!day) throw new CommandError('No such day.');
       if (day.status !== 'planned') throw new CommandError('That day has already been shot or called off.');
       if (s.now < day.at - 12 * MS_HOUR) {
-        throw new CommandError(`That day is ${formatDate(day.at, s.homeZone)}. You cannot shoot it early.`);
+        throw new CommandError(`That day is ${formatDate(day.at, s.homeZone)}. You can’t shoot it early.`);
       }
       if (s.now > day.at + 2 * MS_DAY) throw new CommandError('That day has gone by. Plan another one.');
       if (day.permission.needed && day.permission.status !== 'granted') {
@@ -402,11 +402,11 @@ export function registerShootSystem(sim: Simulation): void {
         }
       } else {
         carry -= 0.1;
-        reasons.push('Shooting on what you own rather than what you would have hired.');
+        reasons.push('Shooting on what you own rather than what you’d have hired.');
         // And the state of your own kit is the state of your own kit.
         if (ownCamera && ownCamera.condition < 45) {
           carry -= 0.06;
-          reasons.push(`${ownCamera.name} has not been looked after, and the day showed it.`);
+          reasons.push(`${ownCamera.name} hasn’t been looked after, and the day showed it.`);
         } else if (ownCamera && ownCamera.condition >= 85) {
           carry += 0.03;
           reasons.push(`${ownCamera.name} is in the condition you keep it in.`);
@@ -440,7 +440,7 @@ export function registerShootSystem(sim: Simulation): void {
       const summary = got >= day.setups
         ? `Everything you went for, in ${plural(day.hours, 'hour')}.`
         : got === 0
-          ? 'Nothing usable. It happens, and it is nobody’s fault but the day’s.'
+          ? 'Nothing usable. It happens, and it’s nobody’s fault but the day’s.'
           : `${got} of ${plural(day.setups, 'setup')}, with ${yes > 0 ? plural(yes, 'person', 'people') : 'nobody'} on it.`;
       day.note = [summary, ...reasons].join(' ');
 
@@ -504,14 +504,14 @@ export function registerShootSystem(sim: Simulation): void {
     day.permission.decidedAt = s.now;
     day.permission.note = yes
       ? rng.pick([
-        'They said yes, with a list of what you must not touch.',
-        'Granted, on the condition you are out by six.',
+        'They said yes, with a list of what you mustn’t touch.',
+        'Granted, on the condition you’re out by six.',
         'Yes, and they asked for a credit.',
       ])
       : rng.pick([
         'They said no, without saying why.',
         'They have somebody else in that day.',
-        'No. Their insurer will not have a camera in there.',
+        'No. Their insurer won’t have a camera in there.',
       ]);
 
     if (!yes) {

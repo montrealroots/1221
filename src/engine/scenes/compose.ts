@@ -42,7 +42,7 @@ function effortChoices(format: PostFormat): { id: string; label: string; minutes
   const all = clamp(Math.min(profile.maxMinutes, Math.max(proper * 2, 240)), profile.minMinutes, profile.maxMinutes);
   const choices = [
     { id: 'quick', label: 'Get It Out', minutes: quick, detail: `${formatDuration(quick * MS_MINUTE)}. Good enough, today.` },
-    { id: 'proper', label: 'Do It Properly', minutes: proper, detail: `${formatDuration(proper * MS_MINUTE)}. The version you would not mind being judged on.` },
+    { id: 'proper', label: 'Do It Properly', minutes: proper, detail: `${formatDuration(proper * MS_MINUTE)}. The version you wouldn’t mind being judged on.` },
     { id: 'all', label: 'Give It Everything', minutes: all, detail: `${formatDuration(all * MS_MINUTE)}. The whole day, and it shows.` },
   ];
   return choices.filter((c, i, arr) => arr.findIndex((o) => o.minutes === c.minutes) === i);
@@ -66,8 +66,8 @@ export const COMPOSE_SCENE = defineScene({
 
   available(sim, input) {
     const account = sim.universe.socialAccounts[String(input['accountId'])];
-    if (!account) return { ok: false, reason: 'There is no account like that.' };
-    if (account.ownerId !== sim.player.id) return { ok: false, reason: 'That account is not yours to post from.' };
+    if (!account) return { ok: false, reason: 'There’s no account like that.' };
+    if (account.ownerId !== sim.player.id) return { ok: false, reason: 'That account isn’t yours to post from.' };
     return { ok: true };
   },
 
@@ -96,7 +96,7 @@ export const COMPOSE_SCENE = defineScene({
       case 'angle': {
         const choices: SceneChoice[] = CRAFT_ANGLES.map((a) => ({ id: `angle:${a.id}`, label: a.label, aliases: a.aliases, detail: a.detail }));
         choices.push({ id: 'back', label: 'A Different Format', aliases: ['back', 'format'] });
-        return { title: 'What Is It About?', eyebrow, text: 'The angle is what people remember. It is also what they argue with.', choices, canSkip: true };
+        return { title: 'What Is It About?', eyebrow, text: 'The angle is what people remember. It’s also what they argue with.', choices, canSkip: true };
       }
       case 'hook': {
         const choices: SceneChoice[] = CRAFT_HOOKS.map((h) => ({ id: `hook:${h.id}`, label: h.label, aliases: h.aliases, detail: h.detail }));
@@ -107,7 +107,7 @@ export const COMPOSE_SCENE = defineScene({
         const format = str(session, 'format') as PostFormat;
         const choices: SceneChoice[] = effortChoices(format).map((e) => ({
           id: `effort:${e.minutes}`, label: e.label, aliases: [e.id], detail: e.detail,
-          disabled: sim.player.wellbeing.energy - e.minutes / 22 < 5 ? 'You do not have that in you today.' : undefined,
+          disabled: sim.player.wellbeing.energy - e.minutes / 22 < 5 ? 'You don’t have that in you today.' : undefined,
         }));
         choices.push({ id: 'back', label: 'A Different Hook', aliases: ['back', 'hook'] });
         return { title: 'How Long Will You Give It?', eyebrow, text: 'Time is the one thing that always shows. It costs energy at the same rate.', choices, facts: [{ label: 'Energy', value: `${Math.round(sim.player.wellbeing.energy)}` }, { label: 'Now', value: formatTime(sim.now, sim.zone) }], canSkip: true };

@@ -21,8 +21,8 @@ export const UNIVERSITY_NOTE =
   'The universities are real, and so are the towns they stand in and the years they were founded. '
   + 'Everything about you and them is SLATE’s own: how hard one is to get into, what it charges, what '
   + 'a term does to you and what you leave with. Where a university stands in a town smaller than '
-  + 'SLATE’s gazetteer carries, its real town is named on its own row and it is reached from the '
-  + 'nearest city the gazetteer has — it is never claimed to be in that city.';
+  + 'SLATE’s gazetteer carries, its real town is named on its own row and it’s reached from the '
+  + 'nearest city the gazetteer has — it’s never claimed to be in that city.';
 
 /** Fields a university is known for. Used to say what it is good at, not to rank it. */
 export type Field =
@@ -70,7 +70,7 @@ export const UNIVERSITIES: readonly University[] = [
   u('ucl', 'University College London', 'London', 'uk-eng-london', 'uk', 1826, 89, ['humanities', 'medicine', 'architecture', 'science', 'law'], 'The first English university to admit students of any religion, and the first to admit women on equal terms.'),
   u('kcl', 'King’s College London', 'London', 'uk-eng-london', 'uk', 1829, 85, ['law', 'medicine', 'humanities'], 'On the Strand, and it has been arguing with University College since both were founded.'),
   u('rada', 'Royal Academy of Dramatic Art', 'London', 'uk-eng-london', 'uk', 1904, 96, ['drama'], 'A drama school in Bloomsbury that takes about thirty people a year onto its acting course.'),
-  u('lamda', 'London Academy of Music and Dramatic Art', 'London', 'uk-eng-london', 'uk', 1861, 94, ['drama', 'music'], 'The oldest drama school in Britain, and it is as hard to get into as it sounds.'),
+  u('lamda', 'London Academy of Music and Dramatic Art', 'London', 'uk-eng-london', 'uk', 1861, 94, ['drama', 'music'], 'The oldest drama school in Britain, and it’s as hard to get into as it sounds.'),
   u('nfts', 'National Film and Television School', 'Beaconsfield', 'uk-eng-london', 'uk', 1971, 92, ['film'], 'A film school on a studio lot, and the graduate courses are what people come for.'),
   u('rcm', 'Royal College of Music', 'London', 'uk-eng-london', 'uk', 1882, 91, ['music'], 'A conservatoire opposite the Albert Hall.'),
   u('csm', 'Central Saint Martins', 'London', 'uk-eng-london', 'uk', 1989, 88, ['art'], 'Part of the University of the Arts London, and the fashion course is the one people mean.'),
@@ -86,7 +86,7 @@ export const UNIVERSITIES: readonly University[] = [
 
   // --- United States --------------------------------------------------------
   u('harvard', 'Harvard University', 'Cambridge, Massachusetts', 'us-ma-boston', 'us', 1636, 98, ['law', 'business', 'medicine', 'humanities'], 'The oldest university in the United States, across the river from Boston.'),
-  u('mit', 'Massachusetts Institute of Technology', 'Cambridge, Massachusetts', 'us-ma-boston', 'us', 1861, 97, ['engineering', 'science', 'economics'], 'Across the Charles, and it is engineering all the way down.'),
+  u('mit', 'Massachusetts Institute of Technology', 'Cambridge, Massachusetts', 'us-ma-boston', 'us', 1861, 97, ['engineering', 'science', 'economics'], 'Across the Charles, and it’s engineering all the way down.'),
   u('yale', 'Yale University', 'New Haven', 'us-ny-newyork', 'us', 1701, 97, ['law', 'drama', 'humanities'], 'Its drama school has produced an implausible number of the people you have heard of.'),
   u('princeton', 'Princeton University', 'Princeton', 'us-ny-newyork', 'us', 1746, 97, ['humanities', 'science', 'economics'], 'Small, rich, and almost entirely undergraduate.'),
   u('columbia', 'Columbia University', 'New York', 'us-ny-manhattan', 'us', 1754, 94, ['law', 'business', 'film', 'humanities'], 'In Morningside Heights, and the film school is in the city that shoots.'),
@@ -114,7 +114,7 @@ export const UNIVERSITIES: readonly University[] = [
   u('penn', 'University of Pennsylvania', 'Philadelphia', 'us-pa-philadelphia', 'us', 1740, 94, ['business', 'medicine', 'law'], 'Wharton is here, and so is a great deal of medicine.'),
   u('asu', 'Arizona State University', 'Tempe', 'us-az-phoenix', 'us', 1885, 62, ['business', 'engineering', 'film', 'sport'], 'One of the largest universities in America by enrolment, and it takes most people who apply.'),
   u('colorado', 'University of Colorado Boulder', 'Boulder', 'us-co-denver', 'us', 1876, 70, ['science', 'engineering', 'sport'], 'At the foot of the Flatirons, and a great deal of atmospheric science happens here.'),
-  u('unlv', 'University of Nevada, Las Vegas', 'Las Vegas', 'us-nv-lasvegas', 'us', 1957, 58, ['business', 'sport', 'film'], 'A city university with a hospitality school built for the city it is in.'),
+  u('unlv', 'University of Nevada, Las Vegas', 'Las Vegas', 'us-nv-lasvegas', 'us', 1957, 58, ['business', 'sport', 'film'], 'A city university with a hospitality school built for the city it’s in.'),
   u('hawaii', 'University of Hawaii at Manoa', 'Honolulu', 'us-hi-honolulu', 'us', 1907, 62, ['science', 'humanities', 'sport'], 'In the Manoa valley, and the oceanography is world class for obvious reasons.'),
   u('unc', 'University of North Carolina at Chapel Hill', 'Chapel Hill', 'us-nc-charlotte', 'us', 1789, 82, ['medicine', 'law', 'sport', 'education'], 'The oldest public university in the country, depending on who you ask, and the basketball is a religion.'),
   u('ohiostate', 'Ohio State University', 'Columbus', 'us-oh-columbus', 'us', 1870, 70, ['engineering', 'business', 'sport', 'medicine'], 'Vast, and the stadium holds a hundred thousand people.'),
@@ -230,7 +230,7 @@ export const UNIVERSITIES: readonly University[] = [
   u('ftii', 'Film and Television Institute of India', 'Pune', 'in-16-pune', 'in', 1960, 90, ['film', 'drama'], 'On the old Prabhat studio lot, and much of Indian art cinema came through it.'),
   u('nsd', 'National School of Drama', 'Delhi', 'in-07-delhi', 'in', 1959, 89, ['drama'], 'A repertory company attached to a school, and it takes about twenty people a year.'),
   u('du', 'University of Delhi', 'Delhi', 'in-07-delhi', 'in', 1922, 78, ['humanities', 'economics', 'law'], 'A federation of colleges, and the cut-off marks for the good ones are famously brutal.'),
-  u('iisc', 'Indian Institute of Science', 'Bengaluru', 'in-19-bengaluru', 'in', 1909, 93, ['science', 'engineering'], 'Founded with Tata money, and it is a research institute more than a university.'),
+  u('iisc', 'Indian Institute of Science', 'Bengaluru', 'in-19-bengaluru', 'in', 1909, 93, ['science', 'engineering'], 'Founded with Tata money, and it’s a research institute more than a university.'),
   u('jnu', 'Jawaharlal Nehru University', 'Delhi', 'in-07-delhi', 'in', 1969, 82, ['humanities', 'economics', 'education'], 'Largely postgraduate, and famous for its politics.'),
   u('cu', 'University of Calcutta', 'Kolkata', 'in-28-kolkata', 'in', 1857, 72, ['humanities', 'science', 'law'], 'One of the first three modern universities in India.'),
   u('lums', 'Lahore University of Management Sciences', 'Lahore', 'pk-04-lahore', 'pk', 1984, 84, ['business', 'economics', 'law'], 'A private university in Lahore with a hard entrance examination.'),
@@ -240,7 +240,7 @@ export const UNIVERSITIES: readonly University[] = [
   u('ui', 'University of Indonesia', 'Depok', 'id-30-depok', 'id', 1849, 76, ['medicine', 'law', 'economics'], 'The oldest in Indonesia, on a wooded campus south of Jakarta.'),
   u('up', 'University of the Philippines Diliman', 'Quezon City', 'ph-ncr-quezoncity', 'ph', 1908, 80, ['humanities', 'engineering', 'film'], 'And its film institute is where most Filipino directors trained.'),
   u('vnu', 'Vietnam National University, Hanoi', 'Hanoi', 'vn-01-hanoi', 'vn', 1906, 74, ['science', 'humanities', 'engineering'], 'The oldest modern university in Vietnam.'),
-  u('technion', 'Technion Israel Institute of Technology', 'Haifa', 'il-05-telaviv', 'il', 1912, 87, ['engineering', 'science', 'medicine'], 'Older than the state it is in.'),
+  u('technion', 'Technion Israel Institute of Technology', 'Haifa', 'il-05-telaviv', 'il', 1912, 87, ['engineering', 'science', 'medicine'], 'Older than the state it’s in.'),
   u('tau', 'Tel Aviv University', 'Tel Aviv', 'il-05-telaviv', 'il', 1956, 84, ['film', 'law', 'medicine', 'humanities'], 'And its film and television school is the main one in the country.'),
   u('huji', 'Hebrew University of Jerusalem', 'Jerusalem', 'il-06-jerusalem', 'il', 1918, 85, ['science', 'law', 'humanities'], 'On Mount Scopus, and Einstein was on its first board of governors.'),
   u('boun', 'Boğaziçi University', 'Istanbul', 'tr-34-istanbul', 'tr', 1863, 86, ['engineering', 'economics', 'humanities'], 'On the Bosphorus, taught in English, and the hardest in Turkey to get into.'),
@@ -310,10 +310,10 @@ export const REGIME_LABEL: Readonly<Record<FeeRegime, string>> = {
 };
 
 export const REGIME_ABOUT: Readonly<Record<FeeRegime, string>> = {
-  free: 'The state pays for it and you do not.',
-  nominal: 'A registration charge and a transport pass, and that is the lot.',
+  free: 'The state pays for it and you don’t.',
+  nominal: 'A registration charge and a transport pass, and that’s the lot.',
   capped: 'The university may not charge a home student more than the cap.',
-  deferred: 'You are not billed now. It comes out of your pay once you are earning enough.',
+  deferred: 'You aren’t billed now. It comes out of your pay once you’re earning enough.',
   market: 'Each university sets its own price, and they differ by a very long way.',
 };
 
@@ -413,10 +413,10 @@ export function feesAreCountrys(countryId: string): boolean {
  * both while a fees-only award does not, is how it really works.
  */
 export const ROOM_AND_BOARD_NOTE =
-  'Tuition is the number everybody quotes and it is often not the biggest one. Somewhere to sleep and '
+  'Tuition is the number everybody quotes and it’s often not the biggest one. Somewhere to sleep and '
   + 'something to eat are charged separately nearly everywhere, are frequently more than the fees, and '
   + 'in the countries that charge no tuition are the whole bill. A full ride covers them; an award '
-  + 'against the fees does not. The amounts are SLATE’s own calibration.';
+  + 'against the fees doesn’t. The amounts are SLATE’s own calibration.';
 
 export type Housing = 'at_home' | 'hall' | 'shared' | 'own_place';
 
@@ -432,9 +432,9 @@ export interface HousingOption {
 
 export const HOUSING: readonly HousingOption[] = [
   { id: 'at_home', label: 'Living At Home', perYear: 0, belonging: 25, about: 'Free, and you commute, and you miss most of it.' },
-  { id: 'hall', label: 'A Room In Hall', perYear: 11_000_00, belonging: 90, about: 'On campus, catered, and it is where the whole first year happens.' },
+  { id: 'hall', label: 'A Room In Hall', perYear: 11_000_00, belonging: 90, about: 'On campus, catered, and it’s where the whole first year happens.' },
   { id: 'shared', label: 'A Shared House', perYear: 7_500_00, belonging: 70, about: 'Off campus with four other people, and you cook for yourself.' },
-  { id: 'own_place', label: 'A Place Of Your Own', perYear: 14_000_00, belonging: 45, about: 'Quiet, expensive, and you will know fewer people.' },
+  { id: 'own_place', label: 'A Place Of Your Own', perYear: 14_000_00, belonging: 45, about: 'Quiet, expensive, and you’ll know fewer people.' },
 ];
 
 export const HOUSING_BY_ID: Readonly<Record<string, HousingOption>> = Object.fromEntries(
@@ -512,7 +512,7 @@ export const MAJORS: readonly Major[] = [
   m('film_production', 'Film Production', 'film', 3, [
     { key: 'visual_language', kind: 'skill' }, { key: 'coverage_planning', kind: 'skill' },
     { key: 'editing', kind: 'skill' },
-  ], 'Three years of making short films that are mostly bad, and one that is not.'),
+  ], 'Three years of making short films that are mostly bad, and one that isn’t.'),
   m('screenwriting', 'Screenwriting', 'film', 3, [
     { key: 'story_structure', kind: 'skill' }, { key: 'dialogue', kind: 'skill' },
     { key: 'rewriting', kind: 'skill' },
@@ -537,17 +537,17 @@ export const MAJORS: readonly Major[] = [
   m('law', 'Law', 'law', 3, [
     { key: 'negotiation', kind: 'skill' }, { key: 'deal_structuring', kind: 'skill' },
     { key: 'rights_management', kind: 'skill' },
-  ], 'Cases, statutes and a great deal of reading, and it is useful in this business.'),
+  ], 'Cases, statutes and a great deal of reading, and it’s useful in this business.'),
   m('economics', 'Economics', 'economics', 3, [
     { key: 'market_reading', kind: 'skill' }, { key: 'corporate_finance', kind: 'skill' },
   ], 'Models, and the argument about whether they describe anything.'),
   m('business', 'Business And Management', 'business', 3, [
     { key: 'leadership', kind: 'skill' }, { key: 'operations', kind: 'skill' },
     { key: 'accounting', kind: 'skill' },
-  ], 'Broad, and it is what most people do who want to run something.'),
+  ], 'Broad, and it’s what most people do who want to run something.'),
   m('engineering', 'Engineering', 'engineering', 4, [
     { key: 'grip_electric', kind: 'skill' }, { key: 'vfx_craft', kind: 'skill' },
-  ], 'Four years, and the workload is not a rumor.'),
+  ], 'Four years, and the workload isn’t a rumor.'),
   m('computer_science', 'Computer Science', 'engineering', 3, [
     { key: 'vfx_craft', kind: 'skill' }, { key: 'editing_software', kind: 'skill' },
   ], 'Theory first, and the useful part arrives late.'),

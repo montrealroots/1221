@@ -396,12 +396,12 @@ describe('turning up', () => {
     sim.player.currentLocationId = 'us-tx-austin';
     const away = sim.execute({ kind: 'fw.attend', payload: { inviteId } });
     expect(away.ok).toBe(false);
-    expect(away.error).toContain('you are not');
+    expect(away.error).toMatch(/you (are(n’t| not)|aren’t)/);
 
     sim.player.currentLocationId = there;
     const undressed = sim.execute({ kind: 'fw.attend', payload: { inviteId } });
     expect(undressed.ok).toBe(false);
-    expect(undressed.error).toContain('not dressed');
+    expect(undressed.error).toMatch(/n[o’]t dressed/);
 
     // And wearing something is not the same as being dressed: one T-shirt and
     // nothing else is refused by name.

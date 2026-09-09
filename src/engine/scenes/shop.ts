@@ -33,13 +33,13 @@ const BIG_BASKET = 150_000;
 
 function placeOf(session: SceneSession): Place {
   const place = placesIn(session.locationId).find((p) => p.id === String(session.context['placeId']));
-  if (!place) throw new CommandError('That shop is not here any more.');
+  if (!place) throw new CommandError('That shop isn’t here any more.');
   return place;
 }
 
 function visitFor(sim: Simulation, session: SceneSession) {
   const id = String(session.context['visitId'] ?? '');
-  if (!id) throw new CommandError('You are not in there yet.');
+  if (!id) throw new CommandError('You aren’t in there yet.');
   return visitOf(sim, id);
 }
 
@@ -71,7 +71,7 @@ export const SHOP_SCENE = defineScene({
     const wanted = input['placeId'] === undefined ? undefined : String(input['placeId']);
     const here = shopsHere(sim);
     if (here.length === 0) return { ok: false, reason: 'No shop here that SLATE knows the inside of.' };
-    if (wanted && !here.some((p) => p.id === wanted)) return { ok: false, reason: 'That is not a shop you can walk around.' };
+    if (wanted && !here.some((p) => p.id === wanted)) return { ok: false, reason: 'That isn’t a shop you can walk around.' };
     return { ok: true };
   },
 
@@ -433,7 +433,7 @@ export const SHOP_SCENE = defineScene({
     }
 
     if (session.node === 'reflect' && choiceId === 'finish') { ctx.finish(); return; }
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {

@@ -48,7 +48,7 @@ export function serialise(universe: SaveUniverse): string {
 export function deserialise(raw: string): SaveUniverse {
   const parsed = JSON.parse(raw) as SaveUniverse;
   if (!parsed || typeof parsed !== 'object' || !parsed.meta) {
-    throw new PersistenceError('That save file is not a SLATE universe.', false);
+    throw new PersistenceError('That save file isn’t a SLATE universe.', false);
   }
   return parsed;
 }

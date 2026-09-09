@@ -110,7 +110,7 @@ describe('the records, which are real', () => {
 
   it('says out loud that a record set since is not in here', () => {
     expect(RECORDS_NOTE).toMatch(/real/);
-    expect(RECORDS_NOTE).toMatch(/not in here/);
+    expect(RECORDS_NOTE).toMatch(/n[o’]t in here/);
   });
 });
 

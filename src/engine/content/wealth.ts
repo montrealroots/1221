@@ -107,7 +107,7 @@ export const REAL_CARDS: readonly RealCard[] = [
     annualFee: 795_00, minimumScore: 760, baseCreditLimit: 100_000_00,
     invitation: { reportedSpend: 0, reportedMonths: 0, viaBank: 'jpm_private', note: 'Not applied for. Offered to J.P. Morgan Private Bank clients, which is to say to people with ten million or so with the bank.' },
     perks: ['Private Bank Clients Only', 'Palladium And Brass', 'Everything The Sapphire Reserve Does'],
-    about: 'The card that used to be called Palladium. It is the Sapphire Reserve for people who bank at the private bank.',
+    about: 'The card that used to be called Palladium. It’s the Sapphire Reserve for people who bank at the private bank.',
   }),
   CARD({
     id: 'capital_one_venture_x', name: 'Capital One Venture X', issuer: 'Capital One', network: 'Visa', countryIds: ['us'],
@@ -124,7 +124,7 @@ export const REAL_CARDS: readonly RealCard[] = [
   CARD({
     id: 'coutts_silk', name: 'Coutts Silk Card', issuer: 'Coutts', network: 'Mastercard', countryIds: ['uk'],
     annualFee: 0, minimumScore: 740, baseCreditLimit: 100_000_00,
-    invitation: { reportedSpend: 0, reportedMonths: 0, viaBank: 'coutts', note: 'For Coutts clients. The bank does not publish a fee for the card; it is part of the relationship, which wants a million or so.' },
+    invitation: { reportedSpend: 0, reportedMonths: 0, viaBank: 'coutts', note: 'For Coutts clients. The bank doesn’t publish a fee for the card; it’s part of the relationship, which wants a million or so.' },
     perks: ['Coutts Clients Only', 'Concierge', 'No Preset Spending Limit'],
     about: 'The card that comes with an account at the bank on the Strand.',
   }),
@@ -180,7 +180,7 @@ export const PRIVATE_BANKS: readonly PrivateBank[] = [
   // Switzerland and Liechtenstein
   BANK({ id: 'ubs', name: 'UBS Global Wealth Management', countryId: 'ch', city: 'Zürich', minimumRelationship: 2_000_000_00, minimumIs: 'reported', apy: 0.008, annualFee: 0, kycWeeks: 4, about: 'The largest wealth manager on earth, since it absorbed Credit Suisse. Two million is where the private bank starts, as reported; the fee comes off the assets, not the account.' }),
   BANK({ id: 'julius_baer', name: 'Julius Baer', countryId: 'ch', city: 'Zürich', minimumRelationship: 1_000_000_00, minimumIs: 'reported', apy: 0.008, annualFee: 0, kycWeeks: 4, about: 'A pure private bank on the Bahnhofstrasse. A million, as reported.' }),
-  BANK({ id: 'pictet', name: 'Pictet', countryId: 'ch', city: 'Geneva', minimumRelationship: 2_000_000_00, minimumIs: 'reported', apy: 0.007, annualFee: 0, kycWeeks: 5, about: 'A partnership in Geneva since 1805. They do not advertise a minimum; two million is what is reported.' }),
+  BANK({ id: 'pictet', name: 'Pictet', countryId: 'ch', city: 'Geneva', minimumRelationship: 2_000_000_00, minimumIs: 'reported', apy: 0.007, annualFee: 0, kycWeeks: 5, about: 'A partnership in Geneva since 1805. They don’t advertise a minimum; two million is what is reported.' }),
   BANK({ id: 'lombard_odier', name: 'Lombard Odier', countryId: 'ch', city: 'Geneva', minimumRelationship: 3_000_000_00, minimumIs: 'reported', apy: 0.007, annualFee: 0, kycWeeks: 5, about: 'Geneva since 1796, and still owned by its partners. Three million, as reported.' }),
   BANK({ id: 'efg', name: 'EFG International', countryId: 'ch', city: 'Zürich', minimumRelationship: 1_000_000_00, minimumIs: 'reported', apy: 0.009, annualFee: 0, kycWeeks: 3, about: 'A Swiss private bank with a Greek shipping family behind it. A million, as reported.' }),
   BANK({ id: 'vontobel', name: 'Vontobel', countryId: 'ch', city: 'Zürich', minimumRelationship: 1_000_000_00, minimumIs: 'reported', apy: 0.008, annualFee: 0, kycWeeks: 4, about: 'Zürich, family-controlled, listed. A million, as reported.' }),
@@ -252,7 +252,7 @@ export function privateBankById(id: string): PrivateBank | undefined {
 /** What a US person owes the Treasury for having money abroad: an FBAR above this, in aggregate. Public. */
 export const FBAR_THRESHOLD: Money = 10_000_00;
 
-export const BLACK_CARD_NOTE = 'The issuer, the network and a published fee are public record. How an invitation is decided is not published by anyone; SLATE uses what is widely reported and says so.';
+export const BLACK_CARD_NOTE = 'The issuer, the network and a published fee are public record. How an invitation is decided isn’t published by anyone; SLATE uses what is widely reported and says so.';
 export const PRIVATE_BANK_NOTE = 'A real bank in a real jurisdiction. What it wants before it opens an account is rarely published; SLATE labels each minimum as published or reported.';
-export const REPORTING_NOTE = 'An account abroad is reported. Every bank here exchanges information under the Common Reporting Standard or FATCA with the tax authority where you live, and SLATE tells your tax return about it. It is a place to keep money, not a place to hide it.';
+export const REPORTING_NOTE = 'An account abroad is reported. Every bank here exchanges information under the Common Reporting Standard or FATCA with the tax authority where you live, and SLATE tells your tax return about it. It’s a place to keep money, not a place to hide it.';
 export const FBAR_NOTE = 'A United States person with more than ten thousand dollars abroad in aggregate files an FBAR with the Treasury each year. SLATE files it for you and says so.';

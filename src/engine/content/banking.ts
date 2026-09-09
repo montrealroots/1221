@@ -130,7 +130,7 @@ const SLATE_PRODUCTS: readonly BankProduct[] = [
     minimumOpening: 0, monthlyFee: 0, feeWaivedAbove: 0, apy: 0.021,
     freeWithdrawals: 6, excessWithdrawalFee: 10_00,
     perks: ['Six Withdrawals A Month'],
-    about: 'Somewhere to put it that is not the current account. Six withdrawals a month before they charge.',
+    about: 'Somewhere to put it that isn’t the current account. Six withdrawals a month before they charge.',
   },
   {
     id: 'nb_high_yield', institutionId: 'northbank', name: 'High Yield Savings', family: 'savings', kind: 'savings',
@@ -152,7 +152,7 @@ const SLATE_PRODUCTS: readonly BankProduct[] = [
     id: 'nb_cd_12', institutionId: 'northbank', name: 'Twelve Month Certificate', family: 'certificate', kind: 'savings',
     minimumOpening: 1_000_00, monthlyFee: 0, feeWaivedAbove: 0, apy: 0.048, termMonths: 12, earlyExitShare: 0.5,
     perks: ['Locked For A Year', 'A Better Rate For Locking It'],
-    about: 'A year, at a rate the savings account does not pay. Take it out early and half the interest goes.',
+    about: 'A year, at a rate the savings account doesn’t pay. Take it out early and half the interest goes.',
   },
   {
     id: 'nb_cd_36', institutionId: 'northbank', name: 'Three Year Certificate', family: 'certificate', kind: 'savings',
@@ -181,7 +181,7 @@ const SLATE_PRODUCTS: readonly BankProduct[] = [
     minimumOpening: 0, monthlyFee: 65_00, feeWaivedAbove: 0, apy: 0,
     baseCreditLimit: 100_000_00, minimumScore: 760, minimumShare: 0.01, minimumFloor: 100_00, lateFee: 0,
     perks: ['Sixty Five A Month', 'A Limit That Clears A Car', 'No Late Fee, And They Call Instead'],
-    about: 'The card that gets you a table. Sixty five a month, and a score that is not easy to have.',
+    about: 'The card that gets you a table. Sixty five a month, and a score that isn’t easy to have.',
   },
 ];
 

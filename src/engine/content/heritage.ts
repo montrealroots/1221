@@ -18,9 +18,9 @@
 
 export const HERITAGE_NOTE =
   'A heritage here is a naming tradition and nothing else. The names are common ones from published '
-  + 'national and regional name lists, they are not the only names anybody has, and nobody real is '
+  + 'national and regional name lists, they aren’t the only names anybody has, and nobody real is '
   + 'in the list. It carries no attribute, no skill and no advantage anywhere in the game: it decides '
-  + 'what your family is called and where they are likely to be from, and that is all it does.';
+  + 'what your family is called and where they are likely to be from, and that’s all it does.';
 
 export interface Heritage {
   id: string;

@@ -382,11 +382,11 @@ function roomNote(sim: Simulation, place: Place, showing: Showing, at: Instant, 
       : trouble > 0.9
         ? rng.pick([
           'The room went completely silent at the right moment, which almost never happens.',
-          'Somebody clapped at the end and, for once, it did not feel stupid.',
+          'Somebody clapped at the end and, for once, it didn’t feel stupid.',
           'Nobody moved until the lights came up.',
         ])
         : rng.pick([
-          'Nothing happened that was not on the screen.',
+          'Nothing happened that wasn’t on the screen.',
           'A quiet, well behaved room.',
           'Trailers, an advert for a car, and then the film.',
         ]);
@@ -397,8 +397,8 @@ function roomNote(sim: Simulation, place: Place, showing: Showing, at: Instant, 
 function verdictNote(verdict: number, genre: FilmGenre, rng: { pick<T>(items: readonly T[]): T }): string {
   if (verdict >= 82) {
     return rng.pick([
-      'You sat through the credits. It is going to be in your head for a week.',
-      'That is the reason to leave the house. Every bit of it worked.',
+      'You sat through the credits. It’s going to be in your head for a week.',
+      'That’s the reason to leave the house. Every bit of it worked.',
       'You came out of it wanting to make something.',
     ]);
   }
@@ -406,13 +406,13 @@ function verdictNote(verdict: number, genre: FilmGenre, rng: { pick<T>(items: re
     return rng.pick([
       'Good. Twenty minutes too long, and still good.',
       'It does what it set out to do and does it properly.',
-      'You would recommend it to about half the people you know.',
+      'You’d recommend it to about half the people you know.',
     ]);
   }
   if (verdict >= 42) {
     return rng.pick([
-      'Fine. You will have forgotten it by Thursday.',
-      'It is exactly what it looks like on the poster.',
+      'Fine. You’ll have forgotten it by Thursday.',
+      'It’s exactly what it looks like on the poster.',
       'Two good scenes and a lot of getting between them.',
     ]);
   }
@@ -426,7 +426,7 @@ function verdictNote(verdict: number, genre: FilmGenre, rng: { pick<T>(items: re
   return rng.pick([
     'You thought about leaving and stayed out of stubbornness.',
     'Nothing in it worked, and it was long.',
-    'That is two hours you are not getting back.',
+    'That’s two hours you aren’t getting back.',
   ]);
 }
 
@@ -470,14 +470,14 @@ export function registerCinemaSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const cityId = s.player.currentLocationId;
       const place = cinemasIn(s, cityId).find((one) => one.id === p.placeId);
-      if (!place) throw new CommandError('That is not a cinema in this city.');
+      if (!place) throw new CommandError('That isn’t a cinema in this city.');
       const showing = showingById(s, cityId, p.showingId, p.at);
-      if (!showing) throw new CommandError('That is not on there.');
+      if (!showing) throw new CommandError('That isn’t on there.');
       if (p.at < s.now) throw new CommandError('That showing has started. Pick a later one.');
-      if (p.at > s.now + 14 * MS_DAY) throw new CommandError('They are not selling that far ahead.');
+      if (p.at > s.now + 14 * MS_DAY) throw new CommandError('They aren’t selling that far ahead.');
 
       const day = showtimesFor(s, place, showing, p.at);
-      if (!day.includes(p.at)) throw new CommandError('There is no showing at that time.');
+      if (!day.includes(p.at)) throw new CommandError('There’s no showing at that time.');
 
       const age = ageOf(s);
       const cert = showing.certificate;
@@ -500,7 +500,7 @@ export function registerCinemaSystem(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay for a ticket from.');
       if (s.ledger.availableFunds(accountId) < paid) {
-        throw new CommandError(`That is ${formatMoney(paid)} and you do not have it.`);
+        throw new CommandError(`That is ${formatMoney(paid)} and you don’t have it.`);
       }
 
       const already = Object.values(s.universe.cinemaTickets).find(
@@ -573,10 +573,10 @@ export function registerCinemaSystem(sim: Simulation): void {
       const ticket = s.universe.cinemaTickets[p.ticketId];
       if (!ticket) throw new CommandError('No such ticket.');
       if (ticket.status === 'seen') throw new CommandError('You have already seen that one.');
-      if (ticket.status !== 'booked') throw new CommandError('That ticket is not good for anything now.');
+      if (ticket.status !== 'booked') throw new CommandError('That ticket isn’t good for anything now.');
       if (s.now < ticket.at - DOORS_OPEN_MINUTES * MS_MINUTE) {
         throw new CommandError(
-          `That is at ${formatTime(ticket.at, s.homeZone)} on ${formatDate(ticket.at, s.homeZone)}. They will not let you in yet.`,
+          `That’s at ${formatTime(ticket.at, s.homeZone)} on ${formatDate(ticket.at, s.homeZone)}. They won’t let you in yet.`,
         );
       }
       if (s.now > ticket.at + DOORS_SHUT_MINUTES * MS_MINUTE) {
@@ -584,26 +584,26 @@ export function registerCinemaSystem(sim: Simulation): void {
         throw new CommandError('That started half an hour ago. They have shut the doors.');
       }
       if (s.player.currentLocationId !== ticket.cityId) {
-        throw new CommandError(`Your seat is in ${CITIES.get(ticket.cityId)?.name ?? 'another city'} and you are not.`);
+        throw new CommandError(`Your seat is in ${CITIES.get(ticket.cityId)?.name ?? 'another city'} and you aren’t.`);
       }
       if (s.player.currentPlaceId !== ticket.placeId) {
-        throw new CommandError(`You are not at ${ticket.placeName}. Nobody has ever watched a film from the car park.`);
+        throw new CommandError(`You aren’t at ${ticket.placeName}. Nobody has ever watched a film from the car park.`);
       }
       if (s.player.wellbeing.energy < 8) {
-        throw new CommandError('You would sleep through it. Go home.');
+        throw new CommandError('You’d sleep through it. Go home.');
       }
 
       const place = cinemasIn(s, ticket.cityId).find((one) => one.id === ticket.placeId);
       const showing = showingById(s, ticket.cityId, ticket.showingId, ticket.at);
       const size = p.snacks ?? 'nothing';
-      if (!SNACK_PRICES[size] && size !== 'nothing') throw new CommandError('They do not sell that.');
+      if (!SNACK_PRICES[size] && size !== 'nothing') throw new CommandError('They don’t sell that.');
       const snacks = place ? snackPrice(place, size) : 0;
 
       const accountId = s.player.primaryAccountId;
       if (snacks > 0) {
         if (!accountId) throw new CommandError('You have no account to pay the stand from.');
         if (s.ledger.availableFunds(accountId) < snacks) {
-          throw new CommandError(`The stand wants ${formatMoney(snacks)} and you do not have it.`);
+          throw new CommandError(`The stand wants ${formatMoney(snacks)} and you don’t have it.`);
         }
         s.expense(accountId, snacks, `Cinema — ${SNACK_LABEL[size]}`, 'leisure', { refType: 'place', refId: ticket.placeId });
       }
@@ -651,10 +651,10 @@ export function registerCinemaSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const ticket = s.universe.cinemaTickets[p.ticketId];
       if (!ticket) throw new CommandError('No such ticket.');
-      if (ticket.status !== 'booked') throw new CommandError('There is nothing to give back.');
+      if (ticket.status !== 'booked') throw new CommandError('There’s nothing to give back.');
       if (s.now > ticket.at - REFUNDABLE_UNTIL_MINUTES * MS_MINUTE) {
         throw new CommandError(
-          `They will not refund inside ${plural(REFUNDABLE_UNTIL_MINUTES / 60, 'hour')} of the showing.`,
+          `They won’t refund inside ${plural(REFUNDABLE_UNTIL_MINUTES / 60, 'hour')} of the showing.`,
         );
       }
       const accountId = s.player.primaryAccountId;

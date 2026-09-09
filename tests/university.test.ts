@@ -240,7 +240,7 @@ describe('applying', () => {
     const sim = aLeaver('wrong-course', 88);
     const wrong = sim.execute({ kind: 'uni.apply', payload: { universityId: 'rada', majorId: 'medicine' } });
     expect(wrong.ok).toBe(false);
-    expect(wrong.error).toMatch(/does not teach/);
+    expect(wrong.error).toMatch(/does(n’t| not) teach/);
 
     expect(sim.execute({ kind: 'uni.apply', payload: { universityId: 'ucl', majorId: 'english' } }).ok).toBe(true);
     const again = sim.execute({ kind: 'uni.apply', payload: { universityId: 'ucl', majorId: 'law' } });

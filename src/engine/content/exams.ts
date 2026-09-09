@@ -22,7 +22,7 @@ export const EXAM_NOTE =
   + 'out of 750, the Suneung on its nine grade bands, ENEM out of 1000 on each area, the Baccalauréat '
   + 'out of 20. What SLATE carries is the name, who sits it, roughly when in the year, and the range a '
   + 'score falls in. How a particular character scores is SLATE’s own arithmetic on their marks, '
-  + 'their preparation and their nerve, and it is not a prediction about anybody real.';
+  + 'their preparation and their nerve, and it isn’t a prediction about anybody real.';
 
 export const SITTING_NOTE =
   'A real examination calendar moves every year and several of these run on several dates a year. '
@@ -32,9 +32,9 @@ export const SITTING_NOTE =
 
 export const STATE_TEST_NOTE =
   'Every American state tests its schools every year and most call it something of their own. SLATE '
-  + 'carries the name where it is confident of it and says "the state assessment" where it is not, '
+  + 'carries the name where it is confident of it and says "the state assessment" where it isn’t, '
   + 'rather than inventing an acronym. A state test decides nothing about a character’s future in '
-  + 'this game, which is roughly what it decides in life; it is on the calendar because it is on the '
+  + 'this game, which is roughly what it decides in life; it’s on the calendar because it’s on the '
   + 'calendar.';
 
 export const GRADE_NOTE =
@@ -54,12 +54,12 @@ export const TERM_NOTE =
   'School years are shaped differently around the world and the shapes here are real: three terms in '
   + 'Britain and much of the Commonwealth, two semesters in America and Germany, four quarters in '
   + 'Japan and Korea, and a year that opens in April in Japan and in January south of the equator. '
-  + 'Which week a term starts is SLATE’s own; which month it starts is not.';
+  + 'Which week a term starts is SLATE’s own; which month it starts isn’t.';
 
 export const PREP_NOTE =
-  'Sitting down with a past paper is worth something and everybody knows it is. How much it is worth '
-  + 'here is SLATE’s calibration: preparation moves a score, it does not replace the year of '
-  + 'lessons behind it, and there is a ceiling on how much of it does any good.';
+  'Sitting down with a past paper is worth something and everybody knows it is. How much it’s worth '
+  + 'here is SLATE’s calibration: preparation moves a score, it doesn’t replace the year of '
+  + 'lessons behind it, and there’s a ceiling on how much of it does any good.';
 
 // ---------------------------------------------------------------------------
 // The tests themselves
@@ -262,7 +262,7 @@ export const TESTS: readonly StandardTest[] = [
     countryIds: ['ru'], fromAge: 17, toAge: 18, month: 6, min: 0, max: 100, fee: 0, retakes: 1,
     resultsAfterDays: 12,
     sections: [sec('paper', 'The Papers', 0, 100, third('language', 'mathematics', 'history'))],
-    about: 'Russian and mathematics compulsory and the rest chosen, each paper out of a hundred, and it is both the leaving certificate and the university application.',
+    about: 'Russian and mathematics compulsory and the rest chosen, each paper out of a hundred, and it’s both the leaving certificate and the university application.',
   },
   {
     id: 'oge', name: 'Основной Государственный Экзамен', shortName: 'The OGE', kind: 'national',
@@ -411,7 +411,7 @@ export const TESTS_ELSEWHERE: readonly StandardTest[] = [
     countryIds: ['eg'], fromAge: 17, toAge: 19, month: 6, min: 0, max: 100, fee: 0, retakes: 1,
     resultsAfterDays: 30,
     sections: [sec('paper', 'The Papers', 0, 100, third('language', 'mathematics', 'science'))],
-    about: 'The Egyptian leaving examination, reported as a percentage, and the faculty you are allowed to enter is decided by it alone.',
+    about: 'The Egyptian leaving examination, reported as a percentage, and the faculty you’re allowed to enter is decided by it alone.',
   },
   {
     id: 'bagrut', name: 'בגרות', shortName: 'The Bagrut', kind: 'leaving', countryIds: ['il'],
@@ -444,7 +444,7 @@ export const TESTS_ELSEWHERE: readonly StandardTest[] = [
     id: 'comipems', name: 'El Examen COMIPEMS', kind: 'entrance', countryIds: ['mx'],
     fromAge: 14, toAge: 16, month: 6, min: 0, max: 128, fee: 25_00, retakes: 1, resultsAfterDays: 30,
     sections: [sec('paper', 'El Examen', 0, 128, third('language', 'mathematics', 'science'))],
-    about: 'A hundred and twenty eight questions on one Saturday in Mexico City, and the number of them you get right decides which high school of the twenty you listed you are sent to.',
+    about: 'A hundred and twenty eight questions on one Saturday in Mexico City, and the number of them you get right decides which high school of the twenty you listed you’re sent to.',
   },
   {
     id: 'naplan', name: 'The National Assessment Program Literacy and Numeracy', shortName: 'NAPLAN',
@@ -454,7 +454,7 @@ export const TESTS_ELSEWHERE: readonly StandardTest[] = [
       sec('literacy', 'Literacy', 0, 1000, whole('language')),
       sec('numeracy', 'Numeracy', 0, 1000, whole('mathematics')),
     ],
-    about: 'Sat in years three, five, seven and nine every March, reported in four proficiency levels since 2023, and it is about the school as much as about the child.',
+    about: 'Sat in years three, five, seven and nine every March, reported in four proficiency levels since 2023, and it’s about the school as much as about the child.',
   },
   {
     id: 'atar', name: 'The Australian Tertiary Admission Rank', shortName: 'The ATAR', kind: 'admissions',
@@ -475,7 +475,7 @@ export const TESTS_ELSEWHERE: readonly StandardTest[] = [
     kind: 'national', countryIds: [], regionIds: ['ca-on'], fromAge: 15, toAge: 16, month: 3,
     min: 0, max: 400, fee: 0, retakes: 2, resultsAfterDays: 60,
     sections: [sec('paper', 'The Test', 0, 400, whole('language'))],
-    about: 'You cannot get an Ontario high school diploma without passing it, which is the whole of its reputation.',
+    about: 'You can’t get an Ontario high school diploma without passing it, which is the whole of its reputation.',
   },
   // --- The international programs -----------------------------------------
   {
@@ -486,7 +486,7 @@ export const TESTS_ELSEWHERE: readonly StandardTest[] = [
       sec('subjects', 'The Six Subjects', 0, 42, third('language', 'mathematics', 'science')),
       sec('core', 'The Core', 0, 3, half('language', 'history')),
     ],
-    about: 'Six subjects out of seven each plus three points for the extended essay and theory of knowledge, forty five in all, and it is sat in schools in more than a hundred and fifty countries.',
+    about: 'Six subjects out of seven each plus three points for the extended essay and theory of knowledge, forty five in all, and it’s sat in schools in more than a hundred and fifty countries.',
   },
   {
     id: 'ielts', name: 'The International English Language Testing System', shortName: 'IELTS',
@@ -498,7 +498,7 @@ export const TESTS_ELSEWHERE: readonly StandardTest[] = [
       sec('writing', 'Writing', 0, 9, whole('language')),
       sec('speaking', 'Speaking', 0, 9, whole('foreign')),
     ],
-    about: 'Four bands averaged to a half point, and what a university or a visa asks for from anybody who did not do their schooling in English.',
+    about: 'Four bands averaged to a half point, and what a university or a visa asks for from anybody who didn’t do their schooling in English.',
   },
 ];
 
@@ -615,7 +615,7 @@ export const GRADE_SCALES: readonly GradeScale[] = [
     id: 'letters', label: 'Letters And A Grade Point Average', countryIds: ['us', 'ca', 'ph', 'sa'],
     direction: 'high', averageLabel: 'Grade Point Average', averageMax: 4,
     bands: [
-      { from: 97, label: 'A+', points: 4, about: 'Four point oh, and there is nothing above it.' },
+      { from: 97, label: 'A+', points: 4, about: 'Four point oh, and there’s nothing above it.' },
       { from: 88, label: 'A', points: 4, about: 'Four point oh on an unweighted scale.' },
       { from: 84, label: 'A-', points: 3.7, about: 'Three point seven, and still an A on a transcript.' },
       { from: 80, label: 'B+', points: 3.3, about: 'Three point three, and a comfortable place to be.' },
@@ -641,7 +641,7 @@ export const GRADE_SCALES: readonly GradeScale[] = [
       { from: 52, label: '4', about: 'A standard pass, which is the line a school counts.' },
       { from: 42, label: '3', about: 'Below a pass, and English and mathematics have to be sat again.' },
       { from: 30, label: '2', about: 'Below a pass.' },
-      { from: 0, label: '1', about: 'The bottom of the scale, and above it is U for ungraded.' },
+      { from: 0, label: '1', about: 'The bottom of the scale, and above it’s U for ungraded.' },
     ],
     about: 'England and Wales replaced letters with numbers at GCSE in 2017, where nine is the top and a four is a pass, and A Levels stayed on A star down to E.',
   },
@@ -676,13 +676,13 @@ export const GRADE_SCALES: readonly GradeScale[] = [
     id: 'dutch', label: 'One Through Ten', countryIds: ['nl'], direction: 'high',
     averageLabel: 'Het Gemiddelde', averageMax: 10,
     bands: [
-      { from: 92, label: '10', about: 'Given so rarely that it is a story when it happens.' },
+      { from: 92, label: '10', about: 'Given so rarely that it’s a story when it happens.' },
       { from: 84, label: '9', about: 'Uitmuntend.' },
       { from: 74, label: '8', about: 'Goed, and about as high as most Dutch marking goes.' },
       { from: 64, label: '7', about: 'Ruim voldoende, and where a good student lives.' },
       { from: 55, label: '6', about: 'Voldoende: the pass, and the grade the whole country aims at.' },
       { from: 42, label: '5', about: 'Onvoldoende, and it needs making up somewhere else.' },
-      { from: 0, label: '4', about: 'Well short, and it cannot be averaged away.' },
+      { from: 0, label: '4', about: 'Well short, and it can’t be averaged away.' },
     ],
     about: 'One to ten with a six as the pass, and the Dutch habit of aiming squarely at the six has a name of its own.',
   },
@@ -704,7 +704,7 @@ export const GRADE_SCALES: readonly GradeScale[] = [
       { from: 85, label: '5', about: 'Отлично: excellent, and everybody knows what a five means.' },
       { from: 68, label: '4', about: 'Хорошо: good.' },
       { from: 45, label: '3', about: 'Удовлетворительно: satisfactory, and the pass.' },
-      { from: 0, label: '2', about: 'Неудовлетворительно, and there is no one on the scale at all.' },
+      { from: 0, label: '2', about: 'Неудовлетворительно, and there’s no one on the scale at all.' },
     ],
     about: 'Five down to two with nothing below it, which is why a two is the thing every schoolchild in the region dreads.',
   },
@@ -731,7 +731,7 @@ export const GRADE_SCALES: readonly GradeScale[] = [
       { from: 40, label: 'Satisfactory', about: 'A pass, and nothing more said about it.' },
       { from: 0, label: 'Unsatisfactory', about: 'Below the pass.' },
     ],
-    about: 'Where SLATE does not carry a country’s own scale, a mark out of a hundred in plain words, said plainly rather than dressed up as somebody’s national system.',
+    about: 'Where SLATE doesn’t carry a country’s own scale, a mark out of a hundred in plain words, said plainly rather than dressed up as somebody’s national system.',
   },
 ];
 
@@ -836,9 +836,9 @@ export const GENERAL_TERMS = 'three_terms';
 export const REPORT_COMMENTS: Readonly<Record<string, readonly string[]>> = {
   Outstanding: [
     'Works at a level above the year and is beginning to set the pace for the rest of the class.',
-    'Arrives having already thought about it, which is not something that can be taught.',
+    'Arrives having already thought about it, which isn’t something that can be taught.',
     'The quality of the written work is well beyond what is asked for at this stage.',
-    'Asks the question the rest of the room has not got to yet.',
+    'Asks the question the rest of the room hasn’t got to yet.',
     'A pleasure to teach, and I have stopped being surprised by what comes back.',
     'Should be entered for the harder paper without hesitation.',
     'Has taken every piece of feedback and done something with it.',
@@ -855,12 +855,12 @@ export const REPORT_COMMENTS: Readonly<Record<string, readonly string[]>> = {
     'Well above where the year is expected to be at this point.',
   ],
   Sound: [
-    'Solid, steady work, and there is more here than the marks are showing.',
+    'Solid, steady work, and there’s more here than the marks are showing.',
     'Understands it in the room; the difficulty is getting it onto the page.',
     'Doing what is asked. Doing a little more than that would move things on.',
     'A fair term. The written work is thinner than the contributions in class.',
     'Comfortable with the routine work and hesitant with anything unfamiliar.',
-    'Would benefit from asking when something has not gone in, rather than waiting.',
+    'Would benefit from asking when something hasn’t gone in, rather than waiting.',
     'On track. The next step is being able to explain the working, not just get there.',
     'Sits where most of the year sits, and could sit higher with a little more at home.',
   ],
@@ -871,25 +871,25 @@ export const REPORT_COMMENTS: Readonly<Record<string, readonly string[]>> = {
     'Capable of considerably better than this and both of us know it.',
     'A difficult term. The basics need going over again before anything else will stick.',
     'Progress has stalled. A conversation at home would help.',
-    'Turns up and does the minimum, and the minimum is not going to be enough next year.',
+    'Turns up and does the minimum, and the minimum isn’t going to be enough next year.',
     'Marks are being lost to carelessness rather than to not knowing.',
   ],
   Struggling: [
-    'Falling behind the rest of the set and it is going to take work to close.',
+    'Falling behind the rest of the set and it’s going to take work to close.',
     'Missing too many lessons for anything to build on anything.',
     'Needs support with the fundamentals before the year’s material makes sense.',
     'I have spoken to them about this twice and I would like to speak to somebody at home.',
-    'The work that is handed in is not finished and a lot of it is not handed in.',
+    'The work that’s handed in isn’t finished and a lot of it isn’t handed in.',
     'This can be turned round, but not without a change in the next few weeks.',
     'Has stopped asking, which worries me more than the marks do.',
-    'A hard term, and I do not think the difficulty is ability.',
+    'A hard term, and I don’t think the difficulty is ability.',
   ],
   Failing: [
-    'Will not pass this course on the current work and needs a plan rather than a comment.',
+    'Won’t pass this course on the current work and needs a plan rather than a comment.',
     'Almost nothing has been handed in this term.',
     'Attendance is the first thing that has to change; everything else follows it.',
     'I would like to meet before the next report rather than after it.',
-    'This is a long way below what this student can do, and that is the frustrating part.',
+    'This is a long way below what this student can do, and that’s the frustrating part.',
     'The course has moved beyond where they are and the gap is now the whole term.',
     'Needs to repeat the material rather than carry on past it.',
     'A serious conversation is overdue.',
@@ -912,7 +912,7 @@ export const EFFORT_LEVELS: readonly { from: number; label: string; about: strin
   { from: 68, label: 'Good', about: 'Consistent, and the work arrives.' },
   { from: 50, label: 'Satisfactory', about: 'What is asked for and not much beyond it.' },
   { from: 32, label: 'Inconsistent', about: 'Some weeks, and not others.' },
-  { from: 0, label: 'A Concern', about: 'The work is not being done.' },
+  { from: 0, label: 'A Concern', about: 'The work isn’t being done.' },
 ];
 
 /** How much a term of preparation is worth on the day, at its ceiling. */
@@ -955,7 +955,7 @@ export function stateTestFor(regionId: string): { name: string; short?: string; 
   if (carried) return { ...carried, carried: true };
   return {
     name: GENERAL_STATE_TEST,
-    about: 'Every state tests its schools every spring. SLATE does not carry this one’s own name for it and says so rather than inventing one.',
+    about: 'Every state tests its schools every spring. SLATE doesn’t carry this one’s own name for it and says so rather than inventing one.',
     carried: false,
   };
 }

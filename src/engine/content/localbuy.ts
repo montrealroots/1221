@@ -24,7 +24,7 @@ import type { CatalogItem } from './catalog';
 import type { ClimateType } from './climate';
 
 export const LOCAL_BUY_NOTE =
-  'Two branches of the same chain in two countries do not stock the same shop, and the reasons are '
+  'Two branches of the same chain in two countries don’t stock the same shop, and the reasons are '
   + 'real: what may lawfully be sold there, what the weather asks for, and which brands trade in that '
   + 'market at all. How deep any one branch goes into the range it could carry is SLATE’s own, '
   + 'because no company publishes its buy.';
@@ -36,7 +36,7 @@ export const LAW_NOTE =
 
 export const CLIMATE_BUY_NOTE =
   'A buyer sends a shop what that city’s year actually needs. A heavy coat in an equatorial city and '
-  + 'swimwear in a subarctic one are not stocked, which is why the same chain reads differently in '
+  + 'swimwear in a subarctic one aren’t stocked, which is why the same chain reads differently in '
   + 'Singapore and in Reykjavik. Where the line falls is SLATE’s own.';
 
 // ---------------------------------------------------------------------------
@@ -116,7 +116,7 @@ export function availabilityOf(
 ): { availability: Availability; why?: string } {
   if (hasAny(item, ALCOHOL_TAGS)) {
     if (ALCOHOL_PROHIBITED.has(countryId)) {
-      return { availability: 'not_sold', why: 'Alcohol is not sold in shops here.' };
+      return { availability: 'not_sold', why: 'Alcohol isn’t sold in shops here.' };
     }
     const monopoly = ALCOHOL_MONOPOLY[countryId];
     if (monopoly) {
@@ -128,7 +128,7 @@ export function availabilityOf(
   }
   if (hasAny(item, PORK_TAGS)) {
     if (PORK_NOT_SOLD.has(countryId)) {
-      return { availability: 'not_sold', why: 'Pork is not sold here.' };
+      return { availability: 'not_sold', why: 'Pork isn’t sold here.' };
     }
     if (PORK_LICENSED_ROOM.has(countryId)) {
       return {

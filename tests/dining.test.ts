@@ -216,7 +216,7 @@ describe('the room', () => {
     const elsewhere = placesIn(sim.player.currentLocationId).find((p) => p.kind === 'restaurant' && p.id !== place.id)!;
     const notThere = sim.execute({ kind: 'dine.arrive', payload: { placeId: elsewhere.id } });
     expect(notThere.ok).toBe(false);
-    expect(notThere.error).toMatch(/not at/i);
+    expect(notThere.error).toMatch(/n[o’]t at/i);
   });
 
   it('moves the clock for the wait and for the kitchen, and never backwards', () => {

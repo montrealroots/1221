@@ -438,7 +438,7 @@ export function describePart(part: SchoolPart): string {
   if (part.verdict === undefined) return `${what} in ${part.title}.`;
   const how = part.verdict >= 80 ? 'It went very well.'
     : part.verdict >= 60 ? 'It went well enough.'
-      : part.verdict >= 40 ? 'It was fine.' : 'It was not your night.';
+      : part.verdict >= 40 ? 'It was fine.' : 'It wasn’t your night.';
   return `${what} in ${part.title}. ${how}${part.noticed ? ' Somebody outside the school was watching.' : ''}`;
 }
 
@@ -455,12 +455,12 @@ export function registerSchool(sim: Simulation): void {
     'school.attend',
     (p, { sim: s }) => {
       const schooling = ensureSchooling(s);
-      if (!schooling) throw new CommandError('You are not at school.');
-      if (!isASchoolDay(s)) throw new CommandError('There is no school today.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
+      if (!isASchoolDay(s)) throw new CommandError('There’s no school today.');
       const hours = schoolHours(s);
       if (s.now > hours.to) throw new CommandError('School is over for today.');
       const today = todaysLessons(s, schooling);
-      if (today.length === 0) throw new CommandError('There is nothing on your timetable today.');
+      if (today.length === 0) throw new CommandError('There’s nothing on your timetable today.');
 
       const effort = p.effort ?? 'normal';
       const put = effort === 'hard' ? 1.55 : effort === 'coast' ? 0.45 : 1;
@@ -507,10 +507,12 @@ export function registerSchool(sim: Simulation): void {
     'school.skip',
     (p, { sim: s }) => {
       const schooling = ensureSchooling(s);
-      if (!schooling) throw new CommandError('You are not at school.');
-      if (!isASchoolDay(s)) throw new CommandError('There is no school today to miss.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
+      if (!isASchoolDay(s)) throw new CommandError('There’s no school today to miss.');
+      const hours = schoolHours(s);
+      if (s.now > hours.to) throw new CommandError('School is already over for today. There’s nothing left to skip.');
       const today = todaysLessons(s, schooling);
-      if (today.length === 0) throw new CommandError('There is nothing on today.');
+      if (today.length === 0) throw new CommandError('There’s nothing on today.');
 
       for (const lesson of today) {
         const mark = markFor(schooling, lesson.subjectId);
@@ -519,7 +521,7 @@ export function registerSchool(sim: Simulation): void {
         if (!schooling.marks.find((one) => one.subjectId === lesson.subjectId)) schooling.marks.push(mark);
       }
       const rate = attendance(schooling);
-      s.advanceTo(schoolHours(s).to);
+      s.advanceTo(Math.max(s.now, hours.to));
       // Below four fifths somebody rings home, which is how it works.
       const note = rate < 80
         ? `${plural(today.length, 'lesson')} missed. Attendance is ${rate}%, and the school has been in touch with home.`
@@ -543,12 +545,12 @@ export function registerSchool(sim: Simulation): void {
     'school.join_club',
     (p, { sim: s }) => {
       const schooling = ensureSchooling(s);
-      if (!schooling) throw new CommandError('You are not at school.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
       const club = CLUB_BY_ID[p.clubId];
-      if (!club) throw new CommandError('The school does not run that.');
+      if (!club) throw new CommandError('The school doesn’t run that.');
       const age = ageOf(s);
       if (age < club.fromAge) throw new CommandError(`${club.label} is for ${club.fromAge} and up. You are ${age}.`);
-      if (schooling.clubs.includes(club.id)) throw new CommandError(`You are already in ${club.label}.`);
+      if (schooling.clubs.includes(club.id)) throw new CommandError(`You’re already in ${club.label}.`);
       if (schooling.clubs.length >= 3) throw new CommandError('Three is as many as anybody can actually keep up.');
 
       schooling.clubs.push(club.id);
@@ -576,7 +578,7 @@ export function registerSchool(sim: Simulation): void {
     'school.audition',
     (_p, { sim: s }) => {
       const schooling = ensureSchooling(s);
-      if (!schooling) throw new CommandError('You are not at school.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
       if (!schooling.clubs.includes('drama')) {
         throw new CommandError('The play is cast out of the drama club. Join it first.');
       }

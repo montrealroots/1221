@@ -70,7 +70,7 @@ describe('navigation', () => {
     expect(labels.length).toBeGreaterThan(20);
     for (const { file, label } of labels) {
       expect(label, `${file}: ${label}`).not.toMatch(EMOJI);
-      expect(label, `${file}: ${label}`).toMatch(/^[A-Za-z0-9?'&, ]+$/);
+      expect(label, `${file}: ${label}`).toMatch(/^[A-Za-z0-9?'’&, ]+$/);
       // Title Case: every word capitalised, as the rest of the game is.
       for (const word of label.split(' ')) expect(word, `${file}: "${label}"`).toMatch(/^[A-Z0-9]/);
     }

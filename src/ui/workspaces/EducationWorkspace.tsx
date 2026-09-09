@@ -198,7 +198,7 @@ function SchoolPanels(): JSX.Element | null {
         <h1>{schooling.placeName}</h1>
         <p className="muted">
           {stage?.label}, {schooling.yearLabel}. The {system.label} system.
-          {' '}{schoolIsCompulsory(sim) ? 'You have to be here.' : 'You do not have to be here any more.'}
+          {' '}{schoolIsCompulsory(sim) ? 'You have to be here.' : 'You don’t have to be here any more.'}
         </p>
       </div>
 
@@ -207,7 +207,7 @@ function SchoolPanels(): JSX.Element | null {
           title={isASchoolDay(sim) ? 'Today' : 'No School Today'}
           subtitle={isASchoolDay(sim)
             ? today.map((one) => SUBJECT_BY_ID[one.subjectId]?.label ?? one.subjectId).join(' · ')
-            : 'It is the weekend.'}
+            : 'It’s the weekend.'}
         >
           <div className="col gap-3">
             <div className="row gap-2 wrap">
@@ -259,8 +259,8 @@ function SchoolPanels(): JSX.Element | null {
             Attendance {attendance(schooling)}%.
             {' '}{standing.university
               ? 'These marks would get a university to look.'
-              : 'These marks would not get a university to look yet.'}
-            {standing.scholarship ? ' And they would pay for it.' : ''}
+              : 'These marks wouldn’t get a university to look yet.'}
+            {standing.scholarship ? ' And they’d pay for it.' : ''}
           </p>
         </Panel>
 
@@ -457,7 +457,7 @@ function ExamPanels(): JSX.Element | null {
             ))}
           {open.length === 0 && coming.length === 0 && (
             <div className="list-item list-static">
-              <div className="xs dim">There is nothing anybody your age sits where you are.</div>
+              <div className="xs dim">There’s nothing anybody your age sits where you are.</div>
             </div>
           )}
         </div>
@@ -514,7 +514,7 @@ function ExamPanels(): JSX.Element | null {
         </Panel>
       )}
 
-      <Panel title="How This Works" subtitle="What is real here, and what is not.">
+      <Panel title="How This Works" subtitle="What is real here, and what isn’t.">
         <div className="col gap-2">
           <p className="xs dim" style={{ margin: 0 }}>{EXAM_NOTE}</p>
           <p className="xs dim" style={{ margin: 0 }}>{SITTING_NOTE}</p>
@@ -566,7 +566,7 @@ function UniversityPanels(): JSX.Element | null {
           <p className="muted">{describeStudies(studies)} {whereItIs(university)}.</p>
         </div>
         <div className="grid grid-sheet">
-          <Panel title="The Term" subtitle={away ? `You are not in ${university.town}.` : `Year ${studies.year} of ${studies.years}.`}>
+          <Panel title="The Term" subtitle={away ? `You aren’t in ${university.town}.` : `Year ${studies.year} of ${studies.years}.`}>
             <div className="col gap-3">
               <div className="row gap-2 wrap">
                 {(['normal', 'hard', 'coast'] as const).map((effort) => (
@@ -615,8 +615,8 @@ function UniversityPanels(): JSX.Element | null {
         <h1>Where you might go.</h1>
         <p className="muted">
           You are carrying {marks.toFixed(0)}. {marks >= UNIVERSITY_LOOKS_AT
-            ? 'That is enough for a university to look at you.'
-            : `Universities do not look below ${UNIVERSITY_LOOKS_AT}.`}
+            ? 'That’s enough for a university to look at you.'
+            : `Universities don’t look below ${UNIVERSITY_LOOKS_AT}.`}
         </p>
       </div>
 
@@ -630,7 +630,7 @@ function UniversityPanels(): JSX.Element | null {
               value={pickedUni}
               onChange={(e) => { setPickedUni(e.target.value); setPickedMajor(''); }}
             >
-              <option value="">Pick a university</option>
+              <option value="">Pick A University</option>
               {here.map((one) => (
                 <option key={one.id} value={one.id}>{one.name} — {one.town}</option>
               ))}
@@ -644,7 +644,7 @@ function UniversityPanels(): JSX.Element | null {
               disabled={!chosen}
               onChange={(e) => setPickedMajor(e.target.value)}
             >
-              <option value="">Pick a course</option>
+              <option value="">Pick A Course</option>
               {courses.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
             </select>
 

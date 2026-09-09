@@ -308,10 +308,10 @@ export function registerExams(sim: Simulation): void {
     'exam.register',
     (p, { sim: s }) => {
       const schooling = schoolingOf(s);
-      if (!schooling) throw new CommandError('You are not at school.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
       const test = testsOpenTo(s).find((one) => one.id === p.testId);
-      if (!test) throw new CommandError('That is not a test anybody sits at your age, where you are.');
-      if (alreadyDownFor(s, test.id)) throw new CommandError(`You are already down for ${test.name}.`);
+      if (!test) throw new CommandError('That isn’t a test anybody sits at your age, where you are.');
+      if (alreadyDownFor(s, test.id)) throw new CommandError(`You’re already down for ${test.name}.`);
       const attempt = attemptsAt(s, test.id);
       if (attempt > test.retakes) {
         throw new CommandError(
@@ -323,9 +323,9 @@ export function registerExams(sim: Simulation): void {
       const sitsAt = nextSittingDate(s, test);
       if (test.fee > 0) {
         const accountId = s.player.primaryAccountId;
-        if (!accountId) throw new CommandError('There is no account to pay the entry fee from.');
+        if (!accountId) throw new CommandError('There’s no account to pay the entry fee from.');
         if (s.ledger.availableFunds(accountId) < test.fee) {
-          throw new CommandError(`${test.name} costs ${formatMoney(test.fee)} to enter and it is not there.`);
+          throw new CommandError(`${test.name} costs ${formatMoney(test.fee)} to enter and it isn’t there.`);
         }
         s.expense(accountId, test.fee, `${test.name} — Entry`, 'education', {
           refType: 'person', refId: s.player.id,
@@ -366,18 +366,18 @@ export function registerExams(sim: Simulation): void {
     'exam.study',
     (p, { sim: s }) => {
       const schooling = schoolingOf(s);
-      if (!schooling) throw new CommandError('You are not at school.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
       const sitting = p.sittingId
         ? schooling.sittings.find((one) => one.id === p.sittingId)
         : sittingsToCome(s)[0];
-      if (!sitting) throw new CommandError('There is nothing coming up to revise for.');
+      if (!sitting) throw new CommandError('There’s nothing coming up to revise for.');
       if (sitting.satAt) throw new CommandError('That one has been sat.');
       const test = testById(s, sitting.testId)!;
       if ((s.player.wellbeing.energy ?? 100) < 15) {
-        throw new CommandError('There is nothing left in you. Nothing would go in.');
+        throw new CommandError('There’s nothing left in you. Nothing would go in.');
       }
       if (prepWorth(sitting) >= PREP_CEILING) {
-        throw new CommandError(`You have done the papers. More of them is not going to move ${test.name}.`);
+        throw new CommandError(`You have done the papers. More of them isn’t going to move ${test.name}.`);
       }
       sitting.prep += 1;
       s.advanceTo(s.now + 2 * MS_HOUR);
@@ -397,7 +397,7 @@ export function registerExams(sim: Simulation): void {
         prep: sitting.prep,
         worth: Math.round(prepWorth(sitting) * 10) / 10,
         note: `Two hours on a past ${test.shortName ?? test.name} paper. `
-          + `${plural(sitting.prep, 'session')} in, and it is worth about ${Math.round(prepWorth(sitting))} points on the day.`,
+          + `${plural(sitting.prep, 'session')} in, and it’s worth about ${Math.round(prepWorth(sitting))} points on the day.`,
       };
     },
   );
@@ -410,11 +410,11 @@ export function registerExams(sim: Simulation): void {
     'exam.sit',
     (p, { sim: s }) => {
       const schooling = schoolingOf(s);
-      if (!schooling) throw new CommandError('You are not at school.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
       const sitting = p.sittingId
         ? schooling.sittings.find((one) => one.id === p.sittingId)
         : sittingsOf(s).find((one) => !one.satAt && Math.abs(one.sitsAt - s.now) < MS_DAY);
-      if (!sitting) throw new CommandError('There is nothing to sit today.');
+      if (!sitting) throw new CommandError('There’s nothing to sit today.');
       if (sitting.satAt) throw new CommandError('You have sat that one.');
       const test = testById(s, sitting.testId)!;
       if (s.now < sitting.sitsAt - 12 * MS_HOUR) {
@@ -468,7 +468,7 @@ export function registerExams(sim: Simulation): void {
         // it is done, not what they got. The score is on the record and the
         // page does not show it until the results are out.
         note: `${test.name} is sat. Results on ${formatDate(sitting.resultsAt, s.homeZone)}, `
-          + `and there is nothing to do until then.`,
+          + `and there’s nothing to do until then.`,
       };
     },
   );
@@ -478,9 +478,9 @@ export function registerExams(sim: Simulation): void {
     'exam.withdraw',
     (p, { sim: s }) => {
       const schooling = schoolingOf(s);
-      if (!schooling) throw new CommandError('You are not at school.');
+      if (!schooling) throw new CommandError('You aren’t at school.');
       const sitting = schooling.sittings.find((one) => one.id === p.sittingId);
-      if (!sitting) throw new CommandError('You are not down for that.');
+      if (!sitting) throw new CommandError('You aren’t down for that.');
       if (sitting.satAt) throw new CommandError('That one has been sat.');
       const test = testById(s, sitting.testId)!;
       schooling.sittings = schooling.sittings.filter((one) => one.id !== sitting.id);
@@ -533,10 +533,10 @@ export function registerExamSchedules(sim: Simulation): void {
     if (!test) return;
     sitting.released = true;
     const share = (sitting.score - test.min) / Math.max(1, test.max - test.min);
-    const how = share >= 0.85 ? 'and it is a very good one'
-      : share >= 0.65 ? 'and it is a good one'
+    const how = share >= 0.85 ? 'and it’s a very good one'
+      : share >= 0.65 ? 'and it’s a good one'
         : share >= 0.45 ? 'which is about the middle of it'
-          : 'and it is below where you wanted to be';
+          : 'and it’s below where you wanted to be';
     s.notify({
       title: `${test.shortName ?? test.name} Results`,
       body: `${sitting.score} out of ${test.max}, ${how}.`

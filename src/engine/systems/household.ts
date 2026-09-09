@@ -455,7 +455,7 @@ export function registerHousehold(sim: Simulation): void {
     'home.repair',
     (p, { sim: s }) => {
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('You do not own that.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('You don’t own that.');
       if (works(asset)) throw new CommandError(`${asset.name} is working.`);
       if (asset.repairDueAt !== undefined) throw new CommandError(`${asset.name} is already booked in.`);
 
@@ -464,7 +464,7 @@ export function registerHousehold(sim: Simulation): void {
       const accountId = p.accountId ?? s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`The repair is ${formatMoney(cost)} and you cannot cover it.`);
+        throw new CommandError(`The repair is ${formatMoney(cost)} and you can’t cover it.`);
       }
 
       s.expense(accountId, cost, `Repair — ${asset.name}`, 'household', { refType: 'asset', refId: asset.id });
@@ -486,12 +486,12 @@ export function registerHousehold(sim: Simulation): void {
     'home.use',
     (p, { sim: s }) => {
       const asset = s.universe.assets[p.assetId];
-      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('You do not own that.');
+      if (!asset || asset.ownerId !== s.player.id) throw new CommandError('You don’t own that.');
       const item = asset.catalogId ? CATALOG.get(asset.catalogId) : undefined;
       const choices = item ? usesFor(item.name, item.category) : NOTHING;
       const use = p.useId ? choices.find((c) => c.id === p.useId) : choices[0];
-      if (!use) throw new CommandError(`There is nothing to do with ${asset.name} but own it.`);
-      if (use.via) throw new CommandError(`${asset.name} is not used from here. ${USE_ELSEWHERE[use.via]}`);
+      if (!use) throw new CommandError(`There’s nothing to do with ${asset.name} but own it.`);
+      if (use.via) throw new CommandError(`${asset.name} isn’t used from here. ${USE_ELSEWHERE[use.via]}`);
       if (!works(asset)) throw new CommandError(`${asset.name} is broken. It needs a repair first.`);
 
       const minutes = clamp(p.minutes ?? use.minutes, 5, 240);

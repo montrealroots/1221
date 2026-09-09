@@ -40,16 +40,16 @@ export const TOPIC_LABEL: Readonly<Record<Topic, string>> = {
 /** What an hour of it does to you, which is not the same for all of them. */
 export const TOPIC_EFFECT: Readonly<Record<Topic, { morale: number; energy: number; stress: number; note: string }>> = {
   film: { morale: 6, energy: -2, stress: -4, note: 'You come away wanting to make something.' },
-  making: { morale: 5, energy: -3, stress: -2, note: 'Half of it is technique you will actually use.' },
+  making: { morale: 5, energy: -3, stress: -2, note: 'Half of it is technique you’ll actually use.' },
   acting: { morale: 5, energy: -2, stress: -3, note: 'Watching somebody good is its own lesson.' },
   cooking: { morale: 7, energy: -1, stress: -6, note: 'Nothing in the world is calmer than a knife on a board.' },
   cars: { morale: 6, energy: -2, stress: -3, note: 'Loud, and none of it your problem.' },
-  fitness: { morale: 3, energy: -1, stress: -1, note: 'Watching training is not training.' },
+  fitness: { morale: 3, energy: -1, stress: -1, note: 'Watching training isn’t training.' },
   music: { morale: 8, energy: 2, stress: -7, note: 'It sits with you afterwards.' },
-  tech: { morale: 4, energy: -3, stress: 0, note: 'You now want something you did not know existed.' },
+  tech: { morale: 4, energy: -3, stress: 0, note: 'You now want something you didn’t know existed.' },
   travel: { morale: 8, energy: -1, stress: -6, note: 'Somewhere else, for an hour, at no cost.' },
   comedy: { morale: 10, energy: 1, stress: -9, note: 'You laughed properly at least twice.' },
-  news: { morale: -4, energy: -4, stress: 7, note: 'You are better informed and worse off.' },
+  news: { morale: -4, energy: -4, stress: 7, note: 'You’re better informed and worse off.' },
   fashion: { morale: 5, energy: -2, stress: -2, note: 'You have opinions about a hem now.' },
   gaming: { morale: 7, energy: -4, stress: -5, note: 'Three hours can go like that.' },
   home: { morale: 5, energy: -2, stress: -4, note: 'You look around your own place differently.' },
@@ -112,7 +112,7 @@ function ch(
 
 const FILM: ChannelSeed[] = [
   ch('c_frame_by_frame', 'Frame By Frame', 'framebyframe', 'film', 2_840_000, 11, 92, 'essayist', 'One shot, taken apart, for as long as it takes.'),
-  ch('c_the_cutting_room', 'The Cutting Room', 'cuttingroom', 'film', 1_420_000, 9, 88, 'essayist', 'Editing, and why you did not notice it.'),
+  ch('c_the_cutting_room', 'The Cutting Room', 'cuttingroom', 'film', 1_420_000, 9, 88, 'essayist', 'Editing, and why you didn’t notice it.'),
   ch('c_second_unit', 'Second Unit', 'secondunit', 'film', 940_000, 7, 84, 'enthusiast', 'The parts of a picture nobody credits.'),
   ch('c_reel_talk', 'Reel Talk', 'reeltalk', 'film', 3_610_000, 3, 71, 'loud', 'Reviews on the Friday, argument by the Sunday.'),
   ch('c_the_long_take', 'The Long Take', 'thelongtake', 'film', 612_000, 21, 95, 'quiet', 'Forty minute video essays and no apologies.'),
@@ -122,7 +122,7 @@ const FILM: ChannelSeed[] = [
   ch('c_double_bill', 'Double Bill', 'doublebill', 'film', 447_000, 10, 81, 'warm', 'Two films that explain each other.'),
   ch('c_the_credits_roll', 'The Credits Roll', 'creditsroll', 'film', 733_000, 8, 79, 'essayist', 'Who actually made it, and what they did.'),
   ch('c_box_office_desk', 'Box Office Desk', 'boxofficedesk', 'film', 1_060_000, 2, 68, 'brisk', 'Weekend numbers, Monday morning, no spin.'),
-  ch('c_the_third_act', 'The Third Act', 'thirdact', 'film', 358_000, 12, 86, 'essayist', 'Endings, and why most of them are not earned.'),
+  ch('c_the_third_act', 'The Third Act', 'thirdact', 'film', 358_000, 12, 86, 'essayist', 'Endings, and why most of them aren’t earned.'),
 ];
 
 const MAKING: ChannelSeed[] = [
@@ -161,7 +161,7 @@ const COOKING: ChannelSeed[] = [
   ch('c_knife_work', 'Knife Work', 'knifework', 'cooking', 2_340_000, 5, 91, 'brisk', 'Technique first. Recipes are downstream of it.'),
   ch('c_sunday_lunch', 'Sunday Lunch', 'sundaylunch', 'cooking', 987_000, 7, 86, 'warm', 'One big meal a week, done properly.'),
   ch('c_market_day', 'Market Day', 'marketday', 'cooking', 612_000, 9, 88, 'warm', 'What is good this week, and what to do with it.'),
-  ch('c_the_test_kitchen_bench', 'The Test Bench', 'testbench', 'cooking', 3_050_000, 4, 90, 'brisk', 'Six versions of one thing until it is right.'),
+  ch('c_the_test_kitchen_bench', 'The Test Bench', 'testbench', 'cooking', 3_050_000, 4, 90, 'brisk', 'Six versions of one thing until it’s right.'),
   ch('c_late_night_eggs', 'Late Night Eggs', 'latenighteggs', 'cooking', 1_410_000, 2, 76, 'loud', 'Cooking at one in the morning like a person.'),
   ch('c_the_stock_pot', 'The Stock Pot', 'thestockpot', 'cooking', 448_000, 11, 92, 'quiet', 'Stocks, sauces and the things underneath everything.'),
   ch('c_two_burners', 'Two Burners', 'twoburners', 'cooking', 2_680_000, 4, 82, 'warm', 'Small kitchen, no space, still eating well.'),
@@ -227,7 +227,7 @@ const TECH: ChannelSeed[] = [
   ch('c_the_photo_lab', 'The Photo Lab', 'thephotolab', 'tech', 964_000, 8, 89, 'warm', 'Cameras, lenses and pictures rather than specs.'),
   ch('c_home_server', 'Home Server', 'homeserver', 'tech', 743_000, 10, 87, 'brisk', 'Running your own, in a cupboard, on purpose.'),
   ch('c_the_screen_test', 'The Screen Test', 'screentest', 'tech', 1_120_000, 9, 91, 'quiet', 'Displays, color and what a calibration is for.'),
-  ch('c_first_boot', 'First Boot', 'firstboot', 'tech', 2_260_000, 6, 79, 'warm', 'Unboxing without pretending it is an event.'),
+  ch('c_first_boot', 'First Boot', 'firstboot', 'tech', 2_260_000, 6, 79, 'warm', 'Unboxing without pretending it’s an event.'),
 ];
 
 const TRAVEL: ChannelSeed[] = [
@@ -240,7 +240,7 @@ const TRAVEL: ChannelSeed[] = [
   ch('c_the_walking_route', 'The Walking Route', 'walkingroute', 'travel', 1_060_000, 10, 90, 'quiet', 'Long distance paths, filmed as they are walked.'),
   ch('c_market_streets', 'Market Streets', 'marketstreets', 'travel', 1_720_000, 6, 85, 'warm', 'Eating where people actually eat.'),
   ch('c_the_last_stop', 'The Last Stop', 'thelaststop', 'travel', 448_000, 15, 91, 'quiet', 'The end of the line, wherever that is.'),
-  ch('c_out_of_season', 'Out Of Season', 'outofseason', 'travel', 967_000, 13, 87, 'quiet', 'Resorts in February, and why they are better.'),
+  ch('c_out_of_season', 'Out Of Season', 'outofseason', 'travel', 967_000, 13, 87, 'quiet', 'Resorts in February, and why they’re better.'),
   ch('c_the_visa_desk', 'The Visa Desk', 'visadesk', 'travel', 336_000, 9, 84, 'brisk', 'Paperwork, honestly, before you book anything.'),
   ch('c_hotel_review_room', 'The Hotel Room', 'thehotelroom', 'travel', 1_490_000, 7, 82, 'warm', 'One room, filmed properly, no euphemisms.'),
 ];
@@ -263,13 +263,13 @@ const COMEDY: ChannelSeed[] = [
 const NEWS: ChannelSeed[] = [
   ch('c_the_morning_desk', 'The Morning Desk', 'morningdesk', 'news', 4_820_000, 1, 78, 'brisk', 'Twelve minutes, every morning, no shouting.'),
   ch('c_long_form_report', 'Long Form Report', 'longformreport', 'news', 1_640_000, 14, 93, 'quiet', 'One story, six weeks, forty minutes.'),
-  ch('c_the_fact_check', 'The Fact Check', 'thefactcheck', 'news', 2_070_000, 4, 89, 'brisk', 'Sources shown on screen or it does not count.'),
+  ch('c_the_fact_check', 'The Fact Check', 'thefactcheck', 'news', 2_070_000, 4, 89, 'brisk', 'Sources shown on screen or it doesn’t count.'),
   ch('c_the_industry_brief', 'The Industry Brief', 'industrybrief', 'news', 736_000, 2, 84, 'brisk', 'What moved in the trade today.'),
   ch('c_local_paper', 'Local Paper', 'localpaper', 'news', 288_000, 3, 81, 'warm', 'Council meetings, potholes and planning rows.'),
   ch('c_the_wire', 'The Wire Desk', 'thewiredesk', 'news', 3_140_000, 1, 72, 'loud', 'Fast, first, occasionally wrong.'),
   ch('c_court_report', 'Court Report', 'courtreport', 'news', 512_000, 5, 90, 'quiet', 'From the public gallery, notebook only.'),
-  ch('c_the_numbers_desk', 'The Numbers Desk', 'numbersdesk', 'news', 964_000, 6, 92, 'brisk', 'The chart, the source, and what it does not show.'),
-  ch('c_foreign_desk', 'Foreign Desk', 'foreigndesk', 'news', 1_880_000, 3, 87, 'quiet', 'Reporting from the place it is happening.'),
+  ch('c_the_numbers_desk', 'The Numbers Desk', 'numbersdesk', 'news', 964_000, 6, 92, 'brisk', 'The chart, the source, and what it doesn’t show.'),
+  ch('c_foreign_desk', 'Foreign Desk', 'foreigndesk', 'news', 1_880_000, 3, 87, 'quiet', 'Reporting from the place it’s happening.'),
   ch('c_the_correction', 'The Correction', 'thecorrection', 'news', 341_000, 9, 91, 'quiet', 'What we got wrong last month, and why.'),
   ch('c_press_gallery', 'Press Gallery', 'pressgallery', 'news', 1_230_000, 2, 79, 'brisk', 'Politics, plainly, without the theater.'),
   ch('c_the_science_brief', 'The Science Brief', 'sciencebrief', 'news', 1_570_000, 4, 88, 'brisk', 'Papers read properly before they are reported.'),

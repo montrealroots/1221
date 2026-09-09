@@ -392,7 +392,7 @@ export function WellbeingWorkspace() {
                     <button
                       className="btn btn-sm btn-primary"
                       disabled={Boolean(scene)}
-                      title={scene ? 'Finish or leave the scene you are in first.' : undefined}
+                      title={scene ? 'Finish or leave the scene you’re in first.' : undefined}
                       onClick={() => run('scene.start', { definitionId: 'wellbeing.activity', input: { activityId: activity.id, minutes: duration } })}
                     >
                       Play It Out
@@ -400,7 +400,7 @@ export function WellbeingWorkspace() {
                     <button
                       className="btn btn-sm"
                       disabled={Boolean(scene)}
-                      title={scene ? 'Finish or leave the scene you are in first.' : 'The same thing, straight through.'}
+                      title={scene ? 'Finish or leave the scene you’re in first.' : 'The same thing, straight through.'}
                       onClick={() => run('scene.quick', { definitionId: 'wellbeing.activity', input: { activityId: activity.id, minutes: duration } }, { idempotencyKey: `quick:${activity.id}:${sim.now}` })}
                     >
                       Just Do It

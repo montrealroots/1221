@@ -156,7 +156,7 @@ export class Ledger {
     }
     if (sum !== 0) {
       throw new LedgerError(
-        `Transaction ${txn.id} ('${txn.memo}') does not balance: postings sum to ${sum} cents, expected 0.`,
+        `Transaction ${txn.id} ('${txn.memo}') doesn’t balance: postings sum to ${sum} cents, expected 0.`,
       );
     }
     for (const p of txn.postings) {

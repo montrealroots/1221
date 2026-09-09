@@ -336,11 +336,11 @@ function houseNote(sim: Simulation, place: Place, event: Event, seatsBought: num
 
 function verdictNote(verdict: number, kind: GoingKind, rng: { pick<T>(items: readonly T[]): T }): string {
   const label = GOING_LABEL[kind].toLowerCase().replace(/^an? /, '');
-  if (verdict >= 82) return rng.pick(['You will be talking about that for a week.', 'Worth the whole evening and the ticket twice over.', 'One of those nights you leave the house for.']);
-  if (verdict >= 62) return rng.pick(['Good. You would go again.', 'It did what it came to do, and did it well.', 'A proper night out.']);
+  if (verdict >= 82) return rng.pick(['You’ll be talking about that for a week.', 'Worth the whole evening and the ticket twice over.', 'One of those nights you leave the house for.']);
+  if (verdict >= 62) return rng.pick(['Good. You’d go again.', 'It did what it came to do, and did it well.', 'A proper night out.']);
   if (verdict >= 42) return rng.pick(['Fine. You have had better and worse.', 'You checked your phone once, near the end.', `A ${label} that neither surprised nor disappointed.`]);
   if (verdict >= 22) return rng.pick(['Not your thing, and you knew it early.', 'You stayed out of politeness.', 'A long way to come for that.']);
-  return rng.pick(['You wished you had stayed in.', 'That is an evening you are not getting back.', 'Nothing in it worked for you.']);
+  return rng.pick(['You wished you had stayed in.', 'That’s an evening you aren’t getting back.', 'Nothing in it worked for you.']);
 }
 
 /** A ticket in a sentence. */
@@ -372,14 +372,14 @@ export function registerGoingSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const cityId = s.player.currentLocationId;
       const found = eventById(s, cityId, p.eventId);
-      if (!found) throw new CommandError('That is not on there.');
+      if (!found) throw new CommandError('That isn’t on there.');
       const { place, event } = found;
-      if (place.id !== p.placeId) throw new CommandError('That is not on at that venue.');
+      if (place.id !== p.placeId) throw new CommandError('That isn’t on at that venue.');
       if (event.at < s.now) throw new CommandError('That has started. Pick a later one.');
-      if (event.at > s.now + 21 * MS_DAY) throw new CommandError('They are not selling that far ahead.');
+      if (event.at > s.now + 21 * MS_DAY) throw new CommandError('They aren’t selling that far ahead.');
 
       const band = (p.band ?? 'middle');
-      if (!BAND_SHARE[band]) throw new CommandError('There is no such seat.');
+      if (!BAND_SHARE[band]) throw new CommandError('There’s no such seat.');
       const seats = clamp(Math.round(p.seats ?? 1), 1, 8);
       const left = seatsLeft(s, place, event, band);
       if (left < seats) {
@@ -392,7 +392,7 @@ export function registerGoingSystem(sim: Simulation): void {
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account to pay for a ticket from.');
       if (s.ledger.availableFunds(accountId) < paid) {
-        throw new CommandError(`That is ${formatMoney(paid)} and you do not have it.`);
+        throw new CommandError(`That is ${formatMoney(paid)} and you don’t have it.`);
       }
 
       const already = Object.values(s.universe.goingTickets).find(
@@ -451,19 +451,19 @@ export function registerGoingSystem(sim: Simulation): void {
       const ticket = s.universe.goingTickets[p.ticketId];
       if (!ticket) throw new CommandError('No such ticket.');
       if (ticket.status === 'went') throw new CommandError('You have already been to that one.');
-      if (ticket.status !== 'booked') throw new CommandError('That ticket is not good for anything now.');
+      if (ticket.status !== 'booked') throw new CommandError('That ticket isn’t good for anything now.');
       if (s.now < ticket.at - DOORS_OPEN_MINUTES * MS_MINUTE) {
         const zone = zoneOf(s, ticket.cityId);
-        throw new CommandError(`That is at ${formatTime(ticket.at, zone)} on ${formatDate(ticket.at, zone)}. They are not open yet.`);
+        throw new CommandError(`That’s at ${formatTime(ticket.at, zone)} on ${formatDate(ticket.at, zone)}. They aren’t open yet.`);
       }
       if (s.now > ticket.at + DOORS_SHUT_MINUTES * MS_MINUTE) {
         ticket.status = 'missed';
         throw new CommandError('That started, and they have shut the doors.');
       }
       if (s.player.currentLocationId !== ticket.cityId) {
-        throw new CommandError(`It is in ${CITIES.get(ticket.cityId)?.name ?? 'another city'} and you are not.`);
+        throw new CommandError(`It’s in ${CITIES.get(ticket.cityId)?.name ?? 'another city'} and you aren’t.`);
       }
-      if (s.player.wellbeing.energy < 8) throw new CommandError('You would sleep through it. Go home.');
+      if (s.player.wellbeing.energy < 8) throw new CommandError('You’d sleep through it. Go home.');
 
       const found = eventById(s, ticket.cityId, ticket.eventId, ticket.at);
       const kind = ticket.kind as GoingKind;
@@ -504,9 +504,9 @@ export function registerGoingSystem(sim: Simulation): void {
     (p, { sim: s }) => {
       const ticket = s.universe.goingTickets[p.ticketId];
       if (!ticket) throw new CommandError('No such ticket.');
-      if (ticket.status !== 'booked') throw new CommandError('There is nothing to give back.');
+      if (ticket.status !== 'booked') throw new CommandError('There’s nothing to give back.');
       if (s.now > ticket.at - REFUNDABLE_UNTIL_MINUTES * MS_MINUTE) {
-        throw new CommandError(`They will not refund inside ${plural(REFUNDABLE_UNTIL_MINUTES / 60, 'hour')} of the start.`);
+        throw new CommandError(`They won’t refund inside ${plural(REFUNDABLE_UNTIL_MINUTES / 60, 'hour')} of the start.`);
       }
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('You have no account for the refund to go to.');

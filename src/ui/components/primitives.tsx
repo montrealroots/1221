@@ -5,7 +5,7 @@
  * engine, not here.
  */
 
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
 import { clamp } from '@/engine/core/rng';
 
@@ -147,6 +147,14 @@ export function Modal({
   onClose: () => void;
   wide?: boolean;
 }) {
+  // Escape closes it, the way every dialog on every platform closes. Without
+  // this a modal could only be left by finding its button, and anything
+  // underneath it stayed unreachable until then.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
   return (
     <div className="overlay" onClick={onClose}>
       <div

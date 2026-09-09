@@ -17,8 +17,8 @@ import { defineScene, unknownStep, type SceneChoice, type SceneRuntime } from '.
 
 const PACE: readonly { id: string; label: string; aliases: string[]; factor: number; note: string }[] = [
   { id: 'easy', label: 'Easy Jog', aliases: ['easy', 'jog', 'slow'], factor: 1.0, note: 'Conversation pace. The kind you can do tomorrow too.' },
-  { id: 'steady', label: 'Steady', aliases: ['steady', 'normal', 'medium'], factor: 1.0, note: 'Honest work. You will know you did it.' },
-  { id: 'hard', label: 'Hard Intervals', aliases: ['hard', 'intervals', 'fast', 'sprints'], factor: 0.7, note: 'Shorter and much worse. Fitness likes it; the rest of you does not.' },
+  { id: 'steady', label: 'Steady', aliases: ['steady', 'normal', 'medium'], factor: 1.0, note: 'Honest work. You’ll know you did it.' },
+  { id: 'hard', label: 'Hard Intervals', aliases: ['hard', 'intervals', 'fast', 'sprints'], factor: 0.7, note: 'Shorter and much worse. Fitness likes it; the rest of you doesn’t.' },
 ];
 
 function num(session: SceneSession, key: string): number {
@@ -37,7 +37,7 @@ function describe(effects: Record<string, number>): string {
   if ((effects['fitness'] ?? 0) >= 0.5) parts.push(`fitness up ${Math.round((effects['fitness'] ?? 0) * 10) / 10}`);
   if (Math.abs(effects['energy'] ?? 0) >= 1) parts.push(`energy down ${Math.abs(Math.round(effects['energy'] ?? 0))}`);
   if ((effects['morale'] ?? 0) >= 1) parts.push(`morale up ${Math.round(effects['morale'] ?? 0)}`);
-  return parts.length > 0 ? parts.join(', ') + '.' : 'Nothing you would notice.';
+  return parts.length > 0 ? parts.join(', ') + '.' : 'Nothing you’d notice.';
 }
 
 export const RUN_SCENE = defineScene({
@@ -131,7 +131,7 @@ export const RUN_SCENE = defineScene({
       }
       if (choiceId === 'finish') { ctx.finish(); return; }
     }
-    throw new CommandError('That is not a choice here.');
+    throw new CommandError('That isn’t a choice here.');
   },
 
   summarise(sim, session, ctx) {

@@ -46,7 +46,7 @@ export const WAIT_MINUTES = 15;
 export const RESULTS_DAYS = 2;
 /** Days a prescription can sit uncollected. */
 export const RX_LAPSE_DAYS = 14;
-export const NOT_HERE = 'You are not in the city the practice is in.';
+export const NOT_HERE = 'You aren’t in the city the practice is in.';
 
 // ---------------------------------------------------------------------------
 // Readers
@@ -54,7 +54,7 @@ export const NOT_HERE = 'You are not in the city the practice is in.';
 
 export function appointmentOf(sim: Simulation, id: Id): Appointment {
   const appointment = sim.universe.appointments[id];
-  if (!appointment) throw new CommandError('There is no appointment like that.');
+  if (!appointment) throw new CommandError('There’s no appointment like that.');
   return appointment;
 }
 
@@ -98,7 +98,7 @@ export function doctorKnows(sim: Simulation, doctorId: Id): string[] {
   const facts = factsOf(sim, doctorId, { aboutId: sim.player.id });
   const known: string[] = [];
   if (facts.some((f) => f.kind === 'meeting')) known.push('met');
-  if (facts.some((f) => f.kind === 'event' && /did not come/.test(f.text))) known.push('missed');
+  if (facts.some((f) => f.kind === 'event' && /did(n’t| not) come/.test(f.text))) known.push('missed');
   return known;
 }
 
@@ -113,8 +113,8 @@ export interface Complaint {
 const COMPLAINTS: readonly Complaint[] = [
   { id: 'checkup', label: 'A Checkup', detail: 'Nothing wrong. Making sure.', fit: ['primary', 'dentist', 'optometrist'] },
   { id: 'pain', label: 'Something Hurts', detail: 'A back, a shoulder, a knee. It has been a week.', fit: ['chiropractor', 'physical_therapy', 'primary', 'urgent_care', 'emergency', 'specialist'] },
-  { id: 'injury', label: 'Something From Training', detail: 'It went in the gym and it has not come back.', fit: ['physical_therapy', 'chiropractor', 'urgent_care', 'primary'] },
-  { id: 'sleep', label: 'I Cannot Sleep', detail: 'Weeks of it. It is starting to show.', fit: ['primary', 'counseling'] },
+  { id: 'injury', label: 'Something From Training', detail: 'It went in the gym and it hasn’t come back.', fit: ['physical_therapy', 'chiropractor', 'urgent_care', 'primary'] },
+  { id: 'sleep', label: 'I Can’t Sleep', detail: 'Weeks of it. It’s starting to show.', fit: ['primary', 'counseling'] },
   { id: 'stress', label: 'The Pressure', detail: 'Everything at once, all the time.', fit: ['counseling', 'primary'] },
   { id: 'unwell', label: 'I Feel Unwell', detail: 'Since Tuesday. Hot, then cold.', fit: ['primary', 'urgent_care', 'emergency'] },
   { id: 'teeth', label: 'My Teeth', detail: 'One of them, mostly.', fit: ['dentist'] },
@@ -156,10 +156,10 @@ export function visitCost(sim: Simulation, appointment: Appointment): VisitCost 
 
 /** Whether the visit can start now: yours, scheduled, the time has come, you are there. */
 export function attendable(sim: Simulation, appointment: Appointment): { ok: boolean; reason?: string } {
-  if (appointment.personId !== sim.player.id) return { ok: false, reason: 'That is not your appointment.' };
+  if (appointment.personId !== sim.player.id) return { ok: false, reason: 'That isn’t your appointment.' };
   if (appointment.status !== 'scheduled') return { ok: false, reason: `That appointment is ${appointment.status}.` };
   if (sim.player.currentLocationId !== appointment.locationId) return { ok: false, reason: NOT_HERE };
-  if (sim.now < appointment.at - EARLY_MINUTES * MS_MINUTE) return { ok: false, reason: `It is at ${formatTime(appointment.at, sim.zone)}; the desk opens an hour before.` };
+  if (sim.now < appointment.at - EARLY_MINUTES * MS_MINUTE) return { ok: false, reason: `It’s at ${formatTime(appointment.at, sim.zone)}; the desk opens an hour before.` };
   return { ok: true };
 }
 
@@ -169,10 +169,10 @@ export function prescriptionsOf(sim: Simulation, personId: Id): Prescription[] {
 
 /** Whether a prescription can be collected now: written, not lapsed, you are in a city. */
 export function fillable(sim: Simulation, rx: Prescription): { ok: boolean; reason?: string } {
-  if (rx.personId !== sim.player.id) return { ok: false, reason: 'That is not your prescription.' };
+  if (rx.personId !== sim.player.id) return { ok: false, reason: 'That isn’t your prescription.' };
   if (rx.status === 'filled' || rx.status === 'finished') return { ok: false, reason: 'You have already collected it.' };
   if (rx.status === 'lapsed') return { ok: false, reason: 'It sat too long at the pharmacy; ask for another.' };
-  if (!CITIES.get(sim.player.currentLocationId)) return { ok: false, reason: 'You are between places.' };
+  if (!CITIES.get(sim.player.currentLocationId)) return { ok: false, reason: 'You’re between places.' };
   return { ok: true };
 }
 
@@ -248,7 +248,7 @@ export function registerCare(sim: Simulation): void {
     if (sceneOn(s, 'appointment', appointment.id)) return;
     const provider = providerOf(s, appointment);
     if (s.player.currentLocationId !== appointment.locationId) {
-      missAppointment(s, appointment, `You were not in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}.`);
+      missAppointment(s, appointment, `You weren’t in ${CITIES.require(appointment.locationId).name} for ${appointment.kind}.`);
       return;
     }
     const cost = visitCost(s, appointment);
@@ -280,7 +280,7 @@ export function registerCare(sim: Simulation): void {
     }
     const provider = providerOf(sim, appointment);
     const doctor = doctorOf(sim, provider);
-    rememberFact(sim, doctor.id, { kind: 'event', aboutId: sim.player.id, text: `Booked ${appointment.kind} and did not come.`, weight: 35, sourceKind: 'care', refType: 'appointment', refId: appointment.id, expiresAt: addDays(sim.now, 180, sim.homeZone) });
+    rememberFact(sim, doctor.id, { kind: 'event', aboutId: sim.player.id, text: `Booked ${appointment.kind} and didn’t come.`, weight: 35, sourceKind: 'care', refType: 'appointment', refId: appointment.id, expiresAt: addDays(sim.now, 180, sim.homeZone) });
     missAppointment(sim, appointment, 'You never went.');
   });
 
@@ -288,7 +288,7 @@ export function registerCare(sim: Simulation): void {
     'health.skip',
     (p, { sim: s }) => {
       const appointment = appointmentOf(s, p.appointmentId);
-      if (appointment.status !== 'scheduled') throw new CommandError('That appointment is not open.');
+      if (appointment.status !== 'scheduled') throw new CommandError('That appointment isn’t open.');
       cancelKind(s, 'health.lapse', appointment.id);
       missAppointment(s, appointment, 'You decided not to go.');
       return { skipped: true, fee: Math.round(appointment.cost * 0.4) };
@@ -340,7 +340,7 @@ export function registerCare(sim: Simulation): void {
       const appointment = appointmentOf(s, p.appointmentId);
       if (appointment.status !== 'scheduled' || !appointment.checkedInAt) throw new CommandError('Check in at the desk first.');
       if (appointment.consultedAt) throw new CommandError('You have already been seen.');
-      if (!complaintsFor(s, appointment).some((c) => c.id === p.complaint)) throw new CommandError('That is not something to bring here.');
+      if (!complaintsFor(s, appointment).some((c) => c.id === p.complaint)) throw new CommandError('That isn’t something to bring here.');
       const provider = providerOf(s, appointment);
       const doctor = doctorOf(s, provider);
       const complaint = COMPLAINT_BY_ID[p.complaint]!;
@@ -389,9 +389,9 @@ export function registerCare(sim: Simulation): void {
     'health.pay',
     (p, { sim: s }) => {
       const appointment = appointmentOf(s, p.appointmentId);
-      if (appointment.personId !== s.player.id) throw new CommandError('That is not your bill.');
+      if (appointment.personId !== s.player.id) throw new CommandError('That isn’t your bill.');
       if (appointment.status === 'scheduled') {
-        if (!appointment.consultedAt) throw new CommandError('You have not been seen yet.');
+        if (!appointment.consultedAt) throw new CommandError('You haven’t been seen yet.');
         appointment.status = 'completed';
         if (appointment.scheduledItemId) s.timeline.cancel(appointment.scheduledItemId, s.now);
         s.emit('health.appointment_completed', { appointmentId: appointment.id, providerId: appointment.providerId, conditionGain: appointment.conditionGain ?? 0 });
@@ -401,7 +401,7 @@ export function registerCare(sim: Simulation): void {
         const provider = providerOf(s, appointment);
         s.requireDecision({
           urgency: 55, category: 'health', title: 'Unpaid Medical Bill',
-          detail: `${formatMoney(appointment.outOfPocket)} is owed to ${provider.name}. They will send it on.`,
+          detail: `${formatMoney(appointment.outOfPocket)} is owed to ${provider.name}. They’ll send it on.`,
           route: '/workspace/health',
           actions: [{ label: 'Pay It', commandKind: 'health.pay', payload: { appointmentId: appointment.id } }],
           refType: 'appointment', refId: appointment.id,
@@ -448,9 +448,9 @@ export function registerCare(sim: Simulation): void {
     'health.fill_prescription',
     (p, { sim: s }) => {
       const rx = rxStore(s)[p.prescriptionId];
-      if (!rx) throw new CommandError('There is no prescription like that.');
+      if (!rx) throw new CommandError('There’s no prescription like that.');
       const can = fillable(s, rx);
-      if (!can.ok) throw new CommandError(can.reason ?? 'That cannot be collected.');
+      if (!can.ok) throw new CommandError(can.reason ?? 'That can’t be collected.');
       const accountId = s.player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < rx.outOfPocket) throw new CommandError(`${rx.medication} is ${formatMoney(rx.outOfPocket)} at the counter. You have ${formatMoney(s.ledger.availableFunds(accountId))}.`);
@@ -493,7 +493,7 @@ export function registerCare(sim: Simulation): void {
     const rx = rxStore(sim)[item.payload['prescriptionId'] as Id];
     if (!rx || rx.status !== 'written') return;
     rx.status = 'lapsed';
-    sim.notify({ category: 'health', title: `${rx.medication} Not Collected`, body: `It sat at the pharmacy for ${RX_LAPSE_DAYS} days. If you still need it, that is another visit.`, importance: 35, route: '/workspace/health', refType: 'prescription', refId: rx.id });
+    sim.notify({ category: 'health', title: `${rx.medication} Not Collected`, body: `It sat at the pharmacy for ${RX_LAPSE_DAYS} days. If you still need it, that’s another visit.`, importance: 35, route: '/workspace/health', refType: 'prescription', refId: rx.id });
     sim.emit('health.prescription_lapsed', { prescriptionId: rx.id });
   });
 }

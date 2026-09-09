@@ -88,11 +88,11 @@ interface text; it does not flatten how a person talks.
 ## The count, honestly
 
 Run `node tools/dialogue-check.mjs` for today's figure. At the time of
-writing the library holds **465 distinct entries** across six sections
-(property 122, dating 112, vehicles 87, travel 55, health 52, social 37),
-moved out of the code that used to carry them inline; the scenes for the
-gym, meals, runs and wellbeing still carry their lines in code and are next
-to move. The vehicles section speaks to what is being sold: a line about a
+writing the library holds **1,296 distinct entries** across eighteen sections
+(property 122, dating 112, fitness 92, vehicles 87, wellbeing 84, jewellery
+80, work 79, dining 78, street 73, people 69, costume 61, nightlife 59,
+retail 59, travel 55, health 52, money 49, wardrobe 48, social 37), moved
+out of the code that used to carry them inline. The vehicles section speaks to what is being sold: a line about a
 car is never said about a boat, and the bike shop, the boat yard and the
 aircraft broker each have their own.
 

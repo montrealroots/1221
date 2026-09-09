@@ -301,7 +301,7 @@ function Tweet({ item, now, onOpen, onWho, onQuote, say }: RowProps & { item: So
 
   const act = (kind: string, message?: string) => {
     const result = run(kind, { itemId: item.id }, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
     else if (message) say(message);
   };
   const count = (n: number) => (hideCounts ? '' : views(n));
@@ -399,7 +399,7 @@ function Tweet({ item, now, onOpen, onWho, onQuote, say }: RowProps & { item: So
                 disabled={draft.length > TEXT_LIMIT}
                 onClick={() => {
                   const result = run('feed.edit', { itemId: item.id, text: draft }, { silent: true });
-                  if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That did not work.');
+                  if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That didn’t work.');
                 }}
               >
                 Save
@@ -409,7 +409,7 @@ function Tweet({ item, now, onOpen, onWho, onQuote, say }: RowProps & { item: So
                 className="ph-btn-outline"
                 onClick={() => {
                   const result = run('feed.delete', { itemId: item.id }, { silent: true });
-                  say(result.ok ? 'Deleted.' : result.error ?? 'That did not work.');
+                  say(result.ok ? 'Deleted.' : result.error ?? 'That didn’t work.');
                 }}
               >
                 Delete
@@ -438,7 +438,7 @@ function PostPage({
 
   const send = () => {
     const result = run('feed.reply', { itemId: item.id, text }, { silent: true });
-    if (result.ok) { setText(''); say('Posted. Two minutes gone.'); } else say(result.error ?? 'That did not work.');
+    if (result.ok) { setText(''); say('Posted. Two minutes gone.'); } else say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -618,7 +618,7 @@ function NoticesPage({
           <div className="ph-x-notice">
             <div className="ph-x-notice-text">
               <b>Notifications Paused</b>
-              <p>Nothing from either app interrupts your day while this is off. It all still happens, and it is all still here.</p>
+              <p>Nothing from either app interrupts your day while this is off. It all still happens, and it’s all still here.</p>
             </div>
             <button
               type="button"
@@ -709,7 +709,7 @@ function ChatPage({
               <LockGlyph size={26} />
               <span>
                 <b>Nothing Leaves The Game</b>
-                <p>What you write here is written into your save and nowhere else. There is no server on the other end of it.</p>
+                <p>What you write here is written into your save and nowhere else. There’s no server on the other end of it.</p>
               </span>
             </div>
             <div className="ph-x-welcome-row">
@@ -723,7 +723,7 @@ function ChatPage({
               <PasscodeGlyph size={26} />
               <span>
                 <b>No Passcode To Set</b>
-                <p>The app asks for one. SLATE does not, because there is nothing here another person could reach.</p>
+                <p>The app asks for one. SLATE doesn’t, because there’s nothing here another person could reach.</p>
               </span>
             </div>
             <button type="button" className="ph-x-welcome-go" onClick={() => { setAbout(false); setReadIt(true); }}>
@@ -777,7 +777,7 @@ function ThreadPage({
 
   const send = () => {
     const result = run('feed.message', { profileId, text }, { silent: true });
-    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That did not work.');
+    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -855,7 +855,7 @@ function ProfilePage({
   const follow = () => {
     const result = run(following ? 'feed.unfollow' : 'feed.follow', { profileId: profile.id }, { silent: true });
     if (result.ok) say(following ? `You no longer follow @${profile.handle}.` : `Following @${profile.handle}.`);
-    else say(result.error ?? 'That did not work.');
+    else say(result.error ?? 'That didn’t work.');
   };
 
   const rowProps = { now, onOpen, onWho: () => undefined, onQuote, say };
@@ -922,7 +922,7 @@ function ProfilePage({
                 onClick={() => {
                   const result = run('feed.block', { profileId: profile.id }, { silent: true });
                   if (result.ok) say(blocked ? `@${profile.handle} is unblocked.` : `@${profile.handle} is blocked.`);
-                  else say(result.error ?? 'That did not work.');
+                  else say(result.error ?? 'That didn’t work.');
                 }}
               >
                 {blocked ? 'Unblock' : 'Block'}
@@ -1066,7 +1066,7 @@ function CommunitiesPage({ onBack, ...rest }: RowProps & { onBack: () => void })
   const join = (roomId: string, name: string, joined: boolean) => {
     const result = run('feed.join_room', { roomId }, { silent: true });
     if (result.ok) rest.say(joined ? `Left ${name}.` : `Joined ${name}.`);
-    else rest.say(result.error ?? 'That did not work.');
+    else rest.say(result.error ?? 'That didn’t work.');
   };
 
   return (
@@ -1142,7 +1142,7 @@ function ListsPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
 
   const make = () => {
     const result = run<{ roomId: string }>('feed.create_list', { name }, { silent: true });
-    if (!result.ok) { rest.say(result.error ?? 'That did not work.'); return; }
+    if (!result.ok) { rest.say(result.error ?? 'That didn’t work.'); return; }
     rest.say(`${name.trim()} made. Add accounts to it.`);
     setOpenId(result.value?.roomId ?? null);
     setPane('add');
@@ -1152,13 +1152,13 @@ function ListsPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
 
   const edit = (roomId: string, profileId: string, remove?: boolean) => {
     const result = run('feed.edit_list', { roomId, profileId, remove }, { silent: true });
-    if (!result.ok) rest.say(result.error ?? 'That did not work.');
+    if (!result.ok) rest.say(result.error ?? 'That didn’t work.');
     else rest.say(remove ? 'Taken off the list.' : 'Added to the list.');
   };
 
   const drop = (room: { id: string; name: string }) => {
     const result = run('feed.delete_list', { roomId: room.id }, { silent: true });
-    if (!result.ok) { rest.say(result.error ?? 'That did not work.'); return; }
+    if (!result.ok) { rest.say(result.error ?? 'That didn’t work.'); return; }
     rest.say(`${room.name} deleted.`);
     setOpenId(null);
   };
@@ -1279,7 +1279,7 @@ function SpacesPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
 
   const start = () => {
     const result = run<{ peak: number }>('feed.start_space', { name, minutes }, { silent: true });
-    if (!result.ok) { rest.say(result.error ?? 'That did not work.'); return; }
+    if (!result.ok) { rest.say(result.error ?? 'That didn’t work.'); return; }
     rest.say(`Space over. ${tally(result.value?.peak ?? 0, 'person', 'people')} at the top of it.`);
     setName('');
   };
@@ -1319,7 +1319,7 @@ function SpacesPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
               ))}
             </div>
             <p className="ph-card-meta">
-              You are on air for the whole of it, and those are hours out of the day like
+              You’re on air for the whole of it, and those are hours out of the day like
               any others.
             </p>
             <div className="ph-actions" style={{ padding: '4px 0 0' }}>
@@ -1329,7 +1329,7 @@ function SpacesPage({ onBack, ...rest }: RowProps & { onBack: () => void }) {
         )}
         <div className="ph-label" style={{ padding: '0 14px' }}>Spaces You Have Held</div>
         {held.length === 0
-          ? <p className="ph-empty"><b>None Yet</b>A space you host is kept here once it is over.</p>
+          ? <p className="ph-empty"><b>None Yet</b>A space you host is kept here once it’s over.</p>
           : held.map((room) => (
             <div key={room.id} className="ph-panel">
               <p style={{ margin: 0, fontSize: 13.5, fontWeight: 600 }}>{room.name}</p>
@@ -1419,7 +1419,7 @@ function AskPage({
   const answer = (text: string): string => {
     const q = text.toLowerCase();
     if (/trend|happening|talking/.test(q)) {
-      return `Right now: ${list.map((t) => t.label).join(', ')}. That is counted off what has been posted in the last two days.`;
+      return `Right now: ${list.map((t) => t.label).join(', ')}. That’s counted off what has been posted in the last two days.`;
     }
     if (/follow/.test(q)) return `You follow ${following} accounts across both apps.`;
     if (/time|long|minutes|hours/.test(q)) return `${minutes} minutes on this app today.`;
@@ -1432,7 +1432,7 @@ function AskPage({
         : `Premium is ${formatMoney(X_PREMIUM_MONTHLY)} a month, and the share needs five hundred followers behind it.`;
     }
     if (/best|top post/.test(q)) {
-      return stats?.best ? `Your best is at ${views(stats.best.likes)} likes: "${stats.best.text.slice(0, 90)}"` : 'You have not posted anything yet.';
+      return stats?.best ? `Your best is at ${views(stats.best.likes)} likes: "${stats.best.text.slice(0, 90)}"` : 'You haven’t posted anything yet.';
     }
     return 'I can only see what is in this save: what is trending, who you follow, what your posts did, and how long you have been in here. Ask me one of those.';
   };
@@ -1533,7 +1533,7 @@ function Composer({
         ? run('feed.thread', { parts }, { silent: true })
         : run('feed.post', { platform: TEXT_PLATFORM, kind: 'text', text }, { silent: true });
     if (result.ok) { say(rest.length > 0 ? `Thread posted, ${parts.length} of them.` : 'Posted.'); onClose(); }
-    else say(result.error ?? 'That did not work.');
+    else say(result.error ?? 'That didn’t work.');
   };
 
   if (!hasProfile) {
@@ -1628,7 +1628,7 @@ function EditProfile({
           className="ph-btn-solid"
           onClick={() => {
             const result = run('feed.edit_profile', { profileId: profile.id, name, bio, image }, { silent: true });
-            if (result.ok) { say('Profile saved.'); onDone(); } else say(result.error ?? 'That did not work.');
+            if (result.ok) { say('Profile saved.'); onDone(); } else say(result.error ?? 'That didn’t work.');
           }}
         >
           Save
@@ -1652,7 +1652,7 @@ function MakeAccount({
         <b style={{ fontSize: 16 }}>Make Your Account</b>
         <p className="ph-card-meta">
           An account on the text app. Premium is what turns the share of the advertising on,
-          and it is only worth taking once people are actually reading you.
+          and it’s only worth taking once people are actually reading you.
         </p>
         <div className="ph-label">Handle</div>
         <input className="ph-input" value={handle} onChange={(e) => setHandle(e.target.value)} placeholder="yourname" />
@@ -1666,8 +1666,8 @@ function MakeAccount({
             className="ph-btn-solid"
             onClick={() => {
               const result = run<{ profileId: string }>('feed.create_profile', { platform: TEXT_PLATFORM, handle, name, bio }, { silent: true });
-              if (result.ok) { say('That is your account.'); onDone?.(result.value!.profileId); }
-              else say(result.error ?? 'That did not work.');
+              if (result.ok) { say('That’s your account.'); onDone?.(result.value!.profileId); }
+              else say(result.error ?? 'That didn’t work.');
             }}
           >
             Create Account
@@ -1706,7 +1706,7 @@ function PremiumPage({ onBack, say }: { onBack: () => void; say: (text: string) 
               <p className="ph-card-meta">
                 {formatMoney(X_PREMIUM_MONTHLY)} a month, taken every month. It puts the check beside your
                 name and turns on the share of the advertising sold against your impressions. It lapses
-                on its own if the money is not there.
+                on its own if the money isn’t there.
               </p>
               <div className="ph-actions">
                 {mine.verified ? (
@@ -1715,7 +1715,7 @@ function PremiumPage({ onBack, say }: { onBack: () => void; say: (text: string) 
                     className="ph-btn-outline"
                     onClick={() => {
                       const result = run('feed.leave_premium', {}, { silent: true });
-                      say(result.ok ? 'Premium canceled. Nothing more will be taken.' : result.error ?? 'That did not work.');
+                      say(result.ok ? 'Premium canceled. Nothing more will be taken.' : result.error ?? 'That didn’t work.');
                     }}
                   >
                     Cancel Premium
@@ -1726,7 +1726,7 @@ function PremiumPage({ onBack, say }: { onBack: () => void; say: (text: string) 
                     className="ph-btn-solid"
                     onClick={() => {
                       const result = run('feed.join_premium', {}, { silent: true });
-                      say(result.ok ? 'Premium is on.' : result.error ?? 'That did not work.');
+                      say(result.ok ? 'Premium is on.' : result.error ?? 'That didn’t work.');
                     }}
                   >
                     Subscribe
@@ -1799,7 +1799,7 @@ function SettingsPage({
 
   const set = (patch: Record<string, unknown>) => {
     const result = run('feed.settings', patch, { silent: true });
-    if (!result.ok) say(result.error ?? 'That did not work.');
+    if (!result.ok) say(result.error ?? 'That didn’t work.');
   };
 
   const rows = [
@@ -1807,14 +1807,14 @@ function SettingsPage({
       key: 'account',
       icon: <AccountGlyph size={22} />,
       title: 'Your Account',
-      body: `The account this phone is signed in to${mine ? `, which is @${mine.handle}` : '. You have not made one yet'}.`,
+      body: `The account this phone is signed in to${mine ? `, which is @${mine.handle}` : '. You haven’t made one yet'}.`,
       onClick: () => say(mine ? `Joined ${new Date(mine.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })}.` : 'Make one from the Profile tab.'),
     },
     {
       key: 'privacy',
       icon: <ShieldGlyph size={22} />,
       title: 'Privacy And Safety',
-      body: 'Who can see what you post, and who cannot reach you at all.',
+      body: 'Who can see what you post, and who can’t reach you at all.',
       value: `${settings.blockedProfileIds.length} Blocked`,
       onClick: () => say(`${settings.blockedProfileIds.length} blocked, ${settings.mutedProfileIds.length} muted. Block and mute are on each account's page.`),
     },

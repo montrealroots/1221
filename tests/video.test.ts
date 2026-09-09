@@ -242,7 +242,7 @@ describe('the comment section', () => {
     const video = homeFeed(sim, sim.player.id, 3)[0]!;
     const refused = sim.execute({ kind: 'video.read_harsh', payload: { videoId: video.id } });
     expect(refused.ok).toBe(false);
-    expect(String(refused.error)).toMatch(/not about you/i);
+    expect(String(refused.error)).toMatch(/n[o’]t about you/i);
   });
 });
 

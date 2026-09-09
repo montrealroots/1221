@@ -56,7 +56,7 @@ export const SHINGLE_SHAPES: readonly ShingleShape[] = [
   },
   {
     id: 'studio', name: 'A Studio',
-    what: 'Stages, standing sets, post in-house, and a payroll that does not care whether you are shooting.',
+    what: 'Stages, standing sets, post in-house, and a payroll that doesn’t care whether you’re shooting.',
     suits: 'Volume, control of the whole pipeline, and owning what you make.',
     cannot: 'Be quiet. The overhead has to be fed every month, hit or no hit.',
     overhead: 340_000_00, capacity: 8, setup: 2_800_000_00, seats: 60,
@@ -124,7 +124,7 @@ export const REMITS: readonly Remit[] = [
   },
   {
     id: 'anything', name: 'Whatever Sells',
-    what: 'No remit at all. You will make anything, which means nobody knows what you are for.',
+    what: 'No remit at all. You’ll make anything, which means nobody knows what you are for.',
     formats: ['feature', 'series', 'limited_series', 'documentary', 'tv_movie', 'special', 'short'],
     priceIndex: 0.92, prestige: 30,
   },

@@ -257,7 +257,7 @@ export function upcomingInvites(sim: Simulation, personId: Id = sim.player.id): 
 export function describeInvite(sim: Simulation, invite: FashionInvite): string {
   const zone = CITIES.get(invite.cityId)?.timeZone ?? sim.zone;
   if (invite.status === 'asked') return `Asked ${formatDate(invite.askedAt, zone)}. No answer yet.`;
-  if (invite.status === 'refused') return invite.note ?? 'They did not write back.';
+  if (invite.status === 'refused') return invite.note ?? 'They didn’t write back.';
   if (invite.status === 'declined') return 'You said no.';
   if (invite.status === 'missed') return 'You never turned up, and the seat sat empty in front of everybody.';
   if (invite.attended) {
@@ -286,11 +286,11 @@ export function registerFashionSystem(sim: Simulation): void {
     'fw.request',
     (p, { sim: s }) => {
       const found = showById(s, p.showId);
-      if (!found) throw new CommandError('That is not a show on any schedule you can see.');
+      if (!found) throw new CommandError('That isn’t a show on any schedule you can see.');
       const { edition, show } = found;
       if (show.at < s.now) throw new CommandError('That show has been and gone.');
       if (show.at < s.now + 3 * MS_DAY) {
-        throw new CommandError('That is in less than three days. The list closed a fortnight ago.');
+        throw new CommandError('That’s in less than three days. The list closed a fortnight ago.');
       }
       const already = invitesOf(s).find(
         (invite) => invite.showId === show.id && invite.status !== 'refused' && invite.status !== 'declined',
@@ -340,7 +340,7 @@ export function registerFashionSystem(sim: Simulation): void {
       const invite = s.universe.fashionInvites[p.inviteId];
       if (!invite) throw new CommandError('No such invitation.');
       if (invite.status !== 'accepted' && invite.status !== 'asked') {
-        throw new CommandError('There is nothing to turn down.');
+        throw new CommandError('There’s nothing to turn down.');
       }
       invite.status = 'declined';
       s.emit('fw.declined', { inviteId: invite.id });
@@ -364,26 +364,26 @@ export function registerFashionSystem(sim: Simulation): void {
       const invite = s.universe.fashionInvites[p.inviteId];
       if (!invite) throw new CommandError('No such invitation.');
       if (invite.status === 'attended') throw new CommandError('You have already been to that one.');
-      if (invite.status !== 'accepted') throw new CommandError('You do not have a seat at that show.');
+      if (invite.status !== 'accepted') throw new CommandError('You don’t have a seat at that show.');
       if (s.now < invite.at - DOORS_OPEN_MINUTES * MS_MINUTE) {
         const zone = CITIES.get(invite.cityId)?.timeZone ?? s.zone;
         throw new CommandError(
-          `That is at ${formatTime(invite.at, zone)} on ${formatDate(invite.at, zone)}. Nobody is inside yet.`,
+          `That’s at ${formatTime(invite.at, zone)} on ${formatDate(invite.at, zone)}. Nobody is inside yet.`,
         );
       }
       if (s.now > invite.at + DOORS_SHUT_MINUTES * MS_MINUTE) {
         invite.status = 'missed';
-        throw new CommandError('They started without you. A show does not wait.');
+        throw new CommandError('They started without you. A show doesn’t wait.');
       }
       if (s.player.currentLocationId !== invite.cityId) {
         throw new CommandError(
-          `The show is in ${CITIES.get(invite.cityId)?.name ?? 'another city'} and you are not.`,
+          `The show is in ${CITIES.get(invite.cityId)?.name ?? 'another city'} and you aren’t.`,
         );
       }
 
       const worn = wearing(s, s.player.id);
       if (worn.length === 0) {
-        throw new CommandError('You are not dressed. Nobody walks into that room in whatever they slept in.');
+        throw new CommandError('You aren’t dressed. Nobody walks into that room in whatever they slept in.');
       }
       // Wearing something is not the same as being dressed. The mirror's own
       // rule about what an outfit is missing is the rule at the door.
@@ -399,7 +399,7 @@ export function registerFashionSystem(sim: Simulation): void {
       const cost = turningUpCost(invite.cityId);
       if (!accountId) throw new CommandError('You have no account to pay for the car and the rest of it from.');
       if (s.ledger.availableFunds(accountId) < cost) {
-        throw new CommandError(`Getting there and being ready for it is ${formatMoney(cost)}, and you do not have it.`);
+        throw new CommandError(`Getting there and being ready for it is ${formatMoney(cost)}, and you don’t have it.`);
       }
       s.expense(accountId, cost, `${invite.brand} show — ${invite.weekName}`, 'leisure', {
         refType: 'invite', refId: invite.id,
@@ -445,7 +445,7 @@ export function registerFashionSystem(sim: Simulation): void {
           ? 'Photographed on the way in, and again on the way out. Somebody will run it.'
           : verdict >= 55
             ? 'Two photographers took you on the way in. It will end up somewhere.'
-            : 'They photographed you, which given what you had on is not entirely good news.'
+            : 'They photographed you, which given what you had on isn’t entirely good news.'
         : seat === 'standing'
           ? 'Nobody looked at you once, which standing at the back is for.'
           : 'You got in, sat down, watched it and left. Nobody took a picture.';
@@ -496,7 +496,7 @@ export function registerFashionSystem(sim: Simulation): void {
         'A polite three lines. The room is small this season.',
         'No answer at all, which is the answer.',
         'They regret that the list is closed.',
-        'A press officer writes back to say they will keep you in mind.',
+        'A press officer writes back to say they’ll keep you in mind.',
       ]);
       s.notify({
         title: `${invite.brand} Said No`,

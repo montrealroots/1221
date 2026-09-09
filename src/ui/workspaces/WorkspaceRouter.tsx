@@ -49,7 +49,7 @@ export function WorkspaceRouter({ route }: { route: string }) {
     return (
       <div className="empty">
         <h3>Nothing Here Yet</h3>
-        <p className="small">That workspace does not exist. Use Go Anywhere to find what you were after.</p>
+        <p className="small">That workspace doesn’t exist. Use Go Anywhere to find what you were after.</p>
       </div>
     );
   }

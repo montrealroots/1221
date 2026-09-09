@@ -187,7 +187,7 @@ export function registerMedia(sim: Simulation): void {
       if (!account) throw new CommandError('No such account.');
       const platform = PLATFORM_BY_ID[account.platform];
       if (!platform.formats.includes(p.format)) {
-        throw new CommandError(`${platform.name} does not support ${p.format.replace(/_/g, ' ')}.`);
+        throw new CommandError(`${platform.name} doesn’t support ${p.format.replace(/_/g, ' ')}.`);
       }
 
       const profile = FORMAT_PROFILE[p.format];
@@ -339,14 +339,14 @@ export interface PostCraft {
 
 export const CRAFT_ANGLES: readonly { id: string; label: string; aliases: string[]; detail: string; bonus: number; topic: string }[] = [
   { id: 'behind', label: 'Behind The Scenes', aliases: ['behind', 'bts', 'process'], detail: 'What it is like to make the thing.', bonus: 3, topic: 'work' },
-  { id: 'take', label: 'A Take On The Business', aliases: ['take', 'opinion', 'business'], detail: 'Something you think that others do not say.', bonus: 4, topic: 'industry' },
+  { id: 'take', label: 'A Take On The Business', aliases: ['take', 'opinion', 'business'], detail: 'Something you think that others don’t say.', bonus: 4, topic: 'industry' },
   { id: 'personal', label: 'Something Personal', aliases: ['personal', 'me', 'life'], detail: 'A day, a place, a person. Risky and warm.', bonus: 2, topic: 'life' },
-  { id: 'reply', label: 'A Reply To The Noise', aliases: ['reply', 'response', 'discourse'], detail: 'Joining a conversation that is already loud.', bonus: 1, topic: 'discourse' },
+  { id: 'reply', label: 'A Reply To The Noise', aliases: ['reply', 'response', 'discourse'], detail: 'Joining a conversation that’s already loud.', bonus: 1, topic: 'discourse' },
 ];
 
 export const CRAFT_HOOKS: readonly { id: string; label: string; aliases: string[]; detail: string; bonus: number }[] = [
   { id: 'plain', label: 'Say It Plainly', aliases: ['plain', 'straight', 'simple'], detail: 'No tricks. Lands with people who already like you.', bonus: 1 },
-  { id: 'question', label: 'Open With A Question', aliases: ['question', 'ask'], detail: 'People answer questions. That is the whole trick.', bonus: 3 },
+  { id: 'question', label: 'Open With A Question', aliases: ['question', 'ask'], detail: 'People answer questions. That’s the whole trick.', bonus: 3 },
   { id: 'cold', label: 'Start In The Middle', aliases: ['cold', 'middle', 'in medias res'], detail: 'No preamble. The first second is the hook.', bonus: 4 },
   { id: 'tease', label: 'Tease It', aliases: ['tease', 'wait for it'], detail: 'Works once, then they know.', bonus: 2 },
 ];
@@ -355,7 +355,7 @@ export function craftBonus(craft: PostCraft | undefined): number {
   if (!craft) return 0;
   const angle = CRAFT_ANGLES.find((a) => a.id === craft.angle);
   const hook = CRAFT_HOOKS.find((h) => h.id === craft.hook);
-  if (!angle || !hook) throw new CommandError('That is not a way to make a post SLATE knows.');
+  if (!angle || !hook) throw new CommandError('That isn’t a way to make a post SLATE knows.');
   return angle.bonus + hook.bonus;
 }
 

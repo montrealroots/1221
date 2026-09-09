@@ -84,7 +84,7 @@ export function registerTravel(sim: Simulation): void {
     (p, { sim: s }) => {
       if (p.destinations.length === 0) throw new CommandError('A trip needs at least one destination.');
       for (const city of p.destinations) CITIES.require(city);
-      if (p.departAt < s.now) throw new CommandError('You cannot depart in the past.');
+      if (p.departAt < s.now) throw new CommandError('You can’t depart in the past.');
 
       const player = s.player;
       const legs: TripLeg[] = [];
@@ -143,7 +143,7 @@ export function registerTravel(sim: Simulation): void {
     (p, { sim: s }) => {
       const player = s.player;
       const fromCity = p.fromCityId ?? player.currentLocationId;
-      if (fromCity === p.toCityId) throw new CommandError('You are already there.');
+      if (fromCity === p.toCityId) throw new CommandError('You’re already there.');
       CITIES.require(p.toCityId);
 
       const options = searchFlights(s, fromCity, p.toCityId, p.departAt);
@@ -175,7 +175,7 @@ export function registerTravel(sim: Simulation): void {
       const accountId = p.accountId ?? player.primaryAccountId;
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < total) {
-        throw new CommandError(`That fare is ${formatMoney(total)} for ${passengers.length} passenger${passengers.length === 1 ? '' : 's'} and you cannot cover it.`);
+        throw new CommandError(`That fare is ${formatMoney(total)} for ${passengers.length} passenger${passengers.length === 1 ? '' : 's'} and you can’t cover it.`);
       }
       s.expense(accountId, total, `${option.airlineName} ${option.flightNumber}`, 'travel');
 
@@ -231,7 +231,7 @@ export function registerTravel(sim: Simulation): void {
       if (!accountId) throw new CommandError('No account to pay from.');
       if (s.ledger.availableFunds(accountId) < cost) {
         throw new CommandError(owned
-          ? `Flying the ${aircraft.name} there is about ${formatMoney(cost)} in fuel, crew and fees.`
+          ? `Flying the ${aircraft.name} there’s about ${formatMoney(cost)} in fuel, crew and fees.`
           : `Chartering a ${aircraft.name} on that route is about ${formatMoney(cost)}.`);
       }
       s.expense(accountId, cost, owned ? `Flight — ${aircraft.name}` : `Private charter — ${aircraft.name}`, 'travel', owned ? { refType: 'vehicle', refId: owned.id } : undefined);
@@ -472,7 +472,7 @@ export function registerTravel(sim: Simulation): void {
       }
       const total = flightTotal + stayTotal + returnTotal;
       if (s.ledger.availableFunds(accountId) < total) {
-        throw new CommandError(`The whole trip comes to ${formatMoney(total)} — flights ${formatMoney(flightTotal + returnTotal)}, stay ${formatMoney(stayTotal)} — and you cannot cover it.`);
+        throw new CommandError(`The whole trip comes to ${formatMoney(total)} — flights ${formatMoney(flightTotal + returnTotal)}, stay ${formatMoney(stayTotal)} — and you can’t cover it.`);
       }
 
       const { tripId } = s.must<{ tripId: Id }>({ kind: 'travel.plan_trip', payload: {
@@ -511,7 +511,7 @@ export function registerTravel(sim: Simulation): void {
     'travel.cancel_flight',
     (p, { sim: s }) => {
       const booking = s.universe.flightBookings[p.bookingId];
-      if (!booking || booking.status !== 'booked') throw new CommandError('That booking cannot be canceled.');
+      if (!booking || booking.status !== 'booked') throw new CommandError('That booking can’t be canceled.');
       const refund = booking.refundable
         ? booking.fare + booking.taxesFees
         : booking.departAt - s.now > 24 * MS_HOUR ? applyRate(booking.fare, 0.25) : 0;
@@ -900,7 +900,7 @@ export function privateAircraftOptions(fromCityId: string, toCityId: string) {
       reason: !rangeOk
         ? `Range is ${a.rangeKm.toLocaleString('en-US')} km; the route is ${Math.round(distance).toLocaleString('en-US')} km.`
         : !runwayOk
-          ? `${toAirport?.name} cannot take this aircraft.`
+          ? `${toAirport?.name} can’t take this aircraft.`
           : undefined,
     };
   });
@@ -911,8 +911,8 @@ interface AircraftLike { id: string; name: string; category: string; seats: numb
 /** An aircraft you own, in hand, or the reason it is not. */
 export function ownedAircraft(sim: Simulation, vehicleId: Id): Vehicle {
   const vehicle = sim.universe.vehicles[vehicleId];
-  if (!vehicle || vehicle.soldAt || vehicle.ownerId !== sim.player.id) throw new CommandError('You do not own that aircraft.');
-  if (vehicleKind(vehicle) !== 'jet') throw new CommandError('That does not fly.');
+  if (!vehicle || vehicle.soldAt || vehicle.ownerId !== sim.player.id) throw new CommandError('You don’t own that aircraft.');
+  if (vehicleKind(vehicle) !== 'jet') throw new CommandError('That doesn’t fly.');
   requireInHand(vehicle);
   return vehicle;
 }
@@ -952,11 +952,11 @@ export function ownedAircraftOptions(sim: Simulation, toCityId: string) {
         estimatedHours: Number(hours.toFixed(1)),
         available: here && rangeOk && runwayOk,
         reason: !here
-          ? vehicle.deliveryDueAt ? 'Not delivered yet.' : `It is in ${CITIES.get(vehicle.locationId ?? '')?.name ?? 'another city'}.`
+          ? vehicle.deliveryDueAt ? 'Not delivered yet.' : `It’s in ${CITIES.get(vehicle.locationId ?? '')?.name ?? 'another city'}.`
           : !rangeOk
             ? `Range is ${a.rangeKm.toLocaleString('en-US')} km; the route is ${Math.round(distance).toLocaleString('en-US')} km.`
             : !runwayOk
-              ? `${toAirport?.name} cannot take this aircraft.`
+              ? `${toAirport?.name} can’t take this aircraft.`
               : undefined,
       };
     });

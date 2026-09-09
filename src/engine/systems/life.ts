@@ -107,9 +107,9 @@ export function wellbeingSummary(person: Person): string {
   if (w.energy < 15) return 'Running on empty. You need sleep before anything else.';
   if (w.sleepDebt > 20) return 'Badly short on sleep. Everything is harder than it should be.';
   if (w.stress > 78) return 'Stretched very thin. Something is going to give.';
-  if (w.nourishment < 25) return 'Hungry, and it is starting to show.';
+  if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
-  if (w.morale < 30) return 'Flat. The work is fine, the feeling is not.';
+  if (w.morale < 30) return 'Flat. The work is fine, the feeling isn’t.';
   return 'Holding up.';
 }
 
@@ -159,7 +159,7 @@ export const ACTIVITIES: readonly ActivityDef[] = [
   { id: 'housework', name: 'Housework', category: 'chores', description: 'Keeps the place in condition, which is worth more than it sounds.', minutes: 60, perHour: { energy: -8, stress: -2 }, requiresHome: true, tags: ['chores', 'home'] },
   { id: 'socialise', name: 'See Friends', category: 'social', description: 'The thing that keeps you a person rather than a career.', minutes: 150, variableDuration: { min: 60, max: 360 }, perHour: { energy: -4, stress: -14, morale: 9 }, cost: 45_00, requiresCompanion: false, tags: ['social', 'relationships'] },
   { id: 'network', name: 'Industry Event', category: 'social', description: 'A room full of people who could change your year.', minutes: 180, perHour: { energy: -9, stress: 6, morale: 2 }, cost: 30_00, practises: [{ key: 'networking', kind: 'attribute', gain: 1.4 }], tags: ['career', 'social'] },
-  { id: 'commute', name: 'Commute', category: 'transport', description: 'Time you do not get back.', minutes: 45, perHour: { energy: -5, stress: 7 }, tags: ['transport'] },
+  { id: 'commute', name: 'Commute', category: 'transport', description: 'Time you don’t get back.', minutes: 45, perHour: { energy: -5, stress: 7 }, tags: ['transport'] },
 ];
 
 export const ACTIVITY_BY_ID: Readonly<Record<string, ActivityDef>> =
@@ -241,7 +241,7 @@ export function registerLife(sim: Simulation): void {
       const person = s.player;
       const hours = clamp(p.hours, 0.5, 16);
       const start = p.startAt ?? s.now;
-      if (start < s.now) throw new CommandError('You cannot go to sleep in the past.');
+      if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not
@@ -299,10 +299,10 @@ export function registerLife(sim: Simulation): void {
       );
 
       if (def.requiresHome && !person.residenceId) {
-        throw new CommandError(`${def.name} needs somewhere to live. You do not have a home yet.`);
+        throw new CommandError(`${def.name} needs somewhere to live. You don’t have a home yet.`);
       }
       if (person.wellbeing.energy < 8 && (def.perHour.energy ?? 0) < 0) {
-        throw new CommandError('You are too exhausted for that. Sleep first.');
+        throw new CommandError('You’re too exhausted for that. Sleep first.');
       }
 
       const conflicts = s.timeline.conflicts(s.now, minutes);
@@ -319,7 +319,7 @@ export function registerLife(sim: Simulation): void {
         const accountId = p.accountId ?? person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay from.');
         if (s.ledger.availableFunds(accountId) < cost) {
-          throw new CommandError(`${def.name} costs about ${formatMoney(cost)} and you cannot cover it right now.`);
+          throw new CommandError(`${def.name} costs about ${formatMoney(cost)} and you can’t cover it right now.`);
         }
         s.expense(accountId, cost, def.name, def.category === 'food' ? 'dining' : 'lifestyle');
       }
@@ -344,7 +344,7 @@ export function registerLife(sim: Simulation): void {
       const recipe = RECIPES.get(p.recipeId);
       if (!recipe) throw new CommandError('No such recipe.');
       const person = s.player;
-      if (!person.residenceId) throw new CommandError('You need a kitchen. You do not have a home yet.');
+      if (!person.residenceId) throw new CommandError('You need a kitchen. You don’t have a home yet.');
 
       // The kit before the food: there is no point checking the pantry for a
       // dish you have nothing to cook it in.
@@ -352,7 +352,7 @@ export function registerLife(sim: Simulation): void {
       const short = recipe.equipment.filter((kind) => !kit.has(kind as EquipmentKind));
       if (short.length > 0) {
         const words = short.map((kind) => EQUIPMENT_LABEL[kind as EquipmentKind] ?? kind);
-        throw new CommandError(`You do not have what you need to cook that: ${words.join(', ')}. Appliances are in Shopping.`);
+        throw new CommandError(`You don’t have what you need to cook that: ${words.join(', ')}. Appliances are in Shopping.`);
       }
 
       // Check the pantry actually has the ingredients.
@@ -371,7 +371,7 @@ export function registerLife(sim: Simulation): void {
         if (needed > 0.0001) missing.push(CATALOG.get(ing.catalogId)?.name ?? ing.catalogId);
       }
       if (missing.length > 0) {
-        throw new CommandError(`You are missing ${missing.join(', ')}. Buy groceries first.`);
+        throw new CommandError(`You’re missing ${missing.join(', ')}. Buy groceries first.`);
       }
 
       for (const c of consume) {
@@ -453,10 +453,10 @@ export function registerLife(sim: Simulation): void {
         cost = retailPrice(item.id, 'greenrow', costOfLiving(person.currentLocationId));
         const accountId = p.accountId ?? person.primaryAccountId;
         if (!accountId) throw new CommandError('No account to pay from.');
-        if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`That costs ${formatMoney(cost)} and you cannot cover it.`);
+        if (s.ledger.availableFunds(accountId) < cost) throw new CommandError(`That costs ${formatMoney(cost)} and you can’t cover it.`);
         s.expense(accountId, cost, item.name, 'dining');
       } else {
-        throw new CommandError(`You do not have any ${item.name}. Buy some first.`);
+        throw new CommandError(`You don’t have any ${item.name}. Buy some first.`);
       }
 
       const nourishment = item.nourishment ?? 15;
@@ -793,10 +793,10 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   if (available < ideal) {
     return {
       hours: Math.max(3, Math.round(available * 2) / 2),
-      reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night is not available.`,
+      reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night isn’t available.`,
     };
   }
-  return { hours: Math.round(ideal * 2) / 2, reason: debt > 8 ? 'You are carrying real sleep debt.' : 'A normal night.' };
+  return { hours: Math.round(ideal * 2) / 2, reason: debt > 8 ? 'You’re carrying real sleep debt.' : 'A normal night.' };
 }
 
 export const DAY_MS = MS_DAY;
