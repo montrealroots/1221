@@ -85,8 +85,30 @@ describe('the routes the engine points at', () => {
 
 describe('what was taken out', () => {
   it('leaves no workspace file behind', () => {
+    // The cut-down took twenty five workspaces out. This names them rather
+    // than pinning the whole directory, so a workspace added on purpose is an
+    // addition and a workspace that crept back is caught. Putting one of these
+    // back is a decision, and editing this line is how the decision is made.
+    const removed = [
+      'AwardsWorkspace', 'BankWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
+      'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
+      'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
+      'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
+      'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
+      'TrackWorkspace', 'TravelWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace',
+      'WorkWorkspace',
+    ];
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
-    expect(files).toEqual(['CalendarWorkspace.tsx', 'WorkspaceRouter.tsx']);
+    for (const gone of removed) {
+      expect(files, `${gone} came back`).not.toContain(`${gone}.tsx`);
+    }
+    // Every workspace on disk is one the router will actually serve.
+    const router = read('ui/workspaces/WorkspaceRouter.tsx');
+    for (const file of files) {
+      if (file === 'WorkspaceRouter.tsx') continue;
+      const name = file.replace(/\.tsx$/, '');
+      expect(router, `${name} is on disk but not routed`).toContain(name);
+    }
   });
 
   it('keeps the founder premise out of character creation', () => {
