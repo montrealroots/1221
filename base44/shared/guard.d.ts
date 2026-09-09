@@ -13,11 +13,11 @@ export declare class GuardError extends Error {
 }
 
 /**
- * What the save says it is. SLATE is an actor and actress simulator, every
+ * What the save says it is. SLATE is an actor and actress life simulator, every
  * payload carries the premise, and the server refuses one that does not.
  */
 export interface InspectedPremise {
-  kind: 'actor-actress-simulator';
+  kind: 'actor-actress-life-simulator';
   statement?: string;
   titles?: readonly ('actor' | 'actress')[];
   equalStanding: true;

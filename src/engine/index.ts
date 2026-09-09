@@ -368,9 +368,17 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       universe.meta.performerTitle = player.performerTitle;
       steps.push('Mirrored the player’s title onto the save.');
     }
-    if (!universe.premise || universe.premise.kind !== 'actor-actress-simulator') {
+    // A save written before the genre was named in full carries the old kind.
+    // It is the same game, so it is restated rather than refused.
+    const KNOWN_KINDS = ['actor-actress-life-simulator', 'actor-actress-simulator'];
+    if (universe.premise && KNOWN_KINDS.includes(universe.premise.kind as string)
+        && universe.premise.kind !== 'actor-actress-life-simulator') {
+      universe.premise.kind = 'actor-actress-life-simulator';
+      steps.push('Named the game in full: an actor and actress life simulator.');
+    }
+    if (!universe.premise || universe.premise.kind !== 'actor-actress-life-simulator') {
       const premise: Premise = {
-        kind: 'actor-actress-simulator',
+        kind: 'actor-actress-life-simulator',
         statement: PREMISE_STATEMENT,
         titles: PERFORMER_TITLES,
         equalStanding: true,
@@ -379,7 +387,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
         recordedAt: universe.meta.createdAt ?? universe.now,
       };
       universe.premise = premise;
-      steps.push('Wrote the premise into the save: an actor and actress simulator.');
+      steps.push('Wrote the premise into the save: an actor and actress life simulator.');
     } else {
       // It is there, but it must still agree with the person it is about.
       if (player && universe.premise.playerTitle !== player.performerTitle) {
@@ -436,13 +444,13 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   checked += universe.transactions.length;
 
   // The premise must be in the save, and it must be about the person it names.
-  // SLATE is an actor and actress simulator; a universe that has lost that is
+  // SLATE is an actor and actress life simulator; a universe that has lost that is
   // not one this build will vouch for.
   checked++;
   const premise = universe.premise;
   if (!premise) errors.push('The save doesn’t say what game it is: the premise is missing.');
   else {
-    if (premise.kind !== 'actor-actress-simulator') {
+    if (premise.kind !== 'actor-actress-life-simulator') {
       errors.push(`The save claims to be a '${premise.kind}', which SLATE is not.`);
     }
     if (premise.equalStanding !== true) {

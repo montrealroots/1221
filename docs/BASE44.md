@@ -122,7 +122,7 @@ finishes. It prints a pass or a fail per check:
 1. The deployment answers and the caller is signed in.
 2. An anonymous caller is refused.
 3. A slot that is not one, two or three is refused.
-4. A save that does not say it is an actor and actress simulator is refused.
+4. A save that does not say it is an actor and actress life simulator is refused.
 5. A ledger that does not balance is refused.
 6. A real save writes.
 7. It reads back byte for byte.

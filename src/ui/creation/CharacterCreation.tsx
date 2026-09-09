@@ -130,7 +130,7 @@ export function CharacterCreation({
               <div className="eyebrow">Slot {slot}</div>
               <h1 style={{ fontSize: 'var(--size-lg)' }}>Who are you going to be?</h1>
               <p className="muted small" style={{ marginTop: 2 }}>
-                SLATE is an actor and actress simulator. This is the{' '}
+                SLATE is an actor and actress life simulator. This is the{' '}
                 {PERFORMER_NOUN[titleOf(config)].toLowerCase()} you play.
               </p>
             </div>

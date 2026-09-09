@@ -90,9 +90,9 @@ export function inspectPayload(payload, expectedSlot) {
   if (!premise || typeof premise !== 'object') {
     throw new GuardError('The save does not say what game it is. Refusing to store it.');
   }
-  if (premise.kind !== 'actor-actress-simulator') {
+  if (premise.kind !== 'actor-actress-life-simulator') {
     throw new GuardError(
-      `The save says it is a '${premise.kind}'. This deployment stores SLATE saves, which are actor and actress simulators.`,
+      `The save says it is a '${premise.kind}'. This deployment stores SLATE saves, which are actor and actress life simulators.`,
       409,
     );
   }

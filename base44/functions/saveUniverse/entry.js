@@ -60,7 +60,7 @@ export default async function (req) {
       playtime_seconds: incoming.playtimeSeconds,
       character_name: incoming.meta.characterName ?? '',
       // The premise, lifted out of the payload and onto the row. The game is an
-      // actor and actress simulator; the database says so about every save it
+      // actor and actress life simulator; the database says so about every save it
       // holds rather than making a reader parse a universe to find out.
       performer_title: incoming.premise.playerTitle,
       premise: {

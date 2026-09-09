@@ -1,7 +1,7 @@
 /**
  * What SLATE is, held in place.
  *
- * SLATE is an actor and actress simulator. That is the premise, and it is the
+ * SLATE is an actor and actress life simulator. That is the premise, and it is
  * most important fact about the game, so it is not left to a heading on a
  * screen: every save states it, every save carries the two titles it is about,
  * and every save records that they stand equal. These tests are what stops any
@@ -34,9 +34,9 @@ describe('every save says what game it is', () => {
     const premise = sim.universe.premise;
 
     expect(premise).toBeDefined();
-    expect(premise.kind).toBe('actor-actress-simulator');
+    expect(premise.kind).toBe('actor-actress-life-simulator');
     expect(premise.statement).toBe(PREMISE_STATEMENT);
-    expect(premise.statement).toMatch(/actor and actress simulator/i);
+    expect(premise.statement).toMatch(/actor and actress life simulator/i);
     expect(premise.equalStanding).toBe(true);
     expect([...premise.titles].sort()).toEqual(['actor', 'actress']);
     expect(premise.recordedAt).toBe(sim.universe.meta.createdAt);
@@ -162,8 +162,8 @@ describe('a save that has lost the premise', () => {
     const result = migrate(universe);
     expect(result.migrated).toBe(true);
     expect(result.problems).toEqual([]);
-    expect(result.steps.join(' ')).toMatch(/actor and actress simulator/i);
-    expect(universe.premise.kind).toBe('actor-actress-simulator');
+    expect(result.steps.join(' ')).toMatch(/actor and actress life simulator/i);
+    expect(universe.premise.kind).toBe('actor-actress-life-simulator');
     expect(universe.premise.playerTitle).toBe('actress');
     expect(validateUniverse(universe).errors).toEqual([]);
   });
@@ -190,9 +190,26 @@ describe('a save that has lost the premise', () => {
     expect(report.errors.join(' ')).toMatch(/premise is missing/i);
   });
 
+  it('is renamed forward when it carries the old kind', () => {
+    const sim = quickSave({}, 'premise-old-kind');
+    const universe = deserialise(serialise(sim.universe));
+
+    // Written before the genre was named in full.
+    universe.premise.kind = 'actor-actress-simulator' as 'actor-actress-life-simulator';
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+
+    const result = migrate(universe);
+    expect(result.problems).toEqual([]);
+    expect(universe.premise.kind).toBe('actor-actress-life-simulator');
+    expect(result.steps.join(' ')).toMatch(/named the game in full/i);
+    // Nothing else about it was rewritten.
+    expect(universe.premise.playerTitle).toBe(sim.player.performerTitle);
+    expect(validateUniverse(universe).errors).toEqual([]);
+  });
+
   it('fails validation when it claims to be a different game', () => {
     const sim = quickSave({}, 'premise-wrong-game');
-    sim.universe.premise.kind = 'life-simulator' as 'actor-actress-simulator';
+    sim.universe.premise.kind = 'life-simulator' as 'actor-actress-life-simulator';
 
     const report = validateUniverse(sim.universe);
     expect(report.ok).toBe(false);
@@ -228,7 +245,7 @@ describe('the server will not store a save that is not this game', () => {
 
   it('accepts one that says what it is', () => {
     const accepted = inspectPayload(payloadOf(() => {}), 1);
-    expect(accepted.premise.kind).toBe('actor-actress-simulator');
+    expect(accepted.premise.kind).toBe('actor-actress-life-simulator');
     expect(accepted.premise.playerTitle).toMatch(/^(actor|actress)$/);
   });
 
@@ -238,10 +255,10 @@ describe('the server will not store a save that is not this game', () => {
   });
 
   it('refuses one that claims to be a different game', () => {
-    expect(() => inspectPayload(payloadOf((u) => { u.premise.kind = 'farming-simulator' as 'actor-actress-simulator'; }), 1))
+    expect(() => inspectPayload(payloadOf((u) => { u.premise.kind = 'farming-simulator' as 'actor-actress-life-simulator'; }), 1))
       .toThrow(GuardError);
-    expect(() => inspectPayload(payloadOf((u) => { u.premise.kind = 'farming-simulator' as 'actor-actress-simulator'; }), 1))
-      .toThrow(/actor and actress simulators/i);
+    expect(() => inspectPayload(payloadOf((u) => { u.premise.kind = 'farming-simulator' as 'actor-actress-life-simulator'; }), 1))
+      .toThrow(/actor and actress life simulators/i);
   });
 
   it('refuses one that has demoted a title', () => {

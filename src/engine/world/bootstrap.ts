@@ -285,7 +285,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   const stated = config.performerTitle;
   const performerTitle: PerformerTitle = stated ?? impliedPerformerTitle(config.pronouns);
   const premise: Premise = {
-    kind: 'actor-actress-simulator',
+    kind: 'actor-actress-life-simulator',
     statement: PREMISE_STATEMENT,
     titles: PERFORMER_TITLES,
     equalStanding: true,

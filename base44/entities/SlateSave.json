@@ -48,8 +48,8 @@
       "properties": {
         "kind": {
           "type": "string",
-          "enum": ["actor-actress-simulator"],
-          "description": "SLATE is an actor and actress simulator. A row that says anything else is not stored."
+          "enum": ["actor-actress-life-simulator"],
+          "description": "SLATE is an actor and actress life simulator. A row that says anything else is not stored."
         },
         "statement": {
           "type": "string",

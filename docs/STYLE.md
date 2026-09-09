@@ -52,7 +52,7 @@ called real.
 
 ## Actor, or actress
 
-SLATE is an actor and actress simulator. The two words name one craft, and the
+SLATE is an actor and actress life simulator. The two words name one craft, and
 game gives them equal standing: neither is the default, neither is the variant,
 and no string calls one of them the other one.
 

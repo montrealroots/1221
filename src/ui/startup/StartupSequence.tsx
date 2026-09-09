@@ -160,7 +160,12 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
       <div className="startup-inner">
         <span className="clapper" role="img" aria-label="SLATE">🎬</span>
         <div className="wordmark">SLATE</div>
-        <div className="wordmark-sub">An actor and actress simulator</div>
+        {/*
+          "life simulator" is bound together so the line breaks before it on a
+          phone. Left to itself it wraps after "life" and leaves "simulator"
+          alone on the second line.
+        */}
+        <div className="wordmark-sub">An actor and actress life{'\u00A0'}simulator</div>
 
         <div
           className="startup-bar"

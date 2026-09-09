@@ -1,6 +1,6 @@
 # 🎬 SLATE
 
-**An actor and actress simulator.** Actor and actress are two names for one
+**An actor and actress life simulator.** Actor and actress are two names for one
 craft, and SLATE treats them as equals: neither is the default, neither is the
 special case, and every label about a person uses their own word. The premise
 is not a line on a title screen — every save carries it, the client validates
@@ -130,7 +130,7 @@ The browser never writes a save directly. It sends the universe to
 
 | Function | Enforces |
 | --- | --- |
-| `saveUniverse` | Signed in; slot is 1–3; payload parses, is within size, and is in a format this build reads; the save says it is an actor and actress simulator, holds the two titles equal, and gives its player one of them; every transaction balances and the whole ledger sums to zero; no record belongs to another save; the world clock and playtime have not gone backwards; the previous payload is kept as a backup. Idempotent on a retry. |
+| `saveUniverse` | Signed in; slot is 1–3; payload parses, is within size, and is in a format this build reads; the save says it is an actor and actress life simulator, holds the two titles equal, and gives its player one of them; every transaction balances and the whole ledger sums to zero; no record belongs to another save; the world clock and playtime have not gone backwards; the previous payload is kept as a backup. Idempotent on a retry. |
 | `loadUniverse` | Reads scoped to the caller by row-level security. With no slot, returns what is in all three. |
 | `recordOfficialResult` | Writes a finalised result once. A second write returns what is already stored rather than changing it. |
 | `clearSlot` | Moves the payload aside as a backup and marks the slot cleared. Nothing is destroyed outright. |

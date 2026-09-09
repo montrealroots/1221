@@ -851,7 +851,7 @@ export interface SaveMeta {
 /**
  * What SLATE is, written into every universe it makes.
  *
- * SLATE is an actor and actress simulator. That is the premise, and it is the
+ * SLATE is an actor and actress life simulator. That is the premise, and it is
  * most important fact about the game, so it is not left to a heading on a
  * screen somebody might later rewrite: every save states it, carries the two
  * titles it is about, and records that they stand equal. A save that does not
@@ -864,7 +864,7 @@ export interface SaveMeta {
  */
 export interface Premise {
   /** What this game is. One value, and it does not vary by save. */
-  kind: 'actor-actress-simulator';
+  kind: 'actor-actress-life-simulator';
   /** Said in full, so a reader of the raw save needs nothing else. */
   statement: string;
   /** The two titles the game is about, in no order of precedence. */
@@ -881,7 +881,7 @@ export interface Premise {
 
 /** The premise, in the words every save carries. */
 export const PREMISE_STATEMENT =
-  'SLATE is an actor and actress simulator. Actor and actress are two names for '
+  'SLATE is an actor and actress life simulator. Actor and actress are two names '
   + 'one craft, and this game treats them as equals: neither is the default, and '
   + 'every label about a person uses their own word.';
 
