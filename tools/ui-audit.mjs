@@ -320,16 +320,6 @@ for (const size of WIDTHS) {
     await shoot('04-home');
     scrollsSideways = (await probe('home')) || scrollsSideways;
 
-    // The rail folds into a drawer below a certain width.
-    const openRail = async () => {
-      const toggle = page.getByRole('button', { name: /toggle navigation/i }).first();
-      if (!(await toggle.count())) return;
-      if ((await page.locator('nav.rail[data-open="true"]').count()) === 0) {
-        await toggle.click().catch(() => {});
-        await page.waitForTimeout(500);
-      }
-    };
-
     if (await click(/^Open Calendar$/)) {
       await page.waitForTimeout(1500);
       await shoot('05-calendar');
@@ -340,31 +330,6 @@ for (const size of WIDTHS) {
         await day.click().catch(() => {});
         await page.waitForTimeout(800);
         scrollsSideways = (await probe('a day, opened')) || scrollsSideways;
-      }
-    }
-
-    await openRail();
-    if (await click(/^Production Companies$/)) {
-      await page.waitForTimeout(1400);
-      await shoot('06-companies');
-      scrollsSideways = (await probe('the production companies')) || scrollsSideways;
-
-      const card = page.locator('.studio').first();
-      if (await card.count()) {
-        await card.click().catch(() => {});
-        await page.waitForTimeout(900);
-        await shoot('07-company-open');
-        scrollsSideways = (await probe('one company, opened')) || scrollsSideways;
-        // The dialog scrolls; the lower half has to be measured on screen too.
-        await page.evaluate(() => {
-          const body = document.querySelector('.modal-body');
-          if (body) body.scrollTop = body.scrollHeight;
-        });
-        await page.waitForTimeout(400);
-        await shoot('08-company-open-lower');
-        scrollsSideways = (await probe('one company, further down')) || scrollsSideways;
-        await page.keyboard.press('Escape');
-        await page.waitForTimeout(400);
       }
     }
 

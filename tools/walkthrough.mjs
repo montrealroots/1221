@@ -333,32 +333,7 @@ if (await click(/^Open Calendar$/)) {
 }
 
 // ---------------------------------------------------------------------------
-// 7. The production companies, and one of them opened
-// ---------------------------------------------------------------------------
-
-if (await click(/^Production Companies$/)) {
-  await page.waitForTimeout(1400);
-  await sections('production-companies', 'the eighteen: who they are and how each one is owned');
-
-  // A card is the button. Open a subsidiary, because that is the one whose
-  // detail carries a parent company as well as the people.
-  const owned = page.locator('.studio', { hasText: 'NBCUniversal' }).first();
-  if (await owned.count()) {
-    await owned.scrollIntoViewIfNeeded().catch(() => {});
-    await owned.click().catch(() => {});
-    await page.waitForTimeout(800);
-    await shoot('production-company-open', 'one company opened: ownership, labels, who runs it, casting');
-    await page.keyboard.press('Escape');
-    await page.waitForTimeout(400);
-  } else {
-    console.log('   (no company card could be opened)');
-  }
-  await click(/^Home$/);
-  await page.waitForTimeout(1200);
-}
-
-// ---------------------------------------------------------------------------
-// 8. Save and exit, and the slots with something in them
+// 7. Save and exit, and the slots with something in them
 // ---------------------------------------------------------------------------
 
 if (await click(/save\s*&\s*exit/i)) {
@@ -379,7 +354,7 @@ if (await click(/save\s*&\s*exit/i)) {
 }
 
 // ---------------------------------------------------------------------------
-// 9. Startup when a slot will not read
+// 8. Startup when a slot will not read
 // ---------------------------------------------------------------------------
 
 await page.evaluate(() => { localStorage.setItem('slate.save.2', 'this is not a universe'); });
@@ -392,7 +367,7 @@ if (await click(/^Continue$/)) {
 }
 
 // ---------------------------------------------------------------------------
-// 10. The same game on a phone
+// 9. The same game on a phone
 // ---------------------------------------------------------------------------
 
 await page.setViewportSize(NARROW);
@@ -416,16 +391,6 @@ if (await click(/^Continue$/)) {
   if (await click(/^Open Calendar$/)) {
     await page.waitForTimeout(1600);
     await sections('narrow-calendar', 'the calendar at phone width');
-  }
-  // The rail is not on the page at this width, so the drawer has to be opened
-  // before there is a destination to click. Without this the button matches
-  // nothing and the walk moves on having photographed the calendar twice.
-  if (await click(/toggle navigation/i)) {
-    await page.waitForTimeout(700);
-    if (await click(/^Production Companies$/)) {
-      await page.waitForTimeout(1600);
-      await sections('narrow-production-companies', 'the companies at phone width, one card to a row');
-    }
   }
 }
 
