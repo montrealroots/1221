@@ -800,25 +800,6 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         items={GENRE_MASTERIES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
       />
 
-      {/* --- What is not here yet ------------------------------------------ */}
-      <div className="card">
-        <div className="panel-head">
-          <div><h3>The Work Itself</h3></div>
-        </div>
-        <div className="callout">
-          <strong className="xs">Under Construction</strong>
-          <p className="xs" style={{ margin: '6px 0 0' }}>
-            Casting, auditions, productions and everything the career is made of are being rebuilt
-            for a later milestone. None of it is in this build, and nothing in the game points at
-            it yet.
-          </p>
-          <p className="xs" style={{ margin: '8px 0 0' }}>
-            This build is the ground the work will stand on: where you live, the map around it,
-            the calendar you keep, the weather over all of it, and how you keep yourself standing.
-            Start there, and the work arrives into a life that already exists.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }
