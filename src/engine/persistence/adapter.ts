@@ -17,6 +17,11 @@ export interface SaveSlotInfo {
   /** Set when the stored save could not be read. */
   error?: string;
   hasBackup: boolean;
+  /**
+   * The world date the backup sits at, when it is known. Restoring is a step
+   * backwards, and a player cannot weigh it without knowing how far back.
+   */
+  backupDateLabel?: string;
   /** Approximate stored size in bytes. */
   bytes?: number;
 }

@@ -21,6 +21,10 @@
       "type": "string",
       "description": "The previous payload, kept so a bad write or an accidental delete is recoverable."
     },
+    "backup_world_date_label": {
+      "type": "string",
+      "description": "The world date the backup sits at, so a player can see how far back restoring would take them without the server parsing the payload."
+    },
     "schema_version": {
       "type": "integer",
       "description": "Save format version. The client refuses to load a save written by a newer build than it understands."

@@ -139,6 +139,37 @@ describe('deleting a slot', () => {
     expect(restored?.meta.id).toBe(sim.universe.meta.id);
   });
 
+  it('says which world date the backup sits at, so restoring is not a blind step', async () => {
+    const sim = quickSave({ wealth: 'inherited' }, 'backup-dated');
+    const adapter = new LocalSaveAdapter();
+    const slot = sim.universe.meta.slot;
+    sim.universe.meta.worldDateLabel = 'March 2, 2026';
+    await adapter.save(sim.universe);
+
+    // A year on, saving again pushes the older state into the backup.
+    sim.advanceTo(sim.now + 365 * 86_400_000);
+    sim.universe.meta.worldDateLabel = 'March 2, 2027';
+    await adapter.save(sim.universe);
+
+    const info = (await adapter.listSlots()).find((s) => s.slot === slot)!;
+    expect(info.meta?.worldDateLabel).toBe('March 2, 2027');
+    expect(info.hasBackup).toBe(true);
+    expect(info.backupDateLabel).toBe('March 2, 2026');
+  });
+
+  it('does not offer a restore from a backup that cannot be read either', async () => {
+    const adapter = new LocalSaveAdapter();
+    store.setItem('slate.save.1', 'this is not a universe');
+    store.setItem('slate.backup.1', 'nor is this');
+
+    const info = (await adapter.listSlots()).find((s) => s.slot === 1)!;
+    expect(info.occupied).toBe(true);
+    expect(info.error).toBe('That save file is damaged and can’t be read.');
+    // The button is drawn from hasBackup. A backup that will not open is not one.
+    expect(info.hasBackup).toBe(false);
+    expect(info.backupDateLabel).toBeUndefined();
+  });
+
   it('reports no backup when a damaged slot had none, rather than offering a restore that fails', async () => {
     const adapter = new LocalSaveAdapter();
     store.setItem('slate.save.1', 'this is not a universe');

@@ -81,17 +81,21 @@ export class LocalSaveAdapter implements SaveAdapter {
         continue;
       }
       const raw = store.getItem(KEY(slot));
-      const hasBackup = store.getItem(BACKUP_KEY(slot)) !== null;
+      // A backup is only a backup if it can be read. Advertising one that
+      // cannot puts a button on the card that fails when it is pressed.
+      const backup = await this.readBackup(store, slot);
+      const hasBackup = backup !== null;
+      const backupDateLabel = backup?.meta.worldDateLabel || undefined;
       if (!raw) {
-        slots.push({ slot, occupied: false, hasBackup });
+        slots.push({ slot, occupied: false, hasBackup, backupDateLabel });
         continue;
       }
       try {
         const universe = deserialise(await unpack(raw));
-        slots.push({ slot, occupied: true, meta: universe.meta, hasBackup, bytes: raw.length });
+        slots.push({ slot, occupied: true, meta: universe.meta, hasBackup, backupDateLabel, bytes: raw.length });
       } catch (error) {
         slots.push({
-          slot, occupied: true, hasBackup, bytes: raw.length,
+          slot, occupied: true, hasBackup, backupDateLabel, bytes: raw.length,
           error: (error as Error).message,
         });
       }
@@ -145,6 +149,16 @@ export class LocalSaveAdapter implements SaveAdapter {
       return true;
     } catch {
       return false;
+    }
+  }
+
+  private async readBackup(store: Storage, slot: Slot): Promise<SaveUniverse | null> {
+    const raw = store.getItem(BACKUP_KEY(slot));
+    if (!raw) return null;
+    try {
+      return deserialise(await unpack(raw));
+    } catch {
+      return null;
     }
   }
 

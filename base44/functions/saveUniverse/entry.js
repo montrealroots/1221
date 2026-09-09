@@ -90,6 +90,11 @@ export default async function (req) {
       saved = await base44.entities.SlateSave.update(existing.id, {
         ...row,
         backup_payload: existing.payload || existing.backup_payload || '',
+        // The date travels with the payload it describes, so the slot screen can
+        // say how far back a restore goes without reading a whole universe.
+        backup_world_date_label: existing.payload
+          ? (existing.world_date_label || '')
+          : (existing.backup_world_date_label || ''),
       });
     } else {
       saved = await base44.entities.SlateSave.create(row);

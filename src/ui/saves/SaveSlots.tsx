@@ -131,9 +131,12 @@ export function SaveSlots({
                       New Save
                     </button>
                     {info.hasBackup && (
-                      <button className="btn btn-sm" onClick={() => void load(slot, true)} disabled={working}>
-                        {working ? 'Opening…' : 'Restore Backup'}
-                      </button>
+                      <>
+                        <button className="btn btn-sm" onClick={() => void load(slot, true)} disabled={working}>
+                          {working ? 'Opening…' : 'Restore Backup'}
+                        </button>
+                        <BackupNote label={info.backupDateLabel} center />
+                      </>
                     )}
                   </div>
                 </div>
@@ -143,10 +146,7 @@ export function SaveSlots({
             const meta = info.meta;
             return (
               <div key={slot} className="slot">
-                <div className="row-between">
-                  <span className="slot-number">Slot {slot}</span>
-                  {info.hasBackup && <span className="chip">Backup</span>}
-                </div>
+                <div className="slot-number">Slot {slot}</div>
 
                 {info.error ? (
                   <>
@@ -154,9 +154,12 @@ export function SaveSlots({
                     <p className="small negative">{info.error}</p>
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       {info.hasBackup && (
-                        <button className="btn" onClick={() => void load(slot, true)} disabled={working}>
-                          Restore Backup
-                        </button>
+                        <>
+                          <button className="btn" onClick={() => void load(slot, true)} disabled={working}>
+                            Restore Backup
+                          </button>
+                          <BackupNote label={info.backupDateLabel} />
+                        </>
                       )}
                       <button className="btn btn-danger btn-sm" onClick={() => setConfirmDelete(slot)} disabled={working}>
                         Delete
@@ -203,6 +206,7 @@ export function SaveSlots({
                       {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · Updates On Load'}
                       {info.bytes !== undefined && ` · ${formatBytes(info.bytes)}`}
                     </div>
+                    {info.hasBackup && <BackupNote label={info.backupDateLabel} />}
 
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       <button className="btn btn-primary btn-block" onClick={() => void load(slot)} disabled={working}>
@@ -258,6 +262,19 @@ export function SaveSlots({
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * What restoring would go back to. A backup the player cannot date is a step
+ * they cannot weigh, so the date is the whole point of the note; a stored save
+ * from before the date was kept has to say that rather than invent one.
+ */
+function BackupNote({ label, center = false }: { label?: string; center?: boolean }) {
+  return (
+    <div className={`xs dim${center ? ' center' : ''}`}>
+      {label ? `Backup from ${label}` : 'Backup from an unrecorded date'}
     </div>
   );
 }

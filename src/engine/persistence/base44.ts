@@ -46,7 +46,7 @@ export interface FunctionReply {
     slot: number; occupied: boolean; hasBackup: boolean; saveId?: string;
     schemaVersion?: number; characterName?: string; careerLabel?: string;
     locationLabel?: string; worldDateLabel?: string; netWorthLabel?: string;
-    playtimeSeconds?: number; bytes?: number;
+    playtimeSeconds?: number; bytes?: number; backupDateLabel?: string;
   }[];
 }
 
@@ -73,6 +73,7 @@ interface SaveRecord {
   app_version: string;
   updated_at?: string;
   backup_payload?: string;
+  backup_world_date_label?: string;
 }
 
 /**
@@ -142,11 +143,18 @@ export class Base44SaveAdapter implements SaveAdapter {
       const reply = await this.call('loadUniverse', {}, 'Reading your saves');
       return ([1, 2, 3] as Slot[]).map((slot) => {
         const row = reply.slots?.find((s) => s.slot === slot);
-        if (!row?.occupied) return { slot, occupied: false, hasBackup: Boolean(row?.hasBackup) };
+        if (!row?.occupied) {
+          return {
+            slot, occupied: false,
+            hasBackup: Boolean(row?.hasBackup),
+            backupDateLabel: row?.backupDateLabel || undefined,
+          };
+        }
         return {
           slot,
           occupied: true,
           hasBackup: row.hasBackup,
+          backupDateLabel: row.backupDateLabel || undefined,
           bytes: row.bytes,
           meta: {
             id: row.saveId ?? '',
@@ -180,17 +188,19 @@ export class Base44SaveAdapter implements SaveAdapter {
     return ([1, 2, 3] as Slot[]).map((slot) => {
       const record = records.find((r) => r.slot === slot);
       if (!record) return { slot, occupied: false, hasBackup: false };
+      const hasBackup = Boolean(record.backup_payload);
+      const backupDateLabel = record.backup_world_date_label || undefined;
       try {
         const universe = deserialise(record.payload);
         return {
           slot, occupied: true, meta: universe.meta,
-          hasBackup: Boolean(record.backup_payload),
+          hasBackup, backupDateLabel,
           bytes: record.payload.length,
         };
       } catch (error) {
         return {
-          slot, occupied: true, hasBackup: Boolean(record.backup_payload),
-          error: `Stored save couldn’t be read: ${(error as Error).message}`,
+          slot, occupied: true, hasBackup, backupDateLabel,
+          error: (error as Error).message,
         };
       }
     });
@@ -251,7 +261,11 @@ export class Base44SaveAdapter implements SaveAdapter {
       const [existing] = await entity.filter({ slot });
       if (existing) {
         // Keep the prior payload as a server-side backup before overwriting.
-        await entity.update(existing.id, { ...data, backup_payload: existing.payload });
+        await entity.update(existing.id, {
+          ...data,
+          backup_payload: existing.payload,
+          backup_world_date_label: existing.world_date_label ?? '',
+        });
         universe.meta.backupAvailable = true;
       } else {
         await entity.create(data);
@@ -280,7 +294,11 @@ export class Base44SaveAdapter implements SaveAdapter {
     const [existing] = await entity.filter({ slot });
     if (existing) {
       // Keep the payload as a backup rather than destroying it outright.
-      await entity.update(existing.id, { backup_payload: existing.payload, payload: '' });
+      await entity.update(existing.id, {
+        backup_payload: existing.payload,
+        backup_world_date_label: existing.world_date_label ?? '',
+        payload: '',
+      });
     }
     await this.fallback.remove(slot).catch(() => undefined);
   }
@@ -290,7 +308,10 @@ export class Base44SaveAdapter implements SaveAdapter {
     if (!entity) return this.fallback.backup(slot);
     const [existing] = await entity.filter({ slot });
     if (!existing?.payload) return false;
-    await entity.update(existing.id, { backup_payload: existing.payload });
+    await entity.update(existing.id, {
+      backup_payload: existing.payload,
+      backup_world_date_label: existing.world_date_label ?? '',
+    });
     return true;
   }
 

@@ -30,6 +30,9 @@ export default async function (req) {
     // refuse the next universe started in that slot. The backup survives.
     await base44.entities.SlateSave.update(row.id, {
       backup_payload: row.payload || row.backup_payload || '',
+      backup_world_date_label: row.payload
+        ? (row.world_date_label || '')
+        : (row.backup_world_date_label || ''),
       payload: '',
       save_id: '',
       world_now: 0,
