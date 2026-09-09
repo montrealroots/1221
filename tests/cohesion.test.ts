@@ -13,6 +13,8 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { ATTRIBUTES, TRAITS, ALL_TRAITS } from '@/engine/domain/attributes';
 import { COUNTRIES } from '@/engine/content/geography';
+import { ageOnDate } from '@/engine/core/time';
+import { MINIMUM_AGE } from '@/ui/creation/CharacterCreation';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
 function globSource(directory: string): string {
@@ -90,5 +92,31 @@ describe('a fact stated twice is stated the same way', () => {
     const categories = new Set(TRAITS.map((t) => t.category));
     for (const trait of TRAITS) expect(categories.has(trait.category)).toBe(true);
     expect(duplicates(TRAITS, (t) => t.name)).toEqual([]);
+  });
+});
+
+describe('the age a save can begin at', () => {
+  const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
+
+  it('will not start a save on somebody under eighteen', () => {
+    expect(MINIMUM_AGE).toBe(18);
+
+    const start = { year: 2026, month: 3, day: 2 };
+    // The last birthday that clears it, and the first that does not.
+    expect(ageOnDate({ year: 2008, month: 3, day: 2 }, start)).toBe(18);
+    expect(ageOnDate({ year: 2008, month: 3, day: 3 }, start)).toBe(17);
+  });
+
+  it('stops the year picker at the last year that could be old enough', () => {
+    // A 2008 birthday can still land short of it, which is why the age itself
+    // is checked as well; the picker's job is to stop the obvious mistake.
+    expect(source).toContain('max={config.startYear - MINIMUM_AGE}');
+    expect(source).not.toMatch(/max=\{config\.startYear - \d/);
+  });
+
+  it('states the rule once, so the picker and the check cannot disagree', () => {
+    const literals = source.match(/\bage < \d+\b/g) ?? [];
+    expect(literals).toEqual([]);
+    expect(source).toContain('if (age < MINIMUM_AGE)');
   });
 });

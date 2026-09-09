@@ -33,6 +33,16 @@ import {
 } from '@/engine/content/personality-traits';
 import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
 
+/**
+ * The youngest a character can be when the save begins.
+ *
+ * Eighteen, because this is a working actor's life and the work is adult
+ * work: everything a career is made of — signing with an agent, signing a
+ * contract, being on a set without somebody standing in for your consent —
+ * is something a minor cannot do for themselves.
+ */
+export const MINIMUM_AGE = 18;
+
 const STEPS = ['Identity', 'Personal', 'Your Craft', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
@@ -320,7 +330,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div className="field">
           <label htmlFor="birth-year">Year Of Birth</label>
           <input
-            id="birth-year" type="number" min={1940} max={config.startYear - 5}
+            id="birth-year" type="number" min={1940} max={config.startYear - MINIMUM_AGE}
             value={config.birthYear}
             onChange={(e) => set('birthYear', Number(e.target.value))}
           />
@@ -902,9 +912,12 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
     const age = ageAtStart(config);
-    // Five, because school starts around then and there is now a school to
-    // go to. Below that a life is somebody else's decisions all the way down.
-    if (age < 5) issues.push('Your character has to be at least 5 when the save begins.');
+    // The year picker already stops at the last year that can be old enough,
+    // but the month and the day can still land short of the birthday, so the
+    // age itself is what decides.
+    if (age < MINIMUM_AGE) {
+      issues.push(`Your character has to be at least ${MINIMUM_AGE} when the save begins.`);
+    }
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
