@@ -13,7 +13,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, quickSave, validateUniverse } from '@/engine';
 import {
-  affinity, caresAbout, holdsTrait, lovesGenre, sharedGround, tasteOf, traitModifier, unknownTaste,
+  affinity, axisModifier, caresAbout, holdsTrait, lovesGenre, sharedGround, tasteOf,
+  traitModifier, unknownTaste,
 } from '@/engine/core/taste';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import type { Person } from '@/engine/domain/model';
@@ -171,5 +172,68 @@ describe('what two people have in common', () => {
     const two = playerWith('taste-t2', { interests: [], genres: [], personalityTraits: ['quick_tempered'] });
     expect(affinity(one, two)).toBe(0);
     expect(sharedGround(one, two).traits).toEqual(['quick_tempered']);
+  });
+});
+
+describe('what the personality axes actually do', () => {
+  const month = 30 * 86_400_000;
+  const flat = {
+    openness: 50, conscientiousness: 50, extraversion: 50,
+    agreeableness: 50, emotionalStability: 50, ambition: 50, riskTolerance: 50,
+  };
+  const after = (over: Record<string, number>, seed: string) => {
+    const sim = createSave(1, seed, {
+      ...defaultConfig(), personality: { ...flat, ...over } as never,
+    });
+    sim.advanceTo(sim.now + month);
+    return sim.universe.people[sim.universe.playerId]!.wellbeing;
+  };
+
+  it('leaves the middle of every scale at no modifier', () => {
+    const sim = createSave(1, 'axis-mid', { ...defaultConfig(), personality: flat as never });
+    const person = sim.universe.people[sim.universe.playerId]!;
+    for (const key of ['stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'travelFatigue']) {
+      expect(axisModifier(person, key), key).toBe(1);
+    }
+  });
+
+  it('makes emotional stability decide how stress arrives and clears', () => {
+    const volatile = after({ emotionalStability: 5 }, 'axis-volatile');
+    const steady = after({ emotionalStability: 95 }, 'axis-steady');
+    expect(volatile.stress).toBeGreaterThan(steady.stress);
+    expect(volatile.morale).toBeLessThan(steady.morale);
+  });
+
+  it('makes conscientiousness decide how the nights go', () => {
+    const loose = after({ conscientiousness: 5 }, 'axis-loose');
+    const meticulous = after({ conscientiousness: 95 }, 'axis-meticulous');
+    expect(loose.morale).toBeLessThan(meticulous.morale);
+  });
+
+  it('keeps the swing from one slider inside something a month can survive', () => {
+    // A whole slider is a real difference, not a death sentence. If one axis
+    // can halve a month of morale on its own, the model is doing too much.
+    const worst = after({ conscientiousness: 5 }, 'axis-worst');
+    const best = after({ conscientiousness: 95 }, 'axis-best');
+    expect(best.morale - worst.morale).toBeLessThan(45);
+    expect(worst.morale).toBeGreaterThan(50);
+  });
+
+  it('moves nothing for the axes that need people or decisions', () => {
+    const mid = after({}, 'axis-mid-run');
+    for (const [axis, seed] of [
+      ['extraversion', 'axis-extra'], ['agreeableness', 'axis-agree'], ['riskTolerance', 'axis-risk'],
+    ] as const) {
+      const low = after({ [axis]: 5 }, seed);
+      expect(low.stress, axis).toBe(mid.stress);
+      expect(low.morale, axis).toBe(mid.morale);
+    }
+  });
+
+  it('says on the screen which ones are live, rather than implying all of them', () => {
+    const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
+    expect(source).toContain('Emotional Stability and Conscientiousness are the two that');
+    // The old copy promised all three of these, and none was true.
+    expect(source).not.toContain('They shape how people respond to you');
   });
 });

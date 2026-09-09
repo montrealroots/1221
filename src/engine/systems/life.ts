@@ -16,7 +16,7 @@ import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { modifierFor } from '../domain/attributes';
-import { traitModifier } from '../core/taste';
+import { dispositionOf } from '../core/taste';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 
 // ---------------------------------------------------------------------------
@@ -42,7 +42,7 @@ export function freshWellbeing(): Wellbeing {
 
 /** One of this person's personality knobs, or 1 when they hold nothing that touches it. */
 export function personalityOf(person: Person, key: string): number {
-  return traitModifier(person, key);
+  return dispositionOf(person, key);
 }
 
 /**

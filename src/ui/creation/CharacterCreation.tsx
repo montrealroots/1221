@@ -620,7 +620,11 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              These are dispositions, not stats. They shape how people respond to you, how you hold up under pressure, and what you tend to choose.
+              Dispositions, not stats. Emotional Stability and Conscientiousness are the two that
+              do something today: how fast stress arrives and how fast it clears, and how well the
+              nights go. The other five are written into the save and change nothing yet — two are
+              wired to shoots and travel this build hasn’t got, and three need other people, which
+              it also hasn’t got.
             </p>
           </div>
         </div>

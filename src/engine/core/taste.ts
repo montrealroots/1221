@@ -77,6 +77,69 @@ export function traitModifier(person: Person, key: string): number {
   return personalityModifier(tasteOf(person).traits, key);
 }
 
+/**
+ * How far an axis leans from the middle of its scale, -1 to 1.
+ *
+ * The sliders run 5 to 95, so 50 is the middle and 45 is the reach either way.
+ * A person left at the defaults leans barely at all, which is the point: the
+ * middle of every scale should be an ordinary person, not a bonus.
+ */
+function lean(value: number): number {
+  return Math.max(-1, Math.min(1, ((value ?? 50) - 50) / 45));
+}
+
+/**
+ * What somebody's disposition does to one of the knobs the life systems read.
+ *
+ * Four of the seven axes reach wellbeing, and each for a reason rather than
+ * because a number was going spare:
+ *
+ * - Emotional stability is stress reactivity. Steady people take less on and
+ *   shed it faster; volatile people do the opposite. This is the one the
+ *   screen means by "how you hold up under pressure".
+ * - Ambition costs. Driven people push through the point where somebody
+ *   content would stop, and it shows up as stress.
+ * - Conscientiousness is routine, and routine is what sleep is made of, so it
+ *   moves both how well a night goes and how much of it comes back as energy.
+ * - Openness is how a new place lands. Somebody experimental is not worn down
+ *   by being somewhere unfamiliar the way a conventional person is.
+ *
+ * Extraversion, agreeableness and risk tolerance are about other people and
+ * about choices, and this build has neither. They are recorded and read by
+ * nothing, and the creation screen says so rather than implying otherwise.
+ */
+export function axisModifier(person: Person, key: string): number {
+  const p = person.personality;
+  if (!p) return 1;
+  const steady = lean(p.emotionalStability);
+  const driven = lean(p.ambition);
+  const ordered = lean(p.conscientiousness);
+  const open = lean(p.openness);
+
+  let value = 1;
+  switch (key) {
+    case 'stressGain': value = 1 - steady * 0.3 + driven * 0.15; break;
+    case 'stressRecovery': value = 1 + steady * 0.3; break;
+    case 'sleepQuality': value = 1 + ordered * 0.1; break;
+    case 'energyRecovery': value = 1 + ordered * 0.1; break;
+    // Read as "how much travel bothers you", so openness lowers it.
+    case 'travelFatigue': value = 1 - open * 0.2; break;
+    default: return 1;
+  }
+  return Math.round(Math.max(0.5, Math.min(1.6, value)) * 1000) / 1000;
+}
+
+/**
+ * Everything about who somebody is, as one multiplier on a named knob.
+ *
+ * The traits they hold and the axes they were built on, multiplied together.
+ * This is what the life systems ask, so neither half can be wired up without
+ * the other coming with it.
+ */
+export function dispositionOf(person: Person, key: string): number {
+  return traitModifier(person, key) * axisModifier(person, key);
+}
+
 /** What two people both care about. */
 export interface SharedGround {
   interests: readonly string[];
