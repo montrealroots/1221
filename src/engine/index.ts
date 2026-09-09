@@ -17,6 +17,7 @@ import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './cor
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { PERFORMER_TITLES, impliedPerformerTitle, performerTitleOf } from './core/performer';
+import { unknownTaste } from './core/taste';
 import { titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
@@ -505,6 +506,22 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
     if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
       errors.push('Player primary account points at an account that doesn’t exist.');
+    }
+  }
+
+  // Nobody may carry a trait, an interest or a genre this build has never
+  // heard of. It is a warning rather than an error: the save is still sound,
+  // the engine drops what it does not know, and the player loses only a line
+  // on a sheet. Saying so is what stops it being noticed years later.
+  for (const person of Object.values(universe.people)) {
+    checked++;
+    const strange = unknownTaste(person);
+    if (strange.length > 0) {
+      warnings.push(
+        `${person.displayName} carries ${strange.length} taste${strange.length === 1 ? '' : 's'} `
+        + `this build doesn’t know: ${strange.slice(0, 4).join(', ')}`
+        + `${strange.length > 4 ? ', and more' : ''}. They’ll be ignored.`,
+      );
     }
   }
 

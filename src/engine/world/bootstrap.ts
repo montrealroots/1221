@@ -24,6 +24,12 @@ import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
+import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
+
+/** The ids on a list this build recognises, deduplicated, in the order given. */
+function known(ids: readonly string[] | undefined, table: Readonly<Record<string, unknown>>): string[] {
+  return [...new Set((ids ?? []).filter((id) => table[id] !== undefined))];
+}
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
 
@@ -73,6 +79,8 @@ export interface NewSaveConfig {
   personalityTraits: string[];
   traits: string[];
   interests: string[];
+  /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
+  genres: string[];
   goals: string[];
   lifestyle: Person['lifestyle'];
   background: string;
@@ -119,7 +127,7 @@ export function defaultConfig(): NewSaveConfig {
     raceEthnicity: [],
     homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
     personality: defaultPersonality(),
-    personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
+    personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
     companyName: '',
@@ -337,7 +345,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),
     currentLocationId: config.startLocationId,
     personality: config.personality,
-    interests: config.interests,
+    // Cleaned by the same rule the engine reads them by, so what is written
+    // and what is read can never drift apart.
+    interests: known(config.interests, INTEREST_BY_ID),
+    genres: known(config.genres, GENRE_BY_ID),
     goals: config.goals,
     lifestyle: config.lifestyle,
     background: config.background,

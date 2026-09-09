@@ -16,6 +16,9 @@ import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { describeEthnicity } from '@/engine/content/ethnicity';
 import {
+  CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
+} from '@/engine/content/interests';
+import {
   PERSONALITY_GROUPS, personalityTraitPairs, personalityTraitsIn,
 } from '@/engine/content/personality-traits';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
@@ -222,5 +225,71 @@ describe('the order the personality traits are offered in', () => {
         for (const id of partners) expect(paired.has(id)).toBe(true);
       }
     }
+  });
+});
+
+describe('the interests and the genres', () => {
+  it('offers film and television, and the trades that make them', () => {
+    const general = GENERAL_INTERESTS.map((one) => one.id);
+    expect(general).toContain('film');
+    expect(general).toContain('television');
+    const crafts = CRAFT_INTERESTS.map((one) => one.id);
+    for (const trade of [
+      'cinematography', 'screenwriting', 'editing', 'sound_design', 'costume_design',
+      'production_design', 'stunts', 'visual_effects', 'casting', 'directing',
+      'producing', 'showrunning', 'voice_acting', 'film_scoring',
+    ]) expect(crafts, `${trade} is a trade this industry has`).toContain(trade);
+  });
+
+  it('keeps every list in the order a reader would look in', () => {
+    for (const [name, list] of [
+      ['crafts', CRAFT_INTERESTS], ['general', GENERAL_INTERESTS], ['genres', FILM_GENRES],
+    ] as const) {
+      const labels = list.map((one) => one.label);
+      const sorted = [...labels].sort((a, b) => a.localeCompare(b, 'en'));
+      expect(labels, `${name} is out of alphabetical order`).toEqual(sorted);
+      expect(isAlphabetical(list)).toBe(true);
+    }
+  });
+
+  it('names every genre once, and enough of them to be worth the word every', () => {
+    const ids = FILM_GENRES.map((one) => one.id);
+    const labels = FILM_GENRES.map((one) => one.label);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(new Set(labels).size).toBe(labels.length);
+    expect(FILM_GENRES.length).toBeGreaterThan(120);
+    // The ones a list this size has no excuse for missing.
+    for (const label of [
+      'Action', 'Comedy', 'Documentary', 'Drama', 'Film Noir', 'Horror', 'Musical',
+      'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western',
+    ]) expect(labels).toContain(label);
+  });
+
+  it('puts both on the player, and reads them through one door', () => {
+    const sim = createSave(1, 'interests', {
+      ...defaultConfig(), interests: ['cinematography', 'film'], genres: ['film_noir', 'western'],
+    });
+    const player = sim.universe.people[sim.universe.playerId]!;
+    expect(player.interests).toEqual(['cinematography', 'film']);
+    expect(player.genres).toEqual(['film_noir', 'western']);
+
+    // `core/taste.ts` is the door. Everything else asks it, so the rules about
+    // what an interest means live in one file rather than in each caller.
+    const readers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
+      .filter((f) => f.endsWith('.ts'))
+      .map((f) => `src/engine/${f}`)
+      .filter((f) => statSync(f).isFile())
+      .filter((f) => !/content\/interests\.ts|core\/taste\.ts|world\/bootstrap\.ts|domain\/model\.ts/.test(f))
+      .filter((f) => /\bgenres\b/.test(readFileSync(f, 'utf8')));
+    expect(readers, 'these reach past core/taste.ts for a genre').toEqual([]);
+  });
+
+  it('drops an id that is not on any list', () => {
+    const sim = createSave(1, 'interests-junk', {
+      ...defaultConfig(), interests: ['film', 'not-real'], genres: ['western', 'not-a-genre'],
+    });
+    const player = sim.universe.people[sim.universe.playerId]!;
+    expect(player.interests).toEqual(['film']);
+    expect(player.genres).toEqual(['western']);
   });
 });

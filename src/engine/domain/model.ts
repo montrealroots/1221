@@ -127,6 +127,11 @@ export interface Person {
 
   personality: Personality;
   interests: string[];
+  /**
+   * Genres they love. On the character sheet because a person has them;
+   * nothing in the simulation reads one to decide anything.
+   */
+  genres?: string[];
   goals: string[];
   lifestyle: 'frugal' | 'modest' | 'comfortable' | 'lavish';
   background: string;
@@ -810,7 +815,7 @@ export interface Preferences {
   largePurchaseThreshold: Money;
 }
 
-export const SAVE_SCHEMA_VERSION = 74;
+export const SAVE_SCHEMA_VERSION = 75;
 
 export interface SaveMeta {
   id: Id;

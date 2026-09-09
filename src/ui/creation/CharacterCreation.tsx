@@ -35,6 +35,9 @@ import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
+import {
+  ALL_INTERESTS, CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, type Interest,
+} from '@/engine/content/interests';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -77,11 +80,6 @@ const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; hi
   { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
 ];
 
-const INTEREST_OPTIONS = [
-  'film', 'television', 'theatre', 'music', 'writing', 'photography', 'fashion',
-  'cooking', 'travel', 'fitness', 'cars', 'design', 'history', 'technology',
-  'sport', 'art', 'games', 'politics', 'nature', 'animals',
-];
 
 export function CharacterCreation({
   slot, onCancel, onStart,
@@ -617,8 +615,70 @@ function PersonalStep({
       ...c,
       interests: c.interests.includes(interest)
         ? c.interests.filter((i) => i !== interest)
-        : [...c.interests, interest].slice(0, 6),
+        : [...c.interests, interest],
     }));
+  };
+
+  const toggleGenre = (genre: string) => {
+    setConfig((c) => ({
+      ...c,
+      genres: c.genres.includes(genre)
+        ? c.genres.filter((g) => g !== genre)
+        : [...c.genres, genre],
+    }));
+  };
+
+  // Take a whole list at once, or put it back. `field` names which of the two
+  // lists is being set, so one control serves both.
+  const setAll = (field: 'interests' | 'genres', options: readonly Interest[], on: boolean) => {
+    setConfig((c) => {
+      const ids = options.map((o) => o.id);
+      const rest = c[field].filter((id) => !ids.includes(id));
+      return { ...c, [field]: on ? [...rest, ...ids] : rest };
+    });
+  };
+
+  // One chip, whichever list it came from.
+  const Chips = ({ options, chosen, onToggle }: {
+    options: readonly Interest[];
+    chosen: readonly string[];
+    onToggle: (id: string) => void;
+  }) => (
+    <div className="row wrap gap-2">
+      {options.map((option) => {
+        const on = chosen.includes(option.id);
+        return (
+          <button
+            key={option.id}
+            className="chip"
+            style={on
+              ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
+              : undefined}
+            aria-pressed={on}
+            onClick={() => onToggle(option.id)}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const AllOrNothing = ({ field, options, chosen }: {
+    field: 'interests' | 'genres';
+    options: readonly Interest[];
+    chosen: readonly string[];
+  }) => {
+    const every = options.every((o) => chosen.includes(o.id));
+    return (
+      <button
+        type="button"
+        className="btn btn-sm"
+        onClick={() => setAll(field, options, !every)}
+      >
+        {every ? 'Clear These' : 'Select All'}
+      </button>
+    );
   };
 
   return (
@@ -706,24 +766,50 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Interests And Background</h2>
-            <p className="muted small">Interests affect who you get on with and what you enjoy doing with your time.</p>
+            <h2>Interests</h2>
+            <p className="muted small">
+              What you care about when nobody is paying you to. Take as many as are true.
+            </p>
+          </div>
+          <span className="chip chip-accent">{config.interests.length} Chosen</span>
+        </div>
+
+        <div className="row-between" style={{ marginBottom: 'var(--s2)' }}>
+          <span className="eyebrow">The Work</span>
+          <AllOrNothing field="interests" options={CRAFT_INTERESTS} chosen={config.interests} />
+        </div>
+        <Chips options={CRAFT_INTERESTS} chosen={config.interests} onToggle={toggleInterest} />
+
+        <div className="row-between" style={{ margin: 'var(--s4) 0 var(--s2)' }}>
+          <span className="eyebrow">Everything Else</span>
+          <AllOrNothing field="interests" options={GENERAL_INTERESTS} chosen={config.interests} />
+        </div>
+        <Chips options={GENERAL_INTERESTS} chosen={config.interests} onToggle={toggleInterest} />
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Genres</h2>
+            <p className="muted small">
+              The films you love, which is not the same question as the films you would be cast in.
+              Take as many as are true — there is no limit here.
+            </p>
+          </div>
+          <div className="row gap-2" style={{ alignItems: 'center' }}>
+            <span className="chip chip-accent">{config.genres.length} Chosen</span>
+            <AllOrNothing field="genres" options={FILM_GENRES} chosen={config.genres} />
           </div>
         </div>
-        <div className="row wrap gap-2" style={{ marginBottom: 'var(--s4)' }}>
-          {INTEREST_OPTIONS.map((interest) => (
-            <button
-              key={interest}
-              className="chip"
-              style={config.interests.includes(interest)
-                ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
-                : undefined}
-              aria-pressed={config.interests.includes(interest)}
-              onClick={() => toggleInterest(interest)}
-            >
-              {titleCaseLabel(interest)}
-            </button>
-          ))}
+        <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} />
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Background</h2>
+            <p className="muted small">Where the life before this one happened, and how you spend.</p>
+          </div>
         </div>
         <div className="field">
           <label htmlFor="background">Where You Come From</label>
@@ -950,7 +1036,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         </div>
 
         <div className="card">
-          <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting point</div>
+          <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
           <Line label="City" value={city?.name ?? '—'} />
           <Line label="Housing" value={HOUSING.find((h) => h.id === config.housing)?.label ?? '—'} />
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
@@ -984,7 +1070,13 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
-        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Craft</div>
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests And Genres</div>
+        <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
+        <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+      </div>
+
+      <div className="card">
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>My Skills</div>
         {/*
           Not a list of what was picked — nothing is picked. You hold
           every trait in the game, and this card used to say "no traits, a
@@ -1008,6 +1100,12 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
     </div>
   );
+}
+
+/** The chosen ones, in the order the list offers them, or an em dash. */
+function namesOf(all: readonly Interest[], chosen: readonly string[]): string {
+  const named = all.filter((one) => chosen.includes(one.id)).map((one) => one.label);
+  return named.length > 0 ? named.join(', ') : '—';
 }
 
 function Line({ label, value }: { label: string; value: string }) {
