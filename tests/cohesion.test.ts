@@ -18,6 +18,7 @@ import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { describeEthnicity } from '@/engine/content/ethnicity';
+import { STUDIOS, everyFigure, studiosInTier } from '@/engine/content/studios';
 import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
 } from '@/engine/content/interests';
@@ -372,5 +373,68 @@ describe('the acting sheet', () => {
     for (const trait of ALL_TRAITS) {
       expect(player.traits, `${trait.name} not held`).toContain(trait.id);
     }
+  });
+});
+
+describe('the production companies', () => {
+  it('carries eighteen, ranked once each', () => {
+    expect(STUDIOS).toHaveLength(18);
+    const ranks = STUDIOS.map((one) => one.rank);
+    expect(ranks).toEqual([...ranks].sort((a, b) => a - b));
+    expect(new Set(ranks).size).toBe(ranks.length);
+    expect(ranks[0]).toBe(1);
+    expect(ranks.at(-1)).toBe(18);
+  });
+
+  it('gives every company an id, a name and somebody running it', () => {
+    const ids = STUDIOS.map((one) => one.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const studio of STUDIOS) {
+      expect(studio.name, studio.id).not.toBe('');
+      expect(studio.figures.length, `${studio.name} has nobody running it`).toBeGreaterThan(0);
+      for (const person of studio.figures) {
+        expect(person.role, `${person.name} has no role`).not.toBe('');
+      }
+    }
+  });
+
+  it('says owned or independent, and never both', () => {
+    for (const studio of STUDIOS) {
+      if (studio.independent) {
+        expect(studio.parent, `${studio.name} is independent with a parent`).toBeUndefined();
+      } else {
+        expect(studio.parent, `${studio.name} is owned by nobody`).toBeTruthy();
+      }
+    }
+    // Eight of the eighteen answer to somebody else; ten answer to nobody.
+    expect(STUDIOS.filter((one) => !one.independent)).toHaveLength(8);
+    expect(STUDIOS.filter((one) => one.independent)).toHaveLength(10);
+  });
+
+  it('splits into the eight that make at scale and the ten beside them', () => {
+    expect(studiosInTier('major')).toHaveLength(8);
+    expect(studiosInTier('label')).toHaveLength(10);
+    // The majors are the top of the list, not scattered through it.
+    for (const major of studiosInTier('major')) expect(major.rank).toBeLessThanOrEqual(8);
+  });
+
+  it('points a label at a parent that is really on the list, where it is', () => {
+    const names = new Set(STUDIOS.map((one) => one.name));
+    for (const studio of STUDIOS) {
+      if (!studio.parent) continue;
+      // A parent may be outside the list — Comcast, Apollo, Mediawan — but
+      // where it names one that is on it, the name has to match exactly.
+      const onTheList = [...names].some((name) => name === studio.parent);
+      if (studio.parent.includes('Disney') || studio.parent.includes('NBCUniversal')) {
+        expect(onTheList, `${studio.name} names a parent that is not on the list`).toBe(true);
+      }
+    }
+  });
+
+  it('reaches every named person through one door', () => {
+    const everybody = everyFigure();
+    const counted = STUDIOS.reduce((n, one) => n + one.figures.length + (one.casting?.length ?? 0), 0);
+    expect(everybody).toHaveLength(counted);
+    expect(everybody.length).toBeGreaterThan(50);
   });
 });
