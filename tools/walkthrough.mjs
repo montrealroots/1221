@@ -193,36 +193,9 @@ if (await upload.count()) {
   await shoot('creation-1-portrait', 'a photo dropped in, cropped to the headshot frame');
 }
 
-const map = page.locator('svg').last();
-if (await map.count()) {
-  await map.scrollIntoViewIfNeeded().catch(() => {});
-  await page.waitForTimeout(1500);
-  await shoot('creation-1-map-world', 'the geography map, whole world, the country marked');
-  if (await click(/^Zoom In$/)) {
-    await page.waitForTimeout(1300);
-    await shoot('creation-1-map-zoomed', 'the same map zoomed to the country');
-    await click(/^Whole World$/);
-    await page.waitForTimeout(800);
-  }
-  const hide = page.getByRole('button', { name: /^Hide Map$/ }).first();
-  if (await hide.count()) {
-    await hide.click().catch(() => {});
-    await page.waitForTimeout(700);
-    await shoot('creation-1-map-hidden', 'the picker with the map folded away');
-    await click(/^Show Map$/);
-    await page.waitForTimeout(1000);
-  }
-}
-
-const town = page.getByPlaceholder(/start typing a town name/i).first();
-if (await town.count()) {
-  await town.scrollIntoViewIfNeeded().catch(() => {});
-  await town.fill('port');
-  await page.waitForTimeout(900);
-  await shoot('creation-1-town-search', 'the town search with a query typed into it');
-  await town.fill('');
-  await page.waitForTimeout(500);
-}
+// The birthplace picker and its map are no longer on this page. Both are
+// intact in LocationPicker and WorldMap for whatever screen wants them next,
+// and there is nothing here to photograph.
 
 const STEPS = [
   ['creation-2-who-you-are', 'step 2 of 5: personality, traits, interests, genres and background'],

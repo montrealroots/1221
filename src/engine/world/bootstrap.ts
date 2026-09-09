@@ -159,10 +159,9 @@ export function defaultConfig(): NewSaveConfig {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     raceEthnicity: [],
-    // Born wherever the player says. Icelandic either way: the family's
-    // passport is the only one anybody created here holds, and where you were
-    // born no longer decides it.
-    homeRegionId: 'us-ca-losangeles', livesWhereBorn: false,
+    // Born on the family land, living on it, and holding its passport. None of
+    // the three is a question any screen asks any more.
+    homeRegionId: ESTATE_CITY_ID, livesWhereBorn: true,
     citizenshipId: ESTATE_COUNTRY_ID,
     personality: defaultPersonality(),
     personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],

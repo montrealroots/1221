@@ -13,7 +13,6 @@ import {
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { PERFORMER_NOUN, PERFORMER_TITLES, type PerformerTitle } from '@/engine/core/performer';
-import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
@@ -462,25 +461,26 @@ function IdentityStep({ config, set, setConfig }: {
 
       <hr className="divider" />
 
-      <div className="panel-head">
-        <div>
-          <h3>Place Of Birth</h3>
-          <p className="muted small">
-            Where you’re from, which isn’t always where you ended up. It’s the answer you give
-            when somebody asks, and it’s the accent you had
-            to lose or decided to keep.
-          </p>
-        </div>
+      {/*
+        Born on the land, like everything else about where this character
+        stands. The picker that used to be here — the map, the country and
+        region lists, the ranked towns — is intact in LocationPicker and
+        WorldMap and is simply not on this page any more.
+      */}
+      <div className="field" style={{ maxWidth: 'min(28rem, 100%)' }}>
+        <label htmlFor="birthplace">Place Of Birth</label>
+        <input
+          id="birthplace"
+          type="text"
+          value={estatePlaceLine()}
+          readOnly
+          aria-readonly="true"
+        />
+        <p className="xs dim" style={{ marginTop: 4 }}>
+          You were born on the family land and you have never lived anywhere else. It’s the answer
+          you give when somebody asks, and it’s the accent you either lost on purpose or kept.
+        </p>
       </div>
-
-      <LocationPicker
-        idPrefix="born"
-        cityId={config.homeRegionId}
-        // Where you were born, and nothing else. It used to drag your home town
-        // and your passport along with it; home base is the family land now and
-        // the passport is Icelandic, so neither follows from this any more.
-        onPick={(picked) => set('homeRegionId', picked.id)}
-      />
 
       <div className="callout">
         You will be <strong>{ageAtStart(config)}</strong> when the save begins.
@@ -1130,7 +1130,6 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     }
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
-    if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === 3) {
     // Where you live is not asked any more, so there is nothing here to get
