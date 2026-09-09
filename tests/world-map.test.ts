@@ -206,3 +206,45 @@ describe('the generated outlines', () => {
     expect((box as Box).x).toBeGreaterThan(MAP.width * 0.5);
   });
 });
+
+describe('the picker and the map it draws', () => {
+  /**
+   * They are on disk and nothing imports them.
+   *
+   * The birthplace picker came off Identity when the place of birth became the
+   * family land, and it was the last thing using either component. That leaves
+   * two files a cleanup would read as dead: the picker with its country and
+   * region lists and its ranked town search, and the map it draws. Both are
+   * kept deliberately, whole, for whatever screen wants a place chosen next —
+   * so this fails if either is deleted or gutted rather than moved.
+   */
+  const read = (path: string) => readFileSync(new URL(`../src/ui/creation/${path}`, import.meta.url), 'utf8');
+
+  it('keeps the location picker whole', () => {
+    const source = read('LocationPicker.tsx');
+    expect(source).toMatch(/export function LocationPicker/);
+    // The three ways in: the map, the country and region lists, the search.
+    expect(source).toMatch(/WorldMap/);
+    expect(source).toMatch(/Country/);
+    expect(source).toMatch(/Town Or City/);
+  });
+
+  it('keeps the map component whole', () => {
+    const source = read('WorldMap.tsx');
+    expect(source).toMatch(/export function WorldMap/);
+    // Its features: framing a country, zooming to it, going back out.
+    expect(source).toMatch(/frameBox|viewBoxOf/);
+    expect(source).toMatch(/loadWorldMap/);
+  });
+
+  it('is off the identity page and nothing else pulls it back in', () => {
+    const creation = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
+    // The import, not the word: the page carries a comment naming the file to
+    // say where the picker went, and that comment is the point of it.
+    expect(creation, 'the picker is back on Identity')
+      .not.toMatch(/import\s*\{[^}]*LocationPicker[^}]*\}\s*from/);
+    expect(creation, 'the picker is rendered again').not.toMatch(/<LocationPicker/);
+    expect(creation, 'Identity should state the birthplace, not ask for it')
+      .toMatch(/id="birthplace"[\s\S]{0,200}readOnly/);
+  });
+});

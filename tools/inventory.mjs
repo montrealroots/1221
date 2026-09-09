@@ -48,8 +48,8 @@ function collect() {
     if (rel.startsWith('src/engine/scenes/')) add(scenes, /defineScene\(\{\s*id:\s*'([a-z0-9_.]+)'/g);
   }
   const routes = new Set();
-  for (const file of [join(ROOT, 'src/ui/shell/destinations.ts'), join(ROOT, 'src/ui/shell/help-content.ts')]) {
-    for (const m of readFileSync(file, 'utf8').matchAll(/route:\s*'(\/[a-z/-]*)'/g)) routes.add(m[1]);
+  for (const m of readFileSync(join(ROOT, 'src/ui/shell/destinations.ts'), 'utf8').matchAll(/route:\s*'(\/[a-z/-]*)'/g)) {
+    routes.add(m[1]);
   }
   return { commands, schedules, events, listeners, scenes, routes: [...routes].sort() };
 }

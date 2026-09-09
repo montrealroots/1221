@@ -4,6 +4,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { SaveAdapter, SaveSlotInfo, Slot } from '@/engine/persistence/adapter';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 import type { SaveUniverse } from '@/engine/domain/model';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { migrate, validateUniverse } from '@/engine';
@@ -100,9 +101,9 @@ export function SaveSlots({
     <div className="main">
       <div className="main-inner">
         <div className="center" style={{ marginBottom: 'var(--s7)', paddingTop: 'var(--s6)' }}>
-          <div style={{ fontSize: 44, marginBottom: 'var(--s3)' }} role="img" aria-label="SLATE">🎬</div>
+          <div style={{ fontSize: 44, marginBottom: 'var(--s3)' }} aria-hidden="true">🎬</div>
           <div className="wordmark" style={{ fontSize: 32 }}>SLATE</div>
-          <p className="muted">Three slots. Three separate worlds. Nothing crosses between them.</p>
+          <p className="muted">Three slots. Three separate lives. Nothing crosses between them.</p>
         </div>
 
         {error && (
@@ -121,11 +122,23 @@ export function SaveSlots({
                 <div key={slot} className="slot slot-empty">
                   <div className="slot-number">Slot {slot}</div>
                   <p className="small dim center" style={{ maxWidth: 220 }}>
-                    An empty universe, waiting for someone to live in it.
+                    {info.hasBackup
+                      ? 'Empty, but the save that was here is still kept as a backup.'
+                      : 'An empty universe, waiting for an actor or an actress to live in it.'}
                   </p>
-                  <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
-                    New Save
-                  </button>
+                  <div className="col gap-2" style={{ alignItems: 'center' }}>
+                    <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
+                      New Save
+                    </button>
+                    {info.hasBackup && (
+                      <>
+                        <button className="btn btn-sm" onClick={() => void load(slot, true)} disabled={working}>
+                          {working ? 'Opening…' : 'Restore Backup'}
+                        </button>
+                        <BackupNote label={info.backupDateLabel} center />
+                      </>
+                    )}
+                  </div>
                 </div>
               );
             }
@@ -133,20 +146,20 @@ export function SaveSlots({
             const meta = info.meta;
             return (
               <div key={slot} className="slot">
-                <div className="row-between">
-                  <span className="slot-number">Slot {slot}</span>
-                  {info.hasBackup && <span className="chip">Backup</span>}
-                </div>
+                <div className="slot-number">Slot {slot}</div>
 
                 {info.error ? (
                   <>
-                    <div className="slot-name" style={{ fontSize: 'var(--size-md)' }}>Unreadable save</div>
+                    <div className="slot-name" style={{ fontSize: 'var(--size-md)' }}>Unreadable Save</div>
                     <p className="small negative">{info.error}</p>
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       {info.hasBackup && (
-                        <button className="btn" onClick={() => void load(slot, true)} disabled={working}>
-                          Restore From Backup
-                        </button>
+                        <>
+                          <button className="btn" onClick={() => void load(slot, true)} disabled={working}>
+                            Restore Backup
+                          </button>
+                          <BackupNote label={info.backupDateLabel} />
+                        </>
                       )}
                       <button className="btn btn-danger btn-sm" onClick={() => setConfirmDelete(slot)} disabled={working}>
                         Delete
@@ -165,7 +178,7 @@ export function SaveSlots({
                       )}
                       <div style={{ minWidth: 0 }}>
                         <div className="slot-name">{meta?.characterName}</div>
-                        <div className="muted small">{meta?.careerLabel}</div>
+                        <div className="muted small">{meta?.performerTitle ? PERFORMER_NOUN[meta.performerTitle] : (meta?.careerLabel || '—')}</div>
                       </div>
                     </div>
 
@@ -179,7 +192,7 @@ export function SaveSlots({
                         <span className="small">{meta?.locationLabel || '—'}</span>
                       </div>
                       <div className="stat">
-                        <span className="stat-label">Net worth</span>
+                        <span className="stat-label">Net Worth</span>
                         <span className="small mono">{meta?.netWorthLabel || '—'}</span>
                       </div>
                       <div className="stat">
@@ -190,9 +203,10 @@ export function SaveSlots({
 
                     <div className="xs dim">
                       Version {meta?.appVersion ?? '—'} · Schema {meta?.schemaVersion ?? '—'}
-                      {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · will be updated on load'}
+                      {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · Updates On Load'}
                       {info.bytes !== undefined && ` · ${formatBytes(info.bytes)}`}
                     </div>
+                    {info.hasBackup && <BackupNote label={info.backupDateLabel} />}
 
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       <button className="btn btn-primary btn-block" onClick={() => void load(slot)} disabled={working}>
@@ -226,20 +240,23 @@ export function SaveSlots({
         <div className="overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Confirm Deletion">
             <div className="modal-head">
-              <h2>Delete slot {confirmDelete}?</h2>
+              <h2>Delete Slot {confirmDelete}?</h2>
             </div>
             <div className="modal-body">
               <p>
-                This ends that universe. Everything in it — the people, the history, the work — stops existing.
+                This ends that universe. The character, everywhere they have been and everything
+                that happened to them stops existing.
               </p>
               <p className="muted small">
-                A backup is kept, so this can be undone from this screen if you change your mind.
+                {restorableAfterDelete(slots.find((s) => s.slot === confirmDelete))
+                  ? 'A backup is kept, so this can be undone from this screen if you change your mind.'
+                  : 'There’s no backup of this slot, so nothing will be left to restore.'}
               </p>
             </div>
             <div className="modal-foot">
               <button className="btn" onClick={() => setConfirmDelete(null)}>Keep It</button>
               <button className="btn btn-danger" onClick={() => void remove(confirmDelete)}>
-                Delete slot {confirmDelete}
+                Delete Slot {confirmDelete}
               </button>
             </div>
           </div>
@@ -247,6 +264,29 @@ export function SaveSlots({
       )}
     </div>
   );
+}
+
+/**
+ * What restoring would go back to. A backup the player cannot date is a step
+ * they cannot weigh, so the date is the whole point of the note; a stored save
+ * from before the date was kept has to say that rather than invent one.
+ */
+function BackupNote({ label, center = false }: { label?: string; center?: boolean }) {
+  return (
+    <div className={`xs dim${center ? ' center' : ''}`}>
+      {label ? `Backup from ${label}` : 'Backup from an unrecorded date'}
+    </div>
+  );
+}
+
+/**
+ * Whether deleting this slot leaves something the player can bring back.
+ * A readable save becomes its own backup on the way out; an unreadable one
+ * does not, so it can only fall back to a backup that is already there.
+ */
+function restorableAfterDelete(info: SaveSlotInfo | undefined): boolean {
+  if (!info) return false;
+  return info.error ? info.hasBackup : info.occupied;
 }
 
 function formatPlaytime(seconds: number): string {

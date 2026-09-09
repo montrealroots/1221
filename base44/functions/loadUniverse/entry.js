@@ -31,6 +31,7 @@ export default async function (req) {
             slot,
             occupied: Boolean(row.payload),
             hasBackup: Boolean(row.backup_payload),
+            backupDateLabel: row.backup_world_date_label || undefined,
             saveId: row.save_id,
             schemaVersion: row.schema_version,
             characterName: row.character_name,

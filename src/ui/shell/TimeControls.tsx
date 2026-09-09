@@ -104,7 +104,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
         <>
           <button className="btn" onClick={onClose}>Not Yet</button>
           <button className="btn btn-primary" onClick={sleep}>
-            Sleep {hours} hours
+            Sleep {hours} Hours
           </button>
         </>
       }

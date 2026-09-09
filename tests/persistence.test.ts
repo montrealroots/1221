@@ -5,7 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { LocalSaveAdapter } from '@/engine/persistence/local';
-import { serialise } from '@/engine/persistence/adapter';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
 
 class MemoryStorage implements Storage {
   private map = new Map<string, string>();
@@ -59,5 +59,127 @@ describe('saves on this device', () => {
     expect(store.getItem(`slate.backup.${sim.universe.meta.slot}`)!.startsWith('{')).toBe(true);
     const restored = await adapter.restoreBackup(sim.universe.meta.slot);
     expect(restored?.meta.id).toBe(sim.universe.meta.id);
+  });
+});
+
+describe('a save that will not read', () => {
+  let store: MemoryStorage;
+  beforeEach(() => {
+    store = new MemoryStorage();
+    Object.defineProperty(globalThis, 'localStorage', { value: store, configurable: true, writable: true });
+  });
+  afterEach(() => {
+    Reflect.deleteProperty(globalThis, 'localStorage');
+  });
+
+  it('tells the player something they can act on, not the parser’s message', () => {
+    // JSON.parse says "Unexpected token 'h', ... is not valid JSON". That used
+    // to reach the slot card verbatim. What the player can do about a corrupt
+    // save does not depend on which byte broke it.
+    expect(() => deserialise('this is not a universe')).toThrow(/damaged and can’t be read/);
+    expect(() => deserialise('this is not a universe')).not.toThrow(/JSON|Unexpected token/);
+  });
+
+  it('still says so when the file parses but is not a SLATE save', () => {
+    expect(() => deserialise('{"hello":"world"}')).toThrow(/isn’t a SLATE universe/);
+  });
+
+  it('puts that sentence on the slot rather than a prefix and a parser', async () => {
+    const adapter = new LocalSaveAdapter();
+    store.setItem('slate.save.2', 'this is not a universe');
+
+    const slots = await adapter.listSlots();
+    const broken = slots.find((s) => s.slot === 2);
+    expect(broken?.occupied).toBe(true);
+    expect(broken?.error).toBe('That save file is damaged and can’t be read.');
+    expect(broken?.error).not.toMatch(/JSON|Unexpected token/);
+  });
+
+  it('does not write a damaged save over the backup that could still be read', async () => {
+    // Deleting a corrupt slot is precisely when the older copy is the only
+    // thing left, so it is the last moment to overwrite it with the corruption.
+    const sim = quickSave({ wealth: 'inherited' }, 'delete-corrupt');
+    const adapter = new LocalSaveAdapter();
+    const slot = sim.universe.meta.slot;
+    await adapter.save(sim.universe);
+    await adapter.backup(slot);
+    store.setItem(`slate.save.${slot}`, 'this is not a universe');
+
+    await adapter.remove(slot);
+
+    const restored = await adapter.restoreBackup(slot);
+    expect(restored?.meta.id).toBe(sim.universe.meta.id);
+  });
+});
+
+describe('deleting a slot', () => {
+  let store: MemoryStorage;
+  beforeEach(() => {
+    store = new MemoryStorage();
+    Object.defineProperty(globalThis, 'localStorage', { value: store, configurable: true, writable: true });
+  });
+  afterEach(() => {
+    Reflect.deleteProperty(globalThis, 'localStorage');
+  });
+
+  it('leaves a backup behind, so the screen can honor the undo it promises', async () => {
+    const sim = quickSave({ wealth: 'inherited' }, 'delete-undo');
+    const adapter = new LocalSaveAdapter();
+    const slot = sim.universe.meta.slot;
+    await adapter.save(sim.universe);
+
+    await adapter.remove(slot);
+
+    const slots = await adapter.listSlots();
+    const emptied = slots.find((s) => s.slot === slot)!;
+    expect(emptied.occupied).toBe(false);
+    // An empty slot that reports a backup is what puts Restore Backup on the card.
+    expect(emptied.hasBackup).toBe(true);
+    const restored = await adapter.restoreBackup(slot);
+    expect(restored?.meta.id).toBe(sim.universe.meta.id);
+  });
+
+  it('says which world date the backup sits at, so restoring is not a blind step', async () => {
+    const sim = quickSave({ wealth: 'inherited' }, 'backup-dated');
+    const adapter = new LocalSaveAdapter();
+    const slot = sim.universe.meta.slot;
+    sim.universe.meta.worldDateLabel = 'March 2, 2026';
+    await adapter.save(sim.universe);
+
+    // A year on, saving again pushes the older state into the backup.
+    sim.advanceTo(sim.now + 365 * 86_400_000);
+    sim.universe.meta.worldDateLabel = 'March 2, 2027';
+    await adapter.save(sim.universe);
+
+    const info = (await adapter.listSlots()).find((s) => s.slot === slot)!;
+    expect(info.meta?.worldDateLabel).toBe('March 2, 2027');
+    expect(info.hasBackup).toBe(true);
+    expect(info.backupDateLabel).toBe('March 2, 2026');
+  });
+
+  it('does not offer a restore from a backup that cannot be read either', async () => {
+    const adapter = new LocalSaveAdapter();
+    store.setItem('slate.save.1', 'this is not a universe');
+    store.setItem('slate.backup.1', 'nor is this');
+
+    const info = (await adapter.listSlots()).find((s) => s.slot === 1)!;
+    expect(info.occupied).toBe(true);
+    expect(info.error).toBe('That save file is damaged and can’t be read.');
+    // The button is drawn from hasBackup. A backup that will not open is not one.
+    expect(info.hasBackup).toBe(false);
+    expect(info.backupDateLabel).toBeUndefined();
+  });
+
+  it('reports no backup when a damaged slot had none, rather than offering a restore that fails', async () => {
+    const adapter = new LocalSaveAdapter();
+    store.setItem('slate.save.1', 'this is not a universe');
+
+    await adapter.remove(1);
+
+    const slots = await adapter.listSlots();
+    const emptied = slots.find((s) => s.slot === 1)!;
+    expect(emptied.occupied).toBe(false);
+    expect(emptied.hasBackup).toBe(false);
+    expect(await adapter.restoreBackup(1)).toBeNull();
   });
 });

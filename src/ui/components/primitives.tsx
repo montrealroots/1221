@@ -111,33 +111,6 @@ export function Empty({ title, body, action }: { title: string; body: string; ac
   );
 }
 
-export function Tabs<T extends string>({
-  tabs, active, onChange,
-}: {
-  tabs: { id: T; label: string; badge?: number }[];
-  active: T;
-  onChange: (id: T) => void;
-}) {
-  return (
-    <div className="tabs" role="tablist">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          className="tab"
-          role="tab"
-          aria-selected={active === tab.id}
-          onClick={() => onChange(tab.id)}
-        >
-          {tab.label}
-          {tab.badge !== undefined && tab.badge > 0 && (
-            <span className="chip chip-accent" style={{ marginLeft: 6 }}>{tab.badge}</span>
-          )}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export function Modal({
   title, children, footer, onClose, wide,
 }: {
@@ -178,15 +151,10 @@ export function Modal({
   );
 }
 
-/** A term with an explanation attached. Depth is useless if it is opaque. */
 export function Term({ children, explain }: { children: ReactNode; explain: string }) {
   return <span className="tooltip-term" title={explain}>{children}</span>;
 }
 
-/**
- * A real logo, from the record, in one fixed frame; a monogram when the record
- * has none. Nothing is drawn by hand to stand in for a real mark.
- */
 export function Logo({ id, name, large, small }: { id: string; name: string; large?: boolean; small?: boolean }) {
   const [missing, setMissing] = useState(false);
   const width = large ? 160 : small ? 44 : 72;

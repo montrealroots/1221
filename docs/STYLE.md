@@ -50,6 +50,27 @@ a purchase, a relationship change or an outcome that a validated command has
 not committed. A real name carries its provenance; an invented one is never
 called real.
 
+## Actor, or actress
+
+SLATE is an actor and actress life simulator. The two words name one craft, and
+game gives them equal standing: neither is the default, neither is the variant,
+and no string calls one of them the other one.
+
+A person's title is their own word. It comes from `performerTitleOf` and is
+printed through `PERFORMER_NOUN`, never typed into a string, because a
+hardcoded "Actor" is wrong for half the people it lands on. A label that
+arrives as a single "Method Actor/Actress" string is read back for one person
+through `forTitle`. A list of people is split by `splitByTitle`, and both
+halves are headed with their own word, neither introduced as the other one's
+counterpart.
+
+Where the choice is offered it is offered flat: **Actor** and **Actress**, two
+options of the same weight, with no note explaining one of them as the
+exception. The article before both is "an", and the sentence around the word is
+where that goes wrong — "You are a " followed by the noun reads "a actor", and
+no search for that phrase will find it, because nothing in the file spells it.
+`tests/premise.test.ts` holds the words, and the save that has to state them.
+
 ## Pictures
 
 The interface is text. No emoji on any tab, tile, breadcrumb, search result,
@@ -89,8 +110,9 @@ rewrites the safe cases, and `--check` holds the line in the gate.
 
 Displayed labels are free to change; command kinds, entity ids, save keys,
 schedule kinds and event names are not renamed to improve a label. A label
-map (`FACILITY_LABEL`, `WELLBEING_LABEL`, `PLACE_KIND_LABEL`) sits between
-the id and the screen.
+map (`PERFORMER_NOUN`, `DISCIPLINE_LABEL`) sits between the id and the
+screen. A person's title is the strictest case of it: every screen reads the
+word through `performerNoun`, never writes it out.
 
 ## What holds it in place
 

@@ -108,7 +108,7 @@ export function LocationPicker({
         <div className="row-between wrap gap-2">
           <p className="xs dim" style={{ margin: 0 }}>
             {mapOpen
-              ? 'Tap a country on the map, or use the list.'
+              ? 'Pick a country on the map, or find it in the list below.'
               : 'The map is hidden. The list below does the same thing.'}
           </p>
           <button

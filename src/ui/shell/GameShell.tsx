@@ -1,9 +1,8 @@
 /**
  * SLATE — the shell.
  *
- * HOME for immediate life, WORLD for discovery, workspaces for deep work, and
- * Go Anywhere over the top of all of it. Context is preserved: breadcrumbs,
- * recent destinations and favorites all survive moving around.
+ * HOME for immediate life, and the calendar for what is coming. Context is
+ * preserved: the breadcrumbs survive moving around.
  *
  * The rail down the left is every destination, always in reach, with Home at
  * the top wearing the count of what is waiting on you. It is words only: no
@@ -15,26 +14,33 @@
  * the tools you reach for, then the state of your save.
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { DESTINATIONS } from './destinations';
+import { RAIL_DESTINATIONS } from './destinations';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
-import { GoAnywhere } from './GoAnywhere';
-import { HelpPanel } from './HelpPanel';
 import { TimeControls } from './TimeControls';
 import { Home } from '@/ui/screens/Home';
-import { World } from '@/ui/screens/World';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
-import { ScenePanel } from '@/ui/components/ScenePanel';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
+import { performerNoun } from '@/engine/core/performer';
 
 
 export function GameShell() {
   const game = useGame();
-  const { sim, route, navigate, breadcrumbs, searchOpen, setSearchOpen, helpOpen, setHelpOpen, toasts } = game;
+  const { sim, route, navigate, breadcrumbs, toasts } = game;
   const [railOpen, setRailOpen] = useState(false);
   const waiting = useWorld((s) => openDecisions(s).length);
   const unread = useWorld((s) => unreadNotifications(s).length);
+
+  // Escape closes the drawer, the way it closes the dialogs. Without it the
+  // only ways out were the Menu button and a shade the drawer covers most of,
+  // and a keyboard had neither.
+  useEffect(() => {
+    if (!railOpen) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setRailOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [railOpen]);
 
   const go = (to: string, label: string, locked?: boolean) => {
     if (locked) { game.toast(`${label} Is Under Construction.`, 'neutral'); return; }
@@ -77,27 +83,6 @@ export function GameShell() {
 
         <div className="grow" />
 
-        <div className="topbar-group" role="group" aria-label="Tools">
-          <button
-            className="btn btn-sm"
-            onClick={() => setSearchOpen(true)}
-            aria-label="Go Anywhere. Search everything."
-          >
-            <span aria-hidden="true">⌕</span>
-            <span className="hide-sm">Go Anywhere</span>
-            <kbd className="hide-sm">/</kbd>
-          </button>
-
-          <button
-            className="btn btn-ghost btn-sm"
-            onClick={() => setHelpOpen(!helpOpen)}
-            aria-label="Help For This Screen"
-            aria-pressed={helpOpen}
-          >
-            ?
-          </button>
-        </div>
-
         <span className="topbar-divider" aria-hidden="true" />
 
         <div className="topbar-group" role="group" aria-label="Your Save">
@@ -126,7 +111,7 @@ export function GameShell() {
             </button>
           </div>
 
-          {DESTINATIONS.map((group) => (
+          {RAIL_DESTINATIONS.map((group) => (
             <div key={group.label} className="rail-group">
               <div className="rail-group-label">{group.label}</div>
               {group.items.map((item) => (
@@ -150,7 +135,7 @@ export function GameShell() {
             <div className="rail-you">
               <div className="small strong truncate">{sim.player.displayName}</div>
               <div className="xs dim truncate">
-                {unread > 0 ? `${unread} Unread` : 'Nothing Unread'}
+                {performerNoun(sim.player)} · {unread > 0 ? `${unread} Unread` : 'Nothing Unread'}
               </div>
             </div>
           </div>
@@ -182,14 +167,10 @@ export function GameShell() {
               </nav>
             )}
 
-            <ScenePanel />
             <Screen route={route} />
           </div>
         </main>
       </div>
-
-      {searchOpen && <GoAnywhere />}
-      {helpOpen && <HelpPanel />}
 
       <div className="toasts" aria-live="polite" aria-atomic="false">
         {toasts.map((toast) => (
@@ -202,7 +183,6 @@ export function GameShell() {
 
 function Screen({ route }: { route: string }) {
   if (route === '/home') return <Home />;
-  if (route === '/world') return <World />;
   if (route.startsWith('/workspace/')) return <WorkspaceRouter route={route} />;
   return <Home />;
 }

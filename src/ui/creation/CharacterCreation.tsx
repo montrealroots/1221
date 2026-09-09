@@ -1,7 +1,7 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Personal, Your Craft, Starting Point, Review, then Start.
+ * Identity, Who You Are, My Skills, Starting Point, Review, then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -10,10 +10,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   defaultConfig, wealthNote,
-  type NewSaveConfig, type StartingHousing, type StartingWealth,
+  type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
-import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '@/engine/core/performer';
-import { LocationPicker } from './LocationPicker';
+import { PERFORMER_NOUN, PERFORMER_TITLES, type PerformerTitle } from '@/engine/core/performer';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
@@ -23,35 +22,49 @@ import {
   APP_VERSION, WEALTH_PROFILES,
 } from '@/engine/world/bootstrap';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
-import { titleCaseLabel } from '@/engine/core/text';
+import { formatPeople } from '@/engine/world/place';
+import { zoneAbbreviation } from '@/engine/core/time';
 import { ageOnDate } from '@/engine/core/time';
-import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
+import { citizenshipLabel } from '@/engine/domain/citizenship';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
 import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
-  conflictingPersonalityTraits, personalityTraitsIn,
+  conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
-import { FOUNDER_TRAITS } from '@/engine/content/founder';
-import { ALL_TRAITS } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
+import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
 import {
-  DEFAULT_HERITAGE, HERITAGES, HERITAGE_BY_ID, HERITAGE_NOTE, heritageRegions,
-} from '@/engine/content/heritage';
+  ESTATE_ACRES, ESTATE_COUNTRY_ID, ESTATE_NOTE, HOLDINGS, estateCity, estatePlaceLine,
+  studioName,
+} from '@/engine/content/estate';
 import {
-  GROWTH_NOTE, HEIGHT_RANGE, WEIGHT_RANGE, describeHeight, describeWeight,
-} from '@/engine/content/lifespan';
+  ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
+} from '@/engine/content/ethnicity';
+import {
+  ALL_INTERESTS, CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, type Interest,
+} from '@/engine/content/interests';
 
-const STEPS = ['Identity', 'Personal', 'Your Craft', 'Starting Point', 'Review'] as const;
+/**
+ * How far back the last year a character can be born in sits from the year
+ * the save begins.
+ *
+ * The line is drawn on the year, not on the age. A birthday later in the year
+ * than the start date leaves somebody seventeen when the save opens, and that
+ * is fine: the picker and the rule say the same thing, which is that 2008 is
+ * as recent as a birth year gets against a save that begins in 2026.
+ */
+export const BIRTH_YEARS_BEFORE_START = 18;
+
+/** The last year somebody can be born in and still start this save. */
+export function latestBirthYear(startYear: number): number {
+  return startYear - BIRTH_YEARS_BEFORE_START;
+}
+
+const STEPS = ['Identity', 'Who You Are', 'My Skills', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
-
-const HOUSING: { id: StartingHousing; label: string; blurb: string }[] = [
-  { id: 'couch', label: "A Friend's Couch", blurb: 'No home of your own. No rent, no privacy, no stability.' },
-  { id: 'roommates', label: 'Room In A Share', blurb: 'Cheap, crowded, and how most people start.' },
-  { id: 'rental', label: 'Your Own Rental', blurb: 'A lease, a deposit and somewhere that’s yours.' },
-  { id: 'owned', label: 'You Own A Home', blurb: 'A house and the mortgage that came with it.' },
-];
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
 
@@ -65,11 +78,6 @@ const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; hi
   { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
 ];
 
-const INTEREST_OPTIONS = [
-  'film', 'television', 'theatre', 'music', 'writing', 'photography', 'fashion',
-  'cooking', 'travel', 'fitness', 'cars', 'design', 'history', 'technology',
-  'sport', 'art', 'games', 'politics', 'nature', 'animals',
-];
 
 export function CharacterCreation({
   slot, onCancel, onStart,
@@ -129,7 +137,11 @@ export function CharacterCreation({
             <span role="img" aria-label="SLATE" style={{ fontSize: 22 }}>🎬</span>
             <div>
               <div className="eyebrow">Slot {slot}</div>
-              <h1 style={{ fontSize: 'var(--size-lg)' }}>Who are you going to be?</h1>
+              <h1 style={{ fontSize: 'var(--size-lg)' }}>Who Are You Going To Be?</h1>
+              <p className="muted small" style={{ marginTop: 2 }}>
+                SLATE is a life simulator about the acting business. This is the{' '}
+                {billedAs(config).toLowerCase()} you play.
+              </p>
             </div>
           </div>
           <button className="btn btn-ghost btn-sm" onClick={onCancel}>Cancel</button>
@@ -137,7 +149,7 @@ export function CharacterCreation({
 
         {restored && step === 0 && (
           <div className="callout callout-info" style={{ marginBottom: 'var(--s5)' }}>
-            Your previous setup was still here, so it has been restored.
+            You’d half-filled this form already. It’s been put back the way you left it.
             <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(defaultConfig())}>
               Start Over
             </button>
@@ -157,7 +169,7 @@ export function CharacterCreation({
           ))}
         </div>
 
-        {step === 0 && <IdentityStep config={config} set={set} />}
+        {step === 0 && <IdentityStep config={config} set={set} setConfig={setConfig} />}
         {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === 2 && <CareerStep config={config} set={set} />}
         {step === 3 && <StartingPointStep config={config} set={set} />}
@@ -214,28 +226,48 @@ function ageAtStart(config: NewSaveConfig): number {
   );
 }
 
-/** The word this character is billed with, chosen or implied by their pronouns. */
-function titleOf(config: NewSaveConfig): PerformerTitle {
-  return config.performerTitle ?? impliedPerformerTitle(config.pronouns);
+/**
+ * The title a set of pronouns settles by itself, or undefined when it is the
+ * player's to make.
+ *
+ * He and she each name one of the two words and there is nothing left to
+ * choose. They/them names neither, so the choice opens up — and it opens up
+ * empty, because preselecting one of two equals is what a default is, and
+ * this game holds that neither of them is.
+ */
+export function settledTitle(pronouns: string): PerformerTitle | undefined {
+  if (/^\s*he\b/i.test(pronouns)) return 'actor';
+  if (/^\s*she\b/i.test(pronouns)) return 'actress';
+  return undefined;
+}
+
+/**
+ * The word this character is billed with: settled by their pronouns where
+ * their pronouns settle it, and otherwise the one they picked. Undefined only
+ * while somebody on they/them has not picked yet, which the Identity step
+ * will not let past.
+ */
+function titleOf(config: NewSaveConfig): PerformerTitle | undefined {
+  return settledTitle(config.pronouns) ?? config.performerTitle;
+}
+
+/** The same, for the places downstream of a step that has already checked it. */
+function billedAs(config: NewSaveConfig): string {
+  const title = titleOf(config);
+  return title ? PERFORMER_NOUN[title] : 'Actor Or Actress';
 }
 
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
-function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
-  const home = CITIES.get(config.startLocationId);
-  const birthplace = CITIES.get(config.homeRegionId);
-  // Whether they hold a passport for the country they actually live in. When
-  // they do not, the second-citizenship field is the one that matters.
-  const homeCountryId = home?.countryId;
-  const citizenOfHome = homeCountryId !== undefined
-    && isCitizenOf({ citizenshipId: config.citizenshipId, secondCitizenshipId: config.secondCitizenshipId }, homeCountryId);
-
-  // Most people are from where they are, so that is the default and the
-  // birthplace follows the home town until somebody says it should not. Once
-  // they have said so it stays said, even if they later pick the same town.
-  const [bornWhereTheyLive, setBornWhereTheyLive] = useState(
-    () => config.homeRegionId === config.startLocationId,
-  );
+function IdentityStep({ config, set, setConfig }: {
+  config: NewSaveConfig;
+  set: Setter;
+  setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
+}) {
+  // Whether they hold a passport for the country they live in is no longer a
+  // question: the family's is Icelandic and so is the land, so everybody
+  // created here can work at home. It is still worth saying on the screen.
+  const settled = settledTitle(config.pronouns);
 
   return (
     <div className="card">
@@ -288,27 +320,60 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             value={config.stageName ?? ''}
             onChange={(e) => set('stageName', e.target.value)}
           />
-          <p className="xs dim" style={{ marginTop: 4 }}>How you are billed on screen.</p>
+          <p className="xs dim" style={{ marginTop: 4 }}>The name your work is credited under, if it isn’t your own.</p>
         </div>
         <div className="field">
           <label htmlFor="pronouns">Pronouns</label>
-          <select id="pronouns" value={config.pronouns} onChange={(e) => set('pronouns', e.target.value)}>
+          <select
+            id="pronouns"
+            value={config.pronouns}
+            onChange={(e) => {
+              const pronouns = e.target.value;
+              // The title is written into the config, not worked out from it
+              // when the save is made, so it has to move with the pronouns:
+              // settled where they settle it, and cleared where they do not,
+              // so a pick made under they/them cannot survive behind he/him.
+              setConfig((c) => ({ ...c, pronouns, performerTitle: settledTitle(pronouns) }));
+            }}
+          >
             <option value="she/her">She/Her</option>
             <option value="he/him">He/Him</option>
             <option value="they/them">They/Them</option>
           </select>
         </div>
         <div className="field">
-          <label htmlFor="performer-title">Billed As</label>
-          <select
-            id="performer-title"
-            value={config.performerTitle ?? impliedPerformerTitle(config.pronouns)}
-            onChange={(e) => set('performerTitle', e.target.value as PerformerTitle)}
-          >
-            <option value="actor">Actor</option>
-            <option value="actress">Actress</option>
-          </select>
-          <p className="xs dim" style={{ marginTop: 4 }}>Which of the two the business lists you under, and which award categories are open to you.</p>
+          <span className="label">Billed As</span>
+          {settled ? (
+            <>
+              <output className="settled-title" htmlFor="pronouns">{PERFORMER_NOUN[settled]}</output>
+              <p className="xs dim" style={{ marginTop: 4 }}>
+                Your pronouns say which of the two words is yours, so there’s nothing to pick.
+                Change them and this changes with them.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="row gap-2" role="group" aria-label="Billed As">
+                {PERFORMER_TITLES.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    className="trait grow"
+                    aria-pressed={config.performerTitle === option}
+                    onClick={() => set('performerTitle', option)}
+                  >
+                    <div className="trait-name">{PERFORMER_NOUN[option]}</div>
+                  </button>
+                ))}
+              </div>
+              <p className="xs dim" style={{ marginTop: 4 }}>
+                He/Him settles this by itself, and so does She/Her. They/Them doesn’t, so the
+                choice is yours. Actor and Actress are two words for the same craft and the game
+                treats them as equals — pick the one the business would list you under, and it
+                will call you by it.
+              </p>
+            </>
+          )}
         </div>
       </div>
         </div>
@@ -316,85 +381,50 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
 
       <hr className="divider" />
 
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="heritage">Heritage</label>
-          <select id="heritage" value={config.heritageId} onChange={(e) => set('heritageId', e.target.value)}>
-            {heritageRegions().map((region) => (
-              <optgroup key={region} label={region}>
-                {HERITAGES.filter((one) => one.region === region)
-                  .map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
-              </optgroup>
-            ))}
-          </select>
+      <div className="field">
+        <span className="label">Race Or Ethnicity (Optional)</span>
+        <div className="trait-grid" role="group" aria-label="Race Or Ethnicity">
+          {ETHNICITIES.map((one) => {
+            const on = config.raceEthnicity.includes(one.id);
+            return (
+              <button
+                key={one.id}
+                type="button"
+                className="trait"
+                aria-pressed={on}
+                onClick={() => set(
+                  'raceEthnicity',
+                  on
+                    ? config.raceEthnicity.filter((id) => id !== one.id)
+                    : [...config.raceEthnicity, one.id],
+                )}
+              >
+                <div className="trait-name">{one.label}</div>
+              </button>
+            );
+          })}
         </div>
-        <div className="field">
-          <label htmlFor="heritage-mother">Your Mother’s Heritage</label>
-          <select
-            id="heritage-mother"
-            value={config.parentHeritageIds[0]}
-            onChange={(e) => set('parentHeritageIds', [e.target.value, config.parentHeritageIds[1]])}
-          >
-            {HERITAGES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="heritage-father">Your Father’s Heritage</label>
-          <select
-            id="heritage-father"
-            value={config.parentHeritageIds[1]}
-            onChange={(e) => set('parentHeritageIds', [config.parentHeritageIds[0], e.target.value])}
-          >
-            {HERITAGES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="suggest-name">A Name From It</label>
-          <button
-            id="suggest-name"
-            type="button"
-            className="btn btn-sm"
-            onClick={() => {
-              const one = HERITAGE_BY_ID[config.heritageId] ?? HERITAGE_BY_ID[DEFAULT_HERITAGE]!;
-              const pool = [...one.feminine, ...one.masculine];
-              const pick = <T,>(list: readonly T[]): T => list[Math.floor(Math.random() * list.length)]!;
-              set('firstName', pick(pool));
-              set('lastName', pick(one.family));
-            }}
-          >
-            Suggest One
-          </button>
-        </div>
+        {config.raceEthnicity.includes(ETHNICITY_OTHER) && (
+          <div className="field" style={{ marginTop: 'var(--s3)' }}>
+            <label htmlFor="ethnicity-own">In Your Own Words</label>
+            <input
+              id="ethnicity-own" type="text"
+              placeholder="However you’d say it"
+              value={config.raceEthnicityOwn ?? ''}
+              onChange={(e) => set('raceEthnicityOwn', e.target.value)}
+            />
+          </div>
+        )}
+        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>{ETHNICITY_NOTE}</p>
       </div>
-      <p className="xs dim" style={{ margin: '4px 0 var(--s2)' }}>{HERITAGE_NOTE}</p>
 
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="adult-height">Adult Height</label>
-          <input
-            id="adult-height" type="number" min={HEIGHT_RANGE[0]} max={HEIGHT_RANGE[1]}
-            value={config.adultHeightCm}
-            onChange={(e) => set('adultHeightCm', Number(e.target.value))}
-          />
-          <p className="xs dim" style={{ margin: '4px 0 0' }}>{describeHeight(config.adultHeightCm)}</p>
-        </div>
-        <div className="field">
-          <label htmlFor="adult-weight">Adult Weight</label>
-          <input
-            id="adult-weight" type="number" min={WEIGHT_RANGE[0]} max={WEIGHT_RANGE[1]}
-            value={config.adultWeightKg}
-            onChange={(e) => set('adultWeightKg', Number(e.target.value))}
-          />
-          <p className="xs dim" style={{ margin: '4px 0 0' }}>{describeWeight(config.adultWeightKg)}</p>
-        </div>
-      </div>
-      <p className="xs dim" style={{ margin: '4px 0 var(--s2)' }}>{GROWTH_NOTE}</p>
+      <hr className="divider" />
 
       <div className="field-row">
         <div className="field">
           <label htmlFor="birth-year">Year Of Birth</label>
           <input
-            id="birth-year" type="number" min={1940} max={config.startYear - 5}
+            id="birth-year" type="number" min={1940} max={latestBirthYear(config.startYear)}
             value={config.birthYear}
             onChange={(e) => set('birthYear', Number(e.target.value))}
           />
@@ -415,109 +445,42 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
         <div className="field">
           <label htmlFor="citizenship">Citizenship</label>
-          <select id="citizenship" value={config.citizenshipId} onChange={(e) => set('citizenshipId', e.target.value)}>
-            {[...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name))
-              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
-          </select>
+          <input
+            id="citizenship"
+            type="text"
+            value={COUNTRIES.get(ESTATE_COUNTRY_ID)?.name ?? 'Iceland'}
+            readOnly
+            aria-readonly="true"
+          />
           <p className="xs dim" style={{ marginTop: 4 }}>
-            You can take work in a country you hold a passport for. Anywhere else needs an arrangement.
-          </p>
-        </div>
-        <div className="field">
-          <label htmlFor="citizenship-second">Second Citizenship (Optional)</label>
-          <select
-            id="citizenship-second"
-            value={config.secondCitizenshipId ?? ''}
-            onChange={(e) => set('secondCitizenshipId', e.target.value || undefined)}
-          >
-            <option value="">None</option>
-            {[...COUNTRIES.all()]
-              .filter((c) => c.id !== config.citizenshipId)
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
-          </select>
-          <p className="xs dim" style={{ marginTop: 4 }}>
-            {homeCountryId && !citizenOfHome
-              ? `You live in ${COUNTRIES.get(homeCountryId)?.name ?? 'somewhere'} and aren’t a citizen of it. Naturalised there? Say so here.`
-              : 'Born in one country, naturalised in another, and you carry both.'}
+            The family is Icelandic and so are you, wherever you happened to be born. It arrives
+            with the name, and it isn’t yours to give back.
           </p>
         </div>
       </div>
 
       <hr className="divider" />
 
-      <div className="panel-head">
-        <div>
-          <h3>Where You Live</h3>
-          <p className="muted small">
-            Where you are decides your taxes, your rent, your job market and how much industry work is
-            within reach. Picking a country here sets your citizenship to match — change it above if you
-            live somewhere you aren’t a citizen of.
-          </p>
-        </div>
-      </div>
-
-      <LocationPicker
-        idPrefix="live"
-        cityId={config.startLocationId}
-        onPick={(picked) => {
-          const previous = CITIES.get(config.startLocationId);
-          set('startLocationId', picked.id);
-          // Somebody who has not said otherwise was born where they live.
-          if (bornWhereTheyLive) set('homeRegionId', picked.id);
-          // Citizenship follows the country while the two agree. Once somebody
-          // has deliberately made them differ, moving no longer overwrites it.
-          if (!previous || config.citizenshipId === previous.countryId) {
-            set('citizenshipId', picked.countryId);
-          }
-        }}
-      />
-
-      <hr className="divider" />
-
-      <div className="panel-head">
-        <div>
-          <h3>Place Of Birth</h3>
-          <p className="muted small">
-            Where you are from, which isn’t always where you ended up. It’s what you say when
-            somebody asks, it’s the town your family is still in, and it’s the accent you had
-            to lose or decided to keep.
-          </p>
-        </div>
-      </div>
-
-      <label className="check" htmlFor="born-here">
+      {/*
+        Born on the land, like everything else about where this character
+        stands. The picker that used to be here — the map, the country and
+        region lists, the ranked towns — is intact in LocationPicker and
+        WorldMap and is simply not on this page any more.
+      */}
+      <div className="field" style={{ maxWidth: 'min(28rem, 100%)' }}>
+        <label htmlFor="birthplace">Place Of Birth</label>
         <input
-          id="born-here"
-          type="checkbox"
-          checked={bornWhereTheyLive}
-          onChange={(e) => {
-            setBornWhereTheyLive(e.target.checked);
-            if (e.target.checked) set('homeRegionId', config.startLocationId);
-          }}
+          id="birthplace"
+          type="text"
+          value={estatePlaceLine()}
+          readOnly
+          aria-readonly="true"
         />
-        <span>
-          I Was Born Where I Live Now
-          {home && <span className="dim"> — {placeLine(home)}</span>}
-        </span>
-      </label>
-
-      {!bornWhereTheyLive && (
-        <LocationPicker
-          idPrefix="born"
-          cityId={config.homeRegionId}
-          onPick={(picked) => set('homeRegionId', picked.id)}
-        />
-      )}
-
-      {!bornWhereTheyLive && birthplace && (
-        <div className="callout">
-          From <strong>{placeLine(birthplace)}</strong>
-          {home && birthplace.countryId !== home.countryId && (
-            <> · You moved country to get where you are, which is its own kind of start.</>
-          )}
-        </div>
-      )}
+        <p className="xs dim" style={{ marginTop: 4 }}>
+          You were born on the family land and you have never lived anywhere else. It’s the answer
+          you give when somebody asks, and it’s the accent you either lost on purpose or kept.
+        </p>
+      </div>
 
       <div className="callout">
         You will be <strong>{ageAtStart(config)}</strong> when the save begins.
@@ -556,8 +519,70 @@ function PersonalStep({
       ...c,
       interests: c.interests.includes(interest)
         ? c.interests.filter((i) => i !== interest)
-        : [...c.interests, interest].slice(0, 6),
+        : [...c.interests, interest],
     }));
+  };
+
+  const toggleGenre = (genre: string) => {
+    setConfig((c) => ({
+      ...c,
+      genres: c.genres.includes(genre)
+        ? c.genres.filter((g) => g !== genre)
+        : [...c.genres, genre],
+    }));
+  };
+
+  // Take a whole list at once, or put it back. `field` names which of the two
+  // lists is being set, so one control serves both.
+  const setAll = (field: 'interests' | 'genres', options: readonly Interest[], on: boolean) => {
+    setConfig((c) => {
+      const ids = options.map((o) => o.id);
+      const rest = c[field].filter((id) => !ids.includes(id));
+      return { ...c, [field]: on ? [...rest, ...ids] : rest };
+    });
+  };
+
+  // One chip, whichever list it came from.
+  const Chips = ({ options, chosen, onToggle }: {
+    options: readonly Interest[];
+    chosen: readonly string[];
+    onToggle: (id: string) => void;
+  }) => (
+    <div className="chip-row" style={{ gap: 'var(--s2)' }}>
+      {options.map((option) => {
+        const on = chosen.includes(option.id);
+        return (
+          <button
+            key={option.id}
+            className="chip"
+            style={on
+              ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
+              : undefined}
+            aria-pressed={on}
+            onClick={() => onToggle(option.id)}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const AllOrNothing = ({ field, options, chosen }: {
+    field: 'interests' | 'genres';
+    options: readonly Interest[];
+    chosen: readonly string[];
+  }) => {
+    const every = options.every((o) => chosen.includes(o.id));
+    return (
+      <button
+        type="button"
+        className="btn btn-sm"
+        onClick={() => setAll(field, options, !every)}
+      >
+        {every ? 'Clear These' : 'Select All'}
+      </button>
+    );
   };
 
   return (
@@ -567,7 +592,11 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              These are dispositions, not stats. They shape how people respond to you, how you hold up under pressure, and what you tend to choose.
+              Dispositions, not stats. Two of them do something today: Emotional Stability sets
+              how quickly stress arrives and how quickly it clears, and Conscientiousness sets
+              how well the nights go. The other five are written into the save and change nothing
+              yet — two of them wait on shoots and travel, three wait on other people, and none
+              of that is built.
             </p>
           </div>
         </div>
@@ -595,11 +624,12 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Personality</h2>
+            <h2>Traits</h2>
             <p className="muted small">
-              Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are already
-              the best alive at all five of those. Every one of these costs something, some can’t be
-              held together, and the life half of the game reads all of them.
+              Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are
+              already the best alive at the one thing there is to be good at. Each pair here is one
+              trait written against another: every one costs something, the two sides of a pair
+              can’t both be held, and everything the game still simulates reads all of them.
             </p>
           </div>
           <span className="chip chip-accent">{config.personalityTraits.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -608,30 +638,35 @@ function PersonalStep({
         {PERSONALITY_GROUPS.map((group) => (
           <div key={group} style={{ marginBottom: 'var(--s4)' }}>
             <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group}</div>
-            <div className="trait-grid">
-              {personalityTraitsIn(group).map((trait) => {
-                const selected = config.personalityTraits.includes(trait.id);
-                const conflicts = conflictingPersonalityTraits(config.personalityTraits, trait.id);
-                const blocked = !selected
-                  && (conflicts.length > 0 || config.personalityTraits.length >= MAX_PERSONALITY_TRAITS);
-                return (
-                  <button
-                    key={trait.id}
-                    className="trait"
-                    aria-pressed={selected}
-                    disabled={blocked}
-                    onClick={() => togglePersonality(trait.id)}
-                    title={conflicts.length > 0
-                      ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
-                      : undefined}
-                  >
-                    <div className="trait-name">{trait.name}</div>
-                    <div className="trait-desc">{trait.description}</div>
-                    <div className="xs dim" style={{ marginTop: 4 }}>{trait.cost}</div>
-                  </button>
-                );
-              })}
-            </div>
+            {/* A row per opposing pair. One flowing grid would wrap a pair
+                across two rows at some widths and the opposition would stop
+                being visible, which is the only reason the order exists. */}
+            {personalityTraitPairs(group).map((pair) => (
+              <div className="trait-pair" key={pair[0]!.id}>
+                {pair.map((trait) => {
+                  const selected = config.personalityTraits.includes(trait.id);
+                  const conflicts = conflictingPersonalityTraits(config.personalityTraits, trait.id);
+                  const blocked = !selected
+                    && (conflicts.length > 0 || config.personalityTraits.length >= MAX_PERSONALITY_TRAITS);
+                  return (
+                    <button
+                      key={trait.id}
+                      className="trait"
+                      aria-pressed={selected}
+                      disabled={blocked}
+                      onClick={() => togglePersonality(trait.id)}
+                      title={conflicts.length > 0
+                        ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(', ')}.`
+                        : undefined}
+                    >
+                      <div className="trait-name">{trait.name}</div>
+                      <div className="trait-desc">{trait.description}</div>
+                      <div className="xs dim" style={{ marginTop: 4 }}>{trait.cost}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -639,38 +674,50 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Your Craft</h2>
+            <h2>Interests</h2>
             <p className="muted small">
-              Not a choice, and not on this page. You hold every acting, writing, directing,
-              producing and showrunning trait in the game — {ALL_TRAITS.length + FOUNDER_TRAITS.length + GOAT_TRAITS.length} of
-              them — because you’re the best living practitioner of all five. They’re listed on
-              the Your Craft step and on your Character screen.
+              What you care about when nobody is paying you to. Take as many as are true.
             </p>
           </div>
+          <span className="chip chip-accent">{config.interests.length} Chosen</span>
         </div>
+
+        <div className="row-between" style={{ marginBottom: 'var(--s2)' }}>
+          <span className="eyebrow">The Work</span>
+          <AllOrNothing field="interests" options={CRAFT_INTERESTS} chosen={config.interests} />
+        </div>
+        <Chips options={CRAFT_INTERESTS} chosen={config.interests} onToggle={toggleInterest} />
+
+        <div className="row-between" style={{ margin: 'var(--s4) 0 var(--s2)' }}>
+          <span className="eyebrow">Everything Else</span>
+          <AllOrNothing field="interests" options={GENERAL_INTERESTS} chosen={config.interests} />
+        </div>
+        <Chips options={GENERAL_INTERESTS} chosen={config.interests} onToggle={toggleInterest} />
       </div>
 
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Interests And Background</h2>
-            <p className="muted small">Interests affect who you get on with and what you enjoy doing with your time.</p>
+            <h2>Genres</h2>
+            <p className="muted small">
+              The films you love, which isn’t the same question as the films you’d be cast in.
+              Take as many as are true — there’s no limit here.
+            </p>
+          </div>
+          <div className="row gap-2" style={{ alignItems: 'center' }}>
+            <span className="chip chip-accent">{config.genres.length} Chosen</span>
+            <AllOrNothing field="genres" options={FILM_GENRES} chosen={config.genres} />
           </div>
         </div>
-        <div className="row wrap gap-2" style={{ marginBottom: 'var(--s4)' }}>
-          {INTEREST_OPTIONS.map((interest) => (
-            <button
-              key={interest}
-              className="chip"
-              style={config.interests.includes(interest)
-                ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
-                : undefined}
-              aria-pressed={config.interests.includes(interest)}
-              onClick={() => toggleInterest(interest)}
-            >
-              {titleCaseLabel(interest)}
-            </button>
-          ))}
+        <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} />
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Background</h2>
+            <p className="muted small">Where the life before this one happened, and how you spend.</p>
+          </div>
         </div>
         <div className="field">
           <label htmlFor="background">Where You Come From</label>
@@ -703,120 +750,157 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Your Craft</h2>
+            <h2>My Skills</h2>
             <p className="muted small">
-              You are a {PERFORMER_NOUN[titleOf(config)].toLowerCase()}, and you are the best there
-              has ever been at all of it. Nothing here is chosen, because nothing here is missing.
+              You are an {billedAs(config).toLowerCase()}, and you are the best there
+              has ever been at it. There’s nothing to choose here, because nothing is missing.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-2">
-          {DISCIPLINES.map((discipline) => (
-            <div key={discipline} className="trait is-fixed">
-              <div className="row-between">
-                <div className="trait-name">{DISCIPLINE_LABEL[discipline]}</div>
-                <span className="chip chip-accent">{GOAT_LABEL}</span>
-              </div>
-              <div className="xs dim" style={{ marginTop: 4 }}>
-                Everything At {CEILING} · Every Trait
-              </div>
-              <div className="row wrap gap-1" style={{ marginTop: 6 }}>
-                {goatTraitsIn(discipline).map((trait) => (
-                  <span key={trait.id} className="chip chip-accent">{trait.name}</span>
-                ))}
-              </div>
+        {DISCIPLINES.map((discipline) => (
+          <div key={discipline} className="trait is-fixed">
+            <div className="row-between">
+              <div className="trait-name">{DISCIPLINE_LABEL[discipline]}</div>
+              <span className="chip chip-accent">{GOAT_LABEL}</span>
             </div>
-          ))}
-        </div>
+            <div className="xs dim" style={{ marginTop: 4 }}>
+              All {ATTRIBUTES.length} Attributes At {CEILING} · All {ALL_TRAITS.length} Traits
+            </div>
+            <div className="chip-row" style={{ marginTop: 8 }}>
+              {goatTraitsIn(discipline).map((trait) => (
+                <span key={trait.id} className="chip chip-accent">{trait.name}</span>
+              ))}
+            </div>
+            <div className="col gap-1" style={{ marginTop: 8 }}>
+              {goatTraitsIn(discipline).map((trait) => (
+                <div key={trait.id} className="xs dim">
+                  <span className="strong">{trait.name}.</span> {trait.description}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* --- What is not here yet ------------------------------------------ */}
-      <div className="card">
-        <div className="panel-head">
-          <div><h3>The Work Itself</h3></div>
-        </div>
-        <div className="callout">
-          <strong className="xs">Under Construction</strong>
-          <p className="xs" style={{ margin: '6px 0 0' }}>
-            Casting, auditions, productions and everything the career is made of are being rebuilt
-            for a later milestone. The Casting tab is in the game and locked until that work lands.
-          </p>
-          <p className="xs" style={{ margin: '8px 0 0' }}>
-            This build is the life around the work: where you live, who you know, what you own,
-            what you wear, what you eat, where you go and how you keep yourself standing. Start
-            there, and the career opens on top of a life that already exists.
-          </p>
-        </div>
-      </div>
+      {/* --- All of it, so a claim this size can be read rather than taken --- */}
+      <Sheet
+        title="Every Acting Skill"
+        note={`All of them, at ${CEILING}. Alphabetical, so a name can be found rather than hunted for.`}
+        items={ATTRIBUTES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
+      />
+      <Sheet
+        title="Every Acting Trait"
+        note="Held at once. For anybody else half of these would rule out the other half."
+        items={TRAITS.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
+      />
+      <Sheet
+        title="Mastery Of Every Genre"
+        note="One for each genre there is. There’s no form you can’t work in."
+        items={GENRE_MASTERIES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
+      />
+
     </div>
   );
 }
 
+/**
+ * Starting Point — where you are standing on day one.
+ *
+ * Not a set of choices any more. Where you live, what you live in and what is
+ * next door are all one fact: the family holds two thousand acres outside
+ * Reykjavík and has just put a studio lot and a production company on it. The
+ * page reports that rather than asking about it.
+ */
 function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
-  const city = CITIES.get(config.startLocationId);
+  const city = estateCity();
   const wealth = WEALTH_PROFILES[config.wealth];
+  const company = studioName(config.lastName);
 
   return (
     <div className="col gap-5">
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where You Start</h2>
-            <p className="muted small">
-              {city
-                ? `${city.name}, chosen on Identity. This is what living there costs and offers.`
-                : 'Choose somewhere to live on the Identity step.'}
-            </p>
+            <h2>Home Base</h2>
+            <p className="muted small">Where the family land is. It isn’t a choice — it’s where you’re from.</p>
           </div>
         </div>
 
-        {city && (
-          <div className="grid grid-4">
-            <div className="stat">
-              <span className="stat-label">Industry presence</span>
-              <span className="stat-value">{city.industryPresence}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-label">Job market</span>
-              <span className="stat-value">{city.jobMarketDepth}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-label">Median rent</span>
-              <span className="stat-value">{formatMoney(city.medianRentCents, { cents: false })}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-label">Cost of living</span>
-              <span className="stat-value">{city.costOfLivingIndex}</span>
-            </div>
+        <div className="strong" style={{ fontSize: 'var(--size-lg)', marginBottom: 'var(--s3)' }}>
+          {estatePlaceLine()}
+        </div>
+
+        <div className="grid grid-3">
+          <div className="stat">
+            <span className="stat-label">Population</span>
+            <span className="stat-value">{formatPeople(city.population)}</span>
           </div>
-        )}
-        {city && (
-          <p className="muted small" style={{ marginTop: 'var(--s3)' }}>
-            {city.tags.map(titleCaseLabel).join(' · ')}
-          </p>
-        )}
+          <div className="stat">
+            <span className="stat-label">Time Zone</span>
+            <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{zoneAbbreviation(Date.now(), city.timeZone)}</span>
+            <span className="stat-note">{city.timeZone}</span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Industry Here</span>
+            <span className="stat-value">None</span>
+            <span className="stat-note">No television, no film, until the family</span>
+          </div>
+        </div>
+
+        <p className="muted small" style={{ marginTop: 'var(--s4)', marginBottom: 0 }}>{ESTATE_NOTE}</p>
       </div>
 
       <div className="card">
-        <div className="panel-head"><h2>Housing</h2></div>
-        <div className="grid grid-2">
-          {HOUSING.map((option) => (
-            <button
-              key={option.id}
-              className="trait"
-              aria-pressed={config.housing === option.id}
-              onClick={() => set('housing', option.id)}
-            >
-              <div className="trait-name">{option.label}</div>
-              <div className="trait-desc">{option.blurb}</div>
-            </button>
+        <div className="panel-head">
+          <div>
+            <h2>The Land</h2>
+            <p className="muted small">Held by the family. Three things stand on it.</p>
+          </div>
+          <span className="chip chip-accent">{ESTATE_ACRES.toLocaleString('en-US')} Acres</span>
+        </div>
+
+        <div className="col gap-2">
+          {HOLDINGS.map((holding) => (
+            <div key={holding.id} className="holding">
+              <div className="strong">{holding.label(config.lastName)}</div>
+              <div className="small muted">{holding.detail}</div>
+            </div>
           ))}
         </div>
       </div>
 
       <div className="card">
-        <div className="panel-head"><h2>Money</h2></div>
+        <div className="panel-head">
+          <div>
+            <h2>{company}</h2>
+            <p className="muted small">
+              Television and Film. It carries the family name, which is the surname you gave on
+              Identity — the company is named the moment you are.
+            </p>
+          </div>
+        </div>
+        {config.lastName.trim() ? (
+          <div className="callout">
+            The name was on the gate before you were on the lot. Everybody who reads it on a call
+            sheet knows which family it belongs to. That’s the advantage, and it’s the whole problem.
+          </div>
+        ) : (
+          <div className="callout callout-accent">
+            Put a surname on Identity — it’s the family name, and the company takes it.
+          </div>
+        )}
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>What Is Yours</h2>
+            <p className="muted small">
+              The land and the company are the family’s. This is the money in your own name.
+            </p>
+          </div>
+        </div>
         <div className="field">
           <label htmlFor="wealth">What You Are Starting With</label>
           <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
@@ -834,24 +918,10 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
             <span className="stat-value mono">{formatMoney(wealth.savings, { cents: false })}</span>
           </div>
           <div className="stat">
-            <span className="stat-label">Credit score</span>
+            <span className="stat-label">Credit Score</span>
             <span className="stat-value mono">{wealth.creditScore}</span>
           </div>
         </div>
-      </div>
-
-      <div className="card">
-        <div className="panel-head"><h2>Starting Situation</h2></div>
-        <div className="col gap-3">
-          <label className="row gap-2" style={{ marginBottom: 0 }}>
-            <input
-              type="checkbox" checked={config.startWithVehicle} style={{ width: 'auto' }}
-              onChange={(e) => set('startWithVehicle', e.target.checked)}
-            />
-            <span className="small" style={{ color: 'var(--text)' }}>Start With A Car</span>
-          </label>
-        </div>
-
       </div>
     </div>
   );
@@ -880,7 +950,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {PERFORMER_NOUN[titleOf(config)]} · {city?.name}
+            {age} · {billedAs(config)} · {city?.name}
           </p>
           {config.stageName && (
             <p className="small dim">Credited as {config.stageName}</p>
@@ -893,20 +963,24 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
-          <Line label="Billed As" value={PERFORMER_NOUN[titleOf(config)]} />
+          <Line label="Billed As" value={billedAs(config)} />
+          <Line
+            label="Race Or Ethnicity"
+            value={describeEthnicity(config.raceEthnicity, config.raceEthnicityOwn)}
+          />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
           <Line label={config.secondCitizenshipId ? 'Citizenships' : 'Citizenship'} value={citizenshipLabel(config)} />
         </div>
 
         <div className="card">
-          <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting point</div>
-          <Line label="City" value={city?.name ?? '—'} />
-          <Line label="Housing" value={HOUSING.find((h) => h.id === config.housing)?.label ?? '—'} />
+          <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
+          <Line label="Home Base" value={estatePlaceLine()} />
+          <Line label="The Land" value={`${ESTATE_ACRES.toLocaleString('en-US')} Acres, Family Held`} />
+          <Line label="The Company" value={studioName(config.lastName)} />
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
           <Line label="Credit Score" value={String(wealth.creditScore)} />
-          <Line label="Car" value={config.startWithVehicle ? 'Yes' : 'No'} />
         </div>
       </div>
 
@@ -914,8 +988,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
         {config.personalityTraits.length === 0 ? (
           <p className="muted small">
-            Nothing picked. You’ll be the best there has ever been at making things and no
-            particular kind of person, which is allowed.
+            Nothing picked. You’ll be the best there has ever been at the work and nobody in
+            particular away from it, which is allowed.
           </p>
         ) : (
           <div className="col gap-3">
@@ -935,7 +1009,13 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
-        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Craft</div>
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests And Genres</div>
+        <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
+        <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+      </div>
+
+      <div className="card">
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>My Skills</div>
         {/*
           Not a list of what was picked — nothing is picked. You hold
           every trait in the game, and this card used to say "no traits, a
@@ -943,9 +1023,9 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           committing and it was false.
         */}
         <p className="small">
-          <strong>All {ALL_TRAITS.length + GOAT_TRAITS.length + FOUNDER_TRAITS.length} Of Them.</strong>
-          {' '}Every acting and profession trait in the game, every producing trait, and all
-          {' '}{GOAT_TRAITS.length} G.O.A.T. traits, held at once.
+          <strong>The Best There Has Ever Been.</strong>
+          {' '}All {ATTRIBUTES.length} acting attributes at {CEILING}, all {ALL_TRAITS.length}{' '}
+          acting traits, and the {GOAT_TRAITS.length} G.O.A.T. traits, held at once.
         </p>
         <p className="xs dim" style={{ margin: '6px 0 0' }}>
           For anybody else that list contradicts itself and most of it is paid for with a weakness
@@ -954,10 +1034,48 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="callout callout-accent">
-        Once this save begins, the world starts running. Time passes, bills arrive, and the people in it
-        get on with their own lives whether you’re watching or not.
+        Once this save begins, the world starts running. Time passes, the calendar fills, and
+        everybody in it gets on with their own life whether you’re watching or not.
       </div>
     </div>
+  );
+}
+
+/** The chosen ones, in the order the list offers them, or an em dash. */
+function namesOf(all: readonly Interest[], chosen: readonly string[]): string {
+  const named = all.filter((one) => chosen.includes(one.id)).map((one) => one.label);
+  return named.length > 0 ? named.join(', ') : '—';
+}
+
+/**
+ * One long list, folded away.
+ *
+ * The page states that the player holds all of it, and a number that large is
+ * a claim rather than a fact until somebody can read it. So it is all here,
+ * shut by default because it is the length it is, and open to anybody who
+ * wants to check.
+ */
+function Sheet({ title, note, items }: {
+  title: string;
+  note: string;
+  items: readonly { id: string; name: string; note: string }[];
+}) {
+  return (
+    <details className="card sheet">
+      <summary>
+        <span className="sheet-title">{title}</span>
+        <span className="chip chip-accent">{items.length}</span>
+      </summary>
+      <p className="muted small" style={{ margin: 'var(--s3) 0' }}>{note}</p>
+      <div className="sheet-grid">
+        {items.map((item) => (
+          <div key={item.id} className="sheet-item">
+            <div className="strong xs">{item.name}</div>
+            <div className="xs dim">{item.note}</div>
+          </div>
+        ))}
+      </div>
+    </details>
   );
 }
 
@@ -983,16 +1101,20 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
     const age = ageAtStart(config);
-    // Five, because school starts around then and there is now a school to
-    // go to. Below that a life is somebody else's decisions all the way down.
-    if (age < 5) issues.push('Your character has to be at least 5 when the save begins.');
+    // The year, not the age. A birth year at the cap can still leave somebody
+    // seventeen when the save opens, and that is a life this game will run.
+    if (!titleOf(config)) {
+      issues.push('Choose whether you’re billed as an actor or an actress.');
+    }
+    if (config.birthYear > latestBirthYear(config.startYear)) {
+      issues.push(`Your character can’t be born after ${latestBirthYear(config.startYear)}.`);
+    }
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
-    if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
-    if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === 3) {
-    if (!CITIES.get(config.startLocationId)) issues.push('Choose a city to start in.');
+    // Where you live is not asked any more, so there is nothing here to get
+    // wrong but the day the save opens on.
     if (config.startDay < 1 || config.startDay > 28) issues.push('Pick a start day between 1 and 28.');
   }
   return issues;

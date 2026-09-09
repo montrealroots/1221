@@ -8,29 +8,31 @@
  */
 
 import type {
-  CareerTrack, Person, Personality, SaveMeta, SaveUniverse,
+  CareerTrack, Person, Personality, Premise, SaveMeta, SaveUniverse,
 } from '../domain/model';
-import { SAVE_SCHEMA_VERSION } from '../domain/model';
+import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from '../domain/model';
 import {
-  ALL_TRAITS, ATTRIBUTES, PROFESSION_TRAITS, emptyAttributeSheet,
+  ALL_TRAITS, ATTRIBUTES, emptyAttributeSheet,
   attributesOf, type AttributeSheet,
 } from '../domain/attributes';
 import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
-import { FOUNDER_ATTRIBUTES, FOUNDER_TRAITS } from '../content/founder';
 import { CEILING, GOAT_TRAITS } from '../content/prodigy';
 import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
-import { LEVEL_XP, PROFESSIONS } from '../content/professions';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
+import { ETHNICITY_BY_ID } from '../content/ethnicity';
+import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
+
+/** The ids on a list this build recognises, deduplicated, in the order given. */
+function known(ids: readonly string[] | undefined, table: Readonly<Record<string, unknown>>): string[] {
+  return [...new Set((ids ?? []).filter((id) => table[id] !== undefined))];
+}
 import { freshWellbeing } from '../systems/life';
-import { PERFORMER_NOUN, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
-import {
-  DEFAULT_HEIGHT_CM, DEFAULT_WEIGHT_KG, HEIGHT_RANGE, WEIGHT_RANGE,
-} from '../content/lifespan';
-import { DEFAULT_HERITAGE, HERITAGE_BY_ID } from '../content/heritage';
+import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
+import { ESTATE_CITY_ID, ESTATE_COUNTRY_ID } from '@/engine/content/estate';
 
 export const APP_VERSION = '1.1.0';
 
@@ -39,8 +41,6 @@ export const APP_VERSION = '1.1.0';
 // ---------------------------------------------------------------------------
 
 export type StartingWealth = 'nothing' | 'scraping' | 'modest' | 'comfortable' | 'wealthy' | 'inherited';
-export type StartingHousing = 'couch' | 'roommates' | 'rental' | 'owned';
-
 export interface NewSaveConfig {
   /** Identity */
   firstName: string;
@@ -60,17 +60,24 @@ export interface NewSaveConfig {
   birthYear: number;
   birthMonth: number;
   birthDay: number;
-  /** The height and weight this character ends up at as an adult. */
-  adultHeightCm: number;
-  adultWeightKg: number;
   /**
-   * Where the family name comes from. One for the character, and one for each
-   * of the two people who raised them, so a family of two heritages names its
-   * children out of both.
+   * Who the character is. More than one can be true, so it is a set, and it
+   * carries nothing mechanical — see `content/ethnicity.ts`.
    */
-  heritageId: string;
-  parentHeritageIds: readonly [string, string];
+  raceEthnicity: readonly string[];
+  /** Said in their own words, when the list does not have it. */
+  raceEthnicityOwn?: string;
   homeRegionId: string;
+  /**
+   * Whether they still live where they were born.
+   *
+   * On the config rather than in a component's state because two steps read
+   * it: Place Of Birth on Identity carries the home town with it while this
+   * is true, and Where You Live on Starting Point is what sets it. It also
+   * means a half-filled form remembers the answer instead of guessing it back
+   * from whether the two places happen to match.
+   */
+  livesWhereBorn: boolean;
   citizenshipId: string;
   /** Headshot as a data URL, already fitted to the portrait frame. */
   portrait?: string;
@@ -81,6 +88,8 @@ export interface NewSaveConfig {
   personalityTraits: string[];
   traits: string[];
   interests: string[];
+  /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
+  genres: string[];
   goals: string[];
   lifestyle: Person['lifestyle'];
   background: string;
@@ -104,9 +113,7 @@ export interface NewSaveConfig {
 
   /** Starting point */
   startLocationId: string;
-  housing: StartingHousing;
   wealth: StartingWealth;
-  startWithVehicle: boolean;
   /** World start date, local to the starting city. */
   startYear: number;
   startMonth: number;
@@ -121,21 +128,40 @@ export function defaultPersonality(): Personality {
   };
 }
 
+/**
+ * A config whose two passports do not name the same country.
+ *
+ * Everybody created through the game holds the family's Icelandic one on top
+ * of whatever their birth gives them, and that is set in `defaultConfig` and
+ * on the screen. Somebody born Icelandic would otherwise be handed it a second
+ * time, which is not dual citizenship, it is the same passport printed twice.
+ *
+ * Only the duplicate is dropped. A second passport somebody deliberately set
+ * to something else is theirs and is left alone — the rule about Iceland is a
+ * rule about this game's creation screen, not about what a person can be.
+ */
+export function withSettledCitizenship(config: NewSaveConfig): NewSaveConfig {
+  if (config.secondCitizenshipId !== config.citizenshipId) return config;
+  return { ...config, secondCitizenshipId: undefined };
+}
+
 export function defaultConfig(): NewSaveConfig {
   return {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
-    adultHeightCm: DEFAULT_HEIGHT_CM, adultWeightKg: DEFAULT_WEIGHT_KG,
-    heritageId: DEFAULT_HERITAGE, parentHeritageIds: [DEFAULT_HERITAGE, DEFAULT_HERITAGE],
-    homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
+    raceEthnicity: [],
+    // Born on the family land, living on it, and holding its passport. None of
+    // the three is a question any screen asks any more.
+    homeRegionId: ESTATE_CITY_ID, livesWhereBorn: true,
+    citizenshipId: ESTATE_COUNTRY_ID,
     personality: defaultPersonality(),
-    personalityTraits: [], traits: [], interests: ['film', 'music'], goals: ['Make something that lasts'],
+    personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
     companyName: '',
-    startLocationId: 'us-ca-losangeles',
-    housing: 'roommates', wealth: 'scraping',
-    startWithVehicle: true,
+    // Home base is the family land, and it is not a choice on any screen.
+    startLocationId: ESTATE_CITY_ID,
+    wealth: 'scraping',
     startYear: 2026, startMonth: 3, startDay: 2,
   };
 }
@@ -190,53 +216,21 @@ export function wealthNote(wealth: StartingWealth): string {
 // Universe construction
 // ---------------------------------------------------------------------------
 
-export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerId: string): SaveUniverse {
+export function emptyUniverse(
+  meta: SaveMeta, now: number, zone: string, playerId: string, premise: Premise,
+): SaveUniverse {
   return {
     meta,
+    premise,
     __idCounter: 0,
     now,
     homeZone: zone,
     currentZone: zone,
     playerId,
-    people: {}, relationships: {}, households: {},
-    accounts: {}, transactions: [], bills: {}, creditProfiles: {}, taxYears: {},
-    properties: {}, structures: {}, rooms: {}, zones: {}, furnishings: {},
-    propertyListings: {}, propertyOffers: {}, realEstateAgents: {},
-    constructionProjects: {}, constructionPhases: {}, changeOrders: {},
-    vehicles: {}, vehicleListings: {}, vehicleModifications: {}, serviceRecords: {},
-    assets: {}, outfits: {}, orders: {}, pantry: {},
-    healthProviders: {}, appointments: {}, insurancePolicies: {}, insuranceClaims: {},
-    courses: {}, enrollments: {},
-    trips: {}, flightBookings: {}, hotelBookings: {},
-    socialAccounts: {}, socialPosts: {}, brandDeals: {},
-    videoChannels: {}, videos: {}, videoComments: {}, videoSubscriptions: {}, watchHistory: {},
-    videoPlaylists: {}, liveStreams: {}, communityPosts: {}, channelMemberships: {}, creatorPayouts: {},
-    videoNotices: {},
-    socialProfiles: {}, socialItems: {}, socialFollows: {}, socialScreenTime: {}, socialRooms: {},
-    kitHires: {}, shootDays: {}, indieFilms: {},
-    cinemaTickets: {},
-    fashionInvites: {},
-    goingTickets: {},
-    parcels: {},
-    companies: {},
-    scenes: { version: 2, sessions: {} },
-    memberships: {}, workouts: {}, plans: {}, vehicleDeals: {}, dates: {}, dialogue: { version: 1, seen: {} },
-    recall: { version: 1, entries: [], played: {} },
-    industry: {
-      briefed: false,
-      // Fiction, fixed here so every save tells the same story about itself.
-      strikeMonths: 19,
-      // The premise: there is nobody else.
-      rivals: 0,
-      // Nobody wrote for nineteen months.
-      material: 0,
-      buyerHunger: 92,
-      // The grips went into construction and have not all come back.
-      crewDepth: 34,
-      ratesSet: {},
-    },
+    people: {}, households: {},
+    accounts: {}, transactions: [],
+    properties: {},
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
-    tutorial: { completed: [], active: [], dismissed: [], guidedMode: true, advancedMode: false },
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
@@ -250,15 +244,15 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
 
 /** Starting capability from the chosen track and stage. */
 /**
- * The founder's instrument.
+ * The instrument.
  *
- * There is nothing to seed. They are the best living writer, director,
- * producer, showrunner and actor at once, so every one of the 88 acting
- * attributes and every skill in every domain starts at the ceiling. Nothing on
- * the creation screen moves any of it, because there is nowhere for it to go.
+ * There is nothing to seed. They are the best living actor or actress, so
+ * every one of the 88 acting attributes starts at the ceiling, along with the
+ * ordinary life skills anybody has. Nothing on the creation screen moves any
+ * of it, because there is nowhere for it to go.
  *
  * What creation still decides is everything the instrument does not cover:
- * how much money, who takes your call, and what kind of company you open.
+ * who they are, where they live, and what they are starting with.
  */
 /**
  * Every trait in the game, held at once.
@@ -272,21 +266,6 @@ export function emptyUniverse(meta: SaveMeta, now: number, zone: string, playerI
 function everyTrait(): string[] {
   return ALL_TRAITS.map((trait) => trait.id);
 }
-
-/** Every profession, open on day one, at the top of its ladder, all traits taken. */
-function maxedProfessions(at: number): Person['professions'] {
-  const out: NonNullable<Person['professions']> = {};
-  const topXp = LEVEL_XP[LEVEL_XP.length - 1] ?? 0;
-  for (const def of PROFESSIONS) {
-    out[def.id] = {
-      unlockedAt: at,
-      xp: topXp,
-      traitIds: PROFESSION_TRAITS.filter((t) => t.profession === def.id).map((t) => t.id),
-    };
-  }
-  return out;
-}
-
 
 function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
   const attributes = emptyAttributeSheet(CEILING);
@@ -318,7 +297,10 @@ export interface BootstrapResult {
  * Builds the raw universe object. Systems are wired separately by
  * `createSimulation`, which then runs `populateWorld` to fill it in.
  */
-export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): BootstrapResult {
+export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig): BootstrapResult {
+  // Settled here rather than trusted, so a save built straight from the engine
+  // holds the same two passports a save built through the screen does.
+  const config = withSettledCitizenship(raw);
   const city = CITIES.require(config.startLocationId);
   const zone = city.timeZone;
   const now = instantFromZoned(
@@ -327,6 +309,24 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   );
 
   const playerId = 'person_000001';
+
+  // Actor, or actress. The one fact the whole game is about, so it is settled
+  // here, once, and written into the save rather than worked out again at
+  // every place that needs to print it. Stated is stated; where the player
+  // said nothing, their pronouns decided and the save records that it was the
+  // pronouns rather than them.
+  const stated = config.performerTitle;
+  const performerTitle: PerformerTitle = stated ?? impliedPerformerTitle(config.pronouns);
+  const premise: Premise = {
+    kind: 'actor-actress-life-simulator',
+    statement: PREMISE_STATEMENT,
+    titles: PERFORMER_TITLES,
+    equalStanding: true,
+    playerTitle: performerTitle,
+    playerTitleSource: stated ? 'stated' : 'implied',
+    recordedAt: now,
+  };
+
   const meta: SaveMeta = {
     id: `save_${slot}_${seed.slice(0, 8)}`,
     slot,
@@ -337,7 +337,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    careerLabel: careerLabel('actor', config.performerTitle ?? impliedPerformerTitle(config.pronouns)),
+    performerTitle,
+    careerLabel: careerLabel('actor', performerTitle),
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -345,7 +346,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     appVersion: APP_VERSION,
   };
 
-  const universe = emptyUniverse(meta, now, zone, playerId);
+  const universe = emptyUniverse(meta, now, zone, playerId, premise);
 
   const { attributes, skills } = seedCapability();
 
@@ -365,34 +366,27 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     stageName: config.stageName?.trim() || undefined,
     portrait: config.portrait,
     pronouns: config.pronouns,
-    performerTitle: config.performerTitle,
+    performerTitle,
     birthInstant,
-    // The chair. A life starts freshly cut and grows out from the first day
-    // rather than staying that way until somebody happens to sit down.
-    groomedAt: now,
-    // The one physical fact the player chooses. A character who starts young
-    // is smaller than this and grows to exactly it.
-    adultHeightCm: clamp(Math.round(config.adultHeightCm ?? DEFAULT_HEIGHT_CM), HEIGHT_RANGE[0], HEIGHT_RANGE[1]),
-    adultWeightKg: clamp(Math.round(config.adultWeightKg ?? DEFAULT_WEIGHT_KG), WEIGHT_RANGE[0], WEIGHT_RANGE[1]),
-    // Where the name comes from. A naming tradition and nothing else.
-    heritageId: HERITAGE_BY_ID[config.heritageId ?? ''] ? config.heritageId : DEFAULT_HERITAGE,
-    parentHeritageIds: [
-      HERITAGE_BY_ID[config.parentHeritageIds?.[0] ?? ''] ? config.parentHeritageIds[0] : DEFAULT_HERITAGE,
-      HERITAGE_BY_ID[config.parentHeritageIds?.[1] ?? ''] ? config.parentHeritageIds[1] : DEFAULT_HERITAGE,
-    ],
+    // Who they are, kept exactly as they said it. Only the player is asked,
+    // and nothing reads it to decide anything.
+    raceEthnicity: [...new Set((config.raceEthnicity ?? []).filter((id) => ETHNICITY_BY_ID[id]))],
+    ...(config.raceEthnicityOwn?.trim() ? { raceEthnicityOwn: config.raceEthnicityOwn.trim() } : {}),
     homeRegionId: config.homeRegionId,
     citizenshipId: config.citizenshipId,
     ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),
     currentLocationId: config.startLocationId,
     personality: config.personality,
-    interests: config.interests,
+    // Cleaned by the same rule the engine reads them by, so what is written
+    // and what is read can never drift apart.
+    interests: known(config.interests, INTEREST_BY_ID),
+    genres: known(config.genres, GENRE_BY_ID),
     goals: config.goals,
     lifestyle: config.lifestyle,
     background: config.background,
     attributes,
-    // Every craft trait in the game. Nothing was picked and nothing could
-    // have been: the best living writer, director, producer, showrunner and
-    // actor holds all of them.
+    // Every acting trait in the game. Nothing was picked and nothing could
+    // have been: the best living actor or actress holds all of them.
     traits: everyTrait(),
     // Personality is the opposite: the only thing on this character that was
     // genuinely chosen, and the only trait set that still costs them.
@@ -401,30 +395,16 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
       .slice(0, MAX_PERSONALITY_TRAITS),
     skills,
 
-    // The producer's instrument, at the ceiling like everything else. Separate
-    // from the acting set above because they measure different jobs, and both
-    // of them are full.
-    founder: Object.fromEntries(FOUNDER_ATTRIBUTES.map((a) => [a.id, CEILING])),
-    // All fourteen G.O.A.T. traits and all nineteen ordinary producing ones.
-    // The ordinary set is built out of trade-offs — a contrarian reads the
-    // market worse — and the prodigy flag below is what stops the trade-off
-    // half applying to the one person it was never going to apply to.
-    founderTraits: [...GOAT_TRAITS.map((t) => t.id), ...FOUNDER_TRAITS.map((t) => t.id)],
+    // The three that say what kind of actor or actress. There is nothing
+    // else to be the best at any more: the writing, the directing, the
+    // producing and the showrunning went with the half of the game that
+    // used them.
+    goatTraits: GOAT_TRAITS.map((t) => t.id),
     prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
-    // Nothing is left to earn. Every profession is already open and already at
-    // the top level, with every trait slot it opens filled.
-    industryXp: 0,
-    professions: maxedProfessions(now),
-    representation: {},
-    quote: config.careerStage > 40 ? Math.round(config.careerStage * 4_000_00) : 0,
-    creditIds: [],
-    nominationIds: [],
     creditScore: WEALTH_PROFILE[config.wealth].creditScore,
-    tier: 'full',
-    greenlightAuthority: 0,
     createdAt: now,
   };
   universe.people[playerId] = player;
@@ -441,7 +421,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
  * never printed without knowing whose it is. Every other track reads the same
  * for everybody.
  */
-export function careerLabel(track: CareerTrack, title: PerformerTitle = 'actor'): string {
+export function careerLabel(track: CareerTrack, title: PerformerTitle): string {
   const labels: Record<CareerTrack, string> = {
     none: 'Undecided', actor: PERFORMER_NOUN[title], writer: 'Writer', director: 'Director',
     producer: 'Producer', showrunner: 'Showrunner', crew: 'Crew',

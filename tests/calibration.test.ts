@@ -59,14 +59,17 @@ describe('the random number generator', () => {
 
 describe('reproducibility', () => {
   it('gives two identical seeds the same world, and different seeds different ones', () => {
-    // The film industry is gone, so what a seed has to reproduce now is the
-    // life around the player: who they meet, what is for sale, what it costs.
+    // What a seed has to reproduce is the life around the player: who is in
+    // the save, where they live, and the state two years of the clock left
+    // them in.
     const shape = (seed: string) => {
-      const sim = quickSave({}, seed);
+      const sim = quickSave({ firstName: seed }, seed);
       sim.advanceTo(sim.now + 2 * 365 * 86_400_000);
       return [
-        Object.values(sim.universe.people).map((p) => p.displayName).sort().join(','),
-        Object.values(sim.universe.propertyListings).map((l) => `${l.propertyId}|${l.askingPrice}`).sort().join(','),
+        Object.values(sim.universe.people)
+          .map((p) => `${p.displayName}|${p.residenceId ?? ''}|${Math.round(p.wellbeing.energy)}|${Math.round(p.wellbeing.condition)}`)
+          .sort().join(','),
+        Object.values(sim.universe.properties).map((one) => `${one.id}|${one.marketValue}|${one.condition.toFixed(3)}`).sort().join(','),
       ].join('\n');
     };
     expect(shape('twin')).toEqual(shape('twin'));

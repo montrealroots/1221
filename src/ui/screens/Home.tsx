@@ -11,10 +11,9 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
-import { TutorialCard } from '@/ui/shell/Tutorial';
-import { DESTINATIONS } from '@/ui/shell/destinations';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
@@ -24,9 +23,10 @@ import {
   formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
+import { ESTATE_ACRES, HOUSE } from '@/engine/content/estate';
 
 export function Home() {
-  const { sim, navigate, run, toast } = useGame();
+  const { sim, navigate, run } = useGame();
   const snapshot = useWorld(lifeSnapshot);
   const decisions = useWorld(openDecisions);
   const next = useWorld(nextCommitment);
@@ -47,7 +47,7 @@ export function Home() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">{formatWeekdayDate(sim.now, sim.zone)}</div>
+        <div className="eyebrow">{formatWeekdayDate(sim.now, sim.zone)} · {PERFORMER_NOUN[player.performerTitle]}</div>
         <h1>Good {partOfDay(sim.now, sim.zone)}, {player.firstName}.</h1>
         <p className="muted">
           {formatTime(sim.now, sim.zone)} in {city?.name ?? 'an unknown place'} ·{' '}
@@ -63,46 +63,50 @@ export function Home() {
       </div>
 
       {/*
-        Everywhere you can go. This was a rail down the left of every screen;
-        it’s here because Home is the hub and a hub that’s missing half the
-        building isn’t one.
+        The calendar is a section of the hub rather than a tile pointing at
+        one. What is coming is part of standing in the day, not somewhere else
+        to go, and it reads that way at the top of Home. One button into the
+        month, in the header: there used to be three, all going to the same
+        screen.
       */}
-      <div className="card" style={{ marginBottom: 'var(--s5)' }}>
-        <div className="panel-head">
-          <div>
-            <h2>Where To</h2>
-            <p className="muted small">
-              Everything in the game. Press <kbd>/</kbd> from anywhere to search it instead.
-            </p>
+      <Panel
+        title="Calendar"
+        subtitle={next ? 'What is coming, and when.' : undefined}
+        actions={(
+          <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+            Open Calendar
+          </button>
+        )}
+      >
+        {next ? (
+          <div className="stat">
+            <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
+            <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{titleCaseLabel(next.title)}</span>
+            <span className="stat-note">
+              {formatDate(next.at, sim.zone)} at {formatTime(next.at, sim.zone)}
+              {next.locationId && next.locationId !== player.currentLocationId && (
+                <span className="negative"> · you are not in {CITIES.get(next.locationId)?.name}</span>
+              )}
+            </span>
           </div>
-        </div>
-        {DESTINATIONS.map((group) => (
-          <div key={group.label} style={{ marginBottom: 'var(--s4)' }}>
-            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group.label}</div>
-            <div className="dest-grid">
-              {group.items.map((dest) => (
-                <button
-                  key={dest.route}
-                  className={`dest${dest.locked ? ' is-locked' : ''}`}
-                  aria-label={dest.locked ? `${dest.label}, Locked, Under Construction` : dest.label}
-                  onClick={() => {
-                    if (dest.locked) { toast(`${dest.label} Is Under Construction.`, 'neutral'); return; }
-                    navigate(dest.route, dest.label);
-                  }}
-                >
-                  <span className="dest-body">
-                    <span className="dest-label">
-                      {dest.label}
-                      {dest.locked && <span className="chip dest-lock" aria-hidden="true">Locked</span>}
-                    </span>
-                    <span className="dest-detail">{dest.detail}</span>
-                  </span>
-                </button>
+        ) : (
+          <p className="muted small" style={{ margin: 0 }}>Nothing scheduled. The day is yours.</p>
+        )}
+
+        {soon.length > 1 && (
+          <>
+            <hr className="divider" />
+            <div className="col gap-2">
+              {soon.slice(1, 6).map((entry) => (
+                <div key={entry.id} className="row-between">
+                  <span className="small truncate" title={titleCaseLabel(entry.title)}>{titleCaseLabel(entry.title)}</span>
+                  <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
+                </div>
               ))}
             </div>
-          </div>
-        ))}
-      </div>
+          </>
+        )}
+      </Panel>
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
         <Panel
@@ -118,7 +122,7 @@ export function Home() {
           {decisions.length === 0 && unread.length === 0 ? (
             <Empty
               title="Nothing Pressing"
-              body="No bills overdue, no offers expiring, no conflicts on the calendar. Go and do something you want to do."
+              body="Nothing is overdue and nothing clashes on the calendar. Go and do something you want to do."
             />
           ) : (
             <div className="list">
@@ -190,52 +194,6 @@ export function Home() {
         </Panel>
 
         <div className="col gap-4">
-          <Panel title="What Happens Next" tight>
-            {next ? (
-              <>
-                <div className="stat" style={{ marginBottom: 'var(--s3)' }}>
-                  <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
-                  <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{titleCaseLabel(next.title)}</span>
-                  <span className="stat-note">
-                    {formatDate(next.at, sim.zone)} at {formatTime(next.at, sim.zone)}
-                    {next.locationId && next.locationId !== player.currentLocationId && (
-                      <span className="negative"> · you are not in {CITIES.get(next.locationId)?.name}</span>
-                    )}
-                  </span>
-                </div>
-                <div className="row gap-2 wrap">
-                  <button className="btn btn-sm" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                    Open Calendar
-                  </button>
-                  <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                    Plan Something
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="muted small">Nothing scheduled. The day is yours.</p>
-                <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                  Plan Something
-                </button>
-              </>
-            )}
-
-            {soon.length > 1 && (
-              <>
-                <hr className="divider" />
-                <div className="col gap-2">
-                  {soon.slice(1, 5).map((entry) => (
-                    <div key={entry.id} className="row-between">
-                      <span className="small truncate" title={titleCaseLabel(entry.title)}>{titleCaseLabel(entry.title)}</span>
-                      <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </Panel>
-
           <Panel title="How You Are" tight>
             <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>{wellbeingSummary(player)}</p>
             <div className="col gap-3">
@@ -243,17 +201,10 @@ export function Home() {
               <Meter label="Stress" value={player.wellbeing.stress} invert />
               <Meter label="Readiness" value={ready} hint="How well you’ll perform at anything right now." />
             </div>
-            <button className="btn btn-sm" style={{ marginTop: 'var(--s3)' }} onClick={() => navigate('/workspace/wellbeing', 'Wellbeing')}>
-              Wellbeing
-            </button>
           </Panel>
 
           {place && (
-            <Panel
-              title="Where You Are"
-              tight
-              actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>Travel</button>}
-            >
+            <Panel title="Where You Are" tight>
               <div className="strong">
                 {place.city.name}{place.regionName ? `, ${place.regionName}` : ''} · {place.countryName}
               </div>
@@ -287,7 +238,7 @@ export function Home() {
                 />
                 <Stat label="Income Tax" value={`${Math.round(place.effectiveIncomeTax * 100)}%`} note="Effective on $60,000" />
                 <Stat label="Sales Tax" value={`${(place.salesTax * 100).toFixed(1)}%`} note={`Property ${(place.propertyTax * 100).toFixed(2)}%`} />
-                <Stat label="Industry" value={`${place.industryPresence}/100`} note={`Jobs ${place.jobMarketDepth}/100`} />
+                <Stat label="Industry" value={`${place.industryPresence}/100`} note="Film and Television work here" />
                 <Stat
                   label="Languages"
                   value={place.languages[0] ?? '—'}
@@ -346,7 +297,7 @@ export function Home() {
       </div>
 
       <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
-        <Panel title="Money" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/bank', 'Bank')}>Bank</button>}>
+        <Panel title="Money" tight>
           <div className="col gap-3">
             <Stat
               label={primary?.name ?? 'No account'}
@@ -360,7 +311,7 @@ export function Home() {
         </Panel>
 
 
-        <Panel title="Standing" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/character', 'Character')}>Character</button>}>
+        <Panel title="Standing" tight>
           <div className="col gap-3">
             <Meter label="Public Fame" value={player.reputation.publicFame} />
             <Meter label="Professional Reputation" value={player.reputation.professionalReputation} />
@@ -371,27 +322,28 @@ export function Home() {
 
       <div className="grid grid-2">
 
-        <Panel title="Home And Household" tight actions={<button className="btn btn-ghost btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Property</button>}>
-          {snapshot.home ? (
-            <div className="col gap-3">
-              <Stat
-                label={snapshot.home.tenure === 'owned' ? 'You own' : 'You rent'}
-                value={<span style={{ fontSize: 'var(--size-md)' }}>{snapshot.home.addressLine}</span>}
-                note={`${snapshot.home.bedrooms} bed · ${snapshot.home.interiorSqft.toLocaleString('en-US')} sq ft`}
-              />
-              <Meter label="Condition" value={snapshot.home.condition} />
-              <Stat label="Household" value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`} />
-            </div>
-          ) : (
-            <div className="col gap-2">
-              <p className="small muted">You don’t have a place of your own.</p>
-              <button className="btn btn-sm" onClick={() => navigate('/workspace/property', 'Property')}>Find Somewhere</button>
-            </div>
-          )}
+        {/*
+          The land, not a lease. This panel used to report a tenure, an address
+          the game had made up and a monthly rent, which is what the old
+          housing model had to say about somebody climbing a ladder. Nobody
+          here is on one.
+        */}
+        <Panel title="The Land" tight>
+          <div className="col gap-3">
+            <Stat
+              label="Home"
+              value={<span style={{ fontSize: 'var(--size-md)' }}>{HOUSE.name}</span>}
+              note={`${ESTATE_ACRES.toLocaleString('en-US')} acres, held by the family`}
+            />
+            <Meter label="Condition" value={snapshot.home?.condition ?? HOUSE.condition} />
+            <Stat
+              label="Household"
+              value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`}
+              note="No rent, no lease, no landlord"
+            />
+          </div>
         </Panel>
       </div>
-
-      <TutorialCard />
     </>
   );
 }

@@ -21,6 +21,10 @@
       "type": "string",
       "description": "The previous payload, kept so a bad write or an accidental delete is recoverable."
     },
+    "backup_world_date_label": {
+      "type": "string",
+      "description": "The world date the backup sits at, so a player can see how far back restoring would take them without the server parsing the payload."
+    },
     "schema_version": {
       "type": "integer",
       "description": "Save format version. The client refuses to load a save written by a newer build than it understands."
@@ -36,6 +40,40 @@
     },
     "character_name": {
       "type": "string"
+    },
+    "performer_title": {
+      "type": "string",
+      "enum": ["actor", "actress"],
+      "description": "Actor, or actress. SLATE is a simulator of both, held as equals, so the title is a column of its own rather than a detail inside the payload."
+    },
+    "premise": {
+      "type": "object",
+      "description": "What the game this save belongs to is. Written by the client, checked by the server on every write, and stored beside the save so the database itself says what it holds.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["actor-actress-life-simulator"],
+          "description": "SLATE is an actor and actress life simulator. A row that says anything else is not stored."
+        },
+        "statement": {
+          "type": "string",
+          "description": "The premise in full, so a reader of the raw row needs nothing else to understand it."
+        },
+        "equal_standing": {
+          "type": "boolean",
+          "description": "Whether actor and actress stand equal in this save. Always true; a false is refused on write."
+        },
+        "player_title": {
+          "type": "string",
+          "enum": ["actor", "actress"],
+          "description": "The title this save's player carries."
+        },
+        "player_title_source": {
+          "type": "string",
+          "enum": ["stated", "implied"],
+          "description": "Whether the player stated their title themselves, or their pronouns implied it."
+        }
+      }
     },
     "career_label": {
       "type": "string"

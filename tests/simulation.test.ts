@@ -123,7 +123,13 @@ describe('sleep', () => {
   it('lands on the right wall-clock time when sleeping across a DST change', () => {
     // 7 March 2026 at 11:30 PM in Los Angeles, sleeping eight hours across the
     // spring-forward transition, wakes at 8:30 AM rather than 7:30 AM.
-    const sim = quickSave({ startYear: 2026, startMonth: 3, startDay: 7 });
+    //
+    // Los Angeles by name, not by default: home base is Reykjavík now and
+    // Iceland keeps no daylight saving at all, so inheriting the home zone
+    // left this testing a clock change that never happens.
+    const sim = quickSave({
+      startYear: 2026, startMonth: 3, startDay: 7, startLocationId: 'us-ca-losangeles',
+    });
     const zone = sim.homeZone;
     const bedtime = sim.now;
     const parts = zonedParts(bedtime, zone);
@@ -139,7 +145,12 @@ describe('sleep', () => {
 describe('skip to event', () => {
   it('shows what would be crossed and missed before committing', () => {
     const sim = quickSave();
-    sim.advanceTo(sim.now + 20 * MS_DAY);
+    // Nothing in the world books the player any more, so the commitments
+    // being inspected are put on the calendar here.
+    sim.onSchedule('test.meeting', () => {});
+    sim.onSchedule('test.other', () => {});
+    sim.schedule({ at: sim.now + 3 * MS_DAY, kind: 'test.meeting', label: 'A Meeting', category: 'personal', requiresPlayer: true });
+    sim.schedule({ at: sim.now + 9 * MS_DAY, kind: 'test.other', label: 'Something Else', category: 'personal' });
     const targets = skipTargets(sim, 5);
     expect(targets.length).toBeGreaterThan(0);
     for (const target of targets) {
@@ -222,40 +233,35 @@ describe('the calendar', () => {
 describe('commands', () => {
   it('never applies the same idempotency key twice', () => {
     const sim = quickSave();
-    const accountId = sim.player.primaryAccountId as string;
-    const before = sim.ledger.account(accountId).balance;
 
-    const key = 'purchase-abc-123';
-    const first = sim.execute({
-      kind: 'finance.transfer',
-      payload: { fromAccountId: accountId, toAccountId: accountId, amount: 1 },
-      idempotencyKey: key,
-    });
-    const second = sim.execute({
-      kind: 'finance.transfer',
-      payload: { fromAccountId: accountId, toAccountId: accountId, amount: 1 },
-      idempotencyKey: key,
-    });
+    const key = 'sleep-abc-123';
+    const first = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
+    const wokeAt = sim.now;
+    const second = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
 
     expect(first.ok).toBe(true);
     expect(second.ok).toBe(true);
     expect(second.replayed).toBe(true);
-    expect(sim.ledger.account(accountId).balance).toBe(before);
+    expect(second.value, 'the replay returned a different result').toEqual(first.value);
+    // The second submission is a receipt, not a second night: the clock did
+    // not move again.
+    expect(sim.now).toBe(wokeAt);
   });
 
   it('rolls back completely when a command fails part-way', () => {
     const sim = quickSave();
     const accounts = sim.ledger.accountsOf(sim.player.id).length;
     const transactions = sim.universe.transactions.length;
+    const now = sim.now;
+    const energy = sim.player.wellbeing.energy;
 
-    // A loan far beyond what the credit score supports.
-    const result = sim.execute({
-      kind: 'finance.take_loan',
-      payload: { borrowerId: sim.player.id, principal: 500_000_000_00, months: 360, product: 'mortgage' },
-    });
+    // A night that starts before the world does.
+    const result = sim.execute({ kind: 'life.sleep', payload: { hours: 8, startAt: sim.now - MS_DAY } });
     expect(result.ok).toBe(false);
 
-    // No orphan account, no orphan transaction, no half-created state.
+    // No moved clock, no orphan account, no orphan transaction, no half-slept night.
+    expect(sim.now).toBe(now);
+    expect(sim.player.wellbeing.energy).toBe(energy);
     expect(sim.ledger.accountsOf(sim.player.id)).toHaveLength(accounts);
     expect(sim.universe.transactions.length).toBe(transactions);
     expect(sim.ledger.audit()).toEqual([]);
@@ -270,16 +276,9 @@ describe('commands', () => {
 
   it('surfaces a readable reason when a command is refused', () => {
     const sim = quickSave();
-    const result = sim.execute({
-      kind: 'finance.transfer',
-      payload: {
-        fromAccountId: sim.player.primaryAccountId,
-        toAccountId: sim.player.primaryAccountId,
-        amount: 999_999_999,
-      },
-    });
+    const result = sim.execute({ kind: 'life.sleep', payload: { hours: 8, startAt: sim.now - MS_DAY } });
     expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/Not enough available/);
+    expect(result.error).toMatch(/can’t go to sleep in the past/);
   });
 });
 
@@ -299,6 +298,29 @@ describe('migrations and validation', () => {
     expect(result.problems[0]).toMatch(/newer version/);
   });
 
+
+  it('drops the heritage and the height and weight a save no longer reads', () => {
+    const sim = quickSave();
+    sim.universe.meta.schemaVersion = 72;
+    const player = sim.universe.people[sim.universe.playerId]!;
+    const row = player as unknown as Record<string, unknown>;
+    row.heritageId = 'english';
+    row.parentHeritageIds = ['english', 'irish'];
+    row.adultHeightCm = 175;
+    row.adultWeightKg = 72;
+
+    const result = migrate(sim.universe);
+
+    expect(result.migrated).toBe(true);
+    expect(row.heritageId).toBeUndefined();
+    expect(row.parentHeritageIds).toBeUndefined();
+    expect(row.adultHeightCm).toBeUndefined();
+    expect(row.adultWeightKg).toBeUndefined();
+    expect('heritageId' in row).toBe(false);
+    // The rest of the person is untouched.
+    expect(player.displayName).toBe(sim.universe.people[sim.universe.playerId]!.displayName);
+    expect(validateUniverse(sim.universe).ok).toBe(true);
+  });
 
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();

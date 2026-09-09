@@ -54,11 +54,6 @@ export interface GameContextValue {
   saveError?: string;
   saveNow: () => Promise<void>;
 
-  searchOpen: boolean;
-  setSearchOpen: (open: boolean) => void;
-  helpOpen: boolean;
-  setHelpOpen: (open: boolean) => void;
-
   exitToMenu: () => void;
 }
 
@@ -113,8 +108,6 @@ export function GameProvider({
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | undefined>();
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [helpOpen, setHelpOpen] = useState(false);
   const toastId = useRef(0);
   const dirty = useRef(false);
 
@@ -174,7 +167,6 @@ export function GameProvider({
       return [...crumbs, entry].slice(-6);
     });
     setRecent((list) => [entry, ...list.filter((r) => r.route !== next)].slice(0, 10));
-    setSearchOpen(false);
   }, []);
 
   const back = useCallback(() => {
@@ -278,21 +270,9 @@ export function GameProvider({
       const target = event.target as HTMLElement | null;
       const typing = target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName);
 
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault();
-        setSearchOpen((open) => !open);
-        return;
-      }
-      if (event.key === 'Escape') {
-        setSearchOpen(false);
-        setHelpOpen(false);
-        return;
-      }
       if (typing) return;
-      if (event.key === '/') { event.preventDefault(); setSearchOpen(true); }
-      if (event.key === '?') { event.preventDefault(); setHelpOpen((open) => !open); }
       if (event.key.toLowerCase() === 'h' && !event.metaKey && !event.ctrlKey) navigate('/home', 'Home');
-      if (event.key.toLowerCase() === 'w' && !event.metaKey && !event.ctrlKey) navigate('/world', 'World');
+      if (event.key.toLowerCase() === 'c' && !event.metaKey && !event.ctrlKey) navigate('/workspace/calendar', 'Calendar');
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -312,7 +292,6 @@ export function GameProvider({
     route, navigate, back, breadcrumbs, recent, favourites, toggleFavourite,
     toasts, toast,
     saving, saveError, saveNow,
-    searchOpen, setSearchOpen, helpOpen, setHelpOpen,
     exitToMenu,
   };
 
@@ -323,25 +302,7 @@ export function GameProvider({
 
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
-  '/world': 'World',
   '/workspace/calendar': 'Calendar',
-  '/workspace/bank': 'Bank',
-  '/workspace/wellbeing': 'Wellbeing',
-  '/workspace/relationships': 'Relationships',
-  '/workspace/property': 'Property',
-  '/workspace/vehicles': 'Vehicles',
-  '/workspace/shopping': 'Shopping',
-  '/workspace/travel': 'Travel',
-  '/workspace/city': 'The City',
-  '/workspace/health': 'Health',
-  '/workspace/insurance': 'Insurance',
-  '/workspace/education': 'Education',
-  '/workspace/track': 'Track',
-  '/workspace/social': 'Social',
-  '/workspace/history': 'History',
-  '/workspace/character': 'Character',
-  '/workspace/settings': 'Settings',
-  '/workspace/film': 'Film',
 };
 
 export function labelForRoute(route: string): string {

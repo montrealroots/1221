@@ -62,11 +62,23 @@ describe('the holiday files', () => {
   });
 
   it('are what the month grid shows for where the player stands', () => {
-    const sim = quickSave({}, 'holiday-grid');
-    const march = monthGrid(sim, 2026, 3);
-    const day31 = march.find((d) => d.inMonth && d.dayOfMonth === 31)!;
+    // Standing at home base, which is Reykjavík: Iceland's March, not
+    // America's. Palm Sunday on the 29th and no St. Patrick's Day at all.
+    load('is');
+    const home = quickSave({}, 'holiday-grid-home');
+    const icelandic = monthGrid(home, 2026, 3);
+    const march29 = icelandic.find((d) => d.inMonth && d.dayOfMonth === 29)!;
+    expect(march29.holidays.some((h) => /Palm Sunday|Pálmasunnudagur/.test(h.name))).toBe(true);
+    const march17 = icelandic.find((d) => d.inMonth && d.dayOfMonth === 17)!;
+    expect(march17.holidays.some((h) => /Patrick/.test(h.name))).toBe(false);
+
+    // Stand somewhere else and the same month reads differently, which is the
+    // whole of what this is checking.
+    const abroad = quickSave({ startLocationId: 'us-ca-losangeles' }, 'holiday-grid-abroad');
+    const american = monthGrid(abroad, 2026, 3);
+    const day31 = american.find((d) => d.inMonth && d.dayOfMonth === 31)!;
     expect(day31.holidays.some((h) => h.name === 'César Chávez Day')).toBe(true);
-    const day17 = march.find((d) => d.inMonth && d.dayOfMonth === 17)!;
+    const day17 = american.find((d) => d.inMonth && d.dayOfMonth === 17)!;
     expect(day17.holidays.some((h) => /Patrick/.test(h.name) && h.type === 'observance')).toBe(true);
   });
 });

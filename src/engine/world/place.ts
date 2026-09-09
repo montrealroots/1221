@@ -17,9 +17,8 @@ import { CITIES, COUNTRIES, REGIONS, distanceKm, type City } from '../content/ge
 import { computeAnnualTax, filmIncentive, propertyTaxRate, salesTaxRate } from '../content/tax';
 import { currencyInfo, formatLocalCompact, type CurrencyInfo } from '../content/currency';
 import { languageNames } from '../content/languages';
-import { usesFahrenheit } from '../content/climate';
+import { usesFahrenheit, usesMiles } from '../content/climate';
 import { weatherAt, type WeatherNow } from '../systems/weather';
-import { usesMiles } from '../systems/driving';
 
 /** "Capital", "State Capital", "Provincial Capital": what kind of place this is, if it is a kind at all. */
 export function placeKindLabel(city: City): string | undefined {

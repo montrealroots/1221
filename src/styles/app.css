@@ -59,6 +59,10 @@
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
 
+  /* The distance from a chip's outer edge to its text: its padding plus its
+     border. Kept with the space tokens because .chip is defined from it. */
+  --chip-inset: 9px;
+
   --radius: 10px;
   --radius-sm: 6px;
   --radius-lg: 16px;
@@ -184,7 +188,6 @@ pre, code, .mono-block {
 
 /* Numbers line up and never wrap mid-figure. */
 .tabular, .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
-
 
 html, body, #root { height: 100%; }
 
@@ -344,18 +347,10 @@ button.link:hover { color: var(--accent-strong); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
-/*
- * A sheet of named rows — attributes, skills — needs a wider column than a
- * card does. At `grid-2`'s 260px minimum a laptop fits four columns, and a
- * row of name, value and meter then leaves about seventy pixels for the name,
- * which breaks "Negotiation" in half. This is the same auto-fit, with a
- * minimum set by what the longest name actually needs.
- */
-.grid-sheet { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);
-  padding: 2px var(--s2); border-radius: 100px;
+  padding: 2px calc(var(--chip-inset) - 1px); border-radius: 100px;
   font-size: var(--size-xs); font-weight: 600;
   /* A chip is a label, never prose. "0 / 4" split over two lines is not a
      smaller chip, it is a broken one. */
@@ -363,6 +358,19 @@ button.link:hover { color: var(--accent-strong); }
   background: var(--surface-3); color: var(--text-muted);
   border: 1px solid var(--line);
 }
+
+/*
+ * A chip's text sits inside its own padding and border, so a chip under a
+ * label starts nine pixels right of where the label starts and the two read as
+ * misaligned even though nothing has moved. Anything that has to line up with
+ * a chip pulls back by this, and it is written once here rather than guessed
+ * at each site.
+ */
+.chip-row {
+  display: flex; flex-wrap: wrap; gap: var(--s1);
+  margin-left: calc(var(--chip-inset) * -1);
+}
+
 .chip-accent { background: var(--accent-dim); color: var(--accent-strong); border-color: var(--accent-line); }
 .chip-positive { background: var(--positive-dim); color: var(--positive); border-color: transparent; }
 .chip-negative { background: var(--negative-dim); color: var(--negative); border-color: transparent; }
@@ -395,8 +403,24 @@ input[type="text"], input[type="number"], input[type="date"], input[type="search
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
 }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+/* A field that reports rather than asks. Kept the same shape so the form still
+   lines up, and visibly not one you can type in — styled the same as the rest,
+   it read as a box somebody had simply not filled in yet. */
+input[readonly] {
+  background: var(--surface-3); color: var(--text-muted);
+  border-style: dashed; cursor: default;
+}
+input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
-label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
+label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
+
+/* A value the form worked out rather than asked for. It sits where the input
+   it replaces would, so a field that settles itself does not shift the row. */
+.settled-title {
+  display: block; padding: var(--s2) 0;
+  font-size: var(--size-sm); font-weight: 650;
+  color: var(--accent-strong);
+}
 
 /* Chromium gives a range input a default side margin, which pushes it a few
    pixels past the field it sits in. */
@@ -437,11 +461,8 @@ input[type="range"] {
 table { width: 100%; border-collapse: collapse; font-size: var(--size-sm); }
 th, td { padding: var(--s2) var(--s3); text-align: left; border-bottom: 1px solid var(--line); }
 th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; white-space: nowrap; }
-
-/* A list beside the thing it opens. On a phone the list goes above it. */
-.master-detail { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: var(--s5); align-items: start; }
 .master-detail > *, .side-by-side > * { min-width: 0; }
-@media (max-width: 900px) { .master-detail { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { }
 /* Two panels in a dialog: the search and the terms. One above the other on a phone. */
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
@@ -531,6 +552,30 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .slot-name { font-size: var(--size-xl); font-weight: 600; }
 .slot-meta { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
 
+/* A long list the player can open and read, rather than take on trust. */
+.sheet > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  cursor: pointer; list-style: none;
+}
+.sheet > summary::-webkit-details-marker { display: none; }
+.sheet-title { font-size: var(--size-md); font-weight: 650; }
+/* The toggle reads last, after the name and the count, so the row says what
+   the list is before it says what the click does. */
+.sheet > summary::after {
+  content: 'Show'; font-size: var(--size-xs); font-weight: 600;
+  color: var(--accent-strong);
+}
+.sheet-title { margin-right: auto; }
+.sheet[open] > summary::after { content: 'Hide'; }
+.sheet-grid {
+  display: grid; gap: var(--s3);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  max-height: 460px; overflow-y: auto;
+  padding-right: var(--s2);
+}
+.sheet-item { min-width: 0; }
+
+/* The production companies, one card each. */
 /* ---------- App shell ---------- */
 
 .shell { display: flex; flex-direction: column; height: 100%; }
@@ -721,38 +766,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
   display: flex; justify-content: center; align-items: flex-start;
   padding: 10vh var(--s4) var(--s4); z-index: 200;
 }
-.search-panel {
-  width: min(680px, 100%); background: var(--surface);
-  border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg); overflow: hidden;
-  display: flex; flex-direction: column; max-height: 72vh;
-}
-.search-input {
-  border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
-  padding: var(--s5); font-size: var(--size-lg); background: transparent;
-}
-.search-input:focus { border-color: var(--line); outline: none; }
-.search-results { overflow-y: auto; flex: 1; }
-.search-group-label {
-  padding: var(--s2) var(--s5); font-size: var(--size-xs);
-  text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim);
-  font-weight: 650; background: var(--surface-2);
-  position: sticky; top: 0;
-}
-.search-result {
-  display: flex; align-items: center; gap: var(--s3); width: 100%;
-  padding: var(--s3) var(--s5); background: none; border: 0;
-  color: inherit; font: inherit; text-align: left; cursor: pointer;
-}
-.search-row { display: flex; align-items: center; gap: var(--s1); }
-.search-row > .search-result { flex: 1 1 auto; min-width: 0; }
-.search-result:hover, .search-result[aria-selected="true"] { background: var(--surface-2); }
-.search-result[aria-selected="true"] { box-shadow: inset 2px 0 0 var(--accent); }
-.search-hint {
-  padding: var(--s2) var(--s5); border-top: 1px solid var(--line);
-  font-size: var(--size-xs); color: var(--text-dim);
-  display: flex; gap: var(--s4); flex-wrap: wrap;
-}
 kbd {
   font-family: var(--font-mono); font-size: 11px;
   background: var(--surface-3); border: 1px solid var(--line-strong);
@@ -768,6 +781,9 @@ kbd {
 .cal-day[data-out="true"] { background: var(--surface-2); opacity: .5; }
 .cal-day[data-today="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
 .cal-daynum { font-size: var(--size-xs); font-weight: 650; color: var(--text-muted); white-space: nowrap; }
+/* The pill's words under the day number, not six pixels right of it: its text
+   sits behind 4px of padding and the 2px colour bar down its left edge. */
+.cal-day .cal-event { margin-left: -6px; }
 .cal-event {
   font-size: 10px; padding: 1px 4px; border-radius: 3px;
   background: var(--surface-3); color: var(--text-muted);
@@ -791,27 +807,8 @@ kbd {
 .decision[data-urgency="high"] .decision-urgency { background: var(--warning); }
 .decision[data-urgency="normal"] .decision-urgency { background: var(--info); }
 
-/* ---------- Help ---------- */
-
-.help-panel {
-  position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%);
-  background: var(--surface); border-left: 1px solid var(--line-strong);
-  box-shadow: var(--shadow-lg); z-index: 150;
-  display: flex; flex-direction: column;
-}
-.help-body { overflow-y: auto; padding: var(--s5); flex: 1; }
-.help-section { margin-bottom: var(--s5); }
-.help-section h4 { color: var(--accent-strong); margin-bottom: var(--s2); }
-
 .tooltip-term {
   border-bottom: 1px dotted var(--text-dim); cursor: help;
-}
-
-.tutorial-card {
-  position: fixed; bottom: var(--s5); right: var(--s5); width: min(360px, calc(100vw - 32px));
-  background: var(--surface); border: 1px solid var(--accent-line);
-  border-radius: var(--radius); box-shadow: var(--shadow-lg);
-  padding: var(--s4); z-index: 140;
 }
 
 /* ---------- Toast ---------- */
@@ -856,7 +853,23 @@ kbd {
 .creation-step[data-state="active"] { border-bottom-color: var(--accent); color: var(--accent-strong); }
 .creation-step[data-state="done"] { border-bottom-color: var(--text-dim); color: var(--text-muted); }
 
+/* One thing on the land: what it is, then what it is. Boxed so three of them
+   read as three, not as a paragraph with bold in it. */
+.holding {
+  padding: var(--s3); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--surface-2);
+}
+
 .trait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--s2); }
+
+/* Two traits written against each other, kept on one row so the trade-off
+   between them is visible. Narrow enough and they stack, which still reads as
+   a pair because nothing else comes between them. */
+.trait-pair {
+  display: grid; gap: var(--s2);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-bottom: var(--s2);
+}
 .trait {
   padding: var(--s3); border: 1px solid var(--line); border-radius: var(--radius-sm);
   background: var(--surface-2); text-align: left; cursor: pointer; color: inherit; font: inherit;
@@ -867,30 +880,12 @@ kbd {
 .trait-name { font-weight: 650; font-size: var(--size-sm); margin-bottom: 2px; }
 .trait-desc { font-size: var(--size-xs); color: var(--text-muted); line-height: 1.4; }
 
-/* ---------- Attribute sheet ---------- */
-
-.attr-row { display: grid; grid-template-columns: minmax(0, 1fr) 46px minmax(48px, 90px); align-items: center; gap: var(--s3); padding: 3px 0; }
-.attr-name { font-size: var(--size-sm); min-width: 0; }
-.attr-value { font-size: var(--size-sm); font-weight: 650; text-align: right; font-variant-numeric: tabular-nums; }
-
 /* ---------- God mode ----------
    Sandbox is a declared cheat, so it is meant to look like one. Everything it
    has touched is in the clapper gold: the number, the bar, the name and the
    trait. */
 
 .god { color: var(--accent-strong); }
-.god-value { color: var(--accent-strong); text-shadow: 0 0 12px var(--accent-dim); }
-.attr-row.god-row .attr-name { color: var(--accent); }
-.god-meter > span { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-strong) 100%); }
-.chip-god {
-  background: var(--accent-dim); color: var(--accent-strong);
-  border-color: var(--accent-line); font-weight: 650;
-}
-.god-banner {
-  border: 1px solid var(--accent-line); background: var(--accent-dim);
-  color: var(--accent-strong); border-radius: var(--radius-sm);
-  padding: var(--s2) var(--s3); font-size: var(--size-xs);
-}
 
 /* ---------- The scene in front of you ----------
    Above every screen while a scene is in progress. It is a card with the
@@ -905,34 +900,11 @@ kbd {
 .scene.scene-interrupted { border-left-color: var(--warning); }
 .scene.scene-min { padding: var(--s3) var(--s4); }
 .scene .panel-head { padding: 0; margin-bottom: var(--s3); }
-.scene-text { font-size: var(--size-base); line-height: 1.55; margin: 0 0 var(--s4); max-width: 68ch; }
-.scene-facts { margin-bottom: var(--s4); }
-
-.scene-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: var(--s2); margin-bottom: var(--s4); }
-.scene-choice {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0;
-  padding: var(--s3) var(--s4); text-align: left;
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm);
-  color: var(--text); font: inherit; cursor: pointer;
-}
-.scene-choice:hover { border-color: var(--line-strong); background: var(--surface-3); }
 .scene-choice.is-primary { border-color: var(--accent-line); background: var(--accent-dim); }
 .scene-choice.is-primary .scene-choice-label { color: var(--accent-strong); }
 .scene-choice.is-danger { border-color: var(--negative); }
 .scene-choice.is-hinted { box-shadow: 0 0 0 2px var(--accent-line); }
 .scene-choice.is-disabled { opacity: .55; cursor: not-allowed; }
-.scene-choice-label { font-weight: 650; font-size: var(--size-sm); overflow-wrap: anywhere; }
-.scene-choice-detail { font-size: var(--size-xs); color: var(--text-dim); overflow-wrap: anywhere; }
-
-.scene-type { margin-bottom: var(--s3); }
-.scene-type label { display: block; margin-bottom: var(--s1); }
-.scene-type input { min-width: 0; }
-.scene-foot { align-items: center; }
-
-.scene-transcript { margin-top: var(--s3); border-top: 1px solid var(--line); padding-top: var(--s2); }
-.scene-transcript summary { cursor: pointer; }
-.scene-transcript ol { list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; max-height: 240px; overflow-y: auto; }
-.scene-transcript li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--s2); font-size: var(--size-sm); color: var(--text-muted); }
 .scene-transcript li.is-you { color: var(--text); }
 
 /* ---------- Responsive ---------- */
@@ -952,6 +924,9 @@ kbd {
    * category's colour. Nothing is lost: the day is a button, and tapping it
    * opens the day's own panel with every entry named, timed and placed.
    */
+  /* .cal-day .cal-event, to outrank the pull the wide rule applies: there is
+     no padding and no colour bar here, so there is nothing to pull back from. */
+  .cal-day .cal-event { margin-left: 0; }
   .cal-event {
     display: block; height: 5px; padding: 0; border-left: 0; border-radius: 2px;
     background: var(--event-colour, var(--line-strong));
@@ -1142,15 +1117,7 @@ kbd {
   border: 1px solid var(--line); background: var(--surface-2); flex: none;
 }
 .headshot-sm { width: 44px; height: 55px; }
-.headshot-md { width: 96px; height: 120px; }
-.headshot-lg { width: 160px; height: 200px; }
-/* The review card's portrait: the one place the photo is the point. */
 .headshot-xl { width: 200px; height: 250px; box-shadow: var(--shadow); }
-.page-head-portrait { display: flex; gap: var(--s4); align-items: flex-start; }
-@media (max-width: 640px) {
-  .page-head-portrait { flex-direction: column; }
-  .headshot-lg { width: 120px; height: 150px; }
-}
 
 /* --------------------------------------------------------------------------
    Advance menu
@@ -1175,8 +1142,21 @@ kbd {
 .menu-item:disabled { opacity: .45; cursor: default; }
 .menu-item-label { font-size: var(--size-sm); font-weight: 600; }
 .menu-item-detail { font-size: var(--size-xs); color: var(--text-dim); overflow-wrap: anywhere; }
-/* On a phone the menu hangs from the right edge of the bar so it stays on screen. */
-@media (max-width: 620px) { .menu { left: auto; right: 0; } }
+/*
+ * On a phone the menu spans the viewport rather than hanging off its button.
+ *
+ * Hanging from the button's right edge is not enough when the button is in the
+ * middle of a crowded bar: Advance sits between Sleep and the save controls,
+ * and a menu 288 pixels wide right-aligned to it began 74 pixels off the left
+ * of a 390 pixel screen. Pinned to the viewport it cannot miss.
+ */
+@media (max-width: 620px) {
+  .menu {
+    position: fixed; left: var(--s3); right: var(--s3);
+    top: calc(var(--nav-h) + var(--s2));
+    min-width: 0; max-width: none; width: auto;
+  }
+}
 
 /* --------------------------------------------------------------------------
    Weather

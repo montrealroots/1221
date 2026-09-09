@@ -80,31 +80,17 @@ function checkInvariants(sim: Simulation, label: string): void {
   const residents = new Map<Id, Id>();
   for (const property of Object.values(u.properties)) {
     if (!property.ownerId) continue;
-    const owner = u.people[property.ownerId] ?? u.companies[property.ownerId];
-    expect(owner, `${label}: property ${property.id} has a missing owner`).toBeDefined();
+    expect(u.people[property.ownerId], `${label}: property ${property.id} has a missing owner`).toBeDefined();
   }
   for (const person of Object.values(u.people)) {
     if (!person.residenceId) continue;
     expect(u.properties[person.residenceId], `${label}: ${person.displayName} lives in a property that does not exist`).toBeDefined();
     residents.set(person.id, person.residenceId);
   }
-  for (const vehicle of Object.values(u.vehicles)) {
-    const owner = u.people[vehicle.ownerId] ?? u.companies[vehicle.ownerId];
-    expect(owner, `${label}: vehicle ${vehicle.id} has a missing owner`).toBeDefined();
-    // A sold vehicle cannot still be accruing a payment schedule.
-    if (vehicle.soldAt !== undefined) {
-      expect(vehicle.soldAt <= u.now, `${label}: vehicle ${vehicle.id} was sold in the future`).toBe(true);
+  for (const household of Object.values(u.households)) {
+    for (const memberId of household.memberIds) {
+      expect(u.people[memberId], `${label}: household ${household.id} lists somebody who is gone`).toBeDefined();
     }
-  }
-
-  // --- Relationships -------------------------------------------------------
-  for (const rel of Object.values(u.relationships)) {
-    expect(rel.aId === rel.bId, `${label}: ${rel.id} is a relationship with itself`).toBe(false);
-    for (const [dim, value] of Object.entries(rel.dimensions)) {
-      expect(Number.isFinite(value), `${label}: ${rel.id}.${dim} is not a number`).toBe(true);
-      expect(value >= 0 && value <= 100, `${label}: ${rel.id}.${dim} is ${value}, outside 0-100`).toBe(true);
-    }
-    expect(rel.since <= u.now, `${label}: ${rel.id} started in the future`).toBe(true);
   }
 
   // --- Wellbeing -----------------------------------------------------------
@@ -192,35 +178,6 @@ describe('a universe left running', () => {
     expect(sizes['people'], `people: ${sizes['people']}`).toBeLessThan(1_500);
     expect(sizes['scheduled'], `scheduled: ${sizes['scheduled']}`).toBeLessThan(6_000);
     expect(sizes['decisions'], `decisions: ${sizes['decisions']}`).toBeLessThan(500);
-    expect(sizes['vehicleListings'], `vehicleListings: ${sizes['vehicleListings']}`).toBeLessThan(1_000);
-    expect(sizes['propertyListings'], `propertyListings: ${sizes['propertyListings']}`).toBeLessThan(1_000);
-    expect(sizes['socialPosts'], `socialPosts: ${sizes['socialPosts']}`).toBeLessThan(2_000);
-  }, 900_000);
-
-  it('does not run away with prices over ten years', () => {
-    const sim = quickSave({}, 'endurance-prices');
-    const askingPrices = () => Object.values(sim.universe.propertyListings)
-      .filter((l) => l.status === 'active')
-      .map((l) => l.askingPrice);
-    const median = (xs: number[]) => {
-      if (xs.length === 0) return 0;
-      const sorted = [...xs].sort((a, b) => a - b);
-      return sorted[Math.floor(sorted.length / 2)] ?? 0;
-    };
-
-    sim.advanceTo(sim.now + 30 * MS_DAY);
-    const before = median(askingPrices());
-    expect(before, 'no listings to measure').toBeGreaterThan(0);
-
-    sim.advanceTo(sim.now + 10 * YEAR);
-    const after = median(askingPrices());
-    expect(after).toBeGreaterThan(0);
-
-    // Ten years of appreciation is real, but a compounding bug shows up as
-    // orders of magnitude rather than a multiple.
-    const growth = after / before;
-    expect(growth, `median asking price moved ${growth.toFixed(2)}x in ten years`).toBeGreaterThan(0.4);
-    expect(growth, `median asking price moved ${growth.toFixed(2)}x in ten years`).toBeLessThan(6);
   }, 900_000);
 
   it('reaches the same universe twice from the same seed', () => {

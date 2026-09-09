@@ -19,6 +19,7 @@
  * worse than no label, so these hold the rule as well as the field.
  */
 
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import {
@@ -101,10 +102,27 @@ describe('against a real save', () => {
     expect(citizenshipsOf(sim.player)).toEqual(['us', 'ca']);
   });
 
-  it('leaves it off somebody who only holds one', () => {
-    const sim = quickSave({}, 'cit-single');
-    expect(sim.player.secondCitizenshipId).toBeUndefined();
-    expect(citizenshipsOf(sim.player)).toHaveLength(1);
+  it('gives everybody the family passport, and only that one', () => {
+    // Citizenship is not a question the game asks any more. The family is
+    // Icelandic, so anybody created here is, wherever they were born.
+    const born = quickSave({ homeRegionId: 'us-ca-losangeles' }, 'cit-abroad');
+    expect(born.player.citizenshipId).toBe('is');
+    expect(born.player.secondCitizenshipId).toBeUndefined();
+    expect(citizenshipsOf(born.player)).toEqual(['is']);
+    // And where they were born does not quietly change it.
+    const elsewhere = quickSave({ homeRegionId: 'jp-13-tokyo' }, 'cit-elsewhere');
+    expect(elsewhere.player.citizenshipId).toBe('is');
+  });
+
+  it('leaves the screen no way to set citizenship to anything else', () => {
+    // The engine can still carry two passports — that is a fact about people,
+    // and it is tested above. What creation offers is one, locked.
+    const creation = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
+    expect(creation, 'creation still has a citizenship dropdown')
+      .not.toMatch(/id="citizenship"[\s\S]{0,80}<select/);
+    expect(creation, 'creation still offers a second citizenship')
+      .not.toMatch(/citizenship-second/);
+    expect(creation).toMatch(/id="citizenship"[\s\S]{0,200}readOnly/);
   });
 
 });

@@ -497,56 +497,7 @@ export function gateIsCountrys(countryId: string, gate: GateId): boolean {
 // The size you end up
 // ---------------------------------------------------------------------------
 
-/**
- * How a body gets to the size it ends up.
- *
- * The player says how tall and how heavy their character is as an adult, and
- * a character who starts as a child grows toward exactly that. The share of
- * adult height reached at each age is the general shape of human growth —
- * fast to about two, steady through childhood, a run in the teens, finished
- * around twenty — smoothed by SLATE into one curve.
- *
- * One curve, not two. Boys and girls finish growing at different ages and any
- * honest model of that needs a real growth reference and a field on the
- * character that says which to use. SLATE has neither, so it carries the
- * middle of it and says so rather than guessing from a pronoun.
- */
-export const GROWTH_NOTE =
-  'You set the height and weight your character ends up at, and a character who starts young grows '
-  + 'to exactly that. The shape of the growing is SLATE’s own smoothing of the general human curve, '
-  + 'and it’s one curve: children finish growing at different ages and boys and girls finish at '
-  + 'different ages, and SLATE carries the middle of that rather than inferring anything from a '
-  + 'pronoun. It’s a size, not a growth chart, and no part of it is medical.';
-
-/** Share of adult height reached, by age. */
-export const HEIGHT_CURVE: readonly { age: number; share: number }[] = [
-  { age: 0, share: 0.29 }, { age: 1, share: 0.43 }, { age: 2, share: 0.50 },
-  { age: 4, share: 0.58 }, { age: 6, share: 0.65 }, { age: 8, share: 0.71 },
-  { age: 10, share: 0.77 }, { age: 12, share: 0.83 }, { age: 14, share: 0.91 },
-  { age: 16, share: 0.97 }, { age: 18, share: 0.995 }, { age: 20, share: 1 },
-];
-
-/** Share of adult weight reached, by age. Weight comes later than height. */
-export const WEIGHT_CURVE: readonly { age: number; share: number }[] = [
-  { age: 0, share: 0.05 }, { age: 1, share: 0.13 }, { age: 2, share: 0.17 },
-  { age: 4, share: 0.23 }, { age: 6, share: 0.29 }, { age: 8, share: 0.36 },
-  { age: 10, share: 0.45 }, { age: 12, share: 0.55 }, { age: 14, share: 0.70 },
-  { age: 16, share: 0.87 }, { age: 18, share: 0.96 }, { age: 20, share: 1 },
-];
-
-/** The age a body has finished growing, for the purposes of the curve above. */
-export const FULLY_GROWN = 20;
-
-/** What the game will accept as an adult size. */
-export const HEIGHT_RANGE: readonly [number, number] = [140, 215];
-export const WEIGHT_RANGE: readonly [number, number] = [40, 180];
-
-/** The middle of the range, used when nothing was chosen. */
-export const DEFAULT_HEIGHT_CM = 175;
-export const DEFAULT_WEIGHT_KG = 72;
-
 function alongCurve(curve: readonly { age: number; share: number }[], age: number): number {
-  if (age >= FULLY_GROWN) return 1;
   let previous = curve[0]!;
   for (const point of curve) {
     if (point.age === age) return point.share;
@@ -558,16 +509,6 @@ function alongCurve(curve: readonly { age: number; share: number }[], age: numbe
     previous = point;
   }
   return 1;
-}
-
-/** How tall somebody of this age is, on their way to that adult height. */
-export function heightAtAge(adultCm: number, age: number): number {
-  return Math.round(adultCm * alongCurve(HEIGHT_CURVE, Math.max(0, age)) * 10) / 10;
-}
-
-/** What somebody of this age weighs, on their way to that adult weight. */
-export function weightAtAge(adultKg: number, age: number): number {
-  return Math.round(adultKg * alongCurve(WEIGHT_CURVE, Math.max(0, age)) * 10) / 10;
 }
 
 /**
@@ -596,15 +537,4 @@ export const FULLY_FORMED = 22;
 export function youthFactorAt(age: number): number {
   if (age >= FULLY_FORMED) return 1;
   return Math.round(alongCurve(YOUTH_CURVE, Math.max(0, age)) * 1000) / 1000;
-}
-
-/** A height in the two ways people say it. */
-export function describeHeight(cm: number): string {
-  const inches = Math.round(cm / 2.54);
-  return `${Math.round(cm)} cm (${Math.floor(inches / 12)} ft ${inches % 12} in)`;
-}
-
-/** A weight in the two ways people say it. */
-export function describeWeight(kg: number): string {
-  return `${Math.round(kg)} kg (${Math.round(kg * 2.20462)} lb)`;
 }

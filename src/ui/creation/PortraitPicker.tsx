@@ -223,7 +223,7 @@ export function PortraitPicker({
               ? 'Drag the photo to reposition it. Any shape works — it’s fitted to a headshot frame.'
               : storedBytes > 0
                 ? `Saved at ${PORTRAIT_WIDTH}×${PORTRAIT_HEIGHT}, ${Math.round(storedBytes / 1024)}KB.`
-                : 'Any size or shape. It’s cropped to a headshot and shrunk to fit in your save.'}
+                : 'Any size or shape. It gets cropped to a headshot and shrunk to fit in the save.'}
         </p>
       </div>
     </div>

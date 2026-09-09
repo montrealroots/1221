@@ -14,10 +14,6 @@
  * every newspaper uses one. It is always beside the word rather than instead
  * of it, and always hidden from a screen reader, which has the word.
  *
- * And the apps inside the phone are not SLATE's interface. They are other
- * people's apps, drawn as they are: a comment section that says nothing but
- * "Perfect" where the real one says "Perfect 🔥" is not the app. So
- * `src/ui/phone` is exempt, and SLATE's own chrome around it is not.
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -45,11 +41,7 @@ function walk(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-/** The apps inside the phone are other people's apps and keep their emoji. */
-const PHONE = /^src[\\/]ui[\\/]phone[\\/]/;
-
-const SOURCES = [...walk('src/ui'), ...walk('src/app'), ...walk('src/engine/systems'), ...walk('src/engine/scenes'), ...walk('src/styles')]
-  .filter((file) => !PHONE.test(file));
+const SOURCES = [...walk('src/ui'), ...walk('src/app'), ...walk('src/engine/systems'), ...walk('src/styles')];
 
 describe('navigation', () => {
   it('names every destination in plain words', () => {
@@ -65,9 +57,13 @@ describe('navigation', () => {
     const labels: { file: string; label: string }[] = [];
     for (const file of SOURCES) {
       const text = readFileSync(file, 'utf8');
-      for (const match of text.matchAll(/\{ id: '[a-z_-]+', label: '([^']+)'/g)) labels.push({ file, label: match[1]! });
+      for (const match of text.matchAll(/id: '[a-z_-]+', label: '([^']+)'/g)) labels.push({ file, label: match[1]! });
     }
-    expect(labels.length).toBeGreaterThan(20);
+    // A floor so the scan cannot silently match nothing and pass. It used to
+    // be twenty. The housing options were the last thing matching the old
+    // pattern and they went with the page, taking the scan to zero; it now
+    // matches the startup stages, which are written the same way.
+    expect(labels.length).toBeGreaterThan(0);
     for (const { file, label } of labels) {
       expect(label, `${file}: ${label}`).not.toMatch(EMOJI);
       expect(label, `${file}: ${label}`).toMatch(/^[A-Za-z0-9?'’&, ]+$/);

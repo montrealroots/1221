@@ -14,8 +14,8 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { ALL_DESTINATIONS, RAIL_DESTINATIONS } from '@/ui/shell/destinations';
 import { readFileSync, readdirSync } from 'node:fs';
-import { quickSave } from '@/engine';
 
 const ROOT = new URL('../src/', import.meta.url);
 
@@ -28,9 +28,8 @@ function registeredRoutes(): Set<string> {
   const router = read('ui/workspaces/WorkspaceRouter.tsx');
   const routes = new Set<string>();
   for (const match of router.matchAll(/'(\/workspace\/[a-z-]+)'\s*:/g)) routes.add(match[1]!);
-  // The two the shell serves itself, outside the workspace router.
+  // The one the shell serves itself, outside the workspace router.
   routes.add('/home');
-  routes.add('/world');
   return routes;
 }
 
@@ -65,8 +64,8 @@ function enginesRoutes(): { file: string; route: string }[] {
 describe('the routes the engine points at', () => {
   it('finds the screens the interface registers', () => {
     const routes = registeredRoutes();
-    expect(routes.size, 'no workspaces were found at all').toBeGreaterThan(10);
-    expect(routes.has('/workspace/bank')).toBe(true);
+    expect(routes.size, 'no screens were found at all').toBeGreaterThan(1);
+    expect(routes.has('/workspace/calendar')).toBe(true);
     expect(routes.has('/home')).toBe(true);
   });
 
@@ -77,52 +76,83 @@ describe('the routes the engine points at', () => {
   });
 
   it('never point at a tab the shell has locked', () => {
+    // There is nothing locked in this build. The check stays because the
+    // moment something is shut again, a link into it must fail here.
     const locked = lockedRoutes();
-    expect(locked.size, 'no locked tab was found — has the company tab been unlocked?').toBeGreaterThan(0);
     const offenders = enginesRoutes().filter(({ route }) => locked.has(route));
     expect(offenders.map((d) => `${d.file} -> ${d.route}`), 'these link to a locked tab').toEqual([]);
   });
 });
 
-describe('the locked casting tab', () => {
-  it('is listed, is locked, and has no screen behind it', () => {
-    const locked = lockedRoutes();
-    expect(locked.has('/workspace/casting'), 'the casting tab is not marked locked').toBe(true);
-    expect(registeredRoutes().has('/workspace/casting'), 'something is registered against a locked route').toBe(false);
-    // The founder premise is gone: no company tab, anywhere.
-    expect(locked.has('/workspace/company')).toBe(false);
-    expect(registeredRoutes().has('/workspace/company')).toBe(false);
-  });
-
-  it('is not offered by Go Anywhere, which only lists doors that open', () => {
-    const search = read('ui/shell/GoAnywhere.tsx');
-    expect(search).not.toMatch(/\/workspace\/casting/);
-    expect(search).not.toMatch(/\/workspace\/company/);
-  });
-
-  it('has no workspace file left behind', () => {
+describe('what was taken out', () => {
+  it('leaves no workspace file behind', () => {
+    // The cut-down took twenty five workspaces out. This names them rather
+    // than pinning the whole directory, so a workspace added on purpose is an
+    // addition and a workspace that crept back is caught. Putting one of these
+    // back is a decision, and editing this line is how the decision is made.
+    const removed = [
+      'AwardsWorkspace', 'BankWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
+      'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
+      'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
+      'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
+      'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
+      'TrackWorkspace', 'TravelWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace',
+      'WorkWorkspace',
+    ];
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
-    expect(files).not.toContain('CompanyWorkspace.tsx');
-    expect(files).not.toContain('CastingWorkspace.tsx');
+    for (const gone of removed) {
+      expect(files, `${gone} came back`).not.toContain(`${gone}.tsx`);
+    }
+    // Every workspace on disk is one the router will actually serve.
+    const router = read('ui/workspaces/WorkspaceRouter.tsx');
+    for (const file of files) {
+      if (file === 'WorkspaceRouter.tsx') continue;
+      const name = file.replace(/\.tsx$/, '');
+      expect(router, `${name} is on disk but not routed`).toContain(name);
+    }
   });
 
   it('keeps the founder premise out of character creation', () => {
     const creation = read('ui/creation/CharacterCreation.tsx');
     expect(creation, 'the strike is still in creation').not.toMatch(/STRIKE_IS_FICTION|OPENING_BRIEF/);
-    expect(creation, 'the company step is still in creation').not.toMatch(/The Company|Your Company|company-name/);
+    // Not the word "company": the family's company is the premise now, and
+    // Starting Point names it. What must not come back is a step that asks the
+    // player to found one — its input, its own step, its name field.
+    expect(creation, 'the company step is still in creation').not.toMatch(/Your Company|company-name|companyName/);
     expect(creation, 'creation still calls the player a founder').not.toMatch(/And Founder/);
   });
 
   it('tells the player it is under construction rather than navigating', () => {
+    // The rail is what renders destinations now, so it is the one that has to
+    // refuse a shut one. Home used to carry this and no longer offers tiles.
+    const shell = read('ui/shell/GameShell.tsx');
+    expect(shell).toMatch(/if \(locked\) \{[^}]*toast\([^)]*Under Construction/);
+    expect(shell).toMatch(/return; \}/);
+  });
+
+  it('gives the calendar a section of Home rather than a tile pointing at one', () => {
+    // The calendar describes the day you are standing in, so it is a section
+    // of the hub. The rail does not carry it and Home does not list it among
+    // the places to go — Home *is* where it is.
+    const railRoutes = RAIL_DESTINATIONS.flatMap((g) => g.items).map((i) => i.route);
+    expect(railRoutes).not.toContain('/workspace/calendar');
+    expect(ALL_DESTINATIONS.map((d) => d.route)).toContain('/workspace/calendar');
+    for (const group of RAIL_DESTINATIONS) expect(group.items.length).toBeGreaterThan(0);
+
     const home = read('ui/screens/Home.tsx');
-    // The click handler returns before navigate when the destination is shut.
-    expect(home).toMatch(/if \(dest\.locked\) \{[^}]*toast\([^)]*Under Construction/);
-    expect(home).toMatch(/return; \}/);
+    expect(home, 'Home has no Calendar section').toMatch(/title="Calendar"/);
+    expect(home, 'the Calendar section does not open the calendar')
+      .toMatch(/navigate\('\/workspace\/calendar'/);
+    // Home stopped rendering the destination tiles when the rail came back;
+    // two lists of the same places on one screen is one too many.
+    expect(home, 'Home is rendering destination tiles again').not.toMatch(/DESTINATIONS/);
+    expect(home, 'the Where To card is back').not.toMatch(/Where To/);
   });
 
   it('offers every destination it lists, and lists every screen there is', () => {
-    // The rail is gone; Home renders this list. If the two drift apart a
-    // workspace becomes unreachable without anybody noticing.
+    // Every screen is reachable: the rail carries the destinations, Home
+    // carries the calendar as a section of itself. If the list and the
+    // screens drift apart a workspace becomes unreachable unnoticed.
     const registered = registeredRoutes();
     const listed = new Set<string>();
     const source = read('ui/shell/destinations.ts');
@@ -134,15 +164,5 @@ describe('the locked casting tab', () => {
     const lockedSet = lockedRoutes();
     const broken = [...listed].filter((r) => !registered.has(r) && !lockedSet.has(r));
     expect(broken, 'Home offers these and nothing is behind them').toEqual([]);
-  });
-
-  it('still runs a company underneath, with nowhere to look at it', () => {
-    // The engine half is real even though the screen is not: this is what the
-    // tab will show when it is built, and it must not have quietly broken.
-    const sim = quickSave({}, 'nav-company');
-    const company = sim.universe.companies[sim.universe.playerCompanyId!];
-    expect(company).toBeDefined();
-    expect(company!.overhead).toBeGreaterThan(0);
-    expect(sim.universe.accounts[company!.cashAccountId]?.balance).toBeGreaterThan(0);
   });
 });
