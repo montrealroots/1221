@@ -18,9 +18,12 @@ import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { describeEthnicity } from '@/engine/content/ethnicity';
-import { STUDIOS, STUDIO_BY_ID, everyFigure, ownershipDetail, peopleAt, studiosInTier } from '@/engine/content/studios';
 import {
-  CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
+  STUDIOS, STUDIO_BY_ID, everyFigure, genresOf, ownershipDetail, peopleAt,
+  studiosInTier, studiosMaking, studiosWorkingIn,
+} from '@/engine/content/studios';
+import {
+  CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, GENRE_BY_ID, isAlphabetical,
 } from '@/engine/content/interests';
 import { GENRE_MASTERIES, masteryForGenre } from '@/engine/content/genre-mastery';
 import {
@@ -470,6 +473,77 @@ describe('the production companies', () => {
     const source = readFileSync('src/ui/workspaces/ProductionCompaniesWorkspace.tsx', 'utf8');
     const face = source.slice(source.indexOf('function StudioCard'), source.indexOf('function StudioDetail'));
     expect(face).not.toMatch(/figures|casting/);
+  });
+
+  it('says what every company makes, at what size, and how much of it', () => {
+    for (const studio of STUDIOS) {
+      expect(studio.formats.length, `${studio.name} makes nothing`).toBeGreaterThan(0);
+      expect(new Set(studio.formats).size).toBe(studio.formats.length);
+      expect(studio.budgets.length, `${studio.name} works at no budget`).toBeGreaterThan(0);
+      expect(new Set(studio.budgets).size).toBe(studio.budgets.length);
+      expect(studio.specialty, `${studio.name} has no specialism`).not.toBe('');
+      // A specialism says what the company makes. The line already on the card
+      // says who it is. Half of these started out as the same sentence written
+      // twice — Annapurna's two were a word apart — so the check is a shared
+      // run of words, not string equality, which caught none of them.
+      const runs = (text: string) => {
+        const words = text.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
+        return new Set(words.slice(0, -3).map((_, i) => words.slice(i, i + 4).join(' ')));
+      };
+      const shared = [...runs(studio.specialty)].filter((run) => runs(studio.about).has(run));
+      expect(shared, `${studio.name} says the same thing twice: ${shared[0]}`).toEqual([]);
+    }
+  });
+
+  it('names only genres the engine really has, so the join cannot rot', () => {
+    // This is the whole point of keying to ids: a company and a performer read
+    // the same list, and a genre that only exists on one side fails here
+    // rather than quietly making a company work in nothing.
+    for (const studio of STUDIOS) {
+      expect(studio.worksIn.length, `${studio.name} works in no genre`).toBeGreaterThan(4);
+      expect(new Set(studio.worksIn).size, `${studio.name} repeats a genre`).toBe(studio.worksIn.length);
+      for (const id of studio.worksIn) {
+        expect(GENRE_BY_ID[id], `${studio.name} names a genre that does not exist: ${id}`).toBeTruthy();
+      }
+      expect(genresOf(studio)).toHaveLength(studio.worksIn.length);
+    }
+  });
+
+  it('runs the genre join in both directions', () => {
+    expect(genresOf(STUDIO_BY_ID.blumhouse!).map((one) => one.label)).toContain('Slasher');
+    // Everybody who works in horror really carries it, and everybody who
+    // carries it comes back.
+    const horror = studiosWorkingIn('horror');
+    expect(horror.length).toBeGreaterThan(3);
+    for (const one of horror) expect(one.worksIn).toContain('horror');
+    expect(horror.map((one) => one.id)).toContain('blumhouse');
+    expect(studiosWorkingIn('kaiju').map((one) => one.id)).toEqual(['legendary']);
+    expect(studiosWorkingIn('not_a_genre')).toHaveLength(0);
+    // Every genre a company claims is reachable from the genre side too.
+    for (const studio of STUDIOS) {
+      for (const id of studio.worksIn) {
+        expect(studiosWorkingIn(id).map((one) => one.id)).toContain(studio.id);
+      }
+    }
+  });
+
+  it('knows who makes television and who only makes films', () => {
+    const series = studiosMaking('series');
+    for (const one of series) expect(one.formats).toContain('series');
+    // Focus and Neon are film companies. Casting a series regular is not a
+    // thing either of them can offer, and the data has to say so.
+    expect(series.map((one) => one.id)).not.toContain('focus');
+    expect(series.map((one) => one.id)).not.toContain('neon');
+    expect(series.map((one) => one.id)).toContain('netflix');
+    expect(studiosMaking('feature')).toHaveLength(STUDIOS.length);
+  });
+
+  it('spreads across the genre list rather than crowding into a corner of it', () => {
+    // Eighteen companies naming a dozen genres each out of a hundred and
+    // forty-nine should touch a good spread of it, or the list is decorative.
+    const touched = new Set(STUDIOS.flatMap((one) => one.worksIn));
+    expect(touched.size).toBeGreaterThan(50);
+    expect(touched.size).toBeLessThan(FILM_GENRES.length);
   });
 
   it('reaches every named person through one door', () => {

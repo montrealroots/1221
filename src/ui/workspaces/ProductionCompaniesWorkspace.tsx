@@ -17,8 +17,8 @@ import { useState, type ReactNode } from 'react';
 import { Modal, Stat } from '@/ui/components/primitives';
 import { plural } from '@/engine/core/text';
 import {
-  CHECKED_ON, CHURN_NOTE, OWNERSHIP_LABEL, STUDIO_NOTE,
-  ownershipDetail, peopleAt, studiosInTier,
+  BUDGET_LABEL, CHECKED_ON, CHURN_NOTE, FORMAT_LABEL, OWNERSHIP_LABEL, STUDIO_NOTE,
+  VOLUME_LABEL, VOLUME_NOTE, genresOf, ownershipDetail, peopleAt, studiosInTier,
   type Studio, type StudioFigure,
 } from '@/engine/content/studios';
 
@@ -89,6 +89,7 @@ function StudioCard({ studio, onOpen }: { studio: Studio; onOpen: (studio: Studi
       <div className="studio-foot xs dim">
         {studio.labels.length > 0 && <span>{plural(studio.labels.length, 'Label')}</span>}
         <span>{plural(people.length, 'Person', 'People')}</span>
+        <span>{plural(studio.worksIn.length, 'Genre')}</span>
       </div>
     </button>
   );
@@ -110,6 +111,34 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
 
       <p className="small muted">{studio.about}</p>
       {studio.control && <p className="small muted">{studio.control}</p>}
+
+      <Block label="What It Makes">
+        <p className="small" style={{ margin: '0 0 var(--s2)' }}>{studio.specialty}</p>
+        <div className="row wrap gap-1">
+          {studio.formats.map((format) => (
+            <span key={format} className="chip chip-accent">{FORMAT_LABEL[format]}</span>
+          ))}
+        </div>
+      </Block>
+
+      <Block label="At What Size">
+        <div className="row wrap gap-1" style={{ marginBottom: 'var(--s2)' }}>
+          {studio.budgets.map((band) => (
+            <span key={band} className="chip">{BUDGET_LABEL[band]}</span>
+          ))}
+        </div>
+        <p className="xs dim" style={{ margin: 0 }}>
+          {VOLUME_LABEL[studio.volume]} output. {VOLUME_NOTE[studio.volume]}
+        </p>
+      </Block>
+
+      <Block label="Works In">
+        <div className="row wrap gap-1">
+          {genresOf(studio).map((genre) => (
+            <span key={genre.id} className="chip">{genre.label}</span>
+          ))}
+        </div>
+      </Block>
 
       {studio.labels.length > 0 && (
         <Block label="Produces Under">
