@@ -4,7 +4,7 @@
  * The premise the rest of the game hangs off. You do not arrive with nothing
  * and work your way in: you are born onto two thousand acres outside
  * Reykjavík, and the family has just built a studio lot on it and started a
- * production company that makes television and film and carries the family
+ * production company that makes Television and Film and carries the family
  * name.
  *
  * The family name, not yours. It comes off the surname because that is where
@@ -70,14 +70,14 @@ export const HOLDINGS: readonly Holding[] = [
   {
     id: 'lot',
     label: () => 'The Studio Lot',
-    detail: 'Newly built, on the same land, and close enough to walk to from the house. Stages for television and film both.',
+    detail: 'Newly built, on the same land, and close enough to walk to from the house. Stages for Television and Film both.',
   },
   {
     id: 'company',
-    label: () => 'The Company',
+    label: () => 'Company Headquarters',
     // Named in its own card below rather than here, so the name is not printed
     // twice on one page under two different headings.
-    detail: 'Television and film, out of the lot. It carries the family name and it has no record yet.',
+    detail: 'Television and Film, out of the lot. It carries the family name and it has no record yet.',
   },
 ];
 
@@ -88,7 +88,7 @@ export const HOLDINGS: readonly Holding[] = [
  * is correct and is exactly the situation: there is no business here to join.
  */
 export const ESTATE_NOTE =
-  'There’s no television or film industry in Iceland to walk into. That’s the point of it: the family '
+  'There’s no Television or Film industry in Iceland to walk into. That’s the point of it: the family '
   + 'isn’t '
   + 'buying a way into somebody else’s business, it’s building one where there was none, and you '
   + 'are standing on it before anybody outside the country knows it exists.';

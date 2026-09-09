@@ -368,7 +368,7 @@ function IdentityStep({ config, set, setConfig }: {
                 ))}
               </div>
               <p className="xs dim" style={{ marginTop: 4 }}>
-                He/him settles this by itself, and so does she/her. They/them doesn’t, so the
+                He/Him settles this by itself, and so does She/Her. They/Them doesn’t, so the
                 choice is yours. Actor and Actress are two words for the same craft and the game
                 treats them as equals — pick the one the business would list you under, and it
                 will call you by it.
@@ -894,7 +894,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
           <div>
             <h2>{company}</h2>
             <p className="muted small">
-              Television and film. It carries the family name, which is the surname you gave on
+              Television and Film. It carries the family name, which is the surname you gave on
               Identity — the company is named the moment you are.
             </p>
           </div>

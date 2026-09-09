@@ -343,6 +343,49 @@ describe('the house rule holds in the source', () => {
     expect(offenders, 'these capitalise one of the two titles and not the other').toEqual([]);
   });
 
+  it('capitalises Television and Film wherever the two are named together', () => {
+    // Same rule as the two titles: a pair named as a pair takes a capital on
+    // both halves. On its own, either word is ordinary prose and is left be —
+    // it is only the pairing that is a name.
+    const PAIR = /\b(television|film) (and|or) (television|film)\b/gi;
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      for (const [i, line] of readFileSync(file, 'utf8').split('\n').entries()) {
+        for (const match of line.matchAll(PAIR)) {
+          const [first, , second] = [match[1]!, match[2]!, match[3]!];
+          if (/^[A-Z]/.test(first) && /^[A-Z]/.test(second)) continue;
+          offenders.push(`${file}:${i + 1} — ${match[0]}`);
+        }
+      }
+    }
+    expect(offenders, 'these name the pair without capitalising both halves').toEqual([]);
+  });
+
+  it('capitalises both halves of a pronoun pair on screen', () => {
+    // He/Him, She/Her, They/Them. Half a pair capitalised reads as though the
+    // second word were an afterthought, which is the same fault as writing
+    // "Actor and actress".
+    //
+    // The stored value is lowercase and must stay that way: `pronouns` is
+    // 'they/them' in the save and `settledTitle` matches it case-insensitively.
+    // So the option values and the code that talks about them are skipped, and
+    // what is checked is prose.
+    const PAIR = /\b(he|she|they)\/(him|her|them)\b/gi;
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      for (const [i, raw] of readFileSync(file, 'utf8').split('\n').entries()) {
+        const line = raw.trim();
+        if (line.startsWith('//') || line.startsWith('*') || line.startsWith('/*')) continue;
+        if (/value=|pronouns:|'(he|she|they)\/(him|her|them)'/i.test(line)) continue;
+        for (const match of line.matchAll(PAIR)) {
+          if (/^[A-Z]/.test(match[1]!) && /^[A-Z]/.test(match[2]!)) continue;
+          offenders.push(`${file}:${i + 1} — ${match[0]}`);
+        }
+      }
+    }
+    expect(offenders, 'these leave half a pronoun pair in lower case').toEqual([]);
+  });
+
   it('never writes "a actor" or "a actress"', () => {
     // Both words open on a vowel sound, so the article is always "an". The bug
     // hides from a search because the article and the noun are never in the

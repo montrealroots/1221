@@ -62,7 +62,7 @@ export interface City extends ReferenceRecord {
   /** Median home price in cents. Calibrated estimate. */
   medianHomePriceCents: number;
   population: number;
-  /** 0-100 how much film and television work happens here. */
+  /** 0-100 how much Film and Television work happens here. */
   industryPresence: number;
   /** 0-100 depth of the ordinary job market. */
   jobMarketDepth: number;
