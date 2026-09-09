@@ -607,6 +607,23 @@ describe('messages', () => {
     sim.advanceTo(sim.now + 2 * DAY);
     expect(noteOf(sim, mine)).toBeUndefined();
   });
+
+  it('puts a note on the app it was written in, not on whichever one is assumed', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'social-note-platform');
+    makeMine(sim, PHOTO_PLATFORM);
+    makeMine(sim, CLIP_PLATFORM);
+    const photo = myProfile(sim, PHOTO_PLATFORM)!;
+    const clip = myProfile(sim, CLIP_PLATFORM)!;
+
+    sim.execute({ kind: 'feed.set_note', payload: { text: 'Back on my nonsense.', platform: CLIP_PLATFORM } });
+    expect(noteOf(sim, clip)).toBe('Back on my nonsense.');
+    expect(noteOf(sim, photo)).toBeUndefined();
+
+    // No platform still means the photo app, so every older caller is unchanged.
+    sim.execute({ kind: 'feed.set_note', payload: { text: 'Out on the water.' } });
+    expect(noteOf(sim, photo)).toBe('Out on the water.');
+    expect(noteOf(sim, clip)).toBe('Back on my nonsense.');
+  });
 });
 
 // ---------------------------------------------------------------------------

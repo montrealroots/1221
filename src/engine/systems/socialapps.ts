@@ -2026,10 +2026,17 @@ export function registerSocialApps(sim: Simulation): void {
     },
   );
 
-  sim.onCommand<{ text: string }, { note: string }>(
+  /**
+   * The note that sits over your picture for a day.
+   *
+   * Two apps put one there and each keeps its own, so this takes the platform
+   * rather than assuming. It defaulted to the photo app when only the photo app
+   * asked; leaving that default keeps every existing caller honest.
+   */
+  sim.onCommand<{ text: string; platform?: PlatformId }, { note: string }>(
     'feed.set_note',
     (p, { sim: s }) => {
-      const mine = myProfile(s, PHOTO_PLATFORM);
+      const mine = myProfile(s, p.platform ?? PHOTO_PLATFORM);
       if (!mine) throw new CommandError('You have no account there yet.');
       const text = p.text.trim().slice(0, 60);
       mine.note = text || undefined;

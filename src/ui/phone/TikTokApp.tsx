@@ -25,12 +25,12 @@ import { plural } from '@/engine/core/text';
 import type { SocialItem, SocialProfile } from '@/engine/domain/model';
 import {
   CLIP_FLOOR, CLIP_PLATFORM, catalogOf, collectionsOf, exploreFeed, followersOf, followingFeed,
-  homeFeed, isFollowing, itemById, myProfile, profileById, repliesTo, screenTime, searchSocial,
-  settingsOf, socialAnalytics, trends,
+  homeFeed, isBlocked, isFollowing, isMuted, itemById, noteOf, myProfile, profileById, repliesTo, screenTime, searchSocial,
+  GIFT_STEPS, messagesWith, settingsOf, socialAnalytics, threadsOf, trends,
 } from '@/engine/systems/socialapps';
 import {
   AccessGlyph, AccountGlyph, AddPersonGlyph, ArrowShareGlyph, BackGlyph, BarsGlyph, BellGlyph,
-  BlockRingGlyph, BookmarkGlyph, BubbleGlyph, CallGlyph, CartGlyph, ChartGlyph,
+  BlockRingGlyph, BookmarkGlyph, BubbleGlyph, CallGlyph, CameraGlyph, CartGlyph, ChartGlyph,
   ChevronRightGlyph, ClockGlyph, CloseGlyph, ContentGlyph, DeviceGlyph, DownloadGlyph, DownGlyph,
   FlaskGlyph, GearGlyph, HeartGlyph, HistoryGlyph, HomeGlyph, InfoGlyph,
   InsightGlyph, LanguageGlyph, LiveGlyph, LockGlyph, MenuGlyph, MusicGlyph, NoteGlyph, PeopleGlyph,
@@ -44,7 +44,7 @@ import type { PhoneTheme } from './Phone';
 import './social.css';
 
 type Tab = 'home' | 'friends' | 'inbox' | 'profile';
-type Screen = 'app' | 'create' | 'live' | 'settings' | 'saved' | 'followers' | 'search' | 'studio';
+type Screen = 'app' | 'create' | 'live' | 'settings' | 'saved' | 'followers' | 'search' | 'studio' | 'thread';
 
 /** A clip nobody has brought a cover to still has to look like something. */
 function look(id: string): string {
@@ -62,13 +62,17 @@ export function TikTokApp({ theme }: { theme: PhoneTheme }) {
   const [lane, setLane] = useState<Lane>('foryou');
   const [openId, setOpenId] = useState<string | null>(null);
   const [whoId, setWhoId] = useState<string | null>(null);
+  const [threadId, setThreadId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   const now = useWorld((s) => s.now);
   const mine = useWorld((s) => myProfile(s, CLIP_PLATFORM));
   const open = useWorld((s) => (openId ? itemById(s, openId) : undefined));
   const who = useWorld((s) => (whoId ? profileById(s, whoId) : undefined));
-  const unread = useWorld((s) => (mine ? catalogOf(s, mine).length : 0));
+  const unread = useWorld((s) => threadsOf(s).reduce((sum, one) => sum + one.unread, 0));
+
+  /** Opening somebody's thread closes their page, the way the app does it. */
+  const message = (id: string) => { setWhoId(null); setThreadId(id); setScreen('thread'); };
 
   const say = (text: string) => {
     setToast(text);
@@ -87,6 +91,7 @@ export function TikTokApp({ theme }: { theme: PhoneTheme }) {
           onFollowers={() => setScreen('followers')}
           onSaved={() => setScreen('saved')}
           onLive={() => setScreen('live')}
+          onMessage={message}
           say={say}
         />
       ) : open ? (
@@ -101,6 +106,13 @@ export function TikTokApp({ theme }: { theme: PhoneTheme }) {
         <SavedPage onBack={() => setScreen('app')} onOpen={setOpenId} />
       ) : screen === 'followers' ? (
         <FollowersPage onBack={() => setScreen('app')} onWho={setWhoId} />
+      ) : screen === 'thread' && threadId ? (
+        <ThreadPage
+          profileId={threadId}
+          now={now}
+          onBack={() => { setThreadId(null); setScreen('app'); setTab('inbox'); }}
+          say={say}
+        />
       ) : screen === 'search' ? (
         <SearchPage onBack={() => setScreen('app')} onOpen={setOpenId} onWho={setWhoId} />
       ) : screen === 'studio' ? (
@@ -120,7 +132,9 @@ export function TikTokApp({ theme }: { theme: PhoneTheme }) {
             />
           )}
           {tab === 'friends' && <FriendsPage onWho={setWhoId} say={say} />}
-          {tab === 'inbox' && <InboxPage now={now} mine={mine} onOpen={setOpenId} onWho={setWhoId} />}
+          {tab === 'inbox' && (
+            <InboxPage now={now} mine={mine} onOpen={setOpenId} onWho={setWhoId} onThread={message} />
+          )}
           {tab === 'profile' && (
             mine
               ? (
@@ -133,6 +147,7 @@ export function TikTokApp({ theme }: { theme: PhoneTheme }) {
                   onSaved={() => setScreen('saved')}
                   onLive={() => setScreen('live')}
                   onStudio={() => setScreen('studio')}
+                  onMessage={message}
                   say={say}
                 />
               )
@@ -350,7 +365,10 @@ function ClipPage({
   const profile = useWorld((s) => profileById(s, item.profileId));
   const replies = useWorld((s) => repliesTo(s, item.id));
   const profiles = useWorld((s) => s.universe.socialProfiles);
+  const own = useWorld((s) => profile?.ownerId === s.player.id);
   const [text, setText] = useState('');
+  const [menu, setMenu] = useState(false);
+  const [draft, setDraft] = useState(item.text);
 
   const send = () => {
     const result = run('feed.reply', { itemId: item.id, text }, { silent: true });
@@ -362,7 +380,13 @@ function ClipPage({
       <div className="ph-so-top">
         <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Back"><BackGlyph /></button>
         <b style={{ fontSize: 15 }}>{tally(item.comments, 'comment')}</b>
-        <span style={{ width: 22 }} />
+        {own
+          ? (
+            <button type="button" className="ph-iconbtn" aria-label="Edit Or Delete" onClick={() => setMenu((v) => !v)}>
+              <MenuGlyph size={19} />
+            </button>
+          )
+          : <span style={{ width: 22 }} />}
       </div>
       <div className="ph-body">
         <button type="button" className="ph-dm-row" onClick={() => profile && onWho(profile.id)}>
@@ -373,6 +397,37 @@ function ClipPage({
           </span>
         </button>
         <p className="ph-post-caption" style={{ paddingBottom: 8 }}>{item.text}</p>
+
+        {menu && own && (
+          <div className="ph-panel">
+            <div className="ph-label">Caption</div>
+            <EmojiRow app="photo" onPick={(emoji) => setDraft((current) => current + emoji)} />
+            <input className="ph-input" value={draft} maxLength={2200} onChange={(e) => setDraft(e.target.value)} />
+            <div className="ph-actions">
+              <button
+                type="button"
+                className="ph-btn-solid"
+                onClick={() => {
+                  const result = run('feed.edit', { itemId: item.id, text: draft }, { silent: true });
+                  if (result.ok) { say('Saved.'); setMenu(false); } else say(result.error ?? 'That did not work.');
+                }}
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                className="ph-btn-outline"
+                onClick={() => {
+                  const result = run('feed.delete', { itemId: item.id }, { silent: true });
+                  if (result.ok) { say('Taken down.'); onBack(); } else say(result.error ?? 'That did not work.');
+                }}
+              >
+                Take It Down
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="ph-sep" />
         {replies.length === 0 && <p className="ph-empty">Nobody has said anything yet.</p>}
         {replies.map((reply) => {
@@ -860,16 +915,17 @@ interface Bucket {
 }
 
 function InboxPage({
-  now, mine, onOpen, onWho,
+  now, mine, onOpen, onWho, onThread,
 }: {
   now: number; mine: SocialProfile | undefined;
-  onOpen: (id: string) => void; onWho: (id: string) => void;
+  onOpen: (id: string) => void; onWho: (id: string) => void; onThread: (profileId: string) => void;
 }) {
   const items = useWorld((s) => (mine ? catalogOf(s, mine) : []));
   const followers = useWorld((s) => (mine ? followersOf(s, mine.id) : []));
   const profiles = useWorld((s) => s.universe.socialProfiles);
   const settings = useWorld((s) => settingsOf(s));
   const saved = useWorld((s) => Object.values(s.universe.socialItems).filter((one) => one.saved).length);
+  const threads = useWorld((s) => threadsOf(s).filter((one) => one.profile.platform === CLIP_PLATFORM));
   const [open, setOpenBucket] = useState<string | null>(null);
 
   if (!mine) return <p className="ph-empty"><b>Nothing Yet</b>Make an account and this fills up.</p>;
@@ -1006,6 +1062,100 @@ function InboxPage({
             SLATE does not write to you. Everything in here came from somebody in this world.
           </p>
         )}
+
+        {threads.length === 0 ? (
+          <p className="ph-tt-noconvo">
+            Nothing written yet. Open somebody&rsquo;s page and press Message.
+          </p>
+        ) : threads.map((one) => (
+          <button
+            key={one.profile.id}
+            type="button"
+            className="ph-tt-convo"
+            onClick={() => onThread(one.profile.id)}
+          >
+            <span className={`ph-tt-convo-face${one.unread > 0 ? ' ph-lit' : ''}`}>
+              <Avatar name={one.profile.name} size={52} image={one.profile.avatarImage} />
+            </span>
+            <span className="ph-tt-convo-text">
+              <b>
+                {one.profile.name}
+                {one.profile.verified && <span className="ph-tick" aria-label="Verified"><TickGlyph /></span>}
+              </b>
+              <small>
+                {one.last.byPlayer ? 'Sent' : one.last.text.slice(0, 34)}
+                {' · '}{ago(now, one.last.at)}
+              </small>
+            </span>
+            {one.last.byPlayer
+              ? <span className="ph-tt-convo-cam" aria-hidden="true"><CameraGlyph size={19} /></span>
+              : one.unread > 0 && <span className="ph-tt-reddot" aria-hidden="true" />}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+/**
+ * One conversation.
+ *
+ * What you write is written into your save and nowhere else. Whether they
+ * answer is theirs to decide, and it takes them the time it takes.
+ */
+function ThreadPage({
+  profileId, now, onBack, say,
+}: { profileId: string; now: number; onBack: () => void; say: (text: string) => void }) {
+  const { run } = useGame();
+  const profile = useWorld((s) => profileById(s, profileId));
+  const messages = useWorld((s) => messagesWith(s, profileId));
+  const [text, setText] = useState('');
+  const [read, setRead] = useState(false);
+
+  if (!read) { setRead(true); run('feed.read_messages', { profileId }, { silent: true }); }
+
+  const send = () => {
+    const result = run('feed.message', { profileId, text }, { silent: true });
+    if (result.ok) { setText(''); say('Sent.'); } else say(result.error ?? 'That did not work.');
+  };
+
+  return (
+    <>
+      <div className="ph-tt-threadtop">
+        <button type="button" className="ph-iconbtn" onClick={onBack} aria-label="Back"><BackGlyph size={20} /></button>
+        <span className="ph-tt-threadwho">
+          <Avatar name={profile?.name ?? '?'} size={30} image={profile?.avatarImage} />
+          <b>{profile?.handle ?? ''}</b>
+        </span>
+        <span style={{ width: 34 }} />
+      </div>
+      <div className="ph-tt-page">
+        {messages.length === 0 && (
+          <p className="ph-empty">
+            <b>Nothing Yet</b>
+            Say something. Whether they answer is up to them.
+          </p>
+        )}
+        <div className="ph-thread">
+          {messages.map((one) => (
+            <span key={one.id} className={`ph-bubble${one.byPlayer ? ' ph-mine' : ''}`}>
+              {one.text}
+              <small>{ago(now, one.at)}</small>
+            </span>
+          ))}
+        </div>
+      </div>
+      <EmojiRow app="photo" onPick={(emoji) => setText((current) => current + emoji)} />
+      <div className="ph-tt-send">
+        <input
+          className="ph-input"
+          value={text}
+          placeholder="Send a message"
+          aria-label="Send A Message"
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') send(); }}
+        />
+        <button type="button" className="ph-tt-sendgo" disabled={text.trim().length === 0} onClick={send}>Send</button>
       </div>
     </>
   );
@@ -1025,11 +1175,12 @@ const SHELVES = [
 ] as const;
 
 function ProfilePage({
-  profile, now, onBack, onOpen, onSettings, onFollowers, onSaved, onLive, onStudio, say,
+  profile, now, onBack, onOpen, onSettings, onFollowers, onSaved, onLive, onStudio, onMessage, say,
 }: {
   profile: SocialProfile; now: number; onBack?: () => void;
   onOpen: (id: string) => void; onSettings: () => void; onFollowers: () => void;
-  onSaved: () => void; onLive: () => void; onStudio?: () => void; say: (text: string) => void;
+  onSaved: () => void; onLive: () => void; onStudio?: () => void;
+  onMessage: (id: string) => void; say: (text: string) => void;
 }) {
   const { run } = useGame();
   const items = useWorld((s) => catalogOf(s, profile));
@@ -1045,7 +1196,11 @@ function ProfilePage({
     .filter((one) => one.liked && one.platform === CLIP_PLATFORM)
     .map((one) => itemById(s, one.id))
     .filter((one): one is SocialItem => Boolean(one)));
+  const note = useWorld((s) => noteOf(s, profile));
+  const muted = useWorld((s) => isMuted(s, profile.id));
+  const blocked = useWorld((s) => isBlocked(s, profile.id));
   const [editing, setEditing] = useState(false);
+  const [gifting, setGifting] = useState(false);
   const [shelf, setShelf] = useState<(typeof SHELVES)[number]['key']>('posts');
   const likes = items.reduce((sum, item) => sum + item.likes, 0);
   void now;
@@ -1082,7 +1237,7 @@ function ProfilePage({
 
       <div className="ph-tt-page ph-tt-profile">
         <div className="ph-tt-face">
-          {own && profile.note && <span className="ph-tt-thought">{profile.note}</span>}
+          {own && note && <span className="ph-tt-thought">{note}</span>}
           <span className="ph-tt-face-mark">
             <Avatar name={profile.name} size={96} image={profile.avatarImage} />
             {own && <i className="ph-tt-face-plus" aria-hidden="true"><PlusGlyph size={14} /></i>}
@@ -1124,15 +1279,69 @@ function ProfilePage({
               >
                 {following ? 'Following' : 'Follow'}
               </button>
-              <button
-                type="button"
-                onClick={() => say(`@${profile.handle} posts every ${profile.cadenceDays === 1 ? 'day' : `${profile.cadenceDays} days`}.`)}
-              >
-                About
+              <button type="button" onClick={() => onMessage(profile.id)}>Message</button>
+              <button type="button" className="ph-square" aria-label="Send A Gift" onClick={() => setGifting((v) => !v)}>
+                <SparkleGlyph size={18} />
               </button>
             </>
           )}
         </div>
+
+        {!own && gifting && (
+          <div className="ph-tt-gifts">
+            <div className="ph-tt-gifts-head">Send @{profile.handle} A Gift</div>
+            <div className="ph-tt-gifts-row">
+              {GIFT_STEPS.map((amount) => (
+                <button
+                  key={amount}
+                  type="button"
+                  onClick={() => {
+                    const result = run('feed.gift', { profileId: profile.id, amount }, { silent: true });
+                    if (result.ok) { say(`Sent ${formatMoney(amount)} to @${profile.handle}.`); setGifting(false); }
+                    else say(result.error ?? 'That did not work.');
+                  }}
+                >
+                  {formatMoney(amount)}
+                </button>
+              ))}
+            </div>
+            <small>It comes out of your account and lands in theirs on the month.</small>
+          </div>
+        )}
+
+        {!own && (
+          <div className="ph-tt-profchips">
+            <button
+              type="button"
+              className="ph-tt-chip"
+              onClick={() => {
+                const result = run('feed.mute', { profileId: profile.id }, { silent: true });
+                if (result.ok) say(muted ? `@${profile.handle} is back on your feed.` : `@${profile.handle} is off your feed.`);
+                else say(result.error ?? 'That did not work.');
+              }}
+            >
+              {muted ? 'Unmute' : 'Mute'}
+            </button>
+            <button
+              type="button"
+              className="ph-tt-chip"
+              onClick={() => {
+                const result = run('feed.block', { profileId: profile.id }, { silent: true });
+                if (result.ok) say(blocked ? `@${profile.handle} is unblocked.` : `@${profile.handle} is blocked, and you no longer follow them.`);
+                else say(result.error ?? 'That did not work.');
+              }}
+            >
+              {blocked ? 'Unblock' : 'Block'}
+            </button>
+            <button
+              type="button"
+              className="ph-tt-chip"
+              onClick={() => say(`@${profile.handle} posts every ${profile.cadenceDays === 1 ? 'day' : `${profile.cadenceDays} days`}.`)}
+            >
+              About
+            </button>
+          </div>
+        )}
 
         {own && (
           <div className="ph-tt-profchips">
@@ -1192,6 +1401,7 @@ function EditProfile({
   const { run } = useGame();
   const [name, setName] = useState(profile.name);
   const [bio, setBio] = useState(profile.bio);
+  const [note, setNote] = useState(profile.note ?? '');
   const [image, setImage] = useState<string | undefined>(profile.avatarImage);
   return (
     <div className="ph-panel">
@@ -1201,13 +1411,24 @@ function EditProfile({
       <input className="ph-input" value={name} onChange={(e) => setName(e.target.value)} />
       <div className="ph-label">Bio</div>
       <input className="ph-input" value={bio} maxLength={80} onChange={(e) => setBio(e.target.value)} />
+      <div className="ph-label">Thoughts, Which Sit Over Your Picture For A Day</div>
+      <input
+        className="ph-input"
+        value={note}
+        maxLength={60}
+        placeholder="Thoughts?"
+        onChange={(e) => setNote(e.target.value)}
+      />
       <div className="ph-actions">
         <button
           type="button"
           className="ph-btn-solid"
           onClick={() => {
             const result = run('feed.edit_profile', { profileId: profile.id, name, bio, image }, { silent: true });
-            if (result.ok) { say('Profile saved.'); onDone(); } else say(result.error ?? 'That did not work.');
+            if (!result.ok) { say(result.error ?? 'That did not work.'); return; }
+            run('feed.set_note', { text: note, platform: CLIP_PLATFORM }, { silent: true });
+            say('Profile saved.');
+            onDone();
           }}
         >
           Save

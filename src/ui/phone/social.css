@@ -1147,7 +1147,8 @@
   font-size: 15px; font-weight: 500;
 }
 .ph-tt-profile { background: var(--ph-bg); text-align: center; }
-.ph-tt-face { padding: 18px 0 0; }
+/* The bubble sits above the picture and off to its left, as the app has it. */
+.ph-tt-face { padding: 18px 0 0; display: flex; flex-direction: column; align-items: center; }
 .ph-tt-face-mark { position: relative; display: inline-flex; }
 .ph-tt-face-plus {
   position: absolute; right: -2px; bottom: -2px;
@@ -1156,8 +1157,10 @@
   border: 2.5px solid var(--ph-bg);
 }
 .ph-tt-thought {
-  display: inline-block; margin-bottom: 6px; padding: 8px 14px; border-radius: 16px;
+  align-self: center; position: relative; left: -46px; z-index: 2;
+  margin-bottom: -10px; padding: 9px 15px; border-radius: 16px;
   background: var(--ph-chip); color: var(--ph-muted); font-size: 14px;
+  max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .ph-tt-handle { font-size: 17px; font-weight: 600; margin-top: 12px; }
 .ph-tt-counts { display: flex; align-items: center; justify-content: center; margin: 16px 0 14px; }
@@ -1305,3 +1308,49 @@
 .ph-tt-dots i { width: 6px; height: 6px; border-radius: 3px; background: var(--ph-line); display: block; }
 .ph-tt-dots i.ph-on { width: 16px; background: var(--ph-muted); }
 .ph-tt-activity-note { margin: 12px 0 0; color: var(--ph-muted); font-size: 13.5px; line-height: 1.4; }
+
+/* The conversations under the inbox's coloured rows, and one of them open. */
+.ph-tt-convo {
+  display: flex; align-items: center; gap: 13px; width: 100%; text-align: left;
+  border: 0; background: none; cursor: pointer; color: var(--ph-text);
+  font: inherit; padding: 9px 16px;
+}
+.ph-tt-convo-face { flex: none; display: flex; border-radius: 50%; }
+.ph-tt-convo-face.ph-lit { box-shadow: 0 0 0 2px #20d5ec; }
+.ph-tt-convo-text { flex: 1; min-width: 0; }
+.ph-tt-convo-text b {
+  display: flex; align-items: center; gap: 5px; font-size: 16px; font-weight: 600;
+  overflow: hidden; white-space: nowrap;
+}
+.ph-tt-convo-text small {
+  display: block; color: var(--ph-muted); font-size: 14px; margin-top: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ph-tt-convo-cam { flex: none; color: var(--ph-muted); display: flex; }
+.ph-tt-noconvo { padding: 22px 16px; color: var(--ph-muted); font-size: 14px; }
+
+.ph-tt-threadtop {
+  flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+  padding: 8px 12px; background: var(--ph-bg); border-bottom: 1px solid var(--ph-line);
+}
+.ph-tt-threadwho { display: flex; align-items: center; justify-content: center; gap: 9px; }
+.ph-tt-threadwho b { font-size: 16px; font-weight: 600; }
+.ph-tt-send {
+  flex: none; display: flex; gap: 8px; padding: 10px 12px;
+  border-top: 1px solid var(--ph-line); background: var(--ph-bg);
+}
+.ph-tt-sendgo {
+  flex: none; border: 0; border-radius: 8px; cursor: pointer; padding: 9px 18px;
+  background: #fe2c55; color: #fff; font: inherit; font-size: 15px; font-weight: 600;
+}
+.ph-tt-sendgo:disabled { opacity: 0.45; cursor: default; }
+
+/* Sending somebody a gift, which comes out of your account and lands in theirs. */
+.ph-tt-gifts { margin: 12px 14px 0; padding: 14px; border-radius: 12px; background: var(--ph-chip); }
+.ph-tt-gifts-head { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.ph-tt-gifts-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.ph-tt-gifts-row button {
+  flex: 1 0 auto; border: 0; border-radius: 8px; cursor: pointer; padding: 10px 12px;
+  background: #fe2c55; color: #fff; font: inherit; font-size: 15px; font-weight: 700;
+}
+.ph-tt-gifts small { display: block; margin-top: 12px; color: var(--ph-muted); font-size: 13px; }
