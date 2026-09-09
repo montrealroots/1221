@@ -14,7 +14,6 @@ import { WEEKDAY_NAMES } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
-import { DESTINATIONS } from '@/ui/shell/destinations';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
@@ -26,7 +25,7 @@ import {
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
 
 export function Home() {
-  const { sim, navigate, run, toast } = useGame();
+  const { sim, navigate, run } = useGame();
   const snapshot = useWorld(lifeSnapshot);
   const decisions = useWorld(openDecisions);
   const next = useWorld(nextCommitment);
@@ -63,44 +62,50 @@ export function Home() {
       </div>
 
       {/*
-        Everywhere you can go. This was a rail down the left of every screen;
-        it’s here because Home is the hub and a hub that’s missing half the
-        building isn’t one.
+        The calendar is a section of the hub rather than a tile pointing at
+        one. What is coming is part of standing in the day, not somewhere else
+        to go, and it reads that way at the top of Home. One button into the
+        month, in the header: there used to be three, all going to the same
+        screen.
       */}
-      <div className="card" style={{ marginBottom: 'var(--s5)' }}>
-        <div className="panel-head">
-          <div>
-            <h2>Where To</h2>
-            <p className="muted small">Everything in the game.</p>
+      <Panel
+        title="Calendar"
+        subtitle={next ? 'What is coming, and when.' : undefined}
+        actions={(
+          <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+            Open Calendar
+          </button>
+        )}
+      >
+        {next ? (
+          <div className="stat">
+            <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
+            <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{titleCaseLabel(next.title)}</span>
+            <span className="stat-note">
+              {formatDate(next.at, sim.zone)} at {formatTime(next.at, sim.zone)}
+              {next.locationId && next.locationId !== player.currentLocationId && (
+                <span className="negative"> · you are not in {CITIES.get(next.locationId)?.name}</span>
+              )}
+            </span>
           </div>
-        </div>
-        {DESTINATIONS.map((group) => (
-          <div key={group.label} style={{ marginBottom: 'var(--s4)' }}>
-            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group.label}</div>
-            <div className="dest-grid">
-              {group.items.map((dest) => (
-                <button
-                  key={dest.route}
-                  className={`dest${dest.locked ? ' is-locked' : ''}`}
-                  aria-label={dest.locked ? `${dest.label}, Locked, Under Construction` : dest.label}
-                  onClick={() => {
-                    if (dest.locked) { toast(`${dest.label} Is Under Construction.`, 'neutral'); return; }
-                    navigate(dest.route, dest.label);
-                  }}
-                >
-                  <span className="dest-body">
-                    <span className="dest-label">
-                      {dest.label}
-                      {dest.locked && <span className="chip dest-lock" aria-hidden="true">Locked</span>}
-                    </span>
-                    <span className="dest-detail">{dest.detail}</span>
-                  </span>
-                </button>
+        ) : (
+          <p className="muted small" style={{ margin: 0 }}>Nothing scheduled. The day is yours.</p>
+        )}
+
+        {soon.length > 1 && (
+          <>
+            <hr className="divider" />
+            <div className="col gap-2">
+              {soon.slice(1, 6).map((entry) => (
+                <div key={entry.id} className="row-between">
+                  <span className="small truncate" title={titleCaseLabel(entry.title)}>{titleCaseLabel(entry.title)}</span>
+                  <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
+                </div>
               ))}
             </div>
-          </div>
-        ))}
-      </div>
+          </>
+        )}
+      </Panel>
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
         <Panel
@@ -188,52 +193,6 @@ export function Home() {
         </Panel>
 
         <div className="col gap-4">
-          <Panel title="What Happens Next" tight>
-            {next ? (
-              <>
-                <div className="stat" style={{ marginBottom: 'var(--s3)' }}>
-                  <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
-                  <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{titleCaseLabel(next.title)}</span>
-                  <span className="stat-note">
-                    {formatDate(next.at, sim.zone)} at {formatTime(next.at, sim.zone)}
-                    {next.locationId && next.locationId !== player.currentLocationId && (
-                      <span className="negative"> · you are not in {CITIES.get(next.locationId)?.name}</span>
-                    )}
-                  </span>
-                </div>
-                <div className="row gap-2 wrap">
-                  <button className="btn btn-sm" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                    Open Calendar
-                  </button>
-                  <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                    See The Month
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="muted small">Nothing scheduled. The day is yours.</p>
-                <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
-                  Open Calendar
-                </button>
-              </>
-            )}
-
-            {soon.length > 1 && (
-              <>
-                <hr className="divider" />
-                <div className="col gap-2">
-                  {soon.slice(1, 5).map((entry) => (
-                    <div key={entry.id} className="row-between">
-                      <span className="small truncate" title={titleCaseLabel(entry.title)}>{titleCaseLabel(entry.title)}</span>
-                      <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </Panel>
-
           <Panel title="How You Are" tight>
             <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>{wellbeingSummary(player)}</p>
             <div className="col gap-3">

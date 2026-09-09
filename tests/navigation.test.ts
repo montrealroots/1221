@@ -120,29 +120,36 @@ describe('what was taken out', () => {
   });
 
   it('tells the player it is under construction rather than navigating', () => {
-    const home = read('ui/screens/Home.tsx');
-    // The click handler returns before navigate when the destination is shut.
-    expect(home).toMatch(/if \(dest\.locked\) \{[^}]*toast\([^)]*Under Construction/);
-    expect(home).toMatch(/return; \}/);
+    // The rail is what renders destinations now, so it is the one that has to
+    // refuse a shut one. Home used to carry this and no longer offers tiles.
+    const shell = read('ui/shell/GameShell.tsx');
+    expect(shell).toMatch(/if \(locked\) \{[^}]*toast\([^)]*Under Construction/);
+    expect(shell).toMatch(/return; \}/);
   });
 
-  it('keeps the calendar on Home and off the rail, and loses nothing by it', () => {
-    // The calendar describes the day you are standing in. It reads as part of
-    // Home, not as another place to go, so the rail does not carry it — but it
-    // is still one list, and Home still offers everything.
+  it('gives the calendar a section of Home rather than a tile pointing at one', () => {
+    // The calendar describes the day you are standing in, so it is a section
+    // of the hub. The rail does not carry it and Home does not list it among
+    // the places to go — Home *is* where it is.
     const railRoutes = RAIL_DESTINATIONS.flatMap((g) => g.items).map((i) => i.route);
-    const homeRoutes = ALL_DESTINATIONS.map((d) => d.route);
-    expect(homeRoutes).toContain('/workspace/calendar');
     expect(railRoutes).not.toContain('/workspace/calendar');
-    // Everything the rail does carry, Home carries too.
-    for (const route of railRoutes) expect(homeRoutes).toContain(route);
-    // And no group is left on the rail with nothing under it.
+    expect(ALL_DESTINATIONS.map((d) => d.route)).toContain('/workspace/calendar');
     for (const group of RAIL_DESTINATIONS) expect(group.items.length).toBeGreaterThan(0);
+
+    const home = read('ui/screens/Home.tsx');
+    expect(home, 'Home has no Calendar section').toMatch(/title="Calendar"/);
+    expect(home, 'the Calendar section does not open the calendar')
+      .toMatch(/navigate\('\/workspace\/calendar'/);
+    // Home stopped rendering the destination tiles when the rail came back;
+    // two lists of the same places on one screen is one too many.
+    expect(home, 'Home is rendering destination tiles again').not.toMatch(/DESTINATIONS/);
+    expect(home, 'the Where To card is back').not.toMatch(/Where To/);
   });
 
   it('offers every destination it lists, and lists every screen there is', () => {
-    // The rail and Home both render this list. If the two drift apart a
-    // workspace becomes unreachable without anybody noticing.
+    // Every screen is reachable: the rail carries the destinations, Home
+    // carries the calendar as a section of itself. If the list and the
+    // screens drift apart a workspace becomes unreachable unnoticed.
     const registered = registeredRoutes();
     const listed = new Set<string>();
     const source = read('ui/shell/destinations.ts');

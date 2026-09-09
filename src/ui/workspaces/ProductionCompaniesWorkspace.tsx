@@ -17,10 +17,13 @@ import { useState, type ReactNode } from 'react';
 import { Modal, Stat } from '@/ui/components/primitives';
 import { plural } from '@/engine/core/text';
 import {
-  BUDGET_LABEL, CHECKED_ON, CHURN_NOTE, FORMAT_LABEL, OWNERSHIP_LABEL, STUDIO_NOTE,
-  VOLUME_LABEL, VOLUME_NOTE, genresOf, ownershipDetail, peopleAt, studiosInTier,
+  AGREEMENT_LABEL, BUDGET_LABEL, CHECKED_ON, CHURN_NOTE, FORMAT_LABEL, NEW_FACES_LABEL,
+  NEW_FACES_NOTE, OWNERSHIP_LABEL, SCALE_NOTE, STUDIO_NOTE, UNION_NOTE, VOLUME_LABEL,
+  VOLUME_NOTE, agreementsFor, citiesFor, genresOf, ownershipDetail, scaleFloor,
+  shootsWhere, studiosInTier, volumeOf,
   type Studio, type StudioFigure,
 } from '@/engine/content/studios';
+import { useGame } from '@/app/game-context';
 
 export function ProductionCompaniesWorkspace() {
   const [open, setOpen] = useState<Studio | null>(null);
@@ -71,9 +74,15 @@ function Shelf({
   );
 }
 
+/** Tone carries no meaning on its own here; the chip says the words as well. */
+const FACES_TONE: Record<Studio['newFaces'], string> = {
+  discovers: 'chip-positive',
+  open: 'chip-info',
+  guarded: 'chip-warning',
+};
+
 function StudioCard({ studio, onOpen }: { studio: Studio; onOpen: (studio: Studio) => void }) {
   const detail = ownershipDetail(studio);
-  const people = peopleAt(studio);
 
   return (
     <button className="card studio" onClick={() => onOpen(studio)}>
@@ -82,20 +91,24 @@ function StudioCard({ studio, onOpen }: { studio: Studio; onOpen: (studio: Studi
       <div className="studio-owner">
         <span className="chip">{OWNERSHIP_LABEL[studio.ownership]}</span>
         <span className="xs dim">{detail ?? ''}</span>
+        <span className={`chip ${FACES_TONE[studio.newFaces]}`}>{NEW_FACES_LABEL[studio.newFaces]}</span>
       </div>
 
       <p className="small muted studio-about">{studio.about}</p>
 
       <div className="studio-foot xs dim">
-        {studio.labels.length > 0 && <span>{plural(studio.labels.length, 'Label')}</span>}
-        <span>{plural(people.length, 'Person', 'People')}</span>
+        <span>About {studio.titlesAYear} A Year</span>
         <span>{plural(studio.worksIn.length, 'Genre')}</span>
+        <span>{plural(studio.shootsIn.length, 'City', 'Cities')}</span>
       </div>
     </button>
   );
 }
 
 function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void }) {
+  const { sim } = useGame();
+  const here = sim.player.currentLocationId;
+  const scale = scaleFloor(studio);
   return (
     <Modal title={studio.name} onClose={onClose}>
       <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
@@ -128,7 +141,8 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
           ))}
         </div>
         <p className="xs dim" style={{ margin: 0 }}>
-          {VOLUME_LABEL[studio.volume]} output. {VOLUME_NOTE[studio.volume]}
+          About {studio.titlesAYear} scripted titles a year. {VOLUME_LABEL[volumeOf(studio)]} output:{' '}
+          {VOLUME_NOTE[volumeOf(studio)]}
         </p>
       </Block>
 
@@ -157,8 +171,61 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
           <Figures people={studio.casting} />
         </Block>
       )}
+
+      <Block label="Known For">
+        <div className="row wrap gap-1">
+          {studio.knownFor.map((title) => <span key={title} className="chip">{title}</span>)}
+        </div>
+      </Block>
+
+      <Block label="Getting In">
+        <div style={{ marginBottom: 'var(--s2)' }}>
+          <span className={`chip ${FACES_TONE[studio.newFaces]}`}>{NEW_FACES_LABEL[studio.newFaces]}</span>
+        </div>
+        <p className="small" style={{ margin: 0 }}>{NEW_FACES_NOTE[studio.newFaces]}</p>
+      </Block>
+
+      <Block label="Where It Shoots">
+        <div className="row wrap gap-1">
+          {citiesFor(studio).map((city) => (
+            <span
+              key={city.id}
+              className={shootsWhere(studio, here) && city.id === here ? 'chip chip-accent' : 'chip'}
+            >
+              {city.name}{city.id === here ? ' · you are here' : ''}
+            </span>
+          ))}
+        </div>
+      </Block>
+
+      <Block label="What Scale Pays">
+        {/* Three across in the dialog, stacking on a phone. grid-3's 200px
+            floor put two on one row and the third alone under them. */}
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(150px, 100%), 1fr))',
+            marginBottom: 'var(--s2)',
+          }}
+        >
+          <Stat label="Background" value={money(scale.background)} note="A day as an extra" />
+          <Stat label="Day Performer" value={money(scale.day)} note="A day with lines" />
+          <Stat label="Weekly" value={money(scale.week)} note="A week on the call sheet" />
+        </div>
+        <div className="row wrap gap-1" style={{ marginBottom: 'var(--s2)' }}>
+          {agreementsFor(studio).map((one) => (
+            <span key={one} className="chip">{AGREEMENT_LABEL[one]}</span>
+          ))}
+        </div>
+        <p className="xs dim" style={{ margin: 0 }}>{UNION_NOTE} {SCALE_NOTE}</p>
+      </Block>
     </Modal>
   );
+}
+
+/** Whole dollars. Scale is quoted to the dollar and never to the cent. */
+function money(amount: number): string {
+  return `$${amount.toLocaleString('en-US')}`;
 }
 
 function Block({ label, children }: { label: string; children: ReactNode }) {

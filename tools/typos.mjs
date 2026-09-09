@@ -142,10 +142,11 @@ function isClassNameOrHyphenated(line, match, index) {
  * Names that really are the same word twice.
  *
  * Sa Sa is a Hong Kong cosmetics chain and that is how it is written on the
- * shopfront. Correcting somebody's name is not tidying, it is being wrong, so
- * the handful that are genuinely doubled are listed rather than flagged.
+ * shopfront, and La La Land is a film. Correcting a name is not tidying, it is
+ * being wrong, so the handful that are genuinely doubled are listed rather
+ * than flagged.
  */
-const REAL_DOUBLED = new Set(['Sa Sa', 'Kai Kai', 'Duran Duran', 'Boutros Boutros']);
+const REAL_DOUBLED = new Set(['Sa Sa', 'Kai Kai', 'Duran Duran', 'Boutros Boutros', 'La La Land']);
 
 function isRealDoubledName(line, index) {
   return [...REAL_DOUBLED].some((name) => line.slice(index, index + name.length) === name);

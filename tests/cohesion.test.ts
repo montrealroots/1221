@@ -14,13 +14,14 @@ import {
   ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, ALL_TRAITS, attributesInGroup,
 } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
-import { COUNTRIES } from '@/engine/content/geography';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { describeEthnicity } from '@/engine/content/ethnicity';
 import {
-  STUDIOS, STUDIO_BY_ID, everyFigure, genresOf, ownershipDetail, peopleAt,
-  studiosInTier, studiosMaking, studiosWorkingIn,
+  AGREEMENT_FOR, BUDGET_LABEL, SCALE, STUDIOS, STUDIO_BY_ID, VOLUME_LABEL, agreementsFor,
+  citiesFor, everyFigure, genresOf, ownershipDetail, peopleAt, scaleFloor, shootsWhere,
+  studiosInTier, studiosMaking, studiosShootingIn, studiosWorkingIn, volumeOf,
 } from '@/engine/content/studios';
 import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, GENRE_BY_ID, isAlphabetical,
@@ -544,6 +545,90 @@ describe('the production companies', () => {
     const touched = new Set(STUDIOS.flatMap((one) => one.worksIn));
     expect(touched.size).toBeGreaterThan(50);
     expect(touched.size).toBeLessThan(FILM_GENRES.length);
+  });
+
+  it('says whether an unknown can get in, which nothing else here could answer', () => {
+    const by = (kind: string) => STUDIOS.filter((one) => one.newFaces === kind);
+    expect(by('discovers').length + by('open').length + by('guarded').length).toBe(18);
+    // It is not the budget axis wearing another hat. Blumhouse is cheap and
+    // casts unknowns because the economics need it; Annapurna is cheap and
+    // casts movie stars because auteurs bring them. If the two ever line up
+    // exactly, one of them is redundant.
+    const cheap = STUDIOS.filter((one) => one.budgets.includes('micro') || one.budgets.includes('low'));
+    expect(cheap.map((one) => one.newFaces)).toContain('discovers');
+    expect(cheap.map((one) => one.newFaces)).toContain('guarded');
+    expect(STUDIO_BY_ID.blumhouse!.newFaces).toBe('discovers');
+    expect(STUDIO_BY_ID.annapurna!.newFaces).toBe('guarded');
+    // Somebody starting from nothing has to have somewhere to start.
+    expect(by('discovers').length).toBeGreaterThan(0);
+  });
+
+  it('shoots only in cities the gazetteer really has', () => {
+    for (const studio of STUDIOS) {
+      expect(studio.shootsIn.length, `${studio.name} shoots nowhere`).toBeGreaterThan(1);
+      expect(new Set(studio.shootsIn).size, `${studio.name} repeats a city`).toBe(studio.shootsIn.length);
+      for (const id of studio.shootsIn) {
+        expect(CITIES.get(id), `${studio.name} shoots in a city that does not exist: ${id}`).toBeTruthy();
+      }
+      expect(citiesFor(studio)).toHaveLength(studio.shootsIn.length);
+    }
+    // The join runs back from the map to the work.
+    expect(studiosShootingIn('us-ga-atlanta').length).toBeGreaterThan(4);
+    expect(studiosShootingIn('nowhere-at-all')).toHaveLength(0);
+    for (const studio of studiosShootingIn('uk-eng-london')) {
+      expect(shootsWhere(studio, 'uk-eng-london')).toBe(true);
+    }
+  });
+
+  it('derives the output band from the number, so the two cannot disagree', () => {
+    for (const studio of STUDIOS) {
+      expect(studio.titlesAYear, `${studio.name} makes nothing`).toBeGreaterThan(0);
+      expect(VOLUME_LABEL[volumeOf(studio)], studio.name).toBeTruthy();
+      // The band is a function of the number and nothing else is stored.
+      expect(Object.keys(studio)).not.toContain('volume');
+    }
+    // Two claims the prose makes, now answerable from the data.
+    const biggest = [...STUDIOS].sort((a, b) => b.titlesAYear - a.titlesAYear)[0]!;
+    expect(biggest.id, 'Netflix is described as the biggest output of anybody').toBe('netflix');
+    const majors = studiosInTier('major');
+    const smallestMajor = [...majors].sort((a, b) => a.titlesAYear - b.titlesAYear)[0]!;
+    expect(smallestMajor.id, 'Apple is described as the smallest slate of the eight').toBe('apple');
+  });
+
+  it('names a few things each company made', () => {
+    const seen = new Map<string, string>();
+    for (const studio of STUDIOS) {
+      expect(studio.knownFor.length, `${studio.name} made nothing anybody knows`).toBeGreaterThan(2);
+      for (const title of studio.knownFor) {
+        expect(title).not.toBe('');
+        // Produced, not distributed — casting runs through whoever produces.
+        // The two come apart: Moonlight was Plan B's and A24 only released it,
+        // and it was on both lists until this check said so.
+        expect(seen.get(title), `${title} is claimed by ${seen.get(title)} and ${studio.name}`).toBeUndefined();
+        seen.set(title, studio.name);
+      }
+    }
+  });
+
+  it('puts everyone under an agreement and knows what a day pays there', () => {
+    for (const studio of STUDIOS) {
+      const agreements = agreementsFor(studio);
+      expect(agreements.length, `${studio.name} works under no agreement`).toBeGreaterThan(0);
+      const floor = scaleFloor(studio);
+      // Background is the bottom of the ladder and weekly is the top of it.
+      expect(floor.background).toBeLessThan(floor.day);
+      expect(floor.day).toBeLessThan(floor.week);
+      for (const one of agreements) expect(floor.day).toBeLessThanOrEqual(SCALE[one]!.day);
+    }
+    // Every band maps to a real agreement, and the cheap end really is cheaper.
+    for (const band of Object.keys(BUDGET_LABEL) as (keyof typeof BUDGET_LABEL)[]) {
+      expect(SCALE[AGREEMENT_FOR[band]]).toBeTruthy();
+    }
+    expect(scaleFloor(STUDIO_BY_ID.blumhouse!).day).toBeLessThan(scaleFloor(STUDIO_BY_ID.disney!).day);
+    // The two low tiers are real and none of these eighteen reaches them; the
+    // day a smaller production does, this is the line that changes.
+    const reached = new Set(STUDIOS.flatMap((one) => agreementsFor(one)));
+    expect([...reached].sort()).toEqual(['low_budget', 'theatrical']);
   });
 
   it('reaches every named person through one door', () => {
