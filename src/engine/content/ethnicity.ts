@@ -43,9 +43,9 @@ export const ETHNICITY_BY_ID: Readonly<Record<string, Ethnicity>> = Object.fromE
 export const ETHNICITY_OTHER = 'other';
 
 export const ETHNICITY_NOTE =
-  'Tick as many as are true. It is who your character is and nothing else: it carries no '
+  'Tick as many as are true. It’s who your character is and nothing else: it carries no '
   + 'attribute, no skill and no advantage anywhere in the game, nothing in the simulation reads '
-  + 'it, and it is never guessed from a name or a country. Leave it blank if you would rather '
+  + 'it, and it’s never guessed from a name or a country. Leave it blank if you’d rather '
   + 'not say.';
 
 /** How a set of them reads on a page, in the order the list is written. */

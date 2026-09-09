@@ -10,7 +10,10 @@
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { ATTRIBUTES, TRAITS, ALL_TRAITS } from '@/engine/domain/attributes';
+import {
+  ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, ALL_TRAITS, attributesInGroup,
+} from '@/engine/domain/attributes';
+import { CEILING } from '@/engine/content/prodigy';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
@@ -326,5 +329,48 @@ describe('mastery of every genre', () => {
   it('keeps every id and name unique', () => {
     expect(new Set(GENRE_MASTERIES.map((m) => m.id)).size).toBe(GENRE_MASTERIES.length);
     expect(new Set(GENRE_MASTERIES.map((m) => m.name)).size).toBe(GENRE_MASTERIES.length);
+  });
+});
+
+describe('the acting sheet', () => {
+  it('lists every skill and every trait alphabetically', () => {
+    const skills = ATTRIBUTES.map((a) => a.name);
+    expect(skills).toEqual([...skills].sort((a, b) => a.localeCompare(b, 'en')));
+    const traits = TRAITS.map((t) => t.name);
+    expect(traits).toEqual([...traits].sort((a, b) => a.localeCompare(b, 'en')));
+  });
+
+  it('keeps the ids the traits point at', () => {
+    // A trait's attributeMods name attribute ids. One that no longer exists
+    // would write into a key nothing reads, and nothing would say so.
+    const ids = new Set(ATTRIBUTES.map((a) => a.id));
+    for (const trait of TRAITS) {
+      for (const id of Object.keys(trait.attributeMods ?? {})) {
+        expect(ids.has(id), `${trait.name} modifies unknown attribute '${id}'`).toBe(true);
+      }
+    }
+  });
+
+  it('gives every skill a group the interface knows', () => {
+    const groups = new Set(ATTRIBUTE_GROUPS);
+    for (const skill of ATTRIBUTES) {
+      expect(groups.has(skill.group), `${skill.name} is in unknown group '${skill.group}'`).toBe(true);
+    }
+    // Every group carries something; an empty one is a group that died.
+    for (const group of ATTRIBUTE_GROUPS) {
+      expect(attributesInGroup(group).length, `${group} is empty`).toBeGreaterThan(0);
+    }
+  });
+
+  it('hands the player all of it, at the ceiling', () => {
+    const sim = createSave(1, 'goat-sheet', { ...defaultConfig() });
+    const player = sim.universe.people[sim.universe.playerId]!;
+    expect(Object.keys(player.attributes)).toHaveLength(ATTRIBUTES.length);
+    for (const skill of ATTRIBUTES) expect(player.attributes[skill.id]).toBe(CEILING);
+    // Every acting trait and a mastery of every genre, held at once.
+    expect(ALL_TRAITS).toHaveLength(TRAITS.length + GENRE_MASTERIES.length);
+    for (const trait of ALL_TRAITS) {
+      expect(player.traits, `${trait.name} not held`).toContain(trait.id);
+    }
   });
 });

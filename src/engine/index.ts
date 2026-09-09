@@ -472,7 +472,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   if (!premise) errors.push('The save doesn’t say what game it is: the premise is missing.');
   else {
     if (premise.kind !== 'actor-actress-life-simulator') {
-      errors.push(`The save claims to be a '${premise.kind}', which SLATE is not.`);
+      errors.push(`The save claims to be a '${premise.kind}', which SLATE isn’t.`);
     }
     if (premise.equalStanding !== true) {
       errors.push('The premise no longer holds actor and actress as equals.');

@@ -214,7 +214,9 @@ describe('a save that has lost the premise', () => {
 
     const report = validateUniverse(sim.universe);
     expect(report.ok).toBe(false);
-    expect(report.errors.join(' ')).toMatch(/which SLATE is not/i);
+    const said = report.errors.join(' ');
+    expect(said).toMatch(/life-simulator/);
+    expect(said).toMatch(/SLATE isn’t|SLATE is not/);
   });
 
   it('fails validation when the two titles stop being equals', () => {
@@ -385,7 +387,7 @@ describe('the title a character is billed under', () => {
     // a pre-picked Actor would make actor exactly that, on the one screen where
     // the choice is real.
     expect(settledTitle('they/them')).toBeUndefined();
-    expect(source).toContain('Choose whether you are billed as an actor or an actress.');
+    expect(source).toContain('Choose whether you’re billed as an actor or an actress.');
   });
 
   it("offers both words from the same list, in the engine's own order", () => {

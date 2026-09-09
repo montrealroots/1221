@@ -362,7 +362,7 @@ function IdentityStep({ config, set, setConfig }: {
             <>
               <output className="settled-title" htmlFor="pronouns">{PERFORMER_NOUN[settled]}</output>
               <p className="xs dim" style={{ marginTop: 4 }}>
-                Your pronouns say which of the two words is yours, so there is nothing to pick.
+                Your pronouns say which of the two words is yours, so there’s nothing to pick.
                 Change them and this changes with them.
               </p>
             </>
@@ -423,7 +423,7 @@ function IdentityStep({ config, set, setConfig }: {
             <label htmlFor="ethnicity-own">In Your Own Words</label>
             <input
               id="ethnicity-own" type="text"
-              placeholder="However you would say it"
+              placeholder="However you’d say it"
               value={config.raceEthnicityOwn ?? ''}
               onChange={(e) => set('raceEthnicityOwn', e.target.value)}
             />
@@ -792,8 +792,8 @@ function PersonalStep({
           <div>
             <h2>Genres</h2>
             <p className="muted small">
-              The films you love, which is not the same question as the films you would be cast in.
-              Take as many as are true — there is no limit here.
+              The films you love, which isn’t the same question as the films you’d be cast in.
+              Take as many as are true — there’s no limit here.
             </p>
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>
@@ -845,7 +845,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <h2>My Skills</h2>
             <p className="muted small">
               You are an {billedAs(config).toLowerCase()}, and you are the best there
-              has ever been at it. There is nothing to choose here, because nothing is missing.
+              has ever been at it. There’s nothing to choose here, because nothing is missing.
             </p>
           </div>
         </div>
@@ -1133,7 +1133,7 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     // The year, not the age. A birth year at the cap can still leave somebody
     // seventeen when the save opens, and that is a life this game will run.
     if (!titleOf(config)) {
-      issues.push('Choose whether you are billed as an actor or an actress.');
+      issues.push('Choose whether you’re billed as an actor or an actress.');
     }
     if (config.birthYear > latestBirthYear(config.startYear)) {
       issues.push(`Your character can’t be born after ${latestBirthYear(config.startYear)}.`);

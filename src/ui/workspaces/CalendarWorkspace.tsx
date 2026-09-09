@@ -49,7 +49,7 @@ export function CalendarWorkspace() {
         <h1>Every commitment you have.</h1>
         <p className="muted">
           Everything the world has put on your calendar, and the days the country
-          you are standing in observes. If two things want you at once, they’re
+          you’re standing in observes. If two things want you at once, they’re
           flagged here first.
         </p>
       </div>
