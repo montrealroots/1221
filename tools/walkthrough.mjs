@@ -138,6 +138,24 @@ await sections('save-slots-empty', 'three slots, nothing in any of them');
 
 await click(/^New Save$/);
 await page.waitForTimeout(1100);
+
+// The default pronouns are they/them, which settles neither title, so the step
+// will not advance until one is picked. Pick one here rather than changing the
+// pronouns, so the walk goes through the branch a player actually meets.
+const billed = page.getByRole('group', { name: 'Billed As' });
+if (await billed.count()) {
+  await billed.getByRole('button', { name: 'Actress' }).click();
+  await page.waitForTimeout(400);
+}
+
+// Something to say about who she is, so the field is photographed filled in
+// rather than empty.
+const race = page.getByRole('group', { name: 'Race Or Ethnicity' });
+if (await race.count()) {
+  await race.getByRole('button', { name: 'Black Or African' }).click();
+  await page.waitForTimeout(300);
+}
+
 await sections('creation-1-identity', 'step 1 of 5: name, portrait, where you are from');
 
 const dataUrl = await page.evaluate(() => {
