@@ -211,8 +211,8 @@ if (await town.count()) {
 }
 
 const STEPS = [
-  ['creation-2-personal', 'step 2 of 5: personality, its traits, interests and background'],
-  ['creation-3-craft', 'step 3 of 5: the craft, and how far along it already is'],
+  ['creation-2-who-you-are', 'step 2 of 5: personality, traits, interests, genres and background'],
+  ['creation-3-my-skills', 'step 3 of 5: the craft, and how far along it already is'],
   ['creation-4-starting-point', 'step 4 of 5: the city, the housing and the money'],
   ['creation-5-review', 'step 5 of 5: all of it, before it becomes a save'],
 ];

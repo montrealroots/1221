@@ -1,7 +1,7 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Personal, My Skills, Starting Point, Review, then Start.
+ * Identity, Who You Are, My Skills, Starting Point, Review, then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -56,7 +56,7 @@ export function latestBirthYear(startYear: number): number {
   return startYear - BIRTH_YEARS_BEFORE_START;
 }
 
-const STEPS = ['Identity', 'Personal', 'My Skills', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Who You Are', 'My Skills', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
 
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
@@ -175,7 +175,7 @@ export function CharacterCreation({
         {step === 0 && <IdentityStep config={config} set={set} setConfig={setConfig} />}
         {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === 2 && <CareerStep config={config} set={set} />}
-        {step === 3 && <StartingPointStep config={config} set={set} />}
+        {step === 3 && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
         {step === 4 && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
@@ -268,22 +268,13 @@ function IdentityStep({ config, set, setConfig }: {
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
   const home = CITIES.get(config.startLocationId);
-  const birthplace = CITIES.get(config.homeRegionId);
   // Whether they hold a passport for the country they actually live in. When
   // they do not, the second-citizenship field is the one that matters.
   const homeCountryId = home?.countryId;
   const citizenOfHome = homeCountryId !== undefined
     && isCitizenOf({ citizenshipId: config.citizenshipId, secondCitizenshipId: config.secondCitizenshipId }, homeCountryId);
 
-  // Most people still live where they are from, so that is the default and
-  // the home town follows the birthplace until somebody says it should not.
-  // Once they have said so it stays said, even if they later pick the same
-  // town.
   const settled = settledTitle(config.pronouns);
-
-  const [stillLivesThere, setStillLivesThere] = useState(
-    () => config.homeRegionId === config.startLocationId,
-  );
 
   return (
     <div className="card">
@@ -507,8 +498,9 @@ function IdentityStep({ config, set, setConfig }: {
         cityId={config.homeRegionId}
         onPick={(picked) => {
           set('homeRegionId', picked.id);
-          // Somebody who has not said otherwise still lives where they are from.
-          if (stillLivesThere) {
+          // Somebody who has not said otherwise still lives where they are
+          // from, so the home town follows until Starting Point says it does not.
+          if (config.livesWhereBorn) {
             const previous = CITIES.get(config.startLocationId);
             set('startLocationId', picked.id);
             if (!previous || config.citizenshipId === previous.countryId) {
@@ -517,67 +509,6 @@ function IdentityStep({ config, set, setConfig }: {
           }
         }}
       />
-
-      <hr className="divider" />
-
-      <div className="panel-head">
-        <div>
-          <h3>Where You Live</h3>
-          <p className="muted small">
-            Where you are decides your taxes, your rent, your job market and how much industry work is
-            within reach. Picking a country here sets your citizenship to match — change it above if you
-            live somewhere you aren’t a citizen of.
-          </p>
-        </div>
-      </div>
-
-      <label className="check" htmlFor="live-here">
-        <input
-          id="live-here"
-          type="checkbox"
-          checked={stillLivesThere}
-          onChange={(e) => {
-            setStillLivesThere(e.target.checked);
-            if (e.target.checked) {
-              const previous = CITIES.get(config.startLocationId);
-              set('startLocationId', config.homeRegionId);
-              const birth = CITIES.get(config.homeRegionId);
-              if (birth && (!previous || config.citizenshipId === previous.countryId)) {
-                set('citizenshipId', birth.countryId);
-              }
-            }
-          }}
-        />
-        <span>
-          I Still Live Where I Was Born
-          {birthplace && <span className="dim"> — {placeLine(birthplace)}</span>}
-        </span>
-      </label>
-
-      {!stillLivesThere && (
-        <LocationPicker
-          idPrefix="live"
-          cityId={config.startLocationId}
-          onPick={(picked) => {
-            const previous = CITIES.get(config.startLocationId);
-            set('startLocationId', picked.id);
-            // Citizenship follows the country while the two agree. Once somebody
-            // has deliberately made them differ, moving no longer overwrites it.
-            if (!previous || config.citizenshipId === previous.countryId) {
-              set('citizenshipId', picked.countryId);
-            }
-          }}
-        />
-      )}
-
-      {!stillLivesThere && home && (
-        <div className="callout">
-          Living in <strong>{placeLine(home)}</strong>
-          {birthplace && birthplace.countryId !== home.countryId && (
-            <> · You moved country to get where you are, which is its own kind of start.</>
-          )}
-        </div>
-      )}
 
       <div className="callout">
         You will be <strong>{ageAtStart(config)}</strong> when the save begins.
@@ -717,7 +648,7 @@ function PersonalStep({
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Personality</h2>
+            <h2>Traits</h2>
             <p className="muted small">
               Pick up to {MAX_PERSONALITY_TRAITS}. Who you are, not what you are good at — you are
               already the best alive at the one thing there is to be good at. Each pair here is one
@@ -916,20 +847,89 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   );
 }
 
-function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+function StartingPointStep({ config, set, setConfig }: {
+  config: NewSaveConfig;
+  set: Setter;
+  setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
+}) {
   const city = CITIES.get(config.startLocationId);
   const wealth = WEALTH_PROFILES[config.wealth];
+
+  const birthplace = CITIES.get(config.homeRegionId);
 
   return (
     <div className="col gap-5">
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where You Start</h2>
+            <h2>Where You Live</h2>
+            <p className="muted small">
+              Where you are decides your rent and what is within reach of you. Picking a country
+              here sets your citizenship to match — change that on Identity if you live somewhere
+              you aren’t a citizen of.
+            </p>
+          </div>
+        </div>
+
+        <label className="check" htmlFor="live-here">
+          <input
+            id="live-here"
+            type="checkbox"
+            checked={config.livesWhereBorn}
+            onChange={(e) => {
+              const on = e.target.checked;
+              setConfig((c) => {
+                if (!on) return { ...c, livesWhereBorn: false };
+                const previous = CITIES.get(c.startLocationId);
+                const born = CITIES.get(c.homeRegionId);
+                const follows = born && (!previous || c.citizenshipId === previous.countryId);
+                return {
+                  ...c,
+                  livesWhereBorn: true,
+                  startLocationId: c.homeRegionId,
+                  ...(follows ? { citizenshipId: born.countryId } : {}),
+                };
+              });
+            }}
+          />
+          <span>
+            I Still Live Where I Was Born
+            {birthplace && <span className="dim"> — {placeLine(birthplace)}</span>}
+          </span>
+        </label>
+
+        {!config.livesWhereBorn && (
+          <LocationPicker
+            idPrefix="live"
+            cityId={config.startLocationId}
+            onPick={(picked) => {
+              const previous = CITIES.get(config.startLocationId);
+              set('startLocationId', picked.id);
+              // Citizenship follows the country while the two agree. Once
+              // somebody has deliberately made them differ, moving no longer
+              // overwrites it.
+              if (!previous || config.citizenshipId === previous.countryId) {
+                set('citizenshipId', picked.countryId);
+              }
+            }}
+          />
+        )}
+
+        {!config.livesWhereBorn && city && birthplace && birthplace.countryId !== city.countryId && (
+          <div className="callout">
+            You moved country to get where you are, which is its own kind of start.
+          </div>
+        )}
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>What It Costs</h2>
             <p className="muted small">
               {city
-                ? `${city.name}, chosen on Identity. This is what living there costs and offers.`
-                : 'Choose somewhere to live on the Identity step.'}
+                ? `What living in ${city.name} costs and offers.`
+                : 'Choose somewhere to live first.'}
             </p>
           </div>
         </div>
@@ -1190,11 +1190,10 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     }
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
-    if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === 3) {
-    if (!CITIES.get(config.startLocationId)) issues.push('Choose a city to start in.');
+    if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
     if (config.startDay < 1 || config.startDay > 28) issues.push('Pick a start day between 1 and 28.');
   }
   return issues;

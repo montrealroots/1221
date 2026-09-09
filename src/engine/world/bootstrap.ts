@@ -69,6 +69,16 @@ export interface NewSaveConfig {
   /** Said in their own words, when the list does not have it. */
   raceEthnicityOwn?: string;
   homeRegionId: string;
+  /**
+   * Whether they still live where they were born.
+   *
+   * On the config rather than in a component's state because two steps read
+   * it: Place Of Birth on Identity carries the home town with it while this
+   * is true, and Where You Live on Starting Point is what sets it. It also
+   * means a half-filled form remembers the answer instead of guessing it back
+   * from whether the two places happen to match.
+   */
+  livesWhereBorn: boolean;
   citizenshipId: string;
   /** Headshot as a data URL, already fitted to the portrait frame. */
   portrait?: string;
@@ -125,7 +135,7 @@ export function defaultConfig(): NewSaveConfig {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     raceEthnicity: [],
-    homeRegionId: 'us-ca-losangeles', citizenshipId: 'us',
+    homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, citizenshipId: 'us',
     personality: defaultPersonality(),
     personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
