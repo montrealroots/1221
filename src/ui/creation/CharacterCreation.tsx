@@ -34,14 +34,20 @@ import {
 import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
 
 /**
- * The youngest a character can be when the save begins.
+ * How far back the last year a character can be born in sits from the year
+ * the save begins.
  *
- * Eighteen, because this is a working actor's life and the work is adult
- * work: everything a career is made of — signing with an agent, signing a
- * contract, being on a set without somebody standing in for your consent —
- * is something a minor cannot do for themselves.
+ * The line is drawn on the year, not on the age. A birthday later in the year
+ * than the start date leaves somebody seventeen when the save opens, and that
+ * is fine: the picker and the rule say the same thing, which is that 2008 is
+ * as recent as a birth year gets against a save that begins in 2026.
  */
-export const MINIMUM_AGE = 18;
+export const BIRTH_YEARS_BEFORE_START = 18;
+
+/** The last year somebody can be born in and still start this save. */
+export function latestBirthYear(startYear: number): number {
+  return startYear - BIRTH_YEARS_BEFORE_START;
+}
 
 const STEPS = ['Identity', 'Personal', 'Your Craft', 'Starting Point', 'Review'] as const;
 type StepIndex = 0 | 1 | 2 | 3 | 4;
@@ -237,10 +243,11 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
   const citizenOfHome = homeCountryId !== undefined
     && isCitizenOf({ citizenshipId: config.citizenshipId, secondCitizenshipId: config.secondCitizenshipId }, homeCountryId);
 
-  // Most people are from where they are, so that is the default and the
-  // birthplace follows the home town until somebody says it should not. Once
-  // they have said so it stays said, even if they later pick the same town.
-  const [bornWhereTheyLive, setBornWhereTheyLive] = useState(
+  // Most people still live where they are from, so that is the default and
+  // the home town follows the birthplace until somebody says it should not.
+  // Once they have said so it stays said, even if they later pick the same
+  // town.
+  const [stillLivesThere, setStillLivesThere] = useState(
     () => config.homeRegionId === config.startLocationId,
   );
 
@@ -330,7 +337,7 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         <div className="field">
           <label htmlFor="birth-year">Year Of Birth</label>
           <input
-            id="birth-year" type="number" min={1940} max={config.startYear - MINIMUM_AGE}
+            id="birth-year" type="number" min={1940} max={latestBirthYear(config.startYear)}
             value={config.birthYear}
             onChange={(e) => set('birthYear', Number(e.target.value))}
           />
@@ -384,35 +391,6 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
 
       <div className="panel-head">
         <div>
-          <h3>Where You Live</h3>
-          <p className="muted small">
-            Where you are decides your taxes, your rent, your job market and how much industry work is
-            within reach. Picking a country here sets your citizenship to match — change it above if you
-            live somewhere you aren’t a citizen of.
-          </p>
-        </div>
-      </div>
-
-      <LocationPicker
-        idPrefix="live"
-        cityId={config.startLocationId}
-        onPick={(picked) => {
-          const previous = CITIES.get(config.startLocationId);
-          set('startLocationId', picked.id);
-          // Somebody who has not said otherwise was born where they live.
-          if (bornWhereTheyLive) set('homeRegionId', picked.id);
-          // Citizenship follows the country while the two agree. Once somebody
-          // has deliberately made them differ, moving no longer overwrites it.
-          if (!previous || config.citizenshipId === previous.countryId) {
-            set('citizenshipId', picked.countryId);
-          }
-        }}
-      />
-
-      <hr className="divider" />
-
-      <div className="panel-head">
-        <div>
           <h3>Place Of Birth</h3>
           <p className="muted small">
             Where you are from, which isn’t always where you ended up. It’s what you say when
@@ -422,34 +400,78 @@ function IdentityStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         </div>
       </div>
 
-      <label className="check" htmlFor="born-here">
+      <LocationPicker
+        idPrefix="born"
+        cityId={config.homeRegionId}
+        onPick={(picked) => {
+          set('homeRegionId', picked.id);
+          // Somebody who has not said otherwise still lives where they are from.
+          if (stillLivesThere) {
+            const previous = CITIES.get(config.startLocationId);
+            set('startLocationId', picked.id);
+            if (!previous || config.citizenshipId === previous.countryId) {
+              set('citizenshipId', picked.countryId);
+            }
+          }
+        }}
+      />
+
+      <hr className="divider" />
+
+      <div className="panel-head">
+        <div>
+          <h3>Where You Live</h3>
+          <p className="muted small">
+            Where you are decides your taxes, your rent, your job market and how much industry work is
+            within reach. Picking a country here sets your citizenship to match — change it above if you
+            live somewhere you aren’t a citizen of.
+          </p>
+        </div>
+      </div>
+
+      <label className="check" htmlFor="live-here">
         <input
-          id="born-here"
+          id="live-here"
           type="checkbox"
-          checked={bornWhereTheyLive}
+          checked={stillLivesThere}
           onChange={(e) => {
-            setBornWhereTheyLive(e.target.checked);
-            if (e.target.checked) set('homeRegionId', config.startLocationId);
+            setStillLivesThere(e.target.checked);
+            if (e.target.checked) {
+              const previous = CITIES.get(config.startLocationId);
+              set('startLocationId', config.homeRegionId);
+              const birth = CITIES.get(config.homeRegionId);
+              if (birth && (!previous || config.citizenshipId === previous.countryId)) {
+                set('citizenshipId', birth.countryId);
+              }
+            }
           }}
         />
         <span>
-          I Was Born Where I Live Now
-          {home && <span className="dim"> — {placeLine(home)}</span>}
+          I Still Live Where I Was Born
+          {birthplace && <span className="dim"> — {placeLine(birthplace)}</span>}
         </span>
       </label>
 
-      {!bornWhereTheyLive && (
+      {!stillLivesThere && (
         <LocationPicker
-          idPrefix="born"
-          cityId={config.homeRegionId}
-          onPick={(picked) => set('homeRegionId', picked.id)}
+          idPrefix="live"
+          cityId={config.startLocationId}
+          onPick={(picked) => {
+            const previous = CITIES.get(config.startLocationId);
+            set('startLocationId', picked.id);
+            // Citizenship follows the country while the two agree. Once somebody
+            // has deliberately made them differ, moving no longer overwrites it.
+            if (!previous || config.citizenshipId === previous.countryId) {
+              set('citizenshipId', picked.countryId);
+            }
+          }}
         />
       )}
 
-      {!bornWhereTheyLive && birthplace && (
+      {!stillLivesThere && home && (
         <div className="callout">
-          From <strong>{placeLine(birthplace)}</strong>
-          {home && birthplace.countryId !== home.countryId && (
+          Living in <strong>{placeLine(home)}</strong>
+          {birthplace && birthplace.countryId !== home.countryId && (
             <> · You moved country to get where you are, which is its own kind of start.</>
           )}
         </div>
@@ -912,11 +934,10 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
     const age = ageAtStart(config);
-    // The year picker already stops at the last year that can be old enough,
-    // but the month and the day can still land short of the birthday, so the
-    // age itself is what decides.
-    if (age < MINIMUM_AGE) {
-      issues.push(`Your character has to be at least ${MINIMUM_AGE} when the save begins.`);
+    // The year, not the age. A birth year at the cap can still leave somebody
+    // seventeen when the save opens, and that is a life this game will run.
+    if (config.birthYear > latestBirthYear(config.startYear)) {
+      issues.push(`Your character can’t be born after ${latestBirthYear(config.startYear)}.`);
     }
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');

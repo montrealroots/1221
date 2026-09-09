@@ -14,7 +14,7 @@ import { quickSave } from '@/engine';
 import { ATTRIBUTES, TRAITS, ALL_TRAITS } from '@/engine/domain/attributes';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
-import { MINIMUM_AGE } from '@/ui/creation/CharacterCreation';
+import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
 function globSource(directory: string): string {
@@ -95,28 +95,26 @@ describe('a fact stated twice is stated the same way', () => {
   });
 });
 
-describe('the age a save can begin at', () => {
+describe('the year a character can be born in', () => {
   const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
 
-  it('will not start a save on somebody under eighteen', () => {
-    expect(MINIMUM_AGE).toBe(18);
+  it('stops at eighteen years before the save begins', () => {
+    expect(BIRTH_YEARS_BEFORE_START).toBe(18);
+    expect(latestBirthYear(2026)).toBe(2008);
+  });
 
+  it('lets a birthday at the cap open the save at seventeen', () => {
     const start = { year: 2026, month: 3, day: 2 };
-    // The last birthday that clears it, and the first that does not.
+    // 2008 is allowed, and a June birthday in 2008 is seventeen in March.
+    // The rule is the year, so this is a life the game will run.
+    expect(ageOnDate({ year: 2008, month: 6, day: 14 }, start)).toBe(17);
     expect(ageOnDate({ year: 2008, month: 3, day: 2 }, start)).toBe(18);
-    expect(ageOnDate({ year: 2008, month: 3, day: 3 }, start)).toBe(17);
   });
 
-  it('stops the year picker at the last year that could be old enough', () => {
-    // A 2008 birthday can still land short of it, which is why the age itself
-    // is checked as well; the picker's job is to stop the obvious mistake.
-    expect(source).toContain('max={config.startYear - MINIMUM_AGE}');
-    expect(source).not.toMatch(/max=\{config\.startYear - \d/);
-  });
-
-  it('states the rule once, so the picker and the check cannot disagree', () => {
-    const literals = source.match(/\bage < \d+\b/g) ?? [];
-    expect(literals).toEqual([]);
-    expect(source).toContain('if (age < MINIMUM_AGE)');
+  it('checks the year rather than the age, so the picker and the rule agree', () => {
+    expect(source).toContain('max={latestBirthYear(config.startYear)}');
+    expect(source).toContain('config.birthYear > latestBirthYear(config.startYear)');
+    // No age floor anywhere: it would contradict the year the picker allows.
+    expect(source.match(/\bage < \d+\b/g) ?? []).toEqual([]);
   });
 });
