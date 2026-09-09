@@ -127,7 +127,7 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
 
       <Block label="What It Makes">
         <p className="small" style={{ margin: '0 0 var(--s2)' }}>{studio.specialty}</p>
-        <div className="row wrap gap-1">
+        <div className="chip-row">
           {studio.formats.map((format) => (
             <span key={format} className="chip chip-accent">{FORMAT_LABEL[format]}</span>
           ))}
@@ -135,7 +135,7 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
       </Block>
 
       <Block label="At What Size">
-        <div className="row wrap gap-1" style={{ marginBottom: 'var(--s2)' }}>
+        <div className="chip-row" style={{ marginBottom: 'var(--s2)' }}>
           {studio.budgets.map((band) => (
             <span key={band} className="chip">{BUDGET_LABEL[band]}</span>
           ))}
@@ -147,7 +147,7 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
       </Block>
 
       <Block label="Works In">
-        <div className="row wrap gap-1">
+        <div className="chip-row">
           {genresOf(studio).map((genre) => (
             <span key={genre.id} className="chip">{genre.label}</span>
           ))}
@@ -156,7 +156,7 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
 
       {studio.labels.length > 0 && (
         <Block label="Produces Under">
-          <div className="row wrap gap-1">
+          <div className="chip-row">
             {studio.labels.map((label) => <span key={label} className="chip">{label}</span>)}
           </div>
         </Block>
@@ -173,20 +173,20 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
       )}
 
       <Block label="Known For">
-        <div className="row wrap gap-1">
+        <div className="chip-row">
           {studio.knownFor.map((title) => <span key={title} className="chip">{title}</span>)}
         </div>
       </Block>
 
       <Block label="Getting In">
-        <div style={{ marginBottom: 'var(--s2)' }}>
+        <div className="chip-row" style={{ marginBottom: 'var(--s2)' }}>
           <span className={`chip ${FACES_TONE[studio.newFaces]}`}>{NEW_FACES_LABEL[studio.newFaces]}</span>
         </div>
         <p className="small" style={{ margin: 0 }}>{NEW_FACES_NOTE[studio.newFaces]}</p>
       </Block>
 
       <Block label="Where It Shoots">
-        <div className="row wrap gap-1">
+        <div className="chip-row">
           {citiesFor(studio).map((city) => (
             <span
               key={city.id}
@@ -212,7 +212,7 @@ function StudioDetail({ studio, onClose }: { studio: Studio; onClose: () => void
           <Stat label="Day Performer" value={money(scale.day)} note="A day with lines" />
           <Stat label="Weekly" value={money(scale.week)} note="A week on the call sheet" />
         </div>
-        <div className="row wrap gap-1" style={{ marginBottom: 'var(--s2)' }}>
+        <div className="chip-row" style={{ marginBottom: 'var(--s2)' }}>
           {agreementsFor(studio).map((one) => (
             <span key={one} className="chip">{AGREEMENT_LABEL[one]}</span>
           ))}

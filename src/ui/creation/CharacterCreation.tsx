@@ -576,7 +576,7 @@ function PersonalStep({
     chosen: readonly string[];
     onToggle: (id: string) => void;
   }) => (
-    <div className="row wrap gap-2">
+    <div className="chip-row" style={{ gap: 'var(--s2)' }}>
       {options.map((option) => {
         const on = chosen.includes(option.id);
         return (
@@ -795,7 +795,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
             <div className="xs dim" style={{ marginTop: 4 }}>
               All {ATTRIBUTES.length} Attributes At {CEILING} · All {ALL_TRAITS.length} Traits
             </div>
-            <div className="row wrap gap-1" style={{ marginTop: 8 }}>
+            <div className="chip-row" style={{ marginTop: 8 }}>
               {goatTraitsIn(discipline).map((trait) => (
                 <span key={trait.id} className="chip chip-accent">{trait.name}</span>
               ))}

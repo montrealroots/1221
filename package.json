@@ -16,7 +16,8 @@
     "gate": "npm run validate && node tools/title-case.mjs --check && node tools/label-sweep.mjs && node tools/plural-check.mjs && node tools/voice-check.mjs --check && node tools/spelling.mjs && node tools/typos.mjs && npx vite-node tools/geo-check.mjs && node tools/inventory.mjs --check",
     "base44:contract": "vitest run tests/base44-contract.test.ts",
     "base44:smoke": "node tools/base44-smoke.mjs",
-    "base44:deploy": "npm run build && npx --yes @base44/cli deploy --config base44/config.jsonc"
+    "base44:deploy": "npm run build && npx --yes @base44/cli deploy --config base44/config.jsonc",
+    "audit": "npm run build && (npx vite preview --port 4173 & sleep 3; node tools/ui-audit.mjs ui-audit; code=$?; kill %1 2>/dev/null; exit $code)"
   },
   "dependencies": {
     "react": "^18.3.1",

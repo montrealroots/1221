@@ -59,6 +59,10 @@
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
 
+  /* The distance from a chip's outer edge to its text: its padding plus its
+     border. Kept with the space tokens because .chip is defined from it. */
+  --chip-inset: 9px;
+
   --radius: 10px;
   --radius-sm: 6px;
   --radius-lg: 16px;
@@ -346,7 +350,7 @@ button.link:hover { color: var(--accent-strong); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);
-  padding: 2px var(--s2); border-radius: 100px;
+  padding: 2px calc(var(--chip-inset) - 1px); border-radius: 100px;
   font-size: var(--size-xs); font-weight: 600;
   /* A chip is a label, never prose. "0 / 4" split over two lines is not a
      smaller chip, it is a broken one. */
@@ -354,6 +358,19 @@ button.link:hover { color: var(--accent-strong); }
   background: var(--surface-3); color: var(--text-muted);
   border: 1px solid var(--line);
 }
+
+/*
+ * A chip's text sits inside its own padding and border, so a chip under a
+ * label starts nine pixels right of where the label starts and the two read as
+ * misaligned even though nothing has moved. Anything that has to line up with
+ * a chip pulls back by this, and it is written once here rather than guessed
+ * at each site.
+ */
+.chip-row {
+  display: flex; flex-wrap: wrap; gap: var(--s1);
+  margin-left: calc(var(--chip-inset) * -1);
+}
+
 .chip-accent { background: var(--accent-dim); color: var(--accent-strong); border-color: var(--accent-line); }
 .chip-positive { background: var(--positive-dim); color: var(--positive); border-color: transparent; }
 .chip-negative { background: var(--negative-dim); color: var(--negative); border-color: transparent; }
@@ -580,8 +597,17 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
    whether or not there is a fact: a ticker fits beside the chip and a parent
    company's name does not, and the two wrapping differently is what threw the
    line under them out of true from card to card. */
-.studio-owner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); }
-.studio-owner > .xs { min-height: 1.25em; overflow-wrap: break-word; }
+.studio-owner {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1);
+  /* Pulled back by a chip's inset so the chips' text starts under the name,
+     and the plain line inside pushed forward by the same, so it starts there
+     too. Three rows, one left edge, and it matches the heading above them. */
+  margin-left: calc(var(--chip-inset) * -1);
+}
+.studio-owner > .xs {
+  min-height: 1.25em; overflow-wrap: break-word;
+  padding-left: var(--chip-inset);
+}
 .studio-about { margin: 0; }
 /* Pinned to the floor of the card, so a row ends level however much any one
    card has to say above it. */
@@ -810,6 +836,9 @@ kbd {
 .cal-day[data-out="true"] { background: var(--surface-2); opacity: .5; }
 .cal-day[data-today="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
 .cal-daynum { font-size: var(--size-xs); font-weight: 650; color: var(--text-muted); white-space: nowrap; }
+/* The pill's words under the day number, not six pixels right of it: its text
+   sits behind 4px of padding and the 2px colour bar down its left edge. */
+.cal-day .cal-event { margin-left: -6px; }
 .cal-event {
   font-size: 10px; padding: 1px 4px; border-radius: 3px;
   background: var(--surface-3); color: var(--text-muted);
@@ -943,6 +972,9 @@ kbd {
    * category's colour. Nothing is lost: the day is a button, and tapping it
    * opens the day's own panel with every entry named, timed and placed.
    */
+  /* .cal-day .cal-event, to outrank the pull the wide rule applies: there is
+     no padding and no colour bar here, so there is nothing to pull back from. */
+  .cal-day .cal-event { margin-left: 0; }
   .cal-event {
     display: block; height: 5px; padding: 0; border-left: 0; border-radius: 2px;
     background: var(--event-colour, var(--line-strong));
