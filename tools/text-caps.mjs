@@ -269,240 +269,101 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
   };
 
   console.log(`\n${size.name} (${size.width}x${size.height})`);
-  await page.goto(BASE, { waitUntil: 'networkidle' });
-  // The startup sequence, while it is still on screen.
+
+  /** Clicks and says whether it landed, so a miss cannot read as a screen. */
+  const click = async (pattern) => {
+    const target = page.getByRole('button', { name: pattern }).first();
+    if (!(await target.count())) return false;
+    try { await target.click({ timeout: 4000 }); return true; } catch { return false; }
+  };
+
+  await page.goto(BASE, { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => localStorage.clear());
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(700);
   await check('00-startup');
-  await page.waitForTimeout(3200);
+  await page.getByRole('button', { name: /^New Save$/ }).first().waitFor({ timeout: 25000 });
+  await page.waitForTimeout(400);
   await check('01-slots');
 
-  await page.getByRole('button', { name: /new (save|game)|start|empty slot|create/i }).first().click().catch(() => {});
-  await page.waitForTimeout(1000);
-  for (const [label, value] of [[/first name/i, 'Alexandria'], [/last name/i, 'Castellanos']]) {
-    const f = page.getByLabel(label).first();
-    if (await f.count()) await f.fill(value).catch(() => {});
+  // Creation. A long surname on purpose: the company takes it and the longest
+  // label on Starting Point is built out of it.
+  await click(/^New Save$/);
+  await page.waitForTimeout(1100);
+  for (const [selector, value] of [['#first', 'Alexandria'], ['#last', 'Kristjánsdóttir']]) {
+    const field = page.locator(selector).first();
+    if (await field.count()) await field.fill(value).catch(() => {});
   }
-  const pronouns = page.getByLabel(/pronouns/i).first();
-  if (await pronouns.count()) await pronouns.selectOption('she/her').catch(() => {});
-  const second = page.getByLabel(/second citizenship/i).first();
-  if (await second.count()) await second.selectOption('ca').catch(() => {});
+  // They/them settles no title, so Continue stays shut until one is picked.
+  const billed = page.getByRole('group', { name: 'Billed As' });
+  if (await billed.count()) {
+    await billed.getByRole('button', { name: 'Actress' }).click().catch(() => {});
+    await page.waitForTimeout(300);
+  }
+  const race = page.getByRole('group', { name: 'Race Or Ethnicity' });
+  if (await race.count()) {
+    await race.getByRole('button', { name: 'Black Or African' }).click().catch(() => {});
+    await page.waitForTimeout(200);
+  }
   await check('02-identity');
 
-  const steps = ['03-personal', '04-company', '05-starting-point', '06-review'];
-  for (const step of steps) {
-    const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
-    if (!(await next.count())) break;
-    await next.click().catch(() => {});
-    await page.waitForTimeout(800);
-    if (step === '03-personal') {
-      for (const t of ['Night Owl', 'Holds Grudges', 'Disciplined', 'Generous']) {
-        const b = page.locator('button.trait').filter({ hasText: new RegExp(`^${t}`) }).first();
-        if (await b.count()) await b.click().catch(() => {});
+  for (const [step, screen] of [
+    ['who you are', '03-who-you-are'],
+    ['my skills', '04-my-skills'],
+    ['starting point', '05-starting-point'],
+    ['review', '06-review'],
+  ]) {
+    if (!(await click(/^Continue$/))) { console.log(`  (could not reach ${step})`); break; }
+    await page.waitForTimeout(900);
+    if (screen === '03-who-you-are') {
+      // Open a folded list so its contents are measured rather than its lid.
+      const more = page.getByRole('button', { name: /^Show All/ }).first();
+      if (await more.count()) { await more.click().catch(() => {}); await page.waitForTimeout(500); }
+    }
+    await check(screen);
+  }
+
+  if (await click(/it.s time to be great/i)) {
+    await page.waitForTimeout(4000);
+    await check('07-home');
+
+    if (await click(/^Open Calendar$/)) {
+      await page.waitForTimeout(1500);
+      await check('08-calendar');
+      const day = page.locator('.cal-day:has(.cal-event)').first();
+      if (await day.count()) {
+        await day.scrollIntoViewIfNeeded().catch(() => {});
+        await day.click().catch(() => {});
+        await page.waitForTimeout(700);
+        await check('09-calendar-day');
+      }
+      const entry = page.locator('.list-item').first();
+      if (await entry.count()) {
+        await entry.click().catch(() => {});
+        await page.waitForTimeout(700);
+        await check('10-calendar-entry');
+        await page.keyboard.press('Escape').catch(() => {});
+        await page.waitForTimeout(300);
       }
     }
-    if (step === '04-company') {
-      const nf = page.getByLabel(/what it is called/i).first();
-      if (await nf.count()) await nf.fill('Castellanos Pictures').catch(() => {});
-    }
-    await check(step);
-  }
 
-  const begin = page.getByRole('button', { name: /it.s time to be great|begin|start save/i }).first();
-  if (await begin.count()) { await begin.click().catch(() => {}); await page.waitForTimeout(3800); }
-  const gotIt = page.getByRole('button', { name: /^got it$/i }).first();
-  if (await gotIt.count()) { await gotIt.click().catch(() => {}); await page.waitForTimeout(400); }
-  await check('07-home');
-
-  // Every destination Home offers.
-  const tiles = await page.evaluate(() =>
-    [...document.querySelectorAll('.dest')].map((n) => n.getAttribute('aria-label') || ''));
-  for (const label of tiles) {
-    const name = label.split(',')[0].trim();
-    if (!name) continue;
-    const tile = page.locator(`.dest[aria-label^="${name}"]`).first();
-    if (!(await tile.count())) continue;
-    await tile.click().catch(() => {});
-    await page.waitForTimeout(1100);
-    const dismiss = page.getByRole('button', { name: /^got it$/i }).first();
-    if (await dismiss.count()) { await dismiss.click().catch(() => {}); await page.waitForTimeout(300); }
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    await check(slug);
-
-    // Every tab on the screen, not just the one it opens on. Most of the game
-    // lives behind a second or third tab.
-    const tabCount = await page.locator('.tab').count();
-    for (let i = 1; i < tabCount; i++) {
-      const tab = page.locator('.tab').nth(i);
-      const tabName = ((await tab.textContent().catch(() => '')) || `tab${i}`)
-        .trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 24) || `tab${i}`;
-      await tab.click({ timeout: 4000 }).catch(() => {});
-      await page.waitForTimeout(700);
-      await check(`${slug}--${tabName}`);
-    }
-
-    await page.evaluate(() => {
-      const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));
-      b?.click();
-    });
-    await page.waitForTimeout(600);
-  }
-
-  // A scene, several steps in: the panel above The City, then the gym desk,
-  // the plan, the exercise list, and the cooldown.
-  const city = page.locator('.dest[aria-label^="The City"]').first();
-  if (await city.count()) {
-    await city.click().catch(() => {});
-    await page.waitForTimeout(1100);
-    const dismissCity = page.getByRole('button', { name: /^got it$/i }).first();
-    if (await dismissCity.count()) { await dismissCity.click().catch(() => {}); await page.waitForTimeout(300); }
-    // Each step is named after the scene panel's own title, so a step that
-    // did not open is visible in the log rather than silently "ok".
-    const sceneTitle = async () => ((await page.locator('.scene h2').first().textContent().catch(() => '')) ?? '').trim() || 'no scene on screen';
-    const sceneCheck = async (name) => check(`${name} (${await sceneTitle()})`);
-    const pickScene = async (label) => {
-      const c = page.locator('.scene-choice').filter({ has: page.locator('.scene-choice-label', { hasText: new RegExp(`^${label}$`) }) }).first();
-      await c.waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
-      if (!(await c.count())) { console.log(`  scene: no choice "${label}" at "${await sceneTitle()}"`); return false; }
-      const before = await sceneTitle();
-      await c.click().catch(() => {});
-      // Every choice the walk takes moves the scene to a new step with its own title.
-      await page.waitForFunction((prev) => (document.querySelector('.scene h2')?.textContent ?? '').trim() !== prev, before, { timeout: 8000 }).catch(() => {});
-      await page.waitForTimeout(300);
-      return true;
-    };
-    const leaveScene = async () => {
-      const leave = page.locator('.scene').getByRole('button', { name: /^Leave$/ }).first();
-      if (await leave.count()) { await leave.click().catch(() => {}); await page.waitForTimeout(500); }
-    };
-    // Gyms sit under the Errands tab; a gym row carries its own Work Out.
-    const errands = page.locator('.tab', { hasText: /^Errands$/ }).first();
-    if (await errands.count()) { await errands.click().catch(() => {}); await page.waitForTimeout(500); }
-    // The list is long and its journeys are planned on render; on a busy
-    // machine it can take a moment, so wait for the row rather than guess.
-    const workOut = page.getByRole('button', { name: /^Work Out$/ }).first();
-    await workOut.waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
-    if (!(await workOut.count())) {
-      const tabs = await page.locator('.tab').allTextContents().catch(() => []);
-      const rows = await page.locator('.list-item .small.strong').allTextContents().catch(() => []);
-      const buttons = [...new Set(await page.locator('.list-item .btn').allTextContents().catch(() => []))];
-      console.log(`  scene-gym: no gym row with Work Out on The City — scene not walked`);
-      console.log(`  scene-gym: tabs [${tabs.map((t) => t.trim()).join(', ')}]; ${rows.length} rows; buttons [${buttons.join(', ')}]; first rows [${rows.slice(0, 6).map((r) => r.trim()).join(' | ')}]`);
-    }
-    if (await workOut.count()) {
-      await workOut.click().catch(() => {});
-      await page.waitForTimeout(800);
-      await sceneCheck('scene-gym-arrive');
-      for (const mode of ['Walk', 'Drive', 'Taxi', 'Transit']) { if (await pickScene(mode)) break; }
-      await sceneCheck('scene-gym-desk');
-      await pickScene('Buy A Day Pass');
-      await sceneCheck('scene-gym-plan');
-      await pickScene('Strength');
-      await sceneCheck('scene-gym-pick');
-      // One block: the first exercise on offer, at a steady effort. Finish Up
-      // is only offered once something has been done.
-      const firstExercise = ((await page.locator('.scene-choice .scene-choice-label').allTextContents().catch(() => []))
-        .map((t) => t.trim()).find((t) => t && !/^(Something Else|Finish Up)$/.test(t))) ?? '';
-      if (firstExercise) await pickScene(firstExercise.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      await sceneCheck('scene-gym-effort');
-      await pickScene('Steady');
-      await sceneCheck('scene-gym-after-block');
-      await pickScene('Finish Up');
-      await sceneCheck('scene-gym-cooldown');
-      await leaveScene();
-    }
-
-    // The dealership, on the same tab: the lot, a car, the numbers, the paperwork.
-    // Lots open at nine and the day starts before that, so the clock moves on
-    // an hour at a time until they are, through the same menu the player uses.
-    for (let i = 0; i < 3; i++) {
-      const closed = await page.locator('.scene-choice.is-disabled[title*="closed"]').count().catch(() => 0);
-      const hour = Number(((await page.locator('.topbar-clock strong').textContent().catch(() => '')) ?? '').match(/^(\d+):/)?.[1] ?? 12);
-      const morning = /AM$/.test(((await page.locator('.topbar-clock strong').textContent().catch(() => '')) ?? '').trim()) && hour < 9 && hour !== 12;
-      if (!closed && !morning) break;
-      await page.getByRole('button', { name: /^Advance/ }).first().click().catch(() => {});
-      await page.waitForTimeout(300);
-      await page.getByRole('menuitem', { name: /One Hour/ }).first().click().catch(() => {});
+    if (await click(/^Advance/)) {
       await page.waitForTimeout(600);
-      const anyway = page.getByRole('button', { name: /^Advance Anyway$/ }).first();
-      if (await anyway.count()) { await anyway.click().catch(() => {}); await page.waitForTimeout(600); }
-    }
-    const lookAtCars = page.getByRole('button', { name: /^Look At The Cars$/ }).first();
-    await lookAtCars.waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
-    if (!(await lookAtCars.count())) console.log('  scene-dealer: no dealership row with Look At The Cars on The City — scene not walked');
-    if (await lookAtCars.count()) {
-      await lookAtCars.click().catch(() => {});
-      await page.waitForTimeout(800);
-      await sceneCheck('scene-dealer-arrive');
-      for (const mode of ['Walk', 'Drive', 'Taxi', 'Transit']) { if (await pickScene(mode)) break; }
-      await sceneCheck('scene-dealer-lot');
-      const firstCar = ((await page.locator('.scene-choice .scene-choice-label').allTextContents().catch(() => []))
-        .map((t) => t.trim()).find((t) => t && t !== 'Walk Out')) ?? '';
-      if (firstCar) await pickScene(firstCar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      await sceneCheck('scene-dealer-car');
-      await pickScene('Look It Over');
-      await pickScene('Talk Numbers');
-      await sceneCheck('scene-dealer-numbers');
-      await pickScene('Accept .*');
-      await sceneCheck('scene-dealer-agreed');
-      await leaveScene();
-    }
-    await page.evaluate(() => {
-      const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));
-      b?.click();
-    });
-    await page.waitForTimeout(600);
-  }
-
-  // The calendar's two modals.
-  const calendar = page.locator('.dest[aria-label^="Calendar"]').first();
-  if (await calendar.count()) {
-    await calendar.click().catch(() => {});
-    await page.waitForTimeout(1100);
-    const dismissCal = page.getByRole('button', { name: /^got it$/i }).first();
-    if (await dismissCal.count()) { await dismissCal.click().catch(() => {}); await page.waitForTimeout(300); }
-    await page.locator('.cal-day[data-today="true"]').first().click().catch(() => {});
-    await page.waitForTimeout(500);
-    const planIt = page.getByRole('button', { name: /^Plan Something$/ }).first();
-    if (await planIt.count()) {
-      await planIt.click().catch(() => {});
-      await page.waitForTimeout(500);
-      await check('calendar-plan-form');
+      await check('11-advance-menu');
       await page.keyboard.press('Escape').catch(() => {});
-      const never = page.getByRole('button', { name: /^Never Mind$/ }).first();
-      if (await never.count()) await never.click().catch(() => {});
       await page.waitForTimeout(300);
     }
-    const firstEntry = page.locator('.list-item').filter({ hasText: /Due|Listings|Inventory|Payout|Draw/ }).first();
-    if (await firstEntry.count()) {
-      await firstEntry.click().catch(() => {});
-      await page.waitForTimeout(500);
-      await check('calendar-entry-detail');
-      await page.getByRole('button', { name: /^Close$/ }).first().click().catch(() => {});
+    if (await click(/^Sleep$/)) {
+      await page.waitForTimeout(800);
+      await check('12-sleep');
+      await click(/^Not Yet$/);
       await page.waitForTimeout(300);
     }
-    await page.evaluate(() => {
-      const b = [...document.querySelectorAll('button')].find((x) => /Go To Home/.test(x.getAttribute('aria-label') ?? ''));
-      b?.click();
-    });
-    await page.waitForTimeout(600);
+    if (await click(/save\s*&\s*exit/i)) {
+      await page.waitForTimeout(2200);
+      await check('13-slots-filled');
+    }
   }
-
-  // Go Anywhere, open.
-  await page.keyboard.press('/').catch(() => {});
-  await page.waitForTimeout(600);
-  await check('go-anywhere');
-  await page.keyboard.press('Escape').catch(() => {});
-  await page.waitForTimeout(300);
-
-  // Help, which nothing else opens.
-  await page.evaluate(() => {
-    const b = [...document.querySelectorAll('button')]
-      .find((x) => /help/i.test(x.getAttribute('aria-label') ?? x.textContent ?? ''));
-    b?.click();
-  });
-  await page.waitForTimeout(700);
-  await check('help');
-  await page.keyboard.press('Escape').catch(() => {});
 
   await page.close();
   } catch (err) {

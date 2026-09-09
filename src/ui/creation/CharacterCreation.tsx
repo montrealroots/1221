@@ -26,7 +26,7 @@ import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { zoneAbbreviation } from '@/engine/core/time';
 import { ageOnDate } from '@/engine/core/time';
-import { citizenshipLabel, isCitizenOf } from '@/engine/domain/citizenship';
+import { citizenshipLabel } from '@/engine/domain/citizenship';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
 import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
@@ -35,7 +35,8 @@ import {
 import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
 import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
 import {
-  ESTATE_ACRES, ESTATE_NOTE, HOLDINGS, estateCity, estatePlaceLine, studioName,
+  ESTATE_ACRES, ESTATE_COUNTRY_ID, ESTATE_NOTE, HOLDINGS, estateCity, estatePlaceLine,
+  studioName,
 } from '@/engine/content/estate';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
@@ -139,7 +140,7 @@ export function CharacterCreation({
               <div className="eyebrow">Slot {slot}</div>
               <h1 style={{ fontSize: 'var(--size-lg)' }}>Who Are You Going To Be?</h1>
               <p className="muted small" style={{ marginTop: 2 }}>
-                SLATE is an actor and actress life simulator. This is the{' '}
+                SLATE is a life simulator about the acting business. This is the{' '}
                 {billedAs(config).toLowerCase()} you play.
               </p>
             </div>
@@ -149,7 +150,7 @@ export function CharacterCreation({
 
         {restored && step === 0 && (
           <div className="callout callout-info" style={{ marginBottom: 'var(--s5)' }}>
-            Your previous setup was still here, so it has been restored.
+            You’d half-filled this form already. It’s been put back the way you left it.
             <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(defaultConfig())}>
               Start Over
             </button>
@@ -264,13 +265,9 @@ function IdentityStep({ config, set, setConfig }: {
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
-  const home = CITIES.get(config.startLocationId);
-  // Whether they hold a passport for the country they actually live in. When
-  // they do not, the second-citizenship field is the one that matters.
-  const homeCountryId = home?.countryId;
-  const citizenOfHome = homeCountryId !== undefined
-    && isCitizenOf({ citizenshipId: config.citizenshipId, secondCitizenshipId: config.secondCitizenshipId }, homeCountryId);
-
+  // Whether they hold a passport for the country they live in is no longer a
+  // question: the family's is Icelandic and so is the land, so everybody
+  // created here can work at home. It is still worth saying on the screen.
   const settled = settledTitle(config.pronouns);
 
   return (
@@ -371,9 +368,10 @@ function IdentityStep({ config, set, setConfig }: {
                 ))}
               </div>
               <p className="xs dim" style={{ marginTop: 4 }}>
-                They/them settles neither word, so this one is yours. Actor and actress are two
-                names for the same craft and this game holds them equal: pick the one the
-                business would list you under, and the game will call you by it.
+                He/him settles this by itself, and so does she/her. They/them doesn’t, so the
+                choice is yours. Actor and actress are two words for the same craft and the game
+                treats them as equals — pick the one the business would list you under, and it
+                will call you by it.
               </p>
             </>
           )}
@@ -448,31 +446,16 @@ function IdentityStep({ config, set, setConfig }: {
         </div>
         <div className="field">
           <label htmlFor="citizenship">Citizenship</label>
-          <select id="citizenship" value={config.citizenshipId} onChange={(e) => set('citizenshipId', e.target.value)}>
-            {[...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name))
-              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
-          </select>
+          <input
+            id="citizenship"
+            type="text"
+            value={COUNTRIES.get(ESTATE_COUNTRY_ID)?.name ?? 'Iceland'}
+            readOnly
+            aria-readonly="true"
+          />
           <p className="xs dim" style={{ marginTop: 4 }}>
-            You can take work in a country you hold a passport for. Anywhere else needs an arrangement.
-          </p>
-        </div>
-        <div className="field">
-          <label htmlFor="citizenship-second">Second Citizenship (Optional)</label>
-          <select
-            id="citizenship-second"
-            value={config.secondCitizenshipId ?? ''}
-            onChange={(e) => set('secondCitizenshipId', e.target.value || undefined)}
-          >
-            <option value="">None</option>
-            {[...COUNTRIES.all()]
-              .filter((c) => c.id !== config.citizenshipId)
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
-          </select>
-          <p className="xs dim" style={{ marginTop: 4 }}>
-            {homeCountryId && !citizenOfHome
-              ? `You live in ${COUNTRIES.get(homeCountryId)?.name ?? 'somewhere'} and aren’t a citizen of it. Naturalised there? Say so here.`
-              : 'Born in one country, naturalised in another, and you carry both.'}
+            The family is Icelandic and so are you, wherever you happened to be born. It arrives
+            with the name, and it isn’t yours to give back.
           </p>
         </div>
       </div>
@@ -483,8 +466,8 @@ function IdentityStep({ config, set, setConfig }: {
         <div>
           <h3>Place Of Birth</h3>
           <p className="muted small">
-            Where you are from, which isn’t always where you ended up. It’s what you say when
-            somebody asks, it’s the town your family is still in, and it’s the accent you had
+            Where you’re from, which isn’t always where you ended up. It’s the answer you give
+            when somebody asks, and it’s the accent you had
             to lose or decided to keep.
           </p>
         </div>
@@ -493,18 +476,10 @@ function IdentityStep({ config, set, setConfig }: {
       <LocationPicker
         idPrefix="born"
         cityId={config.homeRegionId}
-        onPick={(picked) => {
-          set('homeRegionId', picked.id);
-          // Somebody who has not said otherwise still lives where they are
-          // from, so the home town follows until Starting Point says it does not.
-          if (config.livesWhereBorn) {
-            const previous = CITIES.get(config.startLocationId);
-            set('startLocationId', picked.id);
-            if (!previous || config.citizenshipId === previous.countryId) {
-              set('citizenshipId', picked.countryId);
-            }
-          }
-        }}
+        // Where you were born, and nothing else. It used to drag your home town
+        // and your passport along with it; home base is the family land now and
+        // the passport is Icelandic, so neither follows from this any more.
+        onPick={(picked) => set('homeRegionId', picked.id)}
       />
 
       <div className="callout">
@@ -617,11 +592,11 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              Dispositions, not stats. Emotional Stability and Conscientiousness are the two that
-              do something today: how fast stress arrives and how fast it clears, and how well the
-              nights go. The other five are written into the save and change nothing yet — two are
-              wired to shoots and travel this build hasn’t got, and three need other people, which
-              it also hasn’t got.
+              Dispositions, not stats. Two of them do something today: Emotional Stability sets
+              how quickly stress arrives and how quickly it clears, and Conscientiousness sets
+              how well the nights go. The other five are written into the save and change nothing
+              yet — two of them wait on shoots and travel, three wait on other people, and none
+              of that is built.
             </p>
           </div>
         </div>
@@ -821,7 +796,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       />
       <Sheet
         title="Mastery Of Every Genre"
-        note="One for each genre there is. There is no form you cannot work in."
+        note="One for each genre there is. There’s no form you can’t work in."
         items={GENRE_MASTERIES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
       />
 
@@ -867,7 +842,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
         <div className="panel-head">
           <div>
             <h2>Home Base</h2>
-            <p className="muted small">Where the family land is. It is not a choice, it is where you are from.</p>
+            <p className="muted small">Where the family land is. It isn’t a choice — it’s where you’re from.</p>
           </div>
         </div>
 
@@ -927,11 +902,11 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
         {config.lastName.trim() ? (
           <div className="callout">
             The name was on the gate before you were on the lot. Everybody who reads it on a call
-            sheet knows whose family it is — that is the advantage, and it is the whole problem.
+            sheet knows which family it belongs to. That’s the advantage, and it’s the whole problem.
           </div>
         ) : (
           <div className="callout callout-accent">
-            Put a surname on Identity — it is the family name, and the company takes it.
+            Put a surname on Identity — it’s the family name, and the company takes it.
           </div>
         )}
       </div>
@@ -1032,8 +1007,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
         {config.personalityTraits.length === 0 ? (
           <p className="muted small">
-            Nothing picked. You’ll be the best there has ever been at making things and no
-            particular kind of person, which is allowed.
+            Nothing picked. You’ll be the best there has ever been at the work and nobody in
+            particular away from it, which is allowed.
           </p>
         ) : (
           <div className="col gap-3">
@@ -1078,8 +1053,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="callout callout-accent">
-        Once this save begins, the world starts running. Time passes, bills arrive, and the people in it
-        get on with their own lives whether you’re watching or not.
+        Once this save begins, the world starts running. Time passes, the calendar fills, and
+        everybody in it gets on with their own life whether you’re watching or not.
       </div>
     </div>
   );

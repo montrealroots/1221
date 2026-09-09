@@ -32,7 +32,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 }
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
-import { ESTATE_CITY_ID } from '@/engine/content/estate';
+import { ESTATE_CITY_ID, ESTATE_COUNTRY_ID } from '@/engine/content/estate';
 
 export const APP_VERSION = '1.1.0';
 
@@ -137,12 +137,33 @@ export function defaultPersonality(): Personality {
   };
 }
 
+/**
+ * A config whose two passports do not name the same country.
+ *
+ * Everybody created through the game holds the family's Icelandic one on top
+ * of whatever their birth gives them, and that is set in `defaultConfig` and
+ * on the screen. Somebody born Icelandic would otherwise be handed it a second
+ * time, which is not dual citizenship, it is the same passport printed twice.
+ *
+ * Only the duplicate is dropped. A second passport somebody deliberately set
+ * to something else is theirs and is left alone — the rule about Iceland is a
+ * rule about this game's creation screen, not about what a person can be.
+ */
+export function withSettledCitizenship(config: NewSaveConfig): NewSaveConfig {
+  if (config.secondCitizenshipId !== config.citizenshipId) return config;
+  return { ...config, secondCitizenshipId: undefined };
+}
+
 export function defaultConfig(): NewSaveConfig {
   return {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     raceEthnicity: [],
-    homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, citizenshipId: 'us',
+    // Born wherever the player says. Icelandic either way: the family's
+    // passport is the only one anybody created here holds, and where you were
+    // born no longer decides it.
+    homeRegionId: 'us-ca-losangeles', livesWhereBorn: false,
+    citizenshipId: ESTATE_COUNTRY_ID,
     personality: defaultPersonality(),
     personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
@@ -286,7 +307,10 @@ export interface BootstrapResult {
  * Builds the raw universe object. Systems are wired separately by
  * `createSimulation`, which then runs `populateWorld` to fill it in.
  */
-export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): BootstrapResult {
+export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig): BootstrapResult {
+  // Settled here rather than trusted, so a save built straight from the engine
+  // holds the same two passports a save built through the screen does.
+  const config = withSettledCitizenship(raw);
   const city = CITIES.require(config.startLocationId);
   const zone = city.timeZone;
   const now = instantFromZoned(

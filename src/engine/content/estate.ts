@@ -23,11 +23,14 @@ import { CITIES, COUNTRIES, REGIONS, type City } from '@/engine/content/geograph
 /** Home base. Not a choice — it is where the family land is. */
 export const ESTATE_CITY_ID = 'is-39-reykjavik';
 
+/** The country the land is in. Everybody in the family holds its passport. */
+export const ESTATE_COUNTRY_ID = 'is';
+
 export const ESTATE_ACRES = 2_000;
 
 export function estateCity(): City {
   const city = CITIES.get(ESTATE_CITY_ID);
-  if (!city) throw new Error(`the estate sits in a city the gazetteer does not have: ${ESTATE_CITY_ID}`);
+  if (!city) throw new Error(`the estate sits in a city the gazetteer doesn’t have: ${ESTATE_CITY_ID}`);
   return city;
 }
 
@@ -85,6 +88,7 @@ export const HOLDINGS: readonly Holding[] = [
  * is correct and is exactly the situation: there is no business here to join.
  */
 export const ESTATE_NOTE =
-  'There is no television or film industry in Iceland to walk into. That is the point of it: the family is not '
-  + 'buying a way into somebody else’s business, it is building one where there was none, and you '
+  'There’s no television or film industry in Iceland to walk into. That’s the point of it: the family '
+  + 'isn’t '
+  + 'buying a way into somebody else’s business, it’s building one where there was none, and you '
   + 'are standing on it before anybody outside the country knows it exists.';

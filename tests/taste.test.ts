@@ -232,7 +232,12 @@ describe('what the personality axes actually do', () => {
 
   it('says on the screen which ones are live, rather than implying all of them', () => {
     const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
-    expect(source).toContain('Emotional Stability and Conscientiousness are the two that');
+    // Substance, not phrasing. The screen has to name the two that are live
+    // and say the rest are not; how it says it is free to be edited.
+    expect(source).toMatch(/Emotional Stability/);
+    expect(source).toMatch(/Conscientiousness/);
+    // Whitespace-tolerant: the sentence wraps across lines in the source.
+    expect(source.replace(/\s+/g, ' ')).toMatch(/change nothing yet/);
     // The old copy promised all three of these, and none was true.
     expect(source).not.toContain('They shape how people respond to you');
   });

@@ -403,6 +403,14 @@ input[type="text"], input[type="number"], input[type="date"], input[type="search
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
 }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+/* A field that reports rather than asks. Kept the same shape so the form still
+   lines up, and visibly not one you can type in — styled the same as the rest,
+   it read as a box somebody had simply not filled in yet. */
+input[readonly] {
+  background: var(--surface-3); color: var(--text-muted);
+  border-style: dashed; cursor: default;
+}
+input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
 label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
@@ -1134,8 +1142,21 @@ kbd {
 .menu-item:disabled { opacity: .45; cursor: default; }
 .menu-item-label { font-size: var(--size-sm); font-weight: 600; }
 .menu-item-detail { font-size: var(--size-xs); color: var(--text-dim); overflow-wrap: anywhere; }
-/* On a phone the menu hangs from the right edge of the bar so it stays on screen. */
-@media (max-width: 620px) { .menu { left: auto; right: 0; } }
+/*
+ * On a phone the menu spans the viewport rather than hanging off its button.
+ *
+ * Hanging from the button's right edge is not enough when the button is in the
+ * middle of a crowded bar: Advance sits between Sleep and the save controls,
+ * and a menu 288 pixels wide right-aligned to it began 74 pixels off the left
+ * of a 390 pixel screen. Pinned to the viewport it cannot miss.
+ */
+@media (max-width: 620px) {
+  .menu {
+    position: fixed; left: var(--s3); right: var(--s3);
+    top: calc(var(--nav-h) + var(--s2));
+    min-width: 0; max-width: none; width: auto;
+  }
+}
 
 /* --------------------------------------------------------------------------
    Weather

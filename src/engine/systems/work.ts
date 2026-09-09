@@ -100,7 +100,7 @@ export function floorFor(countryId: string, cityId?: string): WageFloor {
     statutory: false,
     year: 2024,
     about: 'SLATE carries no published figure for this country, so this is worked out from what '
-      + 'this city costs against the countries it does carry. It is an estimate.',
+      + 'this city costs against the countries it does carry. It’s an estimate.',
   };
 }
 

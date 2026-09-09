@@ -164,7 +164,7 @@ export const DERIVED_AT_COST = 1.05;
 export const DERIVED_NOTE =
   'For a country SLATE carries no published figure for, the floor is derived rather than quoted: '
   + 'the median of the floors it does carry, moved by what that city costs against the median of '
-  + 'the places those floors apply in. It is an estimate and the game says so wherever it shows '
+  + 'the places those floors apply in. It’s an estimate and the game says so wherever it shows '
   + 'one. Nothing is ever paid below the general world floor.';
 
 export const STATE_NOTE =
