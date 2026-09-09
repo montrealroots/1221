@@ -527,6 +527,29 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .slot-name { font-size: var(--size-xl); font-weight: 600; }
 .slot-meta { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
 
+/* A long list the player can open and read, rather than take on trust. */
+.sheet > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  cursor: pointer; list-style: none;
+}
+.sheet > summary::-webkit-details-marker { display: none; }
+.sheet-title { font-size: var(--size-md); font-weight: 650; }
+/* The toggle reads last, after the name and the count, so the row says what
+   the list is before it says what the click does. */
+.sheet > summary::after {
+  content: 'Show'; font-size: var(--size-xs); font-weight: 600;
+  color: var(--accent-strong);
+}
+.sheet-title { margin-right: auto; }
+.sheet[open] > summary::after { content: 'Hide'; }
+.sheet-grid {
+  display: grid; gap: var(--s3);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  max-height: 460px; overflow-y: auto;
+  padding-right: var(--s2);
+}
+.sheet-item { min-width: 0; }
+
 /* ---------- App shell ---------- */
 
 .shell { display: flex; flex-direction: column; height: 100%; }

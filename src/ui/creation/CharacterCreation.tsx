@@ -31,7 +31,8 @@ import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
-import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
+import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -875,6 +876,23 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
         ))}
       </div>
 
+      {/* --- All of it, so a claim this size can be read rather than taken --- */}
+      <Sheet
+        title="Every Acting Skill"
+        note={`All of them, at ${CEILING}. Alphabetical, so a name can be found rather than hunted for.`}
+        items={ATTRIBUTES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
+      />
+      <Sheet
+        title="Every Acting Trait"
+        note="Held at once. For anybody else half of these would rule out the other half."
+        items={TRAITS.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
+      />
+      <Sheet
+        title="Mastery Of Every Genre"
+        note="One for each genre there is. There is no form you cannot work in."
+        items={GENRE_MASTERIES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
+      />
+
       {/* --- What is not here yet ------------------------------------------ */}
       <div className="card">
         <div className="panel-head">
@@ -1106,6 +1124,38 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 function namesOf(all: readonly Interest[], chosen: readonly string[]): string {
   const named = all.filter((one) => chosen.includes(one.id)).map((one) => one.label);
   return named.length > 0 ? named.join(', ') : '—';
+}
+
+/**
+ * One long list, folded away.
+ *
+ * The page states that the player holds all of it, and a number that large is
+ * a claim rather than a fact until somebody can read it. So it is all here,
+ * shut by default because it is the length it is, and open to anybody who
+ * wants to check.
+ */
+function Sheet({ title, note, items }: {
+  title: string;
+  note: string;
+  items: readonly { id: string; name: string; note: string }[];
+}) {
+  return (
+    <details className="card sheet">
+      <summary>
+        <span className="sheet-title">{title}</span>
+        <span className="chip chip-accent">{items.length}</span>
+      </summary>
+      <p className="muted small" style={{ margin: 'var(--s3) 0' }}>{note}</p>
+      <div className="sheet-grid">
+        {items.map((item) => (
+          <div key={item.id} className="sheet-item">
+            <div className="strong xs">{item.name}</div>
+            <div className="xs dim">{item.note}</div>
+          </div>
+        ))}
+      </div>
+    </details>
+  );
 }
 
 function Line({ label, value }: { label: string; value: string }) {
