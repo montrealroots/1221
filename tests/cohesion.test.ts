@@ -18,6 +18,7 @@ import { describeEthnicity } from '@/engine/content/ethnicity';
 import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
 } from '@/engine/content/interests';
+import { GENRE_MASTERIES, masteryForGenre } from '@/engine/content/genre-mastery';
 import {
   PERSONALITY_GROUPS, personalityTraitPairs, personalityTraitsIn,
 } from '@/engine/content/personality-traits';
@@ -275,13 +276,17 @@ describe('the interests and the genres', () => {
 
     // `core/taste.ts` is the door. Everything else asks it, so the rules about
     // what an interest means live in one file rather than in each caller.
+    //
+    // The rule is about reading them off a PERSON — `person.genres` — not about
+    // the word. The genre catalog itself is public: `content/genre-mastery.ts`
+    // builds a mastery per genre from it and never touches anybody's save.
     const readers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
       .map((f) => `src/engine/${f}`)
       .filter((f) => statSync(f).isFile())
-      .filter((f) => !/content\/interests\.ts|core\/taste\.ts|world\/bootstrap\.ts|domain\/model\.ts/.test(f))
-      .filter((f) => /\bgenres\b/.test(readFileSync(f, 'utf8')));
-    expect(readers, 'these reach past core/taste.ts for a genre').toEqual([]);
+      .filter((f) => !/core\/taste\.ts|world\/bootstrap\.ts|domain\/model\.ts/.test(f))
+      .filter((f) => /\.(genres|interests|personalityTraits)\b/.test(readFileSync(f, 'utf8')));
+    expect(readers, 'these reach past core/taste.ts for somebody’s taste').toEqual([]);
   });
 
   it('drops an id that is not on any list', () => {
@@ -291,5 +296,35 @@ describe('the interests and the genres', () => {
     const player = sim.universe.people[sim.universe.playerId]!;
     expect(player.interests).toEqual(['film']);
     expect(player.genres).toEqual(['western']);
+  });
+});
+
+describe('mastery of every genre', () => {
+  it('gives every genre one, and nothing a mastery without a genre', () => {
+    expect(GENRE_MASTERIES).toHaveLength(FILM_GENRES.length);
+    for (const genre of FILM_GENRES) {
+      const mastery = masteryForGenre(genre.id);
+      expect(mastery, `${genre.label} has no mastery`).toBeDefined();
+      expect(mastery!.name).toBe(`${genre.label} Mastery`);
+      expect(mastery!.category).toBe('Genre');
+    }
+    const genreIds = new Set(FILM_GENRES.map((g) => g.id));
+    for (const mastery of GENRE_MASTERIES) {
+      expect(genreIds.has(mastery.id.replace(/^genre_/, ''))).toBe(true);
+    }
+  });
+
+  it('lists them alphabetically by their own name, not the genre’s', () => {
+    // Adding a word to the end reorders any pair where one genre name begins
+    // the other: Horror Comedy Mastery comes before Horror Mastery, where the
+    // genres run Horror then Horror Comedy.
+    const names = GENRE_MASTERIES.map((m) => m.name);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, 'en')));
+    expect(names.indexOf('Horror Comedy Mastery')).toBeLessThan(names.indexOf('Horror Mastery'));
+  });
+
+  it('keeps every id and name unique', () => {
+    expect(new Set(GENRE_MASTERIES.map((m) => m.id)).size).toBe(GENRE_MASTERIES.length);
+    expect(new Set(GENRE_MASTERIES.map((m) => m.name)).size).toBe(GENRE_MASTERIES.length);
   });
 });

@@ -177,7 +177,8 @@ export function overallRating(sheet: AttributeSheet): number {
 
 import { performerTitleOf, type PerformerTitle } from '../core/performer';
 
-export type TraitCategory = 'Talent' | 'Method' | 'Temperament' | 'Public' | 'Social' | 'Life';
+export type TraitCategory =
+  | 'Talent' | 'Method' | 'Temperament' | 'Public' | 'Social' | 'Life' | 'Genre';
 
 export interface TraitDef {
   id: string;
