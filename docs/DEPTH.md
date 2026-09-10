@@ -73,6 +73,22 @@ machine with an essay attached, and the essay is the tell.
 Delete `src/engine/content/geography.ts` and the audience model has to break.
 If only the labels change, the 170,911 cities were decoration.
 
+**This one is not left to good intentions.** A decider — anything that turns
+the state of the world into an outcome the player did not choose — registers in
+`src/engine/decided.ts` saying what it decides and every input it reads.
+`tests/deciders.test.ts` then sweeps each declared input from one end of its
+range to the other across six worlds, and fails if the outcome never moves.
+There is no hand-written sensitivity test to write weakly; the sweep is
+generic, so the only way to pass is for the inputs to matter.
+
+`tools/deciders.mjs --check` closes the other half: a file in the engine that
+gets hold of the random number generator and is owned by no decider fails the
+gate. Randomness is where slot machines live, so that is where the rule sits.
+
+Two deciders are registered today, `weather.day` and `family.born`, which are
+the only two things in the build that decide anything. **When casting lands, it
+lands here, and it cannot land without proving its inputs matter.**
+
 ## Where We Stand
 
 Measured on a booted save, not read off the source.
@@ -289,6 +305,9 @@ occupancy — declared, and instantiated nowhere.
 
 - `tools/wired.mjs --check` — the declared vocabulary against what reads it,
   ratcheted at `docs/UNWIRED.json`. The count may fall. It may not rise.
+- `tools/deciders.mjs --check` and `tests/deciders.test.ts` — every draw owned
+  by a registered decider, and every decider swept until it proves the inputs
+  it named change what it decides.
 - `tools/doc-refs.mjs --check` — every file a doc names has to be there, so
   this document cannot start lying the way `docs/STYLE.md` did.
 - `tests/cohesion.test.ts` — the existing "everything is wired to something"
