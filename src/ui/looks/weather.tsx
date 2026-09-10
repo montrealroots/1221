@@ -29,7 +29,7 @@ import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, spokenList } from './words';
+import { isAre, spokenList, toStart } from './words';
 
 /** How many days the look shows: today, and the five after it. */
 const WEEK = 6;
@@ -206,7 +206,7 @@ defineLook<Sky>('weather', {
     ways.push({
       to: at('skyweek', city.id),
       label: 'The Week Ahead',
-      detail: `${countWord(week.length)} days of it, and every one of them opens`,
+      detail: `${toStart(countWord(week.length))} days of it, and every one of them opens`,
     });
 
     return {

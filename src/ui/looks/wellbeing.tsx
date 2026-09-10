@@ -19,6 +19,7 @@ import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
+import { waysIntoSomebody, whatTheyAre } from './family';
 import { isAre, spokenList } from './words';
 
 /** The nine, in the order a person would notice them. */
@@ -81,12 +82,26 @@ defineLook<Person>('person', {
         detail: 'Everything you have put on the calendar yourself',
       });
     }
+    // Anybody who is somebody to you opens onto what they are, where the two
+    // of you stand and what they run on the land, ahead of their dials.
+    const theirs = waysIntoSomebody(sim, person);
+    const relation = whatTheyAre(sim, person);
+
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
-      kind: isYou ? 'Yourself' : PERFORMER_NOUN[person.performerTitle ?? 'actor'],
-      summary: wellbeingSummary(person),
-      ways,
-      provenance: 'Nine dials, moved by the hours you keep. Six of them the game has never shown you.',
+      // A mother is not billed as an actress. Nobody on this land is billed at
+      // all, and calling her one was the field standing in for a fact about
+      // her that the save has had all along.
+      kind: isYou ? 'Yourself' : relation ?? PERFORMER_NOUN[person.performerTitle ?? 'actor'],
+      // Two sentences rather than one joined by "and": the wellbeing line is
+      // already a whole sentence, and stitching them made a fragment.
+      summary: isYou || !relation
+        ? wellbeingSummary(person)
+        : `${person.firstName} is your ${relation.toLowerCase()}. ${wellbeingSummary(person)}`,
+      ways: [...theirs, ...ways],
+      provenance: isYou
+        ? 'Nine dials, moved by the hours you keep. Six of them the game has never shown you.'
+        : 'The same nine dials you have, moved by the same days. Nobody here acts, and nothing bills them.',
     };
   },
 });

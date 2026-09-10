@@ -44,7 +44,7 @@ import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, said, spokenList } from './words';
+import { isAre, said, spokenList, toStart } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -197,7 +197,10 @@ defineLook<PlaceProfile>('place', {
     ways.push({
       to: at('currency', place.currency.code),
       label: place.currency.name || place.currency.code,
-      detail: `${place.currency.symbol} ${place.currency.code}, and what a hundred dollars turns into here`,
+      // Code first, then the symbol. A symbol is whatever the country writes —
+      // kr, zł, ₫ — and half of them start lowercase, which is wrong at the
+      // front of a line and not something to correct: it is their spelling.
+      detail: `${place.currency.code}, written ${place.currency.symbol}, and what a hundred dollars turns into here`,
     });
     ways.push({
       to: at('daylight', place.city.id),
@@ -393,7 +396,7 @@ defineLook<Region>('region', {
       // Only the one you came in through if you are actually in it. Read from
       // a state on the other side of the country, that is somebody else’s.
       detail: inIt
-        ? `${pieces(region.parentId)} on the map, and this is the one you came in through`
+        ? `${toStart(pieces(region.parentId))} on the map, and this is the one you came in through`
         : `The country over it, and the ${siblings - 1} other pieces of it on the map`,
     }];
     for (const town of orderedTowns(towns, here?.id)) {

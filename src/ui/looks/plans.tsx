@@ -22,7 +22,7 @@ import { Stat } from '@/ui/components/primitives';
 import { clockWord } from './weather';
 import { defineLook } from './registry';
 import { at } from './subject';
-import { isAre, said, spokenList } from './words';
+import { isAre, said, spokenList, toStart } from './words';
 
 /** How far out the calendar is asked about when gathering what you planned. */
 const AHEAD_DAYS = 365;
@@ -108,7 +108,7 @@ defineLook<Stretch>('stretch', {
               ? 'The sun is up for all of it.'
               : dark.length === hours.length
                 ? 'All of it is after dark.'
-                : `${said(dark.length, 'hour')} of it ${isAre(dark.length)} after dark.`}
+                : `${toStart(said(dark.length, 'hour'))} of it ${isAre(dark.length)} after dark.`}
             {' '}
             {wet.length === 0
               ? 'Nothing falls while it runs.'

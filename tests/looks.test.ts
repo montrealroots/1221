@@ -46,7 +46,15 @@ const UI = new URL('../src/ui/', import.meta.url);
  * anything nothing would handle.
  */
 function world(): Simulation {
-  const sim = quickSave();
+  // With a twin, because a twin is the one relation whose wording differs from
+  // every other and the crawl has to walk it.
+  const sim = quickSave({
+    family: {
+      mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' },
+      father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' },
+      twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
+    },
+  });
   const player = sim.universe.people[sim.universe.playerId]!;
 
   sim.onSchedule('production.table_read', () => {});
@@ -213,6 +221,31 @@ describe('the shape of a look', () => {
         `${key} name "${look.name}" carries its own kind "${look.kind}"`,
       ).toBe(false);
     }
+  });
+
+  it('starts a sentence the way a sentence starts', () => {
+    // "four people live under the one roof" — a spelled-out number at the
+    // front of a summary, which is what `said(4, 'person')` returns and what
+    // shipped on the household. Names and figures are fine at the front; a
+    // lowercase letter is not.
+    // Collected rather than asserted one at a time: half a dozen of these
+    // shipped together, and a gate that reports the first one takes six runs
+    // to say what a person would have seen in one glance at the page.
+    const offenders: string[] = [];
+    const check = (where: string, text: string): void => {
+      if (/^[a-z]/.test(text)) offenders.push(`${where}: ${text}`);
+    };
+    for (const [key, look] of looks) {
+      check(`${key} name`, look.name);
+      check(`${key} kind`, look.kind);
+      check(`${key} summary`, look.summary);
+      if (look.provenance) check(`${key} provenance`, look.provenance);
+      for (const way of look.ways ?? []) {
+        check(`${key} way label`, way.label);
+        check(`${key} way detail`, way.detail);
+      }
+    }
+    expect(offenders).toEqual([]);
   });
 
   it('leads with a sentence', () => {

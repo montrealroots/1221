@@ -35,3 +35,15 @@ export function said(count: number, one: string, many = `${one}s`, zero = 'no'):
   const figure = n === 0 ? zero : (n > 0 && n < SMALL.length ? SMALL[n]! : n.toLocaleString('en-US'));
   return `${figure} ${n === 1 ? one : many}`;
 }
+
+/**
+ * The same words, capitalized for the front of a sentence.
+ *
+ * `said` spells small numbers out, which is right in the middle of a sentence
+ * and wrong at the start of one: the household shipped reading "four people
+ * live under the one roof". Only the first letter is touched, so a name or an
+ * acronym already in place comes back unchanged.
+ */
+export function toStart(words: string): string {
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}

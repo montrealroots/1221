@@ -33,7 +33,9 @@ import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, spokenList } from './words';
+import { whatTheyAre } from './family';
+import { bondFor, standingWord } from '@/engine/world/standing';
+import { isAre, spokenList, toStart } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -222,7 +224,7 @@ defineLook<Property>('house', {
         label: householdName(sim),
         detail: household.memberIds.length <= 1
           ? 'Just you under this roof, and nothing to split with anybody'
-          : `${said(household.memberIds.length, 'person', 'people')} under this roof, and what each is to you`,
+          : `${toStart(said(household.memberIds.length, 'person', 'people'))} under this roof, and what each is to you`,
       });
     }
 
@@ -292,7 +294,7 @@ defineLook<Household>('household', {
       parent: house ? at('house', house.id) : at('estate'),
       summary: count <= 1
         ? 'You’re the only person in it, and the house is a good deal bigger than one person needs.'
-        : `${said(count, 'person', 'people')} live under the one roof, and you’re one of them.`,
+        : `${toStart(said(count, 'person', 'people'))} live under the one roof, and you’re one of them.`,
       body: (
         <>
           <p className="small">
@@ -310,13 +312,23 @@ defineLook<Household>('household', {
           </p>
         </>
       ),
-      ways: members.map((person) => ({
-        to: at('person', person.id),
-        label: nameOf(person),
-        detail: person.id === sim.universe.playerId
-          ? 'You, and the nine dials the day moves'
-          : 'Who they are, and how they’re doing today',
-      })),
+      ways: members.map((person) => {
+        // A name on this list is a person, and if they are somebody to you the
+        // list says which somebody rather than making you open them to find out.
+        const word = whatTheyAre(sim, person);
+        const bond = person.id === sim.universe.playerId
+          ? undefined
+          : bondFor(sim.universe, sim.universe.playerId, person.id);
+        return {
+          to: at('person', person.id),
+          label: nameOf(person),
+          detail: person.id === sim.universe.playerId
+            ? 'You, and the nine dials the day moves'
+            : word && bond
+              ? `Your ${word.toLowerCase()}, and the two of you are ${standingWord(Math.round(bond.closeness)).toLowerCase()}`
+              : 'Who they are, and how they’re doing today',
+        };
+      }),
     };
   },
 });
