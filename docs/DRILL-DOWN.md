@@ -112,9 +112,30 @@ Measured in the running app, every screen, at 1440×950:
 | Calendar | 64% |
 
 Measured again on the same screen at the same width once the engine was built
-and Home was wired to it: **16%**, thirty-seven live elements in two hundred
-and thirty-three, thirty-six of them nouns rather than controls. Twenty-five
-kinds are declared and sixty-six subjects resolve out of a booted save.
+and Home was wired to every noun on it: **27%**, seventy-two live elements in
+two hundred and sixty-seven, seventy-one of them nouns rather than controls.
+Twenty-five kinds are declared and sixty-six subjects resolve out of a booted
+save.
+
+A share of elements is the wrong measure and it flatters as often as it
+damns: most of a page is wrappers, and a wrapper is not a dead end. The
+question that matters is whether any text stating a fact sits outside a
+control, and `tools/drill.mjs` answers it directly — it walks the leaves and
+prints every one no control contains. On Home that is **nine**, and all nine
+are right:
+
+- Four are the words *between* the nouns — "Good Morning, ", " in · · ·",
+  "Nothing scheduled. … is yours.", ", held by the family, with the house, the
+  lot and the company all standing on it." Grammar is not a thing in the
+  world, and a sentence whose every word opened would be unreadable.
+- Four say that nothing is there: "Nothing is waiting on a decision.",
+  "Nothing Pressing", and the two lines under it. There is no object behind an
+  absence, and rule 3 says a name is not painted as a way in unless it is one.
+- One is the heading "What Needs You", which names a set rather than a thing
+  and has nothing declared behind it.
+
+Every figure, name, date, temperature, balance, bar and place on the screen
+opens. That is the whole of what the rule asks for.
 
 The first row for Home is what it was: the main game screen, offering a player
 exactly one thing to press, with every stat, meter, place name, temperature,

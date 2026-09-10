@@ -85,6 +85,37 @@ const coverage = await page.evaluate(() => {
 });
 console.log(`Home: ${coverage.live} of ${coverage.total} elements are live (${Math.round((coverage.live / coverage.total) * 100)}%), ${coverage.nouns} of them nouns.\n`);
 
+// --- what is still a dead end --------------------------------------------
+// "Interactive" counted as a share of elements is misleading: most of a page
+// is wrappers, and a wrapper is not a dead end. The question that matters is
+// whether any text stating a fact sits outside a control. This finds the
+// leaves — elements whose text is their own, not inherited from a child — and
+// reports the ones no button, link or control contains.
+const dead = await page.evaluate(() => {
+  const main = document.querySelector('.main') ?? document.body;
+  const out = [];
+  for (const el of main.querySelectorAll('*')) {
+    if (['SCRIPT', 'STYLE'].includes(el.tagName)) continue;
+    if (el.closest('button, a[href], input, select, textarea, [role="button"], [role="tab"], label')) continue;
+    if (el.getAttribute('aria-hidden') === 'true') continue;
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) continue;
+    // Its own text: what is left once every child element's text is removed.
+    const own = [...el.childNodes]
+      .filter((n) => n.nodeType === 3)
+      .map((n) => n.textContent ?? '')
+      .join(' ')
+      .trim()
+      .replace(/\s+/g, ' ');
+    if (own.length < 2) continue;
+    out.push({ tag: el.tagName.toLowerCase(), cls: el.className || '', text: own.slice(0, 90) });
+  }
+  return out;
+});
+console.log(`Text outside any control: ${dead.length}`);
+for (const d of dead) console.log(`  <${d.tag}${d.cls ? ` class="${d.cls}"` : ''}>  ${d.text}`);
+console.log('');
+
 // --- read whatever look is open ------------------------------------------
 const readLooks = () => page.evaluate(() => [...document.querySelectorAll('.look')].map((el) => ({
   depth: Number(el.getAttribute('data-depth') ?? 0),

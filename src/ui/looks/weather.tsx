@@ -212,7 +212,7 @@ defineLook<Sky>('weather', {
           body: (
             <>
               <p className="small">
-                {spokenName(city.name)} is {now.climateName} country — {BAND[now.climate]}.
+                {spokenName(city.name)} is {now.climateName.toLowerCase()} country — {BAND[now.climate]}.
               </p>
               <p className="small">
                 {dateWords(now.dateKey)} here normally runs to about {normalHigh(sim, city, now)}{unit} by day,

@@ -8,11 +8,11 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
 import { clamp } from '@/engine/core/rng';
-import { Open } from '@/ui/looks/Look';
+import { LookRegion, Open } from '@/ui/looks/Look';
 import type { Subject } from '@/ui/looks/subject';
 
 export function Panel({
-  title, subtitle, actions, children, flush, tight,
+  title, subtitle, actions, children, flush, tight, look,
 }: {
   title?: ReactNode;
   subtitle?: ReactNode;
@@ -20,19 +20,28 @@ export function Panel({
   children: ReactNode;
   flush?: boolean;
   tight?: boolean;
+  /**
+   * What the panel is about. A heading is the world's word for what is under
+   * it — "Weather", "The Land", "Standing" — so given a subject it becomes
+   * the way into it, and the panel hosts its own region so the look opens
+   * beneath the whole panel rather than inside one of its rows.
+   */
+  look?: Subject;
 }) {
+  const head = (title || actions) && (
+    <div className="panel-head" style={flush ? { padding: 'var(--s4) var(--s4) 0' } : undefined}>
+      <div>
+        {title && <h2>{look ? <Open subject={look}>{title}</Open> : title}</h2>}
+        {subtitle && <p className="muted small" style={{ margin: 0 }}>{subtitle}</p>}
+      </div>
+      {actions && <div className="row gap-2">{actions}</div>}
+    </div>
+  );
   return (
     <section className={`card${flush ? ' card-flush' : ''}${tight ? ' card-tight' : ''}`}>
-      {(title || actions) && (
-        <div className="panel-head" style={flush ? { padding: 'var(--s4) var(--s4) 0' } : undefined}>
-          <div>
-            {title && <h2>{title}</h2>}
-            {subtitle && <p className="muted small" style={{ margin: 0 }}>{subtitle}</p>}
-          </div>
-          {actions && <div className="row gap-2">{actions}</div>}
-        </div>
-      )}
-      {children}
+      {look
+        ? <LookRegion className="panel-body">{head}{children}</LookRegion>
+        : <>{head}{children}</>}
     </section>
   );
 }

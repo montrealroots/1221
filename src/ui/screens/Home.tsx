@@ -94,6 +94,7 @@ export function Home() {
         screen.
       */}
       <Panel
+        look={at('day', today)}
         title="Calendar"
         subtitle={next ? 'What is coming, and when.' : undefined}
         actions={(
@@ -248,7 +249,7 @@ export function Home() {
         </Panel>
 
         <div className="col gap-4">
-          <Panel title="How You Are" tight>
+          <Panel title="How You Are" tight look={at('person', player.id)}>
             {/*
               The summary names you, and the three bars name their dials, so
               each is the way into itself. Six more dials are simulated every
@@ -268,7 +269,7 @@ export function Home() {
           </Panel>
 
           {place && (
-            <Panel title="Where You Are" tight>
+            <Panel title="Where You Are" tight look={at('place', place.city.id)}>
               <LookRegion>
                 <div className="strong">
                   <Open subject={at('place', place.city.id)}>{place.city.name}</Open>
@@ -370,7 +371,7 @@ export function Home() {
           )}
 
           {weather && city && (
-            <Panel title="Weather" tight>
+            <Panel title="Weather" tight look={at('weather', city.id)}>
               {/*
                 Every day in the strip is its own moment and opens as one. The
                 climate band used to sit in the header as a chip that did
@@ -424,7 +425,7 @@ export function Home() {
       </div>
 
       <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
-        <Panel title="Money" tight>
+        <Panel title="Money" tight look={at('networth', player.id)}>
           <LookRegion className="col gap-3">
             <Stat
               label={primary?.name ?? 'No account'}
@@ -448,7 +449,7 @@ export function Home() {
         </Panel>
 
 
-        <Panel title="Standing" tight>
+        <Panel title="Standing" tight look={at('reputation', player.id)}>
           {/*
             Three of the seven figures the business keeps on you. The other
             four — audience appeal, reliability, prestige and controversy — are
@@ -456,9 +457,6 @@ export function Home() {
             standing itself, which the sentence above the bars names.
           */}
           <LookRegion>
-            <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>
-              <Open subject={at('reputation', player.id)}>Where you stand</Open>, so far.
-            </p>
             <div className="col gap-3">
               <Meter label="Public Fame" value={player.reputation.publicFame} look={at('standing', 'publicFame')} />
               <Meter label="Professional Reputation" value={player.reputation.professionalReputation} look={at('standing', 'professionalReputation')} />
@@ -476,7 +474,7 @@ export function Home() {
           housing model had to say about somebody climbing a ladder. Nobody
           here is on one.
         */}
-        <Panel title="The Land" tight>
+        <Panel title="The Land" tight look={at('estate')}>
           {/*
             The premise, and the one place on Home where the whole of it is
             reachable. The land opens onto the house, the lot and the company;

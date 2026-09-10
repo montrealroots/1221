@@ -293,6 +293,9 @@ a:hover { text-decoration: underline; }
   border-radius: var(--radius); padding: var(--s5);
 }
 .card-tight { padding: var(--s4); }
+/* A panel that opens hosts its own region, and the wrapper must not sit
+   between the card and the layout it was drawn for. */
+.panel-body { display: contents; }
 .card-flush { padding: 0; overflow: hidden; }
 
 .panel-head {
@@ -389,6 +392,10 @@ button.link:hover { color: var(--accent-strong); }
 .stat > button.link .stat-label {
   text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px;
 }
+/* Only the label answers to the pointer. The generic link hover would tint
+   the figure and the note with it, and a whole tile changing color reads as a
+   state rather than as an affordance. */
+.stat > button.link:hover { color: inherit; }
 .stat > button.link:hover .stat-label { color: var(--accent-strong); }
 .stat-label { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 /* A long value wraps rather than running out of its panel: a list of formats
