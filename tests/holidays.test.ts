@@ -1,9 +1,15 @@
 /**
- * The holidays of wherever you are.
+ * The holidays a life keeps.
  *
- * Each country's file is what a calendar there would show, in its own
- * words, with the English beside it; a state keeps its own days; and the
- * month grid reads the country the player is standing in.
+ * Each country's file is what a calendar there would show, in its own words,
+ * with the English beside it, and a state keeps its own days.
+ *
+ * A life is not always lived in one country's year. On the family land in
+ * Iceland, working in an American business, the calendar keeps both: the
+ * shops shut for Sumardagurinn fyrsti and nobody in Los Angeles picks up the
+ * phone on Thanksgiving. The month grid reads every calendar the player
+ * keeps, where they are standing first, and the two collapse to one in
+ * America.
  */
 
 import { readFileSync } from 'node:fs';
@@ -11,7 +17,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { addCountryHolidays, holidayLabel, holidaysInYear, holidaysOn, regionCodeFor } from '@/engine/content/holidays';
 import { HOLIDAY_FILES, HOLIDAY_YEARS } from '@/engine/content/holiday-data';
-import { monthGrid } from '@/engine/world/calendar';
+import { keptCalendars, monthGrid } from '@/engine/world/calendar';
 import { instantFromZoned } from '@/engine/core/time';
 import { REGIONS } from '@/engine/content/geography';
 
@@ -61,24 +67,60 @@ describe('the holiday files', () => {
     expect(sacramento.filter((h) => h.name === 'Presidents\' Day').length).toBeLessThanOrEqual(1);
   });
 
-  it('are what the month grid shows for where the player stands', () => {
-    // Standing at home base, which is Reykjavík: Iceland's March, not
-    // America's. Palm Sunday on the 29th and no St. Patrick's Day at all.
+  it('shows the month grid both the calendars this life keeps', () => {
     load('is');
     const home = quickSave({}, 'holiday-grid-home');
-    const icelandic = monthGrid(home, 2026, 3);
-    const march29 = icelandic.find((d) => d.inMonth && d.dayOfMonth === 29)!;
-    expect(march29.holidays.some((h) => /Palm Sunday|Pálmasunnudagur/.test(h.name))).toBe(true);
-    const march17 = icelandic.find((d) => d.inMonth && d.dayOfMonth === 17)!;
-    expect(march17.holidays.some((h) => /Patrick/.test(h.name))).toBe(false);
+    const march = monthGrid(home, 2026, 3);
+    const dayIn = (n: number) => march.find((d) => d.inMonth && d.dayOfMonth === n)!;
 
-    // Stand somewhere else and the same month reads differently, which is the
-    // whole of what this is checking.
+    // Iceland's, because that is where the shops are.
+    expect(dayIn(29).holidays.some((h) => /Palm Sunday|Pálmasunnudagur/.test(h.name))).toBe(true);
+    // America's, because that is where the work is.
+    expect(dayIn(17).holidays.some((h) => /Patrick/.test(h.name))).toBe(true);
+
+    // And each day says whose it is.
+    const stPatrick = dayIn(17).holidays.find((h) => /Patrick/.test(h.name))!;
+    expect(stPatrick.countryId).toBe('us');
+    expect(stPatrick.countryName).toBe('United States');
+    const palmSunday = dayIn(29).holidays.find((h) => /Palm Sunday|Pálmasunnudagur/.test(h.name))!;
+    expect(palmSunday.countryId).toBe('is');
+
+    // The big American days are on it, which is what a calendar for this life
+    // has to have and what it did not have when it read one country only.
+    const november = monthGrid(home, 2026, 11);
+    const thanksgiving = november.find((d) => d.inMonth && d.dayOfMonth === 26)!;
+    expect(thanksgiving.holidays.some((h) => h.englishName === 'Thanksgiving Day')).toBe(true);
+    const july = monthGrid(home, 2026, 7);
+    expect(july.find((d) => d.inMonth && d.dayOfMonth === 4)!.holidays
+      .some((h) => h.englishName === 'Independence Day')).toBe(true);
+  });
+
+  it('does not print a day twice when two calendars keep it', () => {
+    load('is');
+    const home = quickSave({}, 'holiday-grid-dedupe');
+    const january = monthGrid(home, 2026, 1);
+    const newYear = january.find((d) => d.inMonth && d.dayOfMonth === 1)!;
+    const named = newYear.holidays.filter((h) => /New Year's Day/i.test(h.englishName));
+    expect(named).toHaveLength(1);
+    // Where you are standing wins the naming of a day both keep.
+    expect(named[0]!.countryId).toBe('is');
+  });
+
+  it('keeps one calendar, not two, when the two are the same country', () => {
     const abroad = quickSave({ startLocationId: 'us-ca-losangeles' }, 'holiday-grid-abroad');
+    expect(keptCalendars(abroad).map((c) => c.countryId)).toEqual(['us']);
     const american = monthGrid(abroad, 2026, 3);
+    // The state's own day still lands, which the industry calendar alone
+    // would not give: it carries no region.
     const day31 = american.find((d) => d.inMonth && d.dayOfMonth === 31)!;
     expect(day31.holidays.some((h) => h.name === 'César Chávez Day')).toBe(true);
     const day17 = american.find((d) => d.inMonth && d.dayOfMonth === 17)!;
     expect(day17.holidays.some((h) => /Patrick/.test(h.name) && h.type === 'observance')).toBe(true);
+  });
+
+  it('puts where you are standing before the business', () => {
+    load('is');
+    const home = quickSave({}, 'holiday-grid-order');
+    expect(keptCalendars(home).map((c) => c.countryId)).toEqual(['is', 'us']);
   });
 });

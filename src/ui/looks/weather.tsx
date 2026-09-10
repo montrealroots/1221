@@ -22,7 +22,7 @@ import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/clim
 import { CITIES, type City } from '@/engine/content/geography';
 import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, startOfDay, zonedParts } from '@/engine/core/time';
 import {
-  forecastFor, hoursOn, shootDayWeather, weatherAt,
+  WEATHER_EMOJI, forecastFor, hoursOn, shootDayWeather, weatherAt, weatherShort,
   type DayWeather, type HourWeather, type WeatherCondition, type WeatherNow,
 } from '@/engine/systems/weather';
 import type { Simulation } from '@/engine';
@@ -491,10 +491,15 @@ defineLook<Hours>('hours', {
           <p className="small">{spellSentence(hours)}</p>
         </>
       ),
+      waysAs: 'strip',
       ways: hours.map((hour) => ({
         to: at('skyhour', `${city.id}/${day.dateKey}/${hour.hour}`),
         label: clockWord(hour.hour),
         detail: `${hour.temperature}${unit}, ${hour.condition.toLowerCase()}${hour.daylight ? '' : ', after dark'}`,
+        glance: {
+          icon: WEATHER_EMOJI[hour.condition],
+          lines: [`${hour.temperature}°`, hour.daylight ? 'Light' : 'Dark'],
+        },
       })),
       provenance: 'One curve between the day’s high and its low, coldest before dawn and warmest at three, and a wet spell that falls where the day puts it rather than all day long.',
     };
@@ -604,7 +609,10 @@ defineLook<TheWeek>('skyweek', {
     const lows = days.map((d) => d.low);
     const warmest = days.reduce((a, b) => (b.high > a.high ? b : a));
     const wet = days.filter((d) => d.precipitation !== 'none');
-    const wetNames = wet.map((d) => weekdayAt(sim, city, days.indexOf(d)));
+    // Today and tomorrow have names of their own. Calling today "Monday" in a
+    // sentence a person reads on Monday is what a table does, not a person.
+    const dayName = (i: number) => (i === 0 ? 'today' : i === 1 ? 'tomorrow' : weekdayAt(sim, city, i));
+    const wetNames = wet.map((d) => dayName(days.indexOf(d)));
 
     return {
       name: 'The Week Ahead',
@@ -615,10 +623,12 @@ defineLook<TheWeek>('skyweek', {
       body: (
         <>
           <p className="small">
-            The warmest is {weekdayAt(sim, city, days.indexOf(warmest))} at {warmest.high}{unit}.{' '}
+            The warmest is {dayName(days.indexOf(warmest))} at {warmest.high}{unit}.{' '}
             {wetNames.length === 0
               ? 'Nothing falls all week.'
-              : `${spokenList(wetNames)} ${isAre(wetNames.length)} the wet ${wetNames.length === 1 ? 'one' : 'ones'}.`}
+              : wetNames.length === days.length
+                ? `Every one of the ${countWord(days.length)} is wet.`
+                : `${sentenceStart(spokenList(wetNames))} ${isAre(wetNames.length)} the wet ${wetNames.length === 1 ? 'one' : 'ones'}.`}
           </p>
           <p className="small">
             Each day is its own draw blended with the two before it, so the week has a shape rather than
@@ -626,10 +636,15 @@ defineLook<TheWeek>('skyweek', {
           </p>
         </>
       ),
+      waysAs: 'strip',
       ways: days.map((day, i) => ({
         to: at('forecastday', `${city.id}/${day.dateKey}`),
-        label: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : weekdayAt(sim, city, i),
+        label: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : weekdayAt(sim, city, i).slice(0, 3),
         detail: `${day.condition}, ${day.low}${unit} to ${day.high}${unit}`,
+        glance: {
+          icon: WEATHER_EMOJI[day.condition],
+          lines: [weatherShort(day.condition), `${day.high}° / ${day.low}°`],
+        },
       })),
       provenance: 'SLATE’s climate model, six days of it. It isn’t a forecast service, and it never was one.',
     };

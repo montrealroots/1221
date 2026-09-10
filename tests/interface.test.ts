@@ -164,3 +164,82 @@ describe('affordances', () => {
     expect(offenders, 'title attributes carrying what the screen should say').toEqual([]);
   });
 });
+
+
+/**
+ * A screen that changes its mind has to be allowed to.
+ *
+ * `useWorld` memoizes on the world alone. A callback that also closes over
+ * the screen's own state — the month the calendar is looking at, the subject
+ * a name is about to open — goes on returning the old answer until the clock
+ * happens to tick, and never at all while it is paused. The calendar shipped
+ * that way: pressing forward moved the heading March, April, May, June with
+ * the grid frozen on March underneath it.
+ *
+ * The fix is a second argument. This is the check that it is passed.
+ */
+describe('reading the world', () => {
+  /** The text of one call's arguments, brackets balanced, strings respected. */
+  function argumentsOf(text: string, open: number): string {
+    let depth = 0;
+    let quote = '';
+    for (let i = open; i < text.length; i++) {
+      const ch = text[i]!;
+      if (quote) {
+        if (ch === '\\') i++;
+        else if (ch === quote) quote = '';
+        continue;
+      }
+      if (ch === "'" || ch === '"' || ch === '`') { quote = ch; continue; }
+      if (ch === '(' || ch === '[' || ch === '{') depth++;
+      else if (ch === ')' || ch === ']' || ch === '}') {
+        depth--;
+        if (depth === 0) return text.slice(open + 1, i);
+      }
+    }
+    return '';
+  }
+
+  /** Whether the arguments carry a second one at the top level. */
+  function hasSecondArgument(args: string): boolean {
+    let depth = 0;
+    let quote = '';
+    for (let i = 0; i < args.length; i++) {
+      const ch = args[i]!;
+      if (quote) {
+        if (ch === '\\') i++;
+        else if (ch === quote) quote = '';
+        continue;
+      }
+      if (ch === "'" || ch === '"' || ch === '`') { quote = ch; continue; }
+      if (ch === '(' || ch === '[' || ch === '{') depth++;
+      else if (ch === ')' || ch === ']' || ch === '}') depth--;
+      else if (ch === ',' && depth === 0) return true;
+    }
+    return false;
+  }
+
+  it('passes what a reader closes over besides the world', () => {
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      if (!file.endsWith('.tsx')) continue;
+      const text = readFileSync(file, 'utf8');
+      // Everything the component holds itself, and every prop it is given.
+      const held = new Set<string>();
+      for (const m of text.matchAll(/const \[\s*(\w+)\s*,\s*set\w+\s*\]\s*=\s*useState/g)) held.add(m[1]!);
+      if (held.size === 0) continue;
+      for (const m of text.matchAll(/\buseWorld\s*\(/g)) {
+        const open = m.index! + m[0].length - 1;
+        const args = argumentsOf(text, open);
+        if (hasSecondArgument(args)) continue;
+        for (const name of held) {
+          if (new RegExp(`\\b${name}\\b`).test(args)) {
+            const line = text.slice(0, m.index!).split('\n').length;
+            offenders.push(`${file}:${line} reads "${name}" and passes no deps`);
+          }
+        }
+      }
+    }
+    expect(offenders, 'world readers that will not notice the screen changed its mind').toEqual([]);
+  });
+});

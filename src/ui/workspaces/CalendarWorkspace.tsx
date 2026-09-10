@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
-import { monthGrid, entriesBetween, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
+import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
@@ -14,19 +14,23 @@ export function CalendarWorkspace() {
   const { sim, refresh } = useGame();
   const today = zonedParts(sim.now, sim.homeZone);
 
-  // The holidays of the country you are standing in, fetched once per country.
-  const countryId = CITIES.get(sim.player.currentLocationId)?.countryId;
+  // Every calendar this life keeps — where you are standing, and the
+  // industry's — fetched once per country. Both, because the year a person
+  // lives in is not always one country's.
+  const wanted = keptCalendars(sim).map((c) => c.countryId).join(',');
   useEffect(() => {
-    if (!countryId || isHolidaysLoaded(countryId)) return;
+    const ids = wanted.split(',').filter((id) => id && !isHolidaysLoaded(id));
+    if (ids.length === 0) return;
     let cancelled = false;
-    loadCountryHolidays(countryId).then(() => { if (!cancelled) refresh(); }).catch(() => {});
+    Promise.all(ids.map((id) => loadCountryHolidays(id).catch(() => 0)))
+      .then(() => { if (!cancelled) refresh(); });
     return () => { cancelled = true; };
-  }, [countryId, refresh]);
+  }, [wanted, refresh]);
   const [view, setView] = useState({ year: today.year, month: today.month });
   const [selected, setSelected] = useState<string | null>(null);
   const [detail, setDetail] = useState<CalendarEntry | null>(null);
 
-  const days = useWorld((s) => monthGrid(s, view.year, view.month));
+  const days = useWorld((s) => monthGrid(s, view.year, view.month), [view.year, view.month]);
   const next30 = useWorld((s) => entriesBetween(s, s.now, s.now + 30 * MS_DAY));
   const conflicts = next30.filter((e) => e.conflicted);
   const selectedDay = days.find((d) => d.key === selected);
@@ -48,9 +52,10 @@ export function CalendarWorkspace() {
         <div className="eyebrow">Calendar</div>
         <h1>Every commitment you have.</h1>
         <p className="muted">
-          Everything the world has put on your calendar, and the days the country
-          you’re standing in observes. If two things want you at once, they’re
-          flagged here first.
+          Everything the world has put on your calendar, and the days both your
+          calendars keep — the country you’re standing in, and the one the
+          business runs on. If two things want you at once, they’re flagged
+          here first.
         </p>
       </div>
 

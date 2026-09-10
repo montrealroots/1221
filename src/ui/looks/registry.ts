@@ -22,6 +22,15 @@ export interface Way {
   to: Subject;
   label: string;
   detail: string;
+  /**
+   * What the cell shows when the ways are laid out as a strip.
+   *
+   * The edges stay data either way — this says how one is drawn, not where it
+   * goes — so the crawl still walks the whole graph. A picture is always
+   * beside the word and never instead of it, and it is hidden from a screen
+   * reader, which has the word and the lines.
+   */
+  glance?: { icon?: string; lines?: readonly string[] };
 }
 
 /** Another face of the same thing. Costs no depth and has no address. */
@@ -45,6 +54,15 @@ export interface Looked {
   body?: ReactNode;
   facets?: readonly Facet[];
   ways?: readonly Way[];
+  /**
+   * How the ways are laid out.
+   *
+   * A list by default: a name and a line saying what is behind it. A strip
+   * goes across the way a week of weather does on Home — a name, a picture
+   * and the figures under it — for a set whose members are a sequence and
+   * whose whole point is being compared side by side.
+   */
+  waysAs?: 'list' | 'strip';
   /** One footnote line. Never a level, never openable. */
   provenance?: string;
 }

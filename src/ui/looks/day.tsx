@@ -27,7 +27,7 @@
 
 import { normalFor, toFahrenheit, usesFahrenheit } from '@/engine/content/climate';
 import { CITIES, COUNTRIES, REGIONS, type City } from '@/engine/content/geography';
-import { holidayLabel, holidaysOn, type HolidayEntry } from '@/engine/content/holidays';
+import { holidayLabel, holidaysAcross, type KeptHoliday } from '@/engine/content/holidays';
 import { formatDaylight, sunTimes, type SunTimes } from '@/engine/core/sun';
 import { plural, titleCaseLabel } from '@/engine/core/text';
 import {
@@ -37,7 +37,7 @@ import {
   type Instant, type Season, type TimeZone, type ZonedParts,
 } from '@/engine/core/time';
 import { forecastFor } from '@/engine/systems/weather';
-import { LEGEND_BY_CATEGORY, entriesBetween, upcoming, type CalendarEntry } from '@/engine/world/calendar';
+import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
@@ -204,7 +204,7 @@ interface TheDay {
   city: City;
   offset: number;
   entries: CalendarEntry[];
-  holidays: HolidayEntry[];
+  holidays: KeptHoliday[];
   sun: SunTimes;
   season: Season;
 }
@@ -230,7 +230,7 @@ function dayAt(sim: Simulation, key: string): TheDay | undefined {
     city,
     offset: daysBetween(sim.now, start, zone),
     entries: around.filter((e) => e.at >= start && e.at < end),
-    holidays: holidaysOn(start, zone, city.countryId, city.parentId),
+    holidays: holidaysAcross(start, zone, keptCalendars(sim)),
     sun: sunTimes(start + MS_DAY / 2, city.latitude, city.longitude, city.timeZone),
     season: seasonOf(start, zone, city.latitude),
   };
@@ -253,9 +253,20 @@ defineLook<TheDay>('day', {
     const clashes = entries.filter((e) => e.conflicted);
     const country = COUNTRIES.get(city.countryId)?.name ?? city.countryId.toUpperCase();
     const observed = holidays.map((h) => h.englishName || h.name);
-    // `holidaysOn` has already dropped the ones kept somewhere else, so
+    // Whose day it is matters now that a life keeps two calendars.
+    // Thanksgiving is not kept "here" on the family land in Iceland; it is
+    // kept where the work is, and saying otherwise is wrong about the day.
+    const named = (h: KeptHoliday) => h.englishName || h.name;
+    const keptHere = holidays.filter((h) => h.countryId === city.countryId).map(named);
+    const keptAway = holidays.filter((h) => h.countryId !== city.countryId).map(named);
+    // `holidaysAcross` has already dropped the ones kept in another region, so
     // anything still carrying a subdivision code is kept here and not nationally.
     const regional = holidays.filter((h) => h.regionCode).length;
+    // A life keeps more than one country’s year. Grouped by whose it is,
+    // because "Iceland and the United States both keep it" and "one is theirs
+    // and one is yours" are different facts about the same day.
+    const byCountry = [...new Map(holidays.map((h) => [h.countryId, h.countryName])).entries()]
+      .map(([id, name]) => ({ name, kept: holidays.filter((h) => h.countryId === id) }));
 
     const ways: Way[] = entries.slice(0, 8).map((entry) => ({
       to: at('entry', entry.id),
@@ -307,7 +318,7 @@ defineLook<TheDay>('day', {
       // A day falls on a city whether or not the tax tables can reach it, so
       // the parent is declared only where it would open.
       parent: placeOpens(city) ? at('place', city.id) : undefined,
-      summary: daySentence(day, sim, observed),
+      summary: daySentence(day, sim, keptHere, keptAway),
       body: (
         <>
           <p className="small muted">
@@ -324,7 +335,8 @@ defineLook<TheDay>('day', {
               : `The day is carrying ${count(entries.length, 'thing')}: ${spokenList(entries.map((e) => asName(e.title)))}.`}
             {wants.length > 0 && ` You have to be at ${count(wants.length, 'of them', 'of them')}.`}
             {clashes.length > 0 && ` The calendar has flagged ${count(clashes.length, 'of them', 'of them')} as landing on top of each other.`}
-            {observed.length > 0 && ` ${spokenList(observed)} ${isAre(observed.length)} kept in ${country} that day.`}
+            {keptHere.length > 0 && ` ${spokenList(keptHere)} ${isAre(keptHere.length)} kept in ${country} that day.`}
+            {keptAway.length > 0 && ` ${spokenList(keptAway)} ${isAre(keptAway.length)} kept where the work is.`}
           </p>
           {sim.zone !== zone && (
             <p className="small muted">
@@ -366,9 +378,11 @@ defineLook<TheDay>('day', {
           label: 'What’s Kept That Day',
           body: (
             <>
-              <p className="small">
-                {`${country} keeps ${spokenList(holidays.map(holidayLabel))} on it.`}
-              </p>
+              {byCountry.map(({ name, kept }) => (
+                <p key={name} className="small">
+                  {`${name} keeps ${spokenList(kept.map(holidayLabel))} on it.`}
+                </p>
+              ))}
               <p className="small muted">
                 {holidays.some((h) => h.type === 'public')
                   ? 'The public ones close offices and banks in the places that keep them.'
@@ -384,7 +398,7 @@ defineLook<TheDay>('day', {
         }]
         : undefined,
       ways,
-      provenance: 'The light is worked out from the tilt, the date and this latitude rather than looked up. The observances are the ones the country you’re standing in keeps.',
+      provenance: 'The light is worked out from the tilt, the date and this latitude rather than looked up. The observances are the ones your calendars keep — where you are standing, and the business’s own.',
     };
   },
 });
@@ -402,14 +416,21 @@ function loadOf(day: TheDay): string {
 }
 
 /** The one sentence a day leads with. */
-function daySentence(day: TheDay, sim: Simulation, observed: string[]): string {
+function daySentence(day: TheDay, sim: Simulation, keptHere: string[], keptAway: string[]): string {
   const { city, entries, offset } = day;
   const past = offset < 0;
+  // What is kept where you are standing, and what is kept where the work is,
+  // are two different facts about a day and the sentence says which is which.
+  const observance = keptHere.length > 0 && keptAway.length > 0
+    ? `and it’s ${spokenList(keptHere)} here and ${spokenList(keptAway)} where the work is`
+    : keptHere.length > 0
+      ? `and it’s ${spokenList(keptHere)} here`
+      : `and it’s ${spokenList(keptAway)} where the work is`;
   // What is booked outranks what is kept: a commitment is the thing you act on.
   const tail = entries.length > 0
     ? `with ${count(entries.length, 'thing')} on the calendar`
-    : observed.length > 0
-      ? `and it’s ${spokenList(observed)} here`
+    : keptHere.length + keptAway.length > 0
+      ? observance
       : offset === 0
         ? 'and the day is entirely yours'
         : past ? 'and nothing was on it' : 'and nothing is on it yet';

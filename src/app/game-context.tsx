@@ -66,10 +66,21 @@ export function useGame(): GameContextValue {
 }
 
 /** Re-reads a value from the simulation whenever the world changes. */
-export function useWorld<T>(read: (sim: Simulation) => T): T {
+/**
+ * Read something out of the world, recomputed when the world changes.
+ *
+ * `deps` is for anything the callback closes over that is not the world — a
+ * month the screen is looking at, a subject it is about to open. Without it
+ * the memo holds on `[sim, version]` alone, so a screen that changed its own
+ * mind about what to read went on showing the old answer until the clock
+ * happened to tick: the calendar paged March to June with the label
+ * advancing and the grid frozen on March, and paused it never caught up at
+ * all.
+ */
+export function useWorld<T>(read: (sim: Simulation) => T, deps: readonly unknown[] = []): T {
   const { sim, version } = useGame();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useMemo(() => read(sim), [sim, version]);
+  return useMemo(() => read(sim), [sim, version, ...deps]);
 }
 
 const AUTOSAVE_INTERVAL_MS = 45_000;

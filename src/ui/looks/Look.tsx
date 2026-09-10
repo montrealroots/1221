@@ -81,7 +81,7 @@ export function Open({
   plain?: boolean;
 }) {
   const region = useContext(RegionContext);
-  const exists = useWorld((sim) => lookExists(sim, subject));
+  const exists = useWorld((sim) => lookExists(sim, subject), [subject.kind, subject.id]);
 
   if (plain || !region || !exists) return <>{children}</>;
 
@@ -101,7 +101,7 @@ export function Open({
 /** What a resolved look renders as. */
 function LookPanel({ subject, onClose }: { subject: Subject; onClose: () => void }) {
   const region = useContext(RegionContext);
-  const found = useWorld((s) => resolveLook(s, subject));
+  const found = useWorld((s) => resolveLook(s, subject), [subject.kind, subject.id]);
 
   if (!found) return null;
 
@@ -122,7 +122,7 @@ function LookPanel({ subject, onClose }: { subject: Subject; onClose: () => void
         <p className="look-summary">{found.summary}</p>
         {found.body}
         {found.facets && found.facets.length > 0 && <Facets facets={found.facets} />}
-        {found.ways && found.ways.length > 0 && <Ways ways={found.ways} />}
+        {found.ways && found.ways.length > 0 && <Ways ways={found.ways} as={found.waysAs} />}
         {found.provenance && <p className="look-provenance">{found.provenance}</p>}
       </LookRegion>
     </div>
@@ -188,9 +188,31 @@ function Facets({ facets }: { facets: readonly Facet[] }) {
  * can be read without walking it. A way onto nothing is not painted — the
  * thing it points at may have left the world since the view was written.
  */
-function Ways({ ways }: { ways: readonly Way[] }) {
-  const live = useWorld((s) => ways.filter((w) => lookExists(s, w.to)));
+function Ways({ ways, as = 'list' }: { ways: readonly Way[]; as?: 'list' | 'strip' }) {
+  const live = useWorld((s) => ways.filter((w) => lookExists(s, w.to)), [ways]);
   if (live.length === 0) return null;
+
+  // A strip: the same edges, drawn across instead of down. The whole cell is
+  // the control, so its accessible name reads "Wednesday, Overcast, 3° / -1°"
+  // — the detail line, said rather than printed twice.
+  if (as === 'strip') {
+    return (
+      <div className="look-strip">
+        {live.map((way) => (
+          <div key={subjectKey(way.to)} className="look-cell">
+            <Open subject={way.to}>
+              <span className="look-cell-name">{way.label}</span>
+              {way.glance?.icon && <span aria-hidden="true" className="look-cell-icon">{way.glance.icon}</span>}
+              {(way.glance?.lines ?? []).map((line) => (
+                <span key={line} className="look-cell-line">{line}</span>
+              ))}
+            </Open>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="look-ways">
       {live.map((way) => (
