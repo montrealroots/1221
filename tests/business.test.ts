@@ -20,7 +20,8 @@
 import { describe, expect, it } from 'vitest';
 import { theLot, stagesOn, utilisation, wouldBook, paidInSoFar, paidInAsShareOfAYear } from '@/engine/world/lot';
 import { BUILD_COST_CENTS, ICELAND_STAGE_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS } from '@/engine/content/lot';
-import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD } from '@/engine/content/sugar';
+import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
+import { quotaYears, decideQuota } from '@/engine/world/sugar';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -534,5 +535,54 @@ describe('where the money comes from', () => {
     // And it means something set against what the business earns.
     expect(paidInAsShareOfAYear(sim)).toBeGreaterThan(0);
     expect(paidInAsShareOfAYear(sim)).toBeLessThan(1);
+  });
+});
+
+describe('the sugar quota', () => {
+  it('remembers the year that actually happened rather than rolling for it', () => {
+    const sim = quickSave({}, 'quota-real');
+    const first = quotaYears(sim)[0]!;
+    expect(first.fiscalYear).toBe(2026);
+    expect(first.tonnes, 'the 2026 answer was nothing, and it is on the record').toBe(0);
+    expect(first.because).toMatch(/specialty sugar quota/i);
+  });
+
+  it('is sticky, because policy is', () => {
+    // An open year almost always stays open. This is the honest majority of
+    // the answer and the reason a run of shut years means something.
+    const open = Array.from({ length: 20 }, (_, i) => decideQuota(90_000, 0, i / 20));
+    expect(open.filter((a) => a.tonnes > 0).length).toBeGreaterThan(14);
+  });
+
+  it('gets likelier to reopen the longer it has been shut', () => {
+    const roll = 0.5;
+    expect(decideQuota(0, 0, roll).tonnes, 'reopened immediately on a middling roll').toBe(0);
+    expect(decideQuota(0, 5, roll).tonnes, 'five shut years and still no pressure').toBeGreaterThan(0);
+  });
+
+  it('costs the group real money while it is shut', () => {
+    const shut = profitAfterQuota(GROUP_PROFIT_CENTS, 0);
+    const open = profitAfterQuota(GROUP_PROFIT_CENTS, QUOTA.ordinaryTonnes);
+    expect(shut).toBeLessThan(open);
+    expect(open).toBe(GROUP_PROFIT_CENTS);
+  });
+
+  it('makes the lot a heavier sentence in a year America was shut', () => {
+    const sim = quickSave({}, 'quota-weight');
+    for (let month = 0; month < 24; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
+    const shutShare = paidInAsShareOfAYear(sim);
+    // The same money, read against a full year rather than a shut one.
+    const againstFull = paidInSoFar(sim) / GROUP_PROFIT_CENTS;
+    expect(shutShare, 'the quota changed nothing anybody could feel').toBeGreaterThan(againstFull);
+  });
+
+  it('keeps deciding, year after year, without being asked', () => {
+    const sim = quickSave({}, 'quota-runs');
+    for (let y = 0; y < 6; y++) sim.advanceTo(sim.now + 365 * MS_DAY);
+    const years = quotaYears(sim);
+    expect(years.length, 'the quota stopped being decided').toBeGreaterThan(4);
+    // Every year is its own answer with its own reason.
+    expect(new Set(years.map((y) => y.fiscalYear)).size).toBe(years.length);
+    for (const y of years) expect(y.because.length).toBeGreaterThan(10);
   });
 });

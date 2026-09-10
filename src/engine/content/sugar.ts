@@ -213,3 +213,45 @@ export const GROUP_PROFIT_CENTS: Money = Math.round(GROUP.revenueCents * GROUP_M
 export const LOT_AS_A_SHARE_NOTE =
   'The lot is not going to bankrupt anybody. It is going to sit on the group’s accounts, every year, '
   + 'as a number somebody has to justify.';
+
+// ---------------------------------------------------------------------------
+// The quota, which is decided again every year
+// ---------------------------------------------------------------------------
+
+/**
+ * How organic sugar actually gets into America, and why it is a live question
+ * rather than a fact.
+ *
+ * Almost all organic cane sugar trades raw, because organic rules restrict the
+ * refining aids, and raw specialty sugar enters the United States through a
+ * tariff-rate quota that is set fresh every year. Certified organic is 99% of
+ * everything that comes in under it. So one line in one announcement decides
+ * whether a year's worth of the group's American business lands at four
+ * percent duty or thirty-four.
+ *
+ * In July 2025 the answer was nothing at all. That is real and dated. What
+ * happens in the years after is not knowable, so the game does not pretend to
+ * model the politics: it models the one thing that is reliably true about
+ * policy, which is that last year's answer is the best guess at this year's.
+ */
+export const QUOTA = {
+  /** The month the announcement lands, and the fiscal year it governs. */
+  announcedInMonth: 7,
+  /** Tonnes of additional specialty quota in an ordinary year. SLATE's own. */
+  ordinaryTonnes: 100_000,
+  /** What was actually announced for the 2026 fiscal year. */
+  firstYear: 2026,
+  firstYearTonnes: 0,
+  /** How much of the group's profit rides on the American window. SLATE's own. */
+  shareOfProfitAtRisk: 0.28,
+  /** How much of that is lost when the quota is shut. SLATE's own. */
+  lostWhenShut: 0.6,
+  said: 'Set once a year, and the year it was set to nothing cost the trade eighty-five million dollars.',
+} as const;
+
+/** What a year's quota does to what the group clears. */
+export function profitAfterQuota(profitCents: Money, tonnes: number): Money {
+  const open = Math.min(1, tonnes / QUOTA.ordinaryTonnes);
+  const lost = QUOTA.shareOfProfitAtRisk * QUOTA.lostWhenShut * (1 - open);
+  return Math.round(profitCents * (1 - lost));
+}

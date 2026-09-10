@@ -430,6 +430,17 @@ export interface SoundStage {
   builtAt: Instant;
 }
 
+/** One year's answer on how much sugar America will let in at the low duty. */
+export interface QuotaYear {
+  /** The American fiscal year it governs. */
+  fiscalYear: number;
+  /** Tonnes of additional specialty quota. Zero is a real answer. */
+  tonnes: number;
+  decidedAt: Instant;
+  /** Why it came out that way, in the world's words. */
+  because: string;
+}
+
 /** Whether a production is shooting on a stage, getting ready, or holding it. */
 export type BookingKind = 'shooting' | 'prep' | 'hold';
 
@@ -990,6 +1001,16 @@ export interface SaveUniverse {
    */
   stages: Record<Id, SoundStage>;
   bookings: Record<Id, Booking>;
+
+  /**
+   * What America let in, year by year.
+   *
+   * The sugar the family sells there arrives through a quota that is set fresh
+   * every July, and the year it was set to nothing is real and dated. Kept as
+   * a list rather than as a current figure because the interesting thing about
+   * it is the run: two shut years in a row is a different world from one.
+   */
+  quotaYears: QuotaYear[];
 
   scheduled: ScheduledItem[];
   audits: AuditRecord[];

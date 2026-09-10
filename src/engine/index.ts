@@ -26,6 +26,7 @@ import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
+import { registerSugar, seedTheQuota } from './world/sugar';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
@@ -50,6 +51,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPlans(sim);
   registerCompanyCommands(sim);
   registerLot(sim);
+  registerSugar(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -189,6 +191,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // what pays for all of it. The family has been in cane since long before
   // anybody thought about a stage.
   foundTheSugarGroup(sim);
+  seedTheQuota(sim);
   const company = foundTheCompany(sim);
 
   // --- The lot ------------------------------------------------------------
@@ -313,6 +316,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('properties', 'the properties');
   record('stages', 'the stages on the lot');
   record('bookings', 'who is booked onto them');
+  list('quotaYears', 'what America let in each year');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
   record('idempotency', 'the command receipts');

@@ -23,7 +23,8 @@ import {
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
-import { GROUP, GROUP_PROFIT_CENTS } from '../content/sugar';
+import { GROUP } from '../content/sugar';
+import { profitThisYear } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
 
 /** A week, which is the unit a stage is let in. */
@@ -490,5 +491,10 @@ export function collectWhatIsDue(sim: Simulation): Money {
  * profit it means something immediately.
  */
 export function paidInAsShareOfAYear(sim: Simulation): number {
-  return GROUP_PROFIT_CENTS > 0 ? paidInSoFar(sim) / GROUP_PROFIT_CENTS : 0;
+  // Against what the sugar cleared THIS year, not a flat figure. The same
+  // eight million of empty stages is a different sentence in a year America
+  // was open and a year it was shut, and that difference is the only way the
+  // quota is ever felt on this side of the family.
+  const earned = profitThisYear(sim);
+  return earned > 0 ? paidInSoFar(sim) / earned : 0;
 }

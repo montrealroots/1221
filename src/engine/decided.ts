@@ -25,6 +25,7 @@ import { weatherOn } from './systems/weather';
 import { MS_DAY } from './core/time';
 import { ENQUIRY_SHAPES, type Enquiry } from './content/lot';
 import { wouldBook } from './world/lot';
+import { decideQuota } from './world/sugar';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -164,3 +165,29 @@ function lotFor(seed: number): Simulation {
   LOTS.set(seed, made);
   return made;
 }
+
+// ---------------------------------------------------------------------------
+// The sugar
+// ---------------------------------------------------------------------------
+
+interface Quota { was: number | undefined; shutRunning: number; roll: number }
+
+defineDecider<Quota, string>({
+  id: 'sugar.quota',
+  decides: 'How much sugar America lets in at the low duty, for one fiscal year.',
+  drawnIn: 'src/engine/world/sugar.ts',
+  reads: {
+    // What it did last year, which is the honest majority of the answer.
+    lastYear: (q, t) => ({ ...q, was: t < 0.5 ? 0 : Math.round(t * 120_000) }),
+    // How long it has been shut, because a run builds pressure to reopen.
+    shutRunning: (q, t) => ({ ...q, shutRunning: Math.round(t * 6) }),
+    // And the draw, because it is a political decision and the game does not
+    // know. Declaring this is admitting it rather than hiding it.
+    roll: (q, t) => ({ ...q, roll: t }),
+  },
+  sample: (seed) => ({ was: seed % 2 === 0 ? 0 : 90_000, shutRunning: seed % 3, roll: (seed % 7) / 7 }),
+  decide: ({ was, shutRunning, roll }) => {
+    const answer = decideQuota(was, shutRunning, roll);
+    return answer.tonnes === 0 ? 'shut' : 'open';
+  },
+});

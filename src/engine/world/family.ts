@@ -138,7 +138,7 @@ function backgroundFor(role: EstateRole, twin: boolean): string {
   }
   switch (role) {
     case 'the house': return 'Has kept the house since before you were born, and knows every draft in it.';
-    case 'the lot': return 'Built the lot out of a hay barn and has run it ever since.';
+    case 'the lot': return 'Talked the family into building the stages, then took charge of them.';
     case 'the company': return 'Runs the company that carries the family name, and did long before you came home.';
     default: return 'Grew up on this land, left it once, and came back.';
   }
