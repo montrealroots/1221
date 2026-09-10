@@ -19,6 +19,8 @@
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../domain/model';
 import { CITIES } from '../content/geography';
+import { plural } from '../core/text';
+import { MISSED_COOLS, TOGETHER_WARMS, bondFor, moveBond } from './standing';
 import { formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
@@ -44,6 +46,9 @@ export const FURTHEST_AHEAD_DAYS = 365 * 5;
 /** What a title may run to before it stops being a label. */
 export const LONGEST_TITLE = 80;
 
+/** How many people one plan can be with. */
+export const MOST_PEOPLE_ON_A_PLAN = 8;
+
 export interface PlanSpec {
   title: string;
   at: Instant;
@@ -51,6 +56,15 @@ export interface PlanSpec {
   category?: PlannableCategory;
   /** Where you have to be. Defaults to where you are when you make it. */
   locationId?: string;
+  /**
+   * Who it is with.
+   *
+   * A plan with nobody in it is a plan: an audition, an hour set aside, a
+   * morning you meant to spend on something. A plan with somebody in it is the
+   * other kind, and it is the only thing in the game that moves where you
+   * stand with them — turning up is worth something and not turning up costs.
+   */
+  withIds?: Id[];
 }
 
 export interface PlanResult {
@@ -99,7 +113,48 @@ export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult 
     return { ok: false, error: 'There’s nowhere by that name on the map.' };
   }
 
+  const people = spec.withIds;
+  if (people !== undefined) {
+    if (!Array.isArray(people)) return { ok: false, error: 'That isn’t a list of people.' };
+    if (people.length > MOST_PEOPLE_ON_A_PLAN) {
+      return { ok: false, error: `That’s more than ${plural(MOST_PEOPLE_ON_A_PLAN, 'person', 'people')}. Make it two plans.` };
+    }
+    if (new Set(people).size !== people.length) {
+      return { ok: false, error: 'Somebody is on that list twice.' };
+    }
+    for (const id of people) {
+      if (id === sim.universe.playerId) {
+        return { ok: false, error: 'You’re already going. That’s what makes it your plan.' };
+      }
+      const person = sim.universe.people[id];
+      if (!person) return { ok: false, error: 'You don’t know anybody by that name.' };
+      if (!bondFor(sim.universe, sim.universe.playerId, id)) {
+        return { ok: false, error: `You don’t know ${person.firstName} well enough to make a plan with them.` };
+      }
+    }
+  }
+
   return { ok: true };
+}
+
+/** The people a scheduled plan was made with, as ids the save still knows. */
+export function peopleOn(item: { payload: Record<string, unknown> }): Id[] {
+  const raw = item.payload.withIds;
+  return Array.isArray(raw) ? raw.filter((id): id is Id => typeof id === 'string') : [];
+}
+
+/** The names of those people, in the order they were put on it. */
+export function namesOn(sim: Simulation, item: { payload: Record<string, unknown> }): string[] {
+  return peopleOn(item)
+    .map((id) => sim.universe.people[id]?.firstName)
+    .filter((name): name is string => name !== undefined);
+}
+
+/** A list of names with an "and" in it, the way a person says one. */
+export function saidAsList(names: readonly string[]): string {
+  if (names.length === 0) return '';
+  if (names.length === 1) return names[0]!;
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]!}`;
 }
 
 /**
@@ -109,20 +164,37 @@ export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult 
  * right place for is simply done — no notification, because the clock stopped
  * at it and you were looking straight at it. A plan somewhere you are not is
  * missed, and that is worth being told.
+ *
+ * Either way, anybody the plan was with finds out. That is the whole reason a
+ * plan can have people on it: turning up is the only thing in the game that
+ * warms a standing, and not turning up is the only thing that cools one on
+ * purpose.
  */
 export function registerPlans(sim: Simulation): void {
   sim.onSchedule(PLAN_KIND, (item, s) => {
     const player = s.universe.people[s.universe.playerId];
     const wanted = item.locationId;
-    if (!player || !wanted || wanted === player.currentLocationId) return;
+    const people = peopleOn(item);
+    const kept = Boolean(player) && (!wanted || wanted === player!.currentLocationId);
+
+    if (kept) {
+      for (const id of people) moveBond(s.universe, s.universe.playerId, id, TOGETHER_WARMS, s.now);
+      return;
+    }
+    if (!player || !wanted) return;
+
     item.status = 'missed';
+    for (const id of people) moveBond(s.universe, s.universe.playerId, id, -MISSED_COOLS, s.now);
+
     const there = CITIES.get(wanted)?.name ?? 'somewhere else';
     const here = CITIES.get(player.currentLocationId)?.name ?? 'where you are';
+    const left = saidAsList(namesOn(s, item));
     s.notify({
       category: 'personal',
       title: `You Missed ${item.label}`,
-      body: `It wanted you in ${there} at ${formatTime(item.at, s.homeZone)}, and you were in ${here}.`,
-      importance: 60,
+      body: `It wanted you in ${there} at ${formatTime(item.at, s.homeZone)}, and you were in ${here}.${
+        left ? ` ${left} noticed.` : ''}`,
+      importance: left ? 70 : 60,
     });
   });
 
@@ -138,6 +210,7 @@ export function registerPlans(sim: Simulation): void {
       requiresPlayer: true,
       durationMinutes: payload.durationMinutes ?? 60,
       locationId: payload.locationId ?? player?.currentLocationId,
+      payload: payload.withIds?.length ? { withIds: [...payload.withIds] } : {},
     });
     return { ok: true, id: item.id };
   });

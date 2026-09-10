@@ -18,6 +18,7 @@ import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } fr
 import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
+import { driftBonds, moralePullOf } from '../world/standing';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -277,6 +278,14 @@ export function dailyRollover(sim: Simulation): void {
     w.fitness = clamp(Math.min(w.fitness - 0.18, ceiling.fitness), 0, 100);
     const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
     w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
+  }
+
+  // A day of neither of you doing anything about it, charged to every bond,
+  // and then what the people around you are worth to the person having the day.
+  driftBonds(sim.universe, sim.now);
+  for (const person of Object.values(sim.universe.people)) {
+    const pull = moralePullOf(sim.universe, person.id);
+    if (pull !== 0) person.wellbeing.morale = clamp(person.wellbeing.morale + pull, 0, 100);
   }
 
   liveTheUnattendedDay(sim);
