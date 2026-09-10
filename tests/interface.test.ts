@@ -153,12 +153,23 @@ describe('affordances', () => {
     // has been taken. Thirteen more sit on the calendar, the shell and the
     // creation pickers; they are older than this rule and they move when
     // those screens do, not before. Widening the glob is what promotes them.
+    //
+    // A tooltip is an attribute on a DOM element. `title` on a component of
+    // ours — <Panel title={…}> — is a prop that becomes a heading, and the
+    // rule has nothing to say about it: the regex used to fail the moment a
+    // panel's heading came from content rather than being typed out.
     const REACHED = /ui\/(screens\/Home|looks\/)/;
     const offenders: string[] = [];
     for (const file of SOURCES) {
       if (!file.endsWith('.tsx') || !REACHED.test(file)) continue;
       for (const [index, line] of readFileSync(file, 'utf8').split('\n').entries()) {
-        if (/\stitle={/.test(line)) offenders.push(`${file}:${index + 1}`);
+        const at = line.search(/\stitle={/);
+        if (at < 0) continue;
+        // The tag this attribute is on. Capitalized means a component.
+        const tags = [...line.slice(0, at).matchAll(/<([A-Za-z][\w.]*)/g)];
+        const tag = tags[tags.length - 1]?.[1];
+        if (tag && /^[A-Z]/.test(tag)) continue;
+        offenders.push(`${file}:${index + 1}`);
       }
     }
     expect(offenders, 'title attributes carrying what the screen should say').toEqual([]);

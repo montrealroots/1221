@@ -23,7 +23,7 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
-import { ESTATE_ACRES, HOUSE } from '@/engine/content/estate';
+import { ESTATE_ACRES, ESTATE_NAME, HOUSE, LOT_NAME } from '@/engine/content/estate';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -474,7 +474,7 @@ export function Home() {
           housing model had to say about somebody climbing a ladder. Nobody
           here is on one.
         */}
-        <Panel title="The Land" tight look={at('estate')}>
+        <Panel title={ESTATE_NAME} tight look={at('estate')}>
           {/*
             The premise, and the one place on Home where the whole of it is
             reachable. The land opens onto the house, the lot and the company;
@@ -486,7 +486,7 @@ export function Home() {
               <Open subject={at('estate')}>
                 {ESTATE_ACRES.toLocaleString('en-US')} acres
               </Open>
-              {', held by the family, with the house, the lot and the company all standing on it.'}
+              {`, held by the family, with ${HOUSE.name}, ${LOT_NAME} and the company all standing on it.`}
             </p>
             <div className="col gap-3">
               <Stat

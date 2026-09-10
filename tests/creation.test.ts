@@ -148,7 +148,7 @@ describe('My Skills', () => {
 describe('Starting Point', () => {
   it('reports the land and asks only about money', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
-    for (const card of ['Home Base', 'The Land', 'What Is Yours']) {
+    for (const card of ['Home Base', 'ESTATE_NAME', 'What Is Yours']) {
       expect(step, `${card} is gone`).toContain(card);
     }
     // Everything it used to ask.
@@ -272,7 +272,7 @@ describe('Review', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth',
-      'Home Base', 'The Land', 'The Company', 'Checking', 'Savings', 'Credit Score',
+      'Home Base', 'ESTATE_NAME', 'The Company', 'Checking', 'Savings', 'Credit Score',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }

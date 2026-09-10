@@ -284,7 +284,7 @@ export function dailyRollover(sim: Simulation): void {
   // and then what the people around you are worth to the person having the day.
   driftBonds(sim.universe, sim.now);
   for (const person of Object.values(sim.universe.people)) {
-    const pull = moralePullOf(sim.universe, person.id);
+    const pull = moralePullOf(sim.universe, person.id, person.wellbeing.morale);
     if (pull !== 0) person.wellbeing.morale = clamp(person.wellbeing.morale + pull, 0, 100);
   }
 

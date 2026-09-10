@@ -153,29 +153,50 @@ export function daysSinceTogether(bond: Bond, now: Instant): number | undefined 
 // What it does to you
 // ---------------------------------------------------------------------------
 
-/**
- * How much of a day's morale the people around you account for.
- *
- * Small, and deliberately so. A person with a good family and a bad week is
- * still having a bad week; the family is what makes it survivable rather than
- * what makes it good. At the extremes this is worth about a point of morale a
- * day, which over a month is the difference between coping and not.
- */
+/** The most the people around you can move your morale in one day. */
 export const MORALE_FROM_STANDING = 1.2;
 
+/** How much of the gap they close in a day when they are moving it at all. */
+export const MORALE_PULL_PER_DAY = 0.06;
+
 /**
- * The pull the people around you put on your morale each day.
+ * Where the people around you would hold somebody's morale.
  *
  * Their average, not their best and not their worst: one person you are close
  * to does not cancel out a house you are not speaking to, and one row does not
- * undo everybody else. Nought when there is nobody, because having no people
- * is a different problem from having people you are not getting on with, and
- * the game does not yet model the first one.
+ * undo everybody else. Undefined when there is nobody, because having no
+ * people is a different problem from having people you are not getting on
+ * with, and the game does not model the first one yet.
  */
-export function moralePullOf(universe: SaveUniverse, personId: Id): number {
+export function moraleHeldAt(universe: SaveUniverse, personId: Id): number | undefined {
   const bonds = bondsOf(universe, personId);
-  if (bonds.length === 0) return 0;
-  const average = bonds.reduce((sum, bond) => sum + bond.closeness, 0) / bonds.length;
-  // Fifty is even. Above it the people around you carry you, below it they cost you.
-  return ((average - 50) / 50) * MORALE_FROM_STANDING;
+  if (bonds.length === 0) return undefined;
+  return bonds.reduce((sum, bond) => sum + bond.closeness, 0) / bonds.length;
+}
+
+/**
+ * The pull the people around you put on somebody's morale in a day.
+ *
+ * A pull toward a level rather than a daily allowance, and one that only ever
+ * works in the direction the standing implies. A good family holds you up when
+ * you are below what they are worth, and stops there: it does not carry you to
+ * the ceiling, and a person with good people and a bad week is still having a
+ * bad week. A house you are not speaking to drags you down toward it and
+ * likewise stops.
+ *
+ * Written as an allowance first — a flat point and a bit a day, every day —
+ * which added to thirty-six points over a month, pinned morale at a hundred
+ * and made every other thing that moves it stop mattering. This is the same
+ * spring the bonds themselves drift on, for the same reason.
+ */
+export function moralePullOf(universe: SaveUniverse, personId: Id, morale: number): number {
+  const held = moraleHeldAt(universe, personId);
+  if (held === undefined) return 0;
+  const gap = held - morale;
+  // Fifty is even. Above it they can carry you; below it they can cost you.
+  // Neither works the other way round.
+  if (held >= 50 && gap <= 0) return 0;
+  if (held < 50 && gap >= 0) return 0;
+  const pull = gap * MORALE_PULL_PER_DAY;
+  return clamp(pull, -MORALE_FROM_STANDING, MORALE_FROM_STANDING);
 }

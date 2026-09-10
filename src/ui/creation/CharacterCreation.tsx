@@ -39,8 +39,8 @@ import {
 import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
 import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
 import {
-  ESTATE_ACRES, ESTATE_COUNTRY_ID, ESTATE_NOTE, HOLDINGS, estateCity, estatePlaceLine,
-  studioName,
+  ESTATE_ACRES, ESTATE_COUNTRY_ID, ESTATE_NAME, ESTATE_NOTE, HOLDINGS, HOUSE, LOT_NAME,
+  estateCity, estatePlaceLine, studioName,
 } from '@/engine/content/estate';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
@@ -871,7 +871,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>The Land</h2>
+            <h2>{ESTATE_NAME}</h2>
             <p className="muted small">Held by the family. Three things stand on it.</p>
           </div>
           <span className="chip chip-accent">{ESTATE_ACRES.toLocaleString('en-US')} Acres</span>
@@ -993,7 +993,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
           <Line label="Home Base" value={estatePlaceLine()} />
-          <Line label="The Land" value={`${ESTATE_ACRES.toLocaleString('en-US')} Acres, Family Held`} />
+          <Line label={ESTATE_NAME} value={`${ESTATE_ACRES.toLocaleString('en-US')} Acres, Family Held`} />
           <Line label="The Company" value={studioName(config.lastName)} />
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
@@ -1146,11 +1146,11 @@ const MONTHS = [
  */
 const ESTATE_ROLES: { id: EstateRole; label: string; note: string; said: string }[] = [
   {
-    id: 'the house', label: 'Keeps The House', said: 'Keeps the house.',
+    id: 'the house', label: `Keeps ${HOUSE.name}`, said: `Keeps ${HOUSE.name}.`,
     note: 'Runs the household. Nothing in it works without them.',
   },
   {
-    id: 'the lot', label: 'Runs The Lot', said: 'Runs the lot.',
+    id: 'the lot', label: `Runs ${LOT_NAME}`, said: `Runs ${LOT_NAME}.`,
     note: 'The stages, the crew, the schedule. The lot is theirs.',
   },
   {

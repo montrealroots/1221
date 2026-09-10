@@ -14,6 +14,7 @@
  * were already here. This file is edges, not new state.
  */
 
+import { ESTATE_NAME, HOUSE, LOT_NAME } from '@/engine/content/estate';
 import type { Bond, Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { ageOn, dateKey, formatDate } from '@/engine/core/time';
@@ -432,12 +433,12 @@ defineLook<Moves>('whatmoves', {
 /** Where each role goes, and what it is called on the way in. */
 const ROLE_OPENS: Record<string, { label: string; detail: string; to: () => { kind: string; id: string } }> = {
   'the house': {
-    label: 'The House',
+    label: HOUSE.name,
     detail: 'The six bedrooms, the condition of it, and who sleeps in it',
     to: () => at('house'),
   },
   'the lot': {
-    label: 'The Studio Lot',
+    label: LOT_NAME,
     detail: 'The stages on the family land, and what has shot on them',
     to: () => at('lot'),
   },
@@ -496,7 +497,7 @@ defineLook<Doing>('estaterole', {
         ? [{ to: opens.to(), label: opens.label, detail: opens.detail }]
         : [{
           to: at('estate'),
-          label: 'The Land Itself',
+          label: ESTATE_NAME,
           detail: 'The two thousand acres they live on and don’t run',
         }],
       provenance: 'What somebody does here was chosen on the Your People step and is stored on the person. '

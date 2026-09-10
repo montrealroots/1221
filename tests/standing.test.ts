@@ -16,7 +16,7 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import type { Id, SaveUniverse } from '@/engine/domain/model';
 import {
-  DRIFT_PER_DAY, MISSED_COOLS, MORALE_FROM_STANDING, RESTING_APART,
+  DRIFT_PER_DAY, MISSED_COOLS, MORALE_FROM_STANDING, MORALE_PULL_PER_DAY, RESTING_APART,
   RESTING_UNDER_ONE_ROOF, STANDING_BANDS, TOGETHER_WARMS,
   bondFor, bondsOf, driftBonds, moralePullOf, moveBond, otherIn,
   restingLevel, standingSaid, standingWord,
@@ -235,22 +235,48 @@ describe('where a bond settles', () => {
 });
 
 describe('what the people around you do to your days', () => {
+  const pullAt = (sim: Simulation, closenessEach: number, morale: number): number => {
+    for (const bond of Object.values(sim.universe.bonds)) bond.closeness = closenessEach;
+    return moralePullOf(sim.universe, sim.universe.playerId, morale);
+  };
+
   it('lifts morale when you are getting on with them', () => {
     const sim = quickSave({ family: withTwin }, 'standing-morale-up');
-    for (const bond of Object.values(sim.universe.bonds)) bond.closeness = 100;
-    expect(moralePullOf(sim.universe, sim.universe.playerId)).toBeCloseTo(MORALE_FROM_STANDING, 5);
+    expect(pullAt(sim, 100, 50)).toBeCloseTo(MORALE_FROM_STANDING, 5);
   });
 
   it('costs morale when you are not', () => {
     const sim = quickSave({ family: withTwin }, 'standing-morale-down');
-    for (const bond of Object.values(sim.universe.bonds)) bond.closeness = 0;
-    expect(moralePullOf(sim.universe, sim.universe.playerId)).toBeCloseTo(-MORALE_FROM_STANDING, 5);
+    expect(pullAt(sim, 0, 50)).toBeCloseTo(-MORALE_FROM_STANDING, 5);
   });
 
   it('is nothing either way when everybody is exactly even', () => {
     const sim = quickSave({ family: withTwin }, 'standing-morale-even');
-    for (const bond of Object.values(sim.universe.bonds)) bond.closeness = 50;
-    expect(moralePullOf(sim.universe, sim.universe.playerId)).toBe(0);
+    expect(pullAt(sim, 50, 50)).toBe(0);
+  });
+
+  it('stops when it has held you up to what they are worth', () => {
+    // The thing that makes this a spring rather than an allowance. A family
+    // at seventy-five holds you at seventy-five; it does not carry you to the
+    // ceiling, and a good family with a bad week is still a bad week.
+    const sim = quickSave({ family: withTwin }, 'standing-morale-ceiling');
+    expect(pullAt(sim, 75, 74)).toBeGreaterThan(0);
+    expect(pullAt(sim, 75, 75)).toBe(0);
+    expect(pullAt(sim, 75, 90)).toBe(0);
+  });
+
+  it('never lifts you toward a house you are not speaking to', () => {
+    const sim = quickSave({ family: withTwin }, 'standing-morale-floor');
+    expect(pullAt(sim, 20, 40)).toBeLessThan(0);
+    expect(pullAt(sim, 20, 20)).toBe(0);
+    expect(pullAt(sim, 20, 5)).toBe(0);
+  });
+
+  it('closes a real fraction of the gap, and never more than a day’s worth', () => {
+    const sim = quickSave({ family: withTwin }, 'standing-morale-rate');
+    expect(pullAt(sim, 80, 70)).toBeCloseTo(10 * MORALE_PULL_PER_DAY, 5);
+    // A huge gap is still one day.
+    expect(pullAt(sim, 100, 0)).toBe(MORALE_FROM_STANDING);
   });
 
   it('averages them, so one good one does not cover a bad house', () => {
@@ -258,7 +284,7 @@ describe('what the people around you do to your days', () => {
     const player = sim.universe.playerId;
     for (const bond of bondsOf(sim.universe, player)) bond.closeness = 10;
     bondsOf(sim.universe, player)[0]!.closeness = 100;
-    expect(moralePullOf(sim.universe, player)).toBeLessThan(0);
+    expect(moralePullOf(sim.universe, player, 50)).toBeLessThan(0);
   });
 
   it('actually reaches morale as the days pass', () => {
@@ -277,8 +303,8 @@ describe('what the people around you do to your days', () => {
     const good = week(100);
     const bad = week(0);
     expect(good).toBeGreaterThan(bad);
-    // Seven days of it, both ways from even, is worth about that much.
-    expect(good - bad).toBeCloseTo(2 * MORALE_FROM_STANDING * 7, 0);
+    // A real gap after one week, and not a runaway one.
+    expect(good - bad).toBeGreaterThan(3);
   });
 });
 

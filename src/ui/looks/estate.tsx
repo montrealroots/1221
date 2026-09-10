@@ -24,7 +24,9 @@
 
 import { CITIES, type City } from '@/engine/content/geography';
 import {
-  ESTATE_ACRES, ESTATE_CITY_ID, ESTATE_NOTE, HOUSE, studioName,
+  ESTATE_ACRES, ESTATE_CITY_ID, ESTATE_COUNTRY_ID, ESTATE_NAME, ESTATE_NOTE, HOUSE, LOT_NAME,
+  MOVED_IN, PEACE_RANKED_SINCE, SAFEGUARDS, SAFEGUARD_BY_ID, SAFETY_NOTE, studioName,
+  type Safeguard,
 } from '@/engine/content/estate';
 import { plural } from '@/engine/core/text';
 import type { Household, Person, Property } from '@/engine/domain/model';
@@ -147,7 +149,7 @@ defineLook<TheLand>('estate', {
     // the things on the land, and the sentence naming them does not name it.
     const standing = [
       ...(land.house ? [land.house.name || HOUSE.name] : []),
-      'The Studio Lot',
+      LOT_NAME,
       land.company,
     ];
     const living = land.household?.memberIds.length ?? 1;
@@ -162,7 +164,7 @@ defineLook<TheLand>('estate', {
     }
     ways.push({
       to: at('lot'),
-      label: 'The Studio Lot',
+      label: LOT_NAME,
       detail: 'Newly built stages on the same land, close enough to walk to, and nothing shot on one yet',
     });
     ways.push({
@@ -170,19 +172,24 @@ defineLook<TheLand>('estate', {
       label: land.company,
       detail: COMPANY_DETAIL,
     });
+    ways.push({
+      to: at('security'),
+      label: 'The Way In',
+      detail: `${toStart(said(SAFEGUARDS.length, 'layer'))} between the road and the front door, and one gate through all of them`,
+    });
 
     return {
-      name: 'The Land',
+      name: ESTATE_NAME,
       kind: 'What The Family Holds',
       parent: at('place', land.town.id),
-      summary: `You live on ${acresSaid()} acres outside ${land.town.name} that the family has held since `
-        + 'before you were born, and there’s no rent, no mortgage and nobody to answer to about any of it.',
+      summary: `${ESTATE_NAME} is ${acresSaid()} acres outside ${land.town.name}, it’s the family’s, and `
+        + 'there’s no rent, no mortgage and nobody to answer to about any of it.',
       body: (
         <>
           <p className="small">
-            It’s {acresSaid()} acres outside{' '}
-            <Open subject={at('place', land.town.id)}>{land.town.name}</Open>, and you were born onto it rather than
-            buying your way onto it. What stands on it: {spokenList(standing)}.
+            The family has been on it since the first day of {MOVED_IN.year}, and it sits outside{' '}
+            <Open subject={at('place', land.town.id)}>{land.town.name}</Open>. Three things stand on it:{' '}
+            {spokenList(standing)}.
           </p>
           <p className="small">{ESTATE_NOTE}</p>
           <div className="grid grid-3">
@@ -228,27 +235,38 @@ defineLook<Property>('house', {
       });
     }
 
+    ways.push({
+      to: at('safeguard', 'house'),
+      label: 'What Stands Around It',
+      detail: 'The doors, the glass and the room inside it nobody thinks about from one year to the next',
+    });
+
     return {
       name: house.name || HOUSE.name,
       kind: 'Where You Sleep',
       parent: at('estate'),
-      summary: kept >= 70
-        ? `You sleep here, it’s kept at ${outOf(kept)}, and a night in a house this well looked `
-          + 'after puts back more than a night in one that isn’t.'
-        : `You sleep here, it’s down to ${outOf(kept)}, and the nights aren’t putting back what `
-          + 'they should.',
+      summary: kept >= 100
+        ? `You sleep here, it’s at ${outOf(kept)}, and nothing in a house this new has had time to go `
+          + 'wrong yet.'
+        : kept >= 70
+          ? `You sleep here, it’s kept at ${outOf(kept)}, and a night in a house this well looked `
+            + 'after puts back more than a night in one that isn’t.'
+          : `You sleep here, it’s down to ${outOf(kept)}, and the nights aren’t putting back what `
+            + 'they should.',
       body: (
         <>
           <p className="small">
             It’s {said(house.bedrooms, 'bedroom')}, {said(house.bathrooms, 'bathroom')} and{' '}
-            {house.interiorSqft.toLocaleString('en-US')} square feet of house, put up in {house.yearBuilt} and kept
-            up ever since, because the family keeps it up. There’s no lease on it, no loan against it and nobody
-            whose permission you need to be in it.
+            {house.interiorSqft.toLocaleString('en-US')} square feet of house, built in {house.yearBuilt} and
+            lived in since the first day of {MOVED_IN.year}. The family put it up rather than bought it, so
+            there’s no lease on it, no loan against it and nobody whose permission you need to be in it.
           </p>
           <p className="small">
             Condition is the one figure in this house that moves on its own. It sets how much a night here
-            gives you back, it slips a little each day nobody tends to it, and at {kept} it’s
-            {kept >= 70 ? ' working for you rather than against you.' : ' costing you sleep you’d otherwise have had.'}
+            gives you back and it slips a little each day nobody tends to it — and at {outOf(kept)} it’s
+            {kept >= 100
+              ? ' as high as the figure goes, because the house is barely a year old and the family keeps it that way.'
+              : kept >= 70 ? ' working for you rather than against you.' : ' costing you sleep you’d otherwise have had.'}
           </p>
           <div className="grid grid-3">
             <Stat label="Condition" value={outOf(kept)} note="What a night here is worth" />
@@ -258,14 +276,14 @@ defineLook<Property>('house', {
               value={`${house.interiorSqft.toLocaleString('en-US')} sq ft`}
               note={`On ${acresSaid()} acres`}
             />
-            <Stat label="Built" value={house.yearBuilt} note="And standing well before you were" />
+            <Stat label="Built" value={house.yearBuilt} note={`Moved into on 1 January ${MOVED_IN.year}`} />
             <Stat label="What It Costs You" value="Nothing" note="No rent, no lease, no landlord" />
           </div>
         </>
       ),
       ways,
-      provenance: 'The rooms, the floor area and the year are the premise’s placeholders. The condition is real '
-        + 'and moves every day the clock runs.',
+      provenance: 'The rooms and the floor area are the premise’s placeholders. The year, the day the family '
+        + 'moved in and the condition are real, and the condition moves every day the clock runs.',
     };
   },
 });
@@ -340,6 +358,116 @@ defineLook<Household>('household', {
 });
 
 // ---------------------------------------------------------------------------
+// What it takes to get onto the land
+// ---------------------------------------------------------------------------
+
+interface TheWayIn { town: City }
+
+defineLook<TheWayIn>('security', {
+  gone: 'There’s nothing standing between the road and the door any more.',
+  resolve: () => {
+    const town = estateTown();
+    return town ? { town } : undefined;
+  },
+  seeds: () => [''],
+  look: ({ town }) => ({
+    name: 'The Way In',
+    kind: 'What It Takes To Get Onto The Land',
+    parent: at('estate'),
+    summary: `One road runs onto ${ESTATE_NAME}, there are ${said(SAFEGUARDS.length, 'layer')} between it `
+      + 'and the front door, and nobody reaches the second without being expected at the first.',
+    body: (
+      <>
+        <p className="small">
+          The family didn’t build a house and then worry about it. All of this went in with the build:
+          the line around the land first, the one gate through it, the room that watches both, and the
+          house hardened inside all three. Every layer works whether or not the one outside it does.
+        </p>
+        <p className="small">{SAFETY_NOTE}</p>
+        <div className="grid grid-3">
+          <Stat label="Roads In" value="1" note="And somebody is watching it" />
+          <Stat label="Layers" value={SAFEGUARDS.length} note="Between the road and the door" />
+          <Stat
+            label="Where This Is"
+            value={`First since ${PEACE_RANKED_SINCE}`}
+            note={`${town.name}, in the most peaceful country there is`}
+          />
+        </div>
+      </>
+    ),
+    ways: [
+      ...SAFEGUARDS.map((one): Way => ({
+        to: at('safeguard', one.id),
+        label: one.label,
+        detail: one.summary,
+      })),
+      {
+        to: at('country', ESTATE_COUNTRY_ID),
+        label: 'The Country Around It',
+        detail: `First in the world for peace every year since ${PEACE_RANKED_SINCE}, which is what makes all of the above remarkable`,
+      },
+    ],
+    provenance: 'The ranking is real and published. Everything on this land is the premise: SLATE runs no '
+      + 'intrusions, no incidents and no threat model, and none of this has ever had to work.',
+  }),
+});
+
+// ---------------------------------------------------------------------------
+// One layer of it
+// ---------------------------------------------------------------------------
+
+defineLook<Safeguard>('safeguard', {
+  gone: 'That isn’t one of the things standing between the road and the door.',
+  resolve: (_sim, id) => SAFEGUARD_BY_ID[id],
+  seeds: () => SAFEGUARDS.map((one) => one.id),
+  look: (guard, { sim }) => {
+    const house = houseIn(sim, '');
+    const opensOnto: Way[] = [];
+    if (guard.covers === 'house' && house) {
+      opensOnto.push({
+        to: at('house', house.id),
+        label: house.name || HOUSE.name,
+        detail: 'The building this stands around, and the condition of it',
+      });
+    }
+    if (guard.covers === 'lot') {
+      opensOnto.push({
+        to: at('lot'),
+        label: LOT_NAME,
+        detail: 'The stages this keeps a lens off',
+      });
+    }
+    if (guard.covers === 'land') {
+      opensOnto.push({
+        to: at('estate'),
+        label: ESTATE_NAME,
+        detail: `The ${acresSaid()} acres this runs around`,
+      });
+    }
+
+    return {
+      name: guard.label,
+      kind: guard.kind,
+      parent: at('security'),
+      summary: guard.summary,
+      body: (
+        <>
+          {guard.detail.map((paragraph) => <p key={paragraph.slice(0, 24)} className="small">{paragraph}</p>)}
+          <div className="grid grid-3">
+            {guard.figures.map((figure) => (
+              <Stat key={figure.label} label={figure.label} value={figure.value} note={figure.note} />
+            ))}
+          </div>
+        </>
+      ),
+      ways: opensOnto,
+      provenance: 'Part of the build rather than added to it, which is why none of it looks bolted on. '
+        + 'Nothing in SLATE tests any of it.',
+    };
+  },
+});
+
+// ---------------------------------------------------------------------------
 // The lot
 // ---------------------------------------------------------------------------
 
@@ -354,7 +482,7 @@ defineLook<TheLot>('lot', {
   },
   seeds: () => [''],
   look: (lot) => ({
-    name: 'The Studio Lot',
+    name: LOT_NAME,
     kind: 'What The Family Built',
     parent: at('estate'),
     summary: 'You can walk to the stages from the house, they’re newly built and standing empty, and nothing '
@@ -373,11 +501,18 @@ defineLook<TheLot>('lot', {
         </p>
       </>
     ),
-    ways: [{
-      to: at('company'),
-      label: lot.company,
-      detail: COMPANY_DETAIL,
-    }],
+    ways: [
+      {
+        to: at('company'),
+        label: lot.company,
+        detail: COMPANY_DETAIL,
+      },
+      {
+        to: at('safeguard', 'lot'),
+        label: 'What Keeps A Lens Off It',
+        detail: 'Inside the same line the house is, which is why a shoot here can’t be photographed from outside',
+      },
+    ],
     provenance: 'The lot is the premise. SLATE has no stage bookings, no day rate and no overhead running '
       + 'against it yet.',
   }),
