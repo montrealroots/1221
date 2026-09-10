@@ -663,6 +663,12 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 }
 .look-cell > button.link:hover { background: var(--surface-hover); color: inherit; }
 .look-cell > button.link.is-open { background: var(--surface-hover); }
+/* The cell the level is about. Same accent as a picked trait, so "this is the
+   one" reads the same everywhere on the page. */
+.look-cell.is-here > button.link {
+  background: var(--accent-dim); box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+.look-cell.is-here .look-cell-name { color: var(--accent-strong); }
 .look-cell-name {
   font-size: var(--size-xs); color: var(--text-dim); white-space: nowrap;
   text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px;

@@ -283,8 +283,10 @@ defineLook<Household>('household', {
   },
   look: (household, { sim }) => {
     const members = membersOf(sim, household);
-    const names = members.map(nameOf);
     const count = members.length;
+    const heads = household.headIds
+      .map((id) => sim.universe.people[id])
+      .filter((one): one is Person => one !== undefined);
     const house = household.residenceId ? sim.universe.properties[household.residenceId] : houseIn(sim, '');
     const dependents = household.dependentIds.length;
 
@@ -300,7 +302,11 @@ defineLook<Household>('household', {
           <p className="small">
             {count === 0
               ? 'Nobody else is named under this roof yet, and it’s a big house to be the only one in.'
-              : `${spokenList(names)} ${isAre(count)} under the roof, and that’s the whole of it.`}
+              : heads.length === 0
+                ? 'Nobody is named as the head of it, which for a house this size is unusual.'
+                : `${spokenList(heads.map((one) => one.firstName))} ${isAre(heads.length)} `
+                  + `the ${heads.length === 1 ? 'head' : 'heads'} of it, which is what it means for the land `
+                  + 'to have been theirs before it was yours.'}
             {' '}It’s the family’s household and it carries the family’s name, the same name that’s on the gate
             of the lot.
           </p>

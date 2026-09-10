@@ -218,7 +218,11 @@ function makeBond(saveId: Id, a: Id, b: Id, closeness: number, now: Instant): Bo
   return {
     id: bondKey(a, b), saveId, betweenIds: pair,
     closeness: clamp(closeness, 0, 100),
-    lastTogetherAt: now,
+    // No `lastTogetherAt`. Nothing has happened yet, and the field means the
+    // last time the two of them set time aside for each other rather than the
+    // last time they were in the same room. On the first morning of a save
+    // that is nothing, and saying "you saw them today, on purpose" would be
+    // the save inventing an afternoon neither of them had.
     formedAt: now,
   };
 }

@@ -30,7 +30,19 @@ export interface Way {
    * beside the word and never instead of it, and it is hidden from a screen
    * reader, which has the word and the lines.
    */
-  glance?: { icon?: string; lines?: readonly string[] };
+  glance?: {
+    icon?: string;
+    lines?: readonly string[];
+    /**
+     * Whether this cell is the one the level is about.
+     *
+     * A strip of seven bands with no mark on the one you are standing in is a
+     * chart of somebody else’s life: the sentence said which rung you were on
+     * and the picture did not, so the eye had to go back to the prose to find
+     * out. Marked cells still open like any other.
+     */
+    marked?: boolean;
+  };
 }
 
 /** Another face of the same thing. Costs no depth and has no address. */

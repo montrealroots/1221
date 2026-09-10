@@ -212,7 +212,10 @@ defineLook<Standing>('bond', {
           </p>
           <p className="small">
             {days === undefined
-              ? 'The two of you haven’t set aside a day for each other yet.'
+              ? roof
+                ? 'The two of you haven’t set aside time for each other yet. You see them every day of your '
+                  + 'life, which is a different thing and is already in the number above.'
+                : 'The two of you haven’t set aside time for each other yet.'
               : days === 0
                 ? 'You saw them today, on purpose.'
                 : `It’s been ${said(days, 'day')} since the two of you set aside time for each other.`}
@@ -281,7 +284,11 @@ defineLook<Scale>('scale', {
           ? `Where you and ${person.firstName} are, at ${closeness}`
           : `${one.from} to ${topOf(one.word)} out of a hundred`,
         glance: {
-          lines: [`${one.from}–${topOf(one.word)}`, inBand(one.word) === 0 ? 'Nobody' : said(inBand(one.word), 'person', 'people')],
+          marked: one.word === band.word,
+          lines: [
+            `${one.from}–${topOf(one.word)}`,
+            inBand(one.word) === 0 ? 'Nobody' : said(inBand(one.word), 'person', 'people'),
+          ],
         },
       })),
       provenance: 'The bands are the engine’s own words for a closeness, not a second scale written for a screen.',

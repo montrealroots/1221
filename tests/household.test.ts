@@ -139,18 +139,35 @@ describe('where you stand', () => {
     );
   });
 
-  it('opens onto the scale, what moves it, and the last day you saw them', () => {
+  it('opens onto the scale and what moves it, always', () => {
     const sim = world();
     const ways = (open(sim, 'bond', idOf(sim, 'Halla')).ways ?? []).map((way) => way.to.kind);
+    expect(ways).toEqual(['scale', 'whatmoves']);
+  });
+
+  it('offers the last day only once there has actually been one', () => {
+    // A fresh save has none. Living in the same house is not setting time
+    // aside, and a save that opened on a day the two of you spent together
+    // would be inventing an afternoon neither of them had.
+    const sim = world('household-last-day');
+    const halla = idOf(sim, 'Halla');
+    expect(bondFor(sim.universe, sim.universe.playerId, halla)!.lastTogetherAt).toBeUndefined();
+    expect(open(sim, 'bond', halla).summary).toBeTruthy();
+
+    sim.execute({
+      kind: 'calendar.schedule',
+      payload: { title: 'Lunch', at: sim.now + 2 * MS_DAY, withIds: [halla] },
+    });
+    sim.advanceTo(sim.now + 3 * MS_DAY);
+
+    const ways = (open(sim, 'bond', halla).ways ?? []).map((way) => way.to.kind);
     expect(ways).toEqual(['scale', 'whatmoves', 'day']);
   });
 
-  it('drops the last day when there has never been one', () => {
+  it('says living together is not the same as setting time aside', () => {
     const sim = world();
-    const halla = idOf(sim, 'Halla');
-    delete bondFor(sim.universe, sim.universe.playerId, halla)!.lastTogetherAt;
-    const ways = (open(sim, 'bond', halla).ways ?? []).map((way) => way.to.kind);
-    expect(ways).toEqual(['scale', 'whatmoves']);
+    const look = open(sim, 'bond', idOf(sim, 'Halla'));
+    expect(JSON.stringify(look.body)).toContain('haven’t set aside time for each other yet');
   });
 
   it('never prints the number as the thing itself', () => {
@@ -167,6 +184,21 @@ describe('the scale it sits on', () => {
     expect(look.waysAs).toBe('strip');
     expect((look.ways ?? []).map((way) => way.label))
       .toEqual(['Inseparable', 'Close', 'Warm', 'Cordial', 'Distant', 'Cold', 'Estranged']);
+  });
+
+  it('marks the rung you are standing on, and only that one', () => {
+    const sim = world();
+    const halla = idOf(sim, 'Halla');
+    const bond = bondFor(sim.universe, sim.universe.playerId, halla)!;
+    const marked = (look: Looked): string[] => (look.ways ?? [])
+      .filter((way) => way.glance?.marked)
+      .map((way) => way.label);
+
+    expect(marked(open(sim, 'scale', halla))).toEqual([standingWord(Math.round(bond.closeness))]);
+
+    // And it follows the number rather than being written in.
+    bond.closeness = 15;
+    expect(marked(open(sim, 'scale', halla))).toEqual(['Cold']);
   });
 
   it('says which rung the two of you are on', () => {

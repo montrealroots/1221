@@ -199,9 +199,10 @@ function Ways({ ways, as = 'list' }: { ways: readonly Way[]; as?: 'list' | 'stri
     return (
       <div className="look-strip">
         {live.map((way) => (
-          <div key={subjectKey(way.to)} className="look-cell">
+          <div key={subjectKey(way.to)} className={`look-cell${way.glance?.marked ? ' is-here' : ''}`}>
             <Open subject={way.to}>
               <span className="look-cell-name">{way.label}</span>
+              {way.glance?.marked && <span className="sr-only">, where you are</span>}
               {way.glance?.icon && <span aria-hidden="true" className="look-cell-icon">{way.glance.icon}</span>}
               {(way.glance?.lines ?? []).map((line) => (
                 <span key={line} className="look-cell-line">{line}</span>
