@@ -24,7 +24,8 @@ import { resolveLook } from '@/ui/looks/registry';
 import type { Looked } from '@/ui/looks/registry';
 import '@/ui/looks/all';
 import {
-  FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, PLAN_KIND, checkPlan, couldPlanWith,
+  CALLING_OFF_COSTS, FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, NOTICE_FREE_HOURS,
+  PLAN_KIND, callingOffCosts, checkPlan, couldPlanWith,
 } from '@/engine/world/plans';
 
 const PLANS_SOURCE = readFileSync(new URL('../src/engine/world/plans.ts', import.meta.url), 'utf8');
@@ -297,6 +298,48 @@ describe('the form and the engine agree about what a plan has', () => {
     expect(missing, 'the plan form does not send these, so the engine never sees them').toEqual([]);
   });
 
+  it('stops the clock from a screen, so a plan is never resolved behind you', () => {
+    // The other half of the same bug the payload gate guards. The world's own
+    // advanceTo runs straight over a commitment and marks it attended; every
+    // screen that moves the clock has to stop at one instead, or the choice
+    // between going and not never reaches the player and the dialog warning
+    // you are about to miss something is describing a thing that cannot
+    // happen.
+    const CONTEXT = readFileSync(new URL('../src/app/game-context.tsx', import.meta.url), 'utf8');
+    for (const call of ['sim.advanceBy(', 'sim.advanceTo(']) {
+      const at = CONTEXT.indexOf(call);
+      expect(at, `${call} is gone from the game context`).toBeGreaterThan(-1);
+      const line = CONTEXT.slice(at, CONTEXT.indexOf(')', at) + 1);
+      expect(line, `${call} does not stop at what wants you`).toContain('stopOnPlayerRequired: true');
+    }
+  });
+
+  it('offers the choice at the moment, and the choice reaches the engine', () => {
+    // Two halves in two files, because the halt outlived the control that
+    // caused it: the live tick can be halted as well as the Advance menu, so
+    // the provider holds where the clock stopped and the controls put the
+    // question on screen.
+    const CONTEXT = readFileSync(new URL('../src/app/game-context.tsx', import.meta.url), 'utf8');
+    const CONTROLS = readFileSync(new URL('../src/ui/shell/TimeControls.tsx', import.meta.url), 'utf8');
+
+    expect(CONTEXT, 'nothing reads where the clock stopped').toContain('interruptedBy');
+    expect(CONTEXT, 'the world keeps ticking while it waits on you').toContain("timeSpeed = 'paused'");
+    expect(CONTROLS, 'the halt never reaches a screen').toContain('standingAt');
+    expect(CONTROLS, 'not going never reaches the engine').toContain("'calendar.skip'");
+  });
+
+  it('stops the live clock too, not only the ones a person presses', () => {
+    // The bug the browser caught and the unit tests could not: the clock ran
+    // the commitment while the player was standing in front of the question
+    // about it, so pressing Don't Go answered "that's already settled".
+    const CONTEXT = readFileSync(new URL('../src/app/game-context.tsx', import.meta.url), 'utf8');
+    const tick = CONTEXT.indexOf('setInterval');
+    expect(tick, 'the live clock is gone').toBeGreaterThan(-1);
+    const loop = CONTEXT.slice(tick, CONTEXT.indexOf('}, TICK_MS)', tick));
+    expect(loop, 'the live clock runs over what wants you').toContain('stopOnPlayerRequired: true');
+    expect(loop, 'the live clock does not halt').toContain('halt(');
+  });
+
   it('offers the people rather than only sending them', () => {
     // A payload field with no control behind it is the same bug wearing a
     // different hat: it would always send an empty list.
@@ -361,5 +404,135 @@ describe('a plan remembers who it is with', () => {
     const look = resolveLook(sim, { kind: 'entry', id: made.id! }) as Looked;
     expect(words(look)).not.toContain('It’s with');
     expect((look.ways ?? []).some((way) => way.to.kind === 'person')).toBe(false);
+  });
+});
+
+describe('not going', () => {
+  const family = {
+    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
+    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
+  };
+  const skip = (sim: Simulation, entryId: string): Answer =>
+    sim.execute<Answer>({ kind: 'calendar.skip', payload: { entryId } }).value!;
+  const closeness = (sim: Simulation, first: string): number =>
+    couldPlanWith(sim).find((one) => one.person.firstName === first)!.closeness;
+
+  const dinner = (seed: string) => {
+    const sim = quickSave({ family }, seed);
+    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!.person.id;
+    const made = put(sim, { title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90, withIds: [halla] });
+    return { sim, halla, id: made.id! };
+  };
+
+  it('is refused before the thing has come round', () => {
+    const { sim, id } = dinner('skip-too-early');
+    expect(skip(sim, id).error).toBe('That hasn’t come round yet. Call it off instead, and they’ll know.');
+  });
+
+  it('costs the full price once you are standing at it', () => {
+    const { sim, id } = dinner('skip-at-it');
+    const before = closeness(sim, 'Halla');
+
+    // The clock stops at it rather than running over it.
+    const stopped = sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
+    expect(stopped.interruptedBy?.id).toBe(id);
+    expect(sim.timeline.get(id)!.status).toBe('pending');
+
+    expect(skip(sim, id).ok).toBe(true);
+    expect(sim.timeline.get(id)!.status).toBe('missed');
+    expect(closeness(sim, 'Halla')).toBeCloseTo(before - MISSED_COOLS, 5);
+  });
+
+  it('says who waited, by name', () => {
+    const { sim, id } = dinner('skip-said');
+    sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
+    skip(sim, id);
+    const said = unreadNotifications(sim).map((one) => `${one.title} ${one.body}`).join(' ');
+    expect(said).toContain('You Didn’t Go To Dinner');
+    expect(said).toContain('Halla waited');
+  });
+
+  it('costs nothing but the plan when nobody was on it', () => {
+    const sim = quickSave({ family }, 'skip-alone');
+    const made = put(sim, { title: 'An Hour Of My Own', at: sim.now + 2 * MS_HOUR });
+    sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
+    expect(skip(sim, made.id!).ok).toBe(true);
+    const said = unreadNotifications(sim).map((one) => one.body).join(' ');
+    expect(said).toContain('Nobody was waiting on it but you');
+  });
+
+  it('is refused twice over, and refused for something that is not yours', () => {
+    const { sim, id } = dinner('skip-twice');
+    sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
+    expect(skip(sim, id).ok).toBe(true);
+    expect(skip(sim, id).error).toBe('That’s already settled one way or the other.');
+    expect(skip(sim, 'sched_nope').error).toBe('There’s nothing by that name on the calendar.');
+  });
+
+  it('leaves going the thing that warms it', () => {
+    // The other side of the same fork, so the two are visibly opposite.
+    const { sim } = dinner('skip-or-go');
+    const before = closeness(sim, 'Halla');
+    sim.advanceTo(sim.now + MS_DAY);
+    expect(closeness(sim, 'Halla')).toBeCloseTo(before + TOGETHER_WARMS, 5);
+  });
+});
+
+describe('calling it off', () => {
+  const family = {
+    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
+    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
+  };
+  const closeness = (sim: Simulation, first: string): number =>
+    couldPlanWith(sim).find((one) => one.person.firstName === first)!.closeness;
+
+  const dinnerIn = (seed: string, ms: number) => {
+    const sim = quickSave({ family }, seed);
+    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!.person.id;
+    const made = put(sim, { title: 'Dinner', at: sim.now + ms, durationMinutes: 90, withIds: [halla] });
+    return { sim, id: made.id! };
+  };
+
+  it('is free with a day’s notice or more', () => {
+    const { sim, id } = dinnerIn('calloff-early', 3 * MS_DAY);
+    const before = closeness(sim, 'Halla');
+    expect(callOff(sim, id).ok).toBe(true);
+    expect(closeness(sim, 'Halla')).toBe(before);
+  });
+
+  it('costs more the later it gets, and never as much as not going', () => {
+    const late = dinnerIn('calloff-late', MS_HOUR);
+    const before = closeness(late.sim, 'Halla');
+    expect(callOff(late.sim, late.id).ok).toBe(true);
+    const cost = before - closeness(late.sim, 'Halla');
+
+    expect(cost).toBeGreaterThan(0);
+    expect(cost).toBeLessThan(MISSED_COOLS);
+    expect(cost).toBeCloseTo(callingOffCosts(MS_HOUR), 5);
+  });
+
+  it('prices the whole run of notice in order', () => {
+    // Nought a day out, rising in a straight line to the full cost at the
+    // moment it starts. Three prices that have to stay in this order or the
+    // choice between telling them and not is not a choice.
+    expect(callingOffCosts(2 * MS_DAY)).toBe(0);
+    expect(callingOffCosts(NOTICE_FREE_HOURS * MS_HOUR)).toBe(0);
+    expect(callingOffCosts(NOTICE_FREE_HOURS * MS_HOUR / 2)).toBeCloseTo(CALLING_OFF_COSTS / 2, 5);
+    expect(callingOffCosts(0)).toBe(CALLING_OFF_COSTS);
+    expect(CALLING_OFF_COSTS).toBeLessThan(MISSED_COOLS);
+  });
+
+  it('is refused once the thing has started', () => {
+    const { sim, id } = dinnerIn('calloff-started', 2 * MS_HOUR);
+    sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
+    expect(callOff(sim, id).error).toBe('It’s already started. You either went or you didn’t.');
+  });
+
+  it('tells them, when the notice was short enough to cost', () => {
+    const { sim, id } = dinnerIn('calloff-told', MS_HOUR);
+    callOff(sim, id);
+    const said = unreadNotifications(sim).map((one) => `${one.title} ${one.body}`).join(' ');
+    expect(said).toContain('You Called Off Dinner');
+    expect(said).toContain('Halla');
   });
 });

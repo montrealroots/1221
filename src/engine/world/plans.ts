@@ -22,7 +22,7 @@ import { CITIES } from '../content/geography';
 import { plural } from '../core/text';
 import { MISSED_COOLS, TOGETHER_WARMS, bondFor, bondsOf, moveBond, otherIn } from './standing';
 import { relationFrom } from './family';
-import { formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
+import { formatDuration, formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
 export const PLAN_KIND = 'life.commitment';
@@ -46,6 +46,37 @@ export const FURTHEST_AHEAD_DAYS = 365 * 5;
 
 /** What a title may run to before it stops being a label. */
 export const LONGEST_TITLE = 80;
+
+/**
+ * How much notice makes calling a plan off free.
+ *
+ * A day. Telling somebody the morning before is a change of plan; telling
+ * them as they are putting their coat on is something else, and the game
+ * should not price the two the same.
+ */
+export const NOTICE_FREE_HOURS = 24;
+
+/**
+ * What calling one off at no notice costs.
+ *
+ * Half of not turning up at all. Late is worse than early and better than
+ * absent, and the three of them have to be ordered or the choice between
+ * them is not a choice.
+ */
+export const CALLING_OFF_COSTS = 5;
+
+/**
+ * What calling a plan off costs, given how long is left before it.
+ *
+ * Nought at a full day's notice or more, rising in a straight line to the
+ * full cost at the moment it starts. Past its start there is nothing left to
+ * call off — you either went or you did not — so the calendar refuses.
+ */
+export function callingOffCosts(msOfNotice: number): number {
+  const free = NOTICE_FREE_HOURS * 60 * 60_000;
+  const left = Math.max(0, Math.min(msOfNotice, free));
+  return CALLING_OFF_COSTS * (1 - left / free);
+}
 
 /** How many people one plan can be with. */
 export const MOST_PEOPLE_ON_A_PLAN = 8;
@@ -216,6 +247,40 @@ export function registerPlans(sim: Simulation): void {
     return { ok: true, id: item.id };
   });
 
+  /**
+   * You did not go.
+   *
+   * Only while it is actually happening — the clock has reached it and it is
+   * still waiting on you. Before that the honest word is calling it off, and
+   * the calendar says so rather than letting the two blur together.
+   */
+  sim.onCommand<{ entryId: Id }, PlanResult>('calendar.skip', (payload, { sim: s }) => {
+    const item = s.timeline.get(payload.entryId);
+    if (!item) return { ok: false, error: 'There’s nothing by that name on the calendar.' };
+    if (item.kind !== PLAN_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
+    if (item.status !== 'pending') return { ok: false, error: 'That’s already settled one way or the other.' };
+    if (item.at > s.now) {
+      return { ok: false, error: 'That hasn’t come round yet. Call it off instead, and they’ll know.' };
+    }
+
+    item.status = 'missed';
+    item.resolvedAt = s.now;
+    const people = peopleOn(item);
+    for (const id of people) moveBond(s.universe, s.universe.playerId, id, -MISSED_COOLS, s.now);
+
+    const left = saidAsList(namesOn(s, item));
+    s.notify({
+      category: 'personal',
+      title: `You Didn’t Go To ${item.label}`,
+      body: left
+        ? `${left} waited, and you weren’t there. That’s ${MISSED_COOLS} points off where you stand with `
+          + `${people.length === 1 ? 'them' : 'each of them'}.`
+        : 'Nobody was waiting on it but you, so it cost you nothing but the plan.',
+      importance: left ? 70 : 35,
+    });
+    return { ok: true, id: item.id };
+  });
+
   sim.onCommand<{ entryId: Id }, PlanResult>('calendar.cancel', (payload, { sim: s }) => {
     const item = s.timeline.get(payload.entryId);
     if (!item) return { ok: false, error: 'There’s nothing by that name on the calendar.' };
@@ -225,9 +290,32 @@ export function registerPlans(sim: Simulation): void {
     if (item.status !== 'pending') {
       return { ok: false, error: 'That’s already settled one way or the other.' };
     }
-    return s.timeline.cancel(item.id, s.now)
-      ? { ok: true, id: item.id }
-      : { ok: false, error: 'That one wouldn’t come off the calendar.' };
+    if (item.at <= s.now) {
+      return { ok: false, error: 'It’s already started. You either went or you didn’t.' };
+    }
+    if (!s.timeline.cancel(item.id, s.now)) {
+      return { ok: false, error: 'That one wouldn’t come off the calendar.' };
+    }
+
+    // Late notice costs. Telling somebody the morning before is a change of
+    // plan; telling them as they are putting their coat on is not.
+    const cost = callingOffCosts(item.at - s.now);
+    if (cost > 0) {
+      const people = peopleOn(item);
+      for (const id of people) moveBond(s.universe, s.universe.playerId, id, -cost, s.now);
+      const left = saidAsList(namesOn(s, item));
+      if (left) {
+        s.notify({
+          category: 'personal',
+          title: `You Called Off ${item.label}`,
+          body: `${left} had ${formatDuration(item.at - s.now)} of notice, which is short enough to `
+            + `cost you ${Math.round(cost * 10) / 10} points of where you stand with `
+            + `${people.length === 1 ? 'them' : 'each of them'}.`,
+          importance: 45,
+        });
+      }
+    }
+    return { ok: true, id: item.id };
   });
 }
 
