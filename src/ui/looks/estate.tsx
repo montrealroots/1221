@@ -198,14 +198,14 @@ defineLook<TheLand>('estate', {
             <Stat
               label="Living On It"
               value={plural(living, 'person', 'people')}
-              note="No rent, no lease, no landlord"
+              note="Nobody to answer to about it"
             />
           </div>
         </>
       ),
       ways,
-      provenance: 'The acreage, the house and the lot are the premise, true before your first day starts. '
-        + 'Nothing about the land is bought, sold or priced by the simulation.',
+      provenance: 'The acreage, the house and the lot were true before your first day started. SLATE '
+        + 'never buys, sells or prices any of it.',
     };
   },
 });
@@ -265,8 +265,8 @@ defineLook<Property>('house', {
             Condition is the one figure in this house that moves on its own. It sets how much a night here
             gives you back and it slips a little each day nobody tends to it — and at {outOf(kept)} it’s
             {kept >= 100
-              ? ' as high as the figure goes, because the house is barely a year old and the family keeps it that way.'
-              : kept >= 70 ? ' working for you rather than against you.' : ' costing you sleep you’d otherwise have had.'}
+              ? ' as high as it goes. The house is barely a year old and the family keeps it that way.'
+              : kept >= 70 ? ' working for you.' : ' costing you sleep you’d otherwise have had.'}
           </p>
           <div className="grid grid-3">
             <Stat label="Condition" value={outOf(kept)} note="What a night here is worth" />
@@ -277,7 +277,7 @@ defineLook<Property>('house', {
               note={`On ${acresSaid()} acres`}
             />
             <Stat label="Built" value={house.yearBuilt} note={`Moved into on 1 January ${MOVED_IN.year}`} />
-            <Stat label="What It Costs You" value="Nothing" note="No rent, no lease, no landlord" />
+            <Stat label="What It Costs You" value="Nothing" note="Nobody to answer to about it" />
           </div>
         </>
       ),
@@ -323,8 +323,8 @@ defineLook<Household>('household', {
               : heads.length === 0
                 ? 'Nobody is named as the head of it, which for a house this size is unusual.'
                 : `${spokenList(heads.map((one) => one.firstName))} ${isAre(heads.length)} `
-                  + `the ${heads.length === 1 ? 'head' : 'heads'} of it, which is what it means for the land `
-                  + 'to have been theirs before it was yours.'}
+                  + `the ${heads.length === 1 ? 'head' : 'heads'} of it. The land was theirs before it was `
+                  + 'yours, and this is what that means day to day.'}
             {' '}It’s the family’s household and it carries the family’s name, the same name that’s on the gate
             of the lot.
           </p>
@@ -385,7 +385,7 @@ defineLook<TheWayIn>('security', {
         </p>
         <p className="small">{SAFETY_NOTE}</p>
         <div className="grid grid-3">
-          <Stat label="Roads In" value="1" note="And somebody is watching it" />
+          <Stat label="Roads In" value="1" note="Watched around the clock" />
           <Stat label="Layers" value={SAFEGUARDS.length} note="Between the road and the door" />
           <Stat
             label="Where This Is"
@@ -404,7 +404,7 @@ defineLook<TheWayIn>('security', {
       {
         to: at('country', ESTATE_COUNTRY_ID),
         label: 'The Country Around It',
-        detail: `First in the world for peace every year since ${PEACE_RANKED_SINCE}, which is what makes all of the above remarkable`,
+        detail: `First in the world for peace every year since ${PEACE_RANKED_SINCE}. That’s what makes all of the above remarkable`,
       },
     ],
     provenance: 'The ranking is real and published. Everything on this land is the premise: SLATE runs no '
@@ -461,8 +461,7 @@ defineLook<Safeguard>('safeguard', {
         </>
       ),
       ways: opensOnto,
-      provenance: 'Part of the build rather than added to it, which is why none of it looks bolted on. '
-        + 'Nothing in SLATE tests any of it.',
+      provenance: 'It went in with the build, so none of it looks bolted on. SLATE never tests any of it.',
     };
   },
 });
@@ -491,8 +490,7 @@ defineLook<TheLot>('lot', {
       <>
         <p className="small">
           Newly built, on the same land, close enough to walk to from the house. Stages for Television and
-          Film both — which, in a country with no business to speak of, makes them the only stages there
-          are.
+          Film both. In a country with no business to speak of, they’re the only stages there are.
         </p>
         <p className="small">
           {lot.company} works out of here, and so far that means a gate, a name on it and a set of empty
@@ -510,7 +508,7 @@ defineLook<TheLot>('lot', {
       {
         to: at('safeguard', 'lot'),
         label: 'What Keeps A Lens Off It',
-        detail: 'Inside the same line the house is, which is why a shoot here can’t be photographed from outside',
+        detail: 'Inside the same line as the house, so nothing shooting here can be photographed from outside',
       },
     ],
     provenance: 'The lot is the premise. SLATE has no stage bookings, no day rate and no overhead running '
@@ -539,23 +537,22 @@ defineLook<TheCompany>('company', {
     name: company.name,
     kind: 'The Family Company',
     parent: at('lot'),
-    summary: 'The name on the gate here is your family’s rather than yours, and there’s nothing behind it yet '
-      + 'but a set of empty stages.',
+    summary: 'The name on the gate is your family’s, not yours, and there’s nothing behind it yet but a '
+      + 'set of empty stages.',
     body: (
       <>
         <p className="small">
-          Television and Film, run out of the lot on the family land. The name is the family’s rather than
-          yours — it came off the surname because that’s where a surname comes from, and it was on the gate
-          before you were on the lot.
+          Television and Film, run out of the lot on the family land. The name is the family’s, not yours.
+          It came off the surname, and it was on the gate before you were on the lot.
         </p>
         <p className="small">
-          And that’s the whole of it so far. No slate, no picture in development, no credit, no deal and
-          nothing anybody has seen. There’s no account in its name, nothing on a schedule and nothing to
-          report. It comes to a name, a set of empty stages and a country that hasn’t heard of either.
+          That’s as far as it goes so far. There’s no slate, nothing in development, no credit and no deal.
+          Nobody has seen anything. It comes to a name, a set of empty stages, and a country that hasn’t
+          heard of either.
         </p>
         <p className="small">
           Everybody who reads {company.name} on a call sheet will know which family it belongs to. That’s the
-          advantage, and it’s also the whole problem.
+          advantage. It’s also the problem.
         </p>
       </>
     ),
@@ -566,7 +563,7 @@ defineLook<TheCompany>('company', {
         ? `The ${company.surname} the name comes from, and how they’re doing today`
         : 'The person the name would come from, and how they’re doing today',
     }],
-    provenance: 'Named, and nothing else. SLATE keeps no books, no slate and no schedule for it yet, so there '
+    provenance: 'It has a name and not much else. SLATE keeps no books or schedule for it yet, so there '
       + 'are no figures here and none are invented.',
   }),
 });

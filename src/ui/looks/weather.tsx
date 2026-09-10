@@ -226,7 +226,7 @@ defineLook<Sky>('weather', {
           </p>
           <p className="small">
             {wetNames.length === 0
-              ? `Nothing wet in the ${countWord(ahead.length)} days after today.`
+              ? `Dry right through the ${countWord(ahead.length)} days after today.`
               : wetNames.length === ahead.length
                 ? `Every one of the ${countWord(ahead.length)} days after today is wet.`
                 : `${spokenList(wetNames)} ${isAre(wetNames.length)} wet, and the rest of the week stays dry.`}
@@ -471,7 +471,7 @@ function hoursFor(sim: Simulation, city: City, key: string): { hours: HourWeathe
 /** When the wet stretch of a day runs, said as a person would say it. */
 function spellSentence(hours: readonly HourWeather[]): string {
   const wet = hours.filter((h) => h.wet);
-  if (wet.length === 0) return 'Nothing falls in any of them.';
+  if (wet.length === 0) return 'Every one of them stays dry.';
   const first = wet[0]!;
   const last = wet[wet.length - 1]!;
   if (wet.length === 1) return `It comes on for the one hour, around ${clockSaid(first.hour)}.`;
@@ -613,7 +613,7 @@ defineLook<OneHour>('skyhour', {
         </>
       ),
       ways,
-      provenance: `Read off ${dateWords(day.dateKey)}’s own curve. Nothing about an hour is stored — ask twice and it says the same thing.`,
+      provenance: `Read off ${dateWords(day.dateKey)}’s own curve. No hour is stored anywhere — ask twice and it says the same thing.`,
     };
   },
 });
@@ -656,7 +656,7 @@ defineLook<TheWeek>('skyweek', {
           <p className="small">
             The warmest is {dayName(days.indexOf(warmest))} at {warmest.high}{unit}.{' '}
             {wetNames.length === 0
-              ? 'Nothing falls all week.'
+              ? 'Dry all week.'
               : wetNames.length === days.length
                 ? `Every one of the ${countWord(days.length)} is wet.`
                 : `${sentenceStart(spokenList(wetNames))} ${isAre(wetNames.length)} the wet ${wetNames.length === 1 ? 'one' : 'ones'}.`}

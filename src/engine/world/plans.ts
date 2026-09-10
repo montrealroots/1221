@@ -133,12 +133,15 @@ export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult 
   }
 
   const minutes = spec.durationMinutes ?? 60;
-  if (!Number.isFinite(minutes) || minutes < SHORTEST_MINUTES || minutes > LONGEST_MINUTES) {
-    return { ok: false, error: 'Nothing shorter than five minutes, and nothing longer than a day.' };
+  if (!Number.isFinite(minutes) || minutes < SHORTEST_MINUTES) {
+    return { ok: false, error: 'That’s too short to be worth writing down. Give it five minutes at least.' };
+  }
+  if (minutes > LONGEST_MINUTES) {
+    return { ok: false, error: 'That runs longer than a day. Put down the part you’ll actually be there for.' };
   }
 
   if (spec.category !== undefined && !PLANNABLE.includes(spec.category)) {
-    return { ok: false, error: 'That isn’t a kind of day you can put on it yourself.' };
+    return { ok: false, error: 'You can’t put that kind of day on the calendar yourself.' };
   }
 
   if (spec.locationId !== undefined && !CITIES.get(spec.locationId)) {
@@ -147,7 +150,7 @@ export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult 
 
   const people = spec.withIds;
   if (people !== undefined) {
-    if (!Array.isArray(people)) return { ok: false, error: 'That isn’t a list of people.' };
+    if (!Array.isArray(people)) return { ok: false, error: 'Whatever that is, it isn’t a list of people.' };
     if (people.length > MOST_PEOPLE_ON_A_PLAN) {
       return { ok: false, error: `That’s more than ${plural(MOST_PEOPLE_ON_A_PLAN, 'person', 'people')}. Make it two plans.` };
     }
@@ -260,7 +263,7 @@ export function registerPlans(sim: Simulation): void {
     if (item.kind !== PLAN_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
     if (item.status !== 'pending') return { ok: false, error: 'That’s already settled one way or the other.' };
     if (item.at > s.now) {
-      return { ok: false, error: 'That hasn’t come round yet. Call it off instead, and they’ll know.' };
+      return { ok: false, error: 'It hasn’t come round yet. Call it off instead, and they’ll know.' };
     }
 
     item.status = 'missed';
@@ -294,7 +297,7 @@ export function registerPlans(sim: Simulation): void {
       return { ok: false, error: 'It’s already started. You either went or you didn’t.' };
     }
     if (!s.timeline.cancel(item.id, s.now)) {
-      return { ok: false, error: 'That one wouldn’t come off the calendar.' };
+      return { ok: false, error: 'It wouldn’t come off the calendar.' };
     }
 
     // Late notice costs. Telling somebody the morning before is a change of
@@ -308,7 +311,7 @@ export function registerPlans(sim: Simulation): void {
         s.notify({
           category: 'personal',
           title: `You Called Off ${item.label}`,
-          body: `${left} had ${formatDuration(item.at - s.now)} of notice, which is short enough to `
+          body: `${left} had ${formatDuration(item.at - s.now)} of notice. That’s short enough to `
             + `cost you ${Math.round(cost * 10) / 10} points of where you stand with `
             + `${people.length === 1 ? 'them' : 'each of them'}.`,
           importance: 45,

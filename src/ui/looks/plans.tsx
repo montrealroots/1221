@@ -68,7 +68,7 @@ function hoursAcross(sim: Simulation, entry: CalendarEntry, city: City | undefin
 }
 
 defineLook<Stretch>('stretch', {
-  gone: 'Nothing is taking those hours any more.',
+  gone: 'Those hours are free again.',
   resolve: (sim, id) => {
     const item = sim.timeline.get(id);
     if (!item) return undefined;
@@ -111,7 +111,7 @@ defineLook<Stretch>('stretch', {
                 : `${toStart(said(dark.length, 'hour'))} of it ${isAre(dark.length)} after dark.`}
             {' '}
             {wet.length === 0
-              ? 'Nothing falls while it runs.'
+              ? 'It stays dry the whole way through.'
               : `It is ${spokenList([...new Set(wet.map((h) => h.condition.toLowerCase()))])} for `
                 + `${said(wet.length, 'hour')} of it.`}
           </p>
@@ -140,7 +140,7 @@ defineLook<Stretch>('stretch', {
         glance: { icon: undefined, lines: [`${hour.temperature}°`, hour.daylight ? 'Light' : 'Dark'] },
       })),
       provenance: `${first.hour === last.hour ? 'The hour' : 'Every hour'} it touches, read off the day’s own curve. `
-        + 'Nothing about it is stored anywhere.',
+        + 'None of it is stored anywhere.',
     };
   },
 });
@@ -173,7 +173,7 @@ defineLook<Plans>('plans', {
         <>
           <p className="small">
             {pending.length === 0
-              ? 'The calendar takes what you give it: a name, a time, how long it runs and where it wants you. Nothing has to be there.'
+              ? 'The calendar takes what you give it: a name, a time, how long it runs and where it wants you. None of it has to be there.'
               : `${asName(next!.title)} is the next one, ${formatDate(next!.at, zone)} at ${formatTime(next!.at, zone)}.`}
             {missed.length > 0 && ` ${said(missed.length, 'has', 'have')} gone by without you.`}
             {called.length > 0 && ` ${said(called.length, 'was', 'were')} called off.`}

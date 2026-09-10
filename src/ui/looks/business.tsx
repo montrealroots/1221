@@ -102,7 +102,7 @@ defineLook<Company>('firm', {
       ways.push({
         to: at('firm', company.parentId!),
         label: sim.universe.companies[company.parentId!]?.legalName ?? 'The Parent',
-        detail: 'The company that owns this one, and everything else the family holds',
+        detail: 'Who owns this one, and everything else the family holds',
       });
     }
 
@@ -138,7 +138,7 @@ defineLook<Company>('firm', {
             />
             {isParent
               ? <Stat label="Doors Open" value={`${open.length}/${doors.length}`} note="Of what a production company must do" />
-              : <Stat label="Owned By" value="The Parent" note="Wholly, which is the point of it" />}
+              : <Stat label="Owned By" value="The Parent" note="Wholly. That’s what makes it useful" />}
           </div>
         </>
       ),
@@ -182,7 +182,7 @@ defineLook<Door>('door', {
       ways.push({
         to: at('firm', company.id),
         label: company.legalName,
-        detail: 'The company this is about, and the other eight things it has to be able to do',
+        detail: 'Whose door this is, and the other eight things the company has to be able to do',
       });
     }
 
@@ -246,7 +246,7 @@ defineLook<Register>('register', {
             <Stat
               label="Files Every"
               value={facts.filesEveryMonths === 0 ? 'Never' : said(facts.filesEveryMonths, 'month')}
-              note={facts.filesEveryMonths === 0 ? 'Nothing to keep up' : 'For as long as it exists'}
+              note={facts.filesEveryMonths === 0 ? 'No filing to keep up' : 'For as long as it exists'}
             />
           </div>
         </>
@@ -258,7 +258,7 @@ defineLook<Register>('register', {
           detail: `${formatDate(on.nextDueAt, sim.homeZone)}, ${formatRelative(on.nextDueAt, sim.now)}`,
         }]
         : [],
-      provenance: 'The body and the mechanism are real. The fee is SLATE’s own estimate.',
+      provenance: 'Body and mechanism are real. The fee is SLATE’s own estimate.',
     };
   },
 });
@@ -287,11 +287,11 @@ defineLook<Guilded>('guild', {
       ways.push({
         to: at('door', 'employ_americans'),
         label: 'Hire Americans',
-        detail: 'The door this guild stands in, and the American arm it wants first',
+        detail: 'Which door this guild stands in, and the American arm it wants first',
       });
     }
     if (company) {
-      ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'The company that would sign' });
+      ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Whose name goes on it' });
     }
 
     return {
@@ -302,7 +302,7 @@ defineLook<Guilded>('guild', {
         ? `Signed on ${formatDate(signed.since, sim.homeZone)}, under the ${signed.agreement}.`
         : facts.signable
           ? `Not signed. Which means nobody ${facts.covers.toLowerCase()} covered by it can work for this company.`
-          : `Nothing to sign. ${facts.what}`,
+          : `There’s nothing to sign. ${facts.what}`,
       body: (
         <>
           <p className="small">{facts.what}</p>
@@ -314,7 +314,7 @@ defineLook<Guilded>('guild', {
             <Stat
               label="Deposit"
               value={facts.depositCents === 0 ? 'None' : moneyOf(facts.depositCents)}
-              note={facts.depositCents === 0 ? 'Nothing held' : 'Held before you shoot'}
+              note={facts.depositCents === 0 ? 'They hold none' : 'Held before you shoot'}
             />
           </div>
         </>
@@ -361,7 +361,7 @@ defineLook<Covered>('cover', {
         </>
       ),
       ways: id === 'errors_omissions'
-        ? [{ to: at('door', 'deliver'), label: 'Deliver A Picture', detail: 'The door this cover stands in' }]
+        ? [{ to: at('door', 'deliver'), label: 'Deliver A Picture', detail: 'Which door this cover stands in' }]
         : [],
       provenance: 'What each policy is for is real. The limits and premiums are SLATE’s own.',
     };
@@ -384,14 +384,14 @@ defineLook<Holding>('holding', {
       label: project.title,
       detail: 'What the company is trying to make out of it',
     }));
-    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'The company that holds it' });
+    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who holds it' });
 
     return {
       name: holding.title,
       kind: holding.hold === 'option' ? 'Optioned' : holding.hold === 'owned' ? 'Owned Outright' : 'Commissioned',
       parent: company ? at('firm', company.id) : undefined,
       summary: holding.chainComplete
-        ? 'The company holds it, the paper behind it’s clean, and it can be insured and sold.'
+        ? 'It’s held, the paper behind it’s clean, and it can be insured and sold.'
         : `The company holds it and the paper behind it isn’t clean. ${holding.chainGap ?? ''}`,
       body: (
         <>
@@ -399,14 +399,14 @@ defineLook<Holding>('holding', {
             {holding.hold === 'option'
               ? 'An option is the right to make it for a while, not ownership of it. It runs out, and when '
                 + 'it does the rights go back to whoever they came from.'
-              : 'Owned outright, which is the only kind of hold with no clock on it.'}
+              : 'Owned outright. It’s the only kind of hold with no clock on it.'}
           </p>
           <p className="small">
             <strong>Chain of title. </strong>
             {holding.chainComplete
               ? 'Unbroken. That’s the document set proving the company owns what it’s about to sell, and '
                 + 'an insurer reads it before writing errors and omissions cover.'
-              : `Broken. ${holding.chainGap ?? 'Something is missing.'} Nothing can be delivered until it is closed — `
+              : `Broken. ${holding.chainGap ?? 'Something is missing.'} Until it’s closed nothing ships: `
                 + 'the insurer stops, so the cover stops, so the distributor stops.'}
           </p>
           <div className="grid grid-3">
@@ -439,8 +439,8 @@ defineLook<Project>('project', {
     const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
     const company = sim.universe.companies[project.companyId];
     const ways: Way[] = [];
-    if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'The rights it hangs off' });
-    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'The company developing it' });
+    if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
+    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s developing it' });
 
     return {
       name: project.title,
@@ -488,11 +488,11 @@ defineLook<Roled>('role', {
     if (post?.personId) {
       ways.push({ to: at('person', post.personId), label: who ?? 'Them', detail: 'Who is in the post, and how they are' });
     }
-    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'The company the post is at' });
+    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Where the post sits' });
 
     return {
       name: facts.label,
-      kind: who ? 'A Post Somebody Holds' : 'A Post Nobody Holds',
+      kind: who ? 'A Post That’s Filled' : 'A Post Nobody Holds',
       parent: company ? at('firm', company.id) : undefined,
       summary: who
         ? `${who} is ${facts.said}, and has been since ${post?.filledAt ? formatDate(post.filledAt, sim.homeZone) : 'the company was formed'}.`
@@ -536,13 +536,13 @@ defineLook<Rebate>('rebate', {
       kind: 'Money Back From The State',
       parent: at('door', 'claim_rebate'),
       summary: `Iceland pays back ${Math.round(REBATE.share * 100)} percent of what a production spends `
-        + 'here, which is the whole reason anybody shoots in this country.',
+        + 'here. That’s the reason anybody shoots in this country.',
       body: (
         <>
           <p className="small">
             The mechanism matters more than the percentage. You apply before you shoot a foot of film, you
             spend, an Icelandic auditor certifies what was spent in Iceland, and the state pays a share of
-            it back afterwards. Because it lands afterwards, productions borrow against it — which is an
+            it back afterwards. Because it lands afterwards, productions borrow against it. That’s an
             industry of its own.
           </p>
           <p className="small">
@@ -559,7 +559,7 @@ defineLook<Rebate>('rebate', {
       ),
       ways: [
         { to: at('door', 'claim_rebate'), label: door.label, detail: 'Whether this company could claim it' },
-        ...(company ? [{ to: at('firm', company.id), label: company.legalName, detail: 'The company that would apply' }] : []),
+        ...(company ? [{ to: at('firm', company.id), label: company.legalName, detail: 'Who would be applying' }] : []),
       ],
       provenance: REBATE.note,
     };

@@ -126,7 +126,7 @@ export function Home() {
             </div>
           ) : (
             <p className="muted small" style={{ margin: 0 }}>
-              Nothing scheduled. <Open subject={at('day', today)}>The day</Open> is yours.
+              The calendar’s empty. <Open subject={at('day', today)}>The day</Open> is yours.
             </p>
           )}
 
@@ -153,7 +153,7 @@ export function Home() {
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
         <Panel
           title="What Needs You"
-          subtitle={decisions.length === 0 ? 'Nothing is waiting on a decision.' : `${decisions.length} open`}
+          subtitle={decisions.length === 0 ? 'No decision is waiting on you.' : `${decisions.length} open`}
           flush
           actions={unread.length > 0 ? (
             <button className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
@@ -164,7 +164,7 @@ export function Home() {
           {decisions.length === 0 && unread.length === 0 ? (
             <Empty
               title="Nothing Pressing"
-              body="Nothing is overdue and nothing clashes on the calendar. Go and do something you want to do."
+              body="You’re not late for anything and the calendar doesn’t clash. Go and do something you want to do."
             />
           ) : (
             <LookRegion className="list">

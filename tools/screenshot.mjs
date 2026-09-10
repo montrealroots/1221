@@ -75,29 +75,21 @@ if (await begin.count()) {
     }
   };
 
-  for (const [name, pattern] of [
-    ['08-world', /^world$/i],
-    ['09-calendar', /calendar/i],
-    ['10-wellbeing', /wellbeing/i],
-    ['11-relationships', /relationships/i],
-    ['12-history', /^history$/i],
-    ['13-bank', /^bank$/i],
-    ['14-property', /^property$/i],
-    ['15-vehicles', /^vehicles$/i],
-    ['16-shopping', /^shopping$/i],
-    ['17-insurance', /insurance/i],
-    ['18-work', /^work$/i],
-    ['19-social', /^social$/i],
-    ['20-health', /^health$/i],
-    ['21-education', /education/i],
-    ['22-city', /^the city$/i],
-    ['23-travel', /^travel$/i],
-    ['24-character', /character/i],
-    ['25-settings', /settings/i],
-  ]) {
+  // Whatever the rail actually lists, in the order it lists it. A hard-coded
+  // list here went stale the moment a workspace was deleted, and quietly said
+  // "no rail entry" for pages that were sitting right there.
+  await openRail();
+  const railed = (await page.locator('nav.rail .rail-item').allInnerTexts())
+    .map((text) => text.split('\n')[0].trim())
+    .filter((label) => label.length > 0 && label !== 'Home');
+  if (railed.length === 0) console.log('  (the rail lists nothing but Home)');
+  let n = 7;
+  for (const label of railed) {
+    n += 1;
+    const name = `${String(n).padStart(2, '0')}-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     await openRail();
-    const link = page.getByRole('button', { name: pattern }).first();
-    if (!(await link.count())) { console.log('  (no rail entry for', name, ')'); continue; }
+    const link = page.locator('nav.rail .rail-item', { hasText: label }).first();
+    if (!(await link.count())) { console.log('  (rail entry vanished:', label, ')'); continue; }
     await link.click().catch(() => {});
     await page.waitForTimeout(1300);
     // Guided-mode cards cover the screen they are explaining.

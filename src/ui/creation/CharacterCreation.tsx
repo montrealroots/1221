@@ -495,7 +495,7 @@ function IdentityStep({ config, set, setConfig }: {
         />
         <p className="xs dim" style={{ marginTop: 4 }}>
           You were born on the family land and you have never lived anywhere else. It’s the answer
-          you give when somebody asks, and it’s the accent you either lost on purpose or kept.
+          you give when anybody asks, and it’s the accent you either lost on purpose or kept.
         </p>
       </div>
 
@@ -803,7 +803,7 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
       {/* --- All of it, so a claim this size can be read rather than taken --- */}
       <Sheet
         title="Every Acting Skill"
-        note={`All of them, at ${CEILING}. Alphabetical, so a name can be found rather than hunted for.`}
+        note={`All of them, at ${CEILING}. Alphabetical, so you can find a name instead of hunting for it.`}
         items={ATTRIBUTES.map((one) => ({ id: one.id, name: one.name, note: one.description }))}
       />
       <Sheet
@@ -840,7 +840,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
         <div className="panel-head">
           <div>
             <h2>Home Base</h2>
-            <p className="muted small">Where the family land is. It isn’t a choice — it’s where you’re from.</p>
+            <p className="muted small">Where the family land is. Not a choice — it’s where you’re from.</p>
           </div>
         </div>
 
@@ -892,15 +892,15 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
           <div>
             <h2>{company}</h2>
             <p className="muted small">
-              Television and Film. It carries the family name, which is the surname you gave on
-              Identity — the company is named the moment you are.
+              Television and Film. It carries the family name — the surname you gave on Identity — so
+               the company got its name the moment you got yours.
             </p>
           </div>
         </div>
         {config.lastName.trim() ? (
           <div className="callout">
             The name was on the gate before you were on the lot. Everybody who reads it on a call
-            sheet knows which family it belongs to. That’s the advantage, and it’s the whole problem.
+            sheet knows which family it belongs to. That’s the advantage. It’s also the problem.
           </div>
         ) : (
           <div className="callout callout-accent">
@@ -1005,8 +1005,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
         {config.personalityTraits.length === 0 ? (
           <p className="muted small">
-            Nothing picked. You’ll be the best there has ever been at the work and nobody in
-            particular away from it, which is allowed.
+            You haven’t picked any. You’ll be the best there has ever been at the work and nobody in
+            particular away from it. That’s allowed.
           </p>
         ) : (
           <div className="col gap-3">
@@ -1147,7 +1147,7 @@ const MONTHS = [
 const ESTATE_ROLES: { id: EstateRole; label: string; note: string; said: string }[] = [
   {
     id: 'the house', label: `Keeps ${HOUSE.name}`, said: `Keeps ${HOUSE.name}.`,
-    note: 'Runs the household. Nothing in it works without them.',
+    note: 'Runs the household. It stops working the day they stop.',
   },
   {
     id: 'the lot', label: `Runs ${LOT_NAME}`, said: `Runs ${LOT_NAME}.`,
@@ -1198,12 +1198,12 @@ function YourPeopleStep({ config, set }: { config: NewSaveConfig; set: Setter })
         </div>
         <div className="callout">
           The last page showed you three things standing on that land: the house, the lot, and the
-          company that carries the family name. Somebody runs each of them, and this is where you
-          say who.
+          company that carries the family name. Each of them is run by one person, and this is where
+          you say who.
         </div>
         <p className="muted small" style={{ margin: 'var(--s4) 0 0' }}>
-          Nobody here acts. They’re the family, not the business — and every one of them is
-          somebody you have to get on with, which is its own kind of work.
+          Nobody here acts. They’re the family, not the business. Every one of them is a person
+          you have to get on with, and that’s work of its own.
         </p>
       </div>
 
@@ -1223,8 +1223,8 @@ function YourPeopleStep({ config, set }: { config: NewSaveConfig; set: Setter })
           <div>
             <h2>A Twin</h2>
             <p className="muted small">
-              Somebody born the same morning you were. Most people weren’t, so this one is a
-              choice rather than a blank to fill in.
+              A person born the same morning you were. Most people weren’t, so this is a choice, not
+              a blank to fill in.
             </p>
           </div>
           {twin && twin.firstName.trim() && surname
@@ -1243,14 +1243,14 @@ function YourPeopleStep({ config, set }: { config: NewSaveConfig; set: Setter })
             onClick={() => setFamily({ twin: undefined })}
           >
             <div className="trait-name">You Were Born Alone</div>
-            <div className="trait-desc">Which is how most people are born.</div>
+            <div className="trait-desc">How most people are born.</div>
           </button>
           <button
             type="button" className="trait" aria-pressed={Boolean(twin)}
             onClick={() => setFamily({ twin: twin ?? defaultTwin() })}
           >
             <div className="trait-name">You Have A Twin</div>
-            <div className="trait-desc">Somebody who has been beside you since before either of you could talk.</div>
+            <div className="trait-desc">Beside you since before either of you could talk.</div>
           </button>
         </div>
 
@@ -1335,7 +1335,7 @@ function ParentCard({ who, idPrefix, parent, surname, birthYear, playerAge, onCh
             placeholder="A first name"
           />
           <p className="xs dim" style={{ marginTop: 4 }}>
-            They take the family name, which is the surname you gave on Identity.
+            They take the family name — the surname you gave on Identity.
           </p>
         </div>
 

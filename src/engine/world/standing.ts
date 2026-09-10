@@ -125,7 +125,7 @@ export function driftBonds(universe: SaveUniverse, now: Instant): void {
 export const STANDING_BANDS: readonly { from: number; word: string; said: string }[] = [
   { from: 85, word: 'Inseparable', said: 'You two are as close as it gets. It would be strange if you weren’t.' },
   { from: 70, word: 'Close', said: 'You’re close. You tell each other things before you tell anybody else.' },
-  { from: 55, word: 'Warm', said: 'You get on. Nothing is wrong, and neither of you is working at it.' },
+  { from: 55, word: 'Warm', said: 'You get on. Neither of you is working at it, and neither of you needs to.' },
   { from: 40, word: 'Cordial', said: 'You’re fine with each other. Politely, and at a slight distance.' },
   { from: 25, word: 'Distant', said: 'You live alongside each other. That’s about the size of it.' },
   { from: 10, word: 'Cold', said: 'Something went wrong here, and neither of you has fixed it.' },

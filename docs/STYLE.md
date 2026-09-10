@@ -106,6 +106,22 @@ English leaves alone stay alone: possessive "you have" ("you have $50"),
 contracted. `node tools/voice-check.mjs` counts what is left, `--fix`
 rewrites the safe cases, and `--check` holds the line in the gate.
 
+Contractions are half of it. The other half is shape. A habit is fine
+once and a tell nine times: a clause tacked on to explain what the
+sentence just meant ("…, which is most of it"), an em dash and then a
+restatement, "rather than" where "not" would do, a sentence opening on
+"Nothing", "the whole point of it". `node tools/tics.mjs` counts nine of
+them against a budget and prints every line it found; `--check` fails the
+gate when one goes over. The budgets are deliberately not zero. Each of
+these is good writing in small numbers.
+
+The same tool watches how long lists begin. Eight hundred attribute
+descriptions that all open on a gerund read as generated, however well
+each one is written on its own, so any file with twenty or more lines of
+prose where a third of them open on the same word fails the gate. Vary
+the shape, not just the words: a plain noun phrase, a "you" sentence, a
+question, a colon and the thing itself.
+
 ## Identifiers
 
 Displayed labels are free to change; command kinds, entity ids, save keys,
@@ -134,6 +150,9 @@ word through `performerNoun`, never writes it out.
 - `tools/voice-check.mjs` — every string the game shows, counted for the
   places a person would have contracted and did not; `--fix` rewrites the
   safe ones, `--check` fails the gate over budget.
+- `tools/tics.mjs` — the same strings, counted for nine stock shapes against
+  a budget each, and for a long list where one opening word does too much of
+  the work; `--counts` for the totals alone, `--check` fails the gate.
 - `tools/cohesion-walk.mjs` — the game as a person meets it, in a browser:
   startup, the slots, creation, Home, every rail destination and every tab
   behind it, the phone and its apps, a sentence typed into Go Anywhere and

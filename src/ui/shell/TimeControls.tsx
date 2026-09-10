@@ -276,7 +276,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
       }
     >
       {targets.length === 0 ? (
-        <p className="muted">Nothing is scheduled ahead of you right now.</p>
+        <p className="muted">You’ve got nothing scheduled ahead of you.</p>
       ) : (
         <>
           <div className="list card card-flush" style={{ maxHeight: 260, overflowY: 'auto' }}>

@@ -56,7 +56,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'highly_strung', name: 'Highly Strung', group: 'Temperament',
-    description: 'You feel everything at full volume, which is exhausting and is also where the work comes from.',
+    description: 'You feel everything at full volume. It’s exhausting, and it’s where the work comes from.',
     cost: 'Stress builds fast and sleep is the first thing to go.',
     systemMods: { stressGain: 1.35, sleepQuality: 0.88, moraleSwing: 1.25 },
     conflictsWith: ['even_tempered', 'unshakeable'],
@@ -70,15 +70,15 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'sentimental', name: 'Sentimental', group: 'Temperament',
-    description: 'You keep things. Birthdays, first drafts, the people who were there at the start.',
-    cost: 'You take endings badly and hold on past the point of use.',
+    description: 'Birthdays, first drafts, the people who were there at the start. You keep all of it.',
+    cost: 'Endings go badly, and you hold on well past the point of any use.',
     systemMods: { relationshipDecay: 0.72, moraleSwing: 1.15 },
     conflictsWith: ['detached'],
   },
   {
     id: 'detached', name: 'Detached', group: 'Temperament',
     description: 'You can put a thing down and walk away from it, including people.',
-    cost: 'Nothing you have keeps itself. Everything drifts unless you tend it.',
+    cost: 'Everything you have drifts unless you tend it. None of it keeps itself.',
     systemMods: { relationshipDecay: 1.3, stressGain: 0.85 },
     conflictsWith: ['sentimental', 'loyal'],
   },
@@ -93,7 +93,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'night_owl', name: 'Night Owl', group: 'Habits',
-    description: 'Nothing good happens before noon and everything good happens after midnight.',
+    description: 'The good hours start after midnight, and none of them are before noon.',
     cost: 'Every early call is a fight with yourself, and you sleep badly.',
     systemMods: { sleepQuality: 0.85, energyRecovery: 0.94 },
     conflictsWith: ['early_riser'],
@@ -107,7 +107,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'chaotic', name: 'Chaotic', group: 'Habits',
-    description: 'You live in the mess and genuinely don’t see it. You know where everything is anyway.',
+    description: 'The mess is genuinely invisible to you, and you know where everything is anyway.',
     cost: 'It shows, and it costs you when somebody comes round.',
     systemMods: { hygieneDrift: 1.3, stressGain: 0.92 },
     conflictsWith: ['orderly'],
@@ -121,7 +121,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'restless', name: 'Restless', group: 'Habits',
-    description: 'You can’t be in one place for long. Airports don’t bother you.',
+    description: 'One place for long is beyond you. Airports don’t bother you in the slightest.',
     cost: 'You don’t rest properly, anywhere, ever.',
     systemMods: { travelFatigue: 0.68, energyRecovery: 0.9 },
     conflictsWith: ['homebody'],
@@ -130,7 +130,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   // --- Body: how they treat themselves -------------------------------------
   {
     id: 'disciplined_body', name: 'Disciplined', group: 'Body',
-    description: 'You train, you sleep, you eat like somebody who intends to still be working at sixty.',
+    description: 'The training, the sleeping, the eating: all of it belongs to a person who means to still be working at sixty.',
     cost: 'The hours it takes are hours you aren’t spending on anybody.',
     systemMods: { trainingGain: 1.25, injuryRisk: 0.78, energyRecovery: 1.08, relationshipDecay: 1.15 },
     conflictsWith: ['indulgent'],
@@ -144,8 +144,8 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'resilient', name: 'Resilient', group: 'Body',
-    description: 'You get over things — illness, injury, a bad year — faster than the people around you.',
-    cost: 'Nothing. This one is simply luck, and there’s one of it.',
+    description: 'Illness, injury, a bad year: all of it clears faster in you than in the people around you.',
+    cost: 'None. This one is simply luck, and there’s one of it.',
     systemMods: { stressRecovery: 1.2, injuryRisk: 0.88, energyRecovery: 1.1 },
     conflictsWith: ['burns_out'],
   },
@@ -166,7 +166,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'sleeps_anywhere', name: 'Sleeps Anywhere', group: 'Body',
     description: 'Cars, planes, floors, the twenty minutes between two things. You take it where you find it.',
-    cost: 'You sleep through things, and some of them were people.',
+    cost: 'Things get slept through, and some of them were people.',
     systemMods: { sleepQuality: 1.18, travelFatigue: 0.85, relationshipDecay: 1.12 },
     conflictsWith: ['light_sleeper'],
   },
@@ -175,7 +175,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'frugal', name: 'Frugal', group: 'Money',
     description: 'You know what everything costs and you have never once been surprised by a bill.',
-    cost: 'You won’t pay for the coach, the course or the help.',
+    cost: 'The coach, the course, the help. None of it ever gets paid for.',
     systemMods: { spendImpulse: 0.72, trainingGain: 0.88 },
     conflictsWith: ['spender'],
   },
@@ -195,7 +195,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'keeps_accounts', name: 'Keeps Accounts', group: 'Money',
-    description: 'You remember what you are owed and by whom, down to the coffee.',
+    description: 'What you’re owed and by whom, down to the coffee, stays remembered.',
     cost: 'So does everybody else, about you.',
     systemMods: { spendImpulse: 0.85, relationshipDecay: 1.12 },
     conflictsWith: ['generous'],
@@ -233,27 +233,27 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'open_book', name: 'An Open Book', group: 'People',
     description: 'You say the thing. People know where they are with you within about a minute.',
-    cost: 'You have never once managed to keep something to yourself.',
+    cost: 'Keeping a thing to yourself has never once happened.',
     systemMods: { relationshipDecay: 0.85, moraleSwing: 1.1 },
     conflictsWith: ['guarded'],
   },
   {
     id: 'peacemaker', name: 'Peacemaker', group: 'People',
     description: 'You can feel a room going wrong before it does and you get in front of it.',
-    cost: 'You absorb the trouble rather than putting it down.',
+    cost: 'You absorb the trouble and then carry it around all day.',
     systemMods: { relationshipDecay: 0.78, stressGain: 1.15 },
     conflictsWith: ['quick_tempered', 'holds_grudges'],
   },
   {
     id: 'holds_grudges', name: 'Holds Grudges', group: 'People',
-    description: 'You remember exactly what was said, by whom, and in what year.',
+    description: 'Exactly what was said, by whom, and in what year: it’s all still there.',
     cost: 'It costs you people, slowly, over a very long time.',
     systemMods: { relationshipDecay: 1.35, stressGain: 1.08 },
     conflictsWith: ['peacemaker', 'forgiving'],
   },
   {
     id: 'forgiving', name: 'Forgiving', group: 'People',
-    description: 'You let it go, genuinely, and start the next conversation from nothing.',
+    description: 'It goes, genuinely, and the next conversation starts from nothing.',
     cost: 'You let the same thing happen twice, and carry it both times.',
     systemMods: { relationshipDecay: 0.75, stressRecovery: 1.1, stressGain: 1.1 },
     conflictsWith: ['holds_grudges'],
@@ -262,7 +262,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   // --- Mind: how they think -------------------------------------------------
   {
     id: 'curious', name: 'Curious', group: 'Mind',
-    description: 'You read the thing nobody asked you to read and it’s always useful eventually.',
+    description: 'The thing nobody asked you to read gets read, and it’s always useful eventually.',
     cost: 'It isn’t useful now, and now is when the work is due.',
     systemMods: { trainingGain: 1.22, stressGain: 1.1 },
     conflictsWith: ['single_minded'],
@@ -290,7 +290,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'self_assured', name: 'Self Assured', group: 'Mind',
-    description: 'You know what you can do and you have never needed anybody to confirm it.',
+    description: 'What you can do is settled, and nobody has ever needed to confirm it for you.',
     cost: 'You’re the last to hear that something isn’t working.',
     systemMods: { stressGain: 0.82, moraleSwing: 0.78, trainingGain: 0.92 },
     conflictsWith: ['self_critical'],

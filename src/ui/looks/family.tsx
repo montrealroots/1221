@@ -74,7 +74,7 @@ const seedPeople = (sim: Simulation): string[] => yourPeople(sim).map((person) =
 interface Related { person: Person; word: string }
 
 defineLook<Related>('relation', {
-  gone: 'They aren’t anything to you any more, which is a strange thing for the save to be saying.',
+  gone: 'They aren’t anything to you any more. The save shouldn’t be able to say that.',
   resolve: (sim, id) => {
     const person = personIn(sim, id);
     if (!person) return undefined;
@@ -100,22 +100,22 @@ defineLook<Related>('relation', {
       kind: 'The Fact Of It',
       parent: at('person', person.id),
       summary: twin
-        ? `${person.firstName} was born the same morning you were, which is the only thing that makes `
-          + 'somebody a twin rather than a sibling who shares a birthday.'
+        ? `${person.firstName} was born the same morning you were. That’s what makes a twin — not a `
+          + 'brother or sister who happens to share the date.'
         : `${person.firstName} was ${said(Math.round(apart), 'year')} into their own life when yours `
-          + 'started, and has been in the house for every day of it since.',
+          + 'started, and has been in the house every day since.',
       body: (
         <>
           <p className="small">
             {twin
-              ? `The two of you have the same parents, the same surname, the same birthday and, if you were `
-                + 'born identical, the same face. Nothing else in this game is that close by default.'
+              ? `The two of you share parents, a surname, a birthday and — if you were born identical — `
+                + 'a face. Nobody else starts that close to you.'
               : `${older ? 'They were here first' : 'They were born after you'}, by `
                 + `${said(apart, 'year')}. `}
             {' '}You share the surname {player.lastName}, which is also the name on the gate of the lot.
             {roof
-              ? ' And you still sleep under the same roof, which is why you see each other whether either of you meant to.'
-              : ' You no longer live in the same house, which is why keeping up with them takes deciding to.'}
+              ? ' You still sleep under the same roof, so you see each other whether either of you meant to.'
+              : ' You don’t live in the same house any more. Keeping up with them takes deciding to.'}
           </p>
           <p className="small">
             {theirs.length === 0
@@ -143,8 +143,7 @@ defineLook<Related>('relation', {
         label: nameOf(one.person),
         detail: `${person.firstName}’s ${relationWord(one.kind, one.person.gender).toLowerCase()}`,
       })),
-      provenance: 'A relation is stored on the person rather than between two of them, because being '
-        + 'somebody’s mother is a fact about her.',
+      provenance: 'Being a person’s mother is a fact about her, so it’s kept on her, not between the two of you.',
     };
   },
 });
@@ -201,12 +200,11 @@ defineLook<Standing>('bond', {
           <p className="small">
             {above > 2
               ? `You’re ${said(Math.round(above), 'point')} above where this would sit if neither of you did `
-                + 'anything about it, and that is entirely down to the two of you.'
+                + 'anything about it. The two of you put it there.'
               : above < -2
-                ? `You’re ${said(Math.round(-above), 'point')} below where this would sit on its own, which `
-                  + 'takes some doing.'
-                : 'This is sitting almost exactly where it would sit on its own, which means neither of you '
-                  + 'has done anything to it lately, good or bad.'}
+                ? `You’re ${said(Math.round(-above), 'point')} below where this would sit on its own. That takes doing.`
+                : 'It’s sitting about where it would sit on its own. Neither of you has done anything to it '
+                  + 'lately, good or bad.'}
             {roof
               ? ' Living in the same house holds it up on its own: you hear them on the stairs and you eat at the same table, whether either of you planned to.'
               : ' Nothing holds this up on its own any more, because you don’t share a roof.'}
@@ -214,8 +212,8 @@ defineLook<Standing>('bond', {
           <p className="small">
             {days === undefined
               ? roof
-                ? 'The two of you haven’t set aside time for each other yet. You see them every day of your '
-                  + 'life, which is a different thing and is already in the number above.'
+                ? 'The two of you haven’t set aside time for each other yet. Living in the same house isn’t '
+                  + 'the same thing, and it’s already counted above.'
                 : 'The two of you haven’t set aside time for each other yet.'
               : days === 0
                 ? 'You saw them today, on purpose.'
@@ -227,14 +225,14 @@ defineLook<Standing>('bond', {
             <Stat
               label="Last Together"
               value={days === undefined ? 'Never' : days === 0 ? 'Today' : said(days, 'day')}
-              note={days === undefined ? 'Nothing set aside yet' : 'Since you set time aside'}
+              note={days === undefined ? 'You haven’t set time aside yet' : 'Since you set time aside'}
             />
           </div>
         </>
       ),
       ways,
-      provenance: 'One number for the pair rather than one each. The game has no interest in a mother who '
-        + 'feels close to a son who doesn’t feel close back.',
+      provenance: 'One number for the pair, not one each. A mother who feels close to a son who doesn’t '
+        + 'feel close back is a story SLATE doesn’t tell.',
     };
   },
 });
@@ -338,8 +336,8 @@ defineLook<Rung>('band', {
               ? 'Nobody in your life is here at the moment.'
               : `${spokenList(here.map((one) => one.firstName))} ${isAre(here.length)} here right now.`}
             {youAreHere
-              ? ` That includes ${person.firstName}, which is how you came to be reading this.`
-              : ` You and ${person.firstName} are ${standingWord(Math.round(yours?.closeness ?? 0)).toLowerCase()} rather than this.`}
+              ? ` ${person.firstName} is one of them. That’s how you got here.`
+              : ` You and ${person.firstName} are ${standingWord(Math.round(yours?.closeness ?? 0)).toLowerCase()}, not this.`}
           </p>
           <div className="grid grid-3">
             <Stat label="From" value={from} note="The bottom of it" />
@@ -351,7 +349,7 @@ defineLook<Rung>('band', {
       ways: here.map((one) => ({
         to: at('bond', one.id),
         label: nameOf(one),
-        detail: `${outOf(standingWith(sim, one)?.closeness ?? 0)}, which is ${word.toLowerCase()}`,
+        detail: `${outOf(standingWith(sim, one)?.closeness ?? 0)} — ${word.toLowerCase()}`,
       })),
     };
   },
@@ -381,8 +379,8 @@ defineLook<Moves>('whatmoves', {
       name: 'Turning Up, And Not',
       kind: 'The Only Two Things That Do',
       parent: at('bond', person.id),
-      summary: 'Putting a plan on the calendar with somebody and being there for it is the one thing that '
-        + 'warms this. Not being there is the one thing that cools it on purpose.',
+      summary: 'Make a plan with them and turn up, and this warms. Don’t turn up, and it cools. Those are '
+        + 'the only two things that move it on purpose.',
       body: (
         <>
           <p className="small">
@@ -393,11 +391,11 @@ defineLook<Moves>('whatmoves', {
           </p>
           <p className="small">
             The rest is what time does. Every day this slides {Math.round(DRIFT_PER_DAY * 100)}% of the way
-            back toward {rest}, which is {roof
-              ? 'what living in the same house is worth on its own — you hear them on the stairs and you eat at the same table, whether either of you planned to'
-              : 'what a standing with somebody you don’t live with settles at when neither of you does anything'}.
-            So a good afternoon is about half forgotten in {said(halfLife, 'day')}, and nothing you do to
-            this is permanent in either direction.
+            back toward {rest}. {roof
+              ? 'That’s what living in the same house is worth on its own: you hear them on the stairs, you eat at the same table.'
+              : 'That’s where a standing settles with a person you don’t live with.'}
+            {' '}A good afternoon is half forgotten in {said(halfLife, 'day')}. Nothing you do here sticks
+            for good, in either direction.
           </p>
           <div className="grid grid-3">
             <Stat label="Turning Up" value={`+${TOGETHER_WARMS}`} note="A plan you were there for" />
@@ -416,8 +414,8 @@ defineLook<Moves>('whatmoves', {
           to: at('household', sim.universe.people[sim.universe.playerId]?.householdId ?? ''),
           label: 'Everybody Under This Roof',
           detail: roof
-            ? `Which is why this settles at ${rest} rather than ${RESTING_APART}`
-            : `Which ${person.firstName} is no longer part of`,
+            ? `Why this settles at ${rest} and not ${RESTING_APART}`
+            : `${person.firstName} isn’t part of it any more`,
         },
       ],
       provenance: `Under one roof a standing rests at ${RESTING_UNDER_ONE_ROOF}; apart it rests at `
@@ -473,8 +471,8 @@ defineLook<Doing>('estaterole', {
         ? `${person.firstName} is the one who runs ${opens.label.toLowerCase()}, and ${older
           ? 'has been since before you were old enough to notice'
           : 'took it on while the two of you were growing up on the same land'}.`
-        : `${person.firstName} lives on the land and leaves the running of it to everybody else, which is a `
-          + 'thing a person is allowed to do.',
+        : `${person.firstName} lives on the land and leaves the running of it to everybody else. `
+          + 'People are allowed to do that.',
       body: (
         <>
           <p className="small">
@@ -483,8 +481,8 @@ defineLook<Doing>('estaterole', {
                 + `draws a wage from anybody. It’s the thing ${person.firstName} is the one who does, and on `
                 + `this land that is a more permanent arrangement than a job: your `
                 + `${(word ?? 'family').toLowerCase()} will still be the one who does it next year.`
-              : `Somebody has to run the house, the lot and the company, and it isn’t ${person.firstName}. `
-                + 'That leaves them the only person on the land with nothing they have to be doing.'}
+              : `The house, the lot and the company all need running, and none of it falls to `
+                + `${person.firstName}. They’re the one person here with nothing they have to be doing.`}
           </p>
           <p className="small">
             {others.length === 0
@@ -500,8 +498,8 @@ defineLook<Doing>('estaterole', {
           label: ESTATE_NAME,
           detail: 'The two thousand acres they live on and don’t run',
         }],
-      provenance: 'What somebody does here was chosen on the Your People step and is stored on the person. '
-        + 'Nothing pays them for it, because SLATE has no wages on this land.',
+      provenance: 'You chose this on the Your People step. Nobody draws a wage for it — SLATE pays no '
+        + 'wages on this land.',
     };
   },
 });
@@ -543,7 +541,7 @@ export function waysIntoSomebody(sim: Simulation, person: Person): Way[] {
       to: at('estaterole', person.id),
       label: 'What They Do Here',
       detail: person.estateRole === 'nothing in particular'
-        ? 'Which is nothing in particular, and that is allowed'
+        ? 'Nothing in particular, and that’s allowed'
         : `They’re the one who runs ${person.estateRole}`,
     });
   }

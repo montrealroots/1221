@@ -74,8 +74,8 @@ export function BusinessWorkspace() {
 
       <Panel title="What It May Do" tight>
         <p className="muted small" style={{ marginBottom: 'var(--s3)' }}>
-          Nine things a production company has to be able to do. Each one that is shut says the single
-          thing shutting it, and that thing opens.
+          Here are the nine, open or shut. A shut one names the single thing keeping it shut, and
+          that thing is a door of its own.
         </p>
         <div className="col gap-2">
           {doors.map((door) => <Door key={door.id} door={door} />)}

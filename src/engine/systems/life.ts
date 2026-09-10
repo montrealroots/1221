@@ -345,7 +345,7 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
   const debt = sim.player.wellbeing.sleepDebt;
   const ideal = clamp(7.5 + debt * 0.12, 6, 11);
-  if (!next) return { hours: Math.round(ideal * 2) / 2, reason: 'Nothing is scheduled, so sleep as long as you need.' };
+  if (!next) return { hours: Math.round(ideal * 2) / 2, reason: 'Your calendar’s clear, so sleep as long as you need.' };
 
   const available = (next.at - sim.now) / MS_HOUR - 1.5;
   if (available < ideal) {

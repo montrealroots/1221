@@ -186,7 +186,7 @@ export function capabilitiesOf(sim: Simulation): Capability[] {
 
   return [
     of('trade', 'Exist At All',
-      'Hold land, sign anything, and be a company rather than a family with an idea.',
+      'Hold land, sign anything, and be a company instead of a family with an idea.',
       'A company that isn’t registered isn’t a company, and nothing else on this page can begin.',
       [needRegistry(u, 'is_companies')]),
 
@@ -265,10 +265,10 @@ export function whereItStands(sim: Simulation): string {
   const doors = capabilitiesOf(sim);
   const open = doors.filter((one) => one.can);
   const shut = doors.filter((one) => !one.can);
-  if (shut.length === 0) return 'Everything is in place. Whatever happens next is a decision rather than a permission.';
+  if (shut.length === 0) return 'Everything is in place. What happens next is a decision now, not a permission.';
   if (open.length === 0) return 'None of it is in place yet. The company exists on paper and can do nothing else.';
-  return `${open.length} of the ${doors.length} things a production company has to be able to do, `
-    + `this one can. The first of the rest is ${shut[0]!.label.toLowerCase()}.`;
+  return `This one can do ${open.length} of the ${doors.length} things a production company has to `
+    + `be able to do. Next up is ${shut[0]!.label.toLowerCase()}.`;
 }
 
 // ---------------------------------------------------------------------------

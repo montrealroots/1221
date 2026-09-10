@@ -22,7 +22,7 @@
 export const LIFESPAN_NOTE =
   'Life expectancy at birth and the state pension age are published national figures, carried in '
   + 'whole years. Which source and which year a figure comes from moves it by a year or two, so '
-  + 'SLATE treats each one as a band rather than a number and doesn’t claim it’s this year’s. '
+  + 'SLATE treats each one as a band, not a single number, and doesn’t claim it’s this year’s. '
   + 'Everything that happens to one person — when a life actually ends, what a year costs, who is '
   + 'born into a family — is SLATE’s own calibration. No table anywhere says when anybody dies.';
 
@@ -30,7 +30,7 @@ export const LIFESPAN_NOTE =
 export const PENSION_NOTE =
   'Many countries still set a different pension age for men and for women, and several are in the '
   + 'middle of raising one or both. SLATE carries the higher of the two at the end of the announced '
-  + 'schedule, which is the age a life planned today would actually reach.';
+  + 'schedule, since that is the age a life planned today would actually reach.';
 
 // ---------------------------------------------------------------------------
 // How long people live
@@ -126,7 +126,7 @@ export const ADULT_EXPECTANCY_NOTE =
   'Life expectancy at birth is an average over everybody born, and where child mortality is high it '
   + 'sits well below the age adults actually reach. A character who is already grown up has survived '
   + 'the part that makes that figure low. SLATE puts most of that distance back with an adjustment '
-  + 'of its own rather than pretending the at-birth figure is the age people die at. It’s a '
+  + 'of its own, because pretending the at-birth figure is the age people die at would be worse. It’s a '
   + 'correction of roughly the right size, not a life table.';
 
 /** The figure a country would have if almost no child died. */
@@ -253,7 +253,7 @@ export const AGING: readonly AgingBand[] = [
   { from: 20, fitness: 0.12, condition: 0.05, recovery: 0.001, about: 'The body is at its best and stays there.' },
   { from: 30, fitness: 0.35, condition: 0.18, recovery: 0.003, about: 'Recovery takes a day longer than it used to.' },
   { from: 40, fitness: 0.62, condition: 0.34, recovery: 0.005, about: 'You feel a bad night the next morning now.' },
-  { from: 50, fitness: 0.95, condition: 0.55, recovery: 0.008, about: 'Keeping the ceiling up is work rather than weather.' },
+  { from: 50, fitness: 0.95, condition: 0.55, recovery: 0.008, about: 'Keeping the ceiling up is work now, and the work doesn’t stop.' },
   { from: 60, fitness: 1.35, condition: 0.85, recovery: 0.012, about: 'What you don’t use, you lose faster than you gain it.' },
   { from: 70, fitness: 1.80, condition: 1.25, recovery: 0.016, about: 'A week off costs a month back.' },
   { from: 80, fitness: 2.30, condition: 1.75, recovery: 0.021, about: 'Every year is a year now, and it shows.' },
@@ -343,7 +343,7 @@ export const MILESTONE_AGES: readonly number[] = [1, 5, 10, 13, 16, 18, 21, 30, 
 /** How a birthday reads, by what the year was worth. */
 export const BIRTHDAY_LINES: readonly string[] = [
   'A year older, and the day itself was ordinary.',
-  'Nobody made much of it, which was the right amount.',
+  'Nobody made much of it, and that was about right.',
   'The phone went more than usual, and then it stopped.',
   'A quiet one. You did the things you do.',
   'You were working, and it went past.',
@@ -353,7 +353,7 @@ export const BIRTHDAY_LINES: readonly string[] = [
 export const MILESTONE_LINES: readonly string[] = [
   'People came. Some of them traveled for it.',
   'A round number, and everybody said so.',
-  'The kind of birthday people ring about rather than message.',
+  'The kind of birthday people ring about instead of sending a message.',
   'A number that changes how a room reads you.',
 ];
 

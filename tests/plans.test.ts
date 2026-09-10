@@ -66,10 +66,10 @@ describe('making a plan', () => {
       [{ title: '   ', at: sim.now + MS_DAY }, /needs a name/],
       [{ title: 'Yesterday', at: sim.now - MS_HOUR }, /been and gone/],
       [{ title: 'Distant', at: sim.now + (FURTHEST_AHEAD_DAYS + 10) * MS_DAY }, /further out than the calendar goes/],
-      [{ title: 'Blink', at: sim.now + MS_DAY, durationMinutes: 1 }, /five minutes/],
+      [{ title: 'Blink', at: sim.now + MS_DAY, durationMinutes: 1 }, /five minutes/i],
       [{ title: 'Forever', at: sim.now + MS_DAY, durationMinutes: LONGEST_MINUTES + 1 }, /longer than a day/],
       [{ title: 'Elsewhere', at: sim.now + MS_DAY, locationId: 'atlantis' }, /nowhere by that name/],
-      [{ title: 'A Holiday', at: sim.now + MS_DAY, category: 'holiday' }, /kind of day you can put on it yourself/],
+      [{ title: 'A Holiday', at: sim.now + MS_DAY, category: 'holiday' }, /can’t put that kind of day/],
     ];
     for (const [payload, why] of cases) {
       const answer = put(sim, payload);
@@ -426,7 +426,7 @@ describe('not going', () => {
 
   it('is refused before the thing has come round', () => {
     const { sim, id } = dinner('skip-too-early');
-    expect(skip(sim, id).error).toBe('That hasn’t come round yet. Call it off instead, and they’ll know.');
+    expect(skip(sim, id).error).toBe('It hasn’t come round yet. Call it off instead, and they’ll know.');
   });
 
   it('costs the full price once you are standing at it', () => {

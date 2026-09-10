@@ -11,7 +11,7 @@ export function WorkspaceRouter({ route }: { route: string }) {
   if (!Workspace) {
     return (
       <div className="empty">
-        <h3>Nothing Here Yet</h3>
+        <h3>Not Built Yet</h3>
         <p className="small">That workspace doesn’t exist.</p>
       </div>
     );

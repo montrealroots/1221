@@ -57,7 +57,7 @@ interface Figure {
 const FROM_A_CAREER =
   'It was worked out on your first morning from a single number — how far along the acting career already was — '
   + 'and nothing ever asked you that, so it stood at five in a hundred and this is what five came to. '
-  + 'Nothing since has moved it, and nothing yet can: there’s no work, no notice and nobody keeping score.';
+  + 'It hasn’t moved since, and it can’t yet: there’s no work, no notice and nobody keeping score.';
 
 /** The seven, in the order a person would ask about them. */
 const FIGURES: readonly Figure[] = [
@@ -79,7 +79,7 @@ const FIGURES: readonly Figure[] = [
     behind: 'it says whether the people who know you like you',
     note: 'Whether the people who know you like you',
     means: 'It counts whether the people who do know you warm to you. Fame and appeal come apart all the time, and a career can run on either one alone.',
-    since: 'Nothing about you set this one. It was written flat at fifty, the same fifty everybody starts on, which is the world declining to hold an opinion — and nothing since has given anybody cause to form one.',
+    since: 'Your character didn’t set this one. It was written flat at fifty, the same fifty everybody starts on, and fifty is the world declining to hold an opinion. Nobody has since had cause to form one.',
     provenance: 'Nought to a hundred. Left level at the start, and no screen in the game has ever shown it to you.',
     shown: false,
   },
@@ -101,7 +101,7 @@ const FIGURES: readonly Figure[] = [
     behind: 'it says whether a producer believes you’ll finish',
     note: 'Whether a producer believes you’ll finish',
     means: 'It’s whether whoever hires you believes you’ll finish what you signed for. It moves slower than the rest of these and it’s worth more than it sounds.',
-    since: 'This one is the only figure here taken from you rather than from a career you haven’t had: a flat fifty-five, plus a fifth of how conscientious you are. Nothing has tested it since.',
+    since: 'It’s the only figure here taken from you instead of from a career you haven’t had: a flat fifty-five, plus a fifth of how conscientious you are. The game hasn’t tested it since.',
     provenance: 'Nought to a hundred. Fifty-five to start with, plus a fifth of how conscientious you are, and nothing in the game has tested it since.',
     shown: false,
   },
@@ -111,7 +111,7 @@ const FIGURES: readonly Figure[] = [
     short: 'prestige',
     behind: 'it says where you sit with the awards and the critics',
     note: 'Where you sit with the awards and the critics',
-    means: 'It’s where you stand with the awards and the critics, which is its own economy and doesn’t pay in the same currency as the other six.',
+    means: 'It’s where you stand with the awards and the critics. That’s an economy of its own, and it doesn’t pay in the same currency as the other six.',
     since: FROM_A_CAREER,
     provenance: 'Nought to a hundred, set on the first morning from how far along the career was, and untouched by any day since.',
     shown: false,
@@ -122,7 +122,7 @@ const FIGURES: readonly Figure[] = [
     short: 'industry demand',
     behind: 'it says how many people want you this week',
     note: 'How many people want you this week',
-    means: 'It counts how many people want to hire you right now. It’s the only one of the seven about this week rather than about a whole record.',
+    means: 'It counts how many people want to hire you right now — the only one of the seven about this week instead of a whole record.',
     since: FROM_A_CAREER,
     provenance: 'Nought to a hundred, set on the first morning from how far along the career was, and untouched by any day since.',
     shown: true,
@@ -184,7 +184,7 @@ defineLook<Standing>('reputation', {
       label: figure.name,
       detail: `${outOf(valueOf(reputation, figure.key))}, and ${figure.behind}`,
     })),
-    provenance: 'Seven figures, all written on your first morning and none of them moved since. Nothing in SLATE keeps score of you yet.',
+    provenance: 'Seven figures, all written on your first morning, none of them moved since. SLATE doesn’t keep score of you yet.',
   }),
 });
 
@@ -283,16 +283,16 @@ function sentenceFor(key: FigureKey, value: number): string {
             : `${said}. You’re recognized nearly everywhere, and it costs you about what it buys you.`;
     case 'audienceAppeal':
       return n < 35 ? `${said}. The people who know the work mostly don’t warm to it.`
-        : n < 55 ? `${said}, which is level. Nobody has seen enough of you to decide how they feel.`
+        : n < 55 ? `${said}. Level — nobody has seen enough of you to decide how they feel.`
           : n < 75 ? `${said}. The people who know you like you, and they say so out loud.`
-            : `${said}. People are fond of you, which is the hardest of these to buy and the easiest to spend.`;
+            : `${said}. People are fond of you. That’s the hardest of these to buy and the easiest to spend.`;
     case 'professionalReputation':
       return n < 5 ? `${said}. There’s no body of work for anybody in the business to have an opinion about.`
         : n < 30 ? `${said}. A handful of people who’ve worked with you would vouch for you.`
           : n < 65 ? `${said}. Casting knows the name, and knows it’s safe.`
             : `${said}. The work speaks before you do.`;
     case 'reliability':
-      return n < 40 ? `${said}. A producer would want somebody keeping an eye on you.`
+      return n < 40 ? `${said}. A producer would want a minder on you.`
         : n < 70 ? `${said}. You’ve given nobody reason to doubt you’d finish, and nobody reason to be sure of it either.`
           : `${said}. Whoever hires you can stop wondering whether you’ll turn up.`;
     case 'prestige':

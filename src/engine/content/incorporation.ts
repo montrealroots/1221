@@ -76,7 +76,7 @@ export const FORMS: readonly FormFacts[] = [
   {
     id: 'inc', jurisdiction: 'us', suffix: 'Inc.', label: 'Corporation',
     what: 'The American corporation. More formality than an LLC, and the form investors expect '
-      + 'when they are buying stock rather than lending.',
+      + 'when they’re buying stock, not lending.',
     formationCost: cents(1_800),
     suits: 'An American arm that will take outside investment.',
   },
@@ -110,8 +110,8 @@ export const REGISTRIES: readonly RegistryFacts[] = [
   {
     id: 'is_companies', jurisdiction: 'is',
     body: 'Fyrirtækjaskrá', label: 'The Company Register',
-    what: 'The Icelandic register of companies, kept by RSK — which is also the tax office, '
-      + 'so one filing does both jobs and one number follows the company everywhere.',
+    what: 'The Icelandic register of companies. RSK keeps it, and RSK is also the tax office, so one '
+      + 'filing does both jobs and one number follows the company everywhere.',
     why: 'Without it there’s no company, and everything else on this page needs a company first.',
     cost: cents(130_000), required: true, filesEveryMonths: 12,
   },
@@ -181,8 +181,8 @@ export const REBATE = {
   /** Roughly how long after delivery the money lands. SLATE's own. */
   paidAfterMonths: 6,
   note: 'The share has been raised above this figure, with a higher tier for productions '
-    + 'meeting further conditions. SLATE uses the long-standing lower rate rather than print a '
-    + 'current number it can’t source.',
+    + 'meeting further conditions. SLATE uses the long-standing lower rate. Printing a current one it '
+    + 'can’t source would be worse.',
 } as const;
 
 /** Corporate income tax on an Icelandic private limited company. */
@@ -223,8 +223,8 @@ export const GUILDS: readonly GuildFacts[] = [
     what: 'You don’t join as a producer — you sign a specific agreement and become bound by it. '
       + 'There is a ladder of them by budget, from the ultra low budget agreement up to the basic '
       + 'theatrical, and which rung you are on decides the minimums and the conditions.',
-    binds: 'Minimums, pension and health contributions on every salary, and residuals for as long '
-      + 'as the picture is used — which is to say for the life of the copyright.',
+    binds: 'Minimums, pension and health contributions on every salary, and residuals for as long as '
+      + 'the picture is used. That means for the life of the copyright.',
     depositCents: cents(25_000), agreement: 'Low Budget Agreement', signable: true,
   },
   {
@@ -232,7 +232,7 @@ export const GUILDS: readonly GuildFacts[] = [
     body: 'Writers Guild of America', label: 'The Writers Guild',
     covers: 'Writers',
     what: 'Signing binds the company to the minimum basic agreement for anybody it employs to '
-      + 'write, and hands the determination of the writing credit to the guild rather than to you.',
+      + 'write. It also hands the writing credit to the guild to determine, not to you.',
     binds: 'Minimums, contributions, residuals, and arbitration of who is credited.',
     depositCents: cents(10_000), agreement: 'Minimum Basic Agreement', signable: true,
   },
@@ -268,9 +268,8 @@ export const GUILDS: readonly GuildFacts[] = [
     id: 'is_crew', jurisdiction: 'is',
     body: 'Icelandic trade unions', label: 'The Icelandic Crew',
     covers: 'Icelandic crew',
-    what: 'Crew here belong to ordinary trade unions rather than a film-specific one — the '
-      + 'electrical trades union covers a great deal of a set — and the same collective agreements '
-      + 'apply.',
+    what: 'Crew here belong to ordinary trade unions, not a film-specific one. The electrical trades '
+      + 'union covers a great deal of a set. The same collective agreements apply.',
     binds: 'The collective floor, working time, and contributions.',
     depositCents: 0, agreement: 'Kjarasamningur', signable: false,
   },
@@ -289,8 +288,8 @@ export const GUILD_BY_ID: Readonly<Record<GuildId, GuildFacts>> =
  */
 export const GLOBAL_RULE_ONE =
   'A SAG-AFTRA member may not work for a producer who hasn’t signed with SAG-AFTRA — anywhere on '
-  + 'earth, which is the entire point of it. An Icelandic company that wants one American actor '
-  + 'has to become, in part, an American company first.';
+  + 'earth. That’s what it’s for. An Icelandic company that wants one American actor has to '
+  + 'become, in part, an American company first.';
 
 // ---------------------------------------------------------------------------
 // Cover
@@ -313,22 +312,22 @@ export const POLICIES: readonly PolicyFacts[] = [
     id: 'general_liability', label: 'General Liability',
     what: 'Third-party injury and property damage. The policy every counterparty asks for a '
       + 'certificate of before they let you through the door.',
-    why: 'No location, no facility and no hire company deals with a production without it.',
+    why: 'No location or hire company will deal with a production that hasn’t got it.',
     limitCents: cents(2_000_000), premiumCents: cents(8_000), standing: true,
   },
   {
     id: 'workers_comp', label: 'Workers’ Compensation',
-    what: 'Cover for people hurt at work, which on a set is a live risk rather than a theoretical one.',
+    what: 'Cover for people hurt at work. On a set that’s a live risk, not a theoretical one.',
     why: 'Employing anybody without it’s unlawful in every jurisdiction this company will work in.',
     limitCents: cents(1_000_000), premiumCents: cents(6_000), standing: true,
   },
   {
     id: 'errors_omissions', label: 'Errors And Omissions',
-    what: 'Cover for being sued over what is in the picture rather than what happened making it: '
-      + 'defamation, privacy, and infringing somebody’s rights.',
+    what: 'Cover for being sued over what’s in the picture, not what happened making it: defamation, '
+      + 'privacy, and infringing another person’s rights.',
     why: 'No distributor on earth takes delivery without a certificate. The underwriter won’t '
-      + 'issue one until a lawyer has read the chain of title, which is how a break in it finally '
-      + 'surfaces — years late, and at the one moment it can’t be fixed quietly.',
+      + 'issue one until a lawyer has read the chain of title. That’s how a break in it finally '
+      + 'surfaces: years late, at the one moment it can’t be fixed quietly.',
     limitCents: cents(3_000_000), premiumCents: cents(14_000), standing: false,
   },
   {
@@ -383,7 +382,7 @@ export const ROLES: readonly RoleFacts[] = [
   {
     id: 'principal', label: 'The Principal', said: 'the principal',
     what: 'Whoever the company answers to. Sets the slate, says yes and no, and signs.',
-    without: 'Nothing gets decided, which is a slower death than getting it wrong.',
+    without: 'Decisions stop getting made. That kills a company slower than getting them wrong.',
     monthlyCents: 0,
   },
   {
@@ -434,4 +433,4 @@ export const INCORPORATION_NOTE =
   + 'companies, Global Rule One is why an Icelandic producer needs an American arm, and no '
   + 'distributor takes delivery without errors and omissions cover. The money is quoted rather '
   + 'than legislated — formation fees, premiums and deposits all move, and every figure here is '
-  + 'SLATE’s own estimate rather than a current price.';
+  + 'SLATE’s own estimate, not a current price.';

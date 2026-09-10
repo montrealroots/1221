@@ -138,14 +138,14 @@ function clockAgainstHome(hours: number): string {
 /** What the Daylight tile says, and what a way into the light says. */
 function lightLine(sun: SunTimes, zone: string): string {
   if (sun.polar === 'day') return 'The sun never sets today';
-  if (sun.polar === 'night') return 'The sun never rises today';
+  if (sun.polar === 'night') return 'No sunrise here today';
   if (sun.sunrise === undefined || sun.sunset === undefined) return 'No sunrise on file';
   return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDaylight(sun.daylightMinutes)} of it`;
 }
 
 /** What SLATE thinks a unit of this money is worth, said honestly. */
 function rateLine(info: CurrencyInfo): string {
-  if (info.code === 'USD') return 'The unit the ledger is kept in';
+  if (info.code === 'USD') return 'What the ledger is kept in';
   if (info.unitsPerUsd === undefined) return 'No rate on file, so the ledger stays in dollars';
   return `About ${info.unitsPerUsd.toLocaleString('en-US')} to the dollar, by SLATE’s reckoning`;
 }
@@ -192,7 +192,7 @@ defineLook<PlaceProfile>('place', {
     ways.push({
       to: at('country', place.countryId),
       label: place.countryName,
-      detail: 'The languages, the money, the side of the road and the law over all of it',
+      detail: 'Languages, money, which side of the road, and the law over all of it',
     });
     ways.push({
       to: at('currency', place.currency.code),
@@ -286,7 +286,7 @@ defineLook<PlaceProfile>('place', {
             <Stat
               label="Languages"
               value={place.languages[0] ?? 'Not On File'}
-              note={spokenList(place.languages.slice(1)) || 'The only one the country lists'}
+              note={spokenList(place.languages.slice(1)) || 'Just the one, on the country’s own list'}
             />
           </div>
         </>
@@ -367,7 +367,7 @@ function capitalName(country: Country): string {
 }
 
 defineLook<Region>('region', {
-  gone: 'The map was redrawn, and it isn’t one of the pieces any more.',
+  gone: 'Somebody redrew the map, and it isn’t one of the pieces any more.',
   resolve: (sim, id) => REGIONS.get(id || standingIn(sim)?.parentId || ''),
   seeds: (sim) => {
     const ids = [standingIn(sim)?.parentId, homeCityOf(sim)?.parentId, CITIES.get(ESTATE_CITY_ID)?.parentId];
@@ -615,7 +615,7 @@ interface TheLight {
 }
 
 defineLook<TheLight>('daylight', {
-  gone: 'The sun still comes up, but not on anywhere SLATE can name.',
+  gone: 'Sunrise still happens. It just isn’t anywhere SLATE can name.',
   resolve: (sim, id) => {
     const city = cityFor(sim, id);
     if (!city) return undefined;

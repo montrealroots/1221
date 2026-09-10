@@ -108,7 +108,7 @@ export const HOLDINGS: readonly Holding[] = [
   {
     id: 'house',
     label: () => HOUSE.name,
-    detail: 'Where you live. No rent, no lease, no landlord, and nobody to answer to about it.',
+    detail: 'Where you live. No rent, no lease, and nobody to answer to about it.',
   },
   {
     id: 'lot',
@@ -133,7 +133,7 @@ export const HOLDINGS: readonly Holding[] = [
 export const ESTATE_NOTE =
   'There’s no Television or Film industry in Iceland to walk into. That’s the point of it: the family '
   + 'isn’t '
-  + 'buying a way into somebody else’s business, it’s building one where there was none, and you '
+  + 'buying a way into anybody else’s business, it’s building one where there was none, and you '
   + 'are standing on it before anybody outside the country knows it exists.';
 
 // ---------------------------------------------------------------------------
@@ -178,11 +178,11 @@ export const SAFEGUARDS: readonly Safeguard[] = [
     detail: [
       'A continuous barrier runs the entire boundary — anti-climb steel to head height, set into a '
       + 'concrete foot so it can’t be lifted or dug under, and carrying a tension line that reports '
-      + 'the moment anything leans on it. It follows the lava field rather than cutting through it. '
+      + 'the moment anything leans on it. It follows the lava field instead of cutting through it. '
       + 'That’s why it cost what it cost.',
-      'Ground sensors sit inside the line, not on it. Somebody who got over the fence would be '
-      + 'walking into a second detection layer they can’t see, and the control room would have had '
-      + 'them on camera before they reached the first one.',
+      'Ground sensors sit inside the line, not on it. Anybody over the fence walks into a second '
+      + 'detection layer they can’t see, and the control room had them on camera before they reached '
+      + 'the first one.',
     ],
     figures: [
       { label: 'What It Encloses', value: '2,000 acres', note: 'Every foot of the boundary' },
@@ -195,17 +195,16 @@ export const SAFEGUARDS: readonly Safeguard[] = [
     label: 'The Gate',
     kind: 'The Only Way In',
     covers: 'land',
-    summary: 'One road runs onto the land, somebody is in the gatehouse on it around the clock, and either they’re expecting you or they aren’t.',
+    summary: 'One road runs onto the land. There’s a gatehouse on it, staffed around the clock, and either they’re expecting you or they aren’t.',
     detail: [
-      'A gatehouse with somebody in it every hour of every day, and vehicle barriers rated to stop a '
-      + 'truck at speed rather than to discourage a car. Nothing comes through on a story: arrivals '
-      + 'are on a list, and a name that isn’t on it waits at the barrier while somebody in the house '
-      + 'is asked.',
+      'Staffed every hour of every day, with vehicle barriers rated to stop a truck at speed — not to '
+      + 'discourage a car. A story doesn’t get you through. Arrivals are on a list, and a name that '
+      + 'isn’t on it waits at the barrier while the house is called.',
       'Deliveries stop at the gate and are carried on from there. Nobody outside the household drives '
       + 'to the door. That one measure does more of the work than all the steel.',
     ],
     figures: [
-      { label: 'Roads In', value: '1', note: 'And somebody is watching it' },
+      { label: 'Roads In', value: '1', note: 'Watched around the clock' },
       { label: 'Manned', value: '24 hours', note: 'Every day of the year' },
       { label: 'Unannounced Arrivals', value: 'Wait', note: 'Nobody is waved through' },
     ],
@@ -215,11 +214,11 @@ export const SAFEGUARDS: readonly Safeguard[] = [
     label: 'The Control Room',
     kind: 'Who Is Watching',
     covers: 'land',
-    summary: 'Everything the cameras and sensors see lands in one room, and somebody is in it.',
+    summary: 'Everything the cameras and sensors see lands in one room, and that room is staffed.',
     detail: [
       'Overlapping camera coverage with no blind corner, thermal after dark so the weather stops '
       + 'mattering, and every feed on the land — the boundary, the gate, the yard, the stages — '
-      + 'terminating in one staffed room rather than on a hard drive nobody watches.',
+      + 'terminating in one staffed room — not on a hard drive nobody watches.',
       'It runs on the land’s own power. Iceland’s grid is geothermal and among the most reliable in '
       + 'the world, and the family put in a generator and a battery wall anyway, because a security '
       + 'system that stops when the power does only works on good days.',
@@ -238,7 +237,7 @@ export const SAFEGUARDS: readonly Safeguard[] = [
     summary: 'Anybody who got past all of it would still be standing outside a hardened building.',
     detail: [
       'Reinforced doors, laminated glass and a monitored alarm on every opening, which for a house '
-      + 'this new was designed in rather than added afterwards. There is a room inside with its own '
+      + 'this new was designed in, not added afterwards. There’s a room inside with its own '
       + 'door, its own line out and its own air, and in the ordinary run of things nobody in the '
       + 'family thinks about it from one year to the next.',
       'It is the layer that should never be reached, and the family built it on the principle that '

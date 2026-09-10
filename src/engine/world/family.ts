@@ -131,7 +131,7 @@ function backgroundFor(role: EstateRole, twin: boolean): string {
   if (twin) {
     switch (role) {
       case 'the house': return 'Born the same morning you were, and the one who keeps the house running now.';
-      case 'the lot': return 'Born the same morning you were, and grew up on the lot rather than in the house.';
+      case 'the lot': return 'Born the same morning you were, and grew up out on the lot while you grew up in the house.';
       case 'the company': return 'Born the same morning you were, and took the company on before you did.';
       default: return 'Born the same morning you were, in the same room, on the same land.';
     }

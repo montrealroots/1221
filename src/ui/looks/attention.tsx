@@ -82,7 +82,7 @@ const RAISED_BY: Readonly<Record<string, string>> = {
   health: 'your health',
   property: 'the roof over your head',
   travel: 'the traveling',
-  relationship: 'somebody who knows you',
+  relationship: 'a person who knows you',
   legal: 'the paperwork',
 };
 
@@ -206,7 +206,7 @@ defineLook<DecisionItem>('decision', {
       : `It closed ${formatRelative(closedAt ?? sim.now, sim.now)} and nothing on Home lists it now.`;
 
     const ending = stage === 'open'
-      ? `Left alone it goes quiet on its own: ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered.${decision.dueAt !== undefined ? ` The date on it comes first — once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not.` : ''} The world only looks in every ${countWord(TICK_DAYS)} days, so either one lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`
+      ? `Left alone it goes quiet by itself, ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered.${decision.dueAt !== undefined ? ` The date on it comes first — once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not.` : ''} The world only looks in every ${countWord(TICK_DAYS)} days, so either one lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`
       : `The save forgets it entirely six months after it closed, on ${formatDate(forgottenAt, sim.zone)}.`;
 
     // Home renders the actions, a way through where there is a route, and
@@ -214,10 +214,10 @@ defineLook<DecisionItem>('decision', {
     const labels = decision.actions.map((action) => titleCaseLabel(action.label));
     const onPanel = stage === 'open' && place > 0 && place <= PANEL_ROWS;
     const offered = stage !== 'open'
-      ? 'Nothing’s offered against it now, because Home doesn’t list it at all.'
+      ? 'Home doesn’t list it at all now, so there’s nothing to press.'
       : !onPanel
-        ? 'Nothing can be pressed against it while it sits below the panel, so it waits its turn.'
-        : `Home puts ${spokenList([...labels, 'Dismiss'])} against it${decision.route ? ', and a way through to the screen where it lives' : ''}, and pressing one of those is doing it — which is why they’re there and this is only the reading of it.`;
+        ? 'While it sits below the panel there’s nothing to press, so it waits its turn.'
+        : `Home puts ${spokenList([...labels, 'Dismiss'])} against it${decision.route ? ', and a way through to the screen where it lives' : ''}, and pressing one of those is doing it. They’re the doing; this is the reading.`;
 
     return {
       name: nameOf(decision.title, 'Something Waiting'),
@@ -245,7 +245,7 @@ defineLook<DecisionItem>('decision', {
             <Stat
               label="Due"
               value={decision.dueAt !== undefined ? formatDate(decision.dueAt, sim.zone) : 'No date'}
-              note={decision.dueAt !== undefined ? formatRelative(decision.dueAt, sim.now) : 'Nothing forces it'}
+              note={decision.dueAt !== undefined ? formatRelative(decision.dueAt, sim.now) : 'Never forced'}
               tone={overdue ? 'negative' : undefined}
             />
             <Stat
@@ -304,7 +304,7 @@ defineLook<Notice>('notification', {
       kind: 'Something You Were Told',
       parent: at('person', sim.universe.playerId),
       summary: note.read
-        ? `You’ve read this one — it came in ${formatRelative(note.at, sim.now)}, and it’s a record now rather than anything asking.`
+        ? `You’ve read this one — it came in ${formatRelative(note.at, sim.now)}, and it’s a record now, not a question.`
         : unread.length === 1
           ? `It came in ${formatRelative(note.at, sim.now)} and it’s the only thing you haven’t read.`
           : `It came in ${formatRelative(note.at, sim.now)} and it’s ${ordinal(place)} of the ${countWord(unread.length)} you haven’t read.`,
@@ -314,7 +314,7 @@ defineLook<Notice>('notification', {
           <p className="small muted">
             {`${sentenceStart(raisedBy(note.category))} sent it, at ${outOf(importance)}, and that figure is the whole of what decides the order the unread come in — heaviest first, and the newest of two that weigh the same. `}
             {note.read
-              ? 'Nothing about it is asking for anything; it stays until the list runs past five hundred and the oldest fall off the end.'
+              ? 'It isn’t asking for anything. It stays until the list runs past five hundred and the oldest fall off the end.'
               : 'Reading it here doesn’t mark it read — the one control that does sits on Home and clears the whole list at once, because that changes the save and this doesn’t.'}
             {note.route ? ' Home offers a way through to where it happened.' : ''}
           </p>
@@ -325,7 +325,7 @@ defineLook<Notice>('notification', {
             <Stat
               label="Standing"
               value={note.read ? 'Read' : 'Unread'}
-              note={note.read ? 'Nothing counts it any more' : `${place} of ${unread.length} unread`}
+              note={note.read ? 'No longer counted' : `${place} of ${unread.length} unread`}
             />
             <Stat
               label="What It’s About"
@@ -339,7 +339,7 @@ defineLook<Notice>('notification', {
       ways,
       provenance: aboutWay
         ? 'A notice can name the thing it’s about, and the thing this one names is still in the world.'
-        : 'A notice can name the thing it’s about. Nothing in the world names one yet, so this one ends here — the day something does, it opens onto it.',
+        : 'A notice can name the thing it’s about. So far nothing in the world does, so this one ends here. The day something names one, it’ll open onto it.',
     };
   },
 });

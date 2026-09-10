@@ -192,7 +192,7 @@ function movementSentence(inward: number, outward: number): string {
 function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
   switch (kind) {
     case 'savings':
-      return 'set aside rather than spent.';
+      return 'set aside, and not for spending.';
     case 'brokerage':
       return 'and what it’s worth moves with the market.';
     case 'escrow':
@@ -254,7 +254,7 @@ function accountBody(a: Account, sim: Simulation) {
         {a.institution ?? 'The bank'} opened it {heldFor(sim, a.openedAt)}
         {a.last4 ? `, and it ends ${a.last4}` : ''}.{' '}
         {a.apr !== undefined
-          ? `Anything left on it is written at ${ratePercent(a.apr)} a year, against what’s still owing rather than against what it started at.`
+          ? `Anything left on it is written at ${ratePercent(a.apr)} a year, against what’s still owing, not against what it started at.`
           : 'It charges you nothing for the privilege of holding your money.'}
       </p>
       <p className="small">{movementSentence(inward, outward)}</p>
@@ -352,7 +352,7 @@ function worthBody(held: Holdings) {
       </p>
       <p className="small">
         {owned.length === 0
-          ? 'Nothing on the deeds is in your name, so what you’re worth is money rather than things.'
+          ? 'None of the deeds carry your name, so what you’re worth is money and not things.'
           : `${spokenList(owned.map((p) => p.name))} ${isAre(owned.length)} counted at ${formatMoney(worth.assets)} between them.`}
       </p>
       <div className="grid grid-4">
@@ -434,7 +434,7 @@ defineLook<Owing>('debt', {
         ? `${formatMoney(owedOn(a))} on it at ${ratePercent(a.apr)}`
         : `${formatMoney(owedOn(a))} on it, at no stated rate`,
     })),
-    provenance: 'The rates are the ones written on the accounts themselves, and nothing has charged one yet. Nothing here is run forward — it’s what the balances are at this minute.',
+    provenance: 'The rates come off the accounts themselves, and none has charged one yet. None of it is run forward — it’s what the balances are at this minute.',
   }),
 });
 

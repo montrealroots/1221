@@ -311,8 +311,8 @@ defineLook<TheDay>('day', {
         to: at('day', other.key),
         label: dayName(other.parts),
         detail: step < 0
-          ? `The day before it: ${loadOf(other)}`
-          : `The day after it: ${loadOf(other)}`,
+          ? `One day back, and ${loadOf(other, 'before')}`
+          : `One day on, and ${loadOf(other, 'after')}`,
       });
     }
 
@@ -328,14 +328,14 @@ defineLook<TheDay>('day', {
           <p className="small muted">
             {lightSentence(day)}{' '}
             {offset === 0
-              ? `It’s ${formatTime(sim.now, city.timeZone)} in ${city.name} as you read this, and ${quarterSentence(day)}.`
-              : `It’s ${day.season} in ${city.name} on it, and ${quarterSentence(day)}.`}
+              ? `${quarterSentence(day)}.`
+              : `${day.season} in ${city.name} on it, and ${quarterSentence(day)}.`}
           </p>
           <p className="small muted">
             {entries.length === 0
               ? offset === 0
-                ? 'Nothing is booked on it. The day is entirely yours.'
-                : 'Nothing is booked on it yet.'
+                ? 'Not a thing booked on it, either.'
+                : 'Not a thing booked on it yet.'
               : `The day is carrying ${count(entries.length, 'thing')}: ${spokenList(entries.map((e) => asName(e.title)))}.`}
             {wants.length > 0 && ` You have to be at ${count(wants.length, 'of them', 'of them')}.`}
             {clashes.length > 0 && ` The calendar has flagged ${count(clashes.length, 'of them', 'of them')} as landing on top of each other.`}
@@ -357,7 +357,7 @@ defineLook<TheDay>('day', {
             <Stat
               label="Sunset"
               value={day.sun.polar ? 'None' : formatTime(day.sun.sunset ?? 0, city.timeZone)}
-              note={day.sun.polar ? 'Nothing crosses the horizon' : 'Local clock'}
+              note={day.sun.polar ? 'It never clears the horizon' : 'Local clock'}
             />
             <Stat
               label="Daylight"
@@ -369,7 +369,7 @@ defineLook<TheDay>('day', {
             <Stat
               label="Wants You"
               value={wants.length}
-              note={wants.length === 0 ? 'Nothing needs you in person' : 'You have to be at these'}
+              note={wants.length === 0 ? 'None of it needs you' : 'You have to be at these'}
               tone={clashes.length > 0 ? 'negative' : undefined}
             />
             <Stat label="Where" value={city.name} note={zoneAbbreviation(day.start, city.timeZone)} look={placeOpens(city) ? at('place', city.id) : undefined} />
@@ -389,7 +389,7 @@ defineLook<TheDay>('day', {
               ))}
               <p className="small muted">
                 {holidays.some((h) => h.type === 'public')
-                  ? 'The public ones close offices and banks in the places that keep them.'
+                  ? 'Public ones close offices and banks in the places that keep them.'
                   : holidays.some((h) => h.type === 'bank' || h.type === 'school')
                     ? 'None of them is a public holiday, though the banks or the schools shut for one.'
                     : 'None of them is a day off — they’re marked, not taken.'}
@@ -402,21 +402,27 @@ defineLook<TheDay>('day', {
         }]
         : undefined,
       ways,
-      provenance: 'The light is worked out from the tilt, the date and this latitude rather than looked up. The observances are the ones your calendars keep — where you are standing, and the business’s own.',
+      provenance: 'The light is worked out from the tilt, the date and this latitude — not looked up. The observances are the ones your calendars keep: where you’re standing, and the business’s own.',
     };
   },
 });
 
-/** What a day is carrying, in the half-line a way in gets. */
-function loadOf(day: TheDay): string {
+/**
+ * What a day is carrying, in the half-line a way in gets. An empty day either
+ * side of this one is the common case, and the two lines sit one above the
+ * other, so an empty day says it in the tense it belongs to.
+ */
+function loadOf(day: TheDay, when: 'before' | 'after' | 'around' = 'around'): string {
+  const empty = when === 'before'
+    ? 'nothing was booked on it'
+    : when === 'after' ? 'nothing on it yet' : 'nothing booked on it at all';
   if (day.holidays.length > 0 && day.entries.length === 0) {
-    return `nothing booked, and ${day.holidays[0]?.englishName ?? day.holidays[0]?.name} kept on it`;
+    return `${empty}, and ${day.holidays[0]?.englishName ?? day.holidays[0]?.name} kept on it`;
   }
-  if (day.entries.length === 0) return 'nothing booked on it at all';
   const first = day.entries[0];
   return first
     ? `${count(day.entries.length, 'thing')} on it, starting with ${asName(first.title)}`
-    : 'nothing booked on it at all';
+    : empty;
 }
 
 /** The one sentence a day leads with. */
@@ -461,15 +467,15 @@ function daySentence(day: TheDay, sim: Simulation, keptHere: string[], keptAway:
 /** What the light does on a day, said the way a person standing in it would. */
 function lightSentence(day: TheDay): string {
   const { sun, city } = day;
-  if (sun.polar === 'day') return `The sun doesn’t go down on it in ${city.name} — twenty-four hours of light, and the difference between two in the afternoon and two in the morning is the color of it.`;
-  if (sun.polar === 'night') return `The sun doesn’t clear the horizon on it in ${city.name} — a few hours of blue in the middle, and that’s the whole of the day.`;
-  return `It’s light in ${city.name} from ${formatTime(sun.sunrise ?? 0, city.timeZone)} to ${formatTime(sun.sunset ?? 0, city.timeZone)}, ${formatDaylight(sun.daylightMinutes)} of it.`;
+  if (sun.polar === 'day') return 'The sun doesn’t go down on it at all — twenty-four hours of light, and the only difference between two in the afternoon and two in the morning is the color of it.';
+  if (sun.polar === 'night') return 'The sun doesn’t clear the horizon on it — a few hours of blue in the middle, and that’s the whole of the day.';
+  return `Light from ${formatTime(sun.sunrise ?? 0, city.timeZone)} to ${formatTime(sun.sunset ?? 0, city.timeZone)}, ${formatDaylight(sun.daylightMinutes)} of it.`;
 }
 
 /** The same, compressed into the line a way into the light carries. */
 function lightDetail(day: TheDay): string {
   if (day.sun.polar === 'day') return 'The sun never sets on it here';
-  if (day.sun.polar === 'night') return 'The sun never rises on it here';
+  if (day.sun.polar === 'night') return 'No sunrise on it here at all';
   return `${formatTime(day.sun.sunrise ?? 0, day.city.timeZone)} to ${formatTime(day.sun.sunset ?? 0, day.city.timeZone)}, ${formatDaylight(day.sun.daylightMinutes)} of it`;
 }
 
@@ -558,7 +564,7 @@ defineLook<TheEntry>('entry', {
       ways.push({
         to: at('stretch', entry.id),
         label: `${formatTime(entry.at, clock)} To ${formatTime(endOf(entry), clock)}`,
-        detail: `The hours it takes, and what the sky is doing across them`,
+        detail: 'How many hours it takes, and what the sky is doing across them',
       });
     }
     // Who it is with. The one field on a plan that reaches outside the
@@ -591,21 +597,21 @@ defineLook<TheEntry>('entry', {
         label: city.name,
         detail: elsewhere
           ? `Where this one is, and you’re in ${elsewhere.name} instead`
-          : 'Where this one is, which is where you already are',
+          : 'Where this one is — where you already are',
       });
     }
     if (next) {
       ways.push({
         to: at('entry', next.id),
         label: asName(next.title),
-        detail: `The next thing that day: ${entryDetail(next, zone)}`,
+        detail: `Next thing that day: ${entryDetail(next, zone)}`,
       });
     }
     if (found.day) {
       ways.push({
         to: at('day', found.day.key),
         label: dayName(found.day.parts),
-        detail: `The day it sits in: ${loadOf(found.day)}`,
+        detail: `Which day it sits in: ${loadOf(found.day)}`,
       });
     }
 
@@ -627,14 +633,14 @@ defineLook<TheEntry>('entry', {
               ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
               : entry.requiresPlayer
                 ? 'This one wants you there. Move the clock to it and it happens.'
-                : 'The world handles this one on its own when the clock reaches it.'}
+                : 'This one the world handles on its own when the clock reaches it.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>
           <p className="small muted">
             {city
               ? elsewhere
                 ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}, so getting there is part of it.</>
-                : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, which is where you already are.</>
+                : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, where you already are.</>
               : 'It names no city, so wherever you are is close enough.'}
             {clashes.length > 0
               ? ` ${spokenList(clashes.map((c) => asName(c.title)))} ${isAre(clashes.length)} inside the same hour, and both want you.`
@@ -651,7 +657,7 @@ defineLook<TheEntry>('entry', {
                 : entry.status === 'pending'
                   ? `Turning up is worth ${TOGETHER_WARMS} points of where you stand with `
                     + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}, and not turning up costs ${MISSED_COOLS}.`
-                  : `You were there, which was worth ${TOGETHER_WARMS} points of where you stand with `
+                  : `You were there. That was worth ${TOGETHER_WARMS} points of where you stand with `
                     + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}.`}
             </p>
           )}

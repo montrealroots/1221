@@ -487,7 +487,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
               : entry.status === 'pending'
                 ? `Turning up is worth ${TOGETHER_WARMS} points of where you stand with ${them}, `
                   + `and not turning up costs ${MISSED_COOLS}.`
-                : `You were there, which was worth ${TOGETHER_WARMS} points of where you stand with ${them}.`}
+                : `You were there. That was worth ${TOGETHER_WARMS} points of where you stand with ${them}.`}
         </p>
       )}
       {error && <p className="small negative">{error}</p>}
