@@ -27,7 +27,7 @@ import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
 import {
-  companiesOf, foundTheCompany, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
+  companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
@@ -185,6 +185,10 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // by whoever the player said runs what. The Your People step decides who is
   // the principal of a production company, which is a heavier thing than the
   // step lets on.
+  // The sugar first, because it is older than everything else here and it is
+  // what pays for all of it. The family has been in cane since long before
+  // anybody thought about a stage.
+  foundTheSugarGroup(sim);
   const company = foundTheCompany(sim);
 
   // --- The lot ------------------------------------------------------------
@@ -452,6 +456,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       }
     }
   }
+
+  // Schema 78: a company says which business it is in. Before the sugar group
+  // there was only one, so anything without a trade is a film company.
+  let traded = 0;
+  for (const company of Object.values(universe.companies ?? {})) {
+    const c = company as unknown as Record<string, unknown>;
+    if (c.trade === undefined) { c.trade = 'film'; traded += 1; }
+  }
+  if (traded > 0) steps.push(`Marked ${traded === 1 ? 'one company' : `${traded} companies`} as being in film.`);
 
   if (!universe.preferences) {
     universe.preferences = {

@@ -74,6 +74,17 @@ export interface Company {
   legalName: string;
   form: CompanyForm;
   jurisdiction: Jurisdiction;
+  /**
+   * What business it is in.
+   *
+   * The family holds two entirely separate things: the sugar group that made
+   * the money, and the production company that spends it. They share owners
+   * and nothing else — different trades, different countries, different
+   * centuries — so anything asking "what can the company do" has to mean one
+   * of them and not both. Without this they were indistinguishable by shape,
+   * and the film half started answering questions about cane.
+   */
+  trade: 'film' | 'sugar';
   parentId?: Id;
   /** Why this arm exists, in a sentence. Absent on a parent. */
   formedFor?: string;

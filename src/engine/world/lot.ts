@@ -23,6 +23,7 @@ import {
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
+import { GROUP, GROUP_PROFIT_CENTS } from '../content/sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
 
 /** A week, which is the unit a stage is let in. */
@@ -274,7 +275,7 @@ export function chargeTheMonth(sim: Simulation, accountId: Id): Money {
   return spent;
 }
 
-export const PAID_IN = 'Paid In By The Family';
+export const PAID_IN = `Paid In By ${GROUP.name}`;
 
 /**
  * The parents write a check when the company cannot pay for itself.
@@ -287,9 +288,10 @@ export const PAID_IN = 'Paid In By The Family';
  * and here it is the family, out of money the game has not modeled yet.
  *
  * So the shortfall is topped up in round hundreds of thousands and posted
- * under its own name. What it buys is the figure that matters more than the
- * balance: how much of their own money the family has put into this bet, which
- * only ever goes up, and which anybody can add up from the ledger.
+ * under the name of the business it comes out of. What it buys is the figure
+ * that matters more than the balance: how much of the sugar money has gone
+ * into this bet, which only ever goes up, and which anybody can add up from
+ * the ledger and set against what the group makes in a year.
  */
 export function familyCovers(sim: Simulation, accountId: Id): Money {
   const account = sim.universe.accounts[accountId];
@@ -478,4 +480,15 @@ export function collectWhatIsDue(sim: Simulation): Money {
     booking.invoicedAt = sim.now;
   }
   return took;
+}
+
+/**
+ * What the family has put in, said against what the business earns.
+ *
+ * The balance on its own means nothing — a hundred million is ruin to one
+ * company and a rounding error to another. Against a year of the group's
+ * profit it means something immediately.
+ */
+export function paidInAsShareOfAYear(sim: Simulation): number {
+  return GROUP_PROFIT_CENTS > 0 ? paidInSoFar(sim) / GROUP_PROFIT_CENTS : 0;
 }

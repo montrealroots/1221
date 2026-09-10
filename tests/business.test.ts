@@ -18,8 +18,9 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { theLot, stagesOn, utilisation, wouldBook, paidInSoFar } from '@/engine/world/lot';
-import { ICELAND_STAGE_FLOOR_SQM } from '@/engine/content/lot';
+import { theLot, stagesOn, utilisation, wouldBook, paidInSoFar, paidInAsShareOfAYear } from '@/engine/world/lot';
+import { BUILD_COST_CENTS, ICELAND_STAGE_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS } from '@/engine/content/lot';
+import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD } from '@/engine/content/sugar';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -27,7 +28,7 @@ import { ESTATE_CITY_ID } from '@/engine/content/estate';
 import { CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, VAT_RATE } from '@/engine/content/incorporation';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
-  parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf,
+  parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
 
@@ -482,5 +483,56 @@ describe('the lot as a business', () => {
     expect(cash.balance, 'the company is running overdrawn with nothing explaining it').toBeGreaterThanOrEqual(0);
     expect(paidInSoFar(sim), 'nobody has put a króna in').toBeGreaterThan(0);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('where the money comes from', () => {
+  it('holds two businesses that share owners and nothing else', () => {
+    const sim = quickSave({}, 'sugar-two');
+    const sugar = theSugarGroup(sim)!;
+    const film = parentCompany(sim.universe)!;
+    expect(sugar, 'no sugar group').toBeDefined();
+    expect(sugar.trade).toBe('sugar');
+    expect(film.trade).toBe('film');
+    expect(sugar.id).not.toBe(film.id);
+    // The sugar is older than the film by generations, which is the point.
+    expect(sugar.foundedAt).toBeLessThan(film.foundedAt);
+  });
+
+  it('keeps the sugar out of every question about making pictures', () => {
+    const sim = quickSave({}, 'sugar-apart');
+    // companiesOf, parentCompany and americanArm all mean the film side.
+    expect(companiesOf(sim.universe).every((c) => c.trade === 'film')).toBe(true);
+    expect(parentCompany(sim.universe)!.form).toBe('ehf');
+    // And the capability ladder never counts the sugar group's registrations.
+    const doors = capabilitiesOf(sim);
+    expect(doors.length).toBe(9);
+  });
+
+  it('is first in a trade small enough that being first is checkable', () => {
+    // The group is invented and may be as big as the fiction likes. What has
+    // to hold is the size of the thing it is first in.
+    expect(ORGANIC_SHARE_OF_WORLD).toBeGreaterThan(0.2);
+    expect(ORGANIC_SHARE_OF_WORLD).toBeLessThan(0.5);
+    expect(GROUP.organicTonnesAYear).toBeLessThan(GROUP.tonnesAYear);
+  });
+
+  it('can afford the lot, which is the whole reason the group is this size', () => {
+    // A single organic sugar company could not have built this. The world
+    // organic trade is 450,000 tonnes; the biggest real producer turns over
+    // about what the lot cost, once.
+    expect(BUILD_COST_CENTS).toBeLessThan(GROUP_PROFIT_CENTS * 3);
+    expect(MONTHLY_OVERHEAD_CENTS * 12).toBeLessThan(GROUP_PROFIT_CENTS * 0.1);
+  });
+
+  it('puts the sugar’s name on the money it sends', () => {
+    const sim = quickSave({}, 'sugar-cheque');
+    for (let month = 0; month < 18; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
+    const paid = sim.universe.transactions.filter((t) => t.memo.includes(GROUP.name));
+    expect(paid.length, 'the money arrived from nowhere in particular').toBeGreaterThan(0);
+    expect(paidInSoFar(sim)).toBeGreaterThan(0);
+    // And it means something set against what the business earns.
+    expect(paidInAsShareOfAYear(sim)).toBeGreaterThan(0);
+    expect(paidInAsShareOfAYear(sim)).toBeLessThan(1);
   });
 });

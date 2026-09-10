@@ -34,6 +34,7 @@ import {
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { addMonths, instantFromZoned, type Instant } from '../core/time';
 import { estateCity } from '../content/estate';
+import { GROUP } from '../content/sugar';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -43,18 +44,26 @@ const all = <T>(table: Record<Id, T> | undefined): T[] => Object.values(table ??
 
 /** The parent. There is exactly one, and it is Icelandic. */
 export function parentCompany(universe: SaveUniverse): Company | undefined {
-  return all(universe.companies).find((one) => !one.parentId && !one.dissolvedAt);
+  return all(universe.companies).find((one) => one.trade === 'film' && !one.parentId && !one.dissolvedAt);
 }
 
 /** The American arm, where one has been formed. */
 export function americanArm(universe: SaveUniverse): Company | undefined {
-  return all(universe.companies).find((one) => one.jurisdiction === 'us' && !one.dissolvedAt);
+  return all(universe.companies).find((one) => one.trade === 'film' && one.jurisdiction === 'us' && !one.dissolvedAt);
 }
 
 /** Every company the family holds, parent first. */
+/**
+ * The film companies: the production company and any arm of it.
+ *
+ * Not every company in the save. The sugar group is in here too and has
+ * nothing to do with making anything — it is where the money comes from, not
+ * what it is spent on, and every capability, registry and guild question on
+ * this page means the film side.
+ */
 export function companiesOf(universe: SaveUniverse): Company[] {
   return all(universe.companies)
-    .filter((one) => !one.dissolvedAt)
+    .filter((one) => !one.dissolvedAt && one.trade === 'film')
     .sort((a, b) => (a.parentId ? 1 : 0) - (b.parentId ? 1 : 0));
 }
 
@@ -310,6 +319,48 @@ function numberFor(registry: RegistryId, seed: number): string {
  * company that has never made a thing, which is exactly the position this
  * whole game starts from.
  */
+/**
+ * The business the family was already in, put into the save before the one
+ * this game is about.
+ *
+ * It exists as a real record rather than as a sentence because the production
+ * company is funded out of it, and money coming from somewhere the player
+ * cannot open is exactly what this game is not allowed to have. Whoever asks
+ * where the money for an empty stage comes from gets an answer with a number
+ * on it.
+ *
+ * It is a public limited company rather than a private one — an hf. rather
+ * than an ehf. — because a group this size with foreign subsidiaries is, and
+ * because the two forms are already modeled and the difference should mean
+ * something.
+ */
+export function foundTheSugarGroup(sim: Simulation): Company {
+  const u = sim.universe;
+  const player = u.people[u.playerId]!;
+  const zone = estateCity().timeZone;
+  const foundedAt = instantFromZoned({ year: GROUP.since, month: 4, day: 1, hour: 9, minute: 0 }, zone);
+  const group: Company = {
+    id: sim.nextId('company'),
+    saveId: u.meta.id,
+    name: GROUP.name,
+    legalName: GROUP.legalName,
+    form: 'hf',
+    trade: 'sugar',
+    jurisdiction: 'is',
+    ownerships: ownersOf(u, player.id),
+    locationId: GROUP.locationId,
+    remit: GROUP.remit,
+    foundedAt,
+  };
+  u.companies[group.id] = group;
+  return group;
+}
+
+/** The sugar group, if the save has one. */
+export function theSugarGroup(sim: Simulation): Company | undefined {
+  return Object.values(sim.universe.companies).find((c) => c.legalName === GROUP.legalName);
+}
+
 export function foundTheCompany(sim: Simulation): Company {
   const u = sim.universe;
   const player = u.people[u.playerId]!;
@@ -324,6 +375,7 @@ export function foundTheCompany(sim: Simulation): Company {
     name: studioName(surname),
     legalName: `${studioName(surname)} ${FORM_BY_ID[form].suffix}`,
     form,
+    trade: 'film',
     jurisdiction: 'is',
     ownerships: ownersOf(u, player.id),
     locationId: ESTATE_CITY_ID,
@@ -504,6 +556,9 @@ export function registerCompanyCommands(sim: Simulation): void {
       saveId: s.universe.meta.id,
       name: parent.name,
       legalName: `${parent.name} ${facts.suffix}`,
+      // An arm of the film company is in the film business, whatever it is
+      // formed for. It inherits the trade rather than choosing one.
+      trade: parent.trade,
       form,
       jurisdiction: 'us',
       parentId: parent.id,
