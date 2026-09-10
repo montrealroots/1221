@@ -20,10 +20,10 @@
 
 import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/climate';
 import { CITIES, type City } from '@/engine/content/geography';
-import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, zonedParts } from '@/engine/core/time';
+import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, startOfDay, zonedParts } from '@/engine/core/time';
 import {
-  forecastFor, shootDayWeather, weatherAt,
-  type DayWeather, type WeatherCondition, type WeatherNow,
+  forecastFor, hoursOn, shootDayWeather, weatherAt,
+  type DayWeather, type HourWeather, type WeatherCondition, type WeatherNow,
 } from '@/engine/systems/weather';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
@@ -87,6 +87,9 @@ const unitOf = (day: DayWeather): string => (day.fahrenheit ? '°F' : '°C');
 
 /** A gazetteer name as a person says it. A slashed name is spoken, never read out with the slash. */
 const spokenName = (name: string): string => name.replace(/\s*\/\s*/g, ' and ');
+
+/** A word that has to open a sentence. */
+const sentenceStart = (word: string): string => word.charAt(0).toUpperCase() + word.slice(1);
 
 /** Small numbers the way prose spells them. */
 const COUNT_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six'];
@@ -163,11 +166,37 @@ defineLook<Sky>('weather', {
       .map((d, i) => (d.precipitation === 'none' ? '' : weekdayAt(sim, city, i + 1)))
       .filter((name) => name !== '');
 
-    const ways: Way[] = ahead.map((day, i) => ({
-      to: at('forecastday', `${city.id}/${day.dateKey}`),
-      label: weekdayAt(sim, city, i + 1),
-      detail: `${day.condition}, ${day.low}${unit} to ${day.high}${unit}`,
-    }));
+    // Three ways, and only three. The five weekdays used to hang off the sky
+    // directly, which put the whole week at one level and left no way at all
+    // into the hours you are standing in. What a person asks is what happens
+    // for the rest of today, what tomorrow is, and what the week looks like,
+    // so those are the three things the sky opens onto — and each of them
+    // opens further.
+    const today = week[0];
+    const tomorrow = week[1];
+    const ways: Way[] = [];
+    if (today) {
+      const left = hoursOn(sim, city.id, sim.now).length;
+      ways.push({
+        to: at('hours', `${city.id}/${today.dateKey}`),
+        label: 'The Rest Of Today',
+        detail: left <= 1
+          ? 'The last hour of it, and what it is doing'
+          : `${countWord(left)} hours left, hour by hour to midnight`,
+      });
+    }
+    if (tomorrow) {
+      ways.push({
+        to: at('forecastday', `${city.id}/${tomorrow.dateKey}`),
+        label: 'Tomorrow',
+        detail: `${tomorrow.condition}, ${tomorrow.low}${unit} to ${tomorrow.high}${unit}`,
+      });
+    }
+    ways.push({
+      to: at('skyweek', city.id),
+      label: 'The Week Ahead',
+      detail: `${countWord(week.length)} days of it, and every one of them opens`,
+    });
 
     return {
       name: `Weather In ${spokenName(city.name)}`,
@@ -271,7 +300,13 @@ defineLook<Ahead>('forecastday', {
     const instant = sim.now + offset * MS_DAY;
 
     const week = forecastFor(sim, city.id, WEEK);
-    const ways: Way[] = [];
+    const ways: Way[] = [{
+      to: at('hours', `${city.id}/${day.dateKey}`),
+      label: offset === 0 ? 'The Rest Of Today' : 'Hour By Hour',
+      detail: offset === 0
+        ? 'The hours you have left of it, one at a time'
+        : `What it does through the day, ${clockSaid(0)} to ${clockSaid(23)}`,
+    }];
     if (offset > 0) {
       const before = week[offset - 1];
       if (before) {
@@ -296,7 +331,10 @@ defineLook<Ahead>('forecastday', {
     return {
       name: weekdayAt(sim, city, offset),
       kind: WHEN_KIND[offset] ?? 'The Week Ahead',
-      parent: at('weather', city.id),
+      // A day sits inside the week, and the week inside the sky. The trail
+      // reads Reykjavík · Weather · The Week Ahead · Thursday, which is the
+      // way a person got there.
+      parent: at('skyweek', city.id),
       summary: `You’re looking at ${BRINGS[day.condition]} in ${spokenName(city.name)} ${when}, `
         + `${day.low}${unit} to ${day.high}${unit}.`,
       body: (
@@ -315,6 +353,285 @@ defineLook<Ahead>('forecastday', {
       ),
       ways,
       provenance: 'Its own draw, blended with the two days before it, which is why a cold snap lasts and a wet spell lingers.',
+    };
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The rest of today, and the hours of any day
+// ---------------------------------------------------------------------------
+
+/**
+ * `cityId/dateKey`, the same shape a forecast day uses.
+ *
+ * Asked for today it gives the hours you have left; asked for any other day it
+ * gives all twenty-four. That is not two kinds — it is the same thing, read
+ * from where you are standing in it, which is exactly what "the rest of today"
+ * means to a person.
+ */
+interface Hours { city: City; day: DayWeather; hours: HourWeather[]; today: boolean; offset: number }
+
+/**
+ * The stretch of the day an hour belongs to, in the words a person uses.
+ *
+ * Noon and midnight name themselves, so they get nothing: "at noon it’s five
+ * degrees, in the afternoon" is the sentence a clock would write and not one
+ * a person would.
+ */
+function stretchOf(hour: number): string {
+  if (hour === 0 || hour === 12) return '';
+  if (hour < 5) return 'the small hours';
+  if (hour < 12) return 'the morning';
+  if (hour < 17) return 'the afternoon';
+  if (hour < 21) return 'the evening';
+  return 'the night';
+}
+
+/** "3 PM", "Midnight", "Noon" — never "15:00". A name, so Title Case. */
+function clockWord(hour: number): string {
+  if (hour === 0) return 'Midnight';
+  if (hour === 12) return 'Noon';
+  const twelve = hour % 12 === 0 ? 12 : hour % 12;
+  return `${twelve} ${hour < 12 ? 'AM' : 'PM'}`;
+}
+
+/**
+ * The same clock inside a sentence.
+ *
+ * "midnight" and "noon" are ordinary words and lowercase there, but AM and PM
+ * are not — lowercasing the whole thing gave "at 9 am", which no style sheet
+ * in the world writes.
+ */
+function clockSaid(hour: number): string {
+  if (hour === 0 || hour === 12) return clockWord(hour).toLowerCase();
+  return clockWord(hour);
+}
+
+/**
+ * The warmest and coldest hour, tie broken where the curve actually turns.
+ *
+ * The reading is whole degrees, so on a day with a three-degree range one in
+ * the afternoon through five all say the same thing. Keeping whichever a scan
+ * met first named one o’clock as the warmest hour of a day that peaks at
+ * three, which is true of the printed number and false about the day.
+ */
+function extremesOf(hours: readonly HourWeather[]): { warmest: HourWeather; coldest: HourWeather } {
+  const nearest = (pick: HourWeather[], turn: number) =>
+    pick.reduce((a, b) => (Math.abs(b.hour - turn) < Math.abs(a.hour - turn) ? b : a));
+  const top = Math.max(...hours.map((h) => h.temperature));
+  const bottom = Math.min(...hours.map((h) => h.temperature));
+  return {
+    warmest: nearest(hours.filter((h) => h.temperature === top), 15),
+    coldest: nearest(hours.filter((h) => h.temperature === bottom), 4),
+  };
+}
+
+/** Where a day’s hours start from: now if it is today, midnight otherwise. */
+function hoursFor(sim: Simulation, city: City, dateKey: string): { hours: HourWeather[]; today: boolean; offset: number } {
+  const week = forecastFor(sim, city.id, WEEK);
+  const offset = week.findIndex((d) => d.dateKey === dateKey);
+  if (offset < 0) return { hours: [], today: false, offset: -1 };
+  const today = offset === 0;
+  const from = today ? sim.now : startOfDay(sim.now + offset * MS_DAY, city.timeZone);
+  return { hours: hoursOn(sim, city.id, from), today, offset };
+}
+
+/** When the wet stretch of a day runs, said as a person would say it. */
+function spellSentence(hours: readonly HourWeather[]): string {
+  const wet = hours.filter((h) => h.wet);
+  if (wet.length === 0) return 'Nothing falls in any of them.';
+  const first = wet[0]!;
+  const last = wet[wet.length - 1]!;
+  if (wet.length === 1) return `It comes on for the one hour, around ${clockSaid(first.hour)}.`;
+  return `It comes on around ${clockSaid(first.hour)} and holds until about `
+    + `${clockSaid(Math.min(23, last.hour + 1))} — ${countWord(wet.length)} hours of it.`;
+}
+
+defineLook<Hours>('hours', {
+  gone: 'That day is behind you, and the hours in it are not something anybody is forecasting now.',
+  resolve: (sim, id) => {
+    const split = splitDayId(id);
+    if (!split) return undefined;
+    const city = CITIES.get(split.cityId);
+    if (!city) return undefined;
+    const week = forecastFor(sim, city.id, WEEK);
+    const day = week.find((d) => d.dateKey === split.dateKey);
+    if (!day) return undefined;
+    const { hours, today, offset } = hoursFor(sim, city, split.dateKey);
+    if (hours.length === 0) return undefined;
+    return { city, day, hours, today, offset };
+  },
+  seeds: (sim) => {
+    const city = cityFor(sim, '');
+    if (!city) return [];
+    return forecastFor(sim, city.id, WEEK).map((d) => `${city.id}/${d.dateKey}`);
+  },
+  look: (found, { sim }) => {
+    const { city, day, hours, today, offset } = found;
+    const unit = unitOf(day);
+    const { warmest, coldest } = extremesOf(hours);
+    const dark = hours.filter((h) => !h.daylight).length;
+
+    return {
+      name: today ? 'The Rest Of Today' : `${weekdayAt(sim, city, offset)}’s Hours`,
+      kind: 'Hour By Hour',
+      parent: at('forecastday', `${city.id}/${day.dateKey}`),
+      summary: today
+        ? `You have ${countWord(hours.length)} hours of ${dateWords(day.dateKey)} left, and they run between `
+          + `${coldest.temperature}${unit} and ${warmest.temperature}${unit}.`
+        : `${dateWords(day.dateKey)} runs from ${coldest.temperature}${unit} before dawn up to `
+          + `${warmest.temperature}${unit} by ${clockSaid(warmest.hour)}.`,
+      body: (
+        <>
+          <p className="small">
+            The warmest of them is {clockSaid(warmest.hour)} at {warmest.temperature}{unit}, the
+            coldest {clockSaid(coldest.hour)} at {coldest.temperature}{unit}, and{' '}
+            {dark === 0 ? 'the sun is up for all of them' : `${countWord(dark)} of them are after dark`}.
+          </p>
+          <p className="small">{spellSentence(hours)}</p>
+        </>
+      ),
+      ways: hours.map((hour) => ({
+        to: at('skyhour', `${city.id}/${day.dateKey}/${hour.hour}`),
+        label: clockWord(hour.hour),
+        detail: `${hour.temperature}${unit}, ${hour.condition.toLowerCase()}${hour.daylight ? '' : ', after dark'}`,
+      })),
+      provenance: 'One curve between the day’s high and its low, coldest before dawn and warmest at three, and a wet spell that falls where the day puts it rather than all day long.',
+    };
+  },
+});
+
+// ---------------------------------------------------------------------------
+// One hour — the floor of the sky
+// ---------------------------------------------------------------------------
+
+interface OneHour { city: City; day: DayWeather; hour: HourWeather; hours: HourWeather[]; index: number }
+
+defineLook<OneHour>('skyhour', {
+  gone: 'That hour has gone by, and what it was doing is nobody’s business now.',
+  resolve: (sim, id) => {
+    const cut = id.lastIndexOf('/');
+    if (cut <= 0) return undefined;
+    const wanted = Number(id.slice(cut + 1));
+    const split = splitDayId(id.slice(0, cut));
+    if (!split || !Number.isInteger(wanted)) return undefined;
+    const city = CITIES.get(split.cityId);
+    if (!city) return undefined;
+    const day = forecastFor(sim, city.id, WEEK).find((d) => d.dateKey === split.dateKey);
+    if (!day) return undefined;
+    const { hours } = hoursFor(sim, city, split.dateKey);
+    const index = hours.findIndex((h) => h.hour === wanted);
+    const hour = hours[index];
+    if (!hour) return undefined;
+    return { city, day, hour, hours, index };
+  },
+  seeds: (sim) => {
+    const city = cityFor(sim, '');
+    if (!city) return [];
+    const day = forecastFor(sim, city.id, WEEK)[0];
+    if (!day) return [];
+    return hoursOn(sim, city.id, sim.now).slice(0, 4).map((h) => `${city.id}/${day.dateKey}/${h.hour}`);
+  },
+  look: (found, { sim }) => {
+    const { city, day, hour, hours, index } = found;
+    const unit = unitOf(day);
+    const before = hours[index - 1];
+    const after = hours[index + 1];
+    const swing = after ? after.temperature - hour.temperature : 0;
+
+    const ways: Way[] = [];
+    if (before) {
+      ways.push({
+        to: at('skyhour', `${city.id}/${day.dateKey}/${before.hour}`),
+        label: clockWord(before.hour),
+        detail: `The hour before it: ${before.temperature}${unit}, ${before.condition.toLowerCase()}`,
+      });
+    }
+    if (after) {
+      ways.push({
+        to: at('skyhour', `${city.id}/${day.dateKey}/${after.hour}`),
+        label: clockWord(after.hour),
+        detail: `The hour after it: ${after.temperature}${unit}, ${after.condition.toLowerCase()}`,
+      });
+    }
+
+    return {
+      name: clockWord(hour.hour),
+      kind: 'One Hour',
+      parent: at('hours', `${city.id}/${day.dateKey}`),
+      summary: `At ${clockSaid(hour.hour)} it’s ${hour.temperature}${unit} and ${DOING[hour.condition]} `
+        + `in ${spokenName(city.name)}${stretchOf(hour.hour) ? `, in ${stretchOf(hour.hour)}` : ''}.`,
+      body: (
+        <>
+          <p className="small">
+            {hour.daylight ? 'The sun is up for it' : 'It’s dark'}, the wind is at {windOf(day)}, and{' '}
+            {hour.wet
+              ? `${BRINGS[hour.condition]} is falling through it.`
+              : 'nothing is falling.'}
+            {' '}
+            {swing === 0 ? 'The hour after it is no different.'
+              : swing > 0 ? `The next hour is ${countWord(Math.abs(swing))} degrees warmer.`
+                : `The next hour is ${countWord(Math.abs(swing))} degrees colder.`}
+          </p>
+          <p className="small">{outdoorSentence(sim, city, hour.at)}</p>
+        </>
+      ),
+      ways,
+      provenance: `Read off ${dateWords(day.dateKey)}’s own curve. Nothing about an hour is stored — ask twice and it says the same thing.`,
+    };
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The week ahead, held in one view
+// ---------------------------------------------------------------------------
+
+interface TheWeek { city: City; days: DayWeather[] }
+
+defineLook<TheWeek>('skyweek', {
+  gone: 'There’s nowhere by that name to have a week of weather.',
+  resolve: (sim, id) => {
+    const city = cityFor(sim, id);
+    if (!city) return undefined;
+    const days = forecastFor(sim, city.id, WEEK);
+    return days.length > 0 ? { city, days } : undefined;
+  },
+  seeds: (sim) => [sim.player.currentLocationId],
+  look: (found, { sim }) => {
+    const { city, days } = found;
+    const unit = unitOf(days[0] ?? ({ fahrenheit: false } as DayWeather));
+    const highs = days.map((d) => d.high);
+    const lows = days.map((d) => d.low);
+    const warmest = days.reduce((a, b) => (b.high > a.high ? b : a));
+    const wet = days.filter((d) => d.precipitation !== 'none');
+    const wetNames = wet.map((d) => weekdayAt(sim, city, days.indexOf(d)));
+
+    return {
+      name: 'The Week Ahead',
+      kind: 'Six Days Of Sky',
+      parent: at('weather', city.id),
+      summary: `${sentenceStart(countWord(days.length))} days in ${spokenName(city.name)}, from ${Math.min(...lows)}${unit} `
+        + `to ${Math.max(...highs)}${unit}, and ${wet.length === 0 ? 'not one of them wet' : `${countWord(wet.length)} of them wet`}.`,
+      body: (
+        <>
+          <p className="small">
+            The warmest is {weekdayAt(sim, city, days.indexOf(warmest))} at {warmest.high}{unit}.{' '}
+            {wetNames.length === 0
+              ? 'Nothing falls all week.'
+              : `${spokenList(wetNames)} ${isAre(wetNames.length)} the wet ${wetNames.length === 1 ? 'one' : 'ones'}.`}
+          </p>
+          <p className="small">
+            Each day is its own draw blended with the two before it, so the week has a shape rather than
+            six unrelated days: a cold snap lasts, and a wet spell lingers.
+          </p>
+        </>
+      ),
+      ways: days.map((day, i) => ({
+        to: at('forecastday', `${city.id}/${day.dateKey}`),
+        label: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : weekdayAt(sim, city, i),
+        detail: `${day.condition}, ${day.low}${unit} to ${day.high}${unit}`,
+      })),
+      provenance: 'SLATE’s climate model, six days of it. It isn’t a forecast service, and it never was one.',
     };
   },
 });

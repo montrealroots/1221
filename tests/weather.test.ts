@@ -11,9 +11,9 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { CITIES, type City } from '@/engine/content/geography';
-import { MS_DAY, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, instantFromZoned, startOfDay, zonedParts } from '@/engine/core/time';
 import { climateTypeFor, normalFor, climateByLatitude, baselineTemperature } from '@/engine/content/climate';
-import { forecastFor, shootDayWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
+import { forecastFor, hoursOn, shootDayWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
 
 const sim = quickSave({}, 'weather-seed');
 const city = (id: string) => {
@@ -243,5 +243,130 @@ describe('a shoot day in the weather', () => {
       if (day.precipitation !== 'none') { expect(factor).toBeLessThan(1); wetSeen = true; }
     }
     expect(wetSeen).toBe(true);
+  });
+});
+
+
+/**
+ * The hours of a day.
+ *
+ * A day used to be the smallest thing the weather knew, and "it is snowing"
+ * meant snowing from midnight to midnight. It does not: a wet day has a spell
+ * in it, and a day whose spell ran out before dawn is overcast by breakfast.
+ * These hold the two halves of that — that the hour and the day agree about
+ * the shape of the day, and that they are allowed to disagree about right now.
+ */
+describe('the hours', () => {
+  const HOME = 'is-39-reykjavik';
+
+  it('runs from now to the end of the local day', () => {
+    const sim = quickSave();
+    const rest = hoursOn(sim, HOME, sim.now);
+    expect(rest.length).toBeGreaterThan(0);
+    expect(rest.length).toBeLessThanOrEqual(24);
+    const zone = CITIES.require(HOME).timeZone;
+    expect(rest[0]!.hour).toBe(zonedParts(sim.now, zone).hour);
+    expect(rest[rest.length - 1]!.hour).toBe(23);
+    // Consecutive, no gaps.
+    for (let i = 1; i < rest.length; i++) expect(rest[i]!.hour).toBe(rest[i - 1]!.hour + 1);
+  });
+
+  it('gives a whole day when asked from its start', () => {
+    const sim = quickSave();
+    const zone = CITIES.require(HOME).timeZone;
+    const hours = hoursOn(sim, HOME, startOfDay(sim.now + MS_DAY, zone));
+    expect(hours).toHaveLength(24);
+    expect(hours[0]!.hour).toBe(0);
+  });
+
+  it('says the same thing every time it is asked', () => {
+    const sim = quickSave();
+    const once = hoursOn(sim, HOME, sim.now).map((h) => `${h.hour}:${h.temperatureC}:${h.condition}`);
+    const twice = hoursOn(sim, HOME, sim.now).map((h) => `${h.hour}:${h.temperatureC}:${h.condition}`);
+    expect(twice).toEqual(once);
+  });
+
+  it('stays inside the day it belongs to', () => {
+    const sim = quickSave();
+    const zone = CITIES.require(HOME).timeZone;
+    const day = weatherOn(sim, CITIES.require(HOME), sim.now);
+    for (const hour of hoursOn(sim, HOME, startOfDay(sim.now, zone))) {
+      expect(hour.temperatureC).toBeGreaterThanOrEqual(day.lowC - 1);
+      expect(hour.temperatureC).toBeLessThanOrEqual(day.highC + 1);
+      expect(hour.dateKey).toBe(day.dateKey);
+    }
+  });
+
+  it('is coldest before dawn and warmest mid-afternoon', () => {
+    // Asserted as "no hour beats three in the afternoon" rather than "the
+    // warmest hour is three": the reading is whole degrees, so on a day with
+    // a three-degree range half the afternoon ties and which one a scan
+    // happens to keep says nothing about the curve.
+    const sim = quickSave();
+    const zone = CITIES.require(HOME).timeZone;
+    const hours = hoursOn(sim, HOME, startOfDay(sim.now, zone));
+    const at3pm = hours.find((h) => h.hour === 15)!;
+    const at4am = hours.find((h) => h.hour === 4)!;
+    for (const hour of hours) {
+      expect(hour.temperatureC, `${hour.hour} beat three in the afternoon`).toBeLessThanOrEqual(at3pm.temperatureC);
+      expect(hour.temperatureC, `${hour.hour} was colder than four in the morning`).toBeGreaterThanOrEqual(at4am.temperatureC);
+    }
+  });
+
+  it('rains in a spell rather than all day', () => {
+    // Somewhere in a fortnight there is a wet day; on it, some hours are wet
+    // and some are not. A day that rained every hour of itself would be the
+    // old model with more steps.
+    const sim = quickSave();
+    const zone = CITIES.require(HOME).timeZone;
+    let checked = 0;
+    for (let d = 0; d < 21 && checked < 3; d++) {
+      const start = startOfDay(sim.now + d * MS_DAY, zone);
+      const day = weatherOn(sim, CITIES.require(HOME), start);
+      if (day.precipitation === 'none') continue;
+      const hours = hoursOn(sim, HOME, start);
+      const wet = hours.filter((h) => h.wet);
+      expect(wet.length, `${day.dateKey} is wet but no hour of it is`).toBeGreaterThan(0);
+      expect(wet.length, `${day.dateKey} is wet in all twenty-four hours`).toBeLessThan(24);
+      // One unbroken spell, not scattered showers.
+      const first = hours.indexOf(wet[0]!);
+      for (let i = 0; i < wet.length; i++) expect(hours[first + i]!.wet).toBe(true);
+      checked++;
+    }
+    expect(checked, 'no wet day in three weeks to check').toBeGreaterThan(0);
+  });
+
+  it('reports what the sky is doing now, not what the day is called', () => {
+    // The reading of right now takes its condition from its own hour. On a
+    // day whose spell has not started or has already finished, that is not
+    // the day's headline — and saying "snowing" over a sky that is not is
+    // the lie this exists to stop.
+    const sim = quickSave();
+    const zone = CITIES.require(HOME).timeZone;
+    let disagreed = 0;
+    for (let d = 0; d < 21; d++) {
+      const start = startOfDay(sim.now + d * MS_DAY, zone);
+      const day = weatherOn(sim, CITIES.require(HOME), start);
+      if (day.precipitation === 'none') continue;
+      for (const hour of hoursOn(sim, HOME, start)) {
+        const now = weatherAt(sim, HOME, hour.at)!;
+        expect(now.condition).toBe(hour.condition);
+        expect(now.dayCondition).toBe(day.condition);
+        if (now.condition !== now.dayCondition) disagreed++;
+      }
+    }
+    expect(disagreed, 'the hour never once differed from the day').toBeGreaterThan(0);
+  });
+
+  it('knows which of its hours the sun is up for', () => {
+    const sim = quickSave();
+    const zone = CITIES.require(HOME).timeZone;
+    const hours = hoursOn(sim, HOME, startOfDay(sim.now, zone));
+    const lit = hours.filter((h) => h.daylight);
+    expect(lit.length).toBeGreaterThan(0);
+    expect(lit.length).toBeLessThan(24);
+    // Daylight is one unbroken stretch, not scattered through the night.
+    const first = hours.findIndex((h) => h.daylight);
+    for (let i = 0; i < lit.length; i++) expect(hours[first + i]!.daylight).toBe(true);
   });
 });

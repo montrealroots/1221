@@ -201,6 +201,20 @@ describe('the shape of a look', () => {
     }
   });
 
+  it('never puts the kind inside the name', () => {
+    // Rule 5: `kind` renders as an eyebrow above the name and never enters it.
+    // The hour-by-hour look shipped as name "Friday, Hour By Hour" under kind
+    // "Hour By Hour", which prints the same three words twice, one above the
+    // other, and puts them in the trail as well. Nothing caught it, so this
+    // does.
+    for (const [key, look] of looks) {
+      expect(
+        look.name.toLowerCase().includes(look.kind.toLowerCase()),
+        `${key} name "${look.name}" carries its own kind "${look.kind}"`,
+      ).toBe(false);
+    }
+  });
+
   it('leads with a sentence', () => {
     for (const [key, look] of looks) {
       const summary = look.summary.trim();

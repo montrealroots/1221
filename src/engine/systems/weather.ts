@@ -14,7 +14,8 @@
  */
 
 import type { Simulation } from '../core/simulation';
-import { MS_DAY, startOfDay, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, startOfDay, zonedParts, type Instant } from '../core/time';
+import { sunTimes } from '../core/sun';
 import { CITIES, type City } from '../content/geography';
 import { CLIMATE_NAMES, normalFor, toFahrenheit, usesFahrenheit, type ClimateType } from '../content/climate';
 import { clamp } from '../core/rng';
@@ -45,7 +46,39 @@ export interface DayWeather {
   anomalyC: number;
 }
 
+/** One hour of a day's weather. The floor of the sky: a moment, in a place. */
+export interface HourWeather {
+  cityId: string;
+  /** The instant the hour begins, on the hour, local. */
+  at: Instant;
+  /** Local hour of the day, 0 to 23. */
+  hour: number;
+  /** The calendar day it belongs to, so an hour knows its day. */
+  dateKey: string;
+  condition: WeatherCondition;
+  /** Whole degrees, in the unit the country reads. */
+  temperature: number;
+  temperatureC: number;
+  fahrenheit: boolean;
+  /** Whether anything is actually falling in this hour. */
+  wet: boolean;
+  windKph: number;
+  /** Whether the sun is above the horizon for it. */
+  daylight: boolean;
+}
+
 export interface WeatherNow extends DayWeather {
+  /**
+   * What the sky is doing *this hour*, which is not always what the day is
+   * doing. A snow day whose spell ran out before dawn is overcast by
+   * breakfast, and saying "snowing" over a sky that is not is the kind of lie
+   * an hourly model exists to stop.
+   */
+  condition: WeatherCondition;
+  /** The day's headline, which is what a forecast for it would say. */
+  dayCondition: WeatherCondition;
+  /** Whether anything is falling right now. */
+  wetNow: boolean;
   /** The temperature at this hour, whole degrees, in the displayed unit. */
   temperature: number;
   temperatureC: number;
@@ -162,6 +195,91 @@ export function weatherOn(sim: Simulation, city: City, instant: Instant): DayWea
 }
 
 /**
+ * The temperature at an hour of a day, in Celsius.
+ *
+ * Coldest a little before dawn, warmest mid-afternoon: one cosine, peaking at
+ * three, between the day's own high and low. Shared by the reading of right
+ * now and by the hour-by-hour, so the two can never disagree about what four
+ * in the afternoon is like.
+ */
+function temperatureAtHour(day: DayWeather, hour: number): number {
+  const meanC = (day.highC + day.lowC) / 2;
+  const halfRange = (day.highC - day.lowC) / 2;
+  return meanC + halfRange * Math.cos((2 * Math.PI * (hour - 15)) / 24);
+}
+
+/**
+ * When it actually rains on a day it rains.
+ *
+ * A wet day is not wet from midnight to midnight; it has a spell in it. The
+ * spell is drawn from its own stream rather than the day's, so adding hours
+ * to the model left every day the model had already decided on untouched.
+ */
+function wetSpell(sim: Simulation, cityId: string, day: number): { from: number; to: number } {
+  const rng = sim.rng('weather-hours', cityId, String(day));
+  const start = Math.floor(rng.next() * 20);
+  const length = 3 + Math.floor(rng.next() * 7);
+  return { from: start, to: Math.min(24, start + length) };
+}
+
+/**
+ * The hours of a day, from an instant forward.
+ *
+ * Asking at half past seven gives half past seven's hour first and runs to
+ * the end of the local day, which is what "the rest of today" means. Asking
+ * from the start of a day gives all twenty-four.
+ */
+export function hoursOn(sim: Simulation, cityId: string, from: Instant, limit = 24): HourWeather[] {
+  const city = CITIES.get(cityId);
+  if (!city) return [];
+  const zone = city.timeZone;
+  const day = weatherOn(sim, city, from);
+  const parts = zonedParts(from, zone);
+  const midnight = startOfDay(from, zone);
+  const spell = wetSpell(sim, city.id, dayIndex(from, zone));
+  const sun = sunTimes(from, city.latitude, city.longitude, zone);
+
+  const out: HourWeather[] = [];
+  for (let hour = parts.hour; hour < 24 && out.length < limit; hour++) {
+    const at = midnight + hour * MS_HOUR;
+    const wet = day.precipitation !== 'none' && hour >= spell.from && hour < spell.to;
+    const lit = sun.polar === 'day' ? true
+      : sun.polar === 'night' ? false
+        : at + MS_HOUR > (sun.sunrise ?? at) && at < (sun.sunset ?? at);
+    const temperatureC = temperatureAtHour(day, hour);
+    out.push({
+      cityId: city.id,
+      at,
+      hour,
+      dateKey: day.dateKey,
+      condition: hourCondition(day, wet, lit, hour),
+      temperature: day.fahrenheit ? toFahrenheit(temperatureC) : Math.round(temperatureC),
+      temperatureC: Math.round(temperatureC),
+      fahrenheit: day.fahrenheit,
+      wet,
+      windKph: day.windKph,
+      daylight: lit,
+    });
+  }
+  return out;
+}
+
+/**
+ * What the sky is doing in one hour of a day.
+ *
+ * Inside the wet spell it is the day's own weather. Outside it, a wet day is
+ * still an overcast one — the cloud that brought the rain does not leave
+ * between showers — and a dry day keeps what it was, except that fog is a
+ * thing that happens around dawn and burns off.
+ */
+function hourCondition(day: DayWeather, wet: boolean, lit: boolean, hour: number): WeatherCondition {
+  if (day.precipitation !== 'none') return wet ? day.condition : 'Overcast';
+  if (day.condition === 'Fog') return hour >= 4 && hour < 11 ? 'Fog' : 'Partly Cloudy';
+  if (day.condition === 'Clear' && !lit) return 'Clear';
+  return day.condition;
+}
+
+/**
  * The weather right now: the day, plus the temperature at this hour. Coldest
  * a little before dawn, warmest mid-afternoon.
  */
@@ -171,17 +289,20 @@ export function weatherAt(sim: Simulation, cityId: string, instant: Instant = si
   const day = weatherOn(sim, city, instant);
   const parts = zonedParts(instant, city.timeZone);
   const hour = parts.hour + parts.minute / 60;
-  const meanC = (day.highC + day.lowC) / 2;
-  const halfRange = (day.highC - day.lowC) / 2;
-  const temperatureC = meanC + halfRange * Math.cos((2 * Math.PI * (hour - 15)) / 24);
+  const temperatureC = temperatureAtHour(day, hour);
   const temperature = day.fahrenheit ? toFahrenheit(temperatureC) : Math.round(temperatureC);
   const unit = day.fahrenheit ? '°F' : '°C';
+  const thisHour = hoursOn(sim, city.id, instant, 1)[0];
+  const condition = thisHour?.condition ?? day.condition;
   return {
     ...day,
+    condition,
+    dayCondition: day.condition,
+    wetNow: thisHour?.wet ?? day.precipitation !== 'none',
     temperature,
     temperatureC: Math.round(temperatureC),
-    short: SHORT[day.condition],
-    summary: `${temperature}${unit} ${day.condition.toLowerCase()}, high ${day.high}${unit}, low ${day.low}${unit}`,
+    short: SHORT[condition],
+    summary: `${temperature}${unit} ${condition.toLowerCase()}, high ${day.high}${unit}, low ${day.low}${unit}`,
   };
 }
 
