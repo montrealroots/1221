@@ -20,7 +20,6 @@
 import { describe, expect, it } from 'vitest';
 import { theLot, stagesOn, utilisation, wouldBook, paidInSoFar } from '@/engine/world/lot';
 import { ICELAND_STAGE_FLOOR_SQM } from '@/engine/content/lot';
-import { MS_DAY } from '@/engine/core/time';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';

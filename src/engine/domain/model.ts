@@ -418,7 +418,15 @@ export interface SoundStage {
   weekRateCents: Money;
   /** Tank floor area in square meters, where there is one. */
   tankSqm?: number;
-  features: string[];
+  /**
+   * What the room is fitted with, by id rather than by label.
+   *
+   * Not called `features`, because that name is reserved across the save for
+   * lists of Title Case words a person reads, and `tools/label-sweep.mjs`
+   * holds it to that. These are identifiers; `FITTING_LABEL` turns them into
+   * something to print.
+   */
+  fitted: string[];
   builtAt: Instant;
 }
 

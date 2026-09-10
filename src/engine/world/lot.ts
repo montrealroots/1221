@@ -155,7 +155,7 @@ export function buildTheLot(sim: Simulation, ownerCompanyId: Id): Property {
     interiorSqft: Math.round(LOT_FLOOR_SQM * 10.7639),
     lotSqft: 0,
     yearBuilt: new Date(at).getUTCFullYear(),
-    features: ['sound stages', 'water tank', 'workshops', 'production offices'],
+    features: ['Sound Stages', 'Water Tank', 'Workshops', 'Production Offices'],
     marketValue: BUILD_COST_CENTS,
     condition: 100,
     annualPropertyTaxRate: 0,
@@ -175,7 +175,7 @@ export function buildTheLot(sim: Simulation, ownerCompanyId: Id): Property {
       clearHeightM: facts.clearHeightM,
       weekRateCents: facts.weekRateCents,
       ...(facts.tankSqm === undefined ? {} : { tankSqm: facts.tankSqm }),
-      features: [...facts.features],
+      fitted: [...facts.fitted],
       builtAt: at,
     };
     sim.universe.stages[stage.id] = stage;

@@ -148,6 +148,17 @@ export type StageFeature =
   | 'tank' | 'dive_well' | 'cyclorama' | 'interconnect'
   | 'elephant_door' | 'geothermal_floor' | 'silent_hvac';
 
+/** What each fitting is called on a screen. */
+export const FITTING_LABEL: Readonly<Record<StageFeature, string>> = {
+  tank: 'Water Tank',
+  dive_well: 'Dive Well',
+  cyclorama: 'Cyclorama',
+  interconnect: 'A Door To The Next Stage',
+  elephant_door: 'Elephant Door',
+  geothermal_floor: 'Geothermal Floor',
+  silent_hvac: 'Silent Air',
+};
+
 export interface StageFacts {
   id: string;
   /** The world's word for it. */
@@ -158,7 +169,7 @@ export interface StageFacts {
   clearHeightM: number;
   /** What a shooting week costs, in cents. SLATE's own. */
   weekRateCents: Money;
-  features: readonly StageFeature[];
+  fitted: readonly StageFeature[];
   /** Tank floor area in square meters, where there is one. */
   tankSqm?: number;
   /** One sentence a person would say about it. */
@@ -179,7 +190,7 @@ export const STAGES: readonly StageFacts[] = [
     floorSqm: 6_000,
     clearHeightM: 30,
     weekRateCents: 185_000_00,
-    features: ['cyclorama', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
+    fitted: ['cyclorama', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
     said: 'A hundred meters by sixty, and thirty meters of air above it.',
   },
   {
@@ -188,7 +199,7 @@ export const STAGES: readonly StageFacts[] = [
     floorSqm: 3_200,
     clearHeightM: 18,
     weekRateCents: 145_000_00,
-    features: ['tank', 'dive_well', 'geothermal_floor', 'silent_hvac'],
+    fitted: ['tank', 'dive_well', 'geothermal_floor', 'silent_hvac'],
     tankSqm: 2_400,
     said: 'Most of the floor is water, and it is heated because the country heats things.',
   },
@@ -198,7 +209,7 @@ export const STAGES: readonly StageFacts[] = [
     floorSqm: 2_000,
     clearHeightM: 18,
     weekRateCents: 78_000_00,
-    features: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
+    fitted: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
     said: 'Ordinary, in the way most of the work is ordinary.',
   },
   {
@@ -207,7 +218,7 @@ export const STAGES: readonly StageFacts[] = [
     floorSqm: 2_000,
     clearHeightM: 18,
     weekRateCents: 78_000_00,
-    features: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
+    fitted: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
     said: 'The twin of Stage 3, and the door between them opens.',
   },
 ];
