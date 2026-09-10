@@ -14,7 +14,10 @@ other.
 Everything else that used to be here — the shops, the studios, the schools,
 the phone, the people — has been removed on purpose. What is left
 is those six features and the engine underneath them, kept whole:
-`docs/COVERAGE-MATRIX.md` lists what is in the build and what was taken out.
+`docs/COVERAGE-MATRIX.md` lists what is in the build and what was taken out,
+and `docs/DEPTH.md` is the bar the rest of it is held to: a simulation deeper
+than *Total Extreme Wrestling* and *The Movies* combined, sixteen axes, the
+build order, and the measured distance between that and where this is now.
 
 SLATE runs as a single-page app. The whole simulation is in the browser, and
 the server is the authority on what may be stored. It plays without a backend
