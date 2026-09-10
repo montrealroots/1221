@@ -25,6 +25,9 @@ import { CITIES } from './content/geography';
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
+import {
+  companiesOf, foundTheCompany, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
+} from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
 import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
@@ -44,6 +47,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
+  registerCompanyCommands(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -174,6 +178,13 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const stream = sim.rng('family');
   populateFamily(sim.universe, config.family, (ns) => sim.nextId(ns), () => stream.next());
 
+  // --- The business -------------------------------------------------------
+  // After the family, because the company is owned by the parents and staffed
+  // by whoever the player said runs what. The Your People step decides who is
+  // the principal of a production company, which is a heavier thing than the
+  // step lets on.
+  foundTheCompany(sim);
+
   armWorldClock(sim);
 }
 
@@ -280,6 +291,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('people', 'the people');
   record('households', 'the households');
   record('bonds', 'the bonds between people');
+  record('companies', 'the family business');
+  record('registrations', 'the registers it is on');
+  record('signatures', 'the guilds it has signed with');
+  record('policies', 'the cover it carries');
+  record('holdings', 'the material it holds');
+  record('posts', 'the posts it keeps');
+  record('projects', 'the slate');
   record('properties', 'the properties');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
@@ -509,6 +527,53 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
     if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
       errors.push('Player primary account points at an account that doesn’t exist.');
+    }
+  }
+
+  // --- The business -------------------------------------------------------
+  // Seven tables that point at each other and at people, so every pointer is
+  // checked. A company owned by nobody, an arm with no parent or a project
+  // hanging off a right that was never acquired are all silent until the day
+  // a screen tries to open one.
+  const companies = companiesOf(universe);
+  const parents = companies.filter((one) => !one.parentId);
+  if (Object.keys(universe.companies).length > 0 && parents.length !== 1) {
+    errors.push(`The family holds ${parents.length} parent companies, and it has to hold exactly one.`);
+  }
+  for (const company of companies) {
+    const total = company.ownerships.reduce((sum, one) => sum + one.percent, 0);
+    if (company.ownerships.length > 0 && total !== 100) {
+      errors.push(`${company.name} is ${total}% owned, which is not how owning something works.`);
+    }
+    for (const owner of company.ownerships) {
+      const known = owner.holderKind === 'person' ? universe.people[owner.holderId] : universe.companies[owner.holderId];
+      if (!known) errors.push(`${company.name} is part-owned by somebody the save doesn’t have.`);
+    }
+    if (company.parentId && !universe.companies[company.parentId]) {
+      errors.push(`${company.name} is an arm of a company that doesn’t exist.`);
+    }
+    if (!CITIES.get(company.locationId)) {
+      errors.push(`${company.name} is registered in an unknown place '${company.locationId}'.`);
+    }
+  }
+  const companyIds = new Set(Object.keys(universe.companies));
+  const belongsTo = (companyId: string, what: string): void => {
+    if (!companyIds.has(companyId)) errors.push(`${what} belongs to a company that doesn’t exist.`);
+  };
+  for (const one of Object.values(universe.registrations)) belongsTo(one.companyId, `Registration ${one.number}`);
+  for (const one of Object.values(universe.signatures)) belongsTo(one.companyId, `The ${one.guild} signature`);
+  for (const one of Object.values(universe.policies)) belongsTo(one.companyId, `The ${one.kind} policy`);
+  for (const one of holdingsOf(universe)) belongsTo(one.companyId, `The rights to ${one.title}`);
+  for (const one of postsOf(universe)) {
+    belongsTo(one.companyId, `The ${one.role} post`);
+    if (one.personId && !universe.people[one.personId]) {
+      errors.push(`The ${one.role} post is filled by somebody the save doesn’t have.`);
+    }
+  }
+  for (const one of projectsOf(universe)) {
+    belongsTo(one.companyId, one.title);
+    if (one.holdingId && !universe.holdings[one.holdingId]) {
+      errors.push(`${one.title} hangs off rights the save doesn’t have.`);
     }
   }
 

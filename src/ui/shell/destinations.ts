@@ -40,6 +40,16 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', homeOnly: true },
     ],
   },
+  {
+    label: 'The Family',
+    items: [
+      {
+        route: '/workspace/business',
+        label: 'Family Business',
+        detail: 'What the company may do, and what is stopping it',
+      },
+    ],
+  },
 ];
 
 /**

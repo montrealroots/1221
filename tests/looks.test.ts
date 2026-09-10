@@ -57,6 +57,18 @@ function world(): Simulation {
   });
   const player = sim.universe.people[sim.universe.playerId]!;
 
+  // Something on the slate and rights behind it, so the business graph has
+  // material to crawl. A company with nothing is a real state and it is the
+  // state at boot, but it is not the one that exercises the most edges.
+  const took = sim.execute<{ ok: boolean; id?: string }>({
+    kind: 'company.option',
+    payload: { title: 'The Long Winter', provenance: 'novel' },
+  }).value;
+  sim.execute({
+    kind: 'company.develop',
+    payload: { title: 'The Long Winter', holdingId: took?.id },
+  });
+
   sim.onSchedule('production.table_read', () => {});
   sim.onSchedule('life.dinner', () => {});
 

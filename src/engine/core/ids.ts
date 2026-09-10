@@ -13,7 +13,8 @@ export type Id = string;
 export type IdNamespace =
   | 'save' | 'person' | 'household' | 'account' | 'txn' | 'posting' | 'bill' | 'rx'
   | 'job' | 'shift' | 'application' | 'employer'
-  | 'rel' | 'relmem' | 'event' | 'sched' | 'cal'
+  | 'rel' | 'relmem' | 'bond' | 'event' | 'sched' | 'cal'
+  | 'company' | 'reg' | 'sign' | 'policy' | 'hold' | 'post' | 'project'
   | 'prop' | 'listing' | 'offer' | 'build' | 'room' | 'furn'
   | 'veh' | 'vehmod' | 'service' | 'part'
   | 'trip' | 'flight' | 'stay'
