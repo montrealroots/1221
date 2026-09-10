@@ -14,9 +14,9 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { createSave, defaultConfig } from '@/engine';
+import { createSave, defaultConfig, quickSave } from '@/engine';
 import { ESTATE_ACRES, ESTATE_CITY_ID, ESTATE_COUNTRY_ID, studioName } from '@/engine/content/estate';
-import { ATTRIBUTES, ALL_TRAITS } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, attributesOf, effectiveAttributes, emptyAttributeSheet, rate, sheetOf } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
 import { citizenshipsOf } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
@@ -128,8 +128,7 @@ function stepSource(from: string, to?: string): string {
 describe('My Skills', () => {
   it('hands over every skill at the ceiling and every trait at once', () => {
     const p = filled().universe.people[filled().universe.playerId]!;
-    expect(Object.keys(p.attributes)).toHaveLength(ATTRIBUTES.length);
-    expect(ATTRIBUTES.filter((a) => p.attributes[a.id] !== CEILING)).toEqual([]);
+    expect(ATTRIBUTES.filter((a) => rate(p.attributes, a.id) !== CEILING)).toEqual([]);
     expect(p.traits).toHaveLength(ALL_TRAITS.length);
     for (const trait of ALL_TRAITS) expect(p.traits, trait.name).toContain(trait.id);
   });
@@ -279,5 +278,43 @@ describe('Review', () => {
     // The two it used to show and cannot any more.
     expect(step, 'Review shows a housing rung again').not.toMatch(/HOUSING\.find/);
     expect(step, 'Review shows a chosen city again').not.toMatch(/label="City"/);
+  });
+});
+
+describe('the sheet is a base and its exceptions', () => {
+  // The shape is the point: 813 attributes written out cost 20KB per person
+  // and 63ms of structuredClone per command at a thousand people, to say one
+  // number. These hold the shape, not the size.
+  it('costs one number for a person who is ordinary at everything', () => {
+    const sheet = emptyAttributeSheet(10);
+    expect(sheet.of, 'a sheet with no exceptions carries none').toBeUndefined();
+    expect(JSON.stringify(sheet).length).toBeLessThan(20);
+    for (const a of ATTRIBUTES) expect(rate(sheet, a.id)).toBe(10);
+  });
+
+  it('keeps only what differs, and reads the rest off the base', () => {
+    const sheet = sheetOf(40, { [ATTRIBUTES[0]!.id]: 91, [ATTRIBUTES[1]!.id]: 40 });
+    // The one that matches the base is not an exception.
+    expect(Object.keys(sheet.of ?? {})).toEqual([ATTRIBUTES[0]!.id]);
+    expect(rate(sheet, ATTRIBUTES[0]!.id)).toBe(91);
+    expect(rate(sheet, ATTRIBUTES[1]!.id)).toBe(40);
+    expect(rate(sheet, 'an_attribute_that_does_not_exist')).toBe(40);
+  });
+
+  it('is what the prodigy means: the ceiling, and nothing written down', () => {
+    const player = quickSave({}, 'sheet-prodigy').player;
+    expect(player.attributes.base).toBe(CEILING);
+    expect(player.attributes.of ?? {}, 'the prodigy has no exceptions').toEqual({});
+    // And the traits, which subtract for everybody else, cannot move it.
+    const effective = attributesOf(player);
+    for (const a of ATTRIBUTES) expect(rate(effective, a.id), a.id).toBe(CEILING);
+  });
+
+  it('lets a trait move one attribute without writing the other 812', () => {
+    const sheet = emptyAttributeSheet(50);
+    const moved = effectiveAttributes(sheet, ALL_TRAITS.map((t) => t.id));
+    expect(moved.base, 'the base is untouched').toBe(50);
+    expect(Object.keys(moved.of ?? {}).length, 'only what the traits named').toBeLessThan(ATTRIBUTES.length);
+    expect(Object.keys(moved.of ?? {}).length).toBeGreaterThan(0);
   });
 });

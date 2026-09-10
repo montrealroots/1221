@@ -87,12 +87,25 @@ export const SKILL_BY_ID: Readonly<Record<string, SkillDef>> =
 
 export const SKILL_IDS: readonly string[] = SKILLS.map((k) => k.id);
 
-export type SkillSheet = Record<string, number>;
+/**
+ * The same shape as `AttributeSheet`, and for the same reason: one base and the
+ * exceptions to it, so a person who is ordinary at everything costs one number
+ * rather than forty-seven.
+ */
+export interface SkillSheet {
+  /** What every skill is, unless `of` says otherwise. */
+  base: number;
+  /** Only the ids that differ from the base. */
+  of?: Record<string, number>;
+}
+
+/** What a skill actually is on this sheet. */
+export function level(sheet: SkillSheet, id: string): number {
+  return sheet.of?.[id] ?? sheet.base;
+}
 
 export function emptySkillSheet(base = 5): SkillSheet {
-  const sheet: SkillSheet = {};
-  for (const k of SKILLS) sheet[k.id] = base;
-  return sheet;
+  return { base };
 }
 
 export function skillsInDomain(domain: SkillDomain): SkillDef[] {
@@ -102,5 +115,5 @@ export function skillsInDomain(domain: SkillDomain): SkillDef[] {
 export function domainAverage(sheet: SkillSheet, domain: SkillDomain): number {
   const defs = skillsInDomain(domain);
   if (defs.length === 0) return 0;
-  return defs.reduce((s_, d) => s_ + (sheet[d.id] ?? 0), 0) / defs.length;
+  return defs.reduce((s_, d) => s_ + level(sheet, d.id), 0) / defs.length;
 }

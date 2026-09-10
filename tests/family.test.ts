@@ -19,8 +19,8 @@ import {
   ageOn, bondBetween, bornBefore, familyOf, relationWord,
 } from '@/engine/world/family';
 import { bondKey } from '@/engine/domain/model';
-import { emptyAttributeSheet } from '@/engine/domain/attributes';
-import { emptySkillSheet } from '@/engine/domain/skills';
+import { ATTRIBUTES, emptyAttributeSheet, rate } from '@/engine/domain/attributes';
+import { SKILLS, emptySkillSheet, level } from '@/engine/domain/skills';
 import type { Person, SaveUniverse } from '@/engine/domain/model';
 import { MS_DAY } from '@/engine/core/time';
 
@@ -117,10 +117,10 @@ describe('what kind of people they are', () => {
       expect(person.reputation.publicFame).toBe(0);
       // Nothing reads a mother's acting technique, so hers sits on the floor
       // of the scale — untrained, which is a real answer, rather than absent.
-      const onFloor = (sheet: Record<string, number>, floor: Record<string, number>): boolean =>
-        Object.entries(sheet).every(([key, value]) => value === floor[key]);
-      expect(onFloor(person.attributes, emptyAttributeSheet())).toBe(true);
-      expect(onFloor(person.skills, emptySkillSheet())).toBe(true);
+      // Nobody in the family acts, so every rating reads as the floor — and
+      // that is a real answer, untrained, rather than an absent one.
+      for (const a of ATTRIBUTES) expect(rate(person.attributes, a.id)).toBe(emptyAttributeSheet().base);
+      for (const k of SKILLS) expect(level(person.skills, k.id)).toBe(emptySkillSheet().base);
     }
   });
 

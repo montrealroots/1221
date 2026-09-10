@@ -12,10 +12,9 @@ import type {
 } from '../domain/model';
 import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from '../domain/model';
 import {
-  ALL_TRAITS, ATTRIBUTES, emptyAttributeSheet,
-  attributesOf, type AttributeSheet,
+  ALL_TRAITS, emptyAttributeSheet, attributesOf, type AttributeSheet,
 } from '../domain/attributes';
-import { SKILLS, emptySkillSheet, type SkillSheet } from '../domain/skills';
+import { emptySkillSheet, type SkillSheet } from '../domain/skills';
 import { CEILING, GOAT_TRAITS } from '../content/prodigy';
 import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
 import { CITIES } from '../content/geography';
@@ -279,12 +278,12 @@ function everyTrait(): string[] {
   return ALL_TRAITS.map((trait) => trait.id);
 }
 
+/**
+ * The prodigy's sheet: everything at the ceiling, and no exceptions, which is
+ * the whole of what the flag means. Two numbers, not eight hundred and sixty.
+ */
 function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
-  const attributes = emptyAttributeSheet(CEILING);
-  const skills = emptySkillSheet(CEILING);
-  for (const attribute of ATTRIBUTES) attributes[attribute.id] = CEILING;
-  for (const skill of SKILLS) skills[skill.id] = CEILING;
-  return { attributes, skills };
+  return { attributes: emptyAttributeSheet(CEILING), skills: emptySkillSheet(CEILING) };
 }
 
 function seedReputation(config: NewSaveConfig) {
@@ -445,7 +444,7 @@ export function careerLabel(track: CareerTrack, title: PerformerTitle): string {
 /** Effective attribute sheet with traits applied, for display. */
 export function playerAttributes(universe: SaveUniverse): AttributeSheet {
   const player = universe.people[universe.playerId];
-  if (!player) return {};
+  if (!player) return emptyAttributeSheet(0);
   return attributesOf(player);
 }
 

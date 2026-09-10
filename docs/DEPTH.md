@@ -104,12 +104,12 @@ Three findings are defects rather than gaps, and all three are live:
   The craft sheet is not merely unread; it is uninformative even if read. And
   no look, workspace or screen displays it during play.
 
-One structural constraint has to be settled before the population system, not
-after. A person is 30,536 bytes of JSON, 9,902 gzipped, and **93% of that is
-813 copies of the number 100 plus a trait list.** At this representation TEW's
-roster would be a seven-megabyte save. The attribute sheet has to become sparse
-— a base plus deltas, or generated from a seed — before there is anybody to
-store.
+One structural constraint had to be settled before the population system, and
+it has been. A person was 30,536 bytes of JSON, 93% of it 813 copies of the
+same number, and a thousand people cost a 20MB save and **63ms of
+`structuredClone` on every command**, because the engine snapshots the universe
+before each one. The sheet is now a base and its exceptions: a thousand people
+cost 1.1MB and 8.2ms. That is what makes a TEW-sized roster possible at all.
 
 ## The Sixteen Axes
 

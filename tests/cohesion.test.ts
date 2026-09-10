@@ -10,9 +10,7 @@
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import {
-  ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, ALL_TRAITS, attributesInGroup,
-} from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, attributesInGroup, rate } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
@@ -377,8 +375,7 @@ describe('the acting sheet', () => {
   it('hands the player all of it, at the ceiling', () => {
     const sim = createSave(1, 'goat-sheet', { ...defaultConfig() });
     const player = sim.universe.people[sim.universe.playerId]!;
-    expect(Object.keys(player.attributes)).toHaveLength(ATTRIBUTES.length);
-    for (const skill of ATTRIBUTES) expect(player.attributes[skill.id]).toBe(CEILING);
+    for (const attribute of ATTRIBUTES) expect(rate(player.attributes, attribute.id)).toBe(CEILING);
     // Every acting trait and a mastery of every genre, held at once.
     expect(ALL_TRAITS).toHaveLength(TRAITS.length + GENRE_MASTERIES.length);
     for (const trait of ALL_TRAITS) {
