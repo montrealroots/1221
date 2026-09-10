@@ -141,12 +141,12 @@ word through `performerNoun`, never writes it out.
   check and the inventory check in one go.
 - `tools/text-caps.mjs` — every screen at five widths: nothing clipped,
   crushed, cut off or bleeding; non-sentence text capitalised; words not
-  broken in half; the gym scene and both calendar modals included.
+  broken in half; the calendar's modals included.
 - `tests/interface.test.ts` — no emoji anywhere in the interface but the
   brand mark, and that never in an accessible name; every destination and
   tab label in plain Title Case words.
-- `tests/text-caps.test.ts`, `tests/cohesion.test.ts` — duplicates, repeats,
-  wiring and casing across the tree.
+- `tests/cohesion.test.ts` — duplicates, repeats, wiring and casing across
+  the tree.
 - `tools/voice-check.mjs` — every string the game shows, counted for the
   places a person would have contracted and did not; `--fix` rewrites the
   safe ones, `--check` fails the gate over budget.
@@ -155,12 +155,12 @@ word through `performerNoun`, never writes it out.
   the work; `--counts` for the totals alone, `--check` fails the gate.
 - `tools/cohesion-walk.mjs` — the game as a person meets it, in a browser:
   startup, the slots, creation, Home, every rail destination and every tab
-  behind it, the phone and its apps, a sentence typed into Go Anywhere and
-  the scene it opens, the calendar's plan form, help, then Save & Exit and
-  back in. Page errors, leaked `undefined`s, a rail that marks the wrong
-  screen, a covered control or a save that does not come back all fail it.
-- `tools/monte-carlo.mjs` — random lives, played by the game's own commands
-  with real ids from the save, a year at a time: every throw, missed event,
-  unbalanced ledger, bad number, backwards clock and failed round trip is a
-  bug with a seed to reproduce it. `tests/monte-carlo.test.ts` runs a short
-  one in the gate.
+  behind it, a sentence typed into Go Anywhere, the calendar's plan form,
+  help, then Save & Exit and back in. Page errors, leaked `undefined`s, a
+  rail that marks the wrong screen, a covered control or a save that does not
+  come back all fail it. It still carries branches for a phone and for scenes,
+  both of which were deleted; they skip silently, which is its own small
+  version of the fiction this section is meant to prevent.
+- `tools/doc-refs.mjs` — every file path a doc names, checked. This section is
+  a promise about what is enforced, and it had gone partly false: it named a
+  fuzzer and two test files that had been deleted. `--check` fails the gate.

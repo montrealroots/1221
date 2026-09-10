@@ -32,7 +32,6 @@ they need. Nothing below claims otherwise.
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
 | Time controls | Implemented — live play, sleeping, and skipping to an event with what it would cross shown first | `src/ui/shell/TimeControls.tsx` | `simulation`, `realclock` |
 | Wellbeing and sleep | Partial — the model, the night, and the day that passes unattended. There is nothing else to spend a day on any more | `src/engine/systems/life.ts` | `simulation`, `smoke`, `endurance` |
-| Jobs and wages | Partial — 51 published national wage floors, 31 US state floors, 50 real companies in the countries they trade in with a stance on how each pays against the floor, 14 jobs, and the arithmetic from a floor to an hourly rate to a shift. Nothing is applied for, worked or paid out yet | `src/engine/content/work.ts`, `src/engine/content/employers.ts`, `src/engine/systems/work.ts` | `work` |
 | Money | Partial — a ledger that conserves, the accounts a life starts with, and net worth derived from them. Nothing bills, earns or charges | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts` | `money`, `endurance` |
 | Server-checked persistence | Implemented — the guards between a browser and storage, and the client that speaks the platform's protocol | `base44/`, `src/engine/persistence/` | `server-guards`, `base44-adapter`, `base44-contract` |
 
