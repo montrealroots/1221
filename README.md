@@ -52,12 +52,18 @@ refuses fractional cents, so money conservation is structural rather than
 hoped for. `Ledger.audit()` recomputes every balance from the postings and
 reports any drift.
 
-**Outcomes are deterministic and explained.** Every probabilistic decision draws
-from a named, seeded stream, and records the inputs, weights, rules version,
-seed, probability, roll and result. The same save replays to the same universe.
-A decision the player could not have seen inside is marked unknowable, and
-`redactForPlayer` strips those before anything reaches the screen: the player
-learns that something was hidden, never what it was.
+**Outcomes are deterministic.** Every draw comes from a named, seeded stream,
+and the same save replays to the same universe. That part is live and tested.
+
+The explaining half is built and not yet connected. `src/engine/core/audit.ts`
+can record the inputs, weights, rules version, seed, probability, roll and
+result behind a decision, mark the factors the player could not have seen
+inside as unknowable, and strip those with `redactForPlayer` so the player
+learns that something was hidden and never what it was. Nothing calls it:
+`sim.audit()` has no callers, and no played save has ever written a single
+audit record. This paragraph said otherwise for a while, which was worse than
+saying nothing, because it made the axis look finished. It is waiting for the
+first system that makes a decision worth explaining.
 
 **Failure is transactional.** A command that throws restores the universe
 exactly as it was. The restore writes the old values back into the objects that
