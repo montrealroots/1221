@@ -18,7 +18,18 @@ import { writeFileSync } from 'node:fs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4180';
 const CHROME = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const MAX_DEPTH = Number(process.argv[2] ?? 4);
+const MAX_DEPTH = Number(process.argv.slice(2).find((a) => /^\d+$/.test(a)) ?? 4);
+const CHECK = process.argv.includes('--check');
+
+/**
+ * What Home is allowed to leave outside a control.
+ *
+ * Four are the words *between* the nouns, four say that nothing is there, and
+ * one is the heading "What Needs You", which names a set rather than a thing.
+ * Every figure, name, date, temperature, balance, bar and place opens. If this
+ * number climbs, a fact was printed and left dead.
+ */
+const DEAD_ALLOWED = 9;
 
 const browser = await chromium.launch({ executablePath: CHROME });
 const page = await browser.newPage({ viewport: { width: 1440, height: 950 } });
@@ -33,6 +44,17 @@ const closeInnermost = async () => {
   if (!(await panel.count())) return;
   await panel.getByRole('button', { name: /^Close / }).first().click({ timeout: 1500 }).catch(() => {});
   await page.waitForTimeout(150);
+};
+
+/** Shut every open look, so the next index means what it meant. */
+const closeAll = async () => {
+  for (let guard = 0; guard < 12; guard++) {
+    const open = page.locator('.look');
+    if ((await open.count()) === 0) return;
+    await open.last().getByRole('button', { name: /^Close / }).first()
+      .click({ timeout: 1500 }).catch(() => {});
+    await page.waitForTimeout(120);
+  }
 };
 
 const click = async (pattern, within) => {
@@ -162,12 +184,23 @@ async function drill(path, depth) {
 }
 
 // --- press every noun on Home --------------------------------------------
-const nouns = await page.evaluate(() => [...document.querySelectorAll('.main button.link')]
-  .map((b) => b.textContent?.trim() ?? '').filter(Boolean));
-console.log(`Nouns on Home: ${nouns.length}\n${nouns.map((n) => `  ${n}`).join('\n')}\n`);
+// By position, not by name. A stat tile is one control wrapping a label, a
+// figure and a note, so its text runs together — "Local Time7:30 AMGMT" — and
+// no name-based locator will ever match that. Matching by name reported
+// fourteen dead nouns that were not dead, which is exactly the lie a walk
+// tool must not tell. Nothing is open when the list is taken, so every
+// `.main button.link` on it is a noun printed by the screen itself.
+const nounsOn = page.locator('.main button.link');
+const nounCount = await nounsOn.count();
+const nouns = (await nounsOn.allTextContents()).map((t) => t.trim().replace(/\s+/g, ' '));
+console.log(`Nouns on Home: ${nounCount}\n${nouns.map((n) => `  ${n}`).join('\n')}\n`);
 
-for (const noun of nouns) {
-  const opened = await click(new RegExp(`^${noun.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`), page.locator('.main'));
+for (let index = 0; index < nounCount; index++) {
+  const noun = nouns[index] ?? `noun ${index}`;
+  // Re-query with nothing open, so the index still means what it meant.
+  const fresh = page.locator('.main button.link');
+  let opened = true;
+  await fresh.nth(index).click({ timeout: 1500 }).catch(() => { opened = false; });
   if (!opened) { problems.push(`Home → ${noun}: would not press`); continue; }
   await page.waitForTimeout(300);
   const looks = await readLooks();
@@ -175,8 +208,7 @@ for (const noun of nouns) {
   lines.push('');
   lines.push(`── Home → ${noun}`);
   await drill(`Home → ${noun}`, 0);
-  await closeInnermost();
-  await page.waitForTimeout(150);
+  await closeAll();
 }
 
 console.log(lines.join('\n'));
@@ -184,3 +216,17 @@ writeFileSync('/tmp/drill-report.txt', lines.join('\n'), 'utf8');
 console.log(`\n${seen.size} distinct looks reached by pressing.`);
 console.log(problems.length === 0 ? '\nNo problems.' : `\n${problems.length} problems:\n${problems.map((p) => `  ${p}`).join('\n')}`);
 await browser.close();
+
+if (CHECK) {
+  const faults = [];
+  if (dead.length > DEAD_ALLOWED) {
+    faults.push(`${dead.length} pieces of text sit outside a control, and ${DEAD_ALLOWED} is the whole of what should: `
+      + 'grammar between the nouns, and lines saying nothing is there.');
+  }
+  if (problems.length > 0) faults.push(`${problems.length} nouns would not open.`);
+  if (faults.length > 0) {
+    console.log(`\n${faults.map((f) => `  ${f}`).join('\n')}`);
+    process.exit(1);
+  }
+  console.log('\nEvery fact on Home opens.');
+}

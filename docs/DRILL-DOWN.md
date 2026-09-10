@@ -135,7 +135,10 @@ are right:
   and has nothing declared behind it.
 
 Every figure, name, date, temperature, balance, bar and place on the screen
-opens. That is the whole of what the rule asks for.
+opens. That is the whole of what the rule asks for, and
+`node tools/drill.mjs --check` holds it: it fails if that count climbs, and
+fails if any noun on the screen would not open. Dropping one `look=` from one
+stat tile takes it from nine to twelve, which is what it is there to catch.
 
 The first row for Home is what it was: the main game screen, offering a player
 exactly one thing to press, with every stat, meter, place name, temperature,
