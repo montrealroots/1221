@@ -341,9 +341,42 @@ const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
  * places on Earth; the remaining ${'${'}TOTAL_CITIES.toLocaleString('en-US')} are fetched
  * a country at a time by `loadCountryCities`.
  */
+/**
+ * Places the game itself stands on, which the bundle rule misses.
+ *
+ * `tools/build-world-data.mjs` bundles the largest three places in every
+ * country plus the largest nine hundred on Earth, and fetches the rest of a
+ * country only when somebody looks at it. That is right for a gazetteer and
+ * wrong for the one town the save is built on: the engine needs the estate's
+ * city at boot, before anything has been fetched, and Iceland's fourth town
+ * does not clear the rule.
+ *
+ * These are real rows, copied out of `public/geo/is.tsv`, and they go through
+ * `deriveCity` exactly like every other uncalibrated place. That matters: they
+ * get the derived economics and an industry presence of zero, which for
+ * Iceland is not a shortcut but the fact the premise rests on.
+ */
+const NEEDED_AT_BOOT: readonly RawCity[] = [
+  {
+    id: 'is-39-mosfellsbr',
+    name: 'Mosfellsbær',
+    regionId: 'is-39',
+    countryId: 'is',
+    lat: 64.1667,
+    lon: -21.7000,
+    timeZone: 'Atlantic/Reykjavik',
+    population: 13_715,
+    kind: '',
+  },
+];
+
+const BUNDLED_IDS = new Set(WORLD_CITIES.map((c) => c.id));
+
 export const CITIES = new Registry<City>('cities', [
   ...CALIBRATED_CITIES,
-  ...WORLD_CITIES.filter((c) => !CALIBRATED_IDS.has(c.id)).map(deriveCity),
+  ...[...WORLD_CITIES, ...NEEDED_AT_BOOT.filter((c) => !BUNDLED_IDS.has(c.id))]
+    .filter((c) => !CALIBRATED_IDS.has(c.id))
+    .map(deriveCity),
 ]);
 
 /** Countries whose full city list has already been pulled in. */

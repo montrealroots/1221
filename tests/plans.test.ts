@@ -15,6 +15,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { estateCity } from '@/engine/content/estate';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
@@ -156,7 +157,9 @@ describe('when the moment comes', () => {
     const told = unreadNotifications(sim).find((n) => /Missed/.test(n.title));
     expect(told, 'nothing said you had missed it').toBeDefined();
     expect(told!.body).toMatch(/Los Angeles/);
-    expect(told!.body).toMatch(/Reykjav/);
+    // Named from the estate rather than typed out, so moving the family does
+    // not quietly turn this into a test of where they used to live.
+    expect(told!.body).toContain(estateCity().name);
   });
 });
 

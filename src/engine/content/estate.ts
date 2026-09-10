@@ -2,10 +2,16 @@
  * SLATE — the land the family holds, and what stands on it.
  *
  * The premise the rest of the game hangs off. You do not arrive with nothing
- * and work your way in: you are born onto two thousand acres outside
- * Reykjavík, and the family has just built a studio lot on it and started a
- * production company that makes Television and Film and carries the family
- * name.
+ * and work your way in: you are born onto two thousand acres in Mosfellsbær,
+ * fifteen minutes outside Reykjavík, and the family has just built a studio
+ * lot on it and started a production company that makes Television and Film
+ * and carries the family name.
+ *
+ * Two thousand acres sounds enormous and, in Iceland, is not. It is eight
+ * hundred and nine hectares against a mean Icelandic farm of about seven
+ * hundred and fifteen, so an Icelander reads it as one ordinary jörð. What is
+ * remarkable is not the size but the address: eight square kilometers held
+ * whole, inside the Capital Region, where the land is worth something.
  *
  * The family name, not yours. It comes off the surname because that is where
  * a surname comes from, but nothing on that gate was put there for the
@@ -21,13 +27,44 @@
 import { CITIES, COUNTRIES, REGIONS, type City } from '@/engine/content/geography';
 import { instantFromZoned } from '@/engine/core/time';
 
-/** Home base. Not a choice — it is where the family land is. */
-export const ESTATE_CITY_ID = 'is-39-reykjavik';
+/**
+ * Home base. Not a choice — it is where the family land is.
+ *
+ * Mosfellsbær rather than Reykjavík, and the difference is the whole point of
+ * the sentence "outside Reykjavík". It is its own municipality: 185 square
+ * kilometers, thirteen thousand people, a town at one end and Mosfellsdalur
+ * and the uplands behind it open. Eight square kilometers held whole is 4.4%
+ * of it, which is a lot of one small place and nothing at all of Iceland.
+ *
+ * Kjósarhreppur next door would have been the truer farm country — three
+ * hundred residents, no town at all — and it is not in the gazetteer, because
+ * the gazetteer is public reference data and three hundred people do not
+ * clear its threshold. Adding a municipality to it to suit the fiction is the
+ * one thing that is not allowed. Mosfellsbær is also the better answer for a
+ * working lot: fifteen minutes to the city rather than forty-five, which is
+ * what crew, deliveries and a call time actually turn on.
+ */
+export const ESTATE_CITY_ID = 'is-39-mosfellsbr';
 
 /** The country the land is in. Everybody in the family holds its passport. */
 export const ESTATE_COUNTRY_ID = 'is';
 
 export const ESTATE_ACRES = 2_000;
+
+/**
+ * The same land in the unit Iceland actually uses, and what it measures
+ * against. Both figures are public record.
+ *
+ * Iceland has 7,828 registered jarðir covering about 56,000 square kilometers,
+ * a mean of roughly 715 hectares each (HMS, reported in Bændablaðið, February
+ * 2025). The median runs 200–300 ha in the South, 400–500 across most of the
+ * country and over 800 in the East and the Westfjords. So this is one average
+ * farm, and the game should never call it vast: Grímsstaðir á Fjöllum is
+ * thirty-seven times the size, and one British owner holds about a hundred
+ * times it.
+ */
+export const ESTATE_HECTARES = 809;
+export const MEAN_ICELANDIC_FARM_HECTARES = 715;
 
 /**
  * What the land is called.
