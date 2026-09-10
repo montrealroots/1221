@@ -35,7 +35,7 @@ import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { whatTheyAre } from './family';
 import { bondFor, standingWord } from '@/engine/world/standing';
-import { isAre, spokenList, toStart } from './words';
+import { isAre, outOf, spokenList, toStart } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -233,9 +233,9 @@ defineLook<Property>('house', {
       kind: 'Where You Sleep',
       parent: at('estate'),
       summary: kept >= 70
-        ? `You sleep here, it’s kept at ${kept} out of a hundred, and a night in a house this well looked `
+        ? `You sleep here, it’s kept at ${outOf(kept)}, and a night in a house this well looked `
           + 'after puts back more than a night in one that isn’t.'
-        : `You sleep here, it’s down to ${kept} out of a hundred, and the nights aren’t putting back what `
+        : `You sleep here, it’s down to ${outOf(kept)}, and the nights aren’t putting back what `
           + 'they should.',
       body: (
         <>
@@ -251,7 +251,7 @@ defineLook<Property>('house', {
             {kept >= 70 ? ' working for you rather than against you.' : ' costing you sleep you’d otherwise have had.'}
           </p>
           <div className="grid grid-3">
-            <Stat label="Condition" value={`${kept} out of a hundred`} note="What a night here is worth" />
+            <Stat label="Condition" value={outOf(kept)} note="What a night here is worth" />
             <Stat label="Bedrooms" value={house.bedrooms} note={`And ${plural(house.bathrooms, 'bathroom')}`} />
             <Stat
               label="Floor Area"

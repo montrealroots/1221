@@ -20,19 +20,25 @@ import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { waysIntoSomebody, whatTheyAre } from './family';
-import { isAre, spokenList } from './words';
+import { isAre, outOf, spokenList } from './words';
 
-/** The nine, in the order a person would notice them. */
+/**
+ * The nine, in the order a person would notice them.
+ *
+ * `behind` is what the way in says next to the figure. The figure alone —
+ * "82/100" — names the dial twice and says nothing about what moves it, which
+ * is the whole reason a person would open one.
+ */
 const DIALS = [
-  { key: 'energy', name: 'Energy', unit: 'level' },
-  { key: 'stress', name: 'Stress', unit: 'level' },
-  { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours' },
-  { key: 'morale', name: 'Morale', unit: 'level' },
-  { key: 'condition', name: 'Condition', unit: 'level' },
-  { key: 'fitness', name: 'Fitness', unit: 'level' },
-  { key: 'travelFatigue', name: 'Travel Fatigue', unit: 'level' },
-  { key: 'nourishment', name: 'Nourishment', unit: 'level' },
-  { key: 'hygiene', name: 'Hygiene', unit: 'level' },
+  { key: 'energy', name: 'Energy', unit: 'level', behind: 'what the day has left in you' },
+  { key: 'stress', name: 'Stress', unit: 'level', behind: 'what it is doing to your sleep' },
+  { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'the nights you still owe' },
+  { key: 'morale', name: 'Morale', unit: 'level', behind: 'whether the work feels worth doing' },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: 'what a long day would find' },
+  { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'what a physical day would cost' },
+  { key: 'travelFatigue', name: 'Travel Fatigue', unit: 'level', behind: 'how much of the moving is still in you' },
+  { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
+  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'what a room notices about you' },
 ] as const;
 
 type DialKey = typeof DIALS[number]['key'];
@@ -67,8 +73,8 @@ defineLook<Person>('person', {
         to: at('dial', `${person.id}/${d.key}`),
         label: d.name,
         detail: d.unit === 'hours'
-          ? `${Math.round(valueOf(w, d.key))} hours owed`
-          : `${Math.round(valueOf(w, d.key))} out of a hundred`,
+          ? `${Math.round(valueOf(w, d.key))} hours owed, and ${d.behind}`
+          : `${outOf(valueOf(w, d.key))}, and ${d.behind}`,
       }));
     ways.push({
       to: at('readiness', person.id),

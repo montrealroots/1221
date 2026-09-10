@@ -29,7 +29,7 @@ import type { Person, Reputation } from '@/engine/domain/model';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, spokenList } from './words';
+import { isAre, outOf, spokenList } from './words';
 
 type FigureKey = keyof Reputation;
 
@@ -182,7 +182,7 @@ defineLook<Standing>('reputation', {
     ways: FIGURES.map((figure): Way => ({
       to: at('standing', figure.key),
       label: figure.name,
-      detail: `${opening(spokenFigure(valueOf(reputation, figure.key)))} out of a hundred, and ${figure.behind}`,
+      detail: `${outOf(valueOf(reputation, figure.key))}, and ${figure.behind}`,
     })),
     provenance: 'Seven figures, all written on your first morning and none of them moved since. Nothing in SLATE keeps score of you yet.',
   }),
@@ -278,7 +278,7 @@ function sentenceFor(key: FigureKey, value: number): string {
   switch (key) {
     case 'publicFame':
       return n < 3 ? `${said}. Nobody who hasn’t met you has heard the name.`
-        : n < 25 ? `${said} out of a hundred. A few people would place you, and none of them quickly.`
+        : n < 25 ? `${said}. A few people would place you, and none of them quickly.`
           : n < 60 ? `${said}. Enough people know the face that a room changes a little when you walk into it.`
             : `${said}. You’re recognized nearly everywhere, and it costs you about what it buys you.`;
     case 'audienceAppeal':
@@ -287,7 +287,7 @@ function sentenceFor(key: FigureKey, value: number): string {
           : n < 75 ? `${said}. The people who know you like you, and they say so out loud.`
             : `${said}. People are fond of you, which is the hardest of these to buy and the easiest to spend.`;
     case 'professionalReputation':
-      return n < 5 ? `${said} out of a hundred. There’s no body of work for anybody in the business to have an opinion about.`
+      return n < 5 ? `${said}. There’s no body of work for anybody in the business to have an opinion about.`
         : n < 30 ? `${said}. A handful of people who’ve worked with you would vouch for you.`
           : n < 65 ? `${said}. Casting knows the name, and knows it’s safe.`
             : `${said}. The work speaks before you do.`;
@@ -309,6 +309,6 @@ function sentenceFor(key: FigureKey, value: number): string {
         : n < 30 ? `${said}. Something’s being said quietly, and it hasn’t reached anybody who matters.`
           : `${said}. It’s the first thing said about you, and it’ll be a long time going quiet.`;
     default:
-      return `${said} out of a hundred.`;
+      return `${said}.`;
   }
 }

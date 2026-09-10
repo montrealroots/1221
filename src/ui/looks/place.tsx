@@ -44,7 +44,7 @@ import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, said, spokenList, toStart } from './words';
+import { isAre, outOf, said, spokenList, toStart } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -319,13 +319,13 @@ function summaryOfPlace(place: PlaceProfile, isHere: boolean, isHome: boolean): 
 function industryLine(place: PlaceProfile): string {
   if (place.industryPresence === 0) {
     return place.city.id === ESTATE_CITY_ID
-      ? `Film and Television rate zero out of a hundred here, and that isn’t a gap in the data — there’s no business in ${theCountry(place.countryName)} to walk into. The only lot in the country is the one the family built, and you were born onto it.`
-      : `Film and Television rate zero out of a hundred here, so work in it means working remotely or moving.`;
+      ? `Film and Television rate 0/100 here, and that isn’t a gap in the data — there’s no business in ${theCountry(place.countryName)} to walk into. The only lot in the country is the one the family built, and you were born onto it.`
+      : `Film and Television rate 0/100 here, so work in it means working remotely or moving.`;
   }
   const incentive = place.filmIncentive
     ? ` A production that spends its money locally gets ${Math.round(place.filmIncentive * 100)}% of it back, which is why so much of it shoots here.`
     : '';
-  return `Film and Television rate ${place.industryPresence} out of a hundred here, against ${place.jobMarketDepth} for ordinary work.${incentive}`;
+  return `Film and Television rate ${outOf(place.industryPresence)} here, against ${outOf(place.jobMarketDepth)} for ordinary work.${incentive}`;
 }
 
 // ---------------------------------------------------------------------------

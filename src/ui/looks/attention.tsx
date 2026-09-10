@@ -31,7 +31,7 @@ import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, lookExists, resolveLook, type Way } from './registry';
 import { at, subjectForRef, type Subject } from './subject';
-import { spokenList } from './words';
+import { outOf, spokenList } from './words';
 
 /** Untouched for this long and the world stops nagging. `expireDecisions`. */
 const QUIET_AFTER_DAYS = 90;
@@ -112,7 +112,7 @@ function nameOf(title: string, fallback: string): string {
   return plain ? titleCaseLabel(plain) : fallback;
 }
 
-/** What a figure out of a hundred means for where a thing sits. */
+/** What a figure on the hundred-point scale means for where a thing sits. */
 function weightOf(urgency: number): string {
   if (urgency >= 85) return 'high enough that nothing but an overdue thing sits above it';
   if (urgency >= 65) return 'above the ordinary run of things';
@@ -159,12 +159,12 @@ function decisionSentence(decision: DecisionItem, stage: Stage, sim: Simulation)
   switch (stage) {
     case 'open':
       if (decision.dueAt !== undefined && decision.dueAt < sim.now) {
-        return `It went past its date ${formatRelative(decision.dueAt, sim.now)}, it’s carrying ${urgency} out of a hundred, and being overdue is what holds it at the top of everything waiting on you.`;
+        return `It went past its date ${formatRelative(decision.dueAt, sim.now)}, it’s carrying ${outOf(urgency)}, and being overdue is what holds it at the top of everything waiting on you.`;
       }
       if (decision.dueAt !== undefined) {
-        return `It’s asking you at ${urgency} out of a hundred and it wants an answer ${formatRelative(decision.dueAt, sim.now)}.`;
+        return `It’s asking you at ${outOf(urgency)} and it wants an answer ${formatRelative(decision.dueAt, sim.now)}.`;
       }
-      return `It’s asking you at ${urgency} out of a hundred with no date on it, and left alone it goes quiet ${formatRelative(quietAt, sim.now)}.`;
+      return `It’s asking you at ${outOf(urgency)} with no date on it, and left alone it goes quiet ${formatRelative(quietAt, sim.now)}.`;
     case 'answered':
       return `You dealt with this one ${formatRelative(decision.resolvedAt ?? sim.now, sim.now)}, so it isn’t on the list any more.`;
     case 'ran out':
@@ -228,7 +228,7 @@ defineLook<DecisionItem>('decision', {
         <>
           {decision.detail && <p className="small muted">{decision.detail}</p>}
           <p className="small muted">
-            {`${sentenceStart(raisedBy(decision.category))} put it in front of you ${formatRelative(decision.createdAt, sim.now)}, at ${urgency} out of a hundred — ${weightOf(urgency)}. `}
+            {`${sentenceStart(raisedBy(decision.category))} put it in front of you ${formatRelative(decision.createdAt, sim.now)}, at ${outOf(urgency)} — ${weightOf(urgency)}. `}
             {'If the same thing comes up again the figure only ever goes up: the higher of the two stands, and nothing brings it back down. '}
             {standing}
           </p>
@@ -295,7 +295,7 @@ defineLook<Notice>('notification', {
       ways.push({
         to: at('decision', alsoWaiting.id),
         label: nameOf(alsoWaiting.title, 'What It Wants'),
-        detail: `The same thing, still waiting on you at ${Math.round(alsoWaiting.urgency)} out of a hundred`,
+        detail: `The same thing, still waiting on you at ${outOf(alsoWaiting.urgency)}`,
       });
     }
 
@@ -312,7 +312,7 @@ defineLook<Notice>('notification', {
         <>
           {note.body && <p className="small muted">{note.body}</p>}
           <p className="small muted">
-            {`${sentenceStart(raisedBy(note.category))} sent it, at ${importance} out of a hundred, and that figure is the whole of what decides the order the unread come in — heaviest first, and the newest of two that weigh the same. `}
+            {`${sentenceStart(raisedBy(note.category))} sent it, at ${outOf(importance)}, and that figure is the whole of what decides the order the unread come in — heaviest first, and the newest of two that weigh the same. `}
             {note.read
               ? 'Nothing about it is asking for anything; it stays until the list runs past five hundred and the oldest fall off the end.'
               : 'Reading it here doesn’t mark it read — the one control that does sits on Home and clears the whole list at once, because that changes the save and this doesn’t.'}

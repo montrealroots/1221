@@ -47,3 +47,15 @@ export function said(count: number, one: string, many = `${one}s`, zero = 'no'):
 export function toStart(words: string): string {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
+
+/**
+ * A figure on the nought-to-a-hundred scale, written the way it is read.
+ *
+ * "82/100", never "82 out of a hundred". The words were four times the width
+ * of the figure and said nothing the slash does not, and a column of them next
+ * to each other could not be scanned: nine dials each ending in the same five
+ * words is a wall, and nine ending in /100 is a list.
+ */
+export function outOf(value: number): string {
+  return `${Math.round(value)}/100`;
+}

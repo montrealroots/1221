@@ -26,7 +26,7 @@ import {
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, said, spokenList } from './words';
+import { isAre, outOf, said, spokenList } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -221,7 +221,7 @@ defineLook<Standing>('bond', {
                 : `It’s been ${said(days, 'day')} since the two of you set aside time for each other.`}
           </p>
           <div className="grid grid-3">
-            <Stat label="Where It Stands" value={closeness} note={`${band.word}, out of a hundred`} />
+            <Stat label="Where It Stands" value={outOf(closeness)} note={band.word} />
             <Stat label="Where It Settles" value={rest} note={roof ? 'Because you live together' : 'Because you live apart'} />
             <Stat
               label="Last Together"
@@ -282,7 +282,7 @@ defineLook<Scale>('scale', {
         label: one.word,
         detail: one.word === band.word
           ? `Where you and ${person.firstName} are, at ${closeness}`
-          : `${one.from} to ${topOf(one.word)} out of a hundred`,
+          : `${one.from}/100 to ${topOf(one.word)}/100`,
         glance: {
           marked: one.word === band.word,
           lines: [
@@ -332,7 +332,7 @@ defineLook<Rung>('band', {
       body: (
         <>
           <p className="small">
-            It covers {from} to {top} out of a hundred.{' '}
+            It covers {outOf(from)} to {outOf(top)}.{' '}
             {here.length === 0
               ? 'Nobody in your life is here at the moment.'
               : `${spokenList(here.map((one) => one.firstName))} ${isAre(here.length)} here right now.`}
@@ -350,7 +350,7 @@ defineLook<Rung>('band', {
       ways: here.map((one) => ({
         to: at('bond', one.id),
         label: nameOf(one),
-        detail: `${Math.round(standingWith(sim, one)?.closeness ?? 0)} out of a hundred, which is ${word.toLowerCase()}`,
+        detail: `${outOf(standingWith(sim, one)?.closeness ?? 0)}, which is ${word.toLowerCase()}`,
       })),
     };
   },

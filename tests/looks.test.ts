@@ -343,6 +343,22 @@ describe('what the screens name', () => {
     expect(strays, 'subjects naming a kind nothing declares').toEqual([]);
   });
 
+  it('writes a figure out of a hundred as a figure', () => {
+    // "82/100", not "82 out of a hundred". The words were four times the width
+    // of the figure and said nothing the slash does not, and nine dials each
+    // ending in the same five words read as a wall rather than a list.
+    const offenders: string[] = [];
+    for (const { path, text } of sources()) {
+      if (path.endsWith('/words.ts')) continue;
+      for (const [index, line] of text.split('\n').entries()) {
+        // Comments may say it in prose; a string a player reads may not.
+        if (/^\s*(\*|\/\/)/.test(line)) continue;
+        if (/out of a hundred/.test(line)) offenders.push(`${path.split('/src/')[1]}:${index + 1}`);
+      }
+    }
+    expect(offenders, 'a figure written out in words where /100 belongs').toEqual([]);
+  });
+
   it('writes the apostrophe the house writes', () => {
     // docs/STYLE.md: the apostrophe is the typographic one, "which the rest
     // of the prose already uses". Nothing checked it, and the first draft of
