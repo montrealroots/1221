@@ -470,6 +470,12 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
   if (traded > 0) steps.push(`Marked ${traded === 1 ? 'one company' : `${traded} companies`} as being in film.`);
 
+  // Schema 78: a picture carries the elements it has handed over.
+  for (const project of Object.values(universe.projects ?? {})) {
+    const p = project as unknown as Record<string, unknown>;
+    if (!Array.isArray(p.delivered)) p.delivered = [];
+  }
+
   if (!universe.preferences) {
     universe.preferences = {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,

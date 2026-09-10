@@ -273,7 +273,23 @@ export interface Post {
  * things die between `optioned` and `packaged`, and a company with one project
  * has no slate, it has a hope.
  */
-export type Stage = 'idea' | 'optioned' | 'writing' | 'draft' | 'packaged' | 'greenlit' | 'shelved';
+/**
+ * Where a picture is in its life.
+ *
+ * It used to stop at `greenlit`, which is the point where a project becomes
+ * interesting rather than the point where it ends. Everything expensive and
+ * everything that can go wrong happens in the four stages after it, and
+ * `delivered` is the one that actually kills productions: a picture can be
+ * shot, cut, finished and still not paid for, because one element on a
+ * contractual list is missing.
+ */
+export type Stage =
+  | 'idea' | 'optioned' | 'writing' | 'draft' | 'packaged' | 'greenlit'
+  | 'prep' | 'shooting' | 'post' | 'delivered'
+  | 'shelved';
+
+/** The stages a greenlit picture moves through, in order. */
+export const MAKING: readonly Stage[] = ['prep', 'shooting', 'post', 'delivered'];
 
 export interface Project {
   id: Id;
@@ -290,4 +306,28 @@ export interface Project {
   /** What making it is reckoned to cost, once anybody has reckoned. */
   budgetCents?: Money;
   shelvedAt?: Instant;
+
+  // --- The dated life, once it is greenlit ---------------------------------
+  // Empty until then. A picture that has not been greenlit has no dates and
+  // saying otherwise would be a schedule nobody has agreed to.
+
+  /** The city the unit works out of. */
+  unitBaseId?: string;
+  /** Prep starts, the crew comes on, and the money starts going out. */
+  prepFrom?: Instant;
+  /** The first day of principal photography. */
+  shootFrom?: Instant;
+  /** Wrap. */
+  shootTo?: Instant;
+  /** When post is reckoned to finish. */
+  postTo?: Instant;
+  /** The date the delivery is contractually due. Missing it has a cost. */
+  deliverBy?: Instant;
+  /** The stage on the lot it is holding, where it holds one. */
+  stageId?: Id;
+  /** The booking that holds it, so the lot and the picture agree. */
+  bookingId?: Id;
+  /** Elements handed over, by id. The money waits on the whole list. */
+  delivered: string[];
+  deliveredAt?: Instant;
 }

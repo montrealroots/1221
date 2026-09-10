@@ -757,6 +757,7 @@ export function registerCompanyCommands(sim: Simulation): void {
         stage: holding ? 'optioned' : 'idea',
         startedAt: s.now,
         spentCents: 0,
+        delivered: [],
         ...(payload.holdingId ? { holdingId: payload.holdingId } : {}),
       };
       s.universe.projects[project.id] = project;
