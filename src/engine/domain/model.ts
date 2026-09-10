@@ -264,6 +264,14 @@ export interface Bond {
   closeness: number;
   /** The last time the two of them were actually in the same room on purpose. */
   lastTogetherAt?: Instant;
+  /**
+   * The last day drift was charged for.
+   *
+   * Anchored rather than assumed, so a bond drifts by the days that passed
+   * and not by the number of times something happened to look at it. Skipping
+   * a month forward in one jump has to cost the same as living it.
+   */
+  lastDriftedAt?: Instant;
   formedAt: Instant;
 }
 
