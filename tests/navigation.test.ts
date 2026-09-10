@@ -103,10 +103,12 @@ describe('what was taken out', () => {
     for (const gone of removed) {
       expect(files, `${gone} came back`).not.toContain(`${gone}.tsx`);
     }
-    // Every workspace on disk is one the router will actually serve.
+    // Every workspace on disk is one the router will actually serve. A
+    // screen is a .tsx; a plain .ts beside it is the logic a screen leans on
+    // — what fits in a calendar cell, say — and is not something to route.
     const router = read('ui/workspaces/WorkspaceRouter.tsx');
     for (const file of files) {
-      if (file === 'WorkspaceRouter.tsx') continue;
+      if (file === 'WorkspaceRouter.tsx' || !file.endsWith('.tsx')) continue;
       const name = file.replace(/\.tsx$/, '');
       expect(router, `${name} is on disk but not routed`).toContain(name);
     }

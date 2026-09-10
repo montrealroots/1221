@@ -17,7 +17,8 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { addCountryHolidays, holidayLabel, holidaysInYear, holidaysOn, regionCodeFor } from '@/engine/content/holidays';
 import { HOLIDAY_FILES, HOLIDAY_YEARS } from '@/engine/content/holiday-data';
-import { keptCalendars, monthGrid } from '@/engine/world/calendar';
+import { keptCalendars, monthGrid, type CalendarDay } from '@/engine/world/calendar';
+import { CHIPS, dayLabel, hiddenIn, holidayChips, roomFor } from '@/ui/workspaces/cell';
 import { instantFromZoned } from '@/engine/core/time';
 import { REGIONS } from '@/engine/content/geography';
 
@@ -122,5 +123,58 @@ describe('the holiday files', () => {
     load('is');
     const home = quickSave({}, 'holiday-grid-order');
     expect(keptCalendars(home).map((c) => c.countryId)).toEqual(['is', 'us']);
+  });
+});
+
+
+/**
+ * What one day of the month grid prints.
+ *
+ * A cell is small and a day can carry more than it holds. Both holidays show
+ * where two land together — the calendar does not pick which country's year
+ * the player cares about — and the day's own commitments are never squeezed
+ * out entirely to make room for somebody's public holiday.
+ */
+describe('a day in the grid', () => {
+  const day = (holidays: number, entries: number): CalendarDay => ({
+    holidays: Array.from({ length: holidays }, (_, i) => ({
+      name: `Holiday ${i + 1}`, englishName: `Holiday ${i + 1}`, type: 'public' as const,
+      countryId: i === 0 ? 'is' : 'us', countryName: i === 0 ? 'Iceland' : 'United States',
+    })),
+    entries: Array.from({ length: entries }, (_, i) => ({ id: `e${i}` })),
+  } as unknown as CalendarDay);
+
+  it('prints both when two land on one day', () => {
+    expect(holidayChips(day(2, 0))).toBe(2);
+    expect(hiddenIn(day(2, 0))).toBe(0);
+  });
+
+  it('never gives every chip to the holidays', () => {
+    // Three public holidays on one day happens in a dense enough country.
+    // The player's own calendar still gets a line of it.
+    expect(holidayChips(day(4, 2))).toBe(CHIPS - 1);
+    expect(roomFor(day(4, 2))).toBeGreaterThanOrEqual(1);
+  });
+
+  it('counts everything it could not fit, of either kind', () => {
+    expect(hiddenIn(day(0, 5))).toBe(2);   // three entries shown, two hidden
+    expect(hiddenIn(day(4, 0))).toBe(2);   // two holidays shown, two hidden
+    expect(hiddenIn(day(3, 2))).toBe(2);   // one holiday and one entry hidden
+    expect(hiddenIn(day(1, 2))).toBe(0);
+  });
+
+  it('says out loud everything it prints', () => {
+    // The label overrides the cell's own text, so anything it leaves out is
+    // read by nobody. This shipped as "…, 0 entries" over the words St.
+    // Patrick's Day.
+    load('is');
+    const sim = quickSave({}, 'holiday-cell-label');
+    const may = monthGrid(sim, 2026, 5);
+    const both = may.find((d) => d.inMonth && d.dayOfMonth === 25)!;
+    const said = dayLabel(both, sim.homeZone);
+    expect(said).toContain('Whit Monday');
+    expect(said).toContain('Memorial Day');
+    const quiet = may.find((d) => d.inMonth && d.dayOfMonth === 12)!;
+    expect(dayLabel(quiet, sim.homeZone)).toMatch(/Nothing on it\.$/);
   });
 });

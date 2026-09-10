@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
-import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
+import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
+import { dayLabel, hiddenIn, holidayChips, roomFor } from './cell';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -34,8 +35,6 @@ export function CalendarWorkspace() {
   const next30 = useWorld((s) => entriesBetween(s, s.now, s.now + 30 * MS_DAY));
   const conflicts = next30.filter((e) => e.conflicted);
   const selectedDay = days.find((d) => d.key === selected);
-  // How many of the player's own entries fit in a cell after the day's holiday chips.
-  const roomFor = (day: CalendarDay) => 3 - (day.holidays.length > 0 ? 1 : 0);
 
   const shift = (delta: number) => {
     setView((v) => {
@@ -91,14 +90,14 @@ export function CalendarWorkspace() {
               data-out={!day.inMonth}
               data-today={day.isToday}
               onClick={() => setSelected(day.key === selected ? null : day.key)}
-              aria-label={`${formatDate(day.date, sim.homeZone)}, ${day.entries.length} entries`}
+              aria-label={dayLabel(day, sim.homeZone)}
               style={{ textAlign: 'left', border: 0, font: 'inherit', color: 'inherit', cursor: 'pointer' }}
             >
               <div className="row-between">
                 <span className="cal-daynum">{day.dayOfMonth}</span>
-                {day.holidays.length > 0 && <span className="xs dim cal-holiday-mark" title={day.holidays.map(holidayLabel).join(', ')}>✦</span>}
+                {day.holidays.length > 0 && <span className="xs dim cal-holiday-mark" aria-hidden="true">✦</span>}
               </div>
-              {day.holidays.slice(0, 1).map((holiday) => (
+              {day.holidays.slice(0, holidayChips(day)).map((holiday) => (
                 <span
                   key={`${day.key}:${holiday.name}`}
                   className="cal-event"
@@ -119,8 +118,8 @@ export function CalendarWorkspace() {
                   {titleCaseLabel(entry.title)}
                 </span>
               ))}
-              {day.entries.length > roomFor(day) && (
-                <span className="xs dim cal-more">+{day.entries.length - roomFor(day)} more</span>
+              {hiddenIn(day) > 0 && (
+                <span className="xs dim cal-more">+{hiddenIn(day)} more</span>
               )}
             </button>
           ))}
