@@ -1,7 +1,7 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Who You Are, My Skills, Starting Point, Your People, Review,
+ * Identity, Who You Are, My Skills, Your People, Starting Point, Review,
  * then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
@@ -65,7 +65,7 @@ export function latestBirthYear(startYear: number): number {
   return startYear - BIRTH_YEARS_BEFORE_START;
 }
 
-const STEPS = ['Identity', 'Who You Are', 'My Skills', 'Starting Point', 'Your People', 'Review'] as const;
+const STEPS = ['Identity', 'Who You Are', 'My Skills', 'Your People', 'Starting Point', 'Review'] as const;
 
 /**
  * Which step is which, by name rather than by number.
@@ -188,8 +188,8 @@ export function CharacterCreation({
         {step === STEP.Identity && <IdentityStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Who You Are'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['My Skills'] && <CareerStep config={config} set={set} />}
-        {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} />}
         {step === STEP['Your People'] && <YourPeopleStep config={config} set={set} />}
+        {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} />}
         {step === STEP.Review && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
@@ -1191,15 +1191,20 @@ function YourPeopleStep({ config, set }: { config: NewSaveConfig; set: Setter })
           <div>
             <h2>The People You Grew Up With</h2>
             <p className="muted small">
-              The land is theirs before it’s yours, and they live on it now. Two of them, and a
-              third if you weren’t born alone.
+              You grew up on family land, and this is the family. Two of them, and a third if you
+              weren’t born alone.
             </p>
           </div>
         </div>
         <div className="callout">
+          There are three things on that land: the house, the lot it was built beside, and the
+          company that carries the family name. You’ll see all three on the next page. What this
+          page decides is which of them each of these people is the one who runs.
+        </div>
+        <p className="muted small" style={{ margin: 'var(--s4) 0 0' }}>
           Nobody here acts. They’re the family, not the business — and every one of them is
           somebody you have to get on with, which is its own kind of work.
-        </div>
+        </p>
       </div>
 
       <ParentCard
