@@ -23,6 +23,8 @@ import type { Simulation } from './core/simulation';
 import { CITIES } from './content/geography';
 import { weatherOn } from './systems/weather';
 import { MS_DAY } from './core/time';
+import { ENQUIRY_SHAPES, type Enquiry } from './content/lot';
+import { wouldBook } from './world/lot';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -118,3 +120,47 @@ defineDecider<Household, string>({
       .join('/');
   },
 });
+
+// ---------------------------------------------------------------------------
+// The lot
+// ---------------------------------------------------------------------------
+
+interface Enquired { sim: Simulation; need: Enquiry; from: number }
+
+defineDecider<Enquired, string>({
+  id: 'lot.booked',
+  decides: 'Whether a production takes a stage at Sugar Land, and which one.',
+  drawnIn: 'src/engine/world/lot.ts',
+  reads: {
+    // How much room it wants. The smallest stage that holds it is the one it
+    // gets, so this has to move the answer between four different rooms.
+    size: (e, t) => ({ ...e, need: { ...e.need, needsSqm: Math.round(400 + t * 5_800) } }),
+    // How much air above it. Thirty meters is Askja's and nothing else's.
+    height: (e, t) => ({ ...e, need: { ...e.need, needsHeightM: Math.round(6 + t * 24) } }),
+    // Water. Only Lón has any.
+    water: (e, t) => ({ ...e, need: { ...e.need, needsTank: t >= 0.5 } }),
+    // What it will spend here, which decides which rebate tier it qualifies
+    // for, which is the whole reason anybody looks at Iceland.
+    spend: (e, t) => ({ ...e, need: { ...e.need, spendIsk: Math.round(t * 3_000_000_000) } }),
+    // How long for. Long enough and it stops fitting around what is booked.
+    weeks: (e, t) => ({ ...e, need: { ...e.need, weeks: Math.round(1 + t * 25) } }),
+  },
+  sample: (seed) => {
+    const shape = ENQUIRY_SHAPES[seed % ENQUIRY_SHAPES.length]!.of;
+    const sim = lotFor(seed);
+    return { sim, need: { ...shape }, from: sim.now + 60 * MS_DAY };
+  },
+  decide: ({ sim, need, from }) => {
+    const answer = wouldBook(sim, need, from);
+    return answer.stageId ? (sim.universe.stages[answer.stageId]?.name ?? 'a stage') : 'nowhere';
+  },
+});
+
+const LOTS = new Map<number, Simulation>();
+function lotFor(seed: number): Simulation {
+  const held = LOTS.get(seed);
+  if (held) return held;
+  const made = quickSave({}, `decider-lot-${seed}`);
+  LOTS.set(seed, made);
+  return made;
+}

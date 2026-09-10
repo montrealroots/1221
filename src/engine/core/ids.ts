@@ -16,6 +16,7 @@ export type IdNamespace =
   | 'rel' | 'relmem' | 'bond' | 'event' | 'sched' | 'cal'
   | 'company' | 'reg' | 'sign' | 'policy' | 'hold' | 'post' | 'project'
   | 'prop' | 'listing' | 'offer' | 'build' | 'room' | 'furn'
+  | 'stage' | 'booking'
   | 'veh' | 'vehmod' | 'service' | 'part'
   | 'trip' | 'flight' | 'stay'
   | 'trade' | 'deal' | 'wave' | 'press'

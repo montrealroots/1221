@@ -386,31 +386,69 @@ export interface Property {
   isPrimaryResidence: boolean;
   /** Rented out to tenants for income. */
   rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
-  /** When the property is a studio lot or a stage: the plant, and who is on it. */
-  lot?: StudioPlant;
   listedForSale?: { price: Money; since: Instant; agentId?: Id };
   soldAt?: Instant;
   createdAt: Instant;
 }
 
-/** A studio lot the player owns, as a working business. */
-export interface StudioPlant {
-  stages: number;
-  /** Square feet of the largest stage. */
-  largestStageSqft: number;
-  /** What SLATE charges the world for a stage day here, in cents. */
-  stageDayRate: Money;
-  /** Monthly cost of keeping the lights on, in cents. */
-  monthlyOverhead: Money;
-  facilities: ('backlot' | 'water_tank' | 'led_volume' | 'post' | 'scoring_stage' | 'workshops' | 'offices')[];
-  /** World productions on the lot right now. */
-  tenants: { projectTitle: string; projectId?: Id; stages: number; from: Instant; to: Instant; dayRate: Money }[];
-  /** Everything the lot has taken in and paid out. */
-  lifetimeIncome: Money;
-  lifetimeOverhead: Money;
-  /** 0-1 share of stage days in use over the last close. */
-  occupancy: number;
-  lastClosedAt?: Instant;
+/**
+ * One stage on a lot.
+ *
+ * This replaced a `StudioPlant` record that carried twelve fields and was
+ * instantiated nowhere — among them `occupancy`, `lifetimeIncome` and
+ * `lifetimeOverhead`, all three of them facts about the world stored as
+ * numbers somebody would have to remember to update. They are worked out from
+ * the bookings and from the ledger now, so they cannot drift from the thing
+ * they describe.
+ *
+ * What is stored here is only what is physically true: how big the room is,
+ * how much air is above it, what it charges and what is in it.
+ */
+export interface SoundStage {
+  id: Id;
+  saveId: Id;
+  /** The lot it stands on. */
+  propertyId: Id;
+  name: string;
+  /** Clear floor inside the acoustic liner, square meters. */
+  floorSqm: number;
+  /** Clear height to the underside of the perms, meters. */
+  clearHeightM: number;
+  /** What a shooting week costs here, in cents. */
+  weekRateCents: Money;
+  /** Tank floor area in square meters, where there is one. */
+  tankSqm?: number;
+  features: string[];
+  builtAt: Instant;
+}
+
+/** Whether a production is shooting on a stage, getting ready, or holding it. */
+export type BookingKind = 'shooting' | 'prep' | 'hold';
+
+/**
+ * A production holding a stage for a run of dates.
+ *
+ * The unit is the week, because that is how stages are actually let, and the
+ * rate depends on what the production is doing in there. Pre-lighting and
+ * striking cost less than shooting; holding a standing set on a dark day costs
+ * less again. A lot that charged one flat rate would be a lot nobody had ever
+ * booked.
+ */
+export interface Booking {
+  id: Id;
+  saveId: Id;
+  stageId: Id;
+  /** Who is on it, in the world's words. */
+  holder: string;
+  /** Set when it is the family's own company on its own stage. */
+  companyId?: Id;
+  kind: BookingKind;
+  from: Instant;
+  to: Instant;
+  /** What this booking is paying per week, in cents, after the rate share. */
+  weekRateCents: Money;
+  /** Set once the money for it has been posted. */
+  invoicedAt?: Instant;
 }
 
 export interface Structure {
@@ -935,6 +973,15 @@ export interface SaveUniverse {
   transactions: LedgerTransaction[];
 
   properties: Record<Id, Property>;
+
+  /**
+   * The lot, as a working plant. Stages are what stands on it; bookings are
+   * who is on them and for how long. Occupancy and what the lot has earned are
+   * worked out from these two and from the ledger, never stored, so they
+   * cannot say one thing while the bookings say another.
+   */
+  stages: Record<Id, SoundStage>;
+  bookings: Record<Id, Booking>;
 
   scheduled: ScheduledItem[];
   audits: AuditRecord[];

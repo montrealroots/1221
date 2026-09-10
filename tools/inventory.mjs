@@ -37,15 +37,36 @@ function collect() {
   const events = new Map();
   const listeners = new Map();
   const scenes = new Map();
-  for (const file of walk(join(ROOT, 'src/engine')).sort()) {
+
+  // A kind is often a named constant rather than a literal, because the
+  // interface has to name it too: `onSchedule(LOT_OVERHEAD_KIND)`, not
+  // `onSchedule('lot.overhead')`. Reading only for literals made those
+  // invisible, so this counted the game's surface as smaller than it was and
+  // said so with a straight face. tests/cohesion.test.ts already resolves
+  // constants for exactly this reason; this does now too.
+  const named = new Map();
+  const files = walk(join(ROOT, 'src/engine')).sort();
+  for (const file of files) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+\.[a-z0-9_]+)'/g)) {
+      named.set(m[1], m[2]);
+    }
+  }
+  const kindOf = (token) => (token.startsWith("'") ? token.slice(1, -1) : named.get(token));
+
+  for (const file of files) {
     const text = readFileSync(file, 'utf8');
     const rel = relative(ROOT, file);
-    const add = (map, re, group = 1) => { for (const m of text.matchAll(re)) if (!map.has(m[group])) map.set(m[group], rel); };
-    add(commands, /onCommand(?:<[^(]*?>)?\(\s*'([a-z0-9_.]+)'/gs);
-    add(schedules, /onSchedule\(\s*'([a-z0-9_.]+)'/g);
-    add(events, /\.emit\(\s*'([a-z0-9_.]+)'/g);
-    add(listeners, /onEvent\(\s*'([a-z0-9_.]+)'/g);
-    if (rel.startsWith('src/engine/scenes/')) add(scenes, /defineScene\(\{\s*id:\s*'([a-z0-9_.]+)'/g);
+    const add = (map, re, group = 1) => {
+      for (const m of text.matchAll(re)) {
+        const kind = kindOf(m[group]);
+        if (kind && !map.has(kind)) map.set(kind, rel);
+      }
+    };
+    add(commands, /onCommand(?:<[^(]*?>)?\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/gs);
+    add(schedules, /onSchedule\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/g);
+    add(events, /\.emit\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/g);
+    add(listeners, /onEvent\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/g);
+    if (rel.startsWith('src/engine/scenes/')) add(scenes, /defineScene\(\{\s*id:\s*('[a-z0-9_.]+')/g);
   }
   const routes = new Set();
   for (const m of readFileSync(join(ROOT, 'src/ui/shell/destinations.ts'), 'utf8').matchAll(/route:\s*'(\/[a-z/-]*)'/g)) {

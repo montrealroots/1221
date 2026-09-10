@@ -80,7 +80,12 @@ function checkInvariants(sim: Simulation, label: string): void {
   const residents = new Map<Id, Id>();
   for (const property of Object.values(u.properties)) {
     if (!property.ownerId) continue;
-    expect(u.people[property.ownerId], `${label}: property ${property.id} has a missing owner`).toBeDefined();
+    // A property belongs to a person or to a company, and ownerKind says
+    // which: the lot is the company's, not anybody's in it.
+    const owner = property.ownerKind === 'company'
+      ? u.companies[property.ownerId]
+      : u.people[property.ownerId];
+    expect(owner, `${label}: property ${property.id} has a missing owner`).toBeDefined();
   }
   for (const person of Object.values(u.people)) {
     if (!person.residenceId) continue;

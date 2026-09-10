@@ -241,6 +241,8 @@ export function emptyUniverse(
     companies: {}, registrations: {}, signatures: {}, policies: {}, holdings: {}, posts: {}, projects: {},
     accounts: {}, transactions: [],
     properties: {},
+    stages: {},
+    bookings: {},
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,

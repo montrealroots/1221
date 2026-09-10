@@ -174,15 +174,35 @@ export const REGISTRY_BY_ID: Readonly<Record<RegistryId, RegistryFacts>> =
 export const REBATE = {
   body: 'Atvinnuvega- og nýsköpunarráðuneytið',
   label: 'The Production Reimbursement',
+  /** Every qualifying feature, series and documentary. No minimum spend, no cap. */
   share: 0.25,
+  /** The higher tier, and the three conditions a production has to meet for it. */
+  higherShare: 0.35,
+  higherNeeds: {
+    /** Icelandic spend, in króna. */
+    spendIsk: 350_000_000,
+    /** Working days in Iceland, of which some must be shooting days. */
+    workingDays: 30,
+    shootingDays: 10,
+    /** Crew working directly on it, and for how long, taxed in Iceland. */
+    crew: 50,
+    crewDays: 50,
+  },
   /** Applied for before a foot of film is shot, or not at all. */
   appliedBefore: true,
   auditedBy: 'An Icelandic auditor, at the production’s cost',
   /** Roughly how long after delivery the money lands. SLATE's own. */
   paidAfterMonths: 6,
-  note: 'The share has been raised above this figure, with a higher tier for productions '
-    + 'meeting further conditions. SLATE uses the long-standing lower rate. Printing a current one it '
-    + 'can’t source would be worse.',
+  note: 'Both rates are the published ones. The higher tier also applies with no conditions at all to '
+    + 'work made for audiences of eighteen and under.',
+  /**
+   * The date the whole thing is legislated to stop.
+   *
+   * Not a detail: every business case in Iceland that turns on this rate is
+   * priced against a scheme with an end date on it, and a review is already
+   * running. A lot built on the rebate is built on a law that expires.
+   */
+  endsOn: { year: 2028, month: 12, day: 31 },
 } as const;
 
 /** Corporate income tax on an Icelandic private limited company. */

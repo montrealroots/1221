@@ -25,6 +25,7 @@ import { CITIES } from './content/geography';
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
+import { buildTheLot, registerLot } from './world/lot';
 import {
   companiesOf, foundTheCompany, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
@@ -48,6 +49,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerCompanyCommands(sim);
+  registerLot(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -183,7 +185,13 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // by whoever the player said runs what. The Your People step decides who is
   // the principal of a production company, which is a heavier thing than the
   // step lets on.
-  foundTheCompany(sim);
+  const company = foundTheCompany(sim);
+
+  // --- The lot ------------------------------------------------------------
+  // After the company, because the company owns it. The land was the family's
+  // already; the stages on it were built, and they have been costing money
+  // every month since.
+  buildTheLot(sim, company.id);
 
   armWorldClock(sim);
 }
@@ -299,6 +307,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('posts', 'the posts it keeps');
   record('projects', 'the slate');
   record('properties', 'the properties');
+  record('stages', 'the stages on the lot');
+  record('bookings', 'who is booked onto them');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
   record('idempotency', 'the command receipts');
@@ -644,11 +654,17 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   check('scheduled', universe.scheduled);
 
   // Ownership conservation: nothing owned by someone who does not exist.
+  // A property is owned by a person or by a company, and `ownerKind` says
+  // which — the lot is owned by the family business, not by anybody in it.
   for (const property of Object.values(universe.properties)) {
     checked++;
     if (!property.ownerId) continue;
-    if (!universe.people[property.ownerId]) {
-      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who doesn’t exist.`);
+    const owner = property.ownerKind === 'company'
+      ? universe.companies[property.ownerId]
+      : universe.people[property.ownerId];
+    if (!owner) {
+      const who = property.ownerKind === 'company' ? 'a company that' : 'somebody who';
+      errors.push(`Property ${property.id} is owned by '${property.ownerId}', ${who} doesn’t exist.`);
     }
   }
 

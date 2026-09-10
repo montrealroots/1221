@@ -58,15 +58,19 @@ describe('a new universe boots and runs', () => {
   });
 
   it('runs three years without breaking anything', () => {
-    // Nothing bills the player any more, so the honest claim is not that the
-    // ledger keeps moving — it is that three years of the clock leave the
-    // save consistent, the money reconciled and the character still alive in
-    // a plausible state.
+    // The lot bills the company every month now, so the claim is no longer
+    // that the ledger sits still — it is that everything it does conserves.
+    // `audit()` re-derives every balance from the postings and proves each
+    // transaction sums to zero, which is the invariant worth holding: money
+    // may move as much as it likes and may not appear.
     const sim = quickSave();
     const opening = sim.universe.transactions.length;
     for (let month = 0; month < 36; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
 
-    expect(sim.universe.transactions.length, 'money appeared from nowhere').toBe(opening);
+    expect(
+      sim.universe.transactions.length,
+      'three years and the lot never charged anybody for standing there',
+    ).toBeGreaterThan(opening);
     expect(sim.ledger.audit()).toEqual([]);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(openDecisions(sim).length).toBeGreaterThanOrEqual(0);

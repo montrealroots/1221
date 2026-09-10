@@ -18,6 +18,9 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { theLot, stagesOn, utilisation, wouldBook, paidInSoFar } from '@/engine/world/lot';
+import { ICELAND_STAGE_FLOOR_SQM } from '@/engine/content/lot';
+import { MS_DAY } from '@/engine/core/time';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -380,6 +383,105 @@ describe('what the content claims about the real world', () => {
     expect(REBATE.appliedBefore).toBe(true);
     expect(REBATE.auditedBy).toContain('auditor');
     // And says plainly that the rate has moved rather than printing a guess.
-    expect(REBATE.note).toContain('raised above this figure');
+    // Both rates are sourced now: 25% with no minimum spend and no cap, and a
+    // 35% tier a production has to qualify for.
+    expect(REBATE.share).toBe(0.25);
+    expect(REBATE.higherShare).toBe(0.35);
+    expect(REBATE.higherNeeds.crew).toBeGreaterThan(0);
+    expect(REBATE.endsOn.year, 'the scheme has an end date and the game should carry it').toBe(2028);
+  });
+});
+
+describe('the lot as a business', () => {
+  it('is owned by the company, not by anybody in the family', () => {
+    const sim = quickSave({}, 'lot-owner');
+    const lot = theLot(sim)!;
+    expect(lot, 'no lot was built').toBeDefined();
+    expect(lot.ownerKind).toBe('company');
+    expect(sim.universe.companies[lot.ownerId!], 'the owner is not a company in the save').toBeDefined();
+    expect(sim.universe.people[lot.ownerId!], 'the lot belongs to a person').toBeUndefined();
+  });
+
+  it('has more stage floor on it than the rest of Iceland put together', () => {
+    const sim = quickSave({}, 'lot-floor');
+    const floor = stagesOn(sim).reduce((n, s) => n + s.floorSqm, 0);
+    expect(floor).toBeGreaterThan(ICELAND_STAGE_FLOOR_SQM);
+  });
+
+  it('costs money on a month when nobody is on it', () => {
+    const sim = quickSave({}, 'lot-dark');
+    const cash = Object.values(sim.universe.accounts).find((a) => a.kind === 'company_cash')!;
+    const opening = sim.universe.transactions.length;
+    sim.advanceTo(sim.now + 40 * MS_DAY);
+    expect(
+      sim.universe.transactions.length,
+      'a month passed and the lot charged nobody for standing there',
+    ).toBeGreaterThan(opening);
+    // Every line is posted under its own name, so the bill can be opened.
+    const memos = sim.universe.transactions.map((t) => t.memo);
+    expect(memos.some((m) => /Set Aside For Repairs/.test(m))).toBe(true);
+    expect(memos.some((m) => /Standing Crew/.test(m))).toBe(true);
+    void cash;
+  });
+
+  it('works out how full it is from the bookings rather than remembering', () => {
+    const sim = quickSave({}, 'lot-full');
+    const empty = utilisation(sim, sim.now, sim.now + 30 * MS_DAY);
+    expect(empty.taken).toBe(0);
+    expect(empty.share).toBe(0);
+
+    const stage = stagesOn(sim)[0]!;
+    sim.universe.bookings.b1 = {
+      id: 'b1', saveId: sim.universe.meta.id, stageId: stage.id, holder: 'a test',
+      kind: 'shooting', from: sim.now, to: sim.now + 7 * MS_DAY, weekRateCents: stage.weekRateCents,
+    };
+    const one = utilisation(sim, sim.now, sim.now + 30 * MS_DAY);
+    expect(one.taken).toBeCloseTo(1, 5);
+    // Four stages over thirty days, one of them let for one week.
+    expect(one.share!).toBeGreaterThan(0);
+    expect(one.share!).toBeLessThan(0.1);
+  });
+
+  it('clips a booking to the window rather than counting it whole', () => {
+    const sim = quickSave({}, 'lot-clip');
+    const stage = stagesOn(sim)[0]!;
+    sim.universe.bookings.b1 = {
+      id: 'b1', saveId: sim.universe.meta.id, stageId: stage.id, holder: 'a long one',
+      kind: 'shooting', from: sim.now - 60 * MS_DAY, to: sim.now + 60 * MS_DAY,
+      weekRateCents: stage.weekRateCents,
+    };
+    // Ten days of a hundred-and-twenty-day booking fall in the window.
+    const window = utilisation(sim, sim.now, sim.now + 10 * MS_DAY);
+    expect(window.taken).toBeCloseTo(10 / 7, 5);
+  });
+
+  it('sends a production somewhere else when nothing here is the right size', () => {
+    const sim = quickSave({}, 'lot-toobig');
+    const answer = wouldBook(sim, {
+      kind: 'feature', from: 'somebody enormous', needsSqm: 20_000, needsHeightM: 40,
+      needsTank: false, weeks: 10, spendIsk: 5_000_000_000,
+    }, sim.now + 30 * MS_DAY);
+    expect(answer.stageId).toBeUndefined();
+    expect(answer.because).toMatch(/right size/);
+  });
+
+  it('puts a production in the smallest room that holds it', () => {
+    const sim = quickSave({}, 'lot-smallest');
+    const answer = wouldBook(sim, {
+      kind: 'commercial', from: 'an agency', needsSqm: 500, needsHeightM: 8,
+      needsTank: false, weeks: 1, spendIsk: 400_000_000,
+    }, sim.now + 30 * MS_DAY);
+    const took = sim.universe.stages[answer.stageId!];
+    expect(took, 'nothing was offered').toBeDefined();
+    expect(took!.floorSqm, 'a commercial was put in the biggest room on the lot').toBe(2_000);
+  });
+
+  it('says who is paying for it, rather than letting the company go quietly broke', () => {
+    const sim = quickSave({}, 'lot-funded');
+    const cash = Object.values(sim.universe.accounts).find((a) => a.kind === 'company_cash')!;
+    for (let month = 0; month < 24; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
+    expect(cash.balance, 'the company is running overdrawn with nothing explaining it').toBeGreaterThanOrEqual(0);
+    expect(paidInSoFar(sim), 'nobody has put a króna in').toBeGreaterThan(0);
+    expect(sim.ledger.audit()).toEqual([]);
   });
 });

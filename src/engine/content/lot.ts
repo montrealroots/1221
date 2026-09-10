@@ -1,0 +1,423 @@
+/**
+ * SLATE — Sugar Land Studios, as a plant and as a bet.
+ *
+ * A lot is not a building. A lot is a fixed cost with a variable income, and
+ * everything interesting about it comes from that mismatch. The overhead is
+ * owed on a Tuesday in February when nothing is shooting and nobody is on the
+ * land. Against that you have stage weeks, which arrive in lumps and only when
+ * somebody chooses you over Budapest.
+ *
+ * That is why owning stages is a bet rather than a convenience. A company that
+ * rents stages pays only when it shoots. A company that owns them pays always,
+ * and in exchange keeps the margin when it does. Get the occupancy and it was
+ * the best decision the family ever made. Miss it and the lot eats the company
+ * that built it.
+ *
+ * ## What is real here and what is ours
+ *
+ * Every comparison figure below comes from an operator's own published
+ * specification and is named. Every figure describing Sugar Land is SLATE's
+ * own and says so. The distinction matters more than the numbers: "the largest
+ * stage in the world" has no registry and no auditor, so a game that prints it
+ * flatly is repeating marketing. Where Sugar Land claims a record it states
+ * the measure in the same breath.
+ *
+ * ## The shape of the bet, and why it is this shape
+ *
+ * The obvious build was one enormous room — beat Qingdao's ten thousand square
+ * meters and own the outright record. It was the wrong build, for three
+ * reasons that are all about this land rather than about ambition.
+ *
+ * One room is binary. It is booked or it is not, and at this size the
+ * productions that can fill it are a handful a year in a market that is
+ * contracting. Four stages that let separately are a business with an
+ * occupancy rate; one stage is a coin.
+ *
+ * Height is the cheap axis. Volume is floor times height, and height costs a
+ * fraction of what floor costs, so a tall room takes the European record
+ * without the span that makes a wide one ruinous.
+ *
+ * And the tank is the defensible record. Qingdao's floor figure rests on a
+ * width its own sources dispute; Pinewood publishes its tank on a spec sheet
+ * anybody can read. Beating a published number is a claim that survives
+ * somebody checking it.
+ */
+
+import type { Money } from '../core/money';
+
+// ---------------------------------------------------------------------------
+// What the rest of the world has
+// ---------------------------------------------------------------------------
+
+export interface StageElsewhere {
+  /** The operator's own name for it. */
+  name: string;
+  where: string;
+  /** Clear floor, square meters, as the operator publishes it. */
+  floorSqm: number;
+  /** Working height to the underside of the grid, meters. */
+  heightM?: number;
+  /** In-stage water tank floor area, square meters. */
+  tankSqm?: number;
+  /** Where the figure comes from. */
+  source: string;
+  /** What it is the biggest of, if anything, and by whose measure. */
+  claim?: string;
+}
+
+/**
+ * The stages Sugar Land is measured against, with their own operators' figures.
+ *
+ * Two things worth knowing before reading the claims. Pinewood's 007 Stage is
+ * not a sound stage: Pinewood's own spec sheet gives its acoustic treatment as
+ * "Mute", which makes it a silent stage, and that is the crux of a European
+ * argument nobody can settle. And Korda and Babelsberg both call themselves
+ * Europe's largest, truthfully, because Korda wins on volume and Babelsberg
+ * wins on floor. Neither is audited by anyone.
+ */
+export const STAGES_ELSEWHERE: readonly StageElsewhere[] = [
+  {
+    name: 'Stage 1',
+    where: 'Qingdao Oriental Movie Metropolis, Shandong',
+    floorSqm: 10_000,
+    heightM: 27.5,
+    source: 'Qingdao municipal press, opening day, April 2018',
+    claim: 'The largest purpose-built stage in the world by floor and by volume.',
+  },
+  {
+    name: 'Stage 6',
+    where: 'Korda Studios, Etyek',
+    floorSqm: 5_856,
+    heightM: 20.05,
+    source: 'Korda Studios’ own specification',
+    claim: 'The largest purpose-built sound stage in Europe, by volume.',
+  },
+  {
+    name: 'Stage 20, the Rainbow Stage',
+    where: 'Studio Babelsberg',
+    floorSqm: 7_044,
+    heightM: 10.36,
+    source: 'Studio Babelsberg’s own site',
+    claim: 'Babelsberg’s largest sound stage, and Europe’s largest by floor.',
+  },
+  {
+    name: 'The Albert R. Broccoli 007 Stage',
+    where: 'Pinewood Studios',
+    floorSqm: 5_490,
+    heightM: 12,
+    tankSqm: 2_015,
+    source: 'Pinewood’s own specification table',
+    claim: 'A silent stage rather than a sound stage, and Europe’s largest in-stage tank.',
+  },
+  {
+    name: 'Stage 22',
+    where: 'Cinecittà, Rome',
+    floorSqm: 3_500,
+    heightM: 19.2,
+    source: 'Cinecittà',
+    claim: 'Cinecittà’s largest, ahead of the historic Teatro 5.',
+  },
+  {
+    name: 'Stage 1',
+    where: 'RVK Studios, Gufunes, Reykjavík',
+    floorSqm: 2_775,
+    heightM: 16,
+    source: 'RVK Studios’ own technical page',
+    claim: 'The largest sound stage in Iceland.',
+  },
+];
+
+/**
+ * Every square meter of purpose-built sound stage in Iceland, before this lot.
+ *
+ * RVK Studios in Gufunes: three stages at 2,775, 1,506 and 1,317 square
+ * meters. Fossa Studios, five minutes away: two at 1,130 and 816. Both from
+ * the operators' own pages. The sum is SLATE's arithmetic, not a published
+ * total — nobody publishes one, because until now there was no reason to.
+ *
+ * It is the number that makes this lot make sense. A country with a rebate,
+ * a landscape and no rooms sends its interiors to Budapest.
+ */
+export const ICELAND_STAGE_FLOOR_SQM = 7_544;
+
+// ---------------------------------------------------------------------------
+// What stands on this land
+// ---------------------------------------------------------------------------
+
+export type StageFeature =
+  | 'tank' | 'dive_well' | 'cyclorama' | 'interconnect'
+  | 'elephant_door' | 'geothermal_floor' | 'silent_hvac';
+
+export interface StageFacts {
+  id: string;
+  /** The world's word for it. */
+  name: string;
+  /** Clear floor inside the acoustic liner, square meters. SLATE's own. */
+  floorSqm: number;
+  /** Clear height to the underside of the perms, meters. SLATE's own. */
+  clearHeightM: number;
+  /** What a shooting week costs, in cents. SLATE's own. */
+  weekRateCents: Money;
+  features: readonly StageFeature[];
+  /** Tank floor area in square meters, where there is one. */
+  tankSqm?: number;
+  /** One sentence a person would say about it. */
+  said: string;
+}
+
+/**
+ * The four stages, and why each one is the size it is.
+ *
+ * Askja is a caldera and also, in Icelandic, a box — which is what a stage is.
+ * Lón is a lagoon. The other two are numbered, because that is what real lots
+ * do: Pinewood names the 007 Stage and numbers the rest.
+ */
+export const STAGES: readonly StageFacts[] = [
+  {
+    id: 'askja',
+    name: 'Askja',
+    floorSqm: 6_000,
+    clearHeightM: 30,
+    weekRateCents: 185_000_00,
+    features: ['cyclorama', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
+    said: 'A hundred meters by sixty, and thirty meters of air above it.',
+  },
+  {
+    id: 'lon',
+    name: 'Lón',
+    floorSqm: 3_200,
+    clearHeightM: 18,
+    weekRateCents: 145_000_00,
+    features: ['tank', 'dive_well', 'geothermal_floor', 'silent_hvac'],
+    tankSqm: 2_400,
+    said: 'Most of the floor is water, and it is heated because the country heats things.',
+  },
+  {
+    id: 'stage-3',
+    name: 'Stage 3',
+    floorSqm: 2_000,
+    clearHeightM: 18,
+    weekRateCents: 78_000_00,
+    features: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
+    said: 'Ordinary, in the way most of the work is ordinary.',
+  },
+  {
+    id: 'stage-4',
+    name: 'Stage 4',
+    floorSqm: 2_000,
+    clearHeightM: 18,
+    weekRateCents: 78_000_00,
+    features: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
+    said: 'The twin of Stage 3, and the door between them opens.',
+  },
+];
+
+/** Stage floor across the whole lot, in square meters. */
+export const LOT_FLOOR_SQM = STAGES.reduce((n, s) => n + s.floorSqm, 0);
+
+/** Askja's enclosed volume, which is the figure the record rests on. */
+export const ASKJA_VOLUME_M3 = 6_000 * 30;
+
+/**
+ * What the lot may truthfully say about itself, with the measure attached.
+ *
+ * Never "the largest in the world". Askja is a third the volume of Qingdao and
+ * saying otherwise would be a lie the game could be caught in. What it is, it
+ * is by a measure anybody can check against a published number.
+ */
+export const CLAIMS: readonly { said: string; against: string }[] = [
+  {
+    said: 'The largest sound stage in Europe by volume',
+    against: 'Askja holds 180,000 cubic meters against Korda Stage 6’s 117,400, from Korda’s own figures.',
+  },
+  {
+    said: 'The largest water tank inside a stage anywhere',
+    against: 'Lón’s tank floor is 2,400 square meters against the 007 Stage’s 2,015, from Pinewood’s own spec table.',
+  },
+  {
+    said: 'More stage floor than the rest of Iceland put together',
+    against: `13,200 square meters here against ${ICELAND_STAGE_FLOOR_SQM.toLocaleString('en-US')} at RVK and Fossa combined.`,
+  },
+];
+
+// ---------------------------------------------------------------------------
+// What it cost, and what it costs
+// ---------------------------------------------------------------------------
+
+/**
+ * What the family spent building it. SLATE's own, and the reasoning is the
+ * point of writing it down.
+ *
+ * The anchor is real: a UK studio market study puts new-build stage
+ * construction at roughly £430 to £577 a square foot, so about £5,400 a square
+ * meter. Iceland moves that both ways — labor is scarce and everything
+ * structural is imported and priced in euros, but the power is geothermal and
+ * the ground is stable.
+ *
+ * It is held in euros on purpose. The króna is small and moves, the steel and
+ * the acoustic liner were bought in euros, and a four-year build carries the
+ * exchange rate as a live risk rather than a footnote.
+ */
+export const BUILD_COST_CENTS: Money = 240_000_000_00;
+
+/**
+ * What it costs a month with nothing shooting on it.
+ *
+ * The largest line is not the crew. It is the sinking fund — a percentage of
+ * what the thing cost, put aside every month against the day a roof or a
+ * chiller has to be replaced. It is the line every private operator
+ * underfunds, and it is the one that decides whether a lot is still a lot in
+ * twenty years.
+ */
+export interface OverheadLine {
+  id: string;
+  label: string;
+  monthlyCents: Money;
+  said: string;
+}
+
+export const OVERHEAD: readonly OverheadLine[] = [
+  {
+    id: 'sinking',
+    label: 'Set Aside For Repairs',
+    monthlyCents: 200_000_00,
+    said: 'One percent of what it cost to build, every year, against the day something big fails.',
+  },
+  {
+    id: 'property_tax',
+    label: 'Property Tax',
+    monthlyCents: 176_000_00,
+    said: 'Fasteignaskattur, at the commercial rate the municipality sets.',
+  },
+  {
+    id: 'crew',
+    label: 'Standing Crew',
+    monthlyCents: 154_000_00,
+    said: 'Sixteen people who are there whether anybody is shooting or not, five of them on the gate.',
+  },
+  {
+    id: 'insurance',
+    label: 'Insurance',
+    monthlyCents: 57_000_00,
+    said: 'Including the statutory catastrophe cover, which in Iceland means volcano and earthquake.',
+  },
+  {
+    id: 'selling',
+    label: 'Selling It',
+    monthlyCents: 50_000_00,
+    said: 'A stage nobody has heard of has to be sold, continuously, at every market there is.',
+  },
+  {
+    id: 'utilities',
+    label: 'Keeping The Lights On',
+    monthlyCents: 27_000_00,
+    said: 'Cheap, because the heat comes out of the ground and the power off the grid behind it.',
+  },
+  {
+    id: 'services',
+    label: 'Contracted Services',
+    monthlyCents: 25_000_00,
+    said: 'Fire and sprinkler certification, hoist inspection, snow clearing, waste.',
+  },
+];
+
+/** What a dark month costs, in cents. */
+export const MONTHLY_OVERHEAD_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
+
+/**
+ * The three rates a stage is let at, as a share of the shooting rate.
+ *
+ * Stages are quoted by the week, never by the day, and never at one price. A
+ * production pre-lights and strikes at a lower rate than it shoots at, and
+ * pays a lower one again to hold a standing set on a dark day. Anybody who has
+ * booked one knows this; a game that charges one flat rate has not.
+ */
+export const RATE_SHARE = { shooting: 1, prep: 0.6, hold: 0.35 } as const;
+
+/**
+ * How full it has to be to pay for itself, before any return on the money.
+ *
+ * No film commission or property research house publishes a break-even
+ * occupancy for a sound stage — it was looked for and it does not exist — so
+ * this is the game's own arithmetic over the figures above and nothing more.
+ */
+export const BREAK_EVEN_NOTE =
+  'Nobody publishes a break-even for a stage, so this is worked out from what the lot costs and what '
+  + 'it charges, and from nothing else.';
+
+// ---------------------------------------------------------------------------
+// Who comes looking
+// ---------------------------------------------------------------------------
+
+/**
+ * What an enquiry for stage time looks like.
+ *
+ * Deliberately not named after real companies. A game that said a particular
+ * studio shot on this lot would be inventing a fact about somebody who exists,
+ * and the rule here is that a real name carries its provenance. What a
+ * production is and where its money comes from is enough to make it feel like
+ * a real phone call.
+ */
+export interface Enquiry {
+  kind: 'feature' | 'limited series' | 'commercial' | 'documentary';
+  /** Where the money is from, in the world's words. */
+  from: string;
+  /** Floor it needs, square meters. */
+  needsSqm: number;
+  /** Height to the grid it needs, meters. */
+  needsHeightM: number;
+  /** Whether it needs water, which only one stage here has. */
+  needsTank: boolean;
+  /** How many weeks it wants. */
+  weeks: number;
+  /** What it would spend in Iceland, in króna. Decides the rebate tier. */
+  spendIsk: number;
+}
+
+/**
+ * The shapes of production that come looking for a stage in the North
+ * Atlantic, and roughly how often.
+ *
+ * The weights are SLATE's own and they encode the thing the research kept
+ * saying: the work that actually exists is mostly middling. A room the size of
+ * Askja is wanted by a handful of productions a year, and a two thousand meter
+ * stage is wanted constantly.
+ */
+export const ENQUIRY_SHAPES: readonly { weight: number; of: Enquiry }[] = [
+  {
+    weight: 34,
+    of: { kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000 },
+  },
+  {
+    weight: 24,
+    of: { kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000 },
+  },
+  {
+    weight: 16,
+    of: { kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000 },
+  },
+  {
+    weight: 12,
+    of: { kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000 },
+  },
+  {
+    weight: 9,
+    of: { kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000 },
+  },
+  {
+    weight: 5,
+    of: { kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000 },
+  },
+];
+
+/**
+ * How much cheaper than the going rate Sugar Land has to be before an enquiry
+ * stops caring that Iceland has almost no crew.
+ *
+ * SLATE's own, and the number that carries the whole disadvantage. Iceland has
+ * on the order of a thousand industry people and imports its heads of
+ * department; a production that lands here brings most of its crew and pays to
+ * house them. That cost sits against the rebate, and the rebate is why anybody
+ * looks at all.
+ */
+export const CREW_PENALTY = 0.22;
