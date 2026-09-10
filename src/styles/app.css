@@ -576,6 +576,62 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .sheet-item { min-width: 0; }
 
 /* The production companies, one card each. */
+/* ---------- Looking at things ----------
+ *
+ * A look opens in the flow of the page, under the block whose noun was
+ * pressed. It is indented and hairlined on the left so the eye can see it
+ * hangs off what is above it, and it nests: a look inside a look indents
+ * again. Nothing ever covers anything, so there is no overlay, no z-index and
+ * no scroll lock, and getting out of four levels is one press because closing
+ * a level unmounts what is under it.
+ */
+
+button.link.is-open { color: var(--accent-strong); text-decoration-style: solid; }
+
+.look {
+  margin: var(--s3) 0 var(--s2);
+  padding: var(--s3) 0 var(--s3) var(--s4);
+  border-left: 2px solid var(--accent-line);
+  animation: look-in .16s ease-out;
+}
+@media (prefers-reduced-motion: reduce) { .look { animation: none; } }
+@keyframes look-in { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: none; } }
+
+/* A look inside a look steps in again, and fades its rule so depth reads as
+   distance rather than as a second thing of equal weight. */
+.look .look { border-left-color: var(--line); }
+
+/* Depth costs width and a chain can run five deep. Past the third step the
+   rule alone carries the nesting, because sixteen pixels a level takes eighty
+   off a sentence by the bottom of a real chain — and a phone has none to
+   spare, so it steps in half as far and stops sooner. */
+.look .look .look .look { padding-left: var(--s3); }
+@media (max-width: 620px) {
+  .look { padding-left: var(--s3); }
+  .look .look .look { padding-left: var(--s2); }
+  .look-way { gap: var(--s1); }
+}
+
+.look-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); }
+.look-trail { font-size: var(--size-xs); color: var(--text-dim); margin-bottom: 2px; }
+.look-name { font-size: var(--size-md); font-weight: 650; margin: 2px 0 0; overflow-wrap: break-word; }
+.look-close { flex: none; font-size: var(--size-xs); color: var(--text-dim); }
+
+.look-inner { min-width: 0; }
+.look-summary { font-size: var(--size-sm); margin: var(--s3) 0 0; max-width: 62ch; }
+.look-provenance { font-size: var(--size-xs); color: var(--text-dim); margin: var(--s3) 0 0; max-width: 62ch; }
+
+/* A way in says where it goes before you take it. The name is the control and
+   the detail is the promise, so they sit on one line and wrap together. */
+.look-ways { display: flex; flex-direction: column; gap: var(--s2); margin-top: var(--s3); }
+.look-way { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2); }
+.look-way-detail { font-size: var(--size-xs); color: var(--text-dim); min-width: 0; }
+
+.look-facets { margin-top: var(--s3); }
+.look-facet-body { margin-top: var(--s3); }
+
+.look-gone { border-left-color: var(--line); display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); }
+
 /* ---------- App shell ---------- */
 
 .shell { display: flex; flex-direction: column; height: 100%; }

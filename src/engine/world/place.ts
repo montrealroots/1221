@@ -81,6 +81,14 @@ export interface PlaceProfile {
   industryPresence: number;
   jobMarketDepth: number;
   /** Effective income tax rate at the reference income, 0-1. */
+  /**
+   * What a wage actually loses, as a fraction of it.
+   *
+   * Every line `computeAnnualTax` returns, which is income tax at all three
+   * levels and payroll on top. Calling it income tax alone understates what
+   * comes out and overstates the income tax rate, so nothing that prints it
+   * may label it that.
+   */
   effectiveIncomeTax: number;
   salesTax: number;
   propertyTax: number;
@@ -112,8 +120,12 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
   const incentive = filmIncentive(city.id, sim.now);
 
   const km = home && away ? distanceKm(home, city) : 0;
+  // Thousands separated, because a distance from home is usually a four-digit
+  // one and "3756 mi" reads as a serial number rather than as a distance.
   const distanceFromHome = away
-    ? (usesMiles(city.countryId) ? `${Math.round(km * 0.621371)} mi` : `${Math.round(km)} km`)
+    ? (usesMiles(city.countryId)
+      ? `${Math.round(km * 0.621371).toLocaleString('en-US')} mi`
+      : `${Math.round(km).toLocaleString('en-US')} km`)
     : undefined;
 
   return {

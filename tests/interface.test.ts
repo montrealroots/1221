@@ -109,3 +109,58 @@ describe('the whole interface', () => {
     }
   });
 });
+
+/**
+ * A thing does not need a handle to be looked at.
+ *
+ * The depth engine's first rule is that the name is the control: you press
+ * "Stress", or "Reykjavík", or "Everyday Checking", and it opens. A button
+ * labelled Open or Details or More is the opposite of that — it is a handle
+ * bolted onto a thing that should have been pressable itself, and two of them
+ * shipped on Home before the engine existed.
+ *
+ * A verb that says where it goes is not a handle. "Open Calendar" names a
+ * screen and "Go There" names a route; "Open" names nothing.
+ */
+describe('affordances', () => {
+  const HANDLES = ['Open', 'Show', 'Hide', 'Details', 'More', 'View', 'Expand'];
+
+  it('labels no control with a bare handle', () => {
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      if (!file.endsWith('.tsx')) continue;
+      const text = readFileSync(file, 'utf8');
+      for (const [index, line] of text.split('\n').entries()) {
+        // The whole of a button's text, on its own line between the tags.
+        const alone = /^\s*(?:\{'\s*)?([A-Za-z]+)\s*(?:'\})?\s*$/.exec(line);
+        const word = alone?.[1];
+        if (!word || !HANDLES.includes(word)) continue;
+        const before = text.split('\n').slice(Math.max(0, index - 4), index).join(' ');
+        if (/<button|className="btn|className={`btn/.test(before)) {
+          offenders.push(`${file}:${index + 1}  "${word}"`);
+        }
+      }
+    }
+    expect(offenders, 'controls whose whole label is a handle rather than a name').toEqual([]);
+  });
+
+  it('carries no information in a title attribute, on the screens depth reaches', () => {
+    // Rule 13. A tooltip is not depth: it is invisible on a phone, invisible
+    // to a keyboard and invisible to a screen reader, and it was how the
+    // calendar row on Home used to say what it was.
+    //
+    // Held over Home and the look declarations, which is as far as the engine
+    // has been taken. Thirteen more sit on the calendar, the shell and the
+    // creation pickers; they are older than this rule and they move when
+    // those screens do, not before. Widening the glob is what promotes them.
+    const REACHED = /ui\/(screens\/Home|looks\/)/;
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      if (!file.endsWith('.tsx') || !REACHED.test(file)) continue;
+      for (const [index, line] of readFileSync(file, 'utf8').split('\n').entries()) {
+        if (/\stitle={/.test(line)) offenders.push(`${file}:${index + 1}`);
+      }
+    }
+    expect(offenders, 'title attributes carrying what the screen should say').toEqual([]);
+  });
+});

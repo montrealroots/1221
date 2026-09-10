@@ -1,9 +1,10 @@
 # Depth — every noun opens where it stands
 
-One of the main engines of the system, specified and not yet built. What
-follows is the rule the whole game obeys, the machinery that makes obeying it
-cheap, what stands in the way today, and the checks that will hold it in
-place. Where a screen departs from this, the screen is wrong.
+One of the main engines of the system. The machinery is in `src/ui/looks/`,
+twenty-five kinds are declared against it and Home is wired to every one of
+them. What follows is the rule the whole game obeys, the machinery that makes
+obeying it cheap, what stood in the way, and the checks that hold it in place.
+Where a screen departs from this, the screen is wrong.
 
 The rule, in the words it was asked for: *every logical object, system, and
 piece of information should be interactable and open into increasingly
@@ -53,7 +54,9 @@ resolves to nothing says what became of it, in a sentence, in its own voice.
    subject is no longer there.
 5. **`name` is the world's word for the thing** and is the only string the
    trail prints. `kind` renders as an eyebrow above it and never enters it. No
-   `name` or `kind` carries an underscore, a slash, or a run of four digits.
+   `name` or `kind` carries an underscore, a slash, a run of four digits or a
+   lowercase word running into a capital, and every one of them starts with a
+   capital or a digit.
 6. **Prose first, facts second, ways third.** A body holds at most one grid of
    `Stat`s, and only below its opening sentence. A body that is only a grid of
    `Stat`s is a record view and is rejected.
@@ -108,18 +111,26 @@ Measured in the running app, every screen, at 1440×950:
 | **Home** | **1%** — one live element in ninety-four |
 | Calendar | 64% |
 
-Home is the main game screen and offers a player exactly one thing to press.
-Every stat, meter, place name, temperature, balance and standing bar is a dead
-end. The Calendar at 64% proves the codebase can do better; it does it by
-hand, once, in a screen's local state — which is precisely why the same
-calendar entry is pressable on the Calendar and dead on Home.
+Measured again on the same screen at the same width once the engine was built
+and Home was wired to it: **16%**, thirty-seven live elements in two hundred
+and thirty-three, thirty-six of them nouns rather than controls. Twenty-five
+kinds are declared and sixty-six subjects resolve out of a booted save.
+
+The first row for Home is what it was: the main game screen, offering a player
+exactly one thing to press, with every stat, meter, place name, temperature,
+balance and standing bar a dead end. The Calendar at 64% was the proof that
+the codebase could do better; it did it by hand, once, in a screen's local
+state — which is precisely why the same calendar entry was pressable on the
+Calendar and dead on Home. It is declared once now, and pressable on both.
 
 A survey of six sweeps found **253 drillable subjects** across the two screens
 and five creation steps that exist.
 
-## What must be true first
+## What had to be true first
 
-Six blockers, each verified against source rather than assumed:
+Six blockers, each verified against source rather than assumed. The first five
+are still true and the engine is built around them rather than through them;
+the sixth is answered but unpopulated:
 
 1. **There is no URL.** `route` is React state in `game-context.tsx:99`.
    `react-router-dom` is in `package.json` and imported nowhere in `src/`. Any
@@ -152,8 +163,13 @@ Six blockers, each verified against source rather than assumed:
   every way transitively to a fixed point, and assert each edge resolves onto
   something. The same guarantee as `tests/navigation.test.ts`, whose own header
   records that this class of bug has shipped twice.
-- The name gate — `name` and `kind` must fail `/_|\/|\d{4}/`. `Sleep Debt`
-  passes; `sleepDebt`, `Atlantic/Reykjavik` and `person_000001` cannot ship.
+- The name gate — `name` and `kind` must fail `/_|\/|\d{4}/`, must fail
+  `/\b[a-z]+[A-Z]/`, and must start with a capital or a digit. The middle
+  clause is the one that matters and the one this spec first got wrong:
+  `sleepDebt` carries no underscore, no slash and no run of digits, so the
+  first regex waved through the very example the rule was written around. It
+  is anchored at a word boundary, so McAllen, DeLuca and DreamWorks — all real
+  gazetteer and company spellings — are not mistaken for identifiers.
 - The shape gate — more than one stat grid in a body, or a stat grid with no
   sentence above it, fails. This is the only defence against a look becoming a
   record view.
@@ -164,6 +180,10 @@ Six blockers, each verified against source rather than assumed:
   `cursor: pointer` on anything not rendered as a button, and no control whose
   whole text is Open, Show, Details, More, View or Expand. Two of those ship on
   Home today, which is the point.
+- The apostrophe gate — no straight `'` between two letters anywhere under
+  `src/ui/looks/`. `docs/STYLE.md` has always said the apostrophe is the
+  typographic one and nothing checked it; the first draft of `place.tsx`
+  carried forty-six straight ones into sentences a player reads.
 - `tools/label-sweep.mjs` and `tools/voice-check.mjs` extended over
   `src/ui/looks/**`. Every new sentence in the feature lives in one directory,
   which is the difference between policed prose and a hundred loose strings.

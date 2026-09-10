@@ -8,6 +8,8 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
 import { clamp } from '@/engine/core/rng';
+import { Open } from '@/ui/looks/Look';
+import type { Subject } from '@/ui/looks/subject';
 
 export function Panel({
   title, subtitle, actions, children, flush, tight,
@@ -36,16 +38,21 @@ export function Panel({
 }
 
 export function Stat({
-  label, value, note, tone,
+  label, value, note, tone, look,
 }: {
   label: string;
   value: ReactNode;
   note?: ReactNode;
   tone?: 'positive' | 'negative' | 'warning';
+  /**
+   * The thing this figure is about. Given one, the label becomes the way in —
+   * the name is the control, so there is no button to add beside it.
+   */
+  look?: Subject;
 }) {
   return (
     <div className="stat">
-      <span className="stat-label">{label}</span>
+      <span className="stat-label">{look ? <Open subject={look}>{label}</Open> : label}</span>
       <span className={`stat-value${tone ? ` ${tone}` : ''}`}>{value}</span>
       {note && <span className="stat-note">{note}</span>}
     </div>
@@ -57,7 +64,7 @@ export function Stat({
  * color alone is not accessible.
  */
 export function Meter({
-  label, value, max = 100, tone, hint, invert,
+  label, value, max = 100, tone, hint, invert, look,
 }: {
   label: string;
   value: number;
@@ -65,6 +72,8 @@ export function Meter({
   tone?: 'positive' | 'negative' | 'warning';
   hint?: string;
   invert?: boolean;
+  /** The dial this bar is drawing. Its label becomes the way in. */
+  look?: Subject;
 }) {
   const pct = clamp((value / max) * 100, 0, 100);
   const derived = tone ?? (invert
@@ -73,7 +82,7 @@ export function Meter({
   return (
     <div>
       <div className="row-between xs" style={{ marginBottom: 3 }}>
-        <span className="muted">{label}</span>
+        <span className="muted">{look ? <Open subject={look}>{label}</Open> : label}</span>
         <span className="mono">{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</span>
       </div>
       <div
