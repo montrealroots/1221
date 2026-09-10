@@ -341,6 +341,18 @@ export function familyOf(universe: SaveUniverse, personId: Id): { person: Person
     .filter((entry): entry is { person: Person; kind: Relation['kind'] } => entry.person !== undefined);
 }
 
+/**
+ * What one person is to another, read from the first one's side.
+ *
+ * Undefined where they are not related, which is most people. Lives here
+ * rather than in a screen because being somebody's mother is a fact about the
+ * save, and two screens were about to work it out for themselves.
+ */
+export function relationFrom(universe: SaveUniverse, fromId: Id, toId: Id): string | undefined {
+  const found = universe.people[fromId]?.relations?.find((relation) => relation.toId === toId);
+  return found ? relationWord(found.kind, universe.people[toId]?.gender) : undefined;
+}
+
 /** What one person is to another, in the word the world uses. */
 export function relationWord(kind: Relation['kind'], gender?: Person['gender']): string {
   switch (kind) {

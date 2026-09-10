@@ -12,15 +12,22 @@
  * notices.
  */
 
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { unreadNotifications } from '@/engine/world/world';
+import { MISSED_COOLS, TOGETHER_WARMS } from '@/engine/world/standing';
+import { resolveLook } from '@/ui/looks/registry';
+import type { Looked } from '@/ui/looks/registry';
+import '@/ui/looks/all';
 import {
-  FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, PLAN_KIND, checkPlan,
+  FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, PLAN_KIND, checkPlan, couldPlanWith,
 } from '@/engine/world/plans';
+
+const PLANS_SOURCE = readFileSync(new URL('../src/engine/world/plans.ts', import.meta.url), 'utf8');
 
 interface Answer { ok: boolean; id?: string; error?: string }
 
@@ -170,5 +177,189 @@ describe('a plan survives being saved', () => {
     const made = put(sim, { title: 'Long One', at: sim.now + MS_DAY, durationMinutes: 240 });
     const entry = entriesBetween(sim, sim.now, sim.now + 2 * MS_DAY).find((e) => e.id === made.id)!;
     expect(entry.endsAt! - entry.at).toBe(240 * MS_MINUTE);
+  });
+});
+
+describe('who a plan can be with', () => {
+  const family = {
+    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
+    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
+    twin: { firstName: 'Katla', gender: 'female' as const, identical: true, role: 'the house' as const },
+  };
+
+  it('offers everybody you have a standing with, closest first', () => {
+    const sim = quickSave({ family }, 'plan-with-list');
+    const offered = couldPlanWith(sim);
+
+    expect(offered.map((one) => one.person.firstName)).toEqual(['Katla', 'Halla', 'Jón']);
+    for (let i = 1; i < offered.length; i += 1) {
+      expect(offered[i - 1]!.closeness).toBeGreaterThanOrEqual(offered[i]!.closeness);
+    }
+  });
+
+  it('says what each of them is to you, so a screen never works it out again', () => {
+    const sim = quickSave({ family }, 'plan-with-relations');
+    const said = Object.fromEntries(couldPlanWith(sim).map((one) => [one.person.firstName, one.relation]));
+    expect(said).toEqual({ Halla: 'Mother', Jón: 'Father', Katla: 'Twin Sister' });
+  });
+
+  it('never offers you yourself', () => {
+    const sim = quickSave({ family }, 'plan-with-not-you');
+    expect(couldPlanWith(sim).map((one) => one.person.id)).not.toContain(sim.universe.playerId);
+  });
+
+  it('offers nobody at all when you have no people', () => {
+    const sim = quickSave({}, 'plan-with-nobody');
+    sim.universe.bonds = {};
+    expect(couldPlanWith(sim)).toEqual([]);
+  });
+
+  it('offers exactly what the calendar will take, and nothing it will refuse', () => {
+    // The list and the rule are the same rule read two ways round. A screen
+    // that offered anybody else would be offering a refusal.
+    const sim = quickSave({ family }, 'plan-with-agrees');
+    for (const { person } of couldPlanWith(sim)) {
+      const answer = checkPlan(sim, {
+        title: 'Dinner', at: sim.now + MS_HOUR, withIds: [person.id],
+      });
+      expect(answer.ok, `${person.firstName} is offered and refused`).toBe(true);
+    }
+  });
+});
+
+describe('the loop the form closes', () => {
+  it('moves a standing through the same payload the screen sends', () => {
+    // The whole point of the field. Before it existed the engine took people
+    // on a plan, the standing model read them and five floors of drill-down
+    // described what they did — and no screen could send one, so every bond
+    // in every save drifted to its resting level and stayed there.
+    const sim = quickSave({
+      family: {
+        mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' },
+        father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' },
+      },
+    }, 'plan-with-loop');
+    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!;
+    const jon = couldPlanWith(sim).find((one) => one.person.firstName === 'Jón')!;
+
+    // Exactly the shape PlanForm builds.
+    const answer = put(sim, {
+      title: 'Dinner With Mum',
+      at: sim.now + 2 * MS_HOUR,
+      durationMinutes: 120,
+      category: 'family',
+      withIds: [halla.person.id],
+    });
+    expect(answer.ok).toBe(true);
+
+    sim.advanceTo(sim.now + 3 * MS_HOUR);
+    const after = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!;
+    expect(after.closeness).toBeGreaterThan(halla.closeness);
+    // And nobody who was not on it moved.
+    expect(couldPlanWith(sim).find((one) => one.person.firstName === 'Jón')!.closeness)
+      .toBe(jon.closeness);
+  });
+
+  it('takes an empty list, because most plans are with nobody', () => {
+    const sim = quickSave({}, 'plan-with-empty');
+    expect(put(sim, { title: 'An Hour Of My Own', at: sim.now + MS_HOUR, withIds: [] }).ok).toBe(true);
+  });
+});
+
+describe('the form and the engine agree about what a plan has', () => {
+  const FORM = readFileSync(new URL('../src/ui/workspaces/CalendarWorkspace.tsx', import.meta.url), 'utf8');
+
+  it('sends every part of a plan the engine acts on', () => {
+    // This is the gate that would have caught a whole subsystem going quiet.
+    // `withIds` was taken by the command, read by the standing model and
+    // described by five floors of drill-down, and no screen sent one — so
+    // every bond in every save drifted to its resting level and stayed.
+    //
+    // `locationId` is the deliberate absence: nothing in the game moves you
+    // anywhere, so offering a city would be offering a plan you are certain
+    // to miss. It goes on this list the day travel does.
+    const NOT_ASKED = new Set(['locationId']);
+    const declared = [...PLANS_SOURCE.matchAll(/^\s{2}(\w+)\??:/gm)]
+      .map((match) => match[1]!)
+      .filter((field, index, all) => all.indexOf(field) === index);
+    const inSpec = declared.slice(declared.indexOf('title'), declared.indexOf('withIds') + 1);
+
+    // The payload itself, not the file. The first draft of this asked whether
+    // the field appeared anywhere in the source, which every one of them does
+    // — the control that sets it is in the same file — so deleting it from
+    // the call it is sent in changed nothing and the gate stayed green.
+    const call = FORM.indexOf("'calendar.schedule'");
+    expect(call, 'the form no longer schedules anything').toBeGreaterThan(-1);
+    const open = FORM.indexOf('{', call);
+    const payload = FORM.slice(open, FORM.indexOf('}', open));
+
+    const missing = inSpec.filter((field) => !NOT_ASKED.has(field) && !payload.includes(field));
+    expect(missing, 'the plan form does not send these, so the engine never sees them').toEqual([]);
+  });
+
+  it('offers the people rather than only sending them', () => {
+    // A payload field with no control behind it is the same bug wearing a
+    // different hat: it would always send an empty list.
+    expect(FORM, 'nothing on the form lists who a plan could be with').toContain('couldPlanWith');
+    expect(FORM, 'the people are not a control').toMatch(/aria-labelledby="plan-with-label"/);
+  });
+});
+
+describe('a plan remembers who it is with', () => {
+  const family = {
+    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
+    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
+  };
+  const words = (look: Looked): string =>
+    [look.name, look.summary, JSON.stringify(look.body), ...(look.ways ?? []).flatMap((w) => [w.label, w.detail])]
+      .join(' ');
+
+  const madeWithHalla = (seed: string, over: Record<string, unknown> = {}) => {
+    const sim = quickSave({ family }, seed);
+    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!.person.id;
+    const made = put(sim, {
+      title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90, withIds: [halla], ...over,
+    });
+    return { sim, halla, id: made.id! };
+  };
+
+  it('names her on the entry, and opens onto her', () => {
+    const { sim, halla, id } = madeWithHalla('plan-remembers');
+    const look = resolveLook(sim, { kind: 'entry', id }) as Looked;
+    expect(look, 'the entry would not open').toBeDefined();
+
+    expect(words(look)).toContain('Halla');
+    const toHer = (look.ways ?? []).find((way) => way.to.kind === 'person' && way.to.id === halla);
+    expect(toHer, 'the entry does not open onto the person it is with').toBeDefined();
+    expect(toHer!.detail).toContain('Your mother');
+  });
+
+  it('says what turning up is worth while it is still ahead of you', () => {
+    const { sim, id } = madeWithHalla('plan-remembers-ahead');
+    const look = resolveLook(sim, { kind: 'entry', id }) as Looked;
+    expect(words(look)).toContain(`worth ${TOGETHER_WARMS} points`);
+    expect(words(look)).toContain(`costs ${MISSED_COOLS}`);
+  });
+
+  it('says you were there once it has been and gone', () => {
+    const { sim, id } = madeWithHalla('plan-remembers-kept');
+    sim.advanceTo(sim.now + 3 * MS_HOUR);
+    expect(words(resolveLook(sim, { kind: 'entry', id }) as Looked)).toContain('You were there');
+  });
+
+  it('says you weren’t, when you weren’t', () => {
+    const { sim, id } = madeWithHalla('plan-remembers-missed', { locationId: 'us-ca-losangeles' });
+    sim.advanceTo(sim.now + 3 * MS_HOUR);
+    const look = resolveLook(sim, { kind: 'entry', id }) as Looked;
+    expect(words(look)).toContain('you weren’t there');
+    expect(words(look)).toContain(`cost you ${MISSED_COOLS} points`);
+  });
+
+  it('says nothing about people on a plan with nobody on it', () => {
+    const sim = quickSave({ family }, 'plan-remembers-alone');
+    const made = put(sim, { title: 'An Hour Of My Own', at: sim.now + 2 * MS_HOUR });
+    const look = resolveLook(sim, { kind: 'entry', id: made.id! }) as Looked;
+    expect(words(look)).not.toContain('It’s with');
+    expect((look.ways ?? []).some((way) => way.to.kind === 'person')).toBe(false);
   });
 });

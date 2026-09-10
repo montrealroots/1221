@@ -17,10 +17,11 @@
  */
 
 import type { Simulation } from '../core/simulation';
-import type { Id } from '../domain/model';
+import type { Id, Person } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { plural } from '../core/text';
-import { MISSED_COOLS, TOGETHER_WARMS, bondFor, moveBond } from './standing';
+import { MISSED_COOLS, TOGETHER_WARMS, bondFor, bondsOf, moveBond, otherIn } from './standing';
+import { relationFrom } from './family';
 import { formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
@@ -228,6 +229,39 @@ export function registerPlans(sim: Simulation): void {
       ? { ok: true, id: item.id }
       : { ok: false, error: 'That one wouldn’t come off the calendar.' };
   });
+}
+
+// ---------------------------------------------------------------------------
+// Who a plan can be with
+// ---------------------------------------------------------------------------
+
+/** Somebody a plan can be made with, and what a screen needs to offer them. */
+export interface Plannable {
+  person: Person;
+  /** What they are to the player, where they are anything. */
+  relation?: string;
+  /** Where the two of them stand, nought to a hundred. */
+  closeness: number;
+}
+
+/**
+ * Everybody a plan can be made with, closest first.
+ *
+ * The same rule `checkPlan` enforces, read the other way round: a plan can be
+ * with anybody the player has a standing with, so this is that list. A screen
+ * that offered anybody else would be offering something the calendar is about
+ * to refuse.
+ */
+export function couldPlanWith(sim: Simulation): Plannable[] {
+  const playerId = sim.universe.playerId;
+  const out: Plannable[] = [];
+  for (const bond of bondsOf(sim.universe, playerId)) {
+    const person = sim.universe.people[otherIn(bond, playerId)];
+    if (!person) continue;
+    const relation = relationFrom(sim.universe, playerId, person.id);
+    out.push({ person, closeness: bond.closeness, ...(relation ? { relation } : {}) });
+  }
+  return out;
 }
 
 /** Minutes, said the way a person says them. For a screen to offer. */

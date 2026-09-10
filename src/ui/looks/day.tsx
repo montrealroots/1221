@@ -38,8 +38,11 @@ import {
 } from '@/engine/core/time';
 import { forecastFor } from '@/engine/systems/weather';
 import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type CalendarEntry } from '@/engine/world/calendar';
-import { PLAN_KIND } from '@/engine/world/plans';
+import { PLAN_KIND, peopleOn } from '@/engine/world/plans';
+import { relationFrom } from '@/engine/world/family';
+import { MISSED_COOLS, TOGETHER_WARMS, bondFor, standingWord } from '@/engine/world/standing';
 import type { Simulation } from '@/engine';
+import type { Person } from '@/engine/domain/model';
 import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
@@ -494,6 +497,15 @@ interface TheEntry {
   elsewhere: City | undefined;
 }
 
+/** Everybody a plan was made with, as people the save still knows. */
+function withOn(sim: Simulation, entryId: string): Person[] {
+  const item = sim.timeline.get(entryId);
+  if (!item) return [];
+  return peopleOn(item)
+    .map((id) => sim.universe.people[id])
+    .filter((person): person is Person => person !== undefined);
+}
+
 defineLook<TheEntry>('entry', {
   gone: 'That’s off the calendar now. Whatever it was, it isn’t waiting on you.',
   resolve: (sim, id) => {
@@ -547,6 +559,21 @@ defineLook<TheEntry>('entry', {
         to: at('stretch', entry.id),
         label: `${formatTime(entry.at, clock)} To ${formatTime(endOf(entry), clock)}`,
         detail: `The hours it takes, and what the sky is doing across them`,
+      });
+    }
+    // Who it is with. The one field on a plan that reaches outside the
+    // calendar, and until it was drawn here a person could put somebody on a
+    // plan and never see them on it again.
+    for (const person of withOn(sim, entry.id)) {
+      const bond = bondFor(sim.universe, sim.universe.playerId, person.id);
+      const relation = relationFrom(sim.universe, sim.universe.playerId, person.id);
+      ways.push({
+        to: at('person', person.id),
+        label: person.displayName || person.firstName,
+        detail: entry.status === 'missed'
+          ? `${relation ? `Your ${relation.toLowerCase()}` : 'On this one'}, and you weren’t there`
+          : `${relation ? `Your ${relation.toLowerCase()}` : 'On this one'}${
+            bond ? `, and the two of you are ${standingWord(Math.round(bond.closeness)).toLowerCase()}` : ''}`,
       });
     }
     // Everything else you decided to do, where this is one of them.
@@ -615,6 +642,19 @@ defineLook<TheEntry>('entry', {
                 ? ' Nothing else is booked against it.'
                 : ''}
           </p>
+          {withOn(sim, entry.id).length > 0 && (
+            <p className="small">
+              {`It’s with ${spokenList(withOn(sim, entry.id).map((one) => one.firstName))}. `}
+              {entry.status === 'missed'
+                ? `Being somewhere else cost you ${MISSED_COOLS} points of where you stand with `
+                  + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}.`
+                : entry.status === 'pending'
+                  ? `Turning up is worth ${TOGETHER_WARMS} points of where you stand with `
+                    + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}, and not turning up costs ${MISSED_COOLS}.`
+                  : `You were there, which was worth ${TOGETHER_WARMS} points of where you stand with `
+                    + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}.`}
+            </p>
+          )}
           <div className="grid grid-2">
             <Stat
               label="When"
