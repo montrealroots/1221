@@ -205,7 +205,71 @@ export interface Person {
   /** Said in their own words, where the list did not have it. */
   raceEthnicityOwn?: string;
 
+  /**
+   * Who they are to the people around them.
+   *
+   * Stored on the person rather than in a table of pairs, because being
+   * somebody's mother is a fact about her and not a fact about the two of
+   * them. How they are getting on is the other thing, and that is a `Bond`.
+   */
+  relations?: Relation[];
+
+  /**
+   * What they do on the family land, where they do anything.
+   *
+   * Not a job in a labor market — there is no labor market. It is the thing
+   * this person is the one who does: keeps the house, runs the lot, runs the
+   * company.
+   */
+  estateRole?: EstateRole;
+
   createdAt: Instant;
+}
+
+/** What somebody on the land is the one who does. */
+export type EstateRole = 'the house' | 'the lot' | 'the company' | 'nothing in particular';
+
+/**
+ * How one person is related to another.
+ *
+ * Written from the subject's side: a person carrying `{ kind: 'mother', toId }`
+ * means that person's mother is the one named. A twin is not a sibling with a
+ * coincidence — the world says "your twin", never "your sibling who happens to
+ * share a birthday" — so it is its own word.
+ */
+export type RelationKind = 'mother' | 'father' | 'child' | 'twin';
+
+export interface Relation {
+  kind: RelationKind;
+  toId: Id;
+}
+
+/**
+ * How two people are getting on.
+ *
+ * One record for a pair rather than one each: the game has no interest in a
+ * mother who feels close to a son who does not feel close back, and modeling
+ * both sides would double the bookkeeping to say the same thing twice.
+ *
+ * `closeness` is nought to a hundred and moves with what actually happens —
+ * time spent together warms it, time apart cools it slowly. It is not
+ * affection and it is not a score of the relationship; it is how much of each
+ * other they have had lately.
+ */
+export interface Bond {
+  id: Id;
+  saveId: Id;
+  /** The two people, sorted, so a pair has exactly one bond. */
+  betweenIds: [Id, Id];
+  closeness: number;
+  /** The last time the two of them were actually in the same room on purpose. */
+  lastTogetherAt?: Instant;
+  formedAt: Instant;
+}
+
+/** The one key a pair of people has, whichever order they are named in. */
+export function bondKey(a: Id, b: Id): string {
+  return a < b ? `${a}|${b}` : `${b}|${a}`;
 }
 
 export interface Household {
@@ -815,7 +879,12 @@ export interface Preferences {
   largePurchaseThreshold: Money;
 }
 
-export const SAVE_SCHEMA_VERSION = 75;
+/**
+ * 76 added the family: relations on a person, and bonds between two of them.
+ * A save from 75 or earlier has neither, which reads correctly as somebody
+ * with no family recorded rather than as a broken one.
+ */
+export const SAVE_SCHEMA_VERSION = 76;
 
 export interface SaveMeta {
   id: Id;
@@ -907,6 +976,8 @@ export interface SaveUniverse {
 
   people: Record<Id, Person>;
   households: Record<Id, Household>;
+  /** How the people in it are getting on, keyed by `bondKey`. */
+  bonds: Record<string, Bond>;
 
   accounts: Record<Id, Account>;
   transactions: LedgerTransaction[];

@@ -33,6 +33,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 import { freshWellbeing } from '../systems/life';
 import { PERFORMER_NOUN, PERFORMER_TITLES, impliedPerformerTitle, type PerformerTitle } from '../core/performer';
 import { ESTATE_CITY_ID, ESTATE_COUNTRY_ID } from '@/engine/content/estate';
+import { defaultFamily, type FamilyConfig } from './family';
 
 export const APP_VERSION = '1.1.0';
 
@@ -102,6 +103,15 @@ export interface NewSaveConfig {
   careerStage: number;
 
   /**
+   * The family.
+   *
+   * Just the parents, and a twin where the player had one. The land is
+   * theirs, the company carries their name, and until this existed the save
+   * talked about them constantly without any of them being in it.
+   */
+  family: FamilyConfig;
+
+  /**
    * The company.
    *
    * There is one decision here and it is the name. The shop is an independent
@@ -158,6 +168,7 @@ export function defaultConfig(): NewSaveConfig {
     personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
     lifestyle: 'modest', background: 'Grew up outside the industry.',
     careerStage: 5,
+    family: defaultFamily(),
     companyName: '',
     // Home base is the family land, and it is not a choice on any screen.
     startLocationId: ESTATE_CITY_ID,
@@ -227,7 +238,7 @@ export function emptyUniverse(
     homeZone: zone,
     currentZone: zone,
     playerId,
-    people: {}, households: {},
+    people: {}, households: {}, bonds: {},
     accounts: {}, transactions: [],
     properties: {},
     scheduled: [], audits: [], history: [], decisions: {}, notifications: [],

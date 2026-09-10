@@ -21,7 +21,7 @@ export const CHIPS = 3;
 /**
  * Whether an entry is still on the calendar at all.
  *
- * Cancelled is the one status that means it is not: you called it off, and a
+ * Canceled is the one status that means it is not: you called it off, and a
  * day you called something off on should look as free as a day you never put
  * anything on. Missed and completed both happened — one of them badly — and a
  * calendar that hid them would be lying about your week.

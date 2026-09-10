@@ -165,7 +165,7 @@ describe('a day in the grid', () => {
   });
 
   it('treats a plan you called off as off the calendar', () => {
-    // A day you cancelled something on should look as free as a day you never
+    // A day you canceled something on should look as free as a day you never
     // put anything on. Missed and completed both happened — one badly — and
     // hiding those would be lying about the week.
     expect(standingIn(day(0, 3, 'cancelled'))).toHaveLength(0);

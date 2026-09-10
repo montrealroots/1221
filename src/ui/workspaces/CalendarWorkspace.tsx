@@ -288,7 +288,7 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
           type="text"
           value={title}
           maxLength={LONGEST_TITLE}
-          placeholder="Something you’d recognise on the day"
+          placeholder="Something you’d recognize on the day"
           onChange={(e) => { setTitle(e.target.value); setError(undefined); }}
         />
       </div>

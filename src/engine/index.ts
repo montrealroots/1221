@@ -24,6 +24,7 @@ import { CITIES } from './content/geography';
 
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
+import { populateFamily } from './world/family';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
 import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
@@ -166,6 +167,13 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   player.residenceId = property.id;
   household.residenceId = property.id;
 
+  // --- The family ---------------------------------------------------------
+  // Last, because everybody in it lives in the house the lines above just
+  // built and belongs to the household above that. The land has been theirs
+  // since before the player was born; until this ran, none of them existed.
+  const stream = sim.rng('family');
+  populateFamily(sim.universe, config.family, (ns) => sim.nextId(ns), () => stream.next());
+
   armWorldClock(sim);
 }
 
@@ -271,6 +279,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   record('people', 'the people');
   record('households', 'the households');
+  record('bonds', 'the bonds between people');
   record('properties', 'the properties');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');

@@ -73,7 +73,7 @@ function cleanTitle(raw: unknown): string {
  */
 export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult {
   const title = cleanTitle(spec.title);
-  if (!title) return { ok: false, error: 'It needs a name — something you’d recognise on the day.' };
+  if (!title) return { ok: false, error: 'It needs a name — something you’d recognize on the day.' };
 
   const at = spec.at;
   if (typeof at !== 'number' || !Number.isFinite(at)) {
