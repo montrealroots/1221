@@ -118,6 +118,61 @@ describe('the places', () => {
     expect(baselineTemperature(0)).toBeGreaterThan(baselineTemperature(50));
   });
 
+  it('tell a cold coast from a cold interior', () => {
+    // Sixty-two degrees north in the middle of Siberia and sixty-two degrees
+    // north in the North Atlantic are not the same winter, and reading every
+    // high latitude as subarctic said they were.
+    expect(climateByLatitude(62, 110)).toBe('subarctic');
+    expect(climateByLatitude(62, -20)).toBe('subpolar_oceanic');
+    expect(climateTypeFor(city('is-39-reykjavik'))).toBe('subpolar_oceanic');
+  });
+});
+
+/**
+ * Reykjavík against the record.
+ *
+ * It is the home base of every save, so its numbers are on the main screen of
+ * the game every day a player opens it, and they were twenty degrees wrong:
+ * a January mean of -20.6°C against a real -0.5°C, and a summer-to-winter
+ * swing of 37° against a real 12°. The model is a model and will never match
+ * a thirty-year average exactly, so this holds it to a degree and a half —
+ * tight enough to catch the class of error that put snow on Home in March,
+ * loose enough not to fail on a refinement that is still right.
+ *
+ * Figures are the 1991-2020 normals for the Reykjavík station.
+ */
+describe('the home base', () => {
+  const NORMALS: readonly (readonly [month: number, mean: number, high: number])[] = [
+    [1, -0.5, 1.9], [2, -0.1, 2.8], [3, 0.7, 3.6], [4, 2.9, 5.9],
+    [7, 11.2, 14.1], [10, 4.4, 7.0], [12, 0.4, 2.9],
+  ];
+  const TOLERANCE = 1.5;
+
+  for (const [month, mean, high] of NORMALS) {
+    it(`reads month ${month} within a degree and a half of the record`, () => {
+      const normal = normalFor(city('is-39-reykjavik'), month, 15);
+      expect(Math.abs(normal.mean - mean), `mean ${normal.mean.toFixed(1)} against ${mean}`)
+        .toBeLessThan(TOLERANCE);
+      expect(Math.abs(normal.high - high), `high ${normal.high.toFixed(1)} against ${high}`)
+        .toBeLessThan(TOLERANCE);
+    });
+  }
+
+  it('swings through the year the way the sea lets it', () => {
+    const swing = normalFor(city('is-39-reykjavik'), 7, 15).mean
+      - normalFor(city('is-39-reykjavik'), 1, 15).mean;
+    expect(Math.abs(swing - 11.7), `swing ${swing.toFixed(1)} against 11.7`).toBeLessThan(TOLERANCE);
+  });
+
+  it('never puts a Reykjavík March below freezing all day', () => {
+    // What the bug actually looked like: "snow in Reykjavík on Thursday,
+    // -16°C to -11°C" on a day whose real high is about four above.
+    for (let day = 1; day <= 28; day += 3) {
+      const march = on('is-39-reykjavik', 3, day);
+      expect(march.highC, `March ${day} high ${march.highC}`).toBeGreaterThan(-4);
+    }
+  });
+
   it('describe a day in one line, with a short word for the condition', () => {
     const now = weatherAt(sim, 'us-ca-losangeles');
     expect(now).toBeTruthy();

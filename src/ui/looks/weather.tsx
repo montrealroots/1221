@@ -71,6 +71,7 @@ const BAND: Record<ClimateType, string> = {
   humid_subtropical: 'heavy, humid summers and a winter that barely turns up',
   oceanic: 'gray, mild and wet, without much of an extreme in either direction',
   continental: 'a real summer and a real winter, with little patience in between',
+  subpolar_oceanic: 'cool and wet the year round, with the sea holding both ends of it in check',
   subarctic: 'long dark winters and a summer that never quite gets warm',
   polar: 'cold that runs straight through the calendar, and light that comes and goes',
   highland: 'thin air, warm days and cold nights, whatever the month says',

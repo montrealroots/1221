@@ -378,6 +378,18 @@ button.link:hover { color: var(--accent-strong); }
 .chip-info { background: var(--info-dim); color: var(--info); border-color: transparent; }
 
 .stat { display: flex; flex-direction: column; gap: 2px; }
+/* A stat that opens is one control covering the whole tile. The button lays
+   itself out exactly as the tile did, and only the label carries the
+   underline — three underlines in a tile this small is noise, not an
+   affordance. */
+.stat > button.link {
+  display: flex; flex-direction: column; gap: 2px; align-items: flex-start;
+  text-align: left; width: 100%; text-decoration: none;
+}
+.stat > button.link .stat-label {
+  text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px;
+}
+.stat > button.link:hover .stat-label { color: var(--accent-strong); }
 .stat-label { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 /* A long value wraps rather than running out of its panel: a list of formats
    is as much a stat as a number is. */

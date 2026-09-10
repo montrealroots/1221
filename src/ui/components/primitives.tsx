@@ -50,11 +50,21 @@ export function Stat({
    */
   look?: Subject;
 }) {
-  return (
-    <div className="stat">
-      <span className="stat-label">{look ? <Open subject={look}>{label}</Open> : label}</span>
+  // The whole tile is one control, not three. A player's hand goes to the
+  // figure as readily as to the word above it, and a number that does nothing
+  // under a word that does something is the exact inconsistency depth exists
+  // to remove. The label keeps the underline, so there is still one clear
+  // affordance rather than three.
+  const inner = (
+    <>
+      <span className="stat-label">{label}</span>
       <span className={`stat-value${tone ? ` ${tone}` : ''}`}>{value}</span>
       {note && <span className="stat-note">{note}</span>}
+    </>
+  );
+  return (
+    <div className="stat">
+      {look ? <Open subject={look}>{inner}</Open> : inner}
     </div>
   );
 }
@@ -83,7 +93,11 @@ export function Meter({
     <div>
       <div className="row-between xs" style={{ marginBottom: 3 }}>
         <span className="muted">{look ? <Open subject={look}>{label}</Open> : label}</span>
-        <span className="mono">{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</span>
+        <span className="mono">
+          {look
+            ? <Open subject={look}>{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</Open>
+            : <>{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</>}
+        </span>
       </div>
       <div
         className={`meter meter-${derived}`}

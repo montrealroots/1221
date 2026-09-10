@@ -57,16 +57,19 @@ export function Home() {
       <LookRegion className="page-head">
         <div className="eyebrow">
           <Open subject={at('day', today)}>{formatWeekdayDate(sim.now, sim.zone)}</Open>
-          {' · '}{PERFORMER_NOUN[player.performerTitle]}
+          {' · '}
+          <Open subject={at('person', player.id)}>{PERFORMER_NOUN[player.performerTitle]}</Open>
         </div>
         <h1>
           Good {partOfDay(sim.now, sim.zone)},{' '}
           <Open subject={at('person', player.id)}>{player.firstName}</Open>.
         </h1>
         <p className="muted">
-          {formatTime(sim.now, sim.zone)} in{' '}
+          <Open subject={at('day', today)}>{formatTime(sim.now, sim.zone)}</Open> in{' '}
           {city ? <Open subject={at('place', city.id)}>{city.name}</Open> : 'an unknown place'} ·{' '}
-          {zoneAbbreviation(sim.now, sim.zone)} ·{' '}
+          {city
+            ? <Open subject={at('place', city.id)}>{zoneAbbreviation(sim.now, sim.zone)}</Open>
+            : zoneAbbreviation(sim.now, sim.zone)} ·{' '}
           {city
             ? <Open subject={at('season', `${city.id}/${season}`)}>{season}</Open>
             : season}
@@ -102,13 +105,16 @@ export function Home() {
         <LookRegion>
           {next ? (
             <div className="stat">
-              <span className="stat-label">{formatRelative(next.at, sim.now)}</span>
+              <span className="stat-label">
+                <Open subject={at('entry', next.id)}>{formatRelative(next.at, sim.now)}</Open>
+              </span>
               <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>
                 <Open subject={at('entry', next.id)}>{titleCaseLabel(next.title)}</Open>
               </span>
               <span className="stat-note">
                 <Open subject={at('day', dateKey(next.at, sim.zone))}>{formatDate(next.at, sim.zone)}</Open>
-                {' at '}{formatTime(next.at, sim.zone)}
+                {' at '}
+                <Open subject={at('entry', next.id)}>{formatTime(next.at, sim.zone)}</Open>
                 {next.locationId && next.locationId !== player.currentLocationId && (
                   <span className="negative">
                     {' · you’re not in '}
@@ -132,7 +138,9 @@ export function Home() {
                     <span className="small truncate">
                       <Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open>
                     </span>
-                    <span className="xs dim nowrap">{formatRelative(entry.at, sim.now)}</span>
+                    <span className="xs dim nowrap">
+                      <Open subject={at('entry', entry.id)}>{formatRelative(entry.at, sim.now)}</Open>
+                    </span>
                   </div>
                 ))}
               </div>
@@ -173,7 +181,9 @@ export function Home() {
                       </span>
                       {decision.dueAt !== undefined && (
                         <span className={`xs ${decision.dueAt < sim.now ? 'negative' : 'dim'}`}>
-                          {decision.dueAt < sim.now ? 'Overdue' : formatRelative(decision.dueAt, sim.now)}
+                          <Open subject={at('decision', decision.id)}>
+                            {decision.dueAt < sim.now ? 'Overdue' : formatRelative(decision.dueAt, sim.now)}
+                          </Open>
                         </span>
                       )}
                     </div>
@@ -220,7 +230,9 @@ export function Home() {
                     </div>
                     <div className="xs muted">{note.body}</div>
                   </div>
-                  <span className="xs dim nowrap">{formatRelative(note.at, sim.now)}</span>
+                  <span className="xs dim nowrap">
+                    <Open subject={at('notification', note.id)}>{formatRelative(note.at, sim.now)}</Open>
+                  </span>
                   {note.route && (
                     <button
                       className="btn btn-sm"
@@ -270,10 +282,12 @@ export function Home() {
                   <Open subject={at('country', place.city.countryId)}>{place.countryName}</Open>
                 </div>
                 <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
-                  {place.away && place.homeCity
-                    ? `${place.distanceFromHome} from home in ${place.homeCity.name}${place.hoursFromHome ? ` · ${place.hoursFromHome > 0 ? '+' : ''}${place.hoursFromHome}h from home time` : ''}.`
-                    : 'Home.'}
-                  {placeLine(place) && ` ${placeLine(place)}.`}
+                  <Open subject={at('place', place.city.id)}>
+                    {place.away && place.homeCity
+                      ? `${place.distanceFromHome} from home in ${place.homeCity.name}${place.hoursFromHome ? ` · ${place.hoursFromHome > 0 ? '+' : ''}${place.hoursFromHome}h from home time` : ''}.`
+                      : 'Home.'}
+                    {placeLine(place) && ` ${placeLine(place)}.`}
+                  </Open>
                 </div>
                 <div className="grid grid-3">
                 <Stat
@@ -333,9 +347,23 @@ export function Home() {
                 />
                 </div>
                 <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
-                  Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometres'}, temperatures in °{place.units.temperature}.
-                  {place.filmIncentive ? ` ${Math.round(place.filmIncentive * 100)}% film incentive here.` : ''}
-                  {place.currency.code !== 'USD' ? ` ${RATES_NOTE}` : ''}
+                  <Open subject={at('country', place.city.countryId)}>
+                    Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometres'}, temperatures in °{place.units.temperature}.
+                  </Open>
+                  {place.filmIncentive ? (
+                    <>
+                      {' '}
+                      <Open subject={at('place', place.city.id)}>
+                        {Math.round(place.filmIncentive * 100)}% film incentive here.
+                      </Open>
+                    </>
+                  ) : ''}
+                  {place.currency.code !== 'USD' ? (
+                    <>
+                      {' '}
+                      <Open subject={at('currency', place.currency.code)}>{RATES_NOTE}</Open>
+                    </>
+                  ) : ''}
                 </p>
               </LookRegion>
             </Panel>
@@ -357,10 +385,14 @@ export function Home() {
                       <Open subject={at('weather', city.id)}>{weather.temperature}{unit}</Open>
                     </div>
                     <div className="small muted">
-                      {titleCaseLabel(weather.condition)} · High {weather.high}{unit} · Low {weather.low}{unit}
+                      <Open subject={at('weather', city.id)}>
+                        {titleCaseLabel(weather.condition)} · High {weather.high}{unit} · Low {weather.low}{unit}
+                      </Open>
                     </div>
                     <div className="xs dim">
-                      Humidity {weather.humidity}% · Wind {weather.fahrenheit ? `${Math.round(weather.windKph * 0.621)} mph` : `${weather.windKph} km/h`}
+                      <Open subject={at('weather', city.id)}>
+                        Humidity {weather.humidity}% · Wind {weather.fahrenheit ? `${Math.round(weather.windKph * 0.621)} mph` : `${weather.windKph} km/h`}
+                      </Open>
                       {' · '}<Open subject={at('weather', city.id)}>{weather.climateName}</Open>
                     </div>
                   </div>
@@ -375,8 +407,12 @@ export function Home() {
                           <Open subject={at('forecastday', `${city.id}/${day.dateKey}`)}>{weekday.slice(0, 3)}</Open>
                         </div>
                         <div aria-hidden="true">{WEATHER_EMOJI[day.condition]}</div>
-                        <div className="xs weather-cond">{weatherShort(day.condition)}</div>
-                        <div className="xs mono">{day.high}° / {day.low}°</div>
+                        <div className="xs weather-cond">
+                          <Open subject={at('forecastday', `${city.id}/${day.dateKey}`)}>{weatherShort(day.condition)}</Open>
+                        </div>
+                        <div className="xs mono">
+                          <Open subject={at('forecastday', `${city.id}/${day.dateKey}`)}>{day.high}° / {day.low}°</Open>
+                        </div>
                       </div>
                     );
                   })}
