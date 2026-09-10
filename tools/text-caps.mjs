@@ -207,11 +207,37 @@ const PROBE = () => {
   // enough that no label would be written that way.
   const isSentence = (t) => /[.!?]$/.test(t) || t.split(/\s+/).length > 12;
 
+  /**
+   * A noun in the middle of a sentence, which happens to open.
+   *
+   * The depth engine renders a pressable word as `button.link`, so a control
+   * and a word are now the same element and the capitals rule cannot treat
+   * every button as a label. "Nothing scheduled. The Day is yours." is worse
+   * English than what it replaced, not better.
+   *
+   * The test is where it sits, not what it is: a link with other words beside
+   * it inside its parent is part of a sentence and is left alone. A link that
+   * is the whole of its parent — a stat's label, a bar's label, a way in — is
+   * a label and is held to Title Case like every other label.
+   */
+  const isWordInProse = (el) => {
+    if (!el.matches('button.link')) return false;
+    const parent = el.parentElement;
+    if (!parent) return false;
+    const around = [...parent.childNodes]
+      .filter((n) => n !== el)
+      .map((n) => n.textContent ?? '')
+      .join('')
+      .trim();
+    return around.length > 0;
+  };
+
   for (const el of document.querySelectorAll(LABEL_SITES)) {
     // A name out of a real gazetteer is not a label the game wrote. It is
     // spelled the way the world spells it — Klagenfurt am Wörthersee, Rožnov
     // pod Radhoštěm, Town 'n' Country — and Title Case would make it wrong.
     if (el.closest('[data-source="gazetteer"]')) continue;
+    if (isWordInProse(el)) continue;
     const style = getComputedStyle(el);
     if (style.display === 'none' || style.visibility === 'hidden') continue;
     if (style.textTransform === 'uppercase' || style.textTransform === 'capitalize') continue;

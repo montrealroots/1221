@@ -299,9 +299,20 @@ export function Home() {
                   label="Cost Of Living"
                   value={place.costOfLivingIndex}
                   note={`Rent about ${place.localRent ?? formatMoneyCompact(place.medianRentCents)}/mo`}
+                  look={at('place', place.city.id)}
                 />
-                <Stat label="Tax On A Wage" value={`${Math.round(place.effectiveIncomeTax * 100)}%`} note="Income tax and payroll both, on $60,000" />
-                <Stat label="Sales Tax" value={`${(place.salesTax * 100).toFixed(1)}%`} note={`Property ${(place.propertyTax * 100).toFixed(2)}%`} />
+                <Stat
+                  label="Tax On A Wage"
+                  value={`${Math.round(place.effectiveIncomeTax * 100)}%`}
+                  note="Income tax and payroll both, on $60,000"
+                  look={at('place', place.city.id)}
+                />
+                <Stat
+                  label="Sales Tax"
+                  value={`${(place.salesTax * 100).toFixed(1)}%`}
+                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%`}
+                  look={at('place', place.city.id)}
+                />
                 <Stat
                   label="Industry"
                   value={`${place.industryPresence}/100`}
@@ -312,6 +323,7 @@ export function Home() {
                   label="Languages"
                   value={place.languages[0] ?? '—'}
                   note={place.languages.slice(1).join(', ') || 'Official language'}
+                  look={at('country', place.city.countryId)}
                 />
                 <Stat
                   label={place.countryName}
