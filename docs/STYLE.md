@@ -154,13 +154,12 @@ word through `performerNoun`, never writes it out.
   a budget each, and for a long list where one opening word does too much of
   the work; `--counts` for the totals alone, `--check` fails the gate.
 - `tools/cohesion-walk.mjs` — the game as a person meets it, in a browser:
-  startup, the slots, creation, Home, every rail destination and every tab
-  behind it, a sentence typed into Go Anywhere, the calendar's plan form,
-  help, then Save & Exit and back in. Page errors, leaked `undefined`s, a
-  rail that marks the wrong screen, a covered control or a save that does not
-  come back all fail it. It still carries branches for a phone and for scenes,
-  both of which were deleted; they skip silently, which is its own small
-  version of the fiction this section is meant to prevent.
+  startup, the slots, creation end to end, Home, every rail destination and
+  every tab behind it, the calendar's plan form, then Save & Exit and back in.
+  Page errors, leaked `undefined`s, a rail that marks the wrong screen, a
+  covered control or a save that does not come back all fail it. A walk that
+  cannot get past a step reports that step and stops, rather than reporting
+  the five screens it never reached as broken.
 - `tools/doc-refs.mjs` — every file path a doc names, checked. This section is
   a promise about what is enforced, and it had gone partly false: it named a
   fuzzer and two test files that had been deleted. `--check` fails the gate.
