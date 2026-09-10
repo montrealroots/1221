@@ -1,5 +1,5 @@
 /**
- * The five creation steps, pinned to their final shape.
+ * The six creation steps, pinned to their final shape.
  *
  * Each of these pages settled after a long run of changes, and most of what
  * settled was a decision to stop asking something. Where you live, where you
@@ -20,7 +20,9 @@ import { ATTRIBUTES, ALL_TRAITS } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
 import { citizenshipsOf } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
-import { latestBirthYear, settledTitle } from '@/ui/creation/CharacterCreation';
+import { familyIssues, latestBirthYear, settledTitle } from '@/ui/creation/CharacterCreation';
+import type { NewSaveConfig } from '@/engine/world/bootstrap';
+import type { EstateRole } from '@/engine/domain/model';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -178,8 +180,95 @@ describe('Starting Point', () => {
   });
 });
 
+describe('Your People', () => {
+  it('asks for each of the three things about a parent, and nothing else', () => {
+    const step = stepSource('function ParentCard', 'function Choice');
+    for (const field of ['-name', '-age']) {
+      expect(step, `the parent card lost the ${field} field`).toContain(`id={\`\${idPrefix}${field}\`}`);
+    }
+    expect(step, 'the parent card asks what they do').toContain('What They Do On The Land');
+    // A parent is not a performer and is never asked to be one.
+    expect(step, 'a parent is asked to be billed').not.toMatch(/actor|actress|billed/i);
+    expect(step, 'a parent is asked for a skill').not.toMatch(/attribute|trait|skill/i);
+  });
+
+  it('offers every role the engine has a word for, and no role it does not', () => {
+    const roles: EstateRole[] = ['the house', 'the lot', 'the company', 'nothing in particular'];
+    const step = stepSource('const ESTATE_ROLES', 'const TWIN_GENDERS');
+    for (const role of roles) {
+      expect(step, `no way to pick ${role}`).toContain(`'${role}'`);
+    }
+  });
+
+  it('lets a twin be a brother, a sister, or neither', () => {
+    const step = stepSource('const TWIN_GENDERS', 'The step where the house');
+    expect(step).toContain("id: 'female'");
+    expect(step).toContain("id: 'male'");
+    expect(step).toContain("id: 'nonbinary'");
+    // Never the word the game does not use for one.
+    expect(step, 'a twin is called a sibling').not.toMatch(/sibling/i);
+  });
+
+  it('carries what was picked all the way into the save', () => {
+    const sim = createSave(1, 'creation-family', {
+      ...defaultConfig(),
+      firstName: 'Sigrún', lastName: 'Halldórsdóttir',
+      birthYear: 1998, birthMonth: 11, birthDay: 3,
+      family: {
+        mother: { firstName: 'Bryndís', ageAtBirth: 27, role: 'the company' },
+        father: { firstName: 'Ólafur', ageAtBirth: 34, role: 'the lot' },
+        twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
+      },
+    });
+    const people = Object.values(sim.universe.people);
+    const by = (first: string) => people.find((one) => one.firstName === first)!;
+
+    expect(people).toHaveLength(4);
+    expect(by('Bryndís').estateRole).toBe('the company');
+    expect(by('Ólafur').estateRole).toBe('the lot');
+    expect(by('Katla').estateRole).toBe('the house');
+    // The family name is the one the player gave, for all of them.
+    for (const person of people) expect(person.lastName).toBe('Halldórsdóttir');
+  });
+
+  it('refuses a family the player has left half-said', () => {
+    const base = defaultConfig();
+    const complain = (family: NewSaveConfig['family']): string[] =>
+      familyIssues({ ...base, firstName: 'Sigrún', family });
+
+    expect(complain(base.family)).toEqual([]);
+    expect(complain({ ...base.family, mother: { ...base.family.mother, firstName: '  ' } }))
+      .toContain('Your mother needs a first name.');
+    expect(complain({ ...base.family, father: { ...base.family.father, ageAtBirth: 4 } })
+      .join(' ')).toMatch(/between 15 and 60/);
+    expect(complain({ ...base.family, twin: { firstName: '', gender: 'female', identical: false, role: 'the house' } }))
+      .toContain('Your twin needs a first name, or you were born alone.');
+  });
+
+  it('refuses two people in one house with one name', () => {
+    const base = defaultConfig();
+    const clash = familyIssues({
+      ...base,
+      firstName: 'Katla',
+      family: {
+        ...base.family,
+        twin: { firstName: 'katla', gender: 'female', identical: true, role: 'the house' },
+      },
+    });
+    // Said in the name the player typed, not the one the comparison lowercased.
+    expect(clash).toContain('You and your twin can’t both be called Katla.');
+  });
+});
+
 describe('Review', () => {
-  it('shows every line the four steps decided', () => {
+  it('shows the people as well as the person', () => {
+    const step = stepSource('function ReviewStep');
+    for (const line of ['Your Mother', 'Your Father', 'Your People']) {
+      expect(step, `Review stopped showing ${line}`).toContain(line);
+    }
+  });
+
+  it('shows every line the five steps decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth',

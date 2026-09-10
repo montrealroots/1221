@@ -1,7 +1,8 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Who You Are, My Skills, Starting Point, Review, then Start.
+ * Identity, Who You Are, My Skills, Starting Point, Your People, Review,
+ * then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -12,11 +13,15 @@ import {
   defaultConfig, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
+import {
+  OLDEST_PARENT, YOUNGEST_PARENT, relationWord,
+  type FamilyConfig, type ParentConfig, type TwinConfig,
+} from '@/engine/world/family';
 import { PERFORMER_NOUN, PERFORMER_TITLES, type PerformerTitle } from '@/engine/core/performer';
 import { PortraitPicker } from './PortraitPicker';
 import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
-import type { Personality } from '@/engine/domain/model';
+import type { EstateRole, Personality } from '@/engine/domain/model';
 import { formatMoney } from '@/engine/core/money';
 import {
   APP_VERSION, WEALTH_PROFILES,
@@ -60,8 +65,19 @@ export function latestBirthYear(startYear: number): number {
   return startYear - BIRTH_YEARS_BEFORE_START;
 }
 
-const STEPS = ['Identity', 'Who You Are', 'My Skills', 'Starting Point', 'Review'] as const;
-type StepIndex = 0 | 1 | 2 | 3 | 4;
+const STEPS = ['Identity', 'Who You Are', 'My Skills', 'Starting Point', 'Your People', 'Review'] as const;
+
+/**
+ * Which step is which, by name rather than by number.
+ *
+ * The numbers used to be written out in six places — the union type, both
+ * arrows, the Continue test, and every branch of the form — so adding a step
+ * meant finding all of them and one of them was always missed.
+ */
+const STEP = Object.fromEntries(STEPS.map((label, index) => [label, index])) as
+  Record<typeof STEPS[number], number>;
+const LAST_STEP = STEPS.length - 1;
+type StepIndex = number;
 
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
@@ -169,11 +185,12 @@ export function CharacterCreation({
           ))}
         </div>
 
-        {step === 0 && <IdentityStep config={config} set={set} setConfig={setConfig} />}
-        {step === 1 && <PersonalStep config={config} set={set} setConfig={setConfig} />}
-        {step === 2 && <CareerStep config={config} set={set} />}
-        {step === 3 && <StartingPointStep config={config} set={set} />}
-        {step === 4 && <ReviewStep config={config} />}
+        {step === STEP.Identity && <IdentityStep config={config} set={set} setConfig={setConfig} />}
+        {step === STEP['Who You Are'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
+        {step === STEP['My Skills'] && <CareerStep config={config} set={set} />}
+        {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} />}
+        {step === STEP['Your People'] && <YourPeopleStep config={config} set={set} />}
+        {step === STEP.Review && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
           <div className="callout callout-warning" style={{ marginTop: 'var(--s5)' }}>
@@ -186,16 +203,16 @@ export function CharacterCreation({
         <div className="row-between" style={{ marginTop: 'var(--s6)' }}>
           <button
             className="btn"
-            onClick={() => setStep((s) => Math.max(0, s - 1) as StepIndex)}
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
             disabled={step === 0}
           >
             Back
           </button>
 
-          {step < 4 ? (
+          {step < LAST_STEP ? (
             <button
               className="btn btn-primary"
-              onClick={() => setStep((s) => Math.min(4, s + 1) as StepIndex)}
+              onClick={() => setStep((s) => Math.min(LAST_STEP, s + 1))}
               disabled={!canAdvance}
             >
               Continue
@@ -1009,6 +1026,26 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Your People</div>
+        <Line
+          label="Your Mother"
+          value={personLine(config.family.mother, config.lastName, config.birthYear, age)}
+        />
+        <Line
+          label="Your Father"
+          value={personLine(config.family.father, config.lastName, config.birthYear, age)}
+        />
+        <Line
+          label={config.family.twin ? twinLabel(config.family.twin) : 'A Twin'}
+          value={config.family.twin
+            ? `${nameLine(config.family.twin.firstName, config.lastName)}, ${age}, ${
+              config.family.twin.identical ? 'identical' : 'fraternal'}. ${
+              roleLine(config.family.twin.role)}`
+            : 'None — you were born alone.'}
+        />
+      </div>
+
+      <div className="card">
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests And Genres</div>
         <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
@@ -1095,9 +1132,353 @@ const MONTHS = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
+// ---------------------------------------------------------------------------
+// Your People
+// ---------------------------------------------------------------------------
+
+/**
+ * What somebody can be the one who does on the land.
+ *
+ * Three forms, because three places need it. `label` is the button. `note` is
+ * what the button explains. `said` is the sentence about a person, which the
+ * note cannot stand in for: "Halla Rivera, 53. What gets made, and what it
+ * costs" is not a thing anybody would say about a mother.
+ */
+const ESTATE_ROLES: { id: EstateRole; label: string; note: string; said: string }[] = [
+  {
+    id: 'the house', label: 'Keeps The House', said: 'Keeps the house.',
+    note: 'Runs the household. Nothing in it works without them.',
+  },
+  {
+    id: 'the lot', label: 'Runs The Lot', said: 'Runs the lot.',
+    note: 'The stages, the crew, the schedule. The lot is theirs.',
+  },
+  {
+    id: 'the company', label: 'Runs The Company', said: 'Runs the company.',
+    note: 'What gets made, and what it costs. The name on the gate.',
+  },
+  {
+    id: 'nothing in particular', label: 'Nothing In Particular', said: 'Runs none of it.',
+    note: 'Lives here. Leaves the running of it to everybody else.',
+  },
+];
+
+const TWIN_GENDERS: { id: TwinConfig['gender']; label: string; note: string }[] = [
+  { id: 'female', label: 'A Sister', note: 'Your twin sister.' },
+  { id: 'male', label: 'A Brother', note: 'Your twin brother.' },
+  { id: 'nonbinary', label: 'Neither', note: 'Your twin, and no other word for it.' },
+];
+
+/**
+ * The step where the house stops being empty.
+ *
+ * Everything above this one is about the player. This is the only place the
+ * game asks about anybody else, and what it asks is small on purpose: a name,
+ * an age, and the thing each of them is the one who does. The rest — who they
+ * are, how they take a Tuesday — the save works out for itself.
+ */
+function YourPeopleStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
+  const family = config.family;
+  const surname = config.lastName.trim();
+  const setFamily = (patch: Partial<FamilyConfig>) => set('family', { ...family, ...patch });
+  const twin = family.twin;
+  const playerAge = ageAtStart(config);
+
+  return (
+    <div className="col gap-5">
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>The People You Grew Up With</h2>
+            <p className="muted small">
+              The land is theirs before it’s yours, and they live on it now. Two of them, and a
+              third if you weren’t born alone.
+            </p>
+          </div>
+        </div>
+        <div className="callout">
+          Nobody here acts. They’re the family, not the business — and every one of them is
+          somebody you have to get on with, which is its own kind of work.
+        </div>
+      </div>
+
+      <ParentCard
+        who="Mother" idPrefix="mother" parent={family.mother} surname={surname}
+        birthYear={config.birthYear} playerAge={playerAge}
+        onChange={(patch) => setFamily({ mother: { ...family.mother, ...patch } })}
+      />
+      <ParentCard
+        who="Father" idPrefix="father" parent={family.father} surname={surname}
+        birthYear={config.birthYear} playerAge={playerAge}
+        onChange={(patch) => setFamily({ father: { ...family.father, ...patch } })}
+      />
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>A Twin</h2>
+            <p className="muted small">
+              Somebody born the same morning you were. Most people weren’t, so this one is a
+              choice rather than a blank to fill in.
+            </p>
+          </div>
+          {twin && twin.firstName.trim() && surname
+            ? <span className="chip chip-accent">{twin.firstName.trim()} {surname}</span>
+            : <span className="chip">{twin ? 'A Twin' : 'Born Alone'}</span>}
+        </div>
+
+        <div
+          className="trait-grid"
+          style={{ gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${CHOICE_COLUMN}px), 1fr))` }}
+          role="group"
+          aria-label="Whether You Have A Twin"
+        >
+          <button
+            type="button" className="trait" aria-pressed={!twin}
+            onClick={() => setFamily({ twin: undefined })}
+          >
+            <div className="trait-name">You Were Born Alone</div>
+            <div className="trait-desc">Which is how most people are born.</div>
+          </button>
+          <button
+            type="button" className="trait" aria-pressed={Boolean(twin)}
+            onClick={() => setFamily({ twin: twin ?? defaultTwin() })}
+          >
+            <div className="trait-name">You Have A Twin</div>
+            <div className="trait-desc">Somebody who has been beside you since before either of you could talk.</div>
+          </button>
+        </div>
+
+        {twin && (
+          <div className="col gap-4" style={{ marginTop: 'var(--s5)' }}>
+            <div className="field">
+              <label htmlFor="twin-name">Their First Name</label>
+              <input
+                id="twin-name" value={twin.firstName}
+                onChange={(e) => setFamily({ twin: { ...twin, firstName: e.target.value } })}
+                placeholder="A first name"
+              />
+              {surname && twin.firstName.trim() && (
+                <p className="xs dim" style={{ marginTop: 4 }}>{twin.firstName.trim()} {surname}</p>
+              )}
+            </div>
+
+            <Choice
+              label="Brother Or Sister"
+              options={TWIN_GENDERS.map((g) => ({ id: g.id ?? 'nonbinary', label: g.label, note: g.note }))}
+              value={twin.gender ?? 'nonbinary'}
+              onPick={(id) => setFamily({ twin: { ...twin, gender: id as TwinConfig['gender'] } })}
+            />
+
+            <Choice
+              label="Identical Or Fraternal"
+              options={[
+                { id: 'identical', label: 'Identical', note: 'You have the same face. People get the two of you wrong, and some of them mean to.' },
+                { id: 'fraternal', label: 'Fraternal', note: 'Born together, and that’s where the resemblance stops.' },
+              ]}
+              value={twin.identical ? 'identical' : 'fraternal'}
+              onPick={(id) => setFamily({ twin: { ...twin, identical: id === 'identical' } })}
+            />
+
+            <Choice
+              label="What They Do On The Land"
+              options={ESTATE_ROLES.map((r) => ({ id: r.id, label: r.label, note: r.note }))}
+              value={twin.role}
+              onPick={(id) => setFamily({ twin: { ...twin, role: id as EstateRole } })}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** One parent, asked for the same three things as the other. */
+function ParentCard({ who, idPrefix, parent, surname, birthYear, playerAge, onChange }: {
+  who: 'Mother' | 'Father';
+  idPrefix: string;
+  parent: ParentConfig;
+  surname: string;
+  birthYear: number;
+  playerAge: number;
+  onChange: (patch: Partial<ParentConfig>) => void;
+}) {
+  const age = Number.isFinite(parent.ageAtBirth) ? parent.ageAtBirth : 0;
+  const bornIn = birthYear - age;
+
+  return (
+    <div className="card">
+      <div className="panel-head">
+        <div>
+          <h2>Your {who}</h2>
+          <p className="muted small">
+            {who === 'Mother' ? 'She' : 'He'} was here before you were, and{' '}
+            {who === 'Mother' ? 'she' : 'he'} is here now.
+          </p>
+        </div>
+        {parent.firstName.trim() && surname && (
+          <span className="chip chip-accent">{parent.firstName.trim()} {surname}</span>
+        )}
+      </div>
+
+      <div className="grid grid-2">
+        <div className="field">
+          <label htmlFor={`${idPrefix}-name`}>Their First Name</label>
+          <input
+            id={`${idPrefix}-name`} value={parent.firstName}
+            onChange={(e) => onChange({ firstName: e.target.value })}
+            placeholder="A first name"
+          />
+          <p className="xs dim" style={{ marginTop: 4 }}>
+            They take the family name, which is the surname you gave on Identity.
+          </p>
+        </div>
+
+        <div className="field">
+          <label htmlFor={`${idPrefix}-age`}>How Old They Were When You Were Born</label>
+          <input
+            id={`${idPrefix}-age`} type="number" inputMode="numeric"
+            min={YOUNGEST_PARENT} max={OLDEST_PARENT}
+            value={Number.isFinite(parent.ageAtBirth) ? parent.ageAtBirth : ''}
+            onChange={(e) => onChange({ ageAtBirth: Number(e.target.value) })}
+          />
+          <p className="xs dim" style={{ marginTop: 4 }}>
+            {age >= YOUNGEST_PARENT && age <= OLDEST_PARENT
+              ? `Born around ${bornIn}, which puts them at ${age + playerAge} when the save opens.`
+              : `Anywhere from ${YOUNGEST_PARENT} to ${OLDEST_PARENT}.`}
+          </p>
+        </div>
+      </div>
+
+      <Choice
+        label="What They Do On The Land"
+        options={ESTATE_ROLES.map((r) => ({ id: r.id, label: r.label, note: r.note }))}
+        value={parent.role}
+        onPick={(id) => onChange({ role: id as EstateRole })}
+      />
+    </div>
+  );
+}
+
+/**
+ * How narrow a column of choices is allowed to get before the row breaks.
+ *
+ * Wide enough that four choices land as two rows of two rather than a row of
+ * three and a lonely fourth, and that two land side by side rather than as two
+ * boxes and a third of a row of nothing. Three choices are the exception: they
+ * fit across, and breaking them would be the same fault the other way.
+ *
+ * It is a floor, not a width. On a phone one column clears it and the choices
+ * stack, which is the only thing that reads at that size.
+ */
+const CHOICE_COLUMN = 260;
+const CHOICE_COLUMN_OF_THREE = 210;
+
+/** A row of buttons where a dropdown would have hidden what the options say. */
+function Choice({ label, options, value, onPick }: {
+  label: string;
+  options: { id: string; label: string; note: string }[];
+  value: string;
+  onPick: (id: string) => void;
+}) {
+  const floor = options.length === 3 ? CHOICE_COLUMN_OF_THREE : CHOICE_COLUMN;
+  return (
+    <div className="field" style={{ marginTop: 'var(--s4)' }}>
+      <span className="label">{label}</span>
+      <div
+        className="trait-grid"
+        style={{ gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${floor}px), 1fr))` }}
+        role="group"
+        aria-label={label}
+      >
+        {options.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            className="trait"
+            aria-pressed={value === option.id}
+            onClick={() => onPick(option.id)}
+          >
+            <div className="trait-name">{option.label}</div>
+            <div className="trait-desc">{option.note}</div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** A full name, or a placeholder where the form is still half-filled. */
+function nameLine(first: string, last: string): string {
+  return [first.trim(), last.trim()].filter(Boolean).join(' ') || '—';
+}
+
+/** What somebody is the one who does, as a sentence rather than a label. */
+function roleLine(role: EstateRole): string {
+  return ESTATE_ROLES.find((one) => one.id === role)?.said ?? '';
+}
+
+/** One parent, in the one line the review has room for. */
+function personLine(parent: ParentConfig, surname: string, birthYear: number, playerAge: number): string {
+  const name = nameLine(parent.firstName, surname);
+  if (!Number.isFinite(parent.ageAtBirth)) return name;
+  return `${name}, ${parent.ageAtBirth + playerAge}, born around ${birthYear - parent.ageAtBirth}. ${roleLine(parent.role)}`;
+}
+
+/** Twin Sister, Twin Brother, or just Twin — in the engine's own word for it. */
+function twinLabel(twin: TwinConfig): string {
+  return `Your ${relationWord('twin', twin.gender)}`;
+}
+
+/** What the step will not let past, said the way a person would say it. */
+export function familyIssues(config: NewSaveConfig): string[] {
+  const issues: string[] = [];
+  const { mother, father, twin } = config.family;
+
+  for (const [who, parent] of [['mother', mother], ['father', father]] as const) {
+    if (!parent.firstName.trim()) issues.push(`Your ${who} needs a first name.`);
+    if (!Number.isFinite(parent.ageAtBirth)
+      || parent.ageAtBirth < YOUNGEST_PARENT || parent.ageAtBirth > OLDEST_PARENT) {
+      issues.push(`Your ${who} has to have been between ${YOUNGEST_PARENT} and ${OLDEST_PARENT} when you were born.`);
+    }
+  }
+  if (twin && !twin.firstName.trim()) issues.push('Your twin needs a first name, or you were born alone.');
+
+  // Everybody in this house shares a surname, so two of them sharing a first
+  // name is a sentence nobody can read: "you told your mother" and "you told
+  // your twin" would name the same person.
+  const names = [
+    ['you', config.firstName],
+    ['your mother', mother.firstName],
+    ['your father', father.firstName],
+    ...(twin ? [['your twin', twin.firstName] as const] : []),
+  ] as const;
+  for (let i = 0; i < names.length; i += 1) {
+    for (let j = i + 1; j < names.length; j += 1) {
+      const [oneWho, oneName] = names[i]!;
+      const [twoWho, twoName] = names[j]!;
+      const shared = oneName.trim().toLowerCase();
+      if (shared && shared === twoName.trim().toLowerCase()) {
+        issues.push(`${sentenceStart(oneWho)} and ${twoWho} can’t both be called ${oneName.trim()}.`);
+      }
+    }
+  }
+  return issues;
+}
+
+/** A twin nobody has said anything about yet. */
+function defaultTwin(): TwinConfig {
+  return { firstName: '', gender: 'nonbinary', identical: false, role: 'nothing in particular' };
+}
+
+/** The same words, capitalized for the front of a sentence. */
+function sentenceStart(words: string): string {
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 function validate(config: NewSaveConfig, step: StepIndex): string[] {
   const issues: string[] = [];
-  if (step === 0) {
+  if (step === STEP.Identity) {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
     const age = ageAtStart(config);
@@ -1112,11 +1493,12 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
   }
-  if (step === 3) {
+  if (step === STEP['Starting Point']) {
     // Where you live is not asked any more, so there is nothing here to get
     // wrong but the day the save opens on.
     if (config.startDay < 1 || config.startDay > 28) issues.push('Pick a start day between 1 and 28.');
   }
+  if (step === STEP['Your People']) issues.push(...familyIssues(config));
   return issues;
 }
 
@@ -1162,6 +1544,15 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
     }
     if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
     if (!COUNTRIES.get(merged.citizenshipId)) merged.citizenshipId = defaultConfig().citizenshipId;
+
+    // The merge above is one level deep, so a stored family missing a parent
+    // would replace a whole one and the form would read a field off nothing.
+    const family = defaultConfig().family;
+    merged.family = {
+      mother: { ...family.mother, ...merged.family?.mother },
+      father: { ...family.father, ...merged.family?.father },
+      ...(merged.family?.twin ? { twin: { ...defaultTwin(), ...merged.family.twin } } : {}),
+    };
 
     return merged;
   } catch {

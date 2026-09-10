@@ -33,12 +33,28 @@ const start = page.getByRole('button', { name: /new (save|game)|start|empty slot
 if (await start.count()) { await start.click().catch(() => {}); await page.waitForTimeout(1000); }
 await shoot('02-identity');
 
-// Walk the creation steps.
-for (const step of ['03-personal', '04-career', '05-starting-point', '06-review']) {
+// They/Them settles nothing, so Identity asks which word the business lists
+// you under and will not advance until it is answered. Without this the walk
+// never left the first step and quietly shot it five times over.
+const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
+if (await billed.count()) { await billed.click().catch(() => {}); await page.waitForTimeout(300); }
+
+// Walk the creation steps, and say so when one of them does not open. A walk
+// that shoots the same page under five names is worse than one that stops:
+// the shots look like a full set and the fault is in every one of them.
+const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText();
+for (const step of ['03-personal', '04-career', '05-starting-point', '06-your-people', '07-review']) {
+  const before = await stepName().catch(() => '');
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) break;
   await next.click().catch(() => {});
   await page.waitForTimeout(900);
+  const after = await stepName().catch(() => '');
+  if (after === before) {
+    const blocking = await page.locator('.callout-warning').allInnerTexts();
+    console.log(`  STUCK on ${before || 'the first step'}:`, blocking.join(' ') || 'Continue would not press');
+    break;
+  }
   await shoot(step);
 }
 
