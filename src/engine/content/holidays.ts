@@ -120,6 +120,45 @@ function dayKey(instant: Instant, zone: string): string {
   return `${parts.year}-${String(parts.month).padStart(2, '0')}-${String(parts.day).padStart(2, '0')}`;
 }
 
+/** A calendar somebody keeps: a country, and the region of it they are in. */
+export interface Calendar {
+  countryId: string;
+  regionId?: string;
+}
+
+/** A holiday, and which of the calendars it came off. */
+export interface KeptHoliday extends HolidayEntry {
+  countryId: string;
+  countryName: string;
+}
+
+/**
+ * The holidays on one day across every calendar somebody keeps.
+ *
+ * A life is not always lived in one country's year. Somebody on the family
+ * land in Iceland working in an American business keeps both: the shops shut
+ * for Sumardagurinn fyrsti and nobody in Los Angeles picks up the phone on
+ * Thanksgiving, and a calendar that showed only one of those would be wrong
+ * about half the days that matter.
+ *
+ * Ordered by the calendars given, and deduplicated by name: New Year's Day is
+ * one day, not one per country.
+ */
+export function holidaysAcross(instant: Instant, zone: string, calendars: readonly Calendar[]): KeptHoliday[] {
+  const out: KeptHoliday[] = [];
+  const seen = new Set<string>();
+  for (const calendar of calendars) {
+    const countryName = COUNTRIES.get(calendar.countryId)?.name ?? calendar.countryId;
+    for (const holiday of holidaysOn(instant, zone, calendar.countryId, calendar.regionId)) {
+      const key = (holiday.englishName || holiday.name).trim().toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({ ...holiday, countryId: calendar.countryId, countryName });
+    }
+  }
+  return out;
+}
+
 /**
  * The holidays on one day in one country — the national ones, and the ones
  * the given region keeps. Empty until that country's file has been loaded.

@@ -13,6 +13,8 @@ import {
   type ReactNode,
 } from 'react';
 import type { Simulation, CommandResult } from '@/engine';
+import type { AdvanceResult } from '@/engine/core/simulation';
+import type { ScheduledItem } from '@/engine/core/scheduler';
 import { refreshMeta } from '@/engine';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
@@ -34,8 +36,11 @@ export interface GameContextValue {
   /** Runs a command and refreshes the UI. Failures surface as a toast. */
   run: <R = unknown>(kind: string, payload?: Record<string, unknown>, options?: { idempotencyKey?: string; silent?: boolean }) => CommandResult<R>;
   /** Advances world time through the one advancement path. */
-  advance: (ms: number) => void;
-  advanceTo: (instant: number) => void;
+  advance: (ms: number) => AdvanceResult | undefined;
+  advanceTo: (instant: number) => AdvanceResult | undefined;
+  /** What the clock stopped at, waiting on the player to decide. */
+  standingAt: { item: ScheduledItem; wanted: number } | null;
+  clearStandingAt: () => void;
   /** Forces a re-read without mutating. */
   refresh: () => void;
 
@@ -66,10 +71,21 @@ export function useGame(): GameContextValue {
 }
 
 /** Re-reads a value from the simulation whenever the world changes. */
-export function useWorld<T>(read: (sim: Simulation) => T): T {
+/**
+ * Read something out of the world, recomputed when the world changes.
+ *
+ * `deps` is for anything the callback closes over that is not the world — a
+ * month the screen is looking at, a subject it is about to open. Without it
+ * the memo holds on `[sim, version]` alone, so a screen that changed its own
+ * mind about what to read went on showing the old answer until the clock
+ * happened to tick: the calendar paged March to June with the label
+ * advancing and the grid frozen on March, and paused it never caught up at
+ * all.
+ */
+export function useWorld<T>(read: (sim: Simulation) => T, deps: readonly unknown[] = []): T {
   const { sim, version } = useGame();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useMemo(() => read(sim), [sim, version]);
+  return useMemo(() => read(sim), [sim, version, ...deps]);
 }
 
 const AUTOSAVE_INTERVAL_MS = 45_000;
@@ -106,6 +122,14 @@ export function GameProvider({
   const [recent, setRecent] = useState<NavEntry[]>([]);
   const [favourites, setFavourites] = useState<NavEntry[]>(() => readFavourites());
   const [toasts, setToasts] = useState<Toast[]>([]);
+  /**
+   * The thing the clock stopped at, and where it was trying to get to.
+   *
+   * Held here rather than on the control that happened to move the clock,
+   * because every way of moving it can be halted — the Advance menu, Skip To
+   * Event, and the live tick that runs while nobody touches anything.
+   */
+  const [standingAt, setStandingAt] = useState<{ item: ScheduledItem; wanted: number } | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | undefined>();
   const toastId = useRef(0);
@@ -137,26 +161,62 @@ export function GameProvider({
     return result;
   }, [sim, toast, refresh]);
 
-  const advance = useCallback((ms: number) => {
-    if (ms <= 0) return;
-    try {
-      sim.advanceBy(ms);
-      dirty.current = true;
-    } catch (error) {
-      toast((error as Error).message, 'negative');
-    }
-    refresh();
-  }, [sim, toast, refresh]);
+  /**
+   * Moving the clock from a screen always stops at something that wants you.
+   *
+   * The world's own `advanceTo` does not, and neither did this: setting the
+   * clock a month ahead ran straight over every commitment in the month and
+   * marked each one attended, so the dialog that warned you were about to
+   * miss something was telling you a thing that could not happen. You go to
+   * what you stop for. This is the stop.
+   *
+   * Both return the advance, so a screen can say what it halted at.
+   */
+  /**
+   * The world stopped at something that wants you, so the world waits.
+   *
+   * Pausing is the point rather than a nicety. The clock is at the thing but
+   * has not resolved it, and the stop only triggers on the way to something —
+   * once the clock is standing on it, the next tick of any kind runs it. So a
+   * live clock left running behind the question answered it: the player
+   * pressed Don't Go and the world said "that's already settled one way or
+   * the other", because a tenth of a second earlier it had been.
+   */
+  const halt = useCallback((result: AdvanceResult, wanted: number) => {
+    if (!result.interruptedBy) return;
+    sim.universe.preferences.timeSpeed = 'paused';
+    setStandingAt({ item: result.interruptedBy, wanted });
+  }, [sim]);
 
-  const advanceTo = useCallback((instant: number) => {
+  const advance = useCallback((ms: number): AdvanceResult | undefined => {
+    if (ms <= 0) return undefined;
     try {
-      sim.advanceTo(instant);
+      const wanted = sim.now + ms;
+      const result = sim.advanceBy(ms, { stopOnPlayerRequired: true });
       dirty.current = true;
+      halt(result, wanted);
+      refresh();
+      return result;
     } catch (error) {
       toast((error as Error).message, 'negative');
+      refresh();
+      return undefined;
     }
-    refresh();
-  }, [sim, toast, refresh]);
+  }, [sim, toast, refresh, halt]);
+
+  const advanceTo = useCallback((instant: number): AdvanceResult | undefined => {
+    try {
+      const result = sim.advanceTo(instant, { stopOnPlayerRequired: true });
+      dirty.current = true;
+      halt(result, instant);
+      refresh();
+      return result;
+    } catch (error) {
+      toast((error as Error).message, 'negative');
+      refresh();
+      return undefined;
+    }
+  }, [sim, toast, refresh, halt]);
 
   const navigate = useCallback((next: string, label?: string) => {
     setRoute(next);
@@ -229,9 +289,15 @@ export function GameProvider({
       if (step < 1) return;
 
       try {
-        sim.advanceBy(step);
+        // The live clock stops at something that wants you, the same as any
+        // other way of moving it. Without this the world ran the commitment
+        // while the player was standing in front of the choice about it, and
+        // the answer came back "that's already settled one way or the other".
+        const wanted = sim.now + step;
+        const result = sim.advanceBy(step, { stopOnPlayerRequired: true });
         sim.universe.meta.playtimeSeconds += elapsed / 1_000;
         dirty.current = true;
+        halt(result, wanted);
         setVersion((v) => v + 1);
       } catch {
         // A handler threw; stop ticking rather than looping on the error.
@@ -239,7 +305,7 @@ export function GameProvider({
       }
     }, TICK_MS);
     return () => window.clearInterval(handle);
-  }, [sim, timeSpeed]);
+  }, [sim, timeSpeed, halt]);
 
 
   // --- Autosave -----------------------------------------------------------
@@ -289,6 +355,7 @@ export function GameProvider({
 
   const value: GameContextValue = {
     sim, version, run, advance, advanceTo, refresh,
+    standingAt, clearStandingAt: () => setStandingAt(null),
     route, navigate, back, breadcrumbs, recent, favourites, toggleFavourite,
     toasts, toast,
     saving, saveError, saveNow,
@@ -303,6 +370,7 @@ export function GameProvider({
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
+  '/workspace/business': 'Family Business',
 };
 
 export function labelForRoute(route: string): string {

@@ -1,7 +1,9 @@
 import { CalendarWorkspace } from './CalendarWorkspace';
+import { BusinessWorkspace } from './BusinessWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
+  '/workspace/business': BusinessWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {
@@ -9,7 +11,7 @@ export function WorkspaceRouter({ route }: { route: string }) {
   if (!Workspace) {
     return (
       <div className="empty">
-        <h3>Nothing Here Yet</h3>
+        <h3>Not Built Yet</h3>
         <p className="small">That workspace doesn’t exist.</p>
       </div>
     );

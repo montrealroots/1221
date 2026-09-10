@@ -13,10 +13,12 @@ describe('a new universe boots and runs', () => {
     expect(report.errors).toEqual([]);
     expect(sim.player.displayName).toBeTruthy();
     expect(sim.player.primaryAccountId).toBeTruthy();
-    // A new save is one person in one household. The systems that used to
-    // populate a world around them — agents, providers, the industry — are
-    // gone, and nothing else generates a name any more.
-    expect(Object.keys(sim.universe.people)).toEqual([sim.universe.playerId]);
+    // A new save is one household: the player and the two people whose land
+    // it is. The systems that used to populate a world around them — agents,
+    // providers, the industry — are gone, and nothing outside the family
+    // generates a name any more.
+    expect(Object.keys(sim.universe.people)).toHaveLength(3);
+    expect(Object.keys(sim.universe.people)).toContain(sim.universe.playerId);
     expect(Object.keys(sim.universe.households)).toHaveLength(1);
   });
 

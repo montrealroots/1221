@@ -2,11 +2,10 @@
  * The cohesion walk.
  *
  * Plays the game the way a person meets it: startup, the save slots, character
- * creation, Home, every destination in the rail and every tab behind each
- * one, the phone and all four apps, Go Anywhere with a sentence typed in, a
- * scene played through its choices, the calendar's plan form, the help panel,
- * then Save & Exit and back in through the slot it was saved to. On every
- * screen it looks for the things that break the thread:
+ * creation end to end, Home, every destination the rail lists and every tab
+ * behind each one, the calendar's plan form, then Save & Exit and back in
+ * through the slot it was saved to. On every screen it looks for the things
+ * that break the thread:
  *
  *   - a page error or a console error
  *   - an error screen, or the shell saying a workspace does not exist
@@ -15,7 +14,6 @@
  *   - a heading with nothing in it
  *   - the rail not marking the screen you are on after a navigation
  *   - a locked destination that does not say so
- *   - a scene with no choice and no way out
  *   - a save that does not come back as the same life
  *
  *   SLATE_URL=http://localhost:5186 npx vite-node tools/cohesion-walk.mjs
@@ -106,41 +104,59 @@ for (const [label, value] of [[/first name/i, FIRST], [/last name/i, 'Castellano
   if (await f.count()) await f.fill(value).catch(() => {});
 }
 await seen('02-creation-identity');
-for (const step of ['03-creation-personal', '04-creation-career', '05-creation-starting-point', '06-creation-review']) {
+// They/Them settles nothing, so Identity asks which word the business lists you
+// under and will not let Next through until it is answered. Without this the
+// walk never leaves the first step -- and then reports the five screens it
+// never reached as broken, which is how it spent a while crying wolf.
+const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
+if (await billed.count()) { await billed.click({ timeout: 3000 }).catch(() => {}); await settle(300); }
+else note('02-creation-identity', 'flow', 'Identity does not offer a billing to answer');
+
+const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText().catch(() => '');
+for (const step of ['03-creation-who-you-are', '04-creation-my-skills', '05-creation-starting-point', '06-creation-your-people', '07-creation-review']) {
+  const before = await stepName();
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) { note(step, 'flow', 'no Next button to reach this step'); break; }
   await next.click({ timeout: 3000 }).catch(() => {});
   await settle(800);
-  if (step === '03-creation-personal') {
+  // A step that would not open is the finding. Walking on regardless turns one
+  // fault into five.
+  if ((await stepName()) === before) {
+    const why = (await page.locator('.callout-warning').allInnerTexts()).join(' ').trim();
+    note(step, 'flow', `the step would not open${why ? `: ${why}` : ', and Continue would not press'}`);
+    break;
+  }
+  if (step === '03-creation-who-you-are') {
     for (const t of ['Night Owl', 'Holds Grudges', 'Disciplined', 'Generous']) {
       const b = page.locator('button.trait').filter({ hasText: new RegExp(`^${t}`) }).first();
       if (await b.count()) await b.click({ timeout: 3000 }).catch(() => {});
     }
   }
-  if (step === '04-creation-career') {
-    const nf = page.getByLabel(/what it is called|what it’s called/i).first();
-    if (await nf.count()) await nf.fill('Castellanos Pictures').catch(() => {});
-  }
   const facts = await seen(step);
-  if (step === '06-creation-review' && !facts.body.includes(FIRST)) note(step, 'flow', 'the review does not show the name typed on the first step');
+  if (step === '07-creation-review' && !facts.body.includes(FIRST)) note(step, 'flow', 'the review does not show the name typed on the first step');
 }
 const begin = page.getByRole('button', { name: /it.s time to be great|begin|start save/i }).first();
-if (!(await begin.count())) note('06-creation-review', 'flow', 'no way to begin the life from the review');
+if (!(await begin.count())) note('07-creation-review', 'flow', 'no way to begin the life from the review');
 await begin.click({ timeout: 3000 }).catch(() => {});
 await settle(3800);
 await dismissCoachMark();
 const guidedOff = page.getByRole('button', { name: /turn guided mode off/i }).first();
 if (await guidedOff.count()) { await guidedOff.click({ timeout: 3000 }).catch(() => {}); await settle(400); }
-const home = await seen('07-home');
-if (!home.body.includes(FIRST)) note('07-home', 'flow', 'Home does not greet the character that was just made');
-if (!/^Home/.test(home.rail)) note('07-home', 'rail', `the rail marks "${home.rail}" rather than Home`);
+const home = await seen('08-home');
+if (!home.body.includes(FIRST)) note('08-home', 'flow', 'Home does not greet the character that was just made');
+if (!/^Home/.test(home.rail)) note('08-home', 'rail', `the rail marks "${home.rail}" rather than Home`);
 
 // --- Every destination in the rail, and every tab behind it -------------------
 const items = await page.evaluate(() => [...document.querySelectorAll('.rail .rail-item')].map((el) => ({
   label: (el.querySelector('.grow')?.textContent ?? el.textContent ?? '').trim(),
   locked: Boolean(el.querySelector('.rail-lock')),
 })));
-if (items.length < 20) note('rail', 'rail', `only ${items.length} destinations in the rail`);
+// The rail had eighteen destinations before the cleanup and has what it has
+// now. A hard number here was a standing false finding, so the walk asks only
+// that there is something besides Home and that every one of them opens.
+if (items.filter((i) => i.label && i.label !== 'Home').length === 0) {
+  note('rail', 'rail', 'the rail lists nothing but Home');
+}
 for (const item of items) {
   if (!item.label || item.label === 'Home') continue;
   const link = page.locator('.rail .rail-item', { hasText: new RegExp(`^${item.label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`) }).first();
@@ -167,105 +183,14 @@ for (const item of items) {
   }
 }
 
-// --- The phone, and all four apps ---------------------------------------------
-const phone = page.locator('.rail .rail-item', { hasText: /^Phone/ }).first();
-if (await phone.count()) {
-  await phone.click({ timeout: 3000 }).catch(() => {});
-  await settle(900);
-  await dismissCoachMark();
-  for (const app of ['YouTube', 'X', 'Instagram', 'TikTok']) {
-    const icon = page.locator(`button.ph-app[aria-label="${app}"]`).first();
-    if (!(await icon.count())) { note('phone', 'phone', `no ${app} on the home screen`); continue; }
-    await icon.click({ timeout: 3000 }).catch(() => {});
-    await settle(900);
-    await seen(`phone-${slug(app)}`);
-    // The app's own bar, not the handset's home bar under it.
-    const bar = page.locator('.ph-screen [class*="-bar"]:not(.ph-home-bar) button:not([aria-label="Close The App"])');
-    const n = Math.min(await bar.count(), 6);
-    for (let i = 0; i < n; i++) {
-      const label = (await bar.nth(i).getAttribute('aria-label').catch(() => null)) ?? (await bar.nth(i).textContent().catch(() => '')) ?? `tab${i}`;
-      await bar.nth(i).click({ timeout: 3000 }).catch(() => {});
-      await settle(500);
-      await seen(`phone-${slug(app)}--${slug(label.trim() || `tab${i}`)}`);
-    }
-    // The handset's home bar has to be reachable under whatever the app put
-    // at the bottom of its screen, or there is no way out of the app.
-    const covered = await page.evaluate(() => {
-      const pill = document.querySelector('button[aria-label="Close The App"]');
-      if (!pill) return 'missing';
-      pill.scrollIntoView({ block: 'center' });
-      const box = pill.getBoundingClientRect();
-      const hit = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
-      return hit === pill || pill.contains(hit) ? '' : `${hit?.tagName.toLowerCase()}.${String(hit?.className ?? '').split(' ')[0]}`;
-    });
-    if (covered === 'missing') note(`phone-${slug(app)}`, 'phone', 'no way to close the app');
-    else if (covered) note(`phone-${slug(app)}`, 'phone', `the handset's home bar is covered by ${covered}`);
-    const close = page.locator('button[aria-label="Close The App"]').first();
-    if (await close.count()) { await close.click({ timeout: 3000, force: Boolean(covered) }).catch(() => {}); await settle(500); }
-  }
-}
-
-// --- Go Anywhere, with a sentence, into a scene -------------------------------
-const search = page.getByRole('button', { name: /go anywhere/i }).first();
-if (await search.count()) {
-  await search.click({ timeout: 3000 }).catch(() => {});
-  await settle(600);
-  await page.keyboard.type('work out at the gym');
-  await settle(800);
-  const asked = await seen('go-anywhere-ask');
-  const results = page.locator('.search-results button, .search-results [role="option"], .search-result');
-  const options = await results.count();
-  if (options === 0) note('go-anywhere-ask', 'ask', 'a plain sentence produced no result at all');
-  else await results.first().click({ timeout: 3000 }).catch(() => {});
-  await settle(800);
-  // A plan is a proposal until it is run: the box says what it will do and
-  // waits for the row to be opened again. Enter opens the highlighted row.
-  for (let round = 0; round < 3 && (await page.locator('.search-panel').count()) && (await results.count()); round++) {
-    await seen(`ask-proposal-${round + 1}`);
-    await results.first().click({ timeout: 3000 }).catch(() => {});
-    await settle(1200);
-  }
-  await settle(600);
-  await dismissCoachMark();
-  await seen('after-ask');
-  void asked;
-  if (await page.locator('.search-panel').count()) {
-    note('after-ask', 'ask', 'the sentence did not resolve to anything, and the dialog stayed open');
-    await page.keyboard.press('Escape');
-    await settle(400);
-  }
-  // The ask lands on the gym's door in The City, where Work Out opens the scene.
-  const workOut = page.getByRole('button', { name: /^work out$/i }).first();
-  if (await workOut.count()) { await workOut.click({ timeout: 3000 }).catch(() => {}); await settle(1000); await seen('scene-opened'); }
-  else note('after-ask', 'flow', 'arriving at the gym did not offer Work Out');
-  if (!(await page.locator('.scene-choices button').count())) note('scene-opened', 'scene', 'Work Out did not open a scene with choices');
-  // A scene, if one opened: play it through its choices, then leave.
-  for (let turn = 0; turn < 8; turn++) {
-    const choices = page.locator('.scene-choices button');
-    const n = await choices.count();
-    if (n === 0) break;
-    const labels = await choices.allTextContents();
-    const pick = labels.findIndex((l) => !/leave it|skip to the end/i.test(l));
-    if (pick === -1) {
-      if (turn === 0) note('scene', 'scene', 'a scene opened with nothing to choose but leaving');
-      break;
-    }
-    await choices.nth(pick).click({ timeout: 3000 }).catch(() => {});
-    await settle(700);
-    await seen(`scene-turn-${turn + 1}`);
-  }
-  const leave = page.getByRole('button', { name: /^leave( it)?$/i }).first();
-  if (await leave.count()) { await leave.click({ timeout: 3000 }).catch(() => {}); await settle(600); await seen('scene-left'); }
-}
-
-// --- The calendar's plan form, and the help panel -----------------------------
+// --- The calendar's plan form -------------------------------------------------
 const calendar = page.locator('.rail .rail-item', { hasText: /^Calendar/ }).first();
 if (await calendar.count()) {
   await calendar.click({ timeout: 3000 }).catch(() => {});
   await settle(800);
   await page.locator('.cal-day[data-today="true"]').first().click({ timeout: 3000 }).catch(() => {});
   await settle(500);
-  const plan = page.getByRole('button', { name: /plan something/i }).first();
+  const plan = page.getByRole('button', { name: /put something on it/i }).first();
   if (await plan.count()) {
     await plan.click({ timeout: 3000 }).catch(() => {});
     await settle(600);
@@ -275,17 +200,8 @@ if (await calendar.count()) {
     else await page.keyboard.press('Escape');
     await settle(400);
     if (await page.getByRole('button', { name: /never mind/i }).count()) note('calendar-plan-form', 'flow', 'the plan form did not close');
-  } else note('calendar', 'flow', 'no Plan Something on the calendar');
+  } else note('calendar', 'flow', 'no way to put something on the day');
 }
-const help = page.getByRole('button', { name: /^help$|^\?$/i }).first();
-if (await help.count()) {
-  await help.click({ timeout: 3000 }).catch(() => {});
-  await settle(800);
-  await seen('help');
-  await page.keyboard.press('Escape');
-  await settle(400);
-}
-
 // --- Save, leave, and come back as the same life ----------------------------------
 const exit = page.getByRole('button', { name: /save & exit|save and exit/i }).first();
 if (await exit.count()) {

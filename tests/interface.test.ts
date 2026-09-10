@@ -109,3 +109,148 @@ describe('the whole interface', () => {
     }
   });
 });
+
+/**
+ * A thing does not need a handle to be looked at.
+ *
+ * The depth engine's first rule is that the name is the control: you press
+ * "Stress", or "Reykjavík", or "Everyday Checking", and it opens. A button
+ * labelled Open or Details or More is the opposite of that — it is a handle
+ * bolted onto a thing that should have been pressable itself, and two of them
+ * shipped on Home before the engine existed.
+ *
+ * A verb that says where it goes is not a handle. "Open Calendar" names a
+ * screen and "Go There" names a route; "Open" names nothing.
+ */
+describe('affordances', () => {
+  const HANDLES = ['Open', 'Show', 'Hide', 'Details', 'More', 'View', 'Expand'];
+
+  it('labels no control with a bare handle', () => {
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      if (!file.endsWith('.tsx')) continue;
+      const text = readFileSync(file, 'utf8');
+      for (const [index, line] of text.split('\n').entries()) {
+        // The whole of a button's text, on its own line between the tags.
+        const alone = /^\s*(?:\{'\s*)?([A-Za-z]+)\s*(?:'\})?\s*$/.exec(line);
+        const word = alone?.[1];
+        if (!word || !HANDLES.includes(word)) continue;
+        const before = text.split('\n').slice(Math.max(0, index - 4), index).join(' ');
+        if (/<button|className="btn|className={`btn/.test(before)) {
+          offenders.push(`${file}:${index + 1}  "${word}"`);
+        }
+      }
+    }
+    expect(offenders, 'controls whose whole label is a handle rather than a name').toEqual([]);
+  });
+
+  it('carries no information in a title attribute, on the screens depth reaches', () => {
+    // Rule 13. A tooltip is not depth: it is invisible on a phone, invisible
+    // to a keyboard and invisible to a screen reader, and it was how the
+    // calendar row on Home used to say what it was.
+    //
+    // Held over Home and the look declarations, which is as far as the engine
+    // has been taken. Thirteen more sit on the calendar, the shell and the
+    // creation pickers; they are older than this rule and they move when
+    // those screens do, not before. Widening the glob is what promotes them.
+    //
+    // A tooltip is an attribute on a DOM element. `title` on a component of
+    // ours — <Panel title={…}> — is a prop that becomes a heading, and the
+    // rule has nothing to say about it: the regex used to fail the moment a
+    // panel's heading came from content rather than being typed out.
+    const REACHED = /ui\/(screens\/Home|looks\/)/;
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      if (!file.endsWith('.tsx') || !REACHED.test(file)) continue;
+      for (const [index, line] of readFileSync(file, 'utf8').split('\n').entries()) {
+        const at = line.search(/\stitle={/);
+        if (at < 0) continue;
+        // The tag this attribute is on. Capitalized means a component.
+        const tags = [...line.slice(0, at).matchAll(/<([A-Za-z][\w.]*)/g)];
+        const tag = tags[tags.length - 1]?.[1];
+        if (tag && /^[A-Z]/.test(tag)) continue;
+        offenders.push(`${file}:${index + 1}`);
+      }
+    }
+    expect(offenders, 'title attributes carrying what the screen should say').toEqual([]);
+  });
+});
+
+
+/**
+ * A screen that changes its mind has to be allowed to.
+ *
+ * `useWorld` memoizes on the world alone. A callback that also closes over
+ * the screen's own state — the month the calendar is looking at, the subject
+ * a name is about to open — goes on returning the old answer until the clock
+ * happens to tick, and never at all while it is paused. The calendar shipped
+ * that way: pressing forward moved the heading March, April, May, June with
+ * the grid frozen on March underneath it.
+ *
+ * The fix is a second argument. This is the check that it is passed.
+ */
+describe('reading the world', () => {
+  /** The text of one call's arguments, brackets balanced, strings respected. */
+  function argumentsOf(text: string, open: number): string {
+    let depth = 0;
+    let quote = '';
+    for (let i = open; i < text.length; i++) {
+      const ch = text[i]!;
+      if (quote) {
+        if (ch === '\\') i++;
+        else if (ch === quote) quote = '';
+        continue;
+      }
+      if (ch === "'" || ch === '"' || ch === '`') { quote = ch; continue; }
+      if (ch === '(' || ch === '[' || ch === '{') depth++;
+      else if (ch === ')' || ch === ']' || ch === '}') {
+        depth--;
+        if (depth === 0) return text.slice(open + 1, i);
+      }
+    }
+    return '';
+  }
+
+  /** Whether the arguments carry a second one at the top level. */
+  function hasSecondArgument(args: string): boolean {
+    let depth = 0;
+    let quote = '';
+    for (let i = 0; i < args.length; i++) {
+      const ch = args[i]!;
+      if (quote) {
+        if (ch === '\\') i++;
+        else if (ch === quote) quote = '';
+        continue;
+      }
+      if (ch === "'" || ch === '"' || ch === '`') { quote = ch; continue; }
+      if (ch === '(' || ch === '[' || ch === '{') depth++;
+      else if (ch === ')' || ch === ']' || ch === '}') depth--;
+      else if (ch === ',' && depth === 0) return true;
+    }
+    return false;
+  }
+
+  it('passes what a reader closes over besides the world', () => {
+    const offenders: string[] = [];
+    for (const file of SOURCES) {
+      if (!file.endsWith('.tsx')) continue;
+      const text = readFileSync(file, 'utf8');
+      // Everything the component holds itself, and every prop it is given.
+      const held = new Set<string>();
+      for (const m of text.matchAll(/const \[\s*(\w+)\s*,\s*set\w+\s*\]\s*=\s*useState/g)) held.add(m[1]!);
+      if (held.size === 0) continue;
+      for (const m of text.matchAll(/\buseWorld\s*\(/g)) {
+        const open = m.index! + m[0].length - 1;
+        const args = argumentsOf(text, open);
+        if (hasSecondArgument(args)) continue;
+        for (const name of held) {
+          if (new RegExp(`\\b${name}\\b`).test(args)) {
+            const line = text.slice(0, m.index!).split('\n').length;
+            offenders.push(`${file}:${line} reads "${name}" and passes no deps`);
+          }
+        }
+      }
+    }
+    expect(offenders, 'world readers that will not notice the screen changed its mind').toEqual([]);
+  });
+});

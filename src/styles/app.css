@@ -293,6 +293,9 @@ a:hover { text-decoration: underline; }
   border-radius: var(--radius); padding: var(--s5);
 }
 .card-tight { padding: var(--s4); }
+/* A panel that opens hosts its own region, and the wrapper must not sit
+   between the card and the layout it was drawn for. */
+.panel-body { display: contents; }
 .card-flush { padding: 0; overflow: hidden; }
 
 .panel-head {
@@ -378,6 +381,22 @@ button.link:hover { color: var(--accent-strong); }
 .chip-info { background: var(--info-dim); color: var(--info); border-color: transparent; }
 
 .stat { display: flex; flex-direction: column; gap: 2px; }
+/* A stat that opens is one control covering the whole tile. The button lays
+   itself out exactly as the tile did, and only the label carries the
+   underline — three underlines in a tile this small is noise, not an
+   affordance. */
+.stat > button.link {
+  display: flex; flex-direction: column; gap: 2px; align-items: flex-start;
+  text-align: left; width: 100%; text-decoration: none;
+}
+.stat > button.link .stat-label {
+  text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px;
+}
+/* Only the label answers to the pointer. The generic link hover would tint
+   the figure and the note with it, and a whole tile changing color reads as a
+   state rather than as an affordance. */
+.stat > button.link:hover { color: inherit; }
+.stat > button.link:hover .stat-label { color: var(--accent-strong); }
 .stat-label { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 /* A long value wraps rather than running out of its panel: a list of formats
    is as much a stat as a number is. */
@@ -576,6 +595,97 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .sheet-item { min-width: 0; }
 
 /* The production companies, one card each. */
+/* ---------- Looking at things ----------
+ *
+ * A look opens in the flow of the page, under the block whose noun was
+ * pressed. It is indented and hairlined on the left so the eye can see it
+ * hangs off what is above it, and it nests: a look inside a look indents
+ * again. Nothing ever covers anything, so there is no overlay, no z-index and
+ * no scroll lock, and getting out of four levels is one press because closing
+ * a level unmounts what is under it.
+ */
+
+button.link.is-open { color: var(--accent-strong); text-decoration-style: solid; }
+
+.look {
+  margin: var(--s3) 0 var(--s2);
+  padding: var(--s3) 0 var(--s3) var(--s4);
+  border-left: 2px solid var(--accent-line);
+  animation: look-in .16s ease-out;
+}
+@media (prefers-reduced-motion: reduce) { .look { animation: none; } }
+@keyframes look-in { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: none; } }
+
+/* A look inside a look steps in again, and fades its rule so depth reads as
+   distance rather than as a second thing of equal weight. */
+.look .look { border-left-color: var(--line); }
+
+/* Depth costs width and a chain can run five deep. Past the third step the
+   rule alone carries the nesting, because sixteen pixels a level takes eighty
+   off a sentence by the bottom of a real chain — and a phone has none to
+   spare, so it steps in half as far and stops sooner. */
+.look .look .look .look { padding-left: var(--s3); }
+@media (max-width: 620px) {
+  .look { padding-left: var(--s3); }
+  .look .look .look { padding-left: var(--s2); }
+  .look-way { gap: var(--s1); }
+}
+
+.look-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); }
+.look-trail { font-size: var(--size-xs); color: var(--text-dim); margin-bottom: 2px; }
+.look-name { font-size: var(--size-md); font-weight: 650; margin: 2px 0 0; overflow-wrap: break-word; }
+.look-close { flex: none; font-size: var(--size-xs); color: var(--text-dim); }
+
+.look-inner { min-width: 0; }
+.look-summary { font-size: var(--size-sm); margin: var(--s3) 0 0; max-width: 62ch; }
+.look-provenance { font-size: var(--size-xs); color: var(--text-dim); margin: var(--s3) 0 0; max-width: 62ch; }
+
+/* A way in says where it goes before you take it. The name is the control and
+   the detail is the promise, so they sit on one line and wrap together. */
+.look-ways { display: flex; flex-direction: column; gap: var(--s2); margin-top: var(--s3); }
+.look-way { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2); }
+.look-way-detail { font-size: var(--size-xs); color: var(--text-dim); min-width: 0; }
+
+/* Ways drawn across, the way a week of weather reads on Home: a name, a
+   picture and the figures under it. Twenty-four hours will not fit on a
+   phone, so the strip scrolls sideways rather than crushing the cells — the
+   one place on the page allowed to. */
+.look-strip {
+  display: flex; gap: var(--s2); margin-top: var(--s3);
+  overflow-x: auto; padding-bottom: var(--s2);
+  scrollbar-width: thin;
+}
+.look-cell { flex: 0 0 auto; min-width: 0; }
+.look-cell > button.link {
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  min-width: 58px; padding: var(--s2) var(--s1);
+  text-align: center; text-decoration: none; border-radius: var(--radius-sm);
+}
+.look-cell > button.link:hover { background: var(--surface-hover); color: inherit; }
+.look-cell > button.link.is-open { background: var(--surface-hover); }
+/* The cell the level is about. Same accent as a picked trait, so "this is the
+   one" reads the same everywhere on the page. */
+.look-cell.is-here > button.link {
+  background: var(--accent-dim); box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+.look-cell.is-here .look-cell-name { color: var(--accent-strong); }
+.look-cell-name {
+  font-size: var(--size-xs); color: var(--text-dim); white-space: nowrap;
+  text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px;
+}
+.look-cell > button.link:hover .look-cell-name { color: var(--accent-strong); }
+.look-cell-icon { font-size: var(--size-md); line-height: 1.3; }
+.look-cell-line {
+  font-size: var(--size-xs); line-height: 1.5; white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.look-cell-line:last-child { color: var(--text-muted); }
+
+.look-facets { margin-top: var(--s3); }
+.look-facet-body { margin-top: var(--s3); }
+
+.look-gone { border-left-color: var(--line); display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); }
+
 /* ---------- App shell ---------- */
 
 .shell { display: flex; flex-direction: column; height: 100%; }

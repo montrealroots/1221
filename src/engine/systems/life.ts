@@ -18,6 +18,7 @@ import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } fr
 import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
+import { driftBonds, moralePullOf } from '../world/standing';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -279,6 +280,14 @@ export function dailyRollover(sim: Simulation): void {
     w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
   }
 
+  // A day of neither of you doing anything about it, charged to every bond,
+  // and then what the people around you are worth to the person having the day.
+  driftBonds(sim.universe, sim.now);
+  for (const person of Object.values(sim.universe.people)) {
+    const pull = moralePullOf(sim.universe, person.id, person.wellbeing.morale);
+    if (pull !== 0) person.wellbeing.morale = clamp(person.wellbeing.morale + pull, 0, 100);
+  }
+
   liveTheUnattendedDay(sim);
 
   sim.emit('world.day_rollover', { date: sim.now });
@@ -336,7 +345,7 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
   const debt = sim.player.wellbeing.sleepDebt;
   const ideal = clamp(7.5 + debt * 0.12, 6, 11);
-  if (!next) return { hours: Math.round(ideal * 2) / 2, reason: 'Nothing is scheduled, so sleep as long as you need.' };
+  if (!next) return { hours: Math.round(ideal * 2) / 2, reason: 'Your calendar’s clear, so sleep as long as you need.' };
 
   const available = (next.at - sim.now) / MS_HOUR - 1.5;
   if (available < ideal) {

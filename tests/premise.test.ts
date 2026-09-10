@@ -23,7 +23,7 @@ import {
   categoryAdmits, forTitle, impliedPerformerTitle, performerNoun, performerTitleOf, splitByTitle,
 } from '@/engine/core/performer';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
-import { ALL_TRAITS, ATTRIBUTES } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, rate } from '@/engine/domain/attributes';
 import { SKILLS } from '@/engine/domain/skills';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { settledTitle } from '@/ui/creation/CharacterCreation';
@@ -292,8 +292,7 @@ describe('the craft is acting, and only acting', () => {
     const player = sim.player;
 
     // Every acting attribute at the ceiling.
-    expect(Object.keys(player.attributes).length).toBe(ATTRIBUTES.length);
-    for (const attribute of ATTRIBUTES) expect(player.attributes[attribute.id]).toBe(CEILING);
+    for (const attribute of ATTRIBUTES) expect(rate(player.attributes, attribute.id)).toBe(CEILING);
 
     // Every acting trait, and the three that belong to one person.
     expect(player.traits.sort()).toEqual(ALL_TRAITS.map((t) => t.id).sort());

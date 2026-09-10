@@ -40,6 +40,11 @@ const ALLOWED = {
   'src/ui/workspaces/TravelWorkspace.tsx': ['formatPeople(d.city.population)'],
   'src/ui/creation/LocationPicker.tsx': ['c.population.toLocaleString'],
   'src/ui/screens/Home.tsx': ['place.countryPopulation.toLocaleString', 'formatPeople(place.cityPopulation)'],
+  // Populations again, in the looks. Measured rather than assumed: of 1,379
+  // cities the smallest non-zero is 2 and of 252 countries it is 30, so no
+  // row in the gazetteer can print "1 people". Two cities and four countries
+  // sit at 0, which agrees with a plural anyway.
+  'src/ui/looks/place.tsx': ['${people} people', 'formatPeople('],
   'src/engine/index.ts': ['${people} people'],
   'src/engine/systems/media.ts': ['impressions.toLocaleString'],
   // "A cocktail thing", "a summer thing" — a noun, not a count of things.

@@ -151,6 +151,16 @@ function proseSpans(line, tsx) {
   return spans.sort((a, b) => a[0] - b[0]);
 }
 
+/**
+ * Blank out `{/* ... *\/}` blocks, which span lines and read exactly like the
+ * bare prose the JSX rule below is looking for. Same length in, same length
+ * out, so a span found in the blanked copy still points at the real line.
+ */
+function withoutJsxComments(source) {
+  return source.replace(/\{\/\*[\s\S]*?\*\/\}/g, (block) =>
+    block.replace(/[^\n]/g, ' '));
+}
+
 const files = walk(ROOT);
 const byRule = {};
 const byFile = {};
@@ -162,10 +172,11 @@ for (const file of files) {
   const tsx = file.endsWith('.tsx');
   const source = readFileSync(file, 'utf8');
   const lines = source.split('\n');
+  const masked = withoutJsxComments(source).split('\n');
   let changed = false;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const spans = proseSpans(line, tsx);
+    const spans = proseSpans(masked[i], tsx);
     if (spans.length === 0) continue;
     let out = '';
     let cursor = 0;

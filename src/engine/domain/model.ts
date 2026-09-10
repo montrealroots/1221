@@ -18,6 +18,18 @@ import type { SkillSheet } from './skills';
 
 export type Id = string;
 
+// The business. Declared next door, in `domain/company.ts`, because seven
+// linked types about one subject are a file rather than a section.
+import type {
+  Company, Holding, Policy, Post, Project, Registration, Signature,
+} from './company';
+
+export type {
+  Company, CompanyForm, GuildId, Holding, Hold, Jurisdiction, Ownership, Policy,
+  PolicyKind, Post, Project, Provenance, Registration, RegistryId, RoleId,
+  Signature, Stage,
+} from './company';
+
 export interface Personality {
   /** Big five plus two industry-relevant dials, all 0-100. */
   openness: number;
@@ -205,7 +217,79 @@ export interface Person {
   /** Said in their own words, where the list did not have it. */
   raceEthnicityOwn?: string;
 
+  /**
+   * Who they are to the people around them.
+   *
+   * Stored on the person rather than in a table of pairs, because being
+   * somebody's mother is a fact about her and not a fact about the two of
+   * them. How they are getting on is the other thing, and that is a `Bond`.
+   */
+  relations?: Relation[];
+
+  /**
+   * What they do on the family land, where they do anything.
+   *
+   * Not a job in a labor market — there is no labor market. It is the thing
+   * this person is the one who does: keeps the house, runs the lot, runs the
+   * company.
+   */
+  estateRole?: EstateRole;
+
   createdAt: Instant;
+}
+
+/** What somebody on the land is the one who does. */
+export type EstateRole = 'the house' | 'the lot' | 'the company' | 'nothing in particular';
+
+/**
+ * How one person is related to another.
+ *
+ * Written from the subject's side: a person carrying `{ kind: 'mother', toId }`
+ * means that person's mother is the one named. A twin is not a sibling with a
+ * coincidence — the world says "your twin", never "your sibling who happens to
+ * share a birthday" — so it is its own word.
+ */
+export type RelationKind = 'mother' | 'father' | 'child' | 'twin';
+
+export interface Relation {
+  kind: RelationKind;
+  toId: Id;
+}
+
+/**
+ * How two people are getting on.
+ *
+ * One record for a pair rather than one each: the game has no interest in a
+ * mother who feels close to a son who does not feel close back, and modeling
+ * both sides would double the bookkeeping to say the same thing twice.
+ *
+ * `closeness` is nought to a hundred and moves with what actually happens —
+ * time spent together warms it, time apart cools it slowly. It is not
+ * affection and it is not a score of the relationship; it is how much of each
+ * other they have had lately.
+ */
+export interface Bond {
+  id: Id;
+  saveId: Id;
+  /** The two people, sorted, so a pair has exactly one bond. */
+  betweenIds: [Id, Id];
+  closeness: number;
+  /** The last time the two of them were actually in the same room on purpose. */
+  lastTogetherAt?: Instant;
+  /**
+   * The last day drift was charged for.
+   *
+   * Anchored rather than assumed, so a bond drifts by the days that passed
+   * and not by the number of times something happened to look at it. Skipping
+   * a month forward in one jump has to cost the same as living it.
+   */
+  lastDriftedAt?: Instant;
+  formedAt: Instant;
+}
+
+/** The one key a pair of people has, whichever order they are named in. */
+export function bondKey(a: Id, b: Id): string {
+  return a < b ? `${a}|${b}` : `${b}|${a}`;
 }
 
 export interface Household {
@@ -670,96 +754,6 @@ export interface Running {
   startedAt: Instant;
 }
 
-/**
- * The player's production company.
- *
- * After the strike there is one of these that matters, and it is theirs. It
- * holds the money, the material, the people and the standing, and every
- * decision the game asks about is finally a decision this company made.
- */
-export interface Company {
-  id: Id;
-  saveId: Id;
-  name: string;
-  legalName: string;
-  structure: 'sole_proprietor' | 'llc' | 's_corp' | 'c_corp' | 'partnership';
-  kind: 'production' | 'studio' | 'distributor' | 'agency' | 'vendor' | 'exhibitor' | 'other';
-  ownerships: { holderId: Id; holderKind: 'person' | 'company'; percent: number }[];
-  founderId: Id;
-  headquartersPropertyId?: Id;
-  headquartersLocationId: string;
-
-  /** The shape of the shop: kitchen table, boutique, independent, studio. */
-  shingle: string;
-  /** What the company says it is for. Buyers and talent both read it. */
-  remit: string;
-  /** In the founder's words. Shown on the company's own page. */
-  strategy: string;
-
-  cashAccountId: Id;
-  creditAccountId?: Id;
-
-  /** Monthly overhead, in cents, before anybody is paid. */
-  overhead: Money;
-  /**
-   * What the founder pays themselves out of it each month.
-   *
-   * With no job system there are no wages, and somebody who wholly owns a
-   * company does not go hungry beside it — they take a draw. It is money the
-   * company then cannot spend on a picture, which is the whole tension: every
-   * dollar you live on is a dollar that is not on the screen.
-   */
-  founderDraw: Money;
-  /** How many projects it can carry before the work suffers. */
-  capacity: number;
-
-  /** 0-100 how the industry regards the company. */
-  reputation: number;
-  /** 0-100 what talent thinks of working here, which is not the same thing. */
-  standingWithTalent: number;
-  /** Maximum single-project greenlight the company can support, in cents. */
-  greenlightCeiling: Money;
-  valuation: Money;
-  foundedAt: Instant;
-  dissolvedAt?: Instant;
-  registeredIn: string;
-}
-
-export interface Division {
-  id: Id;
-  saveId: Id;
-  companyId: Id;
-  name: string;
-  focus: string;
-  headId?: Id;
-  budget: Money;
-  spent: Money;
-  employeeIds: Id[];
-  projectIds: Id[];
-  createdAt: Instant;
-}
-
-export interface Employee {
-  id: Id;
-  saveId: Id;
-  companyId: Id;
-  divisionId?: Id;
-  personId: Id;
-  title: string;
-  department: string;
-  annualSalary: Money;
-  /** Cents of single-project greenlight authority. */
-  authority: Money;
-  performance: number;
-  hiredAt: Instant;
-  departedAt?: Instant;
-  reportsToId?: Id;
-}
-
-// ---------------------------------------------------------------------------
-// Player-facing surfaces
-// ---------------------------------------------------------------------------
-
 export interface DecisionItem {
   id: Id;
   saveId: Id;
@@ -815,7 +809,16 @@ export interface Preferences {
   largePurchaseThreshold: Money;
 }
 
-export const SAVE_SCHEMA_VERSION = 75;
+/**
+ * 76 added the family: relations on a person, and bonds between two of them.
+ * 77 added the business — seven tables for the company, and the removal of the
+ * `Company`, `Division` and `Employee` types that had been declared for a
+ * build that was cut and never stored a single record.
+ *
+ * A save from 76 or earlier has no company at all, which reads correctly as a
+ * family that never formed one rather than as a broken save.
+ */
+export const SAVE_SCHEMA_VERSION = 78;
 
 export interface SaveMeta {
   id: Id;
@@ -907,6 +910,26 @@ export interface SaveUniverse {
 
   people: Record<Id, Person>;
   households: Record<Id, Household>;
+  /** How the people in it are getting on, keyed by `bondKey`. */
+  bonds: Record<string, Bond>;
+
+  /**
+   * The family business.
+   *
+   * The parent is Icelandic and any arm of it is not, which is the one fact
+   * the whole of `world/company.ts` is built on. Seven tables rather than one
+   * because a company is not a record — it is a record and everything it
+   * stands in relation to: the registers it is on, the guilds it has signed
+   * with, the cover it carries, the material it holds, the posts it keeps and
+   * the slate it is developing.
+   */
+  companies: Record<Id, Company>;
+  registrations: Record<Id, Registration>;
+  signatures: Record<Id, Signature>;
+  policies: Record<Id, Policy>;
+  holdings: Record<Id, Holding>;
+  posts: Record<Id, Post>;
+  projects: Record<Id, Project>;
 
   accounts: Record<Id, Account>;
   transactions: LedgerTransaction[];

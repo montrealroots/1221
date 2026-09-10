@@ -89,6 +89,9 @@ const REAL_NAMES = [
   'Theatre Royal', 'Old Vic', 'National Theatre', 'Barbican Centre', 'Centre Pompidou',
   // Point Grey is the headland the University of British Columbia stands on.
   'Point Grey',
+  // The studio behind Total Extreme Wrestling, named in docs/DEPTH.md. It is a
+  // company, not a color.
+  'Grey Dog Software',
   'Southbank Centre', 'Sydney Theatre', 'Abbey Theatre', 'Lyric Theatre', 'Apollo Theatre',
   'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre',
   // Retail chains that spell themselves that way.

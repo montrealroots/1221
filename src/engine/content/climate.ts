@@ -21,13 +21,14 @@ import type { City } from './geography';
 
 export type ClimateType =
   | 'equatorial' | 'monsoon' | 'savanna' | 'arid' | 'semi_arid' | 'mediterranean'
-  | 'humid_subtropical' | 'oceanic' | 'continental' | 'subarctic' | 'polar' | 'highland';
+  | 'humid_subtropical' | 'oceanic' | 'continental' | 'subpolar_oceanic' | 'subarctic'
+  | 'polar' | 'highland';
 
 export const CLIMATE_NAMES: Record<ClimateType, string> = {
   equatorial: 'Equatorial', monsoon: 'Tropical Monsoon', savanna: 'Tropical Savanna',
   arid: 'Desert', semi_arid: 'Semi-Arid', mediterranean: 'Mediterranean',
   humid_subtropical: 'Humid Subtropical', oceanic: 'Oceanic', continental: 'Continental',
-  subarctic: 'Subarctic', polar: 'Polar', highland: 'Highland',
+  subpolar_oceanic: 'Subpolar Oceanic', subarctic: 'Subarctic', polar: 'Polar', highland: 'Highland',
 };
 
 /**
@@ -45,6 +46,10 @@ export const CLIMATE_OVERRIDES: Readonly<Record<string, ClimateType>> = {
   'mx-cmx-mexicocity': 'highland', 'ae-du-dubai': 'arid',
   'au-vic-melbourne': 'oceanic', 'nz-wgn-wellington': 'oceanic', 'nz-akl-auckland': 'oceanic',
   'fr-paca-cannes': 'mediterranean', 'es-cat-barcelona': 'mediterranean',
+  // The one Norwegian city that is not on the Atlantic. Oslo sits at the head
+  // of a long fjord and has a real continental swing of twenty-one degrees,
+  // which is twice what the coast gets.
+  'no-12-oslo': 'oceanic',
 
   // --- United States, by state --------------------------------------------
   'us-ak': 'subarctic', 'us-hi': 'savanna',
@@ -79,7 +84,16 @@ export const CLIMATE_OVERRIDES: Readonly<Record<string, ClimateType>> = {
   hu: 'continental', sk: 'continental', ro: 'continental', bg: 'continental', rs: 'continental',
   ua: 'continental', by: 'continental', lt: 'continental', lv: 'continental', ee: 'continental',
   ru: 'continental', kz: 'continental', mn: 'continental', uz: 'arid', tm: 'arid', kg: 'continental', tj: 'continental',
-  no: 'subarctic', se: 'subarctic', fi: 'subarctic', is: 'subarctic', gl: 'polar',
+  // Iceland, the Faroes and the Norwegian coast sit in the North Atlantic
+  // Drift and are nothing like an interior at the same latitude. Reykjavík
+  // read as subarctic gave a January mean of -20.6°C against a real -0.5°C
+  // and a summer-to-winter swing of 37° against a real 12°, which is what
+  // put snow and -18°C on the main screen in March.
+  no: 'subpolar_oceanic', is: 'subpolar_oceanic', fo: 'subpolar_oceanic',
+  // Stockholm and Helsinki are Baltic, not Siberian. Read as subarctic they
+  // ran five and a half degrees cold on the year and swung thirteen degrees
+  // wider than they do. Their published normals sit inside the oceanic band.
+  se: 'oceanic', fi: 'oceanic', gl: 'polar',
   in: 'monsoon', bd: 'monsoon', lk: 'monsoon', mm: 'monsoon', th: 'monsoon', vn: 'monsoon',
   kh: 'monsoon', la: 'monsoon', ph: 'monsoon', np: 'highland', bt: 'highland',
   id: 'equatorial', my: 'equatorial', sg: 'equatorial', bn: 'equatorial', pg: 'equatorial',
@@ -134,7 +148,11 @@ export function climateByLatitude(latitude: number, longitude: number): ClimateT
   if (lat < 23.5) return 'savanna';
   if (lat < 35) return 'humid_subtropical';
   if (lat < 58) return interior ? 'continental' : 'oceanic';
-  if (lat < 66.5) return 'subarctic';
+  // Above the mid-fifties an interior and a coast part company completely: a
+  // winter in Yakutsk and a winter in Tórshavn share a latitude and nothing
+  // else. Reading every high latitude as subarctic is what made Reykjavík
+  // twenty degrees too cold in January.
+  if (lat < 66.5) return interior ? 'subarctic' : 'subpolar_oceanic';
   return 'polar';
 }
 
@@ -171,6 +189,11 @@ const PROFILES: Record<ClimateType, ClimateProfile> = {
   oceanic:           { tempOffset: 1.5, amplitude: 0.55, diurnal: 7, wetDays: [0.45, 0.4, 0.38, 0.35, 0.33, 0.32, 0.3, 0.32, 0.35, 0.42, 0.45, 0.46], lagDays: 40, cloud: 0.6 },
   continental:       { tempOffset: -2, amplitude: 1.15, diurnal: 10, wetDays: [0.3, 0.28, 0.3, 0.32, 0.36, 0.38, 0.36, 0.34, 0.3, 0.3, 0.32, 0.32], lagDays: 25, cloud: 0.5 },
   subarctic:         { tempOffset: -3, amplitude: 1.3, diurnal: 8, wetDays: [0.35, 0.3, 0.28, 0.25, 0.25, 0.3, 0.35, 0.38, 0.38, 0.38, 0.38, 0.38], lagDays: 30, cloud: 0.6 },
+  // A cold ocean holds a place far steadier than a cold continent does. The
+  // offset and the damping are fitted to the published normals for Reykjavík,
+  // Tórshavn and Bergen, which the latitude baseline alone misses by more
+  // than twenty degrees in midwinter.
+  subpolar_oceanic:  { tempOffset: 4, amplitude: 0.41, diurnal: 5, wetDays: [0.6, 0.55, 0.55, 0.5, 0.45, 0.45, 0.5, 0.5, 0.55, 0.6, 0.6, 0.6], lagDays: 30, cloud: 0.75 },
   polar:             { tempOffset: -6, amplitude: 1.2, diurnal: 5, wetDays: flat(0.2), lagDays: 30, cloud: 0.6 },
   highland:          { tempOffset: -8, amplitude: 0.4, diurnal: 13, wetDays: [0.1, 0.1, 0.15, 0.25, 0.35, 0.45, 0.5, 0.5, 0.45, 0.3, 0.12, 0.08], lagDays: 15, cloud: 0.4 },
 };

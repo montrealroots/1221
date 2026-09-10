@@ -16,13 +16,27 @@ import {
   addDays, formatDate, formatDateTime, formatDuration, formatTime, instantFromZoned, zonedParts, MS_HOUR,
   type Instant,
 } from '@/engine/core/time';
+import { PLAN_KIND, namesOn, saidAsList } from '@/engine/world/plans';
+import { MISSED_COOLS, TOGETHER_WARMS } from '@/engine/world/standing';
+import type { ScheduledItem } from '@/engine/core/scheduler';
 
 export function TimeControls() {
-  const { sim, advanceTo, refresh } = useGame();
+  const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
   const [confirm, setConfirm] = useState<{ at: Instant; label: string; missed: CalendarEntry[] } | null>(null);
   const speed = sim.universe.preferences.timeSpeed;
+
+  /**
+   * Moving the clock, and standing still when something wants you.
+   *
+   * Every way of moving the clock stops at anything that needs the player
+   * rather than running it over, and the halt is held by the provider because
+   * the live tick can be halted too. That halt is the whole decision: you are
+   * at the thing, and you either go — which spends the hours it takes — or you
+   * do not, and they find out you were not there.
+   */
+  const due = standingAt;
 
   const setSpeed = (next: typeof speed) => {
     sim.universe.preferences.timeSpeed = next;
@@ -50,6 +64,27 @@ export function TimeControls() {
           onChooseEvent={() => setSkipOpen(true)}
         />
       </div>
+
+      {due && (
+        <DueNow
+          item={due.item}
+          wanted={due.wanted}
+          onGo={() => { clearStandingAt(); advanceTo(due.wanted); }}
+          onStay={() => {
+            // Not silent: if the world refuses to let you walk away from
+            // something, the reason is the answer and it belongs on screen.
+            const answer = run<{ ok: boolean; error?: string }>('calendar.skip', { entryId: due.item.id });
+            clearStandingAt();
+            if (!answer.value?.ok) {
+              if (answer.value?.error) toast(answer.value.error, 'negative');
+              refresh();
+              return;
+            }
+            advanceTo(due.wanted);
+          }}
+          onClose={clearStandingAt}
+        />
+      )}
 
       {sleepOpen && <SleepDialog onClose={() => setSleepOpen(false)} />}
       {skipOpen && <SkipDialog onClose={() => setSkipOpen(false)} onSkip={(at) => { advanceTo(at); setSkipOpen(false); }} />}
@@ -158,6 +193,64 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
+/**
+ * You are at it. Go, or do not.
+ *
+ * The one place in the game where turning up is a decision rather than a
+ * consequence. Going costs the hours it takes, which is why not going is a
+ * real option and not a way of throwing points away for nothing.
+ */
+function DueNow({ item, wanted, onGo, onStay, onClose }: {
+  item: ScheduledItem;
+  wanted: Instant;
+  onGo: () => void;
+  onStay: () => void;
+  onClose: () => void;
+}) {
+  const { sim } = useGame();
+  const zone = sim.zone;
+  const mine = item.kind === PLAN_KIND;
+  const names = namesOn(sim, item);
+  const runs = item.durationMinutes ?? 60;
+  const ahead = Math.max(0, wanted - item.at);
+
+  return (
+    <Modal
+      title={titleCaseLabel(item.label)}
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
+          {mine && (
+            <button className="btn" onClick={onStay}>
+              {names.length > 0 ? 'Don’t Go' : 'Skip It'}
+            </button>
+          )}
+          <button className="btn btn-primary" onClick={onGo}>Go</button>
+        </>
+      )}
+    >
+      <p className="small">
+        It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this is what wanted you.
+        {' '}Going takes {formatDuration(runs * 60_000)} of the day
+        {ahead > 0 ? `, and the clock carries on to ${formatDateTime(wanted, zone)} after.` : '.'}
+      </p>
+      {names.length > 0 && (
+        <p className="small">
+          {`It’s with ${saidAsList(names)}. Going is worth ${TOGETHER_WARMS} points of where you stand with `
+            + `${names.length === 1 ? 'them' : 'each of them'}. Not going costs ${MISSED_COOLS}, and `
+            + `${names.length === 1 ? 'they’ll' : 'they’ll each'} know you weren’t there.`}
+        </p>
+      )}
+      {!mine && (
+        <p className="small muted">
+          This one isn’t yours to walk away from — it’s the world’s. Go, or leave the clock where it is.
+        </p>
+      )}
+    </Modal>
+  );
+}
+
 function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: number) => void }) {
   const { sim } = useGame();
   const targets = useWorld((s) => skipTargets(s, 14));
@@ -183,7 +276,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
       }
     >
       {targets.length === 0 ? (
-        <p className="muted">Nothing is scheduled ahead of you right now.</p>
+        <p className="muted">You’ve got nothing scheduled ahead of you.</p>
       ) : (
         <>
           <div className="list card card-flush" style={{ maxHeight: 260, overflowY: 'auto' }}>

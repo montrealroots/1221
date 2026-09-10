@@ -33,12 +33,28 @@ const start = page.getByRole('button', { name: /new (save|game)|start|empty slot
 if (await start.count()) { await start.click().catch(() => {}); await page.waitForTimeout(1000); }
 await shoot('02-identity');
 
-// Walk the creation steps.
-for (const step of ['03-personal', '04-career', '05-starting-point', '06-review']) {
+// They/Them settles nothing, so Identity asks which word the business lists
+// you under and will not advance until it is answered. Without this the walk
+// never left the first step and quietly shot it five times over.
+const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
+if (await billed.count()) { await billed.click().catch(() => {}); await page.waitForTimeout(300); }
+
+// Walk the creation steps, and say so when one of them does not open. A walk
+// that shoots the same page under five names is worse than one that stops:
+// the shots look like a full set and the fault is in every one of them.
+const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText();
+for (const step of ['03-personal', '04-career', '05-starting-point', '06-your-people', '07-review']) {
+  const before = await stepName().catch(() => '');
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) break;
   await next.click().catch(() => {});
   await page.waitForTimeout(900);
+  const after = await stepName().catch(() => '');
+  if (after === before) {
+    const blocking = await page.locator('.callout-warning').allInnerTexts();
+    console.log(`  STUCK on ${before || 'the first step'}:`, blocking.join(' ') || 'Continue would not press');
+    break;
+  }
   await shoot(step);
 }
 
@@ -59,29 +75,21 @@ if (await begin.count()) {
     }
   };
 
-  for (const [name, pattern] of [
-    ['08-world', /^world$/i],
-    ['09-calendar', /calendar/i],
-    ['10-wellbeing', /wellbeing/i],
-    ['11-relationships', /relationships/i],
-    ['12-history', /^history$/i],
-    ['13-bank', /^bank$/i],
-    ['14-property', /^property$/i],
-    ['15-vehicles', /^vehicles$/i],
-    ['16-shopping', /^shopping$/i],
-    ['17-insurance', /insurance/i],
-    ['18-work', /^work$/i],
-    ['19-social', /^social$/i],
-    ['20-health', /^health$/i],
-    ['21-education', /education/i],
-    ['22-city', /^the city$/i],
-    ['23-travel', /^travel$/i],
-    ['24-character', /character/i],
-    ['25-settings', /settings/i],
-  ]) {
+  // Whatever the rail actually lists, in the order it lists it. A hard-coded
+  // list here went stale the moment a workspace was deleted, and quietly said
+  // "no rail entry" for pages that were sitting right there.
+  await openRail();
+  const railed = (await page.locator('nav.rail .rail-item').allInnerTexts())
+    .map((text) => text.split('\n')[0].trim())
+    .filter((label) => label.length > 0 && label !== 'Home');
+  if (railed.length === 0) console.log('  (the rail lists nothing but Home)');
+  let n = 7;
+  for (const label of railed) {
+    n += 1;
+    const name = `${String(n).padStart(2, '0')}-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     await openRail();
-    const link = page.getByRole('button', { name: pattern }).first();
-    if (!(await link.count())) { console.log('  (no rail entry for', name, ')'); continue; }
+    const link = page.locator('nav.rail .rail-item', { hasText: label }).first();
+    if (!(await link.count())) { console.log('  (rail entry vanished:', label, ')'); continue; }
     await link.click().catch(() => {});
     await page.waitForTimeout(1300);
     // Guided-mode cards cover the screen they are explaining.

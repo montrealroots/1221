@@ -1,5 +1,5 @@
 /**
- * The five creation steps, pinned to their final shape.
+ * The six creation steps, pinned to their final shape.
  *
  * Each of these pages settled after a long run of changes, and most of what
  * settled was a decision to stop asking something. Where you live, where you
@@ -14,13 +14,15 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { createSave, defaultConfig } from '@/engine';
+import { createSave, defaultConfig, quickSave } from '@/engine';
 import { ESTATE_ACRES, ESTATE_CITY_ID, ESTATE_COUNTRY_ID, studioName } from '@/engine/content/estate';
-import { ATTRIBUTES, ALL_TRAITS } from '@/engine/domain/attributes';
+import { ALL_TRAITS, ATTRIBUTES, attributesOf, effectiveAttributes, emptyAttributeSheet, rate, sheetOf } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
 import { citizenshipsOf } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
-import { latestBirthYear, settledTitle } from '@/ui/creation/CharacterCreation';
+import { familyIssues, latestBirthYear, settledTitle } from '@/ui/creation/CharacterCreation';
+import type { NewSaveConfig } from '@/engine/world/bootstrap';
+import type { EstateRole } from '@/engine/domain/model';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -126,8 +128,7 @@ function stepSource(from: string, to?: string): string {
 describe('My Skills', () => {
   it('hands over every skill at the ceiling and every trait at once', () => {
     const p = filled().universe.people[filled().universe.playerId]!;
-    expect(Object.keys(p.attributes)).toHaveLength(ATTRIBUTES.length);
-    expect(ATTRIBUTES.filter((a) => p.attributes[a.id] !== CEILING)).toEqual([]);
+    expect(ATTRIBUTES.filter((a) => rate(p.attributes, a.id) !== CEILING)).toEqual([]);
     expect(p.traits).toHaveLength(ALL_TRAITS.length);
     for (const trait of ALL_TRAITS) expect(p.traits, trait.name).toContain(trait.id);
   });
@@ -146,7 +147,7 @@ describe('My Skills', () => {
 describe('Starting Point', () => {
   it('reports the land and asks only about money', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
-    for (const card of ['Home Base', 'The Land', 'What Is Yours']) {
+    for (const card of ['Home Base', 'ESTATE_NAME', 'What Is Yours']) {
       expect(step, `${card} is gone`).toContain(card);
     }
     // Everything it used to ask.
@@ -178,17 +179,142 @@ describe('Starting Point', () => {
   });
 });
 
+describe('Your People', () => {
+  it('asks for each of the three things about a parent, and nothing else', () => {
+    const step = stepSource('function ParentCard', 'function Choice');
+    for (const field of ['-name', '-age']) {
+      expect(step, `the parent card lost the ${field} field`).toContain(`id={\`\${idPrefix}${field}\`}`);
+    }
+    expect(step, 'the parent card asks what they do').toContain('What They Do On The Land');
+    // A parent is not a performer and is never asked to be one.
+    expect(step, 'a parent is asked to be billed').not.toMatch(/actor|actress|billed/i);
+    expect(step, 'a parent is asked for a skill').not.toMatch(/attribute|trait|skill/i);
+  });
+
+  it('offers every role the engine has a word for, and no role it does not', () => {
+    const roles: EstateRole[] = ['the house', 'the lot', 'the company', 'nothing in particular'];
+    const step = stepSource('const ESTATE_ROLES', 'const TWIN_GENDERS');
+    for (const role of roles) {
+      expect(step, `no way to pick ${role}`).toContain(`'${role}'`);
+    }
+  });
+
+  it('lets a twin be a brother, a sister, or neither', () => {
+    const step = stepSource('const TWIN_GENDERS', 'The step where the house');
+    expect(step).toContain("id: 'female'");
+    expect(step).toContain("id: 'male'");
+    expect(step).toContain("id: 'nonbinary'");
+    // Never the word the game does not use for one.
+    expect(step, 'a twin is called a sibling').not.toMatch(/sibling/i);
+  });
+
+  it('carries what was picked all the way into the save', () => {
+    const sim = createSave(1, 'creation-family', {
+      ...defaultConfig(),
+      firstName: 'Sigrún', lastName: 'Halldórsdóttir',
+      birthYear: 1998, birthMonth: 11, birthDay: 3,
+      family: {
+        mother: { firstName: 'Bryndís', ageAtBirth: 27, role: 'the company' },
+        father: { firstName: 'Ólafur', ageAtBirth: 34, role: 'the lot' },
+        twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
+      },
+    });
+    const people = Object.values(sim.universe.people);
+    const by = (first: string) => people.find((one) => one.firstName === first)!;
+
+    expect(people).toHaveLength(4);
+    expect(by('Bryndís').estateRole).toBe('the company');
+    expect(by('Ólafur').estateRole).toBe('the lot');
+    expect(by('Katla').estateRole).toBe('the house');
+    // The family name is the one the player gave, for all of them.
+    for (const person of people) expect(person.lastName).toBe('Halldórsdóttir');
+  });
+
+  it('refuses a family the player has left half-said', () => {
+    const base = defaultConfig();
+    const complain = (family: NewSaveConfig['family']): string[] =>
+      familyIssues({ ...base, firstName: 'Sigrún', family });
+
+    expect(complain(base.family)).toEqual([]);
+    expect(complain({ ...base.family, mother: { ...base.family.mother, firstName: '  ' } }))
+      .toContain('Your mother needs a first name.');
+    expect(complain({ ...base.family, father: { ...base.family.father, ageAtBirth: 4 } })
+      .join(' ')).toMatch(/between 15 and 60/);
+    expect(complain({ ...base.family, twin: { firstName: '', gender: 'female', identical: false, role: 'the house' } }))
+      .toContain('Your twin needs a first name, or you were born alone.');
+  });
+
+  it('refuses two people in one house with one name', () => {
+    const base = defaultConfig();
+    const clash = familyIssues({
+      ...base,
+      firstName: 'Katla',
+      family: {
+        ...base.family,
+        twin: { firstName: 'katla', gender: 'female', identical: true, role: 'the house' },
+      },
+    });
+    // Said in the name the player typed, not the one the comparison lowercased.
+    expect(clash).toContain('You and your twin can’t both be called Katla.');
+  });
+});
+
 describe('Review', () => {
-  it('shows every line the four steps decided', () => {
+  it('shows the people as well as the person', () => {
+    const step = stepSource('function ReviewStep');
+    for (const line of ['Your Mother', 'Your Father', 'Your People']) {
+      expect(step, `Review stopped showing ${line}`).toContain(line);
+    }
+  });
+
+  it('shows every line the five steps decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth',
-      'Home Base', 'The Land', 'The Company', 'Checking', 'Savings', 'Credit Score',
+      'Home Base', 'ESTATE_NAME', 'The Company', 'Checking', 'Savings', 'Credit Score',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }
     // The two it used to show and cannot any more.
     expect(step, 'Review shows a housing rung again').not.toMatch(/HOUSING\.find/);
     expect(step, 'Review shows a chosen city again').not.toMatch(/label="City"/);
+  });
+});
+
+describe('the sheet is a base and its exceptions', () => {
+  // The shape is the point: 813 attributes written out cost 20KB per person
+  // and 63ms of structuredClone per command at a thousand people, to say one
+  // number. These hold the shape, not the size.
+  it('costs one number for a person who is ordinary at everything', () => {
+    const sheet = emptyAttributeSheet(10);
+    expect(sheet.of, 'a sheet with no exceptions carries none').toBeUndefined();
+    expect(JSON.stringify(sheet).length).toBeLessThan(20);
+    for (const a of ATTRIBUTES) expect(rate(sheet, a.id)).toBe(10);
+  });
+
+  it('keeps only what differs, and reads the rest off the base', () => {
+    const sheet = sheetOf(40, { [ATTRIBUTES[0]!.id]: 91, [ATTRIBUTES[1]!.id]: 40 });
+    // The one that matches the base is not an exception.
+    expect(Object.keys(sheet.of ?? {})).toEqual([ATTRIBUTES[0]!.id]);
+    expect(rate(sheet, ATTRIBUTES[0]!.id)).toBe(91);
+    expect(rate(sheet, ATTRIBUTES[1]!.id)).toBe(40);
+    expect(rate(sheet, 'an_attribute_that_does_not_exist')).toBe(40);
+  });
+
+  it('is what the prodigy means: the ceiling, and nothing written down', () => {
+    const player = quickSave({}, 'sheet-prodigy').player;
+    expect(player.attributes.base).toBe(CEILING);
+    expect(player.attributes.of ?? {}, 'the prodigy has no exceptions').toEqual({});
+    // And the traits, which subtract for everybody else, cannot move it.
+    const effective = attributesOf(player);
+    for (const a of ATTRIBUTES) expect(rate(effective, a.id), a.id).toBe(CEILING);
+  });
+
+  it('lets a trait move one attribute without writing the other 812', () => {
+    const sheet = emptyAttributeSheet(50);
+    const moved = effectiveAttributes(sheet, ALL_TRAITS.map((t) => t.id));
+    expect(moved.base, 'the base is untouched').toBe(50);
+    expect(Object.keys(moved.of ?? {}).length, 'only what the traits named').toBeLessThan(ATTRIBUTES.length);
+    expect(Object.keys(moved.of ?? {}).length).toBeGreaterThan(0);
   });
 });

@@ -106,6 +106,22 @@ English leaves alone stay alone: possessive "you have" ("you have $50"),
 contracted. `node tools/voice-check.mjs` counts what is left, `--fix`
 rewrites the safe cases, and `--check` holds the line in the gate.
 
+Contractions are half of it. The other half is shape. A habit is fine
+once and a tell nine times: a clause tacked on to explain what the
+sentence just meant ("…, which is most of it"), an em dash and then a
+restatement, "rather than" where "not" would do, a sentence opening on
+"Nothing", "the whole point of it". `node tools/tics.mjs` counts nine of
+them against a budget and prints every line it found; `--check` fails the
+gate when one goes over. The budgets are deliberately not zero. Each of
+these is good writing in small numbers.
+
+The same tool watches how long lists begin. Eight hundred attribute
+descriptions that all open on a gerund read as generated, however well
+each one is written on its own, so any file with twenty or more lines of
+prose where a third of them open on the same word fails the gate. Vary
+the shape, not just the words: a plain noun phrase, a "you" sentence, a
+question, a colon and the thing itself.
+
 ## Identifiers
 
 Displayed labels are free to change; command kinds, entity ids, save keys,
@@ -125,23 +141,25 @@ word through `performerNoun`, never writes it out.
   check and the inventory check in one go.
 - `tools/text-caps.mjs` — every screen at five widths: nothing clipped,
   crushed, cut off or bleeding; non-sentence text capitalised; words not
-  broken in half; the gym scene and both calendar modals included.
+  broken in half; the calendar's modals included.
 - `tests/interface.test.ts` — no emoji anywhere in the interface but the
   brand mark, and that never in an accessible name; every destination and
   tab label in plain Title Case words.
-- `tests/text-caps.test.ts`, `tests/cohesion.test.ts` — duplicates, repeats,
-  wiring and casing across the tree.
+- `tests/cohesion.test.ts` — duplicates, repeats, wiring and casing across
+  the tree.
 - `tools/voice-check.mjs` — every string the game shows, counted for the
   places a person would have contracted and did not; `--fix` rewrites the
   safe ones, `--check` fails the gate over budget.
+- `tools/tics.mjs` — the same strings, counted for nine stock shapes against
+  a budget each, and for a long list where one opening word does too much of
+  the work; `--counts` for the totals alone, `--check` fails the gate.
 - `tools/cohesion-walk.mjs` — the game as a person meets it, in a browser:
-  startup, the slots, creation, Home, every rail destination and every tab
-  behind it, the phone and its apps, a sentence typed into Go Anywhere and
-  the scene it opens, the calendar's plan form, help, then Save & Exit and
-  back in. Page errors, leaked `undefined`s, a rail that marks the wrong
-  screen, a covered control or a save that does not come back all fail it.
-- `tools/monte-carlo.mjs` — random lives, played by the game's own commands
-  with real ids from the save, a year at a time: every throw, missed event,
-  unbalanced ledger, bad number, backwards clock and failed round trip is a
-  bug with a seed to reproduce it. `tests/monte-carlo.test.ts` runs a short
-  one in the gate.
+  startup, the slots, creation end to end, Home, every rail destination and
+  every tab behind it, the calendar's plan form, then Save & Exit and back in.
+  Page errors, leaked `undefined`s, a rail that marks the wrong screen, a
+  covered control or a save that does not come back all fail it. A walk that
+  cannot get past a step reports that step and stops, rather than reporting
+  the five screens it never reached as broken.
+- `tools/doc-refs.mjs` — every file path a doc names, checked. This section is
+  a promise about what is enforced, and it had gone partly false: it named a
+  fuzzer and two test files that had been deleted. `--check` fails the gate.

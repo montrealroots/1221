@@ -7,7 +7,7 @@
  * commitments but matter anyway — birthdays, holidays, seasons.
  */
 
-import { holidaysOn, type HolidayEntry } from '../content/holidays';
+import { holidaysAcross, type Calendar, type KeptHoliday } from '../content/holidays';
 import type { Simulation } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
 import type { Id } from '../domain/model';
@@ -70,7 +70,7 @@ export interface CalendarDay {
   isToday: boolean;
   season: Season;
   entries: CalendarEntry[];
-  holidays: HolidayEntry[];
+  holidays: KeptHoliday[];
 }
 
 // ---------------------------------------------------------------------------
@@ -122,13 +122,36 @@ export function entriesBetween(sim: Simulation, from: Instant, to: Instant): Cal
   return entries;
 }
 
+/**
+ * The country whose year the business runs on.
+ *
+ * The work is American — the studios, the guilds, the awards, the release
+ * calendar — so its holidays are kept wherever the player is standing. A
+ * Thanksgiving nobody in the industry is working through is a fact about the
+ * week whether or not the shops in Reykjavík are open.
+ */
+export const INDUSTRY_COUNTRY = 'us';
+
+/**
+ * The calendars this life keeps: where you are standing, and the industry's.
+ *
+ * Where you are comes first, because that is whose shops are shut and whose
+ * roads are quiet. The two collapse to one when the player is in America.
+ */
+export function keptCalendars(sim: Simulation): Calendar[] {
+  const player = sim.universe.people[sim.universe.playerId];
+  const here = player ? CITIES.get(player.currentLocationId) : undefined;
+  const out: Calendar[] = here ? [{ countryId: here.countryId, regionId: here.parentId }] : [];
+  if (!out.some((c) => c.countryId === INDUSTRY_COUNTRY)) out.push({ countryId: INDUSTRY_COUNTRY });
+  return out;
+}
+
 /** A full month grid, Sunday-first, including leading and trailing days. */
 export function monthGrid(sim: Simulation, year: number, month: number): CalendarDay[] {
   const zone = sim.homeZone;
   const player = sim.universe.people[sim.universe.playerId];
   const here = player ? CITIES.get(player.currentLocationId) : undefined;
-  const countryId = here?.countryId ?? 'us';
-  const regionId = here?.parentId;
+  const calendars = keptCalendars(sim);
   const latitude = here?.latitude ?? 34;
 
   const firstOfMonth = instantFromZoned({ year, month, day: 1 }, zone);
@@ -158,7 +181,7 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
       isToday: key === todayKey,
       season: seasonOf(date, zone, latitude),
       entries: entries.filter((e) => e.at >= dayStart && e.at < dayEnd),
-      holidays: holidaysOn(date, zone, countryId, regionId),
+      holidays: holidaysAcross(date, zone, calendars),
     });
   }
   return days;

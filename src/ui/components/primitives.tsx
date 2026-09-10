@@ -8,9 +8,11 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
 import { clamp } from '@/engine/core/rng';
+import { LookRegion, Open } from '@/ui/looks/Look';
+import type { Subject } from '@/ui/looks/subject';
 
 export function Panel({
-  title, subtitle, actions, children, flush, tight,
+  title, subtitle, actions, children, flush, tight, look,
 }: {
   title?: ReactNode;
   subtitle?: ReactNode;
@@ -18,36 +20,60 @@ export function Panel({
   children: ReactNode;
   flush?: boolean;
   tight?: boolean;
+  /**
+   * What the panel is about. A heading is the world's word for what is under
+   * it — "Weather", "The Land", "Standing" — so given a subject it becomes
+   * the way into it, and the panel hosts its own region so the look opens
+   * beneath the whole panel rather than inside one of its rows.
+   */
+  look?: Subject;
 }) {
+  const head = (title || actions) && (
+    <div className="panel-head" style={flush ? { padding: 'var(--s4) var(--s4) 0' } : undefined}>
+      <div>
+        {title && <h2>{look ? <Open subject={look}>{title}</Open> : title}</h2>}
+        {subtitle && <p className="muted small" style={{ margin: 0 }}>{subtitle}</p>}
+      </div>
+      {actions && <div className="row gap-2">{actions}</div>}
+    </div>
+  );
   return (
     <section className={`card${flush ? ' card-flush' : ''}${tight ? ' card-tight' : ''}`}>
-      {(title || actions) && (
-        <div className="panel-head" style={flush ? { padding: 'var(--s4) var(--s4) 0' } : undefined}>
-          <div>
-            {title && <h2>{title}</h2>}
-            {subtitle && <p className="muted small" style={{ margin: 0 }}>{subtitle}</p>}
-          </div>
-          {actions && <div className="row gap-2">{actions}</div>}
-        </div>
-      )}
-      {children}
+      {look
+        ? <LookRegion className="panel-body">{head}{children}</LookRegion>
+        : <>{head}{children}</>}
     </section>
   );
 }
 
 export function Stat({
-  label, value, note, tone,
+  label, value, note, tone, look,
 }: {
   label: string;
   value: ReactNode;
   note?: ReactNode;
   tone?: 'positive' | 'negative' | 'warning';
+  /**
+   * The thing this figure is about. Given one, the label becomes the way in —
+   * the name is the control, so there is no button to add beside it.
+   */
+  look?: Subject;
 }) {
-  return (
-    <div className="stat">
+  // The whole tile is one control, not three. A player's hand goes to the
+  // figure as readily as to the word above it, and a number that does nothing
+  // under a word that does something is the exact inconsistency depth exists
+  // to remove. The label keeps the underline, so there is still one clear
+  // affordance rather than three.
+  const inner = (
+    <>
       <span className="stat-label">{label}</span>
       <span className={`stat-value${tone ? ` ${tone}` : ''}`}>{value}</span>
       {note && <span className="stat-note">{note}</span>}
+    </>
+  );
+  return (
+    <div className="stat">
+      {look ? <Open subject={look}>{inner}</Open> : inner}
     </div>
   );
 }
@@ -57,7 +83,7 @@ export function Stat({
  * color alone is not accessible.
  */
 export function Meter({
-  label, value, max = 100, tone, hint, invert,
+  label, value, max = 100, tone, hint, invert, look,
 }: {
   label: string;
   value: number;
@@ -65,6 +91,8 @@ export function Meter({
   tone?: 'positive' | 'negative' | 'warning';
   hint?: string;
   invert?: boolean;
+  /** The dial this bar is drawing. Its label becomes the way in. */
+  look?: Subject;
 }) {
   const pct = clamp((value / max) * 100, 0, 100);
   const derived = tone ?? (invert
@@ -73,8 +101,12 @@ export function Meter({
   return (
     <div>
       <div className="row-between xs" style={{ marginBottom: 3 }}>
-        <span className="muted">{label}</span>
-        <span className="mono">{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</span>
+        <span className="muted">{look ? <Open subject={look}>{label}</Open> : label}</span>
+        <span className="mono">
+          {look
+            ? <Open subject={look}>{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</Open>
+            : <>{Math.round(value)}{max === 100 ? '' : ` / ${max}`}</>}
+        </span>
       </div>
       <div
         className={`meter meter-${derived}`}
