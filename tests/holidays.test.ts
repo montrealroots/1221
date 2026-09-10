@@ -18,7 +18,7 @@ import { quickSave } from '@/engine';
 import { addCountryHolidays, holidayLabel, holidaysInYear, holidaysOn, regionCodeFor } from '@/engine/content/holidays';
 import { HOLIDAY_FILES, HOLIDAY_YEARS } from '@/engine/content/holiday-data';
 import { keptCalendars, monthGrid, type CalendarDay } from '@/engine/world/calendar';
-import { CHIPS, dayLabel, hiddenIn, holidayChips, roomFor } from '@/ui/workspaces/cell';
+import { CHIPS, dayLabel, hiddenIn, holidayChips, roomFor, standingIn, stillStands } from '@/ui/workspaces/cell';
 import { instantFromZoned } from '@/engine/core/time';
 import { REGIONS } from '@/engine/content/geography';
 
@@ -136,12 +136,13 @@ describe('the holiday files', () => {
  * out entirely to make room for somebody's public holiday.
  */
 describe('a day in the grid', () => {
-  const day = (holidays: number, entries: number): CalendarDay => ({
+  const day = (holidays: number, entries: number, status = 'pending'): CalendarDay => ({
+    date: Date.UTC(2026, 4, 25, 12),
     holidays: Array.from({ length: holidays }, (_, i) => ({
       name: `Holiday ${i + 1}`, englishName: `Holiday ${i + 1}`, type: 'public' as const,
       countryId: i === 0 ? 'is' : 'us', countryName: i === 0 ? 'Iceland' : 'United States',
     })),
-    entries: Array.from({ length: entries }, (_, i) => ({ id: `e${i}` })),
+    entries: Array.from({ length: entries }, (_, i) => ({ id: `e${i}`, status })),
   } as unknown as CalendarDay);
 
   it('prints both when two land on one day', () => {
@@ -161,6 +162,19 @@ describe('a day in the grid', () => {
     expect(hiddenIn(day(4, 0))).toBe(2);   // two holidays shown, two hidden
     expect(hiddenIn(day(3, 2))).toBe(2);   // one holiday and one entry hidden
     expect(hiddenIn(day(1, 2))).toBe(0);
+  });
+
+  it('treats a plan you called off as off the calendar', () => {
+    // A day you cancelled something on should look as free as a day you never
+    // put anything on. Missed and completed both happened — one badly — and
+    // hiding those would be lying about the week.
+    expect(standingIn(day(0, 3, 'cancelled'))).toHaveLength(0);
+    expect(standingIn(day(0, 3, 'missed'))).toHaveLength(3);
+    expect(standingIn(day(0, 3, 'done'))).toHaveLength(3);
+    expect(hiddenIn(day(0, 5, 'cancelled'))).toBe(0);
+    expect(dayLabel(day(0, 3, 'cancelled'), 'UTC')).toMatch(/Nothing on it\.$/);
+    expect(stillStands({ status: 'pending' } as never)).toBe(true);
+    expect(stillStands({ status: 'cancelled' } as never)).toBe(false);
   });
 
   it('says out loud everything it prints', () => {

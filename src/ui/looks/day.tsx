@@ -38,6 +38,7 @@ import {
 } from '@/engine/core/time';
 import { forecastFor } from '@/engine/systems/weather';
 import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type CalendarEntry } from '@/engine/world/calendar';
+import { PLAN_KIND } from '@/engine/world/plans';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
@@ -538,6 +539,24 @@ defineLook<TheEntry>('entry', {
       label: asName(other.title),
       detail: `What it collides with: ${formatTime(other.at, clockOf(other, zone))}, and that one wants you too`,
     }));
+
+    // The hours it actually takes, and the sky over them. A commitment is a
+    // window, not an instant, and the window is a thing you can look at.
+    if (length) {
+      ways.push({
+        to: at('stretch', entry.id),
+        label: `${formatTime(entry.at, clock)} To ${formatTime(endOf(entry), clock)}`,
+        detail: `The hours it takes, and what the sky is doing across them`,
+      });
+    }
+    // Everything else you decided to do, where this is one of them.
+    if (sim.timeline.get(entry.id)?.kind === PLAN_KIND) {
+      ways.push({
+        to: at('plans'),
+        label: 'Your Own Plans',
+        detail: 'Everything else you have put on the calendar yourself',
+      });
+    }
 
     if (city && placeOpens(city)) {
       ways.push({

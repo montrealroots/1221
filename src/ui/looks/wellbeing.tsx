@@ -74,6 +74,13 @@ defineLook<Person>('person', {
       label: 'Readiness',
       detail: 'What all nine come to, for turning up today',
     });
+    if (isYou) {
+      ways.push({
+        to: at('plans'),
+        label: 'Your Own Plans',
+        detail: 'Everything you have put on the calendar yourself',
+      });
+    }
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
       kind: isYou ? 'Yourself' : PERFORMER_NOUN[person.performerTitle ?? 'actor'],

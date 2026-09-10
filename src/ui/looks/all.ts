@@ -18,3 +18,4 @@ import './standing';
 import './estate';
 import './day';
 import './attention';
+import './plans';

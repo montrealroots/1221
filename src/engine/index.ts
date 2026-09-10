@@ -24,6 +24,7 @@ import { CITIES } from './content/geography';
 
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
+import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
 import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
 import {
@@ -41,6 +42,7 @@ export type { Command, CommandResult };
 export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
+  registerPlans(sim);
 }
 
 /** Recurring world processes every save needs running. */

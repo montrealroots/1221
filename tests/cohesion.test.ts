@@ -77,9 +77,21 @@ describe('everything is wired to something', () => {
     const source = readFileSync('src/engine/index.ts', 'utf8')
       + globSource('src/engine/systems')
       + globSource('src/engine/world');
+    // A kind is often a named constant rather than a literal, because the
+    // interface needs to name it too — `kind: PLAN_KIND`, not `kind:
+    // 'life.commitment'`. Reading only for literals called that dead, which
+    // is exactly backwards: a kind shared with the interface is the least
+    // dead thing in the file.
+    const named = new Map<string, string>();
+    for (const m of source.matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+\.[a-z0-9_]+)'/g)) {
+      named.set(m[2]!, m[1]!);
+    }
     const dead = sim.scheduleKinds().filter((kind) => {
-      const scheduled = new RegExp(`kind: '${kind.replace('.', '\\.')}'`);
-      return !scheduled.test(source);
+      const escaped = kind.replace('.', '\\.');
+      const asLiteral = new RegExp(`kind: '${escaped}'`);
+      const constant = named.get(kind);
+      const asConstant = constant ? new RegExp(`kind: ${constant}\\b`) : undefined;
+      return !asLiteral.test(source) && !(asConstant?.test(source) ?? false);
     });
     expect(dead, 'handlers that nothing anywhere schedules').toEqual([]);
   });

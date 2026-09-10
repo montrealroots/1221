@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
-import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarEntry } from '@/engine/world/calendar';
-import { formatDate, formatDuration, formatTime, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
+import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
+import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
+import {
+  LONGEST_TITLE, PLANNABLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult, type PlannableCategory,
+} from '@/engine/world/plans';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
-import { dayLabel, hiddenIn, holidayChips, roomFor } from './cell';
+import { dayLabel, hiddenIn, holidayChips, roomFor, standingIn, stillStands } from './cell';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -30,11 +33,15 @@ export function CalendarWorkspace() {
   const [view, setView] = useState({ year: today.year, month: today.month });
   const [selected, setSelected] = useState<string | null>(null);
   const [detail, setDetail] = useState<CalendarEntry | null>(null);
+  const [planning, setPlanning] = useState<string | null>(null);
 
   const days = useWorld((s) => monthGrid(s, view.year, view.month), [view.year, view.month]);
-  const next30 = useWorld((s) => entriesBetween(s, s.now, s.now + 30 * MS_DAY));
+  // What is still coming. A plan you called off is not in the next thirty
+  // days, however recently it was.
+  const next30 = useWorld((s) => entriesBetween(s, s.now, s.now + 30 * MS_DAY).filter(stillStands));
   const conflicts = next30.filter((e) => e.conflicted);
   const selectedDay = days.find((d) => d.key === selected);
+  const planningDay = days.find((d) => d.key === planning);
 
   const shift = (delta: number) => {
     setView((v) => {
@@ -107,7 +114,7 @@ export function CalendarWorkspace() {
                   {holiday.name === holiday.englishName ? titleCaseLabel(holiday.name) : holiday.name}
                 </span>
               ))}
-              {day.entries.slice(0, roomFor(day)).map((entry) => (
+              {standingIn(day).slice(0, roomFor(day)).map((entry) => (
                 <span
                   key={entry.id}
                   className="cal-event"
@@ -141,10 +148,24 @@ export function CalendarWorkspace() {
           title={formatDate(selectedDay.date, sim.homeZone)}
           subtitle={selectedDay.holidays.length > 0 ? selectedDay.holidays.map(holidayLabel).join(' · ') : `${selectedDay.season}`}
           flush
-          actions={<button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>}
+          actions={(
+            <>
+              {canPlan(selectedDay, sim.now) && (
+                <button className="btn btn-sm btn-primary" onClick={() => setPlanning(selectedDay.key)}>
+                  Put Something On It
+                </button>
+              )}
+              <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>
+            </>
+          )}
         >
           {selectedDay.entries.length === 0 ? (
-            <Empty title="Nothing Scheduled" body="That day is entirely yours." />
+            <Empty
+              title="Nothing Scheduled"
+              body={canPlan(selectedDay, sim.now)
+                ? 'That day is entirely yours. Put something on it if you want it spoken for.'
+                : 'That day was entirely yours.'}
+            />
           ) : (
             <div className="list">
               {selectedDay.entries.map((entry) => (
@@ -199,8 +220,140 @@ export function CalendarWorkspace() {
       </Panel>
 
       {detail && <EntryDetail entry={detail} onClose={() => setDetail(null)} />}
+      {planningDay && (
+        <PlanForm
+          day={planningDay}
+          onClose={() => setPlanning(null)}
+          onDone={() => { setPlanning(null); refresh(); }}
+        />
+      )}
     </>
   );
+}
+
+/** Whether a day is still ahead enough to put something on. */
+function canPlan(day: CalendarDay, now: number): boolean {
+  return day.date + MS_DAY > now;
+}
+
+/**
+ * Putting something on a day.
+ *
+ * A modal, because it asks a question and changes the world — which is the
+ * one thing a look never does. Four questions and no more: what it is, when
+ * it starts, how long it takes, and which kind of day it is.
+ *
+ * No "where" yet. Every plan is where you are standing, because nothing in
+ * the game moves you anywhere else, and offering a city you cannot get to
+ * would be offering a commitment you are guaranteed to miss.
+ */
+function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => void; onDone: () => void }) {
+  const { sim, run } = useGame();
+  const zone = sim.homeZone;
+  const [title, setTitle] = useState('');
+  const [minute, setMinute] = useState(() => firstFreeSlot(day, sim.now, zone));
+  const [minutes, setMinutes] = useState(60);
+  const [category, setCategory] = useState<PlannableCategory>('personal');
+  const [error, setError] = useState<string | undefined>();
+
+  const at = startOfDay(day.date, zone) + minute * MS_MINUTE;
+  const slots = openSlots(day, sim.now, zone);
+
+  const put = () => {
+    // The command succeeds even when the calendar declines the plan: a
+    // refusal is an answer, not a failure, and it belongs beside the field
+    // rather than in a toast that slides away while you are still reading it.
+    const result = run<PlanResult>('calendar.schedule', { title, at, durationMinutes: minutes, category });
+    if (result.value?.ok) { onDone(); return; }
+    setError(result.value?.error ?? result.error ?? 'The calendar wouldn’t take it.');
+  };
+
+  return (
+    <Modal
+      title={`Put Something On ${formatDate(day.date, zone)}`}
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
+          <button className="btn btn-primary" onClick={put} disabled={title.trim().length === 0}>
+            Put It On
+          </button>
+        </>
+      )}
+    >
+      <div className="field">
+        <label htmlFor="plan-title">What Is It</label>
+        <input
+          id="plan-title"
+          type="text"
+          value={title}
+          maxLength={LONGEST_TITLE}
+          placeholder="Something you’d recognise on the day"
+          onChange={(e) => { setTitle(e.target.value); setError(undefined); }}
+        />
+      </div>
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="plan-at">When It Starts</label>
+          <select id="plan-at" value={minute} onChange={(e) => { setMinute(Number(e.target.value)); setError(undefined); }}>
+            {slots.map((slot) => (
+              <option key={slot} value={slot}>
+                {formatTime(startOfDay(day.date, zone) + slot * MS_MINUTE, zone)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="plan-length">How Long It Takes</label>
+          <select id="plan-length" value={minutes} onChange={(e) => setMinutes(Number(e.target.value))}>
+            {PLAN_LENGTHS.map((length) => (
+              <option key={length.minutes} value={length.minutes}>{length.label}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="field">
+        <label id="plan-kind-label">What Kind Of Day It Is</label>
+        <div className="row gap-2" role="group" aria-labelledby="plan-kind-label">
+          {PLANNABLE.map((option) => (
+            <button
+              key={option}
+              type="button"
+              className="trait grow"
+              aria-pressed={category === option}
+              onClick={() => setCategory(option)}
+            >
+              <div className="trait-name">{LEGEND_BY_CATEGORY[option]?.label ?? titleCaseLabel(option)}</div>
+              <div className="xs muted">{LEGEND_BY_CATEGORY[option]?.description}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <p className="xs dim" style={{ margin: 0 }}>
+        It will want you in {CITIES.get(sim.player.currentLocationId)?.name ?? 'where you are'}, and the clock
+        stops when it comes round. Two things at once are allowed — the calendar flags them rather than
+        refusing.
+      </p>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/** Every half hour of a day that has not already gone by. */
+function openSlots(day: CalendarDay, now: number, zone: string): number[] {
+  const midnight = startOfDay(day.date, zone);
+  const out: number[] = [];
+  for (let minute = 0; minute < 24 * 60; minute += 30) {
+    if (midnight + minute * MS_MINUTE >= now) out.push(minute);
+  }
+  return out;
+}
+
+/** Where the picker opens: the next half hour still ahead, or nine in the morning. */
+function firstFreeSlot(day: CalendarDay, now: number, zone: string): number {
+  const slots = openSlots(day, now, zone);
+  const nine = slots.find((m) => m >= 9 * 60);
+  return nine ?? slots[0] ?? 0;
 }
 
 /** An entry's own state, in the word the screen shows. */
@@ -209,18 +362,38 @@ function statusOf(entry: CalendarEntry): string {
 }
 
 /**
- * One entry, opened. What it is, when it is, how long it runs and what state
- * it is in. Nothing here is yours to change: every entry on this calendar now
- * belongs to the clock rather than to a system you can argue with.
+ * One entry, opened.
+ *
+ * What it is, when it is, how long it runs and what state it is in. The one
+ * thing here that is yours is a plan you made: you can call it off, and
+ * nothing else on the calendar can be argued with — a holiday is a country's
+ * and a world event belongs to the clock.
  */
 function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
-  const { sim } = useGame();
+  const { sim, run, refresh } = useGame();
   const legend = LEGEND_BY_CATEGORY[entry.category];
   const status = statusOf(entry);
   const city = entry.locationId ? CITIES.get(entry.locationId)?.name : undefined;
+  const [error, setError] = useState<string | undefined>();
+  const mine = sim.timeline.get(entry.id)?.kind === PLAN_KIND && entry.status === 'pending';
+
+  const callOff = () => {
+    const result = run<PlanResult>('calendar.cancel', { entryId: entry.id });
+    if (result.value?.ok) { refresh(); onClose(); return; }
+    setError(result.value?.error ?? result.error ?? 'It wouldn’t come off the calendar.');
+  };
 
   return (
-    <Modal title={titleCaseLabel(entry.title)} onClose={onClose}>
+    <Modal
+      title={titleCaseLabel(entry.title)}
+      onClose={onClose}
+      footer={mine ? (
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Leave It</button>
+          <button className="btn" onClick={callOff}>Call It Off</button>
+        </>
+      ) : undefined}
+    >
       <div className="grid grid-2" style={{ marginBottom: 'var(--s4)' }}>
         <Stat label="When" value={formatTime(entry.at, sim.homeZone)} note={formatDate(entry.at, sim.homeZone)} />
         <Stat label="Length" value={entry.durationMinutes ? formatDuration(entry.durationMinutes * MS_MINUTE) : '—'} />
@@ -238,7 +411,9 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
           : entry.requiresPlayer
             ? 'This one wants you there. Move the clock to it and it happens.'
             : 'The world handles this one on its own when the clock reaches it.'}
+        {mine && ' You put it there, so you can take it off again.'}
       </p>
+      {error && <p className="small negative">{error}</p>}
     </Modal>
   );
 }

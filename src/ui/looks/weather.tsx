@@ -20,7 +20,7 @@
 
 import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/climate';
 import { CITIES, type City } from '@/engine/content/geography';
-import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, startOfDay, zonedParts } from '@/engine/core/time';
+import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, instantFromZoned, startOfDay, zonedParts } from '@/engine/core/time';
 import {
   WEATHER_EMOJI, forecastFor, hoursOn, shootDayWeather, weatherAt, weatherShort,
   type DayWeather, type HourWeather, type WeatherCondition, type WeatherNow,
@@ -33,6 +33,17 @@ import { isAre, spokenList } from './words';
 
 /** How many days the look shows: today, and the five after it. */
 const WEEK = 6;
+
+const A_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * How far either way the sky will answer at all.
+ *
+ * The model is a pure function of the date and can be asked about any day
+ * ever, which is not the same as every day being a thing in the world. A year
+ * each way covers anything the calendar can hold and keeps the graph finite.
+ */
+const HORIZON_DAYS = 400;
 
 /** The condition as a person says it is doing right now. */
 const DOING: Record<WeatherCondition, string> = {
@@ -282,11 +293,8 @@ defineLook<Ahead>('forecastday', {
     if (!split) return undefined;
     const city = CITIES.get(split.cityId);
     if (!city) return undefined;
-    const week = forecastFor(sim, city.id, WEEK);
-    const offset = week.findIndex((d) => d.dateKey === split.dateKey);
-    const day = week[offset];
-    if (!day) return undefined;
-    return { city, day, offset };
+    const found = dayOfKey(sim, city, split.dateKey);
+    return found ? { city, day: found.day, offset: found.offset } : undefined;
   },
   seeds: (sim) => {
     const city = cityFor(sim, '');
@@ -299,7 +307,6 @@ defineLook<Ahead>('forecastday', {
     const when = offset === 0 ? 'today' : offset === 1 ? 'tomorrow' : `on ${weekdayAt(sim, city, offset)}`;
     const instant = sim.now + offset * MS_DAY;
 
-    const week = forecastFor(sim, city.id, WEEK);
     const ways: Way[] = [{
       to: at('hours', `${city.id}/${day.dateKey}`),
       label: offset === 0 ? 'The Rest Of Today' : 'Hour By Hour',
@@ -307,30 +314,29 @@ defineLook<Ahead>('forecastday', {
         ? 'The hours you have left of it, one at a time'
         : `What it does through the day, ${clockSaid(0)} to ${clockSaid(23)}`,
     }];
-    if (offset > 0) {
-      const before = week[offset - 1];
-      if (before) {
-        ways.push({
-          to: at('forecastday', `${city.id}/${before.dateKey}`),
-          label: weekdayAt(sim, city, offset - 1),
-          detail: `The day before it: ${before.condition}, ${before.low}${unit} to ${before.high}${unit}`,
-        });
-      }
-    }
-    if (offset < WEEK - 1) {
-      const after = week[offset + 1];
-      if (after) {
-        ways.push({
-          to: at('forecastday', `${city.id}/${after.dateKey}`),
-          label: weekdayAt(sim, city, offset + 1),
-          detail: `What follows it: ${after.condition}, ${after.low}${unit} to ${after.high}${unit}`,
-        });
-      }
+    // Either side of it, but only inside the week. Any day resolves — a
+    // commitment three weeks out opens into the sky over it — and offering
+    // each of those a day before and a day after would make the graph an
+    // endless line, walkable forever and worth walking nowhere. Near the
+    // present, stepping through the days is what a person does; far from it,
+    // you got here from the thing that happens on it.
+    const nearby = Math.abs(offset) < WEEK;
+    const neighbour = (step: -1 | 1) => forecastFor(sim, city.id, 1, sim.now + (offset + step) * MS_DAY)[0];
+    for (const step of nearby ? ([-1, 1] as const) : []) {
+      const beside = neighbour(step);
+      if (!beside) continue;
+      ways.push({
+        to: at('forecastday', `${city.id}/${beside.dateKey}`),
+        label: weekdayAt(sim, city, offset + step),
+        detail: step < 0
+          ? `The day before it: ${beside.condition}, ${beside.low}${unit} to ${beside.high}${unit}`
+          : `What follows it: ${beside.condition}, ${beside.low}${unit} to ${beside.high}${unit}`,
+      });
     }
 
     return {
       name: weekdayAt(sim, city, offset),
-      kind: WHEN_KIND[offset] ?? 'The Week Ahead',
+      kind: WHEN_KIND[offset] ?? (offset < 0 ? 'A Sky That Has Been' : 'Further Out'),
       // A day sits inside the week, and the week inside the sky. The trail
       // reads Reykjavík · Weather · The Week Ahead · Thursday, which is the
       // way a person got there.
@@ -388,7 +394,7 @@ function stretchOf(hour: number): string {
 }
 
 /** "3 PM", "Midnight", "Noon" — never "15:00". A name, so Title Case. */
-function clockWord(hour: number): string {
+export function clockWord(hour: number): string {
   if (hour === 0) return 'Midnight';
   if (hour === 12) return 'Noon';
   const twelve = hour % 12 === 0 ? 12 : hour % 12;
@@ -426,11 +432,37 @@ function extremesOf(hours: readonly HourWeather[]): { warmest: HourWeather; cold
   };
 }
 
+/**
+ * How many days a date key sits from today, in this city’s own reckoning.
+ *
+ * Worked out from the key rather than by searching the week, so the sky is
+ * askable about any day the calendar can reach. It used to scan a six-day
+ * forecast and return nothing beyond it, which meant a commitment three weeks
+ * out could not open into the hour it happens in — the chain simply stopped,
+ * with nothing saying why.
+ */
+function offsetOfDay(sim: Simulation, city: City, key: string): number | undefined {
+  if (!A_DATE.test(key)) return undefined;
+  const [year, month, day] = key.split('-').map(Number);
+  if (!year || !month || !day) return undefined;
+  const midnight = instantFromZoned({ year, month, day, hour: 12 }, city.timeZone);
+  const today = startOfDay(sim.now, city.timeZone);
+  const offset = Math.round((startOfDay(midnight, city.timeZone) - today) / MS_DAY);
+  return Math.abs(offset) <= HORIZON_DAYS ? offset : undefined;
+}
+
+/** The weather on the day a key names, wherever it falls. */
+function dayOfKey(sim: Simulation, city: City, key: string): { day: DayWeather; offset: number } | undefined {
+  const offset = offsetOfDay(sim, city, key);
+  if (offset === undefined) return undefined;
+  const day = forecastFor(sim, city.id, 1, sim.now + offset * MS_DAY)[0];
+  return day && day.dateKey === key ? { day, offset } : undefined;
+}
+
 /** Where a day’s hours start from: now if it is today, midnight otherwise. */
-function hoursFor(sim: Simulation, city: City, dateKey: string): { hours: HourWeather[]; today: boolean; offset: number } {
-  const week = forecastFor(sim, city.id, WEEK);
-  const offset = week.findIndex((d) => d.dateKey === dateKey);
-  if (offset < 0) return { hours: [], today: false, offset: -1 };
+function hoursFor(sim: Simulation, city: City, key: string): { hours: HourWeather[]; today: boolean; offset: number } {
+  const offset = offsetOfDay(sim, city, key);
+  if (offset === undefined) return { hours: [], today: false, offset: -1 };
   const today = offset === 0;
   const from = today ? sim.now : startOfDay(sim.now + offset * MS_DAY, city.timeZone);
   return { hours: hoursOn(sim, city.id, from), today, offset };
@@ -454,8 +486,7 @@ defineLook<Hours>('hours', {
     if (!split) return undefined;
     const city = CITIES.get(split.cityId);
     if (!city) return undefined;
-    const week = forecastFor(sim, city.id, WEEK);
-    const day = week.find((d) => d.dateKey === split.dateKey);
+    const day = dayOfKey(sim, city, split.dateKey)?.day;
     if (!day) return undefined;
     const { hours, today, offset } = hoursFor(sim, city, split.dateKey);
     if (hours.length === 0) return undefined;
@@ -522,7 +553,7 @@ defineLook<OneHour>('skyhour', {
     if (!split || !Number.isInteger(wanted)) return undefined;
     const city = CITIES.get(split.cityId);
     if (!city) return undefined;
-    const day = forecastFor(sim, city.id, WEEK).find((d) => d.dateKey === split.dateKey);
+    const day = dayOfKey(sim, city, split.dateKey)?.day;
     if (!day) return undefined;
     const { hours } = hoursFor(sim, city, split.dateKey);
     const index = hours.findIndex((h) => h.hour === wanted);
