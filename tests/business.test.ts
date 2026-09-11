@@ -18,8 +18,13 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { theLot, stagesOn, utilisation, wouldBook, paidInSoFar, paidInAsShareOfAYear } from '@/engine/world/lot';
-import { BUILD_COST_CENTS, ICELAND_STAGE_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS } from '@/engine/content/lot';
+import {
+  breakEvenShare, paidInAsShareOfAYear, paidInSoFar, stagesOn, theLot, utilisation,
+  whereTheLotStands, wouldBook,
+} from '@/engine/world/lot';
+import {
+  BUILD_COST_CENTS, ICELAND_STAGE_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS, THE_RATE_CARD,
+} from '@/engine/content/lot';
 import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
 import { quotaYears, decideQuota } from '@/engine/world/sugar';
 import { quickSave, validateUniverse } from '@/engine';
@@ -390,6 +395,37 @@ describe('what the content claims about the real world', () => {
     expect(REBATE.higherShare).toBe(0.35);
     expect(REBATE.higherNeeds.crew).toBeGreaterThan(0);
     expect(REBATE.endsOn.year, 'the scheme has an end date and the game should carry it').toBe(2028);
+  });
+});
+
+describe('the rate card, which is what the whole bet turns on', () => {
+  it('lets every stage inside the published benchmark, and large rooms cheaper by the meter', () => {
+    const sim = quickSave({}, 'rates');
+    const by = stagesOn(sim)
+      .map((stage) => ({ name: stage.name, per: stage.weekRateCents / 100 / stage.floorSqm }));
+    for (const one of by) {
+      // Lambert Smith Hampton's UK benchmark, carried to 2026 money, is about
+      // €21-25 per square meter per week for a 20,000 sq ft room. Nothing here
+      // may sit above it, because a lot nobody has heard of does not command
+      // a premium over near-London.
+      expect(one.per).toBeLessThanOrEqual(THE_RATE_CARD.benchmarkPerSqmWeek + 3);
+      expect(one.per).toBeGreaterThan(8);
+    }
+    const askja = stagesOn(sim).find((one) => one.name === 'Askja')!;
+    const small = stagesOn(sim).find((one) => one.floorSqm === 2_000)!;
+    expect(askja.weekRateCents / askja.floorSqm).toBeLessThan(small.weekRateCents / small.floorSqm);
+  });
+
+  it('needs most of the lot full to cover a month, which is the honest answer', () => {
+    const sim = quickSave({}, 'break-even');
+    const need = breakEvenShare(sim)!;
+    // A new lot in a country with no crew base needing three fifths of its
+    // capacity to stand still is the bet. If this ever drops toward a third,
+    // the rate card has been inflated again and the lot has stopped being a
+    // risk the family took.
+    expect(need).toBeGreaterThan(0.5);
+    expect(need).toBeLessThan(0.75);
+    expect(whereTheLotStands(sim)).toContain(`${Math.round(need * 100)}% full to cover a month`);
   });
 });
 

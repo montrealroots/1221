@@ -167,7 +167,7 @@ export interface StageFacts {
   floorSqm: number;
   /** Clear height to the underside of the perms, meters. SLATE's own. */
   clearHeightM: number;
-  /** What a shooting week costs, in cents. SLATE's own. */
+  /** What a shooting week costs, in cents. See `THE_RATE_CARD`. */
   weekRateCents: Money;
   fitted: readonly StageFeature[];
   /** Tank floor area in square meters, where there is one. */
@@ -175,6 +175,35 @@ export interface StageFacts {
   /** One sentence a person would say about it. */
   said: string;
 }
+
+/**
+ * What a stage actually lets for, and where the figure comes from.
+ *
+ * The rates here used to be invented and were roughly twice the market. That
+ * mattered more than a wrong number usually does, because the break-even
+ * occupancy — the one figure this entire bet turns on — is the overhead
+ * divided by what a full lot earns, so an inflated rate card made the lot look
+ * twice as easy to fill as it is.
+ *
+ * The benchmark is published: Lambert Smith Hampton's 2018 UK studio review
+ * lists a prestige 20,000 sq ft near-London stage at £25,000–30,000 a week,
+ * which is £1.25–1.50 per square foot per week. Carried to 2026 money that is
+ * about €21–25 per square meter per week for a room that size, and large rooms
+ * let for less per square meter than small ones, which is why Askja is the
+ * cheapest square meter on the lot and the 2,000s are the dearest.
+ *
+ * One honest caveat, stated because it changes what the number means. A rate
+ * card is a list price and the same review is blunt that substantial discounts
+ * are nearly always negotiated off it. SLATE charges the list, because it does
+ * not model a negotiation yet. When it does, these become the asking price and
+ * what is actually taken will sit below them.
+ */
+export const THE_RATE_CARD = {
+  /** €/m²/week for a room of about 20,000 sq ft, in 2026 money. */
+  benchmarkPerSqmWeek: 23,
+  source: 'Lambert Smith Hampton, UK studio market review, 2018, carried forward',
+  said: 'A list price, and list prices get discounted.',
+} as const;
 
 /**
  * The four stages, and why each one is the size it is.
@@ -189,7 +218,7 @@ export const STAGES: readonly StageFacts[] = [
     name: 'Askja',
     floorSqm: 6_000,
     clearHeightM: 30,
-    weekRateCents: 185_000_00,
+    weekRateCents: 90_000_00,
     fitted: ['cyclorama', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
     said: 'A hundred meters by sixty, and thirty meters of air above it.',
   },
@@ -198,7 +227,7 @@ export const STAGES: readonly StageFacts[] = [
     name: 'Lón',
     floorSqm: 3_200,
     clearHeightM: 18,
-    weekRateCents: 145_000_00,
+    weekRateCents: 82_000_00,
     fitted: ['tank', 'dive_well', 'geothermal_floor', 'silent_hvac'],
     tankSqm: 2_400,
     said: 'Most of the floor is water, and it is heated because the country heats things.',
@@ -208,7 +237,7 @@ export const STAGES: readonly StageFacts[] = [
     name: 'Stage 3',
     floorSqm: 2_000,
     clearHeightM: 18,
-    weekRateCents: 78_000_00,
+    weekRateCents: 43_000_00,
     fitted: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
     said: 'Ordinary, in the way most of the work is ordinary.',
   },
@@ -217,7 +246,7 @@ export const STAGES: readonly StageFacts[] = [
     name: 'Stage 4',
     floorSqm: 2_000,
     clearHeightM: 18,
-    weekRateCents: 78_000_00,
+    weekRateCents: 43_000_00,
     fitted: ['interconnect', 'elephant_door', 'geothermal_floor', 'silent_hvac'],
     said: 'The twin of Stage 3, and the door between them opens.',
   },
