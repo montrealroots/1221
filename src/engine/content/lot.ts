@@ -412,6 +412,16 @@ export interface Enquiry {
   weeks: number;
   /** What it would spend in Iceland, in króna. Decides the rebate tier. */
   spendIsk: number;
+  /**
+   * Whether the crew is already here.
+   *
+   * The single largest thing separating one enquiry from another. A production
+   * from abroad pays to fly and house most of a crew; an Icelandic one pays
+   * none of that and is comparing Sugar Land against the stage across town
+   * rather than against Budapest. Four in five projects claiming the Icelandic
+   * rebate are domestic, so the ordinary enquiry here is a local one.
+   */
+  local: boolean;
 }
 
 /**
@@ -424,40 +434,73 @@ export interface Enquiry {
  * stage is wanted constantly.
  */
 export const ENQUIRY_SHAPES: readonly { weight: number; of: Enquiry }[] = [
+  // The ordinary week here. Four in five projects claiming the Icelandic
+  // rebate are domestic, and a domestic one is short, small and comparing
+  // Sugar Land against the stage in Gufunes rather than against Budapest.
   {
-    weight: 34,
-    of: { kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000 },
+    weight: 30,
+    of: { kind: 'commercial', from: 'an Icelandic agency', needsSqm: 700, needsHeightM: 8, needsTank: false, weeks: 1, spendIsk: 25_000_000, local: true },
   },
   {
-    weight: 24,
-    of: { kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000 },
+    weight: 18,
+    of: { kind: 'limited series', from: 'RÚV', needsSqm: 1_400, needsHeightM: 10, needsTank: false, weeks: 6, spendIsk: 260_000_000, local: true },
   },
   {
-    weight: 16,
-    of: { kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000 },
+    weight: 10,
+    of: { kind: 'documentary', from: 'an Icelandic producer', needsSqm: 500, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 35_000_000, local: true },
   },
+  {
+    weight: 8,
+    of: { kind: 'feature', from: 'an Icelandic production', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 5, spendIsk: 380_000_000, local: true },
+  },
+  // And the rest is the world, which is where the stage-weeks are. Iceland
+  // draws on the order of a dozen foreign projects in a year, so these are
+  // rare, and each one is worth more than a season of the ones above.
   {
     weight: 12,
-    of: { kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000 },
+    of: { kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000, local: false },
   },
   {
     weight: 9,
-    of: { kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000 },
+    of: { kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000, local: false },
   },
   {
     weight: 5,
-    of: { kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000 },
+    of: { kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000, local: false },
+  },
+  {
+    weight: 4,
+    of: { kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
+  },
+  {
+    weight: 3,
+    of: { kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000, local: false },
+  },
+  {
+    weight: 2,
+    of: { kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000, local: false },
   },
 ];
 
 /**
- * How much cheaper than the going rate Sugar Land has to be before an enquiry
- * stops caring that Iceland has almost no crew.
+ * What it costs a foreign production to make anything in Iceland, over what
+ * the same thing would cost where it came from.
  *
- * SLATE's own, and the number that carries the whole disadvantage. Iceland has
- * on the order of a thousand industry people and imports its heads of
- * department; a production that lands here brings most of its crew and pays to
- * house them. That cost sits against the rebate, and the rebate is why anybody
- * looks at all.
+ * The number that carries the whole disadvantage, and it had been guessed too
+ * low. Everything structural and most of everything else arrives by sea; the
+ * national crew base is on the order of a thousand people, so heads of
+ * department are flown in and housed for the run; and the program is
+ * weather-dependent in a way a Budapest program is not. Quantity surveying
+ * of exactly this puts the uplift at 25–40% over a UK cost for an imported
+ * build, and the middle of that band is what a production is weighing.
+ *
+ * Why the exact figure matters more than it looks. It sits directly against
+ * the rebate, and the rebate has two tiers: 25% ordinarily, 35% for a
+ * production big enough to clear the higher test. At the old 0.22 both tiers
+ * beat it, so every enquiry that found a free room booked and the refusal this
+ * file exists to model could never happen. At the real figure, only the
+ * productions large enough for the higher rebate find Iceland worth it — which
+ * is both what the tier was designed to do and what actually happens.
  */
-export const CREW_PENALTY = 0.22;
+export const CREW_PENALTY = 0.32;
+export const CREW_PENALTY_SOURCE = 'Imported-build cost uplift over UK, 25–40%, taken at the middle.';

@@ -421,19 +421,24 @@ export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer
     };
   }
   const rate = rateFor(room, 'shooting');
-  // What the rebate is worth against what the shortage of crew costs. Both
-  // are shares of the same spend, so they can be set against each other, and
-  // the sign of the difference is the whole decision.
-  const worthIt = tierFor(need) - CREW_PENALTY;
-  if (worthIt <= 0) {
+  // What the rebate is worth against what coming here costs, as shares of the
+  // same spend, so they can be set against each other. A production whose crew
+  // is already in the country pays none of that cost and is not weighing
+  // Iceland against anywhere — it is weighing this stage against the one in
+  // Gufunes, and the rebate is a straight gain.
+  const penalty = need.local ? 0 : CREW_PENALTY;
+  const back = tierFor(need);
+  if (back - penalty <= 0) {
     return {
-      because: 'What Iceland gives back doesn’t cover what it costs to bring a crew here.',
+      because: `${Math.round(back * 100)}% back doesn’t cover what it costs to bring a crew and a build here.`,
       weekRateCents: rate,
     };
   }
   return {
     stageId: room.id,
-    because: `${Math.round(tierFor(need) * 100)}% back covers the crew it has to fly in, and ${room.name} is free.`,
+    because: need.local
+      ? `Its crew is already here, and ${room.name} is free.`
+      : `${Math.round(back * 100)}% back covers the crew it has to fly in, and ${room.name} is free.`,
     weekRateCents: rate,
   };
 }

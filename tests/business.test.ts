@@ -23,7 +23,8 @@ import {
   whereTheLotStands, wouldBook,
 } from '@/engine/world/lot';
 import {
-  BUILD_COST_CENTS, ICELAND_STAGE_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS, THE_RATE_CARD,
+  BUILD_COST_CENTS, ENQUIRY_SHAPES, ICELAND_STAGE_FLOOR_SQM,
+  MONTHLY_OVERHEAD_CENTS, THE_RATE_CARD,
 } from '@/engine/content/lot';
 import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
 import { quotaYears, decideQuota } from '@/engine/world/sugar';
@@ -496,17 +497,55 @@ describe('the lot as a business', () => {
     const sim = quickSave({}, 'lot-toobig');
     const answer = wouldBook(sim, {
       kind: 'feature', from: 'somebody enormous', needsSqm: 20_000, needsHeightM: 40,
-      needsTank: false, weeks: 10, spendIsk: 5_000_000_000,
+      needsTank: false, weeks: 10, spendIsk: 5_000_000_000, local: false,
     }, sim.now + 30 * MS_DAY);
     expect(answer.stageId).toBeUndefined();
     expect(answer.because).toMatch(/right size/);
+  });
+
+  it('turns away a foreign production the rebate doesn’t carry, and takes the same one local', () => {
+    const sim = quickSave({}, 'lot-budapest');
+    const small = {
+      kind: 'documentary' as const, from: 'a streamer', needsSqm: 600, needsHeightM: 8,
+      needsTank: false, weeks: 2, spendIsk: 60_000_000,
+    };
+    // Too small for the higher rebate tier, so 25% back against a third more
+    // to build and crew here. It goes somewhere with a crew already in it.
+    const away = wouldBook(sim, { ...small, local: false }, sim.now + 30 * MS_DAY);
+    expect(away.stageId, 'the refusal this whole model exists for never fires').toBeUndefined();
+    expect(away.because).toMatch(/doesn’t cover/);
+    // The identical job with an Icelandic crew has no such problem.
+    const stays = wouldBook(sim, { ...small, local: true }, sim.now + 30 * MS_DAY);
+    expect(stays.stageId).toBeDefined();
+    expect(stays.because).toMatch(/already here/);
+  });
+
+  it('lets the big foreign ones in, because the higher tier is built for them', () => {
+    const sim = quickSave({}, 'lot-tentpole');
+    const answer = wouldBook(sim, {
+      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
+    }, sim.now + 30 * MS_DAY);
+    expect(answer.stageId).toBeDefined();
+    expect(answer.because).toMatch(/35% back/);
+  });
+
+  it('makes most enquiries domestic, the way the Icelandic register actually reads', () => {
+    const all = ENQUIRY_SHAPES.reduce((n, one) => n + one.weight, 0);
+    const home = ENQUIRY_SHAPES.filter((one) => one.of.local).reduce((n, one) => n + one.weight, 0);
+    expect(home / all).toBeGreaterThan(0.6);
+    // But the foreign ones are where the stage-weeks are.
+    const weeksOf = (local: boolean): number => ENQUIRY_SHAPES
+      .filter((one) => one.of.local === local)
+      .reduce((n, one) => n + one.weight * one.of.weeks, 0);
+    expect(weeksOf(false) / weeksOf(true)).toBeGreaterThan(0.5);
   });
 
   it('puts a production in the smallest room that holds it', () => {
     const sim = quickSave({}, 'lot-smallest');
     const answer = wouldBook(sim, {
       kind: 'commercial', from: 'an agency', needsSqm: 500, needsHeightM: 8,
-      needsTank: false, weeks: 1, spendIsk: 400_000_000,
+      needsTank: false, weeks: 1, spendIsk: 400_000_000, local: true,
     }, sim.now + 30 * MS_DAY);
     const took = sim.universe.stages[answer.stageId!];
     expect(took, 'nothing was offered').toBeDefined();
