@@ -12,9 +12,8 @@
  * building a save. Nothing in the engine imports this, so there is no cycle:
  * it is read by the test and by the tool.
  *
- * Two deciders today, and they are the only two things in the build that
- * decide anything. The list is meant to grow. When casting lands it lands
- * here, and it cannot land without saying what it reads.
+ * The list is meant to grow. When casting lands it lands here, and it cannot
+ * land without saying what it reads.
  */
 
 import { defineDecider } from './core/deciders';
@@ -26,6 +25,7 @@ import { MS_DAY } from './core/time';
 import { ENQUIRY_SHAPES, type Enquiry } from './content/lot';
 import { wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
+import { decideSlip, type Squeeze } from './world/making';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -189,5 +189,32 @@ defineDecider<Quota, string>({
   decide: ({ was, shutRunning, roll }) => {
     const answer = decideQuota(was, shutRunning, roll);
     return answer.tonnes === 0 ? 'shut' : 'open';
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The shoot
+// ---------------------------------------------------------------------------
+
+defineDecider<Squeeze, string>({
+  id: 'making.slip',
+  decides: 'How many days past wrap a shoot runs.',
+  drawnIn: 'src/engine/world/making.ts',
+  reads: {
+    // How far the schedule was cut below what the budget says the picture
+    // takes. This is the read that matters: an overrun is mostly a decision
+    // somebody made months earlier, not weather.
+    tightness: (sq, t) => ({ ...sq, tightness: 0.45 + t * 0.85 }),
+    // And how long the shoot is, because a twenty-week picture has four times
+    // as many chances to lose a day as a five-week one.
+    weeks: (sq, t) => ({ ...sq, weeks: Math.round(2 + t * 22) }),
+  },
+  sample: (seed) => ({ tightness: 0.5 + (seed % 8) * 0.1, weeks: 3 + (seed % 12) * 2 }),
+  decide: (squeeze) => {
+    const days = decideSlip(squeeze, ((squeeze.weeks * 7 + 3) % 11) / 11).days;
+    if (days === 0) return 'on schedule';
+    if (days <= 3) return 'a few days over';
+    if (days <= 10) return 'a week or two over';
+    return 'badly over';
   },
 });

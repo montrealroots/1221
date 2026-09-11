@@ -63,8 +63,17 @@ export function onStageAt(sim: Simulation, stageId: Id, at: Instant): Booking | 
 export interface Utilisation {
   /** Stage-weeks the lot had to sell in the window. */
   available: number;
-  /** Stage-weeks somebody was on, at any rate. */
+  /** Stage-weeks anybody was on, at any rate. */
   taken: number;
+  /**
+   * Of those, the ones the owner's own production is sitting on.
+   *
+   * Counted apart from the rest because it is the difference between a full
+   * lot and a paid one. A month at nine tenths occupancy that earned nothing
+   * is a month the family's own picture had the rooms, and a figure that hid
+   * that would be the single most misleading number on the screen.
+   */
+  own: number;
   /** 0-1. Undefined when the window holds no stage-weeks at all. */
   share: number | undefined;
   /** What those bookings are worth across the window, in cents. */
@@ -84,7 +93,9 @@ export function utilisation(sim: Simulation, from: Instant, to: Instant): Utilis
   const span = Math.max(0, to - from);
   const available = (span / MS_WEEK) * stages.length;
   let taken = 0;
+  let own = 0;
   let earnsCents = 0;
+  const owner = theLot(sim)?.ownerId;
   for (const stage of stages) {
     for (const booking of bookingsFor(sim, stage.id)) {
       const start = Math.max(booking.from, from);
@@ -92,12 +103,14 @@ export function utilisation(sim: Simulation, from: Instant, to: Instant): Utilis
       if (end <= start) continue;
       const weeks = (end - start) / MS_WEEK;
       taken += weeks;
+      if (owner !== undefined && booking.companyId === owner) own += weeks;
       earnsCents += Math.round(weeks * booking.weekRateCents);
     }
   }
   return {
     available,
     taken,
+    own,
     share: available > 0 ? Math.min(1, taken / available) : undefined,
     earnsCents,
   };
@@ -212,10 +225,8 @@ export function registerLot(sim: Simulation): void {
       sim.notify({
         category: 'business',
         title: `${LOT_NAME}: A Month Of It`,
-        body: month.taken === 0
-          ? `${money(spent)} went out and nothing came in. Nobody was on a stage.`
-          : `${money(spent)} went out. ${weeks(month.taken)} of stage time was let, at ${money(month.earnsCents)}.`,
-        importance: month.taken === 0 ? 55 : 35,
+        body: `${money(spent)} went out. ${howTheMonthWent(month)}`,
+        importance: month.earnsCents === 0 ? 55 : 35,
       });
     }
     takeAnEnquiry(sim);
@@ -256,7 +267,26 @@ function startOfNextMonth(at: Instant, zone: string): Instant {
 }
 
 const money = (cents: Money): string => `€${Math.round(cents / 100).toLocaleString('en-US')}`;
-const weeks = (n: number): string => `${n < 1 ? n.toFixed(1) : Math.round(n)} stage ${n >= 1.5 ? 'weeks' : 'week'}`;
+const weeks = (n: number): string => {
+  const said = n < 1 ? n.toFixed(1) : String(Math.round(n));
+  return `${said} stage ${said === '1' ? 'week' : 'weeks'}`;
+};
+
+/**
+ * The month in a sentence, with the family's own rooms counted separately.
+ *
+ * A lot that reported nine tenths full and nothing earned, without saying the
+ * rooms went to its owner's own picture, would be the most misleading figure
+ * on any screen in the game. So it says which is which.
+ */
+export function howTheMonthWent(month: Utilisation): string {
+  if (month.taken === 0) return 'Nobody was on a stage, and nothing came in.';
+  const paid = month.taken - month.own;
+  if (month.own <= 0) return `${weeks(month.taken)} went to paying tenants, at ${money(month.earnsCents)}.`;
+  if (paid <= 0) return `${weeks(month.own)} went to the company’s own picture, which pays the lot nothing.`;
+  return `${weeks(paid)} went to paying tenants at ${money(month.earnsCents)}, `
+    + `and ${weeks(month.own)} to the company’s own picture, which pays nothing.`;
+}
 
 /**
  * Charges the company for a month of owning the place.
@@ -331,7 +361,10 @@ export function whereTheLotStands(sim: Simulation): string {
     return `${stages.length} stages, and nobody has been on any of them in the last thirty days.${cover}`;
   }
   const share = Math.round((month.share ?? 0) * 100);
-  return `${stages.length} stages, ${share}% full across the last thirty days.${cover}`;
+  const ours = month.own > 0 && month.taken > 0
+    ? ` ${Math.round((month.own / month.taken) * 100)}% of that is the company’s own picture, which pays nothing.`
+    : '';
+  return `${stages.length} stages, ${share}% full across the last thirty days.${cover}${ours}`;
 }
 
 // ---------------------------------------------------------------------------

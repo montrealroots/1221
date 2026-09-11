@@ -26,6 +26,10 @@ import {
   americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf, parentCompany,
   policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
 } from '@/engine/world/company';
+import { DELIVERY, type Element } from '@/engine/content/making';
+import {
+  finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
+} from '@/engine/world/making';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatRelative } from '@/engine/core/time';
 import { Stat } from '@/ui/components/primitives';
@@ -438,31 +442,121 @@ defineLook<Project>('project', {
   look: (project, { sim }) => {
     const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
     const company = sim.universe.companies[project.companyId];
+    const plan = planOf(project);
+    const stage = project.stageId ? sim.universe.stages[project.stageId] : undefined;
+    const held = heldUpBy(project);
     const ways: Way[] = [];
     if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
-    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s developing it' });
+    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s making it' });
 
     return {
       name: project.title,
       kind: project.medium === 'film' ? 'A Film On The Slate' : 'Television On The Slate',
       parent: company ? at('firm', company.id) : undefined,
-      summary: holding
-        ? `On the slate since ${formatDate(project.startedAt, sim.homeZone)}, and the company holds the rights.`
-        : `On the slate since ${formatDate(project.startedAt, sim.homeZone)}, and the company holds no rights to it.`,
+      summary: whereThePictureStands(sim, project),
       body: (
         <>
-          <p className="small">
-            Most things die between being optioned and being packaged, which isn’t a failure of the
-            company so much as the shape of the business. A slate exists because of it.
-          </p>
-          <div className="grid grid-3">
-            <Stat label="Where It Is" value={toStart(project.stage)} note="On the way to being made" />
-            <Stat label="Spent On It" value={moneyOf(project.spentCents)} note="Gone either way" />
-            <Stat label="Rights" value={holding ? 'Held' : 'None'} note={holding ? holding.title : 'Nothing behind it yet'} />
-          </div>
+          {plan ? (
+            <>
+              <p className="small">{plan.what}</p>
+              <div className="grid grid-3">
+                <Stat label="Where It Is" value={periodOf(project)?.label ?? toStart(project.stage)}
+                  note={periodOf(project)?.what ?? 'Between periods'} />
+                <Stat label="Budget" value={project.budgetCents ? moneyOf(project.budgetCents) : 'Not set'}
+                  note={`${moneyOf(project.spentCents)} of it has gone`} />
+                <Stat label="Stage" value={stage?.name ?? 'Elsewhere'}
+                  note={stage ? 'Held off the lot’s own board' : 'Not on a stage here'} />
+              </div>
+              <h4>The Schedule</h4>
+              <table className="table">
+                <tbody>
+                  {(project.periods ?? []).map((window) => {
+                    const period = plan.periods.find((one) => one.id === window.id);
+                    const span = Math.round((window.to - window.from) / (7 * 24 * 60 * 60 * 1000));
+                    const units = period ? Math.round(span * period.unit.aWeek) : span;
+                    return (
+                      <tr key={window.id}>
+                        <td>{period?.label ?? window.id}</td>
+                        <td className="small">{formatDate(window.from, sim.homeZone)}</td>
+                        <td className="small">{formatDate(window.to, sim.homeZone)}</td>
+                        <td className="small">{units} {units === 1 ? period?.unit.one : period?.unit.many}</td>
+                      </tr>
+                    );
+                  })}
+                  {project.deliverBy === undefined ? null : (
+                    <tr>
+                      <td>Delivery Due</td>
+                      <td className="small" colSpan={2}>{formatDate(project.deliverBy, sim.homeZone)}</td>
+                      <td className="small">
+                        {finishesBy(project) === undefined ? '' : `${Math.round((project.deliverBy - finishesBy(project)!) / (7 * 24 * 60 * 60 * 1000))} weeks after the work`}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              <h4>The Delivery List</h4>
+              <p className="small">
+                A distributor doesn’t pay for a film. It pays for a list, and it pays when the list
+                is complete{held.length > 0 ? `. ${held.length === 1 ? 'One item' : `${held.length} items`} on this one ${isAre(held.length)} outstanding` : ', and this one is'}.
+              </p>
+              <table className="table">
+                <tbody>
+                  {DELIVERY.map((element: Element) => (
+                    <tr key={element.id}>
+                      <td>{element.label}</td>
+                      <td className="small">
+                        {project.delivered.includes(element.id)
+                          ? 'Over'
+                          : element.by === 'business' ? 'Waiting to be filed' : 'Comes out of the work'}
+                      </td>
+                      <td className="small">{element.what}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <>
+              <p className="small">
+                Most things die between being optioned and being packaged, which isn’t a failure of the
+                company so much as the shape of the business. A slate exists because of it.
+              </p>
+              <div className="grid grid-3">
+                <Stat label="Where It Is" value={toStart(project.stage)} note="On the way to being made" />
+                <Stat label="Spent On It" value={moneyOf(project.spentCents)} note="Gone either way" />
+                <Stat label="Rights" value={holding ? 'Held' : 'None'} note={holding ? holding.title : 'Nothing behind it yet'} />
+              </div>
+            </>
+          )}
         </>
       ),
       ways,
+      facets: plan === undefined ? undefined : [
+        {
+          id: 'outstanding',
+          label: 'What’s Outstanding',
+          body: (
+            <p className="small">
+              {held.length === 0
+                ? `The money isn’t being held up. ${stillMissing(project).length === 0 ? 'Every element is over.' : 'What’s left doesn’t gate the payment.'}`
+                : `The money is held until ${spokenList(held.map((one) => one.label))} ${isAre(held.length)} over.`}
+            </p>
+          ),
+        },
+        {
+          id: 'where',
+          label: 'Where It’s Being Made',
+          body: (
+            <p className="small">
+              {stage
+                ? `${stage.name}, held from ${formatDate(windowOf(project, plan.periods[0]!.id)?.from ?? project.startedAt, sim.homeZone)}. `
+                  + 'It’s a room no paying tenant can have while the picture is in it, which is what owning the stages actually costs.'
+                : 'No room on the lot is being held for it.'}
+            </p>
+          ),
+          ways: stage ? [{ to: at('firm', project.companyId), label: 'The Lot', detail: 'Who else is booked on it' }] : undefined,
+        },
+      ],
     };
   },
 });

@@ -311,16 +311,20 @@ export interface Project {
   // Empty until then. A picture that has not been greenlit has no dates and
   // saying otherwise would be a schedule nobody has agreed to.
 
+  /** How it is being made, by plan id. Set at the greenlight and not before. */
+  planId?: string;
   /** The city the unit works out of. */
   unitBaseId?: string;
-  /** Prep starts, the crew comes on, and the money starts going out. */
-  prepFrom?: Instant;
-  /** The first day of principal photography. */
-  shootFrom?: Instant;
-  /** Wrap. */
-  shootTo?: Instant;
-  /** When post is reckoned to finish. */
-  postTo?: Instant;
+  /**
+   * The schedule, period by period, with real dates on it.
+   *
+   * The one source of truth for when anything happens. It is a list and not a
+   * set of named fields because the periods themselves are a list: an animated
+   * picture has no prep and a documentary has no wrap, and a schedule with
+   * `shootFrom` carved into it could never hold either. Whatever the plan says
+   * its periods are, this is those periods with dates.
+   */
+  periods?: { id: string; from: Instant; to: Instant }[];
   /** The date the delivery is contractually due. Missing it has a cost. */
   deliverBy?: Instant;
   /** The stage on the lot it is holding, where it holds one. */
