@@ -27,6 +27,8 @@ import {
   policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
 } from '@/engine/world/company';
 import { DELIVERY, type Element } from '@/engine/content/making';
+import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
+import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
 import {
   finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
 } from '@/engine/world/making';
@@ -445,6 +447,8 @@ defineLook<Project>('project', {
     const plan = planOf(project);
     const stage = project.stageId ? sim.universe.stages[project.stageId] : undefined;
     const held = heldUpBy(project);
+    const deal = project.dealId ? dealById(project.dealId) : undefined;
+    const split = standingOf(project);
     const ways: Way[] = [];
     if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
     if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s making it' });
@@ -453,7 +457,7 @@ defineLook<Project>('project', {
       name: project.title,
       kind: project.medium === 'film' ? 'A Film On The Slate' : 'Television On The Slate',
       parent: company ? at('firm', company.id) : undefined,
-      summary: whereThePictureStands(sim, project),
+      summary: project.dealId ? whereTheMoneyStands(project) : whereThePictureStands(sim, project),
       body: (
         <>
           {plan ? (
@@ -514,6 +518,56 @@ defineLook<Project>('project', {
                   ))}
                 </tbody>
               </table>
+              {deal === undefined || split === undefined ? null : (
+                <>
+                  <h4>Where The Money Went</h4>
+                  <p className="small">
+                    {deal.what} A picture is paid for in the order below, and the money that made it
+                    is third — behind the fee, and behind what was spent selling it.
+                  </p>
+                  <table className="table">
+                    <tbody>
+                      {TIERS.map((tier) => (
+                        <tr key={tier.id}>
+                          <td>{tier.label}</td>
+                          <td className="small">{moneyOf(split.took[tier.id])}</td>
+                          <td className="small">{tier.what}</td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td>Still Outstanding</td>
+                        <td className="small">{moneyOf(split.stillOwedCents)}</td>
+                        <td className="small">
+                          {split.stillOwedCents > 0
+                            ? 'What the picture still owes for itself, interest included.'
+                            : 'The picture has paid for itself.'}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h4>The Windows</h4>
+                  {deal.reach === 0 ? (
+                    <p className="small">
+                      Nobody licenses this one again. It was bought outright, so there are no windows
+                      to open and no statements to read.
+                    </p>
+                  ) : (
+                    <table className="table">
+                      <tbody>
+                        {WINDOWS.map((window) => (
+                          <tr key={window.id}>
+                            <td>{window.label}</td>
+                            <td className="small">
+                              {project.windowsPaid?.includes(window.id) ? 'Paid' : 'Not yet'}
+                            </td>
+                            <td className="small">{window.what}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </>
+              )}
             </>
           ) : (
             <>

@@ -496,12 +496,16 @@ function weighTheSchedule(sim: Simulation, project: Project, shooting: Period): 
     refId: project.id,
   });
 
-  for (const item of sim.universe.scheduled) {
-    if (item.status !== 'pending') continue;
-    if (item.refId !== project.id) continue;
-    if (item.kind === MAKING_KIND && item.at > sim.now) item.at += by;
-    if (item.kind === DELIVERY_KIND) item.at += by;
-  }
+  // Through the timeline's own reschedule, never by writing `at` in place. The
+  // list is held sorted and walked by a forward-only cursor, so an in-place
+  // write leaves it unsorted with the cursor pointing at the wrong item, and
+  // that surfaces as an event firing out of order weeks later.
+  const moving = sim.universe.scheduled.filter((item) => (
+    item.status === 'pending'
+    && item.refId === project.id
+    && ((item.kind === MAKING_KIND && item.at > sim.now) || item.kind === DELIVERY_KIND)
+  ));
+  for (const item of moving) sim.timeline.reschedule(item.id, item.at + by);
 }
 
 /** Asks the stage for the extra weeks. It can say no. */

@@ -26,6 +26,8 @@ import { ENQUIRY_SHAPES, type Enquiry } from './content/lot';
 import { wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
 import { decideSlip, type Squeeze } from './world/making';
+import { decideTake, type Prospects } from './world/selling';
+import { DEALS } from './content/selling';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -216,5 +218,44 @@ defineDecider<Squeeze, string>({
     if (days <= 3) return 'a few days over';
     if (days <= 10) return 'a week or two over';
     return 'badly over';
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The money that comes back
+// ---------------------------------------------------------------------------
+
+defineDecider<Prospects, string>({
+  id: 'selling.take',
+  decides: 'What a finished picture takes across ten years.',
+  drawnIn: 'src/engine/world/selling.ts',
+  reads: {
+    // What it cost, because scale buys audience — sublinearly, but it buys it.
+    // A quarter-million-euro picture and a hundred-million one cannot land in
+    // the same band.
+    budget: (p, t) => ({ ...p, negativeCents: Math.round((250_000 + t * 120_000_000) * 100) }),
+    // And how it is being sold, which matters as much as the picture: a
+    // streamer buyout reaches nobody after the check clears, and a studio
+    // release reaches everybody for a decade.
+    deal: (p, t) => ({
+      ...p,
+      dealId: DEALS[Math.min(DEALS.length - 1, Math.floor(t * DEALS.length))]!.id,
+    }),
+  },
+  sample: (seed) => ({
+    negativeCents: (2_000_000 + (seed % 9) * 7_000_000) * 100,
+    dealId: DEALS[seed % DEALS.length]!.id,
+  }),
+  decide: (prospects) => {
+    const roll = ((prospects.negativeCents / 100_000) % 13) / 13;
+    const took = decideTake(prospects, roll).cents;
+    // Banded against what it cost, because that is the only scale on which a
+    // take means anything. Forty million is a triumph for one picture and a
+    // disaster for another.
+    const times = took / Math.max(1, prospects.negativeCents);
+    if (times < 1) return 'never earns it back';
+    if (times < 2.5) return 'earns its cost back';
+    if (times < 5) return 'a real hit';
+    return 'a phenomenon';
   },
 });

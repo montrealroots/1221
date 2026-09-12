@@ -352,6 +352,34 @@ describe('running over', () => {
     expect(windowOf(project(), 'post')!.from).toBe(wrapNow);
   });
 
+  it('leaves the timeline sorted, so nothing fires out of order later', () => {
+    // Two pictures on the lot at once, the second starting six weeks behind the
+    // first, so their ticks interleave. That is what makes this worth testing:
+    // one picture alone can slip as far as it likes without passing anything.
+    const sim = world('slip-sorted');
+    const id = makeIt(sim, 'Cut To The Bone', { shootWeeks: 3 });
+    const from = windowOf(sim.universe.projects[id]!, 'prep')!.from;
+    makeIt(sim, 'Room To Breathe', { shootWeeks: 3, from: from + 6 * MS_WEEK });
+
+    const project = () => sim.universe.projects[id]!;
+    sim.advanceTo(windowOf(project(), 'shooting')!.from + MS_DAY);
+
+    // A slip moves scheduled items. Writing `at` in place instead of going
+    // through the timeline's own reschedule leaves the list unsorted, and the
+    // timeline is held sorted and walked by a forward-only cursor, so an
+    // unsorted list means an event firing in the wrong order weeks later.
+    const pending = sim.universe.scheduled.filter((one) => one.status === 'pending');
+    for (const [i, one] of pending.entries()) {
+      if (i > 0) expect(one.at, `${one.label} sits before ${pending[i - 1]!.label}`)
+        .toBeGreaterThanOrEqual(pending[i - 1]!.at);
+    }
+    // And both pictures still run to completion afterwards.
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    runItOut(sim, id);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    expect(project().delivered).toContain('picture');
+  });
+
   it('charges for the extra days', () => {
     const sim = world('slip-cost');
     const id = makeIt(sim, 'Cut To The Bone', { shootWeeks: 4 });

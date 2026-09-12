@@ -334,4 +334,29 @@ export interface Project {
   /** Elements handed over, by id. The money waits on the whole list. */
   delivered: string[];
   deliveredAt?: Instant;
+
+  // --- The life after delivery ---------------------------------------------
+  // Empty until somebody buys it. A picture nobody has bought is an asset with
+  // no price, and saying otherwise would be inventing a market.
+
+  /** How it was sold, by deal id. */
+  dealId?: string;
+  soldAt?: Instant;
+  releasedAt?: Instant;
+  /**
+   * What it is reckoned to take across ten years, all in, for what it cost and
+   * the way it is being released. Decided once at the sale and not revised,
+   * because a figure that moved every time somebody looked at it would be a
+   * number nobody could plan against.
+   */
+  takeCents?: Money;
+  /**
+   * Which windows have paid, by id.
+   *
+   * The only thing stored about the money. Everything else — gross to date,
+   * what each tier took, what the company has seen — is recomputed from this
+   * and the deal, so a recoupment figure can never drift from the receipts
+   * that produced it.
+   */
+  windowsPaid?: string[];
 }
