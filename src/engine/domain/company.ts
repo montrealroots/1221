@@ -335,6 +335,20 @@ export interface Project {
   delivered: string[];
   deliveredAt?: Instant;
 
+  /**
+   * Who is on it, by post, with the dates they are on it for.
+   *
+   * Empty until the picture starts hiring, and filled over the weeks rather
+   * than at once, because a unit production manager comes on ten weeks before
+   * the camera turns over and a boom operator comes on one. The person is a
+   * reference rather than a copy: they exist in their own right afterward, and
+   * the next picture can hire them again.
+   *
+   * What they are paid is not here. That is the engagement and the deal, which
+   * covers cast and crew in one record.
+   */
+  crew?: { postId: string; personId: Id; from: Instant; to: Instant }[];
+
   // --- The life after delivery ---------------------------------------------
   // Empty until somebody buys it. A picture nobody has bought is an asset with
   // no price, and saying otherwise would be inventing a market.

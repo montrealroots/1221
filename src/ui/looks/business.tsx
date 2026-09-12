@@ -29,6 +29,8 @@ import {
 import { DELIVERY, type Element } from '@/engine/content/making';
 import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
 import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
+import { departmentById } from '@/engine/content/crew';
+import { crewOf, postsFor, standingReads } from '@/engine/world/crew';
 import {
   finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
 } from '@/engine/world/making';
@@ -449,6 +451,8 @@ defineLook<Project>('project', {
     const held = heldUpBy(project);
     const deal = project.dealId ? dealById(project.dealId) : undefined;
     const split = standingOf(project);
+    const crew = crewOf(sim, project);
+    const carries = postsFor(project.budgetCents ?? 0).length;
     const ways: Way[] = [];
     if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
     if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s making it' });
@@ -498,6 +502,33 @@ defineLook<Project>('project', {
                   )}
                 </tbody>
               </table>
+              <h4>Who Is On It</h4>
+              <p className="small">
+                {crew.length === 0
+                  ? `Nobody yet. This picture carries ${carries} posts, and they come on over the weeks before the camera does — the money and the design first, the camera late.`
+                  : `${crew.length} of ${carries} posts filled. Nobody starts on the first day: a unit production manager is here ten weeks before the camera turns over, a boom operator for one.`}
+              </p>
+              {crew.length === 0 ? null : (
+                <table className="table">
+                  <tbody>
+                    {crew.map((seat) => (
+                      <tr key={seat.post.id}>
+                        <td>
+                          {seat.person.displayName}
+                          {seat.post.head ? ' · Heads the department' : ''}
+                        </td>
+                        <td className="small">{seat.post.label}</td>
+                        <td className="small">{departmentById(seat.post.department)?.label ?? seat.post.department}</td>
+                        <td className="small">{seat.post.local}</td>
+                        <td className="small">{standingReads(seat.person.reputation.professionalReputation)}</td>
+                        <td className="small">
+                          {formatDate(seat.from, sim.homeZone)} to {formatDate(seat.to, sim.homeZone)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
               <h4>The Delivery List</h4>
               <p className="small">
                 A distributor doesn’t pay for a film. It pays for a list, and it pays when the list

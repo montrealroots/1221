@@ -42,6 +42,7 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
+import { armTheCrew } from './crew';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -341,6 +342,10 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
     refType: 'project',
     refId: project.id,
   });
+
+  // And the people. A picture that has dates has a crew coming on against
+  // them, starting long before the camera does.
+  armTheCrew(sim, project);
 
   const stage = stageId ? sim.universe.stages[stageId] : undefined;
   const shoot = plan.periods.find((p) => p.holds === 'shooting');

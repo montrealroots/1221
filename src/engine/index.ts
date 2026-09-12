@@ -29,6 +29,7 @@ import { buildTheLot, registerLot } from './world/lot';
 import { registerSugar, seedTheQuota } from './world/sugar';
 import { registerMaking } from './world/making';
 import { registerSelling } from './world/selling';
+import { registerCrew } from './world/crew';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
@@ -56,6 +57,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerSugar(sim);
   registerMaking(sim);
   registerSelling(sim);
+  registerCrew(sim);
 }
 
 /** Recurring world processes every save needs running. */

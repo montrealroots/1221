@@ -28,6 +28,7 @@ import { decideQuota } from './world/sugar';
 import { decideSlip, type Squeeze } from './world/making';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
+import { decideHire, standingReads, type Hiring } from './world/crew';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -257,5 +258,37 @@ defineDecider<Prospects, string>({
     if (times < 2.5) return 'earns its cost back';
     if (times < 5) return 'a real hit';
     return 'a phenomenon';
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The people a picture needs
+// ---------------------------------------------------------------------------
+
+defineDecider<Hiring, string>({
+  id: 'crew.hired',
+  decides: 'Who gets a post on a picture, and whether they have worked here before.',
+  drawnIn: 'src/engine/world/crew.ts',
+  reads: {
+    // How many people have held this post for the company already. A crew that
+    // has worked together gets rehired, and nothing else about this decision
+    // matters as much.
+    returning: (h, t) => ({ ...h, returning: Math.round(t * 5) }),
+    // What the picture costs, because money reaches further: a quarter of a
+    // million euros gets who is available and forty million gets who is wanted.
+    budget: (h, t) => ({ ...h, negativeCents: Math.round((250_000 + t * 60_000_000) * 100) }),
+    // And whether the post runs a department, because a head is both kept
+    // harder and drawn from a shallower, better pool than anybody under them.
+    head: (h, t) => ({ ...h, head: t >= 0.5 }),
+  },
+  sample: (seed) => ({
+    returning: seed % 4,
+    negativeCents: (1_000_000 + (seed % 7) * 5_000_000) * 100,
+    head: seed % 2 === 0,
+  }),
+  decide: (hiring) => {
+    const roll = ((hiring.negativeCents / 1_000) % 17) / 17;
+    const answer = decideHire(hiring, roll);
+    return `${answer.returning ? 'somebody they have used' : 'somebody new'}, ${standingReads(answer.standing)}`;
   },
 });
