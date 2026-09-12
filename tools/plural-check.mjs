@@ -15,7 +15,6 @@
  * Run: node tools/plural-check.mjs
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
 
 /** Nouns that need a singular form when the count is one. */
 const COUNTABLE = [
@@ -69,7 +68,9 @@ const PATTERN = new RegExp(String.raw`\$\{[^}]{1,80}\}\s*(?:${COUNTABLE.join('|'
 function walk(dir) {
   const out = [];
   for (const entry of readdirSync(dir)) {
-    const path = join(dir, entry);
+    // Forward slashes, always. ALLOWED is keyed by them, and `join` would hand
+    // back backslashes on Windows.
+    const path = `${dir}/${entry}`;
     if (statSync(path).isDirectory()) out.push(...walk(path));
     else if (/\.(ts|tsx)$/.test(path)) out.push(path);
   }

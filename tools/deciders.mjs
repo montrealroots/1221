@@ -21,7 +21,6 @@
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
 
 const CHECK = process.argv.includes('--check');
 
@@ -36,7 +35,10 @@ const DRAWS = /\b(?:sim|s|this)\.rng\(|\brngFor\(|\bmakeRng\(/;
 
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const path = join(dir, entry.name);
+    // Forward slashes, always. A decider's `drawnIn` is written with them, and
+    // `join` would hand back backslashes on Windows — which made every decider
+    // look stale and every drawing file look like an orphan.
+    const path = `${dir}/${entry.name}`;
     if (entry.isDirectory()) walk(path, out);
     else if (path.endsWith('.ts')) out.push(path);
   }

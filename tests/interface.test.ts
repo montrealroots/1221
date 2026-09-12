@@ -17,7 +17,6 @@
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ALL_DESTINATIONS, DESTINATIONS } from '@/ui/shell/destinations';
 import { WEATHER_EMOJI } from '@/engine/systems/weather';
@@ -34,7 +33,10 @@ const BRAND_FILES = new Set([
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
-    const path = join(dir, name);
+    // Forward slashes, always. BRAND_FILES is written with them, and `join`
+    // hands back backslashes on Windows, which made the brand mark look like a
+    // stray emoji in the files allowed to carry it.
+    const path = `${dir}/${name}`;
     if (statSync(path).isDirectory()) walk(path, out);
     else if (/\.(ts|tsx|css)$/.test(name)) out.push(path);
   }

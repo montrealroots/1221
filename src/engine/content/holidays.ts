@@ -58,7 +58,9 @@ export function addCountryHolidays(countryId: string, text: string): number {
   if (loaded.has(countryId)) return 0;
   const entry: CountryHolidays = { regions: new Map(), days: new Map() };
   let count = 0;
-  for (const line of text.split('\n')) {
+  // Split on either ending, so a checkout that converts line endings cannot
+  // leave a carriage return stuck to a region code or a holiday type.
+  for (const line of text.split(/\r?\n/)) {
     if (!line) continue;
     if (line.startsWith('# ')) {
       const [code, name] = line.slice(2).split('\t');

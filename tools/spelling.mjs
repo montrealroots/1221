@@ -24,7 +24,6 @@
  * Run `node tools/spelling.mjs` to report, `--write` to fix.
  */
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
 
 /** British spelling on the left, what SLATE says on the right. */
 const SPELLINGS = {
@@ -144,7 +143,9 @@ function walk(dir) {
   const out = [];
   for (const entry of readdirSync(dir)) {
     if (SKIP_DIRS.has(entry)) continue;
-    const path = join(dir, entry);
+    // Forward slashes, always. Every exemption and allowlist in this file is
+    // written with them, and `join` would hand back backslashes on Windows.
+    const path = `${dir}/${entry}`;
     if (statSync(path).isDirectory()) out.push(...walk(path));
     else if (EXTENSIONS.test(path)) out.push(path);
   }

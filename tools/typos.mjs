@@ -12,7 +12,6 @@
  * Run: node tools/typos.mjs
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
 
 /** Straightforwardly wrong, in any register. */
 const MISSPELLINGS = {
@@ -104,7 +103,10 @@ function walk(dir) {
   const out = [];
   for (const entry of readdirSync(dir)) {
     if (SKIP_DIRS.has(entry)) continue;
-    const path = join(dir, entry);
+    // Forward slashes, always. SKIP_FILES is written with them, and `join`
+    // would hand back backslashes on Windows — which is how this tool ended up
+    // flagging its own dictionary of deliberate misspellings.
+    const path = `${dir}/${entry}`;
     if (statSync(path).isDirectory()) out.push(...walk(path));
     else if (EXTENSIONS.test(path)) out.push(path);
   }

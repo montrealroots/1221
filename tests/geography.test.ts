@@ -106,7 +106,7 @@ describe('the city files on disk', () => {
   it('adds up to the whole world', () => {
     let total = 0;
     for (const file of files) {
-      total += readFileSync(`${dir}/${file}`, 'utf8').split('\n').filter(Boolean).length;
+      total += readFileSync(`${dir}/${file}`, 'utf8').split(/\r?\n/).filter(Boolean).length;
     }
     expect(total).toBe(CITIES_IN_THE_WORLD);
   });
@@ -114,7 +114,7 @@ describe('the city files on disk', () => {
   it('agrees with the counts the picker shows', () => {
     for (const file of files.slice(0, 40)) {
       const id = file.replace('.tsv', '');
-      const lines = readFileSync(`${dir}/${file}`, 'utf8').split('\n').filter(Boolean).length;
+      const lines = readFileSync(`${dir}/${file}`, 'utf8').split(/\r?\n/).filter(Boolean).length;
       expect(cityCount(id), `${id} count disagrees`).toBe(lines);
     }
   });
@@ -122,7 +122,7 @@ describe('the city files on disk', () => {
   it('holds well-formed rows with unique ids', () => {
     const seen = new Set<string>();
     for (const file of ['us.tsv', 'gb.tsv', 'uk.tsv', 'jp.tsv', 'br.tsv'].filter((f) => files.includes(f))) {
-      for (const line of readFileSync(`${dir}/${file}`, 'utf8').split('\n')) {
+      for (const line of readFileSync(`${dir}/${file}`, 'utf8').split(/\r?\n/)) {
         if (!line) continue;
         const parts = line.split('\t');
         expect(parts.length, `malformed row in ${file}: ${line}`).toBe(8);
@@ -153,7 +153,7 @@ describe('the city files on disk', () => {
   it('resolves every city named anywhere in the content', () => {
     const known = new Set<string>();
     for (const file of readdirSync(dir)) {
-      for (const line of readFileSync(`${dir}/${file}`, 'utf8').split('\n')) {
+      for (const line of readFileSync(`${dir}/${file}`, 'utf8').split(/\r?\n/)) {
         const id = line.split('\t')[0];
         if (id) known.add(id);
       }

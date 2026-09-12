@@ -412,7 +412,10 @@ export async function loadCountryCities(countryId: string): Promise<number> {
 export function addCountryCities(countryId: string, text: string): number {
   if (loadedCountries.has(countryId)) return 0;
   const parsed: City[] = [];
-  for (const line of text.split('\n')) {
+  // Split on either ending. A checkout that converts line endings would
+  // otherwise leave a carriage return stuck to the last field of every row, and
+  // the last field is the place kind.
+  for (const line of text.split(/\r?\n/)) {
     if (!line) continue;
     const [id, name, regionId, lat, lon, timeZone, population, kind] = line.split('\t');
     if (!id || !name || !timeZone) continue;
