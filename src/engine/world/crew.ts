@@ -41,7 +41,6 @@ import { emptySkillSheet } from '../domain/skills';
 import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
-import { plural } from '../core/text';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import { POSTS, type Post, postById, prepScale } from '../content/crew';
 import { MS_WEEK } from './lot';
@@ -305,7 +304,7 @@ export function armTheCrew(sim: Simulation, project: Project): void {
     sim.schedule({
       at,
       kind: CREW_KIND,
-      label: `${project.title}: ${posts.length === 1 ? posts[0]!.label : `${plural(posts.length, 'Person', 'People')} Start`}`,
+      label: `${project.title}: ${posts.length === 1 ? posts[0]!.label : 'The Crew Comes On'}`,
       category: 'business',
       priority: 55,
       payload: { projectId: project.id, postIds: posts.map((p) => p.id) },

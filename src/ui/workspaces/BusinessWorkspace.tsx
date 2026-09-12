@@ -18,7 +18,7 @@
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
-import { Open } from '@/ui/looks/Look';
+import { LookRegion, Open } from '@/ui/looks/Look';
 import { at } from '@/ui/looks/subject';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -51,7 +51,12 @@ export function BusinessWorkspace() {
   const open = doors.filter((one) => one.can);
 
   return (
-    <>
+    // One region around the whole screen, because every name on it is a way
+    // into something: the company, a right it holds, a picture on the slate, a
+    // register, a guild, a policy, a post. Without it `Open` has nowhere to
+    // open into and renders all seven of them as plain text, which is a screen
+    // full of things that look like they lead somewhere and do not.
+    <LookRegion>
       <div className="row-between" style={{ marginBottom: 'var(--s5)' }}>
         <div>
           <div className="eyebrow">The Family Business</div>
@@ -90,7 +95,7 @@ export function BusinessWorkspace() {
         Every figure the company spends comes out of its own account and is posted to the ledger, so
         the business and the household are never spending the same money twice.
       </p>
-    </>
+    </LookRegion>
   );
 }
 
