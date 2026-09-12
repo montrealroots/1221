@@ -37,6 +37,7 @@ import {
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatRelative } from '@/engine/core/time';
 import { Stat } from '@/ui/components/primitives';
+import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, said, spokenList, toStart } from './words';
@@ -508,26 +509,35 @@ defineLook<Project>('project', {
                   ? `Nobody yet. This picture carries ${carries} posts, and they come on over the weeks before the camera does — the money and the design first, the camera late.`
                   : `${crew.length} of ${carries} posts filled. Nobody starts on the first day: a unit production manager is here ten weeks before the camera turns over, a boom operator for one.`}
               </p>
+              {/* Six columns of short values. On a phone they get about fifty
+                  pixels each and a word like "Production" comes apart across
+                  three lines, so the whole table scrolls sideways in its own box
+                  rather than being crushed into the width of the page. */}
               {crew.length === 0 ? null : (
+                <div className="table-wrap">
                 <table className="table">
                   <tbody>
                     {crew.map((seat) => (
                       <tr key={seat.post.id}>
-                        <td>
-                          {seat.person.displayName}
+                        {/* The name is the way in, the way every other name in
+                            the game is. These people exist in their own right
+                            and outlast the picture that hired them. */}
+                        <td className="nowrap">
+                          <Open subject={at('person', seat.person.id)}>{seat.person.displayName}</Open>
                           {seat.post.head ? ' · Heads the department' : ''}
                         </td>
-                        <td className="small">{seat.post.label}</td>
-                        <td className="small">{departmentById(seat.post.department)?.label ?? seat.post.department}</td>
-                        <td className="small">{seat.post.local}</td>
-                        <td className="small">{standingReads(seat.person.reputation.professionalReputation)}</td>
-                        <td className="small">
+                        <td className="small nowrap">{seat.post.label}</td>
+                        <td className="small nowrap">{departmentById(seat.post.department)?.label ?? seat.post.department}</td>
+                        <td className="small nowrap">{seat.post.local}</td>
+                        <td className="small nowrap">{standingReads(seat.person.reputation.professionalReputation)}</td>
+                        <td className="small nowrap">
                           {formatDate(seat.from, sim.homeZone)} to {formatDate(seat.to, sim.homeZone)}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
               <h4>The Delivery List</h4>
               <p className="small">
@@ -539,7 +549,10 @@ defineLook<Project>('project', {
                   {DELIVERY.map((element: Element) => (
                     <tr key={element.id}>
                       <td>{element.label}</td>
-                      <td className="small">
+                      {/* A status is two or three words and must not break in
+                          half. The column beside it carries prose and will take
+                          whatever room is left. */}
+                      <td className="small nowrap">
                         {project.delivered.includes(element.id)
                           ? 'Over'
                           : element.by === 'business' ? 'Waiting to be filed' : 'Comes out of the work'}
@@ -561,13 +574,13 @@ defineLook<Project>('project', {
                       {TIERS.map((tier) => (
                         <tr key={tier.id}>
                           <td>{tier.label}</td>
-                          <td className="small">{moneyOf(split.took[tier.id])}</td>
+                          <td className="small money">{moneyOf(split.took[tier.id])}</td>
                           <td className="small">{tier.what}</td>
                         </tr>
                       ))}
                       <tr>
                         <td>Still Outstanding</td>
-                        <td className="small">{moneyOf(split.stillOwedCents)}</td>
+                        <td className="small money">{moneyOf(split.stillOwedCents)}</td>
                         <td className="small">
                           {split.stillOwedCents > 0
                             ? 'What the picture still owes for itself, interest included.'
@@ -587,8 +600,8 @@ defineLook<Project>('project', {
                       <tbody>
                         {WINDOWS.map((window) => (
                           <tr key={window.id}>
-                            <td>{window.label}</td>
-                            <td className="small">
+                            <td className="nowrap">{window.label}</td>
+                            <td className="small nowrap">
                               {project.windowsPaid?.includes(window.id) ? 'Paid' : 'Not yet'}
                             </td>
                             <td className="small">{window.what}</td>

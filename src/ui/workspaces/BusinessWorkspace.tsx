@@ -20,6 +20,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { LookRegion, Open } from '@/ui/looks/Look';
 import { at } from '@/ui/looks/subject';
+import { toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import type { GuildId, PolicyKind, RegistryId } from '@/engine/domain/company';
@@ -273,7 +274,8 @@ function Slate() {
                 <div className="strong">
                   <Open subject={at('project', project.id)}>{project.title}</Open>
                 </div>
-                <span className="chip">{project.stage}</span>
+                {/* The stage is an id. A chip is a label, so it is read as one. */}
+                <span className="chip">{toStart(project.stage)}</span>
               </div>
             </div>
           ))}

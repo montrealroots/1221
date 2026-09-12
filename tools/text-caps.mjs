@@ -19,7 +19,7 @@
  */
 
 import { chromium } from 'playwright';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = 'text-caps';
@@ -27,6 +27,17 @@ const MAX_SHOWN = Number(process.env.SLATE_MAX_SHOWN ?? 4);
 mkdirSync(OUT, { recursive: true });
 
 const ONLY = (process.env.SLATE_WIDTHS ?? '').split(',').map((w) => w.trim()).filter(Boolean);
+
+/**
+ * A save to sweep the production screens against.
+ *
+ * `SLATE_SEED_SAVE=path/to/save.json`, as written by `tools/seed-save.mjs`. A
+ * freshly created save has no company worth reading and no picture at all, so
+ * without one of these the densest text in the game goes unmeasured.
+ */
+const SEED = process.env.SLATE_SEED_SAVE && existsSync(process.env.SLATE_SEED_SAVE)
+  ? readFileSync(process.env.SLATE_SEED_SAVE, 'utf8')
+  : undefined;
 const WIDTHS = [
   { name: 'phone', width: 390, height: 844 },
   { name: 'phablet', width: 480, height: 900 },
@@ -208,6 +219,21 @@ const PROBE = () => {
   const isSentence = (t) => /[.!?]$/.test(t) || t.split(/\s+/).length > 12;
 
   /**
+   * A relative date is a value, not a label.
+   *
+   * The depth engine makes a date openable, so "6 days ago" arrives here as a
+   * `button.link` that is the whole of its parent and reads as a label by
+   * position. It is not one: the capitals rule exists so that headings, chips
+   * and controls are Title Case, and "6 Days Ago" is worse English than what it
+   * replaced. Same reasoning as the gazetteer exemption above — a value the
+   * world supplies is spelled the way the world spells it.
+   */
+  const isRelativeDate = (t) => (
+    /^(in\s+)?[\d.,]+\s+(second|minute|hour|day|week|month|year)s?(\s+ago)?$/i.test(t)
+    || /^(just now|today|tomorrow|yesterday|now|overdue)$/i.test(t)
+  );
+
+  /**
    * A noun in the middle of a sentence, which happens to open.
    *
    * The depth engine renders a pressable word as `button.link`, so a control
@@ -254,6 +280,7 @@ const PROBE = () => {
     const label = own.split(/\s+—\s+/)[0].trim();
     if (!label || label.length < 2) continue;
     if (isSentence(label)) continue;
+    if (isRelativeDate(label)) continue;
     const bad = label.split(/\s+/).filter((w) => !wordIsFine(w));
     if (bad.length > 0) note('lowercase', el, `lowercase: ${bad.join(', ')}`);
   }
@@ -266,9 +293,11 @@ const PROBE = () => {
   };
 };
 
-const browser = await chromium.launch({
-  executablePath: process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
-});
+// The container this was written in keeps its browser at a fixed path. Fall
+// back to whatever Playwright installed when that path is not there, so the
+// sweep runs on a developer's own machine as well as in CI.
+const AT = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const browser = await chromium.launch(existsSync(AT) ? { executablePath: AT } : {});
 
 let totalFaults = 0;
 const summary = [];
@@ -388,6 +417,113 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
     if (await click(/save\s*&\s*exit/i)) {
       await page.waitForTimeout(2200);
       await check('13-slots-filled');
+    }
+  }
+
+  // --- The production process ----------------------------------------------
+  // A new save has no company worth looking at and no picture at all, so the
+  // whole of making something was never swept. Given a seeded save — one with
+  // a picture in principal photography, a crew on it and an earlier one sold —
+  // this walks the screens that carry it. Those screens hold the densest text
+  // in the game: a schedule, a delivery list, a crew of twenty-four with a
+  // union local each, and a recoupment waterfall.
+  if (SEED) {
+    await page.goto(BASE, { waitUntil: 'domcontentloaded' });
+    await page.evaluate((raw) => localStorage.setItem('slate.save.1', raw), SEED);
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(1200);
+    await click(/^Continue$/);
+    await page.waitForTimeout(2600);
+    await check('14-home-loaded');
+
+    // Under 900px the rail is an off-canvas drawer, hidden outright. Clicking
+    // a destination through a closed drawer does nothing, and the sweep would
+    // then measure Home three times and file it under the production screens.
+    const toggle = page.getByRole('button', { name: /toggle navigation/i }).first();
+    if (await toggle.count() && await toggle.isVisible()) {
+      await toggle.click().catch(() => {});
+      await page.waitForTimeout(500);
+    }
+
+    const toBusiness = page.getByText('Family Business', { exact: false }).first();
+    if (await toBusiness.count()) {
+      await toBusiness.click().catch(() => {});
+      await page.waitForTimeout(1800);
+      await click(/^Got It$/);
+      // Prove we are actually on it before calling it a screen.
+      const onIt = await page.getByText('What It May Do', { exact: false }).count();
+      if (!onIt) { console.log('  (never reached the family business — skipping the production walk)'); }
+      await check('15-business');
+
+      // Every door's reason, which is where the longest built strings live.
+      for (const [slug, name] of [['why', /^Why$/], ['missing', /what.s missing/i]]) {
+        const opener = page.getByRole('button', { name }).first();
+        if (await opener.count()) {
+          await opener.scrollIntoViewIfNeeded().catch(() => {});
+          await opener.click().catch(() => {});
+          await page.waitForTimeout(700);
+          await check(`16-door-${slug}`);
+        } else {
+          console.log(`  (no door reason matching ${name})`);
+        }
+      }
+
+      // The picture itself: schedule, delivery list, crew, and the money.
+      const picture = page.getByRole('button', { name: /Hvítserkur/ }).first();
+      if (await picture.count()) {
+        await picture.scrollIntoViewIfNeeded().catch(() => {});
+        await picture.click().catch(() => {});
+        await page.waitForTimeout(1800);
+        // A click that did not open the look would leave us measuring the
+        // business page twice and calling the second one the picture.
+        const crew = page.getByText('Who Is On It', { exact: false }).first();
+        if (!(await crew.count())) {
+          console.log('  (the picture did not open — not counting it as a screen)');
+        }
+        await check('17-picture');
+        if (await crew.count()) {
+          await crew.scrollIntoViewIfNeeded().catch(() => {});
+          await page.waitForTimeout(500);
+          await check('18-crew');
+        }
+        // Everything the look folds away behind a facet. These render as tabs
+        // rather than buttons, and only the first one's body is in the document
+        // until its tab is pressed, so each has to be opened to be measured.
+        const tabs = page.locator('.look-facets [role="tab"]');
+        const count = await tabs.count();
+        for (let t = 0; t < count; t += 1) {
+          const tab = tabs.nth(t);
+          const label = (await tab.innerText().catch(() => `${t}`)).trim();
+          await tab.click().catch(() => {});
+          await page.waitForTimeout(600);
+          await check(`19-facet-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || t}`);
+        }
+        if (count === 0) console.log('  (the picture has no facets)');
+      } else {
+        console.log('  (no picture on the slate to open)');
+      }
+
+      // The sold one, for the waterfall and the windows.
+      const sold = page.getByRole('button', { name: /Reykjadalur/ }).first();
+      if (await sold.count()) {
+        await sold.click().catch(() => {});
+        await page.waitForTimeout(1800);
+        await check('20-sold-picture');
+        const money = page.getByText('Where The Money Went', { exact: false }).first();
+        if (await money.count()) {
+          await money.scrollIntoViewIfNeeded().catch(() => {});
+          await page.waitForTimeout(500);
+          await check('21-waterfall');
+        }
+      }
+
+      // A person the picture brought into the world.
+      const someone = page.locator('button.link').filter({ hasText: /(son|dóttir)$/ }).first();
+      if (await someone.count()) {
+        await someone.click().catch(() => {});
+        await page.waitForTimeout(1200);
+        await check('22-crew-person');
+      }
     }
   }
 
