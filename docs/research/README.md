@@ -9,7 +9,7 @@ back in.
 | --- | --- | --- |
 | [STAGE.md](STAGE.md) | Everything a state-of-the-art sound stage needs | 11 domains, 891 items |
 | [LOT.md](LOT.md) | Everything a state-of-the-art studio lot needs | 12 domains, 681 items |
-| [PIPELINE.md](PIPELINE.md) | Every process in making a picture | 7 domains, 425 processes, 171 option spaces |
+| [PIPELINE.md](PIPELINE.md) | Every process in making a picture | 8 domains, 439 processes, 177 option spaces |
 | [KINDS.md](KINDS.md) | How that process differs by what you are making | 8 kinds |
 
 ## What is missing, and why
@@ -18,17 +18,47 @@ The pipeline and the kinds are incomplete. A weekly usage limit killed thirteen
 of the twenty process agents and four of the twelve kind agents mid-run, along
 with all four synthesis agents. What is here is what returned.
 
-Missing from **PIPELINE.md**: crew and departments, production design, costume,
-locations, camera, lighting, sound on set, the shoot day itself, effects, post
-picture, post sound, and marketing. That is most of production and all of post
-— the map covers development, the screenplay, genre and format, characters,
-breakdown, budgeting and casting, and then stops at the point the crew comes on.
+Missing from **PIPELINE.md**: production design, costume, locations, camera,
+lighting, sound on set, the shoot day itself, effects, post picture, post sound,
+and marketing. That is most of production and all of post — the map covers
+development, the screenplay, genre and format, characters, breakdown, budgeting
+and casting, then crew and departments, and then stops at the point the cameras
+are meant to turn over.
 
 Missing from **KINDS.md**: the VFX-led tentpole, the micro-budget feature, the
 returning series, and short form.
 
-Those agents can be re-run when the limit resets. Nothing already captured needs
-re-running, and a resumed run replays it from cache without spending anything.
+**Domain 8, crew and departments, was added later and by a different method.**
+The agent fleet could not be resumed: the cached re-run promised below was a
+facility of the session that ran it, and a later session on a different account
+did not have it. So domain 8 was written by hand against named published
+sources, and it is deliberately narrower than the seven before it — fourteen
+processes against their sixty. It was chosen because rank 2 of the build order
+("people, generated because a title needed them") cannot be built without
+knowing what posts exist, who hires them, when they start and under whose
+agreement. Its sources:
+
+- The **DGA Basic Agreement** summary on `dga.org`, for the producer's duty to
+  consult the director on the UPM and the director's right to select the 1st AD.
+- **Wrapbook's** guide to the IATSE Low Budget Theatrical Agreement, for the
+  five tiers, their ceilings, what counts as production cost, the Ultra Low
+  Budget minimum of fifteen shooting days, and the retroactive repricing that
+  follows exceeding a ceiling by more than ten per cent.
+- The **list of IATSE locals** on Wikipedia, for craft jurisdictions quoted in
+  the locals' own wording.
+- **Hollywood Teamsters Local 399** (`ht399.org`), for the crafts that are
+  Teamsters rather than IATSE — transportation, locations, casting, animal
+  handling — and the membership figure.
+- **AFCI University's** sample pre-production schedule for a studio feature, for
+  the week-by-week staggered start dates.
+- **Celtx** and **Assemble**, for crew-size bands by production scale and the
+  department hierarchy chart.
+
+Figures from these are as published; nothing in domain 8 is an estimate dressed
+as a source, and where a number is a band rather than a figure it says so.
+
+The remaining agents can in principle be re-run where that tooling exists.
+Nothing already captured needs re-running.
 
 ## What is not missing
 
@@ -110,4 +140,7 @@ should be checked before it is built on, the way the rate card was. And every
 British spelling in these four files is deliberate: they quote operators,
 standards and surveys that spell it their own way, and `tools/spelling.mjs`
 skips this directory for that reason. The house style governs what the game
-says, not what a source said.
+says, not what a source said. Domain 8 of PIPELINE.md is the one stretch of
+prose here that is not quoted from anywhere, and it keeps the same British
+register as the rest of the document it sits in rather than switching halfway
+through; the exemption covers it as a directory either way.

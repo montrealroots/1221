@@ -6,7 +6,7 @@ This is the map SLATE builds from. It is deliberately written as processes rathe
 
 ## What is in here
 
-7 domains, 425 named processes, 171 option spaces. Every process says who does it, what it is, **what gets decided** — which is the part that becomes a choice in SLATE — what the engine behind it would have to hold, how long it takes, and how television differs from film.
+8 domains, 439 named processes, 177 option spaces. Every process says who does it, what it is, **what gets decided** — which is the part that becomes a choice in SLATE — what the engine behind it would have to hold, how long it takes, and how television differs from film.
 
 An **option space** is a list of everything a given choice can be. They are the answer to wanting every option at hand: not a dropdown of names, but the real set, each entry of which has to carry a consequence before it earns its place.
 
@@ -19,6 +19,9 @@ An **option space** is a list of everything a given choice can be. They are the 
 5. **Script breakdown and scheduling** — 63 processes, 27 option spaces
 6. **Budgeting, financing and the bond** — 64 processes, 21 option spaces
 7. **Casting, end to end** — 58 processes, 15 option spaces
+8. **Crew and departments: who a production hires, in what order, under whose agreement, and what happens when one of them leaves** — 14 processes, 6 option spaces
+
+Domains 1 to 7 were written by the agent fleet described in `README.md`. Domain 8 was written later, by hand, from named published sources, and is shallower than the seven before it: fourteen processes rather than sixty. It covers the structure, the hiring chain, the jurisdictions, the budget tiers and the prep calendar, which is what rank 2 of the build order needs. It does not attempt the per-craft depth the agents reached. The twelve domains after it are still missing.
 
 ---
 
@@ -5199,3 +5202,157 @@ Roles played in a capture volume are cast on body, voice and physical invention,
 - Pay-to-play audition workshops are illegal in California under the Krekorian Talent Scam Prevention Act as amended (2017, est.), so 'pay a casting director for access' must be modelled as a legal risk, not as a straightforward career investment.
 - Chemistry cannot be computed from two solo scores. If the pairing matrix is separable, there is no chemistry read — there is only addition with a new name on it.
 - The three playable roles see different parts of this pipeline, and that asymmetry is the game: the actor never sees the grid, the pass reason, or the room after they leave; the producer sees costs and approvals but not the read; the writer-and-lot-head sees the role as written and the studio's veto. Giving all three the same information collapses the whole domain.
+
+---
+
+## 8. Crew and departments: who a production hires, in what order, under whose agreement, and what happens when one of them leaves
+
+### The department map is fixed before any name is in it
+
+A production is a set of departments with a head each, and the set barely varies between a four-week independent and a nine-month tentpole. What varies is how many people sit under each head, and how many heads one person wears. The departments are production (office and accounting), assistant directors, camera, electric, grip, art, construction, set decoration, property, costume, hair, makeup, production sound, script supervision, locations, transportation, stunts, special effects, visual effects, craft service and catering, and editorial.
+
+- **Who.** Line Producer; Unit Production Manager; the Producer
+- **Decides.** Which departments this picture actually carries — a picture with no practical effects carries no special effects department, a stage-bound picture may carry no locations department beyond a manager — and which department heads double, such as the DP operating their own camera or the production designer acting as their own art director.
+- **Engine.** A department table per title, each row carrying a head post, a staffing level, a union jurisdiction, a start week and an end week. The table is generated from the plan and the budget rather than hand-authored, so a picture's crew is a consequence of what it is and what it cost.
+- **Takes.** Settled during budgeting; revised at every budget pass
+- **Television.** A returning series carries the same departments permanently and staffs them to the season rather than the episode, so the heads are employees on a run-of-show deal rather than a picture's hires.
+
+### The head is hired, then the head hires the department
+
+Department heads are engaged by production. Everybody below a head is engaged by that head, within a headcount and a rate band production has set. A key grip reviews every hire and every equipment order in the grip department; a best boy electric runs hiring, scheduling, timesheets and inventory for electric. Production does not interview a grip.
+
+- **Who.** Unit Production Manager; Line Producer; each department head; the best boy or assistant who does the paperwork
+- **Decides.** Whether a head gets their usual crew or is made to take somebody production wants, what the headcount ceiling is, and whether a head may exceed it for a heavy day.
+- **Engine.** Two-tier hiring: production controls heads, heads control their own rosters. A head brought in carries a crew loyalty set — the people they always bring — and denying it costs the head's efficiency or their goodwill. This is the cheapest available way to make the choice of a head matter beyond their own day rate.
+- **Takes.** A head is engaged weeks out; their crew is assembled in days
+- **Television.** The same, except a head's crew becomes the show's crew for years, which makes the original hire far more consequential and makes firing a head mid-season a departmental event rather than a personnel one.
+
+### The director selects the first AD, and is consulted on the UPM
+
+A contractual right, not a courtesy. Under the DGA Basic Agreement the producer must consult the director about the selection of the Unit Production Manager on a theatrical feature or a non-episodic television programme, and the director has the right to select the First Assistant Director.
+
+- **Who.** The Director; the Producer; the UPM; DGA Reports Compliance
+- **Decides.** Whether the director gets their own 1st AD, usually the one they always work with, and whether the producer's preferred UPM survives the consultation.
+- **Engine.** An approval chain with named holders rather than a single hiring decision: the 1st AD slot is the director's to fill, the UPM slot is the producer's but consultable. A producer who installs a UPM over a director's objection has spent something, and the engine should charge it. A playable producer and a playable director want different people in these two chairs, which is the kind of conflict the three-seat premise exists to create.
+- **Takes.** The 1st AD is typically engaged six weeks out; the UPM ten
+- **Television.** Episodic directors do not bring their own 1st AD. The show has one, and an incoming episodic director inherits the crew entirely. The right exists on paper and is worth nothing in practice, which is a real difference between directing a film and directing television.
+
+### Which agreement the picture is made under, decided by its budget
+
+A union picture is made under a named agreement, and which one is a function of total production cost. The IATSE Low Budget Theatrical Agreement runs in tiers: Ultra Low Budget up to $3.3m, Tier 1A from $3.3m to $6.875m, Tier 1B to $9.9m, Tier 2 to $13.75m, and Tier 3 to $16.5m, above which the Basic Agreement applies. Qualifying cost includes above- and below-the-line across pre-production, production and post, and excludes the completion bond premium and contingency up to ten per cent of budget.
+
+- **Who.** Line Producer; production counsel; the IATSE local's business representative; Production Accountant
+- **Decides.** Which tier to aim at, and therefore whether the budget is built to sit under a ceiling. A picture budgeted at $6.8m is a different picture from one budgeted at $7.1m, and not because of the $300,000.
+- **Engine.** A tier lookup against total cost, selecting a rate table and a set of terms. The tier is stored on the title because everything downstream reads it. Ultra Low Budget additionally requires a minimum of fifteen days of principal photography and pays negotiated wages at 125% of statutory minimum wage, not less than $15 an hour, rather than scale.
+- **Takes.** Settled at the financing plan; filed before the first day
+- **Television.** Television has its own agreements and its own tier logic, keyed to licence fee and episode count rather than negative cost, so the same crew can be on three different rate cards across a career.
+
+### Blowing through the tier ceiling reprices the crew retroactively
+
+The consequence that makes the tier real. If final costs exceed the applicable tier ceiling by more than ten per cent, every covered employee must be paid retroactively at the rates of the then-current IATSE Basic Agreement. A two-week advance notification lets a production move up a tier instead of taking the repricing.
+
+- **Who.** Production Accountant; Line Producer; the local's business representative; the completion bond's inspector
+- **Decides.** Whether to notify and step up a tier while there is still time, or to gamble on landing inside the ceiling.
+- **Engine.** A live cost-to-ceiling ratio the player can watch, a two-week notification window that closes, and a retroactive repricing event that recalculates every covered timecard on the picture at Basic Agreement rates. SLATE already reads an overrun off how far a schedule was cut below what the money implies; this is what that overrun can cost beyond the extra days. A picture can be destroyed by its own tenth per cent.
+- **Takes.** Notification is two weeks; the repricing is immediate and covers the whole run
+- **Television.** Season-long accounting makes the ceiling a running total across episodes rather than a single number, so an expensive early episode constrains every later one.
+
+### Jurisdiction: which local covers which craft
+
+A craft is not a job title, it is a bargaining unit, and the boundaries are specific. The Hollywood locals: 44 Affiliated Property Craftpersons; 80 Grips; 600 International Cinematographers Guild, national; 695 Production Sound Technicians, Television Engineers, Video Assist Technicians and Studio Projectionists; 700 Motion Picture Editors Guild, national; 705 Costumers; 706 Makeup Artists and Hairstylists Guild; 728 Motion Picture Studio Electrical Lighting Technicians; 729 Motion Picture Set Painters and Sign Writers; 800 Art Directors Guild, national; 871 Script Supervisors, Continuity Coordinators, Accountants and Allied Production Specialists; 884 Motion Picture Studio Teachers and Welfare Workers; 892 Costume Designers Guild; and USA 829 United Scenic Artists, national.
+
+- **Who.** Each local's business representative; Production Accountant; Line Producer
+- **Decides.** Nothing, day to day, which is the point. Jurisdiction is a constraint the production discovers rather than chooses, and discovering it late is expensive.
+- **Engine.** A craft-to-local map on every crew post, so a rate, a set of working conditions and a pension-and-health contribution all follow from the post rather than being authored per person. The map is also what makes a jurisdictional dispute expressible: two locals claiming the same work is a real and recurring production problem.
+- **Takes.** Permanent
+- **Television.** Identical jurisdictions, different agreements over them.
+
+### The crafts that are Teamsters, not IATSE
+
+A counter-intuitive boundary, and one that makes two career ladders unmodellable if it is got wrong. Hollywood Teamsters Local 399 covers transportation coordinators, transportation captains and drivers — and also location managers, key assistant location managers, assistant location managers and location scouts, animal trainers and wranglers, casting professionals, dispatchers, chef assistants and mechanics. Roughly 6,400 members across Los Angeles and New Mexico.
+
+- **Who.** Transportation Coordinator; Location Manager; Casting Director; Local 399's business representative
+- **Decides.** Which agreement a location manager's or a casting director's deal sits under, and therefore what their floor, their benefits and their career ladder look like.
+- **Engine.** Locations and casting hang off the Teamsters map rather than the IATSE one. Modelling a casting director as a creative guild member in the DGA or WGA sense produces a career that does not exist; the Casting Society is a professional body that gives the Artios Awards, not a union that sets fees.
+- **Takes.** Permanent
+- **Television.** The same, with the wrinkle that a long-running series' location department is effectively permanent staff.
+
+### Staffing a department to the money
+
+Headcount is the budget's main lever on the crew, and it moves in recognisable bands: five to seven people on an ultra-low-budget picture where the DP operates and the director handles props; ten to twenty on a small independent, where sound may be one person and the art department is one person who is at least dedicated; twenty-five to over a hundred on a fully staffed production with no doubling at all; and around two hundred on a large union feature.
+
+- **Who.** Line Producer; UPM; each department head arguing for their own count
+- **Decides.** Which roles exist at all, which merge, and which are day-played rather than carried. Merging is not free: a DP who is also the operator cannot watch a monitor and light at the same time.
+- **Engine.** Headcount per department as a function of budget tier and plan, with an explicit doubling table saying which posts may merge and what merging costs in time per unit of work. A picture that saves a second AC and loses twenty minutes a day to it has made a real decision, and the engine has to be able to say so.
+- **Takes.** Set during budgeting; argued over continuously
+- **Television.** Multi-camera sitcoms carry a large permanent stage crew and a small location footprint; single-camera drama is staffed like a feature that never stops.
+
+### The staggered start: ten weeks of people arriving
+
+Crew does not start together. On a studio feature the office opens around ten weeks out with the producers, director, casting director, location manager, UPM, production coordinator, production accountant and production designer. A set designer follows at nine weeks. At eight, the assistant production accountant, costume designer and set decorator start and the first location scout goes out. At seven come the principal locations presentation, the blueprints meeting, a budget review and the legal and insurance meeting. At six, the first AD, costumers, leadman, prop master, construction coordinator and transportation coordinator all begin and the major locations lock. At five the DP starts a one-week prep, equipment bids go out and set construction begins. At four, the second AD, office secretary, assistant prop master and special effects supervisor start, and the DP joins the second scout. At three, the script supervisor and swing gang come on and cast deals lock. At two, the DP goes exclusive, the first AC, gaffer, key grip and transportation captain start, the stunt coordinator and key hair and makeup arrive, and rehearsals begin. At one, everybody else: camera operators, sound mixer, boom operator, the editor, and the trucks are loaded.
+
+- **Who.** UPM, who authors the start-date schedule; Production Coordinator, who executes it; every head
+- **Decides.** Who starts when, which is a direct spend decision — every week of prep for a head is a week of their rate — and how much prep each department gets before it is expected to be ready.
+- **Engine.** A per-post start offset measured in weeks before the first day of photography, and an end offset after wrap. Crew cost then falls out of the schedule rather than being a lump: the same picture with two extra weeks of art department prep costs a computable amount more and arrives on day one in a measurably better state. This is the most immediately useful piece of this domain for SLATE, because it turns the crew from a budget line into a calendar of people.
+- **Takes.** Ten weeks of prep on a studio feature; three to eight weeks is the ordinary range
+- **Television.** A series prep is front-loaded into the pilot or the season opener and then collapses: episode eight gets days of prep, not weeks, because the standing sets and the crew already exist.
+
+### The one-week look, before the exclusive deal
+
+A DP is commonly engaged for a single week of prep before being hired permanently, and goes exclusive only two weeks out. It is a trial that both sides use.
+
+- **Who.** The Director; the DP; UPM; the DP's agent
+- **Decides.** Whether this DP is the DP. A week of scouting and testing with a director is where a mismatch in taste surfaces while it is still cheap.
+- **Engine.** A provisional engagement state distinct from an engagement: a post can be filled provisionally, generate a read on fit between two people, and then convert or not. This is the same shape as an option on material, applied to a person, and it gives the engine a way to discover compatibility without simply exposing a hidden number.
+- **Takes.** One week of prep; exclusivity from two weeks out
+- **Television.** A series DP is tested on the pilot and then becomes a fixture, often alternating blocks with a second DP so each can prep while the other shoots.
+
+### Deal memos, start paperwork, and the moment a person legally exists on the picture
+
+A crew member is not hired when they say yes. They are hired when a deal memo is signed and start paperwork is filed, and on a guild picture that paperwork goes to the guild as well as to the production.
+
+- **Who.** Production Coordinator; Production Accountant; the crew member; DGA Reports Compliance for DGA posts
+- **Decides.** Rate, guaranteed hours or days, box or kit rental, credit, travel and per diem, and whether the engagement is run-of-show, weekly or daily.
+- **Engine.** The crew engagement record, which is the same shape as the cast engagement record: person, title, post, dates, rate, guarantee, credit. If the crew deal and the actor deal are not the same record with different defaults, the engine will carry two of everything forever.
+- **Takes.** Days
+- **Television.** Run-of-series deals with annual escalators and an episode guarantee, rather than a picture's fixed span.
+
+### Day-playing, and the difference between a crew and a call sheet
+
+Not everybody on the crew is on the picture. A day player is engaged for the days they work, and a heavy day pulls in additional grips, electricians and drivers who are gone the next morning.
+
+- **Who.** 1st AD, who calls the day; each department head, who orders their additional labour; UPM, who approves it
+- **Decides.** How much additional labour a given day buys, which is a direct trade against the day's page count.
+- **Engine.** A distinction between the carried crew and the day's roster, with the roster built per shooting day from what the day requires. A big day with no additional labour simply does not finish, and that is the mechanism by which an under-crewed schedule converts into an overrun rather than into a number nobody can see.
+- **Takes.** Ordered one to three days ahead
+- **Television.** Episodic patterns make additional labour predictable, so a show's day-player spend is a budgeted line rather than a running decision.
+
+### Replacing a head mid-picture
+
+Heads leave. They are fired, they fall ill, they take a better job, they fall out with the director. Replacing one is not like replacing a crew member, because the department is built around them.
+
+- **Who.** The Producer; the Director; UPM; the incoming head; the local
+- **Decides.** Whether to replace with the best boy or assistant already there, bring in an outsider, or let the picture continue short-handed.
+- **Engine.** A departure event that degrades the department rather than simply swapping a name: an outside replacement arrives without the crew loyalty set and without the prep, and a promoted second arrives with both but with less capability. The cost of losing a production designer in week two of a shoot has to be visible, or nothing about keeping a crew happy matters.
+- **Takes.** Days to weeks, and the department runs degraded throughout
+- **Television.** Far more survivable, because the show's pattern carries the department; a feature depends on its heads much more than a series does.
+
+### Wrap, and the order people leave in
+
+Departments come off in roughly the reverse of the order they came on, and some do not come off at all. Camera and sound wrap with the shoot. Grip and electric wrap their equipment out over days. Art, construction and set decoration strike sets for a week or more. Costume inventories and returns. Accounting stays for months after everybody else has gone.
+
+- **Who.** UPM; Production Accountant; each head; Transportation Coordinator
+- **Decides.** How much wrap each department is given, and whether anything is struck in a hurry and damaged or lost.
+- **Engine.** End offsets per post, mirroring the start offsets, so the tail of a picture's crew cost is as computable as its head. Accounting's long tail is what makes a picture's final cost arrive weeks after its last shooting day, which is the gap the tier ceiling is judged in.
+- **Takes.** Days for camera; weeks for construction; months for accounting
+- **Television.** A series hiatus is not a wrap: the crew is held, the sets stand, and the cost continues.
+
+### What gets got wrong
+
+- A crew is modelled as a budget line rather than as a calendar of people. The staggered start schedule is the fix and it is cheap: a start offset and an end offset per post turns crew cost into a consequence of the schedule, and makes buying an extra week of art department prep a decision with a price and an effect.
+- Department heads are hired by production and everybody else is hired by a head. Modelling a flat hiring pool loses the mechanic of a head bringing their own crew, which is the main reason the choice of a head matters beyond a day rate.
+- The director's right to pick the first AD and be consulted on the UPM is contractual. It is also the cleanest available source of conflict between two of the three playable seats, and it costs almost nothing to model.
+- The budget tier is not a rate lookup, it is a ceiling with teeth. Exceeding it by more than ten per cent reprices every covered timecard retroactively at Basic Agreement rates, which means a production can be ruined by an overrun it could have notified its way out of two weeks earlier.
+- Locations and casting are Teamsters crafts, not IATSE ones. Get this wrong and the career ladders of two of the most important non-creative roles in the industry do not exist.
+- Doubling a post must cost time, not only save money. A DP who operates, a designer with no art director, a sound mixer booming their own scene: each is a real saving and a real loss of minutes per unit of work, and if only the saving is modelled, every production doubles everything.
+- A department is not a number of interchangeable people. Losing a head mid-shoot should degrade the department rather than swap a label, and the difference between promoting the best boy and importing a stranger is the difference between a department that knows the picture and one that does not.
