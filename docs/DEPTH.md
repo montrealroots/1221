@@ -196,9 +196,14 @@ Dependency, not appetite.
 days. `currentLocationId` is read in two dozen places and written once, at
 bootstrap. Until it moves, nothing about being somewhere can matter.
 
-**1. The Title.** A picture with a dated life — prep, shoot, post, delivered,
-released, library — a unit base city, a budget band, and a shooting schedule
-made of ordinary scheduled items. **This is the foundational thing.** Run every
+**1. The Title. Done.** A picture with a dated life — prep, shoot, post,
+delivered — a unit base city, a budget, and a schedule made of ordinary
+scheduled items, laid out from the one number a producer actually chooses. It
+holds a stage off the lot's own booking board, spends its budget across its
+periods, reads its overrun off how far the schedule was cut below what the
+money implies, and is not paid for until a contractual delivery list is
+complete. Release and library are still ahead of it, at rank 8.
+**This was the foundational thing.** Run every
 one of the sixteen axes against it: a person exists because a production needed
 them; two people know each other because they were on a title together;
 reputation moves on titles released; a contract is an agreement about an
@@ -213,7 +218,15 @@ persisted, and recurring.
 billing × exclusivity. This is where TEW's contracts axis and the actor's deal
 turn out to be the same record.
 
-**4. The shoot day and the take.** The atom.
+**4. The unit of work, declared by the plan.** Not the shoot day. The research
+in `research/KINDS.md` is emphatic that there is no single atom: a live-action
+feature counts shooting days, a CG feature counts approved seconds at three to
+five a week per animator, a documentary counts beats banked and then cut
+minutes, an unscripted format counts contributor-days, a multi-camera sitcom
+counts one show a week. An engine that names the shooting day forecloses every
+other kind permanently. `content/making.ts` carries `Period.unit` for this
+reason — what a week of a period produces, and how many of them a week holds —
+and nothing downstream may name a shooting day directly.
 
 **5. The union floor over the day.** Membership, eligibility, scale by tier,
 call and wrap as real instants, overtime, meal penalty, turnaround.

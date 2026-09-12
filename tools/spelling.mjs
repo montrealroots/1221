@@ -127,6 +127,19 @@ const REAL_NAMES = [
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
 
+/**
+ * Directories holding somebody else's words rather than SLATE's.
+ *
+ * `docs/research/` is captured source material: published specifications,
+ * engineering standards, quantity-surveying figures and trade practice, most
+ * of it British or European and most of it quoting operators who spell it
+ * their own way. Americanising a quotation is not a house-style fix, it is
+ * editing a source, and a research file that has been edited is worth less
+ * than one that has not. The house style governs what the game says.
+ */
+const NOT_OURS = ['docs/research'];
+const oursToFix = (path) => !NOT_OURS.some((dir) => path.startsWith(dir));
+
 function walk(dir) {
   const out = [];
   for (const entry of readdirSync(dir)) {
@@ -295,7 +308,7 @@ let files = 0;
 let total = 0;
 const seen = new Map();
 
-for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk('docs')]) {
+for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk('docs')].filter(oursToFix)) {
   const original = readFileSync(file, 'utf8');
   const lines = original.split('\n');
   let touched = false;
