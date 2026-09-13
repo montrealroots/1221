@@ -255,10 +255,20 @@ export function capabilitiesOf(sim: Simulation): Capability[] {
 
     of('greenlight', 'Greenlight Something',
       'Say yes to a picture and start spending real money on it.',
-      'Everything above has to be true at once before anybody can responsibly say yes.',
+      'A picture needs material to be of, a head of production to run it, a payroll to put a crew on, cover over the floor and money behind it — all of it true at once, before anybody says yes rather than after.',
       [
         material.length > 0 ? undefined : { need: 'Material', how: 'Option or buy something first.', fixKind: 'holding', fixId: '' },
         needRole(u, 'production'),
+        // A crew is put on a payroll from the first week of prep, so a company
+        // that cannot employ anybody cannot start a picture. This used to be
+        // listed two doors up and checked nowhere, which let a production hire
+        // twenty-four people through a door marked shut.
+        needRegistry(u, 'is_employer'),
+        // And nobody lets a foot of film be shot uninsured. The production
+        // package alone was the old requirement; the other two are the ones a
+        // location and a hire company actually ask for.
+        needPolicy(u, 'general_liability'),
+        needPolicy(u, 'workers_comp'),
         needPolicy(u, 'production_package'),
         cash >= GREENLIGHT_FLOOR ? undefined : {
           need: 'Money In The Company',

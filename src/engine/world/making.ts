@@ -43,6 +43,7 @@ import {
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
 import { armTheCrew } from './crew';
+import { capabilitiesOf } from './company';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -254,6 +255,23 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   if (!project) return { ok: false, error: 'There’s no such picture on the slate.' };
   if (project.shelvedAt) return { ok: false, error: 'That one came off the slate.' };
   if (project.planId) return { ok: false, error: `${project.title} is already being made.` };
+
+  // The door, and it refuses. The Family Business screen has always listed the
+  // nine things a production company has to be able to do and said which were
+  // shut — and then let a picture be greenlit through a shut one, so the whole
+  // page was advice rather than a rule. A declared word nothing reads is worse
+  // than no word: either the door means this, or it should not be on screen.
+  const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight');
+  if (door && !door.can) {
+    const missing = door.blockers.map((one) => one.need.toLowerCase());
+    const said = missing.length === 1
+      ? missing[0]!
+      : `${missing.slice(0, -1).join(', ')} and ${missing[missing.length - 1]!}`;
+    return {
+      ok: false,
+      error: `Nobody can say yes to ${project.title} yet. It needs ${said} first.`,
+    };
+  }
 
   const plan = planById(spec.planId);
   if (!plan) return { ok: false, error: 'There’s no such way of making it.' };
@@ -570,6 +588,19 @@ export function handOver(sim: Simulation, projectId: Id, elementId: string): { o
   }
   if (project.delivered.includes(element.id)) {
     return { ok: false, error: `${element.label} has already gone over.` };
+  }
+  // A certificate is a thing you hold, not a form you fill in. The delivery
+  // list has always had errors and omissions cover on it and the Family
+  // Business screen has always had a door that says a picture cannot be handed
+  // over without it — and nothing joined the two, so a production could file
+  // the certificate for cover it had never bought.
+  const door = capabilitiesOf(sim).find((one) => one.id === 'deliver');
+  if (element.id === 'eo' && door && !door.can) {
+    return {
+      ok: false,
+      error: `${element.label} is a certificate, and the company hasn’t got one. `
+        + `${door.blockers[0]!.how}`,
+    };
   }
   if (!project.planId) return { ok: false, error: `${project.title} isn’t being made yet.` };
   if (!canHandOver(project, element, sim.now)) {

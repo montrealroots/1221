@@ -17,6 +17,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -33,7 +34,11 @@ interface Done { ok: boolean; id?: string; error?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
   sim.execute<Done>({ kind, payload }).value!;
 
-const world = (seed = 'selling'): Simulation => quickSave({}, seed);
+const world = (seed = 'selling'): Simulation => {
+  const sim = quickSave({}, seed);
+  openTheDoors(sim);
+  return sim;
+};
 
 const STUDIO = dealById('studio')!;
 const STREAMER = dealById('streamer')!;

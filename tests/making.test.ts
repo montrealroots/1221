@@ -17,10 +17,11 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { projectsOf, parentCompany } from '@/engine/world/company';
+import { capabilitiesOf, projectsOf, parentCompany } from '@/engine/world/company';
 import { MS_WEEK, bookingsFor, howTheMonthWent, stagesOn, theLot, utilisation } from '@/engine/world/lot';
 import {
   DELIVERY, PLANS, impliedShootWeeks, planById, tightnessOf,
@@ -35,7 +36,11 @@ interface Done { ok: boolean; id?: string; error?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
   sim.execute<Done>({ kind, payload }).value!;
 
-const world = (seed = 'making'): Simulation => quickSave({}, seed);
+const world = (seed = 'making'): Simulation => {
+  const sim = quickSave({}, seed);
+  openTheDoors(sim);
+  return sim;
+};
 
 /** Puts a title on the slate and gives back its id. */
 function onTheSlate(sim: Simulation, title: string, medium: 'film' | 'television' = 'film'): string {
@@ -156,6 +161,85 @@ describe('what the money says a schedule should be', () => {
     const weeks = impliedShootWeeks(20_000_000_00);
     expect(tightnessOf(weeks, 20_000_000_00)).toBeCloseTo(1, 6);
     expect(tightnessOf(weeks / 2, 20_000_000_00)).toBeCloseTo(0.5, 6);
+  });
+});
+
+describe('the doors are a rule, not advice', () => {
+  // The Family Business screen has always listed the nine things a production
+  // company must be able to do and marked which were shut. It then let a
+  // picture be greenlit through a shut one, so the page was a description of a
+  // game that was not being played.
+
+  it('refuses a greenlight through a shut door, and says what is missing', () => {
+    const sim = quickSave({}, 'shut');
+    const id = onTheSlate(sim, 'Hvítserkur');
+    const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
+    expect(door.can, 'a fresh company should not be able to greenlight anything').toBe(false);
+
+    const done = run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+    });
+    expect(done.ok).toBe(false);
+    expect(done.error).toContain('Nobody can say yes to Hvítserkur yet');
+    // And it names them rather than saying no.
+    for (const blocker of door.blockers) {
+      expect(done.error!.toLowerCase()).toContain(blocker.need.toLowerCase());
+    }
+    expect(sim.universe.projects[id]!.planId).toBeUndefined();
+  });
+
+  it('lets one through once every blocker is answered', () => {
+    const sim = quickSave({}, 'opened');
+    const id = onTheSlate(sim, 'Hvítserkur');
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+    }).ok).toBe(false);
+
+    openTheDoors(sim);
+    expect(capabilitiesOf(sim).find((one) => one.id === 'greenlight')!.can).toBe(true);
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+    }).ok).toBe(true);
+    expect(sim.universe.projects[id]!.planId).toBe('feature');
+  });
+
+  it('refuses to file a certificate the company has not got', () => {
+    // Doors open enough to start a picture, but no errors and omissions cover.
+    // A picture can be made without it; it cannot be handed over.
+    const sim = quickSave({}, 'no-eo');
+    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
+    run(sim, 'company.fill_post', { role: 'production', personId: somebody.id });
+    run(sim, 'company.option', { title: 'Something To Make', hold: 'option', months: 18 });
+    run(sim, 'company.register', { registry: 'is_employer' });
+    for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
+      run(sim, 'company.insure', { policy });
+    }
+    // A small picture, so the company can still afford a certificate after it
+    // has started paying for one.
+    const id = makeIt(sim, 'Hvítserkur', { budgetCents: 80_000_00 });
+    // The certificate waits on prep, not on the whole picture, so this only has
+    // to get past prep.
+    sim.advanceTo(windowOf(sim.universe.projects[id]!, 'prep')!.to + MS_DAY);
+
+    const done = run(sim, 'company.deliver', { projectId: id, elementId: 'eo' });
+    expect(done.ok).toBe(false);
+    expect(done.error).toContain('hasn’t got one');
+    expect(sim.universe.projects[id]!.stage).not.toBe('delivered');
+
+    // Buy the cover and the same filing goes through.
+    expect(run(sim, 'company.insure', { policy: 'errors_omissions' }).ok).toBe(true);
+    expect(run(sim, 'company.deliver', { projectId: id, elementId: 'eo' }).ok).toBe(true);
+  });
+
+  it('shuts again when the company has spent what it had', () => {
+    // A picture empties the company, and the door says so rather than letting
+    // it commit to a second one it cannot pay for.
+    const sim = world('spent');
+    makeIt(sim, 'Hvítserkur');
+    runItOut(sim, projectsOf(sim.universe).find((one) => one.title === 'Hvítserkur')!.id);
+    const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
+    expect(door.can).toBe(false);
+    expect(door.blockers.map((b) => b.need)).toContain('Money In The Company');
   });
 });
 

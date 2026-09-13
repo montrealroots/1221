@@ -17,6 +17,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -35,7 +36,11 @@ interface Done { ok: boolean; id?: string; error?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
   sim.execute<Done>({ kind, payload }).value!;
 
-const world = (seed = 'crew'): Simulation => quickSave({}, seed);
+const world = (seed = 'crew'): Simulation => {
+  const sim = quickSave({}, seed);
+  openTheDoors(sim);
+  return sim;
+};
 
 /** Greenlights one and gives back its id. */
 function makeIt(sim: Simulation, title: string, over: Record<string, unknown> = {}): string {
@@ -199,6 +204,11 @@ describe('they come back', () => {
     deliver(sim, first);
     const found = crewPeople(sim).length;
     expect(found).toBeGreaterThan(0);
+
+    // Sell it before making another. A twenty million euro picture empties the
+    // company, and the greenlight door refuses a second one until there is
+    // money behind it again — which is the whole loop, not a test detail.
+    expect(run(sim, 'company.sell', { projectId: first, dealId: 'streamer' }).ok).toBe(true);
 
     const second = makeIt(sim, 'Reykjadalur');
     deliver(sim, second);

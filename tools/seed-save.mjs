@@ -55,6 +55,25 @@ function deliver(sim, id) {
 
 const sim = quickSave({}, 'seeded');
 
+// The greenlight door refuses a picture the company cannot responsibly make, so
+// the doors are opened here the way a player opens them: somebody in the head
+// of production post, material held, and the production package bound.
+const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer);
+for (const [kind, payload] of [
+  ['company.fill_post', { role: 'production', personId: somebody.id }],
+  ['company.option', { title: 'Something To Make', hold: 'option', months: 18 }],
+  ['company.register', { registry: 'is_employer' }],
+  ['company.insure', { policy: 'general_liability' }],
+  ['company.insure', { policy: 'workers_comp' }],
+  ['company.insure', { policy: 'production_package' }],
+  // The delivery list carries an errors and omissions certificate, and it
+  // cannot be filed for cover the company never bought.
+  ['company.insure', { policy: 'errors_omissions' }],
+]) {
+  const done = run(sim, kind, payload);
+  if (!done.ok) throw new Error(`${kind}: ${done.error}`);
+}
+
 // One behind it, delivered and sold, so the waterfall has something to show.
 const sold = greenlight(sim, 'Reykjadalur', 20_000_000_00);
 deliver(sim, sold);
