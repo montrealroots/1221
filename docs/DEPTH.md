@@ -583,6 +583,19 @@ mechanism — the same weekly tick, re-running the same periods, gated on the sa
 cutting room. Two things moving the same parts is the bug this file already
 warns about.
 
+**A fixture that stops short takes the rules with it.** The looks suite crawls
+a world that options and develops and then stops, so half the project page — the
+schedule, the crew, both ledgers, what can come apart — was never once drawn by
+a test. Two house rules were being broken in that half and passing. Rule six
+says one grid of facts is a look and two is a record: the page had two the
+moment anybody said yes to something and three a year later. And the wellbeing
+sentence falls through to "Holding up.", which is two words against a rule that
+wants a sentence, and it only fires in the middle band a fresh save is never in.
+Neither is an edge case; both are what a player sees. A fixture is a claim about
+which states are worth checking, and stopping it one command short of the
+interesting half is how a suite of seventeen rules enforces them on a page
+nobody is looking at.
+
 **A command nothing calls has never really been tested.** `company.greenlight`
 has been correct for eight commits and accepted two things that make a picture
 impossible, because the only caller was a test suite that passed sensible

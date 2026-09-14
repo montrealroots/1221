@@ -609,20 +609,41 @@ defineLook<Project>('project', {
                 <>
                   <h4>What Has Been Shot</h4>
                   <p className="small">{whereTheMaterialStands(project, sim.now)}</p>
-                  <div className="grid grid-3">
-                    <Stat label="Shooting Ratio" value={ratio === undefined ? 'Nothing yet' : saidAsRatio(ratio)}
-                      note={ratio === undefined
-                        ? 'No material stands against the runtime yet'
-                        : 'Material against finished runtime. No figure anywhere sets it: the two ledgers come to it'} />
-                    <Stat label="The Cutting Room"
-                      value={hands === 0 ? 'Nobody' : `${hands} ${hands === 1 ? 'hand' : 'hands'}`}
-                      note={rate ? `${rate.who}, ${Math.round(cutsAWeek(project) / 60)} finished minutes a week between them` : 'This plan turns no material into runtime'} />
-                    <Stat label="The Cut Against The Date"
-                      value={forecast === undefined ? 'Not running' : forecast.makesIt ? 'Inside it' : `${Math.ceil(forecast.shortBy)} weeks short`}
-                      tone={forecast && !forecast.makesIt ? 'negative' : undefined}
-                      note={forecast === undefined
-                        ? 'There is no cutting room on this one'
-                        : `Needs ${Math.ceil(forecast.needs)} more weeks and the calendar leaves ${Math.floor(forecast.has)}`} />
+                  <div className="table-wrap">
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <td className="nowrap">Shooting Ratio</td>
+                        <td className="small nowrap">{ratio === undefined ? 'Nothing yet' : saidAsRatio(ratio)}</td>
+                        <td className="small">
+                          {ratio === undefined
+                            ? 'No material stands against the runtime yet.'
+                            : 'Material against finished runtime. No figure anywhere sets it: the two ledgers come to it.'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">The Cutting Room</td>
+                        <td className="small nowrap">{hands === 0 ? 'Nobody' : `${hands} ${hands === 1 ? 'hand' : 'hands'}`}</td>
+                        <td className="small">
+                          {rate
+                            ? `${rate.who}, ${Math.round(cutsAWeek(project) / 60)} finished minutes a week between them.`
+                            : 'This plan turns no material into runtime.'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">The Cut Against The Date</td>
+                        <td className={`small nowrap${forecast && !forecast.makesIt ? ' negative' : ''}`}>
+                          {forecast === undefined ? 'Not running'
+                            : forecast.makesIt ? 'Inside it' : `${Math.ceil(forecast.shortBy)} weeks short`}
+                        </td>
+                        <td className="small">
+                          {forecast === undefined
+                            ? 'There is no cutting room on this one.'
+                            : `Needs ${Math.ceil(forecast.needs)} more weeks and the calendar leaves ${Math.floor(forecast.has)}.`}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                   </div>
                   {ledger.length === 0 ? null : (
                     <table className="table">
@@ -659,24 +680,39 @@ defineLook<Project>('project', {
                     how far the work had climbed when it landed, so the same note is free in week two
                     and ruinous in week nineteen. The ladder says that, and no figure here does.
                   </p>
-                  <div className="grid grid-3">
-                    <Stat label="What’s Lying Around" value={`${Math.round(exposure * 100)}/100`}
-                      tone={exposure > 0.5 ? 'warning' : undefined}
-                      note="Material banked against runtime owed, a chain of title with a gap in it, and paperwork nobody has filed" />
-                    <Stat label="Owed Back To The Room"
-                      value={owedBack > 0 ? `${Math.round(owedBack / 60)} minutes` : 'None'}
-                      tone={owedBack > 0 ? 'negative' : undefined}
-                      note={owedBack > 0
-                        ? 'Screen time already made once that has to be made again before anything new'
-                        : 'The cutting room has had nothing sent back to it'} />
-                    <Stat label="Above The Cutting Room" value={above === 0 ? 'Nobody' : `${above} ${above === 1 ? 'rung' : 'rungs'}`}
-                      note={above > 2
-                        ? 'A producer, an executive and a broadcaster, and every one of them can send it back down'
-                        : 'A short ladder above the cut, so there is little to fall'} />
-                  </div>
                   <div className="table-wrap">
                   <table className="table">
                     <tbody>
+                      <tr>
+                        <td className="nowrap">What’s Lying Around</td>
+                        <td className={`small nowrap${exposure > 0.5 ? ' warning' : ''}`}>
+                          {Math.round(exposure * 100)}/100
+                        </td>
+                        <td className="small">
+                          Material banked against runtime owed, a chain of title with a gap in it,
+                          and paperwork the company has yet to file.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">Owed Back To The Room</td>
+                        <td className={`small nowrap${owedBack > 0 ? ' negative' : ''}`}>
+                          {owedBack > 0 ? `${Math.round(owedBack / 60)} minutes` : 'None'}
+                        </td>
+                        <td className="small">
+                          {owedBack > 0
+                            ? 'Screen time already made once, to be made again before anything new.'
+                            : 'The cutting room has had nothing sent back to it.'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">Above The Cutting Room</td>
+                        <td className="small nowrap">{above === 0 ? 'Nobody' : `${above} ${above === 1 ? 'rung' : 'rungs'}`}</td>
+                        <td className="small">
+                          {above > 2
+                            ? 'A producer, an executive and a broadcaster, and every one of them can send it back down.'
+                            : 'A short ladder above the cut, so there is little to fall.'}
+                        </td>
+                      </tr>
                       {deck.map((finding) => (
                         <tr key={finding.id}>
                           <td className="nowrap">{finding.label}</td>
