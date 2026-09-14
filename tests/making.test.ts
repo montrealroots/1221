@@ -18,6 +18,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { deliverIt, openTheDoors } from './doors';
+import { stillToCarry } from '@/engine/world/lot';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -717,5 +718,89 @@ describe('build two: a season that is not a picture', () => {
     expect(project.spentCents).toBeGreaterThanOrEqual(project.budgetCents!);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('a greenlight refuses what cannot be made', () => {
+  const world = (seed: string): Simulation => {
+    const sim = quickSave({}, seed);
+    openTheDoors(sim);
+    return sim;
+  };
+  const put = (sim: Simulation, title: string, medium: 'film' | 'television'): string => {
+    run(sim, 'company.develop', { title, medium });
+    return projectsOf(sim.universe).find((one) => one.title === title)!.id;
+  };
+
+  it('will not lay a season out behind you', () => {
+    // The ordinary mistake on a plan anchored at its transmission date: the
+    // work is fitted backward in front of the date, so an airdate ten weeks
+    // out puts casting, the rig and the field in weeks that have happened.
+    // It used to be accepted — twenty-seven ticks scheduled in the past and
+    // never fired, and a picture that could not be finished, delivered, sold,
+    // shelved or greenlit again for the rest of the save.
+    const sim = world('past-airdate');
+    const id = put(sim, 'The Long Winter', 'television');
+    const said = run(sim, 'company.greenlight', {
+      projectId: id, planId: 'unscripted', budgetCents: 20_000_000_00, shootWeeks: 6,
+      from: sim.now + 10 * MS_WEEK,
+    });
+    expect(said.ok).toBe(false);
+    expect(said.error).toMatch(/weeks in front of that date/);
+    expect(sim.universe.projects[id]!.planId, 'it was greenlit anyway').toBeUndefined();
+
+    // Far enough out and the same season is fine.
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'unscripted', budgetCents: 20_000_000_00, shootWeeks: 6,
+      from: sim.now + 60 * MS_WEEK,
+    }).ok).toBe(true);
+    for (const window of sim.universe.projects[id]!.periods ?? []) {
+      expect(window.from, `${window.id} starts in the past`).toBeGreaterThanOrEqual(sim.now);
+    }
+  });
+
+  it('will not start a picture in a week that has gone', () => {
+    const sim = world('past-start');
+    const id = put(sim, 'Yesterday', 'film');
+    const said = run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5,
+      from: sim.now - 20 * MS_WEEK,
+    });
+    expect(said.ok).toBe(false);
+    expect(said.error).toMatch(/ago/);
+  });
+
+  it('will not commit to more than there is behind the company', () => {
+    // Not the cash in the account — a picture is paid for as it goes and the
+    // family has been covering the difference since the first month. What a
+    // company cannot do is say yes to something bigger than the patience it
+    // has left, which is a real figure off the ledger and the sugar year.
+    const sim = world('too-big');
+    const id = put(sim, 'Too Big', 'film');
+    const room = stillToCarry(sim);
+    expect(room, 'the family had nothing left on the first day').toBeGreaterThan(0);
+
+    const said = run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: room * 3, shootWeeks: 8,
+    });
+    expect(said.ok).toBe(false);
+    expect(said.error).toMatch(/behind this company/);
+
+    // And a picture inside it goes through.
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: Math.round(room / 4), shootWeeks: 8,
+    }).ok).toBe(true);
+  });
+
+  it('lets a bet-the-company picture through, because that is a decision', () => {
+    // Most of what the family has left, on one picture. It is allowed, and it
+    // is ruinous if it does not come back — which is the point of it being a
+    // decision rather than a rule.
+    const sim = world('bet');
+    const id = put(sim, 'Everything On It', 'film');
+    const room = stillToCarry(sim);
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: Math.round(room * 0.8), shootWeeks: 10,
+    }).ok).toBe(true);
   });
 });

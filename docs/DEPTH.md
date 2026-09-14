@@ -583,6 +583,17 @@ mechanism — the same weekly tick, re-running the same periods, gated on the sa
 cutting room. Two things moving the same parts is the bug this file already
 warns about.
 
+**A command nothing calls has never really been tested.** `company.greenlight`
+has been correct for eight commits and accepted two things that make a picture
+impossible, because the only caller was a test suite that passed sensible
+arguments. Give it an airdate ten weeks out and it lays the casting, the rig and
+the field into weeks that have already happened — twenty-seven ticks scheduled
+in the past and never fired — and the picture cannot then be finished,
+delivered, sold, greenlit again or shelved, because `Project.shelvedAt` is
+declared and written nowhere. One date, and the save carries it forever. The
+moment a person can type into a field is the moment every unchecked argument
+becomes reachable, so the refusals have to exist before the form does.
+
 **A lever that is always wrong is as inert as a constant.** The first draft of
 the selling line bought more calls and lost money at every level: the extra
 attention arrived from abroad, and most of what arrives from abroad fails the

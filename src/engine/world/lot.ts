@@ -501,6 +501,26 @@ export function turnedAway(sim: Simulation): { why: string; said: string; count:
   ].filter((one) => one.count > 0).sort((a, b) => b.count - a.count);
 }
 
+/**
+ * What the family will still put in before the money comes with a condition.
+ *
+ * The honest ceiling on what this company can commit to, and it is not the
+ * cash in the account — a production is funded as it goes and the family has
+ * been covering the difference since the first month. What it cannot do is
+ * say yes to something bigger than the patience it has left.
+ *
+ * Zero once the money is conditional, which is not the same as being broke: it
+ * means the next picture has to be paid for by the business rather than by
+ * somebody's goodwill.
+ */
+export function stillToCarry(sim: Simulation): Money {
+  const standing = standingWith(sim);
+  if (standing.conditional) return 0;
+  const line = PATIENCE[PATIENCE.length - 1]!.at
+    * Math.max(0.3, 1 - SHUT_YEAR_BITE * standing.shutYears);
+  return Math.max(0, Math.round((line - standing.share) * profitThisYear(sim)));
+}
+
 /** Where the family stands, in a sentence. */
 export function whatTheFamilySays(sim: Simulation): string {
   const standing = standingWith(sim);

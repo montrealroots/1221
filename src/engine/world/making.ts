@@ -31,7 +31,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Booking, Id, SoundStage } from '../domain/model';
-import type { Money } from '../core/money';
+import { formatMoney, type Money } from '../core/money';
 import type { Instant } from '../core/time';
 import type { Project } from '../domain/company';
 import type { DimensionId } from '../content/maturity';
@@ -42,7 +42,7 @@ import {
   elementById, elementsAfter, planById, tightnessOf,
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
-import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
+import { MS_WEEK, bookingsFor, rateFor, stagesOn, stillToCarry, theLot } from './lot';
 import { bankAWeek, cuttingPeriod, cutsAWeek, weighTheCut } from './inventory';
 import {
   backToTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, knockEverything,
@@ -384,6 +384,42 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   const lead = plan.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
   const from = spec.from ?? sim.now + lead * MS_WEEK;
   const laid = layOut(plan, weeks, from);
+
+  // Nothing can be made in a week that has already happened. On a plan
+  // anchored at the start this is obvious and a caller has to try; on one
+  // anchored at delivery it is the ordinary mistake, because the work is laid
+  // out backward from the date and a near airdate puts the whole of it behind
+  // you. It used to be accepted: casting, the rig and the field would all sit
+  // in the past, their ticks scheduled and never fired, and the picture could
+  // not be finished, delivered, sold, shelved or greenlit again. One date, and
+  // the thing was stuck in the save forever.
+  const opens = laid.periods.reduce((at, one) => Math.min(at, one.from), laid.periods[0]?.from ?? from);
+  if (opens < sim.now) {
+    const short = Math.ceil((sim.now - opens) / MS_WEEK);
+    return {
+      ok: false,
+      error: plan.anchor === 'delivery'
+        ? `${plan.label} needs ${Math.ceil((from - opens) / MS_WEEK)} weeks in front of that date and `
+          + `there are ${Math.floor((from - sim.now) / MS_WEEK)}. Move it back ${short} weeks.`
+        : `That start is ${short === 1 ? 'a week' : `${short} weeks`} ago.`,
+    };
+  }
+
+  // And a budget the company has no way of meeting. It is not the cash in the
+  // account — a picture is paid for as it goes and the family has covered the
+  // difference since the first month — but a company cannot say yes to
+  // something larger than the patience it has left to spend.
+  const behindIt = (cashFor(sim, project.companyId)
+    ? sim.universe.accounts[cashFor(sim, project.companyId)!]?.balance ?? 0
+    : 0) + stillToCarry(sim);
+  if (spec.budgetCents > behindIt) {
+    return {
+      ok: false,
+      error: `There’s ${formatMoney(Math.max(0, behindIt), { cents: false })} behind this company, counting what the family `
+        + `would still put in. ${formatMoney(spec.budgetCents, { cents: false })} is more than that.`,
+    };
+  }
+
   const held = holdingWindow(plan, laid);
 
   let stageId = spec.stageId;
