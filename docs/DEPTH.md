@@ -188,6 +188,25 @@ career trapped in a genre the player never chose.
 It goes last, because it can only be *measured* from an accumulated record. It
 cannot be a field.
 
+## Open Questions
+
+Two things are known to be imperfect and are left that way deliberately, so
+that a future session changes them as a decision rather than by accident.
+
+**An unrecouped picture stops accruing interest after its last receipt.**
+`splitIt` is a pure function of the receipt list and takes no notion of now, so
+once the final window has paid, what is still owed freezes even as years pass.
+That is defensible — the split describes what the receipts did, not what is
+owed today — but it understates a long-dead picture's debt. Fixing it means
+passing the current instant in and giving up the purity several tests rely on.
+
+**The lot's viability finding is not pinned by a test.** Five years across three
+seeds gives about ten bookings a year and 21% occupancy against a 62%
+break-even, with the family fronting roughly €30m. That was an ad hoc probe, not
+a committed test, so a future change could move it silently. It matters because
+enquiry volume is hardcoded at one a month and responds to nothing, which makes
+that axis inert: no action the player takes can currently change the outcome.
+
 ## The Build Order
 
 Dependency, not appetite.
@@ -313,6 +332,31 @@ and be wrong on the day it is finally connected.
 **`StudioPlant` is a warning this codebase already wrote down.** Twelve fields,
 stages, day rates, LED volume, water tank, dated tenants, lifetime income,
 occupancy — declared, and instantiated nowhere.
+
+**A regression test that cannot fail is decoration.** Written down because it
+happened: the first test guarding the timeline-sort bug passed with the bug
+deliberately reintroduced, because one picture slipping alone never passes
+another scheduled item. Two interleaved pictures make it fail. Reintroduce the
+bug, watch the test go red, restore the fix — and only then believe the test.
+
+**`npx tsc --noEmit` compiles nothing here, and exits 0 while doing it.** The
+root `tsconfig.json` is `files: []` with project references, so the bare
+invocation is a green light that means nothing. This hid a whole engine file
+from the typechecker once. Always `npm run typecheck`, which is `tsc -b`.
+
+**Money is a waterfall walked in order, never a lookup against a total.**
+Recoupment tiers have to be computed by walking receipts in the order they
+arrived, because interest on an unrecouped balance accrues between receipts and
+cannot be recovered from a lump sum. Charging it flat against the original
+principal for the life of a picture turned a €20m negative into a fictitious
+€47m one, and that was caught as a real bug rather than a rounding argument.
+
+**Store the minimum fact and recompute the rest.** A sold picture stores only
+which windows have paid; gross to date, what each tier took and what the
+company has seen are all recomputed from that and the deal terms every time
+anybody asks. A stored derived total is a number that can drift from the
+receipts that produced it, and a balance nobody can reconstruct is the one
+thing a game about film money is not allowed to show.
 
 ## What Holds It In Place
 
