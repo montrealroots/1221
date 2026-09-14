@@ -376,6 +376,43 @@ export interface Project {
    * what happened before the guard, to the tune of ninety-six per cent over.
    */
   settled?: string[];
+  /**
+   * The inventory ledger: material acquired and not yet on the timeline.
+   *
+   * Counted by stock, cumulative, and never decremented — placing a second of
+   * material on the timeline does not un-acquire it, and the thing that makes
+   * the shooting ratio meaningful is precisely that most of what was banked is
+   * never used. The ratio is this against the runtime owed, derived every time
+   * anybody asks.
+   */
+  banked?: Partial<Record<string, number>>;
+  /**
+   * How many hands the cutting room has, where that has been decided.
+   *
+   * The plan's figure is a default, not a rule. Money buys capacity, capacity
+   * buys progress at a rate, and money never buys progress directly — so the
+   * number of editors is the decision that sits between a budget and a
+   * delivery date, and under-resourcing it is how a season misses air.
+   */
+  hands?: number;
+  /**
+   * Finished seconds the cutting room has produced, cumulative.
+   *
+   * The output side of the second ledger, and the only part of the cut that
+   * cannot be derived: it depends on how many hands the room had in every week
+   * it ran, and that is a decision that can change week to week. Parts reach
+   * the rung the cut takes them to, in order, as this covers their runtime.
+   */
+  cut?: number;
+  /**
+   * Whether the last weekly look said the cut would miss the date.
+   *
+   * Stored because it is the only part of the forecast that is not derivable —
+   * whether anybody has been told yet. The forecast itself is recomputed from
+   * the ledger every time it is asked for, and a stored copy of it would drift
+   * from the thing it claims to describe within a week.
+   */
+  shortOfTheDate?: boolean;
   /** The city the unit works out of. */
   unitBaseId?: string;
   /**

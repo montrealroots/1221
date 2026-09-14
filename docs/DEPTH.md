@@ -303,17 +303,50 @@ alongside each other:
 
 Nothing from the port test. The spine now expresses a format-led unscripted
 season with no engine concept it did not already need, which is what build two
-was for. The research's own acceptance test for build one is still worth
-running as a target, though, and it is not met yet:
+was for. The research's own acceptance test for build one reads:
 
 > the engine must produce a four-figure shooting ratio, an editor-week
 > bottleneck, a legal recut at week 19 and a make-air scramble, with the strings
 > "ratio", "editor", "episode" and "compliance" appearing only in data files.
 
-The maturity vector gives the legal recut. The other three need the inventory
-ledger — material acquired but not yet on the timeline — and the rate table
-that converts it. That is the next real piece, and it is what makes the shooting
-ratio a derived statistic rather than a design constant.
+Three of the four are met, and met the way the sentence intends — as output
+rather than as content.
+
+**The shooting ratio.** Derived, never set. Every plan says how many hours of
+material a week of acquisition banks and how long acquisition runs; the ratio
+is that against the runtime owed, divided at the moment somebody asks. The
+same two lines of arithmetic give 15:1 for a feature, 10:1 for a drama series
+and 1,880:1 for a fixed-rig season, and the test that holds them checks the
+answers against published figures rather than against anything in the engine.
+Shoot the same runtime for twice as long and the number doubles, because that
+is what the number means.
+
+**The editor-week bottleneck.** The cutting room converts material into screen
+time at a published rate times the hands it has, and the parts come out of it
+as its output covers their runtime. Not a timetable with a rate printed beside
+it: put one editor on a season the plan staffed with two and the episodes
+genuinely arrive half as fast, and some of them do not arrive at all.
+
+**The make-air scramble.** A consequence, not an event. A season whose room
+cannot finish in the calendar in front of it is told so in the week the
+material overtakes the room, and it is told again if hiring gets it back. At
+the staffing each plan assumes, no plan warns; nothing has been tuned to make
+the warning fire.
+
+**The legal recut is the one still missing**, and it is missing at the trigger
+rather than at the mechanism. `knockBack` un-finishes a season to any rung on
+any dimension and reports how far it fell, and a test drives a finished,
+delivered season back to nothing with one withdrawn consent. Nothing in the
+engine calls it. A withdrawn consent is a decision somebody makes for a reason,
+which means a decider, a draw, and a content table of what makes a contributor
+pull out — the next real piece.
+
+As for the strings: the engine carries no form-specific branch at all. No
+module under `world/` names a plan id, and what makes a season a season is
+entirely in `content/`. The acceptance test's own phrasing is looser than the
+thing it is testing for — `ratioOf` is a function and `unscripted-editor` is a
+row in a rate table — so the test held here is the stronger one: that no
+mechanism anywhere asks what kind of thing it is working on.
 
 
 
@@ -459,6 +492,29 @@ company has seen are all recomputed from that and the deal terms every time
 anybody asks. A stored derived total is a number that can drift from the
 receipts that produced it, and a balance nobody can reconstruct is the one
 thing a game about film money is not allowed to show.
+
+**Both sides of a comparison have to come from the same mechanism.** The first
+cutting-room forecast measured work remaining off the rungs the parts sat on,
+while the parts were moved up by a timetable that never read the cutting room's
+rate. Two mechanisms, calibrated near each other, interfering: the shortfall
+sawtoothed across zero every few weeks and every production in the game warned
+that it would miss its date by exactly one week. The warning was not wrong
+about the arithmetic. It was reporting the gap between two clocks. Staffing
+only became a decision when the room's own output became the thing that moved
+the parts *and* the thing the forecast was made from.
+
+**A recurring tick laid out in bulk at greenlight goes stale the first time
+anything slips.** Twenty weekly items scheduled up front, a two-day overrun,
+and the last one now fires two days before the period it was meant to close —
+leaving the final episode cut and never released, for the sake of two days. One
+item at a time, each deciding when the next is due from the schedule as it
+stands today, and the slip takes care of itself.
+
+**Exports nothing reads, in a module written an hour ago.** Five of them, in
+the first draft of the inventory ledger: a sentence for a screen, a ledger
+listing, a pressure figure, two label helpers. Writing the module is not the
+same as wiring it, and a fresh file gets no exemption from the One Rule — the
+grep for readers is part of finishing, not part of tidying up later.
 
 ## What Holds It In Place
 

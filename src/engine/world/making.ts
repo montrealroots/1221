@@ -42,8 +42,9 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
+import { bankAWeek, cuttingPeriod, cutsAWeek, leftToCut, weighTheCut } from './inventory';
 import {
-  advance, advancePart, doneShare, holdingItUp, isFinished, partsOutstanding,
+  advance, advancePart, doneShare, holdingItUp, isFinished, partsOf, partsOutstanding,
 } from './maturity';
 import { DIMENSIONS, dimensionById } from '../content/maturity';
 import { armTheCrew } from './crew';
@@ -69,6 +70,23 @@ export const WORK_DONE = 'done';
  * covers every part of every period of every plan.
  */
 export const PART_KIND = 'project.part';
+
+/**
+ * A week passing on something that is being made.
+ *
+ * The production's heartbeat, and it runs from the first week of acquisition
+ * to the last week of the cut. Two things happen on it: whatever is being
+ * acquired is banked, weekly rather than in a lump at the end — banking it all
+ * at the boundary would leave the shooting ratio right and the pressure
+ * invisible — and the cut is weighed against the date.
+ *
+ * It has to be weekly and it has to span both, because on a plan whose cut
+ * runs with its shoot the period boundaries are useless for this: the field,
+ * the cut and the compliance all begin on the same morning, before an hour of
+ * material exists, and the cut is still running months after the last week of
+ * banking. Neither end of that is where the news is.
+ */
+export const BANK_KIND = 'project.banked';
 
 // ---------------------------------------------------------------------------
 // Laying a plan onto dates
@@ -285,6 +303,8 @@ export interface Greenlight {
   shootWeeks: number;
   /** What each part runs to, in seconds. Defaults to what the plan delivers. */
   secondsEach?: number;
+  /** How many hands the cutting room gets. Defaults to what the plan assumes. */
+  hands?: number;
   /**
    * The date the plan is anchored to, meaning whichever end the plan nails
    * down. On a plan anchored at the start it is the day the first period
@@ -393,6 +413,7 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
     seconds,
   }));
   project.owesSeconds = seconds * plan.delivers.parts;
+  if (spec.hands !== undefined) project.hands = Math.max(1, Math.round(spec.hands));
   project.budgetCents = spec.budgetCents;
   project.stage = 'greenlit';
   project.unitBaseId = theLot(sim)?.locationId;
@@ -424,6 +445,10 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   if (plan.partsFinish === 'inOrder' && plan.delivers.parts > 1) {
     for (const period of plan.periods) {
       if (period.advances === undefined) continue;
+      // Except the cutting room's own period. Its parts come up as the room
+      // turns them out, which is a rate and not a timetable, so scheduling
+      // ticks for it would be a second mechanism moving the same parts.
+      if (period.converts !== undefined) continue;
       const window = laid.periods.find((one) => one.id === period.id);
       if (!window) continue;
       const span = window.to - window.from;
@@ -440,6 +465,17 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
         });
       }
     }
+  }
+
+  // The heartbeat starts a week into the first thing that banks or cuts, and
+  // from there each week puts the next one up for as long as there is a reason.
+  const weekly = plan.periods
+    .filter((one) => one.acquires !== undefined || one.converts !== undefined)
+    .map((one) => laid.periods.find((window) => window.id === one.id))
+    .filter((window): window is Dated => window !== undefined);
+  if (weekly.length > 0) {
+    const from = weekly.reduce((n, one) => Math.min(n, one.from), weekly[0]!.from);
+    aWeekOn(sim, project, from + MS_WEEK, from);
   }
 
   const finishes = laid.periods.reduce<Instant | undefined>(
@@ -599,10 +635,102 @@ function settlePeriod(sim: Simulation, project: Project, period: Period): void {
   // per-part ticks have already walked them up across the period's span, and
   // levelling everybody at the boundary would erase exactly the stagger those
   // ticks exist to create.
+  //
+  // Nor on the cutting room's own period, whatever the plan says about how its
+  // parts finish. Nothing comes out of a cutting room because the calendar
+  // reached the end of it.
   const plan = planOf(project);
+  if (period.converts !== undefined) return;
   if (plan?.partsFinish === 'inOrder' && (project.parts?.length ?? 1) > 1) return;
   for (const [dimension, rung] of Object.entries(period.advances ?? {})) {
     advance(project, dimension as never, rung as string);
+  }
+}
+
+/**
+ * Puts the next weekly tick on the calendar, while there is a reason for one.
+ *
+ * One item at a time rather than the whole run laid out at greenlight, because
+ * how long the cutting room needs is not known at greenlight — it is whatever
+ * the room's rate and the room's hands turn out to make it, and hands can be
+ * changed in any week. A season whose cut runs past the end of its own post
+ * period keeps cutting; it does not stop unfinished because the calendar said
+ * post was over.
+ */
+function aWeekOn(sim: Simulation, project: Project, at: Instant, since: Instant): void {
+  sim.schedule({
+    at,
+    kind: BANK_KIND,
+    label: `${project.title}: A Week Of Work`,
+    category: 'business',
+    priority: 30,
+    payload: { projectId: project.id, since },
+    refType: 'project',
+    refId: project.id,
+  });
+}
+
+/**
+ * The last moment a week of this is worth ticking for, as things stand today.
+ *
+ * Read fresh every week rather than fixed at greenlight, because a shoot that
+ * runs over moves everything behind it and a heartbeat that stopped on the old
+ * date would leave the last part sitting in the cutting room, cut and never
+ * released, for the sake of two days.
+ */
+function weeklyThrough(project: Project): Instant | undefined {
+  const plan = planOf(project);
+  if (!plan) return undefined;
+  return plan.periods
+    .filter((one) => one.acquires !== undefined || one.converts !== undefined)
+    .map((one) => windowOf(project, one.id)?.to)
+    .reduce<Instant | undefined>(
+      (latest, to) => (to === undefined ? latest : Math.max(latest ?? to, to)), undefined,
+    );
+}
+
+/**
+ * Runs the cutting room for one week.
+ *
+ * This is where money stops being money. The room's hands and the rate for
+ * what they do give a number of finished seconds; those seconds cover the
+ * parts in order; a part whose runtime is covered has come out of the cut.
+ * Nothing about it is a timetable, which is the whole point — staff the room
+ * with one editor instead of two and the parts genuinely arrive later, rather
+ * than arriving on time with a warning printed next to them.
+ *
+ * Coming out of the cut is not the same as being finished, and the second half
+ * of this is the difference. What sits above the cut on a season's ladder is a
+ * producer, an executive and a broadcaster, and their time is calendar time
+ * rather than editor-weeks: no amount of staffing makes a channel watch it
+ * sooner. So a part is released to the rest of the period's ladder when both
+ * are true — the room has cut it, and its turn in the period has come.
+ */
+function runTheCut(sim: Simulation, project: Project, share: number): void {
+  const plan = planOf(project);
+  const period = plan ? cuttingPeriod(plan) : undefined;
+  const upTo = period?.converts?.upTo;
+  if (!plan || !period || !upTo) return;
+  const window = windowOf(project, period.id);
+  if (!window || sim.now <= window.from) return;
+
+  project.cut = (project.cut ?? 0) + cutsAWeek(project) * share;
+
+  const parts = [...partsOf(project)].sort((a, b) => a.ordinal - b.ordinal);
+  const span = Math.max(1, window.to - window.from);
+  let covered = 0;
+  for (const part of parts) {
+    covered += part.seconds;
+    if (covered > (project.cut ?? 0)) break;
+    advancePart(project, part, 'picture', upTo);
+    // Its turn, measured the way the per-part ticks measure it: evenly across
+    // the period, because that is how long the people above the cut take.
+    if (sim.now < window.from + Math.round((span * part.ordinal) / parts.length)) continue;
+    let moved = false;
+    for (const [dimension, rung] of Object.entries(period.advances ?? {})) {
+      if (advancePart(project, part, dimension as never, rung as string)) moved = true;
+    }
+    if (moved) sayAPartIsThrough(sim, project, period, part.ordinal);
   }
 }
 
@@ -623,6 +751,13 @@ function finishOnePart(sim: Simulation, project: Project, periodId: string, ordi
     if (advancePart(project, part, dimension as never, rung as string)) moved = true;
   }
   if (!moved) return;
+  sayAPartIsThrough(sim, project, period, ordinal);
+}
+
+/** Says one part is through one period, whatever moved it. */
+function sayAPartIsThrough(
+  sim: Simulation, project: Project, period: Period, ordinal: number,
+): void {
   sim.notify({
     category: 'business',
     title: `${project.title}: Part ${ordinal} Is Through ${period.label}`,
@@ -838,6 +973,37 @@ export function registerMaking(sim: Simulation): void {
     const project = sim.universe.projects[projectId];
     if (!project || project.shelvedAt) return;
     enterPeriod(sim, project, periodId);
+  });
+
+  sim.onSchedule(BANK_KIND, (item) => {
+    const project = sim.universe.projects[String(item.payload?.projectId ?? '')];
+    if (!project || project.shelvedAt) return;
+    // How much of a week this tick is actually worth. A full one, except where
+    // the one before it was cut short to land on the end of something.
+    const since = Number(item.payload?.since ?? item.at - MS_WEEK);
+    const share = Math.max(0, Math.min(1, (item.at - since) / MS_WEEK));
+    // Every period that is acquiring this week banks its week. Which ones
+    // those are is a question about the calendar and not about which period
+    // the tick was scheduled under, because more than one can be running.
+    for (const period of planOf(project)?.periods ?? []) {
+      const window = windowOf(project, period.id);
+      if (!window || item.at <= window.from || item.at > window.to) continue;
+      bankAWeek(project, period, share);
+    }
+    runTheCut(sim, project, share);
+    weighTheCut(sim, project);
+    // And next week, if there is still material to get through or calendar
+    // left to get through it in. A room with nobody in it is the one case
+    // where another week changes nothing, so it stops.
+    //
+    // The next one lands on the end of the run rather than stepping past it,
+    // so the last part comes out of the cutting room on the day the plan says
+    // the cutting room closes and not on the following Tuesday.
+    const through = weeklyThrough(project) ?? item.at;
+    const step = item.at + MS_WEEK;
+    const next = item.at < through && step > through ? through : step;
+    const more = item.at < through || leftToCut(project) > 0;
+    if (more && cutsAWeek(project) > 0) aWeekOn(sim, project, next, item.at);
   });
 
   sim.onSchedule(PART_KIND, (item) => {

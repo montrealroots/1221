@@ -42,6 +42,7 @@
 import type { BookingKind } from '../domain/model';
 import type { Stage } from '../domain/company';
 import type { DimensionId } from './maturity';
+import type { StockId } from './inventory';
 
 // ---------------------------------------------------------------------------
 // A period
@@ -98,6 +99,23 @@ export interface Period {
    * somebody else's job and they are the ones that hold a finished thing up.
    */
   advances?: Partial<Record<DimensionId, string>>;
+  /**
+   * What a week of this period banks into the inventory ledger.
+   *
+   * Material acquired and not yet placed on the timeline. A week of it costs
+   * what it costs whether or not a second of it is ever used, which is what
+   * makes the ratio between this and the finished runtime worth reporting.
+   */
+  acquires?: { stock: StockId; aWeek: number };
+  /**
+   * That this period is the cutting room, and how fast it runs.
+   *
+   * `at` names a row in the rate table and `hands` says how many of them there
+   * are, so the throughput is capacity times rate rather than a number. `upTo`
+   * is the rung a converted second has reached. Where inventory dwarfs the
+   * timeline this is the bottleneck, and no amount of further acquiring helps.
+   */
+  converts?: { at: string; hands: number; upTo: string };
   /**
    * What a week of this period produces, counted the way the people in it
    * count it.
@@ -205,6 +223,7 @@ const FEATURE: Plan = {
       holds: 'shooting',
       spends: 0.5,
       advances: { picture: 'shot', performance: 'captured' },
+      acquires: { stock: 'rushes', aWeek: 4.2 },
       unit: { one: 'shooting day', many: 'shooting days', aWeek: 5 },
     },
     {
@@ -215,6 +234,7 @@ const FEATURE: Plan = {
       per: 2.4,
       spends: 0.3,
       advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
+      converts: { at: 'picture-editor', hands: 2, upTo: 'cut' },
       unit: { one: 'week of post', many: 'weeks of post', aWeek: 1 },
     },
   ],
@@ -227,6 +247,11 @@ const FEATURE: Plan = {
  * one runs while episode four is shooting, so post barely extends past wrap
  * even though the total post work is larger. Prep is longer because a series
  * builds standing sets it will live on for months.
+ *
+ * That overlap is why a series runs four cutting rooms where a feature runs
+ * one deeper: the DGA gives a feature director ten weeks for their cut and a
+ * television director four days, so television cuts in parallel or it does not
+ * make its transmission dates at all.
  */
 const SERIES: Plan = {
   id: 'series',
@@ -259,16 +284,19 @@ const SERIES: Plan = {
       holds: 'shooting',
       spends: 0.58,
       advances: { picture: 'shot', performance: 'captured' },
+      acquires: { stock: 'rushes', aWeek: 11 },
       unit: { one: 'shooting day', many: 'shooting days', aWeek: 5 },
     },
     {
       id: 'post',
       stage: 'post',
       label: 'Finishing',
-      what: 'What is left after wrap, which is less than a feature because most of it was already done.',
-      per: 0.8,
+      what: 'Cutting rooms running one per episode, from the first block. Most of it is behind the show by wrap, and what is left is the finish.',
+      per: 1.6,
+      runsWith: 'shooting',
       spends: 0.28,
       advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
+      converts: { at: 'television-editor', hands: 4, upTo: 'cut' },
       unit: { one: 'week of finishing', many: 'weeks of finishing', aWeek: 1 },
     },
   ],
@@ -353,6 +381,7 @@ const UNSCRIPTED: Plan = {
       holds: 'shooting',
       spends: 0.42,
       advances: { picture: 'stringout', performance: 'captured' },
+      acquires: { stock: 'rushes', aWeek: 2_500 },
       unit: { one: 'contributor-day', many: 'contributor-days', aWeek: 7 },
     },
     {
@@ -364,6 +393,7 @@ const UNSCRIPTED: Plan = {
       runsWith: 'field',
       spends: 0.24,
       advances: { picture: 'locked', sound: 'mixed', performance: 'complete', conform: 'mastered' },
+      converts: { at: 'unscripted-editor', hands: 2, upTo: 'assembly' },
       unit: { one: 'cut minute', many: 'cut minutes', aWeek: 15 },
     },
     {

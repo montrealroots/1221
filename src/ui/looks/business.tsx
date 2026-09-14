@@ -34,6 +34,15 @@ import { crewOf, postsFor, standingReads } from '@/engine/world/crew';
 import {
   finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
 } from '@/engine/world/making';
+import { DIMENSIONS, rungsOf } from '@/engine/content/maturity';
+import { rateById } from '@/engine/content/inventory';
+import {
+  laddersOf, partsOf, rungOf, rungOfPart, shareOf, shareOfPart, whereTheWorkStands,
+} from '@/engine/world/maturity';
+import {
+  cutsAWeek, handsOn, ledgerOf, ratioOf, saidAsRatio, stockOf, whereTheMaterialStands, willMakeIt,
+} from '@/engine/world/inventory';
+import { stockById } from '@/engine/content/inventory';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatRelative } from '@/engine/core/time';
 import { Stat } from '@/ui/components/primitives';
@@ -454,6 +463,13 @@ defineLook<Project>('project', {
     const split = standingOf(project);
     const crew = crewOf(sim, project);
     const carries = postsFor(project.budgetCents ?? 0).length;
+    const ladders = laddersOf(project);
+    const parts = partsOf(project);
+    const ledger = ledgerOf(project);
+    const ratio = ratioOf(project);
+    const forecast = willMakeIt(project, sim.now);
+    const hands = handsOn(project);
+    const rate = plan ? rateById(plan.periods.find((one) => one.converts)?.converts?.at ?? '') : undefined;
     const ways: Way[] = [];
     if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
     if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s making it' });
@@ -538,6 +554,96 @@ defineLook<Project>('project', {
                   </tbody>
                 </table>
                 </div>
+              )}
+              <h4>How Finished It Is</h4>
+              <p className="small">{whereTheWorkStands(project)}</p>
+              <div className="table-wrap">
+              <table className="table">
+                <tbody>
+                  {DIMENSIONS.map((dimension) => {
+                    const rung = rungsOf(ladders, dimension.id)
+                      .find((one) => one.id === rungOf(project, dimension.id));
+                    return (
+                      <tr key={dimension.id}>
+                        <td className="nowrap">{dimension.label}</td>
+                        <td className="small nowrap">{rung?.label ?? 'Not started'}</td>
+                        <td className="small nowrap">{Math.round(shareOf(project, dimension.id) * 100)}/100</td>
+                        <td className="small">{rung?.what ?? dimension.what}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              </div>
+              <p className="small">
+                Done is the lowest line in that table and never the average of them. A part that is
+                locked, mixed, mastered and missing one signature is worth nothing until the last name is on it.
+              </p>
+              {parts.length < 2 ? null : (
+                <div className="table-wrap">
+                <table className="table">
+                  <tbody>
+                    {parts.map((part) => (
+                      <tr key={part.id}>
+                        <td className="nowrap">Part {part.ordinal}</td>
+                        <td className="small nowrap">{Math.round(part.seconds / 60)} minutes</td>
+                        <td className="small nowrap">
+                          {rungsOf(ladders, 'picture')
+                            .find((one) => one.id === rungOfPart(project, part, 'picture'))?.label ?? '—'}
+                        </td>
+                        <td className="small nowrap">
+                          {Math.round(Math.min(...DIMENSIONS.map((d) => shareOfPart(project, part, d.id))) * 100)}/100
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                </div>
+              )}
+              {ledger.length === 0 && ratio === undefined ? null : (
+                <>
+                  <h4>What Has Been Shot</h4>
+                  <p className="small">{whereTheMaterialStands(project, sim.now)}</p>
+                  <div className="grid grid-3">
+                    <Stat label="Shooting Ratio" value={ratio === undefined ? 'Nothing yet' : saidAsRatio(ratio)}
+                      note={ratio === undefined
+                        ? 'No material stands against the runtime yet'
+                        : 'Material against finished runtime. No figure anywhere sets it: the two ledgers come to it'} />
+                    <Stat label="The Cutting Room"
+                      value={hands === 0 ? 'Nobody' : `${hands} ${hands === 1 ? 'hand' : 'hands'}`}
+                      note={rate ? `${rate.who}, ${Math.round(cutsAWeek(project) / 60)} finished minutes a week between them` : 'This plan turns no material into runtime'} />
+                    <Stat label="The Cut Against The Date"
+                      value={forecast === undefined ? 'Not running' : forecast.makesIt ? 'Inside it' : `${Math.ceil(forecast.shortBy)} weeks short`}
+                      tone={forecast && !forecast.makesIt ? 'negative' : undefined}
+                      note={forecast === undefined
+                        ? 'There is no cutting room on this one'
+                        : `Needs ${Math.ceil(forecast.needs)} more weeks and the calendar leaves ${Math.floor(forecast.has)}`} />
+                  </div>
+                  {ledger.length === 0 ? null : (
+                    <table className="table">
+                      <tbody>
+                        {ledger.map((row) => {
+                          const stock = stockById(row.stock);
+                          const n = Math.round(row.amount);
+                          return (
+                            <tr key={row.stock}>
+                              <td className="nowrap">{row.label}</td>
+                              <td className="small nowrap">
+                                {n.toLocaleString('en-US')} {n === 1 ? stock?.unit.one : stock?.unit.many}
+                              </td>
+                              <td className="small">{stock?.what}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                  <p className="small">
+                    {plan && stockOf(plan)
+                      ? 'Money buys hands, hands turn material into screen time at a rate, and money never buys screen time directly. Put one editor on this where the plan assumed two and it arrives half as fast — not late with a warning next to it, but actually half as fast.'
+                      : 'This plan acquires nothing it sets aside. Everything made for it goes straight onto the timeline.'}
+                  </p>
+                </>
               )}
               <h4>The Delivery List</h4>
               <p className="small">
