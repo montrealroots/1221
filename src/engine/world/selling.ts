@@ -36,6 +36,7 @@ import {
   type Deal, type ReleaseWindow, type TierId,
   dealById, ultimateFor, windowById,
 } from '../content/selling';
+import { castOn } from './casting';
 import { MS_WEEK } from './lot';
 
 export const WINDOW_KIND = 'project.window';
@@ -48,24 +49,62 @@ export interface Prospects {
   negativeCents: Money;
   /** Which deal it is being sold on, by id. */
   dealId: string;
+  /**
+   * What the cast is, out of a hundred, on the two axes a buyer can see.
+   *
+   * Not one number, because they are not one thing. Truth is whether the
+   * performances are any good, which is what a picture is remembered for; how
+   * it reads is what the lens does with the faces, which is what a poster and a
+   * trailer are made of. A picture can have either without the other, and the
+   * two of them reach the same figure by different routes.
+   *
+   * Absent on anything cast before this was modeled, or on a form that casts
+   * nobody, and absent means the picture is priced on its money and its deal
+   * alone — which is what the engine did for every sale before now.
+   */
+  cast?: { truth: number; reads: number };
 }
 
 /**
  * What a picture will take across ten years, decided once at the sale.
  *
- * Two things move it and both are decisions somebody made. What it cost,
- * because scale buys audience sublinearly. And how it is being sold, because a
- * wide release across a decade of windows reaches an audience a buyout never
- * puts in a room. The draw only says where inside a wide band it lands, which
- * is honest: nobody in this business knows what a picture will take, and the
- * ones who claim to are selling something.
+ * Three things move it and all three are decisions somebody made. What it cost,
+ * because scale buys audience sublinearly. How it is being sold, because a wide
+ * release across a decade of windows reaches an audience a buyout never puts in
+ * a room. And who is in it — which is the one of the three that is chosen part
+ * by part, months earlier, by somebody who was mostly thinking about the money.
+ *
+ * The draw only says where inside a wide band it lands, which is honest: nobody
+ * in this business knows what a picture will take, and the ones who claim to
+ * are selling something.
+ *
+ * The cast term is centered on the middling cast rather than on nothing, so it
+ * cuts both ways: a picture cast out of whoever was free takes materially less
+ * than the same picture with the same money and the same deal. Casting is not a
+ * bonus applied to a picture that was going to be fine.
  */
 export function decideTake(prospects: Prospects, roll: number): { cents: Money } {
   const deal = dealById(prospects.dealId);
   const pull = deal ? 0.6 + 0.4 * deal.reach : 1;
   const band = 0.45 + roll * 1.7;
-  return { cents: Math.round(ultimateFor(prospects.negativeCents) * pull * band) };
+  const cast = prospects.cast
+    ? 1 + ((prospects.cast.truth - 50) / 100) * CAST_MOVES.truth
+        + ((prospects.cast.reads - 50) / 100) * CAST_MOVES.reads
+    : 1;
+  return { cents: Math.round(ultimateFor(prospects.negativeCents) * pull * band * Math.max(0.2, cast)) };
 }
+
+/**
+ * How far the two visible axes move what a picture takes, end to end.
+ *
+ * SLATE's own. How a cast reads moves it further than how true they are, which
+ * is not a claim about what is good — it is a claim about what sells a ticket
+ * to somebody who has not seen the picture yet, and the trade has been saying
+ * so about faces for a century. Together they swing a picture's take by a bit
+ * over half in each direction, which is less than the deal does and more than
+ * the draw does.
+ */
+export const CAST_MOVES = { truth: 0.34, reads: 0.46 } as const;
 
 // ---------------------------------------------------------------------------
 // The waterfall
@@ -218,8 +257,15 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
   project.dealId = deal.id;
   project.soldAt = sim.now;
   project.releasedAt = sim.now + RELEASE_WEEKS * MS_WEEK;
+  const truth = castOn(sim, project, 'truth');
+  const reads = castOn(sim, project, 'reads');
   project.takeCents = decideTake(
-    { negativeCents: project.budgetCents ?? 0, dealId: deal.id }, roll,
+    {
+      negativeCents: project.budgetCents ?? 0,
+      dealId: deal.id,
+      ...(truth !== undefined && reads !== undefined ? { cast: { truth, reads } } : {}),
+    },
+    roll,
   ).cents;
   project.windowsPaid = [];
 

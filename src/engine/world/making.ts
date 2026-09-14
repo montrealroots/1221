@@ -54,6 +54,7 @@ import {
 } from './maturity';
 import { DIMENSIONS, dimensionById, rungsOf } from '../content/maturity';
 import { armTheCrew } from './crew';
+import { armTheCasting, castsPerformers, layTheRoles, takeFactor } from './casting';
 import { capabilitiesOf } from './company';
 
 export const MAKING_KIND = 'project.period';
@@ -623,6 +624,14 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   // And the people. A picture that has dates has a crew coming on against
   // them, starting long before the camera does.
   armTheCrew(sim, project);
+  // And the parts. Written out now rather than filled now: this is the first
+  // moment the picture knows its runtime, its parts and its money, and a role
+  // priced before any of those would be a number somebody made up. Nobody is
+  // in one yet, and nothing forces anybody ever to be.
+  if (castsPerformers(plan)) {
+    project.roles = layTheRoles(sim, project);
+    armTheCasting(sim, project);
+  }
 
   const stage = stageId ? sim.universe.stages[stageId] : undefined;
   const shoot = plan.periods.find((p) => p.holds === 'shooting');
@@ -1257,13 +1266,20 @@ export function registerMaking(sim: Simulation): void {
     // the one before it was cut short to land on the end of something.
     const since = Number(item.payload?.since ?? item.at - MS_WEEK);
     const share = Math.max(0, Math.min(1, (item.at - since) / MS_WEEK));
+    // What the cast does to the week. A cast that cannot repeat needs more
+    // takes, and more takes is more material banked for the same finished
+    // second — which is the shooting ratio, which is how far the cutting room
+    // has to wade, which is the delivery date. Read once a week rather than
+    // fixed at the greenlight, so a part cast late is a part that only slows
+    // the weeks after it was cast.
+    const takes = takeFactor(sim, project);
     // Every period that is acquiring this week banks its week. Which ones
     // those are is a question about the calendar and not about which period
     // the tick was scheduled under, because more than one can be running.
     for (const period of planOf(project)?.periods ?? []) {
       const window = windowOf(project, period.id);
       if (!window || item.at <= window.from || item.at > window.to) continue;
-      bankAWeek(project, period, share);
+      bankAWeek(project, period, share, takes);
     }
     runTheCut(sim, project, share);
     putItBack(sim, project);

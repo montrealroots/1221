@@ -72,13 +72,23 @@ const bandFor = (ratio: number): string => KNOWN_RATIOS
 describe('the shooting ratio is reported, never chosen', () => {
   it('is not written down anywhere in the engine', () => {
     // Every plan says how much it banks in a week and how long it runs. None
-    // of them says what the ratio is, and nothing outside the test corpus
-    // reads the published bands.
+    // of them says what its ratio will be.
+    //
+    // A plan does name a band, and that is a different claim: it says which
+    // published figure its *cutting rate* was measured at, so the room can slow
+    // down when there is more to wade through than the rate assumed. It is an
+    // input to the cut, never an output of the shoot — and the test below that
+    // a badly cast picture departs from its own band is what holds the two
+    // apart. If `ratio` ever became the answer rather than the yardstick, the
+    // emergent figure could not move away from it, and that test would fail.
     for (const plan of PLANS) {
       for (const period of plan.periods) {
         expect(Object.keys(period)).not.toContain('ratio');
+        expect(Object.keys(period)).not.toContain('shootingRatio');
       }
-      expect(Object.keys(plan)).not.toContain('ratio');
+      expect(Object.keys(plan)).not.toContain('shootingRatio');
+      // What it does carry is a band id, never a number.
+      if (plan.ratio !== undefined) expect(typeof plan.ratio).toBe('string');
     }
   });
 
@@ -88,7 +98,15 @@ describe('the shooting ratio is reported, never chosen', () => {
     runItOut(sim, id);
     const ratio = ratioOf(sim.universe.projects[id]!)!;
     expect(bandFor(ratio)).toBe('feature');
-    expect(saidAsRatio(ratio)).toBe('15:1');
+    // Near the published figure rather than on it. The picture is cast before
+    // it shoots, and a cast is not neutral: the office fills the parts with the
+    // best it can find for the band, which is a shade better than middling, and
+    // a shade better than middling shoots a shade less. An exact string here
+    // would be asserting that casting does nothing.
+    const published = KNOWN_RATIOS.find((b) => b.id === 'feature')!.ratio;
+    expect(ratio).toBeGreaterThan(published * 0.8);
+    expect(ratio).toBeLessThan(published * 1.25);
+    expect(saidAsRatio(ratio)).toMatch(/^\d+:1$/);
   });
 
   it('lands a drama series below a feature, because it is shot to a plan', () => {

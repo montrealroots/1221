@@ -29,6 +29,10 @@ import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
 import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
 import { SELLING } from '@/engine/content/lot';
+import { AXES, feeReads } from '@/engine/content/casting';
+import {
+  askFor, castOf, datesFor, howManyCast, quoteOf, readOf, seatFor, whereTheCastStands, whoCameIn,
+} from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
 } from '@/engine/world/making';
@@ -340,6 +344,7 @@ function Slate() {
   const slate = useWorld((s) => projectsOf(s.universe));
   const [putting, setPutting] = useState(false);
   const [saying, setSaying] = useState<string | undefined>();
+  const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
   const [selling, setSelling] = useState<string | undefined>();
 
@@ -368,6 +373,11 @@ function Slate() {
                   {project.planId === undefined && !project.shelvedAt && (
                     <button className="btn btn-sm" onClick={() => setSaying(project.id)}>Say Yes To It</button>
                   )}
+                  {(project.roles ?? []).length > 0 && project.stage !== 'delivered' && (
+                    <button className="btn btn-sm" onClick={() => setCasting(project.id)}>
+                      {`The Parts (${howManyCast(project)}/${(project.roles ?? []).length})`}
+                    </button>
+                  )}
                   {project.planId !== undefined && project.stage !== 'delivered' && (
                     <button className="btn btn-sm" onClick={() => setFiling(project.id)}>The Delivery List</button>
                   )}
@@ -382,6 +392,7 @@ function Slate() {
       )}
       {putting && <DevelopForm onClose={() => setPutting(false)} />}
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
+      {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
       {selling && <SellForm projectId={selling} onClose={() => setSelling(undefined)} />}
     </Panel>
@@ -675,6 +686,205 @@ function DeliveryForm({ projectId, onClose }: { projectId: string; onClose: () =
         </table>
       </div>
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
+ * The parts, and who is in them.
+ *
+ * Two screens in one, and the seam between them is the whole mechanic. The
+ * left-hand fact is what the picture set aside for a part; the right-hand fact
+ * is what the person wants. Everything a producer can actually do about casting
+ * happens in the gap between those two numbers.
+ *
+ * The read is printed as three figures and never as one, because three is what
+ * it is. A performer the camera loves who cannot hit the same mark twice is a
+ * different object from a reliable one nobody wants to look at, and an average
+ * of the two would say they were the same buy.
+ */
+function CastForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [open, setOpen] = useState<string | undefined>();
+  const [asking, setAsking] = useState<Record<string, string>>({});
+  const [heard, setHeard] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const put = (roleId: string) => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.breakdown', { projectId, roleId }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+    setHeard(undefined);
+  };
+  const offer = (roleId: string, personId: string, feeCents: number) => {
+    const answer = run<{ ok: boolean; error?: string; said?: string }>(
+      'company.cast', { projectId, roleId, personId, feeCents }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+    setHeard(answer.value?.said);
+  };
+  const release = (roleId: string) => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.release', { projectId, roleId }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+    setHeard(undefined);
+  };
+
+  const inIt = castOf(sim, project);
+  const filled = howManyCast(project);
+
+  return (
+    <Modal
+      title={`The Parts: ${project.title}`}
+      wide
+      onClose={onClose}
+      footer={<button className="btn btn-ghost" onClick={onClose}>Close</button>}
+    >
+      <p className="small">{whereTheCastStands(sim, project)}</p>
+      <p className="muted small">
+        Two weeks before the camera turns over the office fills whatever is left, at the band, out
+        of whoever the band reaches. Paying over it is the only way to reach further, and the only
+        reason to.
+      </p>
+      <div className="table-wrap">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Part</th>
+              <th>The Band</th>
+              <th>Who</th>
+              {AXES.map((axis) => <th key={axis.id} className="nowrap">{axis.label}</th>)}
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {inIt.map((one) => {
+              const when = datesFor(project, one.role);
+              return (
+                <tr key={one.role.id}>
+                  <td className="nowrap">
+                    <div className="strong">{one.role.name}</div>
+                    <div className="muted small">
+                      {when ? formatDate(when.from, sim.homeZone) : one.size.label}
+                    </div>
+                  </td>
+                  <td className="nowrap">{formatMoney(one.role.bandCents)}</td>
+                  <td className="small">
+                    {one.person
+                      ? <Open subject={at('person', one.person.id)}>{one.person.displayName}</Open>
+                      : <span className="muted">Whoever is free</span>}
+                    {one.seat && (
+                      <div className="muted small">
+                        {formatMoney(one.seat.feeCents)}
+                        {` · ${feeReads(one.seat.feeCents, one.role.bandCents)}`}
+                      </div>
+                    )}
+                  </td>
+                  {AXES.map((axis) => (
+                    <td key={axis.id} className="nowrap small">{`${Math.round(one.read[axis.id])}/100`}</td>
+                  ))}
+                  <td className="nowrap">
+                    {seatFor(project, one.role.id)
+                      ? <button className="btn btn-sm" onClick={() => release(one.role.id)}>Let Them Go</button>
+                      : one.role.seen
+                        ? (
+                          <button className="btn btn-sm" onClick={() => setOpen(open === one.role.id ? undefined : one.role.id)}>
+                            {open === one.role.id ? 'Close' : `Who Came In (${(one.role.seen ?? []).length})`}
+                          </button>
+                        )
+                        : <button className="btn btn-sm btn-primary" onClick={() => put(one.role.id)}>Put It Out</button>}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {open && (() => {
+        const role = project.roles?.find((r) => r.id === open);
+        if (!role) return null;
+        const came = whoCameIn(sim, role);
+        return (
+          <div style={{ marginTop: 'var(--s4)' }}>
+            <div className="strong">{`Who Came In For ${role.name}`}</div>
+            <p className="muted small">
+              What they were last paid is what their people argue from, and what you pay now is
+              what the next three producers will read.
+            </p>
+            <div className="table-wrap">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    {AXES.map((axis) => <th key={axis.id} className="nowrap">{axis.label}</th>)}
+                    <th className="nowrap">Quote</th>
+                    <th className="nowrap">They Want</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {came.map((person) => {
+                    const read = readOf(person);
+                    const ask = askFor(person, role, sim.now);
+                    const typed = asking[person.id];
+                    const fee = typed === undefined || typed === ''
+                      ? ask
+                      : Math.round(Number(typed) * 100);
+                    return (
+                      <tr key={person.id}>
+                        <td className="nowrap">
+                          <Open subject={at('person', person.id)}>{person.displayName}</Open>
+                        </td>
+                        {AXES.map((axis) => (
+                          <td key={axis.id} className="nowrap small">{`${Math.round(read[axis.id])}/100`}</td>
+                        ))}
+                        <td className="nowrap small">
+                          {quoteOf(person, role.size, sim.now) > 0
+                            ? formatMoney(quoteOf(person, role.size, sim.now))
+                            : <span className="muted">Never been paid</span>}
+                        </td>
+                        <td className="nowrap small">{formatMoney(ask)}</td>
+                        <td className="nowrap">
+                          <input
+                            aria-label={`What to offer ${person.displayName}`}
+                            type="number"
+                            min={0}
+                            step={1_000}
+                            style={{ width: '7rem' }}
+                            placeholder={String(Math.round(ask / 100))}
+                            value={typed ?? ''}
+                            onChange={(e) => setAsking({ ...asking, [person.id]: e.target.value })}
+                          />
+                          <button
+                            className="btn btn-sm btn-primary"
+                            style={{ marginLeft: 'var(--s2)' }}
+                            onClick={() => offer(role.id, person.id, fee)}
+                          >
+                            Offer It
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })()}
+
+      {heard && <p className="small" style={{ marginTop: 'var(--s3)' }}>{heard}</p>}
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+      {filled === 0 && (
+        <p className="muted small" style={{ marginTop: 'var(--s3)' }}>
+          Nobody is cast yet, so every figure above is what the part would be if it stayed that way.
+        </p>
+      )}
     </Modal>
   );
 }

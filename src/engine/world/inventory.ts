@@ -29,8 +29,9 @@
 import type { Simulation } from '../core/simulation';
 import type { Project } from '../domain/company';
 import type { StockId } from '../content/inventory';
-import { STOCKS, throughput } from '../content/inventory';
+import { KNOWN_RATIOS, STOCKS, throughput } from '../content/inventory';
 import type { Period, Plan } from '../content/making';
+import { clamp } from '../core/rng';
 import { MS_WEEK } from './lot';
 import { finishesBy, planOf, windowOf } from './making';
 import { owedSeconds, partsOf } from './maturity';
@@ -116,16 +117,44 @@ export function handsOn(project: Project): number {
 }
 
 /**
+ * How far the room is wading, against the amount of material its rate assumes.
+ *
+ * Every published cutting rate in the business was measured on an ordinary
+ * amount of material for its form. An editor turning out eight finished
+ * minutes a week on a feature is doing it at about fifteen to one; sit the same
+ * editor in front of thirty to one and they are not turning out eight minutes,
+ * they are watching twice as much to find them. So the plan names the band its
+ * rate is quoted at and this is the distance from it.
+ *
+ * Square root rather than straight, because watching twice the material is not
+ * twice the work — most of what doubles is rushes nobody uses, thrown out in
+ * the first pass. And capped at one in the good direction: a picture that shot
+ * less than the form usually does has less coverage, not a faster editor, and
+ * letting a thin shoot buy a quick cut would be the exact wrong lesson.
+ *
+ * SLATE's own, both the curve and the floor.
+ */
+export function wading(project: Project): number {
+  const plan = planOf(project);
+  const band = KNOWN_RATIOS.find((one) => one.id === plan?.ratio);
+  const actual = ratioOf(project);
+  if (!band || actual === undefined || actual <= 0) return 1;
+  return clamp(Math.sqrt(band.ratio / actual), 0.55, 1);
+}
+
+/**
  * Finished seconds the cutting room turns out in a week.
  *
- * Capacity times rate, and the capacity half is a decision rather than a
- * property of the plan. Doubling the editors halves the weeks; halving them
- * is how a season that was going to make its airdate stops making it.
+ * Capacity times rate times how far it is wading. The capacity half is a
+ * decision rather than a property of the plan — doubling the editors halves the
+ * weeks, halving them is how a season that was going to make its airdate stops
+ * making it. The wading half is not a decision at all by the time it bites: it
+ * was made months earlier, by whoever was cast.
  */
 export function cutsAWeek(project: Project): number {
   const plan = planOf(project);
   const converts = plan ? cuttingPeriod(plan)?.converts : undefined;
-  return converts ? throughput(converts.at, handsOn(project)) : 0;
+  return converts ? throughput(converts.at, handsOn(project)) * wading(project) : 0;
 }
 
 /**
@@ -190,10 +219,10 @@ export function willMakeIt(project: Project, now: number): Forecast | undefined 
  * and a stub week that banks seven days of material is the sort of small lie
  * that shows up later as a ratio nobody can account for.
  */
-export function bankAWeek(project: Project, period: Period, share = 1): void {
+export function bankAWeek(project: Project, period: Period, share = 1, takes = 1): void {
   const acquires = period.acquires;
   if (!acquires) return;
-  bank(project, acquires.stock, acquires.aWeek * share);
+  bank(project, acquires.stock, acquires.aWeek * share * Math.max(0, takes));
 }
 
 /**

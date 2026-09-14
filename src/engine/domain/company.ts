@@ -493,6 +493,26 @@ export interface Project {
    */
   crew?: { postId: string; personId: Id; from: Instant; to: Instant }[];
 
+  /**
+   * The parts, as parts rather than as people.
+   *
+   * Laid out at the greenlight from the plan and the runtime, because that is
+   * when a picture first knows how much of itself there is to be in. A role
+   * exists whether or not anybody is ever cast in it, and an uncast lead on a
+   * picture in its last week of prep is the most expensive object in this file.
+   */
+  roles?: Role[];
+  /**
+   * Who is in them, and on what terms.
+   *
+   * Separate from the roles rather than a field on one, for the same reason
+   * the crew is separate from the posts: the role is a fact about the picture
+   * and the engagement is a fact about a person and a picture together. A
+   * recast writes a second seat and leaves the first standing, because the
+   * money on the first is still owed.
+   */
+  cast?: Seat[];
+
   // --- The life after delivery ---------------------------------------------
   // Empty until somebody buys it. A picture nobody has bought is an asset with
   // no price, and saying otherwise would be inventing a market.
@@ -517,4 +537,71 @@ export interface Project {
    * that produced it.
    */
   windowsPaid?: string[];
+}
+
+// ---------------------------------------------------------------------------
+// The cast
+// ---------------------------------------------------------------------------
+
+/**
+ * One part, as written.
+ *
+ * Fields and no prose, which is the research's own rule for this record: the
+ * breakdown paragraph an agent reads is generated from these, and nothing
+ * further down the pipeline reads free text. A role that needed a sentence to
+ * explain it would be a role the engine could not price, schedule or cast.
+ */
+export interface Role {
+  id: Id;
+  /** Which one it is on the picture, counting from one. */
+  ordinal: number;
+  /** The character. */
+  name: string;
+  /** How big it is, by `content/casting.ts` size id. */
+  size: string;
+  /**
+   * The part it belongs to, where it belongs to one.
+   *
+   * Absent means the whole title, which is what a lead and a regular are. The
+   * difference between those two words and this one is eight episodes of
+   * money.
+   */
+  partId?: Id;
+  /** What the picture has set aside for it, before anybody argues. */
+  bandCents: Money;
+  /**
+   * Who came in for it, by person id, once the breakdown has gone out.
+   *
+   * Absent until somebody puts the part out, which is a dated act and not a
+   * list that appears: the people on it exist because the part was advertised,
+   * and they go on existing afterwards whether or not any of them got it. That
+   * is also why it is stored rather than worked out on demand — a pile of
+   * submissions recomputed every time a screen was drawn would be a different
+   * pile every time, and choosing between four strangers who keep changing is
+   * not a decision.
+   */
+  seen?: Id[];
+  /** When it went out. */
+  outAt?: Instant;
+}
+
+/**
+ * Somebody engaged in a role, on terms.
+ *
+ * Three facts that are routinely confused for one: what was agreed, whether it
+ * is owed regardless, and whether they were ever used. Pay or play is the
+ * second of those and only the second — actors are paid and cut out of the
+ * picture often enough that collapsing them would make a whole category of
+ * real disaster unrepresentable.
+ */
+export interface Seat {
+  roleId: Id;
+  personId: Id;
+  /** What was agreed, in cents. */
+  feeCents: Money;
+  castAt: Instant;
+  /** Whether the fee is owed whether or not the picture is ever made. */
+  payOrPlay?: true;
+  /** When they were let go, where they were. The fee stays owed. */
+  releasedAt?: Instant;
 }

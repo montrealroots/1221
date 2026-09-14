@@ -176,6 +176,29 @@ export interface Plan {
    * and an engine that only has the first can only make pictures.
    */
   anchor: 'start' | 'delivery';
+  /**
+   * Who stands in front of the camera, where anybody does.
+   *
+   * `performers` is people cast in written parts. It is deliberately not a
+   * boolean, because the other answer is not "nobody" — a format season puts
+   * twelve contributors on a cast board and choosing them is the same act as
+   * choosing every story the season can contain. Those are engaged, held and
+   * paid on entirely different terms, and a flag reading true for both would
+   * be the shortest possible way to say something false.
+   */
+  cast?: 'performers';
+  /**
+   * The shooting ratio this plan's cutting rate is quoted at, by band id.
+   *
+   * Every published throughput figure in the business assumes the ordinary
+   * amount of material for the form it was measured on. A room turning out
+   * eight finished minutes a week on a feature is doing it at fifteen to one,
+   * and the same room at thirty to one is not turning out eight minutes — it is
+   * watching twice as much to find them. Naming the band here is what lets the
+   * rate stop being a constant, and it is what makes a cast that needs more
+   * takes cost the calendar rather than only the stock.
+   */
+  ratio?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -194,6 +217,8 @@ export interface Plan {
  */
 const FEATURE: Plan = {
   id: 'feature',
+  cast: 'performers',
+  ratio: 'feature',
   label: 'A Feature, Shot On Stages',
   what: 'Prep, a shoot, and a long post. The ordinary shape of a picture made indoors.',
   media: ['film'],
@@ -255,6 +280,8 @@ const FEATURE: Plan = {
  */
 const SERIES: Plan = {
   id: 'series',
+  cast: 'performers',
+  ratio: 'drama',
   label: 'A Series, Shot On Stages',
   what: 'Long prep for standing sets, a long shoot, and a post that runs alongside it and finishes soon after wrap.',
   media: ['television'],
@@ -342,6 +369,7 @@ const SERIES: Plan = {
  */
 const UNSCRIPTED: Plan = {
   id: 'unscripted',
+  ratio: 'rig',
   label: 'A Format Season, Against An Airdate',
   what: 'A cast board, a built arena, a continuous shoot, and a cut that starts the same day the cameras do.',
   media: ['television'],

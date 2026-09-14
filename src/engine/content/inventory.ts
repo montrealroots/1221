@@ -189,12 +189,15 @@ export interface Band {
 }
 
 /**
- * Real shooting ratios, kept so the engine's own output can be checked.
+ * Real shooting ratios, and what every cutting rate above is quoted against.
  *
- * Nothing reads these to decide anything. They exist so a test can take the
- * ratio the engine produces and say whether it is a number anybody in the
- * business would recognize, which is the only way an emergent figure can be
- * held honest.
+ * They began as a check: something a test could hold the engine's own emergent
+ * ratio up against, so a number nobody sets could still be wrong. They are now
+ * also read to decide something, because a rate table quoted at no particular
+ * amount of material was quietly claiming that an editor works at the same
+ * speed however much there is — which is the one thing everybody who has ever
+ * sat in a cutting room knows is false. A plan names the band its rate belongs
+ * to and `world/inventory.ts` reads the distance from it.
  */
 export const KNOWN_RATIOS: readonly Band[] = [
   { id: 'cg', label: 'Computer Animation', ratio: 1, source: 'Nothing is rendered that is not used' },

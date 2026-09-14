@@ -12,8 +12,8 @@
  * building a save. Nothing in the engine imports this, so there is no cycle:
  * it is read by the test and by the tool.
  *
- * The list is meant to grow. When casting lands it lands here, and it cannot
- * land without saying what it reads.
+ * The list is meant to grow, and it has: casting landed, and it landed here,
+ * because it could not land anywhere else without saying what it reads.
  */
 
 import { defineDecider } from './core/deciders';
@@ -31,6 +31,8 @@ import { FINDINGS } from './content/trouble';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
+import { decideOffer, reachOfBand, readOn, sheetFor, type Offer } from './world/casting';
+import { passById } from './content/casting';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -402,5 +404,86 @@ defineDecider<Hiring, string>({
     const roll = ((hiring.negativeCents / 1_000) % 17) / 17;
     const answer = decideHire(hiring, roll);
     return `${answer.returning ? 'somebody they have used' : 'somebody new'}, ${standingReads(answer.standing)}`;
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The people a picture puts on screen
+// ---------------------------------------------------------------------------
+
+interface Asking { offer: Offer; roll: number }
+
+defineDecider<Asking, string>({
+  id: 'casting.answered',
+  decides: 'Whether an actor takes a part, counters, or passes — and on what.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // Whether the dates are clear, which is first because no amount of money
+    // moves a shooting schedule somebody else already owns.
+    dates: (a, t) => ({ ...a, offer: { ...a.offer, free: t >= 0.5 } }),
+    // What is being offered against what their people want. The whole of a
+    // negotiation, held as one ratio.
+    money: (a, t) => ({
+      ...a,
+      offer: { ...a.offer, feeCents: Math.round(a.offer.askCents * (0.4 + t * 1.6)) },
+    }),
+    // How much of the picture the part is. An actor in demand turns down small
+    // ones and an actor who is not takes whatever comes.
+    size: (a, t) => ({ ...a, offer: { ...a.offer, carries: Math.round(3 + t * 52) } }),
+    // And how wanted they are, which is what makes the same part an insult to
+    // one person and a break for another.
+    demand: (a, t) => ({ ...a, offer: { ...a.offer, demand: Math.round(t * 100) } }),
+    // The draw, because the honest reason people say no is frequently no reason
+    // at all, and declaring that is better than hiding it in a formula.
+    draw: (a, t) => ({ ...a, roll: t }),
+  },
+  sample: (seed) => ({
+    offer: {
+      askCents: (150_000 + (seed % 5) * 90_000) * 100,
+      feeCents: (150_000 + (seed % 5) * 90_000) * 100,
+      carries: 12 + (seed % 4) * 9,
+      free: true,
+      demand: 45 + (seed % 6) * 8,
+    },
+    roll: ((seed * 7) % 13) / 13,
+  }),
+  decide: ({ offer, roll }) => {
+    const answer = decideOffer(offer, roll);
+    if (answer.took) return 'they take it';
+    if ('counterCents' in answer) return 'their people name a number';
+    return `they pass on ${passById(answer.passed)?.label.toLowerCase() ?? 'it'}`;
+  },
+});
+
+interface Pile { bandCents: number; draw: number }
+
+defineDecider<Pile, string>({
+  id: 'casting.seen',
+  decides: 'How good the people who come in for a part are.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // What the picture set aside for the part. The only input, and the reason
+    // greenlighting cheap is a casting decision months before anybody thinks of
+    // it as one.
+    band: (p, t) => ({ ...p, bandCents: Math.round((2_000 + t * 900_000) * 100) }),
+    // And where in the band's spread this particular submission falls.
+    draw: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({
+    bandCents: (5_000 + (seed % 6) * 60_000) * 100,
+    draw: ((seed * 5) % 11) / 11,
+  }),
+  decide: ({ bandCents, draw }) => {
+    const reach = reachOfBand(bandCents);
+    const standing = Math.max(1, Math.min(100, Math.round(reach - 18 + draw * 30)));
+    // A fixed generator, so this reports what the band bought rather than what
+    // the dice did on top of it.
+    let n = 0;
+    const sheet = sheetFor(standing, () => { n += 1; return ((n * 37) % 23) / 23; });
+    const truth = readOn(sheet, 'truth');
+    if (truth < 34) return 'whoever was free';
+    if (truth < 52) return 'working actors';
+    if (truth < 70) return 'people you have heard of';
+    return 'people who do not normally read for this';
   },
 });

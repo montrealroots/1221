@@ -235,7 +235,34 @@ export interface Person {
    */
   estateRole?: EstateRole;
 
+  /**
+   * What they have been paid to act, and on what.
+   *
+   * A quote is a ratchet with memory, and the memory is the whole of why it
+   * matters. Business affairs pulls what somebody was last paid, in what size
+   * of part, and argues from there — so working for a favor is not a free
+   * favor, it is a number the next three producers get to read. Absent for
+   * everybody who has never been cast, which is almost everybody.
+   */
+  quotes?: Quote[];
+
   createdAt: Instant;
+}
+
+/**
+ * One fee, on one title, at one size.
+ *
+ * Kept as a list rather than a single highest number, because the thing a
+ * quote decays against is its date and the thing it is argued against is the
+ * size it was paid for. A lead fee does not set a day player's price and a
+ * day player's does not cap a lead's.
+ */
+export interface Quote {
+  projectId: Id;
+  /** Which size of part it was paid for, by `content/casting.ts` id. */
+  size: string;
+  cents: number;
+  at: Instant;
 }
 
 /** What somebody on the land is the one who does. */
