@@ -34,6 +34,7 @@ import type { Booking, Id, SoundStage } from '../domain/model';
 import type { Money } from '../core/money';
 import type { Instant } from '../core/time';
 import type { Project } from '../domain/company';
+import type { DimensionId } from '../content/maturity';
 import { MS_DAY, formatDate } from '../core/time';
 import {
   DELIVERY, LATE_PENALTY_A_WEEK, SLIP_COSTS, SLIP_RATE,
@@ -42,11 +43,16 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
-import { bankAWeek, cuttingPeriod, cutsAWeek, leftToCut, weighTheCut } from './inventory';
+import { bankAWeek, cuttingPeriod, cutsAWeek, weighTheCut } from './inventory';
 import {
-  advance, advancePart, doneShare, holdingItUp, isFinished, partsOf, partsOutstanding,
+  backToTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, knockEverything,
+  landsOn, outOfTheRoom, putBack, rungReads, takeItBack,
+} from './trouble';
+import {
+  advance, advancePart, doneShare, holdingItUp, isFinished, knockBackPart, laddersOf, owedSeconds,
+  partsOf, partsOutstanding, stepOfPart,
 } from './maturity';
-import { DIMENSIONS, dimensionById } from '../content/maturity';
+import { DIMENSIONS, dimensionById, rungsOf } from '../content/maturity';
 import { armTheCrew } from './crew';
 import { capabilitiesOf } from './company';
 
@@ -681,12 +687,19 @@ function aWeekOn(sim: Simulation, project: Project, at: Instant, since: Instant)
 function weeklyThrough(project: Project): Instant | undefined {
   const plan = planOf(project);
   if (!plan) return undefined;
-  return plan.periods
+  const work = plan.periods
     .filter((one) => one.acquires !== undefined || one.converts !== undefined)
     .map((one) => windowOf(project, one.id)?.to)
     .reduce<Instant | undefined>(
       (latest, to) => (to === undefined ? latest : Math.max(latest ?? to, to)), undefined,
     );
+  if (work === undefined) return project.deliverBy;
+  // Through to the delivery date and not to the end of the work, because the
+  // weeks between finishing and delivering are where the paperwork lives and
+  // where the research puts the lawyer. A heartbeat that stopped when the
+  // cutting room closed would leave the one week this whole mechanism exists
+  // for — the work finished, the thing not delivered — with no tick in it.
+  return project.deliverBy === undefined ? work : Math.max(work, project.deliverBy);
 }
 
 /**
@@ -714,14 +727,33 @@ function runTheCut(sim: Simulation, project: Project, share: number): void {
   const window = windowOf(project, period.id);
   if (!window || sim.now <= window.from) return;
 
-  project.cut = (project.cut ?? 0) + cutsAWeek(project) * share;
-
   const parts = [...partsOf(project)].sort((a, b) => a.ordinal - b.ordinal);
+
+  // The week's output, spent on what is owed again before anything new. A room
+  // handed an episode back is a room not cutting the next one, which is the
+  // only honest way a recut can cost anything: there is one room, it runs at
+  // one rate, and every second of a second pass is a second the rest of the
+  // season does not get.
+  let made = cutsAWeek(project) * share;
+  for (const part of parts) {
+    const owes = part.recut ?? 0;
+    if (owes <= 0 || made <= 0) continue;
+    const paid = Math.min(owes, made);
+    part.recut = owes - paid;
+    made -= paid;
+  }
+  // Clamped at what the thing owes. Seconds cut twice are not seconds in
+  // credit, and an unclamped overshoot would quietly pay for a recut later.
+  project.cut = Math.min(owedSeconds(project), (project.cut ?? 0) + made);
+
   const span = Math.max(1, window.to - window.from);
   let covered = 0;
   for (const part of parts) {
     covered += part.seconds;
     if (covered > (project.cut ?? 0)) break;
+    // A part the room still owes is a part the room has not finished, whatever
+    // the coverage says.
+    if ((part.recut ?? 0) > 0) continue;
     advancePart(project, part, 'picture', upTo);
     // Its turn, measured the way the per-part ticks measure it: evenly across
     // the period, because that is how long the people above the cut take.
@@ -731,6 +763,139 @@ function runTheCut(sim: Simulation, project: Project, share: number): void {
       if (advancePart(project, part, dimension as never, rung as string)) moved = true;
     }
     if (moved) sayAPartIsThrough(sim, project, period, part.ordinal);
+  }
+}
+
+/**
+ * Gives back what a period already did, to a part that has lost it.
+ *
+ * Not a second mechanism that moves work up — it re-runs the one that already
+ * did, for periods whose window is behind the picture. A period that has been
+ * through once can be through again, and that is what a compliance office
+ * watching an episode a second time actually is.
+ *
+ * It is a no-op on the way up, which is how it stays one mechanism rather than
+ * two. Everything it re-applies has already been applied by the per-part ticks
+ * or by settling, and `advancePart` refuses a move that is not upward. It only
+ * does anything at all on a part that has fallen.
+ *
+ * The cutting room's own period is left out, because `runTheCut` owns that one
+ * and two things moving the same parts is the bug this file has already been
+ * bitten by. And nothing is given back to a part the room has not finished
+ * again: a compliance office does not pass an episode that is currently in
+ * pieces on somebody's timeline.
+ */
+function putItBack(sim: Simulation, project: Project): void {
+  const plan = planOf(project);
+  if (!plan) return;
+  const cutting = cuttingPeriod(plan)?.id;
+  for (const period of plan.periods) {
+    const window = windowOf(project, period.id);
+    if (!window || sim.now < window.to) continue;
+    // The cutting room's own advances belong to `runTheCut` and nothing else
+    // may touch them. Its delivery elements are a different matter: a master is
+    // made by the work, so remaking the work is what hands one over again, and
+    // without this a rejected master is a picture that can never be delivered.
+    if (period.id !== cutting) {
+      for (const part of partsOf(project)) {
+        if (!outOfTheRoom(project, part, plan)) continue;
+        if (putBack(project, part, period.advances ?? {})) {
+          sayAPartIsThrough(sim, project, period, part.ordinal);
+        }
+      }
+    }
+    // And the elements that come out of the work, which is the way back for a
+    // master that was rejected: the work makes it again, and making it is what
+    // hands it over.
+    if (!project.settled?.includes(period.id)) continue;
+    for (const element of elementsAfter(period.id, 'production')) {
+      if (project.delivered.includes(element.id)) continue;
+      // Only once the work behind it is back. An element that moves a
+      // dimension is a claim about that dimension, and filing it off a part
+      // that is still in pieces would walk the ladder rather than climb it.
+      if (element.moves && !backUpTo(project, element.moves.dimension, element.moves.to)) continue;
+      project.delivered.push(element.id);
+      if (element.moves) advance(project, element.moves.dimension, element.moves.to);
+    }
+  }
+}
+
+/**
+ * Whether every part stands one rung below the one an element would claim.
+ *
+ * The gate that stops the delivery list being a ladder of its own. Captions
+ * take conform from mastered to accepted; they cannot take it from the floor,
+ * because there is no master to check.
+ */
+function backUpTo(project: Project, dimension: DimensionId, to: string): boolean {
+  const rungs = rungsOf(laddersOf(project), dimension);
+  const want = rungs.findIndex((one) => one.id === to);
+  if (want <= 0) return true;
+  return partsOf(project).every((part) => stepOfPart(project, part, dimension) >= want - 1);
+}
+
+/**
+ * Somebody watches the finished work, once a week, one part at a time.
+ *
+ * The whole reason the maturity vector is a vector. Until this existed nothing
+ * in the engine ever sent a dimension down, so a ladder that could be fallen
+ * off was a ladder nobody ever fell off, and `knockBack` was a mechanism with
+ * no cause — which by this project's own rule is worse than not having it.
+ *
+ * It rides the weekly tick rather than a boundary because a review is not an
+ * event at a boundary. It is a person watching a cut at whatever rung the cut
+ * has reached that week, every week, and on a plan whose compliance runs
+ * alongside its cut there is no boundary to hang it on anyway.
+ */
+function review(sim: Simulation, project: Project): void {
+  const plan = planOf(project);
+  if (!plan || project.stage === 'delivered') return;
+  const deck = deckFor(project, plan);
+  if (deck.length === 0) return;
+  const exposure = exposureOf(project, sim);
+  const ladders = laddersOf(project);
+  const week = Math.round(sim.now / MS_WEEK);
+
+  for (const part of partsOf(project)) {
+    const found = decideReview({
+      ladders,
+      deck,
+      climbed: climbedTo(project, part),
+      exposure,
+      whether: sim.rng('making', 'review', project.id, part.id, week).next(),
+      which: sim.rng('making', 'found', project.id, part.id, week).next(),
+    });
+    const finding = found.finding;
+    if (!finding || found.said === 'nothing found') continue;
+
+    const to = landsOn(project, part, finding, plan);
+    if (to === undefined) continue;
+    const stood = rungReads(project, part, finding.dimension);
+    let fell: number;
+    if (finding.scope === 'whole') {
+      fell = knockEverything(project, finding, to, plan);
+    } else {
+      const own = knockBackPart(project, part, finding.dimension, to).fell;
+      const apart = comesApart(project, part, finding.dimension, plan, own);
+      fell = own + apart.fell;
+      // What the room owes again: the picture it lost, whether the finding hit
+      // the picture directly or pulled it down behind something else.
+      backToTheRoom(project, plan, part, finding.dimension === 'picture' ? own : apart.picture);
+    }
+    if (fell === 0) continue;
+
+    const struck = takeItBack(project);
+    const parts = partsOf(project).length;
+    sim.notify({
+      category: 'business',
+      title: `${project.title}: ${finding.label}`,
+      body: `${finding.what} ${parts > 1 ? `Part ${part.ordinal} was at ${stood.toLowerCase()}` : `It was at ${stood.toLowerCase()}`}`
+        + ` and it’s ${fell === 1 ? 'a rung' : `${fell} rungs`} lower now.`
+        + `${struck.length > 0 ? ` ${struck.join(' and ')} ${struck.length === 1 ? 'comes' : 'come'} back off the delivery list.` : ''}`,
+      importance: fell > 4 ? 80 : 55,
+      refType: 'project',
+      refId: project.id,
+    });
   }
 }
 
@@ -991,7 +1156,14 @@ export function registerMaking(sim: Simulation): void {
       bankAWeek(project, period, share);
     }
     runTheCut(sim, project, share);
+    putItBack(sim, project);
     weighTheCut(sim, project);
+    review(sim, project);
+    // And whether all of that leaves a thing that can be handed over. The
+    // delivery tick is one-shot and long past by the time a recut finishes, so
+    // without this a season that climbed back out of a knock would be finished
+    // and undeliverable for the rest of the save.
+    settleDelivery(sim, project);
     // And next week, if there is still material to get through or calendar
     // left to get through it in. A room with nobody in it is the one case
     // where another week changes nothing, so it stops.
@@ -1002,7 +1174,12 @@ export function registerMaking(sim: Simulation): void {
     const through = weeklyThrough(project) ?? item.at;
     const step = item.at + MS_WEEK;
     const next = item.at < through && step > through ? through : step;
-    const more = item.at < through || leftToCut(project) > 0;
+    // It runs until the thing has gone over, and not until the work is done.
+    // Those are different dates and the weeks between them are the ones this
+    // whole mechanism exists for: a review that knocked an episode down and
+    // then stopped, because the cutting room had closed, would leave it down
+    // for the rest of the save. Nothing else would ever look at it again.
+    const more = project.stage !== 'delivered';
     if (more && cutsAWeek(project) > 0) aWeekOn(sim, project, next, item.at);
   });
 

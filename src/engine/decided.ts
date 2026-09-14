@@ -26,6 +26,8 @@ import { ENQUIRY_SHAPES, type Enquiry } from './content/lot';
 import { wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
 import { decideSlip, type Squeeze } from './world/making';
+import { decideReview, type Review } from './world/trouble';
+import { FINDINGS } from './content/trouble';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
@@ -219,6 +221,57 @@ defineDecider<Squeeze, string>({
     if (days <= 3) return 'a few days over';
     if (days <= 10) return 'a week or two over';
     return 'badly over';
+  },
+});
+
+// ---------------------------------------------------------------------------
+// Somebody watching the finished work
+// ---------------------------------------------------------------------------
+
+/**
+ * The two decks a review can draw from: a picture's and a season's.
+ *
+ * Not a plan id anywhere. What the decks differ by is whether consent is a
+ * standing relationship and whether there is anybody above the cutting room,
+ * which is a fact about the periods, and the sample carries the two answers.
+ */
+const PICTURE_DECK = FINDINGS.filter((one) => one.needs?.movedDuringTheWork === undefined
+  && one.needs?.ratioAbove === undefined);
+const SEASON_DECK = FINDINGS;
+
+defineDecider<Review, string>({
+  id: 'making.reviewed',
+  decides: 'What a look at finished work turns up, and how far down it sends the work.',
+  drawnIn: 'src/engine/world/making.ts',
+  reads: {
+    // How far this part had climbed, taken the way done is taken: the lowest
+    // of its six. This is the whole difference between a free regression and a
+    // ruinous one, and it belongs to the ladder rather than to the row.
+    climbed: (r, t) => ({ ...r, climbed: t }),
+    // How much the production left lying around. At nothing to find the week
+    // passes; at everything, most weeks turn something up.
+    exposure: (r, t) => ({ ...r, exposure: t }),
+    // Whether this week's look finds anything, against the rate exposure sets.
+    // Declared rather than hidden: a lawyer finding a thing this week and not
+    // last week is genuinely not something the engine knows.
+    whether: (r, t) => ({ ...r, whether: t * 0.35 }),
+    // And which row comes off the deck, which is a second draw and not the
+    // first. One roll doing both jobs correlates them: a low roll fires and
+    // lands on the heaviest row, so the rare rows at the bottom could never
+    // happen at all while every test still passed.
+    which: (r, t) => ({ ...r, which: t }),
+  },
+  sample: (seed) => ({
+    ladders: seed % 2 === 0 ? 'season' : 'picture',
+    deck: seed % 2 === 0 ? SEASON_DECK : PICTURE_DECK,
+    climbed: 0.2 + (seed % 5) * 0.2,
+    exposure: (seed % 4) / 4,
+    whether: 0.04 + (seed % 3) * 0.05,
+    which: (seed % 7) / 7,
+  }),
+  decide: (review) => {
+    const found = decideReview(review);
+    return found.finding ? `${found.finding.dimension}, ${found.said}` : found.said;
   },
 });
 

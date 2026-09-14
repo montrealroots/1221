@@ -333,17 +333,42 @@ material overtakes the room, and it is told again if hiring gets it back. At
 the staffing each plan assumes, no plan warns; nothing has been tuned to make
 the warning fire.
 
-**The legal recut is the one still missing**, and it is missing at the trigger
-rather than at the mechanism. `knockBack` un-finishes a season to any rung on
-any dimension and reports how far it fell, and a test drives a finished,
-delivered season back to nothing with one withdrawn consent. Nothing in the
-engine calls it. A withdrawn consent is a decision somebody makes for a reason,
-which means a decider, a draw, and a content table of what makes a contributor
-pull out — the next real piece.
+**The legal recut.** Somebody watches the finished work, every week, one part
+at a time, and what they find comes off a deck of seven rows the research
+names: a compliance note, a note from the people paying, coverage debt, a
+rejected master, a withdrawn consent, a gap in the chain, a moment nobody
+caught. What a finding costs is written nowhere. It is how many rungs the part
+actually fell times everything that was standing on the rung it fell from, so
+the same withdrawn consent is free in week two and ruinous in week nineteen —
+which is the property the maturity vector was built to have and had never had,
+because nothing ever sent a dimension down.
+
+The week nineteen of the research's own sentence now exists, and it exists by
+arithmetic rather than by being put there. The weekly tick used to stop when the
+cutting room closed; it runs to the delivery date, so the weeks between the work
+finishing and the thing going over have something running in them. That gap is
+where a lawyer lives.
+
+And the cost lands in the second ledger. A part sent back down owes the cutting
+room a share of itself again — the share of the ladder it lost — and the room
+pays that down before it cuts anything new, at its own rate with the hands it
+has. One editor on a season the plan staffed with three delivers it more than
+twenty weeks past air; three delivers it inside a fortnight. Nothing about what
+gets found changes between those two runs. Only the room changes.
+
+All four parts of it are met.
 
 As for the strings: the engine carries no form-specific branch at all. No
 module under `world/` names a plan id, and what makes a season a season is
-entirely in `content/`. The acceptance test's own phrasing is looser than the
+entirely in `content/`. The deck is the newest test of that and the sharpest.
+Whether a withdrawn consent can happen to a production is not a question about
+which plan it is — it is whether some period of that plan carries rights all the
+way to cleared while the work is going on. A picture options its material in
+prep and files a chain of title, so there is no live consent in it for anybody
+to take back; a season's consent is a standing relationship with people who are
+still in the room. Same predicate, read off the periods. And how far a note from
+above sends a cut back is how many rungs that form stacks above its cutting
+room, which is four on a season and two on a picture, read off the ladder. The acceptance test's own phrasing is looser than the
 thing it is testing for — `ratioOf` is a function and `unscripted-editor` is a
 row in a rate table — so the test held here is the stronger one: that no
 mechanism anywhere asks what kind of thing it is working on.
@@ -509,6 +534,26 @@ and the last one now fires two days before the period it was meant to close —
 leaving the final episode cut and never released, for the sake of two days. One
 item at a time, each deciding when the next is due from the schedule as it
 stands today, and the slip takes care of itself.
+
+**A mechanism with no cause is worse than no mechanism.** `knockBack` sat in
+the engine for a whole build: written, tested, exported, and called by nothing
+except a test that drove it by hand. Every screen that printed a maturity vector
+was printing six ladders nobody could fall off. The One Rule is usually read as
+being about a field with no reader, but this is the same fault one level up —
+a verb with no subject — and it is harder to see, because the tests pass and the
+code looks finished.
+
+**Going down needs a way back up, and it has to be the same way it went up.**
+A knock-back with no route out is a dead end wearing a setback's clothes, and
+the first draft had three: a rejected master struck a delivery element that
+`handOver` refuses to file because it comes out of the work; a season's rights
+and compliance were moved only by one-shot ticks scheduled at greenlight and
+consumed; and the weekly tick stopped the moment the work was done, so a knock
+on the final week froze the production for the rest of the save. All three were
+fixed by widening what already existed rather than by adding a second
+mechanism — the same weekly tick, re-running the same periods, gated on the same
+cutting room. Two things moving the same parts is the bug this file already
+warns about.
 
 **Exports nothing reads, in a module written an hour ago.** Five of them, in
 the first draft of the inventory ledger: a sentence for a screen, a ledger

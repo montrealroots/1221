@@ -33,7 +33,7 @@ import { STOCKS, throughput } from '../content/inventory';
 import type { Period, Plan } from '../content/making';
 import { MS_WEEK } from './lot';
 import { finishesBy, planOf, windowOf } from './making';
-import { owedSeconds } from './maturity';
+import { owedSeconds, partsOf } from './maturity';
 
 // ---------------------------------------------------------------------------
 // The ledger
@@ -100,7 +100,12 @@ export const cuttingPeriod = (plan: Plan): Period | undefined =>
 export function leftToCut(project: Project): number {
   const plan = planOf(project);
   if (!plan || !cuttingPeriod(plan)) return 0;
-  return Math.max(0, owedSeconds(project) - (project.cut ?? 0));
+  // What was never cut, plus what has to be cut again. The second term is what
+  // makes a note show up in the forecast the week it arrives rather than as a
+  // surprise at the end, and it is the reason `weighTheCut` can say a season
+  // has stopped making its date without anybody watching for it.
+  const again = partsOf(project).reduce((n, part) => n + (part.recut ?? 0), 0);
+  return Math.max(0, owedSeconds(project) - (project.cut ?? 0)) + again;
 }
 
 /** How many hands the cutting room has: the decision, or the plan's default. */

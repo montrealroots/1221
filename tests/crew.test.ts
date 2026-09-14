@@ -17,7 +17,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { openTheDoors } from './doors';
+import { deliverIt, openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -29,7 +29,7 @@ import {
   crewOf, decideHire, endFor, freeAcross, heldBefore, onItAt, postsFor,
   standingReads, startFor, whereTheCrewStands,
 } from '@/engine/world/crew';
-import { finishesBy, heldUpBy, windowOf } from '@/engine/world/making';
+import { finishesBy, windowOf } from '@/engine/world/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
 
@@ -53,16 +53,14 @@ function makeIt(sim: Simulation, title: string, over: Record<string, unknown> = 
   return id;
 }
 
-/** Runs a picture all the way to delivered. */
+/** Runs a picture all the way to delivered, however long that turns out to be. */
 function deliver(sim: Simulation, id: string): void {
   for (let i = 0; i < 8; i += 1) {
     const done = finishesBy(sim.universe.projects[id]!)!;
     if (sim.now > done) break;
     sim.advanceTo(done + MS_DAY);
   }
-  for (const element of heldUpBy(sim.universe.projects[id]!)) {
-    run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-  }
+  deliverIt(sim, id);
 }
 
 const crewPeople = (sim: Simulation): string[] => Object.values(sim.universe.people)

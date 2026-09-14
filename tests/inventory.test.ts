@@ -26,8 +26,8 @@ import {
   weeksToConvert, whereTheMaterialStands, willMakeIt,
 } from '@/engine/world/inventory';
 import { isFinished, owedSeconds, rungOf, secondsAtOrBeyond } from '@/engine/world/maturity';
-import { finishesBy, heldUpBy, windowOf } from '@/engine/world/making';
-import { openTheDoors } from './doors';
+import { finishesBy, windowOf } from '@/engine/world/making';
+import { deliverIt, openTheDoors } from './doors';
 
 interface Done { ok: boolean; id?: string; error?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
@@ -171,6 +171,7 @@ describe('material banks week by week, not in a lump', () => {
     const sim = world('banking-keeps');
     const id = greenlit(sim, 'unscripted', 'The Arena');
     runItOut(sim, id);
+    expect(deliverIt(sim, id)).toBe(true);
     const project = sim.universe.projects[id]!;
     expect(isFinished(project)).toBe(true);
     // The season is finished and almost none of what was shot is in it. That
@@ -200,24 +201,26 @@ describe('hands buy capacity, capacity buys screen time', () => {
     expect(willMakeIt(full, two.sim.now)!.makesIt).toBe(true);
   });
 
-  it('actually delivers later with fewer hands, rather than warning and arriving anyway', () => {
+  it('actually cuts less with fewer hands, rather than warning and arriving anyway', () => {
     const lean = staffed('late-1', 1);
-    const full = staffed('late-2', 2);
-    runItOut(lean.sim, lean.id);
-    runItOut(full.sim, full.id);
+    const full = staffed('late-2', 3);
+    // The same season, twice, run to the same day. Comparing at one instant
+    // and not at the end of two different schedules, because the whole claim
+    // is about rate: on any given morning the better-staffed room has more
+    // screen time behind it.
+    const until = finishesBy(lean.sim.universe.projects[lean.id]!)!;
+    lean.sim.advanceTo(until);
+    full.sim.advanceTo(until);
     const short = lean.sim.universe.projects[lean.id]!;
     const staffedUp = full.sim.universe.projects[full.id]!;
 
-    // The well-staffed season is finished. The under-staffed one is not, and
-    // the difference is measured in screen time that never came out of the
-    // cutting room rather than in a message.
-    expect(isFinished(staffedUp)).toBe(true);
-    expect(isFinished(short)).toBe(false);
     expect(short.cut!).toBeLessThan(staffedUp.cut!);
-    expect(leftToCut(short)).toBeGreaterThan(0);
-    expect(leftToCut(staffedUp)).toBe(0);
+    expect(leftToCut(short)).toBeGreaterThan(leftToCut(staffedUp));
+    expect(isFinished(short)).toBe(false);
     expect(secondsAtOrBeyond(short, 'picture', 'assembly'))
       .toBeLessThan(secondsAtOrBeyond(staffedUp, 'picture', 'assembly'));
+    // And it shows up where a producer would look: the forecast, not a log.
+    expect(willMakeIt(short, lean.sim.now)!.makesIt).toBe(false);
   });
 
   it('takes the plan’s figure where nobody has decided, and the decision where somebody has', () => {
@@ -285,10 +288,11 @@ describe('the engine says so when the cut cannot make the date', () => {
     sim.advanceTo(post.from + 21 * MS_DAY);
     expect(warnings(sim)).toHaveLength(1);
     // Four editors instead of one, which is what the warning was for.
-    sim.universe.projects[id]!.hands = 4;
+    sim.universe.projects[id]!.hands = 6;
     runItOut(sim, id);
     expect(sim.universe.notifications.some((one) => one.title.includes('Back Inside Its Date'))).toBe(true);
     expect(warnings(sim), 'it nagged about a cut it had already got back').toHaveLength(1);
+    expect(deliverIt(sim, id)).toBe(true);
     expect(isFinished(sim.universe.projects[id]!)).toBe(true);
   });
 });
@@ -343,9 +347,7 @@ describe('the ledger holds together', () => {
     const sim = world('sound');
     const id = greenlit(sim, 'unscripted', 'The Arena');
     runItOut(sim, id);
-    for (const element of heldUpBy(sim.universe.projects[id]!)) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
+    expect(deliverIt(sim, id)).toBe(true);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
     expect(rungOf(sim.universe.projects[id]!, 'picture')).toBe('locked');

@@ -19,7 +19,7 @@ import {
   partsOf, rungOf, rungOfPart, secondsAtOrBeyond, shareOf, whereTheWorkStands,
 } from '@/engine/world/maturity';
 import { finishesBy, heldUpBy, nobodysJob } from '@/engine/world/making';
-import { openTheDoors } from './doors';
+import { deliverIt, openTheDoors } from './doors';
 
 interface Done { ok: boolean; id?: string; error?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
@@ -121,14 +121,7 @@ describe('the season is the kind that cannot fake it', () => {
     const sim = world('consent');
     const id = greenlit(sim, 'unscripted', 'The Arena');
     const project = () => sim.universe.projects[id]!;
-    for (let i = 0; i < 8; i += 1) {
-      const done = finishesBy(project())!;
-      if (sim.now > done) break;
-      sim.advanceTo(done + MS_DAY);
-    }
-    for (const element of heldUpBy(project())) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
+    expect(deliverIt(sim, id), 'the season never got delivered').toBe(true);
     // Finished on every dimension, and delivered.
     expect(isFinished(project())).toBe(true);
     expect(doneShare(project())).toBe(1);
@@ -160,14 +153,7 @@ describe('what a plan never moves is somebody’s job', () => {
       const sim = world(`reachable-${plan.id}`);
       const id = greenlit(sim, plan.id, `Reach ${plan.id}`);
       const project = () => sim.universe.projects[id]!;
-      for (let i = 0; i < 10; i += 1) {
-        const done = finishesBy(project())!;
-        if (sim.now > done) break;
-        sim.advanceTo(done + MS_DAY);
-      }
-      for (const element of heldUpBy(project())) {
-        run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-      }
+      expect(deliverIt(sim, id), `${plan.id} can never be delivered`).toBe(true);
       expect(isFinished(project()), `${plan.id} can never finish`).toBe(true);
     }
   });
@@ -178,14 +164,7 @@ describe('delivery waits for the work, not just the list', () => {
     const sim = world('unfinished');
     const id = greenlit(sim, 'feature');
     const project = () => sim.universe.projects[id]!;
-    for (let i = 0; i < 8; i += 1) {
-      const done = finishesBy(project())!;
-      if (sim.now > done) break;
-      sim.advanceTo(done + MS_DAY);
-    }
-    for (const element of heldUpBy(project())) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
+    expect(deliverIt(sim, id)).toBe(true);
     expect(project().stage).toBe('delivered');
 
     // Now the same picture with rights pulled back before the last element.
@@ -282,14 +261,7 @@ describe('a season is N timelines, measured in runtime', () => {
   it('finishes the whole season, and spends its budget exactly once', () => {
     const { sim, id } = season('spend');
     const project = () => sim.universe.projects[id]!;
-    for (let i = 0; i < 10; i += 1) {
-      const done = finishesBy(project())!;
-      if (sim.now > done) break;
-      sim.advanceTo(done + MS_DAY);
-    }
-    for (const element of heldUpBy(project())) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
+    expect(deliverIt(sim, id)).toBe(true);
     expect(isFinished(project())).toBe(true);
 
     // The guard against settling a period by two routes: the boundary of the

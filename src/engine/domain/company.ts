@@ -309,6 +309,17 @@ export interface Part {
   maturity?: Partial<Record<string, string>>;
   /** When it transmits or is due, where the plan gives parts their own dates. */
   dueAt?: Instant;
+  /**
+   * Seconds of this part the cutting room has to make again.
+   *
+   * What a regression actually costs, held where the regression happened. A
+   * note that sends one episode back a rung is a fraction of that episode owed
+   * to the room again; a withdrawn consent that sends it back to the assembly
+   * is the whole of it. The room pays this down before it cuts anything new,
+   * at the rate it runs at with the hands it has, which is why the same note is
+   * absorbed by a room with slack and fatal to a room already short of its date.
+   */
+  recut?: number;
 }
 
 export interface Project {

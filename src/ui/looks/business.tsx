@@ -34,7 +34,7 @@ import { crewOf, postsFor, standingReads } from '@/engine/world/crew';
 import {
   finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
 } from '@/engine/world/making';
-import { DIMENSIONS, rungsOf } from '@/engine/content/maturity';
+import { DIMENSIONS, dimensionById, rungsOf } from '@/engine/content/maturity';
 import { rateById } from '@/engine/content/inventory';
 import {
   laddersOf, partsOf, rungOf, rungOfPart, shareOf, shareOfPart, whereTheWorkStands,
@@ -43,6 +43,7 @@ import {
   cutsAWeek, handsOn, ledgerOf, ratioOf, saidAsRatio, stockOf, whereTheMaterialStands, willMakeIt,
 } from '@/engine/world/inventory';
 import { stockById } from '@/engine/content/inventory';
+import { aboveTheRoom, deckFor, exposureOf, owedAgain } from '@/engine/world/trouble';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatRelative } from '@/engine/core/time';
 import { Stat } from '@/ui/components/primitives';
@@ -470,6 +471,10 @@ defineLook<Project>('project', {
     const forecast = willMakeIt(project, sim.now);
     const hands = handsOn(project);
     const rate = plan ? rateById(plan.periods.find((one) => one.converts)?.converts?.at ?? '') : undefined;
+    const deck = plan ? deckFor(project, plan) : [];
+    const exposure = exposureOf(project, sim);
+    const owedBack = owedAgain(project);
+    const above = plan ? aboveTheRoom(plan, ladders) : 0;
     const ways: Way[] = [];
     if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
     if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s making it' });
@@ -643,6 +648,52 @@ defineLook<Project>('project', {
                       ? 'Money buys hands, hands turn material into screen time at a rate, and money never buys screen time directly. Put one editor on this where the plan assumed two and it arrives half as fast — not late with a warning next to it, but actually half as fast.'
                       : 'This plan acquires nothing it sets aside. Everything made for it goes straight onto the timeline.'}
                   </p>
+                </>
+              )}
+              {deck.length === 0 ? null : (
+                <>
+                  <h4>What Could Come Apart</h4>
+                  <p className="small">
+                    Done is the lowest line in the table above, so finished work stays finished
+                    until a lawyer or a compliance editor watches it again. What a finding costs is
+                    how far the work had climbed when it landed, so the same note is free in week two
+                    and ruinous in week nineteen. The ladder says that, and no figure here does.
+                  </p>
+                  <div className="grid grid-3">
+                    <Stat label="What’s Lying Around" value={`${Math.round(exposure * 100)}/100`}
+                      tone={exposure > 0.5 ? 'warning' : undefined}
+                      note="Material banked against runtime owed, a chain of title with a gap in it, and paperwork nobody has filed" />
+                    <Stat label="Owed Back To The Room"
+                      value={owedBack > 0 ? `${Math.round(owedBack / 60)} minutes` : 'None'}
+                      tone={owedBack > 0 ? 'negative' : undefined}
+                      note={owedBack > 0
+                        ? 'Screen time already made once that has to be made again before anything new'
+                        : 'The cutting room has had nothing sent back to it'} />
+                    <Stat label="Above The Cutting Room" value={above === 0 ? 'Nobody' : `${above} ${above === 1 ? 'rung' : 'rungs'}`}
+                      note={above > 2
+                        ? 'A producer, an executive and a broadcaster, and every one of them can send it back down'
+                        : 'A short ladder above the cut, so there is little to fall'} />
+                  </div>
+                  <div className="table-wrap">
+                  <table className="table">
+                    <tbody>
+                      {deck.map((finding) => (
+                        <tr key={finding.id}>
+                          <td className="nowrap">{finding.label}</td>
+                          <td className="small nowrap">
+                            {dimensionById(finding.dimension)?.label ?? finding.dimension}
+                          </td>
+                          <td className="small nowrap">
+                            {finding.down === 'floor' ? 'All the way down'
+                              : finding.down === 'room' ? 'Back to the cutting room'
+                                : `${finding.down} ${finding.down === 1 ? 'rung' : 'rungs'}`}
+                          </td>
+                          <td className="small">{finding.what}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  </div>
                 </>
               )}
               <h4>The Delivery List</h4>

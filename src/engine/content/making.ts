@@ -393,7 +393,7 @@ const UNSCRIPTED: Plan = {
       runsWith: 'field',
       spends: 0.24,
       advances: { picture: 'locked', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'unscripted-editor', hands: 2, upTo: 'assembly' },
+      converts: { at: 'unscripted-editor', hands: 3, upTo: 'assembly' },
       unit: { one: 'cut minute', many: 'cut minutes', aWeek: 15 },
     },
     {

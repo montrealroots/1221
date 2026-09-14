@@ -17,7 +17,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { openTheDoors } from './doors';
+import { deliverIt, openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -27,7 +27,6 @@ import { DEALS, TIERS, WINDOWS, dealById, ultimateFor } from '@/engine/content/s
 import {
   decideTake, grossSoFar, splitIt, standingOf, whereTheMoneyStands,
 } from '@/engine/world/selling';
-import { finishesBy, heldUpBy } from '@/engine/world/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
 
@@ -60,15 +59,11 @@ function deliverOne(sim: Simulation, title = 'Hvítserkur'): string {
     projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
   }).error).toBeUndefined();
 
-  for (let i = 0; i < 8; i += 1) {
-    const done = finishesBy(sim.universe.projects[id]!)!;
-    if (sim.now > done) break;
-    sim.advanceTo(done + MS_DAY);
-  }
-  for (const element of heldUpBy(sim.universe.projects[id]!)) {
-    expect(run(sim, 'company.deliver', { projectId: id, elementId: element.id }).ok).toBe(true);
-  }
-  expect(sim.universe.projects[id]!.stage).toBe('delivered');
+  // A week at a time, filing what the list is waiting on, until it is over.
+  // Not one pass: a review can send the picture back down the ladder in the
+  // last week before delivery, and getting it over is a producer's job rather
+  // than a single call.
+  expect(deliverIt(sim, id), 'the picture never got delivered').toBe(true);
   return id;
 }
 

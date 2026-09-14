@@ -17,7 +17,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { openTheDoors } from './doors';
+import { deliverIt, openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -496,9 +496,10 @@ describe('finishing is not delivering', () => {
     const project = () => sim.universe.projects[id]!;
     runItOut(sim, id);
 
-    for (const element of heldUpBy(project())) {
-      expect(run(sim, 'company.deliver', { projectId: id, elementId: element.id }).ok).toBe(true);
-    }
+    // Filing the list is a producer's job and not a single call: a review can
+    // send the picture back down the ladder in the week before delivery, and
+    // then the certificate has to go over again behind the recut.
+    expect(deliverIt(sim, id), 'the picture never got delivered').toBe(true);
     expect(project().stage).toBe('delivered');
     expect(project().deliveredAt).toBeDefined();
     expect(heldUpBy(project())).toHaveLength(0);
@@ -592,9 +593,7 @@ describe('the save stays sound through all of it', () => {
     expect(inProduction(sim).map((p) => p.id)).toContain(id);
     expect(planOf(sim.universe.projects[id]!)?.id).toBe('feature');
     runItOut(sim, id);
-    for (const element of heldUpBy(sim.universe.projects[id]!)) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
+    expect(deliverIt(sim, id)).toBe(true);
     expect(inProduction(sim).map((p) => p.id)).not.toContain(id);
     expect(stillMissing(sim.universe.projects[id]!)).toHaveLength(0);
   });
