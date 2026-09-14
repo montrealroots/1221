@@ -46,6 +46,7 @@ import { MS_WEEK, bookingsFor, rateFor, stagesOn, stillToCarry, theLot } from '.
 import { bankAWeek, cuttingPeriod, cutsAWeek, weighTheCut } from './inventory';
 import {
   backToTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, knockEverything,
+  somebodyGoesOff,
   landsOn, outOfTheRoom, putBack, rungReads, takeItBack,
 } from './trouble';
 import {
@@ -54,7 +55,7 @@ import {
 } from './maturity';
 import { DIMENSIONS, dimensionById, rungsOf } from '../content/maturity';
 import { armTheCrew } from './crew';
-import { armTheCasting, castsPerformers, layTheRoles, takeFactor } from './casting';
+import { armTheCasting, castsPerformers, layTheRoles, takeFactor, theBiggestName } from './casting';
 import { capabilitiesOf } from './company';
 
 export const MAKING_KIND = 'project.period';
@@ -969,7 +970,7 @@ function backUpTo(project: Project, dimension: DimensionId, to: string): boolean
 function review(sim: Simulation, project: Project): void {
   const plan = planOf(project);
   if (!plan || project.stage === 'delivered') return;
-  const deck = deckFor(project, plan);
+  const deck = deckFor(project, plan, theBiggestName(sim, project));
   if (deck.length === 0) return;
   const exposure = exposureOf(project, sim);
   const ladders = laddersOf(project);
@@ -1003,12 +1004,18 @@ function review(sim: Simulation, project: Project): void {
     }
     if (fell === 0) continue;
 
+    // A name going off is the one row on the deck whose damage outlives the
+    // picture: the attention goes on the person, and they carry it into every
+    // sale and every casting office afterwards.
+    const gone = finding.id === 'a-name-goes-off' ? somebodyGoesOff(sim, project) : undefined;
+
     const struck = takeItBack(project);
     const parts = partsOf(project).length;
     sim.notify({
       category: 'business',
       title: `${project.title}: ${finding.label}`,
-      body: `${finding.what} ${parts > 1 ? `Part ${part.ordinal} was at ${stood.toLowerCase()}` : `It was at ${stood.toLowerCase()}`}`
+      body: `${finding.what}${gone ? ` It’s ${gone.displayName}.` : ''}`
+        + ` ${parts > 1 ? `Part ${part.ordinal} was at ${stood.toLowerCase()}` : `It was at ${stood.toLowerCase()}`}`
         + ` and it’s ${fell === 1 ? 'a rung' : `${fell} rungs`} lower now.`
         + `${struck.length > 0 ? ` ${struck.join(' and ')} ${struck.length === 1 ? 'comes' : 'come'} back off the delivery list.` : ''}`,
       importance: fell > 4 ? 80 : 55,

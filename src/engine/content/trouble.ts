@@ -86,6 +86,15 @@ export interface Needs {
    * the question is closed.
    */
   unfiled?: string;
+  /**
+   * Somebody in the cast is known well enough to be news.
+   *
+   * The thing a producer buys when they pay over the band, and the thing they
+   * are exposed to for having bought it. A picture cast out of people nobody
+   * has heard of cannot have a name go off, because it has no names — which is
+   * one of the few genuine advantages of having no money.
+   */
+  aNameOnIt?: true;
 }
 
 export interface Finding {
@@ -184,6 +193,17 @@ export const FINDINGS: readonly Finding[] = [
     weight: 0.06,
     needs: { onPaper: true, unfiled: 'chain' },
     source: 'PIPELINE.md: chain of title is the unbroken paper trail, and a break in it stops the insurance, which stops the sale',
+  },
+  {
+    id: 'a-name-goes-off',
+    label: 'A Name Goes Off',
+    what: 'Something a person in the cast did, or is said to have done, arrives in the press while the picture is still being finished. The work is exactly what it was the day before. Every buyer now has a reason to wait, and the scenes built around that face are the scenes the picture was sold on.',
+    dimension: 'picture',
+    down: 1,
+    scope: 'whole',
+    weight: 0.09,
+    needs: { aNameOnIt: true },
+    source: 'PIPELINE.md: conduct history is a pass reason an office records, and publicity risk is a line in the cost of a recast',
   },
   {
     id: 'lost-moment',

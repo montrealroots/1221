@@ -356,10 +356,19 @@ defineDecider<Prospects, string>({
       ...p,
       dealId: DEALS[Math.min(DEALS.length - 1, Math.floor(t * DEALS.length))]!.id,
     }),
+    // And who is in it. Two axes, because a picture beautifully played by
+    // people the camera does not want is a different object from a plain one
+    // played well, and both of those are things a buyer prices separately.
+    cast: (p, t) => ({ ...p, cast: { truth: t * 100, reads: t * 100 } }),
+    // And what the trade is currently writing about them, which is subtracted
+    // rather than blended: it is not a quality of the work.
+    conduct: (p, t) => ({ ...p, controversy: t * 100 }),
   },
   sample: (seed) => ({
     negativeCents: (2_000_000 + (seed % 9) * 7_000_000) * 100,
     dealId: DEALS[seed % DEALS.length]!.id,
+    cast: { truth: 35 + (seed % 5) * 9, reads: 40 + (seed % 4) * 8 },
+    controversy: (seed % 3) * 12,
   }),
   decide: (prospects) => {
     const roll = ((prospects.negativeCents / 100_000) % 13) / 13;

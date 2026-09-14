@@ -119,6 +119,32 @@ Nobody has to cast anything. Two weeks before the camera turns over the
 casting office fills whatever is left, at the band and no further — so the
 money a picture was greenlit at is a casting decision months before anybody
 thinks of it as one, and paying over the band is the only way to reach past it.
+What is paid over the band the company pays on the day it reaches, whether or
+not a frame is ever shot, because that is what pay or play means.
+
+Having a name is also the only way to lose one. A picture with somebody
+well-enough known to be news carries a row on the trouble deck that a picture
+cast out of strangers cannot draw: something the person did, or is said to have
+done, arrives in the press while the picture is being finished. The work is
+what it was; every buyer now has a reason to wait. The attention goes on the
+person rather than on the production, so they carry it into the sale of
+everything they are in and into the next office, which passes on them without
+saying why. It is the only thing in the build that writes `controversy`, which
+had been a number seeded to zero on every person in every save and moved by
+nothing at all.
+
+**What is not built, and is named here so the list above does not imply it.**
+The audition — the room, the hidden want, the note, the redirect, the
+repeatability check on a callback — is the largest missing piece and the one
+the research is most emphatic about; casting here is offer-only, which the
+research lists as a real format but is one of nineteen. There are no holds:
+availability, a pin, a first refusal, a hold and a booking are five states with
+five exit costs, and collapsing them deletes pilot season, so they wait for a
+market with somebody else's projects in it to compete over. No background, no
+stand-ins, no doubles, no stunt performers. No billing, which is a finite-slot
+constraint that can become unsatisfiable. No most-favoured-nations, no minors
+and their hours, no visas, no union clearance. A day out of days would make the
+schedule re-price the cast, and there is not one.
 
 `lot.sell` is the odd one out and the only command taken again every month:
 what the lot spends telling people it exists. The overhead table's line is the

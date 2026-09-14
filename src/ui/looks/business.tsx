@@ -42,6 +42,7 @@ import {
 import {
   cutsAWeek, handsOn, ledgerOf, ratioOf, saidAsRatio, stockOf, whereTheMaterialStands, willMakeIt,
 } from '@/engine/world/inventory';
+import { theBiggestName } from '@/engine/world/casting';
 import { stockById } from '@/engine/content/inventory';
 import { aboveTheRoom, deckFor, exposureOf, owedAgain } from '@/engine/world/trouble';
 import { formatMoney } from '@/engine/core/money';
@@ -471,7 +472,7 @@ defineLook<Project>('project', {
     const forecast = willMakeIt(project, sim.now);
     const hands = handsOn(project);
     const rate = plan ? rateById(plan.periods.find((one) => one.converts)?.converts?.at ?? '') : undefined;
-    const deck = plan ? deckFor(project, plan) : [];
+    const deck = plan ? deckFor(project, plan, theBiggestName(sim, project)) : [];
     const exposure = exposureOf(project, sim);
     const owedBack = owedAgain(project);
     const above = plan ? aboveTheRoom(plan, ladders) : 0;

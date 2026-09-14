@@ -36,7 +36,7 @@ import {
   type Deal, type ReleaseWindow, type TierId,
   dealById, ultimateFor, windowById,
 } from '../content/selling';
-import { castOn } from './casting';
+import { castOn, castsControversy } from './casting';
 import { MS_WEEK } from './lot';
 
 export const WINDOW_KIND = 'project.window';
@@ -63,6 +63,15 @@ export interface Prospects {
    * alone — which is what the engine did for every sale before now.
    */
   cast?: { truth: number; reads: number };
+  /**
+   * How much active negative attention the cast is carrying, out of a hundred.
+   *
+   * Separate from the two axes above and subtracted rather than blended,
+   * because it is not a quality of the performance: a picture can be
+   * beautifully played by somebody every buyer has a reason to wait on. A name
+   * going off during post is the ordinary way this stops being zero.
+   */
+  controversy?: number;
 }
 
 /**
@@ -91,7 +100,10 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
     ? 1 + ((prospects.cast.truth - 50) / 100) * CAST_MOVES.truth
         + ((prospects.cast.reads - 50) / 100) * CAST_MOVES.reads
     : 1;
-  return { cents: Math.round(ultimateFor(prospects.negativeCents) * pull * band * Math.max(0.2, cast)) };
+  const cold = 1 - ((prospects.controversy ?? 0) / 100) * CAST_MOVES.controversy;
+  return {
+    cents: Math.round(ultimateFor(prospects.negativeCents) * pull * band * Math.max(0.2, cast * cold)),
+  };
 }
 
 /**
@@ -104,7 +116,7 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
  * over half in each direction, which is less than the deal does and more than
  * the draw does.
  */
-export const CAST_MOVES = { truth: 0.34, reads: 0.46 } as const;
+export const CAST_MOVES = { truth: 0.34, reads: 0.46, controversy: 0.38 } as const;
 
 // ---------------------------------------------------------------------------
 // The waterfall
@@ -259,11 +271,13 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
   project.releasedAt = sim.now + RELEASE_WEEKS * MS_WEEK;
   const truth = castOn(sim, project, 'truth');
   const reads = castOn(sim, project, 'reads');
+  const controversy = castsControversy(sim, project);
   project.takeCents = decideTake(
     {
       negativeCents: project.budgetCents ?? 0,
       dealId: deal.id,
       ...(truth !== undefined && reads !== undefined ? { cast: { truth, reads } } : {}),
+      ...(controversy !== undefined ? { controversy } : {}),
     },
     roll,
   ).cents;

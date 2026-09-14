@@ -35,6 +35,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Part, Project } from '../domain/company';
+import type { Person } from '../domain/model';
 import type { DimensionId } from '../content/maturity';
 import { bottomOf, rungsOf, terminalOf } from '../content/maturity';
 import type { Finding, Needs } from '../content/trouble';
@@ -45,6 +46,7 @@ import { cuttingPeriod, ratioOf } from './inventory';
 import { partsOf, rungOfPart, shareOfPart, stepOfPart } from './maturity';
 import { advancePart, knockBack, knockBackPart, laddersOf } from './maturity';
 import { DIMENSIONS } from '../content/maturity';
+import { SOMEBODY_KNOWS, goesOffBy, theNameThatGoesOff } from './casting';
 
 // ---------------------------------------------------------------------------
 // What a plan is exposed to
@@ -81,7 +83,13 @@ export function aboveTheRoom(plan: Plan, ladders: string): number {
  * to withdraw; a season whose consent is a standing relationship with people
  * still in the room has one every week. Nothing here asks the plan its name.
  */
-export function deckFor(project: Project, plan: Plan): Finding[] {
+/**
+ * `known` is required rather than defaulted, because a default of nothing would
+ * quietly drop a whole row from the deck for any caller that forgot — and a
+ * finding that can never be dealt is exactly the disease this file exists
+ * inside a project that has a test for.
+ */
+export function deckFor(project: Project, plan: Plan, known: number): Finding[] {
   const ladders = laddersOf(project);
   const ratio = ratioOf(project) ?? 0;
   const holding = project.holdingId;
@@ -92,6 +100,7 @@ export function deckFor(project: Project, plan: Plan): Finding[] {
     if (needs.aboveTheRoom && aboveTheRoom(plan, ladders) < 1) return false;
     if (needs.onPaper && !holding) return false;
     if (needs.unfiled && project.delivered.includes(needs.unfiled)) return false;
+    if (needs.aNameOnIt && known < SOMEBODY_KNOWS) return false;
     return true;
   };
   return FINDINGS.filter((one) => can(one.needs));
@@ -366,4 +375,24 @@ export function putBack(
     if (advancePart(project, part, dimension as DimensionId, rung as string)) moved = true;
   }
   return moved;
+}
+
+/**
+ * Puts the attention on the person it is attention about.
+ *
+ * The finding takes the picture down a rung because the scenes built around
+ * that face are the scenes it was sold on. This is the other half, and it is
+ * the half that outlives the picture: the person carries it, every buyer of
+ * everything they are in reads it, and the next production office passes on
+ * them without ever saying why.
+ *
+ * It is the only writer of `controversy` in the build, which had been a number
+ * seeded to zero on every person in every save and moved by nothing at all.
+ */
+export function somebodyGoesOff(sim: Simulation, project: Project): Person | undefined {
+  const person = theNameThatGoesOff(sim, project);
+  if (!person) return undefined;
+  const was = person.reputation.controversy;
+  person.reputation.controversy = Math.min(100, was + goesOffBy(person.reputation.publicFame));
+  return person;
 }

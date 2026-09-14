@@ -32,9 +32,10 @@ import {
 } from '@/engine/content/casting';
 import {
   askFor, castOf, castOn, datesFor, decideOffer, freeToWork, howManyCast, openRoles, quoteOf,
-  readOf, readOn, reachOfBand, seatFor, sheetFor, takeFactor, whereTheCastStands,
-  whoCameIn, WHOEVER,
+  goesOffBy, readOf, readOn, reachOfBand, seatFor, sheetFor, SOMEBODY_KNOWS, takeFactor,
+  theBiggestName, theNameThatGoesOff, TOO_HOT, whereTheCastStands, whoCameIn, WHOEVER,
 } from '@/engine/world/casting';
+import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
 import { cutsAWeek, ratioOf, weeksToConvert, willMakeIt } from '@/engine/world/inventory';
 import { MS_WEEK } from '@/engine/world/lot';
@@ -85,10 +86,16 @@ function castEverybodyAt(sim: Simulation, id: string, at: Partial<Record<string,
   const project = sim.universe.projects[id]!;
   project.cast = [];
   for (const [i, role] of (project.roles ?? []).entries()) {
+    const from = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
     const person: Person = {
-      ...Object.values(sim.universe.people).find((one) => !one.isPlayer)!,
+      ...from,
       id: `made-${id}-${i}`,
       isPlayer: false,
+      // Their own reputation, not a shared reference to one. Spreading a person
+      // is a shallow copy, so without this every made performer pointed at the
+      // same object and setting one person's fame set everybody's — which
+      // silently made a test about picking the biggest name unable to fail.
+      reputation: { ...from.reputation },
       attributes: sheetOf(50, Object.fromEntries(
         AXES.flatMap((axis) => axis.of.map((attr) => [attr, at[axis.id] ?? 50])),
       )),
@@ -718,6 +725,97 @@ describe('the curve is centered on an ordinary cast, not a perfect one', () => {
     expect(takesAt(100)).toBe(TAKES.best);
     expect(takesAt(-500)).toBe(TAKES.worst);
     expect(takesAt(500)).toBe(TAKES.best);
+  });
+});
+
+describe('a name going off is the price of having one', () => {
+  it('cannot happen to a picture with nobody known in it', () => {
+    // The only genuine advantage of having no money: a picture cast out of
+    // people nobody has heard of has no name to lose.
+    const sim = world('no-names');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    castEverybodyAt(sim, id, { repeatable: 55 });
+    for (const one of castOf(sim, project)) {
+      if (one.person) one.person.reputation.publicFame = 0;
+    }
+    expect(theBiggestName(sim, project)).toBe(0);
+    expect(deckFor(project, planById('feature')!, theBiggestName(sim, project)).map((f) => f.id))
+      .not.toContain('a-name-goes-off');
+  });
+
+  it('is on the deck the moment somebody in it is known', () => {
+    const sim = world('one-name');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    castEverybodyAt(sim, id, { repeatable: 55 });
+    for (const one of castOf(sim, project)) {
+      if (one.person) one.person.reputation.publicFame = 0;
+    }
+    const lead = castOf(sim, project).find((one) => one.size.id === 'lead')!;
+    lead.person!.reputation.publicFame = SOMEBODY_KNOWS;
+    expect(deckFor(project, planById('feature')!, theBiggestName(sim, project)).map((f) => f.id))
+      .toContain('a-name-goes-off');
+  });
+
+  it('goes off on the biggest name rather than on a random one', () => {
+    const sim = world('biggest');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    castEverybodyAt(sim, id, { repeatable: 55 });
+    const all = castOf(sim, project);
+    for (const [i, one] of all.entries()) {
+      if (one.person) one.person.reputation.publicFame = 30 + i;
+    }
+    const most = all.reduce((top, one) => (
+      (one.person?.reputation.publicFame ?? 0) > (top.person?.reputation.publicFame ?? 0) ? one : top
+    ), all[0]!);
+    expect(theNameThatGoesOff(sim, project)!.id).toBe(most.person!.id);
+  });
+
+  it('writes the attention onto the person, which nothing else in the build does', () => {
+    const sim = world('goes-off');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    castEverybodyAt(sim, id, { repeatable: 55 });
+    const lead = castOf(sim, project).find((one) => one.size.id === 'lead')!;
+    lead.person!.reputation.publicFame = 70;
+    expect(lead.person!.reputation.controversy).toBe(0);
+    const gone = somebodyGoesOff(sim, project)!;
+    expect(gone.reputation.controversy).toBeGreaterThan(0);
+    // Bigger names go off harder, and neither reaches the top from one week.
+    const quieter = { ...gone, reputation: { ...gone.reputation, publicFame: 26, controversy: 0 } };
+    expect(goesOffBy(26)).toBeLessThan(goesOffBy(70));
+    expect(goesOffBy(100)).toBeLessThan(100);
+    expect(quieter.reputation.controversy).toBe(0);
+  });
+
+  it('costs the picture at the sale, on top of whatever the cut lost', () => {
+    const money = 20_000_000_00;
+    const clean = decideTake(
+      { negativeCents: money, dealId: 'studio', cast: { truth: 60, reads: 60 }, controversy: 0 }, 0.5,
+    );
+    const loud = decideTake(
+      { negativeCents: money, dealId: 'studio', cast: { truth: 60, reads: 60 }, controversy: 80 }, 0.5,
+    );
+    expect(loud.cents).toBeLessThan(clean.cents);
+  });
+
+  it('follows them out of the picture and into the next office', () => {
+    // The half that outlives the production. A performer the trade is writing
+    // about does not get cast by an office with no authority to explain it.
+    const sim = world('too-hot');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const came = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!);
+    for (const person of came) person.reputation.controversy = TOO_HOT;
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const seat = seatFor(sim.universe.projects[id]!, role.id);
+    // Somebody plays the part — the office finds somebody else rather than
+    // leaving it empty — and it is not one of the four it passed on.
+    if (seat) expect(came.map((p) => p.id)).not.toContain(seat.personId);
   });
 });
 

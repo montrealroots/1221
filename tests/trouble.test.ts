@@ -27,6 +27,7 @@ import {
   aboveTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, landsOn,
   movedDuringTheWork, rateOf, takeItBack,
 } from '@/engine/world/trouble';
+import { theBiggestName } from '@/engine/world/casting';
 import {
   doneShare, isFinished, partsOf, rungOfPart, stepOfPart,
 } from '@/engine/world/maturity';
@@ -109,10 +110,14 @@ describe('somebody watches the work, and what they find is not a script', () => 
     season.advanceTo(finishesBy(season.universe.projects[seasonId]!)!);
     picture.advanceTo(finishesBy(picture.universe.projects[pictureId]!)!);
 
-    const seasonDeck = deckFor(season.universe.projects[seasonId]!, planById('unscripted')!)
-      .map((one) => one.id);
-    const pictureDeck = deckFor(picture.universe.projects[pictureId]!, planById('feature')!)
-      .map((one) => one.id);
+    const seasonDeck = deckFor(
+      season.universe.projects[seasonId]!, planById('unscripted')!,
+      theBiggestName(season, season.universe.projects[seasonId]!),
+    ).map((one) => one.id);
+    const pictureDeck = deckFor(
+      picture.universe.projects[pictureId]!, planById('feature')!,
+      theBiggestName(picture, picture.universe.projects[pictureId]!),
+    ).map((one) => one.id);
     expect(seasonDeck).toContain('withdrawn-consent');
     expect(pictureDeck).not.toContain('withdrawn-consent');
     // And the routine one happens to everything, which is why it needs no gate.
@@ -426,7 +431,7 @@ describe('the deck holds together', () => {
       const id = greenlit(sim, plan.id, `Reach ${plan.id}`);
       const project = sim.universe.projects[id]!;
       sim.advanceTo(finishesBy(project)!);
-      for (const one of deckFor(project, plan)) reached.add(one.id);
+      for (const one of deckFor(project, plan, theBiggestName(sim, project))) reached.add(one.id);
     }
     // A row nothing can ever draw is a declared word with nothing reading it.
     for (const finding of FINDINGS) {

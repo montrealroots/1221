@@ -875,6 +875,10 @@ export function theOfficeFills(sim: Simulation, project: Project): number {
   for (const role of openRoles(project)) {
     const seen = putItOut(sim, project, role)
       .filter((person) => {
+        // An office with no authority to go over the band also has no appetite
+        // for explaining a booking to anybody. It passes, and `conduct history`
+        // is one of the twenty pass reasons a real office records.
+        if (person.reputation.controversy >= TOO_HOT) return false;
         const when = datesFor(project, role);
         return !when || freeToWork(sim, person.id, when.from, when.to);
       });
@@ -911,3 +915,72 @@ export function registerTheOffice(sim: Simulation): void {
     });
   });
 }
+
+// ---------------------------------------------------------------------------
+// What a name is worth, and what it exposes you to
+// ---------------------------------------------------------------------------
+
+/**
+ * The public fame at which somebody is known well enough to be news.
+ *
+ * SLATE's own. Under it a person is a working actor and what they do at the
+ * weekend is nobody's business; over it there is a market for it. Set so that a
+ * picture with real money behind its leads has names on it and a cheap one does
+ * not, which makes it the price of the thing the money bought.
+ */
+export const SOMEBODY_KNOWS = 25;
+
+/** How well known the best-known person in the cast is. */
+export function theBiggestName(sim: Simulation, project: Project): number {
+  let most = 0;
+  for (const one of castOf(sim, project)) {
+    if (one.person) most = Math.max(most, one.person.reputation.publicFame);
+  }
+  return most;
+}
+
+/**
+ * Whoever in the cast has the most to lose, which is whoever has the most.
+ *
+ * The person a story is about is the person a story is worth writing about, so
+ * a name going off goes off on the biggest name in the picture rather than on a
+ * random one. Returns nobody where nobody is known, which is the same condition
+ * that stops the finding being dealt at all.
+ */
+export function theNameThatGoesOff(sim: Simulation, project: Project): Person | undefined {
+  let worst: Person | undefined;
+  for (const one of castOf(sim, project)) {
+    if (!one.person || one.person.reputation.publicFame < SOMEBODY_KNOWS) continue;
+    if (!worst || one.person.reputation.publicFame > worst.reputation.publicFame) worst = one.person;
+  }
+  return worst;
+}
+
+/**
+ * How far a wave of attention over somebody carries, out of a hundred.
+ *
+ * Scaled to how known they were, because a story about somebody nobody has
+ * heard of is not a story. It never reaches a hundred from one week: this is a
+ * thing that accumulates across a career and decays across years, and a single
+ * event that maxed the axis would leave nowhere for the second one to go.
+ */
+export const goesOffBy = (fame: number): number =>
+  Math.round(18 + Math.min(1, fame / 80) * 34);
+
+/**
+ * What the cast's controversy costs the picture at the sale.
+ *
+ * Weighted the way every other cast figure is: by how much of the picture each
+ * of them is in, because a day player nobody minds is not the same exposure as
+ * the lead. Read by `world/selling.ts` and by the office, which will not cast
+ * somebody the trade is currently writing about.
+ */
+export function castsControversy(sim: Simulation, project: Project): number | undefined {
+  const inIt = castOf(sim, project);
+  const weight = inIt.reduce((n, one) => n + one.share, 0);
+  if (weight <= 0) return undefined;
+  return inIt.reduce((n, one) => n + (one.person?.reputation.controversy ?? 0) * one.share, 0) / weight;
+}
+
+/** What an office will not touch. SLATE's own, and deliberately not a ban. */
+export const TOO_HOT = 55;

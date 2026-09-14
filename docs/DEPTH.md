@@ -43,16 +43,25 @@ that is to declare the vocabulary without building the systems: a field for
 every axis, a modifier key for every effect, an id namespace for every noun. It
 reads as a deep game to anybody scrolling the source and it plays as nothing.
 
-The disease is already here, and it was found by measurement:
+The disease is already here, and it was found by measurement. The second column
+is where each row stood when the ledger was written; the third is where it
+stands now, and the only direction it is allowed to move:
 
-| Declared | Read by something |
-|---|---|
-| 123 id namespaces | 17 |
-| 54 trait modifier keys | 7 |
-| 18 higher-is-worse guards | 12 |
-| 7 reputation axes | 0 |
-| 7 personality axes | 4 |
-| 813 acting attributes | 0 |
+| Declared | Read, at the start | Read now |
+|---|---|---|
+| 125 id namespaces | 17 | 20 |
+| 54 trait modifier keys | 7 | 7 |
+| 18 higher-is-worse guards | 12 | 12 |
+| 7 reputation axes | 0 | 7 |
+| 7 personality axes | 4 | 4 |
+| 813 acting attributes | 0 | 19 |
+
+The two rows that moved, moved for one reason: casting. Nineteen attributes are
+read as three axes that go three different places, and the seven reputation
+axes have writers because a cast is made of people whose standing, fame and
+conduct all decide something separately. Nineteen of eight hundred and thirteen
+is not a boast — it is a first reader on the largest unwired thing in the build,
+and the other seven hundred and ninety-four are still a promise.
 
 `tools/wired.mjs` walks the declared vocabulary, finds what nothing reads, and
 holds the count against `docs/UNWIRED.json`. It does not demand zero — content
