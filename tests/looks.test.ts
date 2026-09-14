@@ -25,6 +25,7 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
+import { openTheDoors } from './doors';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 
 const UI = new URL('../src/ui/', import.meta.url);
@@ -68,6 +69,27 @@ function world(): Simulation {
     kind: 'company.develop',
     payload: { title: 'The Long Winter', holdingId: took?.id },
   });
+
+  // And greenlit, with the doors opened the way a player opens them. Half the
+  // project look only exists once a picture is being made — the schedule, the
+  // crew, the maturity vector, the two ledgers, what can come apart — and a
+  // fixture that stopped at developed never crawled any of it. Rule 6 passed
+  // for months on a page that broke it the moment anybody said yes to
+  // something: one grid of facts before the greenlight, three after it.
+  openTheDoors(sim, 'Something Else To Make');
+  const onTheSlate = Object.values(sim.universe.projects)
+    .find((one) => one.title === 'The Long Winter');
+  if (onTheSlate) {
+    sim.execute({
+      kind: 'company.greenlight',
+      payload: {
+        projectId: onTheSlate.id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5,
+      },
+    });
+    // Far enough in that the ledgers have something in them and the cutting
+    // room has been asked a question, which is where most of the page is.
+    sim.advanceTo(sim.now + 200 * MS_DAY);
+  }
 
   sim.onSchedule('production.table_read', () => {});
   sim.onSchedule('life.dinner', () => {});

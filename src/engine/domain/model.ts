@@ -235,7 +235,34 @@ export interface Person {
    */
   estateRole?: EstateRole;
 
+  /**
+   * What they have been paid to act, and on what.
+   *
+   * A quote is a ratchet with memory, and the memory is the whole of why it
+   * matters. Business affairs pulls what somebody was last paid, in what size
+   * of part, and argues from there — so working for a favor is not a free
+   * favor, it is a number the next three producers get to read. Absent for
+   * everybody who has never been cast, which is almost everybody.
+   */
+  quotes?: Quote[];
+
   createdAt: Instant;
+}
+
+/**
+ * One fee, on one title, at one size.
+ *
+ * Kept as a list rather than a single highest number, because the thing a
+ * quote decays against is its date and the thing it is argued against is the
+ * size it was paid for. A lead fee does not set a day player's price and a
+ * day player's does not cap a lead's.
+ */
+export interface Quote {
+  projectId: Id;
+  /** Which size of part it was paid for, by `content/casting.ts` id. */
+  size: string;
+  cents: number;
+  at: Instant;
 }
 
 /** What somebody on the land is the one who does. */
@@ -386,31 +413,88 @@ export interface Property {
   isPrimaryResidence: boolean;
   /** Rented out to tenants for income. */
   rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
-  /** When the property is a studio lot or a stage: the plant, and who is on it. */
-  lot?: StudioPlant;
   listedForSale?: { price: Money; since: Instant; agentId?: Id };
   soldAt?: Instant;
   createdAt: Instant;
 }
 
-/** A studio lot the player owns, as a working business. */
-export interface StudioPlant {
-  stages: number;
-  /** Square feet of the largest stage. */
-  largestStageSqft: number;
-  /** What SLATE charges the world for a stage day here, in cents. */
-  stageDayRate: Money;
-  /** Monthly cost of keeping the lights on, in cents. */
-  monthlyOverhead: Money;
-  facilities: ('backlot' | 'water_tank' | 'led_volume' | 'post' | 'scoring_stage' | 'workshops' | 'offices')[];
-  /** World productions on the lot right now. */
-  tenants: { projectTitle: string; projectId?: Id; stages: number; from: Instant; to: Instant; dayRate: Money }[];
-  /** Everything the lot has taken in and paid out. */
-  lifetimeIncome: Money;
-  lifetimeOverhead: Money;
-  /** 0-1 share of stage days in use over the last close. */
-  occupancy: number;
-  lastClosedAt?: Instant;
+/**
+ * One stage on a lot.
+ *
+ * This replaced a `StudioPlant` record that carried twelve fields and was
+ * instantiated nowhere — among them `occupancy`, `lifetimeIncome` and
+ * `lifetimeOverhead`, all three of them facts about the world stored as
+ * numbers somebody would have to remember to update. They are worked out from
+ * the bookings and from the ledger now, so they cannot drift from the thing
+ * they describe.
+ *
+ * What is stored here is only what is physically true: how big the room is,
+ * how much air is above it, what it charges and what is in it.
+ */
+export interface SoundStage {
+  id: Id;
+  saveId: Id;
+  /** The lot it stands on. */
+  propertyId: Id;
+  name: string;
+  /** Clear floor inside the acoustic liner, square meters. */
+  floorSqm: number;
+  /** Clear height to the underside of the perms, meters. */
+  clearHeightM: number;
+  /** What a shooting week costs here, in cents. */
+  weekRateCents: Money;
+  /** Tank floor area in square meters, where there is one. */
+  tankSqm?: number;
+  /**
+   * What the room is fitted with, by id rather than by label.
+   *
+   * Not called `features`, because that name is reserved across the save for
+   * lists of Title Case words a person reads, and `tools/label-sweep.mjs`
+   * holds it to that. These are identifiers; `FITTING_LABEL` turns them into
+   * something to print.
+   */
+  fitted: string[];
+  builtAt: Instant;
+}
+
+/** One year's answer on how much sugar America will let in at the low duty. */
+export interface QuotaYear {
+  /** The American fiscal year it governs. */
+  fiscalYear: number;
+  /** Tonnes of additional specialty quota. Zero is a real answer. */
+  tonnes: number;
+  decidedAt: Instant;
+  /** Why it came out that way, in the world's words. */
+  because: string;
+}
+
+/** Whether a production is shooting on a stage, getting ready, or holding it. */
+export type BookingKind = 'shooting' | 'prep' | 'hold';
+
+/**
+ * A production holding a stage for a run of dates.
+ *
+ * The unit is the week, because that is how stages are actually let, and the
+ * rate depends on what the production is doing in there. Pre-lighting and
+ * striking cost less than shooting; holding a standing set on a dark day costs
+ * less again. A lot that charged one flat rate would be a lot nobody had ever
+ * booked.
+ */
+export interface Booking {
+  id: Id;
+  saveId: Id;
+  stageId: Id;
+  /** Who is on it, in the world's words. */
+  holder: string;
+  /** Set when it is the family's own company on its own stage. */
+  companyId?: Id;
+  kind: BookingKind;
+  from: Instant;
+  to: Instant;
+  /** What this booking is paying per week, in cents, after the rate share. */
+  weekRateCents: Money;
+  /** Set once the money for it has been posted. */
+  invoicedAt?: Instant;
 }
 
 export interface Structure {
@@ -935,6 +1019,25 @@ export interface SaveUniverse {
   transactions: LedgerTransaction[];
 
   properties: Record<Id, Property>;
+
+  /**
+   * The lot, as a working plant. Stages are what stands on it; bookings are
+   * who is on them and for how long. Occupancy and what the lot has earned are
+   * worked out from these two and from the ledger, never stored, so they
+   * cannot say one thing while the bookings say another.
+   */
+  stages: Record<Id, SoundStage>;
+  bookings: Record<Id, Booking>;
+
+  /**
+   * What America let in, year by year.
+   *
+   * The sugar the family sells there arrives through a quota that is set fresh
+   * every July, and the year it was set to nothing is real and dated. Kept as
+   * a list rather than as a current figure because the interesting thing about
+   * it is the run: two shut years in a row is a different world from one.
+   */
+  quotaYears: QuotaYear[];
 
   scheduled: ScheduledItem[];
   audits: AuditRecord[];

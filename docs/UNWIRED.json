@@ -1,10 +1,10 @@
 {
   "note": "Set by tools/wired.mjs --bless. These may fall. They may not rise.",
   "counts": {
-    "Id namespaces": 106,
+    "Id namespaces": 105,
     "Trait modifier keys": 47,
     "Higher-is-worse guards": 6,
-    "Dials nothing moves": 7,
+    "Dials nothing moves": 0,
     "Personality axes nothing consults": 3,
     "Save tables nothing fills": 0
   }

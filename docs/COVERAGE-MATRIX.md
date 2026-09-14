@@ -54,7 +54,9 @@ not coming back in this build.
 
 ## The engine, as it now stands
 
-Fifteen commands and two routes, which is the honest size of what is left.
+Twenty-two commands and two routes, which is the honest size of what is left.
+The appendix below is generated from the code, so it is the count to trust; this
+paragraph had said fifteen for three commands longer than it was true.
 
 Three of them are a person deciding something rather than answering
 something. `calendar.schedule` puts a thing on the calendar, `calendar.cancel`
@@ -70,14 +72,100 @@ notice costs nothing, calling off later costs more the later it is, and not
 going at all costs twice what the latest possible call-off does. Ordering
 them is what makes choosing between them a choice.
 
-Seven more are the family business, and they are one system rather than
-seven: a production company is a list of things it may and may not do, and
+Thirteen more are the family business, and they are one system rather than
+thirteen: a production company is a list of things it may and may not do, and
 each of these opens one of those doors. `company.register` puts it on a
 register (Fyrirtækjaskrá, the VAT roll, the employer roll, the IRS),
 `company.form_arm` forms the American subsidiary, `company.sign` signs a
 guild agreement, `company.insure` binds a policy, `company.option` takes
-rights to something, `company.fill_post` puts somebody in a post and
+rights to something, `company.fill_post` puts a person in a post and
 `company.develop` puts something on the slate.
+
+The last three are what happens after somebody says yes. `company.greenlight`
+turns a title into a schedule: it lays a plan's periods onto real dates,
+takes a stage off the lot's own booking board to hold them, and arms the
+ticks that walk the picture from prep to wrap to a finished cut.
+`company.deliver` files one item on the contractual delivery list, which is
+the thing that actually gets a picture paid for — and four of those items
+are paperwork no one on the crew makes, so a finished film can sit unpaid
+for months because the music cue sheet was nobody's job.
+
+`company.sell` sells the finished thing, and it is the only one of the three
+that can pay the company back. A deal is chosen, a ten-year take is reckoned
+once and never revised, and the release windows are armed to pay as they open.
+
+Three of them put people on screen, and they are three rather than one because
+advertising a part, offering it to a named person, and letting that person go
+are three decisions taken days apart by different people. `company.breakdown`
+puts a part out and writes down who came in — once, so the way to see better
+people is to have more money behind the part rather than to look again.
+`company.cast` offers it at a number, and is the only command in the build
+whose refusal is a person saying no rather than the engine saying it could not
+be done. `company.release` lets somebody go, and never gets the money back:
+paid, used and credited are three different things, and actors are routinely
+paid and cut out.
+
+Casting is also where the acting sheet stops being decoration. Every save has
+carried 813 acting attributes since the first commit and nothing read one of
+them; nineteen are now read, on the people a picture casts, as three axes that
+go three different places. Whether a performer can repeat a take is read by the
+shoot and by nothing else — more takes is more material for the same finished
+second, which is the shooting ratio, which is how far the cutting room has to
+wade, which is the delivery date. Whether they are any good and what the lens
+does with them are read by the sale, and by nothing on the floor. No axis is
+read twice, because an axis with two readers could have been one axis.
+
+Nobody has to cast anything. Two weeks before the camera turns over the
+casting office fills whatever is left, at the band and no further — so the
+money a picture was greenlit at is a casting decision months before anybody
+thinks of it as one, and paying over the band is the only way to reach past it.
+What is paid over the band the company pays on the day it reaches, whether or
+not a frame is ever shot, because that is what pay or play means.
+
+Having a name is also the only way to lose one. A picture with somebody
+well-enough known to be news carries a row on the trouble deck that a picture
+cast out of strangers cannot draw: something the person did, or is said to have
+done, arrives in the press while the picture is being finished. The work is
+what it was; every buyer now has a reason to wait. The attention goes on the
+person rather than on the production, so they carry it into the sale of
+everything they are in and into the next office, which passes on them without
+saying why. It is the only thing in the build that writes `controversy`, which
+had been a number seeded to zero on every person in every save and moved by
+nothing at all.
+
+**What is not built, and is named here so the list above does not imply it.**
+The audition — the room, the hidden want, the note, the redirect, the
+repeatability check on a callback — is the largest missing piece and the one
+the research is most emphatic about; casting here is offer-only, which the
+research lists as a real format but is one of nineteen. There are no holds:
+availability, a pin, a first refusal, a hold and a booking are five states with
+five exit costs, and collapsing them deletes pilot season, so they wait for a
+market with somebody else's projects in it to compete over. No background, no
+stand-ins, no doubles, no stunt performers. No billing, which is a finite-slot
+constraint that can become unsatisfiable. No most-favoured-nations, no minors
+and their hours, no visas, no union clearance. A day out of days would make the
+schedule re-price the cast, and there is not one.
+
+`lot.sell` is the odd one out and the only command taken again every month:
+what the lot spends telling people it exists. The overhead table's line is the
+floor and anything above it is a bet, read back off the ledger across three
+quarters rather than off the figure — so it cannot be bought the month before
+it is wanted, and it cannot be dropped without the market noticing two quarters
+later.
+What arrives is run through a recoupment waterfall in the order it arrives: a
+distributor's fee off the top, then what was spent selling the picture, then
+the money that made it, with interest on whatever part of that is still
+outstanding. The order is the whole mechanic, and it is why a picture can take
+three times its budget and still owe for itself.
+
+No command hires a crew, and that is deliberate. A greenlit picture arms a
+`project.crew` tick for each week somebody is due to start, and people arrive
+against that calendar on their own: the unit production manager, the designer
+and the money ten weeks before the camera turns over, the first AD at six, the
+gaffer and the key grip at two, the boom operator in the last week. Most of the
+people in a save exist because a picture needed them, and they persist and get
+rehired afterward, so a company that keeps working accumulates a crew rather
+than regenerating one.
 
 The decision underneath them: the parent is an Icelandic `ehf.` and the
 American arm is earned. Global Rule One is why — a SAG-AFTRA member may not
@@ -97,22 +185,26 @@ marking read (`world.take_decision_action`, `world.dismiss_decision`,
 
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 15 commands, 2 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 2 routes.
+Generated by `node tools/inventory.mjs --markdown`. 22 commands, 12 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 2 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
-| company | `company.develop` `company.fill_post` `company.form_arm` `company.insure` `company.option` `company.register` `company.sign` | `src/engine/world/company.ts` |
+| company | `company.breakdown` `company.cast` `company.deliver` `company.develop` `company.fill_post` `company.form_arm` `company.greenlight` `company.insure` `company.option` `company.register` `company.release` `company.sell` `company.sign` | `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/engine/world/making.ts`, `src/engine/world/selling.ts` |
 | life | `life.sleep` | `src/engine/systems/life.ts` |
+| lot | `lot.sell` | `src/engine/world/lot.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
 ### Scheduled kinds
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| life | `life.day_rollover` | `src/engine/systems/life.ts` |
+| life | `life.commitment` `life.day_rollover` | `src/engine/systems/life.ts`, `src/engine/world/plans.ts` |
+| lot | `lot.overhead` | `src/engine/world/lot.ts` |
+| project | `project.banked` `project.cast` `project.crew` `project.delivery` `project.part` `project.period` `project.window` | `src/engine/world/casting.ts`, `src/engine/world/crew.ts`, `src/engine/world/making.ts`, `src/engine/world/selling.ts` |
+| sugar | `sugar.quota` | `src/engine/world/sugar.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
 
 ### Events emitted

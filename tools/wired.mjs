@@ -31,7 +31,6 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
 
 const CHECK = process.argv.includes('--check');
 const BLESS = process.argv.includes('--bless');
@@ -41,7 +40,9 @@ const BASELINE = 'docs/UNWIRED.json';
 
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const path = join(dir, entry.name);
+    // Forward slashes, always. Every path this file names a file by is written
+    // with them, and `join` would hand back backslashes on Windows.
+    const path = `${dir}/${entry.name}`;
     if (entry.isDirectory()) walk(path, out);
     else if (/\.(ts|tsx)$/.test(path)) out.push(path);
   }

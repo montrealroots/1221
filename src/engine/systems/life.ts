@@ -102,7 +102,7 @@ export function wellbeingSummary(person: Person): string {
   if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
   if (w.morale < 30) return 'Flat. The work is fine, the feeling isn’t.';
-  return 'Holding up.';
+  return 'Holding up, and no dial is far enough out to be worth naming.';
 }
 
 // ---------------------------------------------------------------------------

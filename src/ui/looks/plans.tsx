@@ -152,7 +152,7 @@ defineLook<Stretch>('stretch', {
 interface Plans { pending: CalendarEntry[]; settled: CalendarEntry[] }
 
 defineLook<Plans>('plans', {
-  gone: 'There is no calendar to have put anything on.',
+  gone: 'There’s no calendar to have put anything on.',
   resolve: (sim) => plansOf(sim),
   seeds: () => [''],
   look: ({ pending, settled }, { sim }) => {

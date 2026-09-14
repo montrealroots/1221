@@ -26,9 +26,29 @@ import {
   americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf, parentCompany,
   policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
 } from '@/engine/world/company';
+import { DELIVERY, type Element } from '@/engine/content/making';
+import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
+import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
+import { departmentById } from '@/engine/content/crew';
+import { crewOf, postsFor, standingReads } from '@/engine/world/crew';
+import {
+  finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
+} from '@/engine/world/making';
+import { DIMENSIONS, dimensionById, rungsOf } from '@/engine/content/maturity';
+import { rateById } from '@/engine/content/inventory';
+import {
+  laddersOf, partsOf, rungOf, rungOfPart, shareOf, shareOfPart, whereTheWorkStands,
+} from '@/engine/world/maturity';
+import {
+  cutsAWeek, handsOn, ledgerOf, ratioOf, saidAsRatio, stockOf, whereTheMaterialStands, willMakeIt,
+} from '@/engine/world/inventory';
+import { theBiggestName } from '@/engine/world/casting';
+import { stockById } from '@/engine/content/inventory';
+import { aboveTheRoom, deckFor, exposureOf, owedAgain } from '@/engine/world/trouble';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatRelative } from '@/engine/core/time';
 import { Stat } from '@/ui/components/primitives';
+import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, said, spokenList, toStart } from './words';
@@ -438,31 +458,397 @@ defineLook<Project>('project', {
   look: (project, { sim }) => {
     const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
     const company = sim.universe.companies[project.companyId];
+    const plan = planOf(project);
+    const stage = project.stageId ? sim.universe.stages[project.stageId] : undefined;
+    const held = heldUpBy(project);
+    const deal = project.dealId ? dealById(project.dealId) : undefined;
+    const split = standingOf(project);
+    const crew = crewOf(sim, project);
+    const carries = postsFor(project.budgetCents ?? 0).length;
+    const ladders = laddersOf(project);
+    const parts = partsOf(project);
+    const ledger = ledgerOf(project);
+    const ratio = ratioOf(project);
+    const forecast = willMakeIt(project, sim.now);
+    const hands = handsOn(project);
+    const rate = plan ? rateById(plan.periods.find((one) => one.converts)?.converts?.at ?? '') : undefined;
+    const deck = plan ? deckFor(project, plan, theBiggestName(sim, project)) : [];
+    const exposure = exposureOf(project, sim);
+    const owedBack = owedAgain(project);
+    const above = plan ? aboveTheRoom(plan, ladders) : 0;
     const ways: Way[] = [];
     if (holding) ways.push({ to: at('holding', holding.id), label: holding.title, detail: 'Which rights it hangs off' });
-    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s developing it' });
+    if (company) ways.push({ to: at('firm', company.id), label: company.legalName, detail: 'Who’s making it' });
 
     return {
       name: project.title,
       kind: project.medium === 'film' ? 'A Film On The Slate' : 'Television On The Slate',
       parent: company ? at('firm', company.id) : undefined,
-      summary: holding
-        ? `On the slate since ${formatDate(project.startedAt, sim.homeZone)}, and the company holds the rights.`
-        : `On the slate since ${formatDate(project.startedAt, sim.homeZone)}, and the company holds no rights to it.`,
+      summary: project.dealId ? whereTheMoneyStands(project) : whereThePictureStands(sim, project),
       body: (
         <>
-          <p className="small">
-            Most things die between being optioned and being packaged, which isn’t a failure of the
-            company so much as the shape of the business. A slate exists because of it.
-          </p>
-          <div className="grid grid-3">
-            <Stat label="Where It Is" value={toStart(project.stage)} note="On the way to being made" />
-            <Stat label="Spent On It" value={moneyOf(project.spentCents)} note="Gone either way" />
-            <Stat label="Rights" value={holding ? 'Held' : 'None'} note={holding ? holding.title : 'Nothing behind it yet'} />
-          </div>
+          {plan ? (
+            <>
+              <p className="small">{plan.what}</p>
+              <div className="grid grid-3">
+                <Stat label="Where It Is" value={periodOf(project)?.label ?? toStart(project.stage)}
+                  note={periodOf(project)?.what ?? 'Between periods'} />
+                <Stat label="Budget" value={project.budgetCents ? moneyOf(project.budgetCents) : 'Not set'}
+                  note={`${moneyOf(project.spentCents)} of it has gone`} />
+                <Stat label="Stage" value={stage?.name ?? 'Elsewhere'}
+                  note={stage ? 'Held off the lot’s own board' : 'Not on a stage here'} />
+              </div>
+              <h4>The Schedule</h4>
+              <table className="table">
+                <tbody>
+                  {(project.periods ?? []).map((window) => {
+                    const period = plan.periods.find((one) => one.id === window.id);
+                    const span = Math.round((window.to - window.from) / (7 * 24 * 60 * 60 * 1000));
+                    const units = period ? Math.round(span * period.unit.aWeek) : span;
+                    return (
+                      <tr key={window.id}>
+                        <td>{period?.label ?? window.id}</td>
+                        <td className="small">{formatDate(window.from, sim.homeZone)}</td>
+                        <td className="small">{formatDate(window.to, sim.homeZone)}</td>
+                        <td className="small">{units} {units === 1 ? period?.unit.one : period?.unit.many}</td>
+                      </tr>
+                    );
+                  })}
+                  {project.deliverBy === undefined ? null : (
+                    <tr>
+                      <td>Delivery Due</td>
+                      <td className="small" colSpan={2}>{formatDate(project.deliverBy, sim.homeZone)}</td>
+                      <td className="small">
+                        {finishesBy(project) === undefined ? '' : `${Math.round((project.deliverBy - finishesBy(project)!) / (7 * 24 * 60 * 60 * 1000))} weeks after the work`}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              <h4>Who Is On It</h4>
+              <p className="small">
+                {crew.length === 0
+                  ? `Nobody yet. This picture carries ${carries} posts, and they come on over the weeks before the camera does — the money and the design first, the camera late.`
+                  : `${crew.length} of ${carries} posts filled. Nobody starts on the first day: a unit production manager is here ten weeks before the camera turns over, a boom operator for one.`}
+              </p>
+              {/* Six columns of short values. On a phone they get about fifty
+                  pixels each and a word like "Production" comes apart across
+                  three lines, so the whole table scrolls sideways in its own box
+                  rather than being crushed into the width of the page. */}
+              {crew.length === 0 ? null : (
+                <div className="table-wrap">
+                <table className="table">
+                  <tbody>
+                    {crew.map((seat) => (
+                      <tr key={seat.post.id}>
+                        {/* The name is the way in, the way every other name in
+                            the game is. These people exist in their own right
+                            and outlast the picture that hired them. */}
+                        <td className="nowrap">
+                          <Open subject={at('person', seat.person.id)}>{seat.person.displayName}</Open>
+                          {seat.post.head ? ' · Heads the department' : ''}
+                        </td>
+                        <td className="small nowrap">{seat.post.label}</td>
+                        <td className="small nowrap">{departmentById(seat.post.department)?.label ?? seat.post.department}</td>
+                        <td className="small nowrap">{seat.post.local}</td>
+                        <td className="small nowrap">{standingReads(seat.person.reputation.professionalReputation)}</td>
+                        <td className="small nowrap">
+                          {formatDate(seat.from, sim.homeZone)} to {formatDate(seat.to, sim.homeZone)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                </div>
+              )}
+              <h4>How Finished It Is</h4>
+              <p className="small">{whereTheWorkStands(project)}</p>
+              <div className="table-wrap">
+              <table className="table">
+                <tbody>
+                  {DIMENSIONS.map((dimension) => {
+                    const rung = rungsOf(ladders, dimension.id)
+                      .find((one) => one.id === rungOf(project, dimension.id));
+                    return (
+                      <tr key={dimension.id}>
+                        <td className="nowrap">{dimension.label}</td>
+                        <td className="small nowrap">{rung?.label ?? 'Not started'}</td>
+                        <td className="small nowrap">{Math.round(shareOf(project, dimension.id) * 100)}/100</td>
+                        <td className="small">{rung?.what ?? dimension.what}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              </div>
+              <p className="small">
+                Done is the lowest line in that table and never the average of them. A part that is
+                locked, mixed, mastered and missing one signature is worth nothing until the last name is on it.
+              </p>
+              {parts.length < 2 ? null : (
+                <div className="table-wrap">
+                <table className="table">
+                  <tbody>
+                    {parts.map((part) => (
+                      <tr key={part.id}>
+                        <td className="nowrap">Part {part.ordinal}</td>
+                        <td className="small nowrap">{Math.round(part.seconds / 60)} minutes</td>
+                        <td className="small nowrap">
+                          {rungsOf(ladders, 'picture')
+                            .find((one) => one.id === rungOfPart(project, part, 'picture'))?.label ?? '—'}
+                        </td>
+                        <td className="small nowrap">
+                          {Math.round(Math.min(...DIMENSIONS.map((d) => shareOfPart(project, part, d.id))) * 100)}/100
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                </div>
+              )}
+              {ledger.length === 0 && ratio === undefined ? null : (
+                <>
+                  <h4>What Has Been Shot</h4>
+                  <p className="small">{whereTheMaterialStands(project, sim.now)}</p>
+                  <div className="table-wrap">
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <td className="nowrap">Shooting Ratio</td>
+                        <td className="small nowrap">{ratio === undefined ? 'Nothing yet' : saidAsRatio(ratio)}</td>
+                        <td className="small">
+                          {ratio === undefined
+                            ? 'No material stands against the runtime yet.'
+                            : 'Material against finished runtime. No figure anywhere sets it: the two ledgers come to it.'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">The Cutting Room</td>
+                        <td className="small nowrap">{hands === 0 ? 'Nobody' : `${hands} ${hands === 1 ? 'hand' : 'hands'}`}</td>
+                        <td className="small">
+                          {rate
+                            ? `${rate.who}, ${Math.round(cutsAWeek(project) / 60)} finished minutes a week between them.`
+                            : 'This plan turns no material into runtime.'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">The Cut Against The Date</td>
+                        <td className={`small nowrap${forecast && !forecast.makesIt ? ' negative' : ''}`}>
+                          {forecast === undefined ? 'Not running'
+                            : forecast.makesIt ? 'Inside it' : `${Math.ceil(forecast.shortBy)} weeks short`}
+                        </td>
+                        <td className="small">
+                          {forecast === undefined
+                            ? 'There is no cutting room on this one.'
+                            : `Needs ${Math.ceil(forecast.needs)} more weeks and the calendar leaves ${Math.floor(forecast.has)}.`}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  {ledger.length === 0 ? null : (
+                    <table className="table">
+                      <tbody>
+                        {ledger.map((row) => {
+                          const stock = stockById(row.stock);
+                          const n = Math.round(row.amount);
+                          return (
+                            <tr key={row.stock}>
+                              <td className="nowrap">{row.label}</td>
+                              <td className="small nowrap">
+                                {n.toLocaleString('en-US')} {n === 1 ? stock?.unit.one : stock?.unit.many}
+                              </td>
+                              <td className="small">{stock?.what}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                  <p className="small">
+                    {plan && stockOf(plan)
+                      ? 'Money buys hands, hands turn material into screen time at a rate, and money never buys screen time directly. Put one editor on this where the plan assumed two and it arrives half as fast — not late with a warning next to it, but actually half as fast.'
+                      : 'This plan acquires nothing it sets aside. Everything made for it goes straight onto the timeline.'}
+                  </p>
+                </>
+              )}
+              {deck.length === 0 ? null : (
+                <>
+                  <h4>What Could Come Apart</h4>
+                  <p className="small">
+                    Done is the lowest line in the table above, so finished work stays finished
+                    until a lawyer or a compliance editor watches it again. What a finding costs is
+                    how far the work had climbed when it landed, so the same note is free in week two
+                    and ruinous in week nineteen. The ladder says that, and no figure here does.
+                  </p>
+                  <div className="table-wrap">
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <td className="nowrap">What’s Lying Around</td>
+                        <td className={`small nowrap${exposure > 0.5 ? ' warning' : ''}`}>
+                          {Math.round(exposure * 100)}/100
+                        </td>
+                        <td className="small">
+                          Material banked against runtime owed, a chain of title with a gap in it,
+                          and paperwork the company has yet to file.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">Owed Back To The Room</td>
+                        <td className={`small nowrap${owedBack > 0 ? ' negative' : ''}`}>
+                          {owedBack > 0 ? `${Math.round(owedBack / 60)} minutes` : 'None'}
+                        </td>
+                        <td className="small">
+                          {owedBack > 0
+                            ? 'Screen time already made once, to be made again before anything new.'
+                            : 'The cutting room has had nothing sent back to it.'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="nowrap">Above The Cutting Room</td>
+                        <td className="small nowrap">{above === 0 ? 'Nobody' : `${above} ${above === 1 ? 'rung' : 'rungs'}`}</td>
+                        <td className="small">
+                          {above > 2
+                            ? 'A producer, an executive and a broadcaster, and every one of them can send it back down.'
+                            : 'A short ladder above the cut, so there is little to fall.'}
+                        </td>
+                      </tr>
+                      {deck.map((finding) => (
+                        <tr key={finding.id}>
+                          <td className="nowrap">{finding.label}</td>
+                          <td className="small nowrap">
+                            {dimensionById(finding.dimension)?.label ?? finding.dimension}
+                          </td>
+                          <td className="small nowrap">
+                            {finding.down === 'floor' ? 'All the way down'
+                              : finding.down === 'room' ? 'Back to the cutting room'
+                                : `${finding.down} ${finding.down === 1 ? 'rung' : 'rungs'}`}
+                          </td>
+                          <td className="small">{finding.what}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  </div>
+                </>
+              )}
+              <h4>The Delivery List</h4>
+              <p className="small">
+                A distributor doesn’t pay for a film. It pays for a list, and it pays when the list
+                is complete{held.length > 0 ? `. ${held.length === 1 ? 'One item' : `${held.length} items`} on this one ${isAre(held.length)} outstanding` : ', and this one is'}.
+              </p>
+              <table className="table">
+                <tbody>
+                  {DELIVERY.map((element: Element) => (
+                    <tr key={element.id}>
+                      <td>{element.label}</td>
+                      {/* A status is two or three words and must not break in
+                          half. The column beside it carries prose and will take
+                          whatever room is left. */}
+                      <td className="small nowrap">
+                        {project.delivered.includes(element.id)
+                          ? 'Over'
+                          : element.by === 'business' ? 'Waiting to be filed' : 'Comes out of the work'}
+                      </td>
+                      <td className="small">{element.what}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {deal === undefined || split === undefined ? null : (
+                <>
+                  <h4>Where The Money Went</h4>
+                  <p className="small">
+                    {deal.what} A picture is paid for in the order below, and the money that made it
+                    is third — behind the fee, and behind what was spent selling it.
+                  </p>
+                  <table className="table">
+                    <tbody>
+                      {TIERS.map((tier) => (
+                        <tr key={tier.id}>
+                          <td>{tier.label}</td>
+                          <td className="small money">{moneyOf(split.took[tier.id])}</td>
+                          <td className="small">{tier.what}</td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td>Still Outstanding</td>
+                        <td className="small money">{moneyOf(split.stillOwedCents)}</td>
+                        <td className="small">
+                          {split.stillOwedCents > 0
+                            ? 'What the picture still owes for itself, interest included.'
+                            : 'The picture has paid for itself.'}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h4>The Windows</h4>
+                  {deal.reach === 0 ? (
+                    <p className="small">
+                      Nobody licenses this one again. It was bought outright, so there are no windows
+                      to open and no statements to read.
+                    </p>
+                  ) : (
+                    <table className="table">
+                      <tbody>
+                        {WINDOWS.map((window) => (
+                          <tr key={window.id}>
+                            <td className="nowrap">{window.label}</td>
+                            <td className="small nowrap">
+                              {project.windowsPaid?.includes(window.id) ? 'Paid' : 'Not yet'}
+                            </td>
+                            <td className="small">{window.what}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="small">
+                Most things die between being optioned and being packaged, which isn’t a failure of the
+                company so much as the shape of the business. A slate exists because of it.
+              </p>
+              <div className="grid grid-3">
+                <Stat label="Where It Is" value={toStart(project.stage)} note="On the way to being made" />
+                <Stat label="Spent On It" value={moneyOf(project.spentCents)} note="Gone either way" />
+                <Stat label="Rights" value={holding ? 'Held' : 'None'} note={holding ? holding.title : 'Nothing behind it yet'} />
+              </div>
+            </>
+          )}
         </>
       ),
       ways,
+      facets: plan === undefined ? undefined : [
+        {
+          id: 'outstanding',
+          label: 'What’s Outstanding',
+          body: (
+            <p className="small">
+              {held.length === 0
+                ? `The money isn’t being held up. ${stillMissing(project).length === 0 ? 'Every element is over.' : 'What’s left doesn’t gate the payment.'}`
+                : `The money is held until ${spokenList(held.map((one) => one.label))} ${isAre(held.length)} over.`}
+            </p>
+          ),
+        },
+        {
+          id: 'where',
+          label: 'Where It’s Being Made',
+          body: (
+            <p className="small">
+              {stage
+                ? `${stage.name}, held from ${formatDate(windowOf(project, plan.periods[0]!.id)?.from ?? project.startedAt, sim.homeZone)}. `
+                  + 'It’s a room no paying tenant can have while the picture is in it, which is what owning the stages actually costs.'
+                : 'No room on the lot is being held for it.'}
+            </p>
+          ),
+          ways: stage ? [{ to: at('firm', project.companyId), label: 'The Lot', detail: 'Who else is booked on it' }] : undefined,
+        },
+      ],
     };
   },
 });
@@ -508,7 +894,7 @@ defineLook<Roled>('role', {
               value={facts.monthlyCents === 0 ? 'Nothing' : moneyOf(facts.monthlyCents)}
               note={facts.monthlyCents === 0 ? 'Whoever owns it does it' : 'Whether anything shoots or not'}
             />
-            <Stat label="Where" value="Sugar Land" note="There is nowhere else" />
+            <Stat label="Where" value="Sugar Land" note="There’s nowhere else" />
           </div>
         </>
       ),

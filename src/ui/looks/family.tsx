@@ -477,9 +477,9 @@ defineLook<Doing>('estaterole', {
         <>
           <p className="small">
             {opens
-              ? `It isn’t a job in a labor market — there is no labor market here, and nobody on this land `
+              ? `It isn’t a job in a labor market — there’s no labor market here, and nobody on this land `
                 + `draws a wage from anybody. It’s the thing ${person.firstName} is the one who does, and on `
-                + `this land that is a more permanent arrangement than a job: your `
+                + `this land that’s a more permanent arrangement than a job: your `
                 + `${(word ?? 'family').toLowerCase()} will still be the one who does it next year.`
               : `The house, the lot and the company all need running, and none of it falls to `
                 + `${person.firstName}. They’re the one person here with nothing they have to be doing.`}

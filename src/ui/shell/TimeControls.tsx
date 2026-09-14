@@ -38,8 +38,11 @@ export function TimeControls() {
    */
   const due = standingAt;
 
+  // Through the command, the way every other change to the save goes. It was
+  // an assignment into `sim.universe` from a React component, which is the one
+  // write in the interface that skipped the engine entirely.
   const setSpeed = (next: typeof speed) => {
-    sim.universe.preferences.timeSpeed = next;
+    run('world.set_preferences', { timeSpeed: next }, { silent: true });
     refresh();
   };
 

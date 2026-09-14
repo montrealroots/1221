@@ -202,7 +202,7 @@ function dragsOn(w: Wellbeing): { key: DialKey; name: string; value: number }[] 
 }
 
 defineLook<Ready>('readiness', {
-  gone: 'There is nobody here to be ready.',
+  gone: 'There’s nobody here to be ready.',
   resolve: (sim, id) => {
     const person = personIn(sim, id || sim.universe.playerId);
     if (!person) return undefined;

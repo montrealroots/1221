@@ -25,8 +25,14 @@ import { CITIES } from './content/geography';
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
+import { buildTheLot, registerLot } from './world/lot';
+import { registerSugar, seedTheQuota } from './world/sugar';
+import { registerMaking } from './world/making';
+import { registerSelling } from './world/selling';
+import { registerCrew } from './world/crew';
+import { registerCasting } from './world/casting';
 import {
-  companiesOf, foundTheCompany, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
+  companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
@@ -48,6 +54,12 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerCompanyCommands(sim);
+  registerLot(sim);
+  registerSugar(sim);
+  registerMaking(sim);
+  registerSelling(sim);
+  registerCrew(sim);
+  registerCasting(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -183,7 +195,18 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // by whoever the player said runs what. The Your People step decides who is
   // the principal of a production company, which is a heavier thing than the
   // step lets on.
-  foundTheCompany(sim);
+  // The sugar first, because it is older than everything else here and it is
+  // what pays for all of it. The family has been in cane since long before
+  // anybody thought about a stage.
+  foundTheSugarGroup(sim);
+  seedTheQuota(sim);
+  const company = foundTheCompany(sim);
+
+  // --- The lot ------------------------------------------------------------
+  // After the company, because the company owns it. The land was the family's
+  // already; the stages on it were built, and they have been costing money
+  // every month since.
+  buildTheLot(sim, company.id);
 
   armWorldClock(sim);
 }
@@ -292,13 +315,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('households', 'the households');
   record('bonds', 'the bonds between people');
   record('companies', 'the family business');
-  record('registrations', 'the registers it is on');
+  record('registrations', 'the registers it’s on');
   record('signatures', 'the guilds it has signed with');
   record('policies', 'the cover it carries');
   record('holdings', 'the material it holds');
   record('posts', 'the posts it keeps');
   record('projects', 'the slate');
   record('properties', 'the properties');
+  record('stages', 'the stages on the lot');
+  record('bookings', 'who is booked onto them');
+  list('quotaYears', 'what America let in each year');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
   record('idempotency', 'the command receipts');
@@ -443,6 +469,21 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
+  // Schema 78: a company says which business it is in. Before the sugar group
+  // there was only one, so anything without a trade is a film company.
+  let traded = 0;
+  for (const company of Object.values(universe.companies ?? {})) {
+    const c = company as unknown as Record<string, unknown>;
+    if (c.trade === undefined) { c.trade = 'film'; traded += 1; }
+  }
+  if (traded > 0) steps.push(`Marked ${traded === 1 ? 'one company' : `${traded} companies`} as being in film.`);
+
+  // Schema 78: a picture carries the elements it has handed over.
+  for (const project of Object.values(universe.projects ?? {})) {
+    const p = project as unknown as Record<string, unknown>;
+    if (!Array.isArray(p.delivered)) p.delivered = [];
+  }
+
   if (!universe.preferences) {
     universe.preferences = {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
@@ -577,7 +618,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   for (const company of companies) {
     const total = company.ownerships.reduce((sum, one) => sum + one.percent, 0);
     if (company.ownerships.length > 0 && total !== 100) {
-      errors.push(`${company.name} is ${total}% owned, which is not how owning something works.`);
+      errors.push(`${company.name} is ${total}% owned, which isn’t how owning something works.`);
     }
     for (const owner of company.ownerships) {
       const known = owner.holderKind === 'person' ? universe.people[owner.holderId] : universe.companies[owner.holderId];
@@ -644,11 +685,17 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   check('scheduled', universe.scheduled);
 
   // Ownership conservation: nothing owned by someone who does not exist.
+  // A property is owned by a person or by a company, and `ownerKind` says
+  // which — the lot is owned by the family business, not by anybody in it.
   for (const property of Object.values(universe.properties)) {
     checked++;
     if (!property.ownerId) continue;
-    if (!universe.people[property.ownerId]) {
-      errors.push(`Property ${property.id} is owned by '${property.ownerId}', who doesn’t exist.`);
+    const owner = property.ownerKind === 'company'
+      ? universe.companies[property.ownerId]
+      : universe.people[property.ownerId];
+    if (!owner) {
+      const who = property.ownerKind === 'company' ? 'a company that' : 'somebody who';
+      errors.push(`Property ${property.id} is owned by '${property.ownerId}', ${who} doesn’t exist.`);
     }
   }
 

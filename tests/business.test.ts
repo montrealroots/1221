@@ -18,6 +18,16 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import {
+  breakEvenShare, paidInAsShareOfAYear, paidInSoFar, stagesOn, theLot, utilisation,
+  whereTheLotStands, wouldBook,
+} from '@/engine/world/lot';
+import {
+  BUILD_COST_CENTS, ENQUIRY_SHAPES, ICELAND_STAGE_FLOOR_SQM,
+  MONTHLY_OVERHEAD_CENTS, THE_RATE_CARD,
+} from '@/engine/content/lot';
+import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
+import { quotaYears, decideQuota } from '@/engine/world/sugar';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -25,7 +35,7 @@ import { ESTATE_CITY_ID } from '@/engine/content/estate';
 import { CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, VAT_RATE } from '@/engine/content/incorporation';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
-  parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf,
+  parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
 
@@ -380,6 +390,276 @@ describe('what the content claims about the real world', () => {
     expect(REBATE.appliedBefore).toBe(true);
     expect(REBATE.auditedBy).toContain('auditor');
     // And says plainly that the rate has moved rather than printing a guess.
-    expect(REBATE.note).toContain('raised above this figure');
+    // Both rates are sourced now: 25% with no minimum spend and no cap, and a
+    // 35% tier a production has to qualify for.
+    expect(REBATE.share).toBe(0.25);
+    expect(REBATE.higherShare).toBe(0.35);
+    expect(REBATE.higherNeeds.crew).toBeGreaterThan(0);
+    expect(REBATE.endsOn.year, 'the scheme has an end date and the game should carry it').toBe(2028);
+  });
+});
+
+describe('the rate card, which is what the whole bet turns on', () => {
+  it('lets every stage inside the published benchmark, and large rooms cheaper by the meter', () => {
+    const sim = quickSave({}, 'rates');
+    const by = stagesOn(sim)
+      .map((stage) => ({ name: stage.name, per: stage.weekRateCents / 100 / stage.floorSqm }));
+    for (const one of by) {
+      // Lambert Smith Hampton's UK benchmark, carried to 2026 money, is about
+      // €21-25 per square meter per week for a 20,000 sq ft room. Nothing here
+      // may sit above it, because a lot nobody has heard of does not command
+      // a premium over near-London.
+      expect(one.per).toBeLessThanOrEqual(THE_RATE_CARD.benchmarkPerSqmWeek + 3);
+      expect(one.per).toBeGreaterThan(8);
+    }
+    const askja = stagesOn(sim).find((one) => one.name === 'Askja')!;
+    const small = stagesOn(sim).find((one) => one.floorSqm === 2_000)!;
+    expect(askja.weekRateCents / askja.floorSqm).toBeLessThan(small.weekRateCents / small.floorSqm);
+  });
+
+  it('needs most of the lot full to cover a month, which is the honest answer', () => {
+    const sim = quickSave({}, 'break-even');
+    const need = breakEvenShare(sim)!;
+    // A new lot in a country with no crew base needing three fifths of its
+    // capacity to stand still is the bet. If this ever drops toward a third,
+    // the rate card has been inflated again and the lot has stopped being a
+    // risk the family took.
+    expect(need).toBeGreaterThan(0.5);
+    expect(need).toBeLessThan(0.75);
+    expect(whereTheLotStands(sim)).toContain(`${Math.round(need * 100)}% full to cover a month`);
+  });
+});
+
+describe('the lot as a business', () => {
+  it('is owned by the company, not by anybody in the family', () => {
+    const sim = quickSave({}, 'lot-owner');
+    const lot = theLot(sim)!;
+    expect(lot, 'no lot was built').toBeDefined();
+    expect(lot.ownerKind).toBe('company');
+    expect(sim.universe.companies[lot.ownerId!], 'the owner is not a company in the save').toBeDefined();
+    expect(sim.universe.people[lot.ownerId!], 'the lot belongs to a person').toBeUndefined();
+  });
+
+  it('has more stage floor on it than the rest of Iceland put together', () => {
+    const sim = quickSave({}, 'lot-floor');
+    const floor = stagesOn(sim).reduce((n, s) => n + s.floorSqm, 0);
+    expect(floor).toBeGreaterThan(ICELAND_STAGE_FLOOR_SQM);
+  });
+
+  it('costs money on a month when nobody is on it', () => {
+    const sim = quickSave({}, 'lot-dark');
+    const cash = Object.values(sim.universe.accounts).find((a) => a.kind === 'company_cash')!;
+    const opening = sim.universe.transactions.length;
+    sim.advanceTo(sim.now + 40 * MS_DAY);
+    expect(
+      sim.universe.transactions.length,
+      'a month passed and the lot charged nobody for standing there',
+    ).toBeGreaterThan(opening);
+    // Every line is posted under its own name, so the bill can be opened.
+    const memos = sim.universe.transactions.map((t) => t.memo);
+    expect(memos.some((m) => /Set Aside For Repairs/.test(m))).toBe(true);
+    expect(memos.some((m) => /Standing Crew/.test(m))).toBe(true);
+    void cash;
+  });
+
+  it('works out how full it is from the bookings rather than remembering', () => {
+    const sim = quickSave({}, 'lot-full');
+    const empty = utilisation(sim, sim.now, sim.now + 30 * MS_DAY);
+    expect(empty.taken).toBe(0);
+    expect(empty.share).toBe(0);
+
+    const stage = stagesOn(sim)[0]!;
+    sim.universe.bookings.b1 = {
+      id: 'b1', saveId: sim.universe.meta.id, stageId: stage.id, holder: 'a test',
+      kind: 'shooting', from: sim.now, to: sim.now + 7 * MS_DAY, weekRateCents: stage.weekRateCents,
+    };
+    const one = utilisation(sim, sim.now, sim.now + 30 * MS_DAY);
+    expect(one.taken).toBeCloseTo(1, 5);
+    // Four stages over thirty days, one of them let for one week.
+    expect(one.share!).toBeGreaterThan(0);
+    expect(one.share!).toBeLessThan(0.1);
+  });
+
+  it('clips a booking to the window rather than counting it whole', () => {
+    const sim = quickSave({}, 'lot-clip');
+    const stage = stagesOn(sim)[0]!;
+    sim.universe.bookings.b1 = {
+      id: 'b1', saveId: sim.universe.meta.id, stageId: stage.id, holder: 'a long one',
+      kind: 'shooting', from: sim.now - 60 * MS_DAY, to: sim.now + 60 * MS_DAY,
+      weekRateCents: stage.weekRateCents,
+    };
+    // Ten days of a hundred-and-twenty-day booking fall in the window.
+    const window = utilisation(sim, sim.now, sim.now + 10 * MS_DAY);
+    expect(window.taken).toBeCloseTo(10 / 7, 5);
+  });
+
+  it('sends a production somewhere else when nothing here is the right size', () => {
+    const sim = quickSave({}, 'lot-toobig');
+    const answer = wouldBook(sim, {
+      kind: 'feature', from: 'somebody enormous', needsSqm: 20_000, needsHeightM: 40,
+      needsTank: false, weeks: 10, spendIsk: 5_000_000_000, local: false,
+    }, sim.now + 30 * MS_DAY);
+    expect(answer.stageId).toBeUndefined();
+    expect(answer.because).toMatch(/right size/);
+  });
+
+  it('turns away a foreign production the rebate doesn’t carry, and takes the same one local', () => {
+    const sim = quickSave({}, 'lot-budapest');
+    // Spending enough that the room is a small share of it, so the only thing
+    // left to turn it away is where its crew is coming from.
+    const small = {
+      kind: 'documentary' as const, from: 'a streamer', needsSqm: 600, needsHeightM: 8,
+      needsTank: false, weeks: 2, spendIsk: 300_000_000,
+    };
+    // Too small for the higher rebate tier, so 25% back against a third more
+    // to build and crew here. It goes somewhere with a crew already in it.
+    const away = wouldBook(sim, { ...small, local: false }, sim.now + 30 * MS_DAY);
+    expect(away.stageId, 'the refusal this whole model exists for never fires').toBeUndefined();
+    expect(away.because).toMatch(/doesn’t cover/);
+    // The identical job with an Icelandic crew has no such problem.
+    const stays = wouldBook(sim, { ...small, local: true }, sim.now + 30 * MS_DAY);
+    expect(stays.stageId).toBeDefined();
+    expect(stays.because).toMatch(/already here/);
+  });
+
+  it('lets the big foreign ones in, because the higher tier is built for them', () => {
+    const sim = quickSave({}, 'lot-tentpole');
+    const answer = wouldBook(sim, {
+      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
+    }, sim.now + 30 * MS_DAY);
+    expect(answer.stageId).toBeDefined();
+    expect(answer.because).toMatch(/35% back/);
+  });
+
+  it('makes most enquiries domestic, the way the Icelandic register actually reads', () => {
+    const all = ENQUIRY_SHAPES.reduce((n, one) => n + one.weight, 0);
+    const home = ENQUIRY_SHAPES.filter((one) => one.of.local).reduce((n, one) => n + one.weight, 0);
+    expect(home / all).toBeGreaterThan(0.6);
+    // But the foreign ones are where the stage-weeks are.
+    const weeksOf = (local: boolean): number => ENQUIRY_SHAPES
+      .filter((one) => one.of.local === local)
+      .reduce((n, one) => n + one.weight * one.of.weeks, 0);
+    expect(weeksOf(false) / weeksOf(true)).toBeGreaterThan(0.5);
+  });
+
+  it('puts a production in the smallest room that holds it', () => {
+    const sim = quickSave({}, 'lot-smallest');
+    const answer = wouldBook(sim, {
+      kind: 'commercial', from: 'an agency', needsSqm: 500, needsHeightM: 8,
+      needsTank: false, weeks: 1, spendIsk: 400_000_000, local: true,
+    }, sim.now + 30 * MS_DAY);
+    const took = sim.universe.stages[answer.stageId!];
+    expect(took, 'nothing was offered').toBeDefined();
+    expect(took!.floorSqm, 'a commercial was put in the biggest room on the lot').toBe(2_000);
+  });
+
+  it('says who is paying for it, rather than letting the company go quietly broke', () => {
+    const sim = quickSave({}, 'lot-funded');
+    const cash = Object.values(sim.universe.accounts).find((a) => a.kind === 'company_cash')!;
+    for (let month = 0; month < 24; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
+    expect(cash.balance, 'the company is running overdrawn with nothing explaining it').toBeGreaterThanOrEqual(0);
+    expect(paidInSoFar(sim), 'nobody has put a króna in').toBeGreaterThan(0);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('where the money comes from', () => {
+  it('holds two businesses that share owners and nothing else', () => {
+    const sim = quickSave({}, 'sugar-two');
+    const sugar = theSugarGroup(sim)!;
+    const film = parentCompany(sim.universe)!;
+    expect(sugar, 'no sugar group').toBeDefined();
+    expect(sugar.trade).toBe('sugar');
+    expect(film.trade).toBe('film');
+    expect(sugar.id).not.toBe(film.id);
+    // The sugar is older than the film by generations, which is the point.
+    expect(sugar.foundedAt).toBeLessThan(film.foundedAt);
+  });
+
+  it('keeps the sugar out of every question about making pictures', () => {
+    const sim = quickSave({}, 'sugar-apart');
+    // companiesOf, parentCompany and americanArm all mean the film side.
+    expect(companiesOf(sim.universe).every((c) => c.trade === 'film')).toBe(true);
+    expect(parentCompany(sim.universe)!.form).toBe('ehf');
+    // And the capability ladder never counts the sugar group's registrations.
+    const doors = capabilitiesOf(sim);
+    expect(doors.length).toBe(9);
+  });
+
+  it('is first in a trade small enough that being first is checkable', () => {
+    // The group is invented and may be as big as the fiction likes. What has
+    // to hold is the size of the thing it is first in.
+    expect(ORGANIC_SHARE_OF_WORLD).toBeGreaterThan(0.2);
+    expect(ORGANIC_SHARE_OF_WORLD).toBeLessThan(0.5);
+    expect(GROUP.organicTonnesAYear).toBeLessThan(GROUP.tonnesAYear);
+  });
+
+  it('can afford the lot, which is the whole reason the group is this size', () => {
+    // A single organic sugar company could not have built this. The world
+    // organic trade is 450,000 tonnes; the biggest real producer turns over
+    // about what the lot cost, once.
+    expect(BUILD_COST_CENTS).toBeLessThan(GROUP_PROFIT_CENTS * 3);
+    expect(MONTHLY_OVERHEAD_CENTS * 12).toBeLessThan(GROUP_PROFIT_CENTS * 0.1);
+  });
+
+  it('puts the sugar’s name on the money it sends', () => {
+    const sim = quickSave({}, 'sugar-cheque');
+    for (let month = 0; month < 18; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
+    const paid = sim.universe.transactions.filter((t) => t.memo.includes(GROUP.name));
+    expect(paid.length, 'the money arrived from nowhere in particular').toBeGreaterThan(0);
+    expect(paidInSoFar(sim)).toBeGreaterThan(0);
+    // And it means something set against what the business earns.
+    expect(paidInAsShareOfAYear(sim)).toBeGreaterThan(0);
+    expect(paidInAsShareOfAYear(sim)).toBeLessThan(1);
+  });
+});
+
+describe('the sugar quota', () => {
+  it('remembers the year that actually happened rather than rolling for it', () => {
+    const sim = quickSave({}, 'quota-real');
+    const first = quotaYears(sim)[0]!;
+    expect(first.fiscalYear).toBe(2026);
+    expect(first.tonnes, 'the 2026 answer was nothing, and it is on the record').toBe(0);
+    expect(first.because).toMatch(/specialty sugar quota/i);
+  });
+
+  it('is sticky, because policy is', () => {
+    // An open year almost always stays open. This is the honest majority of
+    // the answer and the reason a run of shut years means something.
+    const open = Array.from({ length: 20 }, (_, i) => decideQuota(90_000, 0, i / 20));
+    expect(open.filter((a) => a.tonnes > 0).length).toBeGreaterThan(14);
+  });
+
+  it('gets likelier to reopen the longer it has been shut', () => {
+    const roll = 0.5;
+    expect(decideQuota(0, 0, roll).tonnes, 'reopened immediately on a middling roll').toBe(0);
+    expect(decideQuota(0, 5, roll).tonnes, 'five shut years and still no pressure').toBeGreaterThan(0);
+  });
+
+  it('costs the group real money while it is shut', () => {
+    const shut = profitAfterQuota(GROUP_PROFIT_CENTS, 0);
+    const open = profitAfterQuota(GROUP_PROFIT_CENTS, QUOTA.ordinaryTonnes);
+    expect(shut).toBeLessThan(open);
+    expect(open).toBe(GROUP_PROFIT_CENTS);
+  });
+
+  it('makes the lot a heavier sentence in a year America was shut', () => {
+    const sim = quickSave({}, 'quota-weight');
+    for (let month = 0; month < 24; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
+    const shutShare = paidInAsShareOfAYear(sim);
+    // The same money, read against a full year rather than a shut one.
+    const againstFull = paidInSoFar(sim) / GROUP_PROFIT_CENTS;
+    expect(shutShare, 'the quota changed nothing anybody could feel').toBeGreaterThan(againstFull);
+  });
+
+  it('keeps deciding, year after year, without being asked', () => {
+    const sim = quickSave({}, 'quota-runs');
+    for (let y = 0; y < 6; y++) sim.advanceTo(sim.now + 365 * MS_DAY);
+    const years = quotaYears(sim);
+    expect(years.length, 'the quota stopped being decided').toBeGreaterThan(4);
+    // Every year is its own answer with its own reason.
+    expect(new Set(years.map((y) => y.fiscalYear)).size).toBe(years.length);
+    for (const y of years) expect(y.because.length).toBeGreaterThan(10);
   });
 });

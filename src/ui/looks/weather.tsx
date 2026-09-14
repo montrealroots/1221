@@ -480,7 +480,7 @@ function spellSentence(hours: readonly HourWeather[]): string {
 }
 
 defineLook<Hours>('hours', {
-  gone: 'That day is behind you, and the hours in it are not something anybody is forecasting now.',
+  gone: 'That day is behind you, and the hours in it aren’t something anybody is forecasting now.',
   resolve: (sim, id) => {
     const split = splitDayId(id);
     if (!split) return undefined;

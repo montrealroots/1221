@@ -184,7 +184,7 @@ export function GameProvider({
    */
   const halt = useCallback((result: AdvanceResult, wanted: number) => {
     if (!result.interruptedBy) return;
-    sim.universe.preferences.timeSpeed = 'paused';
+    sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
     setStandingAt({ item: result.interruptedBy, wanted });
   }, [sim]);
 

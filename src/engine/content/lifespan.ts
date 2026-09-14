@@ -30,7 +30,7 @@ export const LIFESPAN_NOTE =
 export const PENSION_NOTE =
   'Many countries still set a different pension age for men and for women, and several are in the '
   + 'middle of raising one or both. SLATE carries the higher of the two at the end of the announced '
-  + 'schedule, since that is the age a life planned today would actually reach.';
+  + 'schedule, since that’s the age a life planned today would actually reach.';
 
 // ---------------------------------------------------------------------------
 // How long people live

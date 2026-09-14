@@ -177,7 +177,7 @@ describe('race and ethnicity on the character sheet', () => {
     // And it is only ever written in the one place that builds the player.
     const writers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
-      .map((f) => `src/engine/${f}`)
+      .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
       .filter((f) => statSync(f).isFile())
       .filter((f) => /raceEthnicity:\s/.test(readFileSync(f, 'utf8')));
     expect(writers).toEqual(['src/engine/world/bootstrap.ts']);
@@ -195,7 +195,7 @@ describe('race and ethnicity on the character sheet', () => {
     // starts being a stat. Nothing outside creation and the review may read it.
     const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts') && !f.endsWith('content/ethnicity.ts'))
-      .map((f) => `src/engine/${f}`)
+      .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
       .filter((f) => statSync(f).isFile());
     const readers = engine.filter((f) => {
       const text = readFileSync(f, 'utf8');
@@ -295,7 +295,7 @@ describe('the interests and the genres', () => {
     // builds a mastery per genre from it and never touches anybody's save.
     const readers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
-      .map((f) => `src/engine/${f}`)
+      .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
       .filter((f) => statSync(f).isFile())
       .filter((f) => !/core\/taste\.ts|world\/bootstrap\.ts|domain\/model\.ts/.test(f))
       .filter((f) => /\.(genres|interests|personalityTraits)\b/.test(readFileSync(f, 'utf8')));

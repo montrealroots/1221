@@ -16,15 +16,17 @@
  */
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
 
-const ROOT = new URL('..', import.meta.url).pathname;
 const BEGIN = '<!-- inventory:begin -->';
 const END = '<!-- inventory:end -->';
 
+// Paths are repo-relative with forward slashes, the way every other tool here
+// works and the way the matrix itself spells them. Deriving a base directory
+// from `import.meta.url` gave `/C:/...` on Windows, which `join` then turned
+// into a path with a drive letter in the middle of it.
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
-    const full = join(dir, name);
+    const full = `${dir}/${name}`;
     if (statSync(full).isDirectory()) walk(full, out);
     else if (full.endsWith('.ts') || full.endsWith('.tsx')) out.push(full);
   }
@@ -37,18 +39,39 @@ function collect() {
   const events = new Map();
   const listeners = new Map();
   const scenes = new Map();
-  for (const file of walk(join(ROOT, 'src/engine')).sort()) {
+
+  // A kind is often a named constant rather than a literal, because the
+  // interface has to name it too: `onSchedule(LOT_OVERHEAD_KIND)`, not
+  // `onSchedule('lot.overhead')`. Reading only for literals made those
+  // invisible, so this counted the game's surface as smaller than it was and
+  // said so with a straight face. tests/cohesion.test.ts already resolves
+  // constants for exactly this reason; this does now too.
+  const named = new Map();
+  const files = walk('src/engine').sort();
+  for (const file of files) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+\.[a-z0-9_]+)'/g)) {
+      named.set(m[1], m[2]);
+    }
+  }
+  const kindOf = (token) => (token.startsWith("'") ? token.slice(1, -1) : named.get(token));
+
+  for (const file of files) {
     const text = readFileSync(file, 'utf8');
-    const rel = relative(ROOT, file);
-    const add = (map, re, group = 1) => { for (const m of text.matchAll(re)) if (!map.has(m[group])) map.set(m[group], rel); };
-    add(commands, /onCommand(?:<[^(]*?>)?\(\s*'([a-z0-9_.]+)'/gs);
-    add(schedules, /onSchedule\(\s*'([a-z0-9_.]+)'/g);
-    add(events, /\.emit\(\s*'([a-z0-9_.]+)'/g);
-    add(listeners, /onEvent\(\s*'([a-z0-9_.]+)'/g);
-    if (rel.startsWith('src/engine/scenes/')) add(scenes, /defineScene\(\{\s*id:\s*'([a-z0-9_.]+)'/g);
+    const rel = file;
+    const add = (map, re, group = 1) => {
+      for (const m of text.matchAll(re)) {
+        const kind = kindOf(m[group]);
+        if (kind && !map.has(kind)) map.set(kind, rel);
+      }
+    };
+    add(commands, /onCommand(?:<[^(]*?>)?\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/gs);
+    add(schedules, /onSchedule\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/g);
+    add(events, /\.emit\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/g);
+    add(listeners, /onEvent\(\s*('[a-z0-9_.]+'|[A-Z][A-Z0-9_]*)/g);
+    if (rel.startsWith('src/engine/scenes/')) add(scenes, /defineScene\(\{\s*id:\s*('[a-z0-9_.]+')/g);
   }
   const routes = new Set();
-  for (const m of readFileSync(join(ROOT, 'src/ui/shell/destinations.ts'), 'utf8').matchAll(/route:\s*'(\/[a-z/-]*)'/g)) {
+  for (const m of readFileSync('src/ui/shell/destinations.ts', 'utf8').matchAll(/route:\s*'(\/[a-z/-]*)'/g)) {
     routes.add(m[1]);
   }
   return { commands, schedules, events, listeners, scenes, routes: [...routes].sort() };
@@ -97,7 +120,7 @@ function markdown(inv) {
 
 const inv = collect();
 const mode = process.argv[2] ?? '';
-const docPath = join(ROOT, 'docs/COVERAGE-MATRIX.md');
+const docPath = 'docs/COVERAGE-MATRIX.md';
 
 if (mode === '--markdown') {
   process.stdout.write(`${markdown(inv)}\n`);
@@ -107,14 +130,18 @@ if (mode === '--markdown') {
   const end = doc.indexOf(END);
   if (start < 0 || end < 0) { console.error(`No ${BEGIN} … ${END} block in ${docPath}`); process.exit(1); }
   writeFileSync(docPath, `${doc.slice(0, start + BEGIN.length)}\n${markdown(inv)}\n${doc.slice(end)}`);
-  console.log(`Wrote the inventory into ${relative(ROOT, docPath)}.`);
+  console.log(`Wrote the inventory into ${docPath}.`);
 } else if (mode === '--check') {
   const doc = readFileSync(docPath, 'utf8');
   const start = doc.indexOf(BEGIN);
   const end = doc.indexOf(END);
   if (start < 0 || end < 0) { console.error(`No inventory block in ${docPath}`); process.exit(1); }
-  const current = doc.slice(start + BEGIN.length, end).trim();
-  const expected = markdown(inv).trim();
+  // Compared as content, not as bytes: a checkout with CRLF endings is still
+  // the same inventory, and comparing the terminators made this fail on Windows
+  // no matter what the block said.
+  const flat = (text) => text.replace(/\r\n/g, '\n').trim();
+  const current = flat(doc.slice(start + BEGIN.length, end));
+  const expected = flat(markdown(inv));
   if (current !== expected) {
     console.error('docs/COVERAGE-MATRIX.md is behind the code. Run: node tools/inventory.mjs --write');
     process.exit(1);

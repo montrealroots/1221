@@ -316,7 +316,10 @@ describe('the house rule holds in the source', () => {
     for (const name of readdirSync(dir)) {
       const path = new URL(name, dir);
       if (statSync(path).isDirectory()) walk(new URL(`${name}/`, dir), out);
-      else if (/\.(ts|tsx)$/.test(name)) out.push(fileURLToPath(path));
+      // Forward slashes, always. The exemption below names a file with one, and
+      // on Windows `fileURLToPath` hands back backslashes — so the module that
+      // is allowed to spell the titles out was being flagged for spelling them.
+      else if (/\.(ts|tsx)$/.test(name)) out.push(fileURLToPath(path).replace(/\\/g, '/'));
     }
     return out;
   }

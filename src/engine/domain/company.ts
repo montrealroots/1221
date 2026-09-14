@@ -74,6 +74,17 @@ export interface Company {
   legalName: string;
   form: CompanyForm;
   jurisdiction: Jurisdiction;
+  /**
+   * What business it is in.
+   *
+   * The family holds two entirely separate things: the sugar group that made
+   * the money, and the production company that spends it. They share owners
+   * and nothing else — different trades, different countries, different
+   * centuries — so anything asking "what can the company do" has to mean one
+   * of them and not both. Without this they were indistinguishable by shape,
+   * and the film half started answering questions about cane.
+   */
+  trade: 'film' | 'sugar';
   parentId?: Id;
   /** Why this arm exists, in a sentence. Absent on a parent. */
   formedFor?: string;
@@ -86,6 +97,39 @@ export interface Company {
   remit: string;
   foundedAt: Instant;
   dissolvedAt?: Instant;
+  /**
+   * The last thing the family said about carrying this, by rung id.
+   *
+   * Stored because it is the only part of the conversation that is not
+   * derivable. What the family has put in is on the ledger and what a year of
+   * the group's profit came to is a function of the quota, so where they stand
+   * is recomputed every time anybody asks — but whether anybody has said it out
+   * loud is not a fact about money. It matters because the rung can move
+   * without the money moving at all: America shuts the quota, the same figure
+   * reads against a smaller year, and the line comes to meet you.
+   */
+  familySaid?: string;
+  /**
+   * What the lot spends a month telling people it exists, where that has been
+   * decided.
+   *
+   * The overhead table's floor is what it costs to be sold at all. This is the
+   * part somebody chose, and it is the one decision on this axis that is taken
+   * again every month rather than once. Money only; what it buys is worked out
+   * from the ledger, because the market takes two quarters to notice a lot and
+   * two more to forget one, and a stored figure would let a player buy a
+   * booking the month before they needed it.
+   */
+  sellsFor?: Money;
+  /**
+   * How many enquiries went away again, by what sent them.
+   *
+   * Kept rather than worked out, because an enquiry that did not book leaves no
+   * trace anywhere else: the bookings table holds only the ones that said yes,
+   * which is the most flattering possible account of a stage business. It is
+   * also the only way to read what money spent on being known actually bought.
+   */
+  turnedAway?: Partial<Record<string, number>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -262,7 +306,54 @@ export interface Post {
  * things die between `optioned` and `packaged`, and a company with one project
  * has no slate, it has a hope.
  */
-export type Stage = 'idea' | 'optioned' | 'writing' | 'draft' | 'packaged' | 'greenlit' | 'shelved';
+/**
+ * Where a picture is in its life.
+ *
+ * It used to stop at `greenlit`, which is the point where a project becomes
+ * interesting rather than the point where it ends. Everything expensive and
+ * everything that can go wrong happens in the four stages after it, and
+ * `delivered` is the one that actually kills productions: a picture can be
+ * shot, cut, finished and still not paid for, because one element on a
+ * contractual list is missing.
+ */
+export type Stage =
+  | 'idea' | 'optioned' | 'writing' | 'draft' | 'packaged' | 'greenlit'
+  | 'prep' | 'shooting' | 'post' | 'delivered'
+  | 'shelved';
+
+/** The stages a greenlit picture moves through, in order. */
+export const MAKING: readonly Stage[] = ['prep', 'shooting', 'post', 'delivered'];
+
+/**
+ * One deliverable part of a title: a feature, or one episode of a season.
+ *
+ * It carries its own maturity because parts do not finish together. On a block
+ * shoot episode one is locked while episode six is a stringout, and the season
+ * is neither of those numbers — it is the runtime-weighted blend of all eight,
+ * held down by whichever dimension is worst.
+ */
+export interface Part {
+  id: Id;
+  /** Which one it is, counting from one. */
+  ordinal: number;
+  /** Seconds of finished screen time it owes. */
+  seconds: number;
+  /** How far each dimension has come, by rung id. Absent means the bottom. */
+  maturity?: Partial<Record<string, string>>;
+  /** When it transmits or is due, where the plan gives parts their own dates. */
+  dueAt?: Instant;
+  /**
+   * Seconds of this part the cutting room has to make again.
+   *
+   * What a regression actually costs, held where the regression happened. A
+   * note that sends one episode back a rung is a fraction of that episode owed
+   * to the room again; a withdrawn consent that sends it back to the assembly
+   * is the whole of it. The room pays this down before it cuts anything new,
+   * at the rate it runs at with the hands it has, which is why the same note is
+   * absorbed by a room with slack and fatal to a room already short of its date.
+   */
+  recut?: number;
+}
 
 export interface Project {
   id: Id;
@@ -279,4 +370,238 @@ export interface Project {
   /** What making it is reckoned to cost, once anybody has reckoned. */
   budgetCents?: Money;
   shelvedAt?: Instant;
+
+  // --- The dated life, once it is greenlit ---------------------------------
+  // Empty until then. A picture that has not been greenlit has no dates and
+  // saying otherwise would be a schedule nobody has agreed to.
+
+  /** How it is being made, by plan id. Set at the greenlight and not before. */
+  planId?: string;
+  /**
+   * Which ladder set its maturity is measured against, from the plan.
+   *
+   * Stored rather than looked up through the plan every time, because a plan's
+   * ladders could be revised and a picture already in flight should keep
+   * being measured against the ladder it was started on.
+   */
+  ladders?: string;
+  /**
+   * What this owes, part by part, each with its own maturity.
+   *
+   * A feature is one part. A season is eight, at eight different rungs, and
+   * that is not a detail — it is what a season *is*. Holding one maturity
+   * vector for a whole season would say episode six is as finished as episode
+   * one, which is never true of anything made in blocks.
+   *
+   * Every figure anybody reads about progress is recomputed from these and
+   * weighted by runtime. There is deliberately no percentage stored anywhere.
+   */
+  parts?: Part[];
+  /**
+   * Seconds of finished screen time this owes in total.
+   *
+   * The engine's native measure. Pages, shooting days, approved shots and cut
+   * minutes are all conversions into it, because they have to be: a page is
+   * about a minute, an animation shot is four or five seconds, and an engine
+   * that counts in any one of them can only make one kind of thing. Stored
+   * rather than summed from the parts so that a contracted slot and what the
+   * cut currently runs to can differ, which is the ordinary state of a picture
+   * on its way from a long assembly down to its release length.
+   */
+  owesSeconds?: number;
+  /**
+   * The periods whose money has gone out and whose elements are handed over.
+   *
+   * Settling is not idempotent on its own — it posts an expense and pushes
+   * delivery elements — and once periods run alongside each other there is more
+   * than one route to the same one: the boundary of the period declared after
+   * it, and the tick at the end of the work. Recording which have settled is
+   * the minimum fact that stops a picture spending its budget twice, which is
+   * what happened before the guard, to the tune of ninety-six per cent over.
+   */
+  settled?: string[];
+  /**
+   * The inventory ledger: material acquired and not yet on the timeline.
+   *
+   * Counted by stock, cumulative, and never decremented — placing a second of
+   * material on the timeline does not un-acquire it, and the thing that makes
+   * the shooting ratio meaningful is precisely that most of what was banked is
+   * never used. The ratio is this against the runtime owed, derived every time
+   * anybody asks.
+   */
+  banked?: Partial<Record<string, number>>;
+  /**
+   * How many hands the cutting room has, where that has been decided.
+   *
+   * The plan's figure is a default, not a rule. Money buys capacity, capacity
+   * buys progress at a rate, and money never buys progress directly — so the
+   * number of editors is the decision that sits between a budget and a
+   * delivery date, and under-resourcing it is how a season misses air.
+   */
+  hands?: number;
+  /**
+   * Finished seconds the cutting room has produced, cumulative.
+   *
+   * The output side of the second ledger, and the only part of the cut that
+   * cannot be derived: it depends on how many hands the room had in every week
+   * it ran, and that is a decision that can change week to week. Parts reach
+   * the rung the cut takes them to, in order, as this covers their runtime.
+   */
+  cut?: number;
+  /**
+   * Whether the last weekly look said the cut would miss the date.
+   *
+   * Stored because it is the only part of the forecast that is not derivable —
+   * whether anybody has been told yet. The forecast itself is recomputed from
+   * the ledger every time it is asked for, and a stored copy of it would drift
+   * from the thing it claims to describe within a week.
+   */
+  shortOfTheDate?: boolean;
+  /** The city the unit works out of. */
+  unitBaseId?: string;
+  /**
+   * The schedule, period by period, with real dates on it.
+   *
+   * The one source of truth for when anything happens. It is a list and not a
+   * set of named fields because the periods themselves are a list: an animated
+   * picture has no prep and a documentary has no wrap, and a schedule with
+   * `shootFrom` carved into it could never hold either. Whatever the plan says
+   * its periods are, this is those periods with dates.
+   */
+  periods?: { id: string; from: Instant; to: Instant }[];
+  /** The date the delivery is contractually due. Missing it has a cost. */
+  deliverBy?: Instant;
+  /** The stage on the lot it is holding, where it holds one. */
+  stageId?: Id;
+  /** The booking that holds it, so the lot and the picture agree. */
+  bookingId?: Id;
+  /** Elements handed over, by id. The money waits on the whole list. */
+  delivered: string[];
+  deliveredAt?: Instant;
+
+  /**
+   * Who is on it, by post, with the dates they are on it for.
+   *
+   * Empty until the picture starts hiring, and filled over the weeks rather
+   * than at once, because a unit production manager comes on ten weeks before
+   * the camera turns over and a boom operator comes on one. The person is a
+   * reference rather than a copy: they exist in their own right afterward, and
+   * the next picture can hire them again.
+   *
+   * What they are paid is not here. That is the engagement and the deal, which
+   * covers cast and crew in one record.
+   */
+  crew?: { postId: string; personId: Id; from: Instant; to: Instant }[];
+
+  /**
+   * The parts, as parts rather than as people.
+   *
+   * Laid out at the greenlight from the plan and the runtime, because that is
+   * when a picture first knows how much of itself there is to be in. A role
+   * exists whether or not anybody is ever cast in it, and an uncast lead on a
+   * picture in its last week of prep is the most expensive object in this file.
+   */
+  roles?: Role[];
+  /**
+   * Who is in them, and on what terms.
+   *
+   * Separate from the roles rather than a field on one, for the same reason
+   * the crew is separate from the posts: the role is a fact about the picture
+   * and the engagement is a fact about a person and a picture together. A
+   * recast writes a second seat and leaves the first standing, because the
+   * money on the first is still owed.
+   */
+  cast?: Seat[];
+
+  // --- The life after delivery ---------------------------------------------
+  // Empty until somebody buys it. A picture nobody has bought is an asset with
+  // no price, and saying otherwise would be inventing a market.
+
+  /** How it was sold, by deal id. */
+  dealId?: string;
+  soldAt?: Instant;
+  releasedAt?: Instant;
+  /**
+   * What it is reckoned to take across ten years, all in, for what it cost and
+   * the way it is being released. Decided once at the sale and not revised,
+   * because a figure that moved every time somebody looked at it would be a
+   * number nobody could plan against.
+   */
+  takeCents?: Money;
+  /**
+   * Which windows have paid, by id.
+   *
+   * The only thing stored about the money. Everything else — gross to date,
+   * what each tier took, what the company has seen — is recomputed from this
+   * and the deal, so a recoupment figure can never drift from the receipts
+   * that produced it.
+   */
+  windowsPaid?: string[];
+}
+
+// ---------------------------------------------------------------------------
+// The cast
+// ---------------------------------------------------------------------------
+
+/**
+ * One part, as written.
+ *
+ * Fields and no prose, which is the research's own rule for this record: the
+ * breakdown paragraph an agent reads is generated from these, and nothing
+ * further down the pipeline reads free text. A role that needed a sentence to
+ * explain it would be a role the engine could not price, schedule or cast.
+ */
+export interface Role {
+  id: Id;
+  /** Which one it is on the picture, counting from one. */
+  ordinal: number;
+  /** The character. */
+  name: string;
+  /** How big it is, by `content/casting.ts` size id. */
+  size: string;
+  /**
+   * The part it belongs to, where it belongs to one.
+   *
+   * Absent means the whole title, which is what a lead and a regular are. The
+   * difference between those two words and this one is eight episodes of
+   * money.
+   */
+  partId?: Id;
+  /** What the picture has set aside for it, before anybody argues. */
+  bandCents: Money;
+  /**
+   * Who came in for it, by person id, once the breakdown has gone out.
+   *
+   * Absent until somebody puts the part out, which is a dated act and not a
+   * list that appears: the people on it exist because the part was advertised,
+   * and they go on existing afterwards whether or not any of them got it. That
+   * is also why it is stored rather than worked out on demand — a pile of
+   * submissions recomputed every time a screen was drawn would be a different
+   * pile every time, and choosing between four strangers who keep changing is
+   * not a decision.
+   */
+  seen?: Id[];
+  /** When it went out. */
+  outAt?: Instant;
+}
+
+/**
+ * Somebody engaged in a role, on terms.
+ *
+ * Three facts that are routinely confused for one: what was agreed, whether it
+ * is owed regardless, and whether they were ever used. Pay or play is the
+ * second of those and only the second — actors are paid and cut out of the
+ * picture often enough that collapsing them would make a whole category of
+ * real disaster unrepresentable.
+ */
+export interface Seat {
+  roleId: Id;
+  personId: Id;
+  /** What was agreed, in cents. */
+  feeCents: Money;
+  castAt: Instant;
+  /** Whether the fee is owed whether or not the picture is ever made. */
+  payOrPlay?: true;
+  /** When they were let go, where they were. The fee stays owed. */
+  releasedAt?: Instant;
 }

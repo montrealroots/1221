@@ -43,16 +43,25 @@ that is to declare the vocabulary without building the systems: a field for
 every axis, a modifier key for every effect, an id namespace for every noun. It
 reads as a deep game to anybody scrolling the source and it plays as nothing.
 
-The disease is already here, and it was found by measurement:
+The disease is already here, and it was found by measurement. The second column
+is where each row stood when the ledger was written; the third is where it
+stands now, and the only direction it is allowed to move:
 
-| Declared | Read by something |
-|---|---|
-| 123 id namespaces | 17 |
-| 54 trait modifier keys | 7 |
-| 18 higher-is-worse guards | 12 |
-| 7 reputation axes | 0 |
-| 7 personality axes | 4 |
-| 813 acting attributes | 0 |
+| Declared | Read, at the start | Read now |
+|---|---|---|
+| 125 id namespaces | 17 | 20 |
+| 54 trait modifier keys | 7 | 7 |
+| 18 higher-is-worse guards | 12 | 12 |
+| 7 reputation axes | 0 | 7 |
+| 7 personality axes | 4 | 4 |
+| 813 acting attributes | 0 | 19 |
+
+The two rows that moved, moved for one reason: casting. Nineteen attributes are
+read as three axes that go three different places, and the seven reputation
+axes have writers because a cast is made of people whose standing, fame and
+conduct all decide something separately. Nineteen of eight hundred and thirteen
+is not a boast — it is a first reader on the largest unwired thing in the build,
+and the other seven hundred and ninety-four are still a promise.
 
 `tools/wired.mjs` walks the declared vocabulary, finds what nothing reads, and
 holds the count against `docs/UNWIRED.json`. It does not demand zero — content
@@ -188,6 +197,53 @@ career trapped in a genre the player never chose.
 It goes last, because it can only be *measured* from an accumulated record. It
 cannot be a field.
 
+## Open Questions
+
+Two things are known to be imperfect and are left that way deliberately, so
+that a future session changes them as a decision rather than by accident.
+
+**An unrecouped picture stops accruing interest after its last receipt.**
+`splitIt` is a pure function of the receipt list and takes no notion of now, so
+once the final window has paid, what is still owed freezes even as years pass.
+That is defensible — the split describes what the receipts did, not what is
+owed today — but it understates a long-dead picture's debt. Fixing it means
+passing the current instant in and giving up the purity several tests rely on.
+
+**The lot's axis is finished and its answer is that the lot cannot be made to
+pay.** How many people ring is earned now — off the crew in the country, off
+what the rooms did over three years, and off what the lot spends being known —
+and a player who sells it hard runs at 30/100 of a full month against a
+break-even of 62. That is the ceiling, and it is not a tuning failure. Break
+even needs the two big rooms let, only the handful of foreign features Iceland
+gets in a year can fill them, and winning all of them is winning a dozen
+projects. The research says the same thing about real lots: a stage business
+at 65% occupancy yields three or four per cent on what it cost to build against
+a required yield of six and a half, so the asset is worth less than the build
+on the day it opens. Studio lots are justified by trading income, by the land,
+and by an owner who wants the capacity — which is this family exactly, and is
+the frame the game should put it in.
+
+What is left on it is a decision rather than a defect: whether the player can
+build a small stage. Four rooms and the smallest is bigger than four of the ten
+enquiry shapes need, which is most of why it is empty.
+
+**The lot has no small stage, and that is most of why it is empty.** Four rooms
+and the smallest is bigger than four of the ten enquiry shapes need. The
+ordinary Icelandic commercial and the ordinary Icelandic documentary — 40 of the
+101 weight between them — are turned away because the only room that will hold
+them costs well over half of everything they were going to spend in the country.
+Nobody designed that; it fell out of pricing the whole hold against the budget.
+It is also the research's own warning about phase one, arriving from the other
+direction, and the obvious lever for a player: build a small one.
+
+The order mattered and was nearly got wrong. Making demand respond to the world
+first would have produced a better-looking lot and an equally inert one, because
+`familyCovers` topped the company's cash to zero every month with no cap and no
+failure state: the marginal cost of every lever was zero, so the best play was
+whatever you liked, decided in month one and never revisited. A perfect demand
+model on top of an infinite backstop is still a fixed outcome, only flattering.
+So the downside came first.
+
 ## The Build Order
 
 Dependency, not appetite.
@@ -196,9 +252,174 @@ Dependency, not appetite.
 days. `currentLocationId` is read in two dozen places and written once, at
 bootstrap. Until it moves, nothing about being somewhere can matter.
 
-**1. The Title.** A picture with a dated life — prep, shoot, post, delivered,
-released, library — a unit base city, a budget band, and a shooting schedule
-made of ordinary scheduled items. **This is the foundational thing.** Run every
+**Before rank 1, a correction the research forced.** The order below builds the
+live-action feature first, and the spine synthesis in `research/KINDS.md` says
+that is the wrong first build — not because a feature is hard, but because every
+spine primitive gets quietly satisfied by a live-action-shaped special case (the
+day, the page, the strip) and the spine is not discovered to be fake until the
+fourth form, with nine forms of content authored on top of it. Its
+recommendation is a format-led unscripted season first, because it has no script
+and no takes and no boundary between production and post, so none of those
+assumptions can be hardcoded anywhere.
+
+Rank 1 was already built as a feature, so the test was run in reverse: the
+unscripted season was written as build two and required to add no new engine
+concepts. **It needed four.** That list is the answer, and two of them are now
+fixed.
+
+| What the season needed | State |
+| --- | --- |
+| Periods that run alongside each other, not only after | **Fixed.** `Period.runsWith` |
+| A clock anchored at the delivery date, not the start | **Fixed.** `Plan.anchor` |
+| "Done" as the minimum of a maturity vector, not one stage | **Fixed.** `Project.maturity` |
+| A season as N timelines at different maturities | **Fixed.** `Project.parts` |
+
+The first two were the scheduler being a live-action scheduler wearing a
+general name. `layOut` set every period's start to the previous period's end,
+which cannot express post beginning on field day one and running months past
+wrap — which is simply what an unscripted season is. And `deliverBy` was
+derived forward, so a longer shoot delivered later; a broadcast season has its
+transmission date agreed against a format document before anybody knows what
+the content is, and the work is fitted backward into the room in front of it.
+Those are opposite clocks and the engine only had one.
+
+The third is fixed too, and it was the one the season could not fake. A picture
+carries six dimensions now — picture, sound, performance, rights, compliance,
+conform — each on a ladder the plan names, and `doneShare` takes the **minimum**
+across them. Not the average, which would call a finished uncleared episode five
+sixths done. A season that is locked, mixed, complete, compliant and accepted
+reads 0/100 the moment one contributor withdraws consent, and that is the honest
+number: it is worth nothing until somebody signs.
+
+The ladders are data and they differ by form. A picture's cut goes shot,
+assembled, cut, locked, graded. A season's goes stringout, paper cut, assembly,
+producer's cut, executive's cut, broadcaster's cut, locked — longer, because on
+that form the notes are the work and every rung is a person who can send it back
+down.
+
+It also surfaced something the single `stage` field had been hiding: no period in
+the feature plan advances compliance at all. That is not an oversight. On a
+picture the legal work *is* the delivery list — filing the chain of title is what
+clears the rights, and the errors and omissions certificate is what gets it
+through review — where on a season compliance is a live period running alongside
+the cut. Both are now expressible, and `nobodysJob` will name any dimension a
+plan never moves.
+
+The fourth is fixed, and with it the progress model. A title owes **parts** —
+one for a feature, eight for a season — each with its own maturity vector and
+its own runtime in seconds. Progress is runtime-weighted across them and then
+minimised across dimensions, so the measure is screen time rather than episode
+count: a forty-minute episode that is locked is worth more of a season than a
+twenty-minute one, and counting episodes would call them equal.
+
+Seconds of finished screen time is now the engine's native measure, which is
+what the research asked for. A producer sets what a picture runs to, and an hour
+and nineteen minutes is an ordinary answer rather than a special case.
+
+Parts finish in order where the plan says so. A season's cut advances episode
+one weeks before episode eight, and in between the season genuinely sits at
+three different rungs at once — which is the difference between eight timelines
+and one timeline drawn eight times.
+
+Two real bugs fell out of building it, both from periods being able to run
+alongside each other:
+
+- **`finishesBy` returned the last declared period's end, not the latest.** An
+  unscripted season declares compliance last and it ends four weeks before the
+  cut does, so the work was being called finished four weeks early. Reading the
+  last element was right while everything was sequential and became a silent lie
+  the moment anything was not.
+- **A period could settle twice** — once at the boundary of the period declared
+  after it, once at the tick ending the work — and settling posts an expense.
+  A season spent ninety-six per cent over its budget before the guard. Pinned
+  now by counting postings per period rather than by checking a total, because
+  a total only catches it loosely: a season legitimately runs a little over when
+  its field slips.
+
+### What is left
+
+Nothing from the port test. The spine now expresses a format-led unscripted
+season with no engine concept it did not already need, which is what build two
+was for. The research's own acceptance test for build one reads:
+
+> the engine must produce a four-figure shooting ratio, an editor-week
+> bottleneck, a legal recut at week 19 and a make-air scramble, with the strings
+> "ratio", "editor", "episode" and "compliance" appearing only in data files.
+
+Three of the four are met, and met the way the sentence intends — as output
+rather than as content.
+
+**The shooting ratio.** Derived, never set. Every plan says how many hours of
+material a week of acquisition banks and how long acquisition runs; the ratio
+is that against the runtime owed, divided at the moment somebody asks. The
+same two lines of arithmetic give 15:1 for a feature, 10:1 for a drama series
+and 1,880:1 for a fixed-rig season, and the test that holds them checks the
+answers against published figures rather than against anything in the engine.
+Shoot the same runtime for twice as long and the number doubles, because that
+is what the number means.
+
+**The editor-week bottleneck.** The cutting room converts material into screen
+time at a published rate times the hands it has, and the parts come out of it
+as its output covers their runtime. Not a timetable with a rate printed beside
+it: put one editor on a season the plan staffed with two and the episodes
+genuinely arrive half as fast, and some of them do not arrive at all.
+
+**The make-air scramble.** A consequence, not an event. A season whose room
+cannot finish in the calendar in front of it is told so in the week the
+material overtakes the room, and it is told again if hiring gets it back. At
+the staffing each plan assumes, no plan warns; nothing has been tuned to make
+the warning fire.
+
+**The legal recut.** Somebody watches the finished work, every week, one part
+at a time, and what they find comes off a deck of seven rows the research
+names: a compliance note, a note from the people paying, coverage debt, a
+rejected master, a withdrawn consent, a gap in the chain, a moment nobody
+caught. What a finding costs is written nowhere. It is how many rungs the part
+actually fell times everything that was standing on the rung it fell from, so
+the same withdrawn consent is free in week two and ruinous in week nineteen —
+which is the property the maturity vector was built to have and had never had,
+because nothing ever sent a dimension down.
+
+The week nineteen of the research's own sentence now exists, and it exists by
+arithmetic rather than by being put there. The weekly tick used to stop when the
+cutting room closed; it runs to the delivery date, so the weeks between the work
+finishing and the thing going over have something running in them. That gap is
+where a lawyer lives.
+
+And the cost lands in the second ledger. A part sent back down owes the cutting
+room a share of itself again — the share of the ladder it lost — and the room
+pays that down before it cuts anything new, at its own rate with the hands it
+has. One editor on a season the plan staffed with three delivers it more than
+twenty weeks past air; three delivers it inside a fortnight. Nothing about what
+gets found changes between those two runs. Only the room changes.
+
+All four parts of it are met.
+
+As for the strings: the engine carries no form-specific branch at all. No
+module under `world/` names a plan id, and what makes a season a season is
+entirely in `content/`. The deck is the newest test of that and the sharpest.
+Whether a withdrawn consent can happen to a production is not a question about
+which plan it is — it is whether some period of that plan carries rights all the
+way to cleared while the work is going on. A picture options its material in
+prep and files a chain of title, so there is no live consent in it for anybody
+to take back; a season's consent is a standing relationship with people who are
+still in the room. Same predicate, read off the periods. And how far a note from
+above sends a cut back is how many rungs that form stacks above its cutting
+room, which is four on a season and two on a picture, read off the ladder. The acceptance test's own phrasing is looser than the
+thing it is testing for — `ratioOf` is a function and `unscripted-editor` is a
+row in a rate table — so the test held here is the stronger one: that no
+mechanism anywhere asks what kind of thing it is working on.
+
+
+
+**1. The Title. Done.** A picture with a dated life — prep, shoot, post,
+delivered — a unit base city, a budget, and a schedule made of ordinary
+scheduled items, laid out from the one number a producer actually chooses. It
+holds a stage off the lot's own booking board, spends its budget across its
+periods, reads its overrun off how far the schedule was cut below what the
+money implies, and is not paid for until a contractual delivery list is
+complete. Release and library are still ahead of it, at rank 8.
+**This was the foundational thing.** Run every
 one of the sixteen axes against it: a person exists because a production needed
 them; two people know each other because they were on a title together;
 reputation moves on titles released; a contract is an agreement about an
@@ -213,7 +434,15 @@ persisted, and recurring.
 billing × exclusivity. This is where TEW's contracts axis and the actor's deal
 turn out to be the same record.
 
-**4. The shoot day and the take.** The atom.
+**4. The unit of work, declared by the plan.** Not the shoot day. The research
+in `research/KINDS.md` is emphatic that there is no single atom: a live-action
+feature counts shooting days, a CG feature counts approved seconds at three to
+five a week per animator, a documentary counts beats banked and then cut
+minutes, an unscripted format counts contributor-days, a multi-camera sitcom
+counts one show a week. An engine that names the shooting day forecloses every
+other kind permanently. `content/making.ts` carries `Period.unit` for this
+reason — what a week of a period produces, and how many of them a week holds —
+and nothing downstream may name a shooting day directly.
 
 **5. The union floor over the day.** Membership, eligibility, scale by tier,
 call and wrap as real instants, overtime, meal penalty, turnaround.
@@ -300,6 +529,146 @@ and be wrong on the day it is finally connected.
 **`StudioPlant` is a warning this codebase already wrote down.** Twelve fields,
 stages, day rates, LED volume, water tank, dated tenants, lifetime income,
 occupancy — declared, and instantiated nowhere.
+
+**A regression test that cannot fail is decoration.** Written down because it
+happened: the first test guarding the timeline-sort bug passed with the bug
+deliberately reintroduced, because one picture slipping alone never passes
+another scheduled item. Two interleaved pictures make it fail. Reintroduce the
+bug, watch the test go red, restore the fix — and only then believe the test.
+
+**`npx tsc --noEmit` compiles nothing here, and exits 0 while doing it.** The
+root `tsconfig.json` is `files: []` with project references, so the bare
+invocation is a green light that means nothing. This hid a whole engine file
+from the typechecker once. Always `npm run typecheck`, which is `tsc -b`.
+
+**Money is a waterfall walked in order, never a lookup against a total.**
+Recoupment tiers have to be computed by walking receipts in the order they
+arrived, because interest on an unrecouped balance accrues between receipts and
+cannot be recovered from a lump sum. Charging it flat against the original
+principal for the life of a picture turned a €20m negative into a fictitious
+€47m one, and that was caught as a real bug rather than a rounding argument.
+
+**Store the minimum fact and recompute the rest.** A sold picture stores only
+which windows have paid; gross to date, what each tier took and what the
+company has seen are all recomputed from that and the deal terms every time
+anybody asks. A stored derived total is a number that can drift from the
+receipts that produced it, and a balance nobody can reconstruct is the one
+thing a game about film money is not allowed to show.
+
+**Both sides of a comparison have to come from the same mechanism.** The first
+cutting-room forecast measured work remaining off the rungs the parts sat on,
+while the parts were moved up by a timetable that never read the cutting room's
+rate. Two mechanisms, calibrated near each other, interfering: the shortfall
+sawtoothed across zero every few weeks and every production in the game warned
+that it would miss its date by exactly one week. The warning was not wrong
+about the arithmetic. It was reporting the gap between two clocks. Staffing
+only became a decision when the room's own output became the thing that moved
+the parts *and* the thing the forecast was made from.
+
+**A recurring tick laid out in bulk at greenlight goes stale the first time
+anything slips.** Twenty weekly items scheduled up front, a two-day overrun,
+and the last one now fires two days before the period it was meant to close —
+leaving the final episode cut and never released, for the sake of two days. One
+item at a time, each deciding when the next is due from the schedule as it
+stands today, and the slip takes care of itself.
+
+**A mechanism with no cause is worse than no mechanism.** `knockBack` sat in
+the engine for a whole build: written, tested, exported, and called by nothing
+except a test that drove it by hand. Every screen that printed a maturity vector
+was printing six ladders nobody could fall off. The One Rule is usually read as
+being about a field with no reader, but this is the same fault one level up —
+a verb with no subject — and it is harder to see, because the tests pass and the
+code looks finished.
+
+**Going down needs a way back up, and it has to be the same way it went up.**
+A knock-back with no route out is a dead end wearing a setback's clothes, and
+the first draft had three: a rejected master struck a delivery element that
+`handOver` refuses to file because it comes out of the work; a season's rights
+and compliance were moved only by one-shot ticks scheduled at greenlight and
+consumed; and the weekly tick stopped the moment the work was done, so a knock
+on the final week froze the production for the rest of the save. All three were
+fixed by widening what already existed rather than by adding a second
+mechanism — the same weekly tick, re-running the same periods, gated on the same
+cutting room. Two things moving the same parts is the bug this file already
+warns about.
+
+**One write in the whole interface skipped the engine, and the test that
+caught it was about something else.** Setting the clock speed assigned straight
+into `sim.universe.preferences` from a React component, and pausing when the
+world stops at you did the same — while `world.set_preferences` sat registered
+and called by nothing. It surfaced from a rule about reachability: every command
+the engine registers has to be run by something in the interface, and that one
+came back as unreachable when it was really being bypassed. The two readings
+look identical from the command's end. Both are now the same fix.
+
+**A fixture that stops short takes the rules with it.** The looks suite crawls
+a world that options and develops and then stops, so half the project page — the
+schedule, the crew, both ledgers, what can come apart — was never once drawn by
+a test. Two house rules were being broken in that half and passing. Rule six
+says one grid of facts is a look and two is a record: the page had two the
+moment anybody said yes to something and three a year later. And the wellbeing
+sentence falls through to "Holding up.", which is two words against a rule that
+wants a sentence, and it only fires in the middle band a fresh save is never in.
+Neither is an edge case; both are what a player sees. A fixture is a claim about
+which states are worth checking, and stopping it one command short of the
+interesting half is how a suite of seventeen rules enforces them on a page
+nobody is looking at.
+
+**A command nothing calls has never really been tested.** `company.greenlight`
+has been correct for eight commits and accepted two things that make a picture
+impossible, because the only caller was a test suite that passed sensible
+arguments. Give it an airdate ten weeks out and it lays the casting, the rig and
+the field into weeks that have already happened — twenty-seven ticks scheduled
+in the past and never fired — and the picture cannot then be finished,
+delivered, sold, greenlit again or shelved, because `Project.shelvedAt` is
+declared and written nowhere. One date, and the save carries it forever. The
+moment a person can type into a field is the moment every unchecked argument
+becomes reachable, so the refusals have to exist before the form does.
+
+**A lever that is always wrong is as inert as a constant.** The first draft of
+the selling line bought more calls and lost money at every level: the extra
+attention arrived from abroad, and most of what arrives from abroad fails the
+rebate's own tier test, so the money bought refusals. It was truthful and it was
+a trap — a player learns once never to touch it and the term is a constant
+again. What fixed it was not a bigger multiplier but the corpus's own point:
+what a desk in Los Angeles buys is not more calls from RÚV. Money moves the
+*mix* and not only the count, and the same spend that used to lose twelve
+million across a decade now saves five. The waste is still there and is on the
+screen, because a lever whose cost is hidden is the same trap facing the other
+way.
+
+**A rate card nothing reads is a price list, not a price.** `wouldBook` computed
+what the room cost on its third line and then never mentioned it again: the
+decision was size, then availability, then the rebate, so every stage on the lot
+could have been priced at anything and exactly the same productions would have
+booked. Two thirds of `RATE_SHARE` had the same problem — prep and hold rates,
+declared, commented, and never asked for, because all three call sites passed
+`'shooting'`. A number that is never compared against anything is decoration
+however carefully it was derived.
+
+**A correct figure nobody acts on is the same fault as a wrong one.**
+`paidInAsShareOfAYear` was written, commented, tested, and read by no screen and
+no engine code. Its own comment said that reading the family's money against
+what the sugar cleared this year rather than against a flat number "is the only
+way the quota is ever felt on this side of the family" — and that was true, and
+the quota was still never felt, because the function had no callers. A number
+that is right and inert is harder to spot than one that is wrong, because
+everything about it looks finished.
+
+**A test that checks the announcement is not testing the mechanism.** The first
+draft of the family's patience passed with the mechanism deliberately removed:
+the test read a notification, and the notification was emitted from the tick on
+the same condition rather than from the code that actually withheld the money.
+Two of three tests in that commit had the same shape, and one of them recomputed
+the engine's own arithmetic inside the test and checked it against itself.
+Reintroduce the fault, watch it go red, and only then believe the test — most of
+all when the fault is subtle enough that you wrote the test to catch it.
+
+**Exports nothing reads, in a module written an hour ago.** Five of them, in
+the first draft of the inventory ledger: a sentence for a screen, a ledger
+listing, a pressure figure, two label helpers. Writing the module is not the
+same as wiring it, and a fresh file gets no exemption from the One Rule — the
+grep for readers is part of finishing, not part of tidying up later.
 
 ## What Holds It In Place
 

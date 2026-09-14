@@ -15,6 +15,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { estateCity } from '@/engine/content/estate';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
@@ -156,7 +157,9 @@ describe('when the moment comes', () => {
     const told = unreadNotifications(sim).find((n) => /Missed/.test(n.title));
     expect(told, 'nothing said you had missed it').toBeDefined();
     expect(told!.body).toMatch(/Los Angeles/);
-    expect(told!.body).toMatch(/Reykjav/);
+    // Named from the estate rather than typed out, so moving the family does
+    // not quietly turn this into a test of where they used to live.
+    expect(told!.body).toContain(estateCity().name);
   });
 });
 
@@ -323,7 +326,16 @@ describe('the form and the engine agree about what a plan has', () => {
     const CONTROLS = readFileSync(new URL('../src/ui/shell/TimeControls.tsx', import.meta.url), 'utf8');
 
     expect(CONTEXT, 'nothing reads where the clock stopped').toContain('interruptedBy');
-    expect(CONTEXT, 'the world keeps ticking while it waits on you').toContain("timeSpeed = 'paused'");
+    // The pause itself, not the spelling of it. It used to be an assignment
+    // into `sim.universe` from a React component — the one write in the whole
+    // interface that skipped the engine — and this held that assignment in
+    // place rather than the behavior it stood for.
+    expect(CONTEXT, 'the world keeps ticking while it waits on you').toContain("timeSpeed: 'paused'");
+    const sim = quickSave({}, 'halted');
+    expect(sim.universe.preferences.timeSpeed).not.toBe('paused');
+    sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
+    expect(sim.universe.preferences.timeSpeed, 'the clock could not be stopped through a command')
+      .toBe('paused');
     expect(CONTROLS, 'the halt never reaches a screen').toContain('standingAt');
     expect(CONTROLS, 'not going never reaches the engine').toContain("'calendar.skip'");
   });
